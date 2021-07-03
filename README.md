@@ -59,6 +59,18 @@
 
 
 
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/tobc" target="_blank">tobc</a>
+
+时间不详
+
+为 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）添加新指令
+- @_FILE
+- @_INCLUDE
+- @_MOD
+- @_DEFF
+
+
+
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6Back" target="_blank">ED6Back</a>
 
 写于 2008 年或更早
@@ -128,7 +140,9 @@
 
 写于 2011-08
 
-零之轨迹破解模块，脱了 exe 的 SecuROM 壳，还原了 VM 部分的 freetype 代码
+零之轨迹破解增强模块，脱了 exe 的 SecuROM 壳，还原了 VM 部分的 freetype 代码
+
+实现了 MOD 基础功能
 
 
 
@@ -140,8 +154,41 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/YamaNeko" target="_blank">YamaNeko</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/EDAO" target="_blank">EDAO</a>
 
 写于 2011-09
 
 零、碧之轨迹 itc、itp 解码工具
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/EDAO" target="_blank">EDAO</a>
+
+写于 2013-04
+
+碧之轨迹破解模块，整合了 SoundArc 进程，解决声音不同步 bug，实现了 MOD 基础功能
+
+碧轨是最深度修改的版本
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/EDAO/RecordViewer" target="_blank">碧之轨迹存档宝箱查看器</a>
+
+写于 2015-07
+
+可以查看所有宝箱取得情况，包含了宝箱的地图和具体坐标(x, y, z)
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/Decompiler" target="_blank">Decompiler</a>
+
+写于 2015-07
+
+碧之轨迹集大成编辑工具，支持下列格式与`.py`相互转换
+- scena 剧情
+- ms*.dat 怪物状态
+- as*.dat 战技脚本
+- fachr*._bn 场景攻击
+- eff 特效
+- t_name._dt
+- t_dbmon._dt
