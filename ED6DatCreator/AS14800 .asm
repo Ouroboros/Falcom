@@ -1,0 +1,2186 @@
+@_FILE "debug_AS14800 ._DT"
+@_INCLUDE "as_def.txt"
+
+@UnknownFlag_0x04 0
+
+(CraftOffsetTable:s)
+(CraftOffsetTableEnd:s)
+(UnknownFlag_0x04:s)
+
+; Char chip pattern info  CH_Index, CH_DAT_Index, CP_Index, CP_DAT_Index
+ (0x0779:s, 0x0029:s, 0x077D:s, 0x0029:s) (0x0779:s, 0x0029:s, 0x077D:s, 0x0029:s)
+ (0x077B:s, 0x0029:s, 0x077F:s, 0x0029:s) (0x0779:s, 0x0029:s, 0x077D:s, 0x0029:s)
+ (0x0779:s, 0x0029:s, 0x077D:s, 0x0029:s)
+[FF FF FF FF]
+
+; 3d model file
+""
+
+#CraftOffsetTable
+ (SysCraft_MagicEffect:s)
+ (SysCraft_Stand:s)
+ (SysCraft_Move:s)
+ (SysCraft_UnderAttack:s)
+ (SysCraft_Dead:s)
+ (SysCraft_NormalAttack:s)
+ (SysCraft_MagicChant:s)
+ (SysCraft_MagicChant:s)
+ (SysCraft_MagicChant:s)
+ (SysCraft_MagicChant:s)
+ (SysCraft_MagicChant:s)
+ (SysCraft_Stun:s)
+ (SysCraft_Unknown2:s)
+ (Craft_0D:s) (SysCraft_MagicChant:s) (SysCraft_MagicChant:s) (Craft_10:s) (Craft_11:s)
+ (Craft_12:s) (Craft_13:s) (Craft_14:s) (Craft_15:s) (Craft_16:s)
+ (Craft_17:s) (Craft_18:s) (SysCraft_MagicChant:s) (SysCraft_MagicChant:s) (SysCraft_MagicChant:s)
+ (SysCraft_MagicChant:s) (SysCraft_MagicChant:s) (SysCraft_MagicChant:s)
+#CraftOffsetTableEnd
+
+[80 EF 80 EF 80 EF 80 EF 80 EF 80 EF 80 EF 80 EF]
+
+
+@_MOD 16
+#SysCraft_MagicChant
+End
+
+#loc_00D0
+SelectChip(Self, 0x1:b)
+SubChip(Self, 0x0:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x28:i)
+Update
+Goto(loc_00D0:s)
+
+
+@_MOD 16
+#Craft_0D
+SelectChip(Self, 0x3:b)
+SubChip(Self, 0x0:b)
+End
+
+
+@_MOD 16
+#SysCraft_Stun
+SelectChip(Self, 0x4:b)
+SubChip(Self, 0x0:b)
+Sleep(0x96:i)
+Update
+End
+
+
+@_MOD 16
+#SysCraft_Unknown2
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+End
+
+#loc_03B0
+ResetLoopTarget
+
+#loc_03B1
+LoopTargetBegin(loc_03C7:s)
+DamageAnime(Target, 0x1:b, 0x32:i)
+Damage(Target)
+Sleep(0x32:i)
+Update
+LoopTargetEnd
+Goto(loc_03B1:s)
+
+#loc_03C7
+Ret
+
+#loc_0407
+ResetLoopTarget
+
+#loc_0408
+LoopTargetBegin(loc_0417:s)
+Damage(Target)
+Sleep(0x32:i)
+Update
+LoopTargetEnd
+Goto(loc_0408:s)
+
+#loc_0417
+End
+
+
+@_MOD 16
+#SysCraft_MagicEffect
+AddEff(0x100:s, "monster\\msc0331.eff")
+AddEff(0x101:s, "monster\\msc0281.eff")
+AddEff(0x102:s, "craft\\cr180_00.eff")
+AddEff(0x103:s, "monster\\ms10020c.eff")
+AddEff(0x104:s, "monster\\msc0100.eff")
+End
+
+
+@_MOD 16
+#Craft_18
+End
+
+
+@_MOD 16
+#SysCraft_Dead
+SelectChip(Self, 0x3:b)
+SubChip(Self, 0x0:b)
+Voice(0x771:s)
+OP_34
+OP_42(0xFF:b, 0x3E8:i, 0x0:b)
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0x0:i, 0x3E8:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x1F4:s, 0x1F4:s, 0x1F4:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0x258:i, 0x1F4:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x1F4:s, 0x1F4:s, 0x1F4:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0xFFFFFDA8:i, 0x320:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x1F4:s, 0x1F4:s, 0x1F4:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0x0:i, 0x5DC:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0x0:i, 0x7D0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0x0:i, 0x1F4:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x5DC:s, 0x41A:s, 0x5DC:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+Sleep(0xA0:i)
+Update
+Voice(0x783:s)
+Call(loc_03B0:s)
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+Sleep(0xA0:i)
+Update
+OP_54(0x2:b)
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+Sleep(0xA0:i)
+Update
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+Sleep(0xA0:i)
+Update
+SetChipModeFlag(0x0:b, Self, 0x8:s)
+Die
+Sleep(0x7D0:i)
+Update
+End
+
+
+@_MOD 16
+#Craft_17
+AddEff(0x0:s, "monster\\ms10011.eff")
+OP_95
+SetAngleTarget(Self, "", 0x0:s)
+MoveAngle(0x12C:i, 0x3E8:s, 0x4B0:s)
+OP_26(0x2:b, 0xFF:b, 0x10:s)
+ShakeScreen(0x0:i, 0x64:i, 0x0:i, 0x2710:i)
+Turn(Self, Dest, 0x1F4:s)
+BeginThread(Self, Thread2, loc_092C:s, 0x0:b)
+BeginThread(Self, Thread1, loc_095A:s, 0x0:b)
+Move(Self, Dest, 0x0:i, 0x0:i, 0x0:i, 0x7D0:i, 0x0:b)
+SuspendThread(Self, Thread1)
+SuspendThread(Self, Thread2)
+OP_99(0xFF:b)
+Random(0x16:b, 0x3:b, 0x0:i, loc_090D:s)
+OP_95
+SetAngleTarget(0xFC:b, "", 0x0:s)
+MoveAngle(0xC8:i, 0x3E8:s, 0x4B0:s)
+BeginThread(Self, Thread2, loc_0407:s, 0x0:b)
+Turn(Self, 0x0:b, 0x1F4:s)
+SuspendThread(Self, Thread2)
+Goto(loc_0915:s)
+
+#loc_090D
+Turn(Self, 0x0:b, 0x1F4:s)
+SuspendThread(Self, Thread1)
+
+#loc_0915
+ShakeScreen(0x0:i, 0x0:i, 0x0:i, 0x0:i)
+OP_27(0x2:b, 0xFF:b, 0x10:s)
+End
+
+#loc_092C
+Random(0x16:b, 0x1:b, 0x0:i, loc_0936:s)
+End
+
+#loc_095A
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+Goto(loc_095A:s)
+
+#loc_0936
+ResetLoopTarget
+
+#loc_0937
+LoopTargetBegin(loc_0956:s)
+OP_8D(0x10:b, Self:i, 0xFE:i, 0x0:i, 0x2:i)
+LoopTargetEnd
+Sleep(0x14:i)
+Update
+Goto(loc_0937:s)
+
+#loc_0956
+Goto(loc_092C:s)
+
+
+@_MOD 16
+#Craft_16
+AddEff(0x0:s, "monster\\msc0657.eff")
+AddEff(0x1:s, "craft\\cr152_03.eff")
+Sleep(0x64:i)
+Update
+Voice(0x762:s)
+SelectChip(Self, 0x0:b)
+ShowEff(0x1:b, 0xFF:b, Target, 0x0:s, 0x0:i, 0x7D0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x1F4:s, 0x1F4:s, 0x1F4:s, 0x2:b)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+CancelEff(Self, 0x2:b)
+ShowEff(0x1:b, 0xFF:b, Target, 0x0:s, 0x0:i, 0x7D0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x3:b)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+CancelEff(Self, 0x3:b)
+ShowEff(0x1:b, 0xFF:b, Target, 0x0:s, 0x0:i, 0x7D0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x5DC:s, 0x5DC:s, 0x5DC:s, 0x4:b)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+Damage(Target)
+ShowEff(0x1:b, 0xFF:b, Target, 0x1:s, 0x0:i, 0x3E8:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x5:b)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+Voice(0x769:s)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+OP_14(0x0:s)
+OP_14(0x1:s)
+End
+
+
+@_MOD 16
+#Craft_14
+Turn(Self, Dest, 0x1F4:s)
+Random(0x8:b, 0x1:b, 0x0:i, loc_0C7C:s)
+ShowEff(0x0:b, 0xFF:b, Self, 0x103:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x5DC:s, 0x5DC:s, 0x5DC:s, 0x0:b)
+Sleep(0x64:i)
+Update
+ShowEff(0x0:b, 0xFF:b, Self, 0x103:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x5DC:s, 0x5DC:s, 0x5DC:s, 0x1:b)
+SeEx(0xED:s, 0x0:b)
+Voice(0x76E:s)
+SelectChip(Self, 0x1:b)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+
+#loc_0C7C
+OP_54(0x1:b)
+
+#loc_0C7E
+SelectChip(Self, 0x1:b)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+Goto(loc_0C7E:s)
+
+
+@_MOD 16
+#Craft_15
+AddEff(0x0:s, "monster\\ms30602a.eff")
+AddEff(0x1:s, "monster\\ms30602b.eff")
+AddEff(0x2:s, "monster\\ms30000b.eff")
+OP_8D(0xC:b, 0x0:i, 0xFFFF3CB0:i, 0x0:i, 0x0:i)
+Voice(0x791:s)
+OP_95
+OP_42(0xFF:b, 0x7D0:i, 0x0:b)
+MoveAngle(0x320:i, 0x320:s, 0xBB8:s)
+RotationAngle(0x0:i, 0x3A98:i, 0xFFFF8AD0:i, 0xBB8:i)
+Sleep(0x64:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x2:s, 0x0:i, 0x76C:i, 0x834:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x3:b)
+SelectChip(Self, 0x1:b)
+SubChip(Self, 0x0:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x78:i)
+Update
+FinishEff(Self, 0x3:b)
+ShowEff(0x1:b, 0xFF:b, Self, 0x0:s, 0x0:i, 0x76C:i, 0x640:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x2:b)
+OP_95
+SetAngleTarget(0xFC:b, "", 0x0:s)
+MoveAngle(0xC8:i, 0x3E8:s, 0x5DC:s)
+BeginThread(Self, Thread1, loc_0F48:s, 0x0:b)
+SelectChip(Self, 0x2:b)
+SubChip(Self, 0x0:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x96:i)
+Update
+SelectChip(Self, 0x1:b)
+SubChip(Self, 0x0:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x78:i)
+Update
+WaitThread(Self, Thread1)
+SeEx(0xED:s, 0x0:b)
+SelectChip(Self, 0x2:b)
+SubChip(Self, 0x7:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x64:i)
+Update
+End
+
+#loc_0F48
+Sleep(0x64:i)
+Update
+OP_8D(0xC:b, 0x0:i, 0xFFFFD8F0:i, 0x0:i, 0x0:i)
+BeatBack(0x3:b)
+
+#loc_0F62
+LoopTargetBegin(loc_0F97:s)
+ShowEff(0x1:b, 0xFF:b, Target, 0x1:s, 0x0:i, 0x64:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+DamageAnime(Target, 0x1:b, 0x32:i)
+Damage(Target)
+Sleep(0x32:i)
+Update
+LoopTargetEnd
+Goto(loc_0F62:s)
+
+#loc_0F97
+End
+
+
+@_MOD 16
+#Craft_13
+Sleep(0xA:i)
+Update
+Voice(0x762:s)
+SelectChip(Self, 0x3:b)
+SubChip(Self, 0x0:b)
+OP_34
+OP_42(0xFF:b, 0x3E8:i, 0x0:b)
+BeginThread(Self, Thread1, loc_10AF:s, 0x0:b)
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0x0:i, 0x3E8:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x1F4:s, 0x1F4:s, 0x1F4:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0x258:i, 0x1F4:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x1F4:s, 0x1F4:s, 0x1F4:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0xFFFFFDA8:i, 0x320:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x1F4:s, 0x1F4:s, 0x1F4:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0x0:i, 0x5DC:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0x0:i, 0x7D0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0x0:i, 0x1F4:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x5DC:s, 0x41A:s, 0x5DC:s, 0xFF:b)
+Sleep(0xA0:i)
+Update
+Sleep(0x3E8:i)
+Update
+Call(loc_03B0:s)
+Sleep(0x3E8:i)
+Update
+SetChipModeFlag(0x0:b, Self, 0x8:s)
+Die
+OP_14(0x1:s)
+ReleaseEff(0x1:s)
+End
+
+#loc_10AF
+SelectChip(Self, 0x3:b)
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+SubChip(Self, 0x0:b)
+Sleep(0x28:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+Sleep(0x28:i)
+Update
+Goto(loc_10AF:s)
+
+
+@_MOD 16
+#Craft_12
+ResetLoopTarget
+Voice(0x76C:s)
+LockAngle(Self)
+BeginThread(Self, Thread1, loc_00D0:s, 0x0:b)
+OP_7C(0xFF:b, 0x1:b)
+SuspendThread(Self, Thread1)
+Turn(Self, Target, 0x0:s)
+SelectChip(Self, 0x0:b)
+ShowEff(0x0:b, 0xFF:b, Self, 0x100:s, 0x0:i, 0x3E8:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x3:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x64:i)
+Update
+ShowEff(0x0:b, 0xFF:b, Self, 0x100:s, 0x0:i, 0x3E8:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x4:b)
+SubChip(Self, 0x4:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x64:i)
+Update
+ResetLoopTarget
+LockAngle(0xFD:b)
+OP_40(0x0:b)
+OP_31(0x4:b, 0x3E8:i)
+ShowEff(0x0:b, 0xFF:b, Self, 0x100:s, 0x0:i, 0x3E8:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x5:b)
+SubChip(Self, 0x0:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x78:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x78:i)
+Update
+ShowEff(0x0:b, 0xFF:b, Target, 0x103:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x6:b)
+
+#loc_1212
+LoopTargetBegin(loc_123C:s)
+DamageAnime(Target, 0x0:b, 0x32:i)
+Sleep(0xC8:i)
+Update
+DamageAnime(Target, 0x0:b, 0x32:i)
+Sleep(0xC8:i)
+Update
+Damage(Target)
+DamageAnime(Target, 0x0:b, 0x32:i)
+LoopTargetEnd
+Goto(loc_1212:s)
+
+#loc_123C
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x64:i)
+Update
+WaitEff(Self, 0x3:b)
+WaitEff(Self, 0x4:b)
+WaitEff(Self, 0x5:b)
+WaitEff(Self, 0x6:b)
+End
+
+
+@_MOD 16
+#Craft_11
+OP_78(0x1:b)
+AddEff(0x0:s, "scraft\\sc006_03.eff")
+AddEff(0x1:s, "monster\\ms10997.eff")
+AddEff(0x2:s, "monster\\msc0310.eff")
+OP_78(0x0:b)
+ResetLoopTarget
+LockAngle(Self)
+BeginThread(Self, Thread1, loc_00D0:s, 0x0:b)
+OP_7C(0xFF:b, 0x1:b)
+SuspendThread(Self, Thread1)
+LockAngle(Self)
+BeginThread(Self, Thread1, loc_00D0:s, 0x0:b)
+OP_1E(0xFFFFFFFF:i)
+SuspendThread(Self, Thread1)
+Turn(Self, Target, 0x0:s)
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x3C:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x3C:i)
+Update
+Sleep(0x64:i)
+Update
+Random(0x14:b, 0x4:b, 0x50:i, loc_1373:s)
+Voice(0x762:s)
+Goto(loc_13A3:s)
+
+#loc_1373
+Random(0x14:b, 0x4:b, 0x3C:i, loc_1382:s)
+Voice(0x763:s)
+Goto(loc_13A3:s)
+
+#loc_1382
+Random(0x14:b, 0x4:b, 0x2D:i, loc_1391:s)
+Voice(0x764:s)
+Goto(loc_13A3:s)
+
+#loc_1391
+Random(0x14:b, 0x4:b, 0x1E:i, loc_13A0:s)
+Voice(0x76F:s)
+Goto(loc_13A3:s)
+
+#loc_13A0
+Voice(0x767:s)
+
+#loc_13A3
+BeginThread(Self, Thread1, loc_1479:s, 0x0:b)
+ShowEff(0x0:b, 0xFF:b, Self, 0x2:s, 0xFFFFFA24:i, 0x1F4:i, 0x5DC:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x2:b)
+ShowEff(0x0:b, 0xFF:b, Self, 0x0:s, 0xFFFFFA24:i, 0x1F4:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x3:b)
+ShowEff(0x0:b, 0xFF:b, Self, 0x2:s, 0x5DC:i, 0x1F4:i, 0x5DC:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x4:b)
+ShowEff(0x0:b, 0xFF:b, Self, 0x0:s, 0x5DC:i, 0x1F4:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x5:b)
+Sleep(0x12C:i)
+Update
+LockAngle(0xFD:b)
+OP_40(0x0:b)
+OP_31(0x3:b, 0x1F4:i)
+Call(loc_15F9:s)
+Sleep(0x5DC:i)
+Update
+ResetLoopTarget
+
+#loc_143F
+LoopTargetBegin(loc_144E:s)
+Damage(Target)
+LoopTargetEnd
+Sleep(0x64:i)
+Update
+Goto(loc_143F:s)
+
+#loc_144E
+SuspendThread(Self, Thread1)
+CancelEff(Self, 0x2:b)
+CancelEff(Self, 0x3:b)
+CancelEff(Self, 0x4:b)
+CancelEff(Self, 0x5:b)
+SubChip(Self, 0x6:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x64:i)
+Update
+ReleaseEff(0x0:s)
+ReleaseEff(0x1:s)
+ReleaseEff(0x2:s)
+End
+
+#loc_1479
+SubChip(Self, 0x0:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+SubChip(Self, 0x1:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+SubChip(Self, 0x2:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+SubChip(Self, 0x3:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+SubChip(Self, 0x4:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+SubChip(Self, 0x5:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+SubChip(Self, 0x6:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+SubChip(Self, 0x7:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+SubChip(Self, 0x1:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+SubChip(Self, 0x2:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+SubChip(Self, 0x3:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+SubChip(Self, 0x4:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+SubChip(Self, 0x5:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+SubChip(Self, 0x6:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+SubChip(Self, 0x7:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+Sleep(0x1E:i)
+Update
+Goto(loc_1479:s)
+
+#loc_15F9
+ResetLoopTarget
+
+#loc_15FA
+LoopTargetBegin(loc_1626:s)
+ShowEff(0x1:b, 0xFF:b, Target, 0x1:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+LoopTargetEnd
+Sleep(0x32:i)
+Update
+Goto(loc_15FA:s)
+
+#loc_1626
+Ret
+
+
+@_MOD 16
+#Craft_10
+ResetLoopTarget
+LockAngle(Self)
+BeginThread(Self, Thread1, loc_00D0:s, 0x0:b)
+OP_7C(0xFF:b, 0x1:b)
+SuspendThread(Self, Thread1)
+BeginThread(Self, Thread1, loc_16B0:s, 0x0:b)
+SeEx(0x3D2:s, 0x0:b)
+Turn(Self, Target, 0x0:s)
+Sleep(0xC8:i)
+Update
+LockAngle(0xFD:b)
+OP_42(0xFE:b, 0x1F4:i, 0x0:b)
+ShowEff(0x0:b, 0xFF:b, Target, 0x102:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+Sleep(0x3E8:i)
+Update
+OP_42(0xFF:b, 0x1F4:i, 0x0:b)
+SeEx(0x3D2:s, 0x0:b)
+BeginThread(Self, Thread2, loc_169C:s, 0x0:b)
+OP_14(0x102:s)
+LockAngle(0xFD:b)
+Sleep(0xC8:i)
+Update
+SuspendThread(Self, Thread1)
+SuspendThread(Self, Thread2)
+End
+
+#loc_169C
+TipText("战斗情报解释", 0x5DC:i)
+OP_2B
+End
+
+#loc_16B0
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x50:i)
+Update
+End
+
+
+@_MOD 16
+#SysCraft_NormalAttack
+ResetLoopTarget
+SelectChip(Self, 0x2:b)
+SubChip(Self, 0x0:b)
+Sleep(0x3C:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x3C:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x3C:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x3C:i)
+Update
+SeEx(0x24E:s, 0x0:b)
+SubChip(Self, 0x4:b)
+Sleep(0x50:i)
+Update
+ShowEff(0x0:b, 0xFF:b, Target, 0x101:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+SubChip(Self, 0x5:b)
+Sleep(0x64:i)
+Update
+Damage(Target)
+DamageAnime(Target, 0x0:b, 0x32:i)
+Sleep(0xC8:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x3C:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+End
+
+
+@_MOD 16
+#SysCraft_UnderAttack
+SelectChip(Self, 0x3:b)
+SubChip(Self, 0x0:b)
+Sleep(0x0:i)
+Update
+Random(0x14:b, 0x4:b, 0x50:i, loc_19F1:s)
+Voice(0x78E:s)
+Goto(loc_1A3F:s)
+
+#loc_19F1
+Random(0x14:b, 0x4:b, 0x3C:i, loc_1A00:s)
+Voice(0x78D:s)
+Goto(loc_1A3F:s)
+
+#loc_1A00
+Random(0x14:b, 0x4:b, 0x2D:i, loc_1A0F:s)
+Voice(0x78C:s)
+Goto(loc_1A3F:s)
+
+#loc_1A0F
+Random(0x14:b, 0x4:b, 0x1E:i, loc_1A1E:s)
+Voice(0x78B:s)
+Goto(loc_1A3F:s)
+
+#loc_1A1E
+Random(0x14:b, 0x4:b, 0x14:i, loc_1A2D:s)
+Voice(0x78A:s)
+Goto(loc_1A3F:s)
+
+#loc_1A2D
+Random(0x14:b, 0x4:b, 0x14:i, loc_1A3C:s)
+Voice(0x789:s)
+Goto(loc_1A3F:s)
+
+#loc_1A3C
+Voice(0x788:s)
+
+#loc_1A3F
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+Sleep(0xC8:i)
+Update
+End
+
+
+@_MOD 16
+#SysCraft_Stand
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+Goto(SysCraft_Stand:s)
+
+
+@_MOD 16
+#SysCraft_Move
+Random(0x14:b, 0x4:b, 0x50:i, loc_1B79:s)
+Voice(0x763:s)
+Goto(loc_1BB8:s)
+
+#loc_1B79
+Random(0x14:b, 0x4:b, 0x3C:i, loc_1B88:s)
+Voice(0x765:s)
+Goto(loc_1A3F:s)
+
+#loc_1B88
+Random(0x14:b, 0x4:b, 0x2D:i, loc_1B97:s)
+Voice(0x778:s)
+Goto(loc_1BB8:s)
+
+#loc_1B97
+Random(0x14:b, 0x4:b, 0x1E:i, loc_1BA6:s)
+Voice(0x77B:s)
+Goto(loc_1BB8:s)
+
+#loc_1BA6
+Random(0x14:b, 0x4:b, 0x14:i, loc_1BB5:s)
+Voice(0x77E:s)
+Goto(loc_1BB8:s)
+
+#loc_1BB5
+Voice(0x78F:s)
+
+#loc_1BB8
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x32:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x32:i)
+Update
+Goto(SysCraft_Move:s)
+

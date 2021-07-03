@@ -1,0 +1,1406 @@
+@_FILE "debug_AS04750 ._DT"
+@_INCLUDE "as_def.txt"
+
+@UnknownFlag_0x04 0
+
+(CraftOffsetTable:s)
+(CraftOffsetTableEnd:s)
+(UnknownFlag_0x04:s)
+
+; Char chip pattern info  CH_Index, CH_DAT_Index, CP_Index, CP_DAT_Index
+ (0x03A8:s, 0x0027:s, 0x03B2:s, 0x0027:s) (0x03A9:s, 0x0027:s, 0x03B3:s, 0x0027:s)
+ (0x03AA:s, 0x0027:s, 0x03B4:s, 0x0027:s) (0x03AB:s, 0x0027:s, 0x03B5:s, 0x0027:s)
+ (0x03AC:s, 0x0027:s, 0x03B6:s, 0x0027:s) (0x03AD:s, 0x0027:s, 0x03B7:s, 0x0027:s)
+ (0x03AE:s, 0x0027:s, 0x03B8:s, 0x0027:s)
+[FF FF FF FF]
+
+; 3d model file
+""
+
+#CraftOffsetTable
+ (SysCraft_MagicEffect:s)
+ (SysCraft_Stand:s)
+ (SysCraft_Move:s)
+ (SysCraft_UnderAttack:s)
+ (SysCraft_Dead:s)
+ (SysCraft_NormalAttack:s)
+ (SysCraft_MagicChant:s)
+ (SysCraft_MagicCast:s)
+ (SysCraft_Win:s)
+ (SysCraft_Win:s)
+ (SysCraft_Win:s)
+ (SysCraft_Stun:s)
+ (SysCraft_Unknown2:s)
+ (SysCraft_Win:s) (SysCraft_Win:s) (SysCraft_Win:s) (Craft_10:s) (Craft_11:s)
+ (SysCraft_Win:s) (Craft_13:s) (Craft_14:s) (Craft_15:s) (Craft_16:s)
+ (Craft_17:s) (Craft_18:s) (Craft_19:s) (SysCraft_Win:s) (SysCraft_Win:s)
+ (SysCraft_Win:s) (SysCraft_Win:s) (SysCraft_Win:s)
+#CraftOffsetTableEnd
+
+[80 B0 80 B0 80 B0 80 B0 80 B0 80 B0 80 B0 80 B0]
+
+
+@_MOD 16
+#SysCraft_Win
+End
+
+
+@_MOD 16
+#SysCraft_Stand
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x82:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x82:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x82:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x82:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x82:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x82:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x82:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x82:i)
+Update
+Goto(SysCraft_Stand:s)
+
+
+@_MOD 16
+#SysCraft_Move
+SelectChip(Self, 0x1:b)
+SubChip(Self, 0x0:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x28:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x28:i)
+Update
+Goto(SysCraft_Move:s)
+
+
+@_MOD 16
+#SysCraft_UnderAttack
+SelectChip(Self, 0x3:b)
+SubChip(Self, 0x0:b)
+Sleep(0x28:i)
+Update
+Call(loc_041E:s)
+End
+
+
+@_MOD 16
+#SysCraft_MagicChant
+Random(0x8:b, 0x1:b, 0x0:i, loc_0272:s)
+ShowEff(0x1:b, 0xFF:b, Self, 0x100:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0xFFFF:s, 0xFFFF:s, 0xFFFF:s, 0x0:b)
+Turn(Self, Dest, 0x1F4:s)
+
+#loc_0272
+OP_54(0x1:b)
+SelectChip(Self, 0x5:b)
+
+#loc_0277
+SubChip(Self, 0x0:b)
+Sleep(0x82:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x82:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x82:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x82:i)
+Update
+Goto(loc_0277:s)
+
+
+@_MOD 16
+#SysCraft_MagicCast
+ShowEff(0x1:b, 0xFF:b, Self, 0x101:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0xFFFF:s, 0xFFFF:s, 0xFFFF:s, 0xFF:b)
+Turn(Self, Dest, 0x1F4:s)
+Sleep(0xC8:i)
+Update
+SelectChip(Self, 0x6:b)
+SubChip(Self, 0x0:b)
+Sleep(0x12C:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x0:i)
+Update
+MagicCastBegin(0xFFFF:s)
+MagicCastEnd
+End
+
+
+@_MOD 16
+#SysCraft_Unknown2
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+End
+
+
+@_MOD 16
+#SysCraft_Stun
+SelectChip(Self, 0x4:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x64:i)
+Update
+End
+
+#loc_041E
+ShakeChar(Self, 0xFFFFFF38:i, 0x0:i, 0xFFFFFF38:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0xC8:i, 0x0:i, 0xC8:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0xFFFFFF38:i, 0x0:i, 0xFFFFFF38:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0xC8:i, 0x0:i, 0xC8:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0xFFFFFF6A:i, 0x0:i, 0xFFFFFF6A:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0x96:i, 0x0:i, 0x96:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0xFFFFFF9C:i, 0x0:i, 0xFFFFFF9C:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0x64:i, 0x0:i, 0x64:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x32:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+Sleep(0x32:i)
+Update
+Ret
+
+
+@_MOD 16
+#SysCraft_MagicEffect
+AddEff(0x100:s, "battle\\btgun00.eff")
+AddEff(0x101:s, "monster\\msc0310.eff")
+AddEff(0x103:s, "monster\\ms10020c.eff")
+AddEff(0x104:s, "battle\\btgun00.eff")
+End
+
+
+@_MOD 16
+#SysCraft_Dead
+Random(0x14:b, 0x4:b, 0x4B:i, loc_06FB:s)
+Voice(0x785:s)
+Goto(loc_071C:s)
+
+#loc_06FB
+Random(0x14:b, 0x4:b, 0x32:i, loc_070A:s)
+Voice(0x786:s)
+Goto(loc_071C:s)
+
+#loc_070A
+Random(0x14:b, 0x4:b, 0x19:i, loc_0719:s)
+Voice(0x787:s)
+Goto(loc_071C:s)
+
+#loc_0719
+Voice(0x784:s)
+
+#loc_071C
+Sleep(0x64:i)
+Update
+SelectChip(Self, 0x4:b)
+SubChip(Self, 0x0:b)
+Sleep(0xC8:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0xC8:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0xC8:i)
+Update
+SeEx(0x20C:s, 0x0:b)
+SubChip(Self, 0x3:b)
+Sleep(0xC8:i)
+Update
+Die
+Sleep(0xBB8:i)
+Update
+End
+
+
+@_MOD 16
+#Craft_10
+OP_78(0x1:b)
+AddEff(0x0:s, "monster\\msc0535.eff")
+AddEff(0x1:s, "monster\\ms30000b.eff")
+AddEff(0x2:s, "monster\\ms30805c.eff")
+OP_78(0x0:b)
+ResetLoopTarget
+Turn(Self, Dest, 0x320:s)
+Say(Self, "装弹完毕！", 0x3E8:i)
+Voice(0x76E:s)
+Sleep(0x320:i)
+Update
+SelectChip(Self, 0x2:b)
+BeginThread(Self, Thread1, loc_09DD:s, 0x0:b)
+ShowEff(0x0:b, 0xFF:b, Self, 0x1:s, 0x0:i, 0x0:i, 0x3E8:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x3:b)
+Sleep(0x3E8:i)
+Update
+Voice(0x76F:s)
+Say(Self, "接招！", 0x1F4:i)
+Goto(loc_0807:s)
+
+#loc_0807
+Sleep(0x3E8:i)
+Update
+Voice(0x770:s)
+Say(Self, "尝尝我愤怒的攻击吧！！", 0x7D0:i)
+Sleep(0x1F4:i)
+Update
+ShowEff(0x0:b, 0xFF:b, Self, 0x0:s, 0x0:i, 0x0:i, 0x7D0:i, 0x0:s, 0x0:s, 0x0:s, 0x1F4:s, 0x1F4:s, 0x1F4:s, 0x2:b)
+Sleep(0x64:i)
+Update
+OP_95
+SetAngleTarget(Self, "", 0x0:s)
+SetAngleTarget(0xFC:b, "", 0x0:s)
+SetAngleTarget(Dest, "", 0x0:s)
+MoveAngle(0xC8:i, 0x3E8:s, 0x4B0:s)
+SubChip(Self, 0x3:b)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x1E:i)
+Update
+BeginThread(Self, Thread2, loc_09AB:s, 0x0:b)
+Sleep(0xDAC:i)
+Update
+SuspendThread(Self, Thread1)
+SeEx(0x29:s, 0x0:b)
+Voice(0x788:s)
+Say(Self, "喔！", 0x3E8:i)
+Goto(loc_08E0:s)
+
+#loc_08E0
+SelectChip(Self, 0x3:b)
+SubChip(Self, 0x0:b)
+Sleep(0xA:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x32:i, 0x0:i, 0x32:i)
+Sleep(0x12C:i)
+Update
+SelectChip(Self, 0x4:b)
+SeEx(0x218:s, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x3E8:i)
+Update
+Voice(0x78A:s)
+Say(Self, "什么！", 0x3E8:i)
+Goto(loc_0980:s)
+
+#loc_0980
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SuspendThread(Self, Thread2)
+FinishEff(Self, 0x2:b)
+ReleaseEff(0x0:s)
+ReleaseEff(0x1:s)
+ReleaseEff(0x2:s)
+End
+
+#loc_09AB
+SortTarget(0x0:b)
+ResetLoopTarget
+
+#loc_09AE
+LoopTargetBegin(loc_09DC:s)
+ShowEff(0x1:b, 0xFF:b, Target, 0x2:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+Damage(Target)
+Sleep(0x64:i)
+Update
+LoopTargetEnd
+Goto(loc_09AE:s)
+
+#loc_09DC
+End
+
+#loc_09DD
+SelectChip(Self, 0x2:b)
+SubChip(Self, 0x0:b)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x1E:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x1E:i)
+Update
+Goto(loc_09DD:s)
+
+
+@_MOD 16
+#Craft_16
+SelectChip(Self, 0x5:b)
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+LockAngle(Self)
+Turn(Self, Dest, 0x1F4:s)
+SaveCurPos(Self)
+BeginThread(Self, Thread1, SysCraft_Move:s, 0x0:b)
+Move(Self, Dest, 0x0:i, 0x0:i, 0x0:i, 0x3E8:i, 0x0:b)
+SuspendThread(Self, Thread1)
+SelectChip(Self, 0x4:b)
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+OP_54(0x2:b)
+SeEx(0xD8:s, 0x0:b)
+Voice(0x76B:s)
+Say(Self, "这样你这家伙也要完蛋啦！", 0x3E8:i)
+SubChip(Self, 0x3:b)
+Sleep(0x1F4:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+BeginThread(Self, Thread1, SysCraft_Move:s, 0x0:b)
+Turn(Self, 0xF0:b, 0x3E8:s)
+JumpBack(0x32:s, 0x64:s)
+SuspendThread(Self, Thread1)
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+End
+
+
+@_MOD 16
+#Craft_17
+ResetLoopTarget
+LockAngle(Self)
+BeginThread(Self, Thread1, SysCraft_Move:s, 0x0:b)
+OP_7C(0xFF:b, 0x1:b)
+SuspendThread(Self, Thread1)
+Sleep(0xA:i)
+Update
+Turn(Self, 0x0:b, 0x320:s)
+SelectChip(Self, 0x5:b)
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+BeginThread(Self, Thread1, loc_0C56:s, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+OP_54(0x1:b)
+End
+
+#loc_0C56
+TipText("基尔巴特嘀嘀咕咕地念叨着什么", 0x5DC:i)
+OP_2B
+End
+
+
+@_MOD 16
+#Craft_18
+OP_78(0x1:b)
+AddEff(0x0:s, "monster\\msc0574.eff")
+OP_78(0x0:b)
+ResetLoopTarget
+Voice(0x76C:s)
+Say(Self, "尝尝这招！", 0x1F4:i)
+Turn(Self, Target, 0x1F4:s)
+ResetLoopTarget
+LockAngle(0xFD:b)
+OP_40(0x0:b)
+OP_31(0x4:b, 0x1F4:i)
+SelectChip(Self, 0x6:b)
+SubChip(Self, 0x0:b)
+Sleep(0x12C:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x0:s, 0x0:i, 0x12C:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x2:b)
+OP_4F(0xFC:b, 0x1:b)
+Damage(Target)
+WaitEff(Self, 0x2:b)
+OP_42(0xFF:b, 0x190:i, 0x0:b)
+SeEx(0x2A:s, 0x0:b)
+Say(Self, "·········", 0x1F4:i)
+SubChip(Self, 0x1:b)
+Sleep(0x1F4:i)
+Update
+ReleaseEff(0x0:s)
+SelectChip(Self, 0x0:b)
+Voice(0x76D:s)
+Sleep(0x12C:i)
+Update
+End
+
+
+@_MOD 16
+#Craft_19
+LockAngle(Self)
+OP_78(0x1:b)
+AddEff(0x0:s, "monster\\msc0550.eff")
+AddEff(0x1:s, "craft\\cr000_00.eff")
+AddEff(0x2:s, "monster\\ms10011.eff")
+AddEff(0x3:s, "monster\\msc0575.eff")
+AddEff(0x4:s, "monster\\msc0561.eff")
+OP_78(0x0:b)
+OP_95
+SetAngleTarget(Self, "", 0x0:s)
+MoveAngle(0x12C:i, 0x3E8:s, 0x4B0:s)
+BeginThread(Self, Thread1, SysCraft_Move:s, 0x0:b)
+OP_1E(0xFFFFFFFF:i)
+SuspendThread(Self, Thread1)
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+Turn(Self, Target, 0x0:s)
+Turn(Target, Self, 0xFA:s)
+SelectChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+SelectChip(Self, 0x4:b)
+Voice(0x771:s)
+Say(Self, "请、请请请等一下！", 0x3E8:i)
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SeEx(0x24E:s, 0x0:b)
+BeginThread(Self, Thread1, loc_14C3:s, 0x0:b)
+Sleep(0x1F4:i)
+Update
+SuspendThread(Self, Thread1)
+Sleep(0x3E8:i)
+Update
+Voice(0x772:s)
+Say(Self, "抱歉！", 0x3E8:i)
+Goto(loc_0E3B:s)
+
+#loc_0E3B
+SeEx(0x218:s, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x64:i)
+Update
+Sleep(0x3E8:i)
+Update
+Voice(0x773:s)
+Say(Self, "就是这样！", 0x3E8:i)
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SeEx(0x218:s, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x1F4:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SeEx(0x218:s, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+Voice(0x774:s)
+Say(Self, "拜托了！", 0x3E8:i)
+Goto(loc_0F06:s)
+
+#loc_0F06
+SubChip(Self, 0x3:b)
+Sleep(0x1F4:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SeEx(0x218:s, 0x0:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x64:i)
+Update
+Voice(0x775:s)
+Say(Self, "我们重归于好吧！", 0x3E8:i)
+SubChip(Self, 0x3:b)
+Sleep(0x258:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x0:b)
+Sleep(0x3E8:i)
+Update
+SelectChip(Self, 0x6:b)
+SubChip(Self, 0x1:b)
+Sleep(0x1F4:i)
+Update
+Voice(0x776:s)
+Say(Self, "来吧，握手！", 0x3E8:i)
+Sleep(0x190:i)
+Update
+ShadowBegin(Self, 0x32:s, 0x190:s)
+SaveCurPos(Self)
+JumpToTarget(0xA:s, 0x7:s)
+BeginThread(Self, Thread1, loc_14C3:s, 0x0:b)
+Sleep(0x64:i)
+Update
+SuspendThread(Self, Thread1)
+Sleep(0x320:i)
+Update
+ShadowEnd(Self)
+SeEx(0x215:s, 0x0:b)
+Voice(0x777:s)
+Say(Self, "上当了吧！", 0x1F4:i)
+ShowEff(0x1:b, 0xFF:b, Self, 0x1:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x3:b)
+WaitEff(Self, 0x3:b)
+SubChip(Self, 0x1:b)
+Sleep(0x1F4:i)
+Update
+SelectChip(Target, 0x0:b)
+BeginThread(Self, Thread2, loc_1329:s, 0x0:b)
+SelectChip(Self, 0x6:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+Voice(0x778:s)
+Say(Self, "白痴！", 0xFA:i)
+Goto(loc_103B:s)
+
+#loc_103B
+Sleep(0x212:i)
+Update
+Voice(0x779:s)
+Say(Self, "你就该是这种下场！", 0x1F4:i)
+Sleep(0x2EE:i)
+Update
+Voice(0x77A:s)
+Say(Self, "要是没有你就好了！", 0x1F4:i)
+Sleep(0x2EE:i)
+Update
+Voice(0x77B:s)
+Say(Self, "畜生！", 0x190:i)
+Goto(loc_109E:s)
+
+#loc_109E
+Sleep(0x212:i)
+Update
+Voice(0x77C:s)
+Say(Self, "我可是精英啊～！", 0x2BC:i)
+Sleep(0x41A:i)
+Update
+Voice(0x77D:s)
+Say(Self, "可恶！", 0x78:i)
+Goto(loc_10DD:s)
+
+#loc_10DD
+Sleep(0x15E:i)
+Update
+Say(Self, "可恶！", 0x78:i)
+Goto(loc_10F9:s)
+
+#loc_10F9
+Sleep(0x15E:i)
+Update
+Voice(0x77E:s)
+Say(Self, "混账！", 0x78:i)
+Goto(loc_1118:s)
+
+#loc_1118
+Sleep(0x15E:i)
+Update
+Voice(0x77F:s)
+Say(Self, "怎么样！", 0x78:i)
+Goto(loc_113C:s)
+
+#loc_113C
+Sleep(0x15E:i)
+Update
+Voice(0x780:s)
+Say(Self, "活该！", 0x12C:i)
+Goto(loc_115B:s)
+
+#loc_115B
+Sleep(0x1AE:i)
+Update
+Voice(0x781:s)
+Say(Self, "笨～蛋！", 0x12C:i)
+Goto(loc_117F:s)
+
+#loc_117F
+Sleep(0x1F4:i)
+Update
+SuspendThread(Self, Thread2)
+ShowEff(0x1:b, 0xFF:b, Target, 0x1:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x3:b)
+Sleep(0x12C:i)
+Update
+BeginThread(Self, Thread1, loc_14C3:s, 0x0:b)
+Say(Self, "！", 0x1F4:i)
+Goto(loc_11BF:s)
+
+#loc_11BF
+Sleep(0x1F4:i)
+Update
+BeginThread(Target, Thread1, loc_13BA:s, 0x0:b)
+Voice(0x782:s)
+Say(Self, "等、等等……有话好说！", 0x1F4:i)
+Sleep(0x7D0:i)
+Update
+SuspendThread(Self, Thread1)
+Voice(0x788:s)
+SelectChip(Self, 0x3:b)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+SeEx(0x25C:s, 0x0:b)
+ShowEff(0x0:b, 0xFF:b, Self, 0x4:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x6:b)
+Voice(0x783:s)
+Say(Self, "啊～～～～～！！", 0x12C:i)
+SuspendThread(Target, Thread1)
+Turn(Target, Self, 0x0:s)
+LockAngle(Target)
+BeginThread(Self, Thread1, loc_135E:s, 0x0:b)
+SeEx(0x21B:s, 0x0:b)
+JumpBack(0x4E20:s, 0xBB8:s)
+SubChip(Self, 0x0:b)
+Sleep(0x32:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x0:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x2:b)
+Jump(Self, Self, 0x0:i, 0x0:i, 0x0:i, 0x3E8:s, 0x1770:s)
+SuspendThread(Self, Thread1)
+Random(0x14:b, 0x4:b, 0x4B:i, loc_12A6:s)
+Voice(0x784:s)
+Goto(loc_12C7:s)
+
+#loc_12A6
+Random(0x14:b, 0x4:b, 0x32:i, loc_12B5:s)
+Voice(0x78C:s)
+Goto(loc_12C7:s)
+
+#loc_12B5
+Random(0x14:b, 0x4:b, 0x19:i, loc_12C4:s)
+Voice(0x78D:s)
+Goto(loc_12C7:s)
+
+#loc_12C4
+Voice(0x767:s)
+
+#loc_12C7
+ShowEff(0x1:b, 0xFF:b, Self, 0x0:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x2:b)
+BeginThread(Self, Thread1, loc_14C3:s, 0x0:b)
+WaitEff(Self, 0x2:b)
+SuspendThread(Self, Thread1)
+OP_A(Target, 0x1:b, 0x0:b, 0x0:i)
+ReleaseEff(0x0:s)
+ReleaseEff(0x1:s)
+ReleaseEff(0x2:s)
+ReleaseEff(0x3:s)
+ReleaseEff(0x4:s)
+SelectChip(Self, 0x0:b)
+TipText("真令人失望……", 0x3E8:i)
+SeEx(0x29:s, 0x0:b)
+Damage(Target)
+ResetChipStatus(Target)
+End
+
+#loc_1329
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+ShowEff(0x0:b, 0xFF:b, Target, 0x3:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x5:b)
+Goto(loc_1329:s)
+
+#loc_135E
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+Goto(loc_135E:s)
+
+#loc_13BA
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+OP_4(Self, 0x1:b, 0x2D:s)
+Sleep(0x14:i)
+Update
+End
+
+#loc_14C3
+ShakeChar(Self, 0xFFFFFFCE:i, 0x0:i, 0xFFFFFFCE:i)
+Sleep(0x1E:i)
+Update
+ShakeChar(Self, 0x0:i, 0x0:i, 0x0:i)
+Sleep(0x1E:i)
+Update
+Goto(loc_14C3:s)
+
+
+@_MOD 16
+#Craft_15
+ResetLoopTarget
+SE(0x2B9:s)
+Random(0x14:b, 0x4:b, 0x4B:i, loc_1502:s)
+Voice(0x791:s)
+Goto(loc_1523:s)
+
+#loc_1502
+Random(0x14:b, 0x4:b, 0x32:i, loc_1511:s)
+Voice(0x77C:s)
+Goto(loc_1523:s)
+
+#loc_1511
+Random(0x14:b, 0x4:b, 0x19:i, loc_1520:s)
+Voice(0x768:s)
+Goto(loc_1523:s)
+
+#loc_1520
+Voice(0x76F:s)
+
+#loc_1523
+Turn(Self, Target, 0x1F4:s)
+SeEx(0xD8:s, 0x0:b)
+SelectChip(Self, 0x2:b)
+SubChip(Self, 0x0:b)
+Sleep(0x1F4:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x3:b)
+Sleep(0x50:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x104:s, 0x7D:i, 0x44C:i, 0x384:i, 0x0:s, 0x0:s, 0x0:s, 0xFFFF:s, 0xFFFF:s, 0xFFFF:s, 0x2:b)
+SubChip(Self, 0x4:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x8:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x9:b)
+Sleep(0x50:i)
+Update
+LockAngle(0xFD:b)
+OP_40(0x0:b)
+OP_31(0x4:b, 0xC8:i)
+OP_3F(0xA:b)
+ShowEff(0x0:b, 0xFF:b, Target, 0x8:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x3:b)
+SeEx(0x2B9:s, 0x0:b)
+WaitEff(Self, 0x2:b)
+WaitEff(Self, 0x3:b)
+End
+
+
+@_MOD 16
+#SysCraft_NormalAttack
+ResetLoopTarget
+OP_6D(0x1000:i)
+OP_6D(0x2000:i)
+Random(0x14:b, 0x4:b, 0x50:i, loc_15F8:s)
+Voice(0x762:s)
+Goto(loc_1637:s)
+
+#loc_15F8
+Random(0x14:b, 0x4:b, 0x3C:i, loc_1607:s)
+Voice(0x763:s)
+Goto(loc_1637:s)
+
+#loc_1607
+Random(0x14:b, 0x4:b, 0x2D:i, loc_1616:s)
+Voice(0x764:s)
+Goto(loc_1637:s)
+
+#loc_1616
+Random(0x14:b, 0x4:b, 0x1E:i, loc_1625:s)
+Voice(0x76F:s)
+Goto(loc_1637:s)
+
+#loc_1625
+Random(0x14:b, 0x4:b, 0x14:i, loc_1634:s)
+Voice(0x767:s)
+Goto(loc_1637:s)
+
+#loc_1634
+Voice(0x766:s)
+
+#loc_1637
+SelectChip(Self, 0x2:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x1F4:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x28:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x100:s, 0x96:i, 0x44C:i, 0x352:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x2:b)
+ResetLoopTarget
+LockAngle(0xFD:b)
+OP_31(0x4:b, 0x3E8:i)
+SubChip(Self, 0x1:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x28:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x100:s, 0xC8:i, 0x3E8:i, 0x384:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x3:b)
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x28:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x100:s, 0xFA:i, 0x47E:i, 0x384:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x4:b)
+SubChip(Self, 0x1:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x28:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x100:s, 0xC8:i, 0x44C:i, 0x384:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x5:b)
+ShowEff(0x0:b, 0xFF:b, Target, 0x9:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x6:b)
+SubChip(Self, 0x1:b)
+Sleep(0x96:i)
+Update
+SubChip(Self, 0x2:b)
+Sleep(0x28:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Self, 0x100:s, 0x96:i, 0x47E:i, 0x384:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x7:b)
+ShowEff(0x0:b, 0xFF:b, Target, 0x9:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x8:b)
+Sleep(0x96:i)
+Update
+ShowEff(0x0:b, 0xFF:b, Target, 0x9:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x9:b)
+Sleep(0x96:i)
+Update
+OP_6E(0x2000:i)
+OP_6E(0x1000:i)
+ShowEff(0x0:b, 0xFF:b, Target, 0x8:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+SubChip(Self, 0x3:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x4:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x5:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x6:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x7:b)
+Sleep(0x50:i)
+Update
+End
+
+
+@_MOD 16
+#Craft_14
+OP_78(0x1:b)
+AddEff(0x0:s, "craft\\cr000_00.eff")
+AddEff(0x1:s, "monster\\ms10997.eff")
+OP_78(0x0:b)
+ResetLoopTarget
+OP_31(0xC:b, 0x12C:i)
+OP_31(0x6:b, 0x12C:i)
+OP_3F(Self)
+LockAngle(Self)
+BeginThread(Self, Thread1, SysCraft_Move:s, 0x0:b)
+OP_1E(0xFFFFFFFF:i)
+SuspendThread(Self, Thread1)
+Turn(Self, Target, 0x0:s)
+SelectChip(Self, 0x2:b)
+SubChip(Self, 0x0:b)
+Sleep(0x64:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x64:i)
+Update
+Sleep(0xC8:i)
+Update
+Random(0x14:b, 0x4:b, 0x50:i, loc_1883:s)
+Voice(0x791:s)
+Goto(loc_18C2:s)
+
+#loc_1883
+Random(0x14:b, 0x4:b, 0x3C:i, loc_1892:s)
+Voice(0x77C:s)
+Goto(loc_18C2:s)
+
+#loc_1892
+Random(0x14:b, 0x4:b, 0x2D:i, loc_18A1:s)
+Voice(0x768:s)
+Goto(loc_18C2:s)
+
+#loc_18A1
+Random(0x14:b, 0x4:b, 0x1E:i, loc_18B0:s)
+Voice(0x76A:s)
+Goto(loc_18C2:s)
+
+#loc_18B0
+Random(0x14:b, 0x4:b, 0x14:i, loc_18BF:s)
+Voice(0x767:s)
+Goto(loc_18C2:s)
+
+#loc_18BF
+Voice(0x766:s)
+
+#loc_18C2
+BeginThread(Self, Thread1, loc_1946:s, 0x0:b)
+ShowEff(0x0:b, 0xFF:b, Self, 0x101:s, 0x96:i, 0xFFFFFF6A:i, 0x3E8:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x6:b)
+LockAngle(0xFD:b)
+OP_40(0x0:b)
+OP_31(0x3:b, 0x1F4:i)
+Call(loc_195C:s)
+Sleep(0x7D0:i)
+Update
+ResetLoopTarget
+
+#loc_18FB
+LoopTargetBegin(loc_1930:s)
+ShowEff(0x0:b, 0xFF:b, Target, 0x9:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+DamageAnime(Target, 0x0:b, 0x32:i)
+Damage(Target)
+LoopTargetEnd
+Sleep(0x64:i)
+Update
+Goto(loc_18FB:s)
+
+#loc_1930
+CancelEff(Self, 0x6:b)
+SuspendThread(Self, Thread1)
+Sleep(0x1F4:i)
+Update
+ReleaseEff(0x0:s)
+ReleaseEff(0x1:s)
+ReleaseEff(0x2:s)
+End
+
+#loc_1946
+SubChip(Self, 0x0:b)
+Sleep(0x50:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0x50:i)
+Update
+Goto(loc_1946:s)
+
+#loc_195C
+ResetLoopTarget
+
+#loc_195D
+LoopTargetBegin(loc_1989:s)
+ShowEff(0x1:b, 0xFF:b, Target, 0x1:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+LoopTargetEnd
+Sleep(0x32:i)
+Update
+Goto(loc_195D:s)
+
+#loc_1989
+Ret
+
+
+@_MOD 16
+#Craft_13
+OP_78(0x1:b)
+AddEff(0x0:s, "magic\\mg111_0.eff")
+OP_78(0x0:b)
+ResetLoopTarget
+Sleep(0x64:i)
+Update
+LockAngle(Self)
+Voice(0x769:s)
+BeginThread(Self, Thread1, SysCraft_Move:s, 0x0:b)
+OP_1E(0xFFFFFFFF:i)
+SuspendThread(Self, Thread1)
+SelectChip(Self, 0x0:b)
+SubChip(Self, 0x0:b)
+Turn(Self, Target, 0x0:s)
+SelectChip(Self, 0x6:b)
+ShowEff(0x0:b, 0xFF:b, Self, 0x10:s, 0x0:i, 0x0:i, 0x190:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x3:b)
+SubChip(Self, 0x0:b)
+Sleep(0x1F4:i)
+Update
+ShowEff(0x1:b, 0xFF:b, Target, 0x0:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x2:b)
+SubChip(Self, 0x1:b)
+Sleep(0x3E8:i)
+Update
+WaitEff(Self, 0x2:b)
+LockAngle(0xFD:b)
+ReleaseEff(0x0:s)
+End
+
+
+@_MOD 16
+#Craft_11
+OP_78(0x1:b)
+AddEff(0x0:s, "craft\\cr000_00.eff")
+AddEff(0x1:s, "magic\\mg120_0.eff")
+OP_78(0x0:b)
+ResetLoopTarget
+ShowEff(0x1:b, 0xFF:b, Self, 0x0:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0xFF:b)
+Sleep(0x320:i)
+Update
+LockAngle(Self)
+Voice(0x769:s)
+BeginThread(Self, Thread1, SysCraft_Move:s, 0x0:b)
+OP_1E(0xFFFFFFFF:i)
+SuspendThread(Self, Thread1)
+SelectChip(Self, 0x6:b)
+SubChip(Self, 0x0:b)
+Sleep(0xC8:i)
+Update
+Turn(Self, Target, 0x0:s)
+Say(Self, "呼，多谢了哦！", 0x3E8:i)
+ShowEff(0x1:b, 0xFF:b, Target, 0x1:s, 0x0:i, 0x0:i, 0x0:i, 0x0:s, 0x0:s, 0x0:s, 0x3E8:s, 0x3E8:s, 0x3E8:s, 0x1:b)
+Sleep(0x3E8:i)
+Update
+SubChip(Self, 0x1:b)
+Sleep(0xC8:i)
+Update
+WaitEff(Self, 0x1:b)
+LockAngle(0xFD:b)
+ReleaseEff(0x0:s)
+ReleaseEff(0x1:s)
+End
+
