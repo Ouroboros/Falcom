@@ -55,7 +55,7 @@
 
 于 2011-06-01 完成
 
-将空之轨迹 3rd AS 战技脚本，反汇编成 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）语言
+第一代反汇编器，把空之轨迹 3rd AS 战技脚本，反汇编成 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）语言
 
 
 
@@ -150,7 +150,7 @@
 
 写于 2011-09
 
-将零之轨迹 AS 战技脚本，反汇编成 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）语言
+第一代反汇编器第二版，将零之轨迹 AS 战技脚本，反汇编成 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）语言
 
 
 
@@ -184,7 +184,7 @@
 
 写于 2015-07
 
-碧之轨迹集大成编辑工具，支持下列格式与`.py`相互转换
+第二代反汇编器，碧之轨迹集大成编辑工具，支持下列格式与`.py`相互转换
 - scena 剧情
 - ms*.dat 怪物状态
 - as*.dat 战技脚本
@@ -192,3 +192,32 @@
 - eff 特效
 - t_name._dt
 - t_dbmon._dt
+
+
+
+双星物语2
+=============
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2" target="_blank">ZWEI2</a>
+
+时间不详
+
+itm 加/解密工具，逆向自游侠论坛某位不记得名字的大佬
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2Scp" target="_blank">ZWEI2Scp</a>
+
+时间不详
+
+从 itm 里提取文本的工具
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2Plus" target="_blank">ZWEI2Plus</a>
+
+2010-04
+
+双星物语2加强版汉化模块，文本从`双星物语2`提取，文本外挂加密，实时替换
+
+文字绘制类似于 3rd
