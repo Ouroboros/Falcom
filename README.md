@@ -12,6 +12,8 @@
 - 双星物语2 Plus
 
 
+空之轨迹
+=============
 
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/3rd%20Kuro" target="_blank">3rd Kuro</a>
 
@@ -41,11 +43,19 @@
 
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/ed63cn" target="_blank">ed63cn</a>
 
-大概在 2008 ~ 2010 年之间
+在 2008 ~ 2010 年之间
 
 空之轨迹 3rd 日文版汉化增加模块，包含汉化、MOD 增强（使用敌方角色，战技、S技修正）
 
 汉化部分逆向自 <a href="https://github.com/dwing4g" target="_blank">dwing</a> 发布的 3rd 汉化补丁
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ed63cn/ASDecompiler" target="_blank">ED63 ASDecompiler</a>
+
+于 2011-06-01 完成
+
+将空之轨迹 3rd AS 战技脚本，反汇编成 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）语言
 
 
 
@@ -61,7 +71,7 @@
 
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6Walk" target="_blank">ED6Walk</a>
 
-大概在 2010 ~ 2014 年之间
+在 2010 ~ 2014 年之间
 
 把一系列 bmp 转换为空之轨迹三部曲的 ._CH 和 ._CP 动画文件
 
@@ -100,3 +110,38 @@
 写于 2011 年之前
 
 基于 MFC 实现的空之轨迹 MS 文件编辑器
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6FC%20Steam" target="_blank">ED6FC Steam</a>
+
+写于 2015-11
+
+空之轨迹 FC Steam 版汉化模块，用 DWrite 实现字符绘制
+
+
+
+零之轨迹、碧之轨迹
+=============
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/EDZero" target="_blank">EDZero</a>
+
+写于 2011-08
+
+零之轨迹破解模块，脱了 exe 的 SecuROM 壳，还原了 VM 部分的 freetype 代码
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/EDZero/ASDecompiler" target="_blank">EDZero ASDecompiler</a>
+
+写于 2011-09
+
+将零之轨迹 AS 战技脚本，反汇编成 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）语言
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/YamaNeko" target="_blank">YamaNeko</a>
+
+写于 2011-09
+
+零、碧之轨迹 itc、itp 解码工具
