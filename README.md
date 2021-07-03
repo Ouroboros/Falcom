@@ -63,9 +63,19 @@
 
 大概在 2010 ~ 2014 年之间
 
-把一系列 bmp 转换为 实现了空之轨迹三部曲 ._CH 和 ._CP 动画文件
+把一系列 bmp 转换为空之轨迹三部曲的 ._CH 和 ._CP 动画文件
 
 抄自 <a href="https://github.com/prefetchnta" target="_blank">prefetchnta</a> 最早在其 blog 公开的 EDWalk.exe
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/tga2_ch" target="_blank">tga2_ch</a>
+
+时间不详
+
+把单个 tga 转换为空之轨迹三部曲的 ._CH 文件
+
+抄自 <a href="https://github.com/dwing4g" target="_blank">dwing</a> 的 tga2ch.exe
 
 
 
