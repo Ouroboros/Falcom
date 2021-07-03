@@ -1,0 +1,12 @@
+CHR_Cassius_Walk                = 'chr/ch93670.itc'
+CHR_Cassius_Defense             = 'chr/ch93671.itc'
+CHR_Cassius_Dead                = 'chr/ch93672.itc'
+CHR_Cassius_Stand               = 'chr/ch94670.itc'
+CHR_Cassius_Move                = 'chr/ch94671.itc'
+CHR_Cassius_Attack              = 'chr/ch94672.itc'
+CHR_Cassius_Underattack         = 'chr/ch94673.itc'
+CHR_Cassius_UseItem             = CHR_Cassius_Underattack
+CHR_Cassius_Stun                = 'chr/ch94674.itc'
+CHR_Cassius_Aria                = 'chr/ch94675.itc'
+CHR_Cassius_BaiLieJi            = 'chr/ch94678.itc'
+CHR_Cassius_Phenix              = 'chr/ch94679.itc'
