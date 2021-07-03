@@ -74,6 +74,8 @@
 
 第一代反汇编器，把空之轨迹 3rd AS 战技脚本，反汇编成 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）语言
 
+[有帖为证](https://tieba.baidu.com/p/1096499559)
+
 
 
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/tobc" target="_blank">tobc</a>
