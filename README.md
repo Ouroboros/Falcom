@@ -39,6 +39,16 @@
 
 
 
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ed63cn" target="_blank">ed63cn</a>
+
+大概在 2008 ~ 2010 年之间
+
+空之轨迹 3rd 日文版汉化增加模块，包含汉化、MOD 增强（使用敌方角色，战技、S技修正）
+
+汉化部分逆向自 <a href="https://github.com/dwing4g" target="_blank">dwing</a> 发布的 3rd 汉化补丁
+
+
+
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6Back" target="_blank">ED6Back</a>
 
 写于 2008 年或更早
@@ -51,7 +61,7 @@
 
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6Walk" target="_blank">ED6Walk</a>
 
-大概在 2010 ~ 2014 之间
+大概在 2010 ~ 2014 年之间
 
 把一系列 bmp 转换为 实现了空之轨迹三部曲 ._CH 和 ._CP 动画文件
 
