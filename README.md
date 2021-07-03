@@ -11,6 +11,24 @@
 - 双星物语2 Plus
 
 
+闪之轨迹3
+=============
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ed83/frida" target="_blank">ED83 Frida</a>
+
+写于 2021-06-02
+
+闪之轨迹3的增强模块，目前没什么功能
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ed83/loader" target="_blank">ED83 Loader</a>
+
+写于 2021-07-03
+
+就是`frida`的加载器，初始化`frida`，然后附加自己，加载`js`脚本
+
+
 空之轨迹
 =============
 
