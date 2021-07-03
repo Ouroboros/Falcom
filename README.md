@@ -8,7 +8,6 @@
 - 英雄传说 零之轨迹
 - 英雄传说 碧之轨迹
 - 英雄传说 闪之轨迹3
-- 双星物语2
 - 双星物语2 Plus
 
 
@@ -154,7 +153,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/EDAO" target="_blank">EDAO</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/YamaNeko" target="_blank">YamaNeko</a>
 
 写于 2011-09
 
@@ -195,6 +194,14 @@
 
 
 
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/Decompiler2" target="_blank">Decompiler2</a>
+
+写于 2017-06-28
+
+第三代反汇编器，还未完成
+
+
+
 双星物语2
 =============
 
@@ -221,3 +228,22 @@ itm 加/解密工具，逆向自游侠论坛某位不记得名字的大佬
 双星物语2加强版汉化模块，文本从`双星物语2`提取，文本外挂加密，实时替换
 
 文字绘制类似于 3rd
+
+
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2Trainer" target="_blank">ZWEI2Trainer</a>
+
+时间不详
+
+双星物语2作弊器，作用不明，看代码功能还挺多
+
+
+
+其他
+=============
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/%E6%94%B9%E4%B9%8B%E7%90%86" target="_blank">改之理</a>
+
+时间不详
+
+山寨的`改之理`，只写了一小部分界面
