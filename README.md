@@ -96,7 +96,7 @@
 
 实现了空之轨迹三部曲 DAT 的压缩算法
 
-抄自 <a href="https://github.com/prefetchnta" target="_blank">prefetchnta</a> 最早在其 blog 公开的 FALCOM.exe
+抄自 <a href="https://github.com/prefetchnta" target="_blank">prefetchnta</a> 最早在其 blog 公开的 FALCOM.exe 和 ED6back.exe
 
 
 
@@ -116,7 +116,7 @@
 
 把单个 tga 转换为空之轨迹三部曲的 ._CH 文件
 
-抄自 <a href="https://github.com/dwing4g" target="_blank">dwing</a> 的 tga2ch.exe
+抄自 <a href="https://github.com/dwing4g" target="_blank">dwing</a> 的 tga2_ch.exe
 
 
 
@@ -229,7 +229,7 @@
 
 时间不详
 
-itm 加/解密工具，逆向自游侠论坛某位不记得名字的大佬
+itm 加/解密工具，逆向自游侠论坛的 `jiacat`
 
 
 
@@ -259,6 +259,25 @@ itm 加/解密工具，逆向自游侠论坛某位不记得名字的大佬
 
 
 
+bin
+=============
+
+| 原版                          | 描述
+|------------------------------|----------
+|Chaltier.7z                   | 最早的 SC 剑帝补丁，当约修亚在队伍第一时，进入战斗时会替换成剑帝，由 `Leon` 发布在 `FALCOMCHINA`
+|ED6back.exe                   | 原版的 ED6back，来自 `prefetchnta` 的 blog
+|FALCOM.exe                    | 最早的 ED6 压缩程序，来自 `prefetchnta` 的 blog
+|ED6walk.7z                    | 原版的 ED6walk，来自 `prefetchnta` 的 blog
+|Loader.exe                    | 最早的 3rd 娱乐通版破解程序，来自空之轨迹吧 IP 老兄
+|ed6_win(debug mode).rar       | 娱乐通版 FC，开启了 debug mode，来自 `dwing`
+|tga2_ch.7z                    | 原版的 tga2_ch，来自 `dwing`
+|ed62.dll                      | 日文版 SC 的汉化模块，来自 `dwing`
+|ed63cn2.dll                   | 日文版 3rd 的汉化模块，来自 `dwing`
+|ed3rdcn.7z                    | 日文版 3rd 的汉化，来自 `dwing` & `lancer`，里面还包含了`褪色的照片`的剧情翻译
+|FinalVersion.7z               | `双星物语2`的汉化文本和加解密、导入程序，由 `jiacat` 发布在游侠论坛上
+
+
+
 其他
 =============
 
@@ -267,3 +286,6 @@ itm 加/解密工具，逆向自游侠论坛某位不记得名字的大佬
 时间不详
 
 山寨的`改之理`，只写了一小部分界面
+
+
+
