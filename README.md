@@ -80,7 +80,7 @@
 
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/tobc" target="_blank">tobc</a>
 
-时间不详
+写于 2011-05
 
 为 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）添加新指令
 - @_FILE
