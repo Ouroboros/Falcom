@@ -1,4 +1,4 @@
-﻿#pragma comment(lib, "frida-core.lib")
+#pragma comment(lib, "frida-core.lib")
 
 #pragma comment(lib, "advapi32.lib")
 #pragma comment(lib, "crypt32.lib")
@@ -156,6 +156,12 @@
  */
 #include <stddef.h>
 
+/*
+ * Note: Clang (but not clang-cl) defines __GNUC__ and __GNUC_MINOR__.
+ * Both Clang 11.1 on current Arch Linux and Apple's Clang 12.0 define
+ * __GNUC__ = 4 and __GNUC_MINOR__ = 2. So G_GNUC_CHECK_VERSION(4, 2) on
+ * current Clang will be 1.
+ */
 #ifdef __GNUC__
 #define G_GNUC_CHECK_VERSION(major, minor) \
     ((__GNUC__ > (major)) || \
@@ -169,7 +175,7 @@
  * where this is valid. This allows for warningless compilation of
  * "long long" types even in the presence of '-ansi -pedantic'. 
  */
-#if     __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)
+#if G_GNUC_CHECK_VERSION(2, 8)
 #define G_GNUC_EXTENSION __extension__
 #else
 #define G_GNUC_EXTENSION
@@ -224,6 +230,39 @@
 #else
 #  define G_INLINE_FUNC static inline GLIB_DEPRECATED_MACRO_IN_2_48_FOR(static inline)
 #endif /* G_IMPLEMENT_INLINES */
+
+/*
+ * Attribute support detection. Works on clang and GCC >= 5
+ * https://clang.llvm.org/docs/LanguageExtensions.html#has-attribute
+ * https://gcc.gnu.org/onlinedocs/cpp/_005f_005fhas_005fattribute.html
+ */
+
+#ifdef __has_attribute
+#define g_macro__has_attribute __has_attribute
+#else
+
+/*
+ * Fallback for GCC < 5 and other compilers not supporting __has_attribute.
+ */
+#define g_macro__has_attribute(x) g_macro__has_attribute_##x
+
+#define g_macro__has_attribute___pure__ G_GNUC_CHECK_VERSION (2, 96)
+#define g_macro__has_attribute___malloc__ G_GNUC_CHECK_VERSION (2, 96)
+#define g_macro__has_attribute___noinline__ G_GNUC_CHECK_VERSION (2, 96)
+#define g_macro__has_attribute___sentinel__ G_GNUC_CHECK_VERSION (4, 0)
+#define g_macro__has_attribute___alloc_size__ G_GNUC_CHECK_VERSION (4, 3)
+#define g_macro__has_attribute___format__ G_GNUC_CHECK_VERSION (2, 4)
+#define g_macro__has_attribute___format_arg__ G_GNUC_CHECK_VERSION (2, 4)
+#define g_macro__has_attribute___noreturn__ (G_GNUC_CHECK_VERSION (2, 8) || (0x5110 <= __SUNPRO_C))
+#define g_macro__has_attribute___const__ G_GNUC_CHECK_VERSION (2, 4)
+#define g_macro__has_attribute___unused__ G_GNUC_CHECK_VERSION (2, 4)
+#define g_macro__has_attribute___no_instrument_function__ G_GNUC_CHECK_VERSION (2, 4)
+#define g_macro__has_attribute_fallthrough G_GNUC_CHECK_VERSION (6, 0)
+#define g_macro__has_attribute___deprecated__ G_GNUC_CHECK_VERSION (3, 1)
+#define g_macro__has_attribute_may_alias G_GNUC_CHECK_VERSION (3, 3)
+#define g_macro__has_attribute_warn_unused_result G_GNUC_CHECK_VERSION (3, 4)
+
+#endif
 
 /* Provide macros to feature the GCC function attribute.
  */
@@ -307,14 +346,27 @@
  *
  * Since: 2.58
  */
+/* Note: We can’t annotate this with GLIB_AVAILABLE_MACRO_IN_2_58 because it’s
+ * used within the GLib headers in function declarations which are always
+ * evaluated when a header is included. This results in warnings in third party
+ * code which includes glib.h, even if the third party code doesn’t use the new
+ * macro itself. */
 
-#if    __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
+#if g_macro__has_attribute(__pure__)
 #define G_GNUC_PURE __attribute__((__pure__))
-#define G_GNUC_MALLOC __attribute__((__malloc__))
-#define G_GNUC_NO_INLINE __attribute__((noinline))
 #else
 #define G_GNUC_PURE
+#endif
+
+#if g_macro__has_attribute(__malloc__)
+#define G_GNUC_MALLOC __attribute__ ((__malloc__))
+#else
 #define G_GNUC_MALLOC
+#endif
+
+#if g_macro__has_attribute(__noinline__)
+#define G_GNUC_NO_INLINE __attribute__ ((__noinline__))
+#else
 #define G_GNUC_NO_INLINE
 #endif
 
@@ -337,7 +389,7 @@
  *
  * Since: 2.8
  */
-#if     __GNUC__ >= 4
+#if g_macro__has_attribute(__sentinel__)
 #define G_GNUC_NULL_TERMINATED __attribute__((__sentinel__))
 #else
 #define G_GNUC_NULL_TERMINATED
@@ -351,10 +403,18 @@
  * This symbol is private.
  */
 #undef glib_typeof
-#if !defined(__cplusplus) && \
-     ((defined(__GNUC__) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 8))) || \
-      defined(__clang__))
+#if !defined(__cplusplus) && (G_GNUC_CHECK_VERSION(4, 8) || defined(__clang__))
 #define glib_typeof(t) __typeof__ (t)
+#elif defined(__cplusplus) && __cplusplus >= 201103L
+/* C++11 decltype() is close enough for our usage */
+/* This needs `#include <type_traits>`, but we have guarded this feature with a
+ * `GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68` check, and such a check
+ * cannot be enforced in this header due to include ordering requirements.
+ * Within GLib itself, which use `glib_typeof` need to add the include
+ * themselves. See other examples in GLib for how to do this.
+ */
+#define glib_typeof(t) typename std::remove_reference<decltype (t)>::type
+#define glib_typeof_2_68
 #endif
 
 /*
@@ -367,12 +427,6 @@
  * So we define it to 0 to satisfy the pre-processor.
  */
 
-#ifdef __has_attribute
-#define g_macro__has_attribute __has_attribute
-#else
-#define g_macro__has_attribute(x) 0
-#endif
-
 #ifdef __has_feature
 #define g_macro__has_feature __has_feature
 #else
@@ -383,6 +437,12 @@
 #define g_macro__has_builtin __has_builtin
 #else
 #define g_macro__has_builtin(x) 0
+#endif
+
+#ifdef __has_extension
+#define g_macro__has_extension __has_extension
+#else
+#define g_macro__has_extension(x) 0
 #endif
 
 /**
@@ -428,8 +488,7 @@
  *
  * Since: 2.18
  */
-#if     (!defined(__clang__) && ((__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))) || \
-        (defined(__clang__) && g_macro__has_attribute(__alloc_size__))
+#if g_macro__has_attribute(__alloc_size__)
 #define G_GNUC_ALLOC_SIZE(x) __attribute__((__alloc_size__(x)))
 #define G_GNUC_ALLOC_SIZE2(x,y) __attribute__((__alloc_size__(x,y)))
 #else
@@ -615,46 +674,73 @@
  * See the [GNU C documentation](https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-no_005finstrument_005ffunction-function-attribute) for more details.
  */
 
-#if     __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
+#if g_macro__has_attribute(__format__)
+
 #if !defined (__clang__) && G_GNUC_CHECK_VERSION (4, 4)
 #define G_GNUC_PRINTF( format_idx, arg_idx )    \
   __attribute__((__format__ (gnu_printf, format_idx, arg_idx)))
 #define G_GNUC_SCANF( format_idx, arg_idx )     \
   __attribute__((__format__ (gnu_scanf, format_idx, arg_idx)))
 #define G_GNUC_STRFTIME( format_idx )    \
-  __attribute__((__format__ (gnu_strftime, format_idx, 0)))
+  __attribute__((__format__ (gnu_strftime, format_idx, 0))) \
+  GLIB_AVAILABLE_MACRO_IN_2_60
 #else
 #define G_GNUC_PRINTF( format_idx, arg_idx )    \
   __attribute__((__format__ (__printf__, format_idx, arg_idx)))
 #define G_GNUC_SCANF( format_idx, arg_idx )     \
   __attribute__((__format__ (__scanf__, format_idx, arg_idx)))
 #define G_GNUC_STRFTIME( format_idx )    \
-  __attribute__((__format__ (__strftime__, format_idx, 0)))
+  __attribute__((__format__ (__strftime__, format_idx, 0))) \
+  GLIB_AVAILABLE_MACRO_IN_2_60
 #endif
-#define G_GNUC_FORMAT( arg_idx )                \
-  __attribute__((__format_arg__ (arg_idx)))
-#define G_GNUC_NORETURN                         \
-  __attribute__((__noreturn__))
-#define G_GNUC_CONST                            \
-  __attribute__((__const__))
-#define G_GNUC_UNUSED                           \
-  __attribute__((__unused__))
-#define G_GNUC_NO_INSTRUMENT			\
-  __attribute__((__no_instrument_function__))
-#else   /* !__GNUC__ */
+
+#else
+
 #define G_GNUC_PRINTF( format_idx, arg_idx )
 #define G_GNUC_SCANF( format_idx, arg_idx )
-#define G_GNUC_STRFTIME( format_idx )
+#define G_GNUC_STRFTIME( format_idx ) \
+  GLIB_AVAILABLE_MACRO_IN_2_60
+
+#endif
+
+#if g_macro__has_attribute(__format_arg__)
+#define G_GNUC_FORMAT(arg_idx) \
+  __attribute__ ((__format_arg__ (arg_idx)))
+#else
 #define G_GNUC_FORMAT( arg_idx )
+#endif
+
+#if g_macro__has_attribute(__noreturn__)
+#define G_GNUC_NORETURN \
+  __attribute__ ((__noreturn__))
+#else
 /* NOTE: MSVC has __declspec(noreturn) but unlike GCC __attribute__,
  * __declspec can only be placed at the start of the function prototype
  * and not at the end, so we can't use it without breaking API.
  */
 #define G_GNUC_NORETURN
+#endif
+
+#if g_macro__has_attribute(__const__)
+#define G_GNUC_CONST \
+  __attribute__ ((__const__))
+#else
 #define G_GNUC_CONST
+#endif
+
+#if g_macro__has_attribute(__unused__)
+#define G_GNUC_UNUSED \
+  __attribute__ ((__unused__))
+#else
 #define G_GNUC_UNUSED
+#endif
+
+#if g_macro__has_attribute(__no_instrument_function__)
+#define G_GNUC_NO_INSTRUMENT \
+  __attribute__ ((__no_instrument_function__))
+#else
 #define G_GNUC_NO_INSTRUMENT
-#endif  /* !__GNUC__ */
+#endif
 
 /**
  * G_GNUC_FALLTHROUGH:
@@ -684,13 +770,13 @@
  *
  * Since: 2.60
  */
-#if    __GNUC__ > 6
-#define G_GNUC_FALLTHROUGH __attribute__((fallthrough))
-#elif g_macro__has_attribute (fallthrough)
-#define G_GNUC_FALLTHROUGH __attribute__((fallthrough))
+#if g_macro__has_attribute(fallthrough)
+#define G_GNUC_FALLTHROUGH __attribute__((fallthrough)) \
+  GLIB_AVAILABLE_MACRO_IN_2_60
 #else
-#define G_GNUC_FALLTHROUGH
-#endif /* __GNUC__ */
+#define G_GNUC_FALLTHROUGH \
+  GLIB_AVAILABLE_MACRO_IN_2_60
+#endif
 
 /**
  * G_GNUC_DEPRECATED:
@@ -710,7 +796,7 @@
  *
  * Since: 2.2
  */
-#if    __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1) || defined (__clang__)
+#if g_macro__has_attribute(__deprecated__)
 #define G_GNUC_DEPRECATED __attribute__((__deprecated__))
 #else
 #define G_GNUC_DEPRECATED
@@ -739,11 +825,13 @@
  *
  * Since: 2.26
  */
-#if    __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5) || defined (__clang__)
+#if G_GNUC_CHECK_VERSION(4, 5) || defined(__clang__)
 #define G_GNUC_DEPRECATED_FOR(f)                        \
-  __attribute__((deprecated("Use " #f " instead")))
+  __attribute__((deprecated("Use " #f " instead")))     \
+  GLIB_AVAILABLE_MACRO_IN_2_26
 #else
-#define G_GNUC_DEPRECATED_FOR(f)        G_GNUC_DEPRECATED
+#define G_GNUC_DEPRECATED_FOR(f)      G_GNUC_DEPRECATED \
+  GLIB_AVAILABLE_MACRO_IN_2_26
 #endif /* __GNUC__ */
 
 #ifdef __ICC
@@ -752,7 +840,7 @@
   _Pragma ("warning (disable:1478)")
 #define G_GNUC_END_IGNORE_DEPRECATIONS			\
   _Pragma ("warning (pop)")
-#elif    __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)
+#elif G_GNUC_CHECK_VERSION(4, 6)
 #define G_GNUC_BEGIN_IGNORE_DEPRECATIONS		\
   _Pragma ("GCC diagnostic push")			\
   _Pragma ("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
@@ -786,7 +874,7 @@
  *
  * Since: 2.14
  */
-#if     __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)
+#if g_macro__has_attribute(may_alias)
 #define G_GNUC_MAY_ALIAS __attribute__((may_alias))
 #else
 #define G_GNUC_MAY_ALIAS
@@ -810,7 +898,7 @@
  *
  * Since: 2.10
  */
-#if    __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4)
+#if g_macro__has_attribute(warn_unused_result)
 #define G_GNUC_WARN_UNUSED_RESULT __attribute__((warn_unused_result))
 #else
 #define G_GNUC_WARN_UNUSED_RESULT
@@ -852,6 +940,9 @@
 #if g_macro__has_feature(attribute_analyzer_noreturn) && defined(__clang_analyzer__)
 #define G_ANALYZER_ANALYZING 1
 #define G_ANALYZER_NORETURN __attribute__((analyzer_noreturn))
+#elif defined(__COVERITY__)
+#define G_ANALYZER_ANALYZING 1
+#define G_ANALYZER_NORETURN __attribute__((noreturn))
 #else
 #define G_ANALYZER_ANALYZING 0
 #define G_ANALYZER_NORETURN
@@ -863,7 +954,8 @@
 #ifndef __GI_SCANNER__ /* The static assert macro really confuses the introspection parser */
 #define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
 #define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
-#if !defined(__cplusplus) && defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
+#if !defined(__cplusplus) && defined(__STDC_VERSION__) && \
+    (__STDC_VERSION__ >= 201112L || g_macro__has_feature(c_static_assert) || g_macro__has_extension(c_static_assert))
 #define G_STATIC_ASSERT(expr) _Static_assert (expr, "Expression evaluates to false")
 #elif (defined(__cplusplus) && __cplusplus >= 201103L) || \
       (defined(__cplusplus) && defined (_MSC_VER) && (_MSC_VER >= 1600)) || \
@@ -957,7 +1049,7 @@
  * fields through their offsets.
  */
 
-#if (defined(__GNUC__)  && __GNUC__ >= 4) || defined (_MSC_VER)
+#if G_GNUC_CHECK_VERSION(4, 0) || defined(_MSC_VER)
 #define G_STRUCT_OFFSET(struct_type, member) \
       ((glong) offsetof (struct_type, member))
 #else
@@ -1016,9 +1108,11 @@
  * Since: 2.60
  */
 #if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L && !defined(__cplusplus)
-#define G_ALIGNOF(type) _Alignof (type)
+#define G_ALIGNOF(type) _Alignof (type) \
+  GLIB_AVAILABLE_MACRO_IN_2_60
 #else
-#define G_ALIGNOF(type) (G_STRUCT_OFFSET (struct { char a; type b; }, b))
+#define G_ALIGNOF(type) (G_STRUCT_OFFSET (struct { char a; type b; }, b)) \
+  GLIB_AVAILABLE_MACRO_IN_2_60
 #endif
 
 /**
@@ -1065,18 +1159,18 @@
  * evaluated when a header is included. This results in warnings in third party
  * code which includes glib.h, even if the third party code doesn’t use the new
  * macro itself. */
-#if (3 <= __GNUC__ || (__GNUC__ == 2 && 8 <= __GNUC_MINOR__)) || (0x5110 <= __SUNPRO_C)
+#if g_macro__has_attribute(__noreturn__)
   /* For compatibility with G_NORETURN_FUNCPTR on clang, use
      __attribute__((__noreturn__)), not _Noreturn.  */
 # define G_NORETURN __attribute__ ((__noreturn__))
-#elif 1200 <= _MSC_VER
+#elif defined (_MSC_VER) && (1200 <= _MSC_VER)
   /* Use MSVC specific syntax.  */
 # define G_NORETURN __declspec (noreturn)
   /* Use ISO C++11 syntax when the compiler supports it.  */
-#elif (__cplusplus >= 201103 && !(__GNUC__ == 4 && __GNUC_MINOR__ == 7)) || (_MSC_VER >= 1900)
+#elif defined (__cplusplus) && __cplusplus >= 201103
 # define G_NORETURN [[noreturn]]
   /* Use ISO C11 syntax when the compiler supports it.  */
-#elif __STDC_VERSION__ >= 201112 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7)
+#elif defined (__STDC_VERSION__) && __STDC_VERSION__ >= 201112
 # define G_NORETURN _Noreturn
 #else
 # define G_NORETURN /* empty */
@@ -1104,7 +1198,7 @@
  *
  * Since: 2.68
  */
-#if (3 <= __GNUC__ || (__GNUC__ == 2 && 8 <= __GNUC_MINOR__)) || (0x5110 <= __SUNPRO_C)
+#if g_macro__has_attribute(__noreturn__)
 # define G_NORETURN_FUNCPTR __attribute__ ((__noreturn__))      \
   GLIB_AVAILABLE_MACRO_IN_2_68
 #else
@@ -1120,7 +1214,7 @@
  * The _G_BOOLEAN_EXPR macro is intended to trigger a gcc warning when
  * putting assignments in g_return_if_fail ().  
  */
-#if defined(__GNUC__) && (__GNUC__ > 2) && defined(__OPTIMIZE__)
+#if G_GNUC_CHECK_VERSION(2, 0) && defined(__OPTIMIZE__)
 #define _G_BOOLEAN_EXPR(expr)                   \
  G_GNUC_EXTENSION ({                            \
    int _g_boolean_var_;                         \
@@ -1137,7 +1231,7 @@
 #define G_UNLIKELY(expr) (expr)
 #endif
 
-#if    __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1) || defined (__clang__)
+#if G_GNUC_CHECK_VERSION(3, 1) || defined(__clang__)
 #define G_DEPRECATED __attribute__((__deprecated__))
 #elif defined(_MSC_VER) && (_MSC_VER >= 1300)
 #define G_DEPRECATED __declspec(deprecated)
@@ -1145,7 +1239,7 @@
 #define G_DEPRECATED
 #endif
 
-#if    __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5) || defined (__clang__)
+#if G_GNUC_CHECK_VERSION(4, 5) || defined(__clang__)
 #define G_DEPRECATED_FOR(f) __attribute__((__deprecated__("Use '" #f "' instead")))
 #elif defined(_MSC_FULL_VER) && (_MSC_FULL_VER > 140050320)
 #define G_DEPRECATED_FOR(f) __declspec(deprecated("is deprecated. Use '" #f "' instead"))
@@ -1153,7 +1247,7 @@
 #define G_DEPRECATED_FOR(f) G_DEPRECATED
 #endif
 
-#if    __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 5) || defined (__clang__)
+#if G_GNUC_CHECK_VERSION(4, 5) || defined(__clang__)
 #define G_UNAVAILABLE(maj,min) __attribute__((deprecated("Not available before " #maj "." #min)))
 #elif defined(_MSC_FULL_VER) && (_MSC_FULL_VER > 140050320)
 #define G_UNAVAILABLE(maj,min) __declspec(deprecated("is not available before " #maj "." #min))
@@ -1184,12 +1278,14 @@
 #endif
 
 #if !defined(GLIB_DISABLE_DEPRECATION_WARNINGS) && \
-    (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6) || \
+    (G_GNUC_CHECK_VERSION(4, 6) ||                 \
      __clang_major__ > 3 || (__clang_major__ == 3 && __clang_minor__ >= 4))
 #define _GLIB_GNUC_DO_PRAGMA(x) _Pragma(G_STRINGIFY (x))
 #define GLIB_DEPRECATED_MACRO _GLIB_GNUC_DO_PRAGMA(GCC warning "Deprecated pre-processor symbol")
-#define GLIB_DEPRECATED_MACRO_FOR(f) _GLIB_GNUC_DO_PRAGMA(GCC warning "Deprecated pre-processor symbol, replace with " #f)
-#define GLIB_UNAVAILABLE_MACRO(maj,min) _GLIB_GNUC_DO_PRAGMA(GCC warning "Not available before " #maj "." #min)
+#define GLIB_DEPRECATED_MACRO_FOR(f) \
+  _GLIB_GNUC_DO_PRAGMA(GCC warning G_STRINGIFY (Deprecated pre-processor symbol: replace with #f))
+#define GLIB_UNAVAILABLE_MACRO(maj,min) \
+  _GLIB_GNUC_DO_PRAGMA(GCC warning G_STRINGIFY (Not available before maj.min))
 #else
 #define GLIB_DEPRECATED_MACRO
 #define GLIB_DEPRECATED_MACRO_FOR(f)
@@ -1197,7 +1293,7 @@
 #endif
 
 #if !defined(GLIB_DISABLE_DEPRECATION_WARNINGS) && \
-    ((defined (__GNUC__) && (__GNUC__ > 6 || (__GNUC__ == 6 && __GNUC_MINOR__ >= 1))) || \
+    (G_GNUC_CHECK_VERSION(6, 1) ||                 \
      (defined (__clang_major__) && (__clang_major__ > 3 || (__clang_major__ == 3 && __clang_minor__ >= 0))))
 #define GLIB_DEPRECATED_ENUMERATOR G_DEPRECATED
 #define GLIB_DEPRECATED_ENUMERATOR_FOR(f) G_DEPRECATED_FOR(f)
@@ -1209,7 +1305,7 @@
 #endif
 
 #if !defined(GLIB_DISABLE_DEPRECATION_WARNINGS) && \
-    ((defined (__GNUC__) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1))) || \
+    (G_GNUC_CHECK_VERSION(3, 1) ||                 \
      (defined (__clang_major__) && (__clang_major__ > 3 || (__clang_major__ == 3 && __clang_minor__ >= 0))))
 #define GLIB_DEPRECATED_TYPE G_DEPRECATED
 #define GLIB_DEPRECATED_TYPE_FOR(f) G_DEPRECATED_FOR(f)
@@ -1422,8 +1518,8 @@ typedef unsigned long long guintptr;
 #define G_GUINTPTR_FORMAT       "llu"
 
 #define GLIB_MAJOR_VERSION 2
-#define GLIB_MINOR_VERSION 67
-#define GLIB_MICRO_VERSION 2
+#define GLIB_MINOR_VERSION 69
+#define GLIB_MICRO_VERSION 0
 
 #define G_OS_WIN32
 #define G_PLATFORM_WIN32
@@ -1782,6 +1878,16 @@ G_END_DECLS
  * Since: 2.68
  */
 #define GLIB_VERSION_2_68       (G_ENCODE_VERSION (2, 68))
+
+/**
+ * GLIB_VERSION_2_70:
+ *
+ * A macro that evaluates to the 2.70 version of GLib, in a format
+ * that can be used by the C pre-processor.
+ *
+ * Since: 2.70
+ */
+#define GLIB_VERSION_2_70       (G_ENCODE_VERSION (2, 70))
 
 /**
  * GLIB_VERSION_CUR_STABLE:
@@ -2604,6 +2710,40 @@ G_END_DECLS
 # define GLIB_AVAILABLE_TYPE_IN_2_68
 #endif
 
+#if GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_70
+# define GLIB_DEPRECATED_IN_2_70                GLIB_DEPRECATED
+# define GLIB_DEPRECATED_IN_2_70_FOR(f)         GLIB_DEPRECATED_FOR(f)
+# define GLIB_DEPRECATED_MACRO_IN_2_70          GLIB_DEPRECATED_MACRO
+# define GLIB_DEPRECATED_MACRO_IN_2_70_FOR(f)   GLIB_DEPRECATED_MACRO_FOR(f)
+# define GLIB_DEPRECATED_ENUMERATOR_IN_2_70          GLIB_DEPRECATED_ENUMERATOR
+# define GLIB_DEPRECATED_ENUMERATOR_IN_2_70_FOR(f)   GLIB_DEPRECATED_ENUMERATOR_FOR(f)
+# define GLIB_DEPRECATED_TYPE_IN_2_70           GLIB_DEPRECATED_TYPE
+# define GLIB_DEPRECATED_TYPE_IN_2_70_FOR(f)    GLIB_DEPRECATED_TYPE_FOR(f)
+#else
+# define GLIB_DEPRECATED_IN_2_70                _GLIB_EXTERN
+# define GLIB_DEPRECATED_IN_2_70_FOR(f)         _GLIB_EXTERN
+# define GLIB_DEPRECATED_MACRO_IN_2_70
+# define GLIB_DEPRECATED_MACRO_IN_2_70_FOR(f)
+# define GLIB_DEPRECATED_ENUMERATOR_IN_2_70
+# define GLIB_DEPRECATED_ENUMERATOR_IN_2_70_FOR(f)
+# define GLIB_DEPRECATED_TYPE_IN_2_70
+# define GLIB_DEPRECATED_TYPE_IN_2_70_FOR(f)
+#endif
+
+#if GLIB_VERSION_MAX_ALLOWED < GLIB_VERSION_2_70
+# define GLIB_AVAILABLE_IN_2_70                 GLIB_UNAVAILABLE(2, 70)
+# define GLIB_AVAILABLE_STATIC_INLINE_IN_2_70   GLIB_UNAVAILABLE_STATIC_INLINE(2, 70)
+# define GLIB_AVAILABLE_MACRO_IN_2_70           GLIB_UNAVAILABLE_MACRO(2, 70)
+# define GLIB_AVAILABLE_ENUMERATOR_IN_2_70      GLIB_UNAVAILABLE_ENUMERATOR(2, 70)
+# define GLIB_AVAILABLE_TYPE_IN_2_70            GLIB_UNAVAILABLE_TYPE(2, 70)
+#else
+# define GLIB_AVAILABLE_IN_2_70                 _GLIB_EXTERN
+# define GLIB_AVAILABLE_STATIC_INLINE_IN_2_70
+# define GLIB_AVAILABLE_MACRO_IN_2_70
+# define GLIB_AVAILABLE_ENUMERATOR_IN_2_70
+# define GLIB_AVAILABLE_TYPE_IN_2_70
+#endif
+
 #endif /*  __G_VERSION_MACROS_H__ */
 #include <time.h>
 
@@ -3203,6 +3343,11 @@ G_END_DECLS
  *   way as out of stack space situations from infinite function recursion, i.e.
  *   with a segmentation fault.
  *
+ * - Allowing @size to be specified by an untrusted party would allow for them
+ *   to trigger a segmentation fault by specifying a large size, leading to a
+ *   denial of service vulnerability. @size must always be entirely under the
+ *   control of the program.
+ *
  * - Special care has to be taken when mixing alloca() with GNU C variable sized arrays.
  *   Stack space allocated with alloca() in the same scope as a variable sized array
  *   will be freed together with the variable sized array upon exit of that scope, and
@@ -3218,6 +3363,12 @@ G_END_DECLS
  * 
  * Wraps g_alloca() in a more typesafe manner.
  * 
+ * As mentioned in the documentation for g_alloca(), @n_structs must always be
+ * entirely under the control of the program, or you may introduce a denial of
+ * service vulnerability. In addition, the multiplication of @struct_type by
+ * @n_structs is not checked, so an overflow may lead to a remote code execution
+ * vulnerability.
+ *
  * Returns: Pointer to stack space for @n_structs chunks of type @struct_type
  */
 #define g_newa(struct_type, n_structs)	((struct_type*) g_alloca (sizeof (struct_type) * (gsize) (n_structs)))
@@ -3592,6 +3743,11 @@ G_END_DECLS
 #endif
 
 
+#if defined(glib_typeof_2_68) && GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68
+/* for glib_typeof */
+#include <type_traits>
+#endif
+
 G_BEGIN_DECLS
 
 GLIB_AVAILABLE_IN_ALL
@@ -3669,7 +3825,7 @@ G_END_DECLS
     __atomic_store ((gint *)(atomic), &gais_temp, __ATOMIC_SEQ_CST);         \
   }))
 
-#if defined(glib_typeof)
+#if defined(glib_typeof) && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68)
 #define g_atomic_pointer_get(atomic)                                       \
   (G_GNUC_EXTENSION ({                                                     \
     G_STATIC_ASSERT (sizeof *(atomic) == sizeof (gpointer));               \
@@ -3686,7 +3842,7 @@ G_END_DECLS
     (void) (0 ? (gpointer) * (atomic) : NULL);                              \
     __atomic_store (gaps_temp_atomic, &gaps_temp_newval, __ATOMIC_SEQ_CST); \
   }))
-#else /* if !defined(glib_typeof) */
+#else /* if !(defined(glib_typeof) && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68)) */
 #define g_atomic_pointer_get(atomic) \
   (G_GNUC_EXTENSION ({                                                       \
     G_STATIC_ASSERT (sizeof *(atomic) == sizeof (gpointer));                 \
@@ -3703,7 +3859,7 @@ G_END_DECLS
     (void) (0 ? (gpointer) *(atomic) : NULL);                                \
     __atomic_store (gaps_temp_atomic, &gaps_temp_newval, __ATOMIC_SEQ_CST);  \
   }))
-#endif /* !defined(glib_typeof) */
+#endif /* if defined(glib_typeof) && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68) */
 
 #define g_atomic_int_inc(atomic) \
   (G_GNUC_EXTENSION ({                                                       \
@@ -3749,16 +3905,24 @@ G_END_DECLS
     (guint) __atomic_fetch_xor ((atomic), (val), __ATOMIC_SEQ_CST);          \
   }))
 
-#if defined(glib_typeof)
+#if defined(glib_typeof) && defined(__cplusplus) && __cplusplus >= 201103L
+/* This is typesafe because we check we can assign oldval to the type of
+ * (*atomic). Unfortunately it can only be done in C++ because gcc/clang warn
+ * when atomic is volatile and not oldval, or when atomic is gsize* and oldval
+ * is NULL. Note that clang++ force us to be typesafe because it is an error if the 2nd
+ * argument of __atomic_compare_exchange_n() has a different type than the
+ * first.
+ * https://gitlab.gnome.org/GNOME/glib/-/merge_requests/1919
+ * https://gitlab.gnome.org/GNOME/glib/-/merge_requests/1715#note_1024120. */
 #define g_atomic_pointer_compare_and_exchange(atomic, oldval, newval) \
   (G_GNUC_EXTENSION ({                                                       \
     G_STATIC_ASSERT (sizeof (oldval) == sizeof (gpointer));                  \
-    glib_typeof ((oldval)) gapcae_oldval = (oldval);                         \
+    glib_typeof (*(atomic)) gapcae_oldval = (oldval);                        \
     G_STATIC_ASSERT (sizeof *(atomic) == sizeof (gpointer));                 \
     (void) (0 ? (gpointer) *(atomic) : NULL);                                \
     __atomic_compare_exchange_n ((atomic), &gapcae_oldval, (newval), FALSE, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST) ? TRUE : FALSE; \
   }))
-#else /* if !defined(glib_typeof) */
+#else /* if !(defined(glib_typeof) && defined(__cplusplus) && __cplusplus >= 201103L) */
 #define g_atomic_pointer_compare_and_exchange(atomic, oldval, newval) \
   (G_GNUC_EXTENSION ({                                                       \
     G_STATIC_ASSERT (sizeof (oldval) == sizeof (gpointer));                  \
@@ -3860,7 +4024,7 @@ G_END_DECLS
     __asm__ __volatile__ ("" : : : "memory");                                \
     gapg_result;                                                             \
   }))
-#if defined(glib_typeof)
+#if defined(glib_typeof) && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68)
 #define g_atomic_pointer_set(atomic, newval) \
   (G_GNUC_EXTENSION ({                                                       \
     G_STATIC_ASSERT (sizeof *(atomic) == sizeof (gpointer));                 \
@@ -3869,7 +4033,7 @@ G_END_DECLS
     __asm__ __volatile__ ("" : : : "memory");                                \
     *(atomic) = (glib_typeof (*(atomic))) (gsize) (newval);                  \
   }))
-#else /* if !defined(glib_typeof) */
+#else /* if !(defined(glib_typeof) && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68)) */
 #define g_atomic_pointer_set(atomic, newval) \
   (G_GNUC_EXTENSION ({                                                       \
     G_STATIC_ASSERT (sizeof *(atomic) == sizeof (gpointer));                 \
@@ -3878,7 +4042,7 @@ G_END_DECLS
     __asm__ __volatile__ ("" : : : "memory");                                \
     *(atomic) = (gpointer) (gsize) (newval);                                         \
   }))
-#endif /* defined(glib_typeof) */
+#endif /* if defined(glib_typeof) && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68) */
 
 #define g_atomic_int_inc(atomic) \
   (G_GNUC_EXTENSION ({                                                       \
@@ -3981,10 +4145,24 @@ G_END_DECLS
 #define g_atomic_int_dec_and_test(atomic) \
   (g_atomic_int_dec_and_test ((gint *) (atomic)))
 
+#if defined(glib_typeof) && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68)
+  /* The (void *) cast in the middle *looks* redundant, because
+   * g_atomic_pointer_get returns void * already, but it's to silence
+   * -Werror=bad-function-cast when we're doing something like:
+   * guintptr a, b; ...; a = g_atomic_pointer_get (&b);
+   * which would otherwise be assigning the void * result of
+   * g_atomic_pointer_get directly to the pointer-sized but
+   * non-pointer-typed result. */
+#define g_atomic_pointer_get(atomic)                                       \
+  (glib_typeof (*(atomic))) (void *) ((g_atomic_pointer_get) ((void *) atomic))
+#else /* !(defined(glib_typeof) && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68)) */
 #define g_atomic_pointer_get(atomic) \
   (g_atomic_pointer_get (atomic))
+#endif
+
 #define g_atomic_pointer_set(atomic, newval) \
   (g_atomic_pointer_set ((atomic), (gpointer) (newval)))
+
 #define g_atomic_pointer_compare_and_exchange(atomic, oldval, newval) \
   (g_atomic_pointer_compare_and_exchange ((atomic), (gpointer) (oldval), (gpointer) (newval)))
 #define g_atomic_pointer_add(atomic, val) \
@@ -4310,6 +4488,11 @@ GLIB_AVAILABLE_IN_ALL
 void     g_prefix_error               (GError       **err,
                                        const gchar   *format,
                                        ...) G_GNUC_PRINTF (2, 3);
+
+/* if (err) prefix the string to the ->message */
+GLIB_AVAILABLE_IN_2_70
+void     g_prefix_error_literal       (GError       **err,
+                                       const gchar   *prefix);
 
 /* g_propagate_error then g_error_prefix on dest */
 GLIB_AVAILABLE_IN_ALL
@@ -7714,6 +7897,11 @@ G_END_DECLS
 #endif
 
 
+#if defined(glib_typeof_2_68) && GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68
+/* for glib_typeof */
+#include <type_traits>
+#endif
+
 G_BEGIN_DECLS
 
 /**
@@ -7791,7 +7979,7 @@ gpointer g_try_realloc_n  (gpointer	 mem,
 			   gsize	 n_blocks,
 			   gsize	 n_block_bytes) G_GNUC_WARN_UNUSED_RESULT;
 
-#if defined(glib_typeof) && GLIB_VERSION_MAX_ALLOWED >= GLIB_VERSION_2_58
+#if defined(glib_typeof) && GLIB_VERSION_MAX_ALLOWED >= GLIB_VERSION_2_58 && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68)
 #define g_clear_pointer(pp, destroy)                     \
   G_STMT_START                                           \
   {                                                      \
@@ -7894,7 +8082,7 @@ g_steal_pointer (gpointer pp)
 }
 
 /* type safety */
-#if defined(glib_typeof) && GLIB_VERSION_MAX_ALLOWED >= GLIB_VERSION_2_58
+#if defined(glib_typeof) && GLIB_VERSION_MAX_ALLOWED >= GLIB_VERSION_2_58 && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68)
 #define g_steal_pointer(pp) ((glib_typeof (*pp)) (g_steal_pointer) (pp))
 #else  /* __GNUC__ */
 /* This version does not depend on gcc extensions, but gcc does not warn
@@ -9581,8 +9769,8 @@ typedef void (*GSourceDummyMarshal) (void);
 struct _GSourceFuncs
 {
   gboolean (*prepare)  (GSource    *source,
-                        gint       *timeout_);
-  gboolean (*check)    (GSource    *source);
+                        gint       *timeout_);/* Can be NULL */
+  gboolean (*check)    (GSource    *source);/* Can be NULL */
   gboolean (*dispatch) (GSource    *source,
                         GSourceFunc callback,
                         gpointer    user_data);
@@ -10097,6 +10285,15 @@ GLIB_AVAILABLE_IN_ALL
 void     g_main_context_invoke      (GMainContext   *context,
                                      GSourceFunc     function,
                                      gpointer        data);
+
+GLIB_AVAILABLE_STATIC_INLINE_IN_2_70
+static inline int
+g_steal_fd (int *fd_ptr)
+{
+  int fd = *fd_ptr;
+  *fd_ptr = -1;
+  return fd;
+}
 
 /* Hook for GClosure / GSource integration. Don't touch */
 GLIB_VAR GSourceFuncs g_timeout_funcs;
@@ -11172,6 +11369,11 @@ GLIB_AVAILABLE_IN_ALL
 GString*     g_string_erase             (GString         *string,
                                          gssize           pos,
                                          gssize           len);
+GLIB_AVAILABLE_IN_2_68
+guint         g_string_replace          (GString         *string,
+                                         const gchar     *find,
+                                         const gchar     *replace,
+                                         guint            limit);
 GLIB_AVAILABLE_IN_ALL
 GString*     g_string_ascii_down        (GString         *string);
 GLIB_AVAILABLE_IN_ALL
@@ -14106,6 +14308,24 @@ struct _GOptionEntry
  */
 #define G_OPTION_REMAINING ""
 
+/**
+ * G_OPTION_ENTRY_NULL:
+ *
+ * A #GOptionEntry array requires a %NULL terminator, this macro can
+ * be used as terminator instead of an explicit `{ 0 }` but it cannot
+ * be assigned to a variable.
+ *
+ * |[
+ *   GOptionEntry option[] = { G_OPTION_ENTRY_NULL };
+ * ]|
+ *
+ * Since: 2.70
+ */
+#define G_OPTION_ENTRY_NULL    \
+  GLIB_AVAILABLE_MACRO_IN_2_70 \
+  { NULL, 0, 0, 0, NULL, NULL, NULL }
+
+
 GLIB_AVAILABLE_IN_ALL
 GOptionContext *g_option_context_new              (const gchar         *parameter_string);
 GLIB_AVAILABLE_IN_ALL
@@ -14240,15 +14460,25 @@ GLIB_AVAILABLE_IN_ALL
 GPatternSpec* g_pattern_spec_new       (const gchar  *pattern);
 GLIB_AVAILABLE_IN_ALL
 void          g_pattern_spec_free      (GPatternSpec *pspec);
+GLIB_AVAILABLE_IN_2_70
+GPatternSpec *g_pattern_spec_copy (GPatternSpec *pspec);
 GLIB_AVAILABLE_IN_ALL
 gboolean      g_pattern_spec_equal     (GPatternSpec *pspec1,
 					GPatternSpec *pspec2);
-GLIB_AVAILABLE_IN_ALL
+GLIB_AVAILABLE_IN_2_70
+gboolean g_pattern_spec_match (GPatternSpec *pspec,
+                               gsize string_length,
+                               const gchar *string,
+                               const gchar *string_reversed);
+GLIB_AVAILABLE_IN_2_70
+gboolean g_pattern_spec_match_string (GPatternSpec *pspec,
+                                      const gchar *string);
+GLIB_DEPRECATED_IN_2_70_FOR (g_pattern_spec_match)
 gboolean      g_pattern_match          (GPatternSpec *pspec,
 					guint         string_length,
 					const gchar  *string,
 					const gchar  *string_reversed);
-GLIB_AVAILABLE_IN_ALL
+GLIB_DEPRECATED_IN_2_70_FOR (g_pattern_spec_match_string)
 gboolean      g_pattern_match_string   (GPatternSpec *pspec,
 					const gchar  *string);
 GLIB_AVAILABLE_IN_ALL
@@ -14719,6 +14949,11 @@ G_END_DECLS
 #endif
 
 
+#if defined(glib_typeof_2_68) && GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68
+/* for glib_typeof */
+#include <type_traits>
+#endif
+
 G_BEGIN_DECLS
 
 GLIB_AVAILABLE_IN_2_58
@@ -14766,7 +15001,7 @@ gsize           g_atomic_rc_box_get_size        (gpointer        mem_block);
 #define g_atomic_rc_box_new0(type) \
   ((type *) g_atomic_rc_box_alloc0 (sizeof (type)))
 
-#ifdef glib_typeof
+#if defined(glib_typeof) && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68)
 /* Type check to avoid assigning references to different types */
 #define g_rc_box_acquire(mem_block) \
   ((glib_typeof (mem_block)) (g_rc_box_acquire) (mem_block))
@@ -16417,6 +16652,25 @@ gboolean g_spawn_async_with_pipes (const gchar          *working_directory,
                                    gint                 *standard_error,
                                    GError              **error);
 
+GLIB_AVAILABLE_IN_2_68
+gboolean g_spawn_async_with_pipes_and_fds (const gchar          *working_directory,
+                                           const gchar * const  *argv,
+                                           const gchar * const  *envp,
+                                           GSpawnFlags           flags,
+                                           GSpawnChildSetupFunc  child_setup,
+                                           gpointer              user_data,
+                                           gint                  stdin_fd,
+                                           gint                  stdout_fd,
+                                           gint                  stderr_fd,
+                                           const gint           *source_fds,
+                                           const gint           *target_fds,
+                                           gsize                 n_fds,
+                                           GPid                 *child_pid_out,
+                                           gint                 *stdin_pipe_out,
+                                           gint                 *stdout_pipe_out,
+                                           gint                 *stderr_pipe_out,
+                                           GError              **error);
+
 /* Lets you provide fds for stdin/stdout/stderr */
 GLIB_AVAILABLE_IN_2_58
 gboolean g_spawn_async_with_fds (const gchar          *working_directory,
@@ -16719,9 +16973,13 @@ GLIB_AVAILABLE_IN_ALL
 gchar*                g_strescape      (const gchar *source,
 					const gchar *exceptions) G_GNUC_MALLOC;
 
-GLIB_AVAILABLE_IN_ALL
-gpointer              g_memdup	       (gconstpointer mem,
-					guint	       byte_size) G_GNUC_ALLOC_SIZE(2);
+GLIB_DEPRECATED_IN_2_68_FOR (g_memdup2)
+gpointer              g_memdup         (gconstpointer mem,
+                                        guint         byte_size) G_GNUC_ALLOC_SIZE(2);
+
+GLIB_AVAILABLE_IN_2_68
+gpointer              g_memdup2        (gconstpointer mem,
+                                        gsize         byte_size) G_GNUC_ALLOC_SIZE(2);
 
 /* NULL terminated string arrays.
  * g_strsplit(), g_strsplit_set() split up string into max_tokens tokens
@@ -16884,6 +17142,7 @@ G_END_DECLS
 #endif /* __G_STRING_H__ */
 /*
  * Copyright © 2020 Canonical Ltd.
+ * Copyright © 2021 Alexandros Theodotou
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -16911,7 +17170,7 @@ G_BEGIN_DECLS
 
 /**
  * GStrvBuilder:
- * 
+ *
  * A helper object to build a %NULL-terminated string array
  * by appending. See g_strv_builder_new().
  *
@@ -16931,6 +17190,14 @@ GStrvBuilder *g_strv_builder_ref (GStrvBuilder *builder);
 GLIB_AVAILABLE_IN_2_68
 void g_strv_builder_add (GStrvBuilder *builder,
                          const char *value);
+
+GLIB_AVAILABLE_IN_2_70
+void g_strv_builder_addv (GStrvBuilder *builder,
+                          const char **value);
+
+GLIB_AVAILABLE_IN_2_70
+void g_strv_builder_add_many (GStrvBuilder *builder,
+                              ...) G_GNUC_NULL_TERMINATED;
 
 GLIB_AVAILABLE_IN_2_68
 GStrv g_strv_builder_end (GStrvBuilder *builder);
@@ -17273,6 +17540,10 @@ void    g_test_add_data_func_full       (const char     *testpath,
                                          gpointer        test_data,
                                          GTestDataFunc   test_func,
                                          GDestroyNotify  data_free_func);
+
+/* tell about currently run test */
+GLIB_AVAILABLE_IN_2_68
+const char * g_test_get_path            (void);
 
 /* tell about failure */
 GLIB_AVAILABLE_IN_2_30
@@ -17959,6 +18230,10 @@ void     g_tree_replace         (GTree            *tree,
 GLIB_AVAILABLE_IN_ALL
 gboolean g_tree_remove          (GTree            *tree,
                                  gconstpointer     key);
+
+GLIB_AVAILABLE_IN_2_70
+void     g_tree_remove_all      (GTree            *tree);
+
 GLIB_AVAILABLE_IN_ALL
 gboolean g_tree_steal           (GTree            *tree,
                                  gconstpointer     key);
@@ -18109,7 +18384,7 @@ typedef enum {
   G_URI_FLAGS_ENCODED_QUERY   = 1 << 5,
   G_URI_FLAGS_ENCODED_PATH    = 1 << 6,
   G_URI_FLAGS_ENCODED_FRAGMENT = 1 << 7,
-  G_URI_FLAGS_SCHEME_NORMALIZE = 1 << 8,
+  G_URI_FLAGS_SCHEME_NORMALIZE GLIB_AVAILABLE_ENUMERATOR_IN_2_68 = 1 << 8,
 } GUriFlags;
 
 GLIB_AVAILABLE_IN_2_66
@@ -19283,7 +19558,11 @@ void     g_thread_foreach      (GFunc             thread_func,
 #endif
 
 #define g_static_mutex_get_mutex g_static_mutex_get_mutex_impl GLIB_DEPRECATED_MACRO_IN_2_32
+#ifndef G_OS_WIN32
+#define G_STATIC_MUTEX_INIT { NULL, PTHREAD_MUTEX_INITIALIZER } GLIB_DEPRECATED_MACRO_IN_2_32_FOR(g_mutex_init)
+#else
 #define G_STATIC_MUTEX_INIT { NULL } GLIB_DEPRECATED_MACRO_IN_2_32_FOR(g_mutex_init)
+#endif
 typedef struct
 {
   GMutex *mutex;
@@ -21755,7 +22034,7 @@ type_name##_get_type (void) \
 /* Only use this in non-C++ on GCC >= 2.7, except for Darwin/ppc64.
  * See https://bugzilla.gnome.org/show_bug.cgi?id=647145
  */
-#if !defined (__cplusplus) && (__GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 7)) && !(defined (__APPLE__) && defined (__ppc64__))
+#if !defined (__cplusplus) && (G_GNUC_CHECK_VERSION(2, 7)) && !(defined (__APPLE__) && defined (__ppc64__))
 #define _G_DEFINE_BOXED_TYPE_BEGIN(TypeName, type_name, copy_func, free_func) \
 static GType type_name##_get_type_once (void); \
 \
@@ -23497,8 +23776,11 @@ typedef gboolean (*GSignalEmissionHook) (GSignalInvocationHint *ihint,
  * value returned by the last callback.
  * 
  * Returns: The accumulator function returns whether the signal emission
- *  should be aborted. Returning %FALSE means to abort the
- *  current emission and %TRUE is returned for continuation.
+ *  should be aborted. Returning %TRUE will continue with
+ *  the signal emission. Returning %FALSE will abort the current emission.
+ *  Since 2.62, returning %FALSE will skip to the CLEANUP stage. In this case,
+ *  emission will occur as normal in the CLEANUP stage and the handler's
+ *  return value will be accumulated.
  */
 typedef gboolean (*GSignalAccumulator)	(GSignalInvocationHint *ihint,
 					 GValue		       *return_accu,
@@ -23861,13 +24143,14 @@ void	 g_clear_signal_handler		      (gulong            *handler_id_ptr,
 
 #define  g_clear_signal_handler(handler_id_ptr, instance)           \
   G_STMT_START {                                                    \
-    G_STATIC_ASSERT (sizeof *(handler_id_ptr) == sizeof (gulong));  \
-    gulong _handler_id = *(handler_id_ptr);                         \
+    gpointer const _instance      = (instance);                     \
+    gulong *const _handler_id_ptr = (handler_id_ptr);               \
+    const gulong _handler_id      = *_handler_id_ptr;               \
                                                                     \
     if (_handler_id > 0)                                            \
       {                                                             \
-        g_signal_handler_disconnect ((instance), _handler_id);      \
-        *(handler_id_ptr) = 0;                                      \
+        *_handler_id_ptr = 0;                                       \
+        g_signal_handler_disconnect (_instance, _handler_id);       \
       }                                                             \
   } G_STMT_END                                                      \
   GLIB_AVAILABLE_MACRO_IN_2_62
@@ -24381,6 +24664,15 @@ typedef gsize GType;
  */
 #define G_TYPE_TREE (g_tree_get_type ())
 
+/**
+ * G_TYPE_PATTERN_SPEC:
+ *
+ * The #GType for #GPatternSpec.
+ *
+ * Since: 2.70
+ */
+#define G_TYPE_PATTERN_SPEC (g_pattern_spec_get_type ())
+
 GLIB_AVAILABLE_IN_ALL
 GType   g_date_get_type            (void) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
@@ -24441,6 +24733,8 @@ GLIB_AVAILABLE_IN_2_66
 GType   g_uri_get_type             (void) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_2_68
 GType   g_tree_get_type            (void) G_GNUC_CONST;
+GLIB_AVAILABLE_IN_2_70
+GType g_pattern_spec_get_type (void) G_GNUC_CONST;
 
 GLIB_DEPRECATED_FOR('G_TYPE_VARIANT')
 GType   g_variant_get_gtype        (void) G_GNUC_CONST;
@@ -24543,6 +24837,11 @@ GType   g_value_get_type           (void) G_GNUC_CONST;
 G_END_DECLS
 
 #endif  /* __G_BOXED_H__ */
+
+#if defined(glib_typeof_2_68) && GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68
+/* for glib_typeof */
+#include <type_traits>
+#endif
 
 G_BEGIN_DECLS
 
@@ -25029,7 +25328,7 @@ GLIB_AVAILABLE_IN_ALL
 void        g_object_remove_weak_pointer      (GObject        *object, 
                                                gpointer       *weak_pointer_location);
 
-#if defined(glib_typeof) && GLIB_VERSION_MAX_ALLOWED >= GLIB_VERSION_2_56
+#if defined(glib_typeof) && GLIB_VERSION_MAX_ALLOWED >= GLIB_VERSION_2_56 && (!defined(glib_typeof_2_68) || GLIB_VERSION_MIN_REQUIRED >= GLIB_VERSION_2_68)
 /* Make reference APIs type safe with macros */
 #define g_object_ref(Obj) ((glib_typeof (Obj)) (g_object_ref) (Obj))
 #define g_object_ref_sink(Obj) ((glib_typeof (Obj)) (g_object_ref_sink) (Obj))
@@ -29202,6 +29501,8 @@ typedef enum
  * message bus. This means that the Hello() method will be invoked as part of the connection setup.
  * @G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING: If set, processing of D-Bus messages is
  * delayed until g_dbus_connection_start_message_processing() is called.
+ * @G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_REQUIRE_SAME_USER: When authenticating
+ * as a server, require the UID of the peer to be the same as the UID of the server. (Since: 2.68)
  *
  * Flags used when creating a new #GDBusConnection.
  *
@@ -29213,7 +29514,8 @@ typedef enum {
   G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_SERVER = (1<<1),
   G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS = (1<<2),
   G_DBUS_CONNECTION_FLAGS_MESSAGE_BUS_CONNECTION = (1<<3),
-  G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING = (1<<4)
+  G_DBUS_CONNECTION_FLAGS_DELAY_MESSAGE_PROCESSING = (1<<4),
+  G_DBUS_CONNECTION_FLAGS_AUTHENTICATION_REQUIRE_SAME_USER GLIB_AVAILABLE_ENUMERATOR_IN_2_68 = (1<<5)
 } GDBusConnectionFlags;
 
 /**
@@ -29364,6 +29666,8 @@ typedef enum
  * details).
  * @G_DBUS_SERVER_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS: Allow the anonymous
  * authentication method.
+ * @G_DBUS_SERVER_FLAGS_AUTHENTICATION_REQUIRE_SAME_USER: Require the UID of the
+ * peer to be the same as the UID of the server when authenticating. (Since: 2.68)
  *
  * Flags used when creating a #GDBusServer.
  *
@@ -29373,7 +29677,8 @@ typedef enum
 {
   G_DBUS_SERVER_FLAGS_NONE = 0,
   G_DBUS_SERVER_FLAGS_RUN_IN_THREAD = (1<<0),
-  G_DBUS_SERVER_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS = (1<<1)
+  G_DBUS_SERVER_FLAGS_AUTHENTICATION_ALLOW_ANONYMOUS = (1<<1),
+  G_DBUS_SERVER_FLAGS_AUTHENTICATION_REQUIRE_SAME_USER GLIB_AVAILABLE_ENUMERATOR_IN_2_68 = (1<<2)
 } GDBusServerFlags;
 
 /**
@@ -29693,6 +29998,12 @@ typedef enum {
  *    wrong many times, and the user may not have many chances left.
  * @G_TLS_PASSWORD_FINAL_TRY: Hint to the user that this is the last try to get
  *    this password right.
+ * @G_TLS_PASSWORD_PKCS11_USER: For PKCS #11, the user PIN is required.
+ *    Since: 2.70.
+ * @G_TLS_PASSWORD_PKCS11_SECURITY_OFFICER: For PKCS #11, the security officer
+ *    PIN is required. Since: 2.70.
+ * @G_TLS_PASSWORD_PKCS11_CONTEXT_SPECIFIC: For PKCS #11, the context-specific
+ *    PIN is required. Since: 2.70.
  *
  * Various flags for the password.
  *
@@ -29704,7 +30015,10 @@ typedef enum _GTlsPasswordFlags
   G_TLS_PASSWORD_NONE = 0,
   G_TLS_PASSWORD_RETRY = 1 << 1,
   G_TLS_PASSWORD_MANY_TRIES = 1 << 2,
-  G_TLS_PASSWORD_FINAL_TRY = 1 << 3
+  G_TLS_PASSWORD_FINAL_TRY = 1 << 3,
+  G_TLS_PASSWORD_PKCS11_USER = 1 << 4,
+  G_TLS_PASSWORD_PKCS11_SECURITY_OFFICER = 1 << 5,
+  G_TLS_PASSWORD_PKCS11_CONTEXT_SPECIFIC = 1 << 6
 } GTlsPasswordFlags;
 
 /**
@@ -29805,6 +30119,40 @@ typedef enum {
 typedef enum {
   G_TLS_CERTIFICATE_REQUEST_NONE = 0
 } GTlsCertificateRequestFlags;
+
+/**
+ * GTlsProtocolVersion:
+ * @G_TLS_PROTOCOL_VERSION_UNKNOWN: No protocol version or unknown protocol version
+ * @G_TLS_PROTOCOL_VERSION_SSL_3_0: SSL 3.0, which is insecure and should not be used
+ * @G_TLS_PROTOCOL_VERSION_TLS_1_0: TLS 1.0, which is insecure and should not be used
+ * @G_TLS_PROTOCOL_VERSION_TLS_1_1: TLS 1.1, which is insecure and should not be used
+ * @G_TLS_PROTOCOL_VERSION_TLS_1_2: TLS 1.2, defined by [RFC 5246](https://datatracker.ietf.org/doc/html/rfc5246)
+ * @G_TLS_PROTOCOL_VERSION_TLS_1_3: TLS 1.3, defined by [RFC 8446](https://datatracker.ietf.org/doc/html/rfc8446)
+ * @G_TLS_PROTOCOL_VERSION_DTLS_1_0: DTLS 1.0, which is insecure and should not be used
+ * @G_TLS_PROTOCOL_VERSION_DTLS_1_2: DTLS 1.2, defined by [RFC 6347](https://datatracker.ietf.org/doc/html/rfc6347)
+ *
+ * The TLS or DTLS protocol version used by a #GTlsConnection or
+ * #GDtlsConnection. The integer values of these versions are sequential
+ * to ensure newer known protocol versions compare greater than older
+ * known versions. Any known DTLS protocol version will compare greater
+ * than any SSL or TLS protocol version. The protocol version may be
+ * %G_TLS_PROTOCOL_VERSION_UNKNOWN if the TLS backend supports a newer
+ * protocol version that GLib does not yet know about. This means that
+ * it's possible for an unknown DTLS protocol version to compare less
+ * than the TLS protocol versions.
+ *
+ * Since: 2.70
+ */
+typedef enum {
+  G_TLS_PROTOCOL_VERSION_UNKNOWN = 0,
+  G_TLS_PROTOCOL_VERSION_SSL_3_0 = 1,
+  G_TLS_PROTOCOL_VERSION_TLS_1_0 = 2,
+  G_TLS_PROTOCOL_VERSION_TLS_1_1 = 3,
+  G_TLS_PROTOCOL_VERSION_TLS_1_2 = 4,
+  G_TLS_PROTOCOL_VERSION_TLS_1_3 = 5,
+  G_TLS_PROTOCOL_VERSION_DTLS_1_0 = 201,
+  G_TLS_PROTOCOL_VERSION_DTLS_1_2 = 202,
+} GTlsProtocolVersion;
 
 /**
  * GIOModuleScopeFlags:
@@ -33669,7 +34017,7 @@ gboolean         g_credentials_set_unix_user      (GCredentials    *credentials,
 
 G_END_DECLS
 
-#endif /* __G_DBUS_PROXY_H__ */
+#endif /* __G_CREDENTIALS_H__ */
 /*
  * Copyright 2015 Collabora Ltd.
  *
@@ -37615,6 +37963,12 @@ gboolean              g_dtls_connection_get_channel_binding_data    (GDtlsConnec
                                                                      GError                 **error);
 G_GNUC_END_IGNORE_DEPRECATIONS
 
+GLIB_AVAILABLE_IN_2_70
+GTlsProtocolVersion   g_dtls_connection_get_protocol_version        (GDtlsConnection       *conn);
+
+GLIB_AVAILABLE_IN_2_70
+gchar *               g_dtls_connection_get_ciphersuite_name        (GDtlsConnection       *conn);
+
 G_END_DECLS
 
 #endif /* __G_DTLS_CONNECTION_H__ */
@@ -40615,6 +40969,10 @@ void              g_file_info_get_modification_time  (GFileInfo         *info,
 G_GNUC_END_IGNORE_DEPRECATIONS
 GLIB_AVAILABLE_IN_2_62
 GDateTime *       g_file_info_get_modification_date_time (GFileInfo     *info);
+GLIB_AVAILABLE_IN_2_70
+GDateTime *       g_file_info_get_access_date_time (GFileInfo     *info);
+GLIB_AVAILABLE_IN_2_70
+GDateTime *       g_file_info_get_creation_date_time (GFileInfo     *info);
 GLIB_AVAILABLE_IN_ALL
 const char *      g_file_info_get_symlink_target     (GFileInfo         *info);
 GLIB_AVAILABLE_IN_ALL
@@ -40667,6 +41025,12 @@ G_GNUC_END_IGNORE_DEPRECATIONS
 GLIB_AVAILABLE_IN_2_62
 void              g_file_info_set_modification_date_time (GFileInfo     *info,
                                                           GDateTime     *mtime);
+GLIB_AVAILABLE_IN_2_70
+void              g_file_info_set_access_date_time (GFileInfo *info,
+                                                    GDateTime *atime);
+GLIB_AVAILABLE_IN_2_70
+void              g_file_info_set_creation_date_time (GFileInfo *info,
+                                                      GDateTime *creation_time);
 GLIB_AVAILABLE_IN_ALL
 void              g_file_info_set_symlink_target     (GFileInfo         *info,
 						      const char        *symlink_target);
@@ -41928,6 +42292,8 @@ GLIB_AVAILABLE_IN_ALL GType g_tls_database_lookup_flags_get_type (void) G_GNUC_C
 #define G_TYPE_TLS_DATABASE_LOOKUP_FLAGS (g_tls_database_lookup_flags_get_type ())
 GLIB_AVAILABLE_IN_ALL GType g_tls_certificate_request_flags_get_type (void) G_GNUC_CONST;
 #define G_TYPE_TLS_CERTIFICATE_REQUEST_FLAGS (g_tls_certificate_request_flags_get_type ())
+GLIB_AVAILABLE_IN_ALL GType g_tls_protocol_version_get_type (void) G_GNUC_CONST;
+#define G_TYPE_TLS_PROTOCOL_VERSION (g_tls_protocol_version_get_type ())
 GLIB_AVAILABLE_IN_ALL GType g_io_module_scope_flags_get_type (void) G_GNUC_CONST;
 #define G_TYPE_IO_MODULE_SCOPE_FLAGS (g_io_module_scope_flags_get_type ())
 GLIB_AVAILABLE_IN_ALL GType g_socket_client_event_get_type (void) G_GNUC_CONST;
@@ -49071,6 +49437,18 @@ GLIB_AVAILABLE_IN_2_34
 gboolean              g_tls_certificate_is_same            (GTlsCertificate     *cert_one,
                                                             GTlsCertificate     *cert_two);
 
+GLIB_AVAILABLE_IN_2_70
+GDateTime            *g_tls_certificate_get_not_valid_before (GTlsCertificate     *cert);
+
+GLIB_AVAILABLE_IN_2_70
+GDateTime            *g_tls_certificate_get_not_valid_after  (GTlsCertificate     *cert);
+
+GLIB_AVAILABLE_IN_2_70
+gchar                *g_tls_certificate_get_subject_name     (GTlsCertificate     *cert);
+
+GLIB_AVAILABLE_IN_2_70
+gchar                *g_tls_certificate_get_issuer_name      (GTlsCertificate     *cert);
+
 G_END_DECLS
 
 #endif /* __G_TLS_CERTIFICATE_H__ */
@@ -49254,6 +49632,12 @@ GLIB_AVAILABLE_IN_ALL
 gboolean              g_tls_connection_handshake_finish            (GTlsConnection       *conn,
 								    GAsyncResult         *result,
 								    GError              **error);
+
+GLIB_AVAILABLE_IN_2_70
+GTlsProtocolVersion   g_tls_connection_get_protocol_version        (GTlsConnection       *conn);
+
+GLIB_AVAILABLE_IN_2_70
+gchar *               g_tls_connection_get_ciphersuite_name        (GTlsConnection       *conn);
 
 /**
  * G_TLS_ERROR:
@@ -50840,14 +51224,14 @@ G_END_DECLS
  *
  * Json micro version component (e.g. 3 if %JSON_VERSION is 1.2.3)
  */
-#define JSON_MICRO_VERSION              (1)
+#define JSON_MICRO_VERSION              (3)
 
 /**
  * JSON_VERSION
  *
  * Json version.
  */
-#define JSON_VERSION                    (1.6.1)
+#define JSON_VERSION                    (1.6.3)
 
 /**
  * JSON_VERSION_S:
@@ -50855,7 +51239,7 @@ G_END_DECLS
  * JSON-GLib version, encoded as a string, useful for printing and
  * concatenation.
  */
-#define JSON_VERSION_S                  "1.6.1"
+#define JSON_VERSION_S                  "1.6.3"
 
 #define JSON_ENCODE_VERSION(major,minor,micro) \
         ((major) << 24 | (minor) << 16 | (micro) << 8)
@@ -52631,22 +53015,43 @@ G_BEGIN_DECLS
 typedef struct _FridaDeviceManager FridaDeviceManager;
 typedef struct _FridaDeviceList FridaDeviceList;
 typedef struct _FridaDevice FridaDevice;
+typedef struct _FridaRemoteDeviceOptions FridaRemoteDeviceOptions;
 typedef struct _FridaApplicationList FridaApplicationList;
 typedef struct _FridaApplication FridaApplication;
 typedef struct _FridaProcessList FridaProcessList;
 typedef struct _FridaProcess FridaProcess;
+typedef struct _FridaProcessMatchOptions FridaProcessMatchOptions;
 typedef struct _FridaSpawnOptions FridaSpawnOptions;
+typedef struct _FridaFrontmostQueryOptions FridaFrontmostQueryOptions;
+typedef struct _FridaApplicationQueryOptions FridaApplicationQueryOptions;
+typedef struct _FridaProcessQueryOptions FridaProcessQueryOptions;
+typedef struct _FridaSessionOptions FridaSessionOptions;
 typedef struct _FridaSpawnList FridaSpawnList;
 typedef struct _FridaSpawn FridaSpawn;
 typedef struct _FridaChildList FridaChildList;
 typedef struct _FridaChild FridaChild;
 typedef struct _FridaCrash FridaCrash;
-typedef struct _FridaIcon FridaIcon;
+typedef struct _FridaBus FridaBus;
 typedef struct _FridaSession FridaSession;
 typedef struct _FridaScript FridaScript;
 typedef struct _FridaScriptOptions FridaScriptOptions;
+typedef struct _FridaPeerOptions FridaPeerOptions;
+typedef struct _FridaRelay FridaRelay;
+typedef struct _FridaPortalOptions FridaPortalOptions;
+typedef struct _FridaPortalMembership FridaPortalMembership;
+typedef struct _FridaRpcClient FridaRpcClient;
+typedef struct _FridaRpcPeer FridaRpcPeer;
+typedef struct _FridaRpcPeerIface FridaRpcPeerIface;
 typedef struct _FridaInjector FridaInjector;
+typedef struct _FridaControlService FridaControlService;
+typedef struct _FridaControlServiceOptions FridaControlServiceOptions;
+typedef struct _FridaPortalService FridaPortalService;
+typedef struct _FridaEndpointParameters FridaEndpointParameters;
+typedef struct _FridaAuthenticationService FridaAuthenticationService;
+typedef struct _FridaAuthenticationServiceIface FridaAuthenticationServiceIface;
+typedef struct _FridaStaticAuthenticationService FridaStaticAuthenticationService;
 typedef struct _FridaFileMonitor FridaFileMonitor;
+typedef struct _FridaHostSession FridaHostSession;
 
 typedef enum {
   FRIDA_RUNTIME_GLIB,
@@ -52660,15 +53065,44 @@ typedef enum {
 } FridaDeviceType;
 
 typedef enum {
+  FRIDA_AGENT_MESSAGE_KIND_SCRIPT = 1,
+  FRIDA_AGENT_MESSAGE_KIND_DEBUGGER
+} FridaAgentMessageKind;
+
+typedef enum {
   FRIDA_CHILD_ORIGIN_FORK,
   FRIDA_CHILD_ORIGIN_EXEC,
   FRIDA_CHILD_ORIGIN_SPAWN
 } FridaChildOrigin;
 
 typedef enum {
+  FRIDA_PEER_SETUP_ACTIVE,
+  FRIDA_PEER_SETUP_PASSIVE,
+  FRIDA_PEER_SETUP_ACTPASS,
+  FRIDA_PEER_SETUP_HOLDCONN
+} FridaPeerSetup;
+
+typedef enum {
+  FRIDA_PORT_CONFLICT_BEHAVIOR_FAIL,
+  FRIDA_PORT_CONFLICT_BEHAVIOR_PICK_NEXT
+} FridaPortConflictBehavior;
+
+typedef enum {
   FRIDA_REALM_NATIVE,
   FRIDA_REALM_EMULATED
 } FridaRealm;
+
+typedef enum {
+  FRIDA_RELAY_KIND_TURN_UDP,
+  FRIDA_RELAY_KIND_TURN_TCP,
+  FRIDA_RELAY_KIND_TURN_TLS
+} FridaRelayKind;
+
+typedef enum {
+  FRIDA_SCOPE_MINIMAL,
+  FRIDA_SCOPE_METADATA,
+  FRIDA_SCOPE_FULL
+} FridaScope;
 
 typedef enum {
   FRIDA_SCRIPT_RUNTIME_DEFAULT,
@@ -52680,7 +53114,7 @@ typedef enum {
   FRIDA_SESSION_DETACH_REASON_APPLICATION_REQUESTED = 1,
   FRIDA_SESSION_DETACH_REASON_PROCESS_REPLACED,
   FRIDA_SESSION_DETACH_REASON_PROCESS_TERMINATED,
-  FRIDA_SESSION_DETACH_REASON_SERVER_TERMINATED,
+  FRIDA_SESSION_DETACH_REASON_CONNECTION_TERMINATED,
   FRIDA_SESSION_DETACH_REASON_DEVICE_LOST
 } FridaSessionDetachReason;
 
@@ -52694,6 +53128,16 @@ typedef enum {
   FRIDA_UNLOAD_POLICY_RESIDENT,
   FRIDA_UNLOAD_POLICY_DEFERRED
 } FridaUnloadPolicy;
+
+typedef enum {
+  FRIDA_WEB_SERVICE_FLAVOR_CONTROL,
+  FRIDA_WEB_SERVICE_FLAVOR_CLUSTER
+} FridaWebServiceFlavor;
+
+typedef enum {
+  FRIDA_WEB_SERVICE_TRANSPORT_PLAIN,
+  FRIDA_WEB_SERVICE_TRANSPORT_TLS
+} FridaWebServiceTransport;
 
 /* Library lifetime */
 void frida_init (void);
@@ -52737,12 +53181,12 @@ FridaDevice * frida_device_manager_find_device_sync (FridaDeviceManager * self, 
 void frida_device_manager_enumerate_devices (FridaDeviceManager * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaDeviceList * frida_device_manager_enumerate_devices_finish (FridaDeviceManager * self, GAsyncResult * result, GError ** error);
 FridaDeviceList * frida_device_manager_enumerate_devices_sync (FridaDeviceManager * self, GCancellable * cancellable, GError ** error);
-void frida_device_manager_add_remote_device (FridaDeviceManager * self, const gchar * location, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_device_manager_add_remote_device (FridaDeviceManager * self, const gchar * address, FridaRemoteDeviceOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaDevice * frida_device_manager_add_remote_device_finish (FridaDeviceManager * self, GAsyncResult * result, GError ** error);
-FridaDevice * frida_device_manager_add_remote_device_sync (FridaDeviceManager * self, const gchar * location, GCancellable * cancellable, GError ** error);
-void frida_device_manager_remove_remote_device (FridaDeviceManager * self, const gchar * location, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+FridaDevice * frida_device_manager_add_remote_device_sync (FridaDeviceManager * self, const gchar * address, FridaRemoteDeviceOptions * options, GCancellable * cancellable, GError ** error);
+void frida_device_manager_remove_remote_device (FridaDeviceManager * self, const gchar * address, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 void frida_device_manager_remove_remote_device_finish (FridaDeviceManager * self, GAsyncResult * result, GError ** error);
-void frida_device_manager_remove_remote_device_sync (FridaDeviceManager * self, const gchar * location, GCancellable * cancellable, GError ** error);
+void frida_device_manager_remove_remote_device_sync (FridaDeviceManager * self, const gchar * address, GCancellable * cancellable, GError ** error);
 
 /* DeviceList */
 gint frida_device_list_size (FridaDeviceList * self);
@@ -52753,38 +53197,42 @@ typedef gboolean (* FridaDeviceProcessPredicate) (FridaProcess * process, gpoint
 
 const gchar * frida_device_get_id (FridaDevice * self);
 const gchar * frida_device_get_name (FridaDevice * self);
-FridaIcon * frida_device_get_icon (FridaDevice * self);
+GVariant * frida_device_get_icon (FridaDevice * self);
 FridaDeviceType frida_device_get_dtype (FridaDevice * self);
+FridaBus * frida_device_get_bus (FridaDevice * self);
 FridaDeviceManager * frida_device_get_manager (FridaDevice * self);
 
 gboolean frida_device_is_lost (FridaDevice * self);
-void frida_device_get_frontmost_application (FridaDevice * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_device_query_system_parameters (FridaDevice * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+GHashTable * frida_device_query_system_parameters_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
+GHashTable * frida_device_query_system_parameters_sync (FridaDevice * self, GCancellable * cancellable, GError ** error);
+void frida_device_get_frontmost_application (FridaDevice * self, FridaFrontmostQueryOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaApplication * frida_device_get_frontmost_application_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
-FridaApplication * frida_device_get_frontmost_application_sync (FridaDevice * self, GCancellable * cancellable, GError ** error);
-void frida_device_enumerate_applications (FridaDevice * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+FridaApplication * frida_device_get_frontmost_application_sync (FridaDevice * self, FridaFrontmostQueryOptions * options, GCancellable * cancellable, GError ** error);
+void frida_device_enumerate_applications (FridaDevice * self, FridaApplicationQueryOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaApplicationList * frida_device_enumerate_applications_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
-FridaApplicationList * frida_device_enumerate_applications_sync (FridaDevice * self, GCancellable * cancellable, GError ** error);
-void frida_device_get_process_by_pid (FridaDevice * self, guint pid, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+FridaApplicationList * frida_device_enumerate_applications_sync (FridaDevice * self, FridaApplicationQueryOptions * options, GCancellable * cancellable, GError ** error);
+void frida_device_get_process_by_pid (FridaDevice * self, guint pid, FridaProcessMatchOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaProcess * frida_device_get_process_by_pid_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
-FridaProcess * frida_device_get_process_by_pid_sync (FridaDevice * self, guint pid, GCancellable * cancellable, GError ** error);
-void frida_device_get_process_by_name (FridaDevice * self, const gchar * name, gint timeout, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+FridaProcess * frida_device_get_process_by_pid_sync (FridaDevice * self, guint pid, FridaProcessMatchOptions * options, GCancellable * cancellable, GError ** error);
+void frida_device_get_process_by_name (FridaDevice * self, const gchar * name, FridaProcessMatchOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaProcess * frida_device_get_process_by_name_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
-FridaProcess * frida_device_get_process_by_name_sync (FridaDevice * self, const gchar * name, gint timeout, GCancellable * cancellable, GError ** error);
-void frida_device_get_process (FridaDevice * self, FridaDeviceProcessPredicate predicate, gpointer predicate_target, gint timeout, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+FridaProcess * frida_device_get_process_by_name_sync (FridaDevice * self, const gchar * name, FridaProcessMatchOptions * options, GCancellable * cancellable, GError ** error);
+void frida_device_get_process (FridaDevice * self, FridaDeviceProcessPredicate predicate, gpointer predicate_target, FridaProcessMatchOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaProcess * frida_device_get_process_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
-FridaProcess * frida_device_get_process_sync (FridaDevice * self, FridaDeviceProcessPredicate predicate, gpointer predicate_target, gint timeout, GCancellable * cancellable, GError ** error);
-void frida_device_find_process_by_pid (FridaDevice * self, guint pid, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+FridaProcess * frida_device_get_process_sync (FridaDevice * self, FridaDeviceProcessPredicate predicate, gpointer predicate_target, FridaProcessMatchOptions * options, GCancellable * cancellable, GError ** error);
+void frida_device_find_process_by_pid (FridaDevice * self, guint pid, FridaProcessMatchOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaProcess * frida_device_find_process_by_pid_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
-FridaProcess * frida_device_find_process_by_pid_sync (FridaDevice * self, guint pid, GCancellable * cancellable, GError ** error);
-void frida_device_find_process_by_name (FridaDevice * self, const gchar * name, gint timeout, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+FridaProcess * frida_device_find_process_by_pid_sync (FridaDevice * self, guint pid, FridaProcessMatchOptions * options, GCancellable * cancellable, GError ** error);
+void frida_device_find_process_by_name (FridaDevice * self, const gchar * name, FridaProcessMatchOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaProcess * frida_device_find_process_by_name_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
-FridaProcess * frida_device_find_process_by_name_sync (FridaDevice * self, const gchar * name, gint timeout, GCancellable * cancellable, GError ** error);
-void frida_device_find_process (FridaDevice * self, FridaDeviceProcessPredicate predicate, gpointer predicate_target, gint timeout, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+FridaProcess * frida_device_find_process_by_name_sync (FridaDevice * self, const gchar * name, FridaProcessMatchOptions * options, GCancellable * cancellable, GError ** error);
+void frida_device_find_process (FridaDevice * self, FridaDeviceProcessPredicate predicate, gpointer predicate_target, FridaProcessMatchOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaProcess * frida_device_find_process_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
-FridaProcess * frida_device_find_process_sync (FridaDevice * self, FridaDeviceProcessPredicate predicate, gpointer predicate_target, gint timeout, GCancellable * cancellable, GError ** error);
-void frida_device_enumerate_processes (FridaDevice * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+FridaProcess * frida_device_find_process_sync (FridaDevice * self, FridaDeviceProcessPredicate predicate, gpointer predicate_target, FridaProcessMatchOptions * options, GCancellable * cancellable, GError ** error);
+void frida_device_enumerate_processes (FridaDevice * self, FridaProcessQueryOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaProcessList * frida_device_enumerate_processes_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
-FridaProcessList * frida_device_enumerate_processes_sync (FridaDevice * self, GCancellable * cancellable, GError ** error);
+FridaProcessList * frida_device_enumerate_processes_sync (FridaDevice * self, FridaProcessQueryOptions * options, GCancellable * cancellable, GError ** error);
 void frida_device_enable_spawn_gating (FridaDevice * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 void frida_device_enable_spawn_gating_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
 void frida_device_enable_spawn_gating_sync (FridaDevice * self, GCancellable * cancellable, GError ** error);
@@ -52809,9 +53257,9 @@ void frida_device_resume_sync (FridaDevice * self, guint pid, GCancellable * can
 void frida_device_kill (FridaDevice * self, guint pid, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 void frida_device_kill_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
 void frida_device_kill_sync (FridaDevice * self, guint pid, GCancellable * cancellable, GError ** error);
-void frida_device_attach (FridaDevice * self, guint pid, FridaRealm realm, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_device_attach (FridaDevice * self, guint pid, FridaSessionOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 FridaSession * frida_device_attach_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
-FridaSession * frida_device_attach_sync (FridaDevice * self, guint pid, FridaRealm realm, GCancellable * cancellable, GError ** error);
+FridaSession * frida_device_attach_sync (FridaDevice * self, guint pid, FridaSessionOptions * options, GCancellable * cancellable, GError ** error);
 void frida_device_inject_library_file (FridaDevice * self, guint pid, const gchar * path, const gchar * entrypoint, const gchar * data, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 guint frida_device_inject_library_file_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
 guint frida_device_inject_library_file_sync (FridaDevice * self, guint pid, const gchar * path, const gchar * entrypoint, const gchar * data, GCancellable * cancellable, GError ** error);
@@ -52821,6 +53269,22 @@ guint frida_device_inject_library_blob_sync (FridaDevice * self, guint pid, GByt
 void frida_device_open_channel (FridaDevice * self, const gchar * address, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 GIOStream * frida_device_open_channel_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
 GIOStream * frida_device_open_channel_sync (FridaDevice * self, const gchar * address, GCancellable * cancellable, GError ** error);
+void frida_device_get_host_session (FridaDevice * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+FridaHostSession * frida_device_get_host_session_finish (FridaDevice * self, GAsyncResult * result, GError ** error);
+FridaHostSession * frida_device_get_host_session_sync (FridaDevice * self, GCancellable * cancellable, GError ** error);
+
+/* RemoteDeviceOptions */
+FridaRemoteDeviceOptions * frida_remote_device_options_new (void);
+
+GTlsCertificate * frida_remote_device_options_get_certificate (FridaRemoteDeviceOptions * self);
+const gchar * frida_remote_device_options_get_origin (FridaRemoteDeviceOptions * self);
+const gchar * frida_remote_device_options_get_token (FridaRemoteDeviceOptions * self);
+gint frida_remote_device_options_get_keepalive_interval (FridaRemoteDeviceOptions * self);
+
+void frida_remote_device_options_set_certificate (FridaRemoteDeviceOptions * self, GTlsCertificate * value);
+void frida_remote_device_options_set_origin (FridaRemoteDeviceOptions * self, const gchar * value);
+void frida_remote_device_options_set_token (FridaRemoteDeviceOptions * self, const gchar * value);
+void frida_remote_device_options_set_keepalive_interval (FridaRemoteDeviceOptions * self, gint value);
 
 /* ApplicationList */
 gint frida_application_list_size (FridaApplicationList * self);
@@ -52830,8 +53294,7 @@ FridaApplication * frida_application_list_get (FridaApplicationList * self, gint
 const gchar * frida_application_get_identifier (FridaApplication * self);
 const gchar * frida_application_get_name (FridaApplication * self);
 guint frida_application_get_pid (FridaApplication * self);
-FridaIcon * frida_application_get_small_icon (FridaApplication * self);
-FridaIcon * frida_application_get_large_icon (FridaApplication * self);
+GHashTable * frida_application_get_parameters (FridaApplication * self);
 
 /* ProcessList */
 gint frida_process_list_size (FridaProcessList * self);
@@ -52840,8 +53303,16 @@ FridaProcess * frida_process_list_get (FridaProcessList * self, gint index);
 /* Process */
 guint frida_process_get_pid (FridaProcess * self);
 const gchar * frida_process_get_name (FridaProcess * self);
-FridaIcon * frida_process_get_small_icon (FridaProcess * self);
-FridaIcon * frida_process_get_large_icon (FridaProcess * self);
+GHashTable * frida_process_get_parameters (FridaProcess * self);
+
+/* ProcessMatchOptions */
+FridaProcessMatchOptions * frida_process_match_options_new (void);
+
+gint frida_process_match_options_get_timeout (FridaProcessMatchOptions * self);
+FridaScope frida_process_match_options_get_scope (FridaProcessMatchOptions * self);
+
+void frida_process_match_options_set_timeout (FridaProcessMatchOptions * self, gint value);
+void frida_process_match_options_set_scope (FridaProcessMatchOptions * self, FridaScope value);
 
 /* SpawnOptions */
 FridaSpawnOptions * frida_spawn_options_new (void);
@@ -52851,13 +53322,50 @@ gchar ** frida_spawn_options_get_envp (FridaSpawnOptions * self, gint * result_l
 gchar ** frida_spawn_options_get_env (FridaSpawnOptions * self, gint * result_length);
 const gchar * frida_spawn_options_get_cwd (FridaSpawnOptions * self);
 FridaStdio frida_spawn_options_get_stdio (FridaSpawnOptions * self);
-GVariantDict * frida_spawn_options_get_aux (FridaSpawnOptions * self);
+GHashTable * frida_spawn_options_get_aux (FridaSpawnOptions * self);
 
 void frida_spawn_options_set_argv (FridaSpawnOptions * self, gchar ** value, gint value_length);
 void frida_spawn_options_set_envp (FridaSpawnOptions * self, gchar ** value, gint value_length);
 void frida_spawn_options_set_env (FridaSpawnOptions * self, gchar ** value, gint value_length);
 void frida_spawn_options_set_cwd (FridaSpawnOptions * self, const gchar * value);
 void frida_spawn_options_set_stdio (FridaSpawnOptions * self, FridaStdio value);
+void frida_spawn_options_set_aux (FridaSpawnOptions * self, GHashTable * value);
+
+/* FrontmostQueryOptions */
+FridaFrontmostQueryOptions * frida_frontmost_query_options_new (void);
+
+FridaScope frida_frontmost_query_options_get_scope (FridaFrontmostQueryOptions * self);
+
+void frida_frontmost_query_options_set_scope (FridaFrontmostQueryOptions * self, FridaScope value);
+
+/* ApplicationQueryOptions */
+FridaApplicationQueryOptions * frida_application_query_options_new (void);
+
+FridaScope frida_application_query_options_get_scope (FridaApplicationQueryOptions * self);
+
+void frida_application_query_options_select_identifier (FridaApplicationQueryOptions * self, const gchar * identifier);
+gboolean frida_application_query_options_has_selected_identifiers (FridaApplicationQueryOptions * self);
+void frida_application_query_options_enumerate_selected_identifiers (FridaApplicationQueryOptions * self, GFunc func, gpointer user_data);
+void frida_application_query_options_set_scope (FridaApplicationQueryOptions * self, FridaScope value);
+
+/* ProcessQueryOptions */
+FridaProcessQueryOptions * frida_process_query_options_new (void);
+
+FridaScope frida_process_query_options_get_scope (FridaProcessQueryOptions * self);
+
+void frida_process_query_options_select_pid (FridaProcessQueryOptions * self, guint pid);
+gboolean frida_process_query_options_has_selected_pids (FridaProcessQueryOptions * self);
+void frida_process_query_options_enumerate_selected_pids (FridaProcessQueryOptions * self, GFunc func, gpointer user_data);
+void frida_process_query_options_set_scope (FridaProcessQueryOptions * self, FridaScope value);
+
+/* SessionOptions */
+FridaSessionOptions * frida_session_options_new (void);
+
+FridaRealm frida_session_options_get_realm (FridaSessionOptions * self);
+guint frida_session_options_get_persist_timeout (FridaSessionOptions * self);
+
+void frida_session_options_set_realm (FridaSessionOptions * self, FridaRealm value);
+void frida_session_options_set_persist_timeout (FridaSessionOptions * self, guint value);
 
 /* SpawnList */
 gint frida_spawn_list_size (FridaSpawnList * self);
@@ -52885,23 +53393,29 @@ guint frida_crash_get_pid (FridaCrash * self);
 const gchar * frida_crash_get_process_name (FridaCrash * self);
 const gchar * frida_crash_get_summary (FridaCrash * self);
 const gchar * frida_crash_get_report (FridaCrash * self);
+GHashTable * frida_crash_get_parameters (FridaCrash * self);
 
-GVariantDict * frida_crash_load_parameters (FridaCrash * self);
+/* Bus */
+FridaDevice * frida_bus_get_device (FridaBus * self);
 
-/* Icon */
-gint frida_icon_get_width (FridaIcon * self);
-gint frida_icon_get_height (FridaIcon * self);
-gint frida_icon_get_rowstride (FridaIcon * self);
-GBytes * frida_icon_get_pixels (FridaIcon * self);
+gboolean frida_bus_is_detached (FridaBus * self);
+void frida_bus_attach (FridaBus * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_bus_attach_finish (FridaBus * self, GAsyncResult * result, GError ** error);
+void frida_bus_attach_sync (FridaBus * self, GCancellable * cancellable, GError ** error);
+void frida_bus_post (FridaBus * self, const gchar * json, GBytes * data);
 
 /* Session */
 guint frida_session_get_pid (FridaSession * self);
+guint frida_session_get_persist_timeout (FridaSession * self);
 FridaDevice * frida_session_get_device (FridaSession * self);
 
 gboolean frida_session_is_detached (FridaSession * self);
 void frida_session_detach (FridaSession * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 void frida_session_detach_finish (FridaSession * self, GAsyncResult * result, GError ** error);
 void frida_session_detach_sync (FridaSession * self, GCancellable * cancellable, GError ** error);
+void frida_session_resume (FridaSession * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_session_resume_finish (FridaSession * self, GAsyncResult * result, GError ** error);
+void frida_session_resume_sync (FridaSession * self, GCancellable * cancellable, GError ** error);
 void frida_session_enable_child_gating (FridaSession * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 void frida_session_enable_child_gating_finish (FridaSession * self, GAsyncResult * result, GError ** error);
 void frida_session_enable_child_gating_sync (FridaSession * self, GCancellable * cancellable, GError ** error);
@@ -52923,13 +53437,14 @@ void frida_session_enable_debugger_sync (FridaSession * self, guint16 port, GCan
 void frida_session_disable_debugger (FridaSession * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 void frida_session_disable_debugger_finish (FridaSession * self, GAsyncResult * result, GError ** error);
 void frida_session_disable_debugger_sync (FridaSession * self, GCancellable * cancellable, GError ** error);
-void frida_session_enable_jit (FridaSession * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
-void frida_session_enable_jit_finish (FridaSession * self, GAsyncResult * result, GError ** error);
-void frida_session_enable_jit_sync (FridaSession * self, GCancellable * cancellable, GError ** error);
+void frida_session_setup_peer_connection (FridaSession * self, FridaPeerOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_session_setup_peer_connection_finish (FridaSession * self, GAsyncResult * result, GError ** error);
+void frida_session_setup_peer_connection_sync (FridaSession * self, FridaPeerOptions * options, GCancellable * cancellable, GError ** error);
+void frida_session_join_portal (FridaSession * self, const gchar * address, FridaPortalOptions * options, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+FridaPortalMembership * frida_session_join_portal_finish (FridaSession * self, GAsyncResult * result, GError ** error);
+FridaPortalMembership * frida_session_join_portal_sync (FridaSession * self, const gchar * address, FridaPortalOptions * options, GCancellable * cancellable, GError ** error);
 
 /* Script */
-guint frida_script_get_id (FridaScript * self);
-
 gboolean frida_script_is_destroyed (FridaScript * self);
 void frida_script_load (FridaScript * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 void frida_script_load_finish (FridaScript * self, GAsyncResult * result, GError ** error);
@@ -52940,9 +53455,7 @@ void frida_script_unload_sync (FridaScript * self, GCancellable * cancellable, G
 void frida_script_eternalize (FridaScript * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 void frida_script_eternalize_finish (FridaScript * self, GAsyncResult * result, GError ** error);
 void frida_script_eternalize_sync (FridaScript * self, GCancellable * cancellable, GError ** error);
-void frida_script_post (FridaScript * self, const gchar * message, GBytes * data, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
-void frida_script_post_finish (FridaScript * self, GAsyncResult * result, GError ** error);
-void frida_script_post_sync (FridaScript * self, const gchar * message, GBytes * data, GCancellable * cancellable, GError ** error);
+void frida_script_post (FridaScript * self, const gchar * json, GBytes * data);
 
 /* ScriptOptions */
 FridaScriptOptions * frida_script_options_new (void);
@@ -52953,10 +53466,65 @@ FridaScriptRuntime frida_script_options_get_runtime (FridaScriptOptions * self);
 void frida_script_options_set_name (FridaScriptOptions * self, const gchar * value);
 void frida_script_options_set_runtime (FridaScriptOptions * self, FridaScriptRuntime value);
 
+/* PeerOptions */
+FridaPeerOptions * frida_peer_options_new (void);
+
+const gchar * frida_peer_options_get_stun_server (FridaPeerOptions * self);
+
+void frida_peer_options_clear_relays (FridaPeerOptions * self);
+void frida_peer_options_add_relay (FridaPeerOptions * self, FridaRelay * relay);
+void frida_peer_options_enumerate_relays (FridaPeerOptions * self, GFunc func, gpointer user_data);
+void frida_peer_options_set_stun_server (FridaPeerOptions * self, const gchar * value);
+
+/* Relay */
+FridaRelay * frida_relay_new (const gchar * address, const gchar * username, const gchar * password, FridaRelayKind kind);
+
+const gchar * frida_relay_get_address (FridaRelay * self);
+const gchar * frida_relay_get_username (FridaRelay * self);
+const gchar * frida_relay_get_password (FridaRelay * self);
+FridaRelayKind frida_relay_get_kind (FridaRelay * self);
+
+/* PortalOptions */
+FridaPortalOptions * frida_portal_options_new (void);
+
+GTlsCertificate * frida_portal_options_get_certificate (FridaPortalOptions * self);
+const gchar * frida_portal_options_get_token (FridaPortalOptions * self);
+gchar ** frida_portal_options_get_acl (FridaPortalOptions * self, gint * result_length);
+
+void frida_portal_options_set_certificate (FridaPortalOptions * self, GTlsCertificate * value);
+void frida_portal_options_set_token (FridaPortalOptions * self, const gchar * value);
+void frida_portal_options_set_acl (FridaPortalOptions * self, gchar ** value, gint value_length);
+
+/* PortalMembership */
+guint frida_portal_membership_get_id (FridaPortalMembership * self);
+
+void frida_portal_membership_terminate (FridaPortalMembership * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_portal_membership_terminate_finish (FridaPortalMembership * self, GAsyncResult * result, GError ** error);
+void frida_portal_membership_terminate_sync (FridaPortalMembership * self, GCancellable * cancellable, GError ** error);
+
+/* RpcClient */
+FridaRpcClient * frida_rpc_client_new (FridaRpcPeer * peer);
+
+FridaRpcPeer * frida_rpc_client_get_peer (FridaRpcClient * self);
+
+void frida_rpc_client_call (FridaRpcClient * self, const gchar * method, JsonNode ** args, gint args_length, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+JsonNode * frida_rpc_client_call_finish (FridaRpcClient * self, GAsyncResult * result, GError ** error);
+gboolean frida_rpc_client_try_handle_message (FridaRpcClient * self, const gchar * json);
+
+/* RpcPeer */
+struct _FridaRpcPeerIface {
+  GTypeInterface parent_iface;
+  void (* post_rpc_message) (FridaRpcPeer * self, const gchar * json, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+  void (* post_rpc_message_finish) (FridaRpcPeer * self, GAsyncResult * result, GError ** error);
+};
+
+void frida_rpc_peer_post_rpc_message (FridaRpcPeer * self, const gchar * json, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_rpc_peer_post_rpc_message_finish (FridaRpcPeer * self, GAsyncResult * result, GError ** error);
+
 /* Injector */
 FridaInjector * frida_injector_new (void);
-
 FridaInjector * frida_injector_new_inprocess (void);
+
 void frida_injector_close (FridaInjector * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 void frida_injector_close_finish (FridaInjector * self, GAsyncResult * result, GError ** error);
 void frida_injector_close_sync (FridaInjector * self, GCancellable * cancellable, GError ** error);
@@ -52973,6 +53541,78 @@ void frida_injector_recreate_thread (FridaInjector * self, guint pid, guint id, 
 void frida_injector_recreate_thread_finish (FridaInjector * self, GAsyncResult * result, GError ** error);
 void frida_injector_recreate_thread_sync (FridaInjector * self, guint pid, guint id, GCancellable * cancellable, GError ** error);
 
+/* ControlService */
+FridaControlService * frida_control_service_new (FridaEndpointParameters * endpoint_params, FridaControlServiceOptions * options);
+FridaControlService * frida_control_service_new_with_host_session (FridaHostSession * host_session, FridaEndpointParameters * endpoint_params, FridaControlServiceOptions * options);
+
+FridaHostSession * frida_control_service_get_host_session (FridaControlService * self);
+FridaEndpointParameters * frida_control_service_get_endpoint_params (FridaControlService * self);
+FridaControlServiceOptions * frida_control_service_get_options (FridaControlService * self);
+
+void frida_control_service_start (FridaControlService * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_control_service_start_finish (FridaControlService * self, GAsyncResult * result, GError ** error);
+void frida_control_service_start_sync (FridaControlService * self, GCancellable * cancellable, GError ** error);
+void frida_control_service_stop (FridaControlService * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_control_service_stop_finish (FridaControlService * self, GAsyncResult * result, GError ** error);
+void frida_control_service_stop_sync (FridaControlService * self, GCancellable * cancellable, GError ** error);
+
+/* ControlServiceOptions */
+FridaControlServiceOptions * frida_control_service_options_new (void);
+
+gboolean frida_control_service_options_get_enable_preload (FridaControlServiceOptions * self);
+gboolean frida_control_service_options_get_report_crashes (FridaControlServiceOptions * self);
+
+void frida_control_service_options_set_enable_preload (FridaControlServiceOptions * self, gboolean value);
+void frida_control_service_options_set_report_crashes (FridaControlServiceOptions * self, gboolean value);
+
+/* PortalService */
+FridaPortalService * frida_portal_service_new (FridaEndpointParameters * cluster_params, FridaEndpointParameters * control_params);
+
+FridaDevice * frida_portal_service_get_device (FridaPortalService * self);
+FridaEndpointParameters * frida_portal_service_get_cluster_params (FridaPortalService * self);
+FridaEndpointParameters * frida_portal_service_get_control_params (FridaPortalService * self);
+
+void frida_portal_service_start (FridaPortalService * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_portal_service_start_finish (FridaPortalService * self, GAsyncResult * result, GError ** error);
+void frida_portal_service_start_sync (FridaPortalService * self, GCancellable * cancellable, GError ** error);
+void frida_portal_service_stop (FridaPortalService * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_portal_service_stop_finish (FridaPortalService * self, GAsyncResult * result, GError ** error);
+void frida_portal_service_stop_sync (FridaPortalService * self, GCancellable * cancellable, GError ** error);
+void frida_portal_service_kick (FridaPortalService * self, guint connection_id);
+void frida_portal_service_post (FridaPortalService * self, guint connection_id, const gchar * json, GBytes * data);
+void frida_portal_service_narrowcast (FridaPortalService * self, const gchar * tag, const gchar * json, GBytes * data);
+void frida_portal_service_broadcast (FridaPortalService * self, const gchar * json, GBytes * data);
+gchar ** frida_portal_service_enumerate_tags (FridaPortalService * self, guint connection_id, gint * result_length);
+void frida_portal_service_tag (FridaPortalService * self, guint connection_id, const gchar * tag);
+void frida_portal_service_untag (FridaPortalService * self, guint connection_id, const gchar * tag);
+
+/* EndpointParameters */
+FridaEndpointParameters * frida_endpoint_parameters_new (const gchar * address, guint16 port, GTlsCertificate * certificate, const gchar * origin, FridaAuthenticationService * auth_service, GFile * asset_root);
+
+const gchar * frida_endpoint_parameters_get_address (FridaEndpointParameters * self);
+guint16 frida_endpoint_parameters_get_port (FridaEndpointParameters * self);
+GTlsCertificate * frida_endpoint_parameters_get_certificate (FridaEndpointParameters * self);
+const gchar * frida_endpoint_parameters_get_origin (FridaEndpointParameters * self);
+FridaAuthenticationService * frida_endpoint_parameters_get_auth_service (FridaEndpointParameters * self);
+GFile * frida_endpoint_parameters_get_asset_root (FridaEndpointParameters * self);
+
+void frida_endpoint_parameters_set_asset_root (FridaEndpointParameters * self, GFile * value);
+
+/* AuthenticationService */
+struct _FridaAuthenticationServiceIface {
+  GTypeInterface parent_iface;
+  void (* authenticate) (FridaAuthenticationService * self, const gchar * token, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+  gchar * (* authenticate_finish) (FridaAuthenticationService * self, GAsyncResult * result, GError ** error);
+};
+
+void frida_authentication_service_authenticate (FridaAuthenticationService * self, const gchar * token, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+gchar * frida_authentication_service_authenticate_finish (FridaAuthenticationService * self, GAsyncResult * result, GError ** error);
+
+/* StaticAuthenticationService */
+FridaStaticAuthenticationService * frida_static_authentication_service_new (const gchar * token);
+
+const gchar * frida_static_authentication_service_get_token_hash (FridaStaticAuthenticationService * self);
+
 /* FileMonitor */
 FridaFileMonitor * frida_file_monitor_new (const gchar * path);
 
@@ -52984,6 +53624,8 @@ void frida_file_monitor_enable_sync (FridaFileMonitor * self, GCancellable * can
 void frida_file_monitor_disable (FridaFileMonitor * self, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 void frida_file_monitor_disable_finish (FridaFileMonitor * self, GAsyncResult * result, GError ** error);
 void frida_file_monitor_disable_sync (FridaFileMonitor * self, GCancellable * cancellable, GError ** error);
+
+/* Toplevel functions */
 
 /* Errors */
 GQuark frida_error_quark (void);
@@ -53007,40 +53649,75 @@ typedef enum {
 /* GTypes */
 GType frida_runtime_get_type (void) G_GNUC_CONST;
 GType frida_device_type_get_type (void) G_GNUC_CONST;
+GType frida_agent_message_kind_get_type (void) G_GNUC_CONST;
 GType frida_child_origin_get_type (void) G_GNUC_CONST;
+GType frida_peer_setup_get_type (void) G_GNUC_CONST;
+GType frida_port_conflict_behavior_get_type (void) G_GNUC_CONST;
 GType frida_realm_get_type (void) G_GNUC_CONST;
+GType frida_relay_kind_get_type (void) G_GNUC_CONST;
+GType frida_scope_get_type (void) G_GNUC_CONST;
 GType frida_script_runtime_get_type (void) G_GNUC_CONST;
 GType frida_session_detach_reason_get_type (void) G_GNUC_CONST;
 GType frida_stdio_get_type (void) G_GNUC_CONST;
 GType frida_unload_policy_get_type (void) G_GNUC_CONST;
-GType frida_device_manager_get_type (void) G_GNUC_CONST ;
-GType frida_device_list_get_type (void) G_GNUC_CONST ;
-GType frida_device_get_type (void) G_GNUC_CONST ;
-GType frida_application_list_get_type (void) G_GNUC_CONST ;
-GType frida_application_get_type (void) G_GNUC_CONST ;
-GType frida_process_list_get_type (void) G_GNUC_CONST ;
-GType frida_process_get_type (void) G_GNUC_CONST ;
-GType frida_spawn_options_get_type (void) G_GNUC_CONST ;
-GType frida_spawn_list_get_type (void) G_GNUC_CONST ;
-GType frida_spawn_get_type (void) G_GNUC_CONST ;
-GType frida_child_list_get_type (void) G_GNUC_CONST ;
-GType frida_child_get_type (void) G_GNUC_CONST ;
-GType frida_crash_get_type (void) G_GNUC_CONST ;
-GType frida_icon_get_type (void) G_GNUC_CONST ;
-GType frida_session_get_type (void) G_GNUC_CONST ;
-GType frida_script_get_type (void) G_GNUC_CONST ;
-GType frida_script_options_get_type (void) G_GNUC_CONST ;
-GType frida_injector_get_type (void) G_GNUC_CONST ;
-GType frida_file_monitor_get_type (void) G_GNUC_CONST ;
+GType frida_web_service_flavor_get_type (void) G_GNUC_CONST;
+GType frida_web_service_transport_get_type (void) G_GNUC_CONST;
+GType frida_device_manager_get_type (void) G_GNUC_CONST;
+GType frida_device_list_get_type (void) G_GNUC_CONST;
+GType frida_device_get_type (void) G_GNUC_CONST;
+GType frida_remote_device_options_get_type (void) G_GNUC_CONST;
+GType frida_application_list_get_type (void) G_GNUC_CONST;
+GType frida_application_get_type (void) G_GNUC_CONST;
+GType frida_process_list_get_type (void) G_GNUC_CONST;
+GType frida_process_get_type (void) G_GNUC_CONST;
+GType frida_process_match_options_get_type (void) G_GNUC_CONST;
+GType frida_spawn_options_get_type (void) G_GNUC_CONST;
+GType frida_frontmost_query_options_get_type (void) G_GNUC_CONST;
+GType frida_application_query_options_get_type (void) G_GNUC_CONST;
+GType frida_process_query_options_get_type (void) G_GNUC_CONST;
+GType frida_session_options_get_type (void) G_GNUC_CONST;
+GType frida_spawn_list_get_type (void) G_GNUC_CONST;
+GType frida_spawn_get_type (void) G_GNUC_CONST;
+GType frida_child_list_get_type (void) G_GNUC_CONST;
+GType frida_child_get_type (void) G_GNUC_CONST;
+GType frida_crash_get_type (void) G_GNUC_CONST;
+GType frida_bus_get_type (void) G_GNUC_CONST;
+GType frida_session_get_type (void) G_GNUC_CONST;
+GType frida_script_get_type (void) G_GNUC_CONST;
+GType frida_script_options_get_type (void) G_GNUC_CONST;
+GType frida_peer_options_get_type (void) G_GNUC_CONST;
+GType frida_relay_get_type (void) G_GNUC_CONST;
+GType frida_portal_options_get_type (void) G_GNUC_CONST;
+GType frida_portal_membership_get_type (void) G_GNUC_CONST;
+GType frida_rpc_client_get_type (void) G_GNUC_CONST;
+GType frida_rpc_peer_get_type (void) G_GNUC_CONST;
+GType frida_injector_get_type (void) G_GNUC_CONST;
+GType frida_control_service_get_type (void) G_GNUC_CONST;
+GType frida_control_service_options_get_type (void) G_GNUC_CONST;
+GType frida_portal_service_get_type (void) G_GNUC_CONST;
+GType frida_endpoint_parameters_get_type (void) G_GNUC_CONST;
+GType frida_authentication_service_get_type (void) G_GNUC_CONST;
+GType frida_static_authentication_service_get_type (void) G_GNUC_CONST;
+GType frida_file_monitor_get_type (void) G_GNUC_CONST;
 
 /* Macros */
 #define FRIDA_TYPE_RUNTIME (frida_runtime_get_type ())
 
 #define FRIDA_TYPE_DEVICE_TYPE (frida_device_type_get_type ())
 
+#define FRIDA_TYPE_AGENT_MESSAGE_KIND (frida_agent_message_kind_get_type ())
+
 #define FRIDA_TYPE_CHILD_ORIGIN (frida_child_origin_get_type ())
 
+#define FRIDA_TYPE_PEER_SETUP (frida_peer_setup_get_type ())
+
+#define FRIDA_TYPE_PORT_CONFLICT_BEHAVIOR (frida_port_conflict_behavior_get_type ())
+
 #define FRIDA_TYPE_REALM (frida_realm_get_type ())
+
+#define FRIDA_TYPE_RELAY_KIND (frida_relay_kind_get_type ())
+
+#define FRIDA_TYPE_SCOPE (frida_scope_get_type ())
 
 #define FRIDA_TYPE_SCRIPT_RUNTIME (frida_script_runtime_get_type ())
 
@@ -53049,6 +53726,10 @@ GType frida_file_monitor_get_type (void) G_GNUC_CONST ;
 #define FRIDA_TYPE_STDIO (frida_stdio_get_type ())
 
 #define FRIDA_TYPE_UNLOAD_POLICY (frida_unload_policy_get_type ())
+
+#define FRIDA_TYPE_WEB_SERVICE_FLAVOR (frida_web_service_flavor_get_type ())
+
+#define FRIDA_TYPE_WEB_SERVICE_TRANSPORT (frida_web_service_transport_get_type ())
 
 #define FRIDA_TYPE_DEVICE_MANAGER (frida_device_manager_get_type ())
 #define FRIDA_DEVICE_MANAGER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_DEVICE_MANAGER, FridaDeviceManager))
@@ -53061,6 +53742,10 @@ GType frida_file_monitor_get_type (void) G_GNUC_CONST ;
 #define FRIDA_TYPE_DEVICE (frida_device_get_type ())
 #define FRIDA_DEVICE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_DEVICE, FridaDevice))
 #define FRIDA_IS_DEVICE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_DEVICE))
+
+#define FRIDA_TYPE_REMOTE_DEVICE_OPTIONS (frida_remote_device_options_get_type ())
+#define FRIDA_REMOTE_DEVICE_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_REMOTE_DEVICE_OPTIONS, FridaRemoteDeviceOptions))
+#define FRIDA_IS_REMOTE_DEVICE_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_REMOTE_DEVICE_OPTIONS))
 
 #define FRIDA_TYPE_APPLICATION_LIST (frida_application_list_get_type ())
 #define FRIDA_APPLICATION_LIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_APPLICATION_LIST, FridaApplicationList))
@@ -53078,9 +53763,29 @@ GType frida_file_monitor_get_type (void) G_GNUC_CONST ;
 #define FRIDA_PROCESS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_PROCESS, FridaProcess))
 #define FRIDA_IS_PROCESS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_PROCESS))
 
+#define FRIDA_TYPE_PROCESS_MATCH_OPTIONS (frida_process_match_options_get_type ())
+#define FRIDA_PROCESS_MATCH_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_PROCESS_MATCH_OPTIONS, FridaProcessMatchOptions))
+#define FRIDA_IS_PROCESS_MATCH_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_PROCESS_MATCH_OPTIONS))
+
 #define FRIDA_TYPE_SPAWN_OPTIONS (frida_spawn_options_get_type ())
 #define FRIDA_SPAWN_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_SPAWN_OPTIONS, FridaSpawnOptions))
 #define FRIDA_IS_SPAWN_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_SPAWN_OPTIONS))
+
+#define FRIDA_TYPE_FRONTMOST_QUERY_OPTIONS (frida_frontmost_query_options_get_type ())
+#define FRIDA_FRONTMOST_QUERY_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_FRONTMOST_QUERY_OPTIONS, FridaFrontmostQueryOptions))
+#define FRIDA_IS_FRONTMOST_QUERY_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_FRONTMOST_QUERY_OPTIONS))
+
+#define FRIDA_TYPE_APPLICATION_QUERY_OPTIONS (frida_application_query_options_get_type ())
+#define FRIDA_APPLICATION_QUERY_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_APPLICATION_QUERY_OPTIONS, FridaApplicationQueryOptions))
+#define FRIDA_IS_APPLICATION_QUERY_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_APPLICATION_QUERY_OPTIONS))
+
+#define FRIDA_TYPE_PROCESS_QUERY_OPTIONS (frida_process_query_options_get_type ())
+#define FRIDA_PROCESS_QUERY_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_PROCESS_QUERY_OPTIONS, FridaProcessQueryOptions))
+#define FRIDA_IS_PROCESS_QUERY_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_PROCESS_QUERY_OPTIONS))
+
+#define FRIDA_TYPE_SESSION_OPTIONS (frida_session_options_get_type ())
+#define FRIDA_SESSION_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_SESSION_OPTIONS, FridaSessionOptions))
+#define FRIDA_IS_SESSION_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_SESSION_OPTIONS))
 
 #define FRIDA_TYPE_SPAWN_LIST (frida_spawn_list_get_type ())
 #define FRIDA_SPAWN_LIST(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_SPAWN_LIST, FridaSpawnList))
@@ -53102,9 +53807,9 @@ GType frida_file_monitor_get_type (void) G_GNUC_CONST ;
 #define FRIDA_CRASH(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_CRASH, FridaCrash))
 #define FRIDA_IS_CRASH(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_CRASH))
 
-#define FRIDA_TYPE_ICON (frida_icon_get_type ())
-#define FRIDA_ICON(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_ICON, FridaIcon))
-#define FRIDA_IS_ICON(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_ICON))
+#define FRIDA_TYPE_BUS (frida_bus_get_type ())
+#define FRIDA_BUS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_BUS, FridaBus))
+#define FRIDA_IS_BUS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_BUS))
 
 #define FRIDA_TYPE_SESSION (frida_session_get_type ())
 #define FRIDA_SESSION(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_SESSION, FridaSession))
@@ -53118,9 +53823,57 @@ GType frida_file_monitor_get_type (void) G_GNUC_CONST ;
 #define FRIDA_SCRIPT_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_SCRIPT_OPTIONS, FridaScriptOptions))
 #define FRIDA_IS_SCRIPT_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_SCRIPT_OPTIONS))
 
+#define FRIDA_TYPE_PEER_OPTIONS (frida_peer_options_get_type ())
+#define FRIDA_PEER_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_PEER_OPTIONS, FridaPeerOptions))
+#define FRIDA_IS_PEER_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_PEER_OPTIONS))
+
+#define FRIDA_TYPE_RELAY (frida_relay_get_type ())
+#define FRIDA_RELAY(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_RELAY, FridaRelay))
+#define FRIDA_IS_RELAY(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_RELAY))
+
+#define FRIDA_TYPE_PORTAL_OPTIONS (frida_portal_options_get_type ())
+#define FRIDA_PORTAL_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_PORTAL_OPTIONS, FridaPortalOptions))
+#define FRIDA_IS_PORTAL_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_PORTAL_OPTIONS))
+
+#define FRIDA_TYPE_PORTAL_MEMBERSHIP (frida_portal_membership_get_type ())
+#define FRIDA_PORTAL_MEMBERSHIP(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_PORTAL_MEMBERSHIP, FridaPortalMembership))
+#define FRIDA_IS_PORTAL_MEMBERSHIP(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_PORTAL_MEMBERSHIP))
+
+#define FRIDA_TYPE_RPC_CLIENT (frida_rpc_client_get_type ())
+#define FRIDA_RPC_CLIENT(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_RPC_CLIENT, FridaRpcClient))
+#define FRIDA_IS_RPC_CLIENT(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_RPC_CLIENT))
+
+#define FRIDA_TYPE_RPC_PEER (frida_rpc_peer_get_type ())
+#define FRIDA_RPC_PEER(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_RPC_PEER, FridaRpcPeer))
+#define FRIDA_IS_RPC_PEER(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_RPC_PEER))
+
 #define FRIDA_TYPE_INJECTOR (frida_injector_get_type ())
 #define FRIDA_INJECTOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_INJECTOR, FridaInjector))
 #define FRIDA_IS_INJECTOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_INJECTOR))
+
+#define FRIDA_TYPE_CONTROL_SERVICE (frida_control_service_get_type ())
+#define FRIDA_CONTROL_SERVICE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_CONTROL_SERVICE, FridaControlService))
+#define FRIDA_IS_CONTROL_SERVICE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_CONTROL_SERVICE))
+
+#define FRIDA_TYPE_CONTROL_SERVICE_OPTIONS (frida_control_service_options_get_type ())
+#define FRIDA_CONTROL_SERVICE_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_CONTROL_SERVICE_OPTIONS, FridaControlServiceOptions))
+#define FRIDA_IS_CONTROL_SERVICE_OPTIONS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_CONTROL_SERVICE_OPTIONS))
+
+#define FRIDA_TYPE_PORTAL_SERVICE (frida_portal_service_get_type ())
+#define FRIDA_PORTAL_SERVICE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_PORTAL_SERVICE, FridaPortalService))
+#define FRIDA_IS_PORTAL_SERVICE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_PORTAL_SERVICE))
+
+#define FRIDA_TYPE_ENDPOINT_PARAMETERS (frida_endpoint_parameters_get_type ())
+#define FRIDA_ENDPOINT_PARAMETERS(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_ENDPOINT_PARAMETERS, FridaEndpointParameters))
+#define FRIDA_IS_ENDPOINT_PARAMETERS(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_ENDPOINT_PARAMETERS))
+
+#define FRIDA_TYPE_AUTHENTICATION_SERVICE (frida_authentication_service_get_type ())
+#define FRIDA_AUTHENTICATION_SERVICE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_AUTHENTICATION_SERVICE, FridaAuthenticationService))
+#define FRIDA_IS_AUTHENTICATION_SERVICE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_AUTHENTICATION_SERVICE))
+
+#define FRIDA_TYPE_STATIC_AUTHENTICATION_SERVICE (frida_static_authentication_service_get_type ())
+#define FRIDA_STATIC_AUTHENTICATION_SERVICE(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_STATIC_AUTHENTICATION_SERVICE, FridaStaticAuthenticationService))
+#define FRIDA_IS_STATIC_AUTHENTICATION_SERVICE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), FRIDA_TYPE_STATIC_AUTHENTICATION_SERVICE))
 
 #define FRIDA_TYPE_FILE_MONITOR (frida_file_monitor_get_type ())
 #define FRIDA_FILE_MONITOR(obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), FRIDA_TYPE_FILE_MONITOR, FridaFileMonitor))
