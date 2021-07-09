@@ -264,7 +264,7 @@ bin
 
 | 原版                          | 描述
 |------------------------------|----------
-|Chaltier.7z                   | 最早的 SC 剑帝补丁，当约修亚在队伍第一时，进入战斗时会替换成剑帝，由 `Leon` 发布在 `FALCOMCHINA`
+|Chaltier.7z                   | 最早的日文版 SC 1.0.2.0 剑帝补丁，当约修亚在队伍第一时，进入战斗时会替换成剑帝，由 `Leon` 于 2006 ~ 2007年发布在 `FALCOMCHINA`，可以说是本人编程生涯的起点
 |ED6back.exe                   | 原版的 ED6back，来自 `prefetchnta` 的 blog
 |FALCOM.exe                    | 最早的 ED6 压缩程序，来自 `prefetchnta` 的 blog
 |ED6walk.7z                    | 原版的 ED6walk，来自 `prefetchnta` 的 blog
