@@ -1,20 +1,28 @@
 //#pragma comment(linker, "/ENTRY:DllMain")
+#pragma comment(linker, "/EXPORT:Direct3DCreate9=d3d9.Direct3DCreate9")
 
 #include "ml.cpp"
 #include "frida-core.h"
+
+ML_OVERLOAD_NEW
+
+#define DBG(...) { PrintConsole(__VA_ARGS__); }
+//#define DBG(...) 
 
 class FridaLoader
 {
 protected:
     HANDLE      InitEvent;
     HANDLE      ExitEvent;
+    PSTR        Script = nullptr;
+    HANDLE      ThreadHandle = nullptr;
     GMainLoop*  Loop;
 
 public:
     FridaLoader();
     ~FridaLoader();
     
-    NTSTATUS Load();
+    NTSTATUS Load(PSTR Script);
     NTSTATUS Stop();
 
     NTSTATUS WaitForInit()
@@ -33,6 +41,8 @@ protected:
     NTSTATUS FridaThread();
 };
 
+FridaLoader* gFrida;
+
 FridaLoader::FridaLoader()
 {
     NtCreateEvent(&this->InitEvent, EVENT_ALL_ACCESS, nullptr, SynchronizationEvent, FALSE);
@@ -41,13 +51,24 @@ FridaLoader::FridaLoader()
 
 FridaLoader::~FridaLoader()
 {
+    this->Stop();
     NtClose(this->ExitEvent);
     NtClose(this->InitEvent);
+    FreeMemoryP(this->Script);
 }
 
-NTSTATUS FridaLoader::Load()
+NTSTATUS FridaLoader::Load(PSTR Script)
 {
-    Ps::CreateThreadT(
+    ULONG_PTR   Length;
+    NTSTATUS    Status;
+
+    FAIL_RETURN(this->Stop());
+
+    Length = StrLengthA(Script) + 1;
+    this->Script = (PSTR)ReAllocateMemoryP(this->Script, Length);
+    RtlCopyMemory(this->Script, Script, Length);
+
+    FAIL_RETURN(Ps::CreateThreadT(
         ThreadCallbackM(FridaLoader* Loader)
         {
             NTSTATUS Status = Loader->FridaThread();
@@ -57,16 +78,28 @@ NTSTATUS FridaLoader::Load()
 
             return Status;
         },
-        this
-    );
+        this,
+        FALSE,
+        Ps::CurrentProcess,
+        &this->ThreadHandle
+    ));
 
     return this->WaitForInit();
 }
 
 NTSTATUS FridaLoader::Stop()
 {
+    if (this->ThreadHandle == nullptr)
+        return STATUS_SUCCESS;
+
+    NTSTATUS Status;
+
     NtSetEvent(this->ExitEvent, nullptr);
-    return NtWaitForSingleObject(this->InitEvent, FALSE, nullptr);
+    Status = NtWaitForSingleObject(this->ThreadHandle, FALSE, nullptr);
+    NtClose(this->ThreadHandle);
+    this->ThreadHandle = nullptr;
+
+    return Status;
 }
 
 NTSTATUS FridaLoader::FridaThread()
@@ -77,6 +110,8 @@ NTSTATUS FridaLoader::FridaThread()
     FridaDevice*        localDevice;
     GError*             error;
 
+    DBG(L"FridaThread\n");
+
     error       = nullptr;
     localDevice = nullptr;
     manager     = nullptr;
@@ -85,7 +120,13 @@ NTSTATUS FridaLoader::FridaThread()
     SCOPE_EXIT
     {
         if (error != nullptr)
+        {
+            WCHAR Buffer[0x1000];
+
+            swprintf(Buffer, L"domain = %d\ncode = %d\n%S", error->domain, error->code, error->message);
+            ExceptionBox(Buffer);
             g_error_free(error);
+        }
 
         if (localDevice != nullptr)
             frida_unref(localDevice);
@@ -118,36 +159,24 @@ NTSTATUS FridaLoader::FridaThread()
     if (localDevice == nullptr)
         return STATUS_DEVICE_DOES_NOT_EXIST;
 
-    FridaSession* session = frida_device_attach_sync(localDevice, (guint)Ps::CurrentPid(), FRIDA_REALM_NATIVE, nullptr, &error);
+    FridaSessionOptions* sessionOptions = frida_session_options_new();
+    frida_session_options_set_realm(sessionOptions, FRIDA_REALM_NATIVE);
+    FridaSession* session = frida_device_attach_sync(localDevice, (guint)Ps::CurrentPid(), sessionOptions, nullptr, &error);
+    g_clear_object(&sessionOptions);
+
     if (error != nullptr)
         return STATUS_ALREADY_DISCONNECTED;
 
-    FridaScriptOptions* options = frida_script_options_new();
+    FridaScriptOptions* scriptOptions = frida_script_options_new();
 
-    frida_script_options_set_name(options, "example");
-    frida_script_options_set_runtime(options, FRIDA_SCRIPT_RUNTIME_QJS);
+    frida_script_options_set_name(scriptOptions, "script");
+    frida_script_options_set_runtime(scriptOptions, FRIDA_SCRIPT_RUNTIME_QJS);
 
-    FridaScript* script = frida_session_create_script_sync(session,
-        "Interceptor.attach(Module.getExportByName('kernel32.dll', 'CreateFileW'), {\n"
-        "  onEnter(args) {\n"
-        "    console.log(`[*] CreateFileW(\"${args[0].readUtf16String()}\")`);\n"
-        "  }\n"
-        "});\n"
-        "Interceptor.attach(Module.getExportByName('kernel32.dll', 'CloseHandle'), {\n"
-        "  onEnter(args) {\n"
-        "    console.log(`[*] CloseHandle(${args[0]})`);\n"
-        "  }\n"
-        "});",
-        options,
-        nullptr,
-        &error
-    );
+    FridaScript* script = frida_session_create_script_sync(session, this->Script, scriptOptions, nullptr, &error);
+    g_clear_object(&scriptOptions);
 
-    g_clear_object(&options);
-
-    frida_script_load_sync(script, NULL, &error);
     if (error != nullptr)
-        return STATUS_ALREADY_DISCONNECTED;
+        return STATUS_INVALID_PARAMETER;
 
     g_signal_connect(
         script,
@@ -172,11 +201,11 @@ NTSTATUS FridaLoader::FridaThread()
                 if (strcmp(type, "log") == 0)
                 {
                     const gchar * log_message = json_object_get_string_member(root, "payload");
-                    g_print("%s\n", log_message);
+                    DBG(L"%S\n", log_message);
                 }
                 else
                 {
-                    g_print("on_message: %s\n", message);
+                    DBG(L"on_message: %S\n", message);
                 }
 
                 g_object_unref(parser);
@@ -184,6 +213,10 @@ NTSTATUS FridaLoader::FridaThread()
         )),
         nullptr
     );
+
+    frida_script_load_sync(script, NULL, &error);
+    if (error != nullptr)
+        return STATUS_ALREADY_DISCONNECTED;
 
     g_idle_add(
         [](gpointer user_data) -> gboolean
@@ -218,34 +251,83 @@ NTSTATUS FridaLoader::FridaThread()
     frida_session_detach_sync(session, nullptr, nullptr);
     frida_unref(session);
 
-    NtSetEvent(this->InitEvent, nullptr);
-
     g_print("exit\n");
+
+    return STATUS_SUCCESS;
+}
+
+PSTR LoadScript()
+{
+    NTSTATUS        Status;
+    PLDR_MODULE     Exe;
+    PSTR            Script;
+    PWSTR           ScriptName;
+    NtFileDisk      ScriptFile;
+
+    Exe = Ldr::FindLdrModuleByHandle(nullptr);
+
+    ScriptName = (PWSTR)AllocStack(Exe->FullDllName.Length + sizeof(*ScriptName) * 3);
+    RtlCopyMemory(ScriptName, Exe->FullDllName.Buffer, Exe->FullDllName.Length);
+    ScriptName[Exe->FullDllName.Length / sizeof(*ScriptName)] = 0;
+
+    *(PULONG64)findextw(ScriptName) = TAG3W('.js');
+
+    Status = ScriptFile.Open(ScriptName);
+    if (NT_FAILED(Status))
+        return nullptr;
+
+    Script = (PSTR)AllocateMemoryP(ScriptFile.GetSize64() + 1);
+    if (Script == nullptr)
+        return nullptr;
+
+    Status = ScriptFile.Read(Script);
+    if (NT_FAILED(Status))
+    {
+        FreeMemoryP(Script);
+        Script = nullptr;
+    }
+    else
+    {
+        Script[ScriptFile.GetSize64()] = 0;
+    }
+
+    return Script;
+}
+
+NTSTATUS InitalizeFridaCore(PVOID, PVOID, PVOID)
+{
+    PSTR        Script;
+    NTSTATUS    Status;
+
+    Script = LoadScript();
+    if (Script == nullptr)
+        return STATUS_NOT_FOUND;
+
+    gFrida = new FridaLoader;
+
+    Status = gFrida->Load(Script);
+    FreeMemoryP(Script);
+
+    if (NT_FAILED(Status))
+    {
+        SafeDeleteT(gFrida);
+        return Status;
+    }
 
     return STATUS_SUCCESS;
 }
 
 BOOL UnInitialize(PVOID BaseAddress)
 {
+    SafeDeleteT(gFrida);
+    ml::MlUnInitialize();
     return FALSE;
 }
 
 BOOL Initialize(PVOID BaseAddress)
 {
-    NTSTATUS    Status;
-    FridaLoader frida;
-
-    Status = frida.Load();
-    if (NT_FAILED(Status))
-        return FALSE;
-
-    fclose(fopen("E:\\Game\\swd3\\Env.dat", "rb+"));
-
-    Ps::Sleep(1000 * 10);
-
-    frida.Stop();
-
-    return TRUE;
+    ml::MlInitialize();
+    return NT_SUCCESS(NtQueueApcThread(Ps::CurrentThread, (PKNORMAL_ROUTINE)InitalizeFridaCore, 0, 0, 0));
 }
 
 BOOL WINAPI DllMain(PVOID BaseAddress, ULONG Reason, PVOID Reserved)
@@ -266,6 +348,12 @@ BOOL WINAPI DllMain(PVOID BaseAddress, ULONG Reason, PVOID Reserved)
 ForceInline VOID main2(LONG_PTR argc, PWSTR *argv)
 {
     Initialize(0);
+    NtTestAlert();
+
+    fclose(fopen("E:\\Game\\swd3\\Env.dat", "rb+"));
+    Ps::Sleep(1000 * 5);
+
+    UnInitialize(0);
 }
 
 int __cdecl main(LONG_PTR argc, PWSTR *argv)

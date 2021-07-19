@@ -1478,21 +1478,21 @@ G_GNUC_EXTENSION typedef unsigned long long guint64;
 #define G_GUINT64_FORMAT "llu"
 
 
-#define GLIB_SIZEOF_VOID_P 8
+#define GLIB_SIZEOF_VOID_P 4
 #define GLIB_SIZEOF_LONG   4
-#define GLIB_SIZEOF_SIZE_T 8
-#define GLIB_SIZEOF_SSIZE_T 8
+#define GLIB_SIZEOF_SIZE_T 4
+#define GLIB_SIZEOF_SSIZE_T 4
 
-typedef signed long long gssize;
-typedef unsigned long long gsize;
-#define G_GSIZE_MODIFIER "ll"
-#define G_GSSIZE_MODIFIER "ll"
-#define G_GSIZE_FORMAT "llu"
-#define G_GSSIZE_FORMAT "lli"
+typedef signed int gssize;
+typedef unsigned int gsize;
+#define G_GSIZE_MODIFIER ""
+#define G_GSSIZE_MODIFIER ""
+#define G_GSIZE_FORMAT "u"
+#define G_GSSIZE_FORMAT "i"
 
-#define G_MAXSIZE	G_MAXUINT64
-#define G_MINSSIZE	G_MININT64
-#define G_MAXSSIZE	G_MAXINT64
+#define G_MAXSIZE	G_MAXUINT
+#define G_MINSSIZE	G_MININT
+#define G_MAXSSIZE	G_MAXINT
 
 typedef gint64 goffset;
 #define G_MINOFFSET	G_MININT64
@@ -1502,20 +1502,20 @@ typedef gint64 goffset;
 #define G_GOFFSET_FORMAT        G_GINT64_FORMAT
 #define G_GOFFSET_CONSTANT(val) G_GINT64_CONSTANT(val)
 
-#define G_POLLFD_FORMAT "%#llx"
+#define G_POLLFD_FORMAT "%#x"
 
-#define GPOINTER_TO_INT(p)	((gint)  (gint64) (p))
-#define GPOINTER_TO_UINT(p)	((guint) (guint64) (p))
+#define GPOINTER_TO_INT(p)	((gint)  (gint) (p))
+#define GPOINTER_TO_UINT(p)	((guint) (guint) (p))
 
-#define GINT_TO_POINTER(i)	((gpointer) (gint64) (i))
-#define GUINT_TO_POINTER(u)	((gpointer) (guint64) (u))
+#define GINT_TO_POINTER(i)	((gpointer) (gint) (i))
+#define GUINT_TO_POINTER(u)	((gpointer) (guint) (u))
 
-typedef signed long long gintptr;
-typedef unsigned long long guintptr;
+typedef signed int gintptr;
+typedef unsigned int guintptr;
 
-#define G_GINTPTR_MODIFIER      "ll"
-#define G_GINTPTR_FORMAT        "lli"
-#define G_GUINTPTR_FORMAT       "llu"
+#define G_GINTPTR_MODIFIER      ""
+#define G_GINTPTR_FORMAT        "i"
+#define G_GUINTPTR_FORMAT       "u"
 
 #define GLIB_MAJOR_VERSION 2
 #define GLIB_MINOR_VERSION 69
@@ -1588,10 +1588,10 @@ typedef unsigned long long guintptr;
 #define GUINT_TO_LE(val)	((guint) GUINT32_TO_LE (val))
 #define GINT_TO_BE(val)		((gint) GINT32_TO_BE (val))
 #define GUINT_TO_BE(val)	((guint) GUINT32_TO_BE (val))
-#define GSIZE_TO_LE(val)	((gsize) GUINT64_TO_LE (val))
-#define GSSIZE_TO_LE(val)	((gssize) GINT64_TO_LE (val))
-#define GSIZE_TO_BE(val)	((gsize) GUINT64_TO_BE (val))
-#define GSSIZE_TO_BE(val)	((gssize) GINT64_TO_BE (val))
+#define GSIZE_TO_LE(val)	((gsize) GUINT32_TO_LE (val))
+#define GSSIZE_TO_LE(val)	((gssize) GINT32_TO_LE (val))
+#define GSIZE_TO_BE(val)	((gsize) GUINT32_TO_BE (val))
+#define GSSIZE_TO_BE(val)	((gssize) GINT32_TO_BE (val))
 #define G_BYTE_ORDER G_LITTLE_ENDIAN
 
 #define GLIB_SYSDEF_POLLIN =1
@@ -53534,6 +53534,9 @@ guint frida_injector_inject_library_file_sync (FridaInjector * self, guint pid, 
 void frida_injector_inject_library_blob (FridaInjector * self, guint pid, GBytes * blob, const gchar * entrypoint, const gchar * data, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 guint frida_injector_inject_library_blob_finish (FridaInjector * self, GAsyncResult * result, GError ** error);
 guint frida_injector_inject_library_blob_sync (FridaInjector * self, guint pid, GBytes * blob, const gchar * entrypoint, const gchar * data, GCancellable * cancellable, GError ** error);
+void frida_injector_demonitor (FridaInjector * self, guint id, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
+void frida_injector_demonitor_finish (FridaInjector * self, GAsyncResult * result, GError ** error);
+void frida_injector_demonitor_sync (FridaInjector * self, guint id, GCancellable * cancellable, GError ** error);
 void frida_injector_demonitor_and_clone_state (FridaInjector * self, guint id, GCancellable * cancellable, GAsyncReadyCallback callback, gpointer user_data);
 guint frida_injector_demonitor_and_clone_state_finish (FridaInjector * self, GAsyncResult * result, GError ** error);
 guint frida_injector_demonitor_and_clone_state_sync (FridaInjector * self, guint id, GCancellable * cancellable, GError ** error);
