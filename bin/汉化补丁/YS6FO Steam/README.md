@@ -12,3 +12,5 @@
 
 
 其余三个 `7z` 解压到对应游戏 `release` 目录
+
+![alt text](https://github.com/Ouroboros/Falcom/raw/master/bin/%E6%B1%89%E5%8C%96%E8%A1%A5%E4%B8%81/YS6FO%20Steam/screenshot.jpg)
