@@ -1,6 +1,6 @@
 # YS6 YSF YSO Steam 版汉化补丁
 
-基于 `1.2` 版本改进，三版本通用，大概率包括未来的更新
+基于 [1.2版补丁](https://drive.google.com/drive/folders/1S6ilvuuRIeSADbIgLU77so5xNTd9ws0N) 制作，三版本通用，大概率包括未来的更新
 
 `dll.7z` 是汉化模块，解压出来后 dll 是 `ys6.dll`，名字不重要，将各个游戏的 exe 导入表里的 `d3d9.dll` 改成这个名字即可
 
