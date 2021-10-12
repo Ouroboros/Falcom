@@ -1,1 +1,1 @@
-[release](https://github.com/Ouroboros/Falcom/releases/latest)
+[详细说明](https://github.com/Ouroboros/Falcom/releases/latest)
