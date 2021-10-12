@@ -1,5 +1,6 @@
 //#pragma comment(linker, "/ENTRY:DllMain")
 #pragma comment(linker, "/EXPORT:Direct3DCreate9=d3d9.Direct3DCreate9")
+#pragma comment(linker, "/EXPORT:D3D11CreateDevice=d3d11.D3D11CreateDevice")
 
 #include "ml.cpp"
 #include "frida-core.h"
