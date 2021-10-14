@@ -279,7 +279,10 @@ bin
 
 | 汉化补丁                      | 描述
 |------------------------------|----------
-|[详见 release](https://github.com/Ouroboros/Falcom/releases/tag/1.0)| 
+|YSF                           | [详见 release](https://github.com/Ouroboros/Falcom/releases/tag/1.0)
+|YS6                           |
+|YSO                           |
+|YS8                           |
 
 
 其他
