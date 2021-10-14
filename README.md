@@ -279,7 +279,7 @@ bin
 
 | 汉化补丁                      | 描述
 |------------------------------|----------
-|YS6FO Steam                   | YSF YS6 YSO Steam 版汉化补丁，基于之前的 1.2 版改进
+|[详见 release](https://github.com/Ouroboros/Falcom/releases/tag/1.0)| 
 
 
 其他
