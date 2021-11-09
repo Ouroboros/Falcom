@@ -1,6 +1,10 @@
 //#pragma comment(linker, "/ENTRY:DllMain")
 #pragma comment(linker, "/EXPORT:Direct3DCreate9=d3d9.Direct3DCreate9")
 #pragma comment(linker, "/EXPORT:D3D11CreateDevice=d3d11.D3D11CreateDevice")
+#pragma comment(linker, "/EXPORT:DirectDrawCreate=DDRAW.DirectDrawCreate")
+#pragma comment(linker, "/EXPORT:AlphaBlend=MSIMG32.AlphaBlend")
+#pragma comment(linker, "/EXPORT:GradientFill=MSIMG32.GradientFill")
+#pragma comment(linker, "/EXPORT:TransparentBlt=MSIMG32.TransparentBlt")
 
 #include "ml.cpp"
 #include "frida-core.h"
@@ -277,7 +281,7 @@ PSTR LoadScript()
     if (NT_FAILED(Status))
         return nullptr;
 
-    Script = (PSTR)AllocateMemoryP(ScriptFile.GetSize64() + 1);
+    Script = (PSTR)AllocateMemoryP((ULONG_PTR)(ScriptFile.GetSize64() + 1));
     if (Script == nullptr)
         return nullptr;
 
