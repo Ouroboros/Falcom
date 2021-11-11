@@ -1,9 +1,9 @@
-from Common     import *
-from Assembler  import *
+from Falcom.Common  import *
+from Assembler      import *
 
 UserDefined = OperandType.UserDefined + 1
 
-class ED6FCOperandType(IntEnum2):
+class ED83OperandType(IntEnum2):
     Offset,     \
     Item,       \
     BGM,        \
@@ -13,26 +13,26 @@ class ED6FCOperandType(IntEnum2):
     __str__     = OperandType.__str__
     __repr__    = OperandType.__repr__
 
-class ED6FCOperandFormat(OperandFormat):
+class ED83OperandFormat(OperandFormat):
     sizeTable = {
         **OperandFormat.sizeTable,
 
-        ED6FCOperandType.Offset     : 2,
-        ED6FCOperandType.Item       : 2,
-        ED6FCOperandType.BGM        : 2,
-        ED6FCOperandType.Expression : None,
+        ED83OperandType.Offset     : 2,
+        ED83OperandType.Item       : 2,
+        ED83OperandType.BGM        : 2,
+        ED83OperandType.Expression : None,
     }
 
-class ED6FCOperandDescriptor(OperandDescriptor):
-    formatTable: Dict[str, 'ED6FCOperandDescriptor'] = {}
+class ED83OperandDescriptor(OperandDescriptor):
+    formatTable: Dict[str, 'ED83OperandDescriptor'] = {}
 
     def readValue(self, context: 'handlers.InstructionHandlerContext') -> Any:
         return {
-            OperandType.MBCS            : self.readText,
-            ED6FCOperandType.Expression : self.readExpression,
-            ED6FCOperandType.Offset     : lambda context: context.disasmContext.fs.ReadUShort(),
-            ED6FCOperandType.Item       : lambda context: context.disasmContext.fs.ReadUShort(),
-            ED6FCOperandType.BGM        : lambda context: context.disasmContext.fs.ReadShort(),
+            OperandType.MBCS           : self.readText,
+            ED83OperandType.Expression : self.readExpression,
+            ED83OperandType.Offset     : lambda context: context.disasmContext.fs.ReadUShort(),
+            ED83OperandType.Item       : lambda context: context.disasmContext.fs.ReadUShort(),
+            ED83OperandType.BGM        : lambda context: context.disasmContext.fs.ReadShort(),
 
         }.get(self.format.type, super().readValue)(context)
 
@@ -40,12 +40,10 @@ class ED6FCOperandDescriptor(OperandDescriptor):
         fs = context.disasmContext.fs
 
         s = bytearray()
-        objs = []                   # type: List[TextObject]
+        objs: List[TextObject] = []
         containsCtrlCodes = False
 
         def flushText():
-            nonlocal s
-
             if len(s) != 0:
                 objs.append(TextObject(value = s.decode(self.format.encoding)))
                 s.clear()
@@ -111,10 +109,10 @@ class ED6FCOperandDescriptor(OperandDescriptor):
     def formatValue(self, context: 'FormatOperandHandlerContext') -> str:
         return {
             OperandType.MBCS            : self.formatTextObjects,
-            ED6FCOperandType.Expression : self.formatExpression,
-            ED6FCOperandType.Offset     : lambda context: "'%s'" % context.operand.value.name,    # CodeBlock
-            # ED6FCOperandType.Item       : ,
-            # ED6FCOperandType.BGM        : ,
+            ED83OperandType.Expression : self.formatExpression,
+            ED83OperandType.Offset     : lambda context: "'%s'" % context.operand.value.name,    # CodeBlock
+            # ED83OperandType.Item       : ,
+            # ED83OperandType.BGM        : ,
 
         }.get(self.format.type, super().formatValue)(context)
 
@@ -171,15 +169,15 @@ class ED6FCOperandDescriptor(OperandDescriptor):
 
         return text
 
-def oprdesc(*args, **kwargs) -> ED6FCOperandDescriptor:
-    return ED6FCOperandDescriptor(ED6FCOperandFormat(*args, **kwargs))
+def oprdesc(*args, **kwargs) -> ED83OperandDescriptor:
+    return ED83OperandDescriptor(ED83OperandFormat(*args, **kwargs))
 
-ED6FCOperandDescriptor.formatTable.update({
+ED83OperandDescriptor.formatTable.update({
     **OperandDescriptor.formatTable,
 
-    'o' : oprdesc(ED6FCOperandType.Offset),
+    'o' : oprdesc(ED83OperandType.Offset),
     'S' : oprdesc(OperandType.MBCS),
-    'E' : oprdesc(ED6FCOperandType.Expression),
+    'E' : oprdesc(ED83OperandType.Expression),
 })
 
 class TextCtrlCode(IntEnum2):

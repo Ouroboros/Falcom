@@ -1,4 +1,5 @@
-from datatable import *
+from Falcom.Common import *
+from Falcom import ED83
 
 class NameTableEntry:
     def __init__(self, fs):
@@ -42,7 +43,7 @@ class NameTableEntry:
 
     __repr__ = __str__
 
-class NameTable(DataTable):
+class NameTable(ED83.Parser.DataTable):
     def __init__(self, fs):
         super().__init__(fs)
         self.entries = [NameTableEntry(self.data) for _ in range(self.entryCount)]

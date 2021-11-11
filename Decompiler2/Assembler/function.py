@@ -10,12 +10,12 @@ __all__ = (
 )
 
 class CodeBlock:
-    def __init__(self, instructions: 'List[instruction.Instruction]'):
-        self.name           = None          # type: str
+    def __init__(self, instructions: 'List[instruction.Instruction]', offset: int = None, name: str = None):
+        self.name           = name          # type: str
         self.instructions   = instructions  # type: List[instruction.Instruction]
         self.branches       = []            # type: List[CodeBlock]
         self.labels         = None          # type: List[instruction.Label]
-        self.offset         = None          # type: int
+        self.offset         = offset        # type: int
         self.parent         = None          # type: CodeBlock
 
     def addBranch(self, block: 'CodeBlock'):

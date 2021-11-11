@@ -15,10 +15,10 @@ class ED6FCInstructionTable(InstructionTable):
     def writeOpCode(self, fs: fileio.FileStream, inst: 'Instruction'):
         fs.WriteByte(inst.opcode)
 
-    def readOperand(self, info: 'handlers.InstructionHandlerInfo', inst: 'instruction.Instruction', desc: OperandDescriptor) -> 'instruction.Operand':
-        opr = super().readOperand(info, inst, desc)
+    def readOperand(self, context: 'handlers.InstructionHandlerContext', inst: 'instruction.Instruction', desc: OperandDescriptor) -> 'instruction.Operand':
+        opr = super().readOperand(context, inst, desc)
         if desc.format.type == ED6FCOperandType.Offset:
-            opr.value = info.addBranch(opr.value)
+            opr.value = context.addBranch(opr.value)
 
         return opr
 
@@ -31,55 +31,55 @@ for i in ED6FCOperandType:
 for i in TextCtrlCode:
     globals()[i.name] = i
 
-def Handler_If(info: InstructionHandlerInfo):
+def Handler_If(info: InstructionHandlerContext):
     pass
 
-def Handler_Switch(info: InstructionHandlerInfo):
+def Handler_Switch(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_NewScene(info: InstructionHandlerInfo):
+def Handler_NewScene(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_16(info: InstructionHandlerInfo):
+def Handler_16(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_28(info: InstructionHandlerInfo):
+def Handler_28(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_29(info: InstructionHandlerInfo):
+def Handler_29(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_2A(info: InstructionHandlerInfo):
+def Handler_2A(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_41(info: InstructionHandlerInfo):
+def Handler_41(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_QueueWorkItem(info: InstructionHandlerInfo):
+def Handler_QueueWorkItem(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_QueueWorkItem2(info: InstructionHandlerInfo):
+def Handler_QueueWorkItem2(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_RunExpression(info: InstructionHandlerInfo):
+def Handler_RunExpression(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_4F(info: InstructionHandlerInfo):
+def Handler_4F(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_51(info: InstructionHandlerInfo):
+def Handler_51(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_AnonymousTalk(info: InstructionHandlerInfo):
+def Handler_AnonymousTalk(info: InstructionHandlerContext):
     return
 
-def Handler_ChrTalk(info: InstructionHandlerInfo):
+def Handler_ChrTalk(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_NpcTalk(info: InstructionHandlerInfo):
+def Handler_NpcTalk(info: InstructionHandlerContext):
     raise NotImplementedError
 
-def Handler_Menu(info: InstructionHandlerInfo):
+def Handler_Menu(info: InstructionHandlerContext):
     raise NotImplementedError
 
 def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Flags.Empty, handler: InstructionHandler = None) -> InstructionDescriptor:

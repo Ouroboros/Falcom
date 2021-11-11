@@ -43,7 +43,7 @@ class OperandType(IntEnum2):
         return self.name
 
 class OperandFormat:
-    sizeTable = {
+    sizeTable: Dict[OperandType, int] = {
         OperandType.SInt8   : 1,
         OperandType.SInt16  : 2,
         OperandType.SInt32  : 4,
@@ -70,7 +70,7 @@ class OperandFormat:
         OperandType.MBCS    : None,
     }
 
-    def __init__(self, oprType: OperandType, hex: bool = False, encoding: str = 'GBK'):
+    def __init__(self, oprType: OperandType, hex: bool = False, encoding: str = DefaultEncoding):
         self.type       = oprType                   # type: OperandType
         self.hex        = hex                       # type: bool
         self.encoding   = encoding                  # type: str
@@ -86,6 +86,8 @@ class OperandFormat:
         return self.sizeTable.get(self.type)
 
 class OperandDescriptor:
+    formatTable: Dict[str, 'OperandDescriptor'] = {}
+
     @classmethod
     def fromFormatString(cls, fmtstr: str, formatTable = None) -> 'Tuple[OperandDescriptor]':
         formatTable = formatTable if formatTable else cls.formatTable
@@ -94,9 +96,10 @@ class OperandDescriptor:
     def __init__(self, format: OperandFormat, formatHandler: 'handlers.FormatOperandHandler' = None):
         self.format     = format                    # type: OperandFormat
         self.handler    = formatHandler             # type: handlers.FormatOperandHandler
+        self.paramName  = ''                        # type: str
 
-    def readValue(self, info: 'handlers.InstructionHandlerInfo') -> Any:
-        fs = info.disasmInfo.fs
+    def readValue(self, context: 'handlers.InstructionHandlerContext') -> Any:
+        fs = context.disasmContext.fs
 
         return {
             OperandType.SInt8   : lambda : fs.ReadChar(),
@@ -117,8 +120,8 @@ class OperandDescriptor:
             OperandType.MBCS    : lambda : fs.ReadMultiByte(self.format.encoding),
         }[self.format.type]()
 
-    def formatValue(self, info: 'handlers.FormatOperandHandlerInfo') -> str:
-        operand = info.operand
+    def formatValue(self, context: 'handlers.FormatOperandHandlerContext') -> str:
+        operand = context.operand
         desc    = operand.descriptor
         fmt     = desc.format
 
@@ -153,10 +156,10 @@ class OperandDescriptor:
     def __repr__(self):
         return self.__str__()
 
-def oprdesc(*args, **kwargs):
+def oprdesc(*args, **kwargs) -> OperandDescriptor:
     return OperandDescriptor(OperandFormat(*args, **kwargs))
 
-OperandDescriptor.formatTable = {
+OperandDescriptor.formatTable.update({
     'c' : oprdesc(OperandType.SInt8, hex = False),
     'C' : oprdesc(OperandType.UInt8, hex = False),
     'b' : oprdesc(OperandType.SInt8, hex = True),
@@ -179,7 +182,7 @@ OperandDescriptor.formatTable = {
     'd' : oprdesc(OperandType.Float64),
 
     'S' : oprdesc(OperandType.MBCS, encoding = DefaultEncoding)
-}
+})
 
 class InstructionDescriptor:
     NoOperand = None
@@ -228,16 +231,16 @@ class InstructionTable:
     def writeInstruction(self, fs: fileio.FileStream, inst: 'instruction.Instruction'):
         raise NotImplementedError
 
-    def readOperand(self, info: 'handlers.InstructionHandlerInfo', inst: 'instruction.Instruction', desc: OperandDescriptor) -> 'instruction.Operand':
+    def readOperand(self, context: 'handlers.InstructionHandlerContext', inst: 'instruction.Instruction', desc: OperandDescriptor) -> 'instruction.Operand':
         operand = instruction.Operand()
 
-        fs = info.disasmInfo.fs
+        fs = context.disasmContext.fs
 
         pos = fs.Position
 
         operand.size = desc.format.size
         operand.descriptor = desc
-        operand.value = desc.readValue(info)
+        operand.value = desc.readValue(context)
 
         if operand.size is None:
             operand.size = fs.Position - pos
@@ -247,25 +250,25 @@ class InstructionTable:
     def writeOperand(self, fs: fileio.FileStream, operand: 'instruction.Operand'):
         raise NotImplementedError
 
-    def formatOperand(self, info: 'handlers.FormatOperandHandlerInfo') -> str:
+    def formatOperand(self, context: 'handlers.FormatOperandHandlerContext') -> str:
         result  = None
-        operand = info.operand
+        operand = context.operand
         desc    = operand.descriptor
 
-        handler = info.operand.descriptor.handler
+        handler = context.operand.descriptor.handler
         if handler is not None:
-            result = handler(info)
+            result = handler(context)
 
         if result is None:
-            result = desc.formatValue(info)
+            result = desc.formatValue(context)
 
         return result
 
     def formatAllOperand(self, inst: 'instruction.Instruction') -> List[str]:
         text = []
         for opr in inst.operands:
-            info = handlers.FormatOperandHandlerInfo(inst, opr)
-            ret = self.formatOperand(info)
+            context = handlers.FormatOperandHandlerContext(inst, opr)
+            ret = self.formatOperand(context)
 
             if isinstance(ret, list):
                 text.extend(ret)

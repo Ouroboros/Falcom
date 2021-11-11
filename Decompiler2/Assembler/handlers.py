@@ -8,9 +8,9 @@ if TYPE_CHECKING:
 
 __all__ = (
     'InstructionHandler',
-    'InstructionHandlerInfo',
+    'InstructionHandlerContext',
     'FormatOperandHandler',
-    'FormatOperandHandlerInfo',
+    'FormatOperandHandlerContext',
 )
 
 class BaseHandlerInfo:
@@ -20,30 +20,31 @@ class BaseHandlerInfo:
         Format      = 2
 
     def __init__(self, action: Action):
-        self.action         = action    # type: Action
+        self.action         = action    # type: BaseHandlerInfo.Action
         self.disassembler   = None      # type: disassembler.Disassembler
 
-class InstructionHandlerInfo(BaseHandlerInfo):
+class InstructionHandlerContext(BaseHandlerInfo):
     def __init__(self, action: 'BaseHandlerInfo.Action', descriptor: 'instruction_table.InstructionDescriptor'):
         super().__init__(action)
         self.descriptor     = descriptor                                # type: instruction_table.InstructionDescriptor
-        self.disasmInfo     = None                                      # type: disassembler.DisassembleInfo
-        self.instruction    = None                                      # type: instruction.Instruction     format only
+        self.disasmContext  = None                                      # type: disassembler.DisasmContext
+        self.instruction    = None                                      # type: instruction.Instruction
+                                                                        # format only
         self.offset         = instruction.Instruction.InvalidOffset     # type: int
 
     def createCodeBlock(self, offset: int) -> 'function.CodeBlock':
         return self.disassembler.createCodeBlock(offset)
 
     def addBranch(self, offset: int) -> 'function.CodeBlock':
-        return self.disassembler.currentBlock.addBranch(self.createCodeBlock(offset))
+        return self.disassembler.addBranch(offset)
 
-InstructionHandler = Callable[[InstructionHandlerInfo], Any]
+InstructionHandler = Callable[[InstructionHandlerContext], 'instruction.Instruction']
 
 
-class FormatOperandHandlerInfo:
+class FormatOperandHandlerContext:
     def __init__(self, inst: 'instruction.Instruction', operand: 'instruction.Operand', labels: 'Dict[int, str]' = None):
         self.instruction    = inst              # type: instruction.Instruction
         self.operand        = operand           # type: instruction.Operand
         self.labels         = labels or {}      # type: Dict[int, str]
 
-FormatOperandHandler = Callable[[FormatOperandHandlerInfo], Any]
+FormatOperandHandler = Callable[[FormatOperandHandlerContext], Any]

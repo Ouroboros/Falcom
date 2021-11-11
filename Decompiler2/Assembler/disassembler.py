@@ -6,10 +6,10 @@ from .handlers          import *
 
 __all__ = (
     'Disassembler',
-    'DisassembleInfo',
+    'DisasmContext',
 )
 
-class DisassembleInfo:
+class DisasmContext:
     def __init__(self, fs: fileio.FileStream):
         self.fs     = fs    # type: fileio.FileStream
 
@@ -23,24 +23,25 @@ class Disassembler:
     def createCodeBlock(self, offset: int):
         block = self.allocatedBlocks.get(offset)
         if block is None:
-            block = CodeBlock(instructions = [])
-            block.offset = offset
-            block.name = 'loc_%X' % offset
+            block = CodeBlock(instructions = [], offset = offset, name = f'loc_{offset:X}')
             self.allocatedBlocks[offset] = block
 
         return block
 
-    def disasmFunction(self, info: DisassembleInfo) -> Function:
+    def addBranch(self, offset: int) -> CodeBlock:
+        return self.currentBlock.addBranch(self.createCodeBlock(offset))
+
+    def disasmFunction(self, context: DisasmContext) -> Function:
         fun = Function()
 
-        fun.offset = info.fs.Position
-        fun.block = self.disasmBlock(info)
+        fun.offset = context.fs.Position
+        fun.block = self.disasmBlock(context)
         fun.block.name = None
 
         return fun
 
-    def disasmBlock(self, info: DisassembleInfo) -> CodeBlock:
-        offset = info.fs.Position
+    def disasmBlock(self, context: DisasmContext) -> CodeBlock:
+        offset = context.fs.Position
         block = self.disassembledBlocks.get(offset)
 
         if block is not None:
@@ -54,7 +55,7 @@ class Disassembler:
         self.currentBlock = block
 
         while True:
-            inst = self.disasmInstruction(info)
+            inst = self.disasmInstruction(context)
 
             block.instructions.append(inst)
 
@@ -62,48 +63,48 @@ class Disassembler:
                 break
 
             if inst.flags.startBlock:
-                block.insertBranch(self.createCodeBlock(info.fs.Position))
+                block.insertBranch(self.createCodeBlock(context.fs.Position))
                 break
 
-            if info.fs.Position in self.allocatedBlocks:
+            if context.fs.Position in self.allocatedBlocks:
                 break
 
         for index, branch in enumerate(block.branches):
-            pos = info.fs.Position
+            pos = context.fs.Position
 
-            info.fs.Position = branch.offset
-            block.branches[index] = self.disasmBlock(info)
+            context.fs.Position = branch.offset
+            block.branches[index] = self.disasmBlock(context)
 
-            info.fs.Position = pos
+            context.fs.Position = pos
 
         self.currentBlock = previousBlock
 
         return block
 
-    def disasmInstruction(self, info: DisassembleInfo) -> Instruction:
-        pos = info.fs.Position
+    def disasmInstruction(self, context: DisasmContext) -> Instruction:
+        pos = context.fs.Position
 
         try:
-            opcode = self.instructionTable.readOpCode(info.fs)
+            opcode = self.instructionTable.readOpCode(context.fs)
         except Exception as e:
             print('error occurred %s @ position %X' % (e, pos))
             raise e
 
         desc = self.instructionTable.getDescriptor(opcode)
 
-        handlerInfo = InstructionHandlerInfo(InstructionHandlerInfo.Action.Disassemble, desc)
+        handlerContext = InstructionHandlerContext(InstructionHandlerContext.Action.Disassemble, desc)
 
-        handlerInfo.offset          = pos
-        handlerInfo.disasmInfo      = info
-        handlerInfo.disassembler    = self
+        handlerContext.offset          = pos
+        handlerContext.disasmContext   = context
+        handlerContext.disassembler    = self
 
-        inst = None
+        inst: Instruction = None
 
         if desc.handler is not None:
-            inst = desc.handler(handlerInfo)
+            inst = desc.handler(handlerContext)
 
         if inst is None:
-            inst = self.defaultInstructionParser(handlerInfo)
+            inst = self.defaultInstructionParser(handlerContext)
 
         if inst is None:
             raise Exception('disasmInstruction %02X @ %08X failed' % (opcode, pos))
@@ -113,14 +114,14 @@ class Disassembler:
 
         return inst
 
-    def defaultInstructionParser(self, info: InstructionHandlerInfo) -> Instruction:
-        fs      = info.disasmInfo.fs
-        desc    = info.descriptor
+    def defaultInstructionParser(self, context: InstructionHandlerContext) -> Instruction:
+        fs      = context.disasmContext.fs
+        desc    = context.descriptor
 
         inst = Instruction(desc.opcode)
 
-        inst.offset     = info.offset
-        inst.operands   = [self.instructionTable.readOperand(info, inst, oprdesc) for oprdesc in (desc.operands or [])]
+        inst.offset     = context.offset
+        inst.operands   = [self.instructionTable.readOperand(context, inst, oprdesc) for oprdesc in (desc.operands or [])]
         inst.size       = fs.Position - inst.offset
         inst.descriptor = desc
         inst.flags      = desc.flags
@@ -162,7 +163,7 @@ class Disassembler:
     def formatInstruction(self, inst: Instruction) -> List[str]:
         handler = inst.descriptor.handler
         if handler is not None:
-            handlerInfo = InstructionHandlerInfo(InstructionHandlerInfo.Action.Format, inst.descriptor)
+            handlerInfo = InstructionHandlerContext(InstructionHandlerContext.Action.Format, inst.descriptor)
 
             handlerInfo.disassembler = self
             handlerInfo.instruction = inst
