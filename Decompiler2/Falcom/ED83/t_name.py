@@ -1,8 +1,8 @@
-from Falcom.Common import *
 from Falcom import ED83
+from Falcom.Common import *
 
 class NameTableEntry:
-    def __init__(self, fs):
+    def __init__(self, fs: fileio.FileStream):
         self.tableName  = fs.ReadMultiByte()
         self.entrySize  = fs.ReadUShort()
         self.charId     = fs.ReadUShort()
@@ -49,7 +49,7 @@ class NameTable(ED83.Parser.DataTable):
         self.entries = [NameTableEntry(self.data) for _ in range(self.entryCount)]
 
 def main(filename):
-    t_name = NameTable(fileio.FileStream(filename, encoding = DefaultEncoding))
+    t_name = NameTable(fileio.FileStream(filename, encoding = GlobalConfig.DefaultEncoding))
     # print(t_name.entries)
     open('l.txt', 'wb').write(str(t_name.entries).encode('UTF8'))
 

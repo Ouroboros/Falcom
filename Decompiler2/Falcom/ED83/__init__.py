@@ -1,6 +1,8 @@
 def _init():
     import Common
-    Common.DefaultEncoding = 'UTF8'
+    Common.GlobalConfig.DefaultEncoding = 'UTF8'
+    Common.log.setLevel(Common.logging.DEBUG)
+    Common.log.name = 'ED83'
 
 _init()
 

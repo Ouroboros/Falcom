@@ -70,7 +70,9 @@ class OperandFormat:
         OperandType.MBCS    : None,
     }
 
-    def __init__(self, oprType: OperandType, hex: bool = False, encoding: str = DefaultEncoding):
+    def __init__(self, oprType: OperandType, hex: bool = False, encoding: str = None):
+        encoding = encoding or GlobalConfig.DefaultEncoding
+
         self.type       = oprType                   # type: OperandType
         self.hex        = hex                       # type: bool
         self.encoding   = encoding                  # type: str
@@ -96,7 +98,6 @@ class OperandDescriptor:
     def __init__(self, format: OperandFormat, formatHandler: 'handlers.FormatOperandHandler' = None):
         self.format     = format                    # type: OperandFormat
         self.handler    = formatHandler             # type: handlers.FormatOperandHandler
-        self.paramName  = ''                        # type: str
 
     def readValue(self, context: 'handlers.InstructionHandlerContext') -> Any:
         fs = context.disasmContext.fs
@@ -181,7 +182,7 @@ OperandDescriptor.formatTable.update({
     'f' : oprdesc(OperandType.Float32),
     'd' : oprdesc(OperandType.Float64),
 
-    'S' : oprdesc(OperandType.MBCS, encoding = DefaultEncoding)
+    'S' : oprdesc(OperandType.MBCS)
 })
 
 class InstructionDescriptor:
@@ -193,18 +194,20 @@ class InstructionDescriptor:
             mnemonic:   str,
             operands:   List[OperandDescriptor] = NoOperand,
             flags:      'instruction.Flags' = 0,
-            handler:    'handlers.InstructionHandler' = None
+            handler:    'handlers.InstructionHandler' = None,
+            parameters: List[str] = None,
         ):
         self.opcode     = opcode                    # type: int
         self.mnemonic   = mnemonic                  # type: str
         self.operands   = operands                  # type: List[OperandDescriptor]
         self.flags      = flags                     # type: instruction.Flags
         self.handler    = handler                   # type: handlers.InstructionHandler
+        self.parameters = parameters                # type: List[str]
 
     def __str__(self):
         return ' '.join([
             f'{self.opcode:02X} {self.mnemonic}',
-            '(%s)' % (', '.join([str(o) for o in self.operands]) if self.operands else ''),
+            '(%s)' % (', '.join([(str(o) + (f' {self.parameters[i]}' if self.parameters else '')) for i, o in enumerate(self.operands)]) if self.operands else ''),
             f'{self.flags}' if self.flags != instruction.Flags.Empty else '',
         ])
 

@@ -1,6 +1,7 @@
 from Falcom.Common  import *
 from Assembler      import *
 
+DefaultIndent = GlobalConfig.DefaultIndent
 UserDefined = OperandType.UserDefined + 1
 
 class ED83OperandType(IntEnum2):
@@ -17,7 +18,7 @@ class ED83OperandFormat(OperandFormat):
     sizeTable = {
         **OperandFormat.sizeTable,
 
-        ED83OperandType.Offset     : 2,
+        ED83OperandType.Offset     : 4,
         ED83OperandType.Item       : 2,
         ED83OperandType.BGM        : 2,
         ED83OperandType.Expression : None,
@@ -30,7 +31,7 @@ class ED83OperandDescriptor(OperandDescriptor):
         return {
             OperandType.MBCS           : self.readText,
             ED83OperandType.Expression : self.readExpression,
-            ED83OperandType.Offset     : lambda context: context.disasmContext.fs.ReadUShort(),
+            ED83OperandType.Offset     : lambda context: context.disasmContext.fs.ReadULong(),
             ED83OperandType.Item       : lambda context: context.disasmContext.fs.ReadUShort(),
             ED83OperandType.BGM        : lambda context: context.disasmContext.fs.ReadShort(),
 

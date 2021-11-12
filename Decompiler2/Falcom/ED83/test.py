@@ -1,24 +1,32 @@
-from Falcom.Common import *
 from Falcom import ED83
+from Falcom.Common import *
+
+from hexdump import hexdump
 
 def test():
-    print(ED83.ScenaOpTable)
+    scp = [
+        'a0000.dat',
+        # 'chr000.dat',
+        # 'm3040.dat',
+        # 'm4000.dat',
+        'system3.dat',
+    ][-1]
+
+    scena = '''E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\\'''
+
+    fs = fileio.FileStream().OpenMemory(open(scena + scp, 'rb').read())
+    scena = ED83.Parser.SceneParser(fs)
+    scena.readHeader()
+
+    print(ED83.InstructionTable.ScenaOpTable)
     print()
+    print(scena)
 
-    dis = Assembler.Disassembler(ED83.ScenaOpTable)
+    scena.disasmFunctions()
+    py = scena.generatePython('chr000.dat')
 
-    fs = fileio.FileStream()
-    fs.OpenMemory(open('tests\\T2610_1 ._SN', 'rb').read())
+    open('out.py', 'wb').write('\n'.join(py).encode('UTF8'))
 
-    fs.Position = 0x64
-
-    ctx = Assembler.DisasmContext(fs)
-
-    fun = dis.disasmFunction(ctx)
-
-    fun.name = 'test'
-
-    print('\n'.join(dis.formatFuncion(fun)))
 
 def main():
     test()

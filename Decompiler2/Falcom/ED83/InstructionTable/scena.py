@@ -1,9 +1,13 @@
-from Common     import *
-from Assembler  import *
-from .types     import *
+from Falcom.Common  import *
+from Assembler      import *
+from .types         import *
 
 __all__ = (
     'ScenaOpTable',
+    'ED83InstructionTable',
+    'ED83OperandType',
+    'ED83OperandFormat',
+    'ED83OperandDescriptor'
 )
 
 NoOperand = InstructionDescriptor.NoOperand
@@ -26,21 +30,25 @@ class ED83InstructionTable(InstructionTable):
         raise NotImplementedError
 
 
-def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Flags.Empty, handler: InstructionHandler = None, *, parameters = None) -> InstructionDescriptor:
+def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Flags.Empty, handler: InstructionHandler = None, *, parameters = []) -> InstructionDescriptor:
     if operandfmts is NoOperand:
         operands = NoOperand
+        if parameters:
+            raise
+
     else:
         operands = ED83OperandDescriptor.fromFormatString(operandfmts)
+        if parameters and len(operands) != len(parameters):
+            raise
 
-    if parameters:
-        for i, param in enumerate(parameters):
-            operands[i].paramName = param
-
-    return InstructionDescriptor(opcode = opcode, mnemonic = mnemonic, operands = operands, flags = flags, handler = handler)
+    return InstructionDescriptor(opcode = opcode, mnemonic = mnemonic, operands = operands, flags = flags, handler = handler, parameters = parameters)
 
 ScenaOpTable = ED83InstructionTable([
-    inst(0x00,  'ExitThread'),
+    inst(0x00,  'ExitThread',                   NoOperand,          Flags.EndBlock),
     inst(0x01,  'Return',                       NoOperand,          Flags.EndBlock),
+    inst(0x02,  'Call',                         'BSB',              Flags.StartBlock, parameters = ('type', 'name', 'type2')),
+    inst(0x03,  'Goto',                         'o',                Flags.Jump, parameters = ('label', )),
+    inst(0x04,  'OP_04',                        'BS'),
 ])
 
 del inst

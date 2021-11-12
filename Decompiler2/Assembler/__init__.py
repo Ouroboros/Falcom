@@ -2,6 +2,7 @@ from .instruction import *
 from .function import *
 from .instruction_table import *
 from .disassembler import *
+from .formatter import *
 from .handlers import *
 
 # __all__ =  (

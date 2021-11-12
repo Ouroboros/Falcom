@@ -1,6 +1,7 @@
 from Common     import *
 from Assembler  import *
 
+DefaultIndent = GlobalConfig.DefaultIndent
 UserDefined = OperandType.UserDefined + 1
 
 class ED6FCOperandType(IntEnum2):
