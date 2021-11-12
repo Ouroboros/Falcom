@@ -33,7 +33,7 @@ class _ScenaWriter:
     def addLabel(self, name):
         pass
 
-    def opHandler(self, opcode: int, *args, **kwargs):
+    def handleOpCode(self, opcode: int, *args, **kwargs):
         pass
 
 _gScena: _ScenaWriter = None

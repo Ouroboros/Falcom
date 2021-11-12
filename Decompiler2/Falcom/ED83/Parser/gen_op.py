@@ -53,7 +53,7 @@ def main():
         func = [
             f'def {desc.mnemonic}({", ".join(params)}):',
             f'    # 0x{desc.opcode:02X}',
-            f'    scena.opHandler(0x{desc.opcode:02X}{", ".join(args)})',
+            f'    scena.handleOpCode(0x{desc.opcode:02X}{", ".join(args)})',
             '',
         ]
 
