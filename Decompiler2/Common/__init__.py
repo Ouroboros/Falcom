@@ -9,6 +9,11 @@ class _Config:
         self.DefaultEndian   = 'little'
         self.DefaultIndent   = '    '
 
+        self.load()
+
+    def load(self):
+        pass
+
 GlobalConfig = _Config()
 
 log = logging.Logger('ED', level = logging.INFO)

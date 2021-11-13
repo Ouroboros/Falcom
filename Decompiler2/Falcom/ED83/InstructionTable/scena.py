@@ -43,12 +43,17 @@ def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Fla
 
     return InstructionDescriptor(opcode = opcode, mnemonic = mnemonic, operands = operands, flags = flags, handler = handler, parameters = parameters)
 
+def Handler_Switch():
+    pass
+
 ScenaOpTable = ED83InstructionTable([
     inst(0x00,  'ExitThread',                   NoOperand,          Flags.EndBlock),
     inst(0x01,  'Return',                       NoOperand,          Flags.EndBlock),
     inst(0x02,  'Call',                         'BSB',              Flags.StartBlock, parameters = ('type', 'name', 'type2')),
     inst(0x03,  'Goto',                         'o',                Flags.Jump, parameters = ('label', )),
     inst(0x04,  'OP_04',                        'BS'),
+    inst(0x06,  'Switch',                       NoOperand,          Flags.EndBlock,     Handler_Switch),
+    inst(0x2B,  'Battle',                       ''),
 ])
 
 del inst
