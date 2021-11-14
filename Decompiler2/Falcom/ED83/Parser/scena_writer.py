@@ -24,8 +24,8 @@ class _ScenaWriter:
 
     # decorators
 
-    def Function(self, name: str):
-        return self.functionDecorator(name, ED83.ScenaFunctionType.Function)
+    def Code(self, name: str):
+        return self.functionDecorator(name, ED83.ScenaFunctionType.Code)
 
     def BattleSetting(self, name: str):
         return self.functionDecorator(name, ED83.ScenaFunctionType.BattleSetting)

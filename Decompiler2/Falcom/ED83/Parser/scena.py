@@ -106,7 +106,7 @@ class ScenaFormatter(Assembler.Formatter):
         raise NotImplementedError
 
     _formatter = {
-        ScenaFunctionType.Function          : formatCode,
+        ScenaFunctionType.Code          : formatCode,
         ScenaFunctionType.BattleSetting     : formatBattleSetting,
         ScenaFunctionType.AnimeClips        : formatAnimeClips,
         ScenaFunctionType.ActionTable       : formatActionTable,
@@ -179,7 +179,7 @@ class ScenaParser:
 
             return ScenaFunctionType.AnimeClips
 
-        return ScenaFunctionType.Function
+        return ScenaFunctionType.Code
 
     def parse(self):
         self.readHeader()
@@ -211,7 +211,7 @@ class ScenaParser:
 
         for i, f in enumerate(self.functions):
             if i == 0 and not f.name:
-                f.type = ScenaFunctionType.Function
+                f.type = ScenaFunctionType.Code
 
             else:
                 f.type = self.getFunctionType(f.name)
@@ -227,7 +227,7 @@ class ScenaParser:
             log.debug(f'disasm func: {func}')
 
             match func.type:
-                case ScenaFunctionType.Function:
+                case ScenaFunctionType.Code:
                     # func.func = dis.disasmFunction(ctx, name = func.name)
                     pass
 

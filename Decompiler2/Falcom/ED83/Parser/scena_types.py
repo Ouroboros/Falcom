@@ -46,7 +46,7 @@ class ScenaHeader:
 
 class ScenaFunctionType(IntEnum2):
     Invalid             = 0
-    Function            = 1
+    Code                = 1
     BattleSetting       = 3
     AnimeClips          = 4     # gatherAnimeClipInAniFunc
     ActionTable         = 5
