@@ -73,30 +73,52 @@ class _ScenaWriter:
         return self.functionDecorator(name, ED83.ScenaFunctionType.FaceAuto)
 
     def run(self, g):
+        dataFunc = [
+            # ScenaFunctionType.BattleSetting,        # XXX: discard: 01 00 00 00
+            # ScenaFunctionType.AnimeClips,           # XXX: discard: 01 00 00 00 and align to 0x10
+            # ScenaFunctionType.ActionTable,
+            # ScenaFunctionType.WeaponAttTable,
+            # ScenaFunctionType.BreakTable,
+            # ScenaFunctionType.AlgoTable,
+            # ScenaFunctionType.SummonTable,
+            # ScenaFunctionType.AddCollision,
+            # ScenaFunctionType.PartTable,
+            # ScenaFunctionType.ReactionTable,
+            # ScenaFunctionType.AnimeClipTable,       # XXX: discard: 00 00 01 00
+            # ScenaFunctionType.FieldMonsterData,     # XXX: discard: 01 00 00 00
+            ScenaFunctionType.FieldFollowData,      # XXX: discard: 01 00 00 00
+            # ScenaFunctionType.ShinigPomBtlset,
+            # ScenaFunctionType.FaceAuto,
+        ]
+
         hdr = ScenaHeader()
         bss = bytearray()
+
         for f in self.functions:
-            if f.type == ScenaFunctionType.BattleSetting:
-                r: ScenaBattleSetting = f.obj()
-                # bss.extend(r.serialize())
-                # bss.extend(b'\x01\x00\x00\x00')
-                # XXX: discard: 01 00 00 00
+            if f.type in dataFunc:
+                bss.extend(f.obj().serialize())
 
-            elif f.type == ScenaFunctionType.AnimeClips:
-                r: ScenaAnimeClips = f.obj()
-                # bss.extend(r.serialize())
-                # bss.extend(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                # XXX: discard: 01 00 00 00 and align to 0x10
+            # if f.type == ScenaFunctionType.BattleSetting:
+            #     r: ScenaBattleSetting = f.obj()
+            #     # bss.extend(r.serialize())
+            #     # bss.extend(b'\x01\x00\x00\x00')
+            #     # XXX: discard: 01 00 00 00
 
-            elif f.type == ScenaFunctionType.AnimeClipTable:
-                r: ScenaAnimeClipTable = f.obj()
-                # bss.extend(r.serialize())
-                # XXX: discard: 00 00 01 00
+            # elif f.type == ScenaFunctionType.AnimeClips:
+            #     r: ScenaAnimeClips = f.obj()
+            #     # bss.extend(r.serialize())
+            #     # bss.extend(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+            #     # XXX: discard: 01 00 00 00 and align to 0x10
 
-            elif f.type == ScenaFunctionType.FieldMonsterData:
-                r: ScenaFieldMonsterData = f.obj()
-                bss.extend(r.serialize())
-                # XXX: discard: 01 00 00 00
+            # elif f.type == ScenaFunctionType.AnimeClipTable:
+            #     r: ScenaAnimeClipTable = f.obj()
+            #     # bss.extend(r.serialize())
+            #     # XXX: discard: 00 00 01 00
+
+            # elif f.type == ScenaFunctionType.FieldMonsterData:
+            #     r: ScenaFieldMonsterData = f.obj()
+            #     bss.extend(r.serialize())
+            #     # XXX: discard: 01 00 00 00
 
         open(r'D:\Dev\Source\Falcom\Decompiler2\Falcom\ED83\a0000.dat', 'wb').write(b'\x00' * 0x10594 + bss)
 

@@ -27,10 +27,12 @@ def main():
         # 'm4000.dat',
         # 'system3.dat',
         # 'common.dat',
+        'alchr000.dat',
     ][-1]
 
     scena = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\\'
     scena = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\ani\dat\\'
+    scena = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\battle\dat\\'
 
     # for f in fileio.getDirectoryFiles(scena, '*.dat'):
     #     console.setTitle(os.path.basename(f))

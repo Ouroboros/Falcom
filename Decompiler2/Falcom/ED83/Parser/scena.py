@@ -97,7 +97,10 @@ class ScenaFormatter(Assembler.Formatter):
         return body
 
     def formatFieldFollowData(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
+        acs: ScenaFieldFollowData = f.obj
+        body = acs.toPython()
+        body[0] = 'return ' + body[0]
+        return body
 
     def formatShinigPomBtlset(self, f: ScenaFunction) -> List[str]:
         raise NotImplementedError
@@ -268,7 +271,7 @@ class ScenaParser:
                     func.obj = ScenaFieldMonsterData(fs = fs)
 
                 case ScenaFunctionType.FieldFollowData:
-                    pass
+                    func.obj = ScenaFieldFollowData(fs = fs)
 
                 case ScenaFunctionType.ShinigPomBtlset:
                     pass

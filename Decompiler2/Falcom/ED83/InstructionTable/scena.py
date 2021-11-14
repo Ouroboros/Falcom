@@ -16,17 +16,17 @@ class ED83InstructionTable(InstructionTable):
     def readOpCode(self, fs: fileio.FileStream) -> int:
         return fs.ReadByte()
 
-    def writeOpCode(self, fs: fileio.FileStream, inst: 'Instruction'):
+    def writeOpCode(self, fs: fileio.FileStream, inst: Instruction):
         fs.WriteByte(inst.opcode)
 
-    def readOperand(self, context: 'handlers.InstructionHandlerContext', inst: 'instruction.Instruction', desc: OperandDescriptor) -> 'instruction.Operand':
+    def readOperand(self, context: InstructionHandlerContext, inst: Instruction, desc: ED83OperandDescriptor) -> ED83OperandType:
         opr = super().readOperand(context, inst, desc)
         if desc.format.type == ED83OperandType.Offset:
             opr.value = context.addBranch(opr.value)
 
         return opr
 
-    def writeOperand(self, fs: fileio.FileStream, operand: 'instruction.Operand'):
+    def writeOperand(self, fs: fileio.FileStream, operand: ED83OperandType):
         raise NotImplementedError
 
 

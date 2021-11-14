@@ -444,7 +444,7 @@ class ScenaAnimeClipTable:
         return body
 
 class ScenaFieldMonsterData:
-    def __init__(self, type: int = None, word04: int = None, word06: int = None, floats: List[float] = None, fs: fileio.FileStream = None):
+    def __init__(self, type: int = None, word04: int = None, word06: int = None, floats: List[float] = None, *, fs: fileio.FileStream = None):
         self.type   = type
         self.word04 = word04
         self.word06 = word06
@@ -478,6 +478,34 @@ class ScenaFieldMonsterData:
             f'{DefaultIndent}type   = 0x{self.type:08X},',
             f'{DefaultIndent}word04 = 0x{self.word04:04X},',
             f'{DefaultIndent}word06 = 0x{self.word06:04X},',
+            f'{DefaultIndent}floats = {self.floats},',
+            ')',
+        ]
+
+        return body
+
+class ScenaFieldFollowData:
+    def __init__(self, floats: List[float] = None, *, fs: fileio.FileStream = None):
+        self.floats = floats
+
+        if floats: assert len(floats) == 5
+
+        if fs:
+            self.floats = [fs.ReadFloat() for _ in range(5)]
+
+    def serialize(self) -> bytes:
+        fs = io.BytesIO()
+
+        for f in self.floats:
+            fs.write(utils.float_to_bytes(f))
+
+        fs.seek(0)
+
+        return fs.read()
+
+    def toPython(self) -> List[str]:
+        body = [
+            'ScenaFieldFollowData(',
             f'{DefaultIndent}floats = {self.floats},',
             ')',
         ]
