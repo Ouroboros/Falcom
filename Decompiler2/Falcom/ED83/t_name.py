@@ -1,5 +1,6 @@
 from Falcom import ED83
 from Falcom.Common import *
+import pathlib
 
 class NameTableEntry:
     def __init__(self, fs: fileio.FileStream):
@@ -51,7 +52,7 @@ class NameTable(ED83.Parser.DataTable):
 def main(filename):
     t_name = NameTable(fileio.FileStream(filename, encoding = GlobalConfig.DefaultEncoding))
     # print(t_name.entries)
-    open('l.txt', 'wb').write(str(t_name.entries).encode('UTF8'))
+    open(f'{pathlib.Path(filename).stem}.txt', 'wb').write(str(t_name.entries).encode('UTF8'))
 
 if __name__ == '__main__':
     for i in sys.argv[1:]:

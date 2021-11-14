@@ -38,7 +38,7 @@ class Disassembler:
         if name:
             func.name = name
 
-        log.debug(f'disasm func 0x{func.offset:08X} {func.name}')
+        # log.debug(f'disasm func 0x{func.offset:08X} {func.name}')
 
         func.block = self.disasmBlock(context)
 

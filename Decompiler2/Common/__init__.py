@@ -11,6 +11,11 @@ class _Config:
 
         self.load()
 
+    @property
+    def StructEndian(self):
+        fileio.FileStream.BIG_ENDIAN
+        return '<' if self.DefaultEndian == 'little' else '>'
+
     def load(self):
         pass
 
@@ -18,7 +23,7 @@ GlobalConfig = _Config()
 
 log = logging.Logger('ED', level = logging.INFO)
 handler = logging.StreamHandler()
-handler.setFormatter(logging.Formatter('[%(asctime)s][%(filename)s:%(lineno)d][%(levelname)s] %(message)s', datefmt = '%y-%m-%d %H:%M:%S'))
+handler.setFormatter(logging.Formatter('[%(asctime)s][%(filename)s:%(lineno)d][%(levelname)s] %(message)s', datefmt = '%m-%d %H:%M:%S'))
 
 log.addHandler(handler)
 
