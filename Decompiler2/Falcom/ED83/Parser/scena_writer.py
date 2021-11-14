@@ -9,6 +9,8 @@ class _ScenaWriter:
         self.scenaName          = scenaName
         self.fs                 = fileio.FileStream().OpenMemory()
 
+        self.labels             = {}                    # type: Dict[str, int]
+
     def functionDecorator(self, name: str, type: ED83.ScenaFunctionType) -> Callable[[], None]:
         def wrapper(f: Callable[[], Any]):
             func = ED83.ScenaFunction(-1, -1, name)
@@ -78,26 +80,32 @@ class _ScenaWriter:
                 r: ScenaBattleSetting = f.obj()
                 # bss.extend(r.serialize())
                 # bss.extend(b'\x01\x00\x00\x00')
-                # TODO: discard: 01 00 00 00
+                # XXX: discard: 01 00 00 00
 
             elif f.type == ScenaFunctionType.AnimeClips:
                 r: ScenaAnimeClips = f.obj()
-                bss.extend(r.serialize())
+                # bss.extend(r.serialize())
                 # bss.extend(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                # TODO: discard: 01 00 00 00 and align to 0x10
+                # XXX: discard: 01 00 00 00 and align to 0x10
 
             elif f.type == ScenaFunctionType.AnimeClipTable:
                 r: ScenaAnimeClipTable = f.obj()
+                # bss.extend(r.serialize())
+                # XXX: discard: 00 00 01 00
+
+            elif f.type == ScenaFunctionType.FieldMonsterData:
+                r: ScenaFieldMonsterData = f.obj()
                 bss.extend(r.serialize())
-                # TODO: discard: 00 00 01 00
+                # XXX: discard: 01 00 00 00
 
-        # from hexdump import hexdump
-        # hexdump(bss)
-
-        open(r'D:\Dev\Source\Falcom\Decompiler2\Falcom\ED83\a0000.dat', 'wb').write(b'\x00' * 0x4E700 + bss)
+        open(r'D:\Dev\Source\Falcom\Decompiler2\Falcom\ED83\a0000.dat', 'wb').write(b'\x00' * 0x10594 + bss)
 
     def addLabel(self, name):
-        pass
+        addr = self.labels.get(name)
+        if addr is not None:
+            raise Exception(f'duplicated label: {name} -> 0x{addr:08X}')
+
+        self.labels[name] = self.fs.Position
 
     def handleOpCode(self, opcode: int, *args, **kwargs):
         pass

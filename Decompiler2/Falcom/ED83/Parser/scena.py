@@ -91,7 +91,10 @@ class ScenaFormatter(Assembler.Formatter):
         return body
 
     def formatFieldMonsterData(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
+        acs: ScenaFieldMonsterData = f.obj
+        body = acs.toPython()
+        body[0] = 'return ' + body[0]
+        return body
 
     def formatFieldFollowData(self, f: ScenaFunction) -> List[str]:
         raise NotImplementedError
@@ -262,7 +265,7 @@ class ScenaParser:
                     func.obj = ScenaAnimeClipTable(fs = fs)
 
                 case ScenaFunctionType.FieldMonsterData:
-                    pass
+                    func.obj = ScenaFieldMonsterData(fs = fs)
 
                 case ScenaFunctionType.FieldFollowData:
                     pass
