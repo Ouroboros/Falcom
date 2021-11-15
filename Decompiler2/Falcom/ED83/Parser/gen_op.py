@@ -32,30 +32,47 @@ def main():
     for desc in ED83.ScenaOpTable.descriptors:
         desc: Assembler.InstructionDescriptor
 
-        parameters = desc.parameters
-        params = []
-        args = []
+        if desc.handler:
+            func = [
+                f'def {desc.mnemonic}():',
+                '    raise NotImplementedError',
+                '',
+            ]
 
-        if desc.operands:
-            for i, opr in enumerate(desc.operands):
-                typeHint = map_operand_type(opr.format.type)
-                if parameters and parameters[i]:
-                    name = parameters[i]
-                else:
-                    name = f'arg{i + 1}'
+        else:
+            parameters = desc.parameters
+            params = []
+            args = []
+            types = []
 
-                params.append(f'{name}: {typeHint}')
-                args.append(name)
+            if desc.operands:
+                for i, opr in enumerate(desc.operands):
+                    typeHint = map_operand_type(opr.format.type)
+                    if parameters and parameters[i]:
+                        name = parameters[i]
+                    else:
+                        name = f'arg{i + 1}'
 
-        if args:
-            args.insert(0, '')
+                    params.append(f'{name}: {typeHint}')
+                    args.append(name)
+                    types.append(typeHint)
 
-        func = [
-            f'def {desc.mnemonic}({", ".join(params)}):',
-            f'    # 0x{desc.opcode:02X}',
-            f'    scena.handleOpCode(0x{desc.opcode:02X}{", ".join(args)})',
-            '',
-        ]
+            checkTypes = []
+
+            if types:
+                for i, t in enumerate(types):
+                    checkTypes.append(f'    assert isinstance({args[i]}, {t})')
+
+
+            args.insert(0, f'0x{desc.opcode:02X}')
+
+            func = [
+                f'def {desc.mnemonic}({", ".join(params)}):',
+                f'    # 0x{desc.opcode:02X}',
+                *checkTypes,
+                f'    scena.handleOpCode({", ".join(args)})',
+                '',
+            ]
 
         lines.extend(func)
 

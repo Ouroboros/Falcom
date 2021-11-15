@@ -18,15 +18,20 @@ class ScenaHeader:
         self.fullHeaderSize         = None      # type: int
         self.magic                  = None      # type: int
 
-        if fs:
-            self.headerSize          = fs.ReadULong()
-            self.nameOffset          = fs.ReadULong()
-            self.functionEntryOffset = fs.ReadULong()
-            self.functionEntrySize   = fs.ReadULong()
-            self.functionNameOffset  = fs.ReadULong()
-            self.functionCount       = fs.ReadULong()
-            self.fullHeaderSize      = fs.ReadULong()
-            self.magic               = fs.ReadULong()
+        self.read(fs)
+
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
+
+        self.headerSize          = fs.ReadULong()       # 0x00
+        self.nameOffset          = fs.ReadULong()       # 0x04
+        self.functionEntryOffset = fs.ReadULong()       # 0x08
+        self.functionEntrySize   = fs.ReadULong()       # 0x0C
+        self.functionNameOffset  = fs.ReadULong()       # 0x10
+        self.functionCount       = fs.ReadULong()       # 0x14
+        self.fullHeaderSize      = fs.ReadULong()       # 0x18
+        self.magic               = fs.ReadULong()       # 0x1C
 
     def serialize(self) -> bytes:
         fs = io.BytesIO()
@@ -77,7 +82,7 @@ class ScenaFunction:
 class ScenaBattleMonsterSet:
     # No corresponding battle. battleset(%d) monset(%d)
 
-    TerminatorID   = 0xFFFFFFFF
+    InvalidID = 0xFFFFFFFF
 
     def __init__(
         self,
@@ -97,22 +102,27 @@ class ScenaBattleMonsterSet:
         if monsters: assert len(monsters) == 8
         if encounterProbability: assert len(encounterProbability) == 8
 
-        if fs:
-            self.id = fs.ReadULong()
+        self.read(fs)
 
-            match self.id:
-                case self.TerminatorID:
-                    pass
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
 
-                case 0xFFFFFFFE:
-                    # fs.Position += 0x50 - 4
-                    raise
-                    self.id = fs.ReadULong()
+        self.id = fs.ReadULong() # 0x00
 
-                case _:
-                    self.monsters               = [utils.read_fixed_string(fs, 0x10) for _ in range(8)]
-                    self.encounterProbability   = [fs.ReadByte() for _ in range(8)]
-                    self.bytes8C                = fs.Read(8)
+        match self.id:
+            case self.InvalidID:
+                pass
+
+            case 0xFFFFFFFE:
+                # fs.Position += 0x50 - 4
+                raise NotImplementedError
+                self.id = fs.ReadULong()
+
+            case _:
+                self.monsters               = [utils.read_fixed_string(fs, 0x10) for _ in range(8)]     # 0x04
+                self.encounterProbability   = [fs.ReadByte() for _ in range(8)]                         # 0x84
+                self.bytes8C                = fs.Read(8)                                                # 0x8C
 
     def serialize(self) -> bytes:
         fs = io.BytesIO()
@@ -120,7 +130,7 @@ class ScenaBattleMonsterSet:
         fs.write(utils.int_to_bytes(self.id, 4))
 
         match self.id:
-            case self.TerminatorID:
+            case self.InvalidID:
                 fs.write(b'\x00' * 0x18)
                 pass
 
@@ -140,8 +150,8 @@ class ScenaBattleMonsterSet:
     def toPython(self) -> List[str]:
         indent = DefaultIndent
         match self.id:
-            case ScenaBattleMonsterSet.TerminatorID:
-                body = [f'ScenaBattleMonsterSet(id = ScenaBattleMonsterSet.TerminatorID)']
+            case ScenaBattleMonsterSet.InvalidID:
+                body = [f'ScenaBattleMonsterSet(id = ScenaBattleMonsterSet.InvalidID)']
 
             case _:
                 body = [
@@ -153,7 +163,6 @@ class ScenaBattleMonsterSet:
                 ]
 
         return body
-
 
 class ScenaBattleSetting:
     def __init__(
@@ -195,33 +204,38 @@ class ScenaBattleSetting:
         self.battleName     = battleName    # type: str
         self.monsterSet     = monsterSet    # type: List[ScenaBattleMonsterSet]
 
-        if fs:
-            self.mapName    = utils.read_fixed_string(fs, 0x10)
-            self.x          = fs.ReadFloat()
-            self.y          = fs.ReadFloat()
-            self.z          = fs.ReadFloat()
-            self.direction  = fs.ReadFloat()
-            self.float20    = fs.ReadFloat()
-            self.float24    = fs.ReadFloat()
-            self.word28     = fs.ReadUShort()
+        self.read(fs)
 
-            fs.Position += 2    # padding
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
 
-            self.dword2C    = fs.ReadULong()
-            self.word30     = fs.ReadUShort()
-            self.word32     = fs.ReadUShort()
-            self.word34     = fs.ReadUShort()
-            self.word36     = fs.ReadUShort()
-            self.dword38    = fs.ReadULong()
-            self.battleName = utils.read_fixed_string(fs, 0x10)
+        self.mapName    = utils.read_fixed_string(fs, 0x10)     # 0x00
+        self.x          = fs.ReadFloat()                        # 0x10
+        self.y          = fs.ReadFloat()                        # 0x14
+        self.z          = fs.ReadFloat()                        # 0x18
+        self.direction  = fs.ReadFloat()                        # 0x1C
+        self.float20    = fs.ReadFloat()                        # 0x20
+        self.float24    = fs.ReadFloat()                        # 0x24
+        self.word28     = fs.ReadUShort()                       # 0x28
 
-            self.monsterSet = []
+        fs.Position += 2    # padding                           # 0x2A
 
-            monsetid = 0
+        self.dword2C    = fs.ReadULong()                        # 0x2C
+        self.word30     = fs.ReadUShort()                       # 0x30
+        self.word32     = fs.ReadUShort()                       # 0x32
+        self.word34     = fs.ReadUShort()                       # 0x34
+        self.word36     = fs.ReadUShort()                       # 0x36
+        self.dword38    = fs.ReadULong()                        # 0x38
+        self.battleName = utils.read_fixed_string(fs, 0x10)     # 0x3C
 
-            while monsetid != ScenaBattleMonsterSet.TerminatorID:
-                self.monsterSet.append(ScenaBattleMonsterSet(fs = fs))
-                monsetid = self.monsterSet[-1].id
+        self.monsterSet = []                                    # 0x4C
+
+        monsetid = 0
+
+        while monsetid != ScenaBattleMonsterSet.InvalidID:
+            self.monsterSet.append(ScenaBattleMonsterSet(fs = fs))
+            monsetid = self.monsterSet[-1].id
 
     def serialize(self) -> bytes:
         fs = io.BytesIO()
@@ -511,3 +525,283 @@ class ScenaFieldFollowData:
         ]
 
         return body
+
+class ScenaActionTableEntry:
+    InvalidCraftID = 0xFFFF
+
+    def __init__(self, *, fs: fileio.FileStream = None):
+        self.craftId        = None                  # type: int
+        self.byte02         = None                  # type: int
+        self.byte03         = None                  # type: int
+        self.byte04         = None                  # type: int
+        self.byte05         = None                  # type: int
+        self.byte06         = None                  # type: int
+        self.pad07          = None                  # type: int
+        self.float08        = None                  # type: int
+        self.float0C        = None                  # type: int
+        self.float10        = None                  # type: int
+        self.byte14         = None                  # type: int
+        self.pad15          = None                  # type: int
+        self.byte16         = None                  # type: int
+        self.pad17          = None                  # type: int
+        self.word18         = None                  # type: int
+        self.word1A         = None                  # type: int
+        self.word1C         = None                  # type: int
+        self.word1E         = None                  # type: int
+        self.word20         = None                  # type: int
+        self.pad22          = None                  # type: int
+        self.dword24        = None                  # type: int
+        self.dword28        = None                  # type: int
+        self.dword2C        = None                  # type: int
+        self.dword30        = None                  # type: int
+        self.dword34        = None                  # type: int
+        self.dword38        = None                  # type: int
+        self.dword3C        = None                  # type: int
+        self.dword40        = None                  # type: int
+        self.dword44        = None                  # type: int
+        self.dword48        = None                  # type: int
+        self.dword4C        = None                  # type: int
+        self.dword50        = None                  # type: int
+        self.dword54        = None                  # type: int
+        self.dword58        = None                  # type: int
+        self.dword5C        = None                  # type: int
+        self.CP             = None                  # type: int
+        self.pad62          = None                  # type: int
+        self.flags          = None                  # type: str
+        self.action         = None                  # type: str
+        self.name           = None                  # type: str
+
+        if not fs:
+            return
+
+        self.craftId        = fs.ReadUShort()                   # 0x00
+
+        if self.craftId == self.InvalidCraftID:
+            return
+
+        self.byte02         = fs.ReadByte()                     # 0x02
+        self.byte03         = fs.ReadByte()                     # 0x03
+        self.byte04         = fs.ReadByte()                     # 0x04
+        self.byte05         = fs.ReadByte()                     # 0x05
+        self.byte06         = fs.ReadByte()                     # 0x06
+        self.pad07          = fs.ReadByte()                     # 0x07
+        self.float08        = fs.ReadFloat()                    # 0x08
+        self.float0C        = fs.ReadFloat()                    # 0x0C
+        self.float10        = fs.ReadFloat()                    # 0x10
+        self.byte14         = fs.ReadByte()                     # 0x14
+        self.pad15          = fs.ReadByte()                     # 0x15
+        self.byte16         = fs.ReadByte()                     # 0x16
+        self.pad17          = fs.ReadByte()                     # 0x17
+        self.word18         = fs.ReadUShort()                   # 0x18
+        self.word1A         = fs.ReadUShort()                   # 0x1A
+        self.word1C         = fs.ReadUShort()                   # 0x1C
+        self.word1E         = fs.ReadUShort()                   # 0x1E
+        self.word20         = fs.ReadUShort()                   # 0x20
+        self.pad22          = fs.ReadUShort()                   # 0x22
+        self.dword24        = fs.ReadULong()                    # 0x24
+        self.dword28        = fs.ReadULong()                    # 0x28
+        self.dword2C        = fs.ReadULong()                    # 0x2C
+        self.dword30        = fs.ReadULong()                    # 0x30
+        self.dword34        = fs.ReadULong()                    # 0x34
+        self.dword38        = fs.ReadULong()                    # 0x38
+        self.dword3C        = fs.ReadULong()                    # 0x3C
+        self.dword40        = fs.ReadULong()                    # 0x40
+        self.dword44        = fs.ReadULong()                    # 0x44
+        self.dword48        = fs.ReadULong()                    # 0x48
+        self.dword4C        = fs.ReadULong()                    # 0x4C
+        self.dword50        = fs.ReadULong()                    # 0x50
+        self.dword54        = fs.ReadULong()                    # 0x54
+        self.dword58        = fs.ReadULong()                    # 0x58
+        self.dword5C        = fs.ReadULong()                    # 0x5C
+        self.CP             = fs.ReadUShort()                   # 0x60
+        self.pad62          = fs.ReadUShort()                   # 0x62
+        self.flags          = utils.read_fixed_string(fs, 0x10) # 0x64
+        self.action  = utils.read_fixed_string(fs, 0x20) # 0x74
+        self.name           = utils.read_fixed_string(fs, 0x40) # 0x94
+
+    def toPython(self) -> List[str]:
+        return [
+            'ScenaActionTableEntry(',
+            f'{DefaultIndent}craftId       = 0x{self.craftId:X},',
+            f'{DefaultIndent}byte02        = 0x{self.byte02:02X},',
+            f'{DefaultIndent}byte03        = 0x{self.byte03:02X},',
+            f'{DefaultIndent}byte04        = 0x{self.byte04:02X},',
+            f'{DefaultIndent}byte05        = 0x{self.byte05:02X},',
+            f'{DefaultIndent}byte06        = 0x{self.byte06:02X},',
+            f'{DefaultIndent}pad07         = 0x{self.pad07:02X},',
+            f'{DefaultIndent}float08       = {self.float08},',
+            f'{DefaultIndent}float0C       = {self.float0C},',
+            f'{DefaultIndent}float10       = {self.float10},',
+            f'{DefaultIndent}byte14        = 0x{self.byte14:02X},',
+            f'{DefaultIndent}pad15         = 0x{self.pad15:02X},',
+            f'{DefaultIndent}byte16        = 0x{self.byte16:02X},',
+            f'{DefaultIndent}pad17         = 0x{self.pad17:02X},',
+            f'{DefaultIndent}word18        = 0x{self.word18:04X},',
+            f'{DefaultIndent}word1A        = 0x{self.word1A:04X},',
+            f'{DefaultIndent}word1C        = 0x{self.word1C:04X},',
+            f'{DefaultIndent}word1E        = 0x{self.word1E:04X},',
+            f'{DefaultIndent}word20        = 0x{self.word20:04X},',
+            f'{DefaultIndent}pad22         = 0x{self.pad22:02X},',
+            f'{DefaultIndent}dword24       = {self.dword24},',
+            f'{DefaultIndent}dword28       = {self.dword28},',
+            f'{DefaultIndent}dword2C       = {self.dword2C},',
+            f'{DefaultIndent}dword30       = {self.dword30},',
+            f'{DefaultIndent}dword34       = {self.dword34},',
+            f'{DefaultIndent}dword38       = {self.dword38},',
+            f'{DefaultIndent}dword3C       = {self.dword3C},',
+            f'{DefaultIndent}dword40       = {self.dword40},',
+            f'{DefaultIndent}dword44       = {self.dword44},',
+            f'{DefaultIndent}dword48       = {self.dword48},',
+            f'{DefaultIndent}dword4C       = {self.dword4C},',
+            f'{DefaultIndent}dword50       = {self.dword50},',
+            f'{DefaultIndent}dword54       = {self.dword54},',
+            f'{DefaultIndent}dword58       = {self.dword58},',
+            f'{DefaultIndent}dword5C       = {self.dword5C},',
+            f'{DefaultIndent}CP            = {self.CP},',
+            f'{DefaultIndent}pad62         = 0x{self.pad62:02X},',
+            f"{DefaultIndent}flags         = '{self.flags}',",
+            f"{DefaultIndent}action        = '{self.action}',",
+            f"{DefaultIndent}name          = '{self.name}',",
+            ')',
+        ]
+
+class ScenaActionTable:
+    def __init__(self, *actions: List[ScenaActionTableEntry], fs: fileio.FileStream = None):
+        self.actions = actions
+
+        if not fs:
+            return
+
+        self.actions: List[ScenaActionTableEntry] = []
+
+        while True:
+            entry = ScenaActionTableEntry(fs = fs)
+            if entry.craftId == ScenaActionTableEntry.InvalidCraftID:
+                break
+
+            self.actions.append(entry)
+
+    def toPython(self) -> List[str]:
+        b = [
+            'ScenaActionTable(',
+        ]
+
+        for i, a in enumerate(self.actions):
+            b.extend([DefaultIndent + l for l in a.toPython()])
+            b[-1] += ','
+
+        b.append(')')
+        return b
+
+class ScenaAlgoTableEntry:
+    # enemy battle ai
+
+    def __init__(
+            self,
+            craftId         : int       = None,
+            condition       : int       = None,
+            probability     : int       = None,
+            target          : int       = None,
+            targetCondition : int       = None,
+            parameters1     : List[int] = None,
+            parameters2     : List[int] = None,
+            *,
+            fs: fileio.FileStream       = None,
+        ):
+
+        self.craftId            = craftId
+        self.condition          = condition
+        self.probability        = probability
+        self.target             = target
+        self.targetCondition    = targetCondition
+        self.parameters1        = parameters1
+        self.parameters2        = parameters2
+
+        if parameters1: assert len(parameters1) == 3
+        if parameters2: assert len(parameters2) == 3
+
+        self.read(fs)
+
+    def read(self, fs):
+        if not fs:
+            return
+
+        self.craftId            = fs.ReadUShort()                       # 0x00
+        self.condition          = fs.ReadByte()                         # 0x02
+        self.probability        = fs.ReadByte()                         # 0x03
+        self.target             = fs.ReadByte()                         # 0x04
+        self.targetCondition    = fs.ReadByte()                         # 0x05
+
+        pad06 = fs.ReadUShort()                       # 0x06      always 0
+
+        self.parameters1        = [fs.ReadULong() for _ in range(3)]    # 0x08      params for condition
+        self.parameters2        = [fs.ReadULong() for _ in range(3)]    # 0x14      params for targetCondition
+
+        assert pad06 == 0
+
+    def serialize(self) -> bytes:
+        fs = io.BytesIO()
+
+        fs.write(utils.int_to_bytes(self.craftId, 2))
+        fs.write(utils.int_to_bytes(self.condition, 1))
+        fs.write(utils.int_to_bytes(self.probability, 1))
+        fs.write(utils.int_to_bytes(self.target, 1))
+        fs.write(utils.int_to_bytes(self.targetCondition, 1))
+        fs.write(b'\x00' * 2)
+
+        for p in self.parameters1 + self.parameters2:
+            fs.write(utils.int_to_bytes(p, 4))
+
+        fs.seek(0)
+
+        return fs.read()
+
+    def toPython(self) -> List[str]:
+        return [
+            'ScenaAlgoTableEntry(',
+            f'{DefaultIndent}craftId            = 0x{self.craftId:X},',
+            f'{DefaultIndent}condition          = 0x{self.condition:02X},',
+            f'{DefaultIndent}probability        = {self.probability},',
+            f'{DefaultIndent}target             = 0x{self.target:02X},',
+            f'{DefaultIndent}targetCondition    = 0x{self.targetCondition:02X},',
+            f'{DefaultIndent}parameters1        = {self.parameters1},',
+            f'{DefaultIndent}parameters2        = {self.parameters2},',
+            ')',
+        ]
+
+class ScenaAlgoTable:
+    def __init__(self, *entries: List[ScenaAlgoTableEntry], fs: fileio.FileStream = None):
+        self.entries = entries
+
+        if not fs:
+            return
+
+        self.entries: List[ScenaAlgoTableEntry] = []
+
+        while True:
+            e = ScenaAlgoTableEntry(fs = fs)
+            if e.craftId == 0:
+                break
+
+            self.entries.append(e)
+
+    def serialize(self) -> bytes:
+        b = bytearray()
+        for e in self.entries:
+            b.extend(e.serialize())
+
+        b.extend(ScenaAlgoTableEntry(0, 0, 0, 0, 0, [0] * 3, [0] * 3).serialize())
+
+        return bytes(b)
+
+    def toPython(self) -> List[str]:
+        b = [
+            'ScenaAlgoTable(',
+        ]
+
+        for i, a in enumerate(self.entries):
+            b.extend([DefaultIndent + l for l in a.toPython()])
+            b[-1] += ','
+
+        b.append(')')
+        return b

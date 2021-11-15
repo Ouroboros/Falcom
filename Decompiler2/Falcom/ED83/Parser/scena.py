@@ -61,7 +61,10 @@ class ScenaFormatter(Assembler.Formatter):
         return body
 
     def formatActionTable(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
+        acs: ScenaActionTable = f.obj
+        body = acs.toPython()
+        body[0] = 'return ' + body[0]
+        return body
 
     def formatWeaponAttTable(self, f: ScenaFunction) -> List[str]:
         raise NotImplementedError
@@ -70,7 +73,10 @@ class ScenaFormatter(Assembler.Formatter):
         raise NotImplementedError
 
     def formatAlgoTable(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
+        acs: ScenaAlgoTable = f.obj
+        body = acs.toPython()
+        body[0] = 'return ' + body[0]
+        return body
 
     def formatSummonTable(self, f: ScenaFunction) -> List[str]:
         raise NotImplementedError
@@ -241,7 +247,7 @@ class ScenaParser:
                     func.obj = ScenaAnimeClips(fs = fs)
 
                 case ScenaFunctionType.ActionTable:
-                    pass
+                    func.obj = ScenaActionTable(fs = fs)
 
                 case ScenaFunctionType.WeaponAttTable:
                     pass
@@ -250,7 +256,7 @@ class ScenaParser:
                     pass
 
                 case ScenaFunctionType.AlgoTable:
-                    pass
+                    func.obj = ScenaAlgoTable(fs = fs)
 
                 case ScenaFunctionType.SummonTable:
                     pass
@@ -296,7 +302,7 @@ scena = createScenaWriter('{filename}')
         for func in self.functions:
             lines.extend(formatter.formatFuncion(func))
 
-        main = '''
+        main = '''\
 def main():
     scena.run(globals())
 
