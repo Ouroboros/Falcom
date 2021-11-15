@@ -1,3 +1,4 @@
+from os import name
 from Falcom.Common import *
 from Falcom.ED83.Parser.datatable import TableNameEntry
 from . import utils
@@ -52,21 +53,21 @@ class ScenaHeader:
 class ScenaFunctionType(IntEnum2):
     Invalid             = 0
     Code                = 1
-    BattleSetting       = 3
-    AnimeClips          = 4     # gatherAnimeClipInAniFunc
-    ActionTable         = 5
-    WeaponAttTable      = 6
-    BreakTable          = 7
-    AlgoTable           = 8
-    SummonTable         = 9
-    AddCollision        = 10
-    PartTable           = 11
-    ReactionTable       = 12
-    AnimeClipTable      = 13
-    FieldMonsterData    = 14
-    FieldFollowData     = 15
-    ShinigPomBtlset     = 16
-    FaceAuto            = 17
+    BattleSetting       = 2
+    AnimeClips          = 3     # gatherAnimeClipInAniFunc
+    ActionTable         = 4
+    WeaponAttTable      = 5
+    BreakTable          = 6
+    AlgoTable           = 7
+    SummonTable         = 8
+    AddCollision        = 9
+    PartTable           = 10
+    ReactionTable       = 11
+    AnimeClipTable      = 12
+    FieldMonsterData    = 13
+    FieldFollowData     = 14
+    ShinigPomBtlset     = 15
+    FaceAuto            = 16
 
 class ScenaFunction:
     def __init__(self, index: int, offset: int, name: str):
@@ -340,7 +341,7 @@ class ScenaAnimeClipItem:
         return body
 
 class ScenaAnimeClips:
-    def __init__(self, *clips: List[ScenaAnimeClipItem], fs: fileio.FileStream = None):
+    def __init__(self, *clips: ScenaAnimeClipItem, fs: fileio.FileStream = None):
         self.clips = clips
         self.read(fs)
 
@@ -348,7 +349,7 @@ class ScenaAnimeClips:
         if not fs:
             return
 
-        self.clips: List[ScenaAnimeClipItem] = []
+        self.clips = []
         while True:
             c = ScenaAnimeClipItem(fs = fs)
             self.clips.append(c)
@@ -428,17 +429,15 @@ class ScenaAnimeClipTableEntry:
         return f
 
 class ScenaAnimeClipTable:
-    def __init__(self, *entries: List[ScenaAnimeClipTableEntry], fs: fileio.FileStream = None):
+    def __init__(self, *entries: ScenaAnimeClipTableEntry, fs: fileio.FileStream = None):
         self.entries = entries
-
         self.read(fs)
 
     def read(self, fs: fileio.FileStream):
         if not fs:
             return
 
-        self.entries: List[ScenaAnimeClipTableEntry] = []
-
+        self.entries = []
         while True:
             self.entries.append(ScenaAnimeClipTableEntry(fs = fs))
             if self.entries[-1].flags == 0:
@@ -519,11 +518,9 @@ class ScenaFieldMonsterData:
         return body
 
 class ScenaFieldFollowData:
-    def __init__(self, *floats: List[float], fs: fileio.FileStream = None):
+    def __init__(self, *floats: float, fs: fileio.FileStream = None):
         self.floats = floats
-
         if floats: assert len(floats) == 5
-
         self.read(fs)
 
     def read(self, fs: fileio.FileStream):
@@ -790,17 +787,15 @@ class ScenaActionTableEntry:
         ]
 
 class ScenaActionTable:
-    def __init__(self, *actions: List[ScenaActionTableEntry], fs: fileio.FileStream = None):
+    def __init__(self, *actions: ScenaActionTableEntry, fs: fileio.FileStream = None):
         self.actions = actions
-
         self.read(fs)
 
     def read(self, fs: fileio.FileStream):
         if not fs:
             return
 
-        self.actions: List[ScenaActionTableEntry] = []
-
+        self.actions = []
         while True:
             entry = ScenaActionTableEntry(fs = fs)
             if entry.craftId == ScenaActionTableEntry.InvalidCraftID:
@@ -906,17 +901,15 @@ class ScenaAlgoTableEntry:
         ]
 
 class ScenaAlgoTable:
-    def __init__(self, *entries: List[ScenaAlgoTableEntry], fs: fileio.FileStream = None):
+    def __init__(self, *entries: ScenaAlgoTableEntry, fs: fileio.FileStream = None):
         self.entries = entries
-
         self.read(fs)
 
     def read(self, fs: fileio.FileStream):
         if not fs:
             return
 
-        self.entries: List[ScenaAlgoTableEntry] = []
-
+        self.entries = []
         while True:
             e = ScenaAlgoTableEntry(fs = fs)
             if e.craftId == 0:
@@ -946,11 +939,9 @@ class ScenaAlgoTable:
         return b
 
 class ScenaWeaponAttTable:
-    def __init__(self, *attrs: List[int], fs: fileio.FileStream = None):
+    def __init__(self, *attrs: int, fs: fileio.FileStream = None):
         self.weaponAttributeData = attrs
-
         if attrs: assert len(attrs) == 4
-
         self.read(fs)
 
     def read(self, fs: fileio.FileStream):
@@ -969,10 +960,10 @@ class ScenaWeaponAttTable:
         ]
 
 class ScenaBreakTable:
-    def __init__(self, *breakData: List[Tuple[int, int]], fs: fileio.FileStream = None):
+    def __init__(self, *breakData: Tuple[int, int], fs: fileio.FileStream = None):
         self.breakData = breakData
         if breakData:
-            assert isinstance(breakData, (tuple, list))
+            assert isinstance(breakData, tuple)
             for d in breakData:
                 assert isinstance(d, (tuple, list))
                 assert len(d) == 2
@@ -1007,7 +998,85 @@ class ScenaBreakTable:
         ]
 
         for d in self.breakData:
-            f.append(f'{DefaultIndent}({"0x%X, 0x%02X" % d}),',)
+            f.append(f'{DefaultIndent}({"0x%X, %d" % d}),',)
 
         f.append(')')
         return f
+
+class ScenaSummonTableEntry:
+    InvalidID = 0xFFFF
+
+    def __init__(self, id: int = 0, byte2: int = 0, byte3: int = 0, name: str = '', *, fs: fileio.FileStream = None):
+        self.id     = id
+        self.byte2  = byte2
+        self.byte3  = byte3
+        self.name   = name
+
+        self.read(fs)
+
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
+
+        self.id     = fs.ReadUShort()                   # 0x00
+        if self.id == self.InvalidID:
+            return
+
+        self.byte2  = fs.ReadByte()                     # 0x02
+        self.byte3  = fs.ReadByte()                     # 0x03
+        self.name   = utils.read_fixed_string(fs, 0x20) # 0x04
+
+    def serialize(self) -> bytes:
+        fs = io.BytesIO()
+        fs.write(utils.int_to_bytes(self.id, 2))
+        fs.write(utils.int_to_bytes(self.byte2, 1))
+        fs.write(utils.int_to_bytes(self.byte3, 1))
+        fs.write(utils.pad_string(self.name, 0x20))
+        fs.seek(0)
+        return fs.read()
+
+    def toPython(self) -> List[str]:
+        return [
+            f'ScenaSummonTableEntry(0x{self.id:04X}, 0x{self.byte2:02X}, 0x{self.byte3:02X}, \'{self.name}\')',
+        ]
+
+class ScenaSummonTable:
+    def __init__(self, *summons: ScenaSummonTableEntry, fs: fileio.FileStream = None):
+        self.summons = summons
+        self.read(fs)
+
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
+
+        self.summons = []
+        while True:
+            s = ScenaSummonTableEntry(fs = fs)
+            if s.id == ScenaSummonTableEntry.InvalidID:
+                break
+
+            self.summons.append(s)
+
+    def serialize(self) -> bytes:
+        fs = io.BytesIO()
+
+        for s in self.summons:
+            fs.write(s.serialize())
+
+        fs.write(ScenaSummonTableEntry(ScenaSummonTableEntry.InvalidID).serialize())
+        fs.seek(0)
+        return fs.read()
+
+    def toPython(self) -> List[str]:
+        f = [
+            f'ScenaSummonTable(',
+        ]
+
+        for a in self.summons:
+            f.extend([DefaultIndent + l for l in a.toPython()])
+            f[-1] += ','
+
+        f.append(')')
+
+        return f
+

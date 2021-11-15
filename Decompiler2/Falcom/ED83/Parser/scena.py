@@ -55,37 +55,34 @@ class ScenaFormatter(Assembler.Formatter):
         #     f.append(b)
 
     def formatAnimeClips(self, f: ScenaFunction) -> List[str]:
-        acs: ScenaAnimeClips = f.obj
-        body = acs.toPython()
+        body = f.obj.toPython()
         body[0] = 'return ' + body[0]
         return body
 
     def formatActionTable(self, f: ScenaFunction) -> List[str]:
-        acs: ScenaActionTable = f.obj
-        body = acs.toPython()
+        body = f.obj.toPython()
         body[0] = 'return ' + body[0]
         return body
 
     def formatWeaponAttTable(self, f: ScenaFunction) -> List[str]:
-        acs: ScenaWeaponAttTable = f.obj
-        body = acs.toPython()
+        body = f.obj.toPython()
         body[0] = 'return ' + body[0]
         return body
 
     def formatBreakTable(self, f: ScenaFunction) -> List[str]:
-        acs: ScenaBreakTable = f.obj
-        body = acs.toPython()
+        body = f.obj.toPython()
         body[0] = 'return ' + body[0]
         return body
 
     def formatAlgoTable(self, f: ScenaFunction) -> List[str]:
-        acs: ScenaAlgoTable = f.obj
-        body = acs.toPython()
+        body = f.obj.toPython()
         body[0] = 'return ' + body[0]
         return body
 
     def formatSummonTable(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
+        body = f.obj.toPython()
+        body[0] = 'return ' + body[0]
+        return body
 
     def formatAddCollision(self, f: ScenaFunction) -> List[str]:
         raise NotImplementedError
@@ -97,20 +94,17 @@ class ScenaFormatter(Assembler.Formatter):
         raise NotImplementedError
 
     def formatAnimeClipTable(self, f: ScenaFunction) -> List[str]:
-        acs: ScenaAnimeClipTable = f.obj
-        body = acs.toPython()
+        body = f.obj.toPython()
         body[0] = 'return ' + body[0]
         return body
 
     def formatFieldMonsterData(self, f: ScenaFunction) -> List[str]:
-        acs: ScenaFieldMonsterData = f.obj
-        body = acs.toPython()
+        body = f.obj.toPython()
         body[0] = 'return ' + body[0]
         return body
 
     def formatFieldFollowData(self, f: ScenaFunction) -> List[str]:
-        acs: ScenaFieldFollowData = f.obj
-        body = acs.toPython()
+        body = f.obj.toPython()
         body[0] = 'return ' + body[0]
         return body
 
@@ -265,7 +259,7 @@ class ScenaParser:
                     func.obj = ScenaAlgoTable(fs = fs)
 
                 case ScenaFunctionType.SummonTable:
-                    pass
+                    func.obj = ScenaSummonTable(fs = fs)
 
                 case ScenaFunctionType.AddCollision:
                     pass

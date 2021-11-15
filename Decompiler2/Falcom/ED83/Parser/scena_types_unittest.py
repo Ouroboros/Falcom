@@ -3267,6 +3267,17 @@ class ScenaTypesSerializeTestCase(unittest.TestCase):
 
         self.assertEqual(serializer(ScenaBreakTable, data) + bytes.fromhex('01 00 00 00'), bytes.fromhex(data))
 
+    def test_ScenaSummonTable(self):
+        data = '''
+            01 00 0A 00 6D 6F 6E 30 33 32 5F 63 30 30 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 FF FF 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 01 00 00 00
+        '''
+
+        self.assertEqual(serializer(ScenaSummonTable, data) + bytes.fromhex('01 00 00 00'), bytes.fromhex(data))
+
     def assertEqual(self, first, second, msg = None):
         from hexdump import hexdump
 
