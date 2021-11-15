@@ -16,5 +16,8 @@ export const API = {
 }
 
 export const Addrs = {
-    ScriptLoad  : Modules.ED83.base.add(0x3C91B0),
+    ScriptLoad              : Modules.ED83.base.add(0x3C91B0),
+    ScriptVMExecute         : Modules.ED83.base.add(0x3C6DA0),
+    ScriptGetFunctionByName : Modules.ED83.base.add(0x3C7FF0),
+    Logger_Output           : Modules.ED83.base.add(0x11D160),
 };
