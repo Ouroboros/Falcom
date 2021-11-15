@@ -67,10 +67,16 @@ class ScenaFormatter(Assembler.Formatter):
         return body
 
     def formatWeaponAttTable(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
+        acs: ScenaWeaponAttTable = f.obj
+        body = acs.toPython()
+        body[0] = 'return ' + body[0]
+        return body
 
     def formatBreakTable(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
+        acs: ScenaBreakTable = f.obj
+        body = acs.toPython()
+        body[0] = 'return ' + body[0]
+        return body
 
     def formatAlgoTable(self, f: ScenaFunction) -> List[str]:
         acs: ScenaAlgoTable = f.obj
@@ -115,7 +121,7 @@ class ScenaFormatter(Assembler.Formatter):
         raise NotImplementedError
 
     _formatter = {
-        ScenaFunctionType.Code          : formatCode,
+        ScenaFunctionType.Code              : formatCode,
         ScenaFunctionType.BattleSetting     : formatBattleSetting,
         ScenaFunctionType.AnimeClips        : formatAnimeClips,
         ScenaFunctionType.ActionTable       : formatActionTable,
@@ -250,10 +256,10 @@ class ScenaParser:
                     func.obj = ScenaActionTable(fs = fs)
 
                 case ScenaFunctionType.WeaponAttTable:
-                    pass
+                    func.obj = ScenaWeaponAttTable(fs = fs)
 
                 case ScenaFunctionType.BreakTable:
-                    pass
+                    func.obj = ScenaBreakTable(fs = fs)
 
                 case ScenaFunctionType.AlgoTable:
                     func.obj = ScenaAlgoTable(fs = fs)

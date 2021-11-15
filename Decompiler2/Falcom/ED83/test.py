@@ -22,7 +22,7 @@ def test(filename, output = None):
 def main():
     scp = [
         'a0000.dat',
-        'chr000.dat',
+        'chr009.dat',
         # 'm3040.dat',
         # 'm4000.dat',
         # 'system3.dat',
