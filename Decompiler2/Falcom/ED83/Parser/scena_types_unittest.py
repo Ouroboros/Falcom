@@ -3320,6 +3320,10 @@ class ScenaTypesSerializeTestCase(unittest.TestCase):
 
         self.assertEqual(serializer(ScenaReactionTable, data) + bytes.fromhex('01 00 00 00'), bytes.fromhex(data))
 
+    def test_ScenaFaceAuto(self):
+        data = '''23 37 30 73 48 47 47 2B 47 23 30 78 00 00 00 00'''
+        self.assertEqual(serializer(ScenaFaceAuto, data), bytes.fromhex(data))
+
     def assertEqual(self, first, second, msg = None):
         if first != second:
             from hexdump import hexdump

@@ -66,7 +66,7 @@ class ScenaFunctionType(IntEnum2):
     AnimeClipTable      = 12
     FieldMonsterData    = 13
     FieldFollowData     = 14
-    FaceAuto            = 15
+    FaceAuto            = 15    # FC_autoXX
     ShinigPomBtlset     = 16
 
 class ScenaFunction:
@@ -1246,3 +1246,20 @@ class ScenaReactionTable:
         f.append(')')
 
         return f
+
+class ScenaFaceAuto:
+    def __init__(self, s: str = '', *, fs: fileio.FileStream = None) -> None:
+        self.s = s
+        self.read(fs)
+
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
+
+        self.s = utils.read_fixed_string(fs, 0x10)
+
+    def serialize(self) -> bytes:
+        return utils.pad_string(self.s, 0x10)
+
+    def toPython(self) -> List[str]:
+        return [f"ScenaFaceAuto('{self.s}')"]

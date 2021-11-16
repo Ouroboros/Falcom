@@ -113,7 +113,9 @@ class ScenaFormatter(Assembler.Formatter):
         return body
 
     def formatFaceAuto(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
+        body = f.obj.toPython()
+        body[0] = 'return ' + body[0]
+        return body
 
     def formatShinigPomBtlset(self, f: ScenaFunction) -> List[str]:
         raise NotImplementedError
@@ -284,7 +286,7 @@ class ScenaParser:
                     func.obj = ScenaFieldFollowData(fs = fs)
 
                 case ScenaFunctionType.FaceAuto:
-                    pass
+                    func.obj = ScenaFaceAuto(fs = fs)
 
                 case ScenaFunctionType.ShinigPomBtlset:
                     raise NotImplementedError
