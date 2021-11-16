@@ -88,7 +88,9 @@ class ScenaFormatter(Assembler.Formatter):
         raise NotImplementedError
 
     def formatPartTable(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
+        body = f.obj.toPython()
+        body[0] = 'return ' + body[0]
+        return body
 
     def formatReactionTable(self, f: ScenaFunction) -> List[str]:
         raise NotImplementedError
@@ -108,10 +110,10 @@ class ScenaFormatter(Assembler.Formatter):
         body[0] = 'return ' + body[0]
         return body
 
-    def formatShinigPomBtlset(self, f: ScenaFunction) -> List[str]:
+    def formatFaceAuto(self, f: ScenaFunction) -> List[str]:
         raise NotImplementedError
 
-    def formatFaceAuto(self, f: ScenaFunction) -> List[str]:
+    def formatShinigPomBtlset(self, f: ScenaFunction) -> List[str]:
         raise NotImplementedError
 
     _formatter = {
@@ -129,8 +131,8 @@ class ScenaFormatter(Assembler.Formatter):
         ScenaFunctionType.AnimeClipTable    : formatAnimeClipTable,
         ScenaFunctionType.FieldMonsterData  : formatFieldMonsterData,
         ScenaFunctionType.FieldFollowData   : formatFieldFollowData,
-        ScenaFunctionType.ShinigPomBtlset   : formatShinigPomBtlset,
         ScenaFunctionType.FaceAuto          : formatFaceAuto,
+        ScenaFunctionType.ShinigPomBtlset   : formatShinigPomBtlset,
     }
 
 class ScenaParser:
@@ -262,10 +264,10 @@ class ScenaParser:
                     func.obj = ScenaSummonTable(fs = fs)
 
                 case ScenaFunctionType.AddCollision:
-                    pass
+                    raise NotImplementedError
 
                 case ScenaFunctionType.PartTable:
-                    pass
+                    func.obj = ScenaPartTable(fs = fs)
 
                 case ScenaFunctionType.ReactionTable:
                     pass
@@ -279,10 +281,10 @@ class ScenaParser:
                 case ScenaFunctionType.FieldFollowData:
                     func.obj = ScenaFieldFollowData(fs = fs)
 
-                case ScenaFunctionType.ShinigPomBtlset:
+                case ScenaFunctionType.FaceAuto:
                     pass
 
-                case ScenaFunctionType.FaceAuto:
+                case ScenaFunctionType.ShinigPomBtlset:
                     pass
 
                 case _:

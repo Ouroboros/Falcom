@@ -28,7 +28,7 @@ def main():
         # 'system3.dat',
         # 'common.dat',
         'alchr009.dat',
-        'almon999_1.dat',
+        'almon450_1.dat',
     ][-1]
 
     scena = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\\'

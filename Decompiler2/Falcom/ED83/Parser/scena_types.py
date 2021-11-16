@@ -66,8 +66,8 @@ class ScenaFunctionType(IntEnum2):
     AnimeClipTable      = 12
     FieldMonsterData    = 13
     FieldFollowData     = 14
-    ShinigPomBtlset     = 15
-    FaceAuto            = 16
+    FaceAuto            = 15
+    ShinigPomBtlset     = 16
 
 class ScenaFunction:
     def __init__(self, index: int, offset: int, name: str):
@@ -1058,14 +1058,13 @@ class ScenaSummonTable:
             self.summons.append(s)
 
     def serialize(self) -> bytes:
-        fs = io.BytesIO()
+        b = bytearray()
 
         for s in self.summons:
-            fs.write(s.serialize())
+            b.extend(s.serialize())
 
-        fs.write(ScenaSummonTableEntry(ScenaSummonTableEntry.InvalidID).serialize())
-        fs.seek(0)
-        return fs.read()
+        b.extend(ScenaSummonTableEntry(ScenaSummonTableEntry.InvalidID).serialize())
+        return bytes(b)
 
     def toPython(self) -> List[str]:
         f = [
@@ -1080,3 +1079,79 @@ class ScenaSummonTable:
 
         return f
 
+class ScenaAddCollision:
+    def __init__(self, *, fs: fileio.FileStream) -> None:
+        pass
+
+class ScenaPartTableEntry:
+    InvalidID = 0xFF
+
+    def __init__(self, id: int = 0, name1: str = '', name2: str = '', *, fs: fileio.FileStream = None):
+        self.id = id
+        self.name1 = name1
+        self.name2 = name2
+
+        self.read(fs)
+
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
+
+        self.id     = fs.ReadULong()
+        self.name1  = utils.read_fixed_string(fs, 0x20)
+        self.name2  = utils.read_fixed_string(fs, 0x20)
+
+    def serialize(self) -> bytes:
+        fs = io.BytesIO()
+        fs.write(utils.int_to_bytes(self.id, 4))
+        fs.write(utils.pad_string(self.name1, 0x20))
+        fs.write(utils.pad_string(self.name2, 0x20))
+        fs.seek(0)
+        return fs.read()
+
+    def toPython(self) -> List[str]:
+        return [
+            f'ScenaPartTableEntry({self.id}, \'{self.name1}\', \'{self.name2}\')',
+        ]
+
+class ScenaPartTable:
+    def __init__(self, *parts: ScenaPartTableEntry, fs: fileio.FileStream = None) -> None:
+        self.parts = parts
+        if parts: assert len(parts) <= 4
+        self.read(fs)
+
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
+
+        self.parts = []
+        for _ in range(4):
+            e = ScenaPartTableEntry(fs = fs)
+            if e.id == ScenaPartTableEntry.InvalidID:
+                break
+
+            self.parts.append(e)
+
+    def serialize(self) -> bytes:
+        b = bytearray()
+
+        for s in self.parts:
+            b.extend(s.serialize())
+
+        if len(self.parts) < 4:
+            b.extend(ScenaPartTableEntry(ScenaPartTableEntry.InvalidID).serialize())
+
+        return bytes(b)
+
+    def toPython(self) -> List[str]:
+        f = [
+            f'ScenaPartTable(',
+        ]
+
+        for p in self.parts:
+            f.extend([DefaultIndent + l for l in p.toPython()])
+            f[-1] += ','
+
+        f.append(')')
+
+        return f

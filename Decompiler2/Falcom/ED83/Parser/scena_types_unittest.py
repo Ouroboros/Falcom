@@ -3278,13 +3278,38 @@ class ScenaTypesSerializeTestCase(unittest.TestCase):
 
         self.assertEqual(serializer(ScenaSummonTable, data) + bytes.fromhex('01 00 00 00'), bytes.fromhex(data))
 
-    def assertEqual(self, first, second, msg = None):
-        from hexdump import hexdump
+    def test_ScenaPartTable(self):
+        data = '''
+            01 00 00 00 72 6F 62 30 31 30 5F 70 30 30 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 4E 4F 44 45 5F 42 54 4C 5F 41 52 4D
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 02 00 00 00 72 6F 62 30 31 30 5F 70
+            30 31 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 4E 4F 44 45 5F 42 54 4C
+            5F 42 4F 44 59 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 03 00 00 00 72 6F 62 30
+            31 30 5F 70 30 32 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 4E 4F 44 45
+            5F 42 54 4C 5F 48 45 41 44 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 FF 00 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            01 00 00 00
+        '''
 
-        # print('\n****************************************************************************************************')
-        # hexdump(first)
-        # print('****************************************************************************************************')
-        # hexdump(second)
+        self.assertEqual(serializer(ScenaPartTable, data) + bytes.fromhex('01 00 00 00'), bytes.fromhex(data))
+
+    def assertEqual(self, first, second, msg = None):
+        if first != second:
+            from hexdump import hexdump
+
+            print('\n****************************************************************************************************')
+            hexdump(first)
+            print('****************************************************************************************************')
+            hexdump(second)
 
         return super().assertEqual(first, second, msg)
 

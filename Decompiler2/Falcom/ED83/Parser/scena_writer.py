@@ -66,11 +66,11 @@ class _ScenaWriter:
     def FieldFollowData(self, name: str):
         return self.functionDecorator(name, ED83.ScenaFunctionType.FieldFollowData)
 
-    def ShinigPomBtlset(self, name: str):
-        return self.functionDecorator(name, ED83.ScenaFunctionType.ShinigPomBtlset)
-
     def FaceAuto(self, name: str):
         return self.functionDecorator(name, ED83.ScenaFunctionType.FaceAuto)
+
+    def ShinigPomBtlset(self, name: str):
+        return self.functionDecorator(name, ED83.ScenaFunctionType.ShinigPomBtlset)
 
     def run(self, g):
         dataFunc = [

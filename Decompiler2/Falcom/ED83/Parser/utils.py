@@ -14,4 +14,4 @@ def pad_string(s: str, padding: int) -> bytes:
     return s.encode(GlobalConfig.DefaultEncoding).ljust(padding, b'\x00')
 
 def read_fixed_string(fs: fileio.FileStream, size: int) -> str:
-    return fs.Read(size).split(b'\x00', maxsplit = 1)[0].decode(GlobalConfig.DefaultEncoding)
+    return fs.Read(size).rstrip(b'\x00').decode(GlobalConfig.DefaultEncoding)
