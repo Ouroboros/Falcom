@@ -3302,6 +3302,24 @@ class ScenaTypesSerializeTestCase(unittest.TestCase):
 
         self.assertEqual(serializer(ScenaPartTable, data) + bytes.fromhex('01 00 00 00'), bytes.fromhex(data))
 
+    def test_ScenaReactionTable(self):
+        data = '''
+            E8 03 04 00 02 00 01 00 00 00 80 BF 00 00 80 BF
+            00 00 00 00 00 00 80 BF 00 00 80 BF 00 00 80 BF
+            00 00 00 00 00 00 80 BF 00 00 80 BF 00 00 80 BF
+            00 00 00 00 00 00 48 42 00 00 00 00 E9 03 02 00
+            00 00 03 00 00 00 80 BF 00 00 80 BF 00 00 00 00
+            00 00 80 BF 00 00 80 BF 00 00 80 BF 00 00 00 00
+            00 00 80 BF 00 00 80 BF 00 00 80 BF 00 00 00 00
+            00 00 80 BF 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+            00 00 00 00 01 00 00 00
+        '''
+
+        self.assertEqual(serializer(ScenaReactionTable, data) + bytes.fromhex('01 00 00 00'), bytes.fromhex(data))
+
     def assertEqual(self, first, second, msg = None):
         if first != second:
             from hexdump import hexdump

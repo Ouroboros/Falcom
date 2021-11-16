@@ -93,7 +93,9 @@ class ScenaFormatter(Assembler.Formatter):
         return body
 
     def formatReactionTable(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
+        body = f.obj.toPython()
+        body[0] = 'return ' + body[0]
+        return body
 
     def formatAnimeClipTable(self, f: ScenaFunction) -> List[str]:
         body = f.obj.toPython()
@@ -270,7 +272,7 @@ class ScenaParser:
                     func.obj = ScenaPartTable(fs = fs)
 
                 case ScenaFunctionType.ReactionTable:
-                    pass
+                    func.obj = ScenaReactionTable(fs = fs)
 
                 case ScenaFunctionType.AnimeClipTable:
                     func.obj = ScenaAnimeClipTable(fs = fs)
@@ -285,7 +287,7 @@ class ScenaParser:
                     pass
 
                 case ScenaFunctionType.ShinigPomBtlset:
-                    pass
+                    raise NotImplementedError
 
                 case _:
                     raise NotImplementedError(f'unknown func type: {func.type}')

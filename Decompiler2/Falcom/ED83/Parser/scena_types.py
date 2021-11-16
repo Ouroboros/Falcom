@@ -1155,3 +1155,94 @@ class ScenaPartTable:
         f.append(')')
 
         return f
+
+class ScenaReactionTableEntry:
+    InvalidID = 0
+
+    def __init__(self, craftId: int = 0, word02: int = 0, word04: int = 0, word06: int = 0, floats08: List[float] = None, type: int = 0, *, fs: fileio.FileStream = None):
+        self.craftId    = craftId
+        self.word02     = word02
+        self.word04     = word04
+        self.word06     = word06
+        self.floats08   = floats08
+        self.type       = type
+
+        if floats08: assert len(floats08) == 12
+
+        self.read(fs)
+
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
+
+        self.craftId    = fs.ReadUShort()
+        self.word02     = fs.ReadUShort()
+        self.word04     = fs.ReadUShort()
+        self.word06     = fs.ReadUShort()
+        self.floats08   = [fs.ReadFloat() for _ in range(12)]
+        self.type       = fs.ReadULong()
+
+    def serialize(self) -> bytes:
+        fs = io.BytesIO()
+        fs.write(utils.int_to_bytes(self.craftId, 2))
+        fs.write(utils.int_to_bytes(self.word02, 2))
+        fs.write(utils.int_to_bytes(self.word04, 2))
+        fs.write(utils.int_to_bytes(self.word06, 2))
+        [fs.write(utils.float_to_bytes(f)) for f in self.floats08]
+        fs.write(utils.int_to_bytes(self.type, 4))
+        fs.seek(0)
+        return fs.read()
+
+    def toPython(self) -> List[str]:
+        return [
+            f'ScenaReactionTableEntry(',
+            f'{DefaultIndent}craftId    = 0x{self.craftId:04X},',
+            f'{DefaultIndent}word02     = 0x{self.word02:04X},',
+            f'{DefaultIndent}word04     = 0x{self.word04:04X},',
+            f'{DefaultIndent}word06     = 0x{self.word06:04X},',
+            f'{DefaultIndent}floats08   = {self.floats08},',
+            f'{DefaultIndent}type       = {self.type},',
+            f')',
+        ]
+
+class ScenaReactionTable:
+    def __init__(self, *reactions: ScenaReactionTableEntry, fs: fileio.FileStream = None) -> None:
+        self.reactions = reactions
+        if reactions: assert len(reactions) <= 8
+        self.read(fs)
+
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
+
+        self.reactions = []
+        for _ in range(4):
+            e = ScenaReactionTableEntry(fs = fs)
+            if e.craftId == ScenaReactionTableEntry.InvalidID:
+                break
+
+            self.reactions.append(e)
+
+    def serialize(self) -> bytes:
+        b = bytearray()
+
+        for s in self.reactions:
+            b.extend(s.serialize())
+
+        if len(self.reactions) < 8:
+            b.extend(ScenaReactionTableEntry(ScenaReactionTableEntry.InvalidID, 0, 0, 0, [0.0] * 12).serialize())
+
+        return bytes(b)
+
+    def toPython(self) -> List[str]:
+        f = [
+            f'ScenaReactionTable(',
+        ]
+
+        for p in self.reactions:
+            f.extend([DefaultIndent + l for l in p.toPython()])
+            f[-1] += ','
+
+        f.append(')')
+
+        return f
