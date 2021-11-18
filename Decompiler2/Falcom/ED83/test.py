@@ -5,6 +5,9 @@ import pathlib
 from hexdump import hexdump
 
 def test(filename, output = None):
+    if pathlib.Path(filename).stem == 'r4400':
+        return
+
     fs = fileio.FileStream().OpenMemory(open(filename, 'rb').read())
     scena = ED83.Parser.ScenaParser(fs)
 
@@ -30,17 +33,21 @@ def main():
         'alchr009.dat',
         'almon450_1.dat',
         'face.dat',
+        'r4400.dat',
     ][-1]
 
-    scena = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\\'
-    scena = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\ani\dat\\'
-    # scena = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\battle\dat\\'
+    scena = [
+        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\\',
+        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\ani\dat\\',
+        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\battle\dat\\',
+    ]
 
-    # for f in fileio.getDirectoryFiles(scena, '*.dat'):
-    #     console.setTitle(os.path.basename(f))
-    #     test(f)
+    for s in scena:
+        for f in fileio.getDirectoryFiles(s, '*.dat'):
+            console.setTitle(os.path.basename(f))
+            test(f)
 
-    test(scena + scp, scp + '.py')
+    test(scena[-1] + scp, scp + '.py')
 
     # console.pause('done')
 

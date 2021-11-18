@@ -182,7 +182,10 @@ class ScenaParser:
         if typ:
             return typ
 
-        if name == '' or name.startswith('BTLSET_'):
+        if any([
+            name == '',
+            name.startswith('BTLSET'),
+        ]):
             return ScenaFunctionType.BattleSetting
 
         if name.startswith('FC_auto'):
@@ -243,7 +246,7 @@ class ScenaParser:
 
             match func.type:
                 case ScenaFunctionType.Code:
-                    # func.func = dis.disasmFunction(ctx, name = func.name)
+                    func.obj = dis.disasmFunction(ctx, name = func.name)
                     pass
 
                 case ScenaFunctionType.BattleSetting:

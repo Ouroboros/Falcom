@@ -157,7 +157,7 @@ class ScenaBattleMonsterSet:
             case _:
                 body = [
                     f'ScenaBattleMonsterSet(',
-                    f'{indent}id                      = 0x{self.id:08X},',
+                    f'{indent}id                      = 0x{self.id:X},',
                     f'{indent}monsters                = {self.monsters},',
                     f'{indent}encounterProbability    = {self.encounterProbability},',
                     ')',
@@ -176,7 +176,7 @@ class ScenaBattleSetting:
         float20     : int = 0,
         float24     : int = 0,
         word28      : int = 0,
-        dword2C     : int = 0,
+        flags     : int = 0,
         word30      : int = 0,
         word32      : int = 0,
         word34      : int = 0,
@@ -196,7 +196,7 @@ class ScenaBattleSetting:
         self.float20        = float20       # type: int
         self.float24        = float24       # type: int
         self.word28         = word28        # type: int
-        self.dword2C        = dword2C       # type: int
+        self.flags          = flags         # type: int
         self.word30         = word30        # type: int
         self.word32         = word32        # type: int
         self.word34         = word34        # type: int
@@ -222,7 +222,7 @@ class ScenaBattleSetting:
 
         fs.Position += 2    # padding                           # 0x2A
 
-        self.dword2C    = fs.ReadULong()                        # 0x2C
+        self.flags      = fs.ReadULong()                        # 0x2C
         self.word30     = fs.ReadUShort()                       # 0x30
         self.word32     = fs.ReadUShort()                       # 0x32
         self.word34     = fs.ReadUShort()                       # 0x34
@@ -232,11 +232,12 @@ class ScenaBattleSetting:
 
         self.monsterSet = []                                    # 0x4C
 
-        monsetid = 0
+        for _ in range(255):
+            monset = ScenaBattleMonsterSet(fs = fs)
+            if monset.id == ScenaBattleMonsterSet.InvalidID:
+                break
 
-        while monsetid != ScenaBattleMonsterSet.InvalidID:
-            self.monsterSet.append(ScenaBattleMonsterSet(fs = fs))
-            monsetid = self.monsterSet[-1].id
+            self.monsterSet.append(monset)
 
     def serialize(self) -> bytes:
         fs = io.BytesIO()
@@ -252,7 +253,7 @@ class ScenaBattleSetting:
 
         fs.write(b'\x00' * 2) # padding
 
-        fs.write(utils.int_to_bytes(self.dword2C, 4))
+        fs.write(utils.int_to_bytes(self.flags, 4))
         fs.write(utils.int_to_bytes(self.word30, 2))
         fs.write(utils.int_to_bytes(self.word32, 2))
         fs.write(utils.int_to_bytes(self.word34, 2))
@@ -262,6 +263,9 @@ class ScenaBattleSetting:
 
         for monset in self.monsterSet:
             fs.write(monset.serialize())
+
+        if self.monsterSet[-1].id != ScenaBattleMonsterSet.InvalidID:
+            fs.write(ScenaBattleMonsterSet(ScenaBattleMonsterSet.InvalidID).serialize())
 
         fs.seek(0)
 
@@ -278,7 +282,7 @@ class ScenaBattleSetting:
             f'{DefaultIndent}float20     = {self.float20},',
             f'{DefaultIndent}float24     = {self.float24},',
             f'{DefaultIndent}word28      = {self.word28},',
-            f'{DefaultIndent}dword2C     = {self.dword2C},',
+            f'{DefaultIndent}flags       = 0x{self.flags:08X},',
             f'{DefaultIndent}word30      = {self.word30},',
             f'{DefaultIndent}word32      = {self.word32},',
             f'{DefaultIndent}word34      = {self.word34},',
@@ -439,9 +443,10 @@ class ScenaAnimeClipTable:
 
         self.entries = []
         while True:
-            self.entries.append(ScenaAnimeClipTableEntry(fs = fs))
-            if self.entries[-1].flags == 0:
+            e = ScenaAnimeClipTableEntry(fs = fs)
+            if e.flags == 0:
                 break
+            self.entries.append(e)
 
     def serialize(self) -> bytes:
         b = bytearray()
@@ -472,13 +477,13 @@ class ScenaAnimeClipTable:
         return body
 
 class ScenaFieldMonsterData:
-    def __init__(self, type: int = 0, word04: int = 0, word06: int = 0, floats: List[float] = None, *, fs: fileio.FileStream = None):
-        self.type   = type
-        self.word04 = word04
-        self.word06 = word06
-        self.floats = floats
+    def __init__(self, type: int = 0, word04: int = 0, word06: int = 0, floats08: List[float] = None, *, fs: fileio.FileStream = None):
+        self.type       = type
+        self.word04     = word04
+        self.word06     = word06
+        self.floats08   = floats08
 
-        if floats: assert len(floats) == 5
+        if floats08: assert len(floats08) == 5
 
         self.read(fs)
 
@@ -486,10 +491,10 @@ class ScenaFieldMonsterData:
         if not fs:
             return
 
-        self.type = fs.ReadULong()
-        self.word04 = fs.ReadUShort()
-        self.word06 = fs.ReadUShort()
-        self.floats = [fs.ReadFloat() for _ in range(5)]
+        self.type       = fs.ReadULong()                                  # 0x00
+        self.word04     = fs.ReadUShort()                               # 0x04
+        self.word06     = fs.ReadUShort()                               # 0x06
+        self.floats08   = [fs.ReadFloat() for _ in range(5)]            # 0x08
 
     def serialize(self) -> bytes:
         fs = io.BytesIO()
@@ -498,7 +503,7 @@ class ScenaFieldMonsterData:
         fs.write(utils.int_to_bytes(self.word04, 2))
         fs.write(utils.int_to_bytes(self.word06, 2))
 
-        for f in self.floats:
+        for f in self.floats08:
             fs.write(utils.float_to_bytes(f))
 
         fs.seek(0)
@@ -508,10 +513,10 @@ class ScenaFieldMonsterData:
     def toPython(self) -> List[str]:
         body = [
             'ScenaFieldMonsterData(',
-            f'{DefaultIndent}type   = 0x{self.type:08X},',
-            f'{DefaultIndent}word04 = 0x{self.word04:04X},',
-            f'{DefaultIndent}word06 = 0x{self.word06:04X},',
-            f'{DefaultIndent}floats = {self.floats},',
+            f'{DefaultIndent}type       = 0x{self.type:08X},',
+            f'{DefaultIndent}word04     = 0x{self.word04:04X},',
+            f'{DefaultIndent}word06     = 0x{self.word06:04X},',
+            f'{DefaultIndent}floats08   = {self.floats08},',
             ')',
         ]
 
@@ -808,7 +813,8 @@ class ScenaActionTable:
         for e in self.actions:
             b.extend(e.serialize())
 
-        b.extend(ScenaActionTableEntry(craftId = ScenaActionTableEntry.InvalidCraftID).serialize())
+        if not self.actions or self.actions[-1].craftId != ScenaActionTableEntry.InvalidCraftID:
+            b.extend(ScenaActionTableEntry(craftId = ScenaActionTableEntry.InvalidCraftID).serialize())
 
         return bytes(b)
 
@@ -826,6 +832,8 @@ class ScenaActionTable:
 
 class ScenaAlgoTableEntry:
     # enemy battle ai
+
+    InvalidID = 0
 
     def __init__(
             self,
@@ -912,7 +920,7 @@ class ScenaAlgoTable:
         self.entries = []
         while True:
             e = ScenaAlgoTableEntry(fs = fs)
-            if e.craftId == 0:
+            if e.craftId == ScenaAlgoTableEntry.InvalidID:
                 break
 
             self.entries.append(e)
@@ -922,7 +930,8 @@ class ScenaAlgoTable:
         for e in self.entries:
             b.extend(e.serialize())
 
-        b.extend(ScenaAlgoTableEntry(0, 0, 0, 0, 0, [0] * 3, [0] * 3).serialize())
+        if not self.entries or self.entries[-1].craftId != ScenaAlgoTableEntry.InvalidID:
+            b.extend(ScenaAlgoTableEntry(0, 0, 0, 0, 0, [0] * 3, [0] * 3).serialize())
 
         return bytes(b)
 
@@ -960,6 +969,8 @@ class ScenaWeaponAttTable:
         ]
 
 class ScenaBreakTable:
+    InvalidID = 0
+
     def __init__(self, *breakData: Tuple[int, int], fs: fileio.FileStream = None):
         self.breakData = breakData
         if breakData:
@@ -978,7 +989,7 @@ class ScenaBreakTable:
 
         for _ in range(0x40):
             d = fs.ReadULong()
-            if d == 0:
+            if d == self.InvalidID:
                 break
 
             self.breakData.append((d & 0xFFFF, (d >> 16) & 0xFFFF))
@@ -988,13 +999,14 @@ class ScenaBreakTable:
         for d in self.breakData:
             fs.write(utils.int_to_bytes(d[0] | (d[1] << 16), 4))
 
-        fs.write(utils.int_to_bytes(0, 4))
+        fs.write(utils.int_to_bytes(self.InvalidID, 4))
         fs.seek(0)
         return fs.read()
 
     def toPython(self) -> List[str]:
         f = [
             f'ScenaBreakTable(',
+            f'{DefaultIndent}# ActionID, probability',
         ]
 
         for d in self.breakData:
@@ -1063,7 +1075,9 @@ class ScenaSummonTable:
         for s in self.summons:
             b.extend(s.serialize())
 
-        b.extend(ScenaSummonTableEntry(ScenaSummonTableEntry.InvalidID).serialize())
+        if not self.summons or self.summons[-1].id != ScenaSummonTableEntry.InvalidID:
+            b.extend(ScenaSummonTableEntry(ScenaSummonTableEntry.InvalidID).serialize())
+
         return bytes(b)
 
     def toPython(self) -> List[str]:
@@ -1138,7 +1152,7 @@ class ScenaPartTable:
         for s in self.parts:
             b.extend(s.serialize())
 
-        if len(self.parts) < 4:
+        if not self.parts or (len(self.parts) < 4 and self.parts[-1].id != ScenaPartTableEntry.InvalidID):
             b.extend(ScenaPartTableEntry(ScenaPartTableEntry.InvalidID).serialize())
 
         return bytes(b)
@@ -1229,7 +1243,7 @@ class ScenaReactionTable:
         for s in self.reactions:
             b.extend(s.serialize())
 
-        if len(self.reactions) < 8:
+        if not self.reactions or (len(self.reactions) < 8 and self.reactions[-1].craftId != ScenaReactionTableEntry.InvalidID):
             b.extend(ScenaReactionTableEntry(ScenaReactionTableEntry.InvalidID, 0, 0, 0, [0.0] * 12).serialize())
 
         return bytes(b)
