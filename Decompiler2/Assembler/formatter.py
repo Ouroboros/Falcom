@@ -12,7 +12,8 @@ DefaultIndent = GlobalConfig.DefaultIndent
 
 class Formatter:
     def __init__(self, instructionTable: InstructionTable) -> None:
-        self.instructionTable = instructionTable        # type: InstructionTable
+        self.instructionTable   = instructionTable        # type: InstructionTable
+        self.formatted          = set()
 
     def formatLabel(self, name: str) -> str:
         return f"label('{name}')"
@@ -34,6 +35,11 @@ class Formatter:
         return f
 
     def formatBlock(self, block: CodeBlock, *, genLabel = True) -> List[str]:
+        if block.offset in self.formatted:
+            return []
+
+        self.formatted.add(block.offset)
+
         text = []
 
         if genLabel and block.name:
@@ -42,25 +48,26 @@ class Formatter:
                 '',
             ]
 
-        prevIsMultiline = True
+        def addEmptyLine():
+            # return
+            if text and text[-1] != '':
+                text.append('')
 
         for inst in block.instructions:
             t = self.formatInstruction(inst)
             if not inst.flags.multiline:
-                prevIsMultiline = False
+                if inst.flags.startBlock or inst.flags.endBlock:
+                    addEmptyLine()
+
                 text.append(''.join(t))
                 continue
 
-            if not prevIsMultiline:
-                text.append('')
-
+            addEmptyLine()
             text.extend(t)
-            text.append('')
-
-            prevIsMultiline = True
+            addEmptyLine()
 
         for blk in block.branches:
-            text.append('')
+            addEmptyLine()
             text.extend(self.formatBlock(blk))
 
         return text
@@ -79,7 +86,7 @@ class Formatter:
                 return ret
 
         mnemonic = inst.descriptor.mnemonic
-        operands = self.instructionTable.formatAllOperands(inst)
+        operands = self.instructionTable.formatAllOperands(inst, inst.operands)
 
         if inst.flags.multiline:
             f = [f'{mnemonic}(']

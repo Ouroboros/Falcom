@@ -168,7 +168,7 @@ class ED83OperandDescriptor(OperandDescriptor):
                 t = f"({opr}, {self.formatScenaFlags(e.operand)})"
 
             elif e.operand:
-                t = f"({opr}, {e.operand})"
+                t = f"({opr}, {self.formatOperand(e)})"
 
             else:
                 t = opr
@@ -177,6 +177,9 @@ class ED83OperandDescriptor(OperandDescriptor):
 
         # return ['(', *[f'{DefaultIndent}{l}'.rstrip() for l in text], ')']
         return text
+
+    def formatOperand(self, e: 'ScenaExpression') -> str:
+        return '0x%X' % e.operand
 
     def formatScenaFlags(self, flags: int) -> str:
         flags &= 0XFFFF
@@ -188,7 +191,7 @@ def oprdesc(*args, **kwargs) -> ED83OperandDescriptor:
 ED83OperandDescriptor.formatTable.update({
     **OperandDescriptor.formatTable,
 
-    'o' : oprdesc(ED83OperandType.Offset),
+    'O' : oprdesc(ED83OperandType.Offset),
     'F' : oprdesc(ED83OperandType.ScenaFlags),
     'E' : oprdesc(ED83OperandType.Expression),
     'T' : oprdesc(ED83OperandType.Text),

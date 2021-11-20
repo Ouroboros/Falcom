@@ -261,7 +261,7 @@ class InstructionTable:
     def writeOperand(self, fs: fileio.FileStream, operand: 'instruction.Operand'):
         raise NotImplementedError
 
-    def formatOperand(self, context: 'handlers.FormatOperandHandlerContext') -> str:
+    def formatOperand(self, context: 'handlers.FormatOperandHandlerContext') -> str | List[str]:
         result  = None
         operand = context.operand
         desc    = operand.descriptor
@@ -275,9 +275,9 @@ class InstructionTable:
 
         return result
 
-    def formatAllOperands(self, inst: 'instruction.Instruction') -> List[str]:
+    def formatAllOperands(self, inst: 'instruction.Instruction', operands: 'List[instruction.Operand]') -> List[str]:
         text = []
-        for opr in inst.operands:
+        for opr in operands:
             context = handlers.FormatOperandHandlerContext(inst, opr)
             ret = self.formatOperand(context)
 

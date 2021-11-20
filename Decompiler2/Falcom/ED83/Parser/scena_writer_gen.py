@@ -58,11 +58,13 @@ def OP_05(ops: tuple | list, successor: str):
     assert isinstance(successor, str)
     scena.handleOpCode(0x05, ops, successor)
 
-def Switch():
-    raise NotImplementedError
+def Switch(*args):
+    # 0x06
+    return scena.handleOpCode(0x06, *args)
 
-def OP_06():
-    raise NotImplementedError
+def OP_06(*args):
+    # 0x06
+    return scena.handleOpCode(0x06, *args)
 
 def SetScenaFlags(flags: int):
     # 0x10
@@ -117,20 +119,18 @@ def OP_1E(arg1: int, arg2: int, arg3: int, arg4: str):
     assert isinstance(arg4, str)
     scena.handleOpCode(0x1E, arg1, arg2, arg3, arg4)
 
-def Battle():
-    # 0x2B
-    scena.handleOpCode(0x2B)
-
-def OP_2B():
-    # 0x2B
-    scena.handleOpCode(0x2B)
+def OP_29(n: int, *args):
+    # 0x29
+    return scena.handleOpCode(0x29, n, *args)
 
 def OP_3A(n: int, *args):
     # 0x3A
     return scena.handleOpCode(0x3A, n, *args)
+
 def OP_3B(n: int, *args):
     # 0x3B
     return scena.handleOpCode(0x3B, n, *args)
+
 def OP_86(arg1: int, arg2: int, arg3: int, arg4: int, arg5: int, arg6: int, arg7: int, arg8: float, arg9: float, arg10: float, arg11: str):
     # 0x86
     assert isinstance(arg1, int)
@@ -149,6 +149,11 @@ def OP_86(arg1: int, arg2: int, arg3: int, arg4: int, arg5: int, arg6: int, arg7
 def OP_9E(n: int, *args):
     # 0x9E
     return scena.handleOpCode(0x9E, n, *args)
+
+def OP_AC(n: int, *args):
+    # 0xAC
+    return scena.handleOpCode(0xAC, n, *args)
+
 def MenuChrFlagCmd(arg1: int, arg2: int, arg3: int):
     # 0xB1
     assert isinstance(arg1, int)

@@ -64,8 +64,8 @@ class Disassembler:
         while True:
             try:
                 inst = self.disasmInstruction(context)
-            except KeyError:
-                # break
+            except KeyError as e:
+                console.pause(f'KeyError: 0x{e.args[0]:X}'); break
                 raise
 
             block.instructions.append(inst)

@@ -29,7 +29,11 @@ class CodeBlock:
         return block
 
     def __str__(self):
+        return repr(self)
         return '\n'.join(['%s' % inst for inst in self.instructions])
+
+    def __repr__(self):
+        return f'CodeBlock: 0x{self.offset:X}'
 
 class Function:
     def __init__(self, name: str = '', offset: int = 0):

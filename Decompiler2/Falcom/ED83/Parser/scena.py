@@ -56,7 +56,8 @@ class ScenaFormatter(Assembler.Formatter):
             body = ['pass']
 
         f.extend([f'{DefaultIndent}{l}'.rstrip() for l in body])
-        f.append('')
+        if f[-1] != '':
+            f.append('')
 
         return f
 
@@ -189,7 +190,7 @@ class ScenaParser:
 
             match func.type:
                 case ScenaFunctionType.Code:
-                    if func.index == 0x15+1:
+                    if func.index == 0x15+2:
                         break
 
                     try:
