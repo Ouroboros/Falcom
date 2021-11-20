@@ -127,7 +127,12 @@ class OperandDescriptor:
         fmt     = desc.format
 
         def formatInteger():
-            return (fmt.hex and '0x%X' or '%d') % operand.value
+            if fmt.hex:
+                f = f'0x%0{fmt.size * 2}X'
+                return f % operand.value
+
+            return '%d' % operand.value
+            # return (fmt.hex and '0x%X' or '%d') % operand.value
 
         def formatFloat():
             return '%f' % operand.value
@@ -234,7 +239,10 @@ class InstructionTable:
     def writeInstruction(self, fs: fileio.FileStream, inst: 'instruction.Instruction'):
         raise NotImplementedError
 
-    def readOperand(self, context: 'handlers.InstructionHandlerContext', inst: 'instruction.Instruction', desc: OperandDescriptor) -> 'instruction.Operand':
+    def readAllOperands(self, context: 'handlers.InstructionHandlerContext', descriptors: List[OperandDescriptor]) -> 'List[instruction.Operand]':
+        return [self.readOperand(context, desc) for desc in descriptors]
+
+    def readOperand(self, context: 'handlers.InstructionHandlerContext', desc: OperandDescriptor) -> 'instruction.Operand':
         operand = instruction.Operand()
 
         fs = context.disasmContext.fs
@@ -267,14 +275,15 @@ class InstructionTable:
 
         return result
 
-    def formatAllOperand(self, inst: 'instruction.Instruction') -> List[str]:
+    def formatAllOperands(self, inst: 'instruction.Instruction') -> List[str]:
         text = []
         for opr in inst.operands:
             context = handlers.FormatOperandHandlerContext(inst, opr)
             ret = self.formatOperand(context)
 
-            if isinstance(ret, list):
-                text.extend(ret)
+            if isinstance(ret, list | tuple):
+                # text.extend(ret)
+                text.append(ret)
             else:
                 text.append(ret)
 

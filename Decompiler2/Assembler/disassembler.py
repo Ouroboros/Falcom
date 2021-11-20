@@ -62,7 +62,11 @@ class Disassembler:
         self.currentBlock = block
 
         while True:
-            inst = self.disasmInstruction(context)
+            try:
+                inst = self.disasmInstruction(context)
+            except KeyError:
+                # break
+                raise
 
             block.instructions.append(inst)
 
@@ -89,50 +93,47 @@ class Disassembler:
         return block
 
     def disasmInstruction(self, context: DisasmContext) -> Instruction:
-        pos = context.fs.Position
+        fs = context.fs
+        pos = fs.Position
 
         try:
-            opcode = self.instructionTable.readOpCode(context.fs)
+            opcode = self.instructionTable.readOpCode(fs)
         except Exception as e:
             log.error('error occurred %s @ position %X' % (e, pos))
-            raise e
+            raise
 
         log.debug(f'disasm inst 0x{opcode:02X} @ 0x{pos:08X}')
 
         desc = self.instructionTable.getDescriptor(opcode)
 
-        handlerContext = InstructionHandlerContext(InstructionHandlerContext.Action.Disassemble, desc)
+        handlerContext = InstructionHandlerContext(HandlerAction.Disassemble, desc)
 
-        handlerContext.offset          = pos
-        handlerContext.disasmContext   = context
-        handlerContext.disassembler    = self
+        inst = Instruction(opcode)
+        inst.offset     = pos
+        inst.descriptor = desc
+        inst.flags      = desc.flags
 
-        inst: Instruction = None
+        handlerContext.instructionTable = self.instructionTable
+        handlerContext.offset           = pos
+        handlerContext.disasmContext    = context
+        handlerContext.disassembler     = self
+        handlerContext.instruction      = inst
 
-        if desc.handler is not None:
-            inst = desc.handler(handlerContext)
+        inst = desc.handler(handlerContext) if desc.handler else None
 
         if inst is None:
-            inst = self.defaultInstructionParser(handlerContext)
+            inst = self.defaultInstructionDecoder(handlerContext)
 
         if inst is None:
             raise Exception('disasmInstruction %02X @ %08X failed' % (opcode, pos))
 
-        inst.descriptor = inst.descriptor if inst.descriptor is None else desc
-        inst.flags = inst.descriptor.flags if inst.flags is None else inst.flags
+        inst.size = fs.Position - pos
 
         return inst
 
-    def defaultInstructionParser(self, context: InstructionHandlerContext) -> Instruction:
-        fs      = context.disasmContext.fs
-        desc    = context.descriptor
-
-        inst = Instruction(desc.opcode)
-
-        inst.offset     = context.offset
-        inst.operands   = [self.instructionTable.readOperand(context, inst, oprdesc) for oprdesc in (desc.operands or [])]
-        inst.size       = fs.Position - inst.offset
-        inst.descriptor = desc
-        inst.flags      = desc.flags
+    def defaultInstructionDecoder(self, context: InstructionHandlerContext) -> Instruction:
+        desc = context.descriptor
+        inst = context.instruction
+        inst.operands = [self.instructionTable.readOperand(context, oprdesc) for oprdesc in (desc.operands or [])]
 
         return inst

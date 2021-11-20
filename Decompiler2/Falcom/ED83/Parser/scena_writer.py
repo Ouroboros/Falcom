@@ -145,3 +145,5 @@ def createScenaWriter(scriptName: str) -> _ScenaWriter:
 def label(name: str):
     _gScena.addLabel(name)
 
+def ScenaFlags(offset: int, flag: int) -> int:
+    return ((offset & 0xFFFF) << 3) | (flag & 7)

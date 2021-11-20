@@ -9,7 +9,9 @@ class ED83OperandType(IntEnum2):
     Item,       \
     BGM,        \
     Expression, \
-    UserDefined = range(UserDefined, UserDefined + 5)
+    Text,       \
+    ScenaFlags, \
+    UserDefined = range(UserDefined, UserDefined + 7)
 
     __str__     = OperandType.__str__
     __repr__    = OperandType.__repr__
@@ -18,26 +20,29 @@ class ED83OperandFormat(OperandFormat):
     sizeTable = {
         **OperandFormat.sizeTable,
 
-        ED83OperandType.Offset     : 4,
-        ED83OperandType.Item       : 2,
-        ED83OperandType.BGM        : 2,
-        ED83OperandType.Expression : None,
+        ED83OperandType.Offset      : 4,
+        ED83OperandType.Item        : 2,
+        ED83OperandType.BGM         : 2,
+        ED83OperandType.ScenaFlags  : 2,
+        ED83OperandType.Expression  : None,
+        ED83OperandType.Text        : None,
     }
 
 class ED83OperandDescriptor(OperandDescriptor):
     formatTable: Dict[str, 'ED83OperandDescriptor'] = {}
 
-    def readValue(self, context: 'handlers.InstructionHandlerContext') -> Any:
+    def readValue(self, context: InstructionHandlerContext) -> Any:
         return {
-            OperandType.MBCS           : self.readText,
+            ED83OperandType.Text       : self.readText,
             ED83OperandType.Expression : self.readExpression,
+            ED83OperandType.ScenaFlags : lambda context: context.disasmContext.fs.ReadUShort(),
             ED83OperandType.Offset     : lambda context: context.disasmContext.fs.ReadULong(),
-            ED83OperandType.Item       : lambda context: context.disasmContext.fs.ReadUShort(),
-            ED83OperandType.BGM        : lambda context: context.disasmContext.fs.ReadShort(),
+            # ED83OperandType.Item       : lambda context: context.disasmContext.fs.ReadUShort(),
+            # ED83OperandType.BGM        : lambda context: context.disasmContext.fs.ReadShort(),
 
         }.get(self.format.type, super().readValue)(context)
 
-    def readText(self, context: 'handlers.InstructionHandlerContext') -> 'List[TextObject]':
+    def readText(self, context: InstructionHandlerContext) -> 'List[TextObject]':
         fs = context.disasmContext.fs
 
         s = bytearray()
@@ -104,24 +109,25 @@ class ED83OperandDescriptor(OperandDescriptor):
 
         return objs
 
-    def readExpression(self, context: 'handlers.InstructionHandlerContext') -> 'List[ScenaExpression]':
+    def readExpression(self, context: InstructionHandlerContext) -> 'List[ScenaExpression]':
         return ScenaExpression.readExpressions(context)
 
-    def formatValue(self, context: 'FormatOperandHandlerContext') -> str:
+    def formatValue(self, context: FormatOperandHandlerContext) -> str:
         return {
-            OperandType.MBCS            : self.formatTextObjects,
-            ED83OperandType.Expression : self.formatExpression,
-            ED83OperandType.Offset     : lambda context: "'%s'" % context.operand.value.name,    # CodeBlock
-            # ED83OperandType.Item       : ,
-            # ED83OperandType.BGM        : ,
+            ED83OperandType.Text        : self.formatTextObjects,
+            ED83OperandType.Expression  : self.formatExpression,
+            ED83OperandType.ScenaFlags  : lambda context: self.formatScenaFlags(context.operand.value),
+            ED83OperandType.Offset      : lambda context: "'%s'" % context.operand.value.name,    # CodeBlock
+            # ED83OperandType.Item        : ,
+            # ED83OperandType.BGM         : ,
 
         }.get(self.format.type, super().formatValue)(context)
 
-    def formatTextObjects(self, context: 'FormatOperandHandlerContext', depth: int = 1) -> List[str]:
+    def formatTextObjects(self, context: FormatOperandHandlerContext, depth: int = 1) -> List[str]:
         if isinstance(context.operand.value, str):
             return super().formatValue(context)
 
-        context.instruction.flags |= Flags.FormatArgNewLine
+        context.instruction.flags |= Flags.FormatMultiLine
 
         text = []
 
@@ -146,29 +152,35 @@ class ED83OperandDescriptor(OperandDescriptor):
         return text
 
     def formatExpression(self, context: FormatOperandHandlerContext) -> List[str]:
-        context.instruction.flags |= Flags.FormatArgNewLine
+        context.instruction.flags |= Flags.FormatMultiLine
 
-        expr = context.operand.value           # type: List[ScenaExpression]
+        expr: List[ScenaExpression] = context.operand.value
         text = []
 
         for e in expr:
             if isinstance(e.operator, IntEnum2):
-                opr = str(e.operator)
+                opr = f"'{e.operator}'"
             else:
-                opr = '0x%02X' % e.operator
+                raise NotImplementedError
+                # opr = '0x%02X' % e.operator
 
             if e.operator == ScenaExpression.Operator.TestScenaFlags:
-                t = '(%s, ScenaFlags(0x%02X, %d))' % (opr, e.operand >> 3, e.operand & 7)
+                t = f"({opr}, {self.formatScenaFlags(e.operand)})"
 
             elif e.operand:
-                t = '(%s, %s)' % (opr, e.operand)
+                t = f"({opr}, {e.operand})"
 
             else:
                 t = opr
 
             text.append(t)
 
+        # return ['(', *[f'{DefaultIndent}{l}'.rstrip() for l in text], ')']
         return text
+
+    def formatScenaFlags(self, flags: int) -> str:
+        flags &= 0XFFFF
+        return f'ScenaFlags(0x{flags >> 3:04X}, {flags & 7})'
 
 def oprdesc(*args, **kwargs) -> ED83OperandDescriptor:
     return ED83OperandDescriptor(ED83OperandFormat(*args, **kwargs))
@@ -177,8 +189,9 @@ ED83OperandDescriptor.formatTable.update({
     **OperandDescriptor.formatTable,
 
     'o' : oprdesc(ED83OperandType.Offset),
-    'S' : oprdesc(OperandType.MBCS),
+    'F' : oprdesc(ED83OperandType.ScenaFlags),
     'E' : oprdesc(ED83OperandType.Expression),
+    'T' : oprdesc(ED83OperandType.Text),
 })
 
 class TextCtrlCode(IntEnum2):
@@ -210,56 +223,58 @@ class TextObject:
 
 class ScenaExpression:
     class Operator(IntEnum2):
-        Push                = 0x00
-        End                 = 0x01
-        Equ                 = 0x02
-        Neq                 = 0x03
-        Lss                 = 0x04
-        Gtr                 = 0x05
-        Leq                 = 0x06
-        Ge                  = 0x07
-        Ez                  = 0x08
-        Nez64               = 0x09
-        And                 = 0x0A
-        Or                  = 0x0B
-        Add                 = 0x0C
-        Sub                 = 0x0D
-        Neg                 = 0x0E
-        Xor                 = 0x0F
-        IMul                = 0x10
-        IDiv                = 0x11
-        IMod                = 0x12
-        Stub                = 0x13
-        IMul2               = 0x14
-        IDiv2               = 0x15
-        IMod2               = 0x16
+        # stack = DWORD[0x67]
+        PushLong            = 0x00      # push LONG
+        Return              = 0x01      # return [0]
+        Equ                 = 0x02      # a = pop 0; b = pop 1; push a == b
+        Neq                 = 0x03      # a = pop 0; b = pop 1; push a != b
+        Lss                 = 0x04      # a = pop 0; b = pop 1; push a < b
+        Gtr                 = 0x05      # a = pop 0; b = pop 1; push a > b
+        Leq                 = 0x06      # a = pop 0; b = pop 1; push a <= b
+        Geq                 = 0x07      # a = pop 0; b = pop 1; push a >= b
+        Ez                  = 0x08      # a = pop 0; push a == 0
+        Nez64               = 0x09      # a = pop 0; b = pop 1; push a != 0 && b != 0
+        And                 = 0x0A      # a = pop 0; b = pop 1; push a & b
+        Or                  = 0x0B      # a = pop 0; b = pop 1; push a | b
+        Add                 = 0x0C      # a = pop 0; b = pop 1; push a + b
+        Sub                 = 0x0D      # a = pop 0; b = pop 1; push a - b
+        Neg                 = 0x0E      # a = pop 0; push -a
+        Xor                 = 0x0F      # a = pop 0; b = pop 1; push a ^ b
+        Mul                 = 0x10      # a = pop 0; b = pop 1; push a * b
+        Div                 = 0x11      # a = pop 0; b = pop 1; push a / b
+        Mod                 = 0x12      # a = pop 0; b = pop 1; push a % b
+        Nop                 = 0x13      # nop
+        Mul2                = 0x14
+        Div2                = 0x15
+        Mod2                = 0x16
         Add2                = 0x17
         Sub2                = 0x18
         And2                = 0x19
         Xor2                = 0x1A
         Or2                 = 0x1B
-        Exec                = 0x1C
-        Not                 = 0x1D
-        TestScenaFlags      = 0x1E
-        GetResult           = 0x1F
-        PushValueIndex      = 0x20
-        GetChrWork          = 0x21
-        Rand                = 0x22
+        Eval                = 0x1C      # push eval(op)
+        Not                 = 0x1D      # a = pop 0; push ~a
+        TestScenaFlags      = 0x1E      # (WORD)a = pop 0
+        PushReg             = 0x1F      # push regs[(byte)index]
+        PushValueByIndex    = 0x20      # push getValueByIndex((byte)index)
+        GetChrWork          = 0x21      # push getChrWork((word)a1, (byte)a2)
+        Rand                = 0x22      # push rand32()
+        Exp23               = 0x23      # *(_DWORD *)stack = sub_14030FE70((__int64)gCurrentSaveData, *(unsigned __int8 *)ptr)
+        Exp24               = 0x24      # *(_DWORD *)stack = (*(_DWORD *)ptr & *((_DWORD *)gCurrentSaveData + 0xDA5)) != 0
+        Exp25               = 0x25      # *(_DWORD *)stack = *(_DWORD *)(*(_QWORD *)(qword98 + 0x60) + 4 * *(unsigned __int8 *)ptr)
 
     @classmethod
-    def readExpressions(cls, context: 'handlers.InstructionHandlerContext') -> 'List[ScenaExpression]':
+    def readExpressions(cls, context: InstructionHandlerContext) -> 'List[ScenaExpression]':
         Operator = cls.Operator
 
         fs = context.disasmContext.fs
         exps = []
 
         while True:
-            e = cls(operator = fs.ReadByte())
+            e: ScenaExpression = cls(operator = fs.ReadByte())
             e.readOperand(context)
-
             exps.append(e)
-
-            if e.operator == Operator.End:
+            if e.operator == Operator.Return:
                 break
 
         return exps
@@ -274,20 +289,23 @@ class ScenaExpression:
             except ValueError:
                 pass
 
-    def readOperand(self, context: 'handlers.InstructionHandlerContext') -> Tuple[int]:
+    def readOperand(self, context: InstructionHandlerContext) -> Tuple[int]:
         Operator = self.Operator
 
         fs = context.disasmContext.fs
 
-        if self.operator == Operator.Exec:
-            pass
+        if self.operator == Operator.Eval:
+            raise NotImplementedError
 
         reader = {
-            Operator.Push           : lambda: fs.ReadULong(),
-            Operator.TestScenaFlags : lambda: fs.ReadUShort(),
-            Operator.GetResult      : lambda: fs.ReadUShort(),
-            Operator.PushValueIndex : lambda: fs.ReadByte(),
-            Operator.GetChrWork     : lambda: (fs.ReadUShort(), fs.ReadByte()),
+            Operator.PushLong           : lambda: fs.ReadULong(),
+            Operator.TestScenaFlags     : lambda: fs.ReadUShort(),
+            Operator.PushReg            : lambda: fs.ReadByte(),
+            Operator.PushValueByIndex   : lambda: fs.ReadByte(),
+            Operator.GetChrWork         : lambda: (fs.ReadUShort(), fs.ReadByte()),
+            Operator.Exp23              : lambda: fs.ReadByte(),
+            Operator.Exp24              : lambda: fs.ReadULong(),
+            Operator.Exp25              : lambda: fs.ReadUShort(),
         }.get(self.operator)
 
         if reader is not None:
@@ -297,7 +315,7 @@ class ScenaExpression:
 
     def __str__(self):
         if self.operand:
-            return '%s %s' % (self.operator, self.operand)
+            return f"{self.operator} {self.operand}"
 
         return str(self.operator)
 

@@ -15,8 +15,8 @@ class ED6FCInstructionTable(InstructionTable):
     def writeOpCode(self, fs: fileio.FileStream, inst: 'Instruction'):
         fs.WriteByte(inst.opcode)
 
-    def readOperand(self, context: 'handlers.InstructionHandlerContext', inst: 'instruction.Instruction', desc: OperandDescriptor) -> 'instruction.Operand':
-        opr = super().readOperand(context, inst, desc)
+    def readOperand(self, context: 'handlers.InstructionHandlerContext', desc: OperandDescriptor) -> 'instruction.Operand':
+        opr = super().readOperand(context, desc)
         if desc.format.type == ED6FCOperandType.Offset:
             opr.value = context.addBranch(opr.value)
 

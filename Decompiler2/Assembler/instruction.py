@@ -37,7 +37,7 @@ class Flags(IntFlag2):
     Call                = (1 << 2) | StartBlock
     Jump                = (1 << 3) | EndBlock
 
-    FormatArgNewLine    = 1 << 4
+    FormatMultiLine     = 1 << 4
 
     @property
     def endBlock(self):
@@ -56,8 +56,8 @@ class Flags(IntFlag2):
         return bool(self.value & self.Jump & ~self.EndBlock)
 
     @property
-    def argNewLine(self):
-        return bool(self.value & self.FormatArgNewLine)
+    def multiline(self):
+        return bool(self.value & self.FormatMultiLine)
 
 class Instruction:
     InvalidOffset   = None

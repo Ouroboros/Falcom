@@ -14,6 +14,9 @@ class Formatter:
     def __init__(self, instructionTable: InstructionTable) -> None:
         self.instructionTable = instructionTable        # type: InstructionTable
 
+    def formatLabel(self, name: str) -> str:
+        return f"label('{name}')"
+
     def formatFuncion(self, func: Function) -> List[str]:
         funcName = func.name
         if not funcName:
@@ -30,28 +33,31 @@ class Formatter:
 
         return f
 
-    def formatBlock(self, block: CodeBlock) -> List[str]:
+    def formatBlock(self, block: CodeBlock, *, genLabel = True) -> List[str]:
         text = []
 
-        if block.name:
+        if genLabel and block.name:
             text = [
-                "label('%s')" % block.name,
+                self.formatLabel(block.name),
                 '',
             ]
 
+        prevIsMultiline = True
+
         for inst in block.instructions:
             t = self.formatInstruction(inst)
-            if not inst.flags.argNewLine:
+            if not inst.flags.multiline:
+                prevIsMultiline = False
                 text.append(''.join(t))
                 continue
 
+            if not prevIsMultiline:
+                text.append('')
+
+            text.extend(t)
             text.append('')
 
-            params = ['%s%s,' % (DefaultIndent, p) for p in t[1:-1]]
-
-            text.append('\n'.join([t[0], *params, t[-1]]))
-
-            text.append('')
+            prevIsMultiline = True
 
         for blk in block.branches:
             text.append('')
@@ -62,20 +68,36 @@ class Formatter:
     def formatInstruction(self, inst: Instruction) -> List[str]:
         handler = inst.descriptor.handler
         if handler is not None:
-            handlerInfo = InstructionHandlerContext(InstructionHandlerContext.Action.Format, inst.descriptor)
+            handlerContext = InstructionHandlerContext(HandlerAction.Format, inst.descriptor)
 
-            handlerInfo.disassembler = self
-            handlerInfo.instruction = inst
+            handlerContext.instructionTable = self.instructionTable
+            handlerContext.disassembler = self
+            handlerContext.instruction = inst
 
-            ret = handler(handlerInfo)
+            ret = handler(handlerContext)
             if ret is not None:
                 return ret
 
         mnemonic = inst.descriptor.mnemonic
-        operands = self.instructionTable.formatAllOperand(inst)
+        operands = self.instructionTable.formatAllOperands(inst)
 
-        if inst.flags.argNewLine:
-            return ['%s(' % mnemonic, *operands, ')']
+        if inst.flags.multiline:
+            f = [f'{mnemonic}(']
+
+            for opr in operands:
+                if not isinstance(opr, tuple | list):
+                    f.append(f'{DefaultIndent}{opr},')
+                    continue
+
+                f.extend([
+                    f'{DefaultIndent}(',
+                    *[f'{DefaultIndent * 2}{p},'.rstrip() for p in opr],
+                    f'{DefaultIndent}),',
+                ])
+
+            f.append(')')
+
+            return f
 
         else:
-            return ['%s(%s)' % (mnemonic, ', '.join(operands))]
+            return [f'{mnemonic}({", ".join(operands)})']

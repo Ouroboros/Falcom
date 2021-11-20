@@ -4,25 +4,27 @@ from Falcom         import ED83
 
 def map_operand_type(t: OperandType) -> str:
     return {
-        OperandType.SInt8           : 'int',
-        OperandType.SInt16          : 'int',
-        OperandType.SInt32          : 'int',
-        OperandType.SInt64          : 'int',
-        OperandType.UInt8           : 'int',
-        OperandType.UInt16          : 'int',
-        OperandType.UInt32          : 'int',
-        OperandType.UInt64          : 'int',
-        OperandType.Float32         : 'float',
-        OperandType.Float64         : 'float',
-        OperandType.MBCS            : 'str',
-        OperandType.MBCS            : 'str',
-        ED83.ED83OperandType.Offset : 'str',
+        OperandType.SInt8               : 'int',
+        OperandType.SInt16              : 'int',
+        OperandType.SInt32              : 'int',
+        OperandType.SInt64              : 'int',
+        OperandType.UInt8               : 'int',
+        OperandType.UInt16              : 'int',
+        OperandType.UInt32              : 'int',
+        OperandType.UInt64              : 'int',
+        OperandType.Float32             : 'float',
+        OperandType.Float64             : 'float',
+        OperandType.MBCS                : 'str',
+        OperandType.MBCS                : 'str',
+        ED83.ED83OperandType.Offset     : 'str',
+        ED83.ED83OperandType.ScenaFlags : 'int',
+        ED83.ED83OperandType.Expression : 'tuple | list',
     }[t]
 
 def main():
     import pathlib
     filename = pathlib.Path(__file__)
-    filename = filename.parent / ('scena_op_gen.py')
+    filename = filename.parent / ('scena_writer_gen.py')
 
     lines = [
         'from Falcom.ED83.Parser.scena_writer import _gScena as scena',
@@ -32,14 +34,20 @@ def main():
     for desc in ED83.ScenaOpTable.descriptors:
         desc: Assembler.InstructionDescriptor
 
-        if desc.handler:
-            func = [
-                f'def {desc.mnemonic}():',
-                '    raise NotImplementedError',
-                '',
-            ]
+        func = None
 
-        else:
+        if desc.handler:
+            ctx = InstructionHandlerContext(HandlerAction.CodeGen, desc)
+            try:
+                func = desc.handler(ctx)
+            except NotImplementedError:
+                func = [
+                    f'def {desc.mnemonic}():',
+                    '    raise NotImplementedError',
+                    '',
+                ]
+
+        if func is None:
             parameters = desc.parameters
             params = []
             args = []
@@ -62,7 +70,6 @@ def main():
             if types:
                 for i, t in enumerate(types):
                     checkTypes.append(f'    assert isinstance({args[i]}, {t})')
-
 
             args.insert(0, f'0x{desc.opcode:02X}')
 

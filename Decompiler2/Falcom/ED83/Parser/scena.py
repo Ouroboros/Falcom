@@ -1,3 +1,4 @@
+from Assembler.function import Function
 from .scena_types import *
 from ..InstructionTable import ScenaOpTable as ED83ScenaOpTable
 
@@ -13,6 +14,24 @@ __all__ = (
 )
 
 class ScenaFormatter(Assembler.Formatter):
+    _dataFunction = [
+        ScenaFunctionType.BattleSetting,
+        ScenaFunctionType.AnimeClips,
+        ScenaFunctionType.ActionTable,
+        ScenaFunctionType.WeaponAttTable,
+        ScenaFunctionType.BreakTable,
+        ScenaFunctionType.AlgoTable,
+        ScenaFunctionType.SummonTable,
+        ScenaFunctionType.AddCollision,
+        ScenaFunctionType.PartTable,
+        ScenaFunctionType.ReactionTable,
+        ScenaFunctionType.AnimeClipTable,
+        ScenaFunctionType.FieldMonsterData,
+        ScenaFunctionType.FieldFollowData,
+        ScenaFunctionType.FaceAuto,
+        ScenaFunctionType.ShinigPomBtlset,
+    ]
+
     def formatFuncion(self, func: ScenaFunction) -> List[str]:
         funcName = func.name
         if not funcName:
@@ -24,120 +43,44 @@ class ScenaFormatter(Assembler.Formatter):
             f'def {funcName}():',
         ]
 
-        formatter = self._formatter.get(func.type)
-        if formatter is None:
+        if func.type in self._dataFunction:
+            body = self.formatDataFunction(func)
+
+        elif func.type == ScenaFunctionType.Code:
+            body = self.formatCode(func)
+
+        else:
             raise NotImplementedError(f'unknown func type: {func.type}')
 
-        try:
-            body = formatter(self, func)
-
-        except NotImplementedError:
+        if not body:
             body = ['pass']
 
-        f.extend([DefaultIndent + l for l in body])
+        f.extend([f'{DefaultIndent}{l}'.rstrip() for l in body])
         f.append('')
 
         return f
 
-    def formatBattleSetting(self, f: ScenaFunction) -> List[str]:
-        bs: ScenaBattleSetting = f.obj
-        body = bs.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
     def formatCode(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
-        # blk = self.formatBlock(func.func.block)
-        # for b in blk:
-        #     if b:
-        #         b = DefaultIndent + b
+        func: Function = f.obj
 
-        #     f.append(b)
+        if func is None:
+            return
 
-    def formatAnimeClips(self, f: ScenaFunction) -> List[str]:
+        body = []
+        blk = self.formatBlock(func.block, genLabel = False)
+        for b in blk:
+            body.append(b)
+
+        return body
+
+    def formatDataFunction(self, f: ScenaFunction) -> List[str]:
+        if f.obj is None:
+            return
+
         body = f.obj.toPython()
         body[0] = 'return ' + body[0]
         return body
 
-    def formatActionTable(self, f: ScenaFunction) -> List[str]:
-        body = f.obj.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
-    def formatWeaponAttTable(self, f: ScenaFunction) -> List[str]:
-        body = f.obj.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
-    def formatBreakTable(self, f: ScenaFunction) -> List[str]:
-        body = f.obj.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
-    def formatAlgoTable(self, f: ScenaFunction) -> List[str]:
-        body = f.obj.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
-    def formatSummonTable(self, f: ScenaFunction) -> List[str]:
-        body = f.obj.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
-    def formatAddCollision(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
-
-    def formatPartTable(self, f: ScenaFunction) -> List[str]:
-        body = f.obj.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
-    def formatReactionTable(self, f: ScenaFunction) -> List[str]:
-        body = f.obj.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
-    def formatAnimeClipTable(self, f: ScenaFunction) -> List[str]:
-        body = f.obj.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
-    def formatFieldMonsterData(self, f: ScenaFunction) -> List[str]:
-        body = f.obj.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
-    def formatFieldFollowData(self, f: ScenaFunction) -> List[str]:
-        body = f.obj.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
-    def formatFaceAuto(self, f: ScenaFunction) -> List[str]:
-        body = f.obj.toPython()
-        body[0] = 'return ' + body[0]
-        return body
-
-    def formatShinigPomBtlset(self, f: ScenaFunction) -> List[str]:
-        raise NotImplementedError
-
-    _formatter = {
-        ScenaFunctionType.Code              : formatCode,
-        ScenaFunctionType.BattleSetting     : formatBattleSetting,
-        ScenaFunctionType.AnimeClips        : formatAnimeClips,
-        ScenaFunctionType.ActionTable       : formatActionTable,
-        ScenaFunctionType.WeaponAttTable    : formatWeaponAttTable,
-        ScenaFunctionType.BreakTable        : formatBreakTable,
-        ScenaFunctionType.AlgoTable         : formatAlgoTable,
-        ScenaFunctionType.SummonTable       : formatSummonTable,
-        ScenaFunctionType.AddCollision      : formatAddCollision,
-        ScenaFunctionType.PartTable         : formatPartTable,
-        ScenaFunctionType.ReactionTable     : formatReactionTable,
-        ScenaFunctionType.AnimeClipTable    : formatAnimeClipTable,
-        ScenaFunctionType.FieldMonsterData  : formatFieldMonsterData,
-        ScenaFunctionType.FieldFollowData   : formatFieldFollowData,
-        ScenaFunctionType.FaceAuto          : formatFaceAuto,
-        ScenaFunctionType.ShinigPomBtlset   : formatShinigPomBtlset,
-    }
 
 class ScenaParser:
     def __init__(self, fs: fileio.FileStream) -> None:
@@ -246,8 +189,16 @@ class ScenaParser:
 
             match func.type:
                 case ScenaFunctionType.Code:
-                    func.obj = dis.disasmFunction(ctx, name = func.name)
-                    pass
+                    if func.index == 0x15+1:
+                        break
+
+                    try:
+                        func.obj = dis.disasmFunction(ctx, name = func.name)
+                    except KeyError as e:
+                        e.args = (f'0x{e.args[0]:X} ({e.args[0]})',)
+                        # print(e)
+                        # continue
+                        raise
 
                 case ScenaFunctionType.BattleSetting:
                     func.obj = ScenaBattleSetting(fs = fs)
@@ -302,7 +253,7 @@ class ScenaParser:
 
         lines = f'''\
 from Falcom.ED83.Parser.scena_writer import *
-from Falcom.ED83.Parser.scena_op_gen import *
+from Falcom.ED83.Parser.scena_writer_gen import *
 
 scena = createScenaWriter('{filename}')
 

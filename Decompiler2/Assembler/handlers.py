@@ -7,30 +7,33 @@ if TYPE_CHECKING:
     from . import function
 
 __all__ = (
+    'HandlerAction',
     'InstructionHandler',
     'InstructionHandlerContext',
     'FormatOperandHandler',
     'FormatOperandHandlerContext',
 )
 
-class BaseHandlerInfo:
-    class Action(IntEnum2):
-        Disassemble = 0
-        Assemble    = 1
-        Format      = 2
+class HandlerAction(IntEnum2):
+    Disassemble = 0
+    Assemble    = 1
+    Format      = 2
+    CodeGen     = 3
 
-    def __init__(self, action: Action):
-        self.action         = action    # type: BaseHandlerInfo.Action
+class BaseHandlerInfo:
+    def __init__(self, action: HandlerAction):
+        self.action         = action    # type: HandlerAction
         self.disassembler   = None      # type: disassembler.Disassembler
 
 class InstructionHandlerContext(BaseHandlerInfo):
-    def __init__(self, action: 'BaseHandlerInfo.Action', descriptor: 'instruction_table.InstructionDescriptor'):
+    def __init__(self, action: HandlerAction, descriptor: 'instruction_table.InstructionDescriptor'):
         super().__init__(action)
-        self.descriptor     = descriptor                                # type: instruction_table.InstructionDescriptor
-        self.disasmContext  = None                                      # type: disassembler.DisasmContext
-        self.instruction    = None                                      # type: instruction.Instruction
-                                                                        # format only
-        self.offset         = instruction.Instruction.InvalidOffset     # type: int
+        self.instructionTable   = None                                      # type: instruction_table.InstructionTable
+        self.descriptor         = descriptor                                # type: instruction_table.InstructionDescriptor
+        self.disasmContext      = None                                      # type: disassembler.DisasmContext
+        self.instruction        = None                                      # type: instruction.Instruction
+                                                                            # format only
+        self.offset             = instruction.Instruction.InvalidOffset     # type: int
 
     def createCodeBlock(self, offset: int) -> 'function.CodeBlock':
         return self.disassembler.createCodeBlock(offset)

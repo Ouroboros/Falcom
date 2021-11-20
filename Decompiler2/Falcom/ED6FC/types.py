@@ -123,7 +123,7 @@ class ED6FCOperandDescriptor(OperandDescriptor):
         if isinstance(context.operand.value, str):
             return super().formatValue(context)
 
-        context.instruction.flags |= Flags.FormatArgNewLine
+        context.instruction.flags |= Flags.FormatMultiLine
 
         text = []
 
@@ -148,7 +148,7 @@ class ED6FCOperandDescriptor(OperandDescriptor):
         return text
 
     def formatExpression(self, context: FormatOperandHandlerContext) -> List[str]:
-        context.instruction.flags |= Flags.FormatArgNewLine
+        context.instruction.flags |= Flags.FormatMultiLine
 
         expr = context.operand.value           # type: List[ScenaExpression]
         text = []
