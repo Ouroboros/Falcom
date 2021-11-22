@@ -179,8 +179,6 @@ class ScenaParser:
                         func.obj = dis.disasmFunction(ctx, name = func.name)
                     except KeyError as e:
                         e.args = (f'0x{e.args[0]:X} ({e.args[0]})',)
-                        # print(e)
-                        # continue
                         raise
 
                 case ScenaFunctionType.BattleSetting:

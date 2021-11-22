@@ -177,7 +177,7 @@ class ED83OperandDescriptor(OperandDescriptor):
             if e.operator == ScenaExpression.Operator.TestScenaFlags:
                 t = f"({opr}, {self.formatScenaFlags(e.operand)})"
 
-            elif e.operand:
+            elif e.operand is not None:
                 t = f"({opr}, {self.formatOperand(e)})"
 
             else:
