@@ -35,10 +35,34 @@ class Formatter:
         return f
 
     def formatBlock(self, block: CodeBlock, *, genLabel = True) -> List[str]:
-        if block.offset in self.formatted:
-            return []
+        todo = [block]
+        blocks = []
 
-        self.formatted.add(block.offset)
+        while todo:
+            b = todo.pop()
+            if b.offset in self.formatted:
+                continue
+
+            self.formatted.add(b.offset)
+
+            blocks.append(b)
+            todo.extend(b.branches)
+
+        blocks = sorted(blocks, key = lambda b: b.offset)
+
+        f = []
+        for i, b in enumerate(blocks):
+            f.extend(self.formatBlockWorker(b, genLabel = i != 0))
+            if f and f[-1] != '':
+                f.append('')
+
+        return f[:-1]
+
+    def formatBlockWorker(self, block: CodeBlock, *, genLabel = True) -> List[str]:
+        # if block.offset in self.formatted:
+        #     return []
+
+        # self.formatted.add(block.offset)
 
         text = []
 
@@ -65,9 +89,9 @@ class Formatter:
             text.extend(t)
             addEmptyLine()
 
-        for blk in block.branches:
-            addEmptyLine()
-            text.extend(self.formatBlock(blk))
+        # for blk in block.branches:
+        #     addEmptyLine()
+        #     text.extend(self.formatBlock(blk))
 
         return text
 
