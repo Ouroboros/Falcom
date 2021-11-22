@@ -10,14 +10,14 @@ DefaultEncoding = GlobalConfig.DefaultEncoding
 class ScenaHeader:
     MAGIC = 0xABCDEF00
     def __init__(self, *, fs: fileio.FileStream = None):
-        self.headerSize             = None      # type: int
-        self.nameOffset             = None      # type: int
-        self.functionEntryOffset    = None      # type: int
-        self.functionEntrySize      = None      # type: int
-        self.functionNameOffset     = None      # type: int
-        self.functionCount          = None      # type: int
-        self.fullHeaderSize         = None      # type: int
-        self.magic                  = None      # type: int
+        self.headerSize             = 0x20              # type: int
+        self.nameOffset             = self.headerSize   # type: int
+        self.functionEntryOffset    = None              # type: int
+        self.functionEntrySize      = None              # type: int
+        self.functionNameOffset     = None              # type: int
+        self.functionCount          = None              # type: int
+        self.fullHeaderSize         = None              # type: int
+        self.magic                  = self.MAGIC        # type: int
 
         self.read(fs)
 
@@ -68,6 +68,24 @@ class ScenaFunctionType(IntEnum2):
     FieldFollowData     = 14
     FaceAuto            = 15    # FC_autoXX
     ShinigPomBtlset     = 16
+
+ScenaDataFunctionTypes = set([
+    ScenaFunctionType.BattleSetting,
+    ScenaFunctionType.AnimeClips,
+    ScenaFunctionType.ActionTable,
+    ScenaFunctionType.WeaponAttTable,
+    ScenaFunctionType.BreakTable,
+    ScenaFunctionType.AlgoTable,
+    ScenaFunctionType.SummonTable,
+    ScenaFunctionType.AddCollision,
+    ScenaFunctionType.PartTable,
+    ScenaFunctionType.ReactionTable,
+    ScenaFunctionType.AnimeClipTable,
+    ScenaFunctionType.FieldMonsterData,
+    ScenaFunctionType.FieldFollowData,
+    ScenaFunctionType.FaceAuto,
+    ScenaFunctionType.ShinigPomBtlset,
+])
 
 class ScenaFunction:
     def __init__(self, index: int, offset: int, name: str):

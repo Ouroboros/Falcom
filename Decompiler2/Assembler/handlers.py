@@ -32,14 +32,17 @@ class InstructionHandlerContext(BaseHandlerInfo):
         self.descriptor         = descriptor                                # type: instruction_table.InstructionDescriptor
         self.disasmContext      = None                                      # type: disassembler.DisasmContext
         self.instruction        = None                                      # type: instruction.Instruction
-                                                                            # format only
         self.offset             = instruction.Instruction.InvalidOffset     # type: int
+        self.xrefs              = []                                        # type: List[instruction.XRef]
 
     def createCodeBlock(self, offset: int) -> 'function.CodeBlock':
         return self.disassembler.createCodeBlock(offset)
 
     def addBranch(self, offset: int) -> 'function.CodeBlock':
         return self.disassembler.addBranch(offset)
+
+    def addXRef(self, name: str, offset: int):
+        self.xrefs.append(instruction.XRef(name, offset))
 
 InstructionHandler = Callable[[InstructionHandlerContext], 'instruction.Instruction']
 

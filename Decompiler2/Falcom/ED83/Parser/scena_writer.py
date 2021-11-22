@@ -1,19 +1,24 @@
 from Falcom.Common import *
 from Falcom import ED83
 from Falcom.ED83.Parser.scena_types import *
+import pathlib
 
 class _ScenaWriter:
-    def __init__(self, instructionTable: ED83.ED83InstructionTable, scenaName: str) -> None:
+    def __init__(self):
+        self.labels             = {}                    # type: Dict[str, int]
+        self.xrefs              = []                    # type: List[Assembler.XRef]
         self.functions          = []                    # type: List[ED83.ScenaFunction]
-        self.instructionTable   = instructionTable      # type: ED83.ED83InstructionTable
-        self.scenaName          = scenaName
+        self.instructionTable   = None                  # type: ED83.ED83InstructionTable
+        self.scenaName          = ''
         self.fs                 = fileio.FileStream().OpenMemory()
 
-        self.labels             = {}                    # type: Dict[str, int]
+    def init(self, instructionTable: ED83.ED83InstructionTable, scenaName: str):
+        self.instructionTable   = instructionTable
+        self.scenaName          = scenaName
 
     def functionDecorator(self, name: str, type: ED83.ScenaFunctionType) -> Callable[[], None]:
         def wrapper(f: Callable[[], Any]):
-            func = ED83.ScenaFunction(-1, -1, name)
+            func = ED83.ScenaFunction(len(self.functions), -1, name)
             func.type = type
             func.obj = f
             self.functions.append(func)
@@ -72,55 +77,62 @@ class _ScenaWriter:
     def ShinigPomBtlset(self, name: str):
         return self.functionDecorator(name, ED83.ScenaFunctionType.ShinigPomBtlset)
 
-    def run(self, g):
-        dataFunc = [
-            # ScenaFunctionType.BattleSetting,        # XXX: discard: 01 00 00 00
-            # ScenaFunctionType.AnimeClips,           # XXX: discard: 01 00 00 00 and align to 0x10
-            # ScenaFunctionType.ActionTable,
-            # ScenaFunctionType.WeaponAttTable,
-            # ScenaFunctionType.BreakTable,
-            # ScenaFunctionType.AlgoTable,
-            # ScenaFunctionType.SummonTable,
-            # ScenaFunctionType.AddCollision,
-            # ScenaFunctionType.PartTable,
-            # ScenaFunctionType.ReactionTable,
-            # ScenaFunctionType.AnimeClipTable,       # XXX: discard: 00 00 01 00
-            # ScenaFunctionType.FieldMonsterData,     # XXX: discard: 01 00 00 00
-            ScenaFunctionType.FieldFollowData,      # XXX: discard: 01 00 00 00
-            # ScenaFunctionType.ShinigPomBtlset,
-            # ScenaFunctionType.FaceAuto,
-        ]
-
+    def run(self, g: dict):
         hdr = ScenaHeader()
-        bss = bytearray()
+        fs = fileio.FileStream(encoding = DefaultEncoding).OpenFile(self.scenaName, 'wb+')
+
+        self.fs = fs
+        name = (pathlib.Path(self.scenaName).stem).encode(DefaultEncoding) + b'\x00'
+
+        hdr.functionEntryOffset = hdr.headerSize + len(name)
+        hdr.functionEntrySize   = len(self.functions) * 4
+        hdr.functionNameOffset  = hdr.functionEntryOffset + hdr.functionEntrySize
+        hdr.functionCount       = len(self.functions)
+        hdr.fullHeaderSize      = 0
+
+        fs.Write(hdr.serialize())
+        fs.WriteMultiByte(pathlib.Path(self.scenaName).stem + '\x00')
+
+        fs.Seek(fs.Position + hdr.functionEntrySize)
+
+        funcNames = bytearray()
+        pos = fs.Position + hdr.functionCount * 2
 
         for f in self.functions:
-            if f.type in dataFunc:
-                bss.extend(f.obj().serialize())
+            n = f.name.encode(DefaultEncoding) + b'\x00'
+            funcNames.extend(n)
+            fs.WriteUShort(pos)
+            pos += len(n)
 
-            # if f.type == ScenaFunctionType.BattleSetting:
-            #     r: ScenaBattleSetting = f.obj()
-            #     # bss.extend(r.serialize())
-            #     # bss.extend(b'\x01\x00\x00\x00')
-            #     # XXX: discard: 01 00 00 00
+        fs.Write(funcNames)
+        hdr.fullHeaderSize = fs.Position
 
-            # elif f.type == ScenaFunctionType.AnimeClips:
-            #     r: ScenaAnimeClips = f.obj()
-            #     # bss.extend(r.serialize())
-            #     # bss.extend(b'\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-            #     # XXX: discard: 01 00 00 00 and align to 0x10
+        funcOffset = []
 
-            # elif f.type == ScenaFunctionType.AnimeClipTable:
-            #     r: ScenaAnimeClipTable = f.obj()
-            #     # bss.extend(r.serialize())
-            #     # XXX: discard: 00 00 01 00
+        fs.Position = (fs.Position + 4) & ~3
 
-            # elif f.type == ScenaFunctionType.FieldMonsterData:
-            #     r: ScenaFieldMonsterData = f.obj()
-            #     bss.extend(r.serialize())
-            #     # XXX: discard: 01 00 00 00
+        for f in self.functions:
+            f.offset = fs.Position
+            funcOffset.append(f.offset)
 
-        open(r'D:\Dev\Source\Falcom\Decompiler2\Falcom\ED83\a0000.dat', 'wb').write(b'\x00' * 0x10594 + bss)
+            if f.type in ScenaDataFunctionTypes:
+                o = f.obj()
+                if o:
+                    fs.Write(o.serialize())
+                    fs.Position = (fs.Position + 4) & ~3
+
+                continue
+
+            else:
+                self.compileCode(fs, f)
+                if fs.Position % 4 != 0:
+                    fs.Position = (fs.Position + 4) & ~3
+
+        fs.Position = 0
+        fs.Write(hdr.serialize())
+
+        fs.Position = hdr.functionEntryOffset
+        [fs.WriteULong(o) for o in funcOffset]
 
     def addLabel(self, name):
         addr = self.labels.get(name)
@@ -129,18 +141,53 @@ class _ScenaWriter:
 
         self.labels[name] = self.fs.Position
 
-    def handleOpCode(self, opcode: int, *args, **kwargs):
-        pass
+    def compileCode(self, fs: fileio.FileStream, f: ScenaFunction):
+        f.obj()
 
-_gScena: _ScenaWriter = None
+        with fs.PositionSaver:
+            for x in self.xrefs:
+                offset = self.labels[x.name]
+                fs.Position = x.offset
+                fs.WriteULong(offset)
+
+        self.xrefs.clear()
+
+    def handleOpCode(self, opcode: int, *args, **kwargs):
+        log.debug(f'handle opcode 0x{opcode:X} @ 0x{self.fs.Position:X}')
+
+        fs = self.fs
+        tbl = self.instructionTable
+        desc = tbl.getDescriptor(opcode)
+
+        inst = Assembler.Instruction(opcode)
+        inst.descriptor = desc
+
+        for i, a in enumerate(args):
+            opr = Assembler.Operand()
+            opr.value = a
+            opr.descriptor = desc.operands and desc.operands[i] or None
+            inst.operands.append(opr)
+
+        context = Assembler.InstructionHandlerContext(Assembler.HandlerAction.Assemble, desc)
+        context.disasmContext = Assembler.DisasmContext(fs)
+        context.instruction = inst
+        context.xrefs = self.xrefs
+
+        if desc.handler:
+            if desc.handler(context):
+                return
+
+        else:
+            assert len(desc.operands or []) == len(args)
+
+        tbl.writeOpCode(fs, opcode)
+        tbl.writeAllOperands(context, inst.operands)
+
+_gScena: _ScenaWriter = _ScenaWriter()
 
 def createScenaWriter(scriptName: str) -> _ScenaWriter:
-    global _gScena
-
-    scena = _ScenaWriter(instructionTable = ED83.ScenaOpTable, scenaName = scriptName)
-    _gScena = scena
-
-    return scena
+    _gScena.init(instructionTable = ED83.ScenaOpTable, scenaName = scriptName)
+    return _gScena
 
 def label(name: str):
     _gScena.addLabel(name)

@@ -96,8 +96,12 @@ class OperandDescriptor:
         return tuple(formatTable[f] for f in fmtstr)
 
     def __init__(self, format: OperandFormat, formatHandler: 'handlers.FormatOperandHandler' = None):
-        self.format     = format                    # type: OperandFormat
-        self.handler    = formatHandler             # type: handlers.FormatOperandHandler
+        self.format         = format                    # type: OperandFormat
+        self.formatHandler  = formatHandler             # type: handlers.FormatOperandHandler
+
+    @property
+    def type(self) -> OperandType:
+        return self.format.type
 
     def readValue(self, context: 'handlers.InstructionHandlerContext') -> Any:
         fs = context.disasmContext.fs
@@ -119,6 +123,28 @@ class OperandDescriptor:
             OperandType.Float64 : lambda : fs.ReadDouble(),
 
             OperandType.MBCS    : lambda : fs.ReadMultiByte(self.format.encoding),
+        }[self.format.type]()
+
+    def writeValue(self, context: 'handlers.InstructionHandlerContext', value: Any):
+        fs = context.disasmContext.fs
+
+        return {
+            OperandType.SInt8   : lambda : fs.WriteChar(value),
+            OperandType.UInt8   : lambda : fs.WriteByte(value),
+
+            OperandType.SInt16  : lambda : fs.WriteShort(value),
+            OperandType.UInt16  : lambda : fs.WriteUShort(value),
+
+            OperandType.SInt32  : lambda : fs.WriteLong(value),
+            OperandType.UInt32  : lambda : fs.WriteULong(value),
+
+            OperandType.SInt64  : lambda : fs.WriteLong64(value),
+            OperandType.UInt64  : lambda : fs.WriteULong64(value),
+
+            OperandType.Float32 : lambda : fs.WriteFloat(value),
+            OperandType.Float64 : lambda : fs.WriteDouble(value),
+
+            OperandType.MBCS    : lambda : fs.Write(value.encode(self.format.encoding) + b'\x00'),
         }[self.format.type]()
 
     def formatValue(self, context: 'handlers.FormatOperandHandlerContext') -> str:
@@ -230,7 +256,7 @@ class InstructionTable:
     def readOpCode(self, fs: fileio.FileStream) -> int:
         raise NotImplementedError
 
-    def writeOpCode(self, fs: fileio.FileStream, inst: 'instruction.Instruction'):
+    def writeOpCode(self, fs: fileio.FileStream, opcode: int):
         raise NotImplementedError
 
     def readInstruction(self, fs: fileio.FileStream) -> 'instruction.Instruction':
@@ -258,15 +284,20 @@ class InstructionTable:
 
         return operand
 
-    def writeOperand(self, fs: fileio.FileStream, operand: 'instruction.Operand'):
-        raise NotImplementedError
+    def writeOperand(self, context: 'handlers.InstructionHandlerContext', operand: 'instruction.Operand'):
+        desc = operand.descriptor
+        desc.writeValue(context, operand.value)
+
+    def writeAllOperands(self, context: 'handlers.InstructionHandlerContext', operands: 'List[instruction.Operand]'):
+        for opr in operands:
+            self.writeOperand(context, opr)
 
     def formatOperand(self, context: 'handlers.FormatOperandHandlerContext') -> str | List[str]:
         result  = None
         operand = context.operand
         desc    = operand.descriptor
 
-        handler = context.operand.descriptor.handler
+        handler = context.operand.descriptor.formatHandler
         if handler is not None:
             result = handler(context)
 

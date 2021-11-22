@@ -14,7 +14,7 @@ class CodeBlock:
         self.name           = name          # type: str
         self.instructions   = instructions  # type: List[instruction.Instruction]
         self.branches       = []            # type: List[CodeBlock]
-        self.labels         = None          # type: List[instruction.Label]
+        self.xrefs          = None          # type: List[instruction.XRef]
         self.offset         = offset        # type: int
         self.parent         = None          # type: CodeBlock
 

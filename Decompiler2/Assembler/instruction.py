@@ -5,30 +5,35 @@ if TYPE_CHECKING:
     from . import function
 
 __all__ = (
-    'Label',
+    'XRef',
     'Operand',
     'Flags',
     'Instruction',
 )
 
 OperandDescriptor = instruction_table.OperandDescriptor
+NoOperand = instruction_table.InstructionDescriptor.NoOperand
 
-class Label:
-    def __init__(self, label: str, offset: int):
-        self.label  = label                         # type: str
+class XRef:
+    def __init__(self, name: str, offset: int):
+        self.name   = name                          # type: str
         self.offset = offset                        # type: int
 
+    def __str__(self):
+        return f'<xref> from 0x{self.offset:X} to {self.name}'
+
+    __repr__ = __str__
+
 class Operand:
-    def __init__(self):
-        self.value      = None                      # type: Any
+    def __init__(self, *, value: Any = None):
+        self.value      = value                     # type: Any
         self.size       = None                      # type: int
         self.descriptor = None                      # type: OperandDescriptor
 
     def __str__(self):
-        return '%s' % self.value
+        return f'<{self.descriptor}> {self.value}'
 
-    def __repr__(self):
-        return self.__str__()
+    __repr__ = __str__
 
 class Flags(IntFlag2):
     Empty               = 0
@@ -63,14 +68,16 @@ class Instruction:
     InvalidOffset   = None
 
     def __init__(self, opcode: int):
-        self.opcode     = opcode                    # type: int
-        self.offset     = self.InvalidOffset        # type: int
-        self.size       = 0                         # type: int
-        self.operands   = []                        # type: List[Operand]
-        self.branches   = []                        # type: List[function.CodeBlock]
-        self.descriptor = None                      # type: instruction_table.InstructionDescriptor
-        self.label      = None                      # type: Label
-        self.flags      = None                      # type: Flags
+        self.opcode                 = opcode                    # type: int
+        self.offset                 = self.InvalidOffset        # type: int
+        self.size                   = 0                         # type: int
+        self.operands               = []                        # type: List[Operand]
+        self.branches               = []                        # type: List[function.CodeBlock]
+        self.descriptor             = None                      # type: instruction_table.InstructionDescriptor
+        self.label                  = None                      # type: XRef
+        self.flags                  = None                      # type: Flags
+        self.operandDescriptors     = NoOperand                 # type: List[OperandDescriptor]
+                                                                # assemble only
 
     def __str__(self):
         return '%s(%s)' % (self.descriptor.mnemonic, ', '.join(['%s' % opr for opr in self.operands]))

@@ -42,6 +42,13 @@ class ED83OperandDescriptor(OperandDescriptor):
 
         }.get(self.format.type, super().readValue)(context)
 
+    def writeValue(self, context: InstructionHandlerContext, value: Any):
+        return {
+            ED83OperandType.ScenaFlags  : lambda context, value: context.disasmContext.fs.WriteUShort(value),
+            ED83OperandType.Offset      : lambda context, value: context.disasmContext.fs.WriteULong(0xFFFFABCD),
+            ED83OperandType.Expression  : self.writeExpression,
+        }.get(self.format.type, super().writeValue)(context, value)
+
     def readText(self, context: InstructionHandlerContext) -> 'List[TextObject]':
         fs = context.disasmContext.fs
 
@@ -111,6 +118,9 @@ class ED83OperandDescriptor(OperandDescriptor):
 
     def readExpression(self, context: InstructionHandlerContext) -> 'List[ScenaExpression]':
         return ScenaExpression.readExpressions(context)
+
+    def writeExpression(self, context: InstructionHandlerContext, value: 'List[ScenaExpression]'):
+        ScenaExpression.writeExpressions(context, [ScenaExpression(v[0], *v[1:]) if isinstance(v, tuple | list) else ScenaExpression(v) for v in value])
 
     def formatValue(self, context: FormatOperandHandlerContext) -> str:
         return {
@@ -269,7 +279,6 @@ class ScenaExpression:
     @classmethod
     def readExpressions(cls, context: InstructionHandlerContext) -> 'List[ScenaExpression]':
         Operator = cls.Operator
-
         fs = context.disasmContext.fs
         exps = []
 
@@ -282,19 +291,25 @@ class ScenaExpression:
 
         return exps
 
+    @classmethod
+    def writeExpressions(cls, context: InstructionHandlerContext, exprs: List['ScenaExpression']) -> 'List[ScenaExpression]':
+        fs = context.disasmContext.fs
+        for exp in exprs:
+            fs.WriteByte(exp.operator)
+            exp.writeOperand(context)
+
     def __init__(self, operator: Operator, *operand: Tuple[int]):
+        if isinstance(operator, str):
+            operator = ScenaExpression.Operator[operator]
+
+        elif isinstance(operator, int):
+            operator = ScenaExpression.Operator(operator)
+
         self.operator   = operator
         self.operand    = operand or None
 
-        if not isinstance(operator, self.Operator):
-            try:
-                self.operator = self.Operator(operator)
-            except ValueError:
-                pass
-
     def readOperand(self, context: InstructionHandlerContext) -> Tuple[int]:
         Operator = self.Operator
-
         fs = context.disasmContext.fs
 
         if self.operator == Operator.Eval:
@@ -316,9 +331,30 @@ class ScenaExpression:
 
         return self.operand
 
+    def writeOperand(self, context: InstructionHandlerContext):
+        Operator = self.Operator
+        fs = context.disasmContext.fs
+
+        if self.operator == Operator.Eval:
+            raise NotImplementedError
+
+        writer = {
+            Operator.PushLong           : lambda: fs.WriteULong(self.operand[0]),
+            Operator.TestScenaFlags     : lambda: fs.WriteUShort(self.operand[0]),
+            Operator.PushReg            : lambda: fs.WriteByte(self.operand[0]),
+            Operator.PushValueByIndex   : lambda: fs.WriteByte(self.operand[0]),
+            Operator.GetChrWork         : lambda: (fs.WriteUShort(self.operand[0]), fs.WriteByte(self.operand[1])),
+            Operator.Exp23              : lambda: fs.WriteByte(self.operand[0]),
+            Operator.Exp24              : lambda: fs.WriteULong(self.operand[0]),
+            Operator.Exp25              : lambda: fs.WriteUShort(self.operand[0]),
+        }.get(self.operator)
+
+        if writer:
+            writer()
+
     def __str__(self):
         if self.operand:
-            return f"{self.operator} {self.operand}"
+            return f"{self.operator}<{self.operand}>"
 
         return str(self.operator)
 

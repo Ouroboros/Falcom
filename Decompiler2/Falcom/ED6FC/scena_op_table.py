@@ -12,8 +12,8 @@ class ED6FCInstructionTable(InstructionTable):
     def readOpCode(self, fs: fileio.FileStream) -> int:
         return fs.ReadByte()
 
-    def writeOpCode(self, fs: fileio.FileStream, inst: 'Instruction'):
-        fs.WriteByte(inst.opcode)
+    def writeOpCode(self, fs: fileio.FileStream, opcode: int):
+        fs.WriteByte(opcode)
 
     def readOperand(self, context: 'handlers.InstructionHandlerContext', desc: OperandDescriptor) -> 'instruction.Operand':
         opr = super().readOperand(context, desc)
@@ -22,7 +22,7 @@ class ED6FCInstructionTable(InstructionTable):
 
         return opr
 
-    def writeOperand(self, fs: fileio.FileStream, operand: 'instruction.Operand'):
+    def writeOperand(self, fs: fileio.FileStream, operand: Operand):
         raise NotImplementedError
 
 for i in ED6FCOperandType:

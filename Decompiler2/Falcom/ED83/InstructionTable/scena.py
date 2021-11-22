@@ -2,6 +2,7 @@ from enum import Flag
 from Falcom.Common  import *
 from Assembler      import *
 from .types         import *
+from pprint import pprint
 
 __all__ = (
     'ScenaOpTable',
@@ -17,18 +18,28 @@ class ED83InstructionTable(InstructionTable):
     def readOpCode(self, fs: fileio.FileStream) -> int:
         return fs.ReadByte()
 
-    def writeOpCode(self, fs: fileio.FileStream, inst: Instruction):
-        fs.WriteByte(inst.opcode)
+    def writeOpCode(self, fs: fileio.FileStream, opcode: int):
+        fs.WriteByte(opcode)
 
-    def readOperand(self, context: InstructionHandlerContext, desc: ED83OperandDescriptor) -> ED83OperandType:
+    def readOperand(self, context: InstructionHandlerContext, desc: ED83OperandDescriptor) -> Operand:
         opr = super().readOperand(context, desc)
         if desc.format.type == ED83OperandType.Offset:
             opr.value = context.addBranch(opr.value)
 
         return opr
 
-    def writeOperand(self, fs: fileio.FileStream, operand: ED83OperandType):
-        raise NotImplementedError
+    def writeOperand(self, context: InstructionHandlerContext, operand: Operand):
+        match operand.descriptor.type:
+            case ED83OperandType.Offset:
+                fs = context.disasmContext.fs
+                pos = fs.Position
+                log.debug(f'xref {repr(operand.value)} at 0x{pos:08X}')
+                context.addXRef(operand.value, pos)
+
+        super().writeOperand(context, operand)
+
+    def writeAllOperands(self, context: InstructionHandlerContext, operands: List[Operand]):
+        return super().writeAllOperands(context, operands)
 
 def genVariadicParamStub(desc: InstructionDescriptor) -> List[str]:
     return [
@@ -53,15 +64,42 @@ def peekByte(ctx: InstructionHandlerContext) -> int:
 def readAllOperands(ctx: InstructionHandlerContext, fmts: str) -> List[Operand]:
     return ctx.instructionTable.readAllOperands(ctx, ED83OperandDescriptor.fromFormatString(fmts))
 
+def ScriptThread_getFunctionStrWorkValue(ctx: InstructionHandlerContext) -> List[Operand]:
+    n = peekByte(ctx)
+
+    {
+        0x11: '',
+        0x22: '',
+        0x33: '',
+        0x44: '',
+    }
+
+def applyDescriptors(ctx: InstructionHandlerContext, fmts: str):
+    operands = ctx.instruction.operands
+    assert len(operands) == len(fmts)
+    for i, desc in enumerate(ED83OperandDescriptor.fromFormatString(fmts)):
+        operands[i].descriptor = desc
+
 def Handler_Switch(ctx: InstructionHandlerContext):
     SWITCH_DEFAULT = -1
+    '''
+        Switch(
+            (
+                ('Exp23', 0xF7),
+                'Return',
+            ),
+            (1, 'loc_28D4'),
+            (2, 'loc_28E4'),
+            (-1, 'loc_28F4'),
+        )
+    '''
 
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
             expr = readAllOperands(ctx, 'E')[0]
             count = readAllOperands(ctx, 'B')[0]
-            cases = [readAllOperands(ctx, 'iO') for _ in range(count.value)]
+            cases = [readAllOperands(ctx, 'IO') for _ in range(count.value)]
             default = readAllOperands(ctx, 'O')[0]
 
             inst.operands = [expr, cases, default]
@@ -92,42 +130,78 @@ def Handler_Switch(ctx: InstructionHandlerContext):
             return f
 
         case HandlerAction.Assemble:
-            raise NotImplementedError
+            inst = ctx.instruction
+            expr = inst.operands[0]
+            cases = inst.operands[1:]
+            count = len(cases) - 1
+
+            operands = [
+                expr,
+                Operand(value = count),
+            ]
+
+            default = None
+            for c in cases:
+                index, offset = c.value
+                if index == SWITCH_DEFAULT:
+                    if default is not None:
+                        raise ValueError('multiple default cases')
+
+                    default = offset
+
+                else:
+                    operands.extend([
+                        Operand(value = index),
+                        Operand(value = offset),
+                    ])
+
+            operands.append(Operand(value = default))
+            inst.operands = operands
+
+            fmts = 'EB' + 'IO' * count + 'O'
+
+            applyDescriptors(ctx, fmts)
+
+            return
 
         case HandlerAction.CodeGen:
             return genArgsStub(ctx.descriptor)
 
 def Handler_29(ctx: InstructionHandlerContext):
+    def getfmt(n):
+        match n:
+            case 0x00:
+                fmt = 'WfL'
+
+            case 0x01:
+                fmt = 'Si'
+
+            case 0x02:
+                fmt = 'BWWB'
+
+            case 0x03:
+                fmt = ''
+
+            case 0x04:
+                fmt = 'B'
+
+            case _:
+                raise NotImplementedError(f'0x{n:X}')
+
+        return 'BB' + fmt
+
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
 
             n = peekByte(ctx)
-            match n:
-                case 0x00:
-                    fmt = 'WfL'
-
-                case 0x01:
-                    fmt = 'Si'
-
-                case 0x02:
-                    fmt = 'BWWB'
-
-                case 0x03:
-                    fmt = ''
-
-                case 0x04:
-                    fmt = 'B'
-
-                case _:
-                    raise NotImplementedError(f'0x{n:X}')
-
-            inst.operands = readAllOperands(ctx, 'BB' + fmt)
+            inst.operands = readAllOperands(ctx, getfmt(n))
 
             return inst
 
         case HandlerAction.Assemble:
-            raise NotImplementedError
+            applyDescriptors(ctx, getfmt(ctx.instruction.operands[0].value))
+            return
 
         case HandlerAction.CodeGen:
             return genVariadicParamStub(ctx.descriptor)
@@ -156,73 +230,84 @@ def Handler_3A(ctx: InstructionHandlerContext):
             return inst
 
         case HandlerAction.Assemble:
-            raise NotImplementedError
+            applyDescriptors(ctx, 'B' + fmts[ctx.instruction.operands[0].value])
+            return
 
         case HandlerAction.CodeGen:
             return genVariadicParamStub(ctx.descriptor)
 
 def Handler_3B(ctx: InstructionHandlerContext):
+    def getfmt(n):
+        match n:
+            case 0x64:
+                fmt = 'Iff'
+
+            case _:
+                raise NotImplementedError(f'n: 0x{n:X}')
+
+        return 'B' + fmt
+
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
 
             n = peekByte(ctx)
-            match n:
-                case 0x64:
-                    fmt = 'Iff'
-
-                case _:
-                    raise NotImplementedError(f'n: 0x{n:X}')
-
-            inst.operands = readAllOperands(ctx, 'B' + fmt)
+            inst.operands = readAllOperands(ctx, getfmt(n))
 
             return inst
 
         case HandlerAction.Assemble:
-            raise NotImplementedError
+            applyDescriptors(ctx, getfmt(ctx.instruction.operands[0].value))
+            return
 
         case HandlerAction.CodeGen:
             return genVariadicParamStub(ctx.descriptor)
 
 def Handler_9E(ctx: InstructionHandlerContext):
+    fmts = {
+        0x0F: 'B',
+        0x10: '',
+        0x11: 'HC',
+        0x12: 'BB',
+    }
+
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-
             n = peekByte(ctx)
-            fmts = {
-                0x0F: 'B',
-                0x10: '',
-                0x11: 'HC',
-                0x12: 'BB',
-            }
-
             inst.operands = readAllOperands(ctx, 'B' + fmts[n])
-
             return inst
 
         case HandlerAction.Assemble:
-            raise NotImplementedError
+            applyDescriptors(ctx, 'B' + fmts[ctx.instruction.operands[0].value])
+            return
 
         case HandlerAction.CodeGen:
             return genVariadicParamStub(ctx.descriptor)
 
 def Handler_AC(ctx: InstructionHandlerContext):
+    fmts = {
+        0x00: '',
+        0x01: 'L',
+        0x02: 'L',
+        0x05: 'W',
+        0x06: '',
+        0x07: 'W',
+        0x08: '',
+        0x09: 'W',
+        0x0A: '',
+    }
+
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-
             n = peekByte(ctx)
-            fmts = {
-                0x01: 'L',
-            }
-
             inst.operands = readAllOperands(ctx, 'B' + fmts[n])
-
             return inst
 
         case HandlerAction.Assemble:
-            raise NotImplementedError
+            applyDescriptors(ctx, 'B' + fmts[ctx.instruction.operands[0].value])
+            return
 
         case HandlerAction.CodeGen:
             return genVariadicParamStub(ctx.descriptor)
@@ -244,7 +329,7 @@ def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Fla
 ScenaOpTable = ED83InstructionTable([
     inst(0x00,  'ExitThread',                   NoOperand,                  Flags.EndBlock),
     inst(0x01,  'Return',                       NoOperand,                  Flags.EndBlock),
-    inst(0x02,  'Call',                         'BSB',                      Flags.StartBlock,                       parameters = ('type', 'name', 'type2')),
+    # inst(0x02,  'Call',                         'BSB',                      Flags.StartBlock,                       parameters = ('type', 'name', 'type2')),
     inst(0x03,  'Jump',                         'O',                        Flags.Jump,                             parameters = ('label',)),
     inst(0x04,  'OP_04',                        'BS'),
     inst(0x05,  'If',                           'EO',                                                               parameters = ('ops', 'successor')),

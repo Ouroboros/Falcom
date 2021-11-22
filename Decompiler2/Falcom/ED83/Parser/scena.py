@@ -14,24 +14,6 @@ __all__ = (
 )
 
 class ScenaFormatter(Assembler.Formatter):
-    _dataFunction = [
-        ScenaFunctionType.BattleSetting,
-        ScenaFunctionType.AnimeClips,
-        ScenaFunctionType.ActionTable,
-        ScenaFunctionType.WeaponAttTable,
-        ScenaFunctionType.BreakTable,
-        ScenaFunctionType.AlgoTable,
-        ScenaFunctionType.SummonTable,
-        ScenaFunctionType.AddCollision,
-        ScenaFunctionType.PartTable,
-        ScenaFunctionType.ReactionTable,
-        ScenaFunctionType.AnimeClipTable,
-        ScenaFunctionType.FieldMonsterData,
-        ScenaFunctionType.FieldFollowData,
-        ScenaFunctionType.FaceAuto,
-        ScenaFunctionType.ShinigPomBtlset,
-    ]
-
     def formatFuncion(self, func: ScenaFunction) -> List[str]:
         funcName = func.name
         if not funcName:
@@ -43,7 +25,7 @@ class ScenaFormatter(Assembler.Formatter):
             f'def {funcName}():',
         ]
 
-        if func.type in self._dataFunction:
+        if func.type in ScenaDataFunctionTypes:
             body = self.formatDataFunction(func)
 
         elif func.type == ScenaFunctionType.Code:

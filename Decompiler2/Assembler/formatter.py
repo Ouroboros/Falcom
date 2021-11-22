@@ -49,7 +49,6 @@ class Formatter:
             ]
 
         def addEmptyLine():
-            # return
             if text and text[-1] != '':
                 text.append('')
 
