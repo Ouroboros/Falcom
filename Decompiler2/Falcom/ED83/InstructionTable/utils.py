@@ -40,12 +40,12 @@ def peekBytes(ctx: InstructionHandlerContext, n: int) -> bytes:
 
 def ScriptThread_getFunctionStrWorkValue(threadId: int) -> str:
     return 'B' + {
-        # 0x11: 'LB',
+        0x11: 'LB',
         # 0x22: 'LB',
         # 0x33: 'LB',
         # 0x44: 'LB',
         0xDD: 'S',
-        # 0xEE: 'LB',
+        0xEE: 'fB',
         0xFF: 'LB',
     }[threadId]
 
