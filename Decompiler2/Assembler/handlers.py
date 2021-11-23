@@ -5,6 +5,7 @@ if TYPE_CHECKING:
     from . import instruction_table
     from . import disassembler
     from . import function
+    from . import formatter
 
 __all__ = (
     'HandlerAction',
@@ -34,6 +35,7 @@ class InstructionHandlerContext(BaseHandlerInfo):
         self.instruction        = None                                      # type: instruction.Instruction
         self.offset             = instruction.Instruction.InvalidOffset     # type: int
         self.xrefs              = []                                        # type: List[instruction.XRef]
+        self.eval               = None                                      # type: Callable
 
     def createCodeBlock(self, offset: int) -> 'function.CodeBlock':
         return self.disassembler.createCodeBlock(offset)
@@ -48,9 +50,10 @@ InstructionHandler = Callable[[InstructionHandlerContext], 'instruction.Instruct
 
 
 class FormatOperandHandlerContext:
-    def __init__(self, inst: 'instruction.Instruction', operand: 'instruction.Operand', labels: 'Dict[int, str]' = None):
+    def __init__(self, inst: 'instruction.Instruction', operand: 'instruction.Operand', *, labels: 'Dict[int, str]' = None, formatter: 'formatter.Formatter' = None):
         self.instruction    = inst              # type: instruction.Instruction
         self.operand        = operand           # type: instruction.Operand
         self.labels         = labels or {}      # type: Dict[int, str]
+        self.formatter      = formatter
 
 FormatOperandHandler = Callable[[FormatOperandHandlerContext], Any]

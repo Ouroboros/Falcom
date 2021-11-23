@@ -3,6 +3,8 @@ from Falcom import ED83
 from Falcom.ED83.Parser.scena_types import *
 import pathlib
 
+Expr = ED83.ScenaExpression.Operator
+
 class _ScenaWriter:
     def __init__(self):
         self.labels             = {}                    # type: Dict[str, int]
@@ -11,6 +13,7 @@ class _ScenaWriter:
         self.instructionTable   = None                  # type: ED83.ED83InstructionTable
         self.scenaName          = ''
         self.fs                 = fileio.FileStream().OpenMemory()
+        self.globals            = None                  # type: dict
 
     def init(self, instructionTable: ED83.ED83InstructionTable, scenaName: str):
         self.instructionTable   = instructionTable
@@ -78,6 +81,8 @@ class _ScenaWriter:
         return self.functionDecorator(name, ED83.ScenaFunctionType.ShinigPomBtlset)
 
     def run(self, g: dict):
+        self.globals = g
+
         hdr = ScenaHeader()
         fs = fileio.FileStream(encoding = DefaultEncoding).OpenFile(self.scenaName, 'wb+')
 
@@ -152,6 +157,9 @@ class _ScenaWriter:
 
         self.xrefs.clear()
 
+    def onEval(self, code: str):
+        eval(code, self.globals)
+
     def handleOpCode(self, opcode: int, *args, **kwargs):
         log.debug(f'handle opcode 0x{opcode:X} @ 0x{self.fs.Position:X}')
 
@@ -172,6 +180,7 @@ class _ScenaWriter:
         context.disasmContext = Assembler.DisasmContext(fs)
         context.instruction = inst
         context.xrefs = self.xrefs
+        context.eval = self.onEval
 
         if desc.handler:
             if desc.handler(context):

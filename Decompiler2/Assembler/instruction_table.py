@@ -306,10 +306,10 @@ class InstructionTable:
 
         return result
 
-    def formatAllOperands(self, inst: 'instruction.Instruction', operands: 'List[instruction.Operand]') -> List[str]:
+    def formatAllOperands(self, context: 'handlers.FormatOperandHandlerContext', operands: 'List[instruction.Operand]') -> List[str]:
         text = []
         for opr in operands:
-            context = handlers.FormatOperandHandlerContext(inst, opr)
+            context = handlers.FormatOperandHandlerContext(context.instruction, opr, formatter = context.formatter)
             ret = self.formatOperand(context)
 
             if isinstance(ret, list | tuple):

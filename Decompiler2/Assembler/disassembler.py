@@ -17,10 +17,11 @@ class Disassembler:
     def __init__(self, instructionTable: InstructionTable):
         self.instructionTable   = instructionTable      # type: InstructionTable
         self.disassembledBlocks = {}                    # type: Dict[int, CodeBlock]
+        self.disassembledOffset = {}                    # type: Dict[int, Instruction]
         self.allocatedBlocks    = {}                    # type: Dict[int, CodeBlock]
         self.currentBlock       = None                  # type: CodeBlock
 
-    def createCodeBlock(self, offset: int):
+    def createCodeBlock(self, offset: int) -> CodeBlock:
         block = self.allocatedBlocks.get(offset)
         if block is None:
             block = CodeBlock(instructions = [], offset = offset, name = f'loc_{offset:X}')
@@ -48,11 +49,14 @@ class Disassembler:
         return func
 
     def disasmBlock(self, context: DisasmContext) -> CodeBlock:
-        offset = context.fs.Position
+        fs = context.fs
+        offset = fs.Position
         block = self.disassembledBlocks.get(offset)
 
         if block is not None:
             return block
+
+        # log.debug(f'disasm block: 0x{offset:X}')
 
         block = self.createCodeBlock(offset)
 
@@ -62,12 +66,19 @@ class Disassembler:
         self.currentBlock = block
 
         while True:
+            pos = fs.Position
+            inst = self.disassembledOffset.get(pos)
+            if inst:
+                inst.xrefs.append(XRef(self.createCodeBlock(pos).name, pos))
+                break
+
             try:
                 inst = self.disasmInstruction(context)
             except KeyError as e:
                 # console.pause(f'KeyError: 0x{e.args[0]:X}'); break
                 raise
 
+            self.disassembledOffset[pos] = inst
             block.instructions.append(inst)
 
             if inst.flags.endBlock:
@@ -102,7 +113,7 @@ class Disassembler:
             log.error('error occurred %s @ position %X' % (e, pos))
             raise
 
-        log.debug(f'disasm inst 0x{opcode:02X} @ 0x{pos:08X}')
+        log.debug(f'disasm inst 0x{opcode:02X}<{opcode}> @ 0x{pos:08X}')
 
         desc = self.instructionTable.getDescriptor(opcode)
 

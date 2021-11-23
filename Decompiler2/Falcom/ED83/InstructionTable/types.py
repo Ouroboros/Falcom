@@ -44,6 +44,7 @@ class ED83OperandDescriptor(OperandDescriptor):
 
     def writeValue(self, context: InstructionHandlerContext, value: Any):
         return {
+            ED83OperandType.Text       : self.writeText,
             ED83OperandType.ScenaFlags  : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED83OperandType.Offset      : lambda context, value: context.disasmContext.fs.WriteULong(0xFFFFABCD),
             ED83OperandType.Expression  : self.writeExpression,
@@ -51,70 +52,11 @@ class ED83OperandDescriptor(OperandDescriptor):
 
     def readText(self, context: InstructionHandlerContext) -> 'List[TextObject]':
         fs = context.disasmContext.fs
+        return fs.ReadMultiByte()
 
-        s = bytearray()
-        objs: List[TextObject] = []
-        containsCtrlCodes = False
-
-        def flushText():
-            if len(s) != 0:
-                objs.append(TextObject(value = s.decode(self.format.encoding)))
-                s.clear()
-
-        while True:
-            c = fs.read(1)
-            if len(c) == 0:
-                break
-
-            c = c[0]
-
-            if c == 0:
-                flushText()
-                break
-
-            if c >= 0x20:
-                s.append(c)
-                if c >= 0x80:
-                    s.append(fs.read(1)[0])
-
-                continue
-
-            flushText()
-
-            containsCtrlCodes = True
-
-            try:
-                code = TextCtrlCode(c)
-            except ValueError:
-                code = c
-
-            o = TextObject(code = code)
-
-            if c in [
-                    TextCtrlCode.NewLine,
-                    TextCtrlCode.NewLine2,
-                    TextCtrlCode.WaitForEnter,
-                    TextCtrlCode.Clear,
-                    TextCtrlCode.Clear2,
-                    0x05,
-                    TextCtrlCode.ShowAll,
-                    0x18,
-                ]:
-                o.code = TextCtrlCode(o.code)
-                pass
-
-            elif c == TextCtrlCode.SetColor:
-                o.value = fs.read(1)[0]
-
-            elif c == TextCtrlCode.Item:
-                o.value = fs.ReadUShort()
-
-            objs.append(o)
-
-        if containsCtrlCodes is False and len(objs) == 1:
-            return objs[0].value
-
-        return objs
+    def writeText(self, context: InstructionHandlerContext, text: str) -> 'List[TextObject]':
+        fs = context.disasmContext.fs
+        return fs.Write(text.encode(self.format.encoding) + b'\x00')
 
     def readExpression(self, context: InstructionHandlerContext) -> 'List[ScenaExpression]':
         return ScenaExpression.readExpressions(context)
@@ -124,7 +66,7 @@ class ED83OperandDescriptor(OperandDescriptor):
 
     def formatValue(self, context: FormatOperandHandlerContext) -> str:
         return {
-            ED83OperandType.Text        : self.formatTextObjects,
+            ED83OperandType.Text        : self.formatText,
             ED83OperandType.Expression  : self.formatExpression,
             ED83OperandType.ScenaFlags  : lambda context: self.formatScenaFlags(context.operand.value),
             ED83OperandType.Offset      : lambda context: "'%s'" % context.operand.value.name,    # CodeBlock
@@ -133,33 +75,8 @@ class ED83OperandDescriptor(OperandDescriptor):
 
         }.get(self.format.type, super().formatValue)(context)
 
-    def formatTextObjects(self, context: FormatOperandHandlerContext, depth: int = 1) -> List[str]:
-        if isinstance(context.operand.value, str):
-            return super().formatValue(context)
-
-        context.instruction.flags |= Flags.FormatMultiLine
-
-        text = []
-
-        indent = DefaultIndent * (depth - 1)
-
-        objs = context.operand.value       # type: List[TextObject]
-
-        for o in objs:
-            if o.code is None:
-                text.append(repr(o.value))
-                continue
-
-            if o.value is None:
-                text.append(str(o.code))
-                continue
-
-            text.append('(%s, %s)' % (o.code, o.value))
-
-        for i, t in enumerate(text):
-            text[i] = indent + t
-
-        return text
+    def formatText(self, context: FormatOperandHandlerContext, depth: int = 1) -> List[str]:
+        return repr(context.operand.value)
 
     def formatExpression(self, context: FormatOperandHandlerContext) -> List[str]:
         context.instruction.flags |= Flags.FormatMultiLine
@@ -169,13 +86,17 @@ class ED83OperandDescriptor(OperandDescriptor):
 
         for e in expr:
             if isinstance(e.operator, IntEnum2):
-                opr = f"'{e.operator}'"
+                opr = f"Expr.{e.operator}"
             else:
                 raise NotImplementedError
                 # opr = '0x%02X' % e.operator
 
             if e.operator == ScenaExpression.Operator.TestScenaFlags:
                 t = f"({opr}, {self.formatScenaFlags(e.operand)})"
+
+            elif e.operator == ScenaExpression.Operator.Eval:
+                s = context.formatter.formatInstruction(e.operand)
+                t = f"({opr}, '{'; '.join(s)}')"
 
             elif e.operand is not None:
                 t = f"({opr}, {self.formatOperand(e)})"
@@ -272,9 +193,9 @@ class ScenaExpression:
         PushValueByIndex    = 0x20      # push getValueByIndex((byte)index)
         GetChrWork          = 0x21      # push getChrWork((word)a1, (byte)a2)
         Rand                = 0x22      # push rand32()
-        Exp23               = 0x23      # *(_DWORD *)stack = sub_14030FE70((__int64)gCurrentSaveData, *(unsigned __int8 *)ptr)
-        Exp24               = 0x24      # *(_DWORD *)stack = (*(_DWORD *)ptr & *((_DWORD *)gCurrentSaveData + 0xDA5)) != 0
-        Exp25               = 0x25      # *(_DWORD *)stack = *(_DWORD *)(*(_QWORD *)(qword98 + 0x60) + 4 * *(unsigned __int8 *)ptr)
+        Expr23              = 0x23      # *(_DWORD *)stack = sub_14030FE70((__int64)gCurrentSaveData, *(unsigned __int8 *)ptr)
+        Expr24              = 0x24      # *(_DWORD *)stack = (*(_DWORD *)ptr & *((_DWORD *)gCurrentSaveData + 0xDA5)) != 0
+        Expr25              = 0x25      # *(_DWORD *)stack = *(_DWORD *)(*(_QWORD *)(qword98 + 0x60) + 4 * *(unsigned __int8 *)ptr)
 
     @classmethod
     def readExpressions(cls, context: InstructionHandlerContext) -> 'List[ScenaExpression]':
@@ -312,18 +233,16 @@ class ScenaExpression:
         Operator = self.Operator
         fs = context.disasmContext.fs
 
-        if self.operator == Operator.Eval:
-            raise NotImplementedError
-
         reader = {
             Operator.PushLong           : lambda: fs.ReadULong(),
+            Operator.Eval               : lambda: context.disassembler.disasmInstruction(context.disasmContext),
             Operator.TestScenaFlags     : lambda: fs.ReadUShort(),
             Operator.PushReg            : lambda: fs.ReadByte(),
             Operator.PushValueByIndex   : lambda: fs.ReadByte(),
             Operator.GetChrWork         : lambda: (fs.ReadUShort(), fs.ReadByte()),
-            Operator.Exp23              : lambda: fs.ReadByte(),
-            Operator.Exp24              : lambda: fs.ReadULong(),
-            Operator.Exp25              : lambda: fs.ReadUShort(),
+            Operator.Expr23             : lambda: fs.ReadByte(),
+            Operator.Expr24             : lambda: fs.ReadULong(),
+            Operator.Expr25             : lambda: fs.ReadUShort(),
         }.get(self.operator)
 
         if reader is not None:
@@ -335,18 +254,16 @@ class ScenaExpression:
         Operator = self.Operator
         fs = context.disasmContext.fs
 
-        if self.operator == Operator.Eval:
-            raise NotImplementedError
-
         writer = {
             Operator.PushLong           : lambda: fs.WriteULong(self.operand[0]),
+            Operator.Eval               : lambda: context.eval(self.operand[0]),
             Operator.TestScenaFlags     : lambda: fs.WriteUShort(self.operand[0]),
             Operator.PushReg            : lambda: fs.WriteByte(self.operand[0]),
             Operator.PushValueByIndex   : lambda: fs.WriteByte(self.operand[0]),
             Operator.GetChrWork         : lambda: (fs.WriteUShort(self.operand[0]), fs.WriteByte(self.operand[1])),
-            Operator.Exp23              : lambda: fs.WriteByte(self.operand[0]),
-            Operator.Exp24              : lambda: fs.WriteULong(self.operand[0]),
-            Operator.Exp25              : lambda: fs.WriteUShort(self.operand[0]),
+            Operator.Expr23             : lambda: fs.WriteByte(self.operand[0]),
+            Operator.Expr24             : lambda: fs.WriteULong(self.operand[0]),
+            Operator.Expr25             : lambda: fs.WriteUShort(self.operand[0]),
         }.get(self.operator)
 
         if writer:

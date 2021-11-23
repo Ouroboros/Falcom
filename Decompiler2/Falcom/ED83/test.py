@@ -9,6 +9,7 @@ def test(filename, output = None):
         return
 
     fs = fileio.FileStream().OpenMemory(open(filename, 'rb').read())
+    fs.Encoding = GlobalConfig.DefaultEncoding
     scena = ED83.Parser.ScenaParser(fs)
 
     scena.parse()
@@ -49,7 +50,7 @@ def main():
 
     test(scena[-1] + scp, scp + '.py')
 
-    # console.pause('done')
+    console.pause('done')
 
 if __name__ == '__main__':
     Try(main)

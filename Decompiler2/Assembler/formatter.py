@@ -64,7 +64,12 @@ class Formatter:
 
         # self.formatted.add(block.offset)
 
+        # log.debug(f'format block: 0x{block.offset:X}')
+
         text = []
+
+        if not block.instructions:
+            return text
 
         if genLabel and block.name:
             text = [
@@ -77,6 +82,12 @@ class Formatter:
                 text.append('')
 
         for inst in block.instructions:
+            for x in inst.xrefs:
+                text.extend([
+                    self.formatLabel(x.name),
+                    '',
+                ])
+
             t = self.formatInstruction(inst)
             if not inst.flags.multiline:
                 if inst.flags.startBlock or inst.flags.endBlock:
@@ -109,7 +120,8 @@ class Formatter:
                 return ret
 
         mnemonic = inst.descriptor.mnemonic
-        operands = self.instructionTable.formatAllOperands(inst, inst.operands)
+        context = FormatOperandHandlerContext(inst, None, formatter = self)
+        operands = self.instructionTable.formatAllOperands(context, inst.operands)
 
         if inst.flags.multiline:
             f = [f'{mnemonic}(']

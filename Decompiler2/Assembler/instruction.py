@@ -74,7 +74,7 @@ class Instruction:
         self.operands               = []                        # type: List[Operand]
         self.branches               = []                        # type: List[function.CodeBlock]
         self.descriptor             = None                      # type: instruction_table.InstructionDescriptor
-        self.label                  = None                      # type: XRef
+        self.xrefs                  = []                        # type: List[XRef]
         self.flags                  = None                      # type: Flags
         self.operandDescriptors     = NoOperand                 # type: List[OperandDescriptor]
                                                                 # assemble only
