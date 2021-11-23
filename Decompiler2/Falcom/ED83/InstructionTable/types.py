@@ -1,17 +1,19 @@
 from Falcom.Common  import *
 from Assembler      import *
+from .utils         import *
 
 DefaultIndent = GlobalConfig.DefaultIndent
 UserDefined = OperandType.UserDefined + 1
 
 class ED83OperandType(IntEnum2):
-    Offset,     \
-    Item,       \
-    BGM,        \
-    Expression, \
-    Text,       \
-    ScenaFlags, \
-    UserDefined = range(UserDefined, UserDefined + 7)
+    Offset,         \
+    Item,           \
+    BGM,            \
+    Expression,     \
+    Text,           \
+    ScenaFlags,     \
+    ThreadValue,    \
+    UserDefined = range(UserDefined, UserDefined + 8)
 
     __str__     = OperandType.__str__
     __repr__    = OperandType.__repr__
@@ -33,10 +35,11 @@ class ED83OperandDescriptor(OperandDescriptor):
 
     def readValue(self, context: InstructionHandlerContext) -> Any:
         return {
-            ED83OperandType.Text       : self.readText,
-            ED83OperandType.Expression : self.readExpression,
-            ED83OperandType.ScenaFlags : lambda context: context.disasmContext.fs.ReadUShort(),
-            ED83OperandType.Offset     : lambda context: context.disasmContext.fs.ReadULong(),
+            ED83OperandType.Text            : self.readText,
+            ED83OperandType.Expression      : self.readExpression,
+            ED83OperandType.ThreadValue     : self.readThreadValue,
+            ED83OperandType.ScenaFlags      : lambda context: context.disasmContext.fs.ReadUShort(),
+            ED83OperandType.Offset          : lambda context: context.disasmContext.fs.ReadULong(),
             # ED83OperandType.Item       : lambda context: context.disasmContext.fs.ReadUShort(),
             # ED83OperandType.BGM        : lambda context: context.disasmContext.fs.ReadShort(),
 
@@ -44,30 +47,19 @@ class ED83OperandDescriptor(OperandDescriptor):
 
     def writeValue(self, context: InstructionHandlerContext, value: Any):
         return {
-            ED83OperandType.Text       : self.writeText,
+            ED83OperandType.Text        : self.writeText,
             ED83OperandType.ScenaFlags  : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED83OperandType.Offset      : lambda context, value: context.disasmContext.fs.WriteULong(0xFFFFABCD),
             ED83OperandType.Expression  : self.writeExpression,
+            # ED83OperandType.ThreadValue : self.writeThreadValue,
         }.get(self.format.type, super().writeValue)(context, value)
-
-    def readText(self, context: InstructionHandlerContext) -> 'List[TextObject]':
-        fs = context.disasmContext.fs
-        return fs.ReadMultiByte()
-
-    def writeText(self, context: InstructionHandlerContext, text: str) -> 'List[TextObject]':
-        fs = context.disasmContext.fs
-        return fs.Write(text.encode(self.format.encoding) + b'\x00')
-
-    def readExpression(self, context: InstructionHandlerContext) -> 'List[ScenaExpression]':
-        return ScenaExpression.readExpressions(context)
-
-    def writeExpression(self, context: InstructionHandlerContext, value: 'List[ScenaExpression]'):
-        ScenaExpression.writeExpressions(context, [ScenaExpression(v[0], *v[1:]) if isinstance(v, tuple | list) else ScenaExpression(v) for v in value])
 
     def formatValue(self, context: FormatOperandHandlerContext) -> str:
         return {
             ED83OperandType.Text        : self.formatText,
+            OperandType.MBCS            : self.formatText,
             ED83OperandType.Expression  : self.formatExpression,
+            ED83OperandType.ThreadValue : self.formatThreadValue,
             ED83OperandType.ScenaFlags  : lambda context: self.formatScenaFlags(context.operand.value),
             ED83OperandType.Offset      : lambda context: "'%s'" % context.operand.value.name,    # CodeBlock
             # ED83OperandType.Item        : ,
@@ -75,8 +67,29 @@ class ED83OperandDescriptor(OperandDescriptor):
 
         }.get(self.format.type, super().formatValue)(context)
 
-    def formatText(self, context: FormatOperandHandlerContext, depth: int = 1) -> List[str]:
-        return repr(context.operand.value)
+    def readText(self, context: InstructionHandlerContext) -> 'List[TextObject]':
+        fs = context.disasmContext.fs
+        return fs.ReadMultiByte()
+
+    def readExpression(self, context: InstructionHandlerContext) -> 'List[ScenaExpression]':
+        return ScenaExpression.readExpressions(context)
+
+    def readThreadValue(self, context: InstructionHandlerContext) -> List[Operand]:
+        fmts = ScriptThread_getFunctionStrWorkValue(peekByte(context))
+        return readAllOperands(context, fmts)
+
+    def writeExpression(self, context: InstructionHandlerContext, value: 'List[ScenaExpression]'):
+        ScenaExpression.writeExpressions(context, [ScenaExpression(v[0], *v[1:]) if isinstance(v, tuple | list) else ScenaExpression(v) for v in value])
+
+    def writeText(self, context: InstructionHandlerContext, text: str) -> 'List[TextObject]':
+        fs = context.disasmContext.fs
+        return fs.Write(text.encode(self.format.encoding) + b'\x00')
+
+    def formatThreadValue(self, context: FormatOperandHandlerContext) -> List[str]:
+        return f'({", ".join([f"0x{o.value:X}" if isinstance(o.value, int) else formatText(o.value) for o in context.operand.value])})'
+
+    def formatText(self, context: FormatOperandHandlerContext) -> str:
+        return formatText(context.operand.value)
 
     def formatExpression(self, context: FormatOperandHandlerContext) -> List[str]:
         context.instruction.flags |= Flags.FormatMultiLine
@@ -106,7 +119,6 @@ class ED83OperandDescriptor(OperandDescriptor):
 
             text.append(t)
 
-        # return ['(', *[f'{DefaultIndent}{l}'.rstrip() for l in text], ')']
         return text
 
     def formatOperand(self, e: 'ScenaExpression') -> str:
@@ -126,6 +138,7 @@ ED83OperandDescriptor.formatTable.update({
     'F' : oprdesc(ED83OperandType.ScenaFlags),
     'E' : oprdesc(ED83OperandType.Expression),
     'T' : oprdesc(ED83OperandType.Text),
+    'V' : oprdesc(ED83OperandType.ThreadValue),
 })
 
 class TextCtrlCode(IntEnum2):

@@ -19,6 +19,7 @@ def map_operand_type(t: OperandType) -> str:
         ED83.ED83OperandType.Offset     : 'str',
         ED83.ED83OperandType.ScenaFlags : 'int',
         ED83.ED83OperandType.Expression : 'tuple | list',
+        ED83.ED83OperandType.ThreadValue: 'tuple | list',
     }[t]
 
 def main():

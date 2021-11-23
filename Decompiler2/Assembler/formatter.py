@@ -77,6 +77,10 @@ class Formatter:
                 '',
             ]
 
+            if block.name == 'loc_115FA':
+                # XXX
+                text.insert(0, "Jump('loc_115FF')")
+
         def addEmptyLine():
             if text and text[-1] != '':
                 text.append('')

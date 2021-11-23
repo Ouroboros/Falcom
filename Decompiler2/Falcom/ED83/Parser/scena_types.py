@@ -1,4 +1,3 @@
-from os import name
 from Falcom.Common import *
 from Falcom.ED83.Parser.datatable import TableNameEntry
 from . import utils

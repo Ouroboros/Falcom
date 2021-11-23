@@ -30,7 +30,8 @@ class Disassembler:
         return block
 
     def addBranch(self, offset: int) -> CodeBlock:
-        return self.currentBlock.addBranch(self.createCodeBlock(offset))
+        block = self.createCodeBlock(offset)
+        return self.currentBlock.addBranch(block)
 
     def disasmFunction(self, context: DisasmContext, *, name: str = None) -> Function:
         func = Function()
@@ -69,7 +70,8 @@ class Disassembler:
             pos = fs.Position
             inst = self.disassembledOffset.get(pos)
             if inst:
-                inst.xrefs.append(XRef(self.createCodeBlock(pos).name, pos))
+                # ref by other instructions
+                inst.xrefs.append(XRef(self.createCodeBlock(pos).name, -1))
                 break
 
             try:
