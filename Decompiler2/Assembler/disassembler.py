@@ -78,6 +78,9 @@ class Disassembler:
                 inst = self.disasmInstruction(context)
             except KeyError as e:
                 # console.pause(f'KeyError: 0x{e.args[0]:X}'); break
+                fs.Position = pos
+                opcode = self.instructionTable.readOpCode(fs)
+                log.debug(f'disasm inst 0x{opcode:02X}<{opcode}> @ 0x{pos:08X}')
                 raise
 
             self.disassembledOffset[pos] = inst
@@ -115,7 +118,7 @@ class Disassembler:
             log.error('error occurred %s @ position %X' % (e, pos))
             raise
 
-        log.debug(f'disasm inst 0x{opcode:02X}<{opcode}> @ 0x{pos:08X}')
+        # log.debug(f'disasm inst 0x{opcode:02X}<{opcode}> @ 0x{pos:08X}')
 
         desc = self.instructionTable.getDescriptor(opcode)
 

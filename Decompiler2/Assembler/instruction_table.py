@@ -161,7 +161,7 @@ class OperandDescriptor:
             # return (fmt.hex and '0x%X' or '%d') % operand.value
 
         def formatFloat():
-            return '%f' % operand.value
+            return '%f' % round(operand.value, 7)
 
         return {
             OperandType.SInt8   : formatInteger,

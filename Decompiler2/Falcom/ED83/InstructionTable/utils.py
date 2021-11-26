@@ -6,6 +6,9 @@ def genVariadicFuncStub(desc: InstructionDescriptor, *types, parameters = None) 
     args = []
     assertion = []
 
+    if parameters is None:
+        parameters = desc.parameters
+
     if not parameters:
         parameters = [f'arg{i + 1}' for i in range(len(types))]
 

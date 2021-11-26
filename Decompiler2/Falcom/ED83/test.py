@@ -50,7 +50,7 @@ def main():
 
     test(scena[-1] + scp, scp + '.py')
 
-    console.pause('done')
+    # console.pause('done')
 
 if __name__ == '__main__':
     Try(main)

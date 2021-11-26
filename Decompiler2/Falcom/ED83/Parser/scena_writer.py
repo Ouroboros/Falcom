@@ -161,7 +161,7 @@ class _ScenaWriter:
         eval(code, self.globals)
 
     def handleOpCode(self, opcode: int, *args, **kwargs):
-        log.debug(f'handle opcode 0x{opcode:X} @ 0x{self.fs.Position:X}')
+        # log.debug(f'handle opcode 0x{opcode:X} @ 0x{self.fs.Position:X}')
 
         fs = self.fs
         tbl = self.instructionTable

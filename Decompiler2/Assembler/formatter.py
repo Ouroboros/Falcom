@@ -77,9 +77,28 @@ class Formatter:
                 '',
             ]
 
-            if block.name == 'loc_115FA':
+            match block.name:
                 # XXX
-                text.insert(0, "Jump('loc_115FF')")
+                case 'loc_115FA':
+                    text.insert(0, "Jump('loc_115FF')")
+
+                case 'loc_20883':
+                    text = [
+                        'SetScenaFlags(0xF02)',
+                        'SetScenaFlags(0xF01)',
+                        'SetScenaFlags(0xF00)',
+                        'SetScenaFlags(0xD65)',
+                        'SetScenaFlags(0xD64)',
+                        'SetScenaFlags(0xD63)',
+                        'SetScenaFlags(0xD62)',
+                        'SetScenaFlags(0xD61)',
+                        'SetScenaFlags(0xD60)',
+                        'SetScenaFlags(0xD5F)',
+                        'SetScenaFlags(0xD5E)',
+                        '',
+                    ] + text
+
+                    # text.insert(0, "Jump('loc_115FF')")
 
         def addEmptyLine():
             if text and text[-1] != '':
