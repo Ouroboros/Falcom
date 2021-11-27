@@ -53,11 +53,13 @@ def ScriptThread_getFunctionStrWorkValue(threadId: int) -> str:
     }[threadId]
 
 def formatText(t: str) -> str:
-    s = ''
+    s = []
     for ch in t:
-        if ch >= ' ':
-            s += ch
+        if ch == '\\':
+            s.append('\\\\')
+        elif ch >= ' ':
+            s.append(ch)
         else:
-            s += f'\\x{ord(ch):02x}'
+            s.append(f'\\x{ord(ch):02x}')
 
-    return f"'{s}'"
+    return f"'{''.join(s)}'"

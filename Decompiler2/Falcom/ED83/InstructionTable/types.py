@@ -69,7 +69,24 @@ class ED83OperandDescriptor(OperandDescriptor):
 
     def readText(self, context: InstructionHandlerContext) -> 'List[TextObject]':
         fs = context.disasmContext.fs
-        return fs.ReadMultiByte()
+        text = bytearray()
+        while True:
+            ch = fs.ReadByte()
+            if ch == 0:
+                break
+
+            text.append(ch)
+            if ch >= 0x20:
+                continue
+
+            if ch == 0x10:
+                text.extend(fs.Read(2))
+                continue
+
+            if 0x10 < ch <= 0x12:
+                text.extend(fs.Read(4))
+
+        return text.decode(GlobalConfig.DefaultEncoding)
 
     def readExpression(self, context: InstructionHandlerContext) -> 'List[ScenaExpression]':
         return ScenaExpression.readExpressions(context)
@@ -124,7 +141,7 @@ class ED83OperandDescriptor(OperandDescriptor):
     def formatScenaFlags(self, flags: int) -> str:
         # return '0x%X' % flags
         flags &= 0XFFFF
-        return f'ScenaFlags(0x{flags >> 3:04X}, {flags & 7})'
+        return f'ScenaFlag(0x{flags >> 3:04X}, {flags & 7})'
 
 def oprdesc(*args, **kwargs) -> ED83OperandDescriptor:
     return ED83OperandDescriptor(ED83OperandFormat(*args, **kwargs))
@@ -141,12 +158,12 @@ ED83OperandDescriptor.formatTable.update({
 
 class TextCtrlCode(IntEnum2):
     NewLine         = 0x01
-    NewLine2        = 0x0A
     WaitForEnter    = 0x02
     Clear           = 0x03
     Clear2          = 0x04
     ShowAll         = 0x06
     SetColor        = 0x07
+    NewLine2        = 0x0A
     Item            = 0x1F
 
 class TextObject:
