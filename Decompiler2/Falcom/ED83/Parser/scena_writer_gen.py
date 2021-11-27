@@ -386,6 +386,11 @@ def OP_4F(arg1: int, arg2: int, *args):
     assert isinstance(arg2, int)
     return scena.handleOpCode(0x4F, arg1, arg2, *args)
 
+def OP_54(arg1: int, *args):
+    # 0x54
+    assert isinstance(arg1, int)
+    return scena.handleOpCode(0x54, arg1, *args)
+
 def OP_55(arg1: int, arg2: int, arg3: int, arg4: int, arg5: int, arg6: int, arg7: int, arg8: int, arg9: int, arg10: int, arg11: int, arg12: float, arg13: float, arg14: float, arg15: float, arg16: int, arg17: int, arg18: str, arg19: str):
     # 0x55
     assert isinstance(arg1, int)

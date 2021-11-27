@@ -549,6 +549,98 @@ def Handler_4F(ctx: InstructionHandlerContext):
         case HandlerAction.CodeGen:
             return genVariadicFuncStub(ctx.descriptor, int, int)
 
+def Handler_54(ctx: InstructionHandlerContext):
+    def getfmts(n1, n2):
+        return 'B' + {
+            # 0x00: 'L' * 8,
+            # 0x01: 'f' * 8,
+            # 0x03: 'L' * 8,
+            0x08: 'L' * 8,
+            # 0x0A: 'B',
+            # 0x0B: 'W',
+            # 0x0D: 'SSWW',
+            # 0x0E: 'B',
+            # 0x0F: '',
+            # 0x10: '',
+            # 0x11: '',
+            # 0x12: '',
+            # 0x13: '',
+            # 0x14: 'SSWWWWWW',
+            # 0x15: 'S',
+            # 0x16: '',
+            # 0x17: 'L',
+            # 0x18: 'WB',
+            # 0x19: 'SS',
+            # 0x1A: '',
+            # 0x1B: '',
+            # 0x1C: 'SWW',
+            # 0x1D: '',
+            # 0x1E: '',
+            # 0x1F: '',
+            # 0x20: '',
+            # 0x21: 'Wf',
+            # 0x22: 'W',
+            # 0x23: 'WWWL',
+            # 0x24: 'W',
+            # 0x25: '',
+            # 0x26: 'BLLS',
+            # 0x27: '',
+            # 0x28: 'W',
+            # 0x29: 'BW',
+            # 0x2A: '',
+            # 0x2B: 'BSW',
+            # 0x2C: 'Bff',
+            # 0x2D: '',
+            # 0x2E: '',
+            # 0x2F: '',
+            # 0x30: 'V',
+            # 0x31: 'B' + {0x00: 'WWffBB', 0x01: 'W'}[n2],
+            # 0x34: 'L',
+            # 0x35: 'WLSSS',
+            # 0x36: '',
+            # 0x37: 'WBBB',
+            # 0x38: 'BL',
+            # 0x39: 'W',
+            # 0x3A: 'WWffffB',
+            # 0x3B: 'WWff',
+            # 0x3C: 'B' * 0xA,
+            # 0x3E: 'BSL',
+            # 0x3F: '',
+            # 0x40: 'W',
+            # 0x41: '',
+            # 0x42: 'WW',
+            # 0x43: '',
+            # 0x44: 'fff',
+            # 0x45: 'f',
+            # 0x46: 'f',
+            # 0x47: 'BW',
+            # 0x48: 'Wf',
+            # 0x49: 'WW',     # set_ovalgear
+            # 0x4A: 'WW',
+            # 0x4B: 'W',
+            # 0x4C: 'WWB',
+            # 0x4D: 'f',
+            # 0x4E: '',
+            # 0x4F: 'B' + {0x00: 'BW', 0x01: 'B', 0x02: 'WWB', 0x03: 'W', 0x04: 'WWBB', 0x0A: 'WBfW'}[n2],
+            # 0x50: 'f',
+            # 0x51: 'WS',
+            # 0x52: 'WWB',
+            # 0x53: 'WW',
+        }[n1]
+
+    match ctx.action:
+        case HandlerAction.Disassemble:
+            inst = ctx.instruction
+            inst.operands = readAllOperands(ctx, getfmts(*peekBytes(ctx, 2)))
+            return inst
+
+        case HandlerAction.Assemble:
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value, ctx.instruction.operands[1].value))
+            return
+
+        case HandlerAction.CodeGen:
+            return genVariadicFuncStub(ctx.descriptor, int)
+
 def Handler_5E(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
@@ -1148,6 +1240,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x4B,  'OP_4B',                        'WffffWB'),
     inst(0x4C,  'OP_4C',                        'WfffWB'),
     inst(0x4F,  'OP_4F',                        NoOperand,                                      handler = Handler_4F),
+    inst(0x54,  'OP_54',                        NoOperand,                                      handler = Handler_54),
     inst(0x55,  'OP_55',                        'BWWWWWWWWWWffffBBSS'),
     inst(0x56,  'OP_56',                        'BBBfffff'),
     inst(0x57,  'OP_57',                        'BB'),
