@@ -62,16 +62,22 @@ function ED83ScriptLoad2(self: NativePointer, path: NativePointer): NativePointe
         return NULL;
     }
 
-    filePath = 'data_cn/' + filePath.slice(5);
+    const patchPath = 'ouroboros/' + filePath.slice(5);
+    let data = utils.readFileContent(patchPath);
 
-    const data = utils.readFileContent(filePath);
+    if (data) {
+        utils.log(`load patch: ${patchPath}`)
+    } else {
+        filePath = 'data_cn/' + filePath.slice(5);
+        data = utils.readFileContent(filePath);
+    }
 
     if (data == null) {
         utils.log(`Script::load failed: ${filePath}`);
         return NULL;
     }
 
-    utils.log(`Script::load: ${filePath}`);
+    // utils.log(`Script::load: ${filePath}`);
 
     const loader = new ED83.ScriptLoader(self);
     let buffer = loader.buffer;

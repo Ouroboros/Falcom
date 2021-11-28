@@ -98,7 +98,16 @@ class Formatter:
                         '',
                     ] + text
 
-                    # text.insert(0, "Jump('loc_115FF')")
+                case 'loc_41B36':
+                    text = [
+                        'OP_11(0x0B53)',
+                        'OP_11(0x0B52)',
+                        'OP_11(0x0B51)',
+                        'SetScenaFlags(0xC94)',
+                        'SetScenaFlags(0xC9D)',
+                        'Jump("loc_41B5F")',
+                        '',
+                    ] + text
 
         def addEmptyLine():
             if text and text[-1] != '':

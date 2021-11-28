@@ -227,6 +227,29 @@ def Handler_MenuCmd(ctx: InstructionHandlerContext):
         case HandlerAction.CodeGen:
             return genVariadicFuncStub(ctx.descriptor, int, int)
 
+def Handler_Battle(ctx: InstructionHandlerContext):
+    def getfmts(n):
+        return 'BLBB' + {
+            0x00: 'LBLB',
+            0x01: 'WWWW',
+        }[n]
+
+    match ctx.action:
+        case HandlerAction.Disassemble:
+            inst = ctx.instruction
+
+            n = peekByte(ctx)
+            inst.operands = readAllOperands(ctx, getfmts(n))
+
+            return inst
+
+        case HandlerAction.Assemble:
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+            return
+
+        case HandlerAction.CodeGen:
+            return genVariadicFuncStub(ctx.descriptor, int, int, int, int)
+
 def Handler_2F(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BW' + {
@@ -492,7 +515,7 @@ def Handler_49(ctx: InstructionHandlerContext):
             0x04: 'W',
             0x05: 'W',
             0x06: 'W',
-            0x08: 'WffB',
+            0x08: 'WffB',               # set_formation
             0x09: 'W',
             0x0A: 'W',
             0x0B: 'W',
@@ -510,6 +533,9 @@ def Handler_49(ctx: InstructionHandlerContext):
             0x12: '',
             0x13: '',
             0x14: '',
+            0x18: '',
+            0x19: '',
+            0x1A: '',
         }[n]
 
     match ctx.action:
@@ -675,7 +701,7 @@ def Handler_66(ctx: InstructionHandlerContext):
         #     0x08: 'W',
         #     0x09: 'W',
         #     0x0A: 'W',
-        #     0x0B: '',
+            0x0B: '',
         #     0x0C: 'W',
         #     0x0D: '',
         #     0x0E: 'W',
@@ -697,9 +723,9 @@ def Handler_66(ctx: InstructionHandlerContext):
 def Handler_69(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
-            # 0x00: 'WWBBB',
+            0x00: 'WWBBB',
             # 0x01: 'W',
-            # 0x02: 'WWW',
+            0x02: 'WWW',
             # 0x03: 'WWW',
             0x04: 'W',
             0x05: 'WWW',
@@ -735,14 +761,14 @@ def Handler_70(ctx: InstructionHandlerContext):
             0x00: 'WWB',
             0x01: 'WB',
             # 0x02: 'WW',
-            # 0x03: 'WWBB',
+            0x03: 'WWBB',
             # 0x04: 'WBB',
-            # 0x05: 'WWBB',
-            # 0x06: 'WBBBB',
+            0x05: 'WWBB',
+            0x06: 'WBBBB',
             # 0x07: 'WB',
             # 0x08: 'WWW',
             # 0x09: 'WBB',
-            # 0x0A: 'WLL',
+            0x0A: 'WLL',
             # 0x0B: 'WB',
             # 0x0C: 'WBB',
         }[n]
@@ -799,6 +825,7 @@ def Handler_74(ctx: InstructionHandlerContext):
             # 0x04: '',
             # 0x14: 'L',
             # 0x15: '',
+            0x16: '',
         }[n]
 
     match ctx.action:
@@ -809,7 +836,7 @@ def Handler_74(ctx: InstructionHandlerContext):
             return inst
 
         case HandlerAction.Assemble:
-            applyDescriptors(ctx, getfmts(ctx.instruction.operands[2].value))
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[1].value))
             return
 
         case HandlerAction.CodeGen:
@@ -826,6 +853,8 @@ def Handler_75(ctx: InstructionHandlerContext):
             0x05: 'WL',
             0x06: 'W',
             0x07: 'W',
+
+            0x0E: '',
         }[n]
 
     match ctx.action:
@@ -853,7 +882,7 @@ def Handler_79(ctx: InstructionHandlerContext):
             # 0x05: 'B' * 6,
             # 0x06: '',
             0x07: 'B',
-            # 0x08: '',
+            0x08: '',
             # 0x09: '',
             0x0A: '',
             # 0x0B: '',
@@ -946,6 +975,27 @@ def Handler_93(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
             0x00: 'B',
+            0x01: '',
+        }[n]
+
+    match ctx.action:
+        case HandlerAction.Disassemble:
+            inst = ctx.instruction
+            n = peekByte(ctx)
+            inst.operands = readAllOperands(ctx, getfmts(n))
+            return inst
+
+        case HandlerAction.Assemble:
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+            return
+
+        case HandlerAction.CodeGen:
+            return genVariadicFuncStub(ctx.descriptor, int)
+
+def Handler_95(ctx: InstructionHandlerContext):
+    def getfmts(n):
+        return 'B' + {
+            0x00: 'SSBW',
             0x01: '',
         }[n]
 
@@ -1169,6 +1219,48 @@ def Handler_C6(ctx: InstructionHandlerContext):
         case HandlerAction.CodeGen:
             return genVariadicFuncStub(ctx.descriptor, int)
 
+def Handler_C9(ctx: InstructionHandlerContext):
+    def getfmts(n):
+        return 'B' + {
+            0x00: 'W',
+            0x01: 'W',
+            0x02: '',
+        }[n]
+
+    match ctx.action:
+        case HandlerAction.Disassemble:
+            inst = ctx.instruction
+            n = peekByte(ctx)
+            inst.operands = readAllOperands(ctx, getfmts(n))
+            return inst
+
+        case HandlerAction.Assemble:
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+            return
+
+        case HandlerAction.CodeGen:
+            return genVariadicFuncStub(ctx.descriptor, int)
+
+def Handler_CA(ctx: InstructionHandlerContext):
+    def getfmts(n):
+        return 'B' + {
+            0x00: 'L',
+        }[n]
+
+    match ctx.action:
+        case HandlerAction.Disassemble:
+            inst = ctx.instruction
+            n = peekByte(ctx)
+            inst.operands = readAllOperands(ctx, getfmts(n))
+            return inst
+
+        case HandlerAction.Assemble:
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+            return
+
+        case HandlerAction.CodeGen:
+            return genVariadicFuncStub(ctx.descriptor, int)
+
 
 def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Flags.Empty, handler: InstructionHandler = None, *, parameters = []) -> InstructionDescriptor:
     if operandfmts == '':
@@ -1222,10 +1314,11 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x27,  'OP_27',                        'SW'),
     inst(0x28,  'OP_28',                        'VVB'),
     inst(0x29,  'MenuCmd',                      NoOperand,                                      handler = Handler_MenuCmd),
-    # inst(0x2B,  'Battle',                       ''),
+    inst(0x2B,  'Battle',                       NoOperand,                                      handler = Handler_Battle),
     inst(0x2F,  'AddChrAnimeClip',              NoOperand,                                      handler = Handler_2F,   parameters = ('type', 'chrId')),
     inst(0x35,  'OP_35',                        'BWL'),
     inst(0x36,  'CameraRotateChr',              NoOperand,                                      handler = Handler_36),
+    inst(0x37,  'OP_37',                        'Wffff'),
     inst(0x38,  'OP_38',                        'WBBS'),
     inst(0x3A,  'OP_3A',                        NoOperand,                                      handler = Handler_3A),
     inst(0x3B,  'OP_3B',                        NoOperand,                                      handler = Handler_3B),
@@ -1260,6 +1353,8 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x77,  'OP_77',                        'W'),
     inst(0x79,  'OP_79',                        NoOperand,                                      handler = Handler_79),
     inst(0x7C,  'OP_7C',                        NoOperand,                                      handler = Handler_7C),
+    inst(0x7D,  'OP_7D',                        'WL'),
+    inst(0x83,  'OP_83',                        'WWWW'),
     inst(0x84,  'OP_84',                        NoOperand,                                      handler = Handler_84),
     inst(0x86,  'OP_86',                        'BWWWWWWfffS'),
     inst(0x87,  'OP_87',                        'BL'),
@@ -1270,11 +1365,16 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x90,  'OP_90',                        'SL'),
     inst(0x91,  'OP_91',                        NoOperand,                                      handler = Handler_91),
     inst(0x93,  'OP_93',                        NoOperand,                                      handler = Handler_93),
+    inst(0x95,  'OP_95',                        NoOperand,                                      handler = Handler_95),
+    inst(0x97,  'OP_97',                        'BWL'),
+    inst(0x99,  'OP_99',                        'W'),
     inst(0x9C,  'OP_9C',                        NoOperand,                                      handler = Handler_9C),
     inst(0x9E,  'OP_9E',                        NoOperand,                                      handler = Handler_9E),
     inst(0xA0,  'OP_A0',                        NoOperand),
+    inst(0xA3,  'OP_A3',                        'WW'),
     inst(0xA4,  'OP_A4',                        'BB' + 'W' * 20),
     inst(0xA8,  'OP_A8',                        'L'),
+    inst(0xA9,  'OP_A9',                        'B'),
     inst(0xAC,  'OP_AC',                        NoOperand,                                      handler = Handler_AC),
     inst(0xAF,  'OP_AF',                        'B'),
     inst(0xB1,  'MenuChrFlagCmd',               'BWL'),
@@ -1284,6 +1384,8 @@ ScenaOpTable = ED83InstructionTable([
     inst(0xC4,  'OP_C4',                        NoOperand,                                      handler = Handler_C4),
     inst(0xC5,  'OP_C5',                        NoOperand,                                      handler = Handler_C5),
     inst(0xC6,  'OP_C6',                        NoOperand,                                      handler = Handler_C6),
+    inst(0xC9,  'OP_C9',                        NoOperand,                                      handler = Handler_C9),
+    inst(0xCA,  'OP_CA',                        NoOperand,                                      handler = Handler_CA),
 ])
 
 del inst
