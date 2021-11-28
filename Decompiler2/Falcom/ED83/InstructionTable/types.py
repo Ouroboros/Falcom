@@ -139,7 +139,7 @@ class ED83OperandDescriptor(OperandDescriptor):
         return text
 
     def formatScenaFlags(self, flags: int) -> str:
-        return '0x%X' % flags
+        # return '0x%X' % flags
         flags &= 0XFFFF
         return f'ScenaFlag(0x{flags >> 3:04X}, {flags & 7})'
 
