@@ -37,6 +37,10 @@ def peekByte(ctx: InstructionHandlerContext) -> int:
     with ctx.disasmContext.fs.PositionSaver:
         return ctx.disasmContext.fs.ReadByte()
 
+def peekWord(ctx: InstructionHandlerContext) -> int:
+    with ctx.disasmContext.fs.PositionSaver:
+        return ctx.disasmContext.fs.ReadUShort()
+
 def peekBytes(ctx: InstructionHandlerContext, n: int) -> bytes:
     with ctx.disasmContext.fs.PositionSaver:
         return ctx.disasmContext.fs.Read(n)

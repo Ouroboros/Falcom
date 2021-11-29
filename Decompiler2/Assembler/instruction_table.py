@@ -161,7 +161,7 @@ class OperandDescriptor:
             # return (fmt.hex and '0x%X' or '%d') % operand.value
 
         def formatFloat():
-            return '%f' % round(operand.value, 7)
+            return '%s' % operand.value
 
         return {
             OperandType.SInt8   : formatInteger,
@@ -247,7 +247,10 @@ class InstructionTable:
         self.descriptors    = descriptors           # type: List[InstructionDescriptor]
         self.descTable      = {}                    # type: Dict[int, InstructionDescriptor]
 
-        for desc in self.descriptors:
+        self.update(self.descriptors)
+
+    def update(self, descriptors: List[InstructionDescriptor]):
+        for desc in descriptors:
             self.descTable[desc.opcode] = desc
 
     def getDescriptor(self, opcode: int) -> InstructionDescriptor:

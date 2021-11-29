@@ -103,7 +103,7 @@ class ED83OperandDescriptor(OperandDescriptor):
         return fs.Write(text.encode(self.format.encoding) + b'\x00')
 
     def formatThreadValue(self, context: FormatOperandHandlerContext) -> List[str]:
-        return f'({", ".join([f"0x{o.value:X}" if isinstance(o.value, int) else f"{round(o.value, 5)}" if isinstance(o.value, float) else formatText(o.value) for o in context.operand.value])})'
+        return f'({", ".join([f"0x{o.value:X}" if isinstance(o.value, int) else ("%s" % o.value) if isinstance(o.value, float) else formatText(o.value) for o in context.operand.value])})'
 
     def formatText(self, context: FormatOperandHandlerContext) -> str:
         return formatText(context.operand.value)
@@ -126,7 +126,7 @@ class ED83OperandDescriptor(OperandDescriptor):
 
             elif e.operator == ScenaExpression.Operator.Eval:
                 s = context.formatter.formatInstruction(e.operand)
-                t = f"({opr}, '{'; '.join(s)}')"
+                t = f"({opr}, \"{'; '.join(s)}\")"
 
             elif e.operand is not None:
                 t = f"({opr}, {e.formatOperand()})"

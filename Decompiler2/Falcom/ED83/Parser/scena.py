@@ -1,6 +1,7 @@
 from Assembler.function import Function
 from .scena_types import *
 from ..InstructionTable import ScenaOpTable as ED83ScenaOpTable
+import pathlib
 
 __all__ = (
     'ScenaParser',
@@ -172,7 +173,7 @@ class ScenaParser:
 
             match func.type:
                 case ScenaFunctionType.Code:
-                    # if func.index == 0x22: break
+                    if func.index == 0x50: break
 
                     try:
                         func.obj = dis.disasmFunction(ctx, name = func.name)
@@ -232,8 +233,10 @@ class ScenaParser:
         formatter = ScenaFormatter(ED83ScenaOpTable)
 
         lines = f'''\
-from Falcom.ED83.Parser.scena_writer import *
-from Falcom.ED83.Parser.scena_writer_gen import *
+import sys
+sys.path.append(r'{pathlib.Path(__file__).parent.parent.parent.parent}')
+
+from Falcom.ED83.Parser.scena_writer_helper import *
 
 scena = createScenaWriter('{filename}')
 

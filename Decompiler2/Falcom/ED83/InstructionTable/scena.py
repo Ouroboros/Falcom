@@ -180,8 +180,7 @@ def Handler_23(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -216,8 +215,7 @@ def Handler_MenuCmd(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -238,8 +236,7 @@ def Handler_Battle(ctx: InstructionHandlerContext):
         case HandlerAction.Disassemble:
             inst = ctx.instruction
 
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
 
             return inst
 
@@ -261,7 +258,7 @@ def Handler_2F(ctx: InstructionHandlerContext):
             # 0x05: 'SS',
             0x06: 'L',
             0x07: 'L',
-            # 0x08: 'B' + 'S' * 16,
+            0x08: 'B' + 'S' * 16,
             # 0x09: 'B',
             # 0x0A: 'SS',
             0x0B: 'SS',
@@ -275,8 +272,7 @@ def Handler_2F(ctx: InstructionHandlerContext):
         case HandlerAction.Disassemble:
             inst = ctx.instruction
 
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
 
             return inst
 
@@ -292,10 +288,10 @@ def Handler_32(ctx: InstructionHandlerContext):
         return 'B' + {
             0x0A: 'WBS',
             0x0B: 'WB',
-            # 0x0C: 'WVWLVVVVfffVVVB',
-            # 0x0D: 'WBB',
+            0x0C: 'WVWLVVVVfffVVVB',
+            0x0D: 'WBB',
             # 0x0E: 'WBB',
-            # 0x0F: 'WBB',
+            0x0F: 'WBB',
             # 0x10: 'WBB',
             # 0x11: 'WB',
             # 0x12: 'WW',
@@ -315,8 +311,197 @@ def Handler_32(ctx: InstructionHandlerContext):
         case HandlerAction.Disassemble:
             inst = ctx.instruction
 
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
+
+            return inst
+
+        case HandlerAction.Assemble:
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+            return
+
+        case HandlerAction.CodeGen:
+            return genVariadicFuncStub(ctx.descriptor, int)
+
+def Handler_33(ctx: InstructionHandlerContext):
+    def getfmts(n):
+        return 'B' + {
+            0x00: 'WWB',        # bt_damage
+            0x01: 'WVVB',       # bt_damage_anime
+            0x02: 'BW',
+            0x03: 'W',
+            0x04: 'B',
+            # 0x05: 'BS',
+            # 0x06: 'B',
+            # 0x07: 'BS',         # AniBtlItem
+            # 0x08: 'B',
+            # 0x09: 'W',          # bt_init_hit
+            # 0x0A: 'WW',
+            # 0x0B: 'WL',
+            # 0x0C: 'WL',
+            0x0D: 'W',
+            # 0x0E: 'WWL',
+            0x0F: 'WW',
+            # 0x10: 'W',
+            # 0x11: 'WB',
+            # 0x12: 'W' * 9,
+            0x13: 'WWWLLL',
+            # 0x14: 'W',
+            0x15: 'Wfffff',
+            0x16: '',
+            0x17: 'WL',
+            0x18: '',
+            # 0x19: 'L',
+            # 0x1A: 'L',
+            # 0x1B: '',
+            # 0x1C: 'W',
+            # 0x1D: 'WLL',
+            0x1E: 'WWSS',
+            # 0x1F: 'W',
+            # 0x20: 'W',
+            # 0x21: '',
+            # 0x22: '',
+            # 0x23: '',
+            # 0x24: '',
+            # 0x25: '',
+            # 0x26: 'B',
+            # 0x27: 'WLLLL',
+            # 0x28: '',
+            # 0x29: '',
+            # 0x2A: '',
+            # 0x2B: '',
+            # 0x2C: '',
+            # 0x2D: 'W',
+            # 0x2E: 'W',
+            # 0x2F: 'WW',
+            0x30: 'W',
+            # 0x31: '',
+            # 0x32: 'WSS',
+            0x33: 'WWffffBB',
+            0x39: 'WWffffBB',
+            # 0x34: '',
+            0x35: 'WL',
+            # 0x36: 'Wffff',
+            # 0x37: 'WWfW',
+            # 0x38: 'WWfffffB',
+            0x3A: 'W',
+            # 0x3B: 'B',
+            0x3C: 'WWff',
+            # 0x3D: 'WBfffBB',
+            0x46: 'fff',
+            0x47: '',
+            0x48: 'W',
+            # 0x49: 'W',
+            # 0x4A: 'f',
+            # 0x4B: 'WB',
+            # 0x50: 'WSffffW',
+            # 0x51: 'SW',
+            # 0x52: 'WB',         # load_effect
+            # 0x53: 'S',
+            # 0x5A: 'WL',
+            # 0x5B: 'BL',
+            # 0x5C: 'B',
+            # 0x5D: 'W',
+            # 0x5E: 'W',
+            # 0x5F: 'W',
+            # 0x60: 'W',
+            # 0x61: 'WBLLLL',
+            0x62: 'WB',
+            # 0x63: 'W',
+            # 0x64: 'S',
+            # 0x65: 'W',
+            # 0x66: 'W',
+            # 0x67: '',
+            # 0x68: '',
+            # 0x69: '',
+            # 0x6A: '',
+            # 0x6B: 'W',
+            # 0x6C: 'W',
+            # 0x6D: 'W',
+            # 0x6E: 'WWfffL',         # bt_set_safetypoint
+            # 0x6F: '',
+            # 0x70: '',
+            # 0x71: 'LWB',
+            # 0x72: 'LfWB',
+            # 0x73: 'W',
+            # 0x74: 'W',
+            # 0x76: '',
+            # 0x77: 'W',
+            # 0x78: 'WWW',
+            # 0x79: 'W',
+            # 0x7A: 'WB',
+            # 0x7B: 'WW',
+            # 0x7D: 'B',
+            # 0x7E: 'fWB',
+            # 0x7F: '',
+            # 0x82: 'S',
+            # 0x83: 'WW',
+            # 0x85: '',
+            # 0x86: '',
+            # 0x87: '',
+            # 0x88: '',
+            # 0x89: 'W',
+            0x8A: '',
+            # 0x8E: 'WW',
+            # 0x8F: 'W',
+            # 0x90: 'B',
+            # 0x91: 'WW',
+            # 0x92: 'ff',
+            # 0x93: 'W',
+            # 0x94: 'WWW',
+            # 0x95: 'WL',
+            # 0x96: 'WL',
+            # 0x97: 'B',
+            # 0x98: 'W',
+            # 0x99: 'B',
+            # 0x9A: '',
+            # 0x9B: 'W',
+            # 0x9C: 'WL',
+            # 0x9D: 'WW',
+            # 0x9E: 'WS',
+            # 0x9F: '',
+            # 0xA0: 'WL',
+            # 0xA1: 'WL',
+            # 0xA2: 'WL',
+            # 0xA3: 'WL',
+            # 0xA4: 'WL',
+            # 0xA5: 'WL',
+            # 0xA6: '',
+            # 0xA7: '',
+            # 0xA8: '',
+            # 0xA9: '',
+            # 0xAA: '',
+            # 0xAB: '',
+            # 0xAC: '',
+            # 0xAD: '',
+            # 0xAE: 'W',
+            0xAF: 'W',
+            # 0xB0: '',
+            # 0xB1: '',
+            # 0xB2: '',
+            # 0xB3: '',
+            # 0xB4: 'WVVVV',
+            # 0xB5: 'B',
+            # 0xB6: 'ff',
+            0xB7: 'BWLLLB',
+            # 0xB8: 'WB',
+            # 0xB9: 'W',
+            0xBA: 'VS',
+            0xBB: 'VV',
+            # 0xBC: 'BBBB',
+            # 0xBD: '',
+            # 0xBE: '',
+            # 0xBF: 'W',
+            # 0xC0: 'W',
+            # 0xC1: 'L',
+            # 0xC2: 'W',
+            # 0xC3: '',
+        }[n]
+
+    match ctx.action:
+        case HandlerAction.Disassemble:
+            inst = ctx.instruction
+
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
 
             return inst
 
@@ -331,27 +516,27 @@ def Handler_36(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
             0x00: '',
-            # 0x02: 'BLLL',
+            0x02: 'BfffW',
             # 0x03: 'BWSfffW',
             0x04: 'BfffWB',
-            # 0x05: 'BfW',
+            0x05: 'BfW',
             # 0x06: 'BWB',
             0x07: 'W',
             0x08: 'BW',
-            # 0x09: 'fff',
+            0x09: 'fff',
             0x0A: 'fffWWWWWB',
-            # 0x0B: 'BfW',
-            # 0x0C: 'BfffW',
+            0x0B: 'BfW',
+            0x0C: 'BfffW',
             # 0x0D: 'BWSfffW',
             # 0x0E: 'BWWfW',
             # 0x0F: 'Wfff',
             # 0x10: '',
-            # 0x11: 'BfffWB',
+            0x11: 'BfffWB',
             0x12: 'W',
-            # 0x13: 'WSBfffWB',
-            # 0x14: 'BWSfffW',
+            0x13: 'WSBfffWB',
+            0x14: 'BWSfffW',
             # 0x15: 'BfiB',
-            # 0x16: 'BfW',
+            0x16: 'BfW',
             # 0x17: 'W',
             # 0x18: 'BSfffW',
             # 0x19: 'BSfffW',
@@ -374,8 +559,7 @@ def Handler_36(ctx: InstructionHandlerContext):
         case HandlerAction.Disassemble:
             inst = ctx.instruction
 
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
 
             return inst
 
@@ -405,8 +589,7 @@ def Handler_3A(ctx: InstructionHandlerContext):
         case HandlerAction.Disassemble:
             inst = ctx.instruction
 
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
 
             return inst
 
@@ -423,7 +606,7 @@ def Handler_3B(ctx: InstructionHandlerContext):
             0x00: 'VfVffWWffffSWWWWWWW' + 'W' * 3,
             0x32: 'VfVffWWffffSWWWWWWW' + 'W' * 3,
 
-            # 0x01: 'VV',
+            0x01: 'VV',
             # 0x33: 'VV',
 
             # 0x02: 'V',
@@ -439,7 +622,7 @@ def Handler_3B(ctx: InstructionHandlerContext):
             # 0x37: 'L',
 
             0x39: 'W',
-            # 0x3A: 'WVVVV',
+            0x3A: 'WVVVV',
             # 0x3B: 'L',
             # 0x3C: 'L',
             # 0x3D: '',
@@ -458,8 +641,7 @@ def Handler_3B(ctx: InstructionHandlerContext):
         case HandlerAction.Disassemble:
             inst = ctx.instruction
 
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
 
             return inst
 
@@ -482,8 +664,7 @@ def Handler_3C(ctx: InstructionHandlerContext):
         case HandlerAction.Disassemble:
             inst = ctx.instruction
 
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
 
             return inst
 
@@ -497,7 +678,6 @@ def Handler_3C(ctx: InstructionHandlerContext):
 def Handler_43(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BW' + {
-            0x00: 'fW',
             0x05: '',
             # 0x06: '',
             0x0A: '',
@@ -505,11 +685,14 @@ def Handler_43(ctx: InstructionHandlerContext):
             0x0C: '',
             0x69: '',
             # 0x6A: '',
-            # 0xFE: '',
+            0xFE: '',
             0xFF: 'W',
 
             # n != 0xC
+            0x00: 'fW',
+            0x01: 'fW',
             0x64: 'fW',
+            0x65: 'fW',
         }[n]
 
     match ctx.action:
@@ -711,7 +894,7 @@ def Handler_5E(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
             0x00: 'WfWWWfWfff',
-            # 0x01: 'W',
+            0x01: 'W',
         }[n]
 
     match ctx.action:
@@ -900,8 +1083,7 @@ def Handler_75(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -933,8 +1115,7 @@ def Handler_79(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -943,6 +1124,27 @@ def Handler_79(ctx: InstructionHandlerContext):
 
         case HandlerAction.CodeGen:
             return genVariadicFuncStub(ctx.descriptor, int, int)
+
+def Handler_7A(ctx: InstructionHandlerContext):
+    def getfmts(n):
+        return 'B' + {
+            0x00: 'S',
+            0x01: 'WS',
+            0x02: 'WS',
+        }[n]
+
+    match ctx.action:
+        case HandlerAction.Disassemble:
+            inst = ctx.instruction
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
+            return inst
+
+        case HandlerAction.Assemble:
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+            return
+
+        case HandlerAction.CodeGen:
+            return genVariadicFuncStub(ctx.descriptor, int)
 
 def Handler_7C(ctx: InstructionHandlerContext):
     def getfmts(n):
@@ -954,8 +1156,7 @@ def Handler_7C(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -975,8 +1176,7 @@ def Handler_84(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1003,8 +1203,7 @@ def Handler_8A(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1028,8 +1227,7 @@ def Handler_91(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1049,8 +1247,7 @@ def Handler_93(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1070,8 +1267,7 @@ def Handler_95(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1092,8 +1288,7 @@ def Handler_9C(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1115,8 +1310,7 @@ def Handler_9E(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1143,8 +1337,7 @@ def Handler_AC(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1181,8 +1374,7 @@ def Handler_BC(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1191,6 +1383,30 @@ def Handler_BC(ctx: InstructionHandlerContext):
 
         case HandlerAction.CodeGen:
             return genVariadicFuncStub(ctx.descriptor, int, int, tuple)
+
+def Handler_C0(ctx: InstructionHandlerContext):
+    def getfmts(n):
+        return 'W' + {
+            # 0x01 : 'f',
+            0x02 : 'f',
+            # 0x03 : 'Sffffff',
+            # 0x04 : 'SB',
+            # 0x3E8: 'WW',
+            # 0x3E9: 'WW',
+        }[n]
+
+    match ctx.action:
+        case HandlerAction.Disassemble:
+            inst = ctx.instruction
+            inst.operands = readAllOperands(ctx, getfmts(peekWord(ctx)))
+            return inst
+
+        case HandlerAction.Assemble:
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+            return
+
+        case HandlerAction.CodeGen:
+            return genVariadicFuncStub(ctx.descriptor, int)
 
 def Handler_C3(ctx: InstructionHandlerContext):
     def getfmts(n):
@@ -1202,8 +1418,7 @@ def Handler_C3(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1228,8 +1443,7 @@ def Handler_C4(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1249,8 +1463,7 @@ def Handler_C5(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1276,8 +1489,7 @@ def Handler_C6(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1298,8 +1510,7 @@ def Handler_C9(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1318,8 +1529,7 @@ def Handler_CA(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            n = peekByte(ctx)
-            inst.operands = readAllOperands(ctx, getfmts(n))
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
             return inst
 
         case HandlerAction.Assemble:
@@ -1360,6 +1570,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x07,  'OP_07',                        'BV'),
     inst(0x08,  'OP_08',                        'BE'),
     inst(0x0A,  'OP_0A',                        'BE'),
+    inst(0x0B,  'OP_0B',                        'B'),
     inst(0x0C,  'OP_0C',                        'BB'),
     inst(0x0E,  'OP_0E',                        'BBB'),
     inst(0x10,  'SetScenaFlags',                'F',                                                                parameters = ('flags',)),
@@ -1390,6 +1601,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x30,  'AttachEquip',                  'BWSSfffffffff'),
     inst(0x31,  'OP_31',                        'BS'),
     inst(0x32,  'PlayEffect',                   NoOperand,                                      handler = Handler_32),
+    inst(0x33,  'OP_33',                        NoOperand,                                      handler = Handler_33),
     inst(0x35,  'OP_35',                        'BWL'),
     inst(0x36,  'CameraRotateChr',              NoOperand,                                      handler = Handler_36),
     inst(0x37,  'OP_37',                        'Wffff'),
@@ -1406,6 +1618,8 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x49,  'OP_49',                        NoOperand,                                      handler = Handler_49),
     inst(0x4B,  'OP_4B',                        'WffffWB'),
     inst(0x4C,  'OP_4C',                        'WfffWB'),
+    inst(0x4D,  'OP_4D',                        'WB'),
+    inst(0x4E,  'OP_4E',                        'ffB'),
     inst(0x4F,  'OP_4F',                        NoOperand,                                      handler = Handler_4F),
     inst(0x54,  'OP_54',                        NoOperand,                                      handler = Handler_54),
     inst(0x55,  'OP_55',                        'BWWWWWWWWWWffffBBSS'),
@@ -1413,12 +1627,15 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x57,  'OP_57',                        'BB'),
     inst(0x58,  'OP_58',                        'B'),
     inst(0x5A,  'OP_5A',                        'WWSBBB'),
+    inst(0x5C,  'OP_5C',                        'WBS'),
+    inst(0x5D,  'OP_5D',                        'WSfffffffffWBB'),
     inst(0x5E,  'OP_5E',                        NoOperand,                                      handler = Handler_5E),
     inst(0x62,  'OP_62',                        NoOperand),
     inst(0x63,  'OP_63',                        'WB'),
     inst(0x66,  'OP_66',                        NoOperand,                                      handler = Handler_66),
     inst(0x69,  'OP_69',                        NoOperand,                                      handler = Handler_69),
     inst(0x6B,  'OP_6B',                        'BWWfLL'),
+    inst(0x6C,  'OP_6C',                        'Wf'),
     inst(0x6F,  'OP_6F',                        'BWL'),
     inst(0x70,  'OP_70',                        NoOperand,                                      handler = Handler_70),
     inst(0x72,  'QuestInfo',                    NoOperand,                                      handler = Handler_72),
@@ -1426,6 +1643,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x75,  'OP_75',                        NoOperand,                                      handler = Handler_75),
     inst(0x77,  'OP_77',                        'W'),
     inst(0x79,  'OP_79',                        NoOperand,                                      handler = Handler_79),
+    inst(0x7A,  'OP_7A',                        NoOperand,                                      handler = Handler_7A),
     inst(0x7C,  'OP_7C',                        NoOperand,                                      handler = Handler_7C),
     inst(0x7D,  'OP_7D',                        'WL'),
     inst(0x80,  'OP_80',                        'f'),
@@ -1452,9 +1670,12 @@ ScenaOpTable = ED83InstructionTable([
     inst(0xA8,  'OP_A8',                        'L'),
     inst(0xA9,  'OP_A9',                        'B'),
     inst(0xAC,  'OP_AC',                        NoOperand,                                      handler = Handler_AC),
+    inst(0xAE,  'OP_AE',                        'S'),
     inst(0xAF,  'OP_AF',                        'B'),
     inst(0xB1,  'MenuChrFlagCmd',               'BWL'),
+    inst(0xB4,  'OP_B4',                        NoOperand),
     inst(0xBC,  'OP_BC',                        NoOperand,                                      handler = Handler_BC),
+    inst(0xC0,  'OP_C0',                        NoOperand,                                      handler = Handler_C0),
     inst(0xC2,  'OP_C2',                        'B'),
     inst(0xC3,  'OP_C3',                        NoOperand,                                      handler = Handler_C3),
     inst(0xC4,  'OP_C4',                        NoOperand,                                      handler = Handler_C4),
