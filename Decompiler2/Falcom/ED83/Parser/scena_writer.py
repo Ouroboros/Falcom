@@ -112,23 +112,22 @@ class _ScenaWriter:
         fs.Write(funcNames)
         hdr.fullHeaderSize = fs.Position
 
-        funcOffset = []
-
         fs.Position = (fs.Position + 4) & ~3
 
         for f in self.functions:
-            f.offset = fs.Position
-            funcOffset.append(f.offset)
-
             if f.type in ScenaDataFunctionTypes:
                 o = f.obj()
                 if o:
+                    match f.type:
+                        case ScenaFunctionType.AnimeClips:
+                            fs.Position = (fs.Position + 16) & ~0x0F
+
+                    f.offset = fs.Position
                     fs.Write(o.serialize())
                     fs.Position = (fs.Position + 4) & ~3
 
-                continue
-
             else:
+                f.offset = fs.Position
                 self.compileCode(fs, f)
                 if fs.Position % 4 != 0:
                     fs.Position = (fs.Position + 4) & ~3
@@ -137,12 +136,12 @@ class _ScenaWriter:
         fs.Write(hdr.serialize())
 
         fs.Position = hdr.functionEntryOffset
-        [fs.WriteULong(o) for o in funcOffset]
+        [fs.WriteULong(f.offset) for f in self.functions]
 
     def addLabel(self, name):
         addr = self.labels.get(name)
         if addr is not None:
-            raise Exception(f'duplicated label: {name} -> 0x{addr:08X}')
+            raise Exception(f'label exists: {name} -> 0x{addr:08X}')
 
         self.labels[name] = self.fs.Position
 

@@ -173,7 +173,7 @@ class ScenaParser:
 
             match func.type:
                 case ScenaFunctionType.Code:
-                    if func.index == 0x50: break
+                    # if func.index == 0x80: break
 
                     try:
                         func.obj = dis.disasmFunction(ctx, name = func.name)
