@@ -146,6 +146,12 @@ def OP_18(arg1: int, arg2: tuple | list):
     assert isinstance(arg2, tuple | list)
     scena.handleOpCode(0x18, arg1, arg2)
 
+def OP_1A(arg1: int, arg2: int):
+    # 0x1A
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, int)
+    scena.handleOpCode(0x1A, arg1, arg2)
+
 def OP_1D(arg1: int, arg2: str, arg3: str, arg4: str, arg5: int, arg6: int, arg7: int, arg8: float, arg9: float, arg10: float, arg11: float, arg12: float, arg13: float, arg14: float, arg15: str, arg16: str, arg17: int, arg18: int, arg19: float, arg20: float, arg21: int):
     # 0x1D
     assert isinstance(arg1, int)
@@ -741,6 +747,12 @@ def OP_72(arg1: int, arg2: int, *args):
     assert isinstance(arg2, int)
     return scena.handleOpCode(0x72, arg1, arg2, *args)
 
+def OP_73(arg1: int, arg2: int, *args):
+    # 0x73
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, int)
+    return scena.handleOpCode(0x73, arg1, arg2, *args)
+
 def OP_74(arg1: int, arg2: int, *args):
     # 0x74
     assert isinstance(arg1, int)
@@ -1007,6 +1019,11 @@ def OP_BA(arg1: int, *args):
     # 0xBA
     assert isinstance(arg1, int)
     return scena.handleOpCode(0xBA, arg1, *args)
+
+def OP_BB(arg1: int):
+    # 0xBB
+    assert isinstance(arg1, int)
+    scena.handleOpCode(0xBB, arg1)
 
 def OP_BC(arg1: int, arg2: int, arg3: tuple, *args):
     # 0xBC
