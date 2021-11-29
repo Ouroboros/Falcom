@@ -41,6 +41,10 @@ def peekWord(ctx: InstructionHandlerContext) -> int:
     with ctx.disasmContext.fs.PositionSaver:
         return ctx.disasmContext.fs.ReadUShort()
 
+def peekWords(ctx: InstructionHandlerContext, n: int) -> List[int]:
+    with ctx.disasmContext.fs.PositionSaver:
+        return [ctx.disasmContext.fs.ReadUShort() for _ in range(n)]
+
 def peekBytes(ctx: InstructionHandlerContext, n: int) -> bytes:
     with ctx.disasmContext.fs.PositionSaver:
         return ctx.disasmContext.fs.Read(n)
@@ -50,7 +54,7 @@ def ScriptThread_getFunctionStrWorkValue(threadId: int) -> str:
         0x11: 'LB',
         # 0x22: 'LB',
         # 0x33: 'LB',
-        # 0x44: 'LB',
+        0x44: 'LB',
         0xDD: 'S',
         0xEE: 'fB',
         0xFF: 'LB',
@@ -61,6 +65,8 @@ def formatText(t: str) -> str:
     for ch in t:
         if ch == '\\':
             s.append('\\\\')
+        elif ch in ["'", '"']:
+            s.append(f'\\x{ord(ch):02X}')
         elif ch >= ' ':
             s.append(ch)
         else:

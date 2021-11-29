@@ -27,6 +27,7 @@ def main():
     scp = [
         'a0000.dat',
         'chr033.dat',
+        'alchr033.dat',
         # 'chr009.dat',
         # 'm3040.dat',
         # 'm4000.dat',
@@ -49,7 +50,12 @@ def main():
     #         console.setTitle(os.path.basename(f))
     #         test(f)
 
-    test(scena[-1] + scp, scp + '.py')
+    path = scena[-1] + scp, scp + '.py'
+    path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\system.dat'
+
+    path = pathlib.Path(path)
+
+    test(str(path), path.stem + '.py')
 
     # console.pause('done')
 
