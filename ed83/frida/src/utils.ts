@@ -1,5 +1,5 @@
 import { sprintf, vsprintf } from "sprintf-js";
-import { API } from "./modules";
+import { API, Modules } from "./modules";
 
 const Logging = !false;
 
@@ -55,4 +55,25 @@ export function readFileContent(path: string): ArrayBuffer | null {
     API.crt.fclose(fp);
 
     return ptrToBytes(p, fileSize.toNumber());
+}
+
+export function isPathExists(path: string): boolean {
+    const INVALID_FILE_ATTRIBUTES = 0xFFFFFFFF;
+    return API.WIN32.GetFileAttributesA(Memory.allocAnsiString(path)) != INVALID_FILE_ATTRIBUTES;
+}
+
+class TLS {
+    disableDecrypt  : boolean = false;
+    patchFileName   : string = '';
+}
+
+const tls: {[key: number]: TLS} = {};
+
+export function getTLS(): TLS {
+    const tid = Process.getCurrentThreadId();
+
+    if (!tls[tid])
+        tls[tid] = new TLS;
+
+    return tls[tid];
 }

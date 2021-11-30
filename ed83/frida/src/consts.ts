@@ -11,4 +11,11 @@ export const Offsets = {
         Buffer      : 0x6B8,
         BufferBase  : 0x6C0,
     },
+    TableLoader: {
+        vtbl        : {
+            init    : 0x08,
+        },
+
+        Buffer      : 0x08,
+    },
 };

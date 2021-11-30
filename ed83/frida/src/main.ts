@@ -15,59 +15,44 @@ rpc.exports = function () {
     };
 }()
 
-function ED83ScriptLoad(self: NativePointer, path: NativePointer, type: UInt64, log: boolean): NativePointer {
-    const loader = new ED83.ScriptLoader(self);
-    let buffer = loader.buffer;
 
-    if (buffer.isNull() == false) {
-        ED83.FreeMemory(buffer);
-        loader.buffer = NULL;
+function getPatchFile(path: string): string | null {
+    if (path.slice(0, 5) != 'data/') {
+        return null;
     }
 
-    loader.reset();
+    const patchPath = 'ouroboros/' + path.slice(5);
 
-    if (loader.disabled) {
-        return NULL;
+    if (utils.isPathExists(patchPath) == false) {
+        return null;
     }
 
-    let filePath = path.readUtf8String()!;
+    utils.log(`patch: ${patchPath}`);
 
-    if (filePath.slice(0, 5) == 'data/') {
-        filePath = 'data_cn/' + filePath.slice(5);
-    }
-
-    utils.log(`Script::load: ${filePath}`);
-
-    const data = utils.readFileContent(filePath);
-
-    if (data == null) {
-        utils.log(`Script::load failed: ${filePath}`);
-    }
-
-    buffer = ED83.AllocMemory(data!.byteLength, 1);
-    buffer.writeByteArray(data!);
-
-    loader.buffer = buffer;
-    loader.bufferBase = buffer;
-    loader.type = type;
-    loader.name = buffer.add(buffer.add(4).readU32()).readUtf8String()!;
-
-    return buffer;
+    return patchPath;
 }
 
-function ED83ScriptLoad2(self: NativePointer, path: NativePointer): NativePointer {
+function loadPatchFile(path: string): ArrayBuffer | null {
+    const patchPath = getPatchFile(path);
+
+    if (!patchPath)
+        return null;
+
+    let data = utils.readFileContent(patchPath);
+
+    return data;
+}
+
+function ED83ScriptLoad(self: NativePointer, path: NativePointer): NativePointer {
     let filePath = path.readUtf8String()!;
 
     if (filePath.slice(0, 5) != 'data/') {
         return NULL;
     }
 
-    const patchPath = 'ouroboros/' + filePath.slice(5);
-    let data = utils.readFileContent(patchPath);
+    let data = loadPatchFile(filePath);
 
-    if (data) {
-        utils.log(`load patch: ${patchPath}`)
-    } else {
+    if (data == null) {
         filePath = 'data_cn/' + filePath.slice(5);
         data = utils.readFileContent(filePath);
     }
@@ -97,24 +82,6 @@ function ED83ScriptLoad2(self: NativePointer, path: NativePointer): NativePointe
 }
 
 function test_ed83() {
-    // Interceptor.attach(Modules.KERNEL32.getExportByName("CreateFileW"), {
-    //     onEnter: function (args) {
-    //         const fileName = args[0].readUtf16String();
-    //     },
-    //     onLeave: function (retval) {
-    //     },
-    // });
-
-    // Interceptor.attach(Addrs.ScriptLoad, {
-    //     onEnter: function (args) {
-    //         ED83ScriptLoad(args[0] as NativePointer, args[1] as NativePointer, uint64(args[2]), Boolean(args[3]));
-    //     },
-    //     onLeave: function (retval) {
-    //     },
-    // });
-
-    // return;
-
     // Interceptor.attach(Addrs.Logger_Output, {
     //     onEnter: function(args) {
     //         const buf = args[2].readUtf8String()!;
@@ -126,27 +93,75 @@ function test_ed83() {
     //     },
     // });
 
-    // Interceptor.replace(
-    //     Addrs.ScriptLoad,
-    //     new NativeCallback((self: NativePointer, path: NativePointer, type: UInt64, log: boolean): NativePointer => {
-    //             return ED83ScriptLoad(self, path, type, log);
-    //         },
-    //         'pointer',
-    //         ['pointer', 'pointer', 'uint64', 'bool'],
-    //         'win64',
-    //     ),
-    // );
-
     Interceptor.attach(Addrs.ScriptLoad, {
         onEnter: function(args) {
             this.self = args[0];
             this.path = args[1];
         },
         onLeave: function(retval) {
-            const ret = ED83ScriptLoad2(this.self, this.path);
+            const ret = ED83ScriptLoad(this.self, this.path);
             if (ret.isNull() == false)
                 retval.replace(ret);
         },
+    });
+
+    Interceptor.attach(Addrs.LoadTableData, {
+        onEnter: function(args) {
+            const self      = args[0];
+            const path      = args[1].readUtf8String()!;
+            const nodat     = args[2].toInt32() != 0;
+            const fullpath  = args[3].toInt32() != 0;
+
+            let p = path;
+
+            if (fullpath == false) {
+                if (nodat) {
+                    p = `data/text/${path}.tbl`;
+                } else {
+                    p = `data/text/dat/${path}.tbl`;
+                }
+            }
+
+            // utils.log(`LoadTableData: ${p}`);
+
+            const patch = getPatchFile(p)
+            if (!patch)
+                return;
+
+            this.path = Memory.allocUtf8String(patch);
+
+            const tls = utils.getTLS();
+
+            tls.disableDecrypt = true;
+            tls.patchFileName = patch;
+        },
+        onLeave: function(retval) {
+            const tls = utils.getTLS();
+            tls.disableDecrypt = false;
+            tls.patchFileName = '';
+        }
+    });
+
+    Interceptor.attach(Addrs.BlowFish_Decode, {
+        onEnter: function(args) {
+            if (utils.getTLS().disableDecrypt) {
+                args[2] = NULL;     // size
+            }
+        },
+    });
+
+    Interceptor.attach(Addrs.File_Open, {
+        onEnter: function(args) {
+            const patch = utils.getTLS().patchFileName;
+            if (patch) {
+                this.path = Memory.allocUtf8String(patch);
+                args[1] = this.path;
+            }
+        },
+    });
+
+    Memory.patchCode(Addrs.DLC_Check, 1, (code) => {
+        code.writeU8(0xEB);
     });
 
     // Interceptor.attach(Addrs.ScriptVMExecute, {

@@ -84,3 +84,19 @@ export class ScriptLoader {
         init(this.impl);
     }
 }
+
+export class TableLoader {
+    impl: NativePointer;
+
+    constructor(impl: NativePointer) {
+        this.impl = impl;
+    }
+
+    public get buffer(): NativePointer {
+        return this.impl.add(Offsets.TableLoader.Buffer).readPointer();
+    }
+
+    public set buffer(ptr: NativePointer) {
+        this.impl.add(Offsets.TableLoader.Buffer).writePointer(ptr);
+    }
+}
