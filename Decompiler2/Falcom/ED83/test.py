@@ -52,6 +52,7 @@ def main():
 
     path = scena[-1] + scp, scp + '.py'
     path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\system.dat'
+    # path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\a0000.dat'
 
     path = pathlib.Path(path)
 

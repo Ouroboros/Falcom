@@ -69,24 +69,39 @@ class ED83OperandDescriptor(OperandDescriptor):
 
     def readText(self, context: InstructionHandlerContext) -> 'List[TextObject]':
         fs = context.disasmContext.fs
-        text = bytearray()
+        buf = bytearray()
+        objs = []
+
         while True:
             ch = fs.ReadByte()
             if ch == 0:
                 break
 
-            text.append(ch)
             if ch >= 0x20:
+                buf.append(ch)
                 continue
 
+            if ch == TextCtrlCode.NewLine:
+                buf.extend(b'\n')
+
+            if buf:
+                objs.append(TextObject(value = buf.decode(self.format.encoding)))
+                buf.clear()
+
             if ch == 0x10:
-                text.extend(fs.Read(2))
+                objs.append(TextObject(code = ch, value = fs.ReadUShort()))
                 continue
 
             if 0x10 < ch <= 0x12:
-                text.extend(fs.Read(4))
+                objs.append(TextObject(code = ch, value = fs.ReadULong()))
+                continue
 
-        return text.decode(GlobalConfig.DefaultEncoding)
+            objs.append(TextObject(code = ch))
+
+        if buf:
+            objs.append(TextObject(value = buf.decode(self.format.encoding)))
+
+        return objs
 
     def readExpression(self, context: InstructionHandlerContext) -> 'List[ScenaExpression]':
         return ScenaExpression.readExpressions(context)
@@ -100,13 +115,59 @@ class ED83OperandDescriptor(OperandDescriptor):
 
     def writeText(self, context: InstructionHandlerContext, text: str) -> 'List[TextObject]':
         fs = context.disasmContext.fs
-        return fs.Write(text.encode(self.format.encoding) + b'\x00')
+
+        if isinstance(text, str):
+            return fs.Write(text.encode(self.format.encoding) + b'\x00')
+
+        for v in text:
+            if isinstance(v, int):
+                fs.WriteByte(v)
+
+            elif isinstance(v, str):
+                fs.Write(v.replace('\n', '\x01').encode(self.format.encoding))
+
+            else:
+                code, value = v
+
+                fs.WriteByte(code)
+                if code == 0x10:
+                    fs.WriteUShort(value)
+
+                elif 0x10 < code <= 0x12:
+                    fs.WriteULong(value)
+
+                else:
+                    ibp()
+
+        fs.WriteByte(0)
 
     def formatThreadValue(self, context: FormatOperandHandlerContext) -> List[str]:
         return f'({", ".join([f"0x{o.value:X}" if isinstance(o.value, int) else ("%s" % o.value) if isinstance(o.value, float) else formatText(o.value) for o in context.operand.value])})'
 
     def formatText(self, context: FormatOperandHandlerContext) -> str:
-        return formatText(context.operand.value)
+        value = context.operand.value
+        if isinstance(value, str):
+            return formatText(context.operand.value)
+
+        value: List['TextObject']
+        t = []
+        for v in value:
+            if v.code is None:
+                t.append(formatText(v.value))
+                continue
+
+            code = v.code
+            if code in TextCtrlCode._value2member_map_:
+                code = f'TxtCtl.{TextCtrlCode(code)}'
+            else:
+                code = f'0x{code:X}'
+
+            if v.value is not None:
+                t.append(f'({code}, 0x{v.value:X})')
+            elif v.code != TextCtrlCode.NewLine:
+                t.append(f'{code}')
+
+        return t
 
     def formatExpression(self, context: FormatOperandHandlerContext) -> List[str]:
         context.instruction.flags |= Flags.FormatMultiLine
@@ -157,14 +218,15 @@ ED83OperandDescriptor.formatTable.update({
 })
 
 class TextCtrlCode(IntEnum2):
+    Null            = 0x00
     NewLine         = 0x01
-    WaitForEnter    = 0x02
+    Enter           = 0x02
     Clear           = 0x03
     Clear2          = 0x04
     ShowAll         = 0x06
     SetColor        = 0x07
     NewLine2        = 0x0A
-    Item            = 0x1F
+    # Item            = 0x1F
 
 class TextObject:
     def __init__(self, code: int = None, value: Any = None):

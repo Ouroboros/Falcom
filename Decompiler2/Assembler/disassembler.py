@@ -76,11 +76,15 @@ class Disassembler:
 
             try:
                 inst = self.disasmInstruction(context)
-            except KeyError as e:
+            except:
                 # console.pause(f'KeyError: 0x{e.args[0]:X}'); break
                 fs.Position = pos
                 opcode = self.instructionTable.readOpCode(fs)
                 log.debug(f'disasm inst 0x{opcode:02X}<{opcode}> @ 0x{pos:08X}')
+
+                import subprocess
+                subprocess.check_call(f'echo 0x{pos:08X}|clip', shell=True)
+
                 raise
 
             self.disassembledOffset[pos] = inst

@@ -198,16 +198,16 @@ def OP_21(arg1: int):
     assert isinstance(arg1, int)
     scena.handleOpCode(0x21, arg1)
 
-def Talk(chrId: int, text: str):
+def Talk(chrId: int, text: str | tuple):
     # 0x22
     assert isinstance(chrId, int)
-    assert isinstance(text, str)
+    assert isinstance(text, str | tuple)
     scena.handleOpCode(0x22, chrId, text)
 
-def OP_22(chrId: int, text: str):
+def OP_22(chrId: int, text: str | tuple):
     # 0x22
     assert isinstance(chrId, int)
-    assert isinstance(text, str)
+    assert isinstance(text, str | tuple)
     scena.handleOpCode(0x22, chrId, text)
 
 def OP_23(arg1: int, *args):
@@ -215,18 +215,18 @@ def OP_23(arg1: int, *args):
     assert isinstance(arg1, int)
     return scena.handleOpCode(0x23, arg1, *args)
 
-def ChrTalk(chrId: int, flags: int, text: str):
+def ChrTalk(chrId: int, flags: int, text: str | tuple):
     # 0x24
     assert isinstance(chrId, int)
     assert isinstance(flags, int)
-    assert isinstance(text, str)
+    assert isinstance(text, str | tuple)
     scena.handleOpCode(0x24, chrId, flags, text)
 
-def OP_24(chrId: int, flags: int, text: str):
+def OP_24(chrId: int, flags: int, text: str | tuple):
     # 0x24
     assert isinstance(chrId, int)
     assert isinstance(flags, int)
-    assert isinstance(text, str)
+    assert isinstance(text, str | tuple)
     scena.handleOpCode(0x24, chrId, flags, text)
 
 def OP_25(arg1: int):
@@ -576,6 +576,12 @@ def OP_50(arg1: tuple | list, arg2: str):
     assert isinstance(arg2, str)
     scena.handleOpCode(0x50, arg1, arg2)
 
+def OP_52(arg1: int, arg2: int):
+    # 0x52
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, int)
+    scena.handleOpCode(0x52, arg1, arg2)
+
 def OP_53(arg1: int, arg2: int):
     # 0x53
     assert isinstance(arg1, int)
@@ -689,6 +695,12 @@ def OP_63(arg1: int, arg2: int):
     assert isinstance(arg1, int)
     assert isinstance(arg2, int)
     scena.handleOpCode(0x63, arg1, arg2)
+
+def OP_64(arg1: int, arg2: float):
+    # 0x64
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, float)
+    scena.handleOpCode(0x64, arg1, arg2)
 
 def OP_66(arg1: int, arg2: int, *args):
     # 0x66

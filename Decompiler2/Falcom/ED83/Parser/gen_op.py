@@ -15,7 +15,7 @@ def map_operand_type(t: OperandType) -> str:
         OperandType.Float32             : 'float',
         OperandType.Float64             : 'float',
         OperandType.MBCS                : 'str',
-        ED83.ED83OperandType.Text       : 'str',
+        ED83.ED83OperandType.Text       : 'str | tuple',
         ED83.ED83OperandType.Offset     : 'str',
         ED83.ED83OperandType.ScenaFlags : 'int',
         ED83.ED83OperandType.Expression : 'tuple | list',

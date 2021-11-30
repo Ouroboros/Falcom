@@ -53,7 +53,7 @@ def ScriptThread_getFunctionStrWorkValue(threadId: int) -> str:
     return 'B' + {
         0x11: 'LB',
         # 0x22: 'LB',
-        # 0x33: 'LB',
+        0x33: 'LB',
         0x44: 'LB',
         0xDD: 'S',
         0xEE: 'fB',
@@ -69,6 +69,8 @@ def formatText(t: str) -> str:
             s.append(f'\\x{ord(ch):02X}')
         elif ch >= ' ':
             s.append(ch)
+        elif ch == '\n':
+            s.append('\\n')
         else:
             s.append(f'\\x{ord(ch):02x}')
 
