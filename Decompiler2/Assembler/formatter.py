@@ -11,9 +11,10 @@ __all__ = (
 DefaultIndent = GlobalConfig.DefaultIndent
 
 class Formatter:
-    def __init__(self, instructionTable: InstructionTable) -> None:
+    def __init__(self, instructionTable: InstructionTable, *, name = ''):
         self.instructionTable   = instructionTable        # type: InstructionTable
         self.formatted          = set()
+        self.scriptName         = name
 
     def formatLabel(self, name: str) -> str:
         return f"label('{name}')"
@@ -77,37 +78,47 @@ class Formatter:
                 '',
             ]
 
-            match block.name:
-                # XXX
-                case 'loc_115FA':
-                    text.insert(0, "Jump('loc_115FF')")
+            match self.scriptName:
+                case 'a0000':
+                    match block.name:
+                        # XXX
+                        case 'loc_115FA':
+                            text.insert(0, "Jump('loc_115FF')")
 
-                case 'loc_20883':
-                    text = [
-                        'SetScenaFlags(0xF02)',
-                        'SetScenaFlags(0xF01)',
-                        'SetScenaFlags(0xF00)',
-                        'SetScenaFlags(0xD65)',
-                        'SetScenaFlags(0xD64)',
-                        'SetScenaFlags(0xD63)',
-                        'SetScenaFlags(0xD62)',
-                        'SetScenaFlags(0xD61)',
-                        'SetScenaFlags(0xD60)',
-                        'SetScenaFlags(0xD5F)',
-                        'SetScenaFlags(0xD5E)',
-                        '',
-                    ] + text
+                        case 'loc_20883':
+                            text = [
+                                'SetScenaFlags(0xF02)',
+                                'SetScenaFlags(0xF01)',
+                                'SetScenaFlags(0xF00)',
+                                'SetScenaFlags(0xD65)',
+                                'SetScenaFlags(0xD64)',
+                                'SetScenaFlags(0xD63)',
+                                'SetScenaFlags(0xD62)',
+                                'SetScenaFlags(0xD61)',
+                                'SetScenaFlags(0xD60)',
+                                'SetScenaFlags(0xD5F)',
+                                'SetScenaFlags(0xD5E)',
+                                '',
+                            ] + text
 
-                case 'loc_41B36':
-                    text = [
-                        'OP_11(0x0B53)',
-                        'OP_11(0x0B52)',
-                        'OP_11(0x0B51)',
-                        'SetScenaFlags(0xC94)',
-                        'SetScenaFlags(0xC9D)',
-                        'Jump("loc_41B5F")',
-                        '',
-                    ] + text
+                        case 'loc_41B36':
+                            text = [
+                                'OP_11(0x0B53)',
+                                'OP_11(0x0B52)',
+                                'OP_11(0x0B51)',
+                                'SetScenaFlags(0xC94)',
+                                'SetScenaFlags(0xC9D)',
+                                'Jump("loc_41B5F")',
+                                '',
+                            ] + text
+
+                case 'system':
+                    match block.name:
+                        case 'loc_9611':
+                            text = [
+                                'emit(0x00, 0x00, 0x00, 0xF8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x56, 0x17, 0x03, 0x00, 0x00, 0x00, 0x80, 0x3F, 0x00, 0x00, 0x80, 0x3F, 0x00, 0x00, 0x80, 0x3F, 0x00, 0x00, 0x80, 0x3F, 0xCD, 0xCC, 0x4C, 0x3E, 0x57, 0x17, 0x03, 0x03, 0xE4, 0x98, 0x00, 0x00)',
+                                '',
+                            ] + text
 
         def addEmptyLine():
             if text and text[-1] != '':

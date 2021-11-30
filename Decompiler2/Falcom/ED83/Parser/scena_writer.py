@@ -82,6 +82,13 @@ class _ScenaWriter:
         return self.functionDecorator(name, ED83.ScenaFunctionType.ShinigPomBtlset)
 
     def run(self, g: dict):
+        try:
+            self.run2(g)
+        except KeyError as e:
+            e.args = (f'0x{e.args[0]:X} ({e.args[0]})',)
+            raise
+
+    def run2(self, g: dict):
         self.globals = g
 
         hdr = ScenaHeader()
@@ -200,6 +207,10 @@ def createScenaWriter(scriptName: str) -> _ScenaWriter:
 
 def label(name: str):
     _gScena.addLabel(name)
+
+def emit(*b: int):
+    for v in b:
+        _gScena.fs.WriteByte(v)
 
 def ScenaFlag(offset: int, flag: int) -> int:
     return ((offset & 0xFFFF) << 3) | (flag & 7)

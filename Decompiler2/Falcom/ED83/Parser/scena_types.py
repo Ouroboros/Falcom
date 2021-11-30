@@ -1111,7 +1111,7 @@ class ScenaSummonTable:
         return f
 
 class ScenaAddCollision:
-    def __init__(self, *, fs: fileio.FileStream) -> None:
+    def __init__(self, *, fs: fileio.FileStream):
         pass
 
 class ScenaPartTableEntry:
@@ -1146,7 +1146,7 @@ class ScenaPartTableEntry:
         ]
 
 class ScenaPartTable:
-    def __init__(self, *parts: ScenaPartTableEntry, fs: fileio.FileStream = None) -> None:
+    def __init__(self, *parts: ScenaPartTableEntry, fs: fileio.FileStream = None):
         self.parts = parts
         if parts: assert len(parts) <= 4
         self.read(fs)
@@ -1237,7 +1237,7 @@ class ScenaReactionTableEntry:
         ]
 
 class ScenaReactionTable:
-    def __init__(self, *reactions: ScenaReactionTableEntry, fs: fileio.FileStream = None) -> None:
+    def __init__(self, *reactions: ScenaReactionTableEntry, fs: fileio.FileStream = None):
         self.reactions = reactions
         if reactions: assert len(reactions) <= 8
         self.read(fs)
@@ -1279,7 +1279,7 @@ class ScenaReactionTable:
         return f
 
 class ScenaFaceAuto:
-    def __init__(self, s: str = '', *, fs: fileio.FileStream = None) -> None:
+    def __init__(self, s: str = '', *, fs: fileio.FileStream = None):
         self.s = s
         self.read(fs)
 

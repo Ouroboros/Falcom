@@ -704,7 +704,7 @@ def Handler_40(ctx: InstructionHandlerContext):
             return inst
 
         case HandlerAction.Assemble:
-            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[1].value))
             return
 
         case HandlerAction.CodeGen:
@@ -837,7 +837,7 @@ def Handler_4F(ctx: InstructionHandlerContext):
 def Handler_54(ctx: InstructionHandlerContext):
     def getfmts(n1, n2):
         if n1 == 0x31:
-            return 'B' + {0x00: 'WWffBB', 0x01: 'W'}[n2]
+            return 'BB' + {0x00: 'WWffBB', 0x01: 'W'}[n2]
 
         return 'B' + {
             # 0x00: 'L' * 8,
@@ -923,7 +923,7 @@ def Handler_54(ctx: InstructionHandlerContext):
             return inst
 
         case HandlerAction.Assemble:
-            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value, ctx.instruction.operands[1].value))
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value, ctx.instruction.operands[1].value if len(ctx.instruction.operands) > 1 else None))
             return
 
         case HandlerAction.CodeGen:

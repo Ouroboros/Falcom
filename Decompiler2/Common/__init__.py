@@ -4,7 +4,7 @@ from enum import IntEnum, IntFlag
 import logging
 
 class _Config:
-    def __init__(self) -> None:
+    def __init__(self):
         self.DefaultEncoding = 'GBK'
         self.DefaultEndian   = 'little'
         self.DefaultIndent   = '    '

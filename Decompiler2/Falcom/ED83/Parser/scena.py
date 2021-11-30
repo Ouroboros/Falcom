@@ -67,7 +67,7 @@ class ScenaFormatter(Assembler.Formatter):
 
 
 class ScenaParser:
-    def __init__(self, fs: fileio.FileStream) -> None:
+    def __init__(self, fs: fileio.FileStream):
         self.fs                 = fs                # type: fileio.FileStream
         self.name               = ''                # type: str
         self.header             = None              # type: ScenaHeader
@@ -230,7 +230,7 @@ class ScenaParser:
                     raise NotImplementedError(f'unknown func type: {func.type}')
 
     def generatePython(self, filename: str) -> List[str]:
-        formatter = ScenaFormatter(ED83ScenaOpTable)
+        formatter = ScenaFormatter(ED83ScenaOpTable, name = self.name)
 
         lines = f'''\
 import sys
