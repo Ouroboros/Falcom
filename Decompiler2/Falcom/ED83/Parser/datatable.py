@@ -6,6 +6,7 @@ __all__ = (
     'TableNameEntry',
     'TableDataEntry',
     'NameTableData',
+    'AttachTableData',
 )
 
 class TableNameEntry:
@@ -26,6 +27,14 @@ class TableDataEntry:
         self.entryName  = fs.ReadMultiByte()
         self.entrySize  = fs.ReadUShort()
 
+    def toPython(self) -> List[str]:
+        raise NotImplementedError
+
+    def __str__(self):
+        return '\n'.join(self.toPython())
+
+    __repr__ = __str__
+
 class DataTable:
     @staticmethod
     def create(*args, **kwargs):
@@ -43,7 +52,8 @@ class DataTable:
 
     def load(self, fs: fileio.FileStream):
         entryMap = {
-            'NameTableData' : NameTableData,
+            'NameTableData'     : NameTableData,
+            'AttachTableData'   : AttachTableData,
         }
 
         self.entries = []
@@ -140,10 +150,50 @@ class NameTableData(TableDataEntry):
 
         return bytes(body)
 
-    def __str__(self):
-        return '\n'.join(self.toPython())
+class AttachTableData(TableDataEntry):
+    def __init__(self, *, fs: fileio.FileStream = None, **kwargs):
+        super().__init__(fs)
 
-    __repr__ = __str__
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+        if fs:
+            self.chrId      = fs.ReadUShort()
+            self.dword02    = fs.ReadULong()
+            self.itemId     = fs.ReadULong()
+            self.flags      = fs.ReadULong()
+            self.dword0E    = fs.ReadULong()
+            self.dword12    = fs.ReadULong()
+            self.str16      = fs.ReadMultiByte()
+            self.str17      = fs.ReadMultiByte()
+
+    def toPython(self) -> List[str]:
+        return [
+            'AttachTableData(',
+            f'    chrId     = 0x{self.chrId:04X},',
+            f"    dword02   = {self.dword02},",
+            f"    itemId    = 0x{self.itemId:08X},",
+            f"    flags     = 0x{self.flags:08X},",
+            f"    dword0E   = {self.dword0E},",
+            f"    dword12   = {self.dword12},",
+            f"    str16     = '{self.str16}',",
+            f"    str17     = '{self.str17}',",
+            ')',
+        ]
+
+    def serialize(self) -> bytes:
+        body = bytearray()
+
+        body.extend(utils.int_to_bytes(self.chrId, 2))
+        body.extend(utils.int_to_bytes(self.dword02, 4))
+        body.extend(utils.int_to_bytes(self.itemId, 4))
+        body.extend(utils.int_to_bytes(self.flags, 4))
+        body.extend(utils.int_to_bytes(self.dword0E, 4))
+        body.extend(utils.int_to_bytes(self.dword12, 4))
+        body.extend(utils.str_to_bytes(self.str16))
+        body.extend(utils.str_to_bytes(self.str17))
+
+        return bytes(body)
 
 def createDataTable(filename: str, *entries):
     table = bytearray()
