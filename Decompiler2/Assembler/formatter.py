@@ -181,6 +181,14 @@ class Formatter:
                         case 'loc_A01': text = ['Jump("loc_103C")', ''] + text
                         case 'loc_D32': text = ['Jump("loc_103C")', ''] + text
 
+                case 'c3410':
+                    match block.name:
+                        case 'loc_2118': text = ['Jump("loc_2118")', ''] + text
+
+                case 'c3600':
+                    match block.name:
+                        case 'loc_1503': text = ['Jump("loc_1503")', ''] + text
+
         def addEmptyLine():
             if text and text[-1] != '':
                 text.append('')
