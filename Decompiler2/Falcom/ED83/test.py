@@ -26,35 +26,28 @@ def test(filename, output = None):
 def main():
     scp = [
         'a0000.dat',
-        'chr033.dat',
-        'alchr033.dat',
-        # 'chr009.dat',
-        # 'm3040.dat',
-        # 'm4000.dat',
-        # 'system3.dat',
-        # 'common.dat',
-        # 'alchr009.dat',
-        # 'almon450_1.dat',
-        # 'face.dat',
-        # 'r4400.dat',
+        'a0304.dat',
     ][-1]
 
     scena = [
         r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\\',
-        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\ani\dat\\',
+        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\ani\dat\\',
         # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\battle\dat\\',
     ]
 
-    # for s in scena:
-    #     for f in fileio.getDirectoryFiles(s, '*.dat'):
-    #         console.setTitle(os.path.basename(f))
-    #         test(f)
+    for s in scena:
+        break
+        for f in fileio.getDirectoryFiles(s, '*.dat'):
+            console.setTitle(os.path.basename(f))
+            test(f)
 
-    path = scena[-1] + scp, scp + '.py'
-    path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\system.dat'
-    path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\a0000.dat'
+    path = scena[-1] + scp
+    # path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\system.dat'
+    # path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\a0000.dat'
+    # path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\battle\dat\alchr033.dat'
 
     path = pathlib.Path(path)
+
     test(str(path), path.name + '.py')
 
     # console.pause('done')

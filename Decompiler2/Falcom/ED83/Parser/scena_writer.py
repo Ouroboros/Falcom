@@ -120,7 +120,8 @@ class _ScenaWriter:
         fs.Write(funcNames)
         hdr.fullHeaderSize = fs.Position
 
-        fs.Position = (fs.Position + 4) & ~3
+        if fs.Position % 4 != 0:
+            fs.Position = (fs.Position + 4) & ~3
 
         for f in self.functions:
             if f.type in ScenaDataFunctionTypes:
@@ -128,7 +129,8 @@ class _ScenaWriter:
                 if o:
                     match f.type:
                         case ScenaFunctionType.AnimeClips:
-                            fs.Position = (fs.Position + 16) & ~0x0F
+                            if fs.Position % 16 != 0:
+                                fs.Position = (fs.Position + 16) & ~0x0F
 
                     f.offset = fs.Position
                     fs.Write(o.serialize())
@@ -212,5 +214,5 @@ def emit(*b: int):
     for v in b:
         _gScena.fs.WriteByte(v)
 
-def ScenaFlag(offset: int, flag: int) -> int:
+def ScenaFlag(offset: int, flag: int, *args) -> int:
     return ((offset & 0xFFFF) << 3) | (flag & 7)

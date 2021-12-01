@@ -20,6 +20,8 @@ class TableNameEntry:
     __repr__ = __str__
 
 class TableDataEntry:
+    ENTRY_NAME = ''
+
     def __init__(self, fs: fileio.FileStream):
         if not fs:
             return
@@ -161,7 +163,7 @@ class AttachTableData(TableDataEntry):
             self.chrId      = fs.ReadUShort()
             self.dword02    = fs.ReadULong()
             self.itemId     = fs.ReadULong()
-            self.flags      = fs.ReadULong()
+            self.scenaFlags = fs.ReadULong()
             self.dword0E    = fs.ReadULong()
             self.dword12    = fs.ReadULong()
             self.str16      = fs.ReadMultiByte()
@@ -170,14 +172,14 @@ class AttachTableData(TableDataEntry):
     def toPython(self) -> List[str]:
         return [
             'AttachTableData(',
-            f'    chrId     = 0x{self.chrId:04X},',
-            f"    dword02   = {self.dword02},",
-            f"    itemId    = 0x{self.itemId:08X},",
-            f"    flags     = 0x{self.flags:08X},",
-            f"    dword0E   = {self.dword0E},",
-            f"    dword12   = {self.dword12},",
-            f"    str16     = '{self.str16}',",
-            f"    str17     = '{self.str17}',",
+            f'    chrId      = 0x{self.chrId:04X},',
+            f"    dword02    = {self.dword02},",
+            f"    itemId     = 0x{self.itemId:08X},",
+            f"    scenaFlags = 0x{self.scenaFlags:08X},",
+            f"    dword0E    = {self.dword0E},",
+            f"    dword12    = {self.dword12},",
+            f"    str16      = '{self.str16}',",
+            f"    str17      = '{self.str17}',",
             ')',
         ]
 
@@ -187,7 +189,7 @@ class AttachTableData(TableDataEntry):
         body.extend(utils.int_to_bytes(self.chrId, 2))
         body.extend(utils.int_to_bytes(self.dword02, 4))
         body.extend(utils.int_to_bytes(self.itemId, 4))
-        body.extend(utils.int_to_bytes(self.flags, 4))
+        body.extend(utils.int_to_bytes(self.scenaFlags, 4))
         body.extend(utils.int_to_bytes(self.dword0E, 4))
         body.extend(utils.int_to_bytes(self.dword12, 4))
         body.extend(utils.str_to_bytes(self.str16))
@@ -204,7 +206,9 @@ def createDataTable(filename: str, *entries):
     entryCounter = {}
 
     for e in entries:
-        tableName = e.__class__.__name__
+        tableName = e.ENTRY_NAME
+        if not tableName:
+            tableName = e.__class__.__name__
 
         entryCounter[tableName] = entryCounter.get(tableName, 0) + 1
 

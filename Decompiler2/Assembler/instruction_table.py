@@ -1,6 +1,7 @@
 from Common import *
 from . import instruction
 from . import handlers
+import math
 
 if TYPE_CHECKING:
     from . import disassembler
@@ -141,8 +142,8 @@ class OperandDescriptor:
             OperandType.SInt64  : lambda : fs.WriteLong64(value),
             OperandType.UInt64  : lambda : fs.WriteULong64(value),
 
-            OperandType.Float32 : lambda : fs.WriteFloat(value),
-            OperandType.Float64 : lambda : fs.WriteDouble(value),
+            OperandType.Float32 : lambda : fs.WriteFloat(value) if not math.isnan(value) else fs.Write(b'\xFF' * 4),
+            OperandType.Float64 : lambda : fs.WriteDouble(value) if not math.isnan(value) else fs.Write(b'\xFF' * 8),
 
             OperandType.MBCS    : lambda : fs.Write(value.encode(self.format.encoding) + b'\x00'),
         }[self.format.type]()
@@ -161,6 +162,8 @@ class OperandDescriptor:
             # return (fmt.hex and '0x%X' or '%d') % operand.value
 
         def formatFloat():
+            if math.isnan(operand.value):
+                return "float('nan')"
             return '%s' % operand.value
 
         return {
