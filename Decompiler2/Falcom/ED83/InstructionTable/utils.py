@@ -7,10 +7,12 @@ def genVariadicFuncStub(desc: InstructionDescriptor, *types, parameters = None) 
     assertion = []
 
     if parameters is None:
-        parameters = desc.parameters
+        parameters = list(desc.parameters)
 
     if not parameters:
-        parameters = [f'arg{i + 1}' for i in range(len(types))]
+        parameters = []
+
+    parameters.extend([f'arg{i + 1}' for i in range(len(parameters), len(types))])
 
     for i, t in enumerate(types):
         params.append(f'{parameters[i]}: {t.__name__}')

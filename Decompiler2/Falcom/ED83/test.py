@@ -8,6 +8,14 @@ def test(filename, output = None):
     if pathlib.Path(filename).stem == 'r4400':
         return
 
+    if output is None:
+        output = pathlib.Path((filename))
+        os.makedirs(output.parent / 'py', exist_ok = True)
+        output = output.parent / 'py' / (output.name + '.py')
+
+    if output.exists():
+        return
+
     fs = fileio.FileStream().OpenMemory(open(filename, 'rb').read())
     fs.Encoding = GlobalConfig.DefaultEncoding
     scena = ED83.Parser.ScenaParser(fs)
@@ -16,17 +24,12 @@ def test(filename, output = None):
 
     py = scena.generatePython(os.path.basename(filename))
 
-    if output is None:
-        output = pathlib.Path((filename))
-        os.makedirs(output.parent / 'py', exist_ok = True)
-        output = output.parent / 'py' / (output.name + '.py')
-
     open(output, 'wb').write('\n'.join(py).encode('UTF8'))
 
 def main():
     scp = [
         'a0000.dat',
-        'a0304.dat',
+        'a0308.dat',
     ][-1]
 
     scena = [
@@ -36,7 +39,7 @@ def main():
     ]
 
     for s in scena:
-        break
+        # break
         for f in fileio.getDirectoryFiles(s, '*.dat'):
             console.setTitle(os.path.basename(f))
             test(f)

@@ -85,7 +85,8 @@ class _ScenaWriter:
         try:
             self.run2(g)
         except KeyError as e:
-            e.args = (f'0x{e.args[0]:X} ({e.args[0]})',)
+            if isinstance(e.args[0], int):
+                e.args = (f'0x{e.args[0]:X} ({e.args[0]})',)
             raise
 
     def run2(self, g: dict):
@@ -129,6 +130,7 @@ class _ScenaWriter:
                 if o:
                     match f.type:
                         case ScenaFunctionType.AnimeClips:
+                            fs.AlignTo(16)
                             if fs.Position % 16 != 0:
                                 fs.Position = (fs.Position + 16) & ~0x0F
 
@@ -139,14 +141,26 @@ class _ScenaWriter:
             else:
                 f.offset = fs.Position
                 self.compileCode(fs, f)
+                fs.AlignTo(4)
                 if fs.Position % 4 != 0:
                     fs.Position = (fs.Position + 4) & ~3
+
+        with fs.PositionSaver:
+            for x in self.xrefs:
+                offset = self.labels[x.name]
+                fs.Position = x.offset
+                fs.WriteULong(offset)
+
+            self.xrefs.clear()
 
         fs.Position = 0
         fs.Write(hdr.serialize())
 
         fs.Position = hdr.functionEntryOffset
         [fs.WriteULong(f.offset) for f in self.functions]
+
+        fs.Position = fs.END_OF_FILE
+        fs.AlignTo(8)
 
     def addLabel(self, name):
         addr = self.labels.get(name)
@@ -156,15 +170,10 @@ class _ScenaWriter:
         self.labels[name] = self.fs.Position
 
     def compileCode(self, fs: fileio.FileStream, f: ScenaFunction):
+        if f.name:
+            self.addLabel(f.name)
+
         f.obj()
-
-        with fs.PositionSaver:
-            for x in self.xrefs:
-                offset = self.labels[x.name]
-                fs.Position = x.offset
-                fs.WriteULong(offset)
-
-        self.xrefs.clear()
 
     def onEval(self, code: str):
         eval(code, self.globals)
