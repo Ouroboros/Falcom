@@ -55,13 +55,16 @@ def main():
             types = []
 
             if desc.operands:
+                if not parameters:
+                    parameters = []
+                else:
+                    parameters = list(parameters)
+
+                parameters.extend([f'arg{i + 1}' for i in range(len(parameters), len(desc.operands))])
+
                 for i, opr in enumerate(desc.operands):
                     typeHint = map_operand_type(opr.format.type)
-                    if parameters and parameters[i]:
-                        name = parameters[i]
-                    else:
-                        name = f'arg{i + 1}'
-
+                    name = parameters[i]
                     params.append(f'{name}: {typeHint}')
                     args.append(name)
                     types.append(typeHint)

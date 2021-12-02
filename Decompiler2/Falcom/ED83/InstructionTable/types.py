@@ -368,7 +368,7 @@ class ScenaExpression:
                 return '0x%X' % self.operand
 
     def __str__(self):
-        if self.operand:
+        if self.operand is not None:
             return f"{self.operator}<{self.operand}>"
 
         return str(self.operator)

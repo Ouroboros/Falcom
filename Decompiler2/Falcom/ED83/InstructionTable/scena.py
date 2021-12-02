@@ -105,7 +105,6 @@ def Handler_06(ctx: InstructionHandlerContext):
             default = readAllOperands(ctx, 'O')[0]
 
             inst.operands = [expr, cases, default]
-            # ibp()
 
             return inst
 
@@ -115,7 +114,7 @@ def Handler_06(ctx: InstructionHandlerContext):
             expr, cases, default = inst.operands
 
             def formatOperand(opr: Operand):
-                return ctx.instructionTable.formatOperand(handlers.FormatOperandHandlerContext(inst, opr))
+                return ctx.instructionTable.formatOperand(handlers.FormatOperandHandlerContext(inst, opr, formatter = ctx.formatter))
 
             f = [
                 f'{desc.mnemonic}(',
@@ -286,10 +285,42 @@ def Handler_2B(ctx: InstructionHandlerContext):
         case HandlerAction.CodeGen:
             return genVariadicFuncStub(ctx.descriptor, int, int, int, int)
 
+def Handler_2E(ctx: InstructionHandlerContext):
+    def getfmts(n):
+        return 'BWB' + {
+            # 0x00: '',
+            # 0x01: 'ffB',
+            # 0x02: 'B',
+            0x03: 'B',
+        }[n]
+
+    match ctx.action:
+        case HandlerAction.Disassemble:
+            inst = ctx.instruction
+
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
+
+            return inst
+
+        case HandlerAction.Format:
+            for opr in ctx.instruction.operands:
+                if opr.descriptor.format.type == OperandType.MBCS:
+                    ctx.instruction.flags |= Flags.FormatMultiLine
+                    break
+
+            return
+
+        case HandlerAction.Assemble:
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+            return
+
+        case HandlerAction.CodeGen:
+            return genVariadicFuncStub(ctx.descriptor, int, int, int)
+
 def Handler_2F(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BW' + {
-            # 0x00: 'SS',
+            0x00: 'SS',
             # 0x01: 'SS',
             # 0x02: 'SS',
             # 0x03: '',
@@ -301,10 +332,10 @@ def Handler_2F(ctx: InstructionHandlerContext):
             0x09: 'B',
             0x0A: 'SS',
             0x0B: 'SS',
-            # 0x0C: 'SS',
-            # 0x0D: '',
-            # 0x0E: 'LSS',
-            # 0x0F: 'B',
+            0x0C: 'SS',
+            0x0D: '',
+            0x0E: 'LSS',
+            0x0F: 'B',
         }[n]
 
     match ctx.action:
@@ -339,20 +370,20 @@ def Handler_32(ctx: InstructionHandlerContext):
             0x0D: 'WBB',
             0x0E: 'WBB',
             0x0F: 'WWB',
-            # 0x10: 'WWB',
+            0x10: 'WWB',
             0x11: 'WB',
-            # 0x12: 'WW',
+            0x12: 'WW',
             0x13: 'WBW',
             0x14: 'WBffffWB',
-            # 0x15: 'WBffffWB',
+            0x15: 'WBffffWB',
             0x16: 'BS',
-            # 0x17: 'WBf',
+            0x17: 'WBf',
             # 0x18: 'WBW',
             # 0x19: 'WBff',
-            # 0x1A: 'S',
+            0x1A: 'S',
             0x1B: 'W',
-            # 0x1C: 'LS',
-            # 0x1D: 'L',
+            0x1C: 'LS',
+            0x1D: 'L',
         }[n]
 
     match ctx.action:
@@ -378,134 +409,134 @@ def Handler_33(ctx: InstructionHandlerContext):
             0x02: 'BW',
             0x03: 'W',
             0x04: 'B',
-            # 0x05: 'BS',
-            # 0x06: 'B',
-            # 0x07: 'BS',         # AniBtlItem
-            # 0x08: 'B',
-            # 0x09: 'W',          # bt_init_hit
-            # 0x0A: 'WW',
-            # 0x0B: 'WL',
-            # 0x0C: 'WL',
+            0x05: 'BS',
+            0x06: 'B',
+            0x07: 'BS',         # AniBtlItem
+            0x08: 'B',
+            0x09: 'W',          # bt_init_hit
+            0x0A: 'WW',
+            0x0B: 'WL',
+            0x0C: 'WL',
             0x0D: 'W',
-            # 0x0E: 'WWL',
+            0x0E: 'WWL',
             0x0F: 'WW',
-            # 0x10: 'W',
+            0x10: 'W',
             # 0x11: 'WB',
             # 0x12: 'W' * 9,
             0x13: 'WWWLLL',
-            # 0x14: 'W',
+            0x14: 'W',
             0x15: 'Wfffff',
             0x16: '',
             0x17: 'WL',
             0x18: '',
             0x19: 'L',
             0x1A: 'L',
-            # 0x1B: '',
+            0x1B: '',
             # 0x1C: 'W',
             # 0x1D: 'WLL',
             0x1E: 'WWSS',
             0x1F: 'W',
-            # 0x20: 'W',
-            # 0x21: '',
-            # 0x22: '',
-            # 0x23: '',
-            # 0x24: '',
-            # 0x25: '',
-            # 0x26: 'B',
-            # 0x27: 'WLLLL',
+            0x20: 'Wff',
+            0x21: '',
+            0x22: '',
+            0x23: '',
+            0x24: '',
+            0x25: '',
+            0x26: 'B',
+            0x27: 'BWffff',
             # 0x28: '',
-            # 0x29: '',
+            0x29: '',
             # 0x2A: '',
             # 0x2B: '',
-            # 0x2C: '',
-            # 0x2D: 'W',
-            # 0x2E: 'W',
-            # 0x2F: 'WW',
+            0x2C: '',
+            0x2D: 'W',
+            0x2E: 'W',
+            0x2F: 'WW',
             0x30: 'W',
-            # 0x31: '',
-            # 0x32: 'WSS',
+            0x31: '',
+            0x32: 'WSS',
             0x33: 'WWffffBB',
             0x39: 'WWffffBB',
-            # 0x34: '',
+            0x34: '',
             0x35: 'WL',
-            # 0x36: 'Wffff',
-            # 0x37: 'WWfW',
-            # 0x38: 'WWfffffB',
+            0x36: 'Wffff',
+            0x37: 'WWfW',
+            0x38: 'WWfffffB',
             0x3A: 'W',
-            # 0x3B: 'B',
+            0x3B: 'B',
             0x3C: 'WWff',
-            # 0x3D: 'WBfffBB',
+            0x3D: 'WBfffBB',
             0x46: 'fff',
             0x47: '',
             0x48: 'W',
             # 0x49: 'W',
-            # 0x4A: 'f',
-            # 0x4B: 'WB',
+            0x4A: 'f',
+            0x4B: 'WB',
             # 0x50: 'WSffffW',
             # 0x51: 'SW',
-            # 0x52: 'WB',         # load_effect
+            0x52: 'WB',         # load_effect
             # 0x53: 'S',
-            # 0x5A: 'WL',
-            # 0x5B: 'BL',
-            # 0x5C: 'B',
+            0x5A: 'WL',
+            0x5B: 'BL',
+            0x5C: 'B',
             # 0x5D: 'W',
             # 0x5E: 'W',
             # 0x5F: 'W',
             # 0x60: 'W',
-            # 0x61: 'WBLLLL',
+            0x61: 'WBLLLL',
             0x62: 'WB',
-            # 0x63: 'W',
+            0x63: 'W',
             # 0x64: 'S',
             # 0x65: 'W',
             # 0x66: 'W',
-            # 0x67: '',
-            # 0x68: '',
+            0x67: '',
+            0x68: '',
             # 0x69: '',
             # 0x6A: '',
-            # 0x6B: 'W',
+            0x6B: 'W',
             0x6C: 'W',
             # 0x6D: 'W',
-            # 0x6E: 'WWfffL',         # bt_set_safetypoint
-            # 0x6F: '',
-            # 0x70: '',
+            0x6E: 'WWffff',         # bt_set_safetypoint
+            0x6F: '',
+            0x70: '',
             # 0x71: 'LWB',
             # 0x72: 'LfWB',
-            # 0x73: 'W',
-            # 0x74: 'W',
-            # 0x76: '',
-            # 0x77: 'W',
-            # 0x78: 'WWW',
+            0x73: 'W',
+            0x74: 'W',
+            0x76: '',
+            0x77: 'W',
+            0x78: 'WW',
             # 0x79: 'W',
             # 0x7A: 'WB',
-            # 0x7B: 'WW',
-            # 0x7D: 'B',
-            # 0x7E: 'fWB',
-            # 0x7F: '',
+            0x7B: 'WW',
+            0x7D: 'B',
+            0x7E: 'fWB',
+            0x7F: '',
             # 0x82: 'S',
-            # 0x83: 'WW',
-            # 0x85: '',
-            # 0x86: '',
-            # 0x87: '',
-            # 0x88: '',
-            # 0x89: 'W',
+            0x83: 'WW',
+            0x85: '',
+            0x86: '',
+            0x87: '',
+            0x88: '',
+            0x89: 'W',
             0x8A: '',
-            # 0x8E: 'WW',
-            # 0x8F: 'W',
-            # 0x90: 'B',
-            # 0x91: 'WW',
-            # 0x92: 'ff',
+            0x8E: 'WW',
+            0x8F: 'W',
+            0x90: 'B',
+            0x91: 'WW',
+            0x92: 'ff',
             # 0x93: 'W',
-            # 0x94: 'WWW',
+            0x94: 'WWW',
             # 0x95: 'WL',
             # 0x96: 'WL',
             # 0x97: 'B',
-            # 0x98: 'W',
+            0x98: 'W',
             # 0x99: 'B',
             # 0x9A: '',
             # 0x9B: 'W',
             # 0x9C: 'WL',
             # 0x9D: 'WW',
-            # 0x9E: 'WS',
+            0x9E: 'WS',
             # 0x9F: '',
             # 0xA0: 'WL',
             # 0xA1: 'WL',
@@ -513,36 +544,36 @@ def Handler_33(ctx: InstructionHandlerContext):
             # 0xA3: 'WL',
             # 0xA4: 'WL',
             # 0xA5: 'WL',
-            # 0xA6: '',
-            # 0xA7: '',
-            # 0xA8: '',
-            # 0xA9: '',
-            # 0xAA: '',
-            # 0xAB: '',
+            0xA6: '',
+            0xA7: '',
+            0xA8: '',
+            0xA9: '',
+            0xAA: '',
+            0xAB: '',
             # 0xAC: '',
             # 0xAD: '',
-            # 0xAE: 'W',
+            0xAE: 'W',
             0xAF: 'W',
-            # 0xB0: '',
-            # 0xB1: '',
-            # 0xB2: '',
+            0xB0: '',
+            0xB1: '',
+            0xB2: '',
             # 0xB3: '',
-            # 0xB4: 'WVVVV',
-            # 0xB5: 'B',
-            # 0xB6: 'ff',
+            0xB4: 'WVVVV',
+            0xB5: 'B',
+            0xB6: 'ff',
             0xB7: 'BWLLLB',
-            # 0xB8: 'WB',
+            0xB8: 'WB',
             # 0xB9: 'W',
             0xBA: 'VS',
             0xBB: 'VV',
-            # 0xBC: 'BBBB',
-            # 0xBD: '',
-            # 0xBE: '',
-            # 0xBF: 'W',
-            # 0xC0: 'W',
-            # 0xC1: 'L',
-            # 0xC2: 'W',
-            # 0xC3: '',
+            0xBC: 'BBBB',
+            0xBD: '',
+            0xBE: '',
+            0xBF: 'W',
+            0xC0: 'W',
+            0xC1: 'L',
+            0xC2: 'W',
+            0xC3: '',
         }[n]
 
     match ctx.action:
@@ -583,13 +614,13 @@ def Handler_36(ctx: InstructionHandlerContext):
             0x12: 'W',
             0x13: 'WSBfffWB',
             0x14: 'BWSfffW',
-            # 0x15: 'BfiB',
+            0x15: 'BfiB',
             0x16: 'BfW',
             0x17: 'W',
             # 0x18: 'BSfffW',
             # 0x19: 'BSfffW',
             # 0x1A: 'SBfffWB',
-            # 0x1B: 'ff',
+            0x1B: 'ff',
             0x1C: '',
             0x1D: '',
             # 0x1E: '',
@@ -735,7 +766,7 @@ def Handler_40(ctx: InstructionHandlerContext):
 
             # 0xFE05: 'fBWS',
 
-            # 0xF011: 'fBW',
+            0xF011: 'fBW',
             # 0xFE00: 'fBW',
             # 0xFE03: 'fBW',
             # 0xFE04: 'fBW',
@@ -892,7 +923,7 @@ def Handler_54(ctx: InstructionHandlerContext):
                 0x00: 'BW',
                 0x01: 'B',
                 0x02: 'WWB',
-                # 0x03: 'W',
+                0x03: 'W',
                 0x04: 'WWBB',
                 0x0A: 'WBfW',
             }[n2]
@@ -903,7 +934,7 @@ def Handler_54(ctx: InstructionHandlerContext):
             0x03: 'L' * 8,
             0x07: '',
             0x08: 'L' * 8,
-            # 0x0A: 'B',
+            0x0A: 'B',
             0x0B: 'W',
             0x0D: 'SSWW',
             0x0E: 'B',
@@ -918,20 +949,20 @@ def Handler_54(ctx: InstructionHandlerContext):
             0x17: 'BL',
             0x18: 'WB',
             0x19: 'SS',
-            # 0x1A: '',
-            # 0x1B: '',
+            0x1A: '',
+            0x1B: '',
             # 0x1C: 'SWW',
             # 0x1D: '',
             # 0x1E: '',
-            # 0x1F: '',
+            0x1F: '',
             # 0x20: '',
             0x21: 'Wf',
             # 0x22: 'W',
             0x23: 'WWWf',
-            # 0x24: 'W',
+            0x24: 'W',
             0x25: '',
             0x26: 'BLLS',
-            # 0x27: '',
+            0x27: '',
             # 0x28: 'W',
             # 0x29: 'BW',
             0x2A: '',
@@ -945,13 +976,13 @@ def Handler_54(ctx: InstructionHandlerContext):
             0x35: 'WLSSS',
             0x36: '',
             0x37: 'WBBB',
-            # 0x38: 'BL',
+            0x38: 'BL',
             0x39: 'W',
             0x3A: 'WWffffB',
-            # 0x3B: 'WWff',
-            # 0x3C: 'B' * 0xA,
+            0x3B: 'WWff',
+            0x3C: 'Wff',
             0x3E: 'BSL',
-            # 0x3F: '',
+            0x3F: '',
             # 0x40: 'W',
             0x41: '',
             0x42: 'WW',
@@ -959,17 +990,17 @@ def Handler_54(ctx: InstructionHandlerContext):
             0x44: 'fff',
             0x45: 'f',
             # 0x46: 'f',
-            # 0x47: 'BW',
+            0x47: 'BW',
             0x48: 'Wf',
-            # 0x49: 'WW',     # set_ovalgear
-            # 0x4A: 'WW',
-            # 0x4B: 'W',
+            0x49: 'WW',     # set_ovalgear
+            0x4A: 'WW',
+            0x4B: 'W',
             0x4C: 'WWB',
             # 0x4D: 'f',
             # 0x4E: '',
             0x50: 'f',
-            # 0x51: 'WS',
-            # 0x52: 'WWB',
+            0x51: 'WS',
+            0x52: 'WWB',
             # 0x53: 'WW',
         }[n1]
 
@@ -1042,9 +1073,9 @@ def Handler_66(ctx: InstructionHandlerContext):
         #     0x09: 'W',
             0x0A: 'W',
             0x0B: '',
-        #     0x0C: 'W',
-        #     0x0D: '',
-        #     0x0E: 'W',
+            0x0C: 'W',
+            0x0D: '',
+            0x0E: 'W',
         }[n]
 
     match ctx.action:
@@ -1099,7 +1130,7 @@ def Handler_68(ctx: InstructionHandlerContext):
             0x0B: 'W',
             # 0x18: 'L',
             # 0x19: '',
-            # 0x1E: 'SSSfff',
+            0x1E: 'SSSfff',
         }[n]
 
     match ctx.action:
@@ -1129,7 +1160,7 @@ def Handler_69(ctx: InstructionHandlerContext):
             0x08: 'W',
             0x09: 'W',
             # 0x0A: 'WWB',
-            # 0x0B: 'W',
+            0x0B: 'W',
             # 0x0C: 'WW',
             # 0x0D: 'WW',
             # 0x12: 'WW',
@@ -1188,7 +1219,7 @@ def Handler_70(ctx: InstructionHandlerContext):
             0x06: 'WBBBB',
             0x07: 'WB',
             0x08: 'WWW',
-            # 0x09: 'WBB',
+            0x09: 'WBB',
             0x0A: 'WLL',
             0x0B: 'WB',
             0x0C: 'WBB',
@@ -1461,13 +1492,14 @@ def Handler_8A(ctx: InstructionHandlerContext):
         return 'B' + {
             0x00: 'WWSS',
             0x01: 'WWSS',
-            # 0x02: 'W',
+            0x02: 'W',
             0x03: 'Wfffffffff',
             0xFE: 'WSf',
             0xFF: 'WSf',
 
             # # <= 0x33
-            # 0x33: 'WS'
+            0x32: 'WS',
+            0x33: 'WS',
         }[n]
 
     match ctx.action:
@@ -1620,7 +1652,7 @@ def Handler_98(ctx: InstructionHandlerContext):
 def Handler_9B(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
-            # 0x00: 'W',
+            0x00: 'W',
             0x01: '',
             0x02: '',
             0x03: '',
@@ -1734,6 +1766,28 @@ def Handler_AC(ctx: InstructionHandlerContext):
         case HandlerAction.CodeGen:
             return genVariadicFuncStub(ctx.descriptor, int)
 
+def Handler_AD(ctx: InstructionHandlerContext):
+    def getfmts(n):
+        return 'B' + {
+            0x00: 'B',
+            0x01: 'B',
+            0x02: 'f',
+            0x03: 'B',
+        }[n]
+
+    match ctx.action:
+        case HandlerAction.Disassemble:
+            inst = ctx.instruction
+            inst.operands = readAllOperands(ctx, getfmts(peekByte(ctx)))
+            return inst
+
+        case HandlerAction.Assemble:
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+            return
+
+        case HandlerAction.CodeGen:
+            return genVariadicFuncStub(ctx.descriptor, int)
+
 def Handler_B9(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BL' + {
@@ -1801,7 +1855,7 @@ def Handler_BC(ctx: InstructionHandlerContext):
             0x0C: 'Sff',
             0x0D: 'L',
             0x0E: 'VWW',
-            # 0x0F: 'WLS',
+            0x0F: 'WLS',
             0x10: 'LLh',
             0x11: 'Sff',
             0x12: 'Sff',
@@ -2030,8 +2084,6 @@ def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Fla
 
     else:
         operands = ED83OperandDescriptor.fromFormatString(operandfmts)
-        if parameters and len(operands) != len(parameters):
-            raise
 
     return InstructionDescriptor(opcode = opcode, mnemonic = mnemonic, operands = operands, flags = flags, handler = handler, parameters = parameters)
 
@@ -2060,7 +2112,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x17,  'OP_17',                        'WW'),
     inst(0x18,  'OP_18',                        'BE'),
     inst(0x1A,  'OP_1A',                        'BB'),
-    inst(0x1D,  'CreateMonseter',               'HSSSBLLfffffffSSLBffW',    Flags.FormatMultiLine),
+    inst(0x1D,  'CreateChr',                    'HSSSBLLfffffffSSLBffW',    Flags.FormatMultiLine,                          parameters = ('chrId', 'model', 'name', 'monsterId', 'type')),
     inst(0x1E,  'OP_1E',                        'WBBS'),
     inst(0x1F,  'OP_1F',                        'WB'),
     inst(0x20,  'OP_20',                        'BVVV'),
@@ -2077,6 +2129,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x2B,  'Battle',                       NoOperand,                                      handler = Handler_2B),
     inst(0x2C,  'OP_2C',                        'WSBBBBBffffBB'),
     inst(0x2D,  'OP_2D',                        'WfB'),
+    inst(0x2E,  'OP_2E',                        NoOperand,                                      handler = Handler_2E),
     inst(0x2F,  'AddChrAnimeClip',              NoOperand,                                      handler = Handler_2F,       parameters = ('type', 'chrId')),
     inst(0x30,  'AttachEquip',                  'BWSSfffffffff'),
     inst(0x31,  'OP_31',                        'BS'),
@@ -2104,6 +2157,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x47,  'OP_47',                        'BSW'),
     inst(0x48,  'OP_48',                        'BWWW'),
     inst(0x49,  'OP_49',                        NoOperand,                                      handler = Handler_49),
+    inst(0x4A,  'OP_4A',                        'ffffWB'),
     inst(0x4B,  'OP_4B',                        'WffffWB'),
     inst(0x4C,  'OP_4C',                        'WfffWB'),
     inst(0x4D,  'OP_4D',                        'WB'),
@@ -2119,6 +2173,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x57,  'OP_57',                        'BB'),
     inst(0x58,  'OP_58',                        'B'),
     inst(0x5A,  'OP_5A',                        'WWSBBB'),
+    inst(0x5B,  'OP_5B',                        'WBE'),
     inst(0x5C,  'OP_5C',                        'WBS'),
     inst(0x5D,  'OP_5D',                        'WSfffffffffWBB'),
     inst(0x5E,  'OP_5E',                        NoOperand,                                      handler = Handler_5E),
@@ -2160,6 +2215,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x88,  'OP_88',                        'W'),
     inst(0x89,  'OP_89',                        'W'),
     inst(0x8A,  'OP_8A',                        NoOperand,                                      handler = Handler_8A),
+    inst(0x8B,  'OP_8B',                        'fffffB'),
     inst(0x8C,  'OP_8C',                        NoOperand,                                      handler = Handler_8C),
     inst(0x8D,  'OP_8D',                        'Wffff'),
     inst(0x8E,  'OP_8E',                        'W' * 7),
@@ -2173,8 +2229,10 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x97,  'OP_97',                        'BWL'),
     inst(0x98,  'OP_98',                        NoOperand,                                      handler = Handler_98),
     inst(0x99,  'OP_99',                        'W'),
+    inst(0x9A,  'OP_9A',                        'Wfff'),
     inst(0x9B,  'OP_9B',                        NoOperand,                                      handler = Handler_9B),
     inst(0x9C,  'OP_9C',                        NoOperand,                                      handler = Handler_9C),
+    inst(0x9D,  'OP_9D',                        'BB'),
     inst(0x9E,  'OP_9E',                        NoOperand,                                      handler = Handler_9E),
     inst(0xA0,  'OP_A0',                        NoOperand),
     inst(0xA1,  'OP_A1',                        'fffWW'),
@@ -2186,18 +2244,22 @@ ScenaOpTable = ED83InstructionTable([
     inst(0xAA,  'OP_AA',                        'BB'),
     inst(0xAB,  'OP_AB',                        NoOperand,                                      handler = Handler_AB),
     inst(0xAC,  'OP_AC',                        NoOperand,                                      handler = Handler_AC),
+    inst(0xAD,  'OP_AD',                        NoOperand,                                      handler = Handler_AD),
     inst(0xAE,  'OP_AE',                        'SW'),
     inst(0xAF,  'OP_AF',                        'B'),
     inst(0xB1,  'MenuChrFlagCmd',               'BWL'),
     inst(0xB2,  'OP_B2',                        'BW'),
     inst(0xB3,  'OP_B3',                        'ffffWW'),
     inst(0xB4,  'OP_B4',                        NoOperand),
+    inst(0xB5,  'OP_B5',                        'WBfff'),
+    inst(0xB6,  'OP_B6',                        'WB'),
     inst(0xB7,  'OP_B7',                        'BW'),
     inst(0xB8,  'OP_B8',                        'BVV'),
     inst(0xB9,  'OP_B9',                        NoOperand,                                      handler = Handler_B9),
     inst(0xBA,  'OP_BA',                        NoOperand,                                      handler = Handler_BA),
     inst(0xBB,  'OP_BB',                        'W'),
     inst(0xBC,  'OP_BC',                        NoOperand,                                      handler = Handler_BC),
+    inst(0xBE,  'OP_BE',                        'WBff'),
     inst(0xC0,  'OP_C0',                        NoOperand,                                      handler = Handler_C0),
     inst(0xC2,  'OP_C2',                        'B'),
     inst(0xC3,  'OP_C3',                        NoOperand,                                      handler = Handler_C3),

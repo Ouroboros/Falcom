@@ -27,7 +27,7 @@ class BaseHandlerInfo:
         self.disassembler   = None      # type: disassembler.Disassembler
 
 class InstructionHandlerContext(BaseHandlerInfo):
-    def __init__(self, action: HandlerAction, descriptor: 'instruction_table.InstructionDescriptor'):
+    def __init__(self, action: HandlerAction, descriptor: 'instruction_table.InstructionDescriptor', *, formatter: 'formatter.Formatter' = None):
         super().__init__(action)
         self.instructionTable   = None                                      # type: instruction_table.InstructionTable
         self.descriptor         = descriptor                                # type: instruction_table.InstructionDescriptor
@@ -36,6 +36,7 @@ class InstructionHandlerContext(BaseHandlerInfo):
         self.offset             = instruction.Instruction.InvalidOffset     # type: int
         self.xrefs              = []                                        # type: List[instruction.XRef]
         self.eval               = None                                      # type: Callable
+        self.formatter          = formatter
 
     def createCodeBlock(self, offset: int) -> 'function.CodeBlock':
         return self.disassembler.createCodeBlock(offset)

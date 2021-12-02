@@ -121,29 +121,36 @@ class _ScenaWriter:
         fs.Write(funcNames)
         hdr.fullHeaderSize = fs.Position
 
-        if fs.Position % 4 != 0:
-            fs.Position = (fs.Position + 4) & ~3
+        fs.AlignTo(4)
 
         for f in self.functions:
             if f.type in ScenaDataFunctionTypes:
                 o = f.obj()
                 if o:
                     match f.type:
+                        case ScenaFunctionType.FaceAuto:
+                            fs.AlignTo(16)
+
                         case ScenaFunctionType.AnimeClips:
                             fs.AlignTo(16)
-                            if fs.Position % 16 != 0:
-                                fs.Position = (fs.Position + 16) & ~0x0F
+                            # if fs.Position % 16 != 0:
+                            #     fs.Position = (fs.Position + 16) & ~0x0F
+
+                        case _:
+                            pass
+                            # fs.Position = (fs.Position + 4) & ~3
 
                     f.offset = fs.Position
                     fs.Write(o.serialize())
+
                     fs.Position = (fs.Position + 4) & ~3
 
             else:
                 f.offset = fs.Position
                 self.compileCode(fs, f)
                 fs.AlignTo(4)
-                if fs.Position % 4 != 0:
-                    fs.Position = (fs.Position + 4) & ~3
+                # if fs.Position % 4 != 0:
+                #     fs.Position = (fs.Position + 4) & ~3
 
         with fs.PositionSaver:
             for x in self.xrefs:
