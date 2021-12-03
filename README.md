@@ -29,6 +29,20 @@
 就是`frida`的加载器，初始化`frida`，然后附加本进程，加载`js`脚本
 
 
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/Decompiler2" target="_blank">Decompiler2</a>
+
+2017-06-28 ~ 2021-12-03
+
+第三代反汇编器，目前支持闪之轨迹3
+
+* 闪之轨迹3
+  * 2021-11-12 ~ 2021-12-03
+
+* 闪之轨迹4
+  * 2021-12-03 ~ ?
+
+
 空之轨迹
 =============
 
@@ -211,20 +225,6 @@
 - eff 特效
 - t_name._dt
 - t_dbmon._dt
-
-
-
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/Decompiler2" target="_blank">Decompiler2</a>
-
-2017-06-28 ~ 2021-12-03
-
-第三代反汇编器，目前支持闪之轨迹3
-
-* 闪之轨迹3
-  * 2021-11-12 ~ 2021-12-03
-
-* 闪之轨迹4
-  * 2021-12-03 ~ ?
 
 
 
