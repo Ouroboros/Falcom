@@ -1,6 +1,8 @@
 //#pragma comment(linker, "/ENTRY:DllMain")
+#pragma comment(linker, "/EXPORT:DirectInput8Create=dinput8.DirectInput8Create")
 #pragma comment(linker, "/EXPORT:Direct3DCreate9=d3d9.Direct3DCreate9")
 #pragma comment(linker, "/EXPORT:D3D11CreateDevice=d3d11.D3D11CreateDevice")
+#pragma comment(linker, "/EXPORT:D3D11CreateDeviceAndSwapChain=d3d11.D3D11CreateDeviceAndSwapChain")
 #pragma comment(linker, "/EXPORT:DirectDrawCreate=DDRAW.DirectDrawCreate")
 #pragma comment(linker, "/EXPORT:AlphaBlend=MSIMG32.AlphaBlend")
 #pragma comment(linker, "/EXPORT:GradientFill=MSIMG32.GradientFill")

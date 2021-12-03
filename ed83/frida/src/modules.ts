@@ -1,8 +1,11 @@
+const modules = Process.enumerateModules();
+
 export const Modules = {
     KERNEL32    : Process.getModuleByName('KERNEL32.dll'),
     USER32      : Process.getModuleByName('USER32.dll'),
     ucrtbase    : Process.getModuleByName('ucrtbase.dll'),
-    ED83        : Process.getModuleByName('ed8_3_PC.exe'),
+    ED83        : modules[0],
+    ED84        : modules[0],
 };
 
 export const API = {
@@ -17,18 +20,4 @@ export const API = {
     WIN32: {
         GetFileAttributesA: new NativeFunction(Modules.KERNEL32.getExportByName('GetFileAttributesA'), 'uint32', ['pointer']),
     },
-};
-
-export const Addrs = {
-    LoadTableData           : Modules.ED83.base.add(0x2817F0),
-    ScriptLoad              : Modules.ED83.base.add(0x3C91B0),
-    ScriptVMExecute         : Modules.ED83.base.add(0x3C6DA0),
-    ScriptGetFunctionByName : Modules.ED83.base.add(0x3C7FF0),
-    Logger_Output           : Modules.ED83.base.add(0x11D160),
-
-    BlowFish_Decode         : Modules.ED83.base.add(0x20CAA0),
-
-    File_Open               : Modules.ED83.base.add(0xF5920),
-
-    DLC_Check               : Modules.ED83.base.add(0x3A8359),
 };

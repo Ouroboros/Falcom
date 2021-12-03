@@ -77,3 +77,51 @@ export function getTLS(): TLS {
 
     return tls[tid];
 }
+
+export function getGameVersion(): string {
+    const exe = Process.enumerateModules()[0].base;
+
+    const header = exe.add(exe.add(0x3C).readU32());
+    const timestamp = header.add(8).readU32();
+
+    switch (timestamp) {
+        case 0x6079B2A5: return 'ed84_jp';
+        case 0x6079B1DF: return 'ed84_us';
+        case 0x60767137: return 'ed83_cn';
+    }
+
+    throw new Error('unknown game version');
+}
+
+export function getPatchFile(path: string): string | null {
+    if (path.slice(0, 5) != 'data/') {
+        return null;
+    }
+
+    const patchDirs = [
+        'patch/',
+        'ouroboros/',
+        'data_cn/',
+    ];
+
+    for (let dir of patchDirs) {
+        const patchPath = dir + path.slice(5);
+        if (isPathExists(patchPath)) {
+            log(`patch: ${patchPath}`);
+            return patchPath;
+        }
+    }
+
+    return null;
+}
+
+export function loadPatchFile(path: string): ArrayBuffer | null {
+    const patchPath = getPatchFile(path);
+
+    if (!patchPath)
+        return null;
+
+    let data = readFileContent(patchPath);
+
+    return data;
+}
