@@ -216,9 +216,15 @@
 
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/Decompiler2" target="_blank">Decompiler2</a>
 
-写于 2017-06-28
+2017-06-28 ~ 2021-12-03
 
-第三代反汇编器，还未完成
+第三代反汇编器，目前支持闪之轨迹3
+
+* 闪之轨迹3
+  * 2021-11-12 ~ 2021-12-03
+
+* 闪之轨迹4
+  * 2021-12-03 ~ ?
 
 
 
