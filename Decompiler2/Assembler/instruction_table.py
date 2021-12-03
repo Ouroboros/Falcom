@@ -241,20 +241,32 @@ class InstructionDescriptor:
     def __str__(self):
         return ' '.join([
             f'{self.opcode:02X} {self.mnemonic}',
-            '(%s)' % (', '.join([(str(o) + (f' {self.parameters[i]}' if self.parameters else '')) for i, o in enumerate(self.operands)]) if self.operands else ''),
+            '(%s)' % (', '.join([(str(o) + (f' {self.parameters[i]}' if self.parameters and len(self.parameters) > i else '')) for i, o in enumerate(self.operands)]) if self.operands else ''),
             f'{self.flags}' if self.flags != instruction.Flags.Empty else '',
         ])
 
+    __repr__ = __str__
+
 class InstructionTable:
     def __init__(self, descriptors: List[InstructionDescriptor]):
-        self.descriptors    = descriptors           # type: List[InstructionDescriptor]
+        # self.descriptors    = descriptors           # type: List[InstructionDescriptor]
         self.descTable      = {}                    # type: Dict[int, InstructionDescriptor]
 
-        self.update(self.descriptors)
+        self.update(descriptors)
+
+    def __iter__(self):
+        for _, desc in self.descTable.items():
+            yield desc
 
     def update(self, descriptors: List[InstructionDescriptor]):
-        for desc in descriptors:
-            self.descTable[desc.opcode] = desc
+        if isinstance(descriptors, InstructionTable):
+            self.descTable.update(descriptors.descTable)
+
+        else:
+            for desc in descriptors:
+                self.descTable[desc.opcode] = desc
+
+        return self
 
     def getDescriptor(self, opcode: int) -> InstructionDescriptor:
         return self.descTable[opcode]

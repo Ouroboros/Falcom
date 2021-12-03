@@ -105,7 +105,7 @@ class _ScenaWriter:
         hdr.fullHeaderSize      = 0
 
         fs.Write(hdr.serialize())
-        fs.WriteMultiByte(pathlib.Path(self.scenaName).stem + '\x00')
+        fs.Write(name)
 
         fs.Seek(fs.Position + hdr.functionEntrySize)
 

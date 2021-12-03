@@ -237,7 +237,7 @@ def Handler_29(ctx: InstructionHandlerContext):
             0x03: '',
             0x04: 'B',
             # 0x05: 'WL',
-            # 0x06: 'W',
+            0x06: 'W',
             0x07: 'W',
             0x08: 'SLVV',
             # 0x09: 'SV',
@@ -475,7 +475,7 @@ def Handler_33(ctx: InstructionHandlerContext):
             # 0x50: 'WSffffW',
             # 0x51: 'SW',
             0x52: 'WB',         # load_effect
-            # 0x53: 'S',
+            0x53: 'S',
             0x5A: 'WL',
             0x5B: 'BL',
             0x5C: 'B',
@@ -770,7 +770,6 @@ def Handler_40(ctx: InstructionHandlerContext):
             # 0xFE00: 'fBW',
             # 0xFE03: 'fBW',
             # 0xFE04: 'fBW',
-            # 0xFE05: 'fBW',
             0xFFFE: 'fBW',
             0xFFFF: 'fBW',
         }[n]
@@ -955,7 +954,7 @@ def Handler_54(ctx: InstructionHandlerContext):
             # 0x1D: '',
             # 0x1E: '',
             0x1F: '',
-            # 0x20: '',
+            0x20: '',
             0x21: 'Wf',
             # 0x22: 'W',
             0x23: 'WWWf',
@@ -1327,6 +1326,7 @@ def Handler_75(ctx: InstructionHandlerContext):
             0x05: 'WL',
             0x06: 'W',
             0x07: 'W',
+            # 0x08: '',
 
             0x0E: '',
         }[n]
@@ -2088,7 +2088,7 @@ def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Fla
     return InstructionDescriptor(opcode = opcode, mnemonic = mnemonic, operands = operands, flags = flags, handler = handler, parameters = parameters)
 
 ScenaOpTable = ED83InstructionTable([
-    inst(0x00,  'ExitThread',                   NoOperand,                  Flags.EndBlock),
+    # inst(0x00,  'ExitThread',                   NoOperand,                  Flags.EndBlock),
     inst(0x01,  'Return',                       NoOperand,                  Flags.EndBlock),
     inst(0x02,  'Call',                         NoOperand,                  Flags.Empty,        Handler_02,         parameters = ('type', 'name')),
     inst(0x03,  'Jump',                         'O',                        Flags.Jump,                             parameters = ('label',)),
@@ -2138,7 +2138,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x34,  'OP_34',                        'Bffff'),
     inst(0x35,  'OP_35',                        'BWL'),
     inst(0x36,  'CameraRotateChr',              NoOperand,                                      handler = Handler_36),
-    inst(0x37,  'OP_37',                        'Wffff'),
+    inst(0x37,  'SetChrPos',                    'Wffff'),
     inst(0x38,  'OP_38',                        'WBBS'),
     inst(0x39,  'OP_39',                        'WBSffL'),
     inst(0x3A,  'OP_3A',                        NoOperand,                                      handler = Handler_3A),
