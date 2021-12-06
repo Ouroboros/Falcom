@@ -1,6 +1,5 @@
 import * as utils from "./utils";
 import { Modules } from "./modules";
-import { Offsets } from "./consts";
 
 const Addrs = (function() {
     switch (utils.getGameVersion()) {
