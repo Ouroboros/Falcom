@@ -7,6 +7,7 @@ __all__ = (
     'TableDataEntry',
     'NameTableData',
     'AttachTableData',
+    'EventTableData',
 )
 
 class TableNameEntry:
@@ -56,6 +57,7 @@ class DataTable:
         entryMap = {
             'NameTableData'     : NameTableData,
             'AttachTableData'   : AttachTableData,
+            'EventTableData'    : EventTableData,
         }
 
         self.entries = []
@@ -194,6 +196,75 @@ class AttachTableData(TableDataEntry):
         body.extend(utils.int_to_bytes(self.dword12, 4))
         body.extend(utils.str_to_bytes(self.str16))
         body.extend(utils.str_to_bytes(self.str17))
+
+        return bytes(body)
+
+class EventTableData(TableDataEntry):
+    def __init__(self, *, fs: fileio.FileStream = None, **kwargs):
+        super().__init__(fs)
+
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+        if fs:
+            self.eventId    = fs.ReadUShort()
+            self.eventEntry = fs.ReadMultiByte()
+            self.scena      = fs.ReadMultiByte()
+            self.word01     = fs.ReadUShort()
+            self.word02     = fs.ReadUShort()
+            self.word03     = fs.ReadUShort()
+            self.str04      = fs.ReadMultiByte()
+            self.word05     = fs.ReadUShort()
+            self.word06     = fs.ReadUShort()
+            self.word07     = fs.ReadUShort()
+            self.word08     = fs.ReadUShort()
+            self.word09     = fs.ReadUShort()
+            self.word0A     = fs.ReadUShort()
+            self.word0B     = fs.ReadUShort()
+            self.word0C     = fs.ReadUShort()
+            self.word0D     = fs.ReadUShort()
+
+    def toPython(self) -> List[str]:
+        return [
+            'EventTableData(',
+            f'    eventId       = 0x{self.eventId:X},',
+            f"    eventEntry    = '{self.eventEntry}',",
+            f"    scena         = '{self.scena}',",
+            f'    word01        = 0x{self.word01:X},',
+            f'    word02        = 0x{self.word02:X},',
+            f'    word03        = 0x{self.word03:X},',
+            f"    str04         = '{self.str04}',",
+            f'    word05        = 0x{self.word05:X},',
+            f'    word06        = 0x{self.word06:X},',
+            f'    word07        = 0x{self.word07:X},',
+            f'    word08        = 0x{self.word08:X},',
+            f'    word09        = 0x{self.word09:X},',
+            f'    word0A        = 0x{self.word0A:X},',
+            f'    word0B        = 0x{self.word0B:X},',
+            f'    word0C        = 0x{self.word0C:X},',
+            f'    word0D        = 0x{self.word0D:X},',
+            ')',
+        ]
+
+    def serialize(self) -> bytes:
+        body = bytearray()
+
+        body.extend(utils.int_to_bytes(self.eventId, 2))
+        body.extend(utils.str_to_bytes(self.eventEntry))
+        body.extend(utils.str_to_bytes(self.scena))
+        body.extend(utils.int_to_bytes(self.word01, 2))
+        body.extend(utils.int_to_bytes(self.word02, 2))
+        body.extend(utils.int_to_bytes(self.word03, 2))
+        body.extend(utils.str_to_bytes(self.str04))
+        body.extend(utils.int_to_bytes(self.word05, 2))
+        body.extend(utils.int_to_bytes(self.word06, 2))
+        body.extend(utils.int_to_bytes(self.word07, 2))
+        body.extend(utils.int_to_bytes(self.word08, 2))
+        body.extend(utils.int_to_bytes(self.word09, 2))
+        body.extend(utils.int_to_bytes(self.word0A, 2))
+        body.extend(utils.int_to_bytes(self.word0B, 2))
+        body.extend(utils.int_to_bytes(self.word0C, 2))
+        body.extend(utils.int_to_bytes(self.word0D, 2))
 
         return bytes(body)
 

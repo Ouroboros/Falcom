@@ -16,8 +16,8 @@ class Formatter:
         self.formatted          = set()
         self.scriptName         = name
 
-    def formatLabel(self, name: str) -> str:
-        return f"label('{name}')"
+    def formatLabel(self, name: str) -> List[str]:
+        return [f"label('{name}')"]
 
     def formatFuncion(self, func: Function) -> List[str]:
         funcName = func.name
@@ -74,7 +74,7 @@ class Formatter:
 
         if genLabel and block.name:
             text = [
-                self.formatLabel(block.name),
+                *self.formatLabel(block.name),
                 '',
             ]
 
@@ -87,7 +87,7 @@ class Formatter:
         for inst in block.instructions:
             for x in inst.xrefs:
                 text.extend([
-                    self.formatLabel(x.name),
+                    *self.formatLabel(x.name),
                     '',
                 ])
 

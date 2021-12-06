@@ -101,7 +101,7 @@ def Handler_06(ctx: InstructionHandlerContext):
             inst = ctx.instruction
             expr = readAllOperands(ctx, 'E')[0]
             count = readAllOperands(ctx, 'B')[0]
-            cases = [readAllOperands(ctx, 'IO') for _ in range(count.value)]
+            cases = [readAllOperands(ctx, 'LO') for _ in range(count.value)]
             default = readAllOperands(ctx, 'O')[0]
 
             inst.operands = [expr, cases, default]
@@ -122,7 +122,7 @@ def Handler_06(ctx: InstructionHandlerContext):
                 *[f'{DefaultIndent * 2}{opr},'.rstrip() for opr in formatOperand(expr)],
                 f'{DefaultIndent}),',
 
-                *[f'{DefaultIndent}({id.value}, {formatOperand(o)}),' for id, o in cases],
+                *[f'{DefaultIndent}(0x{id.value:08X}, {formatOperand(o)}),' for id, o in cases],
                 f'{DefaultIndent}({SWITCH_DEFAULT}, {formatOperand(default)}),',
             ]
 
@@ -232,7 +232,7 @@ def Handler_29(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BB' + {
             0x00: 'WfL',
-            0x01: 'SI',
+            0x01: 'SL',
             0x02: 'BWWB',
             0x03: '',
             0x04: 'B',

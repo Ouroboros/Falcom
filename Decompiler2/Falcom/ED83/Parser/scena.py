@@ -15,6 +15,13 @@ __all__ = (
 )
 
 class ScenaFormatter(Assembler.Formatter):
+    def formatLabel(self, name: str) -> List[str]:
+        return [
+            f'def _{name}(): pass',
+            '',
+            f"label('{name}')",
+        ]
+
     def formatFuncion(self, func: ScenaFunction) -> List[str]:
         funcName = func.name
         if not funcName:
