@@ -300,3 +300,5 @@ def createDataTable(filename: str, *entries):
     table.extend(padding)
 
     open(filename, 'wb').write(table)
+
+    return entries

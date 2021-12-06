@@ -44,6 +44,9 @@ def main():
         r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\ani\dat\\',
     ]
 
+    output_dir = None
+    output_dir = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\ouroboros\scripts\scena\dat\\'
+
     for s in scena:
         break
         for f in fileio.getDirectoryFiles(s, '*.dat', subdir = False):
@@ -52,8 +55,7 @@ def main():
             output = pathlib.Path(f)
             os.makedirs(output.parent / 'py', exist_ok = True)
             output = output.parent / 'py' / (output.name + '.py')
-            if output.exists():
-                continue
+            # if output.exists(): continue
 
             test(f, output)
 
@@ -63,12 +65,18 @@ def main():
     path = scena[-1] + scp
     # path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\system.dat'
     path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\a0000.dat'
+    path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\m3050.dat'
     # path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\battle\dat\alchr033.dat'
     # path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\r0090.dat'
 
     path = pathlib.Path(path)
 
-    test(str(path), (path.parent / 'py') / (path.name + '.py'))
+    if output_dir:
+        output = output_dir + (path.name + '.py')
+    else:
+        output = (path.parent / 'py') / (path.name + '.py')
+
+    test(str(path), output)
 
     # console.pause('done')
 

@@ -13,7 +13,8 @@ class ED83OperandType(IntEnum2):
     Text,           \
     ScenaFlags,     \
     ThreadValue,    \
-    UserDefined = range(UserDefined, UserDefined + 8)
+    ChrId,          \
+    UserDefined = range(UserDefined, UserDefined + 9)
 
     __str__     = OperandType.__str__
     __repr__    = OperandType.__repr__
@@ -26,6 +27,7 @@ class ED83OperandFormat(OperandFormat):
         ED83OperandType.Item        : 2,
         ED83OperandType.BGM         : 2,
         ED83OperandType.ScenaFlags  : 2,
+        ED83OperandType.ChrId       : 2,
         ED83OperandType.Expression  : None,
         ED83OperandType.Text        : None,
     }
@@ -40,6 +42,7 @@ class ED83OperandDescriptor(OperandDescriptor):
             ED83OperandType.ThreadValue     : self.readThreadValue,
             ED83OperandType.ScenaFlags      : lambda context: context.disasmContext.fs.ReadUShort(),
             ED83OperandType.Offset          : lambda context: context.disasmContext.fs.ReadULong(),
+            ED83OperandType.ChrId           : lambda context: context.disasmContext.fs.ReadUShort(),
             # ED83OperandType.Item       : lambda context: context.disasmContext.fs.ReadUShort(),
             # ED83OperandType.BGM        : lambda context: context.disasmContext.fs.ReadShort(),
 
@@ -50,6 +53,7 @@ class ED83OperandDescriptor(OperandDescriptor):
             ED83OperandType.Text        : self.writeText,
             ED83OperandType.ScenaFlags  : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED83OperandType.Offset      : lambda context, value: context.disasmContext.fs.WriteULong(0xFFFFABCD),
+            ED83OperandType.ChrId       : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED83OperandType.Expression  : self.writeExpression,
             # ED83OperandType.ThreadValue : self.writeThreadValue,
         }.get(self.format.type, super().writeValue)(context, value)
@@ -61,6 +65,7 @@ class ED83OperandDescriptor(OperandDescriptor):
             ED83OperandType.ThreadValue : self.formatThreadValue,
             ED83OperandType.ScenaFlags  : lambda context: self.formatScenaFlags(context.operand.value),
             ED83OperandType.Offset      : lambda context: "'%s'" % context.operand.value.name,    # CodeBlock
+            ED83OperandType.ChrId       : lambda context: self.formatChrId(context.operand.value),
             # ED83OperandType.Item        : ,
             # ED83OperandType.BGM         : ,
 
@@ -205,6 +210,13 @@ class ED83OperandDescriptor(OperandDescriptor):
         flags &= 0XFFFF
         return f'ScenaFlag(0x{flags >> 3:04X}, {flags & 7}, 0x{flags:X})'
 
+    def formatChrId(self, chrId: int) -> str:
+        try:
+            name = GlobalConfig.ChrTable[chrId]
+            return f"ChrTable['{name}']"
+        except KeyError:
+            return f'0x{chrId:04X}'
+
 def oprdesc(*args, **kwargs) -> ED83OperandDescriptor:
     return ED83OperandDescriptor(ED83OperandFormat(*args, **kwargs))
 
@@ -216,6 +228,7 @@ ED83OperandDescriptor.formatTable.update({
     'E' : oprdesc(ED83OperandType.Expression),
     'T' : oprdesc(ED83OperandType.Text),
     'V' : oprdesc(ED83OperandType.ThreadValue),
+    'N' : oprdesc(ED83OperandType.ChrId),
 })
 
 class TextCtrlCode(IntEnum2):
@@ -223,11 +236,12 @@ class TextCtrlCode(IntEnum2):
     NewLine         = 0x01
     Enter           = 0x02
     Clear           = 0x03
-    Clear2          = 0x04
+    # Clear2          = 0x04
     ShowAll         = 0x06
     SetColor        = 0x07
     NewLine2        = 0x0A
     Item            = 0x10
+    Voice           = 0x11
 
 class TextObject:
     def __init__(self, code: int = None, value: Any = None):

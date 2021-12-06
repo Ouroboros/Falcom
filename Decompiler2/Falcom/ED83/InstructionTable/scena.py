@@ -319,7 +319,7 @@ def Handler_2E(ctx: InstructionHandlerContext):
 
 def Handler_2F(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'BW' + {
+        return 'BN' + {
             0x00: 'SS',
             # 0x01: 'SS',
             # 0x02: 'SS',
@@ -347,10 +347,13 @@ def Handler_2F(ctx: InstructionHandlerContext):
             return inst
 
         case HandlerAction.Format:
+            totalLen = 0
             for opr in ctx.instruction.operands:
                 if opr.descriptor.format.type == OperandType.MBCS:
-                    ctx.instruction.flags |= Flags.FormatMultiLine
-                    break
+                    totalLen += len(opr.value)
+
+            if totalLen > 64:
+                ctx.instruction.flags |= Flags.FormatMultiLine
 
             return
 
@@ -595,10 +598,10 @@ def Handler_36(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
             0x00: '',
-            0x02: 'BfffW',
+            0x02: 'BfffH',
             0x03: 'BWSfffW',
-            0x04: 'BfffWB',
-            0x05: 'BfW',
+            0x04: 'BfffHB',
+            0x05: 'BfH',
             0x06: 'BWB',
             0x07: 'W',
             0x08: 'BW',
@@ -733,7 +736,7 @@ def Handler_3B(ctx: InstructionHandlerContext):
 
 def Handler_3C(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'BW' + {
+        return 'BN' + {
             0x01: 'SS',
             0x03: 'SSSSS',
             0x04: 'S',
@@ -787,7 +790,7 @@ def Handler_40(ctx: InstructionHandlerContext):
 
 def Handler_43(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'BW' + {
+        return 'BH' + {
             0x05: '',
             0x06: '',
             0x0A: '',
@@ -822,7 +825,7 @@ def Handler_43(ctx: InstructionHandlerContext):
 
 def Handler_46(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'BWWW' + {
+        return 'BNNW' + {
             0x00: '',
             0x01: 'fff',
             0x02: '',
@@ -2111,16 +2114,16 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x17,  'OP_17',                        'WW'),
     inst(0x18,  'OP_18',                        'BE'),
     inst(0x1A,  'OP_1A',                        'BB'),
-    inst(0x1D,  'CreateChr',                    'HSSSBLLfffffffSSLBffW',    Flags.FormatMultiLine,                          parameters = ('chrId', 'model', 'name', 'monsterId', 'type')),
+    inst(0x1D,  'CreateChr',                    'NSSSBLLfffffffSSLBffW',    Flags.FormatMultiLine,                          parameters = ('chrId', 'model', 'name', 'monsterId', 'type')),
     inst(0x1E,  'OP_1E',                        'WBBS'),
     inst(0x1F,  'OP_1F',                        'WB'),
     inst(0x20,  'OP_20',                        'BVVV'),
     inst(0x21,  'OP_21',                        'B'),
     inst(0x22,  'Talk',                         'WT',                       Flags.FormatMultiLine,                          parameters = ('chrId', 'text')),
     inst(0x23,  'OP_23',                        NoOperand,                                      handler = Handler_23),
-    inst(0x24,  'ChrTalk',                      'WLT',                      Flags.FormatMultiLine,                          parameters = ('chrId', 'flags', 'text')),
+    inst(0x24,  'ChrTalk',                      'NLT',                      Flags.FormatMultiLine,                          parameters = ('chrId', 'flags', 'text')),
     inst(0x25,  'OP_25',                        'B'),
-    inst(0x26,  'OP_26',                        NoOperand),
+    inst(0x26,  'CloseMessageWindow',           NoOperand),
     inst(0x27,  'OP_27',                        'SW'),
     inst(0x28,  'OP_28',                        'VVB'),
     inst(0x29,  'MenuCmd',                      NoOperand,                                      handler = Handler_29),
@@ -2135,23 +2138,23 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x32,  'PlayEffect',                   NoOperand,                                      handler = Handler_32),
     inst(0x33,  'OP_33',                        NoOperand,                                      handler = Handler_33),
     inst(0x34,  'OP_34',                        'Bffff'),
-    inst(0x35,  'OP_35',                        'BWL'),
-    inst(0x36,  'CameraRotateChr',              NoOperand,                                      handler = Handler_36),
-    inst(0x37,  'SetChrPos',                    'Wffff'),
-    inst(0x38,  'OP_38',                        'WBBS'),
-    inst(0x39,  'OP_39',                        'WBSffL'),
+    inst(0x35,  'OP_35',                        'BNL'),
+    inst(0x36,  'CameraCtrl',                   NoOperand,                                      handler = Handler_36),
+    inst(0x37,  'SetChrPos',                    'Nffff'),
+    inst(0x38,  'OP_38',                        'NBBS'),
+    inst(0x39,  'SetChrAni',                    'NBSffL'),
     inst(0x3A,  'OP_3A',                        NoOperand,                                      handler = Handler_3A),
     inst(0x3B,  'OP_3B',                        NoOperand,                                      handler = Handler_3B),
-    inst(0x3C,  'OP_3C',                        NoOperand,                                      handler = Handler_3C),
+    inst(0x3C,  'SetChrFace',                   NoOperand,                                      handler = Handler_3C),
     inst(0x3D,  'OP_3D',                        'WffB'),
     inst(0x3E,  'OP_3E',                        'WWfB'),
     inst(0x3F,  'OP_3F',                        'W'),
     inst(0x40,  'MoveType',                     NoOperand,                                      handler = Handler_40),
     inst(0x41,  'OP_41',                        'WB'),
     inst(0x42,  'OP_42',                        'BWfffffBW'),
-    inst(0x43,  'OP_43',                        NoOperand,                                      handler = Handler_43),
+    inst(0x43,  'Fade',                         NoOperand,                                      handler = Handler_43),
     inst(0x44,  'OP_44',                        'WBfWf'),
-    inst(0x45,  'OP_45',                        'WfffWW'),
+    inst(0x45,  'OP_45',                        'NfffWW'),
     inst(0x46,  'OP_46',                        NoOperand,                                      handler = Handler_46),
     inst(0x47,  'OP_47',                        'BSW'),
     inst(0x48,  'OP_48',                        'BWWW'),

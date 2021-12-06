@@ -118,7 +118,12 @@ def Handler_2F(ctx: InstructionHandlerContext):
             return inst
 
         case HandlerAction.Format:
-            if [opr.descriptor.format.type for opr in ctx.instruction.operands].count(OperandType.MBCS) > 3:
+            totalLen = 0
+            for opr in ctx.instruction.operands:
+                if opr.descriptor.format.type == OperandType.MBCS:
+                    totalLen += len(opr.value)
+
+            if totalLen > 64:
                 ctx.instruction.flags |= Flags.FormatMultiLine
 
             return

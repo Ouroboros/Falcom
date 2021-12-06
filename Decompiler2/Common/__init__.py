@@ -5,9 +5,10 @@ import logging
 
 class _Config:
     def __init__(self):
-        self.DefaultEncoding = 'GBK'
-        self.DefaultEndian   = 'little'
-        self.DefaultIndent   = '    '
+        self.DefaultEncoding    = 'GBK'
+        self.DefaultEndian      = 'little'
+        self.DefaultIndent      = '    '
+        self.ChrTable           = {}
 
         self.load()
 
