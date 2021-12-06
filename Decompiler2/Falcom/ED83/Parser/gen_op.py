@@ -32,7 +32,7 @@ def main():
         '',
     ]
 
-    for desc in ED83.ScenaOpTable.descriptors:
+    for desc in sorted(ED83.ScenaOpTable, key = lambda desc: desc.opcode):
         desc: Assembler.InstructionDescriptor
 
         func = None

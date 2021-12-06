@@ -1,13 +1,5 @@
 from Falcom.ED83.Parser.scena_writer import _gScena as scena
 
-def ExitThread():
-    # 0x00
-    scena.handleOpCode(0x00)
-
-def OP_00():
-    # 0x00
-    scena.handleOpCode(0x00)
-
 def Return():
     # 0x01
     scena.handleOpCode(0x01)
@@ -449,6 +441,15 @@ def OP_36(arg1: int, *args):
     # 0x36
     assert isinstance(arg1, int)
     return scena.handleOpCode(0x36, arg1, *args)
+
+def SetChrPos(arg1: int, arg2: float, arg3: float, arg4: float, arg5: float):
+    # 0x37
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, float)
+    assert isinstance(arg3, float)
+    assert isinstance(arg4, float)
+    assert isinstance(arg5, float)
+    scena.handleOpCode(0x37, arg1, arg2, arg3, arg4, arg5)
 
 def OP_37(arg1: int, arg2: float, arg3: float, arg4: float, arg5: float):
     # 0x37

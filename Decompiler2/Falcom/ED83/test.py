@@ -39,14 +39,14 @@ def main():
     scena = [
         r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\\',
         r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\minigame\dat\\',
-        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\talk\dat\\',
-        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\battle\dat\\',
-        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\ani\dat\\',
+        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\talk\dat\\',
+        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\battle\dat\\',
+        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\ani\dat\\',
     ]
 
     for s in scena:
         # break
-        for f in fileio.getDirectoryFiles(s, '*.dat'):
+        for f in fileio.getDirectoryFiles(s, '*.dat', subdir = False):
             console.setTitle(os.path.basename(f))
 
             output = pathlib.Path(f)
