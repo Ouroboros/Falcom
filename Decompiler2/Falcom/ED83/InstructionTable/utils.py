@@ -57,6 +57,7 @@ def ScriptThread_getFunctionStrWorkValue(threadId: int) -> str:
         # 0x22: 'LB',
         0x33: 'LB',
         0x44: 'LB',
+        0x55: 'LB',
         0xDD: 'S',
         0xEE: 'fB',
         0xFF: 'LB',

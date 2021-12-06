@@ -10,8 +10,9 @@ __all__ = (
 )
 
 class DisasmContext:
-    def __init__(self, fs: fileio.FileStream):
-        self.fs     = fs    # type: fileio.FileStream
+    def __init__(self, fs: fileio.FileStream, *, instCallback : Callable[[Instruction], None] = None):
+        self.fs             = fs
+        self.instCallback   = instCallback
 
 class Disassembler:
     def __init__(self, instructionTable: InstructionTable):
@@ -148,6 +149,9 @@ class Disassembler:
             raise Exception('disasmInstruction %02X @ %08X failed' % (opcode, pos))
 
         inst.size = fs.Position - pos
+
+        if context.instCallback:
+            context.instCallback(inst)
 
         return inst
 

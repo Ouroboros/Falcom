@@ -166,6 +166,23 @@ class OperandDescriptor:
                 return "float('nan')"
             return '%s' % operand.value
 
+        def formatText() -> str:
+            s = []
+            for ch in operand.value:
+                if ch == '\\':
+                    s.append('\\\\')
+                elif ch in ["'", '"']:
+                    s.append(f'\\x{ord(ch):02X}')
+                elif ch >= ' ':
+                    s.append(ch)
+                elif ch == '\n':
+                    s.append('\\n')
+                else:
+                    s.append(f'\\x{ord(ch):02x}')
+
+            return f"'{''.join(s)}'"
+
+
         return {
             OperandType.SInt8   : formatInteger,
             OperandType.UInt8   : formatInteger,
@@ -182,7 +199,7 @@ class OperandDescriptor:
             OperandType.Float32 : formatFloat,
             OperandType.Float64 : formatFloat,
 
-            OperandType.MBCS    : lambda : f"'{operand.value}'",
+            OperandType.MBCS    : formatText,
         }[desc.format.type]()
 
     def __str__(self):

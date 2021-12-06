@@ -67,6 +67,7 @@ class ScenaFunctionType(IntEnum2):
     FieldFollowData     = 14
     FaceAuto            = 15    # FC_autoXX
     ShinigPomBtlset     = 16
+    StyleName           = 17
 
 ScenaDataFunctionTypes = set([
     ScenaFunctionType.BattleSetting,
@@ -84,6 +85,7 @@ ScenaDataFunctionTypes = set([
     ScenaFunctionType.FieldFollowData,
     ScenaFunctionType.FaceAuto,
     ScenaFunctionType.ShinigPomBtlset,
+    ScenaFunctionType.StyleName,
 ])
 
 class ScenaFunction:
@@ -878,11 +880,17 @@ class ScenaAlgoTableEntry:
 
         self.read(fs)
 
-    def read(self, fs):
+    def read(self, fs: fileio.FileStream):
         if not fs:
             return
 
+        if fs.Remaining < 2:
+            return
+
         self.craftId            = fs.ReadUShort()                       # 0x00
+        if self.craftId == self.InvalidID:
+            return
+
         self.condition          = fs.ReadByte()                         # 0x02
         self.probability        = fs.ReadByte()                         # 0x03
         self.target             = fs.ReadByte()                         # 0x04
@@ -935,7 +943,7 @@ class ScenaAlgoTable:
             return
 
         self.entries = []
-        while True:
+        for _ in range(0x40):
             e = ScenaAlgoTableEntry(fs = fs)
             if e.craftId == ScenaAlgoTableEntry.InvalidID:
                 break
@@ -1111,8 +1119,49 @@ class ScenaSummonTable:
         return f
 
 class ScenaAddCollision:
-    def __init__(self, *, fs: fileio.FileStream):
-        pass
+    InvalidID = 0
+
+    def __init__(self, *entries: List[float], fs: fileio.FileStream = None):
+        assert isinstance(entries, tuple | list)
+        for e in entries:
+            assert isinstance(e, tuple | list)
+            assert len(e) == 6
+
+        self.entries = entries
+        self.read(fs)
+
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
+
+        count = fs.ReadByte()
+        self.entries = []
+        for _ in range(count):
+            id = fs.ReadUShort()
+            if id == self.InvalidID:
+                break
+
+            fs.Position += 2
+            self.entries.append((id, *[fs.ReadFloat() for _ in range(5)]))
+
+    def serialize(self) -> bytes:
+        b = bytearray()
+        b.extend(utils.int_to_bytes(len(self.entries), 1))
+
+        for e in self.entries:
+            b.extend(utils.int_to_bytes(e[0], 4))
+            for f in e[1:]:
+                b.extend(utils.float_to_bytes(f))
+
+        return bytes(b)
+
+    def toPython(self) -> List[str]:
+        return [
+            f'ScenaAddCollision(',
+            *[f'{DefaultIndent}({e[0]}, {", ".join(["%f" % f for f in e[1:]])}),' for e in self.entries],
+            ')',
+        ]
+
 
 class ScenaPartTableEntry:
     InvalidID = 0xFF

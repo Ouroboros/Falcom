@@ -57,7 +57,6 @@ class ED83OperandDescriptor(OperandDescriptor):
     def formatValue(self, context: FormatOperandHandlerContext) -> str:
         return {
             ED83OperandType.Text        : self.formatText,
-            OperandType.MBCS            : self.formatText,
             ED83OperandType.Expression  : self.formatExpression,
             ED83OperandType.ThreadValue : self.formatThreadValue,
             ED83OperandType.ScenaFlags  : lambda context: self.formatScenaFlags(context.operand.value),
@@ -88,15 +87,15 @@ class ED83OperandDescriptor(OperandDescriptor):
                 objs.append(TextObject(value = buf.decode(self.format.encoding)))
                 buf.clear()
 
-            if ch == 0x10:
-                objs.append(TextObject(code = ch, value = fs.ReadUShort()))
-                continue
+            match ch:
+                case 0x10 | 0x17 | 0x19:
+                    objs.append(TextObject(code = ch, value = fs.ReadUShort()))
 
-            if 0x10 < ch <= 0x12:
-                objs.append(TextObject(code = ch, value = fs.ReadULong()))
-                continue
+                case 0x11 | 0x12:
+                    objs.append(TextObject(code = ch, value = fs.ReadULong()))
 
-            objs.append(TextObject(code = ch))
+                case _:
+                    objs.append(TextObject(code = ch))
 
         if buf:
             objs.append(TextObject(value = buf.decode(self.format.encoding)))
@@ -130,14 +129,16 @@ class ED83OperandDescriptor(OperandDescriptor):
                 code, value = v
 
                 fs.WriteByte(code)
-                if code == 0x10:
-                    fs.WriteUShort(value)
+                match code:
+                    case 0x10 | 0x17 | 0x19:
+                        fs.WriteUShort(value)
 
-                elif 0x10 < code <= 0x12:
-                    fs.WriteULong(value)
+                    case 0x11 | 0x12:
+                        fs.WriteULong(value)
 
-                else:
-                    ibp()
+                    case _:
+                        ibp()
+                        raise NotImplementedError
 
         fs.WriteByte(0)
 
@@ -186,7 +187,7 @@ class ED83OperandDescriptor(OperandDescriptor):
                 t = f"({opr}, {self.formatScenaFlags(e.operand)})"
 
             elif e.operator == ScenaExpression.Operator.Eval:
-                s = context.formatter.formatInstruction(e.operand)
+                s = context.formatter.formatInstruction(e.operand, flags = e.operand.flags)
                 t = f"({opr}, \"{'; '.join(s)}\")"
 
             elif e.operand is not None:
@@ -226,7 +227,7 @@ class TextCtrlCode(IntEnum2):
     ShowAll         = 0x06
     SetColor        = 0x07
     NewLine2        = 0x0A
-    # Item            = 0x1F
+    Item            = 0x10
 
 class TextObject:
     def __init__(self, code: int = None, value: Any = None):

@@ -109,7 +109,7 @@ class Formatter:
 
         return text
 
-    def formatInstruction(self, inst: Instruction) -> List[str]:
+    def formatInstruction(self, inst: Instruction, *, flags: Flags = None) -> List[str]:
         # log.debug(f'format inst 0x{inst.opcode:02X}<{inst.opcode}> @ 0x{inst.offset:08X}')
 
         handler = inst.descriptor.handler
@@ -128,7 +128,10 @@ class Formatter:
         context = FormatOperandHandlerContext(inst, None, formatter = self)
         operands = self.instructionTable.formatAllOperands(context, inst.operands)
 
-        if inst.flags.multiline:
+        if flags is None:
+            flags = inst.flags
+
+        if flags.multiline:
             f = [f'{mnemonic}(']
 
             for opr in operands:
