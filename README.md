@@ -33,16 +33,16 @@
 
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/Decompiler2" target="_blank">Decompiler2</a>
 
-2017-06-28 ~ 2021-12-03
+2017-06-28 ~ 2021-12-06
 
 第三代反汇编器，目前支持闪之轨迹3
 
 得益于法国老哥的 [SenScriptsDecompiler](https://github.com/TwnKey/SenScriptsDecompiler) ，大大缩短了调试过程
 
-* 闪之轨迹3
+* [闪之轨迹3](https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED83)
   * 2021-11-12 ~ 2021-12-03
 
-* 闪之轨迹4
+* [闪之轨迹4](https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED84)
   * 2021-12-03 ~ 2021-12-06
 
 
