@@ -35,7 +35,7 @@
 
 2017-06-28 ~ 2021-12-06
 
-第三代反汇编器，目前支持闪之轨迹3
+第三代反汇编器，目前支持闪之轨迹3/4
 
 得益于法国老哥的 [SenScriptsDecompiler](https://github.com/TwnKey/SenScriptsDecompiler) ，大大缩短了调试过程
 
