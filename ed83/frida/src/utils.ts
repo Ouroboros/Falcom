@@ -107,7 +107,7 @@ export function getPatchFile(path: string): string | null {
     for (let dir of patchDirs) {
         const patchPath = dir + path.slice(5);
         if (isPathExists(patchPath)) {
-            log(`patch: ${patchPath}`);
+            // log(`patch: ${patchPath}`);
             return patchPath;
         }
     }

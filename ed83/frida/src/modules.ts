@@ -19,5 +19,6 @@ export const API = {
 
     WIN32: {
         GetFileAttributesA: new NativeFunction(Modules.KERNEL32.getExportByName('GetFileAttributesA'), 'uint32', ['pointer']),
+        Sleep: new NativeFunction(Modules.KERNEL32.getExportByName('Sleep'), 'void', ['uint32']),
     },
 };
