@@ -103,6 +103,11 @@ def OP_10(flags: int):
     assert isinstance(flags, int)
     scena.handleOpCode(0x10, flags)
 
+def ClearScenaFlags(arg1: int):
+    # 0x11
+    assert isinstance(arg1, int)
+    scena.handleOpCode(0x11, arg1)
+
 def OP_11(arg1: int):
     # 0x11
     assert isinstance(arg1, int)
@@ -263,6 +268,10 @@ def OP_25(arg1: int):
     # 0x25
     assert isinstance(arg1, int)
     scena.handleOpCode(0x25, arg1)
+
+def WaitForMsg():
+    # 0x26
+    scena.handleOpCode(0x26)
 
 def OP_26():
     # 0x26
@@ -967,6 +976,11 @@ def OP_76(arg1: int, arg2: str, arg3: str, arg4: int, arg5: int, arg6: float, ar
     assert isinstance(arg8, float)
     assert isinstance(arg9, float)
     scena.handleOpCode(0x76, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+
+def ReleaseChr(arg1: int):
+    # 0x77
+    assert isinstance(arg1, int)
+    scena.handleOpCode(0x77, arg1)
 
 def OP_77(arg1: int):
     # 0x77

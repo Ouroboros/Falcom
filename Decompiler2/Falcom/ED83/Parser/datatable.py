@@ -168,7 +168,7 @@ class AttachTableData(TableDataEntry):
             self.scenaFlags = fs.ReadULong()
             self.dword0E    = fs.ReadULong()
             self.dword12    = fs.ReadULong()
-            self.str16      = fs.ReadMultiByte()
+            self.model      = fs.ReadMultiByte()
             self.str17      = fs.ReadMultiByte()
 
     def toPython(self) -> List[str]:
@@ -180,7 +180,7 @@ class AttachTableData(TableDataEntry):
             f"    scenaFlags = 0x{self.scenaFlags:08X},",
             f"    dword0E    = {self.dword0E},",
             f"    dword12    = {self.dword12},",
-            f"    str16      = '{self.str16}',",
+            f"    model      = '{self.model}',",
             f"    str17      = '{self.str17}',",
             ')',
         ]
@@ -194,7 +194,7 @@ class AttachTableData(TableDataEntry):
         body.extend(utils.int_to_bytes(self.scenaFlags, 4))
         body.extend(utils.int_to_bytes(self.dword0E, 4))
         body.extend(utils.int_to_bytes(self.dword12, 4))
-        body.extend(utils.str_to_bytes(self.str16))
+        body.extend(utils.str_to_bytes(self.model))
         body.extend(utils.str_to_bytes(self.str17))
 
         return bytes(body)

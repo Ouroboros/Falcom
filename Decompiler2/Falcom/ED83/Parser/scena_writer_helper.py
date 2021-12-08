@@ -11,6 +11,10 @@ def SaveClearData():
     OP_93(0x00, 0x02)
     OP_93(0x01)
 
+def ChangeSkin(chrId: int, model: str):
+    # SetScenaFlags(ScenaFlag(0x00A7, 0, 0x538))
+    AddChrAnimeClip(0x0A, chrId, model, '')
+
 def CameraRotate(vertical: float, horizontal: float, rotation: float, durationInMs: int = 0):
     '''
         上下

@@ -103,6 +103,11 @@ def OP_10(flags: int):
     assert isinstance(flags, int)
     scena.handleOpCode(0x10, flags)
 
+def ClearScenaFlags(arg1: int):
+    # 0x11
+    assert isinstance(arg1, int)
+    scena.handleOpCode(0x11, arg1)
+
 def OP_11(arg1: int):
     # 0x11
     assert isinstance(arg1, int)
@@ -270,6 +275,10 @@ def OP_25(arg1: int):
     # 0x25
     assert isinstance(arg1, int)
     scena.handleOpCode(0x25, arg1)
+
+def WaitForMsg():
+    # 0x26
+    scena.handleOpCode(0x26)
 
 def OP_26():
     # 0x26
@@ -440,7 +449,7 @@ def OP_35(arg1: int, arg2: int, arg3: int):
     assert isinstance(arg3, int)
     scena.handleOpCode(0x35, arg1, arg2, arg3)
 
-def CameraRotateChr(arg1: int, *args):
+def CameraCtrl(arg1: int, *args):
     # 0x36
     assert isinstance(arg1, int)
     return scena.handleOpCode(0x36, arg1, *args)
@@ -476,6 +485,16 @@ def OP_38(arg1: int, arg2: int, arg3: int, arg4: str):
     assert isinstance(arg4, str)
     scena.handleOpCode(0x38, arg1, arg2, arg3, arg4)
 
+def SetChrAni(arg1: int, arg2: int, arg3: str, arg4: float, arg5: float, arg6: int):
+    # 0x39
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, int)
+    assert isinstance(arg3, str)
+    assert isinstance(arg4, float)
+    assert isinstance(arg5, float)
+    assert isinstance(arg6, int)
+    scena.handleOpCode(0x39, arg1, arg2, arg3, arg4, arg5, arg6)
+
 def OP_39(arg1: int, arg2: int, arg3: str, arg4: float, arg5: float, arg6: int):
     # 0x39
     assert isinstance(arg1, int)
@@ -495,6 +514,12 @@ def OP_3B(arg1: int, *args):
     # 0x3B
     assert isinstance(arg1, int)
     return scena.handleOpCode(0x3B, arg1, *args)
+
+def SetChrFace(arg1: int, arg2: int, *args):
+    # 0x3C
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, int)
+    return scena.handleOpCode(0x3C, arg1, arg2, *args)
 
 def OP_3C(arg1: int, arg2: int, *args):
     # 0x3C

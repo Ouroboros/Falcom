@@ -18,6 +18,7 @@ def map_operand_type(t: OperandType) -> str:
         ED84.ED84OperandType.Text       : 'str | tuple',
         ED84.ED84OperandType.Offset     : 'str',
         ED84.ED84OperandType.ScenaFlags : 'int',
+        ED84.ED84OperandType.ChrId      : 'int',
         ED84.ED84OperandType.Expression : 'tuple | list',
         ED84.ED84OperandType.ThreadValue: 'tuple | list',
     }[t]

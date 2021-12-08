@@ -56,23 +56,22 @@ def main():
     ][-1]
 
     scena = [
-        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\ani\dat\\',
-        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\battle\dat\\',
+        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\ani\dat\\',
+        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\battle\dat\\',
         r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\scena\dat\\',
-        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\talk\dat\\',
-        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\minigame\dat\\',
+        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\talk\dat\\',
+        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\minigame\dat\\',
     ]
 
     for s in scena:
-        # break
+        break
         for f in fileio.getDirectoryFiles(s, '*.dat', subdir = False):
             console.setTitle(os.path.basename(f))
 
             output = pathlib.Path(f)
             os.makedirs(output.parent / 'py', exist_ok = True)
             output = output.parent / 'py' / (output.name + '.py')
-            if output.exists():
-                continue
+            # if output.exists(): continue
 
             test(f, output)
 
@@ -80,13 +79,14 @@ def main():
         return
 
     path = scena[-1] + scp
-    path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\scena\dat\t1020.dat'
+    path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\scena\dat\m6040.dat'
+    path = r'a0000汉化调试地图V0.5.dat'
 
     path = pathlib.Path(path)
 
     test(str(path), (path.parent / 'py') / (path.name + '.py'))
 
-    console.pause('done')
+    # console.pause('done')
 
 if __name__ == '__main__':
     Try(main)

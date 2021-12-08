@@ -32,7 +32,7 @@ def Handler_29(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BB' + {
             0x00: 'WfL',
-            0x01: 'SI',
+            0x01: 'SL',
             0x02: 'BWWB',
             0x03: '',
             0x04: 'B',
@@ -89,7 +89,7 @@ def Handler_2B(ctx: InstructionHandlerContext):
 
 def Handler_2F(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'BW' + {
+        return 'BN' + {
             0x00: 'SS',
             0x01: 'SS',
             # 0x02: 'SS',
@@ -190,7 +190,7 @@ def Handler_33(ctx: InstructionHandlerContext):
                 }[n2]
 
         return 'B' + {
-            0x00: 'WWBB',        # bt_damage
+            0x00: 'WWBB',       # bt_damage
             0x01: 'WVVB',       # bt_damage_anime
             0x02: 'BW',
             0x03: 'W',
@@ -497,7 +497,7 @@ def Handler_3B(ctx: InstructionHandlerContext):
 
 def Handler_3C(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'BW' + {
+        return 'BN' + {
             0x01: 'SS',
             0x03: 'SSSSS',
             0x04: 'S',
@@ -1704,9 +1704,9 @@ ScenaOpTable = ED84InstructionTable(ED83ScenaOpTable).update([
     inst(0x32,  'PlayEffect',                   NoOperand,                                      handler = Handler_32),
     inst(0x33,  'OP_33',                        NoOperand,                                      handler = Handler_33),
     inst(0x34,  'OP_34',                        'BffffW'),
-    inst(0x36,  'CameraRotateChr',              NoOperand,                                      handler = Handler_36),
+    inst(0x36,  'CameraCtrl',                   NoOperand,                                      handler = Handler_36),
     inst(0x3B,  'OP_3B',                        NoOperand,                                      handler = Handler_3B),
-    inst(0x3C,  'OP_3C',                        NoOperand,                                      handler = Handler_3C),
+    inst(0x3C,  'SetChrFace',                   NoOperand,                                      handler = Handler_3C),
     inst(0x40,  'MoveType',                     NoOperand,                                      handler = Handler_40),
     inst(0x41,  'OP_41',                        NoOperand,                                      handler = Handler_41),
     inst(0x43,  'OP_43',                        NoOperand,                                      handler = Handler_43),
