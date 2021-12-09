@@ -13,7 +13,7 @@ def SaveClearData():
 
 def ChangeSkin(chrId: int, model: str):
     # SetScenaFlags(ScenaFlag(0x00A7, 0, 0x538))
-    AddChrAnimeClip(0x0A, chrId, model, '')
+    ChrAnimeClipCtrl(0x0A, chrId, model, '')
 
 def CameraRotate(vertical: float, horizontal: float, rotation: float, durationInMs: int = 0):
     '''

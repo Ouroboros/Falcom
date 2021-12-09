@@ -2,6 +2,7 @@ from Falcom.Common import *
 from Falcom import ED83
 from Falcom.ED83.Parser.scena_types import *
 import pathlib
+import uuid
 
 Expr = ED83.ScenaExpression.Operator
 TxtCtl = ED83.TextCtrlCode
@@ -225,6 +226,9 @@ def createScenaWriter(scriptName: str) -> _ScenaWriter:
 
 def label(name: str):
     _gScena.addLabel(name)
+
+def genLabel() -> str:
+    return str(uuid.uuid4())
 
 def emit(*b: int):
     for v in b:

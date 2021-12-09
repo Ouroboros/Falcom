@@ -56,15 +56,15 @@ def main():
     ][-1]
 
     scena = [
-        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\ani\dat\\',
-        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\battle\dat\\',
+        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\ani\dat\\',
+        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\battle\dat\\',
         r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\scena\dat\\',
         # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\talk\dat\\',
         # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\minigame\dat\\',
     ]
 
     for s in scena:
-        break
+        # break
         for f in fileio.getDirectoryFiles(s, '*.dat', subdir = False):
             console.setTitle(os.path.basename(f))
 
@@ -83,6 +83,7 @@ def main():
     path = r'a0000汉化调试地图V0.5.dat'
 
     path = pathlib.Path(path)
+    os.makedirs(path.parent / 'py', exist_ok = True)
 
     test(str(path), (path.parent / 'py') / (path.name + '.py'))
 

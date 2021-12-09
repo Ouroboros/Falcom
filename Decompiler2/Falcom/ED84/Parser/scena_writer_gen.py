@@ -365,7 +365,7 @@ def OP_2E(arg1: int, arg2: int, arg3: int, *args):
     assert isinstance(arg3, int)
     return scena.handleOpCode(0x2E, arg1, arg2, arg3, *args)
 
-def AddChrAnimeClip(type: int, chrId: int, *args):
+def ChrAnimeClipCtrl(type: int, chrId: int, *args):
     # 0x2F
     assert isinstance(type, int)
     assert isinstance(chrId, int)
@@ -377,7 +377,7 @@ def OP_2F(type: int, chrId: int, *args):
     assert isinstance(chrId, int)
     return scena.handleOpCode(0x2F, type, chrId, *args)
 
-def AttachEquip(arg1: int, arg2: int, arg3: str, arg4: str, arg5: float, arg6: float, arg7: float, arg8: float, arg9: float, arg10: float, arg11: float, arg12: float, arg13: float):
+def EquipCtrl(arg1: int, arg2: int, arg3: str, arg4: str, arg5: float, arg6: float, arg7: float, arg8: float, arg9: float, arg10: float, arg11: float, arg12: float, arg13: float):
     # 0x30
     assert isinstance(arg1, int)
     assert isinstance(arg2, int)
@@ -969,6 +969,11 @@ def OP_76(arg1: int, arg2: str, arg3: str, arg4: int, arg5: int, arg6: float, ar
     assert isinstance(arg8, float)
     assert isinstance(arg9, float)
     scena.handleOpCode(0x76, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9)
+
+def ReleaseChr(arg1: int):
+    # 0x77
+    assert isinstance(arg1, int)
+    scena.handleOpCode(0x77, arg1)
 
 def OP_77(arg1: int):
     # 0x77

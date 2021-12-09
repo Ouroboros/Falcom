@@ -75,14 +75,20 @@ class DataTable:
         f = [
             'from Falcom.ED83.Parser.datatable import *',
             '',
-            f"DataTable.create('{filename}',",
+            'entries = [',
         ]
 
         for e in self.entries:
             f.extend([f'{GlobalConfig.DefaultIndent}{l}' for l in e.toPython()])
             f[-1] += ','
 
-        f.append(')')
+        f.extend([
+            ']',
+            '',
+            "if __name__ == '__main__':",
+            f"{GlobalConfig.DefaultIndent}DataTable.create('{filename}', entries)",
+            '',
+        ])
 
         return f
 
@@ -102,19 +108,19 @@ class NameTableData(TableDataEntry):
             setattr(self, k, v)
 
         if fs:
-            self.chrId      = fs.ReadUShort()
-            self.chrName    = fs.ReadMultiByte()
-            self.model      = fs.ReadMultiByte()
-            self.ani        = fs.ReadMultiByte()
-            self.faceDefault= fs.ReadMultiByte()
-            self.face       = fs.ReadMultiByte()
-            self.name2      = fs.ReadMultiByte()
-            self.dword1     = fs.ReadULong()
-            self.dword2     = fs.ReadULong()
-            self.dword3     = fs.ReadULong()
-            self.dword4     = fs.ReadULong()
-            self.word5      = fs.ReadUShort()
-            self.byte6      = fs.ReadByte()
+            self.chrId          = fs.ReadUShort()
+            self.chrName        = fs.ReadMultiByte()
+            self.model          = fs.ReadMultiByte()
+            self.ani            = fs.ReadMultiByte()
+            self.faceModel      = fs.ReadMultiByte()
+            self.faceAnimeClip  = fs.ReadMultiByte()
+            self.name2          = fs.ReadMultiByte()
+            self.dword1         = fs.ReadULong()
+            self.dword2         = fs.ReadULong()
+            self.dword3         = fs.ReadULong()
+            self.dword4         = fs.ReadULong()
+            self.word5          = fs.ReadUShort()
+            self.byte6          = fs.ReadByte()
 
     def toPython(self) -> List[str]:
         return [
@@ -123,8 +129,8 @@ class NameTableData(TableDataEntry):
             f"    chrName       = '{self.chrName}',",
             f"    model         = '{self.model}',",
             f"    ani           = '{self.ani}',",
-            f"    faceDefault   = '{self.faceDefault}',",
-            f"    face          = '{self.face}',",
+            f"    faceModel     = '{self.faceModel}',",
+            f"    faceAnimeClip = '{self.faceAnimeClip}',",
             f"    name2         = '{self.name2}',",
             f'    dword1        = 0x{self.dword1:08X},',
             f'    dword2        = 0x{self.dword2:08X},',
@@ -142,8 +148,8 @@ class NameTableData(TableDataEntry):
         body.extend(utils.str_to_bytes(self.chrName))
         body.extend(utils.str_to_bytes(self.model))
         body.extend(utils.str_to_bytes(self.ani))
-        body.extend(utils.str_to_bytes(self.faceDefault))
-        body.extend(utils.str_to_bytes(self.face))
+        body.extend(utils.str_to_bytes(self.faceModel))
+        body.extend(utils.str_to_bytes(self.faceAnimeClip))
         body.extend(utils.str_to_bytes(self.name2))
         body.extend(utils.int_to_bytes(self.dword1, 4))
         body.extend(utils.int_to_bytes(self.dword2, 4))
@@ -163,7 +169,7 @@ class AttachTableData(TableDataEntry):
 
         if fs:
             self.chrId      = fs.ReadUShort()
-            self.dword02    = fs.ReadULong()
+            self.type       = fs.ReadULong()        # 5: face model   9: face animeclip
             self.itemId     = fs.ReadULong()
             self.scenaFlags = fs.ReadULong()
             self.dword0E    = fs.ReadULong()
@@ -175,7 +181,7 @@ class AttachTableData(TableDataEntry):
         return [
             'AttachTableData(',
             f'    chrId      = 0x{self.chrId:04X},',
-            f"    dword02    = {self.dword02},",
+            f"    type       = {self.type},",
             f"    itemId     = 0x{self.itemId:08X},",
             f"    scenaFlags = 0x{self.scenaFlags:08X},",
             f"    dword0E    = {self.dword0E},",
@@ -189,7 +195,7 @@ class AttachTableData(TableDataEntry):
         body = bytearray()
 
         body.extend(utils.int_to_bytes(self.chrId, 2))
-        body.extend(utils.int_to_bytes(self.dword02, 4))
+        body.extend(utils.int_to_bytes(self.type, 4))
         body.extend(utils.int_to_bytes(self.itemId, 4))
         body.extend(utils.int_to_bytes(self.scenaFlags, 4))
         body.extend(utils.int_to_bytes(self.dword0E, 4))

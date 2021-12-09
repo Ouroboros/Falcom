@@ -358,7 +358,7 @@ def OP_2E(arg1: int, arg2: int, arg3: int, *args):
     assert isinstance(arg3, int)
     return scena.handleOpCode(0x2E, arg1, arg2, arg3, *args)
 
-def AddChrAnimeClip(type: int, chrId: int, *args):
+def ChrAnimeClipCtrl(type: int, chrId: int, *args):
     # 0x2F
     assert isinstance(type, int)
     assert isinstance(chrId, int)

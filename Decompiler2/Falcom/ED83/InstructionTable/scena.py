@@ -321,7 +321,7 @@ def Handler_2F(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BN' + {
             0x00: 'SS',
-            # 0x01: 'SS',
+            # 0x01: 'SS',       # remove_chr_animeclip
             # 0x02: 'SS',
             # 0x03: '',
             0x04: 'SS',
@@ -437,7 +437,7 @@ def Handler_33(ctx: InstructionHandlerContext):
             0x1B: '',
             # 0x1C: 'W',
             # 0x1D: 'WLL',
-            0x1E: 'WWSS',       # BattleTempChar
+            0x1E: 'WWSS',       # createTempChar(tempChrId, chrId, model, ani)
             0x1F: 'W',
             0x20: 'Wff',        # createFollowChar
             0x21: '',
@@ -935,7 +935,7 @@ def Handler_54(ctx: InstructionHandlerContext):
             0x07: '',
             0x08: 'L' * 8,
             0x0A: 'B',
-            0x0B: 'W',
+            0x0B: 'W',          # resetAttach
             0x0D: 'SSWW',
             0x0E: 'B',
             0x0F: '',
@@ -983,7 +983,7 @@ def Handler_54(ctx: InstructionHandlerContext):
             0x3C: 'Wff',
             0x3E: 'BSL',
             0x3F: '',
-            # 0x40: 'W',
+            0x40: 'N',
             0x41: '',
             0x42: 'WW',
             0x43: '',
@@ -1491,7 +1491,7 @@ def Handler_84(ctx: InstructionHandlerContext):
 def Handler_8A(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
-            0x00: 'WWSS',
+            0x00: 'WWSS',               # attachChr
             0x01: 'WWSS',
             0x02: 'W',
             0x03: 'Wfffffffff',
@@ -2132,15 +2132,15 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x2C,  'OP_2C',                        'WSBBBBBffffBB'),
     inst(0x2D,  'OP_2D',                        'WfB'),
     inst(0x2E,  'OP_2E',                        NoOperand,                                      handler = Handler_2E),
-    inst(0x2F,  'AddChrAnimeClip',              NoOperand,                                      handler = Handler_2F,       parameters = ('type', 'chrId')),
-    inst(0x30,  'AttachEquip',                  'BWSSfffffffff'),
+    inst(0x2F,  'ChrAnimeClipCtrl',             NoOperand,                                      handler = Handler_2F,       parameters = ('type', 'chrId')),
+    inst(0x30,  'EquipCtrl',                    'BWSSfffffffff'),
     inst(0x31,  'OP_31',                        'BS'),
     inst(0x32,  'PlayEffect',                   NoOperand,                                      handler = Handler_32),
     inst(0x33,  'OP_33',                        NoOperand,                                      handler = Handler_33),
     inst(0x34,  'OP_34',                        'Bffff'),
     inst(0x35,  'OP_35',                        'BNL'),
     inst(0x36,  'CameraCtrl',                   NoOperand,                                      handler = Handler_36),
-    inst(0x37,  'SetChrPos',                    'Nffff'),
+    inst(0x37,  'SetChrPos',                    'Nffff',                                                                    parameters = ('chrId', 'x', 'y', 'z', 'direction')),
     inst(0x38,  'OP_38',                        'NBBS'),
     inst(0x39,  'SetChrAni',                    'NBSffL'),
     inst(0x3A,  'OP_3A',                        NoOperand,                                      handler = Handler_3A),
