@@ -133,24 +133,19 @@ function hookBattle() {
             const ctx = (this.context as X64CpuContext);
             const chrId = ctx.r14.toUInt32() & 0xFFFF;
 
-            utils.log('SetupBattle_FormatAlgoScript');
-
             let path = (function() {
-                utils.log('findCharByChrId');
                 const char = ED83.findCharByChrId(chrId);
 
                 if (!char)
-                return '';
+                    return '';
 
-                utils.log('findNameTableDataByModel');
                 const nameData = ED83.findNameTableDataByModel(char.model);
 
                 if (!nameData)
-                return '';
+                    return '';
 
-                utils.log('isReplaced');
                 if (char.isReplaced(nameData) == false)
-                return '';
+                    return '';
 
                 const algo = sprintf(fmt.readAnsiString()!, nameData.ani);
                 if (!utils.getPatchFile(algo))
@@ -163,7 +158,6 @@ function hookBattle() {
                 path = sprintf(fmt.readAnsiString()!, battleAni.readUtf8String()!);
 
             buffer.writeAnsiString(path.slice(0, size));
-            utils.log(`path = ${path}`);
         },
         'void', ['pointer', 'uint32', 'pointer', 'pointer'],
     );
@@ -263,8 +257,6 @@ function hookFileRedirection() {
                 }
             }
 
-            // utils.log(`LoadTableData: ${p}`);
-
             const patch = utils.getPatchFile(p)
             if (!patch)
                 return;
@@ -318,8 +310,52 @@ function hookFileRedirection() {
     });
 }
 
+function traceScriptVM() {
+    let tracing = false;
+
+    Interceptor.attach(Addrs.ScriptVMExecute, {
+        onEnter: function(args) {
+            const p = args[1];
+            const scriptName = p.add(0x14).readUtf8String()!;
+            const currentFunction = p.add(0x34).readUtf8String()!;
+            const offset = p.add(0x78).readU32();
+
+            if (offset == 0) return;
+
+            if (scriptName.indexOf('mon') == -1) {
+                tracing = true;
+                utils.log('***** ScriptVMExecute: %s.%s 0x%08X *****', scriptName, currentFunction, offset);
+            }
+        },
+
+        onLeave: function(retval) {
+            if (tracing) {
+                tracing = false;
+                utils.log('****************** ScriptVMExecute END ******************');
+            }
+        }
+    });
+
+    Interceptor.attach(ptr(0x1403C6DDD), function() {
+        if (!tracing)
+            return;
+
+        const ctx = (this.context as X64CpuContext);
+        const offset = ctx.rdx.toUInt32();
+        const script = ctx.rbx;
+        const scriptName = script.add(0x14).readUtf8String()!;
+        const currentFunction = script.add(0x34).readUtf8String()!;
+        const opcode = ctx.r8.and(0xFF).toUInt32();
+
+        // utils.log(`    OP_${ctx.r8.and(0xFF).toUInt32().toString(16).toUpperCase()} @ ${scriptName}.${currentFunction}.${ptr(offset)}`);
+        utils.log(`    OP_%02X @ ${scriptName}.${currentFunction}.${ptr(offset)}`, opcode);
+    });
+}
+
 export function main() {
-    // ED83.enableLogger();
+    ED83.enableLogger();
+
+    traceScriptVM();
 
     hookFileRedirection();
     hookCharacterModelInit();
@@ -328,19 +364,6 @@ export function main() {
     Memory.patchCode(Addrs.DLC_Check, 1, (code) => {
         code.writeU8(0xEB);
     });
-
-    // Interceptor.attach(Addrs.ScriptVMExecute, {
-    //     onEnter: function(args) {
-    //         const p = args[1];
-    //         const scriptName = p.add(0x14).readUtf8String()!;
-    //         const currentFunction = p.add(0x34).readUtf8String()!;
-    //         const offset = p.add(0x78).readU32();
-
-    //         if (offset == 0) return;
-
-    //         // utils.log('%s %s 0x%08X', scriptName, currentFunction, offset);
-    //     },
-    // });
 
     const recorded: any = {};
 

@@ -133,27 +133,22 @@ export class BattleCharacter extends ED8BaseObject {
     }
 
     isChrNPC(): boolean {
-        utils.log(`isChrNPC`);
         return (BattleCharacter._IsChrNPC(this.impl) & 0xFF) != 0;
     }
 
     initNpcCraftAI(reset: boolean) {
-        utils.log(`initNpcCraftAI`);
         BattleCharacter._InitNpcCraftAI(this.impl, Number(reset));
     }
 
     initEquipAndOrbs(chrId: number) {
-        utils.log(`initEquipAndOrbs: 0x${chrId.toString(16)}`);
         BattleCharacter._InitEquipAndOrbs(this.impl, chrId);
     }
 
     initPartyCraft(chrId: number) {
-        utils.log(`initPartyCraft: 0x${chrId.toString(16)}`);
         BattleCharacter._InitPartyCraft(this.impl, ED83.getCraftList(chrId));
     }
 
     initMagic(chrId: number) {
-        utils.log(`initMagic: 0x${chrId.toString(16)}`);
         BattleCharacter._InitMagic(this.impl, ED83.getMagicList(chrId));
     }
 }

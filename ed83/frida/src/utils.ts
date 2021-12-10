@@ -68,7 +68,8 @@ export function log(format: string, ...args: any[]): void {
     }
 
     const now = new Date;
-    const time = sprintf('%02d:%02d:%02d.%03d', now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds());
+    const offset = (8 * 3600 - now.getTimezoneOffset()) / 3600;
+    const time = sprintf('%02d:%02d:%02d.%03d', now.getHours() + offset, now.getMinutes(), now.getSeconds(), now.getMilliseconds());
     console.log(`${time} ${format}`);
 }
 
