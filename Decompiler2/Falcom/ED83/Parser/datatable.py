@@ -119,7 +119,7 @@ class NameTableData(TableDataEntry):
             self.model          = fs.ReadMultiByte()
             self.ani            = fs.ReadMultiByte()
             self.faceModel      = fs.ReadMultiByte()
-            self.faceAnimeClip  = fs.ReadMultiByte()
+            self.faceTexture    = fs.ReadMultiByte()
             self.name2          = fs.ReadMultiByte()
             self.dword1         = fs.ReadULong()
             self.dword2         = fs.ReadULong()
@@ -136,7 +136,7 @@ class NameTableData(TableDataEntry):
             f"    model         = '{self.model}',",
             f"    ani           = '{self.ani}',",
             f"    faceModel     = '{self.faceModel}',",
-            f"    faceAnimeClip = '{self.faceAnimeClip}',",
+            f"    faceTexture   = '{self.faceTexture}',",
             f"    name2         = '{self.name2}',",
             f'    dword1        = 0x{self.dword1:08X},',
             f'    dword2        = 0x{self.dword2:08X},',
@@ -155,7 +155,7 @@ class NameTableData(TableDataEntry):
         body.extend(utils.str_to_bytes(self.model))
         body.extend(utils.str_to_bytes(self.ani))
         body.extend(utils.str_to_bytes(self.faceModel))
-        body.extend(utils.str_to_bytes(self.faceAnimeClip))
+        body.extend(utils.str_to_bytes(self.faceTexture))
         body.extend(utils.str_to_bytes(self.name2))
         body.extend(utils.int_to_bytes(self.dword1, 4))
         body.extend(utils.int_to_bytes(self.dword2, 4))

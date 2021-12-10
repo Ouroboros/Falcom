@@ -1060,12 +1060,12 @@ def Handler_65(ctx: InstructionHandlerContext):
 
 def Handler_66(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'BW' + {
-            0x00: 'W',
+        return 'BN' + {
+            0x00: 'W',          # addCraft
             0x01: 'W',
             0x02: 'L',
             0x03: '',
-            0x04: 'W',
+            0x04: 'W',          # set_sbreak
             0x05: '',
             0x06: 'W',
             0x07: '',
@@ -2185,7 +2185,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x63,  'OP_63',                        'WB'),
     inst(0x64,  'OP_64',                        'Bf'),
     inst(0x65,  'SetLookpointFlag',             NoOperand,                                      handler = Handler_65,       parameters = ('lookpoint', )),
-    inst(0x66,  'OP_66',                        NoOperand,                                      handler = Handler_66),
+    inst(0x66,  'CraftCtrl',                    NoOperand,                                      handler = Handler_66),
     inst(0x67,  'OP_67',                        NoOperand,                                      handler = Handler_67),
     inst(0x68,  'OP_68',                        NoOperand,                                      handler = Handler_68),
     inst(0x69,  'OP_69',                        NoOperand,                                      handler = Handler_69),
