@@ -1,7 +1,63 @@
 import { sprintf, vsprintf } from "sprintf-js";
-import { API, Modules } from "./modules";
+import { API } from "./modules";
 
 const Logging = !false;
+
+export class ED8BaseObject {
+    impl: NativePointer;
+
+    constructor(impl: NativePointer) {
+        this.impl = impl;
+    }
+
+    readPointer(offset: number): NativePointer {
+        return this.impl.add(offset).readPointer();
+    }
+
+    readU16(offset: number): number {
+        return this.impl.add(offset).readU16();
+    }
+
+    readU32(offset: number): number {
+        return this.impl.add(offset).readU32();
+    }
+
+    readUtf8String(offset: number): string | null {
+        return this.impl.add(offset).readUtf8String();
+    }
+}
+
+export class Interceptor2 {
+    static call<RetType extends NativeCallbackReturnType, ArgTypes extends NativeCallbackArgumentType[] | []> (
+        target: NativePointerValue,
+        replacement: NativeCallbackImplementation<
+                GetNativeCallbackReturnValue<RetType>,
+                Extract<GetNativeCallbackArgumentValue<ArgTypes>, unknown[]>
+            >,
+        retType: RetType,
+        argTypes: ArgTypes,
+    ) {
+        Interceptor.replace(target, new NativeCallback(replacement, retType, argTypes, 'win64'));
+        Interceptor.flush();
+        Memory.patchCode(target, 1, (code: NativePointer) => {
+            code.writeU8(0xE8);
+        });
+    }
+
+    static jmp<RetType extends NativeCallbackReturnType, ArgTypes extends NativeCallbackArgumentType[] | []> (
+        target: NativePointerValue,
+        replacement: NativeCallbackImplementation<
+                GetNativeCallbackReturnValue<RetType>,
+                Extract<GetNativeCallbackArgumentValue<ArgTypes>, unknown[]>
+            >,
+        retType: RetType,
+        argTypes: ArgTypes,
+    ) {
+        const stub = new NativeFunction(target, retType, argTypes);
+        Interceptor.replace(target, new NativeCallback(replacement, retType, argTypes, 'win64'));
+        return stub;
+    }
+}
 
 export function log(format: string, ...args: any[]): void {
     if (!Logging)

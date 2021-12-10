@@ -1,32 +1,68 @@
 import { Modules } from "./modules";
 
 export const Addrs = {
-    BlowFish_Decode         : Modules.ED83.base.add(0x20CAA0),
-    Logger_Output           : Modules.ED83.base.add(0x11D160),
+    BlowFish_Decode                     : Modules.ED83.base.add(0x20CAA0),
+    Logger_Output                       : Modules.ED83.base.add(0x11D160),
 
     // patch
-    DLC_Check               : Modules.ED83.base.add(0x3A8359),
-    File_Open               : Modules.ED83.base.add(0xF5920),
-    LoadTableData           : Modules.ED83.base.add(0x2817F0),
-    ScriptLoad              : Modules.ED83.base.add(0x3C91B0),
-    ScriptVMExecute         : Modules.ED83.base.add(0x3C6DA0),
-    ScriptGetFunctionByName : Modules.ED83.base.add(0x3C7FF0),
+    DLC_Check                           : Modules.ED83.base.add(0x3A8359),
+    File_Open                           : Modules.ED83.base.add(0x0F5920),
+    LoadTableData                       : Modules.ED83.base.add(0x2817F0),
+    ScriptLoad                          : Modules.ED83.base.add(0x3C91B0),
+    ScriptVMExecute                     : Modules.ED83.base.add(0x3C6DA0),
+    ScriptGetFunctionByName             : Modules.ED83.base.add(0x3C7FF0),
+    GetFileSize                         : Modules.ED83.base.add(0x134400),
 
     // api
-    gED83                   : Modules.ED83.base.add(0xC4B3E0),
-    findNameTableDataByModel: Modules.ED83.base.add(0x27F560),
+
+    ED83: {
+        sharedInstance                      : Modules.ED83.base.add(0xC4B3E0),
+        findNameTableDataByModel            : Modules.ED83.base.add(0x27F560),
+        findNameTableDataByChrId            : Modules.ED83.base.add(0x27F440),
+        findPartyCharByChrId                : Modules.ED83.base.add(0x2C2F80),
+    },
 
     // hook
 
     Character: {
-        ChangeSkinFinished  : Modules.ED83.base.add(0x255F8F),
-        loadAni             : Modules.ED83.base.add(0x25D590),
+        ChangeSkinFinished              : Modules.ED83.base.add(0x255FBA),
+        LoadCharaAniByFieldInit         : Modules.ED83.base.add(0x2CAB82),
+
+        InitAnimeClipTable              : Modules.ED83.base.add(0x254380),
+        GetModelFromAttach              : Modules.ED83.base.add(0x25CA40),
+        LoadAni                         : Modules.ED83.base.add(0x25D590),
+        SetFace                         : Modules.ED83.base.add(0x25D880),
+    },
+
+    BattleCharacter: {
+        IsChrNPC                        : Modules.ED83.base.add(0x15A1C0),
+        InitNpcCraftAI                  : Modules.ED83.base.add(0x15C2C0),
+        InitEquipAndOrbs                : Modules.ED83.base.add(0x159D70),
+        InitPartyCraft                  : Modules.ED83.base.add(0x15C290),
+        InitMagic                       : Modules.ED83.base.add(0x15C260),
+    },
+
+    Asset: {
+        LoadAsset                       : Modules.ED83.base.add(0x0E0320),
+        HashSymbol                      : Modules.ED83.base.add(0x52E1F0),
+    },
+
+    BattleProc: {
+        SetupBattle_FormatAlgoScript    : Modules.ED83.base.add(0x1A8362),
+        SetupBattle_FormatAlgoScript2   : Modules.ED83.base.add(0x2A6790),
+        SetupBattle_InitPartyCraft      : Modules.ED83.base.add(0x1A8563),
+        SetupBattle_InitCraft           : Modules.ED83.base.add(0x1A8535),
+        SetupBattle_InitCraftEnd        : Modules.ED83.base.add(0x1A85B2),
     },
 };
 
 export const Offsets = {
     ED83: {
-        t_name      : 0x20D9C0,
+        t_name              : 0x20D9C0,
+        CharacterManager    : 0x1CF0,
+        CraftList           : 0x359AB8,
+        MagicList           : 0x35A0B8,
+        SBreakList          : 0x35AE98,
     },
 
     ScriptLoader: {
@@ -55,8 +91,21 @@ export const Offsets = {
             init    : 0x08,
         },
 
-        Model       : 0xA8,
-        Name        : 0x6F8,
-        ChrID       : 0x7D8,
+        Model               : 0xA8,
+        Name                : 0x6F8,
+        FaceModel           : 0x768,
+        PresetFaceModel     : 0x780,
+        ChrID               : 0x7D8,
+        faceTexture         : 0x868,
+    },
+
+    BattleCharacter: {
+        vtbl        : {
+            init    : 0x08,
+        },
+
+        BattleProc      : 0x08,
+        Character       : 0x10,
+        SBreakCraftID   : 0x1AA,
     },
 };

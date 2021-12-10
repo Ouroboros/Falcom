@@ -8,7 +8,6 @@ const _BlowfishInit     = new NativeFunction(Modules.ED83.base.add(0x20C730), "v
 const _BlowfishInit2    = new NativeFunction(Modules.ED83.base.add(0x20CAC0), "void", ['pointer', 'pointer'], 'win64');
 const _BlowfishDecode   = new NativeFunction(Modules.ED83.base.add(0x20CAA0), "void", ['pointer', 'pointer', 'size_t', 'int'], 'win64');
 const _FreeMemory       = new NativeFunction(Modules.ED83.base.add(0x4DAA50), "void", ['pointer'], 'win64');
-const _findNameTableDataByModel = new NativeFunction(Addrs.findNameTableDataByModel, "pointer", ['pointer', 'pointer'], 'win64');
 
 function BlowfishDecode(data: ArrayBuffer, key1: ArrayBuffer, key2: ArrayBuffer) {
     const bf = AllocObject(0x1444);
@@ -44,9 +43,4 @@ export function AllocMemory(size: number, tag: number): NativePointer {
 
 export function FreeMemory(p: NativePointer) {
     _FreeMemory(p);
-}
-
-export function findNameTableDataByModel(p: NativePointer, model: string): NativePointer {
-    const m = Memory.allocUtf8String(model);
-    return _findNameTableDataByModel(p, m);
 }
