@@ -418,9 +418,9 @@ def Handler_33(ctx: InstructionHandlerContext):
             0x08: 'B',
             0x09: 'W',          # bt_init_hit
             0x0A: 'WW',
-            0x0B: 'WL',
-            0x0C: 'WL',
-            0x0D: 'W',
+            0x0B: 'WL',         # set_flags
+            0x0C: 'WL',         # clear_flags
+            0x0D: 'W',          # get_flags
             0x0E: 'WWL',
             0x0F: 'WW',
             0x10: 'W',
@@ -2110,7 +2110,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x13,  'OP_13',                        'L'),
     inst(0x14,  'OP_14',                        'L'),
     inst(0x15,  'OP_15',                        'L'),
-    inst(0x16,  'OP_16',                        'W'),
+    inst(0x16,  'Sleep',                        'H'),
     inst(0x17,  'OP_17',                        'WW'),
     inst(0x18,  'OP_18',                        'BE'),
     inst(0x1A,  'OP_1A',                        'BB'),

@@ -29,3 +29,26 @@ def CameraPos(x: float, y: float, z: float):
 
 def CameraHeight(height: float, durationInMs: int = 0):
     CameraCtrl(0x05, 0x03, height, durationInMs)
+
+def SetBattleChrFlags(chrId: int, flags: int):
+    OP_33(0x0B, chrId, flags)
+
+def ClearBattleChrFlags(chrId: int, flags: int):
+    OP_33(0x0C, chrId, flags)
+
+def GetBattleChrFlags(chrId: int):
+    OP_33(0x0D, chrId)
+
+L_ARM_POINT = 'L_arm_point'
+R_ARM_POINT = 'R_arm_point'
+
+def AttachEquip(chrId: int, equip: str, part: str):
+    # EquipCtrl(0x00, 0xFFFE, 'C_EQU090', 'R_arm_point', 0, 0, 0, 0, 0, 0, 1, 1, 1)
+    EquipCtrl(0x00, chrId, equip, part, 0, 0, 0, 0, 0, 0, 1, 1, 1)
+
+def DeatchEquip(chrId: int, part: str):
+    # EquipCtrl(0x01, 0xFFFE, '', 'L_arm_point', 0, 0, 0, 0, 0, 0, 1, 1, 1)
+    EquipCtrl(0x01, chrId, '', part, 0, 0, 0, 0, 0, 0, 1, 1, 1)
+
+def PlayVoice(voice1: int, voice2: int = 0, voice3: int = 0, voice4: int = 0):
+    OP_3B(0x3A, 0xFFFE, (0xFF, voice1, 0x0), (0xFF, voice2, 0x0), (0xFF, voice3, 0x0), (0xFF, voice4, 0x0))

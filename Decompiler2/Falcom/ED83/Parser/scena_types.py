@@ -407,10 +407,10 @@ class ScenaAnimeClips:
         return body
 
 class ScenaAnimeClipTableEntry:
-    def __init__(self, flags: int = 0, name1: str = '', name2: str = '', *, fs: fileio.FileStream = None):
+    def __init__(self, flags: int = 0, model: str = '', animeClip: str = '', *, fs: fileio.FileStream = None):
         self.flags  = flags
-        self.name1  = name1
-        self.name2  = name2
+        self.model  = model
+        self.animeClip  = animeClip
 
         self.read(fs)
 
@@ -420,16 +420,16 @@ class ScenaAnimeClipTableEntry:
 
         self.flags = fs.ReadULong()
         if self.flags != 0:
-            self.name1 = utils.read_fixed_string(fs, 0x20)
-            self.name2 = utils.read_fixed_string(fs, 0x20)
+            self.model = utils.read_fixed_string(fs, 0x20)
+            self.animeClip = utils.read_fixed_string(fs, 0x20)
 
     def serialize(self) -> bytes:
         fs = io.BytesIO()
 
         fs.write(utils.int_to_bytes(self.flags, 4))
         if self.flags != 0:
-            fs.write(utils.pad_string(self.name1, 0x20))
-            fs.write(utils.pad_string(self.name2, 0x20))
+            fs.write(utils.pad_string(self.model, 0x20))
+            fs.write(utils.pad_string(self.animeClip, 0x20))
 
         fs.seek(0)
 
@@ -443,8 +443,8 @@ class ScenaAnimeClipTableEntry:
 
         if self.flags != 0:
             f.extend([
-                f"{DefaultIndent}name1 = '{self.name1}',",
-                f"{DefaultIndent}name2 = '{self.name2}',",
+                f"{DefaultIndent}model      = '{self.model}',",
+                f"{DefaultIndent}animeClip  = '{self.animeClip}',",
             ])
 
         f.append(')')
