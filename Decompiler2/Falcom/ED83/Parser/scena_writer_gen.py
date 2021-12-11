@@ -332,6 +332,23 @@ def OP_2B(arg1: int, arg2: int, arg3: int, arg4: int, *args):
     assert isinstance(arg4, int)
     return scena.handleOpCode(0x2B, arg1, arg2, arg3, arg4, *args)
 
+def PlayChrAnimeClip(arg1: int, arg2: str, arg3: int, arg4: int, arg5: int, arg6: int, arg7: int, arg8: float | int, arg9: float | int, arg10: float | int, arg11: float | int, arg12: int, arg13: int):
+    # 0x2C
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, str)
+    assert isinstance(arg3, int)
+    assert isinstance(arg4, int)
+    assert isinstance(arg5, int)
+    assert isinstance(arg6, int)
+    assert isinstance(arg7, int)
+    assert isinstance(arg8, float | int)
+    assert isinstance(arg9, float | int)
+    assert isinstance(arg10, float | int)
+    assert isinstance(arg11, float | int)
+    assert isinstance(arg12, int)
+    assert isinstance(arg13, int)
+    scena.handleOpCode(0x2C, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13)
+
 def OP_2C(arg1: int, arg2: str, arg3: int, arg4: int, arg5: int, arg6: int, arg7: int, arg8: float | int, arg9: float | int, arg10: float | int, arg11: float | int, arg12: int, arg13: int):
     # 0x2C
     assert isinstance(arg1, int)

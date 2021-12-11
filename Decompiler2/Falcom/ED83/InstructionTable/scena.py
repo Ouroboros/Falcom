@@ -993,7 +993,7 @@ def Handler_54(ctx: InstructionHandlerContext):
             0x47: 'BW',
             0x48: 'Wf',
             0x49: 'WW',     # set_ovalgear
-            0x4A: 'WW',
+            0x4A: 'WW',     # battle_change_style
             0x4B: 'W',
             0x4C: 'WWB',
             # 0x4D: 'f',
@@ -2129,7 +2129,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x29,  'MenuCmd',                      NoOperand,                                      handler = Handler_29),
     inst(0x2A,  'OP_2A',                        'BWSSB'),
     inst(0x2B,  'Battle',                       NoOperand,                                      handler = Handler_2B),
-    inst(0x2C,  'OP_2C',                        'WSBBBBBffffBB'),
+    inst(0x2C,  'PlayChrAnimeClip',             'WSBBBBBffffBB'),
     inst(0x2D,  'OP_2D',                        'WfB'),
     inst(0x2E,  'OP_2E',                        NoOperand,                                      handler = Handler_2E),
     inst(0x2F,  'ChrAnimeClipCtrl',             NoOperand,                                      handler = Handler_2F,       parameters = ('type', 'chrId')),

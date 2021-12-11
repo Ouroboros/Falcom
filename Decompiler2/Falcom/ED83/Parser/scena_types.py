@@ -788,7 +788,7 @@ class ScenaActionTableEntry:
             f'{DefaultIndent}word1C        = 0x{self.word1C:04X},',
             f'{DefaultIndent}word1E        = 0x{self.word1E:04X},',
             f'{DefaultIndent}word20        = 0x{self.word20:04X},',
-            f'{DefaultIndent}dword24       = {self.dword24},',
+            f'{DefaultIndent}dword24       = 0x{self.dword24:08X},',
             f'{DefaultIndent}dword28       = {self.dword28},',
             f'{DefaultIndent}dword2C       = {self.dword2C},',
             f'{DefaultIndent}dword30       = {self.dword30},',
