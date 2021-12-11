@@ -12,7 +12,7 @@
 - 双星物语2 Plus
 
 
-闪之轨迹3
+闪之轨迹
 =============
 
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/ed83/frida" target="_blank">ED83 Frida</a>
