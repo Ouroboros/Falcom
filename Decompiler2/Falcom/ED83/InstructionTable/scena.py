@@ -1001,7 +1001,7 @@ def Handler_54(ctx: InstructionHandlerContext):
             0x50: 'f',
             0x51: 'WS',
             0x52: 'WWB',
-            # 0x53: 'WW',
+            0x53: 'WW',     # set_chr_model_chrId
         }[n1]
 
     match ctx.action:

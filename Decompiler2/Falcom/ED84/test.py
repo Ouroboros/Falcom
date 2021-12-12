@@ -70,7 +70,7 @@ def main():
 
             output = pathlib.Path(f)
             os.makedirs(output.parent / 'py', exist_ok = True)
-            output = output.parent / 'py' / (output.name + '.py')
+            output = output.parent / 'py' / (output.stem + '.py')
             # if output.exists(): continue
 
             test(f, output)

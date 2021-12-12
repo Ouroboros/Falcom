@@ -11,9 +11,20 @@ def SaveClearData():
     OP_93(0x00, 0x02)
     OP_93(0x01)
 
+def RefreshSkin(chrId: int):
+    return ChangeSkin(chrId, '')
+
 def ChangeSkin(chrId: int, model: str):
-    # SetScenaFlags(ScenaFlag(0x00A7, 0, 0x538))
     ChrAnimeClipCtrl(0x0A, chrId, model, '')
+
+def SetChrModelChrId(chrId: int, modelChrId: int):
+    OP_54(0x53, chrId, modelChrId)
+
+def SetBattleStyle(chrId: int, style: int):
+    OP_54(0x4A, chrId, style)
+
+def GetBattleStyle(chrId: int):
+    OP_54(0x4B, chrId)
 
 def CameraRotate(vertical: float, horizontal: float, rotation: float, durationInMs: int = 0):
     '''
