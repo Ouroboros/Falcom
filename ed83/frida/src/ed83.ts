@@ -2,45 +2,10 @@ import { sprintf } from "sprintf-js";
 import * as utils from "./utils";
 import { Interceptor2 } from "./utils";
 import { Addrs } from "./ed83_addrs";
-import { AllocMemory, FreeMemory } from "./ed83_utils";
-import { ED83, ScriptLoader, Character, BattleCharacter, MaxPartyChrId } from "./ed83_types";
+import { ED83, MinCustomChrId, InvalidChrId, CharacterManager, Character, BattleCharacter, MaxPartyChrId, NameTableData } from "./ed83_types";
 
-function ED83ScriptLoad(self: NativePointer, path: NativePointer): NativePointer {
-    let filePath = path.readAnsiString()!;
-
-    if (filePath.slice(0, 5) != 'data/') {
-        return NULL;
-    }
-
-    let data = utils.loadPatchFile(filePath);
-
-    if (data == null) {
-        filePath = 'data_cn/' + filePath.slice(5);
-        data = utils.readFileContent(filePath);
-    }
-
-    if (data == null) {
-        utils.log(`Script::load failed: ${filePath}`);
-        return NULL;
-    }
-
-    // utils.log(`Script::load: ${filePath}`);
-
-    const loader = new ScriptLoader(self);
-    let buffer = loader.buffer;
-
-    if (buffer.isNull() == false) {
-        FreeMemory(buffer);
-        loader.buffer = NULL;
-    }
-
-    buffer = AllocMemory(data!.byteLength, 1);
-    buffer.writeByteArray(data!);
-
-    loader.buffer = buffer;
-    loader.bufferBase = buffer;
-
-    return buffer;
+function findReplacedNameData(char: Character): NameTableData | null {
+    return ED83.findNameTableDataByChrId(char.modelChrId);
 }
 
 function hookCharacterModelInit() {
@@ -48,7 +13,7 @@ function hookCharacterModelInit() {
         Addrs.Character.InitAnimeClipTable,
         function(chr: NativePointer, animeclip: NativePointer) {
             const char = new Character(chr);
-            const nameData = ED83.findNameTableDataByModel(char.model);
+            const nameData = findReplacedNameData(char);
 
             if (nameData) {
                 const faceModel = nameData.faceModel;
@@ -66,7 +31,7 @@ function hookCharacterModelInit() {
         Addrs.Character.ChangeSkinFinished,
         function(chr: NativePointer, animeclip: NativePointer) {
             const char = new Character(chr);
-            const nameData = ED83.findNameTableDataByModel(char.model);
+            const nameData = findReplacedNameData(char);
 
             if (!nameData) {
                 InitAnimeClipTable(chr, animeclip);
@@ -82,11 +47,64 @@ function hookCharacterModelInit() {
         Addrs.Character.LoadCharaAniByFieldInit,
         function(chr: NativePointer, ani: NativePointer, autoCompile: number) {
             const char = new Character(chr);
-            const nameData = ED83.findNameTableDataByModel(char.model);
+            const nameData = findReplacedNameData(char);
             char.loadAni(nameData ? nameData.ani : ani.readUtf8String()!);
         },
         'void', ['pointer', 'pointer', 'uint32'],
     );
+
+    const Character_Initialize = Interceptor2.jmp(
+        Addrs.Character.Initialize,
+        function(
+            chr:    NativePointer,
+            model:  NativePointer,
+            name:   NativePointer,
+            a4:     NativePointer,
+            a5:     NativePointer,
+            a6:     NativePointer,
+            a7:     NativePointer,
+            a8:     NativePointer,
+            a9:     NativePointer,
+            a10:     NativePointer,
+            a11:     NativePointer,
+            a12:     NativePointer,
+            a13:     NativePointer,
+            a14:     NativePointer,
+        ): NativePointer {
+
+            const char = new Character(chr);
+            const chrId = ED83.getBattleStyle(char.chrId);
+
+            switch (a8.toUInt32()) {
+                case 0x3EF5C28F:    // field init
+                    if (chrId >= MinCustomChrId && char.modelChrId == InvalidChrId) {
+                        char.modelChrId = chrId;
+                        model = Memory.allocUtf8String(findReplacedNameData(char)!.model);
+                    }
+                    break;
+            }
+
+            return Character_Initialize(chr, model, name, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
+        },
+        'pointer', ['pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer'],
+    );
+
+    Interceptor2.call(
+        Addrs.CharacterManager.CreatePartyCharacters_stricmp,
+        function(scriptName: NativePointer, aniName: NativePointer): number {
+            const ctx = (this.context as X64CpuContext);
+            const char = new Character(ctx.r15);
+
+            if (char.isReplaced()) {
+                return 0;
+            }
+
+            return scriptName.readUtf8String()!.toLowerCase() == aniName.readUtf8String()!.toLowerCase() ? 0 : 1;
+        },
+        'uint32', ['pointer', 'pointer'],
+    );
+
+    // asset redirect
 
     const AssetSymbolMap: any = {
         'C_CHR500'  : 'C_CHR033',
@@ -139,7 +157,7 @@ function hookBattle() {
                 if (!char)
                     return '';
 
-                const nameData = ED83.findNameTableDataByModel(char.model);
+                const nameData = findReplacedNameData(char);
 
                 if (!nameData)
                     return '';
@@ -191,8 +209,8 @@ function hookBattle() {
                 const replaced = battleChar.character.isReplaced();
 
                 battleChar.initEquipAndOrbs(chrId);
-                replaced ? battleChar.initNpcCraftAI(false) : battleChar.initPartyCraft(chrId);
                 battleChar.initMagic(chrId);
+                replaced ? battleChar.initNpcCraftAI(false) : battleChar.initPartyCraft(chrId);
                 battleChar.sbreakCraftID = replaced ? 0x3EF : ED83.getSBreak(chrId).readU16();
             }
         },
@@ -355,7 +373,7 @@ function traceScriptVM() {
 export function main() {
     ED83.enableLogger();
 
-    traceScriptVM();
+    // traceScriptVM();
 
     hookFileRedirection();
     hookCharacterModelInit();

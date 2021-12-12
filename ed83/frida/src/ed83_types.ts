@@ -3,6 +3,8 @@ import { ED8BaseObject } from "./utils";
 import * as utils from "./utils";
 
 export const MaxPartyChrId = 0x30;
+export const MinCustomChrId = 0x2000;
+export const InvalidChrId = 0xFFFF;
 
 export class ScriptLoader extends ED8BaseObject {
     get name(): string {
@@ -61,20 +63,38 @@ export class TableLoader extends ED8BaseObject {
     }
 }
 
+export class CharacterManager extends ED8BaseObject {
+    // private static _ReleaseCharacter = new NativeFunction(Addrs.CharacterManager.ReleaseCharacter, 'void', ['pointer', 'pointer'], 'win64');
+
+    // releaseCharacter(char: NativePointer) {
+    //     CharacterManager._ReleaseCharacter(this.impl, char);
+    // }
+}
+
 export class Character extends ED8BaseObject {
     isReplaced(nameData?: NameTableData | null): boolean {
-        const name = nameData ? nameData : ED83.findNameTableDataByModel(this.model);
-        if (!name)
-            return false;
+        return ED83.getBattleStyle(this.chrId) >= MinCustomChrId;
 
-        if (name.chrId == 0xFFFF)
-            return false;
+        // const name = nameData ? nameData : ED83.findNameTableDataByModel(this.model);
+        // if (!name)
+        //     return false;
 
-        return name.chrId != this.chrId;
+        // if (name.chrId == 0xFFFF)
+        //     return false;
+
+        // return name.chrId != this.chrId;
     }
 
     get chrId(): number {
         return this.readU16(Offsets.Character.ChrID);
+    }
+
+    get modelChrId(): number {
+        return this.readU16(Offsets.Character.ModelChrId);
+    }
+
+    set modelChrId(chrId: number) {
+        this.writeU16(Offsets.Character.ModelChrId, chrId);
     }
 
     get model(): string {
@@ -199,12 +219,13 @@ export class ED83 extends ED8BaseObject {
             return this._sharedInstance;
 
         const p = Addrs.ED83.sharedInstance.readPointer();
-        const i = new ED83(p);
 
-        if (p.isNull() == false)
-            this._sharedInstance = i;
+        if (p.isNull()) {
+            throw new Error('ED83 null');
+        }
 
-        return i;
+        this._sharedInstance = new ED83(p);
+        return this._sharedInstance;
     }
 
     static enableLogger() {
@@ -224,8 +245,8 @@ export class ED83 extends ED8BaseObject {
         return this.sharedInstance.readPointer(Offsets.ED83.t_name);
     }
 
-    static get characterManager(): NativePointer {
-        return this.sharedInstance.readPointer(Offsets.ED83.CharacterManager);
+    static get characterManager(): CharacterManager {
+        return new CharacterManager(this.sharedInstance.readPointer(Offsets.ED83.CharacterManager));
     }
 
     static findNameTableDataByModel(model: string): NameTableData | null {
@@ -238,6 +259,9 @@ export class ED83 extends ED8BaseObject {
     }
 
     static findNameTableDataByChrId(chrId: number): NameTableData | null {
+        if (chrId == InvalidChrId)
+            return null;
+
         const p = this._findNameTableDataByChrId(this.nameTable, chrId);
         if (p.isNull())
             return null;
@@ -246,7 +270,7 @@ export class ED83 extends ED8BaseObject {
     }
 
     static findCharByChrId(chrId: number): Character | null {
-        const char = this._findPartyCharByChrId(this.characterManager, chrId, 0);
+        const char = this._findPartyCharByChrId(this.characterManager.impl, chrId, 0);
         return char ? new Character(char) : null;
     }
 
@@ -260,5 +284,9 @@ export class ED83 extends ED8BaseObject {
 
     static getSBreak(chrId: number): NativePointer {
         return this.sharedInstance.impl.add(Offsets.ED83.SBreakList).add(chrId * 2);
+    }
+
+    static getBattleStyle(chrId: number): number {
+        return this.sharedInstance.impl.add(Offsets.ED83.BattleStyleList).add(chrId * 2).readU16();
     }
 }

@@ -24,10 +24,19 @@ export const Addrs = {
 
     // hook
 
+    CharacterManager: {
+        CreatePartyCharacters_stricmp   : Modules.ED83.base.add(0x2CAA52),
+        // CallReleaseCharacter            : Modules.ED83.base.add(0x2CA925),
+        // ReleaseCharacter                : Modules.ED83.base.add(0x2CA360),
+    },
+
     Character: {
         ChangeSkinFinished              : Modules.ED83.base.add(0x255FBA),
         LoadCharaAniByFieldInit         : Modules.ED83.base.add(0x2CAB82),
 
+        // constructor                     : Modules.ED83.base.add(0x24CE60),
+        // GetAssetFromAttachTable         : Modules.ED83.base.add(0x25CA40),
+        Initialize                      : Modules.ED83.base.add(0x258990),
         InitAnimeClipTable              : Modules.ED83.base.add(0x254380),
         GetModelFromAttach              : Modules.ED83.base.add(0x25CA40),
         LoadAni                         : Modules.ED83.base.add(0x25D590),
@@ -40,6 +49,10 @@ export const Addrs = {
         InitEquipAndOrbs                : Modules.ED83.base.add(0x159D70),
         InitPartyCraft                  : Modules.ED83.base.add(0x15C290),
         InitMagic                       : Modules.ED83.base.add(0x15C260),
+    },
+
+    BattleAITable: {
+        GetCraftByID                    : Modules.ED83.base.add(0x13E900),
     },
 
     Asset: {
@@ -63,6 +76,7 @@ export const Offsets = {
         CraftList           : 0x359AB8,
         MagicList           : 0x35A0B8,
         SBreakList          : 0x35AE98,
+        BattleStyleList     : 0x35AE38,
     },
 
     ScriptLoader: {
@@ -97,6 +111,7 @@ export const Offsets = {
         PresetFaceModel     : 0x780,
         ChrID               : 0x7D8,
         faceTexture         : 0x868,
+        ModelChrId          : 0x1A34,
     },
 
     BattleCharacter: {
@@ -107,5 +122,6 @@ export const Offsets = {
         BattleProc      : 0x08,
         Character       : 0x10,
         SBreakCraftID   : 0x1AA,
+        battleChrId     : 0xE8E,
     },
 };

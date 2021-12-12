@@ -25,6 +25,10 @@ export class ED8BaseObject {
     readUtf8String(offset: number): string | null {
         return this.impl.add(offset).readUtf8String();
     }
+
+    writeU16(offset: number, value: number) {
+        this.impl.add(offset).writeU16(value);
+    }
 }
 
 export class Interceptor2 {
