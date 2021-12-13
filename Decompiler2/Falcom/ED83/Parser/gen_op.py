@@ -4,16 +4,16 @@ from Falcom         import ED83
 
 def map_operand_type(t: OperandType) -> str:
     return {
-        OperandType.SInt8               : 'int',
-        OperandType.SInt16              : 'int',
-        OperandType.SInt32              : 'int',
-        OperandType.SInt64              : 'int',
-        OperandType.UInt8               : 'int',
-        OperandType.UInt16              : 'int',
-        OperandType.UInt32              : 'int',
-        OperandType.UInt64              : 'int',
-        OperandType.Float32             : 'float | int',
-        OperandType.Float64             : 'float | int',
+        OperandType.SInt8               : 'sint8',
+        OperandType.SInt16              : 'sint8',
+        OperandType.SInt32              : 'sint32',
+        OperandType.SInt64              : 'sint64',
+        OperandType.UInt8               : 'uint8',
+        OperandType.UInt16              : 'uint16',
+        OperandType.UInt32              : 'uint32',
+        OperandType.UInt64              : 'uint64',
+        OperandType.Float32             : 'float32',
+        OperandType.Float64             : 'float64',
         OperandType.MBCS                : 'str',
         ED83.ED83OperandType.Text       : 'str | tuple',
         ED83.ED83OperandType.Offset     : 'str',
@@ -30,6 +30,14 @@ def main():
 
     lines = [
         'from Falcom.ED83.Parser.scena_writer import _gScena as scena',
+        '',
+        'sint8 = int',
+        'uint8 = int',
+        'sint16 = int',
+        'uint16 = int',
+        'sint32 = int',
+        'uint32 = int',
+        'float32 = float | int',
         '',
     ]
 

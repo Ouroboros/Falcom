@@ -15,9 +15,14 @@ def genVariadicFuncStub(desc: InstructionDescriptor, *types, parameters = None) 
     parameters.extend([f'arg{i + 1}' for i in range(len(parameters), len(types))])
 
     for i, t in enumerate(types):
-        params.append(f'{parameters[i]}: {t.__name__}')
+        typeName = t.__name__
+
+        if t is float:
+            typeName = 'float | int'
+
+        params.append(f'{parameters[i]}: {typeName}')
         args.append(f'{parameters[i]}')
-        assertion.append(f'    assert isinstance({parameters[i]}, {t.__name__})')
+        assertion.append(f'    assert isinstance({parameters[i]}, {typeName})')
 
     if types:
         params.append('')

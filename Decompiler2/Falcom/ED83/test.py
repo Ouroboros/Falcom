@@ -45,7 +45,7 @@ def main():
     ]
 
     output_dir = None
-    output_dir = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\ouroboros\scripts\scena\dat\\'
+    # output_dir = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\ouroboros\scripts\scena\dat\\'
 
     for s in scena:
         # break
@@ -65,16 +65,17 @@ def main():
     path = scena[-1] + scp
     # path = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\system.dat'
     path = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\a0000.dat'
-    path = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\m3050.dat'
+    # path = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\m3050.dat'
     # path = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\battle\dat\alchr033.dat'
     # path = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\r0090.dat'
+    # path = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\ani\dat\chr033.dat'
 
     path = pathlib.Path(path)
 
     if output_dir:
-        output = output_dir + (path.name + '.py')
+        output = output_dir + (path.stem + '.py')
     else:
-        output = (path.parent / 'py') / (path.name + '.py')
+        output = (path.parent / 'py') / (path.stem + '.py')
 
     test(str(path), output)
 

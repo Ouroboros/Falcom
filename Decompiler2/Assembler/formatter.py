@@ -3,6 +3,7 @@ from .instruction       import *
 from .instruction_table import *
 from .function          import *
 from .handlers          import *
+from .optimizer         import *
 
 __all__ = (
     'Formatter',
@@ -11,10 +12,11 @@ __all__ = (
 DefaultIndent = GlobalConfig.DefaultIndent
 
 class Formatter:
-    def __init__(self, instructionTable: InstructionTable, *, name = ''):
+    def __init__(self, instructionTable: InstructionTable, *, name = '', optimizer: Optimizer = None):
         self.instructionTable   = instructionTable        # type: InstructionTable
         self.formatted          = set()
         self.scriptName         = name
+        self.optimizer          = optimizer
 
     def formatLabel(self, name: str) -> List[str]:
         return [f"label('{name}')"]
@@ -78,7 +80,7 @@ class Formatter:
                 '',
             ]
 
-            text = _hackDeadCode(text, self.scriptName, block)
+            # text = _hackDeadCode(text, self.scriptName, block)
 
         def addEmptyLine():
             if text and text[-1] != '':
@@ -131,6 +133,13 @@ class Formatter:
         if flags is None:
             flags = inst.flags
 
+        if self.optimizer is not None:
+            result = self.optimizer.optimize(inst, operands, flags)
+            if result is not None:
+                mnemonic    = result.mnemonic
+                operands    = result.operands
+                flags       = result.flags
+
         if flags.multiline:
             f = [f'{mnemonic}(']
 
@@ -152,6 +161,7 @@ class Formatter:
         else:
             return [f'{mnemonic}({", ".join(operands)})']
 
+'''
 def _hackDeadCode(text: List[str], scriptName: str, block: CodeBlock) -> List[str]:
     match scriptName:
         case 'a0000':
@@ -382,3 +392,5 @@ def _hackDeadCode(text: List[str], scriptName: str, block: CodeBlock) -> List[st
                 case 'loc_37BD': text = ["Jump('loc_37BD')", ''] + text
 
     return text
+
+'''

@@ -4,6 +4,7 @@ from .instruction_table import *
 from .disassembler import *
 from .formatter import *
 from .handlers import *
+from .optimizer import *
 
 # __all__ =  (
 #     instruction.__all__ +

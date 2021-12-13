@@ -848,9 +848,9 @@ def Handler_46(ctx: InstructionHandlerContext):
 def Handler_49(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
-            0x00: 'W',
+            0x00: 'N',                  # FormationAddMember
             0x01: 'W',
-            0x04: 'W',
+            0x04: 'N',                  # FormationSetLeader
             0x05: 'W',
             0x06: 'W',
             0x08: 'WffB',               # set_formation
@@ -864,7 +864,7 @@ def Handler_49(ctx: InstructionHandlerContext):
             0x11: 'W',
             0x17: 'WW',
 
-            0x02: '',
+            0x02: '',                   # FormationReset
             0x03: '',
             0x07: '',
             0x10: '',
@@ -2158,7 +2158,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x46,  'OP_46',                        NoOperand,                                      handler = Handler_46),
     inst(0x47,  'OP_47',                        'BSW'),
     inst(0x48,  'OP_48',                        'BWWW'),
-    inst(0x49,  'OP_49',                        NoOperand,                                      handler = Handler_49),
+    inst(0x49,  'FormationCtrl',                NoOperand,                                      handler = Handler_49),
     inst(0x4A,  'OP_4A',                        'ffffWB'),
     inst(0x4B,  'OP_4B',                        'WffffWB'),
     inst(0x4C,  'OP_4C',                        'WfffWB'),

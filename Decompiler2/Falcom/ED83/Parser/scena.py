@@ -1,6 +1,7 @@
 from Assembler.function import Function
 from .scena_types import *
 from ..InstructionTable import ScenaOpTable as ED83ScenaOpTable
+from ..InstructionTable.scena_optimizer import ED83Optimizer
 import pathlib
 
 __all__ = (
@@ -237,7 +238,7 @@ class ScenaParser:
                     raise NotImplementedError(f'unknown func type: {func.type}')
 
     def generatePython(self, filename: str) -> List[str]:
-        formatter = ScenaFormatter(ED83ScenaOpTable, name = self.name)
+        formatter = ScenaFormatter(ED83ScenaOpTable, name = self.name, optimizer = ED83Optimizer())
 
         lines = f'''\
 import sys
