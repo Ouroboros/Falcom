@@ -290,7 +290,7 @@ bin
 
 | 汉化补丁                      | 描述
 |------------------------------|----------
-|YSF                           | [详见 release](https://github.com/Ouroboros/Falcom/releases/tag/1.0)
+|YSF                           | [详见 release](https://github.com/Ouroboros/Falcom/releases/tag/localization)
 |YS6                           |
 |YSO                           |
 |YS8                           |
