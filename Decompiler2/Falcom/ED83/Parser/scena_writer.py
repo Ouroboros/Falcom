@@ -16,13 +16,26 @@ class _ScenaWriter:
         self.scenaName          = ''
         self.fs                 = fileio.FileStream().OpenMemory()
         self.globals            = None                  # type: dict
+        self.opcodeCallbacks    = []                    # type: List[Callable[[int, Tuple]]]
+        self.funcCallbacks      = []                    # type: List[Callable[[str, Callable]]]
 
     def init(self, instructionTable: ED83.ED83InstructionTable, scenaName: str):
         self.instructionTable   = instructionTable
         self.scenaName          = scenaName
 
+    def registerFuncCallback(self, cb):
+        self.funcCallbacks.append(cb)
+
+    def registerOpCodeCallback(self, cb):
+        self.opcodeCallbacks.append(cb)
+
     def functionDecorator(self, name: str, type: ED83.ScenaFunctionType) -> Callable[[], None]:
         def wrapper(f: Callable[[], Any]):
+            for cb in self.funcCallbacks:
+                f2 = cb(name, f)
+                if f2 is not None:
+                    f = f2
+
             func = ED83.ScenaFunction(len(self.functions), -1, name)
             func.type = type
             func.obj = f
@@ -188,6 +201,10 @@ class _ScenaWriter:
 
     def handleOpCode(self, opcode: int, *args, **kwargs):
         # log.debug(f'handle opcode 0x{opcode:X} @ 0x{self.fs.Position:X}')
+
+        for cb in self.opcodeCallbacks:
+            if cb(opcode, *args) is True:
+                return
 
         fs = self.fs
         tbl = self.instructionTable

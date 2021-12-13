@@ -2,7 +2,15 @@ import { sprintf } from "sprintf-js";
 import * as utils from "./utils";
 import { Interceptor2 } from "./utils";
 import { Addrs } from "./ed83_addrs";
-import { ED83, MinCustomChrId, InvalidChrId, CharacterManager, Character, BattleCharacter, MaxPartyChrId, NameTableData } from "./ed83_types";
+import {
+    ED83,
+    MinCustomChrId,
+    InvalidChrId,
+    Character,
+    BattleCharacter,
+    MaxPartyChrId,
+    NameTableData
+} from "./ed83_types";
 
 function findReplacedNameData(char: Character): NameTableData | null {
     return ED83.findNameTableDataByChrId(char.modelChrId);
@@ -109,6 +117,8 @@ function hookCharacterModelInit() {
     const AssetSymbolMap: any = {
         'C_CHR500'  : 'C_CHR033',
         'I_BTLSC500': 'I_BTLSC033',
+        'C_CHR501'  : 'C_CHR032',
+        'I_BTLSC501': 'I_BTLSC032',
     };
 
     const AssetLoadMap = AssetSymbolMap;
@@ -372,7 +382,6 @@ function traceScriptVM() {
 
 export function main() {
     ED83.enableLogger();
-
     // traceScriptVM();
 
     hookFileRedirection();

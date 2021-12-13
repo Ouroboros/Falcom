@@ -35,6 +35,11 @@ def SetBattleStyle(chrId: int, style: int):
 def GetBattleStyle(chrId: int):
     OP_54(0x4B, chrId)
 
+
+'''
+    camera
+'''
+
 def CameraRotate(vertical: float, horizontal: float, rotation: float, durationInMs: int = 0, unknown: int = 1):
     '''
         上下
@@ -59,6 +64,11 @@ def ClearBattleChrFlags(chrId: int, flags: int):
 def GetBattleChrFlags(chrId: int):
     OP_33(0x0D, chrId)
 
+
+'''
+    equip
+'''
+
 L_ARM_POINT = 'L_arm_point'
 R_ARM_POINT = 'R_arm_point'
 
@@ -76,3 +86,23 @@ def DeatchEquip(chrId: int, part: str, *args):
 
 def PlayVoice(voice1: int, voice2: int = 0, voice3: int = 0, voice4: int = 0):
     OP_3B(0x3A, 0xFFFE, (0xFF, voice1, 0x0), (0xFF, voice2, 0x0), (0xFF, voice3, 0x0), (0xFF, voice4, 0x0))
+
+'''
+    effect
+'''
+
+def LoadEffect(chrId: int, slot: int, eff: str):
+    EffectCtrl(0x0A, chrId, slot, eff)
+
+def PlayEffect(chrId: int, effectId: tuple, targetChrId: int, *args):
+    EffectCtrl(0x0C, chrId, effectId, targetChrId, *args)
+
+def StopEffect(chrId: int, slot: int, unknown: int):
+    EffectCtrl(0x0D, chrId, slot, unknown)
+
+'''
+    battle
+'''
+
+def IsBattleModelEqualTo(chrId: int, model: str):
+    OP_7A(0x01, chrId, model)

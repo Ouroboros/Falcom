@@ -29,7 +29,7 @@ def main():
     filename = filename.parent / ('scena_writer_gen.py')
 
     lines = [
-        'from Falcom.ED83.Parser.scena_writer import _gScena as scena',
+        'from Falcom.ED83.Parser.scena_writer import _gScena',
         '',
         'sint8 = int',
         'uint8 = int',
@@ -90,7 +90,7 @@ def main():
                 f'def {desc.mnemonic}({", ".join(params)}):',
                 f'    # 0x{desc.opcode:02X}',
                 *checkTypes,
-                f'    scena.handleOpCode({", ".join(args)})',
+                f'    _gScena.handleOpCode({", ".join(args)})',
                 '',
             ]
 

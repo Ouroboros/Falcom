@@ -32,7 +32,7 @@ def genVariadicFuncStub(desc: InstructionDescriptor, *types, parameters = None) 
         f'def {desc.mnemonic}({", ".join(params)}*args):',
         f'    # 0x{desc.opcode:02X}',
         *assertion,
-        f'    return scena.handleOpCode(0x{desc.opcode:02X}, {", ".join(args)}*args)',
+        f'    return _gScena.handleOpCode(0x{desc.opcode:02X}, {", ".join(args)}*args)',
         '',
     ]
 

@@ -65,8 +65,14 @@ def opt(opcode: int, *patterns: Tuple[str, Tuple]) -> OptimizeData:
 optimizeTable = buildTable(
     opt(
         0x30,
-        ('AttachEquip',  {0: 0x00}),
-        ('DeatchEquip',  {0: 0x01, 2: ''}),
+        ('AttachEquip', {0: 0x00}),
+        ('DeatchEquip', {0: 0x01, 2: ''}),
+    ),
+    opt(
+        0x32,
+        ('LoadEffect',  {0: 0x0A}),
+        ('PlayEffect',  {0: 0x0C}),
+        ('StopEffect',  {0: 0x0D}),
     ),
     opt(
         0x36,
@@ -82,8 +88,12 @@ optimizeTable = buildTable(
     ),
     opt(
         0x54,
-        ('SetBattleStyle',      {0: 0x4A}),
-        ('GetBattleStyle',      {0: 0x4B}),
+        ('SetBattleStyle',  {0: 0x4A}),
+        ('GetBattleStyle',  {0: 0x4B}),
+    ),
+    opt(
+        0x7A,
+        ('IsBattleModelEqualTo',  {0: 0x01}),
     ),
 )
 

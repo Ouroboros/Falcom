@@ -375,9 +375,9 @@ class ScenaAnimeClips:
         self.clips = []
         while True:
             c = ScenaAnimeClipItem(fs = fs)
-            self.clips.append(c)
             if c.type == 0:
                 break
+            self.clips.append(c)
 
     def serialize(self) -> bytes:
         b = bytearray()
@@ -579,7 +579,7 @@ class ScenaActionTableEntry:
     def __init__(
         self,
         craftId     : int = 0,
-        byte02      : int = 0,
+        type        : int = 0,
         byte03      : int = 0,
         byte04      : int = 0,
         byte05      : int = 0,
@@ -617,7 +617,7 @@ class ScenaActionTableEntry:
         fs: fileio.FileStream = None,
     ):
         self.craftId        = craftId       # type: int
-        self.byte02         = byte02        # type: int
+        self.type         = type        # type: int
         self.byte03         = byte03        # type: int
         self.byte04         = byte04        # type: int
         self.byte05         = byte05        # type: int
@@ -663,7 +663,7 @@ class ScenaActionTableEntry:
         if self.craftId == self.InvalidCraftID:
             return
 
-        self.byte02         = fs.ReadByte()                     # 0x02
+        self.type         = fs.ReadByte()                     # 0x02
         self.byte03         = fs.ReadByte()                     # 0x03
         self.byte04         = fs.ReadByte()                     # 0x04
         self.byte05         = fs.ReadByte()                     # 0x05
@@ -715,7 +715,7 @@ class ScenaActionTableEntry:
         fs.write(utils.int_to_bytes(self.craftId, 2))
 
         if self.craftId != self.InvalidCraftID:
-            fs.write(utils.int_to_bytes(self.byte02, 1))
+            fs.write(utils.int_to_bytes(self.type, 1))
             fs.write(utils.int_to_bytes(self.byte03, 1))
             fs.write(utils.int_to_bytes(self.byte04, 1))
             fs.write(utils.int_to_bytes(self.byte05, 1))
@@ -773,7 +773,7 @@ class ScenaActionTableEntry:
         return [
             'ScenaActionTableEntry(',
             f'{DefaultIndent}craftId       = 0x{self.craftId:X},',
-            f'{DefaultIndent}byte02        = 0x{self.byte02:02X},',
+            f'{DefaultIndent}type          = 0x{self.type:02X},',
             f'{DefaultIndent}byte03        = 0x{self.byte03:02X},',
             f'{DefaultIndent}byte04        = 0x{self.byte04:02X},',
             f'{DefaultIndent}byte05        = 0x{self.byte05:02X},',

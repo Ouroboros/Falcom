@@ -164,7 +164,12 @@ class OperandDescriptor:
         def formatFloat():
             if math.isnan(operand.value):
                 return "float('nan')"
-            return '%g' % operand.value
+
+            v = '%g' % operand.value
+            if len(v) == 1:
+                v += '.0'
+
+            return v
 
         def formatText() -> str:
             s = []
