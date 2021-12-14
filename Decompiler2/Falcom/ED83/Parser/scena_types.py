@@ -582,8 +582,8 @@ class ScenaActionTableEntry:
         type        : int = 0,
         byte03      : int = 0,
         byte04      : int = 0,
-        byte05      : int = 0,
-        byte06      : int = 0,
+        rng         : int = 0,
+        area        : int = 0,
         float08     : int = 0,
         float0C     : int = 0,
         float10     : int = 0,
@@ -617,11 +617,11 @@ class ScenaActionTableEntry:
         fs: fileio.FileStream = None,
     ):
         self.craftId        = craftId       # type: int
-        self.type         = type        # type: int
+        self.type           = type          # type: int
         self.byte03         = byte03        # type: int
         self.byte04         = byte04        # type: int
-        self.byte05         = byte05        # type: int
-        self.byte06         = byte06        # type: int
+        self.rng            = rng           # type: int
+        self.area           = area          # type: int
         self.float08        = float08       # type: int
         self.float0C        = float0C       # type: int
         self.float10        = float10       # type: int
@@ -666,8 +666,8 @@ class ScenaActionTableEntry:
         self.type         = fs.ReadByte()                     # 0x02
         self.byte03         = fs.ReadByte()                     # 0x03
         self.byte04         = fs.ReadByte()                     # 0x04
-        self.byte05         = fs.ReadByte()                     # 0x05
-        self.byte06         = fs.ReadByte()                     # 0x06
+        self.rng         = fs.ReadByte()                     # 0x05
+        self.area         = fs.ReadByte()                     # 0x06
         pad07               = fs.ReadByte()                     # 0x07
         self.float08        = fs.ReadFloat()                    # 0x08
         self.float0C        = fs.ReadFloat()                    # 0x0C
@@ -718,8 +718,8 @@ class ScenaActionTableEntry:
             fs.write(utils.int_to_bytes(self.type, 1))
             fs.write(utils.int_to_bytes(self.byte03, 1))
             fs.write(utils.int_to_bytes(self.byte04, 1))
-            fs.write(utils.int_to_bytes(self.byte05, 1))
-            fs.write(utils.int_to_bytes(self.byte06, 1))
+            fs.write(utils.int_to_bytes(self.rng, 1))
+            fs.write(utils.int_to_bytes(self.area, 1))
 
             fs.write(b'\x00')
 
@@ -776,8 +776,8 @@ class ScenaActionTableEntry:
             f'{DefaultIndent}type          = 0x{self.type:02X},',
             f'{DefaultIndent}byte03        = 0x{self.byte03:02X},',
             f'{DefaultIndent}byte04        = 0x{self.byte04:02X},',
-            f'{DefaultIndent}byte05        = 0x{self.byte05:02X},',
-            f'{DefaultIndent}byte06        = 0x{self.byte06:02X},',
+            f'{DefaultIndent}rng           = 0x{self.rng:02X},',
+            f'{DefaultIndent}area          = 0x{self.area:02X},',
             f'{DefaultIndent}float08       = {self.float08},',
             f'{DefaultIndent}float0C       = {self.float0C},',
             f'{DefaultIndent}float10       = {self.float10},',

@@ -114,7 +114,6 @@ class ED83Optimizer(Optimizer):
                     continue
                 newopr.append(o)
 
-
             return OptimizeResult(matcher.mnemonic, newopr, flags)
 
         return None
