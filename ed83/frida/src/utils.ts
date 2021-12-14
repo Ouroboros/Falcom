@@ -4,14 +4,22 @@ import { API } from "./modules";
 const Logging = !false;
 
 export class ED8BaseObject {
-    impl: NativePointer;
+    private impl: NativePointer;
 
     constructor(impl: NativePointer) {
         this.impl = impl;
     }
 
+    get pointer(): NativePointer {
+        return this.impl;
+    }
+
     readPointer(offset: number): NativePointer {
         return this.impl.add(offset).readPointer();
+    }
+
+    readU8(offset: number): number {
+        return this.impl.add(offset).readU8();
     }
 
     readU16(offset: number): number {
@@ -20,6 +28,10 @@ export class ED8BaseObject {
 
     readU32(offset: number): number {
         return this.impl.add(offset).readU32();
+    }
+
+    readFloat(offset: number): number {
+        return this.impl.add(offset).readFloat();
     }
 
     readUtf8String(offset: number): string | null {

@@ -8,11 +8,11 @@ export const InvalidChrId = 0xFFFF;
 
 export class ScriptLoader extends ED8BaseObject {
     get name(): string {
-        return this.impl.add(Offsets.ScriptLoader.Name).readUtf8String()!;
+        return this.pointer.add(Offsets.ScriptLoader.Name).readUtf8String()!;
     }
 
     set name(n: string) {
-        this.impl.add(Offsets.ScriptLoader.Name).writeUtf8String(n.slice(0, Offsets.ScriptLoader.NameSize));
+        this.pointer.add(Offsets.ScriptLoader.Name).writeUtf8String(n.slice(0, Offsets.ScriptLoader.NameSize));
     }
 
     get type(): UInt64 {
@@ -20,46 +20,46 @@ export class ScriptLoader extends ED8BaseObject {
     }
 
     set type(t: UInt64) {
-        this.impl.add(Offsets.ScriptLoader.Type).writeU32(t);
+        this.pointer.add(Offsets.ScriptLoader.Type).writeU32(t);
     }
 
     get buffer(): NativePointer {
-        return this.impl.add(Offsets.ScriptLoader.Buffer).readPointer();
+        return this.pointer.add(Offsets.ScriptLoader.Buffer).readPointer();
     }
 
     set buffer(ptr: NativePointer) {
-        this.impl.add(Offsets.ScriptLoader.Buffer).writePointer(ptr);
+        this.pointer.add(Offsets.ScriptLoader.Buffer).writePointer(ptr);
     }
 
     get bufferBase(): NativePointer {
-        return this.impl.add(Offsets.ScriptLoader.BufferBase).readPointer();
+        return this.pointer.add(Offsets.ScriptLoader.BufferBase).readPointer();
     }
 
     set bufferBase(ptr: NativePointer) {
-        this.impl.add(Offsets.ScriptLoader.BufferBase).writePointer(ptr);
+        this.pointer.add(Offsets.ScriptLoader.BufferBase).writePointer(ptr);
     }
 
     get disabled(): boolean {
-        return this.impl.add(Offsets.ScriptLoader.IsDisable).readU8() != 0;
+        return this.pointer.add(Offsets.ScriptLoader.IsDisable).readU8() != 0;
     }
 
     vtbl(): NativePointer {
-        return this.impl.readPointer();
+        return this.pointer.readPointer();
     }
 
     reset() {
         const init = new NativeFunction(this.vtbl().add(Offsets.ScriptLoader.vtbl.init).readPointer(), 'void', ['pointer'], 'win64');
-        init(this.impl);
+        init(this.pointer);
     }
 }
 
 export class TableLoader extends ED8BaseObject {
     get buffer(): NativePointer {
-        return this.impl.add(Offsets.TableLoader.Buffer).readPointer();
+        return this.pointer.add(Offsets.TableLoader.Buffer).readPointer();
     }
 
     set buffer(ptr: NativePointer) {
-        this.impl.add(Offsets.TableLoader.Buffer).writePointer(ptr);
+        this.pointer.add(Offsets.TableLoader.Buffer).writePointer(ptr);
     }
 }
 
@@ -67,7 +67,7 @@ export class CharacterManager extends ED8BaseObject {
     // private static _ReleaseCharacter = new NativeFunction(Addrs.CharacterManager.ReleaseCharacter, 'void', ['pointer', 'pointer'], 'win64');
 
     // releaseCharacter(char: NativePointer) {
-    //     CharacterManager._ReleaseCharacter(this.impl, char);
+    //     CharacterManager._ReleaseCharacter(this.pointer, char);
     // }
 }
 
@@ -106,7 +106,7 @@ export class Character extends ED8BaseObject {
     }
 
     set face(asset: string) {
-        this.impl.add(Offsets.Character.FaceModel).writeUtf8String(asset);
+        this.pointer.add(Offsets.Character.FaceModel).writeUtf8String(asset);
     }
 
     get faceTexture(): string {
@@ -118,14 +118,14 @@ export class Character extends ED8BaseObject {
     }
 
     set presetFaceModel(model: string) {
-        this.impl.add(Offsets.Character.PresetFaceModel).writeUtf8String(model);
+        this.pointer.add(Offsets.Character.PresetFaceModel).writeUtf8String(model);
     }
 
     loadAni(ani: string) {
         const Character_LoadAni = new NativeFunction(Addrs.Character.LoadAni, "void", ['pointer', 'pointer', 'uint32'], 'win64');
         const p = Memory.allocUtf8String(ani);
         const auto_compile = 0;
-        Character_LoadAni(this.impl, p, auto_compile);
+        Character_LoadAni(this.pointer, p, auto_compile);
     }
 }
 
@@ -149,27 +149,27 @@ export class BattleCharacter extends ED8BaseObject {
     }
 
     set sbreakCraftID(craftId: number) {
-        this.impl.add(Offsets.BattleCharacter.SBreakCraftID).writeU16(craftId);
+        this.pointer.add(Offsets.BattleCharacter.SBreakCraftID).writeU16(craftId);
     }
 
     isChrNPC(): boolean {
-        return (BattleCharacter._IsChrNPC(this.impl) & 0xFF) != 0;
+        return (BattleCharacter._IsChrNPC(this.pointer) & 0xFF) != 0;
     }
 
     initNpcCraftAI(reset: boolean) {
-        BattleCharacter._InitNpcCraftAI(this.impl, Number(reset));
+        BattleCharacter._InitNpcCraftAI(this.pointer, Number(reset));
     }
 
     initEquipAndOrbs(chrId: number) {
-        BattleCharacter._InitEquipAndOrbs(this.impl, chrId);
+        BattleCharacter._InitEquipAndOrbs(this.pointer, chrId);
     }
 
     initPartyCraft(chrId: number) {
-        BattleCharacter._InitPartyCraft(this.impl, ED83.getCraftList(chrId));
+        BattleCharacter._InitPartyCraft(this.pointer, ED83.getCraftList(chrId));
     }
 
     initMagic(chrId: number) {
-        BattleCharacter._InitMagic(this.impl, ED83.getMagicList(chrId));
+        BattleCharacter._InitMagic(this.pointer, ED83.getMagicList(chrId));
     }
 }
 
@@ -204,6 +204,65 @@ export class NameTableData extends ED8BaseObject {
 
     get name2(): string {
         return this.readPointer(0x30).readUtf8String()!;
+    }
+}
+
+class vector extends ED8BaseObject {
+    get size(): number {
+        return this.readU32(0x00);
+    }
+
+    get ptr(): NativePointer {
+        return this.readPointer(0x08);
+    }
+}
+
+export class BattleAITable extends ED8BaseObject {
+    get algoTable(): AlgoTable {
+        return new AlgoTable(this.pointer.add(Offsets.BattleAITable.AlgoTable));
+    }
+
+    get actionTable(): ActionTable {
+        return new ActionTable(this.pointer.add(Offsets.BattleAITable.ActionTable));
+    }
+
+    get battleCharacter(): BattleCharacter {
+        return new BattleCharacter(this.readPointer(Offsets.BattleAITable.BattleCharacter));
+    }
+}
+
+export class AlgoTable extends vector {
+}
+
+class ActionTableData extends ED8BaseObject {
+    get craftId(): number {
+        return this.readU16(0x00);
+    }
+
+    get name(): string {
+        return this.readPointer(0x10).readUtf8String()!;
+    }
+
+    get description(): string {
+        return this.readPointer(0x18).readUtf8String()!;
+    }
+
+    get type(): number {
+        return this.readU8(0x24);
+    }
+
+    get area(): number {
+        return this.readU8(0x84);
+    }
+
+    get rng(): number {
+        return this.readFloat(0x88);
+    }
+}
+
+export class ActionTable extends vector {
+    getCraft(index: number): ActionTableData {
+        return new ActionTableData(this.ptr.add(index * 8).readPointer())
     }
 }
 
@@ -270,23 +329,23 @@ export class ED83 extends ED8BaseObject {
     }
 
     static findCharByChrId(chrId: number): Character | null {
-        const char = this._findPartyCharByChrId(this.characterManager.impl, chrId, 0);
+        const char = this._findPartyCharByChrId(this.characterManager.pointer, chrId, 0);
         return char ? new Character(char) : null;
     }
 
     static getCraftList(chrId: number): NativePointer {
-        return this.sharedInstance.impl.add(Offsets.ED83.CraftList).add(chrId * 0x10);
+        return this.sharedInstance.pointer.add(Offsets.ED83.CraftList).add(chrId * 0x10);
     }
 
     static getMagicList(chrId: number): NativePointer {
-        return this.sharedInstance.impl.add(Offsets.ED83.MagicList).add(chrId * 0x10);
+        return this.sharedInstance.pointer.add(Offsets.ED83.MagicList).add(chrId * 0x10);
     }
 
     static getSBreak(chrId: number): NativePointer {
-        return this.sharedInstance.impl.add(Offsets.ED83.SBreakList).add(chrId * 2);
+        return this.sharedInstance.pointer.add(Offsets.ED83.SBreakList).add(chrId * 2);
     }
 
     static getBattleStyle(chrId: number): number {
-        return this.sharedInstance.impl.add(Offsets.ED83.BattleStyleList).add(chrId * 2).readU16();
+        return this.sharedInstance.pointer.add(Offsets.ED83.BattleStyleList).add(chrId * 2).readU16();
     }
 }

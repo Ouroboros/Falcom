@@ -122,6 +122,17 @@ export const Offsets = {
         BattleProc      : 0x08,
         Character       : 0x10,
         SBreakCraftID   : 0x1AA,
+        BattleAITable   : 0x428,
         battleChrId     : 0xE8E,
+    },
+
+    BattleAITable: {
+        vtbl        : {
+            init    : 0x08,
+        },
+
+        AlgoTable       : 0x08,
+        ActionTable     : 0x18,
+        BattleCharacter : 0x50,
     },
 };

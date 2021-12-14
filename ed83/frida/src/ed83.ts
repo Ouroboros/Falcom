@@ -9,7 +9,8 @@ import {
     Character,
     BattleCharacter,
     MaxPartyChrId,
-    NameTableData
+    NameTableData,
+    BattleAITable,
 } from "./ed83_types";
 
 function findReplacedNameData(char: Character): NameTableData | null {
@@ -231,6 +232,50 @@ function hookBattle() {
         code.writeU8(0xEB);
         code.add(1).writeU8(Addrs.BattleProc.SetupBattle_InitCraftEnd.sub(Addrs.BattleProc.SetupBattle_InitCraft).sub(5 + 2).toUInt32());
     });
+
+    const BattleAITable_GetCraftByID = Interceptor2.jmp(
+        Addrs.BattleAITable.GetCraftByID,
+        function(tables: NativePointer, craftId: number): NativePointer {
+            const tbl = new BattleAITable(tables);
+            const char = tbl.battleCharacter;
+
+            if (char.character.isReplaced() == false) {
+                return BattleAITable_GetCraftByID(tables, craftId);
+            }
+
+            switch (craftId) {
+                case 0:     // regular attack
+                {
+                    const actionTable = tbl.actionTable;
+                    for (let i = 0, n = actionTable.size; i != n; i++) {
+                        const craft = actionTable.getCraft(i);
+                        if (craft.type != 1)
+                            continue;
+
+                        return craft.pointer;
+                    }
+                    break;
+                }
+
+                case 1:     // move
+                {
+                    const actionTable = tbl.actionTable;
+                    for (let i = 0, n = actionTable.size; i != n; i++) {
+                        const craft = actionTable.getCraft(i);
+                        if (craft.type != 3)
+                            continue;
+
+                        return craft.pointer;
+                    }
+
+                    break;
+                }
+            }
+
+            return BattleAITable_GetCraftByID(tables, craftId);
+
+        }, 'pointer', ['pointer', 'uint16'],
+    );
 }
 
 function hookFileRedirection() {
