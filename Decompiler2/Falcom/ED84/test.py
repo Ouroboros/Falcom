@@ -49,6 +49,16 @@ def test(filename, output):
 
     open(output, 'wb').write('\n'.join(py).encode('UTF8'))
 
+def procfile(f: str):
+    console.setTitle(os.path.basename(f))
+
+    output = pathlib.Path(f)
+    os.makedirs(output.parent / 'py', exist_ok = True)
+    output = output.parent / 'py' / (output.stem + '.py')
+    # if output.exists(): continue
+
+    test(f, output)
+
 def main():
     scp = [
         'a0000.dat',
@@ -65,6 +75,9 @@ def main():
 
     for s in scena:
         # break
+        iterlib.forEachFileMP(procfile, s, '*.dat', subdir = False)
+        continue
+
         for f in fileio.getDirectoryFiles(s, '*.dat', subdir = False):
             console.setTitle(os.path.basename(f))
 

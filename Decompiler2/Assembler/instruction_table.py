@@ -165,8 +165,8 @@ class OperandDescriptor:
             if math.isnan(operand.value):
                 return "float('nan')"
 
-            v = '%g' % operand.value
-            if len(v) == 1:
+            v: str = '%g' % operand.value
+            if v.find('.') == -1:
                 v += '.0'
 
             return v

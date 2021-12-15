@@ -581,20 +581,20 @@ class ScenaActionTableEntry:
         craftId     : int = 0,
         type        : int = 0,
         byte03      : int = 0,
-        byte04      : int = 0,
+        areaType      : int = 0,
         rng         : int = 0,
         area        : int = 0,
         float08     : int = 0,
         float0C     : int = 0,
         float10     : int = 0,
-        byte14      : int = 0,
+        ariaATDelay : int = 0,
         byte16      : int = 0,
         word18      : int = 0,
         word1A      : int = 0,
         word1C      : int = 0,
         word1E      : int = 0,
         word20      : int = 0,
-        dword24     : int = 0,
+        atDelay     : int = 0,
         dword28     : int = 0,
         dword2C     : int = 0,
         dword30     : int = 0,
@@ -609,7 +609,7 @@ class ScenaActionTableEntry:
         dword54     : int = 0,
         dword58     : int = 0,
         dword5C     : int = 0,
-        word60      : int = 0,
+        cp          : int = 0,
         flags       : str = '',
         action      : str = '',
         name        : str = '',
@@ -619,20 +619,20 @@ class ScenaActionTableEntry:
         self.craftId        = craftId       # type: int
         self.type           = type          # type: int
         self.byte03         = byte03        # type: int
-        self.byte04         = byte04        # type: int
+        self.areaType       = areaType        # type: int
         self.rng            = rng           # type: int
         self.area           = area          # type: int
         self.float08        = float08       # type: int
         self.float0C        = float0C       # type: int
         self.float10        = float10       # type: int
-        self.byte14         = byte14        # type: int
+        self.ariaATDelay    = ariaATDelay   # type: int
         self.byte16         = byte16        # type: int
         self.word18         = word18        # type: int
         self.word1A         = word1A        # type: int
         self.word1C         = word1C        # type: int
         self.word1E         = word1E        # type: int
         self.word20         = word20        # type: int
-        self.dword24        = dword24       # type: int
+        self.atDelay        = atDelay       # type: int
         self.dword28        = dword28       # type: int
         self.dword2C        = dword2C       # type: int
         self.dword30        = dword30       # type: int
@@ -647,7 +647,7 @@ class ScenaActionTableEntry:
         self.dword54        = dword54       # type: int
         self.dword58        = dword58       # type: int
         self.dword5C        = dword5C       # type: int
-        self.word60         = word60        # type: int
+        self.cp             = cp            # type: int
         self.flags          = flags         # type: str
         self.action         = action        # type: str
         self.name           = name          # type: str
@@ -663,17 +663,16 @@ class ScenaActionTableEntry:
         if self.craftId == self.InvalidCraftID:
             return
 
-        self.type         = fs.ReadByte()                     # 0x02
+        self.type           = fs.ReadByte()                     # 0x02
         self.byte03         = fs.ReadByte()                     # 0x03
-        self.byte04         = fs.ReadByte()                     # 0x04
-        self.rng         = fs.ReadByte()                     # 0x05
-        self.area         = fs.ReadByte()                     # 0x06
+        self.areaType       = fs.ReadByte()                     # 0x04
+        self.rng            = fs.ReadByte()                     # 0x05
+        self.area           = fs.ReadByte()                     # 0x06
         pad07               = fs.ReadByte()                     # 0x07
         self.float08        = fs.ReadFloat()                    # 0x08
         self.float0C        = fs.ReadFloat()                    # 0x0C
         self.float10        = fs.ReadFloat()                    # 0x10
-        self.byte14         = fs.ReadByte()                     # 0x14
-        pad15               = fs.ReadByte()                     # 0x15
+        self.ariaATDelay    = fs.ReadUShort()                   # 0x14
         self.byte16         = fs.ReadByte()                     # 0x16
         pad17               = fs.ReadByte()                     # 0x17
         self.word18         = fs.ReadUShort()                   # 0x18
@@ -682,7 +681,7 @@ class ScenaActionTableEntry:
         self.word1E         = fs.ReadUShort()                   # 0x1E
         self.word20         = fs.ReadUShort()                   # 0x20
         pad22               = fs.ReadUShort()                   # 0x22
-        self.dword24        = fs.ReadULong()                    # 0x24
+        self.atDelay        = fs.ReadULong()                    # 0x24
         self.dword28        = fs.ReadULong()                    # 0x28
         self.dword2C        = fs.ReadULong()                    # 0x2C
         self.dword30        = fs.ReadULong()                    # 0x30
@@ -697,14 +696,13 @@ class ScenaActionTableEntry:
         self.dword54        = fs.ReadULong()                    # 0x54
         self.dword58        = fs.ReadULong()                    # 0x58
         self.dword5C        = fs.ReadULong()                    # 0x5C
-        self.word60         = fs.ReadUShort()                   # 0x60
+        self.cp             = fs.ReadUShort()                   # 0x60
         pad62               = fs.ReadUShort()                   # 0x62
         self.flags          = utils.read_fixed_string(fs, 0x10) # 0x64
         self.action         = utils.read_fixed_string(fs, 0x20) # 0x74
         self.name           = utils.read_fixed_string(fs, 0x40) # 0x94
 
         assert pad07 == 0
-        assert pad15 == 0
         assert pad17 == 0
         assert pad22 == 0
         assert pad62 == 0
@@ -717,7 +715,7 @@ class ScenaActionTableEntry:
         if self.craftId != self.InvalidCraftID:
             fs.write(utils.int_to_bytes(self.type, 1))
             fs.write(utils.int_to_bytes(self.byte03, 1))
-            fs.write(utils.int_to_bytes(self.byte04, 1))
+            fs.write(utils.int_to_bytes(self.areaType, 1))
             fs.write(utils.int_to_bytes(self.rng, 1))
             fs.write(utils.int_to_bytes(self.area, 1))
 
@@ -726,9 +724,7 @@ class ScenaActionTableEntry:
             fs.write(utils.float_to_bytes(self.float08))
             fs.write(utils.float_to_bytes(self.float0C))
             fs.write(utils.float_to_bytes(self.float10))
-            fs.write(utils.int_to_bytes(self.byte14, 1))
-
-            fs.write(b'\x00')
+            fs.write(utils.int_to_bytes(self.ariaATDelay, 2))
 
             fs.write(utils.int_to_bytes(self.byte16, 1))
 
@@ -742,7 +738,7 @@ class ScenaActionTableEntry:
 
             fs.write(b'\x00' * 2)
 
-            fs.write(utils.int_to_bytes(self.dword24, 4))
+            fs.write(utils.int_to_bytes(self.atDelay, 4))
             fs.write(utils.int_to_bytes(self.dword28, 4))
             fs.write(utils.int_to_bytes(self.dword2C, 4))
             fs.write(utils.int_to_bytes(self.dword30, 4))
@@ -757,7 +753,7 @@ class ScenaActionTableEntry:
             fs.write(utils.int_to_bytes(self.dword54, 4))
             fs.write(utils.int_to_bytes(self.dword58, 4))
             fs.write(utils.int_to_bytes(self.dword5C, 4))
-            fs.write(utils.int_to_bytes(self.word60, 2))
+            fs.write(utils.int_to_bytes(self.cp, 2))
 
             fs.write(b'\x00' * 2)
 
@@ -775,20 +771,20 @@ class ScenaActionTableEntry:
             f'{DefaultIndent}craftId       = 0x{self.craftId:X},',
             f'{DefaultIndent}type          = 0x{self.type:02X},',
             f'{DefaultIndent}byte03        = 0x{self.byte03:02X},',
-            f'{DefaultIndent}byte04        = 0x{self.byte04:02X},',
+            f'{DefaultIndent}areaType      = 0x{self.areaType:02X},',
             f'{DefaultIndent}rng           = 0x{self.rng:02X},',
             f'{DefaultIndent}area          = 0x{self.area:02X},',
             f'{DefaultIndent}float08       = {self.float08},',
             f'{DefaultIndent}float0C       = {self.float0C},',
             f'{DefaultIndent}float10       = {self.float10},',
-            f'{DefaultIndent}byte14        = 0x{self.byte14:02X},',
+            f'{DefaultIndent}ariaATDelay   = {self.ariaATDelay},',
             f'{DefaultIndent}byte16        = 0x{self.byte16:02X},',
             f'{DefaultIndent}word18        = 0x{self.word18:04X},',
             f'{DefaultIndent}word1A        = 0x{self.word1A:04X},',
             f'{DefaultIndent}word1C        = 0x{self.word1C:04X},',
             f'{DefaultIndent}word1E        = 0x{self.word1E:04X},',
             f'{DefaultIndent}word20        = 0x{self.word20:04X},',
-            f'{DefaultIndent}dword24       = 0x{self.dword24:08X},',
+            f'{DefaultIndent}atDelay       = {self.atDelay},',
             f'{DefaultIndent}dword28       = {self.dword28},',
             f'{DefaultIndent}dword2C       = {self.dword2C},',
             f'{DefaultIndent}dword30       = {self.dword30},',
@@ -803,7 +799,7 @@ class ScenaActionTableEntry:
             f'{DefaultIndent}dword54       = {self.dword54},',
             f'{DefaultIndent}dword58       = {self.dword58},',
             f'{DefaultIndent}dword5C       = {self.dword5C},',
-            f'{DefaultIndent}word60        = {self.word60},',
+            f'{DefaultIndent}cp            = {self.cp},',
             f"{DefaultIndent}flags         = '{self.flags}',",
             f"{DefaultIndent}action        = '{self.action}',",
             f"{DefaultIndent}name          = '{self.name}',",

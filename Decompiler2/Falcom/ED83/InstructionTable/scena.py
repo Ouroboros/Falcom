@@ -11,6 +11,7 @@ __all__ = (
     'ED83OperandDescriptor',
     'ScenaExpression',
     'TextCtrlCode',
+    'ScriptId',
 )
 
 NoOperand = InstructionDescriptor.NoOperand
@@ -63,7 +64,7 @@ def Handler_02(ctx: InstructionHandlerContext):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
-            oprs = readAllOperands(ctx, 'BSB')
+            oprs = readAllOperands(ctx, 'sSB')
             inst.operands = oprs[:-1]
             count = oprs[-1].value
             if count != 0:
@@ -74,7 +75,7 @@ def Handler_02(ctx: InstructionHandlerContext):
         case HandlerAction.Assemble:
             inst = ctx.instruction
             count = len(inst.operands[2:])
-            fmts = 'BSB' + 'V' * count
+            fmts = 'sSB' + 'V' * count
             inst.operands.insert(2, Operand(value = count))
             applyDescriptors(ctx, fmts)
             return
@@ -2115,7 +2116,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x18,  'OP_18',                        'BE'),
     inst(0x1A,  'OP_1A',                        'BB'),
     inst(0x1D,  'CreateChr',                    'NSSSBLLfffffffSSLBffW',    Flags.Empty,                                    parameters = ('chrId', 'model', 'name', 'monsterId', 'type')),
-    inst(0x1E,  'OP_1E',                        'NBBS'),
+    inst(0x1E,  'CreateThread',                 'NBsS',                                                                     parameters = ('chrId', 'threadId', 'scriptId', 'func')),
     inst(0x1F,  'OP_1F',                        'WB'),
     inst(0x20,  'OP_20',                        'BVVV'),
     inst(0x21,  'OP_21',                        'B'),
@@ -2129,7 +2130,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x29,  'MenuCmd',                      NoOperand,                                      handler = Handler_29),
     inst(0x2A,  'OP_2A',                        'BWSSB'),
     inst(0x2B,  'Battle',                       NoOperand,                                      handler = Handler_2B),
-    inst(0x2C,  'PlayChrAnimeClip',             'WSBBBBBffffBB'),
+    inst(0x2C,  'PlayChrAnimeClip',             'WSBBBBBffffBB',                                                            parameters = ('chrId', 'animeClip', 'loop', 'arg4', 'arg5', 'arg6', 'arg7', 'delay', 'startTime', 'endTime', 'currentTime', 'arg12', 'arg13')),
     inst(0x2D,  'WaitAnimeClip',                'WfB',                                                                      parameters = ('chrId', 'expiration', 'animeSlot')),
     inst(0x2E,  'OP_2E',                        NoOperand,                                      handler = Handler_2E),
     inst(0x2F,  'ChrAnimeClipCtrl',             NoOperand,                                      handler = Handler_2F,       parameters = ('type', 'chrId')),
@@ -2247,7 +2248,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0xAB,  'OP_AB',                        NoOperand,                                      handler = Handler_AB),
     inst(0xAC,  'OP_AC',                        NoOperand,                                      handler = Handler_AC),
     inst(0xAD,  'OP_AD',                        NoOperand,                                      handler = Handler_AD),
-    inst(0xAE,  'OP_AE',                        'SW'),
+    inst(0xAE,  'SetEndhookFunction',           'SW'),
     inst(0xAF,  'OP_AF',                        'B'),
     inst(0xB1,  'MenuChrFlagCmd',               'BNL'),
     inst(0xB2,  'OP_B2',                        'BW'),

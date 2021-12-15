@@ -84,9 +84,6 @@ def DeatchEquip(chrId: int, part: str, *args):
     # EquipCtrl(0x01, 0xFFFE, '', 'L_arm_point', 0, 0, 0, 0, 0, 0, 1, 1, 1)
     EquipCtrl(0x01, chrId, '', part, *args)
 
-def PlayVoice(voice1: int, voice2: int = 0, voice3: int = 0, voice4: int = 0):
-    OP_3B(0x3A, 0xFFFE, (0xFF, voice1, 0x0), (0xFF, voice2, 0x0), (0xFF, voice3, 0x0), (0xFF, voice4, 0x0))
-
 '''
     effect
 '''
@@ -104,5 +101,26 @@ def StopEffect(chrId: int, slot: int, unknown: int):
     battle
 '''
 
+def PlaySound(sound: int):
+    OP_3B(0x00, (0xFF, sound, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+
+def PlayVoice(voice1: int, voice2: int = 0, voice3: int = 0, voice4: int = 0):
+    OP_3B(0x3A, 0xFFFE, (0xFF, voice1, 0x0), (0xFF, voice2, 0x0), (0xFF, voice3, 0x0), (0xFF, voice4, 0x0))
+
+TargetSelf = 0xFFFE
+TargetSelectedPos = 0xFFF5
+
 def IsBattleModelEqualTo(chrId: int, model: str):
     OP_7A(0x01, chrId, model)
+
+def ChrMoveToTarget():
+    OP_33(0x34)
+
+def ChrTurnDirection(chrId: int, targetId: int, unknown: float, speed: float = -1.0):
+    OP_33(0x3C, chrId, targetId, unknown, speed)
+
+def ChrSetPosByTargetAsync(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int, unknown3: int):
+    OP_33(0x39, chrId, targetId, x, y, z, speed, unknown2, unknown3)
+
+def ChrSetPosByTargetSync(chrId: int, targetId: int, x: float, y: float, forward: float, speed: float, unknown2: int, unknown3: int):
+    OP_33(0x33, chrId, targetId, x, y, forward, speed, unknown2, unknown3)

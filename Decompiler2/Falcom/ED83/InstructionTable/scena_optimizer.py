@@ -72,7 +72,14 @@ optimizeTable = buildTable(
         0x32,
         ('LoadEffect',  {0: 0x0A}),
         ('PlayEffect',  {0: 0x0C}),
-        ('StopEffect',  {0: 0x0D}),
+        # ('StopEffect',  {0: 0x0D}),
+    ),
+    opt(
+        0x33,
+        ('ChrMoveToTarget',         {0: 0x34}),
+        ('ChrSetPosByTargetSync',   {0: 0x33}),
+        ('ChrSetPosByTargetAsync',  {0: 0x39}),
+        ('ChrTurnDirection',        {0: 0x3C}),
     ),
     opt(
         0x36,
