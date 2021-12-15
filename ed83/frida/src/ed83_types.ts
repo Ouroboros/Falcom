@@ -152,6 +152,10 @@ export class BattleCharacter extends ED8BaseObject {
         this.pointer.add(Offsets.BattleCharacter.SBreakCraftID).writeU16(craftId);
     }
 
+    get battleAITable(): BattleAITable {
+        return new BattleAITable(this.readPointer(Offsets.BattleCharacter.BattleAITable));
+    }
+
     isChrNPC(): boolean {
         return (BattleCharacter._IsChrNPC(this.pointer) & 0xFF) != 0;
     }

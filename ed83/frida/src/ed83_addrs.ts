@@ -123,7 +123,7 @@ export const Offsets = {
         Character       : 0x10,
         SBreakCraftID   : 0x1AA,
         BattleAITable   : 0x428,
-        battleChrId     : 0xE8E,
+        BattleChrId     : 0xE8E,
     },
 
     BattleAITable: {

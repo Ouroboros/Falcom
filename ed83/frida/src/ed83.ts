@@ -222,7 +222,23 @@ function hookBattle() {
                 battleChar.initEquipAndOrbs(chrId);
                 battleChar.initMagic(chrId);
                 replaced ? battleChar.initNpcCraftAI(false) : battleChar.initPartyCraft(chrId);
-                battleChar.sbreakCraftID = replaced ? 0x3EF : ED83.getSBreak(chrId).readU16();
+
+                if (replaced) {
+                    const actionTable = battleChar.battleAITable.actionTable;
+                    if (actionTable.pointer.isNull())
+                        return;
+
+                    for (let i = 0, n = actionTable.size; i != n; i++) {
+                        const craft = actionTable.getCraft(i);
+                        if (craft.type != 0x1F)
+                            continue;
+
+                        battleChar.sbreakCraftID = craft.craftId;
+                    }
+                } else {
+                    battleChar.sbreakCraftID = ED83.getSBreak(chrId).readU16();
+                }
+
             }
         },
         'void', [],
@@ -279,18 +295,6 @@ function hookBattle() {
 }
 
 function hookFileRedirection() {
-    // Interceptor.attach(Addrs.ScriptLoad, {
-    //     onEnter: function(args) {
-    //         this.self = args[0];
-    //         this.path = args[1];
-    //     },
-    //     onLeave: function(retval) {
-    //         const ret = ED83ScriptLoad(this.self, this.path);
-    //         if (ret.isNull() == false)
-    //             retval.replace(ret);
-    //     },
-    // });
-
     const ScriptLoad = Interceptor2.jmp(
         Addrs.ScriptLoad,
         function(script: NativePointer, path: NativePointer, scriptType: NativePointer, stopIfNotExists: NativePointer): NativePointer {
@@ -395,7 +399,7 @@ function traceScriptVM() {
 
             if (offset == 0) return;
 
-            if (scriptName.indexOf('mon') == -1) {
+            if (scriptName.indexOf('chr500') != -1) {
                 tracing = true;
                 utils.log('***** ScriptVMExecute: %s.%s 0x%08X *****', scriptName, currentFunction, offset);
             }
