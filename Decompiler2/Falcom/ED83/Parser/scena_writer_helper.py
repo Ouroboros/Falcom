@@ -84,6 +84,7 @@ def DeatchEquip(chrId: int, part: str, *args):
     # EquipCtrl(0x01, 0xFFFE, '', 'L_arm_point', 0, 0, 0, 0, 0, 0, 1, 1, 1)
     EquipCtrl(0x01, chrId, '', part, *args)
 
+
 '''
     effect
 '''
@@ -96,6 +97,24 @@ def PlayEffect(chrId: int, effectId: tuple, targetChrId: int, *args):
 
 def StopEffect(chrId: int, slot: int, unknown: int):
     EffectCtrl(0x0D, chrId, slot, unknown)
+
+
+'''
+    asset
+'''
+
+def LoadAsset(asset: str):
+    OP_31(0x00, asset)
+
+def ReleaseAsset(asset: str):
+    OP_31(0x01, asset)
+
+def LoadAsset(asset: str):
+    OP_31(0x02, asset)
+
+def LoadAssetAsync(asset: str):
+    OP_31(0x03, asset)
+
 
 '''
     battle

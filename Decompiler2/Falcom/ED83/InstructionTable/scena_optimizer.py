@@ -69,6 +69,13 @@ optimizeTable = buildTable(
         ('DeatchEquip', {0: 0x01, 2: ''}),
     ),
     opt(
+        0x31,
+        ('LoadAsset',       {0: 0x00}),
+        ('ReleaseAsset',    {0: 0x01}),
+        ('IsAssetLoaded',   {0: 0x02}),
+        ('LoadAssetAsync',  {0: 0x03}),
+    ),
+    opt(
         0x32,
         ('LoadEffect',  {0: 0x0A}),
         ('PlayEffect',  {0: 0x0C}),
