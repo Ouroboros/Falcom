@@ -438,7 +438,7 @@ def Handler_33(ctx: InstructionHandlerContext):
             0x1B: '',
             # 0x1C: 'W',
             # 0x1D: 'WLL',
-            0x1E: 'WWSS',       # createTempChar(tempChrId, chrId, model, ani)
+            0x1E: 'WWSS',       # createTempChar(tempChrIndex, chrId, model, ani)
             0x1F: 'W',
             0x20: 'Wff',        # createFollowChar
             0x21: '',
@@ -2137,7 +2137,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x30,  'EquipCtrl',                    'BWSSfffffffff'),
     inst(0x31,  'OP_31',                        'BS'),
     inst(0x32,  'EffectCtrl',                   NoOperand,                                      handler = Handler_32),
-    inst(0x33,  'OP_33',                        NoOperand,                                      handler = Handler_33),
+    inst(0x33,  'BattleChrCtrl',                NoOperand,                                      handler = Handler_33),
     inst(0x34,  'OP_34',                        'Bffff'),
     inst(0x35,  'OP_35',                        'BNL'),
     inst(0x36,  'CameraCtrl',                   NoOperand,                                      handler = Handler_36),

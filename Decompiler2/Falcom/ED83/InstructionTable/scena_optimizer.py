@@ -83,6 +83,7 @@ optimizeTable = buildTable(
     ),
     opt(
         0x33,
+        ('CreateTempChar',          {0: 0x1E}),
         ('ChrMoveToTarget',         {0: 0x34}),
         ('ChrSetPosByTargetSync',   {0: 0x33}),
         ('ChrSetPosByTargetAsync',  {0: 0x39}),

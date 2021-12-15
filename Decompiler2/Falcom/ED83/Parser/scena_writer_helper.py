@@ -120,6 +120,13 @@ def LoadAssetAsync(asset: str):
     battle
 '''
 
+TempCharBaseId = 0xB68
+
+def CreateTempChar(tempChrIndex: int, chrId: int, model: str, ani: str = '') -> int:
+    assert tempChrIndex < 4
+    OP_33(0x1E, tempChrIndex, chrId, model, ani)
+    return tempChrIndex + TempCharBaseId
+
 def PlaySound(sound: int):
     OP_3B(0x00, (0xFF, sound, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
