@@ -64,13 +64,12 @@ def AniBtlCraft05():
     CameraRotateByTarget(0xFFFE, '', 0x03, 6.0, -15.0, 0.0, 1000, 0x01)
     CameraSetDistance(3.5, 1000)
 
-    PlayVoice(0x1B8C)
-
     PlayEffect2(TargetSelf, 0x9F, 0xFFFF, 0, '', *(0.5, 0.0, 0.0), *(0.0, 0.0, 0.0), *(0.8, 0.8, 0.8), 0xFF)
     PlaySound(0x8B7D)
     # Sleep(1666)
     Sleep(800)
 
+    PlayVoice(0x1B8C)
     PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_00', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
     Sleep(500)
 
@@ -140,7 +139,7 @@ def AniBtlCraft05():
 
     CreateThread(0xFFFE, 0x02, ScriptId.Current, 'AniBtlCraftDamageXKnockBack')
 
-    PlayEffect(0xFFFE, (0xFF, 0x90, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
+    PlayEffect2(0xFFFE, 0x90, 0xFFFE, 0x00000003, '', *(0.0, 1.0, 0.0), 0.0, 180, 0.0, *(1.0, 1.0, 1.0), 0xFF)
     PlaySound(0xFB1)
     ChrSetPosByTarget(TargetSelf, TargetSaved, 0.0, 0.0, 0.0, 3.0, 0x00, 0x00)
     WaitForThreadExit(0xFFFE, 0x02)

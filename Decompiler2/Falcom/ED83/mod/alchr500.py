@@ -248,7 +248,7 @@ def ActionTable():
             word1C        = 0x0021,
             word1E        = 0x0022,
             word20        = 0x0000,
-            dword24       = 30,
+            dword24       = 80,
             dword28       = 0,
             dword2C       = 0,
             dword30       = 25,
