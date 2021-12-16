@@ -12,6 +12,7 @@ __all__ = (
     'ED84OperandDescriptor',
     'ScenaExpression',
     'TextCtrlCode',
+    'ScriptId',
 )
 
 NoOperand = InstructionDescriptor.NoOperand

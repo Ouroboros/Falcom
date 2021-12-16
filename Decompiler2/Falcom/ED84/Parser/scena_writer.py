@@ -3,8 +3,9 @@ from Falcom import ED84
 from Falcom.ED84.Parser.scena_types import *
 import pathlib
 
-Expr = ED84.ScenaExpression.Operator
-TxtCtl = ED84.TextCtrlCode
+Expr        = ED84.ScenaExpression.Operator
+TxtCtl      = ED84.TextCtrlCode
+ScriptId    = ED84.ScriptId
 
 class _ScenaWriter:
     def __init__(self):

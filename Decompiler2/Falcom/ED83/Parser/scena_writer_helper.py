@@ -3,6 +3,15 @@ from Falcom.ED83.Parser.scena_writer_gen import *
 
 ChrTable = GlobalConfig.ChrTable
 
+L_ARM_POINT = 'L_arm_point'
+R_ARM_POINT = 'R_arm_point'
+
+TempCharBaseId = 0xB68
+
+TargetInitial       = 0xFFF4
+TargetSelected      = 0xFFF5
+TargetSelf          = 0xFFFE
+
 def ReturnToTitle():
     Call(0x0A, 'FC_EventEndMapChange', (0xDD, 'title'), (0xDD, ''))
 
@@ -69,9 +78,6 @@ def GetBattleChrFlags(chrId: int):
     equip
 '''
 
-L_ARM_POINT = 'L_arm_point'
-R_ARM_POINT = 'R_arm_point'
-
 def AttachEquip(chrId: int, equip: str, part: str, *args):
     if not args:
         args = [0, 0, 0, 0, 0, 0, 1, 1, 1]
@@ -92,6 +98,9 @@ def DeatchEquip(chrId: int, part: str, *args):
 def LoadEffect(chrId: int, slot: int, eff: str):
     EffectCtrl(0x0A, chrId, slot, eff)
 
+def ReleaseEffect(chrId: int, slot: int):
+    EffectCtrl(0x0B, chrId, slot)
+
 def PlayEffect(chrId: int, effectId: tuple, targetChrId: int, *args):
     EffectCtrl(0x0C, chrId, effectId, targetChrId, *args)
 
@@ -109,7 +118,7 @@ def LoadAsset(asset: str):
 def ReleaseAsset(asset: str):
     OP_31(0x01, asset)
 
-def LoadAsset(asset: str):
+def IsAssetLoaded(asset: str):
     OP_31(0x02, asset)
 
 def LoadAssetAsync(asset: str):
@@ -120,9 +129,7 @@ def LoadAssetAsync(asset: str):
     battle
 '''
 
-TempCharBaseId = 0xB68
-
-def CreateTempChar(tempChrIndex: int, chrId: int, model: str, ani: str = '') -> int:
+def ChrCreateTempChar(tempChrIndex: int, chrId: int, model: str, ani: str = '') -> int:
     assert tempChrIndex < 4
     OP_33(0x1E, tempChrIndex, chrId, model, ani)
     return tempChrIndex + TempCharBaseId
@@ -133,9 +140,6 @@ def PlaySound(sound: int):
 def PlayVoice(voice1: int, voice2: int = 0, voice3: int = 0, voice4: int = 0):
     OP_3B(0x3A, 0xFFFE, (0xFF, voice1, 0x0), (0xFF, voice2, 0x0), (0xFF, voice3, 0x0), (0xFF, voice4, 0x0))
 
-TargetSelf = 0xFFFE
-TargetSelectedPos = 0xFFF5
-
 def IsBattleModelEqualTo(chrId: int, model: str):
     OP_7A(0x01, chrId, model)
 
@@ -145,8 +149,8 @@ def ChrMoveToTarget():
 def ChrTurnDirection(chrId: int, targetId: int, unknown: float, speed: float = -1.0):
     OP_33(0x3C, chrId, targetId, unknown, speed)
 
+def ChrSetPosByTarget(chrId: int, targetId: int, x: float, y: float, forward: float, speed: float, unknown2: int = 0, unknown3: int = 0):
+    OP_33(0x33, chrId, targetId, x, y, forward, speed, unknown2, unknown3)
+
 def ChrSetPosByTargetAsync(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int, unknown3: int):
     OP_33(0x39, chrId, targetId, x, y, z, speed, unknown2, unknown3)
-
-def ChrSetPosByTargetSync(chrId: int, targetId: int, x: float, y: float, forward: float, speed: float, unknown2: int, unknown3: int):
-    OP_33(0x33, chrId, targetId, x, y, forward, speed, unknown2, unknown3)
