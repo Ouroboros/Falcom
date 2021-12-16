@@ -6,11 +6,13 @@ ChrTable = GlobalConfig.ChrTable
 L_ARM_POINT = 'L_arm_point'
 R_ARM_POINT = 'R_arm_point'
 
-TempCharBaseId = 0xB68
+DummyCharBaseId         = 0xB5E
+TempCharBaseId          = 0xB68
 
-TargetInitial       = 0xFFF4
-TargetSelected      = 0xFFF5
-TargetSelf          = 0xFFFE
+TargetSaved             = 0xFFF4
+TargetSelectedPos       = 0xFFF5
+TargetSelectedTarget    = 0xFFFB
+TargetSelf              = 0xFFFE
 
 def ReturnToTitle():
     Call(0x0A, 'FC_EventEndMapChange', (0xDD, 'title'), (0xDD, ''))
@@ -49,46 +51,46 @@ def GetBattleStyle(chrId: int):
     camera
 '''
 
-def CameraRotate(vertical: float, horizontal: float, rotation: float, durationInMs: int = 0, unknown: int = 1):
+def CameraRotate(vertical: float, horizontal: float, tilt: float, durationInMs: int = 0, unknown: int = 1):
     '''
         上下
         左右
         翻转
     '''
-    OP_36(0x04, 0x03, vertical, horizontal, rotation, durationInMs, unknown)
+    OP_36(0x04, 0x03, vertical, horizontal, tilt, durationInMs, unknown)
     return
 
-def CameraPos(x: float, y: float, z: float, unknwon: int = 0):
+def CameraSetPos(x: float, y: float, z: float, unknwon: int = 0):
     CameraCtrl(0x02, 0x03, x, y, z, unknwon)
 
-def CameraHeight(height: float, durationInMs: int = 0):
-    CameraCtrl(0x05, 0x03, height, durationInMs)
+def CameraRotateByTarget(chrId: int, node: str, byte3: int, vertical: float, horizontal: float, tilt: float, durationInMs: int, byte8: int):
+    CameraCtrl(0x13, chrId, node, byte3, vertical, horizontal, tilt, durationInMs, byte8)
 
-def SetBattleChrFlags(chrId: int, flags: int):
-    OP_33(0x0B, chrId, flags)
+def CameraSetPosByTarget(chrId: int, node: str, horizontal: float, vertical: float, depth: float, durationInMs: int):
+    CameraCtrl(0x14, 0x03, chrId, node, horizontal, vertical, depth, durationInMs)
 
-def ClearBattleChrFlags(chrId: int, flags: int):
-    OP_33(0x0C, chrId, flags)
+def CameraSetDistance(distance: float, durationInMs: int = 0):
+    CameraCtrl(0x05, 0x03, distance, durationInMs)
 
-def GetBattleChrFlags(chrId: int):
-    OP_33(0x0D, chrId)
+def CameraShake():
+    CameraCtrl(0x0A, 0.2, 0.125, 0.01, 0x001E, 0x012C, 0x003C, 0x0000, 0x0000, 0x00)
 
 
 '''
     equip
 '''
 
-def AttachEquip(chrId: int, equip: str, part: str, *args):
+def AttachEquip(chrId: int, equip: str, node: str, *args):
     if not args:
         args = [0, 0, 0, 0, 0, 0, 1, 1, 1]
     # EquipCtrl(0x00, 0xFFFE, 'C_EQU090', 'R_arm_point', 0, 0, 0, 0, 0, 0, 1, 1, 1)
-    EquipCtrl(0x00, chrId, equip, part, *args)
+    EquipCtrl(0x00, chrId, equip, node, *args)
 
-def DeatchEquip(chrId: int, part: str, *args):
+def DeatchEquip(chrId: int, node: str, *args):
     if not args:
         args = [0, 0, 0, 0, 0, 0, 1, 1, 1]
     # EquipCtrl(0x01, 0xFFFE, '', 'L_arm_point', 0, 0, 0, 0, 0, 0, 1, 1, 1)
-    EquipCtrl(0x01, chrId, '', part, *args)
+    EquipCtrl(0x01, chrId, '', node, *args)
 
 
 '''
@@ -103,6 +105,42 @@ def ReleaseEffect(chrId: int, slot: int):
 
 def PlayEffect(chrId: int, effectId: tuple, targetChrId: int, *args):
     EffectCtrl(0x0C, chrId, effectId, targetChrId, *args)
+
+def PlayEffect2(
+    chrId               : int,
+    effectId            : int,
+    targetChrId         : int,
+    unknown             : int,
+    node                : str,
+    horizontal          : float,
+    vertical            : float,
+    depth               : float,
+    rotate_vertical     : float,
+    rotate_horizontal   : float,
+    rotate_rotation     : float,
+    scale_vertical      : float,
+    scale_horizontal    : float,    # ?
+    scale_depth         : float,
+    slot                : int,
+):
+    EffectCtrl(
+        0x0C,
+        chrId,
+        (0xFF, effectId, 0),
+        targetChrId,
+        unknown,
+        (0xDD, node),
+        (0xEE, horizontal, 0),
+        (0xEE, vertical, 0),
+        (0xEE, depth, 0),
+        rotate_vertical,
+        rotate_horizontal,
+        rotate_rotation,
+        (0xEE, scale_vertical, 0),
+        (0xEE, scale_horizontal, 0),
+        (0xEE, scale_depth, 0),
+        slot,
+    )
 
 def StopEffect(chrId: int, slot: int, unknown: int):
     EffectCtrl(0x0D, chrId, slot, unknown)
@@ -126,8 +164,29 @@ def LoadAssetAsync(asset: str):
 
 
 '''
-    battle
+    battle chr
 '''
+
+def ChrSavePosition(targetChrId: int, unknown: int):
+    BattleChrCtrl(0x35, targetChrId, unknown)
+
+def ChrHide(chrId: int, durationInMs: int):
+    OP_35(0x00, chrId, durationInMs)
+
+def ChrShow(chrId: int, durationInMs: int):
+    OP_35(0x01, chrId, durationInMs)
+
+def ChrCreateDummy(chrId: int, count: int):
+    BattleChrCtrl(0x17, chrId, count)
+
+def ChrCreateAfterImage(chrId: int):
+    BattleChrCtrl(0x30, chrId)
+
+def ChrSetAfterImageOn(chrId: int, unknown1: float, unknown2: float, unknown3: float, unknown4: float, unknown5: float):
+    BattleChrCtrl(0x15, chrId, unknown1, unknown2, unknown3, unknown4, unknown5)
+
+def ChrSetAfterImageOff():
+    BattleChrCtrl(0x16)
 
 def ChrCreateTempChar(tempChrIndex: int, chrId: int, model: str, ani: str = '') -> int:
     assert tempChrIndex < 4
@@ -149,8 +208,17 @@ def ChrMoveToTarget():
 def ChrTurnDirection(chrId: int, targetId: int, unknown: float, speed: float = -1.0):
     OP_33(0x3C, chrId, targetId, unknown, speed)
 
-def ChrSetPosByTarget(chrId: int, targetId: int, x: float, y: float, forward: float, speed: float, unknown2: int = 0, unknown3: int = 0):
-    OP_33(0x33, chrId, targetId, x, y, forward, speed, unknown2, unknown3)
+def ChrSetPosByTarget(chrId: int, targetId: int, horizontal: float, vertical: float, depth: float, speed: float, unknown2: int = 0, unknown3: int = 0):
+    OP_33(0x33, chrId, targetId, horizontal, vertical, depth, speed, unknown2, unknown3)
 
-def ChrSetPosByTargetAsync(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int, unknown3: int):
-    OP_33(0x39, chrId, targetId, x, y, z, speed, unknown2, unknown3)
+def ChrSetPosByTargetAsync(chrId: int, targetId: int, horizontal: float, vertical: float, depth: float, speed: float, unknown2: int, unknown3: int):
+    OP_33(0x39, chrId, targetId, horizontal, vertical, depth, speed, unknown2, unknown3)
+
+def ChrSetBattleFlags(chrId: int, flags: int):
+    OP_33(0x0B, chrId, flags)
+
+def ChrClearBattleFlags(chrId: int, flags: int):
+    OP_33(0x0C, chrId, flags)
+
+def ChrGetBattleFlags(chrId: int):
+    OP_33(0x0D, chrId)

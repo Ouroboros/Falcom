@@ -19,10 +19,14 @@ class _ScenaWriter:
         self.globals            = None                  # type: dict
         self.opcodeCallbacks    = []                    # type: List[Callable[[int, Tuple]]]
         self.funcCallbacks      = []                    # type: List[Callable[[str, Callable]]]
+        self.runCallbacks       = []                    # type: List[Callable[[dict]]]
 
     def init(self, instructionTable: ED83.ED83InstructionTable, scenaName: str):
         self.instructionTable   = instructionTable
         self.scenaName          = scenaName
+
+    def registerRunCallback(self, cb):
+        self.runCallbacks.append(cb)
 
     def registerFuncCallback(self, cb):
         self.funcCallbacks.append(cb)
@@ -97,6 +101,9 @@ class _ScenaWriter:
         return self.functionDecorator(name, ED83.ScenaFunctionType.ShinigPomBtlset)
 
     def run(self, g: dict):
+        for cb in self.runCallbacks:
+            cb(g)
+
         try:
             self.run2(g)
         except KeyError as e:
