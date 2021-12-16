@@ -85,11 +85,16 @@ function hookCharacterModelInit() {
             const chrId = ED83.getBattleStyle(char.chrId);
 
             switch (a8.toUInt32()) {
+                case 0:
                 case 0x3EF5C28F:    // field init
                     if (chrId >= MinCustomChrId && char.modelChrId == InvalidChrId) {
                         char.modelChrId = chrId;
                         model = Memory.allocUtf8String(findReplacedNameData(char)!.model);
                     }
+                    break;
+
+                default:
+                    // utils.log(`createChara: ${a8.toUInt32().toString(16)}`);
                     break;
             }
 
