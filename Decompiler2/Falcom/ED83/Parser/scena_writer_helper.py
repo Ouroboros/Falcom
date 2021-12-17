@@ -14,6 +14,34 @@ TargetSelectedPos       = 0xFFF5
 TargetSelectedTarget    = 0xFFFB
 TargetSelf              = 0xFFFE
 
+def RandIf(probability, true_succ, false_succ):
+    assert 0 <= probability <= 100
+
+    end     = genLabel()
+    false  = genLabel()
+    end    = genLabel()
+
+    If(
+        (
+            Expr.Rand,
+            (Expr.PushLong, 100),
+            Expr.Mod,
+            (Expr.PushLong, probability),
+            Expr.Lss,
+            Expr.Return,
+        ),
+        false,
+    )
+
+    true_succ()
+    Jump(end)
+
+    label(false)
+
+    false_succ()
+
+    label(end)
+
 def ReturnToTitle():
     Call(0x0A, 'FC_EventEndMapChange', (0xDD, 'title'), (0xDD, ''))
 
@@ -48,6 +76,13 @@ def GetBattleStyle(chrId: int):
 
 
 '''
+    debug
+'''
+
+def DebugString(s: str):
+    OP_07(0x02, (0xDD, s))
+
+'''
     camera
 '''
 
@@ -71,6 +106,9 @@ def CameraSetPosByTarget(chrId: int, node: str, horizontal: float, vertical: flo
 
 def CameraSetDistance(distance: float, durationInMs: int = 0):
     CameraCtrl(0x05, 0x03, distance, durationInMs)
+
+def CameraSetHeight(height: float, durationInMs: int = 0):
+    CameraCtrl(0x16, 0x03, height, durationInMs)
 
 def CameraShake():
     CameraCtrl(0x0A, 0.2, 0.125, 0.01, 0x001E, 0x012C, 0x003C, 0x0000, 0x0000, 0x00)
@@ -170,13 +208,14 @@ def LoadAssetAsync(asset: str):
 def ChrSavePosition(targetChrId: int, unknown: int):
     BattleChrCtrl(0x35, targetChrId, unknown)
 
-def ChrHide(chrId: int, durationInMs: int):
-    OP_35(0x00, chrId, durationInMs)
+def ChrHide(chrId: int, flags: int):
+    OP_35(0x00, chrId, flags)
 
-def ChrShow(chrId: int, durationInMs: int):
-    OP_35(0x01, chrId, durationInMs)
+def ChrShow(chrId: int, flags: int):
+    OP_35(0x01, chrId, flags)
 
 def ChrCreateDummy(chrId: int, count: int):
+    assert count <= 5
     BattleChrCtrl(0x17, chrId, count)
 
 def ChrCreateAfterImage(chrId: int):
@@ -188,9 +227,9 @@ def ChrSetAfterImageOn(chrId: int, unknown1: float, unknown2: float, unknown3: f
 def ChrSetAfterImageOff():
     BattleChrCtrl(0x16)
 
-def ChrCreateTempChar(tempChrIndex: int, chrId: int, model: str, ani: str = '') -> int:
+def ChrCreateTempChar(tempChrIndex: int, srcChrId: int, model: str, ani: str = '') -> int:
     assert tempChrIndex < 4
-    OP_33(0x1E, tempChrIndex, chrId, model, ani)
+    OP_33(0x1E, tempChrIndex, srcChrId, model, ani)
     return tempChrIndex + TempCharBaseId
 
 def PlaySound(sound: int):

@@ -22,10 +22,14 @@ def opcodeCallBack(opcode: int, *args):
 
 def runCallBack(g):
     from Falcom.ED83.Parser.scena_writer import _gScena as scena
-    scena.Code('AniBtlCraft05')(AniBtlCraft05)
-    scena.Code('AniBtlCraftDamageAnimeX')(AniBtlCraftDamageAnimeX)
-    scena.Code('AniBtlCraftDamageX')(AniBtlCraftDamageX)
-    scena.Code('AniBtlCraftDamageXKnockBack')(AniBtlCraftDamageXKnockBack)
+    for f in [
+        AniBtlCraft05,
+        AniBtlCraftDamageAnimeX,
+        AniBtlCraftDamageX,
+        AniBtlCraftDamageXKnockBack,
+        AniBtlPlayLanceEffects,
+    ]:
+        scena.Code(f.__name__)(f)
 
 def _init():
     from Falcom.ED83.Parser.scena_writer import _gScena as scena
@@ -41,6 +45,8 @@ def AniBtlMove2():
     Call(0x10, 'AniBtlWait')
 
 def AniBtlCraft05():
+    end = genLabel()
+
     Call(ScriptId.BtlCom, 'AniBtlCraftBegin')
 
     LoadEffect(0xFFFE, 0x90, 'battle/cr000_02_1.eff')
@@ -51,8 +57,27 @@ def AniBtlCraft05():
     Call(ScriptId.Current, 'SpringOff')
     SetEndhookFunction('SpringOn', ScriptId.Current)
 
-    ChrSavePosition(0xFFFE, 0x00000000)
     ChrTurnDirection(0xFFFE, 0xFFFB, 0.0, -1.0)
+    ChrSavePosition(0xFFFE, 0x00000000)
+    ChrCreateDummy(0xFFFE, 1)
+    ChrHide(DummyCharBaseId, 0x40 | 0x20)
+    ChrTurnDirection(DummyCharBaseId, 0xFFFE, 0.0, -1.0)
+    # ChrSetPosByTarget(DummyCharBaseId, 0xFFF5, 0.0, 0.0, -2.0, -1.0, 0x00, 0x00)
+    ChrSetPosByTarget(DummyCharBaseId, 0xFFFB, 0.0, 0.0, -2.0, -1.0, 0x00, 0x00)
+
+    kisin = ChrCreateTempChar(0, 0xFFFF, 'C_ROB004', 'rob500')
+    ChrSetPosByTarget(kisin, 0xFFFE, 0.0, 0.0, -2.0, -1.0, 0x00, 0x00)
+    # PlayChrAnimeClip(kisin, 'evk1000', 0x00, 0x00, 0x00, 0x00, 0x00, -2.0, -1.0, -1.0, -1.0, 0x00, 0x00)
+
+    # PlayChrAnimeClip(kisin, 'evk1000', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+    # ChrSetVisibleFlags(0x00, kisin, 0x00000020)
+    # ChrSetVisibleFlags(0x00, kisin, 0x00000080)
+    # ChrSetVisibleFlags(0x00, kisin, 0x00000200)
+
+    DebugString('jyama sareta - repeat!')
+
+    Sleep(10000)
+    Jump(end)
 
     BattleChrCtrl(0x47)
     CameraCtrl(0x00)
@@ -64,7 +89,7 @@ def AniBtlCraft05():
     CameraRotateByTarget(0xFFFE, '', 0x03, 6.0, -15.0, 0.0, 1000, 0x01)
     CameraSetDistance(3.5, 1000)
 
-    PlayEffect2(TargetSelf, 0x9F, 0xFFFF, 0, '', *(0.5, 0.0, 0.0), *(0.0, 0.0, 0.0), *(0.8, 0.8, 0.8), 0xFF)
+    PlayEffect2(0xFFFE, 0x9F, 0xFFFF, 0, '', *(0.5, 0.0, 0.0), *(0.0, 0.0, 0.0), *(0.8, 0.8, 0.8), 0xFF)
     PlaySound(0x8B7D)
     # Sleep(1666)
     Sleep(800)
@@ -73,82 +98,124 @@ def AniBtlCraft05():
     PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_00', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
     Sleep(500)
 
-    PlayEffect2(0xFFFE, 0x92, 0xFFFE, 0x0000000C, '', *(0.0, 0.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
-    SetChrFace(0x03, 0xFFFE, '2', '2[autoM2]', '0', '2', '0')
-    Sleep(1000)
+    Fade(0x65, 100, 1.0, 0x0000)
+    Fade(0xFE, 0)
+    ChrHide(0xFFF9, 64)
+    ChrHide(0xFFF9, 32)
 
-    PlayEffect2(0xFFFE, 0x91, 0xFFFE, 0x00000003, '', *(0.0, 0.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
-    PlayEffect2(0xFFFE, 0x90, 0xFFFE, 0x00000003, '', *(0.0, 1.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
-    PlaySound(0xFB1)
-    PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 66.6667, 67.2, -1.0, 0x00, 0x00)
-    ChrSetPosByTarget(TargetSelf, TargetSelectedPos, 0.0, 0.0, -2.0, 7.0, 0x00, 0x00)
+    PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_00', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+    ChrShow(0xFFF9, 64)
+    ChrShow(0xFFF9, 32)
+    CameraCtrl(0x00)
+    CameraSetDistance(3.2, 0)
+    Sleep(64)
+
+    def left():
+        CameraSetPosByTarget(0xFFFE, '', 1.5, 2.2, -1.5, 0)
+        CameraRotateByTarget(0xFFFE, '', 0x03, 22.0, 135.0, 0.0, 0, 0x01)
+        PlayEffect2(0xFFFE, 0x92, 0xFFFE, 0x0000000C, '', *(0.0, 0.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
+        SetChrFace(0x03, 0xFFFE, '2', '2[autoM2]', '0', '2', '0')
+        Sleep(1000)
+        CameraSetPosByTarget(DummyCharBaseId, '', 2.5, 2.2, -2.8, 700)
+
+        CameraCtrl(0x16, 0x03, 3.2, 700)
+        CameraSetDistance(3.2, 700)
+
+        PlayEffect2(0xFFFE, 0x91, 0xFFFE, 0x00000003, '', *(0.0, 0.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
+        PlayEffect2(0xFFFE, 0x90, 0xFFFE, 0x00000003, '', *(0.0, 1.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
+        PlaySound(0xFB1)
+        PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 66.6667, 67.2, -1.0, 0x00, 0x00)
+        ChrSetPosByTarget(0xFFFE, 0xFFF5, 0.0, 0.0, -2.0, 7.0, 0x00, 0x00)
+        ChrSetPosByTarget(DummyCharBaseId, 0xFFF5, 0.0, 0.0, -2.0, -1.0, 0x00, 0x00)
+        CameraSetPosByTarget(0xFFFE, '', 2.5, 2.2, -2.8, 700)
+
+    def right():
+        CameraSetPosByTarget(0xFFFE, '', -3.5, 2.2, -2.2, 0)
+        CameraRotateByTarget(0xFFFE, '', 0x03, 22.0, 235, 0.0, 0, 0x01)
+        PlayEffect2(0xFFFE, 0x92, 0xFFFE, 0x0000000C, '', *(0.0, 0.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
+        SetChrFace(0x03, 0xFFFE, '2', '2[autoM2]', '0', '2', '0')
+        Sleep(1000)
+        CameraSetPosByTarget(DummyCharBaseId, '', -3.5, 1.5, -0.8, 700)
+
+        CameraCtrl(0x16, 0x03, 3.2, 700)
+        CameraSetDistance(3.2, 700)
+
+        PlayEffect2(0xFFFE, 0x91, 0xFFFE, 0x00000003, '', *(0.0, 0.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
+        PlayEffect2(0xFFFE, 0x90, 0xFFFE, 0x00000003, '', *(0.0, 1.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
+        PlaySound(0xFB1)
+        PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 66.6667, 67.2, -1.0, 0x00, 0x00)
+        ChrSetPosByTarget(0xFFFE, 0xFFF5, 0.0, 0.0, -2.0, 7.0, 0x00, 0x00)
+        ChrSetPosByTarget(DummyCharBaseId, 0xFFF5, 0.0, 0.0, -2.0, -1.0, 0x00, 0x00)
+        CameraSetPosByTarget(0xFFFE, '', -3.5, 2.2, -2.2, 700)
+
+    RandIf(50, left, right)
+
     PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x01, 0x01, 0x00, 0x01, 0x00, 0.2, 67.2333, 67.4333, -0.0333333, 0x00, 0x00)
     Sleep(100)
-
-    CameraCtrl(0x00)
-    CameraSetDistance(2.4, 0)
-    CameraSetPosByTarget(0xFFFE, '', 0.8, 2.4, 0.0, 0)
-    CameraRotateByTarget(0xFFFE, '', 0x03, 20.0, 135.0, 2.5, 0, 0x01)
-    CameraCtrl(0x16, 0x03, 5.5, 500)
-    CameraCtrl(0x0C, 0x03, 0.0, -0.3, 0.0, 3000)
 
     ChrCreateAfterImage(0xFFFE)
     ChrSetAfterImageOn(0xFFFE, 0.1, 0.1, 0.22, 0.45, 1.0)
 
-    effs = [
-        ((1.5, 1.5, 0.0),   0xFF),
-        ((-1.5, 1.5, 0.0),  0x01),
-        ((1.5, 0, 0.0),     0x02),
-        ((-1.5, 0, 0.0),    0x03),
-        ((0.0, 1.5, 0.0),   0x04),
-        ((0.0, 0.0, 0.0),   0x05),
-    ]
-
     for i in range(5):
-        # break
-        for eff in effs:
-            OP_3B(0x00, (0xFF, 0x8F62, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, -1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
-            OP_3B(0x00, (0xFF, 0x8F66, 0x0), 0.5, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
-            PlayEffect2(
-                TargetSelf,
-                0x83,
-                TargetSelf,
-                0xC,
-                '',
-                *eff[0],
-                0.0, 0.0, 0.0,
-                0.7, 1.0, 1.0,
-                eff[1],
-            )
-            Sleep(70)
+        CreateThread(0xFFFE, 1, ScriptId.Current, 'AniBtlPlayLanceEffects')
 
         match i:
             case 0 | 2 | 4:
-                CreateThread(0xFFFE, 0x02, ScriptId.Current, 'AniBtlCraftDamageX')
-                WaitForThreadExit(0xFFFE, 0x02)
+                CreateThread(0xFFFE, 2, ScriptId.Current, 'AniBtlCraftDamageX')
+                WaitForThreadExit(0xFFFE, 2)
 
             case 1 | 3:
-                CreateThread(0xFFFE, 0x02, ScriptId.Current, 'AniBtlCraftDamageAnimeX')
-                WaitForThreadExit(0xFFFE, 0x02)
+                CreateThread(0xFFFE, 2, ScriptId.Current, 'AniBtlCraftDamageAnimeX')
+                WaitForThreadExit(0xFFFE, 2)
 
+        WaitForThreadExit(0xFFFE, 1)
         Sleep(100)
 
-    PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x00, 0x01, 0x00, 0x00, 0x00, 0.05, 68.6333 + 0.3, -1.0, -1.0, 0x00, 0x00)
-    # OP_6C(0xFFFE, 0.5)
+    PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x00, 0x01, 0x00, 0x00, 0x00, 0.05, 68.9333, -1.0, -1.0, 0x00, 0x00)
+    OP_6C(0xFFFE, 0.5)
     Sleep(800)
-
-    CreateThread(0xFFFE, 0x02, ScriptId.Current, 'AniBtlCraftDamageXKnockBack')
 
     PlayEffect2(0xFFFE, 0x90, 0xFFFE, 0x00000003, '', *(0.0, 1.0, 0.0), 0.0, 180, 0.0, *(1.0, 1.0, 1.0), 0xFF)
     PlaySound(0xFB1)
-    ChrSetPosByTarget(TargetSelf, TargetSaved, 0.0, 0.0, 0.0, 3.0, 0x00, 0x00)
+    ChrSetPosByTarget(0xFFFE, 0xFFF4, 0.0, 0.0, 0.0, 3.0, 0x00, 0x00)
+    Sleep(300)
+
+    CreateThread(0xFFFE, 0x02, ScriptId.Current, 'AniBtlCraftDamageXKnockBack')
     WaitForThreadExit(0xFFFE, 0x02)
-    Sleep(200)
+    Sleep(1000)
+
+    label(end)
 
     ChrSetAfterImageOff()
     Call(ScriptId.BtlCom, 'AniBtlCraftFinish')
 
     Return()
+
+def AniBtlPlayLanceEffects():
+    effs = [
+        ((1.5, 1.5, 0.0),   0xFF),
+        ((-1.5, 1.5, 0.0),  0xFF),
+        ((1.5, 0, 0.0),     0xFF),
+        ((-1.5, 0, 0.0),    0xFF),
+        ((0.0, 1.5, 0.0),   0xFF),
+        ((0.0, 0.0, 0.0),   0xFF),
+    ]
+
+    for eff in effs:
+        OP_3B(0x00, (0xFF, 0x8F62, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, -1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+        OP_3B(0x00, (0xFF, 0x8F66, 0x0), 0.5, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+        PlayEffect2(
+            TargetSelf,
+            0x83,
+            TargetSelf,
+            0xC,
+            '',
+            *eff[0],
+            0.0, 0.0, 0.0,
+            0.5, 0.5, 0.8,
+            eff[1],
+        )
+        Sleep(70)
 
 def AniBtlCraftDamageAnimeX():
     AniBtlCraftDamageT(False, 0)
@@ -215,77 +282,14 @@ def AniBtlMove():
     ChrTurnDirection(0xFFFE, 0xFFF5, 0.0, 1)
     OP_33(0x47)
 
-    b = True
-    b = False
-
-    if b:
-        # chrid = ChrCreateTempChar(1, 0xFFFF, 'C_EQU090', '')
-        # ChrSetPosByTarget(chrid, TargetInitial, 1.0, 2.0, 5.0, 0.0)
-
-        effs = [
-            ((1.5, 1.5, 0.0),   0xFF),
-            ((-1.5, 1.5, 0.0),  0x01),
-            ((1.5, 0, 0.0),     0x02),
-            ((-1.5, 0, 0.0),    0x03),
-            ((0.0, 1.5, 0.0),   0x04),
-            ((0.0, 0.0, 0.0),   0x05),
-        ]
-
-        for _ in range(10):
-            # OP_3B(0x00, (0xFF, 0x8F62, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, -1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
-            # OP_3B(0x00, (0xFF, 0x8F66, 0x0), 0.5, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
-            # OP_5E(0x00, 0x0002, 0.25, 0x001E, 0x02BC, 0x02BC, 0.45, 0xFFFF, -9000.0, -9000.0, -9000.0)
-            # CameraCtrl(0x0A, 0.64, 0.3, 0.2, 0x001E, 0x0258, 0x0258, 0x0000, 0x0000, 0x00)
-            # PlayEffect2(
-            #     TargetSelf,
-            #     0x83,
-            #     TargetSelf,
-            #     0xC,
-            #     '',
-            #     0.0, 1.0, 0.0,
-            #     0.0, 0.0, 0.0,
-            #     1.0, 3.0, 1.0,
-            #     0xFF,
-            # )
-
-            for eff in effs:
-                OP_3B(0x00, (0xFF, 0x8F62, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, -1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
-                OP_3B(0x00, (0xFF, 0x8F66, 0x0), 0.5, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
-                PlayEffect2(
-                    TargetSelf,
-                    0x83,
-                    TargetSelf,
-                    0xC,
-                    '',
-                    *eff[0],
-                    0.0, 0.0, 0.0,
-                    0.7, 1.0, 1.0,
-                    eff[1],
-                )
-                Sleep(70)
-
-            Sleep(100)
-
-        # PlayEffect(0xFFFE, (0xFF, 0x83, 0x0), 0xFFFE, 0x0000000C, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, -2.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
-
-        # OP_6C(0xFFFE, 0.2)
-        # PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_02', 0x01, 0x01, 0x00, 0x01, 0x00, 0.2, 10.4, 10.8, -0.0333333, 0x00, 0x00)
-        # PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_02', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1, -1, -1.0, 0x00, 0x00)
-        # WaitAnimeClip(0xFFFF, 0.0, 0)
-
-        for _ in range(4):
-            Sleep(500)
-
-        Call(0x13, 'ReleaseEffect')
-        Return()
-
-        return
-
     PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_03', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, 0, 1.0, -1.0, 0x00, 0x00)
     # PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_02', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 10.4, 10.8, -1.0, 0x00, 0x00)
     Sleep(50)
     # PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_01', 0x00, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
     Sleep(100)
+
+    ChrCreateAfterImage(0xFFFE)
+    ChrSetAfterImageOn(0xFFFE, 0.1, 0.1, 0.22, 0.45, 1.0)
 
     PlayEffect(0xFFFE, (0xFF, 0x94, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     PlayEffect(0xFFFE, (0xFF, 0x90, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
@@ -296,17 +300,18 @@ def AniBtlMove():
     CameraCtrl(0x16, 0x02, 5.5, 0x03E8)
     OP_33(0x3A, 0xFFFE)
 
+    ChrSetAfterImageOff()
+
     # PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_02', 0x00, 0x00, 0x00, 0x00, 0x00, 0.5, -1.0, -1.0, -1.0, 0x00, 0x00)
     PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_02', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 9.75, 11.8, -1.0, 0x00, 0x00)
     ChrSetPosByTarget(0xFFFE, 0xFFF5, 0.0, 0.0, 0.0, 2.0, 0x00, 0x00)
     Sleep(200)
     OP_33(0x47)
 
-    PlayChrAnimeClip(0xFFFE, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+    Call(ScriptId.Current, 'AniBtlWait')
     Sleep(500)
 
-    Call(0x13, 'ReleaseEffect')
-    # WaitAnimeClip(0xFFFE, 0.0, 0x00)
+    Call(ScriptId.BtlCom, 'ReleaseEffect')
 
     Return()
 

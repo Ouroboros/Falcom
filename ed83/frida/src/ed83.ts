@@ -84,18 +84,73 @@ function hookCharacterModelInit() {
             const char = new Character(chr);
             const chrId = ED83.getBattleStyle(char.chrId);
 
-            switch (a8.toUInt32()) {
-                case 0:
-                case 0x3EF5C28F:    // field init
-                    if (chrId >= MinCustomChrId && char.modelChrId == InvalidChrId) {
-                        char.modelChrId = chrId;
-                        model = Memory.allocUtf8String(findReplacedNameData(char)!.model);
-                    }
-                    break;
+            // utils.log(`createChara a7 : 0x${a7.toUInt32().toString(16)}`);
+            // utils.log(`createChara a8 : 0x${a8.toUInt32().toString(16)}`);
+            // utils.log(`createChara a9 : 0x${a9.and(0xFF).toUInt32().toString(16)}`);
+            // utils.log(`createChara a10: 0x${a10.and(0xFF).toUInt32().toString(16)}`);
+            // utils.log(`createChara a11: 0x${a11.toUInt32().toString(16)}`);
+            // utils.log(`createChara a12: 0x${a12.toUInt32().toString(16)}`);
+            // utils.log(`createChara a13: 0x${a13.and(0xFF).toUInt32().toString(16)}`);
 
-                default:
-                    // utils.log(`createChara: ${a8.toUInt32().toString(16)}`);
-                    break;
+            const modifyModel = (function() {
+                const args = [
+                    a7.toUInt32(),
+                    a8.toUInt32(),
+                    a9.toUInt32() & 0xFF,
+                    a10.toUInt32() & 0xFF,
+                    a11.toUInt32(),
+                    a12.toUInt32(),
+                    a13.toUInt32() & 0xFF,
+                ];
+
+                const patterns = [
+                    [
+                        // field init
+                        0x3fcccccd,
+                        0x3ef5c28f,
+                        0x1,
+                        0x1,
+                        0x3,
+                        0x8,
+                        0x0,
+                    ],
+                    [
+                        // after image, dummy
+                        0x0,
+                        0x0,
+                        0x0,
+                        0x1,
+                        0x3,
+                        0x8,
+                        0x0,
+                    ],
+                ];
+
+                function arrayEquals(a1: any, a2: any): boolean {
+                    if (a1.length != a2.length)
+                        return false;
+
+                    for (let i = 0; i != a1.length; i++) {
+                        if (a1[i] != a2[i])
+                            return false;
+                    }
+
+                    return true;
+                }
+
+                for (let p of patterns) {
+                    if (arrayEquals(p, args))
+                        return true;
+                }
+
+                return false;
+            })();
+
+            if (chrId >= MinCustomChrId && char.modelChrId == InvalidChrId && modifyModel) {
+                char.modelChrId = chrId;
+                const nameData = findReplacedNameData(char);
+                if (nameData)
+                    model = Memory.allocUtf8String(nameData.model);
             }
 
             return Character_Initialize(chr, model, name, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);

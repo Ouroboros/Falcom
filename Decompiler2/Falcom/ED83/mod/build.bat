@@ -17,6 +17,9 @@ if /i "%filename:~0,5%" == "alchr" (
 ) else if /i "%filename:~0,3%" == "chr" (
     move "%output%" "%PATCH_PATH%\scripts\ani\dat\" >NUL
 
+)  else if /i "%filename:~0,3%" == "rob" (
+    rem move "%output%" "%PATCH_PATH%\scripts\ani\dat\" >NUL
+
 ) else if /i "%filename:~0,2%" == "t_" (
     move "%output_tbl%" "%PATCH_PATH%\text\dat\" >NUL
 

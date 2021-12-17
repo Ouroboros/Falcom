@@ -95,11 +95,11 @@ optimizeTable = buildTable(
         ('ChrSetPosByTargetAsync',  {0: 0x39}),
         ('ChrTurnDirection',        {0: 0x3C}),
     ),
-    opt(
-        0x35,
-        ('ChrHide',                 {0: 0x00}),
-        ('ChrShow',                 {0: 0x01}),
-    ),
+    # opt(
+    #     0x35,
+    #     ('ChrHide',                 {0: 0x00}),
+    #     ('ChrShow',                 {0: 0x01}),
+    # ),
     opt(
         0x36,
         ('CameraSetPos',            {0: 0x02, 1: 0x03}),
