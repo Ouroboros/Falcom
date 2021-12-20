@@ -370,7 +370,7 @@ def Handler_32(ctx: InstructionHandlerContext):
         return 'B' + {
             0x0A: 'WBS',
             0x0B: 'WB',
-            0x0C: 'WVWLVVVVfffVVVB',
+            0x0C: 'NVNLVVVVfffVVVB',
             0x0D: 'WBB',
             0x0E: 'WBB',
             0x0F: 'WWB',
@@ -439,7 +439,7 @@ def Handler_33(ctx: InstructionHandlerContext):
             # 0x1C: 'W',
             # 0x1D: 'WLL',
             0x1E: 'WWSS',       # createTempChar(tempChrIndex, chrId, model, ani)
-            0x1F: 'W',
+            0x1F: 'W',          # deleteTempChar(tempChrIndex)
             0x20: 'Wff',        # createFollowChar
             0x21: '',
             0x22: '',
@@ -2139,7 +2139,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x32,  'EffectCtrl',                   NoOperand,                                      handler = Handler_32),
     inst(0x33,  'BattleChrCtrl',                NoOperand,                                      handler = Handler_33),
     inst(0x34,  'OP_34',                        'Bffff'),
-    inst(0x35,  'ChrSetVisibleFlags',           'BNL'),
+    inst(0x35,  'ChrPhysicsCtrl',               'BNL'),
     inst(0x36,  'CameraCtrl',                   NoOperand,                                      handler = Handler_36),
     inst(0x37,  'SetChrPos',                    'Nffff',                                                                    parameters = ('chrId', 'x', 'y', 'z', 'direction')),
     inst(0x38,  'OP_38',                        'NBBS'),

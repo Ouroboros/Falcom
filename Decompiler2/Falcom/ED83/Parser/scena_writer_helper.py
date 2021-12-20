@@ -5,15 +5,16 @@ ChrTable = GlobalConfig.ChrTable
 
 L_ARM_POINT = 'L_arm_point'
 R_ARM_POINT = 'R_arm_point'
+NODE_R_ARM  = 'NODE_R_ARM'
 
 DummyCharBaseId         = 0xB5E
 TempCharBaseId          = 0xB68
 
-TargetSaved             = 0xFFF4
-TargetSelectedPos       = 0xFFF5
-TargetSelectedTarget    = 0xFFFB
-TargetCurrentTarget     = 0xFFFB
-TargetSelf              = 0xFFFE
+class CraftTarget(IntEnum2):
+    Saved           = 0xFFF4
+    SelectedPos     = 0xFFF5
+    Current         = 0xFFFB
+    Self            = 0xFFFE
 
 class AbnormalCondition(IntEnum2):
     Poison              = 0x00000001
@@ -328,10 +329,10 @@ def ChrTargetsIterNext(chrId: int):
 def ChrSavePosition(targetChrId: int, unknown: int):
     BattleChrCtrl(0x35, targetChrId, unknown)
 
-def ChrHide(chrId: int, flags: int):
+def ChrSetPhysicsFlags(chrId: int, flags: int):
     OP_35(0x00, chrId, flags)
 
-def ChrShow(chrId: int, flags: int):
+def ChrClearPhysicsFlags(chrId: int, flags: int):
     OP_35(0x01, chrId, flags)
 
 def ChrCreateDummy(chrId: int, count: int):
@@ -348,15 +349,20 @@ def ChrSetAfterImageOff():
     BattleChrCtrl(0x16)
 
 def ChrCreateTempChar(tempChrIndex: int, srcChrId: int, model: str, ani: str = '') -> int:
-    assert tempChrIndex < 4
+    assert tempChrIndex <= 4
     OP_33(0x1E, tempChrIndex, srcChrId, model, ani)
     return tempChrIndex + TempCharBaseId
 
-def PlaySound(sound: int):
+def ChrDeleteTempChar(tempChrIndex: int = 0xFFFF):
+    assert tempChrIndex <= 4 or tempChrIndex == 0xFFFF
+    OP_33(0x1F, tempChrIndex)
+
+def PlaySE(sound: int):
     OP_3B(0x00, (0xFF, sound, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
-def PlayVoice(voice1: int, voice2: int = 0, voice3: int = 0, voice4: int = 0):
-    OP_3B(0x3A, 0xFFFE, (0xFF, voice1, 0x0), (0xFF, voice2, 0x0), (0xFF, voice3, 0x0), (0xFF, voice4, 0x0))
+def PlayVoice(voice1: int):
+    # OP_3B(0x3A, 0xFFFE, (0xFF, voice1, 0x0), (0xFF, voice2, 0x0), (0xFF, voice3, 0x0), (0xFF, voice4, 0x0))
+    OP_3B(0x32, (0xFF, voice1, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
 def IsBattleModelEqualTo(chrId: int, model: str):
     OP_7A(0x01, chrId, model)

@@ -97,6 +97,7 @@ optimizeTable = buildTable(
         ('ChrSetAfterImageOff',         {0: 0x16}),
         ('ChrCreateDummy',              {0: 0x17}),
         ('ChrCreateTempChar',           {0: 0x1E}),
+        ('ChrDeleteTempChar',           {0: 0x1F}),
         ('ChrCreateAfterImage',         {0: 0x30}),
         ('ChrSetPosByTarget',           {0: 0x33}),
         ('ChrMoveToTarget',             {0: 0x34}),
@@ -108,11 +109,11 @@ optimizeTable = buildTable(
         ('ChrSetAbnormalCondition2',    {0: 0xB7, 1: 0x02}),
         ('ChrClearAbnormalCondition2',  {0: 0xB7, 1: 0x03, 4: 0, 5: 0, 6: 0}),
     ),
-    # opt(
-    #     0x35,
-    #     ('ChrHide',                 {0: 0x00}),
-    #     ('ChrShow',                 {0: 0x01}),
-    # ),
+    opt(
+        0x35,
+        ('ChrSetPhysicsFlags',          {0: 0x00}),
+        ('ChrClearPhysicsFlags',        {0: 0x01}),
+    ),
     opt(
         0x36,
         ('CameraSetPos',            {0: 0x02, 1: 0x03}),

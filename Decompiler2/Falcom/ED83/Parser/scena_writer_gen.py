@@ -496,7 +496,7 @@ def OP_34(arg1: uint8, arg2: float32, arg3: float32, arg4: float32, arg5: float3
     assert isinstance(arg5, float32)
     _gScena.handleOpCode(0x34, arg1, arg2, arg3, arg4, arg5)
 
-def ChrSetVisibleFlags(arg1: uint8, arg2: uint16, arg3: uint32):
+def ChrPhysicsCtrl(arg1: uint8, arg2: uint16, arg3: uint32):
     # 0x35
     assert isinstance(arg1, uint8)
     assert isinstance(arg2, uint16)

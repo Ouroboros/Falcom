@@ -516,7 +516,7 @@ function traceScriptVM() {
 
 export function main() {
     ED83.enableLogger();
-    traceScriptVM();
+    // traceScriptVM();
 
     hookFileRedirection();
     hookCharacterModelInit();
