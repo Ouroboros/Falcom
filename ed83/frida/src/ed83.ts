@@ -8,6 +8,7 @@ import {
     InvalidChrId,
     Character,
     BattleCharacter,
+    AnimeClipObject,
     MaxPartyChrId,
     NameTableData,
     BattleAITable,
@@ -352,6 +353,30 @@ function hookBattle() {
 
         }, 'pointer', ['pointer', 'uint16'],
     );
+
+    return;
+
+    const recorded: any = {};
+
+    const AnimeClipObject_GetStartTimeEndTime = Interceptor2.jmp(
+        Addrs.AnimeClipObject.GetStartTimeEndTime,
+        function(obj: NativePointer, startTime: NativePointer, endTime: NativePointer): number {
+            const ret = AnimeClipObject_GetStartTimeEndTime(obj, startTime, endTime);
+
+            if (ret == 0) {
+                const clip = new AnimeClipObject(obj);
+                const name = clip.name;
+
+                if (!recorded[name]) {
+                    recorded[name] = true;
+                    utils.log(`anime clip ${clip.name} ${startTime.readFloat()} ~ ${endTime.readFloat()}`);
+                }
+            }
+
+            return ret;
+        },
+        'uint32', ['pointer', 'pointer', 'pointer'],
+    );
 }
 
 function hookFileRedirection() {
@@ -459,7 +484,7 @@ function traceScriptVM() {
 
             if (offset == 0) return;
 
-            if (scriptName.indexOf('chr500') != -1) {
+            if (scriptName.indexOf('chr033') != -1) {
                 tracing = true;
                 utils.log('***** ScriptVMExecute: %s.%s 0x%08X *****', scriptName, currentFunction, offset);
             }
@@ -491,7 +516,7 @@ function traceScriptVM() {
 
 export function main() {
     ED83.enableLogger();
-    // traceScriptVM();
+    traceScriptVM();
 
     hookFileRedirection();
     hookCharacterModelInit();

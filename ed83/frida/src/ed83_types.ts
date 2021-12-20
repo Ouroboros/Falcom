@@ -177,6 +177,12 @@ export class BattleCharacter extends ED8BaseObject {
     }
 }
 
+export class AnimeClipObject extends ED8BaseObject {
+    get name(): string {
+        return this.readPointer(0x40).readUtf8String()!;
+    }
+}
+
 export class NameTableData extends ED8BaseObject {
     get chrId(): number {
         return this.readU16(0x00);

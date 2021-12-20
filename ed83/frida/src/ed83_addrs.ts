@@ -67,6 +67,10 @@ export const Addrs = {
         SetupBattle_InitCraft           : Modules.ED83.base.add(0x1A8535),
         SetupBattle_InitCraftEnd        : Modules.ED83.base.add(0x1A85B2),
     },
+
+    AnimeClipObject: {
+        GetStartTimeEndTime             : Modules.ED83.base.add(0x4C16E0),
+    },
 };
 
 export const Offsets = {
