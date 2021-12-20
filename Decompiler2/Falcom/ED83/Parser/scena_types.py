@@ -407,8 +407,8 @@ class ScenaAnimeClips:
         return body
 
 class ScenaAnimeClipTableEntry:
-    def __init__(self, flags: int = 0, model: str = '', animeClip: str = '', *, fs: fileio.FileStream = None):
-        self.flags  = flags
+    def __init__(self, catalog: int = 0, model: str = '', animeClip: str = '', *, fs: fileio.FileStream = None):
+        self.catalog  = catalog
         self.model  = model
         self.animeClip  = animeClip
 
@@ -418,16 +418,16 @@ class ScenaAnimeClipTableEntry:
         if not fs:
             return
 
-        self.flags = fs.ReadULong()
-        if self.flags != 0:
+        self.catalog = fs.ReadULong()
+        if self.catalog != 0:
             self.model = utils.read_fixed_string(fs, 0x20)
             self.animeClip = utils.read_fixed_string(fs, 0x20)
 
     def serialize(self) -> bytes:
         fs = io.BytesIO()
 
-        fs.write(utils.int_to_bytes(self.flags, 4))
-        if self.flags != 0:
+        fs.write(utils.int_to_bytes(self.catalog, 4))
+        if self.catalog != 0:
             fs.write(utils.pad_string(self.model, 0x20))
             fs.write(utils.pad_string(self.animeClip, 0x20))
 
@@ -438,10 +438,10 @@ class ScenaAnimeClipTableEntry:
     def toPython(self) -> List[str]:
         f = [
             'ScenaAnimeClipTableEntry(',
-            f'{DefaultIndent}flags = 0x{self.flags:08X},',
+            f'{DefaultIndent}catalog    = 0x{self.catalog:08X},',
         ]
 
-        if self.flags != 0:
+        if self.catalog != 0:
             f.extend([
                 f"{DefaultIndent}model      = '{self.model}',",
                 f"{DefaultIndent}animeClip  = '{self.animeClip}',",
@@ -463,7 +463,7 @@ class ScenaAnimeClipTable:
         self.entries = []
         while True:
             e = ScenaAnimeClipTableEntry(fs = fs)
-            if e.flags == 0:
+            if e.catalog == 0:
                 break
             self.entries.append(e)
 
@@ -473,8 +473,8 @@ class ScenaAnimeClipTable:
         for e in self.entries:
             b.extend(e.serialize())
 
-        if not self.entries or self.entries[-1].flags != 0:
-            b.extend(ScenaAnimeClipTableEntry(flags = 0).serialize())
+        if not self.entries or self.entries[-1].catalog != 0:
+            b.extend(ScenaAnimeClipTableEntry(catalog = 0).serialize())
 
         return b
 
@@ -581,7 +581,7 @@ class ScenaActionTableEntry:
         craftId     : int = 0,
         type        : int = 0,
         byte03      : int = 0,
-        areaType    : int = 0,
+        rangeType   : int = 0,
         rng         : int = 0,
         area        : int = 0,
         float08     : int = 0,
@@ -619,7 +619,7 @@ class ScenaActionTableEntry:
         self.craftId        = craftId       # type: int
         self.type           = type          # type: int
         self.byte03         = byte03        # type: int
-        self.areaType       = areaType      # type: int
+        self.rangeType      = rangeType     # type: int
         self.rng            = rng           # type: int
         self.area           = area          # type: int
         self.float08        = float08       # type: int
@@ -665,7 +665,7 @@ class ScenaActionTableEntry:
 
         self.type           = fs.ReadByte()                     # 0x02
         self.byte03         = fs.ReadByte()                     # 0x03
-        self.areaType       = fs.ReadByte()                     # 0x04
+        self.rangeType      = fs.ReadByte()                     # 0x04
         self.rng            = fs.ReadByte()                     # 0x05
         self.area           = fs.ReadByte()                     # 0x06
         pad07               = fs.ReadByte()                     # 0x07
@@ -715,7 +715,7 @@ class ScenaActionTableEntry:
         if self.craftId != self.InvalidCraftID:
             fs.write(utils.int_to_bytes(self.type, 1))
             fs.write(utils.int_to_bytes(self.byte03, 1))
-            fs.write(utils.int_to_bytes(self.areaType, 1))
+            fs.write(utils.int_to_bytes(self.rangeType, 1))
             fs.write(utils.int_to_bytes(self.rng, 1))
             fs.write(utils.int_to_bytes(self.area, 1))
 
@@ -767,7 +767,7 @@ class ScenaActionTableEntry:
             f'{DefaultIndent}craftId       = 0x{self.craftId:X},',
             f'{DefaultIndent}type          = 0x{self.type:02X},',
             f'{DefaultIndent}byte03        = 0x{self.byte03:02X},',
-            f'{DefaultIndent}areaType      = 0x{self.areaType:02X},',
+            f'{DefaultIndent}rangeType     = 0x{self.rangeType:02X},',
             f'{DefaultIndent}rng           = 0x{self.rng:02X},',
             f'{DefaultIndent}area          = 0x{self.area:02X},',
             f'{DefaultIndent}float08       = {self.float08},',
@@ -849,7 +849,7 @@ class ScenaAlgoTableEntry:
     def __init__(
             self,
             craftId         : int       = 0,
-            condition       : int       = 0,
+            aiType          : int       = 0,
             probability     : int       = 0,
             target          : int       = 0,
             targetCondition : int       = 0,
@@ -860,7 +860,7 @@ class ScenaAlgoTableEntry:
         ):
 
         self.craftId            = craftId
-        self.condition          = condition
+        self.aiType             = aiType                # 0x0F: SBreak
         self.probability        = probability
         self.target             = target
         self.targetCondition    = targetCondition
@@ -883,14 +883,14 @@ class ScenaAlgoTableEntry:
         if self.craftId == self.InvalidID:
             return
 
-        self.condition          = fs.ReadByte()                         # 0x02
+        self.aiType             = fs.ReadByte()                         # 0x02
         self.probability        = fs.ReadByte()                         # 0x03
         self.target             = fs.ReadByte()                         # 0x04
         self.targetCondition    = fs.ReadByte()                         # 0x05
 
         pad06 = fs.ReadUShort()                       # 0x06      always 0
 
-        self.parameters1        = [fs.ReadULong() for _ in range(3)]    # 0x08      params for condition
+        self.parameters1        = [fs.ReadULong() for _ in range(3)]    # 0x08      params for aiType
         self.parameters2        = [fs.ReadULong() for _ in range(3)]    # 0x14      params for targetCondition
 
         assert pad06 == 0
@@ -899,7 +899,7 @@ class ScenaAlgoTableEntry:
         fs = io.BytesIO()
 
         fs.write(utils.int_to_bytes(self.craftId, 2))
-        fs.write(utils.int_to_bytes(self.condition, 1))
+        fs.write(utils.int_to_bytes(self.aiType, 1))
         fs.write(utils.int_to_bytes(self.probability, 1))
         fs.write(utils.int_to_bytes(self.target, 1))
         fs.write(utils.int_to_bytes(self.targetCondition, 1))
@@ -916,7 +916,7 @@ class ScenaAlgoTableEntry:
         return [
             'ScenaAlgoTableEntry(',
             f'{DefaultIndent}craftId            = 0x{self.craftId:X},',
-            f'{DefaultIndent}condition          = 0x{self.condition:02X},',
+            f'{DefaultIndent}aiType             = 0x{self.aiType:02X},',
             f'{DefaultIndent}probability        = {self.probability},',
             f'{DefaultIndent}target             = 0x{self.target:02X},',
             f'{DefaultIndent}targetCondition    = 0x{self.targetCondition:02X},',

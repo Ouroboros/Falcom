@@ -18,7 +18,7 @@ if /i "%filename:~0,5%" == "alchr" (
     move "%output%" "%PATCH_PATH%\scripts\ani\dat\" >NUL
 
 )  else if /i "%filename:~0,3%" == "rob" (
-    rem move "%output%" "%PATCH_PATH%\scripts\ani\dat\" >NUL
+    move "%output%" "%PATCH_PATH%\scripts\ani\dat\" >NUL
 
 ) else if /i "%filename:~0,2%" == "t_" (
     move "%output_tbl%" "%PATCH_PATH%\text\dat\" >NUL
@@ -39,6 +39,7 @@ for %%i in (
     m????.py
     a????.py
     chr*.py
+    rob*.py
 ) do (
     start /B "" /D "%~dp0" cmd /c " "%~f0" "%%~fi" "
 )

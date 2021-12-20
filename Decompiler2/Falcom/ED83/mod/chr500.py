@@ -11,1747 +11,1747 @@ scena = createScenaWriter('chr500.dat')
 def AnimeClipTable():
     return ScenaAnimeClipTable(
         ScenaAnimeClipTableEntry(
-            flags = 0x00000001,
+            catalog    = 0x00000001,
             model      = 'C_CHR033_DF1',
             animeClip  = 'WALK',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000001,
+            catalog    = 0x00000001,
             model      = 'C_CHR033_DF1',
             animeClip  = 'WAIT1',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000001,
+            catalog    = 0x00000001,
             model      = 'C_CHR033_DF1',
             animeClip  = 'RUN',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000001,
+            catalog    = 0x00000001,
             model      = 'C_CHR033_DF1',
             animeClip  = 'SIT_WAIT',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000001,
+            catalog    = 0x00000001,
             model      = 'C_CHR033_DF1',
             animeClip  = 'WAIT',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000001,
+            catalog    = 0x00000001,
             model      = 'C_CHR033_DF1',
             animeClip  = 'PRE_WAIT',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_WAIT',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_ATTACK',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_DAMAGE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_WEAK',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_WEAKDAMAGE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_POWERUP_F',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_POWERUP',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_POWERUPa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_DEAD',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_DEADa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT00_00',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT00_01',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT00_01a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT00_02',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT00_03',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT01_00',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT01_01',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT01_01a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT02_01',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT02_00',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT02_00a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT03_00',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT03_01',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT03_01a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT03_02',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000100,
+            catalog    = 0x00000100,
             model      = 'C_CHR033_BT1',
             animeClip  = 'BTL_CRAFT03_02a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_00',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_01',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_01a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_02',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_02a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_03',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_03a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_04',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_04a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_05',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_05a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_06',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_06a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_06b',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_06c',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_07',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_08',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_08a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_09',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000010,
+            catalog    = 0x00000010,
             model      = 'C_CHR033_SC1',
             animeClip  = 'BTL_S_CRAFT00_09a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'WAIT_D',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'PRE_WAIT_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'SIT_WAIT_D',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'EV_DEAD1',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_DF1',
             animeClip  = 'SIT_WAIT-2',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_DF1',
             animeClip  = 'SIT_WAIT-1',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_DF1',
             animeClip  = 'SIT_WAIT+1',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_DF1',
             animeClip  = 'SIT_WAIT+2',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_WAIT1',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_AKIRE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_AKIREa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_AKIREb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_AKUBI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_AKUBI_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_ASENUGUI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_ASENUGUIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_ASENUGUIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_ATAMAKAKI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_ATAMAKAKI_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_BYE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_BYEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_BYEb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_BYEBYE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_BYEBYEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_BYEBYEb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_BYE_WALK',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK+1',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK+2',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK+3',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK-1',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK-2',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK_AGO',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK_PEN',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK_PEN_MOVE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK_PEN_MOVEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK_PEN_2',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK_PEN_3',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK_RYOTE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_DESK_SIT_DOWN',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'EV_FALL',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_GAKKARI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_GAKKARIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_GAKKARIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_GAKKARI_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_GAKKARI_sa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_GAKKARI_sb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'EV_GOUREI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'EV_GOUREIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'EV_GOUREIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_GYU',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_GYUa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_GYUb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HAKUSHU',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HAKUSHUa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HAKUSHUb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HAKUSHUc',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HAKUSHU_2',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HAKUSHU_2a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HAKUSHU_2b',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HAKUSHU_2c',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HANASIKAKE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HANASIKAKEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HANASIKAKEb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HITEI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HITEI_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOLD_GLASS',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOLD_GLASS_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOLD_GLASSc',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOLD_GLASSc_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOLD_GLASS_w',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOLD_CUP_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOLD_CUPc_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOLD_JOKKI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOLD_JOKKI_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOLD_JOKKI_w',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOLD_JOKKIc_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOOKAKI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_HOOKAKI_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_INORI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_INORIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KABEMOTARE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KAIWA',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KAMIHARAI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KANGEI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KANGEIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KANGEIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KANGEI2',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KANGEI2a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KANGEI2b',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KAZETUYO',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KAZETUYOa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KAZETUYOb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KAZETUYO_2',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KAZETUYO_2a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KAZETUYO_2b',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KAZETUYO_3',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KAZETUYO_3a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KAZETUYO_3b',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KEIREI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KEIREIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KEIREIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KEYBOARD_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KEYBOARD_sa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KEYBOARD_sb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHO',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHOa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHOb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHO_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHO_2',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHO_2a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHO_2b',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHO_2_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHO_3',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHO_3a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHO_3b',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KINCHO_3_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_KUZUSISUWARI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_MEGANE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_MEGANEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_MEGANEb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_MOKUREI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_MOKUREIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_MOKUREIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_MUKKII',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_ODOROKI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_ODOROKIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_ODOROKIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_ODOROKI_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_OJIGI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_OJIGI_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_OJIGIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_OJIGIa_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_OJIGIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_OJIGIb_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_HOLD',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_HOLDa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_HOLD_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_HOLD_sa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_LOOK',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_LOOKa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_LOOK_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_LOOK_sa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_MISERU',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_MISERUa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_SOUSA',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_SOUSAa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_SOUSA_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_SOUSA_sa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_TALK',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_TALKa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_TALK_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_PHONE_TALK_sa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_REI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_REI_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_REIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_REIa_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_REIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_REIb_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTEBURI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_GYU',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_GYUa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_GYUb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_ATAMA',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_ATAMAa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_ATAMAb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_ATAMA_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_AWASE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_AWASEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_AWASEb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_KOSI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_KOSI_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_KOSIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_KOSIa_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_KOSIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_KOSIb_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_KOSI_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_KOSI_t_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_MAE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_MAEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_MAEb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_MAE_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_SIRI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_SIRIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_SIRIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_RYOTE_SIRI_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SEKI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SEKI_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SIAN',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SIANa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SIANb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SIAN_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SIANF',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SIANFa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SIANFb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SIT_DOWN',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SITN',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SITN_D',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SITN_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SIT_JIMEN',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SIT_GAKE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SLEEP',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SLEEPa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SLEEP_GAKE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SLEEP_GAKEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SLEEP_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SQUAT',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_SQUATa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TAORE_1',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TAORE_2',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TAORE_3',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TAORE_4',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'EV_TEBURI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEBURI_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEKOSI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEKOSI_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEKOSIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEKOSIa_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEKOSIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEKOSIb_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEKOSI_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEKOSI_t_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEMUNE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEMUNEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEMUNEb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEMUNE_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEMUNE_sa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEMUNE_sb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEUKASE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEUKASEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TEUKASEb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TORIDASI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TORIDASIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TORIDASI_KAMI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TORIDASI_KAMIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TORIDASI_KAMI_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_TORIDASI_KAMI_sa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_UDEGUMI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_UDEGUMIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_UDEGUMI_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_UDEGUMIF',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_UDEGUMIFa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_UDEGUMIFb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_UDEGUMIF_t',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_UKETORI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_UKETORIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_UKETORIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_WATASU',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_WATASUa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_WATASUb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_WATASU_KAMI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_WATASU_KAMIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_WATASU_KAMIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_WATASU_KAMI_s',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_WATASU_KAMI_sa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_WATASU_KAMI_sb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YAA',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YAAa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YAAb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YAREYARE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YARUKI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YARUKIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YARUKIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YASUME',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YASUME_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YASUMEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YASUMEa_U',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YORIKAKARI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YORIKAKARIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YORIKAKARIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_LEFT',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_LEFTa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_LEFTb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_SITA',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_SITAa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_SITAb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_MAE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_MAEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_MAEb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_UE',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_UEa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_UEb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_MIGI',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_MIGIa',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHRX01_EV',
             animeClip  = 'EV_YUBISASI_MIGIb',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'ev00025',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'ev00025a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'ev03020',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'ev03025',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'ev03025a',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'ev30150',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'ev32030',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'ev35000',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'ev45005',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'ev86000',
         ),
         ScenaAnimeClipTableEntry(
-            flags = 0x00000002,
+            catalog    = 0x00000002,
             model      = 'C_CHR033_EV',
             animeClip  = 'ev86000a',
         ),
@@ -1775,35 +1775,35 @@ def DefaultFace():
 # id: 0x0003 offset: 0x6D2C
 @scena.Code('Ani_EV_Load')
 def Ani_EV_Load():
-    ChrAnimeClipCtrl(0x06, 0xFFFE, 0x00000002)
+    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000002)
 
     Return()
 
 # id: 0x0004 offset: 0x6D38
 @scena.Code('Ani_BT1_Load')
 def Ani_BT1_Load():
-    ChrAnimeClipCtrl(0x06, 0xFFFE, 0x00000100)
+    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000100)
 
     Return()
 
 # id: 0x0005 offset: 0x6D44
 @scena.Code('Ani_SC1_Load')
 def Ani_SC1_Load():
-    ChrAnimeClipCtrl(0x06, 0xFFFE, 0x00000010)
+    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000010)
 
     Return()
 
 # id: 0x0006 offset: 0x6D50
 @scena.Code('Ani_EV_Release')
 def Ani_EV_Release():
-    ChrAnimeClipCtrl(0x07, 0xFFFE, 0x00000002)
+    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000002)
 
     Return()
 
 # id: 0x0007 offset: 0x6D5C
 @scena.Code('Ani_BT1_Release')
 def Ani_BT1_Release():
-    ChrAnimeClipCtrl(0x07, 0xFFFE, 0x00000100)
+    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000100)
     OP_04(0x0B, 'SpringOn')
 
     Return()
@@ -1811,7 +1811,7 @@ def Ani_BT1_Release():
 # id: 0x0008 offset: 0x6D70
 @scena.Code('Ani_SC_Release')
 def Ani_SC_Release():
-    ChrAnimeClipCtrl(0x07, 0xFFFE, 0x00000010)
+    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000010)
     OP_04(0x0B, 'SpringOn')
 
     Return()
@@ -2797,7 +2797,7 @@ def AniBtlDead():
 
     label('loc_8D09')
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x03,
         (
             (Expr.PushLong, 0x0),
@@ -2806,7 +2806,7 @@ def AniBtlDead():
         ),
     )
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x02,
         (
             (Expr.PushLong, 0xF04B),
@@ -2832,7 +2832,7 @@ def AniBtlDead():
         'loc_8DE8',
     )
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x04,
         (
             (Expr.PushLong, 0xF043),
@@ -2862,7 +2862,7 @@ def AniBtlDead():
 
     BattleChrCtrl(0xBB, (0x11, 0x2, 0x0), (0xFF, 0x0, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -2885,7 +2885,7 @@ def AniBtlDead():
 
     BattleChrCtrl(0xBB, (0x11, 0x2, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -2908,7 +2908,7 @@ def AniBtlDead():
 
     BattleChrCtrl(0xBB, (0x11, 0x2, 0x0), (0xFF, 0x2, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -2921,7 +2921,7 @@ def AniBtlDead():
 
     label('loc_8DDA')
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x02,
         (
             (Expr.PushLong, 0x1),
@@ -2958,7 +2958,7 @@ def AniBtlDead():
         'loc_8E2E',
     )
 
-    OP_07(0x00, (0xFF, 0xA, 0x0))
+    DebugLog(0x00, (0xFF, 0xA, 0x0))
     CreateThread(0xFFFE, 0x02, ScriptId.Current, 'AniBtlRelease')
     WaitForThreadExit(0xFFFE, 0x02)
 
@@ -3104,7 +3104,7 @@ def AniBtlRelease():
 
     BattleChrCtrl(0xB7, 0x01, 0xF080, 0x00008000, 0x00000000, 0x00000000, 0x00)
     BattleChrCtrl(0xB7, 0x01, 0xF080, 0x00400000, 0x00000000, 0x00000000, 0x00)
-    OP_07(0x00, (0xFF, 0xA, 0x0))
+    DebugLog(0x00, (0xFF, 0xA, 0x0))
 
     def _loc_90DD(): pass
 
@@ -3159,7 +3159,7 @@ def AniBtlCraft00():
     LoadEffect(0xFFFE, 0x90, 'battle/cr033_00_0.eff')
     LoadEffect(0xFFFE, 0x91, 'battle/cr033_00_1.eff')
     LoadEffect(0xFFFE, 0x9F, 'battle/damage02.eff')
-    BattleChrCtrl(0x04, 0x00)
+    ChrTargetsIterInit(0x00)
     Call(ScriptId.Current, 'SpringOff')
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0001)
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0000)
@@ -3285,7 +3285,7 @@ def AniBtlCraft01():
     LoadEffect(0xFFFE, 0x94, 'battle/cr033_01_4.eff')
     LoadEffect(0xFFFE, 0x95, 'battle/cr033_01_5.eff')
     LoadEffect(0xFFFE, 0x9F, 'battle/damage02.eff')
-    BattleChrCtrl(0x04, 0x00)
+    ChrTargetsIterInit(0x00)
     Call(ScriptId.Current, 'SpringOff')
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0001)
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0000)
@@ -3436,8 +3436,8 @@ def AniBtlCraftDamage():
 # id: 0x0039 offset: 0xA0C4
 @scena.Code('AniBtlCraftDamage01')
 def AniBtlCraftDamage01():
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_A0CC(): pass
 
     label('loc_A0CC')
@@ -3455,9 +3455,9 @@ def AniBtlCraftDamage01():
     Sleep(50)
     BattleChrCtrl(0x00, 0xFFFB, 0xFFFE, 0x64)
     BattleChrCtrl(0x01, 0xFFFB, (0xEE, 0.5, 0x0), (0xEE, 0.800000011920929, 0x0), 0x01)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -3472,15 +3472,15 @@ def AniBtlCraftDamage01():
 
     label('loc_A192')
 
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
 
     Return()
 
 # id: 0x003A offset: 0xA198
 @scena.Code('AniBtlAttackDamage00')
 def AniBtlAttackDamage00():
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_A1A0(): pass
 
     label('loc_A1A0')
@@ -3496,9 +3496,9 @@ def AniBtlAttackDamage00():
     Sleep(30)
     BattleChrCtrl(0x00, 0xFFFB, 0xFFFE, 0x64)
     BattleChrCtrl(0x01, 0xFFFB, (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0x01)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -3513,15 +3513,15 @@ def AniBtlAttackDamage00():
 
     label('loc_A1D5')
 
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
 
     Return()
 
 # id: 0x003B offset: 0xA1DC
 @scena.Code('AniBtlAttackDamage01')
 def AniBtlAttackDamage01():
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_A1E4(): pass
 
     label('loc_A1E4')
@@ -3537,9 +3537,9 @@ def AniBtlAttackDamage01():
     Sleep(30)
     BattleChrCtrl(0x00, 0xFFFB, 0xFFFE, 0x64)
     BattleChrCtrl(0x01, 0xFFFB, (0xEE, 0.5, 0x0), (0xEE, 0.800000011920929, 0x0), 0x01)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -3554,15 +3554,15 @@ def AniBtlAttackDamage01():
 
     label('loc_A219')
 
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
 
     Return()
 
 # id: 0x003C offset: 0xA220
 @scena.Code('AniBtlAttackDamageAnime00')
 def AniBtlAttackDamageAnime00():
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_A228(): pass
 
     label('loc_A228')
@@ -3577,9 +3577,9 @@ def AniBtlAttackDamageAnime00():
 
     Sleep(30)
     BattleChrCtrl(0x01, 0xFFFB, (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0x01)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -3594,7 +3594,7 @@ def AniBtlAttackDamageAnime00():
 
     label('loc_A256')
 
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
 
     Return()
 
@@ -3606,7 +3606,7 @@ def AniBtlCraft02():
     LoadEffect(0xFFFE, 0x91, 'battle/cr033_02_1.eff')
     LoadEffect(0xFFFE, 0x92, 'battle/cr033_02_2.eff')
     LoadEffect(0xFFFE, 0x93, 'battle/cr033_02_3.eff')
-    BattleChrCtrl(0x04, 0x00)
+    ChrTargetsIterInit(0x00)
     Call(ScriptId.Current, 'SpringOff')
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0001)
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0000)
@@ -3735,7 +3735,7 @@ def AniBtlCraft02():
 # id: 0x003E offset: 0xAA3C
 @scena.Code('AniBtlCraftDamage02')
 def AniBtlCraftDamage02():
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_AA41(): pass
 
     label('loc_AA41')
@@ -3753,9 +3753,9 @@ def AniBtlCraftDamage02():
     PlayEffect(0xFFFE, (0xFF, 0x3F8, 0x0), 0xFFFB, 0x0000000C, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     OP_3B(0x00, (0xFF, 0x8BF0, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(100)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -3989,8 +3989,8 @@ def AniBtlCraft03_Mouth01():
 # id: 0x0042 offset: 0xB694
 @scena.Code('AniBtlCraft03_Damage')
 def AniBtlCraft03_Damage():
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_B69C(): pass
 
     label('loc_B69C')
@@ -4007,9 +4007,9 @@ def AniBtlCraft03_Damage():
     PlayEffect(0xFFFE, (0xFF, 0x9A, 0x0), 0xFFFB, 0x0000000C, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(30)
     BattleChrCtrl(0x00, 0xFFFB, 0xFFFE, 0x64)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -4273,8 +4273,8 @@ def AniBtlSCraft00():
     ChrSetVisibleFlags(0x00, 0xFFF9, 0x00000200)
     SetChrPos(0xFFFE, 0.0, 0.0, -50.0, 0.0)
     ChrTurnDirection(0xFFFE, 0xFFEA, -1.0, 0.5)
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     BattleChrCtrl(0x13, 0xFFFE, 0x0001, 0xFFFF, 0x00000000, 0x00000578, 0x00000000)
     def _loc_C630(): pass
 
@@ -4290,10 +4290,10 @@ def AniBtlSCraft00():
 
     ChrTurnDirection(0xFFFB, 0xFFEA, -1.0, 0.5)
     ChrAnimeClipCtrl(0x08, 0xFFFB, 0x00, 'AniBtlFloat', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
     Sleep(1)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -4430,7 +4430,7 @@ def AniBtlSCraft00():
     ChrSetVisibleFlags(0x01, 0xFFF9, 0x00000020)
     BattleChrCtrl(0x13, 0xFFFE, 0x0001, 0xFFFF, 0x00000000, 0x00000578, 0x00000000)
     Sleep(1)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_D04A(): pass
 
     label('loc_D04A')
@@ -4444,9 +4444,9 @@ def AniBtlSCraft00():
     )
 
     ChrTurnDirection(0xFFFB, 0xFFFF, 180.0, -1.0)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -4491,7 +4491,7 @@ def AniBtlSCraft00():
     CameraRotate(341.0, 195.0, 0.0, 1500, 0x01)
     CameraSetDistance(30.0, 1500)
     StopEffect(0xFFFE, 0x03, 0x01)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_D2AA(): pass
 
     label('loc_D2AA')
@@ -4505,9 +4505,9 @@ def AniBtlSCraft00():
     )
 
     ChrTurnDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -4522,15 +4522,15 @@ def AniBtlSCraft00():
 
     label('loc_D2D2')
 
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     ChrSetPosByTargetAsync(0xFFFB, 0xFFFF, 0.0, 6.5, 1.0, 0.5, 0x02, 0x00)
     OP_3B(0x00, (0xFF, 0x8F41, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x04B0, 0x012C, 0x0000, 0x04B0, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x00, 'AniBtlFloat')
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -4557,9 +4557,9 @@ def AniBtlSCraft00():
 
     label('loc_D3A6')
 
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -4586,9 +4586,9 @@ def AniBtlSCraft00():
 
     label('loc_D3FA')
 
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -4659,7 +4659,7 @@ def AniBtlSCraft00():
     CameraRotate(13.0, 170.0, 0.0, 0, 0x01)
     CameraSetDistance(10.0, 0)
     CameraCtrl(0x05, 0x00, 7.0, 500)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_D8D8(): pass
 
     label('loc_D8D8')
@@ -4673,9 +4673,9 @@ def AniBtlSCraft00():
     )
 
     ChrTurnDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -4692,8 +4692,8 @@ def AniBtlSCraft00():
 
     ReleaseEffect(0xFFFE, 0x96)
     LoadEffect(0xFFFE, 0x96, 'battle/sc033_00_14.eff')
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     ChrSetPosByTarget(0xFFFB, 0xFFEA, 0.0, 0.0, 0.0, 0.0, 0x00, 0x00)
     OP_5C(0xFFFB, 0x00, 'Root')
     OP_5D(0xFFFB, 'Root', 0.0, 0.0, 0.0, -30.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0x0000, 0x03, 0x00)
@@ -4738,9 +4738,9 @@ def AniBtlSCraft00():
     ChrSetVisibleFlags(0x00, 0xFFFB, 0x00000040)
     ChrSetVisibleFlags(0x00, 0xFFFB, 0x00000020)
     OP_5C(0xFFFB, 0x01, 'Root')
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -4810,9 +4810,9 @@ def AniBtlSCraft00():
 
     label('loc_E0FD')
 
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -4882,9 +4882,9 @@ def AniBtlSCraft00():
 
     label('loc_E530')
 
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -4976,7 +4976,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
     CameraSetPos(-0.58, 6.99, -2.61, 2500)
     CameraRotate(336.0, 15.0, 5.0, 1250, 0x01)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_EAF1(): pass
 
     label('loc_EAF1')
@@ -4990,9 +4990,9 @@ def AniBtlSCraft00():
     )
 
     ChrTurnDirection(0xFFFB, 0xFFFF, 180.0, -1.0)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5007,12 +5007,12 @@ def AniBtlSCraft00():
 
     label('loc_EB19')
 
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     ChrSetPosByTargetAsync(0xFFFB, 0xFFFF, 0.0, 6.5, 1.0, 0.0, 0x02, 0x00)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5037,9 +5037,9 @@ def AniBtlSCraft00():
 
     label('loc_EB6C')
 
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5064,9 +5064,9 @@ def AniBtlSCraft00():
 
     label('loc_EB9F')
 
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5091,7 +5091,7 @@ def AniBtlSCraft00():
 
     label('loc_EBD2')
 
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_EBD7(): pass
 
     label('loc_EBD7')
@@ -5105,9 +5105,9 @@ def AniBtlSCraft00():
     )
 
     ChrTurnDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5122,16 +5122,16 @@ def AniBtlSCraft00():
 
     label('loc_EBFF')
 
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x01, 'AniBtlCrucifixion')
     SetChrFace(0x03, 0xFFFB, 'B', 'F', '', '#b', '0')
     Sleep(1)
     PlayEffect(0xFFFE, (0xFF, 0x99, 0x0), 0xFFFB, 0x00000003, (0xDD, 'NODE_HEAD'), (0xEE, 0.0, 0x0), (0xEE, -0.18000000715255737, 0x0), (0xEE, -0.20000000298023224, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x0B)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5160,9 +5160,9 @@ def AniBtlSCraft00():
 
     label('loc_ED4D')
 
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5191,9 +5191,9 @@ def AniBtlSCraft00():
 
     label('loc_EE0F')
 
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5264,7 +5264,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
     CameraSetPos(1.0, 5.07, 4.51, 4000)
     CameraRotate(343.0, 15.0, -5.0, 4000, 0x01)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     OP_3B(0x00, (0xFF, 0x13EC, 0x0), 0.8, (0xFF, 0x3E8, 0x0), 0.0, 1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0BB8, 0x0258, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x8F31, 0x0), 0.6, (0xFF, 0x3E8, 0x0), 0.0, 1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     def _loc_F2AD(): pass
@@ -5280,9 +5280,9 @@ def AniBtlSCraft00():
     )
 
     ChrTurnDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5297,13 +5297,13 @@ def AniBtlSCraft00():
 
     label('loc_F2D5')
 
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     EffectCtrl(0x0F, 0xFFFE, 0x0099, 0x01)
     PlayEffect(0xFFFE, (0xFF, 0x9A, 0x0), 0xFFFB, 0x00000003, (0xDD, 'NODE_HEAD'), (0xEE, 0.0, 0x0), (0xEE, -0.18000000715255737, 0x0), (0xEE, -0.20000000298023224, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x0C)
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5328,9 +5328,9 @@ def AniBtlSCraft00():
 
     label('loc_F397')
 
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5355,9 +5355,9 @@ def AniBtlSCraft00():
 
     label('loc_F3FE')
 
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),
@@ -5421,7 +5421,7 @@ def AniBtlSCraft00():
     BattleChrCtrl(0x1F, 0xFFFF)
     OP_4B(0xFFFE, 1.0, 1.0, 1.0, 1.0, 0x0000, 0x03)
     OP_4B(0xFFF9, 1.0, 1.0, 1.0, 1.0, 0x0000, 0x03)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_F6F9(): pass
 
     label('loc_F6F9')
@@ -5435,9 +5435,9 @@ def AniBtlSCraft00():
     )
 
     OP_38(0xFFFB, 0x00, 0x00, 'ShowEquip')
-    BattleChrCtrl(0x03, 0xFFFE)
+    ChrTargetsIterNext(0xFFFE)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x01,
         (
             (Expr.PushLong, 0x1),

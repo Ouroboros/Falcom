@@ -12,7 +12,92 @@ TempCharBaseId          = 0xB68
 TargetSaved             = 0xFFF4
 TargetSelectedPos       = 0xFFF5
 TargetSelectedTarget    = 0xFFFB
+TargetCurrentTarget     = 0xFFFB
 TargetSelf              = 0xFFFE
+
+class AbnormalCondition(IntEnum2):
+    Poison              = 0x00000001
+    Seal                = 0x00000002
+    Mute                = 0x00000004
+    Blind               = 0x00000008
+    Sleep               = 0x00000010
+    Burn                = 0x00000020
+    Freeze              = 0x00000040
+    Petrify             = 0x00000080
+    Faint               = 0x00000100
+    Confuse             = 0x00000200
+    Charm               = 0x00000400
+    Deathblow           = 0x00000800
+    Nightmare           = 0x00001000
+    Delay               = 0x00002000
+    Vanish              = 0x00004000
+    STRDown             = 0x00008000
+    DEFDown             = 0x00010000
+    ATSDown             = 0x00020000
+    ADFDown             = 0x00040000
+    SPDDown             = 0x00080000
+    MOVDown             = 0x00100000
+    Insight             = 0x00200000
+    SlowHPRecover       = 0x00400000
+    SlowCPRecover       = 0x00800000
+    CraftGuard          = 0x01000000
+    MagicReflect        = 0x02000000
+    PhysicalReflect     = 0x04000000
+    SpiritUnification   = 0x08000000
+    Possess             = 0x10000000
+    Stealth             = 0x20000000
+    BalanceDown         = 0x40000000
+    Death               = 0x80000000
+
+class AbnormalCondition2(IntEnum2):
+    BurningHeart            = 0x00000001
+    HPUpDownVitality        = 0x00000002
+    AlmightyConflagration   = 0x00000004
+    TemporaryHPboost        = 0x00000008
+    GuardBreak              = 0x00000010
+    LinkBreak               = 0x00000020
+    Enhanced                = 0x00000040
+    Brandish                = 0x00000100
+    ProtectionAgainstAll    = 0x00000200
+    AbsoluteReflect         = 0x00000400
+    CantMove                = 0x00000800
+    ElementWeakness         = 0x00001000
+    Hide                    = 0x00004000
+
+def ForEachTarget(cb):
+    ChrTargetsIterInit(0x00)
+    ChrTargetsIterReset(0x01, 0xFFFE)
+
+    start = genLabel()
+    end = genLabel()
+    label(start)
+
+    If(
+        (
+            (Expr.PushReg, 0x1),
+            Expr.Return,
+        ),
+        end,
+    )
+
+    cb()
+
+    ChrTargetsIterNext(0xFFFE)
+
+    OP_0A(
+        0x01,
+        (
+            (Expr.PushLong, 0x1),
+            Expr.Sub2,
+            Expr.Return,
+        ),
+    )
+
+    Jump(start)
+
+    label(end)
+
+    ChrTargetsIterReset(0x01, 0xFFFE)
 
 def RandIf(probability, true_succ, false_succ):
     assert 0 <= probability <= 100
@@ -95,14 +180,14 @@ def CameraRotate(vertical: float, horizontal: float, tilt: float, durationInMs: 
     OP_36(0x04, 0x03, vertical, horizontal, tilt, durationInMs, unknown)
     return
 
-def CameraSetPos(x: float, y: float, z: float, unknwon: int = 0):
-    CameraCtrl(0x02, 0x03, x, y, z, unknwon)
+def CameraSetPos(x: float, y: float, z: float, durationInMs: int = 0):
+    CameraCtrl(0x02, 0x03, x, y, z, durationInMs)
 
 def CameraRotateByTarget(chrId: int, node: str, byte3: int, vertical: float, horizontal: float, tilt: float, durationInMs: int, byte8: int):
     CameraCtrl(0x13, chrId, node, byte3, vertical, horizontal, tilt, durationInMs, byte8)
 
-def CameraSetPosByTarget(chrId: int, node: str, horizontal: float, vertical: float, depth: float, durationInMs: int):
-    CameraCtrl(0x14, 0x03, chrId, node, horizontal, vertical, depth, durationInMs)
+def CameraSetPosByTarget(chrId: int, node: str, x: float, y: float, z: float, durationInMs: int):
+    CameraCtrl(0x14, 0x03, chrId, node, x, y, z, durationInMs)
 
 def CameraSetDistance(distance: float, durationInMs: int = 0):
     CameraCtrl(0x05, 0x03, distance, durationInMs)
@@ -150,15 +235,15 @@ def PlayEffect2(
     targetChrId         : int,
     unknown             : int,
     node                : str,
-    horizontal          : float,
-    vertical            : float,
-    depth               : float,
+    x                   : float,
+    y                   : float,
+    z                   : float,
     rotate_vertical     : float,
     rotate_horizontal   : float,
-    rotate_rotation     : float,
-    scale_vertical      : float,
-    scale_horizontal    : float,    # ?
-    scale_depth         : float,
+    rotate_tilt         : float,
+    scale_y             : float,
+    scale_x             : float,    # ?
+    scale_z             : float,
     slot                : int,
 ):
     EffectCtrl(
@@ -168,15 +253,15 @@ def PlayEffect2(
         targetChrId,
         unknown,
         (0xDD, node),
-        (0xEE, horizontal, 0),
-        (0xEE, vertical, 0),
-        (0xEE, depth, 0),
+        (0xEE, x, 0),
+        (0xEE, y, 0),
+        (0xEE, z, 0),
         rotate_vertical,
         rotate_horizontal,
-        rotate_rotation,
-        (0xEE, scale_vertical, 0),
-        (0xEE, scale_horizontal, 0),
-        (0xEE, scale_depth, 0),
+        rotate_tilt,
+        (0xEE, scale_y, 0),
+        (0xEE, scale_x, 0),
+        (0xEE, scale_z, 0),
         slot,
     )
 
@@ -200,10 +285,45 @@ def IsAssetLoaded(asset: str):
 def LoadAssetAsync(asset: str):
     OP_31(0x03, asset)
 
+def ChrLoadAnimeClipByCatalog(chrId: int, catalog: int):
+    ChrAnimeClipCtrl(0x06, chrId, catalog)
+
+def ChrReleaseAnimeClipByCatalog(chrId: int, catalog: int):
+    ChrAnimeClipCtrl(0x07, chrId, catalog)
+
 
 '''
     battle chr
 '''
+
+def ChrSetAbnormalCondition(chrId: int, condition: AbnormalCondition, param1: int, param2: int, unused: int):
+    BattleChrCtrl(0xB7, 0x00, chrId, condition, param1, param2, unused)
+
+def ChrClearAbnormalCondition(chrId: int, condition: AbnormalCondition):
+    BattleChrCtrl(0xB7, 0x01, chrId, condition, 0, 0, 0)
+
+def ChrSetAbnormalCondition2(chrId: int, condition: AbnormalCondition2, param1: int, param2: int, se: int):
+    BattleChrCtrl(0xB7, 0x02, chrId, condition, param1, param2, se)
+
+def ChrClearAbnormalCondition2(chrId: int, condition: AbnormalCondition2):
+    BattleChrCtrl(0xB7, 0x03, chrId, condition, 0, 0, 0)
+
+def ChrPlayAnimeClipSeq(chrId: int, group: int, *animeClips: str):
+    assert len(animeClips) <= 16
+    if len(animeClips) < 16:
+        animeClips: list = list(animeClips)
+        animeClips.extend([''] * (16 - len(animeClips)))
+
+    ChrAnimeClipCtrl(0x08, chrId, group, *animeClips)
+
+def ChrTargetsIterInit(unknown: int):
+    BattleChrCtrl(0x04, unknown)
+
+def ChrTargetsIterReset(regIndex: int, chrId: int):
+    BattleChrCtrl(0x02, regIndex, chrId)
+
+def ChrTargetsIterNext(chrId: int):
+    BattleChrCtrl(0x03, chrId)
 
 def ChrSavePosition(targetChrId: int, unknown: int):
     BattleChrCtrl(0x35, targetChrId, unknown)
@@ -247,11 +367,11 @@ def ChrMoveToTarget():
 def ChrTurnDirection(chrId: int, targetId: int, unknown: float, speed: float = -1.0):
     OP_33(0x3C, chrId, targetId, unknown, speed)
 
-def ChrSetPosByTarget(chrId: int, targetId: int, horizontal: float, vertical: float, depth: float, speed: float, unknown2: int = 0, unknown3: int = 0):
-    OP_33(0x33, chrId, targetId, horizontal, vertical, depth, speed, unknown2, unknown3)
+def ChrSetPosByTarget(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int = 0, unknown3: int = 0):
+    OP_33(0x33, chrId, targetId, x, y, z, speed, unknown2, unknown3)
 
-def ChrSetPosByTargetAsync(chrId: int, targetId: int, horizontal: float, vertical: float, depth: float, speed: float, unknown2: int, unknown3: int):
-    OP_33(0x39, chrId, targetId, horizontal, vertical, depth, speed, unknown2, unknown3)
+def ChrSetPosByTargetAsync(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int, unknown3: int):
+    OP_33(0x39, chrId, targetId, x, y, z, speed, unknown2, unknown3)
 
 def ChrSetBattleFlags(chrId: int, flags: int):
     OP_33(0x0B, chrId, flags)

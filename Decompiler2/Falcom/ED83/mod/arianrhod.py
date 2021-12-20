@@ -65,19 +65,35 @@ def AniBtlCraft05():
     # ChrSetPosByTarget(DummyCharBaseId, 0xFFF5, 0.0, 0.0, -2.0, -1.0, 0x00, 0x00)
     ChrSetPosByTarget(DummyCharBaseId, 0xFFFB, 0.0, 0.0, -2.0, -1.0, 0x00, 0x00)
 
-    kisin = ChrCreateTempChar(0, 0xFFFF, 'C_ROB004', 'rob500')
-    ChrSetPosByTarget(kisin, 0xFFFE, 0.0, 0.0, -2.0, -1.0, 0x00, 0x00)
-    # PlayChrAnimeClip(kisin, 'evk1000', 0x00, 0x00, 0x00, 0x00, 0x00, -2.0, -1.0, -1.0, -1.0, 0x00, 0x00)
+    if 0:
+        # BattleChrCtrl(0xB7, 0x00, 0xFFFE, AbnormalStatus.Death, 0x000000FF, 0x000000FF, 0x00)
+        BattleChrCtrl(0xB7, 0x00, 0xFFFB, AbnormalCondition.Death | AbnormalCondition.Deathblow | AbnormalCondition.Vanish, 0x000000FF, 0x000000FF, 0x00)
+        SetChrPos(0xFFFB, 0.0, -100.0, 0.0, 0.0)
+        Jump(end)
 
-    # PlayChrAnimeClip(kisin, 'evk1000', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
-    # ChrSetVisibleFlags(0x00, kisin, 0x00000020)
-    # ChrSetVisibleFlags(0x00, kisin, 0x00000080)
-    # ChrSetVisibleFlags(0x00, kisin, 0x00000200)
+        kisin = ChrCreateTempChar(0, 0xFFFF, 'C_ROB004', 'rob500')
+        ChrSetPosByTarget(kisin, 0xFFFE, 0.0, 0.0, -2.0, -1.0, 0x00, 0x00)
+        ChrTurnDirection(kisin, 0xFFFB, 0.0, -1.0)
 
-    DebugString('jyama sareta - repeat!')
+        BattleChrCtrl(0x47)
+        CameraCtrl(0x00)
+        CameraSetPosByTarget(kisin, '', 0.0, 4.5, -0.22, 0)
+        CameraRotateByTarget(kisin, '', 0x03, 6.0, 0, 0, 0, 0x01)
+        CameraSetDistance(2.1, 0)
+        CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
+        CameraSetPosByTarget(kisin, '', 0.0, 4.5, -0.1, 1000)
+        CameraRotateByTarget(kisin, '', 0x03, 6.0, 20, 0.0, 1000, 0x01)
+        CameraSetDistance(7.5, 700)
+        CameraCtrl(0x16, 0x03, 7.5, 700)
+        Sleep(1000)
 
-    Sleep(10000)
-    Jump(end)
+        # SetChrAniFunction(kisin, 0x00, 'AniEvk1001', 0.0, 1.0, 0x00000000)
+        # PlayChrAnimeClip(kisin, 'evk1001', 0x00, 0x01, 0x00, 0x00, 0x00, -2.0, 166.6666717529297, 168.63375854492188, -1.0, 0x00, 0x00)
+        PlayChrAnimeClip(kisin, 'evk1001', 0x00, 0x01, 0x00, 0x00, 0x00, -2.0, 166.6666717529297, 167.63375854492188, -1.0, 0x00, 0x00)
+
+        Sleep(2000)
+
+        Jump(end)
 
     BattleChrCtrl(0x47)
     CameraCtrl(0x00)
@@ -95,7 +111,8 @@ def AniBtlCraft05():
     Sleep(800)
 
     PlayVoice(0x1B8C)
-    PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_00', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+    # PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_00', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+    PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 66.6667, 67.2, -1.0, 0x00, 0x00)
     Sleep(500)
 
     Fade(0x65, 100, 1.0, 0x0000)
@@ -103,7 +120,8 @@ def AniBtlCraft05():
     ChrHide(0xFFF9, 64)
     ChrHide(0xFFF9, 32)
 
-    PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_00', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+    # PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_00', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+    # PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 66.6667, 67.2, -1.0, 0x00, 0x00)
     ChrShow(0xFFF9, 64)
     ChrShow(0xFFF9, 32)
     CameraCtrl(0x00)
@@ -187,6 +205,8 @@ def AniBtlCraft05():
     label(end)
 
     ChrSetAfterImageOff()
+
+    PlayChrAnimeClip(0xFFFE, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.5, -1.0, -1.0, -1.0, 0x00, 0x00)
     Call(ScriptId.BtlCom, 'AniBtlCraftFinish')
 
     Return()
@@ -217,6 +237,8 @@ def AniBtlPlayLanceEffects():
         )
         Sleep(70)
 
+    Return()
+
 def AniBtlCraftDamageAnimeX():
     AniBtlCraftDamageT(False, 0)
 
@@ -227,48 +249,26 @@ def AniBtlCraftDamageXKnockBack():
     AniBtlCraftDamageT(True, 5)
 
 def AniBtlCraftDamageT(damage: bool, knockBack: float):
-    BattleChrCtrl(0x04, 0x00)
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    def cb():
+        status = AbnormalCondition.Deathblow | AbnormalCondition.Burn
+        BattleChrCtrl(0xB7, 0x00, 0xFFFB, status, 0x000000FF, 0x000000FF, 0x00)
+        # SetChrPos(0xFFFB, 0.0, -100.0, 0.0, 0.0)
+        # ChrSetVisibleFlags(0x00, 0xFFFB, 0xFFFFFFFF)
 
-    start = genLabel()
-    end = genLabel()
+    ForEachTarget(cb)
 
-    label(start)
+    def cb():
+        if damage:
+            BattleChrCtrl(0x00, 0xFFFB, 0xFFFE, 0x64)
+        BattleChrCtrl(0x01, 0xFFFB, (0xEE, knockBack, 0x0), (0xEE, 0.5, 0x0), 0x01)
 
-    If(
-        (
-            (Expr.PushReg, 0x1),
-            Expr.Return,
-        ),
-        end,
-    )
-
-    # Sleep(30)
-    if damage:
-        BattleChrCtrl(0x00, 0xFFFB, 0xFFFE, 0x64)
-
-    BattleChrCtrl(0x01, 0xFFFB, (0xEE, knockBack, 0x0), (0xEE, 0.5, 0x0), 0x01)
-    BattleChrCtrl(0x03, 0xFFFE)
-
-    OP_0A(
-        0x01,
-        (
-            (Expr.PushLong, 0x1),
-            Expr.Sub2,
-            Expr.Return,
-        ),
-    )
-
-    Jump(start)
-
-    label(end)
-
-    BattleChrCtrl(0x02, 0x01, 0xFFFE)
+    ForEachTarget(cb)
 
     Return()
 
 def AniBtlStart():
     OP_3B(0x39, 0xFFFE)
+    # CreateThread(0xFFFF, 3, ScriptId.Current, 'AniBtlUndead')
     Return()
 
 def AniBtlMove():
