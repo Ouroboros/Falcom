@@ -51,8 +51,10 @@ def AniBtlCraft05():
     Call(ScriptId.BtlCom, 'AniBtlCraftBegin')
 
     LoadEffect(0xFFFE, 0x90, 'battle/cr000_02_1.eff')
-    LoadEffect(0xFFFE, 0x91, 'battle/cr000_02_5.eff')
+    # LoadEffect(0xFFFE, 0x91, 'battle/cr000_02_5.eff')
     LoadEffect(0xFFFE, 0x92, 'battle/cr033_00_0.eff')
+    LoadEffect(0xFFFE, 0x95, 'battle/sc033_00_5.eff')
+    LoadEffect(0xFFFE, 0x96, 'battle/sc033_00_6.eff')
     LoadEffect(0xFFFE, 0x9F, 'battle/cic033_0.eff')
 
     Call(ScriptId.Current, 'SpringOff')
@@ -110,8 +112,8 @@ def AniBtlCraft05():
         CameraCtrl(0x16, 0x03, 3.2, 700)
         CameraSetDistance(3.2, 700)
 
-        PlayEffect2(0xFFFE, 0x91, 0xFFFE, 0x00000003, '', *(0.0, 0.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
-        PlayEffect2(0xFFFE, 0x90, 0xFFFE, 0x00000003, '', *(0.0, 1.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
+        PlayEffect2(0xFFFE, 0x95, 0xFFFE, 0x00000003, '', *(0.0, 0.0, 0.0), 0.0, 0.0, 0.0, *(0.5, 0.5, 0.5), 0xFF)
+        PlayEffect2(0xFFFE, 0x96, 0xFFFE, 0x00000003, '', *(0.0, 1.0, 0.0), 0.0, 0.0, 0.0, *(0.5, 0.5, 0.5), 0x01)
         PlaySE(0xFB1)
         PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 66.6667, 67.2, -1.0, 0x00, 0x00)
         ChrSetPosByTarget(0xFFFE, 0xFFF5, 0.0, 0.0, -2.0, 7.0, 0x00, 0x00)
@@ -129,8 +131,8 @@ def AniBtlCraft05():
         CameraCtrl(0x16, 0x03, 3.2, 700)
         CameraSetDistance(3.2, 700)
 
-        PlayEffect2(0xFFFE, 0x91, 0xFFFE, 0x00000003, '', *(0.0, 0.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
-        PlayEffect2(0xFFFE, 0x90, 0xFFFE, 0x00000003, '', *(0.0, 1.0, 0.0), 0.0, 0.0, 0.0, *(1.0, 1.0, 1.0), 0xFF)
+        PlayEffect2(0xFFFE, 0x95, 0xFFFE, 0x00000003, '', *(0.0, 0.0, 0.0), 0.0, 0.0, 0.0, *(0.5, 0.5, 0.5), 0xFF)
+        PlayEffect2(0xFFFE, 0x96, 0xFFFE, 0x00000003, '', *(0.0, 1.0, 0.0), 0.0, 0.0, 0.0, *(0.5, 0.5, 0.5), 0x01)
         PlaySE(0xFB1)
         PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 66.6667, 67.2, -1.0, 0x00, 0x00)
         ChrSetPosByTarget(0xFFFE, 0xFFF5, 0.0, 0.0, -2.0, 7.0, 0x00, 0x00)
@@ -141,6 +143,7 @@ def AniBtlCraft05():
 
     PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x01, 0x01, 0x00, 0x01, 0x00, 0.2, 67.2333, 67.4333, -0.0333333, 0x00, 0x00)
     Sleep(100)
+    StopEffect(0xFFFE, 0x01, 0)
 
     ChrCreateAfterImage(0xFFFE)
     ChrSetAfterImageOn(0xFFFE, 0.1, 0.1, 0.22, 0.45, 1.0)
@@ -496,6 +499,8 @@ def AniBtlAttack():
 def AniBtlSCraft00():
     Call(ScriptId.BtlCom, 'AniBtlSCraftBegin')
     ChrAnimeClipCtrl(0x04, 0xFFFE, 'C_CHR033_SC1', '')
+    LoadEffect(0xFFFE, 0x8E, 'event/evr04_01.eff')
+    LoadEffect(0xFFFE, 0x8F, 'event/evret_10.eff')
     LoadEffect(0xFFFE, 0x90, 'battle/sc033_00_0.eff')
     LoadEffect(0xFFFE, 0x91, 'battle/sc033_00_1.eff')
     LoadEffect(0xFFFE, 0x92, 'battle/sc033_00_2.eff')
@@ -1552,6 +1557,31 @@ def AniBtlSCraft00():
 
     label('loc_F2D5')
 
+    Sleep(800)
+
+    ChrTargetsIterReset(0x01, 0xFFFE)
+    kisin = ChrCreateTempChar(1, 0xFFFF, 'C_ROB004', 'rob500')
+    ChrSetPhysicsFlags(kisin, 0x00000040)
+    ChrSetPhysicsFlags(kisin, 0x00000020)
+    ChrSetPhysicsFlags(kisin, 0x00000200)
+
+    ChrSetPosByTarget(kisin, 0xFFFF, 0.0, 0.0, 4.0, 0.0, 0x02, 0x00)
+    ChrTurnDirection(kisin, 0xFFFB, 0.0, -1.0)
+
+    ChrClearPhysicsFlags(kisin, 0x00000040)
+    ChrClearPhysicsFlags(kisin, 0x00000020)
+    ChrSetRGBA(kisin, 1.0, 1.0, 1.0, 0.0, 0x0000, 0x03)
+    Sleep(500)
+
+    OP_3B(0x00, (0xFF, 0x7737, 0x0), 0.3, (0xFF, 0x1F4, 0x0), 0.0, 2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+    OP_3B(0x00, (0xFF, 0x7613, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, -2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+    PlayEffect(0xFFFE, (0xFF, 0x8E, 0x0), kisin, 0x00020003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, -5.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), 0xFF)
+    PlayEffect(0xFFFE, (0xFF, 0x8F, 0x0), kisin, 0x00000103, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x72)
+    Sleep(750)
+
+    ChrSetRGBA(kisin, 1.0, 1.0, 1.0, 0.7, 500, 0x03)
+    Sleep(1000)
+
     ChrTargetsIterInit(0x00)
     ChrTargetsIterReset(0x01, 0xFFFE)
     EffectCtrl(0x0F, 0xFFFE, 0x0099, 0x01)
@@ -1637,13 +1667,6 @@ def AniBtlSCraft00():
 
     label('loc_F465')
 
-    ChrTargetsIterReset(0x01, 0xFFFE)
-    kisin = ChrCreateTempChar(1, 0xFFFF, 'C_ROB004', 'rob500')
-    ChrPhysicsCtrl(0x00, kisin, 0x00000200)
-    ChrSetPosByTarget(kisin, 0xFFFF, 0.0, 0.0, 4.0, 0.0, 0x02, 0x00)
-    ChrTurnDirection(kisin, 0xFFFB, 0.0, -1.0)
-    Sleep(500)
-
     PlayVoice(0x1B6D)
     Sleep(500)
 
@@ -1661,8 +1684,13 @@ def AniBtlSCraft00():
     Sleep(1800)
 
     PlayChrAnimeClip(kisin, 'evk1001', 0x00, 0x01, 0x00, 0x00, 0x00, -2.0, 167.667, 168.633, -1.0, 0x00, 0x00)
-    PlayEffect(0xFFFE, (0xFF, 0x95, 0x0), kisin, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x07)
-    PlayEffect(0xFFFE, (0xFF, 0x96, 0x0), kisin, 0x00000003, (0xDD, ''), (0xEE, -0.25, 0x0), (0xEE, 0.5, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x08)
+
+    # floor
+    PlayEffect2(0xFFFE, 0x95, kisin, 3, '', 0.0, 0.0, -3.0, 0.0, 0.0, 0.0, 2.0, 2.0, 2.0, 0x07)
+
+    # dash
+    PlayEffect2(0xFFFE, 0x96, kisin, 3, '', -0.25, 0.5, 0.0, 0.0, 0.0, 0.0, 3.0, 3.0, 3.0, 0x08)
+
     OP_3B(0x00, (0xFF, 0x8F62, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, -1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x8F66, 0x0), 0.5, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(100)
@@ -1712,6 +1740,8 @@ def AniBtlSCraft00():
     ReleaseEffect(0xFFFE, 0x9B)
     ReleaseEffect(0xFFFE, 0x9C)
     ReleaseEffect(0xFFFE, 0x9D)
+    ReleaseEffect(0xFFFE, 0x8E)
+    ReleaseEffect(0xFFFE, 0x8F)
     WaitForThreadExit(0xFFFE, 0x02)
     WaitForThreadExit(0xFFFE, 0x03)
     Call(ScriptId.Current, 'BtlDefaultFace')
@@ -1720,8 +1750,8 @@ def AniBtlSCraft00():
     ChrPhysicsCtrl(0x01, 0xFFF9, 0x000002A0)
     OP_38(0xFFF9, 0x00, 0x01, 'ShowEquip')
     ChrDeleteTempChar(0xFFFF)
-    OP_4B(0xFFFE, 1.0, 1.0, 1.0, 1.0, 0x0000, 0x03)
-    OP_4B(0xFFF9, 1.0, 1.0, 1.0, 1.0, 0x0000, 0x03)
+    ChrSetRGBA(0xFFFE, 1.0, 1.0, 1.0, 1.0, 0x0000, 0x03)
+    ChrSetRGBA(0xFFF9, 1.0, 1.0, 1.0, 1.0, 0x0000, 0x03)
     ChrTargetsIterReset(0x01, 0xFFFE)
     def _loc_F6F9(): pass
 

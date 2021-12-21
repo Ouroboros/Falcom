@@ -2161,7 +2161,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x48,  'OP_48',                        'BWWW'),
     inst(0x49,  'FormationCtrl',                NoOperand,                                      handler = Handler_49),
     inst(0x4A,  'OP_4A',                        'ffffWB'),
-    inst(0x4B,  'OP_4B',                        'NffffWB'),
+    inst(0x4B,  'ChrSetRGBA',                   'NffffHB', parameters = ('chrId', 'r', 'g', 'b', 'a', 'durationInMs')),
     inst(0x4C,  'OP_4C',                        'WfffWB'),
     inst(0x4D,  'WaitForThreadExit',            'WB',                                                                       parameters = ('chrId', 'threadId')),
     inst(0x4E,  'OP_4E',                        'ffB'),

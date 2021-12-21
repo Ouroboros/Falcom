@@ -720,16 +720,27 @@ def OP_4A(arg1: float32, arg2: float32, arg3: float32, arg4: float32, arg5: uint
     assert isinstance(arg6, uint8)
     _gScena.handleOpCode(0x4A, arg1, arg2, arg3, arg4, arg5, arg6)
 
-def OP_4B(arg1: uint16, arg2: float32, arg3: float32, arg4: float32, arg5: float32, arg6: uint16, arg7: uint8):
+def ChrSetRGBA(chrId: uint16, r: float32, g: float32, b: float32, a: float32, durationInMs: uint16, arg7: uint8):
     # 0x4B
-    assert isinstance(arg1, uint16)
-    assert isinstance(arg2, float32)
-    assert isinstance(arg3, float32)
-    assert isinstance(arg4, float32)
-    assert isinstance(arg5, float32)
-    assert isinstance(arg6, uint16)
+    assert isinstance(chrId, uint16)
+    assert isinstance(r, float32)
+    assert isinstance(g, float32)
+    assert isinstance(b, float32)
+    assert isinstance(a, float32)
+    assert isinstance(durationInMs, uint16)
     assert isinstance(arg7, uint8)
-    _gScena.handleOpCode(0x4B, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+    _gScena.handleOpCode(0x4B, chrId, r, g, b, a, durationInMs, arg7)
+
+def OP_4B(chrId: uint16, r: float32, g: float32, b: float32, a: float32, durationInMs: uint16, arg7: uint8):
+    # 0x4B
+    assert isinstance(chrId, uint16)
+    assert isinstance(r, float32)
+    assert isinstance(g, float32)
+    assert isinstance(b, float32)
+    assert isinstance(a, float32)
+    assert isinstance(durationInMs, uint16)
+    assert isinstance(arg7, uint8)
+    _gScena.handleOpCode(0x4B, chrId, r, g, b, a, durationInMs, arg7)
 
 def OP_4C(arg1: uint16, arg2: float32, arg3: float32, arg4: float32, arg5: uint16, arg6: uint8):
     # 0x4C
