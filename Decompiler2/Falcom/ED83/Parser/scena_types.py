@@ -195,13 +195,13 @@ class ScenaBattleSetting:
         float20     : int = 0,
         float24     : int = 0,
         word28      : int = 0,
-        flags     : int = 0,
+        flags       : int = 0,
         word30      : int = 0,
         word32      : int = 0,
         word34      : int = 0,
         word36      : int = 0,
         dword38     : int = 0,
-        battleName  : str = '',
+        battleScript: str = '',
         monsterSet  : List[ScenaBattleMonsterSet] = None,
         *,
         fs: fileio.FileStream = None,
@@ -221,7 +221,7 @@ class ScenaBattleSetting:
         self.word34         = word34        # type: int
         self.word36         = word36        # type: int
         self.dword38        = dword38       # type: int
-        self.battleName     = battleName    # type: str
+        self.battleScript   = battleScript    # type: str
         self.monsterSet     = monsterSet    # type: List[ScenaBattleMonsterSet]
 
         self.read(fs)
@@ -241,13 +241,13 @@ class ScenaBattleSetting:
 
         fs.Position += 2    # padding                           # 0x2A
 
-        self.flags      = fs.ReadULong()                        # 0x2C
-        self.word30     = fs.ReadUShort()                       # 0x30
-        self.word32     = fs.ReadUShort()                       # 0x32
-        self.word34     = fs.ReadUShort()                       # 0x34
-        self.word36     = fs.ReadUShort()                       # 0x36
-        self.dword38    = fs.ReadULong()                        # 0x38
-        self.battleName = utils.read_fixed_string(fs, 0x10)     # 0x3C
+        self.flags          = fs.ReadULong()                        # 0x2C
+        self.word30         = fs.ReadUShort()                       # 0x30
+        self.word32         = fs.ReadUShort()                       # 0x32
+        self.word34         = fs.ReadUShort()                       # 0x34
+        self.word36         = fs.ReadUShort()                       # 0x36
+        self.dword38        = fs.ReadULong()                        # 0x38
+        self.battleScript   = utils.read_fixed_string(fs, 0x10)     # 0x3C
 
         self.monsterSet = []                                    # 0x4C
 
@@ -278,7 +278,7 @@ class ScenaBattleSetting:
         fs.write(utils.int_to_bytes(self.word34, 2))
         fs.write(utils.int_to_bytes(self.word36, 2))
         fs.write(utils.int_to_bytes(self.dword38, 4))
-        fs.write(utils.pad_string(self.battleName, 0x10))
+        fs.write(utils.pad_string(self.battleScript, 0x10))
 
         for monset in self.monsterSet:
             fs.write(monset.serialize())
@@ -293,22 +293,22 @@ class ScenaBattleSetting:
     def toPython(self) -> List[str]:
         body = [
             f'ScenaBattleSetting(',
-            f'{DefaultIndent}mapName     = \'{self.mapName}\',',
-            f'{DefaultIndent}x           = {self.x},',
-            f'{DefaultIndent}y           = {self.y},',
-            f'{DefaultIndent}z           = {self.z},',
-            f'{DefaultIndent}direction   = {self.direction},',
-            f'{DefaultIndent}float20     = {self.float20},',
-            f'{DefaultIndent}float24     = {self.float24},',
-            f'{DefaultIndent}word28      = {self.word28},',
-            f'{DefaultIndent}flags       = 0x{self.flags:08X},',
-            f'{DefaultIndent}word30      = {self.word30},',
-            f'{DefaultIndent}word32      = {self.word32},',
-            f'{DefaultIndent}word34      = {self.word34},',
-            f'{DefaultIndent}word36      = {self.word36},',
-            f'{DefaultIndent}dword38     = {self.dword38},',
-            f'{DefaultIndent}battleName  = \'{self.battleName}\',',
-            f'{DefaultIndent}monsterSet  = [',
+            f'{DefaultIndent}mapName        = \'{self.mapName}\',',
+            f'{DefaultIndent}x              = {self.x},',
+            f'{DefaultIndent}y              = {self.y},',
+            f'{DefaultIndent}z              = {self.z},',
+            f'{DefaultIndent}direction      = {self.direction},',
+            f'{DefaultIndent}float20        = {self.float20},',
+            f'{DefaultIndent}float24        = {self.float24},',
+            f'{DefaultIndent}word28         = {self.word28},',
+            f'{DefaultIndent}flags          = 0x{self.flags:08X},',
+            f'{DefaultIndent}word30         = {self.word30},',
+            f'{DefaultIndent}word32         = {self.word32},',
+            f'{DefaultIndent}word34         = {self.word34},',
+            f'{DefaultIndent}word36         = {self.word36},',
+            f'{DefaultIndent}dword38        = {self.dword38},',
+            f'{DefaultIndent}battleScript   = \'{self.battleScript}\',',
+            f'{DefaultIndent}monsterSet     = [',
         ]
 
         indent2 = DefaultIndent * 2

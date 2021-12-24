@@ -309,6 +309,12 @@ def ChrSetAbnormalCondition2(chrId: int, condition: AbnormalCondition2, param1: 
 def ChrClearAbnormalCondition2(chrId: int, condition: AbnormalCondition2):
     BattleChrCtrl(0xB7, 0x03, chrId, condition, 0, 0, 0)
 
+def ChrGetAbnormalCondition(chrId: int):
+    BattleChrCtrl(0xB7, 0x04, chrId, 0, 0, 0, 0)
+
+def ChrGetAbnormalCondition2(chrId: int):
+    BattleChrCtrl(0xB7, 0x05, chrId, 0, 0, 0, 0)
+
 def ChrPlayAnimeClipSeq(chrId: int, group: int, *animeClips: str):
     assert len(animeClips) <= 16
     if len(animeClips) < 16:
