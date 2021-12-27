@@ -109,8 +109,8 @@ optimizeTable = buildTable(
         ('ChrClearAbnormalCondition',   {0: 0xB7, 1: 0x01, 4: 0, 5: 0, 6: 0}),
         ('ChrSetAbnormalCondition2',    {0: 0xB7, 1: 0x02}),
         ('ChrClearAbnormalCondition2',  {0: 0xB7, 1: 0x03, 4: 0, 5: 0, 6: 0}),
-        ('ChrGetAbnormalCondition',     {0: 0xB7, 1: 0x04}),
-        ('ChrGetAbnormalCondition2',    {0: 0xB7, 1: 0x05}),
+        ('ChrGetAbnormalCondition',     {0: 0xB7, 1: 0x04, 3: 0, 4: 0, 5: 0, 6: 0}),
+        ('ChrGetAbnormalCondition2',    {0: 0xB7, 1: 0x05, 3: 0, 4: 0, 5: 0, 6: 0}),
     ),
     opt(
         0x35,

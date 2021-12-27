@@ -297,7 +297,7 @@ def ChrReleaseAnimeClipByCatalog(chrId: int, catalog: int):
     battle chr
 '''
 
-def ChrSetAbnormalCondition(chrId: int, condition: AbnormalCondition, param1: int, param2: int, unused: int):
+def ChrSetAbnormalCondition(chrId: int, condition: AbnormalCondition, param1: int, param2: int, unused: int = 0):
     BattleChrCtrl(0xB7, 0x00, chrId, condition, param1, param2, unused)
 
 def ChrClearAbnormalCondition(chrId: int, condition: AbnormalCondition):
@@ -356,12 +356,12 @@ def ChrSetAfterImageOff():
 
 def ChrCreateTempChar(tempChrIndex: int, srcChrId: int, model: str, ani: str = '') -> int:
     assert tempChrIndex <= 4
-    OP_33(0x1E, tempChrIndex, srcChrId, model, ani)
+    BattleChrCtrl(0x1E, tempChrIndex, srcChrId, model, ani)
     return tempChrIndex + TempCharBaseId
 
 def ChrDeleteTempChar(tempChrIndex: int = 0xFFFF):
     assert tempChrIndex <= 4 or tempChrIndex == 0xFFFF
-    OP_33(0x1F, tempChrIndex)
+    BattleChrCtrl(0x1F, tempChrIndex)
 
 def PlaySE(sound: int):
     OP_3B(0x00, (0xFF, sound, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
@@ -374,22 +374,22 @@ def IsBattleModelEqualTo(chrId: int, model: str):
     OP_7A(0x01, chrId, model)
 
 def ChrMoveToTarget():
-    OP_33(0x34)
+    BattleChrCtrl(0x34)
 
 def ChrTurnDirection(chrId: int, targetId: int, unknown: float, speed: float = -1.0):
-    OP_33(0x3C, chrId, targetId, unknown, speed)
+    BattleChrCtrl(0x3C, chrId, targetId, unknown, speed)
 
 def ChrSetPosByTarget(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int = 0, unknown3: int = 0):
-    OP_33(0x33, chrId, targetId, x, y, z, speed, unknown2, unknown3)
+    BattleChrCtrl(0x33, chrId, targetId, x, y, z, speed, unknown2, unknown3)
 
 def ChrSetPosByTargetAsync(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int, unknown3: int):
-    OP_33(0x39, chrId, targetId, x, y, z, speed, unknown2, unknown3)
+    BattleChrCtrl(0x39, chrId, targetId, x, y, z, speed, unknown2, unknown3)
 
 def ChrSetBattleFlags(chrId: int, flags: int):
-    OP_33(0x0B, chrId, flags)
+    BattleChrCtrl(0x0B, chrId, flags)
 
 def ChrClearBattleFlags(chrId: int, flags: int):
-    OP_33(0x0C, chrId, flags)
+    BattleChrCtrl(0x0C, chrId, flags)
 
 def ChrGetBattleFlags(chrId: int):
-    OP_33(0x0D, chrId)
+    BattleChrCtrl(0x0D, chrId)
