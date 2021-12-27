@@ -360,13 +360,13 @@ def OP_2B(arg1: int, arg2: int, arg3: int, arg4: int, *args):
     assert isinstance(arg4, int)
     return _gScena.handleOpCode(0x2B, arg1, arg2, arg3, arg4, *args)
 
-def PlayChrAnimeClip(chrId: uint16, animeClip: str, loop: uint8, arg4: uint8, arg5: uint8, arg6: uint8, arg7: uint8, delay: float32, startTime: float32, endTime: float32, currentTime: float32, slot: uint8, arg13: uint8):
+def PlayChrAnimeClip(chrId: uint16, animeClip: str, loop: uint8, arg4: uint8, reverse: uint8, arg6: uint8, arg7: uint8, delay: float32, startTime: float32, endTime: float32, currentTime: float32, slot: uint8, arg13: uint8):
     # 0x2C
     assert isinstance(chrId, uint16)
     assert isinstance(animeClip, str)
     assert isinstance(loop, uint8)
     assert isinstance(arg4, uint8)
-    assert isinstance(arg5, uint8)
+    assert isinstance(reverse, uint8)
     assert isinstance(arg6, uint8)
     assert isinstance(arg7, uint8)
     assert isinstance(delay, float32)
@@ -375,15 +375,15 @@ def PlayChrAnimeClip(chrId: uint16, animeClip: str, loop: uint8, arg4: uint8, ar
     assert isinstance(currentTime, float32)
     assert isinstance(slot, uint8)
     assert isinstance(arg13, uint8)
-    _gScena.handleOpCode(0x2C, chrId, animeClip, loop, arg4, arg5, arg6, arg7, delay, startTime, endTime, currentTime, slot, arg13)
+    _gScena.handleOpCode(0x2C, chrId, animeClip, loop, arg4, reverse, arg6, arg7, delay, startTime, endTime, currentTime, slot, arg13)
 
-def OP_2C(chrId: uint16, animeClip: str, loop: uint8, arg4: uint8, arg5: uint8, arg6: uint8, arg7: uint8, delay: float32, startTime: float32, endTime: float32, currentTime: float32, slot: uint8, arg13: uint8):
+def OP_2C(chrId: uint16, animeClip: str, loop: uint8, arg4: uint8, reverse: uint8, arg6: uint8, arg7: uint8, delay: float32, startTime: float32, endTime: float32, currentTime: float32, slot: uint8, arg13: uint8):
     # 0x2C
     assert isinstance(chrId, uint16)
     assert isinstance(animeClip, str)
     assert isinstance(loop, uint8)
     assert isinstance(arg4, uint8)
-    assert isinstance(arg5, uint8)
+    assert isinstance(reverse, uint8)
     assert isinstance(arg6, uint8)
     assert isinstance(arg7, uint8)
     assert isinstance(delay, float32)
@@ -392,7 +392,7 @@ def OP_2C(chrId: uint16, animeClip: str, loop: uint8, arg4: uint8, arg5: uint8, 
     assert isinstance(currentTime, float32)
     assert isinstance(slot, uint8)
     assert isinstance(arg13, uint8)
-    _gScena.handleOpCode(0x2C, chrId, animeClip, loop, arg4, arg5, arg6, arg7, delay, startTime, endTime, currentTime, slot, arg13)
+    _gScena.handleOpCode(0x2C, chrId, animeClip, loop, arg4, reverse, arg6, arg7, delay, startTime, endTime, currentTime, slot, arg13)
 
 def WaitAnimeClip(chrId: uint16, expiration: float32, animeSlot: uint8):
     # 0x2D

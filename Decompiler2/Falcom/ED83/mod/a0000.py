@@ -2,6 +2,7 @@ import sys
 sys.path.append(r'D:\Dev\Source\Falcom\Decompiler2')
 
 from Falcom.ED83.Parser.scena_writer_helper import *
+import a0000_hook
 
 scena = createScenaWriter('a0000.dat')
 
@@ -14,22 +15,22 @@ def func_EA4():
 @scena.BattleSetting('')
 def func_EA8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 20.0,
-        float24     = 20.0,
-        word28      = 0,
-        flags       = 0x00000000,
-        word30      = 450,
-        word32      = 456,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = '',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 20.0,
+        width          = 20.0,
+        word28         = 0,
+        flags          = 0x00000000,
+        bgm            = 450,
+        dangerBGM      = 456,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = '',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon999_1', 'mon999_1', 'mon998_1', '', '', '', '', ''],
@@ -42,22 +43,22 @@ def func_EA8():
 @scena.BattleSetting('')
 def func_FA8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 0.0,
-        y           = 0.0,
-        z           = 0.0,
-        direction   = 0.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 0,
-        flags       = 0x00000000,
-        word30      = 450,
-        word32      = 456,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = '',
-        monsterSet  = [
+        mapName        = '',
+        x              = 0.0,
+        y              = 0.0,
+        z              = 0.0,
+        direction      = 0.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 0,
+        flags          = 0x00000000,
+        bgm            = 450,
+        dangerBGM      = 456,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = '',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon999_1', 'mon999_1', 'mon999_1', '', '', '', '', ''],
@@ -70,22 +71,22 @@ def func_FA8():
 @scena.BattleSetting('')
 def func_10A8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 0,
-        flags       = 0x00000000,
-        word30      = 451,
-        word32      = 456,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = '',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 0,
+        flags          = 0x00000000,
+        bgm            = 451,
+        dangerBGM      = 456,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = '',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon996', 'mon996', 'mon999', '', '', '', '', ''],
@@ -98,22 +99,22 @@ def func_10A8():
 @scena.BattleSetting('')
 def func_11A8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 0,
-        flags       = 0x00000000,
-        word30      = 0,
-        word32      = 0,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = '',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 0,
+        flags          = 0x00000000,
+        bgm            = 0,
+        dangerBGM      = 0,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = '',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon999_0', '', '', '', '', '', '', ''],
@@ -126,22 +127,22 @@ def func_11A8():
 @scena.BattleSetting('')
 def func_12A8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 0,
-        flags       = 0x00000000,
-        word30      = 0,
-        word32      = 0,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = '',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 0,
+        flags          = 0x00000000,
+        bgm            = 0,
+        dangerBGM      = 0,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = '',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1'],
@@ -154,22 +155,22 @@ def func_12A8():
 @scena.BattleSetting('')
 def func_13A8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 6.0,
-        float24     = 10.0,
-        word28      = 0,
-        flags       = 0x00000000,
-        word30      = 0,
-        word32      = 0,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = '',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 6.0,
+        width          = 10.0,
+        word28         = 0,
+        flags          = 0x00000000,
+        bgm            = 0,
+        dangerBGM      = 0,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = '',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1'],
@@ -182,22 +183,22 @@ def func_13A8():
 @scena.BattleSetting('')
 def func_14A8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 0.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 0,
-        flags       = 0x00000000,
-        word30      = 0,
-        word32      = 0,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = 'btl0008',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 0.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 0,
+        flags          = 0x00000000,
+        bgm            = 0,
+        dangerBGM      = 0,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = 'btl0008',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon354', '', '', '', '', '', '', ''],
@@ -210,22 +211,22 @@ def func_14A8():
 @scena.BattleSetting('')
 def func_15A8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 0.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 0,
-        flags       = 0x00000000,
-        word30      = 0,
-        word32      = 0,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = 'btl0009',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 0.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 0,
+        flags          = 0x00000000,
+        bgm            = 0,
+        dangerBGM      = 0,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = 'btl0009',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon999_0', '', '', '', '', '', '', ''],
@@ -238,22 +239,22 @@ def func_15A8():
 @scena.BattleSetting('')
 def func_16A8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 0,
-        flags       = 0x00000000,
-        word30      = 0,
-        word32      = 0,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 10,
-        battleName  = '',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 0,
+        flags          = 0x00000000,
+        bgm            = 0,
+        dangerBGM      = 0,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 10,
+        battleScript   = '',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', '', '', '', ''],
@@ -266,22 +267,22 @@ def func_16A8():
 @scena.BattleSetting('')
 def func_17A8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 9,
-        flags       = 0x00000000,
-        word30      = 0,
-        word32      = 0,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = '',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 9,
+        flags          = 0x00000000,
+        bgm            = 0,
+        dangerBGM      = 0,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = '',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon999', '', '', '', '', '', '', ''],
@@ -294,22 +295,22 @@ def func_17A8():
 @scena.BattleSetting('')
 def func_18A8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 9,
-        flags       = 0x00000000,
-        word30      = 0,
-        word32      = 0,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 10,
-        battleName  = '',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 9,
+        flags          = 0x00000000,
+        bgm            = 0,
+        dangerBGM      = 0,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 10,
+        battleScript   = '',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon999', '', '', '', '', '', '', ''],
@@ -322,22 +323,22 @@ def func_18A8():
 @scena.BattleSetting('')
 def func_19A8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 901,
-        flags       = 0x00000000,
-        word30      = 0,
-        word32      = 0,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = 'btl0901',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 901,
+        flags          = 0x00000000,
+        bgm            = 0,
+        dangerBGM      = 0,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = 'btl0901',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['chr000', '', '', '', '', '', '', ''],
@@ -350,22 +351,22 @@ def func_19A8():
 @scena.BattleSetting('')
 def func_1AA8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 305,
-        flags       = 0x00000000,
-        word30      = 0,
-        word32      = 0,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = 'btl0305',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 305,
+        flags          = 0x00000000,
+        bgm            = 0,
+        dangerBGM      = 0,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = 'btl0305',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['chr032', '', '', '', '', '', '', ''],
@@ -378,22 +379,22 @@ def func_1AA8():
 @scena.BattleSetting('')
 def func_1BA8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 317,
-        flags       = 0x00000009,
-        word30      = 457,
-        word32      = 457,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 3,
-        battleName  = 'btl0317',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 317,
+        flags          = 0x00000009,
+        bgm            = 457,
+        dangerBGM      = 457,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 3,
+        battleScript   = 'btl0317',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon400', '', '', '', '', '', '', ''],
@@ -406,22 +407,22 @@ def func_1BA8():
 @scena.BattleSetting('')
 def func_1CA8():
     return ScenaBattleSetting(
-        mapName     = 'm1420',
-        x           = 0.0,
-        y           = 97.0,
-        z           = 0.0,
-        direction   = 0.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 308,
-        flags       = 0x00000000,
-        word30      = 466,
-        word32      = 466,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 3,
-        battleName  = 'btl0308',
-        monsterSet  = [
+        mapName        = 'm1420',
+        x              = 0.0,
+        y              = 97.0,
+        z              = 0.0,
+        direction      = 0.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 308,
+        flags          = 0x00000000,
+        bgm            = 466,
+        dangerBGM      = 466,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 3,
+        battleScript   = 'btl0308',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['chr034_c00', '', '', '', '', '', '', ''],
@@ -434,22 +435,22 @@ def func_1CA8():
 @scena.BattleSetting('BTLSET_EV_05_13_00')
 def BTLSET_EV_05_13_00():
     return ScenaBattleSetting(
-        mapName     = 'm4000',
-        x           = 67.0,
-        y           = 8.100000381469727,
-        z           = 68.0,
-        direction   = 145.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 602,
-        flags       = 0x0000000B,
-        word30      = 468,
-        word32      = 468,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 3,
-        battleName  = 'btl0602',
-        monsterSet  = [
+        mapName        = 'm4000',
+        x              = 67.0,
+        y              = 8.100000381469727,
+        z              = 68.0,
+        direction      = 145.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 602,
+        flags          = 0x0000000B,
+        bgm            = 468,
+        dangerBGM      = 468,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 3,
+        battleScript   = 'btl0602',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['chr033_1', 'chr034_c00_0', '', '', '', '', '', ''],
@@ -462,22 +463,22 @@ def BTLSET_EV_05_13_00():
 @scena.BattleSetting('')
 def func_1EA8():
     return ScenaBattleSetting(
-        mapName     = 'm4002',
-        x           = 66.5,
-        y           = -375.8999938964844,
-        z           = 71.0,
-        direction   = 145.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 604,
-        flags       = 0x0000000B,
-        word30      = 468,
-        word32      = 468,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 3,
-        battleName  = 'btl0604',
-        monsterSet  = [
+        mapName        = 'm4002',
+        x              = 66.5,
+        y              = -375.8999938964844,
+        z              = 71.0,
+        direction      = 145.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 604,
+        flags          = 0x0000000B,
+        bgm            = 468,
+        dangerBGM      = 468,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 3,
+        battleScript   = 'btl0604',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['chr022', 'chr024', 'chr009', 'chr023', '', '', '', ''],
@@ -490,22 +491,22 @@ def func_1EA8():
 @scena.BattleSetting('')
 def func_1FA8():
     return ScenaBattleSetting(
-        mapName     = '',
-        x           = 100.0,
-        y           = -100.0,
-        z           = 100.0,
-        direction   = 90.0,
-        float20     = 20.0,
-        float24     = -1.0,
-        word28      = 0,
-        flags       = 0x00000000,
-        word30      = 0,
-        word32      = 0,
-        word34      = 0,
-        word36      = 0,
-        dword38     = 0,
-        battleName  = 'btl0605',
-        monsterSet  = [
+        mapName        = '',
+        x              = 100.0,
+        y              = -100.0,
+        z              = 100.0,
+        direction      = 90.0,
+        length         = 20.0,
+        width          = -1.0,
+        word28         = 0,
+        flags          = 0x00000000,
+        bgm            = 0,
+        dangerBGM      = 0,
+        word34         = 0,
+        word36         = 0,
+        dword38        = 0,
+        battleScript   = 'btl0605',
+        monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
                 monsters                = ['mon451', '', '', '', '', '', '', ''],
@@ -545,7 +546,7 @@ def Init():
     OP_3A(0x05, 0x0001, 0x0001)
     OP_3A(0x06, 0x0001)
     OP_14(0x00000400)
-    OP_3B(0x64, 1000, 0.000000, 1.000000)
+    OP_3B(0x64, 1000, 0.0, 1.0)
 
     Return()
 
@@ -560,7 +561,7 @@ def Reinit():
         'loc_210A',
     )
 
-    OP_1E(0xFFFF, 0x00, 0x0B, 'EV_Test_Evsave_Load')
+    CreateThread(0xFFFF, 0x00, ScriptId.Current, 'EV_Test_Evsave_Load')
 
     def _loc_210A(): pass
 
@@ -574,201 +575,16 @@ def Reinit():
         'loc_249D',
     )
 
-    CreateChr(
-        0x03EC,
-        'C_CHR027',
-        'ミニゲームテストさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        4.500000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.300000,
-        '',
-        'TK_MiniGame_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
+    CreateChr(0x03EC, 'C_CHR027', 'ミニゲームテストさん', '', 0x00, 0x00008000, 0x00000000, 4.5, 0.0, -1.0, 0.0, 1.0, 1.6, 0.3, '', 'TK_MiniGame_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     OP_9E(0x11, 1004, 1)
-
-    CreateChr(
-        0x03E8,
-        'C_MON999',
-        '戦闘テストさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        3.000000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_Battle_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03EA,
-        'C_CHR011',
-        '一般、クエスト管理さん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        1.500000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_Quest_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03E9,
-        'C_CHR000',
-        'イベントジャンプさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        0.000000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_EV_Jump',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03EB,
-        'C_CHR010',
-        'システムテストさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        -1.500000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_System_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03ED,
-        'C_CHR012',
-        'キャンプテストさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        -3.000000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_Camp_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03EE,
-        'C_CHR013',
-        '手帳管理さん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        -4.500000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_Note_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03EF,
-        'C_CHR015',
-        'ショップテストさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        -6.000000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_Shop_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    OP_86(0x01, 0x0000, 0x008E, 0x0000, 0x0000, 0x0000, 0x03EF, 0.000000, 0.000000, 0.000000, '')
+    CreateChr(0x03E8, 'C_MON999', '戦闘テストさん', '', 0x00, 0x00008000, 0x00000000, 3.0, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_Battle_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03EA, 'C_CHR011', '一般、クエスト管理さん', '', 0x00, 0x00008000, 0x00000000, 1.5, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_Quest_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03E9, 'C_CHR000', 'イベントジャンプさん', '', 0x00, 0x00008000, 0x00000000, 0.0, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_EV_Jump', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03EB, 'C_CHR010', 'システムテストさん', '', 0x00, 0x00008000, 0x00000000, -1.5, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_System_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03ED, 'C_CHR012', 'キャンプテストさん', '', 0x00, 0x00008000, 0x00000000, -3.0, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_Camp_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03EE, 'C_CHR013', '手帳管理さん', '', 0x00, 0x00008000, 0x00000000, -4.5, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_Note_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03EF, 'C_CHR015', 'ショップテストさん', '', 0x00, 0x00008000, 0x00000000, -6.0, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_Shop_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    OP_86(0x01, 0x0000, 0x008E, 0x0000, 0x0000, 0x0000, 0x03EF, 0.0, 0.0, 0.0, '')
 
     Jump('loc_2800')
 
@@ -776,225 +592,42 @@ def Reinit():
 
     label('loc_249D')
 
-    CreateChr(
-        0x03EC,
-        'C_CHR999',
-        'ミニゲームテストさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        4.500000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.300000,
-        '',
-        'TK_MiniGame_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03E8,
-        'C_CHR999',
-        '戦闘テストさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        3.000000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_Battle_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03EA,
-        'C_CHR999',
-        '一般、クエスト管理さん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        1.500000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_Quest_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03E9,
-        'C_CHR999',
-        'イベントジャンプさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        0.000000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_EV_Jump',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03EB,
-        'C_CHR999',
-        'システムテストさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        -1.500000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_System_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03ED,
-        'C_CHR999',
-        'キャンプテストさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        -3.000000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_Camp_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03EE,
-        'C_CHR999',
-        '手帳管理さん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        -4.500000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_Note_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
-    CreateChr(
-        0x03EF,
-        'C_CHR999',
-        'ショップテストさん',
-        '',
-        0x00,
-        0x00008000,
-        0x00000000,
-        -6.000000,
-        0.000000,
-        -1.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.200000,
-        '',
-        'TK_Shop_Debug',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
+    CreateChr(0x03EC, 'C_CHR999', 'ミニゲームテストさん', '', 0x00, 0x00008000, 0x00000000, 4.5, 0.0, -1.0, 0.0, 1.0, 1.6, 0.3, '', 'TK_MiniGame_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03E8, 'C_CHR999', '戦闘テストさん', '', 0x00, 0x00008000, 0x00000000, 3.0, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_Battle_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03EA, 'C_CHR999', '一般、クエスト管理さん', '', 0x00, 0x00008000, 0x00000000, 1.5, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_Quest_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03E9, 'C_CHR999', 'イベントジャンプさん', '', 0x00, 0x00008000, 0x00000000, 0.0, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_EV_Jump', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03EB, 'C_CHR999', 'システムテストさん', '', 0x00, 0x00008000, 0x00000000, -1.5, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_System_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03ED, 'C_CHR999', 'キャンプテストさん', '', 0x00, 0x00008000, 0x00000000, -3.0, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_Camp_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03EE, 'C_CHR999', '手帳管理さん', '', 0x00, 0x00008000, 0x00000000, -4.5, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_Note_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(0x03EF, 'C_CHR999', 'ショップテストさん', '', 0x00, 0x00008000, 0x00000000, -6.0, 0.0, -1.0, 0.0, 1.0, 1.6, 0.2, '', 'TK_Shop_Debug', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
 
     def _loc_2800(): pass
 
     label('loc_2800')
 
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x0001, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0002, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0003, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0004, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0005, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0008, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0006, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0007, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0009, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x000F, 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['馬奇亞斯'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['艾瑪'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['蓋烏斯'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['菲'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['米莉亞姆'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000004)
 
     Return()
 
 # id: 0x0016 offset: 0x2884
 @scena.Code('TK_Event_Jump_Test')
 def TK_Event_Jump_Test():
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 'クレアテスト', 0x00000002)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF7)
@@ -1060,7 +693,7 @@ def TK_QuestUI_Debug():
         'loc_3103',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '▼クエスト確認画面', 0x00000064)
     MenuCmd(0x01, 0x01, '▼クエスト報告画面１章中間（オーレリア）少', 0x00000065)
     MenuCmd(0x01, 0x01, '▼クエスト報告画面１章中間（オーレリア）多', 0x00000066)
@@ -1116,7 +749,7 @@ def TK_QuestUI_Debug():
 
     label('loc_2CDF')
 
-    Call(0x0B, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0x1, 0x0))
+    Call(ScriptId.Current, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0x1, 0x0))
     OP_9C(0x00, 0x00, 0x0010, 0x0001, 0x00000000)
     OP_9C(0x01)
 
@@ -1126,7 +759,7 @@ def TK_QuestUI_Debug():
 
     label('loc_2D14')
 
-    Call(0x0B, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0xA, 0x0))
+    Call(ScriptId.Current, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0xA, 0x0))
     OP_9C(0x00, 0x00, 0x0010, 0x0001, 0x00000000)
     OP_9C(0x01)
 
@@ -1136,7 +769,7 @@ def TK_QuestUI_Debug():
 
     label('loc_2D49')
 
-    Call(0x0B, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0xB, 0x0))
+    Call(ScriptId.Current, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0xB, 0x0))
     OP_9C(0x00, 0x00, 0x0078, 0x0001, 0x00000000)
     OP_9C(0x01)
 
@@ -1146,7 +779,7 @@ def TK_QuestUI_Debug():
 
     label('loc_2D7E')
 
-    Call(0x0B, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0xA, 0x0))
+    Call(ScriptId.Current, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0xA, 0x0))
     OP_9C(0x00, 0x00, 0x0010, 0x0001, 0x00000001)
     OP_9C(0x01)
     OP_9C(0x00, 0x01, 0x0010, 0x0001, 0x00000000)
@@ -1158,7 +791,7 @@ def TK_QuestUI_Debug():
 
     label('loc_2DC0')
 
-    Call(0x0B, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0x3, 0x0))
+    Call(ScriptId.Current, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0x3, 0x0))
     OP_9C(0x00, 0x00, 0xFFFF, 0xFFFF, 0x00000000)
     OP_9C(0x01)
 
@@ -1311,7 +944,7 @@ def TK_QuestUI_Debug():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_30FE')
@@ -1320,7 +953,7 @@ def TK_QuestUI_Debug():
 
     label('loc_3028')
 
-    Call(0x0B, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0x32, 0x0))
+    Call(ScriptId.Current, 'TK_QuestUI_DebugQuestFlag', (0xFF, 0x32, 0x0))
 
     Jump('loc_30FE')
 
@@ -1347,7 +980,7 @@ def TK_QuestUI_Debug():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_30EB')
@@ -1367,7 +1000,7 @@ def TK_QuestUI_Debug():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     def _loc_30EB(): pass
@@ -1684,7 +1317,7 @@ def TK_QuestUI_DebugQuestFlag():
 # id: 0x0019 offset: 0x3644
 @scena.Code('TK_Quest_Debug')
 def TK_Quest_Debug():
-    Call(0x0A, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
 
     OP_18(
         0xF6,
@@ -1709,7 +1342,7 @@ def TK_Quest_Debug():
         'loc_3A0C',
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '▼クエスト', 0x00000001)
     MenuCmd(0x01, 0x00, '▼絆イベント', 0x00000002)
     MenuCmd(0x01, 0x00, '▼サブイベント', 0x00000003)
@@ -1748,7 +1381,7 @@ def TK_Quest_Debug():
 
     label('loc_38C4')
 
-    Call(0x00, 'EV_QuestJump')
+    Call(ScriptId.Map, 'EV_QuestJump')
 
     Jump('loc_3A07')
 
@@ -1756,7 +1389,7 @@ def TK_Quest_Debug():
 
     label('loc_38D9')
 
-    Call(0x00, 'EV_KizunaJump')
+    Call(ScriptId.Map, 'EV_KizunaJump')
 
     Jump('loc_3A07')
 
@@ -1764,7 +1397,7 @@ def TK_Quest_Debug():
 
     label('loc_38EF')
 
-    Call(0x00, 'EV_SubeventJump')
+    Call(ScriptId.Map, 'EV_SubeventJump')
 
     Jump('loc_3A07')
 
@@ -1772,7 +1405,7 @@ def TK_Quest_Debug():
 
     label('loc_3907')
 
-    Call(0x00, 'EV_YarikomiJump')
+    Call(ScriptId.Map, 'EV_YarikomiJump')
 
     Jump('loc_3A07')
 
@@ -1780,7 +1413,7 @@ def TK_Quest_Debug():
 
     label('loc_391F')
 
-    Call(0x00, 'TK_QuestUI_Debug')
+    Call(ScriptId.Map, 'TK_QuestUI_Debug')
 
     Jump('loc_3A07')
 
@@ -1788,7 +1421,7 @@ def TK_Quest_Debug():
 
     label('loc_3938')
 
-    Call(0x00, 'TK_System_MapJumpTest00')
+    Call(ScriptId.Map, 'TK_System_MapJumpTest00')
 
     Jump('loc_3A07')
 
@@ -1796,7 +1429,7 @@ def TK_Quest_Debug():
 
     label('loc_3958')
 
-    Call(0x00, 'TK_System_MapJumpTest01')
+    Call(ScriptId.Map, 'TK_System_MapJumpTest01')
 
     Jump('loc_3A07')
 
@@ -1804,7 +1437,7 @@ def TK_Quest_Debug():
 
     label('loc_3978')
 
-    Call(0x00, 'TK_System_MapJumpTest02')
+    Call(ScriptId.Map, 'TK_System_MapJumpTest02')
 
     Jump('loc_3A07')
 
@@ -1812,7 +1445,7 @@ def TK_Quest_Debug():
 
     label('loc_3998')
 
-    Call(0x00, 'TK_System_MapJumpTest03')
+    Call(ScriptId.Map, 'TK_System_MapJumpTest03')
 
     Jump('loc_3A07')
 
@@ -1820,7 +1453,7 @@ def TK_Quest_Debug():
 
     label('loc_39B8')
 
-    Call(0x00, 'TK_System_MapJumpTest03B')
+    Call(ScriptId.Map, 'TK_System_MapJumpTest03B')
 
     Jump('loc_3A07')
 
@@ -1828,7 +1461,7 @@ def TK_Quest_Debug():
 
     label('loc_39D9')
 
-    Call(0x00, 'TK_System_MapJumpTest04')
+    Call(ScriptId.Map, 'TK_System_MapJumpTest04')
 
     Jump('loc_3A07')
 
@@ -1857,7 +1490,7 @@ def TK_Quest_Debug():
 
     label('loc_3A0C')
 
-    Call(0x0A, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
 
     Return()
 
@@ -1905,7 +1538,7 @@ def EV_QuestJump():
         'loc_41BC',
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
 
     If(
         (
@@ -1958,7 +1591,7 @@ def EV_QuestJump():
 
     label('loc_3BF4')
 
-    Call(0x0B, 'EV_Jump_QS_01')
+    Call(ScriptId.Current, 'EV_Jump_QS_01')
 
     Jump('loc_41AE')
 
@@ -1966,7 +1599,7 @@ def EV_QuestJump():
 
     label('loc_3C0A')
 
-    Call(0x0B, 'EV_Jump_QS_02')
+    Call(ScriptId.Current, 'EV_Jump_QS_02')
 
     Jump('loc_41AE')
 
@@ -1974,7 +1607,7 @@ def EV_QuestJump():
 
     label('loc_3C20')
 
-    Call(0x0B, 'EV_Jump_QS_03')
+    Call(ScriptId.Current, 'EV_Jump_QS_03')
 
     Jump('loc_41AE')
 
@@ -1982,7 +1615,7 @@ def EV_QuestJump():
 
     label('loc_3C36')
 
-    Call(0x0B, 'EV_Jump_QS_04')
+    Call(ScriptId.Current, 'EV_Jump_QS_04')
 
     Jump('loc_41AE')
 
@@ -1990,7 +1623,7 @@ def EV_QuestJump():
 
     label('loc_3C4C')
 
-    Call(0x0B, 'EV_Jump_QS_05')
+    Call(ScriptId.Current, 'EV_Jump_QS_05')
 
     Jump('loc_41AE')
 
@@ -2022,7 +1655,7 @@ def EV_QuestJump():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　老人と孫娘からの依頼　RANK_C]', 0x0000701D)
     MenuCmd(0x01, 0x01, '[▼02　カセット卿の情報　　　RANK_C]', 0x0000701E)
     MenuCmd(0x01, 0x01, '[▼03　シャーリィ登場　　　　RANK_A]', 0x0000701F)
@@ -2045,7 +1678,7 @@ def EV_QuestJump():
         'loc_3E11',
     )
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_3E11(): pass
 
@@ -2081,7 +1714,7 @@ def EV_QuestJump():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　タチアナから話を聞く　RANK_B]', 0x00007100)
     MenuCmd(0x01, 0x01, '[▼02　リーザから話を聞く　　RANK_B]', 0x00007101)
     MenuCmd(0x01, 0x01, '[▼03　カインから話を聞く　　RANK_B]', 0x00007102)
@@ -2103,7 +1736,7 @@ def EV_QuestJump():
         'loc_3F8C',
     )
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_3F8C(): pass
 
@@ -2139,7 +1772,7 @@ def EV_QuestJump():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　女学院の門前での確認　RANK_B]', 0x0000734E)
     MenuCmd(0x01, 0x01, '[▼02　エリゼからの説明　　　RANK_C]', 0x0000734F)
     MenuCmd(0x01, 0x01, '[▼03　ユウナ＆ミュゼパート　RANK_A]', 0x00007350)
@@ -2163,7 +1796,7 @@ def EV_QuestJump():
         'loc_419B',
     )
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_419B(): pass
 
@@ -2237,7 +1870,7 @@ def EV_Jump_QS_01():
         'loc_5641',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -2430,7 +2063,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼自由行動日開始　　　　　　　]', 0x00007001)
     MenuCmd(0x01, 0x01, '[▼01A 宿酒場に入る　　　　　　]', 0x00007002)
     MenuCmd(0x01, 0x01, '[▼01B 本屋に入る　　　　　　　]', 0x00007003)
@@ -2461,20 +2094,20 @@ def EV_Jump_QS_01():
         'loc_49B1',
     )
 
-    OP_11(0x088A)
-    OP_11(0x088B)
-    OP_11(0x088C)
-    OP_11(0x088D)
-    OP_11(0x088E)
-    OP_11(0x088F)
-    OP_11(0x0890)
-    OP_11(0x0891)
-    OP_11(0x0892)
-    OP_11(0x0893)
-    OP_11(0x0894)
-    OP_11(0x0895)
-    OP_11(0x0896)
-    OP_11(0x070D)
+    ClearScenaFlags(ScenaFlag(0x0111, 2, 0x88A))
+    ClearScenaFlags(ScenaFlag(0x0111, 3, 0x88B))
+    ClearScenaFlags(ScenaFlag(0x0111, 4, 0x88C))
+    ClearScenaFlags(ScenaFlag(0x0111, 5, 0x88D))
+    ClearScenaFlags(ScenaFlag(0x0111, 6, 0x88E))
+    ClearScenaFlags(ScenaFlag(0x0111, 7, 0x88F))
+    ClearScenaFlags(ScenaFlag(0x0112, 0, 0x890))
+    ClearScenaFlags(ScenaFlag(0x0112, 1, 0x891))
+    ClearScenaFlags(ScenaFlag(0x0112, 2, 0x892))
+    ClearScenaFlags(ScenaFlag(0x0112, 3, 0x893))
+    ClearScenaFlags(ScenaFlag(0x0112, 4, 0x894))
+    ClearScenaFlags(ScenaFlag(0x0112, 5, 0x895))
+    ClearScenaFlags(ScenaFlag(0x0112, 6, 0x896))
+    ClearScenaFlags(ScenaFlag(0x00E1, 5, 0x70D))
     QuestInfo(0x0001, 0x04, 0x02, 0x02)
 
     Switch(
@@ -2576,7 +2209,7 @@ def EV_Jump_QS_01():
 
     label('loc_499D')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_49B1(): pass
 
@@ -2622,7 +2255,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ジーナに依頼を聞く　　　]', 0x0000700F)
     MenuCmd(0x01, 0x01, '[▼02　宿酒場を訪ねる　　　　　]', 0x00007010)
     MenuCmd(0x01, 0x01, '[▼03　如水庵を訪ねる　　　　　]', 0x00007011)
@@ -2644,11 +2277,11 @@ def EV_Jump_QS_01():
         'loc_4B7A',
     )
 
-    OP_11(0x0897)
-    OP_11(0x0898)
-    OP_11(0x0899)
-    OP_11(0x089A)
-    OP_11(0x089B)
+    ClearScenaFlags(ScenaFlag(0x0112, 7, 0x897))
+    ClearScenaFlags(ScenaFlag(0x0113, 0, 0x898))
+    ClearScenaFlags(ScenaFlag(0x0113, 1, 0x899))
+    ClearScenaFlags(ScenaFlag(0x0113, 2, 0x89A))
+    ClearScenaFlags(ScenaFlag(0x0113, 3, 0x89B))
     QuestInfo(0x0002, 0x04, 0x02, 0x02)
 
     Switch(
@@ -2686,7 +2319,7 @@ def EV_Jump_QS_01():
 
     label('loc_4B66')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_4B7A(): pass
 
@@ -2732,7 +2365,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　パブロの部活相談に乗る　]', 0x00007014)
     MenuCmd(0x01, 0x01, '[▼02　ヴァレリーを誘う　　　　]', 0x00007015)
     MenuCmd(0x01, 0x01, '[▼03　軽音部が結成する　　　　]', 0x00007016)
@@ -2753,9 +2386,9 @@ def EV_Jump_QS_01():
         'loc_4D00',
     )
 
-    OP_11(0x0880)
-    OP_11(0x0881)
-    OP_11(0x0882)
+    ClearScenaFlags(ScenaFlag(0x0110, 0, 0x880))
+    ClearScenaFlags(ScenaFlag(0x0110, 1, 0x881))
+    ClearScenaFlags(ScenaFlag(0x0110, 2, 0x882))
     QuestInfo(0x0004, 0x04, 0x02, 0x02)
     QuestInfo(0x0004, 0x04, 0x01, 0x02)
 
@@ -2783,7 +2416,7 @@ def EV_Jump_QS_01():
 
     label('loc_4CEC')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_4D00(): pass
 
@@ -2829,7 +2462,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　フレディの話を聞く　　　]', 0x00007017)
     MenuCmd(0x01, 0x01, '[▼02A 素材を渡す　　　　　　　]', 0x00007018)
     MenuCmd(0x01, 0x01, '[▼02B クエスト達成　　　　　　]', 0x00007019)
@@ -2864,7 +2497,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -2884,8 +2517,8 @@ def EV_Jump_QS_01():
         'loc_4F10',
     )
 
-    OP_11(0x0883)
-    OP_11(0x0884)
+    ClearScenaFlags(ScenaFlag(0x0110, 3, 0x883))
+    ClearScenaFlags(ScenaFlag(0x0110, 4, 0x884))
     QuestInfo(0x0005, 0x04, 0x01, 0x02)
     QuestInfo(0x0005, 0x04, 0x02, 0x02)
 
@@ -2912,7 +2545,7 @@ def EV_Jump_QS_01():
 
     label('loc_4EFC')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_4F10(): pass
 
@@ -2958,7 +2591,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　イジーから話を聞く　　　]', 0x0000701B)
     MenuCmd(0x01, 0x01, '[▼02　達成イベント　　　　　　]', 0x0000701C)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
@@ -2978,8 +2611,8 @@ def EV_Jump_QS_01():
         'loc_5046',
     )
 
-    OP_11(0x089C)
-    OP_11(0x089D)
+    ClearScenaFlags(ScenaFlag(0x0113, 4, 0x89C))
+    ClearScenaFlags(ScenaFlag(0x0113, 5, 0x89D))
     QuestInfo(0x0007, 0x04, 0x02, 0x02)
 
     Switch(
@@ -3003,7 +2636,7 @@ def EV_Jump_QS_01():
 
     label('loc_5032')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_5046(): pass
 
@@ -3049,7 +2682,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　老人と孫娘からの依頼　RANK_C]', 0x0000701D)
     MenuCmd(0x01, 0x01, '[▼02　カセット卿の情報　　　RANK_C]', 0x0000701E)
     MenuCmd(0x01, 0x01, '[▼03　シャーリィ登場　　　　RANK_A]', 0x0000701F)
@@ -3072,11 +2705,11 @@ def EV_Jump_QS_01():
         'loc_5257',
     )
 
-    OP_11(0x0885)
-    OP_11(0x0886)
-    OP_11(0x0887)
-    OP_11(0x0888)
-    OP_11(0x0889)
+    ClearScenaFlags(ScenaFlag(0x0110, 5, 0x885))
+    ClearScenaFlags(ScenaFlag(0x0110, 6, 0x886))
+    ClearScenaFlags(ScenaFlag(0x0110, 7, 0x887))
+    ClearScenaFlags(ScenaFlag(0x0111, 0, 0x888))
+    ClearScenaFlags(ScenaFlag(0x0111, 1, 0x889))
     QuestInfo(0x0008, 0x04, 0x02, 0x02)
 
     Switch(
@@ -3116,7 +2749,7 @@ def EV_Jump_QS_01():
 
     label('loc_5243')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_5257(): pass
 
@@ -3162,7 +2795,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ロジーに話を聞く　　　　]', 0x00007022)
     MenuCmd(0x01, 0x01, '[▼02　黄土石を見つける　　　　]', 0x00007023)
     MenuCmd(0x01, 0x01, '[▼03　ニジアカネを入手する　　]', 0x00007024)
@@ -3184,12 +2817,12 @@ def EV_Jump_QS_01():
         'loc_541E',
     )
 
-    OP_11(0x089E)
-    OP_11(0x089F)
-    OP_11(0x08A0)
-    OP_11(0x08A1)
-    OP_11(0x08A2)
-    OP_11(0x08A3)
+    ClearScenaFlags(ScenaFlag(0x0113, 6, 0x89E))
+    ClearScenaFlags(ScenaFlag(0x0113, 7, 0x89F))
+    ClearScenaFlags(ScenaFlag(0x0114, 0, 0x8A0))
+    ClearScenaFlags(ScenaFlag(0x0114, 1, 0x8A1))
+    ClearScenaFlags(ScenaFlag(0x0114, 2, 0x8A2))
+    ClearScenaFlags(ScenaFlag(0x0114, 3, 0x8A3))
     QuestInfo(0x0009, 0x04, 0x02, 0x02)
 
     Switch(
@@ -3228,7 +2861,7 @@ def EV_Jump_QS_01():
 
     label('loc_540A')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_541E(): pass
 
@@ -3250,10 +2883,10 @@ def EV_Jump_QS_01():
         'loc_545A',
     )
 
-    OP_11(0x08A9)
+    ClearScenaFlags(ScenaFlag(0x0115, 1, 0x8A9))
     QuestInfo(0x000A, 0x02, 0x0000, 0x02)
     QuestInfo(0x000A, 0x04, 0x02, 0x02)
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     Jump('loc_563C')
 
@@ -3271,10 +2904,10 @@ def EV_Jump_QS_01():
         'loc_5491',
     )
 
-    OP_11(0x08AA)
+    ClearScenaFlags(ScenaFlag(0x0115, 2, 0x8AA))
     QuestInfo(0x000B, 0x02, 0x0000, 0x02)
     QuestInfo(0x000B, 0x04, 0x02, 0x02)
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     Jump('loc_563C')
 
@@ -3316,7 +2949,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　クインズ卿たちに話を聞く]', 0x00007028)
     MenuCmd(0x01, 0x01, '[▼02　財布を発見する　　　　　]', 0x00007029)
     MenuCmd(0x01, 0x01, '[▼03　達成イベント　　　　　　]', 0x0000702A)
@@ -3337,11 +2970,11 @@ def EV_Jump_QS_01():
         'loc_5623',
     )
 
-    OP_11(0x08A4)
-    OP_11(0x08A5)
-    OP_11(0x08A6)
-    OP_11(0x08A7)
-    OP_11(0x08A8)
+    ClearScenaFlags(ScenaFlag(0x0114, 4, 0x8A4))
+    ClearScenaFlags(ScenaFlag(0x0114, 5, 0x8A5))
+    ClearScenaFlags(ScenaFlag(0x0114, 6, 0x8A6))
+    ClearScenaFlags(ScenaFlag(0x0114, 7, 0x8A7))
+    ClearScenaFlags(ScenaFlag(0x0115, 0, 0x8A8))
     QuestInfo(0x000C, 0x04, 0x01, 0x02)
     QuestInfo(0x000C, 0x04, 0x02, 0x02)
 
@@ -3380,7 +3013,7 @@ def EV_Jump_QS_01():
 
     label('loc_560F')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_5623(): pass
 
@@ -3392,7 +3025,7 @@ def EV_Jump_QS_01():
 
     label('loc_5628')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_563C(): pass
 
@@ -3432,7 +3065,7 @@ def EV_Jump_QS_02():
         'loc_71E9',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -3628,7 +3261,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　タチアナから話を聞く　RANK_B]', 0x00007100)
     MenuCmd(0x01, 0x01, '[▼02　リーザから話を聞く　　RANK_B]', 0x00007101)
     MenuCmd(0x01, 0x01, '[▼03　カインから話を聞く　　RANK_B]', 0x00007102)
@@ -3650,10 +3283,10 @@ def EV_Jump_QS_02():
         'loc_5CA0',
     )
 
-    OP_11(0x0A80)
-    OP_11(0x0A81)
-    OP_11(0x0A82)
-    OP_11(0x0A83)
+    ClearScenaFlags(ScenaFlag(0x0150, 0, 0xA80))
+    ClearScenaFlags(ScenaFlag(0x0150, 1, 0xA81))
+    ClearScenaFlags(ScenaFlag(0x0150, 2, 0xA82))
+    ClearScenaFlags(ScenaFlag(0x0150, 3, 0xA83))
     QuestInfo(0x000D, 0x04, 0x01, 0x02)
     QuestInfo(0x000D, 0x04, 0x02, 0x02)
 
@@ -3688,7 +3321,7 @@ def EV_Jump_QS_02():
 
     label('loc_5C8C')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_5CA0(): pass
 
@@ -3734,7 +3367,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　チャミー婆さんに話を聞く]', 0x00007105)
     MenuCmd(0x01, 0x01, '[▼02　ケルベロスを借りる　　　]', 0x00007106)
     MenuCmd(0x01, 0x01, '[▼03　追跡を開始する　　　　　]', 0x00007107)
@@ -3759,13 +3392,13 @@ def EV_Jump_QS_02():
         'loc_5F23',
     )
 
-    OP_11(0x0AA7)
-    OP_11(0x0AA8)
-    OP_11(0x0AA9)
-    OP_11(0x0AAA)
-    OP_11(0x0AAB)
-    OP_11(0x0AAC)
-    OP_11(0x0AAD)
+    ClearScenaFlags(ScenaFlag(0x0154, 7, 0xAA7))
+    ClearScenaFlags(ScenaFlag(0x0155, 0, 0xAA8))
+    ClearScenaFlags(ScenaFlag(0x0155, 1, 0xAA9))
+    ClearScenaFlags(ScenaFlag(0x0155, 2, 0xAAA))
+    ClearScenaFlags(ScenaFlag(0x0155, 3, 0xAAB))
+    ClearScenaFlags(ScenaFlag(0x0155, 4, 0xAAC))
+    ClearScenaFlags(ScenaFlag(0x0155, 5, 0xAAD))
     QuestInfo(0x000F, 0x04, 0x02, 0x02)
 
     Switch(
@@ -3812,7 +3445,7 @@ def EV_Jump_QS_02():
 
     label('loc_5F0F')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_5F23(): pass
 
@@ -3858,7 +3491,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ハドック町長からの依頼　]', 0x0000710C)
     MenuCmd(0x01, 0x01, '[▼02　ミントへの相談　　　　　]', 0x0000710D)
     MenuCmd(0x01, 0x01, '[▼03A ティータからパーツを調達]', 0x0000710E)
@@ -3883,12 +3516,12 @@ def EV_Jump_QS_02():
         'loc_61AA',
     )
 
-    OP_11(0x0A84)
-    OP_11(0x0A87)
-    OP_11(0x0A88)
-    OP_11(0x0A89)
-    OP_11(0x0A8A)
-    OP_11(0x0A8B)
+    ClearScenaFlags(ScenaFlag(0x0150, 4, 0xA84))
+    ClearScenaFlags(ScenaFlag(0x0150, 7, 0xA87))
+    ClearScenaFlags(ScenaFlag(0x0151, 0, 0xA88))
+    ClearScenaFlags(ScenaFlag(0x0151, 1, 0xA89))
+    ClearScenaFlags(ScenaFlag(0x0151, 2, 0xA8A))
+    ClearScenaFlags(ScenaFlag(0x0151, 3, 0xA8B))
     QuestInfo(0x0010, 0x04, 0x02, 0x02)
 
     Switch(
@@ -3938,7 +3571,7 @@ def EV_Jump_QS_02():
 
     label('loc_6196')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_61AA(): pass
 
@@ -3984,7 +3617,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　シドニーの話を聞く　　　]', 0x00007114)
     MenuCmd(0x01, 0x01, '[▼02　ランディから話を聞く　　]', 0x00007115)
     MenuCmd(0x01, 0x01, '[▼03　マヤから話を聞く　　　　]', 0x00007116)
@@ -4006,10 +3639,10 @@ def EV_Jump_QS_02():
         'loc_6374',
     )
 
-    OP_11(0x0A8C)
-    OP_11(0x0A8D)
-    OP_11(0x0A8E)
-    OP_11(0x0A8F)
+    ClearScenaFlags(ScenaFlag(0x0151, 4, 0xA8C))
+    ClearScenaFlags(ScenaFlag(0x0151, 5, 0xA8D))
+    ClearScenaFlags(ScenaFlag(0x0151, 6, 0xA8E))
+    ClearScenaFlags(ScenaFlag(0x0151, 7, 0xA8F))
     QuestInfo(0x0011, 0x04, 0x01, 0x02)
     QuestInfo(0x0011, 0x04, 0x02, 0x02)
 
@@ -4044,7 +3677,7 @@ def EV_Jump_QS_02():
 
     label('loc_6360')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_6374(): pass
 
@@ -4090,7 +3723,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　オーレリアと話す　　　　]', 0x00007118)
     MenuCmd(0x01, 0x01, '[▼02　オーレリアとの手合わせ　]', 0x00007119)
     MenuCmd(0x01, 0x01, '[▼03　達成イベント　　　　　　]', 0x0000711A)
@@ -4111,8 +3744,8 @@ def EV_Jump_QS_02():
         'loc_64F4',
     )
 
-    OP_11(0x0AAE)
-    OP_11(0x0AAF)
+    ClearScenaFlags(ScenaFlag(0x0155, 6, 0xAAE))
+    ClearScenaFlags(ScenaFlag(0x0155, 7, 0xAAF))
     QuestInfo(0x0012, 0x04, 0x01, 0x02)
     QuestInfo(0x0012, 0x04, 0x02, 0x02)
 
@@ -4139,7 +3772,7 @@ def EV_Jump_QS_02():
 
     label('loc_64E0')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_64F4(): pass
 
@@ -4185,7 +3818,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ウェインの話を聞く　　　]', 0x0000711B)
     MenuCmd(0x01, 0x01, '[▼02　水泳勝負　　　　　　　　]', 0x0000711C)
     MenuCmd(0x01, 0x01, '[▼03　達成イベント　　　　　　]', 0x0000711D)
@@ -4206,8 +3839,8 @@ def EV_Jump_QS_02():
         'loc_6674',
     )
 
-    OP_11(0x0A90)
-    OP_11(0x0A91)
+    ClearScenaFlags(ScenaFlag(0x0152, 0, 0xA90))
+    ClearScenaFlags(ScenaFlag(0x0152, 1, 0xA91))
     QuestInfo(0x0013, 0x04, 0x01, 0x02)
     QuestInfo(0x0013, 0x04, 0x02, 0x02)
 
@@ -4234,7 +3867,7 @@ def EV_Jump_QS_02():
 
     label('loc_6660')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_6674(): pass
 
@@ -4280,7 +3913,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ルイゼの話を聞く　　　　]', 0x0000711E)
     MenuCmd(0x01, 0x01, '[▼02　ストラップを渡す～達成　]', 0x0000711F)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
@@ -4314,7 +3947,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -4334,8 +3967,8 @@ def EV_Jump_QS_02():
         'loc_6845',
     )
 
-    OP_11(0x0A92)
-    OP_11(0x0A93)
+    ClearScenaFlags(ScenaFlag(0x0152, 2, 0xA92))
+    ClearScenaFlags(ScenaFlag(0x0152, 3, 0xA93))
     QuestInfo(0x0014, 0x04, 0x01, 0x02)
     QuestInfo(0x0014, 0x04, 0x02, 0x02)
 
@@ -4361,7 +3994,7 @@ def EV_Jump_QS_02():
 
     label('loc_6831')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_6845(): pass
 
@@ -4407,7 +4040,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ケイト巡尉からの依頼　　]', 0x00007121)
     MenuCmd(0x01, 0x01, '[▼02A オーバルストアで聞き取り]', 0x00007122)
     MenuCmd(0x01, 0x01, '[▼02B 商工会議所での聞き取り　]', 0x00007123)
@@ -4430,13 +4063,13 @@ def EV_Jump_QS_02():
         'loc_6A67',
     )
 
-    OP_11(0x0A94)
-    OP_11(0x0A95)
-    OP_11(0x0A96)
-    OP_11(0x0A97)
-    OP_11(0x0A98)
-    OP_11(0x0A99)
-    OP_11(0x0A9A)
+    ClearScenaFlags(ScenaFlag(0x0152, 4, 0xA94))
+    ClearScenaFlags(ScenaFlag(0x0152, 5, 0xA95))
+    ClearScenaFlags(ScenaFlag(0x0152, 6, 0xA96))
+    ClearScenaFlags(ScenaFlag(0x0152, 7, 0xA97))
+    ClearScenaFlags(ScenaFlag(0x0153, 0, 0xA98))
+    ClearScenaFlags(ScenaFlag(0x0153, 1, 0xA99))
+    ClearScenaFlags(ScenaFlag(0x0153, 2, 0xA9A))
     QuestInfo(0x0016, 0x04, 0x02, 0x02)
 
     Switch(
@@ -4476,7 +4109,7 @@ def EV_Jump_QS_02():
 
     label('loc_6A53')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_6A67(): pass
 
@@ -4522,7 +4155,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ベネットに話を聞く　　　]', 0x00007129)
     MenuCmd(0x01, 0x01, '[▼02　達成イベント　　　　　　]', 0x0000712A)
     MenuCmd(0x01, 0x01, '[▼03　達成イベント２　　　　　]', 0x0000712B)
@@ -4544,32 +4177,32 @@ def EV_Jump_QS_02():
         'loc_6C87',
     )
 
-    OP_11(0x0AB0)
-    OP_11(0x0AB1)
-    OP_11(0x0AB2)
-    OP_11(0x0AB3)
-    OP_11(0x0AB4)
-    OP_11(0x0AB5)
-    OP_11(0x0AB6)
-    OP_11(0x0AB7)
-    OP_11(0x0AB8)
-    OP_11(0x0AB9)
-    OP_11(0x0ABA)
-    OP_11(0x0ABB)
-    OP_11(0x0ABC)
-    OP_11(0x0ABD)
-    OP_11(0x0ABE)
-    OP_11(0x0ABF)
-    OP_11(0x0AC0)
-    OP_11(0x0AC1)
-    OP_11(0x0AC2)
-    OP_11(0x0AC3)
-    OP_11(0x0AC4)
-    OP_11(0x0AC5)
-    OP_11(0x0AC6)
-    OP_11(0x0AC7)
-    OP_11(0x0AC8)
-    OP_11(0x0AC9)
+    ClearScenaFlags(ScenaFlag(0x0156, 0, 0xAB0))
+    ClearScenaFlags(ScenaFlag(0x0156, 1, 0xAB1))
+    ClearScenaFlags(ScenaFlag(0x0156, 2, 0xAB2))
+    ClearScenaFlags(ScenaFlag(0x0156, 3, 0xAB3))
+    ClearScenaFlags(ScenaFlag(0x0156, 4, 0xAB4))
+    ClearScenaFlags(ScenaFlag(0x0156, 5, 0xAB5))
+    ClearScenaFlags(ScenaFlag(0x0156, 6, 0xAB6))
+    ClearScenaFlags(ScenaFlag(0x0156, 7, 0xAB7))
+    ClearScenaFlags(ScenaFlag(0x0157, 0, 0xAB8))
+    ClearScenaFlags(ScenaFlag(0x0157, 1, 0xAB9))
+    ClearScenaFlags(ScenaFlag(0x0157, 2, 0xABA))
+    ClearScenaFlags(ScenaFlag(0x0157, 3, 0xABB))
+    ClearScenaFlags(ScenaFlag(0x0157, 4, 0xABC))
+    ClearScenaFlags(ScenaFlag(0x0157, 5, 0xABD))
+    ClearScenaFlags(ScenaFlag(0x0157, 6, 0xABE))
+    ClearScenaFlags(ScenaFlag(0x0157, 7, 0xABF))
+    ClearScenaFlags(ScenaFlag(0x0158, 0, 0xAC0))
+    ClearScenaFlags(ScenaFlag(0x0158, 1, 0xAC1))
+    ClearScenaFlags(ScenaFlag(0x0158, 2, 0xAC2))
+    ClearScenaFlags(ScenaFlag(0x0158, 3, 0xAC3))
+    ClearScenaFlags(ScenaFlag(0x0158, 4, 0xAC4))
+    ClearScenaFlags(ScenaFlag(0x0158, 5, 0xAC5))
+    ClearScenaFlags(ScenaFlag(0x0158, 6, 0xAC6))
+    ClearScenaFlags(ScenaFlag(0x0158, 7, 0xAC7))
+    ClearScenaFlags(ScenaFlag(0x0159, 0, 0xAC8))
+    ClearScenaFlags(ScenaFlag(0x0159, 1, 0xAC9))
     QuestInfo(0x0017, 0x04, 0x02, 0x02)
 
     OP_18(
@@ -4626,7 +4259,7 @@ def EV_Jump_QS_02():
 
     label('loc_6C73')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_6C87(): pass
 
@@ -4672,7 +4305,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　シンとラウを目撃する　　]', 0x0000712D)
     MenuCmd(0x01, 0x01, '[▼02　シンからの依頼　　　　　]', 0x0000712E)
     MenuCmd(0x01, 0x01, '[▼03　捜索場所の当たりを付ける]', 0x0000712F)
@@ -4696,12 +4329,12 @@ def EV_Jump_QS_02():
         'loc_6ED1',
     )
 
-    OP_11(0x0A9B)
-    OP_11(0x0A9C)
-    OP_11(0x0A9D)
-    OP_11(0x0A9E)
-    OP_11(0x0A9F)
-    OP_11(0x0AA0)
+    ClearScenaFlags(ScenaFlag(0x0153, 3, 0xA9B))
+    ClearScenaFlags(ScenaFlag(0x0153, 4, 0xA9C))
+    ClearScenaFlags(ScenaFlag(0x0153, 5, 0xA9D))
+    ClearScenaFlags(ScenaFlag(0x0153, 6, 0xA9E))
+    ClearScenaFlags(ScenaFlag(0x0153, 7, 0xA9F))
+    ClearScenaFlags(ScenaFlag(0x0154, 0, 0xAA0))
     QuestInfo(0x0018, 0x04, 0x02, 0x02)
 
     Switch(
@@ -4749,7 +4382,7 @@ def EV_Jump_QS_02():
 
     label('loc_6EBD')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_6ED1(): pass
 
@@ -4771,10 +4404,10 @@ def EV_Jump_QS_02():
         'loc_6F0D',
     )
 
-    OP_11(0x0ACE)
+    ClearScenaFlags(ScenaFlag(0x0159, 6, 0xACE))
     QuestInfo(0x0019, 0x02, 0x0000, 0x02)
     QuestInfo(0x0019, 0x04, 0x02, 0x02)
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     Jump('loc_71E4')
 
@@ -4792,10 +4425,10 @@ def EV_Jump_QS_02():
         'loc_6F44',
     )
 
-    OP_11(0x0ACF)
+    ClearScenaFlags(ScenaFlag(0x0159, 7, 0xACF))
     QuestInfo(0x001A, 0x02, 0x0000, 0x02)
     QuestInfo(0x001A, 0x04, 0x02, 0x02)
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     Jump('loc_71E4')
 
@@ -4837,7 +4470,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　途方に暮れたコッペを発見]', 0x00007135)
     MenuCmd(0x01, 0x01, '[▽EX　南口のバス停をチェック　]', 0x00007136)
     MenuCmd(0x01, 0x01, '[▼02A 東口のバス停を発見　　　]', 0x00007138)
@@ -4862,12 +4495,12 @@ def EV_Jump_QS_02():
         'loc_71CB',
     )
 
-    OP_11(0x0AA1)
-    OP_11(0x0AA2)
-    OP_11(0x0AA3)
-    OP_11(0x0AA4)
-    OP_11(0x0AA5)
-    OP_11(0x0AA6)
+    ClearScenaFlags(ScenaFlag(0x0154, 1, 0xAA1))
+    ClearScenaFlags(ScenaFlag(0x0154, 2, 0xAA2))
+    ClearScenaFlags(ScenaFlag(0x0154, 3, 0xAA3))
+    ClearScenaFlags(ScenaFlag(0x0154, 4, 0xAA4))
+    ClearScenaFlags(ScenaFlag(0x0154, 5, 0xAA5))
+    ClearScenaFlags(ScenaFlag(0x0154, 6, 0xAA6))
     QuestInfo(0x001B, 0x04, 0x02, 0x02)
     QuestInfo(0x001B, 0x04, 0x01, 0x02)
 
@@ -4912,7 +4545,7 @@ def EV_Jump_QS_02():
 
     label('loc_71B7')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_71CB(): pass
 
@@ -4924,7 +4557,7 @@ def EV_Jump_QS_02():
 
     label('loc_71D0')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_71E4(): pass
 
@@ -4964,7 +4597,7 @@ def EV_Jump_QS_03():
         'loc_A26D',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -5163,7 +4796,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ゼシカの話を聞く　　　　]', 0x00007200)
     MenuCmd(0x01, 0x01, '[▼02　リィンとの手合わせ　　　]', 0x00007201)
     MenuCmd(0x01, 0x01, '[▼03　達成イベント　　　　　　]', 0x00007202)
@@ -5184,8 +4817,8 @@ def EV_Jump_QS_03():
         'loc_78B2',
     )
 
-    OP_11(0x0C80)
-    OP_11(0x0C81)
+    ClearScenaFlags(ScenaFlag(0x0190, 0, 0xC80))
+    ClearScenaFlags(ScenaFlag(0x0190, 1, 0xC81))
     QuestInfo(0x001C, 0x04, 0x01, 0x02)
     QuestInfo(0x001C, 0x04, 0x02, 0x02)
 
@@ -5212,7 +4845,7 @@ def EV_Jump_QS_03():
 
     label('loc_789E')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_78B2(): pass
 
@@ -5258,7 +4891,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ロジーヌと話をする　　　]', 0x00007204)
     MenuCmd(0x01, 0x01, '[▼02　エリゼを誘う　　　　　　]', 0x00007205)
     MenuCmd(0x01, 0x01, '[▼03　子供たちへの授業　　　　]', 0x00007206)
@@ -5280,13 +4913,13 @@ def EV_Jump_QS_03():
         'loc_7A79',
     )
 
-    OP_11(0x0CA0)
-    OP_11(0x0CA1)
-    OP_11(0x0CA2)
-    OP_11(0x0CA3)
-    OP_11(0x0CA4)
-    OP_11(0x0CA5)
-    OP_11(0x0CA6)
+    ClearScenaFlags(ScenaFlag(0x0194, 0, 0xCA0))
+    ClearScenaFlags(ScenaFlag(0x0194, 1, 0xCA1))
+    ClearScenaFlags(ScenaFlag(0x0194, 2, 0xCA2))
+    ClearScenaFlags(ScenaFlag(0x0194, 3, 0xCA3))
+    ClearScenaFlags(ScenaFlag(0x0194, 4, 0xCA4))
+    ClearScenaFlags(ScenaFlag(0x0194, 5, 0xCA5))
+    ClearScenaFlags(ScenaFlag(0x0194, 6, 0xCA6))
     QuestInfo(0x001E, 0x04, 0x02, 0x02)
 
     Switch(
@@ -5319,7 +4952,7 @@ def EV_Jump_QS_03():
 
     label('loc_7A65')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_7A79(): pass
 
@@ -5365,7 +4998,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　フランキーに話を聞く　　]', 0x00007208)
     MenuCmd(0x01, 0x01, '[▼02　分校で資料整理をする　　]', 0x00007209)
     MenuCmd(0x01, 0x01, '[▼03A 食堂の様子を見せる　　　]', 0x0000720A)
@@ -5402,13 +5035,13 @@ def EV_Jump_QS_03():
         'loc_7FDC',
     )
 
-    OP_11(0x0CCF)
-    OP_11(0x0CD0)
-    OP_11(0x0CD1)
-    OP_11(0x0CD2)
-    OP_11(0x0CD3)
-    OP_11(0x0CD4)
-    OP_11(0x0CD5)
+    ClearScenaFlags(ScenaFlag(0x0199, 7, 0xCCF))
+    ClearScenaFlags(ScenaFlag(0x019A, 0, 0xCD0))
+    ClearScenaFlags(ScenaFlag(0x019A, 1, 0xCD1))
+    ClearScenaFlags(ScenaFlag(0x019A, 2, 0xCD2))
+    ClearScenaFlags(ScenaFlag(0x019A, 3, 0xCD3))
+    ClearScenaFlags(ScenaFlag(0x019A, 4, 0xCD4))
+    ClearScenaFlags(ScenaFlag(0x019A, 5, 0xCD5))
     QuestInfo(0x001F, 0x04, 0x02, 0x02)
 
     Switch(
@@ -5472,7 +5105,7 @@ def EV_Jump_QS_03():
 
     label('loc_7FC8')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_7FDC(): pass
 
@@ -5518,7 +5151,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ティータと会話する　　　]', 0x0000721B)
     MenuCmd(0x01, 0x01, '[▼02　如水庵を訪れる　　　　　]', 0x0000721C)
     MenuCmd(0x01, 0x01, '[▼03　如水庵で買い物　　　　　]', 0x0000721D)
@@ -5545,20 +5178,20 @@ def EV_Jump_QS_03():
         'loc_8313',
     )
 
-    OP_11(0x0CA7)
-    OP_11(0x0CA8)
-    OP_11(0x0CA9)
-    OP_11(0x0CAA)
-    OP_11(0x0CAB)
-    OP_11(0x0CAC)
-    OP_11(0x0CAD)
-    OP_11(0x0CAE)
-    OP_11(0x0CAF)
-    OP_11(0x0CB0)
-    OP_11(0x0CB1)
-    OP_11(0x0CB2)
-    OP_11(0x0CB3)
-    OP_11(0x0CB4)
+    ClearScenaFlags(ScenaFlag(0x0194, 7, 0xCA7))
+    ClearScenaFlags(ScenaFlag(0x0195, 0, 0xCA8))
+    ClearScenaFlags(ScenaFlag(0x0195, 1, 0xCA9))
+    ClearScenaFlags(ScenaFlag(0x0195, 2, 0xCAA))
+    ClearScenaFlags(ScenaFlag(0x0195, 3, 0xCAB))
+    ClearScenaFlags(ScenaFlag(0x0195, 4, 0xCAC))
+    ClearScenaFlags(ScenaFlag(0x0195, 5, 0xCAD))
+    ClearScenaFlags(ScenaFlag(0x0195, 6, 0xCAE))
+    ClearScenaFlags(ScenaFlag(0x0195, 7, 0xCAF))
+    ClearScenaFlags(ScenaFlag(0x0196, 0, 0xCB0))
+    ClearScenaFlags(ScenaFlag(0x0196, 1, 0xCB1))
+    ClearScenaFlags(ScenaFlag(0x0196, 2, 0xCB2))
+    ClearScenaFlags(ScenaFlag(0x0196, 3, 0xCB3))
+    ClearScenaFlags(ScenaFlag(0x0196, 4, 0xCB4))
     QuestInfo(0x0020, 0x04, 0x01, 0x02)
     QuestInfo(0x0020, 0x04, 0x02, 0x02)
 
@@ -5639,7 +5272,7 @@ def EV_Jump_QS_03():
 
     label('loc_82FF')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_8313(): pass
 
@@ -5685,7 +5318,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　カイリの話を聞く　　　　]', 0x00007224)
     MenuCmd(0x01, 0x01, '[▼02　茶道の手ほどき　　　　　]', 0x00007225)
     MenuCmd(0x01, 0x01, '[▼03　達成イベント　　　　　　]', 0x00007226)
@@ -5706,11 +5339,11 @@ def EV_Jump_QS_03():
         'loc_849C',
     )
 
-    OP_11(0x0C82)
-    OP_11(0x0C83)
-    OP_11(0x0C84)
-    OP_11(0x0C85)
-    OP_11(0x0C86)
+    ClearScenaFlags(ScenaFlag(0x0190, 2, 0xC82))
+    ClearScenaFlags(ScenaFlag(0x0190, 3, 0xC83))
+    ClearScenaFlags(ScenaFlag(0x0190, 4, 0xC84))
+    ClearScenaFlags(ScenaFlag(0x0190, 5, 0xC85))
+    ClearScenaFlags(ScenaFlag(0x0190, 6, 0xC86))
     QuestInfo(0x0021, 0x04, 0x01, 0x02)
     QuestInfo(0x0021, 0x04, 0x02, 0x02)
 
@@ -5737,7 +5370,7 @@ def EV_Jump_QS_03():
 
     label('loc_8488')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_849C(): pass
 
@@ -5783,7 +5416,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　グスタフの話を聞く　　　]', 0x00007227)
     MenuCmd(0x01, 0x01, '[▼02　硝石を見つける　　　　　]', 0x00007228)
     MenuCmd(0x01, 0x01, '[▼03　硫黄を見つける　　　　　]', 0x00007229)
@@ -5820,7 +5453,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -5840,11 +5473,11 @@ def EV_Jump_QS_03():
         'loc_873A',
     )
 
-    OP_11(0x0C87)
-    OP_11(0x0C88)
-    OP_11(0x0C89)
-    OP_11(0x0C8A)
-    OP_11(0x0C8B)
+    ClearScenaFlags(ScenaFlag(0x0190, 7, 0xC87))
+    ClearScenaFlags(ScenaFlag(0x0191, 0, 0xC88))
+    ClearScenaFlags(ScenaFlag(0x0191, 1, 0xC89))
+    ClearScenaFlags(ScenaFlag(0x0191, 2, 0xC8A))
+    ClearScenaFlags(ScenaFlag(0x0191, 3, 0xC8B))
     QuestInfo(0x0022, 0x04, 0x01, 0x02)
     QuestInfo(0x0022, 0x04, 0x02, 0x02)
 
@@ -5881,7 +5514,7 @@ def EV_Jump_QS_03():
 
     label('loc_8726')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_873A(): pass
 
@@ -5927,7 +5560,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　係員エストンから話を聞く]', 0x0000722D)
     MenuCmd(0x01, 0x01, '[▼02A ヨット（東側）を調べる　]', 0x0000722E)
     MenuCmd(0x01, 0x01, '[▼02B ヨット（西側）を調べる　]', 0x0000722F)
@@ -5953,16 +5586,16 @@ def EV_Jump_QS_03():
         'loc_8A15',
     )
 
-    OP_11(0x0CB5)
-    OP_11(0x0CB6)
-    OP_11(0x0CB7)
-    OP_11(0x0CB8)
-    OP_11(0x0CB9)
-    OP_11(0x0CBA)
-    OP_11(0x0CBB)
-    OP_11(0x0CBC)
-    OP_11(0x0CBD)
-    OP_11(0x0CBE)
+    ClearScenaFlags(ScenaFlag(0x0196, 5, 0xCB5))
+    ClearScenaFlags(ScenaFlag(0x0196, 6, 0xCB6))
+    ClearScenaFlags(ScenaFlag(0x0196, 7, 0xCB7))
+    ClearScenaFlags(ScenaFlag(0x0197, 0, 0xCB8))
+    ClearScenaFlags(ScenaFlag(0x0197, 1, 0xCB9))
+    ClearScenaFlags(ScenaFlag(0x0197, 2, 0xCBA))
+    ClearScenaFlags(ScenaFlag(0x0197, 3, 0xCBB))
+    ClearScenaFlags(ScenaFlag(0x0197, 4, 0xCBC))
+    ClearScenaFlags(ScenaFlag(0x0197, 5, 0xCBD))
+    ClearScenaFlags(ScenaFlag(0x0197, 6, 0xCBE))
     QuestInfo(0x0024, 0x04, 0x02, 0x02)
 
     Switch(
@@ -6029,7 +5662,7 @@ def EV_Jump_QS_03():
 
     label('loc_8A01')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_8A15(): pass
 
@@ -6075,7 +5708,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　シュトラウスに話を聞く　]', 0x00007235)
     MenuCmd(0x01, 0x01, '[▼02　浜辺でヒスイ貝を入手する]', 0x00007236)
     MenuCmd(0x01, 0x01, '[▼03　ヒスイ貝を入手するＢ　　]', 0x00007237)
@@ -6102,16 +5735,16 @@ def EV_Jump_QS_03():
         'loc_8D2B',
     )
 
-    OP_11(0x0CBF)
-    OP_11(0x0CC0)
-    OP_11(0x0CC1)
-    OP_11(0x0CC2)
-    OP_11(0x0CC3)
-    OP_11(0x0CC4)
-    OP_11(0x0CC5)
-    OP_11(0x0CC6)
-    OP_11(0x0CC8)
-    OP_11(0x0CC9)
+    ClearScenaFlags(ScenaFlag(0x0197, 7, 0xCBF))
+    ClearScenaFlags(ScenaFlag(0x0198, 0, 0xCC0))
+    ClearScenaFlags(ScenaFlag(0x0198, 1, 0xCC1))
+    ClearScenaFlags(ScenaFlag(0x0198, 2, 0xCC2))
+    ClearScenaFlags(ScenaFlag(0x0198, 3, 0xCC3))
+    ClearScenaFlags(ScenaFlag(0x0198, 4, 0xCC4))
+    ClearScenaFlags(ScenaFlag(0x0198, 5, 0xCC5))
+    ClearScenaFlags(ScenaFlag(0x0198, 6, 0xCC6))
+    ClearScenaFlags(ScenaFlag(0x0199, 0, 0xCC8))
+    ClearScenaFlags(ScenaFlag(0x0199, 1, 0xCC9))
     QuestInfo(0x0025, 0x04, 0x02, 0x02)
 
     Switch(
@@ -6183,7 +5816,7 @@ def EV_Jump_QS_03():
 
     label('loc_8D17')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_8D2B(): pass
 
@@ -6229,7 +5862,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ガスパールから話を聞く　]', 0x0000723E)
     MenuCmd(0x01, 0x01, '[▼02A 駅に入ろうとする　　　　]', 0x0000723F)
     MenuCmd(0x01, 0x01, '[▼02B ラクウェル駅で話を聞く　]', 0x00007240)
@@ -6257,17 +5890,17 @@ def EV_Jump_QS_03():
         'loc_907D',
     )
 
-    OP_11(0x0CDF)
-    OP_11(0x0CE0)
-    OP_11(0x0CE1)
-    OP_11(0x0CE2)
-    OP_11(0x0CE3)
-    OP_11(0x0CE4)
-    OP_11(0x0CE5)
-    OP_11(0x0CE6)
-    OP_11(0x0CE7)
-    OP_11(0x0CE8)
-    OP_11(0x0CE9)
+    ClearScenaFlags(ScenaFlag(0x019B, 7, 0xCDF))
+    ClearScenaFlags(ScenaFlag(0x019C, 0, 0xCE0))
+    ClearScenaFlags(ScenaFlag(0x019C, 1, 0xCE1))
+    ClearScenaFlags(ScenaFlag(0x019C, 2, 0xCE2))
+    ClearScenaFlags(ScenaFlag(0x019C, 3, 0xCE3))
+    ClearScenaFlags(ScenaFlag(0x019C, 4, 0xCE4))
+    ClearScenaFlags(ScenaFlag(0x019C, 5, 0xCE5))
+    ClearScenaFlags(ScenaFlag(0x019C, 6, 0xCE6))
+    ClearScenaFlags(ScenaFlag(0x019C, 7, 0xCE7))
+    ClearScenaFlags(ScenaFlag(0x019D, 0, 0xCE8))
+    ClearScenaFlags(ScenaFlag(0x019D, 1, 0xCE9))
     QuestInfo(0x0026, 0x04, 0x02, 0x02)
 
     Switch(
@@ -6324,7 +5957,7 @@ def EV_Jump_QS_03():
 
     label('loc_9069')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_907D(): pass
 
@@ -6370,7 +6003,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ヤンとカティからの依頼　]', 0x00007248)
     MenuCmd(0x01, 0x01, '[▼02　夜の峡谷道に出る　　　　]', 0x00007249)
     MenuCmd(0x01, 0x01, '[▼03A クラークと運搬車を発見　]', 0x0000724A)
@@ -6394,10 +6027,10 @@ def EV_Jump_QS_03():
         'loc_92B9',
     )
 
-    OP_11(0x0C8C)
-    OP_11(0x0C8D)
-    OP_11(0x0C8E)
-    OP_11(0x0C8F)
+    ClearScenaFlags(ScenaFlag(0x0191, 4, 0xC8C))
+    ClearScenaFlags(ScenaFlag(0x0191, 5, 0xC8D))
+    ClearScenaFlags(ScenaFlag(0x0191, 6, 0xC8E))
+    ClearScenaFlags(ScenaFlag(0x0191, 7, 0xC8F))
     QuestInfo(0x0027, 0x04, 0x02, 0x02)
 
     Switch(
@@ -6433,7 +6066,7 @@ def EV_Jump_QS_03():
 
     label('loc_92A5')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_92B9(): pass
 
@@ -6479,7 +6112,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01A 峡谷道北に出ようとする　]', 0x0000724E)
     MenuCmd(0x01, 0x01, '[▼01B 峡谷道北に出る　　　　　]', 0x0000724F)
     MenuCmd(0x01, 0x01, '[▼02　プレロマ草と幻獣を確認　]', 0x00007250)
@@ -6502,12 +6135,12 @@ def EV_Jump_QS_03():
         'loc_94BA',
     )
 
-    OP_11(0x0C90)
-    OP_11(0x0C91)
-    OP_11(0x0C92)
-    OP_11(0x0C93)
-    OP_11(0x0BF9)
-    OP_11(0x0BFA)
+    ClearScenaFlags(ScenaFlag(0x0192, 0, 0xC90))
+    ClearScenaFlags(ScenaFlag(0x0192, 1, 0xC91))
+    ClearScenaFlags(ScenaFlag(0x0192, 2, 0xC92))
+    ClearScenaFlags(ScenaFlag(0x0192, 3, 0xC93))
+    ClearScenaFlags(ScenaFlag(0x017F, 1, 0xBF9))
+    ClearScenaFlags(ScenaFlag(0x017F, 2, 0xBFA))
     QuestInfo(0x0028, 0x04, 0x02, 0x02)
 
     Switch(
@@ -6547,7 +6180,7 @@ def EV_Jump_QS_03():
 
     label('loc_94A6')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_94BA(): pass
 
@@ -6593,7 +6226,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　兵士たちに確認する　　　]', 0x00007253)
     MenuCmd(0x01, 0x01, '[▼02　ウォレス戦①　　　　　　]', 0x00007254)
     MenuCmd(0x01, 0x01, '[▼03　ウォレス戦①終了　　　　]', 0x00007255)
@@ -6616,8 +6249,8 @@ def EV_Jump_QS_03():
         'loc_96A8',
     )
 
-    OP_11(0x0C94)
-    OP_11(0x0C95)
+    ClearScenaFlags(ScenaFlag(0x0192, 4, 0xC94))
+    ClearScenaFlags(ScenaFlag(0x0192, 5, 0xC95))
     QuestInfo(0x0029, 0x04, 0x02, 0x02)
 
     Switch(
@@ -6644,7 +6277,7 @@ def EV_Jump_QS_03():
 
     label('loc_9694')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_96A8(): pass
 
@@ -6690,7 +6323,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　フェリスに話を聞く　　　]', 0x00007258)
     MenuCmd(0x01, 0x01, '[▼02　港で張り込みをする　　　]', 0x00007259)
     MenuCmd(0x01, 0x01, '[▼03　バイクチェイス開始（ユ）]', 0x00000001)
@@ -6722,14 +6355,14 @@ def EV_Jump_QS_03():
         'loc_9BCB',
     )
 
-    OP_11(0x0C96)
-    OP_11(0x0C97)
-    OP_11(0x0C98)
-    OP_11(0x0C99)
-    OP_11(0x0C9A)
-    OP_11(0x0C9B)
-    OP_11(0x0C9C)
-    OP_11(0x0C9D)
+    ClearScenaFlags(ScenaFlag(0x0192, 6, 0xC96))
+    ClearScenaFlags(ScenaFlag(0x0192, 7, 0xC97))
+    ClearScenaFlags(ScenaFlag(0x0193, 0, 0xC98))
+    ClearScenaFlags(ScenaFlag(0x0193, 1, 0xC99))
+    ClearScenaFlags(ScenaFlag(0x0193, 2, 0xC9A))
+    ClearScenaFlags(ScenaFlag(0x0193, 3, 0xC9B))
+    ClearScenaFlags(ScenaFlag(0x0193, 4, 0xC9C))
+    ClearScenaFlags(ScenaFlag(0x0193, 5, 0xC9D))
     QuestInfo(0x002A, 0x04, 0x02, 0x02)
 
     If(
@@ -6972,7 +6605,7 @@ def EV_Jump_QS_03():
 
     label('loc_9BB7')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_9BCB(): pass
 
@@ -7018,7 +6651,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　レオノーラと話をする　　]', 0x0000725E)
     MenuCmd(0x01, 0x01, '[▼02　クエスト達成　　　　　　]', 0x0000725E)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
@@ -7038,8 +6671,8 @@ def EV_Jump_QS_03():
         'loc_9D18',
     )
 
-    OP_11(0x0C9E)
-    OP_11(0x0C9F)
+    ClearScenaFlags(ScenaFlag(0x0193, 6, 0xC9E))
+    ClearScenaFlags(ScenaFlag(0x0193, 7, 0xC9F))
     QuestInfo(0x002B, 0x04, 0x01, 0x02)
     QuestInfo(0x002B, 0x04, 0x02, 0x02)
 
@@ -7071,7 +6704,7 @@ def EV_Jump_QS_03():
 
     label('loc_9D04')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_9D18(): pass
 
@@ -7117,7 +6750,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　アレイスターを見つける　]', 0x00007260)
     MenuCmd(0x01, 0x01, '[▼02　海風亭で会話する　　　　]', 0x00007261)
     MenuCmd(0x01, 0x01, '[▼03　海上要塞前で地図を発見　]', 0x00007262)
@@ -7140,11 +6773,11 @@ def EV_Jump_QS_03():
         'loc_9F2E',
     )
 
-    OP_11(0x0CCA)
-    OP_11(0x0CCB)
-    OP_11(0x0CCC)
-    OP_11(0x0CCD)
-    OP_11(0x0CCE)
+    ClearScenaFlags(ScenaFlag(0x0199, 2, 0xCCA))
+    ClearScenaFlags(ScenaFlag(0x0199, 3, 0xCCB))
+    ClearScenaFlags(ScenaFlag(0x0199, 4, 0xCCC))
+    ClearScenaFlags(ScenaFlag(0x0199, 5, 0xCCD))
+    ClearScenaFlags(ScenaFlag(0x0199, 6, 0xCCE))
     QuestInfo(0x002C, 0x04, 0x01, 0x02)
     QuestInfo(0x002C, 0x04, 0x02, 0x02)
 
@@ -7196,7 +6829,7 @@ def EV_Jump_QS_03():
 
     label('loc_9F1A')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_9F2E(): pass
 
@@ -7242,7 +6875,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ユタ坊達に話を聞く　　　]', 0x00007265)
     MenuCmd(0x01, 0x01, '[▼02　キラキラＬＰを調べるＡ　]', 0x00007266)
     MenuCmd(0x01, 0x01, '[▼03　キラキラＬＰを調べるＢ　]', 0x00007267)
@@ -7269,15 +6902,15 @@ def EV_Jump_QS_03():
         'loc_A24F',
     )
 
-    OP_11(0x0CD6)
-    OP_11(0x0CD7)
-    OP_11(0x0CD8)
-    OP_11(0x0CD9)
-    OP_11(0x0CDA)
-    OP_11(0x0CDB)
-    OP_11(0x0CDC)
-    OP_11(0x0CDD)
-    OP_11(0x0CDE)
+    ClearScenaFlags(ScenaFlag(0x019A, 6, 0xCD6))
+    ClearScenaFlags(ScenaFlag(0x019A, 7, 0xCD7))
+    ClearScenaFlags(ScenaFlag(0x019B, 0, 0xCD8))
+    ClearScenaFlags(ScenaFlag(0x019B, 1, 0xCD9))
+    ClearScenaFlags(ScenaFlag(0x019B, 2, 0xCDA))
+    ClearScenaFlags(ScenaFlag(0x019B, 3, 0xCDB))
+    ClearScenaFlags(ScenaFlag(0x019B, 4, 0xCDC))
+    ClearScenaFlags(ScenaFlag(0x019B, 5, 0xCDD))
+    ClearScenaFlags(ScenaFlag(0x019B, 6, 0xCDE))
     QuestInfo(0x002D, 0x04, 0x01, 0x02)
     QuestInfo(0x002D, 0x04, 0x02, 0x02)
 
@@ -7346,7 +6979,7 @@ def EV_Jump_QS_03():
 
     label('loc_A23B')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_A24F(): pass
 
@@ -7358,7 +6991,7 @@ def EV_Jump_QS_03():
 
     label('loc_A254')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_A268(): pass
 
@@ -7398,7 +7031,7 @@ def EV_Jump_QS_04():
         'loc_D949',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -7601,7 +7234,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ヴァレリーから話を聞く　]', 0x00007300)
     MenuCmd(0x01, 0x01, '[▼02A パブロから話を聞く　　　]', 0x00007301)
     MenuCmd(0x01, 0x01, '[▼02B グスタフから話を聞く　　]', 0x00007302)
@@ -7624,11 +7257,11 @@ def EV_Jump_QS_04():
         'loc_AAC0',
     )
 
-    OP_11(0x0E80)
-    OP_11(0x0E81)
-    OP_11(0x0E82)
-    OP_11(0x0E83)
-    OP_11(0x0E84)
+    ClearScenaFlags(ScenaFlag(0x01D0, 0, 0xE80))
+    ClearScenaFlags(ScenaFlag(0x01D0, 1, 0xE81))
+    ClearScenaFlags(ScenaFlag(0x01D0, 2, 0xE82))
+    ClearScenaFlags(ScenaFlag(0x01D0, 3, 0xE83))
+    ClearScenaFlags(ScenaFlag(0x01D0, 4, 0xE84))
     QuestInfo(0x002E, 0x04, 0x01, 0x02)
     QuestInfo(0x002E, 0x04, 0x02, 0x02)
 
@@ -7665,7 +7298,7 @@ def EV_Jump_QS_04():
 
     label('loc_AAAC')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_AAC0(): pass
 
@@ -7711,7 +7344,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ランディの話を聞く　　　]', 0x00007305)
     MenuCmd(0x01, 0x01, '[▼02　ランディにラム酒を譲る　]', 0x00007306)
     MenuCmd(0x01, 0x01, '[▼03　ランディに誘われる　　　]', 0x00007307)
@@ -7732,8 +7365,8 @@ def EV_Jump_QS_04():
         'loc_AC43',
     )
 
-    OP_11(0x0E85)
-    OP_11(0x0E86)
+    ClearScenaFlags(ScenaFlag(0x01D0, 5, 0xE85))
+    ClearScenaFlags(ScenaFlag(0x01D0, 6, 0xE86))
     QuestInfo(0x002F, 0x04, 0x01, 0x02)
     QuestInfo(0x002F, 0x04, 0x02, 0x02)
 
@@ -7766,7 +7399,7 @@ def EV_Jump_QS_04():
 
     label('loc_AC2F')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_AC43(): pass
 
@@ -7812,7 +7445,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ムンクからの出演依頼　　]', 0x00007309)
     MenuCmd(0x01, 0x01, '[▼02A ミントに相談する　　　　]', 0x0000730A)
     MenuCmd(0x01, 0x01, '[▼02B ベッキーに相談する　　　]', 0x0000730B)
@@ -7843,14 +7476,14 @@ def EV_Jump_QS_04():
         'loc_B0FA',
     )
 
-    OP_11(0x0E87)
-    OP_11(0x0E88)
-    OP_11(0x0E89)
-    OP_11(0x0E8A)
-    OP_11(0x0E8B)
-    OP_11(0x0E8C)
-    OP_11(0x0E8D)
-    OP_11(0x0E8E)
+    ClearScenaFlags(ScenaFlag(0x01D0, 7, 0xE87))
+    ClearScenaFlags(ScenaFlag(0x01D1, 0, 0xE88))
+    ClearScenaFlags(ScenaFlag(0x01D1, 1, 0xE89))
+    ClearScenaFlags(ScenaFlag(0x01D1, 2, 0xE8A))
+    ClearScenaFlags(ScenaFlag(0x01D1, 3, 0xE8B))
+    ClearScenaFlags(ScenaFlag(0x01D1, 4, 0xE8C))
+    ClearScenaFlags(ScenaFlag(0x01D1, 5, 0xE8D))
+    ClearScenaFlags(ScenaFlag(0x01D1, 6, 0xE8E))
     QuestInfo(0x0031, 0x04, 0x02, 0x02)
 
     If(
@@ -8095,7 +7728,7 @@ def EV_Jump_QS_04():
 
     label('loc_B0E6')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_B0FA(): pass
 
@@ -8141,7 +7774,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　リーザから話を聞く　　　]', 0x00007310)
     MenuCmd(0x01, 0x01, '[▼02　駅を訪ねる　　　　　　　]', 0x00007311)
     MenuCmd(0x01, 0x01, '[▼03　思い出ノートを調べる　　]', 0x00007312)
@@ -8164,15 +7797,15 @@ def EV_Jump_QS_04():
         'loc_B313',
     )
 
-    OP_11(0x0EF2)
-    OP_11(0x0EF3)
-    OP_11(0x0EF4)
-    OP_11(0x0EF5)
-    OP_11(0x0EF6)
-    OP_11(0x0EF7)
-    OP_11(0x0EF8)
-    OP_11(0x0EF9)
-    OP_11(0x0EFA)
+    ClearScenaFlags(ScenaFlag(0x01DE, 2, 0xEF2))
+    ClearScenaFlags(ScenaFlag(0x01DE, 3, 0xEF3))
+    ClearScenaFlags(ScenaFlag(0x01DE, 4, 0xEF4))
+    ClearScenaFlags(ScenaFlag(0x01DE, 5, 0xEF5))
+    ClearScenaFlags(ScenaFlag(0x01DE, 6, 0xEF6))
+    ClearScenaFlags(ScenaFlag(0x01DE, 7, 0xEF7))
+    ClearScenaFlags(ScenaFlag(0x01DF, 0, 0xEF8))
+    ClearScenaFlags(ScenaFlag(0x01DF, 1, 0xEF9))
+    ClearScenaFlags(ScenaFlag(0x01DF, 2, 0xEFA))
     QuestInfo(0x0032, 0x04, 0x02, 0x02)
 
     Switch(
@@ -8223,7 +7856,7 @@ def EV_Jump_QS_04():
 
     label('loc_B2FF')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_B313(): pass
 
@@ -8269,7 +7902,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　トランプが入荷する　　　]', 0x00007315)
     MenuCmd(0x01, 0x01, '[▼02　スタークと話す　　　　　]', 0x00007316)
     MenuCmd(0x01, 0x01, '[▼03　スタークにトランプを譲る]', 0x00007317)
@@ -8290,10 +7923,10 @@ def EV_Jump_QS_04():
         'loc_B49F',
     )
 
-    OP_11(0x0EBA)
-    OP_11(0x0EBB)
-    OP_11(0x0EBC)
-    OP_11(0x0EBD)
+    ClearScenaFlags(ScenaFlag(0x01D7, 2, 0xEBA))
+    ClearScenaFlags(ScenaFlag(0x01D7, 3, 0xEBB))
+    ClearScenaFlags(ScenaFlag(0x01D7, 4, 0xEBC))
+    ClearScenaFlags(ScenaFlag(0x01D7, 5, 0xEBD))
     QuestInfo(0x0033, 0x04, 0x01, 0x02)
     QuestInfo(0x0033, 0x04, 0x02, 0x02)
 
@@ -8327,7 +7960,7 @@ def EV_Jump_QS_04():
 
     label('loc_B48B')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_B49F(): pass
 
@@ -8373,7 +8006,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　水泳部と話す　　　　　　]', 0x00007318)
     MenuCmd(0x01, 0x01, '[▼02　水泳勝負　ＶＳウェイン　]', 0x00007319)
     MenuCmd(0x01, 0x01, '[▼03　水泳勝負　ＶＳスターク　]', 0x0000731A)
@@ -8397,19 +8030,19 @@ def EV_Jump_QS_04():
         'loc_B705',
     )
 
-    OP_11(0x0ECB)
-    OP_11(0x0ECC)
-    OP_11(0x0ECD)
-    OP_11(0x0ECE)
-    OP_11(0x0ECF)
-    OP_11(0x0ED0)
-    OP_11(0x0ED1)
-    OP_11(0x0ED2)
-    OP_11(0x0ED3)
-    OP_11(0x0ED4)
-    OP_11(0x0ED5)
-    OP_11(0x0ED6)
-    OP_11(0x0ED7)
+    ClearScenaFlags(ScenaFlag(0x01D9, 3, 0xECB))
+    ClearScenaFlags(ScenaFlag(0x01D9, 4, 0xECC))
+    ClearScenaFlags(ScenaFlag(0x01D9, 5, 0xECD))
+    ClearScenaFlags(ScenaFlag(0x01D9, 6, 0xECE))
+    ClearScenaFlags(ScenaFlag(0x01D9, 7, 0xECF))
+    ClearScenaFlags(ScenaFlag(0x01DA, 0, 0xED0))
+    ClearScenaFlags(ScenaFlag(0x01DA, 1, 0xED1))
+    ClearScenaFlags(ScenaFlag(0x01DA, 2, 0xED2))
+    ClearScenaFlags(ScenaFlag(0x01DA, 3, 0xED3))
+    ClearScenaFlags(ScenaFlag(0x01DA, 4, 0xED4))
+    ClearScenaFlags(ScenaFlag(0x01DA, 5, 0xED5))
+    ClearScenaFlags(ScenaFlag(0x01DA, 6, 0xED6))
+    ClearScenaFlags(ScenaFlag(0x01DA, 7, 0xED7))
     QuestInfo(0x0034, 0x04, 0x01, 0x02)
     QuestInfo(0x0034, 0x04, 0x02, 0x02)
 
@@ -8445,7 +8078,7 @@ def EV_Jump_QS_04():
 
     label('loc_B6F1')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_B705(): pass
 
@@ -8491,7 +8124,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　マヤに話を聞く　　　　　]', 0x0000731E)
     MenuCmd(0x01, 0x01, '[▼02A ランディに話を聞く　　　]', 0x0000731F)
     MenuCmd(0x01, 0x01, '[▼02B ゼシカたちに話を聞く　　]', 0x00007320)
@@ -8515,14 +8148,14 @@ def EV_Jump_QS_04():
         'loc_B967',
     )
 
-    OP_11(0x0EBE)
-    OP_11(0x0EBF)
-    OP_11(0x0EC0)
-    OP_11(0x0EC1)
-    OP_11(0x0EC2)
-    OP_11(0x0EC3)
-    OP_11(0x0EC4)
-    OP_11(0x0EC5)
+    ClearScenaFlags(ScenaFlag(0x01D7, 6, 0xEBE))
+    ClearScenaFlags(ScenaFlag(0x01D7, 7, 0xEBF))
+    ClearScenaFlags(ScenaFlag(0x01D8, 0, 0xEC0))
+    ClearScenaFlags(ScenaFlag(0x01D8, 1, 0xEC1))
+    ClearScenaFlags(ScenaFlag(0x01D8, 2, 0xEC2))
+    ClearScenaFlags(ScenaFlag(0x01D8, 3, 0xEC3))
+    ClearScenaFlags(ScenaFlag(0x01D8, 4, 0xEC4))
+    ClearScenaFlags(ScenaFlag(0x01D8, 5, 0xEC5))
     QuestInfo(0x0035, 0x04, 0x01, 0x02)
     QuestInfo(0x0035, 0x04, 0x02, 0x02)
 
@@ -8583,7 +8216,7 @@ def EV_Jump_QS_04():
 
     label('loc_B953')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_B967(): pass
 
@@ -8629,7 +8262,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01  サンディの話を聞く　　　]', 0x00007324)
     MenuCmd(0x01, 0x01, '[▼02A ムーントリュフを発見Ａ　]', 0x00007325)
     MenuCmd(0x01, 0x01, '[▼02B ムーントリュフを発見Ｂ　]', 0x00007326)
@@ -8667,7 +8300,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -8687,11 +8320,11 @@ def EV_Jump_QS_04():
         'loc_BC3F',
     )
 
-    OP_11(0x0EC6)
-    OP_11(0x0EC7)
-    OP_11(0x0EC8)
-    OP_11(0x0EC9)
-    OP_11(0x0ECA)
+    ClearScenaFlags(ScenaFlag(0x01D8, 6, 0xEC6))
+    ClearScenaFlags(ScenaFlag(0x01D8, 7, 0xEC7))
+    ClearScenaFlags(ScenaFlag(0x01D9, 0, 0xEC8))
+    ClearScenaFlags(ScenaFlag(0x01D9, 1, 0xEC9))
+    ClearScenaFlags(ScenaFlag(0x01D9, 2, 0xECA))
     QuestInfo(0x0036, 0x04, 0x01, 0x02)
     QuestInfo(0x0036, 0x04, 0x02, 0x02)
 
@@ -8739,7 +8372,7 @@ def EV_Jump_QS_04():
 
     label('loc_BC2B')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_BC3F(): pass
 
@@ -8785,7 +8418,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　バーナードに話を聞く　　]', 0x0000732B)
     MenuCmd(0x01, 0x01, '[▼02　サンクトの噴水で見つける]', 0x0000732C)
     MenuCmd(0x01, 0x01, '[▼03　駅にいるのを見つける　　]', 0x0000732D)
@@ -8811,14 +8444,14 @@ def EV_Jump_QS_04():
         'loc_BF15',
     )
 
-    OP_11(0x0ED8)
-    OP_11(0x0ED9)
-    OP_11(0x0EDA)
-    OP_11(0x0EDB)
-    OP_11(0x0EDC)
-    OP_11(0x0EDD)
-    OP_11(0x0EDE)
-    OP_11(0x0EDF)
+    ClearScenaFlags(ScenaFlag(0x01DB, 0, 0xED8))
+    ClearScenaFlags(ScenaFlag(0x01DB, 1, 0xED9))
+    ClearScenaFlags(ScenaFlag(0x01DB, 2, 0xEDA))
+    ClearScenaFlags(ScenaFlag(0x01DB, 3, 0xEDB))
+    ClearScenaFlags(ScenaFlag(0x01DB, 4, 0xEDC))
+    ClearScenaFlags(ScenaFlag(0x01DB, 5, 0xEDD))
+    ClearScenaFlags(ScenaFlag(0x01DB, 6, 0xEDE))
+    ClearScenaFlags(ScenaFlag(0x01DB, 7, 0xEDF))
     QuestInfo(0x0038, 0x04, 0x02, 0x02)
 
     Switch(
@@ -8884,7 +8517,7 @@ def EV_Jump_QS_04():
 
     label('loc_BF01')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_BF15(): pass
 
@@ -8930,7 +8563,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　リルケから話を聞く　　　]', 0x00007333)
     MenuCmd(0x01, 0x01, '[▼02　南門に再び出る　　　　　]', 0x00007334)
     MenuCmd(0x01, 0x01, '[▼03　ランタン装備での戦闘①　]', 0x00007335)
@@ -8953,14 +8586,14 @@ def EV_Jump_QS_04():
         'loc_C129',
     )
 
-    OP_11(0x0E8F)
-    OP_11(0x0E90)
-    OP_11(0x0E91)
-    OP_11(0x0E92)
-    OP_11(0x0E93)
-    OP_11(0x0E94)
-    OP_11(0x0E95)
-    OP_11(0x0E96)
+    ClearScenaFlags(ScenaFlag(0x01D1, 7, 0xE8F))
+    ClearScenaFlags(ScenaFlag(0x01D2, 0, 0xE90))
+    ClearScenaFlags(ScenaFlag(0x01D2, 1, 0xE91))
+    ClearScenaFlags(ScenaFlag(0x01D2, 2, 0xE92))
+    ClearScenaFlags(ScenaFlag(0x01D2, 3, 0xE93))
+    ClearScenaFlags(ScenaFlag(0x01D2, 4, 0xE94))
+    ClearScenaFlags(ScenaFlag(0x01D2, 5, 0xE95))
+    ClearScenaFlags(ScenaFlag(0x01D2, 6, 0xE96))
     QuestInfo(0x0039, 0x04, 0x02, 0x02)
 
     Switch(
@@ -9008,7 +8641,7 @@ def EV_Jump_QS_04():
 
     label('loc_C115')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_C129(): pass
 
@@ -9054,7 +8687,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01A ジョアンから話を聞く　　]', 0x0000733A)
     MenuCmd(0x01, 0x01, '[▼01B ジョアンから話を聞く　　]', 0x0000733B)
     MenuCmd(0x01, 0x01, '[▼03　通信波異常の場所を特定　]', 0x00007348)
@@ -9080,25 +8713,25 @@ def EV_Jump_QS_04():
         'loc_C430',
     )
 
-    OP_11(0x0E97)
-    OP_11(0x0E98)
-    OP_11(0x0E99)
-    OP_11(0x0E9A)
-    OP_11(0x0E9B)
-    OP_11(0x0E9C)
-    OP_11(0x0E9D)
-    OP_11(0x0E9E)
-    OP_11(0x0E9F)
-    OP_11(0x0EA0)
-    OP_11(0x0EA1)
-    OP_11(0x0EA2)
-    OP_11(0x0EA3)
-    OP_11(0x0EA4)
-    OP_11(0x0EA5)
-    OP_11(0x0EA6)
-    OP_11(0x0EA7)
-    OP_11(0x0EA8)
-    OP_11(0x039D)
+    ClearScenaFlags(ScenaFlag(0x01D2, 7, 0xE97))
+    ClearScenaFlags(ScenaFlag(0x01D3, 0, 0xE98))
+    ClearScenaFlags(ScenaFlag(0x01D3, 1, 0xE99))
+    ClearScenaFlags(ScenaFlag(0x01D3, 2, 0xE9A))
+    ClearScenaFlags(ScenaFlag(0x01D3, 3, 0xE9B))
+    ClearScenaFlags(ScenaFlag(0x01D3, 4, 0xE9C))
+    ClearScenaFlags(ScenaFlag(0x01D3, 5, 0xE9D))
+    ClearScenaFlags(ScenaFlag(0x01D3, 6, 0xE9E))
+    ClearScenaFlags(ScenaFlag(0x01D3, 7, 0xE9F))
+    ClearScenaFlags(ScenaFlag(0x01D4, 0, 0xEA0))
+    ClearScenaFlags(ScenaFlag(0x01D4, 1, 0xEA1))
+    ClearScenaFlags(ScenaFlag(0x01D4, 2, 0xEA2))
+    ClearScenaFlags(ScenaFlag(0x01D4, 3, 0xEA3))
+    ClearScenaFlags(ScenaFlag(0x01D4, 4, 0xEA4))
+    ClearScenaFlags(ScenaFlag(0x01D4, 5, 0xEA5))
+    ClearScenaFlags(ScenaFlag(0x01D4, 6, 0xEA6))
+    ClearScenaFlags(ScenaFlag(0x01D4, 7, 0xEA7))
+    ClearScenaFlags(ScenaFlag(0x01D5, 0, 0xEA8))
+    ClearScenaFlags(ScenaFlag(0x0073, 5, 0x39D))
     QuestInfo(0x003B, 0x04, 0x02, 0x02)
 
     Switch(
@@ -9159,7 +8792,7 @@ def EV_Jump_QS_04():
 
     label('loc_C41C')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_C430(): pass
 
@@ -9205,7 +8838,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　女学院の門前での確認　RANK_B]', 0x0000734E)
     MenuCmd(0x01, 0x01, '[▼02　エリゼからの説明　　　RANK_C]', 0x0000734F)
     MenuCmd(0x01, 0x01, '[▼03　ユウナ＆ミュゼパート　RANK_A]', 0x00007350)
@@ -9229,8 +8862,8 @@ def EV_Jump_QS_04():
         'loc_C677',
     )
 
-    OP_11(0x0EA8)
-    OP_11(0x0EA9)
+    ClearScenaFlags(ScenaFlag(0x01D5, 0, 0xEA8))
+    ClearScenaFlags(ScenaFlag(0x01D5, 1, 0xEA9))
     QuestInfo(0x003C, 0x04, 0x02, 0x02)
 
     Switch(
@@ -9258,7 +8891,7 @@ def EV_Jump_QS_04():
 
     label('loc_C663')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_C677(): pass
 
@@ -9304,7 +8937,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　職員シーメンスに話を聞く]', 0x00007354)
     MenuCmd(0x01, 0x01, '[▼02　レパント商会を訪ねる　　]', 0x00007355)
     MenuCmd(0x01, 0x01, '[▼03　ルシアンを訪ねる　　　　]', 0x00007356)
@@ -9327,12 +8960,12 @@ def EV_Jump_QS_04():
         'loc_C887',
     )
 
-    OP_11(0x0EE0)
-    OP_11(0x0EE1)
-    OP_11(0x0EE2)
-    OP_11(0x0EE3)
-    OP_11(0x0EE4)
-    OP_11(0x0EE5)
+    ClearScenaFlags(ScenaFlag(0x01DC, 0, 0xEE0))
+    ClearScenaFlags(ScenaFlag(0x01DC, 1, 0xEE1))
+    ClearScenaFlags(ScenaFlag(0x01DC, 2, 0xEE2))
+    ClearScenaFlags(ScenaFlag(0x01DC, 3, 0xEE3))
+    ClearScenaFlags(ScenaFlag(0x01DC, 4, 0xEE4))
+    ClearScenaFlags(ScenaFlag(0x01DC, 5, 0xEE5))
     QuestInfo(0x003D, 0x04, 0x02, 0x02)
 
     Switch(
@@ -9383,7 +9016,7 @@ def EV_Jump_QS_04():
 
     label('loc_C873')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_C887(): pass
 
@@ -9405,10 +9038,10 @@ def EV_Jump_QS_04():
         'loc_C8C3',
     )
 
-    OP_11(0x11A0)
+    ClearScenaFlags(ScenaFlag(0x0234, 0, 0x11A0))
     QuestInfo(0x003E, 0x02, 0x0000, 0x02)
     QuestInfo(0x003E, 0x04, 0x02, 0x02)
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     Jump('loc_D944')
 
@@ -9450,7 +9083,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　両親に話を聞く　　　　　]', 0x0000735A)
     MenuCmd(0x01, 0x01, '[▽02　バークレイと話す（一般）]', 0x0000735B)
     MenuCmd(0x01, 0x01, '[▼03　ラニエラ夫人と話す　　　]', 0x0000735C)
@@ -9475,13 +9108,13 @@ def EV_Jump_QS_04():
         'loc_CB56',
     )
 
-    OP_11(0x0EE6)
-    OP_11(0x0EE7)
-    OP_11(0x0EE8)
-    OP_11(0x0EE9)
-    OP_11(0x0EEA)
-    OP_11(0x0EEB)
-    OP_11(0x0EEC)
+    ClearScenaFlags(ScenaFlag(0x01DC, 6, 0xEE6))
+    ClearScenaFlags(ScenaFlag(0x01DC, 7, 0xEE7))
+    ClearScenaFlags(ScenaFlag(0x01DD, 0, 0xEE8))
+    ClearScenaFlags(ScenaFlag(0x01DD, 1, 0xEE9))
+    ClearScenaFlags(ScenaFlag(0x01DD, 2, 0xEEA))
+    ClearScenaFlags(ScenaFlag(0x01DD, 3, 0xEEB))
+    ClearScenaFlags(ScenaFlag(0x01DD, 4, 0xEEC))
     QuestInfo(0x003F, 0x04, 0x01, 0x02)
     QuestInfo(0x003F, 0x04, 0x02, 0x02)
 
@@ -9530,7 +9163,7 @@ def EV_Jump_QS_04():
 
     label('loc_CB42')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_CB56(): pass
 
@@ -9576,7 +9209,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　レクターからの通信連絡　]', 0x00007361)
     MenuCmd(0x01, 0x01, '[▼02A 帝都駅にマップジャンプ　]', 0x00007362)
     MenuCmd(0x01, 0x01, '[▼02B レクターから話を聞く　　]', 0x00007363)
@@ -9624,7 +9257,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -9656,7 +9289,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -9676,14 +9309,14 @@ def EV_Jump_QS_04():
         'loc_D216',
     )
 
-    OP_11(0x0EAA)
-    OP_11(0x0EAB)
-    OP_11(0x0EAC)
-    OP_11(0x0EAD)
-    OP_11(0x0EAE)
-    OP_11(0x0EAF)
-    OP_11(0x0EB0)
-    OP_11(0x0EB1)
+    ClearScenaFlags(ScenaFlag(0x01D5, 2, 0xEAA))
+    ClearScenaFlags(ScenaFlag(0x01D5, 3, 0xEAB))
+    ClearScenaFlags(ScenaFlag(0x01D5, 4, 0xEAC))
+    ClearScenaFlags(ScenaFlag(0x01D5, 5, 0xEAD))
+    ClearScenaFlags(ScenaFlag(0x01D5, 6, 0xEAE))
+    ClearScenaFlags(ScenaFlag(0x01D5, 7, 0xEAF))
+    ClearScenaFlags(ScenaFlag(0x01D6, 0, 0xEB0))
+    ClearScenaFlags(ScenaFlag(0x01D6, 1, 0xEB1))
     QuestInfo(0x0040, 0x04, 0x01, 0x02)
     QuestInfo(0x0040, 0x04, 0x02, 0x02)
 
@@ -9770,7 +9403,7 @@ def EV_Jump_QS_04():
 
     label('loc_D202')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_D216(): pass
 
@@ -9816,7 +9449,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　ゾウ型幻獣を確認する　　]', 0x00007374)
     MenuCmd(0x01, 0x01, '[▼02　ゾウ型幻獣に挑む　　　　]', 0x00007375)
     MenuCmd(0x01, 0x01, '[▼03　クエスト達成　　　　　　]', 0x00007376)
@@ -9837,8 +9470,8 @@ def EV_Jump_QS_04():
         'loc_D3B6',
     )
 
-    OP_11(0x0EB2)
-    OP_11(0x0EB3)
+    ClearScenaFlags(ScenaFlag(0x01D6, 2, 0xEB2))
+    ClearScenaFlags(ScenaFlag(0x01D6, 3, 0xEB3))
     QuestInfo(0x0041, 0x04, 0x01, 0x02)
     QuestInfo(0x0041, 0x04, 0x02, 0x02)
 
@@ -9879,7 +9512,7 @@ def EV_Jump_QS_04():
 
     label('loc_D3A2')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_D3B6(): pass
 
@@ -9925,7 +9558,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　エイダ＆フリッツと会話　]', 0x00007377)
     MenuCmd(0x01, 0x01, '[▼02　機甲兵戦闘　　　　　　　]', 0x00007378)
     MenuCmd(0x01, 0x01, '[▼03　クエスト達成・ユ／ク　　]', 0x00000001)
@@ -9951,12 +9584,12 @@ def EV_Jump_QS_04():
         'loc_D717',
     )
 
-    OP_11(0x0EB4)
-    OP_11(0x0EB5)
-    OP_11(0x0EB6)
-    OP_11(0x0EB7)
-    OP_11(0x0EB8)
-    OP_11(0x0EB9)
+    ClearScenaFlags(ScenaFlag(0x01D6, 4, 0xEB4))
+    ClearScenaFlags(ScenaFlag(0x01D6, 5, 0xEB5))
+    ClearScenaFlags(ScenaFlag(0x01D6, 6, 0xEB6))
+    ClearScenaFlags(ScenaFlag(0x01D6, 7, 0xEB7))
+    ClearScenaFlags(ScenaFlag(0x01D7, 0, 0xEB8))
+    ClearScenaFlags(ScenaFlag(0x01D7, 1, 0xEB9))
     QuestInfo(0x0042, 0x04, 0x01, 0x02)
     QuestInfo(0x0042, 0x04, 0x02, 0x02)
 
@@ -10149,7 +9782,7 @@ def EV_Jump_QS_04():
 
     label('loc_D703')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_D717(): pass
 
@@ -10195,7 +9828,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　モーガン社長から話を聞く]', 0x0000737A)
     MenuCmd(0x01, 0x01, '[▼02A ミハイルから話を聞く　　]', 0x0000737B)
     MenuCmd(0x01, 0x01, '[▼02B リーヴェルト社へ　　　　]', 0x0000737C)
@@ -10218,11 +9851,11 @@ def EV_Jump_QS_04():
         'loc_D92B',
     )
 
-    OP_11(0x0EED)
-    OP_11(0x0EEE)
-    OP_11(0x0EEF)
-    OP_11(0x0EF0)
-    OP_11(0x0EF1)
+    ClearScenaFlags(ScenaFlag(0x01DD, 5, 0xEED))
+    ClearScenaFlags(ScenaFlag(0x01DD, 6, 0xEEE))
+    ClearScenaFlags(ScenaFlag(0x01DD, 7, 0xEEF))
+    ClearScenaFlags(ScenaFlag(0x01DE, 0, 0xEF0))
+    ClearScenaFlags(ScenaFlag(0x01DE, 1, 0xEF1))
     QuestInfo(0x0043, 0x04, 0x01, 0x02)
     QuestInfo(0x0043, 0x04, 0x02, 0x02)
 
@@ -10269,7 +9902,7 @@ def EV_Jump_QS_04():
 
     label('loc_D917')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_D92B(): pass
 
@@ -10281,7 +9914,7 @@ def EV_Jump_QS_04():
 
     label('loc_D930')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_D944(): pass
 
@@ -10321,7 +9954,7 @@ def EV_Jump_QS_05():
         'loc_E367',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -10482,10 +10115,10 @@ def EV_Jump_QS_05():
         'loc_DB4E',
     )
 
-    OP_11(0x0F8C)
+    ClearScenaFlags(ScenaFlag(0x01F1, 4, 0xF8C))
     QuestInfo(0x0044, 0x02, 0x0000, 0x02)
     QuestInfo(0x0044, 0x04, 0x02, 0x02)
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     Jump('loc_E362')
 
@@ -10503,10 +10136,10 @@ def EV_Jump_QS_05():
         'loc_DB85',
     )
 
-    OP_11(0x0F8D)
+    ClearScenaFlags(ScenaFlag(0x01F1, 5, 0xF8D))
     QuestInfo(0x0045, 0x02, 0x0000, 0x02)
     QuestInfo(0x0045, 0x04, 0x02, 0x02)
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     Jump('loc_E362')
 
@@ -10548,7 +10181,7 @@ def EV_Jump_QS_05():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　オーレリアと話す　　　　]', 0x00007402)
     MenuCmd(0x01, 0x01, '[▼02　オーレリアとの手合わせ　]', 0x00007403)
     MenuCmd(0x01, 0x01, '[▼03　達成イベント　　　　　　]', 0x00007404)
@@ -10569,8 +10202,8 @@ def EV_Jump_QS_05():
         'loc_DD14',
     )
 
-    OP_11(0x0F80)
-    OP_11(0x0F81)
+    ClearScenaFlags(ScenaFlag(0x01F0, 0, 0xF80))
+    ClearScenaFlags(ScenaFlag(0x01F0, 1, 0xF81))
     QuestInfo(0x0046, 0x04, 0x01, 0x02)
     QuestInfo(0x0046, 0x04, 0x02, 0x02)
     QuestInfo(0x0046, 0x04, 0x08, 0x02)
@@ -10606,7 +10239,7 @@ def EV_Jump_QS_05():
 
     label('loc_DD00')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_DD14(): pass
 
@@ -10652,7 +10285,7 @@ def EV_Jump_QS_05():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼01　シュミットと会話　　　　]', 0x00007405)
     MenuCmd(0x01, 0x01, '[▼01　シュミットと会話（周回）]', 0x0000737F)
     MenuCmd(0x01, 0x01, '[▼02A 武器を造ってもらうＡ　　]', 0x00007406)
@@ -10675,14 +10308,14 @@ def EV_Jump_QS_05():
         'loc_E349',
     )
 
-    OP_11(0x0F82)
-    OP_11(0x0F83)
-    OP_11(0x0F84)
-    OP_11(0x0F85)
-    OP_11(0x0F86)
-    OP_11(0x0F87)
-    OP_11(0x0F88)
-    OP_11(0x0F89)
+    ClearScenaFlags(ScenaFlag(0x01F0, 2, 0xF82))
+    ClearScenaFlags(ScenaFlag(0x01F0, 3, 0xF83))
+    ClearScenaFlags(ScenaFlag(0x01F0, 4, 0xF84))
+    ClearScenaFlags(ScenaFlag(0x01F0, 5, 0xF85))
+    ClearScenaFlags(ScenaFlag(0x01F0, 6, 0xF86))
+    ClearScenaFlags(ScenaFlag(0x01F0, 7, 0xF87))
+    ClearScenaFlags(ScenaFlag(0x01F1, 0, 0xF88))
+    ClearScenaFlags(ScenaFlag(0x01F1, 1, 0xF89))
     QuestInfo(0x0047, 0x04, 0x01, 0x02)
     QuestInfo(0x0048, 0x04, 0x01, 0x02)
     QuestInfo(0x0047, 0x04, 0x02, 0x02)
@@ -10697,7 +10330,7 @@ def EV_Jump_QS_05():
         'loc_DF85',
     )
 
-    OP_11(0x0303)
+    ClearScenaFlags(ScenaFlag(0x0060, 3, 0x303))
     OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
 
     Talk(
@@ -10710,7 +10343,7 @@ def EV_Jump_QS_05():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -10744,7 +10377,7 @@ def EV_Jump_QS_05():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -10949,7 +10582,7 @@ def EV_Jump_QS_05():
 
     label('loc_E328')
 
-    OP_6F(0x00, 0x003E, 0x00000001)
+    AddItem(0x00, 0x003E, 1)
 
     Jump('loc_E335')
 
@@ -10957,7 +10590,7 @@ def EV_Jump_QS_05():
 
     label('loc_E335')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_E349(): pass
 
@@ -10969,7 +10602,7 @@ def EV_Jump_QS_05():
 
     label('loc_E34E')
 
-    Call(0x00, 'EV_DoJump_QS_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_QS_SUB')
 
     def _loc_E362(): pass
 
@@ -10986,7 +10619,7 @@ def EV_Jump_QS_05():
 # id: 0x0020 offset: 0xE368
 @scena.Code('EV_DoJump_QS_SUB')
 def EV_DoJump_QS_SUB():
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
 
     If(
         (
@@ -12231,7 +11864,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F552')
 
-    Call(0x0B, 'EV_Party_Set')
+    Call(ScriptId.Current, 'EV_Party_Set')
 
     Switch(
         (
@@ -15677,7 +15310,6 @@ def EV_DoJump_QS_SUB():
 
     Jump('loc_115FF')
 
-    Jump('loc_115FF')
     def _loc_115FA(): pass
 
     label('loc_115FA')
@@ -15717,7 +15349,7 @@ def EV_KizunaJump():
     )
 
     SetScenaFlags(ScenaFlag(0x0211, 2, 0x108A))
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ0100][絆イベント01・ユウナ　　] ＞', 0x00000001)
     MenuCmd(0x01, 0x01, '[KZ0200][絆イベント02・クルト　　] ＞', 0x00000002)
     MenuCmd(0x01, 0x01, '[KZ0300][絆イベント03・アルティナ] ＞', 0x00000003)
@@ -15787,7 +15419,7 @@ def EV_KizunaJump():
 
     label('loc_11AE6')
 
-    Call(0x00, 'EV_KizunaJump_01')
+    Call(ScriptId.Map, 'EV_KizunaJump_01')
 
     Jump('loc_11CB6')
 
@@ -15795,7 +15427,7 @@ def EV_KizunaJump():
 
     label('loc_11AFF')
 
-    Call(0x00, 'EV_KizunaJump_02')
+    Call(ScriptId.Map, 'EV_KizunaJump_02')
 
     Jump('loc_11CB6')
 
@@ -15803,7 +15435,7 @@ def EV_KizunaJump():
 
     label('loc_11B18')
 
-    Call(0x00, 'EV_KizunaJump_03')
+    Call(ScriptId.Map, 'EV_KizunaJump_03')
 
     Jump('loc_11CB6')
 
@@ -15811,7 +15443,7 @@ def EV_KizunaJump():
 
     label('loc_11B31')
 
-    Call(0x00, 'EV_KizunaJump_04')
+    Call(ScriptId.Map, 'EV_KizunaJump_04')
 
     Jump('loc_11CB6')
 
@@ -15819,7 +15451,7 @@ def EV_KizunaJump():
 
     label('loc_11B4A')
 
-    Call(0x00, 'EV_KizunaJump_05')
+    Call(ScriptId.Map, 'EV_KizunaJump_05')
 
     Jump('loc_11CB6')
 
@@ -15827,7 +15459,7 @@ def EV_KizunaJump():
 
     label('loc_11B63')
 
-    Call(0x00, 'EV_KizunaJump_06')
+    Call(ScriptId.Map, 'EV_KizunaJump_06')
 
     Jump('loc_11CB6')
 
@@ -15835,7 +15467,7 @@ def EV_KizunaJump():
 
     label('loc_11B7C')
 
-    Call(0x00, 'EV_KizunaJump_07')
+    Call(ScriptId.Map, 'EV_KizunaJump_07')
 
     Jump('loc_11CB6')
 
@@ -15843,7 +15475,7 @@ def EV_KizunaJump():
 
     label('loc_11B95')
 
-    Call(0x00, 'EV_KizunaJump_08')
+    Call(ScriptId.Map, 'EV_KizunaJump_08')
 
     Jump('loc_11CB6')
 
@@ -15851,7 +15483,7 @@ def EV_KizunaJump():
 
     label('loc_11BAE')
 
-    Call(0x00, 'EV_KizunaJump_09')
+    Call(ScriptId.Map, 'EV_KizunaJump_09')
 
     Jump('loc_11CB6')
 
@@ -15859,7 +15491,7 @@ def EV_KizunaJump():
 
     label('loc_11BC7')
 
-    Call(0x00, 'EV_KizunaJump_10')
+    Call(ScriptId.Map, 'EV_KizunaJump_10')
 
     Jump('loc_11CB6')
 
@@ -15867,7 +15499,7 @@ def EV_KizunaJump():
 
     label('loc_11BE0')
 
-    Call(0x00, 'EV_KizunaJump_11')
+    Call(ScriptId.Map, 'EV_KizunaJump_11')
 
     Jump('loc_11CB6')
 
@@ -15875,7 +15507,7 @@ def EV_KizunaJump():
 
     label('loc_11BF9')
 
-    Call(0x00, 'EV_KizunaJump_12')
+    Call(ScriptId.Map, 'EV_KizunaJump_12')
 
     Jump('loc_11CB6')
 
@@ -15883,7 +15515,7 @@ def EV_KizunaJump():
 
     label('loc_11C12')
 
-    Call(0x00, 'EV_KizunaJump_13')
+    Call(ScriptId.Map, 'EV_KizunaJump_13')
 
     Jump('loc_11CB6')
 
@@ -15891,7 +15523,7 @@ def EV_KizunaJump():
 
     label('loc_11C2B')
 
-    Call(0x00, 'EV_KizunaJump_14')
+    Call(ScriptId.Map, 'EV_KizunaJump_14')
 
     Jump('loc_11CB6')
 
@@ -15899,7 +15531,7 @@ def EV_KizunaJump():
 
     label('loc_11C44')
 
-    Call(0x00, 'EV_KizunaJump_15')
+    Call(ScriptId.Map, 'EV_KizunaJump_15')
 
     Jump('loc_11CB6')
 
@@ -15907,7 +15539,7 @@ def EV_KizunaJump():
 
     label('loc_11C5D')
 
-    Call(0x00, 'EV_KizunaJump_16')
+    Call(ScriptId.Map, 'EV_KizunaJump_16')
 
     Jump('loc_11CB6')
 
@@ -15915,7 +15547,7 @@ def EV_KizunaJump():
 
     label('loc_11C76')
 
-    Call(0x00, 'EV_KizunaJump_17')
+    Call(ScriptId.Map, 'EV_KizunaJump_17')
 
     Jump('loc_11CB6')
 
@@ -15923,7 +15555,7 @@ def EV_KizunaJump():
 
     label('loc_11C8F')
 
-    Call(0x00, 'EV_KizunaJump_18')
+    Call(ScriptId.Map, 'EV_KizunaJump_18')
 
     Jump('loc_11CB6')
 
@@ -15980,7 +15612,7 @@ def EV_KizunaJump_01():
         'loc_1220E',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ0101_00][ユウナ①発生会話　　　　　　　]', 0x00008001)
     MenuCmd(0x01, 0x01, '[KZ0101_01][ユウナ①練習を手伝う　　　　　]', 0x00008002)
     MenuCmd(0x01, 0x01, '[KZ0102_00][ユウナ②発生会話　　　　　　　]', 0x00008003)
@@ -15992,7 +15624,7 @@ def EV_KizunaJump_01():
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
 
     Switch(
         (
@@ -16014,10 +15646,10 @@ def EV_KizunaJump_01():
 
     label('loc_11F5A')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
-    Call(0x0B, 'EV_Flag_Set_03_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
     OP_18(
         0x03,
@@ -16042,9 +15674,9 @@ def EV_KizunaJump_01():
 
     label('loc_11FD5')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
     OP_18(
         0x03,
@@ -16070,8 +15702,8 @@ def EV_KizunaJump_01():
 
     label('loc_1203D')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
     OP_18(
         0x03,
@@ -16099,7 +15731,7 @@ def EV_KizunaJump_01():
 
     label('loc_12095')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
     OP_18(
         0x03,
@@ -16133,9 +15765,9 @@ def EV_KizunaJump_01():
 
     label('loc_120E9')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     If(
         (
@@ -16151,8 +15783,8 @@ def EV_KizunaJump_01():
         'loc_1211A',
     )
 
-    OP_49(0x00, 0x0009)
-    MenuChrFlagCmd(0x00, 0x0009, 0x00000001)
+    FormationAddMember(ChrTable['米莉亞姆'])
+    MenuChrFlagCmd(0x00, ChrTable['米莉亞姆'], 0x00000001)
 
     def _loc_1211A(): pass
 
@@ -16178,8 +15810,8 @@ def EV_KizunaJump_01():
 
     label('loc_12163')
 
-    OP_11(0x1100)
-    OP_11(0x1101)
+    ClearScenaFlags(ScenaFlag(0x0220, 0, 0x1100))
+    ClearScenaFlags(ScenaFlag(0x0220, 1, 0x1101))
     OP_AC(0x01, 0x00008001)
     OP_14(0x04000000)
 
@@ -16198,8 +15830,8 @@ def EV_KizunaJump_01():
 
     label('loc_12189')
 
-    OP_11(0x1102)
-    OP_11(0x1103)
+    ClearScenaFlags(ScenaFlag(0x0220, 2, 0x1102))
+    ClearScenaFlags(ScenaFlag(0x0220, 3, 0x1103))
     OP_AC(0x01, 0x00008003)
     OP_14(0x04000000)
 
@@ -16218,8 +15850,8 @@ def EV_KizunaJump_01():
 
     label('loc_121AF')
 
-    OP_11(0x1104)
-    OP_11(0x1105)
+    ClearScenaFlags(ScenaFlag(0x0220, 4, 0x1104))
+    ClearScenaFlags(ScenaFlag(0x0220, 5, 0x1105))
     OP_AC(0x01, 0x00008005)
     OP_14(0x04000000)
 
@@ -16238,8 +15870,8 @@ def EV_KizunaJump_01():
 
     label('loc_121D5')
 
-    OP_11(0x1106)
-    OP_11(0x1107)
+    ClearScenaFlags(ScenaFlag(0x0220, 6, 0x1106))
+    ClearScenaFlags(ScenaFlag(0x0220, 7, 0x1107))
     OP_AC(0x01, 0x00008007)
     OP_14(0x04000000)
 
@@ -16307,7 +15939,7 @@ def EV_KizunaJump_02():
         'loc_1282D',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ0201_00][クルト①発生会話　　　　　　　]', 0x00000009)
     MenuCmd(0x01, 0x01, '[KZ0201_01][クルト①チェスの対局をする　　]', 0x0000000A)
     MenuCmd(0x01, 0x01, '[KZ0201_02][クルト①正門に歩いてくる　　　]', 0x0000000B)
@@ -16333,7 +15965,7 @@ def EV_KizunaJump_02():
         ),
     )
 
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
 
     Switch(
         (
@@ -16357,10 +15989,10 @@ def EV_KizunaJump_02():
 
     label('loc_1254E')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
-    Call(0x0B, 'EV_Flag_Set_03_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
     OP_18(
         0x03,
@@ -16392,9 +16024,9 @@ def EV_KizunaJump_02():
 
     label('loc_125DE')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
     OP_18(
         0x03,
@@ -16419,8 +16051,8 @@ def EV_KizunaJump_02():
 
     label('loc_12643')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
     OP_18(
         0x03,
@@ -16454,7 +16086,7 @@ def EV_KizunaJump_02():
 
     label('loc_126AD')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
     OP_18(
         0x03,
@@ -16486,9 +16118,9 @@ def EV_KizunaJump_02():
 
     label('loc_126FB')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Switch(
         (
@@ -16512,8 +16144,8 @@ def EV_KizunaJump_02():
 
     label('loc_12762')
 
-    OP_11(0x1108)
-    OP_11(0x1109)
+    ClearScenaFlags(ScenaFlag(0x0221, 0, 0x1108))
+    ClearScenaFlags(ScenaFlag(0x0221, 1, 0x1109))
     OP_AC(0x01, 0x00008009)
     OP_14(0x04000000)
 
@@ -16541,8 +16173,8 @@ def EV_KizunaJump_02():
 
     label('loc_12798')
 
-    OP_11(0x110A)
-    OP_11(0x110B)
+    ClearScenaFlags(ScenaFlag(0x0221, 2, 0x110A))
+    ClearScenaFlags(ScenaFlag(0x0221, 3, 0x110B))
     OP_AC(0x01, 0x0000800C)
     OP_14(0x04000000)
 
@@ -16561,8 +16193,8 @@ def EV_KizunaJump_02():
 
     label('loc_127BE')
 
-    OP_11(0x110C)
-    OP_11(0x110D)
+    ClearScenaFlags(ScenaFlag(0x0221, 4, 0x110C))
+    ClearScenaFlags(ScenaFlag(0x0221, 5, 0x110D))
     OP_AC(0x01, 0x0000800E)
     OP_14(0x04000000)
 
@@ -16590,8 +16222,8 @@ def EV_KizunaJump_02():
 
     label('loc_127F4')
 
-    OP_11(0x110E)
-    OP_11(0x110F)
+    ClearScenaFlags(ScenaFlag(0x0221, 6, 0x110E))
+    ClearScenaFlags(ScenaFlag(0x0221, 7, 0x110F))
     OP_AC(0x01, 0x00008011)
     OP_14(0x04000000)
 
@@ -16659,7 +16291,7 @@ def EV_KizunaJump_03():
         'loc_13028',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ0301_00][アルティナ①発生会話　　　　　]', 0x00000013)
     MenuCmd(0x01, 0x01, '[KZ0301_01][アルティナ①テニス部を体験する]', 0x00000014)
     MenuCmd(0x01, 0x01, '[KZ0301_02][アルティナ①文芸部を体験する　]', 0x00000015)
@@ -16690,7 +16322,7 @@ def EV_KizunaJump_03():
         ),
     )
 
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
 
     Switch(
         (
@@ -16719,10 +16351,10 @@ def EV_KizunaJump_03():
 
     label('loc_12CE0')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
-    Call(0x0B, 'EV_Flag_Set_03_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
     OP_18(
         0x03,
@@ -16747,9 +16379,9 @@ def EV_KizunaJump_03():
 
     label('loc_12D5B')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
     OP_18(
         0x03,
@@ -16782,8 +16414,8 @@ def EV_KizunaJump_03():
 
     label('loc_12DD8')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
     OP_18(
         0x03,
@@ -16811,7 +16443,7 @@ def EV_KizunaJump_03():
 
     label('loc_12E30')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
     OP_18(
         0x03,
@@ -16843,9 +16475,9 @@ def EV_KizunaJump_03():
 
     label('loc_12E7E')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Switch(
         (
@@ -16874,8 +16506,8 @@ def EV_KizunaJump_03():
 
     label('loc_12F0D')
 
-    OP_11(0x1110)
-    OP_11(0x1111)
+    ClearScenaFlags(ScenaFlag(0x0222, 0, 0x1110))
+    ClearScenaFlags(ScenaFlag(0x0222, 1, 0x1111))
     OP_AC(0x01, 0x00008013)
     OP_14(0x04000000)
 
@@ -16912,8 +16544,8 @@ def EV_KizunaJump_03():
 
     label('loc_12F53')
 
-    OP_11(0x1112)
-    OP_11(0x1113)
+    ClearScenaFlags(ScenaFlag(0x0222, 2, 0x1112))
+    ClearScenaFlags(ScenaFlag(0x0222, 3, 0x1113))
     OP_AC(0x01, 0x00008017)
     OP_14(0x04000000)
 
@@ -16941,8 +16573,8 @@ def EV_KizunaJump_03():
 
     label('loc_12F89')
 
-    OP_11(0x1114)
-    OP_11(0x1115)
+    ClearScenaFlags(ScenaFlag(0x0222, 4, 0x1114))
+    ClearScenaFlags(ScenaFlag(0x0222, 5, 0x1115))
     OP_AC(0x01, 0x0000801B)
     OP_14(0x04000000)
 
@@ -16970,8 +16602,8 @@ def EV_KizunaJump_03():
 
     label('loc_12FBF')
 
-    OP_11(0x1116)
-    OP_11(0x1117)
+    ClearScenaFlags(ScenaFlag(0x0222, 6, 0x1116))
+    ClearScenaFlags(ScenaFlag(0x0222, 7, 0x1117))
     OP_AC(0x01, 0x0000801E)
     OP_14(0x04000000)
 
@@ -17066,7 +16698,7 @@ def EV_KizunaJump_04():
         'loc_1345D',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ0401_00][ミュゼ①発生会話　　　　　　　]', 0x00000023)
     MenuCmd(0x01, 0x01, '[KZ0401_01][ミュゼ①部室の整理を手伝う　　]', 0x00000024)
     MenuCmd(0x01, 0x01, '[KZ0402_00][ミュゼ②発生イベント　　　　　]', 0x00000025)
@@ -17088,7 +16720,7 @@ def EV_KizunaJump_04():
         ),
     )
 
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
 
     Switch(
         (
@@ -17108,10 +16740,10 @@ def EV_KizunaJump_04():
 
     label('loc_13242')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
-    Call(0x0B, 'EV_Flag_Set_03_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
     OP_18(
         0x03,
@@ -17143,9 +16775,9 @@ def EV_KizunaJump_04():
 
     label('loc_132D2')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
     OP_18(
         0x03,
@@ -17170,7 +16802,7 @@ def EV_KizunaJump_04():
 
     label('loc_13337')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
     OP_18(
         0x03,
@@ -17202,9 +16834,9 @@ def EV_KizunaJump_04():
 
     label('loc_13385')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     OP_18(
         0x0A,
@@ -17235,8 +16867,8 @@ def EV_KizunaJump_04():
 
     label('loc_133D8')
 
-    OP_11(0x1118)
-    OP_11(0x1119)
+    ClearScenaFlags(ScenaFlag(0x0223, 0, 0x1118))
+    ClearScenaFlags(ScenaFlag(0x0223, 1, 0x1119))
     OP_AC(0x01, 0x00008023)
     OP_14(0x04000000)
 
@@ -17255,8 +16887,8 @@ def EV_KizunaJump_04():
 
     label('loc_133FE')
 
-    OP_11(0x111A)
-    OP_11(0x111B)
+    ClearScenaFlags(ScenaFlag(0x0223, 2, 0x111A))
+    ClearScenaFlags(ScenaFlag(0x0223, 3, 0x111B))
     OP_AC(0x01, 0x00008025)
     OP_14(0x04000000)
 
@@ -17275,8 +16907,8 @@ def EV_KizunaJump_04():
 
     label('loc_13424')
 
-    OP_11(0x111C)
-    OP_11(0x111D)
+    ClearScenaFlags(ScenaFlag(0x0223, 4, 0x111C))
+    ClearScenaFlags(ScenaFlag(0x0223, 5, 0x111D))
     OP_AC(0x01, 0x00008027)
     OP_14(0x04000000)
 
@@ -17344,7 +16976,7 @@ def EV_KizunaJump_05():
         'loc_139C4',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ0501_00][アッシュ①発生会話　　　　　　]', 0x00000029)
     MenuCmd(0x01, 0x01, '[KZ0501_01][アッシュ①不良に絡まれる　　　]', 0x0000002A)
     MenuCmd(0x01, 0x01, '[KZ0501_02][アッシュ①不良を返り討ちにする]', 0x0000002B)
@@ -17369,7 +17001,7 @@ def EV_KizunaJump_05():
         ),
     )
 
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
 
     Switch(
         (
@@ -17392,10 +17024,10 @@ def EV_KizunaJump_05():
 
     label('loc_13754')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
-    Call(0x0B, 'EV_Flag_Set_03_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
     OP_18(
         0x03,
@@ -17420,9 +17052,9 @@ def EV_KizunaJump_05():
 
     label('loc_137CF')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
     OP_18(
         0x03,
@@ -17455,8 +17087,8 @@ def EV_KizunaJump_05():
 
     label('loc_1384C')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
     OP_18(
         0x03,
@@ -17484,9 +17116,9 @@ def EV_KizunaJump_05():
 
     label('loc_138A4')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     OP_18(
         0x0A,
@@ -17520,8 +17152,8 @@ def EV_KizunaJump_05():
 
     label('loc_1390F')
 
-    OP_11(0x111E)
-    OP_11(0x111F)
+    ClearScenaFlags(ScenaFlag(0x0223, 6, 0x111E))
+    ClearScenaFlags(ScenaFlag(0x0223, 7, 0x111F))
     OP_AC(0x01, 0x00008029)
     OP_14(0x04000000)
 
@@ -17549,8 +17181,8 @@ def EV_KizunaJump_05():
 
     label('loc_13945')
 
-    OP_11(0x1120)
-    OP_11(0x1121)
+    ClearScenaFlags(ScenaFlag(0x0224, 0, 0x1120))
+    ClearScenaFlags(ScenaFlag(0x0224, 1, 0x1121))
     OP_AC(0x01, 0x0000802C)
     OP_14(0x04000000)
 
@@ -17569,8 +17201,8 @@ def EV_KizunaJump_05():
 
     label('loc_1396B')
 
-    OP_11(0x1122)
-    OP_11(0x1123)
+    ClearScenaFlags(ScenaFlag(0x0224, 2, 0x1122))
+    ClearScenaFlags(ScenaFlag(0x0224, 3, 0x1123))
     OP_AC(0x01, 0x0000802E)
     OP_14(0x04000000)
 
@@ -17656,7 +17288,7 @@ def EV_KizunaJump_06():
         'loc_13E9F',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ0601_00][トワ①発生会話　　　　　　　　]', 0x00000032)
     MenuCmd(0x01, 0x01, '[KZ0601_01][トワ①資料集めをするリィンたち]', 0x00000033)
     MenuCmd(0x01, 0x01, '[KZ0602_00][トワ②発生会話　　　　　　　　]', 0x00000034)
@@ -17679,7 +17311,7 @@ def EV_KizunaJump_06():
         ),
     )
 
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
 
     Switch(
         (
@@ -17700,10 +17332,10 @@ def EV_KizunaJump_06():
 
     label('loc_13C28')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
-    Call(0x0B, 'EV_Flag_Set_03_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
     OP_18(
         0x03,
@@ -17728,9 +17360,9 @@ def EV_KizunaJump_06():
 
     label('loc_13CA3')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
     OP_18(
         0x03,
@@ -17763,7 +17395,7 @@ def EV_KizunaJump_06():
 
     label('loc_13D20')
 
-    Call(0x0B, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
     OP_18(
         0x03,
@@ -17808,9 +17440,9 @@ def EV_KizunaJump_06():
 
     label('loc_13D80')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     If(
         (
@@ -17826,8 +17458,8 @@ def EV_KizunaJump_06():
         'loc_13DB1',
     )
 
-    OP_49(0x00, 0x0009)
-    MenuChrFlagCmd(0x00, 0x0009, 0x00000001)
+    FormationAddMember(ChrTable['米莉亞姆'])
+    MenuChrFlagCmd(0x00, ChrTable['米莉亞姆'], 0x00000001)
 
     def _loc_13DB1(): pass
 
@@ -17853,8 +17485,8 @@ def EV_KizunaJump_06():
 
     label('loc_13DFA')
 
-    OP_11(0x1124)
-    OP_11(0x1125)
+    ClearScenaFlags(ScenaFlag(0x0224, 4, 0x1124))
+    ClearScenaFlags(ScenaFlag(0x0224, 5, 0x1125))
     OP_AC(0x01, 0x00008032)
     OP_14(0x04000000)
 
@@ -17873,8 +17505,8 @@ def EV_KizunaJump_06():
 
     label('loc_13E20')
 
-    OP_11(0x1126)
-    OP_11(0x1127)
+    ClearScenaFlags(ScenaFlag(0x0224, 6, 0x1126))
+    ClearScenaFlags(ScenaFlag(0x0224, 7, 0x1127))
     OP_AC(0x01, 0x00008034)
     OP_14(0x04000000)
 
@@ -17902,8 +17534,8 @@ def EV_KizunaJump_06():
 
     label('loc_13E56')
 
-    OP_11(0x1128)
-    OP_11(0x1129)
+    ClearScenaFlags(ScenaFlag(0x0225, 0, 0x1128))
+    ClearScenaFlags(ScenaFlag(0x0225, 1, 0x1129))
     OP_AC(0x01, 0x00008037)
     OP_14(0x04000000)
 
@@ -17980,7 +17612,7 @@ def EV_KizunaJump_07():
         'loc_140DF',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ0701_00][ミリアム①発生イベント　　　　]', 0x0000003A)
     MenuCmd(0x01, 0x01, '[KZ0701_01][ミリアム①クレアの尾行を開始　]', 0x0000003B)
     MenuCmd(0x01, 0x01, '[KZ0701_02][ミリアム①張り込みをする１　　]', 0x0000003C)
@@ -17988,10 +17620,10 @@ def EV_KizunaJump_07():
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
     SetScenaFlags(ScenaFlag(0x0073, 2, 0x39A))
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
     OP_18(
         0x03,
@@ -18040,11 +17672,11 @@ def EV_KizunaJump_07():
 
     label('loc_14078')
 
-    OP_11(0x112B)
-    OP_11(0x112C)
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
+    ClearScenaFlags(ScenaFlag(0x0225, 3, 0x112B))
+    ClearScenaFlags(ScenaFlag(0x0225, 4, 0x112C))
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_140DA')
@@ -18129,7 +17761,7 @@ def EV_KizunaJump_08():
         'loc_14505',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ0801_00][ラウラ①発生イベント　　　　　]', 0x0000003F)
     MenuCmd(0x01, 0x01, '[KZ0801_01][ラウラ①駅で出迎える　　　　　]', 0x00000040)
     MenuCmd(0x01, 0x01, '[KZ0801_02][ラウラ①要塞の使用許可の相談　]', 0x00000041)
@@ -18141,10 +17773,10 @@ def EV_KizunaJump_08():
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
     SetScenaFlags(ScenaFlag(0x0073, 2, 0x39A))
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
     OP_18(
         0x03,
@@ -18177,8 +17809,8 @@ def EV_KizunaJump_08():
         ),
     )
 
-    OP_11(0x112E)
-    OP_11(0x112F)
+    ClearScenaFlags(ScenaFlag(0x0225, 6, 0x112E))
+    ClearScenaFlags(ScenaFlag(0x0225, 7, 0x112F))
 
     Switch(
         (
@@ -18200,12 +17832,12 @@ def EV_KizunaJump_08():
     label('loc_143DE')
 
     SetScenaFlags(ScenaFlag(0x0225, 6, 0x112E))
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0003)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0003, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['勞拉'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x00000001)
 
     Jump('loc_1441B')
 
@@ -18213,10 +17845,10 @@ def EV_KizunaJump_08():
 
     label('loc_14404')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1441B')
 
@@ -18244,9 +17876,9 @@ def EV_KizunaJump_08():
 
     label('loc_14464')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_14500')
@@ -18367,7 +17999,7 @@ def EV_KizunaJump_09():
         'loc_1480D',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ0901_00][エリオット①発生イベント　　　]', 0x00000047)
     MenuCmd(0x01, 0x01, '[KZ0901_01][エリオット①駅で出迎える　　　]', 0x00000048)
     MenuCmd(0x01, 0x01, '[KZ0901_02][エリオット①学院正門での語らい]', 0x00000049)
@@ -18377,7 +18009,7 @@ def EV_KizunaJump_09():
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
     SetScenaFlags(ScenaFlag(0x0073, 2, 0x39A))
 
     OP_18(
@@ -18391,11 +18023,11 @@ def EV_KizunaJump_09():
         ),
     )
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
     OP_18(
         0x03,
@@ -18441,8 +18073,8 @@ def EV_KizunaJump_09():
 
     label('loc_14790')
 
-    OP_11(0x1130)
-    OP_11(0x1131)
+    ClearScenaFlags(ScenaFlag(0x0226, 0, 0x1130))
+    ClearScenaFlags(ScenaFlag(0x0226, 1, 0x1131))
     OP_28((0xDD, 't0210'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_14808')
@@ -18545,18 +18177,18 @@ def EV_KizunaJump_10():
         'loc_149FC',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ1001_00][マキアス①発生イベント　　　　]', 0x0000004D)
     MenuCmd(0x01, 0x01, '[KZ1001_01][マキアス①大通りで待ち合わせ　]', 0x0000004E)
     MenuCmd(0x01, 0x01, '[KZ1001_02][マキアス①カフェでお茶をする　]', 0x0000004F)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
     SetScenaFlags(ScenaFlag(0x0073, 2, 0x39A))
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
     OP_18(
         0x03,
@@ -18601,9 +18233,9 @@ def EV_KizunaJump_10():
 
     label('loc_149AB')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_149F7')
@@ -18679,7 +18311,7 @@ def EV_KizunaJump_11():
         'loc_14EA0',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ1101_00][アリサ①発生イベント　　　　　]', 0x00000051)
     MenuCmd(0x01, 0x01, '[KZ1101_01][アリサ①駅で出迎える　　　　　]', 0x00000052)
     MenuCmd(0x01, 0x01, '[KZ1101_02][アリサ①小要塞攻略を決意する　]', 0x00000053)
@@ -18692,11 +18324,11 @@ def EV_KizunaJump_11():
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
     SetScenaFlags(ScenaFlag(0x0073, 2, 0x39A))
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
     OP_18(
         0x03,
@@ -18726,8 +18358,8 @@ def EV_KizunaJump_11():
         ),
     )
 
-    OP_11(0x1135)
-    OP_11(0x1136)
+    ClearScenaFlags(ScenaFlag(0x0226, 5, 0x1135))
+    ClearScenaFlags(ScenaFlag(0x0226, 6, 0x1136))
 
     Switch(
         (
@@ -18749,14 +18381,14 @@ def EV_KizunaJump_11():
 
     label('loc_14D55')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0001)
-    OP_49(0x00, 0x0016)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0001, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0016, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['亞莉莎'])
+    FormationAddMember(ChrTable['雪倫'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['雪倫'], 0x00000001)
 
     Jump('loc_14D9B')
 
@@ -18764,10 +18396,10 @@ def EV_KizunaJump_11():
 
     label('loc_14D84')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_14D9B')
 
@@ -18796,9 +18428,9 @@ def EV_KizunaJump_11():
 
     label('loc_14DEC')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_14E9B')
@@ -18929,7 +18561,7 @@ def EV_KizunaJump_12():
         'loc_1516B',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ1201_00][フィー①発生イベント　　　　　]', 0x0000005A)
     MenuCmd(0x01, 0x01, '[KZ1201_01][フィー①駅で出迎える　　　　　]', 0x0000005B)
     MenuCmd(0x01, 0x01, '[KZ1201_02][フィー①ナインヴァリで買い物　]', 0x0000005C)
@@ -18938,11 +18570,11 @@ def EV_KizunaJump_12():
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
     SetScenaFlags(ScenaFlag(0x0073, 2, 0x39A))
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
     OP_18(
         0x03,
@@ -18997,7 +18629,7 @@ def EV_KizunaJump_12():
 
     label('loc_150EB')
 
-    OP_11(0x1138)
+    ClearScenaFlags(ScenaFlag(0x0227, 0, 0x1138))
 
     OP_18(
         0x0A,
@@ -19010,9 +18642,9 @@ def EV_KizunaJump_12():
         ),
     )
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 't0210'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_15166')
@@ -19106,7 +18738,7 @@ def EV_KizunaJump_13():
         'loc_15425',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ1301_00][ユーシス①発生イベント　　　　]', 0x0000005F)
     MenuCmd(0x01, 0x01, '[KZ1301_01][ユーシス①東口で待ち合わせ　　]', 0x00000060)
     MenuCmd(0x01, 0x01, '[KZ1301_02][ユーシス①リムジンでの語らい　]', 0x00000061)
@@ -19115,12 +18747,12 @@ def EV_KizunaJump_13():
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
     SetScenaFlags(ScenaFlag(0x0073, 2, 0x39A))
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
-    Call(0x0B, 'EV_Flag_Set_03_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
     OP_18(
         0x03,
@@ -19167,10 +18799,10 @@ def EV_KizunaJump_13():
 
     label('loc_153B1')
 
-    OP_11(0x113A)
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
+    ClearScenaFlags(ScenaFlag(0x0227, 2, 0x113A))
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_15420')
@@ -19264,7 +18896,7 @@ def EV_KizunaJump_14():
         'loc_15870',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ1401_00][ガイウス①発生イベント　　　　]', 0x00000065)
     MenuCmd(0x01, 0x01, '[KZ1401_01][ガイウス①駅で出迎える　　　　]', 0x00000066)
     MenuCmd(0x01, 0x01, '[KZ1401_02][ガイウス①要塞の使用許可の相談]', 0x00000067)
@@ -19276,12 +18908,12 @@ def EV_KizunaJump_14():
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
     SetScenaFlags(ScenaFlag(0x0073, 2, 0x39A))
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
-    Call(0x0B, 'EV_Flag_Set_03_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
     OP_18(
         0x03,
@@ -19311,8 +18943,8 @@ def EV_KizunaJump_14():
         ),
     )
 
-    OP_11(0x113C)
-    OP_11(0x113D)
+    ClearScenaFlags(ScenaFlag(0x0227, 4, 0x113C))
+    ClearScenaFlags(ScenaFlag(0x0227, 5, 0x113D))
 
     Switch(
         (
@@ -19333,12 +18965,12 @@ def EV_KizunaJump_14():
 
     label('loc_15749')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0008)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0008, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['蓋烏斯'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['蓋烏斯'], 0x00000001)
 
     Jump('loc_15783')
 
@@ -19346,10 +18978,10 @@ def EV_KizunaJump_14():
 
     label('loc_1576C')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_15783')
 
@@ -19377,9 +19009,9 @@ def EV_KizunaJump_14():
 
     label('loc_157CC')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1586B')
@@ -19501,19 +19133,19 @@ def EV_KizunaJump_15():
         'loc_15A8E',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ1501_00][エマ①発生イベント　　　　　　]', 0x0000006D)
     MenuCmd(0x01, 0x01, '[KZ1501_01][エマ①格納庫でエマと通信する　]', 0x0000006E)
     MenuCmd(0x01, 0x01, '[KZ1501_02][エマ①イストミア森林での語らい]', 0x0000006F)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
     SetScenaFlags(ScenaFlag(0x0073, 2, 0x39A))
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
-    Call(0x0B, 'EV_Flag_Set_03_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
     OP_18(
         0x03,
@@ -19565,10 +19197,10 @@ def EV_KizunaJump_15():
 
     label('loc_15A3A')
 
-    OP_11(0x113F)
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
+    ClearScenaFlags(ScenaFlag(0x0227, 7, 0x113F))
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 't0210'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_15A89')
@@ -19644,7 +19276,7 @@ def EV_KizunaJump_16():
         'loc_15DF8',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ1601_00][サラ①発生会話　　　　　　　　]', 0x00000071)
     MenuCmd(0x01, 0x01, '[KZ1601_01][サラ①要塞の使用許可の相談　　]', 0x00000072)
     MenuCmd(0x01, 0x01, '[KZ1601_02][サラ①副ルート攻略開始　　　　]', 0x00000073)
@@ -19667,9 +19299,9 @@ def EV_KizunaJump_16():
         ),
     )
 
-    OP_11(0x1140)
-    OP_11(0x1141)
-    OP_11(0x1142)
+    ClearScenaFlags(ScenaFlag(0x0228, 0, 0x1140))
+    ClearScenaFlags(ScenaFlag(0x0228, 1, 0x1141))
+    ClearScenaFlags(ScenaFlag(0x0228, 2, 0x1142))
 
     Switch(
         (
@@ -19690,12 +19322,12 @@ def EV_KizunaJump_16():
 
     label('loc_15CE8')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000F)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000F, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['莎拉'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000001)
 
     Jump('loc_15D22')
 
@@ -19703,10 +19335,10 @@ def EV_KizunaJump_16():
 
     label('loc_15D0B')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_15D22')
 
@@ -19859,7 +19491,7 @@ def EV_KizunaJump_17():
         'loc_166E0',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ1701_00][夏至祭初日・チュートリアル　　]', 0x00000078)
     MenuCmd(0x01, 0x01, '[KZ1702_00][競馬レース体験・選択肢　　　　]', 0x00000079)
     MenuCmd(0x01, 0x01, '[KZ1702_01][競馬レース体験・レース前　　　]', 0x0000007A)
@@ -19895,68 +19527,68 @@ def EV_KizunaJump_17():
         ),
     )
 
-    OP_11(0x1143)
-    OP_11(0x1144)
-    OP_11(0x1145)
-    OP_11(0x1146)
-    OP_11(0x1147)
-    OP_11(0x1148)
-    OP_11(0x1149)
-    OP_11(0x114A)
-    OP_11(0x114B)
-    OP_11(0x114C)
-    OP_11(0x114D)
-    OP_11(0x114E)
-    OP_11(0x114F)
-    OP_11(0x1150)
-    OP_11(0x1151)
-    OP_11(0x1152)
-    OP_11(0x1153)
-    OP_11(0x1154)
-    OP_11(0x1155)
-    OP_11(0x1156)
-    OP_11(0x1157)
-    OP_11(0x1158)
-    OP_11(0x1159)
-    OP_11(0x115A)
-    OP_11(0x115B)
-    OP_11(0x115C)
-    OP_11(0x115D)
-    OP_11(0x115E)
-    OP_11(0x115F)
-    OP_11(0x1160)
-    OP_11(0x1161)
-    OP_11(0x1162)
-    OP_11(0x1163)
-    OP_11(0x1164)
-    OP_11(0x1165)
-    OP_11(0x1166)
-    OP_11(0x1167)
-    OP_11(0x1168)
-    OP_11(0x1169)
-    OP_11(0x116A)
-    OP_11(0x116B)
-    OP_11(0x116C)
-    OP_11(0x116D)
-    OP_11(0x116E)
-    OP_11(0x116F)
-    OP_11(0x1170)
-    OP_11(0x1171)
-    OP_11(0x1172)
-    OP_11(0x1173)
-    OP_11(0x1174)
-    OP_11(0x1175)
-    OP_11(0x1176)
-    OP_11(0x1177)
-    OP_11(0x1178)
-    OP_11(0x1179)
-    OP_11(0x117A)
-    OP_11(0x117B)
-    OP_11(0x117C)
-    OP_11(0x117D)
-    OP_11(0x117E)
-    OP_11(0x117F)
-    OP_11(0x1180)
+    ClearScenaFlags(ScenaFlag(0x0228, 3, 0x1143))
+    ClearScenaFlags(ScenaFlag(0x0228, 4, 0x1144))
+    ClearScenaFlags(ScenaFlag(0x0228, 5, 0x1145))
+    ClearScenaFlags(ScenaFlag(0x0228, 6, 0x1146))
+    ClearScenaFlags(ScenaFlag(0x0228, 7, 0x1147))
+    ClearScenaFlags(ScenaFlag(0x0229, 0, 0x1148))
+    ClearScenaFlags(ScenaFlag(0x0229, 1, 0x1149))
+    ClearScenaFlags(ScenaFlag(0x0229, 2, 0x114A))
+    ClearScenaFlags(ScenaFlag(0x0229, 3, 0x114B))
+    ClearScenaFlags(ScenaFlag(0x0229, 4, 0x114C))
+    ClearScenaFlags(ScenaFlag(0x0229, 5, 0x114D))
+    ClearScenaFlags(ScenaFlag(0x0229, 6, 0x114E))
+    ClearScenaFlags(ScenaFlag(0x0229, 7, 0x114F))
+    ClearScenaFlags(ScenaFlag(0x022A, 0, 0x1150))
+    ClearScenaFlags(ScenaFlag(0x022A, 1, 0x1151))
+    ClearScenaFlags(ScenaFlag(0x022A, 2, 0x1152))
+    ClearScenaFlags(ScenaFlag(0x022A, 3, 0x1153))
+    ClearScenaFlags(ScenaFlag(0x022A, 4, 0x1154))
+    ClearScenaFlags(ScenaFlag(0x022A, 5, 0x1155))
+    ClearScenaFlags(ScenaFlag(0x022A, 6, 0x1156))
+    ClearScenaFlags(ScenaFlag(0x022A, 7, 0x1157))
+    ClearScenaFlags(ScenaFlag(0x022B, 0, 0x1158))
+    ClearScenaFlags(ScenaFlag(0x022B, 1, 0x1159))
+    ClearScenaFlags(ScenaFlag(0x022B, 2, 0x115A))
+    ClearScenaFlags(ScenaFlag(0x022B, 3, 0x115B))
+    ClearScenaFlags(ScenaFlag(0x022B, 4, 0x115C))
+    ClearScenaFlags(ScenaFlag(0x022B, 5, 0x115D))
+    ClearScenaFlags(ScenaFlag(0x022B, 6, 0x115E))
+    ClearScenaFlags(ScenaFlag(0x022B, 7, 0x115F))
+    ClearScenaFlags(ScenaFlag(0x022C, 0, 0x1160))
+    ClearScenaFlags(ScenaFlag(0x022C, 1, 0x1161))
+    ClearScenaFlags(ScenaFlag(0x022C, 2, 0x1162))
+    ClearScenaFlags(ScenaFlag(0x022C, 3, 0x1163))
+    ClearScenaFlags(ScenaFlag(0x022C, 4, 0x1164))
+    ClearScenaFlags(ScenaFlag(0x022C, 5, 0x1165))
+    ClearScenaFlags(ScenaFlag(0x022C, 6, 0x1166))
+    ClearScenaFlags(ScenaFlag(0x022C, 7, 0x1167))
+    ClearScenaFlags(ScenaFlag(0x022D, 0, 0x1168))
+    ClearScenaFlags(ScenaFlag(0x022D, 1, 0x1169))
+    ClearScenaFlags(ScenaFlag(0x022D, 2, 0x116A))
+    ClearScenaFlags(ScenaFlag(0x022D, 3, 0x116B))
+    ClearScenaFlags(ScenaFlag(0x022D, 4, 0x116C))
+    ClearScenaFlags(ScenaFlag(0x022D, 5, 0x116D))
+    ClearScenaFlags(ScenaFlag(0x022D, 6, 0x116E))
+    ClearScenaFlags(ScenaFlag(0x022D, 7, 0x116F))
+    ClearScenaFlags(ScenaFlag(0x022E, 0, 0x1170))
+    ClearScenaFlags(ScenaFlag(0x022E, 1, 0x1171))
+    ClearScenaFlags(ScenaFlag(0x022E, 2, 0x1172))
+    ClearScenaFlags(ScenaFlag(0x022E, 3, 0x1173))
+    ClearScenaFlags(ScenaFlag(0x022E, 4, 0x1174))
+    ClearScenaFlags(ScenaFlag(0x022E, 5, 0x1175))
+    ClearScenaFlags(ScenaFlag(0x022E, 6, 0x1176))
+    ClearScenaFlags(ScenaFlag(0x022E, 7, 0x1177))
+    ClearScenaFlags(ScenaFlag(0x022F, 0, 0x1178))
+    ClearScenaFlags(ScenaFlag(0x022F, 1, 0x1179))
+    ClearScenaFlags(ScenaFlag(0x022F, 2, 0x117A))
+    ClearScenaFlags(ScenaFlag(0x022F, 3, 0x117B))
+    ClearScenaFlags(ScenaFlag(0x022F, 4, 0x117C))
+    ClearScenaFlags(ScenaFlag(0x022F, 5, 0x117D))
+    ClearScenaFlags(ScenaFlag(0x022F, 6, 0x117E))
+    ClearScenaFlags(ScenaFlag(0x022F, 7, 0x117F))
+    ClearScenaFlags(ScenaFlag(0x0230, 0, 0x1180))
 
     Switch(
         (
@@ -19992,10 +19624,10 @@ def EV_KizunaJump_17():
 
     SetScenaFlags(ScenaFlag(0x01A0, 0, 0xD00))
     SetScenaFlags(ScenaFlag(0x01AB, 5, 0xD5D))
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_164E4')
 
@@ -20264,7 +19896,7 @@ def EV_KizunaJump_18():
         'loc_1771A',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[KZ1801_00][ユウナ・最終会話　　　　　　　]', 0x0000008C)
     MenuCmd(0x01, 0x01, '[KZ1802_00][クルト・最終会話　　　　　　　]', 0x00000091)
     MenuCmd(0x01, 0x01, '[KZ1803_00][アルティナ・最終会話　　　　　]', 0x00000096)
@@ -20297,24 +19929,24 @@ def EV_KizunaJump_18():
         ),
     )
 
-    OP_11(0x1194)
-    OP_11(0x1181)
-    OP_11(0x1182)
-    OP_11(0x1183)
-    OP_11(0x1184)
-    OP_11(0x1185)
-    OP_11(0x1186)
-    OP_11(0x1187)
-    OP_11(0x1188)
-    OP_11(0x1189)
-    OP_11(0x118A)
-    OP_11(0x118B)
-    OP_11(0x118C)
-    OP_11(0x118D)
-    OP_11(0x118E)
-    OP_11(0x118F)
-    OP_11(0x1190)
-    OP_11(0x1191)
+    ClearScenaFlags(ScenaFlag(0x0232, 4, 0x1194))
+    ClearScenaFlags(ScenaFlag(0x0230, 1, 0x1181))
+    ClearScenaFlags(ScenaFlag(0x0230, 2, 0x1182))
+    ClearScenaFlags(ScenaFlag(0x0230, 3, 0x1183))
+    ClearScenaFlags(ScenaFlag(0x0230, 4, 0x1184))
+    ClearScenaFlags(ScenaFlag(0x0230, 5, 0x1185))
+    ClearScenaFlags(ScenaFlag(0x0230, 6, 0x1186))
+    ClearScenaFlags(ScenaFlag(0x0230, 7, 0x1187))
+    ClearScenaFlags(ScenaFlag(0x0231, 0, 0x1188))
+    ClearScenaFlags(ScenaFlag(0x0231, 1, 0x1189))
+    ClearScenaFlags(ScenaFlag(0x0231, 2, 0x118A))
+    ClearScenaFlags(ScenaFlag(0x0231, 3, 0x118B))
+    ClearScenaFlags(ScenaFlag(0x0231, 4, 0x118C))
+    ClearScenaFlags(ScenaFlag(0x0231, 5, 0x118D))
+    ClearScenaFlags(ScenaFlag(0x0231, 6, 0x118E))
+    ClearScenaFlags(ScenaFlag(0x0231, 7, 0x118F))
+    ClearScenaFlags(ScenaFlag(0x0232, 0, 0x1190))
+    ClearScenaFlags(ScenaFlag(0x0232, 1, 0x1191))
 
     Switch(
         (
@@ -20389,10 +20021,10 @@ def EV_KizunaJump_18():
 
     SetScenaFlags(ScenaFlag(0x01A0, 0, 0xD00))
     SetScenaFlags(ScenaFlag(0x01AB, 5, 0xD5D))
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_16DAE')
 
@@ -20472,11 +20104,11 @@ def EV_KizunaJump_18():
 
     label('loc_16F97')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20484,11 +20116,11 @@ def EV_KizunaJump_18():
 
     label('loc_16FB2')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000B)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20496,11 +20128,11 @@ def EV_KizunaJump_18():
 
     label('loc_16FCD')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000C)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20508,11 +20140,11 @@ def EV_KizunaJump_18():
 
     label('loc_16FE8')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000D)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20520,11 +20152,11 @@ def EV_KizunaJump_18():
 
     label('loc_17003')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000E)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20532,11 +20164,11 @@ def EV_KizunaJump_18():
 
     label('loc_1701E')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0019)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['托娃'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20544,11 +20176,11 @@ def EV_KizunaJump_18():
 
     label('loc_17039')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0001)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['亞莉莎'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20556,11 +20188,11 @@ def EV_KizunaJump_18():
 
     label('loc_17054')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0002)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['艾略特'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20568,11 +20200,11 @@ def EV_KizunaJump_18():
 
     label('loc_1706F')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0003)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['勞拉'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20580,11 +20212,11 @@ def EV_KizunaJump_18():
 
     label('loc_1708A')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0004)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['馬奇亞斯'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20592,11 +20224,11 @@ def EV_KizunaJump_18():
 
     label('loc_170A5')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0005)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['艾瑪'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20604,11 +20236,11 @@ def EV_KizunaJump_18():
 
     label('loc_170C0')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0006)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['尤西斯'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20616,11 +20248,11 @@ def EV_KizunaJump_18():
 
     label('loc_170DB')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0007)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['菲'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20628,11 +20260,11 @@ def EV_KizunaJump_18():
 
     label('loc_170F6')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0008)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['蓋烏斯'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20640,11 +20272,11 @@ def EV_KizunaJump_18():
 
     label('loc_17111')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0009)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['米莉亞姆'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20652,11 +20284,11 @@ def EV_KizunaJump_18():
 
     label('loc_1712C')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000F)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['莎拉'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -20664,10 +20296,10 @@ def EV_KizunaJump_18():
 
     label('loc_17147')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     Jump('loc_1715E')
 
@@ -21354,7 +20986,7 @@ def EV_SubeventJump():
         'loc_17938',
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
 
     If(
         (
@@ -21403,7 +21035,7 @@ def EV_SubeventJump():
 
     label('loc_17893')
 
-    Call(0x0B, 'EV_Jump_SB_01')
+    Call(ScriptId.Current, 'EV_Jump_SB_01')
 
     Jump('loc_1792A')
 
@@ -21411,7 +21043,7 @@ def EV_SubeventJump():
 
     label('loc_178A9')
 
-    Call(0x0B, 'EV_Jump_SB_02')
+    Call(ScriptId.Current, 'EV_Jump_SB_02')
 
     Jump('loc_1792A')
 
@@ -21419,7 +21051,7 @@ def EV_SubeventJump():
 
     label('loc_178BF')
 
-    Call(0x0B, 'EV_Jump_SB_03')
+    Call(ScriptId.Current, 'EV_Jump_SB_03')
 
     Jump('loc_1792A')
 
@@ -21427,7 +21059,7 @@ def EV_SubeventJump():
 
     label('loc_178D5')
 
-    Call(0x0B, 'EV_Jump_SB_04')
+    Call(ScriptId.Current, 'EV_Jump_SB_04')
 
     Jump('loc_1792A')
 
@@ -21435,7 +21067,7 @@ def EV_SubeventJump():
 
     label('loc_178EB')
 
-    Call(0x0B, 'EV_Jump_SB_05')
+    Call(ScriptId.Current, 'EV_Jump_SB_05')
 
     Jump('loc_1792A')
 
@@ -21443,7 +21075,7 @@ def EV_SubeventJump():
 
     label('loc_17901')
 
-    Call(0x0B, 'EV_Jump_SB_FlagSet')
+    Call(ScriptId.Current, 'EV_Jump_SB_FlagSet')
 
     Jump('loc_1792A')
 
@@ -21513,7 +21145,7 @@ def EV_Jump_SB_01():
         'loc_17F35',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -21688,7 +21320,7 @@ def EV_Jump_SB_01():
         ),
     )
 
-    Call(0x00, 'EV_DoJump_SB_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_SB_SUB')
 
     def _loc_17F30(): pass
 
@@ -21728,7 +21360,7 @@ def EV_Jump_SB_02():
         'loc_187D9',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -21913,7 +21545,7 @@ def EV_Jump_SB_02():
         ),
     )
 
-    Call(0x00, 'EV_DoJump_SB_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_SB_SUB')
 
     def _loc_187D4(): pass
 
@@ -21953,7 +21585,7 @@ def EV_Jump_SB_03():
         'loc_195E8',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -22176,7 +21808,7 @@ def EV_Jump_SB_03():
         ),
     )
 
-    Call(0x00, 'EV_DoJump_SB_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_SB_SUB')
 
     def _loc_195E3(): pass
 
@@ -22216,7 +21848,7 @@ def EV_Jump_SB_04():
         'loc_1B245',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -22543,7 +22175,7 @@ def EV_Jump_SB_04():
         ),
     )
 
-    Call(0x00, 'EV_DoJump_SB_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_SB_SUB')
 
     def _loc_1B240(): pass
 
@@ -22583,7 +22215,7 @@ def EV_Jump_SB_05():
         'loc_1B6ED',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -22753,7 +22385,7 @@ def EV_Jump_SB_05():
         ),
     )
 
-    Call(0x00, 'EV_DoJump_SB_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_SB_SUB')
 
     def _loc_1B6E8(): pass
 
@@ -22959,7 +22591,7 @@ def EV_Jump_SB_FlagSet():
 # id: 0x003B offset: 0x1B918
 @scena.Code('EV_DoJump_SB_SUB')
 def EV_DoJump_SB_SUB():
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
     SetScenaFlags(ScenaFlag(0x0060, 0, 0x300))
 
     Switch(
@@ -24746,7 +24378,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1C71B')
 
-    Call(0x0B, 'EV_Party_Set')
+    Call(ScriptId.Current, 'EV_Party_Set')
 
     Switch(
         (
@@ -26910,7 +26542,7 @@ def EV_YarikomiJump():
         'loc_1DDE1',
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
 
     If(
         (
@@ -26967,7 +26599,7 @@ def EV_YarikomiJump():
 
     label('loc_1DCDC')
 
-    Call(0x0B, 'EV_Jump_YR_Bath')
+    Call(ScriptId.Current, 'EV_Jump_YR_Bath')
 
     Jump('loc_1DDD3')
 
@@ -26975,7 +26607,7 @@ def EV_YarikomiJump():
 
     label('loc_1DCF4')
 
-    Call(0x0B, 'EV_Jump_YR_Radio')
+    Call(ScriptId.Current, 'EV_Jump_YR_Radio')
 
     Jump('loc_1DDD3')
 
@@ -26983,7 +26615,7 @@ def EV_YarikomiJump():
 
     label('loc_1DD0D')
 
-    Call(0x0B, 'EV_Jump_YR_Blackbook')
+    Call(ScriptId.Current, 'EV_Jump_YR_Blackbook')
 
     Jump('loc_1DDD3')
 
@@ -26991,7 +26623,7 @@ def EV_YarikomiJump():
 
     label('loc_1DD2A')
 
-    Call(0x0B, 'EV_Jump_YR_Photo')
+    Call(ScriptId.Current, 'EV_Jump_YR_Photo')
 
     Jump('loc_1DDD3')
 
@@ -27005,7 +26637,7 @@ def EV_YarikomiJump():
 
     label('loc_1DD48')
 
-    Call(0x0B, 'EV_Jump_YR_Present')
+    Call(ScriptId.Current, 'EV_Jump_YR_Present')
 
     Jump('loc_1DDD3')
 
@@ -27019,7 +26651,7 @@ def EV_YarikomiJump():
 
     label('loc_1DD68')
 
-    Call(0x0B, 'EV_Jump_YR_Training')
+    Call(ScriptId.Current, 'EV_Jump_YR_Training')
 
     Jump('loc_1DDD3')
 
@@ -27027,7 +26659,7 @@ def EV_YarikomiJump():
 
     label('loc_1DD84')
 
-    Call(0x0B, 'EV_Jump_YR_Fishing')
+    Call(ScriptId.Current, 'EV_Jump_YR_Fishing')
 
     Jump('loc_1DDD3')
 
@@ -27041,7 +26673,7 @@ def EV_YarikomiJump():
 
     label('loc_1DDA4')
 
-    Call(0x0B, 'EV_Jump_YR_Seedling')
+    Call(ScriptId.Current, 'EV_Jump_YR_Seedling')
 
     Jump('loc_1DDD3')
 
@@ -27117,7 +26749,7 @@ def EV_Jump_YR_Radio():
         'loc_1E3FE',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -27131,7 +26763,7 @@ def EV_Jump_YR_Radio():
 
     MenuCmd(0x01, 0x01, '[▼ムンクからラジオネタを頼まれる]', 0x00008515)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01F5, 6, 0xFAE)),
@@ -27142,7 +26774,7 @@ def EV_Jump_YR_Radio():
 
     MenuCmd(0x08, 0x01, '[ネタ01を見たことにする　　　　　]', 0x00000001, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01F5, 7, 0xFAF)),
@@ -27153,7 +26785,7 @@ def EV_Jump_YR_Radio():
 
     MenuCmd(0x08, 0x01, '[ネタ02を見たことにする　　　　　]', 0x00000002, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01F6, 0, 0xFB0)),
@@ -27164,7 +26796,7 @@ def EV_Jump_YR_Radio():
 
     MenuCmd(0x08, 0x01, '[ネタ03を見たことにする　　　　　]', 0x00000003, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01F6, 1, 0xFB1)),
@@ -27175,7 +26807,7 @@ def EV_Jump_YR_Radio():
 
     MenuCmd(0x08, 0x01, '[ネタ04を見たことにする　　　　　]', 0x00000004, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01F6, 2, 0xFB2)),
@@ -27186,7 +26818,7 @@ def EV_Jump_YR_Radio():
 
     MenuCmd(0x08, 0x01, '[ネタ05を見たことにする　　　　　]', 0x00000005, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01F6, 3, 0xFB3)),
@@ -27197,7 +26829,7 @@ def EV_Jump_YR_Radio():
 
     MenuCmd(0x08, 0x01, '[ネタ06を見たことにする　　　　　]', 0x00000006, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01F6, 4, 0xFB4)),
@@ -27208,7 +26840,7 @@ def EV_Jump_YR_Radio():
 
     MenuCmd(0x08, 0x01, '[ネタ07を見たことにする　　　　　]', 0x00000007, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01F6, 5, 0xFB5)),
@@ -27219,7 +26851,7 @@ def EV_Jump_YR_Radio():
 
     MenuCmd(0x08, 0x01, '[ネタ08を見たことにする　　　　　]', 0x00000008, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01F6, 6, 0xFB6)),
@@ -27230,7 +26862,7 @@ def EV_Jump_YR_Radio():
 
     MenuCmd(0x08, 0x01, '[ネタ09を見たことにする　　　　　]', 0x00000009, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01F6, 7, 0xFB7)),
@@ -27275,7 +26907,7 @@ def EV_Jump_YR_Radio():
 
     label('loc_1E285')
 
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
 
     OP_18(
         0x03,
@@ -27329,7 +26961,7 @@ def EV_Jump_YR_Radio():
     SetScenaFlags(ScenaFlag(0x00C0, 2, 0x602))
     SetScenaFlags(ScenaFlag(0x00C0, 1, 0x601))
     SetScenaFlags(ScenaFlag(0x00C0, 0, 0x600))
-    Call(0x0B, 'EV_Party_Set')
+    Call(ScriptId.Current, 'EV_Party_Set')
     OP_AC(0x01, 0x00008515)
     OP_14(0x04000000)
 
@@ -27339,7 +26971,7 @@ def EV_Jump_YR_Radio():
 
     label('loc_1E340')
 
-    Call(0x00, 'EV_DoJump_01')
+    Call(ScriptId.Map, 'EV_DoJump_01')
 
     Jump('loc_1E3F9')
 
@@ -27427,16 +27059,16 @@ def EV_Jump_YR_Radio():
 
     label('loc_1E3A5')
 
-    OP_11(0x0FB8)
-    OP_11(0x0FB9)
-    OP_11(0x0FBA)
-    OP_11(0x0FBB)
-    OP_11(0x0FBC)
-    OP_11(0x0FBD)
-    OP_11(0x0FBE)
-    OP_11(0x0FBF)
-    OP_11(0x0FC0)
-    OP_11(0x0FC1)
+    ClearScenaFlags(ScenaFlag(0x01F7, 0, 0xFB8))
+    ClearScenaFlags(ScenaFlag(0x01F7, 1, 0xFB9))
+    ClearScenaFlags(ScenaFlag(0x01F7, 2, 0xFBA))
+    ClearScenaFlags(ScenaFlag(0x01F7, 3, 0xFBB))
+    ClearScenaFlags(ScenaFlag(0x01F7, 4, 0xFBC))
+    ClearScenaFlags(ScenaFlag(0x01F7, 5, 0xFBD))
+    ClearScenaFlags(ScenaFlag(0x01F7, 6, 0xFBE))
+    ClearScenaFlags(ScenaFlag(0x01F7, 7, 0xFBF))
+    ClearScenaFlags(ScenaFlag(0x01F8, 0, 0xFC0))
+    ClearScenaFlags(ScenaFlag(0x01F8, 1, 0xFC1))
 
     Jump('loc_1E3F9')
 
@@ -27444,16 +27076,16 @@ def EV_Jump_YR_Radio():
 
     label('loc_1E3C8')
 
-    OP_11(0x0FC2)
-    OP_11(0x0FC3)
-    OP_11(0x0FC4)
-    OP_11(0x0FC5)
-    OP_11(0x0FC6)
-    OP_11(0x0FC7)
-    OP_11(0x0FC8)
-    OP_11(0x0FC9)
-    OP_11(0x0FCA)
-    OP_11(0x0FCB)
+    ClearScenaFlags(ScenaFlag(0x01F8, 2, 0xFC2))
+    ClearScenaFlags(ScenaFlag(0x01F8, 3, 0xFC3))
+    ClearScenaFlags(ScenaFlag(0x01F8, 4, 0xFC4))
+    ClearScenaFlags(ScenaFlag(0x01F8, 5, 0xFC5))
+    ClearScenaFlags(ScenaFlag(0x01F8, 6, 0xFC6))
+    ClearScenaFlags(ScenaFlag(0x01F8, 7, 0xFC7))
+    ClearScenaFlags(ScenaFlag(0x01F9, 0, 0xFC8))
+    ClearScenaFlags(ScenaFlag(0x01F9, 1, 0xFC9))
+    ClearScenaFlags(ScenaFlag(0x01F9, 2, 0xFCA))
+    ClearScenaFlags(ScenaFlag(0x01F9, 3, 0xFCB))
 
     Jump('loc_1E3F9')
 
@@ -27510,7 +27142,7 @@ def EV_Jump_YR_Blackbook():
         'loc_1E6AB',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -27554,7 +27186,7 @@ def EV_Jump_YR_Blackbook():
 
     label('loc_1E61F')
 
-    Call(0x00, 'EV_DoJump_01')
+    Call(ScriptId.Map, 'EV_DoJump_01')
 
     Jump('loc_1E6A6')
 
@@ -27562,7 +27194,7 @@ def EV_Jump_YR_Blackbook():
 
     label('loc_1E634')
 
-    Call(0x00, 'EV_DoJump_04')
+    Call(ScriptId.Map, 'EV_DoJump_04')
 
     Jump('loc_1E6A6')
 
@@ -27570,7 +27202,7 @@ def EV_Jump_YR_Blackbook():
 
     label('loc_1E649')
 
-    Call(0x00, 'EV_DoJump_05')
+    Call(ScriptId.Map, 'EV_DoJump_05')
 
     Jump('loc_1E6A6')
 
@@ -27578,13 +27210,13 @@ def EV_Jump_YR_Blackbook():
 
     label('loc_1E65E')
 
-    OP_11(0x0FD4)
-    OP_11(0x0FD5)
-    OP_11(0x0FD6)
-    OP_11(0x0FD7)
-    OP_11(0x0FD8)
-    OP_11(0x0FD9)
-    OP_11(0x0FDA)
+    ClearScenaFlags(ScenaFlag(0x01FA, 4, 0xFD4))
+    ClearScenaFlags(ScenaFlag(0x01FA, 5, 0xFD5))
+    ClearScenaFlags(ScenaFlag(0x01FA, 6, 0xFD6))
+    ClearScenaFlags(ScenaFlag(0x01FA, 7, 0xFD7))
+    ClearScenaFlags(ScenaFlag(0x01FB, 0, 0xFD8))
+    ClearScenaFlags(ScenaFlag(0x01FB, 1, 0xFD9))
+    ClearScenaFlags(ScenaFlag(0x01FB, 2, 0xFDA))
 
     Jump('loc_1E6A6')
 
@@ -27592,15 +27224,15 @@ def EV_Jump_YR_Blackbook():
 
     label('loc_1E678')
 
-    OP_11(0x0FCD)
-    OP_11(0x0FCE)
-    OP_11(0x0FCF)
-    OP_11(0x0FD0)
-    OP_11(0x0FD1)
-    OP_11(0x0FD2)
-    OP_11(0x0FD3)
-    OP_11(0x0FDB)
-    OP_11(0x0FDC)
+    ClearScenaFlags(ScenaFlag(0x01F9, 5, 0xFCD))
+    ClearScenaFlags(ScenaFlag(0x01F9, 6, 0xFCE))
+    ClearScenaFlags(ScenaFlag(0x01F9, 7, 0xFCF))
+    ClearScenaFlags(ScenaFlag(0x01FA, 0, 0xFD0))
+    ClearScenaFlags(ScenaFlag(0x01FA, 1, 0xFD1))
+    ClearScenaFlags(ScenaFlag(0x01FA, 2, 0xFD2))
+    ClearScenaFlags(ScenaFlag(0x01FA, 3, 0xFD3))
+    ClearScenaFlags(ScenaFlag(0x01FB, 3, 0xFDB))
+    ClearScenaFlags(ScenaFlag(0x01FB, 4, 0xFDC))
 
     Jump('loc_1E6A6')
 
@@ -27657,7 +27289,7 @@ def EV_Jump_YR_Photo():
         'loc_1F4D4',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -27671,7 +27303,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x01, 0x01, '[▼ARCUS風景写真イベント　　　　 ]', 0x00000000)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FC, 5, 0xFE5)),
@@ -27682,7 +27314,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景01　イストミア大森林　　　]', 0x00000001, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FC, 6, 0xFE6)),
@@ -27693,7 +27325,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景02　北サザーラント街道２　]', 0x00000002, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FC, 7, 0xFE7)),
@@ -27704,7 +27336,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景03　ウルスラ間道１　　　　]', 0x00000003, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FD, 1, 0xFE9)),
@@ -27715,7 +27347,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景04　東クロスベル街道１　　]', 0x00000004, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FD, 2, 0xFEA)),
@@ -27726,7 +27358,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景05　星見の塔・外観　　　　]', 0x00000005, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FD, 3, 0xFEB)),
@@ -27737,7 +27369,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景06　西ラマール街道１　　　]', 0x00000006, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FD, 5, 0xFED)),
@@ -27748,7 +27380,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景07　ロック＝パティオ　　　]', 0x00000007, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FD, 6, 0xFEE)),
@@ -27759,7 +27391,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景08　ブリオニア島　　　　　]', 0x00000008, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FD, 7, 0xFEF)),
@@ -27770,7 +27402,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景09　オルディス・港湾エリア]', 0x00000009, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FE, 0, 0xFF0)),
@@ -27781,7 +27413,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景10　西オスティア街道　　　]', 0x0000000A, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FE, 4, 0xFF4)),
@@ -27792,7 +27424,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景11　ヒンメル霊園　　　　　]', 0x0000000B, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FF, 1, 0xFF9)),
@@ -27803,7 +27435,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[▼風景12　カレル離宮　　　　　　]', 0x0000000C, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FD, 0, 0xFE8)),
@@ -27814,7 +27446,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[朝に風景03を撮った　　　　　　　]', 0x0000000D, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FD, 4, 0xFEC)),
@@ -27825,7 +27457,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[朝に風景06を撮った　　　　　　　]', 0x0000000E, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FE, 1, 0xFF1)),
@@ -27836,7 +27468,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[曇り時に風景10を撮った　　　　　]', 0x0000000F, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FE, 2, 0xFF2)),
@@ -27847,7 +27479,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[昼に風景10を撮った　　　　　　　]', 0x00000010, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FE, 3, 0xFF3)),
@@ -27858,7 +27490,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[昼暗曇時に風景10を撮った　　　　]', 0x00000011, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FE, 5, 0xFF5)),
@@ -27869,7 +27501,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[夕方前に風景11を撮った　　　　　]', 0x00000012, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FE, 6, 0xFF6)),
@@ -27880,7 +27512,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[曇り時に風景11を撮った　　　　　]', 0x00000013, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FE, 7, 0xFF7)),
@@ -27891,7 +27523,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[昼に風景11を撮った　　　　　　　]', 0x00000014, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FF, 0, 0xFF8)),
@@ -27902,7 +27534,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[昼暗曇時に風景11を撮った　　　　]', 0x00000015, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FF, 2, 0xFFA)),
@@ -27913,7 +27545,7 @@ def EV_Jump_YR_Photo():
 
     MenuCmd(0x08, 0x01, '[曇り時に風景12を撮った　　　　　]', 0x00000016, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01FF, 3, 0xFFB)),
@@ -27978,7 +27610,7 @@ def EV_Jump_YR_Photo():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '[▼西サザーラント街道に出る　　　]', 0x00001066)
     MenuCmd(0x01, 0x01, '[▼北東の街道に出る　　　　　　　]', 0x00001060)
     MenuCmd(0x01, 0x01, '[▼ご褒美（解析結果）・１章終了　]', 0x000010C9)
@@ -28025,7 +27657,7 @@ def EV_Jump_YR_Photo():
 
     label('loc_1F34D')
 
-    Call(0x00, 'EV_DoJump_01')
+    Call(ScriptId.Map, 'EV_DoJump_01')
 
     Jump('loc_1F376')
 
@@ -28033,7 +27665,7 @@ def EV_Jump_YR_Photo():
 
     label('loc_1F362')
 
-    Call(0x00, 'EV_DoJump_YR_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_YR_SUB')
 
     def _loc_1F376(): pass
 
@@ -28158,8 +27790,8 @@ def EV_Jump_YR_Photo():
     label('loc_1F3EB')
 
     OP_12(0x0FF1)
-    OP_11(0x0FF2)
-    OP_11(0x0FF3)
+    ClearScenaFlags(ScenaFlag(0x01FE, 2, 0xFF2))
+    ClearScenaFlags(ScenaFlag(0x01FE, 3, 0xFF3))
 
     Jump('loc_1F4CF')
 
@@ -28168,8 +27800,8 @@ def EV_Jump_YR_Photo():
     label('loc_1F3F9')
 
     OP_12(0x0FF2)
-    OP_11(0x0FF1)
-    OP_11(0x0FF3)
+    ClearScenaFlags(ScenaFlag(0x01FE, 1, 0xFF1))
+    ClearScenaFlags(ScenaFlag(0x01FE, 3, 0xFF3))
 
     Jump('loc_1F4CF')
 
@@ -28178,8 +27810,8 @@ def EV_Jump_YR_Photo():
     label('loc_1F407')
 
     OP_12(0x0FF3)
-    OP_11(0x0FF1)
-    OP_11(0x0FF2)
+    ClearScenaFlags(ScenaFlag(0x01FE, 1, 0xFF1))
+    ClearScenaFlags(ScenaFlag(0x01FE, 2, 0xFF2))
 
     Jump('loc_1F4CF')
 
@@ -28188,9 +27820,9 @@ def EV_Jump_YR_Photo():
     label('loc_1F415')
 
     OP_12(0x0FF5)
-    OP_11(0x0FF6)
-    OP_11(0x0FF7)
-    OP_11(0x0FF8)
+    ClearScenaFlags(ScenaFlag(0x01FE, 6, 0xFF6))
+    ClearScenaFlags(ScenaFlag(0x01FE, 7, 0xFF7))
+    ClearScenaFlags(ScenaFlag(0x01FF, 0, 0xFF8))
 
     Jump('loc_1F4CF')
 
@@ -28199,9 +27831,9 @@ def EV_Jump_YR_Photo():
     label('loc_1F426')
 
     OP_12(0x0FF6)
-    OP_11(0x0FF5)
-    OP_11(0x0FF7)
-    OP_11(0x0FF8)
+    ClearScenaFlags(ScenaFlag(0x01FE, 5, 0xFF5))
+    ClearScenaFlags(ScenaFlag(0x01FE, 7, 0xFF7))
+    ClearScenaFlags(ScenaFlag(0x01FF, 0, 0xFF8))
 
     Jump('loc_1F4CF')
 
@@ -28210,9 +27842,9 @@ def EV_Jump_YR_Photo():
     label('loc_1F437')
 
     OP_12(0x0FF7)
-    OP_11(0x0FF5)
-    OP_11(0x0FF6)
-    OP_11(0x0FF8)
+    ClearScenaFlags(ScenaFlag(0x01FE, 5, 0xFF5))
+    ClearScenaFlags(ScenaFlag(0x01FE, 6, 0xFF6))
+    ClearScenaFlags(ScenaFlag(0x01FF, 0, 0xFF8))
 
     Jump('loc_1F4CF')
 
@@ -28221,9 +27853,9 @@ def EV_Jump_YR_Photo():
     label('loc_1F448')
 
     OP_12(0x0FF8)
-    OP_11(0x0FF5)
-    OP_11(0x0FF6)
-    OP_11(0x0FF7)
+    ClearScenaFlags(ScenaFlag(0x01FE, 5, 0xFF5))
+    ClearScenaFlags(ScenaFlag(0x01FE, 6, 0xFF6))
+    ClearScenaFlags(ScenaFlag(0x01FE, 7, 0xFF7))
 
     Jump('loc_1F4CF')
 
@@ -28232,7 +27864,7 @@ def EV_Jump_YR_Photo():
     label('loc_1F459')
 
     OP_12(0x0FFA)
-    OP_11(0x0FFB)
+    ClearScenaFlags(ScenaFlag(0x01FF, 3, 0xFFB))
 
     Jump('loc_1F4CF')
 
@@ -28241,7 +27873,7 @@ def EV_Jump_YR_Photo():
     label('loc_1F464')
 
     OP_12(0x0FFB)
-    OP_11(0x0FFA)
+    ClearScenaFlags(ScenaFlag(0x01FF, 2, 0xFFA))
 
     Jump('loc_1F4CF')
 
@@ -28249,18 +27881,18 @@ def EV_Jump_YR_Photo():
 
     label('loc_1F46F')
 
-    OP_11(0x0FFC)
-    OP_11(0x0FFD)
-    OP_11(0x0FFE)
-    OP_11(0x0FFF)
-    OP_11(0x1000)
-    OP_11(0x1001)
-    OP_11(0x1002)
-    OP_11(0x1003)
-    OP_11(0x1004)
-    OP_11(0x1005)
-    OP_11(0x1006)
-    OP_11(0x1007)
+    ClearScenaFlags(ScenaFlag(0x01FF, 4, 0xFFC))
+    ClearScenaFlags(ScenaFlag(0x01FF, 5, 0xFFD))
+    ClearScenaFlags(ScenaFlag(0x01FF, 6, 0xFFE))
+    ClearScenaFlags(ScenaFlag(0x01FF, 7, 0xFFF))
+    ClearScenaFlags(ScenaFlag(0x0200, 0, 0x1000))
+    ClearScenaFlags(ScenaFlag(0x0200, 1, 0x1001))
+    ClearScenaFlags(ScenaFlag(0x0200, 2, 0x1002))
+    ClearScenaFlags(ScenaFlag(0x0200, 3, 0x1003))
+    ClearScenaFlags(ScenaFlag(0x0200, 4, 0x1004))
+    ClearScenaFlags(ScenaFlag(0x0200, 5, 0x1005))
+    ClearScenaFlags(ScenaFlag(0x0200, 6, 0x1006))
+    ClearScenaFlags(ScenaFlag(0x0200, 7, 0x1007))
 
     Jump('loc_1F4CF')
 
@@ -28268,18 +27900,18 @@ def EV_Jump_YR_Photo():
 
     label('loc_1F498')
 
-    OP_11(0x1008)
-    OP_11(0x1009)
-    OP_11(0x100A)
-    OP_11(0x100B)
-    OP_11(0x100C)
-    OP_11(0x100D)
-    OP_11(0x100E)
-    OP_11(0x100F)
-    OP_11(0x1010)
-    OP_11(0x1011)
-    OP_11(0x1012)
-    OP_11(0x1013)
+    ClearScenaFlags(ScenaFlag(0x0201, 0, 0x1008))
+    ClearScenaFlags(ScenaFlag(0x0201, 1, 0x1009))
+    ClearScenaFlags(ScenaFlag(0x0201, 2, 0x100A))
+    ClearScenaFlags(ScenaFlag(0x0201, 3, 0x100B))
+    ClearScenaFlags(ScenaFlag(0x0201, 4, 0x100C))
+    ClearScenaFlags(ScenaFlag(0x0201, 5, 0x100D))
+    ClearScenaFlags(ScenaFlag(0x0201, 6, 0x100E))
+    ClearScenaFlags(ScenaFlag(0x0201, 7, 0x100F))
+    ClearScenaFlags(ScenaFlag(0x0202, 0, 0x1010))
+    ClearScenaFlags(ScenaFlag(0x0202, 1, 0x1011))
+    ClearScenaFlags(ScenaFlag(0x0202, 2, 0x1012))
+    ClearScenaFlags(ScenaFlag(0x0202, 3, 0x1013))
 
     Jump('loc_1F4CF')
 
@@ -28336,7 +27968,7 @@ def EV_Jump_YR_Present():
         'loc_1F9EE',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -28392,37 +28024,37 @@ def EV_Jump_YR_Present():
 
     label('loc_1F883')
 
-    OP_6F(0x00, 0x08CA, 0x00000001)
-    OP_6F(0x00, 0x08CB, 0x00000001)
-    OP_6F(0x00, 0x08CC, 0x00000001)
-    OP_6F(0x00, 0x08CD, 0x00000001)
-    OP_6F(0x00, 0x08CE, 0x00000001)
-    OP_6F(0x00, 0x08CF, 0x00000001)
-    OP_6F(0x00, 0x08D0, 0x00000001)
-    OP_6F(0x00, 0x08D1, 0x00000001)
-    OP_6F(0x00, 0x08D2, 0x00000001)
-    OP_6F(0x00, 0x08D3, 0x00000001)
-    OP_6F(0x00, 0x08D4, 0x00000001)
-    OP_6F(0x00, 0x08D5, 0x00000001)
-    OP_6F(0x00, 0x08D6, 0x00000001)
-    OP_6F(0x00, 0x08D7, 0x00000001)
-    OP_6F(0x00, 0x08D8, 0x00000001)
-    OP_6F(0x00, 0x08D9, 0x00000001)
-    OP_6F(0x00, 0x08DA, 0x00000001)
-    OP_6F(0x00, 0x08DB, 0x00000001)
-    OP_6F(0x00, 0x08DC, 0x00000001)
-    OP_6F(0x00, 0x08DD, 0x00000001)
-    OP_6F(0x00, 0x08DE, 0x00000001)
-    OP_6F(0x00, 0x08DF, 0x00000001)
-    OP_6F(0x00, 0x08E0, 0x00000001)
-    OP_6F(0x00, 0x08E1, 0x00000001)
-    OP_6F(0x00, 0x08E2, 0x00000001)
-    OP_6F(0x00, 0x08E3, 0x00000001)
-    OP_6F(0x00, 0x08E4, 0x00000001)
-    OP_6F(0x00, 0x08E5, 0x00000001)
-    OP_6F(0x00, 0x08E6, 0x00000001)
-    OP_6F(0x00, 0x08E7, 0x00000001)
-    OP_6F(0x00, 0x08E8, 0x00000001)
+    AddItem(0x00, 0x08CA, 1)
+    AddItem(0x00, 0x08CB, 1)
+    AddItem(0x00, 0x08CC, 1)
+    AddItem(0x00, 0x08CD, 1)
+    AddItem(0x00, 0x08CE, 1)
+    AddItem(0x00, 0x08CF, 1)
+    AddItem(0x00, 0x08D0, 1)
+    AddItem(0x00, 0x08D1, 1)
+    AddItem(0x00, 0x08D2, 1)
+    AddItem(0x00, 0x08D3, 1)
+    AddItem(0x00, 0x08D4, 1)
+    AddItem(0x00, 0x08D5, 1)
+    AddItem(0x00, 0x08D6, 1)
+    AddItem(0x00, 0x08D7, 1)
+    AddItem(0x00, 0x08D8, 1)
+    AddItem(0x00, 0x08D9, 1)
+    AddItem(0x00, 0x08DA, 1)
+    AddItem(0x00, 0x08DB, 1)
+    AddItem(0x00, 0x08DC, 1)
+    AddItem(0x00, 0x08DD, 1)
+    AddItem(0x00, 0x08DE, 1)
+    AddItem(0x00, 0x08DF, 1)
+    AddItem(0x00, 0x08E0, 1)
+    AddItem(0x00, 0x08E1, 1)
+    AddItem(0x00, 0x08E2, 1)
+    AddItem(0x00, 0x08E3, 1)
+    AddItem(0x00, 0x08E4, 1)
+    AddItem(0x00, 0x08E5, 1)
+    AddItem(0x00, 0x08E6, 1)
+    AddItem(0x00, 0x08E7, 1)
+    AddItem(0x00, 0x08E8, 1)
 
     def _loc_1F97B(): pass
 
@@ -28573,7 +28205,7 @@ def EV_Jump_YR_Training():
         'loc_1FDB7',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -28648,21 +28280,21 @@ def EV_Jump_YR_Training():
     SetScenaFlags(ScenaFlag(0x0447, 1, 0x2239))
     SetScenaFlags(ScenaFlag(0x0447, 2, 0x223A))
     SetScenaFlags(ScenaFlag(0x0447, 3, 0x223B))
-    OP_11(0x108A)
-    OP_11(0x108B)
-    OP_11(0x108C)
-    OP_11(0x108D)
-    OP_11(0x108E)
-    OP_11(0x108F)
-    OP_11(0x1090)
-    OP_11(0x1091)
-    OP_11(0x1092)
-    OP_11(0x1093)
-    OP_11(0x1094)
-    OP_11(0x1095)
-    OP_11(0x1096)
-    OP_11(0x1097)
-    OP_11(0x1098)
+    ClearScenaFlags(ScenaFlag(0x0211, 2, 0x108A))
+    ClearScenaFlags(ScenaFlag(0x0211, 3, 0x108B))
+    ClearScenaFlags(ScenaFlag(0x0211, 4, 0x108C))
+    ClearScenaFlags(ScenaFlag(0x0211, 5, 0x108D))
+    ClearScenaFlags(ScenaFlag(0x0211, 6, 0x108E))
+    ClearScenaFlags(ScenaFlag(0x0211, 7, 0x108F))
+    ClearScenaFlags(ScenaFlag(0x0212, 0, 0x1090))
+    ClearScenaFlags(ScenaFlag(0x0212, 1, 0x1091))
+    ClearScenaFlags(ScenaFlag(0x0212, 2, 0x1092))
+    ClearScenaFlags(ScenaFlag(0x0212, 3, 0x1093))
+    ClearScenaFlags(ScenaFlag(0x0212, 4, 0x1094))
+    ClearScenaFlags(ScenaFlag(0x0212, 5, 0x1095))
+    ClearScenaFlags(ScenaFlag(0x0212, 6, 0x1096))
+    ClearScenaFlags(ScenaFlag(0x0212, 7, 0x1097))
+    ClearScenaFlags(ScenaFlag(0x0213, 0, 0x1098))
 
     Jump('loc_1FD16')
 
@@ -28700,7 +28332,7 @@ def EV_Jump_YR_Training():
         ),
     )
 
-    Call(0x00, 'EV_DoJump_02')
+    Call(ScriptId.Map, 'EV_DoJump_02')
 
     Jump('loc_1FDB2')
 
@@ -28720,7 +28352,7 @@ def EV_Jump_YR_Training():
 
     label('loc_1FD8B')
 
-    Call(0x00, 'EV_DoJump_YR_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_YR_SUB')
 
     Jump('loc_1FDB2')
 
@@ -28777,7 +28409,7 @@ def EV_Jump_YR_Fishing():
         'loc_1FEF3',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -28809,8 +28441,8 @@ def EV_Jump_YR_Fishing():
 
     label('loc_1FE87')
 
-    OP_11(0x10AD)
-    OP_11(0x10AE)
+    ClearScenaFlags(ScenaFlag(0x0215, 5, 0x10AD))
+    ClearScenaFlags(ScenaFlag(0x0215, 6, 0x10AE))
 
     Jump('loc_1FE92')
 
@@ -28832,7 +28464,7 @@ def EV_Jump_YR_Fishing():
 
     label('loc_1FEAB')
 
-    Call(0x00, 'EV_DoJump_YR_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_YR_SUB')
 
     Jump('loc_1FEEE')
 
@@ -28841,7 +28473,7 @@ def EV_Jump_YR_Fishing():
     label('loc_1FEC4')
 
     SetScenaFlags(ScenaFlag(0x0215, 5, 0x10AD))
-    Call(0x00, 'EV_DoJump_YR_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_YR_SUB')
 
     Jump('loc_1FEEE')
 
@@ -28898,7 +28530,7 @@ def EV_Jump_YR_Seedling():
         'loc_202F7',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -28910,7 +28542,7 @@ def EV_Jump_YR_Seedling():
         'loc_202F2',
     )
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0213, 3, 0x109B)),
@@ -28921,7 +28553,7 @@ def EV_Jump_YR_Seedling():
 
     MenuCmd(0x08, 0x01, '[「ハーブの苗」を渡した　　　　　]', 0x00000001, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0213, 4, 0x109C)),
@@ -28932,7 +28564,7 @@ def EV_Jump_YR_Seedling():
 
     MenuCmd(0x08, 0x01, '[「いちごの苗」を渡した　　　　　]', 0x00000002, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0213, 5, 0x109D)),
@@ -28943,7 +28575,7 @@ def EV_Jump_YR_Seedling():
 
     MenuCmd(0x08, 0x01, '[「たまねぎの苗」を渡した　　　　]', 0x00000003, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0213, 6, 0x109E)),
@@ -28954,7 +28586,7 @@ def EV_Jump_YR_Seedling():
 
     MenuCmd(0x08, 0x01, '[「桃の苗」を渡した　　　　　　　]', 0x00000004, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0213, 7, 0x109F)),
@@ -28965,7 +28597,7 @@ def EV_Jump_YR_Seedling():
 
     MenuCmd(0x08, 0x01, '[「じゃがいもの苗」を渡した　　　]', 0x00000005, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0214, 0, 0x10A0)),
@@ -28976,7 +28608,7 @@ def EV_Jump_YR_Seedling():
 
     MenuCmd(0x08, 0x01, '[「スイカの苗」を渡した　　　　　]', 0x00000006, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0214, 1, 0x10A1)),
@@ -28987,7 +28619,7 @@ def EV_Jump_YR_Seedling():
 
     MenuCmd(0x08, 0x01, '[「にがトマトの苗」を渡した　　　]', 0x00000007, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0214, 2, 0x10A2)),
@@ -28998,7 +28630,7 @@ def EV_Jump_YR_Seedling():
 
     MenuCmd(0x08, 0x01, '[野菜・果物をもらう会話・２章　　]', 0x00000008, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0214, 3, 0x10A3)),
@@ -29009,7 +28641,7 @@ def EV_Jump_YR_Seedling():
 
     MenuCmd(0x08, 0x01, '[野菜・果物をもらう会話・３章　　]', 0x00000009, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0214, 4, 0x10A4)),
@@ -29175,7 +28807,7 @@ def EV_Jump_YR_Bath():
         'loc_20603',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -29223,7 +28855,7 @@ def EV_Jump_YR_Bath():
 
     label('loc_205D7')
 
-    Call(0x00, 'EV_DoJump_YR_SUB')
+    Call(ScriptId.Map, 'EV_DoJump_YR_SUB')
 
     Jump('loc_205FE')
 
@@ -29257,7 +28889,7 @@ def EV_Jump_YR_Bath():
 # id: 0x0045 offset: 0x20604
 @scena.Code('EV_DoJump_YR_SUB')
 def EV_DoJump_YR_SUB():
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
 
     Switch(
         (
@@ -29404,18 +29036,6 @@ def EV_DoJump_YR_SUB():
         (0x00008500, 'loc_20D72'),
         (-1, 'loc_20DC0'),
     )
-
-    SetScenaFlags(0xF02)
-    SetScenaFlags(0xF01)
-    SetScenaFlags(0xF00)
-    SetScenaFlags(0xD65)
-    SetScenaFlags(0xD64)
-    SetScenaFlags(0xD63)
-    SetScenaFlags(0xD62)
-    SetScenaFlags(0xD61)
-    SetScenaFlags(0xD60)
-    SetScenaFlags(0xD5F)
-    SetScenaFlags(0xD5E)
 
     def _loc_20883(): pass
 
@@ -29989,7 +29609,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20DC5')
 
-    Call(0x0B, 'EV_Party_Set')
+    Call(ScriptId.Current, 'EV_Party_Set')
 
     Switch(
         (
@@ -30334,8 +29954,8 @@ def EV_DoJump_YR_SUB():
 # id: 0x0046 offset: 0x210E4
 @scena.Code('TK_System_Debug')
 def TK_System_Debug():
-    Call(0x0A, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
-    MenuCmd(0x00, 0x00, 0x0018, 40.000000, 0x00000000)
+    Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
+    MenuCmd(0x00, 0x00, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, 'アクティブボイステスト', 0x00000000)
     MenuCmd(0x01, 0x00, 'ポートレートテスト', 0x00000001)
     MenuCmd(0x01, 0x00, 'ボタンメニュー', 0x00000005)
@@ -30420,7 +30040,7 @@ def TK_System_Debug():
 
     label('loc_216F4')
 
-    Call(0x0B, 'TK_System_Debug_AVoice')
+    Call(ScriptId.Current, 'TK_System_Debug_AVoice')
 
     Jump('loc_22B77')
 
@@ -30428,7 +30048,7 @@ def TK_System_Debug():
 
     label('loc_21713')
 
-    Call(0x0B, 'TK_System_Debug_Portrait')
+    Call(ScriptId.Current, 'TK_System_Debug_Portrait')
 
     Jump('loc_22B77')
 
@@ -30436,7 +30056,7 @@ def TK_System_Debug():
 
     label('loc_21734')
 
-    Call(0x0B, 'TK_System_Debug_ButtonMenu')
+    Call(ScriptId.Current, 'TK_System_Debug_ButtonMenu')
 
     Jump('loc_22B77')
 
@@ -30444,7 +30064,7 @@ def TK_System_Debug():
 
     label('loc_21757')
 
-    Call(0x0B, 'TK_System_Debug_StringsTest')
+    Call(ScriptId.Current, 'TK_System_Debug_StringsTest')
 
     Jump('loc_22B77')
 
@@ -30452,7 +30072,7 @@ def TK_System_Debug():
 
     label('loc_2177B')
 
-    Call(0x0B, 'TK_System_Debug_Bustshot')
+    Call(ScriptId.Current, 'TK_System_Debug_Bustshot')
 
     Jump('loc_22B77')
 
@@ -30460,7 +30080,7 @@ def TK_System_Debug():
 
     label('loc_2179C')
 
-    Call(0x0B, 'TK_System_Debug_Monotone')
+    Call(ScriptId.Current, 'TK_System_Debug_Monotone')
 
     Jump('loc_22B77')
 
@@ -30468,7 +30088,7 @@ def TK_System_Debug():
 
     label('loc_217BD')
 
-    Call(0x0B, 'TK_System_Debug_ChrColor')
+    Call(ScriptId.Current, 'TK_System_Debug_ChrColor')
 
     Jump('loc_22B77')
 
@@ -30476,7 +30096,7 @@ def TK_System_Debug():
 
     label('loc_217DE')
 
-    Call(0x0B, 'TK_System_Debug_HiarColor')
+    Call(ScriptId.Current, 'TK_System_Debug_HiarColor')
 
     Jump('loc_22B77')
 
@@ -30484,9 +30104,9 @@ def TK_System_Debug():
 
     label('loc_21800')
 
-    OP_6B(0x06, 0x0000, 0x0000, 90.000000, 0x00000000, 0x00000000)
-    OP_16(0x03E8)
-    OP_6B(0x07, 0x0000, 0x0000, 0.000000, 0x00000000, 0x00000000)
+    OP_6B(0x06, 0x0000, 0x0000, 90.0, 0x00000000, 0x00000000)
+    Sleep(1000)
+    OP_6B(0x07, 0x0000, 0x0000, 0.0, 0x00000000, 0x00000000)
 
     Jump('loc_22B77')
 
@@ -30494,7 +30114,7 @@ def TK_System_Debug():
 
     label('loc_2182C')
 
-    Call(0x0B, 'TK_System_Debug_popup')
+    Call(ScriptId.Current, 'TK_System_Debug_popup')
 
     Jump('loc_22B77')
 
@@ -30502,7 +30122,7 @@ def TK_System_Debug():
 
     label('loc_2184A')
 
-    Call(0x0B, 'TK_System_Debug_FaceCmd')
+    Call(ScriptId.Current, 'TK_System_Debug_FaceCmd')
 
     Jump('loc_22B77')
 
@@ -30510,7 +30130,7 @@ def TK_System_Debug():
 
     label('loc_2186A')
 
-    Call(0x0B, 'TK_System_Debug_Message')
+    Call(ScriptId.Current, 'TK_System_Debug_Message')
 
     Jump('loc_22B77')
 
@@ -30518,7 +30138,7 @@ def TK_System_Debug():
 
     label('loc_2188A')
 
-    Call(0x0B, 'TK_System_Debug_Emotest')
+    Call(ScriptId.Current, 'TK_System_Debug_Emotest')
 
     Jump('loc_22B77')
 
@@ -30527,139 +30147,139 @@ def TK_System_Debug():
     label('loc_218AA')
 
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M1490', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T0000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T0210', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T0400', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0100', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0200', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0300', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0400', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T1400', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0600', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T2000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_F0000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0200', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C1000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C1080', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_R2400', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M1200', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T9200', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T4000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T3000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_F2000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_F1000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_R3400', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M2010', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2400', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2600', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C3000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2010', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2420', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2430', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2430_01', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2800', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2400_01', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M3200', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C3200', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C3410', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C3600', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M4000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M4000_01', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M4040', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C3610', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0000_01', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0000_02', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0400', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0600', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0800', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0820', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M1020', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M1090', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M1490_01', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T0200', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T1200', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T1000', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T1000_01', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T3400', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T3600', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T3200', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T3000_01', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2200', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0180', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0280', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0380', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0480', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M3420', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T2200', 0x00, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
 
     Jump('loc_22B77')
 
@@ -30668,151 +30288,151 @@ def TK_System_Debug():
     label('loc_21F0F')
 
     OP_5A(0x04B0, 0x0320, 'I_CVIS0001', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0002', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0003', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0004', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0005', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0006', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0007', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0008', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0009', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0010', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0011', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0012', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0013', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0014', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0015', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0016', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0018', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0019', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0020', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0021', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0022', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0023', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0025', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0026', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0027', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0028', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0032', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0033', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0035', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0036', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0037', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0038', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0039', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0041', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0042', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0043', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0044', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0045', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0046', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0047', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0048', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0049', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0050', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0061', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0062', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0063', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0065', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0066', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0072', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0073', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0074', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0075', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0076', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0077', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0078', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0082', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0084', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0085', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0086', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0087', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0088', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0092', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0094', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0098', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0102', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0103', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0107', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0109', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0000', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0072', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0092', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0065', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0017', 0x01, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
 
     Jump('loc_22B77')
 
@@ -30821,101 +30441,101 @@ def TK_System_Debug():
     label('loc_2255A')
 
     OP_5A(0x04B0, 0x0320, 'I_CVIS0064', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0083', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0095', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0096', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0097', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1000', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1001', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1002', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1003', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1004', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1005', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1006', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1007', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0030', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0031', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0034', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0067', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0068', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0069', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0071', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0080', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0081', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0093', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0099', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0100', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0104', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0105', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0106', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0108', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0024', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0029', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0070', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0079', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0101', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0110', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0111', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0112', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1008', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1009', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1010', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1011', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1012', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1013', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1014', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1015', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS1016', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0089', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
     OP_5A(0x04B0, 0x0320, 'I_CVIS0091', 0x02, 0x00, 0x00)
-    OP_16(0x1B58)
+    Sleep(7000)
 
     Jump('loc_22B77')
 
@@ -30923,7 +30543,7 @@ def TK_System_Debug():
 
     label('loc_2297F')
 
-    Call(0x0B, 'TK_System_Debug_BlurTest')
+    Call(ScriptId.Current, 'TK_System_Debug_BlurTest')
 
     Jump('loc_22B77')
 
@@ -30931,7 +30551,7 @@ def TK_System_Debug():
 
     label('loc_229A0')
 
-    Call(0x0B, 'TK_System_CameraVibrateTest')
+    Call(ScriptId.Current, 'TK_System_CameraVibrateTest')
 
     Jump('loc_22B77')
 
@@ -30939,7 +30559,7 @@ def TK_System_Debug():
 
     label('loc_229C4')
 
-    OP_16(0x012C)
+    Sleep(300)
     OP_C2(0x00)
     OP_C2(0x01)
 
@@ -30950,9 +30570,9 @@ def TK_System_Debug():
     label('loc_229D0')
 
     MenuCmd(0x10, 0x00)
-    OP_43(0x00, 0x03E8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
-    Call(0x0A, 'FC_TalkEnd_NoCamMove')
+    Fade(0x00, 1000, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
+    Call(ScriptId.System, 'FC_TalkEnd_NoCamMove')
     OP_AC(0x01, 0x00009800)
     OP_14(0x04000000)
 
@@ -30962,7 +30582,7 @@ def TK_System_Debug():
 
     label('loc_22A0B')
 
-    Call(0x0B, 'TK_NoticeLog_Test')
+    Call(ScriptId.Current, 'TK_NoticeLog_Test')
 
     Jump('loc_22B77')
 
@@ -30970,7 +30590,7 @@ def TK_System_Debug():
 
     label('loc_22A25')
 
-    Call(0x0B, 'TK_TeamSel_Test')
+    Call(ScriptId.Current, 'TK_TeamSel_Test')
 
     Jump('loc_22B77')
 
@@ -30978,7 +30598,7 @@ def TK_System_Debug():
 
     label('loc_22A3D')
 
-    Call(0x0B, 'TK_ActMenu_Test')
+    Call(ScriptId.Current, 'TK_ActMenu_Test')
 
     Jump('loc_22B77')
 
@@ -30986,7 +30606,7 @@ def TK_System_Debug():
 
     label('loc_22A55')
 
-    Call(0x0B, 'TK_LinkLevel_Test')
+    Call(ScriptId.Current, 'TK_LinkLevel_Test')
 
     Jump('loc_22B77')
 
@@ -30994,7 +30614,7 @@ def TK_System_Debug():
 
     label('loc_22A6F')
 
-    Call(0x0B, 'TK_LikeLevel_Test')
+    Call(ScriptId.Current, 'TK_LikeLevel_Test')
 
     Jump('loc_22B77')
 
@@ -31002,7 +30622,7 @@ def TK_System_Debug():
 
     label('loc_22A89')
 
-    Call(0x0B, 'TK_Calendar_Test')
+    Call(ScriptId.Current, 'TK_Calendar_Test')
 
     Jump('loc_22B77')
 
@@ -31010,7 +30630,7 @@ def TK_System_Debug():
 
     label('loc_22AA2')
 
-    Call(0x0B, 'TK_CameraCommand_Test')
+    Call(ScriptId.Current, 'TK_CameraCommand_Test')
 
     Jump('loc_22B77')
 
@@ -31018,7 +30638,7 @@ def TK_System_Debug():
 
     label('loc_22AC0')
 
-    Call(0x0B, 'TK_LookCommand_Test')
+    Call(ScriptId.Current, 'TK_LookCommand_Test')
 
     Jump('loc_22B77')
 
@@ -31026,7 +30646,7 @@ def TK_System_Debug():
 
     label('loc_22ADC')
 
-    Call(0x0B, 'TK_ActiveTodo_Test')
+    Call(ScriptId.Current, 'TK_ActiveTodo_Test')
 
     Jump('loc_22B77')
 
@@ -31034,7 +30654,7 @@ def TK_System_Debug():
 
     label('loc_22AF7')
 
-    Call(0x0B, 'TK_VibratePad_Test')
+    Call(ScriptId.Current, 'TK_VibratePad_Test')
 
     Jump('loc_22B77')
 
@@ -31042,7 +30662,7 @@ def TK_System_Debug():
 
     label('loc_22B12')
 
-    Call(0x0B, 'TK_StatusUp_Test')
+    Call(ScriptId.Current, 'TK_StatusUp_Test')
 
     Jump('loc_22B77')
 
@@ -31050,7 +30670,7 @@ def TK_System_Debug():
 
     label('loc_22B2B')
 
-    Call(0x0B, 'TK_ChapterSave_Test')
+    Call(ScriptId.Current, 'TK_ChapterSave_Test')
 
     Jump('loc_22B77')
 
@@ -31058,7 +30678,7 @@ def TK_System_Debug():
 
     label('loc_22B47')
 
-    Call(0x0B, 'TK_GetSCraft_Test')
+    Call(ScriptId.Current, 'TK_GetSCraft_Test')
 
     Jump('loc_22B77')
 
@@ -31066,7 +30686,7 @@ def TK_System_Debug():
 
     label('loc_22B61')
 
-    Call(0x0B, 'TK_Title_Test')
+    Call(ScriptId.Current, 'TK_Title_Test')
 
     Jump('loc_22B77')
 
@@ -31074,14 +30694,14 @@ def TK_System_Debug():
 
     label('loc_22B77')
 
-    Call(0x0A, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
 
     Return()
 
 # id: 0x0047 offset: 0x22B8C
 @scena.Code('TK_System_Debug_AVoice')
 def TK_System_Debug_AVoice():
-    MenuCmd(0x00, 0x00, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '短いセリフ', 0x00000000)
     MenuCmd(0x01, 0x00, '長いセリフ', 0x00000001)
     MenuCmd(0x01, 0x00, '顔なしセリフ（全員の掛け声etc）', 0x00000002)
@@ -31123,7 +30743,7 @@ def TK_System_Debug_AVoice():
     label('loc_22C69')
 
     SetScenaFlags(ScenaFlag(0x016D, 6, 0xB6E))
-    OP_11(0x0B6F)
+    ClearScenaFlags(ScenaFlag(0x016D, 7, 0xB6F))
     OP_74(0x0067, 0x00, 0x00000000)
 
     Jump('loc_22C8F')
@@ -31133,7 +30753,7 @@ def TK_System_Debug_AVoice():
     label('loc_22C7C')
 
     SetScenaFlags(ScenaFlag(0x016E, 2, 0xB72))
-    OP_11(0x0B73)
+    ClearScenaFlags(ScenaFlag(0x016E, 3, 0xB73))
     OP_74(0x0069, 0x00, 0x00000000)
 
     Jump('loc_22C8F')
@@ -31147,25 +30767,25 @@ def TK_System_Debug_AVoice():
 # id: 0x0048 offset: 0x22C90
 @scena.Code('TK_System_Debug_Portrait')
 def TK_System_Debug_Portrait():
-    OP_55(0x00, 0x0000, 0x0000, 0x1000, 0x1000, 0x0000, 0x0000, 0x0000, 0x0000, 0x1000, 0x1000, 1.000000, 1.000000, 1.000000, 0.000000, 0x00, 0x00, 'I_MG08_CARD', '')
-    OP_56(0x00, 0x03, 0x00, 1.000000, 1.000000, 1.000000, 1.000000, 300.000000)
-    OP_16(0x03E8)
+    OP_55(0x00, 0x0000, 0x0000, 0x1000, 0x1000, 0x0000, 0x0000, 0x0000, 0x0000, 0x1000, 0x1000, 1.0, 1.0, 1.0, 0.0, 0x00, 0x00, 'I_MG08_CARD', '')
+    OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
+    Sleep(1000)
     OP_62()
-    OP_56(0x00, 0x01, 0x00, 0.300000, 0.300000, 0.000000, 0.000000, 300.000000)
-    OP_16(0x03E8)
+    OP_56(0x00, 0x01, 0x00, 0.3, 0.3, 0.0, 0.0, 300.0)
+    Sleep(1000)
     OP_62()
     OP_58(0x00)
-    OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.000000, 1.000000, 1.000000, 0.000000, 0x00, 0x00, 'I_VIS999', '')
-    OP_56(0x00, 0x03, 0x00, 1.000000, 1.000000, 1.000000, 1.000000, 300.000000)
-    OP_16(0x03E8)
+    OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.0, 1.0, 1.0, 0.0, 0x00, 0x00, 'I_VIS999', '')
+    OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
+    Sleep(1000)
     OP_62()
-    OP_56(0x00, 0x00, 0x00, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000)
-    OP_56(0x00, 0x00, 0x00, -1800.000000, 0.000000, 30000.000000, 0.000000, 0.000000)
+    OP_56(0x00, 0x00, 0x00, 0.0, 0.0, 0.0, 0.0, 0.0)
+    OP_56(0x00, 0x00, 0x00, -1800.0, 0.0, 30000.0, 0.0, 0.0)
     OP_57(0x00, 0x03)
     OP_62()
     OP_58(0x00)
-    OP_55(0x00, 0x0000, 0x0000, 0x0600, 0x0400, 0x0153, 0x003C, 0x0000, 0x0000, 0x0600, 0x0400, 1.000000, 1.000000, 1.000000, 0.000000, 0x01, 0x00, 'I_NOTE_HELP000', '')
-    OP_56(0x00, 0x03, 0x00, 1.000000, 1.000000, 1.000000, 1.000000, 500.000000)
+    OP_55(0x00, 0x0000, 0x0000, 0x0600, 0x0400, 0x0153, 0x003C, 0x0000, 0x0000, 0x0600, 0x0400, 1.0, 1.0, 1.0, 0.0, 0x01, 0x00, 'I_NOTE_HELP000', '')
+    OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 500.0)
     OP_57(0x00, 0x03)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
 
@@ -31178,14 +30798,14 @@ def TK_System_Debug_Portrait():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_62()
-    OP_56(0x00, 0x03, 0x00, 1.000000, 1.000000, 1.000000, 0.000000, 500.000000)
+    OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 0.0, 500.0)
     OP_57(0x00, 0x03)
     OP_58(0x00)
-    OP_55(0x00, 0x0000, 0x0000, 0x0400, 0x0400, 0x0000, 0x0000, 0x0000, 0x0000, 0x0400, 0x0400, 1.000000, 1.000000, 1.000000, 0.000000, 0x00, 0x00, 'I_ICONS', 'I_SYSTEM')
-    OP_56(0x00, 0x03, 0x00, 1.000000, 1.000000, 1.000000, 1.000000, 300.000000)
+    OP_55(0x00, 0x0000, 0x0000, 0x0400, 0x0400, 0x0000, 0x0000, 0x0000, 0x0000, 0x0400, 0x0400, 1.0, 1.0, 1.0, 0.0, 0x00, 0x00, 'I_ICONS', 'I_SYSTEM')
+    OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
     OP_57(0x00, 0x03)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
 
@@ -31198,16 +30818,16 @@ def TK_System_Debug_Portrait():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_62()
     OP_58(0x00)
-    OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.000000, 1.000000, 1.000000, 0.000000, 0x00, 0x02, 'I_VIS9100', '')
-    OP_56(0x00, 0x03, 0x00, 1.000000, 1.000000, 1.000000, 1.000000, 300.000000)
-    OP_16(0x03E8)
+    OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.0, 1.0, 1.0, 0.0, 0x00, 0x02, 'I_VIS9100', '')
+    OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
+    Sleep(1000)
     OP_62()
-    OP_56(0x00, 0x03, 0x00, 1.000000, 1.000000, 1.000000, 0.000000, 300.000000)
-    OP_16(0x012C)
+    OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 0.0, 300.0)
+    Sleep(300)
     OP_58(0x00)
 
     Return()
@@ -31258,7 +30878,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -31281,7 +30901,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -31295,7 +30915,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31310,7 +30930,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31322,7 +30942,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31334,7 +30954,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31347,7 +30967,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31359,7 +30979,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31370,7 +30990,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31381,7 +31001,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31393,7 +31013,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31406,7 +31026,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31420,7 +31040,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31431,7 +31051,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31442,7 +31062,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31453,7 +31073,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31464,7 +31084,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     ChrTalk(
         0xF011,
@@ -31475,7 +31095,7 @@ def TK_System_Debug_StringsTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Return()
 
@@ -31483,44 +31103,20 @@ def TK_System_Debug_StringsTest():
 @scena.Code('TK_System_Debug_Bustshot')
 def TK_System_Debug_Bustshot():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-
-    CreateChr(
-        0x03FB,
-        'C_CHR999',
-        'アリサ',
-        '',
-        0x00,
-        0x00000000,
-        0x00000000,
-        0.000000,
-        0.000000,
-        0.000000,
-        0.000000,
-        1.000000,
-        1.600000,
-        0.090000,
-        'chr001',
-        '',
-        0xFFFFFFFF,
-        0x00,
-        0.000000,
-        0.000000,
-        0x0000,
-    )
-
+    CreateChr(0x03FB, 'C_CHR999', 'アリサ', '', 0x00, 0x00000000, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, 'chr001', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     OP_38(0xF011, 0x00, 0x00, 'AniWait')
     OP_38(0x03FB, 0x00, 0x00, 'AniWait')
-    OP_4F(0x00, 0xF011, 30.000000, 0xFE3E, 0x0010, 0.000000, -0.140000)
-    OP_4F(0x00, 0x03FB, -30.000000, 0x01C2, 0x0010, 0.000000, -0.130000)
-    OP_4F(0x03, 0xF011, 1.000000, 1.000000, 1.000000, 0.000000, 0x0000, 0x03)
-    OP_4F(0x03, 0x03FB, 1.000000, 1.000000, 1.000000, 0.000000, 0x0000, 0x03)
-    OP_4F(0x03, 0xF011, 1.000000, 1.000000, 1.000000, 1.000000, 0x03E8, 0x03)
-    OP_4F(0x03, 0x03FB, 1.000000, 1.000000, 1.000000, 1.000000, 0x03E8, 0x03)
-    OP_16(0x03E8)
+    OP_4F(0x00, 0xF011, 30.0, 0xFE3E, 0x0010, 0.0, -0.14)
+    OP_4F(0x00, 0x03FB, -30.0, 0x01C2, 0x0010, 0.0, -0.13)
+    OP_4F(0x03, 0xF011, 1.0, 1.0, 1.0, 0.0, 0x0000, 0x03)
+    OP_4F(0x03, 0x03FB, 1.0, 1.0, 1.0, 0.0, 0x0000, 0x03)
+    OP_4F(0x03, 0xF011, 1.0, 1.0, 1.0, 1.0, 0x03E8, 0x03)
+    OP_4F(0x03, 0x03FB, 1.0, 1.0, 1.0, 1.0, 0x03E8, 0x03)
+    Sleep(1000)
     OP_23(0x01, 0xFFFF, 0x02EE, 0x00, 0x0A)
     OP_23(0x02, 0x0384, 0x0104)
-    OP_43(0x0A, 0x012C)
-    OP_43(0x0C, 0x0000)
+    Fade(0x0A, 300)
+    Fade(0x0C, 0)
     SetChrFace(0x04, 0x03FB, '#E_I#M_0')
 
     ChrTalk(
@@ -31541,7 +31137,7 @@ def TK_System_Debug_Bustshot():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     SetChrFace(0x04, 0xF011, '#E_F#M_9')
 
     ChrTalk(
@@ -31562,15 +31158,15 @@ def TK_System_Debug_Bustshot():
         ),
     )
 
-    OP_26()
-    OP_4F(0x03, 0xF011, 1.000000, 1.000000, 1.000000, 0.000000, 0x03E8, 0x03)
-    OP_4F(0x03, 0x03FB, 1.000000, 1.000000, 1.000000, 0.000000, 0x03E8, 0x03)
-    OP_16(0x03E8)
-    OP_43(0x0B, 0x012C)
-    OP_43(0x0C, 0x0000)
+    WaitForMsg()
+    OP_4F(0x03, 0xF011, 1.0, 1.0, 1.0, 0.0, 0x03E8, 0x03)
+    OP_4F(0x03, 0x03FB, 1.0, 1.0, 1.0, 0.0, 0x03E8, 0x03)
+    Sleep(1000)
+    Fade(0x0B, 300)
+    Fade(0x0C, 0)
     OP_4F(0x01, 0xF011)
     OP_4F(0x01, 0x03FB)
-    OP_77(0x03FB)
+    ReleaseChr(0x03FB)
     OP_21(0x00)
 
     Return()
@@ -31586,8 +31182,8 @@ def TK_System_Debug_Monotone():
         'loc_23C1A',
     )
 
-    OP_07(0x02, (0xDD, 'monotone: off'))
-    OP_84(0x00, 0.500000, 0.500000, 0.500000, 0.000000)
+    DebugLog(0x02, (0xDD, 'monotone: off'))
+    OP_84(0x00, 0.5, 0.5, 0.5, 0.0)
     OP_14(0x80000000)
     OP_84(0x03, 0xF000, '', 0x01)
     OP_84(0x03, 0xF001, '', 0x01)
@@ -31603,7 +31199,7 @@ def TK_System_Debug_Monotone():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_23C7C')
 
@@ -31611,7 +31207,7 @@ def TK_System_Debug_Monotone():
 
     label('loc_23C1A')
 
-    OP_07(0x02, (0xDD, 'monotone: on'))
+    DebugLog(0x02, (0xDD, 'monotone: on'))
     OP_13(0x80000000)
     OP_84(0x03, 0xF000, '', 0x02)
     OP_84(0x03, 0xF001, '', 0x02)
@@ -31628,7 +31224,7 @@ def TK_System_Debug_Monotone():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     def _loc_23C7C(): pass
 
@@ -31649,8 +31245,8 @@ def TK_System_Debug_ChrColor():
         'loc_23CBD',
     )
 
-    OP_4B(0xF011, 1.000000, 1.000000, 1.000000, 1.000000, 0x03E8, 0x03)
-    OP_4C(0xF011, 0.000000, 0.000000, 0.000000, 0x03E8, 0x03)
+    ChrSetRGBA(0xF011, 1.0, 1.0, 1.0, 1.0, 1000, 0x03)
+    OP_4C(0xF011, 0.0, 0.0, 0.0, 0x03E8, 0x03)
 
     Jump('loc_23CE5')
 
@@ -31658,8 +31254,8 @@ def TK_System_Debug_ChrColor():
 
     label('loc_23CBD')
 
-    OP_4B(0xF011, 1.000000, 1.000000, 1.000000, 1.000000, 0x03E8, 0x03)
-    OP_4C(0xF011, 1.000000, 1.000000, 1.000000, 0x03E8, 0x03)
+    ChrSetRGBA(0xF011, 1.0, 1.0, 1.0, 1.0, 1000, 0x03)
+    OP_4C(0xF011, 1.0, 1.0, 1.0, 0x03E8, 0x03)
 
     def _loc_23CE5(): pass
 
@@ -31702,7 +31298,7 @@ def TK_System_Debug_HiarColor():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 'リィン：髪の毛色：初期     change_face_asset() ', 0x00000064)
     MenuCmd(0x01, 0x01, 'リィン：髪の毛色：神気合一 change_face_asset() ', 0x00000065)
     MenuCmd(0x01, 0x01, 'ユウナ：髪の毛色：初期     set_equip() ', 0x0000006E)
@@ -31727,12 +31323,7 @@ def TK_System_Debug_HiarColor():
 
     label('loc_23E48')
 
-    ChrAnimeClipCtrl(
-        0x0B,
-        0x0000,
-        '',
-        '',
-    )
+    ChrAnimeClipCtrl(0x0B, ChrTable['黎恩'], '', '')
 
     Jump('loc_23E97')
 
@@ -31740,12 +31331,7 @@ def TK_System_Debug_HiarColor():
 
     label('loc_23E53')
 
-    ChrAnimeClipCtrl(
-        0x0B,
-        0x0000,
-        'FC_CHR000_C50',
-        '',
-    )
+    ChrAnimeClipCtrl(0x0B, ChrTable['黎恩'], 'FC_CHR000_C50', '')
 
     Jump('loc_23E97')
 
@@ -31761,7 +31347,7 @@ def TK_System_Debug_HiarColor():
 
     label('loc_23E75')
 
-    OP_6F(0x00, 0x043C, 0x00000001)
+    AddItem(0x00, 0x043C, 1)
     OP_70(0x00, 0x000A, 0x043C, 0xFF)
 
     Jump('loc_23E97')
@@ -31830,7 +31416,7 @@ def TK_System_Debug_Message():
         ),
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, 'ウィンドウサイズ可変', 0x00000064)
     MenuCmd(0x01, 0x00, 'ウィンドウサイズ固定', 0x00000065)
     MenuCmd(0x01, 0x00, 'ウィンドウ位置固定', 0x00000066)
@@ -31874,7 +31460,7 @@ def TK_System_Debug_Message():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_24384')
 
@@ -31899,7 +31485,7 @@ def TK_System_Debug_Message():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_24384')
 
@@ -31919,7 +31505,7 @@ def TK_System_Debug_Message():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_24384')
 
@@ -31939,7 +31525,7 @@ def TK_System_Debug_Message():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_24384')
 
@@ -31961,7 +31547,7 @@ def TK_System_Debug_Message():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_24384')
 
@@ -31969,7 +31555,7 @@ def TK_System_Debug_Message():
 
     label('loc_242E3')
 
-    OP_11(0x0326)
+    ClearScenaFlags(ScenaFlag(0x0064, 6, 0x326))
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31983,7 +31569,7 @@ def TK_System_Debug_Message():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_24384')
 
@@ -32020,8 +31606,8 @@ def TK_System_Debug_Message():
 @scena.Code('TK_System_Debug_popup')
 def TK_System_Debug_popup():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-    OP_45(0xF011, 0.000000, 0.000000, 0.000000, 0x0000, 0x0001)
-    OP_45(0xF011, 0.000000, 0.000000, 0.000000, 0x0000, 0x0000)
+    OP_45(0xF011, 0.0, 0.0, 0.0, 0x0000, 0x0001)
+    OP_45(0xF011, 0.0, 0.0, 0.0, 0x0000, 0x0000)
     OP_46(0x00, 0xF011, 0xFFFF, 0x0000)
     OP_23(0x01, 0x00F0, 0x020D, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
@@ -32035,7 +31621,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x005A, 0x0276, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32048,7 +31634,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x0186, 0x01A4, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32061,7 +31647,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x005A, 0x01A4, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32074,7 +31660,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x00F0, 0x020D, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32087,7 +31673,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x005A, 0x0276, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32100,7 +31686,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x0186, 0x01A4, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32113,7 +31699,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x005A, 0x01A4, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32126,7 +31712,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x00F0, 0x0357, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32139,7 +31725,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x005A, 0x0357, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32152,7 +31738,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x0186, 0x03C0, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32165,7 +31751,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x005A, 0x03C0, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32178,7 +31764,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x00F0, 0x0357, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32191,7 +31777,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x005A, 0x0357, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32204,7 +31790,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x0186, 0x03C0, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32217,7 +31803,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0x005A, 0x03C0, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32230,7 +31816,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0xFFFF, 0x00D2, 0x05, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32243,7 +31829,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0xFFFF, 0x014A, 0x05, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32256,7 +31842,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0xFFFF, 0x0276, 0x05, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32269,7 +31855,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0xFFFF, 0x02EE, 0x05, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32282,7 +31868,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0xFFFF, 0x00D2, 0x06, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32295,7 +31881,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0xFFFF, 0x014A, 0x06, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32308,7 +31894,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0xFFFF, 0x0276, 0x06, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32321,7 +31907,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0xFFFF, 0x02EE, 0x06, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32334,7 +31920,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_23(0x01, 0xFFFF, 0x02EE, 0x06, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
@@ -32347,7 +31933,7 @@ def TK_System_Debug_popup():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_21(0x00)
 
     Return()
@@ -32372,7 +31958,7 @@ def TK_System_Debug_FaceCmd():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     SetChrFace(0x04, 0xFFFE, '#E_0#M_0#B_0')
 
     ChrTalk(
@@ -32384,7 +31970,7 @@ def TK_System_Debug_FaceCmd():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     SetChrFace(0x04, 0xF011, '#E_0#M_0#B_0')
 
     ChrTalk(
@@ -32396,7 +31982,7 @@ def TK_System_Debug_FaceCmd():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_63(0xFFFF, 0x01)
     SetChrFace(0x04, 0xF011, '#E_0#M_0#B_0')
 
@@ -32409,7 +31995,7 @@ def TK_System_Debug_FaceCmd():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_63(0xFFFF, 0x01)
     SetChrFace(0x04, 0xF011, '#E_0#M_0#B_0')
 
@@ -32422,7 +32008,7 @@ def TK_System_Debug_FaceCmd():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Return()
 
@@ -32430,11 +32016,11 @@ def TK_System_Debug_FaceCmd():
 @scena.Code('TK_System_Debug_Emotest')
 def TK_System_Debug_Emotest():
     CameraCtrl(0x08, 0x00, 0x0000)
-    CameraCtrl(0x04, 0x03, 0.000000, 0.000000, 0.000000, 0x0000, 0x01)
+    CameraRotate(0.0, 0.0, 0.0, 0, 0x01)
     CameraCtrl(0x12, 0x0004)
     CameraCtrl(0x12, 0x0010)
     CameraCtrl(0x12, 0x0040)
-    OP_35(0x00, 0xFFFE, 0x00004000)
+    ChrSetPhysicsFlags(0xFFFE, 0x00004000)
 
     OP_18(
         0xF7,
@@ -32459,7 +32045,7 @@ def TK_System_Debug_Emotest():
         'loc_24DB1',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '通常エモーション', 0x00000000)
     MenuCmd(0x01, 0x01, 'バストショットエモーション右向き', 0x00000001)
     MenuCmd(0x01, 0x01, 'バストショットエモーション左向き', 0x00000002)
@@ -32486,7 +32072,7 @@ def TK_System_Debug_Emotest():
         'loc_24B2F',
     )
 
-    Call(0x0B, 'SUB_EmotionTest')
+    Call(ScriptId.Current, 'SUB_EmotionTest')
 
     OP_18(
         0xF7,
@@ -32513,8 +32099,8 @@ def TK_System_Debug_Emotest():
         'loc_24B72',
     )
 
-    OP_4F(0x00, 0xFFFE, 30.000000, 0x00FA, 0x0010, 0.000000, -0.100000)
-    Call(0x0B, 'SUB_EmotionTest')
+    OP_4F(0x00, 0xFFFE, 30.0, 0x00FA, 0x0010, 0.0, -0.1)
+    Call(ScriptId.Current, 'SUB_EmotionTest')
 
     OP_18(
         0xF7,
@@ -32541,8 +32127,8 @@ def TK_System_Debug_Emotest():
         'loc_24BB5',
     )
 
-    OP_4F(0x00, 0xFFFE, -30.000000, 0x00FA, 0x0010, 0.000000, -0.100000)
-    Call(0x0B, 'SUB_EmotionTest')
+    OP_4F(0x00, 0xFFFE, -30.0, 0x00FA, 0x0010, 0.0, -0.1)
+    Call(ScriptId.Current, 'SUB_EmotionTest')
 
     OP_18(
         0xF7,
@@ -32569,10 +32155,10 @@ def TK_System_Debug_Emotest():
         'loc_24C70',
     )
 
-    Call(0x0A, 'FC_BustShotCreateKizuna', (0xFF, 0x0, 0x0), (0xFF, 0xFFFE, 0x0))
+    Call(ScriptId.System, 'FC_BustShotCreateKizuna', (0xFF, 0x0, 0x0), (0xFF, 0xFFFE, 0x0))
     OP_BC(0x08, 0x0000, (0xFF, 0xFFFF, 0x0), 0x00000001)
-    Call(0x0A, 'FC_BustShotShow', (0xFF, 0x0, 0x0), (0xFF, 0xFFFE, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0))
-    Call(0x0B, 'SUB_EmotionTest')
+    Call(ScriptId.System, 'FC_BustShotShow', (0xFF, 0x0, 0x0), (0xFF, 0xFFFE, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0))
+    Call(ScriptId.Current, 'SUB_EmotionTest')
 
     OP_18(
         0xF7,
@@ -32618,8 +32204,8 @@ def TK_System_Debug_Emotest():
         'loc_24CAA',
     )
 
-    OP_35(0x01, 0xFFFE, 0x00002000)
-    OP_3D(0xFFFE, 180.000000, 10.000000, 0x00)
+    ChrClearPhysicsFlags(0xFFFE, 0x00002000)
+    OP_3D(0xFFFE, 180.0, 10.0, 0x00)
 
     Jump('loc_24DA8')
 
@@ -32637,7 +32223,7 @@ def TK_System_Debug_Emotest():
         'loc_24CC9',
     )
 
-    OP_3D(0xFFFE, -90.000000, 10.000000, 0x00)
+    OP_3D(0xFFFE, -90.0, 10.0, 0x00)
 
     Jump('loc_24DA8')
 
@@ -32655,7 +32241,7 @@ def TK_System_Debug_Emotest():
         'loc_24CE8',
     )
 
-    OP_3D(0xFFFE, 90.000000, 10.000000, 0x00)
+    OP_3D(0xFFFE, 90.0, 10.0, 0x00)
 
     Jump('loc_24DA8')
 
@@ -32673,7 +32259,7 @@ def TK_System_Debug_Emotest():
         'loc_24D07',
     )
 
-    OP_3D(0xFFFE, 0.000000, 10.000000, 0x00)
+    OP_3D(0xFFFE, 0.0, 10.0, 0x00)
 
     Jump('loc_24DA8')
 
@@ -32691,7 +32277,7 @@ def TK_System_Debug_Emotest():
         'loc_24D2D',
     )
 
-    OP_45(0xFFFE, -45.000000, 0.000000, 0.000000, 0x012C, 0x0000)
+    OP_45(0xFFFE, -45.0, 0.0, 0.0, 0x012C, 0x0000)
 
     Jump('loc_24DA8')
 
@@ -32709,7 +32295,7 @@ def TK_System_Debug_Emotest():
         'loc_24D53',
     )
 
-    OP_45(0xFFFE, 45.000000, 0.000000, 0.000000, 0x012C, 0x0000)
+    OP_45(0xFFFE, 45.0, 0.0, 0.0, 0x012C, 0x0000)
 
     Jump('loc_24DA8')
 
@@ -32727,7 +32313,7 @@ def TK_System_Debug_Emotest():
         'loc_24D79',
     )
 
-    OP_45(0xFFFE, 0.000000, 45.000000, 0.000000, 0x012C, 0x0000)
+    OP_45(0xFFFE, 0.0, 45.0, 0.0, 0x012C, 0x0000)
 
     Jump('loc_24DA8')
 
@@ -32745,7 +32331,7 @@ def TK_System_Debug_Emotest():
         'loc_24D9F',
     )
 
-    OP_45(0xFFFE, 0.000000, 0.000000, 0.000000, 0x012C, 0x0000)
+    OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x012C, 0x0000)
 
     Jump('loc_24DA8')
 
@@ -32775,7 +32361,7 @@ def TK_System_Debug_Emotest():
     label('loc_24DB1')
 
     MenuCmd(0x03, 0x01)
-    OP_35(0x01, 0xFFFE, 0x00004000)
+    ChrClearPhysicsFlags(0xFFFE, 0x00004000)
 
     Return()
 
@@ -32805,7 +32391,7 @@ def SUB_EmotionTest():
         'loc_254CF',
     )
 
-    MenuCmd(0x00, 0x00, 0x0014, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0014, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '？', 0x00000001)
     MenuCmd(0x01, 0x00, '！', 0x00000002)
     MenuCmd(0x01, 0x00, '！？', 0x00000003)
@@ -32875,7 +32461,7 @@ def SUB_EmotionTest():
         'loc_2506A',
     )
 
-    OP_44(0xFFFE, 0x00, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x00, 0.15, 0x0000, 0.0)
 
     Jump('loc_25078')
 
@@ -32883,7 +32469,7 @@ def SUB_EmotionTest():
 
     label('loc_2506A')
 
-    OP_44(0xFFFE, 0x00, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x00, 0.1, 0x0004, 0.0)
 
     def _loc_25078(): pass
 
@@ -32905,7 +32491,7 @@ def SUB_EmotionTest():
         'loc_2509E',
     )
 
-    OP_44(0xFFFE, 0x01, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x01, 0.15, 0x0000, 0.0)
 
     Jump('loc_250AC')
 
@@ -32913,7 +32499,7 @@ def SUB_EmotionTest():
 
     label('loc_2509E')
 
-    OP_44(0xFFFE, 0x01, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x01, 0.1, 0x0004, 0.0)
 
     def _loc_250AC(): pass
 
@@ -32935,7 +32521,7 @@ def SUB_EmotionTest():
         'loc_250D2',
     )
 
-    OP_44(0xFFFE, 0x15, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x15, 0.15, 0x0000, 0.0)
 
     Jump('loc_250E0')
 
@@ -32943,7 +32529,7 @@ def SUB_EmotionTest():
 
     label('loc_250D2')
 
-    OP_44(0xFFFE, 0x15, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x15, 0.1, 0x0004, 0.0)
 
     def _loc_250E0(): pass
 
@@ -32965,7 +32551,7 @@ def SUB_EmotionTest():
         'loc_25106',
     )
 
-    OP_44(0xFFFE, 0x11, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x11, 0.15, 0x0000, 0.0)
 
     Jump('loc_25114')
 
@@ -32973,7 +32559,7 @@ def SUB_EmotionTest():
 
     label('loc_25106')
 
-    OP_44(0xFFFE, 0x11, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x11, 0.1, 0x0004, 0.0)
 
     def _loc_25114(): pass
 
@@ -32995,7 +32581,7 @@ def SUB_EmotionTest():
         'loc_2513A',
     )
 
-    OP_44(0xFFFE, 0x02, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x02, 0.15, 0x0000, 0.0)
 
     Jump('loc_25148')
 
@@ -33003,7 +32589,7 @@ def SUB_EmotionTest():
 
     label('loc_2513A')
 
-    OP_44(0xFFFE, 0x02, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x02, 0.1, 0x0004, 0.0)
 
     def _loc_25148(): pass
 
@@ -33025,7 +32611,7 @@ def SUB_EmotionTest():
         'loc_2516E',
     )
 
-    OP_44(0xFFFE, 0x03, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x03, 0.15, 0x0000, 0.0)
 
     Jump('loc_2517C')
 
@@ -33033,7 +32619,7 @@ def SUB_EmotionTest():
 
     label('loc_2516E')
 
-    OP_44(0xFFFE, 0x03, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x03, 0.1, 0x0004, 0.0)
 
     def _loc_2517C(): pass
 
@@ -33055,7 +32641,7 @@ def SUB_EmotionTest():
         'loc_251A2',
     )
 
-    OP_44(0xFFFE, 0x05, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x05, 0.15, 0x0000, 0.0)
 
     Jump('loc_251B0')
 
@@ -33063,7 +32649,7 @@ def SUB_EmotionTest():
 
     label('loc_251A2')
 
-    OP_44(0xFFFE, 0x05, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x05, 0.1, 0x0004, 0.0)
 
     def _loc_251B0(): pass
 
@@ -33085,7 +32671,7 @@ def SUB_EmotionTest():
         'loc_251D6',
     )
 
-    OP_44(0xFFFE, 0x06, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x06, 0.15, 0x0000, 0.0)
 
     Jump('loc_251E4')
 
@@ -33093,7 +32679,7 @@ def SUB_EmotionTest():
 
     label('loc_251D6')
 
-    OP_44(0xFFFE, 0x06, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x06, 0.1, 0x0004, 0.0)
 
     def _loc_251E4(): pass
 
@@ -33115,7 +32701,7 @@ def SUB_EmotionTest():
         'loc_2520A',
     )
 
-    OP_44(0xFFFE, 0x07, 0.000000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x07, 0.0, 0x0000, 0.0)
 
     Jump('loc_25218')
 
@@ -33123,7 +32709,7 @@ def SUB_EmotionTest():
 
     label('loc_2520A')
 
-    OP_44(0xFFFE, 0x07, 0.000000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x07, 0.0, 0x0004, 0.0)
 
     def _loc_25218(): pass
 
@@ -33145,7 +32731,7 @@ def SUB_EmotionTest():
         'loc_2523E',
     )
 
-    OP_44(0xFFFE, 0x08, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x08, 0.15, 0x0000, 0.0)
 
     Jump('loc_2524C')
 
@@ -33153,7 +32739,7 @@ def SUB_EmotionTest():
 
     label('loc_2523E')
 
-    OP_44(0xFFFE, 0x08, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x08, 0.1, 0x0004, 0.0)
 
     def _loc_2524C(): pass
 
@@ -33175,7 +32761,7 @@ def SUB_EmotionTest():
         'loc_25272',
     )
 
-    OP_44(0xFFFE, 0x09, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x09, 0.15, 0x0000, 0.0)
 
     Jump('loc_25280')
 
@@ -33183,7 +32769,7 @@ def SUB_EmotionTest():
 
     label('loc_25272')
 
-    OP_44(0xFFFE, 0x09, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x09, 0.1, 0x0004, 0.0)
 
     def _loc_25280(): pass
 
@@ -33205,7 +32791,7 @@ def SUB_EmotionTest():
         'loc_252A6',
     )
 
-    OP_44(0xFFFE, 0x0A, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x0A, 0.15, 0x0000, 0.0)
 
     Jump('loc_252B4')
 
@@ -33213,7 +32799,7 @@ def SUB_EmotionTest():
 
     label('loc_252A6')
 
-    OP_44(0xFFFE, 0x0A, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x0A, 0.1, 0x0004, 0.0)
 
     def _loc_252B4(): pass
 
@@ -33235,7 +32821,7 @@ def SUB_EmotionTest():
         'loc_252DA',
     )
 
-    OP_44(0xFFFE, 0x0B, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x0B, 0.15, 0x0000, 0.0)
 
     Jump('loc_252E8')
 
@@ -33243,7 +32829,7 @@ def SUB_EmotionTest():
 
     label('loc_252DA')
 
-    OP_44(0xFFFE, 0x0B, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x0B, 0.1, 0x0004, 0.0)
 
     def _loc_252E8(): pass
 
@@ -33265,7 +32851,7 @@ def SUB_EmotionTest():
         'loc_2530E',
     )
 
-    OP_44(0xFFFE, 0x0C, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x0C, 0.15, 0x0000, 0.0)
 
     Jump('loc_2531C')
 
@@ -33273,7 +32859,7 @@ def SUB_EmotionTest():
 
     label('loc_2530E')
 
-    OP_44(0xFFFE, 0x0C, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x0C, 0.1, 0x0004, 0.0)
 
     def _loc_2531C(): pass
 
@@ -33295,7 +32881,7 @@ def SUB_EmotionTest():
         'loc_25342',
     )
 
-    OP_44(0xFFFE, 0x0D, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x0D, 0.15, 0x0000, 0.0)
 
     Jump('loc_25350')
 
@@ -33303,7 +32889,7 @@ def SUB_EmotionTest():
 
     label('loc_25342')
 
-    OP_44(0xFFFE, 0x0D, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x0D, 0.1, 0x0004, 0.0)
 
     def _loc_25350(): pass
 
@@ -33325,7 +32911,7 @@ def SUB_EmotionTest():
         'loc_25376',
     )
 
-    OP_44(0xFFFE, 0x0E, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x0E, 0.15, 0x0000, 0.0)
 
     Jump('loc_25384')
 
@@ -33333,7 +32919,7 @@ def SUB_EmotionTest():
 
     label('loc_25376')
 
-    OP_44(0xFFFE, 0x0E, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x0E, 0.1, 0x0004, 0.0)
 
     def _loc_25384(): pass
 
@@ -33355,7 +32941,7 @@ def SUB_EmotionTest():
         'loc_253AA',
     )
 
-    OP_44(0xFFFE, 0x0F, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x0F, 0.15, 0x0000, 0.0)
 
     Jump('loc_253B8')
 
@@ -33363,7 +32949,7 @@ def SUB_EmotionTest():
 
     label('loc_253AA')
 
-    OP_44(0xFFFE, 0x0F, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x0F, 0.1, 0x0004, 0.0)
 
     def _loc_253B8(): pass
 
@@ -33385,7 +32971,7 @@ def SUB_EmotionTest():
         'loc_253DE',
     )
 
-    OP_44(0xFFFE, 0x10, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x10, 0.15, 0x0000, 0.0)
 
     Jump('loc_253EC')
 
@@ -33393,7 +32979,7 @@ def SUB_EmotionTest():
 
     label('loc_253DE')
 
-    OP_44(0xFFFE, 0x10, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x10, 0.1, 0x0004, 0.0)
 
     def _loc_253EC(): pass
 
@@ -33415,7 +33001,7 @@ def SUB_EmotionTest():
         'loc_25412',
     )
 
-    OP_44(0xFFFE, 0x12, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x12, 0.15, 0x0000, 0.0)
 
     Jump('loc_25420')
 
@@ -33423,7 +33009,7 @@ def SUB_EmotionTest():
 
     label('loc_25412')
 
-    OP_44(0xFFFE, 0x12, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x12, 0.1, 0x0004, 0.0)
 
     def _loc_25420(): pass
 
@@ -33445,7 +33031,7 @@ def SUB_EmotionTest():
         'loc_25446',
     )
 
-    OP_44(0xFFFE, 0x13, 0.150000, 0x0008, 0.000000)
+    OP_44(0xFFFE, 0x13, 0.15, 0x0008, 0.0)
 
     Jump('loc_25454')
 
@@ -33453,7 +33039,7 @@ def SUB_EmotionTest():
 
     label('loc_25446')
 
-    OP_44(0xFFFE, 0x13, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x13, 0.1, 0x0004, 0.0)
 
     def _loc_25454(): pass
 
@@ -33475,7 +33061,7 @@ def SUB_EmotionTest():
         'loc_2547A',
     )
 
-    OP_44(0xFFFE, 0x14, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x14, 0.15, 0x0000, 0.0)
 
     Jump('loc_25488')
 
@@ -33483,7 +33069,7 @@ def SUB_EmotionTest():
 
     label('loc_2547A')
 
-    OP_44(0xFFFE, 0x14, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x14, 0.1, 0x0004, 0.0)
 
     def _loc_25488(): pass
 
@@ -33505,7 +33091,7 @@ def SUB_EmotionTest():
         'loc_254AE',
     )
 
-    OP_44(0xFFFE, 0x16, 0.150000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0x16, 0.15, 0x0000, 0.0)
 
     Jump('loc_254BC')
 
@@ -33513,7 +33099,7 @@ def SUB_EmotionTest():
 
     label('loc_254AE')
 
-    OP_44(0xFFFE, 0x16, 0.100000, 0x0004, 0.000000)
+    OP_44(0xFFFE, 0x16, 0.1, 0x0004, 0.0)
 
     def _loc_254BC(): pass
 
@@ -33544,7 +33130,7 @@ def SUB_EmotionTest():
 
     label('loc_254CF')
 
-    OP_44(0xFFFE, 0xFF, 0.000000, 0x0000, 0.000000)
+    OP_44(0xFFFE, 0xFF, 0.0, 0x0000, 0.0)
     MenuCmd(0x03, 0x00)
 
     Return()
@@ -33584,7 +33170,7 @@ def TK_System_Debug_BlurTest():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 'ブラーテスト(通常) ※動かないと効果ない', 0x00000001)
     MenuCmd(0x01, 0x01, 'ブラーテスト(拡大)', 0x00000002)
     MenuCmd(0x01, 0x01, 'ブラーテスト(ダッシュ用)', 0x00000003)
@@ -33613,7 +33199,7 @@ def TK_System_Debug_BlurTest():
 
     label('loc_25681')
 
-    OP_5E(0x00, 0x0000, 0.800000, 0x00FA, 0x03E8, 0x00FA, 0.000000, 0xFFFF, -9000.000000, -9000.000000, -9000.000000)
+    OP_5E(0x00, 0x0000, 0.8, 0x00FA, 0x03E8, 0x00FA, 0.0, 0xFFFF, -9000.0, -9000.0, -9000.0)
 
     Jump('loc_25768')
 
@@ -33621,7 +33207,7 @@ def TK_System_Debug_BlurTest():
 
     label('loc_256A6')
 
-    OP_5E(0x00, 0x0002, 0.800000, 0x00FA, 0x03E8, 0x00FA, 0.000000, 0xFFFF, -9000.000000, -9000.000000, -9000.000000)
+    OP_5E(0x00, 0x0002, 0.8, 0x00FA, 0x03E8, 0x00FA, 0.0, 0xFFFF, -9000.0, -9000.0, -9000.0)
 
     Jump('loc_25768')
 
@@ -33629,7 +33215,7 @@ def TK_System_Debug_BlurTest():
 
     label('loc_256CB')
 
-    OP_5E(0x00, 0x0001, 0.800000, 0x00FA, 0x03E8, 0x00FA, 0.000000, 0xFFFF, -9000.000000, -9000.000000, -9000.000000)
+    OP_5E(0x00, 0x0001, 0.8, 0x00FA, 0x03E8, 0x00FA, 0.0, 0xFFFF, -9000.0, -9000.0, -9000.0)
 
     Jump('loc_25768')
 
@@ -33637,7 +33223,7 @@ def TK_System_Debug_BlurTest():
 
     label('loc_256F0')
 
-    OP_5E(0x00, 0x0003, 1.000000, 0x00FA, 0x03E8, 0x00FA, 0.200000, 0xFFFF, -9000.000000, -9000.000000, -9000.000000)
+    OP_5E(0x00, 0x0003, 1.0, 0x00FA, 0x03E8, 0x00FA, 0.2, 0xFFFF, -9000.0, -9000.0, -9000.0)
 
     Jump('loc_25768')
 
@@ -33645,7 +33231,7 @@ def TK_System_Debug_BlurTest():
 
     label('loc_25715')
 
-    OP_5E(0x00, 0x0004, 1.000000, 0x00FA, 0x2710, 0x00FA, 0.200000, 0xF011, 0.000000, 1.000000, 0.000000)
+    OP_5E(0x00, 0x0004, 1.0, 0x00FA, 0x2710, 0x00FA, 0.2, 0xF011, 0.0, 1.0, 0.0)
 
     Jump('loc_25768')
 
@@ -33653,7 +33239,7 @@ def TK_System_Debug_BlurTest():
 
     label('loc_2573A')
 
-    OP_5E(0x00, 0x0003, 1.000000, 0x00FA, 0x2710, 0x00FA, 0.200000, 0xFFFF, 2.000000, 0.000000, 0.000000)
+    OP_5E(0x00, 0x0003, 1.0, 0x00FA, 0x2710, 0x00FA, 0.2, 0xFFFF, 2.0, 0.0, 0.0)
 
     Jump('loc_25768')
 
@@ -33688,9 +33274,9 @@ def TK_System_MapJumpTest00():
     OP_79(0x04, 0x0000)
     OP_79(0x03, 0x0002)
     OP_79(0x00, 0x0386)
-    Call(0x0A, 'FC_CardGameSet')
-    OP_11(0x2201)
-    OP_11(0x2202)
+    Call(ScriptId.System, 'FC_CardGameSet')
+    ClearScenaFlags(ScenaFlag(0x0440, 1, 0x2201))
+    ClearScenaFlags(ScenaFlag(0x0440, 2, 0x2202))
     OP_79(0x01, 0x0015)
     OP_79(0x01, 0x0016)
     OP_79(0x01, 0x0017)
@@ -33769,16 +33355,16 @@ def TK_System_MapJumpTest00():
 @scena.Code('TK_System_MapJumpTest01')
 def TK_System_MapJumpTest01():
     SetScenaFlags(ScenaFlag(0x00E0, 0, 0x700))
-    OP_11(0x0900)
-    OP_11(0x0B00)
-    OP_11(0x0D00)
-    OP_11(0x0F00)
+    ClearScenaFlags(ScenaFlag(0x0120, 0, 0x900))
+    ClearScenaFlags(ScenaFlag(0x0160, 0, 0xB00))
+    ClearScenaFlags(ScenaFlag(0x01A0, 0, 0xD00))
+    ClearScenaFlags(ScenaFlag(0x01E0, 0, 0xF00))
     OP_79(0x04, 0x0000)
     OP_79(0x03, 0x0003)
     OP_79(0x00, 0x038E)
-    Call(0x0A, 'FC_CardGameSet')
-    OP_11(0x2201)
-    OP_11(0x2202)
+    Call(ScriptId.System, 'FC_CardGameSet')
+    ClearScenaFlags(ScenaFlag(0x0440, 1, 0x2201))
+    ClearScenaFlags(ScenaFlag(0x0440, 2, 0x2202))
     OP_79(0x01, 0x0028)
     OP_79(0x01, 0x0029)
     OP_79(0x01, 0x002A)
@@ -33824,7 +33410,7 @@ def TK_System_MapJumpTest01():
     OP_79(0x01, 0x0086)
     SetScenaFlags(ScenaFlag(0x0448, 0, 0x2240))
     SetScenaFlags(ScenaFlag(0x0448, 1, 0x2241))
-    OP_11(0x2242)
+    ClearScenaFlags(ScenaFlag(0x0448, 2, 0x2242))
     SetScenaFlags(ScenaFlag(0x0448, 3, 0x2243))
     SetScenaFlags(ScenaFlag(0x0448, 4, 0x2244))
     SetScenaFlags(ScenaFlag(0x0448, 5, 0x2245))
@@ -33871,15 +33457,15 @@ def TK_System_MapJumpTest01():
 def TK_System_MapJumpTest02():
     SetScenaFlags(ScenaFlag(0x00E0, 0, 0x700))
     SetScenaFlags(ScenaFlag(0x0120, 0, 0x900))
-    OP_11(0x0B00)
-    OP_11(0x0D00)
-    OP_11(0x0F00)
+    ClearScenaFlags(ScenaFlag(0x0160, 0, 0xB00))
+    ClearScenaFlags(ScenaFlag(0x01A0, 0, 0xD00))
+    ClearScenaFlags(ScenaFlag(0x01E0, 0, 0xF00))
     OP_79(0x04, 0x0000)
     OP_79(0x03, 0x0004)
     OP_79(0x00, 0x03A2)
-    Call(0x0A, 'FC_CardGameSet')
-    OP_11(0x2201)
-    OP_11(0x2202)
+    Call(ScriptId.System, 'FC_CardGameSet')
+    ClearScenaFlags(ScenaFlag(0x0440, 1, 0x2201))
+    ClearScenaFlags(ScenaFlag(0x0440, 2, 0x2202))
     OP_79(0x01, 0x00C8)
     OP_79(0x01, 0x00C9)
     OP_79(0x01, 0x00D2)
@@ -33993,14 +33579,14 @@ def TK_System_MapJumpTest03():
     SetScenaFlags(ScenaFlag(0x00E0, 0, 0x700))
     SetScenaFlags(ScenaFlag(0x0120, 0, 0x900))
     SetScenaFlags(ScenaFlag(0x0160, 0, 0xB00))
-    OP_11(0x0D00)
-    OP_11(0x0F00)
+    ClearScenaFlags(ScenaFlag(0x01A0, 0, 0xD00))
+    ClearScenaFlags(ScenaFlag(0x01E0, 0, 0xF00))
     OP_79(0x04, 0x0000)
     OP_79(0x03, 0x0005)
     OP_79(0x00, 0x03AC)
-    Call(0x0A, 'FC_CardGameSet')
-    OP_11(0x2201)
-    OP_11(0x2202)
+    Call(ScriptId.System, 'FC_CardGameSet')
+    ClearScenaFlags(ScenaFlag(0x0440, 1, 0x2201))
+    ClearScenaFlags(ScenaFlag(0x0440, 2, 0x2202))
     OP_79(0x01, 0x0190)
     OP_79(0x01, 0x0191)
     OP_79(0x01, 0x019A)
@@ -34110,14 +33696,14 @@ def TK_System_MapJumpTest03B():
     SetScenaFlags(ScenaFlag(0x00E0, 0, 0x700))
     SetScenaFlags(ScenaFlag(0x0120, 0, 0x900))
     SetScenaFlags(ScenaFlag(0x0160, 0, 0xB00))
-    OP_11(0x0D00)
-    OP_11(0x0F00)
+    ClearScenaFlags(ScenaFlag(0x01A0, 0, 0xD00))
+    ClearScenaFlags(ScenaFlag(0x01E0, 0, 0xF00))
     OP_79(0x04, 0x0000)
     OP_79(0x03, 0x0007)
     OP_79(0x00, 0x03B7)
-    Call(0x0A, 'FC_CardGameSet')
-    OP_11(0x2201)
-    OP_11(0x2202)
+    Call(ScriptId.System, 'FC_CardGameSet')
+    ClearScenaFlags(ScenaFlag(0x0440, 1, 0x2201))
+    ClearScenaFlags(ScenaFlag(0x0440, 2, 0x2202))
     OP_79(0x01, 0x0208)
     OP_79(0x01, 0x0209)
     OP_79(0x01, 0x020A)
@@ -34148,9 +33734,9 @@ def TK_System_MapJumpTest04():
     OP_79(0x04, 0x0000)
     OP_79(0x03, 0x0006)
     OP_79(0x00, 0x03C0)
-    Call(0x0A, 'FC_CardGameSet')
-    OP_11(0x2201)
-    OP_11(0x2202)
+    Call(ScriptId.System, 'FC_CardGameSet')
+    ClearScenaFlags(ScenaFlag(0x0440, 1, 0x2201))
+    ClearScenaFlags(ScenaFlag(0x0440, 2, 0x2202))
     OP_79(0x01, 0x0258)
     OP_79(0x01, 0x0259)
     OP_79(0x01, 0x025A)
@@ -34296,9 +33882,9 @@ def TK_System_CameraVibrateTest():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
-    CameraCtrl(0x0A, 0.100000, 0.100000, 0.000000, 0x01F4, 0x03E8, 0x07D0, 0x0000, 0x0000, 0x00)
+    CameraCtrl(0x0A, 0.1, 0.1, 0.0, 0x01F4, 0x03E8, 0x07D0, 0x0000, 0x0000, 0x00)
 
     Return()
 
@@ -34337,7 +33923,7 @@ def TK_NoticeLog_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 'ログをクリア（一瞬で）', 0x00000001)
     MenuCmd(0x01, 0x01, 'ログをクリア（フェード）', 0x00000002)
     MenuCmd(0x01, 0x01, 'ログ追加×１（人物手帳）', 0x00000003)
@@ -34477,12 +34063,12 @@ def TK_NoticeLog_Test():
     label('loc_26473')
 
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-    OP_43(0x00, 0x0064, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
-    OP_43(0x05, 0x012C)
-    OP_43(0x64, 0x0064, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
-    OP_3B(0x00, (0xFF, 0x88C2, 0x0), 1.000000, (0xFF, 0x0, 0x0), 0.000000, 0.000000, 0x0000, 0xFFFF, 0.000000, 0.000000, 0.000000, 0.000000, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+    Fade(0x00, 100, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
+    Fade(0x05, 300)
+    Fade(0x64, 100, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
+    OP_3B(0x00, (0xFF, 0x88C2, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
 
     Talk(
@@ -34497,18 +34083,18 @@ def TK_NoticeLog_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
-    OP_6F(0x00, 0x0000, 0x00000001)
-    OP_43(0x00, 0x0064, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
-    OP_43(0x69, 0x012C)
+    AddItem(0x00, 0x0000, 1)
+    Fade(0x00, 100, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
+    Fade(0x69, 300)
     OP_91(0x00, 0x0000, 0x00000001)
     OP_C3(0x00, 0x01, 0x00000000, 0x00000000)
-    OP_43(0x64, 0x0064, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x64, 100, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_21(0x00)
 
     Jump('loc_26651')
@@ -34518,11 +34104,11 @@ def TK_NoticeLog_Test():
     label('loc_2656F')
 
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-    OP_43(0x00, 0x01F4, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
-    OP_43(0x05, 0x012C)
-    OP_43(0x64, 0x01F4, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x00, 500, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
+    Fade(0x05, 300)
+    Fade(0x64, 500, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_27('ナイトハルトの声', 0xFFFF)
     SetChrFace(0x04, 0xF011, '')
 
@@ -34536,14 +34122,14 @@ def TK_NoticeLog_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_27('', 0xFFFF)
     OP_63(0xFFFF, 0x01)
-    OP_43(0x00, 0x01F4, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
-    OP_43(0x69, 0x012C)
-    OP_43(0x64, 0x01F4, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x00, 500, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
+    Fade(0x69, 300)
+    Fade(0x64, 500, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_21(0x00)
 
     Jump('loc_26651')
@@ -34608,7 +34194,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 'test [３章]ジュノー要塞', 0x00000001)
     MenuCmd(0x01, 0x01, 'test [４章]暗黒竜', 0x00000002)
     MenuCmd(0x01, 0x01, 'test [終章]幻獣イベント戦', 0x00000003)
@@ -34651,12 +34237,12 @@ def TK_TeamSel_Test():
 
     label('loc_2695D')
 
-    OP_43(0x00, 0x01F4, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
-    OP_16(0x012C)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0010)
-    Call(0x0A, 'FC_TSMenu_Reset')
+    Fade(0x00, 500, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
+    Sleep(300)
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['奧蕾莉亞分校長'])
+    Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x02, 0x00, 0x0000)
     OP_C4(0x02, 0x00, 0x0006)
     OP_C4(0x02, 0x00, 0x0009)
@@ -34691,11 +34277,11 @@ def TK_TeamSel_Test():
     SetScenaFlags(ScenaFlag(0x0072, 0, 0x390))
     OP_C5(0x00, 0x00)
     OP_C5(0x01)
-    OP_C4(0x04, 0x00, (0xDD, 'm3000'), -32.349998, -10.000000, 40.480000, 0.000000)
-    OP_C4(0x04, 0x01, (0xDD, 'm3000'), -33.000000, -10.000000, -38.700001, 180.000000)
+    OP_C4(0x04, 0x00, (0xDD, 'm3000'), -32.35, -10.0, 40.48, 0.0)
+    OP_C4(0x04, 0x01, (0xDD, 'm3000'), -33.0, -10.0, -38.7, 180.0)
     OP_C4(0x05, 0x01, 0x00)
-    OP_43(0x64, 0x01F4, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x64, 500, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
 
     Jump('loc_2721A')
 
@@ -34703,7 +34289,7 @@ def TK_TeamSel_Test():
 
     label('loc_26A2E')
 
-    Call(0x0A, 'FC_TSMenu_Reset')
+    Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x02, 0x00, 0x000A)
     OP_C4(0x02, 0x00, 0x000B)
     OP_C4(0x02, 0x00, 0x000F)
@@ -34748,29 +34334,29 @@ def TK_TeamSel_Test():
         ),
     )
 
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000020)
-    MenuChrFlagCmd(0x00, 0x0000, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x000F, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0008, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0002, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0006, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0004, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0009, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0001, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0003, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0005, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0007, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x000A, 0x08000000)
-    MenuChrFlagCmd(0x00, 0x000B, 0x08000000)
-    MenuChrFlagCmd(0x00, 0x000D, 0x08000000)
-    MenuChrFlagCmd(0x00, 0x000E, 0x08000000)
-    MenuChrFlagCmd(0x00, 0x000C, 0x08000000)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000020)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['蓋烏斯'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['馬奇亞斯'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['米莉亞姆'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['艾瑪'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['菲'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x08000000)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x08000000)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x08000000)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x08000000)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x08000000)
     OP_C5(0x00, 0x01)
     OP_C5(0x01)
-    OP_C4(0x04, 0x00, (0xDD, 'a0000'), -6.120000, -0.000000, -0.210000, 183.000000)
-    OP_C4(0x04, 0x01, (0xDD, 'a0000'), -4.040000, -0.000000, 0.050000, 88.599998)
-    OP_C4(0x04, 0x02, (0xDD, 'a0000'), 3.800000, -0.000000, 0.430000, 95.699997)
-    OP_49(0x02)
+    OP_C4(0x04, 0x00, (0xDD, 'a0000'), -6.12, -0.0, -0.21, 183.0)
+    OP_C4(0x04, 0x01, (0xDD, 'a0000'), -4.04, -0.0, 0.05, 88.6)
+    OP_C4(0x04, 0x02, (0xDD, 'a0000'), 3.8, -0.0, 0.43, 95.7)
+    FormationReset()
     OP_C4(0x01, 0x00)
 
     Jump('loc_2721A')
@@ -34779,7 +34365,7 @@ def TK_TeamSel_Test():
 
     label('loc_26B91')
 
-    Call(0x0A, 'FC_TSMenu_Reset')
+    Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x02, 0x00, 0x0000)
     OP_C4(0x02, 0x00, 0x000A)
     OP_C4(0x02, 0x00, 0x000B)
@@ -34824,10 +34410,10 @@ def TK_TeamSel_Test():
 
     OP_C5(0x00, 0x01)
     OP_C5(0x01)
-    OP_C4(0x04, 0x00, (0xDD, 'a0000'), -6.120000, -0.000000, -0.210000, 183.000000)
-    OP_C4(0x04, 0x01, (0xDD, 'a0000'), -4.040000, -0.000000, 0.050000, 88.599998)
-    OP_C4(0x04, 0x02, (0xDD, 'a0000'), 3.800000, -0.000000, 0.430000, 95.699997)
-    OP_49(0x02)
+    OP_C4(0x04, 0x00, (0xDD, 'a0000'), -6.12, -0.0, -0.21, 183.0)
+    OP_C4(0x04, 0x01, (0xDD, 'a0000'), -4.04, -0.0, 0.05, 88.6)
+    OP_C4(0x04, 0x02, (0xDD, 'a0000'), 3.8, -0.0, 0.43, 95.7)
+    FormationReset()
     OP_C4(0x01, 0x00)
 
     Jump('loc_2721A')
@@ -34836,7 +34422,7 @@ def TK_TeamSel_Test():
 
     label('loc_26C60')
 
-    Call(0x0A, 'FC_TSMenu_Reset')
+    Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x02, 0x00, 0x0000)
     OP_C4(0x02, 0x00, 0x000A)
     OP_C4(0x02, 0x00, 0x000B)
@@ -34879,10 +34465,10 @@ def TK_TeamSel_Test():
 
     OP_C5(0x00, 0x01)
     OP_C5(0x01)
-    OP_C4(0x04, 0x00, (0xDD, 'a0000'), -6.120000, -0.000000, -0.210000, 183.000000)
-    OP_C4(0x04, 0x01, (0xDD, 'a0000'), -4.040000, -0.000000, 0.050000, 88.599998)
-    OP_C4(0x04, 0x02, (0xDD, 'a0000'), 3.800000, -0.000000, 0.430000, 95.699997)
-    OP_49(0x02)
+    OP_C4(0x04, 0x00, (0xDD, 'a0000'), -6.12, -0.0, -0.21, 183.0)
+    OP_C4(0x04, 0x01, (0xDD, 'a0000'), -4.04, -0.0, 0.05, 88.6)
+    OP_C4(0x04, 0x02, (0xDD, 'a0000'), 3.8, -0.0, 0.43, 95.7)
+    FormationReset()
     OP_C4(0x01, 0x00)
 
     Jump('loc_2721A')
@@ -34891,7 +34477,7 @@ def TK_TeamSel_Test():
 
     label('loc_26D25')
 
-    Call(0x0A, 'FC_TSMenu_Reset')
+    Call(ScriptId.System, 'FC_TSMenu_Reset')
 
     Jump('loc_2721A')
 
@@ -34899,7 +34485,7 @@ def TK_TeamSel_Test():
 
     label('loc_26D3D')
 
-    Call(0x0A, 'FC_TSMenu_Reset')
+    Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x02, 0x00, 0x000C)
     OP_C4(0x02, 0x00, 0x000A)
     OP_C4(0x02, 0x00, 0x000B)
@@ -34908,10 +34494,10 @@ def TK_TeamSel_Test():
     OP_C4(0x02, 0x01, 0x000E)
     OP_C4(0x02, 0x02, 0x0003)
     OP_C4(0x02, 0x02, 0x0007)
-    OP_C4(0x04, 0x00, (0xDD, 'a0000'), -6.120000, -0.000000, -0.210000, 183.000000)
-    OP_C4(0x04, 0x01, (0xDD, 'a0000'), -4.040000, -0.000000, 0.050000, 88.599998)
-    OP_C4(0x04, 0x02, (0xDD, 'a0000'), 3.800000, -0.000000, 0.430000, 95.699997)
-    OP_49(0x02)
+    OP_C4(0x04, 0x00, (0xDD, 'a0000'), -6.12, -0.0, -0.21, 183.0)
+    OP_C4(0x04, 0x01, (0xDD, 'a0000'), -4.04, -0.0, 0.05, 88.6)
+    OP_C4(0x04, 0x02, (0xDD, 'a0000'), 3.8, -0.0, 0.43, 95.7)
+    FormationReset()
     OP_C4(0x01, 0x00)
 
     Jump('loc_2721A')
@@ -34941,7 +34527,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_26FEC')
 
@@ -34970,7 +34556,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_26EF9')
 
@@ -34999,7 +34585,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_26EF9')
 
@@ -35028,7 +34614,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_26EF9')
 
@@ -35057,7 +34643,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     def _loc_26EF9(): pass
 
@@ -35084,7 +34670,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_26FEC')
 
@@ -35113,7 +34699,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_26FEC')
 
@@ -35142,7 +34728,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_26FEC')
 
@@ -35171,7 +34757,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     def _loc_26FEC(): pass
 
@@ -35204,7 +34790,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_2716D')
 
@@ -35233,7 +34819,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_2716D')
 
@@ -35262,7 +34848,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_2716D')
 
@@ -35291,7 +34877,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_2716D')
 
@@ -35321,7 +34907,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     def _loc_2716D(): pass
 
@@ -35333,7 +34919,7 @@ def TK_TeamSel_Test():
 
     label('loc_27172')
 
-    Call(0x0A, 'FC_TSMenu_Reset')
+    Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x02, 0x00, 0x000C)
     OP_C4(0x02, 0x00, 0x000A)
     OP_C4(0x02, 0x00, 0x000B)
@@ -35347,7 +34933,7 @@ def TK_TeamSel_Test():
 
     label('loc_271A8')
 
-    OP_49(0x02)
+    FormationReset()
     OP_C4(0x01, 0x00)
 
     Jump('loc_2721A')
@@ -35356,7 +34942,7 @@ def TK_TeamSel_Test():
 
     label('loc_271B2')
 
-    OP_49(0x02)
+    FormationReset()
     OP_C4(0x01, 0x01)
 
     Jump('loc_2721A')
@@ -35365,8 +34951,8 @@ def TK_TeamSel_Test():
 
     label('loc_271BC')
 
-    OP_C4(0x04, 0x00, (0xDD, 'a0000'), -6.120000, -0.000000, -0.210000, 183.000000)
-    OP_C4(0x04, 0x01, (0xDD, 'a0000'), -4.040000, -0.000000, 0.050000, 88.599998)
+    OP_C4(0x04, 0x00, (0xDD, 'a0000'), -6.12, -0.0, -0.21, 183.0)
+    OP_C4(0x04, 0x01, (0xDD, 'a0000'), -4.04, -0.0, 0.05, 88.6)
 
     Jump('loc_2721A')
 
@@ -35457,9 +35043,9 @@ def TK_ActMenu_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0073, 3, 0x39B)),
@@ -35470,7 +35056,7 @@ def TK_ActMenu_Test():
 
     MenuCmd(0x08, 0x01, 'アクションメニュー禁止', 0x00000001, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0073, 1, 0x399)),
@@ -35481,7 +35067,7 @@ def TK_ActMenu_Test():
 
     MenuCmd(0x08, 0x01, 'アクションメニューボタン禁止', 0x00000002, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.Expr24, 0x400000),
@@ -35492,7 +35078,7 @@ def TK_ActMenu_Test():
 
     MenuCmd(0x08, 0x01, 'SYSTEM_FLAG_SHORTCUT_HORSE', 0x00000003, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0073, 2, 0x39A)),
@@ -35503,7 +35089,7 @@ def TK_ActMenu_Test():
 
     MenuCmd(0x08, 0x01, '選択肢：アークス起動', 0x00000004, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0062, 1, 0x311)),
@@ -35514,7 +35100,7 @@ def TK_ActMenu_Test():
 
     MenuCmd(0x08, 0x01, '選択肢：バイク起動', 0x00000005, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0062, 0, 0x310)),
@@ -35525,7 +35111,7 @@ def TK_ActMenu_Test():
 
     MenuCmd(0x08, 0x01, '選択肢：馬起動', 0x00000006, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0073, 5, 0x39D)),
@@ -35536,7 +35122,7 @@ def TK_ActMenu_Test():
 
     MenuCmd(0x08, 0x01, '選択肢：導力波測定器', 0x00000007, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0072, 4, 0x394)),
@@ -35659,12 +35245,12 @@ def TK_ActMenu_Test():
 @scena.Code('EV_useChecker')
 def EV_useChecker():
     OP_20(0x15, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-    OP_3A(0x03, 0.700000, 0x01F4, 0x00)
-    OP_3A(0x03, 1.000000, 0x01F4, 0x00)
+    OP_3A(0x03, 0.7, 0x01F4, 0x00)
+    OP_3A(0x03, 1.0, 0x01F4, 0x00)
     SetChrFace(0x04, ChrTable['黎恩'], '#E0#M4')
 
     ChrTalk(
-        0x0000,
+        ChrTable['黎恩'],
         0x00000000,
         (
             '#0T#3Kレベル３、か。\n',
@@ -35673,7 +35259,7 @@ def EV_useChecker():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_63(0xFFFF, 0x01)
     OP_23(0x01, 0xFFFF, 0xFFFF, 0x00, 0x0A)
     SetChrFace(0x03, ChrTable['黎恩'], '0[autoE0]', '0[autoM0]', '', '#b', '0')
@@ -35723,7 +35309,7 @@ def TK_LinkLevel_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '新旧＋ゲストをリンク登録', 0x00000001)
     MenuCmd(0x01, 0x01, 'リンクEXP上昇（一人）', 0x00000002)
     MenuCmd(0x01, 0x01, 'リンクEXP上昇（大人数）', 0x00000003)
@@ -35750,22 +35336,22 @@ def TK_LinkLevel_Test():
 
     MenuChrFlagCmd(0x01, 0xFFFF, 0x00000002)
     MenuChrFlagCmd(0x01, 0xFFFF, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000002)
-    MenuChrFlagCmd(0x00, 0x0001, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0002, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0003, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0004, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0005, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0008, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0006, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0007, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x0009, 0x00000004)
-    MenuChrFlagCmd(0x00, 0x000F, 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['馬奇亞斯'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['艾瑪'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['蓋烏斯'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['菲'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['米莉亞姆'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000004)
 
     Jump('loc_27869')
 
@@ -35814,7 +35400,7 @@ def TK_LinkLevel_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_27869')
@@ -35879,7 +35465,7 @@ def TK_LikeLevel_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '好感度全員リセット', 0x0000000A)
     MenuCmd(0x01, 0x01, '好感度全員最終条件セット', 0x0000000B)
     MenuCmd(0x01, 0x01, '好感度Lv+1（一人）', 0x00000001)
@@ -36107,7 +35693,7 @@ def TK_LikeLevel_Test():
 
     label('loc_27D19')
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_284EC')
 
@@ -36265,7 +35851,7 @@ def TK_LikeLevel_Test():
 
     label('loc_27E9F')
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_284EC')
 
@@ -36813,7 +36399,7 @@ def TK_LikeLevel_Test():
 
     label('loc_28411')
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_284EC')
 
@@ -36854,7 +36440,7 @@ def TK_LikeLevel_Test():
 
     label('loc_28453')
 
-    OP_C6(0x05, 0x000B, 0x0000012C)
+    OP_C6(0x05, ChrTable['庫爾特'], 0x0000012C)
     OP_C6(0x00, 0x00)
     OP_C6(0x01)
 
@@ -36864,7 +36450,7 @@ def TK_LikeLevel_Test():
 
     label('loc_28465')
 
-    OP_C6(0x05, 0x000D, 0x000007D0)
+    OP_C6(0x05, ChrTable['妙婕'], 0x000007D0)
     OP_C6(0x00, 0x00)
     OP_C6(0x01)
 
@@ -36874,10 +36460,10 @@ def TK_LikeLevel_Test():
 
     label('loc_28477')
 
-    OP_C6(0x05, 0x0019, 0x000003E8)
-    OP_C6(0x05, 0x0086, 0x000003E8)
-    OP_C6(0x05, 0x007A, 0x000003E8)
-    OP_C6(0x05, 0x0091, 0x000003E8)
+    OP_C6(0x05, ChrTable['托娃'], 0x000003E8)
+    OP_C6(0x05, ChrTable['艾爾芬皇女'], 0x000003E8)
+    OP_C6(0x05, ChrTable['愛麗榭'], 0x000003E8)
+    OP_C6(0x05, ChrTable['瑟蕾奴'], 0x000003E8)
     OP_C6(0x00, 0x00)
     OP_C6(0x01)
 
@@ -36887,13 +36473,13 @@ def TK_LikeLevel_Test():
 
     label('loc_284A1')
 
-    OP_C6(0x05, 0x000B, 0x000003E8)
-    OP_C6(0x05, 0x000C, 0x000003E8)
-    OP_C6(0x05, 0x000E, 0x000003E8)
-    OP_C6(0x05, 0x0004, 0x000003E8)
-    OP_C6(0x05, 0x0091, 0x000003E8)
-    OP_C6(0x05, 0x0016, 0x000003E8)
-    OP_C6(0x05, 0x0017, 0x000003E8)
+    OP_C6(0x05, ChrTable['庫爾特'], 0x000003E8)
+    OP_C6(0x05, ChrTable['亞爾緹娜'], 0x000003E8)
+    OP_C6(0x05, ChrTable['亞修'], 0x000003E8)
+    OP_C6(0x05, ChrTable['馬奇亞斯'], 0x000003E8)
+    OP_C6(0x05, ChrTable['瑟蕾奴'], 0x000003E8)
+    OP_C6(0x05, ChrTable['雪倫'], 0x000003E8)
+    OP_C6(0x05, ChrTable['克蕾雅少校'], 0x000003E8)
     OP_C6(0x00, 0x01)
     OP_C6(0x01)
 
@@ -36959,7 +36545,7 @@ def TK_Calendar_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '元旦／特別日無し／行動ポイント０', 0x00000001)
     MenuCmd(0x01, 0x01, '日付：12月23日(木)', 0x0000000A)
     MenuCmd(0x01, 0x01, '日付：1月23日(木)', 0x0000000B)
@@ -36970,7 +36556,7 @@ def TK_Calendar_Test():
     MenuCmd(0x01, 0x01, '行動ポイント：＋１', 0x00000005)
     MenuCmd(0x01, 0x01, '行動ポイント：－１', 0x00000006)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0073, 4, 0x39C)),
@@ -36981,7 +36567,7 @@ def TK_Calendar_Test():
 
     MenuCmd(0x08, 0x01, 'フラグ：カレンダー表示オフ', 0x00000007, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0073, 7, 0x39F)),
@@ -36992,7 +36578,7 @@ def TK_Calendar_Test():
 
     MenuCmd(0x08, 0x01, 'フラグ：チケットモード', 0x00000008, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0072, 6, 0x396)),
@@ -37525,16 +37111,16 @@ def TK_Calendar_Test():
 
     label('loc_289F9')
 
-    OP_43(0x00, 0x00C8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x00, 200, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_8E(0x0001, 0x000A, 0xFFFF, 0x0001, 0x000A, 0xFFFF, 0x04B5)
     OP_8F()
     OP_8E(0x0009, 0x0001, 0xFFFF, 0x0009, 0x0009, 0xFFFF, 0x04B6)
     OP_8F()
     OP_8E(0x0009, 0x0001, 0xFFFF, 0x0009, 0x0014, 0xFFFF, 0x04B6)
     OP_8F()
-    OP_43(0x64, 0x00C8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x64, 200, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
 
     Jump('loc_28B5C')
 
@@ -37542,8 +37128,8 @@ def TK_Calendar_Test():
 
     label('loc_28A4E')
 
-    OP_43(0x00, 0x00C8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x00, 200, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_8E(0x0001, 0x0001, 0xFFFF, 0x0001, 0x0002, 0x0000, 0x04B5)
     OP_8F()
     OP_8E(0x0004, 0x0010, 0x0000, 0x0004, 0x0011, 0x0001, 0x04B5)
@@ -37572,8 +37158,8 @@ def TK_Calendar_Test():
     OP_8F()
     OP_8E(0x0007, 0x0011, 0x000C, 0x0007, 0x0012, 0x000D, 0x04B5)
     OP_8F()
-    OP_43(0x64, 0x00C8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x64, 200, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
 
     Jump('loc_28B5C')
 
@@ -37605,11 +37191,11 @@ def TK_Calendar_Test():
 # id: 0x0064 offset: 0x28B64
 @scena.Code('TK_CameraCommand_Test')
 def TK_CameraCommand_Test():
-    Call(0x0A, 'FC_TalkEnd_NoCamMove')
-    Call(0x0A, 'FC_EventBegin')
-    CameraCtrl(0x04, 0x03, 0.000000, 0.000000, 0.000000, 0x0000, 0x01)
-    OP_43(0x64, 0x012C, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Call(ScriptId.System, 'FC_TalkEnd_NoCamMove')
+    Call(ScriptId.System, 'FC_EventBegin')
+    CameraRotate(0.0, 0.0, 0.0, 0, 0x01)
+    Fade(0x64, 300, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
 
     OP_18(
         0xF7,
@@ -37643,7 +37229,7 @@ def TK_CameraCommand_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '  0度に回転(角度差小さい方に回転)', 0x00000064)
     MenuCmd(0x01, 0x01, ' 45度に回転(角度差小さい方に回転)', 0x00000065)
     MenuCmd(0x01, 0x01, '-45度に回転(角度差小さい方に回転)', 0x00000066)
@@ -37680,7 +37266,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28E23')
 
-    CameraCtrl(0x04, 0x03, 0.000000, 0.000000, 0.000000, 0x03E8, 0x01)
+    CameraRotate(0.0, 0.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37689,7 +37275,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28E3E')
 
-    CameraCtrl(0x04, 0x03, 0.000000, 45.000000, 0.000000, 0x03E8, 0x01)
+    CameraRotate(0.0, 45.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37698,7 +37284,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28E59')
 
-    CameraCtrl(0x04, 0x03, 0.000000, -45.000000, 0.000000, 0x03E8, 0x01)
+    CameraRotate(0.0, -45.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37707,7 +37293,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28E74')
 
-    CameraCtrl(0x04, 0x03, 0.000000, 315.000000, 0.000000, 0x03E8, 0x01)
+    CameraRotate(0.0, 315.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37716,7 +37302,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28E8F')
 
-    CameraCtrl(0x04, 0x03, 0.000000, 45.000000, 0.000000, 0x03E8, 0x00)
+    CameraRotate(0.0, 45.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37725,7 +37311,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28EAA')
 
-    CameraCtrl(0x04, 0x03, 0.000000, -45.000000, 0.000000, 0x03E8, 0x00)
+    CameraRotate(0.0, -45.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37734,7 +37320,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28EC5')
 
-    CameraCtrl(0x04, 0x03, 0.000000, 315.000000, 0.000000, 0x03E8, 0x00)
+    CameraRotate(0.0, 315.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37743,8 +37329,8 @@ def TK_CameraCommand_Test():
 
     label('loc_28EE0')
 
-    CameraCtrl(0x04, 0x03, 0.000000, 360.000000, 0.000000, 0x0000, 0x01)
-    OP_16(0x03E8)
+    CameraRotate(0.0, 360.0, 0.0, 0, 0x01)
+    Sleep(1000)
 
     Jump('loc_28F63')
 
@@ -37752,9 +37338,9 @@ def TK_CameraCommand_Test():
 
     label('loc_28EFA')
 
-    CameraCtrl(0x04, 0x03, 0.000000, 315.000000, 0.000000, 0x0000, 0x01)
-    OP_16(0x01F4)
-    CameraCtrl(0x04, 0x03, 0.000000, 15.000000, 0.000000, 0x03E8, 0x01)
+    CameraRotate(0.0, 315.0, 0.0, 0, 0x01)
+    Sleep(500)
+    CameraRotate(0.0, 15.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37763,9 +37349,9 @@ def TK_CameraCommand_Test():
 
     label('loc_28F2A')
 
-    CameraCtrl(0x04, 0x03, 0.000000, 315.000000, 0.000000, 0x0000, 0x01)
-    OP_16(0x01F4)
-    CameraCtrl(0x04, 0x03, 0.000000, 15.000000, 0.000000, 0x03E8, 0x00)
+    CameraRotate(0.0, 315.0, 0.0, 0, 0x01)
+    Sleep(500)
+    CameraRotate(0.0, 15.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37793,7 +37379,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28F68')
 
-    Call(0x0A, 'FC_EventEnd', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_EventEnd', (0xFF, 0x0, 0x0))
     OP_14(0x04000000)
 
     Return()
@@ -37801,8 +37387,8 @@ def TK_CameraCommand_Test():
 # id: 0x0065 offset: 0x28F84
 @scena.Code('TK_LookCommand_Test')
 def TK_LookCommand_Test():
-    OP_45(0xF011, 0.000000, 0.000000, 0.000000, 0x0000, 0x0001)
-    OP_45(0xF011, 0.000000, 0.000000, 0.000000, 0x0000, 0x0000)
+    OP_45(0xF011, 0.0, 0.0, 0.0, 0x0000, 0x0001)
+    OP_45(0xF011, 0.0, 0.0, 0.0, 0x0000, 0x0000)
     OP_46(0x00, 0xF011, 0xFFFF, 0x0000)
 
     OP_18(
@@ -37837,7 +37423,7 @@ def TK_LookCommand_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '上 look_dir(  0.f, 45.f,  0.f )', 0x00000064)
     MenuCmd(0x01, 0x01, '下 look_dir(  0.f,-45.f,  0.f )', 0x00000065)
     MenuCmd(0x01, 0x01, '左 look_dir( 45.f,  0.f,  0.f )', 0x00000066)
@@ -37872,7 +37458,7 @@ def TK_LookCommand_Test():
 
     label('loc_2914D')
 
-    OP_45(0xF011, 0.000000, 45.000000, 0.000000, 0x012C, 0x0000)
+    OP_45(0xF011, 0.0, 45.0, 0.0, 0x012C, 0x0000)
 
     Jump('loc_2921C')
 
@@ -37880,7 +37466,7 @@ def TK_LookCommand_Test():
 
     label('loc_29165')
 
-    OP_45(0xF011, 0.000000, -45.000000, 0.000000, 0x012C, 0x0000)
+    OP_45(0xF011, 0.0, -45.0, 0.0, 0x012C, 0x0000)
 
     Jump('loc_2921C')
 
@@ -37888,7 +37474,7 @@ def TK_LookCommand_Test():
 
     label('loc_2917D')
 
-    OP_45(0xF011, 45.000000, 0.000000, 0.000000, 0x012C, 0x0000)
+    OP_45(0xF011, 45.0, 0.0, 0.0, 0x012C, 0x0000)
 
     Jump('loc_2921C')
 
@@ -37896,7 +37482,7 @@ def TK_LookCommand_Test():
 
     label('loc_29195')
 
-    OP_45(0xF011, -45.000000, 0.000000, 0.000000, 0x012C, 0x0000)
+    OP_45(0xF011, -45.0, 0.0, 0.0, 0x012C, 0x0000)
 
     Jump('loc_2921C')
 
@@ -37904,7 +37490,7 @@ def TK_LookCommand_Test():
 
     label('loc_291AD')
 
-    OP_1E(0xF011, 0x02, 0x0A, 'FC_look_dir_Yes')
+    CreateThread(0xF011, 0x02, ScriptId.System, 'FC_look_dir_Yes')
 
     Jump('loc_2921C')
 
@@ -37912,7 +37498,7 @@ def TK_LookCommand_Test():
 
     label('loc_291C7')
 
-    OP_1E(0xF011, 0x02, 0x0A, 'FC_look_dir_No')
+    CreateThread(0xF011, 0x02, ScriptId.System, 'FC_look_dir_No')
 
     Jump('loc_2921C')
 
@@ -37920,7 +37506,7 @@ def TK_LookCommand_Test():
 
     label('loc_291E0')
 
-    OP_46(0x03, 0xF011, 0xFFFF, 0x0000, 0.000000)
+    OP_46(0x03, 0xF011, 0xFFFF, 0x0000, 0.0)
 
     Jump('loc_2921C')
 
@@ -37928,7 +37514,7 @@ def TK_LookCommand_Test():
 
     label('loc_291F1')
 
-    OP_46(0x03, 0xF011, 0xFFFF, 0x0000, 1.000000)
+    OP_46(0x03, 0xF011, 0xFFFF, 0x0000, 1.0)
 
     Jump('loc_2921C')
 
@@ -37936,7 +37522,7 @@ def TK_LookCommand_Test():
 
     label('loc_29202')
 
-    OP_46(0x03, 0xF011, 0xFFFF, 0x0000, 0.500000)
+    OP_46(0x03, 0xF011, 0xFFFF, 0x0000, 0.5)
 
     Jump('loc_2921C')
 
@@ -37969,8 +37555,8 @@ def TK_LookCommand_Test():
 @scena.Code('TK_ActiveTodo_Test')
 def TK_ActiveTodo_Test():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-    OP_45(0xF011, 0.000000, 0.000000, 0.000000, 0x0000, 0x0001)
-    OP_45(0xF011, 0.000000, 0.000000, 0.000000, 0x0000, 0x0000)
+    OP_45(0xF011, 0.0, 0.0, 0.0, 0x0000, 0x0001)
+    OP_45(0xF011, 0.0, 0.0, 0.0, 0x0000, 0x0000)
     OP_46(0x00, 0xF011, 0xFFFF, 0x0000)
 
     OP_18(
@@ -38005,9 +37591,9 @@ def TK_ActiveTodo_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x00DA, 0, 0x6D0)),
@@ -38018,7 +37604,7 @@ def TK_ActiveTodo_Test():
 
     MenuCmd(0x08, 0x01, 'ナビ１：許可', 0x0000000B, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x00DA, 2, 0x6D2)),
@@ -38029,7 +37615,7 @@ def TK_ActiveTodo_Test():
 
     MenuCmd(0x08, 0x01, 'ナビ２：許可', 0x0000000C, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x00DA, 4, 0x6D4)),
@@ -38040,7 +37626,7 @@ def TK_ActiveTodo_Test():
 
     MenuCmd(0x08, 0x01, 'ナビ３：許可', 0x0000000D, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x00DA, 1, 0x6D1)),
@@ -38051,7 +37637,7 @@ def TK_ActiveTodo_Test():
 
     MenuCmd(0x08, 0x01, 'ナビ１：禁止', 0x0000000E, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x00DA, 3, 0x6D3)),
@@ -38062,7 +37648,7 @@ def TK_ActiveTodo_Test():
 
     MenuCmd(0x08, 0x01, 'ナビ２：禁止', 0x0000000F, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x00DA, 5, 0x6D5)),
@@ -38144,12 +37730,12 @@ def TK_ActiveTodo_Test():
 
     label('loc_2943C')
 
-    OP_11(0x06D0)
-    OP_11(0x06D2)
-    OP_11(0x06D4)
-    OP_11(0x06D1)
-    OP_11(0x06D3)
-    OP_11(0x06D5)
+    ClearScenaFlags(ScenaFlag(0x00DA, 0, 0x6D0))
+    ClearScenaFlags(ScenaFlag(0x00DA, 2, 0x6D2))
+    ClearScenaFlags(ScenaFlag(0x00DA, 4, 0x6D4))
+    ClearScenaFlags(ScenaFlag(0x00DA, 1, 0x6D1))
+    ClearScenaFlags(ScenaFlag(0x00DA, 3, 0x6D3))
+    ClearScenaFlags(ScenaFlag(0x00DA, 5, 0x6D5))
 
     Jump('loc_2945C')
 
@@ -38215,7 +37801,7 @@ def TK_VibratePad_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '鈍い振動    （左モーターのみ）', 0x00000000)
     MenuCmd(0x01, 0x01, '小刻みな振動（右モーターのみ）', 0x00000001)
     MenuCmd(0x01, 0x01, '銃', 0x00000002)
@@ -38242,7 +37828,7 @@ def TK_VibratePad_Test():
 
     label('loc_29573')
 
-    OP_3B(0xFF, 0.700000, 0.000000, 0.200000)
+    OP_3B(0xFF, 0.7, 0.0, 0.2)
 
     Jump('loc_295DB')
 
@@ -38250,7 +37836,7 @@ def TK_VibratePad_Test():
 
     label('loc_29586')
 
-    OP_3B(0xFF, 0.000000, 0.700000, 0.200000)
+    OP_3B(0xFF, 0.0, 0.7, 0.2)
 
     Jump('loc_295DB')
 
@@ -38258,7 +37844,7 @@ def TK_VibratePad_Test():
 
     label('loc_29599')
 
-    OP_3B(0xFF, 0.200000, 0.400000, 0.100000)
+    OP_3B(0xFF, 0.2, 0.4, 0.1)
 
     Jump('loc_295DB')
 
@@ -38266,7 +37852,7 @@ def TK_VibratePad_Test():
 
     label('loc_295AC')
 
-    OP_3B(0xFF, 0.400000, 0.400000, 0.100000)
+    OP_3B(0xFF, 0.4, 0.4, 0.1)
 
     Jump('loc_295DB')
 
@@ -38274,7 +37860,7 @@ def TK_VibratePad_Test():
 
     label('loc_295BF')
 
-    OP_3B(0xFF, 0.500000, 0.500000, 0.300000)
+    OP_3B(0xFF, 0.5, 0.5, 0.3)
 
     Jump('loc_295DB')
 
@@ -38338,7 +37924,7 @@ def TK_StatusUp_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 'MaxHP +1000', 0x00000000)
     MenuCmd(0x01, 0x01, 'STR   +100', 0x00000001)
     MenuCmd(0x01, 0x01, 'DEF   +100', 0x00000002)
@@ -38377,7 +37963,7 @@ def TK_StatusUp_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_29830')
@@ -38398,7 +37984,7 @@ def TK_StatusUp_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_29830')
@@ -38419,7 +38005,7 @@ def TK_StatusUp_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_29830')
@@ -38440,7 +38026,7 @@ def TK_StatusUp_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_29830')
@@ -38461,7 +38047,7 @@ def TK_StatusUp_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_29830')
@@ -38526,7 +38112,7 @@ def TK_ChapterSave_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '章間セーブ', 0x00000000)
     MenuCmd(0x01, 0x01, 'クリアセーブ', 0x00000001)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x01)
@@ -38548,22 +38134,22 @@ def TK_ChapterSave_Test():
     label('loc_298BF')
 
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-    OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.000000, 1.000000, 1.000000, 0.000000, 0x00, 0x00, 'I_VIS1000', '')
-    OP_56(0x00, 0x03, 0x00, 1.000000, 1.000000, 1.000000, 1.000000, 500.000000)
+    OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.0, 1.0, 1.0, 0.0, 0x00, 0x00, 'I_VIS1000', '')
+    OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 500.0)
     OP_57(0x00, 0x03)
-    OP_16(0x0000)
+    Sleep(0)
     OP_AF(0x00)
     SetScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
     SetScenaFlags(ScenaFlag(0x0062, 4, 0x314))
     OP_90('current', 0x00000017)
     OP_93(0x00, 0x00)
     OP_93(0x01)
-    OP_11(0x0314)
-    OP_11(0x030A)
+    ClearScenaFlags(ScenaFlag(0x0062, 4, 0x314))
+    ClearScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
     OP_AF(0x01)
-    OP_43(0x00, 0x0000, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
-    OP_56(0x00, 0x03, 0x00, 1.000000, 1.000000, 1.000000, 0.000000, 500.000000)
+    Fade(0x00, 0, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
+    OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 0.0, 500.0)
     OP_57(0x00, 0x03)
     OP_58(0xFF)
     SetScenaFlags(ScenaFlag(0x00C1, 4, 0x60C))
@@ -38577,7 +38163,7 @@ def TK_ChapterSave_Test():
         ),
     )
 
-    OP_16(0x012C)
+    Sleep(300)
     OP_AC(0x01, 0x00000001)
     OP_14(0x04000000)
 
@@ -38588,8 +38174,8 @@ def TK_ChapterSave_Test():
     label('loc_29992')
 
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-    OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.000000, 1.000000, 1.000000, 0.000000, 0x00, 0x00, 'I_VIS1000', '')
-    OP_56(0x00, 0x03, 0x00, 1.000000, 1.000000, 1.000000, 1.000000, 500.000000)
+    OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.0, 1.0, 1.0, 0.0, 0x00, 0x00, 'I_VIS1000', '')
+    OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 500.0)
     OP_57(0x00, 0x03)
     OP_23(0x05, 0xFFFF, 0x00DC, 0xFFFF, 0xFFFF, 0x00)
 
@@ -38606,24 +38192,24 @@ def TK_ChapterSave_Test():
         ),
     )
 
-    OP_16(0x05DC)
-    OP_16(0x0000)
+    Sleep(1500)
+    Sleep(0)
     OP_AF(0x00)
     SetScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
     SetScenaFlags(ScenaFlag(0x0060, 1, 0x301))
     OP_90('current', 0x00000017)
     OP_93(0x00, 0x02)
     OP_93(0x01)
-    OP_11(0x0301)
-    OP_11(0x030A)
+    ClearScenaFlags(ScenaFlag(0x0060, 1, 0x301))
+    ClearScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
     OP_AF(0x01)
     OP_25(0x00)
-    OP_43(0x00, 0x0000, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
-    OP_56(0x00, 0x03, 0x00, 1.000000, 1.000000, 1.000000, 0.000000, 500.000000)
+    Fade(0x00, 0, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
+    OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 0.0, 500.0)
     OP_57(0x00, 0x03)
     OP_58(0xFF)
-    Call(0x0A, 'FC_EventEndMapChange', (0xDD, 'title'), (0xDD, ''))
+    Call(ScriptId.System, 'FC_EventEndMapChange', (0xDD, 'title'), (0xDD, ''))
     OP_14(0x04000000)
 
     Jump('loc_29B67')
@@ -38657,12 +38243,12 @@ def TK_ChapterSave_Test():
 @scena.Code('EV_Test_Evsave_Load')
 def EV_Test_Evsave_Load():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-    OP_43(0x00, 0x0000, 1.000000, 0x0000)
-    OP_49(0x07)
-    OP_3A(0x04, 0x0002, 1.000000, 0x0000, 0x00000000, 0x00)
-    OP_11(0x0314)
+    Fade(0x00, 0, 1.0, 0x0000)
+    FormationCtrl(0x07)
+    OP_3A(0x04, 0x0002, 1.0, 0x0000, 0x00000000, 0x00)
+    ClearScenaFlags(ScenaFlag(0x0062, 4, 0x314))
     OP_AF(0x01)
-    OP_11(0x030A)
+    ClearScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
     SetScenaFlags(ScenaFlag(0x00C1, 4, 0x60C))
 
     OP_18(
@@ -38716,7 +38302,7 @@ def TK_GetSCraft_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, 'クラフトクリア', 0x00000000)
     MenuCmd(0x01, 0x00, 'SC:七ノ太刀・落葉', 0x00000001)
     MenuCmd(0x01, 0x00, 'SC:七ノ太刀・刻葉', 0x00000002)
@@ -38739,7 +38325,7 @@ def TK_GetSCraft_Test():
 
     label('loc_29C87')
 
-    OP_66(0x03, 0x0000)
+    CraftCtrl(0x03, ChrTable['黎恩'])
 
     Jump('loc_29D7F')
 
@@ -38747,8 +38333,8 @@ def TK_GetSCraft_Test():
 
     label('loc_29C90')
 
-    OP_66(0x00, 0x0000, 0x07E4)
-    OP_66(0x04, 0x0000, 0x07E4)
+    CraftCtrl(0x00, ChrTable['黎恩'], 0x07E4)
+    CraftCtrl(0x04, ChrTable['黎恩'], 0x07E4)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
 
     Talk(
@@ -38760,7 +38346,7 @@ def TK_GetSCraft_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_29D7F')
@@ -38769,8 +38355,8 @@ def TK_GetSCraft_Test():
 
     label('loc_29CF1')
 
-    OP_66(0x00, 0x0000, 0x07E9)
-    OP_66(0x04, 0x0000, 0x07E9)
+    CraftCtrl(0x00, ChrTable['黎恩'], 0x07E9)
+    CraftCtrl(0x04, ChrTable['黎恩'], 0x07E9)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
 
     Talk(
@@ -38782,7 +38368,7 @@ def TK_GetSCraft_Test():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_29D7F')
@@ -38847,7 +38433,7 @@ def TK_Title_Test():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 'ゲーム開始時', 0x00000000)
     MenuCmd(0x01, 0x01, 'プロローグ～序章', 0x00000001)
     MenuCmd(0x01, 0x01, '１章～２章', 0x00000002)
@@ -39021,19 +38607,14 @@ def TK_Title_Test():
 # id: 0x006D offset: 0x29F5C
 @scena.Code('TK_MiniGame_Debug_CardGame')
 def TK_MiniGame_Debug_CardGame():
-    Call(0x0A, 'FC_CardGame_zack')
+    Call(ScriptId.System, 'FC_CardGame_zack')
 
     Return()
 
 # id: 0x006E offset: 0x29F74
 @scena.Code('TK_MiniGame_Debug')
 def TK_MiniGame_Debug():
-    import hack
-    hack.hack_debug_map2()
-    Return()
-    return
-
-    Call(0x0A, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
 
     OP_18(
         0xF6,
@@ -39067,7 +38648,7 @@ def TK_MiniGame_Debug():
         ),
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, 'ミニゲーム１（釣り）', 0x00000001)
     MenuCmd(0x01, 0x00, 'ミニゲーム３（乗馬TA(絆イベント)）', 0x00000003)
     MenuCmd(0x01, 0x00, 'ミニゲーム７（ポムっと）', 0x00000007)
@@ -39092,14 +38673,14 @@ def TK_MiniGame_Debug():
 
     label('loc_2A0AA')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x000E)
-    OP_49(0x04, 0x0000)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationSetLeader(ChrTable['黎恩'])
 
     OP_18(
         0xF7,
@@ -39110,7 +38691,7 @@ def TK_MiniGame_Debug():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 't0000　リーブスの川・北側１　　　', 0x00000000)
     MenuCmd(0x01, 0x01, 't0000　リーブスの川・北側２　　　　', 0x00000001)
     MenuCmd(0x01, 0x01, 'r0000　南セントアーク街道①の池　　', 0x00000002)
@@ -39451,7 +39032,7 @@ def TK_MiniGame_Debug():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_2AA20')
@@ -39460,7 +39041,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A9E4')
 
-    Call(0x0B, 'TK_MiniGame_Debug_Mg08_Start')
+    Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Start')
 
     OP_18(
         0xF6,
@@ -39498,7 +39079,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2AA25')
 
-    Call(0x0A, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
 
     Return()
 
@@ -39525,7 +39106,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     If(
         (
-            (Expr.Eval, "OP_6F(0x02, 0x0870, 0x00000001)"),
+            (Expr.Eval, "AddItem(0x02, 0x0870, 1)"),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -39533,7 +39114,7 @@ def TK_MiniGame_Debug_Mg08_Start():
         'loc_2AA8B',
     )
 
-    Call(0x0B, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x0, 0x0))
+    Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x0, 0x0))
 
     def _loc_2AA8B(): pass
 
@@ -39563,7 +39144,7 @@ def TK_MiniGame_Debug_Mg08_Start():
         'loc_2B091',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '対戦開始（マスター選択）', 0x00000001)
     MenuCmd(0x01, 0x01, 'デッキ構築', 0x00000000)
     MenuCmd(0x01, 0x01, 'チュートリアル', 0x00000002)
@@ -39595,7 +39176,7 @@ def TK_MiniGame_Debug_Mg08_Start():
     label('loc_2ABDE')
 
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
-    OP_3B(0x00, (0xFF, 0x88BA, 0x0), 1.000000, (0xFF, 0x0, 0x0), 0.000000, 0.000000, 0x0000, 0xFFFF, 0.000000, 0.000000, 0.000000, 0.000000, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+    OP_3B(0x00, (0xFF, 0x88BA, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
     Talk(
         0xFFFF,
@@ -39606,11 +39187,11 @@ def TK_MiniGame_Debug_Mg08_Start():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
-    Call(0x0B, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x2, 0x0))
-    Call(0x0B, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x1, 0x0))
+    Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x2, 0x0))
+    Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x1, 0x0))
 
     Jump('loc_2B08C')
 
@@ -39619,7 +39200,7 @@ def TK_MiniGame_Debug_Mg08_Start():
     label('loc_2ACBC')
 
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
-    OP_3B(0x00, (0xFF, 0x88BA, 0x0), 1.000000, (0xFF, 0x0, 0x0), 0.000000, 0.000000, 0x0000, 0xFFFF, 0.000000, 0.000000, 0.000000, 0.000000, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+    OP_3B(0x00, (0xFF, 0x88BA, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
     Talk(
         0xFFFF,
@@ -39630,11 +39211,11 @@ def TK_MiniGame_Debug_Mg08_Start():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
-    Call(0x0B, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x2, 0x0))
-    Call(0x0B, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x3, 0x0))
+    Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x2, 0x0))
+    Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x3, 0x0))
 
     Jump('loc_2B08C')
 
@@ -39643,7 +39224,7 @@ def TK_MiniGame_Debug_Mg08_Start():
     label('loc_2ADA0')
 
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
-    OP_3B(0x00, (0xFF, 0x88BA, 0x0), 1.000000, (0xFF, 0x0, 0x0), 0.000000, 0.000000, 0x0000, 0xFFFF, 0.000000, 0.000000, 0.000000, 0.000000, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+    OP_3B(0x00, (0xFF, 0x88BA, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
     Talk(
         0xFFFF,
@@ -39654,11 +39235,11 @@ def TK_MiniGame_Debug_Mg08_Start():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
-    Call(0x0B, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x2, 0x0))
-    Call(0x0B, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x0, 0x0))
+    Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x2, 0x0))
+    Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x0, 0x0))
 
     Jump('loc_2B08C')
 
@@ -39697,11 +39278,11 @@ def TK_MiniGame_Debug_Mg08_Start():
     )
 
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-    OP_43(0x00, 0x012C, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x00, 300, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_54(0x08, 0x0000000A, 0x00000000, 0x00000021, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
-    OP_43(0x64, 0x012C, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x64, 300, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
 
     If(
         (
@@ -39722,7 +39303,7 @@ def TK_MiniGame_Debug_Mg08_Start():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_2AF6F')
 
@@ -39749,7 +39330,7 @@ def TK_MiniGame_Debug_Mg08_Start():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_2AF6F')
 
@@ -39776,7 +39357,7 @@ def TK_MiniGame_Debug_Mg08_Start():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     def _loc_2AF6F(): pass
 
@@ -39801,7 +39382,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     label('loc_2AF7D')
 
-    Call(0x0B, 'FC_CardGameResetTutorialFlags')
+    Call(ScriptId.Current, 'FC_CardGameResetTutorialFlags')
     OP_9E(0x12, 0x00, 0x00)
     OP_9E(0x0F, 0x01)
     OP_9E(0x10)
@@ -39817,11 +39398,11 @@ def TK_MiniGame_Debug_Mg08_Start():
     )
 
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-    OP_43(0x00, 0x012C, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x00, 300, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_54(0x08, 0x0000000A, 0x00000000, 0x00000021, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
-    OP_43(0x64, 0x012C, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x64, 300, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
 
     If(
         (
@@ -39842,7 +39423,7 @@ def TK_MiniGame_Debug_Mg08_Start():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_2B075')
 
@@ -39869,7 +39450,7 @@ def TK_MiniGame_Debug_Mg08_Start():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     Jump('loc_2B075')
 
@@ -39896,7 +39477,7 @@ def TK_MiniGame_Debug_Mg08_Start():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
 
     def _loc_2B075(): pass
 
@@ -39958,11 +39539,11 @@ def TK_MiniGame_Debug_Mg08_Cardset():
         'loc_2B0D7',
     )
 
-    OP_6F(0x00, 0x0870, 0x00000003)
-    OP_6F(0x00, 0x0876, 0x00000003)
-    OP_6F(0x00, 0x087E, 0x00000003)
-    OP_6F(0x00, 0x088F, 0x00000003)
-    OP_6F(0x00, 0x0892, 0x00000001)
+    AddItem(0x00, 0x0870, 3)
+    AddItem(0x00, 0x0876, 3)
+    AddItem(0x00, 0x087E, 3)
+    AddItem(0x00, 0x088F, 3)
+    AddItem(0x00, 0x0892, 1)
 
     Jump('loc_2B4BE')
 
@@ -39980,48 +39561,48 @@ def TK_MiniGame_Debug_Mg08_Cardset():
         'loc_2B23B',
     )
 
-    OP_6F(0x00, 0x0870, 0x00000003)
-    OP_6F(0x00, 0x0871, 0x00000003)
-    OP_6F(0x00, 0x0872, 0x00000003)
-    OP_6F(0x00, 0x0873, 0x00000003)
-    OP_6F(0x00, 0x0874, 0x00000003)
-    OP_6F(0x00, 0x0875, 0x00000003)
-    OP_6F(0x00, 0x0876, 0x00000003)
-    OP_6F(0x00, 0x0877, 0x00000003)
-    OP_6F(0x00, 0x0878, 0x00000003)
-    OP_6F(0x00, 0x0879, 0x00000003)
-    OP_6F(0x00, 0x087A, 0x00000003)
-    OP_6F(0x00, 0x087B, 0x00000003)
-    OP_6F(0x00, 0x087C, 0x00000003)
-    OP_6F(0x00, 0x087D, 0x00000003)
-    OP_6F(0x00, 0x087E, 0x00000003)
-    OP_6F(0x00, 0x087F, 0x00000003)
-    OP_6F(0x00, 0x0880, 0x00000003)
-    OP_6F(0x00, 0x0881, 0x00000003)
-    OP_6F(0x00, 0x0882, 0x00000003)
-    OP_6F(0x00, 0x0883, 0x00000003)
-    OP_6F(0x00, 0x0884, 0x00000003)
-    OP_6F(0x00, 0x0885, 0x00000003)
-    OP_6F(0x00, 0x0886, 0x00000003)
-    OP_6F(0x00, 0x0887, 0x00000003)
-    OP_6F(0x00, 0x0888, 0x00000003)
-    OP_6F(0x00, 0x0889, 0x00000003)
-    OP_6F(0x00, 0x088A, 0x00000003)
-    OP_6F(0x00, 0x088B, 0x00000003)
-    OP_6F(0x00, 0x088C, 0x00000003)
-    OP_6F(0x00, 0x088D, 0x00000003)
-    OP_6F(0x00, 0x088E, 0x00000003)
-    OP_6F(0x00, 0x088F, 0x00000003)
-    OP_6F(0x00, 0x0890, 0x00000003)
-    OP_6F(0x00, 0x0891, 0x00000003)
-    OP_6F(0x00, 0x0892, 0x00000001)
-    OP_6F(0x00, 0x0893, 0x00000001)
-    OP_6F(0x00, 0x0894, 0x00000001)
-    OP_6F(0x00, 0x0895, 0x00000001)
-    OP_6F(0x00, 0x0896, 0x00000001)
-    OP_6F(0x00, 0x0897, 0x00000001)
-    OP_6F(0x00, 0x0898, 0x00000001)
-    OP_6F(0x00, 0x0899, 0x00000001)
+    AddItem(0x00, 0x0870, 3)
+    AddItem(0x00, 0x0871, 3)
+    AddItem(0x00, 0x0872, 3)
+    AddItem(0x00, 0x0873, 3)
+    AddItem(0x00, 0x0874, 3)
+    AddItem(0x00, 0x0875, 3)
+    AddItem(0x00, 0x0876, 3)
+    AddItem(0x00, 0x0877, 3)
+    AddItem(0x00, 0x0878, 3)
+    AddItem(0x00, 0x0879, 3)
+    AddItem(0x00, 0x087A, 3)
+    AddItem(0x00, 0x087B, 3)
+    AddItem(0x00, 0x087C, 3)
+    AddItem(0x00, 0x087D, 3)
+    AddItem(0x00, 0x087E, 3)
+    AddItem(0x00, 0x087F, 3)
+    AddItem(0x00, 0x0880, 3)
+    AddItem(0x00, 0x0881, 3)
+    AddItem(0x00, 0x0882, 3)
+    AddItem(0x00, 0x0883, 3)
+    AddItem(0x00, 0x0884, 3)
+    AddItem(0x00, 0x0885, 3)
+    AddItem(0x00, 0x0886, 3)
+    AddItem(0x00, 0x0887, 3)
+    AddItem(0x00, 0x0888, 3)
+    AddItem(0x00, 0x0889, 3)
+    AddItem(0x00, 0x088A, 3)
+    AddItem(0x00, 0x088B, 3)
+    AddItem(0x00, 0x088C, 3)
+    AddItem(0x00, 0x088D, 3)
+    AddItem(0x00, 0x088E, 3)
+    AddItem(0x00, 0x088F, 3)
+    AddItem(0x00, 0x0890, 3)
+    AddItem(0x00, 0x0891, 3)
+    AddItem(0x00, 0x0892, 1)
+    AddItem(0x00, 0x0893, 1)
+    AddItem(0x00, 0x0894, 1)
+    AddItem(0x00, 0x0895, 1)
+    AddItem(0x00, 0x0896, 1)
+    AddItem(0x00, 0x0897, 1)
+    AddItem(0x00, 0x0898, 1)
+    AddItem(0x00, 0x0899, 1)
 
     Jump('loc_2B4BE')
 
@@ -40039,40 +39620,40 @@ def TK_MiniGame_Debug_Mg08_Cardset():
         'loc_2B35F',
     )
 
-    OP_6F(0x00, 0x0870, 0x00000003)
-    OP_6F(0x00, 0x0871, 0x00000003)
-    OP_6F(0x00, 0x0872, 0x00000003)
-    OP_6F(0x00, 0x0873, 0x00000003)
-    OP_6F(0x00, 0x0874, 0x00000003)
-    OP_6F(0x00, 0x0876, 0x00000003)
-    OP_6F(0x00, 0x0877, 0x00000003)
-    OP_6F(0x00, 0x0878, 0x00000003)
-    OP_6F(0x00, 0x0879, 0x00000003)
-    OP_6F(0x00, 0x087A, 0x00000003)
-    OP_6F(0x00, 0x087C, 0x00000003)
-    OP_6F(0x00, 0x087D, 0x00000003)
-    OP_6F(0x00, 0x087E, 0x00000003)
-    OP_6F(0x00, 0x087F, 0x00000003)
-    OP_6F(0x00, 0x0880, 0x00000003)
-    OP_6F(0x00, 0x0882, 0x00000003)
-    OP_6F(0x00, 0x0883, 0x00000003)
-    OP_6F(0x00, 0x0884, 0x00000003)
-    OP_6F(0x00, 0x0885, 0x00000003)
-    OP_6F(0x00, 0x0886, 0x00000003)
-    OP_6F(0x00, 0x0888, 0x00000003)
-    OP_6F(0x00, 0x088A, 0x00000003)
-    OP_6F(0x00, 0x088B, 0x00000003)
-    OP_6F(0x00, 0x088C, 0x00000003)
-    OP_6F(0x00, 0x088D, 0x00000003)
-    OP_6F(0x00, 0x088F, 0x00000003)
-    OP_6F(0x00, 0x0890, 0x00000003)
-    OP_6F(0x00, 0x0892, 0x00000001)
-    OP_6F(0x00, 0x0893, 0x00000001)
-    OP_6F(0x00, 0x0894, 0x00000001)
-    OP_6F(0x00, 0x0895, 0x00000001)
-    OP_6F(0x00, 0x0896, 0x00000001)
-    OP_6F(0x00, 0x0897, 0x00000001)
-    OP_6F(0x00, 0x0898, 0x00000001)
+    AddItem(0x00, 0x0870, 3)
+    AddItem(0x00, 0x0871, 3)
+    AddItem(0x00, 0x0872, 3)
+    AddItem(0x00, 0x0873, 3)
+    AddItem(0x00, 0x0874, 3)
+    AddItem(0x00, 0x0876, 3)
+    AddItem(0x00, 0x0877, 3)
+    AddItem(0x00, 0x0878, 3)
+    AddItem(0x00, 0x0879, 3)
+    AddItem(0x00, 0x087A, 3)
+    AddItem(0x00, 0x087C, 3)
+    AddItem(0x00, 0x087D, 3)
+    AddItem(0x00, 0x087E, 3)
+    AddItem(0x00, 0x087F, 3)
+    AddItem(0x00, 0x0880, 3)
+    AddItem(0x00, 0x0882, 3)
+    AddItem(0x00, 0x0883, 3)
+    AddItem(0x00, 0x0884, 3)
+    AddItem(0x00, 0x0885, 3)
+    AddItem(0x00, 0x0886, 3)
+    AddItem(0x00, 0x0888, 3)
+    AddItem(0x00, 0x088A, 3)
+    AddItem(0x00, 0x088B, 3)
+    AddItem(0x00, 0x088C, 3)
+    AddItem(0x00, 0x088D, 3)
+    AddItem(0x00, 0x088F, 3)
+    AddItem(0x00, 0x0890, 3)
+    AddItem(0x00, 0x0892, 1)
+    AddItem(0x00, 0x0893, 1)
+    AddItem(0x00, 0x0894, 1)
+    AddItem(0x00, 0x0895, 1)
+    AddItem(0x00, 0x0896, 1)
+    AddItem(0x00, 0x0897, 1)
+    AddItem(0x00, 0x0898, 1)
 
     Jump('loc_2B4BE')
 
@@ -40090,48 +39671,48 @@ def TK_MiniGame_Debug_Mg08_Cardset():
         'loc_2B4BE',
     )
 
-    OP_6F(0x01, 0x0870, 0x00000063)
-    OP_6F(0x01, 0x0871, 0x00000063)
-    OP_6F(0x01, 0x0872, 0x00000063)
-    OP_6F(0x01, 0x0873, 0x00000063)
-    OP_6F(0x01, 0x0874, 0x00000063)
-    OP_6F(0x01, 0x0875, 0x00000063)
-    OP_6F(0x01, 0x0876, 0x00000063)
-    OP_6F(0x01, 0x0877, 0x00000063)
-    OP_6F(0x01, 0x0878, 0x00000063)
-    OP_6F(0x01, 0x0879, 0x00000063)
-    OP_6F(0x01, 0x087A, 0x00000063)
-    OP_6F(0x01, 0x087B, 0x00000063)
-    OP_6F(0x01, 0x087C, 0x00000063)
-    OP_6F(0x01, 0x087D, 0x00000063)
-    OP_6F(0x01, 0x087E, 0x00000063)
-    OP_6F(0x01, 0x087F, 0x00000063)
-    OP_6F(0x01, 0x0880, 0x00000063)
-    OP_6F(0x01, 0x0881, 0x00000063)
-    OP_6F(0x01, 0x0882, 0x00000063)
-    OP_6F(0x01, 0x0883, 0x00000063)
-    OP_6F(0x01, 0x0884, 0x00000063)
-    OP_6F(0x01, 0x0885, 0x00000063)
-    OP_6F(0x01, 0x0886, 0x00000063)
-    OP_6F(0x01, 0x0887, 0x00000063)
-    OP_6F(0x01, 0x0888, 0x00000063)
-    OP_6F(0x01, 0x0889, 0x00000063)
-    OP_6F(0x01, 0x088A, 0x00000063)
-    OP_6F(0x01, 0x088B, 0x00000063)
-    OP_6F(0x01, 0x088C, 0x00000063)
-    OP_6F(0x01, 0x088D, 0x00000063)
-    OP_6F(0x01, 0x088E, 0x00000063)
-    OP_6F(0x01, 0x088F, 0x00000063)
-    OP_6F(0x01, 0x0890, 0x00000063)
-    OP_6F(0x01, 0x0891, 0x00000063)
-    OP_6F(0x01, 0x0892, 0x00000063)
-    OP_6F(0x01, 0x0893, 0x00000063)
-    OP_6F(0x01, 0x0894, 0x00000063)
-    OP_6F(0x01, 0x0895, 0x00000063)
-    OP_6F(0x01, 0x0896, 0x00000063)
-    OP_6F(0x01, 0x0897, 0x00000063)
-    OP_6F(0x01, 0x0898, 0x00000063)
-    OP_6F(0x01, 0x0899, 0x00000063)
+    AddItem(0x01, 0x0870, 99)
+    AddItem(0x01, 0x0871, 99)
+    AddItem(0x01, 0x0872, 99)
+    AddItem(0x01, 0x0873, 99)
+    AddItem(0x01, 0x0874, 99)
+    AddItem(0x01, 0x0875, 99)
+    AddItem(0x01, 0x0876, 99)
+    AddItem(0x01, 0x0877, 99)
+    AddItem(0x01, 0x0878, 99)
+    AddItem(0x01, 0x0879, 99)
+    AddItem(0x01, 0x087A, 99)
+    AddItem(0x01, 0x087B, 99)
+    AddItem(0x01, 0x087C, 99)
+    AddItem(0x01, 0x087D, 99)
+    AddItem(0x01, 0x087E, 99)
+    AddItem(0x01, 0x087F, 99)
+    AddItem(0x01, 0x0880, 99)
+    AddItem(0x01, 0x0881, 99)
+    AddItem(0x01, 0x0882, 99)
+    AddItem(0x01, 0x0883, 99)
+    AddItem(0x01, 0x0884, 99)
+    AddItem(0x01, 0x0885, 99)
+    AddItem(0x01, 0x0886, 99)
+    AddItem(0x01, 0x0887, 99)
+    AddItem(0x01, 0x0888, 99)
+    AddItem(0x01, 0x0889, 99)
+    AddItem(0x01, 0x088A, 99)
+    AddItem(0x01, 0x088B, 99)
+    AddItem(0x01, 0x088C, 99)
+    AddItem(0x01, 0x088D, 99)
+    AddItem(0x01, 0x088E, 99)
+    AddItem(0x01, 0x088F, 99)
+    AddItem(0x01, 0x0890, 99)
+    AddItem(0x01, 0x0891, 99)
+    AddItem(0x01, 0x0892, 99)
+    AddItem(0x01, 0x0893, 99)
+    AddItem(0x01, 0x0894, 99)
+    AddItem(0x01, 0x0895, 99)
+    AddItem(0x01, 0x0896, 99)
+    AddItem(0x01, 0x0897, 99)
+    AddItem(0x01, 0x0898, 99)
+    AddItem(0x01, 0x0899, 99)
 
     def _loc_2B4BE(): pass
 
@@ -40142,7 +39723,7 @@ def TK_MiniGame_Debug_Mg08_Cardset():
 # id: 0x0071 offset: 0x2B4C0
 @scena.Code('TK_Shop_Debug')
 def TK_Shop_Debug():
-    Call(0x0A, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
 
     OP_18(
         0xF6,
@@ -40176,7 +39757,7 @@ def TK_Shop_Debug():
         ),
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '武器屋', 0x000003E8)
     MenuCmd(0x01, 0x00, '武器屋(ぼったくり)', 0x000003F2)
     MenuCmd(0x01, 0x00, '工房', 0x000003E9)
@@ -40191,7 +39772,7 @@ def TK_Shop_Debug():
     MenuCmd(0x01, 0x00, 'オーブ作成', 0x000003EF)
     MenuCmd(0x01, 0x00, 'お金欲しい', 0x000003F0)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x00DB, 2, 0x6DA)),
@@ -40202,7 +39783,7 @@ def TK_Shop_Debug():
 
     MenuCmd(0x08, 0x00, '表示フラグ１', 0x000003FC, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x00DB, 3, 0x6DB)),
@@ -40213,7 +39794,7 @@ def TK_Shop_Debug():
 
     MenuCmd(0x08, 0x00, '終了フラグ１', 0x000003FD, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x00DB, 4, 0x6DC)),
@@ -40380,15 +39961,15 @@ def TK_Shop_Debug():
 
     label('loc_2B82A')
 
-    OP_6F(0x04, 0x0000, 0x00000FA0)
-    OP_6F(0x07, 0x00F1, 0x000003E8)
-    OP_6F(0x07, 0x00F2, 0x000003E8)
-    OP_6F(0x07, 0x00F3, 0x000003E8)
-    OP_6F(0x07, 0x00F4, 0x000003E8)
-    OP_6F(0x07, 0x00F5, 0x000003E8)
-    OP_6F(0x07, 0x00F6, 0x000003E8)
-    OP_6F(0x07, 0x00F7, 0x000003E8)
-    OP_6F(0x07, 0x00F8, 0x000003E8)
+    AddItem(0x04, 0x0000, 4000)
+    AddItem(0x07, 0x00F1, 1000)
+    AddItem(0x07, 0x00F2, 1000)
+    AddItem(0x07, 0x00F3, 1000)
+    AddItem(0x07, 0x00F4, 1000)
+    AddItem(0x07, 0x00F5, 1000)
+    AddItem(0x07, 0x00F6, 1000)
+    AddItem(0x07, 0x00F7, 1000)
+    AddItem(0x07, 0x00F8, 1000)
 
     Jump('loc_2B885')
 
@@ -40417,14 +39998,14 @@ def TK_Shop_Debug():
 
     label('loc_2B88A')
 
-    Call(0x0A, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
 
     Return()
 
 # id: 0x0072 offset: 0x2B8A0
 @scena.Code('TK_Note_Debug')
 def TK_Note_Debug():
-    Call(0x0A, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
 
     OP_18(
         0xF6,
@@ -40458,7 +40039,7 @@ def TK_Note_Debug():
         ),
     )
 
-    MenuCmd(0x00, 0x00, 0x0016, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0016, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '手帳全登録', 0x00000000)
     MenuCmd(0x01, 0x00, '｜ナビ全登録', 0x0000000A)
     MenuCmd(0x01, 0x00, '｜クエスト全登録', 0x00000014)
@@ -40527,14 +40108,14 @@ def TK_Note_Debug():
 
     label('loc_2BCCA')
 
-    Call(0x0B, 'EV_Note_Quest', (0xFF, 0x3, 0x0))
-    Call(0x0B, 'EV_Note_Battle', (0xFF, 0x1, 0x0))
-    Call(0x0B, 'EV_Note_Person', (0xFF, 0x1, 0x0))
-    Call(0x0B, 'EV_Note_OpenBook', (0xFF, 0x1, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Quest', (0xFF, 0x3, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Battle', (0xFF, 0x1, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Person', (0xFF, 0x1, 0x0))
+    Call(ScriptId.Current, 'EV_Note_OpenBook', (0xFF, 0x1, 0x0))
     OP_97(0x00, 0xFFFF, 0x00000701)
     OP_91(0x05, 0xFFFF, 0x00000001)
-    OP_6F(0x0F, 0x0086, 0x00000001)
-    OP_6F(0x0F, 0x00DD, 0x00000001)
+    AddItem(0x0F, 0x0086, 1)
+    AddItem(0x0F, 0x00DD, 1)
     OP_79(0x08, 0xFFFF)
 
     Jump('loc_2C0CA')
@@ -40551,7 +40132,7 @@ def TK_Note_Debug():
 
     label('loc_2BD5D')
 
-    Call(0x0B, 'EV_Note_Quest', (0xFF, 0x0, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Quest', (0xFF, 0x0, 0x0))
 
     Jump('loc_2C0CA')
 
@@ -40559,7 +40140,7 @@ def TK_Note_Debug():
 
     label('loc_2BD79')
 
-    Call(0x0B, 'EV_Note_Quest', (0xFF, 0x1, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Quest', (0xFF, 0x1, 0x0))
 
     Jump('loc_2C0CA')
 
@@ -40567,7 +40148,7 @@ def TK_Note_Debug():
 
     label('loc_2BD95')
 
-    Call(0x0B, 'EV_Note_Quest', (0xFF, 0x2, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Quest', (0xFF, 0x2, 0x0))
 
     Jump('loc_2C0CA')
 
@@ -40575,7 +40156,7 @@ def TK_Note_Debug():
 
     label('loc_2BDB1')
 
-    Call(0x0B, 'EV_Note_Quest', (0xFF, 0x3, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Quest', (0xFF, 0x3, 0x0))
 
     Jump('loc_2C0CA')
 
@@ -40583,7 +40164,7 @@ def TK_Note_Debug():
 
     label('loc_2BDCD')
 
-    Call(0x0B, 'EV_Note_Battle', (0xFF, 0x0, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Battle', (0xFF, 0x0, 0x0))
 
     Jump('loc_2C0CA')
 
@@ -40591,7 +40172,7 @@ def TK_Note_Debug():
 
     label('loc_2BDEA')
 
-    Call(0x0B, 'EV_Note_Battle', (0xFF, 0x1, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Battle', (0xFF, 0x1, 0x0))
 
     Jump('loc_2C0CA')
 
@@ -40599,7 +40180,7 @@ def TK_Note_Debug():
 
     label('loc_2BE07')
 
-    Call(0x0B, 'EV_Note_Person', (0xFF, 0x0, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Person', (0xFF, 0x0, 0x0))
 
     Jump('loc_2C0CA')
 
@@ -40607,7 +40188,7 @@ def TK_Note_Debug():
 
     label('loc_2BE24')
 
-    Call(0x0B, 'EV_Note_Person', (0xFF, 0x1, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Person', (0xFF, 0x1, 0x0))
 
     Jump('loc_2C0CA')
 
@@ -40615,7 +40196,7 @@ def TK_Note_Debug():
 
     label('loc_2BE41')
 
-    Call(0x0B, 'EV_Note_Person', (0xFF, 0x2, 0x0))
+    Call(ScriptId.Current, 'EV_Note_Person', (0xFF, 0x2, 0x0))
 
     Jump('loc_2C0CA')
 
@@ -40631,7 +40212,7 @@ def TK_Note_Debug():
 
     label('loc_2BE6B')
 
-    OP_6F(0x0F, 0x00D2, 0x00000063)
+    AddItem(0x0F, 0x00D2, 99)
 
     Jump('loc_2C0CA')
 
@@ -40661,22 +40242,22 @@ def TK_Note_Debug():
     OP_97(0x00, 0x0013, 0x00000701)
     OP_97(0x00, 0x0014, 0x00000701)
     OP_97(0x00, 0x0015, 0x00000701)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x0001, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x0002, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x0003, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x0004, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x0005, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x0006, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x0007, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x0008, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x0009, 0x00000200)
-    MenuChrFlagCmd(0x00, 0x000F, 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['馬奇亞斯'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['艾瑪'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['菲'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['蓋烏斯'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['米莉亞姆'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000200)
 
     Jump('loc_2C0CA')
 
@@ -40684,7 +40265,7 @@ def TK_Note_Debug():
 
     label('loc_2BFAD')
 
-    OP_6F(0x0F, 0x0085, 0x00000001)
+    AddItem(0x0F, 0x0085, 1)
 
     Jump('loc_2C0CA')
 
@@ -40693,7 +40274,7 @@ def TK_Note_Debug():
     label('loc_2BFBA')
 
     OP_91(0x05, 0xFFFF, 0x00000001)
-    OP_6F(0x0F, 0x00DD, 0x00000001)
+    AddItem(0x0F, 0x00DD, 1)
 
     Jump('loc_2C0CA')
 
@@ -40701,7 +40282,7 @@ def TK_Note_Debug():
 
     label('loc_2BFCF')
 
-    OP_6F(0x0F, 0x0086, 0x00000001)
+    AddItem(0x0F, 0x0086, 1)
 
     Jump('loc_2C0CA')
 
@@ -40709,7 +40290,7 @@ def TK_Note_Debug():
 
     label('loc_2BFDC')
 
-    Call(0x0B, 'EV_Note_AVoice')
+    Call(ScriptId.Current, 'EV_Note_AVoice')
 
     Jump('loc_2C0CA')
 
@@ -40725,7 +40306,7 @@ def TK_Note_Debug():
 
     label('loc_2BFFB')
 
-    Call(0x0B, 'EV_Note_OpenBook', (0xFF, 0x1, 0x0))
+    Call(ScriptId.Current, 'EV_Note_OpenBook', (0xFF, 0x1, 0x0))
 
     Jump('loc_2C0CA')
 
@@ -40733,8 +40314,8 @@ def TK_Note_Debug():
 
     label('loc_2C01A')
 
-    OP_6F(0x00, 0x0179, 0x00000001)
-    OP_6F(0x01, 0x0172, 0x00000001)
+    AddItem(0x00, 0x0179, 1)
+    AddItem(0x01, 0x0172, 1)
 
     Jump('loc_2C0CA')
 
@@ -40742,8 +40323,8 @@ def TK_Note_Debug():
 
     label('loc_2C02F')
 
-    OP_6F(0x01, 0x0179, 0x00000001)
-    OP_6F(0x00, 0x0172, 0x00000001)
+    AddItem(0x01, 0x0179, 1)
+    AddItem(0x00, 0x0172, 1)
 
     Jump('loc_2C0CA')
 
@@ -40751,7 +40332,7 @@ def TK_Note_Debug():
 
     label('loc_2C044')
 
-    Call(0x0B, 'EV_Note_OpenBook', (0xFF, 0x0, 0x0))
+    Call(ScriptId.Current, 'EV_Note_OpenBook', (0xFF, 0x0, 0x0))
 
     Jump('loc_2C0CA')
 
@@ -40759,7 +40340,7 @@ def TK_Note_Debug():
 
     label('loc_2C063')
 
-    Call(0x0B, 'EV_Note_OpenSynopsis')
+    Call(ScriptId.Current, 'EV_Note_OpenSynopsis')
 
     Jump('loc_2C0CA')
 
@@ -40767,7 +40348,7 @@ def TK_Note_Debug():
 
     label('loc_2C080')
 
-    OP_16(0x012C)
+    Sleep(300)
     OP_95(0x00, 'book01', 'BookData02', 0x00, 0x0000)
     OP_95(0x01)
 
@@ -40777,7 +40358,7 @@ def TK_Note_Debug():
 
     label('loc_2C0A1')
 
-    Call(0x0B, 'EV_Note_CountTests')
+    Call(ScriptId.Current, 'EV_Note_CountTests')
 
     Jump('loc_2C0CA')
 
@@ -40806,7 +40387,7 @@ def TK_Note_Debug():
 
     label('loc_2C0CF')
 
-    Call(0x0A, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
 
     Return()
 
@@ -41083,7 +40664,7 @@ def EV_Note_Person():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 'リィン①', 0x00000001)
     MenuCmd(0x01, 0x01, 'リィン②', 0x00000002)
     MenuCmd(0x01, 0x01, 'リィン③', 0x00000003)
@@ -41309,65 +40890,65 @@ def EV_Note_OpenBook():
         'loc_2C722',
     )
 
-    OP_6F(0x01, 0x0179, 0x00000063)
-    OP_6F(0x00, 0x0172, 0x00000001)
+    AddItem(0x01, 0x0179, 99)
+    AddItem(0x00, 0x0172, 1)
 
     def _loc_2C722(): pass
 
     label('loc_2C722')
 
-    OP_6F(0x00, 0x0118, 0x00000001)
-    OP_6F(0x00, 0x0119, 0x00000001)
-    OP_6F(0x00, 0x011A, 0x00000001)
-    OP_6F(0x00, 0x011B, 0x00000001)
-    OP_6F(0x00, 0x011C, 0x00000001)
-    OP_6F(0x00, 0x011D, 0x00000001)
-    OP_6F(0x00, 0x011E, 0x00000001)
-    OP_6F(0x00, 0x011F, 0x00000001)
-    OP_6F(0x00, 0x0120, 0x00000001)
-    OP_6F(0x00, 0x0121, 0x00000001)
-    OP_6F(0x00, 0x0168, 0x00000001)
-    OP_6F(0x00, 0x0169, 0x00000001)
-    OP_6F(0x00, 0x016A, 0x00000001)
-    OP_6F(0x00, 0x016B, 0x00000001)
-    OP_6F(0x00, 0x016C, 0x00000001)
-    OP_6F(0x00, 0x016D, 0x00000001)
-    OP_6F(0x00, 0x016E, 0x00000001)
-    OP_6F(0x00, 0x016F, 0x00000001)
-    OP_6F(0x00, 0x0170, 0x00000001)
-    OP_6F(0x00, 0x0122, 0x00000001)
-    OP_6F(0x00, 0x0123, 0x00000001)
-    OP_6F(0x00, 0x0124, 0x00000001)
-    OP_6F(0x00, 0x0125, 0x00000001)
-    OP_6F(0x00, 0x0126, 0x00000001)
-    OP_6F(0x00, 0x0173, 0x00000001)
-    OP_6F(0x00, 0x0174, 0x00000001)
-    OP_6F(0x00, 0x0175, 0x00000001)
-    OP_6F(0x00, 0x0176, 0x00000001)
-    OP_6F(0x00, 0x0177, 0x00000001)
-    OP_6F(0x00, 0x0178, 0x00000001)
-    OP_6F(0x00, 0x0138, 0x00000001)
-    OP_6F(0x00, 0x0139, 0x00000001)
-    OP_6F(0x00, 0x013A, 0x00000001)
-    OP_6F(0x00, 0x013B, 0x00000001)
-    OP_6F(0x00, 0x013C, 0x00000001)
-    OP_6F(0x00, 0x0159, 0x00000001)
-    OP_6F(0x00, 0x015A, 0x00000001)
-    OP_6F(0x00, 0x015B, 0x00000001)
-    OP_6F(0x00, 0x015C, 0x00000001)
-    OP_6F(0x00, 0x015D, 0x00000001)
-    OP_6F(0x00, 0x015E, 0x00000001)
-    OP_6F(0x00, 0x015F, 0x00000001)
-    OP_6F(0x00, 0x0160, 0x00000001)
-    OP_6F(0x00, 0x0161, 0x00000001)
-    OP_6F(0x00, 0x0162, 0x00000001)
+    AddItem(0x00, 0x0118, 1)
+    AddItem(0x00, 0x0119, 1)
+    AddItem(0x00, 0x011A, 1)
+    AddItem(0x00, 0x011B, 1)
+    AddItem(0x00, 0x011C, 1)
+    AddItem(0x00, 0x011D, 1)
+    AddItem(0x00, 0x011E, 1)
+    AddItem(0x00, 0x011F, 1)
+    AddItem(0x00, 0x0120, 1)
+    AddItem(0x00, 0x0121, 1)
+    AddItem(0x00, 0x0168, 1)
+    AddItem(0x00, 0x0169, 1)
+    AddItem(0x00, 0x016A, 1)
+    AddItem(0x00, 0x016B, 1)
+    AddItem(0x00, 0x016C, 1)
+    AddItem(0x00, 0x016D, 1)
+    AddItem(0x00, 0x016E, 1)
+    AddItem(0x00, 0x016F, 1)
+    AddItem(0x00, 0x0170, 1)
+    AddItem(0x00, 0x0122, 1)
+    AddItem(0x00, 0x0123, 1)
+    AddItem(0x00, 0x0124, 1)
+    AddItem(0x00, 0x0125, 1)
+    AddItem(0x00, 0x0126, 1)
+    AddItem(0x00, 0x0173, 1)
+    AddItem(0x00, 0x0174, 1)
+    AddItem(0x00, 0x0175, 1)
+    AddItem(0x00, 0x0176, 1)
+    AddItem(0x00, 0x0177, 1)
+    AddItem(0x00, 0x0178, 1)
+    AddItem(0x00, 0x0138, 1)
+    AddItem(0x00, 0x0139, 1)
+    AddItem(0x00, 0x013A, 1)
+    AddItem(0x00, 0x013B, 1)
+    AddItem(0x00, 0x013C, 1)
+    AddItem(0x00, 0x0159, 1)
+    AddItem(0x00, 0x015A, 1)
+    AddItem(0x00, 0x015B, 1)
+    AddItem(0x00, 0x015C, 1)
+    AddItem(0x00, 0x015D, 1)
+    AddItem(0x00, 0x015E, 1)
+    AddItem(0x00, 0x015F, 1)
+    AddItem(0x00, 0x0160, 1)
+    AddItem(0x00, 0x0161, 1)
+    AddItem(0x00, 0x0162, 1)
 
     Return()
 
 # id: 0x0078 offset: 0x2C88C
 @scena.Code('EV_Note_OpenSynopsis')
 def EV_Note_OpenSynopsis():
-    OP_6F(0x0F, 0x00DF, 0x00000001)
+    AddItem(0x0F, 0x00DF, 1)
 
     Return()
 
@@ -41406,7 +40987,7 @@ def EV_Note_CountTests():
         ),
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '戦闘：魔獣の登録数', 0x00000001)
     MenuCmd(0x01, 0x00, '人物：人物の情報登録数', 0x0000000A)
     MenuCmd(0x01, 0x00, '料理：料理のレシピコンプ数', 0x00000014)
@@ -41453,7 +41034,7 @@ def EV_Note_CountTests():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_2CB23')
@@ -41482,7 +41063,7 @@ def EV_Note_CountTests():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_2CB23')
@@ -41511,7 +41092,7 @@ def EV_Note_CountTests():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_2CB23')
@@ -41540,7 +41121,7 @@ def EV_Note_CountTests():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_2CB23')
@@ -41569,7 +41150,7 @@ def EV_Note_CountTests():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_2CB23')
@@ -41604,7 +41185,7 @@ def EV_Note_CountTests():
 # id: 0x007A offset: 0x2CB2C
 @scena.Code('TK_Camp_Debug')
 def TK_Camp_Debug():
-    Call(0x0A, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
 
     OP_18(
         0xF6,
@@ -41638,11 +41219,11 @@ def TK_Camp_Debug():
         ),
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '全体：禁止フラグテスト＞', 0x0000044C)
     MenuCmd(0x01, 0x00, '全体：システムフラグ テスト＞', 0x0000044D)
     MenuCmd(0x01, 0x00, '全体：その他フラグ テスト＞', 0x0000044E)
-    MenuCmd(0x01, 0x00, '编组：队伍测试＞', 0x0000044F)
+    MenuCmd(0x01, 0x00, '編成：パーティ テスト＞', 0x0000044F)
     MenuCmd(0x01, 0x00, 'オーブメント制御＞', 0x00000450)
     MenuCmd(0x01, 0x00, 'マスタークオーツ＞', 0x00000451)
     MenuCmd(0x01, 0x00, 'リンク：リンクテスト＞', 0x00000452)
@@ -41671,7 +41252,7 @@ def TK_Camp_Debug():
 
     label('loc_2CD1C')
 
-    Call(0x0B, 'TK_Camp_ChrFlagTest')
+    Call(ScriptId.Current, 'TK_Camp_ChrFlagTest')
 
     Jump('loc_2CDFC')
 
@@ -41679,7 +41260,7 @@ def TK_Camp_Debug():
 
     label('loc_2CD38')
 
-    Call(0x0B, 'TK_Camp_FlagTest')
+    Call(ScriptId.Current, 'TK_Camp_FlagTest')
 
     Jump('loc_2CDFC')
 
@@ -41687,7 +41268,7 @@ def TK_Camp_Debug():
 
     label('loc_2CD51')
 
-    Call(0x0B, 'TK_Camp_OtherFlagTest')
+    Call(ScriptId.Current, 'TK_Camp_OtherFlagTest')
 
     Jump('loc_2CDFC')
 
@@ -41695,7 +41276,7 @@ def TK_Camp_Debug():
 
     label('loc_2CD6F')
 
-    Call(0x0B, 'TK_Camp_PartyTest')
+    Call(ScriptId.Current, 'TK_Camp_PartyTest')
 
     Jump('loc_2CDFC')
 
@@ -41703,7 +41284,7 @@ def TK_Camp_Debug():
 
     label('loc_2CD89')
 
-    Call(0x0B, 'TK_Camp_Orbment')
+    Call(ScriptId.Current, 'TK_Camp_Orbment')
 
     Jump('loc_2CDFC')
 
@@ -41711,7 +41292,7 @@ def TK_Camp_Debug():
 
     label('loc_2CDA1')
 
-    Call(0x0B, 'TK_Camp_MQuartz', (0xFF, 0x0, 0x0))
+    Call(ScriptId.Current, 'TK_Camp_MQuartz', (0xFF, 0x0, 0x0))
 
     Jump('loc_2CDFC')
 
@@ -41719,7 +41300,7 @@ def TK_Camp_Debug():
 
     label('loc_2CDBF')
 
-    Call(0x0B, 'TK_Camp_Link')
+    Call(ScriptId.Current, 'TK_Camp_Link')
 
     Jump('loc_2CDFC')
 
@@ -41727,7 +41308,7 @@ def TK_Camp_Debug():
 
     label('loc_2CDD4')
 
-    Call(0x0B, 'TK_Camp_Formation')
+    Call(ScriptId.Current, 'TK_Camp_Formation')
 
     Jump('loc_2CDFC')
 
@@ -41756,25 +41337,20 @@ def TK_Camp_Debug():
 
     label('loc_2CE01')
 
-    Call(0x0A, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
 
     Return()
 
 # id: 0x007B offset: 0x2CE18
 @scena.Code('TK_Battle_Debug')
 def TK_Battle_Debug():
-    # import hack
-    # hack.hack_debug_map()
-    # Return()
-    # return
-
-    Call(0x0A, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
-    OP_6F(0x0F, 0x0081, 0x0000000A)
-    OP_6F(0x0F, 0x00D7, 0x0000000A)
-    OP_6F(0x0F, 0x00D3, 0x0000000A)
-    OP_6F(0x0F, 0x00D4, 0x0000000A)
-    OP_6F(0x0F, 0x00D5, 0x0000000A)
-    OP_66(0x0B, 0xFFFF)
+    Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
+    AddItem(0x0F, 0x0081, 10)
+    AddItem(0x0F, 0x00D7, 10)
+    AddItem(0x0F, 0x00D3, 10)
+    AddItem(0x0F, 0x00D4, 10)
+    AddItem(0x0F, 0x00D5, 10)
+    CraftCtrl(0x0B, 0xFFFF)
 
     OP_18(
         0xF6,
@@ -41799,7 +41375,7 @@ def TK_Battle_Debug():
         'loc_2D48A',
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '戦闘テスト（戦闘エリア移動）', 0x00000000)
     MenuCmd(0x01, 0x00, '戦闘テスト（戦闘エリアその場）', 0x00000001)
     MenuCmd(0x01, 0x00, '戦闘テスト（強敵雑魚）', 0x00000002)
@@ -41911,7 +41487,7 @@ def TK_Battle_Debug():
 
     label('loc_2D2CE')
 
-    Call(0x14, 'FC_BattleTestParty')
+    Call(ScriptId.Debug, 'FC_BattleTestParty')
 
     Jump('loc_2D485')
 
@@ -41920,15 +41496,15 @@ def TK_Battle_Debug():
     label('loc_2D2E9')
 
     SetScenaFlags(ScenaFlag(0x0063, 4, 0x31C))
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x0011)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x0001)
-    OP_49(0x04, 0x0000)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['阿加特'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['亞莉莎'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_69(0x04, 0x0005)
     OP_69(0x00, 0xF000, 0xF001, 0xFF, 0x00, 0x00)
     OP_69(0x00, 0xF002, 0xF003, 0xFF, 0x00, 0x00)
@@ -41939,19 +41515,19 @@ def TK_Battle_Debug():
 
     label('loc_2D329')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0014)
-    OP_49(0x04, 0x0014)
-    OP_6F(0x00, 0x0001, 0x0000000F)
-    OP_6F(0x00, 0x0006, 0x0000000F)
-    OP_6F(0x00, 0x027A, 0x0000000F)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['緹妲'])
+    FormationSetLeader(ChrTable['緹妲'])
+    AddItem(0x00, 0x0001, 15)
+    AddItem(0x00, 0x0006, 15)
+    AddItem(0x00, 0x027A, 15)
     OP_70(0x00, 0x0014, 0x027A, 0x03)
-    OP_66(0x00, 0x0014, 0x0BEA)
-    OP_66(0x00, 0x0014, 0x0BEB)
-    OP_66(0x00, 0x0014, 0x0869)
-    OP_66(0x00, 0x0014, 0x0BFE)
-    OP_66(0x00, 0x0014, 0x087A)
+    CraftCtrl(0x00, ChrTable['緹妲'], 0x0BEA)
+    CraftCtrl(0x00, ChrTable['緹妲'], 0x0BEB)
+    CraftCtrl(0x00, ChrTable['緹妲'], 0x0869)
+    CraftCtrl(0x00, ChrTable['緹妲'], 0x0BFE)
+    CraftCtrl(0x00, ChrTable['緹妲'], 0x087A)
     OP_48(0x00, 0x0014, 0x0001, 0x0028)
     SetScenaFlags(ScenaFlag(0x0080, 0, 0x400))
     SetScenaFlags(ScenaFlag(0x0080, 1, 0x401))
@@ -41994,7 +41570,7 @@ def TK_Battle_Debug():
 
     label('loc_2D404')
 
-    Call(0x0B, 'TK_BattleEvent')
+    Call(ScriptId.Current, 'TK_BattleEvent')
 
     Jump('loc_2D485')
 
@@ -42026,7 +41602,7 @@ def TK_Battle_Debug():
 
     label('loc_2D459')
 
-    Call(0x0B, 'TK_BattleVerification')
+    Call(ScriptId.Current, 'TK_BattleVerification')
 
     Jump('loc_2D485')
 
@@ -42055,7 +41631,7 @@ def TK_Battle_Debug():
 
     label('loc_2D48A')
 
-    Call(0x0A, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
 
     Return()
 
@@ -42085,7 +41661,7 @@ def TK_BattleEvent():
         'loc_2D7ED',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 'ゼシカ vs リィン', 0x000003E8)
     MenuCmd(0x01, 0x01, '[02_47_00]第２章：カンパネルラ', 0x000003E9)
     MenuCmd(0x01, 0x01, '[02_50_13]第２章：完全新種の魔煌兵との中ボス戦', 0x000003EA)
@@ -42116,8 +41692,8 @@ def TK_BattleEvent():
 
     label('loc_2D703')
 
-    OP_49(0x18)
-    OP_49(0x11, 0x00C8)
+    FormationCtrl(0x18)
+    FormationCtrl(0x11, 0x00C8)
     Battle(0x00, 0x0000000C, 0x00, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00)
 
     Jump('loc_2D7E8')
@@ -42150,12 +41726,12 @@ def TK_BattleEvent():
 
     label('loc_2D765')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x0006)
-    OP_49(0x00, 0x0009)
-    OP_49(0x00, 0x000F)
-    OP_49(0x00, 0x0008)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['尤西斯'])
+    FormationAddMember(ChrTable['米莉亞姆'])
+    FormationAddMember(ChrTable['莎拉'])
+    FormationAddMember(ChrTable['蓋烏斯'])
     Battle(0x00, 0x00000010, 0x00, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00)
 
     Jump('loc_2D7E8')
@@ -42164,13 +41740,13 @@ def TK_BattleEvent():
 
     label('loc_2D792')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x0006)
-    OP_49(0x00, 0x0002)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['尤西斯'])
+    FormationAddMember(ChrTable['艾略特'])
     Battle(0x00, 0x00000011, 0x00, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00)
 
     Jump('loc_2D7E8')
@@ -42236,7 +41812,7 @@ def TK_BattleVerification():
         'loc_2D8F0',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '街道(r0000)', 0x000003E8)
     MenuCmd(0x01, 0x01, '騎神戦検証', 0x000003E9)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
@@ -42306,7 +41882,7 @@ def TK_BattleVerification():
         ),
     )
 
-    Call(0x14, 'FC_BattleTestParty')
+    Call(ScriptId.Debug, 'FC_BattleTestParty')
     OP_28((0xDD, 'r0000'), (0xDD, 'go_r0090'), 0x00)
 
     Jump('loc_2D8EB')
@@ -42381,9 +41957,9 @@ def TK_Camp_ChrFlagTest():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.Expr24, 0x800000),
@@ -42394,7 +41970,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'キャンプ禁止', 0x00000009, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x006A, 0, 0x350)),
@@ -42405,7 +41981,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'セーブ禁止', 0x0000000A, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x006A, 1, 0x351)),
@@ -42416,7 +41992,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'ロード禁止', 0x0000000B, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0073, 6, 0x39E)),
@@ -42427,7 +42003,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'ポーズメニュー禁止', 0x0000000C, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0440, 0, 0x2200)),
@@ -42438,7 +42014,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'マップメニュー禁止', 0x0000000D, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x006A, 2, 0x352)),
@@ -42449,7 +42025,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, '装備メニュー禁止', 0x0000000E, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x006A, 3, 0x353)),
@@ -42460,7 +42036,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'オーブメントメニュー禁止', 0x0000000F, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x006A, 4, 0x354)),
@@ -42471,7 +42047,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'アイテムメニュー禁止', 0x00000010, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x006A, 5, 0x355)),
@@ -42482,7 +42058,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'ステータスメニュー', 0x00000011, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x006A, 6, 0x356)),
@@ -42493,7 +42069,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'リンクメニュー', 0x00000012, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x006A, 7, 0x357)),
@@ -42504,7 +42080,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'タクティクスメニュー禁止', 0x00000013, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x006B, 2, 0x35A)),
@@ -42515,7 +42091,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'コスチュームメニュー禁止', 0x00000014, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x006B, 1, 0x359)),
@@ -42526,7 +42102,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'システムメニュー禁止', 0x00000015, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x006B, 4, 0x35C)),
@@ -42537,7 +42113,7 @@ def TK_Camp_ChrFlagTest():
 
     MenuCmd(0x08, 0x01, 'キャンプトップに他チーム表示', 0x00000016, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0440, 4, 0x2204)),
@@ -42702,8 +42278,8 @@ def TK_Camp_ChrFlagTest():
 
     label('loc_2DE09')
 
-    MenuChrFlagCmd(0x00, 0x0000, 0x00200000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00400000)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00200000)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00400000)
 
     Jump('loc_2DE3C')
 
@@ -42711,8 +42287,8 @@ def TK_Camp_ChrFlagTest():
 
     label('loc_2DE1E')
 
-    MenuChrFlagCmd(0x01, 0x0000, 0x00200000)
-    MenuChrFlagCmd(0x01, 0x0000, 0x00400000)
+    MenuChrFlagCmd(0x01, ChrTable['黎恩'], 0x00200000)
+    MenuChrFlagCmd(0x01, ChrTable['黎恩'], 0x00400000)
 
     Jump('loc_2DE3C')
 
@@ -42776,9 +42352,9 @@ def TK_Camp_FlagTest():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0060, 0, 0x300)),
@@ -42789,7 +42365,7 @@ def TK_Camp_FlagTest():
 
     MenuCmd(0x08, 0x01, 'ゲーム開始', 0x00000001, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x00C0, 0, 0x600)),
@@ -42800,7 +42376,7 @@ def TK_Camp_FlagTest():
 
     MenuCmd(0x08, 0x01, '序章開始', 0x00000002, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x00E0, 0, 0x700)),
@@ -42811,7 +42387,7 @@ def TK_Camp_FlagTest():
 
     MenuCmd(0x08, 0x01, '１章開始', 0x00000003, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0120, 0, 0x900)),
@@ -42822,7 +42398,7 @@ def TK_Camp_FlagTest():
 
     MenuCmd(0x08, 0x01, '２章開始', 0x00000004, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0160, 0, 0xB00)),
@@ -42833,7 +42409,7 @@ def TK_Camp_FlagTest():
 
     MenuCmd(0x08, 0x01, '３章開始', 0x00000005, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01A0, 0, 0xD00)),
@@ -42844,7 +42420,7 @@ def TK_Camp_FlagTest():
 
     MenuCmd(0x08, 0x01, '４章開始', 0x00000006, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x01E0, 0, 0xF00)),
@@ -42989,9 +42565,9 @@ def TK_Camp_OtherFlagTest():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0440, 5, 0x2205)),
@@ -43082,26 +42658,26 @@ def TK_Camp_PartyTest():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
-    MenuCmd(0x01, 0x01, '黎恩', 0x00000001)
-    MenuCmd(0x01, 0x01, 'パトリック追加（Geust）', 0x00000014)
-    MenuCmd(0x01, 0x01, '添加尤娜', 0x00000015)
-    MenuCmd(0x01, 0x01, '添加库鲁特', 0x00000016)
-    MenuCmd(0x01, 0x01, '添加亚尔缇娜', 0x00000017)
-    MenuCmd(0x01, 0x01, '添加穆洁', 0x00000018)
-    MenuCmd(0x01, 0x01, '添加亚修', 0x00000019)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
+    MenuCmd(0x01, 0x01, 'ぼっち（リィン）', 0x00000001)
+    MenuCmd(0x01, 0x01, 'パトリック追加（ゲスト）', 0x00000014)
+    MenuCmd(0x01, 0x01, 'ユウナ追加', 0x00000015)
+    MenuCmd(0x01, 0x01, 'クルト追加', 0x00000016)
+    MenuCmd(0x01, 0x01, 'アルティナ追加', 0x00000017)
+    MenuCmd(0x01, 0x01, 'ミュゼ追加', 0x00000018)
+    MenuCmd(0x01, 0x01, 'アッシュ追加', 0x00000019)
     MenuCmd(0x01, 0x01, '4人（ATTACK）', 0x00000002)
     MenuCmd(0x01, 0x01, '6人（ATTACK + SUPPORT）', 0x00000003)
-    MenuCmd(0x01, 0x01, '8人（ATTACK + SUPPORT + 劳拉·菲）', 0x00000004)
+    MenuCmd(0x01, 0x01, '8人（ATTACK + SUPPORT + ラウラ･フィー）', 0x00000004)
     MenuCmd(0x01, 0x01, '最大予定13人（新７組＋旧７組）', 0x00000005)
-    MenuCmd(0x01, 0x01, '角色标志：reset ', 0x0000000A)
-    MenuCmd(0x01, 0x01, '角色标志：装備 → 沙拉', 0x0000000B)
-    MenuCmd(0x01, 0x01, '角色标志：服装 → 沙拉', 0x0000000C)
-    MenuCmd(0x01, 0x01, 'NPC：無し', 0x0000001E)
-    MenuCmd(0x01, 0x01, 'NPC：フランキー', 0x0000001F)
-    MenuCmd(0x01, 0x01, 'NPC：トワ', 0x00000020)
-    MenuCmd(0x01, 0x01, 'NPC：パトリック', 0x00000021)
-    MenuCmd(0x01, 0x01, 'NPC：托马斯', 0x00000022)
+    MenuCmd(0x01, 0x01, 'キャラフラグ：全てリセット', 0x0000000A)
+    MenuCmd(0x01, 0x01, 'キャラフラグ：装備→サラ', 0x0000000B)
+    MenuCmd(0x01, 0x01, 'キャラフラグ：コスチューム→サラ', 0x0000000C)
+    MenuCmd(0x01, 0x01, 'エスコート：無し', 0x0000001E)
+    MenuCmd(0x01, 0x01, 'エスコート：フランキー', 0x0000001F)
+    MenuCmd(0x01, 0x01, 'エスコート：トワ', 0x00000020)
+    MenuCmd(0x01, 0x01, 'エスコート：パトリック', 0x00000021)
+    MenuCmd(0x01, 0x01, 'エスコート：トマス', 0x00000022)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
@@ -43137,9 +42713,9 @@ def TK_Camp_PartyTest():
 
     label('loc_2E466')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
 
     Jump('loc_2E5D1')
 
@@ -43147,12 +42723,12 @@ def TK_Camp_PartyTest():
 
     label('loc_2E475')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
 
     Jump('loc_2E5D1')
 
@@ -43160,14 +42736,14 @@ def TK_Camp_PartyTest():
 
     label('loc_2E490')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x000E)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['亞修'])
 
     Jump('loc_2E5D1')
 
@@ -43175,16 +42751,16 @@ def TK_Camp_PartyTest():
 
     label('loc_2E4B3')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x0003)
-    OP_49(0x00, 0x0007)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['勞拉'])
+    FormationAddMember(ChrTable['菲'])
 
     Jump('loc_2E5D1')
 
@@ -43192,21 +42768,21 @@ def TK_Camp_PartyTest():
 
     label('loc_2E4DE')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x0003)
-    OP_49(0x00, 0x0007)
-    OP_49(0x00, 0x0001)
-    OP_49(0x00, 0x0002)
-    OP_49(0x00, 0x0004)
-    OP_49(0x00, 0x0005)
-    OP_49(0x00, 0x0006)
-    OP_49(0x00, 0x0008)
-    OP_49(0x00, 0x000F)
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['勞拉'])
+    FormationAddMember(ChrTable['菲'])
+    FormationAddMember(ChrTable['亞莉莎'])
+    FormationAddMember(ChrTable['艾略特'])
+    FormationAddMember(ChrTable['馬奇亞斯'])
+    FormationAddMember(ChrTable['艾瑪'])
+    FormationAddMember(ChrTable['尤西斯'])
+    FormationAddMember(ChrTable['蓋烏斯'])
+    FormationAddMember(ChrTable['莎拉'])
 
     Jump('loc_2E5D1')
 
@@ -43214,8 +42790,8 @@ def TK_Camp_PartyTest():
 
     label('loc_2E51D')
 
-    OP_49(0x00, 0x001A)
-    MenuChrFlagCmd(0x00, 0x001A, 0x01000000)
+    FormationAddMember(ChrTable['派崔克'])
+    MenuChrFlagCmd(0x00, ChrTable['派崔克'], 0x01000000)
 
     Jump('loc_2E5D1')
 
@@ -43223,7 +42799,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E52E')
 
-    OP_49(0x00, 0x000A)
+    FormationAddMember(ChrTable['悠娜'])
 
     Jump('loc_2E5D1')
 
@@ -43231,7 +42807,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E537')
 
-    OP_49(0x00, 0x000B)
+    FormationAddMember(ChrTable['庫爾特'])
 
     Jump('loc_2E5D1')
 
@@ -43239,7 +42815,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E540')
 
-    OP_49(0x00, 0x000C)
+    FormationAddMember(ChrTable['亞爾緹娜'])
 
     Jump('loc_2E5D1')
 
@@ -43247,7 +42823,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E549')
 
-    OP_49(0x00, 0x000D)
+    FormationAddMember(ChrTable['妙婕'])
 
     Jump('loc_2E5D1')
 
@@ -43255,7 +42831,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E552')
 
-    OP_49(0x00, 0x000E)
+    FormationAddMember(ChrTable['亞修'])
 
     Jump('loc_2E5D1')
 
@@ -43346,7 +42922,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E5AE')
 
-    MenuChrFlagCmd(0x00, 0x000F, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000001)
 
     Jump('loc_2E5D1')
 
@@ -43354,7 +42930,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E5BB')
 
-    MenuChrFlagCmd(0x00, 0x000F, 0x02000000)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x02000000)
 
     Jump('loc_2E5D1')
 
@@ -43418,13 +42994,13 @@ def TK_Camp_Orbment():
         ),
     )
 
-    OP_11(0x0000)
-    OP_11(0x0001)
-    OP_11(0x0002)
+    ClearScenaFlags(ScenaFlag(0x0000, 0, 0x0))
+    ClearScenaFlags(ScenaFlag(0x0000, 1, 0x1))
+    ClearScenaFlags(ScenaFlag(0x0000, 2, 0x2))
 
     If(
         (
-            (Expr.Eval, "MenuChrFlagCmd(0x03, 0x0000, 0x00200000)"),
+            (Expr.Eval, "MenuChrFlagCmd(0x03, ChrTable['黎恩'], 0x00200000)"),
             Expr.Return,
         ),
         'loc_2E613',
@@ -43438,7 +43014,7 @@ def TK_Camp_Orbment():
 
     If(
         (
-            (Expr.Eval, "MenuChrFlagCmd(0x03, 0x0000, 0x00400000)"),
+            (Expr.Eval, "MenuChrFlagCmd(0x03, ChrTable['黎恩'], 0x00400000)"),
             Expr.Return,
         ),
         'loc_2E625',
@@ -43452,7 +43028,7 @@ def TK_Camp_Orbment():
 
     If(
         (
-            (Expr.Eval, "MenuChrFlagCmd(0x03, 0x0000, 0x00800000)"),
+            (Expr.Eval, "MenuChrFlagCmd(0x03, ChrTable['黎恩'], 0x00800000)"),
             Expr.Return,
         ),
         'loc_2E637',
@@ -43464,12 +43040,12 @@ def TK_Camp_Orbment():
 
     label('loc_2E637')
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '全スロット開封', 0x00000001)
     MenuCmd(0x01, 0x01, '全スロット封印', 0x00000002)
     MenuCmd(0x01, 0x01, 'サブマスタークオーツ開封', 0x00000003)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0000, 0, 0x0)),
@@ -43480,7 +43056,7 @@ def TK_Camp_Orbment():
 
     MenuCmd(0x08, 0x01, 'ロック：リィンのマスターメインスロット', 0x0000000A, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0000, 1, 0x1)),
@@ -43491,7 +43067,7 @@ def TK_Camp_Orbment():
 
     MenuCmd(0x08, 0x01, 'ロック：リィンのマスターサブスロット', 0x0000000B, (0x11, 0x0, 0x0), (0xFF, 0x1, 0x0))
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0000, 2, 0x2)),
@@ -43549,7 +43125,7 @@ def TK_Camp_Orbment():
 
     label('loc_2E829')
 
-    MenuChrFlagCmd(0x02, 0x0000, 0x00200000)
+    MenuChrFlagCmd(0x02, ChrTable['黎恩'], 0x00200000)
 
     Jump('loc_2E8BE')
 
@@ -43557,7 +43133,7 @@ def TK_Camp_Orbment():
 
     label('loc_2E836')
 
-    MenuChrFlagCmd(0x02, 0x0000, 0x00400000)
+    MenuChrFlagCmd(0x02, ChrTable['黎恩'], 0x00400000)
 
     Jump('loc_2E8BE')
 
@@ -43565,7 +43141,7 @@ def TK_Camp_Orbment():
 
     label('loc_2E843')
 
-    MenuChrFlagCmd(0x02, 0x0000, 0x00800000)
+    MenuChrFlagCmd(0x02, ChrTable['黎恩'], 0x00800000)
 
     Jump('loc_2E8BE')
 
@@ -43585,7 +43161,7 @@ def TK_Camp_Orbment():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_2E8BE')
@@ -43653,7 +43229,7 @@ def TK_Camp_MQuartz():
         ),
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '全マスタークオーツ入手', 0x00000001)
     MenuCmd(0x01, 0x00, '全マスタークオーツLV2直前', 0x00000002)
     MenuCmd(0x01, 0x00, '全マスタークオーツLV3直前', 0x00000003)
@@ -43675,8 +43251,8 @@ def TK_Camp_MQuartz():
         'loc_2EA9D',
     )
 
-    OP_6F(0x0F, 0x00C9, 0x00000001)
-    OP_6F(0x0F, 0x00C8, 0x00000003)
+    AddItem(0x0F, 0x00C9, 1)
+    AddItem(0x0F, 0x00C8, 3)
 
     Jump('loc_2F1F2')
 
@@ -43886,10 +43462,10 @@ def TK_Camp_MQuartz():
         'loc_2F0F4',
     )
 
-    OP_6F(0x00, 0x0CA8, 0x00000001)
+    AddItem(0x00, 0x0CA8, 1)
     OP_70(0x03, 0x0017, 0x0CA8, 0x00, 0x01)
-    MenuChrFlagCmd(0x00, 0x0017, 0x00200000)
-    OP_6F(0x0F, 0x00C9, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['克蕾雅少校'], 0x00200000)
+    AddItem(0x0F, 0x00C9, 1)
     OP_70(0x06, 0x0017, 0x01, 0x01, 0x00, 0x01)
 
     Jump('loc_2F1F2')
@@ -43927,7 +43503,7 @@ def TK_Camp_MQuartz():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     Jump('loc_2F1E4')
@@ -43947,7 +43523,7 @@ def TK_Camp_MQuartz():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
 
     def _loc_2F1E4(): pass
@@ -43993,7 +43569,7 @@ def TK_Camp_Link():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 'リンクをそれっぽくしてみる', 0x00000001)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
     MenuCmd(0x04, 0x01, 0xF7)
@@ -44061,7 +43637,7 @@ def TK_Camp_Formation():
         ),
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, 'リィン、ユウナ、クルト、アルティナ、アッシュ、ミュゼの戦闘フォーメーション', 0x00000001)
     MenuCmd(0x01, 0x01, 'リィン、ユウナ、クルト、アルティナ、アッシュ、ミュゼの同座標配置テスト１', 0x00000002)
     MenuCmd(0x01, 0x01, 'リィン、ユウナ、クルト、アルティナ、アッシュ、ミュゼの同座標配置テスト２', 0x00000003)
@@ -44084,12 +43660,12 @@ def TK_Camp_Formation():
 
     label('loc_2F48E')
 
-    OP_49(0x08, 0x0000, -1.000000, 0.000000, 0x00)
-    OP_49(0x08, 0x000A, 1.000000, 0.000000, 0x00)
-    OP_49(0x08, 0x000B, -2.000000, 1.000000, 0x00)
-    OP_49(0x08, 0x000C, 2.000000, 1.000000, 0x00)
-    OP_49(0x08, 0x000E, -1.000000, 2.000000, 0x00)
-    OP_49(0x08, 0x000D, 1.000000, 2.000000, 0x00)
+    FormationCtrl(0x08, 0x0000, -1.0, 0.0, 0x00)
+    FormationCtrl(0x08, 0x000A, 1.0, 0.0, 0x00)
+    FormationCtrl(0x08, 0x000B, -2.0, 1.0, 0x00)
+    FormationCtrl(0x08, 0x000C, 2.0, 1.0, 0x00)
+    FormationCtrl(0x08, 0x000E, -1.0, 2.0, 0x00)
+    FormationCtrl(0x08, 0x000D, 1.0, 2.0, 0x00)
 
     Jump('loc_2F590')
 
@@ -44097,12 +43673,12 @@ def TK_Camp_Formation():
 
     label('loc_2F4E1')
 
-    OP_49(0x08, 0x0000, -1.000000, 0.000000, 0x00)
-    OP_49(0x08, 0x000A, -1.000000, 0.000000, 0x00)
-    OP_49(0x08, 0x000B, -1.000000, 0.000000, 0x00)
-    OP_49(0x08, 0x000C, -1.000000, 0.000000, 0x00)
-    OP_49(0x08, 0x000E, -1.000000, 0.000000, 0x00)
-    OP_49(0x08, 0x000D, -1.000000, 0.000000, 0x00)
+    FormationCtrl(0x08, 0x0000, -1.0, 0.0, 0x00)
+    FormationCtrl(0x08, 0x000A, -1.0, 0.0, 0x00)
+    FormationCtrl(0x08, 0x000B, -1.0, 0.0, 0x00)
+    FormationCtrl(0x08, 0x000C, -1.0, 0.0, 0x00)
+    FormationCtrl(0x08, 0x000E, -1.0, 0.0, 0x00)
+    FormationCtrl(0x08, 0x000D, -1.0, 0.0, 0x00)
 
     Jump('loc_2F590')
 
@@ -44110,12 +43686,12 @@ def TK_Camp_Formation():
 
     label('loc_2F534')
 
-    OP_49(0x08, 0x0000, -2.000000, 0.000000, 0x00)
-    OP_49(0x08, 0x000A, -2.000000, 0.000000, 0x00)
-    OP_49(0x08, 0x000B, -0.250000, 1.000000, 0x00)
-    OP_49(0x08, 0x000C, 0.250000, 1.000000, 0x00)
-    OP_49(0x08, 0x000E, 2.000000, 3.000000, 0x00)
-    OP_49(0x08, 0x000D, 2.000000, 3.000000, 0x00)
+    FormationCtrl(0x08, 0x0000, -2.0, 0.0, 0x00)
+    FormationCtrl(0x08, 0x000A, -2.0, 0.0, 0x00)
+    FormationCtrl(0x08, 0x000B, -0.25, 1.0, 0x00)
+    FormationCtrl(0x08, 0x000C, 0.25, 1.0, 0x00)
+    FormationCtrl(0x08, 0x000E, 2.0, 3.0, 0x00)
+    FormationCtrl(0x08, 0x000D, 2.0, 3.0, 0x00)
 
     Jump('loc_2F590')
 
@@ -44141,10 +43717,10 @@ def TK_Camp_Formation():
 # id: 0x0086 offset: 0x2F594
 @scena.Code('EV_99_98_00')
 def EV_99_98_00():
-    Call(0x0A, 'FC_EventBegin', (0xFF, 0x9800, 0x0))
-    OP_35(0x00, 0xF011, 0x00000001)
-    OP_11(0x06F0)
-    OP_11(0x06F1)
+    Call(ScriptId.System, 'FC_EventBegin', (0xFF, 0x9800, 0x0))
+    ChrSetPhysicsFlags(0xF011, 0x00000001)
+    ClearScenaFlags(ScenaFlag(0x00DE, 0, 0x6F0))
+    ClearScenaFlags(ScenaFlag(0x00DE, 1, 0x6F1))
 
     OP_18(
         0xF6,
@@ -44157,8 +43733,8 @@ def EV_99_98_00():
     )
 
     OP_AC(0x05, 0x0001)
-    OP_43(0x64, 0x03E8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x64, 1000, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
 
     If(
         (
@@ -44180,10 +43756,10 @@ def EV_99_98_00():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '99_98_00選択肢①', 0x00000001)
     MenuCmd(0x01, 0x00, '99_98_00選択肢②', 0x00000002)
     MenuCmd(0x02, 0x00, 0x01, 0xFFFF, 0xFFFF, 0x00)
@@ -44261,7 +43837,7 @@ def EV_99_98_00():
 
     label('loc_2F724')
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
 
@@ -44274,7 +43850,7 @@ def EV_99_98_00():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -44283,8 +43859,8 @@ def EV_99_98_00():
 
     label('loc_2F76B')
 
-    OP_43(0x00, 0x03E8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x00, 1000, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_AC(0x06)
 
     Return()
@@ -44303,7 +43879,7 @@ def EV_99_98_00_END():
         'loc_2F7E7',
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '99_98_00選択肢①', 0x00000001)
     MenuCmd(0x01, 0x00, '99_98_00選択肢②', 0x00000002)
     MenuCmd(0x02, 0x00, 0x01, 0xFFFF, 0xFFFF, 0x00)
@@ -44364,7 +43940,7 @@ def EV_99_98_00_END():
 
     label('loc_2F81B')
 
-    SetChrPos(0xF011, 0.000000, 0.000000, 0.000000, 0.000000)
+    SetChrPos(0xF011, 0.0, 0.0, 0.0, 0.0)
     OP_AC(0x01, 0x00000000)
     OP_14(0x04000000)
 
@@ -44373,11 +43949,11 @@ def EV_99_98_00_END():
 # id: 0x0088 offset: 0x2F83C
 @scena.Code('EV_99_98_01')
 def EV_99_98_01():
-    Call(0x0A, 'FC_EventBegin', (0xFF, 0x9801, 0x0))
-    OP_35(0x00, 0xF011, 0x00000001)
+    Call(ScriptId.System, 'FC_EventBegin', (0xFF, 0x9801, 0x0))
+    ChrSetPhysicsFlags(0xF011, 0x00000001)
     OP_AC(0x05, 0x0001)
-    OP_43(0x64, 0x03E8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x64, 1000, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
 
     If(
         (
@@ -44399,8 +43975,8 @@ def EV_99_98_01():
         ),
     )
 
-    OP_26()
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    WaitForMsg()
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '99_98_01選択肢①', 0x00000001)
     MenuCmd(0x01, 0x00, '99_98_01選択肢②', 0x00000002)
     MenuCmd(0x02, 0x00, 0x00, 0xFFFF, 0xFFFF, 0x00)
@@ -44478,7 +44054,7 @@ def EV_99_98_01():
 
     label('loc_2F9B8')
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
 
@@ -44491,8 +44067,8 @@ def EV_99_98_01():
         ),
     )
 
-    OP_26()
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    WaitForMsg()
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '99_98_01選択肢③', 0x00000001)
     MenuCmd(0x01, 0x01, '99_98_01選択肢④', 0x00000002)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
@@ -44570,7 +44146,7 @@ def EV_99_98_01():
 
     label('loc_2FAF1')
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -44579,8 +44155,8 @@ def EV_99_98_01():
 
     label('loc_2FB01')
 
-    OP_43(0x00, 0x03E8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x00, 1000, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_AC(0x06)
 
     Return()
@@ -44599,7 +44175,7 @@ def EV_99_98_01_END():
         'loc_2FB7B',
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '99_98_01選択肢①', 0x00000001)
     MenuCmd(0x01, 0x00, '99_98_01選択肢②', 0x00000002)
     MenuCmd(0x02, 0x00, 0x01, 0xFFFF, 0xFFFF, 0x00)
@@ -44671,7 +44247,7 @@ def EV_99_98_01_END():
         'loc_2FC16',
     )
 
-    MenuCmd(0x00, 0x01, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '99_98_01選択肢③', 0x00000001)
     MenuCmd(0x01, 0x01, '99_98_01選択肢④', 0x00000002)
     MenuCmd(0x02, 0x01, 0x01, 0xFFFF, 0xFFFF, 0x00)
@@ -44732,7 +44308,7 @@ def EV_99_98_01_END():
 
     label('loc_2FC4A')
 
-    SetChrPos(0xF011, 0.000000, 0.000000, 0.000000, 0.000000)
+    SetChrPos(0xF011, 0.0, 0.0, 0.0, 0.0)
     OP_AC(0x01, 0x00000000)
     OP_14(0x04000000)
 
@@ -44741,11 +44317,11 @@ def EV_99_98_01_END():
 # id: 0x008A offset: 0x2FC6C
 @scena.Code('EV_99_98_02')
 def EV_99_98_02():
-    Call(0x0A, 'FC_EventBegin', (0xFF, 0x9802, 0x0))
-    OP_35(0x00, 0xF011, 0x00000001)
+    Call(ScriptId.System, 'FC_EventBegin', (0xFF, 0x9802, 0x0))
+    ChrSetPhysicsFlags(0xF011, 0x00000001)
     OP_AC(0x05, 0x0001)
-    OP_43(0x64, 0x03E8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x64, 1000, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
 
     If(
         (
@@ -44767,8 +44343,8 @@ def EV_99_98_02():
         ),
     )
 
-    OP_26()
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    WaitForMsg()
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '99_98_02選択肢①', 0x00000001)
     MenuCmd(0x01, 0x00, '99_98_02選択肢②', 0x00000002)
     MenuCmd(0x02, 0x00, 0x01, 0xFFFF, 0xFFFF, 0x00)
@@ -44846,7 +44422,7 @@ def EV_99_98_02():
 
     label('loc_2FDE8')
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
 
@@ -44859,7 +44435,7 @@ def EV_99_98_02():
         ),
     )
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -44868,8 +44444,8 @@ def EV_99_98_02():
 
     label('loc_2FE2F')
 
-    OP_43(0x00, 0x03E8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x00, 1000, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_AC(0x06)
 
     Return()
@@ -44888,7 +44464,7 @@ def EV_99_98_02_END():
         'loc_2FEAB',
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '99_98_02選択肢①', 0x00000001)
     MenuCmd(0x01, 0x00, '99_98_02選択肢②', 0x00000002)
     MenuCmd(0x02, 0x00, 0x01, 0xFFFF, 0xFFFF, 0x00)
@@ -44949,7 +44525,7 @@ def EV_99_98_02_END():
 
     label('loc_2FEDF')
 
-    SetChrPos(0xF011, 0.000000, 0.000000, 0.000000, 0.000000)
+    SetChrPos(0xF011, 0.0, 0.0, 0.0, 0.0)
     OP_AC(0x01, 0x00000000)
     OP_14(0x04000000)
 
@@ -44958,11 +44534,11 @@ def EV_99_98_02_END():
 # id: 0x008C offset: 0x2FF00
 @scena.Code('EV_99_98_03')
 def EV_99_98_03():
-    Call(0x0A, 'FC_EventBegin', (0xFF, 0x9803, 0x0))
-    OP_35(0x00, 0xF011, 0x00000001)
+    Call(ScriptId.System, 'FC_EventBegin', (0xFF, 0x9803, 0x0))
+    ChrSetPhysicsFlags(0xF011, 0x00000001)
     OP_AC(0x05, 0x0001)
-    OP_43(0x64, 0x03E8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x64, 1000, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
 
     If(
         (
@@ -45042,7 +44618,7 @@ def EV_99_98_03():
 
     label('loc_30036')
 
-    OP_26()
+    WaitForMsg()
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -45051,8 +44627,8 @@ def EV_99_98_03():
 
     label('loc_30046')
 
-    OP_43(0x00, 0x03E8, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x00, 1000, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_AC(0x06)
 
     Return()
@@ -45060,8 +44636,8 @@ def EV_99_98_03():
 # id: 0x008D offset: 0x3005C
 @scena.Code('EV_99_98_03_END')
 def EV_99_98_03_END():
-    SetChrPos(0xF011, 0.000000, 0.000000, 0.000000, 0.000000)
-    Call(0x0A, 'FC_EventEnd', (0xFF, 0x0, 0x0))
+    SetChrPos(0xF011, 0.0, 0.0, 0.0, 0.0)
+    Call(ScriptId.System, 'FC_EventEnd', (0xFF, 0x0, 0x0))
     OP_14(0x04000000)
 
     Return()
@@ -45085,7 +44661,7 @@ def TK_Jump_Tmp():
 # id: 0x008F offset: 0x300A8
 @scena.Code('TK_EV_Jump')
 def TK_EV_Jump():
-    Call(0x0A, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
     OP_C9(0x02)
 
     OP_18(
@@ -45129,7 +44705,7 @@ def TK_EV_Jump():
         'loc_30434',
     )
 
-    MenuCmd(0x00, 0x00, 0x0000, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
 
     If(
         (
@@ -45153,7 +44729,7 @@ def TK_EV_Jump():
     MenuCmd(0x01, 0x00, '[04_18]　〃　・演習', 0x0000000A)
     MenuCmd(0x01, 0x00, '[05_00]終　章', 0x0000000B)
 
-    OP_0A(
+    ExecExpressionWithReg(
         0x00,
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0063, 6, 0x31E)),
@@ -45200,7 +44776,7 @@ def TK_EV_Jump():
 
     label('loc_3031E')
 
-    Call(0x0B, 'EV_Jump_00_00')
+    Call(ScriptId.Current, 'EV_Jump_00_00')
 
     Jump('loc_30426')
 
@@ -45208,7 +44784,7 @@ def TK_EV_Jump():
 
     label('loc_30334')
 
-    Call(0x0B, 'EV_Jump_00_01')
+    Call(ScriptId.Current, 'EV_Jump_00_01')
 
     Jump('loc_30426')
 
@@ -45216,7 +44792,7 @@ def TK_EV_Jump():
 
     label('loc_3034A')
 
-    Call(0x0B, 'EV_Jump_01_00')
+    Call(ScriptId.Current, 'EV_Jump_01_00')
 
     Jump('loc_30426')
 
@@ -45224,7 +44800,7 @@ def TK_EV_Jump():
 
     label('loc_30360')
 
-    Call(0x0B, 'EV_Jump_01_01')
+    Call(ScriptId.Current, 'EV_Jump_01_01')
 
     Jump('loc_30426')
 
@@ -45232,7 +44808,7 @@ def TK_EV_Jump():
 
     label('loc_30376')
 
-    Call(0x0B, 'EV_Jump_02_00')
+    Call(ScriptId.Current, 'EV_Jump_02_00')
 
     Jump('loc_30426')
 
@@ -45240,7 +44816,7 @@ def TK_EV_Jump():
 
     label('loc_3038C')
 
-    Call(0x0B, 'EV_Jump_02_01')
+    Call(ScriptId.Current, 'EV_Jump_02_01')
 
     Jump('loc_30426')
 
@@ -45248,7 +44824,7 @@ def TK_EV_Jump():
 
     label('loc_303A2')
 
-    Call(0x0B, 'EV_Jump_03_00')
+    Call(ScriptId.Current, 'EV_Jump_03_00')
 
     Jump('loc_30426')
 
@@ -45256,7 +44832,7 @@ def TK_EV_Jump():
 
     label('loc_303B8')
 
-    Call(0x0B, 'EV_Jump_03_01')
+    Call(ScriptId.Current, 'EV_Jump_03_01')
 
     Jump('loc_30426')
 
@@ -45264,7 +44840,7 @@ def TK_EV_Jump():
 
     label('loc_303CE')
 
-    Call(0x0B, 'EV_Jump_04_00')
+    Call(ScriptId.Current, 'EV_Jump_04_00')
 
     Jump('loc_30426')
 
@@ -45272,7 +44848,7 @@ def TK_EV_Jump():
 
     label('loc_303E4')
 
-    Call(0x0B, 'EV_Jump_04_01')
+    Call(ScriptId.Current, 'EV_Jump_04_01')
 
     Jump('loc_30426')
 
@@ -45280,7 +44856,7 @@ def TK_EV_Jump():
 
     label('loc_303FA')
 
-    Call(0x0B, 'EV_Jump_05_00')
+    Call(ScriptId.Current, 'EV_Jump_05_00')
 
     Jump('loc_30426')
 
@@ -45330,7 +44906,7 @@ def TK_EV_Jump():
 
     label('loc_30434')
 
-    Call(0x0A, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
+    Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
 
     Return()
 
@@ -45360,7 +44936,7 @@ def EV_Jump_00_00():
         'loc_3068A',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -45528,7 +45104,7 @@ def EV_Jump_00_00():
 
     label('loc_30675')
 
-    Call(0x00, 'EV_DoJump_00')
+    Call(ScriptId.Map, 'EV_DoJump_00')
 
     def _loc_30685(): pass
 
@@ -45568,7 +45144,7 @@ def EV_Jump_00_01():
         'loc_30CD7',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -45752,7 +45328,7 @@ def EV_Jump_00_01():
 
     label('loc_30CC2')
 
-    Call(0x00, 'EV_DoJump_00')
+    Call(ScriptId.Map, 'EV_DoJump_00')
 
     def _loc_30CD2(): pass
 
@@ -45769,7 +45345,7 @@ def EV_Jump_00_01():
 # id: 0x0092 offset: 0x30CD8
 @scena.Code('EV_DoJump_00')
 def EV_DoJump_00():
-    Call(0x0B, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
 
     OP_18(
         0x03,
@@ -45892,7 +45468,7 @@ def EV_DoJump_00():
 
     label('loc_30DEF')
 
-    Call(0x0B, 'EV_Party_Set')
+    Call(ScriptId.Current, 'EV_Party_Set')
 
     Switch(
         (
@@ -46194,7 +45770,7 @@ def EV_Jump_01_00():
         'loc_320D5',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -46436,7 +46012,7 @@ def EV_Jump_01_00():
 
     label('loc_320C0')
 
-    Call(0x00, 'EV_DoJump_01')
+    Call(ScriptId.Map, 'EV_DoJump_01')
 
     def _loc_320D0(): pass
 
@@ -46476,7 +46052,7 @@ def EV_Jump_01_01():
         'loc_346A1',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -46852,7 +46428,7 @@ def EV_Jump_01_01():
 
     label('loc_3468C')
 
-    Call(0x00, 'EV_DoJump_01')
+    Call(ScriptId.Map, 'EV_DoJump_01')
 
     def _loc_3469C(): pass
 
@@ -46869,8 +46445,8 @@ def EV_Jump_01_01():
 # id: 0x0095 offset: 0x346A4
 @scena.Code('EV_DoJump_01')
 def EV_DoJump_01():
-    Call(0x0B, 'EV_Flag_Reset')
-    Call(0x0B, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
     OP_18(
         0x03,
@@ -47671,7 +47247,7 @@ def EV_DoJump_01():
 
     SetScenaFlags(ScenaFlag(0x00E0, 7, 0x707))
     SetScenaFlags(ScenaFlag(0x00F2, 0, 0x790))
-    OP_11(0x0374)
+    ClearScenaFlags(ScenaFlag(0x006E, 4, 0x374))
 
     def _loc_34EB6(): pass
 
@@ -47726,7 +47302,7 @@ def EV_DoJump_01():
 
     label('loc_34ED3')
 
-    Call(0x0B, 'EV_Party_Set')
+    Call(ScriptId.Current, 'EV_Party_Set')
 
     Switch(
         (
@@ -48227,8 +47803,8 @@ def EV_DoJump_01():
 
     label('loc_3575C')
 
-    OP_49(0x00, 0x000C)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
     OP_AC(0x01, 0x00001020)
     OP_14(0x04000000)
 
@@ -48238,8 +47814,8 @@ def EV_DoJump_01():
 
     label('loc_35778')
 
-    OP_49(0x00, 0x000C)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
     OP_AC(0x01, 0x00001021)
     OP_14(0x04000000)
 
@@ -49852,7 +49428,7 @@ def EV_Jump_02_00():
         'loc_37041',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -50067,7 +49643,7 @@ def EV_Jump_02_00():
 
     label('loc_3702C')
 
-    Call(0x00, 'EV_DoJump_02')
+    Call(ScriptId.Map, 'EV_DoJump_02')
 
     def _loc_3703C(): pass
 
@@ -50107,7 +49683,7 @@ def EV_Jump_02_01():
         'loc_3A2C0',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -50542,7 +50118,7 @@ def EV_Jump_02_01():
 
     label('loc_3A2AB')
 
-    Call(0x00, 'EV_DoJump_02')
+    Call(ScriptId.Map, 'EV_DoJump_02')
 
     def _loc_3A2BB(): pass
 
@@ -50559,9 +50135,9 @@ def EV_Jump_02_01():
 # id: 0x0098 offset: 0x3A2C4
 @scena.Code('EV_DoJump_02')
 def EV_DoJump_02():
-    Call(0x0B, 'EV_Flag_Reset')
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
     OP_18(
         0x03,
@@ -51367,7 +50943,7 @@ def EV_DoJump_02():
 
     label('loc_3AB90')
 
-    Call(0x0B, 'EV_Party_Set')
+    Call(ScriptId.Current, 'EV_Party_Set')
 
     Switch(
         (
@@ -53759,7 +53335,7 @@ def EV_Jump_03_00():
         'loc_3D15E',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -53996,7 +53572,7 @@ def EV_Jump_03_00():
 
     label('loc_3D149')
 
-    Call(0x00, 'EV_DoJump_03')
+    Call(ScriptId.Map, 'EV_DoJump_03')
 
     def _loc_3D159(): pass
 
@@ -54036,7 +53612,7 @@ def EV_Jump_03_01():
         'loc_40F4C',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -54574,7 +54150,7 @@ def EV_Jump_03_01():
 
     label('loc_40F37')
 
-    Call(0x00, 'EV_DoJump_03')
+    Call(ScriptId.Map, 'EV_DoJump_03')
 
     def _loc_40F47(): pass
 
@@ -54591,10 +54167,10 @@ def EV_Jump_03_01():
 # id: 0x009B offset: 0x40F50
 @scena.Code('EV_DoJump_03')
 def EV_DoJump_03():
-    Call(0x0B, 'EV_Flag_Reset')
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
     OP_18(
         0x03,
@@ -55026,7 +54602,7 @@ def EV_DoJump_03():
         'loc_413C9',
     )
 
-    OP_11(0x0394)
+    ClearScenaFlags(ScenaFlag(0x0072, 4, 0x394))
 
     def _loc_413C9(): pass
 
@@ -55784,9 +55360,9 @@ def EV_DoJump_03():
 
     label('loc_41B05')
 
-    OP_11(0x0B53)
-    OP_11(0x0B52)
-    OP_11(0x0B51)
+    ClearScenaFlags(ScenaFlag(0x016A, 3, 0xB53))
+    ClearScenaFlags(ScenaFlag(0x016A, 2, 0xB52))
+    ClearScenaFlags(ScenaFlag(0x016A, 1, 0xB51))
     SetScenaFlags(ScenaFlag(0x0175, 7, 0xBAF))
     SetScenaFlags(ScenaFlag(0x0192, 0, 0xC90))
     SetScenaFlags(ScenaFlag(0x0192, 1, 0xC91))
@@ -55799,21 +55375,14 @@ def EV_DoJump_03():
 
     Jump('loc_41B5F')
 
-    OP_11(0x0B53)
-    OP_11(0x0B52)
-    OP_11(0x0B51)
-    SetScenaFlags(0xC94)
-    SetScenaFlags(0xC9D)
-    Jump("loc_41B5F")
-
     def _loc_41B36(): pass
 
     label('loc_41B36')
 
-    OP_11(0x0B53)
-    OP_11(0x0B52)
-    OP_11(0x0B51)
-    OP_11(0x0B51)
+    ClearScenaFlags(ScenaFlag(0x016A, 3, 0xB53))
+    ClearScenaFlags(ScenaFlag(0x016A, 2, 0xB52))
+    ClearScenaFlags(ScenaFlag(0x016A, 1, 0xB51))
+    ClearScenaFlags(ScenaFlag(0x016A, 1, 0xB51))
     SetScenaFlags(ScenaFlag(0x0192, 6, 0xC96))
     SetScenaFlags(ScenaFlag(0x0192, 7, 0xC97))
     SetScenaFlags(ScenaFlag(0x0193, 0, 0xC98))
@@ -55829,7 +55398,7 @@ def EV_DoJump_03():
 
     label('loc_41B5F')
 
-    Call(0x0B, 'EV_Party_Set')
+    Call(ScriptId.Current, 'EV_Party_Set')
 
     Switch(
         (
@@ -58875,7 +58444,7 @@ def EV_Jump_04_00():
         'loc_44756',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -59115,7 +58684,7 @@ def EV_Jump_04_00():
 
     label('loc_44741')
 
-    Call(0x00, 'EV_DoJump_04')
+    Call(ScriptId.Map, 'EV_DoJump_04')
 
     def _loc_44751(): pass
 
@@ -59155,7 +58724,7 @@ def EV_Jump_04_01():
         'loc_4740B',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -59592,7 +59161,7 @@ def EV_Jump_04_01():
 
     label('loc_473F6')
 
-    Call(0x00, 'EV_DoJump_04')
+    Call(ScriptId.Map, 'EV_DoJump_04')
 
     def _loc_47406(): pass
 
@@ -59609,11 +59178,11 @@ def EV_Jump_04_01():
 # id: 0x009E offset: 0x4740C
 @scena.Code('EV_DoJump_04')
 def EV_DoJump_04():
-    Call(0x0B, 'EV_Flag_Reset')
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
-    Call(0x0B, 'EV_Flag_Set_03_All')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
     OP_18(
         0x03,
@@ -60246,11 +59815,11 @@ def EV_DoJump_04():
     label('loc_47DE9')
 
     SetScenaFlags(ScenaFlag(0x01A6, 6, 0xD36))
-    OP_11(0x0D6C)
-    OP_11(0x0D6D)
-    OP_11(0x0D6E)
-    OP_11(0x0D6F)
-    OP_11(0x0D38)
+    ClearScenaFlags(ScenaFlag(0x01AD, 4, 0xD6C))
+    ClearScenaFlags(ScenaFlag(0x01AD, 5, 0xD6D))
+    ClearScenaFlags(ScenaFlag(0x01AD, 6, 0xD6E))
+    ClearScenaFlags(ScenaFlag(0x01AD, 7, 0xD6F))
+    ClearScenaFlags(ScenaFlag(0x01A7, 0, 0xD38))
 
     If(
         (
@@ -60619,7 +60188,7 @@ def EV_DoJump_04():
 
     label('loc_47EC6')
 
-    Call(0x0B, 'EV_Party_Set')
+    Call(ScriptId.Current, 'EV_Party_Set')
 
     Switch(
         (
@@ -61852,10 +61421,10 @@ def EV_DoJump_04():
 
     label('loc_48D1F')
 
-    Call(0x0A, 'EV_04_29_00')
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
+    Call(ScriptId.System, 'EV_04_29_00')
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
@@ -62467,15 +62036,15 @@ def EV_DoJump_04():
 
     label('loc_4917C')
 
-    Call(0x0A, 'EV_04_62_00')
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
-    OP_49(0x04, 0x0000)
+    Call(ScriptId.System, 'EV_04_62_00')
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
@@ -62529,15 +62098,15 @@ def EV_DoJump_04():
 
     label('loc_4920D')
 
-    Call(0x0A, 'EV_04_63_00')
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
-    OP_49(0x04, 0x0000)
+    Call(ScriptId.System, 'EV_04_63_00')
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
@@ -62546,15 +62115,15 @@ def EV_DoJump_04():
 
     label('loc_4924E')
 
-    Call(0x0A, 'EV_04_63_01')
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
-    OP_49(0x04, 0x0000)
+    Call(ScriptId.System, 'EV_04_63_01')
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
@@ -62563,15 +62132,15 @@ def EV_DoJump_04():
 
     label('loc_4928F')
 
-    Call(0x0A, 'EV_04_63_02')
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
-    OP_49(0x04, 0x0000)
+    Call(ScriptId.System, 'EV_04_63_02')
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
@@ -62580,15 +62149,15 @@ def EV_DoJump_04():
 
     label('loc_492D0')
 
-    Call(0x0A, 'EV_04_63_03')
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
-    OP_49(0x04, 0x0000)
+    Call(ScriptId.System, 'EV_04_63_03')
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
@@ -62924,10 +62493,10 @@ def EV_DoJump_04():
 
     label('loc_49570')
 
-    Call(0x0A, 'EV_04_80_01')
-    OP_49(0x02)
-    OP_49(0x00, 0x0000)
-    OP_49(0x04, 0x0000)
+    Call(ScriptId.System, 'EV_04_80_01')
+    FormationReset()
+    FormationAddMember(ChrTable['黎恩'])
+    FormationSetLeader(ChrTable['黎恩'])
     OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
@@ -63108,7 +62677,7 @@ def EV_Jump_05_00():
         'loc_4B0F6',
     )
 
-    MenuCmd(0x00, 0x01, 0x0018, 40.000000, 0x00000000)
+    MenuCmd(0x00, 0x01, 0x0018, 40.0, 0x00000000)
 
     If(
         (
@@ -63423,7 +62992,7 @@ def EV_Jump_05_00():
 
     label('loc_4B0E1')
 
-    Call(0x00, 'EV_DoJump_05')
+    Call(ScriptId.Map, 'EV_DoJump_05')
 
     def _loc_4B0F1(): pass
 
@@ -63440,12 +63009,12 @@ def EV_Jump_05_00():
 # id: 0x00A0 offset: 0x4B0F8
 @scena.Code('EV_DoJump_05')
 def EV_DoJump_05():
-    Call(0x0B, 'EV_Flag_Reset')
-    Call(0x0B, 'EV_Flag_Set_00_All')
-    Call(0x0B, 'EV_Flag_Set_01_All')
-    Call(0x0B, 'EV_Flag_Set_02_All')
-    Call(0x0B, 'EV_Flag_Set_03_All')
-    Call(0x0B, 'EV_Flag_Set_04_All')
+    Call(ScriptId.Current, 'EV_Flag_Reset')
+    Call(ScriptId.Current, 'EV_Flag_Set_00_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_01_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_02_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_03_All')
+    Call(ScriptId.Current, 'EV_Flag_Set_04_All')
 
     OP_18(
         0x03,
@@ -63665,7 +63234,7 @@ def EV_DoJump_05():
 
     label('loc_4B55D')
 
-    Call(0x0B, 'EV_Party_Set')
+    Call(ScriptId.Current, 'EV_Party_Set')
 
     Switch(
         (
@@ -64854,61 +64423,61 @@ def EV_DoJump_05():
 # id: 0x00A1 offset: 0x4C070
 @scena.Code('EV_Party_Set')
 def EV_Party_Set():
-    OP_43(0x00, 0x012C, 1.000000, 0x0000)
-    OP_43(0xFF, 0x0000, 0x0000)
+    Fade(0x00, 300, 1.0, 0x0000)
+    Fade(0xFF, 0, 0x0000)
     OP_13(0x00001000)
-    MenuChrFlagCmd(0x01, 0x0000, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0001, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0002, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0003, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0004, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0005, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0006, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0007, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0008, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0009, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x000A, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x000B, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x000C, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x000D, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x000E, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x000F, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0010, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0011, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0012, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0013, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0014, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0015, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0016, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0017, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0018, 0x00000020)
-    MenuChrFlagCmd(0x01, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0001, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0002, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0003, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0004, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0005, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0006, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0007, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0008, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0009, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x000F, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0010, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0011, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0012, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0013, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0014, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0015, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0016, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0017, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0018, 0x00000001)
-    Call(0x0A, 'FC_TSMenu_Reset')
-    OP_49(0x02)
+    MenuChrFlagCmd(0x01, ChrTable['黎恩'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['亞莉莎'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['艾略特'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['勞拉'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['馬奇亞斯'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['艾瑪'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['尤西斯'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['菲'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['蓋烏斯'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['米莉亞姆'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['悠娜'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['庫爾特'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['亞爾緹娜'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['妙婕'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['亞修'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['莎拉'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['奧蕾莉亞分校長'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['阿加特'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['安潔莉卡'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['奧利維爾'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['緹妲'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['緹歐'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['雪倫'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['克蕾雅少校'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['雷克多少校'], 0x00000020)
+    MenuChrFlagCmd(0x01, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['亞莉莎'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['艾略特'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['勞拉'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['馬奇亞斯'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['艾瑪'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['尤西斯'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['菲'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['蓋烏斯'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['米莉亞姆'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['莎拉'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['奧蕾莉亞分校長'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['阿加特'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['安潔莉卡'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['奧利維爾'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['緹妲'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['緹歐'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['雪倫'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['克蕾雅少校'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['雷克多少校'], 0x00000001)
+    Call(ScriptId.System, 'FC_TSMenu_Reset')
+    FormationReset()
 
     If(
         (
@@ -64919,8 +64488,8 @@ def EV_Party_Set():
         'loc_4C240',
     )
 
-    OP_49(0x00, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationAddMember(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     def _loc_4C240(): pass
 
@@ -64948,9 +64517,9 @@ def EV_Party_Set():
         'loc_4C274',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -64966,12 +64535,12 @@ def EV_Party_Set():
         'loc_4C2B2',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0002, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0004, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0006, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['馬奇亞斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -64987,15 +64556,15 @@ def EV_Party_Set():
         'loc_4C308',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0001, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0002, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0004, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0006, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0007, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000F, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['馬奇亞斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['菲'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65011,18 +64580,18 @@ def EV_Party_Set():
         'loc_4C376',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0001, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0003, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0002, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0004, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0006, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0005, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0007, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0008, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000F, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['馬奇亞斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾瑪'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['菲'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['蓋烏斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65038,10 +64607,10 @@ def EV_Party_Set():
         'loc_4C3A4',
     )
 
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65071,22 +64640,22 @@ def EV_Party_Set():
         'loc_4C440',
     )
 
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0001, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0002, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0003, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0004, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0005, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0006, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0007, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0008, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0009, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000F, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['馬奇亞斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾瑪'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['菲'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['蓋烏斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['米莉亞姆'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65102,12 +64671,12 @@ def EV_Party_Set():
         'loc_4C47E',
     )
 
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65137,12 +64706,12 @@ def EV_Party_Set():
         'loc_4C4CA',
     )
 
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65158,13 +64727,13 @@ def EV_Party_Set():
         'loc_4C510',
     )
 
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x001B, 0x01000000)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['湯瑪斯'], 0x01000000)
 
     Jump('loc_4CC6B')
 
@@ -65180,12 +64749,12 @@ def EV_Party_Set():
         'loc_4C54E',
     )
 
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65201,13 +64770,13 @@ def EV_Party_Set():
         'loc_4C594',
     )
 
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0019, 0x01000000)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['托娃'], 0x01000000)
 
     Jump('loc_4CC6B')
 
@@ -65283,12 +64852,12 @@ def EV_Party_Set():
         'loc_4C63A',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0014, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['緹妲'], 0x00000001)
 
     def _loc_4C63A(): pass
 
@@ -65322,11 +64891,11 @@ def EV_Party_Set():
         'loc_4C683',
     )
 
-    MenuChrFlagCmd(0x00, 0x0006, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0009, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0008, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000F, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0012, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['米莉亞姆'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['蓋烏斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['安潔莉卡'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65356,11 +64925,11 @@ def EV_Party_Set():
         'loc_4C6C7',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65390,9 +64959,9 @@ def EV_Party_Set():
         'loc_4C6FB',
     )
 
-    MenuChrFlagCmd(0x00, 0x0012, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000F, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0017, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['安潔莉卡'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['克蕾雅少校'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65408,9 +64977,9 @@ def EV_Party_Set():
         'loc_4C721',
     )
 
-    MenuChrFlagCmd(0x00, 0x0012, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000F, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0019, 0x01000000)
+    MenuChrFlagCmd(0x00, ChrTable['安潔莉卡'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['托娃'], 0x01000000)
 
     Jump('loc_4CC6B')
 
@@ -65426,11 +64995,11 @@ def EV_Party_Set():
         'loc_4C757',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65446,12 +65015,12 @@ def EV_Party_Set():
         'loc_4C795',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x001A, 0x01000000)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['派崔克'], 0x01000000)
 
     Jump('loc_4CC6B')
 
@@ -65467,11 +65036,11 @@ def EV_Party_Set():
         'loc_4C7CB',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65567,11 +65136,11 @@ def EV_Party_Set():
         'loc_4C896',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
 
     def _loc_4C896(): pass
 
@@ -65591,10 +65160,10 @@ def EV_Party_Set():
         'loc_4C8C9',
     )
 
-    MenuChrFlagCmd(0x00, 0x0001, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0004, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0005, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0013, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['馬奇亞斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾瑪'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['奧利維爾'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65610,9 +65179,9 @@ def EV_Party_Set():
         'loc_4C8EF',
     )
 
-    MenuChrFlagCmd(0x00, 0x0001, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0004, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0005, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['馬奇亞斯'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾瑪'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65628,12 +65197,12 @@ def EV_Party_Set():
         'loc_4C92D',
     )
 
-    MenuChrFlagCmd(0x01, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65649,7 +65218,7 @@ def EV_Party_Set():
         'loc_4C943',
     )
 
-    MenuChrFlagCmd(0x00, 0x0016, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['雪倫'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65679,11 +65248,11 @@ def EV_Party_Set():
         'loc_4C987',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0005, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0014, 0x01000000)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾瑪'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['緹妲'], 0x01000000)
 
     Jump('loc_4CC6B')
 
@@ -65699,10 +65268,10 @@ def EV_Party_Set():
         'loc_4C9B5',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0005, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾瑪'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65718,9 +65287,9 @@ def EV_Party_Set():
         'loc_4C9DB',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65736,10 +65305,10 @@ def EV_Party_Set():
         'loc_4CA09',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0016, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['雪倫'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65755,11 +65324,11 @@ def EV_Party_Set():
         'loc_4CA3F',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0015, 0x00000001)
-    MenuChrFlagCmd(0x01, 0x0015, 0x01000000)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['緹歐'], 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['緹歐'], 0x01000000)
 
     Jump('loc_4CC6B')
 
@@ -65775,10 +65344,10 @@ def EV_Party_Set():
         'loc_4CA6D',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0015, 0x01000000)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['緹歐'], 0x01000000)
 
     Jump('loc_4CC6B')
 
@@ -65794,9 +65363,9 @@ def EV_Party_Set():
         'loc_4CA93',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65868,9 +65437,9 @@ def EV_Party_Set():
         'loc_4CB18',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
 
     def _loc_4CB18(): pass
 
@@ -65890,10 +65459,10 @@ def EV_Party_Set():
         'loc_4CB4B',
     )
 
-    MenuChrFlagCmd(0x00, 0x0003, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0007, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0002, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0011, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['菲'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['阿加特'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65909,9 +65478,9 @@ def EV_Party_Set():
         'loc_4CB71',
     )
 
-    MenuChrFlagCmd(0x00, 0x0003, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0007, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0002, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['菲'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65927,9 +65496,9 @@ def EV_Party_Set():
         'loc_4CB97',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65945,10 +65514,10 @@ def EV_Party_Set():
         'loc_4CBC5',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0017, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['克蕾雅少校'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65978,8 +65547,8 @@ def EV_Party_Set():
         'loc_4CBF1',
     )
 
-    MenuChrFlagCmd(0x00, 0x0009, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['米莉亞姆'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -65995,7 +65564,7 @@ def EV_Party_Set():
         'loc_4CC07',
     )
 
-    MenuChrFlagCmd(0x00, 0x0009, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['米莉亞姆'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -66011,9 +65580,9 @@ def EV_Party_Set():
         'loc_4CC2D',
     )
 
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
 
     Jump('loc_4CC6B')
 
@@ -66035,12 +65604,12 @@ def EV_Party_Set():
 
     label('loc_4CC3B')
 
-    MenuChrFlagCmd(0x01, 0x0000, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
+    MenuChrFlagCmd(0x01, ChrTable['黎恩'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
 
     def _loc_4CC6B(): pass
 
@@ -66072,9 +65641,9 @@ def EV_Party_Set():
         'loc_4CCBE',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
 
     Jump('loc_4CCE2')
 
@@ -66096,12 +65665,12 @@ def EV_Party_Set():
 
     label('loc_4CCCC')
 
-    OP_49(0x02)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x000E)
+    FormationReset()
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['亞修'])
 
     def _loc_4CCE2(): pass
 
@@ -66121,10 +65690,10 @@ def EV_Party_Set():
         'loc_4CD05',
     )
 
-    OP_49(0x00, 0x0003)
-    OP_49(0x00, 0x0007)
-    OP_49(0x00, 0x0002)
-    OP_49(0x00, 0x0011)
+    FormationAddMember(ChrTable['勞拉'])
+    FormationAddMember(ChrTable['菲'])
+    FormationAddMember(ChrTable['艾略特'])
+    FormationAddMember(ChrTable['阿加特'])
 
     Jump('loc_4CD88')
 
@@ -66140,9 +65709,9 @@ def EV_Party_Set():
         'loc_4CD1F',
     )
 
-    OP_49(0x00, 0x0002)
-    OP_49(0x00, 0x0003)
-    OP_49(0x00, 0x0007)
+    FormationAddMember(ChrTable['艾略特'])
+    FormationAddMember(ChrTable['勞拉'])
+    FormationAddMember(ChrTable['菲'])
 
     Jump('loc_4CD88')
 
@@ -66158,9 +65727,9 @@ def EV_Party_Set():
         'loc_4CD39',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
 
     Jump('loc_4CD88')
 
@@ -66176,10 +65745,10 @@ def EV_Party_Set():
         'loc_4CD57',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x0017)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['克蕾雅少校'])
 
     Jump('loc_4CD88')
 
@@ -66209,8 +65778,8 @@ def EV_Party_Set():
         'loc_4CD7B',
     )
 
-    OP_49(0x00, 0x0009)
-    OP_49(0x00, 0x000C)
+    FormationAddMember(ChrTable['米莉亞姆'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
 
     Jump('loc_4CD88')
 
@@ -66226,7 +65795,7 @@ def EV_Party_Set():
         'loc_4CD88',
     )
 
-    OP_49(0x00, 0x0009)
+    FormationAddMember(ChrTable['米莉亞姆'])
 
     def _loc_4CD88(): pass
 
@@ -66246,10 +65815,10 @@ def EV_Party_Set():
         'loc_4CDAB',
     )
 
-    OP_49(0x00, 0x0001)
-    OP_49(0x00, 0x0004)
-    OP_49(0x00, 0x0005)
-    OP_49(0x00, 0x0013)
+    FormationAddMember(ChrTable['亞莉莎'])
+    FormationAddMember(ChrTable['馬奇亞斯'])
+    FormationAddMember(ChrTable['艾瑪'])
+    FormationAddMember(ChrTable['奧利維爾'])
 
     Jump('loc_4CF64')
 
@@ -66265,9 +65834,9 @@ def EV_Party_Set():
         'loc_4CDC5',
     )
 
-    OP_49(0x00, 0x0001)
-    OP_49(0x00, 0x0004)
-    OP_49(0x00, 0x0005)
+    FormationAddMember(ChrTable['亞莉莎'])
+    FormationAddMember(ChrTable['馬奇亞斯'])
+    FormationAddMember(ChrTable['艾瑪'])
 
     Jump('loc_4CF64')
 
@@ -66283,12 +65852,12 @@ def EV_Party_Set():
         'loc_4CDE9',
     )
 
-    OP_49(0x02)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x000E)
+    FormationReset()
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['亞修'])
 
     Jump('loc_4CF64')
 
@@ -66304,7 +65873,7 @@ def EV_Party_Set():
         'loc_4CDFB',
     )
 
-    OP_49(0x00, 0x0016)
+    FormationAddMember(ChrTable['雪倫'])
 
     Jump('loc_4CF64')
 
@@ -66334,11 +65903,11 @@ def EV_Party_Set():
         'loc_4CE2B',
     )
 
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x0014)
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['緹妲'])
 
     Jump('loc_4CF64')
 
@@ -66354,10 +65923,10 @@ def EV_Party_Set():
         'loc_4CE49',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x0005)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['艾瑪'])
 
     Jump('loc_4CF64')
 
@@ -66373,9 +65942,9 @@ def EV_Party_Set():
         'loc_4CE63',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
 
     Jump('loc_4CF64')
 
@@ -66391,10 +65960,10 @@ def EV_Party_Set():
         'loc_4CE81',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x0016)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['雪倫'])
 
     Jump('loc_4CF64')
 
@@ -66410,10 +65979,10 @@ def EV_Party_Set():
         'loc_4CE9F',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x0015)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['緹歐'])
 
     Jump('loc_4CF64')
 
@@ -66429,9 +65998,9 @@ def EV_Party_Set():
         'loc_4CEB9',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
 
     Jump('loc_4CF64')
 
@@ -66447,9 +66016,9 @@ def EV_Party_Set():
         'loc_4CED3',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
 
     Jump('loc_4CF64')
 
@@ -66521,12 +66090,12 @@ def EV_Party_Set():
         'loc_4CF64',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
 
     def _loc_4CF64(): pass
 
@@ -66546,7 +66115,7 @@ def EV_Party_Set():
         'loc_4D15B',
     )
 
-    Call(0x0A, 'FC_TSMenu_Reset')
+    Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x02, 0x00, 0x0000)
     OP_C4(0x02, 0x00, 0x0006)
     OP_C4(0x02, 0x00, 0x0009)
@@ -66581,7 +66150,7 @@ def EV_Party_Set():
     SetScenaFlags(ScenaFlag(0x0072, 0, 0x390))
     OP_C5(0x00, 0x00)
     OP_C5(0x01)
-    OP_49(0x02)
+    FormationReset()
 
     Switch(
         (
@@ -66743,11 +66312,11 @@ def EV_Party_Set():
         'loc_4D17D',
     )
 
-    OP_49(0x00, 0x0006)
-    OP_49(0x00, 0x0009)
-    OP_49(0x00, 0x0008)
-    OP_49(0x00, 0x000F)
-    OP_49(0x00, 0x0012)
+    FormationAddMember(ChrTable['尤西斯'])
+    FormationAddMember(ChrTable['米莉亞姆'])
+    FormationAddMember(ChrTable['蓋烏斯'])
+    FormationAddMember(ChrTable['莎拉'])
+    FormationAddMember(ChrTable['安潔莉卡'])
 
     Jump('loc_4D338')
 
@@ -66777,11 +66346,11 @@ def EV_Party_Set():
         'loc_4D1AD',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
 
     Jump('loc_4D338')
 
@@ -66811,9 +66380,9 @@ def EV_Party_Set():
         'loc_4D1D5',
     )
 
-    OP_49(0x00, 0x0012)
-    OP_49(0x00, 0x000F)
-    OP_49(0x00, 0x0017)
+    FormationAddMember(ChrTable['安潔莉卡'])
+    FormationAddMember(ChrTable['莎拉'])
+    FormationAddMember(ChrTable['克蕾雅少校'])
 
     Jump('loc_4D338')
 
@@ -66829,9 +66398,9 @@ def EV_Party_Set():
         'loc_4D1EF',
     )
 
-    OP_49(0x00, 0x0012)
-    OP_49(0x00, 0x000F)
-    OP_49(0x00, 0x0019)
+    FormationAddMember(ChrTable['安潔莉卡'])
+    FormationAddMember(ChrTable['莎拉'])
+    FormationAddMember(ChrTable['托娃'])
 
     Jump('loc_4D338')
 
@@ -66847,11 +66416,11 @@ def EV_Party_Set():
         'loc_4D211',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
 
     Jump('loc_4D338')
 
@@ -66867,12 +66436,12 @@ def EV_Party_Set():
         'loc_4D237',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x001A)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['派崔克'])
 
     Jump('loc_4D338')
 
@@ -66888,11 +66457,11 @@ def EV_Party_Set():
         'loc_4D259',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
 
     Jump('loc_4D338')
 
@@ -66988,16 +66557,16 @@ def EV_Party_Set():
         'loc_4D338',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
 
     def _loc_4D338(): pass
 
@@ -67031,7 +66600,7 @@ def EV_Party_Set():
         'loc_4D4B7',
     )
 
-    Call(0x0A, 'FC_TSMenu_Reset')
+    Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x02, 0x00, 0x000A)
     OP_C4(0x02, 0x00, 0x000B)
     OP_C4(0x02, 0x00, 0x000F)
@@ -67076,29 +66645,29 @@ def EV_Party_Set():
         ),
     )
 
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000020)
-    MenuChrFlagCmd(0x00, 0x0000, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x000F, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0008, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0002, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0006, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0004, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0009, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0001, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0003, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0005, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x0007, 0x04000000)
-    MenuChrFlagCmd(0x00, 0x000A, 0x08000000)
-    MenuChrFlagCmd(0x00, 0x000B, 0x08000000)
-    MenuChrFlagCmd(0x00, 0x000D, 0x08000000)
-    MenuChrFlagCmd(0x00, 0x000E, 0x08000000)
-    MenuChrFlagCmd(0x00, 0x000C, 0x08000000)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000020)
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['蓋烏斯'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['馬奇亞斯'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['米莉亞姆'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['艾瑪'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['菲'], 0x04000000)
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x08000000)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x08000000)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x08000000)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x08000000)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x08000000)
     OP_C5(0x00, 0x00)
     OP_C5(0x01)
-    OP_C4(0x04, 0x00, (0xDD, 'm3430'), -146.000000, 0.000000, 2.000000, 180.000000)
-    OP_C4(0x04, 0x01, (0xDD, 'm3430'), 150.000000, 0.000000, 2.000000, 180.000000)
-    OP_C4(0x04, 0x02, (0xDD, 'm3430'), -2.000000, -0.000000, 2.000000, 180.000000)
-    OP_49(0x02)
+    OP_C4(0x04, 0x00, (0xDD, 'm3430'), -146.0, 0.0, 2.0, 180.0)
+    OP_C4(0x04, 0x01, (0xDD, 'm3430'), 150.0, 0.0, 2.0, 180.0)
+    OP_C4(0x04, 0x02, (0xDD, 'm3430'), -2.0, -0.0, 2.0, 180.0)
+    FormationReset()
     OP_C4(0x01, 0x02)
 
     Jump('loc_4D643')
@@ -67115,12 +66684,12 @@ def EV_Party_Set():
         'loc_4D4DD',
     )
 
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
 
     Jump('loc_4D643')
 
@@ -67150,12 +66719,12 @@ def EV_Party_Set():
         'loc_4D511',
     )
 
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
 
     Jump('loc_4D643')
 
@@ -67171,13 +66740,13 @@ def EV_Party_Set():
         'loc_4D53B',
     )
 
-    OP_49(0x00, 0x0000)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x001B)
+    FormationAddMember(ChrTable['黎恩'])
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['湯瑪斯'])
 
     Jump('loc_4D643')
 
@@ -67193,11 +66762,11 @@ def EV_Party_Set():
         'loc_4D55D',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
 
     Jump('loc_4D643')
 
@@ -67213,12 +66782,12 @@ def EV_Party_Set():
         'loc_4D583',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x0019)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['托娃'])
 
     Jump('loc_4D643')
 
@@ -67294,19 +66863,19 @@ def EV_Party_Set():
         'loc_4D643',
     )
 
-    OP_49(0x02)
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000C)
-    OP_49(0x00, 0x000E)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x0014)
-    MenuChrFlagCmd(0x00, 0x000A, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000B, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000C, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000E, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x000D, 0x00000001)
-    MenuChrFlagCmd(0x00, 0x0014, 0x00000001)
+    FormationReset()
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['亞爾緹娜'])
+    FormationAddMember(ChrTable['亞修'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['緹妲'])
+    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['緹妲'], 0x00000001)
 
     def _loc_4D643(): pass
 
@@ -67340,9 +66909,9 @@ def EV_Party_Set():
         'loc_4D670',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000D)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['妙婕'])
 
     Jump('loc_4D71B')
 
@@ -67358,12 +66927,12 @@ def EV_Party_Set():
         'loc_4D696',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x0002)
-    OP_49(0x00, 0x0004)
-    OP_49(0x00, 0x0006)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['艾略特'])
+    FormationAddMember(ChrTable['馬奇亞斯'])
+    FormationAddMember(ChrTable['尤西斯'])
 
     Jump('loc_4D71B')
 
@@ -67379,15 +66948,15 @@ def EV_Party_Set():
         'loc_4D6C8',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x0001)
-    OP_49(0x00, 0x0002)
-    OP_49(0x00, 0x0004)
-    OP_49(0x00, 0x0006)
-    OP_49(0x00, 0x0007)
-    OP_49(0x00, 0x000F)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['亞莉莎'])
+    FormationAddMember(ChrTable['艾略特'])
+    FormationAddMember(ChrTable['馬奇亞斯'])
+    FormationAddMember(ChrTable['尤西斯'])
+    FormationAddMember(ChrTable['菲'])
+    FormationAddMember(ChrTable['莎拉'])
 
     Jump('loc_4D71B')
 
@@ -67403,18 +66972,18 @@ def EV_Party_Set():
         'loc_4D706',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000D)
-    OP_49(0x00, 0x0001)
-    OP_49(0x00, 0x0003)
-    OP_49(0x00, 0x0002)
-    OP_49(0x00, 0x0004)
-    OP_49(0x00, 0x0006)
-    OP_49(0x00, 0x0005)
-    OP_49(0x00, 0x0007)
-    OP_49(0x00, 0x0008)
-    OP_49(0x00, 0x000F)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['亞莉莎'])
+    FormationAddMember(ChrTable['勞拉'])
+    FormationAddMember(ChrTable['艾略特'])
+    FormationAddMember(ChrTable['馬奇亞斯'])
+    FormationAddMember(ChrTable['尤西斯'])
+    FormationAddMember(ChrTable['艾瑪'])
+    FormationAddMember(ChrTable['菲'])
+    FormationAddMember(ChrTable['蓋烏斯'])
+    FormationAddMember(ChrTable['莎拉'])
 
     Jump('loc_4D71B')
 
@@ -67430,9 +66999,9 @@ def EV_Party_Set():
         'loc_4D71B',
     )
 
-    OP_49(0x00, 0x000A)
-    OP_49(0x00, 0x000B)
-    OP_49(0x00, 0x000D)
+    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['庫爾特'])
+    FormationAddMember(ChrTable['妙婕'])
 
     def _loc_4D71B(): pass
 
@@ -67452,17 +67021,17 @@ def EV_Party_Set():
         'loc_4D735',
     )
 
-    OP_49(0x00, 0x0000)
-    MenuChrFlagCmd(0x00, 0x0000, 0x00000001)
+    FormationAddMember(ChrTable['黎恩'])
+    MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
     def _loc_4D735(): pass
 
     label('loc_4D735')
 
-    Call(0x0A, 'FC_CreateCeline')
+    Call(ScriptId.System, 'FC_CreateCeline')
     OP_14(0x00001000)
-    OP_49(0x04, 0xF000)
-    OP_16(0x0000)
+    FormationSetLeader(0xF000)
+    Sleep(0)
 
     Return()
 
@@ -67625,7 +67194,7 @@ def EV_Flag_Set_01_All():
     SetScenaFlags(ScenaFlag(0x00F1, 3, 0x78B))
     SetScenaFlags(ScenaFlag(0x0112, 6, 0x896))
     SetScenaFlags(ScenaFlag(0x00F2, 0, 0x790))
-    OP_11(0x0374)
+    ClearScenaFlags(ScenaFlag(0x006E, 4, 0x374))
 
     Return()
 
@@ -68149,688 +67718,688 @@ def EV_Flag_Set_04_All():
 # id: 0x00A7 offset: 0x4DF00
 @scena.Code('EV_Flag_Reset')
 def EV_Flag_Reset():
-    OP_11(0x05D1)
-    OP_11(0x05D2)
-    OP_11(0x05D3)
-    OP_11(0x05D4)
-    OP_11(0x05D5)
-    OP_11(0x05D6)
-    OP_11(0x0600)
-    OP_11(0x0601)
-    OP_11(0x0602)
-    OP_11(0x0603)
-    OP_11(0x0604)
-    OP_11(0x0605)
-    OP_11(0x0606)
-    OP_11(0x0607)
-    OP_11(0x0608)
-    OP_11(0x0609)
-    OP_11(0x060A)
-    OP_11(0x060B)
-    OP_11(0x060C)
-    OP_11(0x0700)
-    OP_11(0x0701)
-    OP_11(0x0702)
-    OP_11(0x0703)
-    OP_11(0x0704)
-    OP_11(0x0778)
-    OP_11(0x0705)
-    OP_11(0x0706)
-    OP_11(0x0707)
-    OP_11(0x0708)
-    OP_11(0x0709)
-    OP_11(0x070A)
-    OP_11(0x070B)
-    OP_11(0x070C)
-    OP_11(0x0776)
-    OP_11(0x070D)
-    OP_11(0x070E)
-    OP_11(0x070F)
-    OP_11(0x0710)
-    OP_11(0x0711)
-    OP_11(0x0712)
-    OP_11(0x0713)
-    OP_11(0x0714)
-    OP_11(0x0715)
-    OP_11(0x0770)
-    OP_11(0x0716)
-    OP_11(0x0717)
-    OP_11(0x0718)
-    OP_11(0x0719)
-    OP_11(0x071A)
-    OP_11(0x071B)
-    OP_11(0x071C)
-    OP_11(0x071D)
-    OP_11(0x071E)
-    OP_11(0x071F)
-    OP_11(0x0777)
-    OP_11(0x0720)
-    OP_11(0x0721)
-    OP_11(0x0722)
-    OP_11(0x0723)
-    OP_11(0x0724)
-    OP_11(0x0725)
-    OP_11(0x0726)
-    OP_11(0x0727)
-    OP_11(0x0728)
-    OP_11(0x0729)
-    OP_11(0x072A)
-    OP_11(0x072B)
-    OP_11(0x072C)
-    OP_11(0x072D)
-    OP_11(0x072E)
-    OP_11(0x072F)
-    OP_11(0x0730)
-    OP_11(0x0731)
-    OP_11(0x0732)
-    OP_11(0x0733)
-    OP_11(0x0734)
-    OP_11(0x0735)
-    OP_11(0x0736)
-    OP_11(0x0775)
-    OP_11(0x0737)
-    OP_11(0x0738)
-    OP_11(0x0739)
-    OP_11(0x0779)
-    OP_11(0x073A)
-    OP_11(0x073B)
-    OP_11(0x073C)
-    OP_11(0x073D)
-    OP_11(0x073E)
-    OP_11(0x073F)
-    OP_11(0x0740)
-    OP_11(0x0741)
-    OP_11(0x0742)
-    OP_11(0x0743)
-    OP_11(0x0744)
-    OP_11(0x0745)
-    OP_11(0x0746)
-    OP_11(0x0747)
-    OP_11(0x077E)
-    OP_11(0x0748)
-    OP_11(0x0749)
-    OP_11(0x074A)
-    OP_11(0x074B)
-    OP_11(0x074C)
-    OP_11(0x074D)
-    OP_11(0x074E)
-    OP_11(0x074F)
-    OP_11(0x0750)
-    OP_11(0x0751)
-    OP_11(0x0752)
-    OP_11(0x0753)
-    OP_11(0x0754)
-    OP_11(0x0755)
-    OP_11(0x0756)
-    OP_11(0x0757)
-    OP_11(0x0758)
-    OP_11(0x0759)
-    OP_11(0x075A)
-    OP_11(0x0771)
-    OP_11(0x0772)
-    OP_11(0x0773)
-    OP_11(0x0774)
-    OP_11(0x077A)
-    OP_11(0x077B)
-    OP_11(0x077C)
-    OP_11(0x077D)
-    OP_11(0x0900)
-    OP_11(0x0901)
-    OP_11(0x0902)
-    OP_11(0x0903)
-    OP_11(0x0904)
-    OP_11(0x095C)
-    OP_11(0x0905)
-    OP_11(0x0906)
-    OP_11(0x0907)
-    OP_11(0x0908)
-    OP_11(0x108A)
-    OP_11(0x0909)
-    OP_11(0x090A)
-    OP_11(0x090B)
-    OP_11(0x090C)
-    OP_11(0x090D)
-    OP_11(0x090E)
-    OP_11(0x090F)
-    OP_11(0x0910)
-    OP_11(0x0911)
-    OP_11(0x0912)
-    OP_11(0x0913)
-    OP_11(0x0914)
-    OP_11(0x0915)
-    OP_11(0x0916)
-    OP_11(0x0917)
-    OP_11(0x0918)
-    OP_11(0x0919)
-    OP_11(0x091A)
-    OP_11(0x091B)
-    OP_11(0x091C)
-    OP_11(0x091D)
-    OP_11(0x091E)
-    OP_11(0x091F)
-    OP_11(0x0920)
-    OP_11(0x0921)
-    OP_11(0x0922)
-    OP_11(0x0923)
-    OP_11(0x0924)
-    OP_11(0x0925)
-    OP_11(0x0926)
-    OP_11(0x0927)
-    OP_11(0x0928)
-    OP_11(0x0929)
-    OP_11(0x092A)
-    OP_11(0x092B)
-    OP_11(0x092C)
-    OP_11(0x092D)
-    OP_11(0x092E)
-    OP_11(0x092F)
-    OP_11(0x0930)
-    OP_11(0x0931)
-    OP_11(0x0932)
-    OP_11(0x0933)
-    OP_11(0x0934)
-    OP_11(0x0935)
-    OP_11(0x0936)
-    OP_11(0x0937)
-    OP_11(0x0938)
-    OP_11(0x0939)
-    OP_11(0x093A)
-    OP_11(0x093B)
-    OP_11(0x093C)
-    OP_11(0x093D)
-    OP_11(0x093E)
-    OP_11(0x093F)
-    OP_11(0x0940)
-    OP_11(0x0941)
-    OP_11(0x0942)
-    OP_11(0x0943)
-    OP_11(0x0944)
-    OP_11(0x0945)
-    OP_11(0x0946)
-    OP_11(0x0947)
-    OP_11(0x0948)
-    OP_11(0x0949)
-    OP_11(0x094A)
-    OP_11(0x094B)
-    OP_11(0x094C)
-    OP_11(0x094D)
-    OP_11(0x094E)
-    OP_11(0x094F)
-    OP_11(0x0950)
-    OP_11(0x0951)
-    OP_11(0x0952)
-    OP_11(0x0953)
-    OP_11(0x0954)
-    OP_11(0x0955)
-    OP_11(0x0956)
-    OP_11(0x0957)
-    OP_11(0x0958)
-    OP_11(0x0959)
-    OP_11(0x095A)
-    OP_11(0x095E)
-    OP_11(0x095B)
-    OP_11(0x0B00)
-    OP_11(0x0B01)
-    OP_11(0x0B02)
-    OP_11(0x0B05)
-    OP_11(0x0B06)
-    OP_11(0x0B07)
-    OP_11(0x0B08)
-    OP_11(0x0B09)
-    OP_11(0x0B0A)
-    OP_11(0x0B0B)
-    OP_11(0x0B0C)
-    OP_11(0x0B0D)
-    OP_11(0x0B0E)
-    OP_11(0x0B0F)
-    OP_11(0x0B10)
-    OP_11(0x0B11)
-    OP_11(0x0B12)
-    OP_11(0x0B13)
-    OP_11(0x0B14)
-    OP_11(0x0B15)
-    OP_11(0x0B16)
-    OP_11(0x0B17)
-    OP_11(0x0B18)
-    OP_11(0x0B19)
-    OP_11(0x0B1A)
-    OP_11(0x0B1B)
-    OP_11(0x0B1C)
-    OP_11(0x0B1D)
-    OP_11(0x0B1E)
-    OP_11(0x0B1F)
-    OP_11(0x0B20)
-    OP_11(0x0B21)
-    OP_11(0x0B22)
-    OP_11(0x0B23)
-    OP_11(0x0B24)
-    OP_11(0x0B25)
-    OP_11(0x0B26)
-    OP_11(0x0B27)
-    OP_11(0x0B28)
-    OP_11(0x0B29)
-    OP_11(0x0B2A)
-    OP_11(0x0B2B)
-    OP_11(0x0B2C)
-    OP_11(0x0B2D)
-    OP_11(0x0B2E)
-    OP_11(0x0B2F)
-    OP_11(0x0B30)
-    OP_11(0x0B33)
-    OP_11(0x0B34)
-    OP_11(0x0B35)
-    OP_11(0x0B36)
-    OP_11(0x0B37)
-    OP_11(0x0B38)
-    OP_11(0x0B39)
-    OP_11(0x0B3A)
-    OP_11(0x0B3B)
-    OP_11(0x0B3C)
-    OP_11(0x0B3D)
-    OP_11(0x0B3E)
-    OP_11(0x0B3F)
-    OP_11(0x0B40)
-    OP_11(0x0B41)
-    OP_11(0x0B42)
-    OP_11(0x0B43)
-    OP_11(0x0B44)
-    OP_11(0x0B45)
-    OP_11(0x0B46)
-    OP_11(0x0B47)
-    OP_11(0x0B48)
-    OP_11(0x0B49)
-    OP_11(0x0B4A)
-    OP_11(0x0B4B)
-    OP_11(0x0B4C)
-    OP_11(0x0B4D)
-    OP_11(0x0B4E)
-    OP_11(0x0B4F)
-    OP_11(0x0C73)
-    OP_11(0x0B50)
-    OP_11(0x0C74)
-    OP_11(0x0B51)
-    OP_11(0x0B52)
-    OP_11(0x0B53)
-    OP_11(0x0B54)
-    OP_11(0x0B55)
-    OP_11(0x0B56)
-    OP_11(0x0B57)
-    OP_11(0x0B58)
-    OP_11(0x0B59)
-    OP_11(0x0B5A)
-    OP_11(0x0B5B)
-    OP_11(0x0B5C)
-    OP_11(0x0B5D)
-    OP_11(0x0B5E)
-    OP_11(0x0B5F)
-    OP_11(0x0B60)
-    OP_11(0x0B61)
-    OP_11(0x0B62)
-    OP_11(0x0B63)
-    OP_11(0x0B64)
-    OP_11(0x0B65)
-    OP_11(0x0B66)
-    OP_11(0x0B67)
-    OP_11(0x0B68)
-    OP_11(0x0B69)
-    OP_11(0x0B6A)
-    OP_11(0x0B6B)
-    OP_11(0x0C76)
-    OP_11(0x0B6C)
-    OP_11(0x0B6D)
-    OP_11(0x0B6E)
-    OP_11(0x0B6F)
-    OP_11(0x0B70)
-    OP_11(0x0B71)
-    OP_11(0x0B72)
-    OP_11(0x0C71)
-    OP_11(0x0C72)
-    OP_11(0x0B73)
-    OP_11(0x0B74)
-    OP_11(0x0B75)
-    OP_11(0x0B76)
-    OP_11(0x0B77)
-    OP_11(0x0B78)
-    OP_11(0x0B79)
-    OP_11(0x0B7A)
-    OP_11(0x0B7B)
-    OP_11(0x0B7C)
-    OP_11(0x0B7D)
-    OP_11(0x0B7E)
-    OP_11(0x0B7F)
-    OP_11(0x0B80)
-    OP_11(0x0B88)
-    OP_11(0x0394)
-    OP_11(0x0D00)
-    OP_11(0x0D01)
-    OP_11(0x0D02)
-    OP_11(0x0D03)
-    OP_11(0x0D04)
-    OP_11(0x0D05)
-    OP_11(0x0D06)
-    OP_11(0x0D07)
-    OP_11(0x0D08)
-    OP_11(0x0D09)
-    OP_11(0x0D0A)
-    OP_11(0x0D0B)
-    OP_11(0x0D0C)
-    OP_11(0x0D0D)
-    OP_11(0x0D0E)
-    OP_11(0x0D0F)
-    OP_11(0x0D10)
-    OP_11(0x0D11)
-    OP_11(0x0D12)
-    OP_11(0x0D13)
-    OP_11(0x0D14)
-    OP_11(0x0D15)
-    OP_11(0x0D16)
-    OP_11(0x0D17)
-    OP_11(0x0D18)
-    OP_11(0x0D19)
-    OP_11(0x0D1A)
-    OP_11(0x0D1B)
-    OP_11(0x0D1C)
-    OP_11(0x0D1D)
-    OP_11(0x0D1E)
-    OP_11(0x0D1F)
-    OP_11(0x0D21)
-    OP_11(0x0D22)
-    OP_11(0x0D23)
-    OP_11(0x0D24)
-    OP_11(0x0D25)
-    OP_11(0x0D26)
-    OP_11(0x0D27)
-    OP_11(0x0D28)
-    OP_11(0x0D29)
-    OP_11(0x0D2A)
-    OP_11(0x0D2B)
-    OP_11(0x0D2C)
-    OP_11(0x0D2D)
-    OP_11(0x0D2E)
-    OP_11(0x0D2F)
-    OP_11(0x0D30)
-    OP_11(0x0D31)
-    OP_11(0x0D32)
-    OP_11(0x0D33)
-    OP_11(0x0D34)
-    OP_11(0x0D35)
-    OP_11(0x0D36)
-    OP_11(0x0D37)
-    OP_11(0x0D38)
-    OP_11(0x0D39)
-    OP_11(0x0D3A)
-    OP_11(0x0D3B)
-    OP_11(0x0D3C)
-    OP_11(0x0D3D)
-    OP_11(0x0D3E)
-    OP_11(0x0D3F)
-    OP_11(0x0D40)
-    OP_11(0x0D41)
-    OP_11(0x0D42)
-    OP_11(0x0D43)
-    OP_11(0x0D44)
-    OP_11(0x0D45)
-    OP_11(0x0D46)
-    OP_11(0x0D47)
-    OP_11(0x0D48)
-    OP_11(0x0D49)
-    OP_11(0x0D4A)
-    OP_11(0x0D4B)
-    OP_11(0x0D4C)
-    OP_11(0x0D4D)
-    OP_11(0x0D4E)
-    OP_11(0x0D4F)
-    OP_11(0x0D50)
-    OP_11(0x0D51)
-    OP_11(0x0D52)
-    OP_11(0x0D53)
-    OP_11(0x0D54)
-    OP_11(0x0D55)
-    OP_11(0x0D56)
-    OP_11(0x0D57)
-    OP_11(0x0D58)
-    OP_11(0x0D59)
-    OP_11(0x0D5A)
-    OP_11(0x0D5B)
-    OP_11(0x0D5C)
-    OP_11(0x0D5D)
-    OP_11(0x0D5E)
-    OP_11(0x0D5F)
-    OP_11(0x0D60)
-    OP_11(0x0D61)
-    OP_11(0x0D62)
-    OP_11(0x0D66)
-    OP_11(0x0D67)
-    OP_11(0x0D63)
-    OP_11(0x0D64)
-    OP_11(0x0D65)
-    OP_11(0x0D68)
-    OP_11(0x0D69)
-    OP_11(0x0D6A)
-    OP_11(0x0D6B)
-    OP_11(0x0D6C)
-    OP_11(0x0D6D)
-    OP_11(0x0D6E)
-    OP_11(0x0D6F)
-    OP_11(0x0F00)
-    OP_11(0x0F01)
-    OP_11(0x0F02)
-    OP_11(0x0F03)
-    OP_11(0x0F04)
-    OP_11(0x0F05)
-    OP_11(0x0F06)
-    OP_11(0x0F07)
-    OP_11(0x0F08)
-    OP_11(0x0F09)
-    OP_11(0x0F0B)
-    OP_11(0x0F0C)
-    OP_11(0x0F0D)
-    OP_11(0x0780)
-    OP_11(0x0781)
-    OP_11(0x0782)
-    OP_11(0x0783)
-    OP_11(0x0784)
-    OP_11(0x0785)
-    OP_11(0x0786)
-    OP_11(0x0787)
-    OP_11(0x0788)
-    OP_11(0x0789)
-    OP_11(0x078A)
-    OP_11(0x078B)
-    OP_11(0x0960)
-    OP_11(0x0961)
-    OP_11(0x0962)
-    OP_11(0x0963)
-    OP_11(0x0964)
-    OP_11(0x0965)
-    OP_11(0x0966)
-    OP_11(0x0967)
-    OP_11(0x0968)
-    OP_11(0x0969)
-    OP_11(0x096A)
-    OP_11(0x096B)
-    OP_11(0x096C)
-    OP_11(0x096D)
-    OP_11(0x096E)
-    OP_11(0x096F)
-    OP_11(0x0970)
-    OP_11(0x0971)
-    OP_11(0x0972)
-    OP_11(0x0973)
-    OP_11(0x0974)
-    OP_11(0x0975)
-    OP_11(0x0979)
-    OP_11(0x0976)
-    OP_11(0x0977)
-    OP_11(0x0978)
-    OP_11(0x097A)
-    OP_11(0x097B)
-    OP_11(0x097C)
-    OP_11(0x0B90)
-    OP_11(0x0B91)
-    OP_11(0x0B92)
-    OP_11(0x0B93)
-    OP_11(0x0B94)
-    OP_11(0x0B95)
-    OP_11(0x0B96)
-    OP_11(0x0B97)
-    OP_11(0x0B98)
-    OP_11(0x0B99)
-    OP_11(0x0B9A)
-    OP_11(0x0B9B)
-    OP_11(0x0B9C)
-    OP_11(0x0B9D)
-    OP_11(0x0B9E)
-    OP_11(0x0B9F)
-    OP_11(0x0BA0)
-    OP_11(0x0BA1)
-    OP_11(0x0BA2)
-    OP_11(0x0BA3)
-    OP_11(0x0BA4)
-    OP_11(0x0BA5)
-    OP_11(0x0BA6)
-    OP_11(0x0BA7)
-    OP_11(0x0BA8)
-    OP_11(0x0BA9)
-    OP_11(0x0BAA)
-    OP_11(0x0BAB)
-    OP_11(0x0BAC)
-    OP_11(0x0BAD)
-    OP_11(0x0BAE)
-    OP_11(0x0BAF)
-    OP_11(0x0BB0)
-    OP_11(0x0BB1)
-    OP_11(0x0BB2)
-    OP_11(0x0BB3)
-    OP_11(0x0BB4)
-    OP_11(0x0BB5)
-    OP_11(0x0BB6)
-    OP_11(0x0BB7)
-    OP_11(0x0BB8)
-    OP_11(0x0BB9)
-    OP_11(0x0BBA)
-    OP_11(0x0BBB)
-    OP_11(0x0BBC)
-    OP_11(0x0BBD)
-    OP_11(0x0BBE)
-    OP_11(0x0BBF)
-    OP_11(0x0D70)
-    OP_11(0x0D71)
-    OP_11(0x0D72)
-    OP_11(0x0D73)
-    OP_11(0x0D74)
-    OP_11(0x0D75)
-    OP_11(0x0D76)
-    OP_11(0x0D77)
-    OP_11(0x0D78)
-    OP_11(0x0D79)
-    OP_11(0x0D7A)
-    OP_11(0x0D7B)
-    OP_11(0x0D7C)
-    OP_11(0x0D7D)
-    OP_11(0x0D7E)
-    OP_11(0x0D7F)
-    OP_11(0x0D80)
-    OP_11(0x0D81)
-    OP_11(0x0D82)
-    OP_11(0x0D83)
-    OP_11(0x0D84)
-    OP_11(0x0D85)
-    OP_11(0x0D86)
-    OP_11(0x0D87)
-    OP_11(0x0D88)
-    OP_11(0x0D89)
-    OP_11(0x0D8A)
-    OP_11(0x0D8B)
-    OP_11(0x0D8C)
-    OP_11(0x0D8D)
-    OP_11(0x0D8E)
-    OP_11(0x0D8F)
-    OP_11(0x0D90)
-    OP_11(0x0D91)
-    OP_11(0x0D97)
-    OP_11(0x0D98)
-    OP_11(0x0D99)
-    OP_11(0x11E8)
-    OP_11(0x0D9A)
-    OP_11(0x0D9B)
-    OP_11(0x0D9C)
-    OP_11(0x0D9D)
-    OP_11(0x0D9E)
-    OP_11(0x0D9F)
-    OP_11(0x0DA0)
-    OP_11(0x0DA7)
-    OP_11(0x0DA8)
-    OP_11(0x0DA9)
-    OP_11(0x0DAA)
-    OP_11(0x0DAB)
-    OP_11(0x0DAC)
-    OP_11(0x0DAD)
-    OP_11(0x0DAE)
-    OP_11(0x11A6)
-    OP_11(0x11A7)
-    OP_11(0x11A8)
-    OP_11(0x11A9)
-    OP_11(0x11AA)
-    OP_11(0x11AB)
-    OP_11(0x11AC)
-    OP_11(0x11AD)
-    OP_11(0x11AE)
-    OP_11(0x11AF)
-    OP_11(0x11B0)
-    OP_11(0x11B1)
-    OP_11(0x11B2)
-    OP_11(0x11B3)
-    OP_11(0x11B4)
-    OP_11(0x0D92)
-    OP_11(0x0D93)
-    OP_11(0x0D94)
-    OP_11(0x0D95)
-    OP_11(0x0D96)
-    OP_11(0x0DA1)
-    OP_11(0x0DA2)
-    OP_11(0x0DA3)
-    OP_11(0x0DA4)
-    OP_11(0x0DA5)
-    OP_11(0x0DA6)
-    OP_11(0x0F20)
-    OP_11(0x0F21)
-    OP_11(0x0F22)
-    OP_11(0x0F23)
-    OP_11(0x0F24)
-    OP_11(0x0F25)
-    OP_11(0x0F26)
-    OP_11(0x0F27)
-    OP_11(0x0F28)
-    OP_11(0x0F29)
-    OP_11(0x0F2A)
-    OP_11(0x0F2B)
-    OP_11(0x0F2C)
-    OP_11(0x0F2D)
-    OP_11(0x0F2E)
-    OP_11(0x0885)
-    OP_11(0x0886)
-    OP_11(0x0887)
-    OP_11(0x0888)
-    OP_11(0x0889)
-    OP_11(0x088A)
-    OP_11(0x088B)
-    OP_11(0x088C)
-    OP_11(0x088D)
-    OP_11(0x088E)
-    OP_11(0x088F)
-    OP_11(0x0890)
-    OP_11(0x0891)
-    OP_11(0x0892)
-    OP_11(0x0893)
-    OP_11(0x0894)
-    OP_11(0x0895)
-    OP_11(0x0A80)
-    OP_11(0x0A81)
-    OP_11(0x0A82)
-    OP_11(0x0A83)
-    OP_11(0x0EA8)
-    OP_11(0x0EA9)
+    ClearScenaFlags(ScenaFlag(0x00BA, 1, 0x5D1))
+    ClearScenaFlags(ScenaFlag(0x00BA, 2, 0x5D2))
+    ClearScenaFlags(ScenaFlag(0x00BA, 3, 0x5D3))
+    ClearScenaFlags(ScenaFlag(0x00BA, 4, 0x5D4))
+    ClearScenaFlags(ScenaFlag(0x00BA, 5, 0x5D5))
+    ClearScenaFlags(ScenaFlag(0x00BA, 6, 0x5D6))
+    ClearScenaFlags(ScenaFlag(0x00C0, 0, 0x600))
+    ClearScenaFlags(ScenaFlag(0x00C0, 1, 0x601))
+    ClearScenaFlags(ScenaFlag(0x00C0, 2, 0x602))
+    ClearScenaFlags(ScenaFlag(0x00C0, 3, 0x603))
+    ClearScenaFlags(ScenaFlag(0x00C0, 4, 0x604))
+    ClearScenaFlags(ScenaFlag(0x00C0, 5, 0x605))
+    ClearScenaFlags(ScenaFlag(0x00C0, 6, 0x606))
+    ClearScenaFlags(ScenaFlag(0x00C0, 7, 0x607))
+    ClearScenaFlags(ScenaFlag(0x00C1, 0, 0x608))
+    ClearScenaFlags(ScenaFlag(0x00C1, 1, 0x609))
+    ClearScenaFlags(ScenaFlag(0x00C1, 2, 0x60A))
+    ClearScenaFlags(ScenaFlag(0x00C1, 3, 0x60B))
+    ClearScenaFlags(ScenaFlag(0x00C1, 4, 0x60C))
+    ClearScenaFlags(ScenaFlag(0x00E0, 0, 0x700))
+    ClearScenaFlags(ScenaFlag(0x00E0, 1, 0x701))
+    ClearScenaFlags(ScenaFlag(0x00E0, 2, 0x702))
+    ClearScenaFlags(ScenaFlag(0x00E0, 3, 0x703))
+    ClearScenaFlags(ScenaFlag(0x00E0, 4, 0x704))
+    ClearScenaFlags(ScenaFlag(0x00EF, 0, 0x778))
+    ClearScenaFlags(ScenaFlag(0x00E0, 5, 0x705))
+    ClearScenaFlags(ScenaFlag(0x00E0, 6, 0x706))
+    ClearScenaFlags(ScenaFlag(0x00E0, 7, 0x707))
+    ClearScenaFlags(ScenaFlag(0x00E1, 0, 0x708))
+    ClearScenaFlags(ScenaFlag(0x00E1, 1, 0x709))
+    ClearScenaFlags(ScenaFlag(0x00E1, 2, 0x70A))
+    ClearScenaFlags(ScenaFlag(0x00E1, 3, 0x70B))
+    ClearScenaFlags(ScenaFlag(0x00E1, 4, 0x70C))
+    ClearScenaFlags(ScenaFlag(0x00EE, 6, 0x776))
+    ClearScenaFlags(ScenaFlag(0x00E1, 5, 0x70D))
+    ClearScenaFlags(ScenaFlag(0x00E1, 6, 0x70E))
+    ClearScenaFlags(ScenaFlag(0x00E1, 7, 0x70F))
+    ClearScenaFlags(ScenaFlag(0x00E2, 0, 0x710))
+    ClearScenaFlags(ScenaFlag(0x00E2, 1, 0x711))
+    ClearScenaFlags(ScenaFlag(0x00E2, 2, 0x712))
+    ClearScenaFlags(ScenaFlag(0x00E2, 3, 0x713))
+    ClearScenaFlags(ScenaFlag(0x00E2, 4, 0x714))
+    ClearScenaFlags(ScenaFlag(0x00E2, 5, 0x715))
+    ClearScenaFlags(ScenaFlag(0x00EE, 0, 0x770))
+    ClearScenaFlags(ScenaFlag(0x00E2, 6, 0x716))
+    ClearScenaFlags(ScenaFlag(0x00E2, 7, 0x717))
+    ClearScenaFlags(ScenaFlag(0x00E3, 0, 0x718))
+    ClearScenaFlags(ScenaFlag(0x00E3, 1, 0x719))
+    ClearScenaFlags(ScenaFlag(0x00E3, 2, 0x71A))
+    ClearScenaFlags(ScenaFlag(0x00E3, 3, 0x71B))
+    ClearScenaFlags(ScenaFlag(0x00E3, 4, 0x71C))
+    ClearScenaFlags(ScenaFlag(0x00E3, 5, 0x71D))
+    ClearScenaFlags(ScenaFlag(0x00E3, 6, 0x71E))
+    ClearScenaFlags(ScenaFlag(0x00E3, 7, 0x71F))
+    ClearScenaFlags(ScenaFlag(0x00EE, 7, 0x777))
+    ClearScenaFlags(ScenaFlag(0x00E4, 0, 0x720))
+    ClearScenaFlags(ScenaFlag(0x00E4, 1, 0x721))
+    ClearScenaFlags(ScenaFlag(0x00E4, 2, 0x722))
+    ClearScenaFlags(ScenaFlag(0x00E4, 3, 0x723))
+    ClearScenaFlags(ScenaFlag(0x00E4, 4, 0x724))
+    ClearScenaFlags(ScenaFlag(0x00E4, 5, 0x725))
+    ClearScenaFlags(ScenaFlag(0x00E4, 6, 0x726))
+    ClearScenaFlags(ScenaFlag(0x00E4, 7, 0x727))
+    ClearScenaFlags(ScenaFlag(0x00E5, 0, 0x728))
+    ClearScenaFlags(ScenaFlag(0x00E5, 1, 0x729))
+    ClearScenaFlags(ScenaFlag(0x00E5, 2, 0x72A))
+    ClearScenaFlags(ScenaFlag(0x00E5, 3, 0x72B))
+    ClearScenaFlags(ScenaFlag(0x00E5, 4, 0x72C))
+    ClearScenaFlags(ScenaFlag(0x00E5, 5, 0x72D))
+    ClearScenaFlags(ScenaFlag(0x00E5, 6, 0x72E))
+    ClearScenaFlags(ScenaFlag(0x00E5, 7, 0x72F))
+    ClearScenaFlags(ScenaFlag(0x00E6, 0, 0x730))
+    ClearScenaFlags(ScenaFlag(0x00E6, 1, 0x731))
+    ClearScenaFlags(ScenaFlag(0x00E6, 2, 0x732))
+    ClearScenaFlags(ScenaFlag(0x00E6, 3, 0x733))
+    ClearScenaFlags(ScenaFlag(0x00E6, 4, 0x734))
+    ClearScenaFlags(ScenaFlag(0x00E6, 5, 0x735))
+    ClearScenaFlags(ScenaFlag(0x00E6, 6, 0x736))
+    ClearScenaFlags(ScenaFlag(0x00EE, 5, 0x775))
+    ClearScenaFlags(ScenaFlag(0x00E6, 7, 0x737))
+    ClearScenaFlags(ScenaFlag(0x00E7, 0, 0x738))
+    ClearScenaFlags(ScenaFlag(0x00E7, 1, 0x739))
+    ClearScenaFlags(ScenaFlag(0x00EF, 1, 0x779))
+    ClearScenaFlags(ScenaFlag(0x00E7, 2, 0x73A))
+    ClearScenaFlags(ScenaFlag(0x00E7, 3, 0x73B))
+    ClearScenaFlags(ScenaFlag(0x00E7, 4, 0x73C))
+    ClearScenaFlags(ScenaFlag(0x00E7, 5, 0x73D))
+    ClearScenaFlags(ScenaFlag(0x00E7, 6, 0x73E))
+    ClearScenaFlags(ScenaFlag(0x00E7, 7, 0x73F))
+    ClearScenaFlags(ScenaFlag(0x00E8, 0, 0x740))
+    ClearScenaFlags(ScenaFlag(0x00E8, 1, 0x741))
+    ClearScenaFlags(ScenaFlag(0x00E8, 2, 0x742))
+    ClearScenaFlags(ScenaFlag(0x00E8, 3, 0x743))
+    ClearScenaFlags(ScenaFlag(0x00E8, 4, 0x744))
+    ClearScenaFlags(ScenaFlag(0x00E8, 5, 0x745))
+    ClearScenaFlags(ScenaFlag(0x00E8, 6, 0x746))
+    ClearScenaFlags(ScenaFlag(0x00E8, 7, 0x747))
+    ClearScenaFlags(ScenaFlag(0x00EF, 6, 0x77E))
+    ClearScenaFlags(ScenaFlag(0x00E9, 0, 0x748))
+    ClearScenaFlags(ScenaFlag(0x00E9, 1, 0x749))
+    ClearScenaFlags(ScenaFlag(0x00E9, 2, 0x74A))
+    ClearScenaFlags(ScenaFlag(0x00E9, 3, 0x74B))
+    ClearScenaFlags(ScenaFlag(0x00E9, 4, 0x74C))
+    ClearScenaFlags(ScenaFlag(0x00E9, 5, 0x74D))
+    ClearScenaFlags(ScenaFlag(0x00E9, 6, 0x74E))
+    ClearScenaFlags(ScenaFlag(0x00E9, 7, 0x74F))
+    ClearScenaFlags(ScenaFlag(0x00EA, 0, 0x750))
+    ClearScenaFlags(ScenaFlag(0x00EA, 1, 0x751))
+    ClearScenaFlags(ScenaFlag(0x00EA, 2, 0x752))
+    ClearScenaFlags(ScenaFlag(0x00EA, 3, 0x753))
+    ClearScenaFlags(ScenaFlag(0x00EA, 4, 0x754))
+    ClearScenaFlags(ScenaFlag(0x00EA, 5, 0x755))
+    ClearScenaFlags(ScenaFlag(0x00EA, 6, 0x756))
+    ClearScenaFlags(ScenaFlag(0x00EA, 7, 0x757))
+    ClearScenaFlags(ScenaFlag(0x00EB, 0, 0x758))
+    ClearScenaFlags(ScenaFlag(0x00EB, 1, 0x759))
+    ClearScenaFlags(ScenaFlag(0x00EB, 2, 0x75A))
+    ClearScenaFlags(ScenaFlag(0x00EE, 1, 0x771))
+    ClearScenaFlags(ScenaFlag(0x00EE, 2, 0x772))
+    ClearScenaFlags(ScenaFlag(0x00EE, 3, 0x773))
+    ClearScenaFlags(ScenaFlag(0x00EE, 4, 0x774))
+    ClearScenaFlags(ScenaFlag(0x00EF, 2, 0x77A))
+    ClearScenaFlags(ScenaFlag(0x00EF, 3, 0x77B))
+    ClearScenaFlags(ScenaFlag(0x00EF, 4, 0x77C))
+    ClearScenaFlags(ScenaFlag(0x00EF, 5, 0x77D))
+    ClearScenaFlags(ScenaFlag(0x0120, 0, 0x900))
+    ClearScenaFlags(ScenaFlag(0x0120, 1, 0x901))
+    ClearScenaFlags(ScenaFlag(0x0120, 2, 0x902))
+    ClearScenaFlags(ScenaFlag(0x0120, 3, 0x903))
+    ClearScenaFlags(ScenaFlag(0x0120, 4, 0x904))
+    ClearScenaFlags(ScenaFlag(0x012B, 4, 0x95C))
+    ClearScenaFlags(ScenaFlag(0x0120, 5, 0x905))
+    ClearScenaFlags(ScenaFlag(0x0120, 6, 0x906))
+    ClearScenaFlags(ScenaFlag(0x0120, 7, 0x907))
+    ClearScenaFlags(ScenaFlag(0x0121, 0, 0x908))
+    ClearScenaFlags(ScenaFlag(0x0211, 2, 0x108A))
+    ClearScenaFlags(ScenaFlag(0x0121, 1, 0x909))
+    ClearScenaFlags(ScenaFlag(0x0121, 2, 0x90A))
+    ClearScenaFlags(ScenaFlag(0x0121, 3, 0x90B))
+    ClearScenaFlags(ScenaFlag(0x0121, 4, 0x90C))
+    ClearScenaFlags(ScenaFlag(0x0121, 5, 0x90D))
+    ClearScenaFlags(ScenaFlag(0x0121, 6, 0x90E))
+    ClearScenaFlags(ScenaFlag(0x0121, 7, 0x90F))
+    ClearScenaFlags(ScenaFlag(0x0122, 0, 0x910))
+    ClearScenaFlags(ScenaFlag(0x0122, 1, 0x911))
+    ClearScenaFlags(ScenaFlag(0x0122, 2, 0x912))
+    ClearScenaFlags(ScenaFlag(0x0122, 3, 0x913))
+    ClearScenaFlags(ScenaFlag(0x0122, 4, 0x914))
+    ClearScenaFlags(ScenaFlag(0x0122, 5, 0x915))
+    ClearScenaFlags(ScenaFlag(0x0122, 6, 0x916))
+    ClearScenaFlags(ScenaFlag(0x0122, 7, 0x917))
+    ClearScenaFlags(ScenaFlag(0x0123, 0, 0x918))
+    ClearScenaFlags(ScenaFlag(0x0123, 1, 0x919))
+    ClearScenaFlags(ScenaFlag(0x0123, 2, 0x91A))
+    ClearScenaFlags(ScenaFlag(0x0123, 3, 0x91B))
+    ClearScenaFlags(ScenaFlag(0x0123, 4, 0x91C))
+    ClearScenaFlags(ScenaFlag(0x0123, 5, 0x91D))
+    ClearScenaFlags(ScenaFlag(0x0123, 6, 0x91E))
+    ClearScenaFlags(ScenaFlag(0x0123, 7, 0x91F))
+    ClearScenaFlags(ScenaFlag(0x0124, 0, 0x920))
+    ClearScenaFlags(ScenaFlag(0x0124, 1, 0x921))
+    ClearScenaFlags(ScenaFlag(0x0124, 2, 0x922))
+    ClearScenaFlags(ScenaFlag(0x0124, 3, 0x923))
+    ClearScenaFlags(ScenaFlag(0x0124, 4, 0x924))
+    ClearScenaFlags(ScenaFlag(0x0124, 5, 0x925))
+    ClearScenaFlags(ScenaFlag(0x0124, 6, 0x926))
+    ClearScenaFlags(ScenaFlag(0x0124, 7, 0x927))
+    ClearScenaFlags(ScenaFlag(0x0125, 0, 0x928))
+    ClearScenaFlags(ScenaFlag(0x0125, 1, 0x929))
+    ClearScenaFlags(ScenaFlag(0x0125, 2, 0x92A))
+    ClearScenaFlags(ScenaFlag(0x0125, 3, 0x92B))
+    ClearScenaFlags(ScenaFlag(0x0125, 4, 0x92C))
+    ClearScenaFlags(ScenaFlag(0x0125, 5, 0x92D))
+    ClearScenaFlags(ScenaFlag(0x0125, 6, 0x92E))
+    ClearScenaFlags(ScenaFlag(0x0125, 7, 0x92F))
+    ClearScenaFlags(ScenaFlag(0x0126, 0, 0x930))
+    ClearScenaFlags(ScenaFlag(0x0126, 1, 0x931))
+    ClearScenaFlags(ScenaFlag(0x0126, 2, 0x932))
+    ClearScenaFlags(ScenaFlag(0x0126, 3, 0x933))
+    ClearScenaFlags(ScenaFlag(0x0126, 4, 0x934))
+    ClearScenaFlags(ScenaFlag(0x0126, 5, 0x935))
+    ClearScenaFlags(ScenaFlag(0x0126, 6, 0x936))
+    ClearScenaFlags(ScenaFlag(0x0126, 7, 0x937))
+    ClearScenaFlags(ScenaFlag(0x0127, 0, 0x938))
+    ClearScenaFlags(ScenaFlag(0x0127, 1, 0x939))
+    ClearScenaFlags(ScenaFlag(0x0127, 2, 0x93A))
+    ClearScenaFlags(ScenaFlag(0x0127, 3, 0x93B))
+    ClearScenaFlags(ScenaFlag(0x0127, 4, 0x93C))
+    ClearScenaFlags(ScenaFlag(0x0127, 5, 0x93D))
+    ClearScenaFlags(ScenaFlag(0x0127, 6, 0x93E))
+    ClearScenaFlags(ScenaFlag(0x0127, 7, 0x93F))
+    ClearScenaFlags(ScenaFlag(0x0128, 0, 0x940))
+    ClearScenaFlags(ScenaFlag(0x0128, 1, 0x941))
+    ClearScenaFlags(ScenaFlag(0x0128, 2, 0x942))
+    ClearScenaFlags(ScenaFlag(0x0128, 3, 0x943))
+    ClearScenaFlags(ScenaFlag(0x0128, 4, 0x944))
+    ClearScenaFlags(ScenaFlag(0x0128, 5, 0x945))
+    ClearScenaFlags(ScenaFlag(0x0128, 6, 0x946))
+    ClearScenaFlags(ScenaFlag(0x0128, 7, 0x947))
+    ClearScenaFlags(ScenaFlag(0x0129, 0, 0x948))
+    ClearScenaFlags(ScenaFlag(0x0129, 1, 0x949))
+    ClearScenaFlags(ScenaFlag(0x0129, 2, 0x94A))
+    ClearScenaFlags(ScenaFlag(0x0129, 3, 0x94B))
+    ClearScenaFlags(ScenaFlag(0x0129, 4, 0x94C))
+    ClearScenaFlags(ScenaFlag(0x0129, 5, 0x94D))
+    ClearScenaFlags(ScenaFlag(0x0129, 6, 0x94E))
+    ClearScenaFlags(ScenaFlag(0x0129, 7, 0x94F))
+    ClearScenaFlags(ScenaFlag(0x012A, 0, 0x950))
+    ClearScenaFlags(ScenaFlag(0x012A, 1, 0x951))
+    ClearScenaFlags(ScenaFlag(0x012A, 2, 0x952))
+    ClearScenaFlags(ScenaFlag(0x012A, 3, 0x953))
+    ClearScenaFlags(ScenaFlag(0x012A, 4, 0x954))
+    ClearScenaFlags(ScenaFlag(0x012A, 5, 0x955))
+    ClearScenaFlags(ScenaFlag(0x012A, 6, 0x956))
+    ClearScenaFlags(ScenaFlag(0x012A, 7, 0x957))
+    ClearScenaFlags(ScenaFlag(0x012B, 0, 0x958))
+    ClearScenaFlags(ScenaFlag(0x012B, 1, 0x959))
+    ClearScenaFlags(ScenaFlag(0x012B, 2, 0x95A))
+    ClearScenaFlags(ScenaFlag(0x012B, 6, 0x95E))
+    ClearScenaFlags(ScenaFlag(0x012B, 3, 0x95B))
+    ClearScenaFlags(ScenaFlag(0x0160, 0, 0xB00))
+    ClearScenaFlags(ScenaFlag(0x0160, 1, 0xB01))
+    ClearScenaFlags(ScenaFlag(0x0160, 2, 0xB02))
+    ClearScenaFlags(ScenaFlag(0x0160, 5, 0xB05))
+    ClearScenaFlags(ScenaFlag(0x0160, 6, 0xB06))
+    ClearScenaFlags(ScenaFlag(0x0160, 7, 0xB07))
+    ClearScenaFlags(ScenaFlag(0x0161, 0, 0xB08))
+    ClearScenaFlags(ScenaFlag(0x0161, 1, 0xB09))
+    ClearScenaFlags(ScenaFlag(0x0161, 2, 0xB0A))
+    ClearScenaFlags(ScenaFlag(0x0161, 3, 0xB0B))
+    ClearScenaFlags(ScenaFlag(0x0161, 4, 0xB0C))
+    ClearScenaFlags(ScenaFlag(0x0161, 5, 0xB0D))
+    ClearScenaFlags(ScenaFlag(0x0161, 6, 0xB0E))
+    ClearScenaFlags(ScenaFlag(0x0161, 7, 0xB0F))
+    ClearScenaFlags(ScenaFlag(0x0162, 0, 0xB10))
+    ClearScenaFlags(ScenaFlag(0x0162, 1, 0xB11))
+    ClearScenaFlags(ScenaFlag(0x0162, 2, 0xB12))
+    ClearScenaFlags(ScenaFlag(0x0162, 3, 0xB13))
+    ClearScenaFlags(ScenaFlag(0x0162, 4, 0xB14))
+    ClearScenaFlags(ScenaFlag(0x0162, 5, 0xB15))
+    ClearScenaFlags(ScenaFlag(0x0162, 6, 0xB16))
+    ClearScenaFlags(ScenaFlag(0x0162, 7, 0xB17))
+    ClearScenaFlags(ScenaFlag(0x0163, 0, 0xB18))
+    ClearScenaFlags(ScenaFlag(0x0163, 1, 0xB19))
+    ClearScenaFlags(ScenaFlag(0x0163, 2, 0xB1A))
+    ClearScenaFlags(ScenaFlag(0x0163, 3, 0xB1B))
+    ClearScenaFlags(ScenaFlag(0x0163, 4, 0xB1C))
+    ClearScenaFlags(ScenaFlag(0x0163, 5, 0xB1D))
+    ClearScenaFlags(ScenaFlag(0x0163, 6, 0xB1E))
+    ClearScenaFlags(ScenaFlag(0x0163, 7, 0xB1F))
+    ClearScenaFlags(ScenaFlag(0x0164, 0, 0xB20))
+    ClearScenaFlags(ScenaFlag(0x0164, 1, 0xB21))
+    ClearScenaFlags(ScenaFlag(0x0164, 2, 0xB22))
+    ClearScenaFlags(ScenaFlag(0x0164, 3, 0xB23))
+    ClearScenaFlags(ScenaFlag(0x0164, 4, 0xB24))
+    ClearScenaFlags(ScenaFlag(0x0164, 5, 0xB25))
+    ClearScenaFlags(ScenaFlag(0x0164, 6, 0xB26))
+    ClearScenaFlags(ScenaFlag(0x0164, 7, 0xB27))
+    ClearScenaFlags(ScenaFlag(0x0165, 0, 0xB28))
+    ClearScenaFlags(ScenaFlag(0x0165, 1, 0xB29))
+    ClearScenaFlags(ScenaFlag(0x0165, 2, 0xB2A))
+    ClearScenaFlags(ScenaFlag(0x0165, 3, 0xB2B))
+    ClearScenaFlags(ScenaFlag(0x0165, 4, 0xB2C))
+    ClearScenaFlags(ScenaFlag(0x0165, 5, 0xB2D))
+    ClearScenaFlags(ScenaFlag(0x0165, 6, 0xB2E))
+    ClearScenaFlags(ScenaFlag(0x0165, 7, 0xB2F))
+    ClearScenaFlags(ScenaFlag(0x0166, 0, 0xB30))
+    ClearScenaFlags(ScenaFlag(0x0166, 3, 0xB33))
+    ClearScenaFlags(ScenaFlag(0x0166, 4, 0xB34))
+    ClearScenaFlags(ScenaFlag(0x0166, 5, 0xB35))
+    ClearScenaFlags(ScenaFlag(0x0166, 6, 0xB36))
+    ClearScenaFlags(ScenaFlag(0x0166, 7, 0xB37))
+    ClearScenaFlags(ScenaFlag(0x0167, 0, 0xB38))
+    ClearScenaFlags(ScenaFlag(0x0167, 1, 0xB39))
+    ClearScenaFlags(ScenaFlag(0x0167, 2, 0xB3A))
+    ClearScenaFlags(ScenaFlag(0x0167, 3, 0xB3B))
+    ClearScenaFlags(ScenaFlag(0x0167, 4, 0xB3C))
+    ClearScenaFlags(ScenaFlag(0x0167, 5, 0xB3D))
+    ClearScenaFlags(ScenaFlag(0x0167, 6, 0xB3E))
+    ClearScenaFlags(ScenaFlag(0x0167, 7, 0xB3F))
+    ClearScenaFlags(ScenaFlag(0x0168, 0, 0xB40))
+    ClearScenaFlags(ScenaFlag(0x0168, 1, 0xB41))
+    ClearScenaFlags(ScenaFlag(0x0168, 2, 0xB42))
+    ClearScenaFlags(ScenaFlag(0x0168, 3, 0xB43))
+    ClearScenaFlags(ScenaFlag(0x0168, 4, 0xB44))
+    ClearScenaFlags(ScenaFlag(0x0168, 5, 0xB45))
+    ClearScenaFlags(ScenaFlag(0x0168, 6, 0xB46))
+    ClearScenaFlags(ScenaFlag(0x0168, 7, 0xB47))
+    ClearScenaFlags(ScenaFlag(0x0169, 0, 0xB48))
+    ClearScenaFlags(ScenaFlag(0x0169, 1, 0xB49))
+    ClearScenaFlags(ScenaFlag(0x0169, 2, 0xB4A))
+    ClearScenaFlags(ScenaFlag(0x0169, 3, 0xB4B))
+    ClearScenaFlags(ScenaFlag(0x0169, 4, 0xB4C))
+    ClearScenaFlags(ScenaFlag(0x0169, 5, 0xB4D))
+    ClearScenaFlags(ScenaFlag(0x0169, 6, 0xB4E))
+    ClearScenaFlags(ScenaFlag(0x0169, 7, 0xB4F))
+    ClearScenaFlags(ScenaFlag(0x018E, 3, 0xC73))
+    ClearScenaFlags(ScenaFlag(0x016A, 0, 0xB50))
+    ClearScenaFlags(ScenaFlag(0x018E, 4, 0xC74))
+    ClearScenaFlags(ScenaFlag(0x016A, 1, 0xB51))
+    ClearScenaFlags(ScenaFlag(0x016A, 2, 0xB52))
+    ClearScenaFlags(ScenaFlag(0x016A, 3, 0xB53))
+    ClearScenaFlags(ScenaFlag(0x016A, 4, 0xB54))
+    ClearScenaFlags(ScenaFlag(0x016A, 5, 0xB55))
+    ClearScenaFlags(ScenaFlag(0x016A, 6, 0xB56))
+    ClearScenaFlags(ScenaFlag(0x016A, 7, 0xB57))
+    ClearScenaFlags(ScenaFlag(0x016B, 0, 0xB58))
+    ClearScenaFlags(ScenaFlag(0x016B, 1, 0xB59))
+    ClearScenaFlags(ScenaFlag(0x016B, 2, 0xB5A))
+    ClearScenaFlags(ScenaFlag(0x016B, 3, 0xB5B))
+    ClearScenaFlags(ScenaFlag(0x016B, 4, 0xB5C))
+    ClearScenaFlags(ScenaFlag(0x016B, 5, 0xB5D))
+    ClearScenaFlags(ScenaFlag(0x016B, 6, 0xB5E))
+    ClearScenaFlags(ScenaFlag(0x016B, 7, 0xB5F))
+    ClearScenaFlags(ScenaFlag(0x016C, 0, 0xB60))
+    ClearScenaFlags(ScenaFlag(0x016C, 1, 0xB61))
+    ClearScenaFlags(ScenaFlag(0x016C, 2, 0xB62))
+    ClearScenaFlags(ScenaFlag(0x016C, 3, 0xB63))
+    ClearScenaFlags(ScenaFlag(0x016C, 4, 0xB64))
+    ClearScenaFlags(ScenaFlag(0x016C, 5, 0xB65))
+    ClearScenaFlags(ScenaFlag(0x016C, 6, 0xB66))
+    ClearScenaFlags(ScenaFlag(0x016C, 7, 0xB67))
+    ClearScenaFlags(ScenaFlag(0x016D, 0, 0xB68))
+    ClearScenaFlags(ScenaFlag(0x016D, 1, 0xB69))
+    ClearScenaFlags(ScenaFlag(0x016D, 2, 0xB6A))
+    ClearScenaFlags(ScenaFlag(0x016D, 3, 0xB6B))
+    ClearScenaFlags(ScenaFlag(0x018E, 6, 0xC76))
+    ClearScenaFlags(ScenaFlag(0x016D, 4, 0xB6C))
+    ClearScenaFlags(ScenaFlag(0x016D, 5, 0xB6D))
+    ClearScenaFlags(ScenaFlag(0x016D, 6, 0xB6E))
+    ClearScenaFlags(ScenaFlag(0x016D, 7, 0xB6F))
+    ClearScenaFlags(ScenaFlag(0x016E, 0, 0xB70))
+    ClearScenaFlags(ScenaFlag(0x016E, 1, 0xB71))
+    ClearScenaFlags(ScenaFlag(0x016E, 2, 0xB72))
+    ClearScenaFlags(ScenaFlag(0x018E, 1, 0xC71))
+    ClearScenaFlags(ScenaFlag(0x018E, 2, 0xC72))
+    ClearScenaFlags(ScenaFlag(0x016E, 3, 0xB73))
+    ClearScenaFlags(ScenaFlag(0x016E, 4, 0xB74))
+    ClearScenaFlags(ScenaFlag(0x016E, 5, 0xB75))
+    ClearScenaFlags(ScenaFlag(0x016E, 6, 0xB76))
+    ClearScenaFlags(ScenaFlag(0x016E, 7, 0xB77))
+    ClearScenaFlags(ScenaFlag(0x016F, 0, 0xB78))
+    ClearScenaFlags(ScenaFlag(0x016F, 1, 0xB79))
+    ClearScenaFlags(ScenaFlag(0x016F, 2, 0xB7A))
+    ClearScenaFlags(ScenaFlag(0x016F, 3, 0xB7B))
+    ClearScenaFlags(ScenaFlag(0x016F, 4, 0xB7C))
+    ClearScenaFlags(ScenaFlag(0x016F, 5, 0xB7D))
+    ClearScenaFlags(ScenaFlag(0x016F, 6, 0xB7E))
+    ClearScenaFlags(ScenaFlag(0x016F, 7, 0xB7F))
+    ClearScenaFlags(ScenaFlag(0x0170, 0, 0xB80))
+    ClearScenaFlags(ScenaFlag(0x0171, 0, 0xB88))
+    ClearScenaFlags(ScenaFlag(0x0072, 4, 0x394))
+    ClearScenaFlags(ScenaFlag(0x01A0, 0, 0xD00))
+    ClearScenaFlags(ScenaFlag(0x01A0, 1, 0xD01))
+    ClearScenaFlags(ScenaFlag(0x01A0, 2, 0xD02))
+    ClearScenaFlags(ScenaFlag(0x01A0, 3, 0xD03))
+    ClearScenaFlags(ScenaFlag(0x01A0, 4, 0xD04))
+    ClearScenaFlags(ScenaFlag(0x01A0, 5, 0xD05))
+    ClearScenaFlags(ScenaFlag(0x01A0, 6, 0xD06))
+    ClearScenaFlags(ScenaFlag(0x01A0, 7, 0xD07))
+    ClearScenaFlags(ScenaFlag(0x01A1, 0, 0xD08))
+    ClearScenaFlags(ScenaFlag(0x01A1, 1, 0xD09))
+    ClearScenaFlags(ScenaFlag(0x01A1, 2, 0xD0A))
+    ClearScenaFlags(ScenaFlag(0x01A1, 3, 0xD0B))
+    ClearScenaFlags(ScenaFlag(0x01A1, 4, 0xD0C))
+    ClearScenaFlags(ScenaFlag(0x01A1, 5, 0xD0D))
+    ClearScenaFlags(ScenaFlag(0x01A1, 6, 0xD0E))
+    ClearScenaFlags(ScenaFlag(0x01A1, 7, 0xD0F))
+    ClearScenaFlags(ScenaFlag(0x01A2, 0, 0xD10))
+    ClearScenaFlags(ScenaFlag(0x01A2, 1, 0xD11))
+    ClearScenaFlags(ScenaFlag(0x01A2, 2, 0xD12))
+    ClearScenaFlags(ScenaFlag(0x01A2, 3, 0xD13))
+    ClearScenaFlags(ScenaFlag(0x01A2, 4, 0xD14))
+    ClearScenaFlags(ScenaFlag(0x01A2, 5, 0xD15))
+    ClearScenaFlags(ScenaFlag(0x01A2, 6, 0xD16))
+    ClearScenaFlags(ScenaFlag(0x01A2, 7, 0xD17))
+    ClearScenaFlags(ScenaFlag(0x01A3, 0, 0xD18))
+    ClearScenaFlags(ScenaFlag(0x01A3, 1, 0xD19))
+    ClearScenaFlags(ScenaFlag(0x01A3, 2, 0xD1A))
+    ClearScenaFlags(ScenaFlag(0x01A3, 3, 0xD1B))
+    ClearScenaFlags(ScenaFlag(0x01A3, 4, 0xD1C))
+    ClearScenaFlags(ScenaFlag(0x01A3, 5, 0xD1D))
+    ClearScenaFlags(ScenaFlag(0x01A3, 6, 0xD1E))
+    ClearScenaFlags(ScenaFlag(0x01A3, 7, 0xD1F))
+    ClearScenaFlags(ScenaFlag(0x01A4, 1, 0xD21))
+    ClearScenaFlags(ScenaFlag(0x01A4, 2, 0xD22))
+    ClearScenaFlags(ScenaFlag(0x01A4, 3, 0xD23))
+    ClearScenaFlags(ScenaFlag(0x01A4, 4, 0xD24))
+    ClearScenaFlags(ScenaFlag(0x01A4, 5, 0xD25))
+    ClearScenaFlags(ScenaFlag(0x01A4, 6, 0xD26))
+    ClearScenaFlags(ScenaFlag(0x01A4, 7, 0xD27))
+    ClearScenaFlags(ScenaFlag(0x01A5, 0, 0xD28))
+    ClearScenaFlags(ScenaFlag(0x01A5, 1, 0xD29))
+    ClearScenaFlags(ScenaFlag(0x01A5, 2, 0xD2A))
+    ClearScenaFlags(ScenaFlag(0x01A5, 3, 0xD2B))
+    ClearScenaFlags(ScenaFlag(0x01A5, 4, 0xD2C))
+    ClearScenaFlags(ScenaFlag(0x01A5, 5, 0xD2D))
+    ClearScenaFlags(ScenaFlag(0x01A5, 6, 0xD2E))
+    ClearScenaFlags(ScenaFlag(0x01A5, 7, 0xD2F))
+    ClearScenaFlags(ScenaFlag(0x01A6, 0, 0xD30))
+    ClearScenaFlags(ScenaFlag(0x01A6, 1, 0xD31))
+    ClearScenaFlags(ScenaFlag(0x01A6, 2, 0xD32))
+    ClearScenaFlags(ScenaFlag(0x01A6, 3, 0xD33))
+    ClearScenaFlags(ScenaFlag(0x01A6, 4, 0xD34))
+    ClearScenaFlags(ScenaFlag(0x01A6, 5, 0xD35))
+    ClearScenaFlags(ScenaFlag(0x01A6, 6, 0xD36))
+    ClearScenaFlags(ScenaFlag(0x01A6, 7, 0xD37))
+    ClearScenaFlags(ScenaFlag(0x01A7, 0, 0xD38))
+    ClearScenaFlags(ScenaFlag(0x01A7, 1, 0xD39))
+    ClearScenaFlags(ScenaFlag(0x01A7, 2, 0xD3A))
+    ClearScenaFlags(ScenaFlag(0x01A7, 3, 0xD3B))
+    ClearScenaFlags(ScenaFlag(0x01A7, 4, 0xD3C))
+    ClearScenaFlags(ScenaFlag(0x01A7, 5, 0xD3D))
+    ClearScenaFlags(ScenaFlag(0x01A7, 6, 0xD3E))
+    ClearScenaFlags(ScenaFlag(0x01A7, 7, 0xD3F))
+    ClearScenaFlags(ScenaFlag(0x01A8, 0, 0xD40))
+    ClearScenaFlags(ScenaFlag(0x01A8, 1, 0xD41))
+    ClearScenaFlags(ScenaFlag(0x01A8, 2, 0xD42))
+    ClearScenaFlags(ScenaFlag(0x01A8, 3, 0xD43))
+    ClearScenaFlags(ScenaFlag(0x01A8, 4, 0xD44))
+    ClearScenaFlags(ScenaFlag(0x01A8, 5, 0xD45))
+    ClearScenaFlags(ScenaFlag(0x01A8, 6, 0xD46))
+    ClearScenaFlags(ScenaFlag(0x01A8, 7, 0xD47))
+    ClearScenaFlags(ScenaFlag(0x01A9, 0, 0xD48))
+    ClearScenaFlags(ScenaFlag(0x01A9, 1, 0xD49))
+    ClearScenaFlags(ScenaFlag(0x01A9, 2, 0xD4A))
+    ClearScenaFlags(ScenaFlag(0x01A9, 3, 0xD4B))
+    ClearScenaFlags(ScenaFlag(0x01A9, 4, 0xD4C))
+    ClearScenaFlags(ScenaFlag(0x01A9, 5, 0xD4D))
+    ClearScenaFlags(ScenaFlag(0x01A9, 6, 0xD4E))
+    ClearScenaFlags(ScenaFlag(0x01A9, 7, 0xD4F))
+    ClearScenaFlags(ScenaFlag(0x01AA, 0, 0xD50))
+    ClearScenaFlags(ScenaFlag(0x01AA, 1, 0xD51))
+    ClearScenaFlags(ScenaFlag(0x01AA, 2, 0xD52))
+    ClearScenaFlags(ScenaFlag(0x01AA, 3, 0xD53))
+    ClearScenaFlags(ScenaFlag(0x01AA, 4, 0xD54))
+    ClearScenaFlags(ScenaFlag(0x01AA, 5, 0xD55))
+    ClearScenaFlags(ScenaFlag(0x01AA, 6, 0xD56))
+    ClearScenaFlags(ScenaFlag(0x01AA, 7, 0xD57))
+    ClearScenaFlags(ScenaFlag(0x01AB, 0, 0xD58))
+    ClearScenaFlags(ScenaFlag(0x01AB, 1, 0xD59))
+    ClearScenaFlags(ScenaFlag(0x01AB, 2, 0xD5A))
+    ClearScenaFlags(ScenaFlag(0x01AB, 3, 0xD5B))
+    ClearScenaFlags(ScenaFlag(0x01AB, 4, 0xD5C))
+    ClearScenaFlags(ScenaFlag(0x01AB, 5, 0xD5D))
+    ClearScenaFlags(ScenaFlag(0x01AB, 6, 0xD5E))
+    ClearScenaFlags(ScenaFlag(0x01AB, 7, 0xD5F))
+    ClearScenaFlags(ScenaFlag(0x01AC, 0, 0xD60))
+    ClearScenaFlags(ScenaFlag(0x01AC, 1, 0xD61))
+    ClearScenaFlags(ScenaFlag(0x01AC, 2, 0xD62))
+    ClearScenaFlags(ScenaFlag(0x01AC, 6, 0xD66))
+    ClearScenaFlags(ScenaFlag(0x01AC, 7, 0xD67))
+    ClearScenaFlags(ScenaFlag(0x01AC, 3, 0xD63))
+    ClearScenaFlags(ScenaFlag(0x01AC, 4, 0xD64))
+    ClearScenaFlags(ScenaFlag(0x01AC, 5, 0xD65))
+    ClearScenaFlags(ScenaFlag(0x01AD, 0, 0xD68))
+    ClearScenaFlags(ScenaFlag(0x01AD, 1, 0xD69))
+    ClearScenaFlags(ScenaFlag(0x01AD, 2, 0xD6A))
+    ClearScenaFlags(ScenaFlag(0x01AD, 3, 0xD6B))
+    ClearScenaFlags(ScenaFlag(0x01AD, 4, 0xD6C))
+    ClearScenaFlags(ScenaFlag(0x01AD, 5, 0xD6D))
+    ClearScenaFlags(ScenaFlag(0x01AD, 6, 0xD6E))
+    ClearScenaFlags(ScenaFlag(0x01AD, 7, 0xD6F))
+    ClearScenaFlags(ScenaFlag(0x01E0, 0, 0xF00))
+    ClearScenaFlags(ScenaFlag(0x01E0, 1, 0xF01))
+    ClearScenaFlags(ScenaFlag(0x01E0, 2, 0xF02))
+    ClearScenaFlags(ScenaFlag(0x01E0, 3, 0xF03))
+    ClearScenaFlags(ScenaFlag(0x01E0, 4, 0xF04))
+    ClearScenaFlags(ScenaFlag(0x01E0, 5, 0xF05))
+    ClearScenaFlags(ScenaFlag(0x01E0, 6, 0xF06))
+    ClearScenaFlags(ScenaFlag(0x01E0, 7, 0xF07))
+    ClearScenaFlags(ScenaFlag(0x01E1, 0, 0xF08))
+    ClearScenaFlags(ScenaFlag(0x01E1, 1, 0xF09))
+    ClearScenaFlags(ScenaFlag(0x01E1, 3, 0xF0B))
+    ClearScenaFlags(ScenaFlag(0x01E1, 4, 0xF0C))
+    ClearScenaFlags(ScenaFlag(0x01E1, 5, 0xF0D))
+    ClearScenaFlags(ScenaFlag(0x00F0, 0, 0x780))
+    ClearScenaFlags(ScenaFlag(0x00F0, 1, 0x781))
+    ClearScenaFlags(ScenaFlag(0x00F0, 2, 0x782))
+    ClearScenaFlags(ScenaFlag(0x00F0, 3, 0x783))
+    ClearScenaFlags(ScenaFlag(0x00F0, 4, 0x784))
+    ClearScenaFlags(ScenaFlag(0x00F0, 5, 0x785))
+    ClearScenaFlags(ScenaFlag(0x00F0, 6, 0x786))
+    ClearScenaFlags(ScenaFlag(0x00F0, 7, 0x787))
+    ClearScenaFlags(ScenaFlag(0x00F1, 0, 0x788))
+    ClearScenaFlags(ScenaFlag(0x00F1, 1, 0x789))
+    ClearScenaFlags(ScenaFlag(0x00F1, 2, 0x78A))
+    ClearScenaFlags(ScenaFlag(0x00F1, 3, 0x78B))
+    ClearScenaFlags(ScenaFlag(0x012C, 0, 0x960))
+    ClearScenaFlags(ScenaFlag(0x012C, 1, 0x961))
+    ClearScenaFlags(ScenaFlag(0x012C, 2, 0x962))
+    ClearScenaFlags(ScenaFlag(0x012C, 3, 0x963))
+    ClearScenaFlags(ScenaFlag(0x012C, 4, 0x964))
+    ClearScenaFlags(ScenaFlag(0x012C, 5, 0x965))
+    ClearScenaFlags(ScenaFlag(0x012C, 6, 0x966))
+    ClearScenaFlags(ScenaFlag(0x012C, 7, 0x967))
+    ClearScenaFlags(ScenaFlag(0x012D, 0, 0x968))
+    ClearScenaFlags(ScenaFlag(0x012D, 1, 0x969))
+    ClearScenaFlags(ScenaFlag(0x012D, 2, 0x96A))
+    ClearScenaFlags(ScenaFlag(0x012D, 3, 0x96B))
+    ClearScenaFlags(ScenaFlag(0x012D, 4, 0x96C))
+    ClearScenaFlags(ScenaFlag(0x012D, 5, 0x96D))
+    ClearScenaFlags(ScenaFlag(0x012D, 6, 0x96E))
+    ClearScenaFlags(ScenaFlag(0x012D, 7, 0x96F))
+    ClearScenaFlags(ScenaFlag(0x012E, 0, 0x970))
+    ClearScenaFlags(ScenaFlag(0x012E, 1, 0x971))
+    ClearScenaFlags(ScenaFlag(0x012E, 2, 0x972))
+    ClearScenaFlags(ScenaFlag(0x012E, 3, 0x973))
+    ClearScenaFlags(ScenaFlag(0x012E, 4, 0x974))
+    ClearScenaFlags(ScenaFlag(0x012E, 5, 0x975))
+    ClearScenaFlags(ScenaFlag(0x012F, 1, 0x979))
+    ClearScenaFlags(ScenaFlag(0x012E, 6, 0x976))
+    ClearScenaFlags(ScenaFlag(0x012E, 7, 0x977))
+    ClearScenaFlags(ScenaFlag(0x012F, 0, 0x978))
+    ClearScenaFlags(ScenaFlag(0x012F, 2, 0x97A))
+    ClearScenaFlags(ScenaFlag(0x012F, 3, 0x97B))
+    ClearScenaFlags(ScenaFlag(0x012F, 4, 0x97C))
+    ClearScenaFlags(ScenaFlag(0x0172, 0, 0xB90))
+    ClearScenaFlags(ScenaFlag(0x0172, 1, 0xB91))
+    ClearScenaFlags(ScenaFlag(0x0172, 2, 0xB92))
+    ClearScenaFlags(ScenaFlag(0x0172, 3, 0xB93))
+    ClearScenaFlags(ScenaFlag(0x0172, 4, 0xB94))
+    ClearScenaFlags(ScenaFlag(0x0172, 5, 0xB95))
+    ClearScenaFlags(ScenaFlag(0x0172, 6, 0xB96))
+    ClearScenaFlags(ScenaFlag(0x0172, 7, 0xB97))
+    ClearScenaFlags(ScenaFlag(0x0173, 0, 0xB98))
+    ClearScenaFlags(ScenaFlag(0x0173, 1, 0xB99))
+    ClearScenaFlags(ScenaFlag(0x0173, 2, 0xB9A))
+    ClearScenaFlags(ScenaFlag(0x0173, 3, 0xB9B))
+    ClearScenaFlags(ScenaFlag(0x0173, 4, 0xB9C))
+    ClearScenaFlags(ScenaFlag(0x0173, 5, 0xB9D))
+    ClearScenaFlags(ScenaFlag(0x0173, 6, 0xB9E))
+    ClearScenaFlags(ScenaFlag(0x0173, 7, 0xB9F))
+    ClearScenaFlags(ScenaFlag(0x0174, 0, 0xBA0))
+    ClearScenaFlags(ScenaFlag(0x0174, 1, 0xBA1))
+    ClearScenaFlags(ScenaFlag(0x0174, 2, 0xBA2))
+    ClearScenaFlags(ScenaFlag(0x0174, 3, 0xBA3))
+    ClearScenaFlags(ScenaFlag(0x0174, 4, 0xBA4))
+    ClearScenaFlags(ScenaFlag(0x0174, 5, 0xBA5))
+    ClearScenaFlags(ScenaFlag(0x0174, 6, 0xBA6))
+    ClearScenaFlags(ScenaFlag(0x0174, 7, 0xBA7))
+    ClearScenaFlags(ScenaFlag(0x0175, 0, 0xBA8))
+    ClearScenaFlags(ScenaFlag(0x0175, 1, 0xBA9))
+    ClearScenaFlags(ScenaFlag(0x0175, 2, 0xBAA))
+    ClearScenaFlags(ScenaFlag(0x0175, 3, 0xBAB))
+    ClearScenaFlags(ScenaFlag(0x0175, 4, 0xBAC))
+    ClearScenaFlags(ScenaFlag(0x0175, 5, 0xBAD))
+    ClearScenaFlags(ScenaFlag(0x0175, 6, 0xBAE))
+    ClearScenaFlags(ScenaFlag(0x0175, 7, 0xBAF))
+    ClearScenaFlags(ScenaFlag(0x0176, 0, 0xBB0))
+    ClearScenaFlags(ScenaFlag(0x0176, 1, 0xBB1))
+    ClearScenaFlags(ScenaFlag(0x0176, 2, 0xBB2))
+    ClearScenaFlags(ScenaFlag(0x0176, 3, 0xBB3))
+    ClearScenaFlags(ScenaFlag(0x0176, 4, 0xBB4))
+    ClearScenaFlags(ScenaFlag(0x0176, 5, 0xBB5))
+    ClearScenaFlags(ScenaFlag(0x0176, 6, 0xBB6))
+    ClearScenaFlags(ScenaFlag(0x0176, 7, 0xBB7))
+    ClearScenaFlags(ScenaFlag(0x0177, 0, 0xBB8))
+    ClearScenaFlags(ScenaFlag(0x0177, 1, 0xBB9))
+    ClearScenaFlags(ScenaFlag(0x0177, 2, 0xBBA))
+    ClearScenaFlags(ScenaFlag(0x0177, 3, 0xBBB))
+    ClearScenaFlags(ScenaFlag(0x0177, 4, 0xBBC))
+    ClearScenaFlags(ScenaFlag(0x0177, 5, 0xBBD))
+    ClearScenaFlags(ScenaFlag(0x0177, 6, 0xBBE))
+    ClearScenaFlags(ScenaFlag(0x0177, 7, 0xBBF))
+    ClearScenaFlags(ScenaFlag(0x01AE, 0, 0xD70))
+    ClearScenaFlags(ScenaFlag(0x01AE, 1, 0xD71))
+    ClearScenaFlags(ScenaFlag(0x01AE, 2, 0xD72))
+    ClearScenaFlags(ScenaFlag(0x01AE, 3, 0xD73))
+    ClearScenaFlags(ScenaFlag(0x01AE, 4, 0xD74))
+    ClearScenaFlags(ScenaFlag(0x01AE, 5, 0xD75))
+    ClearScenaFlags(ScenaFlag(0x01AE, 6, 0xD76))
+    ClearScenaFlags(ScenaFlag(0x01AE, 7, 0xD77))
+    ClearScenaFlags(ScenaFlag(0x01AF, 0, 0xD78))
+    ClearScenaFlags(ScenaFlag(0x01AF, 1, 0xD79))
+    ClearScenaFlags(ScenaFlag(0x01AF, 2, 0xD7A))
+    ClearScenaFlags(ScenaFlag(0x01AF, 3, 0xD7B))
+    ClearScenaFlags(ScenaFlag(0x01AF, 4, 0xD7C))
+    ClearScenaFlags(ScenaFlag(0x01AF, 5, 0xD7D))
+    ClearScenaFlags(ScenaFlag(0x01AF, 6, 0xD7E))
+    ClearScenaFlags(ScenaFlag(0x01AF, 7, 0xD7F))
+    ClearScenaFlags(ScenaFlag(0x01B0, 0, 0xD80))
+    ClearScenaFlags(ScenaFlag(0x01B0, 1, 0xD81))
+    ClearScenaFlags(ScenaFlag(0x01B0, 2, 0xD82))
+    ClearScenaFlags(ScenaFlag(0x01B0, 3, 0xD83))
+    ClearScenaFlags(ScenaFlag(0x01B0, 4, 0xD84))
+    ClearScenaFlags(ScenaFlag(0x01B0, 5, 0xD85))
+    ClearScenaFlags(ScenaFlag(0x01B0, 6, 0xD86))
+    ClearScenaFlags(ScenaFlag(0x01B0, 7, 0xD87))
+    ClearScenaFlags(ScenaFlag(0x01B1, 0, 0xD88))
+    ClearScenaFlags(ScenaFlag(0x01B1, 1, 0xD89))
+    ClearScenaFlags(ScenaFlag(0x01B1, 2, 0xD8A))
+    ClearScenaFlags(ScenaFlag(0x01B1, 3, 0xD8B))
+    ClearScenaFlags(ScenaFlag(0x01B1, 4, 0xD8C))
+    ClearScenaFlags(ScenaFlag(0x01B1, 5, 0xD8D))
+    ClearScenaFlags(ScenaFlag(0x01B1, 6, 0xD8E))
+    ClearScenaFlags(ScenaFlag(0x01B1, 7, 0xD8F))
+    ClearScenaFlags(ScenaFlag(0x01B2, 0, 0xD90))
+    ClearScenaFlags(ScenaFlag(0x01B2, 1, 0xD91))
+    ClearScenaFlags(ScenaFlag(0x01B2, 7, 0xD97))
+    ClearScenaFlags(ScenaFlag(0x01B3, 0, 0xD98))
+    ClearScenaFlags(ScenaFlag(0x01B3, 1, 0xD99))
+    ClearScenaFlags(ScenaFlag(0x023D, 0, 0x11E8))
+    ClearScenaFlags(ScenaFlag(0x01B3, 2, 0xD9A))
+    ClearScenaFlags(ScenaFlag(0x01B3, 3, 0xD9B))
+    ClearScenaFlags(ScenaFlag(0x01B3, 4, 0xD9C))
+    ClearScenaFlags(ScenaFlag(0x01B3, 5, 0xD9D))
+    ClearScenaFlags(ScenaFlag(0x01B3, 6, 0xD9E))
+    ClearScenaFlags(ScenaFlag(0x01B3, 7, 0xD9F))
+    ClearScenaFlags(ScenaFlag(0x01B4, 0, 0xDA0))
+    ClearScenaFlags(ScenaFlag(0x01B4, 7, 0xDA7))
+    ClearScenaFlags(ScenaFlag(0x01B5, 0, 0xDA8))
+    ClearScenaFlags(ScenaFlag(0x01B5, 1, 0xDA9))
+    ClearScenaFlags(ScenaFlag(0x01B5, 2, 0xDAA))
+    ClearScenaFlags(ScenaFlag(0x01B5, 3, 0xDAB))
+    ClearScenaFlags(ScenaFlag(0x01B5, 4, 0xDAC))
+    ClearScenaFlags(ScenaFlag(0x01B5, 5, 0xDAD))
+    ClearScenaFlags(ScenaFlag(0x01B5, 6, 0xDAE))
+    ClearScenaFlags(ScenaFlag(0x0234, 6, 0x11A6))
+    ClearScenaFlags(ScenaFlag(0x0234, 7, 0x11A7))
+    ClearScenaFlags(ScenaFlag(0x0235, 0, 0x11A8))
+    ClearScenaFlags(ScenaFlag(0x0235, 1, 0x11A9))
+    ClearScenaFlags(ScenaFlag(0x0235, 2, 0x11AA))
+    ClearScenaFlags(ScenaFlag(0x0235, 3, 0x11AB))
+    ClearScenaFlags(ScenaFlag(0x0235, 4, 0x11AC))
+    ClearScenaFlags(ScenaFlag(0x0235, 5, 0x11AD))
+    ClearScenaFlags(ScenaFlag(0x0235, 6, 0x11AE))
+    ClearScenaFlags(ScenaFlag(0x0235, 7, 0x11AF))
+    ClearScenaFlags(ScenaFlag(0x0236, 0, 0x11B0))
+    ClearScenaFlags(ScenaFlag(0x0236, 1, 0x11B1))
+    ClearScenaFlags(ScenaFlag(0x0236, 2, 0x11B2))
+    ClearScenaFlags(ScenaFlag(0x0236, 3, 0x11B3))
+    ClearScenaFlags(ScenaFlag(0x0236, 4, 0x11B4))
+    ClearScenaFlags(ScenaFlag(0x01B2, 2, 0xD92))
+    ClearScenaFlags(ScenaFlag(0x01B2, 3, 0xD93))
+    ClearScenaFlags(ScenaFlag(0x01B2, 4, 0xD94))
+    ClearScenaFlags(ScenaFlag(0x01B2, 5, 0xD95))
+    ClearScenaFlags(ScenaFlag(0x01B2, 6, 0xD96))
+    ClearScenaFlags(ScenaFlag(0x01B4, 1, 0xDA1))
+    ClearScenaFlags(ScenaFlag(0x01B4, 2, 0xDA2))
+    ClearScenaFlags(ScenaFlag(0x01B4, 3, 0xDA3))
+    ClearScenaFlags(ScenaFlag(0x01B4, 4, 0xDA4))
+    ClearScenaFlags(ScenaFlag(0x01B4, 5, 0xDA5))
+    ClearScenaFlags(ScenaFlag(0x01B4, 6, 0xDA6))
+    ClearScenaFlags(ScenaFlag(0x01E4, 0, 0xF20))
+    ClearScenaFlags(ScenaFlag(0x01E4, 1, 0xF21))
+    ClearScenaFlags(ScenaFlag(0x01E4, 2, 0xF22))
+    ClearScenaFlags(ScenaFlag(0x01E4, 3, 0xF23))
+    ClearScenaFlags(ScenaFlag(0x01E4, 4, 0xF24))
+    ClearScenaFlags(ScenaFlag(0x01E4, 5, 0xF25))
+    ClearScenaFlags(ScenaFlag(0x01E4, 6, 0xF26))
+    ClearScenaFlags(ScenaFlag(0x01E4, 7, 0xF27))
+    ClearScenaFlags(ScenaFlag(0x01E5, 0, 0xF28))
+    ClearScenaFlags(ScenaFlag(0x01E5, 1, 0xF29))
+    ClearScenaFlags(ScenaFlag(0x01E5, 2, 0xF2A))
+    ClearScenaFlags(ScenaFlag(0x01E5, 3, 0xF2B))
+    ClearScenaFlags(ScenaFlag(0x01E5, 4, 0xF2C))
+    ClearScenaFlags(ScenaFlag(0x01E5, 5, 0xF2D))
+    ClearScenaFlags(ScenaFlag(0x01E5, 6, 0xF2E))
+    ClearScenaFlags(ScenaFlag(0x0110, 5, 0x885))
+    ClearScenaFlags(ScenaFlag(0x0110, 6, 0x886))
+    ClearScenaFlags(ScenaFlag(0x0110, 7, 0x887))
+    ClearScenaFlags(ScenaFlag(0x0111, 0, 0x888))
+    ClearScenaFlags(ScenaFlag(0x0111, 1, 0x889))
+    ClearScenaFlags(ScenaFlag(0x0111, 2, 0x88A))
+    ClearScenaFlags(ScenaFlag(0x0111, 3, 0x88B))
+    ClearScenaFlags(ScenaFlag(0x0111, 4, 0x88C))
+    ClearScenaFlags(ScenaFlag(0x0111, 5, 0x88D))
+    ClearScenaFlags(ScenaFlag(0x0111, 6, 0x88E))
+    ClearScenaFlags(ScenaFlag(0x0111, 7, 0x88F))
+    ClearScenaFlags(ScenaFlag(0x0112, 0, 0x890))
+    ClearScenaFlags(ScenaFlag(0x0112, 1, 0x891))
+    ClearScenaFlags(ScenaFlag(0x0112, 2, 0x892))
+    ClearScenaFlags(ScenaFlag(0x0112, 3, 0x893))
+    ClearScenaFlags(ScenaFlag(0x0112, 4, 0x894))
+    ClearScenaFlags(ScenaFlag(0x0112, 5, 0x895))
+    ClearScenaFlags(ScenaFlag(0x0150, 0, 0xA80))
+    ClearScenaFlags(ScenaFlag(0x0150, 1, 0xA81))
+    ClearScenaFlags(ScenaFlag(0x0150, 2, 0xA82))
+    ClearScenaFlags(ScenaFlag(0x0150, 3, 0xA83))
+    ClearScenaFlags(ScenaFlag(0x01D5, 0, 0xEA8))
+    ClearScenaFlags(ScenaFlag(0x01D5, 1, 0xEA9))
 
     Return()
 
@@ -68842,12 +68411,6 @@ def _TK_NoticeLog_Test():
             type   = 0x0004,
             type2  = 0xFFFF,
             dword4 = 0x000088C2,
-            name   = '',
-        ),
-        ScenaAnimeClipItem(
-            type   = 0x0000,
-            type2  = 0xFFFF,
-            dword4 = 0x00000000,
             name   = '',
         ),
     )
@@ -68872,12 +68435,6 @@ def _TK_MiniGame_Debug_Mg08_Start():
             type   = 0x0004,
             type2  = 0xFFFF,
             dword4 = 0x000088BA,
-            name   = '',
-        ),
-        ScenaAnimeClipItem(
-            type   = 0x0000,
-            type2  = 0xFFFF,
-            dword4 = 0x00000000,
             name   = '',
         ),
     )

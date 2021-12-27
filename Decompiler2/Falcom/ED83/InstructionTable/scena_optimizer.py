@@ -68,6 +68,7 @@ optimizeTable = buildTable(
         ('ChrLoadAnimeClipByCatalog',       {0: 0x06}),
         ('ChrReleaseAnimeClipByCatalog',    {0: 0x07}),
         ('ChrPlayAnimeClipSeq',             {0: 0x08}),
+        ('ChrChangeSkin',                   {0: 0x0A, 3: ''}),
     ),
     opt(
         0x30,

@@ -29,6 +29,7 @@ def runCallBack(g):
         AniBtlCraftDamageX,
         AniBtlCraftDamageXKnockBack,
         AniBtlPlayLanceEffects,
+        AniBtlItem,
     ]:
         scena.Code(f.__name__)(f)
 
@@ -43,7 +44,7 @@ _init()
 def AniBtlMove2():
     PlayChrAnimeClip(0xFFFE, 'BTL_MOVE', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1, -1, -1, 0x00, 0x00)
     OP_33(0x34)
-    Call(0x10, 'AniBtlWait')
+    Call(ScriptId.CurrentCharacter, 'AniBtlWait')
 
 def AniBtlCraft05():
     end = genLabel()
@@ -59,6 +60,19 @@ def AniBtlCraft05():
 
     Call(ScriptId.Current, 'SpringOff')
     SetEndhookFunction('SpringOn', ScriptId.Current)
+
+    Call(ScriptId.Current, 'AniAttachEQU442')
+    # Call(ScriptId.Current, 'AniEv86000')
+    # Call(ScriptId.Current, 'AniEv86000b')
+    PlayChrAnimeClip(0xFFFE, 'ev86000a', 0x00, 0x00, 0x01, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+    Sleep(1000)
+    PlayChrAnimeClip(0xFFFE, 'ev86000', 0x00, 0x01, 0x01, 0x00, 0x00, -2.0, -0.0333333, -0.0333333, 0.566667, 0x00, 0x00)
+    Sleep(1000)
+    PlayChrAnimeClip(0xFFFE, 'ev86000', 0x00, 0x00, 0x01, 0x00, 0x00, -2.0, -1.0, -1.0, -1.0, 0x00, 0x00)
+    Sleep(1000)
+
+    Return()
+    return
 
     ChrTurnDirection(0xFFFE, 0xFFFB, 0.0, -1.0)
     ChrSavePosition(0xFFFE, 0x00000000)
@@ -287,6 +301,10 @@ def AniBtlMove():
 
     Call(ScriptId.BtlCom, 'ReleaseEffect')
 
+    Return()
+
+def AniBtlItem():
+    Call(ScriptId.BtlCom, 'AniBtlItem')
     Return()
 
 def AniBtlAria():

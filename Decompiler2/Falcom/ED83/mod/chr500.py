@@ -1782,7 +1782,7 @@ def Ani_EV_Load():
 # id: 0x0004 offset: 0x6D38
 @scena.Code('Ani_BT1_Load')
 def Ani_BT1_Load():
-    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000100)
+    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000100 | 2)
 
     Return()
 
@@ -1803,7 +1803,7 @@ def Ani_EV_Release():
 # id: 0x0007 offset: 0x6D5C
 @scena.Code('Ani_BT1_Release')
 def Ani_BT1_Release():
-    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000100)
+    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000100 | 2)
     OP_04(0x0B, 'SpringOn')
 
     Return()
@@ -2266,6 +2266,9 @@ def BtlDefaultFace():
 @scena.Code('AniBtlInit')
 def AniBtlInit():
     Call(ScriptId.BtlCom, 'AniBtlInit')
+
+    Call(ScriptId.Current, 'Ani_BT1_Load')
+
     ReleaseEffect(0xFFFE, 0x82)
     ReleaseEffect(0xFFFE, 0x83)
     ReleaseEffect(0xFFFE, 0x80)
@@ -3147,6 +3150,8 @@ def AniBtlRelease():
     def _loc_914D(): pass
 
     label('loc_914D')
+
+    Call(ScriptId.Current, 'Ani_BT1_Release')
 
     Sleep(666)
 

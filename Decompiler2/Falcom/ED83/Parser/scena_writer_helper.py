@@ -145,10 +145,10 @@ def FormationReset():
 def FormationSetLeader(chrId: int):
     OP_49(0x04, chrId)
 
-def RefreshSkin(chrId: int):
-    return ChangeSkin(chrId, '')
+def ChrRefreshSkin(chrId: int):
+    return ChrChangeSkin(chrId, '')
 
-def ChangeSkin(chrId: int, model: str):
+def ChrChangeSkin(chrId: int, model: str):
     ChrAnimeClipCtrl(0x0A, chrId, model, '')
 
 def SetChrModelChrId(chrId: int, modelChrId: int):

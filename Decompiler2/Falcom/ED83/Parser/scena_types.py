@@ -184,6 +184,9 @@ class ScenaBattleMonsterSet:
 
         return body
 
+class ScenaBattleSettingFlags(IntEnum2):
+    NoEvade = 0x00000001
+
 class ScenaBattleSetting:
     def __init__(
         self,
@@ -192,12 +195,12 @@ class ScenaBattleSetting:
         y           : int = 0,
         z           : int = 0,
         direction   : int = 0,
-        float20     : int = 0,
-        float24     : int = 0,
+        length      : int = 0,
+        width       : int = 0,
         word28      : int = 0,
         flags       : int = 0,
-        word30      : int = 0,
-        word32      : int = 0,
+        bgm         : int = 0,
+        dangerBGM   : int = 0,
         word34      : int = 0,
         word36      : int = 0,
         dword38     : int = 0,
@@ -212,12 +215,12 @@ class ScenaBattleSetting:
         self.y              = y             # type: int
         self.z              = z             # type: int
         self.direction      = direction     # type: int
-        self.float20        = float20       # type: int
-        self.float24        = float24       # type: int
+        self.length         = length       # type: int
+        self.width          = width       # type: int
         self.word28         = word28        # type: int
         self.flags          = flags         # type: int
-        self.word30         = word30        # type: int
-        self.word32         = word32        # type: int
+        self.bgm            = bgm           # type: int
+        self.dangerBGM      = dangerBGM     # type: int
         self.word34         = word34        # type: int
         self.word36         = word36        # type: int
         self.dword38        = dword38       # type: int
@@ -235,15 +238,15 @@ class ScenaBattleSetting:
         self.y          = fs.ReadFloat()                        # 0x14
         self.z          = fs.ReadFloat()                        # 0x18
         self.direction  = fs.ReadFloat()                        # 0x1C
-        self.float20    = fs.ReadFloat()                        # 0x20
-        self.float24    = fs.ReadFloat()                        # 0x24
+        self.length     = fs.ReadFloat()                        # 0x20
+        self.width      = fs.ReadFloat()                        # 0x24
         self.word28     = fs.ReadUShort()                       # 0x28
 
         fs.Position += 2    # padding                           # 0x2A
 
         self.flags          = fs.ReadULong()                        # 0x2C
-        self.word30         = fs.ReadUShort()                       # 0x30
-        self.word32         = fs.ReadUShort()                       # 0x32
+        self.bgm            = fs.ReadUShort()                       # 0x30
+        self.dangerBGM      = fs.ReadUShort()                       # 0x32
         self.word34         = fs.ReadUShort()                       # 0x34
         self.word36         = fs.ReadUShort()                       # 0x36
         self.dword38        = fs.ReadULong()                        # 0x38
@@ -266,15 +269,15 @@ class ScenaBattleSetting:
         fs.write(utils.float_to_bytes(self.y))
         fs.write(utils.float_to_bytes(self.z))
         fs.write(utils.float_to_bytes(self.direction))
-        fs.write(utils.float_to_bytes(self.float20))
-        fs.write(utils.float_to_bytes(self.float24))
+        fs.write(utils.float_to_bytes(self.length))
+        fs.write(utils.float_to_bytes(self.width))
         fs.write(utils.int_to_bytes(self.word28, 2))
 
         fs.write(b'\x00' * 2) # padding
 
         fs.write(utils.int_to_bytes(self.flags, 4))
-        fs.write(utils.int_to_bytes(self.word30, 2))
-        fs.write(utils.int_to_bytes(self.word32, 2))
+        fs.write(utils.int_to_bytes(self.bgm, 2))
+        fs.write(utils.int_to_bytes(self.dangerBGM, 2))
         fs.write(utils.int_to_bytes(self.word34, 2))
         fs.write(utils.int_to_bytes(self.word36, 2))
         fs.write(utils.int_to_bytes(self.dword38, 4))
@@ -298,12 +301,12 @@ class ScenaBattleSetting:
             f'{DefaultIndent}y              = {self.y},',
             f'{DefaultIndent}z              = {self.z},',
             f'{DefaultIndent}direction      = {self.direction},',
-            f'{DefaultIndent}float20        = {self.float20},',
-            f'{DefaultIndent}float24        = {self.float24},',
+            f'{DefaultIndent}length         = {self.length},',
+            f'{DefaultIndent}width          = {self.width},',
             f'{DefaultIndent}word28         = {self.word28},',
             f'{DefaultIndent}flags          = 0x{self.flags:08X},',
-            f'{DefaultIndent}word30         = {self.word30},',
-            f'{DefaultIndent}word32         = {self.word32},',
+            f'{DefaultIndent}bgm            = {self.bgm},',
+            f'{DefaultIndent}dangerBGM      = {self.dangerBGM},',
             f'{DefaultIndent}word34         = {self.word34},',
             f'{DefaultIndent}word36         = {self.word36},',
             f'{DefaultIndent}dword38        = {self.dword38},',

@@ -11,6 +11,7 @@ __all__ = (
     'StatusTableData',
     'VoiceTableData',
     'SETableData',
+    'BGMTableData',
 )
 
 class TableNameEntry:
@@ -68,6 +69,7 @@ class DataTable:
             'status'            : StatusTableData,
             'voice'             : VoiceTableData,
             'se'                : SETableData,
+            'bgm'               : BGMTableData,
         }
 
         self.entries = []
@@ -227,7 +229,7 @@ class EventTableData(TableDataEntry):
             self.eventEntry = fs.ReadMultiByte()
             self.scena      = fs.ReadMultiByte()
             self.word01     = fs.ReadUShort()
-            self.word02     = fs.ReadUShort()
+            self.nextEventId= fs.ReadUShort()
             self.word03     = fs.ReadUShort()
             self.str04      = fs.ReadMultiByte()
             self.word05     = fs.ReadUShort()
@@ -247,7 +249,7 @@ class EventTableData(TableDataEntry):
             f"    eventEntry    = '{self.eventEntry}',",
             f"    scena         = '{self.scena}',",
             f'    word01        = 0x{self.word01:X},',
-            f'    word02        = 0x{self.word02:X},',
+            f'    nextEventId   = 0x{self.nextEventId:X},',
             f'    word03        = 0x{self.word03:X},',
             f"    str04         = '{self.str04}',",
             f'    word05        = 0x{self.word05:X},',
@@ -269,7 +271,7 @@ class EventTableData(TableDataEntry):
         body.extend(utils.str_to_bytes(self.eventEntry))
         body.extend(utils.str_to_bytes(self.scena))
         body.extend(utils.int_to_bytes(self.word01, 2))
-        body.extend(utils.int_to_bytes(self.word02, 2))
+        body.extend(utils.int_to_bytes(self.nextEventId, 2))
         body.extend(utils.int_to_bytes(self.word03, 2))
         body.extend(utils.str_to_bytes(self.str04))
         body.extend(utils.int_to_bytes(self.word05, 2))
@@ -654,6 +656,38 @@ class VoiceTableData(TableDataEntry):
 
 class SETableData(VoiceTableData):
     ENTRY_NAME = 'se'
+
+class BGMTableData(TableDataEntry):
+    ENTRY_NAME = 'bgm'
+
+    def __init__(self, *, fs: fileio.FileStream = None, **kwargs):
+        super().__init__(fs)
+
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+        if fs:
+            self.id     = fs.ReadUShort()
+            self.file   = fs.ReadMultiByte()
+            self.word3  = fs.ReadUShort()
+
+    def toPython(self) -> List[str]:
+        return [
+            f'{self.__class__.__name__}(',
+            f'    id    = {self.id},',
+            f"    file  = '{self.file}',",
+            f'    word3 = {self.word3},',
+            ')',
+        ]
+
+    def serialize(self) -> bytes:
+        body = bytearray()
+
+        body.extend(utils.int_to_bytes(self.id, 2))
+        body.extend(utils.str_to_bytes(self.file))
+        body.extend(utils.int_to_bytes(self.word3, 2))
+
+        return bytes(body)
 
 def createDataTable(filename: str, *entries):
     table = bytearray()
