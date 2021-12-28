@@ -203,7 +203,7 @@ class ScenaBattleSetting:
         dangerBGM   : int = 0,
         word34      : int = 0,
         word36      : int = 0,
-        dword38     : int = 0,
+        atBonus     : int = 0,
         battleScript: str = '',
         monsterSet  : List[ScenaBattleMonsterSet] = None,
         *,
@@ -223,7 +223,7 @@ class ScenaBattleSetting:
         self.dangerBGM      = dangerBGM     # type: int
         self.word34         = word34        # type: int
         self.word36         = word36        # type: int
-        self.dword38        = dword38       # type: int
+        self.atBonus        = atBonus       # type: int
         self.battleScript   = battleScript    # type: str
         self.monsterSet     = monsterSet    # type: List[ScenaBattleMonsterSet]
 
@@ -249,7 +249,7 @@ class ScenaBattleSetting:
         self.dangerBGM      = fs.ReadUShort()                       # 0x32
         self.word34         = fs.ReadUShort()                       # 0x34
         self.word36         = fs.ReadUShort()                       # 0x36
-        self.dword38        = fs.ReadULong()                        # 0x38
+        self.atBonus        = fs.ReadULong()                        # 0x38
         self.battleScript   = utils.read_fixed_string(fs, 0x10)     # 0x3C
 
         self.monsterSet = []                                    # 0x4C
@@ -280,7 +280,7 @@ class ScenaBattleSetting:
         fs.write(utils.int_to_bytes(self.dangerBGM, 2))
         fs.write(utils.int_to_bytes(self.word34, 2))
         fs.write(utils.int_to_bytes(self.word36, 2))
-        fs.write(utils.int_to_bytes(self.dword38, 4))
+        fs.write(utils.int_to_bytes(self.atBonus, 4))
         fs.write(utils.pad_string(self.battleScript, 0x10))
 
         for monset in self.monsterSet:
@@ -309,7 +309,7 @@ class ScenaBattleSetting:
             f'{DefaultIndent}dangerBGM      = {self.dangerBGM},',
             f'{DefaultIndent}word34         = {self.word34},',
             f'{DefaultIndent}word36         = {self.word36},',
-            f'{DefaultIndent}dword38        = {self.dword38},',
+            f'{DefaultIndent}atBonus        = {self.atBonus},',
             f'{DefaultIndent}battleScript   = \'{self.battleScript}\',',
             f'{DefaultIndent}monsterSet     = [',
         ]

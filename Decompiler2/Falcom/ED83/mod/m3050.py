@@ -28,7 +28,7 @@ def func_408():
         dangerBGM      = 465,
         word34         = 0,
         word36         = 0,
-        dword38        = 3,
+        atBonus        = 3,
         battleScript   = 'btl0411',
         monsterSet     = [
             ScenaBattleMonsterSet(
@@ -56,7 +56,7 @@ def func_508():
         dangerBGM      = 460,
         word34         = 0,
         word36         = 0,
-        dword38        = 0,
+        atBonus        = 0,
         battleScript   = 'btl1009',
         monsterSet     = [
             ScenaBattleMonsterSet(
@@ -84,7 +84,7 @@ def func_608():
         dangerBGM      = 460,
         word34         = 0,
         word36         = 0,
-        dword38        = 0,
+        atBonus        = 0,
         battleScript   = 'btl1010',
         monsterSet     = [
             ScenaBattleMonsterSet(
@@ -112,7 +112,7 @@ def func_708():
         dangerBGM      = 460,
         word34         = 0,
         word36         = 0,
-        dword38        = 0,
+        atBonus        = 0,
         battleScript   = 'btl1011',
         monsterSet     = [
             ScenaBattleMonsterSet(

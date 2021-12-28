@@ -14,6 +14,9 @@ set "output_tbl=%~dpn1.tbl"
 if /i "%filename:~0,5%" == "alchr" (
     move "%output%" "%PATCH_PATH%\scripts\battle\dat\" >NUL
 
+)  else if /i "%filename:~0,3%" == "btl" (
+    move "%output%" "%PATCH_PATH%\scripts\battle\dat\" >NUL
+
 ) else if /i "%filename:~0,3%" == "chr" (
     move "%output%" "%PATCH_PATH%\scripts\ani\dat\" >NUL
 
@@ -40,6 +43,7 @@ for %%i in (
     a????.py
     chr*.py
     rob*.py
+    btl????.py
 ) do (
     start /B "" /D "%~dp0" cmd /c " "%~f0" "%%~fi" "
 )

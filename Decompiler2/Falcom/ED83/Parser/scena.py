@@ -1,4 +1,5 @@
 from Assembler.function import Function
+from Assembler.instruction import Instruction
 from .scena_types import *
 from ..InstructionTable import ScenaOpTable as ED83ScenaOpTable
 from ..InstructionTable.scena_optimizer import ED83Optimizer
@@ -118,9 +119,9 @@ class ScenaParser:
             return typ
 
         if any([
-            name == '',
-            name.startswith('BTLSET'),
-        ]):
+                name == '',
+                name.startswith('BTLSET'),
+            ]):
             return ScenaFunctionType.BattleSetting
 
         if name.startswith('FC_auto'):
@@ -170,6 +171,10 @@ class ScenaParser:
                 f.type = self.getFunctionType(f.name)
 
     def disasmFunctions(self):
+        def cb(inst: Instruction):
+            if inst.opcode == 0x02:
+                self.functionNameMap[inst.operands[1].value] = True
+
         fs = self.fs
         dis = Assembler.Disassembler(ED83ScenaOpTable)
         ctx = Assembler.DisasmContext(fs)

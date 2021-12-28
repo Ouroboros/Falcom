@@ -477,7 +477,7 @@ def OP_32(arg1: int, *args):
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x32, arg1, *args)
 
-def BattleChrCtrl(arg1: int, *args):
+def BattleCtrl(arg1: int, *args):
     # 0x33
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x33, arg1, *args)
@@ -1038,7 +1038,7 @@ def OP_70(arg1: int, *args):
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x70, arg1, *args)
 
-def QuestInfo(arg1: int, arg2: int, *args):
+def QuestCtrl(arg1: int, arg2: int, *args):
     # 0x72
     assert isinstance(arg1, int)
     assert isinstance(arg2, int)

@@ -82,7 +82,7 @@ def PreInit():
 
     If(
         (
-            (Expr.Eval, "BattleChrCtrl(0x87)"),
+            (Expr.Eval, "BattleCtrl(0x87)"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -231,7 +231,7 @@ def AniBtlInit():
     OP_0A(
         0x05,
         (
-            (Expr.Eval, "BattleChrCtrl(0x62, 0xFFFE, 0x00)"),
+            (Expr.Eval, "BattleCtrl(0x62, 0xFFFE, 0x00)"),
             Expr.Nop,
             Expr.Return,
         ),

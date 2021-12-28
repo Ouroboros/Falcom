@@ -27,6 +27,12 @@ def TK_MiniGame_Debug():
     FormationSetLeader(0)
     # FormationAddMember(0xA)
 
+    # CraftCtrl(0x00, ChrTable['黎恩'], 0xD4B)
+    # CraftCtrl(0x04, ChrTable['黎恩'], 0xD4B)
+    # SetChrModelChrId(ChrTable['黎恩'], ChrTable['黎恩'])
+    # SetBattleStyle(ChrTable['黎恩'], ChrTable['黎恩'])
+    # ChrRefreshSkin(0)
+
     # flag = ScenaFlag(0x00A7, 0, 0x538)
 
     # If(
@@ -60,5 +66,7 @@ def TK_MiniGame_Debug():
     SetScenaFlags(ScenaFlag(0x0080, 1, 0x401))
     SetScenaFlags(ScenaFlag(0x0080, 2, 0x402))
     Battle(0x00, 0x00000005, 0x00, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00)
+
+    Return()
 
     return

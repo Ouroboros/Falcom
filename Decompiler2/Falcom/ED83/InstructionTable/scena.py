@@ -408,7 +408,7 @@ def Handler_32(ctx: InstructionHandlerContext):
 def Handler_33(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
-            0x00: 'WWB',        # bt_damage
+            0x00: 'WWC',        # bt_damage
             0x01: 'WVVB',       # bt_damage_anime
             0x02: 'BW',
             0x03: 'W',
@@ -2137,7 +2137,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x30,  'EquipCtrl',                    'BWSSfffffffff'),
     inst(0x31,  'OP_31',                        'BS'),
     inst(0x32,  'EffectCtrl',                   NoOperand,                                      handler = Handler_32),
-    inst(0x33,  'BattleChrCtrl',                NoOperand,                                      handler = Handler_33),
+    inst(0x33,  'BattleCtrl',                   NoOperand,                                      handler = Handler_33),
     inst(0x34,  'OP_34',                        'Bffff'),
     inst(0x35,  'ChrPhysicsCtrl',               'BNL'),
     inst(0x36,  'CameraCtrl',                   NoOperand,                                      handler = Handler_36),
@@ -2196,7 +2196,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x6E,  'OP_6E',                        'WffffB'),
     inst(0x6F,  'AddItem',                      'BWI'),
     inst(0x70,  'OP_70',                        NoOperand,                                      handler = Handler_70),
-    inst(0x72,  'QuestInfo',                    NoOperand,                                      handler = Handler_72),
+    inst(0x72,  'QuestCtrl',                    NoOperand,                                      handler = Handler_72),
     inst(0x73,  'OP_73',                        NoOperand,                                      handler = Handler_73),
     inst(0x74,  'OP_74',                        NoOperand,                                      handler = Handler_74),
     inst(0x75,  'OP_75',                        NoOperand,                                      handler = Handler_75),

@@ -2,7 +2,7 @@ from Falcom.Common  import *
 from Assembler      import *
 
 __all__ = (
-    'ED83Optimizer',
+    'ED84Optimizer',
 )
 
 class OptimizePattern:
@@ -63,53 +63,50 @@ def opt(opcode: int, *patterns: Tuple[str, Tuple]) -> OptimizeData:
     return OptimizeData(opcode, *[OptimizeMatcher(p[0], *[OptimizePattern(index, value) for index, value in p[1].items()]) for p in patterns])
 
 optimizeTable = buildTable(
-    opt(
-        0x2F,
-        ('ChrLoadAnimeClipByCatalog',       {0: 0x06}),
-        ('ChrReleaseAnimeClipByCatalog',    {0: 0x07}),
-        ('ChrPlayAnimeClipSeq',             {0: 0x08}),
-        ('ChrChangeSkin',                   {0: 0x0A, 3: ''}),
-    ),
-    opt(
-        0x30,
-        ('AttachEquip', {0: 0x00}),
-        ('DeatchEquip', {0: 0x01, 2: ''}),
-    ),
-    opt(
-        0x31,
-        ('LoadAsset',       {0: 0x00}),
-        ('ReleaseAsset',    {0: 0x01}),
-        ('IsAssetLoaded',   {0: 0x02}),
-        ('LoadAssetAsync',  {0: 0x03}),
-    ),
-    opt(
-        0x32,
-        ('LoadEffect',      {0: 0x0A}),
-        ('ReleaseEffect',   {0: 0x0B}),
-        ('PlayEffect',      {0: 0x0C}),
-        ('StopEffect',      {0: 0x0D}),
-    ),
+    # opt(
+    #     0x2F,
+    #     ('ChrLoadAnimeClipByCatalog',       {0: 0x06}),
+    #     ('ChrReleaseAnimeClipByCatalog',    {0: 0x07}),
+    #     ('ChrPlayAnimeClipSeq',             {0: 0x08}),
+    #     ('ChrChangeSkin',                   {0: 0x0A, 3: ''}),
+    # ),
+    # opt(
+    #     0x30,
+    #     ('AttachEquip', {0: 0x00}),
+    #     ('DeatchEquip', {0: 0x01, 2: ''}),
+    # ),
+    # opt(
+    #     0x31,
+    #     ('LoadAsset',       {0: 0x00}),
+    #     ('ReleaseAsset',    {0: 0x01}),
+    #     ('IsAssetLoaded',   {0: 0x02}),
+    #     ('LoadAssetAsync',  {0: 0x03}),
+    # ),
+    # opt(
+    #     0x32,
+    #     ('LoadEffect',      {0: 0x0A}),
+    #     ('ReleaseEffect',   {0: 0x0B}),
+    #     ('PlayEffect',      {0: 0x0C}),
+    #     ('StopEffect',      {0: 0x0D}),
+    # ),
     opt(
         0x33,
-        ('BattleDamage',                {0: 0x00}),
-        ('BattleDamageAnime',           {0: 0x01}),
-        ('ChrTargetsIterReset',         {0: 0x02}),
-        ('ChrTargetsIterNext',          {0: 0x03}),
-        ('ChrTargetsIterInit',          {0: 0x04}),
-        ('BattleInitHit',               {0: 0x09}),
-        ('ChrSetAfterImageOn',          {0: 0x15}),
-        ('ChrSetAfterImageOff',         {0: 0x16}),
-        ('ChrCreateDummy',              {0: 0x17}),
-        ('BattleSetFlags',              {0: 0x19}),
-        ('BattleClearFlags',            {0: 0x1A}),
-        ('ChrCreateTempChar',           {0: 0x1E}),
-        ('ChrDeleteTempChar',           {0: 0x1F}),
-        ('ChrCreateAfterImage',         {0: 0x30}),
-        ('ChrSetPosByTarget',           {0: 0x33}),
-        ('ChrMoveToTarget',             {0: 0x34}),
-        ('ChrSavePosition',             {0: 0x35}),
-        ('ChrSetPosByTargetAsync',      {0: 0x39}),
-        ('ChrTurnDirection',            {0: 0x3C}),
+        # ('ChrTargetsIterReset',         {0: 0x02}),
+        # ('ChrTargetsIterNext',          {0: 0x03}),
+        # ('ChrTargetsIterInit',          {0: 0x04}),
+        # ('ChrSetAfterImageOn',          {0: 0x15}),
+        # ('ChrSetAfterImageOff',         {0: 0x16}),
+        # ('ChrCreateDummy',              {0: 0x17}),
+        ('SetBattleFlags',              {0: 0x19}),
+        ('ClearBattleFlags',            {0: 0x1A}),
+        # ('ChrCreateTempChar',           {0: 0x1E}),
+        # ('ChrDeleteTempChar',           {0: 0x1F}),
+        # ('ChrCreateAfterImage',         {0: 0x30}),
+        # ('ChrSetPosByTarget',           {0: 0x33}),
+        # ('ChrMoveToTarget',             {0: 0x34}),
+        # ('ChrSavePosition',             {0: 0x35}),
+        # ('ChrSetPosByTargetAsync',      {0: 0x39}),
+        # ('ChrTurnDirection',            {0: 0x3C}),
         ('ChrSetAbnormalCondition',     {0: 0xB7, 1: 0x00}),
         ('ChrClearAbnormalCondition',   {0: 0xB7, 1: 0x01, 4: 0, 5: 0, 6: 0}),
         ('ChrSetAbnormalCondition2',    {0: 0xB7, 1: 0x02}),
@@ -117,37 +114,37 @@ optimizeTable = buildTable(
         ('ChrGetAbnormalCondition',     {0: 0xB7, 1: 0x04, 3: 0, 4: 0, 5: 0, 6: 0}),
         ('ChrGetAbnormalCondition2',    {0: 0xB7, 1: 0x05, 3: 0, 4: 0, 5: 0, 6: 0}),
     ),
-    opt(
-        0x35,
-        ('ChrSetPhysicsFlags',          {0: 0x00}),
-        ('ChrClearPhysicsFlags',        {0: 0x01}),
-    ),
-    opt(
-        0x36,
-        ('CameraSetPos',            {0: 0x02, 1: 0x03}),
-        ('CameraRotate',            {0: 0x04, 1: 0x03}),
-        ('CameraSetDistance',       {0: 0x05, 1: 0x03}),
-        ('CameraRotateByTarget',    {0: 0x13}),
-        ('CameraSetPosByTarget',    {0: 0x14, 1: 0x03}),
-    ),
-    opt(
-        0x49,
-        ('FormationAddMember',  {0: 0x00}),
-        ('FormationReset',      {0: 0x02}),
-        ('FormationSetLeader',  {0: 0x04}),
-    ),
-    opt(
-        0x54,
-        ('SetBattleStyle',  {0: 0x4A}),
-        ('GetBattleStyle',  {0: 0x4B}),
-    ),
-    opt(
-        0x7A,
-        ('IsBattleModelEqualTo',  {0: 0x01}),
-    ),
+    # opt(
+    #     0x35,
+    #     ('ChrSetPhysicsFlags',          {0: 0x00}),
+    #     ('ChrClearPhysicsFlags',        {0: 0x01}),
+    # ),
+    # opt(
+    #     0x36,
+    #     ('CameraSetPos',            {0: 0x02, 1: 0x03}),
+    #     ('CameraRotate',            {0: 0x04, 1: 0x03}),
+    #     ('CameraSetDistance',       {0: 0x05, 1: 0x03}),
+    #     ('CameraRotateByTarget',    {0: 0x13}),
+    #     ('CameraSetPosByTarget',    {0: 0x14, 1: 0x03}),
+    # ),
+    # opt(
+    #     0x49,
+    #     ('FormationAddMember',  {0: 0x00}),
+    #     ('FormationReset',      {0: 0x02}),
+    #     ('FormationSetLeader',  {0: 0x04}),
+    # ),
+    # opt(
+    #     0x54,
+    #     ('SetBattleStyle',  {0: 0x4A}),
+    #     ('GetBattleStyle',  {0: 0x4B}),
+    # ),
+    # opt(
+    #     0x7A,
+    #     ('IsBattleModelEqualTo',  {0: 0x01}),
+    # ),
 )
 
-class ED83Optimizer(Optimizer):
+class ED84Optimizer(Optimizer):
     def optimize(self, inst: Instruction, operands: List[Any], flags: Flags) -> OptimizeResult:
         opt = optimizeTable.get(inst.opcode)
         if opt is None:

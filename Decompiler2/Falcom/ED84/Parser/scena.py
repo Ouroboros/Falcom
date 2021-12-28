@@ -2,6 +2,7 @@ from Assembler.function import Function
 from Assembler.instruction import Instruction
 from .scena_types import *
 from ..InstructionTable import ScenaOpTable as ED84ScenaOpTable
+from ..InstructionTable.scena_optimizer import ED84Optimizer
 import pathlib
 
 __all__ = (
@@ -16,6 +17,13 @@ __all__ = (
 )
 
 class ScenaFormatter(Assembler.Formatter):
+    def formatLabel(self, name: str) -> List[str]:
+        return [
+            f'def _{name}(): pass',
+            '',
+            f"label('{name}')",
+        ]
+
     def formatFuncion(self, func: ScenaFunction) -> List[str]:
         funcName = func.name
         if not funcName:
@@ -253,7 +261,7 @@ class ScenaParser:
                     raise NotImplementedError(f'unknown func type: {func.type}')
 
     def generatePython(self, filename: str) -> List[str]:
-        formatter = ScenaFormatter(ED84ScenaOpTable, name = self.name)
+        formatter = ScenaFormatter(ED84ScenaOpTable, name = self.name, optimizer = ED84Optimizer())
 
         lines = f'''\
 import sys

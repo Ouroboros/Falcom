@@ -294,26 +294,38 @@ def ChrReleaseAnimeClipByCatalog(chrId: int, catalog: int):
 
 
 '''
-    battle chr
+    battle ctrl
 '''
 
+def BattleDamage(targetChr: int, sourceChr: int, calc: int):
+    BattleCtrl(0x00, targetChr, sourceChr, calc)
+
+def BattleDamageAnime(targetChr: int, knockBack: tuple, arg3: tuple, arg4: int):
+    BattleCtrl(0x01, targetChr, knockBack, arg3, arg4)
+
+def BattleDamageAnime2(targetChr: int, knockBack: float, arg3: float, arg4: int = 1):
+    BattleCtrl(0x01, targetChr, (0xEE, knockBack, 0x0), (0xEE, arg3, 0x0), arg4)
+
+def BattleInitHit(chrId: int):
+    BattleCtrl(0x09, chrId)
+
 def ChrSetAbnormalCondition(chrId: int, condition: AbnormalCondition, param1: int, param2: int, unused: int = 0):
-    BattleChrCtrl(0xB7, 0x00, chrId, condition, param1, param2, unused)
+    BattleCtrl(0xB7, 0x00, chrId, condition, param1, param2, unused)
 
 def ChrClearAbnormalCondition(chrId: int, condition: AbnormalCondition):
-    BattleChrCtrl(0xB7, 0x01, chrId, condition, 0, 0, 0)
+    BattleCtrl(0xB7, 0x01, chrId, condition, 0, 0, 0)
 
 def ChrSetAbnormalCondition2(chrId: int, condition: AbnormalCondition2, param1: int, param2: int, se: int):
-    BattleChrCtrl(0xB7, 0x02, chrId, condition, param1, param2, se)
+    BattleCtrl(0xB7, 0x02, chrId, condition, param1, param2, se)
 
 def ChrClearAbnormalCondition2(chrId: int, condition: AbnormalCondition2):
-    BattleChrCtrl(0xB7, 0x03, chrId, condition, 0, 0, 0)
+    BattleCtrl(0xB7, 0x03, chrId, condition, 0, 0, 0)
 
 def ChrGetAbnormalCondition(chrId: int):
-    BattleChrCtrl(0xB7, 0x04, chrId, 0, 0, 0, 0)
+    BattleCtrl(0xB7, 0x04, chrId, 0, 0, 0, 0)
 
 def ChrGetAbnormalCondition2(chrId: int):
-    BattleChrCtrl(0xB7, 0x05, chrId, 0, 0, 0, 0)
+    BattleCtrl(0xB7, 0x05, chrId, 0, 0, 0, 0)
 
 def ChrPlayAnimeClipSeq(chrId: int, group: int, *animeClips: str):
     assert len(animeClips) <= 16
@@ -324,16 +336,16 @@ def ChrPlayAnimeClipSeq(chrId: int, group: int, *animeClips: str):
     ChrAnimeClipCtrl(0x08, chrId, group, *animeClips)
 
 def ChrTargetsIterInit(unknown: int):
-    BattleChrCtrl(0x04, unknown)
+    BattleCtrl(0x04, unknown)
 
 def ChrTargetsIterReset(regIndex: int, chrId: int):
-    BattleChrCtrl(0x02, regIndex, chrId)
+    BattleCtrl(0x02, regIndex, chrId)
 
 def ChrTargetsIterNext(chrId: int):
-    BattleChrCtrl(0x03, chrId)
+    BattleCtrl(0x03, chrId)
 
 def ChrSavePosition(targetChrId: int, unknown: int):
-    BattleChrCtrl(0x35, targetChrId, unknown)
+    BattleCtrl(0x35, targetChrId, unknown)
 
 def ChrSetPhysicsFlags(chrId: int, flags: int):
     OP_35(0x00, chrId, flags)
@@ -343,25 +355,25 @@ def ChrClearPhysicsFlags(chrId: int, flags: int):
 
 def ChrCreateDummy(chrId: int, count: int):
     assert count <= 5
-    BattleChrCtrl(0x17, chrId, count)
+    BattleCtrl(0x17, chrId, count)
 
 def ChrCreateAfterImage(chrId: int):
-    BattleChrCtrl(0x30, chrId)
+    BattleCtrl(0x30, chrId)
 
 def ChrSetAfterImageOn(chrId: int, unknown1: float, unknown2: float, unknown3: float, unknown4: float, unknown5: float):
-    BattleChrCtrl(0x15, chrId, unknown1, unknown2, unknown3, unknown4, unknown5)
+    BattleCtrl(0x15, chrId, unknown1, unknown2, unknown3, unknown4, unknown5)
 
 def ChrSetAfterImageOff():
-    BattleChrCtrl(0x16)
+    BattleCtrl(0x16)
 
 def ChrCreateTempChar(tempChrIndex: int, srcChrId: int, model: str, ani: str = '') -> int:
     assert tempChrIndex <= 4
-    BattleChrCtrl(0x1E, tempChrIndex, srcChrId, model, ani)
+    BattleCtrl(0x1E, tempChrIndex, srcChrId, model, ani)
     return tempChrIndex + TempCharBaseId
 
 def ChrDeleteTempChar(tempChrIndex: int = 0xFFFF):
     assert tempChrIndex <= 4 or tempChrIndex == 0xFFFF
-    BattleChrCtrl(0x1F, tempChrIndex)
+    BattleCtrl(0x1F, tempChrIndex)
 
 def PlaySE(sound: int):
     OP_3B(0x00, (0xFF, sound, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
@@ -374,22 +386,28 @@ def IsBattleModelEqualTo(chrId: int, model: str):
     OP_7A(0x01, chrId, model)
 
 def ChrMoveToTarget():
-    BattleChrCtrl(0x34)
+    BattleCtrl(0x34)
 
 def ChrTurnDirection(chrId: int, targetId: int, unknown: float, speed: float = -1.0):
-    BattleChrCtrl(0x3C, chrId, targetId, unknown, speed)
+    BattleCtrl(0x3C, chrId, targetId, unknown, speed)
 
 def ChrSetPosByTarget(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int = 0, unknown3: int = 0):
-    BattleChrCtrl(0x33, chrId, targetId, x, y, z, speed, unknown2, unknown3)
+    BattleCtrl(0x33, chrId, targetId, x, y, z, speed, unknown2, unknown3)
 
 def ChrSetPosByTargetAsync(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int, unknown3: int):
-    BattleChrCtrl(0x39, chrId, targetId, x, y, z, speed, unknown2, unknown3)
+    BattleCtrl(0x39, chrId, targetId, x, y, z, speed, unknown2, unknown3)
 
 def ChrSetBattleFlags(chrId: int, flags: int):
-    BattleChrCtrl(0x0B, chrId, flags)
+    BattleCtrl(0x0B, chrId, flags)
 
 def ChrClearBattleFlags(chrId: int, flags: int):
-    BattleChrCtrl(0x0C, chrId, flags)
+    BattleCtrl(0x0C, chrId, flags)
 
 def ChrGetBattleFlags(chrId: int):
-    BattleChrCtrl(0x0D, chrId)
+    BattleCtrl(0x0D, chrId)
+
+def BattleSetFlags(flags: int):
+    BattleCtrl(0x19, flags)
+
+def BattleClearFlags(flags: int):
+    BattleCtrl(0x1A, flags)
