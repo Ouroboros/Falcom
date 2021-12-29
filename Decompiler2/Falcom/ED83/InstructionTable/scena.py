@@ -656,7 +656,7 @@ def Handler_36(ctx: InstructionHandlerContext):
 def Handler_3A(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
-            0x00: 'WfWLB',
+            0x00: 'HfWLB',
             0x01: 'WB',
             0x02: 'B',
             0x03: 'fWB',
@@ -760,7 +760,7 @@ def Handler_3C(ctx: InstructionHandlerContext):
 
 def Handler_40(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'WWfff' + {
+        return 'NWfff' + {
             0xFE00: 'fBW',
             0xFE01: 'fBW',
 

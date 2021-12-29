@@ -1782,7 +1782,7 @@ def Ani_EV_Load():
 # id: 0x0004 offset: 0x6D38
 @scena.Code('Ani_BT1_Load')
 def Ani_BT1_Load():
-    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000100)
+    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000100 | 2)
 
     Return()
 
@@ -1803,7 +1803,7 @@ def Ani_EV_Release():
 # id: 0x0007 offset: 0x6D5C
 @scena.Code('Ani_BT1_Release')
 def Ani_BT1_Release():
-    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000100)
+    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000100 | 2)
     OP_04(0x0B, 'SpringOn')
 
     Return()
@@ -2265,6 +2265,7 @@ def BtlDefaultFace():
 # id: 0x0022 offset: 0x7C00
 @scena.Code('AniBtlInit')
 def AniBtlInit():
+    Call(ScriptId.Current, 'Ani_BT1_Load')
     Call(ScriptId.BtlCom, 'AniBtlInit')
     ReleaseEffect(0xFFFE, 0x82)
     ReleaseEffect(0xFFFE, 0x83)
@@ -4291,7 +4292,7 @@ def AniBtlSCraft00():
     )
 
     ChrTurnDirection(0xFFFB, 0xFFEA, -1.0, 0.5)
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlFloat', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlFloat', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     ChrTargetsIterNext(0xFFFE)
     Sleep(1)
 
@@ -4724,7 +4725,7 @@ def AniBtlSCraft00():
     OP_5E(0x00, 0x0000, 0.8, 0x0096, 0x00C8, 0x0096, 0.5, 0xFFFB, 0.0, 1.0, 0.0)
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -4792,7 +4793,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     SetChrFace(0x03, 0xFFFB, 'B', '7', '', '#b', '0')
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -4864,7 +4865,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     SetChrFace(0x03, 0xFFFB, 'B', '7', '', '#b', '0')
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -4937,7 +4938,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     SetChrFace(0x03, 0xFFFB, 'B', '7', '', '#b', '0')
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -5152,7 +5153,7 @@ def AniBtlSCraft00():
         'loc_ED4D',
     )
 
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x01, 'AniBtlCrucifixion')
     SetChrFace(0x03, 0xFFFB, 'B', 'F', '', '#b', '0')
@@ -5183,7 +5184,7 @@ def AniBtlSCraft00():
         'loc_EE0F',
     )
 
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x01, 'AniBtlCrucifixion')
     SetChrFace(0x03, 0xFFFB, 'B', 'F', '', '#b', '0')
@@ -5214,7 +5215,7 @@ def AniBtlSCraft00():
         'loc_EED1',
     )
 
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x01, 'AniBtlCrucifixion')
     SetChrFace(0x03, 0xFFFB, 'B', 'F', '', '#b', '0')
@@ -6401,6 +6402,12 @@ def _AniBtlDamageVoice():
             type   = 0x0005,
             type2  = 0xFFFF,
             dword4 = 0x00001B72,
+            name   = '',
+        ),
+        ScenaAnimeClipItem(
+            type   = 0x0005,
+            type2  = 0xFFFF,
+            dword4 = 0x1B74,
             name   = '',
         ),
     )

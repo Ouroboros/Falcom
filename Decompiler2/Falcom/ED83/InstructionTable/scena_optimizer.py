@@ -67,7 +67,7 @@ optimizeTable = buildTable(
         0x2F,
         ('ChrLoadAnimeClipByCatalog',       {0: 0x06}),
         ('ChrReleaseAnimeClipByCatalog',    {0: 0x07}),
-        ('ChrPlayAnimeClipSeq',             {0: 0x08}),
+        ('ChrLoadMultipleAnimeClips',       {0: 0x08}),
         ('ChrChangeSkin',                   {0: 0x0A, 3: ''}),
     ),
     opt(
@@ -131,19 +131,27 @@ optimizeTable = buildTable(
         ('CameraSetPosByTarget',    {0: 0x14, 1: 0x03}),
     ),
     opt(
+        0x3A,
+        ('PlayBGM',                 {0: 0x00}),
+    ),
+    opt(
         0x49,
-        ('FormationAddMember',  {0: 0x00}),
-        ('FormationReset',      {0: 0x02}),
-        ('FormationSetLeader',  {0: 0x04}),
+        ('FormationAddMember',      {0: 0x00}),
+        ('FormationReset',          {0: 0x02}),
+        ('FormationSetLeader',      {0: 0x04}),
     ),
     opt(
         0x54,
-        ('SetBattleStyle',  {0: 0x4A}),
-        ('GetBattleStyle',  {0: 0x4B}),
+        ('SetBattleStyle',          {0: 0x4A}),
+        ('GetBattleStyle',          {0: 0x4B}),
     ),
     opt(
         0x7A,
-        ('IsBattleModelEqualTo',  {0: 0x01}),
+        ('IsBattleModelEqualTo',    {0: 0x01}),
+    ),
+    opt(
+        0xAC,
+        ('EventJump',               {0: 0x01}),
     ),
 )
 

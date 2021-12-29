@@ -119,12 +119,12 @@ def RandIf(probability, true_succ, false_succ):
         false,
     )
 
-    true_succ()
+    true_succ and true_succ()
     Jump(end)
 
     label(false)
 
-    false_succ()
+    false_succ and false_succ()
 
     label(end)
 
@@ -160,6 +160,12 @@ def SetBattleStyle(chrId: int, style: int):
 def GetBattleStyle(chrId: int):
     OP_54(0x4B, chrId)
 
+'''
+    event
+'''
+
+def EventJump(eventId: int):
+    OP_AC(0x01, eventId)
 
 '''
     debug
@@ -327,7 +333,7 @@ def ChrGetAbnormalCondition(chrId: int):
 def ChrGetAbnormalCondition2(chrId: int):
     BattleCtrl(0xB7, 0x05, chrId, 0, 0, 0, 0)
 
-def ChrPlayAnimeClipSeq(chrId: int, group: int, *animeClips: str):
+def ChrLoadMultipleAnimeClips(chrId: int, group: int, *animeClips: str):
     assert len(animeClips) <= 16
     if len(animeClips) < 16:
         animeClips: list = list(animeClips)
@@ -381,6 +387,15 @@ def PlaySE(sound: int):
 def PlayVoice(voice1: int, *, speed: float = 0.0):
     # OP_3B(0x3A, 0xFFFE, (0xFF, voice1, 0x0), (0xFF, voice2, 0x0), (0xFF, voice3, 0x0), (0xFF, voice4, 0x0))
     OP_3B(0x32, (0xFF, voice1, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, speed, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+
+def PlayBGM(bgm: int, arg2: float, arg3: int, arg4: int, arg5: int):
+    OP_3A(0x00, bgm, arg2, arg3, arg4, arg5)
+
+def PlayBGM2(bgm: int):
+    OP_3A(0x00, bgm, 1.0, 0x0000, 0x00000000, 0x00)
+
+def StopVoice(voice: int):
+    OP_3B(0x34, (0xFF, voice, 0x0))
 
 def IsBattleModelEqualTo(chrId: int, model: str):
     OP_7A(0x01, chrId, model)

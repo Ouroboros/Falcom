@@ -1,18 +1,14 @@
 from Falcom.ED83.Parser.scena_writer_helper import *
 
 def funcCallBack(name: str, f: Callable):
-    match name:
-        case 'AniBtlStart': return AniBtlStart
-        case 'AniBtlMove': return AniBtlMove
-        case 'AniBtlAttack': return AniBtlAttack
-        case 'AniBtlSCraft00': return AniBtlSCraft00
-        # case 'AniBtlAria': return AniBtlAria
-        # case '_AniBtlAria': return _AniBtlAria
-        # case 'AniBtlArts': return AniBtlArts
-        # case '_AniBtlArts': return _AniBtlArts
-        case _: pass
-
-    pass
+    return {
+        'AniBtlStart'       : AniBtlStart,
+        'AniBtlMove'        : AniBtlMove,
+        'AniBtlDamage'      : AniBtlDamage,
+        'AniBtlDamageVoice' : AniBtlDamageVoice,
+        'AniBtlAttack'      : AniBtlAttack,
+        'AniBtlSCraft00'    : AniBtlSCraft00,
+    }.get(name, None)
 
 def opcodeCallBack(opcode: int, *args):
     match opcode:
@@ -24,12 +20,14 @@ def opcodeCallBack(opcode: int, *args):
 def runCallBack(g):
     from Falcom.ED83.Parser.scena_writer import _gScena as scena
     for f in [
+        AniBtlWin,
         AniBtlCraft05_暴雨疾风枪,
         AniBtlCraftDamageAnimeX,
         AniBtlCraftDamageX,
         AniBtlCraftDamageXKnockBack,
         AniBtlPlayLanceEffects,
         AniBtlItem,
+        AniBtlEnemySBreak,
     ]:
         scena.Code(f.__name__.split('_', maxsplit = 1)[0])(f)
 
@@ -43,7 +41,7 @@ _init()
 
 def AniBtlMove2():
     PlayChrAnimeClip(0xFFFE, 'BTL_MOVE', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1, -1, -1, 0x00, 0x00)
-    OP_33(0x34)
+    BattleCtrl(0x34)
     Call(ScriptId.CurrentCharacter, 'AniBtlWait')
 
 def AniBtlCraft05_暴雨疾风枪():
@@ -61,18 +59,21 @@ def AniBtlCraft05_暴雨疾风枪():
     Call(ScriptId.Current, 'SpringOff')
     SetEndhookFunction('SpringOn', ScriptId.Current)
 
-    # Call(ScriptId.Current, 'AniAttachEQU442')
-    # # Call(ScriptId.Current, 'AniEv86000')
-    # # Call(ScriptId.Current, 'AniEv86000b')
-    # PlayChrAnimeClip(0xFFFE, 'ev86000a', 0x00, 0x00, 0x01, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
-    # Sleep(1000)
-    # PlayChrAnimeClip(0xFFFE, 'ev86000', 0x00, 0x01, 0x01, 0x00, 0x00, -2.0, -0.0333333, -0.0333333, 0.566667, 0x00, 0x00)
-    # Sleep(1000)
-    # PlayChrAnimeClip(0xFFFE, 'ev86000', 0x00, 0x00, 0x01, 0x00, 0x00, -2.0, -1.0, -1.0, -1.0, 0x00, 0x00)
-    # Sleep(1000)
+    if 0:
+        # Call(ScriptId.Current, 'AniAttachEQU442')
+        # # Call(ScriptId.Current, 'AniEv86000')
+        # # Call(ScriptId.Current, 'AniEv86000b')
+        # PlayChrAnimeClip(0xFFFE, 'ev86000a', 0x00, 0x00, 0x01, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+        # Sleep(1000)
+        # PlayChrAnimeClip(0xFFFE, 'ev86000', 0x00, 0x01, 0x01, 0x00, 0x00, -2.0, -0.0333333, -0.0333333, 0.566667, 0x00, 0x00)
+        # Sleep(1000)
+        # PlayChrAnimeClip(0xFFFE, 'ev86000', 0x00, 0x00, 0x01, 0x00, 0x00, -2.0, -1.0, -1.0, -1.0, 0x00, 0x00)
 
-    # Return()
-    # return
+        PlayChrAnimeClip(0xFFFE, 'EV79000', 0x01, 0x00, 0x00, 0x00, 0x00, -2.0, -1.0, -1.0, -1.0, 0x00, 0x00)
+        Sleep(1000)
+
+        Return()
+        return
 
     ChrTurnDirection(0xFFFE, 0xFFFB, 0.0, -1.0)
     ChrSavePosition(0xFFFE, 0x00000000)
@@ -239,7 +240,8 @@ def AniBtlCraftDamageXKnockBack():
 def AniBtlCraftDamageT(damage: bool, knockBack: float):
     def cb():
         status = AbnormalCondition.Deathblow | AbnormalCondition.Burn
-        ChrSetAbnormalCondition(0xFFFB, status, 0x000000FF, 0x000000FF, 0x00)
+        # ChrSetAbnormalCondition(0xFFFB, status, 0x000000FF, 0x000000FF, 0x00)
+        # ChrSetAbnormalCondition(0xFFFB, AbnormalCondition.Freeze, 1, 0)
         # SetChrPos(0xFFFB, 0.0, -100.0, 0.0, 0.0)
         # ChrPhysicsCtrl(0x00, 0xFFFB, 0xFFFFFFFF)
 
@@ -257,9 +259,63 @@ def AniBtlCraftDamageT(damage: bool, knockBack: float):
     Return()
 
 def AniBtlStart():
+    # ChrSetBattleFlags(0xFFFE, 1)
     OP_3B(0x39, 0xFFFE)
     # CreateThread(0xFFFF, 3, ScriptId.Current, 'AniBtlUndead')
     Return()
+
+def AniBtlWin():
+    CameraCtrl(0x00)
+    CameraSetPosByTarget(0xFFFE, '', 0.03, 0.96, 0.05, 0)
+    CameraRotateByTarget(0xFFFE, '', 0x03, 6.0, -29.0, 0.0, 0, 0x01)
+    CameraSetDistance(4.0, 0)
+    CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
+    CameraCtrl(0x05, 0x02, 2.5, 500)
+    OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0001)
+    OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0000)
+    OP_46(0x00, 0xFFFE, 0xFFFF, 0x0000)
+    # Call(ScriptId.Current, 'DefaultFace')
+    # Call(ScriptId.Current, 'ShowEquip')
+    # Call(ScriptId.Current, 'VoiceWin_select')
+    # Call(ScriptId.Current, 'VoiceWin_play')
+
+
+    Call(ScriptId.Current, 'AniAttachEQU442')
+    # # Call(ScriptId.Current, 'AniEv86000')
+    # # Call(ScriptId.Current, 'AniEv86000b')
+
+    # PlayChrAnimeClip(0xFFFE, 'BTL_WIN', 0x00, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+    # Sleep(66)
+    # OP_3B(0x00, (0xFF, 0xFB6, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+    # Sleep(1166)
+    # OP_3B(0x00, (0xFF, 0xFB6, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+    CameraSetPosByTarget(0xFFFE, '', -0.18, 1.33, 0.11, 0)
+    CameraRotateByTarget(0xFFFE, '', 0x03, 2.0, -8.0, 0.0, 0, 0x01)
+    CameraSetDistance(1.8, 0)
+    CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
+    OP_3B(0x39, 0xFFFE)
+    # Call(ScriptId.BtlSys, 'BattleWinCeline')
+    # WaitAnimeClip(0xFFFE, 0.0, 0x00)
+    Fade(0x65, 250, 1.0, 0x0000)
+    Fade(0xFE, 0)
+
+    CameraSetPosByTarget(0xFFFE, '', 0.0, 1.33, 0.02, 0)
+    CameraRotateByTarget(0xFFFE, '', 0x03, 0.0, 14.0, 0.0, 0, 0x01)
+    CameraSetDistance(2.9, 0)
+    CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
+
+    PlayVoice(0xA1C0)
+
+    # PlayChrAnimeClip(0xFFFE, 'BTL_WINa', 0x01, 0x01, 0x00, 0x00, 0x00, 0.0, -1.0, -1.0, -1.0, 0x00, 0x00)
+    PlayChrAnimeClip(0xFFFE, 'ev86000a', 0x00, 0x00, 0x01, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+    Sleep(1000)
+    PlayChrAnimeClip(0xFFFE, 'ev86000', 0x00, 0x01, 0x01, 0x00, 0x00, -2.0, -0.0333333, -0.0333333, 0.566667, 0x00, 0x00)
+    Sleep(1000)
+    PlayChrAnimeClip(0xFFFE, 'ev86000', 0x00, 0x00, 0x01, 0x00, 0x00, -2.0, -1.0, -1.0, -1.0, 0x00, 0x00)
+    Sleep(1000)
+
+    Return()
+
 
 def AniBtlMove():
     LoadEffect(0xFFFE, 0x90, 'battle/cr000_02_1.eff')
@@ -270,7 +326,7 @@ def AniBtlMove():
 
     CameraCtrl(0x00)
     ChrTurnDirection(0xFFFE, 0xFFF5, 0.0, 1)
-    OP_33(0x47)
+    BattleCtrl(0x47)
 
     PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_03', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, 0, 1.0, -1.0, 0x00, 0x00)
     # PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_02', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 10.4, 10.8, -1.0, 0x00, 0x00)
@@ -288,7 +344,7 @@ def AniBtlMove():
     CameraCtrl(0x0A, 0.02, 0.008, 0.0, 0x0064, 0x00FA, 0x0064, 0x0000, 0x0000, 0x00)
     ChrSetPosByTarget(0xFFFE, 0xFFF5, 0.0, 0.0, -1.5, 6.0, 0x00, 0x00)
     CameraCtrl(0x16, 0x02, 5.5, 0x03E8)
-    OP_33(0x3A, 0xFFFE)
+    BattleCtrl(0x3A, 0xFFFE)
 
     ChrSetAfterImageOff()
 
@@ -296,12 +352,12 @@ def AniBtlMove():
     PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_02', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 9.75, 11.8, -1.0, 0x00, 0x00)
     ChrSetPosByTarget(0xFFFE, 0xFFF5, 0.0, 0.0, 0.0, 2.0, 0x00, 0x00)
     Sleep(200)
-    OP_33(0x47)
+    BattleCtrl(0x47)
+
+    Call(ScriptId.BtlCom, 'ReleaseEffect')
 
     Call(ScriptId.Current, 'AniBtlWait')
     Sleep(500)
-
-    Call(ScriptId.BtlCom, 'ReleaseEffect')
 
     Return()
 
@@ -309,107 +365,20 @@ def AniBtlItem():
     Call(ScriptId.BtlCom, 'AniBtlItem')
     Return()
 
-def AniBtlAria():
-    OP_0C(0x00, 0x01)
-    OP_0E(0x00, 0x00, 0x00)
-    OP_0C(0x00, 0x01)
-    OP_0E(0x00, 0x01, 0x01)
-    OP_0C(0x00, 0x01)
-    OP_0E(0x00, 0x02, 0x02)
-    OP_0C(0x00, 0x01)
-    OP_0E(0x00, 0x03, 0x03)
-
-    If(
-        (
-            (Expr.Eval, "OP_33(0x62, 0xFFFE, 0x0E)"),
-            Expr.Return,
-        ),
-        'loc_12D7',
-    )
-
-    OP_33(0x3C, 0xFFFE, 0xFFFB, 0, 0.5)
-    EffectCtrl(0x0C, 0xFFFE, (0xFF, 0x7D9, 0x0), 0xFFFE, 0x00000021, (0xDD, ''), (0xEE, 0.0, 0x0), (0x33, 0x3, 0x0), (0xEE, 0.0, 0x0), 0, 0, 0, (0x33, 0x2, 0x0), (0x33, 0x2, 0x0), (0x33, 0x2, 0x0), 0x00)
-    PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT01_00', 0x01, 0x00, 0x00, 0x00, 0x00, 0, -1, -1, -1, 0x00, 0x00)
-    SetChrFace(0x03, 0xFFFE, '7', '0', '', '#b', '0')
-
-    Jump('loc_13DF')
-
-    def _loc_12D7(): pass
-
-    label('loc_12D7')
-
-    CameraCtrl(0x00)
-    OP_33(0x47)
-    OP_33(0x48, 0xFFFE)
-    OP_33(0x46, 0.25, 6, 15)
-    OP_33(0x3C, 0xFFFE, 0xFFFB, 0, 0.5)
-    EffectCtrl(0x0C, 0xFFFE, (0xFF, 0x7D9, 0x0), 0xFFFE, 0x00000021, (0xDD, ''), (0xEE, 0.0, 0x0), (0x33, 0x3, 0x0), (0xEE, 0.0, 0x0), 0, 0, 0, (0x33, 0x2, 0x0), (0x33, 0x2, 0x0), (0x33, 0x2, 0x0), 0x00)
-    OP_3B(0x00, (0xFF, 0x8B7E, 0x0), 1, (0xFF, 0x0, 0x0), 0, 0, 0x0000, 0xFFFF, 0, 0, 0, 0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
-    OP_3B(0x3A, 0xFFFE, (0x33, 0x0, 0x0), (0x33, 0x1, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0))
-    SetChrFace(0x03, 0xFFFE, '7', '1', '', '#b', '0')
-    PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT01_00', 0x01, 0x00, 0x00, 0x00, 0x00, 0.4, -1, -1, -1, 0x00, 0x00)
-    Sleep(1500)
-    SetChrFace(0x03, 0xFFFE, '7', '0', '', '#b', '0')
-
-    def _loc_13DF(): pass
-
-    label('loc_13DF')
+def AniBtlDamage():
+    BattleDamageAnime2(0xFFFB, 0.0, 0.0, 0x01)
+    SetChrFace(0x03, 0xFFFE, '2', '2[autoM2]', '0', '2', '0')
+    PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT02_01', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
+    Sleep(1000)
+    # WaitAnimeClip(0xFFFE, 0.0, 0x00)
 
     Return()
 
-def AniBtlArts():
-    OP_0C(0x00, 0x01)
-    OP_0E(0x00, 0x00, 0x00)
-    OP_0C(0x00, 0x01)
-    OP_0E(0x00, 0x01, 0x01)
-    CameraCtrl(0x00)
-    OP_33(0x47)
-    OP_33(0x48, 0xFFFE)
-    OP_33(0x46, 0.25, 6, 15)
-    OP_33(0x4B, 0x00FA, 0x03)
-    OP_33(0x3C, 0xFFFE, 0xFFF5, 0, 0.5)
-    PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT01_01', 0x00, 0x00, 0x00, 0x00, 0x00, 0.2, -1, -1, -1, 0x00, 0x00)
-    Sleep(400)
-    SetChrFace(0x03, 0xFFFE, '6', 'B', '', '#b', '0')
-    OP_3B(0x3A, 0xFFFE, (0x33, 0x0, 0x0), (0x33, 0x1, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0))
-    WaitAnimeClip(0xFFFE, 0, 0x00)
-    PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT01_01a', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1, -1, -1, 0x00, 0x00)
+def AniBtlDamageVoice():
+    def voice():
+        OP_3B(0x32, (0xFF, 0x1B74, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
-    If(
-        (
-            (Expr.GetChrWork, 0xFFFE, 0x8),
-            (Expr.PushLong, 0x3F),
-            Expr.Equ,
-            Expr.Return,
-        ),
-        'loc_1686',
-    )
-
-    EffectCtrl(0x0C, 0xFFFE, (0xFF, 0x7DB, 0x0), 0xFFE1, 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0, 0, 0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
-
-    Jump('loc_16D4')
-
-    def _loc_1686(): pass
-
-    label('loc_1686')
-
-    EffectCtrl(0x0C, 0xFFFE, (0xFF, 0x7DB, 0x0), 0xFFFE, 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0, 0, 0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
-
-    def _loc_16D4(): pass
-
-    label('loc_16D4')
-
-    OP_3B(0x00, (0xFF, 0x8B7F, 0x0), 1, (0xFF, 0x0, 0x0), 0, 0, 0x0000, 0xFFFF, 0, 0, 0, 0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
-    Sleep(500)
-    CameraCtrl(0x00)
-    OP_33(0x47)
-    OP_33(0x05, 0x00, '')
-    OP_33(0x06, 0x00)
-    SetChrFace(0x03, 0xFFFE, '0', '0', '', '#b', '0')
-    PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT01_01a', 0x00, 0x00, 0x00, 0x00, 0x00, 0.2, -1, -1, -1, 0x00, 0x00)
-    WaitAnimeClip(0xFFFE, 0, 0x00)
-    EffectCtrl(0x12, 0xFFFE, 0x07DB)
-
+    RandIf(30, voice, None)
     Return()
 
 def AniBtlAttack():
@@ -472,7 +441,7 @@ def AniBtlAttack():
     PlayEffect(0xFFFE, (0xFF, 0x82, 0x0), 0xFFFE, 0x0000000C, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.5, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 0.75, 0x0), (0xEE, 0.75, 0x0), (0xEE, 0.75, 0x0), 0xFF)
     OP_3B(0x00, (0xFF, 0x8FAE, 0x0), 0.7, (0xFF, 0x0, 0x0), 0.0, -2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x04B0, 0x012C, 0x0000, 0x04B0, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
-    BattleInitHit(0xFFFE)
+    # BattleInitHit(0xFFFE)
 
     CreateThread(0xFFFE, 0x02, ScriptId.Current, 'AniBtlAttackDamage01')
     CameraCtrl(0x0A, 0.3, 0.25, 0.1, 0x001E, 0x03E8, 0x0190, 0x0000, 0x0000, 0x00)
@@ -481,14 +450,14 @@ def AniBtlAttack():
     Sleep(166)
     WaitForThreadExit(0xFFFE, 0x02)
 
-    BattleInitHit(0xFFFE)
+    # BattleInitHit(0xFFFE)
 
     CreateThread(0xFFFE, 0x02, ScriptId.Current, 'AniBtlAttackDamage01')
     Sleep(166)
     Sleep(166)
     WaitForThreadExit(0xFFFE, 0x02)
 
-    BattleInitHit(0xFFFE)
+    # BattleInitHit(0xFFFE)
 
     CreateThread(0xFFFE, 0x02, ScriptId.Current, 'AniBtlAttackDamage01')
     Sleep(333)
@@ -572,7 +541,7 @@ def AniBtlSCraft00():
     )
 
     ChrTurnDirection(0xFFFB, 0xFFEA, -1.0, 0.5)
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlFloat', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlFloat', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     ChrTargetsIterNext(0xFFFE)
     Sleep(1)
 
@@ -1005,7 +974,7 @@ def AniBtlSCraft00():
     OP_5E(0x00, 0x0000, 0.8, 0x0096, 0x00C8, 0x0096, 0.5, 0xFFFB, 0.0, 1.0, 0.0)
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -1073,7 +1042,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     SetChrFace(0x03, 0xFFFB, 'B', '7', '', '#b', '0')
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -1145,7 +1114,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     SetChrFace(0x03, 0xFFFB, 'B', '7', '', '#b', '0')
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -1218,7 +1187,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     SetChrFace(0x03, 0xFFFB, 'B', '7', '', '#b', '0')
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -1433,7 +1402,7 @@ def AniBtlSCraft00():
         'loc_ED4D',
     )
 
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x01, 'AniBtlCrucifixion')
     SetChrFace(0x03, 0xFFFB, 'B', 'F', '', '#b', '0')
@@ -1464,7 +1433,7 @@ def AniBtlSCraft00():
         'loc_EE0F',
     )
 
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x01, 'AniBtlCrucifixion')
     SetChrFace(0x03, 0xFFFB, 'B', 'F', '', '#b', '0')
@@ -1495,7 +1464,7 @@ def AniBtlSCraft00():
         'loc_EED1',
     )
 
-    ChrPlayAnimeClipSeq(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x01, 'AniBtlCrucifixion')
     SetChrFace(0x03, 0xFFFB, 'B', 'F', '', '#b', '0')
@@ -1511,7 +1480,8 @@ def AniBtlSCraft00():
 
     # OP_3B(0x32, (0xFF, 0x1B6D, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
-    PlayVoice(0x90AE)
+    # PlayVoice(0x90AE)
+    PlayVoice(0xA1BD)
 
     ChrPhysicsCtrl(0x00, 0xFFF9, 0x00000040)
     ChrPhysicsCtrl(0x00, 0xFFF9, 0x00000020)
@@ -1814,5 +1784,73 @@ def AniBtlSCraft00():
     BattleCtrl(0x6C, 0x0001)
     Sleep(1)
     Call(ScriptId.BtlCom, 'AniBtlSCraftFinish')
+
+    Return()
+
+def AniBtlEnemySBreak():
+    daed = genLabel()
+
+    If(
+        (
+            (Expr.Eval, "BattleCtrl(0x62, 0xFFFE, 0x00)"),
+            (Expr.PushLong, 0),
+            Expr.Gtr,
+            Expr.Return,
+        ),
+        daed,
+    )
+
+    LoadEffect(0xFFFE, 0x9F, 'battle/cic033_0.eff')
+    Fade(0x65, 300, 1.0, 0x0000)
+    Fade(0xFE, 0)
+    ChrSetPhysicsFlags(0xFFF8, 0x00000040)
+    ChrSetPhysicsFlags(0xFFF8, 0x00000020)
+    ChrClearPhysicsFlags(0xFFFE, 0x00000040)
+    ChrClearPhysicsFlags(0xFFFE, 0x00000020)
+    OP_8B(0.3, 0.3, 0.3, 1.0, 4.2039e-43, 0x03)
+    ChrTargetsIterReset(0xFF, 0xFFFE)
+
+    BattleCtrl(0x47)
+    CameraCtrl(0x00)
+    CameraSetPosByTarget(0xFFFE, '', -0.08, 1.3, -0.01, 0)
+    CameraRotateByTarget(0xFFFE, '', 0x03, 11.0, -13.0, 0.0, 0, 0x01)
+    CameraSetDistance(2.7, 0)
+    CameraSetPosByTarget(0xFFFE, '', -0.08, 1.3, -0.01, 700)
+    CameraRotateByTarget(0xFFFE, '', 0x03, 3.0, -5.0, 0.0, 700, 0x01)
+    CameraSetDistance(3.2, 5000)
+
+    OP_BC(0x02, 0x0000, (0xFF, 0xFFFE, 0x0), 0x01)
+    OP_BC(0x09, 0x0000, (0xFF, 0xFFFE, 0x0), 0.0, -0.2, -10.0, 10.0, 0.0, 2.5, 0x0000, 3)
+    OP_BC(0x04, 0x0000, (0xFF, 0xFFFE, 0x0), 0x0000, 0x0003)
+
+    PlayVoice(0x1B5D)
+    Sleep(5000)
+
+    BattleCtrl(0xAE, 0xFFFE)
+    PlayEffect(0xFFFE, (0xFF, 0x9F, 0x0), 0xFFFF, 0x00000000, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
+    SetChrFace(0x03, 0xFFFE, '1,', '0[autoM0]', '0[autoB0]', '#b', '0')
+    PlaySE(0x8B7D)
+
+    OP_BC(0x0F, 0x0000, (0xFF, 0xFFFE, 0x0), 0xFFFE, 0x00000064, 'cutin')
+    OP_3B(0x00, (0xFF, 0x8B7C, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
+    OP_BC(0x08, 0x0000, (0xFF, 0xFFFF, 0x0), 0x00000001)
+    OP_38(0xFFFE, 0x00, 0x0A, 'BtlDefaultFace')
+    OP_38(0xFFFE, 0x00, 0x0A, 'AniBtlWait')
+    OP_38(0xFFFE, 0x00, 0x0A, 'ShowEquip')
+    OP_BC(0x08, 0x0000, (0xFF, 0xFFFF, 0x0), 0x00000000)
+    Sleep(1000)
+
+    Fade(0x65, 300, 1.0, 0x0000)
+    Fade(0xFE, 0)
+    OP_8B(1.0, 1.0, 1.0, 1.0, 4.2039e-43, 0x03)
+    ChrClearPhysicsFlags(0xFFF8, 0x00000040)
+    ChrClearPhysicsFlags(0xFFF8, 0x00000020)
+    OP_BC(0x05, 0x0000, (0xFF, 0xFFFE, 0x0), 0x012C, 0x0003)
+    OP_BC(0x03, 0x0000, (0xFF, 0xFFFE, 0x0))
+
+    BattleCtrl(0x47)
+    ReleaseEffect(0xFFFE, 0x9F)
+
+    label(daed)
 
     Return()

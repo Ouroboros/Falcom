@@ -4,7 +4,7 @@ sys.path.append(r'D:\Dev\Source\Falcom\Decompiler2')
 from Falcom.ED83.Parser.scena_writer_helper import *
 import a0000_hook
 
-scena = createScenaWriter('a0000.dat')
+scena = createScenaWriter('f6000.dat')
 
 # id: 0x0000 offset: 0xEA4
 @scena.Code('')
@@ -128,25 +128,25 @@ def func_11A8():
 def func_12A8():
     return ScenaBattleSetting(
         mapName        = '',
-        x              = 100.0,
-        y              = -100.0,
-        z              = 100.0,
-        direction      = 90.0,
+        x              = 0.0,
+        y              = -3.8,
+        z              = 15.0,
+        direction      = 0.0,
         length         = 20.0,
-        width          = -1.0,
+        width          = 20.0,
         word28         = 0,
         flags          = 0x00000000,
-        bgm            = 0,
-        dangerBGM      = 0,
+        bgm            = 465,
+        dangerBGM      = 465,
         word34         = 0,
         word36         = 0,
         atBonus        = 0,
-        battleScript   = '',
+        battleScript   = 'btl9000',
         monsterSet     = [
             ScenaBattleMonsterSet(
                 id                      = 0x0,
-                monsters                = ['mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1', 'mon999_1'],
-                encounterProbability    = [100, 100, 100, 100, 100, 100, 100, 100],
+                monsters                = ['chr500_0', '', '', '', '', '', '', ''],
+                encounterProbability    = [100, 0, 0, 0, 0, 0, 0, 0],
             ),
         ],
     )
@@ -647,7 +647,7 @@ def TK_Event_Jump_Test():
 
     label('loc_28D4')
 
-    EventJump(0x00009999)
+    OP_AC(0x01, 0x00009999)
     OP_14(0x04000000)
 
     Jump('loc_28F4')
@@ -656,7 +656,7 @@ def TK_Event_Jump_Test():
 
     label('loc_28E4')
 
-    EventJump(0x00009998)
+    OP_AC(0x01, 0x00009998)
     OP_14(0x04000000)
 
     Jump('loc_28F4')
@@ -11980,7 +11980,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F89B')
 
-    EventJump(0x00007000)
+    OP_AC(0x01, 0x00007000)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -11989,7 +11989,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F8AB')
 
-    EventJump(0x00001018)
+    OP_AC(0x01, 0x00001018)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -11998,7 +11998,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F8BB')
 
-    EventJump(0x00007002)
+    OP_AC(0x01, 0x00007002)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12007,7 +12007,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F8CB')
 
-    EventJump(0x00007003)
+    OP_AC(0x01, 0x00007003)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12016,7 +12016,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F8DB')
 
-    EventJump(0x00007004)
+    OP_AC(0x01, 0x00007004)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12025,7 +12025,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F8EB')
 
-    EventJump(0x00007005)
+    OP_AC(0x01, 0x00007005)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12034,7 +12034,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F8FB')
 
-    EventJump(0x00007006)
+    OP_AC(0x01, 0x00007006)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12043,7 +12043,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F90B')
 
-    EventJump(0x00007007)
+    OP_AC(0x01, 0x00007007)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12052,7 +12052,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F91B')
 
-    EventJump(0x00007008)
+    OP_AC(0x01, 0x00007008)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12061,7 +12061,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F92B')
 
-    EventJump(0x00007009)
+    OP_AC(0x01, 0x00007009)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12070,7 +12070,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F93B')
 
-    EventJump(0x0000700A)
+    OP_AC(0x01, 0x0000700A)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12079,7 +12079,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F94B')
 
-    EventJump(0x0000700B)
+    OP_AC(0x01, 0x0000700B)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12088,7 +12088,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F95B')
 
-    EventJump(0x0000700D)
+    OP_AC(0x01, 0x0000700D)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12097,7 +12097,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F96B')
 
-    EventJump(0x0000700E)
+    OP_AC(0x01, 0x0000700E)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12106,7 +12106,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F97B')
 
-    EventJump(0x0000700F)
+    OP_AC(0x01, 0x0000700F)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12115,7 +12115,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F98B')
 
-    EventJump(0x00007010)
+    OP_AC(0x01, 0x00007010)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12124,7 +12124,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F99B')
 
-    EventJump(0x00007011)
+    OP_AC(0x01, 0x00007011)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12133,7 +12133,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F9AB')
 
-    EventJump(0x00007012)
+    OP_AC(0x01, 0x00007012)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12142,7 +12142,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F9BB')
 
-    EventJump(0x00007013)
+    OP_AC(0x01, 0x00007013)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12151,7 +12151,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F9CB')
 
-    EventJump(0x00007014)
+    OP_AC(0x01, 0x00007014)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12160,7 +12160,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F9DB')
 
-    EventJump(0x00007015)
+    OP_AC(0x01, 0x00007015)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12169,7 +12169,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F9EB')
 
-    EventJump(0x00007016)
+    OP_AC(0x01, 0x00007016)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12194,7 +12194,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FA23')
 
-    EventJump(0x00007019)
+    OP_AC(0x01, 0x00007019)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12203,7 +12203,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FA33')
 
-    EventJump(0x0000701A)
+    OP_AC(0x01, 0x0000701A)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12212,7 +12212,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FA43')
 
-    EventJump(0x0000701B)
+    OP_AC(0x01, 0x0000701B)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12221,7 +12221,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FA53')
 
-    EventJump(0x0000701C)
+    OP_AC(0x01, 0x0000701C)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12230,7 +12230,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FA63')
 
-    EventJump(0x0000701D)
+    OP_AC(0x01, 0x0000701D)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12239,7 +12239,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FA73')
 
-    EventJump(0x0000701E)
+    OP_AC(0x01, 0x0000701E)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12248,7 +12248,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FA83')
 
-    EventJump(0x0000701F)
+    OP_AC(0x01, 0x0000701F)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12257,7 +12257,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FA93')
 
-    EventJump(0x00007020)
+    OP_AC(0x01, 0x00007020)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12266,7 +12266,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FAA3')
 
-    EventJump(0x00007021)
+    OP_AC(0x01, 0x00007021)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12275,7 +12275,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FAB3')
 
-    EventJump(0x00007022)
+    OP_AC(0x01, 0x00007022)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12284,7 +12284,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FAC3')
 
-    EventJump(0x00007023)
+    OP_AC(0x01, 0x00007023)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12293,7 +12293,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FAD3')
 
-    EventJump(0x00007024)
+    OP_AC(0x01, 0x00007024)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12302,7 +12302,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FAE3')
 
-    EventJump(0x00007025)
+    OP_AC(0x01, 0x00007025)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12327,7 +12327,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FB26')
 
-    EventJump(0x00007028)
+    OP_AC(0x01, 0x00007028)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12336,7 +12336,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FB36')
 
-    EventJump(0x00007029)
+    OP_AC(0x01, 0x00007029)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12345,7 +12345,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FB46')
 
-    EventJump(0x0000702A)
+    OP_AC(0x01, 0x0000702A)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12354,7 +12354,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FB56')
 
-    EventJump(0x00007100)
+    OP_AC(0x01, 0x00007100)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12363,7 +12363,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FB66')
 
-    EventJump(0x00007101)
+    OP_AC(0x01, 0x00007101)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12372,7 +12372,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FB76')
 
-    EventJump(0x00007102)
+    OP_AC(0x01, 0x00007102)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12381,7 +12381,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FB86')
 
-    EventJump(0x00007103)
+    OP_AC(0x01, 0x00007103)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12390,7 +12390,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FB96')
 
-    EventJump(0x00007104)
+    OP_AC(0x01, 0x00007104)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12399,7 +12399,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FBA6')
 
-    EventJump(0x00007105)
+    OP_AC(0x01, 0x00007105)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12408,7 +12408,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FBB6')
 
-    EventJump(0x00007106)
+    OP_AC(0x01, 0x00007106)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12417,7 +12417,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FBC6')
 
-    EventJump(0x00007107)
+    OP_AC(0x01, 0x00007107)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12426,7 +12426,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FBD6')
 
-    EventJump(0x00007108)
+    OP_AC(0x01, 0x00007108)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12435,7 +12435,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FBE6')
 
-    EventJump(0x00007109)
+    OP_AC(0x01, 0x00007109)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12444,7 +12444,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FBF6')
 
-    EventJump(0x0000710A)
+    OP_AC(0x01, 0x0000710A)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12453,7 +12453,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FC06')
 
-    EventJump(0x0000710B)
+    OP_AC(0x01, 0x0000710B)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12462,7 +12462,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FC16')
 
-    EventJump(0x0000710C)
+    OP_AC(0x01, 0x0000710C)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12471,7 +12471,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FC26')
 
-    EventJump(0x0000710D)
+    OP_AC(0x01, 0x0000710D)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12480,7 +12480,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FC36')
 
-    EventJump(0x0000710E)
+    OP_AC(0x01, 0x0000710E)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12489,7 +12489,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FC46')
 
-    EventJump(0x0000710F)
+    OP_AC(0x01, 0x0000710F)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12498,7 +12498,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FC56')
 
-    EventJump(0x00007110)
+    OP_AC(0x01, 0x00007110)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12507,7 +12507,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FC66')
 
-    EventJump(0x00007111)
+    OP_AC(0x01, 0x00007111)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12516,7 +12516,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FC76')
 
-    EventJump(0x00007112)
+    OP_AC(0x01, 0x00007112)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12525,7 +12525,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FC86')
 
-    EventJump(0x00007113)
+    OP_AC(0x01, 0x00007113)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12534,7 +12534,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FC96')
 
-    EventJump(0x00007114)
+    OP_AC(0x01, 0x00007114)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12543,7 +12543,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FCA6')
 
-    EventJump(0x00007115)
+    OP_AC(0x01, 0x00007115)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12552,7 +12552,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FCB6')
 
-    EventJump(0x00007116)
+    OP_AC(0x01, 0x00007116)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12561,7 +12561,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FCC6')
 
-    EventJump(0x00007117)
+    OP_AC(0x01, 0x00007117)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12570,7 +12570,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FCD6')
 
-    EventJump(0x00007118)
+    OP_AC(0x01, 0x00007118)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12579,7 +12579,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FCE6')
 
-    EventJump(0x00007119)
+    OP_AC(0x01, 0x00007119)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12588,7 +12588,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FCF6')
 
-    EventJump(0x0000711A)
+    OP_AC(0x01, 0x0000711A)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12597,7 +12597,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FD06')
 
-    EventJump(0x0000711B)
+    OP_AC(0x01, 0x0000711B)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12606,7 +12606,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FD16')
 
-    EventJump(0x0000711C)
+    OP_AC(0x01, 0x0000711C)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12615,7 +12615,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FD26')
 
-    EventJump(0x0000711D)
+    OP_AC(0x01, 0x0000711D)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12640,7 +12640,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FD5E')
 
-    EventJump(0x00007120)
+    OP_AC(0x01, 0x00007120)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12649,7 +12649,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FD6E')
 
-    EventJump(0x00007121)
+    OP_AC(0x01, 0x00007121)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12658,7 +12658,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FD7E')
 
-    EventJump(0x00007122)
+    OP_AC(0x01, 0x00007122)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12667,7 +12667,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FD8E')
 
-    EventJump(0x00007123)
+    OP_AC(0x01, 0x00007123)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12676,7 +12676,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FD9E')
 
-    EventJump(0x00007124)
+    OP_AC(0x01, 0x00007124)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12685,7 +12685,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FDAE')
 
-    EventJump(0x00007127)
+    OP_AC(0x01, 0x00007127)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12694,7 +12694,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FDBE')
 
-    EventJump(0x00007125)
+    OP_AC(0x01, 0x00007125)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12703,7 +12703,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FDCE')
 
-    EventJump(0x00007126)
+    OP_AC(0x01, 0x00007126)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12712,7 +12712,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FDDE')
 
-    EventJump(0x00007128)
+    OP_AC(0x01, 0x00007128)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12721,7 +12721,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FDEE')
 
-    EventJump(0x00007129)
+    OP_AC(0x01, 0x00007129)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12739,7 +12739,7 @@ def EV_DoJump_QS_SUB():
         ),
     )
 
-    EventJump(0x00007129)
+    OP_AC(0x01, 0x00007129)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12757,7 +12757,7 @@ def EV_DoJump_QS_SUB():
         ),
     )
 
-    EventJump(0x00007129)
+    OP_AC(0x01, 0x00007129)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12775,7 +12775,7 @@ def EV_DoJump_QS_SUB():
         ),
     )
 
-    EventJump(0x00007129)
+    OP_AC(0x01, 0x00007129)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12784,7 +12784,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FE49')
 
-    EventJump(0x0000712D)
+    OP_AC(0x01, 0x0000712D)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12793,7 +12793,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FE59')
 
-    EventJump(0x0000712E)
+    OP_AC(0x01, 0x0000712E)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12802,7 +12802,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FE69')
 
-    EventJump(0x0000712F)
+    OP_AC(0x01, 0x0000712F)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12811,7 +12811,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FE79')
 
-    EventJump(0x00007130)
+    OP_AC(0x01, 0x00007130)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12820,7 +12820,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FE89')
 
-    EventJump(0x00007131)
+    OP_AC(0x01, 0x00007131)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12829,7 +12829,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FE99')
 
-    EventJump(0x00007132)
+    OP_AC(0x01, 0x00007132)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12854,7 +12854,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FED8')
 
-    EventJump(0x00007135)
+    OP_AC(0x01, 0x00007135)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12863,7 +12863,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FEE8')
 
-    EventJump(0x00007136)
+    OP_AC(0x01, 0x00007136)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12872,7 +12872,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FEF8')
 
-    EventJump(0x00007138)
+    OP_AC(0x01, 0x00007138)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12881,7 +12881,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FF08')
 
-    EventJump(0x00007139)
+    OP_AC(0x01, 0x00007139)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12890,7 +12890,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FF18')
 
-    EventJump(0x0000713A)
+    OP_AC(0x01, 0x0000713A)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12899,7 +12899,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FF28')
 
-    EventJump(0x0000713B)
+    OP_AC(0x01, 0x0000713B)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -12908,7 +12908,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FF38')
 
-    EventJump(0x0000713C)
+    OP_AC(0x01, 0x0000713C)
     OP_14(0x04000000)
 
     Jump('loc_FF4D')
@@ -13174,7 +13174,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_106CE')
 
-    EventJump(0x00007200)
+    OP_AC(0x01, 0x00007200)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13183,7 +13183,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_106DE')
 
-    EventJump(0x00007201)
+    OP_AC(0x01, 0x00007201)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13192,7 +13192,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_106EE')
 
-    EventJump(0x00007202)
+    OP_AC(0x01, 0x00007202)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13201,7 +13201,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_106FE')
 
-    EventJump(0x00007203)
+    OP_AC(0x01, 0x00007203)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13210,7 +13210,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1070E')
 
-    EventJump(0x00007204)
+    OP_AC(0x01, 0x00007204)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13219,7 +13219,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1071E')
 
-    EventJump(0x00007204)
+    OP_AC(0x01, 0x00007204)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13228,7 +13228,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1072E')
 
-    EventJump(0x00007206)
+    OP_AC(0x01, 0x00007206)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13237,7 +13237,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1073E')
 
-    EventJump(0x00007207)
+    OP_AC(0x01, 0x00007207)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13246,7 +13246,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1074E')
 
-    EventJump(0x00007208)
+    OP_AC(0x01, 0x00007208)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13255,7 +13255,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1075E')
 
-    EventJump(0x00007209)
+    OP_AC(0x01, 0x00007209)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13264,7 +13264,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1076E')
 
-    EventJump(0x0000720A)
+    OP_AC(0x01, 0x0000720A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13273,7 +13273,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1077E')
 
-    EventJump(0x0000720B)
+    OP_AC(0x01, 0x0000720B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13282,7 +13282,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1078E')
 
-    EventJump(0x0000720C)
+    OP_AC(0x01, 0x0000720C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13291,7 +13291,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1079E')
 
-    EventJump(0x0000720D)
+    OP_AC(0x01, 0x0000720D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13300,7 +13300,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_107AE')
 
-    EventJump(0x0000720E)
+    OP_AC(0x01, 0x0000720E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13309,7 +13309,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_107BE')
 
-    EventJump(0x0000720F)
+    OP_AC(0x01, 0x0000720F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13318,7 +13318,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_107CE')
 
-    EventJump(0x00007210)
+    OP_AC(0x01, 0x00007210)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13327,7 +13327,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_107DE')
 
-    EventJump(0x00007211)
+    OP_AC(0x01, 0x00007211)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13336,7 +13336,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_107EE')
 
-    EventJump(0x00007212)
+    OP_AC(0x01, 0x00007212)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13345,7 +13345,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_107FE')
 
-    EventJump(0x00007213)
+    OP_AC(0x01, 0x00007213)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13354,7 +13354,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1080E')
 
-    EventJump(0x00007214)
+    OP_AC(0x01, 0x00007214)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13363,7 +13363,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1081E')
 
-    EventJump(0x00007215)
+    OP_AC(0x01, 0x00007215)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13372,7 +13372,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1082E')
 
-    EventJump(0x00007216)
+    OP_AC(0x01, 0x00007216)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13381,7 +13381,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1083E')
 
-    EventJump(0x00007217)
+    OP_AC(0x01, 0x00007217)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13390,7 +13390,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1084E')
 
-    EventJump(0x00007218)
+    OP_AC(0x01, 0x00007218)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13399,7 +13399,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1085E')
 
-    EventJump(0x00007219)
+    OP_AC(0x01, 0x00007219)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13408,7 +13408,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1086E')
 
-    EventJump(0x0000721A)
+    OP_AC(0x01, 0x0000721A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13417,7 +13417,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1087E')
 
-    EventJump(0x00007224)
+    OP_AC(0x01, 0x00007224)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13426,7 +13426,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1088E')
 
-    EventJump(0x00007225)
+    OP_AC(0x01, 0x00007225)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13435,7 +13435,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1089E')
 
-    EventJump(0x00007226)
+    OP_AC(0x01, 0x00007226)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13444,7 +13444,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_108AE')
 
-    EventJump(0x0000721B)
+    OP_AC(0x01, 0x0000721B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13453,7 +13453,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_108BE')
 
-    EventJump(0x0000721C)
+    OP_AC(0x01, 0x0000721C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13462,7 +13462,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_108CE')
 
-    EventJump(0x0000721D)
+    OP_AC(0x01, 0x0000721D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13471,7 +13471,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_108DE')
 
-    EventJump(0x0000721E)
+    OP_AC(0x01, 0x0000721E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13480,7 +13480,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_108EE')
 
-    EventJump(0x0000721F)
+    OP_AC(0x01, 0x0000721F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13489,7 +13489,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_108FE')
 
-    EventJump(0x00007220)
+    OP_AC(0x01, 0x00007220)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13498,7 +13498,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1090E')
 
-    EventJump(0x00007221)
+    OP_AC(0x01, 0x00007221)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13507,7 +13507,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1091E')
 
-    EventJump(0x00007222)
+    OP_AC(0x01, 0x00007222)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13516,7 +13516,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1092E')
 
-    EventJump(0x00007223)
+    OP_AC(0x01, 0x00007223)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13533,7 +13533,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10952')
 
-    EventJump(0x00007228)
+    OP_AC(0x01, 0x00007228)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13542,7 +13542,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10962')
 
-    EventJump(0x00007229)
+    OP_AC(0x01, 0x00007229)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13559,7 +13559,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10986')
 
-    EventJump(0x0000722B)
+    OP_AC(0x01, 0x0000722B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13568,7 +13568,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10996')
 
-    EventJump(0x0000722C)
+    OP_AC(0x01, 0x0000722C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13577,7 +13577,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_109A6')
 
-    EventJump(0x0000722D)
+    OP_AC(0x01, 0x0000722D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13586,7 +13586,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_109B6')
 
-    EventJump(0x0000722E)
+    OP_AC(0x01, 0x0000722E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13595,7 +13595,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_109C6')
 
-    EventJump(0x0000722F)
+    OP_AC(0x01, 0x0000722F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13604,7 +13604,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_109D6')
 
-    EventJump(0x00007230)
+    OP_AC(0x01, 0x00007230)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13613,7 +13613,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_109E6')
 
-    EventJump(0x00007231)
+    OP_AC(0x01, 0x00007231)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13622,7 +13622,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_109F6')
 
-    EventJump(0x00007232)
+    OP_AC(0x01, 0x00007232)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13631,7 +13631,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10A06')
 
-    EventJump(0x00007233)
+    OP_AC(0x01, 0x00007233)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13640,7 +13640,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10A16')
 
-    EventJump(0x00007234)
+    OP_AC(0x01, 0x00007234)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13649,7 +13649,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10A26')
 
-    EventJump(0x00007235)
+    OP_AC(0x01, 0x00007235)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13658,7 +13658,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10A36')
 
-    EventJump(0x00007236)
+    OP_AC(0x01, 0x00007236)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13667,7 +13667,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10A46')
 
-    EventJump(0x00007237)
+    OP_AC(0x01, 0x00007237)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13676,7 +13676,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10A56')
 
-    EventJump(0x00007238)
+    OP_AC(0x01, 0x00007238)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13685,7 +13685,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10A66')
 
-    EventJump(0x00007239)
+    OP_AC(0x01, 0x00007239)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13694,7 +13694,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10A76')
 
-    EventJump(0x0000723A)
+    OP_AC(0x01, 0x0000723A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13703,7 +13703,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10A86')
 
-    EventJump(0x0000723B)
+    OP_AC(0x01, 0x0000723B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13712,7 +13712,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10A96')
 
-    EventJump(0x0000723D)
+    OP_AC(0x01, 0x0000723D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13721,7 +13721,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10AA6')
 
-    EventJump(0x0000723E)
+    OP_AC(0x01, 0x0000723E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13730,7 +13730,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10AB6')
 
-    EventJump(0x0000723F)
+    OP_AC(0x01, 0x0000723F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13739,7 +13739,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10AC6')
 
-    EventJump(0x00007240)
+    OP_AC(0x01, 0x00007240)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13748,7 +13748,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10AD6')
 
-    EventJump(0x00007241)
+    OP_AC(0x01, 0x00007241)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13757,7 +13757,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10AE6')
 
-    EventJump(0x00007242)
+    OP_AC(0x01, 0x00007242)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13766,7 +13766,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10AF6')
 
-    EventJump(0x00007243)
+    OP_AC(0x01, 0x00007243)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13775,7 +13775,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10B06')
 
-    EventJump(0x00007244)
+    OP_AC(0x01, 0x00007244)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13784,7 +13784,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10B16')
 
-    EventJump(0x00007245)
+    OP_AC(0x01, 0x00007245)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13793,7 +13793,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10B26')
 
-    EventJump(0x00007246)
+    OP_AC(0x01, 0x00007246)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13802,7 +13802,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10B36')
 
-    EventJump(0x00007247)
+    OP_AC(0x01, 0x00007247)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13811,7 +13811,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10B46')
 
-    EventJump(0x00007248)
+    OP_AC(0x01, 0x00007248)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13820,7 +13820,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10B56')
 
-    EventJump(0x00007249)
+    OP_AC(0x01, 0x00007249)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13829,7 +13829,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10B66')
 
-    EventJump(0x0000724A)
+    OP_AC(0x01, 0x0000724A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13838,7 +13838,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10B76')
 
-    EventJump(0x0000724B)
+    OP_AC(0x01, 0x0000724B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13847,7 +13847,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10B86')
 
-    EventJump(0x0000724C)
+    OP_AC(0x01, 0x0000724C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13856,7 +13856,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10B96')
 
-    EventJump(0x0000724D)
+    OP_AC(0x01, 0x0000724D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13865,7 +13865,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10BA6')
 
-    EventJump(0x0000724E)
+    OP_AC(0x01, 0x0000724E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13874,7 +13874,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10BB6')
 
-    EventJump(0x0000724F)
+    OP_AC(0x01, 0x0000724F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13883,7 +13883,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10BC6')
 
-    EventJump(0x00007250)
+    OP_AC(0x01, 0x00007250)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13892,7 +13892,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10BD6')
 
-    EventJump(0x00007251)
+    OP_AC(0x01, 0x00007251)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13901,7 +13901,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10BE6')
 
-    EventJump(0x00007252)
+    OP_AC(0x01, 0x00007252)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13910,7 +13910,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10BF6')
 
-    EventJump(0x00007253)
+    OP_AC(0x01, 0x00007253)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13919,7 +13919,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10C06')
 
-    EventJump(0x00007254)
+    OP_AC(0x01, 0x00007254)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13928,7 +13928,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10C16')
 
-    EventJump(0x00007255)
+    OP_AC(0x01, 0x00007255)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13937,7 +13937,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10C26')
 
-    EventJump(0x00007256)
+    OP_AC(0x01, 0x00007256)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13946,7 +13946,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10C36')
 
-    EventJump(0x00007257)
+    OP_AC(0x01, 0x00007257)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13955,7 +13955,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10C46')
 
-    EventJump(0x00007258)
+    OP_AC(0x01, 0x00007258)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13964,7 +13964,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10C56')
 
-    EventJump(0x00007259)
+    OP_AC(0x01, 0x00007259)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13973,7 +13973,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10C66')
 
-    EventJump(0x0000725A)
+    OP_AC(0x01, 0x0000725A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13982,7 +13982,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10C76')
 
-    EventJump(0x0000725B)
+    OP_AC(0x01, 0x0000725B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -13991,7 +13991,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10C86')
 
-    EventJump(0x0000725C)
+    OP_AC(0x01, 0x0000725C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14000,7 +14000,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10C96')
 
-    EventJump(0x0000725D)
+    OP_AC(0x01, 0x0000725D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14009,7 +14009,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10CA6')
 
-    EventJump(0x0000725E)
+    OP_AC(0x01, 0x0000725E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14018,7 +14018,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10CB6')
 
-    EventJump(0x0000725F)
+    OP_AC(0x01, 0x0000725F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14027,7 +14027,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10CC6')
 
-    EventJump(0x00007260)
+    OP_AC(0x01, 0x00007260)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14036,7 +14036,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10CD6')
 
-    EventJump(0x00007261)
+    OP_AC(0x01, 0x00007261)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14045,7 +14045,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10CE6')
 
-    EventJump(0x00007262)
+    OP_AC(0x01, 0x00007262)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14054,7 +14054,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10CF6')
 
-    EventJump(0x00007263)
+    OP_AC(0x01, 0x00007263)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14063,7 +14063,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10D06')
 
-    EventJump(0x00007264)
+    OP_AC(0x01, 0x00007264)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14072,7 +14072,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10D16')
 
-    EventJump(0x00007265)
+    OP_AC(0x01, 0x00007265)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14081,7 +14081,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10D26')
 
-    EventJump(0x00007266)
+    OP_AC(0x01, 0x00007266)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14090,7 +14090,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10D36')
 
-    EventJump(0x00007267)
+    OP_AC(0x01, 0x00007267)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14099,7 +14099,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10D46')
 
-    EventJump(0x00007268)
+    OP_AC(0x01, 0x00007268)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14108,7 +14108,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10D56')
 
-    EventJump(0x00007269)
+    OP_AC(0x01, 0x00007269)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14117,7 +14117,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10D66')
 
-    EventJump(0x0000726A)
+    OP_AC(0x01, 0x0000726A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14126,7 +14126,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10D76')
 
-    EventJump(0x0000726B)
+    OP_AC(0x01, 0x0000726B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14135,7 +14135,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10D86')
 
-    EventJump(0x0000726C)
+    OP_AC(0x01, 0x0000726C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14144,7 +14144,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10D96')
 
-    EventJump(0x0000726D)
+    OP_AC(0x01, 0x0000726D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14153,7 +14153,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10DA6')
 
-    EventJump(0x00007300)
+    OP_AC(0x01, 0x00007300)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14162,7 +14162,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10DB6')
 
-    EventJump(0x00007301)
+    OP_AC(0x01, 0x00007301)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14171,7 +14171,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10DC6')
 
-    EventJump(0x00007302)
+    OP_AC(0x01, 0x00007302)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14180,7 +14180,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10DD6')
 
-    EventJump(0x00007303)
+    OP_AC(0x01, 0x00007303)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14189,7 +14189,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10DE6')
 
-    EventJump(0x00007304)
+    OP_AC(0x01, 0x00007304)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14198,7 +14198,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10DF6')
 
-    EventJump(0x00007305)
+    OP_AC(0x01, 0x00007305)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14207,7 +14207,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10E06')
 
-    EventJump(0x00007306)
+    OP_AC(0x01, 0x00007306)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14216,7 +14216,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10E16')
 
-    EventJump(0x00007307)
+    OP_AC(0x01, 0x00007307)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14225,7 +14225,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10E26')
 
-    EventJump(0x00007308)
+    OP_AC(0x01, 0x00007308)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14234,7 +14234,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10E36')
 
-    EventJump(0x00007309)
+    OP_AC(0x01, 0x00007309)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14243,7 +14243,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10E46')
 
-    EventJump(0x0000730A)
+    OP_AC(0x01, 0x0000730A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14252,7 +14252,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10E56')
 
-    EventJump(0x0000730B)
+    OP_AC(0x01, 0x0000730B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14261,7 +14261,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10E66')
 
-    EventJump(0x0000730C)
+    OP_AC(0x01, 0x0000730C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14270,7 +14270,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10E76')
 
-    EventJump(0x0000730D)
+    OP_AC(0x01, 0x0000730D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14279,7 +14279,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10E86')
 
-    EventJump(0x0000730E)
+    OP_AC(0x01, 0x0000730E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14288,7 +14288,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10E96')
 
-    EventJump(0x0000730F)
+    OP_AC(0x01, 0x0000730F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14297,7 +14297,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10EA6')
 
-    EventJump(0x00007310)
+    OP_AC(0x01, 0x00007310)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14306,7 +14306,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10EB6')
 
-    EventJump(0x00007315)
+    OP_AC(0x01, 0x00007315)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14315,7 +14315,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10EC6')
 
-    EventJump(0x00007316)
+    OP_AC(0x01, 0x00007316)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14324,7 +14324,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10ED6')
 
-    EventJump(0x00007317)
+    OP_AC(0x01, 0x00007317)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14333,7 +14333,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10EE6')
 
-    EventJump(0x00007318)
+    OP_AC(0x01, 0x00007318)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14342,7 +14342,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10EF6')
 
-    EventJump(0x00007319)
+    OP_AC(0x01, 0x00007319)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14351,7 +14351,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10F06')
 
-    EventJump(0x0000731A)
+    OP_AC(0x01, 0x0000731A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14360,7 +14360,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10F16')
 
-    EventJump(0x0000731B)
+    OP_AC(0x01, 0x0000731B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14369,7 +14369,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10F26')
 
-    EventJump(0x0000731C)
+    OP_AC(0x01, 0x0000731C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14378,7 +14378,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10F36')
 
-    EventJump(0x0000731D)
+    OP_AC(0x01, 0x0000731D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14387,7 +14387,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10F46')
 
-    EventJump(0x0000731E)
+    OP_AC(0x01, 0x0000731E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14396,7 +14396,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10F56')
 
-    EventJump(0x0000731F)
+    OP_AC(0x01, 0x0000731F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14405,7 +14405,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10F66')
 
-    EventJump(0x00007320)
+    OP_AC(0x01, 0x00007320)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14414,7 +14414,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10F76')
 
-    EventJump(0x00007321)
+    OP_AC(0x01, 0x00007321)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14423,7 +14423,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10F86')
 
-    EventJump(0x00007322)
+    OP_AC(0x01, 0x00007322)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14432,7 +14432,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10F96')
 
-    EventJump(0x00007323)
+    OP_AC(0x01, 0x00007323)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14449,7 +14449,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10FBA')
 
-    EventJump(0x00007325)
+    OP_AC(0x01, 0x00007325)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14458,7 +14458,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10FCA')
 
-    EventJump(0x00007326)
+    OP_AC(0x01, 0x00007326)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14467,7 +14467,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10FDA')
 
-    EventJump(0x00007327)
+    OP_AC(0x01, 0x00007327)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14484,7 +14484,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10FFE')
 
-    EventJump(0x00007329)
+    OP_AC(0x01, 0x00007329)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14493,7 +14493,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1100E')
 
-    EventJump(0x0000732A)
+    OP_AC(0x01, 0x0000732A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14502,7 +14502,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1101E')
 
-    EventJump(0x0000732B)
+    OP_AC(0x01, 0x0000732B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14511,7 +14511,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1102E')
 
-    EventJump(0x0000732C)
+    OP_AC(0x01, 0x0000732C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14520,7 +14520,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1103E')
 
-    EventJump(0x0000732D)
+    OP_AC(0x01, 0x0000732D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14529,7 +14529,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1104E')
 
-    EventJump(0x0000732E)
+    OP_AC(0x01, 0x0000732E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14538,7 +14538,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1105E')
 
-    EventJump(0x0000732F)
+    OP_AC(0x01, 0x0000732F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14547,7 +14547,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1106E')
 
-    EventJump(0x00007330)
+    OP_AC(0x01, 0x00007330)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14556,7 +14556,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1107E')
 
-    EventJump(0x00007331)
+    OP_AC(0x01, 0x00007331)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14565,7 +14565,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1108E')
 
-    EventJump(0x00007332)
+    OP_AC(0x01, 0x00007332)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14574,7 +14574,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1109E')
 
-    EventJump(0x00007333)
+    OP_AC(0x01, 0x00007333)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14583,7 +14583,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_110AE')
 
-    EventJump(0x00007334)
+    OP_AC(0x01, 0x00007334)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14592,7 +14592,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_110BE')
 
-    EventJump(0x00007335)
+    OP_AC(0x01, 0x00007335)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14601,7 +14601,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_110CE')
 
-    EventJump(0x00007336)
+    OP_AC(0x01, 0x00007336)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14610,7 +14610,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_110DE')
 
-    EventJump(0x00007338)
+    OP_AC(0x01, 0x00007338)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14619,7 +14619,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_110EE')
 
-    EventJump(0x00007339)
+    OP_AC(0x01, 0x00007339)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14628,7 +14628,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_110FE')
 
-    EventJump(0x0000733A)
+    OP_AC(0x01, 0x0000733A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14637,7 +14637,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1110E')
 
-    EventJump(0x0000733B)
+    OP_AC(0x01, 0x0000733B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14646,7 +14646,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1111E')
 
-    EventJump(0x0000733C)
+    OP_AC(0x01, 0x0000733C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14655,7 +14655,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1112E')
 
-    EventJump(0x0000733D)
+    OP_AC(0x01, 0x0000733D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14664,7 +14664,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1113E')
 
-    EventJump(0x0000733E)
+    OP_AC(0x01, 0x0000733E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14673,7 +14673,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1114E')
 
-    EventJump(0x0000733F)
+    OP_AC(0x01, 0x0000733F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14682,7 +14682,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1115E')
 
-    EventJump(0x00007340)
+    OP_AC(0x01, 0x00007340)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14691,7 +14691,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1116E')
 
-    EventJump(0x00007341)
+    OP_AC(0x01, 0x00007341)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14700,7 +14700,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1117E')
 
-    EventJump(0x00007342)
+    OP_AC(0x01, 0x00007342)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14709,7 +14709,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1118E')
 
-    EventJump(0x00007343)
+    OP_AC(0x01, 0x00007343)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14718,7 +14718,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1119E')
 
-    EventJump(0x00007344)
+    OP_AC(0x01, 0x00007344)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14727,7 +14727,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_111AE')
 
-    EventJump(0x00007345)
+    OP_AC(0x01, 0x00007345)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14736,7 +14736,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_111BE')
 
-    EventJump(0x00007346)
+    OP_AC(0x01, 0x00007346)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14745,7 +14745,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_111CE')
 
-    EventJump(0x00007347)
+    OP_AC(0x01, 0x00007347)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14754,7 +14754,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_111DE')
 
-    EventJump(0x00007348)
+    OP_AC(0x01, 0x00007348)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14763,7 +14763,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_111EE')
 
-    EventJump(0x00007349)
+    OP_AC(0x01, 0x00007349)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14772,7 +14772,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_111FE')
 
-    EventJump(0x0000734A)
+    OP_AC(0x01, 0x0000734A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14781,7 +14781,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1120E')
 
-    EventJump(0x0000734B)
+    OP_AC(0x01, 0x0000734B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14790,7 +14790,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1121E')
 
-    EventJump(0x0000734C)
+    OP_AC(0x01, 0x0000734C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14799,7 +14799,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1122E')
 
-    EventJump(0x0000734D)
+    OP_AC(0x01, 0x0000734D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14808,7 +14808,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1123E')
 
-    EventJump(0x0000734E)
+    OP_AC(0x01, 0x0000734E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14817,7 +14817,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1124E')
 
-    EventJump(0x0000734F)
+    OP_AC(0x01, 0x0000734F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14826,7 +14826,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1125E')
 
-    EventJump(0x00007350)
+    OP_AC(0x01, 0x00007350)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14835,7 +14835,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1126E')
 
-    EventJump(0x00007351)
+    OP_AC(0x01, 0x00007351)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14844,7 +14844,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1127E')
 
-    EventJump(0x00007352)
+    OP_AC(0x01, 0x00007352)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14853,7 +14853,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1128E')
 
-    EventJump(0x00007353)
+    OP_AC(0x01, 0x00007353)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14862,7 +14862,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1129E')
 
-    EventJump(0x00007354)
+    OP_AC(0x01, 0x00007354)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14871,7 +14871,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_112AE')
 
-    EventJump(0x00007355)
+    OP_AC(0x01, 0x00007355)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14880,7 +14880,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_112BE')
 
-    EventJump(0x00007356)
+    OP_AC(0x01, 0x00007356)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14889,7 +14889,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_112CE')
 
-    EventJump(0x00007357)
+    OP_AC(0x01, 0x00007357)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14898,7 +14898,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_112DE')
 
-    EventJump(0x00007358)
+    OP_AC(0x01, 0x00007358)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14915,7 +14915,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11309')
 
-    EventJump(0x0000735A)
+    OP_AC(0x01, 0x0000735A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14924,7 +14924,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11319')
 
-    EventJump(0x0000735B)
+    OP_AC(0x01, 0x0000735B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14933,7 +14933,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11329')
 
-    EventJump(0x0000735C)
+    OP_AC(0x01, 0x0000735C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14942,7 +14942,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11339')
 
-    EventJump(0x0000735D)
+    OP_AC(0x01, 0x0000735D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14951,7 +14951,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11349')
 
-    EventJump(0x0000735E)
+    OP_AC(0x01, 0x0000735E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14960,7 +14960,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11359')
 
-    EventJump(0x0000735F)
+    OP_AC(0x01, 0x0000735F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14969,7 +14969,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11369')
 
-    EventJump(0x00007360)
+    OP_AC(0x01, 0x00007360)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -14994,7 +14994,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_113A1')
 
-    EventJump(0x00007363)
+    OP_AC(0x01, 0x00007363)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15003,7 +15003,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_113B1')
 
-    EventJump(0x00007364)
+    OP_AC(0x01, 0x00007364)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15012,7 +15012,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_113C1')
 
-    EventJump(0x00007365)
+    OP_AC(0x01, 0x00007365)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15021,7 +15021,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_113D1')
 
-    EventJump(0x00007366)
+    OP_AC(0x01, 0x00007366)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15030,7 +15030,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_113E1')
 
-    EventJump(0x00007368)
+    OP_AC(0x01, 0x00007368)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15039,7 +15039,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_113F1')
 
-    EventJump(0x00007369)
+    OP_AC(0x01, 0x00007369)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15048,7 +15048,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11401')
 
-    EventJump(0x0000736A)
+    OP_AC(0x01, 0x0000736A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15057,7 +15057,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11411')
 
-    EventJump(0x0000736B)
+    OP_AC(0x01, 0x0000736B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15066,7 +15066,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11421')
 
-    EventJump(0x0000736C)
+    OP_AC(0x01, 0x0000736C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15075,7 +15075,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11431')
 
-    EventJump(0x0000736D)
+    OP_AC(0x01, 0x0000736D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15084,7 +15084,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11441')
 
-    EventJump(0x0000736E)
+    OP_AC(0x01, 0x0000736E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15093,7 +15093,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11451')
 
-    EventJump(0x0000736F)
+    OP_AC(0x01, 0x0000736F)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15102,7 +15102,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11461')
 
-    EventJump(0x00007370)
+    OP_AC(0x01, 0x00007370)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15111,7 +15111,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11471')
 
-    EventJump(0x00007371)
+    OP_AC(0x01, 0x00007371)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15120,7 +15120,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11481')
 
-    EventJump(0x00007372)
+    OP_AC(0x01, 0x00007372)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15129,7 +15129,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11491')
 
-    EventJump(0x00007373)
+    OP_AC(0x01, 0x00007373)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15138,7 +15138,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_114A1')
 
-    EventJump(0x00007374)
+    OP_AC(0x01, 0x00007374)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15147,7 +15147,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_114B1')
 
-    EventJump(0x00007375)
+    OP_AC(0x01, 0x00007375)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15156,7 +15156,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_114C1')
 
-    EventJump(0x00007376)
+    OP_AC(0x01, 0x00007376)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15165,7 +15165,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_114D1')
 
-    EventJump(0x00007377)
+    OP_AC(0x01, 0x00007377)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15174,7 +15174,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_114E1')
 
-    EventJump(0x00007378)
+    OP_AC(0x01, 0x00007378)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15183,7 +15183,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_114F1')
 
-    EventJump(0x00007379)
+    OP_AC(0x01, 0x00007379)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15192,7 +15192,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11501')
 
-    EventJump(0x0000737A)
+    OP_AC(0x01, 0x0000737A)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15201,7 +15201,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11511')
 
-    EventJump(0x0000737B)
+    OP_AC(0x01, 0x0000737B)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15210,7 +15210,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11521')
 
-    EventJump(0x0000737C)
+    OP_AC(0x01, 0x0000737C)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15219,7 +15219,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11531')
 
-    EventJump(0x0000737D)
+    OP_AC(0x01, 0x0000737D)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15228,7 +15228,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11541')
 
-    EventJump(0x0000737E)
+    OP_AC(0x01, 0x0000737E)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15253,7 +15253,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1157D')
 
-    EventJump(0x00007402)
+    OP_AC(0x01, 0x00007402)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15262,7 +15262,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1158D')
 
-    EventJump(0x00007403)
+    OP_AC(0x01, 0x00007403)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15271,7 +15271,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1159D')
 
-    EventJump(0x00007404)
+    OP_AC(0x01, 0x00007404)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15296,7 +15296,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_115D5')
 
-    EventJump(0x00007406)
+    OP_AC(0x01, 0x00007406)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15305,7 +15305,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_115E5')
 
-    EventJump(0x00007407)
+    OP_AC(0x01, 0x00007407)
     OP_14(0x04000000)
 
     Jump('loc_115FF')
@@ -15812,7 +15812,7 @@ def EV_KizunaJump_01():
 
     ClearScenaFlags(ScenaFlag(0x0220, 0, 0x1100))
     ClearScenaFlags(ScenaFlag(0x0220, 1, 0x1101))
-    EventJump(0x00008001)
+    OP_AC(0x01, 0x00008001)
     OP_14(0x04000000)
 
     Jump('loc_12209')
@@ -15821,7 +15821,7 @@ def EV_KizunaJump_01():
 
     label('loc_12179')
 
-    EventJump(0x00008002)
+    OP_AC(0x01, 0x00008002)
     OP_14(0x04000000)
 
     Jump('loc_12209')
@@ -15832,7 +15832,7 @@ def EV_KizunaJump_01():
 
     ClearScenaFlags(ScenaFlag(0x0220, 2, 0x1102))
     ClearScenaFlags(ScenaFlag(0x0220, 3, 0x1103))
-    EventJump(0x00008003)
+    OP_AC(0x01, 0x00008003)
     OP_14(0x04000000)
 
     Jump('loc_12209')
@@ -15841,7 +15841,7 @@ def EV_KizunaJump_01():
 
     label('loc_1219F')
 
-    EventJump(0x00008004)
+    OP_AC(0x01, 0x00008004)
     OP_14(0x04000000)
 
     Jump('loc_12209')
@@ -15852,7 +15852,7 @@ def EV_KizunaJump_01():
 
     ClearScenaFlags(ScenaFlag(0x0220, 4, 0x1104))
     ClearScenaFlags(ScenaFlag(0x0220, 5, 0x1105))
-    EventJump(0x00008005)
+    OP_AC(0x01, 0x00008005)
     OP_14(0x04000000)
 
     Jump('loc_12209')
@@ -15861,7 +15861,7 @@ def EV_KizunaJump_01():
 
     label('loc_121C5')
 
-    EventJump(0x00008006)
+    OP_AC(0x01, 0x00008006)
     OP_14(0x04000000)
 
     Jump('loc_12209')
@@ -15872,7 +15872,7 @@ def EV_KizunaJump_01():
 
     ClearScenaFlags(ScenaFlag(0x0220, 6, 0x1106))
     ClearScenaFlags(ScenaFlag(0x0220, 7, 0x1107))
-    EventJump(0x00008007)
+    OP_AC(0x01, 0x00008007)
     OP_14(0x04000000)
 
     Jump('loc_12209')
@@ -15881,7 +15881,7 @@ def EV_KizunaJump_01():
 
     label('loc_121EB')
 
-    EventJump(0x00008008)
+    OP_AC(0x01, 0x00008008)
     OP_14(0x04000000)
 
     Jump('loc_12209')
@@ -16146,7 +16146,7 @@ def EV_KizunaJump_02():
 
     ClearScenaFlags(ScenaFlag(0x0221, 0, 0x1108))
     ClearScenaFlags(ScenaFlag(0x0221, 1, 0x1109))
-    EventJump(0x00008009)
+    OP_AC(0x01, 0x00008009)
     OP_14(0x04000000)
 
     Jump('loc_12828')
@@ -16155,7 +16155,7 @@ def EV_KizunaJump_02():
 
     label('loc_12778')
 
-    EventJump(0x0000800A)
+    OP_AC(0x01, 0x0000800A)
     OP_14(0x04000000)
 
     Jump('loc_12828')
@@ -16164,7 +16164,7 @@ def EV_KizunaJump_02():
 
     label('loc_12788')
 
-    EventJump(0x0000800B)
+    OP_AC(0x01, 0x0000800B)
     OP_14(0x04000000)
 
     Jump('loc_12828')
@@ -16175,7 +16175,7 @@ def EV_KizunaJump_02():
 
     ClearScenaFlags(ScenaFlag(0x0221, 2, 0x110A))
     ClearScenaFlags(ScenaFlag(0x0221, 3, 0x110B))
-    EventJump(0x0000800C)
+    OP_AC(0x01, 0x0000800C)
     OP_14(0x04000000)
 
     Jump('loc_12828')
@@ -16184,7 +16184,7 @@ def EV_KizunaJump_02():
 
     label('loc_127AE')
 
-    EventJump(0x0000800D)
+    OP_AC(0x01, 0x0000800D)
     OP_14(0x04000000)
 
     Jump('loc_12828')
@@ -16195,7 +16195,7 @@ def EV_KizunaJump_02():
 
     ClearScenaFlags(ScenaFlag(0x0221, 4, 0x110C))
     ClearScenaFlags(ScenaFlag(0x0221, 5, 0x110D))
-    EventJump(0x0000800E)
+    OP_AC(0x01, 0x0000800E)
     OP_14(0x04000000)
 
     Jump('loc_12828')
@@ -16204,7 +16204,7 @@ def EV_KizunaJump_02():
 
     label('loc_127D4')
 
-    EventJump(0x0000800F)
+    OP_AC(0x01, 0x0000800F)
     OP_14(0x04000000)
 
     Jump('loc_12828')
@@ -16213,7 +16213,7 @@ def EV_KizunaJump_02():
 
     label('loc_127E4')
 
-    EventJump(0x00008010)
+    OP_AC(0x01, 0x00008010)
     OP_14(0x04000000)
 
     Jump('loc_12828')
@@ -16224,7 +16224,7 @@ def EV_KizunaJump_02():
 
     ClearScenaFlags(ScenaFlag(0x0221, 6, 0x110E))
     ClearScenaFlags(ScenaFlag(0x0221, 7, 0x110F))
-    EventJump(0x00008011)
+    OP_AC(0x01, 0x00008011)
     OP_14(0x04000000)
 
     Jump('loc_12828')
@@ -16233,7 +16233,7 @@ def EV_KizunaJump_02():
 
     label('loc_1280A')
 
-    EventJump(0x00008012)
+    OP_AC(0x01, 0x00008012)
     OP_14(0x04000000)
 
     Jump('loc_12828')
@@ -16508,7 +16508,7 @@ def EV_KizunaJump_03():
 
     ClearScenaFlags(ScenaFlag(0x0222, 0, 0x1110))
     ClearScenaFlags(ScenaFlag(0x0222, 1, 0x1111))
-    EventJump(0x00008013)
+    OP_AC(0x01, 0x00008013)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16517,7 +16517,7 @@ def EV_KizunaJump_03():
 
     label('loc_12F23')
 
-    EventJump(0x00008014)
+    OP_AC(0x01, 0x00008014)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16526,7 +16526,7 @@ def EV_KizunaJump_03():
 
     label('loc_12F33')
 
-    EventJump(0x00008015)
+    OP_AC(0x01, 0x00008015)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16535,7 +16535,7 @@ def EV_KizunaJump_03():
 
     label('loc_12F43')
 
-    EventJump(0x00008016)
+    OP_AC(0x01, 0x00008016)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16546,7 +16546,7 @@ def EV_KizunaJump_03():
 
     ClearScenaFlags(ScenaFlag(0x0222, 2, 0x1112))
     ClearScenaFlags(ScenaFlag(0x0222, 3, 0x1113))
-    EventJump(0x00008017)
+    OP_AC(0x01, 0x00008017)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16555,7 +16555,7 @@ def EV_KizunaJump_03():
 
     label('loc_12F69')
 
-    EventJump(0x00008018)
+    OP_AC(0x01, 0x00008018)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16564,7 +16564,7 @@ def EV_KizunaJump_03():
 
     label('loc_12F79')
 
-    EventJump(0x00008019)
+    OP_AC(0x01, 0x00008019)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16575,7 +16575,7 @@ def EV_KizunaJump_03():
 
     ClearScenaFlags(ScenaFlag(0x0222, 4, 0x1114))
     ClearScenaFlags(ScenaFlag(0x0222, 5, 0x1115))
-    EventJump(0x0000801B)
+    OP_AC(0x01, 0x0000801B)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16584,7 +16584,7 @@ def EV_KizunaJump_03():
 
     label('loc_12F9F')
 
-    EventJump(0x0000801C)
+    OP_AC(0x01, 0x0000801C)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16593,7 +16593,7 @@ def EV_KizunaJump_03():
 
     label('loc_12FAF')
 
-    EventJump(0x0000801D)
+    OP_AC(0x01, 0x0000801D)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16604,7 +16604,7 @@ def EV_KizunaJump_03():
 
     ClearScenaFlags(ScenaFlag(0x0222, 6, 0x1116))
     ClearScenaFlags(ScenaFlag(0x0222, 7, 0x1117))
-    EventJump(0x0000801E)
+    OP_AC(0x01, 0x0000801E)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16613,7 +16613,7 @@ def EV_KizunaJump_03():
 
     label('loc_12FD5')
 
-    EventJump(0x0000801F)
+    OP_AC(0x01, 0x0000801F)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16622,7 +16622,7 @@ def EV_KizunaJump_03():
 
     label('loc_12FE5')
 
-    EventJump(0x00008020)
+    OP_AC(0x01, 0x00008020)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16631,7 +16631,7 @@ def EV_KizunaJump_03():
 
     label('loc_12FF5')
 
-    EventJump(0x00008021)
+    OP_AC(0x01, 0x00008021)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16640,7 +16640,7 @@ def EV_KizunaJump_03():
 
     label('loc_13005')
 
-    EventJump(0x00008022)
+    OP_AC(0x01, 0x00008022)
     OP_14(0x04000000)
 
     Jump('loc_13023')
@@ -16869,7 +16869,7 @@ def EV_KizunaJump_04():
 
     ClearScenaFlags(ScenaFlag(0x0223, 0, 0x1118))
     ClearScenaFlags(ScenaFlag(0x0223, 1, 0x1119))
-    EventJump(0x00008023)
+    OP_AC(0x01, 0x00008023)
     OP_14(0x04000000)
 
     Jump('loc_13458')
@@ -16878,7 +16878,7 @@ def EV_KizunaJump_04():
 
     label('loc_133EE')
 
-    EventJump(0x00008024)
+    OP_AC(0x01, 0x00008024)
     OP_14(0x04000000)
 
     Jump('loc_13458')
@@ -16889,7 +16889,7 @@ def EV_KizunaJump_04():
 
     ClearScenaFlags(ScenaFlag(0x0223, 2, 0x111A))
     ClearScenaFlags(ScenaFlag(0x0223, 3, 0x111B))
-    EventJump(0x00008025)
+    OP_AC(0x01, 0x00008025)
     OP_14(0x04000000)
 
     Jump('loc_13458')
@@ -16898,7 +16898,7 @@ def EV_KizunaJump_04():
 
     label('loc_13414')
 
-    EventJump(0x00008026)
+    OP_AC(0x01, 0x00008026)
     OP_14(0x04000000)
 
     Jump('loc_13458')
@@ -16909,7 +16909,7 @@ def EV_KizunaJump_04():
 
     ClearScenaFlags(ScenaFlag(0x0223, 4, 0x111C))
     ClearScenaFlags(ScenaFlag(0x0223, 5, 0x111D))
-    EventJump(0x00008027)
+    OP_AC(0x01, 0x00008027)
     OP_14(0x04000000)
 
     Jump('loc_13458')
@@ -16918,7 +16918,7 @@ def EV_KizunaJump_04():
 
     label('loc_1343A')
 
-    EventJump(0x00008028)
+    OP_AC(0x01, 0x00008028)
     OP_14(0x04000000)
 
     Jump('loc_13458')
@@ -17154,7 +17154,7 @@ def EV_KizunaJump_05():
 
     ClearScenaFlags(ScenaFlag(0x0223, 6, 0x111E))
     ClearScenaFlags(ScenaFlag(0x0223, 7, 0x111F))
-    EventJump(0x00008029)
+    OP_AC(0x01, 0x00008029)
     OP_14(0x04000000)
 
     Jump('loc_139BF')
@@ -17163,7 +17163,7 @@ def EV_KizunaJump_05():
 
     label('loc_13925')
 
-    EventJump(0x0000802A)
+    OP_AC(0x01, 0x0000802A)
     OP_14(0x04000000)
 
     Jump('loc_139BF')
@@ -17172,7 +17172,7 @@ def EV_KizunaJump_05():
 
     label('loc_13935')
 
-    EventJump(0x0000802B)
+    OP_AC(0x01, 0x0000802B)
     OP_14(0x04000000)
 
     Jump('loc_139BF')
@@ -17183,7 +17183,7 @@ def EV_KizunaJump_05():
 
     ClearScenaFlags(ScenaFlag(0x0224, 0, 0x1120))
     ClearScenaFlags(ScenaFlag(0x0224, 1, 0x1121))
-    EventJump(0x0000802C)
+    OP_AC(0x01, 0x0000802C)
     OP_14(0x04000000)
 
     Jump('loc_139BF')
@@ -17192,7 +17192,7 @@ def EV_KizunaJump_05():
 
     label('loc_1395B')
 
-    EventJump(0x0000802D)
+    OP_AC(0x01, 0x0000802D)
     OP_14(0x04000000)
 
     Jump('loc_139BF')
@@ -17203,7 +17203,7 @@ def EV_KizunaJump_05():
 
     ClearScenaFlags(ScenaFlag(0x0224, 2, 0x1122))
     ClearScenaFlags(ScenaFlag(0x0224, 3, 0x1123))
-    EventJump(0x0000802E)
+    OP_AC(0x01, 0x0000802E)
     OP_14(0x04000000)
 
     Jump('loc_139BF')
@@ -17212,7 +17212,7 @@ def EV_KizunaJump_05():
 
     label('loc_13981')
 
-    EventJump(0x0000802F)
+    OP_AC(0x01, 0x0000802F)
     OP_14(0x04000000)
 
     Jump('loc_139BF')
@@ -17221,7 +17221,7 @@ def EV_KizunaJump_05():
 
     label('loc_13991')
 
-    EventJump(0x00008030)
+    OP_AC(0x01, 0x00008030)
     OP_14(0x04000000)
 
     Jump('loc_139BF')
@@ -17230,7 +17230,7 @@ def EV_KizunaJump_05():
 
     label('loc_139A1')
 
-    EventJump(0x00008031)
+    OP_AC(0x01, 0x00008031)
     OP_14(0x04000000)
 
     Jump('loc_139BF')
@@ -17487,7 +17487,7 @@ def EV_KizunaJump_06():
 
     ClearScenaFlags(ScenaFlag(0x0224, 4, 0x1124))
     ClearScenaFlags(ScenaFlag(0x0224, 5, 0x1125))
-    EventJump(0x00008032)
+    OP_AC(0x01, 0x00008032)
     OP_14(0x04000000)
 
     Jump('loc_13E9A')
@@ -17496,7 +17496,7 @@ def EV_KizunaJump_06():
 
     label('loc_13E10')
 
-    EventJump(0x00008033)
+    OP_AC(0x01, 0x00008033)
     OP_14(0x04000000)
 
     Jump('loc_13E9A')
@@ -17507,7 +17507,7 @@ def EV_KizunaJump_06():
 
     ClearScenaFlags(ScenaFlag(0x0224, 6, 0x1126))
     ClearScenaFlags(ScenaFlag(0x0224, 7, 0x1127))
-    EventJump(0x00008034)
+    OP_AC(0x01, 0x00008034)
     OP_14(0x04000000)
 
     Jump('loc_13E9A')
@@ -17516,7 +17516,7 @@ def EV_KizunaJump_06():
 
     label('loc_13E36')
 
-    EventJump(0x00008035)
+    OP_AC(0x01, 0x00008035)
     OP_14(0x04000000)
 
     Jump('loc_13E9A')
@@ -17525,7 +17525,7 @@ def EV_KizunaJump_06():
 
     label('loc_13E46')
 
-    EventJump(0x00008036)
+    OP_AC(0x01, 0x00008036)
     OP_14(0x04000000)
 
     Jump('loc_13E9A')
@@ -17536,7 +17536,7 @@ def EV_KizunaJump_06():
 
     ClearScenaFlags(ScenaFlag(0x0225, 0, 0x1128))
     ClearScenaFlags(ScenaFlag(0x0225, 1, 0x1129))
-    EventJump(0x00008037)
+    OP_AC(0x01, 0x00008037)
     OP_14(0x04000000)
 
     Jump('loc_13E9A')
@@ -17545,7 +17545,7 @@ def EV_KizunaJump_06():
 
     label('loc_13E6C')
 
-    EventJump(0x00008038)
+    OP_AC(0x01, 0x00008038)
     OP_14(0x04000000)
 
     Jump('loc_13E9A')
@@ -17554,7 +17554,7 @@ def EV_KizunaJump_06():
 
     label('loc_13E7C')
 
-    EventJump(0x00008039)
+    OP_AC(0x01, 0x00008039)
     OP_14(0x04000000)
 
     Jump('loc_13E9A')
@@ -17685,7 +17685,7 @@ def EV_KizunaJump_07():
 
     label('loc_1409C')
 
-    EventJump(0x0000803B)
+    OP_AC(0x01, 0x0000803B)
     OP_14(0x04000000)
 
     Jump('loc_140DA')
@@ -17694,7 +17694,7 @@ def EV_KizunaJump_07():
 
     label('loc_140AC')
 
-    EventJump(0x0000803C)
+    OP_AC(0x01, 0x0000803C)
     OP_14(0x04000000)
 
     Jump('loc_140DA')
@@ -17703,7 +17703,7 @@ def EV_KizunaJump_07():
 
     label('loc_140BC')
 
-    EventJump(0x0000803D)
+    OP_AC(0x01, 0x0000803D)
     OP_14(0x04000000)
 
     Jump('loc_140DA')
@@ -17887,7 +17887,7 @@ def EV_KizunaJump_08():
 
     label('loc_14482')
 
-    EventJump(0x00008040)
+    OP_AC(0x01, 0x00008040)
     OP_14(0x04000000)
 
     Jump('loc_14500')
@@ -17896,7 +17896,7 @@ def EV_KizunaJump_08():
 
     label('loc_14492')
 
-    EventJump(0x00008041)
+    OP_AC(0x01, 0x00008041)
     OP_14(0x04000000)
 
     Jump('loc_14500')
@@ -17905,7 +17905,7 @@ def EV_KizunaJump_08():
 
     label('loc_144A2')
 
-    EventJump(0x00008042)
+    OP_AC(0x01, 0x00008042)
     OP_14(0x04000000)
 
     Jump('loc_14500')
@@ -17914,7 +17914,7 @@ def EV_KizunaJump_08():
 
     label('loc_144B2')
 
-    EventJump(0x00008043)
+    OP_AC(0x01, 0x00008043)
     OP_14(0x04000000)
 
     Jump('loc_14500')
@@ -17923,7 +17923,7 @@ def EV_KizunaJump_08():
 
     label('loc_144C2')
 
-    EventJump(0x00008044)
+    OP_AC(0x01, 0x00008044)
     OP_14(0x04000000)
 
     Jump('loc_14500')
@@ -17932,7 +17932,7 @@ def EV_KizunaJump_08():
 
     label('loc_144D2')
 
-    EventJump(0x00008045)
+    OP_AC(0x01, 0x00008045)
     OP_14(0x04000000)
 
     Jump('loc_14500')
@@ -17941,7 +17941,7 @@ def EV_KizunaJump_08():
 
     label('loc_144E2')
 
-    EventJump(0x00008046)
+    OP_AC(0x01, 0x00008046)
     OP_14(0x04000000)
 
     Jump('loc_14500')
@@ -18083,7 +18083,7 @@ def EV_KizunaJump_09():
 
     label('loc_147AA')
 
-    EventJump(0x00008048)
+    OP_AC(0x01, 0x00008048)
     OP_14(0x04000000)
 
     Jump('loc_14808')
@@ -18092,7 +18092,7 @@ def EV_KizunaJump_09():
 
     label('loc_147BA')
 
-    EventJump(0x00008049)
+    OP_AC(0x01, 0x00008049)
     OP_14(0x04000000)
 
     Jump('loc_14808')
@@ -18101,7 +18101,7 @@ def EV_KizunaJump_09():
 
     label('loc_147CA')
 
-    EventJump(0x0000804A)
+    OP_AC(0x01, 0x0000804A)
     OP_14(0x04000000)
 
     Jump('loc_14808')
@@ -18110,7 +18110,7 @@ def EV_KizunaJump_09():
 
     label('loc_147DA')
 
-    EventJump(0x0000804B)
+    OP_AC(0x01, 0x0000804B)
     OP_14(0x04000000)
 
     Jump('loc_14808')
@@ -18119,7 +18119,7 @@ def EV_KizunaJump_09():
 
     label('loc_147EA')
 
-    EventJump(0x0000804C)
+    OP_AC(0x01, 0x0000804C)
     OP_14(0x04000000)
 
     Jump('loc_14808')
@@ -18244,7 +18244,7 @@ def EV_KizunaJump_10():
 
     label('loc_149C9')
 
-    EventJump(0x0000804E)
+    OP_AC(0x01, 0x0000804E)
     OP_14(0x04000000)
 
     Jump('loc_149F7')
@@ -18253,7 +18253,7 @@ def EV_KizunaJump_10():
 
     label('loc_149D9')
 
-    EventJump(0x0000804F)
+    OP_AC(0x01, 0x0000804F)
     OP_14(0x04000000)
 
     Jump('loc_149F7')
@@ -18439,7 +18439,7 @@ def EV_KizunaJump_11():
 
     label('loc_14E0A')
 
-    EventJump(0x00008052)
+    OP_AC(0x01, 0x00008052)
     OP_14(0x04000000)
 
     Jump('loc_14E9B')
@@ -18448,7 +18448,7 @@ def EV_KizunaJump_11():
 
     label('loc_14E1A')
 
-    EventJump(0x00008053)
+    OP_AC(0x01, 0x00008053)
     OP_14(0x04000000)
 
     Jump('loc_14E9B')
@@ -18457,7 +18457,7 @@ def EV_KizunaJump_11():
 
     label('loc_14E2A')
 
-    EventJump(0x00008054)
+    OP_AC(0x01, 0x00008054)
     OP_14(0x04000000)
 
     Jump('loc_14E9B')
@@ -18466,7 +18466,7 @@ def EV_KizunaJump_11():
 
     label('loc_14E3A')
 
-    EventJump(0x00008055)
+    OP_AC(0x01, 0x00008055)
     OP_14(0x04000000)
 
     Jump('loc_14E9B')
@@ -18476,7 +18476,7 @@ def EV_KizunaJump_11():
     label('loc_14E4A')
 
     SetScenaFlags(ScenaFlag(0x0226, 5, 0x1135))
-    EventJump(0x00008056)
+    OP_AC(0x01, 0x00008056)
     OP_14(0x04000000)
 
     Jump('loc_14E9B')
@@ -18485,7 +18485,7 @@ def EV_KizunaJump_11():
 
     label('loc_14E5D')
 
-    EventJump(0x00008057)
+    OP_AC(0x01, 0x00008057)
     OP_14(0x04000000)
 
     Jump('loc_14E9B')
@@ -18494,7 +18494,7 @@ def EV_KizunaJump_11():
 
     label('loc_14E6D')
 
-    EventJump(0x00008058)
+    OP_AC(0x01, 0x00008058)
     OP_14(0x04000000)
 
     Jump('loc_14E9B')
@@ -18503,7 +18503,7 @@ def EV_KizunaJump_11():
 
     label('loc_14E7D')
 
-    EventJump(0x00008059)
+    OP_AC(0x01, 0x00008059)
     OP_14(0x04000000)
 
     Jump('loc_14E9B')
@@ -18653,7 +18653,7 @@ def EV_KizunaJump_12():
 
     label('loc_15118')
 
-    EventJump(0x0000805B)
+    OP_AC(0x01, 0x0000805B)
     OP_14(0x04000000)
 
     Jump('loc_15166')
@@ -18662,7 +18662,7 @@ def EV_KizunaJump_12():
 
     label('loc_15128')
 
-    EventJump(0x0000805C)
+    OP_AC(0x01, 0x0000805C)
     OP_14(0x04000000)
 
     Jump('loc_15166')
@@ -18671,7 +18671,7 @@ def EV_KizunaJump_12():
 
     label('loc_15138')
 
-    EventJump(0x0000805D)
+    OP_AC(0x01, 0x0000805D)
     OP_14(0x04000000)
 
     Jump('loc_15166')
@@ -18680,7 +18680,7 @@ def EV_KizunaJump_12():
 
     label('loc_15148')
 
-    EventJump(0x0000805E)
+    OP_AC(0x01, 0x0000805E)
     OP_14(0x04000000)
 
     Jump('loc_15166')
@@ -18811,7 +18811,7 @@ def EV_KizunaJump_13():
 
     label('loc_153D2')
 
-    EventJump(0x00008060)
+    OP_AC(0x01, 0x00008060)
     OP_14(0x04000000)
 
     Jump('loc_15420')
@@ -18820,7 +18820,7 @@ def EV_KizunaJump_13():
 
     label('loc_153E2')
 
-    EventJump(0x00008061)
+    OP_AC(0x01, 0x00008061)
     OP_14(0x04000000)
 
     Jump('loc_15420')
@@ -18829,7 +18829,7 @@ def EV_KizunaJump_13():
 
     label('loc_153F2')
 
-    EventJump(0x00008062)
+    OP_AC(0x01, 0x00008062)
     OP_14(0x04000000)
 
     Jump('loc_15420')
@@ -18838,7 +18838,7 @@ def EV_KizunaJump_13():
 
     label('loc_15402')
 
-    EventJump(0x00008063)
+    OP_AC(0x01, 0x00008063)
     OP_14(0x04000000)
 
     Jump('loc_15420')
@@ -19020,7 +19020,7 @@ def EV_KizunaJump_14():
 
     label('loc_157EA')
 
-    EventJump(0x00008066)
+    OP_AC(0x01, 0x00008066)
     OP_14(0x04000000)
 
     Jump('loc_1586B')
@@ -19029,7 +19029,7 @@ def EV_KizunaJump_14():
 
     label('loc_157FA')
 
-    EventJump(0x00008067)
+    OP_AC(0x01, 0x00008067)
     OP_14(0x04000000)
 
     Jump('loc_1586B')
@@ -19038,7 +19038,7 @@ def EV_KizunaJump_14():
 
     label('loc_1580A')
 
-    EventJump(0x00008068)
+    OP_AC(0x01, 0x00008068)
     OP_14(0x04000000)
 
     Jump('loc_1586B')
@@ -19048,7 +19048,7 @@ def EV_KizunaJump_14():
     label('loc_1581A')
 
     SetScenaFlags(ScenaFlag(0x0227, 4, 0x113C))
-    EventJump(0x00008069)
+    OP_AC(0x01, 0x00008069)
     OP_14(0x04000000)
 
     Jump('loc_1586B')
@@ -19057,7 +19057,7 @@ def EV_KizunaJump_14():
 
     label('loc_1582D')
 
-    EventJump(0x0000806A)
+    OP_AC(0x01, 0x0000806A)
     OP_14(0x04000000)
 
     Jump('loc_1586B')
@@ -19066,7 +19066,7 @@ def EV_KizunaJump_14():
 
     label('loc_1583D')
 
-    EventJump(0x0000806B)
+    OP_AC(0x01, 0x0000806B)
     OP_14(0x04000000)
 
     Jump('loc_1586B')
@@ -19075,7 +19075,7 @@ def EV_KizunaJump_14():
 
     label('loc_1584D')
 
-    EventJump(0x0000806C)
+    OP_AC(0x01, 0x0000806C)
     OP_14(0x04000000)
 
     Jump('loc_1586B')
@@ -19209,7 +19209,7 @@ def EV_KizunaJump_15():
 
     label('loc_15A5B')
 
-    EventJump(0x0000806E)
+    OP_AC(0x01, 0x0000806E)
     OP_14(0x04000000)
 
     Jump('loc_15A89')
@@ -19218,7 +19218,7 @@ def EV_KizunaJump_15():
 
     label('loc_15A6B')
 
-    EventJump(0x0000806F)
+    OP_AC(0x01, 0x0000806F)
     OP_14(0x04000000)
 
     Jump('loc_15A89')
@@ -19378,7 +19378,7 @@ def EV_KizunaJump_16():
         ),
     )
 
-    EventJump(0x00008071)
+    OP_AC(0x01, 0x00008071)
     OP_14(0x04000000)
 
     Jump('loc_15DF3')
@@ -19387,7 +19387,7 @@ def EV_KizunaJump_16():
 
     label('loc_15D82')
 
-    EventJump(0x00008072)
+    OP_AC(0x01, 0x00008072)
     OP_14(0x04000000)
 
     Jump('loc_15DF3')
@@ -19396,7 +19396,7 @@ def EV_KizunaJump_16():
 
     label('loc_15D92')
 
-    EventJump(0x00008073)
+    OP_AC(0x01, 0x00008073)
     OP_14(0x04000000)
 
     Jump('loc_15DF3')
@@ -19406,7 +19406,7 @@ def EV_KizunaJump_16():
     label('loc_15DA2')
 
     SetScenaFlags(ScenaFlag(0x0228, 1, 0x1141))
-    EventJump(0x00008074)
+    OP_AC(0x01, 0x00008074)
     OP_14(0x04000000)
 
     Jump('loc_15DF3')
@@ -19415,7 +19415,7 @@ def EV_KizunaJump_16():
 
     label('loc_15DB5')
 
-    EventJump(0x00008075)
+    OP_AC(0x01, 0x00008075)
     OP_14(0x04000000)
 
     Jump('loc_15DF3')
@@ -19424,7 +19424,7 @@ def EV_KizunaJump_16():
 
     label('loc_15DC5')
 
-    EventJump(0x00008076)
+    OP_AC(0x01, 0x00008076)
     OP_14(0x04000000)
 
     Jump('loc_15DF3')
@@ -19433,7 +19433,7 @@ def EV_KizunaJump_16():
 
     label('loc_15DD5')
 
-    EventJump(0x00008077)
+    OP_AC(0x01, 0x00008077)
     OP_14(0x04000000)
 
     Jump('loc_15DF3')
@@ -19667,7 +19667,7 @@ def EV_KizunaJump_17():
 
     label('loc_1658D')
 
-    EventJump(0x000040D6)
+    OP_AC(0x01, 0x000040D6)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19676,7 +19676,7 @@ def EV_KizunaJump_17():
 
     label('loc_1659D')
 
-    EventJump(0x00008079)
+    OP_AC(0x01, 0x00008079)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19685,7 +19685,7 @@ def EV_KizunaJump_17():
 
     label('loc_165AD')
 
-    EventJump(0x0000807A)
+    OP_AC(0x01, 0x0000807A)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19694,7 +19694,7 @@ def EV_KizunaJump_17():
 
     label('loc_165BD')
 
-    EventJump(0x0000807B)
+    OP_AC(0x01, 0x0000807B)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19703,7 +19703,7 @@ def EV_KizunaJump_17():
 
     label('loc_165CD')
 
-    EventJump(0x0000807C)
+    OP_AC(0x01, 0x0000807C)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19712,7 +19712,7 @@ def EV_KizunaJump_17():
 
     label('loc_165DD')
 
-    EventJump(0x0000807D)
+    OP_AC(0x01, 0x0000807D)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19721,7 +19721,7 @@ def EV_KizunaJump_17():
 
     label('loc_165ED')
 
-    EventJump(0x0000807E)
+    OP_AC(0x01, 0x0000807E)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19730,7 +19730,7 @@ def EV_KizunaJump_17():
 
     label('loc_165FD')
 
-    EventJump(0x0000807F)
+    OP_AC(0x01, 0x0000807F)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19739,7 +19739,7 @@ def EV_KizunaJump_17():
 
     label('loc_1660D')
 
-    EventJump(0x00008080)
+    OP_AC(0x01, 0x00008080)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19748,7 +19748,7 @@ def EV_KizunaJump_17():
 
     label('loc_1661D')
 
-    EventJump(0x00008081)
+    OP_AC(0x01, 0x00008081)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19757,7 +19757,7 @@ def EV_KizunaJump_17():
 
     label('loc_1662D')
 
-    EventJump(0x00008082)
+    OP_AC(0x01, 0x00008082)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19766,7 +19766,7 @@ def EV_KizunaJump_17():
 
     label('loc_1663D')
 
-    EventJump(0x00008083)
+    OP_AC(0x01, 0x00008083)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19775,7 +19775,7 @@ def EV_KizunaJump_17():
 
     label('loc_1664D')
 
-    EventJump(0x00008084)
+    OP_AC(0x01, 0x00008084)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19784,7 +19784,7 @@ def EV_KizunaJump_17():
 
     label('loc_1665D')
 
-    EventJump(0x00008085)
+    OP_AC(0x01, 0x00008085)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19793,7 +19793,7 @@ def EV_KizunaJump_17():
 
     label('loc_1666D')
 
-    EventJump(0x00008086)
+    OP_AC(0x01, 0x00008086)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19802,7 +19802,7 @@ def EV_KizunaJump_17():
 
     label('loc_1667D')
 
-    EventJump(0x00008087)
+    OP_AC(0x01, 0x00008087)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19811,7 +19811,7 @@ def EV_KizunaJump_17():
 
     label('loc_1668D')
 
-    EventJump(0x00008088)
+    OP_AC(0x01, 0x00008088)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19820,7 +19820,7 @@ def EV_KizunaJump_17():
 
     label('loc_1669D')
 
-    EventJump(0x00008089)
+    OP_AC(0x01, 0x00008089)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19829,7 +19829,7 @@ def EV_KizunaJump_17():
 
     label('loc_166AD')
 
-    EventJump(0x0000808A)
+    OP_AC(0x01, 0x0000808A)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -19838,7 +19838,7 @@ def EV_KizunaJump_17():
 
     label('loc_166BD')
 
-    EventJump(0x0000808B)
+    OP_AC(0x01, 0x0000808B)
     OP_14(0x04000000)
 
     Jump('loc_166DB')
@@ -20379,7 +20379,7 @@ def EV_KizunaJump_18():
 
     label('loc_17347')
 
-    EventJump(0x0000808C)
+    OP_AC(0x01, 0x0000808C)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20388,7 +20388,7 @@ def EV_KizunaJump_18():
 
     label('loc_17357')
 
-    EventJump(0x0000808D)
+    OP_AC(0x01, 0x0000808D)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20397,7 +20397,7 @@ def EV_KizunaJump_18():
 
     label('loc_17367')
 
-    EventJump(0x0000808E)
+    OP_AC(0x01, 0x0000808E)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20406,7 +20406,7 @@ def EV_KizunaJump_18():
 
     label('loc_17377')
 
-    EventJump(0x0000808F)
+    OP_AC(0x01, 0x0000808F)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20415,7 +20415,7 @@ def EV_KizunaJump_18():
 
     label('loc_17387')
 
-    EventJump(0x00008090)
+    OP_AC(0x01, 0x00008090)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20424,7 +20424,7 @@ def EV_KizunaJump_18():
 
     label('loc_17397')
 
-    EventJump(0x00008091)
+    OP_AC(0x01, 0x00008091)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20433,7 +20433,7 @@ def EV_KizunaJump_18():
 
     label('loc_173A7')
 
-    EventJump(0x00008092)
+    OP_AC(0x01, 0x00008092)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20442,7 +20442,7 @@ def EV_KizunaJump_18():
 
     label('loc_173B7')
 
-    EventJump(0x00008093)
+    OP_AC(0x01, 0x00008093)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20451,7 +20451,7 @@ def EV_KizunaJump_18():
 
     label('loc_173C7')
 
-    EventJump(0x00008094)
+    OP_AC(0x01, 0x00008094)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20460,7 +20460,7 @@ def EV_KizunaJump_18():
 
     label('loc_173D7')
 
-    EventJump(0x00008095)
+    OP_AC(0x01, 0x00008095)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20469,7 +20469,7 @@ def EV_KizunaJump_18():
 
     label('loc_173E7')
 
-    EventJump(0x00008096)
+    OP_AC(0x01, 0x00008096)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20478,7 +20478,7 @@ def EV_KizunaJump_18():
 
     label('loc_173F7')
 
-    EventJump(0x00008097)
+    OP_AC(0x01, 0x00008097)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20487,7 +20487,7 @@ def EV_KizunaJump_18():
 
     label('loc_17407')
 
-    EventJump(0x00008098)
+    OP_AC(0x01, 0x00008098)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20496,7 +20496,7 @@ def EV_KizunaJump_18():
 
     label('loc_17417')
 
-    EventJump(0x00008099)
+    OP_AC(0x01, 0x00008099)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20505,7 +20505,7 @@ def EV_KizunaJump_18():
 
     label('loc_17427')
 
-    EventJump(0x0000809A)
+    OP_AC(0x01, 0x0000809A)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20514,7 +20514,7 @@ def EV_KizunaJump_18():
 
     label('loc_17437')
 
-    EventJump(0x0000809B)
+    OP_AC(0x01, 0x0000809B)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20523,7 +20523,7 @@ def EV_KizunaJump_18():
 
     label('loc_17447')
 
-    EventJump(0x0000809C)
+    OP_AC(0x01, 0x0000809C)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20532,7 +20532,7 @@ def EV_KizunaJump_18():
 
     label('loc_17457')
 
-    EventJump(0x0000809D)
+    OP_AC(0x01, 0x0000809D)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20541,7 +20541,7 @@ def EV_KizunaJump_18():
 
     label('loc_17467')
 
-    EventJump(0x0000809E)
+    OP_AC(0x01, 0x0000809E)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20550,7 +20550,7 @@ def EV_KizunaJump_18():
 
     label('loc_17477')
 
-    EventJump(0x0000809F)
+    OP_AC(0x01, 0x0000809F)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20559,7 +20559,7 @@ def EV_KizunaJump_18():
 
     label('loc_17487')
 
-    EventJump(0x000080A0)
+    OP_AC(0x01, 0x000080A0)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20568,7 +20568,7 @@ def EV_KizunaJump_18():
 
     label('loc_17497')
 
-    EventJump(0x000080A1)
+    OP_AC(0x01, 0x000080A1)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20577,7 +20577,7 @@ def EV_KizunaJump_18():
 
     label('loc_174A7')
 
-    EventJump(0x000080A2)
+    OP_AC(0x01, 0x000080A2)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20586,7 +20586,7 @@ def EV_KizunaJump_18():
 
     label('loc_174B7')
 
-    EventJump(0x000080A3)
+    OP_AC(0x01, 0x000080A3)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20595,7 +20595,7 @@ def EV_KizunaJump_18():
 
     label('loc_174C7')
 
-    EventJump(0x000080A4)
+    OP_AC(0x01, 0x000080A4)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20604,7 +20604,7 @@ def EV_KizunaJump_18():
 
     label('loc_174D7')
 
-    EventJump(0x000080A5)
+    OP_AC(0x01, 0x000080A5)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20613,7 +20613,7 @@ def EV_KizunaJump_18():
 
     label('loc_174E7')
 
-    EventJump(0x000080A6)
+    OP_AC(0x01, 0x000080A6)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20622,7 +20622,7 @@ def EV_KizunaJump_18():
 
     label('loc_174F7')
 
-    EventJump(0x000080A7)
+    OP_AC(0x01, 0x000080A7)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20631,7 +20631,7 @@ def EV_KizunaJump_18():
 
     label('loc_17507')
 
-    EventJump(0x000080A8)
+    OP_AC(0x01, 0x000080A8)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20640,7 +20640,7 @@ def EV_KizunaJump_18():
 
     label('loc_17517')
 
-    EventJump(0x000080A9)
+    OP_AC(0x01, 0x000080A9)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20649,7 +20649,7 @@ def EV_KizunaJump_18():
 
     label('loc_17527')
 
-    EventJump(0x000080AA)
+    OP_AC(0x01, 0x000080AA)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20658,7 +20658,7 @@ def EV_KizunaJump_18():
 
     label('loc_17537')
 
-    EventJump(0x000080AB)
+    OP_AC(0x01, 0x000080AB)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20667,7 +20667,7 @@ def EV_KizunaJump_18():
 
     label('loc_17547')
 
-    EventJump(0x000080AC)
+    OP_AC(0x01, 0x000080AC)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20676,7 +20676,7 @@ def EV_KizunaJump_18():
 
     label('loc_17557')
 
-    EventJump(0x000080AD)
+    OP_AC(0x01, 0x000080AD)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20685,7 +20685,7 @@ def EV_KizunaJump_18():
 
     label('loc_17567')
 
-    EventJump(0x000080AE)
+    OP_AC(0x01, 0x000080AE)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20694,7 +20694,7 @@ def EV_KizunaJump_18():
 
     label('loc_17577')
 
-    EventJump(0x000080AF)
+    OP_AC(0x01, 0x000080AF)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20703,7 +20703,7 @@ def EV_KizunaJump_18():
 
     label('loc_17587')
 
-    EventJump(0x000080B0)
+    OP_AC(0x01, 0x000080B0)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20712,7 +20712,7 @@ def EV_KizunaJump_18():
 
     label('loc_17597')
 
-    EventJump(0x000080B1)
+    OP_AC(0x01, 0x000080B1)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20721,7 +20721,7 @@ def EV_KizunaJump_18():
 
     label('loc_175A7')
 
-    EventJump(0x000080B2)
+    OP_AC(0x01, 0x000080B2)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20730,7 +20730,7 @@ def EV_KizunaJump_18():
 
     label('loc_175B7')
 
-    EventJump(0x000080B3)
+    OP_AC(0x01, 0x000080B3)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20739,7 +20739,7 @@ def EV_KizunaJump_18():
 
     label('loc_175C7')
 
-    EventJump(0x000080B4)
+    OP_AC(0x01, 0x000080B4)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20748,7 +20748,7 @@ def EV_KizunaJump_18():
 
     label('loc_175D7')
 
-    EventJump(0x000080B5)
+    OP_AC(0x01, 0x000080B5)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20757,7 +20757,7 @@ def EV_KizunaJump_18():
 
     label('loc_175E7')
 
-    EventJump(0x000080B6)
+    OP_AC(0x01, 0x000080B6)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20766,7 +20766,7 @@ def EV_KizunaJump_18():
 
     label('loc_175F7')
 
-    EventJump(0x000080B7)
+    OP_AC(0x01, 0x000080B7)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20775,7 +20775,7 @@ def EV_KizunaJump_18():
 
     label('loc_17607')
 
-    EventJump(0x000080B8)
+    OP_AC(0x01, 0x000080B8)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20784,7 +20784,7 @@ def EV_KizunaJump_18():
 
     label('loc_17617')
 
-    EventJump(0x000080B9)
+    OP_AC(0x01, 0x000080B9)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20793,7 +20793,7 @@ def EV_KizunaJump_18():
 
     label('loc_17627')
 
-    EventJump(0x000080BA)
+    OP_AC(0x01, 0x000080BA)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20802,7 +20802,7 @@ def EV_KizunaJump_18():
 
     label('loc_17637')
 
-    EventJump(0x000080BB)
+    OP_AC(0x01, 0x000080BB)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20811,7 +20811,7 @@ def EV_KizunaJump_18():
 
     label('loc_17647')
 
-    EventJump(0x000080BC)
+    OP_AC(0x01, 0x000080BC)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20820,7 +20820,7 @@ def EV_KizunaJump_18():
 
     label('loc_17657')
 
-    EventJump(0x000080BD)
+    OP_AC(0x01, 0x000080BD)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20829,7 +20829,7 @@ def EV_KizunaJump_18():
 
     label('loc_17667')
 
-    EventJump(0x000080BE)
+    OP_AC(0x01, 0x000080BE)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20838,7 +20838,7 @@ def EV_KizunaJump_18():
 
     label('loc_17677')
 
-    EventJump(0x000080BF)
+    OP_AC(0x01, 0x000080BF)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20847,7 +20847,7 @@ def EV_KizunaJump_18():
 
     label('loc_17687')
 
-    EventJump(0x000080C0)
+    OP_AC(0x01, 0x000080C0)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20856,7 +20856,7 @@ def EV_KizunaJump_18():
 
     label('loc_17697')
 
-    EventJump(0x000080C1)
+    OP_AC(0x01, 0x000080C1)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20865,7 +20865,7 @@ def EV_KizunaJump_18():
 
     label('loc_176A7')
 
-    EventJump(0x000080C2)
+    OP_AC(0x01, 0x000080C2)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20874,7 +20874,7 @@ def EV_KizunaJump_18():
 
     label('loc_176B7')
 
-    EventJump(0x000080C3)
+    OP_AC(0x01, 0x000080C3)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20883,7 +20883,7 @@ def EV_KizunaJump_18():
 
     label('loc_176C7')
 
-    EventJump(0x000080C4)
+    OP_AC(0x01, 0x000080C4)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20892,7 +20892,7 @@ def EV_KizunaJump_18():
 
     label('loc_176D7')
 
-    EventJump(0x000080C5)
+    OP_AC(0x01, 0x000080C5)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20901,7 +20901,7 @@ def EV_KizunaJump_18():
 
     label('loc_176E7')
 
-    EventJump(0x000080C6)
+    OP_AC(0x01, 0x000080C6)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -20910,7 +20910,7 @@ def EV_KizunaJump_18():
 
     label('loc_176F7')
 
-    EventJump(0x000080C7)
+    OP_AC(0x01, 0x000080C7)
     OP_14(0x04000000)
 
     Jump('loc_17715')
@@ -24604,7 +24604,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CDD4')
 
-    EventJump(0x00008100)
+    OP_AC(0x01, 0x00008100)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24613,7 +24613,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CDE4')
 
-    EventJump(0x000081A2)
+    OP_AC(0x01, 0x000081A2)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24622,7 +24622,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CDF4')
 
-    EventJump(0x00008101)
+    OP_AC(0x01, 0x00008101)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24631,7 +24631,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CE04')
 
-    EventJump(0x00008102)
+    OP_AC(0x01, 0x00008102)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24640,7 +24640,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CE14')
 
-    EventJump(0x00008103)
+    OP_AC(0x01, 0x00008103)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24705,7 +24705,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CEB0')
 
-    EventJump(0x00008104)
+    OP_AC(0x01, 0x00008104)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24714,7 +24714,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CEC0')
 
-    EventJump(0x00008105)
+    OP_AC(0x01, 0x00008105)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24723,7 +24723,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CED0')
 
-    EventJump(0x00008106)
+    OP_AC(0x01, 0x00008106)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24732,7 +24732,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CEE0')
 
-    EventJump(0x00008107)
+    OP_AC(0x01, 0x00008107)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24741,7 +24741,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CEF0')
 
-    EventJump(0x00008108)
+    OP_AC(0x01, 0x00008108)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24750,7 +24750,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CF00')
 
-    EventJump(0x00008109)
+    OP_AC(0x01, 0x00008109)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24759,7 +24759,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CF10')
 
-    EventJump(0x0000810A)
+    OP_AC(0x01, 0x0000810A)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24768,7 +24768,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CF20')
 
-    EventJump(0x0000810B)
+    OP_AC(0x01, 0x0000810B)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24777,7 +24777,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CF30')
 
-    EventJump(0x0000810C)
+    OP_AC(0x01, 0x0000810C)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24786,7 +24786,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CF40')
 
-    EventJump(0x0000810D)
+    OP_AC(0x01, 0x0000810D)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24795,7 +24795,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CF50')
 
-    EventJump(0x0000810E)
+    OP_AC(0x01, 0x0000810E)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24804,7 +24804,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CF60')
 
-    EventJump(0x0000810F)
+    OP_AC(0x01, 0x0000810F)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24813,7 +24813,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CF70')
 
-    EventJump(0x00008110)
+    OP_AC(0x01, 0x00008110)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24822,7 +24822,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CF80')
 
-    EventJump(0x00008111)
+    OP_AC(0x01, 0x00008111)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24831,7 +24831,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CF90')
 
-    EventJump(0x00008112)
+    OP_AC(0x01, 0x00008112)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24840,7 +24840,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CFA0')
 
-    EventJump(0x00008113)
+    OP_AC(0x01, 0x00008113)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24849,7 +24849,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CFB0')
 
-    EventJump(0x00008114)
+    OP_AC(0x01, 0x00008114)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24858,7 +24858,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CFC0')
 
-    EventJump(0x00008115)
+    OP_AC(0x01, 0x00008115)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24867,7 +24867,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CFD0')
 
-    EventJump(0x00008116)
+    OP_AC(0x01, 0x00008116)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24876,7 +24876,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CFE0')
 
-    EventJump(0x00008117)
+    OP_AC(0x01, 0x00008117)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24885,7 +24885,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CFF0')
 
-    EventJump(0x00008118)
+    OP_AC(0x01, 0x00008118)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24894,7 +24894,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D000')
 
-    EventJump(0x00008119)
+    OP_AC(0x01, 0x00008119)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24903,7 +24903,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D010')
 
-    EventJump(0x0000811A)
+    OP_AC(0x01, 0x0000811A)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24912,7 +24912,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D020')
 
-    EventJump(0x0000811B)
+    OP_AC(0x01, 0x0000811B)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24921,7 +24921,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D030')
 
-    EventJump(0x0000811C)
+    OP_AC(0x01, 0x0000811C)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24930,7 +24930,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D040')
 
-    EventJump(0x0000811D)
+    OP_AC(0x01, 0x0000811D)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24939,7 +24939,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D050')
 
-    EventJump(0x0000811E)
+    OP_AC(0x01, 0x0000811E)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24948,7 +24948,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D060')
 
-    EventJump(0x000081AA)
+    OP_AC(0x01, 0x000081AA)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24957,7 +24957,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D070')
 
-    EventJump(0x000081AB)
+    OP_AC(0x01, 0x000081AB)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24966,7 +24966,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D080')
 
-    EventJump(0x0000811F)
+    OP_AC(0x01, 0x0000811F)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24975,7 +24975,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D090')
 
-    EventJump(0x00008120)
+    OP_AC(0x01, 0x00008120)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24984,7 +24984,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D0A0')
 
-    EventJump(0x00008121)
+    OP_AC(0x01, 0x00008121)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -24993,7 +24993,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D0B0')
 
-    EventJump(0x000081AC)
+    OP_AC(0x01, 0x000081AC)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25002,7 +25002,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D0C0')
 
-    EventJump(0x00008122)
+    OP_AC(0x01, 0x00008122)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25011,7 +25011,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D0D0')
 
-    EventJump(0x00008123)
+    OP_AC(0x01, 0x00008123)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25020,7 +25020,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D0E0')
 
-    EventJump(0x00008124)
+    OP_AC(0x01, 0x00008124)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25029,7 +25029,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D0F0')
 
-    EventJump(0x00008125)
+    OP_AC(0x01, 0x00008125)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25038,7 +25038,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D100')
 
-    EventJump(0x00008126)
+    OP_AC(0x01, 0x00008126)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25047,7 +25047,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D110')
 
-    EventJump(0x00008127)
+    OP_AC(0x01, 0x00008127)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25056,7 +25056,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D120')
 
-    EventJump(0x00008128)
+    OP_AC(0x01, 0x00008128)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25065,7 +25065,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D130')
 
-    EventJump(0x00008129)
+    OP_AC(0x01, 0x00008129)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25074,7 +25074,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D140')
 
-    EventJump(0x0000812A)
+    OP_AC(0x01, 0x0000812A)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25083,7 +25083,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D150')
 
-    EventJump(0x0000812B)
+    OP_AC(0x01, 0x0000812B)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25092,7 +25092,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D160')
 
-    EventJump(0x0000812C)
+    OP_AC(0x01, 0x0000812C)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25101,7 +25101,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D170')
 
-    EventJump(0x0000812D)
+    OP_AC(0x01, 0x0000812D)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25110,7 +25110,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D180')
 
-    EventJump(0x0000812E)
+    OP_AC(0x01, 0x0000812E)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25119,7 +25119,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D190')
 
-    EventJump(0x0000812F)
+    OP_AC(0x01, 0x0000812F)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25128,7 +25128,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D1A0')
 
-    EventJump(0x00008130)
+    OP_AC(0x01, 0x00008130)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25137,7 +25137,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D1B0')
 
-    EventJump(0x00008131)
+    OP_AC(0x01, 0x00008131)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25146,7 +25146,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D1C0')
 
-    EventJump(0x00008132)
+    OP_AC(0x01, 0x00008132)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25155,7 +25155,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D1D0')
 
-    EventJump(0x00008133)
+    OP_AC(0x01, 0x00008133)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25164,7 +25164,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D1E0')
 
-    EventJump(0x00008134)
+    OP_AC(0x01, 0x00008134)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25173,7 +25173,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D1F0')
 
-    EventJump(0x00008135)
+    OP_AC(0x01, 0x00008135)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25182,7 +25182,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D200')
 
-    EventJump(0x00008136)
+    OP_AC(0x01, 0x00008136)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25191,7 +25191,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D210')
 
-    EventJump(0x00008137)
+    OP_AC(0x01, 0x00008137)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25200,7 +25200,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D220')
 
-    EventJump(0x00008138)
+    OP_AC(0x01, 0x00008138)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25209,7 +25209,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D230')
 
-    EventJump(0x00008139)
+    OP_AC(0x01, 0x00008139)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25218,7 +25218,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D240')
 
-    EventJump(0x0000813A)
+    OP_AC(0x01, 0x0000813A)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25227,7 +25227,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D250')
 
-    EventJump(0x0000813B)
+    OP_AC(0x01, 0x0000813B)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25236,7 +25236,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D260')
 
-    EventJump(0x0000813C)
+    OP_AC(0x01, 0x0000813C)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25245,7 +25245,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D270')
 
-    EventJump(0x0000813D)
+    OP_AC(0x01, 0x0000813D)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25254,7 +25254,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D280')
 
-    EventJump(0x0000813E)
+    OP_AC(0x01, 0x0000813E)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25263,7 +25263,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D290')
 
-    EventJump(0x0000813F)
+    OP_AC(0x01, 0x0000813F)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25272,7 +25272,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D2A0')
 
-    EventJump(0x00008140)
+    OP_AC(0x01, 0x00008140)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25281,7 +25281,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D2B0')
 
-    EventJump(0x00008141)
+    OP_AC(0x01, 0x00008141)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25290,7 +25290,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D2C0')
 
-    EventJump(0x00008142)
+    OP_AC(0x01, 0x00008142)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25299,7 +25299,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D2D0')
 
-    EventJump(0x00008143)
+    OP_AC(0x01, 0x00008143)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25308,7 +25308,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D2E0')
 
-    EventJump(0x00008144)
+    OP_AC(0x01, 0x00008144)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25317,7 +25317,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D2F0')
 
-    EventJump(0x00008145)
+    OP_AC(0x01, 0x00008145)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25326,7 +25326,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D300')
 
-    EventJump(0x00008146)
+    OP_AC(0x01, 0x00008146)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25335,7 +25335,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D310')
 
-    EventJump(0x00008147)
+    OP_AC(0x01, 0x00008147)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25344,7 +25344,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D320')
 
-    EventJump(0x00008148)
+    OP_AC(0x01, 0x00008148)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25353,7 +25353,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D330')
 
-    EventJump(0x00008149)
+    OP_AC(0x01, 0x00008149)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25362,7 +25362,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D340')
 
-    EventJump(0x0000814A)
+    OP_AC(0x01, 0x0000814A)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25371,7 +25371,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D350')
 
-    EventJump(0x000081AD)
+    OP_AC(0x01, 0x000081AD)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25380,7 +25380,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D360')
 
-    EventJump(0x000081AE)
+    OP_AC(0x01, 0x000081AE)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25453,7 +25453,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D410')
 
-    EventJump(0x0000814B)
+    OP_AC(0x01, 0x0000814B)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25462,7 +25462,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D420')
 
-    EventJump(0x0000814C)
+    OP_AC(0x01, 0x0000814C)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25471,7 +25471,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D430')
 
-    EventJump(0x0000814D)
+    OP_AC(0x01, 0x0000814D)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25480,7 +25480,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D440')
 
-    EventJump(0x0000814E)
+    OP_AC(0x01, 0x0000814E)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25489,7 +25489,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D450')
 
-    EventJump(0x0000814F)
+    OP_AC(0x01, 0x0000814F)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25498,7 +25498,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D460')
 
-    EventJump(0x00008150)
+    OP_AC(0x01, 0x00008150)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25507,7 +25507,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D470')
 
-    EventJump(0x00008151)
+    OP_AC(0x01, 0x00008151)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25516,7 +25516,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D480')
 
-    EventJump(0x00008152)
+    OP_AC(0x01, 0x00008152)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25525,7 +25525,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D490')
 
-    EventJump(0x00008153)
+    OP_AC(0x01, 0x00008153)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25534,7 +25534,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D4A0')
 
-    EventJump(0x00008154)
+    OP_AC(0x01, 0x00008154)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25543,7 +25543,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D4B0')
 
-    EventJump(0x00008155)
+    OP_AC(0x01, 0x00008155)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25552,7 +25552,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D4C0')
 
-    EventJump(0x00008156)
+    OP_AC(0x01, 0x00008156)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25561,7 +25561,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D4D0')
 
-    EventJump(0x00008157)
+    OP_AC(0x01, 0x00008157)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25570,7 +25570,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D4E0')
 
-    EventJump(0x00008158)
+    OP_AC(0x01, 0x00008158)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25579,7 +25579,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D4F0')
 
-    EventJump(0x00008159)
+    OP_AC(0x01, 0x00008159)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25588,7 +25588,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D500')
 
-    EventJump(0x0000815A)
+    OP_AC(0x01, 0x0000815A)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25597,7 +25597,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D510')
 
-    EventJump(0x0000815B)
+    OP_AC(0x01, 0x0000815B)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25606,7 +25606,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D520')
 
-    EventJump(0x0000815C)
+    OP_AC(0x01, 0x0000815C)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25615,7 +25615,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D530')
 
-    EventJump(0x0000815D)
+    OP_AC(0x01, 0x0000815D)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25624,7 +25624,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D540')
 
-    EventJump(0x0000815E)
+    OP_AC(0x01, 0x0000815E)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25633,7 +25633,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D550')
 
-    EventJump(0x0000815F)
+    OP_AC(0x01, 0x0000815F)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25642,7 +25642,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D560')
 
-    EventJump(0x00008160)
+    OP_AC(0x01, 0x00008160)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25651,7 +25651,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D570')
 
-    EventJump(0x00008161)
+    OP_AC(0x01, 0x00008161)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25660,7 +25660,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D580')
 
-    EventJump(0x00008162)
+    OP_AC(0x01, 0x00008162)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25669,7 +25669,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D590')
 
-    EventJump(0x00008163)
+    OP_AC(0x01, 0x00008163)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25678,7 +25678,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D5A0')
 
-    EventJump(0x00008164)
+    OP_AC(0x01, 0x00008164)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25687,7 +25687,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D5B0')
 
-    EventJump(0x00008165)
+    OP_AC(0x01, 0x00008165)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25696,7 +25696,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D5C0')
 
-    EventJump(0x00008166)
+    OP_AC(0x01, 0x00008166)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25705,7 +25705,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D5D0')
 
-    EventJump(0x00008167)
+    OP_AC(0x01, 0x00008167)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25714,7 +25714,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D5E0')
 
-    EventJump(0x00008168)
+    OP_AC(0x01, 0x00008168)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25723,7 +25723,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D5F0')
 
-    EventJump(0x00008169)
+    OP_AC(0x01, 0x00008169)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25732,7 +25732,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D600')
 
-    EventJump(0x0000816A)
+    OP_AC(0x01, 0x0000816A)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25741,7 +25741,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D610')
 
-    EventJump(0x0000816B)
+    OP_AC(0x01, 0x0000816B)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25750,7 +25750,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D620')
 
-    EventJump(0x000081B7)
+    OP_AC(0x01, 0x000081B7)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25759,7 +25759,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D630')
 
-    EventJump(0x0000816C)
+    OP_AC(0x01, 0x0000816C)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25768,7 +25768,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D640')
 
-    EventJump(0x0000816D)
+    OP_AC(0x01, 0x0000816D)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25777,7 +25777,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D650')
 
-    EventJump(0x0000816E)
+    OP_AC(0x01, 0x0000816E)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25786,7 +25786,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D660')
 
-    EventJump(0x0000816F)
+    OP_AC(0x01, 0x0000816F)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25795,7 +25795,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D670')
 
-    EventJump(0x00008170)
+    OP_AC(0x01, 0x00008170)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25804,7 +25804,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D680')
 
-    EventJump(0x000081B8)
+    OP_AC(0x01, 0x000081B8)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25813,7 +25813,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D690')
 
-    EventJump(0x00008171)
+    OP_AC(0x01, 0x00008171)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25822,7 +25822,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D6A0')
 
-    EventJump(0x00008172)
+    OP_AC(0x01, 0x00008172)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25831,7 +25831,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D6B0')
 
-    EventJump(0x00008173)
+    OP_AC(0x01, 0x00008173)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25840,7 +25840,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D6C0')
 
-    EventJump(0x00008174)
+    OP_AC(0x01, 0x00008174)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25849,7 +25849,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D6D0')
 
-    EventJump(0x00008175)
+    OP_AC(0x01, 0x00008175)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25858,7 +25858,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D6E0')
 
-    EventJump(0x00008176)
+    OP_AC(0x01, 0x00008176)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25867,7 +25867,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D6F0')
 
-    EventJump(0x00008177)
+    OP_AC(0x01, 0x00008177)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25876,7 +25876,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D700')
 
-    EventJump(0x000081B9)
+    OP_AC(0x01, 0x000081B9)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25885,7 +25885,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D710')
 
-    EventJump(0x000081BA)
+    OP_AC(0x01, 0x000081BA)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25894,7 +25894,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D720')
 
-    EventJump(0x000081BB)
+    OP_AC(0x01, 0x000081BB)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25903,7 +25903,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D730')
 
-    EventJump(0x000081BC)
+    OP_AC(0x01, 0x000081BC)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25912,7 +25912,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D740')
 
-    EventJump(0x000081BD)
+    OP_AC(0x01, 0x000081BD)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25929,7 +25929,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D764')
 
-    EventJump(0x000081BF)
+    OP_AC(0x01, 0x000081BF)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25938,7 +25938,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D774')
 
-    EventJump(0x000081C0)
+    OP_AC(0x01, 0x000081C0)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25947,7 +25947,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D784')
 
-    EventJump(0x000081C1)
+    OP_AC(0x01, 0x000081C1)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25956,7 +25956,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D794')
 
-    EventJump(0x000081C2)
+    OP_AC(0x01, 0x000081C2)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25965,7 +25965,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D7A4')
 
-    EventJump(0x000081C3)
+    OP_AC(0x01, 0x000081C3)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25974,7 +25974,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D7B4')
 
-    EventJump(0x000081C4)
+    OP_AC(0x01, 0x000081C4)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25983,7 +25983,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D7C4')
 
-    EventJump(0x000081C5)
+    OP_AC(0x01, 0x000081C5)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -25992,7 +25992,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D7D4')
 
-    EventJump(0x000081C6)
+    OP_AC(0x01, 0x000081C6)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26001,7 +26001,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D7E4')
 
-    EventJump(0x000081C7)
+    OP_AC(0x01, 0x000081C7)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26010,7 +26010,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D7F4')
 
-    EventJump(0x000081C8)
+    OP_AC(0x01, 0x000081C8)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26019,7 +26019,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D804')
 
-    EventJump(0x000081C9)
+    OP_AC(0x01, 0x000081C9)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26028,7 +26028,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D814')
 
-    EventJump(0x000081CA)
+    OP_AC(0x01, 0x000081CA)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26037,7 +26037,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D824')
 
-    EventJump(0x000081CB)
+    OP_AC(0x01, 0x000081CB)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26046,7 +26046,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D834')
 
-    EventJump(0x000081CC)
+    OP_AC(0x01, 0x000081CC)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26055,7 +26055,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D844')
 
-    EventJump(0x000081CD)
+    OP_AC(0x01, 0x000081CD)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26064,7 +26064,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D854')
 
-    EventJump(0x000081CE)
+    OP_AC(0x01, 0x000081CE)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26073,7 +26073,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D864')
 
-    EventJump(0x00008178)
+    OP_AC(0x01, 0x00008178)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26082,7 +26082,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D874')
 
-    EventJump(0x00008179)
+    OP_AC(0x01, 0x00008179)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26091,7 +26091,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D884')
 
-    EventJump(0x0000817A)
+    OP_AC(0x01, 0x0000817A)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26100,7 +26100,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D894')
 
-    EventJump(0x000081D6)
+    OP_AC(0x01, 0x000081D6)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26109,7 +26109,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D8A4')
 
-    EventJump(0x0000817B)
+    OP_AC(0x01, 0x0000817B)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26118,7 +26118,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D8B4')
 
-    EventJump(0x0000817C)
+    OP_AC(0x01, 0x0000817C)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26127,7 +26127,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D8C4')
 
-    EventJump(0x0000817D)
+    OP_AC(0x01, 0x0000817D)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26136,7 +26136,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D8D4')
 
-    EventJump(0x0000817E)
+    OP_AC(0x01, 0x0000817E)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26145,7 +26145,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D8E4')
 
-    EventJump(0x0000817F)
+    OP_AC(0x01, 0x0000817F)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26154,7 +26154,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D8F4')
 
-    EventJump(0x00008180)
+    OP_AC(0x01, 0x00008180)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26163,7 +26163,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D904')
 
-    EventJump(0x00008181)
+    OP_AC(0x01, 0x00008181)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26172,7 +26172,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D914')
 
-    EventJump(0x00008182)
+    OP_AC(0x01, 0x00008182)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26181,7 +26181,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D924')
 
-    EventJump(0x00008183)
+    OP_AC(0x01, 0x00008183)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26190,7 +26190,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D934')
 
-    EventJump(0x00008184)
+    OP_AC(0x01, 0x00008184)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26199,7 +26199,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D944')
 
-    EventJump(0x00008185)
+    OP_AC(0x01, 0x00008185)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26208,7 +26208,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D954')
 
-    EventJump(0x00008186)
+    OP_AC(0x01, 0x00008186)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26217,7 +26217,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D964')
 
-    EventJump(0x00008187)
+    OP_AC(0x01, 0x00008187)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26226,7 +26226,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D974')
 
-    EventJump(0x00008188)
+    OP_AC(0x01, 0x00008188)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26235,7 +26235,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D984')
 
-    EventJump(0x00008189)
+    OP_AC(0x01, 0x00008189)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26244,7 +26244,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D994')
 
-    EventJump(0x0000818A)
+    OP_AC(0x01, 0x0000818A)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26253,7 +26253,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D9A4')
 
-    EventJump(0x0000818B)
+    OP_AC(0x01, 0x0000818B)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26262,7 +26262,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D9B4')
 
-    EventJump(0x0000818C)
+    OP_AC(0x01, 0x0000818C)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26271,7 +26271,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D9C4')
 
-    EventJump(0x0000818D)
+    OP_AC(0x01, 0x0000818D)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26280,7 +26280,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D9D4')
 
-    EventJump(0x0000818E)
+    OP_AC(0x01, 0x0000818E)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26289,7 +26289,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D9E4')
 
-    EventJump(0x0000818F)
+    OP_AC(0x01, 0x0000818F)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26298,7 +26298,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D9F4')
 
-    EventJump(0x00008190)
+    OP_AC(0x01, 0x00008190)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26307,7 +26307,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DA04')
 
-    EventJump(0x00008191)
+    OP_AC(0x01, 0x00008191)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26316,7 +26316,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DA14')
 
-    EventJump(0x00008192)
+    OP_AC(0x01, 0x00008192)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26325,7 +26325,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DA24')
 
-    EventJump(0x00008193)
+    OP_AC(0x01, 0x00008193)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26334,7 +26334,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DA34')
 
-    EventJump(0x000081CF)
+    OP_AC(0x01, 0x000081CF)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26343,7 +26343,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DA44')
 
-    EventJump(0x000081D0)
+    OP_AC(0x01, 0x000081D0)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26352,7 +26352,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DA54')
 
-    EventJump(0x000081D1)
+    OP_AC(0x01, 0x000081D1)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26361,7 +26361,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DA64')
 
-    EventJump(0x00008194)
+    OP_AC(0x01, 0x00008194)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26370,7 +26370,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DA74')
 
-    EventJump(0x00008195)
+    OP_AC(0x01, 0x00008195)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26379,7 +26379,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DA84')
 
-    EventJump(0x00008196)
+    OP_AC(0x01, 0x00008196)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26388,7 +26388,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DA94')
 
-    EventJump(0x00008197)
+    OP_AC(0x01, 0x00008197)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26397,7 +26397,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DAA4')
 
-    EventJump(0x00008198)
+    OP_AC(0x01, 0x00008198)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26406,7 +26406,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DAB4')
 
-    EventJump(0x00008199)
+    OP_AC(0x01, 0x00008199)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26415,7 +26415,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DAC4')
 
-    EventJump(0x0000819A)
+    OP_AC(0x01, 0x0000819A)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26424,7 +26424,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DAD4')
 
-    EventJump(0x0000819B)
+    OP_AC(0x01, 0x0000819B)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26433,7 +26433,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DAE4')
 
-    EventJump(0x0000819C)
+    OP_AC(0x01, 0x0000819C)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26442,7 +26442,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DAF4')
 
-    EventJump(0x0000819D)
+    OP_AC(0x01, 0x0000819D)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26451,7 +26451,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DB04')
 
-    EventJump(0x0000819E)
+    OP_AC(0x01, 0x0000819E)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26460,7 +26460,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DB14')
 
-    EventJump(0x0000819F)
+    OP_AC(0x01, 0x0000819F)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26469,7 +26469,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DB24')
 
-    EventJump(0x000081A0)
+    OP_AC(0x01, 0x000081A0)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26478,7 +26478,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DB34')
 
-    EventJump(0x000081A1)
+    OP_AC(0x01, 0x000081A1)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26487,7 +26487,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1DB44')
 
-    EventJump(0x000081D2)
+    OP_AC(0x01, 0x000081D2)
     OP_14(0x04000000)
 
     Jump('loc_1DB54')
@@ -26962,7 +26962,7 @@ def EV_Jump_YR_Radio():
     SetScenaFlags(ScenaFlag(0x00C0, 1, 0x601))
     SetScenaFlags(ScenaFlag(0x00C0, 0, 0x600))
     Call(ScriptId.Current, 'EV_Party_Set')
-    EventJump(0x00008515)
+    OP_AC(0x01, 0x00008515)
     OP_14(0x04000000)
 
     Jump('loc_1E3F9')
@@ -29655,7 +29655,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20EDE')
 
-    EventJump(0x00008500)
+    OP_AC(0x01, 0x00008500)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29664,7 +29664,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20EEE')
 
-    EventJump(0x00008502)
+    OP_AC(0x01, 0x00008502)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29673,7 +29673,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20EFE')
 
-    EventJump(0x00008504)
+    OP_AC(0x01, 0x00008504)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29682,7 +29682,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20F0E')
 
-    EventJump(0x00008507)
+    OP_AC(0x01, 0x00008507)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29691,7 +29691,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20F1E')
 
-    EventJump(0x00008509)
+    OP_AC(0x01, 0x00008509)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29700,7 +29700,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20F2E')
 
-    EventJump(0x0000850B)
+    OP_AC(0x01, 0x0000850B)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29709,7 +29709,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20F3E')
 
-    EventJump(0x0000850D)
+    OP_AC(0x01, 0x0000850D)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29718,7 +29718,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20F4E')
 
-    EventJump(0x0000850F)
+    OP_AC(0x01, 0x0000850F)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29727,7 +29727,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20F5E')
 
-    EventJump(0x00008511)
+    OP_AC(0x01, 0x00008511)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29736,7 +29736,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20F6E')
 
-    EventJump(0x00008513)
+    OP_AC(0x01, 0x00008513)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29745,7 +29745,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20F7E')
 
-    EventJump(0x00008516)
+    OP_AC(0x01, 0x00008516)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29754,7 +29754,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20F8E')
 
-    EventJump(0x00008517)
+    OP_AC(0x01, 0x00008517)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29763,7 +29763,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20F9E')
 
-    EventJump(0x00008518)
+    OP_AC(0x01, 0x00008518)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29772,7 +29772,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20FAE')
 
-    EventJump(0x00008519)
+    OP_AC(0x01, 0x00008519)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29781,7 +29781,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20FBE')
 
-    EventJump(0x0000851A)
+    OP_AC(0x01, 0x0000851A)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29790,7 +29790,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20FCE')
 
-    EventJump(0x0000851B)
+    OP_AC(0x01, 0x0000851B)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29799,7 +29799,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20FDE')
 
-    EventJump(0x0000851C)
+    OP_AC(0x01, 0x0000851C)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29808,7 +29808,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20FEE')
 
-    EventJump(0x0000851D)
+    OP_AC(0x01, 0x0000851D)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29817,7 +29817,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20FFE')
 
-    EventJump(0x0000851E)
+    OP_AC(0x01, 0x0000851E)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29826,7 +29826,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2100E')
 
-    EventJump(0x0000851F)
+    OP_AC(0x01, 0x0000851F)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29835,7 +29835,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2101E')
 
-    EventJump(0x00008520)
+    OP_AC(0x01, 0x00008520)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29844,7 +29844,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2102E')
 
-    EventJump(0x00008521)
+    OP_AC(0x01, 0x00008521)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29853,7 +29853,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2103E')
 
-    EventJump(0x00008524)
+    OP_AC(0x01, 0x00008524)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29862,7 +29862,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2104E')
 
-    EventJump(0x00008525)
+    OP_AC(0x01, 0x00008525)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29871,7 +29871,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2105E')
 
-    EventJump(0x00008526)
+    OP_AC(0x01, 0x00008526)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29880,7 +29880,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2106E')
 
-    EventJump(0x00008527)
+    OP_AC(0x01, 0x00008527)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29889,7 +29889,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2107E')
 
-    EventJump(0x00008528)
+    OP_AC(0x01, 0x00008528)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29898,7 +29898,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2108E')
 
-    EventJump(0x00008529)
+    OP_AC(0x01, 0x00008529)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29907,7 +29907,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2109E')
 
-    EventJump(0x0000852A)
+    OP_AC(0x01, 0x0000852A)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29916,7 +29916,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_210AE')
 
-    EventJump(0x0000852B)
+    OP_AC(0x01, 0x0000852B)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29925,7 +29925,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_210BE')
 
-    EventJump(0x0000852D)
+    OP_AC(0x01, 0x0000852D)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -29934,7 +29934,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_210CE')
 
-    EventJump(0x0000852E)
+    OP_AC(0x01, 0x0000852E)
     OP_14(0x04000000)
 
     Jump('loc_210E3')
@@ -30573,7 +30573,7 @@ def TK_System_Debug():
     Fade(0x00, 1000, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
     Call(ScriptId.System, 'FC_TalkEnd_NoCamMove')
-    EventJump(0x00009800)
+    OP_AC(0x01, 0x00009800)
     OP_14(0x04000000)
 
     Jump('loc_22B77')
@@ -35270,7 +35270,7 @@ def EV_useChecker():
 # id: 0x0060 offset: 0x2757C
 @scena.Code('EV_useItemEmasPendant')
 def EV_useItemEmasPendant():
-    EventJump(0x000030D3)
+    OP_AC(0x01, 0x000030D3)
 
     Return()
 
@@ -38164,7 +38164,7 @@ def TK_ChapterSave_Test():
     )
 
     Sleep(300)
-    EventJump(0x00000001)
+    OP_AC(0x01, 0x00000001)
     OP_14(0x04000000)
 
     Jump('loc_29B67')
@@ -38262,7 +38262,7 @@ def EV_Test_Evsave_Load():
 
     OP_3A(0x05, 0x0001, 0x0001)
     OP_3A(0x06, 0x0001)
-    EventJump(0x00000001)
+    OP_AC(0x01, 0x00000001)
     OP_14(0x04000000)
 
     Return()
@@ -43941,7 +43941,7 @@ def EV_99_98_00_END():
     label('loc_2F81B')
 
     SetChrPos(0xF011, 0.0, 0.0, 0.0, 0.0)
-    EventJump(0x00000000)
+    OP_AC(0x01, 0x00000000)
     OP_14(0x04000000)
 
     Return()
@@ -44309,7 +44309,7 @@ def EV_99_98_01_END():
     label('loc_2FC4A')
 
     SetChrPos(0xF011, 0.0, 0.0, 0.0, 0.0)
-    EventJump(0x00000000)
+    OP_AC(0x01, 0x00000000)
     OP_14(0x04000000)
 
     Return()
@@ -44526,7 +44526,7 @@ def EV_99_98_02_END():
     label('loc_2FEDF')
 
     SetChrPos(0xF011, 0.0, 0.0, 0.0, 0.0)
-    EventJump(0x00000000)
+    OP_AC(0x01, 0x00000000)
     OP_14(0x04000000)
 
     Return()
@@ -45508,7 +45508,7 @@ def EV_DoJump_00():
 
     label('loc_30ED8')
 
-    EventJump(0x00000001)
+    OP_AC(0x01, 0x00000001)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45517,7 +45517,7 @@ def EV_DoJump_00():
 
     label('loc_30EE8')
 
-    EventJump(0x00000002)
+    OP_AC(0x01, 0x00000002)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45526,7 +45526,7 @@ def EV_DoJump_00():
 
     label('loc_30EF8')
 
-    EventJump(0x00000003)
+    OP_AC(0x01, 0x00000003)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45535,7 +45535,7 @@ def EV_DoJump_00():
 
     label('loc_30F08')
 
-    EventJump(0x00000004)
+    OP_AC(0x01, 0x00000004)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45544,7 +45544,7 @@ def EV_DoJump_00():
 
     label('loc_30F18')
 
-    EventJump(0x00000005)
+    OP_AC(0x01, 0x00000005)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45553,7 +45553,7 @@ def EV_DoJump_00():
 
     label('loc_30F28')
 
-    EventJump(0x00000006)
+    OP_AC(0x01, 0x00000006)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45562,7 +45562,7 @@ def EV_DoJump_00():
 
     label('loc_30F38')
 
-    EventJump(0x00000007)
+    OP_AC(0x01, 0x00000007)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45571,7 +45571,7 @@ def EV_DoJump_00():
 
     label('loc_30F48')
 
-    EventJump(0x00000008)
+    OP_AC(0x01, 0x00000008)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45580,7 +45580,7 @@ def EV_DoJump_00():
 
     label('loc_30F58')
 
-    EventJump(0x00000009)
+    OP_AC(0x01, 0x00000009)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45589,7 +45589,7 @@ def EV_DoJump_00():
 
     label('loc_30F68')
 
-    EventJump(0x0000000A)
+    OP_AC(0x01, 0x0000000A)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45598,7 +45598,7 @@ def EV_DoJump_00():
 
     label('loc_30F78')
 
-    EventJump(0x0000000B)
+    OP_AC(0x01, 0x0000000B)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45607,7 +45607,7 @@ def EV_DoJump_00():
 
     label('loc_30F88')
 
-    EventJump(0x0000000C)
+    OP_AC(0x01, 0x0000000C)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45616,7 +45616,7 @@ def EV_DoJump_00():
 
     label('loc_30F98')
 
-    EventJump(0x0000000D)
+    OP_AC(0x01, 0x0000000D)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45625,7 +45625,7 @@ def EV_DoJump_00():
 
     label('loc_30FA8')
 
-    EventJump(0x0000000E)
+    OP_AC(0x01, 0x0000000E)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45634,7 +45634,7 @@ def EV_DoJump_00():
 
     label('loc_30FB8')
 
-    EventJump(0x0000000F)
+    OP_AC(0x01, 0x0000000F)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45643,7 +45643,7 @@ def EV_DoJump_00():
 
     label('loc_30FC8')
 
-    EventJump(0x00000010)
+    OP_AC(0x01, 0x00000010)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45652,7 +45652,7 @@ def EV_DoJump_00():
 
     label('loc_30FD8')
 
-    EventJump(0x00000011)
+    OP_AC(0x01, 0x00000011)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45661,7 +45661,7 @@ def EV_DoJump_00():
 
     label('loc_30FE8')
 
-    EventJump(0x00000012)
+    OP_AC(0x01, 0x00000012)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45670,7 +45670,7 @@ def EV_DoJump_00():
 
     label('loc_30FF8')
 
-    EventJump(0x00000013)
+    OP_AC(0x01, 0x00000013)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45679,7 +45679,7 @@ def EV_DoJump_00():
 
     label('loc_31008')
 
-    EventJump(0x00000014)
+    OP_AC(0x01, 0x00000014)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45688,7 +45688,7 @@ def EV_DoJump_00():
 
     label('loc_31018')
 
-    EventJump(0x00000015)
+    OP_AC(0x01, 0x00000015)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45697,7 +45697,7 @@ def EV_DoJump_00():
 
     label('loc_31028')
 
-    EventJump(0x00000016)
+    OP_AC(0x01, 0x00000016)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45706,7 +45706,7 @@ def EV_DoJump_00():
 
     label('loc_31038')
 
-    EventJump(0x00000017)
+    OP_AC(0x01, 0x00000017)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45715,7 +45715,7 @@ def EV_DoJump_00():
 
     label('loc_31048')
 
-    EventJump(0x00000018)
+    OP_AC(0x01, 0x00000018)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45724,7 +45724,7 @@ def EV_DoJump_00():
 
     label('loc_31058')
 
-    EventJump(0x00000019)
+    OP_AC(0x01, 0x00000019)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -45733,7 +45733,7 @@ def EV_DoJump_00():
 
     label('loc_31068')
 
-    EventJump(0x0000001A)
+    OP_AC(0x01, 0x0000001A)
     OP_14(0x04000000)
 
     Jump('loc_31078')
@@ -47524,7 +47524,7 @@ def EV_DoJump_01():
 
     label('loc_3556C')
 
-    EventJump(0x00001001)
+    OP_AC(0x01, 0x00001001)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47533,7 +47533,7 @@ def EV_DoJump_01():
 
     label('loc_3557C')
 
-    EventJump(0x00001002)
+    OP_AC(0x01, 0x00001002)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47542,7 +47542,7 @@ def EV_DoJump_01():
 
     label('loc_3558C')
 
-    EventJump(0x00001003)
+    OP_AC(0x01, 0x00001003)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47551,7 +47551,7 @@ def EV_DoJump_01():
 
     label('loc_3559C')
 
-    EventJump(0x00001004)
+    OP_AC(0x01, 0x00001004)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47560,7 +47560,7 @@ def EV_DoJump_01():
 
     label('loc_355AC')
 
-    EventJump(0x00001005)
+    OP_AC(0x01, 0x00001005)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47569,7 +47569,7 @@ def EV_DoJump_01():
 
     label('loc_355BC')
 
-    EventJump(0x00001006)
+    OP_AC(0x01, 0x00001006)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47578,7 +47578,7 @@ def EV_DoJump_01():
 
     label('loc_355CC')
 
-    EventJump(0x00001007)
+    OP_AC(0x01, 0x00001007)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47587,7 +47587,7 @@ def EV_DoJump_01():
 
     label('loc_355DC')
 
-    EventJump(0x00001008)
+    OP_AC(0x01, 0x00001008)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47596,7 +47596,7 @@ def EV_DoJump_01():
 
     label('loc_355EC')
 
-    EventJump(0x00001009)
+    OP_AC(0x01, 0x00001009)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47605,7 +47605,7 @@ def EV_DoJump_01():
 
     label('loc_355FC')
 
-    EventJump(0x0000100A)
+    OP_AC(0x01, 0x0000100A)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47614,7 +47614,7 @@ def EV_DoJump_01():
 
     label('loc_3560C')
 
-    EventJump(0x0000100B)
+    OP_AC(0x01, 0x0000100B)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47623,7 +47623,7 @@ def EV_DoJump_01():
 
     label('loc_3561C')
 
-    EventJump(0x0000100C)
+    OP_AC(0x01, 0x0000100C)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47632,7 +47632,7 @@ def EV_DoJump_01():
 
     label('loc_3562C')
 
-    EventJump(0x0000100D)
+    OP_AC(0x01, 0x0000100D)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47641,7 +47641,7 @@ def EV_DoJump_01():
 
     label('loc_3563C')
 
-    EventJump(0x0000100E)
+    OP_AC(0x01, 0x0000100E)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47650,7 +47650,7 @@ def EV_DoJump_01():
 
     label('loc_3564C')
 
-    EventJump(0x0000100F)
+    OP_AC(0x01, 0x0000100F)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47659,7 +47659,7 @@ def EV_DoJump_01():
 
     label('loc_3565C')
 
-    EventJump(0x00001010)
+    OP_AC(0x01, 0x00001010)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47668,7 +47668,7 @@ def EV_DoJump_01():
 
     label('loc_3566C')
 
-    EventJump(0x00001011)
+    OP_AC(0x01, 0x00001011)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47677,7 +47677,7 @@ def EV_DoJump_01():
 
     label('loc_3567C')
 
-    EventJump(0x00001012)
+    OP_AC(0x01, 0x00001012)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47686,7 +47686,7 @@ def EV_DoJump_01():
 
     label('loc_3568C')
 
-    EventJump(0x00001013)
+    OP_AC(0x01, 0x00001013)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47695,7 +47695,7 @@ def EV_DoJump_01():
 
     label('loc_3569C')
 
-    EventJump(0x00001014)
+    OP_AC(0x01, 0x00001014)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47704,7 +47704,7 @@ def EV_DoJump_01():
 
     label('loc_356AC')
 
-    EventJump(0x00001015)
+    OP_AC(0x01, 0x00001015)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47713,7 +47713,7 @@ def EV_DoJump_01():
 
     label('loc_356BC')
 
-    EventJump(0x00001016)
+    OP_AC(0x01, 0x00001016)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47722,7 +47722,7 @@ def EV_DoJump_01():
 
     label('loc_356CC')
 
-    EventJump(0x00001017)
+    OP_AC(0x01, 0x00001017)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47731,7 +47731,7 @@ def EV_DoJump_01():
 
     label('loc_356DC')
 
-    EventJump(0x00001018)
+    OP_AC(0x01, 0x00001018)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47740,7 +47740,7 @@ def EV_DoJump_01():
 
     label('loc_356EC')
 
-    EventJump(0x00001019)
+    OP_AC(0x01, 0x00001019)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47749,7 +47749,7 @@ def EV_DoJump_01():
 
     label('loc_356FC')
 
-    EventJump(0x0000101A)
+    OP_AC(0x01, 0x0000101A)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47758,7 +47758,7 @@ def EV_DoJump_01():
 
     label('loc_3570C')
 
-    EventJump(0x0000101B)
+    OP_AC(0x01, 0x0000101B)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47767,7 +47767,7 @@ def EV_DoJump_01():
 
     label('loc_3571C')
 
-    EventJump(0x0000101C)
+    OP_AC(0x01, 0x0000101C)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47776,7 +47776,7 @@ def EV_DoJump_01():
 
     label('loc_3572C')
 
-    EventJump(0x0000101D)
+    OP_AC(0x01, 0x0000101D)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47785,7 +47785,7 @@ def EV_DoJump_01():
 
     label('loc_3573C')
 
-    EventJump(0x0000101E)
+    OP_AC(0x01, 0x0000101E)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47794,7 +47794,7 @@ def EV_DoJump_01():
 
     label('loc_3574C')
 
-    EventJump(0x0000101F)
+    OP_AC(0x01, 0x0000101F)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47805,7 +47805,7 @@ def EV_DoJump_01():
 
     FormationAddMember(ChrTable['亞爾緹娜'])
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
-    EventJump(0x00001020)
+    OP_AC(0x01, 0x00001020)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47816,7 +47816,7 @@ def EV_DoJump_01():
 
     FormationAddMember(ChrTable['亞爾緹娜'])
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000001)
-    EventJump(0x00001021)
+    OP_AC(0x01, 0x00001021)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47825,7 +47825,7 @@ def EV_DoJump_01():
 
     label('loc_35794')
 
-    EventJump(0x00001022)
+    OP_AC(0x01, 0x00001022)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47834,7 +47834,7 @@ def EV_DoJump_01():
 
     label('loc_357A4')
 
-    EventJump(0x00001023)
+    OP_AC(0x01, 0x00001023)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47843,7 +47843,7 @@ def EV_DoJump_01():
 
     label('loc_357B4')
 
-    EventJump(0x00001024)
+    OP_AC(0x01, 0x00001024)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47852,7 +47852,7 @@ def EV_DoJump_01():
 
     label('loc_357C4')
 
-    EventJump(0x00001025)
+    OP_AC(0x01, 0x00001025)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47861,7 +47861,7 @@ def EV_DoJump_01():
 
     label('loc_357D4')
 
-    EventJump(0x00001026)
+    OP_AC(0x01, 0x00001026)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47870,7 +47870,7 @@ def EV_DoJump_01():
 
     label('loc_357E4')
 
-    EventJump(0x00001027)
+    OP_AC(0x01, 0x00001027)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47879,7 +47879,7 @@ def EV_DoJump_01():
 
     label('loc_357F4')
 
-    EventJump(0x00001028)
+    OP_AC(0x01, 0x00001028)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47888,7 +47888,7 @@ def EV_DoJump_01():
 
     label('loc_35804')
 
-    EventJump(0x00001029)
+    OP_AC(0x01, 0x00001029)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47897,7 +47897,7 @@ def EV_DoJump_01():
 
     label('loc_35814')
 
-    EventJump(0x0000102A)
+    OP_AC(0x01, 0x0000102A)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47906,7 +47906,7 @@ def EV_DoJump_01():
 
     label('loc_35824')
 
-    EventJump(0x0000102B)
+    OP_AC(0x01, 0x0000102B)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47915,7 +47915,7 @@ def EV_DoJump_01():
 
     label('loc_35834')
 
-    EventJump(0x0000102C)
+    OP_AC(0x01, 0x0000102C)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47924,7 +47924,7 @@ def EV_DoJump_01():
 
     label('loc_35844')
 
-    EventJump(0x0000102D)
+    OP_AC(0x01, 0x0000102D)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47933,7 +47933,7 @@ def EV_DoJump_01():
 
     label('loc_35854')
 
-    EventJump(0x0000102E)
+    OP_AC(0x01, 0x0000102E)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47942,7 +47942,7 @@ def EV_DoJump_01():
 
     label('loc_35864')
 
-    EventJump(0x0000102F)
+    OP_AC(0x01, 0x0000102F)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47951,7 +47951,7 @@ def EV_DoJump_01():
 
     label('loc_35874')
 
-    EventJump(0x00001030)
+    OP_AC(0x01, 0x00001030)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47960,7 +47960,7 @@ def EV_DoJump_01():
 
     label('loc_35884')
 
-    EventJump(0x00001031)
+    OP_AC(0x01, 0x00001031)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47969,7 +47969,7 @@ def EV_DoJump_01():
 
     label('loc_35894')
 
-    EventJump(0x00001032)
+    OP_AC(0x01, 0x00001032)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47978,7 +47978,7 @@ def EV_DoJump_01():
 
     label('loc_358A4')
 
-    EventJump(0x00001033)
+    OP_AC(0x01, 0x00001033)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47987,7 +47987,7 @@ def EV_DoJump_01():
 
     label('loc_358B4')
 
-    EventJump(0x00001034)
+    OP_AC(0x01, 0x00001034)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -47996,7 +47996,7 @@ def EV_DoJump_01():
 
     label('loc_358C4')
 
-    EventJump(0x00001035)
+    OP_AC(0x01, 0x00001035)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48005,7 +48005,7 @@ def EV_DoJump_01():
 
     label('loc_358D4')
 
-    EventJump(0x00001036)
+    OP_AC(0x01, 0x00001036)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48014,7 +48014,7 @@ def EV_DoJump_01():
 
     label('loc_358E4')
 
-    EventJump(0x00001037)
+    OP_AC(0x01, 0x00001037)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48023,7 +48023,7 @@ def EV_DoJump_01():
 
     label('loc_358F4')
 
-    EventJump(0x00001038)
+    OP_AC(0x01, 0x00001038)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48032,7 +48032,7 @@ def EV_DoJump_01():
 
     label('loc_35904')
 
-    EventJump(0x00001039)
+    OP_AC(0x01, 0x00001039)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48041,7 +48041,7 @@ def EV_DoJump_01():
 
     label('loc_35914')
 
-    EventJump(0x0000103A)
+    OP_AC(0x01, 0x0000103A)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48050,7 +48050,7 @@ def EV_DoJump_01():
 
     label('loc_35924')
 
-    EventJump(0x0000103B)
+    OP_AC(0x01, 0x0000103B)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48059,7 +48059,7 @@ def EV_DoJump_01():
 
     label('loc_35934')
 
-    EventJump(0x0000103C)
+    OP_AC(0x01, 0x0000103C)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48068,7 +48068,7 @@ def EV_DoJump_01():
 
     label('loc_35944')
 
-    EventJump(0x0000103D)
+    OP_AC(0x01, 0x0000103D)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48077,7 +48077,7 @@ def EV_DoJump_01():
 
     label('loc_35954')
 
-    EventJump(0x0000103E)
+    OP_AC(0x01, 0x0000103E)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48086,7 +48086,7 @@ def EV_DoJump_01():
 
     label('loc_35964')
 
-    EventJump(0x0000103F)
+    OP_AC(0x01, 0x0000103F)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48095,7 +48095,7 @@ def EV_DoJump_01():
 
     label('loc_35974')
 
-    EventJump(0x00001040)
+    OP_AC(0x01, 0x00001040)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48104,7 +48104,7 @@ def EV_DoJump_01():
 
     label('loc_35984')
 
-    EventJump(0x00001041)
+    OP_AC(0x01, 0x00001041)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48113,7 +48113,7 @@ def EV_DoJump_01():
 
     label('loc_35994')
 
-    EventJump(0x00001042)
+    OP_AC(0x01, 0x00001042)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48122,7 +48122,7 @@ def EV_DoJump_01():
 
     label('loc_359A4')
 
-    EventJump(0x00001043)
+    OP_AC(0x01, 0x00001043)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48131,7 +48131,7 @@ def EV_DoJump_01():
 
     label('loc_359B4')
 
-    EventJump(0x00001044)
+    OP_AC(0x01, 0x00001044)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48140,7 +48140,7 @@ def EV_DoJump_01():
 
     label('loc_359C4')
 
-    EventJump(0x00001045)
+    OP_AC(0x01, 0x00001045)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48149,7 +48149,7 @@ def EV_DoJump_01():
 
     label('loc_359D4')
 
-    EventJump(0x00001046)
+    OP_AC(0x01, 0x00001046)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48158,7 +48158,7 @@ def EV_DoJump_01():
 
     label('loc_359E4')
 
-    EventJump(0x00001047)
+    OP_AC(0x01, 0x00001047)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48167,7 +48167,7 @@ def EV_DoJump_01():
 
     label('loc_359F4')
 
-    EventJump(0x00001048)
+    OP_AC(0x01, 0x00001048)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48176,7 +48176,7 @@ def EV_DoJump_01():
 
     label('loc_35A04')
 
-    EventJump(0x00001049)
+    OP_AC(0x01, 0x00001049)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48185,7 +48185,7 @@ def EV_DoJump_01():
 
     label('loc_35A14')
 
-    EventJump(0x0000104A)
+    OP_AC(0x01, 0x0000104A)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48194,7 +48194,7 @@ def EV_DoJump_01():
 
     label('loc_35A24')
 
-    EventJump(0x0000104B)
+    OP_AC(0x01, 0x0000104B)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48203,7 +48203,7 @@ def EV_DoJump_01():
 
     label('loc_35A34')
 
-    EventJump(0x0000104C)
+    OP_AC(0x01, 0x0000104C)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48212,7 +48212,7 @@ def EV_DoJump_01():
 
     label('loc_35A44')
 
-    EventJump(0x0000104D)
+    OP_AC(0x01, 0x0000104D)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48221,7 +48221,7 @@ def EV_DoJump_01():
 
     label('loc_35A54')
 
-    EventJump(0x0000104E)
+    OP_AC(0x01, 0x0000104E)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48230,7 +48230,7 @@ def EV_DoJump_01():
 
     label('loc_35A64')
 
-    EventJump(0x0000104F)
+    OP_AC(0x01, 0x0000104F)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48239,7 +48239,7 @@ def EV_DoJump_01():
 
     label('loc_35A74')
 
-    EventJump(0x00001050)
+    OP_AC(0x01, 0x00001050)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48248,7 +48248,7 @@ def EV_DoJump_01():
 
     label('loc_35A84')
 
-    EventJump(0x00001051)
+    OP_AC(0x01, 0x00001051)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48257,7 +48257,7 @@ def EV_DoJump_01():
 
     label('loc_35A94')
 
-    EventJump(0x00001052)
+    OP_AC(0x01, 0x00001052)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48266,7 +48266,7 @@ def EV_DoJump_01():
 
     label('loc_35AA4')
 
-    EventJump(0x00001053)
+    OP_AC(0x01, 0x00001053)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48275,7 +48275,7 @@ def EV_DoJump_01():
 
     label('loc_35AB4')
 
-    EventJump(0x00001054)
+    OP_AC(0x01, 0x00001054)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48284,7 +48284,7 @@ def EV_DoJump_01():
 
     label('loc_35AC4')
 
-    EventJump(0x00001055)
+    OP_AC(0x01, 0x00001055)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48293,7 +48293,7 @@ def EV_DoJump_01():
 
     label('loc_35AD4')
 
-    EventJump(0x00001056)
+    OP_AC(0x01, 0x00001056)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48302,7 +48302,7 @@ def EV_DoJump_01():
 
     label('loc_35AE4')
 
-    EventJump(0x00001057)
+    OP_AC(0x01, 0x00001057)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48311,7 +48311,7 @@ def EV_DoJump_01():
 
     label('loc_35AF4')
 
-    EventJump(0x00001058)
+    OP_AC(0x01, 0x00001058)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48320,7 +48320,7 @@ def EV_DoJump_01():
 
     label('loc_35B04')
 
-    EventJump(0x00001059)
+    OP_AC(0x01, 0x00001059)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48329,7 +48329,7 @@ def EV_DoJump_01():
 
     label('loc_35B14')
 
-    EventJump(0x0000105A)
+    OP_AC(0x01, 0x0000105A)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48338,7 +48338,7 @@ def EV_DoJump_01():
 
     label('loc_35B24')
 
-    EventJump(0x0000105B)
+    OP_AC(0x01, 0x0000105B)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48347,7 +48347,7 @@ def EV_DoJump_01():
 
     label('loc_35B34')
 
-    EventJump(0x0000105C)
+    OP_AC(0x01, 0x0000105C)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48356,7 +48356,7 @@ def EV_DoJump_01():
 
     label('loc_35B44')
 
-    EventJump(0x0000105D)
+    OP_AC(0x01, 0x0000105D)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48365,7 +48365,7 @@ def EV_DoJump_01():
 
     label('loc_35B54')
 
-    EventJump(0x0000105E)
+    OP_AC(0x01, 0x0000105E)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48374,7 +48374,7 @@ def EV_DoJump_01():
 
     label('loc_35B64')
 
-    EventJump(0x0000105F)
+    OP_AC(0x01, 0x0000105F)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48383,7 +48383,7 @@ def EV_DoJump_01():
 
     label('loc_35B74')
 
-    EventJump(0x000010CA)
+    OP_AC(0x01, 0x000010CA)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48392,7 +48392,7 @@ def EV_DoJump_01():
 
     label('loc_35B84')
 
-    EventJump(0x000010CB)
+    OP_AC(0x01, 0x000010CB)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48401,7 +48401,7 @@ def EV_DoJump_01():
 
     label('loc_35B94')
 
-    EventJump(0x00001060)
+    OP_AC(0x01, 0x00001060)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48410,7 +48410,7 @@ def EV_DoJump_01():
 
     label('loc_35BA4')
 
-    EventJump(0x00001061)
+    OP_AC(0x01, 0x00001061)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48419,7 +48419,7 @@ def EV_DoJump_01():
 
     label('loc_35BB4')
 
-    EventJump(0x00001062)
+    OP_AC(0x01, 0x00001062)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48428,7 +48428,7 @@ def EV_DoJump_01():
 
     label('loc_35BC4')
 
-    EventJump(0x00001063)
+    OP_AC(0x01, 0x00001063)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48437,7 +48437,7 @@ def EV_DoJump_01():
 
     label('loc_35BD4')
 
-    EventJump(0x00001064)
+    OP_AC(0x01, 0x00001064)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48446,7 +48446,7 @@ def EV_DoJump_01():
 
     label('loc_35BE4')
 
-    EventJump(0x00001065)
+    OP_AC(0x01, 0x00001065)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48455,7 +48455,7 @@ def EV_DoJump_01():
 
     label('loc_35BF4')
 
-    EventJump(0x00001066)
+    OP_AC(0x01, 0x00001066)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48464,7 +48464,7 @@ def EV_DoJump_01():
 
     label('loc_35C04')
 
-    EventJump(0x00001067)
+    OP_AC(0x01, 0x00001067)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48473,7 +48473,7 @@ def EV_DoJump_01():
 
     label('loc_35C14')
 
-    EventJump(0x00001068)
+    OP_AC(0x01, 0x00001068)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48482,7 +48482,7 @@ def EV_DoJump_01():
 
     label('loc_35C24')
 
-    EventJump(0x00001069)
+    OP_AC(0x01, 0x00001069)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48491,7 +48491,7 @@ def EV_DoJump_01():
 
     label('loc_35C34')
 
-    EventJump(0x0000106A)
+    OP_AC(0x01, 0x0000106A)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48500,7 +48500,7 @@ def EV_DoJump_01():
 
     label('loc_35C44')
 
-    EventJump(0x0000106B)
+    OP_AC(0x01, 0x0000106B)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48509,7 +48509,7 @@ def EV_DoJump_01():
 
     label('loc_35C54')
 
-    EventJump(0x0000106C)
+    OP_AC(0x01, 0x0000106C)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48518,7 +48518,7 @@ def EV_DoJump_01():
 
     label('loc_35C64')
 
-    EventJump(0x0000106D)
+    OP_AC(0x01, 0x0000106D)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48527,7 +48527,7 @@ def EV_DoJump_01():
 
     label('loc_35C74')
 
-    EventJump(0x0000106E)
+    OP_AC(0x01, 0x0000106E)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48536,7 +48536,7 @@ def EV_DoJump_01():
 
     label('loc_35C84')
 
-    EventJump(0x0000106F)
+    OP_AC(0x01, 0x0000106F)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48545,7 +48545,7 @@ def EV_DoJump_01():
 
     label('loc_35C94')
 
-    EventJump(0x00001070)
+    OP_AC(0x01, 0x00001070)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48554,7 +48554,7 @@ def EV_DoJump_01():
 
     label('loc_35CA4')
 
-    EventJump(0x00001071)
+    OP_AC(0x01, 0x00001071)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48563,7 +48563,7 @@ def EV_DoJump_01():
 
     label('loc_35CB4')
 
-    EventJump(0x00001072)
+    OP_AC(0x01, 0x00001072)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48572,7 +48572,7 @@ def EV_DoJump_01():
 
     label('loc_35CC4')
 
-    EventJump(0x00001073)
+    OP_AC(0x01, 0x00001073)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48581,7 +48581,7 @@ def EV_DoJump_01():
 
     label('loc_35CD4')
 
-    EventJump(0x00001074)
+    OP_AC(0x01, 0x00001074)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48590,7 +48590,7 @@ def EV_DoJump_01():
 
     label('loc_35CE4')
 
-    EventJump(0x00001075)
+    OP_AC(0x01, 0x00001075)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48599,7 +48599,7 @@ def EV_DoJump_01():
 
     label('loc_35CF4')
 
-    EventJump(0x00001076)
+    OP_AC(0x01, 0x00001076)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48608,7 +48608,7 @@ def EV_DoJump_01():
 
     label('loc_35D04')
 
-    EventJump(0x00001077)
+    OP_AC(0x01, 0x00001077)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48617,7 +48617,7 @@ def EV_DoJump_01():
 
     label('loc_35D14')
 
-    EventJump(0x00001078)
+    OP_AC(0x01, 0x00001078)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48626,7 +48626,7 @@ def EV_DoJump_01():
 
     label('loc_35D24')
 
-    EventJump(0x00001079)
+    OP_AC(0x01, 0x00001079)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48635,7 +48635,7 @@ def EV_DoJump_01():
 
     label('loc_35D34')
 
-    EventJump(0x0000107A)
+    OP_AC(0x01, 0x0000107A)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48644,7 +48644,7 @@ def EV_DoJump_01():
 
     label('loc_35D44')
 
-    EventJump(0x0000107B)
+    OP_AC(0x01, 0x0000107B)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48653,7 +48653,7 @@ def EV_DoJump_01():
 
     label('loc_35D54')
 
-    EventJump(0x0000107C)
+    OP_AC(0x01, 0x0000107C)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48662,7 +48662,7 @@ def EV_DoJump_01():
 
     label('loc_35D64')
 
-    EventJump(0x000010D1)
+    OP_AC(0x01, 0x000010D1)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48671,7 +48671,7 @@ def EV_DoJump_01():
 
     label('loc_35D74')
 
-    EventJump(0x0000107D)
+    OP_AC(0x01, 0x0000107D)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48680,7 +48680,7 @@ def EV_DoJump_01():
 
     label('loc_35D84')
 
-    EventJump(0x0000107E)
+    OP_AC(0x01, 0x0000107E)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48689,7 +48689,7 @@ def EV_DoJump_01():
 
     label('loc_35D94')
 
-    EventJump(0x0000107F)
+    OP_AC(0x01, 0x0000107F)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48698,7 +48698,7 @@ def EV_DoJump_01():
 
     label('loc_35DA4')
 
-    EventJump(0x00001080)
+    OP_AC(0x01, 0x00001080)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48707,7 +48707,7 @@ def EV_DoJump_01():
 
     label('loc_35DB4')
 
-    EventJump(0x00001081)
+    OP_AC(0x01, 0x00001081)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48716,7 +48716,7 @@ def EV_DoJump_01():
 
     label('loc_35DC4')
 
-    EventJump(0x00001082)
+    OP_AC(0x01, 0x00001082)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48725,7 +48725,7 @@ def EV_DoJump_01():
 
     label('loc_35DD4')
 
-    EventJump(0x00001083)
+    OP_AC(0x01, 0x00001083)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48734,7 +48734,7 @@ def EV_DoJump_01():
 
     label('loc_35DE4')
 
-    EventJump(0x00001084)
+    OP_AC(0x01, 0x00001084)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48743,7 +48743,7 @@ def EV_DoJump_01():
 
     label('loc_35DF4')
 
-    EventJump(0x00001085)
+    OP_AC(0x01, 0x00001085)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48752,7 +48752,7 @@ def EV_DoJump_01():
 
     label('loc_35E04')
 
-    EventJump(0x00001086)
+    OP_AC(0x01, 0x00001086)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48761,7 +48761,7 @@ def EV_DoJump_01():
 
     label('loc_35E14')
 
-    EventJump(0x00001087)
+    OP_AC(0x01, 0x00001087)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48770,7 +48770,7 @@ def EV_DoJump_01():
 
     label('loc_35E24')
 
-    EventJump(0x00001088)
+    OP_AC(0x01, 0x00001088)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48779,7 +48779,7 @@ def EV_DoJump_01():
 
     label('loc_35E34')
 
-    EventJump(0x00001089)
+    OP_AC(0x01, 0x00001089)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48788,7 +48788,7 @@ def EV_DoJump_01():
 
     label('loc_35E44')
 
-    EventJump(0x0000108A)
+    OP_AC(0x01, 0x0000108A)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48797,7 +48797,7 @@ def EV_DoJump_01():
 
     label('loc_35E54')
 
-    EventJump(0x0000108B)
+    OP_AC(0x01, 0x0000108B)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48806,7 +48806,7 @@ def EV_DoJump_01():
 
     label('loc_35E64')
 
-    EventJump(0x0000108C)
+    OP_AC(0x01, 0x0000108C)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48815,7 +48815,7 @@ def EV_DoJump_01():
 
     label('loc_35E74')
 
-    EventJump(0x0000108D)
+    OP_AC(0x01, 0x0000108D)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48824,7 +48824,7 @@ def EV_DoJump_01():
 
     label('loc_35E84')
 
-    EventJump(0x0000108E)
+    OP_AC(0x01, 0x0000108E)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48833,7 +48833,7 @@ def EV_DoJump_01():
 
     label('loc_35E94')
 
-    EventJump(0x0000108F)
+    OP_AC(0x01, 0x0000108F)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48842,7 +48842,7 @@ def EV_DoJump_01():
 
     label('loc_35EA4')
 
-    EventJump(0x00001090)
+    OP_AC(0x01, 0x00001090)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48851,7 +48851,7 @@ def EV_DoJump_01():
 
     label('loc_35EB4')
 
-    EventJump(0x00001091)
+    OP_AC(0x01, 0x00001091)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48860,7 +48860,7 @@ def EV_DoJump_01():
 
     label('loc_35EC4')
 
-    EventJump(0x00001092)
+    OP_AC(0x01, 0x00001092)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48869,7 +48869,7 @@ def EV_DoJump_01():
 
     label('loc_35ED4')
 
-    EventJump(0x00001093)
+    OP_AC(0x01, 0x00001093)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48878,7 +48878,7 @@ def EV_DoJump_01():
 
     label('loc_35EE4')
 
-    EventJump(0x00001094)
+    OP_AC(0x01, 0x00001094)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48887,7 +48887,7 @@ def EV_DoJump_01():
 
     label('loc_35EF4')
 
-    EventJump(0x00001095)
+    OP_AC(0x01, 0x00001095)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48896,7 +48896,7 @@ def EV_DoJump_01():
 
     label('loc_35F04')
 
-    EventJump(0x00001096)
+    OP_AC(0x01, 0x00001096)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48905,7 +48905,7 @@ def EV_DoJump_01():
 
     label('loc_35F14')
 
-    EventJump(0x000010CC)
+    OP_AC(0x01, 0x000010CC)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48914,7 +48914,7 @@ def EV_DoJump_01():
 
     label('loc_35F24')
 
-    EventJump(0x000010CD)
+    OP_AC(0x01, 0x000010CD)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48923,7 +48923,7 @@ def EV_DoJump_01():
 
     label('loc_35F34')
 
-    EventJump(0x000010CE)
+    OP_AC(0x01, 0x000010CE)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48932,7 +48932,7 @@ def EV_DoJump_01():
 
     label('loc_35F44')
 
-    EventJump(0x000010CF)
+    OP_AC(0x01, 0x000010CF)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48941,7 +48941,7 @@ def EV_DoJump_01():
 
     label('loc_35F54')
 
-    EventJump(0x00001097)
+    OP_AC(0x01, 0x00001097)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48950,7 +48950,7 @@ def EV_DoJump_01():
 
     label('loc_35F64')
 
-    EventJump(0x00001098)
+    OP_AC(0x01, 0x00001098)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48959,7 +48959,7 @@ def EV_DoJump_01():
 
     label('loc_35F74')
 
-    EventJump(0x00001099)
+    OP_AC(0x01, 0x00001099)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48968,7 +48968,7 @@ def EV_DoJump_01():
 
     label('loc_35F84')
 
-    EventJump(0x0000109A)
+    OP_AC(0x01, 0x0000109A)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48977,7 +48977,7 @@ def EV_DoJump_01():
 
     label('loc_35F94')
 
-    EventJump(0x0000109B)
+    OP_AC(0x01, 0x0000109B)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48986,7 +48986,7 @@ def EV_DoJump_01():
 
     label('loc_35FA4')
 
-    EventJump(0x0000109C)
+    OP_AC(0x01, 0x0000109C)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -48995,7 +48995,7 @@ def EV_DoJump_01():
 
     label('loc_35FB4')
 
-    EventJump(0x0000109D)
+    OP_AC(0x01, 0x0000109D)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49004,7 +49004,7 @@ def EV_DoJump_01():
 
     label('loc_35FC4')
 
-    EventJump(0x0000109E)
+    OP_AC(0x01, 0x0000109E)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49013,7 +49013,7 @@ def EV_DoJump_01():
 
     label('loc_35FD4')
 
-    EventJump(0x0000109F)
+    OP_AC(0x01, 0x0000109F)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49022,7 +49022,7 @@ def EV_DoJump_01():
 
     label('loc_35FE4')
 
-    EventJump(0x000010A0)
+    OP_AC(0x01, 0x000010A0)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49031,7 +49031,7 @@ def EV_DoJump_01():
 
     label('loc_35FF4')
 
-    EventJump(0x000010A1)
+    OP_AC(0x01, 0x000010A1)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49040,7 +49040,7 @@ def EV_DoJump_01():
 
     label('loc_36004')
 
-    EventJump(0x000010A2)
+    OP_AC(0x01, 0x000010A2)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49049,7 +49049,7 @@ def EV_DoJump_01():
 
     label('loc_36014')
 
-    EventJump(0x000010A3)
+    OP_AC(0x01, 0x000010A3)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49058,7 +49058,7 @@ def EV_DoJump_01():
 
     label('loc_36024')
 
-    EventJump(0x000010A4)
+    OP_AC(0x01, 0x000010A4)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49067,7 +49067,7 @@ def EV_DoJump_01():
 
     label('loc_36034')
 
-    EventJump(0x000010A5)
+    OP_AC(0x01, 0x000010A5)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49076,7 +49076,7 @@ def EV_DoJump_01():
 
     label('loc_36044')
 
-    EventJump(0x000010A6)
+    OP_AC(0x01, 0x000010A6)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49085,7 +49085,7 @@ def EV_DoJump_01():
 
     label('loc_36054')
 
-    EventJump(0x000010A7)
+    OP_AC(0x01, 0x000010A7)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49094,7 +49094,7 @@ def EV_DoJump_01():
 
     label('loc_36064')
 
-    EventJump(0x000010A8)
+    OP_AC(0x01, 0x000010A8)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49103,7 +49103,7 @@ def EV_DoJump_01():
 
     label('loc_36074')
 
-    EventJump(0x000010A9)
+    OP_AC(0x01, 0x000010A9)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49112,7 +49112,7 @@ def EV_DoJump_01():
 
     label('loc_36084')
 
-    EventJump(0x000010AA)
+    OP_AC(0x01, 0x000010AA)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49121,7 +49121,7 @@ def EV_DoJump_01():
 
     label('loc_36094')
 
-    EventJump(0x000010AB)
+    OP_AC(0x01, 0x000010AB)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49130,7 +49130,7 @@ def EV_DoJump_01():
 
     label('loc_360A4')
 
-    EventJump(0x000010AC)
+    OP_AC(0x01, 0x000010AC)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49139,7 +49139,7 @@ def EV_DoJump_01():
 
     label('loc_360B4')
 
-    EventJump(0x000010AD)
+    OP_AC(0x01, 0x000010AD)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49148,7 +49148,7 @@ def EV_DoJump_01():
 
     label('loc_360C4')
 
-    EventJump(0x000010AE)
+    OP_AC(0x01, 0x000010AE)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49157,7 +49157,7 @@ def EV_DoJump_01():
 
     label('loc_360D4')
 
-    EventJump(0x000010AF)
+    OP_AC(0x01, 0x000010AF)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49166,7 +49166,7 @@ def EV_DoJump_01():
 
     label('loc_360E4')
 
-    EventJump(0x000010B0)
+    OP_AC(0x01, 0x000010B0)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49175,7 +49175,7 @@ def EV_DoJump_01():
 
     label('loc_360F4')
 
-    EventJump(0x000010B1)
+    OP_AC(0x01, 0x000010B1)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49184,7 +49184,7 @@ def EV_DoJump_01():
 
     label('loc_36104')
 
-    EventJump(0x000010B2)
+    OP_AC(0x01, 0x000010B2)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49193,7 +49193,7 @@ def EV_DoJump_01():
 
     label('loc_36114')
 
-    EventJump(0x000010B3)
+    OP_AC(0x01, 0x000010B3)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49202,7 +49202,7 @@ def EV_DoJump_01():
 
     label('loc_36124')
 
-    EventJump(0x000010B4)
+    OP_AC(0x01, 0x000010B4)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49211,7 +49211,7 @@ def EV_DoJump_01():
 
     label('loc_36134')
 
-    EventJump(0x000010B5)
+    OP_AC(0x01, 0x000010B5)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49220,7 +49220,7 @@ def EV_DoJump_01():
 
     label('loc_36144')
 
-    EventJump(0x000010B6)
+    OP_AC(0x01, 0x000010B6)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49229,7 +49229,7 @@ def EV_DoJump_01():
 
     label('loc_36154')
 
-    EventJump(0x000010B7)
+    OP_AC(0x01, 0x000010B7)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49238,7 +49238,7 @@ def EV_DoJump_01():
 
     label('loc_36164')
 
-    EventJump(0x000010B8)
+    OP_AC(0x01, 0x000010B8)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49247,7 +49247,7 @@ def EV_DoJump_01():
 
     label('loc_36174')
 
-    EventJump(0x000010B9)
+    OP_AC(0x01, 0x000010B9)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49256,7 +49256,7 @@ def EV_DoJump_01():
 
     label('loc_36184')
 
-    EventJump(0x000010BA)
+    OP_AC(0x01, 0x000010BA)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49265,7 +49265,7 @@ def EV_DoJump_01():
 
     label('loc_36194')
 
-    EventJump(0x000010BB)
+    OP_AC(0x01, 0x000010BB)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49274,7 +49274,7 @@ def EV_DoJump_01():
 
     label('loc_361A4')
 
-    EventJump(0x000010BC)
+    OP_AC(0x01, 0x000010BC)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49283,7 +49283,7 @@ def EV_DoJump_01():
 
     label('loc_361B4')
 
-    EventJump(0x000010BD)
+    OP_AC(0x01, 0x000010BD)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49292,7 +49292,7 @@ def EV_DoJump_01():
 
     label('loc_361C4')
 
-    EventJump(0x000010BE)
+    OP_AC(0x01, 0x000010BE)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49301,7 +49301,7 @@ def EV_DoJump_01():
 
     label('loc_361D4')
 
-    EventJump(0x000010BF)
+    OP_AC(0x01, 0x000010BF)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49310,7 +49310,7 @@ def EV_DoJump_01():
 
     label('loc_361E4')
 
-    EventJump(0x000010C0)
+    OP_AC(0x01, 0x000010C0)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49319,7 +49319,7 @@ def EV_DoJump_01():
 
     label('loc_361F4')
 
-    EventJump(0x000010C1)
+    OP_AC(0x01, 0x000010C1)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49328,7 +49328,7 @@ def EV_DoJump_01():
 
     label('loc_36204')
 
-    EventJump(0x000010C2)
+    OP_AC(0x01, 0x000010C2)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49337,7 +49337,7 @@ def EV_DoJump_01():
 
     label('loc_36214')
 
-    EventJump(0x000010C3)
+    OP_AC(0x01, 0x000010C3)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49346,7 +49346,7 @@ def EV_DoJump_01():
 
     label('loc_36224')
 
-    EventJump(0x000010C4)
+    OP_AC(0x01, 0x000010C4)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49355,7 +49355,7 @@ def EV_DoJump_01():
 
     label('loc_36234')
 
-    EventJump(0x000010C5)
+    OP_AC(0x01, 0x000010C5)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49364,7 +49364,7 @@ def EV_DoJump_01():
 
     label('loc_36244')
 
-    EventJump(0x000010C6)
+    OP_AC(0x01, 0x000010C6)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49373,7 +49373,7 @@ def EV_DoJump_01():
 
     label('loc_36254')
 
-    EventJump(0x000010C7)
+    OP_AC(0x01, 0x000010C7)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49382,7 +49382,7 @@ def EV_DoJump_01():
 
     label('loc_36264')
 
-    EventJump(0x000010C8)
+    OP_AC(0x01, 0x000010C8)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -49391,7 +49391,7 @@ def EV_DoJump_01():
 
     label('loc_36274')
 
-    EventJump(0x000010C9)
+    OP_AC(0x01, 0x000010C9)
     OP_14(0x04000000)
 
     Jump('loc_36284')
@@ -51192,7 +51192,7 @@ def EV_DoJump_02():
 
     label('loc_3B301')
 
-    EventJump(0x00002001)
+    OP_AC(0x01, 0x00002001)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51201,7 +51201,7 @@ def EV_DoJump_02():
 
     label('loc_3B311')
 
-    EventJump(0x00002002)
+    OP_AC(0x01, 0x00002002)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51210,7 +51210,7 @@ def EV_DoJump_02():
 
     label('loc_3B321')
 
-    EventJump(0x00002003)
+    OP_AC(0x01, 0x00002003)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51219,7 +51219,7 @@ def EV_DoJump_02():
 
     label('loc_3B331')
 
-    EventJump(0x00002004)
+    OP_AC(0x01, 0x00002004)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51228,7 +51228,7 @@ def EV_DoJump_02():
 
     label('loc_3B341')
 
-    EventJump(0x00002005)
+    OP_AC(0x01, 0x00002005)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51237,7 +51237,7 @@ def EV_DoJump_02():
 
     label('loc_3B351')
 
-    EventJump(0x00002006)
+    OP_AC(0x01, 0x00002006)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51246,7 +51246,7 @@ def EV_DoJump_02():
 
     label('loc_3B361')
 
-    EventJump(0x00002007)
+    OP_AC(0x01, 0x00002007)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51255,7 +51255,7 @@ def EV_DoJump_02():
 
     label('loc_3B371')
 
-    EventJump(0x00002008)
+    OP_AC(0x01, 0x00002008)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51264,7 +51264,7 @@ def EV_DoJump_02():
 
     label('loc_3B381')
 
-    EventJump(0x00002009)
+    OP_AC(0x01, 0x00002009)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51273,7 +51273,7 @@ def EV_DoJump_02():
 
     label('loc_3B391')
 
-    EventJump(0x0000200A)
+    OP_AC(0x01, 0x0000200A)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51282,7 +51282,7 @@ def EV_DoJump_02():
 
     label('loc_3B3A1')
 
-    EventJump(0x0000200B)
+    OP_AC(0x01, 0x0000200B)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51291,7 +51291,7 @@ def EV_DoJump_02():
 
     label('loc_3B3B1')
 
-    EventJump(0x0000200C)
+    OP_AC(0x01, 0x0000200C)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51300,7 +51300,7 @@ def EV_DoJump_02():
 
     label('loc_3B3C1')
 
-    EventJump(0x0000200D)
+    OP_AC(0x01, 0x0000200D)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51309,7 +51309,7 @@ def EV_DoJump_02():
 
     label('loc_3B3D1')
 
-    EventJump(0x0000200E)
+    OP_AC(0x01, 0x0000200E)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51318,7 +51318,7 @@ def EV_DoJump_02():
 
     label('loc_3B3E1')
 
-    EventJump(0x0000200F)
+    OP_AC(0x01, 0x0000200F)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51327,7 +51327,7 @@ def EV_DoJump_02():
 
     label('loc_3B3F1')
 
-    EventJump(0x00002010)
+    OP_AC(0x01, 0x00002010)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51336,7 +51336,7 @@ def EV_DoJump_02():
 
     label('loc_3B401')
 
-    EventJump(0x00002011)
+    OP_AC(0x01, 0x00002011)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51345,7 +51345,7 @@ def EV_DoJump_02():
 
     label('loc_3B411')
 
-    EventJump(0x00002012)
+    OP_AC(0x01, 0x00002012)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51354,7 +51354,7 @@ def EV_DoJump_02():
 
     label('loc_3B421')
 
-    EventJump(0x00002013)
+    OP_AC(0x01, 0x00002013)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51363,7 +51363,7 @@ def EV_DoJump_02():
 
     label('loc_3B431')
 
-    EventJump(0x00002014)
+    OP_AC(0x01, 0x00002014)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51372,7 +51372,7 @@ def EV_DoJump_02():
 
     label('loc_3B441')
 
-    EventJump(0x00002015)
+    OP_AC(0x01, 0x00002015)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51381,7 +51381,7 @@ def EV_DoJump_02():
 
     label('loc_3B451')
 
-    EventJump(0x00002016)
+    OP_AC(0x01, 0x00002016)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51390,7 +51390,7 @@ def EV_DoJump_02():
 
     label('loc_3B461')
 
-    EventJump(0x00002017)
+    OP_AC(0x01, 0x00002017)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51399,7 +51399,7 @@ def EV_DoJump_02():
 
     label('loc_3B471')
 
-    EventJump(0x00002018)
+    OP_AC(0x01, 0x00002018)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51408,7 +51408,7 @@ def EV_DoJump_02():
 
     label('loc_3B481')
 
-    EventJump(0x00002019)
+    OP_AC(0x01, 0x00002019)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51417,7 +51417,7 @@ def EV_DoJump_02():
 
     label('loc_3B491')
 
-    EventJump(0x0000201A)
+    OP_AC(0x01, 0x0000201A)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51426,7 +51426,7 @@ def EV_DoJump_02():
 
     label('loc_3B4A1')
 
-    EventJump(0x0000201B)
+    OP_AC(0x01, 0x0000201B)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51435,7 +51435,7 @@ def EV_DoJump_02():
 
     label('loc_3B4B1')
 
-    EventJump(0x0000201C)
+    OP_AC(0x01, 0x0000201C)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51444,7 +51444,7 @@ def EV_DoJump_02():
 
     label('loc_3B4C1')
 
-    EventJump(0x0000201D)
+    OP_AC(0x01, 0x0000201D)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51453,7 +51453,7 @@ def EV_DoJump_02():
 
     label('loc_3B4D1')
 
-    EventJump(0x0000201E)
+    OP_AC(0x01, 0x0000201E)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51462,7 +51462,7 @@ def EV_DoJump_02():
 
     label('loc_3B4E1')
 
-    EventJump(0x0000201F)
+    OP_AC(0x01, 0x0000201F)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51471,7 +51471,7 @@ def EV_DoJump_02():
 
     label('loc_3B4F1')
 
-    EventJump(0x00002020)
+    OP_AC(0x01, 0x00002020)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51480,7 +51480,7 @@ def EV_DoJump_02():
 
     label('loc_3B501')
 
-    EventJump(0x00002021)
+    OP_AC(0x01, 0x00002021)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51489,7 +51489,7 @@ def EV_DoJump_02():
 
     label('loc_3B511')
 
-    EventJump(0x00002022)
+    OP_AC(0x01, 0x00002022)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51498,7 +51498,7 @@ def EV_DoJump_02():
 
     label('loc_3B521')
 
-    EventJump(0x00002023)
+    OP_AC(0x01, 0x00002023)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51507,7 +51507,7 @@ def EV_DoJump_02():
 
     label('loc_3B531')
 
-    EventJump(0x00002024)
+    OP_AC(0x01, 0x00002024)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51516,7 +51516,7 @@ def EV_DoJump_02():
 
     label('loc_3B541')
 
-    EventJump(0x00002025)
+    OP_AC(0x01, 0x00002025)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51525,7 +51525,7 @@ def EV_DoJump_02():
 
     label('loc_3B551')
 
-    EventJump(0x00002026)
+    OP_AC(0x01, 0x00002026)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51534,7 +51534,7 @@ def EV_DoJump_02():
 
     label('loc_3B561')
 
-    EventJump(0x00002027)
+    OP_AC(0x01, 0x00002027)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51543,7 +51543,7 @@ def EV_DoJump_02():
 
     label('loc_3B571')
 
-    EventJump(0x00002028)
+    OP_AC(0x01, 0x00002028)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51552,7 +51552,7 @@ def EV_DoJump_02():
 
     label('loc_3B581')
 
-    EventJump(0x00002029)
+    OP_AC(0x01, 0x00002029)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51561,7 +51561,7 @@ def EV_DoJump_02():
 
     label('loc_3B591')
 
-    EventJump(0x0000202A)
+    OP_AC(0x01, 0x0000202A)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51570,7 +51570,7 @@ def EV_DoJump_02():
 
     label('loc_3B5A1')
 
-    EventJump(0x0000202B)
+    OP_AC(0x01, 0x0000202B)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51579,7 +51579,7 @@ def EV_DoJump_02():
 
     label('loc_3B5B1')
 
-    EventJump(0x0000202C)
+    OP_AC(0x01, 0x0000202C)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51588,7 +51588,7 @@ def EV_DoJump_02():
 
     label('loc_3B5C1')
 
-    EventJump(0x0000202D)
+    OP_AC(0x01, 0x0000202D)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51597,7 +51597,7 @@ def EV_DoJump_02():
 
     label('loc_3B5D1')
 
-    EventJump(0x0000202E)
+    OP_AC(0x01, 0x0000202E)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51606,7 +51606,7 @@ def EV_DoJump_02():
 
     label('loc_3B5E1')
 
-    EventJump(0x0000202F)
+    OP_AC(0x01, 0x0000202F)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51615,7 +51615,7 @@ def EV_DoJump_02():
 
     label('loc_3B5F1')
 
-    EventJump(0x00002030)
+    OP_AC(0x01, 0x00002030)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51624,7 +51624,7 @@ def EV_DoJump_02():
 
     label('loc_3B601')
 
-    EventJump(0x00002031)
+    OP_AC(0x01, 0x00002031)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51633,7 +51633,7 @@ def EV_DoJump_02():
 
     label('loc_3B611')
 
-    EventJump(0x00002032)
+    OP_AC(0x01, 0x00002032)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51642,7 +51642,7 @@ def EV_DoJump_02():
 
     label('loc_3B621')
 
-    EventJump(0x00002033)
+    OP_AC(0x01, 0x00002033)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51651,7 +51651,7 @@ def EV_DoJump_02():
 
     label('loc_3B631')
 
-    EventJump(0x00002034)
+    OP_AC(0x01, 0x00002034)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51660,7 +51660,7 @@ def EV_DoJump_02():
 
     label('loc_3B641')
 
-    EventJump(0x00002035)
+    OP_AC(0x01, 0x00002035)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51669,7 +51669,7 @@ def EV_DoJump_02():
 
     label('loc_3B651')
 
-    EventJump(0x00002036)
+    OP_AC(0x01, 0x00002036)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51678,7 +51678,7 @@ def EV_DoJump_02():
 
     label('loc_3B661')
 
-    EventJump(0x00002037)
+    OP_AC(0x01, 0x00002037)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51687,7 +51687,7 @@ def EV_DoJump_02():
 
     label('loc_3B671')
 
-    EventJump(0x00002038)
+    OP_AC(0x01, 0x00002038)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51696,7 +51696,7 @@ def EV_DoJump_02():
 
     label('loc_3B681')
 
-    EventJump(0x00002038)
+    OP_AC(0x01, 0x00002038)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51705,7 +51705,7 @@ def EV_DoJump_02():
 
     label('loc_3B691')
 
-    EventJump(0x00002038)
+    OP_AC(0x01, 0x00002038)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51714,7 +51714,7 @@ def EV_DoJump_02():
 
     label('loc_3B6A1')
 
-    EventJump(0x00002038)
+    OP_AC(0x01, 0x00002038)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51723,7 +51723,7 @@ def EV_DoJump_02():
 
     label('loc_3B6B1')
 
-    EventJump(0x00002038)
+    OP_AC(0x01, 0x00002038)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51732,7 +51732,7 @@ def EV_DoJump_02():
 
     label('loc_3B6C1')
 
-    EventJump(0x00002038)
+    OP_AC(0x01, 0x00002038)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51741,7 +51741,7 @@ def EV_DoJump_02():
 
     label('loc_3B6D1')
 
-    EventJump(0x0000203E)
+    OP_AC(0x01, 0x0000203E)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51750,7 +51750,7 @@ def EV_DoJump_02():
 
     label('loc_3B6E1')
 
-    EventJump(0x0000203F)
+    OP_AC(0x01, 0x0000203F)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51759,7 +51759,7 @@ def EV_DoJump_02():
 
     label('loc_3B6F1')
 
-    EventJump(0x00002040)
+    OP_AC(0x01, 0x00002040)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51768,7 +51768,7 @@ def EV_DoJump_02():
 
     label('loc_3B701')
 
-    EventJump(0x00002041)
+    OP_AC(0x01, 0x00002041)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51777,7 +51777,7 @@ def EV_DoJump_02():
 
     label('loc_3B711')
 
-    EventJump(0x00002042)
+    OP_AC(0x01, 0x00002042)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51786,7 +51786,7 @@ def EV_DoJump_02():
 
     label('loc_3B721')
 
-    EventJump(0x00002043)
+    OP_AC(0x01, 0x00002043)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51795,7 +51795,7 @@ def EV_DoJump_02():
 
     label('loc_3B731')
 
-    EventJump(0x00002044)
+    OP_AC(0x01, 0x00002044)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51804,7 +51804,7 @@ def EV_DoJump_02():
 
     label('loc_3B741')
 
-    EventJump(0x00002045)
+    OP_AC(0x01, 0x00002045)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51813,7 +51813,7 @@ def EV_DoJump_02():
 
     label('loc_3B751')
 
-    EventJump(0x00002046)
+    OP_AC(0x01, 0x00002046)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51822,7 +51822,7 @@ def EV_DoJump_02():
 
     label('loc_3B761')
 
-    EventJump(0x00002047)
+    OP_AC(0x01, 0x00002047)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51831,7 +51831,7 @@ def EV_DoJump_02():
 
     label('loc_3B771')
 
-    EventJump(0x00002048)
+    OP_AC(0x01, 0x00002048)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51840,7 +51840,7 @@ def EV_DoJump_02():
 
     label('loc_3B781')
 
-    EventJump(0x00002049)
+    OP_AC(0x01, 0x00002049)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51849,7 +51849,7 @@ def EV_DoJump_02():
 
     label('loc_3B791')
 
-    EventJump(0x0000204A)
+    OP_AC(0x01, 0x0000204A)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51858,7 +51858,7 @@ def EV_DoJump_02():
 
     label('loc_3B7A1')
 
-    EventJump(0x0000204B)
+    OP_AC(0x01, 0x0000204B)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51867,7 +51867,7 @@ def EV_DoJump_02():
 
     label('loc_3B7B1')
 
-    EventJump(0x0000204C)
+    OP_AC(0x01, 0x0000204C)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51876,7 +51876,7 @@ def EV_DoJump_02():
 
     label('loc_3B7C1')
 
-    EventJump(0x0000204D)
+    OP_AC(0x01, 0x0000204D)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51885,7 +51885,7 @@ def EV_DoJump_02():
 
     label('loc_3B7D1')
 
-    EventJump(0x0000204E)
+    OP_AC(0x01, 0x0000204E)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51894,7 +51894,7 @@ def EV_DoJump_02():
 
     label('loc_3B7E1')
 
-    EventJump(0x0000204F)
+    OP_AC(0x01, 0x0000204F)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51903,7 +51903,7 @@ def EV_DoJump_02():
 
     label('loc_3B7F1')
 
-    EventJump(0x00002050)
+    OP_AC(0x01, 0x00002050)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51912,7 +51912,7 @@ def EV_DoJump_02():
 
     label('loc_3B801')
 
-    EventJump(0x00002051)
+    OP_AC(0x01, 0x00002051)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51921,7 +51921,7 @@ def EV_DoJump_02():
 
     label('loc_3B811')
 
-    EventJump(0x00002052)
+    OP_AC(0x01, 0x00002052)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51930,7 +51930,7 @@ def EV_DoJump_02():
 
     label('loc_3B821')
 
-    EventJump(0x00002053)
+    OP_AC(0x01, 0x00002053)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51939,7 +51939,7 @@ def EV_DoJump_02():
 
     label('loc_3B831')
 
-    EventJump(0x00002054)
+    OP_AC(0x01, 0x00002054)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51948,7 +51948,7 @@ def EV_DoJump_02():
 
     label('loc_3B841')
 
-    EventJump(0x00002055)
+    OP_AC(0x01, 0x00002055)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51957,7 +51957,7 @@ def EV_DoJump_02():
 
     label('loc_3B851')
 
-    EventJump(0x00002056)
+    OP_AC(0x01, 0x00002056)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51966,7 +51966,7 @@ def EV_DoJump_02():
 
     label('loc_3B861')
 
-    EventJump(0x00002057)
+    OP_AC(0x01, 0x00002057)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51975,7 +51975,7 @@ def EV_DoJump_02():
 
     label('loc_3B871')
 
-    EventJump(0x00002058)
+    OP_AC(0x01, 0x00002058)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51984,7 +51984,7 @@ def EV_DoJump_02():
 
     label('loc_3B881')
 
-    EventJump(0x00002059)
+    OP_AC(0x01, 0x00002059)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -51993,7 +51993,7 @@ def EV_DoJump_02():
 
     label('loc_3B891')
 
-    EventJump(0x0000205A)
+    OP_AC(0x01, 0x0000205A)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52002,7 +52002,7 @@ def EV_DoJump_02():
 
     label('loc_3B8A1')
 
-    EventJump(0x0000205B)
+    OP_AC(0x01, 0x0000205B)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52011,7 +52011,7 @@ def EV_DoJump_02():
 
     label('loc_3B8B1')
 
-    EventJump(0x0000205C)
+    OP_AC(0x01, 0x0000205C)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52020,7 +52020,7 @@ def EV_DoJump_02():
 
     label('loc_3B8C1')
 
-    EventJump(0x0000205D)
+    OP_AC(0x01, 0x0000205D)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52029,7 +52029,7 @@ def EV_DoJump_02():
 
     label('loc_3B8D1')
 
-    EventJump(0x0000205E)
+    OP_AC(0x01, 0x0000205E)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52038,7 +52038,7 @@ def EV_DoJump_02():
 
     label('loc_3B8E1')
 
-    EventJump(0x0000205F)
+    OP_AC(0x01, 0x0000205F)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52047,7 +52047,7 @@ def EV_DoJump_02():
 
     label('loc_3B8F1')
 
-    EventJump(0x00002060)
+    OP_AC(0x01, 0x00002060)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52056,7 +52056,7 @@ def EV_DoJump_02():
 
     label('loc_3B901')
 
-    EventJump(0x00002061)
+    OP_AC(0x01, 0x00002061)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52065,7 +52065,7 @@ def EV_DoJump_02():
 
     label('loc_3B911')
 
-    EventJump(0x00002062)
+    OP_AC(0x01, 0x00002062)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52074,7 +52074,7 @@ def EV_DoJump_02():
 
     label('loc_3B921')
 
-    EventJump(0x00002063)
+    OP_AC(0x01, 0x00002063)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52083,7 +52083,7 @@ def EV_DoJump_02():
 
     label('loc_3B931')
 
-    EventJump(0x00002064)
+    OP_AC(0x01, 0x00002064)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52092,7 +52092,7 @@ def EV_DoJump_02():
 
     label('loc_3B941')
 
-    EventJump(0x00002065)
+    OP_AC(0x01, 0x00002065)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52101,7 +52101,7 @@ def EV_DoJump_02():
 
     label('loc_3B951')
 
-    EventJump(0x00002066)
+    OP_AC(0x01, 0x00002066)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52110,7 +52110,7 @@ def EV_DoJump_02():
 
     label('loc_3B961')
 
-    EventJump(0x00002067)
+    OP_AC(0x01, 0x00002067)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52119,7 +52119,7 @@ def EV_DoJump_02():
 
     label('loc_3B971')
 
-    EventJump(0x00002068)
+    OP_AC(0x01, 0x00002068)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52128,7 +52128,7 @@ def EV_DoJump_02():
 
     label('loc_3B981')
 
-    EventJump(0x00002069)
+    OP_AC(0x01, 0x00002069)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52137,7 +52137,7 @@ def EV_DoJump_02():
 
     label('loc_3B991')
 
-    EventJump(0x0000206A)
+    OP_AC(0x01, 0x0000206A)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52146,7 +52146,7 @@ def EV_DoJump_02():
 
     label('loc_3B9A1')
 
-    EventJump(0x0000206B)
+    OP_AC(0x01, 0x0000206B)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52155,7 +52155,7 @@ def EV_DoJump_02():
 
     label('loc_3B9B1')
 
-    EventJump(0x0000206C)
+    OP_AC(0x01, 0x0000206C)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52164,7 +52164,7 @@ def EV_DoJump_02():
 
     label('loc_3B9C1')
 
-    EventJump(0x0000206D)
+    OP_AC(0x01, 0x0000206D)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52173,7 +52173,7 @@ def EV_DoJump_02():
 
     label('loc_3B9D1')
 
-    EventJump(0x0000206E)
+    OP_AC(0x01, 0x0000206E)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52182,7 +52182,7 @@ def EV_DoJump_02():
 
     label('loc_3B9E1')
 
-    EventJump(0x0000206F)
+    OP_AC(0x01, 0x0000206F)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52191,7 +52191,7 @@ def EV_DoJump_02():
 
     label('loc_3B9F1')
 
-    EventJump(0x00002070)
+    OP_AC(0x01, 0x00002070)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52200,7 +52200,7 @@ def EV_DoJump_02():
 
     label('loc_3BA01')
 
-    EventJump(0x00002071)
+    OP_AC(0x01, 0x00002071)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52209,7 +52209,7 @@ def EV_DoJump_02():
 
     label('loc_3BA11')
 
-    EventJump(0x00002072)
+    OP_AC(0x01, 0x00002072)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52218,7 +52218,7 @@ def EV_DoJump_02():
 
     label('loc_3BA21')
 
-    EventJump(0x00002073)
+    OP_AC(0x01, 0x00002073)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52227,7 +52227,7 @@ def EV_DoJump_02():
 
     label('loc_3BA31')
 
-    EventJump(0x00002074)
+    OP_AC(0x01, 0x00002074)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52236,7 +52236,7 @@ def EV_DoJump_02():
 
     label('loc_3BA41')
 
-    EventJump(0x00002075)
+    OP_AC(0x01, 0x00002075)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52245,7 +52245,7 @@ def EV_DoJump_02():
 
     label('loc_3BA51')
 
-    EventJump(0x00002076)
+    OP_AC(0x01, 0x00002076)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52254,7 +52254,7 @@ def EV_DoJump_02():
 
     label('loc_3BA61')
 
-    EventJump(0x00002077)
+    OP_AC(0x01, 0x00002077)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52263,7 +52263,7 @@ def EV_DoJump_02():
 
     label('loc_3BA71')
 
-    EventJump(0x00002078)
+    OP_AC(0x01, 0x00002078)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52272,7 +52272,7 @@ def EV_DoJump_02():
 
     label('loc_3BA81')
 
-    EventJump(0x00002079)
+    OP_AC(0x01, 0x00002079)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52281,7 +52281,7 @@ def EV_DoJump_02():
 
     label('loc_3BA91')
 
-    EventJump(0x0000207A)
+    OP_AC(0x01, 0x0000207A)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52290,7 +52290,7 @@ def EV_DoJump_02():
 
     label('loc_3BAA1')
 
-    EventJump(0x0000207B)
+    OP_AC(0x01, 0x0000207B)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52299,7 +52299,7 @@ def EV_DoJump_02():
 
     label('loc_3BAB1')
 
-    EventJump(0x0000207C)
+    OP_AC(0x01, 0x0000207C)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52308,7 +52308,7 @@ def EV_DoJump_02():
 
     label('loc_3BAC1')
 
-    EventJump(0x0000207D)
+    OP_AC(0x01, 0x0000207D)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52317,7 +52317,7 @@ def EV_DoJump_02():
 
     label('loc_3BAD1')
 
-    EventJump(0x0000207E)
+    OP_AC(0x01, 0x0000207E)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52326,7 +52326,7 @@ def EV_DoJump_02():
 
     label('loc_3BAE1')
 
-    EventJump(0x0000207F)
+    OP_AC(0x01, 0x0000207F)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52335,7 +52335,7 @@ def EV_DoJump_02():
 
     label('loc_3BAF1')
 
-    EventJump(0x00002080)
+    OP_AC(0x01, 0x00002080)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52344,7 +52344,7 @@ def EV_DoJump_02():
 
     label('loc_3BB01')
 
-    EventJump(0x00002081)
+    OP_AC(0x01, 0x00002081)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52353,7 +52353,7 @@ def EV_DoJump_02():
 
     label('loc_3BB11')
 
-    EventJump(0x00002082)
+    OP_AC(0x01, 0x00002082)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52362,7 +52362,7 @@ def EV_DoJump_02():
 
     label('loc_3BB21')
 
-    EventJump(0x00002083)
+    OP_AC(0x01, 0x00002083)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52371,7 +52371,7 @@ def EV_DoJump_02():
 
     label('loc_3BB31')
 
-    EventJump(0x00002084)
+    OP_AC(0x01, 0x00002084)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52380,7 +52380,7 @@ def EV_DoJump_02():
 
     label('loc_3BB41')
 
-    EventJump(0x00002085)
+    OP_AC(0x01, 0x00002085)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52389,7 +52389,7 @@ def EV_DoJump_02():
 
     label('loc_3BB51')
 
-    EventJump(0x00002086)
+    OP_AC(0x01, 0x00002086)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52398,7 +52398,7 @@ def EV_DoJump_02():
 
     label('loc_3BB61')
 
-    EventJump(0x00002087)
+    OP_AC(0x01, 0x00002087)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52407,7 +52407,7 @@ def EV_DoJump_02():
 
     label('loc_3BB71')
 
-    EventJump(0x00002088)
+    OP_AC(0x01, 0x00002088)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52416,7 +52416,7 @@ def EV_DoJump_02():
 
     label('loc_3BB81')
 
-    EventJump(0x00002089)
+    OP_AC(0x01, 0x00002089)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52425,7 +52425,7 @@ def EV_DoJump_02():
 
     label('loc_3BB91')
 
-    EventJump(0x0000208A)
+    OP_AC(0x01, 0x0000208A)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52434,7 +52434,7 @@ def EV_DoJump_02():
 
     label('loc_3BBA1')
 
-    EventJump(0x0000208B)
+    OP_AC(0x01, 0x0000208B)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52443,7 +52443,7 @@ def EV_DoJump_02():
 
     label('loc_3BBB1')
 
-    EventJump(0x0000208C)
+    OP_AC(0x01, 0x0000208C)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52452,7 +52452,7 @@ def EV_DoJump_02():
 
     label('loc_3BBC1')
 
-    EventJump(0x0000208D)
+    OP_AC(0x01, 0x0000208D)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52461,7 +52461,7 @@ def EV_DoJump_02():
 
     label('loc_3BBD1')
 
-    EventJump(0x0000208E)
+    OP_AC(0x01, 0x0000208E)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52470,7 +52470,7 @@ def EV_DoJump_02():
 
     label('loc_3BBE1')
 
-    EventJump(0x0000208F)
+    OP_AC(0x01, 0x0000208F)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52479,7 +52479,7 @@ def EV_DoJump_02():
 
     label('loc_3BBF1')
 
-    EventJump(0x00002090)
+    OP_AC(0x01, 0x00002090)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52488,7 +52488,7 @@ def EV_DoJump_02():
 
     label('loc_3BC01')
 
-    EventJump(0x00002091)
+    OP_AC(0x01, 0x00002091)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52497,7 +52497,7 @@ def EV_DoJump_02():
 
     label('loc_3BC11')
 
-    EventJump(0x00002092)
+    OP_AC(0x01, 0x00002092)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52506,7 +52506,7 @@ def EV_DoJump_02():
 
     label('loc_3BC21')
 
-    EventJump(0x00002093)
+    OP_AC(0x01, 0x00002093)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52515,7 +52515,7 @@ def EV_DoJump_02():
 
     label('loc_3BC31')
 
-    EventJump(0x00002094)
+    OP_AC(0x01, 0x00002094)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52524,7 +52524,7 @@ def EV_DoJump_02():
 
     label('loc_3BC41')
 
-    EventJump(0x00002095)
+    OP_AC(0x01, 0x00002095)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52533,7 +52533,7 @@ def EV_DoJump_02():
 
     label('loc_3BC51')
 
-    EventJump(0x00002096)
+    OP_AC(0x01, 0x00002096)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52542,7 +52542,7 @@ def EV_DoJump_02():
 
     label('loc_3BC61')
 
-    EventJump(0x00002097)
+    OP_AC(0x01, 0x00002097)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52551,7 +52551,7 @@ def EV_DoJump_02():
 
     label('loc_3BC71')
 
-    EventJump(0x00002098)
+    OP_AC(0x01, 0x00002098)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52560,7 +52560,7 @@ def EV_DoJump_02():
 
     label('loc_3BC81')
 
-    EventJump(0x00002099)
+    OP_AC(0x01, 0x00002099)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52569,7 +52569,7 @@ def EV_DoJump_02():
 
     label('loc_3BC91')
 
-    EventJump(0x0000209A)
+    OP_AC(0x01, 0x0000209A)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52578,7 +52578,7 @@ def EV_DoJump_02():
 
     label('loc_3BCA1')
 
-    EventJump(0x0000209B)
+    OP_AC(0x01, 0x0000209B)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52587,7 +52587,7 @@ def EV_DoJump_02():
 
     label('loc_3BCB1')
 
-    EventJump(0x0000209C)
+    OP_AC(0x01, 0x0000209C)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52596,7 +52596,7 @@ def EV_DoJump_02():
 
     label('loc_3BCC1')
 
-    EventJump(0x0000209D)
+    OP_AC(0x01, 0x0000209D)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52605,7 +52605,7 @@ def EV_DoJump_02():
 
     label('loc_3BCD1')
 
-    EventJump(0x0000209E)
+    OP_AC(0x01, 0x0000209E)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52614,7 +52614,7 @@ def EV_DoJump_02():
 
     label('loc_3BCE1')
 
-    EventJump(0x0000209F)
+    OP_AC(0x01, 0x0000209F)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52623,7 +52623,7 @@ def EV_DoJump_02():
 
     label('loc_3BCF1')
 
-    EventJump(0x000020A0)
+    OP_AC(0x01, 0x000020A0)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52632,7 +52632,7 @@ def EV_DoJump_02():
 
     label('loc_3BD01')
 
-    EventJump(0x000020A1)
+    OP_AC(0x01, 0x000020A1)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52641,7 +52641,7 @@ def EV_DoJump_02():
 
     label('loc_3BD11')
 
-    EventJump(0x000020A2)
+    OP_AC(0x01, 0x000020A2)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52650,7 +52650,7 @@ def EV_DoJump_02():
 
     label('loc_3BD21')
 
-    EventJump(0x000020A3)
+    OP_AC(0x01, 0x000020A3)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52659,7 +52659,7 @@ def EV_DoJump_02():
 
     label('loc_3BD31')
 
-    EventJump(0x000020A4)
+    OP_AC(0x01, 0x000020A4)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52668,7 +52668,7 @@ def EV_DoJump_02():
 
     label('loc_3BD41')
 
-    EventJump(0x000020A5)
+    OP_AC(0x01, 0x000020A5)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52677,7 +52677,7 @@ def EV_DoJump_02():
 
     label('loc_3BD51')
 
-    EventJump(0x000020A6)
+    OP_AC(0x01, 0x000020A6)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52686,7 +52686,7 @@ def EV_DoJump_02():
 
     label('loc_3BD61')
 
-    EventJump(0x000020A7)
+    OP_AC(0x01, 0x000020A7)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52695,7 +52695,7 @@ def EV_DoJump_02():
 
     label('loc_3BD71')
 
-    EventJump(0x000020A8)
+    OP_AC(0x01, 0x000020A8)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52704,7 +52704,7 @@ def EV_DoJump_02():
 
     label('loc_3BD81')
 
-    EventJump(0x000020A9)
+    OP_AC(0x01, 0x000020A9)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52713,7 +52713,7 @@ def EV_DoJump_02():
 
     label('loc_3BD91')
 
-    EventJump(0x000020AA)
+    OP_AC(0x01, 0x000020AA)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52722,7 +52722,7 @@ def EV_DoJump_02():
 
     label('loc_3BDA1')
 
-    EventJump(0x000020AB)
+    OP_AC(0x01, 0x000020AB)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52731,7 +52731,7 @@ def EV_DoJump_02():
 
     label('loc_3BDB1')
 
-    EventJump(0x000020AC)
+    OP_AC(0x01, 0x000020AC)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52740,7 +52740,7 @@ def EV_DoJump_02():
 
     label('loc_3BDC1')
 
-    EventJump(0x000020AD)
+    OP_AC(0x01, 0x000020AD)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52749,7 +52749,7 @@ def EV_DoJump_02():
 
     label('loc_3BDD1')
 
-    EventJump(0x000020AE)
+    OP_AC(0x01, 0x000020AE)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52758,7 +52758,7 @@ def EV_DoJump_02():
 
     label('loc_3BDE1')
 
-    EventJump(0x000020AF)
+    OP_AC(0x01, 0x000020AF)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52767,7 +52767,7 @@ def EV_DoJump_02():
 
     label('loc_3BDF1')
 
-    EventJump(0x000020B0)
+    OP_AC(0x01, 0x000020B0)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52776,7 +52776,7 @@ def EV_DoJump_02():
 
     label('loc_3BE01')
 
-    EventJump(0x000020B1)
+    OP_AC(0x01, 0x000020B1)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52785,7 +52785,7 @@ def EV_DoJump_02():
 
     label('loc_3BE11')
 
-    EventJump(0x000020B2)
+    OP_AC(0x01, 0x000020B2)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52794,7 +52794,7 @@ def EV_DoJump_02():
 
     label('loc_3BE21')
 
-    EventJump(0x000020B3)
+    OP_AC(0x01, 0x000020B3)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52803,7 +52803,7 @@ def EV_DoJump_02():
 
     label('loc_3BE31')
 
-    EventJump(0x000020B4)
+    OP_AC(0x01, 0x000020B4)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52812,7 +52812,7 @@ def EV_DoJump_02():
 
     label('loc_3BE41')
 
-    EventJump(0x000020B5)
+    OP_AC(0x01, 0x000020B5)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52821,7 +52821,7 @@ def EV_DoJump_02():
 
     label('loc_3BE51')
 
-    EventJump(0x000020B6)
+    OP_AC(0x01, 0x000020B6)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52830,7 +52830,7 @@ def EV_DoJump_02():
 
     label('loc_3BE61')
 
-    EventJump(0x000020B7)
+    OP_AC(0x01, 0x000020B7)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52839,7 +52839,7 @@ def EV_DoJump_02():
 
     label('loc_3BE71')
 
-    EventJump(0x000020B8)
+    OP_AC(0x01, 0x000020B8)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52848,7 +52848,7 @@ def EV_DoJump_02():
 
     label('loc_3BE81')
 
-    EventJump(0x000020B9)
+    OP_AC(0x01, 0x000020B9)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52857,7 +52857,7 @@ def EV_DoJump_02():
 
     label('loc_3BE91')
 
-    EventJump(0x000020BA)
+    OP_AC(0x01, 0x000020BA)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52866,7 +52866,7 @@ def EV_DoJump_02():
 
     label('loc_3BEA1')
 
-    EventJump(0x000020BB)
+    OP_AC(0x01, 0x000020BB)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52875,7 +52875,7 @@ def EV_DoJump_02():
 
     label('loc_3BEB1')
 
-    EventJump(0x000020BC)
+    OP_AC(0x01, 0x000020BC)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52884,7 +52884,7 @@ def EV_DoJump_02():
 
     label('loc_3BEC1')
 
-    EventJump(0x000020BD)
+    OP_AC(0x01, 0x000020BD)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52893,7 +52893,7 @@ def EV_DoJump_02():
 
     label('loc_3BED1')
 
-    EventJump(0x000020BE)
+    OP_AC(0x01, 0x000020BE)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52902,7 +52902,7 @@ def EV_DoJump_02():
 
     label('loc_3BEE1')
 
-    EventJump(0x000020BF)
+    OP_AC(0x01, 0x000020BF)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52911,7 +52911,7 @@ def EV_DoJump_02():
 
     label('loc_3BEF1')
 
-    EventJump(0x000020C0)
+    OP_AC(0x01, 0x000020C0)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52920,7 +52920,7 @@ def EV_DoJump_02():
 
     label('loc_3BF01')
 
-    EventJump(0x000020C1)
+    OP_AC(0x01, 0x000020C1)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52929,7 +52929,7 @@ def EV_DoJump_02():
 
     label('loc_3BF11')
 
-    EventJump(0x000020C2)
+    OP_AC(0x01, 0x000020C2)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52938,7 +52938,7 @@ def EV_DoJump_02():
 
     label('loc_3BF21')
 
-    EventJump(0x000020C3)
+    OP_AC(0x01, 0x000020C3)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52947,7 +52947,7 @@ def EV_DoJump_02():
 
     label('loc_3BF31')
 
-    EventJump(0x000020C4)
+    OP_AC(0x01, 0x000020C4)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52956,7 +52956,7 @@ def EV_DoJump_02():
 
     label('loc_3BF41')
 
-    EventJump(0x000020C5)
+    OP_AC(0x01, 0x000020C5)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52965,7 +52965,7 @@ def EV_DoJump_02():
 
     label('loc_3BF51')
 
-    EventJump(0x000020C6)
+    OP_AC(0x01, 0x000020C6)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52974,7 +52974,7 @@ def EV_DoJump_02():
 
     label('loc_3BF61')
 
-    EventJump(0x000020C7)
+    OP_AC(0x01, 0x000020C7)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52983,7 +52983,7 @@ def EV_DoJump_02():
 
     label('loc_3BF71')
 
-    EventJump(0x000020C8)
+    OP_AC(0x01, 0x000020C8)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -52992,7 +52992,7 @@ def EV_DoJump_02():
 
     label('loc_3BF81')
 
-    EventJump(0x000020C9)
+    OP_AC(0x01, 0x000020C9)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53001,7 +53001,7 @@ def EV_DoJump_02():
 
     label('loc_3BF91')
 
-    EventJump(0x000020CA)
+    OP_AC(0x01, 0x000020CA)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53010,7 +53010,7 @@ def EV_DoJump_02():
 
     label('loc_3BFA1')
 
-    EventJump(0x000020CB)
+    OP_AC(0x01, 0x000020CB)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53019,7 +53019,7 @@ def EV_DoJump_02():
 
     label('loc_3BFB1')
 
-    EventJump(0x000020CC)
+    OP_AC(0x01, 0x000020CC)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53028,7 +53028,7 @@ def EV_DoJump_02():
 
     label('loc_3BFC1')
 
-    EventJump(0x000020CD)
+    OP_AC(0x01, 0x000020CD)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53037,7 +53037,7 @@ def EV_DoJump_02():
 
     label('loc_3BFD1')
 
-    EventJump(0x000020CE)
+    OP_AC(0x01, 0x000020CE)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53046,7 +53046,7 @@ def EV_DoJump_02():
 
     label('loc_3BFE1')
 
-    EventJump(0x000020CF)
+    OP_AC(0x01, 0x000020CF)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53055,7 +53055,7 @@ def EV_DoJump_02():
 
     label('loc_3BFF1')
 
-    EventJump(0x000020D0)
+    OP_AC(0x01, 0x000020D0)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53064,7 +53064,7 @@ def EV_DoJump_02():
 
     label('loc_3C001')
 
-    EventJump(0x000020D1)
+    OP_AC(0x01, 0x000020D1)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53073,7 +53073,7 @@ def EV_DoJump_02():
 
     label('loc_3C011')
 
-    EventJump(0x000020D2)
+    OP_AC(0x01, 0x000020D2)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53082,7 +53082,7 @@ def EV_DoJump_02():
 
     label('loc_3C021')
 
-    EventJump(0x000020D3)
+    OP_AC(0x01, 0x000020D3)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53091,7 +53091,7 @@ def EV_DoJump_02():
 
     label('loc_3C031')
 
-    EventJump(0x000020D4)
+    OP_AC(0x01, 0x000020D4)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53100,7 +53100,7 @@ def EV_DoJump_02():
 
     label('loc_3C041')
 
-    EventJump(0x000020D5)
+    OP_AC(0x01, 0x000020D5)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53109,7 +53109,7 @@ def EV_DoJump_02():
 
     label('loc_3C051')
 
-    EventJump(0x000020D6)
+    OP_AC(0x01, 0x000020D6)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53118,7 +53118,7 @@ def EV_DoJump_02():
 
     label('loc_3C061')
 
-    EventJump(0x000020D7)
+    OP_AC(0x01, 0x000020D7)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53127,7 +53127,7 @@ def EV_DoJump_02():
 
     label('loc_3C071')
 
-    EventJump(0x000020D8)
+    OP_AC(0x01, 0x000020D8)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53136,7 +53136,7 @@ def EV_DoJump_02():
 
     label('loc_3C081')
 
-    EventJump(0x000020D9)
+    OP_AC(0x01, 0x000020D9)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53145,7 +53145,7 @@ def EV_DoJump_02():
 
     label('loc_3C091')
 
-    EventJump(0x000020DA)
+    OP_AC(0x01, 0x000020DA)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53154,7 +53154,7 @@ def EV_DoJump_02():
 
     label('loc_3C0A1')
 
-    EventJump(0x000020DB)
+    OP_AC(0x01, 0x000020DB)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53163,7 +53163,7 @@ def EV_DoJump_02():
 
     label('loc_3C0B1')
 
-    EventJump(0x000020DC)
+    OP_AC(0x01, 0x000020DC)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53172,7 +53172,7 @@ def EV_DoJump_02():
 
     label('loc_3C0C1')
 
-    EventJump(0x000020DD)
+    OP_AC(0x01, 0x000020DD)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53181,7 +53181,7 @@ def EV_DoJump_02():
 
     label('loc_3C0D1')
 
-    EventJump(0x000020DE)
+    OP_AC(0x01, 0x000020DE)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53190,7 +53190,7 @@ def EV_DoJump_02():
 
     label('loc_3C0E1')
 
-    EventJump(0x000020DF)
+    OP_AC(0x01, 0x000020DF)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53199,7 +53199,7 @@ def EV_DoJump_02():
 
     label('loc_3C0F1')
 
-    EventJump(0x000020E0)
+    OP_AC(0x01, 0x000020E0)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53208,7 +53208,7 @@ def EV_DoJump_02():
 
     label('loc_3C101')
 
-    EventJump(0x000020E1)
+    OP_AC(0x01, 0x000020E1)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53217,7 +53217,7 @@ def EV_DoJump_02():
 
     label('loc_3C111')
 
-    EventJump(0x000020E2)
+    OP_AC(0x01, 0x000020E2)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53226,7 +53226,7 @@ def EV_DoJump_02():
 
     label('loc_3C121')
 
-    EventJump(0x000020E3)
+    OP_AC(0x01, 0x000020E3)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53235,7 +53235,7 @@ def EV_DoJump_02():
 
     label('loc_3C131')
 
-    EventJump(0x000020E4)
+    OP_AC(0x01, 0x000020E4)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53244,7 +53244,7 @@ def EV_DoJump_02():
 
     label('loc_3C141')
 
-    EventJump(0x000020E5)
+    OP_AC(0x01, 0x000020E5)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53253,7 +53253,7 @@ def EV_DoJump_02():
 
     label('loc_3C151')
 
-    EventJump(0x000020E6)
+    OP_AC(0x01, 0x000020E6)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53262,7 +53262,7 @@ def EV_DoJump_02():
 
     label('loc_3C161')
 
-    EventJump(0x000020E7)
+    OP_AC(0x01, 0x000020E7)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53271,7 +53271,7 @@ def EV_DoJump_02():
 
     label('loc_3C171')
 
-    EventJump(0x000020E8)
+    OP_AC(0x01, 0x000020E8)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53280,7 +53280,7 @@ def EV_DoJump_02():
 
     label('loc_3C181')
 
-    EventJump(0x000020E9)
+    OP_AC(0x01, 0x000020E9)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53289,7 +53289,7 @@ def EV_DoJump_02():
 
     label('loc_3C191')
 
-    EventJump(0x000020EA)
+    OP_AC(0x01, 0x000020EA)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -53298,7 +53298,7 @@ def EV_DoJump_02():
 
     label('loc_3C1A1')
 
-    EventJump(0x000020EB)
+    OP_AC(0x01, 0x000020EB)
     OP_14(0x04000000)
 
     Jump('loc_3C1B1')
@@ -55598,7 +55598,7 @@ def EV_DoJump_03():
 
     label('loc_42148')
 
-    EventJump(0x00003001)
+    OP_AC(0x01, 0x00003001)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55607,7 +55607,7 @@ def EV_DoJump_03():
 
     label('loc_42158')
 
-    EventJump(0x00003002)
+    OP_AC(0x01, 0x00003002)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55616,7 +55616,7 @@ def EV_DoJump_03():
 
     label('loc_42168')
 
-    EventJump(0x00003003)
+    OP_AC(0x01, 0x00003003)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55625,7 +55625,7 @@ def EV_DoJump_03():
 
     label('loc_42178')
 
-    EventJump(0x00003004)
+    OP_AC(0x01, 0x00003004)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55634,7 +55634,7 @@ def EV_DoJump_03():
 
     label('loc_42188')
 
-    EventJump(0x00003005)
+    OP_AC(0x01, 0x00003005)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55643,7 +55643,7 @@ def EV_DoJump_03():
 
     label('loc_42198')
 
-    EventJump(0x00003006)
+    OP_AC(0x01, 0x00003006)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55652,7 +55652,7 @@ def EV_DoJump_03():
 
     label('loc_421A8')
 
-    EventJump(0x00003007)
+    OP_AC(0x01, 0x00003007)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55661,7 +55661,7 @@ def EV_DoJump_03():
 
     label('loc_421B8')
 
-    EventJump(0x00003008)
+    OP_AC(0x01, 0x00003008)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55670,7 +55670,7 @@ def EV_DoJump_03():
 
     label('loc_421C8')
 
-    EventJump(0x00003009)
+    OP_AC(0x01, 0x00003009)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55679,7 +55679,7 @@ def EV_DoJump_03():
 
     label('loc_421D8')
 
-    EventJump(0x0000300A)
+    OP_AC(0x01, 0x0000300A)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55688,7 +55688,7 @@ def EV_DoJump_03():
 
     label('loc_421E8')
 
-    EventJump(0x0000300B)
+    OP_AC(0x01, 0x0000300B)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55697,7 +55697,7 @@ def EV_DoJump_03():
 
     label('loc_421F8')
 
-    EventJump(0x0000300C)
+    OP_AC(0x01, 0x0000300C)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55706,7 +55706,7 @@ def EV_DoJump_03():
 
     label('loc_42208')
 
-    EventJump(0x0000300D)
+    OP_AC(0x01, 0x0000300D)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55715,7 +55715,7 @@ def EV_DoJump_03():
 
     label('loc_42218')
 
-    EventJump(0x0000300E)
+    OP_AC(0x01, 0x0000300E)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55724,7 +55724,7 @@ def EV_DoJump_03():
 
     label('loc_42228')
 
-    EventJump(0x0000300F)
+    OP_AC(0x01, 0x0000300F)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55733,7 +55733,7 @@ def EV_DoJump_03():
 
     label('loc_42238')
 
-    EventJump(0x00003010)
+    OP_AC(0x01, 0x00003010)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55742,7 +55742,7 @@ def EV_DoJump_03():
 
     label('loc_42248')
 
-    EventJump(0x00003011)
+    OP_AC(0x01, 0x00003011)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55751,7 +55751,7 @@ def EV_DoJump_03():
 
     label('loc_42258')
 
-    EventJump(0x00003012)
+    OP_AC(0x01, 0x00003012)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55760,7 +55760,7 @@ def EV_DoJump_03():
 
     label('loc_42268')
 
-    EventJump(0x00003013)
+    OP_AC(0x01, 0x00003013)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55769,7 +55769,7 @@ def EV_DoJump_03():
 
     label('loc_42278')
 
-    EventJump(0x00003014)
+    OP_AC(0x01, 0x00003014)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55778,7 +55778,7 @@ def EV_DoJump_03():
 
     label('loc_42288')
 
-    EventJump(0x00003015)
+    OP_AC(0x01, 0x00003015)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55787,7 +55787,7 @@ def EV_DoJump_03():
 
     label('loc_42298')
 
-    EventJump(0x00003016)
+    OP_AC(0x01, 0x00003016)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55796,7 +55796,7 @@ def EV_DoJump_03():
 
     label('loc_422A8')
 
-    EventJump(0x00003017)
+    OP_AC(0x01, 0x00003017)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55805,7 +55805,7 @@ def EV_DoJump_03():
 
     label('loc_422B8')
 
-    EventJump(0x00003018)
+    OP_AC(0x01, 0x00003018)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55814,7 +55814,7 @@ def EV_DoJump_03():
 
     label('loc_422C8')
 
-    EventJump(0x00003019)
+    OP_AC(0x01, 0x00003019)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55823,7 +55823,7 @@ def EV_DoJump_03():
 
     label('loc_422D8')
 
-    EventJump(0x0000301A)
+    OP_AC(0x01, 0x0000301A)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55832,7 +55832,7 @@ def EV_DoJump_03():
 
     label('loc_422E8')
 
-    EventJump(0x0000301B)
+    OP_AC(0x01, 0x0000301B)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55841,7 +55841,7 @@ def EV_DoJump_03():
 
     label('loc_422F8')
 
-    EventJump(0x0000301C)
+    OP_AC(0x01, 0x0000301C)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55850,7 +55850,7 @@ def EV_DoJump_03():
 
     label('loc_42308')
 
-    EventJump(0x0000301D)
+    OP_AC(0x01, 0x0000301D)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55859,7 +55859,7 @@ def EV_DoJump_03():
 
     label('loc_42318')
 
-    EventJump(0x0000301E)
+    OP_AC(0x01, 0x0000301E)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55868,7 +55868,7 @@ def EV_DoJump_03():
 
     label('loc_42328')
 
-    EventJump(0x0000301F)
+    OP_AC(0x01, 0x0000301F)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55877,7 +55877,7 @@ def EV_DoJump_03():
 
     label('loc_42338')
 
-    EventJump(0x00003020)
+    OP_AC(0x01, 0x00003020)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55886,7 +55886,7 @@ def EV_DoJump_03():
 
     label('loc_42348')
 
-    EventJump(0x00003021)
+    OP_AC(0x01, 0x00003021)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55895,7 +55895,7 @@ def EV_DoJump_03():
 
     label('loc_42358')
 
-    EventJump(0x00003022)
+    OP_AC(0x01, 0x00003022)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55904,7 +55904,7 @@ def EV_DoJump_03():
 
     label('loc_42368')
 
-    EventJump(0x00003023)
+    OP_AC(0x01, 0x00003023)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55913,7 +55913,7 @@ def EV_DoJump_03():
 
     label('loc_42378')
 
-    EventJump(0x00003024)
+    OP_AC(0x01, 0x00003024)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55922,7 +55922,7 @@ def EV_DoJump_03():
 
     label('loc_42388')
 
-    EventJump(0x00003025)
+    OP_AC(0x01, 0x00003025)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55931,7 +55931,7 @@ def EV_DoJump_03():
 
     label('loc_42398')
 
-    EventJump(0x00003026)
+    OP_AC(0x01, 0x00003026)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55940,7 +55940,7 @@ def EV_DoJump_03():
 
     label('loc_423A8')
 
-    EventJump(0x00003027)
+    OP_AC(0x01, 0x00003027)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55949,7 +55949,7 @@ def EV_DoJump_03():
 
     label('loc_423B8')
 
-    EventJump(0x00003028)
+    OP_AC(0x01, 0x00003028)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55958,7 +55958,7 @@ def EV_DoJump_03():
 
     label('loc_423C8')
 
-    EventJump(0x00003029)
+    OP_AC(0x01, 0x00003029)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55967,7 +55967,7 @@ def EV_DoJump_03():
 
     label('loc_423D8')
 
-    EventJump(0x0000302A)
+    OP_AC(0x01, 0x0000302A)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55976,7 +55976,7 @@ def EV_DoJump_03():
 
     label('loc_423E8')
 
-    EventJump(0x0000302B)
+    OP_AC(0x01, 0x0000302B)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55985,7 +55985,7 @@ def EV_DoJump_03():
 
     label('loc_423F8')
 
-    EventJump(0x0000302C)
+    OP_AC(0x01, 0x0000302C)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -55994,7 +55994,7 @@ def EV_DoJump_03():
 
     label('loc_42408')
 
-    EventJump(0x0000302D)
+    OP_AC(0x01, 0x0000302D)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56003,7 +56003,7 @@ def EV_DoJump_03():
 
     label('loc_42418')
 
-    EventJump(0x0000302E)
+    OP_AC(0x01, 0x0000302E)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56012,7 +56012,7 @@ def EV_DoJump_03():
 
     label('loc_42428')
 
-    EventJump(0x0000302F)
+    OP_AC(0x01, 0x0000302F)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56021,7 +56021,7 @@ def EV_DoJump_03():
 
     label('loc_42438')
 
-    EventJump(0x00003030)
+    OP_AC(0x01, 0x00003030)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56030,7 +56030,7 @@ def EV_DoJump_03():
 
     label('loc_42448')
 
-    EventJump(0x00003031)
+    OP_AC(0x01, 0x00003031)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56039,7 +56039,7 @@ def EV_DoJump_03():
 
     label('loc_42458')
 
-    EventJump(0x00003032)
+    OP_AC(0x01, 0x00003032)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56048,7 +56048,7 @@ def EV_DoJump_03():
 
     label('loc_42468')
 
-    EventJump(0x00003033)
+    OP_AC(0x01, 0x00003033)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56057,7 +56057,7 @@ def EV_DoJump_03():
 
     label('loc_42478')
 
-    EventJump(0x00003034)
+    OP_AC(0x01, 0x00003034)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56066,7 +56066,7 @@ def EV_DoJump_03():
 
     label('loc_42488')
 
-    EventJump(0x00003035)
+    OP_AC(0x01, 0x00003035)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56075,7 +56075,7 @@ def EV_DoJump_03():
 
     label('loc_42498')
 
-    EventJump(0x00003036)
+    OP_AC(0x01, 0x00003036)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56084,7 +56084,7 @@ def EV_DoJump_03():
 
     label('loc_424A8')
 
-    EventJump(0x00003037)
+    OP_AC(0x01, 0x00003037)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56093,7 +56093,7 @@ def EV_DoJump_03():
 
     label('loc_424B8')
 
-    EventJump(0x00003038)
+    OP_AC(0x01, 0x00003038)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56102,7 +56102,7 @@ def EV_DoJump_03():
 
     label('loc_424C8')
 
-    EventJump(0x00003039)
+    OP_AC(0x01, 0x00003039)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56111,7 +56111,7 @@ def EV_DoJump_03():
 
     label('loc_424D8')
 
-    EventJump(0x0000303A)
+    OP_AC(0x01, 0x0000303A)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56120,7 +56120,7 @@ def EV_DoJump_03():
 
     label('loc_424E8')
 
-    EventJump(0x0000303B)
+    OP_AC(0x01, 0x0000303B)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56129,7 +56129,7 @@ def EV_DoJump_03():
 
     label('loc_424F8')
 
-    EventJump(0x0000303C)
+    OP_AC(0x01, 0x0000303C)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56138,7 +56138,7 @@ def EV_DoJump_03():
 
     label('loc_42508')
 
-    EventJump(0x0000303D)
+    OP_AC(0x01, 0x0000303D)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56147,7 +56147,7 @@ def EV_DoJump_03():
 
     label('loc_42518')
 
-    EventJump(0x0000303E)
+    OP_AC(0x01, 0x0000303E)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56156,7 +56156,7 @@ def EV_DoJump_03():
 
     label('loc_42528')
 
-    EventJump(0x0000303F)
+    OP_AC(0x01, 0x0000303F)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56165,7 +56165,7 @@ def EV_DoJump_03():
 
     label('loc_42538')
 
-    EventJump(0x00003040)
+    OP_AC(0x01, 0x00003040)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56174,7 +56174,7 @@ def EV_DoJump_03():
 
     label('loc_42548')
 
-    EventJump(0x00003041)
+    OP_AC(0x01, 0x00003041)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56183,7 +56183,7 @@ def EV_DoJump_03():
 
     label('loc_42558')
 
-    EventJump(0x00003042)
+    OP_AC(0x01, 0x00003042)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56192,7 +56192,7 @@ def EV_DoJump_03():
 
     label('loc_42568')
 
-    EventJump(0x00003043)
+    OP_AC(0x01, 0x00003043)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56201,7 +56201,7 @@ def EV_DoJump_03():
 
     label('loc_42578')
 
-    EventJump(0x00003044)
+    OP_AC(0x01, 0x00003044)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56210,7 +56210,7 @@ def EV_DoJump_03():
 
     label('loc_42588')
 
-    EventJump(0x00003045)
+    OP_AC(0x01, 0x00003045)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56219,7 +56219,7 @@ def EV_DoJump_03():
 
     label('loc_42598')
 
-    EventJump(0x00003046)
+    OP_AC(0x01, 0x00003046)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56228,7 +56228,7 @@ def EV_DoJump_03():
 
     label('loc_425A8')
 
-    EventJump(0x00003047)
+    OP_AC(0x01, 0x00003047)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56237,7 +56237,7 @@ def EV_DoJump_03():
 
     label('loc_425B8')
 
-    EventJump(0x00003048)
+    OP_AC(0x01, 0x00003048)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56246,7 +56246,7 @@ def EV_DoJump_03():
 
     label('loc_425C8')
 
-    EventJump(0x00003049)
+    OP_AC(0x01, 0x00003049)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56255,7 +56255,7 @@ def EV_DoJump_03():
 
     label('loc_425D8')
 
-    EventJump(0x0000304A)
+    OP_AC(0x01, 0x0000304A)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56264,7 +56264,7 @@ def EV_DoJump_03():
 
     label('loc_425E8')
 
-    EventJump(0x0000304B)
+    OP_AC(0x01, 0x0000304B)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56273,7 +56273,7 @@ def EV_DoJump_03():
 
     label('loc_425F8')
 
-    EventJump(0x0000304C)
+    OP_AC(0x01, 0x0000304C)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56282,7 +56282,7 @@ def EV_DoJump_03():
 
     label('loc_42608')
 
-    EventJump(0x0000304D)
+    OP_AC(0x01, 0x0000304D)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56291,7 +56291,7 @@ def EV_DoJump_03():
 
     label('loc_42618')
 
-    EventJump(0x0000304E)
+    OP_AC(0x01, 0x0000304E)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56300,7 +56300,7 @@ def EV_DoJump_03():
 
     label('loc_42628')
 
-    EventJump(0x0000304F)
+    OP_AC(0x01, 0x0000304F)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56309,7 +56309,7 @@ def EV_DoJump_03():
 
     label('loc_42638')
 
-    EventJump(0x00003050)
+    OP_AC(0x01, 0x00003050)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56318,7 +56318,7 @@ def EV_DoJump_03():
 
     label('loc_42648')
 
-    EventJump(0x00003051)
+    OP_AC(0x01, 0x00003051)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56327,7 +56327,7 @@ def EV_DoJump_03():
 
     label('loc_42658')
 
-    EventJump(0x00003052)
+    OP_AC(0x01, 0x00003052)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56336,7 +56336,7 @@ def EV_DoJump_03():
 
     label('loc_42668')
 
-    EventJump(0x00003053)
+    OP_AC(0x01, 0x00003053)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56345,7 +56345,7 @@ def EV_DoJump_03():
 
     label('loc_42678')
 
-    EventJump(0x00003054)
+    OP_AC(0x01, 0x00003054)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56354,7 +56354,7 @@ def EV_DoJump_03():
 
     label('loc_42688')
 
-    EventJump(0x00003055)
+    OP_AC(0x01, 0x00003055)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56363,7 +56363,7 @@ def EV_DoJump_03():
 
     label('loc_42698')
 
-    EventJump(0x00003056)
+    OP_AC(0x01, 0x00003056)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56372,7 +56372,7 @@ def EV_DoJump_03():
 
     label('loc_426A8')
 
-    EventJump(0x00003057)
+    OP_AC(0x01, 0x00003057)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56381,7 +56381,7 @@ def EV_DoJump_03():
 
     label('loc_426B8')
 
-    EventJump(0x00003058)
+    OP_AC(0x01, 0x00003058)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56390,7 +56390,7 @@ def EV_DoJump_03():
 
     label('loc_426C8')
 
-    EventJump(0x00003059)
+    OP_AC(0x01, 0x00003059)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56399,7 +56399,7 @@ def EV_DoJump_03():
 
     label('loc_426D8')
 
-    EventJump(0x0000305A)
+    OP_AC(0x01, 0x0000305A)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56408,7 +56408,7 @@ def EV_DoJump_03():
 
     label('loc_426E8')
 
-    EventJump(0x0000305B)
+    OP_AC(0x01, 0x0000305B)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56417,7 +56417,7 @@ def EV_DoJump_03():
 
     label('loc_426F8')
 
-    EventJump(0x0000305C)
+    OP_AC(0x01, 0x0000305C)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56426,7 +56426,7 @@ def EV_DoJump_03():
 
     label('loc_42708')
 
-    EventJump(0x0000305D)
+    OP_AC(0x01, 0x0000305D)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56435,7 +56435,7 @@ def EV_DoJump_03():
 
     label('loc_42718')
 
-    EventJump(0x0000305E)
+    OP_AC(0x01, 0x0000305E)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56444,7 +56444,7 @@ def EV_DoJump_03():
 
     label('loc_42728')
 
-    EventJump(0x0000305F)
+    OP_AC(0x01, 0x0000305F)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56453,7 +56453,7 @@ def EV_DoJump_03():
 
     label('loc_42738')
 
-    EventJump(0x00003060)
+    OP_AC(0x01, 0x00003060)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56462,7 +56462,7 @@ def EV_DoJump_03():
 
     label('loc_42748')
 
-    EventJump(0x00003061)
+    OP_AC(0x01, 0x00003061)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56471,7 +56471,7 @@ def EV_DoJump_03():
 
     label('loc_42758')
 
-    EventJump(0x00003062)
+    OP_AC(0x01, 0x00003062)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56480,7 +56480,7 @@ def EV_DoJump_03():
 
     label('loc_42768')
 
-    EventJump(0x00003063)
+    OP_AC(0x01, 0x00003063)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56489,7 +56489,7 @@ def EV_DoJump_03():
 
     label('loc_42778')
 
-    EventJump(0x00003064)
+    OP_AC(0x01, 0x00003064)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56498,7 +56498,7 @@ def EV_DoJump_03():
 
     label('loc_42788')
 
-    EventJump(0x00003065)
+    OP_AC(0x01, 0x00003065)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56507,7 +56507,7 @@ def EV_DoJump_03():
 
     label('loc_42798')
 
-    EventJump(0x00003066)
+    OP_AC(0x01, 0x00003066)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56516,7 +56516,7 @@ def EV_DoJump_03():
 
     label('loc_427A8')
 
-    EventJump(0x00003067)
+    OP_AC(0x01, 0x00003067)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56525,7 +56525,7 @@ def EV_DoJump_03():
 
     label('loc_427B8')
 
-    EventJump(0x00003068)
+    OP_AC(0x01, 0x00003068)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56534,7 +56534,7 @@ def EV_DoJump_03():
 
     label('loc_427C8')
 
-    EventJump(0x00003069)
+    OP_AC(0x01, 0x00003069)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56543,7 +56543,7 @@ def EV_DoJump_03():
 
     label('loc_427D8')
 
-    EventJump(0x0000306A)
+    OP_AC(0x01, 0x0000306A)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56552,7 +56552,7 @@ def EV_DoJump_03():
 
     label('loc_427E8')
 
-    EventJump(0x0000306B)
+    OP_AC(0x01, 0x0000306B)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56561,7 +56561,7 @@ def EV_DoJump_03():
 
     label('loc_427F8')
 
-    EventJump(0x0000306C)
+    OP_AC(0x01, 0x0000306C)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56570,7 +56570,7 @@ def EV_DoJump_03():
 
     label('loc_42808')
 
-    EventJump(0x0000306D)
+    OP_AC(0x01, 0x0000306D)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56579,7 +56579,7 @@ def EV_DoJump_03():
 
     label('loc_42818')
 
-    EventJump(0x0000306E)
+    OP_AC(0x01, 0x0000306E)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56588,7 +56588,7 @@ def EV_DoJump_03():
 
     label('loc_42828')
 
-    EventJump(0x0000306F)
+    OP_AC(0x01, 0x0000306F)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56597,7 +56597,7 @@ def EV_DoJump_03():
 
     label('loc_42838')
 
-    EventJump(0x00003070)
+    OP_AC(0x01, 0x00003070)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56606,7 +56606,7 @@ def EV_DoJump_03():
 
     label('loc_42848')
 
-    EventJump(0x00003071)
+    OP_AC(0x01, 0x00003071)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56615,7 +56615,7 @@ def EV_DoJump_03():
 
     label('loc_42858')
 
-    EventJump(0x00003072)
+    OP_AC(0x01, 0x00003072)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56624,7 +56624,7 @@ def EV_DoJump_03():
 
     label('loc_42868')
 
-    EventJump(0x00003073)
+    OP_AC(0x01, 0x00003073)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56633,7 +56633,7 @@ def EV_DoJump_03():
 
     label('loc_42878')
 
-    EventJump(0x00003074)
+    OP_AC(0x01, 0x00003074)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56642,7 +56642,7 @@ def EV_DoJump_03():
 
     label('loc_42888')
 
-    EventJump(0x00003075)
+    OP_AC(0x01, 0x00003075)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56651,7 +56651,7 @@ def EV_DoJump_03():
 
     label('loc_42898')
 
-    EventJump(0x00003076)
+    OP_AC(0x01, 0x00003076)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56660,7 +56660,7 @@ def EV_DoJump_03():
 
     label('loc_428A8')
 
-    EventJump(0x00003079)
+    OP_AC(0x01, 0x00003079)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56669,7 +56669,7 @@ def EV_DoJump_03():
 
     label('loc_428B8')
 
-    EventJump(0x0000307A)
+    OP_AC(0x01, 0x0000307A)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56678,7 +56678,7 @@ def EV_DoJump_03():
 
     label('loc_428C8')
 
-    EventJump(0x0000307B)
+    OP_AC(0x01, 0x0000307B)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56687,7 +56687,7 @@ def EV_DoJump_03():
 
     label('loc_428D8')
 
-    EventJump(0x0000307C)
+    OP_AC(0x01, 0x0000307C)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56696,7 +56696,7 @@ def EV_DoJump_03():
 
     label('loc_428E8')
 
-    EventJump(0x0000307D)
+    OP_AC(0x01, 0x0000307D)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56705,7 +56705,7 @@ def EV_DoJump_03():
 
     label('loc_428F8')
 
-    EventJump(0x0000307E)
+    OP_AC(0x01, 0x0000307E)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56714,7 +56714,7 @@ def EV_DoJump_03():
 
     label('loc_42908')
 
-    EventJump(0x0000307F)
+    OP_AC(0x01, 0x0000307F)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56723,7 +56723,7 @@ def EV_DoJump_03():
 
     label('loc_42918')
 
-    EventJump(0x00003080)
+    OP_AC(0x01, 0x00003080)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56732,7 +56732,7 @@ def EV_DoJump_03():
 
     label('loc_42928')
 
-    EventJump(0x00003081)
+    OP_AC(0x01, 0x00003081)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56741,7 +56741,7 @@ def EV_DoJump_03():
 
     label('loc_42938')
 
-    EventJump(0x00003082)
+    OP_AC(0x01, 0x00003082)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56750,7 +56750,7 @@ def EV_DoJump_03():
 
     label('loc_42948')
 
-    EventJump(0x00003083)
+    OP_AC(0x01, 0x00003083)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56759,7 +56759,7 @@ def EV_DoJump_03():
 
     label('loc_42958')
 
-    EventJump(0x00003084)
+    OP_AC(0x01, 0x00003084)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56768,7 +56768,7 @@ def EV_DoJump_03():
 
     label('loc_42968')
 
-    EventJump(0x00003085)
+    OP_AC(0x01, 0x00003085)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56777,7 +56777,7 @@ def EV_DoJump_03():
 
     label('loc_42978')
 
-    EventJump(0x00003086)
+    OP_AC(0x01, 0x00003086)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56786,7 +56786,7 @@ def EV_DoJump_03():
 
     label('loc_42988')
 
-    EventJump(0x00003087)
+    OP_AC(0x01, 0x00003087)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56795,7 +56795,7 @@ def EV_DoJump_03():
 
     label('loc_42998')
 
-    EventJump(0x00003088)
+    OP_AC(0x01, 0x00003088)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56804,7 +56804,7 @@ def EV_DoJump_03():
 
     label('loc_429A8')
 
-    EventJump(0x00003089)
+    OP_AC(0x01, 0x00003089)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56813,7 +56813,7 @@ def EV_DoJump_03():
 
     label('loc_429B8')
 
-    EventJump(0x0000308A)
+    OP_AC(0x01, 0x0000308A)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56822,7 +56822,7 @@ def EV_DoJump_03():
 
     label('loc_429C8')
 
-    EventJump(0x0000308B)
+    OP_AC(0x01, 0x0000308B)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56831,7 +56831,7 @@ def EV_DoJump_03():
 
     label('loc_429D8')
 
-    EventJump(0x0000308C)
+    OP_AC(0x01, 0x0000308C)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56840,7 +56840,7 @@ def EV_DoJump_03():
 
     label('loc_429E8')
 
-    EventJump(0x0000308D)
+    OP_AC(0x01, 0x0000308D)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56849,7 +56849,7 @@ def EV_DoJump_03():
 
     label('loc_429F8')
 
-    EventJump(0x0000308E)
+    OP_AC(0x01, 0x0000308E)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56858,7 +56858,7 @@ def EV_DoJump_03():
 
     label('loc_42A08')
 
-    EventJump(0x0000308F)
+    OP_AC(0x01, 0x0000308F)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56867,7 +56867,7 @@ def EV_DoJump_03():
 
     label('loc_42A18')
 
-    EventJump(0x00003090)
+    OP_AC(0x01, 0x00003090)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56876,7 +56876,7 @@ def EV_DoJump_03():
 
     label('loc_42A28')
 
-    EventJump(0x00003091)
+    OP_AC(0x01, 0x00003091)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56885,7 +56885,7 @@ def EV_DoJump_03():
 
     label('loc_42A38')
 
-    EventJump(0x00003092)
+    OP_AC(0x01, 0x00003092)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56894,7 +56894,7 @@ def EV_DoJump_03():
 
     label('loc_42A48')
 
-    EventJump(0x00003093)
+    OP_AC(0x01, 0x00003093)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56903,7 +56903,7 @@ def EV_DoJump_03():
 
     label('loc_42A58')
 
-    EventJump(0x00003093)
+    OP_AC(0x01, 0x00003093)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56912,7 +56912,7 @@ def EV_DoJump_03():
 
     label('loc_42A68')
 
-    EventJump(0x00003093)
+    OP_AC(0x01, 0x00003093)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56921,7 +56921,7 @@ def EV_DoJump_03():
 
     label('loc_42A78')
 
-    EventJump(0x00003096)
+    OP_AC(0x01, 0x00003096)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56930,7 +56930,7 @@ def EV_DoJump_03():
 
     label('loc_42A88')
 
-    EventJump(0x0000309B)
+    OP_AC(0x01, 0x0000309B)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56939,7 +56939,7 @@ def EV_DoJump_03():
 
     label('loc_42A98')
 
-    EventJump(0x0000309C)
+    OP_AC(0x01, 0x0000309C)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56948,7 +56948,7 @@ def EV_DoJump_03():
 
     label('loc_42AA8')
 
-    EventJump(0x0000309D)
+    OP_AC(0x01, 0x0000309D)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56957,7 +56957,7 @@ def EV_DoJump_03():
 
     label('loc_42AB8')
 
-    EventJump(0x0000309E)
+    OP_AC(0x01, 0x0000309E)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56966,7 +56966,7 @@ def EV_DoJump_03():
 
     label('loc_42AC8')
 
-    EventJump(0x0000309F)
+    OP_AC(0x01, 0x0000309F)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56975,7 +56975,7 @@ def EV_DoJump_03():
 
     label('loc_42AD8')
 
-    EventJump(0x000030A0)
+    OP_AC(0x01, 0x000030A0)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56984,7 +56984,7 @@ def EV_DoJump_03():
 
     label('loc_42AE8')
 
-    EventJump(0x000030A1)
+    OP_AC(0x01, 0x000030A1)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -56993,7 +56993,7 @@ def EV_DoJump_03():
 
     label('loc_42AF8')
 
-    EventJump(0x000030A2)
+    OP_AC(0x01, 0x000030A2)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57002,7 +57002,7 @@ def EV_DoJump_03():
 
     label('loc_42B08')
 
-    EventJump(0x000030A3)
+    OP_AC(0x01, 0x000030A3)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57011,7 +57011,7 @@ def EV_DoJump_03():
 
     label('loc_42B18')
 
-    EventJump(0x000030A4)
+    OP_AC(0x01, 0x000030A4)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57020,7 +57020,7 @@ def EV_DoJump_03():
 
     label('loc_42B28')
 
-    EventJump(0x000030A5)
+    OP_AC(0x01, 0x000030A5)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57029,7 +57029,7 @@ def EV_DoJump_03():
 
     label('loc_42B38')
 
-    EventJump(0x000030A6)
+    OP_AC(0x01, 0x000030A6)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57038,7 +57038,7 @@ def EV_DoJump_03():
 
     label('loc_42B48')
 
-    EventJump(0x000030A7)
+    OP_AC(0x01, 0x000030A7)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57047,7 +57047,7 @@ def EV_DoJump_03():
 
     label('loc_42B58')
 
-    EventJump(0x000030A8)
+    OP_AC(0x01, 0x000030A8)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57056,7 +57056,7 @@ def EV_DoJump_03():
 
     label('loc_42B68')
 
-    EventJump(0x000030A9)
+    OP_AC(0x01, 0x000030A9)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57065,7 +57065,7 @@ def EV_DoJump_03():
 
     label('loc_42B78')
 
-    EventJump(0x000030AA)
+    OP_AC(0x01, 0x000030AA)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57074,7 +57074,7 @@ def EV_DoJump_03():
 
     label('loc_42B88')
 
-    EventJump(0x000030AB)
+    OP_AC(0x01, 0x000030AB)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57083,7 +57083,7 @@ def EV_DoJump_03():
 
     label('loc_42B98')
 
-    EventJump(0x000030AC)
+    OP_AC(0x01, 0x000030AC)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57092,7 +57092,7 @@ def EV_DoJump_03():
 
     label('loc_42BA8')
 
-    EventJump(0x000030AD)
+    OP_AC(0x01, 0x000030AD)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57101,7 +57101,7 @@ def EV_DoJump_03():
 
     label('loc_42BB8')
 
-    EventJump(0x000030B0)
+    OP_AC(0x01, 0x000030B0)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57110,7 +57110,7 @@ def EV_DoJump_03():
 
     label('loc_42BC8')
 
-    EventJump(0x000030B1)
+    OP_AC(0x01, 0x000030B1)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57119,7 +57119,7 @@ def EV_DoJump_03():
 
     label('loc_42BD8')
 
-    EventJump(0x000030B2)
+    OP_AC(0x01, 0x000030B2)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57128,7 +57128,7 @@ def EV_DoJump_03():
 
     label('loc_42BE8')
 
-    EventJump(0x000030B3)
+    OP_AC(0x01, 0x000030B3)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57137,7 +57137,7 @@ def EV_DoJump_03():
 
     label('loc_42BF8')
 
-    EventJump(0x000030B4)
+    OP_AC(0x01, 0x000030B4)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57146,7 +57146,7 @@ def EV_DoJump_03():
 
     label('loc_42C08')
 
-    EventJump(0x000030B5)
+    OP_AC(0x01, 0x000030B5)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57155,7 +57155,7 @@ def EV_DoJump_03():
 
     label('loc_42C18')
 
-    EventJump(0x000030B6)
+    OP_AC(0x01, 0x000030B6)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57164,7 +57164,7 @@ def EV_DoJump_03():
 
     label('loc_42C28')
 
-    EventJump(0x000030B7)
+    OP_AC(0x01, 0x000030B7)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57173,7 +57173,7 @@ def EV_DoJump_03():
 
     label('loc_42C38')
 
-    EventJump(0x000030BA)
+    OP_AC(0x01, 0x000030BA)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57182,7 +57182,7 @@ def EV_DoJump_03():
 
     label('loc_42C48')
 
-    EventJump(0x00007257)
+    OP_AC(0x01, 0x00007257)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57191,7 +57191,7 @@ def EV_DoJump_03():
 
     label('loc_42C58')
 
-    EventJump(0x00007252)
+    OP_AC(0x01, 0x00007252)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57200,7 +57200,7 @@ def EV_DoJump_03():
 
     label('loc_42C68')
 
-    EventJump(0x0000725D)
+    OP_AC(0x01, 0x0000725D)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57209,7 +57209,7 @@ def EV_DoJump_03():
 
     label('loc_42C78')
 
-    EventJump(0x000030BD)
+    OP_AC(0x01, 0x000030BD)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57218,7 +57218,7 @@ def EV_DoJump_03():
 
     label('loc_42C88')
 
-    EventJump(0x000030BE)
+    OP_AC(0x01, 0x000030BE)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57227,7 +57227,7 @@ def EV_DoJump_03():
 
     label('loc_42C98')
 
-    EventJump(0x000030BF)
+    OP_AC(0x01, 0x000030BF)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57236,7 +57236,7 @@ def EV_DoJump_03():
 
     label('loc_42CA8')
 
-    EventJump(0x000030C0)
+    OP_AC(0x01, 0x000030C0)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57245,7 +57245,7 @@ def EV_DoJump_03():
 
     label('loc_42CB8')
 
-    EventJump(0x000030C1)
+    OP_AC(0x01, 0x000030C1)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57254,7 +57254,7 @@ def EV_DoJump_03():
 
     label('loc_42CC8')
 
-    EventJump(0x000030C2)
+    OP_AC(0x01, 0x000030C2)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57263,7 +57263,7 @@ def EV_DoJump_03():
 
     label('loc_42CD8')
 
-    EventJump(0x000030C3)
+    OP_AC(0x01, 0x000030C3)
     OP_14(0x04000000)
 
     Jump('loc_42CED')
@@ -57402,7 +57402,7 @@ def EV_DoJump_03():
 
     label('loc_43076')
 
-    EventJump(0x000030C4)
+    OP_AC(0x01, 0x000030C4)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57411,7 +57411,7 @@ def EV_DoJump_03():
 
     label('loc_43086')
 
-    EventJump(0x000030C5)
+    OP_AC(0x01, 0x000030C5)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57420,7 +57420,7 @@ def EV_DoJump_03():
 
     label('loc_43096')
 
-    EventJump(0x000030C6)
+    OP_AC(0x01, 0x000030C6)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57429,7 +57429,7 @@ def EV_DoJump_03():
 
     label('loc_430A6')
 
-    EventJump(0x000030C7)
+    OP_AC(0x01, 0x000030C7)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57438,7 +57438,7 @@ def EV_DoJump_03():
 
     label('loc_430B6')
 
-    EventJump(0x000030C8)
+    OP_AC(0x01, 0x000030C8)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57447,7 +57447,7 @@ def EV_DoJump_03():
 
     label('loc_430C6')
 
-    EventJump(0x000030C9)
+    OP_AC(0x01, 0x000030C9)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57456,7 +57456,7 @@ def EV_DoJump_03():
 
     label('loc_430D6')
 
-    EventJump(0x000030CA)
+    OP_AC(0x01, 0x000030CA)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57465,7 +57465,7 @@ def EV_DoJump_03():
 
     label('loc_430E6')
 
-    EventJump(0x000030CB)
+    OP_AC(0x01, 0x000030CB)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57474,7 +57474,7 @@ def EV_DoJump_03():
 
     label('loc_430F6')
 
-    EventJump(0x000030CC)
+    OP_AC(0x01, 0x000030CC)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57483,7 +57483,7 @@ def EV_DoJump_03():
 
     label('loc_43106')
 
-    EventJump(0x000030CD)
+    OP_AC(0x01, 0x000030CD)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57492,7 +57492,7 @@ def EV_DoJump_03():
 
     label('loc_43116')
 
-    EventJump(0x000030CE)
+    OP_AC(0x01, 0x000030CE)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57501,7 +57501,7 @@ def EV_DoJump_03():
 
     label('loc_43126')
 
-    EventJump(0x000030CF)
+    OP_AC(0x01, 0x000030CF)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57510,7 +57510,7 @@ def EV_DoJump_03():
 
     label('loc_43136')
 
-    EventJump(0x000030D0)
+    OP_AC(0x01, 0x000030D0)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57519,7 +57519,7 @@ def EV_DoJump_03():
 
     label('loc_43146')
 
-    EventJump(0x000030D1)
+    OP_AC(0x01, 0x000030D1)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57528,7 +57528,7 @@ def EV_DoJump_03():
 
     label('loc_43156')
 
-    EventJump(0x000030D2)
+    OP_AC(0x01, 0x000030D2)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57537,7 +57537,7 @@ def EV_DoJump_03():
 
     label('loc_43166')
 
-    EventJump(0x000030D3)
+    OP_AC(0x01, 0x000030D3)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57546,7 +57546,7 @@ def EV_DoJump_03():
 
     label('loc_43176')
 
-    EventJump(0x000030D4)
+    OP_AC(0x01, 0x000030D4)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57555,7 +57555,7 @@ def EV_DoJump_03():
 
     label('loc_43186')
 
-    EventJump(0x000030D5)
+    OP_AC(0x01, 0x000030D5)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57564,7 +57564,7 @@ def EV_DoJump_03():
 
     label('loc_43196')
 
-    EventJump(0x000030D6)
+    OP_AC(0x01, 0x000030D6)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57573,7 +57573,7 @@ def EV_DoJump_03():
 
     label('loc_431A6')
 
-    EventJump(0x000030D7)
+    OP_AC(0x01, 0x000030D7)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57582,7 +57582,7 @@ def EV_DoJump_03():
 
     label('loc_431B6')
 
-    EventJump(0x000030D8)
+    OP_AC(0x01, 0x000030D8)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57591,7 +57591,7 @@ def EV_DoJump_03():
 
     label('loc_431C6')
 
-    EventJump(0x000030D9)
+    OP_AC(0x01, 0x000030D9)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57600,7 +57600,7 @@ def EV_DoJump_03():
 
     label('loc_431D6')
 
-    EventJump(0x000030DA)
+    OP_AC(0x01, 0x000030DA)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57609,7 +57609,7 @@ def EV_DoJump_03():
 
     label('loc_431E6')
 
-    EventJump(0x000030DB)
+    OP_AC(0x01, 0x000030DB)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57618,7 +57618,7 @@ def EV_DoJump_03():
 
     label('loc_431F6')
 
-    EventJump(0x000030DC)
+    OP_AC(0x01, 0x000030DC)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57627,7 +57627,7 @@ def EV_DoJump_03():
 
     label('loc_43206')
 
-    EventJump(0x000030DD)
+    OP_AC(0x01, 0x000030DD)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57636,7 +57636,7 @@ def EV_DoJump_03():
 
     label('loc_43216')
 
-    EventJump(0x000030DE)
+    OP_AC(0x01, 0x000030DE)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57645,7 +57645,7 @@ def EV_DoJump_03():
 
     label('loc_43226')
 
-    EventJump(0x000030DF)
+    OP_AC(0x01, 0x000030DF)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57654,7 +57654,7 @@ def EV_DoJump_03():
 
     label('loc_43236')
 
-    EventJump(0x000030E0)
+    OP_AC(0x01, 0x000030E0)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57663,7 +57663,7 @@ def EV_DoJump_03():
 
     label('loc_43246')
 
-    EventJump(0x000030E1)
+    OP_AC(0x01, 0x000030E1)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57672,7 +57672,7 @@ def EV_DoJump_03():
 
     label('loc_43256')
 
-    EventJump(0x000030E2)
+    OP_AC(0x01, 0x000030E2)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57681,7 +57681,7 @@ def EV_DoJump_03():
 
     label('loc_43266')
 
-    EventJump(0x000030E3)
+    OP_AC(0x01, 0x000030E3)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57690,7 +57690,7 @@ def EV_DoJump_03():
 
     label('loc_43276')
 
-    EventJump(0x000030E4)
+    OP_AC(0x01, 0x000030E4)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57699,7 +57699,7 @@ def EV_DoJump_03():
 
     label('loc_43286')
 
-    EventJump(0x000030E5)
+    OP_AC(0x01, 0x000030E5)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57708,7 +57708,7 @@ def EV_DoJump_03():
 
     label('loc_43296')
 
-    EventJump(0x000030E6)
+    OP_AC(0x01, 0x000030E6)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57717,7 +57717,7 @@ def EV_DoJump_03():
 
     label('loc_432A6')
 
-    EventJump(0x000030E7)
+    OP_AC(0x01, 0x000030E7)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57726,7 +57726,7 @@ def EV_DoJump_03():
 
     label('loc_432B6')
 
-    EventJump(0x000030E8)
+    OP_AC(0x01, 0x000030E8)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57735,7 +57735,7 @@ def EV_DoJump_03():
 
     label('loc_432C6')
 
-    EventJump(0x000030E9)
+    OP_AC(0x01, 0x000030E9)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57744,7 +57744,7 @@ def EV_DoJump_03():
 
     label('loc_432D6')
 
-    EventJump(0x000030EA)
+    OP_AC(0x01, 0x000030EA)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57753,7 +57753,7 @@ def EV_DoJump_03():
 
     label('loc_432E6')
 
-    EventJump(0x000030EB)
+    OP_AC(0x01, 0x000030EB)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57762,7 +57762,7 @@ def EV_DoJump_03():
 
     label('loc_432F6')
 
-    EventJump(0x000030EC)
+    OP_AC(0x01, 0x000030EC)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57771,7 +57771,7 @@ def EV_DoJump_03():
 
     label('loc_43306')
 
-    EventJump(0x000030ED)
+    OP_AC(0x01, 0x000030ED)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57780,7 +57780,7 @@ def EV_DoJump_03():
 
     label('loc_43316')
 
-    EventJump(0x000030EE)
+    OP_AC(0x01, 0x000030EE)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57789,7 +57789,7 @@ def EV_DoJump_03():
 
     label('loc_43326')
 
-    EventJump(0x000030EF)
+    OP_AC(0x01, 0x000030EF)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57798,7 +57798,7 @@ def EV_DoJump_03():
 
     label('loc_43336')
 
-    EventJump(0x00003130)
+    OP_AC(0x01, 0x00003130)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57807,7 +57807,7 @@ def EV_DoJump_03():
 
     label('loc_43346')
 
-    EventJump(0x00003131)
+    OP_AC(0x01, 0x00003131)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57816,7 +57816,7 @@ def EV_DoJump_03():
 
     label('loc_43356')
 
-    EventJump(0x00003132)
+    OP_AC(0x01, 0x00003132)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57825,7 +57825,7 @@ def EV_DoJump_03():
 
     label('loc_43366')
 
-    EventJump(0x000030F0)
+    OP_AC(0x01, 0x000030F0)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57834,7 +57834,7 @@ def EV_DoJump_03():
 
     label('loc_43376')
 
-    EventJump(0x000030F1)
+    OP_AC(0x01, 0x000030F1)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57843,7 +57843,7 @@ def EV_DoJump_03():
 
     label('loc_43386')
 
-    EventJump(0x000030F2)
+    OP_AC(0x01, 0x000030F2)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57852,7 +57852,7 @@ def EV_DoJump_03():
 
     label('loc_43396')
 
-    EventJump(0x000030F3)
+    OP_AC(0x01, 0x000030F3)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57861,7 +57861,7 @@ def EV_DoJump_03():
 
     label('loc_433A6')
 
-    EventJump(0x000030F4)
+    OP_AC(0x01, 0x000030F4)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57870,7 +57870,7 @@ def EV_DoJump_03():
 
     label('loc_433B6')
 
-    EventJump(0x000030F5)
+    OP_AC(0x01, 0x000030F5)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57879,7 +57879,7 @@ def EV_DoJump_03():
 
     label('loc_433C6')
 
-    EventJump(0x000030F6)
+    OP_AC(0x01, 0x000030F6)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57888,7 +57888,7 @@ def EV_DoJump_03():
 
     label('loc_433D6')
 
-    EventJump(0x000030F7)
+    OP_AC(0x01, 0x000030F7)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57897,7 +57897,7 @@ def EV_DoJump_03():
 
     label('loc_433E6')
 
-    EventJump(0x000030F8)
+    OP_AC(0x01, 0x000030F8)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57906,7 +57906,7 @@ def EV_DoJump_03():
 
     label('loc_433F6')
 
-    EventJump(0x000030F9)
+    OP_AC(0x01, 0x000030F9)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57915,7 +57915,7 @@ def EV_DoJump_03():
 
     label('loc_43406')
 
-    EventJump(0x000030FA)
+    OP_AC(0x01, 0x000030FA)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57924,7 +57924,7 @@ def EV_DoJump_03():
 
     label('loc_43416')
 
-    EventJump(0x000030FB)
+    OP_AC(0x01, 0x000030FB)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57933,7 +57933,7 @@ def EV_DoJump_03():
 
     label('loc_43426')
 
-    EventJump(0x000030FC)
+    OP_AC(0x01, 0x000030FC)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57942,7 +57942,7 @@ def EV_DoJump_03():
 
     label('loc_43436')
 
-    EventJump(0x000030FD)
+    OP_AC(0x01, 0x000030FD)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57951,7 +57951,7 @@ def EV_DoJump_03():
 
     label('loc_43446')
 
-    EventJump(0x000030FE)
+    OP_AC(0x01, 0x000030FE)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57960,7 +57960,7 @@ def EV_DoJump_03():
 
     label('loc_43456')
 
-    EventJump(0x000030FF)
+    OP_AC(0x01, 0x000030FF)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57969,7 +57969,7 @@ def EV_DoJump_03():
 
     label('loc_43466')
 
-    EventJump(0x00003100)
+    OP_AC(0x01, 0x00003100)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57978,7 +57978,7 @@ def EV_DoJump_03():
 
     label('loc_43476')
 
-    EventJump(0x00003101)
+    OP_AC(0x01, 0x00003101)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57987,7 +57987,7 @@ def EV_DoJump_03():
 
     label('loc_43486')
 
-    EventJump(0x00003102)
+    OP_AC(0x01, 0x00003102)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -57996,7 +57996,7 @@ def EV_DoJump_03():
 
     label('loc_43496')
 
-    EventJump(0x00003103)
+    OP_AC(0x01, 0x00003103)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58005,7 +58005,7 @@ def EV_DoJump_03():
 
     label('loc_434A6')
 
-    EventJump(0x00003104)
+    OP_AC(0x01, 0x00003104)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58014,7 +58014,7 @@ def EV_DoJump_03():
 
     label('loc_434B6')
 
-    EventJump(0x00003105)
+    OP_AC(0x01, 0x00003105)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58023,7 +58023,7 @@ def EV_DoJump_03():
 
     label('loc_434C6')
 
-    EventJump(0x00003106)
+    OP_AC(0x01, 0x00003106)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58032,7 +58032,7 @@ def EV_DoJump_03():
 
     label('loc_434D6')
 
-    EventJump(0x00003107)
+    OP_AC(0x01, 0x00003107)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58041,7 +58041,7 @@ def EV_DoJump_03():
 
     label('loc_434E6')
 
-    EventJump(0x00003108)
+    OP_AC(0x01, 0x00003108)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58050,7 +58050,7 @@ def EV_DoJump_03():
 
     label('loc_434F6')
 
-    EventJump(0x00003109)
+    OP_AC(0x01, 0x00003109)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58059,7 +58059,7 @@ def EV_DoJump_03():
 
     label('loc_43506')
 
-    EventJump(0x0000310A)
+    OP_AC(0x01, 0x0000310A)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58068,7 +58068,7 @@ def EV_DoJump_03():
 
     label('loc_43516')
 
-    EventJump(0x0000310B)
+    OP_AC(0x01, 0x0000310B)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58077,7 +58077,7 @@ def EV_DoJump_03():
 
     label('loc_43526')
 
-    EventJump(0x0000310C)
+    OP_AC(0x01, 0x0000310C)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58086,7 +58086,7 @@ def EV_DoJump_03():
 
     label('loc_43536')
 
-    EventJump(0x0000310D)
+    OP_AC(0x01, 0x0000310D)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58095,7 +58095,7 @@ def EV_DoJump_03():
 
     label('loc_43546')
 
-    EventJump(0x0000310E)
+    OP_AC(0x01, 0x0000310E)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58104,7 +58104,7 @@ def EV_DoJump_03():
 
     label('loc_43556')
 
-    EventJump(0x0000310F)
+    OP_AC(0x01, 0x0000310F)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58113,7 +58113,7 @@ def EV_DoJump_03():
 
     label('loc_43566')
 
-    EventJump(0x00003110)
+    OP_AC(0x01, 0x00003110)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58122,7 +58122,7 @@ def EV_DoJump_03():
 
     label('loc_43576')
 
-    EventJump(0x00003111)
+    OP_AC(0x01, 0x00003111)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58131,7 +58131,7 @@ def EV_DoJump_03():
 
     label('loc_43586')
 
-    EventJump(0x00003112)
+    OP_AC(0x01, 0x00003112)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58140,7 +58140,7 @@ def EV_DoJump_03():
 
     label('loc_43596')
 
-    EventJump(0x00003113)
+    OP_AC(0x01, 0x00003113)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58149,7 +58149,7 @@ def EV_DoJump_03():
 
     label('loc_435A6')
 
-    EventJump(0x00003114)
+    OP_AC(0x01, 0x00003114)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58158,7 +58158,7 @@ def EV_DoJump_03():
 
     label('loc_435B6')
 
-    EventJump(0x00003115)
+    OP_AC(0x01, 0x00003115)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58167,7 +58167,7 @@ def EV_DoJump_03():
 
     label('loc_435C6')
 
-    EventJump(0x00003116)
+    OP_AC(0x01, 0x00003116)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58176,7 +58176,7 @@ def EV_DoJump_03():
 
     label('loc_435D6')
 
-    EventJump(0x00003117)
+    OP_AC(0x01, 0x00003117)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58185,7 +58185,7 @@ def EV_DoJump_03():
 
     label('loc_435E6')
 
-    EventJump(0x00003118)
+    OP_AC(0x01, 0x00003118)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58194,7 +58194,7 @@ def EV_DoJump_03():
 
     label('loc_435F6')
 
-    EventJump(0x00003119)
+    OP_AC(0x01, 0x00003119)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58203,7 +58203,7 @@ def EV_DoJump_03():
 
     label('loc_43606')
 
-    EventJump(0x0000311A)
+    OP_AC(0x01, 0x0000311A)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58212,7 +58212,7 @@ def EV_DoJump_03():
 
     label('loc_43616')
 
-    EventJump(0x0000311B)
+    OP_AC(0x01, 0x0000311B)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58221,7 +58221,7 @@ def EV_DoJump_03():
 
     label('loc_43626')
 
-    EventJump(0x0000311C)
+    OP_AC(0x01, 0x0000311C)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58230,7 +58230,7 @@ def EV_DoJump_03():
 
     label('loc_43636')
 
-    EventJump(0x0000311D)
+    OP_AC(0x01, 0x0000311D)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58239,7 +58239,7 @@ def EV_DoJump_03():
 
     label('loc_43646')
 
-    EventJump(0x0000311E)
+    OP_AC(0x01, 0x0000311E)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58248,7 +58248,7 @@ def EV_DoJump_03():
 
     label('loc_43656')
 
-    EventJump(0x0000311F)
+    OP_AC(0x01, 0x0000311F)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58257,7 +58257,7 @@ def EV_DoJump_03():
 
     label('loc_43666')
 
-    EventJump(0x00003120)
+    OP_AC(0x01, 0x00003120)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58266,7 +58266,7 @@ def EV_DoJump_03():
 
     label('loc_43676')
 
-    EventJump(0x00003122)
+    OP_AC(0x01, 0x00003122)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58275,7 +58275,7 @@ def EV_DoJump_03():
 
     label('loc_43686')
 
-    EventJump(0x00003123)
+    OP_AC(0x01, 0x00003123)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58284,7 +58284,7 @@ def EV_DoJump_03():
 
     label('loc_43696')
 
-    EventJump(0x00003124)
+    OP_AC(0x01, 0x00003124)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58293,7 +58293,7 @@ def EV_DoJump_03():
 
     label('loc_436A6')
 
-    EventJump(0x00003125)
+    OP_AC(0x01, 0x00003125)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58302,7 +58302,7 @@ def EV_DoJump_03():
 
     label('loc_436B6')
 
-    EventJump(0x00003126)
+    OP_AC(0x01, 0x00003126)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58311,7 +58311,7 @@ def EV_DoJump_03():
 
     label('loc_436C6')
 
-    EventJump(0x00003127)
+    OP_AC(0x01, 0x00003127)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58320,7 +58320,7 @@ def EV_DoJump_03():
 
     label('loc_436D6')
 
-    EventJump(0x00003128)
+    OP_AC(0x01, 0x00003128)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58329,7 +58329,7 @@ def EV_DoJump_03():
 
     label('loc_436E6')
 
-    EventJump(0x00003129)
+    OP_AC(0x01, 0x00003129)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58338,7 +58338,7 @@ def EV_DoJump_03():
 
     label('loc_436F6')
 
-    EventJump(0x0000312A)
+    OP_AC(0x01, 0x0000312A)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58347,7 +58347,7 @@ def EV_DoJump_03():
 
     label('loc_43706')
 
-    EventJump(0x0000312B)
+    OP_AC(0x01, 0x0000312B)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58356,7 +58356,7 @@ def EV_DoJump_03():
 
     label('loc_43716')
 
-    EventJump(0x0000312C)
+    OP_AC(0x01, 0x0000312C)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58365,7 +58365,7 @@ def EV_DoJump_03():
 
     label('loc_43726')
 
-    EventJump(0x0000312D)
+    OP_AC(0x01, 0x0000312D)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58374,7 +58374,7 @@ def EV_DoJump_03():
 
     label('loc_43736')
 
-    EventJump(0x0000312E)
+    OP_AC(0x01, 0x0000312E)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58383,7 +58383,7 @@ def EV_DoJump_03():
 
     label('loc_43746')
 
-    EventJump(0x00003133)
+    OP_AC(0x01, 0x00003133)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58392,7 +58392,7 @@ def EV_DoJump_03():
 
     label('loc_43756')
 
-    EventJump(0x00003134)
+    OP_AC(0x01, 0x00003134)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -58401,7 +58401,7 @@ def EV_DoJump_03():
 
     label('loc_43766')
 
-    EventJump(0x0000312F)
+    OP_AC(0x01, 0x0000312F)
     OP_14(0x04000000)
 
     Jump('loc_4377B')
@@ -60440,7 +60440,7 @@ def EV_DoJump_04():
 
     label('loc_4864F')
 
-    EventJump(0x00004001)
+    OP_AC(0x01, 0x00004001)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60449,7 +60449,7 @@ def EV_DoJump_04():
 
     label('loc_4865F')
 
-    EventJump(0x00004002)
+    OP_AC(0x01, 0x00004002)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60458,7 +60458,7 @@ def EV_DoJump_04():
 
     label('loc_4866F')
 
-    EventJump(0x00004003)
+    OP_AC(0x01, 0x00004003)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60467,7 +60467,7 @@ def EV_DoJump_04():
 
     label('loc_4867F')
 
-    EventJump(0x00004004)
+    OP_AC(0x01, 0x00004004)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60476,7 +60476,7 @@ def EV_DoJump_04():
 
     label('loc_4868F')
 
-    EventJump(0x00004005)
+    OP_AC(0x01, 0x00004005)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60485,7 +60485,7 @@ def EV_DoJump_04():
 
     label('loc_4869F')
 
-    EventJump(0x00004006)
+    OP_AC(0x01, 0x00004006)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60494,7 +60494,7 @@ def EV_DoJump_04():
 
     label('loc_486AF')
 
-    EventJump(0x00004007)
+    OP_AC(0x01, 0x00004007)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60503,7 +60503,7 @@ def EV_DoJump_04():
 
     label('loc_486BF')
 
-    EventJump(0x00004008)
+    OP_AC(0x01, 0x00004008)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60512,7 +60512,7 @@ def EV_DoJump_04():
 
     label('loc_486CF')
 
-    EventJump(0x00004009)
+    OP_AC(0x01, 0x00004009)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60521,7 +60521,7 @@ def EV_DoJump_04():
 
     label('loc_486DF')
 
-    EventJump(0x0000400A)
+    OP_AC(0x01, 0x0000400A)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60530,7 +60530,7 @@ def EV_DoJump_04():
 
     label('loc_486EF')
 
-    EventJump(0x0000400B)
+    OP_AC(0x01, 0x0000400B)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60539,7 +60539,7 @@ def EV_DoJump_04():
 
     label('loc_486FF')
 
-    EventJump(0x0000400C)
+    OP_AC(0x01, 0x0000400C)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60548,7 +60548,7 @@ def EV_DoJump_04():
 
     label('loc_4870F')
 
-    EventJump(0x0000400D)
+    OP_AC(0x01, 0x0000400D)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60557,7 +60557,7 @@ def EV_DoJump_04():
 
     label('loc_4871F')
 
-    EventJump(0x0000400E)
+    OP_AC(0x01, 0x0000400E)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60566,7 +60566,7 @@ def EV_DoJump_04():
 
     label('loc_4872F')
 
-    EventJump(0x0000400F)
+    OP_AC(0x01, 0x0000400F)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60575,7 +60575,7 @@ def EV_DoJump_04():
 
     label('loc_4873F')
 
-    EventJump(0x00004010)
+    OP_AC(0x01, 0x00004010)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60584,7 +60584,7 @@ def EV_DoJump_04():
 
     label('loc_4874F')
 
-    EventJump(0x00004011)
+    OP_AC(0x01, 0x00004011)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60593,7 +60593,7 @@ def EV_DoJump_04():
 
     label('loc_4875F')
 
-    EventJump(0x00004012)
+    OP_AC(0x01, 0x00004012)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60602,7 +60602,7 @@ def EV_DoJump_04():
 
     label('loc_4876F')
 
-    EventJump(0x00004013)
+    OP_AC(0x01, 0x00004013)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60611,7 +60611,7 @@ def EV_DoJump_04():
 
     label('loc_4877F')
 
-    EventJump(0x00004014)
+    OP_AC(0x01, 0x00004014)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60620,7 +60620,7 @@ def EV_DoJump_04():
 
     label('loc_4878F')
 
-    EventJump(0x00004015)
+    OP_AC(0x01, 0x00004015)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60629,7 +60629,7 @@ def EV_DoJump_04():
 
     label('loc_4879F')
 
-    EventJump(0x00004016)
+    OP_AC(0x01, 0x00004016)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60638,7 +60638,7 @@ def EV_DoJump_04():
 
     label('loc_487AF')
 
-    EventJump(0x00004017)
+    OP_AC(0x01, 0x00004017)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60647,7 +60647,7 @@ def EV_DoJump_04():
 
     label('loc_487BF')
 
-    EventJump(0x00004018)
+    OP_AC(0x01, 0x00004018)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60656,7 +60656,7 @@ def EV_DoJump_04():
 
     label('loc_487CF')
 
-    EventJump(0x00004019)
+    OP_AC(0x01, 0x00004019)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60665,7 +60665,7 @@ def EV_DoJump_04():
 
     label('loc_487DF')
 
-    EventJump(0x0000401A)
+    OP_AC(0x01, 0x0000401A)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60674,7 +60674,7 @@ def EV_DoJump_04():
 
     label('loc_487EF')
 
-    EventJump(0x0000401B)
+    OP_AC(0x01, 0x0000401B)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60683,7 +60683,7 @@ def EV_DoJump_04():
 
     label('loc_487FF')
 
-    EventJump(0x0000401C)
+    OP_AC(0x01, 0x0000401C)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60692,7 +60692,7 @@ def EV_DoJump_04():
 
     label('loc_4880F')
 
-    EventJump(0x0000401D)
+    OP_AC(0x01, 0x0000401D)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60701,7 +60701,7 @@ def EV_DoJump_04():
 
     label('loc_4881F')
 
-    EventJump(0x0000401E)
+    OP_AC(0x01, 0x0000401E)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60710,7 +60710,7 @@ def EV_DoJump_04():
 
     label('loc_4882F')
 
-    EventJump(0x0000401F)
+    OP_AC(0x01, 0x0000401F)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60719,7 +60719,7 @@ def EV_DoJump_04():
 
     label('loc_4883F')
 
-    EventJump(0x00004020)
+    OP_AC(0x01, 0x00004020)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60728,7 +60728,7 @@ def EV_DoJump_04():
 
     label('loc_4884F')
 
-    EventJump(0x00004021)
+    OP_AC(0x01, 0x00004021)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60737,7 +60737,7 @@ def EV_DoJump_04():
 
     label('loc_4885F')
 
-    EventJump(0x00004022)
+    OP_AC(0x01, 0x00004022)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60746,7 +60746,7 @@ def EV_DoJump_04():
 
     label('loc_4886F')
 
-    EventJump(0x00004023)
+    OP_AC(0x01, 0x00004023)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60755,7 +60755,7 @@ def EV_DoJump_04():
 
     label('loc_4887F')
 
-    EventJump(0x00004024)
+    OP_AC(0x01, 0x00004024)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60764,7 +60764,7 @@ def EV_DoJump_04():
 
     label('loc_4888F')
 
-    EventJump(0x00004025)
+    OP_AC(0x01, 0x00004025)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60773,7 +60773,7 @@ def EV_DoJump_04():
 
     label('loc_4889F')
 
-    EventJump(0x00004026)
+    OP_AC(0x01, 0x00004026)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60782,7 +60782,7 @@ def EV_DoJump_04():
 
     label('loc_488AF')
 
-    EventJump(0x00004027)
+    OP_AC(0x01, 0x00004027)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60791,7 +60791,7 @@ def EV_DoJump_04():
 
     label('loc_488BF')
 
-    EventJump(0x00004028)
+    OP_AC(0x01, 0x00004028)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60800,7 +60800,7 @@ def EV_DoJump_04():
 
     label('loc_488CF')
 
-    EventJump(0x00004029)
+    OP_AC(0x01, 0x00004029)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60809,7 +60809,7 @@ def EV_DoJump_04():
 
     label('loc_488DF')
 
-    EventJump(0x0000402A)
+    OP_AC(0x01, 0x0000402A)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60818,7 +60818,7 @@ def EV_DoJump_04():
 
     label('loc_488EF')
 
-    EventJump(0x0000402B)
+    OP_AC(0x01, 0x0000402B)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60827,7 +60827,7 @@ def EV_DoJump_04():
 
     label('loc_488FF')
 
-    EventJump(0x0000402C)
+    OP_AC(0x01, 0x0000402C)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60836,7 +60836,7 @@ def EV_DoJump_04():
 
     label('loc_4890F')
 
-    EventJump(0x0000402D)
+    OP_AC(0x01, 0x0000402D)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60845,7 +60845,7 @@ def EV_DoJump_04():
 
     label('loc_4891F')
 
-    EventJump(0x0000402E)
+    OP_AC(0x01, 0x0000402E)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60854,7 +60854,7 @@ def EV_DoJump_04():
 
     label('loc_4892F')
 
-    EventJump(0x0000402F)
+    OP_AC(0x01, 0x0000402F)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60863,7 +60863,7 @@ def EV_DoJump_04():
 
     label('loc_4893F')
 
-    EventJump(0x00004030)
+    OP_AC(0x01, 0x00004030)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60872,7 +60872,7 @@ def EV_DoJump_04():
 
     label('loc_4894F')
 
-    EventJump(0x00004031)
+    OP_AC(0x01, 0x00004031)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60881,7 +60881,7 @@ def EV_DoJump_04():
 
     label('loc_4895F')
 
-    EventJump(0x00004032)
+    OP_AC(0x01, 0x00004032)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60890,7 +60890,7 @@ def EV_DoJump_04():
 
     label('loc_4896F')
 
-    EventJump(0x00004033)
+    OP_AC(0x01, 0x00004033)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60899,7 +60899,7 @@ def EV_DoJump_04():
 
     label('loc_4897F')
 
-    EventJump(0x00004034)
+    OP_AC(0x01, 0x00004034)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60908,7 +60908,7 @@ def EV_DoJump_04():
 
     label('loc_4898F')
 
-    EventJump(0x00004035)
+    OP_AC(0x01, 0x00004035)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60917,7 +60917,7 @@ def EV_DoJump_04():
 
     label('loc_4899F')
 
-    EventJump(0x00004036)
+    OP_AC(0x01, 0x00004036)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60926,7 +60926,7 @@ def EV_DoJump_04():
 
     label('loc_489AF')
 
-    EventJump(0x00004037)
+    OP_AC(0x01, 0x00004037)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60935,7 +60935,7 @@ def EV_DoJump_04():
 
     label('loc_489BF')
 
-    EventJump(0x00004038)
+    OP_AC(0x01, 0x00004038)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60944,7 +60944,7 @@ def EV_DoJump_04():
 
     label('loc_489CF')
 
-    EventJump(0x00004039)
+    OP_AC(0x01, 0x00004039)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60953,7 +60953,7 @@ def EV_DoJump_04():
 
     label('loc_489DF')
 
-    EventJump(0x0000403A)
+    OP_AC(0x01, 0x0000403A)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60962,7 +60962,7 @@ def EV_DoJump_04():
 
     label('loc_489EF')
 
-    EventJump(0x0000403C)
+    OP_AC(0x01, 0x0000403C)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60971,7 +60971,7 @@ def EV_DoJump_04():
 
     label('loc_489FF')
 
-    EventJump(0x0000403D)
+    OP_AC(0x01, 0x0000403D)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60980,7 +60980,7 @@ def EV_DoJump_04():
 
     label('loc_48A0F')
 
-    EventJump(0x0000403E)
+    OP_AC(0x01, 0x0000403E)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60989,7 +60989,7 @@ def EV_DoJump_04():
 
     label('loc_48A1F')
 
-    EventJump(0x0000403F)
+    OP_AC(0x01, 0x0000403F)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -60998,7 +60998,7 @@ def EV_DoJump_04():
 
     label('loc_48A2F')
 
-    EventJump(0x00004040)
+    OP_AC(0x01, 0x00004040)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61007,7 +61007,7 @@ def EV_DoJump_04():
 
     label('loc_48A3F')
 
-    EventJump(0x00004041)
+    OP_AC(0x01, 0x00004041)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61016,7 +61016,7 @@ def EV_DoJump_04():
 
     label('loc_48A4F')
 
-    EventJump(0x00004042)
+    OP_AC(0x01, 0x00004042)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61025,7 +61025,7 @@ def EV_DoJump_04():
 
     label('loc_48A5F')
 
-    EventJump(0x00004043)
+    OP_AC(0x01, 0x00004043)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61034,7 +61034,7 @@ def EV_DoJump_04():
 
     label('loc_48A6F')
 
-    EventJump(0x00004044)
+    OP_AC(0x01, 0x00004044)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61043,7 +61043,7 @@ def EV_DoJump_04():
 
     label('loc_48A7F')
 
-    EventJump(0x00004045)
+    OP_AC(0x01, 0x00004045)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61052,7 +61052,7 @@ def EV_DoJump_04():
 
     label('loc_48A8F')
 
-    EventJump(0x00004046)
+    OP_AC(0x01, 0x00004046)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61061,7 +61061,7 @@ def EV_DoJump_04():
 
     label('loc_48A9F')
 
-    EventJump(0x00004047)
+    OP_AC(0x01, 0x00004047)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61070,7 +61070,7 @@ def EV_DoJump_04():
 
     label('loc_48AAF')
 
-    EventJump(0x00004048)
+    OP_AC(0x01, 0x00004048)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61079,7 +61079,7 @@ def EV_DoJump_04():
 
     label('loc_48ABF')
 
-    EventJump(0x00004049)
+    OP_AC(0x01, 0x00004049)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61088,7 +61088,7 @@ def EV_DoJump_04():
 
     label('loc_48ACF')
 
-    EventJump(0x0000404A)
+    OP_AC(0x01, 0x0000404A)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61097,7 +61097,7 @@ def EV_DoJump_04():
 
     label('loc_48ADF')
 
-    EventJump(0x0000404B)
+    OP_AC(0x01, 0x0000404B)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61106,7 +61106,7 @@ def EV_DoJump_04():
 
     label('loc_48AEF')
 
-    EventJump(0x0000404C)
+    OP_AC(0x01, 0x0000404C)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61115,7 +61115,7 @@ def EV_DoJump_04():
 
     label('loc_48AFF')
 
-    EventJump(0x000040F0)
+    OP_AC(0x01, 0x000040F0)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61124,7 +61124,7 @@ def EV_DoJump_04():
 
     label('loc_48B0F')
 
-    EventJump(0x0000404D)
+    OP_AC(0x01, 0x0000404D)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61133,7 +61133,7 @@ def EV_DoJump_04():
 
     label('loc_48B1F')
 
-    EventJump(0x0000404E)
+    OP_AC(0x01, 0x0000404E)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61142,7 +61142,7 @@ def EV_DoJump_04():
 
     label('loc_48B2F')
 
-    EventJump(0x0000404F)
+    OP_AC(0x01, 0x0000404F)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61151,7 +61151,7 @@ def EV_DoJump_04():
 
     label('loc_48B3F')
 
-    EventJump(0x00004050)
+    OP_AC(0x01, 0x00004050)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61160,7 +61160,7 @@ def EV_DoJump_04():
 
     label('loc_48B4F')
 
-    EventJump(0x00004051)
+    OP_AC(0x01, 0x00004051)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61169,7 +61169,7 @@ def EV_DoJump_04():
 
     label('loc_48B5F')
 
-    EventJump(0x00004052)
+    OP_AC(0x01, 0x00004052)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61178,7 +61178,7 @@ def EV_DoJump_04():
 
     label('loc_48B6F')
 
-    EventJump(0x00004053)
+    OP_AC(0x01, 0x00004053)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61187,7 +61187,7 @@ def EV_DoJump_04():
 
     label('loc_48B7F')
 
-    EventJump(0x00004054)
+    OP_AC(0x01, 0x00004054)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61196,7 +61196,7 @@ def EV_DoJump_04():
 
     label('loc_48B8F')
 
-    EventJump(0x00004055)
+    OP_AC(0x01, 0x00004055)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61205,7 +61205,7 @@ def EV_DoJump_04():
 
     label('loc_48B9F')
 
-    EventJump(0x00004056)
+    OP_AC(0x01, 0x00004056)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61214,7 +61214,7 @@ def EV_DoJump_04():
 
     label('loc_48BAF')
 
-    EventJump(0x00004057)
+    OP_AC(0x01, 0x00004057)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61223,7 +61223,7 @@ def EV_DoJump_04():
 
     label('loc_48BBF')
 
-    EventJump(0x00004058)
+    OP_AC(0x01, 0x00004058)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61232,7 +61232,7 @@ def EV_DoJump_04():
 
     label('loc_48BCF')
 
-    EventJump(0x00004059)
+    OP_AC(0x01, 0x00004059)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61241,7 +61241,7 @@ def EV_DoJump_04():
 
     label('loc_48BDF')
 
-    EventJump(0x0000405A)
+    OP_AC(0x01, 0x0000405A)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61250,7 +61250,7 @@ def EV_DoJump_04():
 
     label('loc_48BEF')
 
-    EventJump(0x0000405B)
+    OP_AC(0x01, 0x0000405B)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61259,7 +61259,7 @@ def EV_DoJump_04():
 
     label('loc_48BFF')
 
-    EventJump(0x0000405C)
+    OP_AC(0x01, 0x0000405C)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61268,7 +61268,7 @@ def EV_DoJump_04():
 
     label('loc_48C0F')
 
-    EventJump(0x0000405D)
+    OP_AC(0x01, 0x0000405D)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61277,7 +61277,7 @@ def EV_DoJump_04():
 
     label('loc_48C1F')
 
-    EventJump(0x0000405E)
+    OP_AC(0x01, 0x0000405E)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61286,7 +61286,7 @@ def EV_DoJump_04():
 
     label('loc_48C2F')
 
-    EventJump(0x0000405F)
+    OP_AC(0x01, 0x0000405F)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61295,7 +61295,7 @@ def EV_DoJump_04():
 
     label('loc_48C3F')
 
-    EventJump(0x00004060)
+    OP_AC(0x01, 0x00004060)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61304,7 +61304,7 @@ def EV_DoJump_04():
 
     label('loc_48C4F')
 
-    EventJump(0x00004061)
+    OP_AC(0x01, 0x00004061)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61313,7 +61313,7 @@ def EV_DoJump_04():
 
     label('loc_48C5F')
 
-    EventJump(0x00004062)
+    OP_AC(0x01, 0x00004062)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61322,7 +61322,7 @@ def EV_DoJump_04():
 
     label('loc_48C6F')
 
-    EventJump(0x00004063)
+    OP_AC(0x01, 0x00004063)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61331,7 +61331,7 @@ def EV_DoJump_04():
 
     label('loc_48C7F')
 
-    EventJump(0x00004064)
+    OP_AC(0x01, 0x00004064)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61340,7 +61340,7 @@ def EV_DoJump_04():
 
     label('loc_48C8F')
 
-    EventJump(0x00004065)
+    OP_AC(0x01, 0x00004065)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61349,7 +61349,7 @@ def EV_DoJump_04():
 
     label('loc_48C9F')
 
-    EventJump(0x00004066)
+    OP_AC(0x01, 0x00004066)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61358,7 +61358,7 @@ def EV_DoJump_04():
 
     label('loc_48CAF')
 
-    EventJump(0x00004067)
+    OP_AC(0x01, 0x00004067)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61367,7 +61367,7 @@ def EV_DoJump_04():
 
     label('loc_48CBF')
 
-    EventJump(0x00004068)
+    OP_AC(0x01, 0x00004068)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61376,7 +61376,7 @@ def EV_DoJump_04():
 
     label('loc_48CCF')
 
-    EventJump(0x00004069)
+    OP_AC(0x01, 0x00004069)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61385,7 +61385,7 @@ def EV_DoJump_04():
 
     label('loc_48CDF')
 
-    EventJump(0x0000406A)
+    OP_AC(0x01, 0x0000406A)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61394,7 +61394,7 @@ def EV_DoJump_04():
 
     label('loc_48CEF')
 
-    EventJump(0x0000406B)
+    OP_AC(0x01, 0x0000406B)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61403,7 +61403,7 @@ def EV_DoJump_04():
 
     label('loc_48CFF')
 
-    EventJump(0x0000406C)
+    OP_AC(0x01, 0x0000406C)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61412,7 +61412,7 @@ def EV_DoJump_04():
 
     label('loc_48D0F')
 
-    EventJump(0x0000406D)
+    OP_AC(0x01, 0x0000406D)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61433,7 +61433,7 @@ def EV_DoJump_04():
 
     label('loc_48D4C')
 
-    EventJump(0x0000406F)
+    OP_AC(0x01, 0x0000406F)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61442,7 +61442,7 @@ def EV_DoJump_04():
 
     label('loc_48D5C')
 
-    EventJump(0x00004070)
+    OP_AC(0x01, 0x00004070)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61451,7 +61451,7 @@ def EV_DoJump_04():
 
     label('loc_48D6C')
 
-    EventJump(0x00004071)
+    OP_AC(0x01, 0x00004071)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61460,7 +61460,7 @@ def EV_DoJump_04():
 
     label('loc_48D7C')
 
-    EventJump(0x00004072)
+    OP_AC(0x01, 0x00004072)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61469,7 +61469,7 @@ def EV_DoJump_04():
 
     label('loc_48D8C')
 
-    EventJump(0x00004073)
+    OP_AC(0x01, 0x00004073)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61478,7 +61478,7 @@ def EV_DoJump_04():
 
     label('loc_48D9C')
 
-    EventJump(0x00004074)
+    OP_AC(0x01, 0x00004074)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61487,7 +61487,7 @@ def EV_DoJump_04():
 
     label('loc_48DAC')
 
-    EventJump(0x00004075)
+    OP_AC(0x01, 0x00004075)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61496,7 +61496,7 @@ def EV_DoJump_04():
 
     label('loc_48DBC')
 
-    EventJump(0x00004076)
+    OP_AC(0x01, 0x00004076)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61505,7 +61505,7 @@ def EV_DoJump_04():
 
     label('loc_48DCC')
 
-    EventJump(0x00004077)
+    OP_AC(0x01, 0x00004077)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61514,7 +61514,7 @@ def EV_DoJump_04():
 
     label('loc_48DDC')
 
-    EventJump(0x00004078)
+    OP_AC(0x01, 0x00004078)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61523,7 +61523,7 @@ def EV_DoJump_04():
 
     label('loc_48DEC')
 
-    EventJump(0x00004079)
+    OP_AC(0x01, 0x00004079)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61532,7 +61532,7 @@ def EV_DoJump_04():
 
     label('loc_48DFC')
 
-    EventJump(0x0000407A)
+    OP_AC(0x01, 0x0000407A)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61541,7 +61541,7 @@ def EV_DoJump_04():
 
     label('loc_48E0C')
 
-    EventJump(0x0000407B)
+    OP_AC(0x01, 0x0000407B)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61550,7 +61550,7 @@ def EV_DoJump_04():
 
     label('loc_48E1C')
 
-    EventJump(0x0000407C)
+    OP_AC(0x01, 0x0000407C)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61559,7 +61559,7 @@ def EV_DoJump_04():
 
     label('loc_48E2C')
 
-    EventJump(0x0000407D)
+    OP_AC(0x01, 0x0000407D)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61568,7 +61568,7 @@ def EV_DoJump_04():
 
     label('loc_48E3C')
 
-    EventJump(0x0000407E)
+    OP_AC(0x01, 0x0000407E)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61577,7 +61577,7 @@ def EV_DoJump_04():
 
     label('loc_48E4C')
 
-    EventJump(0x0000407F)
+    OP_AC(0x01, 0x0000407F)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61586,7 +61586,7 @@ def EV_DoJump_04():
 
     label('loc_48E5C')
 
-    EventJump(0x00004080)
+    OP_AC(0x01, 0x00004080)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61595,7 +61595,7 @@ def EV_DoJump_04():
 
     label('loc_48E6C')
 
-    EventJump(0x00004081)
+    OP_AC(0x01, 0x00004081)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61604,7 +61604,7 @@ def EV_DoJump_04():
 
     label('loc_48E7C')
 
-    EventJump(0x00004082)
+    OP_AC(0x01, 0x00004082)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61613,7 +61613,7 @@ def EV_DoJump_04():
 
     label('loc_48E8C')
 
-    EventJump(0x00004083)
+    OP_AC(0x01, 0x00004083)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61622,7 +61622,7 @@ def EV_DoJump_04():
 
     label('loc_48E9C')
 
-    EventJump(0x00004084)
+    OP_AC(0x01, 0x00004084)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61631,7 +61631,7 @@ def EV_DoJump_04():
 
     label('loc_48EAC')
 
-    EventJump(0x00004085)
+    OP_AC(0x01, 0x00004085)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61640,7 +61640,7 @@ def EV_DoJump_04():
 
     label('loc_48EBC')
 
-    EventJump(0x00004086)
+    OP_AC(0x01, 0x00004086)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61649,7 +61649,7 @@ def EV_DoJump_04():
 
     label('loc_48ECC')
 
-    EventJump(0x00004087)
+    OP_AC(0x01, 0x00004087)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61658,7 +61658,7 @@ def EV_DoJump_04():
 
     label('loc_48EDC')
 
-    EventJump(0x00004088)
+    OP_AC(0x01, 0x00004088)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61667,7 +61667,7 @@ def EV_DoJump_04():
 
     label('loc_48EEC')
 
-    EventJump(0x00004089)
+    OP_AC(0x01, 0x00004089)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61676,7 +61676,7 @@ def EV_DoJump_04():
 
     label('loc_48EFC')
 
-    EventJump(0x0000408A)
+    OP_AC(0x01, 0x0000408A)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61685,7 +61685,7 @@ def EV_DoJump_04():
 
     label('loc_48F0C')
 
-    EventJump(0x0000408C)
+    OP_AC(0x01, 0x0000408C)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61694,7 +61694,7 @@ def EV_DoJump_04():
 
     label('loc_48F1C')
 
-    EventJump(0x0000408D)
+    OP_AC(0x01, 0x0000408D)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61703,7 +61703,7 @@ def EV_DoJump_04():
 
     label('loc_48F2C')
 
-    EventJump(0x0000408E)
+    OP_AC(0x01, 0x0000408E)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61712,7 +61712,7 @@ def EV_DoJump_04():
 
     label('loc_48F3C')
 
-    EventJump(0x0000408F)
+    OP_AC(0x01, 0x0000408F)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61721,7 +61721,7 @@ def EV_DoJump_04():
 
     label('loc_48F4C')
 
-    EventJump(0x00004090)
+    OP_AC(0x01, 0x00004090)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61730,7 +61730,7 @@ def EV_DoJump_04():
 
     label('loc_48F5C')
 
-    EventJump(0x00004091)
+    OP_AC(0x01, 0x00004091)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61739,7 +61739,7 @@ def EV_DoJump_04():
 
     label('loc_48F6C')
 
-    EventJump(0x00004092)
+    OP_AC(0x01, 0x00004092)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61748,7 +61748,7 @@ def EV_DoJump_04():
 
     label('loc_48F7C')
 
-    EventJump(0x00004093)
+    OP_AC(0x01, 0x00004093)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61757,7 +61757,7 @@ def EV_DoJump_04():
 
     label('loc_48F8C')
 
-    EventJump(0x00004094)
+    OP_AC(0x01, 0x00004094)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61766,7 +61766,7 @@ def EV_DoJump_04():
 
     label('loc_48F9C')
 
-    EventJump(0x00004095)
+    OP_AC(0x01, 0x00004095)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61775,7 +61775,7 @@ def EV_DoJump_04():
 
     label('loc_48FAC')
 
-    EventJump(0x00004096)
+    OP_AC(0x01, 0x00004096)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61784,7 +61784,7 @@ def EV_DoJump_04():
 
     label('loc_48FBC')
 
-    EventJump(0x00004097)
+    OP_AC(0x01, 0x00004097)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61793,7 +61793,7 @@ def EV_DoJump_04():
 
     label('loc_48FCC')
 
-    EventJump(0x00004098)
+    OP_AC(0x01, 0x00004098)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61802,7 +61802,7 @@ def EV_DoJump_04():
 
     label('loc_48FDC')
 
-    EventJump(0x00004099)
+    OP_AC(0x01, 0x00004099)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61811,7 +61811,7 @@ def EV_DoJump_04():
 
     label('loc_48FEC')
 
-    EventJump(0x0000409A)
+    OP_AC(0x01, 0x0000409A)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61820,7 +61820,7 @@ def EV_DoJump_04():
 
     label('loc_48FFC')
 
-    EventJump(0x0000409B)
+    OP_AC(0x01, 0x0000409B)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61829,7 +61829,7 @@ def EV_DoJump_04():
 
     label('loc_4900C')
 
-    EventJump(0x0000409C)
+    OP_AC(0x01, 0x0000409C)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61838,7 +61838,7 @@ def EV_DoJump_04():
 
     label('loc_4901C')
 
-    EventJump(0x0000409D)
+    OP_AC(0x01, 0x0000409D)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61847,7 +61847,7 @@ def EV_DoJump_04():
 
     label('loc_4902C')
 
-    EventJump(0x0000409E)
+    OP_AC(0x01, 0x0000409E)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61856,7 +61856,7 @@ def EV_DoJump_04():
 
     label('loc_4903C')
 
-    EventJump(0x0000409F)
+    OP_AC(0x01, 0x0000409F)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61865,7 +61865,7 @@ def EV_DoJump_04():
 
     label('loc_4904C')
 
-    EventJump(0x000040A0)
+    OP_AC(0x01, 0x000040A0)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61874,7 +61874,7 @@ def EV_DoJump_04():
 
     label('loc_4905C')
 
-    EventJump(0x000040A1)
+    OP_AC(0x01, 0x000040A1)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61883,7 +61883,7 @@ def EV_DoJump_04():
 
     label('loc_4906C')
 
-    EventJump(0x000040A2)
+    OP_AC(0x01, 0x000040A2)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61892,7 +61892,7 @@ def EV_DoJump_04():
 
     label('loc_4907C')
 
-    EventJump(0x000040A3)
+    OP_AC(0x01, 0x000040A3)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61901,7 +61901,7 @@ def EV_DoJump_04():
 
     label('loc_4908C')
 
-    EventJump(0x000040A4)
+    OP_AC(0x01, 0x000040A4)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61910,7 +61910,7 @@ def EV_DoJump_04():
 
     label('loc_4909C')
 
-    EventJump(0x000040A5)
+    OP_AC(0x01, 0x000040A5)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61919,7 +61919,7 @@ def EV_DoJump_04():
 
     label('loc_490AC')
 
-    EventJump(0x000040A6)
+    OP_AC(0x01, 0x000040A6)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61928,7 +61928,7 @@ def EV_DoJump_04():
 
     label('loc_490BC')
 
-    EventJump(0x000040A7)
+    OP_AC(0x01, 0x000040A7)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61937,7 +61937,7 @@ def EV_DoJump_04():
 
     label('loc_490CC')
 
-    EventJump(0x000040A8)
+    OP_AC(0x01, 0x000040A8)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61946,7 +61946,7 @@ def EV_DoJump_04():
 
     label('loc_490DC')
 
-    EventJump(0x000040A9)
+    OP_AC(0x01, 0x000040A9)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61955,7 +61955,7 @@ def EV_DoJump_04():
 
     label('loc_490EC')
 
-    EventJump(0x000040AA)
+    OP_AC(0x01, 0x000040AA)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61964,7 +61964,7 @@ def EV_DoJump_04():
 
     label('loc_490FC')
 
-    EventJump(0x000040AB)
+    OP_AC(0x01, 0x000040AB)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61973,7 +61973,7 @@ def EV_DoJump_04():
 
     label('loc_4910C')
 
-    EventJump(0x000040AC)
+    OP_AC(0x01, 0x000040AC)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61982,7 +61982,7 @@ def EV_DoJump_04():
 
     label('loc_4911C')
 
-    EventJump(0x000040AD)
+    OP_AC(0x01, 0x000040AD)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -61991,7 +61991,7 @@ def EV_DoJump_04():
 
     label('loc_4912C')
 
-    EventJump(0x000040AE)
+    OP_AC(0x01, 0x000040AE)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62000,7 +62000,7 @@ def EV_DoJump_04():
 
     label('loc_4913C')
 
-    EventJump(0x000040AF)
+    OP_AC(0x01, 0x000040AF)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62009,7 +62009,7 @@ def EV_DoJump_04():
 
     label('loc_4914C')
 
-    EventJump(0x000040B0)
+    OP_AC(0x01, 0x000040B0)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62018,7 +62018,7 @@ def EV_DoJump_04():
 
     label('loc_4915C')
 
-    EventJump(0x000040B1)
+    OP_AC(0x01, 0x000040B1)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62027,7 +62027,7 @@ def EV_DoJump_04():
 
     label('loc_4916C')
 
-    EventJump(0x000040B2)
+    OP_AC(0x01, 0x000040B2)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62053,7 +62053,7 @@ def EV_DoJump_04():
 
     label('loc_491BD')
 
-    EventJump(0x000040B4)
+    OP_AC(0x01, 0x000040B4)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62062,7 +62062,7 @@ def EV_DoJump_04():
 
     label('loc_491CD')
 
-    EventJump(0x000040B5)
+    OP_AC(0x01, 0x000040B5)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62071,7 +62071,7 @@ def EV_DoJump_04():
 
     label('loc_491DD')
 
-    EventJump(0x000040B6)
+    OP_AC(0x01, 0x000040B6)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62080,7 +62080,7 @@ def EV_DoJump_04():
 
     label('loc_491ED')
 
-    EventJump(0x000040B7)
+    OP_AC(0x01, 0x000040B7)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62089,7 +62089,7 @@ def EV_DoJump_04():
 
     label('loc_491FD')
 
-    EventJump(0x000040B8)
+    OP_AC(0x01, 0x000040B8)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62166,7 +62166,7 @@ def EV_DoJump_04():
 
     label('loc_49311')
 
-    EventJump(0x000040BD)
+    OP_AC(0x01, 0x000040BD)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62175,7 +62175,7 @@ def EV_DoJump_04():
 
     label('loc_49321')
 
-    EventJump(0x000040BE)
+    OP_AC(0x01, 0x000040BE)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62184,7 +62184,7 @@ def EV_DoJump_04():
 
     label('loc_49331')
 
-    EventJump(0x000040BF)
+    OP_AC(0x01, 0x000040BF)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62193,7 +62193,7 @@ def EV_DoJump_04():
 
     label('loc_49341')
 
-    EventJump(0x000040C0)
+    OP_AC(0x01, 0x000040C0)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62202,7 +62202,7 @@ def EV_DoJump_04():
 
     label('loc_49351')
 
-    EventJump(0x000040C1)
+    OP_AC(0x01, 0x000040C1)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62211,7 +62211,7 @@ def EV_DoJump_04():
 
     label('loc_49361')
 
-    EventJump(0x000040C2)
+    OP_AC(0x01, 0x000040C2)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62220,7 +62220,7 @@ def EV_DoJump_04():
 
     label('loc_49371')
 
-    EventJump(0x000040C3)
+    OP_AC(0x01, 0x000040C3)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62229,7 +62229,7 @@ def EV_DoJump_04():
 
     label('loc_49381')
 
-    EventJump(0x000040C4)
+    OP_AC(0x01, 0x000040C4)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62238,7 +62238,7 @@ def EV_DoJump_04():
 
     label('loc_49391')
 
-    EventJump(0x000040C5)
+    OP_AC(0x01, 0x000040C5)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62247,7 +62247,7 @@ def EV_DoJump_04():
 
     label('loc_493A1')
 
-    EventJump(0x000040C6)
+    OP_AC(0x01, 0x000040C6)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62256,7 +62256,7 @@ def EV_DoJump_04():
 
     label('loc_493B1')
 
-    EventJump(0x000040C7)
+    OP_AC(0x01, 0x000040C7)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62265,7 +62265,7 @@ def EV_DoJump_04():
 
     label('loc_493C1')
 
-    EventJump(0x000040C8)
+    OP_AC(0x01, 0x000040C8)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62274,7 +62274,7 @@ def EV_DoJump_04():
 
     label('loc_493D1')
 
-    EventJump(0x000040C9)
+    OP_AC(0x01, 0x000040C9)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62283,7 +62283,7 @@ def EV_DoJump_04():
 
     label('loc_493E1')
 
-    EventJump(0x000040CA)
+    OP_AC(0x01, 0x000040CA)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62292,7 +62292,7 @@ def EV_DoJump_04():
 
     label('loc_493F1')
 
-    EventJump(0x000040CB)
+    OP_AC(0x01, 0x000040CB)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62301,7 +62301,7 @@ def EV_DoJump_04():
 
     label('loc_49401')
 
-    EventJump(0x000040EB)
+    OP_AC(0x01, 0x000040EB)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62310,7 +62310,7 @@ def EV_DoJump_04():
 
     label('loc_49411')
 
-    EventJump(0x000040EC)
+    OP_AC(0x01, 0x000040EC)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62319,7 +62319,7 @@ def EV_DoJump_04():
 
     label('loc_49421')
 
-    EventJump(0x000040ED)
+    OP_AC(0x01, 0x000040ED)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62328,7 +62328,7 @@ def EV_DoJump_04():
 
     label('loc_49431')
 
-    EventJump(0x000040EF)
+    OP_AC(0x01, 0x000040EF)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62337,7 +62337,7 @@ def EV_DoJump_04():
 
     label('loc_49441')
 
-    EventJump(0x000040EE)
+    OP_AC(0x01, 0x000040EE)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62346,7 +62346,7 @@ def EV_DoJump_04():
 
     label('loc_49451')
 
-    EventJump(0x000040CC)
+    OP_AC(0x01, 0x000040CC)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62355,7 +62355,7 @@ def EV_DoJump_04():
 
     label('loc_49461')
 
-    EventJump(0x000040CD)
+    OP_AC(0x01, 0x000040CD)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62364,7 +62364,7 @@ def EV_DoJump_04():
 
     label('loc_49471')
 
-    EventJump(0x000040CE)
+    OP_AC(0x01, 0x000040CE)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62373,7 +62373,7 @@ def EV_DoJump_04():
 
     label('loc_49481')
 
-    EventJump(0x000040CF)
+    OP_AC(0x01, 0x000040CF)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62382,7 +62382,7 @@ def EV_DoJump_04():
 
     label('loc_49491')
 
-    EventJump(0x000040D0)
+    OP_AC(0x01, 0x000040D0)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62391,7 +62391,7 @@ def EV_DoJump_04():
 
     label('loc_494A1')
 
-    EventJump(0x000040D1)
+    OP_AC(0x01, 0x000040D1)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62400,7 +62400,7 @@ def EV_DoJump_04():
 
     label('loc_494B1')
 
-    EventJump(0x000040D2)
+    OP_AC(0x01, 0x000040D2)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62409,7 +62409,7 @@ def EV_DoJump_04():
 
     label('loc_494C1')
 
-    EventJump(0x000040D3)
+    OP_AC(0x01, 0x000040D3)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62418,7 +62418,7 @@ def EV_DoJump_04():
 
     label('loc_494D1')
 
-    EventJump(0x000040D4)
+    OP_AC(0x01, 0x000040D4)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62427,7 +62427,7 @@ def EV_DoJump_04():
 
     label('loc_494E1')
 
-    EventJump(0x000040D5)
+    OP_AC(0x01, 0x000040D5)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62436,7 +62436,7 @@ def EV_DoJump_04():
 
     label('loc_494F1')
 
-    EventJump(0x000040D6)
+    OP_AC(0x01, 0x000040D6)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62445,7 +62445,7 @@ def EV_DoJump_04():
 
     label('loc_49501')
 
-    EventJump(0x000040D7)
+    OP_AC(0x01, 0x000040D7)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62454,7 +62454,7 @@ def EV_DoJump_04():
 
     label('loc_49511')
 
-    EventJump(0x000040D8)
+    OP_AC(0x01, 0x000040D8)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62484,7 +62484,7 @@ def EV_DoJump_04():
     SetScenaFlags(ScenaFlag(0x0228, 6, 0x1146))
     SetScenaFlags(ScenaFlag(0x0228, 7, 0x1147))
     SetScenaFlags(ScenaFlag(0x0229, 0, 0x1148))
-    EventJump(0x000040D8)
+    OP_AC(0x01, 0x000040D8)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62505,7 +62505,7 @@ def EV_DoJump_04():
 
     label('loc_4959D')
 
-    EventJump(0x000040DB)
+    OP_AC(0x01, 0x000040DB)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62514,7 +62514,7 @@ def EV_DoJump_04():
 
     label('loc_495AD')
 
-    EventJump(0x000040DC)
+    OP_AC(0x01, 0x000040DC)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62523,7 +62523,7 @@ def EV_DoJump_04():
 
     label('loc_495BD')
 
-    EventJump(0x000040DD)
+    OP_AC(0x01, 0x000040DD)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62532,7 +62532,7 @@ def EV_DoJump_04():
 
     label('loc_495CD')
 
-    EventJump(0x000040DE)
+    OP_AC(0x01, 0x000040DE)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62541,7 +62541,7 @@ def EV_DoJump_04():
 
     label('loc_495DD')
 
-    EventJump(0x000040DF)
+    OP_AC(0x01, 0x000040DF)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62550,7 +62550,7 @@ def EV_DoJump_04():
 
     label('loc_495ED')
 
-    EventJump(0x000040E0)
+    OP_AC(0x01, 0x000040E0)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62559,7 +62559,7 @@ def EV_DoJump_04():
 
     label('loc_495FD')
 
-    EventJump(0x000040E1)
+    OP_AC(0x01, 0x000040E1)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62568,7 +62568,7 @@ def EV_DoJump_04():
 
     label('loc_4960D')
 
-    EventJump(0x000040E2)
+    OP_AC(0x01, 0x000040E2)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62577,7 +62577,7 @@ def EV_DoJump_04():
 
     label('loc_4961D')
 
-    EventJump(0x000040E3)
+    OP_AC(0x01, 0x000040E3)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62586,7 +62586,7 @@ def EV_DoJump_04():
 
     label('loc_4962D')
 
-    EventJump(0x000040E4)
+    OP_AC(0x01, 0x000040E4)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62595,7 +62595,7 @@ def EV_DoJump_04():
 
     label('loc_4963D')
 
-    EventJump(0x000040E5)
+    OP_AC(0x01, 0x000040E5)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62604,7 +62604,7 @@ def EV_DoJump_04():
 
     label('loc_4964D')
 
-    EventJump(0x000040E6)
+    OP_AC(0x01, 0x000040E6)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62613,7 +62613,7 @@ def EV_DoJump_04():
 
     label('loc_4965D')
 
-    EventJump(0x000040E7)
+    OP_AC(0x01, 0x000040E7)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62622,7 +62622,7 @@ def EV_DoJump_04():
 
     label('loc_4966D')
 
-    EventJump(0x000040E8)
+    OP_AC(0x01, 0x000040E8)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62631,7 +62631,7 @@ def EV_DoJump_04():
 
     label('loc_4967D')
 
-    EventJump(0x000040E9)
+    OP_AC(0x01, 0x000040E9)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -62640,7 +62640,7 @@ def EV_DoJump_04():
 
     label('loc_4968D')
 
-    EventJump(0x000040EA)
+    OP_AC(0x01, 0x000040EA)
     OP_14(0x04000000)
 
     Jump('loc_4969D')
@@ -63365,7 +63365,7 @@ def EV_DoJump_05():
 
     label('loc_4B91E')
 
-    EventJump(0x00005001)
+    OP_AC(0x01, 0x00005001)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63374,7 +63374,7 @@ def EV_DoJump_05():
 
     label('loc_4B92E')
 
-    EventJump(0x00005002)
+    OP_AC(0x01, 0x00005002)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63383,7 +63383,7 @@ def EV_DoJump_05():
 
     label('loc_4B93E')
 
-    EventJump(0x00005003)
+    OP_AC(0x01, 0x00005003)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63392,7 +63392,7 @@ def EV_DoJump_05():
 
     label('loc_4B94E')
 
-    EventJump(0x00005004)
+    OP_AC(0x01, 0x00005004)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63401,7 +63401,7 @@ def EV_DoJump_05():
 
     label('loc_4B95E')
 
-    EventJump(0x00005005)
+    OP_AC(0x01, 0x00005005)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63410,7 +63410,7 @@ def EV_DoJump_05():
 
     label('loc_4B96E')
 
-    EventJump(0x00005006)
+    OP_AC(0x01, 0x00005006)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63419,7 +63419,7 @@ def EV_DoJump_05():
 
     label('loc_4B97E')
 
-    EventJump(0x00005007)
+    OP_AC(0x01, 0x00005007)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63428,7 +63428,7 @@ def EV_DoJump_05():
 
     label('loc_4B98E')
 
-    EventJump(0x00005008)
+    OP_AC(0x01, 0x00005008)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63437,7 +63437,7 @@ def EV_DoJump_05():
 
     label('loc_4B99E')
 
-    EventJump(0x00005009)
+    OP_AC(0x01, 0x00005009)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63446,7 +63446,7 @@ def EV_DoJump_05():
 
     label('loc_4B9AE')
 
-    EventJump(0x0000500A)
+    OP_AC(0x01, 0x0000500A)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63455,7 +63455,7 @@ def EV_DoJump_05():
 
     label('loc_4B9BE')
 
-    EventJump(0x0000500B)
+    OP_AC(0x01, 0x0000500B)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63464,7 +63464,7 @@ def EV_DoJump_05():
 
     label('loc_4B9CE')
 
-    EventJump(0x0000500C)
+    OP_AC(0x01, 0x0000500C)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63473,7 +63473,7 @@ def EV_DoJump_05():
 
     label('loc_4B9DE')
 
-    EventJump(0x0000500D)
+    OP_AC(0x01, 0x0000500D)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63482,7 +63482,7 @@ def EV_DoJump_05():
 
     label('loc_4B9EE')
 
-    EventJump(0x0000500E)
+    OP_AC(0x01, 0x0000500E)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63491,7 +63491,7 @@ def EV_DoJump_05():
 
     label('loc_4B9FE')
 
-    EventJump(0x0000500F)
+    OP_AC(0x01, 0x0000500F)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63500,7 +63500,7 @@ def EV_DoJump_05():
 
     label('loc_4BA0E')
 
-    EventJump(0x00005010)
+    OP_AC(0x01, 0x00005010)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63509,7 +63509,7 @@ def EV_DoJump_05():
 
     label('loc_4BA1E')
 
-    EventJump(0x00005011)
+    OP_AC(0x01, 0x00005011)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63518,7 +63518,7 @@ def EV_DoJump_05():
 
     label('loc_4BA2E')
 
-    EventJump(0x00005012)
+    OP_AC(0x01, 0x00005012)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63527,7 +63527,7 @@ def EV_DoJump_05():
 
     label('loc_4BA3E')
 
-    EventJump(0x00005013)
+    OP_AC(0x01, 0x00005013)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63536,7 +63536,7 @@ def EV_DoJump_05():
 
     label('loc_4BA4E')
 
-    EventJump(0x00005014)
+    OP_AC(0x01, 0x00005014)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63545,7 +63545,7 @@ def EV_DoJump_05():
 
     label('loc_4BA5E')
 
-    EventJump(0x00005015)
+    OP_AC(0x01, 0x00005015)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63554,7 +63554,7 @@ def EV_DoJump_05():
 
     label('loc_4BA6E')
 
-    EventJump(0x00005016)
+    OP_AC(0x01, 0x00005016)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63563,7 +63563,7 @@ def EV_DoJump_05():
 
     label('loc_4BA7E')
 
-    EventJump(0x00005017)
+    OP_AC(0x01, 0x00005017)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63572,7 +63572,7 @@ def EV_DoJump_05():
 
     label('loc_4BA8E')
 
-    EventJump(0x00005018)
+    OP_AC(0x01, 0x00005018)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63581,7 +63581,7 @@ def EV_DoJump_05():
 
     label('loc_4BA9E')
 
-    EventJump(0x00005019)
+    OP_AC(0x01, 0x00005019)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63590,7 +63590,7 @@ def EV_DoJump_05():
 
     label('loc_4BAAE')
 
-    EventJump(0x0000501A)
+    OP_AC(0x01, 0x0000501A)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63599,7 +63599,7 @@ def EV_DoJump_05():
 
     label('loc_4BABE')
 
-    EventJump(0x0000501B)
+    OP_AC(0x01, 0x0000501B)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63608,7 +63608,7 @@ def EV_DoJump_05():
 
     label('loc_4BACE')
 
-    EventJump(0x0000501C)
+    OP_AC(0x01, 0x0000501C)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63617,7 +63617,7 @@ def EV_DoJump_05():
 
     label('loc_4BADE')
 
-    EventJump(0x0000501D)
+    OP_AC(0x01, 0x0000501D)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63626,7 +63626,7 @@ def EV_DoJump_05():
 
     label('loc_4BAEE')
 
-    EventJump(0x0000501E)
+    OP_AC(0x01, 0x0000501E)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63635,7 +63635,7 @@ def EV_DoJump_05():
 
     label('loc_4BAFE')
 
-    EventJump(0x0000501F)
+    OP_AC(0x01, 0x0000501F)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63644,7 +63644,7 @@ def EV_DoJump_05():
 
     label('loc_4BB0E')
 
-    EventJump(0x00005020)
+    OP_AC(0x01, 0x00005020)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63653,7 +63653,7 @@ def EV_DoJump_05():
 
     label('loc_4BB1E')
 
-    EventJump(0x00005021)
+    OP_AC(0x01, 0x00005021)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63662,7 +63662,7 @@ def EV_DoJump_05():
 
     label('loc_4BB2E')
 
-    EventJump(0x00005022)
+    OP_AC(0x01, 0x00005022)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63671,7 +63671,7 @@ def EV_DoJump_05():
 
     label('loc_4BB3E')
 
-    EventJump(0x00005023)
+    OP_AC(0x01, 0x00005023)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63680,7 +63680,7 @@ def EV_DoJump_05():
 
     label('loc_4BB4E')
 
-    EventJump(0x00005024)
+    OP_AC(0x01, 0x00005024)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63689,7 +63689,7 @@ def EV_DoJump_05():
 
     label('loc_4BB5E')
 
-    EventJump(0x00005025)
+    OP_AC(0x01, 0x00005025)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63698,7 +63698,7 @@ def EV_DoJump_05():
 
     label('loc_4BB6E')
 
-    EventJump(0x00005026)
+    OP_AC(0x01, 0x00005026)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63707,7 +63707,7 @@ def EV_DoJump_05():
 
     label('loc_4BB7E')
 
-    EventJump(0x00005027)
+    OP_AC(0x01, 0x00005027)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63716,7 +63716,7 @@ def EV_DoJump_05():
 
     label('loc_4BB8E')
 
-    EventJump(0x00005028)
+    OP_AC(0x01, 0x00005028)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63725,7 +63725,7 @@ def EV_DoJump_05():
 
     label('loc_4BB9E')
 
-    EventJump(0x00005076)
+    OP_AC(0x01, 0x00005076)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63734,7 +63734,7 @@ def EV_DoJump_05():
 
     label('loc_4BBAE')
 
-    EventJump(0x00005029)
+    OP_AC(0x01, 0x00005029)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63743,7 +63743,7 @@ def EV_DoJump_05():
 
     label('loc_4BBBE')
 
-    EventJump(0x0000502A)
+    OP_AC(0x01, 0x0000502A)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63752,7 +63752,7 @@ def EV_DoJump_05():
 
     label('loc_4BBCE')
 
-    EventJump(0x0000502B)
+    OP_AC(0x01, 0x0000502B)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63761,7 +63761,7 @@ def EV_DoJump_05():
 
     label('loc_4BBDE')
 
-    EventJump(0x0000502C)
+    OP_AC(0x01, 0x0000502C)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63770,7 +63770,7 @@ def EV_DoJump_05():
 
     label('loc_4BBEE')
 
-    EventJump(0x0000502D)
+    OP_AC(0x01, 0x0000502D)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63779,7 +63779,7 @@ def EV_DoJump_05():
 
     label('loc_4BBFE')
 
-    EventJump(0x0000502E)
+    OP_AC(0x01, 0x0000502E)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63788,7 +63788,7 @@ def EV_DoJump_05():
 
     label('loc_4BC0E')
 
-    EventJump(0x0000502F)
+    OP_AC(0x01, 0x0000502F)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63797,7 +63797,7 @@ def EV_DoJump_05():
 
     label('loc_4BC1E')
 
-    EventJump(0x00005030)
+    OP_AC(0x01, 0x00005030)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63806,7 +63806,7 @@ def EV_DoJump_05():
 
     label('loc_4BC2E')
 
-    EventJump(0x00005031)
+    OP_AC(0x01, 0x00005031)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63815,7 +63815,7 @@ def EV_DoJump_05():
 
     label('loc_4BC3E')
 
-    EventJump(0x00005032)
+    OP_AC(0x01, 0x00005032)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63824,7 +63824,7 @@ def EV_DoJump_05():
 
     label('loc_4BC4E')
 
-    EventJump(0x00005033)
+    OP_AC(0x01, 0x00005033)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63833,7 +63833,7 @@ def EV_DoJump_05():
 
     label('loc_4BC5E')
 
-    EventJump(0x00005034)
+    OP_AC(0x01, 0x00005034)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63842,7 +63842,7 @@ def EV_DoJump_05():
 
     label('loc_4BC6E')
 
-    EventJump(0x00005035)
+    OP_AC(0x01, 0x00005035)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63851,7 +63851,7 @@ def EV_DoJump_05():
 
     label('loc_4BC7E')
 
-    EventJump(0x00005036)
+    OP_AC(0x01, 0x00005036)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63860,7 +63860,7 @@ def EV_DoJump_05():
 
     label('loc_4BC8E')
 
-    EventJump(0x00005037)
+    OP_AC(0x01, 0x00005037)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63869,7 +63869,7 @@ def EV_DoJump_05():
 
     label('loc_4BC9E')
 
-    EventJump(0x00005038)
+    OP_AC(0x01, 0x00005038)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63878,7 +63878,7 @@ def EV_DoJump_05():
 
     label('loc_4BCAE')
 
-    EventJump(0x00005039)
+    OP_AC(0x01, 0x00005039)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63887,7 +63887,7 @@ def EV_DoJump_05():
 
     label('loc_4BCBE')
 
-    EventJump(0x0000503A)
+    OP_AC(0x01, 0x0000503A)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63896,7 +63896,7 @@ def EV_DoJump_05():
 
     label('loc_4BCCE')
 
-    EventJump(0x0000503B)
+    OP_AC(0x01, 0x0000503B)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63905,7 +63905,7 @@ def EV_DoJump_05():
 
     label('loc_4BCDE')
 
-    EventJump(0x0000503C)
+    OP_AC(0x01, 0x0000503C)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63914,7 +63914,7 @@ def EV_DoJump_05():
 
     label('loc_4BCEE')
 
-    EventJump(0x0000503D)
+    OP_AC(0x01, 0x0000503D)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63923,7 +63923,7 @@ def EV_DoJump_05():
 
     label('loc_4BCFE')
 
-    EventJump(0x0000503E)
+    OP_AC(0x01, 0x0000503E)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63932,7 +63932,7 @@ def EV_DoJump_05():
 
     label('loc_4BD0E')
 
-    EventJump(0x0000503F)
+    OP_AC(0x01, 0x0000503F)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63941,7 +63941,7 @@ def EV_DoJump_05():
 
     label('loc_4BD1E')
 
-    EventJump(0x00005040)
+    OP_AC(0x01, 0x00005040)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63950,7 +63950,7 @@ def EV_DoJump_05():
 
     label('loc_4BD2E')
 
-    EventJump(0x00005041)
+    OP_AC(0x01, 0x00005041)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63959,7 +63959,7 @@ def EV_DoJump_05():
 
     label('loc_4BD3E')
 
-    EventJump(0x00005042)
+    OP_AC(0x01, 0x00005042)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63968,7 +63968,7 @@ def EV_DoJump_05():
 
     label('loc_4BD4E')
 
-    EventJump(0x00005044)
+    OP_AC(0x01, 0x00005044)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63977,7 +63977,7 @@ def EV_DoJump_05():
 
     label('loc_4BD5E')
 
-    EventJump(0x00005045)
+    OP_AC(0x01, 0x00005045)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63986,7 +63986,7 @@ def EV_DoJump_05():
 
     label('loc_4BD6E')
 
-    EventJump(0x00005046)
+    OP_AC(0x01, 0x00005046)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -63995,7 +63995,7 @@ def EV_DoJump_05():
 
     label('loc_4BD7E')
 
-    EventJump(0x00005047)
+    OP_AC(0x01, 0x00005047)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64004,7 +64004,7 @@ def EV_DoJump_05():
 
     label('loc_4BD8E')
 
-    EventJump(0x00005048)
+    OP_AC(0x01, 0x00005048)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64013,7 +64013,7 @@ def EV_DoJump_05():
 
     label('loc_4BD9E')
 
-    EventJump(0x00005049)
+    OP_AC(0x01, 0x00005049)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64022,7 +64022,7 @@ def EV_DoJump_05():
 
     label('loc_4BDAE')
 
-    EventJump(0x0000504A)
+    OP_AC(0x01, 0x0000504A)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64031,7 +64031,7 @@ def EV_DoJump_05():
 
     label('loc_4BDBE')
 
-    EventJump(0x0000504B)
+    OP_AC(0x01, 0x0000504B)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64040,7 +64040,7 @@ def EV_DoJump_05():
 
     label('loc_4BDCE')
 
-    EventJump(0x0000504C)
+    OP_AC(0x01, 0x0000504C)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64049,7 +64049,7 @@ def EV_DoJump_05():
 
     label('loc_4BDDE')
 
-    EventJump(0x0000504D)
+    OP_AC(0x01, 0x0000504D)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64058,7 +64058,7 @@ def EV_DoJump_05():
 
     label('loc_4BDEE')
 
-    EventJump(0x0000504E)
+    OP_AC(0x01, 0x0000504E)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64067,7 +64067,7 @@ def EV_DoJump_05():
 
     label('loc_4BDFE')
 
-    EventJump(0x0000504F)
+    OP_AC(0x01, 0x0000504F)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64076,7 +64076,7 @@ def EV_DoJump_05():
 
     label('loc_4BE0E')
 
-    EventJump(0x00005050)
+    OP_AC(0x01, 0x00005050)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64085,7 +64085,7 @@ def EV_DoJump_05():
 
     label('loc_4BE1E')
 
-    EventJump(0x00005051)
+    OP_AC(0x01, 0x00005051)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64094,7 +64094,7 @@ def EV_DoJump_05():
 
     label('loc_4BE2E')
 
-    EventJump(0x00005052)
+    OP_AC(0x01, 0x00005052)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64103,7 +64103,7 @@ def EV_DoJump_05():
 
     label('loc_4BE3E')
 
-    EventJump(0x00005053)
+    OP_AC(0x01, 0x00005053)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64112,7 +64112,7 @@ def EV_DoJump_05():
 
     label('loc_4BE4E')
 
-    EventJump(0x00005054)
+    OP_AC(0x01, 0x00005054)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64121,7 +64121,7 @@ def EV_DoJump_05():
 
     label('loc_4BE5E')
 
-    EventJump(0x00005055)
+    OP_AC(0x01, 0x00005055)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64130,7 +64130,7 @@ def EV_DoJump_05():
 
     label('loc_4BE6E')
 
-    EventJump(0x00005056)
+    OP_AC(0x01, 0x00005056)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64139,7 +64139,7 @@ def EV_DoJump_05():
 
     label('loc_4BE7E')
 
-    EventJump(0x00005057)
+    OP_AC(0x01, 0x00005057)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64148,7 +64148,7 @@ def EV_DoJump_05():
 
     label('loc_4BE8E')
 
-    EventJump(0x00005058)
+    OP_AC(0x01, 0x00005058)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64157,7 +64157,7 @@ def EV_DoJump_05():
 
     label('loc_4BE9E')
 
-    EventJump(0x00005059)
+    OP_AC(0x01, 0x00005059)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64166,7 +64166,7 @@ def EV_DoJump_05():
 
     label('loc_4BEAE')
 
-    EventJump(0x0000505A)
+    OP_AC(0x01, 0x0000505A)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64175,7 +64175,7 @@ def EV_DoJump_05():
 
     label('loc_4BEBE')
 
-    EventJump(0x0000505B)
+    OP_AC(0x01, 0x0000505B)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64184,7 +64184,7 @@ def EV_DoJump_05():
 
     label('loc_4BECE')
 
-    EventJump(0x0000505C)
+    OP_AC(0x01, 0x0000505C)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64193,7 +64193,7 @@ def EV_DoJump_05():
 
     label('loc_4BEDE')
 
-    EventJump(0x0000505D)
+    OP_AC(0x01, 0x0000505D)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64202,7 +64202,7 @@ def EV_DoJump_05():
 
     label('loc_4BEEE')
 
-    EventJump(0x0000505E)
+    OP_AC(0x01, 0x0000505E)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64211,7 +64211,7 @@ def EV_DoJump_05():
 
     label('loc_4BEFE')
 
-    EventJump(0x0000505F)
+    OP_AC(0x01, 0x0000505F)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64220,7 +64220,7 @@ def EV_DoJump_05():
 
     label('loc_4BF0E')
 
-    EventJump(0x00005060)
+    OP_AC(0x01, 0x00005060)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64229,7 +64229,7 @@ def EV_DoJump_05():
 
     label('loc_4BF1E')
 
-    EventJump(0x00005061)
+    OP_AC(0x01, 0x00005061)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64238,7 +64238,7 @@ def EV_DoJump_05():
 
     label('loc_4BF2E')
 
-    EventJump(0x00005062)
+    OP_AC(0x01, 0x00005062)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64247,7 +64247,7 @@ def EV_DoJump_05():
 
     label('loc_4BF3E')
 
-    EventJump(0x00005063)
+    OP_AC(0x01, 0x00005063)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64256,7 +64256,7 @@ def EV_DoJump_05():
 
     label('loc_4BF4E')
 
-    EventJump(0x00005064)
+    OP_AC(0x01, 0x00005064)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64265,7 +64265,7 @@ def EV_DoJump_05():
 
     label('loc_4BF5E')
 
-    EventJump(0x00005065)
+    OP_AC(0x01, 0x00005065)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64274,7 +64274,7 @@ def EV_DoJump_05():
 
     label('loc_4BF6E')
 
-    EventJump(0x00005066)
+    OP_AC(0x01, 0x00005066)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64283,7 +64283,7 @@ def EV_DoJump_05():
 
     label('loc_4BF7E')
 
-    EventJump(0x00005067)
+    OP_AC(0x01, 0x00005067)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64292,7 +64292,7 @@ def EV_DoJump_05():
 
     label('loc_4BF8E')
 
-    EventJump(0x00005068)
+    OP_AC(0x01, 0x00005068)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64301,7 +64301,7 @@ def EV_DoJump_05():
 
     label('loc_4BF9E')
 
-    EventJump(0x00005069)
+    OP_AC(0x01, 0x00005069)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64310,7 +64310,7 @@ def EV_DoJump_05():
 
     label('loc_4BFAE')
 
-    EventJump(0x0000506A)
+    OP_AC(0x01, 0x0000506A)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64319,7 +64319,7 @@ def EV_DoJump_05():
 
     label('loc_4BFBE')
 
-    EventJump(0x0000506B)
+    OP_AC(0x01, 0x0000506B)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64328,7 +64328,7 @@ def EV_DoJump_05():
 
     label('loc_4BFCE')
 
-    EventJump(0x0000506C)
+    OP_AC(0x01, 0x0000506C)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64337,7 +64337,7 @@ def EV_DoJump_05():
 
     label('loc_4BFDE')
 
-    EventJump(0x0000506D)
+    OP_AC(0x01, 0x0000506D)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64346,7 +64346,7 @@ def EV_DoJump_05():
 
     label('loc_4BFEE')
 
-    EventJump(0x0000506E)
+    OP_AC(0x01, 0x0000506E)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64355,7 +64355,7 @@ def EV_DoJump_05():
 
     label('loc_4BFFE')
 
-    EventJump(0x0000506F)
+    OP_AC(0x01, 0x0000506F)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64364,7 +64364,7 @@ def EV_DoJump_05():
 
     label('loc_4C00E')
 
-    EventJump(0x00005070)
+    OP_AC(0x01, 0x00005070)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64373,7 +64373,7 @@ def EV_DoJump_05():
 
     label('loc_4C01E')
 
-    EventJump(0x00005071)
+    OP_AC(0x01, 0x00005071)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64382,7 +64382,7 @@ def EV_DoJump_05():
 
     label('loc_4C02E')
 
-    EventJump(0x00005072)
+    OP_AC(0x01, 0x00005072)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64391,7 +64391,7 @@ def EV_DoJump_05():
 
     label('loc_4C03E')
 
-    EventJump(0x00005073)
+    OP_AC(0x01, 0x00005073)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64400,7 +64400,7 @@ def EV_DoJump_05():
 
     label('loc_4C04E')
 
-    EventJump(0x00005074)
+    OP_AC(0x01, 0x00005074)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')
@@ -64409,7 +64409,7 @@ def EV_DoJump_05():
 
     label('loc_4C05E')
 
-    EventJump(0x00005075)
+    OP_AC(0x01, 0x00005075)
     OP_14(0x04000000)
 
     Jump('loc_4C06E')

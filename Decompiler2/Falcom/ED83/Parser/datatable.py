@@ -297,8 +297,8 @@ class StatusTableData(TableDataEntry):
 
         if fs:
             self.algoFile           = fs.ReadMultiByte()
-            self.animeclip          = fs.ReadMultiByte()
             self.model              = fs.ReadMultiByte()
+            self.ani                = fs.ReadMultiByte()
             self.float1             = fs.ReadFloat()
             self.float2             = fs.ReadFloat()
             self.float3             = fs.ReadFloat()
@@ -402,8 +402,8 @@ class StatusTableData(TableDataEntry):
         return [
             'StatusTableData(',
             f"    algoFile                  = '{self.algoFile}',",
-            f"    animeclip                 = '{self.animeclip}',",
             f"    model                     = '{self.model}',",
+            f"    ani                       = '{self.ani}',",
             f'    float1                    = {self.float1:g},',
             f'    float2                    = {self.float2:g},',
             f'    float3                    = {self.float3:g},',
@@ -501,8 +501,8 @@ class StatusTableData(TableDataEntry):
         body = bytearray()
 
         body.extend(utils.str_to_bytes(self.algoFile))
-        body.extend(utils.str_to_bytes(self.animeclip))
         body.extend(utils.str_to_bytes(self.model))
+        body.extend(utils.str_to_bytes(self.ani))
         body.extend(utils.float_to_bytes(self.float1))
         body.extend(utils.float_to_bytes(self.float2))
         body.extend(utils.float_to_bytes(self.float3))

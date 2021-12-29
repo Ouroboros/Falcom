@@ -326,6 +326,13 @@ class ScenaBattleSetting:
 
 class ScenaAnimeClipItem:
     def __init__(self, type: int = 0, type2: int = 0, dword4: int = 0, name: str = '', *, fs: fileio.FileStream = None):
+        '''
+            type:
+                3 = eff
+                4 = se
+                5 = voice
+                9 = anime clip
+        '''
         self.type   = type
         self.type2  = type2
         self.dword4 = dword4
@@ -597,7 +604,7 @@ class ScenaActionTableEntry:
         word1C      : int = 0,
         word1E      : int = 0,
         word20      : int = 0,
-        dword24     : int = 0,
+        damage     : int = 0,
         dword28     : int = 0,
         dword2C     : int = 0,
         dword30     : int = 0,
@@ -635,7 +642,7 @@ class ScenaActionTableEntry:
         self.word1C         = word1C        # type: int
         self.word1E         = word1E        # type: int
         self.word20         = word20        # type: int
-        self.dword24        = dword24       # type: int
+        self.damage         = damage       # type: int
         self.dword28        = dword28       # type: int
         self.dword2C        = dword2C       # type: int
         self.dword30        = dword30       # type: int
@@ -684,7 +691,7 @@ class ScenaActionTableEntry:
         self.word1E         = fs.ReadUShort()                   # 0x1E
         self.word20         = fs.ReadUShort()                   # 0x20
         pad22               = fs.ReadUShort()                   # 0x22
-        self.dword24        = fs.ReadULong()                    # 0x24
+        self.damage         = fs.ReadULong()                    # 0x24
         self.dword28        = fs.ReadULong()                    # 0x28
         self.dword2C        = fs.ReadULong()                    # 0x2C
         self.dword30        = fs.ReadULong()                    # 0x30
@@ -737,7 +744,7 @@ class ScenaActionTableEntry:
 
             fs.write(b'\x00' * 2)
 
-            fs.write(utils.int_to_bytes(self.dword24, 4))
+            fs.write(utils.int_to_bytes(self.damage, 4))
             fs.write(utils.int_to_bytes(self.dword28, 4))
             fs.write(utils.int_to_bytes(self.dword2C, 4))
             fs.write(utils.int_to_bytes(self.dword30, 4))
@@ -783,7 +790,7 @@ class ScenaActionTableEntry:
             f'{DefaultIndent}word1C        = 0x{self.word1C:04X},',
             f'{DefaultIndent}word1E        = 0x{self.word1E:04X},',
             f'{DefaultIndent}word20        = 0x{self.word20:04X},',
-            f'{DefaultIndent}dword24       = {self.dword24},',
+            f'{DefaultIndent}damage        = {self.damage},',
             f'{DefaultIndent}dword28       = {self.dword28},',
             f'{DefaultIndent}dword2C       = {self.dword2C},',
             f'{DefaultIndent}dword30       = {self.dword30},',
@@ -854,8 +861,8 @@ class ScenaAlgoTableEntry:
             craftId         : int       = 0,
             aiType          : int       = 0,
             probability     : int       = 0,
-            target          : int       = 0,
-            targetCondition : int       = 0,
+            maxNumOfUses    : int       = 0,
+            targetType      : int       = 0,
             parameters1     : List[int] = None,
             parameters2     : List[int] = None,
             *,
@@ -865,8 +872,8 @@ class ScenaAlgoTableEntry:
         self.craftId            = craftId
         self.aiType             = aiType                # 0x0F: SBreak
         self.probability        = probability
-        self.target             = target
-        self.targetCondition    = targetCondition
+        self.maxNumOfUses       = maxNumOfUses
+        self.targetType         = targetType
         self.parameters1        = parameters1
         self.parameters2        = parameters2
 
@@ -888,13 +895,13 @@ class ScenaAlgoTableEntry:
 
         self.aiType             = fs.ReadByte()                         # 0x02
         self.probability        = fs.ReadByte()                         # 0x03
-        self.target             = fs.ReadByte()                         # 0x04
-        self.targetCondition    = fs.ReadByte()                         # 0x05
+        self.maxNumOfUses       = fs.ReadByte()                         # 0x04
+        self.targetType         = fs.ReadByte()                         # 0x05
 
         pad06 = fs.ReadUShort()                       # 0x06      always 0
 
         self.parameters1        = [fs.ReadULong() for _ in range(3)]    # 0x08      params for aiType
-        self.parameters2        = [fs.ReadULong() for _ in range(3)]    # 0x14      params for targetCondition
+        self.parameters2        = [fs.ReadULong() for _ in range(3)]    # 0x14      params for targetType
 
         assert pad06 == 0
 
@@ -904,8 +911,8 @@ class ScenaAlgoTableEntry:
         fs.write(utils.int_to_bytes(self.craftId, 2))
         fs.write(utils.int_to_bytes(self.aiType, 1))
         fs.write(utils.int_to_bytes(self.probability, 1))
-        fs.write(utils.int_to_bytes(self.target, 1))
-        fs.write(utils.int_to_bytes(self.targetCondition, 1))
+        fs.write(utils.int_to_bytes(self.maxNumOfUses, 1))
+        fs.write(utils.int_to_bytes(self.targetType, 1))
         fs.write(b'\x00' * 2)
 
         for p in self.parameters1 + self.parameters2:
@@ -921,8 +928,8 @@ class ScenaAlgoTableEntry:
             f'{DefaultIndent}craftId            = 0x{self.craftId:X},',
             f'{DefaultIndent}aiType             = 0x{self.aiType:02X},',
             f'{DefaultIndent}probability        = {self.probability},',
-            f'{DefaultIndent}target             = 0x{self.target:02X},',
-            f'{DefaultIndent}targetCondition    = 0x{self.targetCondition:02X},',
+            f'{DefaultIndent}maxNumOfUses       = 0x{self.maxNumOfUses:02X},',
+            f'{DefaultIndent}targetType         = 0x{self.targetType:02X},',
             f'{DefaultIndent}parameters1        = {self.parameters1},',
             f'{DefaultIndent}parameters2        = {self.parameters2},',
             ')',
