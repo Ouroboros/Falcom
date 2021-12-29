@@ -14,8 +14,9 @@ import {
     BattleAITable,
 } from "./ed83_types";
 
-function findReplacedNameData(char: Character): NameTableData | null {
-    return ED83.findNameTableDataByChrId(char.modelChrId);
+function findReplacedNameData(chrId: number): NameTableData | null {
+    const replacedChrId = ED83.getBattleStyle(chrId)
+    return ED83.findNameTableDataByChrId(replacedChrId >= MinCustomChrId ? replacedChrId : chrId);
 }
 
 function hookCharacterModelInit() {
@@ -23,7 +24,7 @@ function hookCharacterModelInit() {
         Addrs.Character.InitAnimeClipTable,
         function(chr: NativePointer, animeclip: NativePointer) {
             const char = new Character(chr);
-            const nameData = findReplacedNameData(char);
+            const nameData = findReplacedNameData(char.chrId);
 
             if (nameData) {
                 const faceModel = nameData.faceModel;
@@ -41,7 +42,7 @@ function hookCharacterModelInit() {
         Addrs.Character.ChangeSkinFinished,
         function(chr: NativePointer, animeclip: NativePointer) {
             const char = new Character(chr);
-            const nameData = findReplacedNameData(char);
+            const nameData = findReplacedNameData(char.chrId);
 
             if (!nameData) {
                 InitAnimeClipTable(chr, animeclip);
@@ -57,7 +58,17 @@ function hookCharacterModelInit() {
         Addrs.Character.LoadCharaAniByFieldInit,
         function(chr: NativePointer, ani: NativePointer, autoCompile: number) {
             const char = new Character(chr);
-            const nameData = findReplacedNameData(char);
+            const nameData = findReplacedNameData(char.chrId);
+            char.loadAni(nameData ? nameData.ani : ani.readUtf8String()!);
+        },
+        'void', ['pointer', 'pointer', 'uint32'],
+    );
+
+    Interceptor2.call(
+        Addrs.Character.LoadCharaAniByCreateBattleCharacter,
+        function(chr: NativePointer, ani: NativePointer, autoCompile: number) {
+            const char = new Character(chr);
+            const nameData = findReplacedNameData(char.chrId);
             char.loadAni(nameData ? nameData.ani : ani.readUtf8String()!);
         },
         'void', ['pointer', 'pointer', 'uint32'],
@@ -93,7 +104,7 @@ function hookCharacterModelInit() {
             // utils.log(`createChara a12: 0x${a12.toUInt32().toString(16)}`);
             // utils.log(`createChara a13: 0x${a13.and(0xFF).toUInt32().toString(16)}`);
 
-            const modifyModel = (function() {
+            function needModifyModel(): boolean {
                 const args = [
                     a7.toUInt32(),
                     a8.toUInt32(),
@@ -116,6 +127,26 @@ function hookCharacterModelInit() {
                         0x0,
                     ],
                     [
+                        // createBattleCharacter
+                        0x3fb33333,
+                        0x3f000000,
+                        0x0,
+                        0x1,
+                        0x3,
+                        0x8,
+                        0x0,
+                    ],
+                    [
+                        // createBattleCharacter
+                        0x3fd00000,
+                        0x3f000000,
+                        0x0,
+                        0x1,
+                        0x3,
+                        0x8,
+                        0x0,
+                    ],
+                    [
                         // after image, dummy
                         0x0,
                         0x0,
@@ -132,6 +163,9 @@ function hookCharacterModelInit() {
                         return false;
 
                     for (let i = 0; i != a1.length; i++) {
+                        if (a1[i] === undefined || a2[i] === undefined)
+                            continue;
+
                         if (a1[i] != a2[i])
                             return false;
                     }
@@ -145,11 +179,13 @@ function hookCharacterModelInit() {
                 }
 
                 return false;
-            })();
+            };
 
-            if (chrId >= MinCustomChrId && char.modelChrId == InvalidChrId && modifyModel) {
+            // utils.log(`needModifyModel(${chrId}) = ${needModifyModel()}`)
+
+            if (chrId >= MinCustomChrId && char.modelChrId == InvalidChrId && needModifyModel()) {
                 char.modelChrId = chrId;
-                const nameData = findReplacedNameData(char);
+                const nameData = findReplacedNameData(char.chrId);
                 if (nameData)
                     model = Memory.allocUtf8String(nameData.model);
             }
@@ -224,17 +260,12 @@ function hookBattle() {
             const chrId = ctx.r14.toUInt32() & 0xFFFF;
 
             let path = (function() {
-                const char = ED83.findCharByChrId(chrId);
-
-                if (!char)
+                if (Character.isReplaced(chrId) == false)
                     return '';
 
-                const nameData = findReplacedNameData(char);
+                const nameData = findReplacedNameData(chrId);
 
                 if (!nameData)
-                    return '';
-
-                if (char.isReplaced(nameData) == false)
                     return '';
 
                 const algo = sprintf(fmt.readAnsiString()!, nameData.ani);
@@ -458,6 +489,8 @@ function hookFileRedirection() {
                     args[1] = this.patch;
                 }
             }
+
+            // utils.log(`open ${args[1].readUtf8String()!}`);
         },
     });
 
@@ -484,7 +517,7 @@ function traceScriptVM() {
 
             if (offset == 0) return;
 
-            if (scriptName.indexOf('chr033') != -1) {
+            if (1 || scriptName.indexOf('m3050') != -1) {
                 tracing = true;
                 utils.log('***** ScriptVMExecute: %s.%s 0x%08X *****', scriptName, currentFunction, offset);
             }

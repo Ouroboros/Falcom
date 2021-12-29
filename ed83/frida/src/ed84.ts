@@ -1,33 +1,29 @@
 import * as utils from "./utils";
-import { Modules } from "./modules";
+import { Interceptor2 } from "./utils";
 import { Addrs } from "./ed84_addrs";
+import {
+    ED84,
+} from "./ed84_types";
 
-const _AllocObject      = new NativeFunction(Addrs.AllocObject, "pointer", ['size_t', 'size_t', 'size_t', 'size_t'], 'win64');
-const _AllocMemory      = new NativeFunction(Addrs.AllocMemory, "pointer", ['size_t', 'size_t', 'size_t', 'size_t', 'size_t'], 'win64');
-const _FreeMemory       = new NativeFunction(Addrs.FreeMemory, "void", ['pointer'], 'win64');
+function hookFileRedirection() {
+    const File_Open = Interceptor2.jmp(
+        Addrs.File_Open,
+        function(self: NativePointer, path: NativePointer, mode: NativePointer): NativePointer {
+            const patch = utils.getPatchFile(path.readAnsiString()!);
+            if (patch) {
+                path = Memory.allocAnsiString(patch);
+            }
 
-function AllocObject(size: number): NativePointer {
-    return _AllocObject(size, 0, 0, 0) as NativePointer;
-}
-
-function AllocMemory(size: number, tag: number): NativePointer {
-    return _AllocMemory(size, tag, 0, 0, 0) as NativePointer;
-}
-
-function FreeMemory(p: NativePointer) {
-    _FreeMemory(p);
+            return File_Open(self, path, mode);
+        },
+        'pointer', ['pointer', 'pointer', 'pointer'],
+    );
 }
 
 export function main() {
-    Interceptor.attach(Addrs.File_Open, {
-        onEnter: function(args) {
-            const patch = utils.getPatchFile(args[1].readAnsiString()!);
-            if (patch) {
-                this.patch = Memory.allocAnsiString(patch);
-                args[1] = this.patch;
-            }
-        },
-    });
+    ED84.enableLogger();
+
+    hookFileRedirection();
 
     Memory.patchCode(Addrs.SaveDataChecksum, 1, (code) => {
         code.writeU8(0xEB);

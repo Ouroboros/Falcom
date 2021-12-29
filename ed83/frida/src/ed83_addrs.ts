@@ -31,8 +31,9 @@ export const Addrs = {
     },
 
     Character: {
-        ChangeSkinFinished              : Modules.ED83.base.add(0x255FBA),
-        LoadCharaAniByFieldInit         : Modules.ED83.base.add(0x2CAB82),
+        ChangeSkinFinished                  : Modules.ED83.base.add(0x255FBA),
+        LoadCharaAniByFieldInit             : Modules.ED83.base.add(0x2CAB82),
+        LoadCharaAniByCreateBattleCharacter : Modules.ED83.base.add(0x195EB0),
 
         // constructor                     : Modules.ED83.base.add(0x24CE60),
         // GetAssetFromAttachTable         : Modules.ED83.base.add(0x25CA40),

@@ -72,8 +72,12 @@ export class CharacterManager extends ED8BaseObject {
 }
 
 export class Character extends ED8BaseObject {
-    isReplaced(nameData?: NameTableData | null): boolean {
-        return ED83.getBattleStyle(this.chrId) >= MinCustomChrId;
+    static isReplaced(chrId: number): boolean {
+        return ED83.getBattleStyle(chrId) >= MinCustomChrId
+    }
+
+    isReplaced(): boolean {
+        return Character.isReplaced(this.chrId);
 
         // const name = nameData ? nameData : ED83.findNameTableDataByModel(this.model);
         // if (!name)
@@ -340,7 +344,7 @@ export class ED83 extends ED8BaseObject {
 
     static findCharByChrId(chrId: number): Character | null {
         const char = this._findPartyCharByChrId(this.characterManager.pointer, chrId, 0);
-        return char ? new Character(char) : null;
+        return char.isNull() ? null : new Character(char);
     }
 
     static getCraftList(chrId: number): NativePointer {
