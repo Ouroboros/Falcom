@@ -24,9 +24,9 @@ def TK_MiniGame_Debug():
 
     FormationReset()
     FormationAddMember(0x00)
-    FormationAddMember(0x05)
-    FormationAddMember(0x0C)
-    FormationAddMember(0x10)
+    # FormationAddMember(0x05)
+    # FormationAddMember(0x0C)
+    # FormationAddMember(0x10)
     FormationSetLeader(0)
     # FormationAddMember(0xA)
 
@@ -65,12 +65,12 @@ def TK_MiniGame_Debug():
     # for chrid in chrmap.keys():
     #     ChrRefreshSkin(chrid)
 
-    SetChrPos(0x03E8, 1.0, -3.0, 1.0, 0)
+    SetScenaFlags(ScenaFlag(0x0080, 0, 0x400))
+    SetScenaFlags(ScenaFlag(0x0080, 1, 0x401))
+    SetScenaFlags(ScenaFlag(0x0080, 2, 0x402))
+    Battle(0x00, 0x00000005, 0x00, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00)
 
-    # SetScenaFlags(ScenaFlag(0x0080, 0, 0x400))
-    # SetScenaFlags(ScenaFlag(0x0080, 1, 0x401))
-    # SetScenaFlags(ScenaFlag(0x0080, 2, 0x402))
-    # Battle(0x00, 0x00000005, 0x00, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00)
+    return Return()
 
     SetScenaFlags(ScenaFlag(0x016F, 7, 0xB7F))
     SetScenaFlags(ScenaFlag(0x016F, 6, 0xB7E))

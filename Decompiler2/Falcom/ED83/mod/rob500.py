@@ -68,7 +68,7 @@ def AnimeClipTable():
 
 @scena.Code('PreInit')
 def PreInit():
-    ChrAnimeClipCtrl(0x0D, 0xFFFE)
+    AnimeClipCtrl(0x0D, 0xFFFE)
 
     end = genLabel()
 
@@ -89,7 +89,7 @@ def PreInit():
         end,
     )
 
-    ChrAnimeClipCtrl(0x0E, 0xFFFE, 0x00000400, 'C_ROB004_DF1', 'WAIT')
+    AnimeClipCtrl(0x0E, 0xFFFE, 0x00000400, 'C_ROB004_DF1', 'WAIT')
 
     def _loc_5509(): pass
 
@@ -158,28 +158,28 @@ def AniDetachEQU204():
 # id: 0x0005 offset: 0x740
 @scena.Code('Ani_BT1_Load')
 def Ani_BT1_Load():
-    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000100 | 0x01 | 0x02)
+    AnimeClipLoadByCatalog(0xFFFE, 0x00000100 | 0x01 | 0x02)
 
     Return()
 
 # id: 0x0006 offset: 0x74C
 @scena.Code('Ani_BT1_Release')
 def Ani_BT1_Release():
-    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000100 | 0x01 | 0x02)
+    AnimeClipReleaseByCatalog(0xFFFE, 0x00000100 | 0x01 | 0x02)
 
     Return()
 
 # id: 0x0007 offset: 0x758
 @scena.Code('Ani_EV_Load')
 def Ani_EV_Load():
-    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000002)
+    AnimeClipLoadByCatalog(0xFFFE, 0x00000002)
 
     Return()
 
 # id: 0x0008 offset: 0x764
 @scena.Code('Ani_EV_Release')
 def Ani_EV_Release():
-    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000002)
+    AnimeClipReleaseByCatalog(0xFFFE, 0x00000002)
 
     Return()
 

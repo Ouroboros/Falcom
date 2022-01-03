@@ -242,7 +242,7 @@ def ActionTable():
             float0C       = 100.0,
             float10       = -100.0,
             ariaATDelay   = 0,
-            atDelay       = 40,
+            atDelay       = 0,
             word18        = 0x0001,
             word1A        = 0x001F,
             word1C        = 0x0021,

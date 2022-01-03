@@ -1760,7 +1760,7 @@ def AnimeClipTable():
 # id: 0x0001 offset: 0x6CE4
 @scena.Code('Init')
 def Init():
-    ChrAnimeClipCtrl(0x04, 0xFFFE, 'C_CHR033_BT1', '')
+    AnimeClipCtrl(0x04, 0xFFFE, 'C_CHR033_BT1', '')
     OP_04(0x0B, 'AniWait')
 
     Return()
@@ -1775,35 +1775,35 @@ def DefaultFace():
 # id: 0x0003 offset: 0x6D2C
 @scena.Code('Ani_EV_Load')
 def Ani_EV_Load():
-    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000002)
+    AnimeClipLoadByCatalog(0xFFFE, 0x00000002)
 
     Return()
 
 # id: 0x0004 offset: 0x6D38
 @scena.Code('Ani_BT1_Load')
 def Ani_BT1_Load():
-    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000100 | 2)
+    AnimeClipLoadByCatalog(0xFFFE, 0x00000100 | 2)
 
     Return()
 
 # id: 0x0005 offset: 0x6D44
 @scena.Code('Ani_SC1_Load')
 def Ani_SC1_Load():
-    ChrLoadAnimeClipByCatalog(0xFFFE, 0x00000010)
+    AnimeClipLoadByCatalog(0xFFFE, 0x00000010)
 
     Return()
 
 # id: 0x0006 offset: 0x6D50
 @scena.Code('Ani_EV_Release')
 def Ani_EV_Release():
-    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000002)
+    AnimeClipReleaseByCatalog(0xFFFE, 0x00000002)
 
     Return()
 
 # id: 0x0007 offset: 0x6D5C
 @scena.Code('Ani_BT1_Release')
 def Ani_BT1_Release():
-    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000100 | 2)
+    AnimeClipReleaseByCatalog(0xFFFE, 0x00000100 | 2)
     OP_04(0x0B, 'SpringOn')
 
     Return()
@@ -1811,7 +1811,7 @@ def Ani_BT1_Release():
 # id: 0x0008 offset: 0x6D70
 @scena.Code('Ani_SC_Release')
 def Ani_SC_Release():
-    ChrReleaseAnimeClipByCatalog(0xFFFE, 0x00000010)
+    AnimeClipReleaseByCatalog(0xFFFE, 0x00000010)
     OP_04(0x0B, 'SpringOn')
 
     Return()
@@ -2275,7 +2275,7 @@ def AniBtlInit():
     LoadEffect(0xFFFE, 0x80, 'battle/moncharge.eff')
     LoadAsset('C_EQU090')
     AttachEquip(0xFFFE, 'C_EQU090', 'R_arm_point', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
-    ChrAnimeClipCtrl(0x04, 0xFFFE, 'C_CHR033_BT1', '')
+    AnimeClipCtrl(0x04, 0xFFFE, 'C_CHR033_BT1', '')
     Call(ScriptId.Current, 'SpringOff')
     OP_04(0x0B, 'AniWait')
 
@@ -2352,7 +2352,7 @@ def AniBtlMove():
     BattleCtrl(0x47)
     BattleCtrl(0x48, 0xFFFE)
     BattleCtrl(0x46, 0.25, 6.0, 15.0)
-    ChrTurnDirection(0xFFFE, 0xFFF5, 0.0, 0.5)
+    BattleTurnChrDirection(0xFFFE, 0xFFF5, 0.0, 0.5)
     Call(ScriptId.BtlCom, 'AniBtlMove')
 
     Return()
@@ -2373,8 +2373,8 @@ def AniBtlAttack():
     BattleCtrl(0x48, 0xFFFB)
     BattleCtrl(0x46, 0.25, 6.0, 15.0)
     Call(ScriptId.BtlCom, 'AniBtlMove')
-    ChrTurnDirection(0xFFFE, 0xFFFB, 0.0, -1.0)
-    ChrCreateAfterImage(0xFFFE)
+    BattleTurnChrDirection(0xFFFE, 0xFFFB, 0.0, -1.0)
+    BattleCreateChrAfterImage(0xFFFE)
     PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 66.6667, 67.2, -1.0, 0x00, 0x00)
     WaitAnimeClip(0xFFFE, 0.0, 0x00)
     PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x01, 0x01, 0x00, 0x01, 0x00, 0.2, 67.2333, 67.4333, -0.0333333, 0x00, 0x00)
@@ -2412,7 +2412,7 @@ def AniBtlAttack():
     label('loc_7F57')
 
     OP_6C(0xFFFE, 1.0)
-    ChrSetAfterImageOn(0xFFFE, 0.1, 0.1, 0.22, 0.45, 1.0)
+    BattleSetChrAfterImageOn(0xFFFE, 0.1, 0.1, 0.22, 0.45, 1.0)
     SetChrFace(0x03, 0xFFFE, '2', '2', '', '#b', '0')
     PlayEffect(0xFFFE, (0xFF, 0x82, 0x0), 0xFFFE, 0x0000000C, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.5, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 0.75, 0x0), (0xEE, 0.75, 0x0), (0xEE, 0.75, 0x0), 0xFF)
     OP_3B(0x00, (0xFF, 0x8FAE, 0x0), 0.7, (0xFF, 0x0, 0x0), 0.0, -2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x04B0, 0x012C, 0x0000, 0x04B0, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
@@ -2428,9 +2428,9 @@ def AniBtlAttack():
     WaitForThreadExit(0xFFFE, 0x02)
     CreateThread(0xFFFE, 0x02, ScriptId.Current, 'AniBtlAttackDamageAnime00')
     Sleep(333)
-    ChrSetAfterImageOff()
+    BattleSetChrAfterImageOff()
     Sleep(166)
-    ChrSetAfterImageOn(0xFFFE, 0.1, 0.1, 0.22, 0.45, 1.0)
+    BattleSetChrAfterImageOn(0xFFFE, 0.1, 0.1, 0.22, 0.45, 1.0)
     PlayChrAnimeClip(0xFFFE, 'BTL_ATTACK', 0x00, 0x01, 0x00, 0x00, 0x00, 0.4, 68.3, 68.5, -1.0, 0x00, 0x00)
     OP_6C(0xFFFE, 0.5)
     WaitAnimeClip(0xFFFE, 0.0, 0x00)
@@ -2450,7 +2450,7 @@ def AniBtlAttack():
     SetChrFace(0x03, 0xFFFE, '2', '0', '', '#b', '0')
     Sleep(133)
     OP_6C(0xFFFE, 0.2)
-    ChrSetAfterImageOff()
+    BattleSetChrAfterImageOff()
     Sleep(266)
     OP_6C(0xFFFE, 1.0)
     WaitAnimeClip(0xFFFE, 0.0, 0x00)
@@ -3002,7 +3002,7 @@ def AniBtlCharge():
         'loc_8F5B',
     )
 
-    ChrTurnDirection(0xFFFE, 0xFFFB, 0.0, -1.0)
+    BattleTurnChrDirection(0xFFFE, 0xFFFB, 0.0, -1.0)
     PlayEffect(0xFFFE, (0xFF, 0x80, 0x0), 0xFFFE, 0x00000103, (0xDD, 'NODE_CENTER'), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), 0x00)
     PlayChrAnimeClip(0xFFFE, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
     OP_6C(0xFFFE, 1.5)
@@ -3017,7 +3017,7 @@ def AniBtlCharge():
     BattleCtrl(0x47)
     BattleCtrl(0x48, 0xFFFE)
     BattleCtrl(0x46, 0.25, 6.0, 15.0)
-    ChrTurnDirection(0xFFFE, 0xFFFB, 0.0, 0.5)
+    BattleTurnChrDirection(0xFFFE, 0xFFFB, 0.0, 0.5)
     PlayEffect(0xFFFE, (0xFF, 0x80, 0x0), 0xFFFE, 0x00000103, (0xDD, 'NODE_CENTER'), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), 0x00)
     OP_3B(0x00, (0xFF, 0xFD5, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayChrAnimeClip(0xFFFE, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
@@ -3105,8 +3105,8 @@ def AniBtlRelease():
         'loc_90DD',
     )
 
-    ChrClearAbnormalCondition(0xF080, 0x00008000)
-    ChrClearAbnormalCondition(0xF080, 0x00400000)
+    BattleClearChrAbnormalCondition(0xF080, 0x00008000)
+    BattleClearChrAbnormalCondition(0xF080, 0x00400000)
     DebugLog(0x00, (0xFF, 0xA, 0x0))
 
     def _loc_90DD(): pass
@@ -3125,8 +3125,8 @@ def AniBtlRelease():
         'loc_9115',
     )
 
-    ChrClearAbnormalCondition(0xF081, 0x00008000)
-    ChrClearAbnormalCondition(0xF081, 0x00400000)
+    BattleClearChrAbnormalCondition(0xF081, 0x00008000)
+    BattleClearChrAbnormalCondition(0xF081, 0x00400000)
 
     def _loc_9115(): pass
 
@@ -3144,8 +3144,8 @@ def AniBtlRelease():
         'loc_914D',
     )
 
-    ChrClearAbnormalCondition(0xF082, 0x00008000)
-    ChrClearAbnormalCondition(0xF082, 0x00400000)
+    BattleClearChrAbnormalCondition(0xF082, 0x00008000)
+    BattleClearChrAbnormalCondition(0xF082, 0x00400000)
 
     def _loc_914D(): pass
 
@@ -3162,7 +3162,7 @@ def AniBtlCraft00():
     LoadEffect(0xFFFE, 0x90, 'battle/cr033_00_0.eff')
     LoadEffect(0xFFFE, 0x91, 'battle/cr033_00_1.eff')
     LoadEffect(0xFFFE, 0x9F, 'battle/damage02.eff')
-    ChrTargetsIterInit(0x00)
+    BattleTargetsIterInit(0x00)
     Call(ScriptId.Current, 'SpringOff')
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0001)
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0000)
@@ -3170,7 +3170,7 @@ def AniBtlCraft00():
     SetChrFace(0x03, 0xFFFE, '3', '2[autoM2]', '5', '3', '0')
     Fade(0x65, 100, 1.0, 0x0000)
     Fade(0xFE, 0)
-    ChrTurnDirection(0xFFFE, 0xFFF5, 0.0, -1.0)
+    BattleTurnChrDirection(0xFFFE, 0xFFF5, 0.0, -1.0)
     BattleCtrl(0x47)
     CameraCtrl(0x00)
     CameraSetPosByTarget(0xFFFE, '', -0.0, 0.95, -0.22, 0)
@@ -3256,7 +3256,7 @@ def AniBtlCraft00():
 
     PlayEffect(0xFFFE, (0xFF, 0x91, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, -1.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     CameraCtrl(0x0A, 0.02, 0.008, 0.0, 0x0064, 0x00FA, 0x0064, 0x0000, 0x0000, 0x00)
-    ChrSetPosByTarget(0xFFFE, 0xFFF5, 0.0, 0.0, 1.5, 6.0, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFF5, 0.0, 0.0, 1.5, 6.0, 0x00, 0x00)
     BattleCtrl(0x47)
     CameraCtrl(0x16, 0x02, 5.5, 1000)
     Fade(0x65, 100, 1.0, 0x0000)
@@ -3264,7 +3264,7 @@ def AniBtlCraft00():
     CreateThread(0xFFFE, 0x02, ScriptId.Current, 'AniBtlCraftDamage')
     BattleCtrl(0x3A, 0xFFFE)
     PlayChrAnimeClip(0xFFFE, 'BTL_CRAFT00_02', 0x00, 0x00, 0x00, 0x00, 0x00, 0.0, -1.0, -1.0, -1.0, 0x00, 0x00)
-    ChrSetPosByTarget(0xFFFE, 0xFFFE, 0.0, 0.0, 1.0, 4.0, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFFE, 0.0, 0.0, 1.0, 4.0, 0x00, 0x00)
     Sleep(333)
     SetChrFace(0x03, 0xFFFE, '2', '12', '', '#b', '0')
     WaitAnimeClip(0xFFFE, 0.0, 0x00)
@@ -3288,7 +3288,7 @@ def AniBtlCraft01():
     LoadEffect(0xFFFE, 0x94, 'battle/cr033_01_4.eff')
     LoadEffect(0xFFFE, 0x95, 'battle/cr033_01_5.eff')
     LoadEffect(0xFFFE, 0x9F, 'battle/damage02.eff')
-    ChrTargetsIterInit(0x00)
+    BattleTargetsIterInit(0x00)
     Call(ScriptId.Current, 'SpringOff')
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0001)
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0000)
@@ -3296,7 +3296,7 @@ def AniBtlCraft01():
     SetChrFace(0x03, 0xFFFE, '3', '2[autoM2]', '5', '3', '0')
     Fade(0x65, 100, 1.0, 0x0000)
     Fade(0xFE, 0)
-    ChrTurnDirection(0xFFFE, 0xFFFB, 0.0, -1.0)
+    BattleTurnChrDirection(0xFFFE, 0xFFFB, 0.0, -1.0)
     BattleCtrl(0x47)
     CameraCtrl(0x00)
     CameraSetPosByTarget(0xFFFE, '', 0.01, 1.2, 0.06, 0)
@@ -3439,8 +3439,8 @@ def AniBtlCraftDamage():
 # id: 0x0039 offset: 0xA0C4
 @scena.Code('AniBtlCraftDamage01')
 def AniBtlCraftDamage01():
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_A0CC(): pass
 
     label('loc_A0CC')
@@ -3458,7 +3458,7 @@ def AniBtlCraftDamage01():
     Sleep(50)
     BattleDamage(0xFFFB, 0xFFFE, 100)
     BattleDamageAnime(0xFFFB, (0xEE, 0.5, 0x0), (0xEE, 0.800000011920929, 0x0), 0x01)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -3475,15 +3475,15 @@ def AniBtlCraftDamage01():
 
     label('loc_A192')
 
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
 
     Return()
 
 # id: 0x003A offset: 0xA198
 @scena.Code('AniBtlAttackDamage00')
 def AniBtlAttackDamage00():
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_A1A0(): pass
 
     label('loc_A1A0')
@@ -3499,7 +3499,7 @@ def AniBtlAttackDamage00():
     Sleep(30)
     BattleDamage(0xFFFB, 0xFFFE, 100)
     BattleDamageAnime(0xFFFB, (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0x01)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -3516,15 +3516,15 @@ def AniBtlAttackDamage00():
 
     label('loc_A1D5')
 
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
 
     Return()
 
 # id: 0x003B offset: 0xA1DC
 @scena.Code('AniBtlAttackDamage01')
 def AniBtlAttackDamage01():
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_A1E4(): pass
 
     label('loc_A1E4')
@@ -3540,7 +3540,7 @@ def AniBtlAttackDamage01():
     Sleep(30)
     BattleDamage(0xFFFB, 0xFFFE, 100)
     BattleDamageAnime(0xFFFB, (0xEE, 0.5, 0x0), (0xEE, 0.800000011920929, 0x0), 0x01)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -3557,15 +3557,15 @@ def AniBtlAttackDamage01():
 
     label('loc_A219')
 
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
 
     Return()
 
 # id: 0x003C offset: 0xA220
 @scena.Code('AniBtlAttackDamageAnime00')
 def AniBtlAttackDamageAnime00():
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_A228(): pass
 
     label('loc_A228')
@@ -3580,7 +3580,7 @@ def AniBtlAttackDamageAnime00():
 
     Sleep(30)
     BattleDamageAnime(0xFFFB, (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0x01)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -3597,7 +3597,7 @@ def AniBtlAttackDamageAnime00():
 
     label('loc_A256')
 
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
 
     Return()
 
@@ -3609,7 +3609,7 @@ def AniBtlCraft02():
     LoadEffect(0xFFFE, 0x91, 'battle/cr033_02_1.eff')
     LoadEffect(0xFFFE, 0x92, 'battle/cr033_02_2.eff')
     LoadEffect(0xFFFE, 0x93, 'battle/cr033_02_3.eff')
-    ChrTargetsIterInit(0x00)
+    BattleTargetsIterInit(0x00)
     Call(ScriptId.Current, 'SpringOff')
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0001)
     OP_45(0xFFFE, 0.0, 0.0, 0.0, 0x0000, 0x0000)
@@ -3617,7 +3617,7 @@ def AniBtlCraft02():
     Call(ScriptId.BtlCom, 'AniBtlMove')
     Fade(0x65, 100, 1.0, 0x0000)
     Fade(0xFE, 0)
-    ChrTurnDirection(0xFFFE, 0xFFF5, 0.0, -1.0)
+    BattleTurnChrDirection(0xFFFE, 0xFFF5, 0.0, -1.0)
     BattleCtrl(0x47)
     CameraCtrl(0x00)
     CameraSetPosByTarget(0xFFFE, '', -0.17, 0.83, -0.03, 0)
@@ -3738,7 +3738,7 @@ def AniBtlCraft02():
 # id: 0x003E offset: 0xAA3C
 @scena.Code('AniBtlCraftDamage02')
 def AniBtlCraftDamage02():
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_AA41(): pass
 
     label('loc_AA41')
@@ -3756,7 +3756,7 @@ def AniBtlCraftDamage02():
     PlayEffect(0xFFFE, (0xFF, 0x3F8, 0x0), 0xFFFB, 0x0000000C, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     OP_3B(0x00, (0xFF, 0x8BF0, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(100)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -3786,9 +3786,9 @@ def AniBtlCraft03():
     Fade(0x65, 100, 1.0, 0x0000)
     Fade(0xFE, 0)
     ChrSetPhysicsFlags(0xFFFE, 0x00000020)
-    ChrSavePosition(0xFFFE, 0)
-    ChrTurnDirection(0xFFFE, 0xFFF5, 0.0, -1.0)
-    ChrCreateDummy(0xFFFE, 5)
+    BattleSaveChrPosition(0xFFFE, 0)
+    BattleTurnChrDirection(0xFFFE, 0xFFF5, 0.0, -1.0)
+    BattleCreateChrDummy(0xFFFE, 5)
     ChrSetPhysicsFlags(0xFFFE, 0x00000800)
     ChrSetPhysicsFlags(0x0B5E, 0x00000020)
     ChrSetPhysicsFlags(0x0B5F, 0x00000020)
@@ -3798,15 +3798,15 @@ def AniBtlCraft03():
     ChrSetPhysicsFlags(0x0B5F, 0x00000080)
     ChrSetPhysicsFlags(0x0B60, 0x00000080)
     ChrSetPhysicsFlags(0x0B61, 0x00000080)
-    ChrSetPosByTarget(0x0B5E, 0xFFFE, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
-    ChrSetPosByTarget(0x0B5F, 0xFFFE, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
-    ChrSetPosByTarget(0x0B60, 0xFFFE, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
-    ChrSetPosByTarget(0x0B61, 0xFFFE, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
-    ChrTurnDirection(0x0B5E, 0xFFF5, 0.0, -1.0)
-    ChrTurnDirection(0x0B5F, 0xFFF5, 0.0, -1.0)
-    ChrTurnDirection(0x0B60, 0xFFF5, 0.0, -1.0)
-    ChrTurnDirection(0x0B61, 0xFFF5, 0.0, -1.0)
-    ChrSetPosByTarget(0x0B62, 0xFFFE, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleSetChrPos(0x0B5E, 0xFFFE, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleSetChrPos(0x0B5F, 0xFFFE, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleSetChrPos(0x0B60, 0xFFFE, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleSetChrPos(0x0B61, 0xFFFE, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleTurnChrDirection(0x0B5E, 0xFFF5, 0.0, -1.0)
+    BattleTurnChrDirection(0x0B5F, 0xFFF5, 0.0, -1.0)
+    BattleTurnChrDirection(0x0B60, 0xFFF5, 0.0, -1.0)
+    BattleTurnChrDirection(0x0B61, 0xFFF5, 0.0, -1.0)
+    BattleSetChrPos(0x0B62, 0xFFFE, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
     PlayChrAnimeClip(0x0B5E, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.0, -1.0, -1.0, -1.0, 0x00, 0x00)
     PlayChrAnimeClip(0x0B5F, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.0, -1.0, -1.0, -1.0, 0x00, 0x00)
     PlayChrAnimeClip(0x0B60, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.0, -1.0, -1.0, -1.0, 0x00, 0x00)
@@ -3947,7 +3947,7 @@ def AniBtlCraft03():
     ChrSetPhysicsFlags(0x0B61, 0x00000020)
     BattleCtrl(0x18)
     Sleep(500)
-    ChrSetPosByTarget(0xFFFE, 0xFFF4, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFF4, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
     PlayChrAnimeClip(0xFFFE, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.0, -1.0, -1.0, -1.0, 0x00, 0x00)
     PlayEffect(0xFFFE, (0xFF, 0x9B, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.8500000238418579, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     ChrClearPhysicsFlags(0xFFFE, 0x00000040)
@@ -3966,9 +3966,9 @@ def AniBtlCraft03():
 # id: 0x0040 offset: 0xB5E4
 @scena.Code('AniBtlCraft03_Dash')
 def AniBtlCraft03_Dash():
-    ChrSetPosByTarget(0xFFFE, 0xFFFE, 0.0, 0.0, 8.0, 6.5, 0x00, 0x00)
-    ChrSetPosByTarget(0xFFFE, 0xFFFE, 0.0, 0.0, 12.0, 6.5, 0x00, 0x00)
-    ChrSetPosByTarget(0xFFFE, 0xFFFE, 0.0, 0.0, 24.0, 8.5, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFFE, 0.0, 0.0, 8.0, 6.5, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFFE, 0.0, 0.0, 12.0, 6.5, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFFE, 0.0, 0.0, 24.0, 8.5, 0x00, 0x00)
 
     Return()
 
@@ -3992,8 +3992,8 @@ def AniBtlCraft03_Mouth01():
 # id: 0x0042 offset: 0xB694
 @scena.Code('AniBtlCraft03_Damage')
 def AniBtlCraft03_Damage():
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_B69C(): pass
 
     label('loc_B69C')
@@ -4010,7 +4010,7 @@ def AniBtlCraft03_Damage():
     PlayEffect(0xFFFE, (0xFF, 0x9A, 0x0), 0xFFFB, 0x0000000C, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(30)
     BattleDamage(0xFFFB, 0xFFFE, 100)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -4047,10 +4047,10 @@ def AniBtlCraft04():
     Call(ScriptId.BtlCom, 'AniBtlMove')
     Fade(0x65, 100, 1.0, 0x0000)
     Fade(0xFE, 0)
-    ChrTurnDirection(0xFFFE, 0xFFFB, 0.0, -1.0)
+    BattleTurnChrDirection(0xFFFE, 0xFFFB, 0.0, -1.0)
     ChrSetPhysicsFlags(0xFFFE, 0x00000020)
-    ChrSavePosition(0xFFFE, 0)
-    ChrCreateDummy(0xFFFE, 3)
+    BattleSaveChrPosition(0xFFFE, 0)
+    BattleCreateChrDummy(0xFFFE, 3)
     ChrSetPhysicsFlags(0x0B5E, 0x00000020)
     ChrSetPhysicsFlags(0x0B5F, 0x00000020)
     ChrSetPhysicsFlags(0x0B60, 0x00000020)
@@ -4059,20 +4059,20 @@ def AniBtlCraft04():
     ChrSetPhysicsFlags(0x0B60, 0x00000080)
     ChrSetPhysicsFlags(0xFFFB, 0x00000020)
     ChrSetPhysicsFlags(0xFFFB, 0x00000080)
-    ChrSetPosByTarget(0x0B5E, 0xFFFB, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
-    ChrSetPosByTarget(0x0B5F, 0xFFFB, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
-    ChrSetPosByTarget(0x0B60, 0xFFFB, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
-    ChrTurnDirection(0x0B5E, 0xFFFE, 120.0, -1.0)
-    ChrTurnDirection(0x0B5F, 0xFFFE, 240.0, -1.0)
-    ChrTurnDirection(0x0B60, 0xFFFE, 180.0, -1.0)
-    ChrSetPosByTarget(0x0B5E, 0x0B5E, 0.0, 0.0, 10.0, -1.0, 0x00, 0x00)
-    ChrSetPosByTarget(0x0B5F, 0x0B5F, 0.0, 0.0, 10.0, -1.0, 0x00, 0x00)
-    ChrTurnDirection(0x0B5E, 0xFFFB, 0.0, -1.0)
-    ChrTurnDirection(0x0B5F, 0xFFFB, 0.0, -1.0)
-    ChrSavePosition(0xFFFE, 0)
-    ChrSetPosByTarget(0xFFFE, 0xFFFB, 0.0, 0.0, -3.0, -1.0, 0x00, 0x01)
-    ChrSetPosByTarget(0x0B5E, 0xFFFB, 0.0, 0.0, -3.0, -1.0, 0x00, 0x01)
-    ChrSetPosByTarget(0x0B5F, 0xFFFB, 0.0, 0.0, -3.0, -1.0, 0x00, 0x01)
+    BattleSetChrPos(0x0B5E, 0xFFFB, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleSetChrPos(0x0B5F, 0xFFFB, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleSetChrPos(0x0B60, 0xFFFB, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleTurnChrDirection(0x0B5E, 0xFFFE, 120.0, -1.0)
+    BattleTurnChrDirection(0x0B5F, 0xFFFE, 240.0, -1.0)
+    BattleTurnChrDirection(0x0B60, 0xFFFE, 180.0, -1.0)
+    BattleSetChrPos(0x0B5E, 0x0B5E, 0.0, 0.0, 10.0, -1.0, 0x00, 0x00)
+    BattleSetChrPos(0x0B5F, 0x0B5F, 0.0, 0.0, 10.0, -1.0, 0x00, 0x00)
+    BattleTurnChrDirection(0x0B5E, 0xFFFB, 0.0, -1.0)
+    BattleTurnChrDirection(0x0B5F, 0xFFFB, 0.0, -1.0)
+    BattleSaveChrPosition(0xFFFE, 0)
+    BattleSetChrPos(0xFFFE, 0xFFFB, 0.0, 0.0, -3.0, -1.0, 0x00, 0x01)
+    BattleSetChrPos(0x0B5E, 0xFFFB, 0.0, 0.0, -3.0, -1.0, 0x00, 0x01)
+    BattleSetChrPos(0x0B5F, 0xFFFB, 0.0, 0.0, -3.0, -1.0, 0x00, 0x01)
     PlayChrAnimeClip(0x0B5E, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.0, -1.0, -1.0, -1.0, 0x00, 0x00)
     PlayChrAnimeClip(0x0B5F, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.0, -1.0, -1.0, -1.0, 0x00, 0x00)
     ChrSetRGBA(0x0B5E, 0.0, 0.0, 0.0, 0.0, 0, 0x03)
@@ -4181,10 +4181,10 @@ def AniBtlCraft04():
     WaitForThreadExit(0x0B5F, 0x02)
     ChrSetRGBA(0x0B5E, 1.0, 1.0, 1.0, 1.0, 0, 0x03)
     ChrSetRGBA(0x0B5F, 1.0, 1.0, 1.0, 1.0, 0, 0x03)
-    ChrSetPosByTarget(0x0B5E, 0x0B5E, 2.0, 0.0, 0.0, -1.0, 0x00, 0x00)
-    ChrSetPosByTarget(0x0B5F, 0x0B5F, -2.0, 0.0, 0.0, -1.0, 0x00, 0x00)
-    ChrTurnDirection(0x0B5E, 0xFFFB, 180.0, -1.0)
-    ChrTurnDirection(0x0B5F, 0xFFFB, 180.0, -1.0)
+    BattleSetChrPos(0x0B5E, 0x0B5E, 2.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleSetChrPos(0x0B5F, 0x0B5F, -2.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleTurnChrDirection(0x0B5E, 0xFFFB, 180.0, -1.0)
+    BattleTurnChrDirection(0x0B5F, 0xFFFB, 180.0, -1.0)
     PlayChrAnimeClip(0x0B5E, 'BTL_CRAFT00_03', 0x00, 0x01, 0x00, 0x00, 0x00, 0.0, 90.1667, 90.5, -1.0, 0x00, 0x00)
     OP_6C(0x0B5E, 0.5)
     PlayChrAnimeClip(0x0B5F, 'BTL_CRAFT00_03', 0x00, 0x01, 0x00, 0x00, 0x00, 0.0, 90.1667, 90.5, -1.0, 0x00, 0x00)
@@ -4213,7 +4213,7 @@ def AniBtlCraft04():
     Sleep(1000)
     Sleep(333)
     Call(ScriptId.BtlCom, 'AniBtlCraftFinish')
-    ChrSetPosByTarget(0xFFFE, 0xFFF4, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFF4, 0.0, 0.0, 0.0, -1.0, 0x00, 0x00)
     PlayChrAnimeClip(0xFFFE, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.0, -1.0, -1.0, -1.0, 0x00, 0x00)
     WaitForThreadExit(0x0B5E, 0x02)
     WaitForThreadExit(0x0B5F, 0x02)
@@ -4232,14 +4232,14 @@ def AniBtlCraft04():
 # id: 0x0044 offset: 0xC330
 @scena.Code('AniBtlCraft04_Dash')
 def AniBtlCraft04_Dash():
-    ChrSetPosByTarget(0xFFFE, 0xFFFE, 0.0, 0.0, 10.0, 6.2, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFFE, 0.0, 0.0, 10.0, 6.2, 0x00, 0x00)
 
     Return()
 
 # id: 0x0045 offset: 0xC34C
 @scena.Code('AniBtlCraft04_Dash2')
 def AniBtlCraft04_Dash2():
-    ChrSetPosByTarget(0xFFFE, 0xFFFE, 0.0, 0.0, 8.5, 7.2, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFFE, 0.0, 0.0, 8.5, 7.2, 0x00, 0x00)
 
     Return()
 
@@ -4247,7 +4247,7 @@ def AniBtlCraft04_Dash2():
 @scena.Code('AniBtlSCraft00')
 def AniBtlSCraft00():
     Call(ScriptId.BtlCom, 'AniBtlSCraftBegin')
-    ChrAnimeClipCtrl(0x04, 0xFFFE, 'C_CHR033_SC1', '')
+    AnimeClipCtrl(0x04, 0xFFFE, 'C_CHR033_SC1', '')
     LoadEffect(0xFFFE, 0x90, 'battle/sc033_00_0.eff')
     LoadEffect(0xFFFE, 0x91, 'battle/sc033_00_1.eff')
     LoadEffect(0xFFFE, 0x92, 'battle/sc033_00_2.eff')
@@ -4275,9 +4275,9 @@ def AniBtlSCraft00():
     ChrSetPhysicsFlags(0xFFF9, 0x00000080)
     ChrSetPhysicsFlags(0xFFF9, 0x00000200)
     SetChrPos(0xFFFE, 0.0, 0.0, -50.0, 0.0)
-    ChrTurnDirection(0xFFFE, 0xFFEA, -1.0, 0.5)
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTurnChrDirection(0xFFFE, 0xFFEA, -1.0, 0.5)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     BattleCtrl(0x13, 0xFFFE, 0x0001, 0xFFFF, 0x00000000, 0x00000578, 0x00000000)
     def _loc_C630(): pass
 
@@ -4291,9 +4291,9 @@ def AniBtlSCraft00():
         'loc_C67B',
     )
 
-    ChrTurnDirection(0xFFFB, 0xFFEA, -1.0, 0.5)
-    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlFloat', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
-    ChrTargetsIterNext(0xFFFE)
+    BattleTurnChrDirection(0xFFFB, 0xFFEA, -1.0, 0.5)
+    AnimeClipLoadMultiple(0xFFFB, 0x00, 'AniBtlFloat', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    BattleTargetsIterNext(0xFFFE)
     Sleep(1)
 
     ExecExpressionWithReg(
@@ -4369,7 +4369,7 @@ def AniBtlSCraft00():
     OP_3B(0x00, (0xFF, 0x8B7D, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(1666)
     LoadAsset('C_CHRX10')
-    ChrCreateTempChar(0x0000, 0xFFFF, 'C_CHRX10', '')
+    BattleCreateTempChar(0x0000, 0xFFFF, 'C_CHRX10', '')
     ChrClearPhysicsFlags(0x0B68, 0x00000040)
     ChrClearPhysicsFlags(0x0B68, 0x00000020)
     ChrSetPhysicsFlags(0x0B68, 0x00000020)
@@ -4433,7 +4433,7 @@ def AniBtlSCraft00():
     ChrClearPhysicsFlags(0xFFF9, 0x00000020)
     BattleCtrl(0x13, 0xFFFE, 0x0001, 0xFFFF, 0x00000000, 0x00000578, 0x00000000)
     Sleep(1)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_D04A(): pass
 
     label('loc_D04A')
@@ -4446,8 +4446,8 @@ def AniBtlSCraft00():
         'loc_D072',
     )
 
-    ChrTurnDirection(0xFFFB, 0xFFFF, 180.0, -1.0)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTurnChrDirection(0xFFFB, 0xFFFF, 180.0, -1.0)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -4477,7 +4477,7 @@ def AniBtlSCraft00():
     CameraRotate(356.0, -149.0, 0.0, 1000, 0x01)
     CameraSetDistance(30.1, 1000)
     OP_3B(0xFF, 0.5, 0.7, 0.6)
-    ChrSetPosByTarget(0x0B68, 0xFFFE, 0.0, 0.0, 25.0, 3.75, 0x00, 0x00)
+    BattleSetChrPos(0x0B68, 0xFFFE, 0.0, 0.0, 25.0, 3.75, 0x00, 0x00)
     PlayChrAnimeClip(0xFFFE, 'BTL_S_CRAFT00_02a', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
     OP_6C(0xFFFE, 3.0)
     CameraCtrl(0x07, 0x00BF)
@@ -4488,13 +4488,13 @@ def AniBtlSCraft00():
     CameraSetPos(6.86, 4.79, 20.05, 1000)
     CameraRotate(352.0, -161.0, 0.0, 1000, 0x01)
     CameraSetDistance(36.0, 1000)
-    ChrSetPosByTarget(0x0B68, 0xFFFF, 0.0, 0.0, 0.0, 3.75, 0x02, 0x00)
+    BattleSetChrPos(0x0B68, 0xFFFF, 0.0, 0.0, 0.0, 3.75, 0x02, 0x00)
     CameraCtrl(0x07, 0x00BF)
     CameraSetPos(5.62, 12.73, 20.6, 1500)
     CameraRotate(341.0, 195.0, 0.0, 1500, 0x01)
     CameraSetDistance(30.0, 1500)
     StopEffect(0xFFFE, 0x03, 0x01)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_D2AA(): pass
 
     label('loc_D2AA')
@@ -4507,8 +4507,8 @@ def AniBtlSCraft00():
         'loc_D2D2',
     )
 
-    ChrTurnDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTurnChrDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -4525,13 +4525,13 @@ def AniBtlSCraft00():
 
     label('loc_D2D2')
 
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
-    ChrSetPosByTargetAsync(0xFFFB, 0xFFFF, 0.0, 6.5, 1.0, 0.5, 0x02, 0x00)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
+    BattleSetChrPosAsync(0xFFFB, 0xFFFF, 0.0, 6.5, 1.0, 0.5, 0x02, 0x00)
     OP_3B(0x00, (0xFF, 0x8F41, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x04B0, 0x012C, 0x0000, 0x04B0, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x00, 'AniBtlFloat')
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -4552,7 +4552,7 @@ def AniBtlSCraft00():
         'loc_D3A6',
     )
 
-    ChrSetPosByTargetAsync(0xFFFB, 0xFFFF, 1.5, 5.0, 0.0, 0.5, 0x02, 0x00)
+    BattleSetChrPosAsync(0xFFFB, 0xFFFF, 1.5, 5.0, 0.0, 0.5, 0x02, 0x00)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x00, 'AniFall')
 
@@ -4560,7 +4560,7 @@ def AniBtlSCraft00():
 
     label('loc_D3A6')
 
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -4581,7 +4581,7 @@ def AniBtlSCraft00():
         'loc_D3FA',
     )
 
-    ChrSetPosByTargetAsync(0xFFFB, 0xFFFF, -1.5, 5.0, 0.0, 0.5, 0x02, 0x00)
+    BattleSetChrPosAsync(0xFFFB, 0xFFFF, -1.5, 5.0, 0.0, 0.5, 0x02, 0x00)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x00, 'AniBtlFloat')
 
@@ -4589,7 +4589,7 @@ def AniBtlSCraft00():
 
     label('loc_D3FA')
 
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -4610,7 +4610,7 @@ def AniBtlSCraft00():
         'loc_D44A',
     )
 
-    ChrSetPosByTargetAsync(0xFFFB, 0xFFFF, 0.0, 3.5, -1.0, 0.5, 0x02, 0x00)
+    BattleSetChrPosAsync(0xFFFB, 0xFFFF, 0.0, 3.5, -1.0, 0.5, 0x02, 0x00)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x00, 'AniFall')
 
@@ -4623,7 +4623,7 @@ def AniBtlSCraft00():
     Fade(0xFE, 0)
     ChrClearPhysicsFlags(0xFFFE, 0x00000040)
     ChrClearPhysicsFlags(0xFFFE, 0x00000020)
-    ChrSetPosByTarget(0xFFFE, 0xFFEA, 0.0, 5.0, -20.0, 0.0, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFEA, 0.0, 5.0, -20.0, 0.0, 0x00, 0x00)
     PlayEffect(0xFFFE, (0xFF, 0x93, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x05)
     OP_3B(0x00, (0xFF, 0x8F2E, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     CameraSetPos(-1.38, 7.18, -15.89, 0)
@@ -4645,7 +4645,7 @@ def AniBtlSCraft00():
     Sleep(233)
     OP_6C(0xFFFE, 4.0)
     OP_5E(0x00, 0x0000, 0.8, 0x0096, 0x00FA, 0x00C8, 0.5, 0xF011, 0.0, 1.0, 0.0)
-    ChrSetPosByTarget(0xFFFE, 0xFFF9, 0.0, 6.5, 10.0, 10.0, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFF9, 0.0, 6.5, 10.0, 10.0, 0x00, 0x00)
     PlayEffect(0xFFFE, (0xFF, 0x91, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x03)
     WaitAnimeClip(0xFFFE, 0.0, 0x00)
     PlayChrAnimeClip(0xFFFE, 'BTL_S_CRAFT00_06a', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
@@ -4662,7 +4662,7 @@ def AniBtlSCraft00():
     CameraRotate(13.0, 170.0, 0.0, 0, 0x01)
     CameraSetDistance(10.0, 0)
     CameraCtrl(0x05, 0x00, 7.0, 500)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_D8D8(): pass
 
     label('loc_D8D8')
@@ -4675,8 +4675,8 @@ def AniBtlSCraft00():
         'loc_D900',
     )
 
-    ChrTurnDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTurnChrDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -4695,17 +4695,17 @@ def AniBtlSCraft00():
 
     ReleaseEffect(0xFFFE, 0x96)
     LoadEffect(0xFFFE, 0x96, 'battle/sc033_00_14.eff')
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
-    ChrSetPosByTarget(0xFFFB, 0xFFEA, 0.0, 0.0, 0.0, 0.0, 0x00, 0x00)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
+    BattleSetChrPos(0xFFFB, 0xFFEA, 0.0, 0.0, 0.0, 0.0, 0x00, 0x00)
     OP_5C(0xFFFB, 0x00, 'Root')
     OP_5D(0xFFFB, 'Root', 0.0, 0.0, 0.0, -30.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0x0000, 0x03, 0x00)
     ChrClearPhysicsFlags(0xFFFB, 0x00000040)
     ChrClearPhysicsFlags(0xFFFB, 0x00000020)
     PlayChrAnimeClip(0xFFFE, 'BTL_S_CRAFT00_06a', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
     OP_6C(0xFFFE, 4.0)
-    ChrTurnDirection(0xFFFE, 0xFFEA, 0.0, 0.0)
-    ChrSetPosByTarget(0xFFFE, 0xFFEA, 0.0, 0.0, -15.0, 0.0, 0x00, 0x00)
+    BattleTurnChrDirection(0xFFFE, 0xFFEA, 0.0, 0.0)
+    BattleSetChrPos(0xFFFE, 0xFFEA, 0.0, 0.0, -15.0, 0.0, 0x00, 0x00)
     Fade(0x65, 200, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraSetPos(1.53, -0.0, 8.99, 0)
@@ -4713,10 +4713,10 @@ def AniBtlSCraft00():
     CameraSetDistance(8.8, 0)
     CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
     CameraCtrl(0x02, 0x02, 1.64, 0.0, -4.17, 500)
-    ChrSetPosByTarget(0xFFFE, 0xFFFB, 0.0, 0.0, 15.0, 12.5, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFFB, 0.0, 0.0, 15.0, 12.5, 0x00, 0x00)
     PlayEffect(0xFFFE, (0xFF, 0x96, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x08)
     BattleCtrl(0x3A, 0xFFFE)
-    ChrSetPosByTargetAsync(0xFFFE, 0xFFFE, 0.0, 0.0, 10.0, 5.0, 0x02, 0x00)
+    BattleSetChrPosAsync(0xFFFE, 0xFFFE, 0.0, 0.0, 10.0, 5.0, 0x02, 0x00)
     Sleep(166)
     OP_5D(0xFFFB, 'Root', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0x0000, 0x03, 0x00)
     PlayEffect(0xFFFE, (0xFF, 0x98, 0x0), 0xFFFB, 0x00000003, (0xDD, 'NODE_HEAD'), (0xEE, 0.0, 0x0), (0xEE, 0.10000000149011612, 0x0), (0xEE, -0.20000000298023224, 0x0), 25.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x0A)
@@ -4725,7 +4725,7 @@ def AniBtlSCraft00():
     OP_5E(0x00, 0x0000, 0.8, 0x0096, 0x00C8, 0x0096, 0.5, 0xFFFB, 0.0, 1.0, 0.0)
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    AnimeClipLoadMultiple(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -4741,7 +4741,7 @@ def AniBtlSCraft00():
     ChrSetPhysicsFlags(0xFFFB, 0x00000040)
     ChrSetPhysicsFlags(0xFFFB, 0x00000020)
     OP_5C(0xFFFB, 0x01, 'Root')
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -4762,16 +4762,16 @@ def AniBtlSCraft00():
         'loc_E0FD',
     )
 
-    ChrSetPosByTarget(0xFFFB, 0xFFEA, 0.0, 0.0, 0.0, 0.0, 0x00, 0x00)
+    BattleSetChrPos(0xFFFB, 0xFFEA, 0.0, 0.0, 0.0, 0.0, 0x00, 0x00)
     OP_5C(0xFFFB, 0x00, 'Root')
     ChrClearPhysicsFlags(0xFFFB, 0x00000040)
     ChrClearPhysicsFlags(0xFFFB, 0x00000020)
     PlayChrAnimeClip(0xFFFE, 'BTL_S_CRAFT00_06a', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
     OP_3B(0x00, (0xFF, 0x10F8, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_6C(0xFFFE, 4.0)
-    ChrTurnDirection(0xFFFE, 0xFFEA, 0.0, 0.0)
-    ChrSetPosByTarget(0xFFFE, 0xFFEA, 0.0, 0.0, 15.0, 0.0, 0x00, 0x00)
-    ChrTurnDirection(0xFFFE, 0xFFFB, 0.0, 0.0)
+    BattleTurnChrDirection(0xFFFE, 0xFFEA, 0.0, 0.0)
+    BattleSetChrPos(0xFFFE, 0xFFEA, 0.0, 0.0, 15.0, 0.0, 0x00, 0x00)
+    BattleTurnChrDirection(0xFFFE, 0xFFFB, 0.0, 0.0)
     Fade(0x65, 200, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraSetPos(-2.69, -0.53, 4.26, 0)
@@ -4780,10 +4780,10 @@ def AniBtlSCraft00():
     CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
     CameraCtrl(0x02, 0x02, -2.77, 0.32, -0.17, 500)
     CameraCtrl(0x04, 0x02, 8.0, 150.0, 0.0, 500, 0x01)
-    ChrSetPosByTarget(0xFFFE, 0xFFFB, 0.0, 0.0, 15.0, 12.5, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFFB, 0.0, 0.0, 15.0, 12.5, 0x00, 0x00)
     PlayEffect(0xFFFE, (0xFF, 0x96, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x08)
     BattleCtrl(0x3A, 0xFFFE)
-    ChrSetPosByTargetAsync(0xFFFE, 0xFFFE, 0.0, 0.0, 10.0, 5.0, 0x02, 0x00)
+    BattleSetChrPosAsync(0xFFFE, 0xFFFE, 0.0, 0.0, 10.0, 5.0, 0x02, 0x00)
     Sleep(166)
     OP_5D(0xFFFB, 'Root', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0x0000, 0x03, 0x00)
     PlayEffect(0xFFFE, (0xFF, 0x98, 0x0), 0xFFFB, 0x00000003, (0xDD, 'NODE_HEAD'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, -0.20000000298023224, 0x0), 25.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x0A)
@@ -4793,7 +4793,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     SetChrFace(0x03, 0xFFFB, 'B', '7', '', '#b', '0')
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    AnimeClipLoadMultiple(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -4813,7 +4813,7 @@ def AniBtlSCraft00():
 
     label('loc_E0FD')
 
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -4834,7 +4834,7 @@ def AniBtlSCraft00():
         'loc_E530',
     )
 
-    ChrSetPosByTarget(0xFFFB, 0xFFEA, 0.0, 0.0, 0.0, 0.0, 0x00, 0x00)
+    BattleSetChrPos(0xFFFB, 0xFFEA, 0.0, 0.0, 0.0, 0.0, 0x00, 0x00)
     OP_5C(0xFFFB, 0x00, 'Root')
     OP_5D(0xFFFB, 'Root', 0.0, 0.0, 0.0, 0.0, -40.0, 0.0, 1.0, 1.0, 1.0, 0x0000, 0x03, 0x00)
     ChrClearPhysicsFlags(0xFFFB, 0x00000040)
@@ -4842,8 +4842,8 @@ def AniBtlSCraft00():
     PlayChrAnimeClip(0xFFFE, 'BTL_S_CRAFT00_06a', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
     OP_3B(0x00, (0xFF, 0x10F8, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_6C(0xFFFE, 4.0)
-    ChrTurnDirection(0xFFFE, 0xFFEA, 0.0, 0.0)
-    ChrSetPosByTarget(0xFFFE, 0xFFEA, 0.0, 0.0, -15.0, 0.0, 0x00, 0x00)
+    BattleTurnChrDirection(0xFFFE, 0xFFEA, 0.0, 0.0)
+    BattleSetChrPos(0xFFFE, 0xFFEA, 0.0, 0.0, -15.0, 0.0, 0x00, 0x00)
     Fade(0x65, 200, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraSetPos(-1.99, 1.59, -9.21, 0)
@@ -4852,10 +4852,10 @@ def AniBtlSCraft00():
     CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
     CameraCtrl(0x02, 0x02, -2.42, 1.5, 4.84, 500)
     CameraCtrl(0x04, 0x02, 352.0, 145.0, 0.0, 500, 0x01)
-    ChrSetPosByTarget(0xFFFE, 0xFFFB, 0.0, 0.0, 15.0, 12.5, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFFB, 0.0, 0.0, 15.0, 12.5, 0x00, 0x00)
     PlayEffect(0xFFFE, (0xFF, 0x96, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x08)
     BattleCtrl(0x3A, 0xFFFE)
-    ChrSetPosByTargetAsync(0xFFFE, 0xFFFE, 0.0, 0.0, 10.0, 5.0, 0x02, 0x00)
+    BattleSetChrPosAsync(0xFFFE, 0xFFFE, 0.0, 0.0, 10.0, 5.0, 0x02, 0x00)
     Sleep(166)
     OP_5D(0xFFFB, 'Root', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0x0000, 0x03, 0x00)
     PlayEffect(0xFFFE, (0xFF, 0x98, 0x0), 0xFFFB, 0x00000003, (0xDD, 'NODE_HEAD'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, -0.20000000298023224, 0x0), 25.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x0A)
@@ -4865,7 +4865,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     SetChrFace(0x03, 0xFFFB, 'B', '7', '', '#b', '0')
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    AnimeClipLoadMultiple(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -4885,7 +4885,7 @@ def AniBtlSCraft00():
 
     label('loc_E530')
 
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -4906,7 +4906,7 @@ def AniBtlSCraft00():
         'loc_E971',
     )
 
-    ChrSetPosByTarget(0xFFFB, 0xFFEA, 0.0, 0.0, 0.0, 0.0, 0x00, 0x00)
+    BattleSetChrPos(0xFFFB, 0xFFEA, 0.0, 0.0, 0.0, 0.0, 0x00, 0x00)
     OP_5C(0xFFFB, 0x00, 'Root')
     OP_5D(0xFFFB, 'Root', 0.0, 0.0, 0.0, -30.0, 40.0, 0.0, 1.0, 1.0, 1.0, 0x0000, 0x03, 0x00)
     ChrClearPhysicsFlags(0xFFFB, 0x00000040)
@@ -4914,9 +4914,9 @@ def AniBtlSCraft00():
     PlayChrAnimeClip(0xFFFE, 'BTL_S_CRAFT00_06a', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
     OP_3B(0x00, (0xFF, 0x10F8, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_6C(0xFFFE, 4.0)
-    ChrTurnDirection(0xFFFE, 0xFFEA, 0.0, 0.0)
-    ChrSetPosByTarget(0xFFFE, 0xFFEA, 0.0, 0.0, 15.0, 0.0, 0x00, 0x00)
-    ChrTurnDirection(0xFFFE, 0xFFFB, 0.0, 0.0)
+    BattleTurnChrDirection(0xFFFE, 0xFFEA, 0.0, 0.0)
+    BattleSetChrPos(0xFFFE, 0xFFEA, 0.0, 0.0, 15.0, 0.0, 0x00, 0x00)
+    BattleTurnChrDirection(0xFFFE, 0xFFFB, 0.0, 0.0)
     Fade(0x65, 200, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraSetPos(0.9, 0.62, -2.66, 0)
@@ -4925,10 +4925,10 @@ def AniBtlSCraft00():
     CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
     CameraCtrl(0x02, 0x02, 1.16, 0.62, 1.81, 500)
     CameraCtrl(0x04, 0x02, 1.0, 335.0, 0.0, 500, 0x01)
-    ChrSetPosByTarget(0xFFFE, 0xFFFB, 0.0, 0.0, 15.0, 12.5, 0x00, 0x00)
+    BattleSetChrPos(0xFFFE, 0xFFFB, 0.0, 0.0, 15.0, 12.5, 0x00, 0x00)
     PlayEffect(0xFFFE, (0xFF, 0x96, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x08)
     BattleCtrl(0x3A, 0xFFFE)
-    ChrSetPosByTargetAsync(0xFFFE, 0xFFFE, 0.0, 0.0, 10.0, 5.0, 0x02, 0x00)
+    BattleSetChrPosAsync(0xFFFE, 0xFFFE, 0.0, 0.0, 10.0, 5.0, 0x02, 0x00)
     Sleep(166)
     OP_5D(0xFFFB, 'Root', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0x0000, 0x03, 0x00)
     PlayEffect(0xFFFE, (0xFF, 0x98, 0x0), 0xFFFB, 0x00000003, (0xDD, 'NODE_HEAD'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, -0.20000000298023224, 0x0), 25.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x0A)
@@ -4938,7 +4938,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0A, 0.0, 0.4, 0.0, 0x0000, 0x0032, 0x0320, 0x0000, 0x0000, 0x00)
     SetChrFace(0x03, 0xFFFB, 'B', '7', '', '#b', '0')
     OP_3B(0xFF, 0.5, 0.7, 0.1)
-    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    AnimeClipLoadMultiple(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_4C(0xFFFB, 0.1, 0.3, 0.6, 0x0000, 0x03)
     OP_4C(0xFFFB, 0.0, 0.0, 0.0, 0x01F4, 0x03)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
@@ -4967,8 +4967,8 @@ def AniBtlSCraft00():
     StopEffect(0xFFFE, 0x0A, 0x01)
     ChrClearPhysicsFlags(0xFFF9, 0x00000040)
     ChrClearPhysicsFlags(0xFFF9, 0x00000020)
-    ChrSetPosByTarget(0xFFFE, 0xFFFF, 0.0, 0.0, 10.0, 0.0, 0x00, 0x00)
-    ChrTurnDirection(0xFFFE, 0xFFFB, 180.0, 0.0)
+    BattleSetChrPos(0xFFFE, 0xFFFF, 0.0, 0.0, 10.0, 0.0, 0x00, 0x00)
+    BattleTurnChrDirection(0xFFFE, 0xFFFB, 180.0, 0.0)
     PlayChrAnimeClip(0xFFFE, 'BTL_S_CRAFT00_07', 0x01, 0x00, 0x00, 0x00, 0x00, 0.0, -1.0, -1.0, -1.0, 0x00, 0x00)
     SetChrFace(0x03, 0xFFFE, '1', '2', '', '#b', '0')
     PlayEffect(0xFFFE, (0xFF, 0x9D, 0x0), 0xFFFF, 0x00000000, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
@@ -4979,7 +4979,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
     CameraSetPos(-0.58, 6.99, -2.61, 2500)
     CameraRotate(336.0, 15.0, 5.0, 1250, 0x01)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_EAF1(): pass
 
     label('loc_EAF1')
@@ -4992,8 +4992,8 @@ def AniBtlSCraft00():
         'loc_EB19',
     )
 
-    ChrTurnDirection(0xFFFB, 0xFFFF, 180.0, -1.0)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTurnChrDirection(0xFFFB, 0xFFFF, 180.0, -1.0)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5010,10 +5010,10 @@ def AniBtlSCraft00():
 
     label('loc_EB19')
 
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
-    ChrSetPosByTargetAsync(0xFFFB, 0xFFFF, 0.0, 6.5, 1.0, 0.0, 0x02, 0x00)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
+    BattleSetChrPosAsync(0xFFFB, 0xFFFF, 0.0, 6.5, 1.0, 0.0, 0x02, 0x00)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5034,13 +5034,13 @@ def AniBtlSCraft00():
         'loc_EB6C',
     )
 
-    ChrSetPosByTargetAsync(0xFFFB, 0xFFFF, 1.5, 5.0, 0.0, 0.0, 0x02, 0x00)
+    BattleSetChrPosAsync(0xFFFB, 0xFFFF, 1.5, 5.0, 0.0, 0.0, 0x02, 0x00)
 
     def _loc_EB6C(): pass
 
     label('loc_EB6C')
 
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5061,13 +5061,13 @@ def AniBtlSCraft00():
         'loc_EB9F',
     )
 
-    ChrSetPosByTargetAsync(0xFFFB, 0xFFFF, -1.5, 5.0, 0.0, 0.0, 0x02, 0x00)
+    BattleSetChrPosAsync(0xFFFB, 0xFFFF, -1.5, 5.0, 0.0, 0.0, 0x02, 0x00)
 
     def _loc_EB9F(): pass
 
     label('loc_EB9F')
 
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5088,13 +5088,13 @@ def AniBtlSCraft00():
         'loc_EBD2',
     )
 
-    ChrSetPosByTargetAsync(0xFFFB, 0xFFFF, 0.0, 3.5, -1.0, 0.0, 0x02, 0x00)
+    BattleSetChrPosAsync(0xFFFB, 0xFFFF, 0.0, 3.5, -1.0, 0.0, 0x02, 0x00)
 
     def _loc_EBD2(): pass
 
     label('loc_EBD2')
 
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_EBD7(): pass
 
     label('loc_EBD7')
@@ -5107,8 +5107,8 @@ def AniBtlSCraft00():
         'loc_EBFF',
     )
 
-    ChrTurnDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTurnChrDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5125,14 +5125,14 @@ def AniBtlSCraft00():
 
     label('loc_EBFF')
 
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x01, 'AniBtlCrucifixion')
     SetChrFace(0x03, 0xFFFB, 'B', 'F', '', '#b', '0')
     Sleep(1)
     PlayEffect(0xFFFE, (0xFF, 0x99, 0x0), 0xFFFB, 0x00000003, (0xDD, 'NODE_HEAD'), (0xEE, 0.0, 0x0), (0xEE, -0.18000000715255737, 0x0), (0xEE, -0.20000000298023224, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x0B)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5153,7 +5153,7 @@ def AniBtlSCraft00():
         'loc_ED4D',
     )
 
-    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    AnimeClipLoadMultiple(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x01, 'AniBtlCrucifixion')
     SetChrFace(0x03, 0xFFFB, 'B', 'F', '', '#b', '0')
@@ -5163,7 +5163,7 @@ def AniBtlSCraft00():
 
     label('loc_ED4D')
 
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5184,7 +5184,7 @@ def AniBtlSCraft00():
         'loc_EE0F',
     )
 
-    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    AnimeClipLoadMultiple(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x01, 'AniBtlCrucifixion')
     SetChrFace(0x03, 0xFFFB, 'B', 'F', '', '#b', '0')
@@ -5194,7 +5194,7 @@ def AniBtlSCraft00():
 
     label('loc_EE0F')
 
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5215,7 +5215,7 @@ def AniBtlSCraft00():
         'loc_EED1',
     )
 
-    ChrLoadMultipleAnimeClips(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    AnimeClipLoadMultiple(0xFFFB, 0x00, 'AniBtlCrucifixion', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     OP_38(0xFFFB, 0x00, 0x00, 'EraseEquip')
     OP_38(0xFFFB, 0x00, 0x01, 'AniBtlCrucifixion')
     SetChrFace(0x03, 0xFFFB, 'B', 'F', '', '#b', '0')
@@ -5267,7 +5267,7 @@ def AniBtlSCraft00():
     CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
     CameraSetPos(1.0, 5.07, 4.51, 4000)
     CameraRotate(343.0, 15.0, -5.0, 4000, 0x01)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     OP_3B(0x00, (0xFF, 0x13EC, 0x0), 0.8, (0xFF, 0x3E8, 0x0), 0.0, 1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0BB8, 0x0258, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x8F31, 0x0), 0.6, (0xFF, 0x3E8, 0x0), 0.0, 1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     def _loc_F2AD(): pass
@@ -5282,8 +5282,8 @@ def AniBtlSCraft00():
         'loc_F2D5',
     )
 
-    ChrTurnDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTurnChrDirection(0xFFFB, 0xFFFE, 0.0, -1.0)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5300,11 +5300,11 @@ def AniBtlSCraft00():
 
     label('loc_F2D5')
 
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     EffectCtrl(0x0F, 0xFFFE, 0x0099, 0x01)
     PlayEffect(0xFFFE, (0xFF, 0x9A, 0x0), 0xFFFB, 0x00000003, (0xDD, 'NODE_HEAD'), (0xEE, 0.0, 0x0), (0xEE, -0.18000000715255737, 0x0), (0xEE, -0.20000000298023224, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x0C)
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5331,7 +5331,7 @@ def AniBtlSCraft00():
 
     label('loc_F397')
 
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5358,7 +5358,7 @@ def AniBtlSCraft00():
 
     label('loc_F3FE')
 
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,
@@ -5417,14 +5417,14 @@ def AniBtlSCraft00():
     WaitForThreadExit(0xFFFE, 0x02)
     WaitForThreadExit(0xFFFE, 0x03)
     Call(ScriptId.Current, 'BtlDefaultFace')
-    ChrAnimeClipCtrl(0x05, 0xFFFE, 'C_CHR033_SC1', '')
+    AnimeClipCtrl(0x05, 0xFFFE, 'C_CHR033_SC1', '')
     ChrClearPhysicsFlags(0xFFFE, 0x000002A0)
     ChrClearPhysicsFlags(0xFFF9, 0x000002A0)
     OP_38(0xFFF9, 0x00, 0x01, 'ShowEquip')
-    ChrDeleteTempChar(0xFFFF)
+    BattleDeleteTempChar(0xFFFF)
     ChrSetRGBA(0xFFFE, 1.0, 1.0, 1.0, 1.0, 0, 0x03)
     ChrSetRGBA(0xFFF9, 1.0, 1.0, 1.0, 1.0, 0, 0x03)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
     def _loc_F6F9(): pass
 
     label('loc_F6F9')
@@ -5438,7 +5438,7 @@ def AniBtlSCraft00():
     )
 
     OP_38(0xFFFB, 0x00, 0x00, 'ShowEquip')
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     ExecExpressionWithReg(
         0x01,

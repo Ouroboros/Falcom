@@ -1382,8 +1382,8 @@ def Handler_7A(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
             0x00: 'S',
-            0x01: 'WS',
-            0x02: 'WS',
+            0x01: 'NS',
+            0x02: 'NS',
         }[n]
 
     match ctx.action:
@@ -2133,9 +2133,9 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x2C,  'PlayChrAnimeClip',             'NSBBBBBffffBB',                                                            parameters = ('chrId', 'animeClip', 'loop', 'arg4', 'reverse', 'arg6', 'arg7', 'delay', 'startTime', 'endTime', 'currentTime', 'slot', 'arg13')),
     inst(0x2D,  'WaitAnimeClip',                'WfB',                                                                      parameters = ('chrId', 'expiration', 'animeSlot')),
     inst(0x2E,  'OP_2E',                        NoOperand,                                      handler = Handler_2E),
-    inst(0x2F,  'ChrAnimeClipCtrl',             NoOperand,                                      handler = Handler_2F,       parameters = ('type', 'chrId')),
+    inst(0x2F,  'AnimeClipCtrl',                NoOperand,                                      handler = Handler_2F,       parameters = ('type', 'chrId')),
     inst(0x30,  'EquipCtrl',                    'BWSSfffffffff'),
-    inst(0x31,  'OP_31',                        'BS'),
+    inst(0x31,  'AssetCtrl',                    'BS'),
     inst(0x32,  'EffectCtrl',                   NoOperand,                                      handler = Handler_32),
     inst(0x33,  'BattleCtrl',                   NoOperand,                                      handler = Handler_33),
     inst(0x34,  'OP_34',                        'Bffff'),
@@ -2170,7 +2170,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x51,  'OP_51',                        'fffffWffff'),
     inst(0x52,  'OP_52',                        'BW'),
     inst(0x53,  'OP_53',                        'BB'),
-    inst(0x54,  'OP_54',                        NoOperand,                                      handler = Handler_54),
+    inst(0x54,  'ModelCtrl',                    NoOperand,                                      handler = Handler_54),
     inst(0x55,  'OP_55',                        'BWWWWWWWWWWffffBBSS'),
     inst(0x56,  'OP_56',                        'BBBfffff'),
     inst(0x57,  'OP_57',                        'BB'),

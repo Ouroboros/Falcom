@@ -1,73 +1,12 @@
 from Falcom.ED83.Parser.scena_writer import *
 from Falcom.ED83.Parser.scena_writer_gen import *
+from Falcom.ED83.Parser.consts import *
 
 ChrTable = GlobalConfig.ChrTable
 
-L_ARM_POINT = 'L_arm_point'
-R_ARM_POINT = 'R_arm_point'
-NODE_R_ARM  = 'NODE_R_ARM'
-
-DummyCharBaseId         = 0xB5E
-TempCharBaseId          = 0xB68
-
-class CraftTarget(IntEnum2):
-    Saved           = 0xFFF4
-    SelectedPos     = 0xFFF5
-    Current         = 0xFFFB
-    Self            = 0xFFFE
-
-class AbnormalCondition(IntEnum2):
-    Poison              = 0x00000001
-    Seal                = 0x00000002
-    Mute                = 0x00000004
-    Blind               = 0x00000008
-    Sleep               = 0x00000010
-    Burn                = 0x00000020
-    Freeze              = 0x00000040
-    Petrify             = 0x00000080
-    Faint               = 0x00000100
-    Confuse             = 0x00000200
-    Charm               = 0x00000400
-    Deathblow           = 0x00000800
-    Nightmare           = 0x00001000
-    Delay               = 0x00002000
-    Vanish              = 0x00004000
-    STRDown             = 0x00008000
-    DEFDown             = 0x00010000
-    ATSDown             = 0x00020000
-    ADFDown             = 0x00040000
-    SPDDown             = 0x00080000
-    MOVDown             = 0x00100000
-    Insight             = 0x00200000
-    SlowHPRecover       = 0x00400000
-    SlowCPRecover       = 0x00800000
-    CraftGuard          = 0x01000000
-    MagicReflect        = 0x02000000
-    PhysicalReflect     = 0x04000000
-    SpiritUnification   = 0x08000000
-    Possess             = 0x10000000
-    Stealth             = 0x20000000
-    BalanceDown         = 0x40000000
-    Death               = 0x80000000
-
-class AbnormalCondition2(IntEnum2):
-    BurningHeart            = 0x00000001
-    HPUpDownVitality        = 0x00000002
-    AlmightyConflagration   = 0x00000004
-    TemporaryHPboost        = 0x00000008
-    GuardBreak              = 0x00000010
-    LinkBreak               = 0x00000020
-    Enhanced                = 0x00000040
-    Brandish                = 0x00000100
-    ProtectionAgainstAll    = 0x00000200
-    AbsoluteReflect         = 0x00000400
-    CantMove                = 0x00000800
-    ElementWeakness         = 0x00001000
-    Hide                    = 0x00004000
-
 def ForEachTarget(cb):
-    ChrTargetsIterInit(0x00)
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(0x01, 0xFFFE)
 
     start = genLabel()
     end = genLabel()
@@ -83,7 +22,7 @@ def ForEachTarget(cb):
 
     cb()
 
-    ChrTargetsIterNext(0xFFFE)
+    BattleTargetsIterNext(0xFFFE)
 
     OP_0A(
         0x01,
@@ -98,12 +37,12 @@ def ForEachTarget(cb):
 
     label(end)
 
-    ChrTargetsIterReset(0x01, 0xFFFE)
+    BattleTargetsIterReset(0x01, 0xFFFE)
 
 def RandIf(probability, true_succ, false_succ):
     assert 0 <= probability <= 100
 
-    end     = genLabel()
+    end    = genLabel()
     false  = genLabel()
     end    = genLabel()
 
@@ -136,29 +75,30 @@ def SaveClearData():
     OP_93(0x00, 0x02)
     OP_93(0x01)
 
+
+# formation 0x49
+
 def FormationAddMember(chrId: int):
-    OP_49(0x00, chrId)
+    FormationCtrl(0x00, chrId)
 
 def FormationReset():
-    OP_49(0x02)
+    FormationCtrl(0x02)
 
 def FormationSetLeader(chrId: int):
-    OP_49(0x04, chrId)
+    FormationCtrl(0x04, chrId)
 
-def ChrRefreshSkin(chrId: int):
-    return ChrChangeSkin(chrId, '')
 
-def ChrChangeSkin(chrId: int, model: str):
-    ChrAnimeClipCtrl(0x0A, chrId, model, '')
+# model ctrl 0x54
 
-def SetChrModelChrId(chrId: int, modelChrId: int):
-    OP_54(0x53, chrId, modelChrId)
+def ModelSetChrId(chrId: int, modelChrId: int):
+    ModelCtrl(0x53, chrId, modelChrId)
 
-def SetBattleStyle(chrId: int, style: int):
-    OP_54(0x4A, chrId, style)
+def ModelSetBattleStyle(chrId: int, style: int):
+    ModelCtrl(0x4A, chrId, style)
 
-def GetBattleStyle(chrId: int):
-    OP_54(0x4B, chrId)
+def ModelGetBattleStyle(chrId: int):
+    ModelCtrl(0x4B, chrId)
+
 
 '''
     event
@@ -174,9 +114,7 @@ def EventJump(eventId: int):
 def DebugString(s: str):
     OP_07(0x02, (0xDD, s))
 
-'''
-    camera
-'''
+# camera 0x36
 
 def CameraRotate(vertical: float, horizontal: float, tilt: float, durationInMs: int = 0, unknown: int = 1):
     '''
@@ -184,8 +122,7 @@ def CameraRotate(vertical: float, horizontal: float, tilt: float, durationInMs: 
         左右
         翻转
     '''
-    OP_36(0x04, 0x03, vertical, horizontal, tilt, durationInMs, unknown)
-    return
+    CameraCtrl(0x04, 0x03, vertical, horizontal, tilt, durationInMs, unknown)
 
 def CameraSetPos(x: float, y: float, z: float, durationInMs: int = 0):
     CameraCtrl(0x02, 0x03, x, y, z, durationInMs)
@@ -206,9 +143,29 @@ def CameraShake():
     CameraCtrl(0x0A, 0.2, 0.125, 0.01, 0x001E, 0x012C, 0x003C, 0x0000, 0x0000, 0x00)
 
 
-'''
-    equip
-'''
+# anime clip 0x2F
+
+def AnimeClipLoadByCatalog(chrId: int, catalog: int):
+    AnimeClipCtrl(0x06, chrId, catalog)
+
+def AnimeClipReleaseByCatalog(chrId: int, catalog: int):
+    AnimeClipCtrl(0x07, chrId, catalog)
+
+def AnimeClipLoadMultiple(chrId: int, group: int, *animeClips: str):
+    assert len(animeClips) <= 16
+    if len(animeClips) < 16:
+        animeClips: list = list(animeClips)
+        animeClips.extend([''] * (16 - len(animeClips)))
+
+    AnimeClipCtrl(0x08, chrId, group, *animeClips)
+
+def AnimeClipRefreshSkin(chrId: int):
+    return AnimeClipChangeSkin(chrId, '')
+
+def AnimeClipChangeSkin(chrId: int, model: str):
+    AnimeClipCtrl(0x0A, chrId, model, '')
+
+# equip 0x30
 
 def AttachEquip(chrId: int, equip: str, node: str, *args):
     if not args:
@@ -222,10 +179,22 @@ def DeatchEquip(chrId: int, node: str, *args):
     # EquipCtrl(0x01, 0xFFFE, '', 'L_arm_point', 0, 0, 0, 0, 0, 0, 1, 1, 1)
     EquipCtrl(0x01, chrId, '', node, *args)
 
+# asset 0x31
 
-'''
-    effect
-'''
+def LoadAsset(asset: str):
+    AssetCtrl(0x00, asset)
+
+def ReleaseAsset(asset: str):
+    AssetCtrl(0x01, asset)
+
+def IsAssetLoaded(asset: str):
+    AssetCtrl(0x02, asset)
+
+def LoadAssetAsync(asset: str):
+    AssetCtrl(0x03, asset)
+
+
+# effect 0x32
 
 def LoadEffect(chrId: int, slot: int, eff: str):
     EffectCtrl(0x0A, chrId, slot, eff)
@@ -276,28 +245,6 @@ def StopEffect(chrId: int, slot: int, unknown: int):
     EffectCtrl(0x0D, chrId, slot, unknown)
 
 
-'''
-    asset
-'''
-
-def LoadAsset(asset: str):
-    OP_31(0x00, asset)
-
-def ReleaseAsset(asset: str):
-    OP_31(0x01, asset)
-
-def IsAssetLoaded(asset: str):
-    OP_31(0x02, asset)
-
-def LoadAssetAsync(asset: str):
-    OP_31(0x03, asset)
-
-def ChrLoadAnimeClipByCatalog(chrId: int, catalog: int):
-    ChrAnimeClipCtrl(0x06, chrId, catalog)
-
-def ChrReleaseAnimeClipByCatalog(chrId: int, catalog: int):
-    ChrAnimeClipCtrl(0x07, chrId, catalog)
-
 
 '''
     battle ctrl
@@ -312,46 +259,92 @@ def BattleDamageAnime(targetChr: int, knockBack: tuple, arg3: tuple, arg4: int):
 def BattleDamageAnime2(targetChr: int, knockBack: float, arg3: float, arg4: int = 1):
     BattleCtrl(0x01, targetChr, (0xEE, knockBack, 0x0), (0xEE, arg3, 0x0), arg4)
 
+def BattleTargetsIterReset(regIndex: int, chrId: int):
+    BattleCtrl(0x02, regIndex, chrId)
+
+def BattleTargetsIterNext(chrId: int):
+    BattleCtrl(0x03, chrId)
+
+def BattleTargetsIterInit(unknown: int):
+    BattleCtrl(0x04, unknown)
+
 def BattleInitHit(chrId: int):
     BattleCtrl(0x09, chrId)
 
-def ChrSetAbnormalCondition(chrId: int, condition: AbnormalCondition, param1: int, param2: int, unused: int = 0):
+def BattleSetChrFlags(chrId: int, flags: int):
+    BattleCtrl(0x0B, chrId, flags)
+
+def BattleClearChrFlags(chrId: int, flags: int):
+    BattleCtrl(0x0C, chrId, flags)
+
+def BattleGetChrFlags(chrId: int):
+    BattleCtrl(0x0D, chrId)
+
+def BattleSetChrAfterImageOn(chrId: int, arg1: float, arg2: float, arg3: float, arg4: float, arg5: float):
+    BattleCtrl(0x15, chrId, arg1, arg2, arg3, arg4, arg5)
+
+def BattleSetChrAfterImageOff():
+    BattleCtrl(0x16)
+
+def BattleCreateChrDummy(chrId: int, count: int):
+    assert count <= 5
+    BattleCtrl(0x17, chrId, count)
+
+def BattleDeleteChrDummy():
+    BattleCtrl(0x18)
+
+def BattleSetFlags(flags: int):
+    BattleCtrl(0x19, flags)
+
+def BattleClearFlags(flags: int):
+    BattleCtrl(0x1A, flags)
+
+def BattleCreateTempChar(tempChrIndex: int, srcChrId: int, model: str, ani: str = '') -> int:
+    assert tempChrIndex <= 4
+    BattleCtrl(0x1E, tempChrIndex, srcChrId, model, ani)
+    return tempChrIndex + TempCharBaseId
+
+def BattleDeleteTempChar(tempChrIndex: int = 0xFFFF):
+    assert tempChrIndex <= 4 or tempChrIndex == 0xFFFF
+    BattleCtrl(0x1F, tempChrIndex)
+
+def BattleCreateChrAfterImage(chrId: int):
+    BattleCtrl(0x30, chrId)
+
+def BattleSetChrPos(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int = 0, unknown3: int = 0):
+    BattleCtrl(0x33, chrId, targetId, x, y, z, speed, unknown2, unknown3)
+
+def BattleMoveToTarget():
+    BattleCtrl(0x34)
+
+def BattleSaveChrPosition(targetChrId: int, unknown: int):
+    BattleCtrl(0x35, targetChrId, unknown)
+
+def BattleSetChrPosAsync(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int, unknown3: int):
+    BattleCtrl(0x39, chrId, targetId, x, y, z, speed, unknown2, unknown3)
+
+def BattleTurnChrDirection(chrId: int, targetId: int, unknown: float, speed: float = -1.0):
+    BattleCtrl(0x3C, chrId, targetId, unknown, speed)
+
+def BattleSetChrAbnormalCondition(chrId: int, condition: AbnormalCondition, param1: int, param2: int, unused: int = 0):
     BattleCtrl(0xB7, 0x00, chrId, condition, param1, param2, unused)
 
-def ChrClearAbnormalCondition(chrId: int, condition: AbnormalCondition):
+def BattleClearChrAbnormalCondition(chrId: int, condition: AbnormalCondition):
     BattleCtrl(0xB7, 0x01, chrId, condition, 0, 0, 0)
 
-def ChrSetAbnormalCondition2(chrId: int, condition: AbnormalCondition2, param1: int, param2: int, se: int):
+def BattleSetChrAbnormalCondition2(chrId: int, condition: AbnormalCondition2, param1: int, param2: int, se: int):
     BattleCtrl(0xB7, 0x02, chrId, condition, param1, param2, se)
 
-def ChrClearAbnormalCondition2(chrId: int, condition: AbnormalCondition2):
+def BattleClearChrAbnormalCondition2(chrId: int, condition: AbnormalCondition2):
     BattleCtrl(0xB7, 0x03, chrId, condition, 0, 0, 0)
 
-def ChrGetAbnormalCondition(chrId: int):
+def BattleGetChrAbnormalCondition(chrId: int):
     BattleCtrl(0xB7, 0x04, chrId, 0, 0, 0, 0)
 
-def ChrGetAbnormalCondition2(chrId: int):
+def BattleGetChrAbnormalCondition2(chrId: int):
     BattleCtrl(0xB7, 0x05, chrId, 0, 0, 0, 0)
 
-def ChrLoadMultipleAnimeClips(chrId: int, group: int, *animeClips: str):
-    assert len(animeClips) <= 16
-    if len(animeClips) < 16:
-        animeClips: list = list(animeClips)
-        animeClips.extend([''] * (16 - len(animeClips)))
-
-    ChrAnimeClipCtrl(0x08, chrId, group, *animeClips)
-
-def ChrTargetsIterInit(unknown: int):
-    BattleCtrl(0x04, unknown)
-
-def ChrTargetsIterReset(regIndex: int, chrId: int):
-    BattleCtrl(0x02, regIndex, chrId)
-
-def ChrTargetsIterNext(chrId: int):
-    BattleCtrl(0x03, chrId)
-
-def ChrSavePosition(targetChrId: int, unknown: int):
-    BattleCtrl(0x35, targetChrId, unknown)
+# Physics 0x35
 
 def ChrSetPhysicsFlags(chrId: int, flags: int):
     OP_35(0x00, chrId, flags)
@@ -359,27 +352,8 @@ def ChrSetPhysicsFlags(chrId: int, flags: int):
 def ChrClearPhysicsFlags(chrId: int, flags: int):
     OP_35(0x01, chrId, flags)
 
-def ChrCreateDummy(chrId: int, count: int):
-    assert count <= 5
-    BattleCtrl(0x17, chrId, count)
 
-def ChrCreateAfterImage(chrId: int):
-    BattleCtrl(0x30, chrId)
-
-def ChrSetAfterImageOn(chrId: int, unknown1: float, unknown2: float, unknown3: float, unknown4: float, unknown5: float):
-    BattleCtrl(0x15, chrId, unknown1, unknown2, unknown3, unknown4, unknown5)
-
-def ChrSetAfterImageOff():
-    BattleCtrl(0x16)
-
-def ChrCreateTempChar(tempChrIndex: int, srcChrId: int, model: str, ani: str = '') -> int:
-    assert tempChrIndex <= 4
-    BattleCtrl(0x1E, tempChrIndex, srcChrId, model, ani)
-    return tempChrIndex + TempCharBaseId
-
-def ChrDeleteTempChar(tempChrIndex: int = 0xFFFF):
-    assert tempChrIndex <= 4 or tempChrIndex == 0xFFFF
-    BattleCtrl(0x1F, tempChrIndex)
+# sound 0x3A 0x3B
 
 def PlaySE(sound: int):
     OP_3B(0x00, (0xFF, sound, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
@@ -397,32 +371,14 @@ def PlayBGM2(bgm: int):
 def StopVoice(voice: int):
     OP_3B(0x34, (0xFF, voice, 0x0))
 
-def IsBattleModelEqualTo(chrId: int, model: str):
-    OP_7A(0x01, chrId, model)
 
-def ChrMoveToTarget():
-    BattleCtrl(0x34)
+# check names 0x7A
 
-def ChrTurnDirection(chrId: int, targetId: int, unknown: float, speed: float = -1.0):
-    BattleCtrl(0x3C, chrId, targetId, unknown, speed)
+def IsMapEqualTo(name: str):
+    OP_7A(0x00, name)
 
-def ChrSetPosByTarget(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int = 0, unknown3: int = 0):
-    BattleCtrl(0x33, chrId, targetId, x, y, z, speed, unknown2, unknown3)
+def IsBattleModelEqualTo(chrId: int, name: str):
+    OP_7A(0x01, chrId, name)
 
-def ChrSetPosByTargetAsync(chrId: int, targetId: int, x: float, y: float, z: float, speed: float, unknown2: int, unknown3: int):
-    BattleCtrl(0x39, chrId, targetId, x, y, z, speed, unknown2, unknown3)
-
-def ChrSetBattleFlags(chrId: int, flags: int):
-    BattleCtrl(0x0B, chrId, flags)
-
-def ChrClearBattleFlags(chrId: int, flags: int):
-    BattleCtrl(0x0C, chrId, flags)
-
-def ChrGetBattleFlags(chrId: int):
-    BattleCtrl(0x0D, chrId)
-
-def BattleSetFlags(flags: int):
-    BattleCtrl(0x19, flags)
-
-def BattleClearFlags(flags: int):
-    BattleCtrl(0x1A, flags)
+def IsAnimeClipEqualTo(chrId: int, name: str):
+    OP_7A(0x02, chrId, name)

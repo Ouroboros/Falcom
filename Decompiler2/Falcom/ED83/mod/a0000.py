@@ -31323,7 +31323,7 @@ def TK_System_Debug_HiarColor():
 
     label('loc_23E48')
 
-    ChrAnimeClipCtrl(0x0B, ChrTable['黎恩'], '', '')
+    AnimeClipCtrl(0x0B, ChrTable['黎恩'], '', '')
 
     Jump('loc_23E97')
 
@@ -31331,7 +31331,7 @@ def TK_System_Debug_HiarColor():
 
     label('loc_23E53')
 
-    ChrAnimeClipCtrl(0x0B, ChrTable['黎恩'], 'FC_CHR000_C50', '')
+    AnimeClipCtrl(0x0B, ChrTable['黎恩'], 'FC_CHR000_C50', '')
 
     Jump('loc_23E97')
 
