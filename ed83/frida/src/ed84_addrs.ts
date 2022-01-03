@@ -5,7 +5,6 @@ export const Addrs = (function() {
     // switch (utils.getGameVersion()) {
     //     case 'ed84_jp':
             return {
-                File_Open           : Modules.ED84.base.add(0x0ED240),
                 AllocObject         : Modules.ED84.base.add(0x4DAAC0),
                 AllocMemory         : Modules.ED84.base.add(0x52E940),
                 FreeMemory          : Modules.ED84.base.add(0x52E920),
@@ -13,6 +12,11 @@ export const Addrs = (function() {
                 Logger_Ansi2UTF8    : Modules.ED83.base.add(0x0D4FF0),
 
                 SaveDataChecksum: Modules.ED84.base.add(0x3E4DD0),
+
+                File: {
+                    Open    : Modules.ED84.base.add(0x0ED240),
+                    GetSize : Modules.ED84.base.add(0x0ED190),
+                }
             };
 
         // case 'ed84_us':

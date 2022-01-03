@@ -1095,11 +1095,11 @@ def Init():
     OP_14(0x00000400)
     OP_3B(0x64, 1000, 0.0, 1.0)
     OP_3A(0x01, 0x02C7, 0x01)
-    OP_54(0x0D, 'TrialBox01', 'LP_trialbox01', 0x17B0, 0x270F)
+    ModelCtrl(0x0D, 'TrialBox01', 'LP_trialbox01', 0x17B0, 0x270F)
 
     If(
         (
-            (Expr.Eval, "OP_54(0x20)"),
+            (Expr.Eval, "ModelCtrl(0x20)"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -1450,6 +1450,7 @@ def TK_QuestUI_Debug():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_5292')
@@ -1486,6 +1487,7 @@ def TK_QuestUI_Debug():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_4D0A')
@@ -1506,6 +1508,7 @@ def TK_QuestUI_Debug():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     def _loc_4D0A(): pass
@@ -14522,6 +14525,7 @@ def EV_KizunaJump_01():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -14824,6 +14828,7 @@ def EV_KizunaJump_02():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -15124,6 +15129,7 @@ def EV_KizunaJump_03():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -15463,6 +15469,7 @@ def EV_KizunaJump_04():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -15761,6 +15768,7 @@ def EV_KizunaJump_05():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -16018,6 +16026,7 @@ def EV_KizunaJump_06():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -16276,6 +16285,7 @@ def EV_KizunaJump_07():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -16513,6 +16523,7 @@ def EV_KizunaJump_08():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -16762,6 +16773,7 @@ def EV_KizunaJump_09():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -17010,6 +17022,7 @@ def EV_KizunaJump_10():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -17313,6 +17326,7 @@ def EV_KizunaJump_11():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -17552,6 +17566,7 @@ def EV_KizunaJump_12():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -17808,6 +17823,7 @@ def EV_KizunaJump_13():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -18040,6 +18056,7 @@ def EV_KizunaJump_14():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -18317,6 +18334,7 @@ def EV_KizunaJump_15():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -18606,6 +18624,7 @@ def EV_KizunaJump_16():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -18877,6 +18896,7 @@ def EV_KizunaJump_17():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -19137,6 +19157,7 @@ def EV_KizunaJump_18():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -19418,6 +19439,7 @@ def EV_KizunaJump_19():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -19693,6 +19715,7 @@ def EV_KizunaJump_20():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -21435,6 +21458,7 @@ def EV_KizunaJump_0X():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -21467,6 +21491,7 @@ def EV_KizunaJump_0X():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -21502,6 +21527,7 @@ def EV_KizunaJump_0X():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -21538,6 +21564,7 @@ def EV_KizunaJump_0X():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -21559,6 +21586,7 @@ def EV_KizunaJump_0X():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -22278,6 +22306,7 @@ def EV_Jump_SB_00_00():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x8185, 0x0))
@@ -23083,6 +23112,7 @@ def EV_Jump_SB_01C_02():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x819A, 0x0))
@@ -29223,6 +29253,7 @@ def EV_Jump_YR_Bath():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
@@ -29290,6 +29321,7 @@ def EV_Jump_YR_Bath():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
@@ -29544,6 +29576,7 @@ def EV_Jump_YR_Bath():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
@@ -29600,6 +29633,7 @@ def EV_Jump_YR_Bath():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
@@ -29683,6 +29717,7 @@ def EV_Jump_YR_Bath():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
@@ -29763,6 +29798,7 @@ def EV_Jump_YR_Bath():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
@@ -30102,6 +30138,7 @@ def EV_Jump_YR_Bath():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
@@ -30485,7 +30522,7 @@ def EV_Jump_YR_Fishing():
 @scena.Code('TK_System_Debug')
 def TK_System_Debug():
     Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0))
-    OP_3A(0x00, 922, 1.0, 0x0000, 0x00000000, 0x00)
+    PlayBGM(922, 1.0, 0x0000, 0x00000000, 0x00)
     MenuCmd(0x00, 0x00, 0x0018, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '语音测试', 0x00000000)
     MenuCmd(0x01, 0x00, '图片显示测试', 0x00000001)
@@ -30645,6 +30682,7 @@ def TK_System_Debug():
 
     OP_6B(0x06, 0x0000, 0x0000, 90.0, 0x00000000, 0x00000000)
     Sleep(1000)
+
     OP_6B(0x07, 0x0000, 0x0000, 0.0, 0x00000000, 0x00000000)
 
     Jump('loc_25043')
@@ -30656,6 +30694,7 @@ def TK_System_Debug():
     OP_9A(0x0004, 0.0, 0.0, 0.0, 0x01F4)
     OP_9A(0x0006, 0.0, 0.0, 0.0, 0x01F4)
     Sleep(1000)
+
     OP_9A(0x0005, 0.0, 0.0, 0.0, 0x0000)
 
     Jump('loc_25043')
@@ -30758,6 +30797,7 @@ def TK_System_Debug():
     label('loc_24EA0')
 
     Sleep(300)
+
     OP_C2(0x00)
     OP_C2(0x01)
 
@@ -30991,14 +31031,17 @@ def TK_System_Debug_Portrait():
     OP_55(0x00, 0x0000, 0x0000, 0x1000, 0x1000, 0x0000, 0x0000, 0x0000, 0x0000, 0x1000, 0x1000, 1.0, 1.0, 1.0, 0.0, 0x00, 0x00, 'I_MG08_CARD', '')
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
     Sleep(1000)
+
     OP_62(0x071C, 0x03FC)
     OP_56(0x00, 0x01, 0x00, 0.3, 0.3, 0.0, 0.0, 300.0)
     Sleep(1000)
+
     OP_62(0x071C, 0x03FC)
     OP_58(0x00)
     OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.0, 1.0, 1.0, 0.0, 0x00, 0x00, 'I_VIS999', '')
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
     Sleep(1000)
+
     OP_62(0x071C, 0x03FC)
     OP_56(0x00, 0x00, 0x00, 0.0, 0.0, 0.0, 0.0, 0.0)
     OP_56(0x00, 0x00, 0x00, -1800.0, 0.0, 30000.0, 0.0, 0.0)
@@ -31020,6 +31063,7 @@ def TK_System_Debug_Portrait():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_62(0x058C, 0x0380)
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 0.0, 500.0)
@@ -31040,15 +31084,18 @@ def TK_System_Debug_Portrait():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_62(0x071C, 0x03FC)
     OP_58(0x00)
     OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.0, 1.0, 1.0, 0.0, 0x00, 0x02, 'I_VIS9100', '')
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
     Sleep(1000)
+
     OP_62(0x071C, 0x03FC)
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 0.0, 300.0)
     Sleep(300)
+
     OP_58(0x00)
 
     Return()
@@ -31100,6 +31147,7 @@ def TK_System_Debug_StringsTest():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -31124,6 +31172,7 @@ def TK_System_Debug_StringsTest():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -31320,6 +31369,7 @@ def TK_System_Debug_StringsTest():
     )
 
     WaitForMsg()
+
     OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00BA, 0x00)
 
     Talk(
@@ -31334,6 +31384,7 @@ def TK_System_Debug_StringsTest():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
 
@@ -31353,6 +31404,7 @@ def TK_System_Debug_Bustshot():
     OP_4F(0x03, 0xF016, 1.0, 1.0, 1.0, 1.0, 0x03E8, 0x03)
     OP_4F(0x03, 0x03FB, 1.0, 1.0, 1.0, 1.0, 0x03E8, 0x03)
     Sleep(1000)
+
     OP_23(0x01, 0xFFFF, 0x02EE, 0x00, 0x0A)
     OP_23(0x02, 0x0384, 0x0104)
     OP_43(0x0A, 0x012C)
@@ -31378,6 +31430,7 @@ def TK_System_Debug_Bustshot():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, 0xF016, '#E_F#M_9')
 
     ChrTalk(
@@ -31399,9 +31452,11 @@ def TK_System_Debug_Bustshot():
     )
 
     WaitForMsg()
+
     OP_4F(0x03, 0xF016, 1.0, 1.0, 1.0, 0.0, 0x03E8, 0x03)
     OP_4F(0x03, 0x03FB, 1.0, 1.0, 1.0, 0.0, 0x03E8, 0x03)
     Sleep(1000)
+
     OP_43(0x0B, 0x012C)
     OP_43(0x0C, 0x0000)
     OP_4F(0x01, 0xF016)
@@ -31598,7 +31653,7 @@ def TK_System_Debug_HiarColor():
 
     label('loc_26510')
 
-    AnimeClipCtrl(0x0A, ChrTable['黎恩'], 'C_CHR000_C01', '')
+    AnimeClipChangeSkin(ChrTable['黎恩'], 'C_CHR000_C01')
 
     Jump('loc_26535')
 
@@ -31872,6 +31927,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x005A, 0x0276, 0x01, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -31885,6 +31941,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x0186, 0x01A4, 0x01, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -31898,6 +31955,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x005A, 0x01A4, 0x01, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -31911,6 +31969,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x00F0, 0x020D, 0x02, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -31924,6 +31983,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x005A, 0x0276, 0x02, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -31937,6 +31997,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x0186, 0x01A4, 0x02, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -31950,6 +32011,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x005A, 0x01A4, 0x02, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -31963,6 +32025,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x00F0, 0x0357, 0x01, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -31976,6 +32039,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x005A, 0x0357, 0x01, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -31989,6 +32053,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x0186, 0x03C0, 0x01, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32002,6 +32067,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x005A, 0x03C0, 0x01, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32015,6 +32081,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x00F0, 0x0357, 0x02, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32028,6 +32095,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x005A, 0x0357, 0x02, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32041,6 +32109,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x0186, 0x03C0, 0x02, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32054,6 +32123,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0x005A, 0x03C0, 0x02, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32067,6 +32137,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0xFFFF, 0x00D2, 0x05, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32080,6 +32151,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0xFFFF, 0x014A, 0x05, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32093,6 +32165,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0xFFFF, 0x0276, 0x05, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32106,6 +32179,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0xFFFF, 0x02EE, 0x05, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32119,6 +32193,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0xFFFF, 0x00D2, 0x06, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32132,6 +32207,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0xFFFF, 0x014A, 0x06, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32145,6 +32221,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0xFFFF, 0x0276, 0x06, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32158,6 +32235,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0xFFFF, 0x02EE, 0x06, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32171,6 +32249,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_23(0x01, 0xFFFF, 0x02EE, 0x06, 0x0A)
     SetChrFace(0x04, 0xF016, '')
 
@@ -32184,6 +32263,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_21(0x00)
 
     Return()
@@ -32209,6 +32289,7 @@ def TK_System_Debug_FaceCmd():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, 0xFFFE, '#E_0#M_0#B_0')
 
     ChrTalk(
@@ -32221,6 +32302,7 @@ def TK_System_Debug_FaceCmd():
     )
 
     WaitForMsg()
+
     SetScenaFlags(ScenaFlag(0x0066, 2, 0x332))
     SetChrFace(0x04, 0xF016, '#E_0#M_0#B_0')
 
@@ -32234,6 +32316,7 @@ def TK_System_Debug_FaceCmd():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     SetChrFace(0x04, 0xF016, '#E_0#M_0#B_0')
 
@@ -32247,6 +32330,7 @@ def TK_System_Debug_FaceCmd():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     SetChrFace(0x04, 0xF016, '#E_0#M_0#B_0')
 
@@ -32274,10 +32358,10 @@ def TK_System_Debug_CutinTest():
     OP_BC(0x09, 0x0000, (0xFF, 0x6E, 0x0), 0.0, -0.08, -12.0, 3.0, 0.0, 0.9, 0x0000, 3)
     OP_BC(0x08, 0x0000, (0xFF, 0xFFFF, 0x0), 0x00000001)
     OP_BC(0x02, 0x0000, (0xFF, 0x6E, 0x0), 0x00)
-    EquipCtrl(0x00, 0x006E, 'M_V4040', 'up_point', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
+    AttachEquip(0x006E, 'M_V4040', 'up_point', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
     OP_2A(0x00, 0x006E, '', 'up_point', 0x01)
     OP_76(ChrTable['剛毅艾奈絲'], 'up_point', 'equip', 0x00, 0x01, 0.0, -1.0, -1.0, -1.0)
-    AnimeClipCtrl(0x08, ChrTable['剛毅艾奈絲'], 0x00, 'AniEv45005', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    AnimeClipLoadMultiple(ChrTable['剛毅艾奈絲'], 0x00, 'AniEv45005', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     SetChrAniFunction(ChrTable['剛毅艾奈絲'], 0x00, 'AniEv45005', -1.0, 1.0, 0x00000000)
     OP_BC(0x09, 0x0000, (0xFF, 0x6E, 0x0), 0.0, -0.08, -12.0, -2.0, 0.0, 0.9, 0x0000, 3)
     OP_BC(0x04, 0x0000, (0xFF, 0x6E, 0x0), 0x00FA, 0x0003)
@@ -32297,8 +32381,10 @@ def TK_System_Debug_CutinTest():
     )
 
     WaitForMsg()
+
     OP_44(0x006E, 0x01, 0.1, 0x0004, 0.0)
     Sleep(1000)
+
     OP_43(0x6A, 0x012C)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
     OP_23(0x01, 0xFFFF, 0xFFFF, 0x00, 0x0A)
@@ -32306,6 +32392,7 @@ def TK_System_Debug_CutinTest():
     OP_43(0x6B, 0x012C)
     OP_BC(0x05, 0x0000, (0xFF, 0x6E, 0x0), 0x0190, 0x0003)
     Sleep(500)
+
     OP_BC(0x03, 0x0000, (0xFF, 0xFFFF, 0x0))
     ReleaseChr(ChrTable['剛毅艾奈絲'])
 
@@ -32315,11 +32402,11 @@ def TK_System_Debug_CutinTest():
 @scena.Code('TK_System_Debug_Emotest')
 def TK_System_Debug_Emotest():
     CameraCtrl(0x08, 0x00, 0x0000)
-    CameraCtrl(0x04, 0x03, 0.0, 0.0, 0.0, 0x0000, 0x01)
+    CameraRotate(0x03, 0.0, 0.0, 0.0, 0, 0x01)
     CameraCtrl(0x12, 0x0004)
     CameraCtrl(0x12, 0x0010)
     CameraCtrl(0x12, 0x0040)
-    ChrPhysicsCtrl(0x00, 0xFFFE, 0x00004000)
+    ChrSetPhysicsFlags(0xFFFE, 0x00004000)
 
     OP_18(
         0xF7,
@@ -32517,7 +32604,7 @@ def TK_System_Debug_Emotest():
         'loc_2763F',
     )
 
-    ChrPhysicsCtrl(0x01, 0xFFFE, 0x00002000)
+    ChrClearPhysicsFlags(0xFFFE, 0x00002000)
     OP_3D(0xFFFE, 180.0, 10.0, 0x00)
 
     Jump('loc_2773D')
@@ -32674,7 +32761,7 @@ def TK_System_Debug_Emotest():
     label('loc_27746')
 
     MenuCmd(0x03, 0x01)
-    ChrPhysicsCtrl(0x01, 0xFFFE, 0x00004000)
+    ChrClearPhysicsFlags(0xFFFE, 0x00004000)
 
     Return()
 
@@ -32944,12 +33031,16 @@ def SUB_EmotionTest():
 
     CreateThread(ChrTable['黎恩'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['悠娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['庫爾特'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞爾緹娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     SetChrPos(ChrTable['黎恩'], -2.35, 0.0, 0.12, 352.7)
     SetChrPos(ChrTable['悠娜'], -1.72, 0.0, 0.21, 355.2)
     SetChrPos(ChrTable['庫爾特'], -1.15, 0.0, 0.14, 10.6)
@@ -33281,6 +33372,7 @@ def SUB_EmotionTest():
     label('loc_27E96')
 
     Sleep(1000)
+
     OP_44(0xF000, 0x00, 0.15, 0x0400, 0.0)
     Sleep(50)
 
@@ -33608,6 +33700,7 @@ def SUB_EmotionTest():
     label('loc_2810A')
 
     Sleep(1000)
+
     OP_44(0xF000, 0x02, 0.15, 0x0400, 0.0)
     Sleep(50)
 
@@ -33935,6 +34028,7 @@ def SUB_EmotionTest():
     label('loc_2837E')
 
     Sleep(1000)
+
     OP_44(0xF000, 0x07, 0.0, 0x0400, 0.0)
     Sleep(50)
 
@@ -34511,6 +34605,7 @@ def TK_System_Debug_FadeTest():
     )
 
     Sleep(200)
+
     OP_43(0x00, 0x03E8, 1.0, 0x0000)
     OP_43(0xFF, 0x0000, 0x00FF)
     OP_43(0x64, 0x03E8, 1.0, 0x0000)
@@ -34539,6 +34634,7 @@ def TK_System_Debug_FadeTest():
     )
 
     Sleep(200)
+
     OP_43(0x00, 0x03E8, 1.0, 0x0001)
     OP_43(0xFF, 0x0000, 0x00FF)
     OP_43(0x64, 0x03E8, 1.0, 0x0001)
@@ -34567,6 +34663,7 @@ def TK_System_Debug_FadeTest():
     )
 
     Sleep(200)
+
     OP_43(0x00, 0x03E8, 1.0, 0x0002)
     OP_43(0xFF, 0x0000, 0x0002)
     OP_43(0x64, 0x03E8, 1.0, 0x0002)
@@ -34580,15 +34677,16 @@ def TK_System_Debug_FadeTest():
     OP_43(0x65, 0x07D0, 1.0, 0x0000)
     OP_43(0xFE, 0x0000)
     CameraCtrl(0x03, 0x03, 0x03EA, '', -0.03, 1.4, 0.09, 0x0000)
-    CameraCtrl(0x13, 0x03EA, '', 0x03, 6.0, -17.0, 0.0, 0x0000, 0x01)
-    CameraCtrl(0x05, 0x03, 1.36, 0x0000)
+    CameraRotateByTarget(0x03EA, '', 0x03, 6.0, -17.0, 0.0, 0, 0x01)
+    CameraSetDistance(0x03, 1.36, 0)
     CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
     Sleep(1000)
+
     OP_43(0x65, 0x07D0, 1.0, 0x0000)
     OP_43(0xFE, 0x0000)
     CameraCtrl(0x03, 0x03, 0x03EB, '', -0.21, 1.4, 0.55, 0x0000)
-    CameraCtrl(0x13, 0x03EB, '', 0x03, 11.0, -2.0, 0.0, 0x0000, 0x01)
-    CameraCtrl(0x05, 0x03, 3.06, 0x0000)
+    CameraRotateByTarget(0x03EB, '', 0x03, 11.0, -2.0, 0.0, 0, 0x01)
+    CameraSetDistance(0x03, 3.06, 0)
     CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
 
     Jump('loc_28C9C')
@@ -34971,6 +35069,7 @@ def TK_NoticeLog_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -35010,6 +35109,7 @@ def TK_NoticeLog_Test():
     )
 
     WaitForMsg()
+
     OP_27('', 0xFFFF)
     OP_63(0xFFFF, 0x01)
     OP_43(0x00, 0x01F4, 1.0, 0x0000)
@@ -35820,6 +35920,7 @@ def TK_PartySel_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -35884,6 +35985,7 @@ def TK_PartySel_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -35970,6 +36072,7 @@ def TK_PartySel_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x00, 0xFF)
@@ -36135,7 +36238,7 @@ def TK_PartySel_Test():
 # id: 0x00A8 offset: 0x2A474
 @scena.Code('TK_Train_Test')
 def TK_Train_Test():
-    OP_54(0x31, 0x00, 0x0000, 0x0028, 1.6, 0.25, 0x03, 0x00, 0x0000)
+    ModelCtrl(0x31, 0x00, 0x0000, 0x0028, 1.6, 0.25, 0x03, 0x00, 0x0000)
     OP_C9(0x0A, 0x0028, 'TK_celine2:tk_celine2')
     MenuChrFlagCmd(0x00, ChrTable['測試：恩奈雅'], 0x00000000)
     ChrPhysicsCtrl(0x0A, ChrTable['測試：恩奈雅'], 0x00000004)
@@ -36200,7 +36303,7 @@ def TK_Bgm_Test():
 
     label('loc_2A55F')
 
-    OP_3A(0x00, 922, 1.0, 0x0000, 0x00000000, 0x00)
+    PlayBGM(922, 1.0, 0x0000, 0x00000000, 0x00)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
 
     Talk(
@@ -36213,6 +36316,7 @@ def TK_Bgm_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2A636')
@@ -36234,6 +36338,7 @@ def TK_Bgm_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2A636')
@@ -36242,9 +36347,9 @@ def TK_Bgm_Test():
 
     label('loc_2A5BE')
 
-    OP_3A(0x00, 171, 1.0, 0x0000, 0x00000000, 0x00)
+    PlayBGM(171, 1.0, 0x0000, 0x00000000, 0x00)
     OP_3A(0x01, 0x00AB, 0x00)
-    OP_3A(0x00, 171, 1.0, 0x0000, 0x00000000, 0x00)
+    PlayBGM(171, 1.0, 0x0000, 0x00000000, 0x00)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
 
     Talk(
@@ -36257,6 +36362,7 @@ def TK_Bgm_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2A636')
@@ -36558,6 +36664,7 @@ def EV_useChecker():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_23(0x01, 0xFFFF, 0xFFFF, 0x00, 0x0A)
     SetChrFace(0x03, ChrTable['黎恩'], '0[autoE0]', '0[autoM0]', '', '#b', '0')
@@ -36702,6 +36809,7 @@ def TK_LinkLevel_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2ACE6')
@@ -38425,7 +38533,7 @@ def TK_Calendar_Test():
 def TK_CameraCommand_Test():
     Call(ScriptId.System, 'FC_TalkEnd_NoCamMove')
     Call(ScriptId.System, 'FC_EventBegin', (0xFF, 0x0, 0x0))
-    CameraCtrl(0x04, 0x03, 0.0, 0.0, 0.0, 0x0000, 0x01)
+    CameraRotate(0x03, 0.0, 0.0, 0.0, 0, 0x01)
     OP_43(0x64, 0x012C, 1.0, 0x0000)
     OP_43(0xFF, 0x0000, 0x00FF)
 
@@ -38498,7 +38606,7 @@ def TK_CameraCommand_Test():
 
     label('loc_2C3C9')
 
-    CameraCtrl(0x04, 0x03, 0.0, 0.0, 0.0, 0x03E8, 0x01)
+    CameraRotate(0x03, 0.0, 0.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_2C509')
@@ -38507,7 +38615,7 @@ def TK_CameraCommand_Test():
 
     label('loc_2C3E4')
 
-    CameraCtrl(0x04, 0x03, 0.0, 45.0, 0.0, 0x03E8, 0x01)
+    CameraRotate(0x03, 0.0, 45.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_2C509')
@@ -38516,7 +38624,7 @@ def TK_CameraCommand_Test():
 
     label('loc_2C3FF')
 
-    CameraCtrl(0x04, 0x03, 0.0, -45.0, 0.0, 0x03E8, 0x01)
+    CameraRotate(0x03, 0.0, -45.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_2C509')
@@ -38525,7 +38633,7 @@ def TK_CameraCommand_Test():
 
     label('loc_2C41A')
 
-    CameraCtrl(0x04, 0x03, 0.0, 315.0, 0.0, 0x03E8, 0x01)
+    CameraRotate(0x03, 0.0, 315.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_2C509')
@@ -38534,7 +38642,7 @@ def TK_CameraCommand_Test():
 
     label('loc_2C435')
 
-    CameraCtrl(0x04, 0x03, 0.0, 45.0, 0.0, 0x03E8, 0x00)
+    CameraRotate(0x03, 0.0, 45.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_2C509')
@@ -38543,7 +38651,7 @@ def TK_CameraCommand_Test():
 
     label('loc_2C450')
 
-    CameraCtrl(0x04, 0x03, 0.0, -45.0, 0.0, 0x03E8, 0x00)
+    CameraRotate(0x03, 0.0, -45.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_2C509')
@@ -38552,7 +38660,7 @@ def TK_CameraCommand_Test():
 
     label('loc_2C46B')
 
-    CameraCtrl(0x04, 0x03, 0.0, 315.0, 0.0, 0x03E8, 0x00)
+    CameraRotate(0x03, 0.0, 315.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_2C509')
@@ -38561,7 +38669,7 @@ def TK_CameraCommand_Test():
 
     label('loc_2C486')
 
-    CameraCtrl(0x04, 0x03, 0.0, 360.0, 0.0, 0x0000, 0x01)
+    CameraRotate(0x03, 0.0, 360.0, 0.0, 0, 0x01)
     Sleep(1000)
 
     Jump('loc_2C509')
@@ -38570,9 +38678,10 @@ def TK_CameraCommand_Test():
 
     label('loc_2C4A0')
 
-    CameraCtrl(0x04, 0x03, 0.0, 315.0, 0.0, 0x0000, 0x01)
+    CameraRotate(0x03, 0.0, 315.0, 0.0, 0, 0x01)
     Sleep(500)
-    CameraCtrl(0x04, 0x03, 0.0, 15.0, 0.0, 0x03E8, 0x01)
+
+    CameraRotate(0x03, 0.0, 15.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_2C509')
@@ -38581,9 +38690,10 @@ def TK_CameraCommand_Test():
 
     label('loc_2C4D0')
 
-    CameraCtrl(0x04, 0x03, 0.0, 315.0, 0.0, 0x0000, 0x01)
+    CameraRotate(0x03, 0.0, 315.0, 0.0, 0, 0x01)
     Sleep(500)
-    CameraCtrl(0x04, 0x03, 0.0, 15.0, 0.0, 0x03E8, 0x00)
+
+    CameraRotate(0x03, 0.0, 15.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_2C509')
@@ -38850,7 +38960,7 @@ def TK_LookCommand_Test():
 
     label('loc_2CAED')
 
-    OP_54(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 180.0, 0x01)
+    ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 180.0, 0x01)
 
     Jump('loc_2CCBC')
 
@@ -38858,7 +38968,7 @@ def TK_LookCommand_Test():
 
     label('loc_2CB09')
 
-    OP_54(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.5, 180.0, 0x01)
+    ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.5, 180.0, 0x01)
 
     Jump('loc_2CCBC')
 
@@ -38866,9 +38976,10 @@ def TK_LookCommand_Test():
 
     label('loc_2CB25')
 
-    AnimeClipCtrl(0x08, 0xF016, 0x00, 'AniEvByeWalk', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
-    OP_54(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
+    AnimeClipLoadMultiple(0xF016, 0x00, 'AniEvByeWalk', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
     Sleep(500)
+
     OP_3D(0xF016, 180.0, 10.0, 0x00)
     OP_3F(0xF016)
     SetChrAniFunction(0xF016, 0x00, 'AniEvByeWalk', -1.0, 1.0, 0x00000000)
@@ -38880,9 +38991,10 @@ def TK_LookCommand_Test():
 
     label('loc_2CB94')
 
-    AnimeClipCtrl(0x08, 0xF016, 0x00, 'AniEvByeWalk', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
-    OP_54(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
+    AnimeClipLoadMultiple(0xF016, 0x00, 'AniEvByeWalk', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
     Sleep(500)
+
     OP_3D(0xF016, 180.0, 5.0, 0x00)
     OP_3F(0xF016)
     SetChrAniFunction(0xF016, 0x00, 'AniEvByeWalk', -1.0, 1.0, 0x00000000)
@@ -38894,9 +39006,10 @@ def TK_LookCommand_Test():
 
     label('loc_2CC03')
 
-    AnimeClipCtrl(0x08, 0xF016, 0x00, 'AniEvByeWalk', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
-    OP_54(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
+    AnimeClipLoadMultiple(0xF016, 0x00, 'AniEvByeWalk', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
     Sleep(500)
+
     OP_3D(0xF016, 180.0, 2.5, 0x00)
     OP_3F(0xF016)
     SetChrAniFunction(0xF016, 0x00, 'AniEvByeWalk', -1.0, 1.0, 0x00000000)
@@ -38908,7 +39021,7 @@ def TK_LookCommand_Test():
 
     label('loc_2CC72')
 
-    AnimeClipCtrl(0x08, 0xF016, 0x00, 'AniEv00040a', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    AnimeClipLoadMultiple(0xF016, 0x00, 'AniEv00040a', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     SetChrAniFunction(0xF016, 0x00, 'AniEv00040a', -1.0, 1.0, 0x00000000)
 
     Jump('loc_2CCBC')
@@ -39143,6 +39256,7 @@ def TK_StatusUp_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2D118')
@@ -39164,6 +39278,7 @@ def TK_StatusUp_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2D118')
@@ -39185,6 +39300,7 @@ def TK_StatusUp_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2D118')
@@ -39206,6 +39322,7 @@ def TK_StatusUp_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2D118')
@@ -39227,6 +39344,7 @@ def TK_StatusUp_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2D118')
@@ -39248,6 +39366,7 @@ def TK_StatusUp_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2D118')
@@ -39342,6 +39461,7 @@ def TK_ChapterSave_Test():
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 500.0)
     OP_57(0x00, 0x03)
     Sleep(0)
+
     OP_AF(0x00)
     SetScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
     SetScenaFlags(ScenaFlag(0x0062, 4, 0x314))
@@ -39395,7 +39515,9 @@ def TK_ChapterSave_Test():
     )
 
     Sleep(1500)
+
     Sleep(0)
+
     OP_AF(0x00)
     SetScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
     SetScenaFlags(ScenaFlag(0x0060, 1, 0x301))
@@ -39442,6 +39564,7 @@ def TK_ChapterSave_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     def _loc_2D4F2(): pass
@@ -39477,6 +39600,7 @@ def TK_ChapterSave_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     def _loc_2D545(): pass
@@ -40745,7 +40869,7 @@ def TK_MiniGame_Debug():
 
     OP_43(0x00, 0x012C, 1.0, 0x0000)
     OP_43(0xFF, 0x0000, 0x0000)
-    OP_54(0x6B, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
+    ModelCtrl(0x6B, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
 
     Jump('loc_2EDB2')
 
@@ -41481,6 +41605,7 @@ def TK_MiniGame_Debug_Mg08_Start():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
     Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x2, 0x0))
@@ -41505,6 +41630,7 @@ def TK_MiniGame_Debug_Mg08_Start():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
     Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x2, 0x0))
@@ -41558,7 +41684,7 @@ def TK_MiniGame_Debug_Mg08_Start():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
     OP_43(0x00, 0x012C, 1.0, 0x0000)
     OP_43(0xFF, 0x0000, 0x0000)
-    OP_54(0x6C, 0x0000009C, 0x00000000, 0x00000021, 0x00000022, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
+    ModelCtrl(0x6C, 0x0000009C, 0x00000000, 0x00000021, 0x00000022, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
     OP_43(0x64, 0x012C, 1.0, 0x0000)
     OP_43(0xFF, 0x0000, 0x0000)
 
@@ -41677,7 +41803,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     OP_43(0x00, 0x012C, 1.0, 0x0000)
     OP_43(0xFF, 0x0000, 0x0000)
-    OP_54(0x6C, 0x0000009C, 0x00000000, 0x00000021, 0x00000022, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
+    ModelCtrl(0x6C, 0x0000009C, 0x00000000, 0x00000021, 0x00000022, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
     OP_43(0x64, 0x012C, 1.0, 0x0000)
     OP_43(0xFF, 0x0000, 0x0000)
 
@@ -44766,6 +44892,7 @@ def TK_Note_Debug():
     label('loc_33382')
 
     Sleep(300)
+
     OP_95(0x00, 'book01', 'BookData02', 0x00, 0x0000)
     OP_95(0x01)
 
@@ -45612,6 +45739,7 @@ def EV_Note_CountTests():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_340B7')
@@ -45641,6 +45769,7 @@ def EV_Note_CountTests():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_340B7')
@@ -45670,6 +45799,7 @@ def EV_Note_CountTests():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_340B7')
@@ -45699,6 +45829,7 @@ def EV_Note_CountTests():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_340B7')
@@ -45728,6 +45859,7 @@ def EV_Note_CountTests():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_340B7')
@@ -46530,8 +46662,8 @@ def FC_SelectEnemyCount():
 # id: 0x00D3 offset: 0x34DBC
 @scena.Code('FC_SetMegane')
 def FC_SetMegane():
-    OP_31(0x00, 'C_EQU350_C02')
-    EquipCtrl(0x00, 0xFFFE, 'C_EQU350_C02', 'megane_point', 0.0, 0.0, -0.04, 0.0, 0.0, 0.0, 1.4, 1.4, 1.4)
+    LoadAsset('C_EQU350_C02')
+    AttachEquip(0xFFFE, 'C_EQU350_C02', 'megane_point', 0.0, 0.0, -0.04, 0.0, 0.0, 0.0, 1.4, 1.4, 1.4)
     OP_2A(0x00, 0xFFFE, '', 'megane_point', 0x01)
 
     Return()
@@ -47881,6 +48013,7 @@ def TK_Camp_Orbment():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_3655C')
@@ -48202,6 +48335,7 @@ def TK_Camp_MQuartz():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_36E62')
@@ -48240,6 +48374,7 @@ def TK_Camp_MQuartz():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_36E54')
@@ -48260,6 +48395,7 @@ def TK_Camp_MQuartz():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     def _loc_36E54(): pass
@@ -61066,6 +61202,7 @@ def EV_DoJump_04():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -61089,6 +61226,7 @@ def EV_DoJump_04():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -61112,6 +61250,7 @@ def EV_DoJump_04():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
@@ -62309,6 +62448,7 @@ def EV_DoJump_05():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)

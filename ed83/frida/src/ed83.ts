@@ -410,7 +410,7 @@ function hookBattle() {
     );
 }
 
-function hookFileRedirection() {
+function hookIoRedirection() {
     const ScriptLoad = Interceptor2.jmp(
         Addrs.ScriptLoad,
         function(script: NativePointer, path: NativePointer, scriptType: NativePointer, stopIfNotExists: NativePointer): NativePointer {
@@ -551,7 +551,7 @@ export function main() {
     ED83.enableLogger();
     // traceScriptVM();
 
-    hookFileRedirection();
+    hookIoRedirection();
     hookCharacterModelInit();
     hookBattle();
 
