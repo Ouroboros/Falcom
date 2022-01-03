@@ -2,6 +2,7 @@ from Falcom.Common import *
 from Falcom import ED84
 from Falcom.ED84.Parser.scena_types import *
 import pathlib
+import uuid
 
 Expr        = ED84.ScenaExpression.Operator
 TxtCtl      = ED84.TextCtrlCode
@@ -16,13 +17,30 @@ class _ScenaWriter:
         self.scenaName          = ''
         self.fs                 = fileio.FileStream().OpenMemory()
         self.globals            = None                  # type: dict
+        self.opcodeCallbacks    = []                    # type: List[Callable[[int, Tuple]]]
+        self.funcCallbacks      = []                    # type: List[Callable[[str, Callable]]]
+        self.runCallbacks       = []                    # type: List[Callable[[dict]]]
 
     def init(self, instructionTable: ED84.ED84InstructionTable, scenaName: str):
         self.instructionTable   = instructionTable
         self.scenaName          = scenaName
 
+    def registerRunCallback(self, cb):
+        self.runCallbacks.append(cb)
+
+    def registerFuncCallback(self, cb):
+        self.funcCallbacks.append(cb)
+
+    def registerOpCodeCallback(self, cb):
+        self.opcodeCallbacks.append(cb)
+
     def functionDecorator(self, name: str, type: ED84.ScenaFunctionType) -> Callable[[], None]:
         def wrapper(f: Callable[[], Any]):
+            for cb in self.funcCallbacks:
+                f2 = cb(name, f)
+                if f2 is not None:
+                    f = f2
+
             func = ED84.ScenaFunction(len(self.functions), -1, name)
             func.type = type
             func.obj = f
@@ -83,6 +101,9 @@ class _ScenaWriter:
         return self.functionDecorator(name, ED84.ScenaFunctionType.ShinigPomBtlset)
 
     def run(self, g: dict):
+        for cb in self.runCallbacks:
+            cb(g)
+
         try:
             self.run2(g)
         except KeyError as e:
@@ -190,6 +211,10 @@ class _ScenaWriter:
     def handleOpCode(self, opcode: int, *args, **kwargs):
         # log.debug(f'handle opcode 0x{opcode:X} @ 0x{self.fs.Position:X}')
 
+        for cb in self.opcodeCallbacks:
+            if cb(opcode, *args) is True:
+                return
+
         fs = self.fs
         tbl = self.instructionTable
         desc = tbl.getDescriptor(opcode)
@@ -227,6 +252,9 @@ def createScenaWriter(scriptName: str) -> _ScenaWriter:
 
 def label(name: str):
     _gScena.addLabel(name)
+
+def genLabel() -> str:
+    return str(uuid.uuid4())
 
 def emit(*b: int):
     for v in b:

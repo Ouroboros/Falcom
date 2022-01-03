@@ -66,11 +66,11 @@ def main():
     ][-1]
 
     scena = [
-        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\ani\dat\\',
-        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\battle\dat\\',
-        r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\scena\dat\\',
-        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\talk\dat\\',
-        # r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\minigame\dat\\',
+        r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\ani\dat\\',
+        r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\battle\dat\\',
+        r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\scena\dat\\',
+        # r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\talk\dat\\',
+        # r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\minigame\dat\\',
     ]
 
     for s in scena:
@@ -92,7 +92,7 @@ def main():
         return
 
     path = scena[-1] + scp
-    path = r'E:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\scena\dat\m6040.dat'
+    path = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\scena\dat\m6040.dat'
     path = r'a0000汉化调试地图V0.5.dat'
 
     path = pathlib.Path(path)

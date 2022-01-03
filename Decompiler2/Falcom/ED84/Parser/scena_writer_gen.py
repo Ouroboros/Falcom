@@ -422,7 +422,7 @@ def OP_2E(arg1: int, arg2: int, arg3: int, *args):
     assert isinstance(arg3, int)
     return _gScena.handleOpCode(0x2E, arg1, arg2, arg3, *args)
 
-def ChrAnimeClipCtrl(type: int, chrId: int, *args):
+def AnimeClipCtrl(type: int, chrId: int, *args):
     # 0x2F
     assert isinstance(type, int)
     assert isinstance(chrId, int)
@@ -467,6 +467,12 @@ def OP_30(arg1: uint8, arg2: uint16, arg3: str, arg4: str, arg5: float32, arg6: 
     assert isinstance(arg12, float32)
     assert isinstance(arg13, float32)
     _gScena.handleOpCode(0x30, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13)
+
+def AssetCtrl(arg1: uint8, arg2: str):
+    # 0x31
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, str)
+    _gScena.handleOpCode(0x31, arg1, arg2)
 
 def OP_31(arg1: uint8, arg2: str):
     # 0x31
@@ -699,6 +705,11 @@ def OP_48(arg1: int, *args):
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x48, arg1, *args)
 
+def FormationCtrl(arg1: int, *args):
+    # 0x49
+    assert isinstance(arg1, int)
+    return _gScena.handleOpCode(0x49, arg1, *args)
+
 def OP_49(arg1: int, *args):
     # 0x49
     assert isinstance(arg1, int)
@@ -803,6 +814,11 @@ def OP_53(arg1: uint8, arg2: uint8):
     assert isinstance(arg1, uint8)
     assert isinstance(arg2, uint8)
     _gScena.handleOpCode(0x53, arg1, arg2)
+
+def ModelCtrl(arg1: int, *args):
+    # 0x54
+    assert isinstance(arg1, int)
+    return _gScena.handleOpCode(0x54, arg1, *args)
 
 def OP_54(arg1: int, *args):
     # 0x54
