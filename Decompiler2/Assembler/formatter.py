@@ -99,6 +99,10 @@ class Formatter:
                     addEmptyLine()
 
                 text.append(''.join(t))
+
+                if inst.flags.newline:
+                    addEmptyLine()
+
                 continue
 
             addEmptyLine()
