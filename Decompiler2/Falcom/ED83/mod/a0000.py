@@ -32016,7 +32016,7 @@ def TK_System_Debug_FaceCmd():
 @scena.Code('TK_System_Debug_Emotest')
 def TK_System_Debug_Emotest():
     CameraCtrl(0x08, 0x00, 0x0000)
-    CameraRotate(0.0, 0.0, 0.0, 0, 0x01)
+    CameraRotate(0x03, 0.0, 0.0, 0.0, 0, 0x01)
     CameraCtrl(0x12, 0x0004)
     CameraCtrl(0x12, 0x0010)
     CameraCtrl(0x12, 0x0040)
@@ -37193,7 +37193,7 @@ def TK_Calendar_Test():
 def TK_CameraCommand_Test():
     Call(ScriptId.System, 'FC_TalkEnd_NoCamMove')
     Call(ScriptId.System, 'FC_EventBegin')
-    CameraRotate(0.0, 0.0, 0.0, 0, 0x01)
+    CameraRotate(0x03, 0.0, 0.0, 0.0, 0, 0x01)
     Fade(0x64, 300, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
 
@@ -37266,7 +37266,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28E23')
 
-    CameraRotate(0.0, 0.0, 0.0, 1000, 0x01)
+    CameraRotate(0x03, 0.0, 0.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37275,7 +37275,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28E3E')
 
-    CameraRotate(0.0, 45.0, 0.0, 1000, 0x01)
+    CameraRotate(0x03, 0.0, 45.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37284,7 +37284,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28E59')
 
-    CameraRotate(0.0, -45.0, 0.0, 1000, 0x01)
+    CameraRotate(0x03, 0.0, -45.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37293,7 +37293,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28E74')
 
-    CameraRotate(0.0, 315.0, 0.0, 1000, 0x01)
+    CameraRotate(0x03, 0.0, 315.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37302,7 +37302,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28E8F')
 
-    CameraRotate(0.0, 45.0, 0.0, 1000, 0x00)
+    CameraRotate(0x03, 0.0, 45.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37311,7 +37311,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28EAA')
 
-    CameraRotate(0.0, -45.0, 0.0, 1000, 0x00)
+    CameraRotate(0x03, 0.0, -45.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37320,7 +37320,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28EC5')
 
-    CameraRotate(0.0, 315.0, 0.0, 1000, 0x00)
+    CameraRotate(0x03, 0.0, 315.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37329,7 +37329,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28EE0')
 
-    CameraRotate(0.0, 360.0, 0.0, 0, 0x01)
+    CameraRotate(0x03, 0.0, 360.0, 0.0, 0, 0x01)
     Sleep(1000)
 
     Jump('loc_28F63')
@@ -37338,9 +37338,9 @@ def TK_CameraCommand_Test():
 
     label('loc_28EFA')
 
-    CameraRotate(0.0, 315.0, 0.0, 0, 0x01)
+    CameraRotate(0x03, 0.0, 315.0, 0.0, 0, 0x01)
     Sleep(500)
-    CameraRotate(0.0, 15.0, 0.0, 1000, 0x01)
+    CameraRotate(0x03, 0.0, 15.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')
@@ -37349,9 +37349,9 @@ def TK_CameraCommand_Test():
 
     label('loc_28F2A')
 
-    CameraRotate(0.0, 315.0, 0.0, 0, 0x01)
+    CameraRotate(0x03, 0.0, 315.0, 0.0, 0, 0x01)
     Sleep(500)
-    CameraRotate(0.0, 15.0, 0.0, 1000, 0x00)
+    CameraRotate(0x03, 0.0, 15.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
     Jump('loc_28F63')

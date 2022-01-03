@@ -114,34 +114,6 @@ def EventJump(eventId: int):
 def DebugString(s: str):
     OP_07(0x02, (0xDD, s))
 
-# camera 0x36
-
-def CameraRotate(vertical: float, horizontal: float, tilt: float, durationInMs: int = 0, unknown: int = 1):
-    '''
-        上下
-        左右
-        翻转
-    '''
-    CameraCtrl(0x04, 0x03, vertical, horizontal, tilt, durationInMs, unknown)
-
-def CameraSetPos(x: float, y: float, z: float, durationInMs: int = 0):
-    CameraCtrl(0x02, 0x03, x, y, z, durationInMs)
-
-def CameraRotateByTarget(chrId: int, node: str, byte3: int, vertical: float, horizontal: float, tilt: float, durationInMs: int, byte8: int):
-    CameraCtrl(0x13, chrId, node, byte3, vertical, horizontal, tilt, durationInMs, byte8)
-
-def CameraSetPosByTarget(chrId: int, node: str, x: float, y: float, z: float, durationInMs: int):
-    CameraCtrl(0x14, 0x03, chrId, node, x, y, z, durationInMs)
-
-def CameraSetDistance(distance: float, durationInMs: int = 0):
-    CameraCtrl(0x05, 0x03, distance, durationInMs)
-
-def CameraSetHeight(height: float, durationInMs: int = 0):
-    CameraCtrl(0x16, 0x03, height, durationInMs)
-
-def CameraShake():
-    CameraCtrl(0x0A, 0.2, 0.125, 0.01, 0x001E, 0x012C, 0x003C, 0x0000, 0x0000, 0x00)
-
 
 # anime clip 0x2F
 
@@ -245,10 +217,7 @@ def StopEffect(chrId: int, slot: int, unknown: int):
     EffectCtrl(0x0D, chrId, slot, unknown)
 
 
-
-'''
-    battle ctrl
-'''
+# battle 0x33
 
 def BattleDamage(targetChr: int, sourceChr: int, calc: int):
     BattleCtrl(0x00, targetChr, sourceChr, calc)
@@ -353,7 +322,42 @@ def ChrClearPhysicsFlags(chrId: int, flags: int):
     OP_35(0x01, chrId, flags)
 
 
+# camera 0x36
+
+def CameraSetPos(n: int, x: float, y: float, z: float, durationInMs: int = 0):
+    CameraCtrl(0x02, n, x, y, z, durationInMs)
+
+def CameraRotate(n: int, vertical: float, horizontal: float, tilt: float, durationInMs: int = 0, unknown: int = 1):
+    '''
+        上下
+        左右
+        翻转
+    '''
+    CameraCtrl(0x04, n, vertical, horizontal, tilt, durationInMs, unknown)
+
+def CameraSetDistance(n: int, distance: float, durationInMs: int = 0):
+    CameraCtrl(0x05, n, distance, durationInMs)
+
+def CameraRotateByTarget(chrId: int, node: str, byte3: int, vertical: float, horizontal: float, tilt: float, durationInMs: int, byte8: int):
+    CameraCtrl(0x13, chrId, node, byte3, vertical, horizontal, tilt, durationInMs, byte8)
+
+def CameraSetPosByTarget(n: int, chrId: int, node: str, x: float, y: float, z: float, durationInMs: int):
+    CameraCtrl(0x14, n, chrId, node, x, y, z, durationInMs)
+
+def CameraSetHeight(n: int, height: float, durationInMs: int = 0):
+    CameraCtrl(0x16, n, height, durationInMs)
+
+def CameraShake():
+    CameraCtrl(0x0A, 0.2, 0.125, 0.01, 0x001E, 0x012C, 0x003C, 0x0000, 0x0000, 0x00)
+
+
 # sound 0x3A 0x3B
+
+def PlayBGM(bgm: int, arg2: float, arg3: int, arg4: int, arg5: int):
+    OP_3A(0x00, bgm, arg2, arg3, arg4, arg5)
+
+def PlayBGM2(bgm: int):
+    OP_3A(0x00, bgm, 1.0, 0x0000, 0x00000000, 0x00)
 
 def PlaySE(sound: int):
     OP_3B(0x00, (0xFF, sound, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
@@ -361,12 +365,6 @@ def PlaySE(sound: int):
 def PlayVoice(voice1: int, *, speed: float = 0.0):
     # OP_3B(0x3A, 0xFFFE, (0xFF, voice1, 0x0), (0xFF, voice2, 0x0), (0xFF, voice3, 0x0), (0xFF, voice4, 0x0))
     OP_3B(0x32, (0xFF, voice1, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, speed, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
-
-def PlayBGM(bgm: int, arg2: float, arg3: int, arg4: int, arg5: int):
-    OP_3A(0x00, bgm, arg2, arg3, arg4, arg5)
-
-def PlayBGM2(bgm: int):
-    OP_3A(0x00, bgm, 1.0, 0x0000, 0x00000000, 0x00)
 
 def StopVoice(voice: int):
     OP_3B(0x34, (0xFF, voice, 0x0))
