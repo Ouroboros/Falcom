@@ -14,12 +14,8 @@ def _init():
 _init()
 
 def TK_MiniGame_Debug():
-    off = genLabel()
-    end = genLabel()
-
     chrmap = {
-        ChrTable['黎恩']: 0x2000,
-        # ChrTable['悠娜']: 0x2001,
+        ChrTable['黎恩']: ChrTable['鋼之阿瑞安赫德'],
     }
 
     FormationReset(0)

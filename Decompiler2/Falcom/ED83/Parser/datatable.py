@@ -42,76 +42,6 @@ class TableDataEntry:
 
     __repr__ = __str__
 
-class DataTable:
-    @staticmethod
-    def create(*args, **kwargs):
-        return createDataTable(*args, **kwargs)
-
-    def __init__(self, *, fs: fileio.FileStream):
-        self.fs = fs
-
-        if fs:
-            self.entryCount = fs.ReadUShort()
-            self.tableCount = fs.ReadULong()
-            self.tables = [TableNameEntry(fs) for _ in range(self.tableCount)]
-
-            try:
-                self.load(fs)
-            except:
-                print(f'pos = 0x{fs.Position:X}')
-                raise
-
-    def load(self, fs: fileio.FileStream):
-        entryMap = {
-            'NameTableData'     : NameTableData,
-            'AttachTableData'   : AttachTableData,
-            'EventTableData'    : EventTableData,
-            'status'            : StatusTableData,
-            'voice'             : VoiceTableData,
-            'se'                : SETableData,
-            'bgm'               : BGMTableData,
-        }
-
-        self.entries = []
-        entryCount = sum([e.entryCount for e in self.tables])
-
-        for _ in range(entryCount):
-            with fs.PositionSaver:
-                header = TableDataEntry(fs)
-
-            cls = entryMap[header.entryName]
-            entry = cls(fs = fs)
-            self.entries.append(entry)
-
-    def toPython(self, filename: str) -> List[str]:
-        f = [
-            'from Falcom.ED83.Parser.datatable import *',
-            '',
-            'entries = [',
-        ]
-
-        for e in self.entries:
-            f.extend([f'{GlobalConfig.DefaultIndent}{l}' for l in e.toPython()])
-            f[-1] += ','
-
-        f.extend([
-            ']',
-            '',
-            "if __name__ == '__main__':",
-            f"{GlobalConfig.DefaultIndent}DataTable.create('{filename}', *entries)",
-            '',
-        ])
-
-        return f
-
-    def serialize(self) -> bytes:
-        raise NotImplementedError
-
-    def __str__(self):
-        return f'{self.tables}'
-
-    __repr__ = __str__
-
 class NameTableData(TableDataEntry):
     def __init__(self, *, fs: fileio.FileStream = None, **kwargs):
         super().__init__(fs)
@@ -688,6 +618,79 @@ class BGMTableData(TableDataEntry):
         body.extend(utils.int_to_bytes(self.word3, 2))
 
         return bytes(body)
+
+class DataTable:
+    DataTableDataTypes = {
+        'NameTableData'     : NameTableData,
+        'AttachTableData'   : AttachTableData,
+        'EventTableData'    : EventTableData,
+        'status'            : StatusTableData,
+        'voice'             : VoiceTableData,
+        'se'                : SETableData,
+        'bgm'               : BGMTableData,
+    }
+
+    PythonHeader = [
+        'from Falcom.ED83.Parser.datatable import *',
+        '',
+        'entries = [',
+    ]
+
+    @staticmethod
+    def create(*args, **kwargs):
+        return createDataTable(*args, **kwargs)
+
+    def __init__(self, *, fs: fileio.FileStream):
+        self.fs = fs
+
+        if fs:
+            self.entryCount = fs.ReadUShort()
+            self.tableCount = fs.ReadULong()
+            self.tables = [TableNameEntry(fs) for _ in range(self.tableCount)]
+
+            try:
+                self.load(fs)
+            except:
+                print(f'pos = 0x{fs.Position:X}')
+                raise
+
+    def load(self, fs: fileio.FileStream):
+        self.entries = []
+        entryCount = sum([e.entryCount for e in self.tables])
+
+        for _ in range(entryCount):
+            with fs.PositionSaver:
+                header = TableDataEntry(fs)
+
+            cls = self.DataTableDataTypes[header.entryName]
+            entry = cls(fs = fs)
+            self.entries.append(entry)
+
+    def toPython(self, filename: str) -> List[str]:
+        f = self.PythonHeader.copy()
+
+        for e in self.entries:
+            f.extend([f'{GlobalConfig.DefaultIndent}{l}' for l in e.toPython()])
+            f[-1] += ','
+
+        f.extend([
+            ']',
+            '',
+            "if __name__ == '__main__':",
+            f"{GlobalConfig.DefaultIndent}DataTable.create('{filename}', *entries)",
+            '',
+        ])
+
+        return f
+
+    def serialize(self) -> bytes:
+        raise NotImplementedError
+
+    def __str__(self):
+        return f'{self.tables}'
+
+    __repr__ = __str__
+
 
 def createDataTable(filename: str, *entries):
     table = bytearray()
