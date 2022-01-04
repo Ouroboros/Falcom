@@ -1,6 +1,6 @@
 ## 闪之轨迹 3/4 增强模块
 
-**需要配合 [loader](https://github.com/Ouroboros/Falcom/tree/master/ed83/loader) 使用，[下载](https://github.com/Ouroboros/Falcom/releases/download/1.0/loader.7z)**
+**需要配合 [loader](https://github.com/Ouroboros/Falcom/tree/master/ed83/loader) 使用，[下载](https://github.com/Ouroboros/Falcom/releases/download/localization/loader.7z)**
 
 目前支持
 * 闪之轨迹3 繁体中文版
