@@ -40,6 +40,8 @@ goto:EOF
 
 :START
 
+rem copy/y config.json5 "%PATCH_PATH%\"
+
 call ..\Parser\gen_op.py
 
 for %%i in (

@@ -1,4 +1,4 @@
-import { Modules } from "./modules";
+import { Modules } from "../modules";
 
 export const Addrs = {
     BlowFish_Decode                     : Modules.ED83.base.add(0x20CAA0),

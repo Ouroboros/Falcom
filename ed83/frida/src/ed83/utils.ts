@@ -1,6 +1,6 @@
-import { Addrs } from "./ed83_addrs";
-import { Modules } from "./modules";
-import * as utils from "./utils";
+import { Addrs } from "./addrs";
+import { Modules } from "../modules";
+import * as utils from "../utils";
 
 const _AllocObject      = new NativeFunction(Modules.ED83.base.add(0x4DAAC0), "pointer", ['size_t', 'size_t', 'size_t', 'size_t'], 'win64');
 const _AllocMemory      = new NativeFunction(Modules.ED83.base.add(0x5DFE70), "pointer", ['size_t', 'size_t', 'size_t', 'size_t', 'size_t'], 'win64');

@@ -1,7 +1,7 @@
 import { sprintf } from "sprintf-js";
-import * as utils from "./utils";
-import { Interceptor2 } from "./utils";
-import { Addrs } from "./ed83_addrs";
+import * as utils from "../utils";
+import { Interceptor2 } from "../utils";
+import { Addrs } from "./addrs";
 import {
     ED83,
     MinCustomChrId,
@@ -12,7 +12,7 @@ import {
     MaxPartyChrId,
     NameTableData,
     BattleAITable,
-} from "./ed83_types";
+} from "./types";
 
 function findReplacedNameData(chrId: number): NameTableData | null {
     const replacedChrId = ED83.getBattleStyle(chrId)

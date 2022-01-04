@@ -1,4 +1,4 @@
-import { Addrs } from "./ed84_addrs";
+import { Addrs } from "./addrs";
 
 const _AllocObject      = new NativeFunction(Addrs.AllocObject, "pointer", ['size_t', 'size_t', 'size_t', 'size_t'], 'win64');
 const _AllocMemory      = new NativeFunction(Addrs.AllocMemory, "pointer", ['size_t', 'size_t', 'size_t', 'size_t', 'size_t'], 'win64');

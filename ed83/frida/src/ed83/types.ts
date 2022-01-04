@@ -1,6 +1,6 @@
-import { Addrs, Offsets } from "./ed83_addrs";
-import { ED8BaseObject } from "./utils";
-import * as utils from "./utils";
+import { Addrs, Offsets } from "./addrs";
+import { ED8BaseObject } from "../utils";
+import * as utils from "../utils";
 
 export const MaxPartyChrId = 0x30;
 export const MinCustomChrId = 0x2000;

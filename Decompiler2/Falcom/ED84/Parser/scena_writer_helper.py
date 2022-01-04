@@ -46,6 +46,12 @@ def RandIf(probability, true_succ, false_succ):
 
     label(end)
 
+# debug 0x07
+
+def DebugString(s: str):
+    OP_07(0x02, (0xDD, s))
+
+
 # anime clip 0x2F
 
 def AnimeClipLoadByCatalog(chrId: int, catalog: int):
