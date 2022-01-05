@@ -1,9 +1,12 @@
 import * as utils from "../utils";
+import { sprintf } from "sprintf-js";
 import { Interceptor2 } from "../utils";
 import { Addrs } from "./addrs";
 import {
     ED84,
     Character,
+    BattleCharacter,
+    BattleInfoTable,
     INameTableData,
     InvalidChrId,
     MaxPartyChrId,
@@ -12,6 +15,10 @@ import {
 
 function findReplacedNameData(chrId: number): INameTableData | undefined {
     const replacedChrId = ED84.getBattleStyle(chrId)
+    if (replacedChrId == InvalidChrId) {
+        return undefined;
+    }
+
     return ED84.findNameTableDataByChrId(replacedChrId >= MaxPartyChrId ? replacedChrId : chrId);
 }
 
@@ -43,7 +50,7 @@ function hookIoRedirection() {
     );
 }
 
-function hookCharacterModelInit() {
+function hookCharacterModel() {
     const Character_LoadFaceModel = Interceptor2.jmp(
         Addrs.Character.LoadFaceModel,
         function(chr: NativePointer, faceModel: NativePointer) {
@@ -120,7 +127,7 @@ function hookCharacterModelInit() {
         function(a1: NativePointer, symbol: NativePointer, size: NativePointer, a4: NativePointer, a5: NativePointer): NativePointer {
             const s = symbol.readUtf8String()!;
 
-            const s2 = ED84.getConfig().assetMap[s];
+            const s2 = ED84.getConfig()?.assetMap[s];
             if (s2) {
                 symbol = Memory.allocUtf8String(s2);
             }
@@ -148,7 +155,7 @@ function hookCharacterModelInit() {
                 if (nonAscii != 0)
                     break;
 
-                const s2 = ED84.getConfig().assetMap[bytes.toString('utf8')];
+                const s2 = ED84.getConfig()?.assetMap[bytes.toString('utf8')];
                 if (s2) {
                     data = Memory.allocUtf8String(s2);
                     size = new UInt64(s2.length);
@@ -162,13 +169,180 @@ function hookCharacterModelInit() {
         },
         'uint32', ['pointer', 'size_t'],
     );
+
+    const BattleCharacter_FormatBattleSymbol = Interceptor2.jmp(
+        Addrs.BattleCharacter.FormatBattleSymbol,
+        function(btlChr: NativePointer, chr: NativePointer, buffer: NativePointer, bufferSize: number, arg5: number, arg6: number) {
+
+            do
+            {
+                const battleChar = new BattleCharacter(btlChr);
+                const char = battleChar.character;
+
+                if (!char.isReplaced())
+                    break;
+
+                const prefixmap: any = {
+                    'C_CHR' : 'C',
+                    'C_MON' : 'M',
+                    'O_E'   : 'OE',
+                    'C_NPC' : 'N',
+                    'C_ROB' : 'R',
+                };
+
+                const model = char.model;
+                let prefix = '';
+                let num = '';
+
+                for (let p in prefixmap) {
+                    if (!model.startsWith(p)) {
+                        continue;
+                    }
+
+                    prefix = prefixmap[p];
+                    num = model.slice(p.length, p.length + 3);
+                    break;
+                }
+
+                const symbol = sprintf('I_BTLS%s', prefix + num);
+                buffer.writeUtf8String(symbol.slice(0, bufferSize));
+
+                return;
+
+            } while (0);
+
+            BattleCharacter_FormatBattleSymbol(btlChr, chr, buffer, bufferSize, arg5, arg6);
+        },
+        'void', ['pointer', 'pointer', 'pointer', 'uint32', 'uint8', 'uint8'],
+    );
+}
+
+function hookBattle() {
+    Interceptor2.call(
+        Addrs.BattleProc.SetupBattle_FormatAlgoScript,
+        function(buffer: NativePointer, size: number, fmt: NativePointer, battleAni: NativePointer) {
+            const ctx = (this.context as X64CpuContext);
+            const chrId = ctx.rdi.toUInt32() & 0xFFFF;
+
+            let path = (function() {
+                if (Character.isReplaced(chrId) == false)
+                    return '';
+
+                const nameData = findReplacedNameData(chrId);
+
+                if (!nameData)
+                    return '';
+
+                const algo = sprintf(fmt.readAnsiString()!, nameData.algo ? nameData.algo.slice(2) : nameData.ani);
+                if (!utils.getPatchFile(algo))
+                    return '';
+
+                return algo;
+            })()
+
+            if (!path)
+                path = sprintf(fmt.readAnsiString()!, battleAni.readUtf8String()!);
+
+            buffer.writeAnsiString(path.slice(0, size));
+        },
+        'void', ['pointer', 'uint32', 'pointer', 'pointer'],
+    );
+
+    Interceptor2.call(
+        Addrs.BattleProc.SetupBattle_InitCraft,
+        function() {
+            const ctx = (this.context as X64CpuContext);
+            const chrId = ctx.rdi.toUInt32() & 0xFFFF;
+            const battleChar = new BattleCharacter(ctx.rcx);
+
+            if (chrId >= MaxPartyChrId) {
+                if (battleChar.isChrNPC()) {
+                    battleChar.initNpcCraftAI(false);
+                }
+            } else {
+                const replaced = Character.isReplaced(chrId);
+
+                battleChar.initEquipAndOrbs(chrId);
+                battleChar.initMagic(chrId);
+                replaced ? battleChar.initNpcCraftAI(false) : battleChar.initPartyCraft(chrId);
+
+                if (replaced) {
+                    const actionTable = battleChar.battleInfoTable.actionTable;
+                    if (actionTable.pointer.isNull())
+                        return;
+
+                    for (let i = 0, n = actionTable.size; i != n; i++) {
+                        const craft = actionTable.getCraft(i);
+                        if (craft.type != 0x1F)
+                            continue;
+
+                        battleChar.sbreakCraftID = craft.craftId;
+                    }
+                } else {
+                    battleChar.sbreakCraftID = ED84.getSBreak(chrId).readU16();
+                }
+
+            }
+        },
+        'void', [],
+    );
+
+    Memory.patchCode(Addrs.BattleProc.SetupBattle_InitCraft.add(5), 2, (code) => {
+        code.writeU8(0xEB);
+        code.add(1).writeU8(Addrs.BattleProc.SetupBattle_InitCraftEnd.sub(Addrs.BattleProc.SetupBattle_InitCraft).sub(5 + 2).toUInt32());
+    });
+
+    const BattleInfoTable_GetCraftByID = Interceptor2.jmp(
+        Addrs.BattleInfoTable.GetCraftByID,
+        function(tables: NativePointer, craftId: number): NativePointer {
+            const tbl = new BattleInfoTable(tables);
+            const char = tbl.battleCharacter;
+
+            if (char.character.isReplaced() == false) {
+                return BattleInfoTable_GetCraftByID(tables, craftId);
+            }
+
+            switch (craftId) {
+                case 0:     // regular attack
+                {
+                    const actionTable = tbl.actionTable;
+                    for (let i = 0, n = actionTable.size; i != n; i++) {
+                        const craft = actionTable.getCraft(i);
+                        if (craft.type != 1)
+                            continue;
+
+                        return craft.pointer;
+                    }
+                    break;
+                }
+
+                case 1:     // move
+                {
+                    const actionTable = tbl.actionTable;
+                    for (let i = 0, n = actionTable.size; i != n; i++) {
+                        const craft = actionTable.getCraft(i);
+                        if (craft.type != 3)
+                            continue;
+
+                        return craft.pointer;
+                    }
+
+                    break;
+                }
+            }
+
+            return BattleInfoTable_GetCraftByID(tables, craftId);
+
+        }, 'pointer', ['pointer', 'uint16'],
+    );
 }
 
 export function main() {
     ED84.enableLogger();
 
     hookIoRedirection();
-    hookCharacterModelInit();
+    hookCharacterModel();
+    hookBattle();
 
     Memory.patchCode(Addrs.SaveDataChecksum, 1, (code) => {
         code.writeU8(0xEB);

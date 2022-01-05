@@ -1,5 +1,5 @@
 import { Addrs, Offsets } from "./addrs";
-import { ED8BaseObject } from "../utils";
+import { ED8BaseObject, ED8Vector } from "../utils";
 import * as utils from "../utils";
 
 export const MaxPartyChrId = 0x30;
@@ -149,11 +149,11 @@ export class BattleCharacter extends ED8BaseObject {
     }
 
     get sbreakCraftID(): number {
-        return this.readPointer(Offsets.BattleCharacter.SBreakCraftID).readU16();
+        return this.readU16(Offsets.BattleCharacter.SBreakCraftID);
     }
 
     set sbreakCraftID(craftId: number) {
-        this.pointer.add(Offsets.BattleCharacter.SBreakCraftID).writeU16(craftId);
+        this.writeU16(Offsets.BattleCharacter.SBreakCraftID, craftId);
     }
 
     get battleAITable(): BattleAITable {
@@ -221,16 +221,6 @@ export class NameTableData extends ED8BaseObject {
     }
 }
 
-class vector extends ED8BaseObject {
-    get size(): number {
-        return this.readU32(0x00);
-    }
-
-    get ptr(): NativePointer {
-        return this.readPointer(0x08);
-    }
-}
-
 export class BattleAITable extends ED8BaseObject {
     get algoTable(): AlgoTable {
         return new AlgoTable(this.pointer.add(Offsets.BattleAITable.AlgoTable));
@@ -245,7 +235,7 @@ export class BattleAITable extends ED8BaseObject {
     }
 }
 
-export class AlgoTable extends vector {
+export class AlgoTable extends ED8Vector {
 }
 
 class ActionTableData extends ED8BaseObject {
@@ -274,7 +264,7 @@ class ActionTableData extends ED8BaseObject {
     }
 }
 
-export class ActionTable extends vector {
+export class ActionTable extends ED8Vector {
     getCraft(index: number): ActionTableData {
         return new ActionTableData(this.ptr.add(index * 8).readPointer())
     }

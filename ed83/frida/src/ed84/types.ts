@@ -2,7 +2,7 @@ import * as json5 from "json5"
 import * as path from "path"
 import { Modules } from "../modules";
 import { Addrs, Offsets } from "./addrs";
-import { ED8BaseObject, Interceptor2 } from "../utils";
+import { ED8BaseObject, ED8Vector, Interceptor2 } from "../utils";
 import * as utils from "../utils";
 
 export const MaxPartyChrId = 0x40;
@@ -14,6 +14,7 @@ export interface INameTableData {
     chrName     : string;
     model       : string;
     ani         : string;
+    algo        : string;
     faceModel   : string;
     faceTexture : string;
     name2       : string;
@@ -49,6 +50,10 @@ export class NameTableData extends ED8BaseObject implements INameTableData {
         return this.readPointer(0x20);
     }
 
+    get algo(): string {
+        return '';
+    }
+
     get faceTexture(): string {
         return this.readPointer(0x28).readUtf8String()!;
     }
@@ -64,7 +69,12 @@ export class CharacterManager extends ED8BaseObject {
 
 export class Character extends ED8BaseObject {
     static isReplaced(chrId: number): boolean {
-        return ED84.getBattleStyle(chrId) >= MinCustomChrId
+        const id = ED84.getBattleStyle(chrId);
+        if (id == InvalidChrId) {
+            return false;
+        }
+
+        return id >= MaxPartyChrId;
     }
 
     isReplaced(): boolean {
@@ -111,9 +121,106 @@ export class Character extends ED8BaseObject {
     }
 }
 
+export class BattleCharacter extends ED8BaseObject {
+    private static _IsChrNPC            = new NativeFunction(Addrs.BattleCharacter.IsChrNPC, 'bool', ['pointer'], 'win64');
+    private static _InitNpcCraftAI      = new NativeFunction(Addrs.BattleCharacter.InitNpcCraftAI, 'void', ['pointer', 'uint32'], 'win64');
+    private static _InitEquipAndOrbs    = new NativeFunction(Addrs.BattleCharacter.InitEquipAndOrbs, 'void', ['pointer', 'uint32'], 'win64');
+    private static _InitPartyCraft      = new NativeFunction(Addrs.BattleCharacter.InitPartyCraft, 'void', ['pointer', 'pointer'], 'win64');
+    private static _InitMagic           = new NativeFunction(Addrs.BattleCharacter.InitMagic, 'void', ['pointer', 'pointer'], 'win64');
+
+    get battleProc(): NativePointer {
+        return this.readPointer(Offsets.BattleCharacter.BattleProc);
+    }
+
+    get character(): Character {
+        return new Character(this.readPointer(Offsets.BattleCharacter.Character));
+    }
+
+    get sbreakCraftID(): number {
+        return this.readU16(Offsets.BattleCharacter.SBreakCraftID);
+    }
+
+    set sbreakCraftID(craftId: number) {
+        this.writeU16(Offsets.BattleCharacter.SBreakCraftID, craftId);
+    }
+
+    get battleInfoTable(): BattleInfoTable {
+        return new BattleInfoTable(this.readPointer(Offsets.BattleCharacter.BattleInfoTable));
+    }
+
+    isChrNPC(): boolean {
+        return (BattleCharacter._IsChrNPC(this.pointer) & 0xFF) != 0;
+    }
+
+    initNpcCraftAI(reset: boolean) {
+        BattleCharacter._InitNpcCraftAI(this.pointer, Number(reset));
+    }
+
+    initEquipAndOrbs(chrId: number) {
+        BattleCharacter._InitEquipAndOrbs(this.pointer, chrId);
+    }
+
+    initPartyCraft(chrId: number) {
+        BattleCharacter._InitPartyCraft(this.pointer, ED84.getCraftList(chrId));
+    }
+
+    initMagic(chrId: number) {
+        BattleCharacter._InitMagic(this.pointer, ED84.getMagicList(chrId));
+    }
+}
+
+export class BattleInfoTable extends ED8BaseObject {
+    get algoTable(): AlgoTable {
+        return new AlgoTable(this.pointer.add(Offsets.BattleInfoTable.AlgoTable));
+    }
+
+    get actionTable(): ActionTable {
+        return new ActionTable(this.pointer.add(Offsets.BattleInfoTable.ActionTable));
+    }
+
+    get battleCharacter(): BattleCharacter {
+        return new BattleCharacter(this.readPointer(Offsets.BattleInfoTable.BattleCharacter));
+    }
+}
+
+export class AlgoTable extends ED8Vector {
+}
+
+class ActionTableData extends ED8BaseObject {
+    get craftId(): number {
+        return this.readU16(0x00);
+    }
+
+    get name(): string {
+        return this.readPointer(0x10).readUtf8String()!;
+    }
+
+    get description(): string {
+        return this.readPointer(0x18).readUtf8String()!;
+    }
+
+    get type(): number {
+        return this.readU8(0x26);
+    }
+
+    get area(): number {
+        return this.readU8(0x84);
+    }
+
+    get rng(): number {
+        return this.readFloat(0x88);
+    }
+}
+
+export class ActionTable extends ED8Vector {
+    getCraft(index: number): ActionTableData {
+        return new ActionTableData(this.ptr.add(index * 8).readPointer())
+    }
+}
+
 export class ED84 extends ED8BaseObject {
     private static _sharedInstance: ED84;
-    private static _config: IConfig;
+    private static _config: IConfig | undefined;
 
     private static _findNameTableDataByModel = new NativeFunction(Addrs.ED84.findNameTableDataByModel, "pointer", ['pointer', 'pointer'], 'win64');
     private static _findNameTableDataByChrId = new NativeFunction(Addrs.ED84.findNameTableDataByChrId, "pointer", ['pointer', 'uint16'], 'win64');
@@ -167,7 +274,7 @@ export class ED84 extends ED8BaseObject {
         return new CharacterManager(this.sharedInstance.readPointer(Offsets.ED84.CharacterManager));
     }
 
-    static getConfig(): IConfig {
+    static getConfig(): IConfig | undefined {
         if (this._config)
             return this._config;
 
@@ -175,7 +282,7 @@ export class ED84 extends ED8BaseObject {
             const exePath = path.join(path.dirname(path.dirname(path.dirname(Modules.ED84.path.split('\\').join('/')))), 'ouroboros', 'config.json5');
             const config = utils.readFileContent(exePath);
             if (!config)
-                return null;
+                return undefined;
 
             const s = Buffer.from(config).toString('utf8');
 
@@ -186,8 +293,8 @@ export class ED84 extends ED8BaseObject {
                 utils.log('load config: %s', e);
             }
 
-            return null;
-        }()!;
+            return undefined;
+        }();
 
         return this._config;
     }
@@ -198,7 +305,7 @@ export class ED84 extends ED8BaseObject {
         if (!p.isNull())
             return new NameTableData(p);
 
-        return ED84.getConfig().nameTable.find(data => data.model == model);
+        return ED84.getConfig()?.nameTable.find(data => data.model == model);
     }
 
     static findNameTableDataByChrId(chrId: number): INameTableData | undefined {
@@ -209,7 +316,7 @@ export class ED84 extends ED8BaseObject {
         if (!p.isNull())
             return new NameTableData(p);
 
-        return ED84.getConfig().nameTable.find(data => data.chrId == chrId);
+        return ED84.getConfig()?.nameTable.find(data => data.chrId == chrId);
     }
 
     static getCraftList(chrId: number): NativePointer {
@@ -225,6 +332,10 @@ export class ED84 extends ED8BaseObject {
     }
 
     static getBattleStyle(chrId: number): number {
+        if (chrId >= MaxPartyChrId) {
+            return InvalidChrId;
+        }
+
         return this.sharedInstance.pointer.add(Offsets.ED84.BattleStyleList).add(chrId * 2).readU16();
     }
 }

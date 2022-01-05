@@ -43,6 +43,16 @@ export class ED8BaseObject {
     }
 }
 
+export class ED8Vector extends ED8BaseObject {
+    get size(): number {
+        return this.readU32(0x00);
+    }
+
+    get ptr(): NativePointer {
+        return this.readPointer(0x08);
+    }
+}
+
 export class Interceptor2 {
     static call<RetType extends NativeCallbackReturnType, ArgTypes extends NativeCallbackArgumentType[] | []> (
         target: NativePointerValue,

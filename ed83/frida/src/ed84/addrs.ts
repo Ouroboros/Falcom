@@ -37,9 +37,28 @@ export const Addrs = (function() {
                     LoadAni                             : Modules.ED84.base.add(0x233DB0),
                 },
 
+                BattleCharacter: {
+                    IsChrNPC                            : Modules.ED84.base.add(0x117090),
+                    InitNpcCraftAI                      : Modules.ED84.base.add(0x1196B0),
+                    InitEquipAndOrbs                    : Modules.ED84.base.add(0x116BB0),
+                    InitPartyCraft                      : Modules.ED84.base.add(0x119680),
+                    InitMagic                           : Modules.ED84.base.add(0x119650),
+                    FormatBattleSymbol                  : Modules.ED84.base.add(0x10DC10),
+                },
+
+                BattleInfoTable: {
+                    GetCraftByID                        : Modules.ED84.base.add(0x0F98F0),
+                },
+
+                BattleProc: {
+                    SetupBattle_FormatAlgoScript        : Modules.ED84.base.add(0x15ABAB),
+                    SetupBattle_InitCraft               : Modules.ED84.base.add(0x15AE7F),
+                    SetupBattle_InitCraftEnd            : Modules.ED84.base.add(0x15AEF3),
+                },
+
                 Asset: {
-                    LoadAsset                           : Modules.ED83.base.add(0x098470),
-                    HashSymbol                          : Modules.ED83.base.add(0x0973D0),
+                    LoadAsset                           : Modules.ED84.base.add(0x098470),
+                    HashSymbol                          : Modules.ED84.base.add(0x0973D0),
                 },
             };
 
@@ -87,9 +106,17 @@ export const Offsets = (function() {
                 },
 
                 BattleCharacter: {
+                    BattleProc      : 0x08,
+                    Character       : 0x10,
+                    SBreakCraftID   : 0x202,
+                    BattleInfoTable : 0x480,
+                    BattleChrId     : 0xF06,
                 },
 
                 BattleInfoTable: {
+                    AlgoTable       : 0x08,
+                    ActionTable     : 0x18,
+                    BattleCharacter : 0x60,
                 },
             };
 
