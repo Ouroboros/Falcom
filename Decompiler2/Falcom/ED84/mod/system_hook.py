@@ -136,7 +136,7 @@ def FC_ActMenu_Ouroboros():
     def showChangeModelMenu():
         ChangeModelMenu(0xF7)
 
-    Call(ScriptId.Current, 'BeginDebugScript')
+    Call(ScriptId.Debug, 'BeginDebugScript')
 
     ShowMenu(
         0xF6,
@@ -146,6 +146,6 @@ def FC_ActMenu_Ouroboros():
         fontSize = 33.0,
     )
 
-    Call(ScriptId.Current, 'EndDebugScript')
+    Call(ScriptId.Debug, 'EndDebugScript')
 
     return Return()
