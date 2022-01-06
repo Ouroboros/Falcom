@@ -3,6 +3,7 @@ from Falcom.ED84.Parser.scena_writer_gen import *
 from Falcom.ED83.Parser.consts import *
 
 ChrTable = GlobalConfig.ChrTable
+MAX_PARTY_CHR_ID = 0x3F
 
 # utils
 
@@ -46,11 +47,122 @@ def RandIf(probability, true_succ, false_succ):
 
     label(end)
 
+def ShowMenu(
+        resultVar: int,
+        level: int,
+        *items: Tuple[str, Callable],
+        height      = 0,
+        fontSize    = 40.0,
+        pos         = (0xFFFF, 0xFFFF),
+        autoExit    = False
+    ):
+
+    assert resultVar <= 0x100
+    assert len(items)
+
+    ExecExpressionWithVar(
+        resultVar,
+        (
+            (Expr.PushLong, 0x0),
+            Expr.Nop,
+            Expr.Return,
+        ),
+    )
+
+    menuLoop        = genLabel()
+    menuCanceled    = genLabel()
+    menuSwitchEnd   = genLabel()
+    menuEnd         = genLabel()
+
+    itemCases = []
+
+    label(menuLoop)
+
+    If(
+        (
+            (Expr.PushVar, resultVar),
+            (Expr.PushLong, 0xFFFFFFFF),
+            Expr.Neq,
+            Expr.Return,
+        ),
+        menuEnd,
+    )
+
+    MenuCreate(level, height, fontSize, 0x00000063)
+
+    for id, item in enumerate(items):
+        id += 1
+        MenuAddItem(level, item[0], id)
+        itemCases.append((id, genLabel()))
+
+    itemCases.append((-1, menuCanceled))
+
+    MenuSetPos(level, 0x01, pos[0] & 0xFFFF, pos[1] & 0xFFFF, 0x01)
+    MenuShow(level, resultVar)
+
+    Switch(
+        (
+            (Expr.PushVar, resultVar),
+            Expr.Return,
+        ),
+        *itemCases,
+    )
+
+    for i, item in enumerate(items):
+        label(itemCases[i][1])
+        item[1]()
+        Jump(menuSwitchEnd)
+
+    label(menuCanceled)
+
+    ExecExpressionWithVar(
+        resultVar,
+        (
+            (Expr.PushLong, 0xFFFFFFFF),
+            Expr.Nop,
+            Expr.Return,
+        ),
+    )
+
+    Jump(menuLoop)
+
+    label(menuSwitchEnd)
+
+    if autoExit:
+        ExecExpressionWithVar(
+            resultVar,
+            (
+                (Expr.PushLong, 0xFFFFFFFF),
+                Expr.Nop,
+                Expr.Return,
+            ),
+        )
+
+    Jump(menuLoop)
+
+    label(menuEnd)
+
+    MenuCmd(0x03, level)
+
 # debug 0x07
 
 def DebugString(s: str):
     OP_07(0x02, (0xDD, s))
 
+
+# menu cmd 0x29
+
+def MenuCreate(level: int, height: int, fontSize: float, color: int = 0):
+    MenuCmd(0x00, level, height, fontSize, color)
+
+def MenuAddItem(level: int, text: str, id: int):
+    MenuCmd(0x01, level, text, id)
+
+def MenuSetPos(level: int, arg2: int, x: int, y: int, arg5: int):
+    MenuCmd(0x02, level, arg2, x & 0xFFFF, y & 0xFFFF, arg5)
+
+def MenuShow(level: int, resultVar: int):
+    MenuCmd(0x04, level, resultVar)
 
 # anime clip 0x2F
 
@@ -314,11 +426,27 @@ def StopVoice(voice: int):
 def FormationAddMember(chrId: int):
     FormationCtrl(0x00, chrId)
 
+def FormationDelMember(chrId: int):
+    FormationCtrl(0x01, chrId)
+
 def FormationReset(releaseChar: int):
     FormationCtrl(0x02, releaseChar)
 
 def FormationSetLeader(chrId: int):
     FormationCtrl(0x04, chrId)
+
+def FormationHasMember(chrId: int):
+    FormationCtrl(0x05, chrId)
+
+# def FormationSetMembers(*chrId: int):
+#     chrId = list(chrId)
+#     if len(chrId) < 0x18:
+#         chrId.extend([0xFFFF] * (len(chrId) - 0x18))
+
+#     FormationCtrl(0x0D, *chrId)
+
+# def FormationGetMemberCount():
+#     FormationCtrl(0x10)
 
 
 # model ctrl 0x54

@@ -2,7 +2,10 @@ import sys
 sys.path.append(r'D:\Dev\Source\Falcom\Decompiler2')
 
 from Falcom.ED83.Parser.scena_writer_helper import *
-import m3050_hook
+try:
+    import m3050_hook
+except ImportError:
+    pass
 
 scena = createScenaWriter('m3050.dat')
 
@@ -123,34 +126,6 @@ def func_708():
         ],
     )
 
-# id: 0x0005
-@scena.BattleSetting('')
-def func_408():
-    return ScenaBattleSetting(
-        mapName        = 'f6000',
-        x              = 0.0,
-        y              = -3.8,
-        z              = 15.0,
-        direction      = 0.0,
-        length         = 20.0,
-        width          = 20.0,
-        word28         = 411,
-        flags          = 0x00000009,
-        bgm            = 466,
-        dangerBGM      = 466,
-        word34         = 0,
-        word36         = 0,
-        atBonus        = 3,
-        battleScript   = 'btl9000',
-        monsterSet     = [
-            ScenaBattleMonsterSet(
-                id                      = 0x0,
-                monsters                = ['chr500_0', '', '', '', '', '', '', ''],
-                encounterProbability    = [100, 0, 0, 0, 0, 0, 0, 0],
-            ),
-        ],
-    )
-
 # id: 0x0005 offset: 0x808
 @scena.Code('PreInit')
 def PreInit():
@@ -192,19 +167,19 @@ def Init():
 
     Call(ScriptId.Sound, 'Init_ENVSE')
     Call(ScriptId.Sound, 'Init_BGM')
-    OP_54(0x14, 'BreakObj00', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
-    OP_54(0x14, 'BreakObj01', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
-    OP_54(0x14, 'BreakObj02', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
-    OP_54(0x14, 'BreakObj03', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
-    OP_54(0x14, 'BreakObj04', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
-    OP_54(0x14, 'BreakObj05', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
-    OP_54(0x14, 'BreakObj06', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
-    OP_54(0x14, 'BreakObj07', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
-    OP_54(0x14, 'BreakObj08', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
-    OP_54(0x14, 'BreakObj09', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
-    OP_54(0x14, 'BreakObj10', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
-    OP_54(0x19, 'HealObj00', 'LP_healobject0')
-    OP_54(0x19, 'HealObj01', 'LP_healobject1')
+    ModelCtrl(0x14, 'BreakObj00', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
+    ModelCtrl(0x14, 'BreakObj01', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
+    ModelCtrl(0x14, 'BreakObj02', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
+    ModelCtrl(0x14, 'BreakObj03', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
+    ModelCtrl(0x14, 'BreakObj04', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
+    ModelCtrl(0x14, 'BreakObj05', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
+    ModelCtrl(0x14, 'BreakObj06', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
+    ModelCtrl(0x14, 'BreakObj07', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
+    ModelCtrl(0x14, 'BreakObj08', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
+    ModelCtrl(0x14, 'BreakObj09', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
+    ModelCtrl(0x14, 'BreakObj10', 'FC_dropItem', 0x0000, 0x0028, 0x0081, 0x0000, 0x0000, 0x0000)
+    ModelCtrl(0x19, 'HealObj00', 'LP_healobject0')
+    ModelCtrl(0x19, 'HealObj01', 'LP_healobject1')
     Call(ScriptId.Current, 'Init_Replay')
     OP_86(0xFF, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, '')
 
@@ -761,7 +736,7 @@ def EV_switch01_resetflag01():
 def LP_healobject0():
     Call(ScriptId.System, 'FC_LpBegin')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x2),
@@ -780,7 +755,7 @@ def LP_healobject0():
 def LP_healobject1():
     Call(ScriptId.System, 'FC_LpBegin')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x2),
@@ -857,30 +832,43 @@ def EV_03_76_02():
     AnimeClipChangeSkin(ChrTable['鋼之雅里安洛德'], 'C_CHR033_C00')
     CreateThread(ChrTable['鋼之雅里安洛德'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['神速杜巴莉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['剛毅艾奈絲'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['魔弓恩奈雅'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['永世α'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0622, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0623, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0624, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0625, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0626, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0627, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0628, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['巴勒德侯爵'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     AnimeClipLoadMultiple(ChrTable['巴勒德侯爵'], 0x00, 'AniEv09005', 'AniEv09010', 'AniEv09020', 'AniEvInori', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['神速杜巴莉'], 0x00, 'AniEv34540', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['剛毅艾奈絲'], 0x00, 'AniEvUdegumiF', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
@@ -987,9 +975,9 @@ def EV_03_76_02():
     OP_3B(0x00, (0xFF, 0x76F4, 0x0), 0.3, (0xFF, 0x3E8, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Fade(0x64, 1000, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
-    OP_44(0x008B, 0x10, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['巴勒德侯爵'], 0x10, 0.15, 0x0000, 0.0)
     OP_41(0x008B, 0x00)
-    OP_44(0x008B, 0xFF, 0.0, 0x0000, 0.0)
+    OP_44(ChrTable['巴勒德侯爵'], 0xFF, 0.0, 0x0000, 0.0)
     OP_3D(ChrTable['巴勒德侯爵'], 98.3, 10.0, 0x00)
     OP_45(ChrTable['巴勒德侯爵'], 0.0, -20.0, 0.0, 0x03E8, 0x0000)
     OP_3F(ChrTable['巴勒德侯爵'])
@@ -1005,6 +993,7 @@ def EV_03_76_02():
     Fade(0xFF, 0, 0x0000)
     OP_3A(0x03, 0.7, 0x01F4, 0x00)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x755C, 0x0), 0.4, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     CameraCtrl(0x0A, 0.05, 0.05, 0.0, 0x0064, 0x01F4, 0x0064, 0x0000, 0x0000, 0x00)
     PlayEffect(0xFFFF, (0xFF, 0xCA, 0x0), 0xFFFF, 0x00000000, (0xDD, ''), (0xEE, 50.81999969482422, 0x0), (0xEE, 41.56999969482422, 0x0), (0xEE, -22.8700008392334, 0x0), 0.0, 0.0, 0.0, (0xEE, 2.0, 0x0), (0xEE, 2.0, 0x0), (0xEE, 2.0, 0x0), 0xFF)
@@ -1024,8 +1013,10 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['巴勒德侯爵'], 0x00, 'AniEvInori', -1.0, 1.0, 0x00000000)
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['巴勒德侯爵'], '#E[9]#M_E#B_0')
 
     ChrTalk(
@@ -1040,6 +1031,7 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_27('女子的聲音', 0xFFFF)
     SetChrFace(0x04, ChrTable['鋼之雅里安洛德'], '#E_0#M_0#B_0')
@@ -1060,6 +1052,7 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     OP_27('', 0xFFFF)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -1086,6 +1079,7 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     OP_3D(ChrTable['巴勒德侯爵'], 265.5, 10.0, 0x00)
     OP_3F(ChrTable['巴勒德侯爵'])
     Fade(0x6A, 300)
@@ -1110,12 +1104,15 @@ def EV_03_76_02():
     ChrClearPhysicsFlags(ChrTable['永世α'], 0x00000040)
     Fade(0xFF, 0, 0x0000)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x765D, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x765F, 0x0), 0.7, (0xFF, 0x12C, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(0xFFFF, (0xFF, 0xD4, 0x0), ChrTable['永世α'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(100)
+
     ChrSetRGBA(ChrTable['永世α'], 1.0, 1.0, 1.0, 1.0, 400, 0x03)
     Sleep(300)
+
     SetChrAniFunction(ChrTable['巴勒德侯爵'], 0x00, 'StopChrAnimeClip', 0.0, 1.0, 0x00000000)
     SetChrAniFunction(ChrTable['巴勒德侯爵'], 0x00, 'AniEv09005', -1.0, 1.0, 0x00000000)
     OP_3B(0x00, (0xFF, 0x756B, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
@@ -1134,6 +1131,7 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
@@ -1162,9 +1160,11 @@ def EV_03_76_02():
     OP_3B(0x00, (0xFF, 0x7562, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, -4.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     SetChrAniFunction(ChrTable['巴勒德侯爵'], 0x00, 'AniEv09010', -1.0, 1.0, 0x00000000)
     Sleep(1800)
+
     OP_3B(0x00, (0xFF, 0x7565, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     CameraCtrl(0x0A, 0.02, 0.02, 0.0, 0x0064, 0x00FA, 0x0064, 0x0000, 0x0000, 0x00)
     Sleep(2200)
+
     OP_23(0x01, 0x0258, 0x0357, 0x05, 0x0D)
     Fade(0x06, 300)
     SetChrFace(0x04, ChrTable['巴勒德侯爵'], '#E[11CCCCCCCCCB]#M_6#B_0')
@@ -1180,6 +1180,7 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -1201,7 +1202,7 @@ def EV_03_76_02():
     OP_3B(0x00, (0xFF, 0x75BB, 0x0), 0.5, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     MoveType(ChrTable['巴勒德侯爵'], 0xFFFF, -21.66, 114.0, 10.14, 2.8, 0x02, 0x0000)
     OP_6C(ChrTable['巴勒德侯爵'], 0.8)
-    OP_44(0x008B, 0x10, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['巴勒德侯爵'], 0x10, 0.15, 0x0000, 0.0)
     Fade(0xFF, 0, 0x0000)
     OP_27('女孩的聲音', 0xFFFF)
     SetChrFace(0x04, ChrTable['神速杜巴莉'], '#E_0#M_0#B_0')
@@ -1218,6 +1219,7 @@ def EV_03_76_02():
     )
 
     Sleep(2000)
+
     OP_63(0xFFFF, 0x00)
     OP_63(0xFFFF, 0x01)
     OP_27('', 0xFFFF)
@@ -1238,7 +1240,7 @@ def EV_03_76_02():
     CameraRotate(0x03, 20.0, 351.0, 354.0, 3500, 0x01)
     CameraSetDistance(0x03, 2.7, 3500)
     OP_41(0x008B, 0x01)
-    OP_44(0x008B, 0xFF, 0.0, 0x0000, 0.0)
+    OP_44(ChrTable['巴勒德侯爵'], 0xFF, 0.0, 0x0000, 0.0)
     SetChrPos(ChrTable['巴勒德侯爵'], -22.05, 114.0, 10.79, 234.2)
     SetChrFace(0x03, ChrTable['巴勒德侯爵'], 'BBBBBBBBBBBBC', 'J', '0[autoB0]', '#b', '0')
     EffectCtrl(0x0E, 0x006D, 0x65, 0x00)
@@ -1250,6 +1252,7 @@ def EV_03_76_02():
     OP_3B(0x00, (0xFF, 0x7569, 0x0), 0.6, (0xFF, 0x0, 0x0), 0.0, -3.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x756B, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(500)
+
     PlayEffect(0xFFFF, (0xFF, 0xC8, 0x0), 0xFFFF, 0x00000000, (0xDD, ''), (0xEE, -21.639999389648438, 0x0), (0xEE, 114.16999816894531, 0x0), (0xEE, 10.100000381469727, 0x0), 0.0, 0.0, 0.0, (0xEE, 0.75, 0x0), (0xEE, 0.75, 0x0), (0xEE, 0.75, 0x0), 0xFF)
     CameraCtrl(0x0A, 0.03, 0.03, 0.0, 0x0064, 0x015E, 0x0064, 0x0000, 0x0000, 0x00)
     CameraCtrl(0x07, 0x00BF)
@@ -1287,18 +1290,22 @@ def EV_03_76_02():
     OP_3B(0x00, (0xFF, 0x770F, 0x0), 0.7, (0xFF, 0x3E8, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(ChrTable['剛毅艾奈絲'], (0xFF, 0xD3, 0x0), ChrTable['剛毅艾奈絲'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x75BB, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(ChrTable['魔弓恩奈雅'], (0xFF, 0xD3, 0x0), ChrTable['剛毅艾奈絲'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(1700)
+
     OP_3B(0x00, (0xFF, 0x75BE, 0x0), 1.0, (0xFF, 0xC8, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     EffectCtrl(0x0E, 0x006E, 0x66, 0x00)
     ChrSetRGBA(ChrTable['剛毅艾奈絲'], 1.0, 1.0, 1.0, 1.0, 500, 0x03)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x75BE, 0x0), 1.0, (0xFF, 0xC8, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     EffectCtrl(0x0E, 0x006F, 0x67, 0x00)
     ChrSetRGBA(ChrTable['魔弓恩奈雅'], 1.0, 1.0, 1.0, 1.0, 500, 0x03)
     OP_3B(0x01, (0xFF, 0x770F, 0x0), (0xFF, 0x3E8, 0x0))
     Sleep(500)
+
     OP_23(0x01, 0x0258, 0x0357, 0x05, 0x0D)
     Fade(0x06, 300)
     OP_45(ChrTable['巴勒德侯爵'], -25.0, 5.0, 0.0, 0x05DC, 0x0000)
@@ -1316,6 +1323,7 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['剛毅艾奈絲'], '#E[7777777777776]#M_2#B_0')
 
     ChrTalk(
@@ -1330,8 +1338,10 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['魔弓恩奈雅'], 0x00, 'AniEvSianF', -1.0, 1.0, 0x00000000)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['魔弓恩奈雅'], '#E[3]#M_2#B_0')
 
     ChrTalk(
@@ -1346,6 +1356,7 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
@@ -1406,6 +1417,7 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(0x0623, 0x00, 'AniEvGyu', -1.0, 1.0, 0x00000000)
     SetChrFace(0x04, 0x0623, '#E_0#M_2#B_0')
 
@@ -1421,6 +1433,7 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['鋼之雅里安洛德'], '#E[1]#M_A#B_0')
 
     ChrTalk(
@@ -1434,6 +1447,7 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -1459,6 +1473,7 @@ def EV_03_76_02():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
@@ -1520,28 +1535,40 @@ def EV_03_80_01():
     CreateChr(ChrTable['妙婕'], 'C_CHR013', '妙婕', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateThread(ChrTable['黎恩'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['尤西斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['米莉亞姆'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['蓋烏斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['莎拉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['奧蕾莉亞分校長'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['安潔莉卡'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['悠娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['庫爾特'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞爾緹娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞修'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['妙婕'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     SetChrPos(ChrTable['尤西斯'], -26.1, 110.0, 55.16, 84.7)
     SetChrPos(ChrTable['米莉亞姆'], -25.65, 110.0, 54.55, 54.6)
     SetChrPos(ChrTable['黎恩'], -24.93, 110.0, 55.41, 89.0)
@@ -1660,7 +1687,7 @@ def EV_03_80_01():
     Fade(0x00, 300, 0.3, 0x0000)
     Fade(0xFF, 0, 0x0000)
     OP_3B(0x00, (0xFF, 0x2F49, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -1673,16 +1700,17 @@ def EV_03_80_01():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
     Fade(0x64, 300, 0.3, 0x0000)
     Fade(0xFF, 0, 0x0000)
     Fade(0x00, 300, 0.3, 0x0000)
     Fade(0xFF, 0, 0x0000)
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -1698,7 +1726,7 @@ def EV_03_80_01():
     OP_75(0x04, 0x00, 0xF6)
     OP_75(0x03, 0x00)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
     Fade(0x64, 300, 0.3, 0x0000)
     Fade(0xFF, 0, 0x0000)
 
@@ -1726,7 +1754,7 @@ def EV_03_80_01():
 
     Fade(0x00, 300, 0.3, 0x0000)
     Fade(0xFF, 0, 0x0000)
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -1750,9 +1778,10 @@ def EV_03_80_01():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
     def _loc_50AA(): pass
 
     label('loc_50AA')
@@ -1789,9 +1818,9 @@ def EV_03_80_01_END():
         'loc_514C',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -1807,7 +1836,7 @@ def EV_03_80_01_END():
     OP_75(0x04, 0x00, 0xF6)
     OP_75(0x03, 0x00)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     def _loc_514C(): pass
 
@@ -1913,28 +1942,40 @@ def EV_03_80_02():
     CreateChr(ChrTable['妙婕'], 'C_CHR013', '妙婕', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateThread(ChrTable['黎恩'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['尤西斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['米莉亞姆'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['蓋烏斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['莎拉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['奧蕾莉亞分校長'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['安潔莉卡'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['悠娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['庫爾特'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞爾緹娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞修'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['妙婕'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     OP_7E(0x00)
     OP_7E(0x02, 0x0001)
     OP_7E(0x05, 500.0)
@@ -1963,6 +2004,7 @@ def EV_03_80_02():
     OP_50((0xDD, 'switch01'), 'l_to_u')
     CreateThread(0xFFFF, 0x05, ScriptId.Sound, 'SE_GIM_M30_SW')
     Sleep(1000)
+
     CameraCtrl(0x07, 0x00BF)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -1976,6 +2018,7 @@ def EV_03_80_02():
     OP_50((0xDD, 'switch00'), 'l_to_u')
     CreateThread(0xFFFF, 0x05, ScriptId.Sound, 'SE_GIM_M30_SW')
     Sleep(1000)
+
     CameraCtrl(0x07, 0x00BF)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -1990,6 +2033,7 @@ def EV_03_80_02():
     OP_50((0xDD, 'bridge00'), 'open1')
     CreateThread(0xFFFF, 0x05, ScriptId.Sound, 'SE_GIM_M30_BRIDGE')
     Sleep(2000)
+
     CameraCtrl(0x09, 0.15, 0.15, 1.0)
     Fade(0xFF, 0, 0x0000)
     CameraCtrl(0x07, 0x00BF)
@@ -2003,12 +2047,15 @@ def EV_03_80_02():
     CameraRotate(0x03, 13.0, 241.0, 0.0, 5000, 0x01)
     CameraSetDistance(0x03, 11.7, 5000)
     Sleep(1800)
+
     OP_50((0xDD, 'bridge01'), 'open1')
     CreateThread(0xFFFF, 0x05, ScriptId.Sound, 'SE_GIM_M30_BRIDGE')
     Sleep(2000)
+
     CameraCtrl(0x09, 0.15, 0.15, 1.0)
     CameraCtrl(0x07, 0x00BF)
     Sleep(1000)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     SetChrPos(ChrTable['黎恩'], -26.91, 110.0, 49.71, 181.2)
@@ -2044,6 +2091,7 @@ def EV_03_80_02():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['黎恩'], '#E_2#M_2#B_0')
 
     ChrTalk(
@@ -2056,6 +2104,7 @@ def EV_03_80_02():
     )
 
     WaitForMsg()
+
     OP_27('舊Ⅶ班', 0xFFFF)
     CameraCtrl(0x09, 0.02, 0.02, 0.25)
     OP_23(0x01, 0x04B0, 0x0096, 0x00, 0x0A)
@@ -2074,6 +2123,7 @@ def EV_03_80_02():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_23(0x01, 0xFFFF, 0xFFFF, 0x00, 0x0A)
     OP_27('', 0xFFFF)
@@ -2106,6 +2156,7 @@ def EV_03_80_02():
     CameraRotate(0x03, 9.0, 344.0, 0.0, 6000, 0x01)
     Fade(0xFF, 0, 0x0000)
     Sleep(1500)
+
     Fade(0x00, 1000, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
     SetChrPos(ChrTable['安潔莉卡'], -26.41, 94.0, -82.08, 344.5)
@@ -2150,6 +2201,7 @@ def EV_03_80_02():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['亞修'], '#E_2#M_A#B_0')
 
     ChrTalk(
@@ -2162,6 +2214,7 @@ def EV_03_80_02():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['亞爾緹娜'], '#E_2#M_2#B_0')
 
     ChrTalk(
@@ -2174,13 +2227,14 @@ def EV_03_80_02():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
-    OP_44(0x0012, 0x0E, 0.15, 0x0000, 0.0)
-    OP_44(0x000A, 0x0E, 0.15, 0x0000, 0.0)
-    OP_44(0x000B, 0x0E, 0.15, 0x0000, 0.0)
-    OP_44(0x000C, 0x0E, 0.15, 0x0000, 0.0)
-    OP_44(0x000E, 0x0E, 0.15, 0x0000, 0.0)
-    OP_44(0x000D, 0x0E, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['安潔莉卡'], 0x0E, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['悠娜'], 0x0E, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['庫爾特'], 0x0E, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['亞爾緹娜'], 0x0E, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['亞修'], 0x0E, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['妙婕'], 0x0E, 0.15, 0x0000, 0.0)
     SetChrFace(0x03, ChrTable['悠娜'], 'C', '8[autoM8]', '0[autoB0]', '#b', '0')
     SetChrFace(0x03, ChrTable['庫爾特'], 'C', '8[autoM8]', '0[autoB0]', '#b', '0')
     SetChrFace(0x03, ChrTable['亞爾緹娜'], 'C', '8[autoM8]', '0[autoB0]', '#b', '0')
@@ -2188,6 +2242,7 @@ def EV_03_80_02():
     SetChrFace(0x03, ChrTable['安潔莉卡'], '2[autoE2]', '2[autoM2]', '0[autoB0]', '#b', '0')
     SetChrFace(0x03, ChrTable['亞修'], '2[autoE2]', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(1500)
+
     OP_3A(0x01, 0x1770, 0x00)
     CameraCtrl(0x00)
     Fade(0x65, 500, 1.0, 0x0000)
@@ -2217,6 +2272,7 @@ def EV_03_80_02():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['妙婕'], '#E_2#M_2#B_0')
 
     ChrTalk(
@@ -2229,6 +2285,7 @@ def EV_03_80_02():
     )
 
     WaitForMsg()
+
     Call(ScriptId.Sound, 'Stop_ENVSE')
     Fade(0x00, 1000, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
@@ -2300,40 +2357,58 @@ def EV_03_81_00():
     AnimeClipChangeSkin(ChrTable['鋼之雅里安洛德'], 'C_CHR033_C00')
     CreateThread(ChrTable['黎恩'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['尤西斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['米莉亞姆'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['銀臂2'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['蓋烏斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['莎拉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['奧蕾莉亞分校長'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['安潔莉卡'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['悠娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['庫爾特'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞爾緹娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞修'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['妙婕'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['鋼之雅里安洛德'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['神速杜巴莉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['剛毅艾奈絲'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['魔弓恩奈雅'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['永世α'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     AnimeClipLoadMultiple(ChrTable['黎恩'], 0x00, 'AniEv35000', 'AniEvCraft03', 'AniEvCraft03_1', '', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['尤西斯'], 0x00, 'AniEv35000', 'AniEvCraft01', 'AniEvCraft01_2', '', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['米莉亞姆'], 0x00, 'AniEv35000', 'AniEvTeMune', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
@@ -2443,11 +2518,13 @@ def EV_03_81_00():
     OP_57(0x00, 0x03)
     OP_57(0x00, 0x00)
     Sleep(2000)
+
     OP_56(0x00, 0x03, 0x01, 1.0, 1.0, 1.0, 0.0, 1000.0)
     OP_56(0x00, 0x00, 0x01, 192.0, 0.0, 1000.0, 0.0, 0.0)
     OP_57(0x00, 0x03)
     OP_57(0x00, 0x00)
     Sleep(500)
+
     Call(ScriptId.Sound, 'Init_ENVSE')
     OP_8D(0x0000, 1.0, 1.0, 1.5, 0.5)
     OP_8D(0x0010, 1.0, 1.0, 1.5, 0.5)
@@ -2458,18 +2535,23 @@ def EV_03_81_00():
     MoveType(ChrTable['黎恩'], 0xFFFF, -35.32, 114.0, 5.9, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['黎恩'], 0.55)
     Sleep(150)
+
     MoveType(ChrTable['奧蕾莉亞分校長'], 0xFFFF, -34.33, 114.0, 5.35, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['奧蕾莉亞分校長'], 0.5)
     Sleep(150)
+
     MoveType(ChrTable['莎拉'], 0xFFFF, -35.62, 114.0, 7.29, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['莎拉'], 0.55)
     Sleep(150)
+
     MoveType(ChrTable['尤西斯'], 0xFFFF, -33.32, 114.0, 4.94, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['尤西斯'], 0.4)
     Sleep(150)
+
     MoveType(ChrTable['米莉亞姆'], 0xFFFF, -34.73, 114.0, 7.11, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['米莉亞姆'], 0.4)
     Sleep(150)
+
     MoveType(ChrTable['蓋烏斯'], 0xFFFF, -33.46, 114.0, 6.97, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['蓋烏斯'], 0.5)
     CameraSetPos(0x03, -35.04, 115.27, 6.03, 5000)
@@ -2486,6 +2568,7 @@ def EV_03_81_00():
     OP_41(0x0008, 0x00)
     CameraCtrl(0x07, 0x00BF)
     Sleep(300)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -2518,6 +2601,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['蓋烏斯'], 20.0, 0.0, 0.0, 0x0320, 0x0000)
     SetChrFace(0x04, ChrTable['蓋烏斯'], '#E_0#M_2#B_0')
 
@@ -2532,6 +2616,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
@@ -2585,8 +2670,10 @@ def EV_03_81_00():
     OP_45(ChrTable['鋼之雅里安洛德'], -80.0, 50.0, 0.0, 0x0000, 0x0000)
     OP_45(ChrTable['鋼之雅里安洛德'], -30.0, 25.0, 0.0, 0x0320, 0x0000)
     Sleep(800)
+
     OP_45(ChrTable['鋼之雅里安洛德'], 40.0, 0.0, 0.0, 0x07D0, 0x0000)
     Sleep(1000)
+
     SetChrAniFunction(ChrTable['米莉亞姆'], 0x00, 'AniEvTeMune', -1.0, 1.0, 0x00000000)
     OP_23(0x01, 0x0258, 0x0357, 0x05, 0x0D)
     Fade(0x06, 300)
@@ -2604,6 +2691,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['莎拉'], '#E_2#M_2#B_0')
 
     ChrTalk(
@@ -2617,6 +2705,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -2633,6 +2722,7 @@ def EV_03_81_00():
     OP_45(ChrTable['黎恩'], 0.0, 0.0, 0.0, 0x03E8, 0x0000)
     SetChrFace(0x03, ChrTable['黎恩'], '33332', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['黎恩'], '#E[2]#M_2#B_0')
 
     ChrTalk(
@@ -2646,10 +2736,12 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_45(ChrTable['黎恩'], 0.0, -10.0, 0.0, 0x0320, 0x0000)
     SetChrFace(0x03, ChrTable['黎恩'], '223', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(100)
+
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
     OP_23(0x01, 0xFFFF, 0xFFFF, 0x00, 0x0A)
@@ -2659,6 +2751,7 @@ def EV_03_81_00():
     OP_56(0x01, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 1000.0)
     OP_57(0x01, 0x03)
     Sleep(2000)
+
     Call(ScriptId.Sound, 'Init_ENVSE_VAR', (0xFF, 0x3E8, 0x0))
     OP_3A(0x03, 0.7, 0x03E8, 0x00)
     OP_56(0x01, 0x03, 0x00, 1.0, 1.0, 1.0, 0.0, 1000.0)
@@ -2666,6 +2759,7 @@ def EV_03_81_00():
     OP_45(ChrTable['黎恩'], 0.0, 0.0, 0.0, 0x03E8, 0x0000)
     SetChrFace(0x03, ChrTable['黎恩'], '33332', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(100)
+
     OP_23(0x01, 0x0258, 0x0357, 0x05, 0x0D)
     Fade(0x06, 300)
     SetChrFace(0x04, ChrTable['黎恩'], '#E[2]#M[2]#B_0')
@@ -2682,6 +2776,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -2702,6 +2797,7 @@ def EV_03_81_00():
     OP_98(0x03E8, 0.0, 0x01)
     Fade(0xFF, 0, 0x0000)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['鋼之雅里安洛德'], '#E_0#M_A#B_0')
 
     ChrTalk(
@@ -2720,15 +2816,18 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
     OP_23(0x01, 0xFFFF, 0xFFFF, 0x00, 0x0A)
     SetScenaFlags(ScenaFlag(0x0064, 4, 0x324))
     Sleep(500)
+
     OP_3D(ChrTable['鋼之雅里安洛德'], 78.1, 2.5, 0x00)
     OP_3F(ChrTable['鋼之雅里安洛德'])
     Sleep(1000)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraSetPos(0x03, -35.79, 115.02, 3.09, 0)
@@ -2751,6 +2850,7 @@ def EV_03_81_00():
     Fade(0xFF, 0, 0x0000)
     OP_45(ChrTable['奧蕾莉亞分校長'], 0.0, -10.0, 0.0, 0x03E8, 0x0000)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['奧蕾莉亞分校長'], '#E[1111111110]#M_A#B_0')
 
     ChrTalk(
@@ -2765,8 +2865,10 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['奧蕾莉亞分校長'], 0.0, 0.0, 0.0, 0x0320, 0x0000)
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['奧蕾莉亞分校長'], '#E_2#M_A#B_0')
 
     ChrTalk(
@@ -2780,6 +2882,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -2817,8 +2920,10 @@ def EV_03_81_00():
     )
 
     Sleep(2000)
+
     OP_45(ChrTable['奧蕾莉亞分校長'], 0.0, 0.0, 0.0, 0x03E8, 0x0000)
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     SetChrFace(0x04, ChrTable['奧蕾莉亞分校長'], '#E[336]#M_A#B_0')
 
@@ -2833,6 +2938,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -2865,6 +2971,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_45(ChrTable['鋼之雅里安洛德'], 0.0, -10.0, 0.0, 0x0320, 0x0000)
     SetChrFace(0x04, ChrTable['鋼之雅里安洛德'], '#E[1]#M_0#B_0')
@@ -2880,8 +2987,10 @@ def EV_03_81_00():
     )
 
     Sleep(800)
+
     OP_45(ChrTable['鋼之雅里安洛德'], 0.0, 0.0, 0.0, 0x0320, 0x0000)
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -2922,8 +3031,10 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['奧蕾莉亞分校長'], 0x00, 'AniEv35000', -1.0, 0.8, 0x00000000)
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['奧蕾莉亞分校長'], '#E[333333332]#M_2#B_0')
 
     ChrTalk(
@@ -2942,30 +3053,37 @@ def EV_03_81_00():
     )
 
     Sleep(2500)
+
     SetChrAniFunction(ChrTable['奧蕾莉亞分校長'], 0x00, 'AniEv30005', -1.0, 0.8, 0x00000000)
     OP_5E(0x00, 0x0000, 0.4, 0x0320, 0x03E8, 0x03E8, 0.5, 0xFFFF, -9000.0, -9000.0, -9000.0)
     OP_46(0x00, ChrTable['奧蕾莉亞分校長'], ChrTable['鋼之雅里安洛德'], 0x03E8)
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
-    OP_44(0x0000, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0006, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0009, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000F, 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['黎恩'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['尤西斯'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['米莉亞姆'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['莎拉'], 0x15, 0.15, 0x0000, 0.0)
     OP_46(0x00, ChrTable['黎恩'], ChrTable['奧蕾莉亞分校長'], 0x03E8)
     SetChrFace(0x03, ChrTable['黎恩'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     Sleep(20)
+
     OP_46(0x00, ChrTable['尤西斯'], ChrTable['奧蕾莉亞分校長'], 0x03E8)
     SetChrFace(0x03, ChrTable['尤西斯'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     Sleep(20)
+
     OP_46(0x00, ChrTable['米莉亞姆'], ChrTable['奧蕾莉亞分校長'], 0x03E8)
     SetChrFace(0x03, ChrTable['米莉亞姆'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     Sleep(20)
+
     OP_46(0x00, ChrTable['蓋烏斯'], ChrTable['奧蕾莉亞分校長'], 0x03E8)
     SetChrFace(0x03, ChrTable['蓋烏斯'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     Sleep(20)
+
     OP_46(0x00, ChrTable['莎拉'], ChrTable['奧蕾莉亞分校長'], 0x03E8)
     SetChrFace(0x03, ChrTable['莎拉'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     Sleep(1000)
+
     OP_27('女孩的聲音', 0xFFFF)
     SetChrFace(0x04, ChrTable['神速杜巴莉'], '#E_0#M_0#B_0')
 
@@ -2980,6 +3098,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_27('', 0xFFFF)
     Fade(0x6A, 300)
@@ -3016,32 +3135,42 @@ def EV_03_81_00():
     OP_3B(0x00, (0xFF, 0x770F, 0x0), 0.5, (0xFF, 0x1F4, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(ChrTable['神速杜巴莉'], (0xFF, 0xC9, 0x0), ChrTable['神速杜巴莉'], 0x00000003, (0xDD, ''), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x64)
     Sleep(500)
+
     PlayEffect(ChrTable['魔弓恩奈雅'], (0xFF, 0xC9, 0x0), ChrTable['魔弓恩奈雅'], 0x00000003, (0xDD, ''), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x65)
     Sleep(300)
+
     PlayEffect(ChrTable['剛毅艾奈絲'], (0xFF, 0xC9, 0x0), ChrTable['剛毅艾奈絲'], 0x00000003, (0xDD, ''), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x66)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x75BB, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(0xFFFF, (0xFF, 0xCA, 0x0), ChrTable['神速杜巴莉'], 0x00000003, (0xDD, ''), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(500)
+
     PlayEffect(0xFFFF, (0xFF, 0xCA, 0x0), ChrTable['魔弓恩奈雅'], 0x00000003, (0xDD, ''), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(300)
+
     PlayEffect(0xFFFF, (0xFF, 0xCA, 0x0), ChrTable['剛毅艾奈絲'], 0x00000003, (0xDD, ''), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(1900)
+
     OP_3B(0x00, (0xFF, 0x75BE, 0x0), 1.0, (0xFF, 0xC8, 0x0), 0.0, -2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     ChrSetRGBA(ChrTable['神速杜巴莉'], 1.0, 1.0, 1.0, 1.0, 800, 0x03)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x75BE, 0x0), 0.8, (0xFF, 0xC8, 0x0), 0.0, -2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     ChrSetRGBA(ChrTable['魔弓恩奈雅'], 1.0, 1.0, 1.0, 1.0, 800, 0x03)
     Sleep(300)
+
     OP_3B(0x01, (0xFF, 0x770F, 0x0), (0xFF, 0x3E8, 0x0))
     OP_3B(0x00, (0xFF, 0x75BE, 0x0), 0.8, (0xFF, 0xC8, 0x0), 0.0, -2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     ChrSetRGBA(ChrTable['剛毅艾奈絲'], 1.0, 1.0, 1.0, 1.0, 800, 0x03)
     Sleep(300)
+
     EffectCtrl(0x0E, 0x006D, 0x64, 0x00)
     EffectCtrl(0x0E, 0x006F, 0x65, 0x00)
     EffectCtrl(0x0E, 0x006E, 0x66, 0x00)
     OP_5E(0x01, 0x03E8)
     Sleep(5100)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -3073,6 +3202,7 @@ def EV_03_81_00():
     Fade(0xFF, 0, 0x0000)
     SetChrAniFunction(ChrTable['米莉亞姆'], 0x00, 'AniEvTeMune', -1.0, 1.0, 0x00000002)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['米莉亞姆'], '#E_8#M_0#B_0')
 
     ChrTalk(
@@ -3087,6 +3217,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['莎拉'], 0x00, 'AniEvUdegumiF', -1.0, 1.0, 0x00000000)
     SetChrFace(0x04, ChrTable['莎拉'], '#E_2#M_2#B_0')
 
@@ -3102,6 +3233,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -3135,9 +3267,11 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['奧蕾莉亞分校長'], 0.0, 0.0, 0.0, 0x0320, 0x0000)
     SetChrFace(0x03, ChrTable['奧蕾莉亞分校長'], 'F', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(300)
+
     CameraCtrl(0x09, 0.05, 0.05, 0.2)
     SetChrFace(0x04, ChrTable['奧蕾莉亞分校長'], '#E[F]#M_2#B_0')
 
@@ -3153,6 +3287,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -3183,8 +3318,10 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['剛毅艾奈絲'], 0x00, 'AniEvUdegumiF', -1.0, 1.0, 0x00000000)
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['剛毅艾奈絲'], '#E_0#M_2#B_0')
 
     ChrTalk(
@@ -3198,6 +3335,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['魔弓恩奈雅'], '#E_0#M_0#B_0')
 
     ChrTalk(
@@ -3212,6 +3350,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -3231,6 +3370,7 @@ def EV_03_81_00():
     OP_45(ChrTable['神速杜巴莉'], 0.0, -10.0, 0.0, 0x0320, 0x0000)
     Fade(0xFF, 0, 0x0000)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['神速杜巴莉'], '#E[33333332]#M_6#B_0')
 
     ChrTalk(
@@ -3245,11 +3385,14 @@ def EV_03_81_00():
     )
 
     Sleep(1000)
+
     OP_45(ChrTable['神速杜巴莉'], 0.0, 0.0, 0.0, 0x03E8, 0x0000)
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['神速杜巴莉'], 0x00, 'AniEvKinchoTeburi', -1.0, 1.0, 0x00000000)
     SetChrFace(0x03, ChrTable['神速杜巴莉'], '6', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(200)
+
     SetChrFace(0x04, ChrTable['神速杜巴莉'], '#E[7]#M_6#B_0')
 
     ChrTalk(
@@ -3264,6 +3407,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['鋼之雅里安洛德'], '#E_0#M_0#B_0')
 
     ChrTalk(
@@ -3277,14 +3421,16 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
     OP_23(0x01, 0xFFFF, 0xFFFF, 0x00, 0x0A)
     SetScenaFlags(ScenaFlag(0x0064, 4, 0x324))
-    OP_44(0x006D, 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['神速杜巴莉'], 0x15, 0.15, 0x0000, 0.0)
     SetChrFace(0x03, ChrTable['神速杜巴莉'], '11C', 'H', '0[autoB0]', '#b', '0')
     OP_45(ChrTable['神速杜巴莉'], -60.0, 0.0, 0.0, 0x0258, 0x0000)
     Sleep(1000)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -3321,6 +3467,7 @@ def EV_03_81_00():
     SetChrAniFunction(ChrTable['鋼之雅里安洛德'], 0x00, 'AniEv86000b', -1.0, 1.0, 0x00000000)
     OP_3B(0x00, (0xFF, 0x7571, 0x0), 0.7, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(1000)
+
     OP_23(0x01, 0x0258, 0x0357, 0x05, 0x0D)
     Fade(0x06, 300)
     OP_AC(0x09, 0x0001)
@@ -3337,6 +3484,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['莎拉'], 0x00, 'AniEvUdegumiF', -1.0, 1.0, 0x00000002)
     SetChrFace(0x04, ChrTable['莎拉'], '#E[C]#M_2#B_0')
 
@@ -3351,6 +3499,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     OP_AC(0x09, 0x0000)
@@ -3377,8 +3526,10 @@ def EV_03_81_00():
     OP_45(ChrTable['鋼之雅里安洛德'], 0.0, -5.0, 0.0, 0x0000, 0x0000)
     Fade(0xFF, 0, 0x0000)
     Sleep(3000)
+
     OP_45(ChrTable['鋼之雅里安洛德'], 15.0, 0.0, 0.0, 0x03E8, 0x0000)
     Sleep(300)
+
     SetChrFace(0x03, ChrTable['鋼之雅里安洛德'], '0', 'A', '0[autoB0]', '#b', '0')
     CameraCtrl(0x07, 0x00BF)
     CameraSetPos(0x03, -47.09, 115.44, -1.05, 20000)
@@ -3399,6 +3550,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['尤西斯'], '#E[11111110]#M_0#B_0')
 
     ChrTalk(
@@ -3413,6 +3565,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['蓋烏斯'], '#E_0#M_2#B_0')
 
     ChrTalk(
@@ -3427,6 +3580,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -3464,9 +3618,11 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['奧蕾莉亞分校長'], 0.0, 0.0, 0.0, 0x03E8, 0x0000)
     SetChrFace(0x03, ChrTable['奧蕾莉亞分校長'], '111I', 'A[autoMA]', '0[autoB0]', '#b', '0')
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['奧蕾莉亞分校長'], '#E[I]#M_4#B_0')
 
     ChrTalk(
@@ -3481,6 +3637,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -3538,6 +3695,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
@@ -3567,15 +3725,19 @@ def EV_03_81_00():
     OP_6C(ChrTable['鋼之雅里安洛德'], 0.8)
     Fade(0xFF, 0, 0x0000)
     Sleep(600)
+
     SetChrAniFunction(ChrTable['鋼之雅里安洛德'], 0x00, 'AniEv35000', -1.0, 1.0, 0x00000000)
     CreateThread(0xFFFF, 0x02, ScriptId.Sound, 'SE_03_60_01_ARIANLOAD_YARI')
     Sleep(800)
+
     PlayEffect(0xFFFF, (0xFF, 0xCC, 0x0), ChrTable['鋼之雅里安洛德'], 0x00000003, (0xDD, 'NODE_R_ARM'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     SetChrFace(0x03, ChrTable['鋼之雅里安洛德'], '0', '0[autoM0]', '0[autoB0]', '#b', '0')
     Sleep(100)
+
     SetChrAniFunction(ChrTable['鋼之雅里安洛德'], 0x00, 'AniAttachMainWeapon', -1.0, 1.0, 0x00000000)
     CameraCtrl(0x07, 0x00BF)
     Sleep(500)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraSetPos(0x03, -47.41, 115.04, -1.49, 0)
@@ -3606,8 +3768,10 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['鋼之雅里安洛德'], 0.0, 0.0, 0.0, 0x03E8, 0x0000)
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['鋼之雅里安洛德'], '#E_2#M_2#B_0')
 
     ChrTalk(
@@ -3621,18 +3785,23 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
-    OP_44(0x006D, 0x01, 0.15, 0x0000, 0.0)
+
+    OP_44(ChrTable['神速杜巴莉'], 0x01, 0.15, 0x0000, 0.0)
     Sleep(50)
-    OP_44(0x006E, 0x01, 0.15, 0x0000, 0.0)
+
+    OP_44(ChrTable['剛毅艾奈絲'], 0x01, 0.15, 0x0000, 0.0)
     Sleep(50)
-    OP_44(0x006F, 0x01, 0.15, 0x0000, 0.0)
+
+    OP_44(ChrTable['魔弓恩奈雅'], 0x01, 0.15, 0x0000, 0.0)
     Sleep(1000)
+
     Fade(0x6A, 300)
     OP_AC(0x09, 0x0000)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
     OP_23(0x01, 0xFFFF, 0xFFFF, 0x00, 0x0A)
     SetScenaFlags(ScenaFlag(0x0064, 4, 0x324))
     Sleep(500)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -3656,8 +3825,10 @@ def EV_03_81_00():
     Fade(0xFF, 0, 0x0000)
     SetChrAniFunction(ChrTable['神速杜巴莉'], 0x00, 'AniEv35000', -1.0, 1.0, 0x00000000)
     Sleep(300)
+
     SetChrAniFunction(ChrTable['剛毅艾奈絲'], 0x00, 'AniEv35000', -1.0, 1.0, 0x00000000)
     Sleep(300)
+
     SetChrAniFunction(ChrTable['魔弓恩奈雅'], 0x00, 'AniEv35000', -1.0, 1.0, 0x00000000)
     SetChrFace(0x03, ChrTable['神速杜巴莉'], '6', '2[autoM2]', '0[autoB0]', '#b', '0')
     SetChrFace(0x03, ChrTable['剛毅艾奈絲'], '6', '2[autoM2]', '0[autoB0]', '#b', '0')
@@ -3679,6 +3850,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_27('', 0xFFFF)
     Fade(0x6A, 300)
@@ -3717,18 +3889,24 @@ def EV_03_81_00():
     OP_3B(0x00, (0xFF, 0x7714, 0x0), 0.6, (0xFF, 0x3E8, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Fade(0xFF, 0, 0x0000)
     Sleep(500)
+
     SetChrAniFunction(ChrTable['奧蕾莉亞分校長'], 0x00, 'AniEv30005', -1.0, 1.0, 0x00000000)
     SetChrAniFunction(ChrTable['黎恩'], 0x00, 'AniEv35000', -1.0, 1.0, 0x00000000)
     Sleep(100)
+
     SetChrAniFunction(ChrTable['蓋烏斯'], 0x00, 'AniEv35000', -1.0, 1.0, 0x00000000)
     Sleep(100)
+
     SetChrAniFunction(ChrTable['尤西斯'], 0x00, 'AniEv35000', -1.0, 1.0, 0x00000000)
     Sleep(100)
+
     SetChrAniFunction(ChrTable['莎拉'], 0x00, 'AniEv35000', -1.0, 1.0, 0x00000000)
     Sleep(100)
+
     SetChrAniFunction(ChrTable['米莉亞姆'], 0x00, 'AniEv35000', -1.0, 1.0, 0x00000000)
     CameraCtrl(0x07, 0x00BF)
     Sleep(300)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraSetPos(0x03, -55.86, 118.77, 0.87, 0)
@@ -3741,10 +3919,12 @@ def EV_03_81_00():
     OP_5E(0x00, 0x0000, 0.2, 0x0000, 0x0000, 0x0000, 0.0, 0xFFFF, -9000.0, -9000.0, -9000.0)
     Fade(0xFF, 0, 0x0000)
     Sleep(1000)
+
     PlayEffect(0xFFFF, (0xFF, 0xDD, 0x0), ChrTable['永世α'], 0x0000000C, (0xDD, 'NODE_HEAD'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     OP_3B(0x00, (0xFF, 0x763C, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     CameraCtrl(0x07, 0x00BF)
     Sleep(300)
+
     OP_3B(0x03, (0xFF, 0x7714, 0x0), 0.2, 0x01F4)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -3779,18 +3959,23 @@ def EV_03_81_00():
     MoveType(ChrTable['悠娜'], 0xFFFF, -30.97, 114.0, -12.36, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['悠娜'], 0.45)
     Sleep(80)
+
     MoveType(ChrTable['庫爾特'], 0xFFFF, -31.32, 114.0, -13.45, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['庫爾特'], 0.5)
     Sleep(80)
+
     MoveType(ChrTable['亞爾緹娜'], 0xFFFF, -29.88, 114.0, -12.03, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['亞爾緹娜'], 0.45)
     Sleep(80)
+
     MoveType(ChrTable['安潔莉卡'], 0xFFFF, -31.74, 114.0, -14.92, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['安潔莉卡'], 0.5)
     Sleep(80)
+
     MoveType(ChrTable['妙婕'], 0xFFFF, -29.94, 114.0, -13.12, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['妙婕'], 0.48)
     Sleep(80)
+
     MoveType(ChrTable['亞修'], 0xFFFF, -30.27, 114.0, -15.08, 3.3, 0x02, 0x0000)
     OP_6C(ChrTable['亞修'], 0.49)
     Fade(0xFF, 0, 0x0000)
@@ -3815,18 +4000,19 @@ def EV_03_81_00():
     CameraSetPos(0x03, -30.78, 115.25, -12.19, 6000)
     CameraRotate(0x03, 351.0, 351.0, 6.0, 6000, 0x01)
     CameraSetDistance(0x03, 2.0, 6000)
-    OP_44(0x000A, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000B, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000C, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000D, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000E, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0012, 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['悠娜'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['庫爾特'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['亞爾緹娜'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['妙婕'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['亞修'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['安潔莉卡'], 0x15, 0.15, 0x0000, 0.0)
     SetChrFace(0x03, ChrTable['庫爾特'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     SetChrFace(0x03, ChrTable['亞爾緹娜'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     SetChrFace(0x03, ChrTable['妙婕'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     SetChrFace(0x03, ChrTable['亞修'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     SetChrFace(0x03, ChrTable['安潔莉卡'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     WaitForMsg()
+
     OP_41(0x000A, 0x00)
     OP_41(0x000B, 0x00)
     OP_41(0x000C, 0x00)
@@ -3859,8 +4045,10 @@ def EV_03_81_00():
     SetChrAniFunction(ChrTable['魔弓恩奈雅'], 0x00, 'AniEvCraft00', 1.0, 1.0, 0x00000000)
     SetChrAniFunction(ChrTable['神速杜巴莉'], 0x00, 'AniEvSCraft01_02', 1.0, 1.0, 0x00000000)
     Sleep(500)
+
     SetChrAniFunction(ChrTable['魔弓恩奈雅'], 0x00, 'AniEvCraft00_1', 1.0, 1.0, 0x00000000)
     Sleep(500)
+
     SetChrAniFunction(ChrTable['尤西斯'], 0x00, 'AniEvCraft01', 1.0, 1.0, 0x00000000)
     PlayEffect(0xFFFF, (0xFF, 0xDC, 0x0), ChrTable['銀臂2'], 0x0000000C, (0xDD, 'NODE_CENTER'), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     ChrSetRGBA(ChrTable['銀臂2'], 1.0, 1.0, 1.0, 1.0, 500, 0x03)
@@ -3877,6 +4065,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['妙婕'], '#E_2#M_2#B_0')
 
     ChrTalk(
@@ -3890,6 +4079,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -3917,6 +4107,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['安潔莉卡'], '#E_2#M_2#B_0')
 
     ChrTalk(
@@ -3931,6 +4122,7 @@ def EV_03_81_00():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     OP_AC(0x09, 0x0000)
@@ -3962,6 +4154,7 @@ def EV_03_81_00():
     SetChrPos(ChrTable['魔弓恩奈雅'], -48.17, 114.0, 0.24, 69.9)
     Fade(0xFF, 0, 0x0000)
     Sleep(300)
+
     OP_23(0x01, 0xFFFF, 0x0357, 0x05, 0x64)
     Fade(0x06, 300)
     OP_AC(0x09, 0x0001)
@@ -3982,24 +4175,30 @@ def EV_03_81_00():
     SetChrAniFunction(ChrTable['鋼之雅里安洛德'], 0x00, 'AniEvCraft00', -1.0, 1.0, 0x00000000)
     PlayEffect(ChrTable['鋼之雅里安洛德'], (0xFF, 0xD5, 0x0), ChrTable['鋼之雅里安洛德'], 0x0000000C, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(500)
+
     SetChrAniFunction(ChrTable['莎拉'], 0x00, 'AniEvSCraft10_12', 1.0, 1.0, 0x00000000)
     Sleep(500)
+
     SetChrAniFunction(ChrTable['鋼之雅里安洛德'], 0x00, 'AniEvCraft00_1', 1.0, 1.0, 0x00000000)
     SetChrAniFunction(ChrTable['奧蕾莉亞分校長'], 0x00, 'AniEvSCraft00_6', 1.0, 1.0, 0x00000000)
     SetChrAniFunction(ChrTable['黎恩'], 0x00, 'AniEvCraft03', 1.0, 1.0, 0x00000000)
     Sleep(300)
+
     OP_4E(0.6, 0.0, 0x03)
     OP_3B(0x00, (0xFF, 0x8FAD, 0x0), 0.7, (0xFF, 0x0, 0x0), 0.0, -1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x04B0, 0x012C, 0x0000, 0x04B0, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x8F78, 0x0), 0.6, (0xFF, 0x64, 0x0), 0.0, -1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x04B0, 0x012C, 0x0000, 0x04B0, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x75BA, 0x0), 0.7, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(50)
+
     MoveType(ChrTable['奧蕾莉亞分校長'], 0xFFFF, -38.87, 114.0, 1.03, 5.5, 0x00, 0x0000)
     PlayEffect(ChrTable['奧蕾莉亞分校長'], (0xFF, 0xDE, 0x0), ChrTable['奧蕾莉亞分校長'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     MoveType(ChrTable['鋼之雅里安洛德'], 0xFFFF, -42.08, 114.0, -0.5, 5.0, 0x00, 0x0000)
     Sleep(100)
+
     PlayEffect(ChrTable['鋼之雅里安洛德'], (0xFF, 0xD6, 0x0), ChrTable['鋼之雅里安洛德'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, -1.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     CameraCtrl(0x0A, 0.25, 0.25, 0.0, 0x0032, 0x00FA, 0x0064, 0x0000, 0x0000, 0x00)
     Sleep(100)
+
     PlayEffect(ChrTable['奧蕾莉亞分校長'], (0xFF, 0xD0, 0x0), ChrTable['奧蕾莉亞分校長'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.009999999776482582, 0x0), (0xEE, -0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 2.0, 0x0), (0xEE, 2.0, 0x0), (0xEE, 2.0, 0x0), 0xFF)
     PlayEffect(ChrTable['鋼之雅里安洛德'], (0xFF, 0xD0, 0x0), ChrTable['鋼之雅里安洛德'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.009999999776482582, 0x0), (0xEE, -0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 2.0, 0x0), (0xEE, 2.0, 0x0), (0xEE, 2.0, 0x0), 0xFF)
     SetChrAniFunction(ChrTable['魔弓恩奈雅'], 0x00, 'AniEvCraft00_2', -1.0, 1.0, 0x00000000)
@@ -4008,31 +4207,37 @@ def EV_03_81_00():
     PlayEffect(ChrTable['尤西斯'], (0xFF, 0xDB, 0x0), ChrTable['尤西斯'], 0x00000003, (0xDD, 'R_arm_point:NODE_EFFECT01'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 1.100000023841858, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.25, 0x0), (0xEE, 1.25, 0x0), (0xEE, 1.25, 0x0), 0xFF)
     SetChrAniFunction(ChrTable['蓋烏斯'], 0x00, 'AniEvSCraft20_2', -1.0, 1.0, 0x00000000)
     Sleep(30)
+
     OP_4E(0.3, 0.0, 0x03)
     SetChrAniFunction(ChrTable['黎恩'], 0x00, 'AniEvCraft03_1', -1.0, 1.0, 0x00000000)
     PlayEffect(ChrTable['黎恩'], (0xFF, 0xD9, 0x0), ChrTable['黎恩'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(50)
+
     PlayEffect(ChrTable['黎恩'], (0xFF, 0xD7, 0x0), ChrTable['黎恩'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.800000011920929, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     PlayEffect(ChrTable['黎恩'], (0xFF, 0xD8, 0x0), ChrTable['黎恩'], 0x0000000C, (0xDD, 'NODE_CENTER'), (0xEE, 1.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     PlayEffect(ChrTable['神速杜巴莉'], (0xFF, 0xD2, 0x0), ChrTable['神速杜巴莉'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     SetChrAniFunction(ChrTable['神速杜巴莉'], 0x00, 'AniEvSCraft01_05', -1.0, 1.0, 0x00000000)
     CameraCtrl(0x0A, 0.15, 0.15, 0.0, 0x0014, 0x012C, 0x07D0, 0x0000, 0x0000, 0x00)
     Sleep(50)
+
     MoveType(ChrTable['黎恩'], 0xFFFF, -38.73, 114.0, 2.85, 7.5, 0x00, 0x0000)
     MoveType(ChrTable['神速杜巴莉'], 0xFFFF, -41.48, 114.0, -1.99, 6.0, 0x00, 0x0000)
     SetChrAniFunction(ChrTable['莎拉'], 0x00, 'AniEvSCraft10_13', -1.0, 1.0, 0x00000000)
     PlayEffect(ChrTable['莎拉'], (0xFF, 0xDA, 0x0), ChrTable['莎拉'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.75, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), 0xFF)
     Sleep(50)
+
     MoveType(ChrTable['莎拉'], 0xFFFF, -39.64, 114.0, 4.55, 9.0, 0x00, 0x0000)
     SetChrAniFunction(ChrTable['剛毅艾奈絲'], 0x00, 'AniEvCraft00_1', -1.0, 1.0, 0x00000000)
     PlayEffect(ChrTable['剛毅艾奈絲'], (0xFF, 0xD3, 0x0), ChrTable['剛毅艾奈絲'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, -0.20000000298023224, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     OP_6C(ChrTable['剛毅艾奈絲'], 0.8)
     MoveType(ChrTable['剛毅艾奈絲'], 0xFFFF, -41.55, 114.0, -3.93, 6.0, 0x00, 0x0000)
     Sleep(300)
+
     OP_63(0xFFFF, 0x00)
     OP_56(0x17, 0x03, 0x00, 1.0, 1.0, 1.0, 0.0, 300.0)
     OP_4E(0.1, 0.0, 0x03)
     Sleep(45)
+
     OP_27('', 0xFFFF)
     OP_3B(0x01, (0xFF, 0x7714, 0x0), (0xFF, 0x1F4, 0x0))
     OP_AC(0x06)
@@ -4113,38 +4318,55 @@ def EV_03_81_01():
     CreateChr(ChrTable['永世α'], 'C_ROB022', '神機永世αⅡ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateThread(ChrTable['黎恩'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['尤西斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['米莉亞姆'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['蓋烏斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['莎拉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['奧蕾莉亞分校長'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['安潔莉卡'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['悠娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['庫爾特'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞爾緹娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞修'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['妙婕'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['鋼之雅里安洛德'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['神速杜巴莉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['剛毅艾奈絲'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['魔弓恩奈雅'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['永世α'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     AnimeClipLoadMultiple(ChrTable['黎恩'], 0x00, 'AniEvDead1', 'AniEv00025', 'AniEvSquat', 'AniEv00024', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['尤西斯'], 0x00, 'AniEvDead1', 'AniEvSquat', 'AniEvGyu', '', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['米莉亞姆'], 0x00, 'AniEvDead1', 'AniEvSquat', 'AniEvRyoteGyu', '', '', '', '', '', '', '', '', '', '', '', '', '')
@@ -4284,6 +4506,7 @@ def EV_03_81_01():
     Fade(0xFF, 0, 0x0000)
     CameraCtrl(0x07, 0x00BF)
     Sleep(500)
+
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraSetPos(0x03, -38.71, 115.27, -1.96, 0)
@@ -4299,6 +4522,7 @@ def EV_03_81_01():
     CameraSetDistance(0x03, 1.6, 12000)
     Fade(0xFF, 0, 0x0000)
     Sleep(1500)
+
     OP_45(ChrTable['尤西斯'], 0.0, 30.0, 0.0, 0x05DC, 0x0000)
     SetChrFace(0x03, ChrTable['尤西斯'], '9998[autoE8]', '2[autoM2]', '0[autoB0]', '#b', '0')
     OP_3A(0x03, 0.7, 0x01F4, 0x00)
@@ -4317,6 +4541,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['莎拉'], 0.0, 0.0, 0.0, 0x03E8, 0x0000)
     SetChrFace(0x04, ChrTable['莎拉'], '#E[9]#M_E#B_0')
 
@@ -4331,6 +4556,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -4362,6 +4588,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['剛毅艾奈絲'], '#E_8#M_2#B_0')
 
     ChrTalk(
@@ -4375,6 +4602,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['神速杜巴莉'], 20.0, -30.0, 0.0, 0x03E8, 0x0000)
     SetChrFace(0x04, ChrTable['神速杜巴莉'], '#E[B]#M_8#B_0')
 
@@ -4389,6 +4617,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -4421,6 +4650,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['庫爾特'], '#E[C]#M_8#B_0')
 
     ChrTalk(
@@ -4434,6 +4664,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['安潔莉卡'], 0.0, -15.0, 0.0, 0x03E8, 0x0000)
     SetChrFace(0x04, ChrTable['安潔莉卡'], '#E[3]#M_2#B_0')
 
@@ -4449,6 +4680,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -4464,6 +4696,7 @@ def EV_03_81_01():
     OP_46(0x00, ChrTable['安潔莉卡'], 0xFFFF, 0x0000)
     Fade(0xFF, 0, 0x0000)
     Sleep(2000)
+
     SetChrFace(0x04, ChrTable['鋼之雅里安洛德'], '#E[3]#M_2#B_0')
 
     ChrTalk(
@@ -4477,6 +4710,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -4520,6 +4754,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -4552,8 +4787,10 @@ def EV_03_81_01():
     )
 
     Sleep(800)
+
     OP_45(ChrTable['鋼之雅里安洛德'], -5.0, 0.0, 0.0, 0x05DC, 0x0000)
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -4582,6 +4819,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['蓋烏斯'], '#E_0#M_2#B_0')
 
     ChrTalk(
@@ -4595,6 +4833,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['奧蕾莉亞分校長'], '#E[1]#M_A#B_0')
 
     ChrTalk(
@@ -4608,6 +4847,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -4634,9 +4874,11 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['奧蕾莉亞分校長'], 0.0, -15.0, 0.0, 0x03E8, 0x0000)
     SetChrFace(0x03, ChrTable['奧蕾莉亞分校長'], '1', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['奧蕾莉亞分校長'], '#E[1]#M_2#B_0')
 
     ChrTalk(
@@ -4651,8 +4893,10 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['奧蕾莉亞分校長'], 0x00, 'AniEvFieldAttackEnd', -1.0, 0.8, 0x00000000)
     Sleep(1500)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -4679,8 +4923,10 @@ def EV_03_81_01():
     )
 
     Sleep(800)
+
     OP_45(ChrTable['鋼之雅里安洛德'], 0.0, 0.0, 0.0, 0x03E8, 0x0000)
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -4694,13 +4940,14 @@ def EV_03_81_01():
     SetChrPos(ChrTable['米莉亞姆'], -33.78, 114.0, -0.59, 250.7)
     OP_46(0x00, ChrTable['米莉亞姆'], ChrTable['鋼之雅里安洛德'], 0x0000)
     Fade(0xFF, 0, 0x0000)
-    OP_44(0x0000, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0006, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0009, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0008, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000F, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0010, 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['黎恩'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['尤西斯'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['米莉亞姆'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['蓋烏斯'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['莎拉'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['奧蕾莉亞分校長'], 0x15, 0.15, 0x0000, 0.0)
     Sleep(1000)
+
     SetChrFace(0x04, ChrTable['黎恩'], '#E[C]#M_8#B_0')
 
     ChrTalk(
@@ -4714,6 +4961,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['莎拉'], '#E_2#M_2#B_0')
 
     ChrTalk(
@@ -4727,6 +4975,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['尤西斯'], '#E_2#M_2#B_0')
 
     ChrTalk(
@@ -4741,6 +4990,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
     OP_23(0x01, 0xFFFF, 0xFFFF, 0x00, 0x0A)
@@ -4750,10 +5000,12 @@ def EV_03_81_01():
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
     OP_57(0x00, 0x03)
     Sleep(1500)
+
     OP_56(0x01, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
     OP_57(0x01, 0x03)
     CameraCtrl(0x00)
     Sleep(1500)
+
     OP_45(ChrTable['鋼之雅里安洛德'], 0.0, 0.0, 0.0, 0x0000, 0x0001)
     OP_45(ChrTable['鋼之雅里安洛德'], 0.0, 0.0, 0.0, 0x0000, 0x0000)
     OP_46(0x00, ChrTable['鋼之雅里安洛德'], 0xFFFF, 0x0000)
@@ -4775,6 +5027,7 @@ def EV_03_81_01():
     OP_56(0x01, 0x03, 0x00, 1.0, 1.0, 1.0, 0.0, 750.0)
     OP_57(0x01, 0x03)
     Sleep(750)
+
     OP_3A(0x01, 0x0FA0, 0x00)
     OP_23(0x01, 0x0258, 0x0357, 0x05, 0x0D)
     Fade(0x06, 300)
@@ -4793,9 +5046,11 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['鋼之雅里安洛德'], 30.0, 0.0, 0.0, 0x05DC, 0x0000)
     SetChrFace(0x03, ChrTable['鋼之雅里安洛德'], '33332[autoE2]', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['鋼之雅里安洛德'], '#E_2#M_2#B_0')
 
     ChrTalk(
@@ -4810,6 +5065,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -4855,6 +5111,7 @@ def EV_03_81_01():
     SetChrFace(0x03, ChrTable['米莉亞姆'], '2[autoE2]', '2[autoM2]', '0[autoB0]', '#b', '0')
     Fade(0xFF, 0, 0x0000)
     Sleep(800)
+
     CameraCtrl(0x0A, 0.02, 0.02, 0.0, 0x0064, 0x00FA, 0x0064, 0x0000, 0x0000, 0x00)
     SetChrFace(0x04, ChrTable['黎恩'], '#E[6]#M_2#B_0')
 
@@ -4869,6 +5126,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_3A(0x02, 0x00)
     PlayBGM(460, 0.7, 0x0000, 0x00000000, 0x00)
@@ -4922,9 +5180,11 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['黎恩'], -50.0, 0.0, 0.0, 0x0320, 0x0000)
     SetChrFace(0x03, ChrTable['黎恩'], '336[autoE6]', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['黎恩'], '#E[6]#M_2#B_0')
 
     ChrTalk(
@@ -4939,9 +5199,11 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['黎恩'], 0.0, -10.0, 0.0, 0x04B0, 0x0000)
     SetChrFace(0x03, ChrTable['黎恩'], '6667', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['黎恩'], '#E[7]#M_2#B_0')
 
     ChrTalk(
@@ -4956,6 +5218,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -4982,6 +5245,7 @@ def EV_03_81_01():
     Fade(0xFF, 0, 0x0000)
     OP_45(ChrTable['黎恩'], 0.0, 0.0, 0.0, 0x0320, 0x0000)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['黎恩'], '#E_6#M_2#B_0')
 
     ChrTalk(
@@ -4995,11 +5259,13 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['米莉亞姆'], 0x00, 'AniEvRyoteGyu', -1.0, 1.0, 0x00000000)
     SetChrAniFunction(ChrTable['尤西斯'], 0x00, 'AniEvGyu', -1.0, 1.0, 0x00000000)
     CreateThread(ChrTable['莎拉'], 0x02, ScriptId.System, 'FC_look_dir_Yes')
     CreateThread(ChrTable['蓋烏斯'], 0x02, ScriptId.System, 'FC_look_dir_Yes')
     Sleep(500)
+
     CameraCtrl(0x0A, 0.02, 0.02, 0.0, 0x0064, 0x00FA, 0x0064, 0x0000, 0x0000, 0x00)
     OP_5E(0x00, 0x0004, 0.5, 0x012C, 0x0320, 0x01F4, 0.5, 0xFFFF, -9000.0, -9000.0, -9000.0)
     CreateThread(0xFFFF, 0x02, ScriptId.Sound, 'VOICE_YES_03_81_01')
@@ -5017,6 +5283,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_27('', 0xFFFF)
     Fade(0x6A, 300)
@@ -5038,11 +5305,13 @@ def EV_03_81_01():
     OP_3B(0x00, (0xFF, 0x763C, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(0xFFFF, (0xFF, 0xCC, 0x0), ChrTable['永世α'], 0x00000003, (0xDD, 'NODE_HEAD'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(800)
+
     OP_3B(0x00, (0xFF, 0x7737, 0x0), 0.7, (0xFF, 0x3E8, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x7593, 0x0), 0.5, (0xFF, 0x3E8, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(ChrTable['永世α'], (0xFF, 0xCB, 0x0), ChrTable['永世α'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x67)
     CameraCtrl(0x07, 0x00BF)
     Sleep(500)
+
     OP_3B(0x01, (0xFF, 0x7737, 0x0), (0xFF, 0xFA0, 0x0))
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -5069,6 +5338,7 @@ def EV_03_81_01():
     )
 
     Sleep(1500)
+
     CameraCtrl(0x09, 0.05, 0.05, 0.2)
     SetChrAniFunction(ChrTable['黎恩'], 0x00, 'AniEv00025', 1.0, 1.0, 0x00000000)
     CameraSetPos(0x03, -35.98, 115.65, -2.7, 1200)
@@ -5076,6 +5346,7 @@ def EV_03_81_01():
     CameraSetDistance(0x03, 1.5, 1200)
     CameraCtrl(0x0B, 0x03, 34.0, 0x04B0)
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     CameraCtrl(0x07, 0x00BF)
     Fade(0x65, 500, 1.0, 0x0000)
@@ -5103,6 +5374,7 @@ def EV_03_81_01():
     SetChrAniFunction(ChrTable['悠娜'], 0x00, 'AniEvPhoneTalk', -1.0, 1.2, 0x00000000)
     Fade(0xFF, 0, 0x0000)
     Sleep(1800)
+
     SetChrFace(0x04, ChrTable['悠娜'], '#E[3322222222222222222332]#M_2#B[777777777777777777770]')
 
     ChrTalk(
@@ -5116,6 +5388,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['庫爾特'], '#E_6#M_2#B_0')
 
     ChrTalk(
@@ -5129,6 +5402,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['亞爾緹娜'], '#E_6#M_2#B_0')
 
     ChrTalk(
@@ -5142,6 +5416,7 @@ def EV_03_81_01():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     OP_AC(0x09, 0x0000)
@@ -5159,17 +5434,21 @@ def EV_03_81_01():
     CameraRotate(0x03, 10.0, 253.0, 5.0, 6000, 0x01)
     Fade(0xFF, 0, 0x0000)
     Sleep(500)
+
     OP_46(0x00, ChrTable['亞修'], ChrTable['妙婕'], 0x03E8)
     OP_46(0x00, ChrTable['妙婕'], ChrTable['亞修'], 0x03E8)
     Sleep(1500)
+
     OP_45(ChrTable['亞修'], 0.0, -20.0, 0.0, 0x01F4, 0x0000)
     OP_45(ChrTable['妙婕'], 0.0, -20.0, 0.0, 0x01F4, 0x0000)
     SetChrFace(0x03, ChrTable['亞修'], '33333332', '2[autoM2]', '0[autoB0]', '#b', '0')
     SetChrFace(0x03, ChrTable['妙婕'], '33333332', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(500)
+
     OP_45(ChrTable['亞修'], 0.0, 0.0, 0.0, 0x01F4, 0x0000)
     OP_45(ChrTable['妙婕'], 0.0, 0.0, 0.0, 0x01F4, 0x0000)
     Sleep(1000)
+
     Call(ScriptId.Sound, 'Stop_ENVSE')
     Fade(0x00, 1000, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
@@ -5270,44 +5549,64 @@ def EV_03_81_03():
     CreateChr(ChrTable['鷹隼β（妙婕機）'], 'C_ROB013_C00', '鷹隼β', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateThread(ChrTable['黎恩'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['尤西斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['米莉亞姆'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['蓋烏斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['莎拉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['奧蕾莉亞分校長'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['安潔莉卡'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['悠娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['庫爾特'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞爾緹娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞修'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['妙婕'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['鋼之雅里安洛德'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['神速杜巴莉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['剛毅艾奈絲'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['魔弓恩奈雅'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['永世α'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['騎神瓦利瑪'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['勇士貳型（亞修機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['鷹隼β（妙婕機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     AnimeClipLoadMultiple(ChrTable['黎恩'], 0x00, 'AniEv45005', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['亞修'], 0x00, 'AniEv45000', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['妙婕'], 0x00, 'AniEv45000', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
@@ -5452,6 +5751,7 @@ def EV_03_81_03():
     PlayEffect(0xFFFF, (0xFF, 0xCD, 0x0), ChrTable['騎神瓦利瑪'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), 0xFF)
     CameraCtrl(0x0A, 0.3, 0.3, 0.0, 0x0064, 0x01F4, 0x0064, 0x0000, 0x0000, 0x00)
     Sleep(600)
+
     SetChrAniFunction(ChrTable['鷹隼β（妙婕機）'], 0x00, 'AniEvk1120', 0.5, 1.0, 0x00000000)
     PlayEffect(0xFFFF, (0xFF, 0xCE, 0x0), ChrTable['鷹隼β（妙婕機）'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 7.0, 0x0), (0xEE, 7.0, 0x0), (0xEE, 7.0, 0x0), 0xFF)
     PlayEffect(0xFFFF, (0xFF, 0xCD, 0x0), ChrTable['鷹隼β（妙婕機）'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), 0xFF)
@@ -5462,6 +5762,7 @@ def EV_03_81_03():
     CameraCtrl(0x0A, 0.3, 0.3, 0.0, 0x0064, 0x01F4, 0x0064, 0x0000, 0x0000, 0x00)
     OP_3B(0x00, (0xFF, 0x7612, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(1000)
+
     SetChrAniFunction(ChrTable['勇士貳型（亞修機）'], 0x00, 'AniEvk1120', 0.5, 1.0, 0x00000000)
     PlayEffect(0xFFFF, (0xFF, 0xCE, 0x0), ChrTable['勇士貳型（亞修機）'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 7.0, 0x0), (0xEE, 7.0, 0x0), (0xEE, 7.0, 0x0), 0xFF)
     PlayEffect(0xFFFF, (0xFF, 0xCD, 0x0), ChrTable['勇士貳型（亞修機）'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), 0xFF)
@@ -5476,6 +5777,7 @@ def EV_03_81_03():
     OP_41(0x0332, 0x00)
     CameraCtrl(0x07, 0x00BF)
     Sleep(500)
+
     OP_3B(0x03, (0xFF, 0x7724, 0x0), 0.7, 0x01F4)
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -5495,16 +5797,20 @@ def EV_03_81_03():
     OP_6C(ChrTable['黎恩'], 0.5)
     OP_45(ChrTable['黎恩'], 0.0, 30.0, 0.0, 0x0000, 0x0000)
     Sleep(100)
+
     MoveType(ChrTable['妙婕'], 0xFFFF, -26.55, 114.0, -9.27, 2.8, 0x02, 0x0000)
     Sleep(300)
+
     MoveType(ChrTable['亞修'], 0xFFFF, -24.84, 114.0, 2.63, 3.3, 0x02, 0x0000)
     OP_41(0x0000, 0x00)
     PlayEffect(0xFFFF, (0xFF, 0xD2, 0x0), ChrTable['黎恩'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     OP_3B(0x00, (0xFF, 0x75E8, 0x0), 0.5, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(1000)
+
     ChrSetRGBA(ChrTable['黎恩'], 1.0, 1.0, 1.0, 0.0, 500, 0x03)
     PlayEffect(0xFFFF, (0xFF, 0xD1, 0x0), ChrTable['黎恩'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x64)
     Sleep(400)
+
     EffectCtrl(0x0E, 0xFFFF, 0x6E, 0x00)
     MoveType(ChrTable['黎恩'], 0xFFFF, -33.2, 117.97, 0.76, 3.5, 0x01, 0x0000)
     OP_41(0x0000, 0x00)
@@ -5515,6 +5821,7 @@ def EV_03_81_03():
     EffectCtrl(0x0E, 0x0320, 0x64, 0x00)
     CameraCtrl(0x07, 0x00BF)
     Sleep(500)
+
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraSetPos(0x03, -34.12, 119.12, -0.75, 0)
@@ -5536,10 +5843,12 @@ def EV_03_81_03():
     SetChrAniFunction(ChrTable['騎神瓦利瑪'], 0x00, 'AniEvk0050', -1.0, 1.0, 0x00000000)
     CreateThread(0xFFFF, 0x02, ScriptId.Sound, 'SE_ROB000_AniEvk0050')
     Sleep(1766)
+
     CameraCtrl(0x0A, 0.05, 0.05, 0.0, 0x0064, 0x00FA, 0x0064, 0x0000, 0x0000, 0x00)
     SetChrAniFunction(ChrTable['騎神瓦利瑪'], 0x00, 'AniAttachEQU200', -1.0, 1.0, 0x00000000)
     SetChrAniFunction(ChrTable['勇士貳型（亞修機）'], 0x00, 'AniEvBtlWait', 1.0, 1.0, 0x00000000)
     Sleep(100)
+
     SetChrAniFunction(ChrTable['鷹隼β（妙婕機）'], 0x00, 'AniEvBtlWait', 1.0, 1.0, 0x00000000)
     PlayEffect(0xFFFF, (0xFF, 0xD5, 0x0), ChrTable['尤西斯'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     PlayEffect(0xFFFF, (0xFF, 0xD5, 0x0), ChrTable['蓋烏斯'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
@@ -5549,8 +5858,10 @@ def EV_03_81_03():
     PlayEffect(0xFFFF, (0xFF, 0xD5, 0x0), ChrTable['悠娜'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     PlayEffect(0xFFFF, (0xFF, 0xD5, 0x0), ChrTable['庫爾特'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(800)
+
     OP_5E(0x00, 0x0004, 0.6, 0x0064, 0x01F4, 0x01F4, 0.5, 0xFFFF, -9000.0, -9000.0, -9000.0)
     Sleep(100)
+
     CameraCtrl(0x0A, 0.05, 0.05, 0.0, 0x0064, 0x01F4, 0x01F4, 0x0000, 0x0000, 0x00)
     PlayEffect(0xFFFF, (0xFF, 0xD6, 0x0), ChrTable['騎神瓦利瑪'], 0x00000021, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 7.0, 0x0), (0xEE, 7.0, 0x0), (0xEE, 7.0, 0x0), 0x6E)
     PlayEffect(0xFFFF, (0xFF, 0xD6, 0x0), ChrTable['勇士貳型（亞修機）'], 0x00000021, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 7.0, 0x0), (0xEE, 7.0, 0x0), (0xEE, 7.0, 0x0), 0x6F)
@@ -5559,6 +5870,7 @@ def EV_03_81_03():
     OP_3B(0x00, (0xFF, 0x75BB, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     CameraCtrl(0x07, 0x00BF)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x7631, 0x0), 0.5, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x7715, 0x0), 0.6, (0xFF, 0x3E8, 0x0), 0.0, -2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Fade(0x65, 800, 1.0, 0x0000)
@@ -5605,6 +5917,7 @@ def EV_03_81_03():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['蓋烏斯'], '#E_0#M_2#B_0')
 
     ChrTalk(
@@ -5618,10 +5931,12 @@ def EV_03_81_03():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['莎拉'], 0x00, 'AniEvUdegumiF', -1.0, 1.0, 0x00000000)
     OP_45(ChrTable['莎拉'], 0.0, -15.0, 0.0, 0x0320, 0x0000)
     SetChrFace(0x03, ChrTable['莎拉'], 'E', 'A[autoMA]', '0[autoB0]', '#b', '0')
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['莎拉'], '#E[E]#M_A#B_0')
 
     ChrTalk(
@@ -5636,6 +5951,7 @@ def EV_03_81_03():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -5664,8 +5980,10 @@ def EV_03_81_03():
     )
 
     WaitForMsg()
+
     OP_46(0x00, ChrTable['亞爾緹娜'], ChrTable['米莉亞姆'], 0x03E8)
     Sleep(500)
+
     CreateThread(ChrTable['亞爾緹娜'], 0x02, ScriptId.System, 'FC_look_dir_Yes')
     SetChrFace(0x04, ChrTable['亞爾緹娜'], '#E[3333332]#M_0#B_0')
 
@@ -5681,8 +5999,10 @@ def EV_03_81_03():
     )
 
     Sleep(1200)
+
     OP_45(ChrTable['亞爾緹娜'], -100.0, 20.0, 0.0, 0x04B0, 0x0000)
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_3B(0x01, (0xFF, 0x7715, 0x0), (0xFF, 0x1F4, 0x0))
     Call(ScriptId.Sound, 'Stop_ENVSE_VAR', (0xFF, 0x1F4, 0x0))
@@ -5741,6 +6061,7 @@ def EV_03_81_03():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -5766,6 +6087,7 @@ def EV_03_81_03():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['妙婕'], '#E[333333332]#M_2#B_0')
 
     ChrTalk(
@@ -5779,6 +6101,7 @@ def EV_03_81_03():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
@@ -5800,12 +6123,15 @@ def EV_03_81_03():
     ChrSetPhysicsFlags(ChrTable['妙婕'], 0x00000040)
     Fade(0xFF, 0, 0x0000)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x7597, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     SetChrAniFunction(ChrTable['騎神瓦利瑪'], 0x00, 'AniEvk0530', -1.0, 1.0, 0x00000000)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x7595, 0x0), 0.6, (0xFF, 0x12C, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     SetChrAniFunction(ChrTable['勇士貳型（亞修機）'], 0x00, 'AniEvWaitCRAFT01A', -1.0, 1.0, 0x00000000)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x759C, 0x0), 0.6, (0xFF, 0x0, 0x0), 0.0, -4.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     SetChrAniFunction(ChrTable['鷹隼β（妙婕機）'], 0x00, 'AniEvWaitCRAFT01M', -1.0, 1.0, 0x00000000)
     CameraCtrl(0x07, 0x00BF)
@@ -5862,7 +6188,7 @@ def EV_03_81_03_END():
     Call(ScriptId.System, 'SetKisinChange_Valimar')
     SetScenaFlags(ScenaFlag(0x0087, 1, 0x439))
 
-    OP_18(
+    ExecExpressionWithVar(
         0x31,
         (
             (Expr.PushLong, 0x2A),
@@ -5927,10 +6253,13 @@ def EV_03_81_04():
     CreateChr(ChrTable['妙婕'], 'C_CHR013', '妙婕', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateThread(ChrTable['黎恩'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞修'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['妙婕'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     ChrSetPhysicsFlags(ChrTable['黎恩'], 0x00000040)
     ChrSetPhysicsFlags(ChrTable['黎恩'], 0x00000020)
     ChrSetPhysicsFlags(ChrTable['亞修'], 0x00000040)
@@ -5943,12 +6272,16 @@ def EV_03_81_04():
     CreateChr(ChrTable['鷹隼β（妙婕機）'], 'C_ROB013_C00', '妙婕', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateThread(ChrTable['永世α'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['騎神瓦利瑪'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['勇士貳型（亞修機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['鷹隼β（妙婕機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     AnimeClipLoadMultiple(ChrTable['騎神瓦利瑪'], 0x00, 'AniSitWait', 'AniBtlDamage', 'AniEvk0058', 'AniEvk0503', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['勇士貳型（亞修機）'], 0x00, 'AniBtlGuard1', 'AniEvCoopKamae', 'AniEvCoopDash', 'AniEvBtlWait', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['鷹隼β（妙婕機）'], 0x00, 'AniBtlGuard1', 'AniEvCoopKamae', 'AniEvCoopDash', 'AniEvBtlWait', '', '', '', '', '', '', '', '', '', '', '', '')
@@ -6012,14 +6345,18 @@ def EV_03_81_04():
     SetChrAniFunction(ChrTable['永世α'], 0x00, 'AniEvkWait5', 1.0, 1.0, 0x00000000)
     PlayEffect(ChrTable['永世α'], (0xFF, 0xD2, 0x0), ChrTable['永世α'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 90.0, 0.0, 0.0, (0xEE, 4.0, 0x0), (0xEE, 4.0, 0x0), (0xEE, 4.0, 0x0), 0x64)
     Sleep(2000)
+
     PlayEffect(ChrTable['永世α'], (0xFF, 0xD3, 0x0), ChrTable['永世α'], 0x00000003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, -20.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x65)
     OP_3B(0x00, (0xFF, 0x1130, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(1500)
+
     OP_3B(0x00, (0xFF, 0x1137, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, -1.6, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(900)
+
     OP_3B(0xFF, 0.5, 0.0, 0.1)
     OP_3B(0x00, (0xFF, 0x114F, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, -3.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(100)
+
     OP_3B(0xFF, 0.1, 0.0, 0.3)
     OP_3B(0x00, (0xFF, 0x113D, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, -3.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x113E, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, -3.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
@@ -6030,17 +6367,19 @@ def EV_03_81_04():
     CameraSetDistance(0x03, 10.6, 1500)
     CameraCtrl(0x07, 0x00BF)
     Sleep(800)
+
     OP_3B(0x00, (0xFF, 0x1157, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, -1.5, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x04B0, 0x012C, 0x0000, 0x04B0, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_5E(0x00, 0x0004, 0.8, 0x0064, 0x03E8, 0x03E8, 0.5, 0xFFFF, -9000.0, -9000.0, -9000.0)
     OP_A1(30.0, 0.0, 1.0, 0x09C4, 0x0003)
     CameraCtrl(0x0A, 0.8, 0.8, 0.0, 0x0064, 0x01F4, 0x0064, 0x0000, 0x0000, 0x00)
-    CameraCtrl(0x02, 0x02, -45.45, 119.72, 0.16, 2000)
-    CameraCtrl(0x04, 0x02, 28.0, 121.0, 356.0, 2000, 0x01)
-    CameraCtrl(0x05, 0x02, 84.0, 2000)
+    CameraSetPos(0x02, -45.45, 119.72, 0.16, 2000)
+    CameraRotate(0x02, 28.0, 121.0, 356.0, 2000, 0x01)
+    CameraSetDistance(0x02, 84.0, 2000)
     CameraCtrl(0x07, 0x00BF)
     OP_3B(0x00, (0xFF, 0x8FAC, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0xFF, 1.0, 0.5, 0.2)
     Sleep(500)
+
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -6058,17 +6397,20 @@ def EV_03_81_04():
     CameraCtrl(0x0A, 0.05, 0.05, 0.0, 0x0064, 0x01F4, 0x0064, 0x0000, 0x0000, 0x00)
     SetChrAniFunction(ChrTable['騎神瓦利瑪'], 0x00, 'AniEvk0503', -1.0, 1.0, 0x00000000)
     Sleep(166)
+
     OP_8D(0x0320, 0.0, 0.0, 2.0, 0.5)
     MoveType(ChrTable['騎神瓦利瑪'], 0xFFFF, -31.11, 114.0, 0.34, 10.0, 0x00, 0x0001)
     PlayEffect(0xFFFF, (0xFF, 0xCB, 0x0), ChrTable['騎神瓦利瑪'], 0x00000003, (0xDD, 'NODE_R_WING0'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     PlayEffect(0xFFFF, (0xFF, 0xCB, 0x0), ChrTable['騎神瓦利瑪'], 0x00000003, (0xDD, 'NODE_L_WING0'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     PlayEffect(ChrTable['騎神瓦利瑪'], (0xFF, 0xCC, 0x0), ChrTable['騎神瓦利瑪'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.009999999776482582, 0x0), (0xEE, -0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 4.0, 0x0), (0xEE, 4.0, 0x0), (0xEE, 4.0, 0x0), 0xFF)
     Sleep(1000)
+
     OP_3B(0x00, (0xFF, 0x7595, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     CameraCtrl(0x0A, 0.15, 0.15, 0.0, 0x0064, 0x01F4, 0x0064, 0x0000, 0x0000, 0x00)
     PlayEffect(ChrTable['騎神瓦利瑪'], (0xFF, 0xCC, 0x0), ChrTable['騎神瓦利瑪'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.009999999776482582, 0x0), (0xEE, -0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 5.0, 0x0), (0xEE, 5.0, 0x0), (0xEE, 5.0, 0x0), 0xFF)
     OP_41(0x0320, 0x00)
     Sleep(500)
+
     SetChrAniFunction(ChrTable['騎神瓦利瑪'], 0x00, 'AniEvk0058', 1.0, 1.0, 0x00000000)
     OP_3B(0x00, (0xFF, 0x7597, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     EffectCtrl(0x0E, 0x0339, 0x64, 0x00)
@@ -6110,6 +6452,7 @@ def EV_03_81_04():
     )
 
     WaitForMsg()
+
     OP_BC(0x05, 0x0000, (0xFF, 0xFFFF, 0x0), 0x00FA, 0x0003)
     OP_BC(0x06, 0x0000, (0xFF, 0xFFFF, 0x0))
     Fade(0x65, 500, 1.0, 0x0000)
@@ -6172,13 +6515,17 @@ def EV_03_81_04():
     )
 
     Sleep(1000)
+
     SetChrAniFunction(ChrTable['勇士貳型（亞修機）'], 0x00, 'AniEvCoopKamae', 1.0, 1.0, 0x00000000)
     OP_41(0x0332, 0x00)
-    OP_1F(0xFFFF, 0x02)
+    TerminateThread(0xFFFF, 0x02)
     Sleep(1000)
+
     OP_3B(0x00, (0xFF, 0x7595, 0x0), 0.6, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     WaitForMsg()
+
     Sleep(500)
+
     SetChrAniFunction(ChrTable['鷹隼β（妙婕機）'], 0x00, 'AniEvCoopKamae', 1.0, 1.0, 0x00000000)
     OP_3B(0x00, (0xFF, 0x759C, 0x0), 0.6, (0xFF, 0x0, 0x0), 0.0, -4.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     SetChrFace(0x04, ChrTable['妙婕'], '#E_2#M_6#B_0')
@@ -6194,6 +6541,7 @@ def EV_03_81_04():
     )
 
     WaitForMsg()
+
     OP_63(0x0335, 0x01)
     OP_BC(0x05, 0x0000, (0xFF, 0xFFFF, 0x0), 0x00FA, 0x0003)
     OP_BC(0x06, 0x0000, (0xFF, 0xFFFF, 0x0))
@@ -6220,6 +6568,7 @@ def EV_03_81_04():
     SetChrAniFunction(ChrTable['勇士貳型（亞修機）'], 0x00, 'AniEvCoopDash', -1.0, 1.0, 0x00000000)
     SetChrAniFunction(ChrTable['鷹隼β（妙婕機）'], 0x00, 'AniEvCoopDash', -1.0, 1.0, 0x00000000)
     Sleep(30)
+
     OP_3B(0x00, (0xFF, 0x75C9, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     MoveType(ChrTable['鷹隼β（妙婕機）'], 0xFFFF, -44.18, 114.0, -4.45, 9.0, 0x00, 0x0000)
     MoveType(ChrTable['勇士貳型（亞修機）'], 0xFFFF, -45.2, 114.0, 3.89, 9.0, 0x00, 0x0000)
@@ -6229,6 +6578,7 @@ def EV_03_81_04():
     PlayEffect(0xFFFF, (0xFF, 0xCC, 0x0), ChrTable['勇士貳型（亞修機）'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.009999999776482582, 0x0), (0xEE, -0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 5.0, 0x0), (0xEE, 5.0, 0x0), (0xEE, 5.0, 0x0), 0xFF)
     PlayEffect(0xFFFF, (0xFF, 0xCC, 0x0), ChrTable['鷹隼β（妙婕機）'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.009999999776482582, 0x0), (0xEE, -0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 5.0, 0x0), (0xEE, 5.0, 0x0), (0xEE, 5.0, 0x0), 0xFF)
     Sleep(1000)
+
     OP_AC(0x06)
 
     Return()
@@ -6306,18 +6656,25 @@ def EV_03_81_05():
     CreateChr(ChrTable['鷹隼β（妙婕機）'], 'C_ROB013_C00', '妙婕', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateThread(ChrTable['黎恩'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞修'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['妙婕'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['永世α'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['騎神瓦利瑪'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['勇士貳型（亞修機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['鷹隼β（妙婕機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     AnimeClipLoadMultiple(ChrTable['永世α'], 0x00, 'AniEvkWait4', 'AniEvkWait0', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['騎神瓦利瑪'], 0x00, 'AniEvBtlWait', 'AniEvCoopKamae', 'AniEvCoopDash', 'AniEvk0058', 'AniEvk0530', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['勇士貳型（亞修機）'], 0x00, 'AniEvEscape', 'AniEvBtlWait', 'AniEvCoopKamae', 'AniEvCoopDash', '', '', '', '', '', '', '', '', '', '', '', '')
@@ -6413,9 +6770,11 @@ def EV_03_81_05():
     Fade(0x64, 800, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
     Sleep(2000)
+
     SetChrAniFunction(ChrTable['勇士貳型（亞修機）'], 0x00, 'AniEvBtlWait', 2.0, 1.0, 0x00000000)
     CameraCtrl(0x07, 0x00BF)
     Sleep(500)
+
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -6433,14 +6792,17 @@ def EV_03_81_05():
     OP_3B(0x00, (0xFF, 0x75C7, 0x0), 0.7, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Fade(0xFF, 0, 0x0000)
     Sleep(500)
+
     OP_45(ChrTable['騎神瓦利瑪'], -20.0, -15.0, 0.0, 0x03E8, 0x0000)
     Sleep(500)
+
     OP_5E(0x00, 0x0002, 0.2, 0x0000, 0x0000, 0x0000, 0.0, 0xFFFF, -9000.0, -9000.0, -9000.0)
     PlayEffect(ChrTable['騎神瓦利瑪'], (0xFF, 0xCA, 0x0), ChrTable['騎神瓦利瑪'], 0x00000003, (0xDD, 'NODE_R_ARM'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x64)
     OP_3B(0x00, (0xFF, 0x7645, 0x0), 1.0, (0xFF, 0x3E8, 0x0), 0.0, 2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x7743, 0x0), 0.3, (0xFF, 0x1F4, 0x0), 0.0, 2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     CameraCtrl(0x07, 0x00BF)
     Sleep(500)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -6472,11 +6834,13 @@ def EV_03_81_05():
     )
 
     WaitForMsg()
+
     OP_BC(0x04, 0x0000, (0xFF, 0xD, 0x0), 0x00FA, 0x0003)
     OP_BC(0x06, 0x0000, (0xFF, 0xD, 0x0))
     SetChrAniFunction(ChrTable['鷹隼β（妙婕機）'], 0x00, 'AniEvBtlWait', 1.0, 1.0, 0x00000000)
     OP_45(ChrTable['鷹隼β（妙婕機）'], 60.0, 0.0, 0.0, 0x05DC, 0x0000)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['妙婕'], '#E[CCCCCCCCC332]#M_8#B[A]')
 
     ChrTalk(
@@ -6491,6 +6855,7 @@ def EV_03_81_05():
     )
 
     WaitForMsg()
+
     OP_63(0x0335, 0x01)
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
@@ -6519,6 +6884,7 @@ def EV_03_81_05():
     OP_45(ChrTable['騎神瓦利瑪'], -50.0, 40.0, 0.0, 0x07D0, 0x0000)
     CameraCtrl(0x07, 0x00BF)
     Sleep(500)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -6550,9 +6916,11 @@ def EV_03_81_05():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['黎恩'], 0.0, 0.0, 0.0, 0x0258, 0x0000)
     SetChrFace(0x03, ChrTable['黎恩'], '336', '0[autoM0]', '0[autoB0]', '#b', '0')
     Sleep(500)
+
     CameraCtrl(0x09, 0.05, 0.05, 0.2)
     SetChrFace(0x04, ChrTable['黎恩'], '#E[6]#M_3#B_0')
 
@@ -6567,6 +6935,7 @@ def EV_03_81_05():
     )
 
     WaitForMsg()
+
     Fade(0x6A, 300)
     OP_AC(0x09, 0x0000)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
@@ -6577,10 +6946,13 @@ def EV_03_81_05():
     OP_5E(0x00, 0x0004, 1.0, 0x0320, 0x03E8, 0x09C4, 0.5, 0xFFFF, -9000.0, -9000.0, -9000.0)
     SetChrAniFunction(ChrTable['騎神瓦利瑪'], 0x00, 'AniEvk0530', 1.0, 1.0, 0x00000000)
     Sleep(200)
+
     SetChrAniFunction(ChrTable['勇士貳型（亞修機）'], 0x00, 'AniBtlCoopKamae', -1.0, 1.0, 0x00000000)
     Sleep(300)
+
     SetChrAniFunction(ChrTable['鷹隼β（妙婕機）'], 0x00, 'AniBtlCoopKamae', -1.0, 1.0, 0x00000000)
     Sleep(1000)
+
     OP_3B(0x01, (0xFF, 0x7743, 0x0), (0xFF, 0x1F4, 0x0))
     OP_AC(0x06)
 
@@ -6665,46 +7037,67 @@ def EV_03_81_06():
     CreateChr(0x0636, 'O_S00EVT00', '視角', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateThread(ChrTable['黎恩'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['尤西斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['米莉亞姆'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['蓋烏斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['莎拉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['奧蕾莉亞分校長'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['安潔莉卡'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['悠娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['庫爾特'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞爾緹娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞修'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['妙婕'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['鋼之雅里安洛德'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['神速杜巴莉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['剛毅艾奈絲'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['魔弓恩奈雅'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['永世α'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['騎神瓦利瑪'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['勇士貳型（亞修機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['鷹隼β（妙婕機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0636, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     AnimeClipLoadMultiple(ChrTable['騎神瓦利瑪'], 0x00, 'AniEvBtlWait', 'AniEvk0058', 'AniEvk0530', 'AniEvk0503', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['勇士貳型（亞修機）'], 0x00, 'AniEvBtlWait', 'AniEvWaitCRAFT01A', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['鷹隼β（妙婕機）'], 0x00, 'AniEvBtlWait', 'AniEvWaitCRAFT01M', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
@@ -6786,19 +7179,23 @@ def EV_03_81_06():
     CameraCtrl(0x0A, 0.05, 0.05, 0.0, 0x0064, 0x01F4, 0x0064, 0x0000, 0x0000, 0x00)
     SetChrAniFunction(ChrTable['騎神瓦利瑪'], 0x00, 'AniEvk0503', -1.0, 1.0, 0x00000000)
     Sleep(166)
+
     OP_8D(0x0320, 0.0, 0.0, 2.0, 0.5)
     MoveType(ChrTable['騎神瓦利瑪'], 0xFFFF, -34.18, 114.0, 0.59, 10.0, 0x00, 0x0001)
     PlayEffect(0xFFFF, (0xFF, 0xCB, 0x0), ChrTable['騎神瓦利瑪'], 0x00000003, (0xDD, 'NODE_R_WING0'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     PlayEffect(0xFFFF, (0xFF, 0xCB, 0x0), ChrTable['騎神瓦利瑪'], 0x00000003, (0xDD, 'NODE_L_WING0'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     PlayEffect(0xFFFF, (0xFF, 0xCC, 0x0), ChrTable['騎神瓦利瑪'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.009999999776482582, 0x0), (0xEE, -0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 4.0, 0x0), (0xEE, 4.0, 0x0), (0xEE, 4.0, 0x0), 0xFF)
     Sleep(1000)
+
     OP_3B(0x00, (0xFF, 0x7595, 0x0), 0.6, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     CameraCtrl(0x0A, 0.15, 0.15, 0.0, 0x0064, 0x01F4, 0x0064, 0x0000, 0x0000, 0x00)
     PlayEffect(0xFFFF, (0xFF, 0xCC, 0x0), ChrTable['騎神瓦利瑪'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.009999999776482582, 0x0), (0xEE, -0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 5.0, 0x0), (0xEE, 5.0, 0x0), (0xEE, 5.0, 0x0), 0xFF)
     OP_41(0x0320, 0x00)
     Sleep(500)
+
     SetChrAniFunction(ChrTable['騎神瓦利瑪'], 0x00, 'AniEvk0058', 1.0, 1.0, 0x00000000)
     Sleep(2500)
+
     OP_3B(0x00, (0xFF, 0x7595, 0x0), 0.6, (0xFF, 0x0, 0x0), 0.0, -4.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x7599, 0x0), 0.6, (0xFF, 0x0, 0x0), 0.0, -2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x75C8, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
@@ -6809,6 +7206,7 @@ def EV_03_81_06():
     CameraRotate(0x03, 356.0, 124.0, 2.0, 8000, 0x01)
     CameraSetDistance(0x03, 17.6, 8000)
     Sleep(500)
+
     OP_23(0x01, 0x0258, 0x0357, 0x05, 0x0D)
     Fade(0x06, 300)
     SetChrFace(0x04, ChrTable['奧蕾莉亞分校長'], '#E_0#M_0#B_0')
@@ -6824,6 +7222,7 @@ def EV_03_81_06():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     PlayBGM(159, 0.7, 0x0000, 0x00000000, 0x00)
     OP_3B(0x01, (0xFF, 0x7703, 0x0), (0xFF, 0xFA0, 0x0))
@@ -6841,6 +7240,7 @@ def EV_03_81_06():
     Fade(0xFF, 0, 0x0000)
     SetChrAniFunction(ChrTable['悠娜'], 0x00, 'AniEvRyoteGyu', -1.0, 1.0, 0x00000000)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['悠娜'], '#E[5]#M_5#B_0')
 
     ChrTalk(
@@ -6854,6 +7254,7 @@ def EV_03_81_06():
     )
 
     WaitForMsg()
+
     CreateThread(ChrTable['庫爾特'], 0x02, ScriptId.System, 'FC_look_dir_Yes')
     SetChrFace(0x04, ChrTable['庫爾特'], '#E[1111111110]#M_4#B_0')
 
@@ -6869,8 +7270,10 @@ def EV_03_81_06():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['亞爾緹娜'], 0.0, -10.0, 0.0, 0x03E8, 0x0000)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['亞爾緹娜'], '#E[E]#M_4#B_0')
 
     ChrTalk(
@@ -6884,6 +7287,7 @@ def EV_03_81_06():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Call(ScriptId.Sound, 'Stop_ENVSE')
     Fade(0x00, 800, 1.0, 0x0000)
@@ -7005,92 +7409,136 @@ def EV_03_81_08():
     CreateChr(ChrTable['瑪雅'], 'C_CHR602', '瑪雅', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateThread(ChrTable['黎恩'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['尤西斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['米莉亞姆'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['蓋烏斯'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['莎拉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['奧蕾莉亞分校長'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['安潔莉卡'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['悠娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['庫爾特'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞爾緹娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['亞修'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['妙婕'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['鋼之雅里安洛德'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['神速杜巴莉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['剛毅艾奈絲'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['魔弓恩奈雅'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['永世α'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['騎神亞格里昂'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['騎神瓦利瑪'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['勇士貳型（亞修機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['鷹隼β（妙婕機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['渥雷斯准將'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0654, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0655, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0656, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0657, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0658, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x0659, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x065A, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x065B, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x065C, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(0x065D, 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['蘭迪'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['阿加特'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['遊擊士托瓦爾'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['龍人Ⅱ（悠娜機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['明鏡Ｓ（庫爾特機）'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['維因'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['席德尼'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['弗雷迪'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['古斯塔夫'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['潔西卡'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['蕾歐諾拉'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     CreateThread(ChrTable['瑪雅'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
+
     AnimeClipLoadMultiple(ChrTable['亞爾緹娜'], 0x00, 'AniEvTeMune', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['尤西斯'], 0x00, 'AniEvUdegumi', 'AniEvKincho2', 'AniEvUdegumiTeburi', '', '', '', '', '', '', '', '', '', '', '', '', '')
     AnimeClipLoadMultiple(ChrTable['蓋烏斯'], 0x00, 'AniEvKincho', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
@@ -7391,6 +7839,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     CreateThread(ChrTable['剛毅艾奈絲'], 0x02, ScriptId.System, 'FC_look_dir_Yes')
     SetChrFace(0x04, ChrTable['剛毅艾奈絲'], '#E[111111112]#M_4#B_0')
 
@@ -7406,9 +7855,11 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['神速杜巴莉'], 0x00, 'AniEvRyoteKosi', -1.0, 1.0, 0x00000000)
     OP_45(ChrTable['神速杜巴莉'], -50.0, 5.0, 0.0, 0x03E8, 0x0000)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['神速杜巴莉'], '#E[3]#M_2#B_0')
 
     ChrTalk(
@@ -7423,6 +7874,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -7438,6 +7890,7 @@ def EV_03_81_08():
     Fade(0xFF, 0, 0x0000)
     SetChrAniFunction(ChrTable['尤西斯'], 0x00, 'AniEvUdegumi', -1.0, 1.0, 0x00000000)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['尤西斯'], '#E[3]#M_2#B_0')
 
     ChrTalk(
@@ -7451,7 +7904,9 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     Sleep(300)
+
     SetChrAniFunction(ChrTable['尤西斯'], 0x00, 'AniEvUdegumiTeburi', -1.0, 1.0, 0x00000000)
     SetChrFace(0x04, ChrTable['尤西斯'], '#E_2#M_2#B_0')
 
@@ -7467,10 +7922,12 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['神速杜巴莉'], 0.0, 0.0, 0.0, 0x0320, 0x0000)
     SetChrAniFunction(ChrTable['神速杜巴莉'], 0x00, 'AniEvRyoteKosi', -1.0, 1.0, 0x00000002)
     SetChrFace(0x03, ChrTable['神速杜巴莉'], 'C', '9', 'A', '#b', '0')
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['神速杜巴莉'], '#E[C]#M_8#B_0')
 
     ChrTalk(
@@ -7484,6 +7941,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -7515,9 +7973,11 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_46(0x00, ChrTable['悠娜'], ChrTable['尤西斯'], 0x03E8)
     SetChrFace(0x03, ChrTable['悠娜'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['悠娜'], '#E[C]#M[H]#B_0')
 
     ChrTalk(
@@ -7531,6 +7991,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     CreateThread(ChrTable['莎拉'], 0x02, ScriptId.System, 'FC_look_dir_Yes')
     SetChrFace(0x04, ChrTable['莎拉'], '#E[33333332]#M_2#B_0')
 
@@ -7546,6 +8007,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -7572,9 +8034,11 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     SetChrAniFunction(ChrTable['安潔莉卡'], 0x00, 'AniEvSian', -1.0, 1.0, 0x00000000)
     SetChrFace(0x03, ChrTable['安潔莉卡'], '3', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['安潔莉卡'], '#E[33333333333333333333332]#M_2#B_0')
 
     ChrTalk(
@@ -7589,6 +8053,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     ClearScenaFlags(ScenaFlag(0x0064, 4, 0x324))
@@ -7617,14 +8082,19 @@ def EV_03_81_08():
     SetChrFace(0x03, ChrTable['魔弓恩奈雅'], '3', '2[autoM2]', '0[autoB0]', '#b', '0')
     Fade(0xFF, 0, 0x0000)
     Sleep(500)
+
     OP_45(ChrTable['魔弓恩奈雅'], 0.0, -15.0, 0.0, 0x0320, 0x0000)
     Sleep(300)
+
     OP_45(ChrTable['剛毅艾奈絲'], 0.0, -15.0, 0.0, 0x0320, 0x0000)
     Sleep(500)
+
     SetChrFace(0x03, ChrTable['神速杜巴莉'], '6666666677', 'EEEEEEEEEEEEF', '0[autoB0]', '#b', '0')
     Sleep(300)
+
     OP_45(ChrTable['神速杜巴莉'], 30.0, -10.0, 0.0, 0x03E8, 0x0000)
     Sleep(2000)
+
     OP_23(0x01, 0x0258, 0x0357, 0x05, 0x0D)
     Fade(0x06, 300)
     SetChrFace(0x04, ChrTable['蓋烏斯'], '#E[3]#M_2#B_0')
@@ -7641,6 +8111,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -7656,6 +8127,7 @@ def EV_03_81_08():
     OP_6C(ChrTable['蓋烏斯'], 0.3)
     Fade(0xFF, 0, 0x0000)
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['蓋烏斯'], '#E[2]#M_2#B_0')
 
     ChrTalk(
@@ -7670,9 +8142,11 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_41(0x0008, 0x00)
     OP_45(ChrTable['蓋烏斯'], 0.0, -20.0, 0.0, 0x03E8, 0x0000)
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['蓋烏斯'], '#E[3]#M_2#B_0')
 
     ChrTalk(
@@ -7687,9 +8161,11 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['蓋烏斯'], 0.0, 0.0, 0.0, 0x0320, 0x0000)
     SetChrFace(0x03, ChrTable['蓋烏斯'], '336', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['蓋烏斯'], '#E_6#M_2#B_0')
 
     ChrTalk(
@@ -7704,10 +8180,12 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_46(0x00, ChrTable['奧蕾莉亞分校長'], ChrTable['蓋烏斯'], 0x03E8)
     SetChrFace(0x03, ChrTable['奧蕾莉亞分校長'], '114[autoE4]', 'H', '0[autoB0]', '#b', '0')
     SetChrAniFunction(ChrTable['奧蕾莉亞分校長'], 0x00, 'AniEvUdegumiF', -1.0, 1.0, 0x00000000)
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['奧蕾莉亞分校長'], '#E_0#M_A#B_0')
 
     ChrTalk(
@@ -7721,8 +8199,10 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_46(0x00, ChrTable['騎神瓦利瑪'], ChrTable['蓋烏斯'], 0x03E8)
     Sleep(300)
+
     OP_27('黎恩', 0xFFFF)
     SetChrFace(0x04, ChrTable['騎神瓦利瑪'], '#E_0#M_0#B_0')
 
@@ -7737,6 +8217,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_27('', 0xFFFF)
     Fade(0x65, 500, 1.0, 0x0000)
@@ -7769,6 +8250,7 @@ def EV_03_81_08():
     Fade(0xFF, 0, 0x0000)
     SetChrAniFunction(ChrTable['神速杜巴莉'], 0x00, 'AniEvTeMune', -1.0, 1.0, 0x00000000)
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['神速杜巴莉'], '#E[C]#M_2#B_0')
 
     ChrTalk(
@@ -7782,6 +8264,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['鋼之雅里安洛德'], 0.0, -20.0, 0.0, 0x03E8, 0x0000)
     SetChrFace(0x04, ChrTable['鋼之雅里安洛德'], '#E[1]#M_0#B_0')
 
@@ -7797,8 +8280,10 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_45(ChrTable['鋼之雅里安洛德'], 0.0, 0.0, 0.0, 0x04B0, 0x0000)
     Sleep(300)
+
     SetChrFace(0x04, ChrTable['鋼之雅里安洛德'], '#E_0#M_0#B_0')
 
     ChrTalk(
@@ -7812,20 +8297,22 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
-    OP_44(0x0006, 0x01, 0.15, 0x0000, 0.0)
-    OP_44(0x0009, 0x01, 0.15, 0x0000, 0.0)
-    OP_44(0x0008, 0x01, 0.15, 0x0000, 0.0)
-    OP_44(0x000F, 0x01, 0.15, 0x0000, 0.0)
-    OP_44(0x0010, 0x01, 0.15, 0x0000, 0.0)
-    OP_44(0x0012, 0x01, 0.15, 0x0000, 0.0)
-    OP_44(0x000A, 0x01, 0.15, 0x0000, 0.0)
-    OP_44(0x000B, 0x01, 0.15, 0x0000, 0.0)
-    OP_44(0x000C, 0x01, 0.15, 0x0000, 0.0)
-    OP_44(0x006D, 0x01, 0.15, 0x0000, 0.0)
-    OP_44(0x006E, 0x01, 0.15, 0x0000, 0.0)
-    OP_44(0x006F, 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['尤西斯'], 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['米莉亞姆'], 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['蓋烏斯'], 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['莎拉'], 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['奧蕾莉亞分校長'], 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['安潔莉卡'], 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['悠娜'], 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['庫爾特'], 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['亞爾緹娜'], 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['神速杜巴莉'], 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['剛毅艾奈絲'], 0x01, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['魔弓恩奈雅'], 0x01, 0.15, 0x0000, 0.0)
     Sleep(1000)
+
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -7858,9 +8345,11 @@ def EV_03_81_08():
     MoveType(ChrTable['遊擊士托瓦爾'], 0xFE00, 0.0, 0.0, 30.0, 2.8, 0x00, 0x0000)
     MoveType(ChrTable['龍人Ⅱ（悠娜機）'], 0xFE00, 0.0, 0.0, 30.0, 1.2, 0x01, 0x0000)
     Sleep(200)
+
     MoveType(ChrTable['明鏡Ｓ（庫爾特機）'], 0xFE00, 0.0, 0.0, 30.0, 1.2, 0x01, 0x0000)
     Fade(0xFF, 0, 0x0000)
     Sleep(1000)
+
     SetChrFace(0x04, ChrTable['悠娜'], '#E_4#M_A#B_0')
 
     ChrTalk(
@@ -7875,6 +8364,7 @@ def EV_03_81_08():
     )
 
     Sleep(2000)
+
     OP_63(0xFFFF, 0x00)
     SetChrFace(0x04, ChrTable['庫爾特'], '#E_4#M_A#B_0')
 
@@ -7890,6 +8380,7 @@ def EV_03_81_08():
     )
 
     Sleep(3000)
+
     OP_63(0xFFFF, 0x00)
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
@@ -7959,13 +8450,15 @@ def EV_03_81_08():
     OP_3B(0x00, (0xFF, 0x75A8, 0x0), 0.4, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Fade(0xFF, 0, 0x0000)
     Sleep(300)
-    OP_44(0x0006, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000A, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000B, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000C, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0009, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000F, 0x15, 0.15, 0x0000, 0.0)
+
+    OP_44(ChrTable['尤西斯'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['悠娜'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['庫爾特'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['亞爾緹娜'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['米莉亞姆'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['莎拉'], 0x15, 0.15, 0x0000, 0.0)
     Sleep(1500)
+
     SetChrAniFunction(ChrTable['亞爾緹娜'], 0x00, 'AniEvTeMune', -1.0, 1.0, 0x00000000)
     OP_23(0x01, 0x0258, 0x0357, 0x05, 0x0D)
     Fade(0x06, 300)
@@ -7983,6 +8476,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['米莉亞姆'], '#E_8#M_0#B_0')
 
     ChrTalk(
@@ -7996,6 +8490,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['莎拉'], '#E_0#M_2#B_0')
 
     ChrTalk(
@@ -8009,6 +8504,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     OP_AC(0x09, 0x0000)
@@ -8031,9 +8527,11 @@ def EV_03_81_08():
     Fade(0xFF, 0, 0x0000)
     OP_3F(ChrTable['鋼之雅里安洛德'])
     Sleep(300)
+
     SetChrFace(0x03, ChrTable['鋼之雅里安洛德'], '3', '2[autoM2]', '0[autoB0]', '#b', '0')
     SetChrAniFunction(ChrTable['鋼之雅里安洛德'], 0x00, 'AniEvGourei', -1.0, 1.0, 0x00000000)
     Sleep(300)
+
     OP_23(0x01, 0x0258, 0x0357, 0x05, 0x0D)
     Fade(0x06, 300)
     OP_AC(0x09, 0x0001)
@@ -8050,6 +8548,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     OP_AC(0x09, 0x0000)
@@ -8073,16 +8572,20 @@ def EV_03_81_08():
     ChrSetRGBA(ChrTable['騎神亞格里昂'], 1.0, 1.0, 1.0, 0.0, 0, 0x03)
     Fade(0xFF, 0, 0x0000)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x7737, 0x0), 0.3, (0xFF, 0x1F4, 0x0), 0.0, 2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x7613, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, -2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(ChrTable['騎神亞格里昂'], (0xFF, 0xD7, 0x0), ChrTable['騎神亞格里昂'], 0x00000103, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x72)
     PlayEffect(ChrTable['騎神亞格里昂'], (0xFF, 0xD3, 0x0), ChrTable['騎神亞格里昂'], 0x00020003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, -5.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), 0xFF)
     Sleep(750)
+
     OP_3B(0x00, (0xFF, 0x7544, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     ChrSetRGBA(ChrTable['騎神亞格里昂'], 1.0, 1.0, 1.0, 0.7, 500, 0x03)
     Sleep(1000)
+
     CameraCtrl(0x07, 0x00BF)
     Sleep(500)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -8114,31 +8617,35 @@ def EV_03_81_08():
     OP_46(0x00, ChrTable['亞爾緹娜'], ChrTable['騎神亞格里昂'], 0x0000)
     SetChrAniFunction(ChrTable['騎神瓦利瑪'], 0x00, 'AniDetachEQU450', -1.0, 1.0, 0x00000000)
     Fade(0xFF, 0, 0x0000)
-    OP_44(0x0006, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0009, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0008, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000F, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0010, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x0012, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000A, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000B, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x000C, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x006D, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x006E, 0x15, 0.15, 0x0000, 0.0)
-    OP_44(0x006F, 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['尤西斯'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['米莉亞姆'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['蓋烏斯'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['莎拉'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['奧蕾莉亞分校長'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['安潔莉卡'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['悠娜'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['庫爾特'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['亞爾緹娜'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['神速杜巴莉'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['剛毅艾奈絲'], 0x15, 0.15, 0x0000, 0.0)
+    OP_44(ChrTable['魔弓恩奈雅'], 0x15, 0.15, 0x0000, 0.0)
     OP_6C(ChrTable['尤西斯'], 0.6)
     SetChrAniFunction(ChrTable['尤西斯'], 0x00, 'AniEvKincho2', -1.0, 1.0, 0x00000000)
     Sleep(50)
+
     OP_6C(ChrTable['莎拉'], 0.6)
     SetChrAniFunction(ChrTable['莎拉'], 0x00, 'AniEvKincho', -1.0, 1.0, 0x00000000)
     SetChrAniFunction(ChrTable['奧蕾莉亞分校長'], 0x00, 'AniEvKincho3', -1.0, 1.0, 0x00000000)
     Sleep(50)
+
     OP_6C(ChrTable['安潔莉卡'], 0.6)
     SetChrAniFunction(ChrTable['安潔莉卡'], 0x00, 'AniEvKincho2', -1.0, 1.0, 0x00000000)
     Sleep(50)
+
     OP_6C(ChrTable['蓋烏斯'], 0.7)
     SetChrAniFunction(ChrTable['蓋烏斯'], 0x00, 'AniEvKincho', -1.0, 1.0, 0x00000000)
     Sleep(1500)
+
     SetChrAniFunction(ChrTable['勇士貳型（亞修機）'], 0x00, 'AniEvWaitCRAFT01A', 0.0, 1.0, 0x00000000)
     SetChrAniFunction(ChrTable['鷹隼β（妙婕機）'], 0x00, 'AniEvWaitCRAFT01M', 0.0, 1.0, 0x00000000)
     SetChrAniFunction(ChrTable['騎神瓦利瑪'], 0x00, 'AniEvk0052', -1.0, 1.0, 0x00000000)
@@ -8161,6 +8668,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_27('', 0xFFFF)
     SetChrFace(0x04, ChrTable['尤西斯'], '#E_2#M_2#B_0')
 
@@ -8175,6 +8683,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -8199,11 +8708,14 @@ def EV_03_81_08():
     SetChrFace(0x03, ChrTable['魔弓恩奈雅'], '4[autoE4]', 'H', '0[autoB0]', '#b', '0')
     Fade(0xFF, 0, 0x0000)
     Sleep(500)
+
     SetChrAniFunction(ChrTable['鋼之雅里安洛德'], 0x00, 'AniEvGourei', -1.0, 1.0, 0x00000002)
     SetChrFace(0x03, ChrTable['鋼之雅里安洛德'], '223', '2[autoM2]', '0[autoB0]', '#b', '0')
     Sleep(1000)
+
     OP_46(0x00, ChrTable['神速杜巴莉'], ChrTable['鋼之雅里安洛德'], 0x03E8)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['神速杜巴莉'], '#E[11C]#M_8#B_0')
 
     ChrTalk(
@@ -8217,6 +8729,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['剛毅艾奈絲'], '#E[C]#M_8#B_0')
 
     ChrTalk(
@@ -8230,6 +8743,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     OP_AC(0x09, 0x0000)
@@ -8260,11 +8774,13 @@ def EV_03_81_08():
     PlayChrAnimeClip(ChrTable['騎神亞格里昂'], 'evk1001', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 166.667, 167.667, -1.0, 0x00, 0x00)
     OP_3B(0x00, (0xFF, 0x7595, 0x0), 0.7, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(1000)
+
     OP_3B(0x00, (0xFF, 0x760D, 0x0), 0.7, (0xFF, 0x0, 0x0), 0.0, -4.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x759D, 0x0), 0.5, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_76(ChrTable['騎神亞格里昂'], 'R_arm_point', 'mode1_mode2', 0x00, 0x01, 0.0, -1.0, -1.0, -1.0)
     CameraCtrl(0x07, 0x00BF)
     Sleep(200)
+
     Fade(0x65, 100, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -8276,21 +8792,23 @@ def EV_03_81_08():
     OP_7E(0x02, 0x0001)
     OP_7E(0x05, 30.0)
     OP_7E(0x06, 0x0001)
-    CameraCtrl(0x02, 0x02, -47.4, 117.48, -2.72, 500)
-    CameraCtrl(0x04, 0x02, 345.0, 116.0, 375.0, 500, 0x01)
-    CameraCtrl(0x05, 0x02, 10.9, 500)
+    CameraSetPos(0x02, -47.4, 117.48, -2.72, 500)
+    CameraRotate(0x02, 345.0, 116.0, 375.0, 500, 0x01)
+    CameraSetDistance(0x02, 10.9, 500)
     OP_5E(0x00, 0x0000, 0.6, 0x0000, 0x0064, 0x01F4, 0.5, 0xFFFF, -9000.0, -9000.0, -9000.0)
     PlayChrAnimeClip(ChrTable['騎神亞格里昂'], 'evk1001', 0x00, 0x01, 0x00, 0x00, 0x00, 0.2, 167.633, 168.633, -1.0, 0x00, 0x00)
     OP_6C(ChrTable['騎神亞格里昂'], 0.8)
     ChrClearPhysicsFlags(ChrTable['永世α'], 0x00000040)
     SetChrPos(ChrTable['永世α'], -57.47, 114.0, 0.06, 90.5)
     Sleep(100)
+
     SetChrAniFunction(ChrTable['永世α'], 0x00, 'AniEvk1029', -1.0, 1.0, 0x00000000)
     OP_6C(ChrTable['永世α'], 0.9)
     OP_3B(0x00, (0xFF, 0x7598, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x7635, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(0xFFFF, (0xFF, 0xD4, 0x0), ChrTable['騎神亞格里昂'], 0x00000003, (0xDD, 'NODE_R_ARM'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(100)
+
     OP_5E(0x00, 0x0004, 0.8, 0x0064, 0x00C8, 0x0320, 0.5, 0xFFFF, -9000.0, -9000.0, -9000.0)
     CameraCtrl(0x0A, 0.3, 0.3, 0.0, 0x000A, 0x01F4, 0x01F4, 0x0000, 0x0000, 0x00)
     OP_3B(0x00, (0xFF, 0x75C9, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
@@ -8301,6 +8819,7 @@ def EV_03_81_08():
     CameraRotate(0x03, 344.0, 115.0, 7.0, 6000, 0x01)
     CameraSetDistance(0x03, 5.4, 6000)
     Sleep(1500)
+
     OP_3B(0x00, (0xFF, 0x75C9, 0x0), 1.0, (0xFF, 0x64, 0x0), 0.0, -4.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x75C8, 0x0), 1.0, (0xFF, 0x12C, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0xFF, 1.0, 0.5, 0.2)
@@ -8308,6 +8827,7 @@ def EV_03_81_08():
     PlayEffect(0xFFFF, (0xFF, 0xD5, 0x0), ChrTable['騎神亞格里昂'], 0x00000003, (0xDD, 'NODE_R_ARM'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), 0xFF)
     CameraCtrl(0x0A, 0.4, 0.4, 0.0, 0x0064, 0x0064, 0x0190, 0x0000, 0x0000, 0x00)
     Sleep(1200)
+
     OP_3B(0x00, (0xFF, 0x75C9, 0x0), 1.0, (0xFF, 0x64, 0x0), 0.0, -4.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x75C8, 0x0), 1.0, (0xFF, 0x12C, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0xFF, 1.0, 0.5, 0.2)
@@ -8315,6 +8835,7 @@ def EV_03_81_08():
     PlayEffect(0xFFFF, (0xFF, 0xD5, 0x0), ChrTable['騎神亞格里昂'], 0x00000003, (0xDD, 'NODE_R_ARM'), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), 0xFF)
     CameraCtrl(0x0A, 0.4, 0.4, 0.0, 0x0064, 0x0064, 0x0190, 0x0000, 0x0000, 0x00)
     Sleep(1000)
+
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -8322,9 +8843,9 @@ def EV_03_81_08():
     CameraRotate(0x03, 354.0, 108.0, 352.0, 0, 0x01)
     CameraSetDistance(0x03, 3.7, 0)
     CameraCtrl(0x0B, 0x03, 34.6, 0x0000)
-    CameraCtrl(0x02, 0x02, -36.15, 116.04, -9.61, 3000)
-    CameraCtrl(0x04, 0x02, 352.0, 110.0, 9.0, 3000, 0x01)
-    CameraCtrl(0x05, 0x02, 7.4, 3000)
+    CameraSetPos(0x02, -36.15, 116.04, -9.61, 3000)
+    CameraRotate(0x02, 352.0, 110.0, 9.0, 3000, 0x01)
+    CameraSetDistance(0x02, 7.4, 3000)
     OP_5E(0x00, 0x0004, 1.0, 0x0000, 0x03E8, 0x09C4, 0.5, 0xFFFF, -9000.0, -9000.0, -9000.0)
     OP_4E(0.4, 0.0, 0x03)
     CameraCtrl(0x0A, 0.5, 0.5, 0.0, 0x0000, 0x01F4, 0x05DC, 0x0000, 0x0000, 0x00)
@@ -8359,10 +8880,12 @@ def EV_03_81_08():
     )
 
     Sleep(400)
+
     OP_3B(0x00, (0xFF, 0x755B, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     OP_3B(0x00, (0xFF, 0x758C, 0x0), 0.6, (0xFF, 0x0, 0x0), 0.0, -3.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(0xFFFF, (0xFF, 0xD6, 0x0), 0xFFFF, 0x00000000, (0xDD, ''), (0xEE, -56.95000076293945, 0x0), (0xEE, 116.79000091552734, 0x0), (0xEE, 1.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 3.0, 0x0), (0xEE, 3.0, 0x0), (0xEE, 3.0, 0x0), 0xFF)
     Sleep(700)
+
     OP_63(0xFFFF, 0x00)
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
@@ -8393,6 +8916,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -8445,6 +8969,7 @@ def EV_03_81_08():
     Fade(0xFF, 0, 0x0000)
     OP_45(ChrTable['騎神亞格里昂'], 30.0, -5.0, 0.0, 0x03E8, 0x0000)
     Sleep(500)
+
     OP_27('聖女的聲音', 0xFFFF)
     SetChrFace(0x04, ChrTable['騎神亞格里昂'], '#E_0#M_0#B_0')
 
@@ -8460,9 +8985,12 @@ def EV_03_81_08():
     )
 
     Sleep(500)
+
     WaitForMsg()
+
     OP_45(ChrTable['騎神亞格里昂'], 0.0, 0.0, 0.0, 0x03E8, 0x0000)
     Sleep(500)
+
     SetChrFace(0x04, ChrTable['騎神亞格里昂'], '#E_0#M_0#B_0')
 
     ChrTalk(
@@ -8477,6 +9005,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_27('', 0xFFFF)
     Fade(0x65, 500, 1.0, 0x0000)
@@ -8507,15 +9036,19 @@ def EV_03_81_08():
     )
 
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x759A, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, -4.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     Sleep(700)
+
     OP_3B(0x00, (0xFF, 0x7595, 0x0), 0.7, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(0xFFFF, (0xFF, 0xD0, 0x0), ChrTable['騎神亞格里昂'], 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.009999999776482582, 0x0), (0xEE, -0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 3.0, 0x0), (0xEE, 3.0, 0x0), (0xEE, 3.0, 0x0), 0xFF)
     CameraCtrl(0x0A, 0.05, 0.05, 0.0, 0x0064, 0x01F4, 0x0064, 0x0000, 0x0000, 0x00)
     WaitForMsg()
+
     OP_27('', 0xFFFF)
     OP_45(ChrTable['騎神亞格里昂'], 30.0, -20.0, 0.0, 0x03E8, 0x0000)
     Sleep(500)
+
     OP_27('聖女的聲音', 0xFFFF)
     SetChrFace(0x04, ChrTable['騎神亞格里昂'], '#E_0#M_0#B_0')
 
@@ -8530,6 +9063,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     OP_27('', 0xFFFF)
     OP_45(ChrTable['騎神亞格里昂'], 0.0, 0.0, 0.0, 0x05DC, 0x0000)
@@ -8537,13 +9071,16 @@ def EV_03_81_08():
     OP_3B(0x01, (0xFF, 0x7737, 0x0), (0xFF, 0x3E8, 0x0))
     PlayEffect(ChrTable['騎神亞格里昂'], (0xFF, 0xD3, 0x0), ChrTable['騎神亞格里昂'], 0x00020003, (0xDD, 'NODE_CENTER'), (0xEE, 0.0, 0x0), (0xEE, -5.0, 0x0), (0xEE, 0.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), (0xEE, 1.5, 0x0), 0xFF)
     Sleep(300)
+
     OP_3B(0x00, (0xFF, 0x7544, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     ChrSetRGBA(ChrTable['騎神亞格里昂'], 1.0, 1.0, 1.0, 0.0, 800, 0x03)
     Sleep(1000)
+
     EffectCtrl(0x0E, 0xFFFF, 0x64, 0x00)
     EffectCtrl(0x0E, 0xFFFF, 0x65, 0x00)
     EffectCtrl(0x0E, 0xFFFF, 0x66, 0x00)
     Sleep(1000)
+
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
     CameraCtrl(0x00)
@@ -8578,6 +9115,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x65, 500, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -8611,6 +9149,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, ChrTable['魔弓恩奈雅'], '#E[2]#M_2#B_0')
 
     ChrTalk(
@@ -8624,6 +9163,7 @@ def EV_03_81_08():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     Fade(0x6A, 300)
     OP_AC(0x09, 0x0000)
@@ -8634,11 +9174,14 @@ def EV_03_81_08():
     OP_45(ChrTable['神速杜巴莉'], 0.0, 0.0, 0.0, 0x0320, 0x0000)
     PlayEffect(ChrTable['神速杜巴莉'], (0xFF, 0xCA, 0x0), ChrTable['神速杜巴莉'], 0x00000003, (0xDD, ''), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0x69)
     Sleep(1000)
+
     PlayEffect(0xFFFF, (0xFF, 0xCB, 0x0), ChrTable['魔弓恩奈雅'], 0x00000003, (0xDD, ''), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(500)
+
     OP_3B(0x00, (0xFF, 0x75BB, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     PlayEffect(0xFFFF, (0xFF, 0xCB, 0x0), ChrTable['剛毅艾奈絲'], 0x00000003, (0xDD, ''), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     Sleep(1500)
+
     PlayEffect(0xFFFF, (0xFF, 0xCB, 0x0), ChrTable['神速杜巴莉'], 0x00000003, (0xDD, ''), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
     SetChrFace(0x03, ChrTable['魔弓恩奈雅'], '3', '2[autoM2]', '0[autoB0]', '#b', '0')
     CameraCtrl(0x00)
@@ -8649,16 +9192,19 @@ def EV_03_81_08():
     EffectCtrl(0x0E, 0x006F, 0x67, 0x00)
     ChrSetRGBA(ChrTable['魔弓恩奈雅'], 1.0, 1.0, 1.0, 0.0, 500, 0x03)
     Sleep(300)
+
     OP_3B(0x00, (0xFF, 0x75BD, 0x0), 0.7, (0xFF, 0xC8, 0x0), 0.0, -2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     SetChrFace(0x03, ChrTable['剛毅艾奈絲'], '1', '2[autoM2]', '0[autoB0]', '#b', '0')
     EffectCtrl(0x0E, 0x006E, 0x68, 0x00)
     ChrSetRGBA(ChrTable['剛毅艾奈絲'], 1.0, 1.0, 1.0, 0.0, 500, 0x03)
     Sleep(1500)
+
     OP_3B(0x00, (0xFF, 0x75BD, 0x0), 0.85, (0xFF, 0xC8, 0x0), 0.0, -2.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
     ChrSetRGBA(ChrTable['神速杜巴莉'], 1.0, 1.0, 1.0, 0.0, 500, 0x03)
     EffectCtrl(0x0E, 0x006D, 0x69, 0x00)
     OP_3B(0x01, (0xFF, 0x770F, 0x0), (0xFF, 0x7D0, 0x0))
     Sleep(1500)
+
     CameraCtrl(0x07, 0x00BF)
     Fade(0x65, 800, 1.0, 0x0000)
     Fade(0xFE, 0)
@@ -8684,6 +9230,7 @@ def EV_03_81_08():
     Fade(0xFF, 0, 0x0000)
     OP_3A(0x01, 0x0FA0, 0x00)
     Sleep(5500)
+
     Call(ScriptId.Sound, 'Stop_ENVSE')
     Fade(0x00, 1000, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)

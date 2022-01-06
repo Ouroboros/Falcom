@@ -319,8 +319,8 @@ class ScenaExpression:
         PushValueByIndex    = 0x20      # push getValueByIndex((byte)index)
         GetChrWork          = 0x21      # push getChrWork((word)a1, (byte)a2)
         Rand                = 0x22      # push rand32()
-        Expr23              = 0x23      # *(_DWORD *)stack = sub_14030FE70((__int64)gCurrentSaveData, *(unsigned __int8 *)ptr)
-        Expr24              = 0x24      # *(_DWORD *)stack = (*(_DWORD *)ptr & *((_DWORD *)gCurrentSaveData + 0xDA5)) != 0
+        PushVar             = 0x23      # push vars[index]
+        Expr24              = 0x24      # *(_DWORD *)stack = (*(_DWORD *)ptr & *((_DWORD *)gED84 + 0xDA5)) != 0
         Expr25              = 0x25      # *(_DWORD *)stack = *(_DWORD *)(*(_QWORD *)(qword98 + 0x60) + 4 * *(unsigned __int8 *)ptr)
 
     @classmethod
@@ -366,7 +366,7 @@ class ScenaExpression:
             Operator.PushReg            : lambda: fs.ReadByte(),
             Operator.PushValueByIndex   : lambda: fs.ReadByte(),
             Operator.GetChrWork         : lambda: (fs.ReadUShort(), fs.ReadByte()),
-            Operator.Expr23             : lambda: fs.ReadByte(),
+            Operator.PushVar            : lambda: fs.ReadByte(),
             Operator.Expr24             : lambda: fs.ReadULong(),
             Operator.Expr25             : lambda: fs.ReadUShort(),
         }.get(self.operator)
@@ -387,7 +387,7 @@ class ScenaExpression:
             Operator.PushReg            : lambda: fs.WriteByte(self.operand[0]),
             Operator.PushValueByIndex   : lambda: fs.WriteByte(self.operand[0]),
             Operator.GetChrWork         : lambda: (fs.WriteUShort(self.operand[0]), fs.WriteByte(self.operand[1])),
-            Operator.Expr23             : lambda: fs.WriteByte(self.operand[0]),
+            Operator.PushVar            : lambda: fs.WriteByte(self.operand[0]),
             Operator.Expr24             : lambda: fs.WriteULong(self.operand[0]),
             Operator.Expr25             : lambda: fs.WriteUShort(self.operand[0]),
         }.get(self.operator)

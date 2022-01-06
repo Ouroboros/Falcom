@@ -169,11 +169,17 @@ def OP_17(arg1: uint16, arg2: uint16):
     assert isinstance(arg2, uint16)
     _gScena.handleOpCode(0x17, arg1, arg2)
 
-def OP_18(arg1: uint8, arg2: tuple | list):
+def ExecExpressionWithVar(varIndex: uint8, expressions: tuple | list):
     # 0x18
-    assert isinstance(arg1, uint8)
-    assert isinstance(arg2, tuple | list)
-    _gScena.handleOpCode(0x18, arg1, arg2)
+    assert isinstance(varIndex, uint8)
+    assert isinstance(expressions, tuple | list)
+    _gScena.handleOpCode(0x18, varIndex, expressions)
+
+def OP_18(varIndex: uint8, expressions: tuple | list):
+    # 0x18
+    assert isinstance(varIndex, uint8)
+    assert isinstance(expressions, tuple | list)
+    _gScena.handleOpCode(0x18, varIndex, expressions)
 
 def OP_19(arg1: uint8, arg2: uint16):
     # 0x19
@@ -253,11 +259,17 @@ def OP_1E(chrId: uint16, threadId: uint8, scriptId: uint8, func: str):
     assert isinstance(func, str)
     _gScena.handleOpCode(0x1E, chrId, threadId, scriptId, func)
 
-def OP_1F(arg1: uint16, arg2: uint8):
+def TerminateThread(chrId: uint16, threadId: uint8):
     # 0x1F
-    assert isinstance(arg1, uint16)
-    assert isinstance(arg2, uint8)
-    _gScena.handleOpCode(0x1F, arg1, arg2)
+    assert isinstance(chrId, uint16)
+    assert isinstance(threadId, uint8)
+    _gScena.handleOpCode(0x1F, chrId, threadId)
+
+def OP_1F(chrId: uint16, threadId: uint8):
+    # 0x1F
+    assert isinstance(chrId, uint16)
+    assert isinstance(threadId, uint8)
+    _gScena.handleOpCode(0x1F, chrId, threadId)
 
 def OP_20(arg1: uint8, arg2: tuple | list, arg3: tuple | list, arg4: tuple | list, arg5: tuple | list):
     # 0x20
@@ -322,6 +334,13 @@ def OP_27(arg1: str, arg2: uint16):
     assert isinstance(arg1, str)
     assert isinstance(arg2, uint16)
     _gScena.handleOpCode(0x27, arg1, arg2)
+
+def MapJump(arg1: tuple | list, arg2: tuple | list, arg3: uint8):
+    # 0x28
+    assert isinstance(arg1, tuple | list)
+    assert isinstance(arg2, tuple | list)
+    assert isinstance(arg3, uint8)
+    _gScena.handleOpCode(0x28, arg1, arg2, arg3)
 
 def OP_28(arg1: tuple | list, arg2: tuple | list, arg3: uint8):
     # 0x28

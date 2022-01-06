@@ -31,10 +31,10 @@ def applyDescriptors(ctx: InstructionHandlerContext, fmts: str):
 
 def Handler_29(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'BB' + {
-            0x00: 'WfL',
+        return 'BC' + {
+            0x00: 'HfI',
             0x01: 'SL',
-            0x02: 'BWWB',
+            0x02: 'BHHB',
             0x03: '',
             0x04: 'B',
             # 0x05: 'WL',
@@ -577,7 +577,7 @@ def Handler_41(ctx: InstructionHandlerContext):
 
 def Handler_43(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'BW' + {
+        return 'BH' + {
             0x05: '',
             0x06: '',
             0x0A: '',
@@ -590,14 +590,14 @@ def Handler_43(ctx: InstructionHandlerContext):
             0xFF: 'W',
 
             # n != 0xC
-            0x00: 'fW',
-            0x01: 'fW',
-            0x02: 'fW',
-            0x03: 'fW',
-            0x64: 'fW',
-            0x65: 'fW',
-            0x67: 'fW',
-            0x68: 'fW',
+            0x00: 'fH',
+            0x01: 'fH',
+            0x02: 'fH',
+            0x03: 'fH',
+            0x64: 'fH',
+            0x65: 'fH',
+            0x67: 'fH',
+            0x68: 'fH',
         }[n]
 
     match ctx.action:
@@ -615,7 +615,7 @@ def Handler_43(ctx: InstructionHandlerContext):
 
 def Handler_46(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'BWWW' + {
+        return 'BNWW' + {
             0x00: '',
             0x01: 'fff',
             0x02: '',
@@ -663,27 +663,27 @@ def Handler_49(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
             0x00: 'N',
-            0x01: 'W',
+            0x01: 'N',
             0x02: 'B',
             0x03: '',
             0x04: 'N',
-            0x05: 'W',
-            0x06: 'W',
+            0x05: 'N',
+            0x06: 'N',
             0x07: '',
-            0x08: 'WffB',               # set_formation
-            0x09: 'W',
-            0x0A: 'W',
-            0x0B: 'W',
-            0x0C: 'WW',
-            0x0D: 'W' * 0x18,
+            0x08: 'NffB',               # set_formation
+            0x09: 'N',
+            0x0A: 'N',
+            0x0B: 'N',
+            0x0C: 'NN',
+            0x0D: 'N' * 0x18,
             0x0E: 'B',
             0x0F: 'B',
             0x10: '',
-            0x11: 'W',
+            0x11: 'N',
             0x12: 'B',
-            0x14: 'W' * 20,
-            0x15: 'W',
-            0x16: 'WW',
+            0x14: 'N' * 20,
+            0x15: 'N',
+            0x16: 'NH',
             0x17: 'W',
             0x18: '',
             0x19: '',
@@ -691,7 +691,7 @@ def Handler_49(ctx: InstructionHandlerContext):
             0x1B: 'B',
             0x1C: 'B',
             0x1D: 'B',
-            0x1E: 'W',
+            0x1E: 'N',
         }[n]
 
     match ctx.action:

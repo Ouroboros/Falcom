@@ -210,10 +210,10 @@ def Handler_0D(ctx: InstructionHandlerContext):
 def Handler_23(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
-            0x00: 'WWWWB',
-            0x01: 'WWBB',
-            0x02: 'WW',
-            0x05: 'WWWWB',
+            0x00: 'HHHHB',
+            0x01: 'HHBB',
+            0x02: 'HH',
+            0x05: 'HHHHB',
         }[n]
 
     match ctx.action:
@@ -850,10 +850,10 @@ def Handler_49(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
             0x00: 'N',                  # FormationAddMember
-            0x01: 'W',
+            0x01: 'N',
             0x04: 'N',                  # FormationSetLeader
-            0x05: 'W',
-            0x06: 'W',
+            0x05: 'N',
+            0x06: 'N',
             0x08: 'WffB',               # set_formation
             0x09: 'W',
             0x0A: 'W',
@@ -2093,14 +2093,14 @@ def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Fla
 ScenaOpTable = ED83InstructionTable([
     # inst(0x00,  'ExitThread',                   NoOperand,                  Flags.EndBlock),
     inst(0x01,  'Return',                       NoOperand,                  Flags.EndBlock),
-    inst(0x02,  'Call',                         NoOperand,                  Flags.Empty,        Handler_02,         parameters = ('type', 'name')),
-    inst(0x03,  'Jump',                         'O',                        Flags.Jump,                             parameters = ('label',)),
+    inst(0x02,  'Call',                         NoOperand,                  Flags.Empty,        Handler_02,                 parameters = ('type', 'name')),
+    inst(0x03,  'Jump',                         'O',                        Flags.Jump,                                     parameters = ('label',)),
     inst(0x04,  'OP_04',                        'BS'),
-    inst(0x05,  'If',                           'EO',                                                               parameters = ('ops', 'false_successor')),
+    inst(0x05,  'If',                           'EO',                                                                       parameters = ('ops', 'false_successor')),
     inst(0x06,  'Switch',                       NoOperand,                  Flags.EndBlock,     Handler_06),
     inst(0x07,  'DebugLog',                     'BV'),
     inst(0x08,  'OP_08',                        'BE'),
-    inst(0x0A,  'ExecExpressionWithReg',        'BE',                                                               parameters = ('regIndex', 'expressions')),
+    inst(0x0A,  'ExecExpressionWithReg',        'BE',                                                                       parameters = ('regIndex', 'expressions')),
     # inst(0x0B,  'OP_0B',                        'BE'),
     inst(0x0C,  'OP_0C',                        'BB'),
     inst(0x0D,  'OP_0D',                        NoOperand,                                      handler = Handler_0D),
@@ -2113,11 +2113,11 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x15,  'OP_15',                        'L'),
     inst(0x16,  'Sleep',                        'H',                        Flags.FormatNewLine),
     inst(0x17,  'OP_17',                        'WW'),
-    inst(0x18,  'OP_18',                        'BE'),
+    inst(0x18,  'ExecExpressionWithVar',        'BE',                                                                       parameters = ('varIndex', 'expressions')),
     inst(0x1A,  'OP_1A',                        'BB'),
     inst(0x1D,  'CreateChr',                    'NSSSBLLfffffffSSLBffW',    Flags.Empty,                                    parameters = ('chrId', 'model', 'name', 'monsterId', 'type')),
     inst(0x1E,  'CreateThread',                 'NBsS',                                                                     parameters = ('chrId', 'threadId', 'scriptId', 'func')),
-    inst(0x1F,  'OP_1F',                        'WB'),
+    inst(0x1F,  'TerminateThread',              'NB',                                                                       parameters = ('chrId', 'threadId')),
     inst(0x20,  'OP_20',                        'BVVV'),
     inst(0x21,  'OP_21',                        'B'),
     inst(0x22,  'Talk',                         'WT',                       Flags.FormatMultiLine,                          parameters = ('chrId', 'text')),
@@ -2126,7 +2126,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x25,  'OP_25',                        'B'),
     inst(0x26,  'WaitForMsg',                   NoOperand,                  Flags.FormatNewLine),
     inst(0x27,  'OP_27',                        'SW'),
-    inst(0x28,  'OP_28',                        'VVB'),
+    inst(0x28,  'MapJump',                      'VVB'),
     inst(0x29,  'MenuCmd',                      NoOperand,                                      handler = Handler_29),
     inst(0x2A,  'OP_2A',                        'BWSSB'),
     inst(0x2B,  'Battle',                       NoOperand,                                      handler = Handler_2B),
@@ -2148,13 +2148,13 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x3B,  'OP_3B',                        NoOperand,                                      handler = Handler_3B),
     inst(0x3C,  'SetChrFace',                   NoOperand,                                      handler = Handler_3C),
     inst(0x3D,  'OP_3D',                        'NffB'),
-    inst(0x3E,  'OP_3E',                        'WWfB'),
+    inst(0x3E,  'OP_3E',                        'NNfB'),
     inst(0x3F,  'OP_3F',                        'N'),
     inst(0x40,  'MoveType',                     NoOperand,                                      handler = Handler_40),
     inst(0x41,  'OP_41',                        'WB'),
     inst(0x42,  'OP_42',                        'BWfffffBW'),
     inst(0x43,  'Fade',                         NoOperand,                                      handler = Handler_43),
-    inst(0x44,  'OP_44',                        'WBfWf'),
+    inst(0x44,  'OP_44',                        'NBfWf'),
     inst(0x45,  'OP_45',                        'NfffWW'),
     inst(0x46,  'OP_46',                        NoOperand,                                      handler = Handler_46),
     inst(0x47,  'OP_47',                        'BSW'),

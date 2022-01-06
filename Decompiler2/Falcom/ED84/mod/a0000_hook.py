@@ -13,11 +13,17 @@ def _init():
 
 _init()
 
+def test_menu():
+    import system_hook
+    system_hook.FC_ActMenu_Ouroboros()
+    Return()
+
 def TK_MiniGame_Debug():
     PlayBGM(922, 1.0, 0x0000, 0x00000000, 0x00)
+    return test_menu()
 
     chrmap = {
-        ChrTable['黎恩']: 0x2001, #ChrTable['鋼之阿瑞安赫德'],
+        ChrTable['黎恩']: 0x2002,
     }
 
     for chrid, newchrid in chrmap.items():
