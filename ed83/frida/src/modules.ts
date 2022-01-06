@@ -21,4 +21,8 @@ export const API = {
         GetFileAttributesA: new NativeFunction(Modules.KERNEL32.getExportByName('GetFileAttributesA'), 'uint32', ['pointer']),
         Sleep: new NativeFunction(Modules.KERNEL32.getExportByName('Sleep'), 'void', ['uint32']),
     },
+
+    USER32: {
+        GetAsyncKeyState: new NativeFunction(Modules.USER32.getExportByName('GetAsyncKeyState'), 'int16', ['int32']),
+    },
 };

@@ -1,9 +1,11 @@
 import * as utils from "../utils";
 import { sprintf } from "sprintf-js";
 import { Interceptor2 } from "../utils";
+import { API } from "../modules";
 import { Addrs } from "./addrs";
 import {
     ED84,
+    ScriptId,
     Character,
     BattleCharacter,
     BattleInfoTable,
@@ -11,6 +13,7 @@ import {
     InvalidChrId,
     MaxPartyChrId,
     MinCustomChrId,
+    ScriptManager,
 } from "./types";
 
 function findReplacedNameData(chrId: number): INameTableData | undefined {
@@ -337,12 +340,62 @@ function hookBattle() {
     );
 }
 
+function hookScript() {
+    const ScriptManager_LoadLibrary = Interceptor2.jmp(
+        Addrs.ScriptManager.LoadLibrary,
+        function(self: NativePointer): number {
+            const ret = ScriptManager_LoadLibrary(self);
+
+            if (ret == 0) {
+                const mgr = new ScriptManager(self);
+                mgr.debug.loadDebug();
+            }
+
+            return ret;
+        },
+        'uint32', ['pointer'],
+    );
+
+    const ScriptManager_GetScriptById = Interceptor2.jmp(
+        Addrs.ScriptManager.GetScriptByID,
+        function(context: NativePointer, id: number): NativePointer {
+            switch (id) {
+                case ScriptId.Debug:
+                    return ED84.scriptManager.debug.pointer;
+            }
+
+            return ScriptManager_GetScriptById(context, id);
+        },
+        'pointer', ['pointer', 'uint16'],
+    );
+
+    const handleActMenu = Interceptor2.jmp(
+        ptr(0x1402CE060),
+        function(arg1: NativePointer, arg2: number): number {
+            const VK_SHIFT = 0x10;
+            const ctx = (this.context as X64CpuContext);
+
+            if (API.USER32.GetAsyncKeyState(VK_SHIFT) >= 0) {
+                return handleActMenu(arg1, arg2);
+            }
+
+            const system = ScriptManager.getScriptByID(ScriptId.System);
+
+            system?.call(ED84.scriptManager.getThreadContext(), 'FC_ActMenu_Ouroboros', 0, 0, 1, 1);
+
+            return 0;
+        },
+        'uint8', ['pointer', 'double'],
+    );
+}
+
 export function main() {
     ED84.enableLogger();
 
     hookIoRedirection();
     hookCharacterModel();
     hookBattle();
+    hookScript();
 
     Memory.patchCode(Addrs.SaveDataChecksum, 1, (code) => {
         code.writeU8(0xEB);

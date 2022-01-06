@@ -27,6 +27,17 @@ export const Addrs = (function() {
                     findPartyCharByChrId                : Modules.ED84.base.add(0x29EA40),
                 },
 
+                Script: {
+                    Load                                : Modules.ED84.base.add(0x3EB010),
+                    Call                                : Modules.ED84.base.add(0x432D50),
+                },
+
+                ScriptManager: {
+                    LoadLibrary                         : Modules.ED84.base.add(0x2A3410),
+                    CreatePartyCharacters_stricmp       : Modules.ED84.base.add(0),
+                    GetScriptByID                       : Modules.ED84.base.add(0x3E7D40),
+                },
+
                 Character: {
                     ChangeSkinFinished                  : Modules.ED84.base.add(0),
                     LoadCharaAniByFieldInit             : Modules.ED84.base.add(0),
@@ -82,17 +93,29 @@ export const Offsets = (function() {
             return {
                 ED84: {
                     t_name              : 0x83B248,
-                    CharacterManager    : 0x1CB8,
+                    ScriptManager       : 0x1CB8,
                     CraftList           : 0x9AEB00,
                     MagicList           : 0x9AF300,
                     SBreakList          : 0x9B0580,
                     BattleStyleList     : 0x9B0500,
                 },
 
-                ScriptLoader: {
-                },
+                ScriptManager: {
+                    ThreadContext       : 0x18928,
+                    SizeOfThreadContext : 0x568,
 
-                TableLoader: {
+                    Scripts: {
+                        common          : 0x1D9A8,
+                        system2         : 0x1E6E0,
+                        system3         : 0x1F418,
+                        system4         : 0x20150,
+                        btlsys          : 0x20E88,
+                        btlwin          : 0x22128,
+                        debug           : 0x233C8,
+                        btlcom          : 0x24100,
+                        sound           : 0x253A0,
+                        tk_common       : 0x260D8,
+                    },
                 },
 
                 Character: {
