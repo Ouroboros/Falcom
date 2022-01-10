@@ -24,7 +24,7 @@ def TK_MiniGame_Debug():
 
     FormationReset()
     FormationAddMember(0x00)
-    # FormationAddMember(0x05)
+    FormationAddMember(0x05)
     # FormationAddMember(0x0C)
     # FormationAddMember(0x10)
     FormationSetLeader(0)

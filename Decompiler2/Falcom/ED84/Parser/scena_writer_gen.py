@@ -599,6 +599,11 @@ def OP_39(arg1: uint16, arg2: uint8, arg3: str, arg4: float32, arg5: float32, ar
     assert isinstance(arg6, uint32)
     _gScena.handleOpCode(0x39, arg1, arg2, arg3, arg4, arg5, arg6)
 
+def BGMCtrl(arg1: int, *args):
+    # 0x3A
+    assert isinstance(arg1, int)
+    return _gScena.handleOpCode(0x3A, arg1, *args)
+
 def OP_3A(arg1: int, *args):
     # 0x3A
     assert isinstance(arg1, int)

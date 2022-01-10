@@ -145,6 +145,9 @@ optimizeTable = buildTable(
     opt(
         0x3A,
         ('PlayBGM',                             {0: 0x00}),
+        ('StopBGM',                             {0: 0x01}),
+        ('ReplaceBGM',                          {0: 0x05}),
+        ('SetMapBGM',                           {0: 0x06}),
     ),
     opt(
         0x49,

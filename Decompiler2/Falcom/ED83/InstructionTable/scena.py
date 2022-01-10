@@ -657,14 +657,14 @@ def Handler_3A(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
             0x00: 'HfWLB',
-            0x01: 'WB',
+            0x01: 'HB',
             0x02: 'B',
-            0x03: 'fWB',
-            0x04: 'WfWLB',
-            0x05: 'WW',
-            0x06: 'W',
+            0x03: 'fHB',
+            0x04: 'HfWLB',
+            0x05: 'HH',
+            0x06: 'H',
             0x07: '',
-            0x08: 'WB',
+            0x08: 'HB',
             0x09: 'B',
         }[n]
 
@@ -2144,7 +2144,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x37,  'SetChrPos',                    'Nffff',                                                                    parameters = ('chrId', 'x', 'y', 'z', 'direction')),
     inst(0x38,  'OP_38',                        'NBBS'),
     inst(0x39,  'SetChrAniFunction',            'NBSffL'),
-    inst(0x3A,  'OP_3A',                        NoOperand,                                      handler = Handler_3A),
+    inst(0x3A,  'BGMCtrl',                      NoOperand,                                      handler = Handler_3A),
     inst(0x3B,  'OP_3B',                        NoOperand,                                      handler = Handler_3B),
     inst(0x3C,  'SetChrFace',                   NoOperand,                                      handler = Handler_3C),
     inst(0x3D,  'OP_3D',                        'NffB'),

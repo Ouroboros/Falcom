@@ -1093,11 +1093,11 @@ def PreInit():
 # id: 0x0027 offset: 0x3DE8
 @scena.Code('Init')
 def Init():
-    OP_3A(0x05, 0x0001, 0x0001)
-    OP_3A(0x06, 0x0001)
+    OP_3A(0x05, 1, 1)
+    OP_3A(0x06, 1)
     OP_14(0x00000400)
     OP_3B(0x64, 1000, 0.0, 1.0)
-    OP_3A(0x01, 0x0000, 0x01)
+    StopBGM(0, 0x01)
     ModelCtrl(0x0D, 'TrialBox01', 'LP_trialbox01', 0x17B0, 0x270F)
 
     If(
@@ -1120,6 +1120,7 @@ def Init():
 # id: 0x0028 offset: 0x3E38
 @scena.Code('Reinit')
 def Reinit():
+    BGMCtrl(0x06, 921)
     OP_AC(0x00, 0x03)
 
     If(
@@ -36326,7 +36327,7 @@ def TK_Bgm_Test():
 
     label('loc_2AC48')
 
-    OP_3A(0x01, 0x00AB, 0x00)
+    StopBGM(171, 0x00)
     OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
@@ -36349,7 +36350,7 @@ def TK_Bgm_Test():
     label('loc_2AC73')
 
     PlayBGM(171, 1.0, 0x0000, 0x00000000, 0x00)
-    OP_3A(0x01, 0x00AB, 0x00)
+    StopBGM(171, 0x00)
     PlayBGM(171, 1.0, 0x0000, 0x00000000, 0x00)
     OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
@@ -36650,8 +36651,8 @@ def TK_ActMenu_Test():
 @scena.Code('EV_useChecker')
 def EV_useChecker():
     OP_20(0x15, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
-    OP_3A(0x03, 0.7, 0x01F4, 0x00)
-    OP_3A(0x03, 1.0, 0x01F4, 0x00)
+    OP_3A(0x03, 0.7, 500, 0x00)
+    OP_3A(0x03, 1.0, 500, 0x00)
     SetChrFace(0x04, ChrTable['黎恩'], '#E0#M4')
 
     ChrTalk(
@@ -39641,7 +39642,7 @@ def EV_Test_Evsave_Load():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
     OP_43(0x00, 0, 1.0, 0)
     FormationCtrl(0x07)
-    OP_3A(0x04, 0x0002, 1.0, 0x0000, 0x00000000, 0x00)
+    OP_3A(0x04, 2, 1.0, 0x0000, 0x00000000, 0x00)
     ClearScenaFlags(ScenaFlag(0x0062, 4, 0x314))
     OP_AF(0x01)
     ClearScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
@@ -39656,8 +39657,8 @@ def EV_Test_Evsave_Load():
         ),
     )
 
-    OP_3A(0x05, 0x0001, 0x0001)
-    OP_3A(0x06, 0x0001)
+    OP_3A(0x05, 1, 1)
+    OP_3A(0x06, 1)
 
     Return()
 
