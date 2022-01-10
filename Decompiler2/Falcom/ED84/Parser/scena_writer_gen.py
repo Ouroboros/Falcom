@@ -626,6 +626,14 @@ def OP_3C(arg1: int, arg2: int, *args):
     assert isinstance(arg2, int)
     return _gScena.handleOpCode(0x3C, arg1, arg2, *args)
 
+def ChrTurnDirection(arg1: uint16, arg2: float32, arg3: float32, arg4: uint8):
+    # 0x3D
+    assert isinstance(arg1, uint16)
+    assert isinstance(arg2, float32)
+    assert isinstance(arg3, float32)
+    assert isinstance(arg4, uint8)
+    _gScena.handleOpCode(0x3D, arg1, arg2, arg3, arg4)
+
 def OP_3D(arg1: uint16, arg2: float32, arg3: float32, arg4: uint8):
     # 0x3D
     assert isinstance(arg1, uint16)
@@ -647,7 +655,7 @@ def OP_3F(arg1: uint16):
     assert isinstance(arg1, uint16)
     _gScena.handleOpCode(0x3F, arg1)
 
-def MoveType(arg1: int, arg2: int, arg3: float | int, arg4: float | int, arg5: float | int, *args):
+def MoveChr(arg1: int, arg2: int, arg3: float | int, arg4: float | int, arg5: float | int, *args):
     # 0x40
     assert isinstance(arg1, int)
     assert isinstance(arg2, int)
@@ -1302,6 +1310,11 @@ def OP_97(arg1: uint8, arg2: uint16, arg3: uint32):
     assert isinstance(arg2, uint16)
     assert isinstance(arg3, uint32)
     _gScena.handleOpCode(0x97, arg1, arg2, arg3)
+
+def WeatherCtrl(arg1: int, *args):
+    # 0x98
+    assert isinstance(arg1, int)
+    return _gScena.handleOpCode(0x98, arg1, *args)
 
 def OP_98(arg1: int, *args):
     # 0x98

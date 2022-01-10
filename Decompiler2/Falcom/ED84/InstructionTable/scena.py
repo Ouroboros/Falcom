@@ -522,7 +522,7 @@ def Handler_3C(ctx: InstructionHandlerContext):
 
 def Handler_40(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'WWfff' + {
+        return 'NNfff' + {
             0xFE00: 'fBWffB',
             0xFE01: 'fBWffB',
 
@@ -1239,7 +1239,7 @@ def Handler_94(ctx: InstructionHandlerContext):
 
 def Handler_98(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'W' + {
+        return 'H' + {
             0x01    : 'f',
             # 0x02    : 'L',
             # 0x03    : 'WB',
@@ -1708,7 +1708,7 @@ ScenaOpTable = ED84InstructionTable(ED83ScenaOpTable).update([
     inst(0x36,  'CameraCtrl',                   NoOperand,                                      handler = Handler_36),
     inst(0x3B,  'OP_3B',                        NoOperand,                                      handler = Handler_3B),
     inst(0x3C,  'SetChrFace',                   NoOperand,                                      handler = Handler_3C),
-    inst(0x40,  'MoveType',                     NoOperand,                                      handler = Handler_40),
+    inst(0x40,  'MoveChr',                      NoOperand,                                      handler = Handler_40),
     inst(0x41,  'OP_41',                        NoOperand,                                      handler = Handler_41),
     inst(0x43,  'OP_43',                        NoOperand,                                      handler = Handler_43),
     inst(0x46,  'OP_46',                        NoOperand,                                      handler = Handler_46),
@@ -1734,7 +1734,7 @@ ScenaOpTable = ED84InstructionTable(ED83ScenaOpTable).update([
     inst(0x8E,  'OP_8E',                        'W' * 8),
     inst(0x93,  'OP_93',                        NoOperand,                                      handler = Handler_93),
     inst(0x94,  'OP_94',                        NoOperand,                                      handler = Handler_94),
-    inst(0x98,  'OP_98',                        NoOperand,                                      handler = Handler_98),
+    inst(0x98,  'WeatherCtrl',                  NoOperand,                                      handler = Handler_98),
     inst(0x9A,  'OP_9A',                        'WfffW'),
     inst(0x9C,  'OP_9C',                        NoOperand,                                      handler = Handler_9C),
     inst(0xAC,  'OP_AC',                        NoOperand,                                      handler = Handler_AC),
