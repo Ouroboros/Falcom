@@ -8,6 +8,16 @@ DummyCharBaseId         = 0xB5E
 TempCharBaseId          = 0xB68
 
 class CraftTarget(IntEnum2):
+    Party1          = 0xF000
+    Party2          = 0xF001
+    Party3          = 0xF002
+    Party4          = 0xF003
+
+    Enemy1          = 0xF043
+    Enemy2          = 0xF044
+    Enemy3          = 0xF045
+    Enemy4          = 0xF046
+
     Saved           = 0xFFF4
     SelectedPos     = 0xFFF5
     Current         = 0xFFFB
@@ -61,3 +71,8 @@ class AbnormalCondition2(IntEnum2):
     CantMove                = 0x00000800
     ElementWeakness         = 0x00001000
     Hide                    = 0x00004000
+
+class BattleChrFlags(IntEnum2):
+    Enemy                   = 0x00000001
+    Controllable            = 0x00000800
+    Party                   = 0x00040000

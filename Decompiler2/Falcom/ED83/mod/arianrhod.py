@@ -46,56 +46,56 @@ def AniBtlMove2():
 
 def AniBtlCraft05_暴雨疾风枪():
     if 0:
-        BattleCreateChrDummy(0xFFFE, 5)
+        # BattleCreateChrDummy(0xFFFE, 5)
 
-        asset = [
-            'C_EQU090',
-            'C_EQU091',
-            'C_EQU000_R',
-            'C_EQU050_R',
-            'C_EQU076',
-        ]
+        # asset = [
+        #     'C_EQU090',
+        #     'C_EQU091',
+        #     'C_EQU000_R',
+        #     'C_EQU050_R',
+        #     'C_EQU076',
+        # ]
 
-        pos = [
-            (2.0, 1.0, 0.0),
-            (-2.0, 1.0, 0.0),
-            (0.0, 2.0, 0.0),
-            (2.0, 2.0, 0.0),
-            (-2.0, 2.0, 0.0),
-        ]
+        # pos = [
+        #     (2.0, 1.0, 0.0),
+        #     (-2.0, 1.0, 0.0),
+        #     (0.0, 2.0, 0.0),
+        #     (2.0, 2.0, 0.0),
+        #     (-2.0, 2.0, 0.0),
+        # ]
 
-        for chrid in range(DummyCharBaseId, DummyCharBaseId + 5):
-            BattleTurnChrDirection(chrid, 0xFFFB, 0.0)
-            ChrSetPhysicsFlags(chrid, 0x00000200)
-            BattleSetChrPos(chrid, 0xFFFE, *pos[chrid - DummyCharBaseId], 0.0)
-            LoadAsset(asset[chrid - DummyCharBaseId])
-            AnimeClipChangeSkin(chrid, asset[chrid - DummyCharBaseId])
+        # for chrid in range(DummyCharBaseId, DummyCharBaseId + 5):
+        #     BattleTurnChrDirection(chrid, 0xFFFB, 0.0)
+        #     ChrSetPhysicsFlags(chrid, 0x00000200)
+        #     BattleSetChrPos(chrid, 0xFFFE, *pos[chrid - DummyCharBaseId], 0.0)
+        #     LoadAsset(asset[chrid - DummyCharBaseId])
+        #     AnimeClipChangeSkin(chrid, asset[chrid - DummyCharBaseId])
 
-        pos = [
-            (4.0, 1.0, 0.0),
-            (-4.0, 1.0, 0.0),
-            (0.0, 2.0, -2.0),
-            (4.0, 2.0, 0.0),
-            (-4.0, 2.0, 0.0),
-        ]
+        # pos = [
+        #     (4.0, 1.0, 0.0),
+        #     (-4.0, 1.0, 0.0),
+        #     (0.0, 2.0, -2.0),
+        #     (4.0, 2.0, 0.0),
+        #     (-4.0, 2.0, 0.0),
+        # ]
 
-        asset = [
-            'C_EQU090',
-            'C_EQU091',
-            'C_EQU000_R',
-            'C_EQU050_L',
-            'C_EQU076',
-        ]
+        # asset = [
+        #     'C_EQU090',
+        #     'C_EQU091',
+        #     'C_EQU000_R',
+        #     'C_EQU050_L',
+        #     'C_EQU076',
+        # ]
 
-        for chrid in range(5):
-            LoadAsset(asset[chrid])
-            chrid = BattleCreateTempChar(chrid, 0xFFFF, asset[chrid], '')
-            BattleTurnChrDirection(chrid, 0xFFFB, 180.0 + 45.0)
-            ChrSetPhysicsFlags(chrid, 0x00000200)
-            BattleSetChrPos(chrid, 0xFFFE, *pos[chrid - TempCharBaseId], 0.0)
-            # AnimeClipChangeSkin(chrid, asset[chrid - TempCharBaseId])
+        # for chrid in range(5):
+        #     LoadAsset(asset[chrid])
+        #     chrid = BattleCreateTempChar(chrid, 0xFFFF, asset[chrid], '')
+        #     BattleTurnChrDirection(chrid, 0xFFFB, 180.0 + 45.0)
+        #     ChrSetPhysicsFlags(chrid, 0x00000200)
+        #     BattleSetChrPos(chrid, 0xFFFE, *pos[chrid - TempCharBaseId], 0.0)
+        #     # AnimeClipChangeSkin(chrid, asset[chrid - TempCharBaseId])
 
-        Sleep(1000)
+        # Sleep(1000)
 
         Return()
         return
@@ -290,7 +290,14 @@ def AniBtlCraftDamageT(damage: bool, knockBack: float):
 
     # BattleSetChrAbnormalCondition(0xFFFE, AbnormalCondition.Stealth, 1, 1)
 
+    for chr in range(CraftTarget.Party1, CraftTarget.Party4 + 1):
+        BattleClearChrFlags(chr, 0xFFFFFFFF)
+        BattleSetChrFlags(chr, 0x81)
+
     def cb():
+        # BattleClearChrFlags(0xFFFB, 0x01)
+        # BattleSetChrFlags(0xFFFB, 0x40800)
+
         if damage:
             BattleDamage(0xFFFB, 0xFFFE, 100)
         BattleDamageAnime2(0xFFFB, knockBack, 0.5, 0x01)
