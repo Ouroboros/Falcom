@@ -1584,7 +1584,7 @@ def EV_03_80_01():
 
     If(
         (
-            (Expr.Expr23, 0x29),
+            (Expr.PushVar, 0x29),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -1630,7 +1630,7 @@ def EV_03_80_01():
 
     If(
         (
-            (Expr.Expr23, 0x29),
+            (Expr.PushVar, 0x29),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -1732,7 +1732,7 @@ def EV_03_80_01():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -1809,7 +1809,7 @@ def EV_03_80_01_END():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Neg,
             Expr.Equ,
@@ -1844,7 +1844,7 @@ def EV_03_80_01_END():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -1867,7 +1867,7 @@ def EV_03_80_01_END():
 
     If(
         (
-            (Expr.Expr23, 0x29),
+            (Expr.PushVar, 0x29),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -1891,7 +1891,7 @@ def EV_03_80_01_END():
 
     If(
         (
-            (Expr.Expr23, 0x29),
+            (Expr.PushVar, 0x29),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,

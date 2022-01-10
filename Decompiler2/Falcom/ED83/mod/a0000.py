@@ -635,7 +635,7 @@ def TK_Event_Jump_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_28D4'),
@@ -685,7 +685,7 @@ def TK_QuestUI_Debug():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -715,7 +715,7 @@ def TK_QuestUI_Debug():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000064, 'loc_2CC7'),
@@ -1334,7 +1334,7 @@ def TK_Quest_Debug():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -1360,7 +1360,7 @@ def TK_Quest_Debug():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x00000001, 'loc_38C4'),
@@ -1530,7 +1530,7 @@ def EV_QuestJump():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -1542,7 +1542,7 @@ def EV_QuestJump():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -1573,7 +1573,7 @@ def EV_QuestJump():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x00000001, 'loc_3BF4'),
@@ -1669,7 +1669,7 @@ def EV_QuestJump():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -1727,7 +1727,7 @@ def EV_QuestJump():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -1787,7 +1787,7 @@ def EV_QuestJump():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -1862,7 +1862,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -1874,7 +1874,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -1905,7 +1905,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -1916,7 +1916,7 @@ def EV_Jump_QS_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -1926,7 +1926,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -1955,7 +1955,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -1966,7 +1966,7 @@ def EV_Jump_QS_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -1976,7 +1976,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -2005,7 +2005,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -2031,7 +2031,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7000),
             Expr.Equ,
             Expr.Return,
@@ -2085,7 +2085,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -2112,7 +2112,7 @@ def EV_Jump_QS_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000700E, 'loc_4971'),
@@ -2223,7 +2223,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x700F),
             Expr.Equ,
             Expr.Return,
@@ -2268,7 +2268,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -2286,7 +2286,7 @@ def EV_Jump_QS_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007012, 'loc_4B58'),
@@ -2333,7 +2333,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7014),
             Expr.Equ,
             Expr.Return,
@@ -2377,7 +2377,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -2394,7 +2394,7 @@ def EV_Jump_QS_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007016, 'loc_4CDB'),
@@ -2430,7 +2430,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7017),
             Expr.Equ,
             Expr.Return,
@@ -2474,10 +2474,10 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7017),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7018),
             Expr.Equ,
             Expr.Or,
@@ -2508,7 +2508,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -2524,7 +2524,7 @@ def EV_Jump_QS_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007019, 'loc_4EEE'),
@@ -2559,7 +2559,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x701B),
             Expr.Equ,
             Expr.Return,
@@ -2602,7 +2602,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -2617,7 +2617,7 @@ def EV_Jump_QS_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000701C, 'loc_502A'),
@@ -2650,7 +2650,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x701D),
             Expr.Equ,
             Expr.Return,
@@ -2696,7 +2696,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -2714,7 +2714,7 @@ def EV_Jump_QS_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007021, 'loc_5232'),
@@ -2763,7 +2763,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7022),
             Expr.Equ,
             Expr.Return,
@@ -2808,7 +2808,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -2827,7 +2827,7 @@ def EV_Jump_QS_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007025, 'loc_53F9'),
@@ -2875,7 +2875,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7026),
             Expr.Equ,
             Expr.Return,
@@ -2896,7 +2896,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7027),
             Expr.Equ,
             Expr.Return,
@@ -2917,7 +2917,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7028),
             Expr.Equ,
             Expr.Return,
@@ -2961,7 +2961,7 @@ def EV_Jump_QS_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -2980,7 +2980,7 @@ def EV_Jump_QS_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000702A, 'loc_55FB'),
@@ -3057,7 +3057,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -3069,7 +3069,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -3103,7 +3103,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -3114,7 +3114,7 @@ def EV_Jump_QS_02():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -3124,7 +3124,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -3153,7 +3153,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -3164,7 +3164,7 @@ def EV_Jump_QS_02():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -3174,7 +3174,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -3203,7 +3203,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -3229,7 +3229,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7100),
             Expr.Equ,
             Expr.Return,
@@ -3274,7 +3274,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -3292,7 +3292,7 @@ def EV_Jump_QS_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007103, 'loc_5C78'),
@@ -3335,7 +3335,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7105),
             Expr.Equ,
             Expr.Return,
@@ -3383,7 +3383,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -3403,7 +3403,7 @@ def EV_Jump_QS_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000710B, 'loc_5EFE'),
@@ -3459,7 +3459,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x710C),
             Expr.Equ,
             Expr.Return,
@@ -3507,7 +3507,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -3526,7 +3526,7 @@ def EV_Jump_QS_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007112, 'loc_617C'),
@@ -3585,7 +3585,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7114),
             Expr.Equ,
             Expr.Return,
@@ -3630,7 +3630,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -3648,7 +3648,7 @@ def EV_Jump_QS_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007117, 'loc_634C'),
@@ -3691,7 +3691,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7118),
             Expr.Equ,
             Expr.Return,
@@ -3735,7 +3735,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -3751,7 +3751,7 @@ def EV_Jump_QS_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000711A, 'loc_64D2'),
@@ -3786,7 +3786,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x711B),
             Expr.Equ,
             Expr.Return,
@@ -3830,7 +3830,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -3846,7 +3846,7 @@ def EV_Jump_QS_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000711D, 'loc_6652'),
@@ -3881,7 +3881,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x711E),
             Expr.Equ,
             Expr.Return,
@@ -3924,10 +3924,10 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x711E),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x711F),
             Expr.Equ,
             Expr.Or,
@@ -3958,7 +3958,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -3974,7 +3974,7 @@ def EV_Jump_QS_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000711F, 'loc_6823'),
@@ -4008,7 +4008,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7121),
             Expr.Equ,
             Expr.Return,
@@ -4054,7 +4054,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -4074,7 +4074,7 @@ def EV_Jump_QS_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007128, 'loc_6A3C'),
@@ -4123,7 +4123,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7129),
             Expr.Equ,
             Expr.Return,
@@ -4168,7 +4168,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -4216,7 +4216,7 @@ def EV_Jump_QS_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000712C, 'loc_6C56'),
@@ -4273,7 +4273,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x712D),
             Expr.Equ,
             Expr.Return,
@@ -4320,7 +4320,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -4339,7 +4339,7 @@ def EV_Jump_QS_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007132, 'loc_6EA3'),
@@ -4396,7 +4396,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7133),
             Expr.Equ,
             Expr.Return,
@@ -4417,7 +4417,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7134),
             Expr.Equ,
             Expr.Return,
@@ -4438,7 +4438,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7135),
             Expr.Equ,
             Expr.Return,
@@ -4486,7 +4486,7 @@ def EV_Jump_QS_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -4506,7 +4506,7 @@ def EV_Jump_QS_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000713C, 'loc_719D'),
@@ -4589,7 +4589,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -4601,7 +4601,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -4638,7 +4638,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -4649,7 +4649,7 @@ def EV_Jump_QS_03():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -4659,7 +4659,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -4688,7 +4688,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -4699,7 +4699,7 @@ def EV_Jump_QS_03():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -4709,7 +4709,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -4738,7 +4738,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -4764,7 +4764,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7200),
             Expr.Equ,
             Expr.Return,
@@ -4808,7 +4808,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -4824,7 +4824,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007202, 'loc_7890'),
@@ -4859,7 +4859,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7204),
             Expr.Equ,
             Expr.Return,
@@ -4904,7 +4904,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -4924,7 +4924,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007207, 'loc_7A57'),
@@ -4966,7 +4966,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7208),
             Expr.Equ,
             Expr.Return,
@@ -5026,7 +5026,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -5046,7 +5046,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000721A, 'loc_7FB7'),
@@ -5119,7 +5119,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x721B),
             Expr.Equ,
             Expr.Return,
@@ -5169,7 +5169,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -5197,7 +5197,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007223, 'loc_82D9'),
@@ -5286,7 +5286,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7224),
             Expr.Equ,
             Expr.Return,
@@ -5330,7 +5330,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -5349,7 +5349,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007226, 'loc_847A'),
@@ -5384,7 +5384,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7227),
             Expr.Equ,
             Expr.Return,
@@ -5430,10 +5430,10 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7227),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x722A),
             Expr.Equ,
             Expr.Or,
@@ -5464,7 +5464,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -5483,7 +5483,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000722B, 'loc_870F'),
@@ -5528,7 +5528,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x722D),
             Expr.Equ,
             Expr.Return,
@@ -5577,7 +5577,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -5600,7 +5600,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007234, 'loc_89E4'),
@@ -5676,7 +5676,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7235),
             Expr.Equ,
             Expr.Return,
@@ -5726,7 +5726,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -5749,7 +5749,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000723D, 'loc_8CFA'),
@@ -5830,7 +5830,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x723E),
             Expr.Equ,
             Expr.Return,
@@ -5881,7 +5881,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -5905,7 +5905,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007247, 'loc_9052'),
@@ -5971,7 +5971,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7248),
             Expr.Equ,
             Expr.Return,
@@ -6018,7 +6018,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -6035,7 +6035,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000724D, 'loc_9291'),
@@ -6080,7 +6080,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x724E),
             Expr.Equ,
             Expr.Return,
@@ -6126,7 +6126,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -6145,7 +6145,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007252, 'loc_9495'),
@@ -6194,7 +6194,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7253),
             Expr.Equ,
             Expr.Return,
@@ -6240,7 +6240,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -6255,7 +6255,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007257, 'loc_968C'),
@@ -6291,7 +6291,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7258),
             Expr.Equ,
             Expr.Return,
@@ -6346,7 +6346,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -6367,18 +6367,18 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x1),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xA),
             Expr.Equ,
             Expr.Or,
@@ -6395,18 +6395,18 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x8),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xB),
             Expr.Equ,
             Expr.Or,
@@ -6423,18 +6423,18 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x6),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x9),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xC),
             Expr.Equ,
             Expr.Or,
@@ -6451,14 +6451,14 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x1),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Or,
@@ -6482,14 +6482,14 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x6),
             Expr.Equ,
             Expr.Or,
@@ -6513,14 +6513,14 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x8),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x9),
             Expr.Equ,
             Expr.Or,
@@ -6546,14 +6546,14 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xA),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xB),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xC),
             Expr.Equ,
             Expr.Or,
@@ -6577,7 +6577,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000725D, 'loc_9BAF'),
@@ -6619,7 +6619,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x725E),
             Expr.Equ,
             Expr.Return,
@@ -6662,7 +6662,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -6678,7 +6678,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000725F, 'loc_9CF3'),
@@ -6718,7 +6718,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7260),
             Expr.Equ,
             Expr.Return,
@@ -6764,7 +6764,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -6783,7 +6783,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007264, 'loc_9F03'),
@@ -6843,7 +6843,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7265),
             Expr.Equ,
             Expr.Return,
@@ -6893,7 +6893,7 @@ def EV_Jump_QS_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -6916,7 +6916,7 @@ def EV_Jump_QS_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000726D, 'loc_A21B'),
@@ -7023,7 +7023,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -7035,7 +7035,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -7076,7 +7076,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -7087,7 +7087,7 @@ def EV_Jump_QS_04():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -7097,7 +7097,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -7126,7 +7126,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -7137,7 +7137,7 @@ def EV_Jump_QS_04():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -7147,7 +7147,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -7176,7 +7176,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -7202,7 +7202,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7300),
             Expr.Equ,
             Expr.Return,
@@ -7248,7 +7248,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -7267,7 +7267,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007304, 'loc_AA95'),
@@ -7312,7 +7312,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7305),
             Expr.Equ,
             Expr.Return,
@@ -7356,7 +7356,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -7372,7 +7372,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007307, 'loc_AC1E'),
@@ -7413,7 +7413,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7309),
             Expr.Equ,
             Expr.Return,
@@ -7467,7 +7467,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -7488,7 +7488,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -7515,7 +7515,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -7542,7 +7542,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -7569,7 +7569,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -7596,7 +7596,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Return,
@@ -7623,7 +7623,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x6),
             Expr.Equ,
             Expr.Return,
@@ -7650,7 +7650,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7),
             Expr.Equ,
             Expr.Return,
@@ -7677,7 +7677,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x8),
             Expr.Equ,
             Expr.Return,
@@ -7702,7 +7702,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000730F, 'loc_B0D8'),
@@ -7742,7 +7742,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7310),
             Expr.Equ,
             Expr.Return,
@@ -7788,7 +7788,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -7810,7 +7810,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007314, 'loc_B2EB'),
@@ -7870,7 +7870,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7315),
             Expr.Equ,
             Expr.Return,
@@ -7914,7 +7914,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -7932,7 +7932,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007317, 'loc_B477'),
@@ -7974,7 +7974,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7300),
             Expr.Equ,
             Expr.Return,
@@ -8021,7 +8021,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -8048,7 +8048,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000731D, 'loc_B6E0'),
@@ -8092,7 +8092,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x731E),
             Expr.Equ,
             Expr.Return,
@@ -8139,7 +8139,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -8161,7 +8161,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007323, 'loc_B933'),
@@ -8230,7 +8230,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7324),
             Expr.Equ,
             Expr.Return,
@@ -8277,10 +8277,10 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7324),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7328),
             Expr.Equ,
             Expr.Or,
@@ -8311,7 +8311,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -8330,7 +8330,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007329, 'loc_BC14'),
@@ -8386,7 +8386,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x732B),
             Expr.Equ,
             Expr.Return,
@@ -8435,7 +8435,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -8456,7 +8456,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007332, 'loc_BEE7'),
@@ -8531,7 +8531,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7333),
             Expr.Equ,
             Expr.Return,
@@ -8577,7 +8577,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -8598,7 +8598,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007338, 'loc_C0FB'),
@@ -8655,7 +8655,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x733A),
             Expr.Equ,
             Expr.Return,
@@ -8704,7 +8704,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -8736,7 +8736,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000734D, 'loc_C3E4'),
@@ -8806,7 +8806,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x734E),
             Expr.Equ,
             Expr.Return,
@@ -8853,7 +8853,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -8868,7 +8868,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007351, 'loc_C65B'),
@@ -8905,7 +8905,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7354),
             Expr.Equ,
             Expr.Return,
@@ -8951,7 +8951,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -8970,7 +8970,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007358, 'loc_C85F'),
@@ -9030,7 +9030,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7359),
             Expr.Equ,
             Expr.Return,
@@ -9051,7 +9051,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x735A),
             Expr.Equ,
             Expr.Return,
@@ -9099,7 +9099,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -9120,7 +9120,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007360, 'loc_CB2B'),
@@ -9177,7 +9177,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7361),
             Expr.Equ,
             Expr.Return,
@@ -9237,7 +9237,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7361),
             Expr.Equ,
             Expr.Return,
@@ -9270,7 +9270,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7362),
             Expr.Equ,
             Expr.Return,
@@ -9300,7 +9300,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -9322,7 +9322,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007373, 'loc_D1DC'),
@@ -9417,7 +9417,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7374),
             Expr.Equ,
             Expr.Return,
@@ -9461,7 +9461,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -9477,7 +9477,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007376, 'loc_D37C'),
@@ -9526,7 +9526,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7377),
             Expr.Equ,
             Expr.Return,
@@ -9575,7 +9575,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -9595,7 +9595,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -9623,7 +9623,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -9651,7 +9651,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -9679,7 +9679,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -9707,7 +9707,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Return,
@@ -9735,7 +9735,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x6),
             Expr.Equ,
             Expr.Return,
@@ -9761,7 +9761,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007379, 'loc_D6F5'),
@@ -9796,7 +9796,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x737A),
             Expr.Equ,
             Expr.Return,
@@ -9842,7 +9842,7 @@ def EV_Jump_QS_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -9861,7 +9861,7 @@ def EV_Jump_QS_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000737E, 'loc_D900'),
@@ -9946,7 +9946,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -9958,7 +9958,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -9981,7 +9981,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -9992,7 +9992,7 @@ def EV_Jump_QS_05():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -10002,7 +10002,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -10031,7 +10031,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -10042,7 +10042,7 @@ def EV_Jump_QS_05():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -10052,7 +10052,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -10081,7 +10081,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -10107,7 +10107,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7400),
             Expr.Equ,
             Expr.Return,
@@ -10128,7 +10128,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7401),
             Expr.Equ,
             Expr.Return,
@@ -10149,7 +10149,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7402),
             Expr.Equ,
             Expr.Return,
@@ -10193,7 +10193,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -10210,7 +10210,7 @@ def EV_Jump_QS_05():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007404, 'loc_DCEC'),
@@ -10253,7 +10253,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7405),
             Expr.Equ,
             Expr.Return,
@@ -10299,7 +10299,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Neq,
@@ -10322,7 +10322,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7405),
             Expr.Equ,
             Expr.Return,
@@ -10356,7 +10356,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x737F),
             Expr.Equ,
             Expr.Return,
@@ -10390,10 +10390,10 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7406),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7407),
             Expr.Equ,
             Expr.Or,
@@ -10465,7 +10465,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xFA),
+            (Expr.PushVar, 0xFA),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -10483,7 +10483,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xFA),
+            (Expr.PushVar, 0xFA),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -10501,7 +10501,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xFA),
+            (Expr.PushVar, 0xFA),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -10519,7 +10519,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xFA),
+            (Expr.PushVar, 0xFA),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -10537,7 +10537,7 @@ def EV_Jump_QS_05():
 
     If(
         (
-            (Expr.Expr23, 0xFA),
+            (Expr.PushVar, 0xFA),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Return,
@@ -10561,7 +10561,7 @@ def EV_Jump_QS_05():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007408, 'loc_E325'),
@@ -10623,7 +10623,7 @@ def EV_DoJump_QS_SUB():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7000),
             Expr.Lss,
             Expr.Return,
@@ -10648,7 +10648,7 @@ def EV_DoJump_QS_SUB():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7100),
             Expr.Lss,
             Expr.Return,
@@ -10673,7 +10673,7 @@ def EV_DoJump_QS_SUB():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7200),
             Expr.Lss,
             Expr.Return,
@@ -10698,7 +10698,7 @@ def EV_DoJump_QS_SUB():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7300),
             Expr.Lss,
             Expr.Return,
@@ -10723,7 +10723,7 @@ def EV_DoJump_QS_SUB():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x7400),
             Expr.Lss,
             Expr.Return,
@@ -10763,7 +10763,7 @@ def EV_DoJump_QS_SUB():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007408, 'loc_EBA2'),
@@ -11390,7 +11390,7 @@ def EV_DoJump_QS_SUB():
     OP_18(
         0xF9,
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Nop,
             Expr.Return,
         ),
@@ -11398,7 +11398,7 @@ def EV_DoJump_QS_SUB():
 
     If(
         (
-            (Expr.Expr23, 0xF9),
+            (Expr.PushVar, 0xF9),
             (Expr.PushLong, 0x713C),
             Expr.Gtr,
             Expr.Return,
@@ -11421,7 +11421,7 @@ def EV_DoJump_QS_SUB():
 
     Switch(
         (
-            (Expr.Expr23, 0xF9),
+            (Expr.PushVar, 0xF9),
             Expr.Return,
         ),
         (0x0000713C, 'loc_F271'),
@@ -11868,7 +11868,7 @@ def EV_DoJump_QS_SUB():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007000, 'loc_F89B'),
@@ -12925,7 +12925,7 @@ def EV_DoJump_QS_SUB():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007200, 'loc_106CE'),
@@ -15340,7 +15340,7 @@ def EV_KizunaJump():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -15374,7 +15374,7 @@ def EV_KizunaJump():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x1),
             Expr.Geq,
             Expr.Return,
@@ -15391,7 +15391,7 @@ def EV_KizunaJump():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_11AE6'),
@@ -15604,7 +15604,7 @@ def EV_KizunaJump_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -15628,7 +15628,7 @@ def EV_KizunaJump_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008008, 'loc_11F5A'),
@@ -15771,10 +15771,10 @@ def EV_KizunaJump_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8001),
             Expr.Equ,
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8002),
             Expr.Equ,
             Expr.Or,
@@ -15792,7 +15792,7 @@ def EV_KizunaJump_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008001, 'loc_12163'),
@@ -15931,7 +15931,7 @@ def EV_KizunaJump_02():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -15957,7 +15957,7 @@ def EV_KizunaJump_02():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -15969,7 +15969,7 @@ def EV_KizunaJump_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008012, 'loc_1254E'),
@@ -16124,7 +16124,7 @@ def EV_KizunaJump_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008009, 'loc_12762'),
@@ -16283,7 +16283,7 @@ def EV_KizunaJump_03():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -16314,7 +16314,7 @@ def EV_KizunaJump_03():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -16326,7 +16326,7 @@ def EV_KizunaJump_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008022, 'loc_12CE0'),
@@ -16481,7 +16481,7 @@ def EV_KizunaJump_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008013, 'loc_12F0D'),
@@ -16690,7 +16690,7 @@ def EV_KizunaJump_04():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -16712,7 +16712,7 @@ def EV_KizunaJump_04():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -16724,7 +16724,7 @@ def EV_KizunaJump_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008028, 'loc_13242'),
@@ -16841,7 +16841,7 @@ def EV_KizunaJump_04():
     OP_18(
         0x0A,
         (
-            (Expr.Expr23, 0xA),
+            (Expr.PushVar, 0xA),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -16851,7 +16851,7 @@ def EV_KizunaJump_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008023, 'loc_133D8'),
@@ -16968,7 +16968,7 @@ def EV_KizunaJump_05():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -16993,7 +16993,7 @@ def EV_KizunaJump_05():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -17005,7 +17005,7 @@ def EV_KizunaJump_05():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008031, 'loc_13754'),
@@ -17123,7 +17123,7 @@ def EV_KizunaJump_05():
     OP_18(
         0x0A,
         (
-            (Expr.Expr23, 0xA),
+            (Expr.PushVar, 0xA),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -17133,7 +17133,7 @@ def EV_KizunaJump_05():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008029, 'loc_1390F'),
@@ -17280,7 +17280,7 @@ def EV_KizunaJump_06():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -17303,7 +17303,7 @@ def EV_KizunaJump_06():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -17315,7 +17315,7 @@ def EV_KizunaJump_06():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008038, 'loc_13C28'),
@@ -17426,7 +17426,7 @@ def EV_KizunaJump_06():
     OP_18(
         0x0A,
         (
-            (Expr.Expr23, 0xA),
+            (Expr.PushVar, 0xA),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -17446,10 +17446,10 @@ def EV_KizunaJump_06():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8033),
             Expr.Equ,
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8032),
             Expr.Equ,
             Expr.Or,
@@ -17467,7 +17467,7 @@ def EV_KizunaJump_06():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008032, 'loc_13DFA'),
@@ -17604,7 +17604,7 @@ def EV_KizunaJump_07():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -17648,7 +17648,7 @@ def EV_KizunaJump_07():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -17658,7 +17658,7 @@ def EV_KizunaJump_07():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x0000803A, 'loc_14078'),
@@ -17753,7 +17753,7 @@ def EV_KizunaJump_08():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -17801,7 +17801,7 @@ def EV_KizunaJump_08():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -17814,7 +17814,7 @@ def EV_KizunaJump_08():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008046, 'loc_143DE'),
@@ -17858,7 +17858,7 @@ def EV_KizunaJump_08():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x0000803F, 'loc_14464'),
@@ -17991,7 +17991,7 @@ def EV_KizunaJump_09():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -18015,7 +18015,7 @@ def EV_KizunaJump_09():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -18057,7 +18057,7 @@ def EV_KizunaJump_09():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008047, 'loc_14790'),
@@ -18169,7 +18169,7 @@ def EV_KizunaJump_10():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -18210,7 +18210,7 @@ def EV_KizunaJump_10():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -18220,7 +18220,7 @@ def EV_KizunaJump_10():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x0000804D, 'loc_149AB'),
@@ -18303,7 +18303,7 @@ def EV_KizunaJump_11():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -18350,7 +18350,7 @@ def EV_KizunaJump_11():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -18363,7 +18363,7 @@ def EV_KizunaJump_11():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008059, 'loc_14D55'),
@@ -18409,7 +18409,7 @@ def EV_KizunaJump_11():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008051, 'loc_14DEC'),
@@ -18553,7 +18553,7 @@ def EV_KizunaJump_12():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -18604,7 +18604,7 @@ def EV_KizunaJump_12():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -18614,7 +18614,7 @@ def EV_KizunaJump_12():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x0000805A, 'loc_150EB'),
@@ -18634,7 +18634,7 @@ def EV_KizunaJump_12():
     OP_18(
         0x0A,
         (
-            (Expr.Expr23, 0xA),
+            (Expr.PushVar, 0xA),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -18730,7 +18730,7 @@ def EV_KizunaJump_13():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -18774,7 +18774,7 @@ def EV_KizunaJump_13():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -18784,7 +18784,7 @@ def EV_KizunaJump_13():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x0000805F, 'loc_153B1'),
@@ -18888,7 +18888,7 @@ def EV_KizunaJump_14():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -18935,7 +18935,7 @@ def EV_KizunaJump_14():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -18948,7 +18948,7 @@ def EV_KizunaJump_14():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x0000806C, 'loc_15749'),
@@ -18991,7 +18991,7 @@ def EV_KizunaJump_14():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008065, 'loc_157CC'),
@@ -19125,7 +19125,7 @@ def EV_KizunaJump_15():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -19174,7 +19174,7 @@ def EV_KizunaJump_15():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -19184,7 +19184,7 @@ def EV_KizunaJump_15():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x0000806D, 'loc_15A3A'),
@@ -19268,7 +19268,7 @@ def EV_KizunaJump_16():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -19291,7 +19291,7 @@ def EV_KizunaJump_16():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -19305,7 +19305,7 @@ def EV_KizunaJump_16():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008077, 'loc_15CE8'),
@@ -19348,7 +19348,7 @@ def EV_KizunaJump_16():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008071, 'loc_15D63'),
@@ -19370,7 +19370,7 @@ def EV_KizunaJump_16():
     OP_18(
         0x0A,
         (
-            (Expr.Expr23, 0xA),
+            (Expr.PushVar, 0xA),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -19483,7 +19483,7 @@ def EV_KizunaJump_17():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -19519,7 +19519,7 @@ def EV_KizunaJump_17():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -19592,7 +19592,7 @@ def EV_KizunaJump_17():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x0000808B, 'loc_164C7'),
@@ -19637,7 +19637,7 @@ def EV_KizunaJump_17():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x00008078, 'loc_1658D'),
@@ -19888,7 +19888,7 @@ def EV_KizunaJump_18():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -19921,7 +19921,7 @@ def EV_KizunaJump_18():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8000),
             Expr.Add,
             Expr.Nop,
@@ -19950,7 +19950,7 @@ def EV_KizunaJump_18():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x000080C7, 'loc_16D91'),
@@ -20034,7 +20034,7 @@ def EV_KizunaJump_18():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x0000808C, 'loc_16F97'),
@@ -20309,7 +20309,7 @@ def EV_KizunaJump_18():
 
     Switch(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             Expr.Return,
         ),
         (0x0000808C, 'loc_17347'),
@@ -20978,7 +20978,7 @@ def EV_SubeventJump():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -20990,7 +20990,7 @@ def EV_SubeventJump():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -21019,7 +21019,7 @@ def EV_SubeventJump():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x00000001, 'loc_17893'),
@@ -21137,7 +21137,7 @@ def EV_Jump_SB_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -21149,7 +21149,7 @@ def EV_Jump_SB_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -21187,7 +21187,7 @@ def EV_Jump_SB_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -21198,7 +21198,7 @@ def EV_Jump_SB_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -21208,7 +21208,7 @@ def EV_Jump_SB_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -21237,7 +21237,7 @@ def EV_Jump_SB_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -21248,7 +21248,7 @@ def EV_Jump_SB_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -21258,7 +21258,7 @@ def EV_Jump_SB_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -21287,7 +21287,7 @@ def EV_Jump_SB_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -21352,7 +21352,7 @@ def EV_Jump_SB_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -21364,7 +21364,7 @@ def EV_Jump_SB_02():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -21412,7 +21412,7 @@ def EV_Jump_SB_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -21423,7 +21423,7 @@ def EV_Jump_SB_02():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -21433,7 +21433,7 @@ def EV_Jump_SB_02():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -21462,7 +21462,7 @@ def EV_Jump_SB_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -21473,7 +21473,7 @@ def EV_Jump_SB_02():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -21483,7 +21483,7 @@ def EV_Jump_SB_02():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -21512,7 +21512,7 @@ def EV_Jump_SB_02():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -21577,7 +21577,7 @@ def EV_Jump_SB_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -21589,7 +21589,7 @@ def EV_Jump_SB_03():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -21626,7 +21626,7 @@ def EV_Jump_SB_03():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -21675,7 +21675,7 @@ def EV_Jump_SB_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -21686,7 +21686,7 @@ def EV_Jump_SB_03():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -21696,7 +21696,7 @@ def EV_Jump_SB_03():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -21725,7 +21725,7 @@ def EV_Jump_SB_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -21736,7 +21736,7 @@ def EV_Jump_SB_03():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -21746,7 +21746,7 @@ def EV_Jump_SB_03():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -21775,7 +21775,7 @@ def EV_Jump_SB_03():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -21840,7 +21840,7 @@ def EV_Jump_SB_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -21852,7 +21852,7 @@ def EV_Jump_SB_04():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -21889,7 +21889,7 @@ def EV_Jump_SB_04():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -21928,7 +21928,7 @@ def EV_Jump_SB_04():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -21972,7 +21972,7 @@ def EV_Jump_SB_04():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -22006,7 +22006,7 @@ def EV_Jump_SB_04():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -22042,7 +22042,7 @@ def EV_Jump_SB_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -22053,7 +22053,7 @@ def EV_Jump_SB_04():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -22063,7 +22063,7 @@ def EV_Jump_SB_04():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x4),
             Expr.Gtr,
             Expr.Return,
@@ -22092,7 +22092,7 @@ def EV_Jump_SB_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -22103,7 +22103,7 @@ def EV_Jump_SB_04():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -22113,7 +22113,7 @@ def EV_Jump_SB_04():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -22142,7 +22142,7 @@ def EV_Jump_SB_04():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -22207,7 +22207,7 @@ def EV_Jump_SB_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -22219,7 +22219,7 @@ def EV_Jump_SB_05():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -22252,7 +22252,7 @@ def EV_Jump_SB_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -22263,7 +22263,7 @@ def EV_Jump_SB_05():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -22273,7 +22273,7 @@ def EV_Jump_SB_05():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -22302,7 +22302,7 @@ def EV_Jump_SB_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -22313,7 +22313,7 @@ def EV_Jump_SB_05():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -22323,7 +22323,7 @@ def EV_Jump_SB_05():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -22352,7 +22352,7 @@ def EV_Jump_SB_05():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -22596,7 +22596,7 @@ def EV_DoJump_SB_SUB():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x000081D2, 'loc_1BFD5'),
@@ -24382,7 +24382,7 @@ def EV_DoJump_SB_SUB():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00008100, 'loc_1CDD4'),
@@ -26534,7 +26534,7 @@ def EV_YarikomiJump():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -26546,7 +26546,7 @@ def EV_YarikomiJump():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -26577,7 +26577,7 @@ def EV_YarikomiJump():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x00000001, 'loc_1DCDC'),
@@ -26741,7 +26741,7 @@ def EV_Jump_YR_Radio():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -26753,7 +26753,7 @@ def EV_Jump_YR_Radio():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -26883,7 +26883,7 @@ def EV_Jump_YR_Radio():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00008515, 'loc_1E285'),
@@ -27134,7 +27134,7 @@ def EV_Jump_YR_Blackbook():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -27146,7 +27146,7 @@ def EV_Jump_YR_Blackbook():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -27169,7 +27169,7 @@ def EV_Jump_YR_Blackbook():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x000010CA, 'loc_1E61F'),
@@ -27281,7 +27281,7 @@ def EV_Jump_YR_Photo():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -27293,7 +27293,7 @@ def EV_Jump_YR_Photo():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -27565,7 +27565,7 @@ def EV_Jump_YR_Photo():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000000, 'loc_1EF4C'),
@@ -27632,7 +27632,7 @@ def EV_Jump_YR_Photo():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00001066, 'loc_1F34D'),
@@ -27960,7 +27960,7 @@ def EV_Jump_YR_Present():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -27972,7 +27972,7 @@ def EV_Jump_YR_Present():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -28001,7 +28001,7 @@ def EV_Jump_YR_Present():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_1F883'),
@@ -28197,7 +28197,7 @@ def EV_Jump_YR_Training():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -28209,7 +28209,7 @@ def EV_Jump_YR_Training():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -28232,7 +28232,7 @@ def EV_Jump_YR_Training():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00008523, 'loc_1FC8D'),
@@ -28304,7 +28304,7 @@ def EV_Jump_YR_Training():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00008523, 'loc_1FD67'),
@@ -28401,7 +28401,7 @@ def EV_Jump_YR_Fishing():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -28413,7 +28413,7 @@ def EV_Jump_YR_Fishing():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -28429,7 +28429,7 @@ def EV_Jump_YR_Fishing():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000852D, 'loc_1FE87'),
@@ -28452,7 +28452,7 @@ def EV_Jump_YR_Fishing():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000852D, 'loc_1FEAB'),
@@ -28522,7 +28522,7 @@ def EV_Jump_YR_Seedling():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -28534,7 +28534,7 @@ def EV_Jump_YR_Seedling():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -28658,7 +28658,7 @@ def EV_Jump_YR_Seedling():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_20294'),
@@ -28799,7 +28799,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -28811,7 +28811,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -28835,7 +28835,7 @@ def EV_Jump_YR_Bath():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00008500, 'loc_205D7'),
@@ -28893,7 +28893,7 @@ def EV_DoJump_YR_SUB():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00008500, 'loc_2071E'),
@@ -28999,7 +28999,7 @@ def EV_DoJump_YR_SUB():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000852D, 'loc_20883'),
@@ -29613,7 +29613,7 @@ def EV_DoJump_YR_SUB():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00008500, 'loc_20EDE'),
@@ -29996,7 +29996,7 @@ def TK_System_Debug():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x00000000, 'loc_216F4'),
@@ -30712,7 +30712,7 @@ def TK_System_Debug_AVoice():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x00000000, 'loc_22C4F'),
@@ -31281,7 +31281,7 @@ def TK_System_Debug_HiarColor():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -31309,7 +31309,7 @@ def TK_System_Debug_HiarColor():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000064, 'loc_23E48'),
@@ -31399,7 +31399,7 @@ def TK_System_Debug_Message():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -31429,7 +31429,7 @@ def TK_System_Debug_Message():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000064, 'loc_24001'),
@@ -32037,7 +32037,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -32064,7 +32064,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32091,7 +32091,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -32119,7 +32119,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -32147,7 +32147,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x18),
             Expr.Equ,
             Expr.Return,
@@ -32180,7 +32180,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -32196,7 +32196,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xA),
             Expr.Equ,
             Expr.Return,
@@ -32215,7 +32215,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xB),
             Expr.Equ,
             Expr.Return,
@@ -32233,7 +32233,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xC),
             Expr.Equ,
             Expr.Return,
@@ -32251,7 +32251,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xD),
             Expr.Equ,
             Expr.Return,
@@ -32269,7 +32269,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x14),
             Expr.Equ,
             Expr.Return,
@@ -32287,7 +32287,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x15),
             Expr.Equ,
             Expr.Return,
@@ -32305,7 +32305,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x16),
             Expr.Equ,
             Expr.Return,
@@ -32323,7 +32323,7 @@ def TK_System_Debug_Emotest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x17),
             Expr.Equ,
             Expr.Return,
@@ -32383,7 +32383,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -32419,7 +32419,7 @@ def SUB_EmotionTest():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x00000001, 'loc_25049'),
@@ -32453,7 +32453,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32483,7 +32483,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32513,7 +32513,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32543,7 +32543,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32573,7 +32573,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32603,7 +32603,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32633,7 +32633,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32663,7 +32663,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32693,7 +32693,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32723,7 +32723,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32753,7 +32753,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32783,7 +32783,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32813,7 +32813,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32843,7 +32843,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32873,7 +32873,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32903,7 +32903,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32933,7 +32933,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32963,7 +32963,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -32993,7 +32993,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -33023,7 +33023,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -33053,7 +33053,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -33083,7 +33083,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -33153,7 +33153,7 @@ def TK_System_Debug_BlurTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -33183,7 +33183,7 @@ def TK_System_Debug_BlurTest():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_25681'),
@@ -33906,7 +33906,7 @@ def TK_NoticeLog_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -33939,7 +33939,7 @@ def TK_NoticeLog_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_26203'),
@@ -34177,7 +34177,7 @@ def TK_TeamSel_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -34214,7 +34214,7 @@ def TK_TeamSel_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_2695D'),
@@ -34651,7 +34651,7 @@ def TK_TeamSel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x29),
+            (Expr.PushVar, 0x29),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -34680,7 +34680,7 @@ def TK_TeamSel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x29),
+            (Expr.PushVar, 0x29),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -34709,7 +34709,7 @@ def TK_TeamSel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x29),
+            (Expr.PushVar, 0x29),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -34738,7 +34738,7 @@ def TK_TeamSel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x29),
+            (Expr.PushVar, 0x29),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -35026,7 +35026,7 @@ def TK_ActMenu_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -35138,7 +35138,7 @@ def TK_ActMenu_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_27475'),
@@ -35292,7 +35292,7 @@ def TK_LinkLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -35320,7 +35320,7 @@ def TK_LinkLevel_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_27685'),
@@ -35448,7 +35448,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -35484,7 +35484,7 @@ def TK_LikeLevel_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000000A, 'loc_27AF6'),
@@ -35863,7 +35863,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0xA),
             Expr.Equ,
             Expr.Return,
@@ -35890,7 +35890,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0xB),
             Expr.Equ,
             Expr.Return,
@@ -35917,7 +35917,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0xC),
             Expr.Equ,
             Expr.Return,
@@ -35944,7 +35944,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0xD),
             Expr.Equ,
             Expr.Return,
@@ -35971,7 +35971,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0xE),
             Expr.Equ,
             Expr.Return,
@@ -35998,7 +35998,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x19),
             Expr.Equ,
             Expr.Return,
@@ -36025,7 +36025,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x9),
             Expr.Equ,
             Expr.Return,
@@ -36052,7 +36052,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x17),
             Expr.Equ,
             Expr.Return,
@@ -36079,7 +36079,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -36106,7 +36106,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -36133,7 +36133,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -36160,7 +36160,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -36187,7 +36187,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x16),
             Expr.Equ,
             Expr.Return,
@@ -36214,7 +36214,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x7),
             Expr.Equ,
             Expr.Return,
@@ -36241,7 +36241,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x6),
             Expr.Equ,
             Expr.Return,
@@ -36268,7 +36268,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x8),
             Expr.Equ,
             Expr.Return,
@@ -36295,7 +36295,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Return,
@@ -36322,7 +36322,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0x91),
             Expr.Equ,
             Expr.Return,
@@ -36349,7 +36349,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0xF),
             Expr.Equ,
             Expr.Return,
@@ -36376,7 +36376,7 @@ def TK_LikeLevel_Test():
 
     If(
         (
-            (Expr.Expr23, 0x1E),
+            (Expr.PushVar, 0x1E),
             (Expr.PushLong, 0xFFFF),
             Expr.Equ,
             Expr.Return,
@@ -36528,7 +36528,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -36596,7 +36596,7 @@ def TK_Calendar_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_287FA'),
@@ -36765,7 +36765,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0x6),
+            (Expr.PushVar, 0x6),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -36790,7 +36790,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0x6),
+            (Expr.PushVar, 0x6),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -36815,7 +36815,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0x6),
+            (Expr.PushVar, 0x6),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -36840,7 +36840,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0x6),
+            (Expr.PushVar, 0x6),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -36865,7 +36865,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0x6),
+            (Expr.PushVar, 0x6),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -36890,7 +36890,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0x6),
+            (Expr.PushVar, 0x6),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Return,
@@ -36915,7 +36915,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0x6),
+            (Expr.PushVar, 0x6),
             (Expr.PushLong, 0x6),
             Expr.Equ,
             Expr.Return,
@@ -36940,7 +36940,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0x6),
+            (Expr.PushVar, 0x6),
             (Expr.PushLong, 0x7),
             Expr.Equ,
             Expr.Return,
@@ -36965,7 +36965,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0x6),
+            (Expr.PushVar, 0x6),
             (Expr.PushLong, 0x8),
             Expr.Equ,
             Expr.Return,
@@ -36990,7 +36990,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0x6),
+            (Expr.PushVar, 0x6),
             (Expr.PushLong, 0x9),
             Expr.Equ,
             Expr.Return,
@@ -37058,7 +37058,7 @@ def TK_Calendar_Test():
 
     If(
         (
-            (Expr.Expr23, 0xA),
+            (Expr.PushVar, 0xA),
             (Expr.PushLong, 0x0),
             Expr.Gtr,
             Expr.Return,
@@ -37069,7 +37069,7 @@ def TK_Calendar_Test():
     OP_18(
         0x0A,
         (
-            (Expr.Expr23, 0xA),
+            (Expr.PushVar, 0xA),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -37212,7 +37212,7 @@ def TK_CameraCommand_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -37246,7 +37246,7 @@ def TK_CameraCommand_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000064, 'loc_28E23'),
@@ -37406,7 +37406,7 @@ def TK_LookCommand_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -37439,7 +37439,7 @@ def TK_LookCommand_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000064, 'loc_2914D'),
@@ -37574,7 +37574,7 @@ def TK_ActiveTodo_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -37665,7 +37665,7 @@ def TK_ActiveTodo_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000000B, 'loc_2940C'),
@@ -37784,7 +37784,7 @@ def TK_VibratePad_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -37813,7 +37813,7 @@ def TK_VibratePad_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000000, 'loc_29573'),
@@ -37907,7 +37907,7 @@ def TK_StatusUp_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -37936,7 +37936,7 @@ def TK_StatusUp_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000000, 'loc_296AD'),
@@ -38095,7 +38095,7 @@ def TK_ChapterSave_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -38121,7 +38121,7 @@ def TK_ChapterSave_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000000, 'loc_298BF'),
@@ -38285,7 +38285,7 @@ def TK_GetSCraft_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -38312,7 +38312,7 @@ def TK_GetSCraft_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000000, 'loc_29C87'),
@@ -38416,7 +38416,7 @@ def TK_Title_Test():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -38447,7 +38447,7 @@ def TK_Title_Test():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000000, 'loc_29E9B'),
@@ -38631,7 +38631,7 @@ def TK_MiniGame_Debug():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -38659,7 +38659,7 @@ def TK_MiniGame_Debug():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x00000001, 'loc_2A0AA'),
@@ -38727,7 +38727,7 @@ def TK_MiniGame_Debug():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000000, 'loc_2A732'),
@@ -39136,7 +39136,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Neq,
             Expr.Return,
@@ -39158,7 +39158,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000003, 'loc_2ABDE'),
@@ -39269,7 +39269,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     If(
         (
-            (Expr.Expr23, 0x20),
+            (Expr.PushVar, 0x20),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -39286,7 +39286,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     If(
         (
-            (Expr.Expr23, 0x21),
+            (Expr.PushVar, 0x21),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -39313,7 +39313,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     If(
         (
-            (Expr.Expr23, 0x21),
+            (Expr.PushVar, 0x21),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -39340,7 +39340,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     If(
         (
-            (Expr.Expr23, 0x21),
+            (Expr.PushVar, 0x21),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -39389,7 +39389,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     If(
         (
-            (Expr.Expr23, 0x20),
+            (Expr.PushVar, 0x20),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -39406,7 +39406,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     If(
         (
-            (Expr.Expr23, 0x21),
+            (Expr.PushVar, 0x21),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -39433,7 +39433,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     If(
         (
-            (Expr.Expr23, 0x21),
+            (Expr.PushVar, 0x21),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -39460,7 +39460,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     If(
         (
-            (Expr.Expr23, 0x21),
+            (Expr.PushVar, 0x21),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -39740,7 +39740,7 @@ def TK_Shop_Debug():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -39810,7 +39810,7 @@ def TK_Shop_Debug():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x000003FC, 'loc_2B753'),
@@ -40022,7 +40022,7 @@ def TK_Note_Debug():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -40072,7 +40072,7 @@ def TK_Note_Debug():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x00000000, 'loc_2BCCA'),
@@ -40647,7 +40647,7 @@ def EV_Note_Person():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -40688,7 +40688,7 @@ def EV_Note_Person():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_2C617'),
@@ -40970,7 +40970,7 @@ def EV_Note_CountTests():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -40999,7 +40999,7 @@ def EV_Note_CountTests():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_2C9C4'),
@@ -41202,7 +41202,7 @@ def TK_Camp_Debug():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -41234,7 +41234,7 @@ def TK_Camp_Debug():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x0000044C, 'loc_2CD1C'),
@@ -41367,7 +41367,7 @@ def TK_Battle_Debug():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -41400,7 +41400,7 @@ def TK_Battle_Debug():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x00000000, 'loc_2D224'),
@@ -41653,7 +41653,7 @@ def TK_BattleEvent():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -41675,7 +41675,7 @@ def TK_BattleEvent():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x000003E8, 'loc_2D703'),
@@ -41804,7 +41804,7 @@ def TK_BattleVerification():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -41821,7 +41821,7 @@ def TK_BattleVerification():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x000003E8, 'loc_2D869'),
@@ -41940,7 +41940,7 @@ def TK_Camp_ChrFlagTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -42131,7 +42131,7 @@ def TK_Camp_ChrFlagTest():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000009, 'loc_2DD8F'),
@@ -42335,7 +42335,7 @@ def TK_Camp_FlagTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -42436,7 +42436,7 @@ def TK_Camp_FlagTest():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_2DFD6'),
@@ -42548,7 +42548,7 @@ def TK_Camp_OtherFlagTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -42583,7 +42583,7 @@ def TK_Camp_OtherFlagTest():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_2E0B9'),
@@ -42641,7 +42641,7 @@ def TK_Camp_PartyTest():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -42684,7 +42684,7 @@ def TK_Camp_PartyTest():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_2E466'),
@@ -42977,7 +42977,7 @@ def TK_Camp_Orbment():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -43084,7 +43084,7 @@ def TK_Camp_Orbment():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_2E802'),
@@ -43212,7 +43212,7 @@ def TK_Camp_MQuartz():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -43243,7 +43243,7 @@ def TK_Camp_MQuartz():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -43262,7 +43262,7 @@ def TK_Camp_MQuartz():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -43310,7 +43310,7 @@ def TK_Camp_MQuartz():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -43358,7 +43358,7 @@ def TK_Camp_MQuartz():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -43406,7 +43406,7 @@ def TK_Camp_MQuartz():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Return,
@@ -43454,7 +43454,7 @@ def TK_Camp_MQuartz():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xA),
             Expr.Equ,
             Expr.Return,
@@ -43476,7 +43476,7 @@ def TK_Camp_MQuartz():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xB),
             Expr.Equ,
             Expr.Return,
@@ -43577,7 +43577,7 @@ def TK_Camp_Link():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_2F25E'),
@@ -43647,7 +43647,7 @@ def TK_Camp_Formation():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_2F48E'),
@@ -43769,7 +43769,7 @@ def EV_99_98_00():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -43792,7 +43792,7 @@ def EV_99_98_00():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -43815,7 +43815,7 @@ def EV_99_98_00():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -43870,7 +43870,7 @@ def EV_99_98_00():
 def EV_99_98_00_END():
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Neg,
             Expr.Equ,
@@ -43893,7 +43893,7 @@ def EV_99_98_00_END():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -43909,7 +43909,7 @@ def EV_99_98_00_END():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -43925,7 +43925,7 @@ def EV_99_98_00_END():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -43986,7 +43986,7 @@ def EV_99_98_01():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -44009,7 +44009,7 @@ def EV_99_98_01():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -44032,7 +44032,7 @@ def EV_99_98_01():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -44078,7 +44078,7 @@ def EV_99_98_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -44101,7 +44101,7 @@ def EV_99_98_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -44124,7 +44124,7 @@ def EV_99_98_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -44166,7 +44166,7 @@ def EV_99_98_01():
 def EV_99_98_01_END():
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Neg,
             Expr.Equ,
@@ -44189,7 +44189,7 @@ def EV_99_98_01_END():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -44205,7 +44205,7 @@ def EV_99_98_01_END():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -44221,7 +44221,7 @@ def EV_99_98_01_END():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -44238,7 +44238,7 @@ def EV_99_98_01_END():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x1),
             Expr.Neg,
             Expr.Equ,
@@ -44261,7 +44261,7 @@ def EV_99_98_01_END():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -44277,7 +44277,7 @@ def EV_99_98_01_END():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -44293,7 +44293,7 @@ def EV_99_98_01_END():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -44354,7 +44354,7 @@ def EV_99_98_02():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -44377,7 +44377,7 @@ def EV_99_98_02():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -44400,7 +44400,7 @@ def EV_99_98_02():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -44455,7 +44455,7 @@ def EV_99_98_02():
 def EV_99_98_02_END():
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Neg,
             Expr.Equ,
@@ -44478,7 +44478,7 @@ def EV_99_98_02_END():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -44494,7 +44494,7 @@ def EV_99_98_02_END():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -44510,7 +44510,7 @@ def EV_99_98_02_END():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -44697,7 +44697,7 @@ def TK_EV_Jump():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -44709,7 +44709,7 @@ def TK_EV_Jump():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -44754,7 +44754,7 @@ def TK_EV_Jump():
 
     Switch(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             Expr.Return,
         ),
         (0x00000001, 'loc_3031E'),
@@ -44928,7 +44928,7 @@ def EV_Jump_00_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -44940,7 +44940,7 @@ def EV_Jump_00_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -44962,7 +44962,7 @@ def EV_Jump_00_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -44980,7 +44980,7 @@ def EV_Jump_00_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -44991,7 +44991,7 @@ def EV_Jump_00_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -45001,7 +45001,7 @@ def EV_Jump_00_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -45030,7 +45030,7 @@ def EV_Jump_00_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -45041,7 +45041,7 @@ def EV_Jump_00_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -45051,7 +45051,7 @@ def EV_Jump_00_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -45080,7 +45080,7 @@ def EV_Jump_00_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -45136,7 +45136,7 @@ def EV_Jump_00_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -45148,7 +45148,7 @@ def EV_Jump_00_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -45186,7 +45186,7 @@ def EV_Jump_00_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -45204,7 +45204,7 @@ def EV_Jump_00_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -45215,7 +45215,7 @@ def EV_Jump_00_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -45225,7 +45225,7 @@ def EV_Jump_00_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -45254,7 +45254,7 @@ def EV_Jump_00_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -45265,7 +45265,7 @@ def EV_Jump_00_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -45275,7 +45275,7 @@ def EV_Jump_00_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -45304,7 +45304,7 @@ def EV_Jump_00_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -45360,7 +45360,7 @@ def EV_DoJump_00():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000001A, 'loc_30DC6'),
@@ -45472,7 +45472,7 @@ def EV_DoJump_00():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00000001, 'loc_30ED8'),
@@ -45762,7 +45762,7 @@ def EV_Jump_01_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -45774,7 +45774,7 @@ def EV_Jump_01_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -45811,7 +45811,7 @@ def EV_Jump_01_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -45854,7 +45854,7 @@ def EV_Jump_01_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -45888,7 +45888,7 @@ def EV_Jump_01_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -45899,7 +45899,7 @@ def EV_Jump_01_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -45909,7 +45909,7 @@ def EV_Jump_01_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Gtr,
             Expr.Return,
@@ -45938,7 +45938,7 @@ def EV_Jump_01_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -45949,7 +45949,7 @@ def EV_Jump_01_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -45959,7 +45959,7 @@ def EV_Jump_01_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -45988,7 +45988,7 @@ def EV_Jump_01_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -46044,7 +46044,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -46056,7 +46056,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -46098,7 +46098,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -46141,7 +46141,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -46180,7 +46180,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -46225,7 +46225,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -46265,7 +46265,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Return,
@@ -46304,7 +46304,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -46315,7 +46315,7 @@ def EV_Jump_01_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -46325,7 +46325,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x5),
             Expr.Gtr,
             Expr.Return,
@@ -46354,7 +46354,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -46365,7 +46365,7 @@ def EV_Jump_01_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -46375,7 +46375,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -46404,7 +46404,7 @@ def EV_Jump_01_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -46461,7 +46461,7 @@ def EV_DoJump_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x000010C9, 'loc_34D60'),
@@ -47306,7 +47306,7 @@ def EV_DoJump_01():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00001001, 'loc_3556C'),
@@ -49420,7 +49420,7 @@ def EV_Jump_02_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -49432,7 +49432,7 @@ def EV_Jump_02_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -49476,7 +49476,7 @@ def EV_Jump_02_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -49519,7 +49519,7 @@ def EV_Jump_02_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -49530,7 +49530,7 @@ def EV_Jump_02_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -49540,7 +49540,7 @@ def EV_Jump_02_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -49569,7 +49569,7 @@ def EV_Jump_02_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -49580,7 +49580,7 @@ def EV_Jump_02_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -49590,7 +49590,7 @@ def EV_Jump_02_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -49619,7 +49619,7 @@ def EV_Jump_02_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -49675,7 +49675,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -49687,7 +49687,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -49734,7 +49734,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -49777,7 +49777,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -49821,7 +49821,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -49864,7 +49864,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -49906,7 +49906,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Return,
@@ -49950,7 +49950,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x6),
             Expr.Equ,
             Expr.Return,
@@ -49994,7 +49994,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -50005,7 +50005,7 @@ def EV_Jump_02_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -50015,7 +50015,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x6),
             Expr.Gtr,
             Expr.Return,
@@ -50044,7 +50044,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -50055,7 +50055,7 @@ def EV_Jump_02_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -50065,7 +50065,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -50094,7 +50094,7 @@ def EV_Jump_02_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -50152,7 +50152,7 @@ def EV_DoJump_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x000020EB, 'loc_3AA6E'),
@@ -50947,7 +50947,7 @@ def EV_DoJump_02():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00002001, 'loc_3B301'),
@@ -53327,7 +53327,7 @@ def EV_Jump_03_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -53339,7 +53339,7 @@ def EV_Jump_03_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -53374,7 +53374,7 @@ def EV_Jump_03_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -53416,7 +53416,7 @@ def EV_Jump_03_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -53448,7 +53448,7 @@ def EV_Jump_03_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -53459,7 +53459,7 @@ def EV_Jump_03_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -53469,7 +53469,7 @@ def EV_Jump_03_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Gtr,
             Expr.Return,
@@ -53498,7 +53498,7 @@ def EV_Jump_03_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -53509,7 +53509,7 @@ def EV_Jump_03_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -53519,7 +53519,7 @@ def EV_Jump_03_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -53548,7 +53548,7 @@ def EV_Jump_03_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -53604,7 +53604,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -53616,7 +53616,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -53655,7 +53655,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -53696,7 +53696,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -53735,7 +53735,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -53775,7 +53775,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -53816,7 +53816,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Return,
@@ -53857,7 +53857,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x6),
             Expr.Equ,
             Expr.Return,
@@ -53899,7 +53899,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x7),
             Expr.Equ,
             Expr.Return,
@@ -53948,7 +53948,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x8),
             Expr.Equ,
             Expr.Return,
@@ -53987,7 +53987,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x9),
             Expr.Equ,
             Expr.Return,
@@ -54026,7 +54026,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -54037,7 +54037,7 @@ def EV_Jump_03_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -54047,7 +54047,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x9),
             Expr.Gtr,
             Expr.Return,
@@ -54076,7 +54076,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -54087,7 +54087,7 @@ def EV_Jump_03_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -54097,7 +54097,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -54126,7 +54126,7 @@ def EV_Jump_03_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -54185,7 +54185,7 @@ def EV_DoJump_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000312F, 'loc_41328'),
@@ -54611,7 +54611,7 @@ def EV_DoJump_03():
     OP_18(
         0xF9,
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Nop,
             Expr.Return,
         ),
@@ -54619,7 +54619,7 @@ def EV_DoJump_03():
 
     If(
         (
-            (Expr.Expr23, 0xF9),
+            (Expr.PushVar, 0xF9),
             (Expr.PushLong, 0x30C3),
             Expr.Gtr,
             Expr.Return,
@@ -54642,7 +54642,7 @@ def EV_DoJump_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF9),
+            (Expr.PushVar, 0xF9),
             Expr.Return,
         ),
         (0x000030C3, 'loc_419A7'),
@@ -55347,7 +55347,7 @@ def EV_DoJump_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00007252, 'loc_41B05'),
@@ -55402,7 +55402,7 @@ def EV_DoJump_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00003001, 'loc_42148'),
@@ -57280,7 +57280,7 @@ def EV_DoJump_03():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x000030C4, 'loc_43076'),
@@ -58436,7 +58436,7 @@ def EV_Jump_04_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -58448,7 +58448,7 @@ def EV_Jump_04_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -58484,7 +58484,7 @@ def EV_Jump_04_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -58520,7 +58520,7 @@ def EV_Jump_04_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -58560,7 +58560,7 @@ def EV_Jump_04_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -58571,7 +58571,7 @@ def EV_Jump_04_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -58581,7 +58581,7 @@ def EV_Jump_04_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Gtr,
             Expr.Return,
@@ -58610,7 +58610,7 @@ def EV_Jump_04_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -58621,7 +58621,7 @@ def EV_Jump_04_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -58631,7 +58631,7 @@ def EV_Jump_04_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -58660,7 +58660,7 @@ def EV_Jump_04_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -58716,7 +58716,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -58728,7 +58728,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -58763,7 +58763,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -58794,7 +58794,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -58831,7 +58831,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -58870,7 +58870,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -58909,7 +58909,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x5),
             Expr.Equ,
             Expr.Return,
@@ -58949,7 +58949,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x6),
             Expr.Equ,
             Expr.Return,
@@ -58993,7 +58993,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x7),
             Expr.Equ,
             Expr.Return,
@@ -59037,7 +59037,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -59048,7 +59048,7 @@ def EV_Jump_04_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -59058,7 +59058,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x7),
             Expr.Gtr,
             Expr.Return,
@@ -59087,7 +59087,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -59098,7 +59098,7 @@ def EV_Jump_04_01():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -59108,7 +59108,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -59137,7 +59137,7 @@ def EV_Jump_04_01():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -59197,7 +59197,7 @@ def EV_DoJump_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x000040EA, 'loc_47BFA'),
@@ -59553,7 +59553,7 @@ def EV_DoJump_04():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -59571,7 +59571,7 @@ def EV_DoJump_04():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -59589,7 +59589,7 @@ def EV_DoJump_04():
 
     If(
         (
-            (Expr.Expr23, 0xF6),
+            (Expr.PushVar, 0xF6),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -60192,7 +60192,7 @@ def EV_DoJump_04():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00004001, 'loc_4864F'),
@@ -62669,7 +62669,7 @@ def EV_Jump_05_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFFF),
             Expr.Neq,
             Expr.Return,
@@ -62681,7 +62681,7 @@ def EV_Jump_05_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Equ,
             Expr.Return,
@@ -62722,7 +62722,7 @@ def EV_Jump_05_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Equ,
             Expr.Return,
@@ -62763,7 +62763,7 @@ def EV_Jump_05_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x2),
             Expr.Equ,
             Expr.Return,
@@ -62802,7 +62802,7 @@ def EV_Jump_05_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x3),
             Expr.Equ,
             Expr.Return,
@@ -62837,7 +62837,7 @@ def EV_Jump_05_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x4),
             Expr.Equ,
             Expr.Return,
@@ -62868,7 +62868,7 @@ def EV_Jump_05_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF0),
             Expr.Equ,
             Expr.Return,
@@ -62879,7 +62879,7 @@ def EV_Jump_05_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Add,
             Expr.Nop,
@@ -62889,7 +62889,7 @@ def EV_Jump_05_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x4),
             Expr.Gtr,
             Expr.Return,
@@ -62918,7 +62918,7 @@ def EV_Jump_05_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0xFFFFFFF1),
             Expr.Equ,
             Expr.Return,
@@ -62929,7 +62929,7 @@ def EV_Jump_05_00():
     OP_18(
         0xF8,
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x1),
             Expr.Sub,
             Expr.Nop,
@@ -62939,7 +62939,7 @@ def EV_Jump_05_00():
 
     If(
         (
-            (Expr.Expr23, 0xF8),
+            (Expr.PushVar, 0xF8),
             (Expr.PushLong, 0x0),
             Expr.Lss,
             Expr.Return,
@@ -62968,7 +62968,7 @@ def EV_Jump_05_00():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2),
             Expr.Neg,
             Expr.Equ,
@@ -63029,7 +63029,7 @@ def EV_DoJump_05():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00005075, 'loc_4B534'),
@@ -63238,7 +63238,7 @@ def EV_DoJump_05():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x00005001, 'loc_4B91E'),
@@ -64808,42 +64808,42 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4025),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4026),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4027),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4028),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4029),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x402A),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x402B),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x402C),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x402D),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x402E),
             Expr.Equ,
             Expr.Or,
@@ -65072,62 +65072,62 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3021),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3022),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3023),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3024),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3025),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3026),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3027),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3028),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3029),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302A),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302B),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302C),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302D),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302E),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302F),
             Expr.Equ,
             Expr.Or,
@@ -65397,38 +65397,38 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2020),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2021),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2022),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2023),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2024),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2025),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2026),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2027),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2028),
             Expr.Equ,
             Expr.Or,
@@ -65617,7 +65617,7 @@ def EV_Party_Set():
 
     Switch(
         (
-            (Expr.Expr23, 0x3),
+            (Expr.PushVar, 0x3),
             Expr.Return,
         ),
         (0x00000000, 'loc_4CCA4'),
@@ -66050,38 +66050,38 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2020),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2021),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2022),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2023),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2024),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2025),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2026),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2027),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x2028),
             Expr.Equ,
             Expr.Or,
@@ -66154,7 +66154,7 @@ def EV_Party_Set():
 
     Switch(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             Expr.Return,
         ),
         (0x0000312F, 'loc_4D0F6'),
@@ -66493,62 +66493,62 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3021),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3022),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3023),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3024),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3025),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3026),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3027),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3028),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x3029),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302A),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302B),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302C),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302D),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302E),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x302F),
             Expr.Equ,
             Expr.Or,
@@ -66819,42 +66819,42 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4025),
             Expr.Equ,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4026),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4027),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4028),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x4029),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x402A),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x402B),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x402C),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x402D),
             Expr.Equ,
             Expr.Or,
-            (Expr.Expr23, 0xF7),
+            (Expr.PushVar, 0xF7),
             (Expr.PushLong, 0x402E),
             Expr.Equ,
             Expr.Or,

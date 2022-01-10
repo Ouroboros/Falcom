@@ -54,7 +54,8 @@ def ShowMenu(
         height      = 0,
         fontSize    = 40.0,
         pos         = (0xFFFF, 0xFFFF),
-        autoExit    = False
+        autoExit    = False,
+        style       = 99,
     ):
 
     assert resultVar <= 0x100
@@ -88,7 +89,7 @@ def ShowMenu(
         menuEnd,
     )
 
-    MenuCreate(level, height, fontSize, 0x00000063)
+    MenuCreate(level, height, fontSize, style)
 
     for id, item in enumerate(items):
         id += 1
@@ -147,7 +148,7 @@ def ShowMenu(
 # debug 0x07
 
 def DebugString(s: str):
-    OP_07(0x02, (0xDD, s))
+    DebugLog(0x02, (0xDD, s))
 
 
 # menu cmd 0x29

@@ -45,7 +45,7 @@ def AniBtlMove2():
     Call(ScriptId.CurrentCharacter, 'AniBtlWait')
 
 def AniBtlCraft05_暴雨疾风枪():
-    if 1:
+    if 0:
         BattleCreateChrDummy(0xFFFE, 5)
 
         asset = [
@@ -287,6 +287,8 @@ def AniBtlCraftDamageT(damage: bool, knockBack: float):
     # ForEachTarget(cb)
 
     BattleInitHit(0xFFFE)
+
+    # BattleSetChrAbnormalCondition(0xFFFE, AbnormalCondition.Stealth, 1, 1)
 
     def cb():
         if damage:

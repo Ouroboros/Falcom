@@ -27,7 +27,10 @@ class ScenaFormatter(Assembler.Formatter):
     def formatFuncion(self, func: ScenaFunction) -> List[str]:
         funcName = func.name
         if not funcName:
-            funcName = f'func_{func.offset:X}'
+            if func.type == ScenaFunctionType.BattleSetting:
+                funcName = f'{func.type}{func.index:02X}'
+            else:
+                funcName = f'func_{func.offset:X}'
 
         f = [
             f'# id: 0x{func.index:04X} offset: 0x{func.offset:X}',
