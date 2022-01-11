@@ -342,7 +342,7 @@ function hookBattle() {
 
 function hookScript() {
     const ScriptManager_LoadLibrary = Interceptor2.jmp(
-        Addrs.ScriptManager.LoadLibrary,
+        Addrs.ScriptManager.LoadLibraries,
         function(self: NativePointer): number {
             const ret = ScriptManager_LoadLibrary(self);
 
@@ -370,7 +370,7 @@ function hookScript() {
     );
 
     const handleActMenu = Interceptor2.jmp(
-        ptr(0x1402CE060),
+        Addrs.HandleActMenu,
         function(arg1: NativePointer, arg2: number): number {
             const VK_SHIFT = 0x10;
             const ctx = (this.context as X64CpuContext);

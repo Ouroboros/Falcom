@@ -10,6 +10,7 @@ export const Addrs = (function() {
                 FreeMemory                              : Modules.ED84.base.add(0x52E920),
                 Logger_Output                           : Modules.ED84.base.add(0x0D6520),
                 Logger_Ansi2UTF8                        : Modules.ED84.base.add(0x0D4FF0),
+                HandleActMenu                           : Modules.ED84.base.add(0x2CE060),
 
                 Crc32CheckSum                           : Modules.ED84.base.add(0x09C000),
 
@@ -33,8 +34,8 @@ export const Addrs = (function() {
                 },
 
                 ScriptManager: {
-                    LoadLibrary                         : Modules.ED84.base.add(0x2A3410),
-                    CreatePartyCharacters_stricmp       : Modules.ED84.base.add(0),
+                    LoadLibraries                       : Modules.ED84.base.add(0x2A3410),
+                    // CreatePartyCharacters_stricmp       : Modules.ED84.base.add(0),
                     GetScriptByID                       : Modules.ED84.base.add(0x3E7D40),
                 },
 
