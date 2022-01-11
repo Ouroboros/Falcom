@@ -46,5 +46,11 @@
   * 创建模型时，会根据模型从 根据 `model` 从 `t_name` 查找对应的 `face` 和 `ani` 加载
   * asset 映射，比如 `C_CHR500 -> C_CHR033`，方便在 `t_name` 新增一个使用相同人物时，无法与原 chrId 区分
 
+* hookBattle: 非 Party 角色(chrId >= 0x40)从 alchr*.dat 加载战技魔法
+
+* hookScript
+  * 加载 debug.dat
+  * 按住`shift`再呼出手机，会调用 `system.dat` 的 `FC_ActMenu_Ouroboros` 函数，不限场景
+
 ### 实例
   * https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED84/mod
