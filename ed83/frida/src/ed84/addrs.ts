@@ -22,10 +22,10 @@ export const Addrs = (function() {
                 },
 
                 ED84: {
-                    sharedInstance                      : Modules.ED84.base.add(0xD099B8),
-                    findNameTableDataByModel            : Modules.ED84.base.add(0x257840),
-                    findNameTableDataByChrId            : Modules.ED84.base.add(0x2576E0),
-                    findPartyCharByChrId                : Modules.ED84.base.add(0x29EA40),
+                    SharedInstance                      : Modules.ED84.base.add(0xD099B8),
+                    FindNameTableDataByModel            : Modules.ED84.base.add(0x257840),
+                    FindNameTableDataByChrId            : Modules.ED84.base.add(0x2576E0),
+                    FindPartyCharByChrId                : Modules.ED84.base.add(0x29EA40),
                 },
 
                 Script: {
@@ -40,9 +40,9 @@ export const Addrs = (function() {
                 },
 
                 Character: {
-                    ChangeSkinFinished                  : Modules.ED84.base.add(0),
-                    LoadCharaAniByFieldInit             : Modules.ED84.base.add(0),
-                    LoadCharaAniByCreateBattleCharacter : Modules.ED84.base.add(0),
+                    // ChangeSkinFinished                  : Modules.ED84.base.add(0),
+                    // LoadCharaAniByFieldInit             : Modules.ED84.base.add(0),
+                    // LoadCharaAniByCreateBattleCharacter : Modules.ED84.base.add(0),
 
                     Initialize                          : Modules.ED84.base.add(0x22F290),
                     LoadFaceModel                       : Modules.ED84.base.add(0x22A530),
@@ -70,7 +70,7 @@ export const Addrs = (function() {
 
                 Asset: {
                     LoadAsset                           : Modules.ED84.base.add(0x098470),
-                    HashSymbol                          : Modules.ED84.base.add(0x0973D0),
+                    // HashSymbol                          : Modules.ED84.base.add(0x0973D0),
                 },
             };
 

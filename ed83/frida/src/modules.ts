@@ -11,6 +11,7 @@ export const Modules = {
 export const API = {
     crt: {
         fopen           : new NativeFunction(Modules.ucrtbase.getExportByName('fopen'), 'pointer', ['pointer', 'pointer'], 'win64'),
+        wfopen          : new NativeFunction(Modules.ucrtbase.getExportByName('_wfopen'), 'pointer', ['pointer', 'pointer'], 'win64'),
         fread           : new NativeFunction(Modules.ucrtbase.getExportByName('fread'), 'size_t', ['pointer', 'size_t', 'size_t', 'pointer'], 'win64'),
         fclose          : new NativeFunction(Modules.ucrtbase.getExportByName('fclose'), 'void', ['pointer'], 'win64'),
         _fileno         : new NativeFunction(Modules.ucrtbase.getExportByName('_fileno'), 'int32', ['pointer'], 'win64'),

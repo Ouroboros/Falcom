@@ -310,9 +310,9 @@ export class ED84 extends ED8BaseObject {
     private static _sharedInstance: ED84;
     private static _config: IConfig | undefined;
 
-    private static _findNameTableDataByModel = new NativeFunction(Addrs.ED84.findNameTableDataByModel, "pointer", ['pointer', 'pointer'], 'win64');
-    private static _findNameTableDataByChrId = new NativeFunction(Addrs.ED84.findNameTableDataByChrId, "pointer", ['pointer', 'uint16'], 'win64');
-    private static _findPartyCharByChrId     = new NativeFunction(Addrs.ED84.findPartyCharByChrId, "pointer", ['pointer', 'uint16', 'uint32'], 'win64');
+    private static _findNameTableDataByModel = new NativeFunction(Addrs.ED84.FindNameTableDataByModel, "pointer", ['pointer', 'pointer'], 'win64');
+    private static _findNameTableDataByChrId = new NativeFunction(Addrs.ED84.FindNameTableDataByChrId, "pointer", ['pointer', 'uint16'], 'win64');
+    private static _findPartyCharByChrId     = new NativeFunction(Addrs.ED84.FindPartyCharByChrId, "pointer", ['pointer', 'uint16', 'uint32'], 'win64');
 
     static enableLogger() {
         Interceptor2.jmp(
@@ -344,7 +344,7 @@ export class ED84 extends ED8BaseObject {
         if (this._sharedInstance)
             return this._sharedInstance;
 
-        const p = Addrs.ED84.sharedInstance.readPointer();
+        const p = Addrs.ED84.SharedInstance.readPointer();
 
         if (p.isNull()) {
             throw new Error('ED84 null');

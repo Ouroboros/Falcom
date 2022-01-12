@@ -39,6 +39,19 @@ function hookIoRedirection() {
         'pointer', ['pointer', 'pointer', 'pointer'],
     );
 
+    const wfopen = Interceptor2.jmp(
+        API.crt.wfopen,
+        function(path: NativePointer, mode: NativePointer): NativePointer {
+            const patch = utils.getPatchFile(path.readUtf16String()!);
+            if (patch) {
+                path = Memory.allocUtf16String(patch);
+            }
+
+            return wfopen(path, mode);
+        },
+        'pointer', ['pointer', 'pointer'],
+    );
+
     const File_GetSize = Interceptor2.jmp(
         Addrs.File.GetSize,
         function(self: NativePointer, path: NativePointer, arg3: NativePointer, fileSize: NativePointer): NativePointer {
