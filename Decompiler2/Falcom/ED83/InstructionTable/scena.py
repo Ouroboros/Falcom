@@ -490,7 +490,7 @@ def Handler_33(ctx: InstructionHandlerContext):
             0x61: 'WBLLLL',
             0x62: 'WB',
             0x63: 'W',
-            # 0x64: 'S',
+            0x64: 'S',
             # 0x65: 'W',
             # 0x66: 'W',
             0x67: '',

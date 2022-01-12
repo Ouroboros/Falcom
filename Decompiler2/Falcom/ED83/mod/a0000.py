@@ -2,7 +2,10 @@ import sys
 sys.path.append(r'D:\Dev\Source\Falcom\Decompiler2')
 
 from Falcom.ED83.Parser.scena_writer_helper import *
-import a0000_hook
+try:
+    import a0000_hook
+except ImportError:
+    pass
 
 scena = createScenaWriter('a0000.dat')
 
@@ -13,7 +16,7 @@ def func_EA4():
 
 # id: 0x0001 offset: 0xEA8
 @scena.BattleSetting('')
-def func_EA8():
+def BattleSetting01():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -22,7 +25,7 @@ def func_EA8():
         direction      = 90.0,
         length         = 20.0,
         width          = 20.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 450,
         dangerBGM      = 456,
@@ -41,7 +44,7 @@ def func_EA8():
 
 # id: 0x0002 offset: 0xFA8
 @scena.BattleSetting('')
-def func_FA8():
+def BattleSetting02():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 0.0,
@@ -50,7 +53,7 @@ def func_FA8():
         direction      = 0.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 450,
         dangerBGM      = 456,
@@ -69,7 +72,7 @@ def func_FA8():
 
 # id: 0x0003 offset: 0x10A8
 @scena.BattleSetting('')
-def func_10A8():
+def BattleSetting03():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -78,7 +81,7 @@ def func_10A8():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 451,
         dangerBGM      = 456,
@@ -97,7 +100,7 @@ def func_10A8():
 
 # id: 0x0004 offset: 0x11A8
 @scena.BattleSetting('')
-def func_11A8():
+def BattleSetting04():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -106,7 +109,7 @@ def func_11A8():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -125,7 +128,7 @@ def func_11A8():
 
 # id: 0x0005 offset: 0x12A8
 @scena.BattleSetting('')
-def func_12A8():
+def BattleSetting05():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -134,7 +137,7 @@ def func_12A8():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -153,7 +156,7 @@ def func_12A8():
 
 # id: 0x0006 offset: 0x13A8
 @scena.BattleSetting('')
-def func_13A8():
+def BattleSetting06():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -162,7 +165,7 @@ def func_13A8():
         direction      = 90.0,
         length         = 6.0,
         width          = 10.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -181,7 +184,7 @@ def func_13A8():
 
 # id: 0x0007 offset: 0x14A8
 @scena.BattleSetting('')
-def func_14A8():
+def BattleSetting07():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -190,7 +193,7 @@ def func_14A8():
         direction      = 0.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -209,7 +212,7 @@ def func_14A8():
 
 # id: 0x0008 offset: 0x15A8
 @scena.BattleSetting('')
-def func_15A8():
+def BattleSetting08():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -218,7 +221,7 @@ def func_15A8():
         direction      = 0.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -237,7 +240,7 @@ def func_15A8():
 
 # id: 0x0009 offset: 0x16A8
 @scena.BattleSetting('')
-def func_16A8():
+def BattleSetting09():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -246,7 +249,7 @@ def func_16A8():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -265,7 +268,7 @@ def func_16A8():
 
 # id: 0x000A offset: 0x17A8
 @scena.BattleSetting('')
-def func_17A8():
+def BattleSetting0A():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -274,7 +277,7 @@ def func_17A8():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 9,
+        battleId       = 9,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -293,7 +296,7 @@ def func_17A8():
 
 # id: 0x000B offset: 0x18A8
 @scena.BattleSetting('')
-def func_18A8():
+def BattleSetting0B():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -302,7 +305,7 @@ def func_18A8():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 9,
+        battleId       = 9,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -321,7 +324,7 @@ def func_18A8():
 
 # id: 0x000C offset: 0x19A8
 @scena.BattleSetting('')
-def func_19A8():
+def BattleSetting0C():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -330,7 +333,7 @@ def func_19A8():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 901,
+        battleId       = 901,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -349,7 +352,7 @@ def func_19A8():
 
 # id: 0x000D offset: 0x1AA8
 @scena.BattleSetting('')
-def func_1AA8():
+def BattleSetting0D():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -358,7 +361,7 @@ def func_1AA8():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 305,
+        battleId       = 305,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -377,7 +380,7 @@ def func_1AA8():
 
 # id: 0x000E offset: 0x1BA8
 @scena.BattleSetting('')
-def func_1BA8():
+def BattleSetting0E():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -386,7 +389,7 @@ def func_1BA8():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 317,
+        battleId       = 317,
         flags          = 0x00000009,
         bgm            = 457,
         dangerBGM      = 457,
@@ -405,7 +408,7 @@ def func_1BA8():
 
 # id: 0x000F offset: 0x1CA8
 @scena.BattleSetting('')
-def func_1CA8():
+def BattleSetting0F():
     return ScenaBattleSetting(
         mapName        = 'm1420',
         x              = 0.0,
@@ -414,7 +417,7 @@ def func_1CA8():
         direction      = 0.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 308,
+        battleId       = 308,
         flags          = 0x00000000,
         bgm            = 466,
         dangerBGM      = 466,
@@ -442,7 +445,7 @@ def BTLSET_EV_05_13_00():
         direction      = 145.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 602,
+        battleId       = 602,
         flags          = 0x0000000B,
         bgm            = 468,
         dangerBGM      = 468,
@@ -461,7 +464,7 @@ def BTLSET_EV_05_13_00():
 
 # id: 0x0011 offset: 0x1EA8
 @scena.BattleSetting('')
-def func_1EA8():
+def BattleSetting11():
     return ScenaBattleSetting(
         mapName        = 'm4002',
         x              = 66.5,
@@ -470,7 +473,7 @@ def func_1EA8():
         direction      = 145.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 604,
+        battleId       = 604,
         flags          = 0x0000000B,
         bgm            = 468,
         dangerBGM      = 468,
@@ -489,7 +492,7 @@ def func_1EA8():
 
 # id: 0x0012 offset: 0x1FA8
 @scena.BattleSetting('')
-def func_1FA8():
+def BattleSetting12():
     return ScenaBattleSetting(
         mapName        = '',
         x              = 100.0,
@@ -498,7 +501,7 @@ def func_1FA8():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -543,8 +546,8 @@ def PreInit():
 # id: 0x0014 offset: 0x20C8
 @scena.Code('Init')
 def Init():
-    OP_3A(0x05, 0x0001, 0x0001)
-    OP_3A(0x06, 0x0001)
+    BGMCtrl(0x05, 1, 1)
+    BGMCtrl(0x06, 1)
     OP_14(0x00000400)
     OP_3B(0x64, 1000, 0.0, 1.0)
 
@@ -670,7 +673,7 @@ def TK_Event_Jump_Test():
 # id: 0x0017 offset: 0x28F8
 @scena.Code('TK_QuestUI_Debug')
 def TK_QuestUI_Debug():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -876,7 +879,7 @@ def TK_QuestUI_Debug():
 
     label('loc_2F93')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x0F,
         (
             (Expr.PushLong, 0x12C),
@@ -924,7 +927,7 @@ def TK_QuestUI_Debug():
 
     label('loc_2FD3')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x00,
         (
             (Expr.Eval, "QuestCtrl(0x0001, 0x07)"),
@@ -933,7 +936,7 @@ def TK_QuestUI_Debug():
         ),
     )
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -945,6 +948,7 @@ def TK_QuestUI_Debug():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_30FE')
@@ -969,7 +973,7 @@ def TK_QuestUI_Debug():
         'loc_30A4',
     )
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -981,6 +985,7 @@ def TK_QuestUI_Debug():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_30EB')
@@ -989,7 +994,7 @@ def TK_QuestUI_Debug():
 
     label('loc_30A4')
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -1001,6 +1006,7 @@ def TK_QuestUI_Debug():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     def _loc_30EB(): pass
@@ -1013,7 +1019,7 @@ def TK_QuestUI_Debug():
 
     label('loc_30F0')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -1319,7 +1325,7 @@ def TK_QuestUI_DebugQuestFlag():
 def TK_Quest_Debug():
     Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -1469,7 +1475,7 @@ def TK_Quest_Debug():
 
     label('loc_39F9')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -1497,7 +1503,7 @@ def TK_Quest_Debug():
 # id: 0x001A offset: 0x3A24
 @scena.Code('EV_QuestJump')
 def EV_QuestJump():
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -1506,7 +1512,7 @@ def EV_QuestJump():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -1515,7 +1521,7 @@ def EV_QuestJump():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -1562,7 +1568,7 @@ def EV_QuestJump():
     MenuCmd(0x04, 0x00, 0xF6)
     MenuCmd(0x03, 0x00)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -1631,7 +1637,7 @@ def EV_QuestJump():
 
     label('loc_3C62')
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -1646,7 +1652,7 @@ def EV_QuestJump():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -1665,7 +1671,7 @@ def EV_QuestJump():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -1690,7 +1696,7 @@ def EV_QuestJump():
 
     label('loc_3E16')
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -1705,7 +1711,7 @@ def EV_QuestJump():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -1723,7 +1729,7 @@ def EV_QuestJump():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -1748,7 +1754,7 @@ def EV_QuestJump():
 
     label('loc_3F91')
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -1763,7 +1769,7 @@ def EV_QuestJump():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -1783,7 +1789,7 @@ def EV_QuestJump():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -1808,7 +1814,7 @@ def EV_QuestJump():
 
     label('loc_41A0')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -1823,7 +1829,7 @@ def EV_QuestJump():
 
     label('loc_41AE')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -1847,7 +1853,7 @@ def EV_QuestJump():
 # id: 0x001B offset: 0x41C0
 @scena.Code('EV_Jump_QS_01')
 def EV_Jump_QS_01():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -1913,7 +1919,7 @@ def EV_Jump_QS_01():
         'loc_4538',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -1934,7 +1940,7 @@ def EV_Jump_QS_01():
         'loc_4533',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -1963,7 +1969,7 @@ def EV_Jump_QS_01():
         'loc_456E',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -1984,7 +1990,7 @@ def EV_Jump_QS_01():
         'loc_4569',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -2014,7 +2020,7 @@ def EV_Jump_QS_01():
         'loc_458B',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -2039,7 +2045,7 @@ def EV_Jump_QS_01():
         'loc_49B6',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -2054,7 +2060,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -2081,7 +2087,7 @@ def EV_Jump_QS_01():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -2231,7 +2237,7 @@ def EV_Jump_QS_01():
         'loc_4B7F',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -2246,7 +2252,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -2264,7 +2270,7 @@ def EV_Jump_QS_01():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -2341,7 +2347,7 @@ def EV_Jump_QS_01():
         'loc_4D05',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -2356,7 +2362,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -2373,7 +2379,7 @@ def EV_Jump_QS_01():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -2438,7 +2444,7 @@ def EV_Jump_QS_01():
         'loc_4F15',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -2453,7 +2459,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -2470,7 +2476,7 @@ def EV_Jump_QS_01():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -2486,7 +2492,7 @@ def EV_Jump_QS_01():
         'loc_4EB4',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -2498,9 +2504,10 @@ def EV_Jump_QS_01():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     def _loc_4EB4(): pass
 
@@ -2567,7 +2574,7 @@ def EV_Jump_QS_01():
         'loc_504B',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -2582,7 +2589,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -2598,7 +2605,7 @@ def EV_Jump_QS_01():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -2658,7 +2665,7 @@ def EV_Jump_QS_01():
         'loc_525C',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -2673,7 +2680,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -2692,7 +2699,7 @@ def EV_Jump_QS_01():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -2771,7 +2778,7 @@ def EV_Jump_QS_01():
         'loc_5423',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -2786,7 +2793,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -2804,7 +2811,7 @@ def EV_Jump_QS_01():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -2925,7 +2932,7 @@ def EV_Jump_QS_01():
         'loc_5628',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -2940,7 +2947,7 @@ def EV_Jump_QS_01():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -2957,7 +2964,7 @@ def EV_Jump_QS_01():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -3042,7 +3049,7 @@ def EV_Jump_QS_01():
 # id: 0x001C offset: 0x5644
 @scena.Code('EV_Jump_QS_02')
 def EV_Jump_QS_02():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -3111,7 +3118,7 @@ def EV_Jump_QS_02():
         'loc_5A7C',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -3132,7 +3139,7 @@ def EV_Jump_QS_02():
         'loc_5A77',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -3161,7 +3168,7 @@ def EV_Jump_QS_02():
         'loc_5AB2',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -3182,7 +3189,7 @@ def EV_Jump_QS_02():
         'loc_5AAD',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -3212,7 +3219,7 @@ def EV_Jump_QS_02():
         'loc_5ACF',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -3237,7 +3244,7 @@ def EV_Jump_QS_02():
         'loc_5CA5',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -3252,7 +3259,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -3270,7 +3277,7 @@ def EV_Jump_QS_02():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -3343,7 +3350,7 @@ def EV_Jump_QS_02():
         'loc_5F28',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -3358,7 +3365,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -3379,7 +3386,7 @@ def EV_Jump_QS_02():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -3467,7 +3474,7 @@ def EV_Jump_QS_02():
         'loc_61AF',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -3482,7 +3489,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -3503,7 +3510,7 @@ def EV_Jump_QS_02():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -3593,7 +3600,7 @@ def EV_Jump_QS_02():
         'loc_6379',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -3608,7 +3615,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -3626,7 +3633,7 @@ def EV_Jump_QS_02():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -3699,7 +3706,7 @@ def EV_Jump_QS_02():
         'loc_64F9',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -3714,7 +3721,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -3731,7 +3738,7 @@ def EV_Jump_QS_02():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -3794,7 +3801,7 @@ def EV_Jump_QS_02():
         'loc_6679',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -3809,7 +3816,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -3826,7 +3833,7 @@ def EV_Jump_QS_02():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -3889,7 +3896,7 @@ def EV_Jump_QS_02():
         'loc_684A',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -3904,7 +3911,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -3920,7 +3927,7 @@ def EV_Jump_QS_02():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -3936,7 +3943,7 @@ def EV_Jump_QS_02():
         'loc_67F1',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -3948,9 +3955,10 @@ def EV_Jump_QS_02():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     def _loc_67F1(): pass
 
@@ -4016,7 +4024,7 @@ def EV_Jump_QS_02():
         'loc_6A6C',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -4031,7 +4039,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -4050,7 +4058,7 @@ def EV_Jump_QS_02():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -4131,7 +4139,7 @@ def EV_Jump_QS_02():
         'loc_6C8C',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -4146,7 +4154,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -4164,7 +4172,7 @@ def EV_Jump_QS_02():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -4205,7 +4213,7 @@ def EV_Jump_QS_02():
     ClearScenaFlags(ScenaFlag(0x0159, 1, 0xAC9))
     QuestCtrl(0x0017, 0x04, 0x02, 0x02)
 
-    OP_18(
+    ExecExpressionWithVar(
         0x27,
         (
             (Expr.PushLong, 0x0),
@@ -4281,7 +4289,7 @@ def EV_Jump_QS_02():
         'loc_6ED6',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -4296,7 +4304,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -4316,7 +4324,7 @@ def EV_Jump_QS_02():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -4446,7 +4454,7 @@ def EV_Jump_QS_02():
         'loc_71D0',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -4461,7 +4469,7 @@ def EV_Jump_QS_02():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -4482,7 +4490,7 @@ def EV_Jump_QS_02():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -4574,7 +4582,7 @@ def EV_Jump_QS_02():
 # id: 0x001D offset: 0x71EC
 @scena.Code('EV_Jump_QS_03')
 def EV_Jump_QS_03():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -4646,7 +4654,7 @@ def EV_Jump_QS_03():
         'loc_76E4',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -4667,7 +4675,7 @@ def EV_Jump_QS_03():
         'loc_76DF',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -4696,7 +4704,7 @@ def EV_Jump_QS_03():
         'loc_771A',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -4717,7 +4725,7 @@ def EV_Jump_QS_03():
         'loc_7715',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -4747,7 +4755,7 @@ def EV_Jump_QS_03():
         'loc_7737',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -4772,7 +4780,7 @@ def EV_Jump_QS_03():
         'loc_78B7',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -4787,7 +4795,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -4804,7 +4812,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -4867,7 +4875,7 @@ def EV_Jump_QS_03():
         'loc_7A7E',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -4882,7 +4890,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -4900,7 +4908,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -4974,7 +4982,7 @@ def EV_Jump_QS_03():
         'loc_7FE1',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -4989,7 +4997,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -5022,7 +5030,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -5127,7 +5135,7 @@ def EV_Jump_QS_03():
         'loc_8318',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -5142,7 +5150,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -5165,7 +5173,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -5294,7 +5302,7 @@ def EV_Jump_QS_03():
         'loc_84A1',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -5309,7 +5317,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -5326,7 +5334,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -5392,7 +5400,7 @@ def EV_Jump_QS_03():
         'loc_873F',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -5407,7 +5415,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -5426,7 +5434,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -5442,7 +5450,7 @@ def EV_Jump_QS_03():
         'loc_86BC',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -5454,9 +5462,10 @@ def EV_Jump_QS_03():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     def _loc_86BC(): pass
 
@@ -5536,7 +5545,7 @@ def EV_Jump_QS_03():
         'loc_8A1A',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -5551,7 +5560,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -5573,7 +5582,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -5684,7 +5693,7 @@ def EV_Jump_QS_03():
         'loc_8D30',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -5699,7 +5708,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -5722,7 +5731,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -5838,7 +5847,7 @@ def EV_Jump_QS_03():
         'loc_9082',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -5853,7 +5862,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -5877,7 +5886,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -5979,7 +5988,7 @@ def EV_Jump_QS_03():
         'loc_92BE',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -5994,7 +6003,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -6014,7 +6023,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -6088,7 +6097,7 @@ def EV_Jump_QS_03():
         'loc_94BF',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -6103,7 +6112,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -6122,7 +6131,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -6202,7 +6211,7 @@ def EV_Jump_QS_03():
         'loc_96AD',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -6217,7 +6226,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -6236,7 +6245,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -6299,7 +6308,7 @@ def EV_Jump_QS_03():
         'loc_9BD0',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -6314,7 +6323,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -6342,7 +6351,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -6467,7 +6476,7 @@ def EV_Jump_QS_03():
         'loc_9AF8',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x725A),
@@ -6498,7 +6507,7 @@ def EV_Jump_QS_03():
         'loc_9B21',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x725B),
@@ -6531,7 +6540,7 @@ def EV_Jump_QS_03():
 
     SetScenaFlags(ScenaFlag(0x0193, 6, 0xC9E))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x725C),
@@ -6562,7 +6571,7 @@ def EV_Jump_QS_03():
         'loc_9B76',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x725D),
@@ -6627,7 +6636,7 @@ def EV_Jump_QS_03():
         'loc_9D1D',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -6642,7 +6651,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -6658,7 +6667,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -6726,7 +6735,7 @@ def EV_Jump_QS_03():
         'loc_9F33',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -6741,7 +6750,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -6760,7 +6769,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -6851,7 +6860,7 @@ def EV_Jump_QS_03():
         'loc_A254',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -6866,7 +6875,7 @@ def EV_Jump_QS_03():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -6889,7 +6898,7 @@ def EV_Jump_QS_03():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -7008,7 +7017,7 @@ def EV_Jump_QS_03():
 # id: 0x001E offset: 0xA270
 @scena.Code('EV_Jump_QS_04')
 def EV_Jump_QS_04():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -7084,7 +7093,7 @@ def EV_Jump_QS_04():
         'loc_A868',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -7105,7 +7114,7 @@ def EV_Jump_QS_04():
         'loc_A863',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -7134,7 +7143,7 @@ def EV_Jump_QS_04():
         'loc_A89E',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -7155,7 +7164,7 @@ def EV_Jump_QS_04():
         'loc_A899',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -7185,7 +7194,7 @@ def EV_Jump_QS_04():
         'loc_A8BB',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -7210,7 +7219,7 @@ def EV_Jump_QS_04():
         'loc_AAC5',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -7225,7 +7234,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -7244,7 +7253,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -7320,7 +7329,7 @@ def EV_Jump_QS_04():
         'loc_AC48',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -7335,7 +7344,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -7352,7 +7361,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -7421,7 +7430,7 @@ def EV_Jump_QS_04():
         'loc_B0FF',
     )
 
-    OP_23(0x05, 0xFFFF, 0x0078, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 120, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -7436,7 +7445,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -7463,7 +7472,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -7498,7 +7507,7 @@ def EV_Jump_QS_04():
 
     SetScenaFlags(ScenaFlag(0x01D1, 2, 0xE8A))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x730E),
@@ -7525,7 +7534,7 @@ def EV_Jump_QS_04():
 
     SetScenaFlags(ScenaFlag(0x01D1, 3, 0xE8B))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x730E),
@@ -7552,7 +7561,7 @@ def EV_Jump_QS_04():
 
     SetScenaFlags(ScenaFlag(0x01D1, 4, 0xE8C))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x730E),
@@ -7577,7 +7586,7 @@ def EV_Jump_QS_04():
         'loc_B028',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x730E),
@@ -7606,7 +7615,7 @@ def EV_Jump_QS_04():
 
     SetScenaFlags(ScenaFlag(0x01D1, 2, 0xE8A))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x730F),
@@ -7633,7 +7642,7 @@ def EV_Jump_QS_04():
 
     SetScenaFlags(ScenaFlag(0x01D1, 3, 0xE8B))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x730F),
@@ -7660,7 +7669,7 @@ def EV_Jump_QS_04():
 
     SetScenaFlags(ScenaFlag(0x01D1, 4, 0xE8C))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x730F),
@@ -7685,7 +7694,7 @@ def EV_Jump_QS_04():
         'loc_B09F',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x730F),
@@ -7750,7 +7759,7 @@ def EV_Jump_QS_04():
         'loc_B318',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -7765,7 +7774,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -7784,7 +7793,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -7878,7 +7887,7 @@ def EV_Jump_QS_04():
         'loc_B4A4',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -7893,7 +7902,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -7910,7 +7919,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -7982,7 +7991,7 @@ def EV_Jump_QS_04():
         'loc_B70A',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -7997,7 +8006,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -8017,7 +8026,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -8100,7 +8109,7 @@ def EV_Jump_QS_04():
         'loc_B96C',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -8115,7 +8124,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -8135,7 +8144,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -8238,7 +8247,7 @@ def EV_Jump_QS_04():
         'loc_BC44',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -8253,7 +8262,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -8273,7 +8282,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -8289,7 +8298,7 @@ def EV_Jump_QS_04():
         'loc_BBB9',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -8301,9 +8310,10 @@ def EV_Jump_QS_04():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     def _loc_BBB9(): pass
 
@@ -8394,7 +8404,7 @@ def EV_Jump_QS_04():
         'loc_BF1A',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -8409,7 +8419,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -8431,7 +8441,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -8539,7 +8549,7 @@ def EV_Jump_QS_04():
         'loc_C12E',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -8554,7 +8564,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -8573,7 +8583,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -8663,7 +8673,7 @@ def EV_Jump_QS_04():
         'loc_C435',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -8678,7 +8688,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -8700,7 +8710,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -8814,7 +8824,7 @@ def EV_Jump_QS_04():
         'loc_C67C',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -8829,7 +8839,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -8849,7 +8859,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -8913,7 +8923,7 @@ def EV_Jump_QS_04():
         'loc_C88C',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -8928,7 +8938,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -8947,7 +8957,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -9059,7 +9069,7 @@ def EV_Jump_QS_04():
         'loc_CB5B',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -9074,7 +9084,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -9095,7 +9105,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -9185,7 +9195,7 @@ def EV_Jump_QS_04():
         'loc_D21B',
     )
 
-    OP_23(0x05, 0xFFFF, 0x0000, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 0, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -9200,7 +9210,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -9233,7 +9243,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -9245,7 +9255,7 @@ def EV_Jump_QS_04():
         'loc_D091',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -9258,9 +9268,10 @@ def EV_Jump_QS_04():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Jump('loc_D108')
 
@@ -9278,7 +9289,7 @@ def EV_Jump_QS_04():
         'loc_D108',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -9290,9 +9301,10 @@ def EV_Jump_QS_04():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     def _loc_D108(): pass
 
@@ -9425,7 +9437,7 @@ def EV_Jump_QS_04():
         'loc_D3BB',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -9440,7 +9452,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -9457,7 +9469,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -9534,7 +9546,7 @@ def EV_Jump_QS_04():
         'loc_D71C',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -9549,7 +9561,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -9571,7 +9583,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -9606,7 +9618,7 @@ def EV_Jump_QS_04():
     SetScenaFlags(ScenaFlag(0x01D6, 6, 0xEB6))
     SetScenaFlags(ScenaFlag(0x01D6, 7, 0xEB7))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x7379),
@@ -9634,7 +9646,7 @@ def EV_Jump_QS_04():
     SetScenaFlags(ScenaFlag(0x01D6, 6, 0xEB6))
     SetScenaFlags(ScenaFlag(0x01D7, 0, 0xEB8))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x7379),
@@ -9662,7 +9674,7 @@ def EV_Jump_QS_04():
     SetScenaFlags(ScenaFlag(0x01D6, 6, 0xEB6))
     SetScenaFlags(ScenaFlag(0x01D7, 1, 0xEB9))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x7379),
@@ -9690,7 +9702,7 @@ def EV_Jump_QS_04():
     SetScenaFlags(ScenaFlag(0x01D6, 7, 0xEB7))
     SetScenaFlags(ScenaFlag(0x01D7, 0, 0xEB8))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x7379),
@@ -9718,7 +9730,7 @@ def EV_Jump_QS_04():
     SetScenaFlags(ScenaFlag(0x01D6, 7, 0xEB7))
     SetScenaFlags(ScenaFlag(0x01D7, 1, 0xEB9))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x7379),
@@ -9746,7 +9758,7 @@ def EV_Jump_QS_04():
     SetScenaFlags(ScenaFlag(0x01D7, 0, 0xEB8))
     SetScenaFlags(ScenaFlag(0x01D7, 1, 0xEB9))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x7379),
@@ -9804,7 +9816,7 @@ def EV_Jump_QS_04():
         'loc_D930',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -9819,7 +9831,7 @@ def EV_Jump_QS_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -9838,7 +9850,7 @@ def EV_Jump_QS_04():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -9931,7 +9943,7 @@ def EV_Jump_QS_04():
 # id: 0x001F offset: 0xD94C
 @scena.Code('EV_Jump_QS_05')
 def EV_Jump_QS_05():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -9989,7 +10001,7 @@ def EV_Jump_QS_05():
         'loc_DAC4',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -10010,7 +10022,7 @@ def EV_Jump_QS_05():
         'loc_DABF',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -10039,7 +10051,7 @@ def EV_Jump_QS_05():
         'loc_DAFA',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -10060,7 +10072,7 @@ def EV_Jump_QS_05():
         'loc_DAF5',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -10090,7 +10102,7 @@ def EV_Jump_QS_05():
         'loc_DB17',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -10157,7 +10169,7 @@ def EV_Jump_QS_05():
         'loc_DD19',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -10172,7 +10184,7 @@ def EV_Jump_QS_05():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -10189,7 +10201,7 @@ def EV_Jump_QS_05():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -10261,7 +10273,7 @@ def EV_Jump_QS_05():
         'loc_E34E',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -10276,7 +10288,7 @@ def EV_Jump_QS_05():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -10295,7 +10307,7 @@ def EV_Jump_QS_05():
     MenuCmd(0x04, 0x01, 0xF7)
     MenuCmd(0x03, 0x01)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -10331,7 +10343,7 @@ def EV_Jump_QS_05():
     )
 
     ClearScenaFlags(ScenaFlag(0x0060, 3, 0x303))
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -10344,9 +10356,10 @@ def EV_Jump_QS_05():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Jump('loc_E2F4')
 
@@ -10365,7 +10378,7 @@ def EV_Jump_QS_05():
     )
 
     SetScenaFlags(ScenaFlag(0x0060, 3, 0x303))
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -10378,9 +10391,10 @@ def EV_Jump_QS_05():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Jump('loc_E2F4')
 
@@ -10413,7 +10427,7 @@ def EV_Jump_QS_05():
 
     QuestCtrl(0x0047, 0x03, 0x01, 0x02)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xFA,
         (
             (Expr.PushLong, 0x0),
@@ -10439,7 +10453,7 @@ def EV_Jump_QS_05():
 
     QuestCtrl(0x0048, 0x03, 0x01, 0x02)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xFA,
         (
             (Expr.PushLong, 0x0),
@@ -10631,7 +10645,7 @@ def EV_DoJump_QS_SUB():
         'loc_E395',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x0),
@@ -10656,7 +10670,7 @@ def EV_DoJump_QS_SUB():
         'loc_E3B1',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -10681,7 +10695,7 @@ def EV_DoJump_QS_SUB():
         'loc_E3CD',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -10706,7 +10720,7 @@ def EV_DoJump_QS_SUB():
         'loc_E3E9',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -10731,7 +10745,7 @@ def EV_DoJump_QS_SUB():
         'loc_E405',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -10746,7 +10760,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_E405')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x5),
@@ -11387,7 +11401,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_EF2B')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF9,
         (
             (Expr.PushVar, 0xF7),
@@ -11406,7 +11420,7 @@ def EV_DoJump_QS_SUB():
         'loc_EF48',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF9,
         (
             (Expr.PushLong, 0x713C),
@@ -12178,7 +12192,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_F9FB')
 
-    OP_28((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_FF4D')
 
@@ -12186,7 +12200,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FA0F')
 
-    OP_28((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_FF4D')
 
@@ -12311,7 +12325,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FAF3')
 
-    OP_28((0xDD, 'm0600'), (0xDD, 'EV_01_20_06'), 0x00)
+    MapJump((0xDD, 'm0600'), (0xDD, 'EV_01_20_06'), 0x00)
 
     Jump('loc_FF4D')
 
@@ -12319,7 +12333,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FB0E')
 
-    OP_28((0xDD, 'r0210'), (0xDD, 'go_r0200'), 0x00)
+    MapJump((0xDD, 'r0210'), (0xDD, 'go_r0200'), 0x00)
 
     Jump('loc_FF4D')
 
@@ -12624,7 +12638,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FD36')
 
-    OP_28((0xDD, 'v0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'v0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_FF4D')
 
@@ -12632,7 +12646,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FD4A')
 
-    OP_28((0xDD, 'v0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'v0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_FF4D')
 
@@ -12730,7 +12744,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FDFE')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x27,
         (
             (Expr.PushLong, 0x3),
@@ -12748,7 +12762,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FE17')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x27,
         (
             (Expr.PushLong, 0x5),
@@ -12766,7 +12780,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FE30')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x27,
         (
             (Expr.PushLong, 0x7),
@@ -12838,7 +12852,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FEA9')
 
-    OP_28((0xDD, 'r2420'), (0xDD, 'EV_02_32_00'), 0x00)
+    MapJump((0xDD, 'r2420'), (0xDD, 'EV_02_32_00'), 0x00)
 
     Jump('loc_FF4D')
 
@@ -12846,7 +12860,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_FEC4')
 
-    OP_28((0xDD, 'm1020'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm1020'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_FF4D')
 
@@ -13525,7 +13539,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1093E')
 
-    OP_28((0xDD, 'r3090'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r3090'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_115FF')
 
@@ -13551,7 +13565,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10972')
 
-    OP_28((0xDD, 'r3090'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r3090'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_115FF')
 
@@ -14441,7 +14455,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10FA6')
 
-    OP_28((0xDD, 'r4290'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r4290'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_115FF')
 
@@ -14476,7 +14490,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_10FEA')
 
-    OP_28((0xDD, 'r4290'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r4290'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_115FF')
 
@@ -14907,7 +14921,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_112EE')
 
-    OP_28((0xDD, 'm3220'), (0xDD, 'QS_0430_03A'), 0x00)
+    MapJump((0xDD, 'm3220'), (0xDD, 'QS_0430_03A'), 0x00)
 
     Jump('loc_115FF')
 
@@ -14978,7 +14992,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11379')
 
-    OP_28((0xDD, 'c3200'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'c3200'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_115FF')
 
@@ -14986,7 +15000,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_1138D')
 
-    OP_28((0xDD, 'c3200'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'c3200'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_115FF')
 
@@ -15237,7 +15251,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11551')
 
-    OP_28((0xDD, 'm3410'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm3410'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_115FF')
 
@@ -15245,7 +15259,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_11565')
 
-    OP_28((0xDD, 'r4200'), (0xDD, 'AV_04007'), 0x00)
+    MapJump((0xDD, 'r4200'), (0xDD, 'AV_04007'), 0x00)
 
     Jump('loc_115FF')
 
@@ -15280,7 +15294,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_115AD')
 
-    OP_28((0xDD, 'v0010'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'v0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_115FF')
 
@@ -15288,7 +15302,7 @@ def EV_DoJump_QS_SUB():
 
     label('loc_115C1')
 
-    OP_28((0xDD, 'c3410'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'c3410'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_115FF')
 
@@ -15325,7 +15339,7 @@ def EV_DoJump_QS_SUB():
 # id: 0x0021 offset: 0x11600
 @scena.Code('EV_KizunaJump')
 def EV_KizunaJump():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -15563,7 +15577,7 @@ def EV_KizunaJump():
 
     label('loc_11CA8')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -15589,7 +15603,7 @@ def EV_KizunaJump():
 # id: 0x0022 offset: 0x11CBC
 @scena.Code('EV_KizunaJump_01')
 def EV_KizunaJump_01():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -15651,7 +15665,7 @@ def EV_KizunaJump_01():
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
     Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -15678,7 +15692,7 @@ def EV_KizunaJump_01():
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -15705,7 +15719,7 @@ def EV_KizunaJump_01():
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -15733,7 +15747,7 @@ def EV_KizunaJump_01():
 
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -15890,7 +15904,7 @@ def EV_KizunaJump_01():
 
     label('loc_121FB')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -15916,7 +15930,7 @@ def EV_KizunaJump_01():
 # id: 0x0023 offset: 0x12210
 @scena.Code('EV_KizunaJump_02')
 def EV_KizunaJump_02():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -15954,7 +15968,7 @@ def EV_KizunaJump_02():
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -15994,7 +16008,7 @@ def EV_KizunaJump_02():
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
     Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -16028,7 +16042,7 @@ def EV_KizunaJump_02():
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -16054,7 +16068,7 @@ def EV_KizunaJump_02():
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -16088,7 +16102,7 @@ def EV_KizunaJump_02():
 
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -16242,7 +16256,7 @@ def EV_KizunaJump_02():
 
     label('loc_1281A')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -16268,7 +16282,7 @@ def EV_KizunaJump_02():
 # id: 0x0024 offset: 0x12830
 @scena.Code('EV_KizunaJump_03')
 def EV_KizunaJump_03():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -16311,7 +16325,7 @@ def EV_KizunaJump_03():
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -16356,7 +16370,7 @@ def EV_KizunaJump_03():
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
     Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -16383,7 +16397,7 @@ def EV_KizunaJump_03():
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -16417,7 +16431,7 @@ def EV_KizunaJump_03():
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -16445,7 +16459,7 @@ def EV_KizunaJump_03():
 
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -16649,7 +16663,7 @@ def EV_KizunaJump_03():
 
     label('loc_13015')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -16675,7 +16689,7 @@ def EV_KizunaJump_03():
 # id: 0x0025 offset: 0x1302C
 @scena.Code('EV_KizunaJump_04')
 def EV_KizunaJump_04():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -16709,7 +16723,7 @@ def EV_KizunaJump_04():
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -16745,7 +16759,7 @@ def EV_KizunaJump_04():
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
     Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -16779,7 +16793,7 @@ def EV_KizunaJump_04():
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -16804,7 +16818,7 @@ def EV_KizunaJump_04():
 
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -16838,7 +16852,7 @@ def EV_KizunaJump_04():
     FormationAddMember(ChrTable['黎恩'])
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
-    OP_18(
+    ExecExpressionWithVar(
         0x0A,
         (
             (Expr.PushVar, 0xA),
@@ -16927,7 +16941,7 @@ def EV_KizunaJump_04():
 
     label('loc_1344A')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -16953,7 +16967,7 @@ def EV_KizunaJump_04():
 # id: 0x0026 offset: 0x13460
 @scena.Code('EV_KizunaJump_05')
 def EV_KizunaJump_05():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -16990,7 +17004,7 @@ def EV_KizunaJump_05():
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -17029,7 +17043,7 @@ def EV_KizunaJump_05():
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
     Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -17056,7 +17070,7 @@ def EV_KizunaJump_05():
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -17090,7 +17104,7 @@ def EV_KizunaJump_05():
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -17120,7 +17134,7 @@ def EV_KizunaJump_05():
     FormationAddMember(ChrTable['黎恩'])
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
 
-    OP_18(
+    ExecExpressionWithVar(
         0x0A,
         (
             (Expr.PushVar, 0xA),
@@ -17239,7 +17253,7 @@ def EV_KizunaJump_05():
 
     label('loc_139B1')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -17265,7 +17279,7 @@ def EV_KizunaJump_05():
 # id: 0x0027 offset: 0x139C8
 @scena.Code('EV_KizunaJump_06')
 def EV_KizunaJump_06():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -17300,7 +17314,7 @@ def EV_KizunaJump_06():
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -17337,7 +17351,7 @@ def EV_KizunaJump_06():
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
     Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -17364,7 +17378,7 @@ def EV_KizunaJump_06():
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -17397,7 +17411,7 @@ def EV_KizunaJump_06():
 
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -17423,7 +17437,7 @@ def EV_KizunaJump_06():
     SetScenaFlags(ScenaFlag(0x00E1, 5, 0x70D))
     SetScenaFlags(ScenaFlag(0x00E1, 6, 0x70E))
 
-    OP_18(
+    ExecExpressionWithVar(
         0x0A,
         (
             (Expr.PushVar, 0xA),
@@ -17563,7 +17577,7 @@ def EV_KizunaJump_06():
 
     label('loc_13E8C')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -17589,7 +17603,7 @@ def EV_KizunaJump_06():
 # id: 0x0028 offset: 0x13EA0
 @scena.Code('EV_KizunaJump_07')
 def EV_KizunaJump_07():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -17625,7 +17639,7 @@ def EV_KizunaJump_07():
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -17645,7 +17659,7 @@ def EV_KizunaJump_07():
     SetScenaFlags(ScenaFlag(0x0120, 7, 0x907))
     SetScenaFlags(ScenaFlag(0x0121, 0, 0x908))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -17677,7 +17691,7 @@ def EV_KizunaJump_07():
     FormationReset()
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_140DA')
 
@@ -17712,7 +17726,7 @@ def EV_KizunaJump_07():
 
     label('loc_140CC')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -17738,7 +17752,7 @@ def EV_KizunaJump_07():
 # id: 0x0029 offset: 0x140E0
 @scena.Code('EV_KizunaJump_08')
 def EV_KizunaJump_08():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -17778,7 +17792,7 @@ def EV_KizunaJump_08():
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -17798,7 +17812,7 @@ def EV_KizunaJump_08():
     SetScenaFlags(ScenaFlag(0x0120, 7, 0x907))
     SetScenaFlags(ScenaFlag(0x0121, 0, 0x908))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -17879,7 +17893,7 @@ def EV_KizunaJump_08():
     FormationReset()
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_14500')
 
@@ -17950,7 +17964,7 @@ def EV_KizunaJump_08():
 
     label('loc_144F2')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -17976,7 +17990,7 @@ def EV_KizunaJump_08():
 # id: 0x002A offset: 0x14508
 @scena.Code('EV_KizunaJump_09')
 def EV_KizunaJump_09():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -18012,7 +18026,7 @@ def EV_KizunaJump_09():
     Call(ScriptId.Current, 'EV_Flag_Reset')
     SetScenaFlags(ScenaFlag(0x0073, 2, 0x39A))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -18029,7 +18043,7 @@ def EV_KizunaJump_09():
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -18075,7 +18089,7 @@ def EV_KizunaJump_09():
 
     ClearScenaFlags(ScenaFlag(0x0226, 0, 0x1130))
     ClearScenaFlags(ScenaFlag(0x0226, 1, 0x1131))
-    OP_28((0xDD, 't0210'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0210'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_14808')
 
@@ -18128,7 +18142,7 @@ def EV_KizunaJump_09():
 
     label('loc_147FA')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -18154,7 +18168,7 @@ def EV_KizunaJump_09():
 # id: 0x002B offset: 0x14810
 @scena.Code('EV_KizunaJump_10')
 def EV_KizunaJump_10():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -18190,7 +18204,7 @@ def EV_KizunaJump_10():
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -18207,7 +18221,7 @@ def EV_KizunaJump_10():
     SetScenaFlags(ScenaFlag(0x0160, 7, 0xB07))
     SetScenaFlags(ScenaFlag(0x0161, 0, 0xB08))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -18236,7 +18250,7 @@ def EV_KizunaJump_10():
     FormationReset()
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_149F7')
 
@@ -18262,7 +18276,7 @@ def EV_KizunaJump_10():
 
     label('loc_149E9')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -18288,7 +18302,7 @@ def EV_KizunaJump_10():
 # id: 0x002C offset: 0x14A00
 @scena.Code('EV_KizunaJump_11')
 def EV_KizunaJump_11():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -18330,7 +18344,7 @@ def EV_KizunaJump_11():
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -18347,7 +18361,7 @@ def EV_KizunaJump_11():
     SetScenaFlags(ScenaFlag(0x0160, 7, 0xB07))
     SetScenaFlags(ScenaFlag(0x0161, 0, 0xB08))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -18431,7 +18445,7 @@ def EV_KizunaJump_11():
     FormationReset()
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_14E9B')
 
@@ -18512,7 +18526,7 @@ def EV_KizunaJump_11():
 
     label('loc_14E8D')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -18538,7 +18552,7 @@ def EV_KizunaJump_11():
 # id: 0x002D offset: 0x14EA4
 @scena.Code('EV_KizunaJump_12')
 def EV_KizunaJump_12():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -18576,7 +18590,7 @@ def EV_KizunaJump_12():
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -18601,7 +18615,7 @@ def EV_KizunaJump_12():
     SetScenaFlags(ScenaFlag(0x0161, 7, 0xB0F))
     SetScenaFlags(ScenaFlag(0x0162, 0, 0xB10))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -18631,7 +18645,7 @@ def EV_KizunaJump_12():
 
     ClearScenaFlags(ScenaFlag(0x0227, 0, 0x1138))
 
-    OP_18(
+    ExecExpressionWithVar(
         0x0A,
         (
             (Expr.PushVar, 0xA),
@@ -18645,7 +18659,7 @@ def EV_KizunaJump_12():
     FormationReset()
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 't0210'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0210'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_15166')
 
@@ -18689,7 +18703,7 @@ def EV_KizunaJump_12():
 
     label('loc_15158')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -18715,7 +18729,7 @@ def EV_KizunaJump_12():
 # id: 0x002E offset: 0x1516C
 @scena.Code('EV_KizunaJump_13')
 def EV_KizunaJump_13():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -18754,7 +18768,7 @@ def EV_KizunaJump_13():
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
     Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -18771,7 +18785,7 @@ def EV_KizunaJump_13():
     SetScenaFlags(ScenaFlag(0x01A0, 5, 0xD05))
     SetScenaFlags(ScenaFlag(0x01A0, 6, 0xD06))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -18803,7 +18817,7 @@ def EV_KizunaJump_13():
     FormationReset()
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_15420')
 
@@ -18847,7 +18861,7 @@ def EV_KizunaJump_13():
 
     label('loc_15412')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -18873,7 +18887,7 @@ def EV_KizunaJump_13():
 # id: 0x002F offset: 0x15428
 @scena.Code('EV_KizunaJump_14')
 def EV_KizunaJump_14():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -18915,7 +18929,7 @@ def EV_KizunaJump_14():
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
     Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -18932,7 +18946,7 @@ def EV_KizunaJump_14():
     SetScenaFlags(ScenaFlag(0x01A0, 5, 0xD05))
     SetScenaFlags(ScenaFlag(0x01A0, 6, 0xD06))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -19012,7 +19026,7 @@ def EV_KizunaJump_14():
     FormationReset()
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1586B')
 
@@ -19084,7 +19098,7 @@ def EV_KizunaJump_14():
 
     label('loc_1585D')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -19110,7 +19124,7 @@ def EV_KizunaJump_14():
 # id: 0x0030 offset: 0x15874
 @scena.Code('EV_KizunaJump_15')
 def EV_KizunaJump_15():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -19147,7 +19161,7 @@ def EV_KizunaJump_15():
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
     Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -19171,7 +19185,7 @@ def EV_KizunaJump_15():
     SetScenaFlags(ScenaFlag(0x01A1, 4, 0xD0C))
     SetScenaFlags(ScenaFlag(0x01A1, 5, 0xD0D))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -19201,7 +19215,7 @@ def EV_KizunaJump_15():
     FormationReset()
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 't0210'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0210'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_15A89')
 
@@ -19227,7 +19241,7 @@ def EV_KizunaJump_15():
 
     label('loc_15A7B')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -19253,7 +19267,7 @@ def EV_KizunaJump_15():
 # id: 0x0031 offset: 0x15A90
 @scena.Code('EV_KizunaJump_16')
 def EV_KizunaJump_16():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -19288,7 +19302,7 @@ def EV_KizunaJump_16():
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -19367,7 +19381,7 @@ def EV_KizunaJump_16():
 
     SetScenaFlags(ScenaFlag(0x01A1, 5, 0xD0D))
 
-    OP_18(
+    ExecExpressionWithVar(
         0x0A,
         (
             (Expr.PushVar, 0xA),
@@ -19442,7 +19456,7 @@ def EV_KizunaJump_16():
 
     label('loc_15DE5')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -19468,7 +19482,7 @@ def EV_KizunaJump_16():
 # id: 0x0032 offset: 0x15DFC
 @scena.Code('EV_KizunaJump_17')
 def EV_KizunaJump_17():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -19516,7 +19530,7 @@ def EV_KizunaJump_17():
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -19847,7 +19861,7 @@ def EV_KizunaJump_17():
 
     label('loc_166CD')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -19873,7 +19887,7 @@ def EV_KizunaJump_17():
 # id: 0x0033 offset: 0x166E4
 @scena.Code('EV_KizunaJump_18')
 def EV_KizunaJump_18():
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -19918,7 +19932,7 @@ def EV_KizunaJump_18():
     MenuCmd(0x04, 0x01, 0xF8)
     MenuCmd(0x03, 0x01)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -20919,7 +20933,7 @@ def EV_KizunaJump_18():
 
     label('loc_17707')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -20945,7 +20959,7 @@ def EV_KizunaJump_18():
 # id: 0x0034 offset: 0x1771C
 @scena.Code('EV_SubeventJump')
 def EV_SubeventJump():
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -20954,7 +20968,7 @@ def EV_SubeventJump():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -20963,7 +20977,7 @@ def EV_SubeventJump():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -21008,7 +21022,7 @@ def EV_SubeventJump():
     MenuCmd(0x04, 0x00, 0xF6)
     MenuCmd(0x03, 0x00)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -21083,7 +21097,7 @@ def EV_SubeventJump():
 
     label('loc_1791C')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -21098,7 +21112,7 @@ def EV_SubeventJump():
 
     label('loc_1792A')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -21122,7 +21136,7 @@ def EV_SubeventJump():
 # id: 0x0035 offset: 0x1793C
 @scena.Code('EV_Jump_SB_01')
 def EV_Jump_SB_01():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -21195,7 +21209,7 @@ def EV_Jump_SB_01():
         'loc_17EC0',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -21216,7 +21230,7 @@ def EV_Jump_SB_01():
         'loc_17EBB',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -21245,7 +21259,7 @@ def EV_Jump_SB_01():
         'loc_17EF6',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -21266,7 +21280,7 @@ def EV_Jump_SB_01():
         'loc_17EF1',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -21296,7 +21310,7 @@ def EV_Jump_SB_01():
         'loc_17F13',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -21311,7 +21325,7 @@ def EV_Jump_SB_01():
 
     label('loc_17F13')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -21337,7 +21351,7 @@ def EV_Jump_SB_01():
 # id: 0x0036 offset: 0x17F38
 @scena.Code('EV_Jump_SB_02')
 def EV_Jump_SB_02():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -21420,7 +21434,7 @@ def EV_Jump_SB_02():
         'loc_18764',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -21441,7 +21455,7 @@ def EV_Jump_SB_02():
         'loc_1875F',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -21470,7 +21484,7 @@ def EV_Jump_SB_02():
         'loc_1879A',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -21491,7 +21505,7 @@ def EV_Jump_SB_02():
         'loc_18795',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -21521,7 +21535,7 @@ def EV_Jump_SB_02():
         'loc_187B7',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -21536,7 +21550,7 @@ def EV_Jump_SB_02():
 
     label('loc_187B7')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -21562,7 +21576,7 @@ def EV_Jump_SB_02():
 # id: 0x0037 offset: 0x187DC
 @scena.Code('EV_Jump_SB_03')
 def EV_Jump_SB_03():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -21683,7 +21697,7 @@ def EV_Jump_SB_03():
         'loc_19573',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -21704,7 +21718,7 @@ def EV_Jump_SB_03():
         'loc_1956E',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -21733,7 +21747,7 @@ def EV_Jump_SB_03():
         'loc_195A9',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -21754,7 +21768,7 @@ def EV_Jump_SB_03():
         'loc_195A4',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -21784,7 +21798,7 @@ def EV_Jump_SB_03():
         'loc_195C6',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -21799,7 +21813,7 @@ def EV_Jump_SB_03():
 
     label('loc_195C6')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -21825,7 +21839,7 @@ def EV_Jump_SB_03():
 # id: 0x0038 offset: 0x195EC
 @scena.Code('EV_Jump_SB_04')
 def EV_Jump_SB_04():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -22050,7 +22064,7 @@ def EV_Jump_SB_04():
         'loc_1B1D0',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -22071,7 +22085,7 @@ def EV_Jump_SB_04():
         'loc_1B1CB',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -22100,7 +22114,7 @@ def EV_Jump_SB_04():
         'loc_1B206',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -22121,7 +22135,7 @@ def EV_Jump_SB_04():
         'loc_1B201',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x4),
@@ -22151,7 +22165,7 @@ def EV_Jump_SB_04():
         'loc_1B223',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -22166,7 +22180,7 @@ def EV_Jump_SB_04():
 
     label('loc_1B223')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -22192,7 +22206,7 @@ def EV_Jump_SB_04():
 # id: 0x0039 offset: 0x1B248
 @scena.Code('EV_Jump_SB_05')
 def EV_Jump_SB_05():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -22260,7 +22274,7 @@ def EV_Jump_SB_05():
         'loc_1B678',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -22281,7 +22295,7 @@ def EV_Jump_SB_05():
         'loc_1B673',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -22310,7 +22324,7 @@ def EV_Jump_SB_05():
         'loc_1B6AE',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -22331,7 +22345,7 @@ def EV_Jump_SB_05():
         'loc_1B6A9',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -22361,7 +22375,7 @@ def EV_Jump_SB_05():
         'loc_1B6CB',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -22376,7 +22390,7 @@ def EV_Jump_SB_05():
 
     label('loc_1B6CB')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x5),
@@ -24649,7 +24663,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CE24')
 
-    OP_28((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -24657,7 +24671,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CE38')
 
-    OP_28((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -24665,7 +24679,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CE4C')
 
-    OP_28((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -24673,7 +24687,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CE60')
 
-    OP_28((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -24681,7 +24695,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CE74')
 
-    OP_28((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -24689,7 +24703,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CE88')
 
-    OP_28((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -24697,7 +24711,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1CE9C')
 
-    OP_28((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0090'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -25389,7 +25403,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D370')
 
-    OP_28((0xDD, 'm3000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm3000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -25397,7 +25411,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D384')
 
-    OP_28((0xDD, 'm3010'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm3010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -25405,7 +25419,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D398')
 
-    OP_28((0xDD, 'm3010'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm3010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -25413,7 +25427,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D3AC')
 
-    OP_28((0xDD, 'm3020'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm3020'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -25421,7 +25435,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D3C0')
 
-    OP_28((0xDD, 'm3020'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm3020'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -25429,7 +25443,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D3D4')
 
-    OP_28((0xDD, 'm3000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm3000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -25437,7 +25451,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D3E8')
 
-    OP_28((0xDD, 'm3010'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm3010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -25445,7 +25459,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D3FC')
 
-    OP_28((0xDD, 'm3030'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm3030'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -25921,7 +25935,7 @@ def EV_DoJump_SB_SUB():
 
     label('loc_1D750')
 
-    OP_28((0xDD, 'm3430'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm3430'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_1DB54')
 
@@ -26501,7 +26515,7 @@ def EV_DoJump_SB_SUB():
 # id: 0x003C offset: 0x1DB58
 @scena.Code('EV_YarikomiJump')
 def EV_YarikomiJump():
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -26510,7 +26524,7 @@ def EV_YarikomiJump():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -26519,7 +26533,7 @@ def EV_YarikomiJump():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -26566,7 +26580,7 @@ def EV_YarikomiJump():
     MenuCmd(0x04, 0x00, 0xF6)
     MenuCmd(0x03, 0x00)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -26687,7 +26701,7 @@ def EV_YarikomiJump():
 
     label('loc_1DDC5')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -26702,7 +26716,7 @@ def EV_YarikomiJump():
 
     label('loc_1DDD3')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -26726,7 +26740,7 @@ def EV_YarikomiJump():
 # id: 0x003D offset: 0x1DDE4
 @scena.Code('EV_Jump_YR_Radio')
 def EV_Jump_YR_Radio():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -26909,7 +26923,7 @@ def EV_Jump_YR_Radio():
 
     Call(ScriptId.Current, 'EV_Flag_Reset')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -27093,7 +27107,7 @@ def EV_Jump_YR_Radio():
 
     label('loc_1E3EB')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -27119,7 +27133,7 @@ def EV_Jump_YR_Radio():
 # id: 0x003E offset: 0x1E400
 @scena.Code('EV_Jump_YR_Blackbook')
 def EV_Jump_YR_Blackbook():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -27240,7 +27254,7 @@ def EV_Jump_YR_Blackbook():
 
     label('loc_1E698')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -27266,7 +27280,7 @@ def EV_Jump_YR_Blackbook():
 # id: 0x003F offset: 0x1E6AC
 @scena.Code('EV_Jump_YR_Photo')
 def EV_Jump_YR_Photo():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -27601,7 +27615,7 @@ def EV_Jump_YR_Photo():
 
     label('loc_1EF4C')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -27919,7 +27933,7 @@ def EV_Jump_YR_Photo():
 
     label('loc_1F4C1')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -27945,7 +27959,7 @@ def EV_Jump_YR_Photo():
 # id: 0x0040 offset: 0x1F4D8
 @scena.Code('EV_Jump_YR_Present')
 def EV_Jump_YR_Present():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -28156,7 +28170,7 @@ def EV_Jump_YR_Present():
 
     label('loc_1F9DB')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -28182,7 +28196,7 @@ def EV_Jump_YR_Present():
 # id: 0x0041 offset: 0x1F9F0
 @scena.Code('EV_Jump_YR_Training')
 def EV_Jump_YR_Training():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -28323,7 +28337,7 @@ def EV_Jump_YR_Training():
 
     label('loc_1FD67')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x201D),
@@ -28360,7 +28374,7 @@ def EV_Jump_YR_Training():
 
     label('loc_1FDA4')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -28386,7 +28400,7 @@ def EV_Jump_YR_Training():
 # id: 0x0042 offset: 0x1FDB8
 @scena.Code('EV_Jump_YR_Fishing')
 def EV_Jump_YR_Fishing():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -28481,7 +28495,7 @@ def EV_Jump_YR_Fishing():
 
     label('loc_1FEE0')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -28507,7 +28521,7 @@ def EV_Jump_YR_Fishing():
 # id: 0x0043 offset: 0x1FEF4
 @scena.Code('EV_Jump_YR_Seedling')
 def EV_Jump_YR_Seedling():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -28758,7 +28772,7 @@ def EV_Jump_YR_Seedling():
 
     label('loc_202E4')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -28784,7 +28798,7 @@ def EV_Jump_YR_Seedling():
 # id: 0x0044 offset: 0x202F8
 @scena.Code('EV_Jump_YR_Bath')
 def EV_Jump_YR_Bath():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -28863,7 +28877,7 @@ def EV_Jump_YR_Bath():
 
     label('loc_205F0')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -28935,7 +28949,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2071E')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -28950,7 +28964,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2072C')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -28965,7 +28979,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_2073A')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -28980,7 +28994,7 @@ def EV_DoJump_YR_SUB():
 
     label('loc_20748')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -30106,6 +30120,7 @@ def TK_System_Debug():
 
     OP_6B(0x06, 0x0000, 0x0000, 90.0, 0x00000000, 0x00000000)
     Sleep(1000)
+
     OP_6B(0x07, 0x0000, 0x0000, 0.0, 0x00000000, 0x00000000)
 
     Jump('loc_22B77')
@@ -30148,136 +30163,202 @@ def TK_System_Debug():
 
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M1490', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T0000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T0210', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T0400', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0100', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0200', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0300', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0400', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T1400', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0600', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T2000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_F0000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0200', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C1000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C1080', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_R2400', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M1200', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T9200', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T4000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T3000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_F2000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_F1000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_R3400', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M2010', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2400', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2600', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C3000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2010', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2420', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2430', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2430_01', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2800', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2400_01', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M3200', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C3200', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C3410', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C3600', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M4000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M4000_01', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M4040', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C3610', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0000_01', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0000_02', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0400', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0600', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0800', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C0820', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M1020', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M1090', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M1490_01', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T0200', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T1200', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T1000', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T1000_01', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T3400', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T3600', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T3200', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T3000_01', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_C2200', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0180', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0280', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0380', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M0480', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_M3420', 0x00, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x03C0, 0x0384, 'I_PVIS_T2200', 0x00, 0x00, 0x00)
     Sleep(7000)
 
@@ -30289,148 +30370,220 @@ def TK_System_Debug():
 
     OP_5A(0x04B0, 0x0320, 'I_CVIS0001', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0002', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0003', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0004', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0005', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0006', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0007', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0008', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0009', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0010', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0011', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0012', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0013', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0014', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0015', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0016', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0018', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0019', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0020', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0021', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0022', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0023', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0025', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0026', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0027', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0028', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0032', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0033', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0035', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0036', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0037', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0038', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0039', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0041', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0042', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0043', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0044', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0045', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0046', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0047', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0048', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0049', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0050', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0061', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0062', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0063', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0065', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0066', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0072', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0073', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0074', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0075', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0076', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0077', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0078', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0082', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0084', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0085', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0086', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0087', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0088', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0092', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0094', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0098', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0102', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0103', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0107', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0109', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0000', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0072', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0092', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0065', 0x01, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0017', 0x01, 0x00, 0x00)
     Sleep(7000)
 
@@ -30442,98 +30595,145 @@ def TK_System_Debug():
 
     OP_5A(0x04B0, 0x0320, 'I_CVIS0064', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0083', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0095', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0096', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0097', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1000', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1001', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1002', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1003', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1004', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1005', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1006', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1007', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0030', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0031', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0034', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0067', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0068', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0069', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0071', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0080', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0081', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0093', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0099', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0100', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0104', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0105', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0106', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0108', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0024', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0029', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0070', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0079', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0101', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0110', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0111', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0112', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1008', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1009', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1010', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1011', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1012', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1013', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1014', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1015', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS1016', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0089', 0x02, 0x00, 0x00)
     Sleep(7000)
+
     OP_5A(0x04B0, 0x0320, 'I_CVIS0091', 0x02, 0x00, 0x00)
     Sleep(7000)
 
@@ -30560,6 +30760,7 @@ def TK_System_Debug():
     label('loc_229C4')
 
     Sleep(300)
+
     OP_C2(0x00)
     OP_C2(0x01)
 
@@ -30770,14 +30971,17 @@ def TK_System_Debug_Portrait():
     OP_55(0x00, 0x0000, 0x0000, 0x1000, 0x1000, 0x0000, 0x0000, 0x0000, 0x0000, 0x1000, 0x1000, 1.0, 1.0, 1.0, 0.0, 0x00, 0x00, 'I_MG08_CARD', '')
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
     Sleep(1000)
+
     OP_62()
     OP_56(0x00, 0x01, 0x00, 0.3, 0.3, 0.0, 0.0, 300.0)
     Sleep(1000)
+
     OP_62()
     OP_58(0x00)
     OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.0, 1.0, 1.0, 0.0, 0x00, 0x00, 'I_VIS999', '')
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
     Sleep(1000)
+
     OP_62()
     OP_56(0x00, 0x00, 0x00, 0.0, 0.0, 0.0, 0.0, 0.0)
     OP_56(0x00, 0x00, 0x00, -1800.0, 0.0, 30000.0, 0.0, 0.0)
@@ -30787,7 +30991,7 @@ def TK_System_Debug_Portrait():
     OP_55(0x00, 0x0000, 0x0000, 0x0600, 0x0400, 0x0153, 0x003C, 0x0000, 0x0000, 0x0600, 0x0400, 1.0, 1.0, 1.0, 0.0, 0x01, 0x00, 'I_NOTE_HELP000', '')
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 500.0)
     OP_57(0x00, 0x03)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -30799,6 +31003,7 @@ def TK_System_Debug_Portrait():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_62()
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 0.0, 500.0)
@@ -30807,7 +31012,7 @@ def TK_System_Debug_Portrait():
     OP_55(0x00, 0x0000, 0x0000, 0x0400, 0x0400, 0x0000, 0x0000, 0x0000, 0x0000, 0x0400, 0x0400, 1.0, 1.0, 1.0, 0.0, 0x00, 0x00, 'I_ICONS', 'I_SYSTEM')
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
     OP_57(0x00, 0x03)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -30819,15 +31024,18 @@ def TK_System_Debug_Portrait():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_62()
     OP_58(0x00)
     OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.0, 1.0, 1.0, 0.0, 0x00, 0x02, 'I_VIS9100', '')
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 300.0)
     Sleep(1000)
+
     OP_62()
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 0.0, 300.0)
     Sleep(300)
+
     OP_58(0x00)
 
     Return()
@@ -30835,7 +31043,7 @@ def TK_System_Debug_Portrait():
 # id: 0x0049 offset: 0x22F20
 @scena.Code('TK_System_Debug_ButtonMenu')
 def TK_System_Debug_ButtonMenu():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -30861,7 +31069,7 @@ def TK_System_Debug_ButtonMenu():
 # id: 0x004A offset: 0x2302C
 @scena.Code('TK_System_Debug_StringsTest')
 def TK_System_Debug_StringsTest():
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -30879,10 +31087,11 @@ def TK_System_Debug_StringsTest():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -30902,9 +31111,10 @@ def TK_System_Debug_StringsTest():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     ChrTalk(
         0xF011,
@@ -31113,8 +31323,9 @@ def TK_System_Debug_Bustshot():
     OP_4F(0x03, 0xF011, 1.0, 1.0, 1.0, 1.0, 0x03E8, 0x03)
     OP_4F(0x03, 0x03FB, 1.0, 1.0, 1.0, 1.0, 0x03E8, 0x03)
     Sleep(1000)
-    OP_23(0x01, 0xFFFF, 0x02EE, 0x00, 0x0A)
-    OP_23(0x02, 0x0384, 0x0104)
+
+    OP_23(0x01, 65535, 750, 0x00, 0x0A)
+    OP_23(0x02, 900, 260)
     Fade(0x0A, 300)
     Fade(0x0C, 0)
     SetChrFace(0x04, 0x03FB, '#E_I#M_0')
@@ -31138,6 +31349,7 @@ def TK_System_Debug_Bustshot():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, 0xF011, '#E_F#M_9')
 
     ChrTalk(
@@ -31159,9 +31371,11 @@ def TK_System_Debug_Bustshot():
     )
 
     WaitForMsg()
+
     OP_4F(0x03, 0xF011, 1.0, 1.0, 1.0, 0.0, 0x03E8, 0x03)
     OP_4F(0x03, 0x03FB, 1.0, 1.0, 1.0, 0.0, 0x03E8, 0x03)
     Sleep(1000)
+
     Fade(0x0B, 300)
     Fade(0x0C, 0)
     OP_4F(0x01, 0xF011)
@@ -31266,7 +31480,7 @@ def TK_System_Debug_ChrColor():
 # id: 0x004E offset: 0x23CE8
 @scena.Code('TK_System_Debug_HiarColor')
 def TK_System_Debug_HiarColor():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -31289,7 +31503,7 @@ def TK_System_Debug_HiarColor():
         'loc_23E9C',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -31356,7 +31570,7 @@ def TK_System_Debug_HiarColor():
 
     label('loc_23E89')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -31384,7 +31598,7 @@ def TK_System_Debug_HiarColor():
 def TK_System_Debug_Message():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -31407,7 +31621,7 @@ def TK_System_Debug_Message():
         'loc_24389',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -31577,7 +31791,7 @@ def TK_System_Debug_Message():
 
     label('loc_24376')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -31609,7 +31823,7 @@ def TK_System_Debug_popup():
     OP_45(0xF011, 0.0, 0.0, 0.0, 0x0000, 0x0001)
     OP_45(0xF011, 0.0, 0.0, 0.0, 0x0000, 0x0000)
     OP_46(0x00, 0xF011, 0xFFFF, 0x0000)
-    OP_23(0x01, 0x00F0, 0x020D, 0x01, 0x0A)
+    OP_23(0x01, 240, 525, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31622,7 +31836,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x005A, 0x0276, 0x01, 0x0A)
+
+    OP_23(0x01, 90, 630, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31635,7 +31850,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x0186, 0x01A4, 0x01, 0x0A)
+
+    OP_23(0x01, 390, 420, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31648,7 +31864,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x005A, 0x01A4, 0x01, 0x0A)
+
+    OP_23(0x01, 90, 420, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31661,7 +31878,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x00F0, 0x020D, 0x02, 0x0A)
+
+    OP_23(0x01, 240, 525, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31674,7 +31892,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x005A, 0x0276, 0x02, 0x0A)
+
+    OP_23(0x01, 90, 630, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31687,7 +31906,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x0186, 0x01A4, 0x02, 0x0A)
+
+    OP_23(0x01, 390, 420, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31700,7 +31920,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x005A, 0x01A4, 0x02, 0x0A)
+
+    OP_23(0x01, 90, 420, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31713,7 +31934,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x00F0, 0x0357, 0x01, 0x0A)
+
+    OP_23(0x01, 240, 855, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31726,7 +31948,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x005A, 0x0357, 0x01, 0x0A)
+
+    OP_23(0x01, 90, 855, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31739,7 +31962,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x0186, 0x03C0, 0x01, 0x0A)
+
+    OP_23(0x01, 390, 960, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31752,7 +31976,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x005A, 0x03C0, 0x01, 0x0A)
+
+    OP_23(0x01, 90, 960, 0x01, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31765,7 +31990,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x00F0, 0x0357, 0x02, 0x0A)
+
+    OP_23(0x01, 240, 855, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31778,7 +32004,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x005A, 0x0357, 0x02, 0x0A)
+
+    OP_23(0x01, 90, 855, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31791,7 +32018,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x0186, 0x03C0, 0x02, 0x0A)
+
+    OP_23(0x01, 390, 960, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31804,7 +32032,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0x005A, 0x03C0, 0x02, 0x0A)
+
+    OP_23(0x01, 90, 960, 0x02, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31817,7 +32046,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0xFFFF, 0x00D2, 0x05, 0x0A)
+
+    OP_23(0x01, 65535, 210, 0x05, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31830,7 +32060,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0xFFFF, 0x014A, 0x05, 0x0A)
+
+    OP_23(0x01, 65535, 330, 0x05, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31843,7 +32074,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0xFFFF, 0x0276, 0x05, 0x0A)
+
+    OP_23(0x01, 65535, 630, 0x05, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31856,7 +32088,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0xFFFF, 0x02EE, 0x05, 0x0A)
+
+    OP_23(0x01, 65535, 750, 0x05, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31869,7 +32102,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0xFFFF, 0x00D2, 0x06, 0x0A)
+
+    OP_23(0x01, 65535, 210, 0x06, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31882,7 +32116,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0xFFFF, 0x014A, 0x06, 0x0A)
+
+    OP_23(0x01, 65535, 330, 0x06, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31895,7 +32130,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0xFFFF, 0x0276, 0x06, 0x0A)
+
+    OP_23(0x01, 65535, 630, 0x06, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31908,7 +32144,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0xFFFF, 0x02EE, 0x06, 0x0A)
+
+    OP_23(0x01, 65535, 750, 0x06, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31921,7 +32158,8 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
-    OP_23(0x01, 0xFFFF, 0x02EE, 0x06, 0x0A)
+
+    OP_23(0x01, 65535, 750, 0x06, 0x0A)
     SetChrFace(0x04, 0xF011, '')
 
     ChrTalk(
@@ -31934,6 +32172,7 @@ def TK_System_Debug_popup():
     )
 
     WaitForMsg()
+
     OP_21(0x00)
 
     Return()
@@ -31959,6 +32198,7 @@ def TK_System_Debug_FaceCmd():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, 0xFFFE, '#E_0#M_0#B_0')
 
     ChrTalk(
@@ -31971,6 +32211,7 @@ def TK_System_Debug_FaceCmd():
     )
 
     WaitForMsg()
+
     SetChrFace(0x04, 0xF011, '#E_0#M_0#B_0')
 
     ChrTalk(
@@ -31983,6 +32224,7 @@ def TK_System_Debug_FaceCmd():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     SetChrFace(0x04, 0xF011, '#E_0#M_0#B_0')
 
@@ -31996,6 +32238,7 @@ def TK_System_Debug_FaceCmd():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
     SetChrFace(0x04, 0xF011, '#E_0#M_0#B_0')
 
@@ -32022,7 +32265,7 @@ def TK_System_Debug_Emotest():
     CameraCtrl(0x12, 0x0040)
     ChrSetPhysicsFlags(0xFFFE, 0x00004000)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -32074,7 +32317,7 @@ def TK_System_Debug_Emotest():
 
     Call(ScriptId.Current, 'SUB_EmotionTest')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -32102,7 +32345,7 @@ def TK_System_Debug_Emotest():
     OP_4F(0x00, 0xFFFE, 30.0, 0x00FA, 0x0010, 0.0, -0.1)
     Call(ScriptId.Current, 'SUB_EmotionTest')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -32130,7 +32373,7 @@ def TK_System_Debug_Emotest():
     OP_4F(0x00, 0xFFFE, -30.0, 0x00FA, 0x0010, 0.0, -0.1)
     Call(ScriptId.Current, 'SUB_EmotionTest')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -32160,7 +32403,7 @@ def TK_System_Debug_Emotest():
     Call(ScriptId.System, 'FC_BustShotShow', (0xFF, 0x0, 0x0), (0xFF, 0xFFFE, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0), (0xFF, 0xFFFF, 0x0))
     Call(ScriptId.Current, 'SUB_EmotionTest')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -32205,7 +32448,7 @@ def TK_System_Debug_Emotest():
     )
 
     ChrClearPhysicsFlags(0xFFFE, 0x00002000)
-    OP_3D(0xFFFE, 180.0, 10.0, 0x00)
+    ChrTurnDirection(0xFFFE, 180.0, 10.0, 0x00)
 
     Jump('loc_24DA8')
 
@@ -32223,7 +32466,7 @@ def TK_System_Debug_Emotest():
         'loc_24CC9',
     )
 
-    OP_3D(0xFFFE, -90.0, 10.0, 0x00)
+    ChrTurnDirection(0xFFFE, -90.0, 10.0, 0x00)
 
     Jump('loc_24DA8')
 
@@ -32241,7 +32484,7 @@ def TK_System_Debug_Emotest():
         'loc_24CE8',
     )
 
-    OP_3D(0xFFFE, 90.0, 10.0, 0x00)
+    ChrTurnDirection(0xFFFE, 90.0, 10.0, 0x00)
 
     Jump('loc_24DA8')
 
@@ -32259,7 +32502,7 @@ def TK_System_Debug_Emotest():
         'loc_24D07',
     )
 
-    OP_3D(0xFFFE, 0.0, 10.0, 0x00)
+    ChrTurnDirection(0xFFFE, 0.0, 10.0, 0x00)
 
     Jump('loc_24DA8')
 
@@ -32339,7 +32582,7 @@ def TK_System_Debug_Emotest():
 
     label('loc_24D9F')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -32368,7 +32611,7 @@ def TK_System_Debug_Emotest():
 # id: 0x0053 offset: 0x24DC0
 @scena.Code('SUB_EmotionTest')
 def SUB_EmotionTest():
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -33111,7 +33354,7 @@ def SUB_EmotionTest():
 
     label('loc_254C1')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -33138,7 +33381,7 @@ def SUB_EmotionTest():
 # id: 0x0054 offset: 0x254E4
 @scena.Code('TK_System_Debug_BlurTest')
 def TK_System_Debug_BlurTest():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -33161,7 +33404,7 @@ def TK_System_Debug_BlurTest():
         'loc_2576D',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -33247,7 +33490,7 @@ def TK_System_Debug_BlurTest():
 
     label('loc_2575F')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -33871,7 +34114,7 @@ def TK_System_MapJumpTest04():
 # id: 0x005B offset: 0x25F9C
 @scena.Code('TK_System_CameraVibrateTest')
 def TK_System_CameraVibrateTest():
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -33883,6 +34126,7 @@ def TK_System_CameraVibrateTest():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     CameraCtrl(0x0A, 0.1, 0.1, 0.0, 0x01F4, 0x03E8, 0x07D0, 0x0000, 0x0000, 0x00)
 
@@ -33891,7 +34135,7 @@ def TK_System_CameraVibrateTest():
 # id: 0x005C offset: 0x26020
 @scena.Code('TK_NoticeLog_Test')
 def TK_NoticeLog_Test():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -33914,7 +34158,7 @@ def TK_NoticeLog_Test():
         'loc_26656',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -34069,7 +34313,7 @@ def TK_NoticeLog_Test():
     Fade(0x64, 100, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
     OP_3B(0x00, (0xFF, 0x88C2, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -34084,9 +34328,10 @@ def TK_NoticeLog_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
     AddItem(0x00, 0x0000, 1)
     Fade(0x00, 100, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
@@ -34123,6 +34368,7 @@ def TK_NoticeLog_Test():
     )
 
     WaitForMsg()
+
     OP_27('', 0xFFFF)
     OP_63(0xFFFF, 0x01)
     Fade(0x00, 500, 1.0, 0x0000)
@@ -34138,7 +34384,7 @@ def TK_NoticeLog_Test():
 
     label('loc_26648')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -34162,7 +34408,7 @@ def TK_NoticeLog_Test():
 # id: 0x005D offset: 0x26658
 @scena.Code('TK_TeamSel_Test')
 def TK_TeamSel_Test():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -34185,7 +34431,7 @@ def TK_TeamSel_Test():
         'loc_2721F',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -34240,6 +34486,7 @@ def TK_TeamSel_Test():
     Fade(0x00, 500, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
     Sleep(300)
+
     FormationAddMember(ChrTable['黎恩'])
     FormationAddMember(ChrTable['奧蕾莉亞分校長'])
     Call(ScriptId.System, 'FC_TSMenu_Reset')
@@ -34256,7 +34503,7 @@ def TK_TeamSel_Test():
     OP_C4(0x02, 0x01, 0x000E)
     OP_C4(0x02, 0x01, 0x0012)
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2B,
         (
             (Expr.PushLong, 0x6),
@@ -34265,7 +34512,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2C,
         (
             (Expr.PushLong, 0x6),
@@ -34307,7 +34554,7 @@ def TK_TeamSel_Test():
     OP_C4(0x02, 0x02, 0x0005)
     OP_C4(0x02, 0x02, 0x0007)
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2B,
         (
             (Expr.PushLong, 0x5),
@@ -34316,7 +34563,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2C,
         (
             (Expr.PushLong, 0x5),
@@ -34325,7 +34572,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2D,
         (
             (Expr.PushLong, 0x6),
@@ -34381,7 +34628,7 @@ def TK_TeamSel_Test():
     OP_C4(0x02, 0x02, 0x0008)
     SetScenaFlags(ScenaFlag(0x0072, 1, 0x391))
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2B,
         (
             (Expr.PushLong, 0x6),
@@ -34390,7 +34637,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2C,
         (
             (Expr.PushLong, 0x6),
@@ -34399,7 +34646,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2D,
         (
             (Expr.PushLong, 0x1),
@@ -34436,7 +34683,7 @@ def TK_TeamSel_Test():
     OP_C4(0x02, 0x02, 0x0008)
     SetScenaFlags(ScenaFlag(0x0072, 1, 0x391))
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2B,
         (
             (Expr.PushLong, 0x6),
@@ -34445,7 +34692,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2C,
         (
             (Expr.PushLong, 0x6),
@@ -34454,7 +34701,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2D,
         (
             (Expr.PushLong, 0x3),
@@ -34960,7 +35207,7 @@ def TK_TeamSel_Test():
 
     label('loc_271F5')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2B,
         (
             (Expr.PushLong, 0x3),
@@ -34969,7 +35216,7 @@ def TK_TeamSel_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2C,
         (
             (Expr.PushLong, 0x3),
@@ -34987,7 +35234,7 @@ def TK_TeamSel_Test():
 
     label('loc_27211')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -35011,7 +35258,7 @@ def TK_TeamSel_Test():
 # id: 0x005E offset: 0x27220
 @scena.Code('TK_ActMenu_Test')
 def TK_ActMenu_Test():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -35034,7 +35281,7 @@ def TK_ActMenu_Test():
         'loc_274C5',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -35220,7 +35467,7 @@ def TK_ActMenu_Test():
 
     label('loc_274B7')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -35245,8 +35492,8 @@ def TK_ActMenu_Test():
 @scena.Code('EV_useChecker')
 def EV_useChecker():
     OP_20(0x15, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
-    OP_3A(0x03, 0.7, 0x01F4, 0x00)
-    OP_3A(0x03, 1.0, 0x01F4, 0x00)
+    BGMCtrl(0x03, 0.7, 500, 0x00)
+    BGMCtrl(0x03, 1.0, 500, 0x00)
     SetChrFace(0x04, ChrTable['黎恩'], '#E0#M4')
 
     ChrTalk(
@@ -35260,8 +35507,9 @@ def EV_useChecker():
     )
 
     WaitForMsg()
+
     OP_63(0xFFFF, 0x01)
-    OP_23(0x01, 0xFFFF, 0xFFFF, 0x00, 0x0A)
+    OP_23(0x01, 65535, 65535, 0x00, 0x0A)
     SetChrFace(0x03, ChrTable['黎恩'], '0[autoE0]', '0[autoM0]', '', '#b', '0')
     OP_21(0x15)
 
@@ -35277,7 +35525,7 @@ def EV_useItemEmasPendant():
 # id: 0x0061 offset: 0x27584
 @scena.Code('TK_LinkLevel_Test')
 def TK_LinkLevel_Test():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -35300,7 +35548,7 @@ def TK_LinkLevel_Test():
         'loc_2786E',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -35389,7 +35637,7 @@ def TK_LinkLevel_Test():
     OP_69(0x05, 0x000B, 0x000A, 0x07CF)
     OP_69(0x05, 0x000B, 0x000C, 0x07CF)
     OP_69(0x05, 0x000C, 0x0009, 0x07CF)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -35401,6 +35649,7 @@ def TK_LinkLevel_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_27869')
@@ -35409,7 +35658,7 @@ def TK_LinkLevel_Test():
 
     label('loc_27860')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -35433,7 +35682,7 @@ def TK_LinkLevel_Test():
 # id: 0x0062 offset: 0x27870
 @scena.Code('TK_LikeLevel_Test')
 def TK_LikeLevel_Test():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -35456,7 +35705,7 @@ def TK_LikeLevel_Test():
         'loc_284F1',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -36489,7 +36738,7 @@ def TK_LikeLevel_Test():
 
     label('loc_284E3')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -36513,7 +36762,7 @@ def TK_LikeLevel_Test():
 # id: 0x0063 offset: 0x284F4
 @scena.Code('TK_Calendar_Test')
 def TK_Calendar_Test():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -36536,7 +36785,7 @@ def TK_Calendar_Test():
         'loc_28B61',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -36620,7 +36869,7 @@ def TK_Calendar_Test():
 
     label('loc_287FA')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x04,
         (
             (Expr.PushLong, 0x1),
@@ -36629,7 +36878,7 @@ def TK_Calendar_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x05,
         (
             (Expr.PushLong, 0x1),
@@ -36638,7 +36887,7 @@ def TK_Calendar_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x09,
         (
             (Expr.PushLong, 0x1),
@@ -36647,7 +36896,7 @@ def TK_Calendar_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x0),
@@ -36664,7 +36913,7 @@ def TK_Calendar_Test():
 
     label('loc_28824')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x04,
         (
             (Expr.PushLong, 0xC),
@@ -36673,7 +36922,7 @@ def TK_Calendar_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x05,
         (
             (Expr.PushLong, 0x17),
@@ -36682,7 +36931,7 @@ def TK_Calendar_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x09,
         (
             (Expr.PushLong, 0x4),
@@ -36697,7 +36946,7 @@ def TK_Calendar_Test():
 
     label('loc_28844')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x04,
         (
             (Expr.PushLong, 0x1),
@@ -36706,7 +36955,7 @@ def TK_Calendar_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x05,
         (
             (Expr.PushLong, 0x17),
@@ -36715,7 +36964,7 @@ def TK_Calendar_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x09,
         (
             (Expr.PushLong, 0x4),
@@ -36730,7 +36979,7 @@ def TK_Calendar_Test():
 
     label('loc_28864')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x04,
         (
             (Expr.PushLong, 0xC),
@@ -36739,7 +36988,7 @@ def TK_Calendar_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x05,
         (
             (Expr.PushLong, 0x2),
@@ -36748,7 +36997,7 @@ def TK_Calendar_Test():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x09,
         (
             (Expr.PushLong, 0x4),
@@ -36773,7 +37022,7 @@ def TK_Calendar_Test():
         'loc_288A0',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x1),
@@ -36798,7 +37047,7 @@ def TK_Calendar_Test():
         'loc_288BC',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x2),
@@ -36823,7 +37072,7 @@ def TK_Calendar_Test():
         'loc_288D8',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x3),
@@ -36848,7 +37097,7 @@ def TK_Calendar_Test():
         'loc_288F4',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x4),
@@ -36873,7 +37122,7 @@ def TK_Calendar_Test():
         'loc_28910',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x5),
@@ -36898,7 +37147,7 @@ def TK_Calendar_Test():
         'loc_2892C',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x6),
@@ -36923,7 +37172,7 @@ def TK_Calendar_Test():
         'loc_28948',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x7),
@@ -36948,7 +37197,7 @@ def TK_Calendar_Test():
         'loc_28964',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x8),
@@ -36973,7 +37222,7 @@ def TK_Calendar_Test():
         'loc_28980',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x9),
@@ -36998,7 +37247,7 @@ def TK_Calendar_Test():
         'loc_2899C',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0xA),
@@ -37013,7 +37262,7 @@ def TK_Calendar_Test():
 
     label('loc_2899C')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x0),
@@ -37066,7 +37315,7 @@ def TK_Calendar_Test():
         'loc_289DC',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x0A,
         (
             (Expr.PushVar, 0xA),
@@ -37167,7 +37416,7 @@ def TK_Calendar_Test():
 
     label('loc_28B53')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -37197,7 +37446,7 @@ def TK_CameraCommand_Test():
     Fade(0x64, 300, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -37220,7 +37469,7 @@ def TK_CameraCommand_Test():
         'loc_28F68',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -37340,6 +37589,7 @@ def TK_CameraCommand_Test():
 
     CameraRotate(0x03, 0.0, 315.0, 0.0, 0, 0x01)
     Sleep(500)
+
     CameraRotate(0x03, 0.0, 15.0, 0.0, 1000, 0x01)
     CameraCtrl(0x07, 0x00BF)
 
@@ -37351,6 +37601,7 @@ def TK_CameraCommand_Test():
 
     CameraRotate(0x03, 0.0, 315.0, 0.0, 0, 0x01)
     Sleep(500)
+
     CameraRotate(0x03, 0.0, 15.0, 0.0, 1000, 0x00)
     CameraCtrl(0x07, 0x00BF)
 
@@ -37360,7 +37611,7 @@ def TK_CameraCommand_Test():
 
     label('loc_28F5A')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -37391,7 +37642,7 @@ def TK_LookCommand_Test():
     OP_45(0xF011, 0.0, 0.0, 0.0, 0x0000, 0x0000)
     OP_46(0x00, 0xF011, 0xFFFF, 0x0000)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -37414,7 +37665,7 @@ def TK_LookCommand_Test():
         'loc_29221',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -37530,7 +37781,7 @@ def TK_LookCommand_Test():
 
     label('loc_29213')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -37559,7 +37810,7 @@ def TK_ActiveTodo_Test():
     OP_45(0xF011, 0.0, 0.0, 0.0, 0x0000, 0x0000)
     OP_46(0x00, 0xF011, 0xFFFF, 0x0000)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -37582,7 +37833,7 @@ def TK_ActiveTodo_Test():
         'loc_29461',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -37743,7 +37994,7 @@ def TK_ActiveTodo_Test():
 
     label('loc_29453')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -37769,7 +38020,7 @@ def TK_ActiveTodo_Test():
 # id: 0x0067 offset: 0x29464
 @scena.Code('TK_VibratePad_Test')
 def TK_VibratePad_Test():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -37792,7 +38043,7 @@ def TK_VibratePad_Test():
         'loc_295E0',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -37868,7 +38119,7 @@ def TK_VibratePad_Test():
 
     label('loc_295D2')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -37892,7 +38143,7 @@ def TK_VibratePad_Test():
 # id: 0x0068 offset: 0x295E4
 @scena.Code('TK_StatusUp_Test')
 def TK_StatusUp_Test():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -37915,7 +38166,7 @@ def TK_StatusUp_Test():
         'loc_29835',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -37952,7 +38203,7 @@ def TK_StatusUp_Test():
     label('loc_296AD')
 
     OP_48(0x00, 0x0000, 0x0064, 0x03E8)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -37964,6 +38215,7 @@ def TK_StatusUp_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_29830')
@@ -37973,7 +38225,7 @@ def TK_StatusUp_Test():
     label('loc_296FB')
 
     OP_48(0x00, 0x0000, 0x0065, 0x0064)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -37985,6 +38237,7 @@ def TK_StatusUp_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_29830')
@@ -37994,7 +38247,7 @@ def TK_StatusUp_Test():
     label('loc_29746')
 
     OP_48(0x00, 0x0000, 0x0066, 0x0064)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -38006,6 +38259,7 @@ def TK_StatusUp_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_29830')
@@ -38015,7 +38269,7 @@ def TK_StatusUp_Test():
     label('loc_29791')
 
     OP_48(0x00, 0x0000, 0x0067, 0x0064)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -38027,6 +38281,7 @@ def TK_StatusUp_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_29830')
@@ -38036,7 +38291,7 @@ def TK_StatusUp_Test():
     label('loc_297DC')
 
     OP_48(0x00, 0x0000, 0x0068, 0x0064)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -38048,6 +38303,7 @@ def TK_StatusUp_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_29830')
@@ -38056,7 +38312,7 @@ def TK_StatusUp_Test():
 
     label('loc_29827')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -38080,7 +38336,7 @@ def TK_StatusUp_Test():
 # id: 0x0069 offset: 0x29838
 @scena.Code('TK_ChapterSave_Test')
 def TK_ChapterSave_Test():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -38103,7 +38359,7 @@ def TK_ChapterSave_Test():
         'loc_29B6C',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -38138,6 +38394,7 @@ def TK_ChapterSave_Test():
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 500.0)
     OP_57(0x00, 0x03)
     Sleep(0)
+
     OP_AF(0x00)
     SetScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
     SetScenaFlags(ScenaFlag(0x0062, 4, 0x314))
@@ -38154,7 +38411,7 @@ def TK_ChapterSave_Test():
     OP_58(0xFF)
     SetScenaFlags(ScenaFlag(0x00C1, 4, 0x60C))
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -38164,6 +38421,7 @@ def TK_ChapterSave_Test():
     )
 
     Sleep(300)
+
     EventJump(0x00000001)
     OP_14(0x04000000)
 
@@ -38177,7 +38435,7 @@ def TK_ChapterSave_Test():
     OP_55(0x00, 0x0000, 0x0000, 0x0780, 0x0438, 0x0000, 0x0000, 0x0000, 0x0000, 0x0780, 0x0438, 1.0, 1.0, 1.0, 0.0, 0x00, 0x00, 'I_VIS1000', '')
     OP_56(0x00, 0x03, 0x00, 1.0, 1.0, 1.0, 1.0, 500.0)
     OP_57(0x00, 0x03)
-    OP_23(0x05, 0xFFFF, 0x00DC, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 220, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -38193,7 +38451,9 @@ def TK_ChapterSave_Test():
     )
 
     Sleep(1500)
+
     Sleep(0)
+
     OP_AF(0x00)
     SetScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
     SetScenaFlags(ScenaFlag(0x0060, 1, 0x301))
@@ -38218,7 +38478,7 @@ def TK_ChapterSave_Test():
 
     label('loc_29B5E')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -38245,13 +38505,13 @@ def EV_Test_Evsave_Load():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
     Fade(0x00, 0, 1.0, 0x0000)
     FormationCtrl(0x07)
-    OP_3A(0x04, 0x0002, 1.0, 0x0000, 0x00000000, 0x00)
+    BGMCtrl(0x04, 2, 1.0, 0x0000, 0x00000000, 0x00)
     ClearScenaFlags(ScenaFlag(0x0062, 4, 0x314))
     OP_AF(0x01)
     ClearScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
     SetScenaFlags(ScenaFlag(0x00C1, 4, 0x60C))
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -38260,8 +38520,8 @@ def EV_Test_Evsave_Load():
         ),
     )
 
-    OP_3A(0x05, 0x0001, 0x0001)
-    OP_3A(0x06, 0x0001)
+    BGMCtrl(0x05, 1, 1)
+    BGMCtrl(0x06, 1)
     EventJump(0x00000001)
     OP_14(0x04000000)
 
@@ -38270,7 +38530,7 @@ def EV_Test_Evsave_Load():
 # id: 0x006B offset: 0x29BCC
 @scena.Code('TK_GetSCraft_Test')
 def TK_GetSCraft_Test():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -38293,7 +38553,7 @@ def TK_GetSCraft_Test():
         'loc_29D84',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -38335,7 +38595,7 @@ def TK_GetSCraft_Test():
 
     CraftCtrl(0x00, ChrTable['黎恩'], 0x07E4)
     CraftCtrl(0x04, ChrTable['黎恩'], 0x07E4)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -38347,6 +38607,7 @@ def TK_GetSCraft_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_29D7F')
@@ -38357,7 +38618,7 @@ def TK_GetSCraft_Test():
 
     CraftCtrl(0x00, ChrTable['黎恩'], 0x07E9)
     CraftCtrl(0x04, ChrTable['黎恩'], 0x07E9)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -38369,6 +38630,7 @@ def TK_GetSCraft_Test():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_29D7F')
@@ -38377,7 +38639,7 @@ def TK_GetSCraft_Test():
 
     label('loc_29D76')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -38401,7 +38663,7 @@ def TK_GetSCraft_Test():
 # id: 0x006C offset: 0x29D88
 @scena.Code('TK_Title_Test')
 def TK_Title_Test():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -38424,7 +38686,7 @@ def TK_Title_Test():
         'loc_29F58',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -38473,7 +38735,7 @@ def TK_Title_Test():
         ),
     )
 
-    OP_28((0xDD, 'title'), (0xDD, ''), 0x00)
+    MapJump((0xDD, 'title'), (0xDD, ''), 0x00)
 
     Jump('loc_29F53')
 
@@ -38490,7 +38752,7 @@ def TK_Title_Test():
         ),
     )
 
-    OP_28((0xDD, 'title'), (0xDD, ''), 0x00)
+    MapJump((0xDD, 'title'), (0xDD, ''), 0x00)
 
     Jump('loc_29F53')
 
@@ -38507,7 +38769,7 @@ def TK_Title_Test():
         ),
     )
 
-    OP_28((0xDD, 'title'), (0xDD, ''), 0x00)
+    MapJump((0xDD, 'title'), (0xDD, ''), 0x00)
 
     Jump('loc_29F53')
 
@@ -38524,7 +38786,7 @@ def TK_Title_Test():
         ),
     )
 
-    OP_28((0xDD, 'title'), (0xDD, ''), 0x00)
+    MapJump((0xDD, 'title'), (0xDD, ''), 0x00)
 
     Jump('loc_29F53')
 
@@ -38541,7 +38803,7 @@ def TK_Title_Test():
         ),
     )
 
-    OP_28((0xDD, 'title'), (0xDD, ''), 0x00)
+    MapJump((0xDD, 'title'), (0xDD, ''), 0x00)
 
     Jump('loc_29F53')
 
@@ -38558,7 +38820,7 @@ def TK_Title_Test():
         ),
     )
 
-    OP_28((0xDD, 'title'), (0xDD, ''), 0x00)
+    MapJump((0xDD, 'title'), (0xDD, ''), 0x00)
 
     Jump('loc_29F53')
 
@@ -38575,7 +38837,7 @@ def TK_Title_Test():
         ),
     )
 
-    OP_28((0xDD, 'title'), (0xDD, ''), 0x00)
+    MapJump((0xDD, 'title'), (0xDD, ''), 0x00)
 
     Jump('loc_29F53')
 
@@ -38583,7 +38845,7 @@ def TK_Title_Test():
 
     label('loc_29F4A')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -38616,7 +38878,7 @@ def TK_MiniGame_Debug_CardGame():
 def TK_MiniGame_Debug():
     Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -38639,7 +38901,7 @@ def TK_MiniGame_Debug():
         'loc_2AA25',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -38682,7 +38944,7 @@ def TK_MiniGame_Debug():
     FormationAddMember(ChrTable['亞修'])
     FormationSetLeader(ChrTable['黎恩'])
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -38766,7 +39028,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A732')
 
-    OP_28((0xDD, 't0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38774,7 +39036,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A746')
 
-    OP_28((0xDD, 't0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38782,7 +39044,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A75A')
 
-    OP_28((0xDD, 'r0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38790,7 +39052,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A76E')
 
-    OP_28((0xDD, 'm0600'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm0600'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38798,7 +39060,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A782')
 
-    OP_28((0xDD, 'r0010'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0010'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38806,7 +39068,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A796')
 
-    OP_28((0xDD, 't2000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't2000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38814,7 +39076,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A7AA')
 
-    OP_28((0xDD, 'r1000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r1000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38822,7 +39084,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A7BE')
 
-    OP_28((0xDD, 'r1200'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r1200'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38830,7 +39092,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A7D2')
 
-    OP_28((0xDD, 'r0210'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r0210'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38838,7 +39100,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A7E6')
 
-    OP_28((0xDD, 'r1400'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r1400'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38846,7 +39108,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A7FA')
 
-    OP_28((0xDD, 'r2200'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r2200'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38854,7 +39116,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A80E')
 
-    OP_28((0xDD, 'c0800'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'c0800'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38862,7 +39124,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A822')
 
-    OP_28((0xDD, 'r2210'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r2210'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38870,7 +39132,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A836')
 
-    OP_28((0xDD, 'r2410'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r2410'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38878,7 +39140,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A84A')
 
-    OP_28((0xDD, 'r2420'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r2420'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38886,7 +39148,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A85E')
 
-    OP_28((0xDD, 'r2200'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r2200'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38894,7 +39156,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A872')
 
-    OP_28((0xDD, 't0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38902,7 +39164,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A886')
 
-    OP_28((0xDD, 't0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38910,7 +39172,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A89A')
 
-    OP_28((0xDD, 't3600'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 't3600'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38918,7 +39180,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A8AE')
 
-    OP_28((0xDD, 'r3200'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r3200'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38926,7 +39188,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A8C2')
 
-    OP_28((0xDD, 'r3200'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r3200'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38934,7 +39196,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A8D6')
 
-    OP_28((0xDD, 'r3600'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r3600'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38942,7 +39204,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A8EA')
 
-    OP_28((0xDD, 'r3600'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r3600'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38950,7 +39212,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A8FE')
 
-    OP_28((0xDD, 'r3600'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r3600'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38958,7 +39220,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A912')
 
-    OP_28((0xDD, 'r4200'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r4200'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38966,7 +39228,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A926')
 
-    OP_28((0xDD, 'r4400'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r4400'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38974,7 +39236,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A93A')
 
-    OP_28((0xDD, 'c3600'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'c3600'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38982,7 +39244,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A94E')
 
-    OP_28((0xDD, 'm3210'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'm3210'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -38990,7 +39252,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A962')
 
-    OP_28((0xDD, 'r4200'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'r4200'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2A976')
 
@@ -39004,7 +39266,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A97B')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x24,
         (
             (Expr.PushLong, 0x1),
@@ -39013,7 +39275,7 @@ def TK_MiniGame_Debug():
         ),
     )
 
-    OP_28((0xDD, 'c3210'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'c3210'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2AA20')
 
@@ -39021,7 +39283,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2A998')
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -39033,6 +39295,7 @@ def TK_MiniGame_Debug():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2AA20')
@@ -39043,7 +39306,7 @@ def TK_MiniGame_Debug():
 
     Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Start')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -39058,7 +39321,7 @@ def TK_MiniGame_Debug():
 
     label('loc_2AA12')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -39086,7 +39349,7 @@ def TK_MiniGame_Debug():
 # id: 0x006F offset: 0x2AA3C
 @scena.Code('TK_MiniGame_Debug_Mg08_Start')
 def TK_MiniGame_Debug_Mg08_Start():
-    OP_18(
+    ExecExpressionWithVar(
         0x20,
         (
             (Expr.PushLong, 0x0),
@@ -39095,7 +39358,7 @@ def TK_MiniGame_Debug_Mg08_Start():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x21,
         (
             (Expr.PushLong, 0x0),
@@ -39120,7 +39383,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     label('loc_2AA8B')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x1),
@@ -39175,7 +39438,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     label('loc_2ABDE')
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
     OP_3B(0x00, (0xFF, 0x88BA, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
     Talk(
@@ -39188,8 +39451,9 @@ def TK_MiniGame_Debug_Mg08_Start():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
     Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x2, 0x0))
     Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x1, 0x0))
 
@@ -39199,7 +39463,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     label('loc_2ACBC')
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
     OP_3B(0x00, (0xFF, 0x88BA, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
     Talk(
@@ -39212,8 +39476,9 @@ def TK_MiniGame_Debug_Mg08_Start():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
     Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x2, 0x0))
     Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x3, 0x0))
 
@@ -39223,7 +39488,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     label('loc_2ADA0')
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
     OP_3B(0x00, (0xFF, 0x88BA, 0x0), 1.0, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
     Talk(
@@ -39236,8 +39501,9 @@ def TK_MiniGame_Debug_Mg08_Start():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
     Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x2, 0x0))
     Call(ScriptId.Current, 'TK_MiniGame_Debug_Mg08_Cardset', (0xFF, 0x0, 0x0))
 
@@ -39247,7 +39513,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     label('loc_2AE7E')
 
-    OP_28((0xDD, 'a1002'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'a1002'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_2B08C')
 
@@ -39280,7 +39546,7 @@ def TK_MiniGame_Debug_Mg08_Start():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
     Fade(0x00, 300, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
-    OP_54(0x08, 0x0000000A, 0x00000000, 0x00000021, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
+    ModelCtrl(0x08, 0x0000000A, 0x00000000, 0x00000021, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
     Fade(0x64, 300, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
 
@@ -39363,7 +39629,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     label('loc_2AF6F')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x21,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -39400,7 +39666,7 @@ def TK_MiniGame_Debug_Mg08_Start():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.600000023841858, 0x0))
     Fade(0x00, 300, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
-    OP_54(0x08, 0x0000000A, 0x00000000, 0x00000021, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
+    ModelCtrl(0x08, 0x0000000A, 0x00000000, 0x00000021, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
     Fade(0x64, 300, 1.0, 0x0000)
     Fade(0xFF, 0, 0x0000)
 
@@ -39483,7 +39749,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     label('loc_2B075')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x21,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -39502,7 +39768,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     label('loc_2B083')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -39725,7 +39991,7 @@ def TK_MiniGame_Debug_Mg08_Cardset():
 def TK_Shop_Debug():
     Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -39748,7 +40014,7 @@ def TK_Shop_Debug():
         'loc_2B88A',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -39977,7 +40243,7 @@ def TK_Shop_Debug():
 
     label('loc_2B877')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -40007,7 +40273,7 @@ def TK_Shop_Debug():
 def TK_Note_Debug():
     Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -40030,7 +40296,7 @@ def TK_Note_Debug():
         'loc_2C0CF',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -40349,6 +40615,7 @@ def TK_Note_Debug():
     label('loc_2C080')
 
     Sleep(300)
+
     OP_95(0x00, 'book01', 'BookData02', 0x00, 0x0000)
     OP_95(0x01)
 
@@ -40366,7 +40633,7 @@ def TK_Note_Debug():
 
     label('loc_2C0BC')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -40632,7 +40899,7 @@ def EV_Note_Person():
 
     label('loc_2C3B7')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -40655,7 +40922,7 @@ def EV_Note_Person():
         'loc_2C6F9',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -40715,7 +40982,7 @@ def EV_Note_Person():
 
     label('loc_2C609')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -40955,7 +41222,7 @@ def EV_Note_OpenSynopsis():
 # id: 0x0079 offset: 0x2C898
 @scena.Code('EV_Note_CountTests')
 def EV_Note_CountTests():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -40978,7 +41245,7 @@ def EV_Note_CountTests():
         'loc_2CB28',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -41014,7 +41281,7 @@ def EV_Note_CountTests():
 
     label('loc_2C9C4')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x00,
         (
             (Expr.Eval, "OP_A9(0x00)"),
@@ -41023,7 +41290,7 @@ def EV_Note_CountTests():
         ),
     )
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -41035,6 +41302,7 @@ def EV_Note_CountTests():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2CB23')
@@ -41043,7 +41311,7 @@ def EV_Note_CountTests():
 
     label('loc_2C9FF')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x00,
         (
             (Expr.Eval, "OP_A9(0x0A)"),
@@ -41052,7 +41320,7 @@ def EV_Note_CountTests():
         ),
     )
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -41064,6 +41332,7 @@ def EV_Note_CountTests():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2CB23')
@@ -41072,7 +41341,7 @@ def EV_Note_CountTests():
 
     label('loc_2CA40')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x00,
         (
             (Expr.Eval, "OP_A9(0x14)"),
@@ -41081,7 +41350,7 @@ def EV_Note_CountTests():
         ),
     )
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -41093,6 +41362,7 @@ def EV_Note_CountTests():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2CB23')
@@ -41101,7 +41371,7 @@ def EV_Note_CountTests():
 
     label('loc_2CA90')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x00,
         (
             (Expr.Eval, "OP_A9(0x1E)"),
@@ -41110,7 +41380,7 @@ def EV_Note_CountTests():
         ),
     )
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -41122,6 +41392,7 @@ def EV_Note_CountTests():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2CB23')
@@ -41130,7 +41401,7 @@ def EV_Note_CountTests():
 
     label('loc_2CAD4')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x00,
         (
             (Expr.Eval, "OP_A9(0x28)"),
@@ -41139,7 +41410,7 @@ def EV_Note_CountTests():
         ),
     )
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -41151,6 +41422,7 @@ def EV_Note_CountTests():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2CB23')
@@ -41159,7 +41431,7 @@ def EV_Note_CountTests():
 
     label('loc_2CB15')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -41187,7 +41459,7 @@ def EV_Note_CountTests():
 def TK_Camp_Debug():
     Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -41210,7 +41482,7 @@ def TK_Camp_Debug():
         'loc_2CE01',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -41316,7 +41588,7 @@ def TK_Camp_Debug():
 
     label('loc_2CDEE')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -41352,7 +41624,7 @@ def TK_Battle_Debug():
     AddItem(0x0F, 0x00D5, 10)
     CraftCtrl(0x0B, 0xFFFF)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -41594,7 +41866,7 @@ def TK_Battle_Debug():
 
     label('loc_2D449')
 
-    OP_28((0xDD, 'a1004'), (0xDD, ''), 0x00)
+    MapJump((0xDD, 'a1004'), (0xDD, ''), 0x00)
 
     Jump('loc_2D485')
 
@@ -41610,7 +41882,7 @@ def TK_Battle_Debug():
 
     label('loc_2D477')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -41638,7 +41910,7 @@ def TK_Battle_Debug():
 # id: 0x007C offset: 0x2D4A0
 @scena.Code('TK_BattleEvent')
 def TK_BattleEvent():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -41763,7 +42035,7 @@ def TK_BattleEvent():
 
     label('loc_2D7DA')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -41789,7 +42061,7 @@ def TK_BattleEvent():
 # id: 0x007D offset: 0x2D7F0
 @scena.Code('TK_BattleVerification')
 def TK_BattleVerification():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -41833,7 +42105,7 @@ def TK_BattleVerification():
 
     label('loc_2D869')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -41846,7 +42118,7 @@ def TK_BattleVerification():
     SetScenaFlags(ScenaFlag(0x00DA, 6, 0x6D6))
     SetScenaFlags(ScenaFlag(0x00DB, 0, 0x6D8))
 
-    OP_18(
+    ExecExpressionWithVar(
         0x04,
         (
             (Expr.PushLong, 0x4),
@@ -41855,7 +42127,7 @@ def TK_BattleVerification():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x05,
         (
             (Expr.PushLong, 0x16),
@@ -41864,7 +42136,7 @@ def TK_BattleVerification():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x09,
         (
             (Expr.PushLong, 0x6),
@@ -41873,7 +42145,7 @@ def TK_BattleVerification():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x06,
         (
             (Expr.PushLong, 0x0),
@@ -41883,7 +42155,7 @@ def TK_BattleVerification():
     )
 
     Call(ScriptId.Debug, 'FC_BattleTestParty')
-    OP_28((0xDD, 'r0000'), (0xDD, 'go_r0090'), 0x00)
+    MapJump((0xDD, 'r0000'), (0xDD, 'go_r0090'), 0x00)
 
     Jump('loc_2D8EB')
 
@@ -41891,7 +42163,7 @@ def TK_BattleVerification():
 
     label('loc_2D8CD')
 
-    OP_28((0xDD, 'a1004'), (0xDD, ''), 0x00)
+    MapJump((0xDD, 'a1004'), (0xDD, ''), 0x00)
 
     Jump('loc_2D8EB')
 
@@ -41899,7 +42171,7 @@ def TK_BattleVerification():
 
     label('loc_2D8DD')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -41925,7 +42197,7 @@ def TK_BattleVerification():
 # id: 0x007E offset: 0x2D8F4
 @scena.Code('TK_Camp_ChrFlagTest')
 def TK_Camp_ChrFlagTest():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -41948,7 +42220,7 @@ def TK_Camp_ChrFlagTest():
         'loc_2DE41',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -42296,7 +42568,7 @@ def TK_Camp_ChrFlagTest():
 
     label('loc_2DE33')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -42320,7 +42592,7 @@ def TK_Camp_ChrFlagTest():
 # id: 0x007F offset: 0x2DE44
 @scena.Code('TK_Camp_FlagTest')
 def TK_Camp_FlagTest():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -42343,7 +42615,7 @@ def TK_Camp_FlagTest():
         'loc_2E01C',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -42509,7 +42781,7 @@ def TK_Camp_FlagTest():
 
     label('loc_2E00E')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -42533,7 +42805,7 @@ def TK_Camp_FlagTest():
 # id: 0x0080 offset: 0x2E020
 @scena.Code('TK_Camp_OtherFlagTest')
 def TK_Camp_OtherFlagTest():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -42556,7 +42828,7 @@ def TK_Camp_OtherFlagTest():
         'loc_2E0CF',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -42602,7 +42874,7 @@ def TK_Camp_OtherFlagTest():
 
     label('loc_2E0C1')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -42626,7 +42898,7 @@ def TK_Camp_OtherFlagTest():
 # id: 0x0081 offset: 0x2E0D0
 @scena.Code('TK_Camp_PartyTest')
 def TK_Camp_PartyTest():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -42649,7 +42921,7 @@ def TK_Camp_PartyTest():
         'loc_2E5D6',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -42839,7 +43111,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E55B')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x28,
         (
             (Expr.PushLong, 0x0),
@@ -42854,7 +43126,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E569')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x28,
         (
             (Expr.PushLong, 0x4),
@@ -42869,7 +43141,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E577')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x28,
         (
             (Expr.PushLong, 0x2),
@@ -42884,7 +43156,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E585')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x28,
         (
             (Expr.PushLong, 0x1),
@@ -42899,7 +43171,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E593')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x28,
         (
             (Expr.PushLong, 0x3),
@@ -42938,7 +43210,7 @@ def TK_Camp_PartyTest():
 
     label('loc_2E5C8')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -42962,7 +43234,7 @@ def TK_Camp_PartyTest():
 # id: 0x0082 offset: 0x2E5D8
 @scena.Code('TK_Camp_Orbment')
 def TK_Camp_Orbment():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -42985,7 +43257,7 @@ def TK_Camp_Orbment():
         'loc_2E8C3',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -43150,7 +43422,7 @@ def TK_Camp_Orbment():
     label('loc_2E850')
 
     OP_A3(0x000A, 0x0E75)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -43162,6 +43434,7 @@ def TK_Camp_Orbment():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2E8BE')
@@ -43170,7 +43443,7 @@ def TK_Camp_Orbment():
 
     label('loc_2E8B5')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -43197,7 +43470,7 @@ def TK_Camp_MQuartz():
     OP_0C(0x00, 0x01)
     OP_0E(0x00, 0x00, 0x00)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -43220,7 +43493,7 @@ def TK_Camp_MQuartz():
         'loc_2F1F7',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -43492,7 +43765,7 @@ def TK_Camp_MQuartz():
         'loc_2F17D',
     )
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -43504,6 +43777,7 @@ def TK_Camp_MQuartz():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     Jump('loc_2F1E4')
@@ -43512,7 +43786,7 @@ def TK_Camp_MQuartz():
 
     label('loc_2F17D')
 
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(
         0xFFFF,
@@ -43524,6 +43798,7 @@ def TK_Camp_MQuartz():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
 
     def _loc_2F1E4(): pass
@@ -43536,7 +43811,7 @@ def TK_Camp_MQuartz():
 
     label('loc_2F1E9')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -43560,7 +43835,7 @@ def TK_Camp_MQuartz():
 # id: 0x0084 offset: 0x2F1F8
 @scena.Code('TK_Camp_Link')
 def TK_Camp_Link():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -43610,7 +43885,7 @@ def TK_Camp_Link():
 
     label('loc_2F2DD')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -43628,7 +43903,7 @@ def TK_Camp_Link():
 # id: 0x0085 offset: 0x2F2E8
 @scena.Code('TK_Camp_Formation')
 def TK_Camp_Formation():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -43699,7 +43974,7 @@ def TK_Camp_Formation():
 
     label('loc_2F587')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -43722,7 +43997,7 @@ def EV_99_98_00():
     ClearScenaFlags(ScenaFlag(0x00DE, 0, 0x6F0))
     ClearScenaFlags(ScenaFlag(0x00DE, 1, 0x6F1))
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x1),
@@ -43745,7 +44020,7 @@ def EV_99_98_00():
         'loc_2F76B',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -43757,6 +44032,7 @@ def EV_99_98_00():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
     MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
@@ -43838,6 +44114,7 @@ def EV_99_98_00():
     label('loc_2F724')
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -43851,9 +44128,10 @@ def EV_99_98_00():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     def _loc_2F76B(): pass
 
@@ -43964,7 +44242,7 @@ def EV_99_98_01():
         'loc_2FB01',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -43976,6 +44254,7 @@ def EV_99_98_01():
     )
 
     WaitForMsg()
+
     MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '99_98_01選択肢①', 0x00000001)
     MenuCmd(0x01, 0x00, '99_98_01選択肢②', 0x00000002)
@@ -44055,6 +44334,7 @@ def EV_99_98_01():
     label('loc_2F9B8')
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -44068,6 +44348,7 @@ def EV_99_98_01():
     )
 
     WaitForMsg()
+
     MenuCmd(0x00, 0x01, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x01, '99_98_01選択肢③', 0x00000001)
     MenuCmd(0x01, 0x01, '99_98_01選択肢④', 0x00000002)
@@ -44147,9 +44428,10 @@ def EV_99_98_01():
     label('loc_2FAF1')
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     def _loc_2FB01(): pass
 
@@ -44332,7 +44614,7 @@ def EV_99_98_02():
         'loc_2FE2F',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -44344,6 +44626,7 @@ def EV_99_98_02():
     )
 
     WaitForMsg()
+
     MenuCmd(0x00, 0x00, 0x0000, 40.0, 0x00000000)
     MenuCmd(0x01, 0x00, '99_98_02選択肢①', 0x00000001)
     MenuCmd(0x01, 0x00, '99_98_02選択肢②', 0x00000002)
@@ -44423,6 +44706,7 @@ def EV_99_98_02():
     label('loc_2FDE8')
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
 
@@ -44436,9 +44720,10 @@ def EV_99_98_02():
     )
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     def _loc_2FE2F(): pass
 
@@ -44549,7 +44834,7 @@ def EV_99_98_03():
         'loc_30046',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     If(
         (
@@ -44619,9 +44904,10 @@ def EV_99_98_03():
     label('loc_30036')
 
     WaitForMsg()
+
     OP_25(0x00)
     OP_25(0x01)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     def _loc_30046(): pass
 
@@ -44645,7 +44931,7 @@ def EV_99_98_03_END():
 # id: 0x008E offset: 0x3008C
 @scena.Code('TK_Jump_Tmp')
 def TK_Jump_Tmp():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x40E4),
@@ -44664,7 +44950,7 @@ def TK_EV_Jump():
     Call(ScriptId.System, 'FC_TalkBegin', (0xFF, 0x0, 0x0))
     OP_C9(0x02)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -44673,7 +44959,7 @@ def TK_EV_Jump():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -44682,7 +44968,7 @@ def TK_EV_Jump():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -44743,7 +45029,7 @@ def TK_EV_Jump():
     MenuCmd(0x04, 0x00, 0xF6)
     MenuCmd(0x03, 0x00)
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -44872,7 +45158,7 @@ def TK_EV_Jump():
 
     label('loc_30418')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -44887,7 +45173,7 @@ def TK_EV_Jump():
 
     label('loc_30426')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -44913,7 +45199,7 @@ def TK_EV_Jump():
 # id: 0x0090 offset: 0x3044C
 @scena.Code('EV_Jump_00_00')
 def EV_Jump_00_00():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -44988,7 +45274,7 @@ def EV_Jump_00_00():
         'loc_30622',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -45009,7 +45295,7 @@ def EV_Jump_00_00():
         'loc_3061D',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -45038,7 +45324,7 @@ def EV_Jump_00_00():
         'loc_30658',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -45059,7 +45345,7 @@ def EV_Jump_00_00():
         'loc_30653',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -45089,7 +45375,7 @@ def EV_Jump_00_00():
         'loc_30675',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -45121,7 +45407,7 @@ def EV_Jump_00_00():
 # id: 0x0091 offset: 0x3068C
 @scena.Code('EV_Jump_00_01')
 def EV_Jump_00_01():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -45212,7 +45498,7 @@ def EV_Jump_00_01():
         'loc_30C6F',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -45233,7 +45519,7 @@ def EV_Jump_00_01():
         'loc_30C6A',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -45262,7 +45548,7 @@ def EV_Jump_00_01():
         'loc_30CA5',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -45283,7 +45569,7 @@ def EV_Jump_00_01():
         'loc_30CA0',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -45313,7 +45599,7 @@ def EV_Jump_00_01():
         'loc_30CC2',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -45347,7 +45633,7 @@ def EV_Jump_00_01():
 def EV_DoJump_00():
     Call(ScriptId.Current, 'EV_Flag_Reset')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x0),
@@ -45747,7 +46033,7 @@ def EV_DoJump_00():
 # id: 0x0093 offset: 0x3107C
 @scena.Code('EV_Jump_01_00')
 def EV_Jump_01_00():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -45896,7 +46182,7 @@ def EV_Jump_01_00():
         'loc_3206D',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -45917,7 +46203,7 @@ def EV_Jump_01_00():
         'loc_32068',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -45946,7 +46232,7 @@ def EV_Jump_01_00():
         'loc_320A3',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -45967,7 +46253,7 @@ def EV_Jump_01_00():
         'loc_3209E',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x2),
@@ -45997,7 +46283,7 @@ def EV_Jump_01_00():
         'loc_320C0',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -46029,7 +46315,7 @@ def EV_Jump_01_00():
 # id: 0x0094 offset: 0x320D8
 @scena.Code('EV_Jump_01_01')
 def EV_Jump_01_01():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -46312,7 +46598,7 @@ def EV_Jump_01_01():
         'loc_34639',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -46333,7 +46619,7 @@ def EV_Jump_01_01():
         'loc_34634',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -46362,7 +46648,7 @@ def EV_Jump_01_01():
         'loc_3466F',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -46383,7 +46669,7 @@ def EV_Jump_01_01():
         'loc_3466A',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x5),
@@ -46413,7 +46699,7 @@ def EV_Jump_01_01():
         'loc_3468C',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -46448,7 +46734,7 @@ def EV_DoJump_01():
     Call(ScriptId.Current, 'EV_Flag_Reset')
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x1),
@@ -49405,7 +49691,7 @@ def EV_DoJump_01():
 # id: 0x0096 offset: 0x36288
 @scena.Code('EV_Jump_02_00')
 def EV_Jump_02_00():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -49527,7 +49813,7 @@ def EV_Jump_02_00():
         'loc_36FD9',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -49548,7 +49834,7 @@ def EV_Jump_02_00():
         'loc_36FD4',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -49577,7 +49863,7 @@ def EV_Jump_02_00():
         'loc_3700F',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -49598,7 +49884,7 @@ def EV_Jump_02_00():
         'loc_3700A',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x1),
@@ -49628,7 +49914,7 @@ def EV_Jump_02_00():
         'loc_3702C',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -49660,7 +49946,7 @@ def EV_Jump_02_00():
 # id: 0x0097 offset: 0x37044
 @scena.Code('EV_Jump_02_01')
 def EV_Jump_02_01():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -50002,7 +50288,7 @@ def EV_Jump_02_01():
         'loc_3A258',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -50023,7 +50309,7 @@ def EV_Jump_02_01():
         'loc_3A253',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -50052,7 +50338,7 @@ def EV_Jump_02_01():
         'loc_3A28E',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -50073,7 +50359,7 @@ def EV_Jump_02_01():
         'loc_3A289',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x6),
@@ -50103,7 +50389,7 @@ def EV_Jump_02_01():
         'loc_3A2AB',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -50139,7 +50425,7 @@ def EV_DoJump_02():
     Call(ScriptId.Current, 'EV_Flag_Set_00_All')
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x2),
@@ -53312,7 +53598,7 @@ def EV_DoJump_02():
 # id: 0x0099 offset: 0x3C1B4
 @scena.Code('EV_Jump_03_00')
 def EV_Jump_03_00():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -53456,7 +53742,7 @@ def EV_Jump_03_00():
         'loc_3D0F6',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -53477,7 +53763,7 @@ def EV_Jump_03_00():
         'loc_3D0F1',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -53506,7 +53792,7 @@ def EV_Jump_03_00():
         'loc_3D12C',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -53527,7 +53813,7 @@ def EV_Jump_03_00():
         'loc_3D127',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x2),
@@ -53557,7 +53843,7 @@ def EV_Jump_03_00():
         'loc_3D149',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -53589,7 +53875,7 @@ def EV_Jump_03_00():
 # id: 0x009A offset: 0x3D160
 @scena.Code('EV_Jump_03_01')
 def EV_Jump_03_01():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -54034,7 +54320,7 @@ def EV_Jump_03_01():
         'loc_40EE4',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -54055,7 +54341,7 @@ def EV_Jump_03_01():
         'loc_40EDF',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -54084,7 +54370,7 @@ def EV_Jump_03_01():
         'loc_40F1A',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -54105,7 +54391,7 @@ def EV_Jump_03_01():
         'loc_40F15',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x9),
@@ -54135,7 +54421,7 @@ def EV_Jump_03_01():
         'loc_40F37',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -54172,7 +54458,7 @@ def EV_DoJump_03():
     Call(ScriptId.Current, 'EV_Flag_Set_01_All')
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x3),
@@ -54608,7 +54894,7 @@ def EV_DoJump_03():
 
     label('loc_413C9')
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF9,
         (
             (Expr.PushVar, 0xF7),
@@ -54627,7 +54913,7 @@ def EV_DoJump_03():
         'loc_413E6',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF9,
         (
             (Expr.PushLong, 0x30C3),
@@ -58421,7 +58707,7 @@ def EV_DoJump_03():
 # id: 0x009C offset: 0x4377C
 @scena.Code('EV_Jump_04_00')
 def EV_Jump_04_00():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -58568,7 +58854,7 @@ def EV_Jump_04_00():
         'loc_446EE',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -58589,7 +58875,7 @@ def EV_Jump_04_00():
         'loc_446E9',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -58618,7 +58904,7 @@ def EV_Jump_04_00():
         'loc_44724',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -58639,7 +58925,7 @@ def EV_Jump_04_00():
         'loc_4471F',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x2),
@@ -58669,7 +58955,7 @@ def EV_Jump_04_00():
         'loc_44741',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -58701,7 +58987,7 @@ def EV_Jump_04_00():
 # id: 0x009D offset: 0x44758
 @scena.Code('EV_Jump_04_01')
 def EV_Jump_04_01():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -59045,7 +59331,7 @@ def EV_Jump_04_01():
         'loc_473A3',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -59066,7 +59352,7 @@ def EV_Jump_04_01():
         'loc_4739E',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -59095,7 +59381,7 @@ def EV_Jump_04_01():
         'loc_473D9',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -59116,7 +59402,7 @@ def EV_Jump_04_01():
         'loc_473D4',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x7),
@@ -59146,7 +59432,7 @@ def EV_Jump_04_01():
         'loc_473F6',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -59184,7 +59470,7 @@ def EV_DoJump_04():
     Call(ScriptId.Current, 'EV_Flag_Set_02_All')
     Call(ScriptId.Current, 'EV_Flag_Set_03_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x4),
@@ -59516,7 +59802,7 @@ def EV_DoJump_04():
         'loc_47D77',
     )
 
-    OP_23(0x05, 0xFFFF, 0x02EE, 0x044C, 0x00AE, 0x00)
+    OP_23(0x05, 65535, 750, 1100, 174, 0x00)
 
     Talk(
         0xFFFF,
@@ -59531,7 +59817,7 @@ def EV_DoJump_04():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF6,
         (
             (Expr.PushLong, 0x0),
@@ -59549,7 +59835,7 @@ def EV_DoJump_04():
     OP_75(0x04, 0x00, 0xF6)
     OP_75(0x03, 0x00)
     OP_25(0x00)
-    OP_23(0x05, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x00)
+    OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     If(
         (
@@ -61425,7 +61711,7 @@ def EV_DoJump_04():
     FormationReset()
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
 
@@ -62045,7 +62331,7 @@ def EV_DoJump_04():
     FormationAddMember(ChrTable['亞修'])
     FormationAddMember(ChrTable['妙婕'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
 
@@ -62107,7 +62393,7 @@ def EV_DoJump_04():
     FormationAddMember(ChrTable['亞修'])
     FormationAddMember(ChrTable['妙婕'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
 
@@ -62124,7 +62410,7 @@ def EV_DoJump_04():
     FormationAddMember(ChrTable['亞修'])
     FormationAddMember(ChrTable['妙婕'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
 
@@ -62141,7 +62427,7 @@ def EV_DoJump_04():
     FormationAddMember(ChrTable['亞修'])
     FormationAddMember(ChrTable['妙婕'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
 
@@ -62158,7 +62444,7 @@ def EV_DoJump_04():
     FormationAddMember(ChrTable['亞修'])
     FormationAddMember(ChrTable['妙婕'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
 
@@ -62497,7 +62783,7 @@ def EV_DoJump_04():
     FormationReset()
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    OP_28((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
+    MapJump((0xDD, 'a0000'), (0xFF, 0x0, 0x0), 0x00)
 
     Jump('loc_4969D')
 
@@ -62654,7 +62940,7 @@ def EV_DoJump_04():
 # id: 0x009F offset: 0x496A0
 @scena.Code('EV_Jump_05_00')
 def EV_Jump_05_00():
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0x0),
@@ -62876,7 +63162,7 @@ def EV_Jump_05_00():
         'loc_4B08E',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -62897,7 +63183,7 @@ def EV_Jump_05_00():
         'loc_4B089',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x0),
@@ -62926,7 +63212,7 @@ def EV_Jump_05_00():
         'loc_4B0C4',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushVar, 0xF8),
@@ -62947,7 +63233,7 @@ def EV_Jump_05_00():
         'loc_4B0BF',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF8,
         (
             (Expr.PushLong, 0x4),
@@ -62977,7 +63263,7 @@ def EV_Jump_05_00():
         'loc_4B0E1',
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0xF7,
         (
             (Expr.PushLong, 0xFFFFFFFF),
@@ -63016,7 +63302,7 @@ def EV_DoJump_05():
     Call(ScriptId.Current, 'EV_Flag_Set_03_All')
     Call(ScriptId.Current, 'EV_Flag_Set_04_All')
 
-    OP_18(
+    ExecExpressionWithVar(
         0x03,
         (
             (Expr.PushLong, 0x5),
@@ -66129,7 +66415,7 @@ def EV_Party_Set():
     OP_C4(0x02, 0x01, 0x000D)
     OP_C4(0x02, 0x01, 0x000E)
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2B,
         (
             (Expr.PushLong, 0x6),
@@ -66138,7 +66424,7 @@ def EV_Party_Set():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2C,
         (
             (Expr.PushLong, 0x6),
@@ -66618,7 +66904,7 @@ def EV_Party_Set():
     OP_C4(0x02, 0x02, 0x0005)
     OP_C4(0x02, 0x02, 0x0007)
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2B,
         (
             (Expr.PushLong, 0x5),
@@ -66627,7 +66913,7 @@ def EV_Party_Set():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2C,
         (
             (Expr.PushLong, 0x5),
@@ -66636,7 +66922,7 @@ def EV_Party_Set():
         ),
     )
 
-    OP_18(
+    ExecExpressionWithVar(
         0x2D,
         (
             (Expr.PushLong, 0x6),

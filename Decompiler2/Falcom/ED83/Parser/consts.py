@@ -76,6 +76,7 @@ class BattleChrFlags(IntEnum2):
     Enemy                   = 0x00000001
     Controllable            = 0x00000800
     Party                   = 0x00040000
+    DisableSwap             = 0x10000000
 
 class BattleFlags(IntEnum2):
     DisableEvade            = 0x00000001

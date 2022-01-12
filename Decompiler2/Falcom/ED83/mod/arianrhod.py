@@ -45,7 +45,8 @@ def AniBtlMove2():
     Call(ScriptId.CurrentCharacter, 'AniBtlWait')
 
 def AniBtlCraft05_暴雨疾风枪():
-    if 0:
+    if 1:
+        BattleCtrl(0x64, '開眼')
         # BattleCreateChrDummy(0xFFFE, 5)
 
         # asset = [

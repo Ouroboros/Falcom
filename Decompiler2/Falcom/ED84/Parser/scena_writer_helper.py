@@ -347,6 +347,9 @@ def BattleSetChrPosAsync(chrId: int, targetId: int, x: float, y: float, z: float
 def BattleTurnChrDirection(chrId: int, targetId: int, unknown: float, speed: float = -1.0):
     BattleCtrl(0x41, chrId, targetId, unknown, speed)
 
+def BattleShowText(s: str):
+    BattleCtrl(0x64, s)
+
 def BattleSetChrAbnormalCondition(chrId: int, condition: AbnormalCondition, param1: int, param2: int, unused: int = 0):
     BattleCtrl(0xB7, 0x00, chrId, condition, param1, param2, unused)
 
