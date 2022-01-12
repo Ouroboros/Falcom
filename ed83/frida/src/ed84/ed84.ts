@@ -308,6 +308,10 @@ function hookBattle() {
         code.add(1).writeU8(Addrs.BattleProc.SetupBattle_InitCraftEnd.sub(Addrs.BattleProc.SetupBattle_InitCraft).sub(5 + 2).toUInt32());
     });
 
+    Memory.patchCode(Addrs.BattleProc.CheckBattleChrFlagsForSwapButton, 1, (code) => {
+        code.writeU8(0x09);
+    });
+
     const BattleInfoTable_GetCraftByID = Interceptor2.jmp(
         Addrs.BattleInfoTable.GetCraftByID,
         function(tables: NativePointer, craftId: number): NativePointer {

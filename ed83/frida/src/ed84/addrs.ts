@@ -66,6 +66,7 @@ export const Addrs = (function() {
                     SetupBattle_FormatAlgoScript        : Modules.ED84.base.add(0x15ABAB),
                     SetupBattle_InitCraft               : Modules.ED84.base.add(0x15AE7F),
                     SetupBattle_InitCraftEnd            : Modules.ED84.base.add(0x15AEF3),
+                    CheckBattleChrFlagsForSwapButton    : Modules.ED84.base.add(0x17B5C5),
                 },
 
                 Asset: {
