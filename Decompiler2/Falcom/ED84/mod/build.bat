@@ -51,6 +51,7 @@ for %%i in (
     a????.py
     f????.py
     system?.py
+    debug.py
     chr*.py
     rob*.py
     btl????.py

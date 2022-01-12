@@ -14,9 +14,8 @@ def _init():
 _init()
 
 def test_menu():
-    import system_hook
-    system_hook.FC_ActMenu_Ouroboros()
-    Return()
+    import debug_hook
+    debug_hook.FC_ActMenu_Ouroboros()
 
 def TK_MiniGame_Debug():
     PlayBGM(922, 1.0, 0x0000, 0x00000000, 0x00)

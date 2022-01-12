@@ -392,9 +392,7 @@ function hookScript() {
                 return handleActMenu(arg1, arg2);
             }
 
-            const system = ScriptManager.getScriptByID(ScriptId.System);
-
-            system?.call(ED84.scriptManager.getThreadContext(), 'FC_ActMenu_Ouroboros', 0, 0, 1, 1);
+            ScriptManager.getScriptByID(ScriptId.Debug)?.call(ED84.scriptManager.getThreadContext(), 'FC_ActMenu_Ouroboros', 0, 0, 1, 1);
 
             return 0;
         },
