@@ -263,6 +263,7 @@ class TextCtrlCode(IntEnum2):
     NewLine2        = 0x0A
     Item            = 0x10
     Voice           = 0x11
+    Craft           = 0x19
 
 class TextObject:
     def __init__(self, code: int = None, value: Any = None):

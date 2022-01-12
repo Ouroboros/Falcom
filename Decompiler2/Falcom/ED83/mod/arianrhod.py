@@ -290,10 +290,9 @@ def AniBtlCraftDamageT(damage: bool, knockBack: float):
 
     # BattleSetChrAbnormalCondition(0xFFFE, AbnormalCondition.Stealth, 1, 1)
 
-    for chr in range(CraftTarget.Party1, CraftTarget.Party2):
-        # BattleClearChrFlags(chr, 0xFFFFFFFF)
-        # BattleSetChrFlags(chr, 0x81)
-        BattleSetChrAbnormalCondition(chr, AbnormalCondition.Possess, 1, 0)
+    # for chr in range(CraftTarget.Party2, CraftTarget.Party3):
+    #     BattleClearChrFlags(chr, 0xFFFFFFFF)
+    #     BattleSetChrFlags(chr, 0x81)
 
     def cb():
         # BattleClearChrFlags(0xFFFB, 0x01)

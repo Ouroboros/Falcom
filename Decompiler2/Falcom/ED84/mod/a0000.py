@@ -25,7 +25,7 @@ def BTLSET000():
         direction      = 90.0,
         length         = 20.0,
         width          = 20.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 477,
         dangerBGM      = 456,
@@ -53,7 +53,7 @@ def BTLSET001():
         direction      = 0.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 477,
         dangerBGM      = 456,
@@ -81,7 +81,7 @@ def BTLSET002():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 474,
         dangerBGM      = 456,
@@ -109,7 +109,7 @@ def BTLSET003():
         direction      = 131.89999389648438,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 477,
         dangerBGM      = 456,
@@ -137,7 +137,7 @@ def BTLSETEXP():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -165,7 +165,7 @@ def BTLSETMANY():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -193,7 +193,7 @@ def BTLSETGEN():
         direction      = 0.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -221,7 +221,7 @@ def BTLSET_NORESULT():
         direction      = 0.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -249,7 +249,7 @@ def BTLSETBONUS():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -277,7 +277,7 @@ def BTLSET_TRIAL01():
         direction      = 0.0,
         length         = 20.0,
         width          = 20.0,
-        word28         = 950,
+        battleId       = 950,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -305,7 +305,7 @@ def BTLSETDEBUG():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 9,
+        battleId       = 9,
         flags          = 0x00000000,
         bgm            = 477,
         dangerBGM      = 456,
@@ -333,7 +333,7 @@ def BTLSETDEBUG2():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 9,
+        battleId       = 9,
         flags          = 0x00000000,
         bgm            = 477,
         dangerBGM      = 456,
@@ -361,7 +361,7 @@ def BTLSETDEBUG3():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 9,
+        battleId       = 9,
         flags          = 0x00000000,
         bgm            = 477,
         dangerBGM      = 456,
@@ -389,7 +389,7 @@ def BTLSET_QS343_02():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 904,
+        battleId       = 904,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -417,7 +417,7 @@ def BTLSET_ID02E_00():
         direction      = 0.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 311,
+        battleId       = 311,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -445,7 +445,7 @@ def BTLSET_ID03B_01():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 354,
+        battleId       = 354,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -473,7 +473,7 @@ def BTLSET_ID01B_05():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 208,
+        battleId       = 208,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -501,7 +501,7 @@ def BTLSET_ID01B_05_B():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 311,
+        battleId       = 311,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -529,7 +529,7 @@ def BTLSET_ID01C_00():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 209,
+        battleId       = 209,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -557,7 +557,7 @@ def BTLSET_ID01D_02():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 212,
+        battleId       = 212,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -585,7 +585,7 @@ def BTLSET_ID01X_03():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 253,
+        battleId       = 253,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -613,7 +613,7 @@ def BTLSET_ID01X_06():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 256,
+        battleId       = 256,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -641,7 +641,7 @@ def BTLSET_ID01X_08():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 258,
+        battleId       = 258,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -669,7 +669,7 @@ def BTLSET_ID02B_02():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 304,
+        battleId       = 304,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -697,7 +697,7 @@ def BTLSET_ID02C_01():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 306,
+        battleId       = 306,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -725,7 +725,7 @@ def BTLSET_ID02E_02():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 313,
+        battleId       = 313,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -753,7 +753,7 @@ def BTLSET_ID02E_04():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 315,
+        battleId       = 315,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -781,7 +781,7 @@ def BTLSET_ID02E_05():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 316,
+        battleId       = 316,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -809,7 +809,7 @@ def BTLSET_ID02D_03():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 310,
+        battleId       = 310,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -837,7 +837,7 @@ def BTLSET_ID04_07():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 407,
+        battleId       = 407,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -865,7 +865,7 @@ def BTLSET_ID04_08():
         direction      = 90.0,
         length         = 8.0,
         width          = 20.0,
-        word28         = 408,
+        battleId       = 408,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -893,7 +893,7 @@ def BTLSET_ID05_00():
         direction      = 0.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 500,
+        battleId       = 500,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -921,7 +921,7 @@ def BTLSET_ID05_00B():
         direction      = 0.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 501,
+        battleId       = 501,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -949,7 +949,7 @@ def BTLSET_ID05_00C():
         direction      = 0.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 502,
+        battleId       = 502,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -977,7 +977,7 @@ def BTLSET_EV98():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -1005,7 +1005,7 @@ def BTLSET_EV99():
         direction      = 90.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 0,
+        battleId       = 0,
         flags          = 0x00000000,
         bgm            = 0,
         dangerBGM      = 0,
@@ -1048,7 +1048,7 @@ def BTLSET1000():
         direction      = 0.0,
         length         = 20.0,
         width          = -1.0,
-        word28         = 1098,
+        battleId       = 1098,
         flags          = 0x00000000,
         bgm            = 452,
         dangerBGM      = 0,
@@ -1093,8 +1093,8 @@ def PreInit():
 # id: 0x0027 offset: 0x3DE8
 @scena.Code('Init')
 def Init():
-    OP_3A(0x05, 1, 1)
-    OP_3A(0x06, 1)
+    ReplaceBGM(1, 1)
+    SetMapBGM(1)
     OP_14(0x00000400)
     OP_3B(0x64, 1000, 0.0, 1.0)
     StopBGM(0, 0x01)
@@ -1120,7 +1120,6 @@ def Init():
 # id: 0x0028 offset: 0x3E38
 @scena.Code('Reinit')
 def Reinit():
-    BGMCtrl(0x06, 921)
     OP_AC(0x00, 0x03)
 
     If(
@@ -32607,7 +32606,7 @@ def TK_System_Debug_Emotest():
     )
 
     ChrClearPhysicsFlags(0xFFFE, 0x00002000)
-    OP_3D(0xFFFE, 180.0, 10.0, 0x00)
+    ChrTurnDirection(0xFFFE, 180.0, 10.0, 0x00)
 
     Jump('loc_27C4B')
 
@@ -32625,7 +32624,7 @@ def TK_System_Debug_Emotest():
         'loc_27B6C',
     )
 
-    OP_3D(0xFFFE, -90.0, 10.0, 0x00)
+    ChrTurnDirection(0xFFFE, -90.0, 10.0, 0x00)
 
     Jump('loc_27C4B')
 
@@ -32643,7 +32642,7 @@ def TK_System_Debug_Emotest():
         'loc_27B8B',
     )
 
-    OP_3D(0xFFFE, 90.0, 10.0, 0x00)
+    ChrTurnDirection(0xFFFE, 90.0, 10.0, 0x00)
 
     Jump('loc_27C4B')
 
@@ -32661,7 +32660,7 @@ def TK_System_Debug_Emotest():
         'loc_27BAA',
     )
 
-    OP_3D(0xFFFE, 0.0, 10.0, 0x00)
+    ChrTurnDirection(0xFFFE, 0.0, 10.0, 0x00)
 
     Jump('loc_27C4B')
 
@@ -36651,8 +36650,8 @@ def TK_ActMenu_Test():
 @scena.Code('EV_useChecker')
 def EV_useChecker():
     OP_20(0x15, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
-    OP_3A(0x03, 0.7, 500, 0x00)
-    OP_3A(0x03, 1.0, 500, 0x00)
+    BGMCtrl(0x03, 0.7, 500, 0x00)
+    BGMCtrl(0x03, 1.0, 500, 0x00)
     SetChrFace(0x04, ChrTable['黎恩'], '#E0#M4')
 
     ChrTalk(
@@ -38982,7 +38981,7 @@ def TK_LookCommand_Test():
     ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
     Sleep(500)
 
-    OP_3D(0xF016, 180.0, 10.0, 0x00)
+    ChrTurnDirection(0xF016, 180.0, 10.0, 0x00)
     OP_3F(0xF016)
     SetChrAniFunction(0xF016, 0x00, 'AniEvByeWalk', -1.0, 1.0, 0x00000000)
     Sleep(1000)
@@ -38997,7 +38996,7 @@ def TK_LookCommand_Test():
     ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
     Sleep(500)
 
-    OP_3D(0xF016, 180.0, 5.0, 0x00)
+    ChrTurnDirection(0xF016, 180.0, 5.0, 0x00)
     OP_3F(0xF016)
     SetChrAniFunction(0xF016, 0x00, 'AniEvByeWalk', -1.0, 1.0, 0x00000000)
     Sleep(1000)
@@ -39012,7 +39011,7 @@ def TK_LookCommand_Test():
     ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
     Sleep(500)
 
-    OP_3D(0xF016, 180.0, 2.5, 0x00)
+    ChrTurnDirection(0xF016, 180.0, 2.5, 0x00)
     OP_3F(0xF016)
     SetChrAniFunction(0xF016, 0x00, 'AniEvByeWalk', -1.0, 1.0, 0x00000000)
     Sleep(1000)
@@ -39642,7 +39641,7 @@ def EV_Test_Evsave_Load():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
     OP_43(0x00, 0, 1.0, 0)
     FormationCtrl(0x07)
-    OP_3A(0x04, 2, 1.0, 0x0000, 0x00000000, 0x00)
+    BGMCtrl(0x04, 2, 1.0, 0x0000, 0x00000000, 0x00)
     ClearScenaFlags(ScenaFlag(0x0062, 4, 0x314))
     OP_AF(0x01)
     ClearScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
@@ -39657,8 +39656,8 @@ def EV_Test_Evsave_Load():
         ),
     )
 
-    OP_3A(0x05, 1, 1)
-    OP_3A(0x06, 1)
+    ReplaceBGM(1, 1)
+    SetMapBGM(1)
 
     Return()
 

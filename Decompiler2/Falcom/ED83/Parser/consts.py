@@ -76,3 +76,18 @@ class BattleChrFlags(IntEnum2):
     Enemy                   = 0x00000001
     Controllable            = 0x00000800
     Party                   = 0x00040000
+
+class BattleFlags(IntEnum2):
+    DisableEvade            = 0x00000001
+    DisableItem             = 0x00000004
+    DisableArts             = 0x00000008
+
+class BattleButtonId(IntEnum2):
+    Move                    = 0
+    Craft                   = 1
+    Item                    = 2
+    Run                     = 3
+    Attack                  = 4
+    Arts                    = 5
+    Swap                    = 6
+    Order                   = 7

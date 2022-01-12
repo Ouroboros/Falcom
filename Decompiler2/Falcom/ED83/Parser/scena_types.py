@@ -197,7 +197,7 @@ class ScenaBattleSetting:
         direction   : int = 0,
         length      : int = 0,
         width       : int = 0,
-        word28      : int = 0,
+        battleId    : int = 0,
         flags       : int = 0,
         bgm         : int = 0,
         dangerBGM   : int = 0,
@@ -215,16 +215,16 @@ class ScenaBattleSetting:
         self.y              = y             # type: int
         self.z              = z             # type: int
         self.direction      = direction     # type: int
-        self.length         = length       # type: int
-        self.width          = width       # type: int
-        self.word28         = word28        # type: int
+        self.length         = length        # type: int
+        self.width          = width         # type: int
+        self.battleId       = battleId      # type: int
         self.flags          = flags         # type: int
         self.bgm            = bgm           # type: int
         self.dangerBGM      = dangerBGM     # type: int
         self.word34         = word34        # type: int
         self.word36         = word36        # type: int
         self.atBonus        = atBonus       # type: int
-        self.battleScript   = battleScript    # type: str
+        self.battleScript   = battleScript  # type: str
         self.monsterSet     = monsterSet    # type: List[ScenaBattleMonsterSet]
 
         self.read(fs)
@@ -240,7 +240,7 @@ class ScenaBattleSetting:
         self.direction  = fs.ReadFloat()                        # 0x1C
         self.length     = fs.ReadFloat()                        # 0x20
         self.width      = fs.ReadFloat()                        # 0x24
-        self.word28     = fs.ReadUShort()                       # 0x28
+        self.battleId   = fs.ReadUShort()                       # 0x28
 
         fs.Position += 2    # padding                           # 0x2A
 
@@ -271,7 +271,7 @@ class ScenaBattleSetting:
         fs.write(utils.float_to_bytes(self.direction))
         fs.write(utils.float_to_bytes(self.length))
         fs.write(utils.float_to_bytes(self.width))
-        fs.write(utils.int_to_bytes(self.word28, 2))
+        fs.write(utils.int_to_bytes(self.battleId, 2))
 
         fs.write(b'\x00' * 2) # padding
 
@@ -303,7 +303,7 @@ class ScenaBattleSetting:
             f'{DefaultIndent}direction      = {self.direction},',
             f'{DefaultIndent}length         = {self.length},',
             f'{DefaultIndent}width          = {self.width},',
-            f'{DefaultIndent}word28         = {self.word28},',
+            f'{DefaultIndent}battleId       = {self.battleId},',
             f'{DefaultIndent}flags          = 0x{self.flags:08X},',
             f'{DefaultIndent}bgm            = {self.bgm},',
             f'{DefaultIndent}dangerBGM      = {self.dangerBGM},',
