@@ -39,9 +39,16 @@ export interface INameTableData {
     name2       : string;
 }
 
+export interface IBGMTableData {
+    id          : number;
+    file        : string;
+}
+
 export interface IConfig {
-    nameTable: INameTableData[];
-    assetMap: {[key: string]: string};
+    patchDirs   : string[];
+    nameTable   : INameTableData[];
+    bgmTable    : IBGMTableData[];
+    assetMap    : {[key: string]: string};
 }
 
 export class NameTableData extends ED8BaseObject implements INameTableData {
@@ -181,6 +188,15 @@ export class Character extends ED8BaseObject {
         this.writeU16(Offsets.Character.ModelChrId, chrId);
     }
 
+    get battleCharacter(): BattleCharacter | undefined {
+        const p = this.readPointer(Offsets.Character.BattleCharacter);
+        return p.isNull() ? undefined : new BattleCharacter(p);
+    }
+
+    get name(): string {
+        return this.readUtf8String(Offsets.Character.Name)!;
+    }
+
     get model(): string {
         return this.readUtf8String(Offsets.Character.Model)!;
     }
@@ -230,6 +246,10 @@ export class BattleCharacter extends ED8BaseObject {
 
     set sbreakCraftID(craftId: number) {
         this.writeU16(Offsets.BattleCharacter.SBreakCraftID, craftId);
+    }
+
+    get flags(): number {
+        return this.readU32(Offsets.BattleCharacter.Flags);
     }
 
     get battleInfoTable(): BattleInfoTable {

@@ -177,7 +177,7 @@ NTSTATUS FridaLoader::FridaThread()
     FridaScriptOptions* scriptOptions = frida_script_options_new();
 
     frida_script_options_set_name(scriptOptions, "script");
-    frida_script_options_set_runtime(scriptOptions, FRIDA_SCRIPT_RUNTIME_QJS);
+    frida_script_options_set_runtime(scriptOptions, FRIDA_SCRIPT_RUNTIME_V8);
 
     FridaScript* script = frida_session_create_script_sync(session, this->Script, scriptOptions, nullptr, &error);
     g_clear_object(&scriptOptions);

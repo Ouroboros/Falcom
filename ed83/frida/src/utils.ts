@@ -178,16 +178,23 @@ export function getGameVersion(): string {
     throw new Error('unknown game version');
 }
 
+let patchDirs = [
+    'patch/',
+    'ouroboros/',
+    'data_cn/',
+];
+
+export function setPatchDirs(dirs: string[]) {
+    if (dirs?.length) {
+        patchDirs = dirs;
+        log(`new patch dirs: ${patchDirs}`);
+    }
+}
+
 export function getPatchFile(path: string): string | null {
     if (path.slice(0, 5) != 'data/') {
         return null;
     }
-
-    const patchDirs = [
-        'patch/',
-        'ouroboros/',
-        'data_cn/',
-    ];
 
     for (let dir of patchDirs) {
         const patchPath = dir + path.slice(5);

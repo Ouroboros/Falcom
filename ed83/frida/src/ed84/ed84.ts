@@ -92,14 +92,30 @@ function hookCharacterModel() {
         Addrs.Character.LoadAni,
         function(chr: NativePointer, ani: NativePointer, autoCompile: number) {
             const char = new Character(chr);
-            const nameData = ED84.findNameTableDataByModel(char.model);
-            ani = nameData ? Memory.allocUtf8String(nameData.ani) : ani;
 
-            // utils.log(`Character::LoadAni(${nameData?.ani})`);
+            if (char.isReplaced()) {
+                const nameData = ED84.findNameTableDataByModel(char.model);
+                ani = nameData ? Memory.allocUtf8String(nameData.ani) : ani;
+
+                utils.log(`Character::LoadAni(${nameData?.ani})`);
+            }
 
             Character_LoadAni(chr, ani, 0);
         },
         'void', ['pointer', 'pointer', 'uint32'],
+    );
+
+    let disableCharacterInitialize = false;
+
+    const BattleProc_CreateEnemyBattleCharacter = Interceptor2.jmp(
+        Addrs.BattleProc.CreateEnemyBattleCharacter,
+        function(battleProc: NativePointer, chrId: number, algo: NativePointer, arg4: NativePointer, arg5: NativePointer, arg6: NativePointer, arg7: NativePointer, arg8: NativePointer): NativePointer {
+            disableCharacterInitialize = true;
+            const ret = BattleProc_CreateEnemyBattleCharacter(battleProc, chrId, algo, arg4, arg5, arg6, arg7, arg8);
+            disableCharacterInitialize = false;
+            return ret;
+        },
+        'pointer', ['pointer', 'uint16', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer'],
     );
 
     const Character_Initialize = Interceptor2.jmp(
@@ -124,7 +140,7 @@ function hookCharacterModel() {
             const char = new Character(chr);
             const chrId = ED84.getBattleStyle(char.chrId);
 
-            if (chrId >= MaxPartyChrId && char.modelChrId == InvalidChrId) {
+            if (!disableCharacterInitialize && chrId != InvalidChrId && chrId >= MaxPartyChrId && char.modelChrId == InvalidChrId) {
                 char.modelChrId = chrId;
                 const nameData = findReplacedNameData(char.chrId);
                 if (nameData) {
@@ -259,6 +275,8 @@ function hookBattle() {
             if (!path)
                 path = sprintf(fmt.readAnsiString()!, battleAni.readUtf8String()!);
 
+            // utils.log(`algo file = ${path}`);
+
             buffer.writeAnsiString(path.slice(0, size));
         },
         'void', ['pointer', 'uint32', 'pointer', 'pointer'],
@@ -309,7 +327,7 @@ function hookBattle() {
     });
 
     Memory.patchCode(Addrs.BattleProc.CheckBattleChrFlagsForSwapButton, 1, (code) => {
-        code.writeU8(0x09);
+        code.writeU8(0x05);
     });
 
     const BattleInfoTable_GetCraftByID = Interceptor2.jmp(
@@ -355,6 +373,16 @@ function hookBattle() {
 
         }, 'pointer', ['pointer', 'uint16'],
     );
+
+    // const setatbardelay = Interceptor2.jmp(
+    //     ptr(0x140108AB0),
+    //     function(atbar: NativePointer, battleChar: NativePointer, at: number, arg4: number, arg5: number) {
+    //         const btc = new BattleCharacter(battleChar);
+    //         utils.log(`SetATBarDelay(${btc.character.name}, ${at.toString(16)} ${arg4} ${arg5})`);
+    //         setatbardelay(atbar, battleChar, at, 1, 1);
+    //     },
+    //     'void', ['pointer', 'pointer', 'uint32', 'uint8', 'uint8'],
+    // )
 }
 
 function hookScript() {
@@ -406,6 +434,10 @@ function hookScript() {
 
 export function main() {
     ED84.enableLogger();
+
+    const dirs = ED84.getConfig()?.patchDirs;
+    if (dirs)
+        utils.setPatchDirs(dirs);
 
     hookIoRedirection();
     hookCharacterModel();

@@ -66,6 +66,7 @@ export const Addrs = (function() {
                     SetupBattle_FormatAlgoScript        : Modules.ED84.base.add(0x15ABAB),
                     SetupBattle_InitCraft               : Modules.ED84.base.add(0x15AE7F),
                     SetupBattle_InitCraftEnd            : Modules.ED84.base.add(0x15AEF3),
+                    CreateEnemyBattleCharacter          : Modules.ED84.base.add(0x15A8E0),
                     CheckBattleChrFlagsForSwapButton    : Modules.ED84.base.add(0x17B5C5),
                 },
 
@@ -94,8 +95,10 @@ export const Offsets = (function() {
     //     case 'ed84_jp':
             return {
                 ED84: {
-                    t_name              : 0x83B248,
                     ScriptManager       : 0x1CB8,
+                    BGMManager          : 0x2210,
+                    t_bgm               : 0x83B210,
+                    t_name              : 0x83B248,
                     CraftList           : 0x9AEB00,
                     MagicList           : 0x9AF300,
                     SBreakList          : 0x9B0580,
@@ -128,12 +131,14 @@ export const Offsets = (function() {
                     ChrID               : 0x900,
                     // faceTexture         : 0x0,
                     ModelChrId          : 0x2174,
+                    BattleCharacter     : 0x2220,
                 },
 
                 BattleCharacter: {
                     BattleProc      : 0x08,
                     Character       : 0x10,
                     SBreakCraftID   : 0x202,
+                    Flags           : 0x3A8,
                     BattleInfoTable : 0x480,
                     BattleChrId     : 0xF06,
                 },
