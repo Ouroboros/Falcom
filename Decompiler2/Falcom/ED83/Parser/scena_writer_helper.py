@@ -249,6 +249,9 @@ def BattleClearChrFlags(chrId: int, flags: int):
 def BattleGetChrFlags(chrId: int):
     BattleCtrl(0x0D, chrId)
 
+def BattleKillTarget(chrId: int):
+    BattleCtrl(0x14, chrId)
+
 def BattleSetChrAfterImageOn(chrId: int, arg1: float, arg2: float, arg3: float, arg4: float, arg5: float):
     BattleCtrl(0x15, chrId, arg1, arg2, arg3, arg4, arg5)
 

@@ -324,7 +324,7 @@ class StatusTableData(TableDataEntry):
             self.float11            = fs.ReadFloat()
             self.float12            = fs.ReadFloat()
 
-            self.rangeType          = fs.ReadMultiByte()
+            self.flags              = fs.ReadMultiByte()
             self.name               = fs.ReadMultiByte()
             self.description        = fs.ReadMultiByte()
 
@@ -421,7 +421,7 @@ class StatusTableData(TableDataEntry):
             f'    dropRate2                 = {self.dropRate2},',
             f'    float11                   = {self.float11:g},',
             f'    float12                   = {self.float12:g},',
-            f"    rangeType                 = '{self.rangeType}',",
+            f"    flags                     = '{self.flags}',",
             f"    name                      = '{self.name}',",
             f"    description               = {repr(self.description)},",
             ')',
@@ -528,7 +528,7 @@ class StatusTableData(TableDataEntry):
         body.extend(utils.float_to_bytes(self.float11))
         body.extend(utils.float_to_bytes(self.float12))
 
-        body.extend(utils.str_to_bytes(self.rangeType))
+        body.extend(utils.str_to_bytes(self.flags))
         body.extend(utils.str_to_bytes(self.name))
         body.extend(utils.str_to_bytes(self.description))
 

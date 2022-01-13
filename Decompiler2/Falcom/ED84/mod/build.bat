@@ -40,6 +40,16 @@ goto:EOF
 
 :START
 
+mkdir "%PATCH_PATH%\asset\D3D11\" >NUL 2>NUL
+
+for %%i in (
+    C_CHR900.pkg
+    C_CHR901.pkg
+    C_CHR902.pkg
+) do (
+    copy NUL "%PATCH_PATH%\asset\D3D11\%%i" >NUL 2>NUL
+)
+
 rem copy/y config.json5 "%PATCH_PATH%\"
 
 call ..\Parser\gen_op.py
