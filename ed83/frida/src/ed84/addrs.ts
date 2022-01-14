@@ -16,6 +16,8 @@ export const Addrs = (function() {
 
                 SaveDataChecksum                        : Modules.ED84.base.add(0x3E4DD0),
 
+                FormatBgmPath                           : Modules.ED84.base.add(0x257DE0),
+
                 File: {
                     Open                                : Modules.ED84.base.add(0x0ED240),
                     GetSize                             : Modules.ED84.base.add(0x0ED190),
@@ -26,6 +28,8 @@ export const Addrs = (function() {
                     FindNameTableDataByModel            : Modules.ED84.base.add(0x257840),
                     FindNameTableDataByChrId            : Modules.ED84.base.add(0x2576E0),
                     FindPartyCharByChrId                : Modules.ED84.base.add(0x29EA40),
+                    PlayBGM                             : Modules.ED84.base.add(0x2F9640),
+                    // PlayBGM2                            : Modules.ED84.base.add(0x307E96),
                 },
 
                 Script: {

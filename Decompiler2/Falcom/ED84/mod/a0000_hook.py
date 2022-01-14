@@ -19,6 +19,7 @@ def test_menu():
 
 def TK_MiniGame_Debug():
     PlayBGM(922, 1.0, 0x0000, 0x00000000, 0x00)
+    # BGMCtrl(0x03, 1.0, 500, 0x00)
     # return test_menu()
 
     chrmap = {

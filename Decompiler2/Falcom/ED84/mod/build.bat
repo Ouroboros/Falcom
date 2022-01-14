@@ -50,7 +50,7 @@ for %%i in (
     copy NUL "%PATCH_PATH%\asset\D3D11\%%i" >NUL 2>NUL
 )
 
-rem copy/y config.json5 "%PATCH_PATH%\"
+copy/y config.json5 "%PATCH_PATH%\" >NUL 2>NUL
 
 call ..\Parser\gen_op.py
 

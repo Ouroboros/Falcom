@@ -14,6 +14,7 @@ import {
     MaxPartyChrId,
     MinCustomChrId,
     ScriptManager,
+    IBGMTableData,
 } from "./types";
 
 function findReplacedNameData(chrId: number): INameTableData | undefined {
@@ -97,7 +98,7 @@ function hookCharacterModel() {
                 const nameData = ED84.findNameTableDataByModel(char.model);
                 ani = nameData ? Memory.allocUtf8String(nameData.ani) : ani;
 
-                utils.log(`Character::LoadAni(${nameData?.ani})`);
+                // utils.log(`Character::LoadAni(${nameData?.ani})`);
             }
 
             Character_LoadAni(chr, ani, 0);
@@ -113,6 +114,13 @@ function hookCharacterModel() {
             disableCharacterInitialize = true;
             const ret = BattleProc_CreateEnemyBattleCharacter(battleProc, chrId, algo, arg4, arg5, arg6, arg7, arg8);
             disableCharacterInitialize = false;
+
+            if (!ret.isNull()) {
+                const btlChr = new BattleCharacter(ret);
+                btlChr.initNpcCraftAI(false);
+                // btlChr.flags |= 0x800;
+            }
+
             return ret;
         },
         'pointer', ['pointer', 'uint16', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer'],
@@ -432,6 +440,51 @@ function hookScript() {
     );
 }
 
+function hookBGM() {
+    const DummyBGMId = 20;      // testop
+    let bgmItem: IBGMTableData | undefined;
+
+    function findBGMItem(bgmId: number): IBGMTableData | undefined {
+        return ED84.getConfig()?.bgmTable?.find((e) => e.id == bgmId);
+    }
+
+    const PlayBGM = Interceptor2.jmp(
+        Addrs.ED84.PlayBGM,
+        function(ed84: NativePointer, bgmId: number, arg3: number, arg4: number, arg5: NativePointer, arg6: NativePointer, arg7: NativePointer, arg8: NativePointer): number {
+            bgmItem = findBGMItem(bgmId);
+            if (bgmItem)
+                bgmId = DummyBGMId;
+            return PlayBGM(ed84, bgmId, arg3, arg4, arg5, arg6, arg7, arg8);
+        },
+        'uint32', ['pointer', 'uint16', 'float', 'float', 'pointer', 'pointer', 'pointer', 'pointer'],
+    );
+
+    const FormatBgmPath = Interceptor2.jmp(
+        Addrs.FormatBgmPath,
+        function(bgmTableData: NativePointer): NativePointer {
+            const buff = FormatBgmPath(bgmTableData);
+
+            if (bgmItem) {
+                const path = [
+                    sprintf("data/bgm/wav/%s.wav", bgmItem.file),
+                    sprintf("data/bgm/opus/%s.opus", bgmItem.file),
+                ].find((e) => !!utils.getPatchFile(e));
+
+                // utils.log(`bgm path: ${path}`);
+
+                if (path) {
+                    buff.writeUtf8String(path.slice(0, 0xFF));
+                }
+
+                // bgmItem = undefined;
+            }
+
+            return buff;
+        },
+        'pointer', ['pointer'],
+    );
+}
+
 export function main() {
     ED84.enableLogger();
 
@@ -443,6 +496,7 @@ export function main() {
     hookCharacterModel();
     hookBattle();
     hookScript();
+    hookBGM();
 
     Memory.patchCode(Addrs.SaveDataChecksum, 1, (code) => {
         code.writeU8(0xEB);

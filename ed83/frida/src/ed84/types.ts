@@ -252,6 +252,10 @@ export class BattleCharacter extends ED8BaseObject {
         return this.readU32(Offsets.BattleCharacter.Flags);
     }
 
+    set flags(f: number) {
+        this.writeU32(Offsets.BattleCharacter.Flags, f);
+    }
+
     get battleInfoTable(): BattleInfoTable {
         return new BattleInfoTable(this.readPointer(Offsets.BattleCharacter.BattleInfoTable));
     }
@@ -428,14 +432,26 @@ export class ED84 extends ED8BaseObject {
     }
 
     static getCraftList(chrId: number): NativePointer {
+        if (chrId > MaxPartyChrId) {
+            return NULL;
+        }
+
         return this.sharedInstance.pointer.add(Offsets.ED84.CraftList).add(chrId * 0x10);
     }
 
     static getMagicList(chrId: number): NativePointer {
+        if (chrId > MaxPartyChrId) {
+            return NULL;
+        }
+
         return this.sharedInstance.pointer.add(Offsets.ED84.MagicList).add(chrId * 0x10);
     }
 
     static getSBreak(chrId: number): NativePointer {
+        if (chrId > MaxPartyChrId) {
+            return NULL;
+        }
+
         return this.sharedInstance.pointer.add(Offsets.ED84.SBreakList).add(chrId * 2);
     }
 

@@ -907,7 +907,7 @@ def Handler_65(ctx: InstructionHandlerContext):
 
 def Handler_66(ctx: InstructionHandlerContext):
     def getfmts(n):
-        return 'BW' + {
+        return 'BN' + {
             0x00: 'W',
             0x01: 'W',
             0x02: 'L',              # full_craft

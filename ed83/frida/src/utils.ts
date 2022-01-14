@@ -41,6 +41,10 @@ export class ED8BaseObject {
     writeU16(offset: number, value: number) {
         this.impl.add(offset).writeU16(value);
     }
+
+    writeU32(offset: number, value: number) {
+        this.impl.add(offset).writeU32(value);
+    }
 }
 
 export class ED8Vector extends ED8BaseObject {
