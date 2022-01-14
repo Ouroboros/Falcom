@@ -51,6 +51,8 @@ export const Addrs = (function() {
                     Initialize                          : Modules.ED84.base.add(0x22F290),
                     LoadFaceModel                       : Modules.ED84.base.add(0x22A530),
                     LoadAni                             : Modules.ED84.base.add(0x233DB0),
+                    // ResetFaceTexture                    : Modules.ED84.base.add(0x2355B0),
+                    SetFaceTexture                      : Modules.ED84.base.add(0x233F90),
                 },
 
                 BattleCharacter: {
@@ -135,6 +137,7 @@ export const Offsets = (function() {
                     ChrID               : 0x900,
                     // faceTexture         : 0x0,
                     ModelChrId          : 0x2174,
+                    Character2          : 0x21D8,
                     BattleCharacter     : 0x2220,
                 },
 

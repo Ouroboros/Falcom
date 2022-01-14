@@ -163,6 +163,9 @@ export class Script extends ED8BaseObject {
 }
 
 export class Character extends ED8BaseObject {
+    // private static _ResetFaceTexture = new NativeFunction(Addrs.Character.ResetFaceTexture, "uint32", ['pointer'], 'win64');
+    // private static _SetFaceTexture = new NativeFunction(Addrs.Character.SetFaceTexture, "void", ['pointer', 'pointer', 'uint16'], 'win64');
+
     static isReplaced(chrId: number): boolean {
         const id = ED84.getBattleStyle(chrId);
         if (id == InvalidChrId) {
@@ -176,29 +179,12 @@ export class Character extends ED8BaseObject {
         return Character.isReplaced(this.chrId);
     }
 
-    get chrId(): number {
-        return this.readU16(Offsets.Character.ChrID);
-    }
-
-    get modelChrId(): number {
-        return this.readU16(Offsets.Character.ModelChrId);
-    }
-
-    set modelChrId(chrId: number) {
-        this.writeU16(Offsets.Character.ModelChrId, chrId);
-    }
-
-    get battleCharacter(): BattleCharacter | undefined {
-        const p = this.readPointer(Offsets.Character.BattleCharacter);
-        return p.isNull() ? undefined : new BattleCharacter(p);
+    get model(): string {
+        return this.readUtf8String(Offsets.Character.Model)!;
     }
 
     get name(): string {
         return this.readUtf8String(Offsets.Character.Name)!;
-    }
-
-    get model(): string {
-        return this.readUtf8String(Offsets.Character.Model)!;
     }
 
     get faceModel(): string {
@@ -217,12 +203,43 @@ export class Character extends ED8BaseObject {
         this.pointer.add(Offsets.Character.PresetFaceModel).writeUtf8String(model);
     }
 
+    get chrId(): number {
+        return this.readU16(Offsets.Character.ChrID);
+    }
+
+    get modelChrId(): number {
+        return this.readU16(Offsets.Character.ModelChrId);
+    }
+
+    set modelChrId(chrId: number) {
+        this.writeU16(Offsets.Character.ModelChrId, chrId);
+    }
+
+    get character2(): Character | undefined {
+        const p = this.readPointer(Offsets.Character.Character2);
+        return p.isNull() ? undefined : new Character(p);
+    }
+
+    get battleCharacter(): BattleCharacter | undefined {
+        const p = this.readPointer(Offsets.Character.BattleCharacter);
+        return p.isNull() ? undefined : new BattleCharacter(p);
+    }
+
     loadAni(ani: string) {
         const Character_LoadAni = new NativeFunction(Addrs.Character.LoadAni, "void", ['pointer', 'pointer', 'uint32'], 'win64');
         const p = Memory.allocUtf8String(ani);
         const auto_compile = 0;
         Character_LoadAni(this.pointer, p, auto_compile);
     }
+
+    // resetFaceTexture(): number {
+    //     return Character._ResetFaceTexture(this.pointer);
+    // }
+
+    // setFaceTexture(faceTexture: string, chrId: number = 0xFFFF) {
+    //     const f = Memory.allocUtf8String(faceTexture);
+    //     Character._SetFaceTexture(this.pointer, f, chrId);
+    // }
 }
 
 export class BattleCharacter extends ED8BaseObject {

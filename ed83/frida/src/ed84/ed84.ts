@@ -143,7 +143,7 @@ function hookCharacterModel() {
             a12     : NativePointer,
             a13     : NativePointer,
             a14     : NativePointer,
-        ): NativePointer {
+        ): number {
 
             const char = new Character(chr);
             const chrId = ED84.getBattleStyle(char.chrId);
@@ -159,7 +159,25 @@ function hookCharacterModel() {
 
             return Character_Initialize(chr, model, name, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
         },
-        'pointer', ['pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer'],
+        'bool', ['pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer', 'pointer'],
+    );
+
+    const Character_SetFaceTexture = Interceptor2.jmp(
+        Addrs.Character.SetFaceTexture,
+        function(self: NativePointer, face: NativePointer, id: number) {
+            const char = new Character(self);
+
+            if (!disableCharacterInitialize && char.isReplaced()) {
+                const nameData = findReplacedNameData(char.chrId);
+                if (nameData) {
+                    // utils.log(`new faceTexture: ${nameData.faceTexture}`);
+                    face = Memory.allocUtf8String(nameData.faceTexture);
+                }
+            }
+
+            Character_SetFaceTexture(self, face, id);
+        },
+        'void', ['pointer', 'pointer', 'uint16'],
     );
 
     const Asset_LoadAsset = Interceptor2.jmp(
