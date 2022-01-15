@@ -1093,7 +1093,7 @@ def PreInit():
 # id: 0x0027 offset: 0x3DE8
 @scena.Code('Init')
 def Init():
-    ReplaceBGM(1, 1)
+    ReplaceBGMReset()
     SetMapBGM(1)
     OP_14(0x00000400)
     OP_3B(0x64, 1000, 0.0, 1.0)
@@ -1217,10 +1217,10 @@ def Reinit():
     label('loc_45D1')
 
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['繆潔'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000004)
     MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000004)
@@ -10385,15 +10385,15 @@ def EV_Jump_QS_342():
     FormationAddMember(ChrTable['蘭迪'])
     FormationAddMember(ChrTable['阿加特'])
     FormationAddMember(ChrTable['緹歐'])
-    FormationAddMember(ChrTable['緹妲'])
+    FormationAddMember(ChrTable['提妲'])
     FormationSetLeader(ChrTable['黎恩'])
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
     MenuChrFlagCmd(0x00, ChrTable['蘭迪'], 0x00000001)
     MenuChrFlagCmd(0x00, ChrTable['阿加特'], 0x00000001)
     MenuChrFlagCmd(0x00, ChrTable['緹歐'], 0x00000001)
-    MenuChrFlagCmd(0x00, ChrTable['緹妲'], 0x00000001)
-    MenuChrFlagCmd(0x00, ChrTable['奧利維爾'], 0x01000000)
-    FormationAddMember(ChrTable['奧利維爾'])
+    MenuChrFlagCmd(0x00, ChrTable['提妲'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['奧利維特皇子'], 0x01000000)
+    FormationAddMember(ChrTable['奧利維特皇子'])
 
     Jump('loc_E3AB')
 
@@ -12305,20 +12305,20 @@ def EV_Jump_QS_503():
 
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
-    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
     FormationAddMember(ChrTable['羅伊德'])
     FormationAddMember(ChrTable['艾莉'])
     FormationAddMember(ChrTable['緹歐'])
     FormationAddMember(ChrTable['蘭迪'])
     FormationSetLeader(ChrTable['黎恩'])
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000001)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000001)
     MenuChrFlagCmd(0x00, ChrTable['羅伊德'], 0x00000001)
     MenuChrFlagCmd(0x00, ChrTable['艾莉'], 0x00000001)
     MenuChrFlagCmd(0x00, ChrTable['緹歐'], 0x00000001)
     MenuChrFlagCmd(0x00, ChrTable['蘭迪'], 0x00000001)
-    MenuChrFlagCmd(0x00, ChrTable['測試：庫爾特襯衫'], 0x01000000)
-    FormationAddMember(ChrTable['測試：庫爾特襯衫'])
+    MenuChrFlagCmd(0x00, ChrTable['琪雅'], 0x01000000)
+    FormationAddMember(ChrTable['琪雅'])
 
     ExecExpressionWithVar(
         0x27,
@@ -13488,10 +13488,10 @@ def EV_Jump_QS_506():
     FormationReset(0x00)
     OP_C4(0x01, 0x00)
     OP_69(0x14, 0x01, 0x00)
-    FormationCtrl(0x14, ChrTable['黎恩'], ChrTable['托娃'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
+    FormationCtrl(0x14, ChrTable['黎恩'], ChrTable['遊擊士托瓦爾'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000110)
-    MenuChrFlagCmd(0x00, ChrTable['托娃'], 0x00000110)
+    MenuChrFlagCmd(0x00, ChrTable['遊擊士托瓦爾'], 0x00000110)
     MenuChrFlagCmd(0x00, 0xF0A6, 0x00000100)
     MenuChrFlagCmd(0x00, 0xF0A7, 0x00000100)
     MenuChrFlagCmd(0x00, 0xF0A8, 0x00000100)
@@ -14630,7 +14630,7 @@ def EV_KizunaJump_01():
 
     label('loc_12CA7')
 
-    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x8009, 0x0))
 
     Jump('loc_12CE8')
@@ -15574,7 +15574,7 @@ def EV_KizunaJump_04():
 
     label('loc_13DF3')
 
-    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['繆潔'])
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x8039, 0x0))
 
     Jump('loc_13E34')
@@ -18144,7 +18144,7 @@ def EV_KizunaJump_14():
 
     label('loc_167A7')
 
-    FormationAddMember(ChrTable['克蕾雅少校'])
+    FormationAddMember(ChrTable['克洛'])
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x80D8, 0x0))
 
     Jump('loc_167CC')
@@ -18702,7 +18702,7 @@ def EV_KizunaJump_16():
 
     label('loc_17106')
 
-    FormationAddMember(ChrTable['測試：妙婕制服測試'])
+    FormationAddMember(ChrTable['托娃'])
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x80F4, 0x0))
 
     Jump('loc_17147')
@@ -19517,7 +19517,7 @@ def EV_KizunaJump_19():
 
     label('loc_17EEC')
 
-    FormationAddMember(ChrTable['測試：杜巴莉'])
+    FormationAddMember(ChrTable['艾爾芬皇女'])
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x8126, 0x0))
 
     Jump('loc_17F2D')
@@ -19811,7 +19811,7 @@ def EV_KizunaJump_20():
 
     label('loc_18410')
 
-    FormationAddMember(ChrTable['測試：奧利維爾'])
+    FormationAddMember(ChrTable['愛麗榭'])
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x8136, 0x0))
 
     Jump('loc_18451')
@@ -20066,7 +20066,7 @@ def EV_KizunaJump_99():
 
     label('loc_18C28')
 
-    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
 
     Jump('loc_18CDC')
 
@@ -20090,7 +20090,7 @@ def EV_KizunaJump_99():
 
     label('loc_18C43')
 
-    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['繆潔'])
 
     Jump('loc_18CDC')
 
@@ -20170,7 +20170,7 @@ def EV_KizunaJump_99():
 
     label('loc_18C9D')
 
-    FormationAddMember(ChrTable['克蕾雅少校'])
+    FormationAddMember(ChrTable['克洛'])
 
     Jump('loc_18CDC')
 
@@ -20186,7 +20186,7 @@ def EV_KizunaJump_99():
 
     label('loc_18CAF')
 
-    FormationAddMember(ChrTable['測試：妙婕制服測試'])
+    FormationAddMember(ChrTable['托娃'])
 
     Jump('loc_18CDC')
 
@@ -20202,7 +20202,7 @@ def EV_KizunaJump_99():
 
     label('loc_18CC1')
 
-    FormationAddMember(ChrTable['測試：恩奈雅'])
+    FormationAddMember(ChrTable['瑟蕾奴'])
 
     Jump('loc_18CDC')
 
@@ -20210,7 +20210,7 @@ def EV_KizunaJump_99():
 
     label('loc_18CCA')
 
-    FormationAddMember(ChrTable['測試：杜巴莉'])
+    FormationAddMember(ChrTable['艾爾芬皇女'])
 
     Jump('loc_18CDC')
 
@@ -20218,7 +20218,7 @@ def EV_KizunaJump_99():
 
     label('loc_18CD3')
 
-    FormationAddMember(ChrTable['測試：奧利維爾'])
+    FormationAddMember(ChrTable['愛麗榭'])
 
     Jump('loc_18CDC')
 
@@ -20308,8 +20308,8 @@ def EV_KizunaJump_99():
 
     label('loc_18E82')
 
-    FormationAddMember(ChrTable['測試：奧利維爾'])
-    MenuChrFlagCmd(0x00, ChrTable['測試：奧利維爾'], 0x01000000)
+    FormationAddMember(ChrTable['愛麗榭'])
+    MenuChrFlagCmd(0x00, ChrTable['愛麗榭'], 0x01000000)
 
     Jump('loc_18EC6')
 
@@ -20317,8 +20317,8 @@ def EV_KizunaJump_99():
 
     label('loc_18E93')
 
-    FormationAddMember(ChrTable['測試：恩奈雅'])
-    MenuChrFlagCmd(0x00, ChrTable['測試：恩奈雅'], 0x01000000)
+    FormationAddMember(ChrTable['瑟蕾奴'])
+    MenuChrFlagCmd(0x00, ChrTable['瑟蕾奴'], 0x01000000)
 
     Jump('loc_18EC6')
 
@@ -20326,8 +20326,8 @@ def EV_KizunaJump_99():
 
     label('loc_18EA4')
 
-    FormationAddMember(ChrTable['克蕾雅少校'])
-    MenuChrFlagCmd(0x00, ChrTable['克蕾雅少校'], 0x01000000)
+    FormationAddMember(ChrTable['克洛'])
+    MenuChrFlagCmd(0x00, ChrTable['克洛'], 0x01000000)
 
     Jump('loc_18EC6')
 
@@ -20410,7 +20410,7 @@ def EV_KizunaJump_99():
 
     label('loc_1905D')
 
-    FormationAddMember(ChrTable['測試：妙婕制服測試'])
+    FormationAddMember(ChrTable['托娃'])
 
     Jump('loc_1909C')
 
@@ -20450,7 +20450,7 @@ def EV_KizunaJump_99():
 
     label('loc_1908A')
 
-    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['繆潔'])
 
     Jump('loc_1909C')
 
@@ -20532,7 +20532,7 @@ def EV_KizunaJump_99():
 
     label('loc_1924B')
 
-    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
 
     Jump('loc_1928A')
 
@@ -20564,7 +20564,7 @@ def EV_KizunaJump_99():
 
     label('loc_1926F')
 
-    FormationAddMember(ChrTable['測試：杜巴莉'])
+    FormationAddMember(ChrTable['艾爾芬皇女'])
 
     Jump('loc_1928A')
 
@@ -28699,10 +28699,10 @@ def EV_Jump_SB_04_00():
     FormationSetLeader(ChrTable['黎恩'])
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000110)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000100)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000100)
     MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000100)
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000100)
-    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000100)
+    MenuChrFlagCmd(0x00, ChrTable['繆潔'], 0x00000100)
     MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000100)
     MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000100)
     MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000100)
@@ -28713,7 +28713,7 @@ def EV_Jump_SB_04_00():
     MenuChrFlagCmd(0x00, ChrTable['菲'], 0x00000100)
     MenuChrFlagCmd(0x00, ChrTable['蓋烏斯'], 0x00000100)
     MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000100)
-    MenuChrFlagCmd(0x00, ChrTable['克蕾雅少校'], 0x00000100)
+    MenuChrFlagCmd(0x00, ChrTable['克洛'], 0x00000100)
 
     Jump('loc_230FE')
 
@@ -29232,7 +29232,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['克蕾雅少校'])"),
+            (Expr.Eval, "FormationCtrl(0x05, ChrTable['克洛'])"),
             Expr.Ez,
             (Expr.Eval, "FormationCtrl(0x05, ChrTable['杜巴莉'])"),
             Expr.Ez,
@@ -29340,7 +29340,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['悠娜'])"),
+            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤娜'])"),
             Expr.Return,
         ),
         'loc_23C87',
@@ -29382,7 +29382,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['妙婕'])"),
+            (Expr.Eval, "FormationCtrl(0x05, ChrTable['繆潔'])"),
             Expr.Return,
         ),
         'loc_23CAF',
@@ -29555,7 +29555,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['緹妲'])"),
+            (Expr.Eval, "FormationCtrl(0x05, ChrTable['提妲'])"),
             Expr.Ez,
             (Expr.Eval, "FormationCtrl(0x05, ChrTable['阿加特'])"),
             Expr.Ez,
@@ -29771,15 +29771,15 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['悠娜'])"),
+            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤娜'])"),
             Expr.Ez,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['妙婕'])"),
+            (Expr.Eval, "FormationCtrl(0x05, ChrTable['繆潔'])"),
             Expr.Ez,
             Expr.Or,
             (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞爾緹娜'])"),
             Expr.Ez,
             Expr.Or,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['緹妲'])"),
+            (Expr.Eval, "FormationCtrl(0x05, ChrTable['提妲'])"),
             Expr.Ez,
             Expr.Or,
             Expr.Return,
@@ -30149,14 +30149,14 @@ def EV_Jump_YR_Bath():
     If(
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0B61, 2, 0x5B0A)),
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['悠娜'])"),
+            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤娜'])"),
             Expr.Nez64,
             (Expr.TestScenaFlags, ScenaFlag(0x0B64, 1, 0x5B21)),
             (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞爾緹娜'])"),
             Expr.Nez64,
             Expr.Or,
             (Expr.TestScenaFlags, ScenaFlag(0x0B65, 4, 0x5B2C)),
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['妙婕'])"),
+            (Expr.Eval, "FormationCtrl(0x05, ChrTable['繆潔'])"),
             Expr.Nez64,
             Expr.Or,
             (Expr.TestScenaFlags, ScenaFlag(0x0B67, 3, 0x5B3B)),
@@ -32351,7 +32351,7 @@ def TK_System_Debug_FaceCmd():
 # id: 0x00A0 offset: 0x27424
 @scena.Code('TK_System_Debug_CutinTest')
 def TK_System_Debug_CutinTest():
-    CreateChr(ChrTable['剛毅艾奈絲'], 'C_CHR033', '鋼のアリアンロード', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['鋼之阿瑞安赫德'], 'C_CHR033', '鋼のアリアンロード', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     OP_BC(0x01, 0x0000, (0xFF, 0x6E, 0x0), 0x00000000, 0.0, 0.03, 1.0, 1.0, 1.0, 1.0, 0.0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x0000, 0x0003)
     OP_BC(0x01, 0x0000, (0xFF, 0x6E, 0x0), 0x00000001, 0.35, 0.03, 1.0, 1.0, 1.0, 1.0, 0.0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x0000, 0x0003)
     OP_BC(0x01, 0x0000, (0xFF, 0x6E, 0x0), 0x00000002, 0.0, 0.97, 1.0, 1.0, 1.0, 1.0, 0.0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x3F800000, 0x0000, 0x0003)
@@ -32361,18 +32361,18 @@ def TK_System_Debug_CutinTest():
     OP_BC(0x02, 0x0000, (0xFF, 0x6E, 0x0), 0x00)
     AttachEquip(0x006E, 'M_V4040', 'up_point', 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0)
     OP_2A(0x00, 0x006E, '', 'up_point', 0x01)
-    OP_76(ChrTable['剛毅艾奈絲'], 'up_point', 'equip', 0x00, 0x01, 0.0, -1.0, -1.0, -1.0)
-    AnimeClipLoadMultiple(ChrTable['剛毅艾奈絲'], 0x00, 'AniEv45005', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
-    SetChrAniFunction(ChrTable['剛毅艾奈絲'], 0x00, 'AniEv45005', -1.0, 1.0, 0x00000000)
+    OP_76(ChrTable['鋼之阿瑞安赫德'], 'up_point', 'equip', 0x00, 0x01, 0.0, -1.0, -1.0, -1.0)
+    AnimeClipLoadMultiple(ChrTable['鋼之阿瑞安赫德'], 0x00, 'AniEv45005', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
+    SetChrAniFunction(ChrTable['鋼之阿瑞安赫德'], 0x00, 'AniEv45005', -1.0, 1.0, 0x00000000)
     OP_BC(0x09, 0x0000, (0xFF, 0x6E, 0x0), 0.0, -0.08, -12.0, -2.0, 0.0, 0.9, 0x0000, 3)
     OP_BC(0x04, 0x0000, (0xFF, 0x6E, 0x0), 0x00FA, 0x0003)
     OP_BC(0x06, 0x0000, (0xFF, 0x6E, 0x0))
     OP_23(0x01, 600, 855, 0x05, 0x0D)
     OP_43(0x06, 300)
-    SetChrFace(0x04, ChrTable['剛毅艾奈絲'], '#E[1]#M_0#B_0')
+    SetChrFace(0x04, ChrTable['鋼之阿瑞安赫德'], '#E[1]#M_0#B_0')
 
     ChrTalk(
-        ChrTable['剛毅艾奈絲'],
+        ChrTable['鋼之阿瑞安赫德'],
         0x00000000,
         (
             '#K……フフ、カットインとは。\n',
@@ -32383,7 +32383,7 @@ def TK_System_Debug_CutinTest():
 
     WaitForMsg()
 
-    OP_44(ChrTable['剛毅艾奈絲'], 0x01, 0.1, 0x0004, 0.0)
+    OP_44(ChrTable['鋼之阿瑞安赫德'], 0x01, 0.1, 0x0004, 0.0)
     Sleep(1000)
 
     OP_43(0x6A, 300)
@@ -32395,7 +32395,7 @@ def TK_System_Debug_CutinTest():
     Sleep(500)
 
     OP_BC(0x03, 0x0000, (0xFF, 0xFFFF, 0x0))
-    ReleaseChr(ChrTable['剛毅艾奈絲'])
+    ReleaseChr(ChrTable['鋼之阿瑞安赫德'])
 
     Return()
 
@@ -33033,7 +33033,7 @@ def SUB_EmotionTest():
     CreateThread(ChrTable['黎恩'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
 
-    CreateThread(ChrTable['悠娜'], 0x03, ScriptId.System, 'FC_chr_entry')
+    CreateThread(ChrTable['尤娜'], 0x03, ScriptId.System, 'FC_chr_entry')
     Sleep(0)
 
     CreateThread(ChrTable['庫爾特'], 0x03, ScriptId.System, 'FC_chr_entry')
@@ -33043,7 +33043,7 @@ def SUB_EmotionTest():
     Sleep(0)
 
     SetChrPos(ChrTable['黎恩'], -2.35, -0.0, 0.12, 352.7)
-    SetChrPos(ChrTable['悠娜'], -1.72, -0.0, 0.21, 355.2)
+    SetChrPos(ChrTable['尤娜'], -1.72, -0.0, 0.21, 355.2)
     SetChrPos(ChrTable['庫爾特'], -1.15, -0.0, 0.14, 10.6)
     SetChrPos(ChrTable['亞爾緹娜'], -0.63, -0.0, 0.08, 2.4)
     OP_44(0xF000, 0x01, 0.15, 0x0400, 0.0)
@@ -35235,7 +35235,7 @@ def TK_PartySel_Test():
     OP_C4(0x02, 0x00, 0x0007)
     OP_C4(0x02, 0x01, 0x0002)
     OP_C4(0x02, 0x01, 0x000F)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000010)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000010)
     SetScenaFlags(ScenaFlag(0x0072, 1, 0x391))
@@ -35278,7 +35278,7 @@ def TK_PartySel_Test():
     OP_C4(0x02, 0x01, 0x0007)
     OP_C4(0x02, 0x01, 0x0002)
     OP_C4(0x02, 0x01, 0x000F)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000010)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000010)
     SetScenaFlags(ScenaFlag(0x0072, 1, 0x391))
@@ -35337,9 +35337,9 @@ def TK_PartySel_Test():
     OP_C4(0x02, 0x02, 0x0016)
     OP_C4(0x02, 0x02, 0x0012)
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000010)
-    MenuChrFlagCmd(0x00, ChrTable['克蕾雅少校'], 0x00000010)
+    MenuChrFlagCmd(0x00, ChrTable['克洛'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['杜巴莉'], 0x00000010)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000010)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000010)
     SetScenaFlags(ScenaFlag(0x0072, 1, 0x391))
 
     ExecExpressionWithVar(
@@ -35939,8 +35939,8 @@ def TK_PartySel_Test():
     OP_C4(0x02, 0x05, 0x001F)
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['羅伊德'], 0x00000010)
-    MenuChrFlagCmd(0x00, ChrTable['湯瑪斯'], 0x00000010)
-    MenuChrFlagCmd(0x00, ChrTable['克蕾雅少校'], 0x00000010)
+    MenuChrFlagCmd(0x00, ChrTable['約修亞'], 0x00000010)
+    MenuChrFlagCmd(0x00, ChrTable['克洛'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000010)
 
@@ -36004,12 +36004,12 @@ def TK_PartySel_Test():
     OP_C4(0x02, 0x05, 0x000F)
     OP_C4(0x02, 0x05, 0x0014)
     OP_C4(0x02, 0x05, 0x0012)
-    MenuChrFlagCmd(0x00, ChrTable['派崔克'], 0x00000010)
+    MenuChrFlagCmd(0x00, ChrTable['艾絲蒂爾'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['玲'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['艾莉'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['緹歐'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['杜巴莉'], 0x00000010)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000010)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000010)
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000010)
 
     ExecExpressionWithVar(
@@ -36181,19 +36181,19 @@ def TK_PartySel_Test():
     label('loc_2AA9B')
 
     FormationReset(0x00)
-    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
     FormationAddMember(ChrTable['庫爾特'])
     FormationAddMember(ChrTable['亞爾緹娜'])
     FormationAddMember(ChrTable['亞修'])
     FormationAddMember(ChrTable['菲'])
-    FormationSetLeader(ChrTable['悠娜'])
+    FormationSetLeader(ChrTable['尤娜'])
     OP_69(0x14, 0x01, 0x00)
     FormationCtrl(0x1B, 0x01)
     FormationReset(0x00)
-    FormationAddMember(ChrTable['悠娜'])
-    FormationSetLeader(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
+    FormationSetLeader(ChrTable['尤娜'])
     MenuChrFlagCmd(0x01, 0xFFFF, 0x00000110)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000110)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000110)
     MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000110)
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000110)
     MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000110)
@@ -36241,8 +36241,8 @@ def TK_PartySel_Test():
 def TK_Train_Test():
     ModelCtrl(0x31, 0x00, 0x0000, 0x0028, 1.6, 0.25, 0x03, 0x00, 0x0000)
     OP_C9(0x0A, 0x0028, 'TK_celine2:tk_celine2')
-    MenuChrFlagCmd(0x00, ChrTable['測試：恩奈雅'], 0x80000000)
-    ChrPhysicsCtrl(0x0A, ChrTable['測試：恩奈雅'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['瑟蕾奴'], 0x80000000)
+    ChrPhysicsCtrl(0x0A, ChrTable['瑟蕾奴'], 0x00000004)
 
     Return()
 
@@ -36742,10 +36742,10 @@ def TK_LinkLevel_Test():
     MenuChrFlagCmd(0x01, 0xFFFF, 0x00000004)
     MenuChrFlagCmd(0x01, 0xFFFF, 0x00000008)
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['繆潔'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000004)
     MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000004)
@@ -36756,10 +36756,10 @@ def TK_LinkLevel_Test():
     MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x00000004)
     MenuChrFlagCmd(0x00, ChrTable['菲'], 0x00000004)
     MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000004)
-    MenuChrFlagCmd(0x00, ChrTable['克蕾雅少校'], 0x00000004)
-    MenuChrFlagCmd(0x00, ChrTable['測試：杜巴莉'], 0x00000008)
-    MenuChrFlagCmd(0x00, ChrTable['測試：奧利維爾'], 0x00000008)
-    MenuChrFlagCmd(0x00, ChrTable['測試：恩奈雅'], 0x00000008)
+    MenuChrFlagCmd(0x00, ChrTable['克洛'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['艾爾芬皇女'], 0x00000008)
+    MenuChrFlagCmd(0x00, ChrTable['愛麗榭'], 0x00000008)
+    MenuChrFlagCmd(0x00, ChrTable['瑟蕾奴'], 0x00000008)
     MenuChrFlagCmd(0x00, ChrTable['杜巴莉'], 0x00000008)
 
     Jump('loc_2B3B1')
@@ -39656,7 +39656,7 @@ def EV_Test_Evsave_Load():
         ),
     )
 
-    ReplaceBGM(1, 1)
+    ReplaceBGMReset()
     SetMapBGM(1)
 
     Return()
@@ -39719,7 +39719,7 @@ def TK_GetSCraft_Test():
 
     label('loc_2DD47')
 
-    CraftCtrl(0x03, 0x0000)
+    CraftCtrl(0x03, ChrTable['黎恩'])
 
     Jump('loc_2DD63')
 
@@ -40405,10 +40405,10 @@ def TK_MiniGame_Debug():
 
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
-    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
     FormationAddMember(ChrTable['庫爾特'])
     FormationAddMember(ChrTable['亞爾緹娜'])
-    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['繆潔'])
     FormationAddMember(ChrTable['亞修'])
     FormationSetLeader(ChrTable['黎恩'])
 
@@ -44739,11 +44739,11 @@ def TK_Note_Debug():
     OP_97(0x00, 0x0014, 0x00000701)
     OP_97(0x00, 0x0015, 0x00000701)
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000200)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000200)
-    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['繆潔'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x00000200)
@@ -44777,11 +44777,11 @@ def TK_Note_Debug():
 
     label('loc_33A35')
 
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000200)
-    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['繆潔'], 0x00000200)
 
     Jump('loc_33C0D')
 
@@ -44797,7 +44797,7 @@ def TK_Note_Debug():
     MenuChrFlagCmd(0x00, ChrTable['尤西斯'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['菲'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['蓋烏斯'], 0x00000200)
-    MenuChrFlagCmd(0x00, ChrTable['克蕾雅少校'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['克洛'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['莎拉'], 0x00000200)
 
     Jump('loc_33C0D')
@@ -44807,10 +44807,10 @@ def TK_Note_Debug():
     label('loc_33AB7')
 
     MenuChrFlagCmd(0x00, ChrTable['安潔莉卡'], 0x00000200)
-    MenuChrFlagCmd(0x00, ChrTable['測試：妙婕制服測試'], 0x00000200)
-    MenuChrFlagCmd(0x00, ChrTable['測試：奧利維爾'], 0x00000200)
-    MenuChrFlagCmd(0x00, ChrTable['測試：杜巴莉'], 0x00000200)
-    MenuChrFlagCmd(0x00, ChrTable['緹妲'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['托娃'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['愛麗榭'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['艾爾芬皇女'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['提妲'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['蘭迪'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['雪倫'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['杜巴莉'], 0x00000200)
@@ -44821,7 +44821,7 @@ def TK_Note_Debug():
 
     label('loc_33AFC')
 
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000200)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000200)
     MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000200)
@@ -46250,17 +46250,17 @@ def TK_Battle_Debug():
 
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
-    FormationAddMember(ChrTable['緹妲'])
-    FormationSetLeader(ChrTable['緹妲'])
+    FormationAddMember(ChrTable['提妲'])
+    FormationSetLeader(ChrTable['提妲'])
     AddItem(0x00, 0x0001, 15)
     AddItem(0x00, 0x0006, 15)
     AddItem(0x00, 0x027A, 15)
     OP_70(0x00, 0x0014, 0x027A, 0x03, 0x00)
-    CraftCtrl(0x00, 0x0014, 0x0BEA)
-    CraftCtrl(0x00, 0x0014, 0x0BEB)
-    CraftCtrl(0x00, 0x0014, 0x0869)
-    CraftCtrl(0x00, 0x0014, 0x0BFE)
-    CraftCtrl(0x00, 0x0014, 0x087A)
+    CraftCtrl(0x00, ChrTable['提妲'], 0x0BEA)
+    CraftCtrl(0x00, ChrTable['提妲'], 0x0BEB)
+    CraftCtrl(0x00, ChrTable['提妲'], 0x0869)
+    CraftCtrl(0x00, ChrTable['提妲'], 0x0BFE)
+    CraftCtrl(0x00, ChrTable['提妲'], 0x087A)
     OP_48(0x00, 0x0014, 0x0001, 0x0028)
     SetScenaFlags(ScenaFlag(0x0080, 0, 0x400))
     SetScenaFlags(ScenaFlag(0x0080, 1, 0x401))
@@ -46388,7 +46388,7 @@ def TK_Battle_Debug():
     OP_B8(0x00, (0xFF, 0x1, 0x0), (0xFF, 0xC57, 0x0))
     FormationCtrl(0x18)
     FormationCtrl(0x16, ChrTable['黎恩'], 1)
-    FormationCtrl(0x16, ChrTable['悠娜'], 5)
+    FormationCtrl(0x16, ChrTable['尤娜'], 5)
     FormationCtrl(0x16, ChrTable['庫爾特'], 4)
     OP_B7(0x03, 0x0001)
     OP_B7(0x03, 0x0002)
@@ -47553,7 +47553,7 @@ def TK_Camp_PartyTest():
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
     FormationAddMember(ChrTable['庫爾特'])
     FormationAddMember(ChrTable['亞爾緹娜'])
 
@@ -47566,10 +47566,10 @@ def TK_Camp_PartyTest():
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
     FormationAddMember(ChrTable['庫爾特'])
     FormationAddMember(ChrTable['亞爾緹娜'])
-    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['繆潔'])
     FormationAddMember(ChrTable['亞修'])
 
     Jump('loc_36DA4')
@@ -47581,10 +47581,10 @@ def TK_Camp_PartyTest():
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
     FormationAddMember(ChrTable['庫爾特'])
     FormationAddMember(ChrTable['亞爾緹娜'])
-    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['繆潔'])
     FormationAddMember(ChrTable['亞修'])
     FormationAddMember(ChrTable['勞拉'])
     FormationAddMember(ChrTable['菲'])
@@ -47598,9 +47598,9 @@ def TK_Camp_PartyTest():
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
-    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
     FormationAddMember(ChrTable['庫爾特'])
-    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['繆潔'])
     FormationAddMember(ChrTable['勞拉'])
     FormationAddMember(ChrTable['菲'])
     FormationAddMember(ChrTable['亞莉莎'])
@@ -47626,7 +47626,7 @@ def TK_Camp_PartyTest():
 
     label('loc_36D02')
 
-    FormationAddMember(ChrTable['悠娜'])
+    FormationAddMember(ChrTable['尤娜'])
 
     Jump('loc_36DA4')
 
@@ -47650,7 +47650,7 @@ def TK_Camp_PartyTest():
 
     label('loc_36D1D')
 
-    FormationAddMember(ChrTable['妙婕'])
+    FormationAddMember(ChrTable['繆潔'])
 
     Jump('loc_36DA4')
 
@@ -48319,7 +48319,7 @@ def TK_Camp_MQuartz():
 
     AddItem(0x00, 0x0CAF, 1)
     OP_70(0x03, 0x000A, 0x0CAF, 0x00, 0x00, 0x01)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00200000)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00200000)
     AddItem(0x0F, 0x00C9, 1)
     OP_70(0x03, 0x000A, 0x0CB0, 0x01, 0x00, 0x01)
     AddItem(0x0F, 0x0CB0, 1)
@@ -48491,12 +48491,12 @@ def TK_Camp_Link():
 
     MenuChrFlagCmd(0x01, 0xFFFF, 0x0000000E)
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['悠娜'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['尤娜'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['庫爾特'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['亞爾緹娜'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['妙婕'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['繆潔'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['亞修'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['克蕾雅少校'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['克洛'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['亞莉莎'], 0x00000004)
     MenuChrFlagCmd(0x00, ChrTable['艾略特'], 0x00000004)
     MenuChrFlagCmd(0x00, ChrTable['勞拉'], 0x00000004)
@@ -48517,12 +48517,12 @@ def TK_Camp_Link():
     MenuChrFlagCmd(0x00, ChrTable['阿加特'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['雪倫'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['緹歐'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['緹妲'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['提妲'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['杜巴莉'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['緋之羅賽莉亞'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['雷克多少校'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['派崔克'], 0x00000004)
-    MenuChrFlagCmd(0x00, ChrTable['湯瑪斯'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['克洛提德'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['艾絲蒂爾'], 0x00000004)
+    MenuChrFlagCmd(0x00, ChrTable['約修亞'], 0x00000004)
     MenuChrFlagCmd(0x00, ChrTable['玲'], 0x00000004)
     MenuChrFlagCmd(0x00, ChrTable['羅伊德'], 0x00000004)
     MenuChrFlagCmd(0x00, ChrTable['艾莉'], 0x00000004)
@@ -48536,14 +48536,14 @@ def TK_Camp_Link():
 
     MenuChrFlagCmd(0x01, 0xFFFF, 0x0000000E)
     MenuChrFlagCmd(0x00, ChrTable['安潔莉卡'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['奧蕾莉亞分校長'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['奧蕾莉亞將軍'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['喬治'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['亞爾賽德子爵'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['剛毅艾奈絲'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['魔弓恩奈雅'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['陷阱師傑諾'], 0x00000002)
     MenuChrFlagCmd(0x00, ChrTable['破壞獸雷歐尼達斯'], 0x00000002)
-    MenuChrFlagCmd(0x00, ChrTable['測試：恩奈雅'], 0x00000002)
+    MenuChrFlagCmd(0x00, ChrTable['瑟蕾奴'], 0x00000002)
 
     Jump('loc_37D2A')
 
@@ -48602,11 +48602,11 @@ def TK_Camp_Formation():
     label('loc_37ED2')
 
     FormationCtrl(0x08, ChrTable['黎恩'], -1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['悠娜'], 1.0, 0.0, 0x00)
+    FormationCtrl(0x08, ChrTable['尤娜'], 1.0, 0.0, 0x00)
     FormationCtrl(0x08, ChrTable['庫爾特'], -2.0, 1.0, 0x00)
     FormationCtrl(0x08, ChrTable['亞爾緹娜'], 2.0, 1.0, 0x00)
     FormationCtrl(0x08, ChrTable['亞修'], -1.0, 2.0, 0x00)
-    FormationCtrl(0x08, ChrTable['妙婕'], 1.0, 2.0, 0x00)
+    FormationCtrl(0x08, ChrTable['繆潔'], 1.0, 2.0, 0x00)
 
     Jump('loc_37FD4')
 
@@ -48615,11 +48615,11 @@ def TK_Camp_Formation():
     label('loc_37F25')
 
     FormationCtrl(0x08, ChrTable['黎恩'], -1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['悠娜'], -1.0, 0.0, 0x00)
+    FormationCtrl(0x08, ChrTable['尤娜'], -1.0, 0.0, 0x00)
     FormationCtrl(0x08, ChrTable['庫爾特'], -1.0, 0.0, 0x00)
     FormationCtrl(0x08, ChrTable['亞爾緹娜'], -1.0, 0.0, 0x00)
     FormationCtrl(0x08, ChrTable['亞修'], -1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['妙婕'], -1.0, 0.0, 0x00)
+    FormationCtrl(0x08, ChrTable['繆潔'], -1.0, 0.0, 0x00)
 
     Jump('loc_37FD4')
 
@@ -48628,11 +48628,11 @@ def TK_Camp_Formation():
     label('loc_37F78')
 
     FormationCtrl(0x08, ChrTable['黎恩'], -2.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['悠娜'], -2.0, 0.0, 0x00)
+    FormationCtrl(0x08, ChrTable['尤娜'], -2.0, 0.0, 0x00)
     FormationCtrl(0x08, ChrTable['庫爾特'], -0.25, 1.0, 0x00)
     FormationCtrl(0x08, ChrTable['亞爾緹娜'], 0.25, 1.0, 0x00)
     FormationCtrl(0x08, ChrTable['亞修'], 2.0, 3.0, 0x00)
-    FormationCtrl(0x08, ChrTable['妙婕'], 2.0, 3.0, 0x00)
+    FormationCtrl(0x08, ChrTable['繆潔'], 2.0, 3.0, 0x00)
 
     Jump('loc_37FD4')
 
@@ -51659,7 +51659,7 @@ def EV_DoJump_01():
 
     Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
-    CreateChr(ChrTable['悠娜'], 'C_CHR011', 'ユウナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['尤娜'], 'C_CHR011', 'ユウナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['亞爾緹娜'], 'C_CHR015', 'アルティナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['庫爾特'], 'C_CHR010', 'クルト', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['蘭迪'], 'C_CHR042', 'ランディ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
@@ -52178,7 +52178,7 @@ def EV_DoJump_01():
 
     Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
-    CreateChr(ChrTable['悠娜'], 'C_CHR011', 'ユウナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['尤娜'], 'C_CHR011', 'ユウナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['亞爾緹娜'], 'C_CHR015', 'アルティナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['庫爾特'], 'C_CHR010', 'クルト', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['亞修'], 'C_CHR010', 'アッシュ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
@@ -52512,10 +52512,10 @@ def EV_DoJump_01():
 
     Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
-    CreateChr(ChrTable['悠娜'], 'C_CHR011', 'ユウナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['尤娜'], 'C_CHR011', 'ユウナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['亞爾緹娜'], 'C_CHR015', 'アルティナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['庫爾特'], 'C_CHR010', 'クルト', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
-    CreateChr(ChrTable['妙婕'], 'C_CHR013', 'ミュゼ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['繆潔'], 'C_CHR013', 'ミュゼ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['亞修'], 'C_CHR010', 'アッシュ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
 
     If(
@@ -55873,7 +55873,7 @@ def EV_DoJump_02():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
     CreateChr(ChrTable['黎恩'], 'C_CHR000', 'リィン', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['亞爾緹娜'], 'C_CHR015', 'アルティナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
-    CreateChr(ChrTable['蘿西努修女'], 'C_CHR610_C01', '従騎士ロジーヌ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['隨從騎士蘿西努'], 'C_CHR610_C01', '従騎士ロジーヌ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     Call(ScriptId.System4, 'EV_02B_00_00')
     MapJump((0xDD, 'v5000'), (0xFF, 0x0, 0x0), 0x00)
 
@@ -55958,10 +55958,10 @@ def EV_DoJump_02():
     Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
     CreateChr(ChrTable['黎恩'], 'C_CHR000', 'リィン', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
-    CreateChr(ChrTable['妙婕'], 'C_CHR013', 'ミュゼ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['繆潔'], 'C_CHR013', 'ミュゼ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['亞修'], 'C_CHR012', 'アッシュ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['馬奇亞斯'], 'C_CHR004', 'マキアス', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
-    CreateChr(ChrTable['克蕾雅少校'], 'C_CHR028', 'クロウ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['克洛'], 'C_CHR028', 'クロウ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     Call(ScriptId.System4, 'EV_02B_06_00')
     MapJump((0xDD, 't3200'), (0xDD, 'go_t3210'), 0x00)
 
@@ -56074,7 +56074,7 @@ def EV_DoJump_02():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['悠娜'])"),
+            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤娜'])"),
             Expr.Return,
         ),
         'loc_48D4E',
@@ -56262,7 +56262,7 @@ def EV_DoJump_02():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
     CreateChr(ChrTable['黎恩'], 'C_CHR000', 'リィン', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['亞修'], 'C_CHR012', 'アッシュ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
-    CreateChr(ChrTable['測試：妙婕制服測試'], 'C_CHR041', 'トワ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['托娃'], 'C_CHR041', 'トワ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     Call(ScriptId.System4, 'EV_02C_02_00')
     MapJump((0xDD, 'v5000'), (0xFF, 0x0, 0x0), 0x00)
 
@@ -56339,7 +56339,7 @@ def EV_DoJump_02():
     Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
     CreateChr(ChrTable['黎恩'], 'C_CHR000', 'リィン', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
-    CreateChr(ChrTable['悠娜'], 'C_CHR011', 'ユウナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['尤娜'], 'C_CHR011', 'ユウナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['庫爾特'], 'C_CHR010', 'クルト', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['亞爾緹娜'], 'C_CHR015', 'アルティナ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     CreateChr(ChrTable['艾略特'], 'C_CHR002', 'エリオット', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
@@ -56530,8 +56530,8 @@ def EV_DoJump_02():
     Call(ScriptId.System, 'FC_TalkEnd', (0xFF, 0x0, 0x0))
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
     CreateChr(ChrTable['黎恩'], 'C_CHR000', 'リィン', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
-    CreateChr(ChrTable['妙婕'], 'C_CHR013', 'ミュゼ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
-    CreateChr(ChrTable['測試：妙婕制服測試'], 'C_CHR041', 'トワ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['繆潔'], 'C_CHR013', 'ミュゼ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
+    CreateChr(ChrTable['托娃'], 'C_CHR041', 'トワ', '', 0x00, 0x00000001, 0x00000000, 0.0, 0.0, 0.0, 0.0, 1.0, 1.6, 0.09, '', '', 0xFFFFFFFF, 0x00, 0.0, 0.0, 0x0000)
     Call(ScriptId.System4, 'EV_02D_02_00')
     MapJump((0xDD, 'v5000'), (0xFF, 0x0, 0x0), 0x00)
 
