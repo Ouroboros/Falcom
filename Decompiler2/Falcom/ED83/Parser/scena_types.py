@@ -588,41 +588,48 @@ class ScenaActionTableEntry:
 
     def __init__(
         self,
-        craftId     : int = 0,
-        type        : int = 0,
-        byte03      : int = 0,
-        rangeType   : int = 0,
-        rng         : int = 0,
-        area        : int = 0,
-        float08     : int = 0,
-        float0C     : int = 0,
-        float10     : int = 0,
-        ariaATDelay : int = 0,
-        atDelay     : int = 0,
-        word18      : int = 0,
-        word1A      : int = 0,
-        word1C      : int = 0,
-        word1E      : int = 0,
-        word20      : int = 0,
-        damage     : int = 0,
-        dword28     : int = 0,
-        dword2C     : int = 0,
-        dword30     : int = 0,
-        dword34     : int = 0,
-        dword38     : int = 0,
-        dword3C     : int = 0,
-        dword40     : int = 0,
-        dword44     : int = 0,
-        dword48     : int = 0,
-        dword4C     : int = 0,
-        dword50     : int = 0,
-        dword54     : int = 0,
-        dword58     : int = 0,
-        dword5C     : int = 0,
-        cp          : int = 0,
-        flags       : str = '',
-        action      : str = '',
-        name        : str = '',
+        craftId         : int = 0,
+        type            : int = 0,
+        byte03          : int = 0,
+        rangeType       : int = 0,
+        rng             : int = 0,
+        area            : int = 0,
+        float08         : int = 0,
+        float0C         : int = 0,
+        float10         : int = 0,
+        ariaATDelay     : int = 0,
+        atDelay         : int = 0,
+
+        effect1         : int = 0,
+        effect2         : int = 0,
+        effect3         : int = 0,
+        effect4         : int = 0,
+        effect5         : int = 0,
+
+        effect1Param1   : int = 0,
+        effect1Param2   : int = 0,
+        effect1Param3   : int = 0,
+
+        effect2Param1   : int = 0,
+        effect2Param2   : int = 0,
+        effect2Param3   : int = 0,
+
+        effect3Param1   : int = 0,
+        effect3Param2   : int = 0,
+        effect3Param3   : int = 0,
+
+        effect4Param1   : int = 0,
+        effect4Param2   : int = 0,
+        effect4Param3   : int = 0,
+
+        effect5Param1   : int = 0,
+        effect5Param2   : int = 0,
+        effect5Param3   : int = 0,
+
+        cp              : int = 0,
+        flags           : str = '',
+        action          : str = '',
+        name            : str = '',
         *,
         fs: fileio.FileStream = None,
     ):
@@ -637,26 +644,26 @@ class ScenaActionTableEntry:
         self.float10        = float10       # type: int
         self.ariaATDelay    = ariaATDelay   # type: int
         self.atDelay        = atDelay       # type: int
-        self.word18         = word18        # type: int
-        self.word1A         = word1A        # type: int
-        self.word1C         = word1C        # type: int
-        self.word1E         = word1E        # type: int
-        self.word20         = word20        # type: int
-        self.damage         = damage       # type: int
-        self.dword28        = dword28       # type: int
-        self.dword2C        = dword2C       # type: int
-        self.dword30        = dword30       # type: int
-        self.dword34        = dword34       # type: int
-        self.dword38        = dword38       # type: int
-        self.dword3C        = dword3C       # type: int
-        self.dword40        = dword40       # type: int
-        self.dword44        = dword44       # type: int
-        self.dword48        = dword48       # type: int
-        self.dword4C        = dword4C       # type: int
-        self.dword50        = dword50       # type: int
-        self.dword54        = dword54       # type: int
-        self.dword58        = dword58       # type: int
-        self.dword5C        = dword5C       # type: int
+        self.effect1        = effect1       # type: int
+        self.effect2        = effect2       # type: int
+        self.effect3        = effect3       # type: int
+        self.effect4        = effect4       # type: int
+        self.effect5        = effect5       # type: int
+        self.effect1Param1  = effect1Param1 # type: int
+        self.effect1Param2  = effect1Param2 # type: int
+        self.effect1Param3  = effect1Param3 # type: int
+        self.effect2Param1  = effect2Param1 # type: int
+        self.effect2Param2  = effect2Param2 # type: int
+        self.effect2Param3  = effect2Param3 # type: int
+        self.effect3Param1  = effect3Param1 # type: int
+        self.effect3Param2  = effect3Param2 # type: int
+        self.effect3Param3  = effect3Param3 # type: int
+        self.effect4Param1  = effect4Param1 # type: int
+        self.effect4Param2  = effect4Param2 # type: int
+        self.effect4Param3  = effect4Param3 # type: int
+        self.effect5Param1  = effect5Param1 # type: int
+        self.effect5Param2  = effect5Param2 # type: int
+        self.effect5Param3  = effect5Param3 # type: int
         self.cp             = cp            # type: int
         self.flags          = flags         # type: str
         self.action         = action        # type: str
@@ -685,27 +692,27 @@ class ScenaActionTableEntry:
         self.ariaATDelay    = fs.ReadUShort()                   # 0x14
         self.atDelay        = fs.ReadByte()                     # 0x16
         pad17               = fs.ReadByte()                     # 0x17
-        self.word18         = fs.ReadUShort()                   # 0x18
-        self.word1A         = fs.ReadUShort()                   # 0x1A
-        self.word1C         = fs.ReadUShort()                   # 0x1C
-        self.word1E         = fs.ReadUShort()                   # 0x1E
-        self.word20         = fs.ReadUShort()                   # 0x20
+        self.effect1        = fs.ReadUShort()                   # 0x18
+        self.effect2        = fs.ReadUShort()                   # 0x1A
+        self.effect3        = fs.ReadUShort()                   # 0x1C
+        self.effect4        = fs.ReadUShort()                   # 0x1E
+        self.effect5        = fs.ReadUShort()                   # 0x20
         pad22               = fs.ReadUShort()                   # 0x22
-        self.damage         = fs.ReadULong()                    # 0x24
-        self.dword28        = fs.ReadULong()                    # 0x28
-        self.dword2C        = fs.ReadULong()                    # 0x2C
-        self.dword30        = fs.ReadULong()                    # 0x30
-        self.dword34        = fs.ReadULong()                    # 0x34
-        self.dword38        = fs.ReadULong()                    # 0x38
-        self.dword3C        = fs.ReadULong()                    # 0x3C
-        self.dword40        = fs.ReadULong()                    # 0x40
-        self.dword44        = fs.ReadULong()                    # 0x44
-        self.dword48        = fs.ReadULong()                    # 0x48
-        self.dword4C        = fs.ReadULong()                    # 0x4C
-        self.dword50        = fs.ReadULong()                    # 0x50
-        self.dword54        = fs.ReadULong()                    # 0x54
-        self.dword58        = fs.ReadULong()                    # 0x58
-        self.dword5C        = fs.ReadULong()                    # 0x5C
+        self.effect1Param1  = fs.ReadULong()                    # 0x24
+        self.effect1Param2  = fs.ReadULong()                    # 0x28
+        self.effect1Param3  = fs.ReadULong()                    # 0x2C
+        self.effect2Param1  = fs.ReadULong()                    # 0x30
+        self.effect2Param2  = fs.ReadULong()                    # 0x34
+        self.effect2Param3  = fs.ReadULong()                    # 0x38
+        self.effect3Param1  = fs.ReadULong()                    # 0x3C
+        self.effect3Param2  = fs.ReadULong()                    # 0x40
+        self.effect3Param3  = fs.ReadULong()                    # 0x44
+        self.effect4Param1  = fs.ReadULong()                    # 0x48
+        self.effect4Param2  = fs.ReadULong()                    # 0x4C
+        self.effect4Param3  = fs.ReadULong()                    # 0x50
+        self.effect5Param1  = fs.ReadULong()                    # 0x54
+        self.effect5Param2  = fs.ReadULong()                    # 0x58
+        self.effect5Param3  = fs.ReadULong()                    # 0x5C
         self.cp             = fs.ReadUShort()                   # 0x60
         pad62               = fs.ReadUShort()                   # 0x62
         self.flags          = utils.read_fixed_string(fs, 0x10) # 0x64
@@ -736,29 +743,29 @@ class ScenaActionTableEntry:
             fs.write(utils.float_to_bytes(self.float10))
             fs.write(utils.int_to_bytes(self.ariaATDelay, 2))
             fs.write(utils.int_to_bytes(self.atDelay, 2))
-            fs.write(utils.int_to_bytes(self.word18, 2))
-            fs.write(utils.int_to_bytes(self.word1A, 2))
-            fs.write(utils.int_to_bytes(self.word1C, 2))
-            fs.write(utils.int_to_bytes(self.word1E, 2))
-            fs.write(utils.int_to_bytes(self.word20, 2))
+            fs.write(utils.int_to_bytes(self.effect1, 2))
+            fs.write(utils.int_to_bytes(self.effect2, 2))
+            fs.write(utils.int_to_bytes(self.effect3, 2))
+            fs.write(utils.int_to_bytes(self.effect4, 2))
+            fs.write(utils.int_to_bytes(self.effect5, 2))
 
             fs.write(b'\x00' * 2)
 
-            fs.write(utils.int_to_bytes(self.damage, 4))
-            fs.write(utils.int_to_bytes(self.dword28, 4))
-            fs.write(utils.int_to_bytes(self.dword2C, 4))
-            fs.write(utils.int_to_bytes(self.dword30, 4))
-            fs.write(utils.int_to_bytes(self.dword34, 4))
-            fs.write(utils.int_to_bytes(self.dword38, 4))
-            fs.write(utils.int_to_bytes(self.dword3C, 4))
-            fs.write(utils.int_to_bytes(self.dword40, 4))
-            fs.write(utils.int_to_bytes(self.dword44, 4))
-            fs.write(utils.int_to_bytes(self.dword48, 4))
-            fs.write(utils.int_to_bytes(self.dword4C, 4))
-            fs.write(utils.int_to_bytes(self.dword50, 4))
-            fs.write(utils.int_to_bytes(self.dword54, 4))
-            fs.write(utils.int_to_bytes(self.dword58, 4))
-            fs.write(utils.int_to_bytes(self.dword5C, 4))
+            fs.write(utils.int_to_bytes(self.effect1Param1, 4))
+            fs.write(utils.int_to_bytes(self.effect1Param2, 4))
+            fs.write(utils.int_to_bytes(self.effect1Param3, 4))
+            fs.write(utils.int_to_bytes(self.effect2Param1, 4))
+            fs.write(utils.int_to_bytes(self.effect2Param2, 4))
+            fs.write(utils.int_to_bytes(self.effect2Param3, 4))
+            fs.write(utils.int_to_bytes(self.effect3Param1, 4))
+            fs.write(utils.int_to_bytes(self.effect3Param2, 4))
+            fs.write(utils.int_to_bytes(self.effect3Param3, 4))
+            fs.write(utils.int_to_bytes(self.effect4Param1, 4))
+            fs.write(utils.int_to_bytes(self.effect4Param2, 4))
+            fs.write(utils.int_to_bytes(self.effect4Param3, 4))
+            fs.write(utils.int_to_bytes(self.effect5Param1, 4))
+            fs.write(utils.int_to_bytes(self.effect5Param2, 4))
+            fs.write(utils.int_to_bytes(self.effect5Param3, 4))
             fs.write(utils.int_to_bytes(self.cp, 2))
 
             fs.write(b'\x00' * 2)
@@ -785,26 +792,26 @@ class ScenaActionTableEntry:
             f'{DefaultIndent}float10       = {self.float10},',
             f'{DefaultIndent}ariaATDelay   = {self.ariaATDelay},',
             f'{DefaultIndent}atDelay       = {self.atDelay},',
-            f'{DefaultIndent}word18        = 0x{self.word18:04X},',
-            f'{DefaultIndent}word1A        = 0x{self.word1A:04X},',
-            f'{DefaultIndent}word1C        = 0x{self.word1C:04X},',
-            f'{DefaultIndent}word1E        = 0x{self.word1E:04X},',
-            f'{DefaultIndent}word20        = 0x{self.word20:04X},',
-            f'{DefaultIndent}damage        = {self.damage},',
-            f'{DefaultIndent}dword28       = {self.dword28},',
-            f'{DefaultIndent}dword2C       = {self.dword2C},',
-            f'{DefaultIndent}dword30       = {self.dword30},',
-            f'{DefaultIndent}dword34       = {self.dword34},',
-            f'{DefaultIndent}dword38       = {self.dword38},',
-            f'{DefaultIndent}dword3C       = {self.dword3C},',
-            f'{DefaultIndent}dword40       = {self.dword40},',
-            f'{DefaultIndent}dword44       = {self.dword44},',
-            f'{DefaultIndent}dword48       = {self.dword48},',
-            f'{DefaultIndent}dword4C       = {self.dword4C},',
-            f'{DefaultIndent}dword50       = {self.dword50},',
-            f'{DefaultIndent}dword54       = {self.dword54},',
-            f'{DefaultIndent}dword58       = {self.dword58},',
-            f'{DefaultIndent}dword5C       = {self.dword5C},',
+            f'{DefaultIndent}effect1       = 0x{self.effect1:04X},',
+            f'{DefaultIndent}effect2       = 0x{self.effect2:04X},',
+            f'{DefaultIndent}effect3       = 0x{self.effect3:04X},',
+            f'{DefaultIndent}effect4       = 0x{self.effect4:04X},',
+            f'{DefaultIndent}effect5       = 0x{self.effect5:04X},',
+            f'{DefaultIndent}effect1Param1 = {self.effect1Param1},',
+            f'{DefaultIndent}effect1Param2 = {self.effect1Param2},',
+            f'{DefaultIndent}effect1Param3 = {self.effect1Param3},',
+            f'{DefaultIndent}effect2Param1 = {self.effect2Param1},',
+            f'{DefaultIndent}effect2Param2 = {self.effect2Param2},',
+            f'{DefaultIndent}effect2Param3 = {self.effect2Param3},',
+            f'{DefaultIndent}effect3Param1 = {self.effect3Param1},',
+            f'{DefaultIndent}effect3Param2 = {self.effect3Param2},',
+            f'{DefaultIndent}effect3Param3 = {self.effect3Param3},',
+            f'{DefaultIndent}effect4Param1 = {self.effect4Param1},',
+            f'{DefaultIndent}effect4Param2 = {self.effect4Param2},',
+            f'{DefaultIndent}effect4Param3 = {self.effect4Param3},',
+            f'{DefaultIndent}effect5Param1 = {self.effect5Param1},',
+            f'{DefaultIndent}effect5Param2 = {self.effect5Param2},',
+            f'{DefaultIndent}effect5Param3 = {self.effect5Param3},',
             f'{DefaultIndent}cp            = {self.cp},',
             f"{DefaultIndent}flags         = '{self.flags}',",
             f"{DefaultIndent}action        = '{self.action}',",

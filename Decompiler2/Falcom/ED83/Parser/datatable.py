@@ -218,7 +218,7 @@ class StatusTableData(TableDataEntry):
         ('efficacyPoison',       'C'),
         ('efficacySeal',         'C'),
         ('efficacyMute',         'C'),
-        ('efficacyBLind',        'C'),
+        ('efficacyBlind',        'C'),
         ('efficacySleep',        'C'),
         ('efficacyBurn',         'C'),
         ('efficacyFreeze',       'C'),

@@ -47,7 +47,7 @@ def AniBtlMove2():
 def AniBtlCraft05_暴雨疾风枪():
     if 1:
         # BattleCtrl(0x64, '開眼')
-        BattleSetChrFlags(0xFFFE, BattleChrFlags.DisableSwap)
+        BattleSetChrFlags(0xFFFE, BattleChrFlags.NoSwap)
         # BattleCreateChrDummy(0xFFFE, 5)
 
         # asset = [
