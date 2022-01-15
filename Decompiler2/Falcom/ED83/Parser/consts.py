@@ -8,6 +8,8 @@ R_HAND_POINT    = 'R_hand_point'
 
 NODE_R_HAND     = 'NODE_R_HAND'
 
+MAX_REG_ID      = 0x20
+
 DummyCharBaseId             = 0xB5E
 TempCharBaseId              = 0xB68
 

@@ -43,9 +43,9 @@ goto:EOF
 mkdir "%PATCH_PATH%\asset\D3D11\" >NUL 2>NUL
 
 for %%i in (
-    C_CHR900.pkg
-    C_CHR901.pkg
-    C_CHR902.pkg
+    C_CHR550.pkg
+    C_CHR551.pkg
+    C_CHR552.pkg
 ) do (
     copy NUL "%PATCH_PATH%\asset\D3D11\%%i" >NUL 2>NUL
 )
@@ -62,10 +62,9 @@ for %%i in (
     f????.py
     system?.py
     debug.py
-    chr*.py
-    rob*.py
+    chr???.py
+    rob???.py
     btl????.py
 ) do (
     start /B "" /D "%~dp0" cmd /c " "%~f0" "%%~fi" "
 )
-

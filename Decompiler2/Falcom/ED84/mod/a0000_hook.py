@@ -60,8 +60,8 @@ def TK_MiniGame_Debug():
     #     AnimeClipRefreshSkin(chrid)
 
     FormationReset(0)
-    FormationAddMember(1)
-    FormationSetLeader(1)
+    FormationAddMember(0)
+    FormationSetLeader(0)
 
     Battle(0x00, 0x00000005, 0x00, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00)
 

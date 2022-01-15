@@ -22,7 +22,7 @@ class _Config:
 
 GlobalConfig = _Config()
 
-log = logging.Logger('ED', level = logging.INFO)
+log = logging.Logger('', level = logging.INFO)
 handler = logging.StreamHandler()
 handler.setFormatter(logging.Formatter('[%(asctime)s][%(filename)s:%(lineno)d][%(levelname)s] %(message)s', datefmt = '%m-%d %H:%M:%S'))
 
