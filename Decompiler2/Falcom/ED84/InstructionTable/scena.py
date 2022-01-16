@@ -149,8 +149,8 @@ def Handler_32(ctx: InstructionHandlerContext):
             0x11: 'WB',
             0x12: 'WW',
             0x13: 'WBW',
-            0x14: 'WBffffWB',
-            0x15: 'WBffffWB',
+            0x14: 'WBffffHB',
+            0x15: 'WBffffHB',
             0x16: 'SS',
             0x17: 'WBf',
             0x18: 'WBW',
@@ -396,7 +396,7 @@ def Handler_36(ctx: InstructionHandlerContext):
             0x07: 'W',
             0x08: 'BW',
             0x09: 'fff',
-            0x0A: 'fffWWWWWB',
+            0x0A: 'fffHHHHHB',
             0x0B: 'BfW',
             0x0C: 'BfffH',
             0x0D: 'BWSfffW',
@@ -845,7 +845,7 @@ def Handler_5A(ctx: InstructionHandlerContext):
 def Handler_5E(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
-            0x00: 'WfWWWLWSfff',
+            0x00: 'WfHHHfWSfff',
             0x01: 'W',
         }[n]
 

@@ -590,7 +590,7 @@ class ScenaActionTableEntry:
         self,
         craftId         : int = 0,
         type            : int = 0,
-        byte03          : int = 0,
+        attribute       : int = 0,
         rangeType       : int = 0,
         rng             : int = 0,
         area            : int = 0,
@@ -635,7 +635,7 @@ class ScenaActionTableEntry:
     ):
         self.craftId        = craftId       # type: int
         self.type           = type          # type: int
-        self.byte03         = byte03        # type: int
+        self.attribute      = attribute     # type: int
         self.rangeType      = rangeType     # type: int
         self.rng            = rng           # type: int
         self.area           = area          # type: int
@@ -681,7 +681,7 @@ class ScenaActionTableEntry:
             return
 
         self.type           = fs.ReadByte()                     # 0x02
-        self.byte03         = fs.ReadByte()                     # 0x03
+        self.attribute      = fs.ReadByte()                     # 0x03
         self.rangeType      = fs.ReadByte()                     # 0x04
         self.rng            = fs.ReadByte()                     # 0x05
         self.area           = fs.ReadByte()                     # 0x06
@@ -731,7 +731,7 @@ class ScenaActionTableEntry:
 
         if self.craftId != self.InvalidCraftID:
             fs.write(utils.int_to_bytes(self.type, 1))
-            fs.write(utils.int_to_bytes(self.byte03, 1))
+            fs.write(utils.int_to_bytes(self.attribute, 1))
             fs.write(utils.int_to_bytes(self.rangeType, 1))
             fs.write(utils.int_to_bytes(self.rng, 1))
             fs.write(utils.int_to_bytes(self.area, 1))
@@ -783,7 +783,7 @@ class ScenaActionTableEntry:
             'ScenaActionTableEntry(',
             f'{DefaultIndent}craftId       = 0x{self.craftId:X},',
             f'{DefaultIndent}type          = 0x{self.type:02X},',
-            f'{DefaultIndent}byte03        = 0x{self.byte03:02X},',
+            f'{DefaultIndent}attribute     = 0x{self.attribute:02X},',
             f'{DefaultIndent}rangeType     = 0x{self.rangeType:02X},',
             f'{DefaultIndent}rng           = 0x{self.rng:02X},',
             f'{DefaultIndent}area          = 0x{self.area:02X},',

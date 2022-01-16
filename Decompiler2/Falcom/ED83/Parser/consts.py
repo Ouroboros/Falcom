@@ -6,6 +6,7 @@ R_ARM_POINT     = 'R_arm_point'
 L_HAND_POINT    = 'L_hand_point'
 R_HAND_POINT    = 'R_hand_point'
 
+NODE_L_HAND     = 'NODE_L_HAND'
 NODE_R_HAND     = 'NODE_R_HAND'
 
 MAX_REG_ID      = 0x20

@@ -50,12 +50,41 @@ def getBossList():
     ]
 
 def DebugMenu(menuVar):
+    def allItems():
+        AddItem(0x04, 0x0000, 10000)
+        AddItem(0x07, 0x00F1, 10000)
+        AddItem(0x07, 0x00F2, 10000)
+        AddItem(0x07, 0x00F3, 10000)
+        AddItem(0x07, 0x00F4, 10000)
+        AddItem(0x07, 0x00F5, 10000)
+        AddItem(0x07, 0x00F6, 10000)
+        AddItem(0x07, 0x00F7, 10000)
+        AddItem(0x07, 0x00F8, 10000)
+
+        for i in range(0x80, 0xFF):
+            AddItem(0x0F, i, 1000)
+
+        # AddItem(0x0F, 0x0081, 900)
+        # AddItem(0x0F, 0x008C, 900)
+        # AddItem(0x0F, 0x00BE, 900)
+        # AddItem(0x0F, 0x00BF, 900)
+        # AddItem(0x0F, 0x00C0, 900)
+        # AddItem(0x0F, 0x00C8, 900)
+
+        AddItem(0x00, 0x0000, 900)
+        AddItem(0x00, 0x0005, 900)
+        AddItem(0x00, 0x000A, 900)
+        AddItem(0x00, 0x003C, 900)
+        AddItem(0x18, 0x0000, 900)
+
     ShowMenu(
         menuVar,
         1,
         ('SelectArea',          lambda: Call(ScriptId.Debug, 'SelectArea')),
         ('SelectFlag_System',   lambda: Call(ScriptId.Debug, 'SelectFlag_System')),
         ('SelectFlag',          lambda: Call(ScriptId.Debug, 'SelectFlag')),
+        ('Mg01_Parts',          lambda: Call(ScriptId.Debug, 'Mg01_Parts')),
+        ('AllItems',            allItems),
         fontSize = 33.0,
     )
 

@@ -145,6 +145,64 @@ def ShowMenu(
 
     MenuCmd(0x03, level)
 
+def Switch2(expr: tuple, handlers: Dict[int, Callable]):
+    handlers.setdefault(-1, lambda: None)
+
+    cases: List[Tuple[int, str]] = []
+
+    for id in sorted(handlers.keys()):
+        if id == -1:
+            continue
+
+        cases.append((id, genLabel()))
+
+    cases.append((-1, genLabel()))
+
+    label_end = genLabel()
+
+    Switch(expr, *cases)
+    for i, case in enumerate(cases):
+        label(case[1])
+        handlers[case[0]]()
+        Jump(label_end)
+
+    label(label_end)
+
+def ForEachTarget(cb, reg = 0):
+    BattleTargetsIterInit(0x00)
+    BattleTargetsIterReset(reg, 0xFFFE)
+
+    start = genLabel()
+    end = genLabel()
+    label(start)
+
+    If(
+        (
+            (Expr.PushReg, reg),
+            Expr.Return,
+        ),
+        end,
+    )
+
+    cb()
+
+    BattleTargetsIterNext(0xFFFE)
+
+    ExecExpressionWithReg(
+        reg,
+        (
+            (Expr.PushLong, 0x1),
+            Expr.Sub2,
+            Expr.Return,
+        ),
+    )
+
+    Jump(start)
+
+    label(end)
+
+    BattleTargetsIterReset(0x01, 0xFFFE)
+
 # debug 0x07
 
 def DebugString(s: str):
@@ -267,6 +325,9 @@ def PlayEffect2(
 
 def StopEffect(chrId: int, slot: int, unknown: int):
     EffectCtrl(0x0D, chrId, slot, unknown)
+
+def WaitEffect(chrId: int, effid: int, arg3: int):
+    EffectCtrl(0x10, chrId, effid, arg3)
 
 
 # BattleCtrl 0x33

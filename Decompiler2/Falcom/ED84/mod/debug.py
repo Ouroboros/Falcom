@@ -11838,7 +11838,7 @@ def SelectFlag_System():
 
     label('loc_F43B')
 
-    OP_12(0x0300)
+    XorScenaFlags(ScenaFlag(0x0060, 0, 0x300))
 
     Jump('loc_F91F')
 
@@ -11846,7 +11846,7 @@ def SelectFlag_System():
 
     label('loc_F443')
 
-    OP_12(0x0303)
+    XorScenaFlags(ScenaFlag(0x0060, 3, 0x303))
 
     Jump('loc_F91F')
 
@@ -11910,7 +11910,7 @@ def SelectFlag_System():
 
     label('loc_F485')
 
-    OP_12(0x0400)
+    XorScenaFlags(ScenaFlag(0x0080, 0, 0x400))
 
     Jump('loc_F91F')
 
@@ -11918,7 +11918,7 @@ def SelectFlag_System():
 
     label('loc_F48D')
 
-    OP_12(0x0401)
+    XorScenaFlags(ScenaFlag(0x0080, 1, 0x401))
 
     Jump('loc_F91F')
 
@@ -11926,7 +11926,7 @@ def SelectFlag_System():
 
     label('loc_F495')
 
-    OP_12(0x0402)
+    XorScenaFlags(ScenaFlag(0x0080, 2, 0x402))
 
     Jump('loc_F91F')
 
@@ -11934,7 +11934,7 @@ def SelectFlag_System():
 
     label('loc_F49D')
 
-    OP_12(0x042A)
+    XorScenaFlags(ScenaFlag(0x0085, 2, 0x42A))
 
     Jump('loc_F91F')
 
@@ -11942,7 +11942,7 @@ def SelectFlag_System():
 
     label('loc_F4A5')
 
-    OP_12(0x039C)
+    XorScenaFlags(ScenaFlag(0x0073, 4, 0x39C))
 
     Jump('loc_F91F')
 
@@ -12087,7 +12087,7 @@ def SelectFlag_System():
 
     label('loc_F740')
 
-    OP_12(0x030E)
+    XorScenaFlags(ScenaFlag(0x0061, 6, 0x30E))
 
     Jump('loc_F91F')
 
@@ -12095,7 +12095,7 @@ def SelectFlag_System():
 
     label('loc_F748')
 
-    OP_12(0x0310)
+    XorScenaFlags(ScenaFlag(0x0062, 0, 0x310))
 
     If(
         (
@@ -12115,7 +12115,7 @@ def SelectFlag_System():
 
     label('loc_F759')
 
-    OP_12(0x0311)
+    XorScenaFlags(ScenaFlag(0x0062, 1, 0x311))
 
     Jump('loc_F91F')
 
@@ -12226,7 +12226,7 @@ def SelectFlag_System():
 
     label('loc_F857')
 
-    OP_12(0x0407)
+    XorScenaFlags(ScenaFlag(0x0080, 7, 0x407))
 
     Jump('loc_F91F')
 
@@ -15971,7 +15971,7 @@ def SelectFlag_Ippan():
 
     label('loc_13309')
 
-    OP_12(0x5B09)
+    XorScenaFlags(ScenaFlag(0x0B61, 1, 0x5B09))
 
     Jump('loc_13750')
 
@@ -15979,7 +15979,7 @@ def SelectFlag_Ippan():
 
     label('loc_13311')
 
-    OP_12(0x5B20)
+    XorScenaFlags(ScenaFlag(0x0B64, 0, 0x5B20))
 
     Jump('loc_13750')
 
@@ -15987,7 +15987,7 @@ def SelectFlag_Ippan():
 
     label('loc_13319')
 
-    OP_12(0x5B2B)
+    XorScenaFlags(ScenaFlag(0x0B65, 3, 0x5B2B))
 
     Jump('loc_13750')
 
@@ -15995,7 +15995,7 @@ def SelectFlag_Ippan():
 
     label('loc_13321')
 
-    OP_12(0x5B3A)
+    XorScenaFlags(ScenaFlag(0x0B67, 2, 0x5B3A))
 
     Jump('loc_13750')
 
@@ -16003,7 +16003,7 @@ def SelectFlag_Ippan():
 
     label('loc_13329')
 
-    OP_12(0x5B45)
+    XorScenaFlags(ScenaFlag(0x0B68, 5, 0x5B45))
 
     Jump('loc_13750')
 
@@ -16011,7 +16011,7 @@ def SelectFlag_Ippan():
 
     label('loc_13331')
 
-    OP_12(0x5B56)
+    XorScenaFlags(ScenaFlag(0x0B6A, 6, 0x5B56))
 
     Jump('loc_13750')
 
@@ -16019,7 +16019,7 @@ def SelectFlag_Ippan():
 
     label('loc_13339')
 
-    OP_12(0x5B62)
+    XorScenaFlags(ScenaFlag(0x0B6C, 2, 0x5B62))
 
     Jump('loc_13750')
 
@@ -16027,7 +16027,7 @@ def SelectFlag_Ippan():
 
     label('loc_13341')
 
-    OP_12(0x5B77)
+    XorScenaFlags(ScenaFlag(0x0B6E, 7, 0x5B77))
 
     Jump('loc_13750')
 
@@ -16035,7 +16035,7 @@ def SelectFlag_Ippan():
 
     label('loc_13349')
 
-    OP_12(0x5B7D)
+    XorScenaFlags(ScenaFlag(0x0B6F, 5, 0x5B7D))
 
     Jump('loc_13750')
 
@@ -16043,7 +16043,7 @@ def SelectFlag_Ippan():
 
     label('loc_13351')
 
-    OP_12(0x5B98)
+    XorScenaFlags(ScenaFlag(0x0B73, 0, 0x5B98))
 
     Jump('loc_13750')
 
@@ -16051,7 +16051,7 @@ def SelectFlag_Ippan():
 
     label('loc_13359')
 
-    OP_12(0x5BA0)
+    XorScenaFlags(ScenaFlag(0x0B74, 0, 0x5BA0))
 
     Jump('loc_13750')
 
@@ -16059,7 +16059,7 @@ def SelectFlag_Ippan():
 
     label('loc_13361')
 
-    OP_12(0x5B14)
+    XorScenaFlags(ScenaFlag(0x0B62, 4, 0x5B14))
 
     Jump('loc_13750')
 
@@ -16067,7 +16067,7 @@ def SelectFlag_Ippan():
 
     label('loc_13369')
 
-    OP_12(0x5B34)
+    XorScenaFlags(ScenaFlag(0x0B66, 4, 0x5B34))
 
     Jump('loc_13750')
 
@@ -16075,7 +16075,7 @@ def SelectFlag_Ippan():
 
     label('loc_13371')
 
-    OP_12(0x5B40)
+    XorScenaFlags(ScenaFlag(0x0B68, 0, 0x5B40))
 
     Jump('loc_13750')
 
@@ -16083,7 +16083,7 @@ def SelectFlag_Ippan():
 
     label('loc_13379')
 
-    OP_12(0x5B4B)
+    XorScenaFlags(ScenaFlag(0x0B69, 3, 0x5B4B))
 
     Jump('loc_13750')
 
@@ -16091,7 +16091,7 @@ def SelectFlag_Ippan():
 
     label('loc_13381')
 
-    OP_12(0x5B5C)
+    XorScenaFlags(ScenaFlag(0x0B6B, 4, 0x5B5C))
 
     Jump('loc_13750')
 
@@ -16099,7 +16099,7 @@ def SelectFlag_Ippan():
 
     label('loc_13389')
 
-    OP_12(0x5B67)
+    XorScenaFlags(ScenaFlag(0x0B6C, 7, 0x5B67))
 
     Jump('loc_13750')
 
@@ -16107,7 +16107,7 @@ def SelectFlag_Ippan():
 
     label('loc_13391')
 
-    OP_12(0x5B70)
+    XorScenaFlags(ScenaFlag(0x0B6E, 0, 0x5B70))
 
     Jump('loc_13750')
 
@@ -16115,7 +16115,7 @@ def SelectFlag_Ippan():
 
     label('loc_13399')
 
-    OP_12(0x5B86)
+    XorScenaFlags(ScenaFlag(0x0B70, 6, 0x5B86))
 
     Jump('loc_13750')
 
@@ -16123,7 +16123,7 @@ def SelectFlag_Ippan():
 
     label('loc_133A1')
 
-    OP_12(0x5B91)
+    XorScenaFlags(ScenaFlag(0x0B72, 1, 0x5B91))
 
     Jump('loc_13750')
 
