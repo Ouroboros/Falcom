@@ -45,7 +45,7 @@
 
 * hookScript
   * 加载 debug.dat
-  * 按住`shift`再呼出手机，会调用 `system.dat` 的 `FC_ActMenu_Ouroboros` 函数，不限场景
+  * 按住`shift`再呼出手机，会调用 `debug.dat` 的 `FC_ActMenu_Ouroboros` 函数，不限场景
 
 * hookBGM: 在 config.json5 里配置新的 BGM
 
