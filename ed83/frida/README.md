@@ -25,13 +25,8 @@
   * 战技不会从 `t_magic` 里读取，而是从 `alchr*.dat` 里读取
   * SBreak 会自动选择 `alchr*.dat` 里最后一个S技
 
-### 如何替换模型
-
-1. 修改
-    * [t_name](https://github.com/Ouroboros/Falcom/blob/e674b61cbde691317a1628278dee29ca3bd8cf9e/Decompiler2/Falcom/ED83/mod/t_name.py#L23719)
-    * [t_attach](https://github.com/Ouroboros/Falcom/blob/e674b61cbde691317a1628278dee29ca3bd8cf9e/Decompiler2/Falcom/ED83/mod/t_attach.py#L1524)
-2. 改脚本
-    * [例子](https://github.com/Ouroboros/Falcom/blob/e674b61cbde691317a1628278dee29ca3bd8cf9e/Decompiler2/Falcom/ED83/mod/hack.py#L29)
+### 实例
+  * https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED83/mod
 
 ----------------
 
