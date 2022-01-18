@@ -47,5 +47,7 @@
   * 加载 debug.dat
   * 按住`shift`再呼出手机，会调用 `system.dat` 的 `FC_ActMenu_Ouroboros` 函数，不限场景
 
+* hookBGM: 在 config.json5 里配置新的 BGM
+
 ### 实例
   * https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED84/mod
