@@ -119,6 +119,9 @@ class ScenaParser:
     }
 
     def getFunctionType(self, name: str) -> ScenaFunctionType:
+        if name.startswith('_a0_'):
+            name = name[4:]
+
         typ = self.functionTypeMap.get(name)
         if typ:
             return typ

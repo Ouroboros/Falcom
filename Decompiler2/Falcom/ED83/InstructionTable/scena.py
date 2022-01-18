@@ -267,8 +267,8 @@ def Handler_29(ctx: InstructionHandlerContext):
 def Handler_2B(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BLBB' + {
-            0x00: 'LBLB',
-            0x01: 'WWWW',
+            0x00: 'LB' * 2,
+            0x01: 'N' * 4,
         }[n]
 
     match ctx.action:
