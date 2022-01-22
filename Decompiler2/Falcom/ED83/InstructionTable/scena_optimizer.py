@@ -88,6 +88,8 @@ optimizeTable = buildTable(
         ('ReleaseEffect',                       {0: 0x0B}),
         ('PlayEffect',                          {0: 0x0C}),
         ('StopEffect',                          {0: 0x0D}),
+        ('WaitEffect',                          {0: 0x10}),
+        ('EffectSetRGBA',                       {0: 0x14}),
     ),
     opt(
         0x33,

@@ -329,6 +329,8 @@ def StopEffect(chrId: int, slot: int, unknown: int):
 def WaitEffect(chrId: int, effid: int, arg3: int):
     EffectCtrl(0x10, chrId, effid, arg3)
 
+def EffectSetRGBA(chrId: int, arg2: int, r: float, g: float, b: float, a: float, arg7: int, slot: int):
+    EffectCtrl(0x14, chrId, arg2, r, g, b, a, arg7, slot)
 
 # BattleCtrl 0x33
 

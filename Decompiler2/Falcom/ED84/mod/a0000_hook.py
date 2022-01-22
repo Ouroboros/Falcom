@@ -131,19 +131,9 @@ def TK_MiniGame_Debug():
     # FormationReset(0x00)
     # OP_C4(0x01, 0x00)
 
-    # FormationReset(0)
-    # FormationAddMember(0)
-    # FormationSetLeader(0)
-
-    FormationCtrl(0x18)
-
-    # FormationCtrl(0x11, 0xF000)
-    # FormationCtrl(0x11, 0xF001)
-    # FormationCtrl(0x11, 0xF002)
-    # FormationCtrl(0x11, 0xF003)
-
-    for i in range(0x40):
-        FormationCtrl(0x11, i)
+    FormationReset(0)
+    FormationAddMember(0)
+    FormationSetLeader(0)
 
     Battle(0x00, 0x00000005, 0x00, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00)
     # Battle(0x01, 0x00000005, 0x00, 0x00, 0x0000, 0x0001, 0x0002, 0x0003)
