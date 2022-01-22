@@ -59,9 +59,91 @@ def TK_MiniGame_Debug():
 
     #     AnimeClipRefreshSkin(chrid)
 
-    FormationReset(0)
-    FormationAddMember(0)
-    FormationSetLeader(0)
+    # Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
+
+
+
+    # Call(ScriptId.System, 'FC_TSMenu_Reset')
+    # OP_C4(0x02, 0x00, ChrTable['黎恩'])
+    # OP_C4(0x02, 0x01, ChrTable['尤娜'])
+    # OP_C4(0x02, 0x01, ChrTable['庫爾特'])
+    # OP_C4(0x02, 0x01, ChrTable['亞爾緹娜'])
+    # OP_C4(0x02, 0x01, ChrTable['繆潔'])
+    # OP_C4(0x02, 0x01, ChrTable['亞修'])
+    # OP_C4(0x02, 0x01, ChrTable['亞莉莎'])
+    # OP_C4(0x02, 0x01, ChrTable['艾略特'])
+    # OP_C4(0x02, 0x01, ChrTable['勞拉'])
+    # OP_C4(0x02, 0x02, ChrTable['馬奇亞斯'])
+    # OP_C4(0x02, 0x02, ChrTable['艾瑪'])
+    # OP_C4(0x02, 0x02, ChrTable['尤西斯'])
+    # OP_C4(0x02, 0x02, ChrTable['菲'])
+    # OP_C4(0x02, 0x02, ChrTable['蓋烏斯'])
+    # OP_C4(0x02, 0x02, ChrTable['莎拉'])
+    # OP_C4(0x02, 0x02, ChrTable['克洛'])
+    # OP_C4(0x02, 0x02, ChrTable['杜巴莉'])
+    # OP_C4(0x02, 0x03, ChrTable['安潔莉卡'])
+    # OP_C4(0x02, 0x03, ChrTable['提妲'])
+    # OP_C4(0x02, 0x03, ChrTable['蘭迪'])
+    # OP_C4(0x02, 0x03, ChrTable['雪倫'])
+    # # MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000010)
+    # SetScenaFlags(ScenaFlag(0x0072, 1, 0x391))
+
+    # ExecExpressionWithVar(
+    #     0x2B,
+    #     (
+    #         (Expr.PushLong, 0x7),
+    #         Expr.Nop,
+    #         Expr.Return,
+    #     ),
+    # )
+
+    # ExecExpressionWithVar(
+    #     0x2C,
+    #     (
+    #         (Expr.PushLong, 0x8),
+    #         Expr.Nop,
+    #         Expr.Return,
+    #     ),
+    # )
+
+    # ExecExpressionWithVar(
+    #     0x2D,
+    #     (
+    #         (Expr.PushLong, 0x8),
+    #         Expr.Nop,
+    #         Expr.Return,
+    #     ),
+    # )
+
+    # ExecExpressionWithVar(
+    #     0x2E,
+    #     (
+    #         (Expr.PushLong, 0x4),
+    #         Expr.Nop,
+    #         Expr.Return,
+    #     ),
+    # )
+
+    # OP_C5(0x00, 0x01, 0x00)
+    # OP_C5(0x01)
+    # Call(ScriptId.System, 'FC_ResetMenuChrFlagALL')
+
+    # FormationReset(0x00)
+    # OP_C4(0x01, 0x00)
+
+    # FormationReset(0)
+    # FormationAddMember(0)
+    # FormationSetLeader(0)
+
+    FormationCtrl(0x18)
+
+    # FormationCtrl(0x11, 0xF000)
+    # FormationCtrl(0x11, 0xF001)
+    # FormationCtrl(0x11, 0xF002)
+    # FormationCtrl(0x11, 0xF003)
+
+    for i in range(0x40):
+        FormationCtrl(0x11, i)
 
     Battle(0x00, 0x00000005, 0x00, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00, 0xFFFFFFFF, 0x00)
     # Battle(0x01, 0x00000005, 0x00, 0x00, 0x0000, 0x0001, 0x0002, 0x0003)

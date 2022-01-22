@@ -69,7 +69,7 @@ def main():
         r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\ani\dat\\',
         r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\battle\dat\\',
         r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\scena\dat\\',
-        # r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\talk\dat\\',
+        r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\talk\dat\\',
         # r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\minigame\dat\\',
     ]
 

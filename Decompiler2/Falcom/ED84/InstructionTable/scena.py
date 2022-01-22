@@ -1406,8 +1406,8 @@ def Handler_C4(ctx: InstructionHandlerContext):
         return 'B' + {
             0x00: 'B',
             0x01: 'B',
-            0x02: 'BW',
-            0x03: 'W',
+            0x02: 'BN',
+            0x03: 'N',
             0x04: 'BVffff',
             0x05: 'BB',
             0x06: '',

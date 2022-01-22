@@ -10,6 +10,8 @@ def _init():
 
     if not Common.GlobalConfig.ChrTable:
         from .Metadata.chrId_table import chrIdTable
+        from .Metadata.chrId_table_en import chrIdTable as chrIdTable_en
+        Common.GlobalConfig.ChrTable.update(chrIdTable_en)
         Common.GlobalConfig.ChrTable.update(chrIdTable)
 
 _init()

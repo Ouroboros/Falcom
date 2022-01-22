@@ -2163,7 +2163,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x4A,  'OP_4A',                        'ffffWB'),
     inst(0x4B,  'ChrSetRGBA',                   'NffffHB', parameters = ('chrId', 'r', 'g', 'b', 'a', 'durationInMs')),
     inst(0x4C,  'OP_4C',                        'WfffWB'),
-    inst(0x4D,  'WaitForThreadExit',            'NB',                                                                       parameters = ('chrId', 'threadId')),
+    inst(0x4D,  'WaitForThreadExit',            'NB',                       Flags.FormatNewLine,                            parameters = ('chrId', 'threadId')),
     inst(0x4E,  'OP_4E',                        'ffB'),
     inst(0x4F,  'OP_4F',                        NoOperand,                                      handler = Handler_4F),
     inst(0x50,  'OP_50',                        'VS'),

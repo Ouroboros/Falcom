@@ -19,11 +19,19 @@ class CraftTarget(IntEnum2):
     Party2                  = 0xF001
     Party3                  = 0xF002
     Party4                  = 0xF003
+    Party5                  = 0xF004
+    Party6                  = 0xF005
+    Party7                  = 0xF006
+    Party8                  = 0xF007
 
     Enemy1                  = 0xF043
     Enemy2                  = 0xF044
     Enemy3                  = 0xF045
     Enemy4                  = 0xF046
+    Enemy5                  = 0xF047
+    Enemy6                  = 0xF048
+    Enemy7                  = 0xF049
+    Enemy8                  = 0xF04A
 
     Saved                   = 0xFFF4
     SelectedPos             = 0xFFF5
