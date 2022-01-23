@@ -322,7 +322,7 @@ def Handler_2F(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BN' + {
             0x00: 'SS',
-            # 0x01: 'SS',       # remove_chr_animeclip
+            0x01: 'SS',       # remove_chr_animeclip
             # 0x02: 'SS',
             # 0x03: '',
             0x04: 'SS',

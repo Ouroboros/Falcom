@@ -328,6 +328,7 @@ class ScenaAnimeClipItem:
     def __init__(self, type: int = 0, type2: int = 0, dword4: int = 0, name: str = '', *, fs: fileio.FileStream = None):
         '''
             type:
+                2 = asset
                 3 = eff
                 4 = se
                 5 = voice
@@ -417,10 +418,10 @@ class ScenaAnimeClips:
         return body
 
 class ScenaAnimeClipTableEntry:
-    def __init__(self, catalog: int = 0, model: str = '', animeClip: str = '', *, fs: fileio.FileStream = None):
-        self.catalog  = catalog
-        self.model  = model
-        self.animeClip  = animeClip
+    def __init__(self, catalog: int = 0, asset: str = '', symbol: str = '', *, fs: fileio.FileStream = None):
+        self.catalog    = catalog
+        self.asset      = asset
+        self.symbol     = symbol
 
         self.read(fs)
 
@@ -430,16 +431,16 @@ class ScenaAnimeClipTableEntry:
 
         self.catalog = fs.ReadULong()
         if self.catalog != 0:
-            self.model = utils.read_fixed_string(fs, 0x20)
-            self.animeClip = utils.read_fixed_string(fs, 0x20)
+            self.asset  = utils.read_fixed_string(fs, 0x20)
+            self.symbol = utils.read_fixed_string(fs, 0x20)
 
     def serialize(self) -> bytes:
         fs = io.BytesIO()
 
         fs.write(utils.int_to_bytes(self.catalog, 4))
         if self.catalog != 0:
-            fs.write(utils.pad_string(self.model, 0x20))
-            fs.write(utils.pad_string(self.animeClip, 0x20))
+            fs.write(utils.pad_string(self.asset, 0x20))
+            fs.write(utils.pad_string(self.symbol, 0x20))
 
         fs.seek(0)
 
@@ -453,8 +454,8 @@ class ScenaAnimeClipTableEntry:
 
         if self.catalog != 0:
             f.extend([
-                f"{DefaultIndent}model      = '{self.model}',",
-                f"{DefaultIndent}animeClip  = '{self.animeClip}',",
+                f"{DefaultIndent}asset      = '{self.asset}',",
+                f"{DefaultIndent}symbol     = '{self.symbol}',",
             ])
 
         f.append(')')

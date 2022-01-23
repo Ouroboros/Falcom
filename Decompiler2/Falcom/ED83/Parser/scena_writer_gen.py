@@ -133,6 +133,11 @@ def OP_11(arg1: uint16):
     assert isinstance(arg1, uint16)
     _gScena.handleOpCode(0x11, arg1)
 
+def ToggleScenaFlags(arg1: uint16):
+    # 0x12
+    assert isinstance(arg1, uint16)
+    _gScena.handleOpCode(0x12, arg1)
+
 def OP_12(arg1: uint16):
     # 0x12
     assert isinstance(arg1, uint16)

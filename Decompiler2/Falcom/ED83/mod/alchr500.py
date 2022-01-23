@@ -12,7 +12,7 @@ def ActionTable():
         ScenaActionTableEntry(
             craftId       = 0x3E8,
             type          = 0x01,
-            byte03        = 0x00,
+            attribute     = 0x00,
             rangeType     = 0x0C,
             rng           = 0x04,
             area          = 0x03,
@@ -49,7 +49,7 @@ def ActionTable():
         ScenaActionTableEntry(
             craftId       = 0x3E9,
             type          = 0x1E,
-            byte03        = 0x00,
+            attribute     = 0x00,
             rangeType     = 0x12,
             rng           = 0x14,
             area          = 0x06,
@@ -86,7 +86,7 @@ def ActionTable():
         ScenaActionTableEntry(
             craftId       = 0x3EA,
             type          = 0x1E,
-            byte03        = 0x00,
+            attribute     = 0x00,
             rangeType     = 0x1F,
             rng           = 0x64,
             area          = 0x64,
@@ -123,7 +123,7 @@ def ActionTable():
         ScenaActionTableEntry(
             craftId       = 0x3EB,
             type          = 0x1E,
-            byte03        = 0x00,
+            attribute     = 0x00,
             rangeType     = 0x10,
             rng           = 0x01,
             area          = 0x0A,
@@ -160,7 +160,7 @@ def ActionTable():
         ScenaActionTableEntry(
             craftId       = 0x3ED,
             type          = 0x1E,
-            byte03        = 0x00,
+            attribute     = 0x00,
             rangeType     = 0x12,
             rng           = 0x14,
             area          = 0x06,
@@ -197,7 +197,7 @@ def ActionTable():
         ScenaActionTableEntry(
             craftId       = 0x3EE,
             type          = 0x1E,
-            byte03        = 0x00,
+            attribute     = 0x00,
             rangeType     = 0x0A,
             rng           = 0x01,
             area          = 0x01,
@@ -234,7 +234,7 @@ def ActionTable():
         ScenaActionTableEntry(
             craftId       = 0x3EF,
             type          = 0x1E,
-            byte03        = 0x00,
+            attribute     = 0x00,
             rangeType     = 0x0E,
             rng           = 0x20,
             area          = 0x06,
@@ -271,7 +271,7 @@ def ActionTable():
         ScenaActionTableEntry(
             craftId       = 0x3EC,
             type          = 0x1E,
-            byte03        = 0x00,
+            attribute     = 0x00,
             rangeType     = 0x0B,
             rng           = 0x01,
             area          = 0x01,
@@ -308,7 +308,7 @@ def ActionTable():
         ScenaActionTableEntry(
             craftId       = 0x3FF,
             type          = 0x1F,
-            byte03        = 0x00,
+            attribute     = 0x00,
             rangeType     = 0x1F,
             rng           = 0x64,
             area          = 0x64,

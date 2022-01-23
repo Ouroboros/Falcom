@@ -117,6 +117,21 @@ def DebugString(s: str):
 
 # anime clip 0x2F
 
+def AnimeClipAdd(chrId: int, asset: str, symbol: str):
+    AnimeClipCtrl(0x00, chrId, asset, symbol)
+
+def AnimeClipRemoveSymbol(chrId: int, symbol: str):
+    AnimeClipCtrl(0x01, chrId, '', symbol)
+
+def AnimeClipLoadAsset(chrId: int, asset: str):
+    AnimeClipCtrl(0x02, chrId, asset, '')
+
+def AnimeClipAddAsset(chrId: int, asset: str):
+    AnimeClipCtrl(0x04, chrId, asset, '')
+
+def AnimeClipRemoveAsset(chrId: int, asset: str):
+    AnimeClipCtrl(0x05, chrId, asset, '')
+
 def AnimeClipLoadByCatalog(chrId: int, catalog: int):
     AnimeClipCtrl(0x06, chrId, catalog)
 
@@ -136,6 +151,14 @@ def AnimeClipRefreshSkin(chrId: int):
 
 def AnimeClipChangeSkin(chrId: int, model: str):
     AnimeClipCtrl(0x0A, chrId, model, '')
+
+def AnimeClipLoadFace(chrId: int, asset: str):
+    AnimeClipCtrl(0x0B, chrId, asset, '')
+
+def AnimeClipSetChrPresetFaceModel(chrId: int, presetFaceModel: str):
+    AnimeClipCtrl(0x0C, chrId, presetFaceModel, '')
+
+
 
 # equip 0x30
 
