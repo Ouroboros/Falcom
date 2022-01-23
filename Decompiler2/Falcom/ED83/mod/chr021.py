@@ -6309,11 +6309,11 @@ def AniEvDead2():
     Call(ScriptId.Current, 'AniDetachMainWeapon')
     Call(ScriptId.Current, 'SpringOff')
     # SetEndhookFunction('SpringOn', 0x000B)
-    AnimeClipAdd(0xFFFE, 'C_CHR010_EV', 'EV79000')
+    AnimeClipAddSymbol(0xFFFE, 'C_CHR010_EV', 'EV79000')
     PlayChrAnimeClip(0xFFFE, 'EV79000', 0x01, 0x00, 0x00, 0x00, 0x00, -2.0, -1.0, -1.0, -1.0, 0x00, 0x00)
     WaitAnimeClip(0xFFFE, 0.0, 0x00)
 
-    AnimeClipRemoveBySymbol(0xFFFE, 'EV79000')
+    AnimeClipRemoveSymbol(0xFFFE, 'EV79000')
 
     Return()
 

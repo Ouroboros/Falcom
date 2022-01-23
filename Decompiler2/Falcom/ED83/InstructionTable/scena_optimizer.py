@@ -65,7 +65,7 @@ def opt(opcode: int, *patterns: Tuple[str, Tuple]) -> OptimizeData:
 optimizeTable = buildTable(
     opt(
         0x2F,
-        ('AnimeClipAdd',                        {0: 0x00}),
+        ('AnimeClipAddSymbol',                  {0: 0x00}),
         ('AnimeClipRemoveSymbol',               {0: 0x01, 2: ''}),
         ('AnimeClipAddAsset',                   {0: 0x04, 3: ''}),
         ('AnimeClipRemoveAsset',                {0: 0x05, 3: ''}),

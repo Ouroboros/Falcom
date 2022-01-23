@@ -225,7 +225,7 @@ def MenuShow(level: int, resultVar: int):
 
 # anime clip 0x2F
 
-def AnimeClipAdd(chrId: int, asset: str, symbol: str):
+def AnimeClipAddSymbol(chrId: int, asset: str, symbol: str):
     AnimeClipCtrl(0x00, chrId, asset, symbol)
 
 def AnimeClipRemoveSymbol(chrId: int, symbol: str):
