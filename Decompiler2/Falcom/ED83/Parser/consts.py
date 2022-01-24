@@ -97,9 +97,10 @@ class BattleChrFlags(IntEnum2):
     NoDamage                = 0x80000000
 
 class BattleFlags(IntEnum2):
-    DisableEvade            = 0x00000001
+    DisableRun              = 0x00000001
     DisableItem             = 0x00000004
     DisableArts             = 0x00000008
+    DisableOrder            = 0x00000020
 
 class BattleButtonId(IntEnum2):
     Move                    = 0

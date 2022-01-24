@@ -110,6 +110,7 @@ def AniBtlInit():
     origFunc['AniBtlInit']()
 
 def AniBtlAttack():
+    BattleSetFlags(BattleFlags.DisableOrder)
     ExecExpressionWithReg(
         0x10,
         (
