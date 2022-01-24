@@ -216,12 +216,59 @@ class BattleCalcTableData(TableDataEntry):
         ('value',           'L'),
     )
 
+class AttachTableData(TableDataEntry):
+    DESCRIPTOR  = (
+        ('chrId',       'W'),
+        ('type',        'I'),
+        ('itemId',      'L'),
+        ('scenaFlags',  'L'),
+        ('dword0E',     'L'),
+        ('dword12',     'L'),
+        ('dword16',     'L'),
+        ('str',         'S'),
+        ('asset',       'S'),
+        ('node',        'S'),
+    )
+
+class AttachTransformData(TableDataEntry):
+    DESCRIPTOR  = (
+        ('chrId',       'W'),
+        ('asset',       'S'),
+        ('str2',        'S'),
+        ('str3',        'S'),
+        ('str4',        'S'),
+    )
+
+class EventTableData(TableDataEntry):
+    DESCRIPTOR  = (
+        ('eventId',         'W'),
+        ('eventEntry',      'S'),
+        ('word01',          'W'),
+        ('word02',          'W'),
+        ('scena',           'S'),
+        ('word03',          'W'),
+        ('nextEventId',     'W'),
+        ('word03',          'W'),
+        ('str04',           'S'),
+        ('word04',          'W'),
+        ('word05',          'W'),
+        ('word06',          'W'),
+        ('word07',          'W'),
+        ('word08',          'W'),
+        ('word09',          'W'),
+        ('word0A',          'W'),
+        ('word0B',          'W'),
+    )
+
 DataTable.DataTableDataTypes.update({
-    'bgm'       : BGMTableData,
-    'voice'     : VoiceTableData,
-    'status'    : StatusTableData,
-    'magic'     : MagicTableData,
-    'btcalc'    : BattleCalcTableData,
+    'AttachTableData'       : AttachTableData,
+    'AttachTransformData'   : AttachTransformData,
+    'EventTableData'        : EventTableData,
+    'bgm'                   : BGMTableData,
+    'voice'                 : VoiceTableData,
+    'status'                : StatusTableData,
+    'magic'                 : MagicTableData,
+    'btcalc'                : BattleCalcTableData,
 })
 
 DataTable.PythonHeader = [

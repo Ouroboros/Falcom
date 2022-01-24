@@ -287,11 +287,38 @@ class BGMTableData(TableDataEntry):
         ('word3',   'H'),
     )
 
+class ItemHelpData(TableDataEntry):
+    DESCRIPTOR  = (
+        ('id',      'W'),
+        ('desc',    'S'),
+        ('word3',   'W'),
+        ('word4',   'W'),
+        ('word5',   'W'),
+        ('word6',   'W'),
+        ('byte7',   'B'),
+    )
+
+class CompHelpData(TableDataEntry):
+    DESCRIPTOR  = (
+        ('id',      'W'),
+        ('desc',    'S'),
+        ('value',   'I'),
+    )
+
+class MapBgmTableData(TableDataEntry):
+    DESCRIPTOR  = (
+        ('mapId',   'L'),
+        ('bgmId',   'H'),
+    )
+
 class DataTable:
     DataTableDataTypes = {
         'NameTableData'     : NameTableData,
         'AttachTableData'   : AttachTableData,
         'EventTableData'    : EventTableData,
+        'ItemHelpData'      : ItemHelpData,
+        'CompHelpData'      : CompHelpData,
+        'MapBgmTableData'   : MapBgmTableData,
         'status'            : StatusTableData,
         'voice'             : VoiceTableData,
         'se'                : SETableData,
