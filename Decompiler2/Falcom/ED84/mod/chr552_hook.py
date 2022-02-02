@@ -105,12 +105,11 @@ def AniRun():
 def AniBtlInit():
     ReleaseEffect(0xFFFE, 0x25)
     LoadEffect(0xFFFE, 0x25, 'battle/atk034_1.eff')
-    # LoadEffect(0xFFFE, 0x26, 'battle/mgwa01_00.eff')
-    LoadEffect(0xFFFE, 0x26, 'battle/mglo01_06.eff')
+    LoadEffect(0xFFFE, 0x26, 'battle/mgwa01_00.eff')
+    # LoadEffect(0xFFFE, 0x26, 'battle/mglo01_06.eff')
     origFunc['AniBtlInit']()
 
 def AniBtlAttack():
-    BattleSetFlags(BattleFlags.DisableOrder)
     ExecExpressionWithReg(
         0x10,
         (
@@ -121,7 +120,7 @@ def AniBtlAttack():
         ),
     )
 
-    ExecExpressionWithReg(0x10, ((Expr.PushLong, 1), Expr.Return))
+    # ExecExpressionWithReg(0x10, ((Expr.PushLong, 1), Expr.Return))
 
     attr_wind   = 0
     attr_fire   = 1
@@ -219,7 +218,7 @@ def AniBtlAttack():
 
         CreateThread(0xFFFE, 0x01, ScriptId.Current, 'AniBtlAttack_Damage')
         WaitForThreadExit(0xFFFE, 0x01)
-        ForEachTarget(lambda: BattleSetChrAbnormalCondition(0xFFFB, AbnormalCondition.Freeze, 0, 1))
+        ForEachTarget(lambda: BattleSetChrAbnormalCondition(0xFFFB, AbnormalCondition.Freeze, 1, 1))
         Sleep(1000)
 
     Switch2(

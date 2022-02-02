@@ -262,3 +262,21 @@ def emit(*b: int):
 
 def ScenaFlag(offset: int, flag: int, *args) -> int:
     return ((offset & 0xFFFF) << 3) | (flag & 7)
+
+def ArgReg(index: int, b: int = 0) -> Tuple[int, int, int]:
+    return (0x11, index, b)
+
+def ArgInt(index: int, b: int = 0) -> Tuple[int, int, int]:
+    return (0x33, index, b)
+
+def ArgStr(index: int, b: int = 0) -> Tuple[int, int, int]:
+    return (0x44, index, b)
+
+def ParamStr(s: str) -> Tuple[int, str]:
+    return (0xDD, s)
+
+def ParamFloat(v: float, b: int = 0) -> Tuple[int, float, int]:
+    return (0xEE, v, b)
+
+def ParamInt(v: int, b: int = 0) -> Tuple[int, int, int]:
+    return (0xFF, v, b)

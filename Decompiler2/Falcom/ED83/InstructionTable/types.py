@@ -153,7 +153,27 @@ class ED83OperandDescriptor(OperandDescriptor):
         fs.WriteByte(0)
 
     def formatThreadValue(self, context: FormatOperandHandlerContext) -> List[str]:
-        return f'({", ".join([f"0x{o.value:X}" if isinstance(o.value, int) else ("%s" % o.value) if isinstance(o.value, float) else formatText(o.value) for o in context.operand.value])})'
+        match len(context.operand.value):
+            case 2:
+                typ, value = context.operand.value
+                typ, value = typ.value, value.value
+
+            case 3:
+                typ, value, byte3 = context.operand.value
+                typ, value, byte3 = typ.value, value.value, byte3.value
+                assert byte3 == 0
+
+            case _:
+                raise NotImplementedError(str(context.operand.value))
+
+        match typ:
+            case 0x11: return f'ArgReg(0x{value:02X})'
+            case 0x33: return f'ArgInt({value})'
+            case 0x44: return f'ArgStr({value})'
+            case 0xDD: return f'ParamStr({formatText(value)})'
+            case 0xEE: return f'ParamFloat({value:g})'
+            case 0xFF: return f'ParamInt({value})'
+            case _: return f'({", ".join([f"0x{o.value:X}" if isinstance(o.value, int) else ("%s" % o.value) if isinstance(o.value, float) else formatText(o.value) for o in context.operand.value])})'
 
     def formatText(self, context: FormatOperandHandlerContext) -> str:
         value = context.operand.value

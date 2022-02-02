@@ -8,7 +8,7 @@ def readAllOperands(ctx: InstructionHandlerContext, fmts: str) -> List[Operand]:
 
 def ScriptThread_getFunctionStrWorkValue(threadId: int) -> str:
     return 'B' + {
-        0x11: 'LB',     # param reg
+        0x11: 'LB',     # arg reg
         # 0x22: 'LB',
         0x33: 'LB',     # arg int
         0x44: 'LB',     # arg str
