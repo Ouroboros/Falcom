@@ -11,30 +11,30 @@ class ED84OperandFormat(ED83OperandFormat):
 class ED84OperandDescriptor(ED83OperandDescriptor):
     formatTable: Dict[str, 'ED84OperandDescriptor'] = {}
 
-    def readValue(self, context: InstructionHandlerContext) -> Any:
-        return {
-            ED84OperandType.ScriptId        : lambda context: context.disasmContext.fs.ReadByte(),
+#     def readValue(self, context: InstructionHandlerContext) -> Any:
+#         return {
+#             ED84OperandType.ScriptId        : lambda context: context.disasmContext.fs.ReadByte(),
 
-        }.get(self.format.type, super().readValue)(context)
+#         }.get(self.format.type, super().readValue)(context)
 
-    def writeValue(self, context: InstructionHandlerContext, value: Any):
-        return {
-            ED84OperandType.ScriptId    : lambda context, value: context.disasmContext.fs.WriteByte(value),
+#     def writeValue(self, context: InstructionHandlerContext, value: Any):
+#         return {
+#             ED84OperandType.ScriptId    : lambda context, value: context.disasmContext.fs.WriteByte(value),
 
-        }.get(self.format.type, super().writeValue)(context, value)
+#         }.get(self.format.type, super().writeValue)(context, value)
 
-    def formatValue(self, context: FormatOperandHandlerContext) -> str:
-        return {
-            ED84OperandType.ScriptId    : lambda context: f'ScriptId.{ScriptId(context.operand.value)}',
+#     def formatValue(self, context: FormatOperandHandlerContext) -> str:
+#         return {
+#             ED84OperandType.ScriptId    : lambda context: f'ScriptId.{ScriptId(context.operand.value)}',
 
-        }.get(self.format.type, super().formatValue)(context)
+#         }.get(self.format.type, super().formatValue)(context)
 
-def oprdesc(*args, **kwargs) -> ED84OperandDescriptor:
-    return ED84OperandDescriptor(ED84OperandFormat(*args, **kwargs))
+# def oprdesc(*args, **kwargs) -> ED84OperandDescriptor:
+#     return ED84OperandDescriptor(ED84OperandFormat(*args, **kwargs))
 
-ED83OperandDescriptor.formatTable.update({
-    's': oprdesc(ED84OperandType.ScriptId),
-})
+# ED83OperandDescriptor.formatTable.update({
+#     's': oprdesc(ED84OperandType.ScriptId),
+# })
 
 ED84OperandDescriptor.formatTable.update({
     **ED83OperandDescriptor.formatTable,
@@ -57,3 +57,9 @@ class ScriptId(IntEnum2):
     System3             = 0x18
     System4             = 0x19
     BtlItem             = 0x1A
+
+def _patch():
+    from Falcom.ED83.InstructionTable import types
+    types.ScriptId = ScriptId
+
+_patch()

@@ -60,11 +60,6 @@ def procfile(f: str):
     test(f, output)
 
 def main():
-    scp = [
-        'a0000.dat',
-        'a0308.dat',
-    ][-1]
-
     scena = [
         r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\ani\dat\\',
         r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\battle\dat\\',
@@ -90,6 +85,11 @@ def main():
 
     else:
         return
+
+    scp = [
+        'a0000.dat',
+        'a0308.dat',
+    ][-1]
 
     path = scena[-1] + scp
     path = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Trails of Cold Steel IV\data_cn\scripts\scena\dat\m6040.dat'

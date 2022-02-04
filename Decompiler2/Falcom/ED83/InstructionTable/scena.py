@@ -1117,20 +1117,20 @@ def Handler_67(ctx: InstructionHandlerContext):
 def Handler_68(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BS' + {
-            0x00: 'W',
-            0x01: 'W',
+            0x00: 'W',              # set_obj_flag
+            0x01: 'W',              # reset_obj_flag
             0x02: 'fff',
-            0x03: 'fff',
-            0x04: 'fff',
-            0x05: '',
-            0x06: '',
-            0x07: 'ffffWB',
-            0x08: 'fffWB',
+            0x03: 'fff',            # obj_rot
+            0x04: 'fff',            # obj_size
+            0x05: '',               # load_obj_asset
+            0x06: '',               # release_obj_asset
+            0x07: 'ffffWB',         # obj_color
+            0x08: 'fffWB',          # obj_specular
             # 0x09: '',
             # 0x0A: '',
-            0x0B: 'W',
-            # 0x18: 'L',
-            # 0x19: '',
+            0x0B: 'W',              # obj_chr_pos
+            # 0x18: 'L',            # check_obj_flag
+            # 0x19: '',             # get_obj_animetime
             0x1E: 'SSSfff',
         }[n]
 
@@ -2106,10 +2106,10 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x0D,  'OP_0D',                        NoOperand,                                      handler = Handler_0D),
     inst(0x0E,  'OP_0E',                        'BBB'),
     inst(0x10,  'SetScenaFlags',                'F',                                                                        parameters = ('flags',)),
-    inst(0x11,  'ClearScenaFlags',              'F'),
-    inst(0x12,  'ToggleScenaFlags',             'F'),
-    inst(0x13,  'OP_13',                        'L'),
-    inst(0x14,  'OP_14',                        'L'),
+    inst(0x11,  'ClearScenaFlags',              'F',                                                                        parameters = ('flags',)),
+    inst(0x12,  'ToggleScenaFlags',             'F',                                                                        parameters = ('flags',)),
+    inst(0x13,  'SetMapFlags',                  'L'),
+    inst(0x14,  'ClearMapFlags',                'L'),
     inst(0x15,  'OP_15',                        'L'),
     inst(0x16,  'Sleep',                        'H',                        Flags.FormatNewLine),
     inst(0x17,  'OP_17',                        'WW'),

@@ -41,11 +41,6 @@ def procfile(f: str):
     test(f, output)
 
 def main():
-    scp = [
-        'a0000.dat',
-        'a0308.dat',
-    ][-1]
-
     scena = [
         r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\\',
         # r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\minigame\dat\\',
@@ -74,6 +69,11 @@ def main():
 
     else:
         return
+
+    scp = [
+        'a0000.dat',
+        'a0308.dat',
+    ][-1]
 
     path = scena[-1] + scp
     # path = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\system.dat'

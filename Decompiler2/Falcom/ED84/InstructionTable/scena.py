@@ -1601,7 +1601,10 @@ def Handler_D2(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'W' + {
             0x00    : 'B',
-            # 0xFFFE  : 'V',
+            0x01    : '',
+            0x02    : '',
+            0xFFFD  : 'BBL',
+            0xFFFE  : 'V',
             0xFFFF  : 'V',
         }[n]
 

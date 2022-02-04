@@ -1,10 +1,96 @@
 from Falcom.Common import *
-from Falcom.ED83.Parser.datatable import TableNameEntry
 from . import utils
 
 DefaultEndian = GlobalConfig.DefaultEndian
 DefaultIndent = GlobalConfig.DefaultIndent
 DefaultEncoding = GlobalConfig.DefaultEncoding
+
+class ScenaTypesBase:
+    DESCRIPTOR: Tuple[str, str] = None
+
+    def __init__(self, *, fs: fileio.FileStream = None, **kwargs):
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
+        if not fs:
+            self.deserialize(fs)
+
+    def toPython(self) -> List[str]:
+        if not self.DESCRIPTOR:
+            raise NotImplementedError
+
+        align = max([len(e[0]) for e in self.DESCRIPTOR])
+        align = (align + 4) & ~3
+
+        lines = [
+            f'{self.__class__.__name__}(',
+        ]
+
+        formatter = {
+            'C' : lambda v: f'{v}',
+            'B' : lambda v: f'0x{v:02X}',
+            'H' : lambda v: f'{v}',
+            'W' : lambda v: f'0x{v:04X}',
+            'I' : lambda v: f'{v}',
+            'L' : lambda v: f'0x{v:08X}',
+            'f' : lambda v: f'{v:g}.0' if f'{v:g}'.count('.') == 0 else f'{v:g}',
+            'S' : lambda v: f"{repr(v)}",
+        }
+
+        for name, type in self.DESCRIPTOR:
+            type = type.split(':', maxsplit = 1)[0]
+            value = getattr(self, name)
+            lines.append(f'{DefaultIndent}{name.ljust(align)}= {formatter[type](value)},')
+
+        lines.append(')')
+
+        return lines
+
+    def serialize(self) -> bytes:
+        if not self.DESCRIPTOR:
+            raise NotImplementedError
+
+        writer = {
+            'B' : lambda v: utils.int_to_bytes(v, 1),
+            'C' : lambda v: utils.int_to_bytes(v, 1),
+            'H' : lambda v: utils.int_to_bytes(v, 2),
+            'W' : lambda v: utils.int_to_bytes(v, 2),
+            'I' : lambda v: utils.int_to_bytes(v, 4),
+            'L' : lambda v: utils.int_to_bytes(v, 4),
+            'f' : lambda v: utils.float_to_bytes(v),
+            'S' : lambda v: utils.str_to_bytes(v),
+        }
+
+        body = bytearray()
+
+        for name, type in self.DESCRIPTOR:
+            body.extend(writer[type](getattr(self, name)))
+
+        return body
+
+    def deserialize(self, fs: fileio.FileStream):
+        if not self.DESCRIPTOR:
+            return
+
+        reader = {
+            'B' : lambda: fs.ReadByte(),
+            'C' : lambda: fs.ReadByte(),
+            'H' : lambda: fs.ReadUShort(),
+            'W' : lambda: fs.ReadUShort(),
+            'I' : lambda: fs.ReadULong(),
+            'L' : lambda: fs.ReadULong(),
+            'f' : lambda: fs.ReadFloat(),
+            'S' : lambda: fs.ReadMultiByte(),
+        }
+
+        for name, type in self.DESCRIPTOR:
+            setattr(self, name, reader[type]())
+
+    def __str__(self):
+        return '\n'.join(self.toPython())
+
+    __repr__ = __str__
+
 
 class ScenaHeader:
     MAGIC = 0xABCDEF00
@@ -184,9 +270,6 @@ class ScenaBattleMonsterSet:
 
         return body
 
-class ScenaBattleSettingFlags(IntEnum2):
-    NoEvade = 0x00000001
-
 class ScenaBattleSetting:
     def __init__(
         self,
@@ -233,16 +316,16 @@ class ScenaBattleSetting:
         if not fs:
             return
 
-        self.mapName    = utils.read_fixed_string(fs, 0x10)     # 0x00
-        self.x          = fs.ReadFloat()                        # 0x10
-        self.y          = fs.ReadFloat()                        # 0x14
-        self.z          = fs.ReadFloat()                        # 0x18
-        self.direction  = fs.ReadFloat()                        # 0x1C
-        self.length     = fs.ReadFloat()                        # 0x20
-        self.width      = fs.ReadFloat()                        # 0x24
-        self.battleId   = fs.ReadUShort()                       # 0x28
+        self.mapName        = utils.read_fixed_string(fs, 0x10)     # 0x00
+        self.x              = fs.ReadFloat()                        # 0x10
+        self.y              = fs.ReadFloat()                        # 0x14
+        self.z              = fs.ReadFloat()                        # 0x18
+        self.direction      = fs.ReadFloat()                        # 0x1C
+        self.length         = fs.ReadFloat()                        # 0x20
+        self.width          = fs.ReadFloat()                        # 0x24
+        self.battleId       = fs.ReadUShort()                       # 0x28
 
-        fs.Position += 2    # padding                           # 0x2A
+        fs.Position += 2    # padding                               # 0x2A
 
         self.flags          = fs.ReadULong()                        # 0x2C
         self.bgm            = fs.ReadUShort()                       # 0x30
