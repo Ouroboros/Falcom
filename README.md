@@ -9,6 +9,7 @@
 - 英雄传说 碧之轨迹
 - 英雄传说 闪之轨迹3
 - 英雄传说 闪之轨迹4
+- 英雄传说 创之轨迹
 - 双星物语2 Plus
 
 
@@ -27,7 +28,7 @@
 
 写于 2021-07-03
 
-就是`frida`的加载器，初始化`frida`，然后附加本进程，加载`js`脚本
+就是`frida`的加载器, 初始化`frida`, 然后附加本进程, 加载`js`脚本
 
 
 
@@ -35,15 +36,18 @@
 
 2017-06-28 ~ 2021-12-06
 
-第三代反汇编器，目前支持闪之轨迹3/4
+第三代反汇编器, 目前支持闪之轨迹3/4, 创之轨迹
 
-得益于法国老哥的 [SenScriptsDecompiler](https://github.com/TwnKey/SenScriptsDecompiler) ，大大缩短了调试过程
+得益于法国老哥的 [SenScriptsDecompiler](https://github.com/TwnKey/SenScriptsDecompiler) , 大大缩短了调试过程
 
 * [闪之轨迹3](https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED83)
   * 2021-11-12 ~ 2021-12-03
 
 * [闪之轨迹4](https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED84)
   * 2021-12-03 ~ 2021-12-06
+
+* [创之轨迹](https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED85)
+  * 2022-02-03 ~ 2022-02-08
 
 
 空之轨迹
@@ -53,9 +57,9 @@
 
 可能写于 2008 年
 
-最古老的第一版 3rd 日文版黑骑士补丁，基于 SC 首个剑帝补丁`Chaltier.exe`仿制而来
+最古老的第一版 3rd 日文版黑骑士补丁, 基于 SC 首个剑帝补丁`Chaltier.exe`仿制而来
 
-使用计时器不停检测远程进程内存，进入战斗后马上用内置的 MS、AS 覆盖
+使用计时器不停检测远程进程内存, 进入战斗后马上用内置的 MS、AS 覆盖
 
 
 
@@ -63,7 +67,7 @@
 
 可能写于 2008 年
 
-用于处理娱乐通汉化的 3rd 文本编码，所有文本都被编码成`|CAB9|D3C3|B5C0|BEDF`形式的 hex string
+用于处理娱乐通汉化的 3rd 文本编码, 所有文本都被编码成`|CAB9|D3C3|B5C0|BEDF`形式的 hex string
 
 
 
@@ -71,7 +75,7 @@
 
 可能写于 2008 年
 
-用于破解娱乐通汉化的 3rd，原理是把壳解压的代码 dump 下来，CREATE_SUSPEND 后预先写进固定的地址实现脱壳，最早实现来源于贴吧一位 IP 老兄
+用于破解娱乐通汉化的 3rd, 原理是把壳解压的代码 dump 下来, CREATE_SUSPEND 后预先写进固定的地址实现脱壳, 最早实现来源于贴吧一位 IP 老兄
 
 
 
@@ -79,7 +83,7 @@
 
 在 2008 ~ 2010 年之间
 
-空之轨迹 3rd 日文版汉化增加模块，包含汉化、MOD 增强（使用敌方角色，战技、S技修正）
+空之轨迹 3rd 日文版汉化增加模块, 包含汉化、MOD 增强（使用敌方角色, 战技、S技修正）
 
 汉化部分逆向自 <a href="https://github.com/dwing4g" target="_blank">dwing</a> 发布的 3rd 汉化补丁
 
@@ -89,7 +93,7 @@
 
 于 2011-06-01 完成
 
-第一代反汇编器，把空之轨迹 3rd AS 战技脚本，反汇编成 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）语言
+第一代反汇编器, 把空之轨迹 3rd AS 战技脚本, 反汇编成 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）语言
 
 [有帖为证](https://tieba.baidu.com/p/1096499559)
 
@@ -149,7 +153,7 @@
 
 时间不详
 
-空之轨迹 DAT 解包器，把 DAT 解压到同名目录
+空之轨迹 DAT 解包器, 把 DAT 解压到同名目录
 
 
 
@@ -165,7 +169,7 @@
 
 写于 2015-11
 
-空之轨迹 FC Steam 版汉化模块，用 DWrite 实现字符绘制
+空之轨迹 FC Steam 版汉化模块, 用 DWrite 实现字符绘制
 
 
 
@@ -176,7 +180,7 @@
 
 写于 2011-08
 
-零之轨迹破解增强模块，脱了 exe 的 SecuROM 壳，还原了 VM 部分的 freetype 代码
+零之轨迹破解增强模块, 脱了 exe 的 SecuROM 壳, 还原了 VM 部分的 freetype 代码
 
 实现了 MOD 基础功能
 
@@ -186,7 +190,7 @@
 
 写于 2011-09
 
-第一代反汇编器第二版，将零之轨迹 AS 战技脚本，反汇编成 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）语言
+第一代反汇编器第二版, 将零之轨迹 AS 战技脚本, 反汇编成 ToB（by <a href="https://github.com/dwing4g" target="_blank">dwing</a>）语言
 
 
 
@@ -202,7 +206,7 @@
 
 写于 2013-04
 
-碧之轨迹破解模块，整合了 SoundArc 进程，解决声音不同步 bug，实现了 MOD 基础功能
+碧之轨迹破解模块, 整合了 SoundArc 进程, 解决声音不同步 bug, 实现了 MOD 基础功能
 
 碧轨是最深度修改的版本
 
@@ -212,7 +216,7 @@
 
 写于 2015-07
 
-可以查看所有宝箱取得情况，包含了宝箱的地图和具体坐标(x, y, z)
+可以查看所有宝箱取得情况, 包含了宝箱的地图和具体坐标(x, y, z)
 
 
 
@@ -220,7 +224,7 @@
 
 写于 2015-07
 
-第二代反汇编器，碧之轨迹集大成编辑工具，支持下列格式与`.py`相互转换
+第二代反汇编器, 碧之轨迹集大成编辑工具, 支持下列格式与`.py`相互转换
 - scena 剧情
 - ms*.dat 怪物状态
 - as*.dat 战技脚本
@@ -238,7 +242,7 @@
 
 时间不详
 
-itm 加/解密工具，逆向自游侠论坛的 `jiacat`
+itm 加/解密工具, 逆向自游侠论坛的 `jiacat`
 
 
 
@@ -254,7 +258,7 @@ itm 加/解密工具，逆向自游侠论坛的 `jiacat`
 
 2010-04
 
-双星物语2加强版汉化模块，文本从`双星物语2`提取，文本外挂加密，实时替换
+双星物语2加强版汉化模块, 文本从`双星物语2`提取, 文本外挂加密, 实时替换
 
 文字绘制类似于 3rd
 
@@ -264,7 +268,7 @@ itm 加/解密工具，逆向自游侠论坛的 `jiacat`
 
 时间不详
 
-双星物语2作弊器，作用不明，看代码功能还挺多
+双星物语2作弊器, 作用不明, 看代码功能还挺多
 
 
 
@@ -273,17 +277,17 @@ bin
 
 | 原版                          | 描述
 |------------------------------|----------
-|Chaltier.7z                   | 最早的日文版 SC 1.0.2.0 剑帝补丁，当约修亚在队伍第一时，进入战斗时会替换成剑帝，由 `Leon` 于 2006 ~ 2007年发布在 `FALCOMCHINA`，可以说是本人编程生涯的起点
-|ED6back.exe                   | 原版的 ED6back，来自 `prefetchnta` 的 blog
-|FALCOM.exe                    | 最早的 ED6 压缩程序，来自 `prefetchnta` 的 blog
-|ED6walk.7z                    | 原版的 ED6walk，来自 `prefetchnta` 的 blog
-|Loader.exe                    | 最早的 3rd 娱乐通版破解程序，来自空之轨迹吧 IP 老兄
-|ed6_win(debug mode).rar       | 娱乐通版 FC，开启了 debug mode，来自 `dwing`
-|tga2_ch.7z                    | 原版的 tga2_ch，来自 `dwing`
-|ed62.dll                      | 日文版 SC 的汉化模块，来自 `dwing`
-|ed63cn2.dll                   | 日文版 3rd 的汉化模块，来自 `dwing`
-|ed3rdcn.7z                    | 日文版 3rd 的汉化，来自 `dwing` & `lancer`，里面还包含了`褪色的照片`的剧情翻译
-|FinalVersion.7z               | `双星物语2`的汉化文本和加解密、导入程序，由 `jiacat` 发布在游侠论坛上
+|Chaltier.7z                   | 最早的日文版 SC 1.0.2.0 剑帝补丁, 当约修亚在队伍第一时, 进入战斗时会替换成剑帝, 由 `Leon` 于 2006 ~ 2007年发布在 `FALCOMCHINA`, 可以说是本人编程生涯的起点
+|ED6back.exe                   | 原版的 ED6back, 来自 `prefetchnta` 的 blog
+|FALCOM.exe                    | 最早的 ED6 压缩程序, 来自 `prefetchnta` 的 blog
+|ED6walk.7z                    | 原版的 ED6walk, 来自 `prefetchnta` 的 blog
+|Loader.exe                    | 最早的 3rd 娱乐通版破解程序, 来自空之轨迹吧 IP 老兄
+|ed6_win(debug mode).rar       | 娱乐通版 FC, 开启了 debug mode, 来自 `dwing`
+|tga2_ch.7z                    | 原版的 tga2_ch, 来自 `dwing`
+|ed62.dll                      | 日文版 SC 的汉化模块, 来自 `dwing`
+|ed63cn2.dll                   | 日文版 3rd 的汉化模块, 来自 `dwing`
+|ed3rdcn.7z                    | 日文版 3rd 的汉化, 来自 `dwing` & `lancer`, 里面还包含了`褪色的照片`的剧情翻译
+|FinalVersion.7z               | `双星物语2`的汉化文本和加解密、导入程序, 由 `jiacat` 发布在游侠论坛上
 
 
 | 汉化补丁                      | 描述
@@ -301,7 +305,7 @@ bin
 
 时间不详
 
-山寨的`改之理`，只写了一小部分界面
+山寨的`改之理`, 只写了一小部分界面
 
 
 

@@ -182,6 +182,8 @@ class OperandDescriptor:
                     s.append(ch)
                 elif ch == '\n':
                     s.append('\\n')
+                elif ch == '\t':
+                    s.append('\\t')
                 else:
                     s.append(f'\\x{ord(ch):02x}')
 
@@ -295,6 +297,12 @@ class InstructionTable:
 
     def readOpCode(self, fs: fileio.FileStream) -> int:
         raise NotImplementedError
+
+    def preDisasmInstruction(self, context: 'handlers.InstructionHandlerContext'):
+        pass
+
+    def postDisasmInstruction(self, context: 'handlers.InstructionHandlerContext'):
+        pass
 
     def writeOpCode(self, fs: fileio.FileStream, opcode: int):
         raise NotImplementedError

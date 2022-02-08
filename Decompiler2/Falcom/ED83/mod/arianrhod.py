@@ -255,9 +255,9 @@ def AniBtlPlayLanceEffects():
         OP_3B(0x00, (0xFF, 0x8F62, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, -1.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
         OP_3B(0x00, (0xFF, 0x8F66, 0x0), 0.5, (0xFF, 0x0, 0x0), 0.0, 0.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x05DC, 0x012C, 0x0000, 0x05DC, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
         PlayEffect2(
-            CraftTarget.Self,
+            PseudoChrId.Self,
             0x83,
-            CraftTarget.Self,
+            PseudoChrId.Self,
             0xC,
             '',
             *eff[0],
@@ -292,7 +292,7 @@ def AniBtlCraftDamageT(damage: bool, knockBack: float):
 
     # BattleSetChrAbnormalCondition(0xFFFE, AbnormalCondition.Stealth, 1, 1)
 
-    # for chr in range(CraftTarget.Party2, CraftTarget.Party3):
+    # for chr in range(PseudoChrId.Party2, PseudoChrId.Party3):
     #     BattleClearChrFlags(chr, 0xFFFFFFFF)
     #     BattleSetChrFlags(chr, 0x81)
 

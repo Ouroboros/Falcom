@@ -1107,7 +1107,7 @@ class ScenaBreakTable:
 
         for _ in range(0x40):
             d = fs.ReadULong()
-            if d == self.InvalidID:
+            if d & 0xFFFF == self.InvalidID:
                 break
 
             self.breakData.append((d & 0xFFFF, (d >> 16) & 0xFFFF))

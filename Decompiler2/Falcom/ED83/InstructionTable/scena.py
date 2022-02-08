@@ -303,14 +303,6 @@ def Handler_2E(ctx: InstructionHandlerContext):
 
             return inst
 
-        case HandlerAction.Format:
-            for opr in ctx.instruction.operands:
-                if opr.descriptor.format.type == OperandType.MBCS:
-                    ctx.instruction.flags |= Flags.FormatMultiLine
-                    break
-
-            return
-
         case HandlerAction.Assemble:
             applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
             return
@@ -2093,7 +2085,7 @@ def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Fla
 ScenaOpTable = ED83InstructionTable([
     # inst(0x00,  'ExitThread',                   NoOperand,                  Flags.EndBlock),
     inst(0x01,  'Return',                       NoOperand,                  Flags.EndBlock),
-    inst(0x02,  'Call',                         NoOperand,                  Flags.Empty,        Handler_02,                 parameters = ('type', 'name')),
+    inst(0x02,  'Call',                         NoOperand,                  Flags.Empty,        Handler_02,                 parameters = ('scriptId', 'name')),
     inst(0x03,  'Jump',                         'O',                        Flags.Jump,                                     parameters = ('label',)),
     inst(0x04,  'OP_04',                        'BS'),
     inst(0x05,  'If',                           'EO',                                                                       parameters = ('ops', 'false_successor')),

@@ -140,6 +140,8 @@ class Disassembler:
         handlerContext.disassembler     = self
         handlerContext.instruction      = inst
 
+        self.instructionTable.preDisasmInstruction(handlerContext)
+
         inst = desc.handler(handlerContext) if desc.handler else None
 
         if inst is None:
@@ -149,6 +151,8 @@ class Disassembler:
             raise Exception('disasmInstruction %02X @ %08X failed' % (opcode, pos))
 
         inst.size = fs.Position - pos
+
+        self.instructionTable.postDisasmInstruction(handlerContext)
 
         if context.instCallback:
             context.instCallback(inst)

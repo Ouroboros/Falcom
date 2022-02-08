@@ -1,8 +1,9 @@
+import opcode
 from Assembler.function import Function
 from Assembler.instruction import Instruction
 from .scena_types import *
-from ..InstructionTable import ScenaOpTable as ED84ScenaOpTable
-from ..InstructionTable.scena_optimizer import ED84Optimizer
+from ..InstructionTable import ScenaOpTable as ED85ScenaOpTable
+from ..InstructionTable.scena_optimizer import ED85Optimizer
 import pathlib
 
 __all__ = (
@@ -119,6 +120,10 @@ class ScenaParser:
     }
 
     def getFunctionType(self, name: str) -> ScenaFunctionType:
+        if name[:4] in ['_a0_', '_a1_']:
+            return ScenaFunctionType.Code
+            name = name[4:]
+
         typ = self.functionTypeMap.get(name)
         if typ:
             return typ
@@ -140,6 +145,9 @@ class ScenaParser:
             return ScenaFunctionType.Code
 
         if name.startswith('_'):
+            if name.startswith('_Lambda'):
+                return ScenaFunctionType.Code
+
             if name[1:] not in self.functionNameMap:
                 return ScenaFunctionType.Invalid
                 raise Exception(f'unsupported func name: {name}')
@@ -186,14 +194,14 @@ class ScenaParser:
 
     def disasmFunctions(self):
         def cb(inst: Instruction):
-            if inst.opcode == 0x02:
+            if inst.opcode == 0x02:     # call
                 self.functionNameMap[inst.operands[1].value] = True
 
             elif inst.opcode == 0x1E:   # create thread:
-                self.functionNameMap[inst.operands[3].value] = True
+                self.functionNameMap[inst.operands[2].value] = True
 
         fs = self.fs
-        dis = Assembler.Disassembler(ED84ScenaOpTable)
+        dis = Assembler.Disassembler(ED85ScenaOpTable)
         ctx = Assembler.DisasmContext(fs, instCallback = cb)
 
         for i, func in enumerate(self.functions):
@@ -208,7 +216,7 @@ class ScenaParser:
 
             match func.type:
                 case ScenaFunctionType.Code:
-                    # if func.index == 0x9E: break
+                    # if func.index == 0x1C: break
 
                     try:
                         func.obj = dis.disasmFunction(ctx, name = func.name)
@@ -268,13 +276,13 @@ class ScenaParser:
                     raise NotImplementedError(f'unknown func type: {func.type}')
 
     def generatePython(self, filename: str) -> List[str]:
-        formatter = ScenaFormatter(ED84ScenaOpTable, name = self.name, optimizer = ED84Optimizer())
+        formatter = ScenaFormatter(ED85ScenaOpTable, name = self.name, optimizer = ED85Optimizer())
 
         lines = f'''\
 import sys
 sys.path.append(r'{pathlib.Path(__file__).parent.parent.parent.parent}')
 
-from Falcom.ED84.Parser.scena_writer_helper import *
+from Falcom.ED85.Parser.scena_writer_helper import *
 try:
     import {pathlib.Path(filename).stem}_hook
 except ImportError:

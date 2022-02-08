@@ -14,7 +14,7 @@ MAX_REG_ID      = 0x20
 DummyCharBaseId             = 0xB5E
 TempCharBaseId              = 0xB68
 
-class CraftTarget(IntEnum2):
+class PseudoChrId(IntEnum2):
     Party1                  = 0xF000
     Party2                  = 0xF001
     Party3                  = 0xF002

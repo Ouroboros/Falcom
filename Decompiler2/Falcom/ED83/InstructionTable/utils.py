@@ -79,6 +79,8 @@ def formatText(t: str) -> str:
             s.append(ch)
         elif ch == '\n':
             s.append('\\n')
+        elif ch == '\t':
+            s.append('\\t')
         else:
             s.append(f'\\x{ord(ch):02x}')
 

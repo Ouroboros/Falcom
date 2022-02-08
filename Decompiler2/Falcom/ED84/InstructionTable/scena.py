@@ -41,7 +41,7 @@ def Handler_29(ctx: InstructionHandlerContext):
             0x06: 'W',
             0x07: 'W',
             0x08: 'SLVV',
-            # 0x09: 'SV',
+            0x09: 'SV',
             0x0A: '',
             0x0B: 'V',
             # 0x0C: 'W',
@@ -522,6 +522,10 @@ def Handler_3C(ctx: InstructionHandlerContext):
 
 def Handler_40(ctx: InstructionHandlerContext):
     def getfmts(n):
+        match n:
+            case 0xFE15:
+                return 'NNVVVVBWffB'
+
         return 'NNfff' + {
             0xFE00: 'fBWffB',
             0xFE01: 'fBWffB',
@@ -530,7 +534,7 @@ def Handler_40(ctx: InstructionHandlerContext):
             0xFE03: 'f' + 'fBWffB',
             0xFE04: 'f' + 'fBWffB',
 
-            # 0xFE05: 'fBWffB' + 'S',
+            0xFE05: 'fBWffB' + 'S',
 
             # 0xF011: 'fBWffB',
             # 0xFE00: 'fBWffB',
