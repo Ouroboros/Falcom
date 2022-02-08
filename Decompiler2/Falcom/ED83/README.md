@@ -5,7 +5,7 @@
 
 ## 支持文件类型
 
-* scripts\*.dat
+* scripts\\*.dat
 * text\
     * t_attach.tbl
     * t_bgm.tbl
