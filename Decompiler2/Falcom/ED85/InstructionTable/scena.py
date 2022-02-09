@@ -655,7 +655,7 @@ def Handler_9E(ctx: InstructionHandlerContext):
             return inst
 
         case HandlerAction.Assemble:
-            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value, ctx.instruction.operands[1].value if len(ctx.instruction.operands) > 1 else None))
             return
 
         case HandlerAction.CodeGen:
