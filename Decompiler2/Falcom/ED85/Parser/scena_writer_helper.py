@@ -206,7 +206,7 @@ def ForEachTarget(cb, reg = 0):
 # debug 0x07
 
 def DebugString(s: str):
-    DebugLog(0x02, (0xDD, s))
+    DebugLog(0x02, ParamStr(s))
 
 
 # menu cmd 0x29
@@ -299,8 +299,8 @@ def LoadAssetAsync(asset: str):
 
 # effect 0x32
 
-def LoadEffect(chrId: int, slot: int, eff: str):
-    EffectCtrl(0x0A, chrId, slot, eff)
+def LoadEffect(chrId: int, slot: int, eff: str, flags: int = 0):
+    EffectCtrl(0x0A, chrId, slot, eff, flags)
 
 def ReleaseEffect(chrId: int, slot: int):
     EffectCtrl(0x0B, chrId, slot)
@@ -391,8 +391,8 @@ def BattleKillTarget(chrId: int):
 def BattleSetChrAfterImageOn(chrId: int, arg1: float, arg2: float, arg3: float, arg4: float, arg5: float):
     BattleCtrl(0x15, chrId, arg1, arg2, arg3, arg4, arg5)
 
-def BattleSetChrAfterImageOff():
-    BattleCtrl(0x16)
+def BattleSetChrAfterImageOff(hideOnly: int):
+    BattleCtrl(0x16, hideOnly)
 
 def BattleCreateChrDummy(chrId: int, count: int):
     assert count <= 5
