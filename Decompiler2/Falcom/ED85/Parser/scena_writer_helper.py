@@ -408,7 +408,7 @@ def BattleClearFlags(flags: int):
     BattleCtrl(0x1A, flags)
 
 def BattleCreateTempChar(tempChrIndex: int, srcChrId: int, model: str, ani: str = '') -> int:
-    assert tempChrIndex <= 4
+    assert tempChrIndex <= 8
     BattleCtrl(0x1E, tempChrIndex, srcChrId, model, ani)
     return tempChrIndex + TempCharBaseId
 

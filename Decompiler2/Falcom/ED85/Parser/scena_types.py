@@ -102,7 +102,7 @@ class ScenaBattleSetting:
         for monset in self.monsterSet:
             fs.write(monset.serialize())
 
-        if self.monsterSet[-1].id != ScenaBattleMonsterSet.InvalidID:
+        if not self.monsterSet or self.monsterSet[-1].id != ScenaBattleMonsterSet.InvalidID:
             fs.write(ScenaBattleMonsterSet(ScenaBattleMonsterSet.InvalidID).serialize())
 
         fs.seek(0)

@@ -100,6 +100,9 @@ class _ScenaWriter:
     def ShinigPomBtlset(self, name: str):
         return self.functionDecorator(name, ED85.ScenaFunctionType.ShinigPomBtlset)
 
+    def StyleName(self, name: str):
+        return self.functionDecorator(name, ED85.ScenaFunctionType.StyleName)
+
     def run(self, g: dict):
         for cb in self.runCallbacks:
             cb(g)

@@ -670,23 +670,17 @@ def OP_3F(arg1: uint16, arg2: uint32):
     assert isinstance(arg2, uint32)
     _gScena.handleOpCode(0x3F, arg1, arg2)
 
-def MoveChr(arg1: int, arg2: int, arg3: float | int, arg4: float | int, arg5: float | int, *args):
+def MoveChr(arg1: int, arg2: int, *args):
     # 0x40
     assert isinstance(arg1, int)
     assert isinstance(arg2, int)
-    assert isinstance(arg3, float | int)
-    assert isinstance(arg4, float | int)
-    assert isinstance(arg5, float | int)
-    return _gScena.handleOpCode(0x40, arg1, arg2, arg3, arg4, arg5, *args)
+    return _gScena.handleOpCode(0x40, arg1, arg2, *args)
 
-def OP_40(arg1: int, arg2: int, arg3: float | int, arg4: float | int, arg5: float | int, *args):
+def OP_40(arg1: int, arg2: int, *args):
     # 0x40
     assert isinstance(arg1, int)
     assert isinstance(arg2, int)
-    assert isinstance(arg3, float | int)
-    assert isinstance(arg4, float | int)
-    assert isinstance(arg5, float | int)
-    return _gScena.handleOpCode(0x40, arg1, arg2, arg3, arg4, arg5, *args)
+    return _gScena.handleOpCode(0x40, arg1, arg2, *args)
 
 def OP_41(arg1: int, arg2: int, *args):
     # 0x41

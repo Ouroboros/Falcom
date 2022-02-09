@@ -554,7 +554,7 @@ def Handler_40(ctx: InstructionHandlerContext):
             return
 
         case HandlerAction.CodeGen:
-            return genVariadicFuncStub(ctx.descriptor, int, int, float, float, float)
+            return genVariadicFuncStub(ctx.descriptor, int, int)
 
 def Handler_41(ctx: InstructionHandlerContext):
     def getfmts(n):
