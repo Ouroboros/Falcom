@@ -100,19 +100,30 @@ def ModelGetBattleStyle(chrId: int):
     ModelCtrl(0x4B, chrId)
 
 
-'''
-    event
-'''
+# event 0xAC
 
 def EventJump(eventId: int):
     OP_AC(0x01, eventId)
 
-'''
-    debug
-'''
+# debug 0x07
 
 def DebugString(s: str):
     OP_07(0x02, (0xDD, s))
+
+
+# menu cmd 0x29
+
+def MenuCreate(level: int, height: int, fontSize: float, color: int = 0):
+    MenuCmd(0x00, level, height, fontSize, color)
+
+def MenuAddItem(level: int, text: str, id: int):
+    MenuCmd(0x01, level, text, id)
+
+def MenuSetPos(level: int, arg2: int, x: int, y: int, arg5: int):
+    MenuCmd(0x02, level, arg2, x & 0xFFFF, y & 0xFFFF, arg5)
+
+def MenuShow(level: int, resultVar: int):
+    MenuCmd(0x04, level, resultVar)
 
 
 # anime clip 0x2F
