@@ -3,6 +3,8 @@ from Falcom.ED83.Parser.scena_writer_gen import *
 from Falcom.ED83.Parser.consts import *
 
 ChrTable = GlobalConfig.ChrTable
+ItemTable = GlobalConfig.ItemTable
+CraftTable = GlobalConfig.CraftTable
 
 def ForEachTarget(cb):
     BattleTargetsIterInit(0x00)

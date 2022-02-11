@@ -912,24 +912,24 @@ def Handler_65(ctx: InstructionHandlerContext):
 def Handler_66(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BN' + {
-            0x00: 'W',
-            0x01: 'W',
+            0x00: 'R',
+            0x01: 'R',
             0x02: 'L',              # full_craft
             0x03: '',
-            0x04: 'W',
+            0x04: 'R',
             0x05: '',
-            0x06: 'W',
+            0x06: 'R',
             0x07: '',
-            0x08: 'W',
+            0x08: 'R',
         #     0x09: 'W',
-            0x0A: 'W',
+            0x0A: 'R',
             0x0B: 'L',
             0x0C: '',
-            0x0D: 'WL',
+            0x0D: 'RL',
             0x0E: '',
-            0x0F: 'W',
-            0x10: 'W',
-            0x11: 'W',
+            0x0F: 'R',
+            0x10: 'R',
+            0x11: 'R',
         }[n]
 
     match ctx.action:

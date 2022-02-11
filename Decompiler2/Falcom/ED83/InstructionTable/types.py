@@ -8,6 +8,7 @@ UserDefined = OperandType.UserDefined + 1
 class ED83OperandType(IntEnum2):
     Offset,         \
     Item,           \
+    CraftId,        \
     BGM,            \
     Expression,     \
     Text,           \
@@ -15,7 +16,7 @@ class ED83OperandType(IntEnum2):
     ThreadValue,    \
     ChrId,          \
     ScriptId,       \
-    UserDefined = range(UserDefined, UserDefined + 10)
+    UserDefined = range(UserDefined, UserDefined + 11)
 
     __str__     = OperandType.__str__
     __repr__    = OperandType.__repr__
@@ -26,6 +27,7 @@ class ED83OperandFormat(OperandFormat):
 
         ED83OperandType.Offset      : 4,
         ED83OperandType.Item        : 2,
+        ED83OperandType.CraftId     : 2,
         ED83OperandType.BGM         : 2,
         ED83OperandType.ScenaFlags  : 2,
         ED83OperandType.ChrId       : 2,
@@ -45,8 +47,9 @@ class ED83OperandDescriptor(OperandDescriptor):
             ED83OperandType.ScenaFlags      : lambda context: context.disasmContext.fs.ReadUShort(),
             ED83OperandType.Offset          : lambda context: context.disasmContext.fs.ReadULong(),
             ED83OperandType.ChrId           : lambda context: context.disasmContext.fs.ReadUShort(),
-            ED83OperandType.ScriptId        : lambda context: context.disasmContext.fs.ReadByte(),
             ED83OperandType.Item            : lambda context: context.disasmContext.fs.ReadUShort(),
+            ED83OperandType.CraftId         : lambda context: context.disasmContext.fs.ReadUShort(),
+            ED83OperandType.ScriptId        : lambda context: context.disasmContext.fs.ReadByte(),
             # ED83OperandType.BGM        : lambda context: context.disasmContext.fs.ReadShort(),
 
         }.get(self.format.type, super().readValue)(context)
@@ -58,6 +61,7 @@ class ED83OperandDescriptor(OperandDescriptor):
             ED83OperandType.Offset      : lambda context, value: context.disasmContext.fs.WriteULong(0xFFFFABCD),
             ED83OperandType.ChrId       : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED83OperandType.Item        : lambda context, value: context.disasmContext.fs.WriteUShort(value),
+            ED83OperandType.CraftId     : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED83OperandType.ScriptId    : lambda context, value: context.disasmContext.fs.WriteByte(value),
             ED83OperandType.Expression  : self.writeExpression,
             # ED83OperandType.ThreadValue : self.writeThreadValue,
@@ -73,6 +77,7 @@ class ED83OperandDescriptor(OperandDescriptor):
             ED83OperandType.Offset      : lambda context: "'%s'" % context.operand.value.name,    # CodeBlock
             ED83OperandType.ChrId       : lambda context: self.formatChrId(context.operand.value),
             ED83OperandType.Item        : lambda context: self.formatItemId(context.operand.value),
+            ED83OperandType.CraftId     : lambda context: self.formatCraftId(context.operand.value),
             # ED83OperandType.BGM         : ,
 
         }.get(self.format.type, super().formatValue)(context)
@@ -263,6 +268,13 @@ class ED83OperandDescriptor(OperandDescriptor):
         except KeyError:
             return f'0x{itemId:04X}'
 
+    def formatCraftId(self, craftId: int) -> str:
+        try:
+            name = GlobalConfig.CraftTable[craftId]
+            return f"CraftTable['{name}']"
+        except KeyError:
+            return f'0x{craftId:04X}'
+
 def oprdesc(*args, **kwargs) -> ED83OperandDescriptor:
     return ED83OperandDescriptor(ED83OperandFormat(*args, **kwargs))
 
@@ -274,6 +286,7 @@ ED83OperandDescriptor.formatTable.update({
     'E' : oprdesc(ED83OperandType.Expression),
     'T' : oprdesc(ED83OperandType.Text),
     't' : oprdesc(ED83OperandType.Item),
+    'R' : oprdesc(ED83OperandType.CraftId),
     'V' : oprdesc(ED83OperandType.ThreadValue),
     'N' : oprdesc(ED83OperandType.ChrId),
     's' : oprdesc(ED83OperandType.ScriptId),

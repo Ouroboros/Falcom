@@ -20,6 +20,7 @@ def map_operand_type(t: OperandType) -> str:
         ED85.ED85OperandType.ScenaFlags : 'uint16',
         ED85.ED85OperandType.ChrId      : 'uint16',
         ED85.ED85OperandType.Item       : 'uint16',
+        ED85.ED85OperandType.CraftId    : 'uint16',
         ED85.ED85OperandType.ScriptId   : 'uint8',
         ED85.ED85OperandType.Expression : 'tuple | list',
         ED85.ED85OperandType.ThreadValue: 'tuple | list',

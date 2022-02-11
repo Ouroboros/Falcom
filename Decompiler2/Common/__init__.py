@@ -10,6 +10,7 @@ class _Config:
         self.DefaultIndent      = '    '
         self.ChrTable           = {}
         self.ItemTable          = {}
+        self.CraftTable         = {}
 
         self.load()
 
