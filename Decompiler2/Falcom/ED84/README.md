@@ -10,6 +10,7 @@
     * t_attach.tbl
     * t_bgm.tbl
     * t_evtable.tbl
+    * t_item.tbl
     * t_itemhelp.tbl
     * t_magic.tbl
     * t_mapbgm.tbl
