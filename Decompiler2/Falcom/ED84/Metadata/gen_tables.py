@@ -84,8 +84,8 @@ def gen_craft_table():
 
 def main():
     for f in [
-        # gen_name_table,
-        # gen_item_table,
+        gen_name_table,
+        gen_item_table,
         gen_craft_table,
     ]:
         try:
