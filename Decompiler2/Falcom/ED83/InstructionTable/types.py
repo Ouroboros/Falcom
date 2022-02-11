@@ -46,7 +46,7 @@ class ED83OperandDescriptor(OperandDescriptor):
             ED83OperandType.Offset          : lambda context: context.disasmContext.fs.ReadULong(),
             ED83OperandType.ChrId           : lambda context: context.disasmContext.fs.ReadUShort(),
             ED83OperandType.ScriptId        : lambda context: context.disasmContext.fs.ReadByte(),
-            # ED83OperandType.Item       : lambda context: context.disasmContext.fs.ReadUShort(),
+            ED83OperandType.Item            : lambda context: context.disasmContext.fs.ReadUShort(),
             # ED83OperandType.BGM        : lambda context: context.disasmContext.fs.ReadShort(),
 
         }.get(self.format.type, super().readValue)(context)
@@ -57,6 +57,7 @@ class ED83OperandDescriptor(OperandDescriptor):
             ED83OperandType.ScenaFlags  : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED83OperandType.Offset      : lambda context, value: context.disasmContext.fs.WriteULong(0xFFFFABCD),
             ED83OperandType.ChrId       : lambda context, value: context.disasmContext.fs.WriteUShort(value),
+            ED83OperandType.Item        : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED83OperandType.ScriptId    : lambda context, value: context.disasmContext.fs.WriteByte(value),
             ED83OperandType.Expression  : self.writeExpression,
             # ED83OperandType.ThreadValue : self.writeThreadValue,
@@ -71,7 +72,7 @@ class ED83OperandDescriptor(OperandDescriptor):
             ED83OperandType.ScenaFlags  : lambda context: self.formatScenaFlags(context.operand.value),
             ED83OperandType.Offset      : lambda context: "'%s'" % context.operand.value.name,    # CodeBlock
             ED83OperandType.ChrId       : lambda context: self.formatChrId(context.operand.value),
-            # ED83OperandType.Item        : ,
+            ED83OperandType.Item        : lambda context: self.formatItemId(context.operand.value),
             # ED83OperandType.BGM         : ,
 
         }.get(self.format.type, super().formatValue)(context)
@@ -193,6 +194,17 @@ class ED83OperandDescriptor(OperandDescriptor):
             else:
                 code = f'0x{code:X}'
 
+            match v.code:
+                case TextCtrlCode.Item:
+                    itemId = v.value
+                    try:
+                        itemName = GlobalConfig.ItemTable[itemId]
+                        t.append(f"({code}, ItemTable['{itemName}'])")
+                        continue
+
+                    except KeyError:
+                        pass
+
             if v.value is not None:
                 t.append(f'({code}, 0x{v.value:X})')
             elif v.code != TextCtrlCode.NewLine:
@@ -213,18 +225,20 @@ class ED83OperandDescriptor(OperandDescriptor):
                 raise NotImplementedError
                 # opr = '0x%02X' % e.operator
 
-            if e.operator == ScenaExpression.Operator.TestScenaFlags:
-                t = f"({opr}, {self.formatScenaFlags(e.operand)})"
+            match e.operator:
+                case ScenaExpression.Operator.TestScenaFlags:
+                    t = f"({opr}, {self.formatScenaFlags(e.operand)})"
 
-            elif e.operator == ScenaExpression.Operator.Eval:
-                s = context.formatter.formatInstruction(e.operand, flags = e.operand.flags)
-                t = f"({opr}, \"{'; '.join(s)}\")"
+                case ScenaExpression.Operator.Eval:
+                    s = context.formatter.formatInstruction(e.operand, flags = e.operand.flags)
+                    t = f"({opr}, \"{'; '.join(s)}\")"
 
-            elif e.operand is not None:
-                t = f"({opr}, {e.formatOperand()})"
+                case _:
+                    if e.operand is not None:
+                        t = f"({opr}, {e.formatOperand()})"
 
-            else:
-                t = opr
+                    else:
+                        t = opr
 
             text.append(t)
 
@@ -242,6 +256,13 @@ class ED83OperandDescriptor(OperandDescriptor):
         except KeyError:
             return f'0x{chrId:04X}'
 
+    def formatItemId(self, itemId: int) -> str:
+        try:
+            name = GlobalConfig.ItemTable[itemId]
+            return f"ItemTable['{name}']"
+        except KeyError:
+            return f'0x{itemId:04X}'
+
 def oprdesc(*args, **kwargs) -> ED83OperandDescriptor:
     return ED83OperandDescriptor(ED83OperandFormat(*args, **kwargs))
 
@@ -252,6 +273,7 @@ ED83OperandDescriptor.formatTable.update({
     'F' : oprdesc(ED83OperandType.ScenaFlags),
     'E' : oprdesc(ED83OperandType.Expression),
     'T' : oprdesc(ED83OperandType.Text),
+    't' : oprdesc(ED83OperandType.Item),
     'V' : oprdesc(ED83OperandType.ThreadValue),
     'N' : oprdesc(ED83OperandType.ChrId),
     's' : oprdesc(ED83OperandType.ScriptId),

@@ -1010,21 +1010,21 @@ def Handler_6A(ctx: InstructionHandlerContext):
 def Handler_70(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
-            0x00: 'WWBB',
-            0x01: 'WB',
+            0x00: 'NtBB',
+            0x01: 'NB',
             # 0x02: 'WW',
-            0x03: 'WWBBB',
-            0x04: 'WBB',
-            0x05: 'WWBB',
-            0x06: 'WBBBB',
-            0x07: 'WB',
-            0x08: 'WWW',
-            0x09: 'WBB',
-            0x0A: 'WLL',
-            0x0B: 'WB',
-            0x0C: 'WBB',
-            0x0D: 'W',
-            0x0E: 'WWW',
+            0x03: 'NtBBB',
+            0x04: 'NBB',
+            0x05: 'NtBB',
+            0x06: 'NBBBB',
+            0x07: 'NB',
+            0x08: 'tWW',
+            0x09: 'NBB',
+            0x0A: 'tLL',
+            0x0B: 'NB',
+            0x0C: 'NBB',
+            0x0D: 'N',
+            0x0E: 'Ntt',
         }[n]
 
     match ctx.action:

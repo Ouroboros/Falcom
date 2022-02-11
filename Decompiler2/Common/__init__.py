@@ -9,6 +9,7 @@ class _Config:
         self.DefaultEndian      = 'little'
         self.DefaultIndent      = '    '
         self.ChrTable           = {}
+        self.ItemTable          = {}
 
         self.load()
 

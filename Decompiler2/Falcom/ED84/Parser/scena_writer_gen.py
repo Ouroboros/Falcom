@@ -16,17 +16,17 @@ def OP_01():
     # 0x01
     _gScena.handleOpCode(0x01)
 
-def Call(type: int, name: str, *args):
+def Call(scriptId: int, name: str, *args):
     # 0x02
-    assert isinstance(type, int)
+    assert isinstance(scriptId, int)
     assert isinstance(name, str)
-    return _gScena.handleOpCode(0x02, type, name, *args)
+    return _gScena.handleOpCode(0x02, scriptId, name, *args)
 
-def OP_02(type: int, name: str, *args):
+def OP_02(scriptId: int, name: str, *args):
     # 0x02
-    assert isinstance(type, int)
+    assert isinstance(scriptId, int)
     assert isinstance(name, str)
-    return _gScena.handleOpCode(0x02, type, name, *args)
+    return _gScena.handleOpCode(0x02, scriptId, name, *args)
 
 def Jump(label: str):
     # 0x03
@@ -123,30 +123,40 @@ def OP_10(flags: uint16):
     assert isinstance(flags, uint16)
     _gScena.handleOpCode(0x10, flags)
 
-def ClearScenaFlags(arg1: uint16):
+def ClearScenaFlags(flags: uint16):
     # 0x11
-    assert isinstance(arg1, uint16)
-    _gScena.handleOpCode(0x11, arg1)
+    assert isinstance(flags, uint16)
+    _gScena.handleOpCode(0x11, flags)
 
-def OP_11(arg1: uint16):
+def OP_11(flags: uint16):
     # 0x11
-    assert isinstance(arg1, uint16)
-    _gScena.handleOpCode(0x11, arg1)
+    assert isinstance(flags, uint16)
+    _gScena.handleOpCode(0x11, flags)
 
-def ToggleScenaFlags(arg1: uint16):
+def ToggleScenaFlags(flags: uint16):
     # 0x12
-    assert isinstance(arg1, uint16)
-    _gScena.handleOpCode(0x12, arg1)
+    assert isinstance(flags, uint16)
+    _gScena.handleOpCode(0x12, flags)
 
-def OP_12(arg1: uint16):
+def OP_12(flags: uint16):
     # 0x12
-    assert isinstance(arg1, uint16)
-    _gScena.handleOpCode(0x12, arg1)
+    assert isinstance(flags, uint16)
+    _gScena.handleOpCode(0x12, flags)
+
+def SetMapFlags(arg1: uint32):
+    # 0x13
+    assert isinstance(arg1, uint32)
+    _gScena.handleOpCode(0x13, arg1)
 
 def OP_13(arg1: uint32):
     # 0x13
     assert isinstance(arg1, uint32)
     _gScena.handleOpCode(0x13, arg1)
+
+def ClearMapFlags(arg1: uint32):
+    # 0x14
+    assert isinstance(arg1, uint32)
+    _gScena.handleOpCode(0x14, arg1)
 
 def OP_14(arg1: uint32):
     # 0x14
@@ -660,23 +670,17 @@ def OP_3F(arg1: uint16):
     assert isinstance(arg1, uint16)
     _gScena.handleOpCode(0x3F, arg1)
 
-def MoveChr(arg1: int, arg2: int, arg3: float | int, arg4: float | int, arg5: float | int, *args):
+def MoveChr(arg1: int, arg2: int, *args):
     # 0x40
     assert isinstance(arg1, int)
     assert isinstance(arg2, int)
-    assert isinstance(arg3, float | int)
-    assert isinstance(arg4, float | int)
-    assert isinstance(arg5, float | int)
-    return _gScena.handleOpCode(0x40, arg1, arg2, arg3, arg4, arg5, *args)
+    return _gScena.handleOpCode(0x40, arg1, arg2, *args)
 
-def OP_40(arg1: int, arg2: int, arg3: float | int, arg4: float | int, arg5: float | int, *args):
+def OP_40(arg1: int, arg2: int, *args):
     # 0x40
     assert isinstance(arg1, int)
     assert isinstance(arg2, int)
-    assert isinstance(arg3, float | int)
-    assert isinstance(arg4, float | int)
-    assert isinstance(arg5, float | int)
-    return _gScena.handleOpCode(0x40, arg1, arg2, arg3, arg4, arg5, *args)
+    return _gScena.handleOpCode(0x40, arg1, arg2, *args)
 
 def OP_41(arg1: int, arg2: int, *args):
     # 0x41

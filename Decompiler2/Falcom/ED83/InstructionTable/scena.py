@@ -2186,7 +2186,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x6B,  'OP_6B',                        'BWWfLL'),
     inst(0x6C,  'OP_6C',                        'Nf'),
     inst(0x6E,  'OP_6E',                        'WffffB'),
-    inst(0x6F,  'AddItem',                      'BWI'),
+    inst(0x6F,  'AddItem',                      'BtI'),
     inst(0x70,  'OP_70',                        NoOperand,                                      handler = Handler_70),
     inst(0x72,  'QuestCtrl',                    NoOperand,                                      handler = Handler_72),
     inst(0x73,  'OP_73',                        NoOperand,                                      handler = Handler_73),

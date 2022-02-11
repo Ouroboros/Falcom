@@ -14,6 +14,10 @@ def _init():
         Common.GlobalConfig.ChrTable.update(chrIdTable_en)
         Common.GlobalConfig.ChrTable.update(chrIdTable)
 
+    if not Common.GlobalConfig.ItemTable:
+        from .Metadata.itemId_table import itemIdTable
+        Common.GlobalConfig.ItemTable.update(itemIdTable)
+
 _init()
 
 from .InstructionTable import *

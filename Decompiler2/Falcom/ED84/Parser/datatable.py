@@ -4,7 +4,7 @@ from Falcom.ED83.Parser.datatable import createDataTable
 
 class BGMTableData(TableDataEntry):
     ENTRY_NAME = 'bgm'
-    DESCRIPTOR  = (
+    DESCRIPTOR = (
         ('id',      'H'),
         ('file',    'S'),
         ('word3',   'H'),
@@ -13,7 +13,7 @@ class BGMTableData(TableDataEntry):
 
 class VoiceTableData(TableDataEntry):
     ENTRY_NAME = 'voice'
-    DESCRIPTOR  = (
+    DESCRIPTOR = (
         ('id',      'W'),
         ('symbol',  'S'),
         ('file',    'S'),
@@ -28,7 +28,7 @@ class VoiceTableData(TableDataEntry):
 
 class StatusTableData(TableDataEntry):
     ENTRY_NAME = 'status'
-    DESCRIPTOR  = (
+    DESCRIPTOR = (
         ('algoFile',             'S'),
         ('model',                'S'),
         ('ani',                  'S'),
@@ -156,7 +156,7 @@ class StatusTableData(TableDataEntry):
 
 class MagicTableData(TableDataEntry):
     ENTRY_NAME = 'magic'
-    DESCRIPTOR  = (
+    DESCRIPTOR = (
         ('id',              'W'),
         ('chrId',           'W'),
         ('targetType',      'S'),
@@ -211,13 +211,13 @@ class MagicTableData(TableDataEntry):
 
 class BattleCalcTableData(TableDataEntry):
     ENTRY_NAME = 'btcalc'
-    DESCRIPTOR  = (
+    DESCRIPTOR = (
         ('id',              'L'),
         ('value',           'L'),
     )
 
 class AttachTableData(TableDataEntry):
-    DESCRIPTOR  = (
+    DESCRIPTOR = (
         ('chrId',       'W'),
         ('type',        'I'),
         ('itemId',      'L'),
@@ -231,7 +231,7 @@ class AttachTableData(TableDataEntry):
     )
 
 class AttachTransformData(TableDataEntry):
-    DESCRIPTOR  = (
+    DESCRIPTOR = (
         ('chrId',       'W'),
         ('asset',       'S'),
         ('str2',        'S'),
@@ -240,7 +240,7 @@ class AttachTransformData(TableDataEntry):
     )
 
 class EventTableData(TableDataEntry):
-    DESCRIPTOR  = (
+    DESCRIPTOR = (
         ('eventId',         'W'),
         ('eventEntry',      'S'),
         ('word01',          'W'),
@@ -260,6 +260,77 @@ class EventTableData(TableDataEntry):
         ('word0B',          'W'),
     )
 
+class ItemTableData(TableDataEntry):
+    DESCRIPTOR = (
+        ('itemId',          'W'),
+        ('chrId',           'W'),
+        ('flags',           'S'),
+        ('word04',          'W'),
+        ('word05',          'W'),
+        ('word06',          'W'),
+        ('word07',          'W'),
+        ('word08',          'W'),
+        ('word09',          'W'),
+        ('byte0A',          'B'),
+        ('rng',             'f'),
+        ('area',            'C'),
+        ('float0D',         'f'),
+        ('float0E',         'f'),
+        ('float0F',         'f'),
+        ('effect1',         'W'),
+        ('effect1Param1',   'L'),
+        ('effect1Param2',   'L'),
+        ('effect1Param3',   'L'),
+        ('effect2',         'W'),
+        ('effect2Param1',   'L'),
+        ('effect2Param2',   'L'),
+        ('effect2Param3',   'L'),
+        ('effect3',         'W'),
+        ('effect3Param1',   'L'),
+        ('effect3Param2',   'L'),
+        ('effect3Param3',   'L'),
+        ('effect4',         'W'),
+        ('effect4Param1',   'L'),
+        ('effect4Param2',   'L'),
+        ('effect4Param3',   'L'),
+        ('effect5',         'W'),
+        ('effect5Param1',   'L'),
+        ('effect5Param2',   'L'),
+        ('effect5Param3',   'L'),
+        ('str',             'I'),
+        ('def_',            'I'),
+        ('ats',             'I'),
+        ('adf',             'I'),
+        ('dex',             'I'),
+        ('agl',             'I'),
+        ('spd',             'I'),
+        ('mov',             'I'),
+        ('hp',              'I'),
+        ('ep',              'I'),
+        ('price',           'I'),
+        ('maxAmount',       'H'),
+        ('sort',            'H'),
+        ('dlcId',           'W'),
+        ('name',            'S'),
+        ('description',     'S'),
+        ('dword34',         'L'),
+        ('dword35',         'L'),
+    )
+
+class ItemTableDataQuartz(TableDataEntry):
+    DESCRIPTOR = ItemTableData.DESCRIPTOR[:-2] + (
+        ("prio_balanced",   "W"),
+        ("prio_phys",       "W"),
+        ("prio_mag",        "W"),
+        ("prio_spd",        "W"),
+        ("artId1",          "W"),
+        ("artId2",          "W"),
+        ("artId3",          "W"),
+        ("artId4",          "W"),
+        ("artId5",          "W"),
+        ("artId6",          "W"),
+    )
+
 DataTable.DataTableDataTypes.update({
     'AttachTableData'       : AttachTableData,
     'AttachTransformData'   : AttachTransformData,
@@ -269,6 +340,8 @@ DataTable.DataTableDataTypes.update({
     'status'                : StatusTableData,
     'magic'                 : MagicTableData,
     'btcalc'                : BattleCalcTableData,
+    'item'                  : ItemTableData,
+    'item_q'                : ItemTableDataQuartz,
 })
 
 DataTable.PythonHeader = [

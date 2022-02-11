@@ -3,6 +3,7 @@ from Falcom.ED84.Parser.scena_writer_gen import *
 from Falcom.ED83.Parser.consts import *
 
 ChrTable = GlobalConfig.ChrTable
+ItemTable = GlobalConfig.ItemTable
 MAX_PARTY_CHR_ID = 0x3F
 
 # utils
