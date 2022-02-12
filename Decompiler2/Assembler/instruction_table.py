@@ -166,7 +166,7 @@ class OperandDescriptor:
                 return "float('nan')"
 
             v: str = '%g' % operand.value
-            if v.startswith('1e'):
+            if v.find('e') != -1:
                 return '%f' % operand.value
 
             if v.find('.') == -1:

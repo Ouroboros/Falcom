@@ -289,7 +289,7 @@ def Handler_2B(ctx: InstructionHandlerContext):
 def Handler_2E(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'BWB' + {
-            # 0x00: '',
+            0x00: '',
             # 0x01: 'ffB',
             0x02: 'B',
             0x03: 'B',

@@ -1503,7 +1503,6 @@ ScenaOpTable = ED85InstructionTable(ED84ScenaOpTable).update([
     inst(0x23,  'OP_23',                        desc_23),
     inst(0x29,  'MenuCmd',                      desc_29),
     inst(0x2A,  'OP_2A',                        desc_2A),
-    # inst(0x2C,  'PlayChrAnimeClip',             'NSBBBBBffffBB',                                                            parameters = ('chrId', 'animeClip', 'loop', 'arg4', 'reverse', 'arg6', 'arg7', 'delay', 'startTime', 'endTime', 'currentTime', 'slot', 'arg13')),
     inst(0x2E,  'OP_2E',                        desc_2E),
     inst(0x32,  'EffectCtrl',                   desc_32),
     inst(0x33,  'BattleCtrl',                   NoOperand,                                      handler = Handler_33),

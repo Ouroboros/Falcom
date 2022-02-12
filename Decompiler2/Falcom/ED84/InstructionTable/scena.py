@@ -1168,17 +1168,15 @@ def Handler_8A(ctx: InstructionHandlerContext):
             0x00: 'WWSS',
             0x01: 'WWSS',
             0x02: 'WW',
-            0x03: 'Wfffffffff',
+            0x03: 'W' + 'f' * 9,
             0x0A: 'WSSS',
             0x0B: 'W',
             0x0C: 'WSSS',
             0x0D: 'S',
-            0xFE: 'WSf',
-            0xFF: 'WSf',
-
-            # # <= 0x33
             0x32: 'WS',
             0x33: 'WS',
+            0xFE: 'WSf',
+            0xFF: 'WSf',
         }[n]
 
     match ctx.action:
