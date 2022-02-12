@@ -1,7 +1,7 @@
 from Falcom.ED84.Parser.scena_writer_helper import *
 from Falcom.ED84.Parser.scena_writer import _gScena
 
-def EvalAlwaysFalse():
+def _AlwaysFalse():
     return FormationCtrl(0x05, 0xEEEE)
 
 # effect 0x32
@@ -76,4 +76,4 @@ def OP_8A(arg1: int, *args):
 
 def OP_D9(*args):
     # 0xD9
-    return EvalAlwaysFalse()
+    return _AlwaysFalse()
