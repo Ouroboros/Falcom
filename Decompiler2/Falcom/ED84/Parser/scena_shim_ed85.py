@@ -33,7 +33,7 @@ def OP_2E(arg1: int, arg2: int, arg3: int, *args):
 
         case 5:
             # FIXME
-            return
+            return Sleep(int(args[0] * 100000 / 30 / 100))
 
     return _gScena.handleOpCode(0x2E, arg1, arg2, arg3, *args)
 
