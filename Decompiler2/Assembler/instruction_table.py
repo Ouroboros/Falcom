@@ -1,3 +1,4 @@
+from binhex import openrsrc
 from Common import *
 from . import instruction
 from . import handlers
@@ -149,68 +150,68 @@ class OperandDescriptor:
         }[self.format.type]()
 
     def formatValue(self, context: 'handlers.FormatOperandHandlerContext') -> str:
-        operand = context.operand
-        desc    = operand.descriptor
-        fmt     = desc.format
-
-        def formatInteger():
-            if fmt.hex:
-                f = f'0x%0{fmt.size * 2}X'
-                return f % operand.value
-
-            return '%d' % operand.value
-            # return (fmt.hex and '0x%X' or '%d') % operand.value
-
-        def formatFloat():
-            if math.isnan(operand.value):
-                return "float('nan')"
-
-            v: str = '%g' % operand.value
-            if v.find('e') != -1:
-                return '%f' % operand.value
-
-            if v.find('.') == -1:
-                v += '.0'
-
-            return v
-
-        def formatText() -> str:
-            s = []
-            for ch in operand.value:
-                if ch == '\\':
-                    s.append('\\\\')
-                elif ch in ["'", '"']:
-                    s.append(f'\\x{ord(ch):02X}')
-                elif ch >= ' ':
-                    s.append(ch)
-                elif ch == '\n':
-                    s.append('\\n')
-                elif ch == '\t':
-                    s.append('\\t')
-                else:
-                    s.append(f'\\x{ord(ch):02x}')
-
-            return f"'{''.join(s)}'"
-
-
         return {
-            OperandType.SInt8   : formatInteger,
-            OperandType.UInt8   : formatInteger,
+            OperandType.SInt8   : self.formatInteger,
+            OperandType.UInt8   : self.formatInteger,
 
-            OperandType.SInt16  : formatInteger,
-            OperandType.UInt16  : formatInteger,
+            OperandType.SInt16  : self.formatInteger,
+            OperandType.UInt16  : self.formatInteger,
 
-            OperandType.SInt32  : formatInteger,
-            OperandType.UInt32  : formatInteger,
+            OperandType.SInt32  : self.formatInteger,
+            OperandType.UInt32  : self.formatInteger,
 
-            OperandType.SInt64  : formatInteger,
-            OperandType.UInt64  : formatInteger,
+            OperandType.SInt64  : self.formatInteger,
+            OperandType.UInt64  : self.formatInteger,
 
-            OperandType.Float32 : formatFloat,
-            OperandType.Float64 : formatFloat,
+            OperandType.Float32 : self.formatFloat,
+            OperandType.Float64 : self.formatFloat,
 
-            OperandType.MBCS    : formatText,
-        }[desc.format.type]()
+            OperandType.MBCS    : self.formatText,
+        }[context.operand.descriptor.format.type](context.operand)
+
+    @staticmethod
+    def formatInteger(operand: 'instruction.Operand') -> str:
+        fmt = operand.descriptor.format
+        if fmt.hex:
+            f = f'0x%0{fmt.size * 2}X'
+            return f % operand.value
+
+        return '%d' % operand.value
+        # return (fmt.hex and '0x%X' or '%d') % operand.value
+
+    @staticmethod
+    def formatFloat(operand: 'instruction.Operand') -> str:
+        if math.isnan(operand.value):
+            return "float('nan')"
+
+        v: str = '%g' % operand.value
+        if v.find('e') != -1:
+            return '%f' % operand.value
+
+        if v.find('.') == -1:
+            v += '.0'
+
+        return v
+
+    @staticmethod
+    def formatText(operand: 'instruction.Operand') -> str:
+        s = []
+        for ch in operand.value:
+            if ch == '\\':
+                s.append('\\\\')
+            elif ch in ["'", '"']:
+                s.append(f'\\x{ord(ch):02X}')
+            elif ch >= ' ':
+                s.append(ch)
+            elif ch == '\n':
+                s.append('\\n')
+            elif ch == '\t':
+                s.append('\\t')
+            else:
+                s.append(f'\\x{ord(ch):02x}')
+
+        return f"'{''.join(s)}'"
+
 
     def __str__(self):
         return str(self.format)

@@ -178,7 +178,7 @@ class ED83OperandDescriptor(OperandDescriptor):
             case 0x44: return f'ArgStr({value})'
             case 0xDD: return f'ParamStr({formatText(value)})'
             case 0xEE: return f'ParamFloat({value:g})'
-            case 0xFF: return f'ParamInt({value})'
+            case 0xFF: return f'ParamInt(0x{value:04X})' if value == 100 or value % 100 != 0 else f'ParamInt({value})'
             case _: return f'({", ".join([f"0x{o.value:X}" if isinstance(o.value, int) else ("%s" % o.value) if isinstance(o.value, float) else formatText(o.value) for o in context.operand.value])})'
 
     def formatText(self, context: FormatOperandHandlerContext) -> str:

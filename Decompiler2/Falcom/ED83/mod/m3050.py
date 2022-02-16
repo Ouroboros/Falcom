@@ -4,7 +4,7 @@ sys.path.append(r'D:\Dev\Source\Falcom\Decompiler2')
 from Falcom.ED83.Parser.scena_writer_helper import *
 try:
     import m3050_hook
-except ImportError:
+except ModuleNotFoundError:
     pass
 
 scena = createScenaWriter('m3050.dat')

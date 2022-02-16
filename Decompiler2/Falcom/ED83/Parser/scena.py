@@ -255,7 +255,7 @@ sys.path.append(r'{pathlib.Path(__file__).parent.parent.parent.parent}')
 from Falcom.ED83.Parser.scena_writer_helper import *
 try:
     import {pathlib.Path(filename).stem}_hook
-except ImportError:
+except ModuleNotFoundError:
     pass
 
 scena = createScenaWriter('{filename}')

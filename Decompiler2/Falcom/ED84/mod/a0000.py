@@ -4,7 +4,7 @@ sys.path.append(r'D:\Dev\Source\Falcom\Decompiler2')
 from Falcom.ED84.Parser.scena_writer_helper import *
 try:
     import a0000_hook
-except ImportError:
+except ModuleNotFoundError:
     pass
 
 scena = createScenaWriter('a0000.dat')
