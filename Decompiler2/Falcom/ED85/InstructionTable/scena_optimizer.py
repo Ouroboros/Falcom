@@ -71,6 +71,11 @@ optimizeTable = buildTable(
         ('MenuShow',                            {0: 0x04}),
     ),
     opt(
+        0x2E,
+        ('WaitAnimeClipTimeout',                {0: 0x04}),
+        ('WaitAnimeClipFromPlayTime',           {0: 0x05}),
+    ),
+    opt(
         0x2F,
         ('AnimeClipAddSymbol',                  {0: 0x00}),
         ('AnimeClipRemoveSymbol',               {0: 0x01, 2: ''}),

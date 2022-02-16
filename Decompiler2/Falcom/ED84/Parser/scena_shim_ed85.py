@@ -28,11 +28,7 @@ def OP_2E(arg1: int, arg2: int, arg3: int, *args):
     assert isinstance(arg2, int)
     assert isinstance(arg3, int)
     match arg1:
-        case 4:
-            return Sleep(int(args[0] * 100000 / 30 / 100))
-
-        case 5:
-            # FIXME
+        case 4 | 5:
             return Sleep(int(args[0] * 100000 / 30 / 100))
 
     return _gScena.handleOpCode(0x2E, arg1, arg2, arg3, *args)

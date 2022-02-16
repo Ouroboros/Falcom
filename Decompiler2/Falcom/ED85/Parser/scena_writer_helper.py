@@ -225,6 +225,14 @@ def MenuSetPos(level: int, arg2: int, x: int, y: int, arg5: int):
 def MenuShow(level: int, resultVar: int):
     MenuCmd(0x04, level, resultVar)
 
+# anime clip related 0x2E
+
+def WaitAnimeClipTimeout(chrId: int, frames: int):
+    OP_2E(0x04, chrId, 0x00, frames)
+
+def WaitAnimeClipFromPlayTime(chrId: int, frames: int):
+    OP_2E(0x05, chrId, 0x00, frames)
+
 # anime clip 0x2F
 
 def AnimeClipAddSymbol(chrId: int, asset: str, symbol: str):
