@@ -76,6 +76,12 @@ def OP_07(arg1: uint8, arg2: tuple | list):
     assert isinstance(arg2, tuple | list)
     _gScena.handleOpCode(0x07, arg1, arg2)
 
+def ExecExpressionWithValue(arg1: uint8, arg2: tuple | list):
+    # 0x08
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, tuple | list)
+    _gScena.handleOpCode(0x08, arg1, arg2)
+
 def OP_08(arg1: uint8, arg2: tuple | list):
     # 0x08
     assert isinstance(arg1, uint8)

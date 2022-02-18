@@ -2091,7 +2091,7 @@ ScenaOpTable = ED83InstructionTable([
     inst(0x05,  'If',                           'EO',                                                                       parameters = ('ops', 'false_successor')),
     inst(0x06,  'Switch',                       NoOperand,                  Flags.EndBlock,     Handler_06),
     inst(0x07,  'DebugLog',                     'BV'),
-    inst(0x08,  'OP_08',                        'BE'),
+    inst(0x08,  'ExecExpressionWithValue',      'BE'),
     inst(0x0A,  'ExecExpressionWithReg',        'BE',                                                                       parameters = ('regIndex', 'expressions')),
     # inst(0x0B,  'OP_0B',                        'BE'),
     inst(0x0C,  'OP_0C',                        'BB'),
