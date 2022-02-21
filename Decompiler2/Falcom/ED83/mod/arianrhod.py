@@ -280,7 +280,7 @@ def AniBtlCraftDamageXKnockBack():
 
 def AniBtlCraftDamageT(damage: bool, knockBack: float):
     def cb():
-        status = AbnormalCondition.Deathblow | AbnormalCondition.Burn
+        status = AbnormalStatus.Deathblow | AbnormalStatus.Burn
         # ChrSetChrAbnormalCondition(0xFFFB, status, 0x000000FF, 0x000000FF, 0x00)
         # ChrSetChrAbnormalCondition(0xFFFB, AbnormalCondition.Freeze, 1, 0)
         # SetChrPos(0xFFFB, 0.0, -100.0, 0.0, 0.0)
@@ -1751,9 +1751,9 @@ def AniBtlSCraft00():
     OP_3B(0x00, (0xFF, 0x8FA6, 0x0), 0.8, (0xFF, 0x0, 0x0), 0.0, 3.0, 0x0000, 0xFFFF, 0.0, 0.0, 0.0, 0.0, '', 0x04B0, 0x012C, 0x0000, 0x04B0, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000)
 
     def cb():
-        BattleClearChrAbnormalCondition(0xFFFB, AbnormalCondition.MagicReflect | AbnormalCondition.PhysicalReflect | AbnormalCondition.CraftGuard)
-        BattleClearChrAbnormalCondition2(0xFFFB, AbnormalCondition2.AbsoluteReflect | AbnormalCondition2.ProtectionAgainstAll)
-        BattleSetChrAbnormalCondition(0xFFFB, AbnormalCondition.Deathblow, 0x000000FF, 0x000000FF, 0x00)
+        BattleClearChrAbnormalStatus(0xFFFB, AbnormalStatus.MagicReflect | AbnormalStatus.PhysicalReflect | AbnormalStatus.CraftGuard)
+        BattleClearChrAbnormalStatus2(0xFFFB, AbnormalStatus2.AbsoluteReflect | AbnormalStatus2.ProtectionAgainstAll)
+        BattleSetChrAbnormalStatus(0xFFFB, AbnormalStatus.Deathblow, 0x000000FF, 0x000000FF, 0x00)
 
     ForEachTarget(cb)
 

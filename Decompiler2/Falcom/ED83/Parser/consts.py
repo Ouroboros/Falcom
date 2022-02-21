@@ -38,7 +38,7 @@ class PseudoChrId(IntEnum2):
     Current                 = 0xFFFB
     Self                    = 0xFFFE
 
-class AbnormalCondition(IntEnum2):
+class AbnormalStatus(IntEnum2):
     Poison                  = 0x00000001
     Seal                    = 0x00000002
     Mute                    = 0x00000004
@@ -72,7 +72,7 @@ class AbnormalCondition(IntEnum2):
     BalanceDown             = 0x40000000
     Death                   = 0x80000000
 
-class AbnormalCondition2(IntEnum2):
+class AbnormalStatus2(IntEnum2):
     BurningHeart            = 0x00000001
     HPUpDownVitality        = 0x00000002
     AlmightyConflagration   = 0x00000004

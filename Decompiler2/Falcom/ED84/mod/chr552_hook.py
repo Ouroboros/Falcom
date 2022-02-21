@@ -184,7 +184,7 @@ def AniBtlAttack():
         CreateThread(0xFFFE, 0x01, ScriptId.Current, 'AniBtlAttack_Damage')
         WaitForThreadExit(0xFFFE, 0x01)
 
-        ForEachTarget(lambda: BattleSetChrAbnormalCondition(0xFFFB, AbnormalCondition.Burn, 0, 1))
+        ForEachTarget(lambda: BattleSetChrAbnormalStatus(0xFFFB, AbnormalStatus.Burn, 0, 1))
 
         Sleep(666)
         WaitEffect(0xFFFE, 0x25, 0x00)
@@ -210,7 +210,7 @@ def AniBtlAttack():
         OP_3B(0x01, (0xFF, 0x8FB3, 0x0), (0xFF, 0x7D0, 0x0))
         Sleep(100)
 
-        ForEachTarget(lambda: BattleSetChrAbnormalCondition(0xFFFB, AbnormalCondition.Seal, 0, 1))
+        ForEachTarget(lambda: BattleSetChrAbnormalStatus(0xFFFB, AbnormalStatus.Seal, 0, 1))
 
     def attack_ice():
         PlayEffect(0xFFFE, (0xFF, 0x26, 0x0), 0xFFFE, 0x00000003, (0xDD, ''), (0xEE, 0.0, 0x0), (0xEE, 0.1, 0x0), (0xEE, 2.0, 0x0), 0.0, 0.0, 0.0, (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), (0xEE, 1.0, 0x0), 0xFF)
@@ -218,7 +218,7 @@ def AniBtlAttack():
 
         CreateThread(0xFFFE, 0x01, ScriptId.Current, 'AniBtlAttack_Damage')
         WaitForThreadExit(0xFFFE, 0x01)
-        ForEachTarget(lambda: BattleSetChrAbnormalCondition(0xFFFB, AbnormalCondition.Freeze, 1, 1))
+        ForEachTarget(lambda: BattleSetChrAbnormalStatus(0xFFFB, AbnormalStatus.Freeze, 1, 1))
         Sleep(1000)
 
     Switch2(

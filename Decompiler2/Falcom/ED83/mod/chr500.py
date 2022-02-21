@@ -3105,8 +3105,8 @@ def AniBtlRelease():
         'loc_90DD',
     )
 
-    BattleClearChrAbnormalCondition(0xF080, 0x00008000)
-    BattleClearChrAbnormalCondition(0xF080, 0x00400000)
+    BattleClearChrAbnormalStatus(0xF080, 0x00008000)
+    BattleClearChrAbnormalStatus(0xF080, 0x00400000)
     DebugLog(0x00, (0xFF, 0xA, 0x0))
 
     def _loc_90DD(): pass
@@ -3125,8 +3125,8 @@ def AniBtlRelease():
         'loc_9115',
     )
 
-    BattleClearChrAbnormalCondition(0xF081, 0x00008000)
-    BattleClearChrAbnormalCondition(0xF081, 0x00400000)
+    BattleClearChrAbnormalStatus(0xF081, 0x00008000)
+    BattleClearChrAbnormalStatus(0xF081, 0x00400000)
 
     def _loc_9115(): pass
 
@@ -3144,8 +3144,8 @@ def AniBtlRelease():
         'loc_914D',
     )
 
-    BattleClearChrAbnormalCondition(0xF082, 0x00008000)
-    BattleClearChrAbnormalCondition(0xF082, 0x00400000)
+    BattleClearChrAbnormalStatus(0xF082, 0x00008000)
+    BattleClearChrAbnormalStatus(0xF082, 0x00400000)
 
     def _loc_914D(): pass
 

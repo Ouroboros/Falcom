@@ -14,7 +14,7 @@ def BattleInit():
 @scena.Code('BattleSetting')
 def BattleSetting():
     # OP_54(0x3A, 0xF043, 0xFFEB, -1.5, -3.8, 15.0, 0.0, 0x01)
-    BattleSetChrAbnormalCondition2(0xF043, AbnormalCondition2.Enhanced, 9, 9, 0)
+    BattleSetChrAbnormalStatus2(0xF043, AbnormalStatus2.Enhanced, 9, 9, 0)
     BattleSetFlags(0x00000040)
     BattleSetFlags(0x00F00000)
     Return()
@@ -26,7 +26,7 @@ def BattleStart():
 
 @scena.Code('BattleTurn')
 def BattleTurn():
-    BattleSetChrAbnormalCondition2(0xF043, AbnormalCondition2.Enhanced, 9, 9, 0)
+    BattleSetChrAbnormalStatus2(0xF043, AbnormalStatus2.Enhanced, 9, 9, 0)
     Return()
 
 # id: 0x0003 offset: 0x1B4

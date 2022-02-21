@@ -2867,7 +2867,7 @@ def AniBtlDamage():
 def AniBtlDamageVoice():
     If(
         (
-            (Expr.Eval, "BattleGetChrAbnormalCondition2(0xFFFE)"),
+            (Expr.Eval, "BattleGetChrAbnormalStatus2(0xFFFE)"),
             (Expr.PushLong, 0x10),
             Expr.And,
             Expr.Return,
