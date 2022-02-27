@@ -372,7 +372,7 @@ def BattleDamageAnime(targetChr: int, knockBack: tuple, arg3: tuple, arg4: int):
     BattleCtrl(0x01, targetChr, knockBack, arg3, arg4)
 
 def BattleDamageAnime2(targetChr: int, knockBack: float, arg3: float, arg4: int = 1):
-    BattleCtrl(0x01, targetChr, (0xEE, knockBack, 0x0), (0xEE, arg3, 0x0), arg4)
+    BattleCtrl(0x01, targetChr, ParamFloat(knockBack), ParamFloat(arg3), arg4)
 
 def BattleTargetsIterReset(regIndex: int, chrId: int):
     BattleCtrl(0x02, regIndex, chrId)

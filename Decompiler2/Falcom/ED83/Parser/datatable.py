@@ -311,6 +311,18 @@ class MapBgmTableData(TableDataEntry):
         ('bgmId',   'H'),
     )
 
+class PlaceTableData(TableDataEntry):
+    DESCRIPTOR = (
+        ("id",          "L"),
+        ("map",         "S"),
+        ("dword02",     "L"),
+        ("str03",       "S"),
+        ("name",        "S"),
+        ("str05",       "S"),
+        ("str06",       "S"),
+        ("str07",       "S"),
+    )
+
 class DataTable:
     DataTableDataTypes = {
         'NameTableData'     : NameTableData,
@@ -323,6 +335,7 @@ class DataTable:
         'voice'             : VoiceTableData,
         'se'                : SETableData,
         'bgm'               : BGMTableData,
+        'PlaceTableData'        : PlaceTableData,
     }
 
     PythonHeader = [

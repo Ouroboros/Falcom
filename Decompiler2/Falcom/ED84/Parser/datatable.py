@@ -331,6 +331,19 @@ class ItemTableDataQuartz(TableDataEntry):
         ("artId6",          "W"),
     )
 
+class PlaceTableData(TableDataEntry):
+    DESCRIPTOR = (
+        ("id",          "L"),
+        ("map",         "S"),
+        ("dword02",     "L"),
+        ("str03",       "S"),
+        ("name",        "S"),
+        ("str05",       "S"),
+        ("str06",       "S"),
+        ("str07",       "S"),
+        ("byte08",      "B"),
+    )
+
 DataTable.DataTableDataTypes.update({
     'AttachTableData'       : AttachTableData,
     'AttachTransformData'   : AttachTransformData,
@@ -342,6 +355,7 @@ DataTable.DataTableDataTypes.update({
     'btcalc'                : BattleCalcTableData,
     'item'                  : ItemTableData,
     'item_q'                : ItemTableDataQuartz,
+    'PlaceTableData'        : PlaceTableData,
 })
 
 DataTable.PythonHeader = [
