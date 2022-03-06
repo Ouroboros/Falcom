@@ -12,6 +12,7 @@ __all__ = (
     'VoiceTableData',
     'SETableData',
     'BGMTableData',
+    'MapBgmTableData',
 )
 
 class TableNameEntry:
@@ -58,6 +59,20 @@ class TableDataEntry:
             'W' : lambda v: f'0x{v:04X}',
             'I' : lambda v: f'{v}',
             'L' : lambda v: f'0x{v:08X}',
+            'M' : lambda v: "'" + {
+                                0       : 'a',
+                                100000  : 'c',
+                                200000  : 't',
+                                300000  : 'r',
+                                400000  : 'm',
+                                500000  : 'e',
+                                600000  : 'f',
+                                700000  : 'v',
+                                800000  : 'h',
+                                900000  : 'w',
+                                1000000 : 'd',
+                                1300000 : 'i',
+                            }[v // 100000 * 100000] + f'{(v - v // 100000 * 100000) // 10:04d}' + "'," + f' # 0x{v:08X}',
             'f' : lambda v: f'{v:g}.0' if f'{v:g}'.count('.') == 0 else f'{v:g}',
             'S' : lambda v: f"{repr(v)}",
         }
@@ -81,6 +96,19 @@ class TableDataEntry:
             'W' : lambda v: utils.int_to_bytes(v, 2),
             'I' : lambda v: utils.int_to_bytes(v, 4),
             'L' : lambda v: utils.int_to_bytes(v, 4),
+            'M' : lambda v: utils.int_to_bytes({
+                                'c': 100000,
+                                't': 200000,
+                                'r': 300000,
+                                'm': 400000,
+                                'e': 500000,
+                                'f': 600000,
+                                'v': 700000,
+                                'h': 800000,
+                                'w': 900000,
+                                'd': 1000000,
+                                'i': 1300000,
+                            }.get(v[0], 0) + int(v[1:], 10) * 10, 4),
             'f' : lambda v: utils.float_to_bytes(v),
             'S' : lambda v: utils.str_to_bytes(v),
         }
@@ -103,6 +131,7 @@ class TableDataEntry:
             'W' : lambda: fs.ReadUShort(),
             'I' : lambda: fs.ReadULong(),
             'L' : lambda: fs.ReadULong(),
+            'M' : lambda: fs.ReadULong(),
             'f' : lambda: fs.ReadFloat(),
             'S' : lambda: fs.ReadMultiByte(),
         }
@@ -307,7 +336,7 @@ class CompHelpData(TableDataEntry):
 
 class MapBgmTableData(TableDataEntry):
     DESCRIPTOR  = (
-        ('mapId',   'L'),
+        ('map',     'M'),
         ('bgmId',   'H'),
     )
 
@@ -335,7 +364,7 @@ class DataTable:
         'voice'             : VoiceTableData,
         'se'                : SETableData,
         'bgm'               : BGMTableData,
-        'PlaceTableData'        : PlaceTableData,
+        'PlaceTableData'    : PlaceTableData,
     }
 
     PythonHeader = [

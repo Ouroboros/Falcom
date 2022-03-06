@@ -2,7 +2,6 @@ from Falcom.Common  import *
 from Assembler      import *
 from .types         import *
 from Falcom.ED84.InstructionTable import ED84InstructionTable, ScenaOpTable as ED84ScenaOpTable
-from pprint import pprint
 
 __all__ = (
     'ScenaOpTable',

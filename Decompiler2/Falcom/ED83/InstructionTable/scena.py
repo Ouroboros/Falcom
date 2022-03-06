@@ -1,7 +1,6 @@
 from Falcom.Common  import *
 from Assembler      import *
 from .types         import *
-from pprint import pprint
 
 __all__ = (
     'ScenaOpTable',

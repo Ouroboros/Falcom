@@ -163,7 +163,7 @@ class MagicTableData(TableDataEntry):
         ('type',            'B'),
         ('damageType',      'B'),
         ('attribute',       'B'),
-        ('byte1',           'B'),
+        ('battleStyle',     'B'),
         ('rangeType',       'B'),
         ('range',           'f'),
         ('area',            'C'),
