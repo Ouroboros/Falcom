@@ -2338,7 +2338,7 @@ def AniBtlReady():
 # id: 0x0025 offset: 0x7DD4
 @scena.Code('AniBtlWait')
 def AniBtlWait():
-    # ChrSetAbnormalCondition(0xFFFE, AbnormalCondition.Death | AbnormalCondition.Deathblow, 0xff, 0xff)
+    # ChrSetAbnormalStatus(0xFFFE, AbnormalStatus.Death | AbnormalStatus.Deathblow, 0xff, 0xff)
     # ChrSetBattleFlags(0xFFFE, 0x1)
     Call(ScriptId.Current, 'BtlDefaultFace')
     PlayChrAnimeClip(0xFFFE, 'BTL_WAIT', 0x01, 0x00, 0x00, 0x00, 0x00, 0.2, -1.0, -1.0, -1.0, 0x00, 0x00)
@@ -2533,7 +2533,7 @@ def AniBtlDamageVoice():
 
     If(
         (
-            (Expr.Eval, "ChrGetAbnormalCondition2(0xFFFE)"),
+            (Expr.Eval, "ChrGetAbnormalStatus2(0xFFFE)"),
             (Expr.PushLong, 0x10),
             Expr.And,
             Expr.Return,
@@ -2563,7 +2563,7 @@ def AniBtlDamageVoice():
 
     If(
         (
-            (Expr.Eval, "ChrGetAbnormalCondition2(0xFFFE)"),
+            (Expr.Eval, "ChrGetAbnormalStatus2(0xFFFE)"),
             (Expr.PushLong, 0x10),
             Expr.And,
             Expr.Return,

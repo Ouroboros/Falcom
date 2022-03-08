@@ -281,8 +281,8 @@ def AniBtlCraftDamageXKnockBack():
 def AniBtlCraftDamageT(damage: bool, knockBack: float):
     def cb():
         status = AbnormalStatus.Deathblow | AbnormalStatus.Burn
-        # ChrSetChrAbnormalCondition(0xFFFB, status, 0x000000FF, 0x000000FF, 0x00)
-        # ChrSetChrAbnormalCondition(0xFFFB, AbnormalCondition.Freeze, 1, 0)
+        # ChrSetChrAbnormalStatus(0xFFFB, status, 0x000000FF, 0x000000FF, 0x00)
+        # ChrSetChrAbnormalStatus(0xFFFB, AbnormalStatus.Freeze, 1, 0)
         # SetChrPos(0xFFFB, 0.0, -100.0, 0.0, 0.0)
         # ChrPhysicsCtrl(0x00, 0xFFFB, 0xFFFFFFFF)
 
@@ -290,7 +290,7 @@ def AniBtlCraftDamageT(damage: bool, knockBack: float):
 
     BattleInitHit(0xFFFE)
 
-    # BattleSetChrAbnormalCondition(0xFFFE, AbnormalCondition.Stealth, 1, 1)
+    # BattleSetChrAbnormalStatus(0xFFFE, AbnormalStatus.Stealth, 1, 1)
 
     # for chr in range(PseudoChrId.Party2, PseudoChrId.Party3):
     #     BattleClearChrFlags(chr, 0xFFFFFFFF)

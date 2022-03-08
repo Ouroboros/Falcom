@@ -447,19 +447,19 @@ def BattleTurnChrDirection(chrId: int, targetId: int, unknown: float, speed: flo
 def BattleShowText(s: str):
     BattleCtrl(0x64, s)
 
-def BattleSetChrAbnormalCondition(chrId: int, status: AbnormalStatus, param1: int, param2: int, unused: int = 0):
+def BattleSetChrAbnormalStatus(chrId: int, status: AbnormalStatus, param1: int, param2: int, unused: int = 0):
     BattleCtrl(0xB7, 0x00, chrId, status, param1, param2, unused)
 
-def BattleClearChrAbnormalCondition(chrId: int, status: AbnormalStatus):
+def BattleClearChrAbnormalStatus(chrId: int, status: AbnormalStatus):
     BattleCtrl(0xB7, 0x01, chrId, status, 0, 0, 0)
 
-def BattleSetChrAbnormalCondition2(chrId: int, status: AbnormalStatus2, param1: int, param2: int, se: int):
+def BattleSetChrAbnormalStatus2(chrId: int, status: AbnormalStatus2, param1: int, param2: int, se: int):
     BattleCtrl(0xB7, 0x02, chrId, status, param1, param2, se)
 
-def BattleClearChrAbnormalCondition2(chrId: int, status: AbnormalStatus2):
+def BattleClearChrAbnormalStatus2(chrId: int, status: AbnormalStatus2):
     BattleCtrl(0xB7, 0x03, chrId, status, 0, 0, 0)
 
-def BattleGetChrAbnormalCondition(chrId: int):
+def BattleGetChrAbnormalStatus(chrId: int):
     BattleCtrl(0xB7, 0x04, chrId, 0, 0, 0, 0)
 
 def BattleGetChrAbnormalStatus2(chrId: int):
