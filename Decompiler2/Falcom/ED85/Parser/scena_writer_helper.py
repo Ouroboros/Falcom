@@ -444,6 +444,9 @@ def BattleSetChrPosAsync(chrId: int, targetId: int, x: float, y: float, z: float
 def BattleTurnChrDirection(chrId: int, targetId: int, unknown: float, speed: float = -1.0):
     BattleCtrl(0x41, chrId, targetId, unknown, speed)
 
+def BattleSetChrATDelay(chrId: int, atdelay: int):
+    BattleCtrl(0x5A, chrId, atdelay)
+
 def BattleShowText(s: str):
     BattleCtrl(0x64, s)
 

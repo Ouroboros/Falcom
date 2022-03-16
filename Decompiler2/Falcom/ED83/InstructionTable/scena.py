@@ -471,7 +471,7 @@ def Handler_33(ctx: InstructionHandlerContext):
             # 0x51: 'SW',
             0x52: 'WB',         # load_effect
             0x53: 'S',
-            0x5A: 'WL',
+            0x5A: 'NI',
             0x5B: 'BL',
             0x5C: 'B',
             # 0x5D: 'W',

@@ -1,6 +1,6 @@
-from Falcom.Common  import *
-from Assembler      import *
-from .utils         import *
+from Falcom.Common import *
+from Assembler     import *
+from .utils        import *
 
 DefaultIndent = GlobalConfig.DefaultIndent
 UserDefined = OperandType.UserDefined + 1
@@ -259,6 +259,10 @@ class ED83OperandDescriptor(OperandDescriptor):
             name = GlobalConfig.ChrTable[chrId]
             return f"ChrTable['{name}']"
         except KeyError:
+            from ..Parser.consts import PseudoChrId
+            if chrId in PseudoChrId._value2member_map_:
+                return f'PseudoChrId.{PseudoChrId(chrId)}'
+
             return f'0x{chrId:04X}'
 
     def formatItemId(self, itemId: int) -> str:

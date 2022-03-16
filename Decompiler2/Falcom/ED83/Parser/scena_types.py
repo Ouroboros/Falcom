@@ -913,7 +913,7 @@ class ScenaActionTable:
             return
 
         self.actions = []
-        while True:
+        for _ in range(0x40):
             entry = ScenaActionTableEntry(fs = fs)
             if entry.craftId == ScenaActionTableEntry.InvalidCraftID:
                 break

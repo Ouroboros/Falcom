@@ -128,6 +128,7 @@ optimizeTable = buildTable(
         ('BattleSaveChrPosition',               {0: 0x35}),
         ('BattleSetChrPosAsync',                {0: 0x39}),
         ('BattleTurnChrDirection',              {0: 0x3C}),
+        ('BattleSetChrATDelay',                 {0: 0x5A}),
         ('BattleShowText',                      {0: 0x64}),
         ('BattleSetChrAbnormalStatus',          {0: 0xB7, 1: 0x00}),
         ('BattleClearChrAbnormalStatus',        {0: 0xB7, 1: 0x01, 4: 0, 5: 0, 6: 0}),
