@@ -53,6 +53,13 @@
 空之轨迹
 =============
 
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6Steam" target="_blank">ED6Steam</a>
+
+写于 2020-04-16 ~ ?
+
+移植 Steam 版汉化模块到 frida
+
+
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/3rd%20Kuro" target="_blank">3rd Kuro</a>
 
 可能写于 2008 年
