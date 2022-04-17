@@ -708,9 +708,6 @@ def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Fla
     if handler:
         assert operandfmts is NoOperand
 
-        if isinstance(handler, tuple):
-            handler = genHandler(*handler)
-
     if operandfmts is NoOperand:
         operands = NoOperand
         if not handler and parameters:

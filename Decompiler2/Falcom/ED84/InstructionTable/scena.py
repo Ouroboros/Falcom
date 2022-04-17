@@ -1682,10 +1682,50 @@ def Handler_D5(ctx: InstructionHandlerContext):
         case HandlerAction.CodeGen:
             return genVariadicFuncStub(ctx.descriptor, int)
 
+def genHandler(b: str, fmts: Dict[int, str]) -> Callable:
+    def handler(ctx: InstructionHandlerContext):
+        peeker = {
+            'B': peekByte,
+            'H': peekWord,
+            'W': peekWord,
+            'N': peekWord,
+        }[b[0]]
+
+        def getfmts(n):
+            return b + fmts[n]
+
+        match ctx.action:
+            case HandlerAction.Disassemble:
+                inst = ctx.instruction
+                inst.operands = readAllOperands(ctx, getfmts(peeker(ctx)))
+                return inst
+
+            case HandlerAction.Assemble:
+                applyDescriptors(ctx, getfmts(ctx.instruction.operands[0].value))
+                return
+
+            case HandlerAction.CodeGen:
+                types = [{
+                    'B': int,
+                    'C': int,
+                    'W': int,
+                    'H': int,
+                    'N': int,
+                    'L': int,
+                    'S': str,
+                    'V': tuple,
+                }[t] for t in b]
+                return genVariadicFuncStub(ctx.descriptor, *types)
+
+    return handler
 
 def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Flags.Empty, handler: InstructionHandler = None, *, parameters = []) -> InstructionDescriptor:
     if operandfmts == '':
         raise ValueError('use NoOperand instead')
+
+    elif isinstance(operandfmts, tuple):
+        handler = genHandler(*operandfmts)
+        operandfmts = NoOperand
 
     if handler:
         assert operandfmts is NoOperand
