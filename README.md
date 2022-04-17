@@ -55,7 +55,7 @@
 
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6Steam" target="_blank">ED6Steam</a>
 
-写于 2020-04-16 ~ ?
+写于 2022-04-16 ~ ?
 
 移植 Steam 版汉化模块到 frida
 
