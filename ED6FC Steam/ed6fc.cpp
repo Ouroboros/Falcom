@@ -531,7 +531,20 @@ BOOL Initialize(PVOID BaseAddress)
 
     ExeModule = FindLdrModuleByHandle(nullptr);
 
-    // char width
+    /*
+        char width
+        004B1A31   |.  56                  push    esi
+        004B1A32   |.  8D71 E0             lea     esi, dword ptr [ecx-0x20]
+        004B1A35   |.  83FE 5F             cmp     esi, 0x5F
+        004B1A38   |.  5E                  pop     esi
+        004B1A39   |.  76 29               jbe     short 0x4B1A64
+        004B1A3B   |.  3C 80               cmp     al, 0x80
+        004B1A3D   |.  72 08               jb      short 0x4B1A47
+        004B1A3F   |.  3C A0               cmp     al, 0xA0
+        004B1A41   |.  72 18               jb      short 0x4B1A5B
+        004B1A43   |.  3C E0               cmp     al, 0xE0
+        004B1A45   |.  73 14               jnb     short 0x4B1A5B
+    */
     SearchAllPatterns(
         L"76 ?? ?? 80 72 ?? ?? A0 72 ?? ?? E0 73 ??",
         ExeModule->DllBase,
