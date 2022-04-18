@@ -22,6 +22,7 @@ export const API = {
         _fileno         : new NativeFunction(Modules.ucrtbase.getExportByName('_fileno'), 'int32', ['pointer'], 'mscdecl'),
         _filelengthi64  : new NativeFunction(Modules.ucrtbase.getExportByName('_filelengthi64'), 'uint64', ['int32'], 'mscdecl'),
         strlen          : new NativeFunction(Modules.ucrtbase.getExportByName('strlen'), 'uint32', ['pointer'], 'mscdecl'),
+        malloc          : new NativeFunction(Modules.ucrtbase.getExportByName('malloc'), 'pointer', ['uint32'], 'mscdecl'),
     },
 
     WIN32: {

@@ -40,8 +40,8 @@ export class ED6FC extends EDBaseObject {
 
     static get dirCacheTable(): ED6DirEntry[] {
         if (!this._dirCacheTable) {
-            const table: ED6DirEntry[] = new Array(32).fill(null);
             const p = Addrs.ED6FC.DirCacheTable;
+            const table: ED6DirEntry[] = new Array(32).fill(null);
 
             table.forEach((_, index: number) => {
                 table[index] = new ED6DirEntry(p.add(index * Process.pointerSize).readPointer());

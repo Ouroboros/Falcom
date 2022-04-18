@@ -5,38 +5,63 @@ import { Interceptor2 } from "../utils";
 import { DWriteRenderer } from "../dwrite/renderer";
 import { Addrs } from "./addrs";
 import { ED6PseudoCompress } from "./utils";
-import {
-    ED6FC,
-} from "./types";
+import { ED6FC } from "./types";
+import ExeText from "./ed6fc.json"
 
 const TextEncoding = 'gbk';
 
-function bypassSteam() {
-    Memory.patchCode(Addrs.Steam.Init, 7, (code) => {
-        code.writeByteArray([0xE9, 0x81, 0x00, 0x00, 0x00, 0x90, 0x90]);
-    });
-
-    Memory.patchCode(Addrs.Steam.InitLang, 2, (code) => {
-        code.writeByteArray([0x33, 0xC3]);
-    });
-
+function hookSteamAndMisc() {
     const patches: any = [
-        [Addrs.Steam.Init,              [0xE9, 0x81, 0x00, 0x00, 0x00, 0x90, 0x90]],
-        [Addrs.Steam.InitLang,          [0x33, 0xC3]],
-        [Addrs.Steam.CheckCloudSave,    [0x83, 0xC4, 0x0C, 0xE9, 0x53, 0x04, 0x00, 0x00]],
-        [Addrs.Steam.CheckCloudSave2,   [0x83, 0xC4, 0x0C, 0xE9, 0xD4, 0x00, 0x00, 0x00]],
-        [Addrs.Steam.CheckCloudSave3,   [0x83, 0xC4, 0x0C, 0xE9, 0x28, 0x01, 0x00, 0x00]],
-        [Addrs.Steam.CheckCloudSave4,   [0x83, 0xC4, 0x10, 0xEB, 0x2B, 0x90]],
-        [Addrs.Steam.CheckAchievements, [0xC3]],
-        [Addrs.Steam.CheckAchievements2,[0xC3]],
-        [Addrs.Steam.RunCallbacks,      [0x8D, 0x80, 0x00, 0x00, 0x00, 0x00]],
+        [Addrs.Steam.Init,                  [0xE9, 0x81, 0x00, 0x00, 0x00, 0x90, 0x90]],
+        [Addrs.Steam.InitLang,              [0x33, 0xC3]],
+        [Addrs.Steam.Init,                  [0xE9, 0x81, 0x00, 0x00, 0x00, 0x90, 0x90]],
+        [Addrs.Steam.InitLang,              [0x33, 0xC3]],
+        [Addrs.Steam.CheckCloudSave,        [0x83, 0xC4, 0x0C, 0xE9, 0x53, 0x04, 0x00, 0x00]],
+        [Addrs.Steam.CheckCloudSave2,       [0x83, 0xC4, 0x0C, 0xE9, 0xD4, 0x00, 0x00, 0x00]],
+        [Addrs.Steam.CheckCloudSave3,       [0x83, 0xC4, 0x0C, 0xE9, 0x28, 0x01, 0x00, 0x00]],
+        [Addrs.Steam.CheckCloudSave4,       [0x83, 0xC4, 0x10, 0xEB, 0x2B, 0x90]],
+        [Addrs.Steam.CheckAchievements,     [0xC3]],
+        [Addrs.Steam.CheckAchievements2,    [0xC3]],
+        [Addrs.Steam.CheckAchievements3,    [0xC3]],
+        [Addrs.Steam.CheckAchievements4,    [0xC3]],
+        [Addrs.Steam.CheckAchievements5,    [0xC3]],
+        [Addrs.Steam.CheckAchievements6,    [0xC3]],
+        [Addrs.Steam.CheckAchievements7,    [0xC3]],
+        [Addrs.Steam.CheckAchievements8,    [0xC3]],
+        [Addrs.Steam.CheckAchievements9,    [0xC3]],
+        [Addrs.Steam.CheckAchievements10,   [0xC3]],
+        [Addrs.Steam.CheckAchievements11,   [0xC3]],
+        [Addrs.Steam.CheckAchievements12,   [0xC3]],
+        [Addrs.Steam.CheckAchievements13,   [0xC3]],
+        [Addrs.Steam.CheckAchievements14,   [0xC3]],
+        [Addrs.Steam.CheckAchievements15,   [0xC3]],
+        [Addrs.Steam.CheckAchievements16,   [0xC3]],
+        [Addrs.Steam.CheckAchievements17,   [0xC3]],
+        [Addrs.Steam.CheckAchievements18,   [0xC3]],
+        [Addrs.Steam.RunCallbacks,          [0x8D, 0x80, 0x00, 0x00, 0x00, 0x00]],
+
+        // 004B1D0A      /76 0F               jbe     short 0x4B1D1B
+        [Addrs.ED6FC.GetTextWidth,          [0x76, 0x0F]],
     ];
 
+    let min: NativePointer = NULL.sub(1);
+    let max: NativePointer = NULL;
+
     for (let p of patches) {
-        Memory.patchCode(p[0], p[1].length, (code) => {
-            code.writeByteArray(p[1]);
-        });
+        const addr = p[0] as NativePointer;
+        if (addr.compare(min) < 0) {
+            min = addr
+        }
+
+        if (addr.compare(max) > 0)
+            max = addr;
     }
+
+    Memory.patchCode(min, max.sub(min).add(0x30).toUInt32(), () => {
+        for (let p of patches) {
+            p[0].writeByteArray(p[1]);
+        }
+    });
 }
 
 function hookEncodingCheck() {
@@ -114,14 +139,16 @@ function hookEncodingCheck() {
         ['00 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 01 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 04 02 03', 0x62, [0x04, 0x04]],
     ];
 
-    const exe = Modules.ED6FC;
+    const textSection = utils.getSectionHeaders(Modules.ED6FC.base)[0];
+    const textStart = Modules.ED6FC.base.add(textSection.add(0x0C).readU32());
+    const textSize  = textSection.add(0x10).readU32();
 
     for (let p of patterns) {
         const pattern = p[0];
         const offset = p[1];
         const data = p[2];
 
-        for (let addr of Memory.scanSync(exe.base, exe.size, pattern)) {
+        for (let addr of Memory.scanSync(textStart, textSize, pattern)) {
             Memory.patchCode(addr.address.add(offset), 1, (code) => {
                 code.writeByteArray(data);
             })
@@ -130,32 +157,33 @@ function hookEncodingCheck() {
 
     Memory.patchCode(Addrs.ED6FC.JPFontSizeLimit, 1, (code) => {
         code.writeU8(0xEB);
-    })
+    });
 }
 
 function hookWindow() {
     const SWP_NOMOVE = 2;
     const SPI_GETWORKAREA = 0x30;
+    const SetWindowPos = new NativeCallback(
+        function(hWnd: NativePointer, hWndInsertAfter: NativePointer, X: number, Y: number, cx: number, cy: number, Flags: number): number {
+
+            if (Flags == SWP_NOMOVE) {
+                const workArea = Memory.alloc(0x10);
+
+                API.USER32.SystemParametersInfoW(SPI_GETWORKAREA, 0, workArea, 0);
+
+                X = ((workArea.add(8).readU32() - workArea.readU32()) - cx) / 2;
+                Y = ((workArea.add(12).readU32() - workArea.add(4).readU32()) - cy) / 2;
+
+                Flags = 0;
+            }
+
+            return API.USER32.SetWindowPos(hWnd, hWndInsertAfter, X, Y, cx, cy, Flags);
+        },
+        'uint32', ['pointer', 'pointer', 'int32', 'int32', 'int32', 'int32', 'uint32'], 'stdcall'
+    );
 
     Memory.patchCode(Addrs.IAT.SetWindowPos, Process.pointerSize, (code) => {
-        code.writePointer(new NativeCallback(
-            function(hWnd: NativePointer, hWndInsertAfter: NativePointer, X: number, Y: number, cx: number, cy: number, Flags: number): number {
-
-                if (Flags == SWP_NOMOVE) {
-                    const workArea = Memory.alloc(0x10);
-
-                    API.USER32.SystemParametersInfoW(SPI_GETWORKAREA, 0, workArea, 0);
-
-                    X = ((workArea.add(8).readU32() - workArea.readU32()) - cx) / 2;
-                    Y = ((workArea.add(12).readU32() - workArea.add(4).readU32()) - cy) / 2;
-
-                    Flags = 0;
-                }
-
-                return API.USER32.SetWindowPos(hWnd, hWndInsertAfter, X, Y, cx, cy, Flags);
-            },
-            'uint32', ['pointer', 'pointer', 'int32', 'int32', 'int32', 'int32', 'uint32'], 'stdcall'
-        ));
+        code.writePointer(SetWindowPos);
     });
 }
 
@@ -184,23 +212,6 @@ function hookFileIo() {
         'int32', ['pointer', 'uint32', 'uint32', 'uint32'],
         'mscdecl',
     );
-
-    // const DecompressData = Interceptor2.jmp(
-    //     Addrs.ED6FC.DecompressData,
-    //     function(): number {
-    //         const ctx = this.context as Ia32CpuContext;
-
-    //         const compressedPtr     = ctx.edi;
-    //         const uncompressedPtr   = ctx.ebx;
-    //         const compressed        = compressedPtr.readPointer();
-    //         const uncompressed      = uncompressedPtr.readPointer();
-
-    //         ctx.edi = compressedPtr;
-    //         ctx.ebx = uncompressedPtr;
-    //         return DecompressData();
-    //     },
-    //     'uint32', [],
-    // );
 }
 
 function hookTextRenderer() {
@@ -213,9 +224,12 @@ function hookTextRenderer() {
         0x80, 0x90, 0xA0, 0xC0,
     ];
 
-    const FontColorTable = [
-        0x0FFF, 0x0FC7, 0x0F52, 0x08CF, 0x0FB4, 0x08FA, 0x0888, 0x0FEE, 0x0853, 0x0333,
-        0x0CA8, 0x0FDB, 0x0ACE, 0x0CFF, 0x056B, 0x0632, 0x0135, 0x0357, 0x0BBB,
+    const TextColorTable = [
+        0x0FFF, 0x0FC7, 0x0F52, 0x08CF,
+        0x0FB4, 0x08FA, 0x0888, 0x0FEE,
+        0x0853, 0x0333, 0x0CA8, 0x0FDB,
+        0x0ACE, 0x0CFF, 0x056B, 0x0632,
+        0x0135, 0x0357, 0x0BBB,
     ];
 
     const asciiRenderer: DWriteRenderer[] = new Array(FontSizeTable.length);
@@ -262,7 +276,7 @@ function hookTextRenderer() {
         let   width         = 0;
         const fontSizeIndex = ED6FC.fontSizeIndex;
         const fontSize      = FontSizeTable[fontSizeIndex];
-        const color         = FontColorTable[colorIndex];
+        const color         = TextColorTable[colorIndex >= TextColorTable.length ? 0 : colorIndex];
         const mbcs          = mbcsRenderer[fontSizeIndex];
         const ascii         = asciiRenderer[fontSizeIndex];
         const sjis          = sjisRenderer[fontSizeIndex];
@@ -270,7 +284,7 @@ function hookTextRenderer() {
         for (let ch of s) {
             const codePoint = ch.codePointAt(0)!;
 
-            if (ch == ' ') {
+            if (codePoint == 0x20) {
                 width = fontSize / 2;
                 text = text.add(1);
 
@@ -313,9 +327,21 @@ function hookTextRenderer() {
 }
 
 export function main() {
-    bypassSteam();
+    console.log('patchModuleText');
+    utils.patchModuleText(Modules.ED6FC, ExeText);
+
+    console.log('bypassSteam');
+    hookSteamAndMisc();
+
+    console.log('hookEncodingCheck');
     hookEncodingCheck();
+
+    console.log('hookWindow');
     hookWindow();
+
+    console.log('hookFileIo');
     hookFileIo();
+
+    console.log('hookTextRenderer');
     hookTextRenderer();
 }

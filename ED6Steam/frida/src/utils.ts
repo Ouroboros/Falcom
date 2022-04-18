@@ -193,10 +193,22 @@ export function getTLS(): TLS {
     return tls[tid];
 }
 
-export function getGameVersion(): string {
-    const exe = Process.enumerateModules()[0].base;
+export function getNtHeaders(base?: NativePointer): NativePointer {
+    base = base ? base : Process.enumerateModules()[0].base;
+    return base.add(base.add(0x3C).readU32());
+}
 
-    const header = exe.add(exe.add(0x3C).readU32());
+export function getSectionHeaders(base?: NativePointer): NativePointer[] {
+    const header = getNtHeaders(base);
+    const numberOfSections = header.add(6).readU16();
+    const sizeOfOptionalHeader = header.add(0x14).readU16();
+    const sectionHeader = header.add(0x18 + sizeOfOptionalHeader);
+
+    return new Array<NativePointer>(numberOfSections).fill(NULL).map((_, index) => {return sectionHeader.add(index * 0x28)});
+}
+
+export function getGameVersion(): string {
+    const header = getNtHeaders();
     const timestamp = header.add(8).readU32();
 
     switch (timestamp) {
@@ -244,4 +256,67 @@ export function loadPatchFile(path: string): ArrayBuffer | null {
     let data = readFileContent(patchPath);
 
     return data;
+}
+
+interface IModuleText {
+    rva : string;
+    text: string;
+    // ptr : NativePointer;
+}
+
+export function patchModuleText(module: Module, text: IModuleText[]) {
+    const sections = getSectionHeaders(module.base);
+    const textSection = sections[0];
+    const dotData = Buffer.from([0x2E, 0x64, 0x61, 0x74, 0x61, 0x00]);
+
+    const dataSection = sections.filter((s) => {
+        return Buffer.from(s.readByteArray(6)!).equals(dotData);
+    })[0];
+
+    const textStart = module.base.add(textSection.add(0x0C).readU32());
+    const textSize  = textSection.add(0x10).readU32();
+    const dataStart = dataSection ? module.base.add(dataSection.add(0x0C).readU32()) : undefined;
+    const dataSize  = dataSection ? dataSection.add(0x10).readU32() : undefined;
+
+    for (let e of text) {
+        const va = module.base.add(parseInt(e.rva, 16));
+        const pattern = new Array<String>(Process.pointerSize).fill('').map((_, index) => {return va.shr(index * 8).and(0xFF).toString(16).padStart(2, '0')}).join(' ');
+
+        let ptr: NativePointer;
+
+        function getptr() {
+            if (ptr !== undefined)
+                return ptr;
+
+            ptr = API.crt.malloc(e.text.length * 2 + 1);
+            ptr.writeAnsiString(e.text);
+            return ptr;
+        }
+
+        for (let addr of Memory.scanSync(textStart, textSize, pattern)) {
+            const address = addr.address;
+
+            if ((address.sub(1).readU8() & 0xF0) == 0xB0 ||
+                 address.sub(1).readU8() == 0x68 ||
+                 address.sub(4).readU16() == 0x44C7
+            ) {
+                // console.log(`patch text: ${address} ${e.text} @ ${va} @ ${pattern}`);
+
+                Memory.patchCode(address, addr.size, (code) => {
+                    code.writePointer(getptr());
+                });
+            }
+        }
+
+        if (!dataStart || !dataSize)
+            continue;
+
+        for (let addr of Memory.scanSync(dataStart, dataSize, pattern)) {
+            const address = addr.address;
+
+            // console.log(`patch data: ${address} ${e.text} @ ${va} @ ${pattern}`);
+
+            address.writePointer(getptr());
+        }
+    }
 }
