@@ -1,8 +1,6 @@
 import { Modules } from "../modules";
 
 export const Addrs = {
-    // api
-
     ED6FC: {
         SharedInstance  : NULL,
 
@@ -14,7 +12,7 @@ export const Addrs = {
 
         LoadFileFromDAT : Modules.ED6FC.base.add(0x062090),         // ED6_DT%02x.DAT
         DecompressData  : Modules.ED6FC.base.add(0x064FC0),
-        GetGlyphsBitmap : Modules.ED6FC.base.add(0x0B1D90),         // 8B 55 14 83 EC 34 83 FA 13
+        GetGlyphsBitmap : Modules.ED6FC.base.add(0x0B1D90),         // cmp     dword ptr [0x185E388], 0x2BC
         DrawTalkText    : Modules.ED6FC.base.add(0x0809B0),         // 8B E9 0F B6 08 C1 E1 08 0B CA 81 F9 40 81 00 00
         DrawDialogText  : Modules.ED6FC.base.add(0x080A00),         // 8B F8 80 FB 20
     },
@@ -54,11 +52,5 @@ export const Addrs = {
 
 export const Offsets = {
     ED6FC: {
-        t_name              : 0x20D9C0,
-        CharacterManager    : 0x1CF0,
-        CraftList           : 0x359AB8,
-        MagicList           : 0x35A0B8,
-        SBreakList          : 0x35AE98,
-        BattleStyleList     : 0x35AE38,
     },
 };

@@ -24,19 +24,19 @@ export class ED6FC extends EDBaseObject {
     private static _sharedInstance: ED6FC;
     private static _dirCacheTable: ED6DirEntry[];
 
-    static get sharedInstance(): ED6FC {
-        if (this._sharedInstance)
-            return this._sharedInstance;
+    // static get sharedInstance(): ED6FC {
+    //     if (this._sharedInstance)
+    //         return this._sharedInstance;
 
-        const p = Addrs.ED6FC.SharedInstance.readPointer();
+    //     const p = Addrs.ED6FC.SharedInstance.readPointer();
 
-        if (p.isNull()) {
-            throw new Error('ED6FC null');
-        }
+    //     if (p.isNull()) {
+    //         throw new Error('ED6FC null');
+    //     }
 
-        this._sharedInstance = new ED6FC(p);
-        return this._sharedInstance;
-    }
+    //     this._sharedInstance = new ED6FC(p);
+    //     return this._sharedInstance;
+    // }
 
     static get dirCacheTable(): ED6DirEntry[] {
         if (!this._dirCacheTable) {

@@ -213,6 +213,7 @@ export function getGameVersion(): string {
 
     switch (timestamp) {
         case 0x590BDEA4: return 'ed6fc';
+        case 0x6217BCDE: return 'ed6fc_dx9';
     }
 
     throw new Error('unknown game version');
