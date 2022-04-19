@@ -6,7 +6,7 @@ import { DWriteRenderer } from "../dwrite/renderer";
 import { Addrs } from "./addrs";
 import { ED6PseudoCompress } from "./utils";
 import { ED6FC } from "./types";
-import ExeText from "./ed6fc.json"
+import ExeText from "./ed6fc.text.json"
 
 const TextEncoding = 'gbk';
 
@@ -327,7 +327,7 @@ function hookTextRenderer() {
 }
 
 export function main() {
-    console.log('patchModuleText');
+    console.log('fc patchModuleText');
     utils.patchModuleText(Modules.ED6FC, ExeText);
 
     console.log('bypassSteam');
