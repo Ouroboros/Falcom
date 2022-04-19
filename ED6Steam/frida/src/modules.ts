@@ -18,7 +18,10 @@ export const API = {
         fopen           : new NativeFunction(Modules.ucrtbase.getExportByName('fopen'), 'pointer', ['pointer', 'pointer'], 'mscdecl'),
         wfopen          : new NativeFunction(Modules.ucrtbase.getExportByName('_wfopen'), 'pointer', ['pointer', 'pointer'], 'mscdecl'),
         fread           : new NativeFunction(Modules.ucrtbase.getExportByName('fread'), 'size_t', ['pointer', 'size_t', 'size_t', 'pointer'], 'mscdecl'),
+        fwrite          : new NativeFunction(Modules.ucrtbase.getExportByName('fwrite'), 'size_t', ['pointer', 'size_t', 'size_t', 'pointer'], 'mscdecl'),
         fclose          : new NativeFunction(Modules.ucrtbase.getExportByName('fclose'), 'void', ['pointer'], 'mscdecl'),
+        _fseeki64       : new NativeFunction(Modules.ucrtbase.getExportByName('_fseeki64'), 'int32', ['pointer', 'int64', 'int32'], 'mscdecl'),
+        fseek           : new NativeFunction(Modules.ucrtbase.getExportByName('fseek'), 'int32', ['pointer', 'int32', 'int32'], 'mscdecl'),
         _fileno         : new NativeFunction(Modules.ucrtbase.getExportByName('_fileno'), 'int32', ['pointer'], 'mscdecl'),
         _filelengthi64  : new NativeFunction(Modules.ucrtbase.getExportByName('_filelengthi64'), 'uint64', ['int32'], 'mscdecl'),
         strlen          : new NativeFunction(Modules.ucrtbase.getExportByName('strlen'), 'uint32', ['pointer'], 'mscdecl'),
@@ -26,6 +29,7 @@ export const API = {
     },
 
     WIN32: {
+        CreateFileW         : new NativeFunction(Modules.KERNEL32.getExportByName('CreateFileW'), 'pointer', ['pointer', 'uint32', 'uint32', 'pointer', 'uint32', 'uint32', 'pointer'], 'stdcall'),
         GetFileAttributesA  : new NativeFunction(Modules.KERNEL32.getExportByName('GetFileAttributesA'), 'uint32', ['pointer'], 'stdcall'),
         Sleep               : new NativeFunction(Modules.KERNEL32.getExportByName('Sleep'), 'void', ['uint32'], 'stdcall'),
         MultiByteToWideChar : new NativeFunction(Modules.KERNEL32.getExportByName('MultiByteToWideChar'), 'int32', ['uint32', 'uint32', 'pointer', 'int32', 'pointer', 'int32'], 'stdcall'),
