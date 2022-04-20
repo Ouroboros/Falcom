@@ -3,6 +3,7 @@ import * as utils from "../utils";
 import * as path from "path";
 import { Interceptor2 } from "../utils";
 import { DWriteRenderer } from "../dwrite/renderer";
+import { DirectSound, DirectSoundBuffer } from "../dsound/dsound";
 import { Addrs } from "./addrs";
 import { ED6PseudoCompress } from "./utils";
 import { ED6FC } from "./types";
@@ -13,7 +14,7 @@ const TextEncoding = 'gbk';
 function hookSteamAndMisc() {
     const patches: any = [
         // _set_se_translator
-        [Addrs.ED6FC.ExceptionHandler,      [0xEB]],
+        // [Addrs.ED6FC.ExceptionHandler,      [0xEB]],
 
         // 004AEF09      /76 3E               jbe     short 0x4AEF49
         [Addrs.ED6FC.GetTextWidth,          [0x05]],
@@ -379,6 +380,124 @@ function hookTextRenderer() {
     );
 }
 
+function hookTalk() {
+    const gDSound = ptr(0x7A527C);
+    const wav = utils.readFileContent('E:\\Game\\Steam\\steamapps\\common\\Trails in the Sky FC\\ED6_DT08\\ch0010000001.WAV')!;
+    const wave = wav.unwrap().add(0x4E);
+    const waveSize = 0x50880;
+
+    console.log(`wave: ${wave}`);
+
+    let ds: DirectSound | undefined = undefined;
+    let sb: DirectSoundBuffer | undefined = undefined;
+
+    function playVoice() {
+        if (ds === undefined)
+            ds = new DirectSound(gDSound.readPointer());
+
+        onTalkEnd();
+
+        sb = ds.CreateSoundBuffer({
+            flags       : 0x82,
+            bufferBytes : waveSize,
+            wfxFormat   : wav.unwrap().add(0x14),
+        });
+
+        if (!sb)
+            return;
+
+        console.log(`SB: ${sb.pointer}`);
+
+        const dsb = sb.lock(ptr(0), ptr(waveSize), 0);
+
+        if (!dsb) {
+            onTalkEnd();
+            return;
+        }
+
+        dsb.audioPtr1.writeByteArray(wave.readByteArray(dsb.audioBytes1.toInt32())!);
+        const audioPtr2 = dsb.audioPtr2;
+        if (!audioPtr2.isNull()) {
+            audioPtr2.writeByteArray(wave.add(dsb.audioBytes1.toUInt32()).readByteArray(dsb.audioBytes2.toUInt32())!);
+        }
+
+        sb.unlock(dsb);
+        sb.setVolume(ED6FC.seVolume);
+
+        sb.play(0);
+    }
+
+    function onTalkEnd() {
+        if (sb !== undefined) {
+            sb.stop();
+            sb.release();
+            sb = undefined;
+        }
+    }
+
+    // const scena_op_5b = Interceptor2.jmp(
+    //     ptr(0x4A3FF0),
+    //     function(thiz: NativePointer, context: NativePointer): number {
+    //         console.log('ChrTalk');
+
+    //         return scena_op_5b(thiz, context);
+    //     },
+    //     'int32', ['pointer', 'pointer'], 'thiscall',
+    // );
+
+    Interceptor.attach(ptr(0x4E1690), function() {
+            const ctx = this.context as Ia32CpuContext;
+            const text = ctx.esi;
+            const ch = text.readU8();
+
+            switch (ch) {
+                case 0x02:
+                    playVoice();
+                    break;
+
+                case 0x03:
+                    onTalkEnd();
+                    break;
+            }
+        },
+    );
+
+    const scena_op_58 = Interceptor2.jmp(
+        ptr(0x4A3DD0),
+        function(thiz: NativePointer, context: NativePointer): number {
+            const closed = scena_op_58(thiz, context) & 0xFF;
+
+            if (closed != 0) {
+                onTalkEnd();
+            }
+
+            return closed;
+        },
+        'int32', ['pointer', 'pointer'], 'thiscall',
+    );
+
+    const scena_op_53 = Interceptor2.jmp(
+        ptr(0x4A3A40),
+        function(thiz: NativePointer, context: NativePointer): number {
+            const closed = scena_op_53(thiz, context) & 0xFF;
+            console.log(`TalkEnd: ${closed}`);
+            onTalkEnd();
+            return closed;
+        },
+        'int32', ['pointer', 'pointer'], 'thiscall',
+    );
+
+    // const clearTextBox = Interceptor2.jmp(
+    //     ptr(0x4E1E20),
+    //     function(thiz: NativePointer) {
+    //         console.log('clearTextBox');
+    //         onTalkEnd();
+    //         clearTextBox(thiz);
+    //     },
+    //     'void', ['pointer'], 'thiscall',
+    // );
+}
+
 function dump() {
     const fp = API.crt.wfopen(utils.UTF16('ed6_win_dump'), utils.UTF16('wb'));
     API.crt.fwrite(Modules.ED6FC.base, Modules.ED6FC.size, 1, fp);
@@ -386,6 +505,8 @@ function dump() {
 }
 
 export function main() {
+    // (new NativeFunction(Process.getModuleByName('KERNEL32.dll').getExportByName('AllocConsole'), 'bool', []))();
+
     console.log('fc dx9 patchModuleText');
     utils.patchModuleText(Modules.ED6FC, ExeText);
 
@@ -403,4 +524,7 @@ export function main() {
 
     console.log('hookTextRenderer');
     hookTextRenderer();
+
+    // console.log('hookTalk');
+    // hookTalk();
 }

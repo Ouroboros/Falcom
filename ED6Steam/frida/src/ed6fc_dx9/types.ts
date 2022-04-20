@@ -41,4 +41,8 @@ export class ED6FC extends EDBaseObject {
     static get fontSizeIndex(): number {
         return Addrs.ED6FC.FontSizeIndex.readU32();
     }
+
+    static get seVolume(): number {
+        return Addrs.ED6FC.SEVolumeTable.add(Addrs.ED6FC.SEVolumeIndex.readU32() * 4).readU32();
+    }
 }

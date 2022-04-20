@@ -29,11 +29,11 @@ export const API = {
     },
 
     WIN32: {
-        CreateFileW         : new NativeFunction(Modules.KERNEL32.getExportByName('CreateFileW'), 'pointer', ['pointer', 'uint32', 'uint32', 'pointer', 'uint32', 'uint32', 'pointer'], 'stdcall'),
-        GetFileAttributesA  : new NativeFunction(Modules.KERNEL32.getExportByName('GetFileAttributesA'), 'uint32', ['pointer'], 'stdcall'),
-        Sleep               : new NativeFunction(Modules.KERNEL32.getExportByName('Sleep'), 'void', ['uint32'], 'stdcall'),
-        MultiByteToWideChar : new NativeFunction(Modules.KERNEL32.getExportByName('MultiByteToWideChar'), 'int32', ['uint32', 'uint32', 'pointer', 'int32', 'pointer', 'int32'], 'stdcall'),
-        // LoadLibraryW        : new NativeFunction(Modules.KERNEL32.getExportByName('LoadLibraryW'), 'pointer', ['pointer'], 'stdcall'),
+        CreateFileW                 : new NativeFunction(Modules.KERNEL32.getExportByName('CreateFileW'), 'pointer', ['pointer', 'uint32', 'uint32', 'pointer', 'uint32', 'uint32', 'pointer'], 'stdcall'),
+        GetFileAttributesA          : new NativeFunction(Modules.KERNEL32.getExportByName('GetFileAttributesA'), 'uint32', ['pointer'], 'stdcall'),
+        Sleep                       : new NativeFunction(Modules.KERNEL32.getExportByName('Sleep'), 'void', ['uint32'], 'stdcall'),
+        MultiByteToWideChar         : new NativeFunction(Modules.KERNEL32.getExportByName('MultiByteToWideChar'), 'int32', ['uint32', 'uint32', 'pointer', 'int32', 'pointer', 'int32'], 'stdcall'),
+        AddVectoredExceptionHandler : new NativeFunction(Modules.KERNEL32.getExportByName('AddVectoredExceptionHandler'), 'pointer', ['uint32', 'pointer'], 'stdcall'),
     },
 
     USER32: {
