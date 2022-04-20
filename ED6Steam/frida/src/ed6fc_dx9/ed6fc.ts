@@ -382,11 +382,8 @@ function hookTextRenderer() {
 
 function hookTalk() {
     const gDSound = ptr(0x7A527C);
-    const wav = utils.readFileContent('E:\\Game\\Steam\\steamapps\\common\\Trails in the Sky FC\\ED6_DT08\\ch0010000001.WAV')!;
-    const wave = wav.unwrap().add(0x4E);
-    const waveSize = 0x50880;
 
-    console.log(`wave: ${wave}`);
+    // console.log(`wave: ${wave}`);
 
     let ds: DirectSound | undefined = undefined;
     let sb: DirectSoundBuffer | undefined = undefined;
@@ -396,6 +393,10 @@ function hookTalk() {
             ds = new DirectSound(gDSound.readPointer());
 
         onTalkEnd();
+
+        const wav = utils.readFileContent('E:\\Game\\Steam\\steamapps\\common\\Trails in the Sky FC\\ED6_DT08\\ch0010000001.WAV')!;
+        const wave = wav.ptr.add(0x4E);
+        const waveSize = 0x50880;
 
         sb = ds.CreateSoundBuffer({
             flags       : 0x82,
@@ -428,11 +429,9 @@ function hookTalk() {
     }
 
     function onTalkEnd() {
-        if (sb !== undefined) {
-            sb.stop();
-            sb.release();
-            sb = undefined;
-        }
+        sb?.stop();
+        sb?.release();
+        sb = undefined;
     }
 
     // const scena_op_5b = Interceptor2.jmp(
@@ -445,13 +444,20 @@ function hookTalk() {
     //     'int32', ['pointer', 'pointer'], 'thiscall',
     // );
 
-    Interceptor.attach(ptr(0x4E1690), function() {
-            const ctx = this.context as Ia32CpuContext;
-            const text = ctx.esi;
+    const showTalkText = Interceptor2.jmp(
+        ptr(0x4E1550),
+        function(thiz: NativePointer, text: NativePointer, arg3: number, arg4: number): NativePointer {
             const ch = text.readU8();
 
+            utils.log(`char: ${ch.toString(16).padStart(2, '0')}`);
+
             switch (ch) {
+                case 0x00:
+                    onTalkEnd();
+                    break;
+
                 case 0x02:
+                    utils.log('playVoice');
                     playVoice();
                     break;
 
@@ -459,33 +465,54 @@ function hookTalk() {
                     onTalkEnd();
                     break;
             }
+
+            return showTalkText(thiz, text, arg3, arg4);
         },
+        'pointer', ['pointer', 'pointer', 'uint32', 'uint32'], 'thiscall',
     );
 
-    const scena_op_58 = Interceptor2.jmp(
-        ptr(0x4A3DD0),
-        function(thiz: NativePointer, context: NativePointer): number {
-            const closed = scena_op_58(thiz, context) & 0xFF;
+    // Interceptor.attach(ptr(0x4E1690), function() {
+    //         const ctx = this.context as Ia32CpuContext;
+    //         const text = ctx.esi;
+    //         const ch = text.readU8();
 
-            if (closed != 0) {
-                onTalkEnd();
-            }
+    //         switch (ch) {
+    //             case 0x02:
+    //                 playVoice();
+    //                 break;
 
-            return closed;
-        },
-        'int32', ['pointer', 'pointer'], 'thiscall',
-    );
+    //             case 0x03:
+    //                 onTalkEnd();
+    //                 break;
+    //         }
+    //     },
+    // );
 
-    const scena_op_53 = Interceptor2.jmp(
-        ptr(0x4A3A40),
-        function(thiz: NativePointer, context: NativePointer): number {
-            const closed = scena_op_53(thiz, context) & 0xFF;
-            console.log(`TalkEnd: ${closed}`);
-            onTalkEnd();
-            return closed;
-        },
-        'int32', ['pointer', 'pointer'], 'thiscall',
-    );
+    // const scena_op_58 = Interceptor2.jmp(
+    //     ptr(0x4A3DD0),
+    //     function(thiz: NativePointer, context: NativePointer): number {
+    //         const closed = scena_op_58(thiz, context) & 0xFF;
+
+    //         utils.log(`scena_op_58: ${closed}`);
+    //         if (closed != 0) {
+    //             onTalkEnd();
+    //         }
+
+    //         return closed;
+    //     },
+    //     'int32', ['pointer', 'pointer'], 'thiscall',
+    // );
+
+    // const scena_op_53 = Interceptor2.jmp(
+    //     ptr(0x4A3A40),
+    //     function(thiz: NativePointer, context: NativePointer): number {
+    //         const closed = scena_op_53(thiz, context) & 0xFF;
+    //         console.log(`TalkEnd: ${closed}`);
+    //         onTalkEnd();
+    //         return closed;
+    //     },
+    //     'int32', ['pointer', 'pointer'], 'thiscall',
+    // );
 
     // const clearTextBox = Interceptor2.jmp(
     //     ptr(0x4E1E20),
@@ -525,6 +552,8 @@ export function main() {
     console.log('hookTextRenderer');
     hookTextRenderer();
 
-    // console.log('hookTalk');
-    // hookTalk();
+    console.log('hookTalk');
+    hookTalk();
+
+    console.log('done');
 }

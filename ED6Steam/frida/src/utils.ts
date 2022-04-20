@@ -121,10 +121,14 @@ export function arrayToBytes(data: number[]): ArrayBuffer {
     return buf;
 }
 
-export function ptrToBytes(addr: NativePointer, size: number): ArrayBuffer {
+interface ArrayBuffer2 extends ArrayBuffer {
+    ptr: NativePointer;
+}
+
+export function ptrToBytes(addr: NativePointer, size: number): ArrayBuffer2 {
     const buf = ArrayBuffer.wrap(addr, size);
     (buf as any).ptr = addr;
-    return buf;
+    return buf as ArrayBuffer2;
 }
 
 export function UTF16(s: string): NativePointer {
@@ -155,8 +159,8 @@ export function readMBCS(p: NativePointer, encoding: string, length?: number): s
     return wchar.readUtf16String()!;
 }
 
-export function readFileContent(path: string): ArrayBuffer | null {
-    const fp = API.crt.fopen(UTF8(path), UTF8('rb')) as NativePointer;
+export function readFileContent(path: string): ArrayBuffer2 | null {
+    const fp = API.crt.wfopen(UTF16(path), UTF16('rb')) as NativePointer;
     if (fp.isNull()) {
         return null;
     }
