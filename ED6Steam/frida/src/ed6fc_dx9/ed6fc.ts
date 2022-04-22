@@ -1,13 +1,15 @@
 import { API, Modules } from "../modules";
 import * as utils from "../utils";
 import * as path from "path";
-import { Interceptor2 } from "../utils";
+import { Interceptor2, ArrayBuffer2 } from "../utils";
 import { DWriteRenderer } from "../dwrite/renderer";
+import { AT9Decoder, AT9DecodeResult } from "../codec/at9";
 import { DirectSound, DirectSoundBuffer } from "../dsound/dsound";
 import { Addrs } from "./addrs";
 import { ED6PseudoCompress } from "./utils";
 import { ED6FC } from "./types";
 import ExeText from "./ed6fc.text.json"
+import { VoiceIdOffset, VoiceIdMapping } from "./voice_id_map"
 
 const TextEncoding = 'gbk';
 
@@ -388,47 +390,80 @@ function hookTalk() {
     let ds: DirectSound | undefined = undefined;
     let sb: DirectSoundBuffer | undefined = undefined;
 
-    function playVoice() {
-        if (ds === undefined)
-            ds = new DirectSound(gDSound.readPointer());
+    function loadVoice(voiceId: string): AT9DecodeResult | undefined {
+        const id = VoiceIdMapping[parseInt(voiceId, 10) + VoiceIdOffset[voiceId.length]];
+        const voicePath = path.join(Modules.ExePath, 'voice', 'at9', `ch${id.toString().padStart(10, '0')}.at9`);
 
-        onTalkEnd();
+        console.log(`voice path: ${voicePath}`);
 
-        const wav = utils.readFileContent('E:\\Game\\Steam\\steamapps\\common\\Trails in the Sky FC\\ED6_DT08\\ch0010000001.WAV')!;
-        const wave = wav.ptr.add(0x4E);
-        const waveSize = 0x50880;
+        // const voicePath2 = 'E:\\Game\\Steam\\steamapps\\common\\Trails in the Sky FC\\DAT\\talk\\ch0081040004.at9';
+        const at9 = utils.readFileContent(voicePath);
 
-        sb = ds.CreateSoundBuffer({
-            flags       : 0x82,
-            bufferBytes : waveSize,
-            wfxFormat   : wav.unwrap().add(0x14),
-        });
+        if (!at9) {
+            console.log('wtf');
+            return undefined;
+        }
 
-        if (!sb)
+        const ret = AT9Decoder.decode(at9)
+        if (!ret)
+            return undefined;
+
+        return ret;
+    }
+
+    function playVoice(voiceId: string) {
+        console.log('playVoice');
+        if (gDSound.readPointer().isNull())
             return;
 
-        console.log(`SB: ${sb.pointer}`);
+        if (ds === undefined) {
+            ds = new DirectSound(gDSound.readPointer());
+        }
 
-        const dsb = sb.lock(ptr(0), ptr(waveSize), 0);
+        stopVoice();
 
-        if (!dsb) {
-            onTalkEnd();
+        const voice = loadVoice(voiceId);
+
+        if (!voice) {
+            console.log('invalid voice id');
             return;
         }
 
-        dsb.audioPtr1.writeByteArray(wave.readByteArray(dsb.audioBytes1.toInt32())!);
+        sb = ds.CreateSoundBuffer({
+            flags       : 0x82,
+            bufferBytes : voice.dataSize,
+            wfxFormat   : voice.wfxFormat,
+        });
+
+        if (!sb) {
+            console.log('create sb failed');
+            return;
+        }
+
+        const dsb = sb.lock(ptr(0), ptr(voice.dataSize), 0);
+
+        if (!dsb) {
+            console.log('dsb lock failed');
+            stopVoice();
+            return;
+        }
+
+        dsb.audioPtr1.writeByteArray(voice.data.readByteArray(dsb.audioBytes1.toInt32())!);
         const audioPtr2 = dsb.audioPtr2;
         if (!audioPtr2.isNull()) {
-            audioPtr2.writeByteArray(wave.add(dsb.audioBytes1.toUInt32()).readByteArray(dsb.audioBytes2.toUInt32())!);
+            audioPtr2.writeByteArray(voice.data.add(dsb.audioBytes1.toUInt32()).readByteArray(dsb.audioBytes2.toUInt32())!);
         }
 
         sb.unlock(dsb);
         sb.setVolume(ED6FC.seVolume);
 
         sb.play(0);
+
+        console.log('success');
     }
 
-    function onTalkEnd() {
+    function stopVoice() {
+        console.log('stopVoice');
         sb?.stop();
         sb?.release();
         sb = undefined;
@@ -444,26 +479,74 @@ function hookTalk() {
     //     'int32', ['pointer', 'pointer'], 'thiscall',
     // );
 
+    let lastTerminator = NULL;
+
     const showTalkText = Interceptor2.jmp(
-        ptr(0x4E1550),
+        Addrs.ED6FC.ShowTalkText,
         function(thiz: NativePointer, text: NativePointer, arg3: number, arg4: number): NativePointer {
-            const ch = text.readU8();
+            let p = text;
 
-            utils.log(`char: ${ch.toString(16).padStart(2, '0')}`);
+            // console.log(`** ShowTalkText(${(this.context as Ia32CpuContext).esp.readPointer()}) ** ${text}: "${utils.readMBCS(text, TextEncoding)!}"`);
 
-            switch (ch) {
+            const firstCh = p.readU8();
+
+            switch (firstCh) {
                 case 0x00:
-                    onTalkEnd();
-                    break;
-
-                case 0x02:
-                    utils.log('playVoice');
-                    playVoice();
-                    break;
+                    // utils.log(`firstCh: 0x${firstCh.toString(16).padStart(2, '0')}`);
+                    if (!p.equals(lastTerminator)) {
+                        stopVoice();
+                        lastTerminator = p;
+                    }
+                    return showTalkText(thiz, text, arg3, arg4);
+                    // break;
 
                 case 0x03:
-                    onTalkEnd();
+                    stopVoice();
                     break;
+            }
+
+            for (;; p = p.add(1)) {
+                const ch = p.readU8();
+
+                // utils.log(`char: 0x${ch.toString(16).padStart(2, '0')}`);
+
+                switch (ch) {
+                    default:
+                        break;
+
+                    case 0x00:
+                    case 0x02:
+                        break;
+
+                    case 0x03:
+                        continue;
+
+                    case 0x23:  // #
+                    {
+                        const start = p.add(1);
+
+                        for (p = start;; p = p.add(1)) {
+                            const ch = p.readU8();
+                            if (ch < 0x30 || ch > 0x39)
+                                break;
+                        }
+
+                        if (p.readU8() != 0x76) {
+                            // #12345v
+                            continue;
+                        }
+
+                        const voiceId = Buffer.from(start.readByteArray(p.sub(start).toUInt32())!).toString('ascii');
+
+                        console.log(`voiceId: ${voiceId}`);
+
+                        playVoice(voiceId);
+
+                        break;
+                    }
+                }
+
+                break;
             }
 
             return showTalkText(thiz, text, arg3, arg4);

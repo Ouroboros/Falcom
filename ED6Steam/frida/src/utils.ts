@@ -121,7 +121,7 @@ export function arrayToBytes(data: number[]): ArrayBuffer {
     return buf;
 }
 
-interface ArrayBuffer2 extends ArrayBuffer {
+export interface ArrayBuffer2 extends ArrayBuffer {
     ptr: NativePointer;
 }
 

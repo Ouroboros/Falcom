@@ -16,6 +16,7 @@ export const Addrs = {
         LoadFileFromDAT     : Modules.ED6FC.base.add(0x077180),         // ED6_DT%02x.DAT
         GetGlyphsBitmap     : Modules.ED6FC.base.add(0x0AF0A0),         // cmp     dword ptr [0x185E388], 0x2BC
         DrawTalkText        : Modules.ED6FC.base.add(0x0DEF80),         // 04 04 04 04 02 03
+        ShowTalkText        : Modules.ED6FC.base.add(0x0E1550),
     },
 
     IAT: {
