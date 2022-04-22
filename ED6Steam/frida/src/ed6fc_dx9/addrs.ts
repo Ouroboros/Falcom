@@ -5,6 +5,7 @@ export const Addrs = {
         DirCacheTable       : Modules.ED6FC.base.add(0x39B010),         // ED6_DT%02x.dir
         SEVolumeTable       : Modules.ED6FC.base.add(0x13B670),
         SEVolumeIndex       : Modules.ED6FC.base.add(0x158D1C),
+        DirectSound         : Modules.ED6FC.base.add(0x3A527C),
 
         FontSizeIndex       : Modules.ED6FC.base.add(0x141E094),
         JPFontSizeLimit     : Modules.ED6FC.base.add(0x0B37CB),         // font192._da

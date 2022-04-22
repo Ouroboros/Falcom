@@ -383,10 +383,6 @@ function hookTextRenderer() {
 }
 
 function hookTalk() {
-    const gDSound = ptr(0x7A527C);
-
-    // console.log(`wave: ${wave}`);
-
     let ds: DirectSound | undefined = undefined;
     let sb: DirectSoundBuffer | undefined = undefined;
 
@@ -413,11 +409,11 @@ function hookTalk() {
 
     function playVoice(voiceId: string) {
         console.log('playVoice');
-        if (gDSound.readPointer().isNull())
+        if (Addrs.ED6FC.DirectSound.readPointer().isNull())
             return;
 
         if (ds === undefined) {
-            ds = new DirectSound(gDSound.readPointer());
+            ds = new DirectSound(Addrs.ED6FC.DirectSound.readPointer());
         }
 
         stopVoice();
