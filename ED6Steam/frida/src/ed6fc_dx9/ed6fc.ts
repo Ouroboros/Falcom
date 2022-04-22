@@ -388,7 +388,10 @@ function hookTalk() {
 
     function loadVoice(voiceId: string): AT9DecodeResult | undefined {
         const id = VoiceIdMapping[parseInt(voiceId, 10) + VoiceIdOffset[voiceId.length]];
-        const voicePath = path.join(Modules.ExePath, 'voice', 'at9', `ch${id.toString().padStart(10, '0')}.at9`);
+        const idstr = id.toString().padStart(10, '0');
+
+        // ch 001 000 0001
+        const voicePath = path.join(Modules.ExePath, 'voice', 'at9', `${idstr.slice(3, 6)}`, `ch${idstr}.at9`);
 
         console.log(`voice path: ${voicePath}`);
 
