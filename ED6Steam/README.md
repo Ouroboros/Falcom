@@ -1,6 +1,8 @@
 空之轨迹 Steam 版汉化模块
 =============
 
+## [主模块](https://github.com/Ouroboros/Falcom/tree/master/ED6Steam/frida)
+
 ## 依赖
 * [LibAtrac9](https://github.com/Ouroboros/LibAtrac9/tree/master/C)
 * [loader](https://github.com/Ouroboros/Falcom/tree/master/ed83/loader)
