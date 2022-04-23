@@ -216,8 +216,9 @@ export function getGameVersion(): string {
     const timestamp = header.add(8).readU32();
 
     switch (timestamp) {
-        case 0x590BDEA4: return 'ed6fc';
+        // case 0x590BDEA4: return 'ed6fc';
         case 0x6217BCDE: return 'ed6fc_dx9';
+        case 0x6217BD04: return 'ed6sc_dx9';
     }
 
     throw new Error('unknown game version');
