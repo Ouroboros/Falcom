@@ -20,4 +20,4 @@
 
 * 支持最新的 DX9 版本 (2022-02-24 17:35 BuildID:8269223), 并且不再支持以后的更新
 * 去掉了 Steam
-* 复制 FC EVO 语音 (talk\*) 到 `voice\at9` 目录, 可以播放语音, **需要语音补丁的 SN 脚本**
+* 复制 FC EVO 语音 (talk\*) 到 `voice\at9` 目录, 可以播放语音, **需要[语音补丁](https://trails-game.com/resource/patches/patch-sora/)的 SN 脚本**
