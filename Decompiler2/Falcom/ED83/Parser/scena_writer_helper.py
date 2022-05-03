@@ -321,6 +321,9 @@ def BattleDeleteTempChar(tempChrIndex: int = 0xFFFF):
     assert tempChrIndex <= 4 or tempChrIndex == 0xFFFF
     BattleCtrl(0x1F, tempChrIndex)
 
+def BattleCreateFollowChar(chrId: int, arg2: float, arg3: float):
+    BattleCtrl(0x20, chrId, arg2, arg3)
+
 def BattleCreateChrAfterImage(chrId: int):
     BattleCtrl(0x30, chrId)
 
@@ -341,6 +344,15 @@ def BattleTurnChrDirection(chrId: int, targetId: int, unknown: float, speed: flo
 
 def BattleSetChrATDelay(chrId: int, atdelay: int):
     BattleCtrl(0x5A, chrId, atdelay)
+
+def BattleSetChrStatus(chrId: int, status: BattleStatus, param: object):
+    if isinstance(param, int):
+        param = ParamInt(param)
+
+    BattleCtrl(0x61, chrId, status, param)
+
+def BattleGetChrStatus(chrId: int, status: BattleStatus):
+    BattleCtrl(0x62, chrId, status)
 
 def BattleShowText(s: str):
     BattleCtrl(0x64, s)

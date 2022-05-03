@@ -122,6 +122,28 @@ def AniBtlAttack():
 
     # ExecExpressionWithReg(0x10, ((Expr.PushLong, 1), Expr.Return))
 
+    BattleCtrl(0x62, PseudoChrId.Target, 0x1A)
+    return Return()
+
+
+    ExecExpressionWithReg(
+        0x10,
+        (
+            (Expr.Eval, 'BattleCtrl(0x62, 0xFFFE, 0x14)'),
+            (Expr.PushLong, 90),
+            Expr.Mul,
+            (Expr.PushLong, 100),
+            Expr.Div,
+            Expr.Return,
+        ),
+    )
+
+    BattleCtrl(0x61, 0xFFFE, 0x14, ParamInt(50))
+    BattleCtrl(0x61, 0xFFFE, 0x14, ArgReg(0x10))
+
+    Return()
+    return
+
     attr_wind   = 0
     attr_fire   = 1
     attr_ice    = 2

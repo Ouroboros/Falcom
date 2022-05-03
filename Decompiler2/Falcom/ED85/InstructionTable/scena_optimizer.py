@@ -127,6 +127,7 @@ optimizeTable = buildTable(
         ('BattleClearFlags',                    {0: 0x1A}),
         ('BattleCreateTempChar',                {0: 0x1E}),
         ('BattleDeleteTempChar',                {0: 0x1F}),
+        ('BattleCreateFollowChar',              {0: 0x20}),
         ('BattleCreateChrAfterImage',           {0: 0x31}),
         ('BattleSetChrPos',                     {0: 0x37}),
         ('BattleMoveToTarget',                  {0: 0x38}),

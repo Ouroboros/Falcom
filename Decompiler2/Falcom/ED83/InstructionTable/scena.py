@@ -431,7 +431,7 @@ def Handler_33(ctx: InstructionHandlerContext):
             # 0x1D: 'WLL',
             0x1E: 'WWSS',       # createTempChar(tempChrIndex, chrId, model, ani)
             0x1F: 'W',          # deleteTempChar(tempChrIndex)
-            0x20: 'Wff',        # createFollowChar
+            0x20: 'Nff',        # createFollowChar
             0x21: '',
             0x22: '',
             0x23: '',

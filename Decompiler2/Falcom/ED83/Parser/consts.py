@@ -35,8 +35,9 @@ class PseudoChrId(IntEnum2):
 
     Saved                   = 0xFFF4
     SelectedPos             = 0xFFF5
-    Current                 = 0xFFFB
+    Target                  = 0xFFFB
     Self                    = 0xFFFE
+    KisinSelf               = 0xFFEC
 
 class AbnormalStatus(IntEnum2):
     Poison                  = 0x00000001
@@ -93,7 +94,7 @@ class BattleChrFlags(IntEnum2):
     NoKnockBack             = 0x00000008
     Controllable            = 0x00000800
     Party                   = 0x00040000
-    NoSwap                  = 0x10000000
+    NoSwap                  = 0x10000000        # rob ?
     NoDamage                = 0x80000000
 
 class BattleFlags(IntEnum2):
@@ -111,3 +112,38 @@ class BattleButtonId(IntEnum2):
     Arts                    = 5
     Swap                    = 6
     Order                   = 7
+
+class BattleStatus(IntEnum2):
+    HPPercent               = 0x00
+    HP                      = 0x14
+    EPPercent               = 0x01
+    EP                      = 0x15
+    CPPercent               = 0x02
+    CP                      = 0x16
+
+    Status_BtlChr_40C       = 0x05
+    ChrId                   = 0x06
+    HPLowerThan20Percent    = 0x07
+    Status_09               = 0x09          # 銀臂 獸眸 ?
+    CurrentCraftType        = 0x0A
+    CurrentCraftId          = 0x0B
+    CraftInfo_34            = 0x0C
+    Level                   = 0x0D
+    Status_0E               = 0x0E
+    Status_0F               = 0x0F
+    Status_10               = 0x10
+    Status_11               = 0x11
+    Status_12               = 0x12
+    CurrentCraftId2         = 0x13
+    DummyChr                = 0x19
+
+    KisinTarget1            = 0x1A
+    KisinTarget2            = 0x1B
+    KisinTarget3            = 0x1C
+    KisinTarget4            = 0x1D
+    KisinTarget5            = 0x1E
+    KisinTarget6            = 0x1F
+    KisinTarget7            = 0x20
+    KisinTarget8            = 0x21
+
+    Status_28               = 0x28

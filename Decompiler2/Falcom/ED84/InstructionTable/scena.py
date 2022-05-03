@@ -220,7 +220,7 @@ def Handler_33(ctx: InstructionHandlerContext):
             # 0x1D: 'WLL',
             0x1E: 'WWSS',
             0x1F: 'W',
-            0x20: 'Wff',
+            0x20: 'Nff',        # createFollowChar
             0x21: '',
             0x22: '',
             0x23: '',
