@@ -315,4 +315,6 @@ bin
 山寨的`改之理`, 只写了一小部分界面
 
 
-
+有用的链接
+=============
+https://ghpages.uyjulian.pw/falcom-dumps/
