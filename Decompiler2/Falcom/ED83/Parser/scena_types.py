@@ -131,9 +131,7 @@ class ScenaHeader:
         fs.write(utils.int_to_bytes(self.fullHeaderSize, 4))
         fs.write(utils.int_to_bytes(self.magic, 4))
 
-        fs.seek(0)
-
-        return fs.read()
+        return fs.getvalue()
 
 class ScenaFunctionType(IntEnum2):
     Invalid             = 0
@@ -249,9 +247,7 @@ class ScenaBattleMonsterSet:
                 # fs.write(self.bytes8C)
                 fs.write(b'\x00' * 8)
 
-        fs.seek(0)
-
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         indent = DefaultIndent
@@ -372,9 +368,7 @@ class ScenaBattleSetting:
         if self.monsterSet[-1].id != ScenaBattleMonsterSet.InvalidID:
             fs.write(ScenaBattleMonsterSet(ScenaBattleMonsterSet.InvalidID).serialize())
 
-        fs.seek(0)
-
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         body = [
@@ -441,9 +435,7 @@ class ScenaAnimeClipItem:
         fs.write(utils.int_to_bytes(self.dword4, 4))
         fs.write(utils.pad_string(self.name, 0x20))
 
-        fs.seek(0)
-
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         body = [
@@ -525,9 +517,7 @@ class ScenaAnimeClipTableEntry:
             fs.write(utils.pad_string(self.asset, 0x20))
             fs.write(utils.pad_string(self.symbol, 0x20))
 
-        fs.seek(0)
-
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         f = [
@@ -619,9 +609,7 @@ class ScenaFieldMonsterData:
         for f in self.floats08:
             fs.write(utils.float_to_bytes(f))
 
-        fs.seek(0)
-
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         body = [
@@ -653,9 +641,7 @@ class ScenaFieldFollowData:
         for f in self.floats:
             fs.write(utils.float_to_bytes(f))
 
-        fs.seek(0)
-
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         params = ['%s' % f for f in self.floats]
@@ -858,9 +844,7 @@ class ScenaActionTableEntry:
             fs.write(utils.pad_string(self.action, 0x20))
             fs.write(utils.pad_string(self.name, 0x40))
 
-        fs.seek(0)
-
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         return [
@@ -1009,9 +993,7 @@ class ScenaAlgoTableEntry:
         for p in self.parameters1 + self.parameters2:
             fs.write(utils.int_to_bytes(p, 4))
 
-        fs.seek(0)
-
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         return [
@@ -1118,8 +1100,7 @@ class ScenaBreakTable:
             fs.write(utils.int_to_bytes(d[0] | (d[1] << 16), 4))
 
         fs.write(utils.int_to_bytes(self.InvalidID, 4))
-        fs.seek(0)
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         f = [
@@ -1162,8 +1143,7 @@ class ScenaSummonTableEntry:
         fs.write(utils.int_to_bytes(self.byte2, 1))
         fs.write(utils.int_to_bytes(self.byte3, 1))
         fs.write(utils.pad_string(self.name, 0x20))
-        fs.seek(0)
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         return [
@@ -1279,8 +1259,7 @@ class ScenaPartTableEntry:
         fs.write(utils.int_to_bytes(self.id, 4))
         fs.write(utils.pad_string(self.name1, 0x20))
         fs.write(utils.pad_string(self.name2, 0x20))
-        fs.seek(0)
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         return [
@@ -1363,8 +1342,7 @@ class ScenaReactionTableEntry:
         fs.write(utils.int_to_bytes(self.word06, 2))
         [fs.write(utils.float_to_bytes(f)) for f in self.floats08]
         fs.write(utils.int_to_bytes(self.type, 4))
-        fs.seek(0)
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         return [

@@ -94,7 +94,7 @@ class BattleChrFlags(IntEnum2):
     NoKnockBack             = 0x00000008
     Controllable            = 0x00000800
     Party                   = 0x00040000
-    NoSwap                  = 0x10000000        # rob ?
+    NoSwap                  = 0x10000000        # is robot ?
     NoDamage                = 0x80000000
 
 class BattleFlags(IntEnum2):
@@ -135,7 +135,7 @@ class BattleStatus(IntEnum2):
     Status_11               = 0x11
     Status_12               = 0x12
     CurrentCraftId2         = 0x13
-    DummyChr                = 0x19
+    IsDummyChr              = 0x19
 
     KisinTarget1            = 0x1A
     KisinTarget2            = 0x1B

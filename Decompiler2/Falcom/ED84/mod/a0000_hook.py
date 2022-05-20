@@ -19,8 +19,33 @@ def test_menu():
 
 def TK_MiniGame_Debug():
     PlayBGM(922, 1.0, 0x0000, 0x00000000, 0x00)
-    # BGMCtrl(0x03, 1.0, 500, 0x00)
+    PlayBGM(160, 1.0, 5000, 0x00000000, 0x00)
+    PlayBGM(713, 1.0, 5000, 0x00000000, 0x01)
+
+    def info(s):
+        Talk(
+            0xFFFF,
+            (
+                s,
+                TxtCtl.ShowAll,
+                TxtCtl.Enter,
+            ),
+        )
+        WaitForMsg()
+        OP_25(0x00)
+
+    info('stop slot 1')
+
+    # StopBGM(4000, 1)
+
+    info('set volume slot 0')
+
+    SetBGMVolume(0.1, 500, 0)
+    SetBGMVolume(0.5, 500, 1)
+
     # return test_menu()
+
+    return Return()
 
     chrmap = {
         ChrTable['黎恩']: 0x2002,

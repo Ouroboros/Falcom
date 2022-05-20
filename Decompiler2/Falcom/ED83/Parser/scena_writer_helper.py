@@ -345,11 +345,8 @@ def BattleTurnChrDirection(chrId: int, targetId: int, unknown: float, speed: flo
 def BattleSetChrATDelay(chrId: int, atdelay: int):
     BattleCtrl(0x5A, chrId, atdelay)
 
-def BattleSetChrStatus(chrId: int, status: BattleStatus, param: object):
-    if isinstance(param, int):
-        param = ParamInt(param)
-
-    BattleCtrl(0x61, chrId, status, param)
+def BattleSetChrStatus(chrId: int, status: BattleStatus, param1: object, param2: object, param3: object, param4: object):
+    BattleCtrl(0x61, chrId, status, param1, param2, param3, param4)
 
 def BattleGetChrStatus(chrId: int, status: BattleStatus):
     BattleCtrl(0x62, chrId, status)
@@ -415,14 +412,17 @@ def CameraShake():
 
 # sound 0x3A 0x3B
 
-def PlayBGM(bgm: int, arg2: float, arg3: int, arg4: int, arg5: int):
-    BGMCtrl(0x00, bgm, arg2, arg3, arg4, arg5)
+def PlayBGM(bgm: int, volume: float, duration: int, arg4: int, slot: int):
+    BGMCtrl(0x00, bgm, volume, duration, arg4, slot)
 
-def StopBGM(bgm: int, arg2: int):
-    BGMCtrl(0x01, bgm, arg2)
+def StopBGM(duration: int, slot: int):
+    BGMCtrl(0x01, duration, slot)
 
-def PlayBGM2(bgm: int):
-    BGMCtrl(0x00, bgm, 1.0, 0x0000, 0x00000000, 0x00)
+def PlayBGM2(bgm: int, volume: float = 1.0):
+    BGMCtrl(0x00, bgm, volume, 0x0000, 0x00000000, 0x00)
+
+def SetBGMVolume(volume: float, duration: int, slot: int):
+    BGMCtrl(0x03, volume, duration, slot)
 
 def ReplaceBGM(old: int, new: int):
     BGMCtrl(0x05, old, new)

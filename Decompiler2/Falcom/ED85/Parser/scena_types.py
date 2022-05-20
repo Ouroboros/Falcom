@@ -105,9 +105,7 @@ class ScenaBattleSetting:
         if not self.monsterSet or self.monsterSet[-1].id != ScenaBattleMonsterSet.InvalidID:
             fs.write(ScenaBattleMonsterSet(ScenaBattleMonsterSet.InvalidID).serialize())
 
-        fs.seek(0)
-
-        return fs.read()
+        return fs.getvalue()
 
     def toPython(self) -> List[str]:
         body = [

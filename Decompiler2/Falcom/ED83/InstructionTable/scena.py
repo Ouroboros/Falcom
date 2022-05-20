@@ -647,11 +647,11 @@ def Handler_36(ctx: InstructionHandlerContext):
 def Handler_3A(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'B' + {
-            0x00: 'HfWLB',
-            0x01: 'HB',
+            0x00: 'HfHIC',
+            0x01: 'HC',
             0x02: 'B',
-            0x03: 'fHB',
-            0x04: 'HfWLB',
+            0x03: 'fHC',
+            0x04: 'HfHIC',
             0x05: 'HH',
             0x06: 'H',
             0x07: '',

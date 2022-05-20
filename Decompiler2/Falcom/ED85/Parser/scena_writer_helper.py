@@ -520,14 +520,17 @@ def CameraShake():
 
 # sound 0x3A 0x3B
 
-def PlayBGM(bgm: int, arg2: float, arg3: int, arg4: int, arg5: int):
-    BGMCtrl(0x00, bgm, arg2, arg3, arg4, arg5)
+def PlayBGM(bgm: int, volume: float, duration: int, arg4: int, slot: int):
+    BGMCtrl(0x00, bgm, volume, duration, arg4, slot)
 
-def StopBGM(bgm: int, arg2: int):
-    BGMCtrl(0x01, bgm, arg2)
+def StopBGM(duration: int, slot: int):
+    BGMCtrl(0x01, duration, slot)
 
-def PlayBGM2(bgm: int):
-    BGMCtrl(0x00, bgm, 1.0, 0x0000, 0x00000000, 0x00)
+def PlayBGM2(bgm: int, volume: float = 1.0):
+    BGMCtrl(0x00, bgm, volume, 0x0000, 0x00000000, 0x00)
+
+def SetBGMVolume(volume: float, duration: int, slot: int):
+    BGMCtrl(0x03, volume, duration, slot)
 
 def ReplaceBGM(old: int, new: int):
     BGMCtrl(0x05, old, new)

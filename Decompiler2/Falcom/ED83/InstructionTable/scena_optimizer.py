@@ -130,6 +130,8 @@ optimizeTable = buildTable(
         ('BattleSetChrPosAsync',                {0: 0x39}),
         ('BattleTurnChrDirection',              {0: 0x3C}),
         ('BattleSetChrATDelay',                 {0: 0x5A}),
+        ('BattleSetChrStatus',                  {0: 0x61}),
+        ('BattleGetChrStatus',                  {0: 0x62}),
         ('BattleShowText',                      {0: 0x64}),
         ('BattleSetChrAbnormalStatus',          {0: 0xB7, 1: 0x00}),
         ('BattleClearChrAbnormalStatus',        {0: 0xB7, 1: 0x01, 4: 0, 5: 0, 6: 0}),
@@ -155,6 +157,11 @@ optimizeTable = buildTable(
     opt(
         0x3A,
         ('PlayBGM',                             {0: 0x00}),
+        ('StopBGM',                             {0: 0x01}),
+        ('SetBGMVolume',                        {0: 0x03}),
+        ('ReplaceBGMReset',                     {0: 0x05, 1: 1, 2: 1}),
+        ('ReplaceBGM',                          {0: 0x05}),
+        ('SetMapBGM',                           {0: 0x06}),
     ),
     opt(
         0x49,
