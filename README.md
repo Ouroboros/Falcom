@@ -40,6 +40,9 @@
 
 得益于法国老哥的 [SenScriptsDecompiler](https://github.com/TwnKey/SenScriptsDecompiler) , 大大缩短了调试过程
 
+* [空之轨迹 FC](https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED6)
+  * 2022-04-24 ~ ?
+
 * [闪之轨迹3](https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED83)
   * 2021-11-12 ~ 2021-12-03
 
