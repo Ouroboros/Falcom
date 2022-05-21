@@ -8,7 +8,7 @@ __all__ = (
 
 NoOperand = InstructionDescriptor.NoOperand
 
-class ED6FCInstructionTable(InstructionTable):
+class ED6InstructionTable(InstructionTable):
     def readOpCode(self, fs: fileio.FileStream) -> int:
         return fs.ReadByte()
 
@@ -17,7 +17,7 @@ class ED6FCInstructionTable(InstructionTable):
 
     def readOperand(self, context: 'handlers.InstructionHandlerContext', desc: OperandDescriptor) -> 'instruction.Operand':
         opr = super().readOperand(context, desc)
-        if desc.format.type == ED6FCOperandType.Offset:
+        if desc.format.type == ED6OperandType.Offset:
             opr.value = context.addBranch(opr.value)
 
         return opr
@@ -25,7 +25,7 @@ class ED6FCInstructionTable(InstructionTable):
     def writeOperand(self, fs: fileio.FileStream, operand: Operand):
         raise NotImplementedError
 
-for i in ED6FCOperandType:
+for i in ED6OperandType:
     globals()[i.name] = i
 
 for i in TextCtrlCode:
@@ -86,11 +86,11 @@ def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Fla
     if operandfmts is NoOperand:
         operands = NoOperand
     else:
-        operands = ED6FCOperandDescriptor.fromFormatString(operandfmts)
+        operands = ED6OperandDescriptor.fromFormatString(operandfmts)
 
     return InstructionDescriptor(opcode = opcode, mnemonic = mnemonic, operands = operands, flags = flags, handler = handler)
 
-ScenaOpTable = ED6FCInstructionTable([
+ScenaOpTable = ED6InstructionTable([
     inst(0x00,  'ExitThread'),
     inst(0x01,  'Return',                       NoOperand,          Flags.EndBlock),
     inst(0x02,  'If',                           'Eo',               Flags.StartBlock,   Handler_If),
