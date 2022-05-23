@@ -120,9 +120,14 @@ class ScenaParser:
 
         fs.Position = hdr.functionTable.offset
 
+        funcNames = {
+            0: 'PreInit',
+            1: 'Init',
+            2: 'ReInit',
+        }
         for i in range(hdr.functionTable.size // 2):
             offset = fs.ReadUShort()
-            self.functions.append(ScenaFunction(index = i, offset = offset, name = f'func_{offset:X}', type = ScenaFunctionType.Code))
+            self.functions.append(ScenaFunction(index = i, offset = offset, name = funcNames.get(i, f'func_{offset:X}'), type = ScenaFunctionType.Code))
 
     def disasmFunctions(self):
         fs = self.fs
@@ -132,7 +137,7 @@ class ScenaParser:
         for func in self.functions:
             fs.Position = func.offset
 
-            if func.index == 0x13: break
+            # if func.index == 0x13: break
 
             log.debug(f'disasm func: {func}')
 

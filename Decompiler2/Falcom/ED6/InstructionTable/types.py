@@ -96,11 +96,11 @@ class ED6OperandDescriptor(OperandDescriptor):
                 buf.clear()
 
             match ch:
-                case 0x10 | 0x17 | 0x19:
-                    objs.append(TextObject(code = ch, value = fs.ReadUShort()))
+                case TextCtrlCode.SetColor:
+                    objs.append(TextObject(code = ch, value = fs.ReadByte()))
 
-                case 0x11 | 0x12:
-                    objs.append(TextObject(code = ch, value = fs.ReadULong()))
+                case TextCtrlCode.Item:
+                    objs.append(TextObject(code = ch, value = fs.ReadUShort()))
 
                 case _:
                     objs.append(TextObject(code = ch))

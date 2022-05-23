@@ -582,17 +582,29 @@ def OP_44(arg1: uint16, arg2: uint8):
     assert isinstance(arg2, uint8)
     _gScena.handleOpCode(0x44, arg1, arg2)
 
-def QueueWorkItem():
-    raise NotImplementedError
+def QueueWorkItem(arg1: int, arg2: int, *args):
+    # 0x45
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, int)
+    return _gScena.handleOpCode(0x45, arg1, arg2, *args)
 
-def OP_45():
-    raise NotImplementedError
+def OP_45(arg1: int, arg2: int, *args):
+    # 0x45
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, int)
+    return _gScena.handleOpCode(0x45, arg1, arg2, *args)
 
-def QueueWorkItem2():
-    raise NotImplementedError
+def QueueWorkItem2(arg1: int, arg2: int, *args):
+    # 0x46
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, int)
+    return _gScena.handleOpCode(0x46, arg1, arg2, *args)
 
-def OP_46():
-    raise NotImplementedError
+def OP_46(arg1: int, arg2: int, *args):
+    # 0x46
+    assert isinstance(arg1, int)
+    assert isinstance(arg2, int)
+    return _gScena.handleOpCode(0x46, arg1, arg2, *args)
 
 def WaitChrThread(arg1: uint16, arg2: uint16):
     # 0x47

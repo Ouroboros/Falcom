@@ -1,7 +1,7 @@
 import { API, Modules } from "../modules";
 import * as utils from "../utils";
 import * as path from "path";
-import { Interceptor2, ArrayBuffer2 } from "../utils";
+import { Interceptor2 } from "../utils";
 import { DWriteRenderer } from "../dwrite/renderer";
 import { AT9Decoder, AT9DecodeResult } from "../codec/at9";
 import { DirectSound, DirectSoundBuffer } from "../dsound/dsound";
@@ -439,7 +439,7 @@ function hookTalk() {
             return;
         }
 
-        const dsb = sb.lock(ptr(0), ptr(voice.dataSize), 0);
+        const dsb = sb.lock(NULL, ptr(voice.dataSize), 0);
 
         if (!dsb) {
             console.log('dsb lock failed');

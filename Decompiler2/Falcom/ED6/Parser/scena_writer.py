@@ -7,6 +7,11 @@ import uuid
 Expr        = ED6.ScenaExpression.Operator
 TxtCtl      = ED6.TextCtrlCode
 
+class LambdaHelper:
+    def __init__(self, name: str, f: Callable[[], Any]) -> None:
+        self.name = name
+        self.func = f
+
 class _ScenaWriter:
     def __init__(self):
         self.labels             = {}                    # type: Dict[str, int]
@@ -54,50 +59,11 @@ class _ScenaWriter:
     def Code(self, name: str):
         return self.functionDecorator(name, ED6.ScenaFunctionType.Code)
 
-    def BattleSetting(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.BattleSetting)
+    def Lambda(self, name: str):
+        def wrapper(f: Callable[[], Any]):
+            return LambdaHelper(name, f)
 
-    def AnimeClips(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.AnimeClips)
-
-    def ActionTable(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.ActionTable)
-
-    def WeaponAttTable(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.WeaponAttTable)
-
-    def BreakTable(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.BreakTable)
-
-    def AlgoTable(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.AlgoTable)
-
-    def SummonTable(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.SummonTable)
-
-    def AddCollision(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.AddCollision)
-
-    def PartTable(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.PartTable)
-
-    def ReactionTable(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.ReactionTable)
-
-    def AnimeClipTable(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.AnimeClipTable)
-
-    def FieldMonsterData(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.FieldMonsterData)
-
-    def FieldFollowData(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.FieldFollowData)
-
-    def FaceAuto(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.FaceAuto)
-
-    def ShinigPomBtlset(self, name: str):
-        return self.functionDecorator(name, ED6.ScenaFunctionType.ShinigPomBtlset)
+        return wrapper
 
     def run(self, g: dict):
         for cb in self.runCallbacks:

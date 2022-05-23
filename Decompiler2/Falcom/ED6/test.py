@@ -66,9 +66,9 @@ def main():
     path = pathlib.Path(path)
 
     if output_dir:
-        output = output_dir + (path.stem + '.py')
+        output = output_dir + (path.stem.strip() + '.py')
     else:
-        output = (path.parent / 'py') / (path.stem + '.py')
+        output = (path.parent / 'py') / (path.stem.strip() + '.py')
 
     test(str(path), output)
 

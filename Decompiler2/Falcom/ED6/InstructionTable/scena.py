@@ -197,15 +197,20 @@ def Handler_41(ctx: InstructionHandlerContext):
         case HandlerAction.CodeGen:
             return genVariadicFuncStub(ctx.descriptor, int)
 
-def Handler_45(ctx: InstructionHandlerContext):
-    raise NotImplementedError
-
+def lambdaHandler(ctx: InstructionHandlerContext, extraCodeSize: int):
     match ctx.action:
         case HandlerAction.Disassemble:
             inst = ctx.instruction
+            fs = ctx.disasmContext.fs
 
-            inst.operands = readAllOperands(ctx, 'BW')
-            inst.operands.extend(readAllOperands(ctx, getfmts(inst.operands[1].value)))
+            chrId, threadId, codeSize = readAllOperands(ctx, 'WWB')
+
+            pos = fs.Position + codeSize.value + extraCodeSize
+            block = ctx.disassembler.disasmBlock(ctx.disasmContext)
+            fs.Position = pos
+
+            block.name = f'lambda_{block.offset:04X}'
+            inst.operands = [chrId, threadId, block]
 
             return inst
 
@@ -213,28 +218,36 @@ def Handler_45(ctx: InstructionHandlerContext):
             applyDescriptors(ctx, len(ctx.instruction.operands))
             return
 
+        case HandlerAction.Format:
+            inst = ctx.instruction
+            desc = inst.descriptor
+            operands = inst.operands
+            code: CodeBlock = operands[2]
+
+            def formatOperand(opr: Operand):
+                return ctx.instructionTable.formatOperand(handlers.FormatOperandHandlerContext(inst, opr, formatter = ctx.formatter))
+
+            blockName = code.name
+            blk = ctx.formatter.formatBlock(code, genLabel = True)
+
+            bb = [
+                f"@scena.Lambda('{blockName}')",
+                f'def {blockName}():',
+                *[f'{DefaultIndent}{line}' for line in blk],
+                '',
+                f'{desc.mnemonic}({formatOperand(operands[0])}, {formatOperand(operands[1])}, {blockName})',
+            ]
+
+            return bb
+
         case HandlerAction.CodeGen:
-            return genVariadicFuncStub(ctx.descriptor, int)
+            return genVariadicFuncStub(ctx.descriptor, int, int)
+
+def Handler_45(ctx: InstructionHandlerContext):
+    return lambdaHandler(ctx, 1)
 
 def Handler_46(ctx: InstructionHandlerContext):
-    raise NotImplementedError
-
-    match ctx.action:
-        case HandlerAction.Disassemble:
-            inst = ctx.instruction
-
-            inst.operands = readAllOperands(ctx, 'BW')
-            inst.operands.extend(readAllOperands(ctx, getfmts(inst.operands[1].value)))
-
-            return inst
-
-        case HandlerAction.Assemble:
-            applyDescriptors(ctx, len(ctx.instruction.operands))
-            return
-
-        case HandlerAction.CodeGen:
-            return genVariadicFuncStub(ctx.descriptor, int)
-
+    return lambdaHandler(ctx, 4)
 
 def genHandler(b: str, fmts: Dict[int, str]) -> Callable:
     def handler(ctx: InstructionHandlerContext):
@@ -384,8 +397,8 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x42,  'OP_42',                        'B'),
     inst(0x43,  'BeginChrThread',               'WBBW'),
     inst(0x44,  'EndChrThread',                 'WB'),
-    inst(0x45,  'QueueWorkItem',                NoOperand,          Flags.Empty,        Handler_45),
-    inst(0x46,  'QueueWorkItem2',               NoOperand,          Flags.Empty,        Handler_46),
+    inst(0x45,  'QueueWorkItem',                NoOperand,          Flags.FormatMultiLine,  Handler_45),
+    inst(0x46,  'QueueWorkItem2',               NoOperand,          Flags.FormatMultiLine,  Handler_46),
     inst(0x47,  'WaitChrThread',                'WW'),
     inst(0x48,  'OP_48'),
     inst(0x49,  'Event',                        'CH'),
