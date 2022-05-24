@@ -26,7 +26,7 @@ def procfile(f: str):
 
     output = pathlib.Path(f)
     os.makedirs(output.parent / 'py', exist_ok = True)
-    output = output.parent / 'py' / (output.stem + '.py')
+    output = output.parent / 'py' / (output.stem.strip() + '.py')
     # if output.exists(): continue
 
     test(f, output)
@@ -41,15 +41,15 @@ def main():
 
     for s in scena:
         break
-        iterlib.forEachFileMP(procfile, s, '*.dat', subdir = False)
+        iterlib.forEachFileMP(procfile, s, '*._SN', subdir = False)
         continue
 
-        for f in fileio.getDirectoryFiles(s, '*.dat', subdir = False):
+        for f in fileio.getDirectoryFiles(s, '*._SN', subdir = False):
             console.setTitle(os.path.basename(f))
 
             output = pathlib.Path(f)
             os.makedirs(output.parent / 'py', exist_ok = True)
-            output = output.parent / 'py' / (output.stem + '.py')
+            output = output.parent / 'py' / (output.stem.strip() + '.py')
             if output.exists(): continue
 
             test(f, output)
@@ -62,7 +62,7 @@ def main():
         'a0308.dat',
     ][-1]
 
-    path = r'E:\Game\Steam\steamapps\common\Trails in the Sky FC\DAT\ED6_DT01\C0100   ._SN'
+    path = r'E:\Game\Steam\steamapps\common\Trails in the Sky FC\DAT\ED6_DT01\T0001   ._SN'
     path = pathlib.Path(path)
 
     if output_dir:

@@ -136,10 +136,32 @@ def Handler_04(ctx: InstructionHandlerContext):
         case HandlerAction.CodeGen:
             return genVariadicFuncStub(ctx.descriptor)
 
+def Handler_28(ctx: InstructionHandlerContext):
+    def getfmts(n):
+        return 'WB' + {
+            0x01: 'W',
+            0x02: 'W',
+            0x03: 'B',
+            0x04: 'B',
+        }[n]
+
+    match ctx.action:
+        case HandlerAction.Disassemble:
+            inst = ctx.instruction
+            inst.operands = readAllOperands(ctx, getfmts(peekBytes(ctx, 3)[-1]))
+            return inst
+
+        case HandlerAction.Assemble:
+            applyDescriptors(ctx, getfmts(ctx.instruction.operands[1].value))
+            return
+
+        case HandlerAction.CodeGen:
+            return genVariadicFuncStub(ctx.descriptor, int, int)
+
 def Handler_29(ctx: InstructionHandlerContext):
     def getfmts(n):
         return 'WB' + {
-            0x00: '',
+            0x00: 'B',
             0x01: 'W',
         }[n]
 
@@ -165,7 +187,8 @@ def Handler_2A(ctx: InstructionHandlerContext):
             fs = ctx.disasmContext.fs
 
             with fs.PositionSaver:
-                count = len([None for _ in range(MAX_PARAM_COUNT) if fs.ReadUShort() != 0xFFFF]) + 1
+                count = len(fs.Read(MAX_PARAM_COUNT * 2).split(b'\xFF\xFF')[0]) // 2
+                count += count != MAX_PARAM_COUNT
 
             inst.operands = readAllOperands(ctx, 'W' * min(count, MAX_PARAM_COUNT))
             return inst
@@ -228,25 +251,41 @@ def lambdaHandler(ctx: InstructionHandlerContext, extraCodeSize: int):
                 return ctx.instructionTable.formatOperand(handlers.FormatOperandHandlerContext(inst, opr, formatter = ctx.formatter))
 
             blockName = code.name
-            blk = ctx.formatter.formatBlock(code, genLabel = True)
 
-            bb = [
+            return [
                 f"@scena.Lambda('{blockName}')",
                 f'def {blockName}():',
-                *[f'{DefaultIndent}{line}' for line in blk],
+                *[f'{DefaultIndent}{line}' for line in ctx.formatter.formatBlock(code)],
                 '',
                 f'{desc.mnemonic}({formatOperand(operands[0])}, {formatOperand(operands[1])}, {blockName})',
             ]
-
-            return bb
 
         case HandlerAction.CodeGen:
             return genVariadicFuncStub(ctx.descriptor, int, int)
 
 def Handler_45(ctx: InstructionHandlerContext):
+    '''
+        @scena.Lambda('lambda_5029')
+        def lambda_5029():
+            OP_6D(54030, 0, 55920, 1000)
+
+            ExitThread()            # <--           1 byte
+
+        DispatchAsync(0x0101, 0x0001, lambda_5029)
+    '''
     return lambdaHandler(ctx, 1)
 
 def Handler_46(ctx: InstructionHandlerContext):
+    '''
+        @scena.Lambda('lambda_464E')
+        def lambda_464E():
+            TurnDirection(0x00FE, 0x0102, 0)
+            Yield()                         # <--   1 byte
+
+            Jump('lambda_464E')             # <--   3 bytes
+
+        DispatchAsync2(0x0101, 0x0001, lambda_464E)
+    '''
     return lambdaHandler(ctx, 4)
 
 def genHandler(b: str, fmts: Dict[int, str]) -> Callable:
@@ -314,13 +353,6 @@ desc_16 = 'B', {
     0x02: 'LLLL',
 }
 
-desc_28 = 'B', {
-    0x01: 'W',
-    0x02: 'W',
-    0x03: 'B',
-    0x04: 'B',
-}
-
 desc_29 = 'WB', {
     0x00: '',
     0x01: '',
@@ -333,22 +365,22 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x02,  'If',                           'EO'),
     inst(0x03,  'Jump',                         'O',                Flags.Jump),
     inst(0x04,  'Switch',                       NoOperand,          Flags.EndBlock,     Handler_04),
-    inst(0x05,  'Call',                         'CH'),                                                      # Call(scp index, func index)
+    inst(0x05,  'Call',                         'CW'),                                                      # Call(scp index, func index)
     inst(0x06,  'NewScene',                     'LCCC'),
-    inst(0x07,  'Yield'),
-    inst(0x08,  'Sleep',                        'I'),
+    inst(0x07,  'IdleLoop'),
+    inst(0x08,  'Sleep',                        'I',                Flags.FormatNewLine),
     inst(0x09,  'SetMapFlags',                  'L'),
     inst(0x0A,  'ClearMapFlags',                'L'),
-    inst(0x0B,  'FadeToDark',                   'iic'),
-    inst(0x0C,  'FadeToLight',                  'ii'),
+    inst(0x0B,  'FadeOut',                      'iic'),
+    inst(0x0C,  'FadeIn',                       'ii'),
     inst(0x0D,  'OP_0D'),
     inst(0x0E,  'Fade',                         'I'),
     inst(0x0F,  'Battle',                       'LLBWB'),
     inst(0x10,  'OP_10',                        'BB'),
     inst(0x11,  'OP_11',                        'BBBLLL'),
-    inst(0x12,  'StopSound',                    'LLL'),
+    inst(0x12,  'OP_12',                        'LLL'),
     inst(0x13,  'SetPlaceName',                 'W'),
-    inst(0x14,  'BlurSwitch'),
+    inst(0x14,  'OP_14'),
     inst(0x15,  'OP_15'),
     inst(0x16,  'OP_16',                        desc_16),
     inst(0x17,  'ShowSaveMenu'),
@@ -365,10 +397,10 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x22,  'OP_22',                        'WBB'),
     inst(0x23,  'OP_23',                        'W'),
     inst(0x24,  'OP_24',                        'WB'),
-    inst(0x25,  'SoundDistance',                'WLLLLLBL'),
-    inst(0x26,  'SoundLoad',                    'H'),
-    inst(0x27,  'Yield'),
-    inst(0x28,  'OP_28',                        desc_28),
+    inst(0x25,  'OP_25',                        'WLLLLLBL'),
+    inst(0x26,  'OP_26',                        'H'),
+    inst(0x27,  'OP_27'),
+    inst(0x28,  'OP_28',                        NoOperand,                              handler = Handler_28),
     inst(0x29,  'OP_29',                        NoOperand,                              handler = Handler_29),
     inst(0x2A,  'OP_2A',                        NoOperand,                              handler = Handler_2A),
     inst(0x2B,  'OP_2B',                        'WW'),
@@ -395,33 +427,33 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x40,  'OP_40',                        'W'),
     inst(0x41,  'OP_41',                        NoOperand,          Flags.Empty,        Handler_41),
     inst(0x42,  'OP_42',                        'B'),
-    inst(0x43,  'BeginChrThread',               'WBBW'),
-    inst(0x44,  'EndChrThread',                 'WB'),
-    inst(0x45,  'QueueWorkItem',                NoOperand,          Flags.FormatMultiLine,  Handler_45),
-    inst(0x46,  'QueueWorkItem2',               NoOperand,          Flags.FormatMultiLine,  Handler_46),
-    inst(0x47,  'WaitChrThread',                'WW'),
-    inst(0x48,  'OP_48'),
+    inst(0x43,  'CreateThread',                 'WBBW'),
+    inst(0x44,  'TerminateThread',              'WB'),
+    inst(0x45,  'DispatchAsync',                NoOperand,          Flags.FormatMultiLine,  Handler_45),
+    inst(0x46,  'DispatchAsync2',               NoOperand,          Flags.FormatMultiLine,  Handler_46),
+    inst(0x47,  'WaitForThreadExit',            'WW'),
+    inst(0x48,  'Yield'),
     inst(0x49,  'Event',                        'CH'),
     inst(0x4A,  'OP_4A',                        'WC'),
     inst(0x4B,  'OP_4B',                        'WC'),
     inst(0x4C,  'OP_4C'),
-    inst(0x4D,  'RunExpression',                'WE'),
+    inst(0x4D,  'ExecExpressionWithReg',        'WE'),
     inst(0x4E,  'OP_4E'),
-    inst(0x4F,  'OP_4F',                        'BE'),
+    inst(0x4F,  'ExecExpressionWithVar',        'BE'),
     inst(0x50,  'OP_50'),
-    inst(0x51,  'OP_51',                        'WBE'),
+    inst(0x51,  'ExecExpressionWithValue',      'WBE'),
     inst(0x52,  'TalkBegin',                    'W'),
     inst(0x53,  'TalkEnd',                      'W'),
-    inst(0x54,  'Talk',                         'T',                Flags.FormatMultiLine),
-    inst(0x55,  'OP_55'),
+    inst(0x54,  'Talk',                         'T'),
+    inst(0x55,  'Yeild2'),
     inst(0x56,  'OP_56',                        'B'),
     inst(0x57,  'OP_57'),
-    inst(0x58,  'WaitAndCloseMessageWindow'),
+    inst(0x58,  'CloseMessageWindow'),
     inst(0x59,  'OP_59'),
     inst(0x5A,  'SetMessageWindowPos',          'hhhh'),  # SetMessageWindowPos(x, y, -1, -1)
-    inst(0x5B,  'ChrTalk',                      'WT',               Flags.FormatMultiLine),
-    inst(0x5C,  'NpcTalk',                      'WST',              Flags.FormatMultiLine),
-    inst(0x5D,  'Menu',                         'hhhcS',            Flags.FormatMultiLine),
+    inst(0x5B,  'ChrTalk',                      'WT'),
+    inst(0x5C,  'NpcTalk',                      'WST'),
+    inst(0x5D,  'Menu',                         'hhhcT',            Flags.FormatTextIndex),
     inst(0x5E,  'MenuEnd',                      'W'),
     inst(0x5F,  'OP_5F',                        'W'),
     inst(0x60,  'SetChrName',                   'S'),
@@ -466,7 +498,7 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x87,  'SetChrSubChip',                'WH'),
     inst(0x88,  'SetChrPos',                    'Wiiih'),
     inst(0x89,  'OP_89',                        'Wiiih'),
-    inst(0x8A,  'TurnDirection',                'WWH'),
+    inst(0x8A,  'ChrTurnDirection',             'WWH'),
     inst(0x8B,  'OP_8B',                        'WLLW'),
     inst(0x8C,  'OP_8C',                        'Whh'),
     inst(0x8D,  'OP_8D',                        'Wiiiii'),
@@ -516,7 +548,7 @@ ScenaOpTable = ED6InstructionTable([
     inst(0xB9,  'OP_B9',                        'WW'),
     inst(0xBA,  'OP_BA',                        'BW'),
     inst(0xBB,  'OP_BB',                        'BB'),
-    inst(0xBC,  'SaveClearData'),
+    inst(0xDE,  'SaveClearData'),
 ])
 
 del inst

@@ -5,14 +5,14 @@ DefaultEndian = GlobalConfig.DefaultEndian
 DefaultIndent = GlobalConfig.DefaultIndent
 DefaultEncoding = GlobalConfig.DefaultEncoding
 
-class ScenaTypesBase:
+class ScenaTypeBase:
     DESCRIPTOR: Tuple[str, str] = None
 
     def __init__(self, *, fs: fileio.FileStream = None, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-        if not fs:
+        if fs:
             self.deserialize(fs)
 
     def toPython(self) -> List[str]:
@@ -31,6 +31,7 @@ class ScenaTypesBase:
             'B' : lambda v: f'0x{v:02X}',
             'H' : lambda v: f'{v}',
             'W' : lambda v: f'0x{v:04X}',
+            'i' : lambda v: f'{v}',
             'I' : lambda v: f'{v}',
             'L' : lambda v: f'0x{v:08X}',
             'f' : lambda v: f'{v:g}.0' if f'{v:g}'.count('.') == 0 else f'{v:g}',
@@ -55,6 +56,8 @@ class ScenaTypesBase:
             'C' : lambda v: utils.int_to_bytes(v, 1),
             'H' : lambda v: utils.int_to_bytes(v, 2),
             'W' : lambda v: utils.int_to_bytes(v, 2),
+            'i' : lambda v: utils.int_to_bytes(v, 4),
+            'I' : lambda v: utils.int_to_bytes(v, 4),
             'I' : lambda v: utils.int_to_bytes(v, 4),
             'L' : lambda v: utils.int_to_bytes(v, 4),
             'f' : lambda v: utils.float_to_bytes(v),
@@ -77,6 +80,7 @@ class ScenaTypesBase:
             'C' : lambda: fs.ReadByte(),
             'H' : lambda: fs.ReadUShort(),
             'W' : lambda: fs.ReadUShort(),
+            'i' : lambda: fs.ReadLong(),
             'I' : lambda: fs.ReadULong(),
             'L' : lambda: fs.ReadULong(),
             'f' : lambda: fs.ReadFloat(),
@@ -91,10 +95,10 @@ class ScenaTypesBase:
 
     __repr__ = __str__
 
-class DATIndex:
+class DATFileIndex:
     INVALID_INDEX = 0xFFFFFFFF
 
-    def __init__(self, *, fs: fileio.FileStream) -> None:
+    def __init__(self, *, fs: fileio.FileStream = None) -> None:
         self.dat    = 0     # type: int
         self.index  = 0     # type: int
         self.value  = 0     # type: int
@@ -211,7 +215,7 @@ class ScenaHeader:
         self.bgm                    = 0                 # type: int
         self.flags                  = 0                 # type: int
         self.entryFunction          = 0                 # type: int
-        self.importTable            = []                # type: List[int]
+        self.importTable            = []                # type: List[DATFileIndex]
         self.reversed               = 0                 # type: int
         self.dataTable              = []                # type: List[ScenaDataIndex]
         self.stringTableOffset      = 0                 # type: int
@@ -231,7 +235,7 @@ class ScenaHeader:
         self.bgm                = fs.ReadUShort()                                                               # 0x1A
         self.flags              = fs.ReadUShort()                                                               # 0x1C
         self.entryFunction      = fs.ReadUShort()                                                               # 0x1E
-        self.importTable        = [DATIndex(fs = fs) for _ in range(self.IMPORT_SCENA_COUNT)]                   # 0x20
+        self.importTable        = [DATFileIndex(fs = fs) for _ in range(self.IMPORT_SCENA_COUNT)]               # 0x20
         self.reversed           = fs.ReadUShort()                                                               # 0x40
         self.dataTable          = [ScenaDataIndex(fs = fs) for _ in range(self.DATA_TABLE_COUNT)]               # 0x42
         self.stringTableOffset  = fs.ReadUShort()                                                               # 0x5A
@@ -258,52 +262,95 @@ class ScenaHeader:
 
         return fs.read()
 
+class ScenaChipData(DATFileIndex):
+    pass
+
+class ScenaNpcData(ScenaTypeBase):
+    DESCRIPTOR = (
+        ('x',                   'i'),
+        ('z',                   'i'),
+        ('y',                   'i'),
+        ('direction',           'H'),
+        ('word_0E',             'H'),
+        ('dword_10',            'I'),
+        ('chipIndex',           'H'),
+        ('npcIndex',            'H'),
+        ('initFunctionIndex',   'W'),
+        ('initScenaIndex',      'W'),
+        ('talkFunctionIndex',   'W'),
+        ('talkScenaIndex',      'W'),
+    )
+
+class ScenaMonsterData(ScenaTypeBase):
+    DESCRIPTOR = (
+        ('x',           'i'),
+        ('z',           'i'),
+        ('y',           'i'),
+        ('word_0C',     'W'),
+        ('word_0E',     'W'),
+        ('byte_10',     'B'),
+        ('byte_11',     'B'),
+        ('dword_12',    'L'),
+        ('battleIndex', 'W'),
+        ('word_18',     'W'),
+        ('word_1A',     'W'),
+    )
+
+class ScenaEventData(ScenaTypeBase):
+    DESCRIPTOR = (
+        ('X',           'i'),
+        ('Y',           'i'),
+        ('Z',           'i'),
+        ('range',       'i'),
+        ('word_10',     'W'),
+        ('byte_14',     'B'),
+        ('byte_18',     'B'),
+        ('dword_1C',    'L'),
+    )
+
+class ScenaActorData(ScenaTypeBase):
+    DESCRIPTOR = (
+        ('triggerX',            'i'),
+        ('triggerZ',            'i'),
+        ('triggerY',            'i'),
+        ('triggerRange',        'i'),
+        ('actorX',              'i'),
+        ('actorZ',              'i'),
+        ('actorY',              'i'),
+        ('flags',               'W'),
+        ('talkScenaIndex',      'W'),
+        ('talkFunctionIndex',   'W'),
+        ('word_22',             'W'),
+    )
+
 class ScenaFunctionType(IntEnum2):
     Invalid             = 0
     Code                = 1
-    BattleSetting       = 2
-    AnimeClips          = 3     # gatherAnimeClipInAniFunc
-    ActionTable         = 4
-    WeaponAttTable      = 5
-    BreakTable          = 6
-    AlgoTable           = 7
-    SummonTable         = 8
-    AddCollision        = 9
-    PartTable           = 10
-    ReactionTable       = 11
-    AnimeClipTable      = 12
-    FieldMonsterData    = 13
-    FieldFollowData     = 14
-    FaceAuto            = 15    # FC_autoXX
-    ShinigPomBtlset     = 16
-    StyleName           = 17
+    ChipData            = 2
+    NpcData             = 3
+    MonsterData         = 4
+    EventData           = 5
+    ActorData           = 6
+    StringTable         = 7
+    Header              = 8
 
 ScenaDataFunctionTypes = set([
-    ScenaFunctionType.BattleSetting,
-    ScenaFunctionType.AnimeClips,
-    ScenaFunctionType.ActionTable,
-    ScenaFunctionType.WeaponAttTable,
-    ScenaFunctionType.BreakTable,
-    ScenaFunctionType.AlgoTable,
-    ScenaFunctionType.SummonTable,
-    ScenaFunctionType.AddCollision,
-    ScenaFunctionType.PartTable,
-    ScenaFunctionType.ReactionTable,
-    ScenaFunctionType.AnimeClipTable,
-    ScenaFunctionType.FieldMonsterData,
-    ScenaFunctionType.FieldFollowData,
-    ScenaFunctionType.FaceAuto,
-    ScenaFunctionType.ShinigPomBtlset,
-    ScenaFunctionType.StyleName,
+    ScenaFunctionType.Header,
+    ScenaFunctionType.StringTable,
+    ScenaFunctionType.ChipData,
+    ScenaFunctionType.NpcData,
+    ScenaFunctionType.MonsterData,
+    ScenaFunctionType.EventData,
+    ScenaFunctionType.ActorData,
 ])
 
 class ScenaFunction:
-    def __init__(self, index: int, offset: int, name: str, *, type = ScenaFunctionType.Invalid):
+    def __init__(self, index: int, offset: int, name: str, *, type = ScenaFunctionType.Invalid, obj = None):
         self.index  = index
         self.offset = offset
         self.name   = name
         self.type   = type
-        self.obj    = None
+        self.obj    = obj
 
     def __str__(self) -> str:
         return f'{self.name}(index = 0x{self.index:04X}, offset = 0x{self.offset:08X}, type = {self.type})'

@@ -227,3 +227,5 @@ def emit(*b: int):
 def ScenaFlag(offset: int, flag: int, *args) -> int:
     return ((offset & 0xFFFF) << 3) | (flag & 7)
 
+def TXT(index: int, s: str) -> str:
+    return s

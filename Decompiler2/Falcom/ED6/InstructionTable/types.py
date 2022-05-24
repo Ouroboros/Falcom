@@ -1,3 +1,4 @@
+from ast import Global
 from Falcom.Common import *
 from Assembler     import *
 from .utils        import *
@@ -147,14 +148,18 @@ class ED6OperandDescriptor(OperandDescriptor):
         fs.WriteByte(0)
 
     def formatText(self, context: FormatOperandHandlerContext) -> str:
+        context.instruction.flags |= Flags.FormatMultiLine
+
         value = context.operand.value
         if isinstance(value, str):
             return formatText(context.operand.value)
 
         value: List['TextObject']
-        t = []
+        t: list[str] = []
+        textIndexes = []
         for v in value:
             if v.code is None:
+                textIndexes.append(len(t))
                 t.append(formatText(v.value))
                 continue
 
@@ -179,6 +184,10 @@ class ED6OperandDescriptor(OperandDescriptor):
                 t.append(f'({code}, 0x{v.value:X})')
             elif v.code != TextCtrlCode.NewLine:
                 t.append(f'{code}')
+
+        if context.instruction.flags.textIndex:
+            for index in textIndexes:
+                t[index] = f'TXT(0x{index:02X}, {t[index]})'
 
         return t
 
