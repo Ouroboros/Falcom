@@ -747,10 +747,12 @@ def OP_47(arg1: uint8, arg2: str, arg3: uint16):
     assert isinstance(arg3, uint16)
     _gScena.handleOpCode(0x47, arg1, arg2, arg3)
 
-def OP_48(arg1: int, *args):
+def OP_48(arg1: int, arg2: int, arg3: int, *args):
     # 0x48
     assert isinstance(arg1, int)
-    return _gScena.handleOpCode(0x48, arg1, *args)
+    assert isinstance(arg2, int)
+    assert isinstance(arg3, int)
+    return _gScena.handleOpCode(0x48, arg1, arg2, arg3, *args)
 
 def FormationCtrl(arg1: int, *args):
     # 0x49
