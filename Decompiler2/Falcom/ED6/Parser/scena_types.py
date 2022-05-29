@@ -98,22 +98,28 @@ class ScenaTypeBase:
 class DATFileIndex:
     INVALID_INDEX = 0xFFFFFFFF
 
-    def __init__(self, *, fs: fileio.FileStream = None) -> None:
-        self.dat    = 0     # type: int
-        self.index  = 0     # type: int
-        self.value  = 0     # type: int
-
+    def __init__(self, value: int = INVALID_INDEX, *, fs: fileio.FileStream = None) -> None:
+        self.value = value             # type: int
         self.read(fs)
+
+    @property
+    def dat(self) -> int:
+        return self.value >> 16
+
+    @property
+    def index(self) -> int:
+        return self.value & 0xFFFF
 
     def read(self, fs: fileio.FileStream):
         if not fs:
             return
 
-        v = fs.ReadULong()
+        self.value = fs.ReadULong()
 
-        self.dat    = v >> 16
-        self.index  = v & 0xFFFF
-        self.value  = v
+    def serialize(self) -> bytes:
+        buf = bytearray()
+        buf.extend(utils.int_to_bytes(self.value, 4))
+        return bytes(buf)
 
     @property
     def datName(self) -> str:
@@ -129,9 +135,9 @@ class DATFileIndex:
     __repr__ = __str__
 
 class ScenaDataIndex:
-    def __init__(self, *, fs: fileio.FileStream = None):
-        self.offset = 0     # type: int
-        self.size   = 0     # type: int
+    def __init__(self, offset: int = 0, size: int = 0, *, fs: fileio.FileStream = None):
+        self.offset = offset    # type: int
+        self.size   = size      # type: int
 
         self.read(fs)
 
@@ -142,86 +148,62 @@ class ScenaDataIndex:
         self.offset = fs.ReadUShort()
         self.size   = fs.ReadUShort()
 
+    def serialize(self) -> bytes:
+        buf = bytearray()
+        buf.extend(utils.int_to_bytes((self.size << 16) | self.offset, 4))
+        return bytes(buf)
+
     def __str__(self) -> str:
         return f'(0x{self.offset:X}, 0x{self.size:X})'
 
     __repr__ = __str__
 
-class ScenaEntryPoint:
+class ScenaEntryPoint(ScenaTypeBase):
     SIZE = 0x44
-
-    def __init__(self, *, fs: fileio.FileStream = None):
-        self.dword_00           = 0             # type: int
-        self.dword_04           = 0             # type: int
-        self.dword_08           = 0             # type: int
-        self.word_0C            = 0             # type: int
-        self.word_0E            = 0             # type: int
-        self.dword_10           = 0             # type: int
-        self.dword_14           = 0             # type: int
-        self.dword_18           = 0             # type: int
-        self.dword_1C           = 0             # type: int
-        self.dword_20           = 0             # type: int
-        self.dword_24           = 0             # type: int
-        self.dword_28           = 0             # type: int
-        self.dword_2C           = 0             # type: int
-        self.word_30            = 0             # type: int
-        self.word_32            = 0             # type: int
-        self.word_34            = 0             # type: int
-        self.word_36            = 0             # type: int
-        self.word_38            = 0             # type: int
-        self.word_3A            = 0             # type: int
-        self.preInitScena       = 0             # type: int
-        self.preInitFunction    = 0             # type: int
-        self.initScena          = 0             # type: int
-        self.initFunction       = 0             # type: int
-
-        self.read(fs)
-
-    def read(self, fs: fileio.FileStream):
-        if not fs:
-            return
-
-        self.dword_00           = fs.ReadULong()
-        self.dword_04           = fs.ReadULong()
-        self.dword_08           = fs.ReadULong()
-        self.word_0C            = fs.ReadUShort()
-        self.word_0E            = fs.ReadUShort()
-        self.dword_10           = fs.ReadULong()
-        self.dword_14           = fs.ReadULong()
-        self.dword_18           = fs.ReadULong()
-        self.dword_1C           = fs.ReadULong()
-        self.dword_20           = fs.ReadULong()
-        self.dword_24           = fs.ReadULong()
-        self.dword_28           = fs.ReadULong()
-        self.dword_2C           = fs.ReadULong()
-        self.word_30            = fs.ReadUShort()
-        self.word_32            = fs.ReadUShort()
-        self.word_34            = fs.ReadUShort()
-        self.word_36            = fs.ReadUShort()
-        self.word_38            = fs.ReadUShort()
-        self.word_3A            = fs.ReadUShort()
-        self.preInitScena       = fs.ReadUShort()
-        self.preInitFunction    = fs.ReadUShort()       # byte
-        self.initScena          = fs.ReadUShort()
-        self.initFunction       = fs.ReadUShort()       # byte
+    DESCRIPTOR = (
+        ('dword_00',        'L'),
+        ('dword_04',        'L'),
+        ('dword_08',        'L'),
+        ('word_0C',         'W'),
+        ('word_0E',         'W'),
+        ('dword_10',        'i'),
+        ('dword_14',        'i'),
+        ('dword_18',        'i'),
+        ('dword_1C',        'i'),
+        ('dword_20',        'i'),
+        ('dword_24',        'i'),
+        ('dword_28',        'i'),
+        ('dword_2C',        'i'),
+        ('word_30',         'H'),
+        ('word_32',         'H'),
+        ('word_34',         'H'),
+        ('word_36',         'H'),
+        ('word_38',         'H'),
+        ('word_3A',         'H'),
+        ('preInitScena',    'W'),
+        ('preInitFunction', 'W'),
+        ('initScena',       'W'),
+        ('initFunction',    'W'),
+    )
 
 class ScenaHeader:
     IMPORT_SCENA_COUNT  = 8
     DATA_TABLE_COUNT    = 6
 
     def __init__(self, *, fs: fileio.FileStream = None):
-        self.mapName                = ''                # type: str
-        self.mapModel               = ''                # type: str
-        self.bgm                    = 0                 # type: int
-        self.flags                  = 0                 # type: int
-        self.entryFunction          = 0                 # type: int
-        self.importTable            = []                # type: List[DATFileIndex]
-        self.reversed               = 0                 # type: int
-        self.dataTable              = []                # type: List[ScenaDataIndex]
-        self.stringTableOffset      = 0                 # type: int
-        self.headerSize             = []                # type: int
-        self.functionTable          = []                # type: ScenaDataIndex
-        self.entryPoint             = []                # type: List[ScenaEntryPoint]
+        self.mapName                = ''                                            # type: str
+        self.mapModel               = ''                                            # type: str
+        self.bgm                    = 0                                             # type: int
+        self.flags                  = 0                                             # type: int
+        self.entryFunction          = 0                                             # type: int
+        self.importTable            = [DATFileIndex()] * self.IMPORT_SCENA_COUNT    # type: List[DATFileIndex]
+        self.reserved               = 0                                             # type: int
+        self.dataTable              = [ScenaDataIndex()] * self.DATA_TABLE_COUNT    # type: List[ScenaDataIndex]
+        self.stringTableOffset      = 0                                             # type: int
+        self.headerSize             = 0                                             # type: int
+        self.functionTable          = ScenaDataIndex()                              # type: ScenaDataIndex
+        self.entryPoint             = []                                            # type: List[ScenaEntryPoint]
+        self.entryPointOffset       = 0                                             # type: int
 
         self.read(fs)
 
@@ -236,31 +218,46 @@ class ScenaHeader:
         self.flags              = fs.ReadUShort()                                                               # 0x1C
         self.entryFunction      = fs.ReadUShort()                                                               # 0x1E
         self.importTable        = [DATFileIndex(fs = fs) for _ in range(self.IMPORT_SCENA_COUNT)]               # 0x20
-        self.reversed           = fs.ReadUShort()                                                               # 0x40
+        self.reserved           = fs.ReadUShort()                                                               # 0x40
         self.dataTable          = [ScenaDataIndex(fs = fs) for _ in range(self.DATA_TABLE_COUNT)]               # 0x42
         self.stringTableOffset  = fs.ReadUShort()                                                               # 0x5A
         self.headerSize         = fs.ReadULong()                                                                # 0x5C
         self.functionTable      = ScenaDataIndex(fs = fs)                                                       # 0x60
+        self.entryPointOffset   = fs.Position
 
-        entryPointCount = (self.dataTable[0].offset - fs.Position) // ScenaEntryPoint.SIZE
+        entryPointCount = (self.dataTable[0].offset - self.entryPointOffset) // ScenaEntryPoint.SIZE
         for _ in range(entryPointCount):
             self.entryPoint.append(ScenaEntryPoint(fs = fs))
 
     def serialize(self) -> bytes:
-        fs = io.BytesIO()
+        assert len(self.importTable) == self.IMPORT_SCENA_COUNT
+        assert len(self.dataTable) == self.DATA_TABLE_COUNT
 
-        fs.write(utils.int_to_bytes(self.headerSize, 4))
-        fs.write(utils.int_to_bytes(self.nameOffset, 4))
-        fs.write(utils.int_to_bytes(self.functionEntryOffset, 4))
-        fs.write(utils.int_to_bytes(self.functionEntrySize, 4))
-        fs.write(utils.int_to_bytes(self.functionNameOffset, 4))
-        fs.write(utils.int_to_bytes(self.functionCount, 4))
-        fs.write(utils.int_to_bytes(self.fullHeaderSize, 4))
-        fs.write(utils.int_to_bytes(self.magic, 4))
+        buf = bytearray()
 
-        fs.seek(0)
+        buf.extend(utils.pad_string(self.mapName, 0x0A))
+        buf.extend(utils.pad_string(self.mapModel, 0x0E))
+        buf.extend(utils.int_to_bytes(self.mapIndex, 2))
+        buf.extend(utils.int_to_bytes(self.bgm, 2))
+        buf.extend(utils.int_to_bytes(self.flags, 2))
+        buf.extend(utils.int_to_bytes(self.entryFunction, 2))
 
-        return fs.read()
+        for idx in self.importTable:
+            buf.extend(idx.serialize())
+
+        buf.extend(utils.int_to_bytes(self.reserved, 2))
+
+        for idx in self.dataTable:
+            buf.extend(idx.serialize())
+
+        buf.extend(utils.int_to_bytes(self.stringTableOffset, 2))
+        buf.extend(utils.int_to_bytes(self.headerSize, 4))
+        buf.extend(self.functionTable.serialize())
+
+        for e in self.entryPoint:
+            buf.extend(e.serialize())
+
+        return bytes(buf)
 
 class ScenaChipData(DATFileIndex):
     pass
@@ -298,13 +295,13 @@ class ScenaMonsterData(ScenaTypeBase):
 
 class ScenaEventData(ScenaTypeBase):
     DESCRIPTOR = (
-        ('X',           'i'),
-        ('Y',           'i'),
-        ('Z',           'i'),
+        ('x',           'i'),
+        ('y',           'i'),
+        ('z',           'i'),
         ('range',       'i'),
-        ('word_10',     'W'),
-        ('byte_14',     'B'),
-        ('byte_18',     'B'),
+        ('dword_10',    'L'),
+        ('dword_14',    'L'),
+        ('dword_18',    'L'),
         ('dword_1C',    'L'),
     )
 
@@ -333,10 +330,20 @@ class ScenaFunctionType(IntEnum2):
     ActorData           = 6
     StringTable         = 7
     Header              = 8
+    EntryPoint          = 9
+
+class ScenaDataTableType(IntEnum2):
+    ChipDataCH  = 0
+    ChipDataCP  = 1
+    NpcData     = 2
+    MonsterData = 3
+    EventData   = 4
+    ActorData   = 5
 
 ScenaDataFunctionTypes = set([
     ScenaFunctionType.Header,
     ScenaFunctionType.StringTable,
+    ScenaFunctionType.EntryPoint,
     ScenaFunctionType.ChipData,
     ScenaFunctionType.NpcData,
     ScenaFunctionType.MonsterData,

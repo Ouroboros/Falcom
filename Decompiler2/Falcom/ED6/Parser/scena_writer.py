@@ -1,7 +1,6 @@
 from Falcom.Common import *
 from Falcom import ED6
 from Falcom.ED6.Parser.scena_types import *
-import pathlib
 import uuid
 
 Expr        = ED6.ScenaExpression.Operator
@@ -45,7 +44,7 @@ class _ScenaWriter:
                 if f2 is not None:
                     f = f2
 
-            func = ED6.ScenaFunction(len(self.functions), -1, name)
+            func = ED6.ScenaFunction(len(self.functions), 0xFFFFFFFF, name)
             func.type = type
             func.obj = f
             self.functions.append(func)
@@ -59,11 +58,41 @@ class _ScenaWriter:
     def Code(self, name: str):
         return self.functionDecorator(name, ED6.ScenaFunctionType.Code)
 
+    def Header(self, name: str):
+        return self.functionDecorator(name, ED6.ScenaFunctionType.Header)
+
+    def StringTable(self, name: str):
+        return self.functionDecorator(name, ED6.ScenaFunctionType.StringTable)
+
+    def EntryPoint(self, name: str):
+        return self.functionDecorator(name, ED6.ScenaFunctionType.EntryPoint)
+
+    def ChipData(self, name: str):
+        return self.functionDecorator(name, ED6.ScenaFunctionType.ChipData)
+
+    def NpcData(self, name: str):
+        return self.functionDecorator(name, ED6.ScenaFunctionType.NpcData)
+
+    def MonsterData(self, name: str):
+        return self.functionDecorator(name, ED6.ScenaFunctionType.MonsterData)
+
+    def EventData(self, name: str):
+        return self.functionDecorator(name, ED6.ScenaFunctionType.EventData)
+
+    def ActorData(self, name: str):
+        return self.functionDecorator(name, ED6.ScenaFunctionType.ActorData)
+
     def Lambda(self, name: str):
         def wrapper(f: Callable[[], Any]):
             return LambdaHelper(name, f)
 
         return wrapper
+
+    def getDataFunc(self, type: ScenaFunctionType):
+        return [f for f in self.functions if f.type == type][-1].obj()
+
+    def getCodeFunc(self) -> list[ScenaFunction]:
+        return [f for f in self.functions if f.type == ScenaFunctionType.Code]
 
     def run(self, g: dict):
         for cb in self.runCallbacks:
@@ -81,80 +110,85 @@ class _ScenaWriter:
 
         hdr = ScenaHeader()
         fs = fileio.FileStream(encoding = DefaultEncoding).OpenFile(self.scenaName, 'wb+')
-
         self.fs = fs
-        name = (pathlib.Path(self.scenaName).stem).encode(DefaultEncoding) + b'\x00'
 
-        hdr.functionEntryOffset = hdr.headerSize + len(name)
-        hdr.functionEntrySize   = len(self.functions) * 4
-        hdr.functionNameOffset  = hdr.functionEntryOffset + hdr.functionEntrySize
-        hdr.functionCount       = len(self.functions)
-        hdr.fullHeaderSize      = 0
+        hdr = self.writeHeader()
+        fs.Position = fs.END_OF_FILE
 
-        fs.Write(hdr.serialize())
-        fs.Write(name)
-
-        fs.Seek(fs.Position + hdr.functionEntrySize)
-
-        funcNames = bytearray()
-        pos = fs.Position + hdr.functionCount * 2
+        funcOffsets = []
 
         for f in self.functions:
-            n = f.name.encode(DefaultEncoding) + b'\x00'
-            funcNames.extend(n)
-            fs.WriteUShort(pos)
-            pos += len(n)
+            if f.type != ScenaFunctionType.Code:
+                continue
 
-        fs.Write(funcNames)
-        hdr.fullHeaderSize = fs.Position
+            f.offset = fs.Position
+            funcOffsets.append(f.offset)
+            hdr.functionTable.size += 2
 
-        fs.AlignTo(4)
-
-        for f in self.functions:
-            if f.type in ScenaDataFunctionTypes:
-                o = f.obj()
-                if o:
-                    match f.type:
-                        case ScenaFunctionType.FaceAuto:
-                            fs.AlignTo(16)
-
-                        case ScenaFunctionType.AnimeClips:
-                            fs.AlignTo(16)
-                            # if fs.Position % 16 != 0:
-                            #     fs.Position = (fs.Position + 16) & ~0x0F
-
-                        case _:
-                            pass
-                            # fs.Position = (fs.Position + 4) & ~3
-
-                    f.offset = fs.Position
-                    fs.Write(o.serialize())
-
-                    fs.Position = (fs.Position + 4) & ~3
-
-            else:
-                f.offset = fs.Position
-                self.compileCode(fs, f)
-                fs.AlignTo(4)
-                # if fs.Position % 4 != 0:
-                #     fs.Position = (fs.Position + 4) & ~3
+            self.compileCode(fs, f)
 
         with fs.PositionSaver:
             for x in self.xrefs:
                 offset = self.labels[x.name]
                 fs.Position = x.offset
-                fs.WriteULong(offset)
+                fs.WriteUShort(offset)
 
             self.xrefs.clear()
+
+        hdr.functionTable.offset = fs.Position
+        [fs.WriteUShort(o) for o in funcOffsets]
+
+        hdr.stringTableOffset = fs.Position
+        fs.Write('\x00'.join(self.getDataFunc(ScenaFunctionType.StringTable)).encode(GlobalConfig.DefaultEncoding))
 
         fs.Position = 0
         fs.Write(hdr.serialize())
 
-        fs.Position = hdr.functionEntryOffset
-        [fs.WriteULong(f.offset) for f in self.functions]
+        fs.Flush()
 
-        fs.Position = fs.END_OF_FILE
-        fs.AlignTo(8)
+    def writeHeader(self) -> ScenaHeader:
+        fs = self.fs
+
+        hdr: ScenaHeader = self.getDataFunc(ScenaFunctionType.Header)
+        hdr.entryPoint = self.getDataFunc(ScenaFunctionType.EntryPoint)
+
+        for i in range(len(hdr.importTable)):
+            v = hdr.importTable[i]
+            if isinstance(v, int):
+                hdr.importTable[i] = DATFileIndex(v)
+
+        fs.Position = 0
+        fs.Write(hdr.serialize())
+
+        chips: tuple[int, int] = self.getDataFunc(ScenaFunctionType.ChipData)
+        chipCH = [ScenaChipData(c[0]) for c in chips if c[0] is not None]
+        chipCP = [ScenaChipData(c[1]) for c in chips if c[1] is not None]
+
+        hdr.dataTable[ScenaDataTableType.ChipDataCH] = ScenaDataIndex(fs.Position, len(chipCH))
+        [fs.Write(ch.serialize()) for ch in chipCH]
+        fs.Write(b'\xFF')
+
+        hdr.dataTable[ScenaDataTableType.ChipDataCP] = ScenaDataIndex(fs.Position, len(chipCP))
+        [fs.Write(cp.serialize()) for cp in chipCP]
+        fs.Write(b'\xFF')
+
+        for index, type in (
+                (ScenaDataTableType.NpcData,        ScenaFunctionType.NpcData),
+                (ScenaDataTableType.MonsterData,    ScenaFunctionType.MonsterData),
+                (ScenaDataTableType.EventData,      ScenaFunctionType.EventData),
+                (ScenaDataTableType.ActorData,      ScenaFunctionType.ActorData),
+            ):
+            data = self.getDataFunc(type)
+            hdr.dataTable[index] = ScenaDataIndex(fs.Position, len(data))
+            print(hdr.dataTable[index])
+            [fs.Write(e.serialize()) for e in data]
+
+        hdr.headerSize = fs.Position
+
+        fs.Position = 0
+        fs.Write(hdr.serialize())
+
+        return hdr
 
     def addLabel(self, name):
         addr = self.labels.get(name)

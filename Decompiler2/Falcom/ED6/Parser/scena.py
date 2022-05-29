@@ -11,14 +11,6 @@ __all__ = (
     'ScenaFunction',
 )
 
-class ScenaDataTableType(IntEnum2):
-    ChipDataCH  = 0
-    ChipDataCP  = 1
-    NpcData     = 2
-    MonsterData = 3
-    EventData   = 4
-    ActorData   = 5
-
 class ScenaFormatter(Assembler.Formatter):
     def formatLabel(self, name: str) -> List[str]:
         return [
@@ -86,7 +78,7 @@ class ScenaFormatter(Assembler.Formatter):
                     f'header.flags          = 0x{hdr.flags:04X}',
                     f'header.entryFunction  = 0x{hdr.entryFunction:04X}',
                     f'header.importTable    = [{comma.join(["0x%08X" % t.value for t in hdr.importTable])}]',
-                    f'header.reversed       = {hdr.reversed}',
+                    f'header.reserved       = {hdr.reserved}',
                     'return header'
                 ]
 
@@ -94,7 +86,20 @@ class ScenaFormatter(Assembler.Formatter):
                 return ['return stringTable']
 
             case ScenaFunctionType.ChipData:
-                pass
+                ch, cp = f.obj
+                ch: list[ScenaChipData]
+                cp: list[ScenaChipData]
+
+                n = max(len(ch), len(cp))
+                ch.extend([None] * (n - len(ch)))
+                cp.extend([None] * (n - len(cp)))
+
+                return [
+                    'return [',
+                    f'{DefaultIndent}# (ch, cp)',
+                    *[f'{DefaultIndent}({ch[i] and f"0x{ch[i].value:08X}"}, {cp[i] and f"0x{cp[i].value:08X}"}),' for i in range(n)],
+                    ']',
+                ]
 
             case _:
                 body = [
@@ -186,7 +191,7 @@ class ScenaParser:
         self.stringTable = [s.decode(GlobalConfig.DefaultEncoding) for s in data.split(b'\x00\x00', maxsplit = 1)[0].split(b'\x00')]
 
         createFunc(self.header.stringTableOffset, ScenaFunctionType.StringTable, self.stringTable)
-
+        createFunc(self.header.entryPointOffset, ScenaFunctionType.EntryPoint, self.header.entryPoint)
         createFunc(dataTable[ScenaDataTableType.ChipDataCH].offset, ScenaFunctionType.ChipData, (readTable(ScenaChipData, dataTable[0]), readTable(ScenaChipData, dataTable[1])))
 
         for constructor, index, type in (

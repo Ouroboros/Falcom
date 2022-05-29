@@ -127,7 +127,7 @@ def Handler_04(ctx: InstructionHandlerContext):
             operands.append(Operand(value = default))
             inst.operands = operands
 
-            fmts = 'EB' + 'IO' * count + 'O'
+            fmts = 'EW' + 'HO' * count + 'O'
 
             applyDescriptors(ctx, fmts)
 
@@ -194,7 +194,7 @@ def Handler_2A(ctx: InstructionHandlerContext):
             return inst
 
         case HandlerAction.Assemble:
-            applyDescriptors(ctx, min(len(ctx.instruction.operands), MAX_PARAM_COUNT))
+            applyDescriptors(ctx, 'W' * min(len(ctx.instruction.operands), MAX_PARAM_COUNT))
             return
 
         case HandlerAction.CodeGen:
@@ -214,7 +214,7 @@ def Handler_41(ctx: InstructionHandlerContext):
             return inst
 
         case HandlerAction.Assemble:
-            applyDescriptors(ctx, len(ctx.instruction.operands))
+            applyDescriptors(ctx, 'BW' + getfmts(ctx.instruction.operands[1].value))
             return
 
         case HandlerAction.CodeGen:
@@ -238,7 +238,8 @@ def lambdaHandler(ctx: InstructionHandlerContext, extraCodeSize: int):
             return inst
 
         case HandlerAction.Assemble:
-            applyDescriptors(ctx, len(ctx.instruction.operands))
+            raise NotImplementedError
+            applyDescriptors(ctx, 'WWB')
             return
 
         case HandlerAction.Format:

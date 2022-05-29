@@ -2,7 +2,7 @@ from Falcom.Common import *
 import struct
 
 def int_to_bytes(i, size) -> bytes:
-    return int.to_bytes(i, size, GlobalConfig.DefaultEndian)
+    return int.to_bytes(i, size, GlobalConfig.DefaultEndian, signed = i < 0)
 
 def str_to_bytes(s: str) -> bytes:
     return s.encode(GlobalConfig.DefaultEncoding) + b'\x00'

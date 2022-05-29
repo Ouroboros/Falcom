@@ -15,7 +15,7 @@ def test(filename, output):
 
     scena.parse()
 
-    print(scena)
+    # print(scena)
 
     py = scena.generatePython(os.path.basename(filename))
 
@@ -64,6 +64,8 @@ def main():
 
     path = r'E:\Game\Steam\steamapps\common\Trails in the Sky FC\DAT\ED6_DT01\T0001   ._SN'
     path = pathlib.Path(path)
+
+    output_dir = '.\\'
 
     if output_dir:
         output = output_dir + (path.stem.strip() + '.py')
