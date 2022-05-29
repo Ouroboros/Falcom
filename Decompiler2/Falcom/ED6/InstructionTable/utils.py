@@ -1,6 +1,28 @@
 from Falcom.Common  import *
 from Assembler      import *
 
+def replaceEmoji(b: bytes) -> bytearray:
+    eighthNoteEmoji = b'\x87\x8A'
+    number1 = b'\x87\x40'
+    number2 = b'\x87\x41'
+    number3 = b'\x87\x42'
+    number4 = b'\x87\x43'
+    number5 = b'\x87\x44'
+
+    b = bytearray(b)
+
+    for x in [
+        eighthNoteEmoji,
+        number1,
+        number2,
+        number3,
+        number4,
+        number5,
+    ]:
+        b = b.replace(x, f'<{x.hex().upper()}>'.encode('ASCII'))
+
+    return b
+
 def genVariadicFuncStub(desc: InstructionDescriptor, *types, parameters = None) -> List[str]:
     params = []
     args = []

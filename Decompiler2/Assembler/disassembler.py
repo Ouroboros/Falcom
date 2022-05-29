@@ -101,6 +101,8 @@ class Disassembler:
             if context.fs.Position in self.allocatedBlocks:
                 break
 
+        # log.debug(f'disasm block end: 0x{offset:X}')
+
         for index, branch in enumerate(block.branches):
             pos = context.fs.Position
 
@@ -156,6 +158,8 @@ class Disassembler:
 
         if context.instCallback:
             context.instCallback(inst)
+
+        # if pos == 0x0000DEC0: ibp()
 
         return inst
 

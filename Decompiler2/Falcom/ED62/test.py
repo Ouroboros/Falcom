@@ -1,4 +1,4 @@
-from Falcom import ED6
+from Falcom import ED62
 from Falcom.Common import *
 import pathlib
 
@@ -10,19 +10,22 @@ def test(filename, output):
         return
 
     fs = fileio.FileStream().OpenMemory(open(filename, 'rb').read())
+    if fs.GetSize() == 0:
+        return
+
     fs.Encoding = GlobalConfig.DefaultEncoding
-    scena = ED6.Parser.ScenaParser(fs)
+    scena = ED62.Parser.ScenaParser(fs)
 
     scena.parse()
-
-    # print(scena)
 
     py = scena.generatePython(os.path.basename(filename))
 
     open(output, 'wb').write('\n'.join(py).encode('UTF8'))
 
-def procfile(f: str):
+def procfile(f: str, encoding: str = 'GBK'):
     console.setTitle(os.path.basename(f))
+
+    GlobalConfig.DefaultEncoding = encoding
 
     output = pathlib.Path(f)
     os.makedirs(output.parent / 'py', exist_ok = True)
@@ -31,17 +34,24 @@ def procfile(f: str):
 
     test(f, output)
 
+def procfile_en(f: str):
+    procfile(f, 'SJIS')
+
+def procfile_cn(f: str):
+    procfile(f, 'GBK')
+
 def main():
     scena = [
-        r'E:\Game\Steam\steamapps\common\Trails in the Sky FC\DAT\ED6_DT01',
+        (procfile_en, r'E:\Game\Steam\steamapps\common\Trails in the Sky SC\ED6_DT21'),
+        (procfile_cn, r'E:\Game\Falcom\ED_SORA2\ED6_DT21'),
     ]
 
     output_dir = None
     # output_dir = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\ouroboros\scripts\scena\dat\\'
 
-    for s in scena:
+    for cb, s in scena:
         # break
-        iterlib.forEachFileMP(procfile, s, '*._SN', subdir = False)
+        iterlib.forEachFileMP(cb, s, '*._SN', subdir = False)
         continue
 
         for f in fileio.getDirectoryFiles(s, '*._SN', subdir = False):
@@ -57,7 +67,7 @@ def main():
     else:
         return
 
-    path = r'E:\Game\Steam\steamapps\common\Trails in the Sky FC\DAT\ED6_DT01\T0001   ._SN'
+    path = r'D:\Dev\Source\Falcom\Decompiler2\Falcom\ED62\T0001   ._SN'
     path = pathlib.Path(path)
 
     output_dir = '.\\'

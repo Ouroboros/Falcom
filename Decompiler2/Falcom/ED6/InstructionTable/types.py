@@ -1,4 +1,3 @@
-from ast import Global
 from Falcom.Common import *
 from Assembler     import *
 from .utils        import *
@@ -93,6 +92,7 @@ class ED6OperandDescriptor(OperandDescriptor):
                 buf.extend(b'\n')
 
             if buf:
+                buf = replaceEmoji(buf)
                 objs.append(TextObject(value = buf.decode(self.format.encoding)))
                 buf.clear()
 

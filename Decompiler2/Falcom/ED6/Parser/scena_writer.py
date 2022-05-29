@@ -1,4 +1,3 @@
-from textwrap import wrap
 from Falcom.Common import *
 from Falcom import ED6
 from Falcom.ED6.Parser.scena_types import *

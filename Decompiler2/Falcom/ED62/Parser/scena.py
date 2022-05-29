@@ -1,7 +1,7 @@
 from Assembler.function import Function
-from Falcom.ED6.InstructionTable.utils import formatText
+from Falcom.ED62.InstructionTable.utils import formatText, replaceEmoji
 from .scena_types import *
-from ..InstructionTable import ScenaOpTable as ED6ScenaOpTable
+from ..InstructionTable import ScenaOpTable as ED62ScenaOpTable
 import pathlib
 
 __all__ = (
@@ -185,7 +185,7 @@ class ScenaParser:
 
         fs.Position = self.header.stringTableOffset
         data = fs.Read()
-        self.stringTable = [s.decode(GlobalConfig.DefaultEncoding) for s in data.split(b'\x00')]
+        self.stringTable = [replaceEmoji(s).decode(GlobalConfig.DefaultEncoding) for s in data.split(b'\x00')]
 
         createFunc(self.header.stringTableOffset, ScenaFunctionType.StringTable, self.stringTable)
         createFunc(self.header.entryPointOffset, ScenaFunctionType.EntryPoint, self.header.entryPoint)
@@ -201,7 +201,7 @@ class ScenaParser:
 
     def disasmFunctions(self):
         fs = self.fs
-        dis = Assembler.Disassembler(ED6ScenaOpTable)
+        dis = Assembler.Disassembler(ED62ScenaOpTable)
         ctx = Assembler.DisasmContext(fs)
 
         for func in self.functions:
@@ -221,7 +221,7 @@ class ScenaParser:
                         raise NotImplementedError(f'unknown func type: {func.type}')
 
     def generatePython(self, filename: str) -> List[str]:
-        formatter = ScenaFormatter(ED6ScenaOpTable, name = self.name)
+        formatter = ScenaFormatter(ED62ScenaOpTable, name = self.name)
 
         linefeed = '\n'
 
@@ -229,7 +229,7 @@ class ScenaParser:
 import sys
 sys.path.append(r'{pathlib.Path(__file__).parent.parent.parent.parent}')
 
-from Falcom.ED6.Parser.scena_writer_helper import *
+from Falcom.ED62.Parser.scena_writer_helper import *
 try:
     import {pathlib.Path(filename).stem.strip()}_hook
 except ModuleNotFoundError:

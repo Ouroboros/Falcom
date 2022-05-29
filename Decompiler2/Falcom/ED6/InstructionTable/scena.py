@@ -92,9 +92,8 @@ def Handler_04(ctx: InstructionHandlerContext):
 
                 *[f'{DefaultIndent}(0x{id.value:08X}, {formatOperand(o)}),' for id, o in cases],
                 f'{DefaultIndent}({SWITCH_DEFAULT}, {formatOperand(default)}),',
+                ')',
             ]
-
-            f.append(')')
 
             return f
 
@@ -229,8 +228,12 @@ def lambdaHandler(ctx: InstructionHandlerContext, extraCodeSize: int):
             chrId, threadId, codeSize = readAllOperands(ctx, 'WWB')
 
             pos = fs.Position + codeSize.value + extraCodeSize
+            # if pos == 0xde0d: ibp()
             block = ctx.disassembler.disasmBlock(ctx.disasmContext)
-            fs.Position = pos
+
+            if codeSize.value != 0:
+                # HACK: YLT buggy script
+                fs.Position = pos
 
             block.name = f'lambda_{block.offset:04X}'
             inst.operands = [chrId, threadId, block]
@@ -385,7 +388,7 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x01,  'Return',                       NoOperand,          Flags.EndBlock),
     inst(0x02,  'If',                           'EO'),
     inst(0x03,  'Jump',                         'O',                Flags.Jump),
-    inst(0x04,  'Switch',                       NoOperand,          Flags.EndBlock,     Handler_04),
+    inst(0x04,  'Switch',                       NoOperand,          Flags.EndBlock,         Handler_04),
     inst(0x05,  'Call',                         'CW'),                                                      # Call(scp index, func index)
     inst(0x06,  'NewScene',                     'LCCC'),
     inst(0x07,  'IdleLoop'),
@@ -405,7 +408,7 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x15,  'OP_15'),
     inst(0x16,  'OP_16',                        desc_16),
     inst(0x17,  'ShowSaveMenu'),
-    inst(0x18,  'OP_18'),
+    inst(0x18,  'OP_18',                        'B'),
     inst(0x19,  'EventBegin',                   'B'),
     inst(0x1A,  'EventEnd',                     'B'),
     inst(0x1B,  'OP_1B',                        'BBW'),
@@ -421,9 +424,9 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x25,  'OP_25',                        'WLLLLLBL'),
     inst(0x26,  'OP_26',                        'H'),
     inst(0x27,  'OP_27'),
-    inst(0x28,  'OP_28',                        NoOperand,                              handler = Handler_28),
-    inst(0x29,  'OP_29',                        NoOperand,                              handler = Handler_29),
-    inst(0x2A,  'OP_2A',                        NoOperand,                              handler = Handler_2A),
+    inst(0x28,  'OP_28',                        NoOperand,                                  handler = Handler_28),
+    inst(0x29,  'OP_29',                        NoOperand,                                  handler = Handler_29),
+    inst(0x2A,  'OP_2A',                        NoOperand,                                  handler = Handler_2A),
     inst(0x2B,  'OP_2B',                        'WW'),
     inst(0x2C,  'OP_2C',                        'WW'),
     inst(0x2D,  'FormationAddMember',           'BB'),
@@ -446,7 +449,7 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x3E,  'OP_3E',                        'Wh'),
     inst(0x3F,  'OP_3F',                        'Wh'),
     inst(0x40,  'OP_40',                        'W'),
-    inst(0x41,  'OP_41',                        NoOperand,          Flags.Empty,        Handler_41),
+    inst(0x41,  'OP_41',                        NoOperand,          Flags.Empty,            Handler_41),
     inst(0x42,  'OP_42',                        'B'),
     inst(0x43,  'CreateThread',                 'WBBW'),
     inst(0x44,  'TerminateThread',              'WB'),
@@ -471,7 +474,7 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x57,  'OP_57'),
     inst(0x58,  'CloseMessageWindow'),
     inst(0x59,  'OP_59'),
-    inst(0x5A,  'SetMessageWindowPos',          'hhhh'),  # SetMessageWindowPos(x, y, -1, -1)
+    inst(0x5A,  'SetMessageWindowPos',          'hhhh',             parameters = ('x', 'y', 'w', 'h')),
     inst(0x5B,  'ChrTalk',                      'WT'),
     inst(0x5C,  'NpcTalk',                      'WST'),
     inst(0x5D,  'Menu',                         'hhhcT',            Flags.FormatTextIndex),
@@ -500,7 +503,7 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x74,  'OP_74',                        'WLW'),
     inst(0x75,  'OP_75',                        'BLB'),
     inst(0x76,  'OP_76',                        'WLWLLLBB'),
-    inst(0x77,  'OP_77',                        'BBBLB'),
+    inst(0x77,  'OP_77',                        'BBBBL'),
     inst(0x78,  'OP_78',                        'BBB'),
     inst(0x79,  'OP_79',                        'BW'),
     inst(0x7A,  'OP_7A',                        'BW'),
@@ -523,10 +526,10 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x8B,  'OP_8B',                        'WLLW'),
     inst(0x8C,  'OP_8C',                        'Whh'),
     inst(0x8D,  'OP_8D',                        'Wiiiii'),
-    inst(0x8E,  'OP_8E',                        'WLLLLB'),
-    inst(0x8F,  'OP_8F',                        'WLLLLB'),
-    inst(0x90,  'OP_90',                        'WLLLLB'),
-    inst(0x91,  'OP_91',                        'WLLLLB'),
+    inst(0x8E,  'OP_8E',                        'WiiiiB'),
+    inst(0x8F,  'OP_8F',                        'WiiiiB'),
+    inst(0x90,  'OP_90',                        'WiiiiB'),
+    inst(0x91,  'OP_91',                        'WiiiiB'),
     inst(0x92,  'OP_92',                        'WWLLB'),
     inst(0x93,  'OP_93',                        'WWLLB'),
     inst(0x94,  'OP_94',                        'BWWLLB'),
