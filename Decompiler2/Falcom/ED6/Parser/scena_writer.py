@@ -1,3 +1,4 @@
+from textwrap import wrap
 from Falcom.Common import *
 from Falcom import ED6
 from Falcom.ED6.Parser.scena_types import *
@@ -84,7 +85,11 @@ class _ScenaWriter:
 
     def Lambda(self, name: str):
         def wrapper(f: Callable[[], Any]):
-            return LambdaHelper(name, f)
+            def wrapper():
+                self.addLabel(name)
+                f()
+
+            return LambdaHelper(name, wrapper)
 
         return wrapper
 
@@ -139,7 +144,11 @@ class _ScenaWriter:
         [fs.WriteUShort(o) for o in funcOffsets]
 
         hdr.stringTableOffset = fs.Position
-        fs.Write('\x00'.join(self.getDataFunc(ScenaFunctionType.StringTable)).encode(GlobalConfig.DefaultEncoding))
+        strtbl = '\x00'.join(self.getDataFunc(ScenaFunctionType.StringTable)).encode(GlobalConfig.DefaultEncoding)
+        if strtbl[-1] != 0:
+            strtbl += b'\x00'
+
+        fs.Write(strtbl)
 
         fs.Position = 0
         fs.Write(hdr.serialize())
@@ -165,12 +174,14 @@ class _ScenaWriter:
         chipCP = [ScenaChipData(c[1]) for c in chips if c[1] is not None]
 
         hdr.dataTable[ScenaDataTableType.ChipDataCH] = ScenaDataIndex(fs.Position, len(chipCH))
-        [fs.Write(ch.serialize()) for ch in chipCH]
-        fs.Write(b'\xFF')
+        if chipCH:
+            [fs.Write(ch.serialize()) for ch in chipCH]
+            fs.Write(b'\xFF')
 
         hdr.dataTable[ScenaDataTableType.ChipDataCP] = ScenaDataIndex(fs.Position, len(chipCP))
-        [fs.Write(cp.serialize()) for cp in chipCP]
-        fs.Write(b'\xFF')
+        if chipCP:
+            [fs.Write(cp.serialize()) for cp in chipCP]
+            fs.Write(b'\xFF')
 
         for index, type in (
                 (ScenaDataTableType.NpcData,        ScenaFunctionType.NpcData),
@@ -180,7 +191,6 @@ class _ScenaWriter:
             ):
             data = self.getDataFunc(type)
             hdr.dataTable[index] = ScenaDataIndex(fs.Position, len(data))
-            print(hdr.dataTable[index])
             [fs.Write(e.serialize()) for e in data]
 
         hdr.headerSize = fs.Position
@@ -228,6 +238,7 @@ class _ScenaWriter:
 
         context = Assembler.InstructionHandlerContext(Assembler.HandlerAction.Assemble, desc)
         context.disasmContext = Assembler.DisasmContext(fs)
+        context.instructionTable = self.instructionTable
         context.instruction = inst
         context.xrefs = self.xrefs
         context.eval = self.onEval

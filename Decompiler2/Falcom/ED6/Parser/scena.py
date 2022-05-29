@@ -185,10 +185,7 @@ class ScenaParser:
 
         fs.Position = self.header.stringTableOffset
         data = fs.Read()
-        if data[-1] == 0 and data[-2] != 0:
-            data = data[:-1]
-
-        self.stringTable = [s.decode(GlobalConfig.DefaultEncoding) for s in data.split(b'\x00\x00', maxsplit = 1)[0].split(b'\x00')]
+        self.stringTable = [s.decode(GlobalConfig.DefaultEncoding) for s in data.split(b'\x00')]
 
         createFunc(self.header.stringTableOffset, ScenaFunctionType.StringTable, self.stringTable)
         createFunc(self.header.entryPointOffset, ScenaFunctionType.EntryPoint, self.header.entryPoint)

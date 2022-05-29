@@ -40,7 +40,7 @@ def main():
     # output_dir = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\ouroboros\scripts\scena\dat\\'
 
     for s in scena:
-        break
+        # break
         iterlib.forEachFileMP(procfile, s, '*._SN', subdir = False)
         continue
 

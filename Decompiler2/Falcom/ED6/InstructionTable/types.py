@@ -135,11 +135,11 @@ class ED6OperandDescriptor(OperandDescriptor):
 
                 fs.WriteByte(code)
                 match code:
-                    case 0x10 | 0x17 | 0x19:
-                        fs.WriteUShort(value)
+                    case TextCtrlCode.SetColor:
+                        fs.WriteByte(value)
 
-                    case 0x11 | 0x12:
-                        fs.WriteULong(value)
+                    case TextCtrlCode.Item:
+                        fs.WriteUShort(value)
 
                     case _:
                         ibp()

@@ -238,9 +238,29 @@ def lambdaHandler(ctx: InstructionHandlerContext, extraCodeSize: int):
             return inst
 
         case HandlerAction.Assemble:
-            raise NotImplementedError
-            applyDescriptors(ctx, 'WWB')
-            return
+            inst = ctx.instruction
+            chrId, threadId, block = inst.operands
+            tbl = ctx.instructionTable
+            fs = ctx.disasmContext.fs
+
+            oprs = [chrId, threadId]
+
+            applyDescriptorsToOperands(oprs, 'WW')
+
+            tbl.writeOpCode(fs, inst.opcode)
+            tbl.writeAllOperands(ctx, oprs)
+
+            pos = fs.Position
+            fs.WriteByte(0)
+
+            block.value.func()
+
+            with fs.PositionSaver:
+                len = fs.Position - pos - extraCodeSize - 1
+                fs.Position = pos
+                fs.WriteByte(len)
+
+            return True
 
         case HandlerAction.Format:
             inst = ctx.instruction
