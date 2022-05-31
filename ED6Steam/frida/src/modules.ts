@@ -40,5 +40,6 @@ export const API = {
         GetAsyncKeyState        : new NativeFunction(Modules.USER32.getExportByName('GetAsyncKeyState'), 'int16', ['int32'], 'stdcall'),
         SystemParametersInfoW   : new NativeFunction(Modules.USER32.getExportByName('SystemParametersInfoW'), 'uint32', ['uint32', 'uint32', 'pointer', 'uint32'], 'stdcall'),
         SetWindowPos            : new NativeFunction(Modules.USER32.getExportByName('SetWindowPos'), 'uint32', ['pointer', 'pointer', 'int32', 'int32', 'int32', 'int32', 'uint32'], 'stdcall'),
+        SetProcessDpiAwarenessContext: new NativeFunction(Process.getModuleByName('USER32.dll').getExportByName('SetProcessDpiAwarenessContext'), 'uint32', ['int64']),
     },
 };
