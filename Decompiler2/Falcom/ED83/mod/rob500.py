@@ -68,7 +68,7 @@ def AnimeClipTable():
 
 @scena.Code('PreInit')
 def PreInit():
-    AnimeClipCtrl(0x0D, 0xFFFE)
+    AnimeClipCmd(0x0D, 0xFFFE)
 
     end = genLabel()
 
@@ -82,14 +82,14 @@ def PreInit():
 
     If(
         (
-            (Expr.Eval, "BattleCtrl(0x87)"),
+            (Expr.Eval, "BattleCmd(0x87)"),
             Expr.Ez,
             Expr.Return,
         ),
         end,
     )
 
-    AnimeClipCtrl(0x0E, 0xFFFE, 0x00000400, 'C_ROB004_DF1', 'WAIT')
+    AnimeClipCmd(0x0E, 0xFFFE, 0x00000400, 'C_ROB004_DF1', 'WAIT')
 
     def _loc_5509(): pass
 
@@ -226,12 +226,12 @@ def AniTurn():
 
 @scena.Code('AniBtlInit')
 def AniBtlInit():
-    ChrPhysicsCtrl(0x00, 0xFFFE, 0x00000010)
+    ChrPhysicsCmd(0x00, 0xFFFE, 0x00000010)
 
     OP_0A(
         0x05,
         (
-            (Expr.Eval, "BattleCtrl(0x62, 0xFFFE, 0x00)"),
+            (Expr.Eval, "BattleCmd(0x62, 0xFFFE, 0x00)"),
             Expr.Nop,
             Expr.Return,
         ),

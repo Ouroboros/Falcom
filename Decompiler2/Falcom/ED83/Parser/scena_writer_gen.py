@@ -455,7 +455,7 @@ def OP_2E(arg1: int, arg2: int, arg3: int, *args):
     assert isinstance(arg3, int)
     return _gScena.handleOpCode(0x2E, arg1, arg2, arg3, *args)
 
-def AnimeClipCtrl(type: int, chrId: int, *args):
+def AnimeClipCmd(type: int, chrId: int, *args):
     # 0x2F
     assert isinstance(type, int)
     assert isinstance(chrId, int)
@@ -467,7 +467,7 @@ def OP_2F(type: int, chrId: int, *args):
     assert isinstance(chrId, int)
     return _gScena.handleOpCode(0x2F, type, chrId, *args)
 
-def EquipCtrl(arg1: uint8, arg2: uint16, arg3: str, arg4: str, arg5: float32, arg6: float32, arg7: float32, arg8: float32, arg9: float32, arg10: float32, arg11: float32, arg12: float32, arg13: float32):
+def EquipCmd(arg1: uint8, arg2: uint16, arg3: str, arg4: str, arg5: float32, arg6: float32, arg7: float32, arg8: float32, arg9: float32, arg10: float32, arg11: float32, arg12: float32, arg13: float32):
     # 0x30
     assert isinstance(arg1, uint8)
     assert isinstance(arg2, uint16)
@@ -501,7 +501,7 @@ def OP_30(arg1: uint8, arg2: uint16, arg3: str, arg4: str, arg5: float32, arg6: 
     assert isinstance(arg13, float32)
     _gScena.handleOpCode(0x30, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13)
 
-def AssetCtrl(arg1: uint8, arg2: str):
+def AssetCmd(arg1: uint8, arg2: str):
     # 0x31
     assert isinstance(arg1, uint8)
     assert isinstance(arg2, str)
@@ -513,7 +513,7 @@ def OP_31(arg1: uint8, arg2: str):
     assert isinstance(arg2, str)
     _gScena.handleOpCode(0x31, arg1, arg2)
 
-def EffectCtrl(arg1: int, *args):
+def EffectCmd(arg1: int, *args):
     # 0x32
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x32, arg1, *args)
@@ -523,7 +523,7 @@ def OP_32(arg1: int, *args):
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x32, arg1, *args)
 
-def BattleCtrl(arg1: int, *args):
+def BattleCmd(arg1: int, *args):
     # 0x33
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x33, arg1, *args)
@@ -542,7 +542,7 @@ def OP_34(arg1: uint8, arg2: float32, arg3: float32, arg4: float32, arg5: float3
     assert isinstance(arg5, float32)
     _gScena.handleOpCode(0x34, arg1, arg2, arg3, arg4, arg5)
 
-def ChrPhysicsCtrl(arg1: uint8, arg2: uint16, arg3: uint32):
+def ChrPhysicsCmd(arg1: uint8, arg2: uint16, arg3: uint32):
     # 0x35
     assert isinstance(arg1, uint8)
     assert isinstance(arg2, uint16)
@@ -556,7 +556,7 @@ def OP_35(arg1: uint8, arg2: uint16, arg3: uint32):
     assert isinstance(arg3, uint32)
     _gScena.handleOpCode(0x35, arg1, arg2, arg3)
 
-def CameraCtrl(arg1: int, *args):
+def CameraCmd(arg1: int, *args):
     # 0x36
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x36, arg1, *args)
@@ -612,7 +612,7 @@ def OP_39(arg1: uint16, arg2: uint8, arg3: str, arg4: float32, arg5: float32, ar
     assert isinstance(arg6, uint32)
     _gScena.handleOpCode(0x39, arg1, arg2, arg3, arg4, arg5, arg6)
 
-def BGMCtrl(arg1: int, *args):
+def BGMCmd(arg1: int, *args):
     # 0x3A
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x3A, arg1, *args)
@@ -759,7 +759,7 @@ def OP_48(arg1: uint8, arg2: uint16, arg3: uint16, arg4: uint16):
     assert isinstance(arg4, uint16)
     _gScena.handleOpCode(0x48, arg1, arg2, arg3, arg4)
 
-def FormationCtrl(arg1: int, *args):
+def FormationCmd(arg1: int, *args):
     # 0x49
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x49, arg1, *args)
@@ -868,7 +868,7 @@ def OP_53(arg1: uint8, arg2: uint8):
     assert isinstance(arg2, uint8)
     _gScena.handleOpCode(0x53, arg1, arg2)
 
-def ModelCtrl(arg1: int, *args):
+def ModelCmd(arg1: int, *args):
     # 0x54
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x54, arg1, *args)
@@ -1022,7 +1022,7 @@ def OP_65(lookpoint: int, arg2: str, *args):
     assert isinstance(arg2, str)
     return _gScena.handleOpCode(0x65, lookpoint, arg2, *args)
 
-def CraftCtrl(arg1: int, arg2: int, *args):
+def CraftCmd(arg1: int, arg2: int, *args):
     # 0x66
     assert isinstance(arg1, int)
     assert isinstance(arg2, int)
@@ -1102,7 +1102,7 @@ def OP_70(arg1: int, *args):
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x70, arg1, *args)
 
-def QuestCtrl(arg1: int, arg2: int, *args):
+def QuestCmd(arg1: int, arg2: int, *args):
     # 0x72
     assert isinstance(arg1, int)
     assert isinstance(arg2, int)
@@ -1338,7 +1338,7 @@ def OP_97(arg1: uint8, arg2: uint16, arg3: uint32):
     assert isinstance(arg3, uint32)
     _gScena.handleOpCode(0x97, arg1, arg2, arg3)
 
-def WeatherCtrl(arg1: int, *args):
+def WeatherCmd(arg1: int, *args):
     # 0x98
     assert isinstance(arg1, int)
     return _gScena.handleOpCode(0x98, arg1, *args)

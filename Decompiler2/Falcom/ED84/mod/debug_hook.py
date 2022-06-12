@@ -157,8 +157,8 @@ def ChangeModelMenu(menuVar):
         height = 25,
     )
 
-    FormationCtrl(0x1B, 0x01)
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1B, 0x01)
+    FormationCmd(0x1C, 0x01)
 
 def FC_ActMenu_Ouroboros():
     def showDebugMenu():

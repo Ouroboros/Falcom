@@ -128,7 +128,7 @@ class ED83OperandDescriptor(OperandDescriptor):
     def writeExpression(self, context: InstructionHandlerContext, value: 'List[ScenaExpression]'):
         ScenaExpression.writeExpressions(context, [ScenaExpression(v[0], *v[1:]) if isinstance(v, tuple | list) else ScenaExpression(v) for v in value])
 
-    def writeText(self, context: InstructionHandlerContext, text: str) -> 'List[TextObject]':
+    def writeText(self, context: InstructionHandlerContext, text: str):
         fs = context.disasmContext.fs
 
         if isinstance(text, str):

@@ -1098,18 +1098,18 @@ def Init():
     OP_14(0x00000400)
     OP_3B(0x64, 1000, 0.0, 1.0)
     StopBGM(0, 0x01)
-    ModelCtrl(0x0D, 'TrialBox01', 'LP_trialbox01', 0x17B0, 0x270F)
+    ModelCmd(0x0D, 'TrialBox01', 'LP_trialbox01', 0x17B0, 0x270F)
 
     If(
         (
-            (Expr.Eval, "ModelCtrl(0x20)"),
+            (Expr.Eval, "ModelCmd(0x20)"),
             Expr.Ez,
             Expr.Return,
         ),
         'loc_3E36',
     )
 
-    FormationCtrl(0x1C, 0x00)
+    FormationCmd(0x1C, 0x00)
 
     def _loc_3E36(): pass
 
@@ -1434,7 +1434,7 @@ def TK_QuestUI_Debug():
     ExecExpressionWithVar(
         0x00,
         (
-            (Expr.Eval, "QuestCtrl(0x0001, 0x07)"),
+            (Expr.Eval, "QuestCmd(0x0001, 0x07)"),
             Expr.Nop,
             Expr.Return,
         ),
@@ -1531,8 +1531,8 @@ def TK_QuestUI_Debug():
         'loc_4E85',
     )
 
-    QuestCtrl(0x00C8, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00C8, 0x03, 0x02, 0x02)
+    QuestCmd(0x00C8, 0x03, 0x01, 0x02)
+    QuestCmd(0x00C8, 0x03, 0x02, 0x02)
 
     Jump('loc_4E91')
 
@@ -1540,24 +1540,24 @@ def TK_QuestUI_Debug():
 
     label('loc_4E85')
 
-    QuestCtrl(0x00C9, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00C9, 0x03, 0x02, 0x02)
+    QuestCmd(0x00C9, 0x03, 0x01, 0x02)
+    QuestCmd(0x00C9, 0x03, 0x02, 0x02)
 
     def _loc_4E91(): pass
 
     label('loc_4E91')
 
-    QuestCtrl(0x00CA, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00CA, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00CB, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00CB, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00CC, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00CC, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00CD, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00CD, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0001, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0002, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0003, 0x03, 0x02, 0x02)
+    QuestCmd(0x00CA, 0x03, 0x01, 0x02)
+    QuestCmd(0x00CA, 0x03, 0x02, 0x02)
+    QuestCmd(0x00CB, 0x03, 0x01, 0x02)
+    QuestCmd(0x00CB, 0x03, 0x02, 0x02)
+    QuestCmd(0x00CC, 0x03, 0x01, 0x02)
+    QuestCmd(0x00CC, 0x03, 0x02, 0x02)
+    QuestCmd(0x00CD, 0x03, 0x01, 0x02)
+    QuestCmd(0x00CD, 0x03, 0x02, 0x02)
+    QuestCmd(0x0001, 0x03, 0x02, 0x02)
+    QuestCmd(0x0002, 0x03, 0x02, 0x02)
+    QuestCmd(0x0003, 0x03, 0x02, 0x02)
     OP_9C(0x00, 0x00, 0x001F, 0x0001, 0x00000000)
     OP_9C(0x01)
 
@@ -1567,7 +1567,7 @@ def TK_QuestUI_Debug():
 
     label('loc_4EE5')
 
-    QuestCtrl(0x0004, 0x03, 0x02, 0x02)
+    QuestCmd(0x0004, 0x03, 0x02, 0x02)
     OP_9C(0x00, 0x00, 0x001F, 0x0001, 0x00000001)
     OP_9C(0x01)
     OP_9C(0x00, 0x01, 0x001F, 0x0001, 0x00000000)
@@ -1579,12 +1579,12 @@ def TK_QuestUI_Debug():
 
     label('loc_4F0A')
 
-    QuestCtrl(0x00CE, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00CE, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00CF, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00CF, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0005, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0006, 0x03, 0x02, 0x02)
+    QuestCmd(0x00CE, 0x03, 0x01, 0x02)
+    QuestCmd(0x00CE, 0x03, 0x02, 0x02)
+    QuestCmd(0x00CF, 0x03, 0x01, 0x02)
+    QuestCmd(0x00CF, 0x03, 0x02, 0x02)
+    QuestCmd(0x0005, 0x03, 0x02, 0x02)
+    QuestCmd(0x0006, 0x03, 0x02, 0x02)
 
     If(
         (
@@ -1594,13 +1594,13 @@ def TK_QuestUI_Debug():
         'loc_4F3F',
     )
 
-    QuestCtrl(0x0006, 0x06, 0x0002)
+    QuestCmd(0x0006, 0x06, 0x0002)
 
     def _loc_4F3F(): pass
 
     label('loc_4F3F')
 
-    QuestCtrl(0x0007, 0x03, 0x02, 0x02)
+    QuestCmd(0x0007, 0x03, 0x02, 0x02)
     OP_9C(0x00, 0x00, 0x001F, 0x0002, 0x00000000)
     OP_9C(0x01)
 
@@ -1610,7 +1610,7 @@ def TK_QuestUI_Debug():
 
     label('loc_4F57')
 
-    QuestCtrl(0x0008, 0x03, 0x02, 0x02)
+    QuestCmd(0x0008, 0x03, 0x02, 0x02)
 
     If(
         (
@@ -1620,7 +1620,7 @@ def TK_QuestUI_Debug():
         'loc_4F73',
     )
 
-    QuestCtrl(0x0008, 0x06, 0x0002)
+    QuestCmd(0x0008, 0x06, 0x0002)
 
     Jump('loc_4F84')
 
@@ -1636,7 +1636,7 @@ def TK_QuestUI_Debug():
         'loc_4F84',
     )
 
-    QuestCtrl(0x0008, 0x06, 0x0001)
+    QuestCmd(0x0008, 0x06, 0x0001)
 
     def _loc_4F84(): pass
 
@@ -1653,18 +1653,18 @@ def TK_QuestUI_Debug():
 
     label('loc_4FA3')
 
-    QuestCtrl(0x00D0, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00D0, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00D1, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00D1, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00D2, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00D2, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00D3, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00D3, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0009, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000A, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000B, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000C, 0x03, 0x02, 0x02)
+    QuestCmd(0x00D0, 0x03, 0x01, 0x02)
+    QuestCmd(0x00D0, 0x03, 0x02, 0x02)
+    QuestCmd(0x00D1, 0x03, 0x01, 0x02)
+    QuestCmd(0x00D1, 0x03, 0x02, 0x02)
+    QuestCmd(0x00D2, 0x03, 0x01, 0x02)
+    QuestCmd(0x00D2, 0x03, 0x02, 0x02)
+    QuestCmd(0x00D3, 0x03, 0x01, 0x02)
+    QuestCmd(0x00D3, 0x03, 0x02, 0x02)
+    QuestCmd(0x0009, 0x03, 0x02, 0x02)
+    QuestCmd(0x000A, 0x03, 0x02, 0x02)
+    QuestCmd(0x000B, 0x03, 0x02, 0x02)
+    QuestCmd(0x000C, 0x03, 0x02, 0x02)
 
     If(
         (
@@ -1674,7 +1674,7 @@ def TK_QuestUI_Debug():
         'loc_4FFC',
     )
 
-    QuestCtrl(0x000C, 0x06, 0x0002)
+    QuestCmd(0x000C, 0x06, 0x0002)
 
     def _loc_4FFC(): pass
 
@@ -1697,8 +1697,8 @@ def TK_QuestUI_Debug():
         'loc_502A',
     )
 
-    QuestCtrl(0x00D6, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00D6, 0x03, 0x02, 0x02)
+    QuestCmd(0x00D6, 0x03, 0x01, 0x02)
+    QuestCmd(0x00D6, 0x03, 0x02, 0x02)
 
     Jump('loc_5042')
 
@@ -1706,18 +1706,18 @@ def TK_QuestUI_Debug():
 
     label('loc_502A')
 
-    QuestCtrl(0x00D4, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00D4, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00D5, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00D5, 0x03, 0x02, 0x02)
+    QuestCmd(0x00D4, 0x03, 0x01, 0x02)
+    QuestCmd(0x00D4, 0x03, 0x02, 0x02)
+    QuestCmd(0x00D5, 0x03, 0x01, 0x02)
+    QuestCmd(0x00D5, 0x03, 0x02, 0x02)
 
     def _loc_5042(): pass
 
     label('loc_5042')
 
-    QuestCtrl(0x00D7, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00D7, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000D, 0x03, 0x02, 0x02)
+    QuestCmd(0x00D7, 0x03, 0x01, 0x02)
+    QuestCmd(0x00D7, 0x03, 0x02, 0x02)
+    QuestCmd(0x000D, 0x03, 0x02, 0x02)
     OP_9C(0x00, 0x00, 0xFFFF, 0x0003, 0x00000001)
     OP_9C(0x01)
     OP_9C(0x00, 0x01, 0xFFFF, 0x0003, 0x00000000)
@@ -1729,14 +1729,14 @@ def TK_QuestUI_Debug():
 
     label('loc_5073')
 
-    QuestCtrl(0x00D8, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00D8, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00D9, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00D9, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000E, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000F, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0010, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0011, 0x03, 0x02, 0x02)
+    QuestCmd(0x00D8, 0x03, 0x01, 0x02)
+    QuestCmd(0x00D8, 0x03, 0x02, 0x02)
+    QuestCmd(0x00D9, 0x03, 0x01, 0x02)
+    QuestCmd(0x00D9, 0x03, 0x02, 0x02)
+    QuestCmd(0x000E, 0x03, 0x02, 0x02)
+    QuestCmd(0x000F, 0x03, 0x02, 0x02)
+    QuestCmd(0x0010, 0x03, 0x02, 0x02)
+    QuestCmd(0x0011, 0x03, 0x02, 0x02)
     OP_9C(0x00, 0x00, 0x00CF, 0x0004, 0x00000001)
     OP_9C(0x01)
     OP_9C(0x00, 0x01, 0x00CF, 0x0004, 0x00000000)
@@ -1748,11 +1748,11 @@ def TK_QuestUI_Debug():
 
     label('loc_50C2')
 
-    QuestCtrl(0x00DA, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00DA, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00DB, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00DB, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0012, 0x03, 0x02, 0x02)
+    QuestCmd(0x00DA, 0x03, 0x01, 0x02)
+    QuestCmd(0x00DA, 0x03, 0x02, 0x02)
+    QuestCmd(0x00DB, 0x03, 0x01, 0x02)
+    QuestCmd(0x00DB, 0x03, 0x02, 0x02)
+    QuestCmd(0x0012, 0x03, 0x02, 0x02)
 
     If(
         (
@@ -1762,15 +1762,15 @@ def TK_QuestUI_Debug():
         'loc_50F1',
     )
 
-    QuestCtrl(0x0012, 0x06, 0x0002)
+    QuestCmd(0x0012, 0x06, 0x0002)
 
     def _loc_50F1(): pass
 
     label('loc_50F1')
 
-    QuestCtrl(0x0013, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0014, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0015, 0x03, 0x02, 0x02)
+    QuestCmd(0x0013, 0x03, 0x02, 0x02)
+    QuestCmd(0x0014, 0x03, 0x02, 0x02)
+    QuestCmd(0x0015, 0x03, 0x02, 0x02)
     OP_9C(0x00, 0x00, 0x00CF, 0x0005, 0x00000001)
     OP_9C(0x01)
     OP_9C(0x00, 0x01, 0x00CF, 0x0005, 0x00000000)
@@ -1790,8 +1790,8 @@ def TK_QuestUI_Debug():
         'loc_513E',
     )
 
-    QuestCtrl(0x00DE, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00DE, 0x03, 0x02, 0x02)
+    QuestCmd(0x00DE, 0x03, 0x01, 0x02)
+    QuestCmd(0x00DE, 0x03, 0x02, 0x02)
 
     Jump('loc_5166')
 
@@ -1807,8 +1807,8 @@ def TK_QuestUI_Debug():
         'loc_515A',
     )
 
-    QuestCtrl(0x00DD, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00DD, 0x03, 0x02, 0x02)
+    QuestCmd(0x00DD, 0x03, 0x01, 0x02)
+    QuestCmd(0x00DD, 0x03, 0x02, 0x02)
 
     Jump('loc_5166')
 
@@ -1816,22 +1816,22 @@ def TK_QuestUI_Debug():
 
     label('loc_515A')
 
-    QuestCtrl(0x00DC, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00DC, 0x03, 0x02, 0x02)
+    QuestCmd(0x00DC, 0x03, 0x01, 0x02)
+    QuestCmd(0x00DC, 0x03, 0x02, 0x02)
 
     def _loc_5166(): pass
 
     label('loc_5166')
 
-    QuestCtrl(0x00DF, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00DF, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00E0, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00E0, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00E1, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00E1, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0016, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0017, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0018, 0x03, 0x02, 0x02)
+    QuestCmd(0x00DF, 0x03, 0x01, 0x02)
+    QuestCmd(0x00DF, 0x03, 0x02, 0x02)
+    QuestCmd(0x00E0, 0x03, 0x01, 0x02)
+    QuestCmd(0x00E0, 0x03, 0x02, 0x02)
+    QuestCmd(0x00E1, 0x03, 0x01, 0x02)
+    QuestCmd(0x00E1, 0x03, 0x02, 0x02)
+    QuestCmd(0x0016, 0x03, 0x02, 0x02)
+    QuestCmd(0x0017, 0x03, 0x02, 0x02)
+    QuestCmd(0x0018, 0x03, 0x02, 0x02)
     OP_9C(0x00, 0x00, 0x002C, 0x0006, 0x00000001)
     OP_9C(0x01)
     OP_9C(0x00, 0x01, 0x002C, 0x0006, 0x00000000)
@@ -1843,15 +1843,15 @@ def TK_QuestUI_Debug():
 
     label('loc_51BB')
 
-    QuestCtrl(0x00E2, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00E2, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00E3, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00E3, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00E4, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00E4, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0019, 0x03, 0x02, 0x02)
-    QuestCtrl(0x001A, 0x03, 0x02, 0x02)
-    QuestCtrl(0x001B, 0x03, 0x02, 0x02)
+    QuestCmd(0x00E2, 0x03, 0x01, 0x02)
+    QuestCmd(0x00E2, 0x03, 0x02, 0x02)
+    QuestCmd(0x00E3, 0x03, 0x01, 0x02)
+    QuestCmd(0x00E3, 0x03, 0x02, 0x02)
+    QuestCmd(0x00E4, 0x03, 0x01, 0x02)
+    QuestCmd(0x00E4, 0x03, 0x02, 0x02)
+    QuestCmd(0x0019, 0x03, 0x02, 0x02)
+    QuestCmd(0x001A, 0x03, 0x02, 0x02)
+    QuestCmd(0x001B, 0x03, 0x02, 0x02)
     OP_9C(0x00, 0x00, 0x002C, 0x0007, 0x00000001)
     OP_9C(0x01)
     OP_9C(0x00, 0x01, 0x002C, 0x0007, 0x00000000)
@@ -1863,12 +1863,12 @@ def TK_QuestUI_Debug():
 
     label('loc_5210')
 
-    QuestCtrl(0x00E5, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00E5, 0x03, 0x02, 0x02)
-    QuestCtrl(0x00E6, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00E6, 0x03, 0x02, 0x02)
-    QuestCtrl(0x001C, 0x03, 0x02, 0x02)
-    QuestCtrl(0x001D, 0x03, 0x02, 0x02)
+    QuestCmd(0x00E5, 0x03, 0x01, 0x02)
+    QuestCmd(0x00E5, 0x03, 0x02, 0x02)
+    QuestCmd(0x00E6, 0x03, 0x01, 0x02)
+    QuestCmd(0x00E6, 0x03, 0x02, 0x02)
+    QuestCmd(0x001C, 0x03, 0x02, 0x02)
+    QuestCmd(0x001D, 0x03, 0x02, 0x02)
 
     If(
         (
@@ -1878,7 +1878,7 @@ def TK_QuestUI_Debug():
         'loc_524A',
     )
 
-    QuestCtrl(0x001D, 0x06, 0x0002)
+    QuestCmd(0x001D, 0x06, 0x0002)
 
     Jump('loc_525B')
 
@@ -1894,14 +1894,14 @@ def TK_QuestUI_Debug():
         'loc_525B',
     )
 
-    QuestCtrl(0x001D, 0x06, 0x0001)
+    QuestCmd(0x001D, 0x06, 0x0001)
 
     def _loc_525B(): pass
 
     label('loc_525B')
 
-    QuestCtrl(0x001E, 0x03, 0x02, 0x02)
-    QuestCtrl(0x001F, 0x03, 0x02, 0x02)
+    QuestCmd(0x001E, 0x03, 0x02, 0x02)
+    QuestCmd(0x001F, 0x03, 0x02, 0x02)
 
     If(
         (
@@ -1911,7 +1911,7 @@ def TK_QuestUI_Debug():
         'loc_527D',
     )
 
-    QuestCtrl(0x001F, 0x06, 0x0002)
+    QuestCmd(0x001F, 0x06, 0x0002)
 
     Jump('loc_528E')
 
@@ -1927,14 +1927,14 @@ def TK_QuestUI_Debug():
         'loc_528E',
     )
 
-    QuestCtrl(0x001F, 0x06, 0x0001)
+    QuestCmd(0x001F, 0x06, 0x0001)
 
     def _loc_528E(): pass
 
     label('loc_528E')
 
-    QuestCtrl(0x0020, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0021, 0x03, 0x02, 0x02)
+    QuestCmd(0x0020, 0x03, 0x02, 0x02)
+    QuestCmd(0x0021, 0x03, 0x02, 0x02)
 
     If(
         (
@@ -1944,7 +1944,7 @@ def TK_QuestUI_Debug():
         'loc_52B0',
     )
 
-    QuestCtrl(0x0021, 0x06, 0x0002)
+    QuestCmd(0x0021, 0x06, 0x0002)
 
     Jump('loc_52C1')
 
@@ -1960,7 +1960,7 @@ def TK_QuestUI_Debug():
         'loc_52C1',
     )
 
-    QuestCtrl(0x0021, 0x06, 0x0001)
+    QuestCmd(0x0021, 0x06, 0x0001)
 
     def _loc_52C1(): pass
 
@@ -1977,12 +1977,12 @@ def TK_QuestUI_Debug():
 
     label('loc_52E0')
 
-    QuestCtrl(0x00E7, 0x03, 0x01, 0x02)
-    QuestCtrl(0x00E7, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0022, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0023, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0024, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0025, 0x03, 0x02, 0x02)
+    QuestCmd(0x00E7, 0x03, 0x01, 0x02)
+    QuestCmd(0x00E7, 0x03, 0x02, 0x02)
+    QuestCmd(0x0022, 0x03, 0x02, 0x02)
+    QuestCmd(0x0023, 0x03, 0x02, 0x02)
+    QuestCmd(0x0024, 0x03, 0x02, 0x02)
+    QuestCmd(0x0025, 0x03, 0x02, 0x02)
 
     If(
         (
@@ -1992,13 +1992,13 @@ def TK_QuestUI_Debug():
         'loc_5315',
     )
 
-    QuestCtrl(0x0025, 0x06, 0x0002)
+    QuestCmd(0x0025, 0x06, 0x0002)
 
     def _loc_5315(): pass
 
     label('loc_5315')
 
-    QuestCtrl(0x0026, 0x03, 0x02, 0x02)
+    QuestCmd(0x0026, 0x03, 0x02, 0x02)
 
     If(
         (
@@ -2008,14 +2008,14 @@ def TK_QuestUI_Debug():
         'loc_532C',
     )
 
-    QuestCtrl(0x0026, 0x06, 0x0002)
+    QuestCmd(0x0026, 0x06, 0x0002)
 
     def _loc_532C(): pass
 
     label('loc_532C')
 
-    QuestCtrl(0x0027, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0028, 0x03, 0x02, 0x02)
+    QuestCmd(0x0027, 0x03, 0x02, 0x02)
+    QuestCmd(0x0028, 0x03, 0x02, 0x02)
     OP_9C(0x00, 0x00, 0x0013, 0x0009, 0x00000001)
     OP_9C(0x01)
     OP_9C(0x00, 0x01, 0x0013, 0x0009, 0x00000000)
@@ -2027,11 +2027,11 @@ def TK_QuestUI_Debug():
 
     label('loc_5357')
 
-    QuestCtrl(0x0029, 0x03, 0x02, 0x02)
-    QuestCtrl(0x002A, 0x03, 0x02, 0x02)
-    QuestCtrl(0x002B, 0x03, 0x02, 0x02)
-    QuestCtrl(0x002C, 0x03, 0x02, 0x02)
-    QuestCtrl(0x002D, 0x03, 0x02, 0x02)
+    QuestCmd(0x0029, 0x03, 0x02, 0x02)
+    QuestCmd(0x002A, 0x03, 0x02, 0x02)
+    QuestCmd(0x002B, 0x03, 0x02, 0x02)
+    QuestCmd(0x002C, 0x03, 0x02, 0x02)
+    QuestCmd(0x002D, 0x03, 0x02, 0x02)
 
     If(
         (
@@ -2041,7 +2041,7 @@ def TK_QuestUI_Debug():
         'loc_538B',
     )
 
-    QuestCtrl(0x002D, 0x06, 0x0002)
+    QuestCmd(0x002D, 0x06, 0x0002)
 
     Jump('loc_539C')
 
@@ -2057,13 +2057,13 @@ def TK_QuestUI_Debug():
         'loc_539C',
     )
 
-    QuestCtrl(0x002D, 0x06, 0x0001)
+    QuestCmd(0x002D, 0x06, 0x0001)
 
     def _loc_539C(): pass
 
     label('loc_539C')
 
-    QuestCtrl(0x002E, 0x03, 0x02, 0x02)
+    QuestCmd(0x002E, 0x03, 0x02, 0x02)
 
     If(
         (
@@ -2073,14 +2073,14 @@ def TK_QuestUI_Debug():
         'loc_53B3',
     )
 
-    QuestCtrl(0x002E, 0x06, 0x0002)
+    QuestCmd(0x002E, 0x06, 0x0002)
 
     def _loc_53B3(): pass
 
     label('loc_53B3')
 
-    QuestCtrl(0x002F, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0030, 0x03, 0x02, 0x02)
+    QuestCmd(0x002F, 0x03, 0x02, 0x02)
+    QuestCmd(0x0030, 0x03, 0x02, 0x02)
     OP_9C(0x00, 0x00, 0x0013, 0x000A, 0x00000001)
     OP_9C(0x01)
     OP_9C(0x00, 0x01, 0x0013, 0x000A, 0x00000000)
@@ -2145,205 +2145,205 @@ def TK_QuestUI_DebugQuestFlag():
 
     label('loc_5465')
 
-    QuestCtrl(0x002A, 0x03, 0x01, 0x02)
-    QuestCtrl(0x002A, 0x03, 0x02, 0x02)
-    QuestCtrl(0x002A, 0x04, 0x04, 0x02)
-    QuestCtrl(0x002B, 0x03, 0x01, 0x02)
-    QuestCtrl(0x002B, 0x03, 0x02, 0x02)
-    QuestCtrl(0x002B, 0x04, 0x04, 0x02)
-    QuestCtrl(0x002C, 0x03, 0x01, 0x02)
-    QuestCtrl(0x002C, 0x03, 0x02, 0x02)
-    QuestCtrl(0x002C, 0x04, 0x04, 0x02)
-    QuestCtrl(0x002D, 0x03, 0x01, 0x02)
-    QuestCtrl(0x002D, 0x03, 0x02, 0x02)
-    QuestCtrl(0x002D, 0x04, 0x04, 0x02)
-    QuestCtrl(0x002E, 0x03, 0x01, 0x02)
-    QuestCtrl(0x002E, 0x03, 0x02, 0x02)
-    QuestCtrl(0x002E, 0x04, 0x04, 0x02)
-    QuestCtrl(0x002F, 0x03, 0x01, 0x02)
-    QuestCtrl(0x002F, 0x03, 0x02, 0x02)
-    QuestCtrl(0x002F, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0030, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0030, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0030, 0x04, 0x04, 0x02)
+    QuestCmd(0x002A, 0x03, 0x01, 0x02)
+    QuestCmd(0x002A, 0x03, 0x02, 0x02)
+    QuestCmd(0x002A, 0x04, 0x04, 0x02)
+    QuestCmd(0x002B, 0x03, 0x01, 0x02)
+    QuestCmd(0x002B, 0x03, 0x02, 0x02)
+    QuestCmd(0x002B, 0x04, 0x04, 0x02)
+    QuestCmd(0x002C, 0x03, 0x01, 0x02)
+    QuestCmd(0x002C, 0x03, 0x02, 0x02)
+    QuestCmd(0x002C, 0x04, 0x04, 0x02)
+    QuestCmd(0x002D, 0x03, 0x01, 0x02)
+    QuestCmd(0x002D, 0x03, 0x02, 0x02)
+    QuestCmd(0x002D, 0x04, 0x04, 0x02)
+    QuestCmd(0x002E, 0x03, 0x01, 0x02)
+    QuestCmd(0x002E, 0x03, 0x02, 0x02)
+    QuestCmd(0x002E, 0x04, 0x04, 0x02)
+    QuestCmd(0x002F, 0x03, 0x01, 0x02)
+    QuestCmd(0x002F, 0x03, 0x02, 0x02)
+    QuestCmd(0x002F, 0x04, 0x04, 0x02)
+    QuestCmd(0x0030, 0x03, 0x01, 0x02)
+    QuestCmd(0x0030, 0x03, 0x02, 0x02)
+    QuestCmd(0x0030, 0x04, 0x04, 0x02)
 
     def _loc_54E3(): pass
 
     label('loc_54E3')
 
-    QuestCtrl(0x0029, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0029, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0029, 0x04, 0x04, 0x02)
+    QuestCmd(0x0029, 0x03, 0x01, 0x02)
+    QuestCmd(0x0029, 0x03, 0x02, 0x02)
+    QuestCmd(0x0029, 0x04, 0x04, 0x02)
 
     def _loc_54F5(): pass
 
     label('loc_54F5')
 
-    QuestCtrl(0x0022, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0022, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0022, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0023, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0023, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0023, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0024, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0024, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0024, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0025, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0025, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0025, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0026, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0026, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0026, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0027, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0027, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0027, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0028, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0028, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0028, 0x04, 0x04, 0x02)
+    QuestCmd(0x0022, 0x03, 0x01, 0x02)
+    QuestCmd(0x0022, 0x03, 0x02, 0x02)
+    QuestCmd(0x0022, 0x04, 0x04, 0x02)
+    QuestCmd(0x0023, 0x03, 0x01, 0x02)
+    QuestCmd(0x0023, 0x03, 0x02, 0x02)
+    QuestCmd(0x0023, 0x04, 0x04, 0x02)
+    QuestCmd(0x0024, 0x03, 0x01, 0x02)
+    QuestCmd(0x0024, 0x03, 0x02, 0x02)
+    QuestCmd(0x0024, 0x04, 0x04, 0x02)
+    QuestCmd(0x0025, 0x03, 0x01, 0x02)
+    QuestCmd(0x0025, 0x03, 0x02, 0x02)
+    QuestCmd(0x0025, 0x04, 0x04, 0x02)
+    QuestCmd(0x0026, 0x03, 0x01, 0x02)
+    QuestCmd(0x0026, 0x03, 0x02, 0x02)
+    QuestCmd(0x0026, 0x04, 0x04, 0x02)
+    QuestCmd(0x0027, 0x03, 0x01, 0x02)
+    QuestCmd(0x0027, 0x03, 0x02, 0x02)
+    QuestCmd(0x0027, 0x04, 0x04, 0x02)
+    QuestCmd(0x0028, 0x03, 0x01, 0x02)
+    QuestCmd(0x0028, 0x03, 0x02, 0x02)
+    QuestCmd(0x0028, 0x04, 0x04, 0x02)
 
     def _loc_5573(): pass
 
     label('loc_5573')
 
-    QuestCtrl(0x001C, 0x03, 0x01, 0x02)
-    QuestCtrl(0x001C, 0x03, 0x02, 0x02)
-    QuestCtrl(0x001C, 0x04, 0x04, 0x02)
-    QuestCtrl(0x001D, 0x03, 0x01, 0x02)
-    QuestCtrl(0x001D, 0x03, 0x02, 0x02)
-    QuestCtrl(0x001D, 0x04, 0x04, 0x02)
-    QuestCtrl(0x001E, 0x03, 0x01, 0x02)
-    QuestCtrl(0x001E, 0x03, 0x02, 0x02)
-    QuestCtrl(0x001E, 0x04, 0x04, 0x02)
-    QuestCtrl(0x001F, 0x03, 0x01, 0x02)
-    QuestCtrl(0x001F, 0x03, 0x02, 0x02)
-    QuestCtrl(0x001F, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0020, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0020, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0020, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0021, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0021, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0021, 0x04, 0x04, 0x02)
+    QuestCmd(0x001C, 0x03, 0x01, 0x02)
+    QuestCmd(0x001C, 0x03, 0x02, 0x02)
+    QuestCmd(0x001C, 0x04, 0x04, 0x02)
+    QuestCmd(0x001D, 0x03, 0x01, 0x02)
+    QuestCmd(0x001D, 0x03, 0x02, 0x02)
+    QuestCmd(0x001D, 0x04, 0x04, 0x02)
+    QuestCmd(0x001E, 0x03, 0x01, 0x02)
+    QuestCmd(0x001E, 0x03, 0x02, 0x02)
+    QuestCmd(0x001E, 0x04, 0x04, 0x02)
+    QuestCmd(0x001F, 0x03, 0x01, 0x02)
+    QuestCmd(0x001F, 0x03, 0x02, 0x02)
+    QuestCmd(0x001F, 0x04, 0x04, 0x02)
+    QuestCmd(0x0020, 0x03, 0x01, 0x02)
+    QuestCmd(0x0020, 0x03, 0x02, 0x02)
+    QuestCmd(0x0020, 0x04, 0x04, 0x02)
+    QuestCmd(0x0021, 0x03, 0x01, 0x02)
+    QuestCmd(0x0021, 0x03, 0x02, 0x02)
+    QuestCmd(0x0021, 0x04, 0x04, 0x02)
 
     def _loc_55DF(): pass
 
     label('loc_55DF')
 
-    QuestCtrl(0x0019, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0019, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0019, 0x04, 0x04, 0x02)
-    QuestCtrl(0x001A, 0x03, 0x01, 0x02)
-    QuestCtrl(0x001A, 0x03, 0x02, 0x02)
-    QuestCtrl(0x001A, 0x04, 0x04, 0x02)
-    QuestCtrl(0x001B, 0x03, 0x01, 0x02)
-    QuestCtrl(0x001B, 0x03, 0x02, 0x02)
-    QuestCtrl(0x001B, 0x04, 0x04, 0x02)
+    QuestCmd(0x0019, 0x03, 0x01, 0x02)
+    QuestCmd(0x0019, 0x03, 0x02, 0x02)
+    QuestCmd(0x0019, 0x04, 0x04, 0x02)
+    QuestCmd(0x001A, 0x03, 0x01, 0x02)
+    QuestCmd(0x001A, 0x03, 0x02, 0x02)
+    QuestCmd(0x001A, 0x04, 0x04, 0x02)
+    QuestCmd(0x001B, 0x03, 0x01, 0x02)
+    QuestCmd(0x001B, 0x03, 0x02, 0x02)
+    QuestCmd(0x001B, 0x04, 0x04, 0x02)
 
     def _loc_5615(): pass
 
     label('loc_5615')
 
-    QuestCtrl(0x0016, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0016, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0016, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0017, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0017, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0017, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0018, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0018, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0018, 0x04, 0x04, 0x02)
+    QuestCmd(0x0016, 0x03, 0x01, 0x02)
+    QuestCmd(0x0016, 0x03, 0x02, 0x02)
+    QuestCmd(0x0016, 0x04, 0x04, 0x02)
+    QuestCmd(0x0017, 0x03, 0x01, 0x02)
+    QuestCmd(0x0017, 0x03, 0x02, 0x02)
+    QuestCmd(0x0017, 0x04, 0x04, 0x02)
+    QuestCmd(0x0018, 0x03, 0x01, 0x02)
+    QuestCmd(0x0018, 0x03, 0x02, 0x02)
+    QuestCmd(0x0018, 0x04, 0x04, 0x02)
 
     def _loc_564B(): pass
 
     label('loc_564B')
 
-    QuestCtrl(0x0012, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0012, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0012, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0013, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0013, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0013, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0014, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0014, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0014, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0015, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0015, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0015, 0x04, 0x04, 0x02)
+    QuestCmd(0x0012, 0x03, 0x01, 0x02)
+    QuestCmd(0x0012, 0x03, 0x02, 0x02)
+    QuestCmd(0x0012, 0x04, 0x04, 0x02)
+    QuestCmd(0x0013, 0x03, 0x01, 0x02)
+    QuestCmd(0x0013, 0x03, 0x02, 0x02)
+    QuestCmd(0x0013, 0x04, 0x04, 0x02)
+    QuestCmd(0x0014, 0x03, 0x01, 0x02)
+    QuestCmd(0x0014, 0x03, 0x02, 0x02)
+    QuestCmd(0x0014, 0x04, 0x04, 0x02)
+    QuestCmd(0x0015, 0x03, 0x01, 0x02)
+    QuestCmd(0x0015, 0x03, 0x02, 0x02)
+    QuestCmd(0x0015, 0x04, 0x04, 0x02)
 
     def _loc_5693(): pass
 
     label('loc_5693')
 
-    QuestCtrl(0x000E, 0x03, 0x01, 0x02)
-    QuestCtrl(0x000E, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000E, 0x04, 0x04, 0x02)
-    QuestCtrl(0x000F, 0x03, 0x01, 0x02)
-    QuestCtrl(0x000F, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000F, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0010, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0010, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0010, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0011, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0011, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0011, 0x04, 0x04, 0x02)
+    QuestCmd(0x000E, 0x03, 0x01, 0x02)
+    QuestCmd(0x000E, 0x03, 0x02, 0x02)
+    QuestCmd(0x000E, 0x04, 0x04, 0x02)
+    QuestCmd(0x000F, 0x03, 0x01, 0x02)
+    QuestCmd(0x000F, 0x03, 0x02, 0x02)
+    QuestCmd(0x000F, 0x04, 0x04, 0x02)
+    QuestCmd(0x0010, 0x03, 0x01, 0x02)
+    QuestCmd(0x0010, 0x03, 0x02, 0x02)
+    QuestCmd(0x0010, 0x04, 0x04, 0x02)
+    QuestCmd(0x0011, 0x03, 0x01, 0x02)
+    QuestCmd(0x0011, 0x03, 0x02, 0x02)
+    QuestCmd(0x0011, 0x04, 0x04, 0x02)
 
     def _loc_56DB(): pass
 
     label('loc_56DB')
 
-    QuestCtrl(0x000D, 0x03, 0x01, 0x02)
-    QuestCtrl(0x000D, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000D, 0x04, 0x04, 0x02)
+    QuestCmd(0x000D, 0x03, 0x01, 0x02)
+    QuestCmd(0x000D, 0x03, 0x02, 0x02)
+    QuestCmd(0x000D, 0x04, 0x04, 0x02)
 
     def _loc_56ED(): pass
 
     label('loc_56ED')
 
-    QuestCtrl(0x0009, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0009, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0009, 0x04, 0x04, 0x02)
-    QuestCtrl(0x000A, 0x03, 0x01, 0x02)
-    QuestCtrl(0x000A, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000A, 0x04, 0x04, 0x02)
-    QuestCtrl(0x000B, 0x03, 0x01, 0x02)
-    QuestCtrl(0x000B, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000B, 0x04, 0x04, 0x02)
-    QuestCtrl(0x000C, 0x03, 0x01, 0x02)
-    QuestCtrl(0x000C, 0x03, 0x02, 0x02)
-    QuestCtrl(0x000C, 0x04, 0x04, 0x02)
+    QuestCmd(0x0009, 0x03, 0x01, 0x02)
+    QuestCmd(0x0009, 0x03, 0x02, 0x02)
+    QuestCmd(0x0009, 0x04, 0x04, 0x02)
+    QuestCmd(0x000A, 0x03, 0x01, 0x02)
+    QuestCmd(0x000A, 0x03, 0x02, 0x02)
+    QuestCmd(0x000A, 0x04, 0x04, 0x02)
+    QuestCmd(0x000B, 0x03, 0x01, 0x02)
+    QuestCmd(0x000B, 0x03, 0x02, 0x02)
+    QuestCmd(0x000B, 0x04, 0x04, 0x02)
+    QuestCmd(0x000C, 0x03, 0x01, 0x02)
+    QuestCmd(0x000C, 0x03, 0x02, 0x02)
+    QuestCmd(0x000C, 0x04, 0x04, 0x02)
 
     def _loc_5735(): pass
 
     label('loc_5735')
 
-    QuestCtrl(0x0005, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0005, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0005, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0006, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0006, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0006, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0007, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0007, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0007, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0008, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0008, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0008, 0x04, 0x04, 0x02)
+    QuestCmd(0x0005, 0x03, 0x01, 0x02)
+    QuestCmd(0x0005, 0x03, 0x02, 0x02)
+    QuestCmd(0x0005, 0x04, 0x04, 0x02)
+    QuestCmd(0x0006, 0x03, 0x01, 0x02)
+    QuestCmd(0x0006, 0x03, 0x02, 0x02)
+    QuestCmd(0x0006, 0x04, 0x04, 0x02)
+    QuestCmd(0x0007, 0x03, 0x01, 0x02)
+    QuestCmd(0x0007, 0x03, 0x02, 0x02)
+    QuestCmd(0x0007, 0x04, 0x04, 0x02)
+    QuestCmd(0x0008, 0x03, 0x01, 0x02)
+    QuestCmd(0x0008, 0x03, 0x02, 0x02)
+    QuestCmd(0x0008, 0x04, 0x04, 0x02)
 
     def _loc_577D(): pass
 
     label('loc_577D')
 
-    QuestCtrl(0x0001, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0001, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0001, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0002, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0002, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0002, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0003, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0003, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0003, 0x04, 0x04, 0x02)
-    QuestCtrl(0x0004, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0004, 0x03, 0x02, 0x02)
-    QuestCtrl(0x0004, 0x04, 0x04, 0x02)
+    QuestCmd(0x0001, 0x03, 0x01, 0x02)
+    QuestCmd(0x0001, 0x03, 0x02, 0x02)
+    QuestCmd(0x0001, 0x04, 0x04, 0x02)
+    QuestCmd(0x0002, 0x03, 0x01, 0x02)
+    QuestCmd(0x0002, 0x03, 0x02, 0x02)
+    QuestCmd(0x0002, 0x04, 0x04, 0x02)
+    QuestCmd(0x0003, 0x03, 0x01, 0x02)
+    QuestCmd(0x0003, 0x03, 0x02, 0x02)
+    QuestCmd(0x0003, 0x04, 0x04, 0x02)
+    QuestCmd(0x0004, 0x03, 0x01, 0x02)
+    QuestCmd(0x0004, 0x03, 0x02, 0x02)
+    QuestCmd(0x0004, 0x04, 0x04, 0x02)
 
     def _loc_57C5(): pass
 
@@ -3098,7 +3098,7 @@ def EV_Jump_QS_110():
         'loc_6A86',
     )
 
-    QuestCtrl(0x0001, 0x04, 0x02, 0x02)
+    QuestCmd(0x0001, 0x04, 0x02, 0x02)
 
     def _loc_6A86(): pass
 
@@ -3212,9 +3212,9 @@ def EV_Jump_QS_111():
         'loc_6CA4',
     )
 
-    QuestCtrl(0x0002, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0002, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0002, 0x04, 0x08, 0x02)
+    QuestCmd(0x0002, 0x04, 0x01, 0x02)
+    QuestCmd(0x0002, 0x04, 0x02, 0x02)
+    QuestCmd(0x0002, 0x04, 0x08, 0x02)
 
     def _loc_6CA4(): pass
 
@@ -3252,7 +3252,7 @@ def EV_Jump_QS_111():
     label('loc_6CE1')
 
     SetScenaFlags(ScenaFlag(0x05C4, 6, 0x2E26))
-    QuestCtrl(0x0002, 0x03, 0x01, 0x02)
+    QuestCmd(0x0002, 0x03, 0x01, 0x02)
 
     def _loc_6CEA(): pass
 
@@ -3369,9 +3369,9 @@ def EV_Jump_QS_112():
         'loc_6EBD',
     )
 
-    QuestCtrl(0x0003, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0003, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0003, 0x04, 0x08, 0x02)
+    QuestCmd(0x0003, 0x04, 0x01, 0x02)
+    QuestCmd(0x0003, 0x04, 0x02, 0x02)
+    QuestCmd(0x0003, 0x04, 0x08, 0x02)
 
     def _loc_6EBD(): pass
 
@@ -3411,7 +3411,7 @@ def EV_Jump_QS_112():
 
     label('loc_6EEF')
 
-    QuestCtrl(0x0003, 0x03, 0x01, 0x02)
+    QuestCmd(0x0003, 0x03, 0x01, 0x02)
 
     Jump('loc_6EFA')
 
@@ -3551,9 +3551,9 @@ def EV_Jump_QS_115():
         'loc_70B7',
     )
 
-    QuestCtrl(0x0004, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0004, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0004, 0x04, 0x08, 0x02)
+    QuestCmd(0x0004, 0x04, 0x01, 0x02)
+    QuestCmd(0x0004, 0x04, 0x02, 0x02)
+    QuestCmd(0x0004, 0x04, 0x08, 0x02)
 
     def _loc_70B7(): pass
 
@@ -3688,9 +3688,9 @@ def EV_Jump_QS_120():
         'loc_7225',
     )
 
-    QuestCtrl(0x0005, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0005, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0005, 0x04, 0x08, 0x02)
+    QuestCmd(0x0005, 0x04, 0x01, 0x02)
+    QuestCmd(0x0005, 0x04, 0x02, 0x02)
+    QuestCmd(0x0005, 0x04, 0x08, 0x02)
 
     def _loc_7225(): pass
 
@@ -3716,7 +3716,7 @@ def EV_Jump_QS_120():
 
     label('loc_7241')
 
-    QuestCtrl(0x0005, 0x03, 0x01, 0x02)
+    QuestCmd(0x0005, 0x03, 0x01, 0x02)
 
     Jump('loc_724C')
 
@@ -3832,9 +3832,9 @@ def EV_Jump_QS_121():
         'loc_74E3',
     )
 
-    QuestCtrl(0x0006, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0006, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0006, 0x04, 0x08, 0x02)
+    QuestCmd(0x0006, 0x04, 0x01, 0x02)
+    QuestCmd(0x0006, 0x04, 0x02, 0x02)
+    QuestCmd(0x0006, 0x04, 0x08, 0x02)
 
     def _loc_74E3(): pass
 
@@ -3892,7 +3892,7 @@ def EV_Jump_QS_121():
     label('loc_7543')
 
     SetScenaFlags(ScenaFlag(0x05C5, 3, 0x2E2B))
-    QuestCtrl(0x0006, 0x03, 0x01, 0x02)
+    QuestCmd(0x0006, 0x03, 0x01, 0x02)
 
     def _loc_754C(): pass
 
@@ -4050,7 +4050,7 @@ def EV_Jump_QS_122():
         'loc_770A',
     )
 
-    QuestCtrl(0x0007, 0x04, 0x02, 0x02)
+    QuestCmd(0x0007, 0x04, 0x02, 0x02)
 
     def _loc_770A(): pass
 
@@ -4162,9 +4162,9 @@ def EV_Jump_QS_125():
         'loc_789C',
     )
 
-    QuestCtrl(0x0008, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0008, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0008, 0x04, 0x08, 0x02)
+    QuestCmd(0x0008, 0x04, 0x01, 0x02)
+    QuestCmd(0x0008, 0x04, 0x02, 0x02)
+    QuestCmd(0x0008, 0x04, 0x08, 0x02)
 
     def _loc_789C(): pass
 
@@ -4192,7 +4192,7 @@ def EV_Jump_QS_125():
     label('loc_78C0')
 
     SetScenaFlags(ScenaFlag(0x05C6, 2, 0x2E32))
-    QuestCtrl(0x0008, 0x03, 0x01, 0x02)
+    QuestCmd(0x0008, 0x03, 0x01, 0x02)
 
     ExecExpressionWithVar(
         0xF9,
@@ -4394,9 +4394,9 @@ def EV_Jump_QS_130():
         'loc_7D98',
     )
 
-    QuestCtrl(0x0009, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0009, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0009, 0x04, 0x08, 0x02)
+    QuestCmd(0x0009, 0x04, 0x01, 0x02)
+    QuestCmd(0x0009, 0x04, 0x02, 0x02)
+    QuestCmd(0x0009, 0x04, 0x08, 0x02)
 
     def _loc_7D98(): pass
 
@@ -4493,7 +4493,7 @@ def EV_Jump_QS_130():
 
     label('loc_7E25')
 
-    QuestCtrl(0x0009, 0x03, 0x01, 0x02)
+    QuestCmd(0x0009, 0x03, 0x01, 0x02)
 
     Jump('loc_7E30')
 
@@ -4707,9 +4707,9 @@ def EV_Jump_QS_131():
         'loc_8191',
     )
 
-    QuestCtrl(0x000A, 0x04, 0x01, 0x02)
-    QuestCtrl(0x000A, 0x04, 0x02, 0x02)
-    QuestCtrl(0x000A, 0x04, 0x08, 0x02)
+    QuestCmd(0x000A, 0x04, 0x01, 0x02)
+    QuestCmd(0x000A, 0x04, 0x02, 0x02)
+    QuestCmd(0x000A, 0x04, 0x08, 0x02)
 
     def _loc_8191(): pass
 
@@ -4749,7 +4749,7 @@ def EV_Jump_QS_131():
 
     label('loc_81C3')
 
-    QuestCtrl(0x000A, 0x03, 0x01, 0x02)
+    QuestCmd(0x000A, 0x03, 0x01, 0x02)
 
     Jump('loc_81CE')
 
@@ -4888,7 +4888,7 @@ def EV_Jump_QS_132():
         'loc_833E',
     )
 
-    QuestCtrl(0x000B, 0x04, 0x02, 0x02)
+    QuestCmd(0x000B, 0x04, 0x02, 0x02)
 
     def _loc_833E(): pass
 
@@ -5004,9 +5004,9 @@ def EV_Jump_QS_133():
         'loc_85DB',
     )
 
-    QuestCtrl(0x000C, 0x04, 0x01, 0x02)
-    QuestCtrl(0x000C, 0x04, 0x02, 0x02)
-    QuestCtrl(0x000C, 0x04, 0x08, 0x02)
+    QuestCmd(0x000C, 0x04, 0x01, 0x02)
+    QuestCmd(0x000C, 0x04, 0x02, 0x02)
+    QuestCmd(0x000C, 0x04, 0x08, 0x02)
 
     def _loc_85DB(): pass
 
@@ -5062,7 +5062,7 @@ def EV_Jump_QS_133():
     label('loc_862B')
 
     SetScenaFlags(ScenaFlag(0x05C3, 3, 0x2E1B))
-    QuestCtrl(0x000C, 0x03, 0x01, 0x02)
+    QuestCmd(0x000C, 0x03, 0x01, 0x02)
 
     def _loc_8634(): pass
 
@@ -5235,9 +5235,9 @@ def EV_Jump_QS_150():
         'loc_88EA',
     )
 
-    QuestCtrl(0x000D, 0x04, 0x01, 0x02)
-    QuestCtrl(0x000D, 0x04, 0x02, 0x02)
-    QuestCtrl(0x000D, 0x04, 0x08, 0x02)
+    QuestCmd(0x000D, 0x04, 0x01, 0x02)
+    QuestCmd(0x000D, 0x04, 0x02, 0x02)
+    QuestCmd(0x000D, 0x04, 0x08, 0x02)
 
     def _loc_88EA(): pass
 
@@ -5268,8 +5268,8 @@ def EV_Jump_QS_150():
 
     SetScenaFlags(ScenaFlag(0x05D0, 3, 0x2E83))
     SetScenaFlags(ScenaFlag(0x05C4, 2, 0x2E22))
-    QuestCtrl(0x000D, 0x03, 0x01, 0x02)
-    FormationCtrl(0x1C, 0x01)
+    QuestCmd(0x000D, 0x03, 0x01, 0x02)
+    FormationCmd(0x1C, 0x01)
 
     def _loc_8928(): pass
 
@@ -5419,7 +5419,7 @@ def EV_Jump_QS_220():
         'loc_8C6D',
     )
 
-    QuestCtrl(0x000E, 0x04, 0x02, 0x02)
+    QuestCmd(0x000E, 0x04, 0x02, 0x02)
 
     def _loc_8C6D(): pass
 
@@ -5487,8 +5487,8 @@ def EV_Jump_QS_220():
 
     label('loc_8CCB')
 
-    QuestCtrl(0x000E, 0x03, 0x01, 0x02)
-    FormationCtrl(0x1C, 0x01)
+    QuestCmd(0x000E, 0x03, 0x01, 0x02)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_8CD9')
 
@@ -5651,7 +5651,7 @@ def EV_Jump_QS_221():
 
     Call(ScriptId.Debug, 'EV_DoJumpSet_02')
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     def _loc_8FD1(): pass
 
@@ -5668,9 +5668,9 @@ def EV_Jump_QS_221():
         'loc_8FF2',
     )
 
-    QuestCtrl(0x000F, 0x04, 0x01, 0x02)
-    QuestCtrl(0x000F, 0x04, 0x02, 0x02)
-    QuestCtrl(0x000F, 0x04, 0x08, 0x02)
+    QuestCmd(0x000F, 0x04, 0x01, 0x02)
+    QuestCmd(0x000F, 0x04, 0x02, 0x02)
+    QuestCmd(0x000F, 0x04, 0x08, 0x02)
 
     def _loc_8FF2(): pass
 
@@ -5713,7 +5713,7 @@ def EV_Jump_QS_221():
 
     label('loc_9032')
 
-    QuestCtrl(0x000F, 0x03, 0x01, 0x02)
+    QuestCmd(0x000F, 0x03, 0x01, 0x02)
 
     Jump('loc_903D')
 
@@ -5861,8 +5861,8 @@ def EV_Jump_QS_222():
         'loc_91D8',
     )
 
-    QuestCtrl(0x0010, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0010, 0x04, 0x02, 0x02)
+    QuestCmd(0x0010, 0x03, 0x01, 0x02)
+    QuestCmd(0x0010, 0x04, 0x02, 0x02)
 
     def _loc_91D8(): pass
 
@@ -5881,7 +5881,7 @@ def EV_Jump_QS_222():
 
     label('loc_91E9')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
     MapJump((0xDD, 'r1210'), (0xDD, 'QS222_01_JUMP'), 0x00)
 
     Jump('loc_920E')
@@ -5983,9 +5983,9 @@ def EV_Jump_QS_223():
         'loc_957F',
     )
 
-    QuestCtrl(0x0011, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0011, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0011, 0x04, 0x08, 0x02)
+    QuestCmd(0x0011, 0x04, 0x01, 0x02)
+    QuestCmd(0x0011, 0x04, 0x02, 0x02)
+    QuestCmd(0x0011, 0x04, 0x08, 0x02)
 
     def _loc_957F(): pass
 
@@ -6071,7 +6071,7 @@ def EV_Jump_QS_223():
 
     SetScenaFlags(ScenaFlag(0x0764, 0, 0x3B20))
     SetScenaFlags(ScenaFlag(0x0759, 4, 0x3ACC))
-    QuestCtrl(0x0011, 0x03, 0x01, 0x02)
+    QuestCmd(0x0011, 0x03, 0x01, 0x02)
 
     def _loc_960A(): pass
 
@@ -6274,7 +6274,7 @@ def EV_Jump_QS_230():
 
     Call(ScriptId.Debug, 'EV_DoJumpSet_02')
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     def _loc_9BED(): pass
 
@@ -6291,9 +6291,9 @@ def EV_Jump_QS_230():
         'loc_9C0E',
     )
 
-    QuestCtrl(0x0012, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0012, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0012, 0x04, 0x08, 0x02)
+    QuestCmd(0x0012, 0x04, 0x01, 0x02)
+    QuestCmd(0x0012, 0x04, 0x02, 0x02)
+    QuestCmd(0x0012, 0x04, 0x08, 0x02)
 
     def _loc_9C0E(): pass
 
@@ -6379,7 +6379,7 @@ def EV_Jump_QS_230():
 
     label('loc_9CA2')
 
-    QuestCtrl(0x0012, 0x03, 0x01, 0x02)
+    QuestCmd(0x0012, 0x03, 0x01, 0x02)
 
     Jump('loc_9CAD')
 
@@ -6478,7 +6478,7 @@ def EV_Jump_QS_231():
 
     Call(ScriptId.Debug, 'EV_DoJumpSet_02')
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     def _loc_9EE3(): pass
 
@@ -6495,9 +6495,9 @@ def EV_Jump_QS_231():
         'loc_9F04',
     )
 
-    QuestCtrl(0x0013, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0013, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0013, 0x04, 0x08, 0x02)
+    QuestCmd(0x0013, 0x04, 0x01, 0x02)
+    QuestCmd(0x0013, 0x04, 0x02, 0x02)
+    QuestCmd(0x0013, 0x04, 0x08, 0x02)
 
     def _loc_9F04(): pass
 
@@ -6536,7 +6536,7 @@ def EV_Jump_QS_231():
 
     label('loc_9F4C')
 
-    QuestCtrl(0x0013, 0x03, 0x01, 0x02)
+    QuestCmd(0x0013, 0x03, 0x01, 0x02)
 
     Jump('loc_9F57')
 
@@ -6693,8 +6693,8 @@ def EV_Jump_QS_232():
         'loc_A114',
     )
 
-    QuestCtrl(0x0014, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0014, 0x04, 0x02, 0x02)
+    QuestCmd(0x0014, 0x03, 0x01, 0x02)
+    QuestCmd(0x0014, 0x04, 0x02, 0x02)
 
     def _loc_A114(): pass
 
@@ -6839,9 +6839,9 @@ def EV_Jump_QS_233():
         'loc_A3CF',
     )
 
-    QuestCtrl(0x0015, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0015, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0015, 0x04, 0x08, 0x02)
+    QuestCmd(0x0015, 0x04, 0x01, 0x02)
+    QuestCmd(0x0015, 0x04, 0x02, 0x02)
+    QuestCmd(0x0015, 0x04, 0x08, 0x02)
 
     def _loc_A3CF(): pass
 
@@ -7072,9 +7072,9 @@ def EV_Jump_QS_240():
         'loc_A789',
     )
 
-    QuestCtrl(0x0016, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0016, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0016, 0x04, 0x08, 0x02)
+    QuestCmd(0x0016, 0x04, 0x01, 0x02)
+    QuestCmd(0x0016, 0x04, 0x02, 0x02)
+    QuestCmd(0x0016, 0x04, 0x08, 0x02)
 
     def _loc_A789(): pass
 
@@ -7135,9 +7135,9 @@ def EV_Jump_QS_240():
 
     label('loc_A7DC')
 
-    QuestCtrl(0x0016, 0x03, 0x01, 0x02)
+    QuestCmd(0x0016, 0x03, 0x01, 0x02)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_A800')
 
@@ -7298,7 +7298,7 @@ def EV_Jump_QS_241():
 
     Call(ScriptId.Debug, 'EV_DoJumpSet_02')
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     def _loc_ACAB(): pass
 
@@ -7315,9 +7315,9 @@ def EV_Jump_QS_241():
         'loc_ACCC',
     )
 
-    QuestCtrl(0x0016, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0016, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0016, 0x04, 0x08, 0x02)
+    QuestCmd(0x0016, 0x04, 0x01, 0x02)
+    QuestCmd(0x0016, 0x04, 0x02, 0x02)
+    QuestCmd(0x0016, 0x04, 0x08, 0x02)
 
     def _loc_ACCC(): pass
 
@@ -7409,7 +7409,7 @@ def EV_Jump_QS_241():
 
     label('loc_AD59')
 
-    QuestCtrl(0x0017, 0x03, 0x01, 0x02)
+    QuestCmd(0x0017, 0x03, 0x01, 0x02)
 
     Jump('loc_AD64')
 
@@ -7620,8 +7620,8 @@ def EV_Jump_QS_242():
         'loc_AFF4',
     )
 
-    QuestCtrl(0x0018, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0018, 0x04, 0x02, 0x02)
+    QuestCmd(0x0018, 0x03, 0x01, 0x02)
+    QuestCmd(0x0018, 0x04, 0x02, 0x02)
 
     def _loc_AFF4(): pass
 
@@ -7640,7 +7640,7 @@ def EV_Jump_QS_242():
 
     label('loc_B005')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
     MapJump((0xDD, 'r7000'), (0xDD, 'QS242_01_JUMP'), 0x00)
 
     Jump('loc_B02A')
@@ -7721,7 +7721,7 @@ def EV_Jump_QS_250():
 
     Call(ScriptId.Debug, 'EV_DoJumpSet_02')
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     def _loc_B233(): pass
 
@@ -7738,9 +7738,9 @@ def EV_Jump_QS_250():
         'loc_B254',
     )
 
-    QuestCtrl(0x0019, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0019, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0019, 0x04, 0x08, 0x02)
+    QuestCmd(0x0019, 0x04, 0x01, 0x02)
+    QuestCmd(0x0019, 0x04, 0x02, 0x02)
+    QuestCmd(0x0019, 0x04, 0x08, 0x02)
 
     def _loc_B254(): pass
 
@@ -7794,7 +7794,7 @@ def EV_Jump_QS_250():
 
     label('loc_B29C')
 
-    QuestCtrl(0x0019, 0x03, 0x01, 0x02)
+    QuestCmd(0x0019, 0x03, 0x01, 0x02)
 
     Jump('loc_B2A7')
 
@@ -7960,9 +7960,9 @@ def EV_Jump_QS_251():
         'loc_B6D1',
     )
 
-    QuestCtrl(0x001A, 0x04, 0x01, 0x02)
-    QuestCtrl(0x001A, 0x04, 0x02, 0x02)
-    QuestCtrl(0x001A, 0x04, 0x08, 0x02)
+    QuestCmd(0x001A, 0x04, 0x01, 0x02)
+    QuestCmd(0x001A, 0x04, 0x02, 0x02)
+    QuestCmd(0x001A, 0x04, 0x08, 0x02)
 
     def _loc_B6D1(): pass
 
@@ -8045,8 +8045,8 @@ def EV_Jump_QS_251():
 
     label('loc_B748')
 
-    QuestCtrl(0x001A, 0x03, 0x01, 0x02)
-    FormationCtrl(0x1C, 0x01)
+    QuestCmd(0x001A, 0x03, 0x01, 0x02)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_B756')
 
@@ -8239,8 +8239,8 @@ def EV_Jump_QS_252():
         'loc_B9A4',
     )
 
-    QuestCtrl(0x001B, 0x03, 0x01, 0x02)
-    QuestCtrl(0x001B, 0x04, 0x02, 0x02)
+    QuestCmd(0x001B, 0x03, 0x01, 0x02)
+    QuestCmd(0x001B, 0x04, 0x02, 0x02)
 
     def _loc_B9A4(): pass
 
@@ -8259,7 +8259,7 @@ def EV_Jump_QS_252():
 
     label('loc_B9B5')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
     MapJump((0xDD, 'r6000'), (0xDD, 'QS252_01_JUMP'), 0x00)
 
     Jump('loc_B9DA')
@@ -8563,7 +8563,7 @@ def EV_Jump_QS_320():
     label('loc_BEFA')
 
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_BF18')
 
@@ -8582,9 +8582,9 @@ def EV_Jump_QS_320():
         'loc_BF39',
     )
 
-    QuestCtrl(0x001C, 0x04, 0x01, 0x02)
-    QuestCtrl(0x001C, 0x04, 0x02, 0x02)
-    QuestCtrl(0x001C, 0x04, 0x08, 0x02)
+    QuestCmd(0x001C, 0x04, 0x01, 0x02)
+    QuestCmd(0x001C, 0x04, 0x02, 0x02)
+    QuestCmd(0x001C, 0x04, 0x08, 0x02)
 
     def _loc_BF39(): pass
 
@@ -8652,7 +8652,7 @@ def EV_Jump_QS_320():
 
     label('loc_BF97')
 
-    QuestCtrl(0x001C, 0x03, 0x01, 0x02)
+    QuestCmd(0x001C, 0x03, 0x01, 0x02)
 
     Jump('loc_BFA2')
 
@@ -8767,9 +8767,9 @@ def EV_Jump_QS_321():
         'loc_C1F5',
     )
 
-    QuestCtrl(0x001D, 0x04, 0x01, 0x02)
-    QuestCtrl(0x001D, 0x04, 0x02, 0x02)
-    QuestCtrl(0x001D, 0x04, 0x08, 0x02)
+    QuestCmd(0x001D, 0x04, 0x01, 0x02)
+    QuestCmd(0x001D, 0x04, 0x02, 0x02)
+    QuestCmd(0x001D, 0x04, 0x08, 0x02)
 
     def _loc_C1F5(): pass
 
@@ -8824,7 +8824,7 @@ def EV_Jump_QS_321():
 
     label('loc_C240')
 
-    QuestCtrl(0x001D, 0x03, 0x01, 0x02)
+    QuestCmd(0x001D, 0x03, 0x01, 0x02)
 
     If(
         (
@@ -8841,7 +8841,7 @@ def EV_Jump_QS_321():
         'loc_C261',
     )
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     def _loc_C261(): pass
 
@@ -9002,8 +9002,8 @@ def EV_Jump_QS_322():
         'loc_C424',
     )
 
-    QuestCtrl(0x001E, 0x03, 0x01, 0x02)
-    QuestCtrl(0x001E, 0x04, 0x02, 0x02)
+    QuestCmd(0x001E, 0x03, 0x01, 0x02)
+    QuestCmd(0x001E, 0x04, 0x02, 0x02)
 
     def _loc_C424(): pass
 
@@ -9022,7 +9022,7 @@ def EV_Jump_QS_322():
 
     label('loc_C435')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
     MapJump((0xDD, 'r5200'), (0xDD, 'QS322_01_JUMP'), 0x00)
 
     Jump('loc_C45A')
@@ -9117,9 +9117,9 @@ def EV_Jump_QS_323():
         'loc_C5FD',
     )
 
-    QuestCtrl(0x001F, 0x04, 0x01, 0x02)
-    QuestCtrl(0x001F, 0x04, 0x02, 0x02)
-    QuestCtrl(0x001F, 0x04, 0x08, 0x02)
+    QuestCmd(0x001F, 0x04, 0x01, 0x02)
+    QuestCmd(0x001F, 0x04, 0x02, 0x02)
+    QuestCmd(0x001F, 0x04, 0x08, 0x02)
 
     def _loc_C5FD(): pass
 
@@ -9160,8 +9160,8 @@ def EV_Jump_QS_323():
 
     label('loc_C632')
 
-    QuestCtrl(0x001F, 0x03, 0x01, 0x02)
-    FormationCtrl(0x1C, 0x01)
+    QuestCmd(0x001F, 0x03, 0x01, 0x02)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_C640')
 
@@ -9316,9 +9316,9 @@ def EV_Jump_QS_324():
         'loc_CC1F',
     )
 
-    QuestCtrl(0x0020, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0020, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0020, 0x04, 0x08, 0x02)
+    QuestCmd(0x0020, 0x04, 0x01, 0x02)
+    QuestCmd(0x0020, 0x04, 0x02, 0x02)
+    QuestCmd(0x0020, 0x04, 0x08, 0x02)
 
     def _loc_CC1F(): pass
 
@@ -9377,8 +9377,8 @@ def EV_Jump_QS_324():
 
     SetScenaFlags(ScenaFlag(0x0881, 3, 0x440B))
     SetScenaFlags(ScenaFlag(0x08A0, 2, 0x4502))
-    QuestCtrl(0x0020, 0x03, 0x01, 0x02)
-    FormationCtrl(0x1C, 0x01)
+    QuestCmd(0x0020, 0x03, 0x01, 0x02)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_CCE0')
 
@@ -9412,8 +9412,8 @@ def EV_Jump_QS_324():
 
     SetScenaFlags(ScenaFlag(0x0881, 3, 0x440B))
     SetScenaFlags(ScenaFlag(0x08A0, 2, 0x4502))
-    QuestCtrl(0x0020, 0x03, 0x01, 0x02)
-    FormationCtrl(0x1C, 0x01)
+    QuestCmd(0x0020, 0x03, 0x01, 0x02)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_CCE0')
 
@@ -9580,8 +9580,8 @@ def EV_Jump_QS_324():
 
     OP_71(0x00, 0x440B, 0x441A)
     SetScenaFlags(ScenaFlag(0x08A0, 2, 0x4502))
-    QuestCtrl(0x0020, 0x03, 0x01, 0x02)
-    FormationCtrl(0x1C, 0x01)
+    QuestCmd(0x0020, 0x03, 0x01, 0x02)
+    FormationCmd(0x1C, 0x01)
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x73F0, 0x0))
 
     Jump('loc_CF64')
@@ -9675,9 +9675,9 @@ def EV_Jump_QS_325():
         'loc_D0C4',
     )
 
-    QuestCtrl(0x0021, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0021, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0021, 0x04, 0x08, 0x02)
+    QuestCmd(0x0021, 0x04, 0x01, 0x02)
+    QuestCmd(0x0021, 0x04, 0x02, 0x02)
+    QuestCmd(0x0021, 0x04, 0x08, 0x02)
 
     def _loc_D0C4(): pass
 
@@ -9705,7 +9705,7 @@ def EV_Jump_QS_325():
 
     SetScenaFlags(ScenaFlag(0x0883, 4, 0x441C))
     SetScenaFlags(ScenaFlag(0x08A0, 3, 0x4503))
-    QuestCtrl(0x0021, 0x03, 0x01, 0x02)
+    QuestCmd(0x0021, 0x03, 0x01, 0x02)
 
     Jump('loc_D0F1')
 
@@ -9832,7 +9832,7 @@ def EV_Jump_QS_340():
 
     Call(ScriptId.Debug, 'EV_DoJumpSet_03')
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     def _loc_D587(): pass
 
@@ -9849,9 +9849,9 @@ def EV_Jump_QS_340():
         'loc_D5A8',
     )
 
-    QuestCtrl(0x0022, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0022, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0022, 0x04, 0x08, 0x02)
+    QuestCmd(0x0022, 0x04, 0x01, 0x02)
+    QuestCmd(0x0022, 0x04, 0x02, 0x02)
+    QuestCmd(0x0022, 0x04, 0x08, 0x02)
 
     def _loc_D5A8(): pass
 
@@ -9961,7 +9961,7 @@ def EV_Jump_QS_340():
 
     label('loc_D648')
 
-    QuestCtrl(0x0022, 0x03, 0x01, 0x02)
+    QuestCmd(0x0022, 0x03, 0x01, 0x02)
 
     Jump('loc_D653')
 
@@ -10190,8 +10190,8 @@ def EV_Jump_QS_341():
         'loc_D930',
     )
 
-    QuestCtrl(0x0023, 0x03, 0x01, 0x02)
-    QuestCtrl(0x0023, 0x04, 0x02, 0x02)
+    QuestCmd(0x0023, 0x03, 0x01, 0x02)
+    QuestCmd(0x0023, 0x04, 0x02, 0x02)
 
     def _loc_D930(): pass
 
@@ -10210,7 +10210,7 @@ def EV_Jump_QS_341():
 
     label('loc_D941')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
     MapJump((0xDD, 'r3430'), (0xDD, 'QS341_01_JUMP'), 0x00)
 
     Jump('loc_D966')
@@ -10358,7 +10358,7 @@ def EV_Jump_QS_342():
 
     label('loc_E30D')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     ExecExpressionWithVar(
         0x27,
@@ -10401,7 +10401,7 @@ def EV_Jump_QS_342():
 
     label('loc_E3A3')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_E3AB')
 
@@ -10420,9 +10420,9 @@ def EV_Jump_QS_342():
         'loc_E3CC',
     )
 
-    QuestCtrl(0x0024, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0024, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0024, 0x04, 0x08, 0x02)
+    QuestCmd(0x0024, 0x04, 0x01, 0x02)
+    QuestCmd(0x0024, 0x04, 0x02, 0x02)
+    QuestCmd(0x0024, 0x04, 0x08, 0x02)
 
     def _loc_E3CC(): pass
 
@@ -10646,7 +10646,7 @@ def EV_Jump_QS_342():
 
     label('loc_E522')
 
-    QuestCtrl(0x0024, 0x03, 0x01, 0x02)
+    QuestCmd(0x0024, 0x03, 0x01, 0x02)
 
     Jump('loc_E52D')
 
@@ -10758,9 +10758,9 @@ def EV_Jump_QS_343():
         'loc_E6C1',
     )
 
-    QuestCtrl(0x0025, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0025, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0025, 0x04, 0x08, 0x02)
+    QuestCmd(0x0025, 0x04, 0x01, 0x02)
+    QuestCmd(0x0025, 0x04, 0x02, 0x02)
+    QuestCmd(0x0025, 0x04, 0x08, 0x02)
 
     def _loc_E6C1(): pass
 
@@ -10788,7 +10788,7 @@ def EV_Jump_QS_343():
 
     SetScenaFlags(ScenaFlag(0x0887, 7, 0x443F))
     SetScenaFlags(ScenaFlag(0x08A1, 1, 0x4509))
-    QuestCtrl(0x0025, 0x03, 0x01, 0x02)
+    QuestCmd(0x0025, 0x03, 0x01, 0x02)
 
     Jump('loc_E6EE')
 
@@ -10921,9 +10921,9 @@ def EV_Jump_QS_344():
         'loc_E909',
     )
 
-    QuestCtrl(0x0026, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0026, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0026, 0x04, 0x08, 0x02)
+    QuestCmd(0x0026, 0x04, 0x01, 0x02)
+    QuestCmd(0x0026, 0x04, 0x02, 0x02)
+    QuestCmd(0x0026, 0x04, 0x08, 0x02)
 
     def _loc_E909(): pass
 
@@ -10959,13 +10959,13 @@ def EV_Jump_QS_344():
     label('loc_E93B')
 
     SetScenaFlags(ScenaFlag(0x0888, 2, 0x4442))
-    QuestCtrl(0x0026, 0x03, 0x01, 0x02)
+    QuestCmd(0x0026, 0x03, 0x01, 0x02)
 
     def _loc_E944(): pass
 
     label('loc_E944')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_E94C')
 
@@ -11110,9 +11110,9 @@ def EV_Jump_QS_345():
         'loc_EC5C',
     )
 
-    QuestCtrl(0x0027, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0027, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0027, 0x04, 0x08, 0x02)
+    QuestCmd(0x0027, 0x04, 0x01, 0x02)
+    QuestCmd(0x0027, 0x04, 0x02, 0x02)
+    QuestCmd(0x0027, 0x04, 0x08, 0x02)
 
     def _loc_EC5C(): pass
 
@@ -11149,8 +11149,8 @@ def EV_Jump_QS_345():
 
     SetScenaFlags(ScenaFlag(0x0889, 0, 0x4448))
     SetScenaFlags(ScenaFlag(0x08A1, 3, 0x450B))
-    QuestCtrl(0x0027, 0x03, 0x01, 0x02)
-    FormationCtrl(0x1C, 0x01)
+    QuestCmd(0x0027, 0x03, 0x01, 0x02)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_ECBE')
 
@@ -11166,8 +11166,8 @@ def EV_Jump_QS_345():
 
     SetScenaFlags(ScenaFlag(0x0889, 0, 0x4448))
     SetScenaFlags(ScenaFlag(0x08A1, 3, 0x450B))
-    QuestCtrl(0x0027, 0x03, 0x01, 0x02)
-    FormationCtrl(0x1C, 0x01)
+    QuestCmd(0x0027, 0x03, 0x01, 0x02)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_ECBE')
 
@@ -11243,8 +11243,8 @@ def EV_Jump_QS_345():
     label('loc_EDA7')
 
     OP_71(0x00, 0x4448, 0x444D)
-    FormationCtrl(0x1C, 0x01)
-    QuestCtrl(0x0027, 0x03, 0x01, 0x02)
+    FormationCmd(0x1C, 0x01)
+    QuestCmd(0x0027, 0x03, 0x01, 0x02)
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x74C6, 0x0))
 
     Jump('loc_EDD7')
@@ -11336,7 +11336,7 @@ def EV_Jump_QS_346():
         'loc_EEAA',
     )
 
-    QuestCtrl(0x0028, 0x04, 0x02, 0x02)
+    QuestCmd(0x0028, 0x04, 0x02, 0x02)
 
     def _loc_EEAA(): pass
 
@@ -11455,9 +11455,9 @@ def EV_Jump_QS_400():
         'loc_F20E',
     )
 
-    QuestCtrl(0x0029, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0029, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0029, 0x04, 0x08, 0x02)
+    QuestCmd(0x0029, 0x04, 0x01, 0x02)
+    QuestCmd(0x0029, 0x04, 0x02, 0x02)
+    QuestCmd(0x0029, 0x04, 0x08, 0x02)
 
     def _loc_F20E(): pass
 
@@ -11652,9 +11652,9 @@ def EV_Jump_QS_500():
         'loc_F6B2',
     )
 
-    QuestCtrl(0x002A, 0x04, 0x01, 0x02)
-    QuestCtrl(0x002A, 0x04, 0x02, 0x02)
-    QuestCtrl(0x002A, 0x04, 0x08, 0x02)
+    QuestCmd(0x002A, 0x04, 0x01, 0x02)
+    QuestCmd(0x002A, 0x04, 0x02, 0x02)
+    QuestCmd(0x002A, 0x04, 0x08, 0x02)
 
     def _loc_F6B2(): pass
 
@@ -11744,7 +11744,7 @@ def EV_Jump_QS_500():
 
     label('loc_F734')
 
-    QuestCtrl(0x002A, 0x03, 0x01, 0x02)
+    QuestCmd(0x002A, 0x03, 0x01, 0x02)
 
     Jump('loc_F73F')
 
@@ -11951,9 +11951,9 @@ def EV_Jump_QS_501():
         'loc_FB13',
     )
 
-    QuestCtrl(0x002B, 0x04, 0x01, 0x02)
-    QuestCtrl(0x002B, 0x04, 0x02, 0x02)
-    QuestCtrl(0x002B, 0x04, 0x08, 0x02)
+    QuestCmd(0x002B, 0x04, 0x01, 0x02)
+    QuestCmd(0x002B, 0x04, 0x02, 0x02)
+    QuestCmd(0x002B, 0x04, 0x08, 0x02)
 
     def _loc_FB13(): pass
 
@@ -12007,7 +12007,7 @@ def EV_Jump_QS_501():
 
     label('loc_FB5B')
 
-    QuestCtrl(0x002B, 0x03, 0x01, 0x02)
+    QuestCmd(0x002B, 0x03, 0x01, 0x02)
 
     Jump('loc_FB66')
 
@@ -12164,8 +12164,8 @@ def EV_Jump_QS_502():
         'loc_FD24',
     )
 
-    QuestCtrl(0x002C, 0x03, 0x01, 0x02)
-    QuestCtrl(0x002C, 0x04, 0x02, 0x02)
+    QuestCmd(0x002C, 0x03, 0x01, 0x02)
+    QuestCmd(0x002C, 0x04, 0x02, 0x02)
 
     def _loc_FD24(): pass
 
@@ -12344,9 +12344,9 @@ def EV_Jump_QS_503():
         'loc_1045F',
     )
 
-    QuestCtrl(0x002D, 0x04, 0x01, 0x02)
-    QuestCtrl(0x002D, 0x04, 0x02, 0x02)
-    QuestCtrl(0x002D, 0x04, 0x08, 0x02)
+    QuestCmd(0x002D, 0x04, 0x01, 0x02)
+    QuestCmd(0x002D, 0x04, 0x02, 0x02)
+    QuestCmd(0x002D, 0x04, 0x08, 0x02)
 
     def _loc_1045F(): pass
 
@@ -12497,7 +12497,7 @@ def EV_Jump_QS_503():
     label('loc_10554')
 
     SetScenaFlags(ScenaFlag(0x0A45, 6, 0x522E))
-    QuestCtrl(0x002D, 0x03, 0x01, 0x02)
+    QuestCmd(0x002D, 0x03, 0x01, 0x02)
 
     def _loc_1055D(): pass
 
@@ -12804,9 +12804,9 @@ def EV_Jump_QS_504():
         'loc_109F0',
     )
 
-    QuestCtrl(0x002E, 0x04, 0x01, 0x02)
-    QuestCtrl(0x002E, 0x04, 0x02, 0x02)
-    QuestCtrl(0x002E, 0x04, 0x08, 0x02)
+    QuestCmd(0x002E, 0x04, 0x01, 0x02)
+    QuestCmd(0x002E, 0x04, 0x02, 0x02)
+    QuestCmd(0x002E, 0x04, 0x08, 0x02)
 
     def _loc_109F0(): pass
 
@@ -12980,9 +12980,9 @@ def EV_Jump_QS_505():
         'loc_10ECD',
     )
 
-    QuestCtrl(0x002F, 0x04, 0x01, 0x02)
-    QuestCtrl(0x002F, 0x04, 0x02, 0x02)
-    QuestCtrl(0x002F, 0x04, 0x08, 0x02)
+    QuestCmd(0x002F, 0x04, 0x01, 0x02)
+    QuestCmd(0x002F, 0x04, 0x02, 0x02)
+    QuestCmd(0x002F, 0x04, 0x08, 0x02)
 
     def _loc_10ECD(): pass
 
@@ -13093,7 +13093,7 @@ def EV_Jump_QS_505():
 
     label('loc_10F70')
 
-    QuestCtrl(0x002F, 0x03, 0x01, 0x02)
+    QuestCmd(0x002F, 0x03, 0x01, 0x02)
 
     Jump('loc_10F7B')
 
@@ -13374,9 +13374,9 @@ def EV_Jump_QS_506():
         'loc_1153E',
     )
 
-    QuestCtrl(0x0030, 0x04, 0x01, 0x02)
-    QuestCtrl(0x0030, 0x04, 0x02, 0x02)
-    QuestCtrl(0x0030, 0x04, 0x08, 0x02)
+    QuestCmd(0x0030, 0x04, 0x01, 0x02)
+    QuestCmd(0x0030, 0x04, 0x02, 0x02)
+    QuestCmd(0x0030, 0x04, 0x08, 0x02)
 
     def _loc_1153E(): pass
 
@@ -13462,7 +13462,7 @@ def EV_Jump_QS_506():
         'loc_11744',
     )
 
-    FormationCtrl(0x14, ChrTable['黎恩'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
+    FormationCmd(0x14, ChrTable['黎恩'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
     Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x02, 0x00, 0x0000)
     OP_C4(0x02, 0x00, 0x0019)
@@ -13488,7 +13488,7 @@ def EV_Jump_QS_506():
     FormationReset(0x00)
     OP_C4(0x01, 0x00)
     OP_69(0x14, 0x01, 0x00)
-    FormationCtrl(0x14, ChrTable['黎恩'], ChrTable['遊擊士托瓦爾'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
+    FormationCmd(0x14, ChrTable['黎恩'], ChrTable['遊擊士托瓦爾'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000001)
     MenuChrFlagCmd(0x00, ChrTable['黎恩'], 0x00000110)
     MenuChrFlagCmd(0x00, ChrTable['遊擊士托瓦爾'], 0x00000110)
@@ -13597,7 +13597,7 @@ def EV_Jump_QS_506():
         'loc_117E7',
     )
 
-    QuestCtrl(0x0030, 0x03, 0x01, 0x02)
+    QuestCmd(0x0030, 0x03, 0x01, 0x02)
 
     Jump('loc_117ED')
 
@@ -13605,7 +13605,7 @@ def EV_Jump_QS_506():
 
     label('loc_117E7')
 
-    QuestCtrl(0x0031, 0x03, 0x01, 0x02)
+    QuestCmd(0x0031, 0x03, 0x01, 0x02)
 
     def _loc_117ED(): pass
 
@@ -25535,7 +25535,7 @@ def EV_Jump_SB_02C_00():
 
     label('loc_1EA81')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x81E7, 0x0))
 
     Jump('loc_1EB4D')
@@ -27452,7 +27452,7 @@ def EV_Jump_SB_03B_00():
 
     label('loc_21514')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_2151C')
 
@@ -27654,7 +27654,7 @@ def EV_Jump_SB_03D_00():
 
     label('loc_21810')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_21818')
 
@@ -27868,7 +27868,7 @@ def EV_Jump_SB_03E_00():
 
     label('loc_21B28')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_21B30')
 
@@ -28656,7 +28656,7 @@ def EV_Jump_SB_04_00():
 
     label('loc_2302B')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_230FE')
 
@@ -28684,7 +28684,7 @@ def EV_Jump_SB_04_00():
 
     label('loc_23041')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_230FE')
 
@@ -28693,7 +28693,7 @@ def EV_Jump_SB_04_00():
     label('loc_23049')
 
     Call(ScriptId.System, 'FC_ResetMenuChrFlagALL')
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
@@ -28759,7 +28759,7 @@ def EV_Jump_SB_04_00():
 
     label('loc_231D7')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
     Call(ScriptId.System, 'FC_EVENT_NEXT', (0xFF, 0x8253, 0x0))
 
     Jump('loc_234B7')
@@ -29232,9 +29232,9 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['克洛'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['克洛'])"),
             Expr.Ez,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['杜巴莉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['杜巴莉'])"),
             Expr.Ez,
             Expr.Or,
             Expr.Return,
@@ -29259,7 +29259,7 @@ def EV_Jump_YR_Bath():
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_23B02')
 
@@ -29299,7 +29299,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['安潔莉卡'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['安潔莉卡'])"),
             Expr.Ez,
             (Expr.PushVar, 0xF9),
             (Expr.PushLong, 0x3),
@@ -29327,7 +29327,7 @@ def EV_Jump_YR_Bath():
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     ExecExpressionWithVar(
         0xF9,
@@ -29340,7 +29340,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤娜'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['尤娜'])"),
             Expr.Return,
         ),
         'loc_23C87',
@@ -29361,7 +29361,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞爾緹娜'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞爾緹娜'])"),
             Expr.Return,
         ),
         'loc_23C9B',
@@ -29382,7 +29382,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['繆潔'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['繆潔'])"),
             Expr.Return,
         ),
         'loc_23CAF',
@@ -29403,7 +29403,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞莉莎'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞莉莎'])"),
             Expr.Return,
         ),
         'loc_23CC3',
@@ -29424,7 +29424,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['勞拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['勞拉'])"),
             Expr.Return,
         ),
         'loc_23CD7',
@@ -29445,7 +29445,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['艾瑪'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['艾瑪'])"),
             Expr.Return,
         ),
         'loc_23CEB',
@@ -29466,7 +29466,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['菲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['菲'])"),
             Expr.Return,
         ),
         'loc_23CFF',
@@ -29487,7 +29487,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['莎拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['莎拉'])"),
             Expr.Return,
         ),
         'loc_23D13',
@@ -29508,7 +29508,7 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['杜巴莉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['杜巴莉'])"),
             Expr.Return,
         ),
         'loc_23D27',
@@ -29555,9 +29555,9 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['提妲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['提妲'])"),
             Expr.Ez,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['阿加特'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['阿加特'])"),
             Expr.Ez,
             Expr.Or,
             Expr.Return,
@@ -29582,7 +29582,7 @@ def EV_Jump_YR_Bath():
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_23D4D')
 
@@ -29612,9 +29612,9 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['蘭迪'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['蘭迪'])"),
             Expr.Ez,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['緹歐'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['緹歐'])"),
             Expr.Ez,
             Expr.Or,
             Expr.Return,
@@ -29639,7 +29639,7 @@ def EV_Jump_YR_Bath():
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_23E0D')
 
@@ -29687,18 +29687,18 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞莉莎'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞莉莎'])"),
             Expr.Ez,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['菲'])"),
-            Expr.Ez,
-            Expr.Or,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['艾瑪'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['菲'])"),
             Expr.Ez,
             Expr.Or,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['勞拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['艾瑪'])"),
             Expr.Ez,
             Expr.Or,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['莎拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['勞拉'])"),
+            Expr.Ez,
+            Expr.Or,
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['莎拉'])"),
             Expr.Ez,
             Expr.Or,
             Expr.Return,
@@ -29723,7 +29723,7 @@ def EV_Jump_YR_Bath():
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_23F01')
 
@@ -29771,15 +29771,15 @@ def EV_Jump_YR_Bath():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤娜'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['尤娜'])"),
             Expr.Ez,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['繆潔'])"),
-            Expr.Ez,
-            Expr.Or,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞爾緹娜'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['繆潔'])"),
             Expr.Ez,
             Expr.Or,
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['提妲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞爾緹娜'])"),
+            Expr.Ez,
+            Expr.Or,
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['提妲'])"),
             Expr.Ez,
             Expr.Or,
             Expr.Return,
@@ -29804,7 +29804,7 @@ def EV_Jump_YR_Bath():
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_24025')
 
@@ -30144,39 +30144,39 @@ def EV_Jump_YR_Bath():
     OP_25(0x00)
     OP_25(0x01)
     Call(ScriptId.Debug, 'EV_Party_Set', (0xFF, 0x1, 0x0))
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     If(
         (
             (Expr.TestScenaFlags, ScenaFlag(0x0B61, 2, 0x5B0A)),
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤娜'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['尤娜'])"),
             Expr.Nez64,
             (Expr.TestScenaFlags, ScenaFlag(0x0B64, 1, 0x5B21)),
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞爾緹娜'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞爾緹娜'])"),
             Expr.Nez64,
             Expr.Or,
             (Expr.TestScenaFlags, ScenaFlag(0x0B65, 4, 0x5B2C)),
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['繆潔'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['繆潔'])"),
             Expr.Nez64,
             Expr.Or,
             (Expr.TestScenaFlags, ScenaFlag(0x0B67, 3, 0x5B3B)),
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞莉莎'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞莉莎'])"),
             Expr.Nez64,
             Expr.Or,
             (Expr.TestScenaFlags, ScenaFlag(0x0B68, 6, 0x5B46)),
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['勞拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['勞拉'])"),
             Expr.Nez64,
             Expr.Or,
             (Expr.TestScenaFlags, ScenaFlag(0x0B6A, 7, 0x5B57)),
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['艾瑪'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['艾瑪'])"),
             Expr.Nez64,
             Expr.Or,
             (Expr.TestScenaFlags, ScenaFlag(0x0B6C, 3, 0x5B63)),
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['菲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['菲'])"),
             Expr.Nez64,
             Expr.Or,
             (Expr.TestScenaFlags, ScenaFlag(0x0B6F, 0, 0x5B78)),
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['莎拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['莎拉'])"),
             Expr.Nez64,
             Expr.Or,
             Expr.Return,
@@ -31621,7 +31621,7 @@ def TK_System_Debug_HiarColor():
 
     label('loc_26922')
 
-    AnimeClipCtrl(0x0B, ChrTable['黎恩'], '', '')
+    AnimeClipCmd(0x0B, ChrTable['黎恩'], '', '')
 
     Jump('loc_26989')
 
@@ -31629,7 +31629,7 @@ def TK_System_Debug_HiarColor():
 
     label('loc_2692D')
 
-    AnimeClipCtrl(0x0B, ChrTable['黎恩'], 'FC_CHR000_C02', '')
+    AnimeClipCmd(0x0B, ChrTable['黎恩'], 'FC_CHR000_C02', '')
 
     Jump('loc_26989')
 
@@ -32402,11 +32402,11 @@ def TK_System_Debug_CutinTest():
 # id: 0x00A1 offset: 0x27778
 @scena.Code('TK_System_Debug_Emotest')
 def TK_System_Debug_Emotest():
-    CameraCtrl(0x08, 0x00, 0x0000)
+    CameraCmd(0x08, 0x00, 0x0000)
     CameraRotate(0x03, 0.0, 0.0, 0.0, 0, 0x01)
-    CameraCtrl(0x12, 0x0004)
-    CameraCtrl(0x12, 0x0010)
-    CameraCtrl(0x12, 0x0040)
+    CameraCmd(0x12, 0x0004)
+    CameraCmd(0x12, 0x0010)
+    CameraCmd(0x12, 0x0040)
     ChrSetPhysicsFlags(0xFFFE, 0x00004000)
 
     ExecExpressionWithVar(
@@ -33051,7 +33051,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -33068,7 +33068,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x2),
             Expr.Gtr,
             Expr.Return,
@@ -33085,7 +33085,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x3),
             Expr.Gtr,
             Expr.Return,
@@ -33102,7 +33102,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x4),
             Expr.Gtr,
             Expr.Return,
@@ -33119,7 +33119,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x5),
             Expr.Gtr,
             Expr.Return,
@@ -33136,7 +33136,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x6),
             Expr.Gtr,
             Expr.Return,
@@ -33153,7 +33153,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x7),
             Expr.Gtr,
             Expr.Return,
@@ -33170,7 +33170,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x8),
             Expr.Gtr,
             Expr.Return,
@@ -33187,7 +33187,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x9),
             Expr.Gtr,
             Expr.Return,
@@ -33204,7 +33204,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xA),
             Expr.Gtr,
             Expr.Return,
@@ -33221,7 +33221,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xB),
             Expr.Gtr,
             Expr.Return,
@@ -33238,7 +33238,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xC),
             Expr.Gtr,
             Expr.Return,
@@ -33255,7 +33255,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xD),
             Expr.Gtr,
             Expr.Return,
@@ -33272,7 +33272,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xE),
             Expr.Gtr,
             Expr.Return,
@@ -33289,7 +33289,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xF),
             Expr.Gtr,
             Expr.Return,
@@ -33306,7 +33306,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x10),
             Expr.Gtr,
             Expr.Return,
@@ -33323,7 +33323,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x11),
             Expr.Gtr,
             Expr.Return,
@@ -33340,7 +33340,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x12),
             Expr.Gtr,
             Expr.Return,
@@ -33357,7 +33357,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x13),
             Expr.Gtr,
             Expr.Return,
@@ -33379,7 +33379,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -33396,7 +33396,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x2),
             Expr.Gtr,
             Expr.Return,
@@ -33413,7 +33413,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x3),
             Expr.Gtr,
             Expr.Return,
@@ -33430,7 +33430,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x4),
             Expr.Gtr,
             Expr.Return,
@@ -33447,7 +33447,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x5),
             Expr.Gtr,
             Expr.Return,
@@ -33464,7 +33464,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x6),
             Expr.Gtr,
             Expr.Return,
@@ -33481,7 +33481,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x7),
             Expr.Gtr,
             Expr.Return,
@@ -33498,7 +33498,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x8),
             Expr.Gtr,
             Expr.Return,
@@ -33515,7 +33515,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x9),
             Expr.Gtr,
             Expr.Return,
@@ -33532,7 +33532,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xA),
             Expr.Gtr,
             Expr.Return,
@@ -33549,7 +33549,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xB),
             Expr.Gtr,
             Expr.Return,
@@ -33566,7 +33566,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xC),
             Expr.Gtr,
             Expr.Return,
@@ -33583,7 +33583,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xD),
             Expr.Gtr,
             Expr.Return,
@@ -33600,7 +33600,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xE),
             Expr.Gtr,
             Expr.Return,
@@ -33617,7 +33617,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xF),
             Expr.Gtr,
             Expr.Return,
@@ -33634,7 +33634,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x10),
             Expr.Gtr,
             Expr.Return,
@@ -33651,7 +33651,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x11),
             Expr.Gtr,
             Expr.Return,
@@ -33668,7 +33668,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x12),
             Expr.Gtr,
             Expr.Return,
@@ -33685,7 +33685,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x13),
             Expr.Gtr,
             Expr.Return,
@@ -33707,7 +33707,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -33724,7 +33724,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x2),
             Expr.Gtr,
             Expr.Return,
@@ -33741,7 +33741,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x3),
             Expr.Gtr,
             Expr.Return,
@@ -33758,7 +33758,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x4),
             Expr.Gtr,
             Expr.Return,
@@ -33775,7 +33775,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x5),
             Expr.Gtr,
             Expr.Return,
@@ -33792,7 +33792,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x6),
             Expr.Gtr,
             Expr.Return,
@@ -33809,7 +33809,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x7),
             Expr.Gtr,
             Expr.Return,
@@ -33826,7 +33826,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x8),
             Expr.Gtr,
             Expr.Return,
@@ -33843,7 +33843,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x9),
             Expr.Gtr,
             Expr.Return,
@@ -33860,7 +33860,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xA),
             Expr.Gtr,
             Expr.Return,
@@ -33877,7 +33877,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xB),
             Expr.Gtr,
             Expr.Return,
@@ -33894,7 +33894,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xC),
             Expr.Gtr,
             Expr.Return,
@@ -33911,7 +33911,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xD),
             Expr.Gtr,
             Expr.Return,
@@ -33928,7 +33928,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xE),
             Expr.Gtr,
             Expr.Return,
@@ -33945,7 +33945,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xF),
             Expr.Gtr,
             Expr.Return,
@@ -33962,7 +33962,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x10),
             Expr.Gtr,
             Expr.Return,
@@ -33979,7 +33979,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x11),
             Expr.Gtr,
             Expr.Return,
@@ -33996,7 +33996,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x12),
             Expr.Gtr,
             Expr.Return,
@@ -34013,7 +34013,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x13),
             Expr.Gtr,
             Expr.Return,
@@ -34035,7 +34035,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x1),
             Expr.Gtr,
             Expr.Return,
@@ -34052,7 +34052,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x2),
             Expr.Gtr,
             Expr.Return,
@@ -34069,7 +34069,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x3),
             Expr.Gtr,
             Expr.Return,
@@ -34086,7 +34086,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x4),
             Expr.Gtr,
             Expr.Return,
@@ -34103,7 +34103,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x5),
             Expr.Gtr,
             Expr.Return,
@@ -34120,7 +34120,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x6),
             Expr.Gtr,
             Expr.Return,
@@ -34137,7 +34137,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x7),
             Expr.Gtr,
             Expr.Return,
@@ -34154,7 +34154,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x8),
             Expr.Gtr,
             Expr.Return,
@@ -34171,7 +34171,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x9),
             Expr.Gtr,
             Expr.Return,
@@ -34188,7 +34188,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xA),
             Expr.Gtr,
             Expr.Return,
@@ -34205,7 +34205,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xB),
             Expr.Gtr,
             Expr.Return,
@@ -34222,7 +34222,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xC),
             Expr.Gtr,
             Expr.Return,
@@ -34239,7 +34239,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xD),
             Expr.Gtr,
             Expr.Return,
@@ -34256,7 +34256,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xE),
             Expr.Gtr,
             Expr.Return,
@@ -34273,7 +34273,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0xF),
             Expr.Gtr,
             Expr.Return,
@@ -34290,7 +34290,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x10),
             Expr.Gtr,
             Expr.Return,
@@ -34307,7 +34307,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x11),
             Expr.Gtr,
             Expr.Return,
@@ -34324,7 +34324,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x12),
             Expr.Gtr,
             Expr.Return,
@@ -34341,7 +34341,7 @@ def SUB_EmotionTest():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x10)"),
+            (Expr.Eval, "FormationCmd(0x10)"),
             (Expr.PushLong, 0x13),
             Expr.Gtr,
             Expr.Return,
@@ -34677,18 +34677,18 @@ def TK_System_Debug_FadeTest():
 
     OP_43(0x65, 2000, 1.0, 0)
     OP_43(0xFE, 0)
-    CameraCtrl(0x03, 0x03, 0x03EA, '', -0.03, 1.4, 0.09, 0x0000)
+    CameraCmd(0x03, 0x03, 0x03EA, '', -0.03, 1.4, 0.09, 0x0000)
     CameraRotateByTarget(0x03EA, '', 0x03, 6.0, -17.0, 0.0, 0, 0x01)
     CameraSetDistance(0x03, 1.36, 0)
-    CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
+    CameraCmd(0x0B, 0x03, 40.0, 0x0000)
     Sleep(1000)
 
     OP_43(0x65, 2000, 1.0, 0)
     OP_43(0xFE, 0)
-    CameraCtrl(0x03, 0x03, 0x03EB, '', -0.21, 1.4, 0.55, 0x0000)
+    CameraCmd(0x03, 0x03, 0x03EB, '', -0.21, 1.4, 0.55, 0x0000)
     CameraRotateByTarget(0x03EB, '', 0x03, 11.0, -2.0, 0.0, 0, 0x01)
     CameraSetDistance(0x03, 3.06, 0)
-    CameraCtrl(0x0B, 0x03, 40.0, 0x0000)
+    CameraCmd(0x0B, 0x03, 40.0, 0x0000)
 
     Jump('loc_291D8')
 
@@ -34805,7 +34805,7 @@ def TK_System_CameraVibrateTest():
 
     label('loc_29392')
 
-    CameraCtrl(0x09, 0.0, 0.0, 0.0)
+    CameraCmd(0x09, 0.0, 0.0, 0.0)
 
     Jump('loc_2942E')
 
@@ -34813,7 +34813,7 @@ def TK_System_CameraVibrateTest():
 
     label('loc_293A5')
 
-    CameraCtrl(0x09, 0.01, 0.01, 0.15)
+    CameraCmd(0x09, 0.01, 0.01, 0.15)
 
     Jump('loc_2942E')
 
@@ -34821,7 +34821,7 @@ def TK_System_CameraVibrateTest():
 
     label('loc_293B8')
 
-    CameraCtrl(0x09, 0.05, 0.05, 0.5)
+    CameraCmd(0x09, 0.05, 0.05, 0.5)
 
     Jump('loc_2942E')
 
@@ -34829,7 +34829,7 @@ def TK_System_CameraVibrateTest():
 
     label('loc_293CB')
 
-    CameraCtrl(0x0A, 0.1, 0.1, 0.0, 0x01F4, 0x03E8, 0x07D0, 0x0000, 0x0000, 0x00)
+    CameraCmd(0x0A, 0.1, 0.1, 0.0, 0x01F4, 0x03E8, 0x07D0, 0x0000, 0x0000, 0x00)
 
     Jump('loc_2942E')
 
@@ -34837,7 +34837,7 @@ def TK_System_CameraVibrateTest():
 
     label('loc_293E9')
 
-    CameraCtrl(0x0A, 0.015, 0.015, 0.0, 0x0000, 0x01F4, 0x00FA, 0x0001, 0x00FA, 0x00)
+    CameraCmd(0x0A, 0.015, 0.015, 0.0, 0x0000, 0x01F4, 0x00FA, 0x0001, 0x00FA, 0x00)
 
     Jump('loc_2942E')
 
@@ -34845,7 +34845,7 @@ def TK_System_CameraVibrateTest():
 
     label('loc_29407')
 
-    CameraCtrl(0x0A, 0.0075, 0.0075, 0.015, 0x0000, 0x1388, 0x0000, 0x0001, 0x01F4, 0x00)
+    CameraCmd(0x0A, 0.0075, 0.0075, 0.015, 0x0000, 0x1388, 0x0000, 0x0001, 0x01F4, 0x00)
 
     Jump('loc_2942E')
 
@@ -36188,7 +36188,7 @@ def TK_PartySel_Test():
     FormationAddMember(ChrTable['菲'])
     FormationSetLeader(ChrTable['尤娜'])
     OP_69(0x14, 0x01, 0x00)
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['尤娜'])
     FormationSetLeader(ChrTable['尤娜'])
@@ -36207,7 +36207,7 @@ def TK_PartySel_Test():
 
     label('loc_2AB0D')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_2AB1E')
 
@@ -36239,10 +36239,10 @@ def TK_PartySel_Test():
 # id: 0x00A8 offset: 0x2AB24
 @scena.Code('TK_Train_Test')
 def TK_Train_Test():
-    ModelCtrl(0x31, 0x00, 0x0000, 0x0028, 1.6, 0.25, 0x03, 0x00, 0x0000)
+    ModelCmd(0x31, 0x00, 0x0000, 0x0028, 1.6, 0.25, 0x03, 0x00, 0x0000)
     OP_C9(0x0A, 0x0028, 'TK_celine2:tk_celine2')
     MenuChrFlagCmd(0x00, ChrTable['瑟蕾奴'], 0x80000000)
-    ChrPhysicsCtrl(0x0A, ChrTable['瑟蕾奴'], 0x00000004)
+    ChrPhysicsCmd(0x0A, ChrTable['瑟蕾奴'], 0x00000004)
 
     Return()
 
@@ -36650,8 +36650,8 @@ def TK_ActMenu_Test():
 @scena.Code('EV_useChecker')
 def EV_useChecker():
     OP_20(0x15, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
-    BGMCtrl(0x03, 0.7, 500, 0x00)
-    BGMCtrl(0x03, 1.0, 500, 0x00)
+    BGMCmd(0x03, 0.7, 500, 0x00)
+    BGMCmd(0x03, 1.0, 500, 0x00)
     SetChrFace(0x04, ChrTable['黎恩'], '#E0#M4')
 
     ChrTalk(
@@ -38608,7 +38608,7 @@ def TK_CameraCommand_Test():
     label('loc_2CAA5')
 
     CameraRotate(0x03, 0.0, 0.0, 0.0, 1000, 0x01)
-    CameraCtrl(0x07, 0x00BF)
+    CameraCmd(0x07, 0x00BF)
 
     Jump('loc_2CBE5')
 
@@ -38617,7 +38617,7 @@ def TK_CameraCommand_Test():
     label('loc_2CAC0')
 
     CameraRotate(0x03, 0.0, 45.0, 0.0, 1000, 0x01)
-    CameraCtrl(0x07, 0x00BF)
+    CameraCmd(0x07, 0x00BF)
 
     Jump('loc_2CBE5')
 
@@ -38626,7 +38626,7 @@ def TK_CameraCommand_Test():
     label('loc_2CADB')
 
     CameraRotate(0x03, 0.0, -45.0, 0.0, 1000, 0x01)
-    CameraCtrl(0x07, 0x00BF)
+    CameraCmd(0x07, 0x00BF)
 
     Jump('loc_2CBE5')
 
@@ -38635,7 +38635,7 @@ def TK_CameraCommand_Test():
     label('loc_2CAF6')
 
     CameraRotate(0x03, 0.0, 315.0, 0.0, 1000, 0x01)
-    CameraCtrl(0x07, 0x00BF)
+    CameraCmd(0x07, 0x00BF)
 
     Jump('loc_2CBE5')
 
@@ -38644,7 +38644,7 @@ def TK_CameraCommand_Test():
     label('loc_2CB11')
 
     CameraRotate(0x03, 0.0, 45.0, 0.0, 1000, 0x00)
-    CameraCtrl(0x07, 0x00BF)
+    CameraCmd(0x07, 0x00BF)
 
     Jump('loc_2CBE5')
 
@@ -38653,7 +38653,7 @@ def TK_CameraCommand_Test():
     label('loc_2CB2C')
 
     CameraRotate(0x03, 0.0, -45.0, 0.0, 1000, 0x00)
-    CameraCtrl(0x07, 0x00BF)
+    CameraCmd(0x07, 0x00BF)
 
     Jump('loc_2CBE5')
 
@@ -38662,7 +38662,7 @@ def TK_CameraCommand_Test():
     label('loc_2CB47')
 
     CameraRotate(0x03, 0.0, 315.0, 0.0, 1000, 0x00)
-    CameraCtrl(0x07, 0x00BF)
+    CameraCmd(0x07, 0x00BF)
 
     Jump('loc_2CBE5')
 
@@ -38683,7 +38683,7 @@ def TK_CameraCommand_Test():
     Sleep(500)
 
     CameraRotate(0x03, 0.0, 15.0, 0.0, 1000, 0x01)
-    CameraCtrl(0x07, 0x00BF)
+    CameraCmd(0x07, 0x00BF)
 
     Jump('loc_2CBE5')
 
@@ -38695,7 +38695,7 @@ def TK_CameraCommand_Test():
     Sleep(500)
 
     CameraRotate(0x03, 0.0, 15.0, 0.0, 1000, 0x00)
-    CameraCtrl(0x07, 0x00BF)
+    CameraCmd(0x07, 0x00BF)
 
     Jump('loc_2CBE5')
 
@@ -38961,7 +38961,7 @@ def TK_LookCommand_Test():
 
     label('loc_2D1C9')
 
-    ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 180.0, 0x01)
+    ModelCmd(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 180.0, 0x01)
 
     Jump('loc_2D398')
 
@@ -38969,7 +38969,7 @@ def TK_LookCommand_Test():
 
     label('loc_2D1E5')
 
-    ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.5, 180.0, 0x01)
+    ModelCmd(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.5, 180.0, 0x01)
 
     Jump('loc_2D398')
 
@@ -38978,7 +38978,7 @@ def TK_LookCommand_Test():
     label('loc_2D201')
 
     AnimeClipLoadMultiple(0xF016, 0x00, 'AniEvByeWalk', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
-    ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
+    ModelCmd(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
     Sleep(500)
 
     ChrTurnDirection(0xF016, 180.0, 10.0, 0x00)
@@ -38993,7 +38993,7 @@ def TK_LookCommand_Test():
     label('loc_2D270')
 
     AnimeClipLoadMultiple(0xF016, 0x00, 'AniEvByeWalk', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
-    ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
+    ModelCmd(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
     Sleep(500)
 
     ChrTurnDirection(0xF016, 180.0, 5.0, 0x00)
@@ -39008,7 +39008,7 @@ def TK_LookCommand_Test():
     label('loc_2D2DF')
 
     AnimeClipLoadMultiple(0xF016, 0x00, 'AniEvByeWalk', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '')
-    ModelCtrl(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
+    ModelCmd(0x3A, 0xF016, 0x03EB, 0.0, 0.0, 1.0, 0.0, 0x01)
     Sleep(500)
 
     ChrTurnDirection(0xF016, 180.0, 2.5, 0x00)
@@ -39640,8 +39640,8 @@ def TK_ChapterSave_Test():
 def EV_Test_Evsave_Load():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
     OP_43(0x00, 0, 1.0, 0)
-    FormationCtrl(0x07)
-    BGMCtrl(0x04, 2, 1.0, 0x0000, 0x00000000, 0x00)
+    FormationCmd(0x07)
+    BGMCmd(0x04, 2, 1.0, 0x0000, 0x00000000, 0x00)
     ClearScenaFlags(ScenaFlag(0x0062, 4, 0x314))
     OP_AF(0x01)
     ClearScenaFlags(ScenaFlag(0x0061, 2, 0x30A))
@@ -39719,7 +39719,7 @@ def TK_GetSCraft_Test():
 
     label('loc_2DD47')
 
-    CraftCtrl(0x03, ChrTable['黎恩'])
+    CraftCmd(0x03, ChrTable['黎恩'])
 
     Jump('loc_2DD63')
 
@@ -40870,7 +40870,7 @@ def TK_MiniGame_Debug():
 
     OP_43(0x00, 300, 1.0, 0)
     OP_43(0xFF, 0, 0x0000)
-    ModelCtrl(0x6B, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
+    ModelCmd(0x6B, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
 
     Jump('loc_2F506')
 
@@ -41685,7 +41685,7 @@ def TK_MiniGame_Debug_Mg08_Start():
     OP_20(0x00, (0xFF, 0x0, 0x0), (0xEE, 1.2000000476837158, 0x0), (0xEE, 1.6230000257492065, 0x0), (0xEE, -1.0, 0x0))
     OP_43(0x00, 300, 1.0, 0)
     OP_43(0xFF, 0, 0x0000)
-    ModelCtrl(0x6C, 0x0000009C, 0x00000000, 0x00000021, 0x00000022, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
+    ModelCmd(0x6C, 0x0000009C, 0x00000000, 0x00000021, 0x00000022, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
     OP_43(0x64, 300, 1.0, 0)
     OP_43(0xFF, 0, 0x0000)
 
@@ -41804,7 +41804,7 @@ def TK_MiniGame_Debug_Mg08_Start():
 
     OP_43(0x00, 300, 1.0, 0)
     OP_43(0xFF, 0, 0x0000)
-    ModelCtrl(0x6C, 0x0000009C, 0x00000000, 0x00000021, 0x00000022, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
+    ModelCmd(0x6C, 0x0000009C, 0x00000000, 0x00000021, 0x00000022, 0x00000000, 0x00000000, 0x00000000, 0x00000000)
     OP_43(0x64, 300, 1.0, 0)
     OP_43(0xFF, 0, 0x0000)
 
@@ -44952,8 +44952,8 @@ def EV_Note_Quest():
         'loc_33C4B',
     )
 
-    QuestCtrl(0x270E, 0x01, 0x001F, 0x02)
-    QuestCtrl(0x270E, 0x03, 0x01, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001F, 0x02)
+    QuestCmd(0x270E, 0x03, 0x01, 0x02)
 
     def _loc_33C4B(): pass
 
@@ -44969,10 +44969,10 @@ def EV_Note_Quest():
         'loc_33C76',
     )
 
-    QuestCtrl(0x270E, 0x01, 0x001F, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0000, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0001, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0002, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001F, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0000, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0001, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0002, 0x02)
 
     def _loc_33C76(): pass
 
@@ -44988,38 +44988,38 @@ def EV_Note_Quest():
         'loc_33D64',
     )
 
-    QuestCtrl(0x270E, 0x01, 0x001F, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0000, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0001, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0002, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0003, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0004, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0005, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0006, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0007, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0008, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0009, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000A, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000B, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000C, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000D, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000E, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000F, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0010, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0011, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0012, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0013, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0014, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0015, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0016, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0017, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0018, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0019, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x001A, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x001B, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x001C, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x001D, 0x02)
-    QuestCtrl(0x270E, 0x03, 0x02, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001F, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0000, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0001, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0002, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0003, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0004, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0005, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0006, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0007, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0008, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0009, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000A, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000B, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000C, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000D, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000E, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000F, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0010, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0011, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0012, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0013, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0014, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0015, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0016, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0017, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0018, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0019, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001A, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001B, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001C, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001D, 0x02)
+    QuestCmd(0x270E, 0x03, 0x02, 0x02)
 
     def _loc_33D64(): pass
 
@@ -45035,39 +45035,39 @@ def EV_Note_Quest():
         'loc_33E58',
     )
 
-    QuestCtrl(0x270E, 0x01, 0x001F, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0000, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0001, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0002, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0003, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0004, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0005, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0006, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0007, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0008, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0009, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000A, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000B, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000C, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000D, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000E, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x000F, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0010, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0011, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0012, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0013, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0014, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0015, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0016, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0017, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0018, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x0019, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x001A, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x001B, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x001C, 0x02)
-    QuestCtrl(0x270E, 0x01, 0x001D, 0x02)
-    QuestCtrl(0x270E, 0x03, 0x02, 0x02)
-    QuestCtrl(0x270E, 0x03, 0x04, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001F, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0000, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0001, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0002, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0003, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0004, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0005, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0006, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0007, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0008, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0009, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000A, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000B, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000C, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000D, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000E, 0x02)
+    QuestCmd(0x270E, 0x01, 0x000F, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0010, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0011, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0012, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0013, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0014, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0015, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0016, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0017, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0018, 0x02)
+    QuestCmd(0x270E, 0x01, 0x0019, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001A, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001B, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001C, 0x02)
+    QuestCmd(0x270E, 0x01, 0x001D, 0x02)
+    QuestCmd(0x270E, 0x03, 0x02, 0x02)
+    QuestCmd(0x270E, 0x03, 0x04, 0x02)
 
     def _loc_33E58(): pass
 
@@ -46256,11 +46256,11 @@ def TK_Battle_Debug():
     AddItem(0x00, 0x0006, 15)
     AddItem(0x00, 0x027A, 15)
     OP_70(0x00, 0x0014, 0x027A, 0x03, 0x00)
-    CraftCtrl(0x00, ChrTable['提妲'], 0x0BEA)
-    CraftCtrl(0x00, ChrTable['提妲'], 0x0BEB)
-    CraftCtrl(0x00, ChrTable['提妲'], 0x0869)
-    CraftCtrl(0x00, ChrTable['提妲'], 0x0BFE)
-    CraftCtrl(0x00, ChrTable['提妲'], 0x087A)
+    CraftCmd(0x00, ChrTable['提妲'], 0x0BEA)
+    CraftCmd(0x00, ChrTable['提妲'], 0x0BEB)
+    CraftCmd(0x00, ChrTable['提妲'], 0x0869)
+    CraftCmd(0x00, ChrTable['提妲'], 0x0BFE)
+    CraftCmd(0x00, ChrTable['提妲'], 0x087A)
     OP_48(0x00, 0x0014, 0x0001, 0x0028)
     SetScenaFlags(ScenaFlag(0x0080, 0, 0x400))
     SetScenaFlags(ScenaFlag(0x0080, 1, 0x401))
@@ -46311,7 +46311,7 @@ def TK_Battle_Debug():
 
     label('loc_353C0')
 
-    CraftCtrl(0x0B, 0xFFFF, 0x00000000)
+    CraftCmd(0x0B, 0xFFFF, 0x00000000)
 
     Jump('loc_35550')
 
@@ -46386,10 +46386,10 @@ def TK_Battle_Debug():
     OP_B8(0x03, (0xFF, 0x0, 0x0), (0xFF, 0x0, 0x0))
     OP_B8(0x00, (0xFF, 0x0, 0x0), (0xFF, 0xC4E, 0x0))
     OP_B8(0x00, (0xFF, 0x1, 0x0), (0xFF, 0xC57, 0x0))
-    FormationCtrl(0x18)
-    FormationCtrl(0x16, ChrTable['黎恩'], 1)
-    FormationCtrl(0x16, ChrTable['尤娜'], 5)
-    FormationCtrl(0x16, ChrTable['庫爾特'], 4)
+    FormationCmd(0x18)
+    FormationCmd(0x16, ChrTable['黎恩'], 1)
+    FormationCmd(0x16, ChrTable['尤娜'], 5)
+    FormationCmd(0x16, ChrTable['庫爾特'], 4)
     OP_B7(0x03, 0x0001)
     OP_B7(0x03, 0x0002)
     OP_B7(0x03, 0x0003)
@@ -46754,9 +46754,9 @@ def TK_BattleEvent():
 
     label('loc_35F13')
 
-    FormationCtrl(0x18)
-    FormationCtrl(0x11, ChrTable['潔西卡'])
-    FormationCtrl(0x11, ChrTable['維因'])
+    FormationCmd(0x18)
+    FormationCmd(0x11, ChrTable['潔西卡'])
+    FormationCmd(0x11, ChrTable['維因'])
     OP_70(0x00, 0x0032, 0x064A, 0xFF, 0x01)
     OP_70(0x00, 0x0033, 0x064B, 0xFF, 0x01)
     OP_70(0x03, 0x0032, 0x0CE4, 0x02, 0x01, 0x01)
@@ -46917,10 +46917,10 @@ def TK_BattleEvent():
     OP_C4(0x02, 0x02, 0x0018)
     OP_C4(0x02, 0x02, 0x0026)
     OP_C4(0x02, 0x02, 0x0027)
-    FormationCtrl(0x18)
-    FormationCtrl(0x1D, 0x00)
-    FormationCtrl(0x1D, 0x01)
-    FormationCtrl(0x1D, 0x02)
+    FormationCmd(0x18)
+    FormationCmd(0x1D, 0x00)
+    FormationCmd(0x1D, 0x01)
+    FormationCmd(0x1D, 0x02)
 
     ExecExpressionWithVar(
         0x2B,
@@ -48601,12 +48601,12 @@ def TK_Camp_Formation():
 
     label('loc_37ED2')
 
-    FormationCtrl(0x08, ChrTable['黎恩'], -1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['尤娜'], 1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['庫爾特'], -2.0, 1.0, 0x00)
-    FormationCtrl(0x08, ChrTable['亞爾緹娜'], 2.0, 1.0, 0x00)
-    FormationCtrl(0x08, ChrTable['亞修'], -1.0, 2.0, 0x00)
-    FormationCtrl(0x08, ChrTable['繆潔'], 1.0, 2.0, 0x00)
+    FormationCmd(0x08, ChrTable['黎恩'], -1.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['尤娜'], 1.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['庫爾特'], -2.0, 1.0, 0x00)
+    FormationCmd(0x08, ChrTable['亞爾緹娜'], 2.0, 1.0, 0x00)
+    FormationCmd(0x08, ChrTable['亞修'], -1.0, 2.0, 0x00)
+    FormationCmd(0x08, ChrTable['繆潔'], 1.0, 2.0, 0x00)
 
     Jump('loc_37FD4')
 
@@ -48614,12 +48614,12 @@ def TK_Camp_Formation():
 
     label('loc_37F25')
 
-    FormationCtrl(0x08, ChrTable['黎恩'], -1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['尤娜'], -1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['庫爾特'], -1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['亞爾緹娜'], -1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['亞修'], -1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['繆潔'], -1.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['黎恩'], -1.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['尤娜'], -1.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['庫爾特'], -1.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['亞爾緹娜'], -1.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['亞修'], -1.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['繆潔'], -1.0, 0.0, 0x00)
 
     Jump('loc_37FD4')
 
@@ -48627,12 +48627,12 @@ def TK_Camp_Formation():
 
     label('loc_37F78')
 
-    FormationCtrl(0x08, ChrTable['黎恩'], -2.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['尤娜'], -2.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['庫爾特'], -0.25, 1.0, 0x00)
-    FormationCtrl(0x08, ChrTable['亞爾緹娜'], 0.25, 1.0, 0x00)
-    FormationCtrl(0x08, ChrTable['亞修'], 2.0, 3.0, 0x00)
-    FormationCtrl(0x08, ChrTable['繆潔'], 2.0, 3.0, 0x00)
+    FormationCmd(0x08, ChrTable['黎恩'], -2.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['尤娜'], -2.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['庫爾特'], -0.25, 1.0, 0x00)
+    FormationCmd(0x08, ChrTable['亞爾緹娜'], 0.25, 1.0, 0x00)
+    FormationCmd(0x08, ChrTable['亞修'], 2.0, 3.0, 0x00)
+    FormationCmd(0x08, ChrTable['繆潔'], 2.0, 3.0, 0x00)
 
     Jump('loc_37FD4')
 
@@ -52185,7 +52185,7 @@ def EV_DoJump_01():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['艾略特'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['艾略特'])"),
             Expr.Return,
         ),
         'loc_40B5E',
@@ -52201,7 +52201,7 @@ def EV_DoJump_01():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['菲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['菲'])"),
             Expr.Return,
         ),
         'loc_40BBB',
@@ -52217,7 +52217,7 @@ def EV_DoJump_01():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['莎拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['莎拉'])"),
             Expr.Return,
         ),
         'loc_40C10',
@@ -56074,7 +56074,7 @@ def EV_DoJump_02():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤娜'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['尤娜'])"),
             Expr.Return,
         ),
         'loc_48D4E',
@@ -56088,7 +56088,7 @@ def EV_DoJump_02():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['庫爾特'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['庫爾特'])"),
             Expr.Return,
         ),
         'loc_48D76',
@@ -56346,7 +56346,7 @@ def EV_DoJump_02():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['菲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['菲'])"),
             Expr.Return,
         ),
         'loc_4936C',
@@ -56362,7 +56362,7 @@ def EV_DoJump_02():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['莎拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['莎拉'])"),
             Expr.Return,
         ),
         'loc_493C1',

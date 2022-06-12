@@ -10798,22 +10798,22 @@ def FC_BattleTestParty():
     FormationAddMember(ChrTable['繆潔'])
     FormationAddMember(ChrTable['亞修'])
     FormationSetLeader(ChrTable['黎恩'])
-    FormationCtrl(0x08, ChrTable['黎恩'], 0.0, 0.0, 0x01)
-    FormationCtrl(0x08, ChrTable['尤娜'], 2.0, 0.0, 0x01)
-    FormationCtrl(0x08, ChrTable['庫爾特'], -2.0, 0.0, 0x01)
-    FormationCtrl(0x08, ChrTable['亞爾緹娜'], 0.0, 2.0, 0x01)
-    ModelCtrl(0x37, 0x0000, 0x00, 0x00, 0x00)
-    ModelCtrl(0x37, 0x000C, 0x00, 0x01, 0x00)
-    ModelCtrl(0x37, 0x000B, 0x01, 0x00, 0x00)
-    ModelCtrl(0x37, 0x000E, 0x01, 0x00, 0x00)
-    ModelCtrl(0x37, 0x000A, 0x01, 0x01, 0x00)
-    ModelCtrl(0x37, 0x000D, 0x01, 0x01, 0x00)
-    ModelCtrl(0x37, 0x0000, 0x00, 0x00, 0x01)
-    ModelCtrl(0x37, 0x000C, 0x00, 0x02, 0x01)
-    ModelCtrl(0x37, 0x000A, 0x01, 0x00, 0x01)
-    ModelCtrl(0x37, 0x000B, 0x01, 0x01, 0x01)
-    ModelCtrl(0x37, 0x000D, 0x00, 0x01, 0x01)
-    ModelCtrl(0x37, 0x000E, 0x01, 0x01, 0x01)
+    FormationCmd(0x08, ChrTable['黎恩'], 0.0, 0.0, 0x01)
+    FormationCmd(0x08, ChrTable['尤娜'], 2.0, 0.0, 0x01)
+    FormationCmd(0x08, ChrTable['庫爾特'], -2.0, 0.0, 0x01)
+    FormationCmd(0x08, ChrTable['亞爾緹娜'], 0.0, 2.0, 0x01)
+    ModelCmd(0x37, 0x0000, 0x00, 0x00, 0x00)
+    ModelCmd(0x37, 0x000C, 0x00, 0x01, 0x00)
+    ModelCmd(0x37, 0x000B, 0x01, 0x00, 0x00)
+    ModelCmd(0x37, 0x000E, 0x01, 0x00, 0x00)
+    ModelCmd(0x37, 0x000A, 0x01, 0x01, 0x00)
+    ModelCmd(0x37, 0x000D, 0x01, 0x01, 0x00)
+    ModelCmd(0x37, 0x0000, 0x00, 0x00, 0x01)
+    ModelCmd(0x37, 0x000C, 0x00, 0x02, 0x01)
+    ModelCmd(0x37, 0x000A, 0x01, 0x00, 0x01)
+    ModelCmd(0x37, 0x000B, 0x01, 0x01, 0x01)
+    ModelCmd(0x37, 0x000D, 0x00, 0x01, 0x01)
+    ModelCmd(0x37, 0x000E, 0x01, 0x01, 0x01)
     AddItem(0x00, 0x04B0, 1)
     AddItem(0x00, 0x04BF, 1)
     AddItem(0x00, 0x04D8, 1)
@@ -10878,34 +10878,34 @@ def FC_BattleTestParty():
     OP_69(0x00, 0x0000, 0x000C, 0xFF, 0x00, 0x00)
     OP_69(0x00, 0x000A, 0x000B, 0xFF, 0x00, 0x00)
     OP_69(0x15, 0x0003)
-    CraftCtrl(0x07, 0xFFFF)
-    CraftCtrl(0x0B, ChrTable['黎恩'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['尤娜'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['庫爾特'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['亞爾緹娜'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['繆潔'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['亞修'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['亞莉莎'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['艾略特'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['勞拉'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['馬奇亞斯'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['艾瑪'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['尤西斯'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['菲'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['蓋烏斯'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['米莉亞姆'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['莎拉'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['奧蕾莉亞將軍'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['阿加特'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['安潔莉卡'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['奧利維特皇子'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['提妲'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['緹歐'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['雪倫'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['克蕾雅少校'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['雷克特少校'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['托娃'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['派崔克'], 0x00000000)
+    CraftCmd(0x07, 0xFFFF)
+    CraftCmd(0x0B, ChrTable['黎恩'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['尤娜'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['庫爾特'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['亞爾緹娜'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['繆潔'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['亞修'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['亞莉莎'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['艾略特'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['勞拉'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['馬奇亞斯'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['艾瑪'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['尤西斯'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['菲'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['蓋烏斯'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['米莉亞姆'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['莎拉'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['奧蕾莉亞將軍'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['阿加特'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['安潔莉卡'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['奧利維特皇子'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['提妲'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['緹歐'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['雪倫'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['克蕾雅少校'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['雷克特少校'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['托娃'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['派崔克'], 0x00000000)
     AddItem(0x00, 0x0001, 15)
     AddItem(0x00, 0x0006, 15)
     AddItem(0x00, 0x000A, 15)
@@ -11974,7 +11974,7 @@ def SelectFlag_System():
 
     label('loc_F4DF')
 
-    CraftCtrl(0x03, 0xFFFF)
+    CraftCmd(0x03, 0xFFFF)
 
     Jump('loc_F91F')
 
@@ -11982,7 +11982,7 @@ def SelectFlag_System():
 
     label('loc_F4E8')
 
-    CraftCtrl(0x00, 0xFFFF, 0x0000)
+    CraftCmd(0x00, 0xFFFF, 0x0000)
 
     Jump('loc_F91F')
 
@@ -11990,37 +11990,37 @@ def SelectFlag_System():
 
     label('loc_F4F3')
 
-    CraftCtrl(0x02, ChrTable['黎恩'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['亞莉莎'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['艾略特'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['勞拉'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['馬奇亞斯'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['艾瑪'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['尤西斯'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['菲'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['蓋烏斯'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['尤娜'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['庫爾特'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['亞爾緹娜'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['繆潔'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['亞修'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['莎拉'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['奧蕾莉亞將軍'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['阿加特'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['安潔莉卡'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['奧利維特皇子'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['提妲'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['緹歐'], 0x00000000)
-    CraftCtrl(0x02, ChrTable['雪倫'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['黎恩'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['亞莉莎'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['艾略特'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['勞拉'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['馬奇亞斯'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['艾瑪'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['尤西斯'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['菲'], 0x00000000)
-    CraftCtrl(0x0B, ChrTable['蓋烏斯'], 0x00000000)
+    CraftCmd(0x02, ChrTable['黎恩'], 0x00000000)
+    CraftCmd(0x02, ChrTable['亞莉莎'], 0x00000000)
+    CraftCmd(0x02, ChrTable['艾略特'], 0x00000000)
+    CraftCmd(0x02, ChrTable['勞拉'], 0x00000000)
+    CraftCmd(0x02, ChrTable['馬奇亞斯'], 0x00000000)
+    CraftCmd(0x02, ChrTable['艾瑪'], 0x00000000)
+    CraftCmd(0x02, ChrTable['尤西斯'], 0x00000000)
+    CraftCmd(0x02, ChrTable['菲'], 0x00000000)
+    CraftCmd(0x02, ChrTable['蓋烏斯'], 0x00000000)
+    CraftCmd(0x02, ChrTable['尤娜'], 0x00000000)
+    CraftCmd(0x02, ChrTable['庫爾特'], 0x00000000)
+    CraftCmd(0x02, ChrTable['亞爾緹娜'], 0x00000000)
+    CraftCmd(0x02, ChrTable['繆潔'], 0x00000000)
+    CraftCmd(0x02, ChrTable['亞修'], 0x00000000)
+    CraftCmd(0x02, ChrTable['莎拉'], 0x00000000)
+    CraftCmd(0x02, ChrTable['奧蕾莉亞將軍'], 0x00000000)
+    CraftCmd(0x02, ChrTable['阿加特'], 0x00000000)
+    CraftCmd(0x02, ChrTable['安潔莉卡'], 0x00000000)
+    CraftCmd(0x02, ChrTable['奧利維特皇子'], 0x00000000)
+    CraftCmd(0x02, ChrTable['提妲'], 0x00000000)
+    CraftCmd(0x02, ChrTable['緹歐'], 0x00000000)
+    CraftCmd(0x02, ChrTable['雪倫'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['黎恩'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['亞莉莎'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['艾略特'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['勞拉'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['馬奇亞斯'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['艾瑪'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['尤西斯'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['菲'], 0x00000000)
+    CraftCmd(0x0B, ChrTable['蓋烏斯'], 0x00000000)
 
     Jump('loc_F91F')
 
@@ -12123,7 +12123,7 @@ def SelectFlag_System():
 
     label('loc_F761')
 
-    ModelCtrl(0x31, 0x00, 0x0002, 0x005F, 0.5, 0.2, 0x03, 0x01, 0x0000)
+    ModelCmd(0x31, 0x00, 0x0002, 0x005F, 0.5, 0.2, 0x03, 0x01, 0x0000)
 
     Jump('loc_F91F')
 
@@ -12131,18 +12131,18 @@ def SelectFlag_System():
 
     label('loc_F779')
 
-    ModelCtrl(0x23, 0x0000, 0xFFFF, 0x0000, -1.0)
-    ModelCtrl(0x23, 0x0001, 0xFFFF, 0x0000, -1.0)
+    ModelCmd(0x23, 0x0000, 0xFFFF, 0x0000, -1.0)
+    ModelCmd(0x23, 0x0001, 0xFFFF, 0x0000, -1.0)
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x0A, 0xF001)"),
+            (Expr.Eval, "FormationCmd(0x0A, 0xF001)"),
             Expr.Return,
         ),
         'loc_F7B0',
     )
 
-    ModelCtrl(0x23, 0x0000, 0xF001, 0x0001, 0.25)
+    ModelCmd(0x23, 0x0000, 0xF001, 0x0001, 0.25)
     ChrClearPhysicsFlags(0xF001, 0x00000001)
 
     def _loc_F7B0(): pass
@@ -12151,13 +12151,13 @@ def SelectFlag_System():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x0A, 0xF002)"),
+            (Expr.Eval, "FormationCmd(0x0A, 0xF002)"),
             Expr.Return,
         ),
         'loc_F7CF',
     )
 
-    ModelCtrl(0x23, 0x0001, 0xF002, 0x0001, 0.25)
+    ModelCmd(0x23, 0x0001, 0xF002, 0x0001, 0.25)
     ChrClearPhysicsFlags(0xF002, 0x00000001)
 
     def _loc_F7CF(): pass
@@ -12242,8 +12242,8 @@ def SelectFlag_System():
 
     label('loc_F874')
 
-    CraftCtrl(0x00, ChrTable['亞爾緹娜'], 0x0A3C)
-    CraftCtrl(0x04, ChrTable['亞爾緹娜'], 0x0A3C)
+    CraftCmd(0x00, ChrTable['亞爾緹娜'], 0x0A3C)
+    CraftCmd(0x04, ChrTable['亞爾緹娜'], 0x0A3C)
 
     Jump('loc_F91F')
 
@@ -14773,7 +14773,7 @@ def SelectFlag():
 
     label('loc_1114E')
 
-    FormationCtrl(0x1C, 0x01)
+    FormationCmd(0x1C, 0x01)
 
     Jump('loc_11173')
 
@@ -16630,18 +16630,18 @@ def EV_Flag_Set_01_All():
     OP_71(0x00, 0x2D0D, 0x2D0E)
     OP_71(0x00, 0x2D80, 0x2DB3)
     OP_71(0x00, 0x2F80, 0x2F98)
-    QuestCtrl(0x0001, 0x05)
-    QuestCtrl(0x0002, 0x05)
-    QuestCtrl(0x0003, 0x05)
-    QuestCtrl(0x0004, 0x05)
-    QuestCtrl(0x0005, 0x05)
-    QuestCtrl(0x0006, 0x05)
-    QuestCtrl(0x0007, 0x05)
-    QuestCtrl(0x0008, 0x05)
-    QuestCtrl(0x0009, 0x05)
-    QuestCtrl(0x000A, 0x05)
-    QuestCtrl(0x000B, 0x05)
-    QuestCtrl(0x000C, 0x05)
+    QuestCmd(0x0001, 0x05)
+    QuestCmd(0x0002, 0x05)
+    QuestCmd(0x0003, 0x05)
+    QuestCmd(0x0004, 0x05)
+    QuestCmd(0x0005, 0x05)
+    QuestCmd(0x0006, 0x05)
+    QuestCmd(0x0007, 0x05)
+    QuestCmd(0x0008, 0x05)
+    QuestCmd(0x0009, 0x05)
+    QuestCmd(0x000A, 0x05)
+    QuestCmd(0x000B, 0x05)
+    QuestCmd(0x000C, 0x05)
     ClearScenaFlags(ScenaFlag(0x006E, 1, 0x371))
     ClearScenaFlags(ScenaFlag(0x006E, 2, 0x372))
     ClearScenaFlags(ScenaFlag(0x006E, 4, 0x374))
@@ -16660,7 +16660,7 @@ def EV_Flag_Set_01X_All():
     OP_71(0x00, 0x3590, 0x3591)
     SetScenaFlags(ScenaFlag(0x06B2, 2, 0x3592))
     OP_71(0x00, 0x35B0, 0x35B5)
-    QuestCtrl(0x000D, 0x05)
+    QuestCmd(0x000D, 0x05)
     Call(ScriptId.System, 'SetKisinChange_ValimarS1')
 
     Return()
@@ -16679,20 +16679,20 @@ def EV_Flag_Set_02_All():
     OP_71(0x00, 0x3980, 0x399A)
     OP_71(0x00, 0x399D, 0x39D4)
     OP_71(0x00, 0x3B80, 0x3B86)
-    QuestCtrl(0x000E, 0x05)
-    QuestCtrl(0x000F, 0x05)
-    QuestCtrl(0x0010, 0x05)
-    QuestCtrl(0x0011, 0x05)
-    QuestCtrl(0x0012, 0x05)
-    QuestCtrl(0x0013, 0x05)
-    QuestCtrl(0x0014, 0x05)
-    QuestCtrl(0x0015, 0x05)
-    QuestCtrl(0x0016, 0x05)
-    QuestCtrl(0x0017, 0x05)
-    QuestCtrl(0x0018, 0x05)
-    QuestCtrl(0x0019, 0x05)
-    QuestCtrl(0x001A, 0x05)
-    QuestCtrl(0x001B, 0x05)
+    QuestCmd(0x000E, 0x05)
+    QuestCmd(0x000F, 0x05)
+    QuestCmd(0x0010, 0x05)
+    QuestCmd(0x0011, 0x05)
+    QuestCmd(0x0012, 0x05)
+    QuestCmd(0x0013, 0x05)
+    QuestCmd(0x0014, 0x05)
+    QuestCmd(0x0015, 0x05)
+    QuestCmd(0x0016, 0x05)
+    QuestCmd(0x0017, 0x05)
+    QuestCmd(0x0018, 0x05)
+    QuestCmd(0x0019, 0x05)
+    QuestCmd(0x001A, 0x05)
+    QuestCmd(0x001B, 0x05)
     SetScenaFlags(ScenaFlag(0x0062, 0, 0x310))
     SetScenaFlags(ScenaFlag(0x0062, 1, 0x311))
     SetScenaFlags(ScenaFlag(0x0BAA, 2, 0x5D52))
@@ -16713,19 +16713,19 @@ def EV_Flag_Set_03_All():
     OP_71(0x00, 0x4301, 0x4302)
     OP_71(0x00, 0x4380, 0x439D)
     OP_71(0x00, 0x4580, 0x4582)
-    QuestCtrl(0x001C, 0x05)
-    QuestCtrl(0x001D, 0x05)
-    QuestCtrl(0x001E, 0x05)
-    QuestCtrl(0x001F, 0x05)
-    QuestCtrl(0x0020, 0x05)
-    QuestCtrl(0x0021, 0x05)
-    QuestCtrl(0x0022, 0x05)
-    QuestCtrl(0x0023, 0x05)
-    QuestCtrl(0x0024, 0x05)
-    QuestCtrl(0x0025, 0x05)
-    QuestCtrl(0x0026, 0x05)
-    QuestCtrl(0x0027, 0x05)
-    QuestCtrl(0x0028, 0x05)
+    QuestCmd(0x001C, 0x05)
+    QuestCmd(0x001D, 0x05)
+    QuestCmd(0x001E, 0x05)
+    QuestCmd(0x001F, 0x05)
+    QuestCmd(0x0020, 0x05)
+    QuestCmd(0x0021, 0x05)
+    QuestCmd(0x0022, 0x05)
+    QuestCmd(0x0023, 0x05)
+    QuestCmd(0x0024, 0x05)
+    QuestCmd(0x0025, 0x05)
+    QuestCmd(0x0026, 0x05)
+    QuestCmd(0x0027, 0x05)
+    QuestCmd(0x0028, 0x05)
     SetScenaFlags(ScenaFlag(0x0BAA, 3, 0x5D53))
     SetScenaFlags(ScenaFlag(0x0BAA, 4, 0x5D54))
     Call(ScriptId.System, 'SetKisinChange_ValimarS2')
@@ -16742,7 +16742,7 @@ def EV_Flag_Set_03X_All():
     OP_71(0x00, 0x5BB3, 0x5BB6)
     Call(ScriptId.System, 'SetKisinChange_ValimarS2')
     ClearScenaFlags(ScenaFlag(0x009E, 2, 0x4F2))
-    QuestCtrl(0x0029, 0x05)
+    QuestCmd(0x0029, 0x05)
 
     Return()
 
@@ -16751,12 +16751,12 @@ def EV_Flag_Set_03X_All():
 def EV_Flag_Set_04_All():
     OP_71(0x00, 0x4F00, 0x4FF5)
     OP_71(0x00, 0x5180, 0x5190)
-    QuestCtrl(0x002A, 0x05)
-    QuestCtrl(0x002B, 0x05)
-    QuestCtrl(0x002C, 0x05)
-    QuestCtrl(0x002D, 0x05)
-    QuestCtrl(0x002E, 0x05)
-    QuestCtrl(0x002F, 0x05)
+    QuestCmd(0x002A, 0x05)
+    QuestCmd(0x002B, 0x05)
+    QuestCmd(0x002C, 0x05)
+    QuestCmd(0x002D, 0x05)
+    QuestCmd(0x002E, 0x05)
+    QuestCmd(0x002F, 0x05)
     Call(ScriptId.System, 'SetKisinChange_ValimarS3')
     ClearScenaFlags(ScenaFlag(0x009E, 2, 0x4F2))
 
@@ -17772,7 +17772,7 @@ def EV_DoJumpSet_01():
 
     SetScenaFlags(ScenaFlag(0x058A, 4, 0x2C54))
     SetScenaFlags(ScenaFlag(0x058A, 3, 0x2C53))
-    QuestCtrl(0x0009, 0x05)
+    QuestCmd(0x0009, 0x05)
 
     def _loc_1467B(): pass
 
@@ -18079,7 +18079,7 @@ def EV_DoJumpSet_01():
 
     SetScenaFlags(ScenaFlag(0x057F, 4, 0x2BFC))
     SetScenaFlags(ScenaFlag(0x057F, 3, 0x2BFB))
-    QuestCtrl(0x0008, 0x05)
+    QuestCmd(0x0008, 0x05)
 
     def _loc_14799(): pass
 
@@ -18104,9 +18104,9 @@ def EV_DoJumpSet_01():
 
     SetScenaFlags(ScenaFlag(0x057E, 6, 0x2BF6))
     SetScenaFlags(ScenaFlag(0x057E, 5, 0x2BF5))
-    QuestCtrl(0x0005, 0x05)
-    QuestCtrl(0x0006, 0x05)
-    QuestCtrl(0x0007, 0x05)
+    QuestCmd(0x0005, 0x05)
+    QuestCmd(0x0006, 0x05)
+    QuestCmd(0x0007, 0x05)
 
     def _loc_147C3(): pass
 
@@ -18375,7 +18375,7 @@ def EV_DoJumpSet_01():
 
     SetScenaFlags(ScenaFlag(0x0573, 4, 0x2B9C))
     SetScenaFlags(ScenaFlag(0x0573, 3, 0x2B9B))
-    QuestCtrl(0x0004, 0x05)
+    QuestCmd(0x0004, 0x05)
 
     def _loc_148C9(): pass
 
@@ -18403,9 +18403,9 @@ def EV_DoJumpSet_01():
     SetScenaFlags(ScenaFlag(0x05F2, 3, 0x2F93))
     SetScenaFlags(ScenaFlag(0x05F2, 4, 0x2F94))
     SetScenaFlags(ScenaFlag(0x05F2, 5, 0x2F95))
-    QuestCtrl(0x0001, 0x05)
-    QuestCtrl(0x0002, 0x05)
-    QuestCtrl(0x0003, 0x05)
+    QuestCmd(0x0001, 0x05)
+    QuestCmd(0x0002, 0x05)
+    QuestCmd(0x0003, 0x05)
 
     def _loc_148F9(): pass
 
@@ -19214,7 +19214,7 @@ def EV_DoJumpSet_01X():
 
     SetScenaFlags(ScenaFlag(0x06A6, 2, 0x3532))
     SetScenaFlags(ScenaFlag(0x06A6, 1, 0x3531))
-    QuestCtrl(0x000D, 0x05)
+    QuestCmd(0x000D, 0x05)
 
     def _loc_14E10(): pass
 
@@ -19334,9 +19334,9 @@ def EV_DoJumpSet_01X():
     SetScenaFlags(ScenaFlag(0x06B2, 2, 0x3592))
     OP_71(0x00, 0x35B0, 0x35B5)
     SetScenaFlags(ScenaFlag(0x06A2, 1, 0x3511))
-    QuestCtrl(0x000A, 0x05)
-    QuestCtrl(0x000B, 0x05)
-    QuestCtrl(0x000C, 0x05)
+    QuestCmd(0x000A, 0x05)
+    QuestCmd(0x000B, 0x05)
+    QuestCmd(0x000C, 0x05)
 
     def _loc_14E90(): pass
 
@@ -19835,9 +19835,9 @@ def EV_DoJumpSet_02():
     OP_71(0x00, 0x39C2, 0x39C5)
     OP_71(0x00, 0x39CE, 0x39CF)
     SetScenaFlags(ScenaFlag(0x0712, 3, 0x3893))
-    QuestCtrl(0x0019, 0x05)
-    QuestCtrl(0x001A, 0x05)
-    QuestCtrl(0x001B, 0x05)
+    QuestCmd(0x0019, 0x05)
+    QuestCmd(0x001A, 0x05)
+    QuestCmd(0x001B, 0x05)
 
     def _loc_155B4(): pass
 
@@ -20174,9 +20174,9 @@ def EV_DoJumpSet_02():
 
     SetScenaFlags(ScenaFlag(0x0702, 4, 0x3814))
     SetScenaFlags(ScenaFlag(0x0702, 3, 0x3813))
-    QuestCtrl(0x0016, 0x05)
-    QuestCtrl(0x0017, 0x05)
-    QuestCtrl(0x0018, 0x05)
+    QuestCmd(0x0016, 0x05)
+    QuestCmd(0x0017, 0x05)
+    QuestCmd(0x0018, 0x05)
 
     def _loc_156F8(): pass
 
@@ -20303,7 +20303,7 @@ def EV_DoJumpSet_02():
 
     SetScenaFlags(ScenaFlag(0x06F9, 0, 0x37C8))
     SetScenaFlags(ScenaFlag(0x06F8, 7, 0x37C7))
-    QuestCtrl(0x0015, 0x05)
+    QuestCmd(0x0015, 0x05)
 
     def _loc_15768(): pass
 
@@ -20382,9 +20382,9 @@ def EV_DoJumpSet_02():
 
     SetScenaFlags(ScenaFlag(0x06F6, 2, 0x37B2))
     SetScenaFlags(ScenaFlag(0x06F6, 1, 0x37B1))
-    QuestCtrl(0x0012, 0x05)
-    QuestCtrl(0x0013, 0x05)
-    QuestCtrl(0x0014, 0x05)
+    QuestCmd(0x0012, 0x05)
+    QuestCmd(0x0013, 0x05)
+    QuestCmd(0x0014, 0x05)
 
     def _loc_157BC(): pass
 
@@ -20546,7 +20546,7 @@ def EV_DoJumpSet_02():
 
     SetScenaFlags(ScenaFlag(0x06ED, 6, 0x376E))
     SetScenaFlags(ScenaFlag(0x06ED, 5, 0x376D))
-    QuestCtrl(0x0011, 0x05)
+    QuestCmd(0x0011, 0x05)
 
     def _loc_1584A(): pass
 
@@ -20612,9 +20612,9 @@ def EV_DoJumpSet_02():
 
     SetScenaFlags(ScenaFlag(0x06EB, 4, 0x375C))
     SetScenaFlags(ScenaFlag(0x06EB, 3, 0x375B))
-    QuestCtrl(0x000E, 0x05)
-    QuestCtrl(0x000F, 0x05)
-    QuestCtrl(0x0010, 0x05)
+    QuestCmd(0x000E, 0x05)
+    QuestCmd(0x000F, 0x05)
+    QuestCmd(0x0010, 0x05)
 
     def _loc_15895(): pass
 
@@ -21183,7 +21183,7 @@ def EV_DoJumpSet_03():
 
     SetScenaFlags(ScenaFlag(0x0842, 4, 0x4214))
     SetScenaFlags(ScenaFlag(0x0842, 3, 0x4213))
-    QuestCtrl(0x0028, 0x05)
+    QuestCmd(0x0028, 0x05)
 
     def _loc_15E8C(): pass
 
@@ -21338,12 +21338,12 @@ def EV_DoJumpSet_03():
 
     SetScenaFlags(ScenaFlag(0x083A, 2, 0x41D2))
     SetScenaFlags(ScenaFlag(0x083A, 1, 0x41D1))
-    QuestCtrl(0x0022, 0x05)
-    QuestCtrl(0x0023, 0x05)
-    QuestCtrl(0x0024, 0x05)
-    QuestCtrl(0x0025, 0x05)
-    QuestCtrl(0x0026, 0x05)
-    QuestCtrl(0x0027, 0x05)
+    QuestCmd(0x0022, 0x05)
+    QuestCmd(0x0023, 0x05)
+    QuestCmd(0x0024, 0x05)
+    QuestCmd(0x0025, 0x05)
+    QuestCmd(0x0026, 0x05)
+    QuestCmd(0x0027, 0x05)
 
     def _loc_15F28(): pass
 
@@ -21588,12 +21588,12 @@ def EV_DoJumpSet_03():
 
     SetScenaFlags(ScenaFlag(0x082D, 0, 0x4168))
     SetScenaFlags(ScenaFlag(0x082C, 7, 0x4167))
-    QuestCtrl(0x001C, 0x05)
-    QuestCtrl(0x001D, 0x05)
-    QuestCtrl(0x001E, 0x05)
-    QuestCtrl(0x001F, 0x05)
-    QuestCtrl(0x0020, 0x05)
-    QuestCtrl(0x0021, 0x05)
+    QuestCmd(0x001C, 0x05)
+    QuestCmd(0x001D, 0x05)
+    QuestCmd(0x001E, 0x05)
+    QuestCmd(0x001F, 0x05)
+    QuestCmd(0x0020, 0x05)
+    QuestCmd(0x0021, 0x05)
 
     def _loc_16032(): pass
 
@@ -22748,12 +22748,12 @@ def EV_DoJumpSet_04():
 
     SetScenaFlags(ScenaFlag(0x09EA, 2, 0x4F52))
     SetScenaFlags(ScenaFlag(0x09EA, 1, 0x4F51))
-    QuestCtrl(0x002A, 0x05)
-    QuestCtrl(0x002B, 0x05)
-    QuestCtrl(0x002C, 0x05)
-    QuestCtrl(0x002D, 0x05)
-    QuestCtrl(0x002E, 0x05)
-    QuestCtrl(0x002F, 0x05)
+    QuestCmd(0x002A, 0x05)
+    QuestCmd(0x002B, 0x05)
+    QuestCmd(0x002C, 0x05)
+    QuestCmd(0x002D, 0x05)
+    QuestCmd(0x002E, 0x05)
+    QuestCmd(0x002F, 0x05)
 
     def _loc_16952(): pass
 
@@ -23550,7 +23550,7 @@ def EV_Party_Set():
         'loc_17097',
     )
 
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['尤娜'])
     FormationSetLeader(ChrTable['尤娜'])
@@ -23681,7 +23681,7 @@ def EV_Party_Set():
     FormationAddMember(ChrTable['馬奇亞斯'])
     FormationAddMember(ChrTable['勞拉'])
     FormationAddMember(ChrTable['蓋烏斯'])
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['尤娜'])
     FormationSetLeader(ChrTable['尤娜'])
@@ -23903,11 +23903,11 @@ def EV_Party_Set():
         'loc_1747B',
     )
 
-    FormationCtrl(0x01, ChrTable['蘭迪'])
+    FormationCmd(0x01, ChrTable['蘭迪'])
     FormationAddMember(ChrTable['菲'])
     FormationAddMember(ChrTable['艾略特'])
     FormationAddMember(ChrTable['莎拉'])
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['庫爾特'])
     FormationSetLeader(ChrTable['庫爾特'])
@@ -24548,7 +24548,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞莉莎'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞莉莎'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -24565,7 +24565,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['勞拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['勞拉'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -24580,7 +24580,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['馬奇亞斯'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['馬奇亞斯'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -24595,7 +24595,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['艾瑪'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['艾瑪'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -24610,7 +24610,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤西斯'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['尤西斯'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -24627,7 +24627,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['蓋烏斯'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['蓋烏斯'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -24654,7 +24654,7 @@ def EV_Party_Set():
         ),
     )
 
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['亞爾緹娜'])
     FormationSetLeader(ChrTable['亞爾緹娜'])
@@ -24819,10 +24819,10 @@ def EV_Party_Set():
 
     FormationReset(0x00)
     OP_C4(0x01, 0x00)
-    FormationCtrl(0x0D, ChrTable['艾略特'], ChrTable['馬奇亞斯'], ChrTable['尤西斯'], ChrTable['阿加特'], ChrTable['蘭迪'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
-    FormationCtrl(0x0D, ChrTable['艾略特'], ChrTable['馬奇亞斯'], ChrTable['尤西斯'], ChrTable['阿加特'], ChrTable['蘭迪'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
+    FormationCmd(0x0D, ChrTable['艾略特'], ChrTable['馬奇亞斯'], ChrTable['尤西斯'], ChrTable['阿加特'], ChrTable['蘭迪'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
+    FormationCmd(0x0D, ChrTable['艾略特'], ChrTable['馬奇亞斯'], ChrTable['尤西斯'], ChrTable['阿加特'], ChrTable['蘭迪'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
     OP_C4(0x01, 0x01)
-    FormationCtrl(0x0D, ChrTable['亞莉莎'], ChrTable['艾瑪'], ChrTable['菲'], ChrTable['勞拉'], ChrTable['莎拉'], ChrTable['提妲'], ChrTable['安潔莉卡'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
+    FormationCmd(0x0D, ChrTable['亞莉莎'], ChrTable['艾瑪'], ChrTable['菲'], ChrTable['勞拉'], ChrTable['莎拉'], ChrTable['提妲'], ChrTable['安潔莉卡'], 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF)
     Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x02, 0x00, ChrTable['黎恩'])
     OP_C4(0x02, 0x00, ChrTable['羅伊德'])
@@ -24833,7 +24833,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['艾略特'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['艾略特'])"),
             Expr.Return,
         ),
         'loc_1804A',
@@ -24847,7 +24847,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['馬奇亞斯'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['馬奇亞斯'])"),
             Expr.Return,
         ),
         'loc_1805A',
@@ -24861,7 +24861,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤西斯'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['尤西斯'])"),
             Expr.Return,
         ),
         'loc_1806A',
@@ -24875,7 +24875,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['阿加特'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['阿加特'])"),
             Expr.Return,
         ),
         'loc_1807A',
@@ -24889,7 +24889,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['蘭迪'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['蘭迪'])"),
             Expr.Return,
         ),
         'loc_1808A',
@@ -24929,7 +24929,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞莉莎'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞莉莎'])"),
             Expr.Return,
         ),
         'loc_180CF',
@@ -24943,7 +24943,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['艾瑪'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['艾瑪'])"),
             Expr.Return,
         ),
         'loc_180DF',
@@ -24957,7 +24957,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['菲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['菲'])"),
             Expr.Return,
         ),
         'loc_180EF',
@@ -24971,7 +24971,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['勞拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['勞拉'])"),
             Expr.Return,
         ),
         'loc_180FF',
@@ -24985,7 +24985,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['莎拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['莎拉'])"),
             Expr.Return,
         ),
         'loc_1810F',
@@ -24999,7 +24999,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['提妲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['提妲'])"),
             Expr.Return,
         ),
         'loc_1811F',
@@ -25013,7 +25013,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['安潔莉卡'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['安潔莉卡'])"),
             Expr.Return,
         ),
         'loc_1812F',
@@ -25284,7 +25284,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['艾略特'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['艾略特'])"),
             Expr.Return,
         ),
         'loc_18562',
@@ -25298,7 +25298,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['馬奇亞斯'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['馬奇亞斯'])"),
             Expr.Return,
         ),
         'loc_18572',
@@ -25312,7 +25312,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤西斯'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['尤西斯'])"),
             Expr.Return,
         ),
         'loc_18582',
@@ -25326,7 +25326,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['阿加特'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['阿加特'])"),
             Expr.Return,
         ),
         'loc_18592',
@@ -25340,7 +25340,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['蘭迪'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['蘭迪'])"),
             Expr.Return,
         ),
         'loc_185A2',
@@ -25399,7 +25399,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞莉莎'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞莉莎'])"),
             Expr.Return,
         ),
         'loc_18698',
@@ -25413,7 +25413,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['艾瑪'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['艾瑪'])"),
             Expr.Return,
         ),
         'loc_186A8',
@@ -25427,7 +25427,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['菲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['菲'])"),
             Expr.Return,
         ),
         'loc_186B8',
@@ -25441,7 +25441,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['勞拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['勞拉'])"),
             Expr.Return,
         ),
         'loc_186C8',
@@ -25455,7 +25455,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['莎拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['莎拉'])"),
             Expr.Return,
         ),
         'loc_186D8',
@@ -25469,7 +25469,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['提妲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['提妲'])"),
             Expr.Return,
         ),
         'loc_186E8',
@@ -25483,7 +25483,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['安潔莉卡'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['安潔莉卡'])"),
             Expr.Return,
         ),
         'loc_186F8',
@@ -25829,7 +25829,7 @@ def EV_Party_Set():
     OP_C5(0x01)
     FormationReset(0x00)
     OP_C4(0x01, 0x00)
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
@@ -26014,7 +26014,7 @@ def EV_Party_Set():
         'loc_18DD4',
     )
 
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
@@ -26126,7 +26126,7 @@ def EV_Party_Set():
         'loc_18F62',
     )
 
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
@@ -26357,13 +26357,13 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['菲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['菲'])"),
             Expr.Return,
         ),
         'loc_19167',
     )
 
-    FormationCtrl(0x01, ChrTable['菲'])
+    FormationCmd(0x01, ChrTable['菲'])
     MenuChrFlagCmd(0x01, ChrTable['菲'], 0x00000001)
 
     Jump('loc_19173')
@@ -26372,7 +26372,7 @@ def EV_Party_Set():
 
     label('loc_19167')
 
-    FormationCtrl(0x01, ChrTable['莎拉'])
+    FormationCmd(0x01, ChrTable['莎拉'])
     MenuChrFlagCmd(0x01, ChrTable['莎拉'], 0x00000001)
 
     def _loc_19173(): pass
@@ -26447,7 +26447,7 @@ def EV_Party_Set():
     OP_C5(0x01)
     FormationReset(0x00)
     OP_C4(0x01, 0x00)
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
@@ -26609,7 +26609,7 @@ def EV_Party_Set():
     OP_C5(0x01)
     FormationReset(0x00)
     OP_C4(0x01, 0x00)
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
@@ -26735,7 +26735,7 @@ def EV_Party_Set():
     FormationAddMember(ChrTable['菲'])
     FormationAddMember(ChrTable['蓋烏斯'])
     FormationAddMember(ChrTable['莎拉'])
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
@@ -26991,7 +26991,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤娜'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['尤娜'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27006,7 +27006,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['庫爾特'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['庫爾特'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27021,7 +27021,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['繆潔'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['繆潔'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27036,7 +27036,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞修'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞修'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27051,7 +27051,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞莉莎'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞莉莎'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27066,7 +27066,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['勞拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['勞拉'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27081,7 +27081,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['馬奇亞斯'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['馬奇亞斯'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27096,7 +27096,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['菲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['菲'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27111,7 +27111,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['莎拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['莎拉'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27126,7 +27126,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['雪倫'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['雪倫'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27280,7 +27280,7 @@ def EV_Party_Set():
         'loc_19CAF',
     )
 
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
@@ -27592,7 +27592,7 @@ def EV_Party_Set():
         'loc_1A0B5',
     )
 
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
@@ -27694,7 +27694,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤娜'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['尤娜'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27709,7 +27709,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['庫爾特'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['庫爾特'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27724,7 +27724,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞爾緹娜'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞爾緹娜'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27739,7 +27739,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['繆潔'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['繆潔'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27754,7 +27754,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞修'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞修'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27769,7 +27769,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['亞莉莎'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['亞莉莎'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27784,7 +27784,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['艾略特'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['艾略特'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27799,7 +27799,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['勞拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['勞拉'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27814,7 +27814,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['馬奇亞斯'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['馬奇亞斯'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27829,7 +27829,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['尤西斯'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['尤西斯'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27844,7 +27844,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['菲'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['菲'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27859,7 +27859,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['蓋烏斯'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['蓋烏斯'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27874,7 +27874,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['莎拉'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['莎拉'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27889,7 +27889,7 @@ def EV_Party_Set():
 
     If(
         (
-            (Expr.Eval, "FormationCtrl(0x05, ChrTable['克洛'])"),
+            (Expr.Eval, "FormationCmd(0x05, ChrTable['克洛'])"),
             Expr.Ez,
             Expr.Return,
         ),
@@ -27951,14 +27951,14 @@ def EV_Party_Set():
     OP_69(0x01, 0xFFF8)
     OP_69(0x00, 0x0000, 0x0028, 0xFF, 0x00, 0x00)
     OP_69(0x00, 0x000B, 0x000A, 0xFF, 0x00, 0x00)
-    FormationCtrl(0x08, ChrTable['黎恩'], -1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['瑟蕾奴'], -2.0, 1.0, 0x00)
-    FormationCtrl(0x08, ChrTable['庫爾特'], 1.0, 0.0, 0x00)
-    FormationCtrl(0x08, ChrTable['尤娜'], 2.0, 1.0, 0x00)
-    FormationCtrl(0x08, ChrTable['亞修'], -1.0, 2.0, 0x00)
-    FormationCtrl(0x08, ChrTable['亞莉莎'], 1.0, 2.0, 0x00)
-    FormationCtrl(0x08, ChrTable['亞爾緹娜'], -2.0, 2.0, 0x00)
-    FormationCtrl(0x08, ChrTable['繆潔'], 2.0, 2.0, 0x00)
+    FormationCmd(0x08, ChrTable['黎恩'], -1.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['瑟蕾奴'], -2.0, 1.0, 0x00)
+    FormationCmd(0x08, ChrTable['庫爾特'], 1.0, 0.0, 0x00)
+    FormationCmd(0x08, ChrTable['尤娜'], 2.0, 1.0, 0x00)
+    FormationCmd(0x08, ChrTable['亞修'], -1.0, 2.0, 0x00)
+    FormationCmd(0x08, ChrTable['亞莉莎'], 1.0, 2.0, 0x00)
+    FormationCmd(0x08, ChrTable['亞爾緹娜'], -2.0, 2.0, 0x00)
+    FormationCmd(0x08, ChrTable['繆潔'], 2.0, 2.0, 0x00)
 
     If(
         (
@@ -27969,7 +27969,7 @@ def EV_Party_Set():
         'loc_1A47F',
     )
 
-    FormationCtrl(0x1B, 0x01)
+    FormationCmd(0x1B, 0x01)
     FormationReset(0x00)
     FormationAddMember(ChrTable['黎恩'])
     FormationSetLeader(ChrTable['黎恩'])
@@ -28047,7 +28047,7 @@ def EV_Party_Set():
     WaitForMsg()
 
     OP_25(0x00)
-    FormationCtrl(0x0E, 0x00)
+    FormationCmd(0x0E, 0x00)
     Call(ScriptId.System, 'FC_TSMenu_Reset')
     OP_C4(0x02, 0x00, ChrTable['亞莉莎'])
     OP_C4(0x02, 0x00, ChrTable['艾略特'])
@@ -29245,8 +29245,8 @@ def FC_SetEquip():
 
     label('loc_1B7DF')
 
-    CraftCtrl(0x03, 0xFFFF)
-    CraftCtrl(0x07, 0xFFFF)
+    CraftCmd(0x03, 0xFFFF)
+    CraftCmd(0x07, 0xFFFF)
     OP_23(0x05, 65535, 65535, 65535, 65535, 0x00)
 
     Talk(

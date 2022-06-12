@@ -30,8 +30,8 @@ def TK_MiniGame_Debug():
     FormationSetLeader(0)
     # FormationAddMember(0xA)
 
-    # CraftCtrl(0x00, ChrTable['黎恩'], 0xD4B)
-    # CraftCtrl(0x04, ChrTable['黎恩'], 0xD4B)
+    # CraftCmd(0x00, ChrTable['黎恩'], 0xD4B)
+    # CraftCmd(0x04, ChrTable['黎恩'], 0xD4B)
     # SetChrModelChrId(ChrTable['黎恩'], ChrTable['黎恩'])
     # SetBattleStyle(ChrTable['黎恩'], ChrTable['黎恩'])
     # ChrRefreshSkin(0)
