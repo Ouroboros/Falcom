@@ -460,21 +460,11 @@ function hookTalk() {
     }
 
     function stopVoice() {
-        console.log('stopVoice');
+        // console.log('stopVoice');
         sb?.stop();
         sb?.release();
         sb = undefined;
     }
-
-    // const scena_op_5b = Interceptor2.jmp(
-    //     ptr(0x4A3FF0),
-    //     function(thiz: NativePointer, context: NativePointer): number {
-    //         console.log('ChrTalk');
-
-    //         return scena_op_5b(thiz, context);
-    //     },
-    //     'int32', ['pointer', 'pointer'], 'thiscall',
-    // );
 
     let lastTerminator = NULL;
 
@@ -550,59 +540,6 @@ function hookTalk() {
         },
         'pointer', ['pointer', 'pointer', 'uint32', 'uint32'], 'thiscall',
     );
-
-    // Interceptor.attach(ptr(0x4E1690), function() {
-    //         const ctx = this.context as Ia32CpuContext;
-    //         const text = ctx.esi;
-    //         const ch = text.readU8();
-
-    //         switch (ch) {
-    //             case 0x02:
-    //                 playVoice();
-    //                 break;
-
-    //             case 0x03:
-    //                 onTalkEnd();
-    //                 break;
-    //         }
-    //     },
-    // );
-
-    // const scena_op_58 = Interceptor2.jmp(
-    //     ptr(0x4A3DD0),
-    //     function(thiz: NativePointer, context: NativePointer): number {
-    //         const closed = scena_op_58(thiz, context) & 0xFF;
-
-    //         utils.log(`scena_op_58: ${closed}`);
-    //         if (closed != 0) {
-    //             onTalkEnd();
-    //         }
-
-    //         return closed;
-    //     },
-    //     'int32', ['pointer', 'pointer'], 'thiscall',
-    // );
-
-    // const scena_op_53 = Interceptor2.jmp(
-    //     ptr(0x4A3A40),
-    //     function(thiz: NativePointer, context: NativePointer): number {
-    //         const closed = scena_op_53(thiz, context) & 0xFF;
-    //         console.log(`TalkEnd: ${closed}`);
-    //         onTalkEnd();
-    //         return closed;
-    //     },
-    //     'int32', ['pointer', 'pointer'], 'thiscall',
-    // );
-
-    // const clearTextBox = Interceptor2.jmp(
-    //     ptr(0x4E1E20),
-    //     function(thiz: NativePointer) {
-    //         console.log('clearTextBox');
-    //         onTalkEnd();
-    //         clearTextBox(thiz);
-    //     },
-    //     'void', ['pointer'], 'thiscall',
-    // );
 }
 
 export function main() {
