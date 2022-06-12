@@ -117,7 +117,7 @@ class ED6OperandDescriptor(OperandDescriptor):
     def writeExpression(self, context: InstructionHandlerContext, value: 'List[ScenaExpression]'):
         ScenaExpression.writeExpressions(context, [ScenaExpression(v[0], *v[1:]) if isinstance(v, tuple | list) else ScenaExpression(v) for v in value])
 
-    def writeText(self, context: InstructionHandlerContext, text: str) -> 'List[TextObject]':
+    def writeText(self, context: InstructionHandlerContext, text: str):
         fs = context.disasmContext.fs
 
         if isinstance(text, str):
@@ -284,6 +284,9 @@ class TextObject:
     def __init__(self, code: int = None, value: Any = None):
         self.code   = code              # type: int
         self.value  = value             # type: Any
+
+    def __eq__(self, o: 'TextObject') -> bool:
+        return o.code == self.code and o.value == self.value
 
     def __str__(self):
         if self.code is None:

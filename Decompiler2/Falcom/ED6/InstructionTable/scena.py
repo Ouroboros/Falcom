@@ -86,12 +86,12 @@ def Handler_04(ctx: InstructionHandlerContext):
 
             f = [
                 f'{desc.mnemonic}(',
-                f'{DefaultIndent}(',
-                *[f'{DefaultIndent * 2}{opr},'.rstrip() for opr in formatOperand(expr)],
-                f'{DefaultIndent}),',
+                f'{GlobalConfig.DefaultIndent}(',
+                *[f'{GlobalConfig.DefaultIndent * 2}{opr},'.rstrip() for opr in formatOperand(expr)],
+                f'{GlobalConfig.DefaultIndent}),',
 
-                *[f'{DefaultIndent}(0x{id.value:08X}, {formatOperand(o)}),' for id, o in cases],
-                f'{DefaultIndent}({SWITCH_DEFAULT}, {formatOperand(default)}),',
+                *[f'{GlobalConfig.DefaultIndent}(0x{id.value:08X}, {formatOperand(o)}),' for id, o in cases],
+                f'{GlobalConfig.DefaultIndent}({SWITCH_DEFAULT}, {formatOperand(default)}),',
                 ')',
             ]
 
@@ -279,7 +279,7 @@ def lambdaHandler(ctx: InstructionHandlerContext, extraCodeSize: int):
             return [
                 f"@scena.Lambda('{blockName}')",
                 f'def {blockName}():',
-                *[f'{DefaultIndent}{line}' for line in ctx.formatter.formatBlock(code)],
+                *[f'{GlobalConfig.DefaultIndent}{line}' for line in ctx.formatter.formatBlock(code)],
                 '',
                 f'{desc.mnemonic}({formatOperand(operands[0])}, {formatOperand(operands[1])}, {blockName})',
             ]
@@ -457,7 +457,7 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x46,  'DispatchAsync2',               NoOperand,          Flags.FormatMultiLine,  Handler_46),
     inst(0x47,  'WaitForThreadExit',            'WW'),
     inst(0x48,  'Yield'),
-    inst(0x49,  'Event',                        'CH'),
+    inst(0x49,  'Event',                        'CW'),
     inst(0x4A,  'OP_4A',                        'WC'),
     inst(0x4B,  'OP_4B',                        'WC'),
     inst(0x4C,  'OP_4C'),

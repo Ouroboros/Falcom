@@ -73,11 +73,9 @@ class OperandFormat:
     }
 
     def __init__(self, oprType: OperandType, hex: bool = False, encoding: str = None):
-        encoding = encoding or GlobalConfig.DefaultEncoding
-
         self.type       = oprType                   # type: OperandType
         self.hex        = hex                       # type: bool
-        self.encoding   = encoding                  # type: str
+        self._encoding  = encoding                  # type: str
 
     def __str__(self):
         return repr(self.type)
@@ -88,6 +86,10 @@ class OperandFormat:
     @property
     def size(self):
         return self.sizeTable.get(self.type)
+
+    @property
+    def encoding(self) -> str:
+        return self._encoding or GlobalConfig.DefaultEncoding
 
 class OperandDescriptor:
     formatTable: Dict[str, 'OperandDescriptor'] = {}

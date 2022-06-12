@@ -22,7 +22,7 @@ class ScenaFormatter(Assembler.Formatter):
     def formatFuncion(self, func: ScenaFunction) -> List[str]:
         funcName = func.name
         if not funcName:
-            funcName = f'func_{func.offset:X}'
+            funcName = f'func_{func.index:02X}_{func.offset:X}'
 
         f = [
             f'# id: 0x{func.index:04X} offset: 0x{func.offset:X}',
@@ -167,7 +167,7 @@ class ScenaParser:
         }
         for i in range(hdr.functionTable.size // 2):
             offset = fs.ReadUShort()
-            self.functions.append(ScenaFunction(index = i, offset = offset, name = funcNames.get(i, f'func_{offset:X}'), type = ScenaFunctionType.Code))
+            self.functions.append(ScenaFunction(index = i, offset = offset, name = funcNames.get(i, f'func_{i:02X}_{offset:X}'), type = ScenaFunctionType.Code))
 
     def parseDataTable(self):
         fs = self.fs

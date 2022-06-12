@@ -215,7 +215,7 @@ ScenaOpTable = ED62InstructionTable(ED6ScenaOpTable).update([
     inst(0xC6,  'OP_C6',                        'BBiii'),
     inst(0xC7,  'OP_C7',                        'BBB'),
     inst(0xC8,  'OP_C8',                        'WWSBW'),
-    inst(0xC9,  'OP_C9',                        NoOperand,              handler = Handler_C9),      # character selection
+    inst(0xC9,  'OP_C9',                        NoOperand,              handler = Handler_C9, parameters = ('mandatory', 'members')),      # character selection
     inst(0xCA,  'OP_CA',                        'BBL'),
     inst(0xCB,  'OP_CB',                        'B'),
     inst(0xCC,  'OP_CC',                        desc_CC),

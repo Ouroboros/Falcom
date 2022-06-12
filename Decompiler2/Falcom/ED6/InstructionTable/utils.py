@@ -1,27 +1,39 @@
 from Falcom.Common  import *
 from Assembler      import *
 
+emojiTable = dict([(x, f'<{x.hex().upper()}>'.encode('ASCII')) for x in [
+        b'\x87\x8A',
+        b'\x87\x40',
+        b'\x87\x41',
+        b'\x87\x42',
+        b'\x87\x43',
+        b'\x87\x44',
+        b'\x87\x55',
+        b'\x87\x56',
+        b'\x87\x58',
+        b'\x87\x59',
+        b'\x87\x5B',
+        b'\x87\x5D',
+        b'\x92\x87',
+    ]])
+
 def replaceEmoji(b: bytes) -> bytearray:
-    eighthNoteEmoji = b'\x87\x8A'
-    number1 = b'\x87\x40'
-    number2 = b'\x87\x41'
-    number3 = b'\x87\x42'
-    number4 = b'\x87\x43'
-    number5 = b'\x87\x44'
+    b = bytes(b)
+    buf = bytearray()
 
-    b = bytearray(b)
+    index = 0
+    while index < len(b):
+        if b[index] < 0x80:
+            buf.append(b[index])
+            index += 1
+            continue
 
-    for x in [
-        eighthNoteEmoji,
-        number1,
-        number2,
-        number3,
-        number4,
-        number5,
-    ]:
-        b = b.replace(x, f'<{x.hex().upper()}>'.encode('ASCII'))
+        ch = b[index:index + 2]
+        buf.extend(emojiTable.get(ch, ch))
 
-    return b
+        index += 2
+
+    return buf
 
 def genVariadicFuncStub(desc: InstructionDescriptor, *types, parameters = None) -> List[str]:
     params = []

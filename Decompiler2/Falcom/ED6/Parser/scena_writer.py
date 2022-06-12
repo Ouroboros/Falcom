@@ -113,7 +113,7 @@ class _ScenaWriter:
         self.globals = g
 
         hdr = ScenaHeader()
-        fs = fileio.FileStream(encoding = DefaultEncoding).OpenFile(self.scenaName, 'wb+')
+        fs = fileio.FileStream(encoding = GlobalConfig.DefaultEncoding).OpenFile(self.scenaName, 'wb+')
         self.fs = fs
 
         hdr = self.writeHeader()
@@ -162,7 +162,7 @@ class _ScenaWriter:
 
         for i in range(len(hdr.importTable)):
             v = hdr.importTable[i]
-            if isinstance(v, int):
+            if isinstance(v, int | str):
                 hdr.importTable[i] = DATFileIndex(v)
 
         fs.Position = 0

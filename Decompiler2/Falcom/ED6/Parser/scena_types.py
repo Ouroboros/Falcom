@@ -1,10 +1,6 @@
 from Falcom.Common import *
 from . import utils
 
-DefaultEndian = GlobalConfig.DefaultEndian
-DefaultIndent = GlobalConfig.DefaultIndent
-DefaultEncoding = GlobalConfig.DefaultEncoding
-
 class ScenaTypeBase:
     DESCRIPTOR: Tuple[str, str] = None
 
@@ -41,7 +37,7 @@ class ScenaTypeBase:
         for name, type in self.DESCRIPTOR:
             type = type.split(':', maxsplit = 1)[0]
             value = getattr(self, name)
-            lines.append(f'{DefaultIndent}{name.ljust(align)}= {formatter[type](value)},')
+            lines.append(f'{GlobalConfig.DefaultIndent}{name.ljust(align)}= {formatter[type](value)},')
 
         lines.append(')')
 
@@ -99,6 +95,9 @@ class DATFileIndex:
     INVALID_INDEX = 0xFFFFFFFF
 
     def __init__(self, value: int = INVALID_INDEX, *, fs: fileio.FileStream = None) -> None:
+        if isinstance(value, str):
+            value = GlobalConfig.DirTable[value]
+
         self.value = value             # type: int
         self.read(fs)
 
@@ -126,8 +125,23 @@ class DATFileIndex:
         return f'ED6_DT{self.dat:02d}'
 
     @property
-    def fileName(self) -> str:
-        return '<None>'
+    def fileName(self) -> str | None:
+        if GlobalConfig.DirTable:
+            name = GlobalConfig.DirTable.get(f'{self.value:08X}')
+            if name is None:
+                return None
+
+            return f"'{name}'"
+
+        return None
+
+    @property
+    def nameOrValue(self) -> str:
+        name = self.fileName
+        if name is not None:
+            return name
+
+        return "0x%08X" % self.value
 
     def __str__(self) -> str:
         return f'({self.datName}, 0x{self.index:X})' if self.value != self.INVALID_INDEX else '<None>'

@@ -1,4 +1,5 @@
 from Assembler.function import Function
+from Assembler.instruction import Instruction
 from Falcom.ED62.InstructionTable.utils import formatText, replaceEmoji
 from .scena_types import *
 from ..InstructionTable import ScenaOpTable as ED62ScenaOpTable
@@ -22,7 +23,7 @@ class ScenaFormatter(Assembler.Formatter):
     def formatFuncion(self, func: ScenaFunction) -> List[str]:
         funcName = func.name
         if not funcName:
-            funcName = f'func_{func.offset:X}'
+            funcName = f'func_{func.index:02X}_{func.offset:X}'
 
         f = [
             f'# id: 0x{func.index:04X} offset: 0x{func.offset:X}',
@@ -42,7 +43,7 @@ class ScenaFormatter(Assembler.Formatter):
         if not body:
             body = ['pass']
 
-        f.extend([f'{DefaultIndent}{l}'.rstrip() for l in body])
+        f.extend([f'{GlobalConfig.DefaultIndent}{l}'.rstrip() for l in body])
         if f[-1] != '':
             f.append('')
 
@@ -77,7 +78,7 @@ class ScenaFormatter(Assembler.Formatter):
                     f'header.bgm            = {hdr.bgm}',
                     f'header.flags          = 0x{hdr.flags:04X}',
                     f'header.entryFunction  = 0x{hdr.entryFunction:04X}',
-                    f'header.importTable    = [{comma.join(["0x%08X" % t.value for t in hdr.importTable])}]',
+                    f'header.importTable    = [{comma.join([t.nameOrValue for t in hdr.importTable])}]',
                     f'header.reserved       = {hdr.reserved}',
                     'return header'
                 ]
@@ -96,8 +97,8 @@ class ScenaFormatter(Assembler.Formatter):
 
                 return [
                     'return [',
-                    f'{DefaultIndent}# (ch, cp)',
-                    *[f'{DefaultIndent}({ch[i] and f"0x{ch[i].value:08X}"}, {cp[i] and f"0x{cp[i].value:08X}"}),' for i in range(n)],
+                    f'{GlobalConfig.DefaultIndent}# (ch, cp)',
+                    *[f'{GlobalConfig.DefaultIndent}({ch[i] and ch[i].nameOrValue}, {cp[i] and cp[i].nameOrValue}),' for i in range(n)],
                     ']',
                 ]
 
@@ -108,7 +109,7 @@ class ScenaFormatter(Assembler.Formatter):
 
                 for o in f.obj:
                     for l in o.toPython():
-                        body.append(f'{DefaultIndent}{l}')
+                        body.append(f'{GlobalConfig.DefaultIndent}{l}')
 
                     body[-1] += ','
 
@@ -123,6 +124,7 @@ class ScenaParser:
         self.header             = None              # type: ScenaHeader
         self.functions          = []                # type: List[ScenaFunction]
         self.stringTable        = []                # type: List[str]
+        self.instructionCb      = None              # type: Callable[[Instruction], None]
 
     def __str__(self) -> str:
         funcs = "\n".join([str(f) for f in self.functions])
@@ -167,7 +169,7 @@ class ScenaParser:
         }
         for i in range(hdr.functionTable.size // 2):
             offset = fs.ReadUShort()
-            self.functions.append(ScenaFunction(index = i, offset = offset, name = funcNames.get(i, f'func_{offset:X}'), type = ScenaFunctionType.Code))
+            self.functions.append(ScenaFunction(index = i, offset = offset, name = funcNames.get(i, f'func_{i:02X}_{offset:X}'), type = ScenaFunctionType.Code))
 
     def parseDataTable(self):
         fs = self.fs
@@ -199,13 +201,16 @@ class ScenaParser:
             ):
             createFunc(dataTable[index].offset, type, readTable(constructor, dataTable[index]))
 
+    def setInstructionCallback(self, cb: Callable[[Instruction], None]):
+        self.instructionCb = cb
+
     def disasmFunctions(self):
         fs = self.fs
         dis = Assembler.Disassembler(ED62ScenaOpTable)
-        ctx = Assembler.DisasmContext(fs)
+        ctx = Assembler.DisasmContext(fs, instCallback = self.instructionCb)
 
         for func in self.functions:
-            log.debug(f'disasm func: {func}')
+            # log.debug(f'disasm func: {func}')
 
             match func.type:
                 case ScenaFunctionType.Code:
@@ -238,7 +243,7 @@ except ModuleNotFoundError:
 scena = createScenaWriter('{filename}')
 
 stringTable = [
-{linefeed.join([f'{DefaultIndent}TXT(0x{i:02X}, {formatText(s)}),' for i, s in enumerate(self.stringTable)])}
+{linefeed.join([f'{GlobalConfig.DefaultIndent}TXT(0x{i:02X}, {formatText(s)}),' for i, s in enumerate(self.stringTable)])}
 ]
 
 '''.splitlines()

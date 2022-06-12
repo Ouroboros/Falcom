@@ -7,6 +7,7 @@
 #pragma comment(linker, "/EXPORT:AlphaBlend=MSIMG32.AlphaBlend")
 #pragma comment(linker, "/EXPORT:GradientFill=MSIMG32.GradientFill")
 #pragma comment(linker, "/EXPORT:TransparentBlt=MSIMG32.TransparentBlt")
+#pragma comment(linker, "/EXPORT:CoTaskMemFree=ole32.CoTaskMemFree")
 
 #include "ml.cpp"
 #include "frida-core.h"

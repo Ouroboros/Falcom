@@ -8,6 +8,7 @@ class _Config:
         self.DefaultEncoding    = 'GBK'
         self.DefaultEndian      = 'little'
         self.DefaultIndent      = '    '
+        self.DirTable           = {}
         self.ChrTable           = {}
         self.ItemTable          = {}
         self.CraftTable         = {}

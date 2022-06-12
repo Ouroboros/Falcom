@@ -10,7 +10,7 @@ __all__ = (
 )
 
 class DisasmContext:
-    def __init__(self, fs: fileio.FileStream, *, instCallback : Callable[[Instruction], None] = None):
+    def __init__(self, fs: fileio.FileStream, *, instCallback: Callable[[Instruction], None] = None):
         self.fs             = fs
         self.instCallback   = instCallback
 
