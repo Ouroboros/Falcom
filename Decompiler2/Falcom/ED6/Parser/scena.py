@@ -42,7 +42,7 @@ class ScenaFormatter(Assembler.Formatter):
         if not body:
             body = ['pass']
 
-        f.extend([f'{DefaultIndent}{l}'.rstrip() for l in body])
+        f.extend([f'{GlobalConfig.DefaultIndent}{l}'.rstrip() for l in body])
         if f[-1] != '':
             f.append('')
 
@@ -77,7 +77,7 @@ class ScenaFormatter(Assembler.Formatter):
                     f'header.bgm            = {hdr.bgm}',
                     f'header.flags          = 0x{hdr.flags:04X}',
                     f'header.entryFunction  = 0x{hdr.entryFunction:04X}',
-                    f'header.importTable    = [{comma.join(["0x%08X" % t.value for t in hdr.importTable])}]',
+                    f'header.importTable    = [{comma.join([t.nameOrValue for t in hdr.importTable])}]',
                     f'header.reserved       = {hdr.reserved}',
                     'return header'
                 ]
@@ -96,8 +96,8 @@ class ScenaFormatter(Assembler.Formatter):
 
                 return [
                     'return [',
-                    f'{DefaultIndent}# (ch, cp)',
-                    *[f'{DefaultIndent}({ch[i] and f"0x{ch[i].value:08X}"}, {cp[i] and f"0x{cp[i].value:08X}"}),' for i in range(n)],
+                    f'{GlobalConfig.DefaultIndent}# (ch, cp)',
+                    *[f'{GlobalConfig.DefaultIndent}({ch[i] and ch[i].nameOrValue}, {cp[i] and cp[i].nameOrValue}),' for i in range(n)],
                     ']',
                 ]
 
@@ -108,7 +108,7 @@ class ScenaFormatter(Assembler.Formatter):
 
                 for o in f.obj:
                     for l in o.toPython():
-                        body.append(f'{DefaultIndent}{l}')
+                        body.append(f'{GlobalConfig.DefaultIndent}{l}')
 
                     body[-1] += ','
 
@@ -238,7 +238,7 @@ except ModuleNotFoundError:
 scena = createScenaWriter('{filename}')
 
 stringTable = [
-{linefeed.join([f'{DefaultIndent}TXT(0x{i:02X}, {formatText(s)}),' for i, s in enumerate(self.stringTable)])}
+{linefeed.join([f'{GlobalConfig.DefaultIndent}TXT(0x{i:02X}, {formatText(s)}),' for i, s in enumerate(self.stringTable)])}
 ]
 
 '''.splitlines()
