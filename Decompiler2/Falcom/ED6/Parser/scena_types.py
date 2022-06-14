@@ -285,7 +285,7 @@ class ScenaNpcData(ScenaTypeBase):
         ('word_0E',             'H'),
         ('dword_10',            'I'),
         ('chipIndex',           'H'),
-        ('npcIndex',            'H'),
+        ('npcIndex',            'W'),
         ('initFunctionIndex',   'W'),
         ('initScenaIndex',      'W'),
         ('talkFunctionIndex',   'W'),

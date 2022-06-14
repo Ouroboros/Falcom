@@ -1698,10 +1698,10 @@ def OP_C8(arg1: uint16, arg2: uint16, arg3: str, arg4: uint8, arg5: uint16):
     assert isinstance(arg5, uint16)
     _gScena.handleOpCode(0xC8, arg1, arg2, arg3, arg4, arg5)
 
-def OP_C9(arg1: int, *args):
+def OP_C9(mandatory: int, *args):
     # 0xC9
-    assert isinstance(arg1, int)
-    return _gScena.handleOpCode(0xC9, arg1, *args)
+    assert isinstance(mandatory, int)
+    return _gScena.handleOpCode(0xC9, mandatory, *args)
 
 def OP_CA(arg1: uint8, arg2: uint8, arg3: uint32):
     # 0xCA
@@ -1918,3 +1918,20 @@ def OP_EB(arg1: uint8, arg2: uint8):
     assert isinstance(arg1, uint8)
     assert isinstance(arg2, uint8)
     _gScena.handleOpCode(0xEB, arg1, arg2)
+
+def OP_EC(arg1: uint8, arg2: uint8):
+    # 0xEC
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, uint8)
+    _gScena.handleOpCode(0xEC, arg1, arg2)
+
+def OP_ED(arg1: str | tuple):
+    # 0xED
+    assert isinstance(arg1, str | tuple)
+    _gScena.handleOpCode(0xED, arg1)
+
+def OP_EE(arg1: uint8, arg2: uint8):
+    # 0xEE
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, uint8)
+    _gScena.handleOpCode(0xEE, arg1, arg2)

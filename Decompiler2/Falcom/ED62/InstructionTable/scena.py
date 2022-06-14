@@ -250,6 +250,12 @@ ScenaOpTable = ED62InstructionTable(ED6ScenaOpTable).update([
     inst(0xE9,  'OP_E9',                        'B' * 1),
     inst(0xEA,  'OP_EA',                        'B' * 4),
     inst(0xEB,  'OP_EB',                        'B' * 2),
+
+    # psv evo
+
+    inst(0xEC,  'OP_EC',                        'B' * 2),
+    inst(0xED,  'OP_ED',                        'T'),
+    inst(0xEE,  'OP_EE',                        'B' * 2),
 ])
 
 del inst
