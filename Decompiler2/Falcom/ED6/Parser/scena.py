@@ -117,9 +117,9 @@ class ScenaFormatter(Assembler.Formatter):
                 return body
 
 class ScenaParser:
-    def __init__(self, fs: fileio.FileStream):
+    def __init__(self, name: str, fs: fileio.FileStream):
         self.fs                 = fs                # type: fileio.FileStream
-        self.name               = ''                # type: str
+        self.name               = name              # type: str
         self.header             = None              # type: ScenaHeader
         self.functions          = []                # type: List[ScenaFunction]
         self.stringTable        = []                # type: List[str]
@@ -185,6 +185,7 @@ class ScenaParser:
 
         fs.Position = self.header.stringTableOffset
         data = fs.Read()
+        # data = data.split(b'\x00\x00')[0]
         self.stringTable = [s.decode(GlobalConfig.DefaultEncoding) for s in data.split(b'\x00')]
 
         createFunc(self.header.stringTableOffset, ScenaFunctionType.StringTable, self.stringTable)
@@ -202,7 +203,7 @@ class ScenaParser:
     def disasmFunctions(self):
         fs = self.fs
         dis = Assembler.Disassembler(ED6ScenaOpTable)
-        ctx = Assembler.DisasmContext(fs)
+        ctx = Assembler.DisasmContext(fs, scriptName = self.name)
 
         for func in self.functions:
             log.debug(f'disasm func: {func}')

@@ -1817,6 +1817,11 @@ def OP_DD():
     # 0xDD
     _gScena.handleOpCode(0xDD)
 
+def ShowPlaceName(arg1: str):
+    # 0xDE
+    assert isinstance(arg1, str)
+    _gScena.handleOpCode(0xDE, arg1)
+
 def OP_DE(arg1: str):
     # 0xDE
     assert isinstance(arg1, str)
@@ -1904,6 +1909,14 @@ def OP_E9(arg1: uint8):
     # 0xE9
     assert isinstance(arg1, uint8)
     _gScena.handleOpCode(0xE9, arg1)
+
+def UnlockAchievement(arg1: uint8, arg2: uint8, arg3: uint8, arg4: uint8):
+    # 0xEA
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, uint8)
+    assert isinstance(arg3, uint8)
+    assert isinstance(arg4, uint8)
+    _gScena.handleOpCode(0xEA, arg1, arg2, arg3, arg4)
 
 def OP_EA(arg1: uint8, arg2: uint8, arg3: uint8, arg4: uint8):
     # 0xEA

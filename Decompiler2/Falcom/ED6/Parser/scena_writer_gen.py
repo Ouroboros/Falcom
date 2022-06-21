@@ -1569,3 +1569,9 @@ def SaveClearData():
 def OP_DE():
     # 0xDE
     _gScena.handleOpCode(0xDE)
+
+def OP_E5(arg1: uint8, arg2: uint8):
+    # 0xE5
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, uint8)
+    _gScena.handleOpCode(0xE5, arg1, arg2)

@@ -281,6 +281,7 @@ class InstructionTable:
     def __init__(self, descriptors: List[InstructionDescriptor]):
         # self.descriptors    = descriptors           # type: List[InstructionDescriptor]
         self.descTable      = {}                    # type: Dict[int, InstructionDescriptor]
+        self.lookupTable    = {}                    # type: Dict[str, InstructionDescriptor]
 
         self.update(descriptors)
 
@@ -296,10 +297,16 @@ class InstructionTable:
             for desc in descriptors:
                 self.descTable[desc.opcode] = desc
 
+        for i in self.descTable.values():
+            self.lookupTable[i.mnemonic] = i
+
         return self
 
     def getDescriptor(self, opcode: int) -> InstructionDescriptor:
         return self.descTable[opcode]
+
+    def getDescriptorByName(self, mnemonic: str) -> InstructionDescriptor:
+        return self.lookupTable[mnemonic]
 
     def readOpCode(self, fs: fileio.FileStream) -> int:
         raise NotImplementedError

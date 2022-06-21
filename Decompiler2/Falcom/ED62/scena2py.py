@@ -97,7 +97,7 @@ def importVoice(output, stringTable, talkInsts):
                 idx += 1
 
 def main(filename):
-    scena = ED62.Parser.ScenaParser(fs = fileio.FileStream(filename, encoding = GlobalConfig.DefaultEncoding, endian = GlobalConfig.StructEndian))
+    scena = ED62.Parser.ScenaParser(pathlib.Path(filename).stem.strip(), fs = fileio.FileStream(filename, encoding = GlobalConfig.DefaultEncoding, endian = GlobalConfig.StructEndian))
 
     talkInsts = {}
 
@@ -114,7 +114,7 @@ def main(filename):
 
     if talkInsts:
         from test import exportText
-        exportText(output, scena.stringTable, talkInsts)
+        # exportText(output, scena.stringTable, talkInsts)
         importVoice(output, scena.stringTable, talkInsts)
 
     open(output, 'wb').write('\n'.join(scena.generatePython(path.name)).encode('UTF8'))

@@ -118,9 +118,9 @@ class ScenaFormatter(Assembler.Formatter):
                 return body
 
 class ScenaParser:
-    def __init__(self, fs: fileio.FileStream):
+    def __init__(self, name: str, fs: fileio.FileStream):
         self.fs                 = fs                # type: fileio.FileStream
-        self.name               = ''                # type: str
+        self.name               = name              # type: str
         self.header             = None              # type: ScenaHeader
         self.functions          = []                # type: List[ScenaFunction]
         self.stringTable        = []                # type: List[str]
@@ -207,7 +207,7 @@ class ScenaParser:
     def disasmFunctions(self):
         fs = self.fs
         dis = Assembler.Disassembler(ED62ScenaOpTable)
-        ctx = Assembler.DisasmContext(fs, instCallback = self.instructionCb)
+        ctx = Assembler.DisasmContext(fs, instCallback = self.instructionCb, scriptName = self.name)
 
         for func in self.functions:
             # log.debug(f'disasm func: {func}')

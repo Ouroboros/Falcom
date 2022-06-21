@@ -229,14 +229,24 @@ def lambdaHandler(ctx: InstructionHandlerContext, extraCodeSize: int):
 
             pos = fs.Position + codeSize.value + extraCodeSize
             # if pos == 0xde0d: ibp()
-            block = ctx.disassembler.disasmBlock(ctx.disasmContext)
 
-            if codeSize.value != 0:
-                # HACK: YLT buggy script
+            if codeSize.value == 0:
+                # HACK: steam buggy script
+
+                log.warning(f'{ctx.disasmContext.scriptName}: 0x{inst.offset:08X} corrupted lambda')
+
+                bb = ctx.createCodeBlock(Instruction.InvalidOffset)
+                desc = ScenaOpTable.getDescriptorByName('ExitThread')
+                bb.instructions.append(Instruction(desc.opcode, offset = bb.offset, descriptor = desc, flags = desc.flags))
+
+            else:
+                bb = ctx.disassembler.disasmBlock(ctx.disasmContext)
                 fs.Position = pos
 
-            block.name = f'lambda_{block.offset:04X}'
-            inst.operands = [chrId, threadId, block]
+            # assert codeSize.value != 0
+
+            bb.name = f'lambda_{bb.offset:04X}'
+            inst.operands = [chrId, threadId, bb]
 
             return inst
 
@@ -573,6 +583,10 @@ ScenaOpTable = ED6InstructionTable([
     inst(0xBA,  'OP_BA',                        'BW'),
     inst(0xBB,  'OP_BB',                        'BB'),
     inst(0xDE,  'SaveClearData'),
+
+    # psv evo
+
+    inst(0xE5,  'OP_E5',                        'B' * 2),
 ])
 
 del inst

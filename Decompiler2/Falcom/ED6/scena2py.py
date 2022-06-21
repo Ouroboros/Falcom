@@ -3,7 +3,7 @@ from Falcom.Common import *
 import pathlib
 
 def main(filename):
-    scena = ED6.Parser.ScenaParser(fs = fileio.FileStream(filename, encoding = GlobalConfig.DefaultEncoding, endian = GlobalConfig.StructEndian))
+    scena = ED6.Parser.ScenaParser(pathlib.Path(filename).stem.strip(), fs = fileio.FileStream(filename, encoding = GlobalConfig.DefaultEncoding, endian = GlobalConfig.StructEndian))
     scena.parse()
     path = pathlib.Path(filename)
     open(f'{path.parent / path.stem.strip()}.py', 'wb').write('\n'.join(scena.generatePython(path.name)).encode('UTF8'))

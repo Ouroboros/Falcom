@@ -55,6 +55,10 @@ def exportText(output: str, stringTable: list[str], talkInsts: dict[int, Instruc
                     'msg'       : parseText(inst.operands[2].value),
                 })
 
+
+            case 0xCC | 0xDE:
+                pass
+
             # case 0x60:
             #     text.append({
             #         'index'     : index,
@@ -174,8 +178,15 @@ def importText(output: str, stringTable: list[str], talkInsts: dict[int, Instruc
 def test(filename, output):
     output = str(output)
 
-    if pathlib.Path(filename).stem in [
+    if pathlib.Path(filename).stem.strip() in [
+            # 'C5313_1',
+            # 'E0001',
         ]:
+        return
+
+    output_name = pathlib.Path(output).name
+    if os.path.exists(f'patch\\{output_name}'):
+        shutil.copy2(f'patch\\{output_name}', output)
         return
 
     fs = fileio.FileStream().OpenMemory(open(filename, 'rb').read())
@@ -183,7 +194,7 @@ def test(filename, output):
         return
 
     fs.Encoding = GlobalConfig.DefaultEncoding
-    scena = ED62.Parser.ScenaParser(fs)
+    scena = ED62.Parser.ScenaParser(pathlib.Path(filename).stem.strip(), fs)
 
     talkInsts = {}
 
@@ -197,14 +208,7 @@ def test(filename, output):
 
     if talkInsts:
         # exportText(output, scena.stringTable, talkInsts)
-
-        output_name = pathlib.Path(output).name
-
-        if os.path.exists(f'patch\\{output_name}'):
-            shutil.copy2(f'patch\\{output_name}', output)
-            return
-        else:
-            importText(output, scena.stringTable, talkInsts)
+        importText(output, scena.stringTable, talkInsts)
 
     py = scena.generatePython(os.path.basename(filename))
 
@@ -231,6 +235,7 @@ def procfile_cn(f: str):
 def main():
     scena = [
         (procfile_en, r'E:\Game\Steam\steamapps\common\Trails in the Sky SC\ED6_DT21'),
+        # (procfile_en, r'E:\Desktop\falcomtools\PSV EVO\Eiyuu Densetsu Sora no Kiseki SC Evolution PCSG00489 (v01.00)\gamedata\data_sc\scenario\1'),
         # (procfile_cn, r'E:\Game\Falcom\ED_SORA2\ED6_DT21'),
     ]
 
@@ -248,7 +253,7 @@ def main():
             output = pathlib.Path(f)
             os.makedirs(output.parent / 'py', exist_ok = True)
             output = output.parent / 'py' / (output.stem.strip() + '.py')
-            if output.exists(): continue
+            # if output.exists(): continue
 
             cb(f)
             # test(f, output)

@@ -75,17 +75,17 @@ class Flags(IntFlag2):
         return bool(self.value & self.FormatTextIndex)
 
 class Instruction:
-    InvalidOffset   = None
+    InvalidOffset   = 0xFFFFFFFF
 
-    def __init__(self, opcode: int):
+    def __init__(self, opcode: int, *, offset: int = InvalidOffset, descriptor: instruction_table.InstructionDescriptor = None, flags: Flags = None):
         self.opcode                 = opcode                    # type: int
-        self.offset                 = self.InvalidOffset        # type: int
+        self.offset                 = offset                    # type: int
         self.size                   = 0                         # type: int
         self.operands               = []                        # type: List[Operand]
         self.branches               = []                        # type: List[function.CodeBlock]
-        self.descriptor             = None                      # type: instruction_table.InstructionDescriptor
+        self.descriptor             = descriptor                # type: instruction_table.InstructionDescriptor
         self.xrefs                  = []                        # type: List[XRef]
-        self.flags                  = None                      # type: Flags
+        self.flags                  = flags                     # type: Flags
         self.operandDescriptors     = NoOperand                 # type: List[OperandDescriptor]
                                                                 # assemble only
 

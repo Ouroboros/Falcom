@@ -10,7 +10,8 @@ __all__ = (
 )
 
 class DisasmContext:
-    def __init__(self, fs: fileio.FileStream, *, instCallback: Callable[[Instruction], None] = None):
+    def __init__(self, fs: fileio.FileStream, *, scriptName: str = '', instCallback: Callable[[Instruction], None] = None):
+        self.scriptName     = scriptName
         self.fs             = fs
         self.instCallback   = instCallback
 
@@ -26,7 +27,9 @@ class Disassembler:
         block = self.allocatedBlocks.get(offset)
         if block is None:
             block = CodeBlock(instructions = [], offset = offset, name = f'loc_{offset:X}')
-            self.allocatedBlocks[offset] = block
+
+            if offset != Instruction.InvalidOffset:
+                self.allocatedBlocks[offset] = block
 
         return block
 

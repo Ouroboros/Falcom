@@ -236,7 +236,7 @@ ScenaOpTable = ED62InstructionTable(ED6ScenaOpTable).update([
     inst(0xDB,  'OP_DB'),
     inst(0xDC,  'OP_DC'),
     inst(0xDD,  'OP_DD'),
-    inst(0xDE,  'OP_DE',                        'S'),
+    inst(0xDE,  'ShowPlaceName',                'S'),
     inst(0xDF,  'OP_DF',                        'S'),
     inst(0xE0,  'OP_E0',                        'B' * 13),
     inst(0xE1,  'OP_E1',                        'B' * 2),
@@ -248,7 +248,7 @@ ScenaOpTable = ED62InstructionTable(ED6ScenaOpTable).update([
     inst(0xE7,  'OP_E7',                        'BSBL'),
     inst(0xE8,  'OP_E8',                        'B' * 4),
     inst(0xE9,  'OP_E9',                        'B' * 1),
-    inst(0xEA,  'OP_EA',                        'B' * 4),
+    inst(0xEA,  'UnlockAchievement',            'B' * 4),   # BWB
     inst(0xEB,  'OP_EB',                        'B' * 2),
 
     # psv evo
