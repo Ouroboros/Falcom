@@ -112,3 +112,41 @@ def formatText(t: str) -> str:
             s.append(f'\\x{ord(ch):02x}')
 
     return f"'{''.join(s)}'"
+
+def readTextObjects(fs: fileio.FileStream, encoding: str) -> 'List[TextObject]':
+    from .types import TextObject, TextCtrlCode
+
+    buf = bytearray()
+    objs = []
+
+    while True:
+        ch = fs.ReadByte()
+        if ch == 0:
+            break
+
+        if ch >= 0x20:
+            buf.append(ch)
+            continue
+
+        if ch == TextCtrlCode.NewLine:
+            buf.extend(b'\n')
+
+        if buf:
+            buf = replaceEmoji(buf)
+            objs.append(TextObject(value = buf.decode(encoding)))
+            buf.clear()
+
+        match ch:
+            case TextCtrlCode.SetColor:
+                objs.append(TextObject(code = ch, value = fs.ReadByte()))
+
+            case TextCtrlCode.Item:
+                objs.append(TextObject(code = ch, value = fs.ReadUShort()))
+
+            case _:
+                objs.append(TextObject(code = ch))
+
+    if buf:
+        objs.append(TextObject(value = buf.decode(encoding)))
+
+    return objs

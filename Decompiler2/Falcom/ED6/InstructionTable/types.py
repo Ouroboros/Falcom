@@ -75,41 +75,7 @@ class ED6OperandDescriptor(OperandDescriptor):
         }.get(self.format.type, super().formatValue)(context)
 
     def readText(self, context: InstructionHandlerContext) -> 'List[TextObject]':
-        fs = context.disasmContext.fs
-        buf = bytearray()
-        objs = []
-
-        while True:
-            ch = fs.ReadByte()
-            if ch == 0:
-                break
-
-            if ch >= 0x20:
-                buf.append(ch)
-                continue
-
-            if ch == TextCtrlCode.NewLine:
-                buf.extend(b'\n')
-
-            if buf:
-                buf = replaceEmoji(buf)
-                objs.append(TextObject(value = buf.decode(self.format.encoding)))
-                buf.clear()
-
-            match ch:
-                case TextCtrlCode.SetColor:
-                    objs.append(TextObject(code = ch, value = fs.ReadByte()))
-
-                case TextCtrlCode.Item:
-                    objs.append(TextObject(code = ch, value = fs.ReadUShort()))
-
-                case _:
-                    objs.append(TextObject(code = ch))
-
-        if buf:
-            objs.append(TextObject(value = buf.decode(self.format.encoding)))
-
-        return objs
+        return readTextObjects(context.disasmContext.fs, self.format.encoding)
 
     def readExpression(self, context: InstructionHandlerContext) -> 'List[ScenaExpression]':
         return ScenaExpression.readExpressions(context)

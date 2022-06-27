@@ -25,10 +25,10 @@ class XRef:
     __repr__ = __str__
 
 class Operand:
-    def __init__(self, *, value: Any = None):
+    def __init__(self, *, value: Any = None, descriptor: instruction_table.OperandDescriptor = None):
         self.value      = value                     # type: Any
         self.size       = None                      # type: int
-        self.descriptor = None                      # type: OperandDescriptor
+        self.descriptor = descriptor                # type: OperandDescriptor
 
     def __str__(self):
         return f'<{self.descriptor}> {self.value}'
@@ -75,7 +75,8 @@ class Flags(IntFlag2):
         return bool(self.value & self.FormatTextIndex)
 
 class Instruction:
-    InvalidOffset   = 0xFFFFFFFF
+    InvalidOffset = 0xFFFFFFFF
+    InvalidOpCode = object()
 
     def __init__(self, opcode: int, *, offset: int = InvalidOffset, descriptor: instruction_table.InstructionDescriptor = None, flags: Flags = None):
         self.opcode                 = opcode                    # type: int

@@ -253,8 +253,8 @@ ScenaOpTable = ED62InstructionTable(ED6ScenaOpTable).update([
 
     # psv evo
 
-    inst(0xEC,  'OP_EC',                        'B' * 2),
-    inst(0xED,  'OP_ED',                        'T'),
+    inst(0xEC,  'ShowMsgByIndex',               'W'),
+    inst(0xED,  'Talk2',                        'T'),
     inst(0xEE,  'OP_EE',                        'B' * 2),
 ])
 

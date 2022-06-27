@@ -1932,11 +1932,20 @@ def OP_EB(arg1: uint8, arg2: uint8):
     assert isinstance(arg2, uint8)
     _gScena.handleOpCode(0xEB, arg1, arg2)
 
-def OP_EC(arg1: uint8, arg2: uint8):
+def ShowMsgByIndex(arg1: uint16):
     # 0xEC
-    assert isinstance(arg1, uint8)
-    assert isinstance(arg2, uint8)
-    _gScena.handleOpCode(0xEC, arg1, arg2)
+    assert isinstance(arg1, uint16)
+    _gScena.handleOpCode(0xEC, arg1)
+
+def OP_EC(arg1: uint16):
+    # 0xEC
+    assert isinstance(arg1, uint16)
+    _gScena.handleOpCode(0xEC, arg1)
+
+def Talk2(arg1: str | tuple):
+    # 0xED
+    assert isinstance(arg1, str | tuple)
+    _gScena.handleOpCode(0xED, arg1)
 
 def OP_ED(arg1: str | tuple):
     # 0xED

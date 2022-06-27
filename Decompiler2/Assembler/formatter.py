@@ -93,6 +93,9 @@ class Formatter:
                     '',
                 ])
 
+            if inst.opcode is Instruction.InvalidOpCode:
+                continue
+
             t = self.formatInstruction(inst)
             if not inst.flags.multiline:
                 if inst.flags.startBlock or inst.flags.endBlock:

@@ -69,7 +69,7 @@ def exportText(output: str, stringTable: list[str], talkInsts: dict[int, Instruc
             #         'msg'       : None,
             #     })
 
-    json.dump({'strings': stringTable, 'msg': text}, open(output.replace('.py', '.json'), 'w', encoding = 'UTF8'), ensure_ascii = False, indent = '  ')
+    json.dump({'count': len(text), 'msg': text}, open(output.replace('.py', '.json'), 'w', encoding = 'UTF8'), ensure_ascii = False, indent = '  ')
 
 def importText(output: str, stringTable: list[str], talkInsts: dict[int, Instruction]):
     translation = f'merge\\{os.path.basename(output).rsplit(".", maxsplit = 1)[0]}.json'
@@ -185,9 +185,9 @@ def test(filename, output):
         return
 
     output_name = pathlib.Path(output).name
-    if os.path.exists(f'patch\\{output_name}'):
-        shutil.copy2(f'patch\\{output_name}', output)
-        return
+    # if os.path.exists(f'tools\\patch\\{output_name}'):
+    #     shutil.copy2(f'tools\\patch\\{output_name}', output)
+    #     return
 
     fs = fileio.FileStream().OpenMemory(open(filename, 'rb').read())
     if fs.GetSize() == 0:
@@ -207,8 +207,8 @@ def test(filename, output):
     scena.parse()
 
     if talkInsts:
-        # exportText(output, scena.stringTable, talkInsts)
-        importText(output, scena.stringTable, talkInsts)
+        exportText(output, scena.stringTable, talkInsts)
+        # importText(output, scena.stringTable, talkInsts)
 
     py = scena.generatePython(os.path.basename(filename))
 
@@ -234,9 +234,10 @@ def procfile_cn(f: str):
 
 def main():
     scena = [
-        (procfile_en, r'E:\Game\Steam\steamapps\common\Trails in the Sky SC\ED6_DT21'),
+        # (procfile_en, r'E:\Game\Steam\steamapps\common\Trails in the Sky SC\ED6_DT21'),
         # (procfile_en, r'E:\Desktop\falcomtools\PSV EVO\Eiyuu Densetsu Sora no Kiseki SC Evolution PCSG00489 (v01.00)\gamedata\data_sc\scenario\1'),
         # (procfile_cn, r'E:\Game\Falcom\ED_SORA2\ED6_DT21'),
+        (procfile_cn, r'E:\Game\Steam\steamapps\common\Trails in the Sky SC\DAT\ED6_DT21'),
     ]
 
     output_dir = None

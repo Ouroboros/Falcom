@@ -3,7 +3,7 @@ from Falcom.Common import *
 import pathlib
 
 def main(filename):
-    t_name = ED6.DataTable(fs = fileio.FileStream(filename, encoding = GlobalConfig.DefaultEncoding, endian = GlobalConfig.StructEndian))
+    t_name = ED6.DataTable(filename = filename)
     path = pathlib.Path(filename)
     open(f'{path.parent / path.stem}.py', 'wb').write('\n'.join(t_name.toPython(path.name)).encode('UTF8'))
     # console.pause('done')
