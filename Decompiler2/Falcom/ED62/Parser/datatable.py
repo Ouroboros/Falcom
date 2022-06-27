@@ -29,6 +29,12 @@ class NameTableData(TableDataEntry):
 
         return indexes
 
+    @classmethod
+    def writeIndexes(cls, fs: fileio.FileStream, indexes: list[int]):
+        fs.Position = 0
+        fs.WriteUShort(len(indexes) * 2 + 2)
+        [fs.WriteUShort(offset) for offset in indexes]
+
 class MagicTableData(TableDataEntry):
     DESCRIPTOR  = (
         ('craftId',             'W'),
@@ -58,6 +64,11 @@ class MagicTableData(TableDataEntry):
         entryCount = fs.ReadUShort() // 2
         fs.Position = 0
         return [fs.ReadUShort() for _ in range(entryCount)]
+
+    @classmethod
+    def writeIndexes(cls, fs: fileio.FileStream, indexes: list[int]):
+        fs.Position = 0
+        [fs.WriteUShort(offset) for offset in indexes]
 
 DataTable.PythonHeader = [
     'from Falcom.ED62.Parser.datatable import *',

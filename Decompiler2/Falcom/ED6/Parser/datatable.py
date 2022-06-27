@@ -1,6 +1,7 @@
 from Falcom.Common import *
 from . import utils
 from .scena_types import DATFileIndex
+from ..InstructionTable.utils import formatText
 import pathlib
 
 __all__ = (
@@ -42,8 +43,8 @@ class TableDataEntry:
             'I' : lambda v: f'{v}',
             'L' : lambda v: f'0x{v:08X}',
             'f' : lambda v: f'{v:g}.0' if f'{v:g}'.count('.') == 0 else f'{v:g}',
-            's' : lambda v: f"'{v}'",
-            'S' : lambda v: f"'{v}'",
+            's' : lambda v: formatText(v),
+            'S' : lambda v: formatText(v),
             'D' : lambda v: v.nameOrValue,
         }
 
@@ -55,9 +56,15 @@ class TableDataEntry:
 
         return lines
 
-    def serialize(self) -> bytes:
+    def serialize(self, fs: fileio.FileStream):
         if not self.DESCRIPTOR:
             raise NotImplementedError
+
+        strPendding = []
+
+        def writeStr(s: str):
+            strPendding.append((fs.Position, s))
+            fs.WriteUShort(0xFEDC)
 
         writer = {
             'B' : lambda v: utils.int_to_bytes(v, 1),
@@ -68,19 +75,23 @@ class TableDataEntry:
             'L' : lambda v: utils.int_to_bytes(v, 4),
             'f' : lambda v: utils.float_to_bytes(v),
             's' : lambda v: utils.str_to_bytes(v),
-            'S' : lambda v: utils.str_to_bytes(v),
-            'D' : lambda v: DATFileIndex(v).value,
+            'S' : lambda v: writeStr(v),
+            'D' : lambda v: utils.int_to_bytes(DATFileIndex(v).value, 4),
         }
-
-        body = bytearray()
 
         for name, type in self.DESCRIPTOR:
             if name.startswith('__'):
                 continue
 
-            body.extend(writer[type](getattr(self, name)))
+            fs.Write(writer[type](getattr(self, name)))
 
-        return body
+        for offset, s in strPendding:
+            pos = fs.Position
+            fs.WriteMultiByte(s)
+            fs.WriteByte(0)
+            with fs.PositionSaver:
+                fs.Position = offset
+                fs.WriteUShort(pos)
 
     def deserialize(self, fs: fileio.FileStream):
         if not self.DESCRIPTOR:
@@ -121,6 +132,12 @@ class TableDataEntry:
         fs.Position = 0
         entryCount = fs.ReadUShort()
         return [fs.ReadUShort() for _ in range(entryCount)]
+
+    @classmethod
+    def writeIndexes(cls, fs: fileio.FileStream, indexes: list[int]):
+        fs.Position = 0
+        fs.WriteUShort(len(indexes))
+        [fs.WriteUShort(offset) for offset in indexes]
 
     def __str__(self):
         return '\n'.join(self.toPython())
@@ -168,8 +185,7 @@ class DataTable:
 
     @staticmethod
     def create(*args, **kwargs):
-        # return createDataTable(*args, **kwargs)
-        pass
+        return createDataTable(*args, **kwargs)
 
     def __init__(self, *, filename: str):
         fs = fileio.FileStream(filename, encoding = GlobalConfig.DefaultEncoding, endian = GlobalConfig.StructEndian)
@@ -221,3 +237,24 @@ class DataTable:
         return f'{self.entries}'
 
     __repr__ = __str__
+
+def createDataTable(filename: str, *entries: TableDataEntry):
+    fs = fileio.FileStream().OpenMemory()
+
+    indexes = [0] * len(entries)
+
+    if not indexes:
+        return
+
+    entries[0].writeIndexes(fs, indexes)
+
+    for index, e in enumerate(entries):
+        indexes[index] = fs.Position
+        body = e.serialize(fs)
+        fs.Write(body)
+
+    entries[0].writeIndexes(fs, indexes)
+
+    open(filename, 'wb').write(fs.ReadAll())
+
+    return entries

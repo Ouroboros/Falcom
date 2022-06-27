@@ -3,7 +3,7 @@ from Falcom.Common import *
 import pathlib
 
 def main(filename):
-    GlobalConfig.DefaultEncoding = 'SJIS'
+    # GlobalConfig.DefaultEncoding = 'SJIS'
     t_name = ED62.DataTable(filename = filename)
     path = pathlib.Path(filename)
     open(f'{path.parent / path.stem.strip()}.py', 'wb').write('\n'.join(t_name.toPython(path.name)).encode('UTF8'))
