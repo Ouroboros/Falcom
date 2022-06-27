@@ -495,10 +495,12 @@ function hookTalk() {
             for (;; p = p.add(1)) {
                 const ch = p.readU8();
 
-                // utils.log(`char: 0x${ch.toString(16).padStart(2, '0')}`);
+                // utils.log(`char ${p} : 0x${ch.toString(16).padStart(2, '0')}`);
 
                 switch (ch) {
                     default:
+                        if (ch < 0x20)
+                            continue;
                         break;
 
                     case 0x00:
@@ -507,6 +509,14 @@ function hookTalk() {
 
                     case 0x03:
                         continue;
+
+                    case 0x07: // SetColor
+                        p = p.add(1);
+                        continue;
+
+                    case 0x1F: // Item
+                        p = p.add(2);
+                        continue
 
                     case 0x23:  // #
                     {
@@ -518,8 +528,8 @@ function hookTalk() {
                                 break;
                         }
 
-                        if (p.readU8() != 0x76) {
-                            // #12345v
+                        if (p.readU8() != 0x56) {
+                            // #1234567890V
                             continue;
                         }
 
