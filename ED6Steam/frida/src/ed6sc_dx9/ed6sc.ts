@@ -12,6 +12,10 @@ import { DirectSound, DirectSoundBuffer } from "../dsound/dsound";
 const TextEncoding = 'gbk';
 
 function hookSteamAndMisc() {
+    const pAsciiFontSizeScale = API.crt.malloc(4);
+
+    pAsciiFontSizeScale.writePointer(pAsciiFontSizeScale);
+
     const patches: any = [
         // _set_se_translator
         // [Addrs.ED6SC.ExceptionHandler,      [0xEB]],
@@ -21,7 +25,11 @@ function hookSteamAndMisc() {
 
         [Addrs.ED6SC.AsciiCharWidth,        new Array(0x200).fill(0)],
         [Addrs.ED6SC.AsciiFontSizeScale,    [0x00, 0x00, 0x80, 0x3E]],  // 0.25
+        [Addrs.ED6SC.BTResultSepithWidth1,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
+        [Addrs.ED6SC.BTResultSepithWidth2,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
     ];
+
+    pAsciiFontSizeScale.writeFloat(0.03125);
 
     let min: NativePointer = NULL.sub(1);
     let max: NativePointer = NULL;
@@ -342,6 +350,13 @@ function hookTextRenderer() {
 
         return buffer;
     }
+
+    // Interceptor.attach(ptr(0x51F120), {
+    //     onEnter: function(args) {
+    //         if (!args[2].isNull())
+    //             console.log(`${this.returnAddress} ${utils.readMBCS(args[2], TextEncoding)}`);
+    //     },
+    // });
 
     Interceptor2.jmp(
         Addrs.ED6SC.GetGlyphsBitmap,

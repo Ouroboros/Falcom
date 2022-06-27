@@ -14,6 +14,10 @@ import { VoiceIdOffset, VoiceIdMapping } from "./voice_id_map"
 const TextEncoding = 'gbk';
 
 function hookSteamAndMisc() {
+    const pAsciiFontSizeScale = API.crt.malloc(4);
+
+    pAsciiFontSizeScale.writePointer(pAsciiFontSizeScale);
+
     const patches: any = [
         // _set_se_translator
         // [Addrs.ED6FC.ExceptionHandler,      [0xEB]],
@@ -23,7 +27,11 @@ function hookSteamAndMisc() {
 
         [Addrs.ED6FC.AsciiCharWidth,        new Array(0x200).fill(0)],
         [Addrs.ED6FC.AsciiFontSizeScale,    [0x00, 0x00, 0x80, 0x3E]],  // 0.25
+        [Addrs.ED6FC.BTResultSepithWidth1,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
+        [Addrs.ED6FC.BTResultSepithWidth2,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
     ];
+
+    pAsciiFontSizeScale.writeFloat(0.03125);
 
     let min: NativePointer = NULL.sub(1);
     let max: NativePointer = NULL;
