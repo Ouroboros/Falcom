@@ -14,6 +14,8 @@ export const Addrs = {
         AsciiFontSizeScale  : Modules.ED6FC.base.add(0x146998),
         BTResultSepithWidth1: Modules.ED6SC.base.add(0x01C5E8),         // CBTResultSepith  xref gAsciiFontSizeScale
         BTResultSepithWidth2: Modules.ED6SC.base.add(0x01CA47),         // CBTResultSepith
+        TitleMenuCount      : Modules.ED6SC.base.add(0x0EEE10),         // DebugMode 7 gMenu
+        TitleMenuCount2     : Modules.ED6SC.base.add(0x0EF24F),         // DebugMode 6 gMenu
 
         LoadFileFromDAT     : Modules.ED6FC.base.add(0x077180),         // ED6_DT%02x.DAT
         GetGlyphsBitmap     : Modules.ED6FC.base.add(0x0AF0A0),         // cmp     dword ptr [0x185E388], 0x2BC

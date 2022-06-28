@@ -22,7 +22,7 @@ function hookSteamAndMisc() {
 
         // 004AEF09      /76 3E               jbe     short 0x4AEF49
         [Addrs.ED6SC.GetTextWidth,          [0x05]],
-        [Addrs.ED6SC.TitleMenuCount,        [0x07]],
+        [Addrs.ED6SC.TitleMenuCount,        [0x06]],
 
         [Addrs.ED6SC.AsciiCharWidth,        new Array(0x200).fill(0)],
         [Addrs.ED6SC.AsciiFontSizeScale,    [0x00, 0x00, 0x80, 0x3E]],  // 0.25
