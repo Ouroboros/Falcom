@@ -203,7 +203,7 @@ def test(filename, output):
             case 0x54 | 0x5B | 0x5C | 0x60:
                 talkInsts[inst.offset] = inst
 
-    scena.setInstructionCallback(cb)
+    # scena.setInstructionCallback(cb)
     scena.parse()
 
     if talkInsts:
@@ -222,6 +222,7 @@ def procfile(f: str, encoding: str = 'GBK'):
     output = pathlib.Path(f)
     os.makedirs(output.parent / 'py', exist_ok = True)
     output = output.parent / 'py' / (output.stem.strip() + '.py')
+    output = fr'D:\Dev\Source\Falcom\Decompiler2\Falcom\ED62\tools\output_voice_final\{output.stem.strip()}.py'
     # if output.exists(): continue
 
     test(f, output)
@@ -245,8 +246,8 @@ def main():
 
     for cb, s in scena:
         # break
-        # iterlib.forEachFileMP(cb, s, '*._SN', subdir = False)
-        # continue
+        iterlib.forEachFileMP(cb, s, '*._SN', subdir = False)
+        continue
 
         for f in fileio.getDirectoryFiles(s, '*._SN', subdir = False):
             # console.setTitle(os.path.basename(f))

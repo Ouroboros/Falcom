@@ -400,7 +400,7 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x03,  'Jump',                         'O',                Flags.Jump),
     inst(0x04,  'Switch',                       NoOperand,          Flags.EndBlock,         Handler_04),
     inst(0x05,  'Call',                         'CW'),                                                      # Call(scp index, func index)
-    inst(0x06,  'NewScene',                     'LCCC'),
+    inst(0x06,  'NewScene',                     'DCCC'),
     inst(0x07,  'IdleLoop'),
     inst(0x08,  'Sleep',                        'I',                Flags.FormatNewLine),
     inst(0x09,  'SetMapFlags',                  'L'),

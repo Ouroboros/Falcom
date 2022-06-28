@@ -66,17 +66,17 @@ def OP_05(arg1: uint8, arg2: uint16):
     assert isinstance(arg2, uint16)
     _gScena.handleOpCode(0x05, arg1, arg2)
 
-def NewScene(arg1: uint32, arg2: uint8, arg3: uint8, arg4: uint8):
+def NewScene(arg1: uint32 | str, arg2: uint8, arg3: uint8, arg4: uint8):
     # 0x06
-    assert isinstance(arg1, uint32)
+    assert isinstance(arg1, uint32 | str)
     assert isinstance(arg2, uint8)
     assert isinstance(arg3, uint8)
     assert isinstance(arg4, uint8)
     _gScena.handleOpCode(0x06, arg1, arg2, arg3, arg4)
 
-def OP_06(arg1: uint32, arg2: uint8, arg3: uint8, arg4: uint8):
+def OP_06(arg1: uint32 | str, arg2: uint8, arg3: uint8, arg4: uint8):
     # 0x06
-    assert isinstance(arg1, uint32)
+    assert isinstance(arg1, uint32 | str)
     assert isinstance(arg2, uint8)
     assert isinstance(arg3, uint8)
     assert isinstance(arg4, uint8)
