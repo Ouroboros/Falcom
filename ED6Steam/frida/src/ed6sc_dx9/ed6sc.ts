@@ -22,6 +22,7 @@ function hookSteamAndMisc() {
 
         // 004AEF09      /76 3E               jbe     short 0x4AEF49
         [Addrs.ED6SC.GetTextWidth,          [0x05]],
+        [Addrs.ED6SC.TitleMenuCount,        [0x07]],
 
         [Addrs.ED6SC.AsciiCharWidth,        new Array(0x200).fill(0)],
         [Addrs.ED6SC.AsciiFontSizeScale,    [0x00, 0x00, 0x80, 0x3E]],  // 0.25
@@ -214,6 +215,11 @@ function hookWindow() {
 }
 
 function hookFileIo() {
+    const patchDirs = [
+        'DAT/patch',
+        'DAT',
+    ];
+
     const LoadFileFromDAT = Interceptor2.jmp(
         Addrs.ED6SC.LoadFileFromDAT,
         function(datOffset: number, fileSize: number): number {
@@ -225,16 +231,20 @@ function hookFileIo() {
                 if (dir.offset != datOffset || dir.size != fileSize)
                     continue;
 
-                const filePath = path.join(Modules.ExePath, 'DAT', `ED6_DT${datIndex.toString(16).padStart(2, '0')}`, dir.fileName);
-                const content = utils.readFileContent(filePath);
+                for (let p of patchDirs) {
+                    const filePath = path.join(Modules.ExePath, p, `ED6_DT${datIndex.toString(16).padStart(2, '0')}`, dir.fileName);
+                    const content = utils.readFileContent(filePath);
 
-                if (!content)
-                    break;
+                    if (!content)
+                        continue;
 
-                console.log(`load ${filePath}`);
-                buffer.writeByteArray(ED6PseudoCompress(content));
+                    console.log(`load ${filePath}`);
+                    buffer.writeByteArray(ED6PseudoCompress(content));
 
-                return 1;
+                    return 1;
+                }
+
+                break;
             }
 
             const fp = API.crt.wfopen(utils.UTF16(`ED6_DT${datIndex.toString(16).padStart(2, '0')}.DAT`), utils.UTF16('rb'));
@@ -482,6 +492,21 @@ function hookTalk() {
     }
 
     let lastTerminator = NULL;
+
+    const closeMessageWindow = Interceptor2.jmp(
+        Addrs.ED6SC.ScenaHandler.add(0x58 * Process.pointerSize).readPointer(),
+        function(thiz: NativePointer, context: NativePointer): number {
+            const offset = context.add(6).readUShort();
+            const ret = closeMessageWindow(thiz, context) & 0xFF;
+
+            if (offset != context.add(6).readUShort()) {
+                stopVoice();
+            }
+
+            return ret;
+        },
+        'uint32', ['pointer', 'pointer'], 'thiscall',
+    );
 
     const showTalkText = Interceptor2.jmp(
         Addrs.ED6SC.ShowTalkText,
