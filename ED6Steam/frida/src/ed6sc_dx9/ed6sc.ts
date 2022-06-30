@@ -8,6 +8,7 @@ import { ED6PseudoCompress } from "../ed6fc_dx9/utils";
 import { DWriteRenderer } from "../dwrite/renderer";
 import { AT9Decoder, AT9DecodeResult } from "../codec/at9";
 import { DirectSound, DirectSoundBuffer } from "../dsound/dsound";
+import ExeText from "./ed6sc.text.json"
 
 const TextEncoding = 'gbk';
 
@@ -22,12 +23,14 @@ function hookSteamAndMisc() {
 
         // 004AEF09      /76 3E               jbe     short 0x4AEF49
         [Addrs.ED6SC.GetTextWidth,          [0x05]],
-        [Addrs.ED6SC.TitleMenuCount,        [0x06]],
+        [Addrs.ED6SC.TitleMenuCount,        [0x07]],
+        [Addrs.ED6SC.TalkTextIconY,         [0x16]],
+        [Addrs.ED6SC.TalkTextIconAddX,      [0x40]],
 
         [Addrs.ED6SC.AsciiCharWidth,        new Array(0x200).fill(0)],
         [Addrs.ED6SC.AsciiFontSizeScale,    [0x00, 0x00, 0x80, 0x3E]],  // 0.25
-        [Addrs.ED6SC.BTResultSepithWidth1,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
-        [Addrs.ED6SC.BTResultSepithWidth2,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
+        // [Addrs.ED6SC.BTResultSepithWidth1,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
+        // [Addrs.ED6SC.BTResultSepithWidth2,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
     ];
 
     pAsciiFontSizeScale.writeFloat(0.03125);
@@ -595,8 +598,8 @@ function hookTalk() {
 export function main() {
     // (new NativeFunction(Process.getModuleByName('KERNEL32.dll').getExportByName('AllocConsole'), 'bool', []))();
 
-    // console.log('sc dx9 patchModuleText');
-    // utils.patchModuleText(Modules.ED6SC, ExeText);
+    console.log('sc dx9 patchModuleText');
+    utils.patchModuleText(Modules.ED6SC, ExeText);
 
     console.log('hookSteamAndMisc');
     hookSteamAndMisc();

@@ -15,7 +15,7 @@
 ML_OVERLOAD_NEW
 
 #define DBG(...) { PrintConsole(__VA_ARGS__); }
-//#define DBG(...) 
+#define DBG(...)
 
 class FridaLoader
 {

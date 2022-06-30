@@ -16,6 +16,8 @@ export const Addrs = {
         BTResultSepithWidth1: Modules.ED6SC.base.add(0x02275A),         // CBTResultSepith  xref gAsciiFontSizeScale
         BTResultSepithWidth2: Modules.ED6SC.base.add(0x0222F0),         // CBTResultSepith
         TitleMenuCount      : Modules.ED6SC.base.add(0x13FC27),         // DebugMode screen\\title00.eff
+        TalkTextIconY       : Modules.ED6SC.base.add(0x12FCD1),         // #XXI
+        TalkTextIconAddX    : Modules.ED6SC.base.add(0x12FD19),         // #XXI
 
         LoadFileFromDAT     : Modules.ED6SC.base.add(0x097210),         // ED6_DT%02x.DAT
         GetGlyphsBitmap     : Modules.ED6SC.base.add(0x0F6A60),         // cmp     dword ptr [0x2EF8C48], 0x2BC

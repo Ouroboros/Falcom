@@ -331,7 +331,7 @@ export function patchModuleText(module: Module, text: IModuleText[]) {
                             address.sub(1).readU8() == 0x68 ||
                             address.sub(4).readU16() == 0x44C7
                         ) {
-                            // console.log(`patch text: ${address} ${e.text} @ ${va} @ ${pattern}`);
+                            // console.log(`patch text to ${getptr()}: ${address} ${e.text} @ ${va} @ ${pattern}`);
                             Memory.patchCode(address, addr.size, (code) => {
                                 code.writePointer(getptr());
                             });
@@ -339,12 +339,12 @@ export function patchModuleText(module: Module, text: IModuleText[]) {
                         break;
 
                     case SectionType.Data:
-                        // console.log(`patch data: ${address} ${e.text} @ ${va} @ ${pattern}`);
+                        // console.log(`patch data to ${getptr()}: ${address} ${e.text} @ ${va} @ ${pattern}`);
                         address.writePointer(getptr());
                         break;
 
                     case SectionType.RData:
-                        // console.log(`patch rdata: ${address} ${e.text} @ ${va} @ ${pattern}`);
+                        // console.log(`patch rdata to ${getptr()}: ${address} ${e.text} @ ${va} @ ${pattern}`);
                         Memory.patchCode(address, addr.size, (code) => {
                             code.writePointer(getptr());
                         });
