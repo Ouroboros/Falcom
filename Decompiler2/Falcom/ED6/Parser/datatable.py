@@ -9,6 +9,7 @@ __all__ = (
     'TableDataEntry',
     'NameTableData',
     'TownTableData',
+    'Item2TableData',
 )
 
 class TableDataEntry:
@@ -171,10 +172,30 @@ class NameTableData(TableDataEntry):
         fs.Position = 0
         return [fs.ReadUShort() for _ in range(entryCount)]
 
+class Item2TableData(TableDataEntry):
+    DESCRIPTOR  = (
+        ('__index',         'L'),
+        ('name',            'S'),
+        ('desc',            'S'),
+    )
+
+    @classmethod
+    def readIndexes(cls, fs: fileio.FileStream) -> list[int]:
+        fs.Position = 0
+        entryCount = fs.ReadUShort() // 2
+        fs.Position = 0
+        return [fs.ReadUShort() for _ in range(entryCount)]
+
+    @classmethod
+    def writeIndexes(cls, fs: fileio.FileStream, indexes: list[int]):
+        fs.Position = 0
+        [fs.WriteUShort(offset) for offset in indexes]
+
 class DataTable:
     DataTableDataTypes = {
         't_name'            : NameTableData,
         't_town'            : TownTableData,
+        't_item2'           : Item2TableData,
     }
 
     PythonHeader = [

@@ -37,7 +37,7 @@ class NameTableData(TableDataEntry):
 
 class MagicTableData(TableDataEntry):
     DESCRIPTOR  = (
-        ('craftId',             'W'),
+        ('id',                  'W'),
         ('target',              'B'),
         ('flags',               'B'),
         ('attr',                'B'),

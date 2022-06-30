@@ -25,6 +25,27 @@ def _init():
         except ModuleNotFoundError:
             pass
 
+    if not Common.GlobalConfig.ChrTable:
+        try:
+            from .Metadata.chrId_table import chrIdTable
+            Common.GlobalConfig.ChrTable.update(chrIdTable)
+        except ModuleNotFoundError:
+            pass
+
+    if not Common.GlobalConfig.ItemTable:
+        try:
+            from .Metadata.itemId_table import itemIdTable
+            Common.GlobalConfig.ItemTable.update(itemIdTable)
+        except ModuleNotFoundError:
+            pass
+
+    if not Common.GlobalConfig.CraftTable:
+        try:
+            from .Metadata.craftId_table import craftIdTable
+            Common.GlobalConfig.CraftTable.update(craftIdTable)
+        except ModuleNotFoundError:
+            pass
+
 _init()
 
 from .InstructionTable import *

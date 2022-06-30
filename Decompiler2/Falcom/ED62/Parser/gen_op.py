@@ -19,6 +19,7 @@ def map_operand_type(t: OperandType) -> str:
         ED62.ED62OperandType.Offset     : 'str',
         ED62.ED62OperandType.ScenaFlags : 'uint16',
         ED62.ED62OperandType.ChrId      : 'uint16',
+        ED62.ED62OperandType.ChrId1     : 'uint8',
         ED62.ED62OperandType.Item       : 'uint16',
         ED62.ED62OperandType.CraftId    : 'uint16',
         ED62.ED62OperandType.DATFile    : 'uint32 | str',

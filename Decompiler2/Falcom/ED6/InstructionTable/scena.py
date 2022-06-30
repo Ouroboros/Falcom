@@ -207,7 +207,7 @@ def Handler_41(ctx: InstructionHandlerContext):
         case HandlerAction.Disassemble:
             inst = ctx.instruction
 
-            inst.operands = readAllOperands(ctx, 'BW')
+            inst.operands = readAllOperands(ctx, 'Bt')
             inst.operands.extend(readAllOperands(ctx, getfmts(inst.operands[1].value)))
 
             return inst
@@ -443,12 +443,12 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x2E,  'FormationDelMember',           'BB'),
     inst(0x2F,  'FormationReset'),
     inst(0x30,  'OP_30',                        'B'),
-    inst(0x31,  'OP_31',                        'BBW'),
+    inst(0x31,  'SetChrStatus',                 'nBH'), # 0: lv, 5: cp
     inst(0x32,  'OP_32',                        'BW'),
     inst(0x33,  'OP_33',                        'BW'),
     inst(0x34,  'OP_34',                        'BW'),
-    inst(0x35,  'OP_35',                        'BW'),
-    inst(0x36,  'OP_36',                        'BW'),
+    inst(0x35,  'AddCraft',                     'nR'),
+    inst(0x36,  'AddSCraft',                    'nR'),
     inst(0x37,  'OP_37',                        'BW'),
     inst(0x38,  'AddSepith',                    'BW'),  # AddSepith(0~6, number)
     inst(0x39,  'SubSepith',                    'BW'),
@@ -456,10 +456,10 @@ ScenaOpTable = ED6InstructionTable([
     inst(0x3B,  'SubMira',                      'H'),
     inst(0x3C,  'OP_3C',                        'H'),
     inst(0x3D,  'OP_3D',                        'H'),
-    inst(0x3E,  'OP_3E',                        'Wh'),
-    inst(0x3F,  'OP_3F',                        'Wh'),
+    inst(0x3E,  'AddItem',                      'th'),
+    inst(0x3F,  'RemoveItem',                   'th'),
     inst(0x40,  'OP_40',                        'W'),
-    inst(0x41,  'OP_41',                        NoOperand,          Flags.Empty,            Handler_41),
+    inst(0x41,  'EquipCmd',                      NoOperand,          Flags.Empty,            Handler_41),
     inst(0x42,  'OP_42',                        'B'),
     inst(0x43,  'CreateThread',                 'WBBW'),
     inst(0x44,  'TerminateThread',              'WB'),

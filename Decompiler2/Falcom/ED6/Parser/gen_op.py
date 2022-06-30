@@ -18,6 +18,7 @@ def map_operand_type(t: OperandType) -> str:
         ED6.ED6OperandType.Text       : 'str | tuple',
         ED6.ED6OperandType.Offset     : 'str',
         ED6.ED6OperandType.ScenaFlags : 'uint16',
+        ED6.ED6OperandType.ChrId1     : 'uint8',
         ED6.ED6OperandType.ChrId      : 'uint16',
         ED6.ED6OperandType.Item       : 'uint16',
         ED6.ED6OperandType.CraftId    : 'uint16',

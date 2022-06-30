@@ -219,11 +219,11 @@ def procfile(f: str, encoding: str = 'GBK'):
 
     GlobalConfig.DefaultEncoding = encoding
 
-    output = pathlib.Path(f)
-    os.makedirs(output.parent / 'py', exist_ok = True)
-    output = output.parent / 'py' / (output.stem.strip() + '.py')
-    output = fr'D:\Dev\Source\Falcom\Decompiler2\Falcom\ED62\tools\output_voice_final\{output.stem.strip()}.py'
+    # output = pathlib.Path(f)
+    # os.makedirs(output.parent / 'py', exist_ok = True)
+    # output = output.parent / 'py' / (output.stem.strip() + '.py')
     # if output.exists(): continue
+    output = fr'D:\Dev\Source\Falcom\Decompiler2\Falcom\ED62\tools\output_voice_final\{pathlib.Path(f).stem.strip()}.py'
 
     test(f, output)
 

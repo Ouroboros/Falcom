@@ -410,6 +410,13 @@ def OP_30(arg1: uint8):
     assert isinstance(arg1, uint8)
     _gScena.handleOpCode(0x30, arg1)
 
+def SetChrStatus(arg1: uint8, arg2: uint8, arg3: uint16):
+    # 0x31
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, uint8)
+    assert isinstance(arg3, uint16)
+    _gScena.handleOpCode(0x31, arg1, arg2, arg3)
+
 def OP_31(arg1: uint8, arg2: uint8, arg3: uint16):
     # 0x31
     assert isinstance(arg1, uint8)
@@ -435,11 +442,23 @@ def OP_34(arg1: uint8, arg2: uint16):
     assert isinstance(arg2, uint16)
     _gScena.handleOpCode(0x34, arg1, arg2)
 
+def AddCraft(arg1: uint8, arg2: uint16):
+    # 0x35
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, uint16)
+    _gScena.handleOpCode(0x35, arg1, arg2)
+
 def OP_35(arg1: uint8, arg2: uint16):
     # 0x35
     assert isinstance(arg1, uint8)
     assert isinstance(arg2, uint16)
     _gScena.handleOpCode(0x35, arg1, arg2)
+
+def AddSCraft(arg1: uint8, arg2: uint16):
+    # 0x36
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, uint16)
+    _gScena.handleOpCode(0x36, arg1, arg2)
 
 def OP_36(arg1: uint8, arg2: uint16):
     # 0x36
@@ -507,11 +526,23 @@ def OP_3D(arg1: uint16):
     assert isinstance(arg1, uint16)
     _gScena.handleOpCode(0x3D, arg1)
 
+def AddItem(arg1: uint16, arg2: sint8):
+    # 0x3E
+    assert isinstance(arg1, uint16)
+    assert isinstance(arg2, sint8)
+    _gScena.handleOpCode(0x3E, arg1, arg2)
+
 def OP_3E(arg1: uint16, arg2: sint8):
     # 0x3E
     assert isinstance(arg1, uint16)
     assert isinstance(arg2, sint8)
     _gScena.handleOpCode(0x3E, arg1, arg2)
+
+def RemoveItem(arg1: uint16, arg2: sint8):
+    # 0x3F
+    assert isinstance(arg1, uint16)
+    assert isinstance(arg2, sint8)
+    _gScena.handleOpCode(0x3F, arg1, arg2)
 
 def OP_3F(arg1: uint16, arg2: sint8):
     # 0x3F
@@ -524,6 +555,13 @@ def OP_40(arg1: uint16, arg2: uint8):
     assert isinstance(arg1, uint16)
     assert isinstance(arg2, uint8)
     _gScena.handleOpCode(0x40, arg1, arg2)
+
+def EquipCmd(arg1: uint8, arg2: uint16, arg3: uint8):
+    # 0x41
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, uint16)
+    assert isinstance(arg3, uint8)
+    _gScena.handleOpCode(0x41, arg1, arg2, arg3)
 
 def OP_41(arg1: uint8, arg2: uint16, arg3: uint8):
     # 0x41
