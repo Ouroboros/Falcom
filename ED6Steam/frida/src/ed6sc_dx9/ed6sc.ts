@@ -29,8 +29,8 @@ function hookSteamAndMisc() {
 
         [Addrs.ED6SC.AsciiCharWidth,        new Array(0x200).fill(0)],
         [Addrs.ED6SC.AsciiFontSizeScale,    [0x00, 0x00, 0x80, 0x3E]],  // 0.25
-        // [Addrs.ED6SC.BTResultSepithWidth1,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
-        // [Addrs.ED6SC.BTResultSepithWidth2,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
+        [Addrs.ED6SC.BTResultSepithWidth1,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
+        [Addrs.ED6SC.BTResultSepithWidth2,  pAsciiFontSizeScale.readByteArray(Process.pointerSize)!],
     ];
 
     pAsciiFontSizeScale.writeFloat(0.03125);
