@@ -1,5 +1,6 @@
 from Assembler.function import Function
-from Falcom.ED6.InstructionTable.utils import formatText
+from Assembler.instruction import Instruction
+from Falcom.ED6.InstructionTable.utils import formatText, replaceEmoji
 from .scena_types import *
 from ..InstructionTable import ScenaOpTable as ED6ScenaOpTable
 import pathlib
@@ -123,6 +124,7 @@ class ScenaParser:
         self.header             = None              # type: ScenaHeader
         self.functions          = []                # type: List[ScenaFunction]
         self.stringTable        = []                # type: List[str]
+        self.instructionCb      = None              # type: Callable[[Instruction], None]
 
     def __str__(self) -> str:
         funcs = "\n".join([str(f) for f in self.functions])
@@ -186,7 +188,7 @@ class ScenaParser:
         fs.Position = self.header.stringTableOffset
         data = fs.Read()
         # data = data.split(b'\x00\x00')[0]
-        self.stringTable = [s.decode(GlobalConfig.DefaultEncoding) for s in data.split(b'\x00')]
+        self.stringTable = [replaceEmoji(s).decode(GlobalConfig.DefaultEncoding) for s in data.split(b'\x00')]
 
         createFunc(self.header.stringTableOffset, ScenaFunctionType.StringTable, self.stringTable)
         createFunc(self.header.entryPointOffset, ScenaFunctionType.EntryPoint, self.header.entryPoint)
@@ -200,10 +202,13 @@ class ScenaParser:
             ):
             createFunc(dataTable[index].offset, type, readTable(constructor, dataTable[index]))
 
+    def setInstructionCallback(self, cb: Callable[[Instruction], None]):
+        self.instructionCb = cb
+
     def disasmFunctions(self):
         fs = self.fs
         dis = Assembler.Disassembler(ED6ScenaOpTable)
-        ctx = Assembler.DisasmContext(fs, scriptName = self.name)
+        ctx = Assembler.DisasmContext(fs, instCallback = self.instructionCb, scriptName = self.name)
 
         for func in self.functions:
             log.debug(f'disasm func: {func}')

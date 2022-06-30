@@ -85,6 +85,7 @@ class ScenaParser:
         self.header             = None              # type: ScenaHeader
         self.functions          = []                # type: List[ScenaFunction]
         self.functionNameMap    = {}                # type: Dict[str, bool]
+        self.instructionCb      = None              # type: Callable[[Instruction], None]
 
     def __str__(self) -> str:
         funcs = '\n'.join([str(f) for f in self.functions])
@@ -184,8 +185,14 @@ class ScenaParser:
         #     else:
         #         f.type = self.getFunctionType(f.name)
 
+    def setInstructionCallback(self, cb: Callable[[Instruction], None]):
+        self.instructionCb = cb
+
     def disasmFunctions(self):
         def cb(inst: Instruction):
+            if self.instructionCb:
+                self.instructionCb(inst)
+
             if inst.opcode == 0x02:
                 self.functionNameMap[inst.operands[1].value] = True
 
@@ -194,7 +201,7 @@ class ScenaParser:
 
         fs = self.fs
         dis = Assembler.Disassembler(ED84ScenaOpTable)
-        ctx = Assembler.DisasmContext(fs, instCallback = cb)
+        ctx = Assembler.DisasmContext(fs, instCallback = cb, scriptName = self.name)
 
         for i, func in enumerate(self.functions):
             fs.Position = func.offset
