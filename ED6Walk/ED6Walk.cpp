@@ -1,32 +1,27 @@
-#pragma comment(linker,"/ENTRY:main")
-#pragma comment(linker,"/MERGE:.text=.Kaede /SECTION:.Kaede,ERW")
-#pragma comment(linker,"/MERGE:.rdata=.Kaede")
-#pragma comment(linker,"/MERGE:.data=.Kaede")
+#pragma comment(linker, "/ENTRY:main")
+#pragma comment(linker, "/SECTION:.text,ERW /MERGE:.rdata=.text /MERGE:.data=.text")
+#pragma comment(linker, "/SECTION:.Asuna,ERW /MERGE:.text=.Asuna")
 
-#include <Windows.h>
-#include <stdio.h>
-#include <malloc.h>
-#include "getmainargs.h"
-#include "my_image.h"
+#include "ml.cpp"
 
-FORCEINLINE void STDCALL Pixel32To4444(uint_16 *dst, uint_32 src)
+FORCEINLINE void STDCALL Pixel32To4444(USHORT *dst, ULONG src)
 {
-    *dst  = (uint_16)((src >>  4) & 0xF);
-    *dst |= (uint_16)((src >>  8) & 0xF0);
-    *dst |= (uint_16)((src >> 12) & 0xF00);
-    *dst |= (uint_16)((src >> 16) & 0xF000);
+    *dst  = (USHORT)((src >>  4) & 0xF);
+    *dst |= (USHORT)((src >>  8) & 0xF0);
+    *dst |= (USHORT)((src >> 12) & 0xF00);
+    *dst |= (USHORT)((src >> 16) & 0xF000);
 }
 
-int STDCALL BMP32To4444(char *dst, char *src, int width, int height)
+int STDCALL BMP32To4444(PBYTE dst, PBYTE src, int width, int height)
 {
-    char *p = dst;
+    PBYTE p = dst;
 
     for (int h = height; h; )
     {
         --h;
         for (int w = 0; w != width; ++w)
         {
-            Pixel32To4444((uint_16 *)dst, *(uint_32 *)(src + h * 1024 + w * 4));
+            Pixel32To4444((USHORT *)dst, *(ULONG *)(src + h * 1024 + w * 4));
             dst += 2;
         }
     }
@@ -34,9 +29,9 @@ int STDCALL BMP32To4444(char *dst, char *src, int width, int height)
     return dst - p;
 }
 
-int STDCALL BMP4444ToCH(char *src, int srclen, char **pCH, uint_32 *pCHSize, char **pCP, uint_32 *pCPSize, DWORD dwAlphaNum)
+int STDCALL BMP4444ToCH(PBYTE src, int srclen, PBYTE *pCH, ULONG *pCHSize, PBYTE *pCP, ULONG *pCPSize, DWORD dwAlphaNum)
 {
-    char *pCPBuf, *pCHBuf, *pBuf, *p1, *p2, *p;
+    PBYTE pCPBuf, pCHBuf, pBuf, p1, p2, p;
     DWORD sum;
     DWORD dwMaxCPSize, dwMaxCHSize;
 
@@ -49,13 +44,13 @@ int STDCALL BMP4444ToCH(char *src, int srclen, char **pCH, uint_32 *pCHSize, cha
     if ((DWORD)(*pCPSize + srclen) > dwMaxCPSize)
     {
         dwMaxCPSize += dwMaxCPSize >> 1;
-        *pCP = (char *)realloc(*pCP, dwMaxCPSize);
+        *pCP = (PBYTE)realloc(*pCP, dwMaxCPSize);
         pCPBuf = *pCP;
     }
     if ((DWORD)(*pCHSize + srclen) > dwMaxCHSize)
     {
         dwMaxCHSize += dwMaxCHSize >> 1;
-        *pCH = (char *)realloc(*pCH, dwMaxCHSize);
+        *pCH = (PBYTE)realloc(*pCH, dwMaxCHSize);
         pCHBuf = *pCH;
     }
 
@@ -67,7 +62,7 @@ int STDCALL BMP4444ToCH(char *src, int srclen, char **pCH, uint_32 *pCHSize, cha
 
     for (int i = 0; i != 16; ++i)
     {
-        CHAR *pBak = pBuf;
+        PBYTE pBak = pBuf;
 
         for (int j = 0; j != 16; ++j)
         {
@@ -122,15 +117,21 @@ int STDCALL BMP4444ToCH(char *src, int srclen, char **pCH, uint_32 *pCHSize, cha
     return dwAlphaNum;
 }
 
-FORCEINLINE void STDCALL main2(int argc, char **argv)
+ForceInline VOID main2(LONG_PTR argc, PWSTR *argv)
 {
     BOOL bError;
     FILE *fCH, *fCP, *fsrc;
-    CHAR  szFileName[MAX_PATH];
-    CHAR *pCPBuffer, *pCHBuffer, *p32Buffer, *p4Buffer;
+    WCHAR  szFileName[MAX_PATH];
+    PBYTE pCPBuffer, pCHBuffer, p32Buffer, p4Buffer;
     DWORD dwCHSize, dwCPSize, dwFrameNum, dwAlphaNum;
     DWORD dwSize, dw4Size;
-    TBitMapHeader h;
+    IMAGE_BITMAP_HEADER h;
+
+    if (argc < 2)
+    {
+        wprintf(L"%s ch04250", argv[0]);
+        return;
+    }
 
     bError = FALSE;
     dwFrameNum = 0;
@@ -138,16 +139,16 @@ FORCEINLINE void STDCALL main2(int argc, char **argv)
 
     dwCPSize = 2;
     dwCHSize = 2;
-    pCHBuffer = (CHAR *)malloc(0x20002);
-    pCPBuffer = (CHAR *)malloc(0x20002);
+    pCHBuffer = (PBYTE)malloc(0x20002);
+    pCPBuffer = (PBYTE)malloc(0x20002);
     *(LPDWORD)pCPBuffer = 0;
     *(LPDWORD)pCHBuffer = 0;
 
     while (1)
     {
-        sprintf(szFileName, "%s_%04u.bmp", argv[1], dwFrameNum++);
+        swprintf(szFileName, L"%s_%04u.bmp", argv[1], dwFrameNum++);
 
-        fsrc = fopen(szFileName, "rb");
+        fsrc = _wfopen(szFileName, L"rb");
         if (fsrc == NULL)
         {
             break;
@@ -155,23 +156,23 @@ FORCEINLINE void STDCALL main2(int argc, char **argv)
 
         if (fread(&h, sizeof(h), 1, fsrc) != 1)
         {
-            printf("Can't read %s\n", szFileName);
+            wprintf(L"Can't read %s\n", szFileName);
             fclose(fsrc);
             break;
         }
 
-        if (h.wTag != 'MB')
+        if (h.Tag != 'MB')
         {
             bError;
-            printf("%s is not a valid BMP file.\n", szFileName);
+            wprintf(L"%s is not a valid BMP file.\n", szFileName);
             fclose(fsrc);
             break;
         }
 
-        if (h.Info.wBit !=32 || h.Info.dwHeight != 256 || h.Info.dwWidth != 256)
+        if (h.Info.Bit !=32 || h.Info.Height != 256 || h.Info.Width != 256)
         {
             bError = TRUE;
-            printf("Input BMP \"%s\" must be 256x256x32.\n", szFileName);
+            wprintf(L"Input BMP \"%s\" must be 256x256x32.\n", szFileName);
             fclose(fsrc);
             break;
         }
@@ -179,13 +180,13 @@ FORCEINLINE void STDCALL main2(int argc, char **argv)
         dwSize = ftell(fsrc);
         fseek(fsrc, 0, SEEK_SET);
 
-        p32Buffer = (char *)malloc(dwSize);
+        p32Buffer = (PBYTE)malloc(dwSize);
         fread(p32Buffer, dwSize, 1, fsrc);
         fclose(fsrc);
 
         dw4Size = (dwSize - 0x36) >> 1;
 
-        p4Buffer = (char *)malloc(dw4Size);
+        p4Buffer = (PBYTE)malloc(dw4Size);
         dwSize = BMP32To4444(p4Buffer, p32Buffer + 0x36, 256, 256);
         free(p32Buffer);
 
@@ -196,27 +197,27 @@ FORCEINLINE void STDCALL main2(int argc, char **argv)
 
     if (bError == FALSE)
     {
-        dwSize = sprintf(szFileName, "%s._CH");
-        fCP = fopen(szFileName, "wb");
-        if (fCP)
+        swprintf(szFileName, L"%s._CH", argv[1]);
+        fCH = _wfopen(szFileName, L"wb");
+        if (fCH)
         {
-            szFileName[dwSize - 1] = 'P';
-            fCH = fopen(szFileName, "wb");
-            if (fCH)
+            swprintf(szFileName, L"%sP._CP", argv[1]);
+            fCP = _wfopen(szFileName, L"wb");
+            if (fCP)
             {
                 fwrite(pCPBuffer, dwCPSize, 1, fCP);
                 fwrite(pCHBuffer, dwCHSize, 1, fCH);
-                fclose(fCH);
+                fclose(fCP);
             }
             else
             {
-                printf("Can't create %s\n", szFileName);
+                wprintf(L"Can't create %s\n", szFileName);
             }
-            fclose(fCP);
+            fclose(fCH);
         }
         else
         {
-            printf("Can't create %s\n", szFileName);
+            wprintf(L"Can't create %s\n", szFileName);
         }
     }
 
@@ -224,12 +225,10 @@ FORCEINLINE void STDCALL main2(int argc, char **argv)
     free(pCPBuffer);
 }
 
-void __cdecl main(int argc, char **argv)
+int __cdecl main(LONG_PTR argc, PWSTR *argv)
 {
-    getargs(&argc, &argv);
-    if (argc >= 2)
-    {
-        main2(argc, argv);
-    }
-    exit(0);
+    getargsW(&argc, &argv);
+    main2(argc, argv);
+    ReleaseArgv(argv);
+    Ps::ExitProcess(0);
 }
