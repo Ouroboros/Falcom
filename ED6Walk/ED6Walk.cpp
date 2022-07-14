@@ -1,6 +1,6 @@
 #pragma comment(linker, "/ENTRY:main")
 #pragma comment(linker, "/SECTION:.text,ERW /MERGE:.rdata=.text /MERGE:.data=.text")
-#pragma comment(linker, "/SECTION:.Asuna,ERW /MERGE:.text=.Asuna")
+#pragma comment(linker, "/SECTION:.Amano,ERW /MERGE:.text=.Amano")
 
 #include "ml.cpp"
 
@@ -129,7 +129,7 @@ ForceInline VOID main2(LONG_PTR argc, PWSTR *argv)
 
     if (argc < 2)
     {
-        wprintf(L"%s ch04250", argv[0]);
+        wprintf(L"%s CH04250(_0000.bmp)", argv[0]);
         return;
     }
 

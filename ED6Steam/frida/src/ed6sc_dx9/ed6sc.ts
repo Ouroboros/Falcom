@@ -76,6 +76,30 @@ function hookSteamAndMisc() {
     Memory.patchCode(Addrs.IAT.CreateFileW, Process.pointerSize, (code) => {
         code.writePointer(CreateFileW);
     });
+
+    const validCaller = [
+        '0x544827',     // minimap: place name
+        '0x544990',     // minimap: topleft place name
+        '0x502bcc',     // tab place name
+        '0x53c0ce',     // team member change title
+    ];
+
+    const TextBoxInit = Interceptor2.jmp(
+        Addrs.ED6SC.TextBoxInit,
+        function(thiz: NativePointer, args: NativePointer): NativePointer {
+            const width = thiz.add(0xA0).readU32();
+            const retaddr = this.returnAddress.toString();
+
+            if (validCaller.indexOf(retaddr) != -1) {
+                args.add(0xC).writeU32(args.add(0xC).readU32() + 1);        // text len + 1
+            } else {
+                console.log(`width = ${width} ${retaddr}`);
+            }
+
+            return TextBoxInit(thiz, args);
+        },
+        'pointer', ['pointer', 'pointer'], 'thiscall',
+    );
 }
 
 function hookEncodingCheck() {
@@ -236,13 +260,19 @@ function hookFileIo() {
 
                 for (let p of patchDirs) {
                     const filePath = path.join(Modules.ExePath, p, `ED6_DT${datIndex.toString(16).padStart(2, '0')}`, dir.fileName);
+                    console.log(`load ${filePath}`);
                     const content = utils.readFileContent(filePath);
 
                     if (!content)
                         continue;
 
-                    console.log(`load ${filePath}`);
-                    buffer.writeByteArray(ED6PseudoCompress(content));
+                    console.log(`patch ${filePath}`);
+
+                    if (filePath.toLocaleLowerCase().endsWith('.wav')) {
+                        buffer.writeByteArray(content);
+                    } else {
+                        buffer.writeByteArray(ED6PseudoCompress(content));
+                    }
 
                     return 1;
                 }
@@ -578,7 +608,7 @@ function hookTalk() {
 
                         const voiceId = Buffer.from(start.readByteArray(p.sub(start).toUInt32())!).toString('ascii');
 
-                        console.log(`voiceId: ${voiceId}`);
+                        // console.log(`voiceId: ${voiceId}`);
 
                         playVoice(voiceId);
 

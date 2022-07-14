@@ -23,6 +23,7 @@ export const Addrs = {
         GetGlyphsBitmap     : Modules.ED6SC.base.add(0x0F6A60),         // cmp     dword ptr [0x2EF8C48], 0x2BC
         DrawTalkText        : Modules.ED6SC.base.add(0x12CCE0),         // 04 04 04 04 02 03
         ShowTalkText        : Modules.ED6SC.base.add(0x12F4E0),
+        TextBoxInit         : Modules.ED6SC.base.add(0x11CD70),
     },
 
     IAT: {
