@@ -24,6 +24,13 @@ export const Addrs = {
         DrawTalkText        : Modules.ED6SC.base.add(0x12CCE0),         // 04 04 04 04 02 03
         ShowTalkText        : Modules.ED6SC.base.add(0x12F4E0),
         TextBoxInit         : Modules.ED6SC.base.add(0x11CD70),
+        TextBoxInitCaller   : [
+            Modules.ED6SC.base.add(0x144822),                           // minimap: place name
+            Modules.ED6SC.base.add(0x14498b),                           // minimap: topleft place name
+            Modules.ED6SC.base.add(0x102bc7),                           // tab place name
+            Modules.ED6SC.base.add(0x13c0c9),                           // team member change title
+            Modules.ED6SC.base.add(0x144365),                           // map place name
+        ],
     },
 
     IAT: {

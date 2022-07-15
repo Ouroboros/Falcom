@@ -77,29 +77,46 @@ function hookSteamAndMisc() {
         code.writePointer(CreateFileW);
     });
 
-    const validCaller = [
-        '0x544827',     // minimap: place name
-        '0x544990',     // minimap: topleft place name
-        '0x502bcc',     // tab place name
-        '0x53c0ce',     // team member change title
-    ];
+    if (true) {
+        const TextBoxInit = new NativeFunction(Addrs.ED6SC.TextBoxInit, 'void', ['pointer', 'pointer'], 'thiscall');
 
-    const TextBoxInit = Interceptor2.jmp(
-        Addrs.ED6SC.TextBoxInit,
-        function(thiz: NativePointer, args: NativePointer): NativePointer {
-            const width = thiz.add(0xA0).readU32();
-            const retaddr = this.returnAddress.toString();
+        for (let caller of Addrs.ED6SC.TextBoxInitCaller) {
+            Interceptor2.call(
+                caller,
+                function(thiz: NativePointer, args: NativePointer) {
+                    args.add(0xC).writeU32(args.add(0xC).readU32() + 1);        // text len + 1
+                    TextBoxInit(thiz, args);
+                },
+                'void', ['pointer', 'pointer'], 'thiscall'
+            );
+        }
 
-            if (validCaller.indexOf(retaddr) != -1) {
-                args.add(0xC).writeU32(args.add(0xC).readU32() + 1);        // text len + 1
-            } else {
-                console.log(`width = ${width} ${retaddr}`);
-            }
+    } else {
+        const validCaller = [
+            '0x544827',     // minimap: place name
+            '0x544990',     // minimap: topleft place name
+            '0x502bcc',     // tab place name
+            '0x53c0ce',     // team member change title
+        ];
 
-            return TextBoxInit(thiz, args);
-        },
-        'pointer', ['pointer', 'pointer'], 'thiscall',
-    );
+        const TextBoxInit = Interceptor2.jmp(
+            Addrs.ED6SC.TextBoxInit,
+            function(thiz: NativePointer, args: NativePointer) {
+                const width = thiz.add(0xA0).readU32();
+                const retaddr = this.returnAddress.toString();
+
+                if (validCaller.indexOf(retaddr) != -1) {
+                    console.log(`width1 = ${width} ${retaddr}`);
+                    args.add(0xC).writeU32(args.add(0xC).readU32() + 1);        // text len + 1
+                } else {
+                    console.log(`width2 = ${width} ${retaddr}`);
+                }
+
+                TextBoxInit(thiz, args);
+            },
+            'void', ['pointer', 'pointer'], 'thiscall',
+        );
+    }
 }
 
 function hookEncodingCheck() {
