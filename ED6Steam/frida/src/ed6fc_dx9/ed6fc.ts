@@ -9,7 +9,6 @@ import { Addrs } from "./addrs";
 import { ED6PseudoCompress } from "./utils";
 import { ED6FC } from "./types";
 import ExeText from "./ed6fc.text.json"
-import { VoiceIdOffset, VoiceIdMapping } from "./voice_id_map"
 
 const TextEncoding = 'gbk';
 
@@ -397,19 +396,21 @@ function hookTalk() {
     let sb: DirectSoundBuffer | undefined = undefined;
 
     function loadVoice(voiceId: string): AT9DecodeResult | undefined {
-        const id = VoiceIdMapping[parseInt(voiceId, 10) + VoiceIdOffset[voiceId.length]];
-        const idstr = id.toString().padStart(10, '0');
+        // const id = VoiceIdMapping[parseInt(voiceId, 10) + VoiceIdOffset[voiceId.length]];
+        // const idstr = id.toString().padStart(10, '0');
+
+        const idstr = voiceId;
 
         // ch 001 000 0001
         const voicePath = path.join(Modules.ExePath, 'voice', 'at9', `${idstr.slice(3, 6)}`, `ch${idstr}.at9`);
 
-        console.log(`voice path: ${voicePath}`);
+        // console.log(`voice path: ${voicePath}`);
 
         // const voicePath2 = 'E:\\Game\\Steam\\steamapps\\common\\Trails in the Sky FC\\DAT\\talk\\ch0081040004.at9';
         const at9 = utils.readFileContent(voicePath);
 
         if (!at9) {
-            console.log('wtf');
+            // console.log('wtf');
             return undefined;
         }
 
@@ -421,7 +422,7 @@ function hookTalk() {
     }
 
     function playVoice(voiceId: string) {
-        console.log('playVoice');
+        // console.log('playVoice');
         if (Addrs.ED6FC.DirectSound.readPointer().isNull())
             return;
 
@@ -434,7 +435,7 @@ function hookTalk() {
         const voice = loadVoice(voiceId);
 
         if (!voice) {
-            console.log('invalid voice id');
+            // console.log('invalid voice id');
             return;
         }
 
@@ -445,14 +446,14 @@ function hookTalk() {
         });
 
         if (!sb) {
-            console.log('create sb failed');
+            // console.log('create sb failed');
             return;
         }
 
         const dsb = sb.lock(NULL, ptr(voice.dataSize), 0);
 
         if (!dsb) {
-            console.log('dsb lock failed');
+            // console.log('dsb lock failed');
             stopVoice();
             return;
         }
@@ -468,27 +469,32 @@ function hookTalk() {
 
         sb.play(0);
 
-        console.log('success');
+        // console.log('success');
     }
 
     function stopVoice() {
-        console.log('stopVoice');
+        // console.log('stopVoice');
         sb?.stop();
         sb?.release();
         sb = undefined;
     }
 
-    // const scena_op_5b = Interceptor2.jmp(
-    //     ptr(0x4A3FF0),
-    //     function(thiz: NativePointer, context: NativePointer): number {
-    //         console.log('ChrTalk');
-
-    //         return scena_op_5b(thiz, context);
-    //     },
-    //     'int32', ['pointer', 'pointer'], 'thiscall',
-    // );
-
     let lastTerminator = NULL;
+
+    const closeMessageWindow = Interceptor2.jmp(
+        Addrs.ED6FC.ScenaHandler.add(0x58 * Process.pointerSize).readPointer(),
+        function(thiz: NativePointer, context: NativePointer): number {
+            const offset = context.add(6).readUShort();
+            const ret = closeMessageWindow(thiz, context) & 0xFF;
+
+            if (offset != context.add(6).readUShort()) {
+                stopVoice();
+            }
+
+            return ret;
+        },
+        'uint32', ['pointer', 'pointer'], 'thiscall',
+    );
 
     const showTalkText = Interceptor2.jmp(
         Addrs.ED6FC.ShowTalkText,
@@ -521,6 +527,8 @@ function hookTalk() {
 
                 switch (ch) {
                     default:
+                        if (ch < 0x20)
+                            continue;
                         break;
 
                     case 0x00:
@@ -529,6 +537,14 @@ function hookTalk() {
 
                     case 0x03:
                         continue;
+
+                    case 0x07: // SetColor
+                        p = p.add(1);
+                        continue;
+
+                    case 0x1F: // Item
+                        p = p.add(2);
+                        continue
 
                     case 0x23:  // #
                     {
@@ -540,8 +556,8 @@ function hookTalk() {
                                 break;
                         }
 
-                        if (p.readU8() != 0x76) {
-                            // #12345v
+                        if (p.readU8() != 0x56) {
+                            // #1234567890V
                             continue;
                         }
 

@@ -6,6 +6,7 @@ export const Addrs = {
         SEVolumeTable       : Modules.ED6FC.base.add(0x13B670),
         SEVolumeIndex       : Modules.ED6FC.base.add(0x158D1C),
         DirectSound         : Modules.ED6FC.base.add(0x3A527C),
+        ScenaHandler        : Modules.ED6FC.base.add(0x13B230),
 
         FontSizeIndex       : Modules.ED6FC.base.add(0x141E094),
         JPFontSizeLimit     : Modules.ED6FC.base.add(0x0B37CB),         // font192._da
