@@ -277,7 +277,7 @@ function hookFileIo() {
 
                 for (let p of patchDirs) {
                     const filePath = path.join(Modules.ExePath, p, `ED6_DT${datIndex.toString(16).padStart(2, '0')}`, dir.fileName);
-                    console.log(`load ${filePath}`);
+                    // console.log(`load ${filePath}`);
                     const content = utils.readFileContent(filePath);
 
                     if (!content)
@@ -483,7 +483,7 @@ function hookTalk() {
         return ret;
     }
 
-    function playVoice(voiceId: string) {
+    function playVoice(voiceId: string): number | undefined {
         // console.log('playVoice');
         if (Addrs.ED6SC.DirectSound.readPointer().isNull())
             return;
@@ -531,7 +531,10 @@ function hookTalk() {
 
         sb.play(0);
 
-        // console.log('success');
+        const bytesPerSec = voice.wfxFormat.add(0x8).readU32();
+        const duration = voice.dataSize / bytesPerSec;
+
+        return duration;
     }
 
     function stopVoice() {
@@ -562,6 +565,7 @@ function hookTalk() {
         Addrs.ED6SC.ShowTalkText,
         function(thiz: NativePointer, text: NativePointer, arg3: number, arg4: number): NativePointer {
             let p = text;
+            let defer = undefined;
 
             // console.log(`** ShowTalkText(${(this.context as Ia32CpuContext).esp.readPointer()}) ** ${text}: "${utils.readMBCS(text, TextEncoding)!}"`);
 
@@ -627,7 +631,23 @@ function hookTalk() {
 
                         // console.log(`voiceId: ${voiceId}`);
 
-                        playVoice(voiceId);
+                        const duration = playVoice(voiceId);
+
+                        if (!duration)
+                            break;
+
+                        const AUTO_TEXT_FLAG = 0x80;
+                        const VK_SCROLL = 0x91;
+
+                        if ((API.USER32.GetKeyState(VK_SCROLL) & 1) == 0)
+                            break;
+
+                        // console.log(`duration: ${duration}`);
+
+                        defer = function() {
+                            thiz.add(0x39EC).writeU16(thiz.add(0x39EC).readU16() | AUTO_TEXT_FLAG);
+                            thiz.add(0x3A00).writeU32(Math.trunc((duration + 0.3) * 1000));
+                        }
 
                         break;
                     }
@@ -636,14 +656,53 @@ function hookTalk() {
                 break;
             }
 
-            return showTalkText(thiz, text, arg3, arg4);
+            const ret = showTalkText(thiz, text, arg3, arg4);
+
+            if (defer)
+                defer();
+
+            return ret;
         },
         'pointer', ['pointer', 'pointer', 'uint32', 'uint32'], 'thiscall',
     );
 }
 
+function bypassBattle() {
+    const p = ptr(0x405490);
+
+    const battle = new NativeFunction(p, 'void', ['pointer', 'pointer', 'pointer', 'pointer', 'pointer'], 'fastcall');
+
+    Interceptor2.jmp(
+        p,
+        function(a: NativePointer, b: NativePointer, c: NativePointer) {
+            // battle
+            const ctx = (this.context as Ia32CpuContext);
+            const id = ctx.ecx;
+            const flags = ctx.edx;
+
+            console.log(`battle id: ${id}`);
+
+            switch (id.toUInt32()) {
+                case 0x460:
+                    break;
+
+                case 0x2714:
+                    battle(id, flags, a, b, c);
+                    break;
+
+                default:
+                    battle(id.and(0), flags, a, b, c);
+                    break;
+            }
+        },
+        'void', ['pointer', 'pointer', 'pointer'], 'mscdecl',
+    );
+}
+
 export function main() {
     // (new NativeFunction(Process.getModuleByName('KERNEL32.dll').getExportByName('AllocConsole'), 'bool', []))();
+
+    bypassBattle();
 
     console.log('sc dx9 patchModuleText');
     utils.patchModuleText(Modules.ED6SC, ExeText);
