@@ -312,8 +312,10 @@ export function patchModuleText(module: Module, text: IModuleText[]) {
             if (ptr !== undefined)
                 return ptr;
 
-            ptr = API.crt.malloc(e.text.length * 2 + 1);
-            ptr.writeAnsiString(e.text);
+            const length = e.text.length * 2 + 1;
+            ptr = API.crt.malloc(length);
+            API.WIN32.WideCharToMultiByte(936, 0, Memory.allocUtf16String(e.text), e.text.length + 2, ptr, length, NULL, NULL);
+            // ptr.writeAnsiString(e.text);
             return ptr;
         }
 

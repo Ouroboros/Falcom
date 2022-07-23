@@ -6,8 +6,7 @@ import { Interceptor2 } from "../utils";
 import { ED6SC } from "./types";
 import { ED6PseudoCompress } from "../ed6fc_dx9/utils";
 import { DWriteRenderer } from "../dwrite/renderer";
-import { AT9Decoder, AT9DecodeResult } from "../codec/at9";
-import { DirectSound, DirectSoundBuffer } from "../dsound/dsound";
+import { VoicePlayer } from "../dsound/player";
 import ExeText from "./ed6sc.text.json"
 
 const TextEncoding = 'gbk';
@@ -77,44 +76,16 @@ function hookSteamAndMisc() {
         code.writePointer(CreateFileW);
     });
 
-    if (true) {
-        const TextBoxInit = new NativeFunction(Addrs.ED6SC.TextBoxInit, 'void', ['pointer', 'pointer'], 'thiscall');
+    const TextBoxInit = new NativeFunction(Addrs.ED6SC.TextBoxInit, 'void', ['pointer', 'pointer'], 'thiscall');
 
-        for (let caller of Addrs.ED6SC.TextBoxInitCaller) {
-            Interceptor2.call(
-                caller,
-                function(thiz: NativePointer, args: NativePointer) {
-                    args.add(0xC).writeU32(args.add(0xC).readU32() + 1);        // text len + 1
-                    TextBoxInit(thiz, args);
-                },
-                'void', ['pointer', 'pointer'], 'thiscall'
-            );
-        }
-
-    } else {
-        const validCaller = [
-            '0x544827',     // minimap: place name
-            '0x544990',     // minimap: topleft place name
-            '0x502bcc',     // tab place name
-            '0x53c0ce',     // team member change title
-        ];
-
-        const TextBoxInit = Interceptor2.jmp(
-            Addrs.ED6SC.TextBoxInit,
+    for (let caller of Addrs.ED6SC.TextBoxInitCaller) {
+        Interceptor2.call(
+            caller,
             function(thiz: NativePointer, args: NativePointer) {
-                const width = thiz.add(0xA0).readU32();
-                const retaddr = this.returnAddress.toString();
-
-                if (validCaller.indexOf(retaddr) != -1) {
-                    console.log(`width1 = ${width} ${retaddr}`);
-                    args.add(0xC).writeU32(args.add(0xC).readU32() + 1);        // text len + 1
-                } else {
-                    console.log(`width2 = ${width} ${retaddr}`);
-                }
-
+                args.add(0xC).writeU32(args.add(0xC).readU32() + 1);        // text len + 1
                 TextBoxInit(thiz, args);
             },
-            'void', ['pointer', 'pointer'], 'thiscall',
+            'void', ['pointer', 'pointer'], 'thiscall'
         );
     }
 }
@@ -459,90 +430,7 @@ function hookTextRenderer() {
 }
 
 function hookTalk() {
-    let ds: DirectSound | undefined = undefined;
-    let sb: DirectSoundBuffer | undefined = undefined;
-
-    function loadVoice(voiceId: string): AT9DecodeResult | undefined {
-        const idstr = voiceId;
-
-        // ch 001 000 0001
-        const voicePath = path.join(Modules.ExePath, 'voice', 'at9', `${idstr.slice(3, 6)}`, `ch${idstr}.at9`);
-
-        // const voicePath2 = 'E:\\Game\\Steam\\steamapps\\common\\Trails in the Sky FC\\DAT\\talk\\ch0081040004.at9';
-        const at9 = utils.readFileContent(voicePath);
-
-        if (!at9) {
-            console.log(`voice not exists: ${voicePath}`);
-            return undefined;
-        }
-
-        const ret = AT9Decoder.decode(at9)
-        if (!ret)
-            return undefined;
-
-        return ret;
-    }
-
-    function playVoice(voiceId: string): number | undefined {
-        // console.log('playVoice');
-        if (Addrs.ED6SC.DirectSound.readPointer().isNull())
-            return;
-
-        if (ds === undefined) {
-            ds = new DirectSound(Addrs.ED6SC.DirectSound.readPointer());
-        }
-
-        stopVoice();
-
-        const voice = loadVoice(voiceId);
-
-        if (!voice) {
-            console.log('invalid voice id');
-            return;
-        }
-
-        sb = ds.CreateSoundBuffer({
-            flags       : 0x82,
-            bufferBytes : voice.dataSize,
-            wfxFormat   : voice.wfxFormat,
-        });
-
-        if (!sb) {
-            console.log('create sb failed');
-            return;
-        }
-
-        const dsb = sb.lock(NULL, ptr(voice.dataSize), 0);
-
-        if (!dsb) {
-            console.log('dsb lock failed');
-            stopVoice();
-            return;
-        }
-
-        dsb.audioPtr1.writeByteArray(voice.data.readByteArray(dsb.audioBytes1.toInt32())!);
-        const audioPtr2 = dsb.audioPtr2;
-        if (!audioPtr2.isNull()) {
-            audioPtr2.writeByteArray(voice.data.add(dsb.audioBytes1.toUInt32()).readByteArray(dsb.audioBytes2.toUInt32())!);
-        }
-
-        sb.unlock(dsb);
-        sb.setVolume(ED6SC.seVolume);
-
-        sb.play(0);
-
-        const bytesPerSec = voice.wfxFormat.add(0x8).readU32();
-        const duration = voice.dataSize / bytesPerSec;
-
-        return duration;
-    }
-
-    function stopVoice() {
-        // console.log('stopVoice');
-        sb?.stop();
-        sb?.release();
-        sb = undefined;
-    }
+    const player = new VoicePlayer(Addrs.ED6SC.DirectSound);
 
     let lastTerminator = NULL;
 
@@ -553,7 +441,7 @@ function hookTalk() {
             const ret = closeMessageWindow(thiz, context) & 0xFF;
 
             if (offset != context.add(6).readUShort()) {
-                stopVoice();
+                player.stopVoice();
             }
 
             return ret;
@@ -575,14 +463,14 @@ function hookTalk() {
                 case 0x00:
                     // utils.log(`firstCh: 0x${firstCh.toString(16).padStart(2, '0')}`);
                     if (!p.equals(lastTerminator)) {
-                        stopVoice();
+                        player.stopVoice();
                         lastTerminator = p;
                     }
                     return showTalkText(thiz, text, arg3, arg4);
                     // break;
 
                 case 0x03:
-                    stopVoice();
+                    player.stopVoice();
                     break;
             }
 
@@ -631,7 +519,7 @@ function hookTalk() {
 
                         // console.log(`voiceId: ${voiceId}`);
 
-                        const duration = playVoice(voiceId);
+                        const duration = player.playVoice(voiceId, ED6SC.seVolume);
 
                         if (!duration)
                             break;
@@ -648,6 +536,8 @@ function hookTalk() {
                             thiz.add(0x39EC).writeU16(thiz.add(0x39EC).readU16() | AUTO_TEXT_FLAG);
                             thiz.add(0x3A00).writeU32(Math.trunc((duration + 0.3) * 1000));
                         }
+
+                        defer();
 
                         break;
                     }
@@ -702,7 +592,7 @@ function bypassBattle() {
 export function main() {
     // (new NativeFunction(Process.getModuleByName('KERNEL32.dll').getExportByName('AllocConsole'), 'bool', []))();
 
-    bypassBattle();
+    // bypassBattle();
 
     console.log('sc dx9 patchModuleText');
     utils.patchModuleText(Modules.ED6SC, ExeText);

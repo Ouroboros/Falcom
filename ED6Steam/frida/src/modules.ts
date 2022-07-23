@@ -33,6 +33,7 @@ export const API = {
         GetFileAttributesA          : new NativeFunction(Modules.KERNEL32.getExportByName('GetFileAttributesA'), 'uint32', ['pointer'], 'stdcall'),
         Sleep                       : new NativeFunction(Modules.KERNEL32.getExportByName('Sleep'), 'void', ['uint32'], 'stdcall'),
         MultiByteToWideChar         : new NativeFunction(Modules.KERNEL32.getExportByName('MultiByteToWideChar'), 'int32', ['uint32', 'uint32', 'pointer', 'int32', 'pointer', 'int32'], 'stdcall'),
+        WideCharToMultiByte         : new NativeFunction(Modules.KERNEL32.getExportByName('WideCharToMultiByte'), 'int32', ['uint32', 'uint32', 'pointer', 'int32', 'pointer', 'int32', 'pointer', 'pointer'], 'stdcall'),
         AddVectoredExceptionHandler : new NativeFunction(Modules.KERNEL32.getExportByName('AddVectoredExceptionHandler'), 'pointer', ['uint32', 'pointer'], 'stdcall'),
     },
 

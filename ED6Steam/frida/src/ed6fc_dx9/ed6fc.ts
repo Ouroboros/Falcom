@@ -3,8 +3,7 @@ import * as utils from "../utils";
 import * as path from "path";
 import { Interceptor2 } from "../utils";
 import { DWriteRenderer } from "../dwrite/renderer";
-import { AT9Decoder, AT9DecodeResult } from "../codec/at9";
-import { DirectSound, DirectSoundBuffer } from "../dsound/dsound";
+import { VoicePlayer } from "../dsound/player";
 import { Addrs } from "./addrs";
 import { ED6PseudoCompress } from "./utils";
 import { ED6FC } from "./types";
@@ -392,95 +391,7 @@ function hookTextRenderer() {
 }
 
 function hookTalk() {
-    let ds: DirectSound | undefined = undefined;
-    let sb: DirectSoundBuffer | undefined = undefined;
-
-    function loadVoice(voiceId: string): AT9DecodeResult | undefined {
-        // const id = VoiceIdMapping[parseInt(voiceId, 10) + VoiceIdOffset[voiceId.length]];
-        // const idstr = id.toString().padStart(10, '0');
-
-        const idstr = voiceId;
-
-        // ch 001 000 0001
-        const voicePath = path.join(Modules.ExePath, 'voice', 'at9', `${idstr.slice(3, 6)}`, `ch${idstr}.at9`);
-
-        // console.log(`voice path: ${voicePath}`);
-
-        // const voicePath2 = 'E:\\Game\\Steam\\steamapps\\common\\Trails in the Sky FC\\DAT\\talk\\ch0081040004.at9';
-        const at9 = utils.readFileContent(voicePath);
-
-        if (!at9) {
-            // console.log('wtf');
-            return undefined;
-        }
-
-        const ret = AT9Decoder.decode(at9)
-        if (!ret)
-            return undefined;
-
-        return ret;
-    }
-
-    function playVoice(voiceId: string): number | undefined {
-        // console.log('playVoice');
-        if (Addrs.ED6FC.DirectSound.readPointer().isNull())
-            return;
-
-        if (ds === undefined) {
-            ds = new DirectSound(Addrs.ED6FC.DirectSound.readPointer());
-        }
-
-        stopVoice();
-
-        const voice = loadVoice(voiceId);
-
-        if (!voice) {
-            // console.log('invalid voice id');
-            return;
-        }
-
-        sb = ds.CreateSoundBuffer({
-            flags       : 0x82,
-            bufferBytes : voice.dataSize,
-            wfxFormat   : voice.wfxFormat,
-        });
-
-        if (!sb) {
-            // console.log('create sb failed');
-            return;
-        }
-
-        const dsb = sb.lock(NULL, ptr(voice.dataSize), 0);
-
-        if (!dsb) {
-            // console.log('dsb lock failed');
-            stopVoice();
-            return;
-        }
-
-        dsb.audioPtr1.writeByteArray(voice.data.readByteArray(dsb.audioBytes1.toInt32())!);
-        const audioPtr2 = dsb.audioPtr2;
-        if (!audioPtr2.isNull()) {
-            audioPtr2.writeByteArray(voice.data.add(dsb.audioBytes1.toUInt32()).readByteArray(dsb.audioBytes2.toUInt32())!);
-        }
-
-        sb.unlock(dsb);
-        sb.setVolume(ED6FC.seVolume);
-
-        sb.play(0);
-
-        const bytesPerSec = voice.wfxFormat.add(0x8).readU32();
-        const duration = voice.dataSize / bytesPerSec;
-
-        return duration;
-    }
-
-    function stopVoice() {
-        // console.log('stopVoice');
-        sb?.stop();
-        sb?.release();
-        sb = undefined;
-    }
+    const player = new VoicePlayer(Addrs.ED6FC.DirectSound);
 
     let lastTerminator = NULL;
 
@@ -491,7 +402,7 @@ function hookTalk() {
             const ret = closeMessageWindow(thiz, context) & 0xFF;
 
             if (offset != context.add(6).readUShort()) {
-                stopVoice();
+                player.stopVoice();
             }
 
             return ret;
@@ -513,14 +424,14 @@ function hookTalk() {
                 case 0x00:
                     // utils.log(`firstCh: 0x${firstCh.toString(16).padStart(2, '0')}`);
                     if (!p.equals(lastTerminator)) {
-                        stopVoice();
+                        player.stopVoice();
                         lastTerminator = p;
                     }
                     return showTalkText(thiz, text, arg3, arg4);
                     // break;
 
                 case 0x03:
-                    stopVoice();
+                    player.stopVoice();
                     break;
             }
 
@@ -569,7 +480,7 @@ function hookTalk() {
 
                         // console.log(`voiceId: ${voiceId}`);
 
-                        const duration = playVoice(voiceId);
+                        const duration = player.playVoice(voiceId, ED6FC.seVolume);
 
                         if (!duration)
                             break;
@@ -586,6 +497,8 @@ function hookTalk() {
                             thiz.add(0x39EC).writeU16(thiz.add(0x39EC).readU16() | AUTO_TEXT_FLAG);
                             thiz.add(0x3A00).writeU32(Math.trunc((duration + 0.3) * 1000));
                         }
+
+                        defer();
 
                         break;
                     }
