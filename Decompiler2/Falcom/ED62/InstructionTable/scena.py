@@ -87,13 +87,13 @@ def Handler_C9(ctx: InstructionHandlerContext):
             fs = ctx.disasmContext.fs
 
             inst.operands = readAllOperands(ctx, 'BB')
-            inst.operands.extend(readAllOperands(ctx, 'W' * inst.operands[1].value))
+            inst.operands.extend(readAllOperands(ctx, 'N' * inst.operands[1].value))
 
             with fs.PositionSaver:
                 count = len(fs.Read(MAX_PARAM_COUNT * 2).split(b'\xFF\xFF')[0]) // 2
                 count += count != MAX_PARAM_COUNT
 
-            inst.operands.extend(readAllOperands(ctx, 'W' * min(count, MAX_PARAM_COUNT)))
+            inst.operands.extend(readAllOperands(ctx, 'N' * min(count, MAX_PARAM_COUNT)))
             return inst
 
         case HandlerAction.Assemble:
@@ -168,8 +168,8 @@ def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Fla
 
 desc_98 = 'B', {
     0x00: 'W',
-    0x01: 'LLL',
-    0x02: 'WLB',
+    0x01: 'iii',
+    0x02: 'WIB',
 }
 
 desc_CC = 'BB', {
@@ -184,7 +184,7 @@ desc_D9 = 'B', {
 }
 
 ScenaOpTable = ED62InstructionTable(ED6ScenaOpTable).update([
-    inst(0x14,  'OP_14',                        'LLLBL'),
+    inst(0x14,  'Blur',                         'iLiBi'),
     inst(0x15,  'OP_15',                        'L'),
     inst(0x18,  'OP_18',                        'BBB'),
     inst(0x2D,  'FormationAddMember',           'nBB'),
@@ -192,7 +192,7 @@ ScenaOpTable = ED62InstructionTable(ED6ScenaOpTable).update([
     inst(0x40,  'OP_40',                        'WB'),
     inst(0x41,  'EquipCmd',                     'ntB'),
     inst(0x57,  'OP_57',                        'WWWS'),
-    inst(0x7D,  'OP_7D',                        'BWWW'),
+    inst(0x7D,  'ChrSetAfterImage',             'BWWW',                 parameters = ('disable', 'chrId', 'interval', 'duration')),    # 0: on, 1: off
     inst(0x98,  'OP_98',                        desc_98),
     inst(0xB3,  'PlayMovie',                    'BSWW'),
     inst(0xB5,  'OP_B5',                        'B'),
@@ -211,11 +211,11 @@ ScenaOpTable = ED62InstructionTable(ED6ScenaOpTable).update([
     inst(0xC2,  'OP_C2'),
     inst(0xC3,  'OP_C3',                        'W'),
     inst(0xC4,  'OP_C4',                        'BL'),
-    inst(0xC5,  'OP_C5',                        'BWWWWWWWWWWWWLBS'),
+    inst(0xC5,  'OP_C5',                        'BhhhhhhhhhhhhLBS'),
     inst(0xC6,  'OP_C6',                        'BBiii'),
     inst(0xC7,  'OP_C7',                        'BBB'),
     inst(0xC8,  'OP_C8',                        'WWSBW'),
-    inst(0xC9,  'OP_C9',                        NoOperand,              handler = Handler_C9, parameters = ('mandatory', 'members')),      # character selection
+    inst(0xC9,  'OP_C9',                        NoOperand,              handler = Handler_C9,   parameters = ('mandatory', 'members')),      # character selection
     inst(0xCA,  'OP_CA',                        'BBL'),
     inst(0xCB,  'OP_CB',                        'B'),
     inst(0xCC,  'OP_CC',                        desc_CC),
@@ -223,8 +223,8 @@ ScenaOpTable = ED62InstructionTable(ED6ScenaOpTable).update([
     inst(0xCE,  'OP_CE',                        'BE'),
     inst(0xCF,  'OP_CF',                        'WBS'),
     inst(0xD0,  'OP_D0',                        'ii'),
-    inst(0xD1,  'OP_D1',                        'hiiii'),
-    inst(0xD2,  'OP_D2',                        'LLB'),
+    inst(0xD1,  'OP_D1',                        'Wiiii'),
+    inst(0xD2,  'LoadChip',                     'DDC',                  parameters = ('ch', 'cp', 'slot')),
     inst(0xD3,  'OP_D3',                        'B'),
     inst(0xD4,  'OP_D4',                        'BB'),
     inst(0xD5,  'OP_D5',                        'BB'),
@@ -248,7 +248,7 @@ ScenaOpTable = ED62InstructionTable(ED6ScenaOpTable).update([
     inst(0xE7,  'OP_E7',                        'BSBL'),
     inst(0xE8,  'OP_E8',                        'B' * 4),
     inst(0xE9,  'OP_E9',                        'B' * 1),
-    inst(0xEA,  'UnlockAchievement',            'B' * 4),   # BWB
+    inst(0xEA,  'UnlockAchievement',            'BWB'),   # BWB
     inst(0xEB,  'OP_EB',                        'B' * 2),
 
     # psv evo

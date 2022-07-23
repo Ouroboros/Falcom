@@ -41,8 +41,8 @@ def procfile_cn(f: str):
 
 def main():
     scena = [
-        # (procfile_cn, r'E:\Game\Steam\steamapps\common\Trails in the Sky FC\DAT\ED6_DT01'),
-        (procfile_psv, r'E:\Desktop\falcomtools\PSV EVO\Eiyuu Densetsu - Sora no Kiseki FC Evolution CHS+DLC-3DM\PCSH00179\gamedata\data\scenario\0'),
+        (procfile_cn, r'E:\Game\Steam\steamapps\common\Trails in the Sky FC\DAT\ED6_DT01'),
+        # (procfile_psv, r'E:\Desktop\falcomtools\PSV EVO\Eiyuu Densetsu - Sora no Kiseki FC Evolution CHS+DLC-3DM\PCSH00179\gamedata\data\scenario\0'),
     ]
 
     output_dir = None
@@ -53,7 +53,7 @@ def main():
         # iterlib.forEachFileMP(cb, s, '*.bin', subdir = False)
         # continue
 
-        for f in fileio.getDirectoryFiles(s, '*.bin', subdir = False):
+        for f in fileio.getDirectoryFiles(s, '*._sn', subdir = False):
             console.setTitle(os.path.basename(f))
 
             output = pathlib.Path(f)

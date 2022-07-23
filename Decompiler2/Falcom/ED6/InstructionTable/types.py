@@ -16,7 +16,8 @@ class ED6OperandType(IntEnum2):
     ScenaFlags,     \
     CraftId,        \
     DATFile,        \
-    UserDefined = range(UserDefined, UserDefined + 11)
+    Function,       \
+    UserDefined = range(UserDefined, UserDefined + 12)
 
     __str__     = OperandType.__str__
     __repr__    = OperandType.__repr__
@@ -32,6 +33,8 @@ class ED6OperandFormat(OperandFormat):
         ED6OperandType.ScenaFlags  : 2,
         ED6OperandType.ChrId1      : 1,
         ED6OperandType.ChrId       : 2,
+        ED6OperandType.DATFile     : 4,
+        ED6OperandType.Function    : 2,
         ED6OperandType.Expression  : None,
         ED6OperandType.Text        : None,
     }
@@ -52,6 +55,7 @@ class ED6OperandDescriptor(OperandDescriptor):
             ED6OperandType.Item            : lambda context: context.disasmContext.fs.ReadUShort(),
             ED6OperandType.CraftId         : lambda context: context.disasmContext.fs.ReadUShort(),
             ED6OperandType.DATFile         : lambda context: DATFileIndex(context.disasmContext.fs.ReadULong()),
+            ED6OperandType.Function        : lambda context: context.disasmContext.fs.ReadUShort(),
             # ED6OperandType.BGM        : lambda context: context.disasmContext.fs.ReadShort(),
 
         }.get(self.format.type, super().readValue)(context)
@@ -61,6 +65,7 @@ class ED6OperandDescriptor(OperandDescriptor):
 
         return {
             ED6OperandType.Text        : self.writeText,
+            ED6OperandType.Expression  : self.writeExpression,
             ED6OperandType.ScenaFlags  : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED6OperandType.Offset      : lambda context, value: context.disasmContext.fs.WriteUShort(0xF00D),
             ED6OperandType.ChrId1      : lambda context, value: context.disasmContext.fs.WriteByte(value),
@@ -68,7 +73,7 @@ class ED6OperandDescriptor(OperandDescriptor):
             ED6OperandType.Item        : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED6OperandType.CraftId     : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED6OperandType.DATFile     : lambda context, value: context.disasmContext.fs.WriteULong(DATFileIndex(value).value),
-            ED6OperandType.Expression  : self.writeExpression,
+            ED6OperandType.Function    : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             # ED6OperandType.ThreadValue : self.writeThreadValue,
         }.get(self.format.type, super().writeValue)(context, value)
 
@@ -83,6 +88,7 @@ class ED6OperandDescriptor(OperandDescriptor):
             ED6OperandType.Item        : lambda context: self.formatItemId(context.operand.value),
             ED6OperandType.CraftId     : lambda context: self.formatCraftId(context.operand.value),
             ED6OperandType.DATFile     : lambda context: context.operand.value.nameOrValue,
+            ED6OperandType.Function    : lambda context: context.formatter.parser.getCodeFuncName(context.instruction),
             # ED6OperandType.BGM         : ,
 
         }.get(self.format.type, super().formatValue)(context)
@@ -247,6 +253,7 @@ ED6OperandDescriptor.formatTable.update({
     'n' : oprdesc(ED6OperandType.ChrId1),
     'N' : oprdesc(ED6OperandType.ChrId),
     'D' : oprdesc(ED6OperandType.DATFile),
+    'm' : oprdesc(ED6OperandType.Function),
 })
 
 class TextCtrlCode(IntEnum2):

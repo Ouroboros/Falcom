@@ -32,6 +32,7 @@ class ScenaTypeBase:
             'L' : lambda v: f'0x{v:08X}',
             'f' : lambda v: f'{v:g}.0' if f'{v:g}'.count('.') == 0 else f'{v:g}',
             'S' : lambda v: f"{repr(v)}",
+            'r' : lambda v: f"{repr(v)}",
         }
 
         for name, type in self.DESCRIPTOR:
@@ -58,11 +59,15 @@ class ScenaTypeBase:
             'L' : lambda v: utils.int_to_bytes(v, 4),
             'f' : lambda v: utils.float_to_bytes(v),
             'S' : lambda v: utils.str_to_bytes(v),
+            'r' : lambda v: b'',
         }
 
         body = bytearray()
 
         for name, type in self.DESCRIPTOR:
+            if name.startswith('_'):
+                continue
+
             body.extend(writer[type](getattr(self, name)))
 
         return body
@@ -81,6 +86,7 @@ class ScenaTypeBase:
             'L' : lambda: fs.ReadULong(),
             'f' : lambda: fs.ReadFloat(),
             'S' : lambda: fs.ReadMultiByte(),
+            'r' : lambda: None,
         }
 
         for name, type in self.DESCRIPTOR:
@@ -278,6 +284,7 @@ class ScenaChipData(DATFileIndex):
 
 class ScenaNpcData(ScenaTypeBase):
     DESCRIPTOR = (
+        ('name',                'r'),
         ('x',                   'i'),
         ('z',                   'i'),
         ('y',                   'i'),
@@ -294,6 +301,7 @@ class ScenaNpcData(ScenaTypeBase):
 
 class ScenaMonsterData(ScenaTypeBase):
     DESCRIPTOR = (
+        ('name',        'r'),
         ('x',           'i'),
         ('z',           'i'),
         ('y',           'i'),

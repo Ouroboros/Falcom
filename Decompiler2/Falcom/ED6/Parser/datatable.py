@@ -114,7 +114,6 @@ class TableDataEntry:
             'W' : lambda: fs.ReadUShort(),
             'I' : lambda: fs.ReadULong(),
             'L' : lambda: fs.ReadULong(),
-            'M' : lambda: fs.ReadULong(),
             'f' : lambda: fs.ReadFloat(),
             'S' : readStr,
             's' : lambda: fs.ReadMultiByte(),

@@ -13,6 +13,10 @@ __all__ = (
 )
 
 class ScenaFormatter(Assembler.Formatter):
+    def __init__(self, parser: 'ScenaParser', instructionTable: 'InstructionTable', *args, **kwargs):
+        super().__init__(instructionTable, *args, **kwargs)
+        self.parser = parser
+
     def formatLabel(self, name: str) -> List[str]:
         return [
             f'def _{name}(): pass',
@@ -163,10 +167,9 @@ class ScenaParser:
         fs.Position = hdr.functionTable.offset
 
         funcNames = {
-            0: 'PreInit',
-            1: 'Init',
-            2: 'ReInit',
+            0: 'Init',
         }
+
         for i in range(hdr.functionTable.size // 2):
             offset = fs.ReadUShort()
             self.functions.append(ScenaFunction(index = i, offset = offset, name = funcNames.get(i, f'func_{i:02X}_{offset:X}'), type = ScenaFunctionType.Code))
@@ -185,12 +188,11 @@ class ScenaParser:
             self.functions.append(ScenaFunction(index = funcIndex, offset = offset, name = str(type), type = type, obj = obj))
             funcIndex += 1
 
-        fs.Position = self.header.stringTableOffset
-        data = fs.Read()
-        # data = data.split(b'\x00\x00')[0]
-        self.stringTable = [replaceEmoji(s).decode(GlobalConfig.DefaultEncoding) for s in data.split(b'\x00')]
+        # fs.Position = self.header.stringTableOffset
+        # data = fs.Read()
+        # self.stringTable = [replaceEmoji(s).decode(GlobalConfig.DefaultEncoding) for s in data.split(b'\x00')]
 
-        createFunc(self.header.stringTableOffset, ScenaFunctionType.StringTable, self.stringTable)
+        # createFunc(self.header.stringTableOffset, ScenaFunctionType.StringTable, self.stringTable)
         createFunc(self.header.entryPointOffset, ScenaFunctionType.EntryPoint, self.header.entryPoint)
         createFunc(dataTable[ScenaDataTableType.ChipDataCH].offset, ScenaFunctionType.ChipData, (readTable(ScenaChipData, dataTable[0]), readTable(ScenaChipData, dataTable[1])))
 
@@ -202,6 +204,52 @@ class ScenaParser:
             ):
             createFunc(dataTable[index].offset, type, readTable(constructor, dataTable[index]))
 
+        def readstr(fs, cp = ANSI_CODE_PAGE):
+            s = bytearray()
+            while True:
+                buf = fs.read(1)
+                if buf == b'' or buf == b'\x00':
+                    break
+
+                s.extend(buf)
+
+            return replaceEmoji(s).decode(GlobalConfig.DefaultEncoding)
+
+        fs.Position = self.header.stringTableOffset
+
+        assert readstr(fs) == '@FileName'
+
+        for npc in self.getDataFunc(ScenaFunctionType.NpcData):
+            npc.name = readstr(fs)
+
+        for m in self.getDataFunc(ScenaFunctionType.MonsterData):
+            m.name = readstr(fs)
+
+    def getDataFunc(self, type: ScenaFunctionType):
+        return [f for f in self.functions if f.type == type][-1].obj
+
+    def getCodeFunc(self) -> list[ScenaFunction]:
+        return [f for f in self.functions if f.type == ScenaFunctionType.Code]
+
+    def getCodeFuncName(self, inst: Instruction):
+        scenaIndex = self.name.strip().rsplit('_', maxsplit = 1)[-1]
+        if scenaIndex.isdigit():
+            scenaIndex = int(scenaIndex, 10)
+        else:
+            scenaIndex = 0
+
+        match inst.opcode:
+            case 0x43: # CreateThread
+                scena, func = 0, inst.operands[3].value
+
+            case 0x49: # Event
+                scena, func = inst.operands[0].value, inst.operands[1].value
+
+        if scena == scenaIndex:
+            return self.getCodeFunc()[func].name
+
+        return '0x%04X' % func
+
     def setInstructionCallback(self, cb: Callable[[Instruction], None]):
         self.instructionCb = cb
 
@@ -211,7 +259,7 @@ class ScenaParser:
         ctx = Assembler.DisasmContext(fs, instCallback = self.instructionCb, scriptName = self.name)
 
         for func in self.functions:
-            log.debug(f'disasm func: {func}')
+            # log.debug(f'disasm func: {func}')
 
             match func.type:
                 case ScenaFunctionType.Code:
@@ -227,9 +275,7 @@ class ScenaParser:
                         raise NotImplementedError(f'unknown func type: {func.type}')
 
     def generatePython(self, filename: str) -> List[str]:
-        formatter = ScenaFormatter(ED6ScenaOpTable, name = self.name)
-
-        linefeed = '\n'
+        formatter = ScenaFormatter(self, ED6ScenaOpTable, name = self.name)
 
         lines = f'''\
 import sys
@@ -242,10 +288,6 @@ except ModuleNotFoundError:
     pass
 
 scena = createScenaWriter('{filename}')
-
-stringTable = [
-{linefeed.join([f'{GlobalConfig.DefaultIndent}TXT(0x{i:02X}, {formatText(s)}),' for i, s in enumerate(self.stringTable)])}
-]
 
 '''.splitlines()
 

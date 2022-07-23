@@ -23,6 +23,7 @@ def map_operand_type(t: OperandType) -> str:
         ED62.ED62OperandType.Item       : 'uint16',
         ED62.ED62OperandType.CraftId    : 'uint16',
         ED62.ED62OperandType.DATFile    : 'uint32 | str',
+        ED62.ED62OperandType.Function   : 'uint16',
         ED62.ED62OperandType.Expression : 'tuple | list',
     }[t]
 

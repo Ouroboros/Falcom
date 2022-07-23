@@ -16,6 +16,7 @@ class _ScenaWriter:
         self.labels             = {}                    # type: Dict[str, int]
         self.xrefs              = []                    # type: List[Assembler.XRef]
         self.functions          = []                    # type: List[ED6.ScenaFunction]
+        self.codeFuncIndex      = 0                     # type: int
         self.instructionTable   = None                  # type: ED6.ED6InstructionTable
         self.scenaName          = ''
         self.fs                 = fileio.FileStream().OpenMemory()
@@ -38,18 +39,24 @@ class _ScenaWriter:
         self.opcodeCallbacks.append(cb)
 
     def functionDecorator(self, name: str, type: ED6.ScenaFunctionType) -> Callable[[], None]:
-        def wrapper(f: Callable[[], Any]):
+        def wrapper(f: Callable[[], Any]) -> ED6.ScenaFunction:
             for cb in self.funcCallbacks:
                 f2 = cb(name, f)
                 if f2 is not None:
                     f = f2
 
-            func = ED6.ScenaFunction(len(self.functions), 0xFFFFFFFF, name)
+            func = ED6.ScenaFunction(len(self.functions), Assembler.Instruction.InvalidOffset, name)
             func.type = type
             func.obj = f
             self.functions.append(func)
 
-            return lambda: None
+            if type == ED6.ScenaFunctionType.Code:
+                idx = self.codeFuncIndex
+                # f = ED6.ScenaFunction(self.codeFuncIndex, 1+Assembler.Instruction.InvalidOffset, name)
+                self.codeFuncIndex += 1
+                return idx
+
+            return None
 
         return wrapper
 
@@ -143,7 +150,13 @@ class _ScenaWriter:
         [fs.WriteUShort(o) for o in funcOffsets]
 
         hdr.stringTableOffset = fs.Position
-        strtbl = '\x00'.join(self.getDataFunc(ScenaFunctionType.StringTable)).encode(GlobalConfig.DefaultEncoding)
+        strtbl = b'\x00'.join([
+            b'@FileName',
+            *[npc.name.encode(GlobalConfig.DefaultEncoding) for npc in self.getDataFunc(ScenaFunctionType.NpcData)],
+            *[m.name.encode(GlobalConfig.DefaultEncoding) for m in self.getDataFunc(ScenaFunctionType.MonsterData)],
+        ])
+
+        # strtbl = '\x00'.join(self.getDataFunc(ScenaFunctionType.StringTable)).encode(GlobalConfig.DefaultEncoding)
         if strtbl[-1] != 0:
             strtbl += b'\x00'
 
