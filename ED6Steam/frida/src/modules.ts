@@ -9,6 +9,7 @@ export const Modules = {
     ED6FC       : modules[0],
     ED6SC       : modules[0],
     ED63rd      : modules[0],
+    ED9         : modules[0],
 
     ExePath     : path.dirname(modules[0].path.split('\\').join('/')).split('/').join('\\'),
 };
@@ -38,10 +39,11 @@ export const API = {
     },
 
     USER32: {
-        GetAsyncKeyState        : new NativeFunction(Modules.USER32.getExportByName('GetAsyncKeyState'), 'int16', ['int32'], 'stdcall'),
-        GetKeyState             : new NativeFunction(Modules.USER32.getExportByName('GetKeyState'), 'int16', ['int32'], 'stdcall'),
-        SystemParametersInfoW   : new NativeFunction(Modules.USER32.getExportByName('SystemParametersInfoW'), 'uint32', ['uint32', 'uint32', 'pointer', 'uint32'], 'stdcall'),
-        SetWindowPos            : new NativeFunction(Modules.USER32.getExportByName('SetWindowPos'), 'uint32', ['pointer', 'pointer', 'int32', 'int32', 'int32', 'int32', 'uint32'], 'stdcall'),
-        SetProcessDpiAwarenessContext: new NativeFunction(Process.getModuleByName('USER32.dll').getExportByName('SetProcessDpiAwarenessContext'), 'uint32', ['int64']),
+        GetAsyncKeyState                : new NativeFunction(Modules.USER32.getExportByName('GetAsyncKeyState'), 'int16', ['int32'], 'stdcall'),
+        GetKeyState                     : new NativeFunction(Modules.USER32.getExportByName('GetKeyState'), 'int16', ['int32'], 'stdcall'),
+        GetSystemMetrics                : new NativeFunction(Modules.USER32.getExportByName('GetSystemMetrics'), 'int32', ['int32'], 'stdcall'),
+        SystemParametersInfoW           : new NativeFunction(Modules.USER32.getExportByName('SystemParametersInfoW'), 'uint32', ['uint32', 'uint32', 'pointer', 'uint32'], 'stdcall'),
+        SetWindowPos                    : new NativeFunction(Modules.USER32.getExportByName('SetWindowPos'), 'uint32', ['pointer', 'pointer', 'int32', 'int32', 'int32', 'int32', 'uint32'], 'stdcall'),
+        SetProcessDpiAwarenessContext   : new NativeFunction(Modules.USER32.getExportByName('SetProcessDpiAwarenessContext'), 'uint32', ['int64']),
     },
 };

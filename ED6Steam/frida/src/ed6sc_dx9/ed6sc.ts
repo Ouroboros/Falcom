@@ -205,6 +205,8 @@ function hookWindow() {
 
     const SWP_NOMOVE = 2;
     const SPI_GETWORKAREA = 0x30;
+    const SM_CYSCREEN = 1;
+
     const SetWindowPos = new NativeCallback(
         function(hWnd: NativePointer, hWndInsertAfter: NativePointer, X: number, Y: number, cx: number, cy: number, Flags: number): number {
 
@@ -213,8 +215,15 @@ function hookWindow() {
 
                 API.USER32.SystemParametersInfoW(SPI_GETWORKAREA, 0, workArea, 0);
 
-                X = ((workArea.add(8).readU32() - workArea.readU32()) - cx) / 2;
-                Y = ((workArea.add(12).readU32() - workArea.add(4).readU32()) - cy) / 2;
+                const width = workArea.add(8).readU32() - workArea.readU32();
+                let height = workArea.add(12).readU32() - workArea.add(4).readU32();
+
+                if (cy > height) {
+                    height = API.USER32.GetSystemMetrics(SM_CYSCREEN);
+                }
+
+                X = (width - cx) / 2;
+                Y = (height - cy) / 2;
 
                 Flags = 0;
             }
@@ -592,7 +601,7 @@ function bypassBattle() {
 export function main() {
     // (new NativeFunction(Process.getModuleByName('KERNEL32.dll').getExportByName('AllocConsole'), 'bool', []))();
 
-    // bypassBattle();
+    bypassBattle();
 
     console.log('sc dx9 patchModuleText');
     utils.patchModuleText(Modules.ED6SC, ExeText);
