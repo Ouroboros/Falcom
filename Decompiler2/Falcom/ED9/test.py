@@ -6,6 +6,7 @@ from hexdump import hexdump
 
 def test(filename, output):
     if pathlib.Path(filename).stem in [
+            'mon9996_c00',
         ]:
         return
 
@@ -32,18 +33,14 @@ def procfile(f: str):
 
 def main():
     scena = [
-        r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\scena\dat\\',
-        # r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\minigame\dat\\',
-        # r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\talk\dat\\',
-        r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\battle\dat\\',
-        r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\data_cn\scripts\ani\dat\\',
+        r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani',
     ]
 
     output_dir = None
     # output_dir = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\ouroboros\scripts\scena\dat\\'
 
     for s in scena:
-        break
+        # break
         iterlib.forEachFileMP(procfile, s, '*.dat', subdir = False)
         continue
 
@@ -53,7 +50,7 @@ def main():
             output = pathlib.Path(f)
             os.makedirs(output.parent / 'py', exist_ok = True)
             output = output.parent / 'py' / (output.stem + '.py')
-            if output.exists(): continue
+            # if output.exists(): continue
 
             test(f, output)
 

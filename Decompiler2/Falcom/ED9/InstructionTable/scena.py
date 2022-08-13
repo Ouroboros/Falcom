@@ -67,11 +67,18 @@ def Handler_00(ctx: InstructionHandlerContext):
                     applyDescriptorsToOperands(inst.operands, 'L')
 
                 case ED9OperandValueType.Integer:
-                    inst.operands[0].value = value & 0x3FFFFFFF
-                    applyDescriptorsToOperands(inst.operands, 'i')
+                    value = (value << 2) & 0xFFFFFFFF
+                    sign = 0xC0000000 if value & 0x80000000 != 0 else 0
+                    value = int.from_bytes((sign | (value >> 2)).to_bytes(4, 'little'), 'little', signed = True)
+                    inst.operands[0].value = value
+                    fmt = 'i'
+                    if value in [65534]:
+                        fmt = 'W'
+
+                    applyDescriptorsToOperands(inst.operands, fmt)
 
                 case ED9OperandValueType.Float:
-                    inst.operands[0].value = struct.unpack('f', ((value & 0x3FFFFFFF) << 2).to_bytes(4, 'little'))[0]
+                    inst.operands[0].value = struct.unpack('f', ((value << 2) & 0xFFFFFFFF).to_bytes(4, 'little'))[0]
                     applyDescriptorsToOperands(inst.operands, 'f')
 
                 case ED9OperandValueType.String:

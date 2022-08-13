@@ -38,6 +38,26 @@ def OP_02(arg1: sint32):
     assert isinstance(arg1, sint32)
     _gScena.handleOpCode(0x02, arg1)
 
+def LOAD_STACK_DEREF(arg1: sint32):
+    # 0x03
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x03, arg1)
+
+def OP_03(arg1: sint32):
+    # 0x03
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x03, arg1)
+
+def PUSH_STACK_OFFSET(arg1: sint32):
+    # 0x04
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x04, arg1)
+
+def OP_04(arg1: sint32):
+    # 0x04
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x04, arg1)
+
 def POP_TO(arg1: sint32):
     # 0x05
     assert isinstance(arg1, sint32)
@@ -47,6 +67,36 @@ def OP_05(arg1: sint32):
     # 0x05
     assert isinstance(arg1, sint32)
     _gScena.handleOpCode(0x05, arg1)
+
+def POP_TO_DEREF(arg1: sint32):
+    # 0x06
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x06, arg1)
+
+def OP_06(arg1: sint32):
+    # 0x06
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x06, arg1)
+
+def LOAD_GLOBAL(arg1: sint32):
+    # 0x07
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x07, arg1)
+
+def OP_07(arg1: sint32):
+    # 0x07
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x07, arg1)
+
+def SET_GLOBAL(arg1: sint32):
+    # 0x08
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x08, arg1)
+
+def OP_08(arg1: sint32):
+    # 0x08
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x08, arg1)
 
 def LOAD_RETURN_VALUE(arg1: uint8):
     # 0x09
@@ -312,7 +362,7 @@ def OP_25(arg1: str):
     assert isinstance(arg1, str)
     _gScena.handleOpCode(0x25, arg1)
 
-def DBG_SET_LINENO(arg1: uint16):
+def DEBUG_SET_LINENO(arg1: uint16):
     # 0x26
     assert isinstance(arg1, uint16)
     _gScena.handleOpCode(0x26, arg1)
