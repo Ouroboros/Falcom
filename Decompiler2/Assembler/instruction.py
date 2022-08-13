@@ -45,6 +45,7 @@ class Flags(IntFlag2):
     FormatMultiLine     = 1 << 4
     FormatNewLine       = 1 << 5
     FormatTextIndex     = 1 << 6
+    FormatIgnore        = 1 << 7
 
     @property
     def endBlock(self):
@@ -73,6 +74,10 @@ class Flags(IntFlag2):
     @property
     def textIndex(self):
         return bool(self.value & self.FormatTextIndex)
+
+    @property
+    def ignore(self):
+        return bool(self.value & self.FormatIgnore)
 
 class Instruction:
     InvalidOffset = 0xFFFFFFFF

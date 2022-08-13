@@ -72,7 +72,7 @@ def Handler_00(ctx: InstructionHandlerContext):
                     value = int.from_bytes((sign | (value >> 2)).to_bytes(4, 'little'), 'little', signed = True)
                     inst.operands[0].value = value
                     fmt = 'i'
-                    if value in [65534]:
+                    if value in [65534, 65510]:
                         fmt = 'W'
 
                     applyDescriptorsToOperands(inst.operands, fmt)
@@ -167,11 +167,11 @@ ScenaOpTable = ED9InstructionTable([
     inst(0x08,  'SET_GLOBAL',                       'i'),
     inst(0x09,  'LOAD_RETURN_VALUE',                'C'),
     inst(0x0A,  'SET_RETURN_VALUE',                 'C'),                                               # return pop TOS
-    inst(0x0B,  'JUMP',                             'O',                    Flags.EndBlock),
+    inst(0x0B,  'JMP',                              'O',                    Flags.EndBlock),
     inst(0x0C,  'CALL',                             'F',                    Flags.FormatNewLine),
     inst(0x0D,  'RETURN',                           NoOperand,              Flags.EndBlock),
-    inst(0x0E,  'POP_JUMP_IF_TRUE',                 'O',                    Flags.FormatNewLine),
-    inst(0x0F,  'POP_JUMP_IF_FALSE',                'O',                    Flags.FormatNewLine),
+    inst(0x0E,  'POP_JMP_NOT_ZERO',                 'O',                    Flags.FormatNewLine),
+    inst(0x0F,  'POP_JMP_ZERO',                     'O',                    Flags.FormatNewLine),
     inst(0x10,  'ADD'),                                                                                 # TOS = TOS1 + TOS
     inst(0x11,  'SUB'),                                                                                 # TOS = TOS1 - TOS
     inst(0x12,  'MUL'),                                                                                 # TOS = TOS1 * TOS
@@ -194,7 +194,7 @@ ScenaOpTable = ED9InstructionTable([
     inst(0x23,  'CALL_MODULE_FUNC_DEFER',           'LLC'),                                             # CALL_MODULE_FUNC_WITH_STACK('module', 'func', argCount)
     inst(0x24,  'SYSCALL',                          'CBB'),                                             # SYSCALL(cmd1, cmd2, cmd3)
     inst(0x25,  'PUSH_CALLER_CONTEXT',              'O'),                                               # PUSH(funcIndex, retAddr, currScript, 0xF0000000)
-    inst(0x26,  'DEBUG_SET_LINENO',                 'H',                    Flags.FormatNewLine),
+    inst(0x26,  'DEBUG_SET_LINENO',                 'H',                    Flags.FormatIgnore),
     inst(0x27,  'POPN',                             'C'),                                               # POP N values
     inst(0x28,  'DEBUG_LOG',                        'L'),                                               # DEBUG_LOG('msg')
 

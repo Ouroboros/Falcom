@@ -87,6 +87,9 @@ class Formatter:
                 text.append('')
 
         for inst in block.instructions:
+            if inst.flags.ignore:
+                continue
+
             for x in inst.xrefs:
                 text.extend([
                     *self.formatLabel(x.name),

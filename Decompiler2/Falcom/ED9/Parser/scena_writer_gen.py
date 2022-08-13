@@ -118,7 +118,7 @@ def OP_0A(arg1: uint8):
     assert isinstance(arg1, uint8)
     _gScena.handleOpCode(0x0A, arg1)
 
-def JUMP(arg1: str):
+def JMP(arg1: str):
     # 0x0B
     assert isinstance(arg1, str)
     _gScena.handleOpCode(0x0B, arg1)
@@ -146,7 +146,7 @@ def OP_0D():
     # 0x0D
     _gScena.handleOpCode(0x0D)
 
-def POP_JUMP_IF_TRUE(arg1: str):
+def POP_JMP_NOT_ZERO(arg1: str):
     # 0x0E
     assert isinstance(arg1, str)
     _gScena.handleOpCode(0x0E, arg1)
@@ -156,7 +156,7 @@ def OP_0E(arg1: str):
     assert isinstance(arg1, str)
     _gScena.handleOpCode(0x0E, arg1)
 
-def POP_JUMP_IF_FALSE(arg1: str):
+def POP_JMP_ZERO(arg1: str):
     # 0x0F
     assert isinstance(arg1, str)
     _gScena.handleOpCode(0x0F, arg1)
