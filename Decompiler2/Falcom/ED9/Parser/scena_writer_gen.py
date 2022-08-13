@@ -222,7 +222,7 @@ def OP_16():
     # 0x16
     _gScena.handleOpCode(0x16)
 
-def GTR():
+def GT():
     # 0x17
     _gScena.handleOpCode(0x17)
 
@@ -238,7 +238,7 @@ def OP_18():
     # 0x18
     _gScena.handleOpCode(0x18)
 
-def LE():
+def LT():
     # 0x19
     _gScena.handleOpCode(0x19)
 
@@ -391,3 +391,33 @@ def OP_28(arg1: uint32):
     # 0x28
     assert isinstance(arg1, uint32)
     _gScena.handleOpCode(0x28, arg1)
+
+def PUSH_INT(arg1: sint32):
+    # 0x1000
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x1000, arg1)
+
+def OP_1000(arg1: sint32):
+    # 0x1000
+    assert isinstance(arg1, sint32)
+    _gScena.handleOpCode(0x1000, arg1)
+
+def PUSH_FLOAT(arg1: float32):
+    # 0x1001
+    assert isinstance(arg1, float32)
+    _gScena.handleOpCode(0x1001, arg1)
+
+def OP_1001(arg1: float32):
+    # 0x1001
+    assert isinstance(arg1, float32)
+    _gScena.handleOpCode(0x1001, arg1)
+
+def PUSH_STR(arg1: str):
+    # 0x1002
+    assert isinstance(arg1, str)
+    _gScena.handleOpCode(0x1002, arg1)
+
+def OP_1002(arg1: str):
+    # 0x1002
+    assert isinstance(arg1, str)
+    _gScena.handleOpCode(0x1002, arg1)

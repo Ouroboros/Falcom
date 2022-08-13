@@ -40,6 +40,10 @@ class ED9InstructionTable(InstructionTable):
     def writeAllOperands(self, context: InstructionHandlerContext, operands: List[Operand]):
         return super().writeAllOperands(context, operands)
 
+def setOpCodeByName(inst: Instruction, name: str):
+    inst.descriptor = ScenaOpTable.getDescriptorByName(name)
+    inst.opcode = inst.descriptor.opcode
+
 def applyDescriptorsToOperands(operands: List[Operand], fmts: str):
     assert len(operands) == len(fmts)
     for i, desc in enumerate(ED9OperandDescriptor.fromFormatString(fmts)):
@@ -75,10 +79,12 @@ def Handler_00(ctx: InstructionHandlerContext):
                     if value in [65534, 65510]:
                         fmt = 'W'
 
+                    setOpCodeByName(inst, 'PUSH_INT')
                     applyDescriptorsToOperands(inst.operands, fmt)
 
                 case ED9OperandValueType.Float:
                     inst.operands[0].value = struct.unpack('f', ((value << 2) & 0xFFFFFFFF).to_bytes(4, 'little'))[0]
+                    setOpCodeByName(inst, 'PUSH_FLOAT')
                     applyDescriptorsToOperands(inst.operands, 'f')
 
                 case ED9OperandValueType.String:
@@ -86,6 +92,7 @@ def Handler_00(ctx: InstructionHandlerContext):
                         fs.Position = value & 0x3FFFFFFF
                         inst.operands[0].value = fs.ReadMultiByte()
 
+                    setOpCodeByName(inst, 'PUSH_STR')
                     applyDescriptorsToOperands(inst.operands, 'S')
 
             return inst
@@ -167,7 +174,7 @@ ScenaOpTable = ED9InstructionTable([
     inst(0x08,  'SET_GLOBAL',                       'i'),
     inst(0x09,  'LOAD_RETURN_VALUE',                'C'),
     inst(0x0A,  'SET_RETURN_VALUE',                 'C'),                                               # return pop TOS
-    inst(0x0B,  'JMP',                              'O',                    Flags.EndBlock),
+    inst(0x0B,  'JMP',                              'O',                    Flags.Jump),
     inst(0x0C,  'CALL',                             'F',                    Flags.FormatNewLine),
     inst(0x0D,  'RETURN',                           NoOperand,              Flags.EndBlock),
     inst(0x0E,  'POP_JMP_NOT_ZERO',                 'O',                    Flags.FormatNewLine),
@@ -179,9 +186,9 @@ ScenaOpTable = ED9InstructionTable([
     inst(0x14,  'MOD'),                                                                                 # TOS = TOS1 % TOS
     inst(0x15,  'EQ'),                                                                                  # TOS = TOS1 == TOS
     inst(0x16,  'NE'),                                                                                  # TOS = TOS1 != TOS
-    inst(0x17,  'GTR'),                                                                                 # TOS = TOS1 > TOS
+    inst(0x17,  'GT'),                                                                                  # TOS = TOS1 > TOS
     inst(0x18,  'GTE'),                                                                                 # TOS = TOS1 >= TOS
-    inst(0x19,  'LE'),                                                                                  # TOS = TOS1 < TOS
+    inst(0x19,  'LT'),                                                                                  # TOS = TOS1 < TOS
     inst(0x1A,  'LEQ'),                                                                                 # TOS = TOS1 <= TOS
     inst(0x1B,  'BITWISE_AND'),                                                                         # TOS = TOS1 & TOS
     inst(0x1C,  'BITWISE_OR'),                                                                          # TOS = TOS1 | TOS
@@ -199,6 +206,9 @@ ScenaOpTable = ED9InstructionTable([
     inst(0x28,  'DEBUG_LOG',                        'L'),                                               # DEBUG_LOG('msg')
 
     # pseudo-instruction
+    inst(0x1000,  'PUSH_INT',                       'i'),
+    inst(0x1001,  'PUSH_FLOAT',                     'f'),
+    inst(0x1002,  'PUSH_STR',                       'S'),
 ])
 
 del inst
