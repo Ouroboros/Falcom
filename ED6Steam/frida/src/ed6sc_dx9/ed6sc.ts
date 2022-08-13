@@ -601,7 +601,7 @@ function bypassBattle() {
 export function main() {
     // (new NativeFunction(Process.getModuleByName('KERNEL32.dll').getExportByName('AllocConsole'), 'bool', []))();
 
-    bypassBattle();
+    // bypassBattle();
 
     console.log('sc dx9 patchModuleText');
     utils.patchModuleText(Modules.ED6SC, ExeText);
