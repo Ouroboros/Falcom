@@ -13,6 +13,8 @@ emojiTable = dict([(x, f'<{x.hex().upper()}>'.encode('ASCII')) for x in [
         b'\x87\x47',
         b'\x87\x48',
         b'\x87\x49',
+        b'\x87\x4C',
+        b'\x87\x4D',
         b'\x87\x55',
         b'\x87\x56',
         b'\x87\x58',
@@ -20,6 +22,7 @@ emojiTable = dict([(x, f'<{x.hex().upper()}>'.encode('ASCII')) for x in [
         b'\x87\x5B',
         b'\x87\x5D',
         b'\x92\x87',
+        b'\xF0\x40',
     ]])
 
 def replaceEmoji(b: bytes) -> bytearray:

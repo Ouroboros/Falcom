@@ -359,7 +359,7 @@ def genHandler(b: str, fmts: Dict[int, str]) -> Callable:
 
     return handler
 
-def inst(opcode: int, mnemonic: str, operandfmts: str = None, flags: Flags = Flags.Empty, handler: InstructionHandler = None, *, parameters = []) -> InstructionDescriptor:
+def inst(opcode: int, mnemonic: str, operandfmts: str = NoOperand, flags: Flags = Flags.Empty, handler: InstructionHandler = None, *, parameters = []) -> InstructionDescriptor:
     if operandfmts == '':
         raise ValueError('use NoOperand instead')
 
@@ -580,7 +580,16 @@ ScenaOpTable = ED6InstructionTable([
 
     # psv evo
 
-    inst(0xE5,  'OP_E5',                        'B' * 2),
+    # inst(0xC6,  'OP_C6',                        'BhhhhhhhhhhhhLBS'),
+    # inst(0xC7,  'OP_C7',                        'BBiiii'),
+    # inst(0xC8,  'OP_C8',                        'BBB'),
+    # inst(0xDC,  'OP_DC'),
+    # inst(0xDD,  'OP_DD'),
+    # inst(0xDF,  'OP_DF',                        'B'),
+    # inst(0xE1,  'OP_E1',                        'Biii'),
+    # inst(0xE5,  'ShowMsgByIndex',               'W'),
+    # inst(0xE6,  'Talk2',                        'T'),
+    # inst(0xE7,  'OP_E7',                        'B' * 2),
 ])
 
 del inst

@@ -100,7 +100,7 @@ def OP_08(arg1: uint32):
     assert isinstance(arg1, uint32)
     _gScena.handleOpCode(0x08, arg1)
 
-def SetMapFlags(arg1: uint32):
+def MapSetFlags(arg1: uint32):
     # 0x09
     assert isinstance(arg1, uint32)
     _gScena.handleOpCode(0x09, arg1)
@@ -110,7 +110,7 @@ def OP_09(arg1: uint32):
     assert isinstance(arg1, uint32)
     _gScena.handleOpCode(0x09, arg1)
 
-def ClearMapFlags(arg1: uint32):
+def MapClearFlags(arg1: uint32):
     # 0x0A
     assert isinstance(arg1, uint32)
     _gScena.handleOpCode(0x0A, arg1)
@@ -407,7 +407,7 @@ def OP_30(arg1: uint8):
     assert isinstance(arg1, uint8)
     _gScena.handleOpCode(0x30, arg1)
 
-def SetChrStatus(arg1: uint8, arg2: uint8, arg3: uint16):
+def ChrSetStatus(arg1: uint8, arg2: uint8, arg3: uint16):
     # 0x31
     assert isinstance(arg1, uint8)
     assert isinstance(arg2, uint8)
@@ -503,7 +503,7 @@ def OP_3A(arg1: uint16):
     assert isinstance(arg1, uint16)
     _gScena.handleOpCode(0x3A, arg1)
 
-def SubMira(arg1: uint16):
+def RemoveMira(arg1: uint16):
     # 0x3B
     assert isinstance(arg1, uint16)
     _gScena.handleOpCode(0x3B, arg1)
@@ -855,7 +855,7 @@ def OP_5F(arg1: uint16):
     assert isinstance(arg1, uint16)
     _gScena.handleOpCode(0x5F, arg1)
 
-def SetChrName(arg1: str):
+def TalkSetChrName(arg1: str):
     # 0x60
     assert isinstance(arg1, str)
     _gScena.handleOpCode(0x60, arg1)
@@ -1200,7 +1200,7 @@ def OP_85(arg1: uint16):
     assert isinstance(arg1, uint16)
     _gScena.handleOpCode(0x85, arg1)
 
-def SetChrChipByIndex(arg1: uint16, arg2: uint16):
+def ChrSetChipByIndex(arg1: uint16, arg2: uint16):
     # 0x86
     assert isinstance(arg1, uint16)
     assert isinstance(arg2, uint16)
@@ -1212,7 +1212,7 @@ def OP_86(arg1: uint16, arg2: uint16):
     assert isinstance(arg2, uint16)
     _gScena.handleOpCode(0x86, arg1, arg2)
 
-def SetChrSubChip(arg1: uint16, arg2: uint16):
+def ChrSetSubChip(arg1: uint16, arg2: uint16):
     # 0x87
     assert isinstance(arg1, uint16)
     assert isinstance(arg2, uint16)
@@ -1224,7 +1224,7 @@ def OP_87(arg1: uint16, arg2: uint16):
     assert isinstance(arg2, uint16)
     _gScena.handleOpCode(0x87, arg1, arg2)
 
-def SetChrPos(chrId: uint16, x: sint32, y: sint32, z: sint32, direction: sint8):
+def ChrSetPos(chrId: uint16, x: sint32, y: sint32, z: sint32, direction: sint8):
     # 0x88
     assert isinstance(chrId, uint16)
     assert isinstance(x, sint32)
@@ -1281,7 +1281,7 @@ def OP_8B(chrId: uint16, x: sint32, y: sint32, speed: sint8):
     assert isinstance(speed, sint8)
     _gScena.handleOpCode(0x8B, chrId, x, y, speed)
 
-def SetChrDirection(chrId: uint16, direction: sint8, speed: sint8):
+def ChrSetDirection(chrId: uint16, direction: sint8, speed: sint8):
     # 0x8C
     assert isinstance(chrId, uint16)
     assert isinstance(direction, sint8)
@@ -1480,7 +1480,7 @@ def OP_99(arg1: uint16, arg2: uint8, arg3: uint8, arg4: uint32):
     assert isinstance(arg4, uint32)
     _gScena.handleOpCode(0x99, arg1, arg2, arg3, arg4)
 
-def SetChrFlags(arg1: uint16, arg2: uint16):
+def ChrSetFlags(arg1: uint16, arg2: uint16):
     # 0x9A
     assert isinstance(arg1, uint16)
     assert isinstance(arg2, uint16)
@@ -1492,7 +1492,7 @@ def OP_9A(arg1: uint16, arg2: uint16):
     assert isinstance(arg2, uint16)
     _gScena.handleOpCode(0x9A, arg1, arg2)
 
-def ClearChrFlags(arg1: uint16, arg2: uint16):
+def ChrClearFlags(arg1: uint16, arg2: uint16):
     # 0x9B
     assert isinstance(arg1, uint16)
     assert isinstance(arg2, uint16)
@@ -1504,7 +1504,7 @@ def OP_9B(arg1: uint16, arg2: uint16):
     assert isinstance(arg2, uint16)
     _gScena.handleOpCode(0x9B, arg1, arg2)
 
-def SetChrBattleFlags(arg1: uint16, arg2: uint16):
+def ChrSetBattleFlags(arg1: uint16, arg2: uint16):
     # 0x9C
     assert isinstance(arg1, uint16)
     assert isinstance(arg2, uint16)
@@ -1516,7 +1516,7 @@ def OP_9C(arg1: uint16, arg2: uint16):
     assert isinstance(arg2, uint16)
     _gScena.handleOpCode(0x9C, arg1, arg2)
 
-def ClearChrBattleFlags(arg1: uint16, arg2: uint16):
+def ChrClearBattleFlags(arg1: uint16, arg2: uint16):
     # 0x9D
     assert isinstance(arg1, uint16)
     assert isinstance(arg2, uint16)
@@ -1734,6 +1734,51 @@ def OP_BB(arg1: uint8, arg2: uint8):
     assert isinstance(arg2, uint8)
     _gScena.handleOpCode(0xBB, arg1, arg2)
 
+def OP_C6(arg1: uint8, arg2: sint8, arg3: sint8, arg4: sint8, arg5: sint8, arg6: sint8, arg7: sint8, arg8: sint8, arg9: sint8, arg10: sint8, arg11: sint8, arg12: sint8, arg13: sint8, arg14: uint32, arg15: uint8, arg16: str):
+    # 0xC6
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, sint8)
+    assert isinstance(arg3, sint8)
+    assert isinstance(arg4, sint8)
+    assert isinstance(arg5, sint8)
+    assert isinstance(arg6, sint8)
+    assert isinstance(arg7, sint8)
+    assert isinstance(arg8, sint8)
+    assert isinstance(arg9, sint8)
+    assert isinstance(arg10, sint8)
+    assert isinstance(arg11, sint8)
+    assert isinstance(arg12, sint8)
+    assert isinstance(arg13, sint8)
+    assert isinstance(arg14, uint32)
+    assert isinstance(arg15, uint8)
+    assert isinstance(arg16, str)
+    _gScena.handleOpCode(0xC6, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16)
+
+def OP_C7(arg1: uint8, arg2: uint8, arg3: sint32, arg4: sint32, arg5: sint32, arg6: sint32):
+    # 0xC7
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, uint8)
+    assert isinstance(arg3, sint32)
+    assert isinstance(arg4, sint32)
+    assert isinstance(arg5, sint32)
+    assert isinstance(arg6, sint32)
+    _gScena.handleOpCode(0xC7, arg1, arg2, arg3, arg4, arg5, arg6)
+
+def OP_C8(arg1: uint8, arg2: uint8, arg3: uint8):
+    # 0xC8
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, uint8)
+    assert isinstance(arg3, uint8)
+    _gScena.handleOpCode(0xC8, arg1, arg2, arg3)
+
+def OP_DC():
+    # 0xDC
+    _gScena.handleOpCode(0xDC)
+
+def OP_DD():
+    # 0xDD
+    _gScena.handleOpCode(0xDD)
+
 def SaveClearData():
     # 0xDE
     _gScena.handleOpCode(0xDE)
@@ -1742,8 +1787,41 @@ def OP_DE():
     # 0xDE
     _gScena.handleOpCode(0xDE)
 
-def OP_E5(arg1: uint8, arg2: uint8):
+def OP_DF(arg1: uint8):
+    # 0xDF
+    assert isinstance(arg1, uint8)
+    _gScena.handleOpCode(0xDF, arg1)
+
+def OP_E1(arg1: uint8, arg2: sint32, arg3: sint32, arg4: sint32):
+    # 0xE1
+    assert isinstance(arg1, uint8)
+    assert isinstance(arg2, sint32)
+    assert isinstance(arg3, sint32)
+    assert isinstance(arg4, sint32)
+    _gScena.handleOpCode(0xE1, arg1, arg2, arg3, arg4)
+
+def ShowMsgByIndex(arg1: uint16):
     # 0xE5
+    assert isinstance(arg1, uint16)
+    _gScena.handleOpCode(0xE5, arg1)
+
+def OP_E5(arg1: uint16):
+    # 0xE5
+    assert isinstance(arg1, uint16)
+    _gScena.handleOpCode(0xE5, arg1)
+
+def Talk2(arg1: str | tuple):
+    # 0xE6
+    assert isinstance(arg1, str | tuple)
+    _gScena.handleOpCode(0xE6, arg1)
+
+def OP_E6(arg1: str | tuple):
+    # 0xE6
+    assert isinstance(arg1, str | tuple)
+    _gScena.handleOpCode(0xE6, arg1)
+
+def OP_E7(arg1: uint8, arg2: uint8):
+    # 0xE7
     assert isinstance(arg1, uint8)
     assert isinstance(arg2, uint8)
-    _gScena.handleOpCode(0xE5, arg1, arg2)
+    _gScena.handleOpCode(0xE7, arg1, arg2)
