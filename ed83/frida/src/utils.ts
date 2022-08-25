@@ -177,6 +177,7 @@ export function getGameVersion(): string {
         case 0x6079B2A5: return 'ed84_jp';
         case 0x6079B1DF: return 'ed84_us';
         case 0x60767137: return 'ed83_cn';
+        case 0x62DA17AE: return 'ed9';
     }
 
     throw new Error('unknown game version');

@@ -14,6 +14,12 @@ function main() {
                 ed84.main()
             });
             break;
+
+        case 'ed9':
+            import("./ed9/ed9").then(ed9 => {
+                ed9.main();
+            });
+            break;
     }
 }
 

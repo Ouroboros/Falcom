@@ -239,7 +239,7 @@ class ED63EffectFile:
         return [bytesToString(c) for c in self.header.Children]
 
     def open(self, efffile):
-        fs = FileStream(efffile)
+        fs = fileio.FileStream(efffile)
         self.header = ED63EffFileHeader(fs)
         self.name = os.path.basename(efffile)
 
@@ -324,7 +324,7 @@ class ED63EffectFile:
                 unserializeStructure(e, extra[i])
                 part.extra.append(e)
 
-        fs = FileStream(os.path.join(os.path.dirname(sys.argv[0]), self.name), 'wb')
+        fs = fileio.FileStream(os.path.join(os.path.dirname(sys.argv[0]), self.name), 'wb')
         fs.Write(bytes(self.header))
 
         for part in self.partData:
@@ -342,4 +342,4 @@ def procfile(file):
     ms.saveTo(file + '.py')
 
 if __name__ == '__main__':
-    TryForEachFileMP(sys.argv[1:], procfile, '*.eff')
+    iterlib.forEachFile(procfile, sys.argv[1:], '*.eff')

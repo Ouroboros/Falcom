@@ -6,6 +6,7 @@ export const Modules = {
     ucrtbase    : Process.getModuleByName('ucrtbase.dll'),
     ED83        : modules[0],
     ED84        : modules[0],
+    ED9         : modules[0],
 };
 
 export const API = {
