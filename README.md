@@ -55,13 +55,16 @@
 * [创之轨迹](https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED85)
   * 2022-02-03 ~ 2022-02-08
 
+* [黎之轨迹](https://github.com/Ouroboros/Falcom/tree/master/Decompiler2/Falcom/ED9)
+  * 2022-07-29 ~ ?
+
 
 空之轨迹
 =============
 
 ## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6Steam" target="_blank">ED6Steam</a>
 
-写于 2022-04-16 ~ ?
+写于 2022-04-16 ~ 2022-08-14
 
 移植 Steam 版汉化模块到 frida
 
