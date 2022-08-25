@@ -1,5 +1,6 @@
 from Falcom.Common import *
 from . import utils
+import struct
 
 class ScenaFunctionParamType(IntEnum2):
     Value   = 0x01
@@ -122,9 +123,9 @@ class ScenaFunctionEntry:
 
         return f
 
-class ScenaVariable:
-    def __init__(self, value: int = 0, flags: int = 0, *, fs: fileio.FileStream = None):
-        self.value  = value
+class ScenaParamFlags:
+    def __init__(self, index: int = 0, flags: int = 0, *, fs: fileio.FileStream = None):
+        self.index  = index
         self.flags  = flags
 
         self.read(fs)
@@ -133,24 +134,220 @@ class ScenaVariable:
         if not fs:
             return
 
-        self.value = fs.ReadULong()
         self.flags = fs.ReadULong()
 
     def serialize(self) -> bytes:
-        fs = io.BytesIO()
-
-        fs.write(utils.int_to_bytes(self.flags, 4))
-
-        return fs.getvalue()
+        return utils.int_to_bytes(self.flags, 4)
 
     def toPython(self) -> List[str]:
         f = [
-            'ScenaVariable(',
+            'ScenaParamFlags(',
             f'{defaultIndent()}flags = 0x{self.flags:08X},',
             ')',
         ]
 
         return f
+
+    def getPythonType(self) -> str:
+        type = self.flags & ScenaFunctionParamType.Mask
+        match type:
+            case ScenaFunctionParamType.Value:
+                return 'int | float'
+
+            case ScenaFunctionParamType.Offset:
+                return 'str'
+
+        raise NotImplementedError
+
+    def __str__(self) -> str:
+        return f'flags = 0x{self.flags:08X}'
+
+    __repr__ =  __str__
+
+class ScenaValue:
+    class Type(IntEnum2):
+        Undefined       = 0
+        Integer         = 1
+        Float           = 2
+        String          = 3
+
+    ClassMap = {
+        int     : Type.Integer,
+        float   : Type.Float,
+        str     : Type.String,
+    }
+
+    def __init__(self, value: int | float | str = None, *, fs: fileio.FileStream = None):
+        self.value  = value
+        if value is not None:
+            self.type = self.ClassMap[type(value)]
+        else:
+            self.type = None
+
+        self.read(fs)
+
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
+
+        value = fs.ReadULong()
+        typ = value >> 30
+
+        match typ:
+            case ScenaValue.Type.Undefined:
+                pass
+
+            case ScenaValue.Type.Integer:
+                value = (value << 2) & 0xFFFFFFFF
+                sign = 0xC0000000 if value & 0x80000000 != 0 else 0
+                value = int.from_bytes((sign | (value >> 2)).to_bytes(4, 'little'), 'little', signed = True)
+
+            case ScenaValue.Type.Float:
+                value = struct.unpack('f', ((value << 2) & 0xFFFFFFFF).to_bytes(4, 'little'))[0]
+
+            case ScenaValue.Type.String:
+                with fs.PositionSaver:
+                    fs.Position = value & 0x3FFFFFFF
+                    value = fs.ReadMultiByte()
+
+        self.value = value
+        self.type = ScenaValue.Type(typ)
+
+    def __str__(self) -> str:
+        return f'ScenaValue<{self.value}>'
+
+    __repr__ = __str__
+
+class ScenaVariable:
+    def __init__(
+            self,value          = None,
+            stackIndex: int     = 0,
+            *,
+            const               = False,
+            stackRef            = False,
+            name                = '',
+            returnValue         = False,
+            isReg               = False,
+            isArg               = False,
+            setVar              = False,
+            loadStack           = False,
+            stack: 'ScenaStack' = None,
+        ):
+        self.value          = value
+        self.stackIndex     = stackIndex
+        self.const          = const
+        self.stackRef       = stackRef
+        self._name          = name
+        self.returnValue    = returnValue
+        self.isReg          = isReg
+        self.isArg          = isArg
+        self.setVar         = setVar
+        self.loadStack      = loadStack
+
+        self.isTos          = False
+        self.inst           = None      # type: Assembler.Instruction
+        self.stack          = stack
+
+    @property
+    def address(self) -> int:
+        return self.stackIndex - self.stack.stackTop
+
+    @property
+    def name(self) -> str:
+        if not self._name:
+            if self.stackIndex is None:
+                self._name = f'<value>'
+            else:
+                self._name = f'var_{self.stackIndex * 4:02X}'
+
+        return self._name
+
+    @name.setter
+    def name(self, v: str):
+        self._name = v
+
+    def __str__(self) -> str:
+        return f'{self.name} = {self.value}'
+
+    __repr__ = __str__
+
+class ScenaStack:
+    def __init__(self):
+        self.stack  = []        # type: list[ScenaVariable]
+        self.savedContext = {}
+
+    @property
+    def stackTop(self) -> int:
+        return len(self.stack)
+
+    def saveContext(self, key):
+        self.savedContext[key] = self.stack.copy()
+
+    def restoreContext(self, key):
+        self.stack = self.savedContext.pop(key)
+
+    def clone(self) -> 'ScenaStack':
+        stack = ScenaStack()
+        stack.stack = self.stack.copy()
+        return stack
+
+    def push(self, v: ScenaVariable) -> ScenaVariable:
+        v.isTos = True
+        if self.stack:
+            self.stack[-1].isTos = False
+
+        self.stack.append(v)
+
+        return v
+
+    def Const(self, value) -> ScenaVariable:
+        v = ScenaVariable(value, None, const = True, stack = self)
+        return v
+
+    def SetVar(self, value = None) -> ScenaVariable:
+        v = ScenaVariable(value, self.stackTop, setVar = True, stack = self)
+        return self.push(v)
+
+    def LoadStack(self, value = None) -> ScenaVariable:
+        v = ScenaVariable(value, self.stackTop, loadStack = True, stack = self)
+        return self.push(v)
+
+    def Arg(self) -> ScenaVariable:
+        v = ScenaVariable(None, self.stackTop, isArg = True, stack = self)
+        return self.push(v)
+
+    def Reg(self) -> ScenaVariable:
+        v = ScenaVariable(None, self.stackTop, isReg = True, stack = self)
+        return self.push(v)
+
+    def ReturnValue(self) -> ScenaVariable:
+        v = ScenaVariable(None, self.stackTop, returnValue = True, stack = self)
+        return self.push(v)
+
+    def topOfStack(self) -> ScenaVariable:
+        tos = self.stack[-1]
+        tos.isTos = True
+        return tos
+
+    def pop(self) -> ScenaVariable:
+        tos = self.stack.pop()
+        tos.isTos = True
+        return tos
+
+    def getAt(self, index: int) -> ScenaVariable:
+        return self.stack[index]
+
+    def fromOffset(self, offset: int) -> ScenaVariable:
+        index = offset // 4
+        assert index < 0
+
+        absIndex = self.stackTop + index
+
+        if absIndex < 0:
+            return ScenaVariable(None, 0, name = f'arg{-absIndex}', stack = self)
+
+        else:
+            return self.stack[index]
 
 class ScenaFunctionType(IntEnum2):
     Invalid             = 0
@@ -161,12 +358,16 @@ ScenaDataFunctionTypes = set([
 
 class ScenaFunction:
     def __init__(self, index: int, offset: int, name: str, *, type: ScenaFunctionType = ScenaFunctionType.Invalid, entry: ScenaFunctionEntry = None):
-        self.index  = index
-        self.offset = offset
-        self.name   = name
-        self.type   = type
-        self.obj    = None
-        self.entry  = entry
+        self.index      = index
+        self.offset     = offset
+        self.name       = name
+        self.type       = type
+        self.obj        = None
+        self.entry      = entry
+        self.isSyscall  = False
+        self.params     = []        # list[ScenaParamFlags]
 
     def __str__(self) -> str:
         return f'0x{self.index:04X} 0x{self.offset:08X} {repr(self.name)} {self.type}'
+
+    __repr__ = __str__

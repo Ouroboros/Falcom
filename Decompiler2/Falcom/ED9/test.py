@@ -12,7 +12,7 @@ def test(filename, output):
 
     fs = fileio.FileStream().OpenMemory(open(filename, 'rb').read())
     fs.Encoding = GlobalConfig.DefaultEncoding
-    scena = ED9.Parser.ScenaParser(fs)
+    scena = ED9.Parser.ScenaParser(fs, name = os.path.basename(filename))
 
     console.setTitle(filename)
     scena.parse()
@@ -40,7 +40,7 @@ def main():
     # output_dir = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\ouroboros\scripts\scena\dat\\'
 
     for s in scena:
-        # break
+        break
         iterlib.forEachFileMP(procfile, s, '*.dat', subdir = False)
         continue
 
@@ -58,7 +58,7 @@ def main():
         return
 
     path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena\system.dat'
-    path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani\common.dat'
+    # path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani\common.dat'
 
     path = pathlib.Path(path)
 

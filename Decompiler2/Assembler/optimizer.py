@@ -1,6 +1,6 @@
-from enum import Flag
-from Common import *
-from .instruction import *
+from Common         import *
+from .instruction   import *
+from .function      import *
 
 __all__ = (
     'Optimizer',
@@ -14,5 +14,8 @@ class OptimizeResult:
         self.flags      = flags
 
 class Optimizer:
-    def optimize(self, inst: Instruction, operands: List[Any], flags: Flags) -> OptimizeResult:
-        raise NotImplementedError
+    def optimizeFunction(self, func: Function):
+        return None
+
+    def optimizeInstruction(self, inst: Instruction, operands: List[Any], flags: Flags) -> OptimizeResult:
+        return None

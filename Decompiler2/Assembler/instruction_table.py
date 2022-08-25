@@ -152,24 +152,28 @@ class OperandDescriptor:
         }[self.format.type]()
 
     def formatValue(self, context: 'handlers.FormatOperandHandlerContext') -> str:
+        return self.formatOperand(context.operand)
+
+    @staticmethod
+    def formatOperand(operand: 'instruction.Operand') -> str:
         return {
-            OperandType.SInt8   : self.formatInteger,
-            OperandType.UInt8   : self.formatInteger,
+            OperandType.SInt8   : OperandDescriptor.formatInteger,
+            OperandType.UInt8   : OperandDescriptor.formatInteger,
 
-            OperandType.SInt16  : self.formatInteger,
-            OperandType.UInt16  : self.formatInteger,
+            OperandType.SInt16  : OperandDescriptor.formatInteger,
+            OperandType.UInt16  : OperandDescriptor.formatInteger,
 
-            OperandType.SInt32  : self.formatInteger,
-            OperandType.UInt32  : self.formatInteger,
+            OperandType.SInt32  : OperandDescriptor.formatInteger,
+            OperandType.UInt32  : OperandDescriptor.formatInteger,
 
-            OperandType.SInt64  : self.formatInteger,
-            OperandType.UInt64  : self.formatInteger,
+            OperandType.SInt64  : OperandDescriptor.formatInteger,
+            OperandType.UInt64  : OperandDescriptor.formatInteger,
 
-            OperandType.Float32 : self.formatFloat,
-            OperandType.Float64 : self.formatFloat,
+            OperandType.Float32 : OperandDescriptor.formatFloat,
+            OperandType.Float64 : OperandDescriptor.formatFloat,
 
-            OperandType.MBCS    : self.formatText,
-        }[context.operand.descriptor.format.type](context.operand)
+            OperandType.MBCS    : OperandDescriptor.formatText,
+        }[operand.descriptor.format.type](operand)
 
     @staticmethod
     def formatInteger(operand: 'instruction.Operand') -> str:

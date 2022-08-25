@@ -27,6 +27,7 @@ class ED9OperandFormat(OperandFormat):
     sizeTable = {
         **OperandFormat.sizeTable,
 
+        ED9OperandType.Value        : 4,
         ED9OperandType.Offset       : 4,
         ED9OperandType.Item         : 2,
         ED9OperandType.CraftId      : 2,
@@ -48,6 +49,7 @@ class ED9OperandDescriptor(OperandDescriptor):
             ED9OperandType.Item         : lambda context: context.disasmContext.fs.ReadUShort(),
             ED9OperandType.CraftId      : lambda context: context.disasmContext.fs.ReadUShort(),
             ED9OperandType.FunctionID   : lambda context: context.disasmContext.fs.ReadUShort(),
+            ED9OperandType.Value        : self.readScenaValue,
 
         }.get(self.format.type, super().readValue)(context)
 
@@ -69,8 +71,39 @@ class ED9OperandDescriptor(OperandDescriptor):
             ED9OperandType.FunctionID   : lambda context: context.formatter.parser.getCodeFuncName(context.operand.value),
             ED9OperandType.Item         : lambda context: self.formatItemId(context.operand.value),
             ED9OperandType.CraftId      : lambda context: self.formatCraftId(context.operand.value),
+            ED9OperandType.Value        : self.formatScenaValue,
 
         }.get(self.format.type, super().formatValue)(context)
+
+    def readScenaValue(self, context: InstructionHandlerContext):
+        from ..Parser.scena_types import ScenaValue
+        fs = context.disasmContext.fs
+        return ScenaValue(fs = fs)
+
+    def formatScenaValue(self, context: FormatOperandHandlerContext):
+        from ..Parser.scena_types import ScenaValue
+
+        v: ScenaValue = context.operand.value
+        match v.type:
+            case ScenaValue.Type.Undefined:
+                fmt = 'L'
+
+            case ScenaValue.Type.Integer:
+                if v.value in [0xFFFE, 0xFFE6, 0xFFFD]:
+                    fmt = 'W'
+                else:
+                    fmt = 'i'
+
+            case ScenaValue.Type.Float:
+                fmt = 'f'
+
+            case ScenaValue.Type.String:
+                fmt = 'S'
+
+        context.operand.value = v.value
+        applyDescriptorsToOperands([context.operand], fmt)
+
+        return super().formatValue(context)
 
     def formatScenaFlags(self, flags: int) -> str:
         # return '0x%X' % flags
@@ -110,8 +143,17 @@ ED9OperandDescriptor.formatTable.update({
 
     'O' : oprdesc(ED9OperandType.Offset),
     'F' : oprdesc(ED9OperandType.FunctionID),
-    'T' : oprdesc(ED9OperandType.Text),
+    'V' : oprdesc(ED9OperandType.Value),
     # 't' : oprdesc(ED9OperandType.Item),
     # 'R' : oprdesc(ED9OperandType.CraftId),
     # 'N' : oprdesc(ED9OperandType.ChrId),
 })
+
+def applyDescriptorsToOperands(operands: List[Operand], fmts: str):
+    assert len(operands) == len(fmts)
+    for i, desc in enumerate(ED9OperandDescriptor.fromFormatString(fmts)):
+        operands[i].descriptor = desc
+
+def applyDescriptors(ctx: InstructionHandlerContext, fmts: str):
+    operands = ctx.instruction.operands
+    applyDescriptorsToOperands(operands, fmts)

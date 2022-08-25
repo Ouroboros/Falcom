@@ -22,6 +22,7 @@ def map_operand_type(t: OperandType) -> str:
         ED9.ED9OperandType.Item         : 'uint16',
         ED9.ED9OperandType.CraftId      : 'uint16',
         ED9.ED9OperandType.FunctionID   : 'uint16',
+        ED9.ED9OperandType.Value        : 'sint32 | float | str',
     }[t]
 
 def main():

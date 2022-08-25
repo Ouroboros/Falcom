@@ -4,6 +4,15 @@ from Falcom.ED9.Parser.scena_types import *
 import pathlib
 import uuid
 
+class _StringPool:
+    def __init__(self):
+        self.pool = {}                                  # type: Dict[str, int]
+        self.xref = []                                  # type: List[Tuple[str, int]]
+
+    def addString(self, s: str, offset: int):
+        self.pool.setdefault(s, 0)
+        self.xref.append((s, offset))
+
 class _ScenaWriter:
     def __init__(self):
         self.labels             = {}                    # type: Dict[str, int]
@@ -16,6 +25,7 @@ class _ScenaWriter:
         self.opcodeCallbacks    = []                    # type: List[Callable[[int, Tuple]]]
         self.funcCallbacks      = []                    # type: List[Callable[[str, Callable]]]
         self.runCallbacks       = []                    # type: List[Callable[[dict]]]
+        self.stringPool         = _StringPool()         # type: _StringPool
 
     def init(self, instructionTable: ED9.ED9InstructionTable, scenaName: str):
         self.instructionTable   = instructionTable
@@ -72,6 +82,9 @@ class _ScenaWriter:
             raise Exception(f'label exists: {name} -> 0x{addr:08X}')
 
         self.labels[name] = self.fs.Position
+
+    def addString(self, s: str):
+        self.stringPool.addString(s, self.fs.Position)
 
     def compileCode(self, fs: fileio.FileStream, f: ScenaFunction):
         if f.name:

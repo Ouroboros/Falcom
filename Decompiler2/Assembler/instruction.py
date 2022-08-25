@@ -83,7 +83,7 @@ class Instruction:
     InvalidOffset = 0xFFFFFFFF
     InvalidOpCode = object()
 
-    def __init__(self, opcode: int, *, offset: int = InvalidOffset, descriptor: instruction_table.InstructionDescriptor = None, flags: Flags = None):
+    def __init__(self, opcode: int, *, offset: int = InvalidOffset, descriptor: instruction_table.InstructionDescriptor = None, flags: Flags = Flags.Empty):
         self.opcode                 = opcode                    # type: int
         self.offset                 = offset                    # type: int
         self.size                   = 0                         # type: int

@@ -22,6 +22,9 @@ class Formatter:
         return [f"label('{name}')"]
 
     def formatFuncion(self, func: Function) -> List[str]:
+        if self.optimizer is not None:
+            self.optimizer.optimizeFunction(func)
+
         funcName = func.name
         if not funcName:
             funcName = f'func_{func.offset:X}'
@@ -144,7 +147,7 @@ class Formatter:
             flags = inst.flags
 
         if self.optimizer is not None:
-            result = self.optimizer.optimize(inst, operands, flags)
+            result = self.optimizer.optimizeInstruction(inst, operands, flags)
             if result is not None:
                 mnemonic    = result.mnemonic
                 operands    = result.operands

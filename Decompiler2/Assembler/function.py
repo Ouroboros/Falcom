@@ -28,6 +28,25 @@ class CodeBlock:
         self.branches.insert(-1, block)
         return block
 
+    def getAllBlocks(self) -> list['CodeBlock']:
+        todo = [self]
+        blocks = []
+        added = set()
+
+        while todo:
+            b = todo.pop()
+            if b.offset in added:
+                continue
+
+            added.add(b.offset)
+
+            blocks.append(b)
+            todo.extend(b.branches)
+
+        blocks = sorted(blocks, key = lambda b: b.offset)
+
+        return blocks
+
     def __str__(self):
         return repr(self)
         return '\n'.join(['%s' % inst for inst in self.instructions])

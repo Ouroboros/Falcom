@@ -98,7 +98,7 @@ def OP_08(arg1: sint32):
     assert isinstance(arg1, sint32)
     _gScena.handleOpCode(0x08, arg1)
 
-def LOAD_RETURN_VALUE(arg1: uint8):
+def GET_REG(arg1: uint8):
     # 0x09
     assert isinstance(arg1, uint8)
     _gScena.handleOpCode(0x09, arg1)
@@ -108,7 +108,7 @@ def OP_09(arg1: uint8):
     assert isinstance(arg1, uint8)
     _gScena.handleOpCode(0x09, arg1)
 
-def SET_RETURN_VALUE(arg1: uint8):
+def SET_REG(arg1: uint8):
     # 0x0A
     assert isinstance(arg1, uint8)
     _gScena.handleOpCode(0x0A, arg1)
@@ -230,7 +230,7 @@ def OP_17():
     # 0x17
     _gScena.handleOpCode(0x17)
 
-def GTE():
+def GE():
     # 0x18
     _gScena.handleOpCode(0x18)
 
@@ -246,7 +246,7 @@ def OP_19():
     # 0x19
     _gScena.handleOpCode(0x19)
 
-def LEQ():
+def LE():
     # 0x1A
     _gScena.handleOpCode(0x1A)
 
@@ -310,31 +310,31 @@ def OP_21():
     # 0x21
     _gScena.handleOpCode(0x21)
 
-def CALL_MODULE_FUNC(arg1: uint32, arg2: uint32, arg3: uint8):
+def CALL_MODULE_FUNC(arg1: sint32 | float | str, arg2: sint32 | float | str, arg3: uint8):
     # 0x22
-    assert isinstance(arg1, uint32)
-    assert isinstance(arg2, uint32)
+    assert isinstance(arg1, sint32 | float | str)
+    assert isinstance(arg2, sint32 | float | str)
     assert isinstance(arg3, uint8)
     _gScena.handleOpCode(0x22, arg1, arg2, arg3)
 
-def OP_22(arg1: uint32, arg2: uint32, arg3: uint8):
+def OP_22(arg1: sint32 | float | str, arg2: sint32 | float | str, arg3: uint8):
     # 0x22
-    assert isinstance(arg1, uint32)
-    assert isinstance(arg2, uint32)
+    assert isinstance(arg1, sint32 | float | str)
+    assert isinstance(arg2, sint32 | float | str)
     assert isinstance(arg3, uint8)
     _gScena.handleOpCode(0x22, arg1, arg2, arg3)
 
-def CALL_MODULE_FUNC_DEFER(arg1: uint32, arg2: uint32, arg3: uint8):
+def CALL_MODULE_FUNC_DEFER(arg1: sint32 | float | str, arg2: sint32 | float | str, arg3: uint8):
     # 0x23
-    assert isinstance(arg1, uint32)
-    assert isinstance(arg2, uint32)
+    assert isinstance(arg1, sint32 | float | str)
+    assert isinstance(arg2, sint32 | float | str)
     assert isinstance(arg3, uint8)
     _gScena.handleOpCode(0x23, arg1, arg2, arg3)
 
-def OP_23(arg1: uint32, arg2: uint32, arg3: uint8):
+def OP_23(arg1: sint32 | float | str, arg2: sint32 | float | str, arg3: uint8):
     # 0x23
-    assert isinstance(arg1, uint32)
-    assert isinstance(arg2, uint32)
+    assert isinstance(arg1, sint32 | float | str)
+    assert isinstance(arg2, sint32 | float | str)
     assert isinstance(arg3, uint8)
     _gScena.handleOpCode(0x23, arg1, arg2, arg3)
 
@@ -421,3 +421,31 @@ def OP_1002(arg1: str):
     # 0x1002
     assert isinstance(arg1, str)
     _gScena.handleOpCode(0x1002, arg1)
+
+def PUSH_FUNC_ID(arg1: uint16):
+    # 0x1003
+    assert isinstance(arg1, uint16)
+    _gScena.handleOpCode(0x1003, arg1)
+
+def OP_1003(arg1: uint16):
+    # 0x1003
+    assert isinstance(arg1, uint16)
+    _gScena.handleOpCode(0x1003, arg1)
+
+def PUSH_RET_ADDR(arg1: str):
+    # 0x1004
+    assert isinstance(arg1, str)
+    _gScena.handleOpCode(0x1004, arg1)
+
+def OP_1004(arg1: str):
+    # 0x1004
+    assert isinstance(arg1, str)
+    _gScena.handleOpCode(0x1004, arg1)
+
+def MLIL_STUB():
+    # 0x5000
+    _gScena.handleOpCode(0x5000)
+
+def OP_5000():
+    # 0x5000
+    _gScena.handleOpCode(0x5000)
