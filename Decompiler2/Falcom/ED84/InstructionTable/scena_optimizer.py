@@ -184,7 +184,7 @@ optimizeTable = buildTable(
 )
 
 class ED84Optimizer(Optimizer):
-    def optimize(self, inst: Instruction, operands: List[Any], flags: Flags) -> OptimizeResult:
+    def optimizeInstruction(self, inst: Instruction, operands: List[Any], flags: Flags) -> OptimizeResult:
         opt = optimizeTable.get(inst.opcode)
         if opt is None:
             return None

@@ -248,9 +248,8 @@ class EventTableData(TableDataEntry):
         ('scena',           'S'),
         ('word03',          'W'),
         ('nextEventId',     'W'),
-        ('word03',          'W'),
-        ('str04',           'S'),
         ('word04',          'W'),
+        ('str04',           'S'),
         ('word05',          'W'),
         ('word06',          'W'),
         ('word07',          'W'),
@@ -258,6 +257,7 @@ class EventTableData(TableDataEntry):
         ('word09',          'W'),
         ('word0A',          'W'),
         ('word0B',          'W'),
+        ('word0C',          'W'),
     )
 
 class ItemTableData(TableDataEntry):
