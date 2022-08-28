@@ -1,3 +1,4 @@
+from tokenize import String
 from Falcom.Common import *
 from . import utils
 import struct
@@ -218,6 +219,25 @@ class ScenaValue:
 
     __repr__ = __str__
 
+class ScenaGlobalVar:
+    class Type(IntEnum2):
+        Integer = 0
+        String  = 2
+
+    def __init__(self, index: int = None, name: str = None, type: Type = None, *, fs: fileio.FileStream = None):
+        self.index  = index
+        self.name   = name
+        self.type   = type
+
+        self.read(fs)
+
+    def read(self, fs: fileio.FileStream):
+        if not fs:
+            return
+
+        self.name = ScenaValue(fs = fs).value
+        self.type = ScenaGlobalVar.Type(fs.ReadULong())
+
 class ScenaVariable:
     def __init__(
             self,value          = None,
@@ -229,6 +249,7 @@ class ScenaVariable:
             returnValue         = False,
             isReg               = False,
             isArg               = False,
+            isGlobalVar         = False,
             setVar              = False,
             loadStack           = False,
             stack: 'ScenaStack' = None,
@@ -241,6 +262,7 @@ class ScenaVariable:
         self.returnValue    = returnValue
         self.isReg          = isReg
         self.isArg          = isArg
+        self.isGlobalVar    = isGlobalVar
         self.setVar         = setVar
         self.loadStack      = loadStack
 
@@ -255,8 +277,12 @@ class ScenaVariable:
     @property
     def name(self) -> str:
         if not self._name:
-            if self.stackIndex is None:
+            if self.isGlobalVar:
+                self._name = f'GlobalVar_{self.value:02d}'
+
+            elif self.stackIndex is None:
                 self._name = f'<value>'
+
             else:
                 self._name = f'var_{self.stackIndex * 4:02X}'
 
@@ -279,6 +305,10 @@ class ScenaStack:
     @property
     def stackTop(self) -> int:
         return len(self.stack)
+
+    @property
+    def isEmpty(self) -> int:
+        return len(self.stack) == 0
 
     def saveContext(self, key):
         self.savedContext[key] = self.stack.copy()
@@ -319,6 +349,9 @@ class ScenaStack:
     def Reg(self) -> ScenaVariable:
         v = ScenaVariable(None, self.stackTop, isReg = True, stack = self)
         return self.push(v)
+
+    def Global(self, index: int) -> ScenaVariable:
+        return ScenaVariable(index, self.stackTop, isGlobalVar = True, stack = self)
 
     def ReturnValue(self) -> ScenaVariable:
         v = ScenaVariable(None, self.stackTop, returnValue = True, stack = self)
@@ -364,7 +397,6 @@ class ScenaFunction:
         self.type       = type
         self.obj        = None
         self.entry      = entry
-        self.isSyscall  = False
         self.params     = []        # list[ScenaParamFlags]
 
     def __str__(self) -> str:

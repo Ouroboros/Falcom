@@ -310,7 +310,7 @@ def OP_21():
     # 0x21
     _gScena.handleOpCode(0x21)
 
-def CALL_MODULE_FUNC(arg1: sint32 | float | str, arg2: sint32 | float | str, arg3: uint8):
+def CALL_MODULE(arg1: sint32 | float | str, arg2: sint32 | float | str, arg3: uint8):
     # 0x22
     assert isinstance(arg1, sint32 | float | str)
     assert isinstance(arg2, sint32 | float | str)
@@ -324,7 +324,7 @@ def OP_22(arg1: sint32 | float | str, arg2: sint32 | float | str, arg3: uint8):
     assert isinstance(arg3, uint8)
     _gScena.handleOpCode(0x22, arg1, arg2, arg3)
 
-def CALL_MODULE_FUNC_DEFER(arg1: sint32 | float | str, arg2: sint32 | float | str, arg3: uint8):
+def CALL_MODULE_NO_RETURN(arg1: sint32 | float | str, arg2: sint32 | float | str, arg3: uint8):
     # 0x23
     assert isinstance(arg1, sint32 | float | str)
     assert isinstance(arg2, sint32 | float | str)

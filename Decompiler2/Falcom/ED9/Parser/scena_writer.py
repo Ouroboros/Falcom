@@ -4,6 +4,21 @@ from Falcom.ED9.Parser.scena_types import *
 import pathlib
 import uuid
 
+class ScenaGlobalVar(ScenaGlobalVar):
+    def load(self):
+        pass
+
+    def set(self):
+        pass
+
+class IntGlobalVar(ScenaGlobalVar):
+    def __init__(self, index: int, name: str):
+        super().__init__(index, name, ScenaGlobalVar.Type.Integer)
+
+class StrGlobalVar(ScenaGlobalVar):
+    def __init__(self, index: int, name: str):
+        super().__init__(index, name, ScenaGlobalVar.Type.String)
+
 class _StringPool:
     def __init__(self):
         self.pool = {}                                  # type: Dict[str, int]
@@ -39,6 +54,9 @@ class _ScenaWriter:
 
     def registerOpCodeCallback(self, cb):
         self.opcodeCallbacks.append(cb)
+
+    def setGlobalVars(self, *vars):
+        pass
 
     def functionDecorator(self, name: str, type: ED9.ScenaFunctionType) -> Callable[[], None]:
         def wrapper(f: Callable[[], Any]):

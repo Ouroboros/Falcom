@@ -17,6 +17,9 @@ def PUSH_STR(s: str):
 def Call(module: str, func: str, *args):
     pass
 
+def CallNoReturn(module: str, func: str, *args):
+    pass
+
 def GetReg(id: int):
     pass
 

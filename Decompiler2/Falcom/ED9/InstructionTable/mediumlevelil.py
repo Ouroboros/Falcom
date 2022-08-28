@@ -13,8 +13,8 @@ class MLIL(IntEnum2):
     NOP                     = auto()
     SET_VAR                 = auto()
     DEL_VAR                 = auto()
-    LOAD                    = auto()
-    STORE                   = auto()
+    LOAD_GLOBAL_VAR         = auto()
+    SET_GLOBAL_VAR          = auto()
     VAR                     = auto()
     ADDRESS_OF              = auto()
     CONST                   = auto()
@@ -71,6 +71,20 @@ class MediumLevelILDelVar(MediumLevelILInstruction):
     def __init__(self, var: 'ScenaVariable'):
         super().__init__()
         self.var = var
+
+class MediumLevelILLoadGlobalVar(MediumLevelILInstruction):
+    OpCode = MLIL.LOAD_GLOBAL_VAR
+    def __init__(self, dest: 'ScenaVariable', src: 'ScenaVariable'):
+        super().__init__()
+        self.dest = dest
+        self.src = src
+
+class MediumLevelILSetGlobalVar(MediumLevelILInstruction):
+    OpCode = MLIL.SET_GLOBAL_VAR
+    def __init__(self, dest: 'ScenaVariable', src: 'ScenaVariable'):
+        super().__init__()
+        self.dest = dest
+        self.src = src
 
 class MediumLevelILAddressOf(MediumLevelILInstruction):
     OpCode = MLIL.ADDRESS_OF
@@ -242,13 +256,14 @@ class MediumLevelILCall(MediumLevelILInstruction):
 
 class MediumLevelILCallModule(MediumLevelILInstruction):
     OpCode = MLIL.CALL_MODULE
-    def __init__(self, module: str, func: str, params: 'list[ScenaVariable]', returnValue: 'ScenaVariable' = None):
+    def __init__(self, module: str, func: str, params: 'list[ScenaVariable]', returnValue: 'ScenaVariable' = None, *, noReturn = False):
         super().__init__()
 
         self.module         = module
         self.func           = func
         self.params         = params
         self.returnValue    = returnValue
+        self.noReturn       = noReturn
 
 class MediumLevelILSyscall(MediumLevelILInstruction):
     OpCode = MLIL.SYSCALL

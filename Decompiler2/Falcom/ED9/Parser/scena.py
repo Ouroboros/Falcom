@@ -94,6 +94,7 @@ class ScenaParser:
         self.fs                 = fs                # type: fileio.FileStream
         self.name               = name              # type: str
         self.header             = None              # type: ScenaHeader
+        self.globalVars         = []                # type: list[ScenaGlobalVar]
         self.functions          = []                # type: List[ScenaFunction]
         self.functionNameMap    = {}                # type: Dict[str, bool]
         self.instructionCb      = None              # type: Callable[[Instruction], None]
@@ -137,8 +138,17 @@ class ScenaParser:
 
             # print('\n'.join(f.toPython()))
 
+        if hdr.globalVarCount == 0:
+            return
+
+        fs.Position = hdr.globalVarOffset
+        self.globalVars = [ScenaGlobalVar(i, fs = fs) for i in range(hdr.globalVarCount)]
+
     def getCodeFuncName(self, funcID: int) -> str:
         return self.functions[funcID].name
+
+    def getGlobalVarName(self, index: int) -> str:
+        return f'g_{self.globalVars[index].name}'
 
     def setInstructionCallback(self, cb: Callable[[Instruction], None]):
         self.instructionCb = cb
@@ -183,6 +193,18 @@ except ModuleNotFoundError:
 scena = createScenaWriter('{filename}')
 
 '''.splitlines()
+
+        if self.globalVars:
+            align = max([len(g.name) for g in self.globalVars])
+            align = (align + 4) & ~3
+            lines.extend([
+                *[f"{self.getGlobalVarName(g.index).ljust(align)}= {g.type == ScenaGlobalVar.Type.Integer and 'IntGlobalVar' or 'StrGlobalVar'}({g.index}, '{g.name}')" for g in self.globalVars],
+                '',
+                'scena.setGlobalVars(',
+                *[f'{defaultIndent()}g_{g.name},' for g in self.globalVars],
+                ')',
+                '',
+            ])
 
         for func in self.functions:
             lines.extend(formatter.formatFuncion(func))
@@ -239,8 +261,8 @@ class OPCode:
     NEG                     = ED9ScenaOpTable.getDescriptorByName('NEG')
     EZ                      = ED9ScenaOpTable.getDescriptorByName('EZ')
     NOT                     = ED9ScenaOpTable.getDescriptorByName('NOT')
-    CALL_MODULE_FUNC        = ED9ScenaOpTable.getDescriptorByName('CALL_MODULE_FUNC')
-    CALL_MODULE_FUNC_DEFER  = ED9ScenaOpTable.getDescriptorByName('CALL_MODULE_FUNC_DEFER')
+    CALL_MODULE             = ED9ScenaOpTable.getDescriptorByName('CALL_MODULE')
+    CALL_MODULE_NO_RETURN   = ED9ScenaOpTable.getDescriptorByName('CALL_MODULE_NO_RETURN')
     SYSCALL                 = ED9ScenaOpTable.getDescriptorByName('SYSCALL')
     PUSH_CALLER_CONTEXT     = ED9ScenaOpTable.getDescriptorByName('PUSH_CALLER_CONTEXT')
     DEBUG_SET_LINENO        = ED9ScenaOpTable.getDescriptorByName('DEBUG_SET_LINENO')
@@ -284,17 +306,19 @@ class ED9Optimizer():
         inst.operands = mlil
 
     def optimizeFunction(self, func: ScenaFunction):
-        if func.isSyscall:
-            return
-
         console.setTitle(f'optimize {func.name}')
+        self.pass1(func)
 
+    def pass1(self, func: ScenaFunction):
         # if not func.name == 'OnEventBegin': return
 
         stack = ScenaStack()
 
-        for i in range(len(func.params), 0, -1):
-            stack.Arg().name = f'arg{i}'
+        def pushArgs():
+            for i in range(len(func.params), 0, -1):
+                stack.Arg().name = f'arg{i}'
+
+        pushArgs()
 
         blocks: list[CodeBlock] = func.obj.block.getAllBlocks()
         for bb in blocks:
@@ -331,20 +355,6 @@ class ED9Optimizer():
                         dst = stack.SetVar(src)
                         dst.inst = instructions.addMLIL(MediumLevelILSetVar(dst, src))
 
-                    case OPCode.PUSH_CALLER_CONTEXT.opcode:
-                        src = stack.Const(inst.operands[0])
-                        funcId = stack.SetVar(func.index)
-                        retAddr = stack.SetVar(src)
-                        currScriptLowPart = stack.SetVar(self.parser.name)
-                        currScriptHighPart = stack.SetVar(self.parser.name)
-                        returnMagic = stack.SetVar(0xF0000000)
-
-                        # funcId.inst             = instructions.addMLIL(MediumLevelILSetVar(funcId, None))
-                        # retAddr.inst            = instructions.addMLIL(MediumLevelILSetVar(retAddr, src))
-                        # currScriptLowPart.inst  = instructions.addMLIL(MediumLevelILSetVar(currScriptLowPart, None))
-                        # currScriptHighPart.inst = instructions.addMLIL(MediumLevelILSetVar(currScriptHighPart, None))
-                        # returnMagic.inst        = instructions.addMLIL(MediumLevelILSetVar(returnMagic, None))
-
                     case OPCode.PUSH_STACK_OFFSET.opcode:
                         src = stack.fromOffset(inst.operands[0].value)
                         dst = stack.SetVar(src)
@@ -361,8 +371,17 @@ class ED9Optimizer():
                     case OPCode.SET_REG.opcode:
                         instructions.addMLIL(MediumLevelILSetReg(inst.operands[0].value, stack.pop()))
 
-                    case OPCode.EZ.opcode:
-                        instructions.addMLIL(MediumLevelILCmpEZ(stack.topOfStack()))
+                    case OPCode.NEG.opcode | \
+                         OPCode.EZ.opcode | \
+                         OPCode.NOT.opcode:
+
+                        instructions.addMLIL(
+                            {
+                                OPCode.NEG.opcode           : MediumLevelILNeg,
+                                OPCode.EZ.opcode            : MediumLevelILCmpEZ,
+                                OPCode.NOT.opcode           : MediumLevelILNot,
+                            }[inst.opcode](stack.topOfStack())
+                        )
 
                     case OPCode.ADD.opcode | \
                          OPCode.SUB.opcode | \
@@ -409,7 +428,6 @@ class ED9Optimizer():
                         instructions.addMLIL(MediumLevelILSetVar(dst, tos))
 
                     case OPCode.POP.opcode | OPCode.POPN.opcode:
-                        # instructions.add(inst)
                         n = inst.operands[0].value
                         if inst.opcode == OPCode.POP.opcode:
                             n //= 4
@@ -431,6 +449,20 @@ class ED9Optimizer():
                         stack.saveContext(block.value.name)
                         instructions.add(inst)
 
+                    case OPCode.PUSH_CALLER_CONTEXT.opcode:
+                        src = stack.Const(inst.operands[0])
+                        funcId = stack.SetVar(func.index)
+                        retAddr = stack.SetVar(src)
+                        currScriptLowPart = stack.SetVar(self.parser.name)
+                        currScriptHighPart = stack.SetVar(self.parser.name)
+                        returnMagic = stack.SetVar(0xF0000000)
+
+                        # funcId.inst             = instructions.addMLIL(MediumLevelILSetVar(funcId, None))
+                        # retAddr.inst            = instructions.addMLIL(MediumLevelILSetVar(retAddr, src))
+                        # currScriptLowPart.inst  = instructions.addMLIL(MediumLevelILSetVar(currScriptLowPart, None))
+                        # currScriptHighPart.inst = instructions.addMLIL(MediumLevelILSetVar(currScriptHighPart, None))
+                        # returnMagic.inst        = instructions.addMLIL(MediumLevelILSetVar(returnMagic, None))
+
                     case OPCode.CALL.opcode:
                         hasReturnValue = False
 
@@ -449,7 +481,7 @@ class ED9Optimizer():
 
                         instructions.addMLIL(MediumLevelILCall(target_func, params, returnValue = stack.Reg() if hasReturnValue else None))
 
-                    case OPCode.CALL_MODULE_FUNC.opcode:
+                    case OPCode.CALL_MODULE.opcode:
                         hasReturnValue = False
 
                         nextInst = getNextInst()
@@ -466,6 +498,20 @@ class ED9Optimizer():
                                 p.inst.flags |= Flags.FormatIgnore
 
                         instructions.addMLIL(MediumLevelILCallModule(module, funcName, params))
+
+                    case OPCode.CALL_MODULE_NO_RETURN.opcode:
+                        module, funcName = inst.operands[0], inst.operands[1]
+                        paramCount = inst.operands[2].value
+                        params = [stack.pop() for _ in range(paramCount)]
+                        for p in params:
+                            if p.inst is not None:
+                                p.inst.flags |= Flags.FormatIgnore
+
+                        instructions.addMLIL(MediumLevelILCallModule(module, funcName, params, noReturn = True))
+
+                        pprint(stack.stack)
+                        assert stack.isEmpty
+                        pushArgs()
 
                     case OPCode.SYSCALL.opcode:
                         catalog     = stack.Const(inst.operands[0])
@@ -508,6 +554,19 @@ class ED9Optimizer():
                             [stack.pop() for _ in range(paramCount)]
 
                         instructions.addMLIL(MediumLevelILSyscall(catalog, cmd, params))
+
+                    case OPCode.LOAD_GLOBAL.opcode:
+                        g = stack.Global(inst.operands[0].value)
+                        g.name = self.parser.getGlobalVarName(g.value)
+                        v = stack.SetVar(g)
+                        v.inst = inst
+                        instructions.addMLIL(MediumLevelILLoadGlobalVar(v, g))
+
+                    case OPCode.SET_GLOBAL.opcode:
+                        v = stack.pop()
+                        g = stack.Global(inst.operands[0].value)
+                        g.name = self.parser.getGlobalVarName(g.value)
+                        instructions.addMLIL(MediumLevelILSetGlobalVar(g, v))
 
                     case _:
                         raise NotImplementedError(f'{bb.name}:{index} {inst.descriptor} {inst.operands}')

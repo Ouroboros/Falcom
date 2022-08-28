@@ -58,7 +58,8 @@ def main():
         return
 
     path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena\system.dat'
-    # path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani\common.dat'
+    path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani\chr0000.dat'
+    # path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena\debug.dat'
 
     path = pathlib.Path(path)
 

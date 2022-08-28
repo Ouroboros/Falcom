@@ -229,6 +229,18 @@ def IL_Handler(ctx: InstructionHandlerContext):
                 f'del {delvar.var.name}'
             ]
 
+        case MLIL.LOAD_GLOBAL_VAR:
+            load_global: MediumLevelILLoadGlobalVar = inst
+            return [
+                f'{load_global.dest.name} = {load_global.src.name}.load()'
+            ]
+
+        case MLIL.SET_GLOBAL_VAR:
+            set_global: MediumLevelILSetGlobalVar = inst
+            return [
+                f'{set_global.dest.name}.set({set_global.src.name})'
+            ]
+
         case MLIL.ADDRESS_OF:
             addrof: MediumLevelILAddressOf = inst
             return [
@@ -261,15 +273,17 @@ def IL_Handler(ctx: InstructionHandlerContext):
             if params:
                 params = ', ' + params
 
+            funcName = callm.noReturn and 'CallNoReturn' or 'Call'
+
             if retval is None:
                 return [
-                    f"Call({formatValue(callm.module)}, {formatValue(callm.func)}{params})",
+                    f"{funcName}({formatValue(callm.module)}, {formatValue(callm.func)}{params})",
                     '',
                 ]
 
             else:
                 return [
-                    f"{retval.name} Call('{formatValue(callm.module)}', '{formatValue(callm.func)}'{params})",
+                    f"{retval.name} {funcName}('{formatValue(callm.module)}', '{formatValue(callm.func)}'{params})",
                     '',
                 ]
 
@@ -457,11 +471,11 @@ ScenaOpTable = ED9InstructionTable([
     inst(0x1F,  'NEG'),                                                                                 # TOS = -TOS
     inst(0x20,  'EZ'),                                                                                  # TOS = TOS == 0
     inst(0x21,  'NOT'),                                                                                 # TOS = ~TOS
-    inst(0x22,  'CALL_MODULE_FUNC',                 'VVC'),                                             # CALL_MODULE_FUNC('module', 'func', argCount)
-    inst(0x23,  'CALL_MODULE_FUNC_DEFER',           'VVC'),                                             # CALL_MODULE_FUNC_WITH_STACK('module', 'func', argCount)
+    inst(0x22,  'CALL_MODULE',                      'VVC'),                                             # CALL_MODULE('module', 'func', argCount)
+    inst(0x23,  'CALL_MODULE_NO_RETURN',            'VVC'),                                             # CALL_MODULE_NO_RETURN('module', 'func', argCount)
     inst(0x24,  'SYSCALL',                          'CBB'),                                             # SYSCALL(catalog, cmd, argCount)
     inst(0x25,  'PUSH_CALLER_CONTEXT',              'O'),                                               # PUSH(funcIndex, retAddr, currScript, 0xF0000000)
-    inst(0x26,  'DEBUG_SET_LINENO',                 'H',                    Flags.FormatIgnore),
+    inst(0x26,  'DEBUG_SET_LINENO',                 'H'), #,                    Flags.FormatIgnore),
     inst(0x27,  'POPN',                             'C'),                                               # POP N values
     inst(0x28,  'DEBUG_LOG',                        'L'),                                               # DEBUG_LOG('msg')
 
