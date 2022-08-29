@@ -94,6 +94,7 @@ class Instruction:
         self.flags                  = flags                     # type: Flags
         self.operandDescriptors     = NoOperand                 # type: List[OperandDescriptor]
                                                                 # assemble only
+        self.comment                = ''                        # type: str
 
     def __str__(self):
         return '%s(%s)' % (self.descriptor.mnemonic, ', '.join(['%s' % opr for opr in self.operands]))

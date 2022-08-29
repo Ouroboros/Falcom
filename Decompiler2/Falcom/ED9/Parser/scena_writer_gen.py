@@ -442,6 +442,16 @@ def OP_1004(arg1: str):
     assert isinstance(arg1, str)
     _gScena.handleOpCode(0x1004, arg1)
 
+def PUSH_CURRENT_FUNC_ID(arg1: uint32):
+    # 0x1005
+    assert isinstance(arg1, uint32)
+    _gScena.handleOpCode(0x1005, arg1)
+
+def OP_1005(arg1: uint32):
+    # 0x1005
+    assert isinstance(arg1, uint32)
+    _gScena.handleOpCode(0x1005, arg1)
+
 def MLIL_STUB():
     # 0x5000
     _gScena.handleOpCode(0x5000)

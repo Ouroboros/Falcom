@@ -292,6 +292,7 @@ class OPCode:
     PUSH_STR                = ED9ScenaOpTable.getDescriptorByName('PUSH_STR')
     PUSH_FUNC_ID            = ED9ScenaOpTable.getDescriptorByName('PUSH_FUNC_ID')
     PUSH_RET_ADDR           = ED9ScenaOpTable.getDescriptorByName('PUSH_RET_ADDR')
+    PUSH_CURRENT_FUNC_ID    = ED9ScenaOpTable.getDescriptorByName('PUSH_CURRENT_FUNC_ID')
 
     MLIL_STUB               = ED9ScenaOpTable.getDescriptorByName('MLIL_STUB')
 
@@ -324,17 +325,18 @@ class ED9Optimizer():
         inst.operands = mlil
 
     def optimizeFunction(self, func: ScenaFunction, dis: Disassembler):
-        console.setTitle(f'optimize {func.name}')
+        pass
+        # console.setTitle(f'optimize {func.name}')
         self.pass0(func, dis)
         self.pass1(func, dis)
 
     def pass0(self, func: ScenaFunction, dis: Disassembler):
-        self.translateToMLIL(func, dis, optimizeReturnAddr = True)
+        self.translateToMLIL(func, dis, optimizeCallInst = True)
 
     def pass1(self, func: ScenaFunction, dis: Disassembler):
         self.translateToMLIL(func, dis, overwriteInstructions = True)
 
-    def translateToMLIL(self, func: ScenaFunction, dis: Disassembler, *, optimizeReturnAddr = False, overwriteInstructions = False) -> list[Instruction]:
+    def translateToMLIL(self, func: ScenaFunction, dis: Disassembler, *, optimizeCallInst = False, overwriteInstructions = False) -> list[Instruction]:
         # if not func.name == 'OnEventBegin': return
 
         stack = ScenaStack()
@@ -349,6 +351,7 @@ class ED9Optimizer():
         for bb in blocks:
             try:
                 stack.restoreContext(bb.name)
+                print(f'restore context for {bb.name}')
             except KeyError:
                 pass
 
@@ -363,7 +366,9 @@ class ED9Optimizer():
 
                 instructions.currentInstruction = inst
 
-                # print(inst)
+                print(inst)
+                print('stack', len(stack.stack))
+                # inst.comment = f'stack size: {len(stack.stack)}'
 
                 def getNextInst() -> Instruction | None:
                     if index + 1 < len(bb.instructions):
@@ -384,13 +389,24 @@ class ED9Optimizer():
                         dst = stack.SetVar(src)
                         dst.inst = instructions.addMLIL(MediumLevelILSetVar(dst, src))
 
-                        if optimizeReturnAddr:
+                        if optimizeCallInst:
                             pushVarMap[dst] = inst
 
                     case OPCode.PUSH_STACK_OFFSET.opcode:
                         src = stack.fromOffset(inst.operands[0].value)
                         dst = stack.SetVar(src)
                         dst.inst = instructions.addMLIL(MediumLevelILAddressOf(dst, src))
+
+                    case OPCode.LOAD_STACK_DEREF.opcode:
+                        # TODO:
+                        src = stack.fromOffset(inst.operands[0].value)
+                        dst = stack.SetVar(src)
+                        instructions.add(inst)
+
+                    case OPCode.POP_TO_DEREF.opcode:
+                        # TODO:
+                        stack.pop()
+                        instructions.add(inst)
 
                     case OPCode.LOAD_STACK.opcode:
                         src = stack.fromOffset(inst.operands[0].value)
@@ -495,6 +511,11 @@ class ED9Optimizer():
                         # currScriptHighPart.inst = instructions.addMLIL(MediumLevelILSetVar(currScriptHighPart, None))
                         # returnMagic.inst        = instructions.addMLIL(MediumLevelILSetVar(returnMagic, None))
 
+                    case OPCode.PUSH_CURRENT_FUNC_ID.opcode:
+                        src = stack.Const(func.index)
+                        dst = stack.SetVar(src)
+                        dst.inst = instructions.addMLIL(MediumLevelILSetVar(dst, src))
+
                     case OPCode.CALL.opcode:
                         hasReturnValue = False
 
@@ -508,7 +529,7 @@ class ED9Optimizer():
                         paramCount = len(target_func.params)
                         params = [stack.pop() for _ in range(paramCount + 2)]   # retaddr and caller func index
 
-                        if optimizeReturnAddr:
+                        if optimizeCallInst:
                             # ibp()
                             try:
                                 push_retaddr: Instruction = pushVarMap[params[-2]]
@@ -516,6 +537,11 @@ class ED9Optimizer():
                                 dis.disassembledOffset[target.offset].xrefs.append(XRef(target.name, -1))
                                 push_retaddr.operands[0].value = target
                                 applyDescriptorsToOperands(push_retaddr.operands, 'O')
+
+                                push_curfunc: Instruction = pushVarMap[params[-1]]
+                                push_curfunc.opcode = OPCode.PUSH_CURRENT_FUNC_ID.opcode
+                                push_curfunc.descriptor = OPCode.PUSH_CURRENT_FUNC_ID
+                                push_curfunc.operands = []
                             except KeyError:
                                 pass
 

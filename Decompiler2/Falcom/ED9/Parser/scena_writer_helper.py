@@ -14,6 +14,9 @@ def PUSH_FLOAT(f: float32):
 def PUSH_STR(s: str):
     PUSH(s)
 
+def PUSH_CURRENT_FUNC_ID():
+    pass
+
 def Call(module: str, func: str, *args):
     pass
 

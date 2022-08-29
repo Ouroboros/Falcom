@@ -269,7 +269,11 @@ def IL_Handler(ctx: InstructionHandlerContext):
             callm: MediumLevelILCallModule = inst
 
             retval = callm.returnValue
-            params = ', '.join([formatValue(p) for p in callm.params[:-5]])    # strip funcid, retaddr, current_script * 2, 0xF0000000
+            if callm.noReturn:
+                params = ', '.join([formatValue(p) for p in callm.params])
+            else:
+                params = ', '.join([formatValue(p) for p in callm.params[:-5]])    # strip funcid, retaddr, current_script * 2, 0xF0000000
+
             if params:
                 params = ', ' + params
 
@@ -344,7 +348,7 @@ def IL_Handler(ctx: InstructionHandlerContext):
 
         case MLIL.DIVS:
             inst_divs: MediumLevelILDiv = inst
-            return [f'{inst_divs.left.name} = {inst_divs.left.name} // {inst_divs.right.name}']
+            return [f'{inst_divs.left.name} = {inst_divs.left.name} / {inst_divs.right.name}']
 
         case MLIL.MODS:
             inst_mods: MediumLevelILMod = inst
@@ -472,10 +476,10 @@ ScenaOpTable = ED9InstructionTable([
     inst(0x20,  'EZ'),                                                                                  # TOS = TOS == 0
     inst(0x21,  'NOT'),                                                                                 # TOS = ~TOS
     inst(0x22,  'CALL_MODULE',                      'VVC'),                                             # CALL_MODULE('module', 'func', argCount)
-    inst(0x23,  'CALL_MODULE_NO_RETURN',            'VVC'),                                             # CALL_MODULE_NO_RETURN('module', 'func', argCount)
+    inst(0x23,  'CALL_MODULE_NO_RETURN',            'VVC',                  Flags.EndBlock),            # CALL_MODULE_NO_RETURN('module', 'func', argCount)
     inst(0x24,  'SYSCALL',                          'CBB'),                                             # SYSCALL(catalog, cmd, argCount)
     inst(0x25,  'PUSH_CALLER_CONTEXT',              'O'),                                               # PUSH(funcIndex, retAddr, currScript, 0xF0000000)
-    inst(0x26,  'DEBUG_SET_LINENO',                 'H',                    Flags.FormatIgnore),
+    inst(0x26,  'DEBUG_SET_LINENO',                 'H'), #,                    Flags.FormatIgnore),
     inst(0x27,  'POPN',                             'C'),                                               # POP N values
     inst(0x28,  'DEBUG_LOG',                        'L'),                                               # DEBUG_LOG('msg')
 
@@ -485,6 +489,7 @@ ScenaOpTable = ED9InstructionTable([
     inst(0x1002,  'PUSH_STR',                       'S'),
     inst(0x1003,  'PUSH_FUNC_ID',                   'F'),
     inst(0x1004,  'PUSH_RET_ADDR',                  'O'),
+    inst(0x1005,  'PUSH_CURRENT_FUNC_ID',           'I'),
 
     # binary ninja style MLIL
 

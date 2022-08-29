@@ -41,8 +41,8 @@ def main():
 
     for s in scena:
         break
-        iterlib.forEachFileMP(procfile, s, '*.dat', subdir = False)
-        continue
+        # iterlib.forEachFileMP(procfile, s, '*.dat', subdir = False)
+        # continue
 
         for f in fileio.getDirectoryFiles(s, '*.dat', subdir = False):
             console.setTitle(os.path.basename(f))
@@ -58,7 +58,7 @@ def main():
         return
 
     path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena\system.dat'
-    path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani\common.dat'
+    path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani\chr0117.dat'
     # path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena\debug.dat'
 
     path = pathlib.Path(path)
