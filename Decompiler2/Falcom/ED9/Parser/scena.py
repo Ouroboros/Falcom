@@ -42,7 +42,21 @@ class ScenaFormatter(Assembler.Formatter):
             else:
                 funcName = f'func_{func.offset:X}'
 
-        args = ', '.join([f'arg{index + 1}: {p.getPythonType()}' for index, p in enumerate(func.params)])
+        if func.entry.defaultParamsCount != 0:
+            args = []
+            for index, p in enumerate(func.params):
+                p: ScenaParamFlags
+                # assert p.defaultValue is not None
+                s = f'arg{index + 1}'
+                if p.defaultValue is not None:
+                    s += f' = {repr(p.defaultValue)}'
+
+                args.append(s)
+
+            args = ', '.join(args)
+
+        else:
+            args = ', '.join([f'arg{index + 1}: {p.getPythonType()}' for index, p in enumerate(func.params)])
 
         f = [
             f'# id: 0x{func.index:04X} offset: 0x{func.offset:X}',
@@ -132,6 +146,10 @@ class ScenaParser:
             fs.Position = f.paramFlagsOffset
             func.params = [ScenaParamFlags(fs = fs) for _ in range(f.paramCount)]
 
+            fs.Position = func.entry.defaultParamsOffset
+            for i in range(func.entry.defaultParamsCount):
+                func.params[len(func.params) - i - 1].defaultValue = ScenaValue(fs = fs).value
+
             self.functions.append(func)
 
             f.name = self.functions[-1].name
@@ -171,7 +189,7 @@ class ScenaParser:
                         e.args = (f'0x{e.args[0]:X} ({e.args[0]})',)
                         raise
 
-                    optimizer.optimizeFunction(func)
+                    optimizer.optimizeFunction(func, dis)
 
                 case _:
                     if func.type not in ScenaDataFunctionTypes:
@@ -305,11 +323,18 @@ class ED9Optimizer():
         inst.descriptor = OPCode.MLIL_STUB
         inst.operands = mlil
 
-    def optimizeFunction(self, func: ScenaFunction):
+    def optimizeFunction(self, func: ScenaFunction, dis: Disassembler):
         console.setTitle(f'optimize {func.name}')
-        self.pass1(func)
+        self.pass0(func, dis)
+        self.pass1(func, dis)
 
-    def pass1(self, func: ScenaFunction):
+    def pass0(self, func: ScenaFunction, dis: Disassembler):
+        self.translateToMLIL(func, dis, optimizeReturnAddr = True)
+
+    def pass1(self, func: ScenaFunction, dis: Disassembler):
+        self.translateToMLIL(func, dis, overwriteInstructions = True)
+
+    def translateToMLIL(self, func: ScenaFunction, dis: Disassembler, *, optimizeReturnAddr = False, overwriteInstructions = False) -> list[Instruction]:
         # if not func.name == 'OnEventBegin': return
 
         stack = ScenaStack()
@@ -329,6 +354,9 @@ class ED9Optimizer():
 
             instructions = InstructionList()
             ignoredInsts = set()
+            pushVarMap = {}
+            currentLineno = 0
+
             for index, inst in enumerate(bb.instructions):
                 if index in ignoredInsts:
                     continue
@@ -345,6 +373,7 @@ class ED9Optimizer():
 
                 match inst.opcode:
                     case OPCode.DEBUG_SET_LINENO.opcode:
+                        currentLineno = inst.operands[0].value
                         continue
 
                     case OPCode.PUSH_INT.opcode | \
@@ -354,6 +383,9 @@ class ED9Optimizer():
                         src = stack.Const(inst.operands[0])
                         dst = stack.SetVar(src)
                         dst.inst = instructions.addMLIL(MediumLevelILSetVar(dst, src))
+
+                        if optimizeReturnAddr:
+                            pushVarMap[dst] = inst
 
                     case OPCode.PUSH_STACK_OFFSET.opcode:
                         src = stack.fromOffset(inst.operands[0].value)
@@ -475,6 +507,18 @@ class ED9Optimizer():
                         target_func = self.parser.functions[inst.operands[0].value]
                         paramCount = len(target_func.params)
                         params = [stack.pop() for _ in range(paramCount + 2)]   # retaddr and caller func index
+
+                        if optimizeReturnAddr:
+                            # ibp()
+                            try:
+                                push_retaddr: Instruction = pushVarMap[params[-2]]
+                                target = bb.addBranch(dis.createCodeBlock(push_retaddr.operands[0].value.value))
+                                dis.disassembledOffset[target.offset].xrefs.append(XRef(target.name, -1))
+                                push_retaddr.operands[0].value = target
+                                applyDescriptorsToOperands(push_retaddr.operands, 'O')
+                            except KeyError:
+                                pass
+
                         for p in params:
                             if p.inst is not None:
                                 p.inst.flags |= Flags.FormatIgnore
@@ -509,7 +553,7 @@ class ED9Optimizer():
 
                         instructions.addMLIL(MediumLevelILCallModule(module, funcName, params, noReturn = True))
 
-                        pprint(stack.stack)
+                        # pprint(stack.stack)
                         assert stack.isEmpty
                         pushArgs()
 
@@ -569,7 +613,8 @@ class ED9Optimizer():
                         instructions.addMLIL(MediumLevelILSetGlobalVar(g, v))
 
                     case _:
-                        raise NotImplementedError(f'{bb.name}:{index} {inst.descriptor} {inst.operands}')
+                        raise NotImplementedError(f'{bb.name}:{index}@{currentLineno} {inst.descriptor} {inst.operands}')
 
-            bb.instructions = instructions.instructions
-            # break
+            if overwriteInstructions:
+                bb.instructions = instructions.instructions
+

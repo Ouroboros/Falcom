@@ -475,7 +475,7 @@ ScenaOpTable = ED9InstructionTable([
     inst(0x23,  'CALL_MODULE_NO_RETURN',            'VVC'),                                             # CALL_MODULE_NO_RETURN('module', 'func', argCount)
     inst(0x24,  'SYSCALL',                          'CBB'),                                             # SYSCALL(catalog, cmd, argCount)
     inst(0x25,  'PUSH_CALLER_CONTEXT',              'O'),                                               # PUSH(funcIndex, retAddr, currScript, 0xF0000000)
-    inst(0x26,  'DEBUG_SET_LINENO',                 'H'), #,                    Flags.FormatIgnore),
+    inst(0x26,  'DEBUG_SET_LINENO',                 'H',                    Flags.FormatIgnore),
     inst(0x27,  'POPN',                             'C'),                                               # POP N values
     inst(0x28,  'DEBUG_LOG',                        'L'),                                               # DEBUG_LOG('msg')
 

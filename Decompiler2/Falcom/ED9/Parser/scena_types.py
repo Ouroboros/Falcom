@@ -52,32 +52,32 @@ class ScenaHeader:
 class ScenaFunctionEntry:
     def __init__(
             self,
-            addr                : int = 0,
-            paramCount          : int = 0,
-            byte05              : int = 0,
-            byte06              : int = 0,
-            constCount          : int = 0,
-            constOffset         : int = 0,
-            paramFlagsOffset    : int = 0,
-            debugSymbolCount    : int = 0,
-            debugSymbolOffset   : int = 0,
-            nameCrc32           : int = 0,
-            nameOffset          : int = 0,
+            addr                    : int = 0,
+            paramCount              : int = 0,
+            byte05                  : int = 0,
+            byte06                  : int = 0,
+            defaultParamsCount      : int = 0,
+            defaultParamsOffset     : int = 0,
+            paramFlagsOffset        : int = 0,
+            debugSymbolCount        : int = 0,
+            debugSymbolOffset       : int = 0,
+            nameCrc32               : int = 0,
+            nameOffset              : int = 0,
             *,
             fs: fileio.FileStream = None
         ):
-        self.addr               = addr
-        self.paramCount         = paramCount
-        self.byte05             = byte05
-        self.byte06             = byte06
-        self.constCount         = constCount
-        self.constOffset        = constOffset
-        self.paramFlagsOffset   = paramFlagsOffset
-        self.debugSymbolCount   = debugSymbolCount
-        self.debugSymbolOffset  = debugSymbolOffset
-        self.nameCrc32          = nameCrc32
-        self.nameOffset         = nameOffset
-        self.name               = None
+        self.addr                   = addr
+        self.paramCount             = paramCount
+        self.byte05                 = byte05
+        self.byte06                 = byte06
+        self.defaultParamsCount     = defaultParamsCount
+        self.defaultParamsOffset    = defaultParamsOffset
+        self.paramFlagsOffset       = paramFlagsOffset
+        self.debugSymbolCount       = debugSymbolCount
+        self.debugSymbolOffset      = debugSymbolOffset
+        self.nameCrc32              = nameCrc32
+        self.nameOffset             = nameOffset
+        self.name                   = None
 
         self.read(fs)
 
@@ -85,17 +85,17 @@ class ScenaFunctionEntry:
         if not fs:
             return
 
-        self.addr               = fs.ReadULong()
-        self.paramCount         = fs.ReadByte()
-        self.byte05             = fs.ReadByte()
-        self.byte06             = fs.ReadByte()
-        self.constCount         = fs.ReadByte()
-        self.constOffset        = fs.ReadULong()
-        self.paramFlagsOffset   = fs.ReadULong()
-        self.debugSymbolCount   = fs.ReadULong()
-        self.debugSymbolOffset  = fs.ReadULong()
-        self.nameCrc32          = fs.ReadULong()
-        self.nameOffset         = fs.ReadULong()
+        self.addr                   = fs.ReadULong()
+        self.paramCount             = fs.ReadByte()
+        self.byte05                 = fs.ReadByte()
+        self.byte06                 = fs.ReadByte()
+        self.defaultParamsCount     = fs.ReadByte()
+        self.defaultParamsOffset    = fs.ReadULong()
+        self.paramFlagsOffset       = fs.ReadULong()
+        self.debugSymbolCount       = fs.ReadULong()
+        self.debugSymbolOffset      = fs.ReadULong()
+        self.nameCrc32              = fs.ReadULong()
+        self.nameOffset             = fs.ReadULong()
 
     def serialize(self) -> bytes:
         fs = io.BytesIO()
@@ -107,27 +107,28 @@ class ScenaFunctionEntry:
     def toPython(self) -> List[str]:
         f = [
             'ScenaFunctionEntry(',
-            f'{defaultIndent()}addr              = 0x{self.addr:08X},',
-            f'{defaultIndent()}paramCount        = 0x{self.paramCount:08X},',
-            f'{defaultIndent()}byte05            = 0x{self.byte05:02X},',
-            f'{defaultIndent()}byte06            = 0x{self.byte06:02X},',
-            f'{defaultIndent()}constCount        = 0x{self.constCount :08X},',
-            f'{defaultIndent()}constOffset       = 0x{self.constOffset :08X},',
-            f'{defaultIndent()}paramFlagsOffset  = 0x{self.paramFlagsOffset:08X},',
-            f'{defaultIndent()}debugSymbolCount  = 0x{self.debugSymbolCount:08X},',
-            f'{defaultIndent()}debugSymbolOffset = 0x{self.debugSymbolOffset:08X},',
-            f'{defaultIndent()}nameCrc32         = 0x{self.nameCrc32:08X},',
-            f'{defaultIndent()}name              = \'{self.name}\',' if self.name else
-            f'{defaultIndent()}nameOffset        = 0x{self.nameOffset:08X},',
+            f'{defaultIndent()}addr                  = 0x{self.addr:08X},',
+            f'{defaultIndent()}paramCount            = 0x{self.paramCount:08X},',
+            f'{defaultIndent()}byte05                = 0x{self.byte05:02X},',
+            f'{defaultIndent()}byte06                = 0x{self.byte06:02X},',
+            f'{defaultIndent()}defaultParamsCount    = 0x{self.defaultParamsCount :08X},',
+            f'{defaultIndent()}defaultParamsOffset   = 0x{self.defaultParamsOffset :08X},',
+            f'{defaultIndent()}paramFlagsOffset      = 0x{self.paramFlagsOffset:08X},',
+            f'{defaultIndent()}debugSymbolCount      = 0x{self.debugSymbolCount:08X},',
+            f'{defaultIndent()}debugSymbolOffset     = 0x{self.debugSymbolOffset:08X},',
+            f'{defaultIndent()}nameCrc32             = 0x{self.nameCrc32:08X},',
+            f'{defaultIndent()}name                  = \'{self.name}\',' if self.name else
+            f'{defaultIndent()}nameOffset            = 0x{self.nameOffset:08X},',
             ')',
         ]
 
         return f
 
 class ScenaParamFlags:
-    def __init__(self, index: int = 0, flags: int = 0, *, fs: fileio.FileStream = None):
-        self.index  = index
-        self.flags  = flags
+    def __init__(self, index: int = 0, flags: int = 0, defaultValue: int | float | str = None, *, fs: fileio.FileStream = None):
+        self.index          = index
+        self.flags          = flags
+        self.defaultValue   = defaultValue
 
         self.read(fs)
 
