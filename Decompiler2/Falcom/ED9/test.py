@@ -33,16 +33,18 @@ def procfile(f: str):
 
 def main():
     scena = [
-        r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani',
+        # r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani',
+        r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena',
+        # r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ai',
     ]
 
     output_dir = None
     # output_dir = r'D:\Game\Steam\steamapps\common\The Legend of Heroes Sen no Kiseki III\ouroboros\scripts\scena\dat\\'
 
     for s in scena:
-        break
-        # iterlib.forEachFileMP(procfile, s, '*.dat', subdir = False)
-        # continue
+        # break
+        iterlib.forEachFileMP(procfile, s, '*.dat', subdir = False)
+        continue
 
         for f in fileio.getDirectoryFiles(s, '*.dat', subdir = False):
             console.setTitle(os.path.basename(f))
@@ -50,7 +52,7 @@ def main():
             output = pathlib.Path(f)
             os.makedirs(output.parent / 'py', exist_ok = True)
             output = output.parent / 'py' / (output.stem + '.py')
-            # if output.exists(): continue
+            if output.exists(): continue
 
             test(f, output)
 
@@ -59,7 +61,7 @@ def main():
 
     path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena\system.dat'
     path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani\chr0117.dat'
-    # path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena\debug.dat'
+    path = r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena\c0000.dat'
 
     path = pathlib.Path(path)
 

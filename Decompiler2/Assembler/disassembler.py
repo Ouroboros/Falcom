@@ -23,6 +23,9 @@ class Disassembler:
         self.allocatedBlocks    = {}                    # type: Dict[int, CodeBlock]
         self.currentBlock       = None                  # type: CodeBlock
 
+    def getInstructionByOffset(self, offset: int) -> Instruction:
+        return self.disassembledOffset[offset]
+
     def createCodeBlock(self, offset: int) -> CodeBlock:
         block = self.allocatedBlocks.get(offset)
         if block is None:

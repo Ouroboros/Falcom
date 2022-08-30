@@ -223,7 +223,7 @@ class ScenaValue:
 class ScenaGlobalVar:
     class Type(IntEnum2):
         Integer = 0
-        String  = 2
+        String  = 1
 
     def __init__(self, index: int = None, name: str = None, type: Type = None, *, fs: fileio.FileStream = None):
         self.index  = index
@@ -251,7 +251,7 @@ class ScenaVariable:
             isReg               = False,
             isArg               = False,
             isGlobalVar         = False,
-            setVar              = False,
+            isSetVar            = False,
             loadStack           = False,
             stack: 'ScenaStack' = None,
         ):
@@ -264,7 +264,7 @@ class ScenaVariable:
         self.isReg          = isReg
         self.isArg          = isArg
         self.isGlobalVar    = isGlobalVar
-        self.setVar         = setVar
+        self.isSetVar       = isSetVar
         self.loadStack      = loadStack
 
         self.isTos          = False
@@ -336,7 +336,7 @@ class ScenaStack:
         return v
 
     def SetVar(self, value = None) -> ScenaVariable:
-        v = ScenaVariable(value, self.stackTop, setVar = True, stack = self)
+        v = ScenaVariable(value, self.stackTop, isSetVar = True, stack = self)
         return self.push(v)
 
     def LoadStack(self, value = None) -> ScenaVariable:
@@ -349,6 +349,7 @@ class ScenaStack:
 
     def Reg(self) -> ScenaVariable:
         v = ScenaVariable(None, self.stackTop, isReg = True, stack = self)
+        v.value = v
         return self.push(v)
 
     def Global(self, index: int) -> ScenaVariable:

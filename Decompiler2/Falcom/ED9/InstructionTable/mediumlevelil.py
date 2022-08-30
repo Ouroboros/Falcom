@@ -51,6 +51,8 @@ class MLIL(IntEnum2):
 
 class MediumLevelILInstruction:
     OpCode = MLIL.UNDEF
+    def __init__(self):
+        self.lineno = 0
 
 class MediumLevelILNop(MediumLevelILInstruction):
     OpCode = MLIL.NOP

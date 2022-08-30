@@ -83,14 +83,13 @@ class Formatter:
                 '',
             ]
 
-            # text = _hackDeadCode(text, self.scriptName, block)
-
         def addEmptyLine():
             if text and text[-1] != '':
                 text.append('')
 
         for inst in block.instructions:
             for x in inst.xrefs:
+                addEmptyLine()
                 text.extend([
                     *self.formatLabel(x.name),
                     '',

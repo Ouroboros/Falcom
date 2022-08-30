@@ -1,6 +1,7 @@
 from Falcom.Common  import *
 from Assembler      import *
 from .types         import *
+from pprint import pprint
 
 __all__ = (
     'ScenaOpTable',
@@ -177,8 +178,8 @@ def IL_Handler(ctx: InstructionHandlerContext):
             if not ignoreConst and v.const:
                 return formatValue(v.value)
 
-            if not ignoreSetVar and v.setVar:
-                return formatValue(v.value)
+            if not ignoreSetVar and v.isSetVar:
+                return formatValue(v.value) if v.value is not None else v.name
 
             if v.isReg or v.isArg:
                 return v.name
@@ -475,7 +476,7 @@ ScenaOpTable = ED9InstructionTable([
     inst(0x1F,  'NEG'),                                                                                 # TOS = -TOS
     inst(0x20,  'EZ'),                                                                                  # TOS = TOS == 0
     inst(0x21,  'NOT'),                                                                                 # TOS = ~TOS
-    inst(0x22,  'CALL_MODULE',                      'VVC'),                                             # CALL_MODULE('module', 'func', argCount)
+    inst(0x22,  'CALL_MODULE',                      'VVC',                  Flags.EndBlock),            # CALL_MODULE('module', 'func', argCount)
     inst(0x23,  'CALL_MODULE_NO_RETURN',            'VVC',                  Flags.EndBlock),            # CALL_MODULE_NO_RETURN('module', 'func', argCount)
     inst(0x24,  'SYSCALL',                          'CBB'),                                             # SYSCALL(catalog, cmd, argCount)
     inst(0x25,  'PUSH_CALLER_CONTEXT',              'O'),                                               # PUSH(funcIndex, retAddr, currScript, 0xF0000000)

@@ -3,6 +3,7 @@ from . import instruction_table
 
 if TYPE_CHECKING:
     from . import function
+    from . import instruction
 
 __all__ = (
     'XRef',
@@ -18,6 +19,9 @@ class XRef:
     def __init__(self, name: str, offset: int):
         self.name   = name                          # type: str
         self.offset = offset                        # type: int
+                                                    # xref from offset
+
+        self.inst   = None                          # type: instruction.Instruction
 
     def __str__(self):
         return f'<xref> from 0x{self.offset:X} to {self.name}'
