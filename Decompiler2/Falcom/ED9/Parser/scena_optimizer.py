@@ -153,6 +153,7 @@ class ED9Optimizer():
                     case OPCode.PUSH_INT.opcode | \
                          OPCode.PUSH.opcode | \
                          OPCode.PUSH_FLOAT.opcode | \
+                         OPCode.PUSH_RET_ADDR.opcode | \
                          OPCode.PUSH_STR.opcode:
                         src = stack.Const(inst.operands[0])
                         dst = stack.SetVar(src)
@@ -304,6 +305,8 @@ class ED9Optimizer():
                                 push_retaddr: Instruction = pushVarMap[params[-2]]
                                 target = bb.addBranch(dis.createCodeBlock(push_retaddr.operands[0].value.value))
                                 dis.getInstructionByOffset(target.offset).xrefs.append(XRef(target.name, -1))
+                                push_retaddr.opcode = OPCode.PUSH_RET_ADDR.opcode
+                                push_retaddr.descriptor = OPCode.PUSH_RET_ADDR
                                 push_retaddr.operands[0].value = target
                                 applyDescriptorsToOperands(push_retaddr.operands, 'O')
 
