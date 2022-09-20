@@ -1,7 +1,7 @@
 from Assembler.function import Function
 from Assembler.instruction import Instruction
 from ..InstructionTable import ScenaOpTable as ED9ScenaOpTable
-from .scena_optimizer import ED9Optimizer
+from .scena_optimizer import ED9Optimizer, ED9OptimizerOptions
 from .scena_types import *
 import pathlib
 
@@ -170,11 +170,16 @@ class ScenaParser:
         self.instructionCb = cb
 
     def disasmFunctions(self):
-
         fs = self.fs
         dis = Assembler.Disassembler(ED9ScenaOpTable)
         ctx = Assembler.DisasmContext(fs, instCallback = self.instructionCb, scriptName = self.name)
-        optimizer = ED9Optimizer(self)
+        options = ED9OptimizerOptions(
+            optimizeCallInst    = True,
+            transToMLIL         = False,
+            processFuncName     = False,
+        )
+
+        optimizer = ED9Optimizer(self, options)
 
         for func in self.functions:
             log.debug(f'disasm func: {func}')
@@ -198,6 +203,8 @@ class ScenaParser:
         formatter = ScenaFormatter(self, ED9ScenaOpTable, name = self.name)
 
         lines = f'''\
+#!/usr/bin/env python3
+
 import sys
 sys.path.append(r'{pathlib.Path(__file__).parent.parent.parent.parent}')
 

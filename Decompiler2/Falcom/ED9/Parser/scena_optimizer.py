@@ -79,9 +79,29 @@ class InstructionList:
         self.instructions.append(inst)
         return inst
 
+class ED9OptimizerOptions:
+    def __init__(
+            self,
+            *,
+            optimizeCallInst    = True,
+            transToMLIL         = False,
+            processFuncName     = False,
+        ):
+        self.optimizeCallInst   = optimizeCallInst
+        self.transToMLIL        = transToMLIL
+        self.processFuncName    = processFuncName
+
+    def any(self) -> bool:
+        return any([
+            self.optimizeCallInst,
+            self.transToMLIL,
+            self.processFuncName,
+        ])
+
 class ED9Optimizer():
-    def __init__(self, parser: 'ScenaParser'):
+    def __init__(self, parser: 'ScenaParser', options = ED9OptimizerOptions()):
         self.parser = parser
+        self.options = options
 
     def getOpCode(self, name: str) -> InstructionDescriptor:
         return ED9ScenaOpTable.getDescriptorByName(name)
@@ -94,14 +114,19 @@ class ED9Optimizer():
     def optimizeFunction(self, func: ScenaFunction, dis: Disassembler):
         pass
         # console.setTitle(f'optimize {func.name}')
-        self.optimizeCallInst(func, dis)
-        self.toMLIL(func, dis)
-        self.processFuncName(func, dis)
+
+        if self.options.any():
+            self.optimizeCallInst(func, dis)
+
+        if self.options.transToMLIL:
+            self.transToMLIL(func, dis)
+            if self.options.processFuncName:
+                self.processFuncName(func, dis)
 
     def optimizeCallInst(self, func: ScenaFunction, dis: Disassembler):
         self.translateToMLIL(func, dis, optimizeCallInst = True)
 
-    def toMLIL(self, func: ScenaFunction, dis: Disassembler):
+    def transToMLIL(self, func: ScenaFunction, dis: Disassembler):
         self.translateToMLIL(func, dis, overwriteInstructions = True)
 
     def translateToMLIL(self, func: ScenaFunction, dis: Disassembler, *, optimizeCallInst = False, overwriteInstructions = False) -> list[Instruction]:

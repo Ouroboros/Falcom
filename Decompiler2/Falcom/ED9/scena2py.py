@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from Falcom import ED9
 from Falcom.Common import *
 import pathlib

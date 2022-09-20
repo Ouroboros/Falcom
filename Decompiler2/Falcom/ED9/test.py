@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from Falcom import ED9
 from Falcom.Common import *
 import pathlib
@@ -33,9 +35,11 @@ def procfile(f: str):
 
 def main():
     scena = [
-        r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani',
-        r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena',
+        # r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani',
+        # r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena',
         # r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ai',
+        # '/Users/ouroboros/Downloads/decrypted/tc/f/script/scena',
+        '/Users/ouroboros/Downloads/decrypted/tc/f/script/ani',
     ]
 
     output_dir = None
