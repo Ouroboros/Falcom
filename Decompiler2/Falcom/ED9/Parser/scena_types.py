@@ -1,27 +1,42 @@
+from multiprocessing.sharedctypes import Value
 from tokenize import String
 from Falcom.Common import *
 from . import utils
-import struct
+import struct, inspect
+
+class ScenaFunctionParamFlags(IntEnum2):
+    Pointer     = 0x04
+    Nullable    = 0x08
+    Mask        = 0x0C
 
 class ScenaFunctionParamType(IntEnum2):
     Value   = 0x01
     Offset  = 0x02
     Mask    = 0x03
 
-class ScenaFunctionParamFlags(IntEnum2):
-    Output      = 0x04
-    Nullable    = 0x08
-    Mask        = 0x0C
+    Pointer         = Value | ScenaFunctionParamFlags.Pointer
+    NullableValue   = Value | ScenaFunctionParamFlags.Nullable
+    NullableOffset  = Offset | ScenaFunctionParamFlags.Nullable
+
+class RawInt(int):
+    def __repr__(self) -> str:
+        return f'RawInt({super()})'
+
+Value32     = int | float
+Nullable32  = Value32 | None
+NullableStr = str | None
+Pointer     = object
 
 class ScenaHeader:
     MAGIC = b'#scp'
 
     def __init__(self, *, fs: fileio.FileStream = None):
         self.magic                  = self.MAGIC        # type: int
-        self.functionEntryOffset    = 0                 # type: int
+        self.functionEntryOffset    = 0x18              # type: int
         self.functionCount          = 0                 # type: int
         self.globalVarOffset        = 0                 # type: int
         self.globalVarCount         = 0                 # type: int
+        self.dword_14               = 0                 # type: int
 
         self.read(fs)
 
@@ -52,7 +67,7 @@ class ScenaHeader:
 class ScenaFunctionEntry:
     def __init__(
             self,
-            addr                    : int = 0,
+            offset                  : int = 0,
             paramCount              : int = 0,
             byte05                  : int = 0,
             byte06                  : int = 0,
@@ -66,7 +81,7 @@ class ScenaFunctionEntry:
             *,
             fs: fileio.FileStream = None
         ):
-        self.addr                   = addr
+        self.offset                 = offset
         self.paramCount             = paramCount
         self.byte05                 = byte05
         self.byte06                 = byte06
@@ -85,7 +100,7 @@ class ScenaFunctionEntry:
         if not fs:
             return
 
-        self.addr                   = fs.ReadULong()
+        self.offset                 = fs.ReadULong()
         self.paramCount             = fs.ReadByte()
         self.byte05                 = fs.ReadByte()
         self.byte06                 = fs.ReadByte()
@@ -100,14 +115,24 @@ class ScenaFunctionEntry:
     def serialize(self) -> bytes:
         fs = io.BytesIO()
 
-        fs.write(utils.int_to_bytes(self.addr, 4))
+        fs.write(utils.int_to_bytes(self.offset, 4))
+        fs.write(utils.int_to_bytes(self.paramCount, 1))
+        fs.write(utils.int_to_bytes(self.byte05, 1))
+        fs.write(utils.int_to_bytes(self.byte06, 1))
+        fs.write(utils.int_to_bytes(self.defaultParamsCount, 1))
+        fs.write(utils.int_to_bytes(self.defaultParamsOffset, 4))
+        fs.write(utils.int_to_bytes(self.paramFlagsOffset, 4))
+        fs.write(utils.int_to_bytes(self.debugSymbolCount, 4))
+        fs.write(utils.int_to_bytes(self.debugSymbolOffset, 4))
+        fs.write(utils.int_to_bytes(self.nameCrc32, 4))
+        fs.write(utils.int_to_bytes(self.nameOffset, 4))
 
         return fs.getvalue()
 
     def toPython(self) -> List[str]:
         f = [
             'ScenaFunctionEntry(',
-            f'{defaultIndent()}addr                  = 0x{self.addr:08X},',
+            f'{defaultIndent()}offset                = 0x{self.offset:08X},',
             f'{defaultIndent()}paramCount            = 0x{self.paramCount:08X},',
             f'{defaultIndent()}byte05                = 0x{self.byte05:02X},',
             f'{defaultIndent()}byte06                = 0x{self.byte06:02X},',
@@ -125,10 +150,27 @@ class ScenaFunctionEntry:
         return f
 
 class ScenaParamFlags:
-    def __init__(self, index: int = 0, flags: int = 0, defaultValue: int | float | str = None, *, fs: fileio.FileStream = None):
-        self.index          = index
-        self.flags          = flags
-        self.defaultValue   = defaultValue
+    def __init__(self, typ: object = None, *, fs: fileio.FileStream = None):
+        self.flags = 0
+
+        if typ is not None:
+            if typ == Value32:
+                self.flags = ScenaFunctionParamType.Value
+
+            elif typ == Nullable32:
+                self.flags = ScenaFunctionParamType.NullableValue
+
+            elif typ == str:
+                self.flags = ScenaFunctionParamType.Offset
+
+            elif typ == NullableStr:
+                self.flags = ScenaFunctionParamType.NullableOffset
+
+            elif typ == Pointer:
+                self.flags = ScenaFunctionParamType.Pointer
+
+            else:
+                raise NotImplementedError(f'unsupported type: {typ}')
 
         self.read(fs)
 
@@ -151,15 +193,25 @@ class ScenaParamFlags:
         return f
 
     def getPythonType(self) -> str:
-        type = self.flags & ScenaFunctionParamType.Mask
-        match type:
+        # type = self.flags & ScenaFunctionParamType.Mask
+
+        match self.flags:
             case ScenaFunctionParamType.Value:
-                return 'int | float'
+                return 'Value32'
 
             case ScenaFunctionParamType.Offset:
                 return 'str'
 
-        raise NotImplementedError
+            case ScenaFunctionParamType.NullableValue:
+                return 'Nullable32'
+
+            case ScenaFunctionParamType.NullableOffset:
+                return 'NullableStr'
+
+            case ScenaFunctionParamType.Pointer:
+                return 'Pointer'
+
+        raise NotImplementedError(str(self))
 
     def __str__(self) -> str:
         return f'flags = 0x{self.flags:08X}'
@@ -168,12 +220,13 @@ class ScenaParamFlags:
 
 class ScenaValue:
     class Type(IntEnum2):
-        Undefined       = 0
+        Raw             = 0
         Integer         = 1
         Float           = 2
         String          = 3
 
     ClassMap = {
+        RawInt  : Type.Raw,
         int     : Type.Integer,
         float   : Type.Float,
         str     : Type.String,
@@ -196,8 +249,8 @@ class ScenaValue:
         typ = value >> 30
 
         match typ:
-            case ScenaValue.Type.Undefined:
-                pass
+            case ScenaValue.Type.Raw:
+                value = RawInt(value)
 
             case ScenaValue.Type.Integer:
                 value = (value << 2) & 0xFFFFFFFF
@@ -214,6 +267,27 @@ class ScenaValue:
 
         self.value = value
         self.type = ScenaValue.Type(typ)
+
+    def serialize(self) -> bytes:
+        match self.type:
+            case ScenaValue.Type.Raw:
+                v = self.value.to_bytes(4, defaultEndian())
+
+            case ScenaValue.Type.Integer:
+                assert self.value <= 0x3FFFFFFFF if self.value >= 0 else self.value >= -(0x1FFFFFFF + 1)
+
+                v = (self.value & 0x3FFFFFFF) | (ScenaValue.Type.Integer << 30)
+                v = int(v).to_bytes(4, defaultEndian(), signed = False)
+
+            case ScenaValue.Type.Float:
+                v = int.from_bytes(struct.pack('f', self.value), defaultEndian())
+                v = (v >> 2) | (ScenaValue.Type.Float << 30)
+                v = v.to_bytes(4, defaultEndian())
+
+            case _:
+                raise NotImplementedError(f'unsupported type: {self.value}')
+
+        return v
 
     def __str__(self) -> str:
         return f'ScenaValue<{self.value}>'
@@ -392,13 +466,23 @@ ScenaDataFunctionTypes = set([
 ])
 
 class ScenaFunction:
-    def __init__(self, index: int, offset: int, name: str, *, type: ScenaFunctionType = ScenaFunctionType.Invalid, entry: ScenaFunctionEntry = None):
+    def __init__(
+            self,
+            index   : int,
+            offset  : int,
+            name    : str,
+            *,
+            type    : ScenaFunctionType = ScenaFunctionType.Invalid,
+            entry   : ScenaFunctionEntry = None,
+            sig     : inspect.Signature = None,
+        ):
         self.index      = index
         self.offset     = offset
         self.name       = name
         self.type       = type
         self.obj        = None
         self.entry      = entry
+        self.sig        = sig
         self.params     = []        # list[ScenaParamFlags]
 
     def __str__(self) -> str:

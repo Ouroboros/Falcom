@@ -2,12 +2,6 @@ from Falcom.Common import *
 from Assembler     import *
 from .utils        import *
 
-class ED9OperandValueType(IntEnum2):
-    Undefined       = 0
-    Integer         = 1
-    Float           = 2
-    String          = 3
-
 class ED9OperandType(IntEnum2):
     Offset,         \
     Item,           \
@@ -85,7 +79,7 @@ class ED9OperandDescriptor(OperandDescriptor):
 
         v: ScenaValue = context.operand.value
         match v.type:
-            case ScenaValue.Type.Undefined:
+            case ScenaValue.Type.Raw:
                 fmt = 'L'
 
             case ScenaValue.Type.Integer:

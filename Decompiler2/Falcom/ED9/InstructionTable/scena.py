@@ -118,7 +118,7 @@ def Handler_00(ctx: InstructionHandlerContext):
             # type = value >> 30
 
             match inst.operands[0].value.type:
-                case ScenaValue.Type.Undefined:
+                case ScenaValue.Type.Raw:
                     pass
 
                 case ScenaValue.Type.Integer:
@@ -148,7 +148,7 @@ def IL_Handler(ctx: InstructionHandlerContext):
 
     def formatScenaValue(v: ScenaValue):
         match v.type:
-            case ScenaValue.Type.Undefined:
+            case ScenaValue.Type.Raw:
                 fmt = 'L'
                 f = ED9OperandDescriptor.formatInteger
 

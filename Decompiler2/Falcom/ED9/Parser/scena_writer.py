@@ -1,8 +1,7 @@
 from Falcom.Common import *
 from Falcom import ED9
 from Falcom.ED9.Parser.scena_types import *
-import pathlib
-import uuid
+import uuid, inspect
 
 class ScenaGlobalVar(ScenaGlobalVar):
     def load(self):
@@ -20,6 +19,8 @@ class StrGlobalVar(ScenaGlobalVar):
         super().__init__(index, name, ScenaGlobalVar.Type.String)
 
 class _StringPool:
+    PLACE_HOLDER = 0xC5555555
+
     def __init__(self):
         self.pool = {}                                  # type: Dict[str, int]
         self.xref = []                                  # type: List[Tuple[str, int]]
@@ -28,18 +29,26 @@ class _StringPool:
         self.pool.setdefault(s, 0)
         self.xref.append((s, offset))
 
+class ScenaFunctionWrapper:
+    def __init__(self, func: ScenaFunction):
+        self.func = func
+
+    def __int__(self) -> int:
+        return self.func.index
+
 class _ScenaWriter:
     def __init__(self):
         self.labels             = {}                    # type: Dict[str, int]
         self.xrefs              = []                    # type: List[Assembler.XRef]
-        self.functions          = []                    # type: List[ED9.ScenaFunction]
+        self.functions          = []                    # type: List[ScenaFunction]
         self.instructionTable   = None                  # type: ED9.ED9InstructionTable
         self.scenaName          = ''
-        self.fs                 = fileio.FileStream().OpenMemory()
+        self.fs                 = None                  # type: fileio.FileStream
         self.globals            = None                  # type: dict
         self.opcodeCallbacks    = []                    # type: List[Callable[[int, Tuple]]]
         self.funcCallbacks      = []                    # type: List[Callable[[str, Callable]]]
         self.runCallbacks       = []                    # type: List[Callable[[dict]]]
+        self.globalVars         = []                    # type: List[ScenaGlobalVar]
         self.stringPool         = _StringPool()         # type: _StringPool
 
     def init(self, instructionTable: ED9.ED9InstructionTable, scenaName: str):
@@ -56,28 +65,35 @@ class _ScenaWriter:
         self.opcodeCallbacks.append(cb)
 
     def setGlobalVars(self, *vars):
-        pass
+        self.globalVars.extend(vars)
 
-    def functionDecorator(self, name: str, type: ED9.ScenaFunctionType) -> Callable[[], None]:
+    def functionDecorator(self, name: str, type: ScenaFunctionType, byte05, byte06) -> Callable[[], None]:
         def wrapper(f: Callable[[], Any]):
             for cb in self.funcCallbacks:
                 f2 = cb(name, f)
                 if f2 is not None:
                     f = f2
 
-            func = ED9.ScenaFunction(len(self.functions), -1, name)
+            func = ScenaFunction(len(self.functions), -1, name)
             func.type = type
             func.obj = f
+
+            if type == ScenaFunctionType.Code:
+                entry = ScenaFunctionEntry(offset = 0xEEEEEEEE, byte05 = byte05, byte06 = byte06, nameCrc32 = utils.hashFuncName(name))
+                func.entry = entry
+                func.sig = inspect.signature(f)
+                entry.paramCount = len(func.sig.parameters)
+
             self.functions.append(func)
 
-            return lambda: None
+            return ScenaFunctionWrapper(func)
 
         return wrapper
 
     # decorators
 
-    def Code(self, name: str):
-        return self.functionDecorator(name, ED9.ScenaFunctionType.Code)
+    def Code(self, name: str, byte05 = 0, byte06 = 0):
+        return self.functionDecorator(name, ScenaFunctionType.Code, byte05, byte06)
 
     def run(self, g: dict):
         for cb in self.runCallbacks:
@@ -92,7 +108,100 @@ class _ScenaWriter:
 
     def run2(self, g: dict):
         self.globals = g
+
+        hdr = ScenaHeader()
+        fs = fileio.FileStream(encoding = defaultEncoding()).OpenFile(self.scenaName, 'wb+')
+
+        self.fs = fs
+
+        hdr.functionCount = len(self.functions)
+        hdr.globalVarCount = len(self.globalVars)
+
+        fs.Write(hdr.serialize())
+
+        self.writeFuncInfo(fs)
+        self.writeDebugSymbols(fs)
+        self.writeGlobalVars(fs)
+
+        self.writeStringPool(fs)
+
+        fs.Flush()
+        fs.Close()
         raise NotImplementedError
+
+    def writeFuncInfo(self, fs: fileio.FileStream):
+        funcEntryOffset = fs.Position
+
+        for f in self.functions:
+            entry = f.entry
+            fs.Write(entry.serialize())
+
+        for f in self.functions:
+            entry = f.entry
+            entry.defaultParamsOffset = fs.Position
+            if entry.paramCount == 0:
+                continue
+
+            entry.defaultParamsCount = 0
+
+            for param in reversed(f.sig.parameters.values()):
+                value = param.default
+                if value is param.empty:
+                    continue
+
+                entry.defaultParamsCount += 1
+
+                print(f'{f.name} @ 0x{fs.Position:08X} {param.name}')
+
+                match value:
+                    case RawInt():
+                        fs.Write(value.to_bytes(4, defaultIndent()))
+
+                    case int() | float():
+                        fs.Write(ScenaValue(value).serialize())
+
+                    case str():
+                        self.writeString(value)
+
+            # if entry.defaultParamsCount == 0:
+            #     entry.defaultParamsOffset = 0xFFFFFFFF
+
+        for f in self.functions:
+            entry = f.entry
+            entry.paramFlagsOffset = fs.Position
+
+            if entry.paramCount == 0:
+                continue
+
+            for param in f.sig.parameters.values():
+                fs.Write(ScenaParamFlags(param.annotation).serialize())
+
+        with fs.PositionSaver:
+            fs.Position = funcEntryOffset
+            for f in self.functions:
+                entry = f.entry
+                # if entry.defaultParamsOffset != 0xFFFFFFFF: ibp()
+
+                fs.Write(entry.serialize())
+
+    def writeDebugSymbols(self, fs: fileio.FileStream):
+        fs.Write(bytes([0xFF] * 0x3630c))
+
+    def writeGlobalVars(self, fs: fileio.FileStream):
+        for gv in self.globalVars:
+            self.writeString(gv.name)
+            fs.WriteULong(gv.type)
+
+    def writeStringPool(self, fs: fileio.FileStream):
+        pool = self.stringPool.pool
+        for s in pool.keys():
+            pool[s] = fs.Position
+            fs.Write(s.encode(defaultEncoding()) + b'\x00')
+
+        with fs.PositionSaver:
+            for s, offset in self.stringPool.xref:
+                fs.Position = offset
+                fs.WriteULong(0xC0000000 | pool[s])
 
     def addLabel(self, name):
         addr = self.labels.get(name)
@@ -100,6 +209,10 @@ class _ScenaWriter:
             raise Exception(f'label exists: {name} -> 0x{addr:08X}')
 
         self.labels[name] = self.fs.Position
+
+    def writeString(self, s: str):
+        self.addString(s)
+        self.fs.WriteULong(_StringPool.PLACE_HOLDER)
 
     def addString(self, s: str):
         self.stringPool.addString(s, self.fs.Position)

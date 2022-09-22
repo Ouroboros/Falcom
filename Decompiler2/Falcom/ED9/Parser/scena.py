@@ -45,7 +45,7 @@ class ScenaFormatter(Assembler.Formatter):
             for index, p in enumerate(func.params):
                 p: ScenaParamFlags
                 # assert p.defaultValue is not None
-                s = f'arg{index + 1}'
+                s = f'arg{index + 1}: {p.getPythonType()}'
                 if p.defaultValue is not None:
                     s += f' = {repr(p.defaultValue)}'
 
@@ -58,7 +58,7 @@ class ScenaFormatter(Assembler.Formatter):
 
         f = [
             f'# id: 0x{func.index:04X} offset: 0x{func.offset:X}',
-            f'@scena.{func.type}(\'{func.name}\')',
+            f"@scena.{func.type}('{func.name}')" if func.entry.byte05 == 0 and func.entry.byte06 == 0 else f"@scena.{func.type}('{func.name}', {func.entry.byte05}, {func.entry.byte06})",
             f'def {funcName}({args}):',
         ]
 
@@ -139,7 +139,7 @@ class ScenaParser:
         for index, f in enumerate(funcEntries):
             assert f.nameOffset >> 30 == 3
             fs.Position = f.nameOffset & 0x3FFFFFFF
-            func = ScenaFunction(index = index, offset = f.addr, name = fs.ReadMultiByte(), type = ScenaFunctionType.Code, entry = f)
+            func = ScenaFunction(index = index, offset = f.offset, name = fs.ReadMultiByte(), type = ScenaFunctionType.Code, entry = f)
 
             fs.Position = f.paramFlagsOffset
             func.params = [ScenaParamFlags(fs = fs) for _ in range(f.paramCount)]

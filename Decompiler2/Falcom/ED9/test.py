@@ -27,19 +27,19 @@ def procfile(f: str):
     console.setTitle(os.path.basename(f))
 
     output = pathlib.Path(f)
-    os.makedirs(output.parent / 'py', exist_ok = True)
-    output = output.parent / 'py' / (output.stem + '.py')
+    os.makedirs(output.parent / 'py.asm', exist_ok = True)
+    output = output.parent / 'py.asm' / (output.stem + '.py')
     # if output.exists(): continue
 
     test(f, output)
 
 def main():
     scena = [
-        # r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani',
+        r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ani',
         # r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\scena',
         # r'D:\Game\Steam\steamapps\common\THE LEGEND OF HEROES KURO NO KISEKI\decrypted\tc\f\script\ai',
         # '/Users/ouroboros/Downloads/decrypted/tc/f/script/scena',
-        '/Users/ouroboros/Downloads/decrypted/tc/f/script/ani',
+        # '/Users/ouroboros/Downloads/decrypted/tc/f/script/ani',
     ]
 
     output_dir = None
@@ -54,9 +54,9 @@ def main():
             console.setTitle(os.path.basename(f))
 
             output = pathlib.Path(f)
-            os.makedirs(output.parent / 'py', exist_ok = True)
-            output = output.parent / 'py' / (output.stem + '.py')
-            if output.exists(): continue
+            os.makedirs(output.parent / 'py.asm', exist_ok = True)
+            output = output.parent / 'py.asm' / (output.stem + '.py')
+            # if output.exists(): continue
 
             test(f, output)
 
