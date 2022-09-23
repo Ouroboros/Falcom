@@ -65,6 +65,8 @@ class ScenaHeader:
         return fs.getvalue()
 
 class ScenaFunctionEntry:
+    SIZE = 0x20
+
     def __init__(
             self,
             offset                  : int = 0,
@@ -152,6 +154,7 @@ class ScenaFunctionEntry:
 class ScenaParamFlags:
     def __init__(self, typ: object = None, *, fs: fileio.FileStream = None):
         self.flags = 0
+        self.defaultValue = None
 
         if typ is not None:
             if typ == Value32:

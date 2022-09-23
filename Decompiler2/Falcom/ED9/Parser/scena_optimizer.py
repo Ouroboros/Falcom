@@ -342,9 +342,10 @@ class ED9Optimizer():
                             except KeyError:
                                 pass
 
-                        for p in params:
-                            if p.inst is not None:
-                                p.inst.flags |= Flags.FormatIgnore
+                        if overwriteInstructions:
+                            for p in params:
+                                if p.inst is not None:
+                                    p.inst.flags |= Flags.FormatIgnore
 
                         instructions.addMLIL(MediumLevelILCall(target_func, params, returnValue = stack.Reg() if hasReturnValue else None))
 
@@ -360,9 +361,11 @@ class ED9Optimizer():
                         module, funcName = inst.operands[0], inst.operands[1]
                         paramCount = inst.operands[2].value
                         params = [stack.pop() for _ in range(paramCount + 5)]   # funcid, retaddr, current_script * 2, 0xF0000000
-                        for p in params:
-                            if p.inst is not None:
-                                p.inst.flags |= Flags.FormatIgnore
+
+                        if overwriteInstructions:
+                            for p in params:
+                                if p.inst is not None:
+                                    p.inst.flags |= Flags.FormatIgnore
 
                         instructions.addMLIL(MediumLevelILCallModule(module, funcName, params))
 
@@ -370,9 +373,11 @@ class ED9Optimizer():
                         module, funcName = inst.operands[0], inst.operands[1]
                         paramCount = inst.operands[2].value
                         params = [stack.pop() for _ in range(paramCount)]
-                        for p in params:
-                            if p.inst is not None:
-                                p.inst.flags |= Flags.FormatIgnore
+
+                        if overwriteInstructions:
+                            for p in params:
+                                if p.inst is not None:
+                                    p.inst.flags |= Flags.FormatIgnore
 
                         instructions.addMLIL(MediumLevelILCallModule(module, funcName, params, noReturn = True))
 
@@ -387,7 +392,7 @@ class ED9Optimizer():
                         params      = []
                         for i in range(1, paramCount + 1):
                             p = stack.getAt(-i)
-                            if p.inst is not None:
+                            if overwriteInstructions and p.inst is not None:
                                 p.inst.flags |= Flags.FormatIgnore
                             params.append(p)
 

@@ -29,6 +29,9 @@ class _StringPool:
         self.pool.setdefault(s, 0)
         self.xref.append((s, offset))
 
+    def getOffset(self, s: str) -> int:
+        return self.pool[s] | 0xC0000000
+
 class ScenaFunctionWrapper:
     def __init__(self, func: ScenaFunction):
         self.func = func
@@ -36,11 +39,20 @@ class ScenaFunctionWrapper:
     def __int__(self) -> int:
         return self.func.index
 
+    def __call__(self, *args: Any, **kwds: Any) -> Any:
+        raise NotImplementedError
+
+class ED9DisasmContext(Assembler.DisasmContext):
+    def __init__(self, writer: '_ScenaWriter', fs: fileio.FileStream):
+        super().__init__(fs)
+        self.writer = writer
+
 class _ScenaWriter:
     def __init__(self):
         self.labels             = {}                    # type: Dict[str, int]
         self.xrefs              = []                    # type: List[Assembler.XRef]
         self.functions          = []                    # type: List[ScenaFunction]
+        self.currentFunctionId  = None                  # type: int
         self.instructionTable   = None                  # type: ED9.ED9InstructionTable
         self.scenaName          = ''
         self.fs                 = None                  # type: fileio.FileStream
@@ -121,24 +133,43 @@ class _ScenaWriter:
 
         self.writeFuncInfo(fs)
         self.writeDebugSymbols(fs)
+
+        hdr.globalVarOffset = fs.Position
         self.writeGlobalVars(fs)
+        self.compileFunctions(fs)
+
+        with fs.PositionSaver:
+            self.flushFuncEntries(fs)
 
         self.writeStringPool(fs)
+
+        fs.Position = 0
+        fs.Write(hdr.serialize())
+
+        with fs.PositionSaver:
+            for x in self.xrefs:
+                offset = self.labels[x.name]
+                fs.Position = x.offset
+                fs.WriteULong(offset)
+
+            self.xrefs.clear()
 
         fs.Flush()
         fs.Close()
         raise NotImplementedError
 
     def writeFuncInfo(self, fs: fileio.FileStream):
-        funcEntryOffset = fs.Position
-
+        offsetOfFuncName = fs.Position + 0x1C
         for f in self.functions:
-            entry = f.entry
-            fs.Write(entry.serialize())
+            self.stringPool.addString(f.name, offsetOfFuncName)
+            offsetOfFuncName += ScenaFunctionEntry.SIZE
+
+        self.flushFuncEntries(fs)
 
         for f in self.functions:
             entry = f.entry
             entry.defaultParamsOffset = fs.Position
+
             if entry.paramCount == 0:
                 continue
 
@@ -151,7 +182,7 @@ class _ScenaWriter:
 
                 entry.defaultParamsCount += 1
 
-                print(f'{f.name} @ 0x{fs.Position:08X} {param.name}')
+                # print(f'{f.name} @ 0x{fs.Position:08X} {param.name}')
 
                 match value:
                     case RawInt():
@@ -177,12 +208,12 @@ class _ScenaWriter:
                 fs.Write(ScenaParamFlags(param.annotation).serialize())
 
         with fs.PositionSaver:
-            fs.Position = funcEntryOffset
-            for f in self.functions:
-                entry = f.entry
-                # if entry.defaultParamsOffset != 0xFFFFFFFF: ibp()
+            self.flushFuncEntries(fs)
 
-                fs.Write(entry.serialize())
+    def flushFuncEntries(self, fs: fileio.FileStream):
+        fs.Position = 0x18
+        for f in self.functions:
+            fs.Write(f.entry.serialize())
 
     def writeDebugSymbols(self, fs: fileio.FileStream):
         fs.Write(bytes([0xFF] * 0x3630c))
@@ -192,16 +223,23 @@ class _ScenaWriter:
             self.writeString(gv.name)
             fs.WriteULong(gv.type)
 
+    def compileFunctions(self, fs: fileio.FileStream):
+        for f in self.functions:
+            self.currentFunctionId = f.index
+            f.entry.offset = fs.Position
+            print(f'{f.name} @ 0x{f.entry.offset:08X}')
+            f.obj(*[None] * f.entry.paramCount)
+
     def writeStringPool(self, fs: fileio.FileStream):
-        pool = self.stringPool.pool
-        for s in pool.keys():
-            pool[s] = fs.Position
+        pool = self.stringPool
+        for s in pool.pool.keys():
+            pool.pool[s] = fs.Position
             fs.Write(s.encode(defaultEncoding()) + b'\x00')
 
         with fs.PositionSaver:
-            for s, offset in self.stringPool.xref:
+            for s, offset in pool.xref:
                 fs.Position = offset
-                fs.WriteULong(0xC0000000 | pool[s])
+                fs.WriteULong(pool.getOffset(s))
 
     def addLabel(self, name):
         addr = self.labels.get(name)
@@ -216,15 +254,6 @@ class _ScenaWriter:
 
     def addString(self, s: str):
         self.stringPool.addString(s, self.fs.Position)
-
-    def compileCode(self, fs: fileio.FileStream, f: ScenaFunction):
-        if f.name:
-            self.addLabel(f.name)
-
-        f.obj()
-
-    def onEval(self, code: str):
-        eval(code, self.globals)
 
     def handleOpCode(self, opcode: int, *args, **kwargs):
         # log.debug(f'handle opcode 0x{opcode:X} @ 0x{self.fs.Position:X}')
@@ -247,10 +276,9 @@ class _ScenaWriter:
             inst.operands.append(opr)
 
         context = Assembler.InstructionHandlerContext(Assembler.HandlerAction.Assemble, desc)
-        context.disasmContext = Assembler.DisasmContext(fs)
+        context.disasmContext = ED9DisasmContext(self, fs)
         context.instruction = inst
         context.xrefs = self.xrefs
-        context.eval = self.onEval
 
         if desc.handler:
             if desc.handler(context):
@@ -266,6 +294,9 @@ _gScena: _ScenaWriter = _ScenaWriter()
 
 def createScenaWriter(scriptName: str) -> _ScenaWriter:
     _gScena.init(instructionTable = ED9.ScenaOpTable, scenaName = scriptName)
+    return _gScena
+
+def getScena() -> _ScenaWriter:
     return _gScena
 
 def label(name: str):

@@ -1,4 +1,4 @@
-from Falcom.ED9.Parser.scena_writer import _gScena
+from Falcom.ED9.Parser.scena_writer import _gScena, ScenaFunctionWrapper
 
 sint8 = int
 uint8 = int
@@ -8,15 +8,11 @@ sint32 = int
 uint32 = int
 float32 = float | int
 
-def PUSH(arg1: int, *args):
-    # 0x00
-    assert isinstance(arg1, int)
-    return _gScena.handleOpCode(0x00, arg1, *args)
+def PUSH(arg1: int | float | str):
+    return _gScena.handleOpCode(0x00, arg1)
 
-def OP_00(arg1: int, *args):
-    # 0x00
-    assert isinstance(arg1, int)
-    return _gScena.handleOpCode(0x00, arg1, *args)
+def OP_00(arg1: int | float | str):
+    return _gScena.handleOpCode(0x00, arg1)
 
 def POP(arg1: uint8):
     # 0x01
@@ -128,14 +124,14 @@ def OP_0B(arg1: str):
     assert isinstance(arg1, str)
     _gScena.handleOpCode(0x0B, arg1)
 
-def CALL(arg1: uint16):
+def CALL(arg1: uint16 | ScenaFunctionWrapper):
     # 0x0C
-    assert isinstance(arg1, uint16)
+    assert isinstance(arg1, uint16 | ScenaFunctionWrapper)
     _gScena.handleOpCode(0x0C, arg1)
 
-def OP_0C(arg1: uint16):
+def OP_0C(arg1: uint16 | ScenaFunctionWrapper):
     # 0x0C
-    assert isinstance(arg1, uint16)
+    assert isinstance(arg1, uint16 | ScenaFunctionWrapper)
     _gScena.handleOpCode(0x0C, arg1)
 
 def RETURN():
@@ -422,14 +418,14 @@ def OP_1002(arg1: str):
     assert isinstance(arg1, str)
     _gScena.handleOpCode(0x1002, arg1)
 
-def PUSH_FUNC_ID(arg1: uint16):
+def PUSH_FUNC_ID(arg1: uint16 | ScenaFunctionWrapper):
     # 0x1003
-    assert isinstance(arg1, uint16)
+    assert isinstance(arg1, uint16 | ScenaFunctionWrapper)
     _gScena.handleOpCode(0x1003, arg1)
 
-def OP_1003(arg1: uint16):
+def OP_1003(arg1: uint16 | ScenaFunctionWrapper):
     # 0x1003
-    assert isinstance(arg1, uint16)
+    assert isinstance(arg1, uint16 | ScenaFunctionWrapper)
     _gScena.handleOpCode(0x1003, arg1)
 
 def PUSH_RET_ADDR(arg1: str):

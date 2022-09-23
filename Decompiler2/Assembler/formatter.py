@@ -77,7 +77,8 @@ class Formatter:
         if not block.instructions:
             return text
 
-        if genLabel and block.name:
+        if genLabel and block.name and not block.name in self.formatted:
+            self.formatted.add(block.name)
             text = [
                 *self.formatLabel(block.name),
                 '',
@@ -89,6 +90,11 @@ class Formatter:
 
         for inst in block.instructions:
             for x in inst.xrefs:
+                if x.name in self.formatted:
+                    continue
+
+                self.formatted.add(x.name)
+
                 addEmptyLine()
                 text.extend([
                     *self.formatLabel(x.name),

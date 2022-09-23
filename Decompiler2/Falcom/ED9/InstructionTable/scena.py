@@ -89,8 +89,8 @@ def inst(opcode: int, mnemonic: str, operandfmts: str = NoOperand, flags: Flags 
         handler = genHandler(*operandfmts)
         operandfmts = NoOperand
 
-    if handler:
-        assert operandfmts is NoOperand
+    # if handler:
+    #     assert operandfmts is NoOperand
 
     if operandfmts is NoOperand:
         operands = NoOperand
@@ -133,10 +133,50 @@ def Handler_00(ctx: InstructionHandlerContext):
             return inst
 
         case HandlerAction.Assemble:
-            raise
+            fs = ctx.disasmContext.fs
+            fs.WriteByte(0x00)
+            fs.WriteByte(0x04)
+
+            value = ctx.instruction.operands[0].value
+
+            match value:
+                case int() | float():
+                    fs.Write(ScenaValue(value).serialize())
+
+                case str():
+                    ctx.disasmContext.writer.writeString(value)
+
+                case _:
+                    fs.Write(ScenaValue(value).serialize())
+
+            return True
 
         case HandlerAction.CodeGen:
+            return [
+                'def PUSH(arg1: int | float | str):',
+                '    return _gScena.handleOpCode(0x00, arg1)',
+
+                '',
+            ]
+
             return genVariadicFuncStub(ctx.descriptor, int)
+
+def Handler_PUSH_RET_ADDR(ctx: InstructionHandlerContext):
+    from ..Parser.scena_types import ScenaValue
+
+    match ctx.action:
+        case HandlerAction.Assemble:
+            fs = ctx.disasmContext.fs
+
+            fs.WriteByte(0x00)
+            fs.WriteByte(0x04)
+
+            value = ctx.instruction.operands[0].value
+
+            ctx.addXRef(value, fs.Position)
+            fs.WriteULong(0)
+
+            return True
 
 from .mediumlevelil import *
 
@@ -489,7 +529,7 @@ ScenaOpTable = ED9InstructionTable([
     inst(0x1001,  'PUSH_FLOAT',                     'f'),
     inst(0x1002,  'PUSH_STR',                       'S'),
     inst(0x1003,  'PUSH_FUNC_ID',                   'F'),
-    inst(0x1004,  'PUSH_RET_ADDR',                  'O'),
+    inst(0x1004,  'PUSH_RET_ADDR',                  'O',    handler = Handler_PUSH_RET_ADDR),
     inst(0x1005,  'PUSH_CURRENT_FUNC_ID',           'I'),
 
     # binary ninja style MLIL

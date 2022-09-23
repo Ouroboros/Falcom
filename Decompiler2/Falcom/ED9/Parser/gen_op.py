@@ -21,7 +21,7 @@ def map_operand_type(t: OperandType) -> str:
         ED9.ED9OperandType.ChrId        : 'uint16',
         ED9.ED9OperandType.Item         : 'uint16',
         ED9.ED9OperandType.CraftId      : 'uint16',
-        ED9.ED9OperandType.FunctionID   : 'uint16',
+        ED9.ED9OperandType.FunctionID   : 'uint16 | ScenaFunctionWrapper',
         ED9.ED9OperandType.Value        : 'sint32 | float | str',
     }[t]
 
@@ -31,7 +31,7 @@ def main():
     filename = filename.parent / ('scena_writer_gen.py')
 
     lines = [
-        'from Falcom.ED9.Parser.scena_writer import _gScena',
+        'from Falcom.ED9.Parser.scena_writer import _gScena, ScenaFunctionWrapper',
         '',
         'sint8 = int',
         'uint8 = int',

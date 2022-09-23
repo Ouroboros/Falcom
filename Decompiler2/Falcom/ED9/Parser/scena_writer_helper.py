@@ -1,48 +1,54 @@
 from Falcom.ED9.Parser.scena_writer import *
 from Falcom.ED9.Parser.scena_writer_gen import *
 from Falcom.ED9.Parser.consts import *
-import struct
+
+_ORIG_PUSH = PUSH
+
+def PUSH(v: int | RawInt):
+    assert isinstance(v, int | RawInt)
+    return _ORIG_PUSH(RawInt(v))
 
 def PUSH_INT(v: sint32):
-    return PUSH(v | (ScenaValue.Type.Integer << 30))
+    assert isinstance(v, sint32)
+    return _ORIG_PUSH(v)
 
 def PUSH_FLOAT(f: float32):
-    b = struct.pack('f', f)
-    v = int.from_bytes(b, 'little', signed = False)
-    return PUSH(v | (ScenaValue.Type.Float << 30))
+    assert isinstance(f, float32)
+    return _ORIG_PUSH(f)
 
 def PUSH_STR(s: str):
-    PUSH(s)
+    assert isinstance(s, str)
+    return _ORIG_PUSH(s)
 
 def PUSH_CURRENT_FUNC_ID():
-    pass
+    PUSH(getScena().currentFunctionId)
 
 def Call(module: str, func: str, *args):
-    pass
+    raise NotImplementedError
 
 def CallNoReturn(module: str, func: str, *args):
-    pass
+    raise NotImplementedError
 
 def GetReg(id: int):
-    pass
+    raise NotImplementedError
 
 def SetReg(id: int, value: int):
-    pass
+    raise NotImplementedError
 
 def JmpIfZero():
-    pass
+    raise NotImplementedError
 
 def JmpIfNotZero():
-    pass
+    raise NotImplementedError
 
 def Syscall():
-    pass
+    raise NotImplementedError
 
 def LogicalOr():
-    pass
+    raise NotImplementedError
 
 def LogicalAnd():
-    pass
+    raise NotImplementedError
 
 def Return():
-    pass
+    raise NotImplementedError

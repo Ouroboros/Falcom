@@ -52,9 +52,10 @@ class ED9OperandDescriptor(OperandDescriptor):
             ED9OperandType.ScenaFlags   : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED9OperandType.Offset       : lambda context, value: context.disasmContext.fs.WriteULong(0xFFFFABCD),
             ED9OperandType.ChrId        : lambda context, value: context.disasmContext.fs.WriteUShort(value),
-            ED9OperandType.FunctionID   : lambda context, value: context.disasmContext.fs.WriteUShort(value),
+            ED9OperandType.FunctionID   : lambda context, value: context.disasmContext.fs.WriteUShort(int(value)),
             ED9OperandType.Item         : lambda context, value: context.disasmContext.fs.WriteUShort(value),
             ED9OperandType.CraftId      : lambda context, value: context.disasmContext.fs.WriteUShort(value),
+            ED9OperandType.Value        : self.writeScenaValue,
         }.get(self.format.type, super().writeValue)(context, value)
 
     def formatValue(self, context: FormatOperandHandlerContext) -> str:
@@ -73,6 +74,16 @@ class ED9OperandDescriptor(OperandDescriptor):
         from ..Parser.scena_types import ScenaValue
         fs = context.disasmContext.fs
         return ScenaValue(fs = fs)
+
+    def writeScenaValue(self, context: InstructionHandlerContext, value):
+        from ..Parser.scena_types import ScenaValue
+        fs = context.disasmContext.fs
+        value = ScenaValue(value)
+        if value.type == ScenaValue.Type.String:
+            context.disasmContext.writer.writeString(value.value)
+
+        else:
+            fs.Write(value.serialize())
 
     def formatScenaValue(self, context: FormatOperandHandlerContext):
         from ..Parser.scena_types import ScenaValue

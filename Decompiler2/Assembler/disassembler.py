@@ -131,9 +131,12 @@ class Disassembler:
             log.error('error occurred %s @ position %X' % (e, pos))
             raise
 
-        # log.debug(f'disasm inst 0x{opcode:02X}<{opcode}> @ 0x{pos:08X}')
-
-        desc = self.instructionTable.getDescriptor(opcode)
+        try:
+            desc = self.instructionTable.getDescriptor(opcode)
+            # log.debug(f'disasm inst 0x{opcode:02X}<{opcode}><{desc.mnemonic}> @ 0x{pos:08X}')
+        except:
+            # log.debug(f'disasm inst 0x{opcode:02X}<{opcode}> @ 0x{pos:08X}')
+            raise
 
         handlerContext = InstructionHandlerContext(HandlerAction.Disassemble, desc)
 
