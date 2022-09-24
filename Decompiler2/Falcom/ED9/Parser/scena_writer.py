@@ -154,9 +154,9 @@ class _ScenaWriter:
 
             self.xrefs.clear()
 
-        fs.Flush()
-        fs.Close()
-        raise NotImplementedError
+        # fs.Flush()
+        # fs.Close()
+        # raise NotImplementedError
 
     def writeFuncInfo(self, fs: fileio.FileStream):
         offsetOfFuncName = fs.Position + 0x1C
@@ -216,7 +216,8 @@ class _ScenaWriter:
             fs.Write(f.entry.serialize())
 
     def writeDebugSymbols(self, fs: fileio.FileStream):
-        fs.Write(bytes([0xFF] * 0x3630c))
+        pass
+        # fs.Write(bytes([0xFF] * 0x3630c))
 
     def writeGlobalVars(self, fs: fileio.FileStream):
         for gv in self.globalVars:
