@@ -58,7 +58,7 @@ class Formatter:
 
         f = []
         for i, b in enumerate(blocks):
-            f.extend(self.formatBlockWorker(b, genLabel = i != 0))
+            f.extend(self.formatBlockWorker(b, genLabel = genLabel and i != 0))
             if f and f[-1] != '':
                 f.append('')
 
@@ -112,7 +112,8 @@ class Formatter:
                 if inst.flags.startBlock or inst.flags.endBlock:
                     addEmptyLine()
 
-                text.append(''.join(t))
+                if t:
+                    text.append(''.join(t))
 
                 if inst.flags.newline:
                     addEmptyLine()

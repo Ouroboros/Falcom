@@ -175,8 +175,8 @@ class ScenaParser:
         ctx = Assembler.DisasmContext(fs, instCallback = self.instructionCb, scriptName = self.name)
         options = ED9OptimizerOptions(
             optimizeCallInst    = True,
-            transToMLIL         = False,
-            processFuncName     = False,
+            transToMLIL         = not False,
+            processFuncName     = not False,
         )
 
         optimizer = ED9Optimizer(self, options)
@@ -189,11 +189,10 @@ class ScenaParser:
                     fs.Position = func.offset
                     try:
                         func.obj = dis.disasmFunction(ctx, name = func.name)
+                        optimizer.optimizeFunction(func, dis)
                     except KeyError as e:
                         e.args = (f'0x{e.args[0]:X} ({e.args[0]})',)
                         raise
-
-                    optimizer.optimizeFunction(func, dis)
 
                 case _:
                     if func.type not in ScenaDataFunctionTypes:

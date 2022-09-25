@@ -11,6 +11,7 @@ if TYPE_CHECKING:
 class MLIL(IntEnum2):
     UNDEF                   = auto()
     NOP                     = auto()
+    SET_LINENO              = auto()
     SET_VAR                 = auto()
     DEL_VAR                 = auto()
     LOAD_GLOBAL_VAR         = auto()
@@ -59,6 +60,9 @@ class MediumLevelILNop(MediumLevelILInstruction):
 
 class MediumLevelILRet(MediumLevelILInstruction):
     OpCode = MLIL.RET
+
+class MediumLevelILSetLineno(MediumLevelILInstruction):
+    OpCode = MLIL.SET_LINENO
 
 class MediumLevelILSetVar(MediumLevelILInstruction):
     OpCode = MLIL.SET_VAR

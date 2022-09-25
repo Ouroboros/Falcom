@@ -318,31 +318,37 @@ class ScenaGlobalVar:
 
 class ScenaVariable:
     def __init__(
-            self,value          = None,
+            self,
+            value               = None,
             stackIndex: int     = 0,
             *,
-            const               = False,
-            stackRef            = False,
             name                = '',
-            returnValue         = False,
+            const               = False,
+            isStackRef          = False,
+            isReturnValue       = False,
             isReg               = False,
             isArg               = False,
             isGlobalVar         = False,
             isSetVar            = False,
-            loadStack           = False,
+            isPtr               = False,
+            isLoadStack         = False,
+            isPopTo             = False,
             stack: 'ScenaStack' = None,
         ):
         self.value          = value
         self.stackIndex     = stackIndex
-        self.const          = const
-        self.stackRef       = stackRef
         self._name          = name
-        self.returnValue    = returnValue
+
+        self.const          = const
+        self.isStackRef     = isStackRef
+        self.isReturnValue  = isReturnValue
         self.isReg          = isReg
         self.isArg          = isArg
         self.isGlobalVar    = isGlobalVar
         self.isSetVar       = isSetVar
-        self.loadStack      = loadStack
+        self.isPtr          = isPtr
+        self.isLoadStack    = isLoadStack
+        self.isPopTo        = isPopTo
 
         self.isTos          = False
         self.inst           = None      # type: Assembler.Instruction
@@ -416,9 +422,17 @@ class ScenaStack:
         v = ScenaVariable(value, self.stackTop, isSetVar = True, stack = self)
         return self.push(v)
 
-    def LoadStack(self, value = None) -> ScenaVariable:
-        v = ScenaVariable(value, self.stackTop, loadStack = True, stack = self)
+    def Ptr(self, value = None) -> ScenaVariable:
+        v = ScenaVariable(value, self.stackTop, isPtr = True, stack = self)
         return self.push(v)
+
+    def LoadStack(self, value = None) -> ScenaVariable:
+        v = ScenaVariable(value, self.stackTop, isLoadStack = True, stack = self)
+        return self.push(v)
+
+    def PopTo(self, value = None) -> ScenaVariable:
+        v = ScenaVariable(value, self.stackTop, isPopTo = True, stack = self)
+        return v
 
     def Arg(self) -> ScenaVariable:
         v = ScenaVariable(None, self.stackTop, isArg = True, stack = self)
@@ -433,7 +447,7 @@ class ScenaStack:
         return ScenaVariable(index, self.stackTop, isGlobalVar = True, stack = self)
 
     def ReturnValue(self) -> ScenaVariable:
-        v = ScenaVariable(None, self.stackTop, returnValue = True, stack = self)
+        v = ScenaVariable(None, self.stackTop, isReturnValue = True, stack = self)
         return self.push(v)
 
     def topOfStack(self) -> ScenaVariable:

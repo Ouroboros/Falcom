@@ -221,11 +221,17 @@ def IL_Handler(ctx: InstructionHandlerContext):
             if not ignoreSetVar and v.isSetVar:
                 return formatValue(v.value) if v.value is not None else v.name
 
+            if v.isPtr:
+                return f'{v.value.name}.ptr()'
+
             if v.isReg or v.isArg:
                 return v.name
 
-            if v.loadStack:
+            if v.isLoadStack:
                 return v.value.name
+
+            if v.isPopTo:
+                return v.value[1].name
 
             # if v.value is None:
             #     return v.name
@@ -258,10 +264,18 @@ def IL_Handler(ctx: InstructionHandlerContext):
         case MLIL.NOP:
             return []
 
+        case MLIL.SET_LINENO:
+            ctx.instruction.flags |= Flags.EndBlock
+            return [
+                f'# lineno {inst.lineno}'
+                '',
+            ]
+
         case MLIL.SET_VAR:
             setvar: MediumLevelILSetVar = inst
+            # if inst.lineno == 3595: ibp()
             return [
-                f'{setvar.dest.name} = {formatValue(setvar.src)}'
+                f'{setvar.dest.value[0].name if setvar.dest.isPopTo else setvar.dest.name} = {formatValue(setvar.dest)}'
             ]
 
         case MLIL.DEL_VAR:
@@ -282,11 +296,11 @@ def IL_Handler(ctx: InstructionHandlerContext):
                 f'{set_global.dest.name}.set({set_global.src.name})'
             ]
 
-        case MLIL.ADDRESS_OF:
-            addrof: MediumLevelILAddressOf = inst
-            return [
-                f'{addrof.dest.name} = {addrof.src.address}'
-            ]
+        # case MLIL.ADDRESS_OF:
+        #     addrof: MediumLevelILAddressOf = inst
+        #     return [
+        #         f'{addrof.dest.name} = {addrof.src.address}'
+        #     ]
 
         case MLIL.CALL:
             call: MediumLevelILCall = inst

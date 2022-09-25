@@ -63,7 +63,7 @@ class ScenaFormatter(Assembler.Formatter):
             return
 
         body = []
-        blk = self.formatBlock(func.block, genLabel = False)
+        blk = self.formatBlock(func.block, genLabel = True)
         for b in blk:
             body.append(b)
 

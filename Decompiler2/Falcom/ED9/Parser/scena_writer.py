@@ -77,7 +77,7 @@ class _ScenaWriter:
         self.opcodeCallbacks.append(cb)
 
     def setGlobalVars(self, *vars):
-        self.globalVars.extend(vars)
+        self.globalVars.extend(sorted(vars, key = lambda v: v.index))
 
     def functionDecorator(self, name: str, type: ScenaFunctionType, byte05, byte06) -> Callable[[], None]:
         def wrapper(f: Callable[[], Any]):

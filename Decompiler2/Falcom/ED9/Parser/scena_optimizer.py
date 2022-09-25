@@ -62,20 +62,27 @@ class OPCode:
     MLIL_STUB               = ED9ScenaOpTable.getDescriptorByName('MLIL_STUB')
 
 class InstructionList:
-    def __init__(self) -> None:
+    def __init__(self, *, map: dict[int, list[Instruction]] = None) -> None:
         self.instructions = []
         self.currentInstruction = None  # type: Instruction
         self.lineno = 0
+        self.map = {} if map is None else map
 
     def addMLIL(self, mlil: MediumLevelILInstruction):
         inst = Instruction(OPCode.MLIL_STUB.opcode, descriptor = OPCode.MLIL_STUB)
-        inst.operands = mlil
-        inst.currinst = self.currentInstruction
         mlil.lineno = self.lineno
+        inst.operands = mlil
+        inst.offset = self.currentInstruction.offset
+        # inst.xrefs = self.currentInstruction.xrefs
+        inst.currinst = self.currentInstruction
         self.instructions.append(inst)
+
+        self.map.setdefault(inst.offset, []).append(inst)
+
         return inst
 
     def add(self, inst: Instruction):
+        self.map.setdefault(inst.offset, []).append(inst)
         self.instructions.append(inst)
         return inst
 
@@ -130,7 +137,7 @@ class ED9Optimizer():
         self.translateToMLIL(func, dis, overwriteInstructions = True)
 
     def translateToMLIL(self, func: ScenaFunction, dis: Disassembler, *, optimizeCallInst = False, overwriteInstructions = False) -> list[Instruction]:
-        # if not func.name == 'OnEventBegin': return
+        OFFSET_REF_BY_PUSH_RET_ADDR = 0xEEEEFFFF
 
         stack = ScenaStack()
 
@@ -140,7 +147,11 @@ class ED9Optimizer():
 
         pushArgs()
 
+        blockRefs = set()
+        xrefs: dict[int, int] = {}
+        instOffsetMap: dict[int, list[Instruction]] = {}
         blocks: list[CodeBlock] = func.obj.block.getAllBlocks()
+
         for bb in blocks:
             try:
                 stack.restoreContext(bb.name)
@@ -148,20 +159,19 @@ class ED9Optimizer():
             except KeyError:
                 pass
 
-            instructions = InstructionList()
+            instructions = InstructionList(map = instOffsetMap)
+            assert instructions.map is instOffsetMap
             ignoredInsts = set()
             pushVarMap = {}
             currentLineno = 0
 
             for index, inst in enumerate(bb.instructions):
-                if index in ignoredInsts:
-                    continue
-
+                instCount = len(instructions.instructions)
                 instructions.currentInstruction = inst
 
-                # print(inst)
-                # print('stack', len(stack.stack))
-                # inst.comment = f'stack size: {len(stack.stack)}'
+                if index in ignoredInsts:
+                    instructions.addMLIL(MediumLevelILNop())
+                    continue
 
                 def getNextInst() -> Instruction | None:
                     if index + 1 < len(bb.instructions):
@@ -173,7 +183,7 @@ class ED9Optimizer():
                     case OPCode.DEBUG_SET_LINENO.opcode:
                         currentLineno = inst.operands[0].value
                         instructions.lineno = currentLineno
-                        continue
+                        instructions.addMLIL(MediumLevelILSetLineno())
 
                     case OPCode.PUSH_INT.opcode | \
                          OPCode.PUSH.opcode | \
@@ -189,7 +199,7 @@ class ED9Optimizer():
 
                     case OPCode.PUSH_STACK_OFFSET.opcode:
                         src = stack.fromOffset(inst.operands[0].value)
-                        dst = stack.SetVar(src)
+                        dst = stack.Ptr(src)
                         dst.inst = instructions.addMLIL(MediumLevelILAddressOf(dst, src))
 
                     case OPCode.LOAD_STACK_DEREF.opcode:
@@ -266,6 +276,7 @@ class ED9Optimizer():
                     case OPCode.POP_TO.opcode:
                         tos = stack.pop()
                         dst = stack.fromOffset(inst.operands[0].value)
+                        dst = stack.PopTo((dst, tos))
                         dst.inst = inst
 
                         instructions.addMLIL(MediumLevelILSetVar(dst, tos))
@@ -287,10 +298,16 @@ class ED9Optimizer():
                         stack.saveContext(block.value.name)
                         instructions.addMLIL((MediumLevelILJmpIfZero if inst.opcode == OPCode.POP_JMP_ZERO.opcode else MediumLevelILJmpIfNotZero)(cond, block))
 
+                        blockRefs.add(block.value)
+                        xrefs[inst.offset] = block.value.offset
+
                     case OPCode.JMP.opcode:
                         block = inst.operands[0]
                         stack.saveContext(block.value.name)
                         instructions.add(inst)
+
+                        blockRefs.add(block.value)
+                        xrefs[inst.offset] = block.value.offset
 
                     case OPCode.PUSH_CALLER_CONTEXT.opcode:
                         src = stack.Const(inst.operands[0])
@@ -329,7 +346,7 @@ class ED9Optimizer():
                             try:
                                 push_retaddr: Instruction = pushVarMap[params[-2]]
                                 target = bb.addBranch(dis.createCodeBlock(push_retaddr.operands[0].value.value))
-                                dis.getInstructionByOffset(target.offset).xrefs.append(XRef(target.name, -1))
+                                dis.getInstructionByOffset(target.offset).xrefs.append(XRef(target.name, OFFSET_REF_BY_PUSH_RET_ADDR))
                                 push_retaddr.opcode = OPCode.PUSH_RET_ADDR.opcode
                                 push_retaddr.descriptor = OPCode.PUSH_RET_ADDR
                                 push_retaddr.operands[0].value = target
@@ -443,8 +460,24 @@ class ED9Optimizer():
                     case _:
                         raise NotImplementedError(f'{bb.name}:{index}@{currentLineno} {inst.descriptor} {inst.operands}')
 
+                if len(instructions.instructions) == instCount:
+                    instructions.addMLIL(MediumLevelILNop()).flags |= Flags.FormatIgnore
+
             if overwriteInstructions:
                 bb.instructions = instructions.instructions
+                for inst in bb.instructions:
+                    inst.xrefs = list(filter(lambda x: x.offset != OFFSET_REF_BY_PUSH_RET_ADDR, inst.xrefs))
+
+        if overwriteInstructions:
+            for _from, to in xrefs.items():
+                # print('%X' % to)
+                instOffsetMap[to][0].xrefs.append(XRef(dis.createCodeBlock(to).name, _from))
+
+            # for b in blockRefs:
+            #     if len(b.instructions) == 0:
+            #         inst = Instruction(OPCode.MLIL_STUB.opcode, descriptor = OPCode.MLIL_STUB)
+            #         inst.operands = MediumLevelILNop()
+            #         b.instructions = [inst]
 
     def processFuncName(self, func: ScenaFunction, dis: Disassembler):
         blocks: list[CodeBlock] = func.obj.block.getAllBlocks()
