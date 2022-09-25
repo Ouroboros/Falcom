@@ -212,6 +212,18 @@ export function getPatchFile(path: string): string | null {
     return null;
 }
 
+export function getPatchFile2(path: string): string | null {
+    for (let dir of patchDirs) {
+        const patchPath = dir + path;
+        if (isPathExists(patchPath)) {
+            // log(`patch: ${patchPath}`);
+            return patchPath;
+        }
+    }
+
+    return null;
+}
+
 export function loadPatchFile(path: string): ArrayBuffer | null {
     const patchPath = getPatchFile(path);
 

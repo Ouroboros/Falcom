@@ -1,3 +1,4 @@
+import * as utils from "../utils";
 import { API, Modules } from "../modules";
 import { Addrs } from "./addrs";
 import { Interceptor2 } from "../utils";
@@ -41,13 +42,33 @@ function hex(v: number): string {
 }
 
 function hookSteamAndMisc() {
-    Interceptor.attach(ptr(0x1404126B0), {
-        onEnter: function(args) {
-            const filename = args[1].readUtf8String()!;
+    // Interceptor.attach(ptr(0x1404126B0), {
+    //     onEnter: function(args) {
+    //         const filename = args[1].readUtf8String()!;
 
-            console.log(`${filename}`);
+    //         console.log(`${filename}`);
+    //     },
+    // });
+}
+
+function hookIoRedirection() {
+    const File_GetRecirectPath = Interceptor2.jmp(
+        Addrs.File.GetRecirectPath,
+        function(arg1: NativePointer, path: NativePointer) {
+            const patch = utils.getPatchFile2(path.readAnsiString()!);
+
+            if (!patch) {
+                File_GetRecirectPath(arg1, path);
+                return;
+            }
+
+            utils.log(`patch ${patch}`);
+
+            path.writeUtf8String(patch);
         },
-    });
+        'void', ['pointer', 'pointer'],
+    );
+
 }
 
 export function main() {
@@ -65,8 +86,8 @@ export function main() {
     // console.log('hookWindow');
     // hookWindow();
 
-    // console.log('hookFileIo');
-    // hookFileIo();
+    console.log('hookIoRedirection');
+    hookIoRedirection();
 
     // console.log('hookTextRenderer');
     // hookTextRenderer();
