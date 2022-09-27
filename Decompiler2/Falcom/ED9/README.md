@@ -65,3 +65,5 @@ def CommonSetMotionSpeedMem(arg1: int | float):
 
     Return()
 ```
+
+![](https://pica.zhimg.com/80/v2-c1fdc17684cf29fa0d5426206f67737d_1440w.png)
