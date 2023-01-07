@@ -4,6 +4,7 @@
 #pragma comment(linker, "/EXPORT:D3D11CreateDevice=d3d11.D3D11CreateDevice")
 #pragma comment(linker, "/EXPORT:D3D11CreateDeviceAndSwapChain=d3d11.D3D11CreateDeviceAndSwapChain")
 #pragma comment(linker, "/EXPORT:DirectDrawCreate=DDRAW.DirectDrawCreate")
+#pragma comment(linker, "/EXPORT:DirectDrawEnumerateA=DDRAW.DirectDrawEnumerateA")
 #pragma comment(linker, "/EXPORT:AlphaBlend=MSIMG32.AlphaBlend")
 #pragma comment(linker, "/EXPORT:GradientFill=MSIMG32.GradientFill")
 #pragma comment(linker, "/EXPORT:TransparentBlt=MSIMG32.TransparentBlt")
@@ -325,6 +326,26 @@ NTSTATUS InitalizeFridaCore(PVOID, PVOID, PVOID)
     return STATUS_SUCCESS;
 }
 
+#if ML_X86
+
+PVOID gLdrLoadDllCaller;
+
+NoInline VOID ReturnToLdrLoadDllCaller()
+{
+    NtTestAlert();
+}
+
+ASM VOID ReturnFromLdrLoadDll()
+{
+    INLINE_ASM
+    {
+        push gLdrLoadDllCaller;
+        jmp ReturnToLdrLoadDllCaller;
+    }
+}
+
+#endif // ML_X86
+
 BOOL UnInitialize(PVOID BaseAddress)
 {
     SafeDeleteT(gFrida);
@@ -335,6 +356,92 @@ BOOL UnInitialize(PVOID BaseAddress)
 BOOL Initialize(PVOID BaseAddress)
 {
     ml::MlInitialize();
+    
+#if ML_X86
+
+    PLDR_MODULE Exe = Ldr::FindLdrModuleByHandle(nullptr);
+
+    if (FLAG_ON(Exe->Flags, LDRP_LOAD_NOTIFICATIONS_SENT))
+    {
+        PVOID   ntdll;
+        PVOID   StackBase, StackTop;
+        PVOID*  AddressOfReturnAddress;
+        PVOID*  LdrLoadDllCaller;
+
+        ntdll = GetNtdllHandle();
+        StackBase = Ps::CurrentTeb()->NtTib.StackBase;
+
+        AddressOfReturnAddress = (PVOID *)_AddressOfReturnAddress() - 1;
+        StackTop = AddressOfReturnAddress;
+
+        LdrLoadDllCaller = nullptr;
+
+        for (ULONG_PTR i = 0; AddressOfReturnAddress < StackBase && i < 100; i++)
+        {
+            if (i != 0 && AddressOfReturnAddress <= StackTop)
+                break;
+
+            if ((ULONG_PTR)StackBase - (ULONG_PTR)AddressOfReturnAddress < 8)
+                break;
+
+            PVOID ebp = AddressOfReturnAddress[0];
+            PVOID ReturnAddress = AddressOfReturnAddress[1];
+
+            if (ReturnAddress < StackBase && StackTop <= ReturnAddress)
+                break;
+
+            PLDR_MODULE Module = Ldr::FindLdrModuleByHandle(ReturnAddress);
+            if (Module == nullptr)
+                break;
+
+            if (Module->DllBase != &__ImageBase && Module->DllBase != ntdll)
+            {
+                LdrLoadDllCaller = &AddressOfReturnAddress[1];
+                break;
+            }
+
+            if (AddressOfReturnAddress >= ebp || ebp >= StackBase)
+                break;
+
+            AddressOfReturnAddress = (PVOID *)ebp;
+        }
+
+        if (LdrLoadDllCaller != nullptr)
+        {
+            gLdrLoadDllCaller = *LdrLoadDllCaller;
+            *LdrLoadDllCaller = ReturnFromLdrLoadDll;
+        }
+
+        /*
+
+        static API_POINTER(RtlLeaveCriticalSection) StubRtlLeaveCriticalSection;
+        static HANDLE gLoaderThreadID;
+
+        Mp::PATCH_MEMORY_DATA p[] =
+        {
+            Mp::FunctionJumpVa(
+                RtlLeaveCriticalSection,
+                API_POINTER(RtlLeaveCriticalSection)([](LPCRITICAL_SECTION CriticalSection)
+                {
+                    StubRtlLeaveCriticalSection(CriticalSection);
+
+                    if (gLoaderThreadID == Ps::CurrentTeb()->ClientId.UniqueThread && CriticalSection == Ps::CurrentPeb()->LoaderLock)
+                    {
+                        Mp::RestoreMemory(StubRtlLeaveCriticalSection);
+                        NtTestAlert();
+                    }
+                }),
+                &StubRtlLeaveCriticalSection
+            ),
+        };
+
+        Mp::PatchMemory(p, countof(p));
+
+        gLoaderThreadID = Ps::CurrentTeb()->ClientId.UniqueThread;
+        */
+    }
+#endif // ML_X86
+
     return NT_SUCCESS(NtQueueApcThread(Ps::CurrentThread, (PKNORMAL_ROUTINE)InitalizeFridaCore, 0, 0, 0));
 }
 
