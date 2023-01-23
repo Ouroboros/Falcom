@@ -52,3 +52,30 @@ def LogicalAnd():
 
 def Return():
     raise NotImplementedError
+
+def handleAssignment(stack: ScenaStack, assign: Tracer.Assignment, varname: str, locals: dict[str, StackValue]):
+    assert assign.src is not None
+
+    if assign.dest is None:
+        assign.dest = stack.Var()
+        src = assign.src
+        dest = assign.dest
+
+        match src:
+            case RawInt():
+                PUSH(src)
+
+            case int():
+                PUSH_INT(src)
+
+            case float():
+                PUSH_FLOAT(src)
+
+            case str():
+                PUSH_STR(src)
+
+            case StackValue():
+                if src.isArg:
+                    LOAD_STACK(src.offsetTo(dest))
+
+    locals[varname] = assign.dest

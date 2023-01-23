@@ -127,6 +127,8 @@ class ED9Optimizer():
 
         if self.options.transToMLIL:
             self.transToMLIL(func, dis)
+            func.decompiled = True
+
             if self.options.processFuncName:
                 self.processFuncName(func, dis)
 

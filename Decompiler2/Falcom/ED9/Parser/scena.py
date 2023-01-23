@@ -56,9 +56,22 @@ class ScenaFormatter(Assembler.Formatter):
         else:
             args = ', '.join([f'arg{index + 1}: {p.getPythonType()}' for index, p in enumerate(func.params)])
 
+        params = []
+
+        if func.entry.byte05 != 0 or func.entry.byte06 != 0:
+            params.extend([
+                f'{func.entry.byte05}',
+                f'{func.entry.byte06}',
+            ])
+
+        if func.decompiled:
+            params.append('compile = True')
+
+        params = ', '.join(params)
+
         f = [
             f'# id: 0x{func.index:04X} offset: 0x{func.offset:X}',
-            f"@scena.{func.type}('{func.name}')" if func.entry.byte05 == 0 and func.entry.byte06 == 0 else f"@scena.{func.type}('{func.name}', {func.entry.byte05}, {func.entry.byte06})",
+            f'@scena.{func.type}({params})',
             f'def {funcName}({args}):',
         ]
 
@@ -87,7 +100,7 @@ class ScenaFormatter(Assembler.Formatter):
             return
 
         body = []
-        blk = self.formatBlock(func.block, genLabel = False)
+        blk = self.formatBlock(func.block, genLabel = not f.decompiled)
         for b in blk:
             body.append(b)
 
@@ -175,8 +188,8 @@ class ScenaParser:
         ctx = Assembler.DisasmContext(fs, instCallback = self.instructionCb, scriptName = self.name)
         options = ED9OptimizerOptions(
             optimizeCallInst    = True,
-            transToMLIL         = not False,
-            processFuncName     = not False,
+            transToMLIL         = False,
+            processFuncName     = False,
         )
 
         optimizer = ED9Optimizer(self, options)

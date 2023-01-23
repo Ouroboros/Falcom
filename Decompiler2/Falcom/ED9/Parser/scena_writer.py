@@ -1,7 +1,8 @@
 from Falcom.Common import *
 from Falcom import ED9
 from Falcom.ED9.Parser.scena_types import *
-import uuid, inspect
+from types import FrameType
+import uuid, inspect, opcode
 
 class ScenaGlobalVar(ScenaGlobalVar):
     def load(self):
@@ -48,11 +49,14 @@ class ED9DisasmContext(Assembler.DisasmContext):
         self.writer = writer
 
 class _ScenaWriter:
+    ScenaCodeList = set()
+
     def __init__(self):
         self.labels             = {}                    # type: Dict[str, int]
         self.xrefs              = []                    # type: List[Assembler.XRef]
         self.functions          = []                    # type: List[ScenaFunction]
         self.currentFunctionId  = None                  # type: int
+        self.currentStack       = None                  # type: ScenaStack
         self.instructionTable   = None                  # type: ED9.ED9InstructionTable
         self.scenaName          = ''
         self.fs                 = None                  # type: fileio.FileStream
@@ -79,8 +83,10 @@ class _ScenaWriter:
     def setGlobalVars(self, *vars):
         self.globalVars.extend(sorted(vars, key = lambda v: v.index))
 
-    def functionDecorator(self, name: str, type: ScenaFunctionType, byte05, byte06) -> Callable[[], None]:
+    def functionDecorator(self, type: ScenaFunctionType, byte05, byte06, **kwargs) -> Callable[[], None]:
         def wrapper(f: Callable[[], Any]):
+            name = f.__name__
+
             for cb in self.funcCallbacks:
                 f2 = cb(name, f)
                 if f2 is not None:
@@ -94,6 +100,7 @@ class _ScenaWriter:
                 entry = ScenaFunctionEntry(offset = 0xEEEEEEEE, byte05 = byte05, byte06 = byte06, nameCrc32 = utils.hashFuncName(name))
                 func.entry = entry
                 func.sig = inspect.signature(f)
+                func.decompiled = kwargs.get('compile', False)
                 entry.paramCount = len(func.sig.parameters)
 
             self.functions.append(func)
@@ -104,8 +111,8 @@ class _ScenaWriter:
 
     # decorators
 
-    def Code(self, name: str, byte05 = 0, byte06 = 0):
-        return self.functionDecorator(name, ScenaFunctionType.Code, byte05, byte06)
+    def Code(self, byte05 = 0, byte06 = 0, **kwargs):
+        return self.functionDecorator(ScenaFunctionType.Code, byte05, byte06, **kwargs)
 
     def run(self, g: dict):
         for cb in self.runCallbacks:
@@ -225,11 +232,20 @@ class _ScenaWriter:
             fs.WriteULong(gv.type)
 
     def compileFunctions(self, fs: fileio.FileStream):
-        for f in self.functions:
+        for f in self.functions[:1]:
             self.currentFunctionId = f.index
             f.entry.offset = fs.Position
             print(f'{f.name} @ 0x{f.entry.offset:08X}')
-            f.obj(*[None] * f.entry.paramCount)
+            if f.decompiled is False:
+                f.obj(*[None] * f.entry.paramCount)
+            else:
+                ibp()
+                self.currentStack = ScenaStack()
+                self.ScenaCodeList.add(f.obj.__code__)
+                sys.settrace(self.onTraceCall)
+                f.obj(*[self.currentStack.Arg() for _ in f.entry.paramCount][::-1])
+                sys.settrace(None)
+                self.currentStack = None
 
     def writeStringPool(self, fs: fileio.FileStream):
         pool = self.stringPool
@@ -291,6 +307,109 @@ class _ScenaWriter:
         tbl.writeOpCode(fs, opcode)
         tbl.writeAllOperands(context, inst.operands)
 
+    def onTraceCall(self, frame: FrameType, event: str, arg):
+        match event:
+            case 'call':
+                if frame.f_code in self.ScenaCodeList:
+                    frame.f_trace_opcodes = True
+                    frame.f_trace_lines = False
+                    return Tracer(frame.f_code.co_name, self.currentStack).onTraceOpCode
+
+class Tracer:
+    class OPCode:
+        STORE_FAST  = opcode.opmap['STORE_FAST']
+        DELETE_FAST = opcode.opmap['DELETE_FAST']
+
+    class Context:
+        def __init__(self, frame: FrameType):
+            self.frame = frame
+            self.lasti = frame.f_lasti
+            self.code = frame.f_code
+
+    class Assignment:
+        def __init__(self, dest: StackValue, src: StackValue):
+            self.dest = dest
+            self.src = src
+
+    def __init__(self, func: str, stack: ScenaStack):
+        self.func           = func
+        self.stack          = stack
+        self.locals         = {}                    # type: dict[str, StackValue]
+        self.prevContext    = None                  # type: Tracer.Context
+        self.assign         = None                  # type: Tracer.Assignment
+
+    def preTrace(self, frame: FrameType, event: str, arg):
+        op = frame.f_code.co_code[frame.f_lasti]
+        locals: dict[str, StackValue] = frame.f_locals
+
+        match op:
+            case Tracer.OPCode.STORE_FAST:
+                # set exists var
+
+                print(f'{opcode.opname[op]} {varname}')
+                print(locals)
+                print('----------------')
+
+                index = frame.f_code.co_code[frame.f_lasti + 1]
+                varname = frame.f_code.co_varnames[index]
+
+                self.assign = Tracer.Assignment(None, None)
+
+                if varname not in locals:
+                    return
+
+                self.assign.dest = locals[varname]
+
+            case Tracer.OPCode.DELETE_FAST:
+                # del var
+
+                print(f'{opcode.opname[op]} {varname}')
+                print(locals)
+                print('----------------')
+
+                index = frame.f_code.co_code[frame.f_lasti + 1]
+                varname = frame.f_code.co_varnames[index]
+                var = locals[varname]
+
+                assert var.stackIndex == self.stack.stackTop
+
+                self.stack.pop()
+
+    def postTrace(self, ctx: Context):
+        frame = ctx.frame
+        op = ctx.code.co_code[ctx.lasti]
+        match op:
+            case Tracer.OPCode.STORE_FAST:
+                # set new var
+
+                print(f'{opcode.opname[op]} {varname}')
+                print(frame.f_locals)
+                print('----------------')
+
+                locals = frame.f_locals
+                index = ctx.code.co_code[ctx.lasti + 1]
+                varname = frame.f_code.co_varnames[index]
+                var = locals[varname]
+
+                self.assign.src = var
+                self.handleAssignment(self.assign, varname, locals)
+                self.assign = None
+
+    def onTraceOpCode(self, frame: FrameType, event: str, arg):
+        # print(f'onTraceOpCode: {self.func} {event}')
+
+        if self.prevContext:
+            self.postTrace(self.prevContext)
+            self.prevContext = None
+
+        if event == 'opcode':
+            self.preTrace(frame, event, arg)
+            self.prevContext = Tracer.Context(frame)
+
+    def handleAssignment(self, assign: Assignment, varname: str, locals: dict[str, StackValue]):
+        from .scena_writer_helper import handleAssignment
+        return handleAssignment(self.stack, assign, varname, locals)
+
 _gScena: _ScenaWriter = _ScenaWriter()
 
 def createScenaWriter(scriptName: str) -> _ScenaWriter:
@@ -299,6 +418,13 @@ def createScenaWriter(scriptName: str) -> _ScenaWriter:
 
 def getScena() -> _ScenaWriter:
     return _gScena
+
+def Compile():
+    def wrapper(f):
+        _ScenaWriter.ScenaCodeList.add(f.__code__)
+        return f
+
+    return wrapper
 
 def label(name: str):
     _gScena.addLabel(name)

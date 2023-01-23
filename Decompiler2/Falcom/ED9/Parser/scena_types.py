@@ -323,6 +323,7 @@ class ScenaVariable:
             stackIndex: int     = 0,
             *,
             name                = '',
+            namePrefix          = 'var_',
             const               = False,
             isStackRef          = False,
             isReturnValue       = False,
@@ -338,6 +339,7 @@ class ScenaVariable:
         self.value          = value
         self.stackIndex     = stackIndex
         self._name          = name
+        self.namePrefix     = namePrefix
 
         self.const          = const
         self.isStackRef     = isStackRef
@@ -368,7 +370,7 @@ class ScenaVariable:
                 self._name = f'<value>'
 
             else:
-                self._name = f'var_{self.stackIndex * 4:02X}'
+                self._name = f'{self.namePrefix}{self.stackIndex * 4:02X}'
 
         return self._name
 
@@ -380,6 +382,64 @@ class ScenaVariable:
         return f'{self.name} = {self.value}'
 
     __repr__ = __str__
+
+class StackValue:
+    def __init__(
+            self,
+            stackIndex: int = 0,
+            *,
+            isArg               = False,
+        ):
+        self.stackIndex = stackIndex
+        self.isArg = isArg
+
+    def offsetTo(self, v: 'StackValue') -> int:
+        return (self.stackIndex - v.stackIndex) * 4
+
+    def __lt__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __le__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __eq__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __ne__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __ge__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __gt__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __not__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __add__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __sub__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __mod__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __mul__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __neg__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __and__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __or__(self, v: 'StackValue'):
+        raise NotImplementedError
+
+    def __xor__(self, v: 'StackValue'):
+        raise NotImplementedError
 
 class ScenaStack:
     def __init__(self):
@@ -406,6 +466,7 @@ class ScenaStack:
         return stack
 
     def push(self, v: ScenaVariable) -> ScenaVariable:
+        v.namePrefix = 'stack_'
         v.isTos = True
         if self.stack:
             self.stack[-1].isTos = False
@@ -417,6 +478,10 @@ class ScenaStack:
     def Const(self, value) -> ScenaVariable:
         v = ScenaVariable(value, None, const = True, stack = self)
         return v
+
+    def Var(self) -> ScenaVariable:
+        v = ScenaVariable(None, self.stackTop, stack = self)
+        return self.push(v)
 
     def SetVar(self, value = None) -> ScenaVariable:
         v = ScenaVariable(value, self.stackTop, isSetVar = True, stack = self)
@@ -485,13 +550,14 @@ ScenaDataFunctionTypes = set([
 class ScenaFunction:
     def __init__(
             self,
-            index   : int,
-            offset  : int,
-            name    : str,
+            index       : int,
+            offset      : int,
+            name        : str,
             *,
-            type    : ScenaFunctionType = ScenaFunctionType.Invalid,
-            entry   : ScenaFunctionEntry = None,
-            sig     : inspect.Signature = None,
+            type        : ScenaFunctionType = ScenaFunctionType.Invalid,
+            entry       : ScenaFunctionEntry = None,
+            sig         : inspect.Signature = None,
+            decompiled  : bool = False,
         ):
         self.index      = index
         self.offset     = offset
@@ -500,6 +566,7 @@ class ScenaFunction:
         self.obj        = None
         self.entry      = entry
         self.sig        = sig
+        self.decompiled = decompiled
         self.params     = []        # list[ScenaParamFlags]
 
     def __str__(self) -> str:
