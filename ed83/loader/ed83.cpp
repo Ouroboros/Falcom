@@ -15,8 +15,17 @@
 
 ML_OVERLOAD_NEW
 
-#define DBG(...) { PrintConsole(__VA_ARGS__); }
-#define DBG(...)
+#define OUTPUT_DEBUG_INFO   1
+
+#if OUTPUT_DEBUG_INFO
+
+    #define DBG(...) { AllocConsole(), PrintConsole(__VA_ARGS__); }
+
+#else // OUTPUT_DEBUG_INFO
+
+    #define DBG(...) { PrintConsole(__VA_ARGS__); }
+
+#endif // OUTPUT_DEBUG_INFO
 
 class FridaLoader
 {
@@ -187,6 +196,7 @@ NTSTATUS FridaLoader::FridaThread()
     if (error != nullptr)
         return STATUS_INVALID_PARAMETER;
 
+#if OUTPUT_DEBUG_INFO
     g_signal_connect(
         script,
         "message",
@@ -210,11 +220,17 @@ NTSTATUS FridaLoader::FridaThread()
                 if (strcmp(type, "log") == 0)
                 {
                     const gchar * log_message = json_object_get_string_member(root, "payload");
-                    DBG(L"%S\n", log_message);
+                    gunichar2 *msg = g_utf8_to_utf16(log_message, -1, nullptr, nullptr, nullptr);
+
+                    DBG(L"%s\n", msg);
+
+                    g_free(msg);
                 }
-                else
+                else if (strcmp(type, "send") != 0)
                 {
-                    DBG(L"on_message: %S\n", message);
+                    gunichar2 *msg = g_utf8_to_utf16(message, -1, nullptr, nullptr, nullptr);
+                    DBG(L"on_message: %s\n", msg);
+                    g_free(msg);
                 }
 
                 g_object_unref(parser);
@@ -222,6 +238,7 @@ NTSTATUS FridaLoader::FridaThread()
         )),
         nullptr
     );
+#endif // OUTPUT_DEBUG_INFO
 
     frida_script_load_sync(script, NULL, &error);
     if (error != nullptr)
@@ -356,8 +373,8 @@ BOOL UnInitialize(PVOID BaseAddress)
 BOOL Initialize(PVOID BaseAddress)
 {
     ml::MlInitialize();
-    
-#if ML_X86
+
+#if ML_X86 && 0
 
     PLDR_MODULE Exe = Ldr::FindLdrModuleByHandle(nullptr);
 
