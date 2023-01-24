@@ -19,11 +19,11 @@ ML_OVERLOAD_NEW
 
 #if OUTPUT_DEBUG_INFO
 
-    #define DBG(...) { AllocConsole(), PrintConsole(__VA_ARGS__); }
+    #define DBG(...) { g_print(__VA_ARGS__); }
 
 #else // OUTPUT_DEBUG_INFO
 
-    #define DBG(...) { PrintConsole(__VA_ARGS__); }
+    #define DBG(...)
 
 #endif // OUTPUT_DEBUG_INFO
 
@@ -128,8 +128,6 @@ NTSTATUS FridaLoader::FridaThread()
     FridaDevice*        localDevice;
     GError*             error;
 
-    DBG(L"FridaThread\n");
-
     error       = nullptr;
     localDevice = nullptr;
     manager     = nullptr;
@@ -163,6 +161,7 @@ NTSTATUS FridaLoader::FridaThread()
     SCOPE_EXIT_END;
 
     frida_init();
+    DBG("FridaThread\n");
 
     loop    = g_main_loop_new(nullptr, TRUE);
     manager = frida_device_manager_new();
@@ -188,7 +187,7 @@ NTSTATUS FridaLoader::FridaThread()
     FridaScriptOptions* scriptOptions = frida_script_options_new();
 
     frida_script_options_set_name(scriptOptions, "script");
-    frida_script_options_set_runtime(scriptOptions, FRIDA_SCRIPT_RUNTIME_V8);
+    frida_script_options_set_runtime(scriptOptions, FRIDA_SCRIPT_RUNTIME_QJS);
 
     FridaScript* script = frida_session_create_script_sync(session, this->Script, scriptOptions, nullptr, &error);
     g_clear_object(&scriptOptions);
@@ -208,30 +207,26 @@ NTSTATUS FridaLoader::FridaThread()
                 gpointer        user_data
             )
             {
-                JsonParser * parser;
-                JsonObject * root;
-                const gchar * type;
+                JsonParser*     parser;
+                JsonObject*     root;
+                const gchar*    type;
 
                 parser = json_parser_new();
-                json_parser_load_from_data(parser, message, -1, NULL);
+                json_parser_load_from_data(parser, message, -1, nullptr);
                 root = json_node_get_object(json_parser_get_root (parser));
 
                 type = json_object_get_string_member(root, "type");
                 if (strcmp(type, "log") == 0)
                 {
                     const gchar * log_message = json_object_get_string_member(root, "payload");
-                    gunichar2 *msg = g_utf8_to_utf16(log_message, -1, nullptr, nullptr, nullptr);
-
-                    DBG(L"%s\n", msg);
-
-                    g_free(msg);
+                    DBG("%s\n", log_message);
                 }
-                else if (strcmp(type, "send") != 0)
-                {
-                    gunichar2 *msg = g_utf8_to_utf16(message, -1, nullptr, nullptr, nullptr);
-                    DBG(L"on_message: %s\n", msg);
-                    g_free(msg);
-                }
+                //else if (strcmp(type, "send") != 0)
+                //{
+                //    gunichar2 *msg = g_utf8_to_utf16(message, -1, nullptr, nullptr, nullptr);
+                //    DBG("on_message: %s\n", msg);
+                //    g_free(msg);
+                //}
 
                 g_object_unref(parser);
             }
@@ -324,6 +319,12 @@ NTSTATUS InitalizeFridaCore(PVOID, PVOID, PVOID)
 {
     PSTR        Script;
     NTSTATUS    Status;
+
+#if OUTPUT_DEBUG_INFO
+    AllocConsole();
+    freopen("CON", "wb", stdout);
+    //SetConsoleOutputCP(CP_UTF8);
+#endif // OUTPUT_DEBUG_INFO
 
     Script = LoadScript();
     if (Script == nullptr)
