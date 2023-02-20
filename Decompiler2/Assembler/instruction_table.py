@@ -1,4 +1,3 @@
-from binhex import openrsrc
 from Common import *
 from . import instruction
 from . import handlers
