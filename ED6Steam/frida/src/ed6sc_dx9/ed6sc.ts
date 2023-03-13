@@ -53,7 +53,8 @@ function hookSteamAndMisc() {
         }
     });
 
-    const CreateFileW = new NativeCallback(
+    const CreateFileW = Interceptor2.iat(
+        Addrs.IAT.CreateFileW,
         function(fileName: NativePointer, desiredAccess: number, shareMode: number, securityAttributes: NativePointer, creationDisposition: number, flagsAndAttributes: number, templateFile: NativePointer): NativePointer {
             const name = fileName.readUtf16String();
 
@@ -67,14 +68,10 @@ function hookSteamAndMisc() {
                     break;
             }
 
-            return API.WIN32.CreateFileW(fileName, desiredAccess, shareMode, securityAttributes, creationDisposition, flagsAndAttributes, templateFile);
+            return CreateFileW(fileName, desiredAccess, shareMode, securityAttributes, creationDisposition, flagsAndAttributes, templateFile);
         },
         'pointer', ['pointer', 'uint32', 'uint32', 'pointer', 'uint32', 'uint32', 'pointer'], 'stdcall'
     );
-
-    Memory.patchCode(Addrs.IAT.CreateFileW, Process.pointerSize, (code) => {
-        code.writePointer(CreateFileW);
-    });
 
     const TextBoxInit = new NativeFunction(Addrs.ED6SC.TextBoxInit, 'void', ['pointer', 'pointer'], 'thiscall');
 
@@ -207,7 +204,8 @@ function hookWindow() {
     const SPI_GETWORKAREA = 0x30;
     const SM_CYSCREEN = 1;
 
-    const SetWindowPos = new NativeCallback(
+    const SetWindowPos = Interceptor2.iat(
+        Addrs.IAT.SetWindowPos,
         function(hWnd: NativePointer, hWndInsertAfter: NativePointer, X: number, Y: number, cx: number, cy: number, Flags: number): number {
 
             if (Flags == SWP_NOMOVE) {
@@ -228,14 +226,10 @@ function hookWindow() {
                 Flags = 0;
             }
 
-            return API.USER32.SetWindowPos(hWnd, hWndInsertAfter, X, Y, cx, cy, Flags);
+            return SetWindowPos(hWnd, hWndInsertAfter, X, Y, cx, cy, Flags);
         },
         'uint32', ['pointer', 'pointer', 'int32', 'int32', 'int32', 'int32', 'uint32'], 'stdcall'
     );
-
-    Memory.patchCode(Addrs.IAT.SetWindowPos, Process.pointerSize, (code) => {
-        code.writePointer(SetWindowPos);
-    });
 }
 
 function hookFileIo() {
@@ -368,6 +362,8 @@ function hookTextRenderer() {
 
         for (let ch of s) {
             const codePoint = ch.codePointAt(0)!;
+
+            // console.log(`char = ${ch}`);
 
             if (codePoint == 0x20) {
                 width = fontSize / 2;

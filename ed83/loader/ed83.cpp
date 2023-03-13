@@ -39,7 +39,7 @@ protected:
 public:
     FridaLoader();
     ~FridaLoader();
-    
+
     NTSTATUS Load(PSTR Script);
     NTSTATUS Stop();
 
@@ -170,6 +170,7 @@ NTSTATUS FridaLoader::FridaThread()
 
     error = nullptr;
     localDevice = frida_device_manager_find_device_by_type_sync(manager, FRIDA_DEVICE_TYPE_LOCAL, 0, nullptr, &error);
+    DBG("frida_device_manager_find_device_by_type_sync\n");
     if (error != nullptr)
         return STATUS_DEVICE_NOT_READY;
 
@@ -180,7 +181,8 @@ NTSTATUS FridaLoader::FridaThread()
     frida_session_options_set_realm(sessionOptions, FRIDA_REALM_NATIVE);
     FridaSession* session = frida_device_attach_sync(localDevice, (guint)Ps::CurrentPid(), sessionOptions, nullptr, &error);
     g_clear_object(&sessionOptions);
-
+    
+    DBG("frida_device_attach_sync\n");
     if (error != nullptr)
         return STATUS_ALREADY_DISCONNECTED;
 
@@ -191,7 +193,8 @@ NTSTATUS FridaLoader::FridaThread()
 
     FridaScript* script = frida_session_create_script_sync(session, this->Script, scriptOptions, nullptr, &error);
     g_clear_object(&scriptOptions);
-
+    
+    DBG("frida_session_create_script_sync\n");
     if (error != nullptr)
         return STATUS_INVALID_PARAMETER;
 
@@ -221,12 +224,15 @@ NTSTATUS FridaLoader::FridaThread()
                     const gchar * log_message = json_object_get_string_member(root, "payload");
                     DBG("%s\n", log_message);
                 }
-                //else if (strcmp(type, "send") != 0)
-                //{
-                //    gunichar2 *msg = g_utf8_to_utf16(message, -1, nullptr, nullptr, nullptr);
-                //    DBG("on_message: %s\n", msg);
-                //    g_free(msg);
-                //}
+                else if (strcmp(type, "error") == 0)
+                {
+                    //DBG("%s\n", json_object_get_string_member(root, "description"));
+                    DBG("%s\n", json_object_get_string_member(root, "stack"));
+                }
+                else if (strcmp(type, "send") != 0)
+                {
+                    DBG("on_message: %s\n", message);
+                }
 
                 g_object_unref(parser);
             }
@@ -236,6 +242,7 @@ NTSTATUS FridaLoader::FridaThread()
 #endif // OUTPUT_DEBUG_INFO
 
     frida_script_load_sync(script, NULL, &error);
+    DBG("frida_script_load_sync\n");
     if (error != nullptr)
         return STATUS_ALREADY_DISCONNECTED;
 

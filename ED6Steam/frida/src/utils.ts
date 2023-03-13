@@ -62,6 +62,30 @@ export class ED8Vector extends EDBaseObject {
 }
 
 export class Interceptor2 {
+    private static iatCallbacks: NativePointer[] = [];
+
+    static iat<RetType extends NativeCallbackReturnType, ArgTypes extends NativeCallbackArgumentType[] | []> (
+        target: NativePointer,
+        replacement: NativeCallbackImplementation<
+                GetNativeCallbackReturnValue<RetType>,
+                Extract<GetNativeCallbackArgumentValue<ArgTypes>, unknown[]>
+            >,
+        retType : RetType,
+        argTypes: ArgTypes,
+        abi     : NativeABI,
+    ) {
+        const callback = new NativeCallback(replacement, retType, argTypes, abi);
+        const orig = new NativeFunction(target.readPointer(), retType, argTypes, abi);
+
+        Memory.patchCode(target, Process.pointerSize, (code) => {
+            code.writePointer(callback);
+        });
+
+        Interceptor2.iatCallbacks.push(callback as NativePointer);
+
+        return orig;
+    }
+
     static call<RetType extends NativeCallbackReturnType, ArgTypes extends NativeCallbackArgumentType[] | []> (
         target: NativePointerValue,
         replacement: NativeCallbackImplementation<
