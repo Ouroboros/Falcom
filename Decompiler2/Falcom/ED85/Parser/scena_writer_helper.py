@@ -227,10 +227,11 @@ def MenuShow(level: int, resultVar: int):
 
 # anime clip related 0x2E
 
-def WaitAnimeClipTimeout(chrId: int, frames: int):
+def WaitAnimeClipFrames(chrId: int, frames: int):
     OP_2E(0x04, chrId, 0x00, frames)
 
-def WaitAnimeClipFromPlayTime(chrId: int, frames: int):
+def WaitAnimeClipFramesSincePlay(chrId: int, frames: int):
+    # since PlayChrAnimeClip called
     OP_2E(0x05, chrId, 0x00, frames)
 
 # anime clip 0x2F

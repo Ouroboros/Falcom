@@ -72,8 +72,8 @@ optimizeTable = buildTable(
     ),
     opt(
         0x2E,
-        ('WaitAnimeClipFromPlayTime',           {0: 0x04}),
-        # ('WaitAnimeClipFromPlayTime',           {0: 0x05}),
+        ('WaitAnimeClipFrames',                 {0: 0x04, 2: 0x00}),
+        ('WaitAnimeClipFramesSincePlay',        {0: 0x05, 2: 0x00}),
     ),
     opt(
         0x2F,
