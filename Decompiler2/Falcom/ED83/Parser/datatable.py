@@ -13,6 +13,8 @@ __all__ = (
     'SETableData',
     'BGMTableData',
     'MapBgmTableData',
+    'ItemHelpData',
+    'CompHelpData',
 )
 
 class TableNameEntry:

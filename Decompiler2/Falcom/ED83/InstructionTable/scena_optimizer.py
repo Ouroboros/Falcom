@@ -171,8 +171,8 @@ optimizeTable = buildTable(
     ),
     opt(
         0x54,
-        ('SetBattleStyle',                      {0: 0x4A}),
-        ('GetBattleStyle',                      {0: 0x4B}),
+        ('ModelSetBattleStyle',                 {0: 0x4A}),
+        ('ModelGetBattleStyle',                 {0: 0x4B}),
     ),
     opt(
         0x7A,
