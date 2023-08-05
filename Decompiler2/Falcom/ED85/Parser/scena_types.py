@@ -1,4 +1,5 @@
 from Falcom.ED84.Parser.scena_types import *
+from Falcom.ED84.Parser import scena_types as ed84
 
 ScenaAlgoTableEntry.InvalidID = 0xFFFF
 ScenaBreakTable.InvalidID = 0xFFFF
@@ -137,3 +138,22 @@ class ScenaBattleSetting:
         body.append(f')')
 
         return body
+
+class ScenaActionTableEntry(ed84.ScenaActionTableEntry):
+    def hasExitCode(self):
+        return True
+
+class ScenaAlgoTableEntry(ed84.ScenaAlgoTableEntry):
+    def hasExitCode(self):
+        return True
+
+class ScenaActionTable(ed84.ScenaActionTable):
+    def serialize(self) -> bytes:
+        b = bytearray()
+        for e in self.actions:
+            b.extend(e.serialize())
+
+        if not self.actions or self.actions[-1].craftId != ScenaActionTableEntry.InvalidCraftID:
+            b.extend(ScenaActionTableEntry(craftId = ScenaActionTableEntry.InvalidCraftID).serialize())
+
+        return bytes(b)

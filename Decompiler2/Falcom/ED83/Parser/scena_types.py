@@ -670,11 +670,11 @@ class ScenaActionTableEntry:
         ariaATDelay     : int = 0,
         atDelay         : int = 0,
 
-        effect1         : int = 0,
-        effect2         : int = 0,
-        effect3         : int = 0,
-        effect4         : int = 0,
-        effect5         : int = 0,
+        effect1         : int = 1,
+        effect2         : int = 2,
+        effect3         : int = 3,
+        effect4         : int = 4,
+        effect5         : int = 5,
 
         effect1Param1   : int = 0,
         effect1Param2   : int = 0,
@@ -741,13 +741,16 @@ class ScenaActionTableEntry:
 
         self.read(fs)
 
+    def hasExitCode(self):
+        return False
+
     def read(self, fs: fileio.FileStream):
         if not fs:
             return
 
         self.craftId = fs.ReadUShort()                          # 0x00
 
-        if self.craftId == self.InvalidCraftID:
+        if self.craftId == self.InvalidCraftID and not self.hasExitCode():
             return
 
         self.type           = fs.ReadByte()                     # 0x02
@@ -799,7 +802,7 @@ class ScenaActionTableEntry:
 
         fs.write(utils.int_to_bytes(self.craftId, 2))
 
-        if self.craftId != self.InvalidCraftID:
+        if self.craftId != self.InvalidCraftID or self.hasExitCode():
             fs.write(utils.int_to_bytes(self.type, 1))
             fs.write(utils.int_to_bytes(self.attribute, 1))
             fs.write(utils.int_to_bytes(self.rangeType, 1))
@@ -883,7 +886,7 @@ class ScenaActionTableEntry:
             f'{DefaultIndent}cp            = {self.cp},',
             f"{DefaultIndent}flags         = '{self.flags}',",
             f"{DefaultIndent}action        = '{self.action}',",
-            f"{DefaultIndent}name          = '{self.name}',",
+            f'{DefaultIndent}name          = "{self.name}",',
             ')',
         ]
 
@@ -944,6 +947,10 @@ class ScenaAlgoTableEntry:
             fs: fileio.FileStream       = None,
         ):
 
+        if craftId == self.InvalidID:
+            parameters1 = [1, 2, 3]
+            parameters2 = [4, 0, 0]
+
         self.craftId            = craftId
         self.aiType             = aiType                # 0x0F: SBreak
         self.probability        = probability
@@ -957,6 +964,9 @@ class ScenaAlgoTableEntry:
 
         self.read(fs)
 
+    def hasExitCode(self):
+        return False
+
     def read(self, fs: fileio.FileStream):
         if not fs:
             return
@@ -964,8 +974,9 @@ class ScenaAlgoTableEntry:
         if fs.Remaining < 2:
             return
 
-        self.craftId            = fs.ReadUShort()                       # 0x00
-        if self.craftId == self.InvalidID:
+        self.craftId = fs.ReadUShort()                       # 0x00
+
+        if self.craftId == self.InvalidID and not self.hasExitCode():
             return
 
         self.aiType             = fs.ReadByte()                         # 0x02
@@ -1020,10 +1031,10 @@ class ScenaAlgoTable:
         self.entries = []
         for _ in range(0x40):
             e = ScenaAlgoTableEntry(fs = fs)
-            if e.craftId == ScenaAlgoTableEntry.InvalidID:
-                break
 
             self.entries.append(e)
+            if e.craftId == ScenaAlgoTableEntry.InvalidID:
+                break
 
     def serialize(self) -> bytes:
         b = bytearray()
@@ -1099,7 +1110,8 @@ class ScenaBreakTable:
         for d in self.breakData:
             fs.write(utils.int_to_bytes(d[0] | (d[1] << 16), 4))
 
-        fs.write(utils.int_to_bytes(self.InvalidID, 4))
+        fs.write(utils.int_to_bytes(self.InvalidID, 2))
+        fs.write(utils.int_to_bytes(1, 2))
         return fs.getvalue()
 
     def toPython(self) -> List[str]:
