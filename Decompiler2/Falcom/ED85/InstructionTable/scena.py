@@ -73,8 +73,8 @@ class ED85InstructionTable(ED84InstructionTable):
 
     def writeOpCode(self, fs: fileio.FileStream, opcode: int):
         fs.WriteByte(opcode)
-        fs.WriteULong(0)
-        # fs.WriteULong(0xFFFFFFFF)
+        # fs.WriteULong(0)
+        fs.WriteULong(0xFF << 0x18)
 
 def applyDescriptorsToOperands(operands: List[Operand], fmts: str):
     assert len(operands) == len(fmts)
