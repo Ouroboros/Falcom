@@ -1,0 +1,1830 @@
+FM_03_TalkOdessa_1//──────────────────────────────
+//	name("●オデッサ")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+
+
+TK_ODESSA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(ODESSA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ODESSA)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ODESSA)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ODESSA)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ODESSA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ODESSA)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ODESSA)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ODESSA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　自分の飛行機の前にいる。
+	if( F6_00_GoToMeru )
+	{
+	//	name("★１回目")
+//		if(!F_ODESSA)
+		if(!FM_12_TalkOdessa_1)
+		{
+			cross_fade(30)			//クロスフェード
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(630,-352,119,0,0)
+			CAM(89,55,119,24,128,0,0)
+			//キャラ再配置
+			chr_pos(RAGNA,830,293,-75,161,2)
+			chr_pos(PARTNER,583,324,-73,216,2)
+			chr_pos(PET,664,483,-73,190,2)
+//			VOICE(280,0)	//★「ふう…やれやれだ」
+			rot_chr(ODESSA,30,PLAYER1)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　話しかけるとキャラ再配置してイベント発生。
+		
+			wait(15)
+			KAO(ODESSA,"12321Z9","23","1")
+			MES(ODESSA,"やれやれ、長年の目的を\nようやく果たしたかと思ったら\nこんな事態になるとはね……",0)
+			KAO(ODESSA,"12321Z7","3","1")
+			MES(ODESSA,"ま、これを乗り越えられなけりゃ\nダイガルドに大目玉を喰らいそうだ。",0)
+			KAO(ODESSA,"12321Z6","21","1")
+			MES(ODESSA,"せいぜい最後まで\nあんた達に付き合わせてもらうよ。",0)
+			MES_close(ODESSA)
+
+			KAO(RAGNA,"12321Z3","2","1")
+			MES(RAGNA,"ああ、よろしく頼むぜ。",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"人狼族の誇り、\nしかと見せてもらおう。",0)
+			MES_close(PARTNER)
+
+			KAO(ODESSA,"12321Z3","26","1")
+			MES(ODESSA,"ふふっ、任せときな。",0)
+			MES_close(ODESSA)
+//			wait_MES(ODESSA)
+
+			EMO(ODESSA,EMO_PA)
+//			VOICE(310,0)	//★「さてと…」
+			KAO(ODESSA,"E","2F","6")
+			wait(30)
+//			wait(15)
+			KAO(ODESSA,"12321Z5","F","6")
+			MES(ODESSA,"しかし、あの婆様を\n乗せて飛ぶわけか……",0)
+			KAO(ODESSA,"12321Z9","23","1")
+			MES(ODESSA,"ま、ホウキでグランヴァレン中を\n旅して回っているみたいだから\n速度を出しても大丈夫そうだね。",0)
+			MES_close(ODESSA)
+			rot(ODESSA,30,180)
+			wait(15)
+			MES(ODESSA,"頼んだよ、《ベイオウルフ号》。",0)
+			MES_close(ODESSA)
+
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			look_off( ODESSA )
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			KAO(RAGNA, "1", "1", "1")
+			KAO(PARTNER,"1", "1", "1")
+			KAO(PET,"1", "1", "1")
+			KAO(ODESSA,"1", "1", "1")
+
+			EV_end()
+//			F_set(ODESSA)
+			F_set(FM_12_TalkOdessa_1)
+
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+
+		}
+		else
+		{
+		//	name("★２回目以降（※振り返らない）")
+			MES(ODESSA,"さてと、あの婆様を\n乗せて飛ぶわけか……",0)
+			MES(ODESSA,"ま、ホウキでグランヴァレン中を\n旅して回っているみたいだから\n速度を出しても大丈夫そうだね。",0)
+			MES(ODESSA,"頼んだよ、《ベイオウルフ号》。",0)
+			MES_close(ODESSA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//──────────────────────────────
+		//▽真ダイガルドを倒した
+		//──────────────────────────────
+		//　　◆異次元．中ボス地点２で気絶して倒れている。
+		//　　ルナ＝ムンドゥス攻略終了までこのまま置き続ける。
+		//──────────────────────────────
+		MES(ODESSA,"………………………………",0)
+		MES_close(ODESSA)
+
+	//	name("テキスト（色換え．表示しない）")
+		MES(0,"C3S2オデッサは力尽きて気絶している。",2)
+		MES_close(0)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//　　Ｇコロッセオのどこかに現れている。
+	if( F4_09_GoShrineMia)
+	{
+	//	name("★初回（一回のみ／イベント処理）")
+		if(!FM_10_TalkOdessa)
+		{
+		//　　話しかけるとキャラ再配置してイベント発生。
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			EV_begin()
+			
+			//カメラセット
+//			CAM_move(9271,-5547,80,0,0)
+//			CAM(-10,52,80,31,163,0,0)
+			CAM_move(9148,-6108,81,0,0)
+			CAM(30,50,81,31,253,0,0)
+			
+			//キャラ再配置
+//			chr_pos(RAGNA,9320,5633,0,120,2)
+//			chr_pos(PARTNER,9290,5833,0,165,2)
+//			chr_pos(ODESSA,9091,5455,-8,0,52)
+			chr_pos(RAGNA,9179,6021,0,25,2)
+			chr_pos(PARTNER,9410,6100,0,63,2)
+			chr_pos(ODESSA,9040,6235,0,270,52)
+
+			if(F2848)//Ｇフィギュア
+			{
+				color(95,-1)//ロープ
+				color(96,-1)//ロープ
+			}
+
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			look_chr( ODESSA, RAGNA,"Bone_Head")
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"おや……\nあんた達も来たのかい。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"オデッサ！？\nどうしてこんな所に……",0)
+			MES_close(RAGNA)
+
+			//─────────────────────
+			//	name("□森の入口で会っている場合")
+			if(FM_07_TalkOdessa)
+			{
+				KAO(ODESSA,"12321Z5","1","1")
+				MES(ODESSA,"言っただろう。\n一度、徹底的に鍛え直すってね。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"実はあの後、覆面をかぶった\nマッチョな大男に声をかけられてね。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"鍛錬に丁度いいからって\nここを紹介してもらったのさ。",0)
+				MES_close(ODESSA)
+			}
+			//	name("□会っていない場合")
+			else
+			{
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"ま、あれから色々あってね。",0)
+				KAO(ODESSA,"12321Z5","1","1")
+				MES(ODESSA,"一度、徹底的に\n鍛え直すことにしたんだ。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"そんな時に、覆面をかぶった\nマッチョな大男に声をかけられてね。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"鍛錬に丁度いいからって\nここを紹介してもらったのさ。",0)
+				MES_close(ODESSA)
+			}
+			//─────────────────────
+			
+			MES(RAGNA,"ギャランドゥのおっさんが……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"ふむ……\n手広く勧誘しておるのう。",0)
+			MES(PARTNER,"では、そなたもあの\n珍妙な踊りをさせられたわけか。",0)
+			MES_close(PARTNER)
+
+			look_chr( ODESSA, PARTNER,"Bone_Head")
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","3","1")
+			MES(ODESSA,"あ、ああ……\nまあ不本意ながらね。",0)
+			MES_close(ODESSA)
+
+			//─────────────────────
+			//	name("□森の入口で会っている場合")
+			if(FM_07_TalkOdessa)
+			{
+				look_chr( ODESSA, RAGNA,"Bone_Head")
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"……しかし、ラグナ。\n活が入ったようじゃないか？",0)
+				MES_close(ODESSA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"え……",0)
+				MES_close(RAGNA)
+
+			//	name2(ODESSA)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"昨日のあんたは\n水に落っこちた犬みたいに\nしょぼくれてたけど……",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"今のあんたは、焦ってはいるが\n心と身体の芯に火が点っている。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"少なくとも前に向かって\n進む覚悟は出来たみたいだね？",0)
+				MES_close(ODESSA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"……ああ。\n背中を押してくれたヤツがいる。",0)
+				look_chr( RAGNA, PARTNER,"Bone_Head")
+				MES(RAGNA,"その子だけじゃない……\nここにいる姫さんたちにも\n背中を押してもらったよ。",0)
+				MES_close(RAGNA)
+
+				look_chr(PARTNER, RAGNA, "Bone_Head")
+			//	name2(PARTNER)
+				MES(PARTNER,"ラグナ……",0)
+				MES_close(PARTNER)
+
+			//	name2(ODESSA)
+				KAO(ODESSA,"12321Z5","1","1")
+				MES(ODESSA,"ふふ、その様子じゃ\n心配する必要はなさそうだ。",0)
+				MES_close(ODESSA)
+				
+				look_off(RAGNA)
+			}
+			//─────────────────────
+			
+			KAO(ODESSA,"12321Z5","1","1")
+			MES(ODESSA,"……どうやらヤバイ事が\n起こっているみたいだね。",0)
+			KAO(ODESSA,"12321Z5","1","1")
+			MES(ODESSA,"加勢が必要なら\nいつでも声をかけてくれ。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"サンクス。\nもしもの時は頼むぜ。",0)
+			MES_close(RAGNA)
+
+		//　　画面フェードアウト抜けでイベント終了。
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+			look_off(ODESSA)
+			look_off(PARTNER)
+
+			if(F2848)//Ｇフィギュア
+			{
+				color(95,1)//ロープ
+				color(96,1)//ロープ
+			}
+			EV_end()
+			F_set(FM_10_TalkOdessa)
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			fade_in(0,30,BLACK)
+
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+	//	name("★以後、繰り返し")
+		else
+		{
+			rot_chr(ODESSA,30,PLAYER1)
+			MES(ODESSA,"どうやらヤバイ事が\n起こっているみたいだね。",0)
+			MES(ODESSA,"加勢が必要なら\nいつでも声をかけてくれ。",0)
+			MES_close(ODESSA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　◆森の入口、泉のほとりの近くにうずくまっている。
+	//　　◆テンガロンハットはかぶっておらず、
+	//　　石碑にもたれかかっているような雰囲気でもよい。
+	if( F4_00_StartSolo )
+	{
+		if(!FM_07_TalkOdessa)
+		{
+		//	name("★スバルがいない場合（一回のみ／イベント処理）")
+			if(!F4_02_GoVillage2)
+			{
+			//　　話しかけるとキャラ再配置してイベント発生。
+			//――――――――――――――――――――――――――
+			//	初期化処理
+			//――――――――――――――――――――――――――
+				cross_fade(30)			//クロスフェード
+				EV_begin()
+				
+				//カメラセット
+				CAM_move(841,-1846,380,0,0)
+				CAM(50,27,380,19,252,0,0)
+				
+				//キャラ再配置
+				chr_pos(RAGNA,151,1513,0,75,2)
+				chr_pos(ODESSA, -165,1583,1,17,150)
+
+				//顔初期化
+				KAO(RAGNA, "1", "1", "1")	
+				KAO(ODESSA,"1", "1", "1")	
+				wait_fade()
+				wait_fade()
+			//――――――――――――――――――――――――――
+			//	イベント開始
+			//――――――――――――――――――――――――――
+				MES(RAGNA,"お、おい……\n大丈夫か、オデッサ！？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"1","2","1")
+				look_chr( ODESSA, RAGNA,"Bone_Head")
+				wait(15)
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"ふふ……坊やか。",0)
+				KAO(ODESSA,"12321Z2","3","1")
+				MOT(ODESSA,2,15)
+				MES(ODESSA,"……よっと。",0)
+				MES_close(ODESSA)
+				wait(15)
+				rot_chr(ODESSA,30,RAGNA)
+				wait(30)
+
+				MES(RAGNA,"だから坊やはよせっての。",0)
+				MES(RAGNA,"姿が見えないから心配したが\nこんな場所にいたとは……",0)
+				MES(RAGNA,"動けないほど酷いのか？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"いや……\nあらかた治っているさ。",0)
+				KAO(ODESSA,"12321Z5","1","1")
+				MES(ODESSA,"回復のため、こうして木々と\n泉の力を貰いに来たからね。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"やっぱり……\nあの狼野郎にやられたのか？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","23","3")
+				MES(ODESSA,"ああ……\n叩きのめされちまったよ。",0)
+				KAO(ODESSA,"12321Z5","3","3")
+				MES(ODESSA,"何が《餓狼狩り》だ……\n数分と持たずに返り討ちさ。",0)
+				KAO(ODESSA,"12321Z4","3","3")
+				MES(ODESSA,"情けないったらありゃしない。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"……………………………",0)
+				MES(RAGNA,"なあ……\nあんたは……その……",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","21","1")
+				MES(ODESSA,"……ああ。\nダイガルドと同じ人狼族さ。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"元々、私が故郷を離れて\nハンターなんかやっているのは\nあの男を探し出すためなんだ。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"もっともここ数年は、\nすっかり人間の世界に染まって\n気ままに暮らしていたけどね。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"……………………………",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","23","1")
+				MES(ODESSA,"しかし参ったね……",0)
+				KAO(ODESSA,"12321Z6","3","1")
+				MES(ODESSA,"自惚れてたわけじゃないが\nここまで実力差があったとは。",0)
+				KAO(ODESSA,"12321Z5","3","1")
+				MES(ODESSA,"こりゃ、一度徹底的に\n鍛え直す必要がありそうだ。",0)
+				MES_close(ODESSA)
+
+			//　　ラグナの頭に！マーク。
+				EMO(RAGNA,EMO_BIKKURI)
+				wait(30)
+
+				MES(RAGNA,"え……",0)
+				MES(RAGNA,"オデッサ、あんた……\nまだ戦うつもりなのかよ！？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"当たり前だろう。",0)
+				KAO(ODESSA,"12321Z6","2","1")
+				MES(ODESSA,"無様な負けっぷりだったが\n何とかこうして２本の足で\n再び立つことが出来ている。",0)
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"前に進まないでどうするのさ？",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"…………………………………",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z5","23","1")
+				MES(ODESSA,"ふむ……\nあんたにも色々あるようだね。",0)
+				KAO(ODESSA,"12321Z4","21","6")
+				MES(ODESSA,"ま、私のはただの意地さ。",0)
+				KAO(ODESSA,"12321Z5","1","6")
+				MES(ODESSA,"あんたはあんたで\n自分の望むようにすればいい。",0)
+				KAO(ODESSA,"12321Z3","23","1")
+				MES(ODESSA,"それじゃあね、ラグナ。",0)
+				MES_close(ODESSA)
+
+			//　　オデッサ、そのまま森から去っていく。
+				look_chr( RAGNA,ODESSA, "Bone_Head")
+				look_off(ODESSA)
+				EV("MV_MOVE_ODESSA_7")
+
+
+			//　　それを見送りながらラグナの頭に…マーク。
+				KAO(RAGNA,"B","A","1")
+				rot(RAGNA,10,320)
+				wait(120)
+
+
+			//　　完全にオデッサが去ってから以下のメッセージ。
+				KAO(RAGNA,"12321Z3","A","1")
+				MES(RAGNA,"自分の望むように……か。",0)
+				KAO(RAGNA,"12321Z3","23","4")
+				MES(RAGNA,"……はは。\n何を望んでいるんだ、俺は？",0)
+				MES_close(RAGNA)
+
+			//　　画面フェードアウト抜けでイベント終了。
+			}
+			else
+			{
+			//	name("★スバルがいる場合（一回のみ／イベント処理）")
+			//　　話しかけるとキャラ再配置してイベント発生。
+			//――――――――――――――――――――――――――
+			//	初期化処理
+			//――――――――――――――――――――――――――
+				cross_fade(30)
+				EV_begin()
+				
+				//カメラセット
+				CAM_move(841,-1846,380,0,0)
+				CAM(50,27,380,19,252,0,0)
+				
+				//キャラ再配置
+				chr_pos(RAGNA,151,1513,0,75,2)
+				chr_pos(PARTNER,-27,1296,0,26,2)
+				chr_pos(ODESSA, -165,1583,1,0,150)
+				
+				//顔初期化
+				KAO(RAGNA, "1", "1", "1")	
+				KAO(PARTNER,"1", "1", "1")	
+				KAO(ODESSA,"B", "3", "3")	
+				wait_fade()
+			//――――――――――――――――――――――――――
+			//	イベント開始
+			//――――――――――――――――――――――――――
+				MES(PARTNER,"し、師匠……この人！",0)
+				MES_close(PARTNER)
+
+				MES(RAGNA,"お、おい……\n大丈夫か、オデッサ！？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"1","2","1")
+				look_chr( ODESSA, RAGNA,"Bone_Head")
+				wait(15)
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"ふふ……坊やか。",0)
+				KAO(ODESSA,"12321Z2","3","1")
+				MOT(ODESSA,2,15)
+				MES(ODESSA,"……よっと。",0)
+				MES_close(ODESSA)
+				wait(15)
+				rot_chr(ODESSA,30,RAGNA)
+				wait(30)
+
+				KAO(ODESSA,"12321Z5","21","1")
+				MES(ODESSA,"へえ、可愛いのと\n一緒にいるじゃないか。",0)
+				MES_close(ODESSA)
+
+				MES(PARTNER,"か、可愛いって……",0)
+				MES_close(PARTNER)
+
+				MES(RAGNA,"だから坊やはよせっての。",0)
+				MES(RAGNA,"姿が見えないから心配したが\nこんな場所にいたとは……",0)
+				MES(RAGNA,"動けないほど酷いのか？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"いや……\nあらかた治っているさ。",0)
+				KAO(ODESSA,"12321Z5","1","1")
+				MES(ODESSA,"回復のため、こうして木々と\n泉の力を貰いに来たからね。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"やっぱり……\nあの狼野郎にやられたのか？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","23","3")
+				MES(ODESSA,"ああ……\n叩きのめされちまったよ。",0)
+				KAO(ODESSA,"12321Z5","3","3")
+				MES(ODESSA,"何が《餓狼狩り》だ……\n数分と持たずに返り討ちさ。",0)
+				KAO(ODESSA,"12321Z4","3","3")
+				MES(ODESSA,"情けないったらありゃしない。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"……………………………",0)
+				MES(RAGNA,"なあ……\nあんたは……その……",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","21","1")
+				MES(ODESSA,"……ああ。\nダイガルドと同じ人狼族さ。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"元々、私が故郷を離れて\nハンターなんかやっているのは\nあの男を探し出すためなんだ。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"もっともここ数年は、\nすっかり人間の世界に染まって\n気ままに暮らしていたけどね。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"……………………………",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","23","1")
+				MES(ODESSA,"しかし参ったね……",0)
+				KAO(ODESSA,"12321Z6","3","1")
+				MES(ODESSA,"自惚れてたわけじゃないが\nここまで実力差があったとは。",0)
+				KAO(ODESSA,"12321Z5","3","1")
+				MES(ODESSA,"こりゃ、一度徹底的に\n鍛え直す必要がありそうだ。",0)
+				MES_close(ODESSA)
+
+			//　　ラグナの頭に！マーク。
+				EMO(RAGNA,EMO_BIKKURI)
+				wait(30)
+
+				MES(RAGNA,"え……",0)
+				MES(RAGNA,"オデッサ、あんた……\nまだ戦うつもりなのかよ！？",0)
+				MES_close(RAGNA)
+
+				rot_chr(PARTNER,30,RAGNA)
+				KAO(PARTNER,"12321Z2","D","6")
+				MES(PARTNER,"し、師匠……？",0)
+				MES_close(PARTNER)
+
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"当たり前だろう。",0)
+				KAO(ODESSA,"12321Z6","2","1")
+				MES(ODESSA,"無様な負けっぷりだったが\n何とかこうして２本の足で\n再び立つことが出来ている。",0)
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"前に進まないでどうするのさ？",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"…………………………………",0)
+				MES_close(RAGNA)
+
+				KAO(PARTNER,"12321Z2","1","4")
+				MES(PARTNER,"……ラグナ師匠………",0)
+				MES_close(PARTNER)
+
+				KAO(ODESSA,"12321Z5","23","1")
+				MES(ODESSA,"ふむ……\nあんたにも色々あるようだね。",0)
+				KAO(ODESSA,"12321Z4","21","6")
+				MES(ODESSA,"ま、私のはただの意地さ。",0)
+				KAO(ODESSA,"12321Z5","1","6")
+				MES(ODESSA,"あんたはあんたで\n自分の望むようにすればいい。",0)
+				KAO(ODESSA,"12321Z5","23","1")
+				MES(ODESSA,"それじゃあね。\nラグナ、それにおチビさん。",0)
+				MES_close(ODESSA)
+
+			//　　オデッサ、そのまま森から去っていく。
+				look_chr( RAGNA,ODESSA, "Bone_Head")
+				look_off(ODESSA)
+				EV("MV_MOVE_ODESSA_7")
+
+			//　　それを見送りながらラグナの頭に…マーク。
+				KAO(RAGNA,"B","A","1")
+				rot(RAGNA,10,320)
+				rot(PARTNER,10,320)
+				
+				wait(120)
+
+			//　　完全にオデッサが去ってから以下のメッセージ。
+				KAO(RAGNA,"12321Z3","A","1")
+				MES(RAGNA,"自分の望むように……か。",0)
+				KAO(RAGNA,"12321Z3","23","4")
+				MES(RAGNA,"……はは。\n何を望んでいるんだ、俺は？",0)
+				MES_close(RAGNA)
+
+				rot_chr(PARTNER,30,RAGNA)
+				KAO(PARTNER,"12321Z2","1","4")
+				MES(PARTNER,"ラグナ師匠……",0)
+				MES_close(PARTNER)
+
+				KAO(RAGNA,"12321Z3","3","4")
+				MES(RAGNA,"……すまねえ、愚痴だ。",0)
+				MES_close(RAGNA)
+				KAO(RAGNA,"1","2A","1")
+				look_off(RAGNA)
+				rot_chr(RAGNA,30,PARTNER)
+				wait(30)
+				KAO(RAGNA,"12321Z6","2","1")
+				MES(RAGNA,"寄り道をしちまったな。\nとっとと山に向かうとしようぜ。",0)
+				MES_close(RAGNA)
+
+			//　　画面フェードアウト抜けでイベント終了。
+			}
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+			delete(ODESSA)
+			EV_end()
+			F_set(FM_07_TalkOdessa)
+			//★オデッサ【人狼族】
+			F_set_note(-19,2)
+			
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			fade_in(0,30,BLACK)
+
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+	//　　町の宿酒場で酒を飲んでいる。
+		if(!FM_05_TalkOdessa)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(11,906,134,0,0)
+			CAM(-10,50,134,25,204,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,0,-892,1,240,2)
+			chr_pos(PARTNER,-134,-831,1,250,2)
+//			chr_pos(RAGNA,15,-884,0,210,2)
+//			chr_pos(PARTNER,136,-821,0,180,2)
+			chr_pos(ODESSA,100,-1080,5,110,150)
+
+			//ルートムーブ中のメイとぶつからないように消す
+			if(WK000==0)	//0922追加
+			{
+				color(MEI,-1)//透過
+				
+				//ホアン初回後ならルートムーブ止める
+				move(MEI, 99, 0,0,0,0,0)//0905追加
+				EV_stop("MOVE_MEI")
+				//メイを初期位置へ
+				chr_pos(MEI,298,-1505,1,351,2)
+			}
+			F_set_chr(RAGNA,CF_NO_ZIMEN)
+			F_set_chr(RAGNA,CF_NO_CSP)
+			F_set_chr(RAGNA,CF_NO_HEIGHT)
+			F_set_chr(PARTNER,CF_NO_ZIMEN)
+			F_set_chr(PARTNER,CF_NO_CSP)
+			F_set_chr(PARTNER,CF_NO_HEIGHT)
+		
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			
+			wait_fade()
+			look(ODESSA,"Bone_Head",0,		0,2,0,			0,-60,0)
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//	name("★初回（飛行場で彼女が去った場合／一回のみ／イベント処理）")
+			if(FM_03_TalkOdessa_2)
+			{
+			//　　話しかけるとキャラ再配置してイベント発生。
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"やあ、あんたたちか……",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z3","1","1")
+				MES(RAGNA,"よう、オデッサ。",0)
+				MES_close(RAGNA)
+
+				KAO(PARTNER,"12321Z7","1","1")
+				MES(PARTNER,"その様子では、目当ての者は\nまだ見つかっておらぬようだな。",0)
+				MES_close(PARTNER)
+
+				KAO(ODESSA,"12321Z3","23","1")
+				MES(ODESSA,"……まあね。",0)
+				KAO(ODESSA,"12321Z6","3","1")
+				MES(ODESSA,"フフ、あんたたちの方も\nかなり苦労してるみたいだけど。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z3","D","1")
+				MES(RAGNA,"よく分かるな……",0)
+				KAO(RAGNA,"12321Z5","1","1")
+				MES(RAGNA,"俺たち、そんなに\n疲れた顔をしてるのか？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","2B","1")
+				MES(ODESSA,"いや、漂ってくる匂いさ。",0)
+				KAO(ODESSA,"12321Z5","B","1")
+				MES(ODESSA,"植物系の魔物か……\n厄介なのと戦ったみたいだね。",0)
+				MES_close(ODESSA)
+
+			//　　ラグナたちの頭に！マーク。
+				KAO(RAGNA,"1","D","6")
+				KAO(PARTNER,"1","D","6")
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PARTNER,EMO_BIKKURI)
+				wait(30)
+
+				KAO(PARTNER,"12321Z2","1","1")
+				MES(PARTNER,"ほう……",0)
+				MES_close(PARTNER)
+
+				KAO(RAGNA,"12321Z3","D","1")
+				MES(RAGNA,"よ、よく分かったな。",0)
+				KAO(RAGNA,"12321Z6","1","1")
+				MES(RAGNA,"前に会った時も思ったけど\n一流のハンターってのは\nそこまで嗅覚がいいのかよ？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","26","1")
+				MES(ODESSA,"はは、私の鼻は特別でね。",0)
+				KAO(ODESSA,"12321Z6","6","1")
+				MES(ODESSA,"大抵の匂いなら、嗅ぎ当てて\n痕跡を辿ることが出来るんだ。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z2","1","1")
+				MES(RAGNA,"そうなのか……",0)
+				KAO(RAGNA,"12321Z6","1","1")
+				MES(RAGNA,"そいつは確かに、賞金稼ぎにも\nトレジャーハントにも向きそうだな。",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","21","1")
+				MES(ODESSA,"ふふ、天職だと思ってるよ。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"とは言え、いまだヤツの\n尻尾すら掴めていないからね。",0)
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"だいぶ鈍ったのかもしれない。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z4","1","3")
+				MES(RAGNA,"ヤツ……\nあのダイガルドって狼男か。",0)
+				MES_close(RAGNA)
+
+				KAO(PARTNER,"12321Z4","1","3")
+				MES(PARTNER,"ふむ……\n正直、かなりの強敵だな。",0)
+				MES_close(PARTNER)
+
+				KAO(ODESSA,"12321Z4","23","3")
+				MES(ODESSA,"……ああ。\nとてつもなく手強い相手さ。",0)
+				KAO(ODESSA,"12321Z5","3","3")
+				MES(ODESSA,"だが私は、何としてでも\nヤツを見つけなくちゃならない。",0)
+				KAO(ODESSA,"12321Z4","2","3")
+				MES(ODESSA,"《餓狼狩り》の名に賭けてね。",0)
+				MES_close(ODESSA)
+				
+			}
+			else
+			{
+			//	name("★初回（飛行場で去っていない場合／一回のみ／イベント処理）")
+			//　　話しかけるとキャラ再配置してイベント発生。
+//				look_chr( ODESSA, RAGNA,"Bone_Head")
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"やあ、お疲れさん。",0)
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"どうやら随分と\n苦労してるみたいだね。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z3","D","1")
+				MES(RAGNA,"よく分かるな……",0)
+				KAO(RAGNA,"12321Z5","1","1")
+				MES(RAGNA,"俺たち、そんなに\n疲れた顔をしてるのか？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","23","1")
+				MES(ODESSA,"いや、漂ってくる匂いさ。",0)
+				KAO(ODESSA,"12321Z6","B","1")
+				MES(ODESSA,"植物系の魔物か……\n厄介なのと戦ったみたいだね。",0)
+				MES_close(ODESSA)
+
+			//　　ラグナたちの頭に！マーク。
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PARTNER,EMO_BIKKURI)
+				KAO(RAGNA,"1","D","1")
+				KAO(PARTNER,"1","D","1")
+				wait(30)
+				
+				KAO(PARTNER,"12321Z2","1","1")
+				MES(PARTNER,"ほう……",0)
+				MES_close(PARTNER)
+
+				KAO(RAGNA,"12321Z3","D","1")
+				MES(RAGNA,"よ、よく分かったな。",0)
+				KAO(RAGNA,"12321Z5","1","1")
+				MES(RAGNA,"一流のハンターってのは\nそこまで嗅覚がいいのかよ？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","26","1")
+				MES(ODESSA,"はは、私の鼻は特別でね。",0)
+				KAO(ODESSA,"12321Z6","6","1")
+				MES(ODESSA,"大抵の匂いなら、嗅ぎ当てて\n痕跡を辿ることが出来るんだ。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z3","1","1")
+				MES(RAGNA,"そうなのか……",0)
+				KAO(RAGNA,"12321Z6","1","1")
+				MES(RAGNA,"そいつは確かに、賞金稼ぎにも\nトレジャーハントにも向きそうだな。",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","21","1")
+				MES(ODESSA,"ふふ、天職だと思ってるよ。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"とは言え、いまだヤツの\n尻尾すら掴めていないからね。",0)
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"だいぶ鈍ったのかもしれない。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z6","1","3")
+				MES(RAGNA,"ヤツ……\nあんたが追ってる賞金首か。",0)
+				MES_close(RAGNA)
+
+				KAO(PARTNER,"12321Z4","1","3")
+				MES(PARTNER,"ふむ。\nかなり手強い相手らしいな？",0)
+				MES_close(PARTNER)
+
+				KAO(ODESSA,"12321Z4","23","3")
+				MES(ODESSA,"……ああ。\nとてつもなく手強い。",0)
+				KAO(ODESSA,"12321Z6","3","3")
+				MES(ODESSA,"だが私は、何としてでも\nヤツを見つけなくちゃならない。",0)
+				KAO(ODESSA,"12321Z4","2","3")
+				MES(ODESSA,"《餓狼狩り》の名に賭けてね。",0)
+				MES_close(ODESSA)
+					
+			}
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+
+			if(WK000==0)	//0922追加
+			{
+				color(MEI,1)//メイを表示
+				EV("MOVE_MEI")
+			}
+			look(ODESSA,"Bone_Head",0,		0,10,0,			0,0,0)
+			
+			F_reset_chr(RAGNA,CF_NO_ZIMEN)
+			F_reset_chr(RAGNA,CF_NO_CSP)
+			F_reset_chr(RAGNA,CF_NO_HEIGHT)
+			F_reset_chr(PARTNER,CF_NO_ZIMEN)
+			F_reset_chr(PARTNER,CF_NO_CSP)
+			F_reset_chr(PARTNER,CF_NO_HEIGHT)
+			 
+			KAO(ODESSA,"1","1","1")
+			chr_pos(ODESSA,110,-1095,5,135,150)
+			F_set(FM_05_TalkOdessa)
+			//カメラを初期設定に
+			CAM_return( 0 )
+			EV_end()
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+	//	name("★以後、繰り返し")
+		else
+		{
+			look_chr( ODESSA, 0,"Bone_Head")
+			MES(ODESSA,"……微かに痕跡はある。\n島にいるのは間違いないんだ。",0)
+			MES(ODESSA,"絶対に見つけ出してやるさ。",0)
+			MES_close(ODESSA)
+		}
+		look_off(ODESSA)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+	//　　飛行場の滑走路にオデッサの飛行機が出ており、
+	//　　その前にオデッサが立って、整備のようなことをしている。
+	//	name("★初回（一回のみ／イベント処理）")
+	//　　話しかけるとキャラ再配置してイベント発生。
+		if(!FM_03_TalkOdessa_1)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)
+			
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(778,-488,161,0,0)
+			CAM(-71,25,161,34,190,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,642,316,-73,212,2)
+			chr_pos(PARTNER,490,111,-73,226,2)
+			chr_pos(ODESSA,841,27,-75,180,2)
+			chr_pos(PLANE_O,1009,-270,-73,70,0)
+			F_set_chr(RAGNA,CF_NO_ZIMEN)
+			F_set_chr(RAGNA,CF_NO_CSP)
+			F_set_chr(RAGNA,CF_NO_HEIGHT)
+		
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			rot_chr(ODESSA,30,RAGNA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"やあ、あんたたちか。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"よう、邪魔するぜ。",0)
+			MES(RAGNA,"すげぇな……\nコイツがあんたの機体か。",0)
+			MES_close(RAGNA)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"ああ。\n《ベイオウルフ号》さ。",0)
+			MES_close(ODESSA)
+			
+			wait(10)
+			
+			cross_fade(30)
+			
+		//　画面スクロールしてオデッサ機をじっくり見せる。
+		
+			EV("MV_MOVE_CAM_3")
+//			wait_fade()
+//			wait_EV("MV_MOVE_CAM_3")
+			wait(150)
+			MES_pos(PARTNER,"W9ほう……\nなかなか獰猛そうな姿だな。",0,120,240,0,0)
+			wait_key(0)
+			MES_pos(PARTNER,"W9しかしそなたの紅い翼ほど\n速くは無さそうだ。",0,120,240,0,0)
+			wait_key(0)
+			MES_close(PARTNER)
+
+			MES_pos(RAGNA,"W9俺のトリスタンは\n速度と機動性重視だからな。",0,230,320,0,0)
+			wait_key(0)
+			MES_pos(RAGNA,"W9だがこの機体は\n代わりに火力と装甲を\n大幅に強化しているらしい。",0,230,320,0,0)
+			wait_key(0)
+			MES_pos(RAGNA,"W9かといって速度と機動性も\nそこまで落としちゃいないから\n十分、格闘戦に耐えられる。",0,230,320,0,0)
+			wait_key(0)
+			MES_pos(RAGNA,"W9まさに大空を駆ける\n鋼鉄の猟犬ってところだな。",0,230,320,0,0)
+			wait_key(0)
+			MES_close(RAGNA)
+
+			MES_pos(PARTNER,"W9ふむ……なるほどな。",0,120,240,0,0)
+			wait_key(0)
+			MES_close(PARTNER)
+			wait_MES(PARTNER)
+
+			//カメラ戻す
+			cross_fade(30)
+			CAM_move(778,-488,161,0,0)
+			CAM(-71,25,161,34,190,0,0)
+			wait_fade()
+
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"ふふ、さすがだね。",0)
+			KAO(ODESSA,"12321Z6","1","1")
+			MES(ODESSA,"一目でそこまで見抜けるとは\nなかなかやるじゃないか。",0)
+			MES_close(ODESSA)
+
+			MES(RAGNA,"ヘっ。\nこのくらい朝飯前だっての。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+
+		//◆　　ラグナ、オデッサ機に近寄ってマジマジと見回す。
+			CAM_move(518,-408,161,80,0)
+			CAM(-71,21,161,34,161,80,0)
+			
+			rot(RAGNA,30,180)
+			move(RAGNA,0,WALK1,636,-125,-75,0)
+			wait(30)
+			
+			rot(ODESSA,30,12)
+			move(ODESSA,0,WALK1,726,249,-74,0)
+			
+			wait_move(ODESSA)
+			rot_chr(ODESSA,30,RAGNA)
+
+			wait_move(RAGNA)
+			rot(RAGNA,30,209)
+			rot_chr(PARTNER,30,RAGNA)
+		
+			MOT(RAGNA,51,0)//キョロキョロ
+			MES(RAGNA,"しかし、さすが一流ハンター。\n高いパーツを使ってやがるな。",0)
+			MES(RAGNA,"へえ、エンジンには\nケーニッヒ社のカスタムを\n積んでいるのか……",0)
+			MES_close(RAGNA)
+
+			EMO(RAGNA,EMO_BIKKURI)
+			wait(30)
+			MES(RAGNA,"おおっ！？\nラジエーターも特注かよ！？",0)
+			MES(RAGNA,"なるほど、こうする事で\n重量負荷を下げてんのか……",0)
+			MES_close(RAGNA)
+
+		//　　オデッサとアルウェンの頭に冷や汗マーク。
+			EMO(ODESSA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			MES(PARTNER,"ううむ、何が良いのか\nさっぱり分からぬのだが。",0)
+			MES(PARTNER,"そなたら翼乗りは\n皆、あのような感じなのか？",0)
+			MES_close(PARTNER)
+
+		//	name2(ODESSA)
+			MES(ODESSA,"はは、あの坊やは特別さ。",0)
+			MES(ODESSA,"私もそれなりに詳しいけど\n細かい所はプロ任せだからね。",0)
+			MES_close(ODESSA)
+
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+		//　　画面フェードアウト抜けでイベント終了。
+			fade_in(100,30,BLACK)
+			wait_fade()
+			
+			//キャラ再配置
+			chr_pos(RAGNA,642,316,-73,212,2)
+			chr_pos(PARTNER,490,111,-73,226,2)
+			chr_pos(ODESSA,841,27,-75,180,2)
+			chr_pos(PLANE_O,1009,-270,-73,70,0)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			F_set_chr(ODESSA,CF_NO_MOVE)
+
+			CAM_return( 0 )			//カメラを初期設定に
+			wait(30)
+			F_reset_chr(RAGNA,CF_NO_ZIMEN)
+			F_reset_chr(RAGNA,CF_NO_CSP)
+			F_reset_chr(RAGNA,CF_NO_HEIGHT)
+
+			F_set(FM_03_TalkOdessa_1)
+			//★オデッサ【ベイオウルフ号】
+			F_set_note(-19,1)
+
+			EV_end()
+			fade_in(0,30,BLACK)
+			
+			
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+	//	name("★２回目（一回のみ／イベント処理）")
+	//　　話しかけるとキャラ再配置してイベント発生。
+		else
+		if(!FM_03_TalkOdessa_2)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)
+
+			EV_begin()
+			//カメラセット
+			CAM_move(920,460,75,0,0)
+			CAM(-231,72,75,23,167,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,642,316,-73,212,2)
+			chr_pos(PARTNER,490,111,-73,226,2)
+			chr_pos(ODESSA,841,27,-75,180,2)
+			chr_pos(PLANE_O,1009,-270,-73,70,0)
+
+			F_reset_chr(ODESSA,CF_NO_MOVE)
+			F_set_chr(ODESSA,CF_NO_CSP)
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			wait_fade()
+		
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　オデッサの頭に？マーク。
+			EMO(ODESSA,EMO_HATENA)
+			wait(30)
+			rot_chr(ODESSA,30,RAGNA)
+			KAO(ODESSA,"B232BZ4","1","1")
+			MES(ODESSA,"ん……\n坊や、ちょっと待った。",0)
+			MES_close(ODESSA)
+
+		//　　オデッサ、飛行機から離れてラグナの前に移動。
+		//	name2(RAGNA)
+			move(ODESSA,0,WALK1,713,315,-74,0)
+			CAM_move(640,-180,55,50,0)
+//			CAM(-191,57,55,23,165,50,0)
+			CAM(-191,55,55,23,165,50,0)
+			wait(20)
+			KAO(RAGNA,"12321Z4","2","1")
+			MES_pos(RAGNA,"だ～から、\n誰が坊やだっての！",0,0,0,0,0)
+			wait(40)
+			MES_close(RAGNA)
+			KAO(RAGNA,"12328Z2","8","1")
+			rot_chr(PARTNER,30,RAGNA)
+			wait_move(ODESSA)
+			rot(ODESSA,30,30)
+			MOT(ODESSA,50,10)
+		//　　◆首筋のあたりにかがみ込むようなポジションになる。
+			KAO(PARTNER,"E","E","1")
+			KAO(ODESSA,"1","3","1")
+			look(ODESSA,"Bone_Head",0,		0,2,3,			0,20,-30)
+			wait(5)
+			look(RAGNA,"Bone_Head",0,		0,2,2,			0,-20,20)
+			MES(RAGNA,"って、おい……",0)
+			MES_close(RAGNA)
+	
+			MES(RAGNA,"（ち、近ぇ……！？）",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"ほう……",0)
+			MES_close(PARTNER)
+
+		//	name2(ODESSA)
+			MES(ODESSA,"………………………………",0)
+			KAO(ODESSA,"B232BZ4","2","1")
+			MES(ODESSA,"……ラグナ。\nあんた、一体誰と会った？",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			KAO(PARTNER,"1","1","1")
+			KAO(RAGNA,"12321Z2","8","1")
+			MES(RAGNA,"へ……\nそ、それより近いって！",0)
+			MES_close(RAGNA)
+			
+			CAM_move(660,-200,75,50,0)
+			CAM(-191,56,75,23,188,50,0)
+			rot(ODESSA,30,30)
+			move(ODESSA,0,WALK1,763,173,-74,0)
+			look(ODESSA,"Bone_Head",0,		0,2,2,			0,0,0)
+			look(RAGNA,"Bone_Head",0,		0,2,2,			0,0,0)
+			KAO(RAGNA,"1","1","1")
+
+		//　　オデッサ、ラグナから一旦離れる。
+			wait_move(ODESSA)
+			rot_chr(PARTNER,30,ODESSA)
+			MOT(ODESSA,50,10)
+			wait(15)
+			KAO(ODESSA,"B232BZ6","2","1")
+			MES(ODESSA,"オイルの匂いのせいで\nすぐには気付かなかったが……",0)
+			KAO(ODESSA,"B232BZ5","2","1")
+			MES(ODESSA,"あんたから微かに\nある男の匂いが漂っている。",0)
+			KAO(ODESSA,"B232BZ3","2","1")
+			MES(ODESSA,"いや、『獣』というべきか。",0)
+			MES_close(ODESSA)
+
+			KAO(PARTNER,"B","D","6")
+			EMO(RAGNA,EMO_BIKKURI)
+			EMO(PARTNER,EMO_BIKKURI)
+			wait(20)
+
+			KAO(RAGNA,"12321","D","1")
+			MES(RAGNA,"あ……",0)
+			MES_close(RAGNA)
+
+			KAO(PARTNER,"12321Z3","1","1")
+			MES(PARTNER,"ふむ、さすがだな。",0)
+			MES_close(PARTNER)
+
+			KAO(RAGNA,"1","1","1")
+		//	name("テキスト（色換え．表示しない）")
+			fade_in(50,10,BLACK)
+			wait_fade()
+			MES(0,"C3S2神殿での一件を\n簡単にオデッサに説明した。",2)
+			MES_close(0)
+			fade_in(0,10,BLACK)
+			wait_fade()
+
+			KAO(ODESSA,"B232BZ3","3","1")
+			MES(ODESSA,"……ふん、なるほどね。",0)
+			KAO(ODESSA,"B232BZ6","2","1")
+			MES(ODESSA,"水没した女神の神殿か……\n先に調べておくべきだったよ。",0)
+			MES_close(ODESSA)
+
+			KAO(RAGNA,"12321Z3","1","1")
+			MES(RAGNA,"な、なあ……",0)
+			KAO(RAGNA,"12321Z6","1","1")
+			MES(RAGNA,"あのダイガルドって野郎が\nあんたの追ってる相手なのか？",0)
+			MES_close(RAGNA)
+
+			KAO(ODESSA,"B232BZ3","3","1")
+			MES(ODESSA,"ま、そういうことさ。",0)
+			KAO(ODESSA,"B232BZ6","21","1")
+			MES(ODESSA,"まあいい、この島にいると\n完全に判っただけでも収穫だ。",0)
+			KAO(ODESSA,"B232BZ3","1","1")
+			MES(ODESSA,"……悪いね、私は行くよ。",0)
+			MES_close(ODESSA)
+			wait_MES(ODESSA)
+			
+		//　　オデッサ、そのまま飛行機から離れて去っていく。
+			look_chr( RAGNA, ODESSA,"Bone_Head")
+			EV("MV_MoveOdessa_03")
+			CAM_move(600,-200,55,90,0)
+			CAM(-191,56,55,23,78,90,0)
+		//	name2(RAGNA)
+		
+			wait(15)
+
+			rot(RAGNA,7,280)
+			rot(PARTNER,7,280)
+			
+			MES_pos(RAGNA,"お、おい。",0,0,0,0,0)
+			wait(30)
+			MES_close(RAGNA)
+
+			
+			wait(80)
+
+			MES(RAGNA,"行っちまった……",0)
+			MES(RAGNA,"ったく、何だってんだ。",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"ふむ、どうやら\n色々と因縁があるらしい。",0)
+			MES(PARTNER,"いずれ機会があれば\n協力できるかもしれぬな。",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"……ああ、そうだな。",0)
+			MES_close(RAGNA)
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+		//　　画面フェードアウト抜けでイベント終了。
+			fade_in(100,30,BLACK)
+			wait_fade()
+			EV_end()
+			delete(ODESSA)
+			look_off( RAGNA )
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+
+			CAM_return( 0 )			//カメラを初期設定に
+			wait(30)
+
+			fade_in(0,30,BLACK)
+			F_set(FM_03_TalkOdessa_2)
+		
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+		
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		//──────────────────────────────
+		//▼フラグ②（神殿の探索へ向かう）
+		//──────────────────────────────
+		//　　クリスタルバレーにいる。（テルミドールとは別位置）
+		//　　テルミドールとは違い、扉を凝視はしておらず、
+		//　　あたりを見回して誰かを探しているような雰囲気。
+		//──────────────────────────────
+		if(!FM_02_TalkOdessa)
+		{
+		//	name("★初回（一回のみ／イベント処理）")
+		//　　話しかけるとキャラ再配置してイベント発生。F1_19_InTemple
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			EV_begin()
+			
+			move(ODESSA, 99, 0,0,0,0,0)//0905追加
+			EV_stop("FREEMOVE_ODESSA")
+			MOT_SET(ODESSA,150,-1,399,399,-1,-1)		//片手腰
+			
+			//カメラセット
+			CAM_move(847,3434,139,0,0)
+			CAM(-50,44,-20,40,193,0,0)
+			
+			//キャラ再配置
+			chr_pos(ODESSA,	997,-3575,-2,30,	2)
+			chr_pos(RAGNA,	862,-3274,0,190,	2)
+			chr_pos(PARTNER,707,-3434,1,250,	2)
+
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			MOT(ODESSA,150,10)
+			wait(15)
+
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"おや……\n妙なところで会うもんだね。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"よぉ、また会ったな。",0)
+			MES(RAGNA,"こんな場所で\nいったい何をしているんだ？",0)
+			MES_close(RAGNA)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"言っただろ、獲物探しさ。",0)
+			KAO(ODESSA,"12321Z6","1","1")
+			MES(ODESSA,"どうやら、ここには一度も\n訪れていないみたいだけどね。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"へえ……\nよく判るな、そんなこと。",0)
+			MES(RAGNA,"やっぱり賞金稼ぎならではの\nカンってやつか？",0)
+			MES_close(RAGNA)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"ま、そんなところさ。",0)
+			MES_close(ODESSA)
+
+//			rot_chr(ODESSA,30,PARTNER)
+			look_chr( ODESSA, PARTNER,"Bone_Head")
+			wait(15)
+			KAO(ODESSA,"12321Z5","1","1")
+			MES(ODESSA,"……ところでお姫様。\nちょっと聞いていいかい？",0)
+			MES_close(ODESSA)
+
+			KAO(PARTNER,"12321Z4","1","1")
+			MES(PARTNER,"ふむ、なんだ？",0)
+			MES_close(PARTNER)
+
+			KAO(ODESSA,"12321Z5","1","1")
+			MES(ODESSA,"この遺跡だけど……\nどんな曰くがあるんだい？",0)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"随分、昔のものみたいだけど。",0)
+			MES_close(ODESSA)
+
+			KAO(PARTNER,"12321Z6","23","1")
+			MES(PARTNER,"フフ……\nなぜ私にそれを聞くのか\nその理由は問わぬとしよう。",0)
+			MES_close(PARTNER)
+
+		//　　アルウェンの頭に…マーク。
+			KAO(PARTNER,"1","21","1")
+			wait(15)
+			EMO(PARTNER,EMO_TENTEN)
+			wait(30)
+
+		//　　アルウェン、扉のほうに視線を向ける。
+			look_chr( PARTNER, 100,"Bone_Head")
+			wait(20)
+		
+			cross_fade(30)
+			
+			
+			CAM_move(-476,3923,1220,0,0)
+			CAM(190,86,1220,39,194,0,0)
+			
+			CAM_move(764,5123,1220,400,0)
+			CAM(430,164,1220,32,208,400,0)
+			wait_fade()
+
+		//　　画面スクロールするなりして扉の祭壇なども映す。
+		//	name2(PARTNER)
+			MES_pos(PARTNER,"W9……クリスタルバレー遺跡。",0,180,120,0,0)
+			wait_key(0)
+			MES_pos(PARTNER,"W9５００年前、我が一族の者が\n築いたものだと聞き及んでいる。",0,180,120,0,0)
+			wait_key(0)
+			MES_pos(PARTNER,"W9何の目的で築いたかまでは\n残念ながら聞いてはおらぬがな。",0,180,120,0,0)
+			wait_key(0)
+			MES_close(PARTNER)
+
+		//	name2(ODESSA)
+			MES_pos(ODESSA,"W9ふむ……なるほどね。",0,420,340,0,0)
+			wait_key(0)
+			MES_pos(ODESSA,"W9……どうやらヤツと\n直接の関係は無さそうだ。",0,420,340,0,0)
+			wait_key(0)
+			MES_close(ODESSA)
+			wait_MES(ODESSA)
+
+			cross_fade(30)
+			CAM_move(847,3434,139,0,0)
+			CAM(-50,44,-20,40,193,0,0)
+			
+			wait_fade()
+
+		//	name2(RAGNA)
+			look_chr( RAGNA, PARTNER,"Bone_Head")
+			MES(RAGNA,"？？？",0)
+			MES(RAGNA,"しかし、５００年前か……",0)
+			MES(RAGNA,"ちょうど魔法大戦ってのが\n終わったくらいの時代だよな。",0)
+			MES(RAGNA,"そう考えると、この遺跡も\n宝の山みたいに思えてくるぜ。",0)
+			MES_close(RAGNA)
+
+			look_off(PARTNER)
+
+		//　　アルウェンとオデッサ、ラグナの方に向き直る。
+			look_off(ODESSA)
+			rot_chr(ODESSA,30,RAGNA)
+			rot_chr(PARTNER,30,RAGNA)
+//			look_chr( ODESSA, RAGNA,"Bone_Head")
+//			look_chr( PARTNER, RAGNA,"Bone_Head")
+
+			KAO(PARTNER,"1","2","1")
+			KAO(ODESSA,"1","2","1")
+		//　　それぞれ…マーク。
+			EMO(ODESSA,EMO_TENTEN)
+			EMO(PARTNER,EMO_TENTEN)
+			wait(30)
+			
+			look_off(RAGNA)
+
+
+			MES(RAGNA,"な、なんだよ？",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z3","2","1")
+			MES(PARTNER,"……まさかとは思うが。",0)
+			KAO(PARTNER,"12321Z6","2","1")
+			MES(PARTNER,"この遺跡の一部を崩して\n持って帰ろうだなどと\n考えているのではあるまいな？",0)
+			MES_close(PARTNER)
+
+			rot_chr(RAGNA,30,PARTNER)
+			
+		//	name2(RAGNA)
+			MES(RAGNA,"へ……",0)
+			MES_close(RAGNA)
+
+			KAO(ODESSA,"12321Z6","23","1")
+			MES(ODESSA,"ま、確かにハンターの中には\nマナーが悪いやつもいるからね。",0)
+			KAO(ODESSA,"12321Z4","21","1")
+			MES(ODESSA,"あんたはどうなんだい？",0)
+			MES_close(ODESSA)
+
+			rot_chr(RAGNA,30,ODESSA)
+			MES(RAGNA,"するかっつーの！",0)
+			MES(RAGNA,"トレジャーハンターは\n墓荒らしの類じゃねえんだ。",0)
+			MES(RAGNA,"貴重な文化遺産が\n失われないよう回収するのが\n本来の仕事なんだからな。",0)
+			MES(RAGNA,"こういう遺跡への敬意は\n人一倍持っているつもりだぜ。",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z3","1","1")
+			MES(PARTNER,"ふむ、ならばよいが。",0)
+			MES_close(PARTNER)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"フフ……\nなかなか殊勝な心がけだね。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"だ～から\nガキ扱いするなっての！",0)
+			MES_close(RAGNA)
+			
+
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			look_off(ODESSA)
+			
+			EV("FREEMOVE_ODESSA")
+			F_set(FM_02_TalkOdessa)
+			MOT(ODESSA,2,10)
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			EV_end()
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+	//	name("★以後、繰り返し")
+		else
+		{
+			MOT(ODESSA,52,10)
+			rot_chr(ODESSA,30,PLAYER1)
+			MES(ODESSA,"フン、それにしても\nなかなか尻尾を掴ませないね。",0)
+			MES(ODESSA,"だが、ヤツがこの島に\n来ているのは間違いないんだ。",0)
+			MES(ODESSA,"必ず尻尾を捕まえてやる……",0)
+			MES_close(ODESSA)
+			MOT(ODESSA,2,10)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		//──────────────────────────────
+		//▽中継地点でオデッサと会った
+		//──────────────────────────────
+		//　　宿酒場の席に座っている（テルミドールとは絡めない）
+		//　　バーボンをロックで嗜んでいるような雰囲気？
+		//	name("★初回（一回のみ／イベント処理）")
+		//　　話しかけるとキャラ再配置してイベント発生。
+		//──────────────────────────────
+		if(!FM_01_TalkOdessa)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(11,906,134,0,0)
+			CAM(-10,50,134,25,204,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,0,-892,1,240,2)
+			chr_pos(PARTNER,-134,-831,1,250,2)
+			chr_pos(ODESSA,100,-1080,5,110,150)
+
+			//ルートムーブ中のメイとぶつからないように消す
+			color(MEI,-1)//透過
+			
+			//ホアン初回後ならルートムーブ止める
+			move(MEI, 99, 0,0,0,0,0)//0905追加
+			EV_stop("MOVE_MEI")
+			//メイを初期位置へ
+			chr_pos(MEI,298,-1505,1,351,2)
+			
+			F_set_chr(RAGNA,CF_NO_ZIMEN)
+			F_set_chr(RAGNA,CF_NO_CSP)
+			F_set_chr(RAGNA,CF_NO_HEIGHT)
+			F_set_chr(PARTNER,CF_NO_ZIMEN)
+			F_set_chr(PARTNER,CF_NO_CSP)
+			F_set_chr(PARTNER,CF_NO_HEIGHT)
+		
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+//			rot(ODESSA,30,110)
+			look(ODESSA,"Bone_Head",0,		0,2,0,			0,-60,0)
+//			look_chr( ODESSA, RAGNA,"Bone_Head")
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"やあ、あんたたちか。",0)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"目当ての物は見つかったかい？",0)
+			MES_close(ODESSA)
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z4","1","1")
+			MES(RAGNA,"いや、生憎とまだだ。",0)
+			KAO(RAGNA,"12321Z5","1","1")
+			MES(RAGNA,"しかしあの廃坑、\n結構厄介なダンジョンだな。",0)
+			KAO(RAGNA,"12321Z6","1","1")
+			MES(RAGNA,"魔物の強さはそこそこだが\n仕掛けやトラップが面倒だぜ。",0)
+			MES_close(RAGNA)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"フッ、あの程度は序の口さ。",0)
+			KAO(ODESSA,"12321Z6","1","1")
+			MES(ODESSA,"どうやら、この島に点在する\nダンジョンはかなりの難度らしい。",0)
+			KAO(ODESSA,"12321Z6","1","1")
+			MES(ODESSA,"フードも含めて、せいぜい準備は\n念入りにやっておくんだね。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z4","23","3")
+			MES(RAGNA,"わ、分かってるっての。",0)
+			KAO(RAGNA,"12321Z4","2","3")
+			MES(RAGNA,"新米じゃねえんだから\nガキ扱いするんじゃねえよ。",0)
+			MES_close(RAGNA)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z2","23","1")
+			MES(ODESSA,"フフ……",0)
+			MES_close(ODESSA)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"1", "2", "7")	
+			MES(PARTNER,"（完全に子ども扱い\n  されておるのう……）",0)
+			MES_close(PARTNER)
+			
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+
+			color(MEI,1)//メイを表示
+			
+			EV("MOVE_MEI")
+			look(ODESSA,"Bone_Head",0,		0,10,0,			0,0,0)
+			
+			F_reset_chr(RAGNA,CF_NO_ZIMEN)
+			F_reset_chr(RAGNA,CF_NO_CSP)
+			F_reset_chr(RAGNA,CF_NO_HEIGHT)
+			F_reset_chr(PARTNER,CF_NO_ZIMEN)
+			F_reset_chr(PARTNER,CF_NO_CSP)
+			F_reset_chr(PARTNER,CF_NO_HEIGHT)
+			 
+			chr_pos(RAGNA,0,-892,1,240,2)
+			chr_pos(PARTNER,-145,-831,1,250,2)
+			
+			chr_pos(ODESSA,110,-1095,5,135,150)
+			F_set(FM_01_TalkOdessa)
+			//カメラを初期設定に
+			CAM_return( 0 )
+			EV_end()
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+			look_chr( ODESSA, 0,"Bone_Head")
+		//	name("★２回目")
+			if(!F_ODESSA)
+			{
+				MES(ODESSA,"トレジャーハンターたる者、\nフードをどう使うかは\nちゃんと考えておくんだね。",0)
+				MES(ODESSA,"確かに、こういった宿酒場で\n上のランクのフードに交換した方が\n経験値という点では美味しいが……",0)
+				MES(ODESSA,"かと言って使い惜しみをしてたら\n探索中に手遅れになりかねない。",0)
+				MES(ODESSA,"１０個単位で管理しながら\n余ったものから回復に使う……",0)
+				MES(ODESSA,"探索が一区切り付いたら\n小まめに町に戻って交換する……",0)
+				MES(ODESSA,"色々あると思うが、まずは自分の\nスタイルを見つけるといいだろう。",0)
+				MES_close(ODESSA)
+				F_set(ODESSA)
+			}
+		//	name("★それ以降")
+			else
+			{
+				MES(ODESSA,"トレジャーハンターたる者、\nフードをどう使うかは\nちゃんと考えておくんだね。",0)
+				MES(ODESSA,"まずは自分のスタイルを\n見つけるといいだろう。",0)
+				MES_close(ODESSA)
+			}
+		}
+		look_off(ODESSA)
+	//──────────────────────────────
+	}
+	
+	TK_end()
+}
+
+
+MV_MoveOdessa_03
+{
+	rot(ODESSA,30,300)
+	move(ODESSA,0,WALK1,1670,634,-74,0)
+	wait_move(ODESSA)
+	rot(ODESSA,30,326)
+	move(ODESSA,0,WALK1,2165,1407,-74,0)
+	wait_move(ODESSA)
+	
+	move(ODESSA,20,WALK1,1637,2054,-74,0)
+	
+}
+
+MV_MOVE_ODESSA_7
+{
+	rot(ODESSA,30,304)
+	move(ODESSA, 0, WALK1,156,1798,1,0)
+	wait_move(ODESSA)
+	
+	rot(ODESSA,30,263)
+	move(ODESSA, 0, WALK1,600,1773,0,0)
+	wait_move(ODESSA)
+
+	rot(ODESSA,30,340)
+	move(ODESSA, 0, WALK1,698,2186,100,0)
+}
+
+MV_MOVE_CAM_3
+{
+	CAM_move(1638,-188,461,0,0)
+	CAM(449,45,461,26,218,0,0)
+	
+	CAM_move(638,-228,461,150,0)
+	CAM(449,45,461,26,161,150,0)
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

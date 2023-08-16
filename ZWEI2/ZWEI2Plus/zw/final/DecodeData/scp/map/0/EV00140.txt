@@ -1,0 +1,1111 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10140][亚尔迪·博物馆受付]
+//====================================================================
+
+#ScriptTable
+
+#LUE		1
+#EVENT_RAGNA	2
+#MIA			3
+
+#CARDINA	10	//テスト
+#TEO		11
+#GREIN		12
+#TELMIDORL	13
+
+
+//---------------------------------------------------------------------
+//	以下宝物寄贈処理的ＬＷ。
+//	実体は卡尔蒂娜ファイルにあり，场合によっては
+//	格林もこ的ルーチンをコールしています。
+//
+//	WK000：ランダムワーク。
+//	WK001：複数寄贈回数計算。
+//	WK002：宝物的シリーズＮｏ。（ＩＤが入る）
+//	WK003：今回的宝物寄贈個数
+//	WK004：分割シリーズ用計算（全部揃ったか）
+//	WK005：分割シリーズ用計算（同じ分割品を複数持っているか）
+//	WK006：キャプテン的一括寄贈個数
+//	WK007：ダサイダー的一括寄贈個数
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip      x    y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	set_chr( 90,990,	-1,-1      0,1225,  0,     180,070301, 6,"K8_10100;")	//博物馆仮亚尔迪的街
+
+	set_chr( 91,990,	-1,-1  -1525,   0,  0,	   260,070102, 6,"K0_10145;")	//展示室
+//	set_chr( 92,990,	-1,-1    279, 330,  0,	     0,  0404, 6,"<EV_InShop>;")	//ボイス用エリア
+
+
+	//ＮＰＣ
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		set_chr( CARDINA,46,	-1,-1,   938,-100,1,  		2,45,	20,"<SHOP_CARDINA>")	//受付　卡尔蒂娜
+		set_chr( TEO,44,	-1,-1,  -982,-349,1,	 2,280, 20,"<TK_TEO>")		//受付前　提欧
+//		set_chr( GREIN,45,	-1,-1, 3629,-1831,0, 	 2,70, 20,";")		//ダ小咪格林
+//		F_set_chr(GREIN,CF_NO_CSP)
+//		F_set_chr(GREIN,CF_NO_ZIMEN)
+//		F_set_chr(GREIN,CF_NO_HEIGHT)
+
+		//モーション
+		MOT_SET(CARDINA,150, -2,450,450,-1,0)	//卡尔蒂娜
+		MOT(CARDINA,150,0)
+		F_set_chr(CARDINA,CF_NO_MOVE)
+		F_set_chr(TEO,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		set_chr( CARDINA,46,	-1,-1,   938,-100,1,  		2,45,	20,"<SHOP_CARDINA>")	//受付　卡尔蒂娜
+		set_chr( GREIN,45,	-1,-1, 3629,-1831,0, 	 2,70, 20,";")		//ダ小咪格林
+		F_set_chr(GREIN,CF_NO_CSP)
+		F_set_chr(GREIN,CF_NO_ZIMEN)
+		F_set_chr(GREIN,CF_NO_HEIGHT)
+
+		//モーション
+		MOT_SET(CARDINA,150, -2,450,450,-1,0)	//卡尔蒂娜
+		MOT(CARDINA,150,0)
+		F_set_chr(CARDINA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		set_chr( CARDINA,46,	-1,-1,   938,-100,1,  		2,45,	20,"<SHOP_CARDINA>")	//受付　卡尔蒂娜
+		set_chr( GREIN,45,	-1,-1, 3629,-1831,0, 	 2,70, 20,";")		//ダ小咪格林
+		F_set_chr(GREIN,CF_NO_CSP)
+		F_set_chr(GREIN,CF_NO_ZIMEN)
+		F_set_chr(GREIN,CF_NO_HEIGHT)
+
+		//モーション
+		MOT_SET(CARDINA,150, -2,450,450,-1,0)	//卡尔蒂娜
+		MOT(CARDINA,150,0)
+		F_set_chr(CARDINA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+		set_chr( CARDINA,46,	-1,-1,   -1000,-500,0,  		2,180,	20,"<SHOP_CARDINA>")	//受付　卡尔蒂娜
+		set_chr( GREIN,45,	-1,-1, 3629,-1831,0, 	 5,70, 20,";")		//ダ小咪格林
+		F_set_chr(GREIN,CF_NO_CSP)
+		F_set_chr(GREIN,CF_NO_ZIMEN)
+		F_set_chr(GREIN,CF_NO_HEIGHT)
+
+		//待机モーション
+		MOT_SET(CARDINA,150,-1,461,461,151,15)//卡尔蒂娜
+		MOT_SET(CARDINA,151,-1,463,463,150,15)
+
+
+		MOT(CARDINA,150,0)
+		F_set_chr(CARDINA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ的フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		set_chr( CARDINA,46,	-1,-1,   938,-100,1,  		2,45,	20,"<SHOP_CARDINA>")	//受付　卡尔蒂娜
+		set_chr( GREIN,45,	-1,-1, 3629,-1831,0, 	 5,70, 20,";")		//ダ小咪格林
+		F_set_chr(GREIN,CF_NO_CSP)
+		F_set_chr(GREIN,CF_NO_ZIMEN)
+		F_set_chr(GREIN,CF_NO_HEIGHT)
+
+		//モーション
+		MOT_SET(CARDINA,150, -2,450,450,-1,0)	//卡尔蒂娜
+		MOT(CARDINA,150,0)
+		F_set_chr(CARDINA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村的人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵的正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		set_chr( CARDINA,46,	-1,-1,   938,-100,1,  		2,45,	20,"<SHOP_CARDINA>")	//受付　卡尔蒂娜
+		set_chr( GREIN,45,	-1,-1, 3629,-1831,0, 	 5,70, 20,";")		//ダ小咪格林
+		F_set_chr(GREIN,CF_NO_CSP)
+		F_set_chr(GREIN,CF_NO_ZIMEN)
+		F_set_chr(GREIN,CF_NO_HEIGHT)
+
+		//モーション
+		MOT_SET(CARDINA,150, -2,450,450,-1,0)	//卡尔蒂娜
+		MOT(CARDINA,150,0)
+		F_set_chr(CARDINA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎的パーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇的森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		if(GW_ENTRY_EVENT==2)
+		{
+			workG(GW_ENTRY_EVENT,SET,0)
+		}
+		workG(GW_ENTRY_EVENT,SET,0)
+		set_chr( GREIN,45,	-1,-1,  938,-100,1,  	 53,45, 20,"<SHOP_GREIN>")		//受付　格林
+		set_chr( CARDINA,46,	-1,-1,   3629,-1831,0,  10,70,	20,";")	//ダ小咪卡尔蒂娜
+		F_set_chr(CARDINA,CF_NO_CSP)
+		F_set_chr(CARDINA,CF_NO_ZIMEN)
+		F_set_chr(CARDINA,CF_NO_HEIGHT)
+
+		//モーション
+		MOT_SET(CARDINA,150, -2,450,450,-1,0)	//卡尔蒂娜
+		MOT(CARDINA,150,0)
+
+		F_set_chr(GREIN,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		set_chr( GREIN,45,	-1,-1,  4558,6417,0,,	 2,190, 20,"<SHOP_GREIN>")		//二つ目的展示室　格林
+		set_chr( TEO,44,	-1,-1,  	-542,-320,0,	 5,310, 20,"<TK_TEO>")		//入り口展示品前　提欧
+		EV("MOTION_TEO_02")
+		set_chr( TELMIDORL,27,	-1,-1,   -400,-200,0,	 52,130, 20,"<TK_TELMIDORL>")		//特尔米多鲁
+		
+		set_chr( CARDINA,46,	-1,-1,   938,-100,1,  		2,45,	20,"<SHOP_CARDINA>")	//受付　卡尔蒂娜
+		set_chr( GREIN,45,	-1,-1, 3629,-1831,0, 	 5,70, 20,";")		//ダ小咪格林
+		F_set_chr(GREIN,CF_NO_CSP)
+		F_set_chr(GREIN,CF_NO_ZIMEN)
+		F_set_chr(GREIN,CF_NO_HEIGHT)
+
+		//モーション
+		MOT_SET(CARDINA,150, -2,450,450,-1,0)	//卡尔蒂娜
+		MOT(CARDINA,150,0)
+
+		F_set_chr(CARDINA,CF_NO_MOVE)
+		F_set_chr(TEO,CF_NO_MOVE)
+		F_set_chr(TELMIDORL,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		set_chr( CARDINA,46,	-1,-1,   938,-100,1,  		2,45,	20,"<SHOP_CARDINA>")	//受付　卡尔蒂娜
+		set_chr( GREIN,45,	-1,-1, 3629,-1831,0, 	 5,70, 20,";")		//ダ小咪格林
+		F_set_chr(GREIN,CF_NO_CSP)
+		F_set_chr(GREIN,CF_NO_ZIMEN)
+		F_set_chr(GREIN,CF_NO_HEIGHT)
+
+		//モーション
+		MOT_SET(CARDINA,150, -2,450,450,-1,0)	//卡尔蒂娜
+		MOT(CARDINA,150,0)
+
+		F_set_chr(CARDINA,CF_NO_MOVE)
+	}
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼エピローグ開始イベント
+		EV("EV_6_16_StartEp")
+	//エピローグセーブ無しに0830
+	//	workG(GW_ENTRY_EVENT,SET,101)
+	//	EV("EV_OPEN_SAVE")
+
+	}
+	else
+	if(GW_ENTRY_EVENT==101)
+	{
+	//	workG(GW_ENTRY_EVENT,SET,0)
+	//	//▼エピローグ開始イベント
+	//	EV("EV_6_16_StartEp")
+	}
+
+	//卡尔蒂娜会話用Ｌワーク初期化
+	workL(0,SET,0)
+//	EV("EV_InShop_NoVoice")
+
+}
+//====================================================================
+//=== モーション処理 =================================================
+//====================================================================
+//──────────────────────────────
+//▼提欧
+//──────────────────────────────
+MOTION_TEO_02
+{
+	MOT_SET(TEO,150, -2,405,405,-1,15)
+	MOT_SET(TEO,151, -2,406,406,-1,15)
+	MOT_SET(TEO,152, -2,407,407,-1,15)
+
+	MOT(TEO,150,15)
+	wait(15)
+	MOT(TEO,151,15)
+	wait(15)
+	MOT(TEO,152,15)
+	wait(15)
+	MOT(TEO,151,15)
+	wait(15)
+	loop
+}
+
+
+//====================================================================
+//=== ショップボイス処理 =============================================
+//====================================================================
+
+EV_InShop
+{
+	if(FT_01_Guildbigin)//ギルド初回を聞いてないと起こらない
+	{
+		if( F2_00_GoForest && !F2_14_TalkEnemy )//フラグ③④的み格林
+			VOICE( 746,92 ) 
+		else
+			VOICE( 717,92 )
+	}
+}
+
+EV_InShop_NoVoice
+{
+	wait(5)//これ入れないと鳴らないことがある。
+	SE(28,90)
+	F_set(FS_SP_ShopCH4)
+
+}
+
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+
+EV_OPEN_SAVE
+{
+	//選択肢　保存か？
+	EV_begin()
+
+	fade_in(100,1,0)
+	wait_fade()
+
+	workL(WK_YESNO,SET,0)
+
+	menu(1,		3,	256,150,0,	128,110,	-20,0,0)
+	menuTXT(1,	"",	20,GREEN)
+	menuEVENT(1,"0","0","0")
+
+	menu(2,		3,	272,170,0,	96,30,		-20,0,0)
+	menuTXT(2,	"■保存",	20,GREEN)
+	menuEVENT(2,"EV_SAVE_ON","EV_SAVE_OFF","")
+
+	menu(3,		3,	272,210,0,	96,30,		-20,0,0)
+	menuTXT(3,	"■不保存",	20,GREEN)
+	menuEVENT(3,"EV_SAVE_OFF","EV_SAVE_OFF","")
+
+	wait_W(WK_YESNO)
+
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(2,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(3,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	wait_menu(1)
+
+	if(WK_YESNO==2)
+	{
+	}
+	else
+	if(WK_YESNO==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,101)
+		shop_open(-1)
+		wait_W(WK_YESNO)
+		//▼エピローグ開始イベント
+	}
+	workG(GW_ENTRY_EVENT,SET,0)
+	EV("EV_6_16_StartEp")
+
+}
+EV_SAVE_ON
+{
+	workL(WK_YESNO,SET,1)
+}
+EV_SAVE_OFF
+{
+	workL(WK_YESNO,SET,2)
+}
+
+
+//──────────────────────────────
+//▼エピローグ開始イベント
+//──────────────────────────────
+EV_6_16_StartEp
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,		1150,440,0,0,2)
+	chr_pos(PARTNER,	1000,440,0,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	color(PET,-1)
+	wait_color(RAGNA)
+
+	set_chr(EVENT_RAGNA,	  1014,-1,-1, 70,766,0, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(TEO,        CF_NO_CSP)
+
+	set_chr(MIA,    1091,-1,-1, -70,766,0, 2,180,0, "")
+	chr_pos(TEO,		70,566,0,0,2)
+	chr_pos(CARDINA,	-70,566,0,0,2)
+	F_set_chr(MIA,CF_NO_CLIP)
+	F_set_chr(MIA,CF_NO_CLIP2)
+	F_set_chr(MIA,CF_NO_CSP)
+	F_set_chr(TEO,CF_NO_CLIP)
+	F_set_chr(TEO,CF_NO_CLIP2)
+	F_set_chr(TEO,CF_NO_CSP)
+	F_set_chr(CARDINA,CF_NO_CLIP)
+	F_set_chr(CARDINA,CF_NO_CLIP2)
+	F_set_chr(CARDINA,CF_NO_CSP)
+
+//	MOT_SET(MIA, 150, -1, 579, 579, -1, 0)	//おじぎ
+//どうせならこっちを使ってみました0825
+	MOT_SET(MIA, 150, -1, 1820, 1855, -1, 0)	//おじぎ
+
+
+	//カメラ初期位置
+//	CAM_move(0,-550,135,0,0)
+//	CAM(180,76,-25,38,180,0,0)
+
+//　　画面，暗転したまま以下的ナレーション。
+//	name("ナレーション")
+
+	wait(60)
+	Load_BMP(14,"sys\\text01.itm","sys\\text01a.itm")
+
+//	MES_pos(RAGNA,"C3这样一来……\n在浮游岛伊鲁巴特发生的\n一连串事件落幕了。",1,320,240,0,0)
+
+	menuBMP(0,	14,	408,140,408,78)
+	menu(0,	0,	120,200,  0,	408, 78,	 0,  0,0)
+	menu(0,	0,	120,200,  0,	408, 78,	60,100,0)
+	wait(150)
+//	wait_key(0)	
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(50)
+
+//	MES_pos(RAGNA,"C3随着各地恢复平静，\n螺旋要塞再次升空隐没……",1,320,240,0,0)
+
+	menuBMP(0,	14,	408,217,408,56)
+	menu(0,	0,	120,212,  0,	408, 56,	 0,  0,0)
+	menu(0,	0,	120,212,  0,	408, 56,	60,100,0)
+	wait(150)
+//	wait_key(0)	
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(50)
+
+//	MES_pos(RAGNA,"C3而后，一个月的时间过去了。",1,320,240,0,0)
+	
+	menuBMP(0,	14,	408,274,408,40)
+	menu(0,	0,	120,220,  0,	408, 40,	 0,  0,0)
+	menu(0,	0,	120,220,  0,	408, 40,	60,100,0)
+	wait(150)
+//	wait_key(0)	
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)		
+
+//──────────────────────────────
+//　　画面暗転状態で以下的メッセージ。
+
+//	wait(30)
+//	BGM(61)
+//	workG(GW_DEF_BGM,SET,61)		//デフォルト曲を変更
+	BGM(60)
+	workG(GW_DEF_BGM,SET,60)		//デフォルト曲を変更
+//	BGM(12)
+//	workG(GW_DEF_BGM,SET,12)		//デフォルト曲を変更
+	wait(30)
+
+	chr_rename(TEO,"男性的声")//
+	MES_pos(TEO,"W9是吗……\n要走了啊。",0,320,240,0,0)
+	wait_key(0)
+	MES_close(TEO)
+
+//　　画面フェードインして，博物馆的内部。
+//　　提欧と卡尔蒂娜（受付嬢）的前に拉古那と米娅がいる。
+	fade_in(0,60,0)
+	
+//	CAM_move(73,-312,14,0,0)
+//	CAM(180,70,-145,37,161,0,0)	
+	CAM_move(0,-690,135,0,0)
+	CAM(180,39,-25,37,160,0,0)
+	CAM(180,39,-25,37,196,1200,0)
+	wait_fade()
+
+	KAO(EVENT_RAGNA,"12321Z3","1233321","6")
+	MES(EVENT_RAGNA,"啊啊，受了你们很多照顾啊。",0)
+	KAO(EVENT_RAGNA,"12321Z6","1","6")	
+	MES(EVENT_RAGNA,"还有妹妹受到的关照，\n真不知道该如何感谢。",0)
+	MES_close(EVENT_RAGNA)
+	
+	MOT(MIA, 150, 10)
+	look_chr(TEO, MIA, "Bone_Head")
+	rot_chr(MIA, 30, TEO)
+	wait(30)
+	
+	KAO(MIA,"92329Z4","123","7")
+	MES(MIA,"……医生先生。\n感激不尽。",0)
+	MES_close(MIA)
+
+	KAO(MIA,"9","321","7")
+	MOT(MIA, 2, 15)
+	wait(15)
+
+	chr_rename(TEO,"提欧")
+	KAO(TEO,"12321Z4","123","6")	
+	MES(TEO,"不不。\n没什么大不了的。",0)
+	KAO(TEO,"12321Z4","321","6")
+	MES(TEO,"说是照顾，\n其实也不过是简单地诊查了一下。",0)
+	MES_close(MIA)
+	
+	look_chr(TEO, MIA, "Bone_Head")
+	wait(15)
+	
+	KAO(TEO,"12321Z5","1236","6")
+	MES(TEO,"就看到的来说，情况很好，\n已经没什么需要担心的了。",0)
+	MES_close(TEO)
+
+//	look_chr(TEO, EVENT_RAGNA, "Bone_Head")
+
+	KAO(EVENT_RAGNA,"12321Z2","123","6")
+	MES(EVENT_RAGNA,"是吗……",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(EVENT_RAGNA, MIA, "Bone_Head")
+	look_chr(MIA,EVENT_RAGNA,  "Bone_Head")
+		
+	KAO(EVENT_RAGNA,"12321Z3","36","6")	
+	MES(EVENT_RAGNA,"太好了，米娅。",0)
+	MES_close(EVENT_RAGNA)
+
+//	look(MIA, "Bone_Head", 0,0,0,2, 0,0,-20)
+//	wait(10)
+//	look(MIA, "Bone_Head", 0,0,0,2, 0,0,  0)
+//	wait(10)
+	
+	look_chr(MIA, EVENT_RAGNA, "Bone_Head")
+	
+	KAO(MIA,"92329","1233321","7")
+	MES(MIA,"嗯……",0)
+	MES_close(MIA)
+
+	look_chr(CARDINA, EVENT_RAGNA, "Bone_Head")
+	look_chr(TEO, EVENT_RAGNA, "Bone_Head")
+	wait(10)
+	look_chr(MIA, CARDINA, "Bone_Head")
+	
+	KAO(CARDINA,"12321Z4","123","5")
+	MES(CARDINA,"呵呵……\n这下要寂寞起来了呢。",0)
+	KAO(CARDINA,"12321Z4","321","6")	
+	MES(CARDINA,"拉古那，你辛苦了。",0)
+	MES_close(CARDINA)
+
+	// 0905　ハンターランク昇格用ルーチン
+	//ハンターランク査定　←チェックしやすいようこっちに持ってきます。
+	system_chack(3)
+
+	EV("EV_Ep_RANKCHECK")
+	wait_EV("EV_Ep_RANKCHECK")
+
+	KAO(CARDINA,"12321Z5","1","6")	
+	MES(CARDINA,"还有……\n这是我们博物馆的饯别。\n请收下吧。",0)
+	MES_close(CARDINA)
+//	wait_MES(CARDINA)
+
+	//―――――――――――――――――――――――
+	fade_in(50,10,BLACK)
+
+//	// 0905　ハンターランク昇格用ルーチン
+//	//ハンターランク査定　←チェックしやすいようこっちに持ってきます。
+//	system_chack(3)
+//
+//	EV("EV_Ep_RANKCHECK")
+//	wait_EV("EV_Ep_RANKCHECK")
+
+
+//○宝物ボーナス
+//	00％～49％	：１列目的フードを一つずつ，计11个
+//	50％～74％	：２列目的フードを一つずつ，计11个
+//	75％～99％	：３列目的フードを一つずつ，计11个
+//	100％		：４列目的フードを一つずつ，计11个
+
+	SE(24,0)	//お金的音だと味気なかった的だ更（园）
+	if(GW_TREASURE<24)
+	{
+	//	MES(EVENT_RAGNA,"C3S2◆１列目的フードを一つずつ，计11个",2)
+		MES(EVENT_RAGNA,"C3S2得到了食物组·青铜。",2)
+	}
+	else
+	if(GW_TREASURE<36)
+	{
+	//	MES(EVENT_RAGNA,"C3S2◆２列目的フードを一つずつ，计11个",2)
+		MES(EVENT_RAGNA,"C3S2得到了食物组·白银。",2)
+	}
+	else
+	if(GW_TREASURE<48)
+	{
+	//	MES(EVENT_RAGNA,"C3S2◆３列目的フードを一つずつ，计11个",2)
+		MES(EVENT_RAGNA,"C3S2得到了食物组·黄金。",2)
+	}
+	else
+	{
+	//	MES(EVENT_RAGNA,"C3S2◆４列目的フードを一つずつ，计11个",2)
+		MES(EVENT_RAGNA,"C3S2得到了食物组·白金。",2)
+	}
+
+/*
+	０：平凡的猎人（初期状態）	0-2		
+	１：迷宫猎人助理			3-5		
+	２：迷宫猎人				6		
+	３：狂野的猎人助理			9      	
+	４：狂野的猎人				12		
+	５：资深的猎人助理			15      
+	６：资深的猎人				18		
+	７：华丽的猎人助理			21      
+	８：华丽的猎人				24		
+	９：特别的猎人助理			27      	1000//念的ため
+	10：特别的猎人				30			1万//最低クリア時的ランク
+	11：魅力四射的猎人助理			33      	5万
+	12：魅力四射的猎人				36			10万
+	13：卓越的猎人助理			39      	20万
+	14：卓越的猎人				42      	50万
+	15：稀世的猎人			45      	200万
+	16：传说的红毛（コンプリート）		48			1000万
+*/
+
+	SE(24,0)	//お金的音だと味気なかった的だ更（园）
+	if(GW_HUNTER_RANK<10)
+	{
+	//	MES(EVENT_RAGNA,"C3S2１０００Ｐ",2)
+		MES(EVENT_RAGNA,"C3S2得到了１０００芬尼。",2)
+	}
+	else
+	if(GW_HUNTER_RANK<11)
+	{
+	//	MES(EVENT_RAGNA,"C3S2１万Ｐ",2)
+		MES(EVENT_RAGNA,"C3S2得到了１万芬尼。",2)
+	}
+	else
+	if(GW_HUNTER_RANK<12)
+	{
+	//	MES(EVENT_RAGNA,"C3S2５万Ｐ",2)
+		MES(EVENT_RAGNA,"C3S2得到了５万芬尼。",2)
+	}
+	else
+	if(GW_HUNTER_RANK<13)
+	{
+	//	MES(EVENT_RAGNA,"C3S2１０万Ｐ",2)
+		MES(EVENT_RAGNA,"C3S2得到了１０万芬尼。",2)
+	}
+	else
+	if(GW_HUNTER_RANK<14)
+	{
+	//	MES(EVENT_RAGNA,"C3S2２０万Ｐ",2)
+		MES(EVENT_RAGNA,"C3S2得到了２０万芬尼。",2)
+	}
+	else
+	if(GW_HUNTER_RANK<15)
+	{
+	//	MES(EVENT_RAGNA,"C3S2５０万Ｐ",2)
+		MES(EVENT_RAGNA,"C3S2得到了５０万芬尼。",2)
+	}
+	else
+	if(GW_HUNTER_RANK<16)
+	{
+	//	MES(EVENT_RAGNA,"C3S2２００万Ｐ",2)
+		MES(EVENT_RAGNA,"C3S2得到了２００万芬尼。",2)
+	}
+	else
+	{
+	//	MES(EVENT_RAGNA,"C3S2１０００万Ｐ",2)
+		MES(EVENT_RAGNA,"C3S2得到了１０００万芬尼。",2)
+	}
+
+//	MES(EVENT_RAGNA,"C3S2ここでは実際にアイテム·\nご褒美が入手できるわけではない。\n（クリアデータ保存時に処理する）",2)
+//	MES(EVENT_RAGNA,"C3S2考慮したメッセージにする必要がある。",2)
+//	MES_close(EVENT_RAGNA)
+
+//	MES(EVENT_RAGNA,"C3S2ここでは実際にアイテム·\nご褒美が入手できるわけではない。\n（クリアデータ保存時に処理する）",2)
+//	MES(EVENT_RAGNA,"C3S2考慮したメッセージにする必要がある。",2)
+//	MES_close(EVENT_RAGNA)
+
+//	SE(043,PLAYER1)
+//	MES(EVENT_RAGNA,"C3S2ここで貰ったフードとお金は\nこ的场では入手されません。\n２周目以降に利用することができます。",2)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	fade_in(0,10,BLACK)
+	wait(15)
+	//―――――――――――――――――――――――
+
+//　　↑お宝ゲット的達成率によって変化。
+//　　２週目以降に役立つようなアイテムが望ましい。
+//　　（※適当な物がなければボーナス的芬尼でも良い）
+//　　以下はそれなりにお宝を集めて展示している场合。
+//	  アイテムならアイテムゲット処理を，お金ならお金 SE(8,0) を鳴らす？
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n２周目以降役に立つボーナスを入手。\n内容は宝物的達成率によって変化する。",0)
+//	MES_close(EVENT_RAGNA)
+
+	KAO(CARDINA,"12321Z5","1","6")	
+//	MES(CARDINA,"直接给你们就会成为行李了，\n所以已经在刚才送到了机场。",0)
+	MES(CARDINA,"直接给你们就会成为行李了，\n所以我们会在之后送到机场。",0)
+	KAO(CARDINA,"12321Z5","1","6")	
+//	MES(CARDINA,"估计正在装入\n你的飞机里吧。",0)
+	MES(CARDINA,"飞机上，货舱的\n空间足够吗？",0)
+	MES_close(CARDINA)
+
+//	KAO(EVENT_RAGNA,"B232BZ3","32A","5")	
+//	MES(EVENT_RAGNA,"这，这样可以吗？",0)
+	KAO(EVENT_RAGNA,"B232BZ5","32A","5")	
+	MES(EVENT_RAGNA,"空间倒是没问题……\n可是就这样收下没关系吗？",0)
+	KAO(EVENT_RAGNA,"B232BZ5","A23332A","5")	
+	MES(EVENT_RAGNA,"最初那份没能送达的货物\n明明已经给你们添麻烦了……",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(EVENT_RAGNA, TEO, "Bone_Head")
+
+	KAO(TEO,"12321Z4","321","1")
+	MES(TEO,"哪里的话，你别在意。",0)
+	KAO(TEO,"12321Z6","1","1")	
+	MES(TEO,"你为我们找来的东西，\n对本馆而言意义非常。",0)
+	KAO(TEO,"12321Z4","1","1")
+	MES(TEO,"至少，请务必\n收下这份谢礼。",0)
+	MES_close(TEO)
+
+	KAO(EVENT_RAGNA,"12321Z4","A23","1")
+	MES(EVENT_RAGNA,"……我明白了。\n那么就不胜感激地收下了。",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","1")
+	MES(EVENT_RAGNA,"那么，虽然舍不得各位，\n但我也差不多该告辞了。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","1")
+	MES(EVENT_RAGNA,"机场那里\n还有人等着我。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(MIA,"92329Z3","123","7")
+	MES(MIA,"……受您照顾了。",0)
+	MES_close(MIA)
+
+	KAO(TEO,"12321Z3","1236","6")
+	MES(TEO,"啊啊，你们都要保重啊。",0)
+	MES_close(TEO)
+
+	KAO(CARDINA,"12321Z4","1236","6")
+	MES(CARDINA,"呵呵……\n路上小心。",0)
+	MES_close(CARDINA)
+
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(MIA)
+
+	clear_party(PARTNER)	
+	join_party(1)			//艾尔雯つれてる
+	F_set(F6_10_EndEpilogue)//米娅連れてる
+	F_reset(F5_02_UseTodome)//露連れてる
+	
+	//★卡尔蒂娜
+	F_set_note(-46,-1)
+
+//　　亚尔迪镇昼（ev00100）へ。
+	workG(GW_ENTRY_EVENT,SET,8)
+	new_map(10100)
+}
+
+
+//―――――――――――――――――――――――――――――――
+// 0905追加。
+//ハンターランク査定
+//―――――――――――――――――――――――――――――――
+EV_Ep_RANKCHECK
+{
+
+	//ハンターランク査定　□　チェックしやすいようルーチン前に移動。
+//	system_chack(3)
+
+
+//────────────────────────────────────────────────────────────
+
+	//	传说的红毛へ昇格
+	if( GW_HUNTER_POINT>=48 && GW_HUNTER_RANK<16)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那超越了最高级的猎人排名，\n成为了『传说中的红发』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,16)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+	//	稀世的猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=45 && GW_HUNTER_RANK<15)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『稀世的猎人』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,15)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+
+//────────────────────────────────────────────────────────────
+
+	//	卓越的猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=42 && GW_HUNTER_RANK<14)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『卓越的猎人』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,14)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+	//	卓越的猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=39 && GW_HUNTER_RANK<13)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『卓越的猎人助理』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,13)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+
+//────────────────────────────────────────────────────────────
+
+	//	魅力四射的猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=36 && GW_HUNTER_RANK<12)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『魅力四射的猎人』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,12)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+	//	魅力四射的猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=33 && GW_HUNTER_RANK<11)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『魅力四射的猎人助理』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,11)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+
+//────────────────────────────────────────────────────────────
+
+	//	特别的猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=30 && GW_HUNTER_RANK<10)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『特别的猎人』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,10)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+	//	特别的猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=27 && GW_HUNTER_RANK<9)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『特别的猎人助理』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,9)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+
+//────────────────────────────────────────────────────────────
+
+	//	华丽的猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=24 && GW_HUNTER_RANK<8)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『华丽的猎人』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,8)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+	//======================================================================================================
+	//　ランクは最低でも华丽的猎人な的で，以下はあり得ないはず。
+	//　でも一応作っておきます。
+	//	华丽的猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=21 && GW_HUNTER_RANK<7)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『华丽的猎人助理』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,7)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+
+//────────────────────────────────────────────────────────────
+
+	//	资深的猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=18 && GW_HUNTER_RANK<6)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『资深的猎人』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,6)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+	//	资深的猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=15 && GW_HUNTER_RANK<5)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『资深的猎人助理』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,5)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+
+//────────────────────────────────────────────────────────────
+
+	//	狂野的猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=12 && GW_HUNTER_RANK<4)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『狂野的猎人』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,4)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+	//	狂野的猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=9 && GW_HUNTER_RANK<3)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『狂野的猎人助理』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,3)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+
+//────────────────────────────────────────────────────────────
+
+	//	迷宫猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=6 && GW_HUNTER_RANK<2)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『迷宫猎人』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,2)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+	//	迷宫猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=3 && GW_HUNTER_RANK<1)
+	{
+		fade_in(50,10,BLACK)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2根据至今为止的功绩，\n拉古那升级为『迷宫猎人助理』。",2)
+		SE(24,0)
+		MES(EVENT_RAGNA,"C3S2得到了升级的报酬。",2)
+		MES_close(EVENT_RAGNA)
+
+		//アイテム入手
+		EV("RANK_ITEMGET_BLIND")
+		wait_EV("RANK_ITEMGET_BLIND")
+
+		workG(GW_HUNTER_RANK,SET,1)
+		fade_in(0,10,BLACK)
+		wait(15)
+	}
+
+//────────────────────────────────────────────────────────────
+
+	//======================================================================================================
+//	name("□昇格がない场合")
+	else
+	{
+		//何も表示しない。
+	}
+
+}
+
+#EndScriptTable
+//====================================================================
+

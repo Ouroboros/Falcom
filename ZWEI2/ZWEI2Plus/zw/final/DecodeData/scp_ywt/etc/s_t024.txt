@@ -1,0 +1,220 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僥儞僓儞乮仛儊僀儞僉儍儔乯Tenzan")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_TENZAN
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(TENZAN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,TENZAN)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,TENZAN)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TENZAN)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TENZAN)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TENZAN)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TENZAN)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,TENZAN)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//丂丂仸嶳儃僗儖乕僩丒儔僗僩偵攝抲丅
+	//丂丂丂曪懷巔偱夡傟偨幮偺慜偵棫偭偰偄傞丅
+	//
+	//	仛榖偟偐偗偨帪揰偱怳傝岦偐側偄
+	if(F6_00_GoToMeru)
+	{
+		rot_chr(PLAYER1,30,TENZAN)
+		rot_chr(PLAYER2,30,TENZAN)
+		rot_chr(PET,30,TENZAN)
+		KAO(PLAYER1, "1", "1", "1")	
+		KAO(PLAYER2, "1", "1", "1")	
+		KAO(PET, "1", "1", "1")	
+		KAO(TENZAN, "1", "1", "1")	
+
+		if(!FS_12_TalkTenzan)
+		{
+			MES(RAGNA,"老爺爺……",0)
+			MES(RAGNA,"你還來這種地方，\n傷已經好了嗎？",0)
+			MES_close(RAGNA)
+
+			//丂丂仛僥儞僓儞怳傝曉傞丅
+			rot_chr(TENZAN,30,PLAYER1)
+
+			MES(TENZAN,"哦，是你們兩個啊。",0)
+			MES(TENZAN,"不要擔心。\n上了年紀恢復是會慢一些。",0)
+			MES(TENZAN,"話說回來……現在\n真的是有些糟糕啊。",0)
+			MES(TENZAN,"這應該就是吉斯迦爾公爵\n一直在擔心的事情吧。",0)
+			MES_close(TENZAN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"「螺旋要塞」梅爾賽迪克……",0)
+			MES_close(RAGNA)
+
+		//	name2(TENZAN)
+			MES(TENZAN,"唔……\n那東西只要已經啟動，\n便會將一切破壞殆盡。",0)
+			MES(TENZAN,"可是我們還沒有從之前的襲擊\n中恢復過來。",0)
+			MES(TENZAN,"……在這時候還幫不上忙。\n抱歉啊，拉格那，還有艾爾文公主殿下。",0)
+			MES_close(TENZAN)
+			
+			
+		//	name2(PARTNER)
+			MES(PARTNER,"不必在意。",0)
+			MES(PARTNER,"你能夠遵守\n與父親大人的約定至今，\n我也應當向你道謝。",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"嗯，之後\n就交給我們吧。",0)
+			MES(RAGNA,"雖然不能說是胸有成竹，\n不過有那麼多同伴幫忙，\n總會有辦法的。",0)
+			MES(RAGNA,"你們就\n好好休息一下吧。",0)
+			MES_close(RAGNA)
+
+		//	name2(TENZAN)
+			MES(TENZAN,"呵呵，這樣啊……",0)
+			MES(TENZAN,"那麼一切\n就都靠你們二位了。",0)
+			MES(TENZAN,"我再次\n拜託你們。",0)
+			MES_close(TENZAN)
+			
+			F_set(FS_12_TalkTenzan)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			rot_chr(TENZAN,30,PLAYER1)
+			if(!F_TENZAN)
+			{
+				MES(TENZAN,"梅爾賽迪克的出現和\n魔王路西亞的復活……",0)
+				MES(TENZAN,"這一定就是吉斯迦爾公爵\n所擔心的事情。",0)
+				MES(TENZAN,"不過要記住，\n無論身處何種狀況，\n都不要迷失自己的方向。",0)
+				MES(TENZAN,"如此便一定可以\n找到前進的道路。",0)
+				MES_close(TENZAN)
+				F_set(TENZAN)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+				MES(TENZAN,"無論身處何種狀況，\n都不要迷失\n自己的方向。",0)
+				MES(TENZAN,"如此便一定可以找到前進的道路。",0)
+				MES(TENZAN,"……你們兩個\n一定要平安歸來啊。",0)
+				MES_close(TENZAN)
+			}
+		}
+	}
+	else
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘偺堦幒偵攝抲丅
+	//丂丂丂僥儞僓儞偼曪懷姫偒丅
+	if( F5_00_HearLunar )
+	{
+		rot_chr(PLAYER1,30,TENZAN)
+		rot_chr(PET,30,TENZAN)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			rot_chr(PLAYER2,30,TENZAN)
+			KAO(PLAYER2, "1", "1", "1")	
+		}
+		KAO(PLAYER1, "1", "1", "1")	
+		KAO(PET, "1", "1", "1")	
+		KAO(TENZAN, "1", "1", "1")	
+
+		look_chr( TENZAN, PLAYER1,"Bone_Head")
+
+		if(!F_TENZAN)
+		{
+			MES(TENZAN,"在月之世界中\n藏有魔王路西亞\n巨大的魔力。",0)
+			MES(TENZAN,"雖然還不清楚\n薩哈爾侯爵的目的……",0)
+			MES(TENZAN,"拉格那，\n你還是儘快趕去水晶谷吧。",0)
+			MES(TENZAN,"只要能夠把門打開，\n那把月支之劍\n便能指出通往月之世界的道路。",0)
+			MES_close(TENZAN)
+			F_set(TENZAN)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			MES(TENZAN,"只要能夠把門打開，\n就能找到通往月之世界的道路。",0)
+			MES(TENZAN,"呼……",0)
+			MES(TENZAN,"現在鑰匙已經交給你們，傳言也已完成，\n我們守護者的使命已經結束了。",0)
+			MES(TENZAN,"拉格那。\n接下來就拜託了。",0)
+			MES_close(TENZAN)
+		}
+		
+		look_off(TENZAN)
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+		//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//丂丂仸儃僗儖乕僩慜偱搢傟偰偄傞丅
+	//丂丂丂儊僀儞僀儀儞僩偑婲摦偡傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

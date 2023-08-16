@@ -1,0 +1,702 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10210][飞机场·工房]
+//====================================================================
+
+#ScriptTable
+
+#MILLIAM	10
+#ANJE		11
+#NIPPLE		12
+#COLIN		13
+#GASHREA	14
+#NORTON		16
+#LA-RAIRA	17
+
+#EVENT_PARTNER	40//改造イベント用キャラ
+#EVENT_GASHREA	41//改造イベント用キャラ
+
+
+// ＬＦ202を，格苏雷会話中（ルートムーブ半停止）
+// に使っています。
+//
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip          x    y   z   	 mot    向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	set_chr( 91,990,	-1,-1,   -1375,   0,  0,	270,     0, 0,";")	//飞机场へ 来る専用
+	set_chr(105,990,	-1,-1,   -1270,   0,  0,	270,070103, 6,"K1_10200;")	//飞机场へ 行く専用
+
+//ノード制御
+
+	if( F6_02_OnMeru && !F6_05_EndSixth )
+		F_reset_obj("obj\03",NP_HIDE)
+	else
+		F_set_obj("obj\03",NP_HIDE)
+
+	//梅丽安から工具箱を借りた後
+	if(FT_07_TalkMilliamA)
+		F_set_obj("obj\02",NP_HIDE)
+
+	if(F6_02_OnMeru)
+		F_set_obj("obj\01",NP_HIDE)
+
+
+	//ＮＰＣ
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		set_chr( COLIN,57,	-1,-1,	173,-104,1,	 2,354, 20,"<TK_COLIN>")		//柯林
+		set_chr( NORTON,63,	-1,-1,	171,64,1,	 53,157, 20,"<TK_NORTON>")		//诺顿
+		set_chr( NIPPLE,56,	-1,-1,	 -781,-233,1,	 2,273, 20,"<TK_NIPPLE>")		//カウンター　艾普尔
+		F_set_chr(COLIN,CF_NO_MOVE)
+		F_set_chr(NORTON,CF_NO_MOVE)
+		F_set_chr(NIPPLE,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		//梅尔塞迪克突入後
+		if(F6_02_OnMeru)
+		{
+			set_chr( GASHREA,61,	-1,-1,  498,-231,1,	 2,178, 20,"<SHOP_GASHREA>")		//机的前　格苏雷
+			set_chr( COLIN,57,		-1,-1,	-307,-367,0,	2,140,	20,"<TK_COLIN>")		//通信机前　柯林
+			F_set_Node(GASHREA,"Bone_RightSword",NP_HIDE)	//格苏雷的スパナを消す
+			
+			//モーション
+			MOT_SET(GASHREA,150,-1,395,395,-1,0)	//格苏雷　仁王立ち
+			MOT(GASHREA,150,0)
+			F_set_chr(GASHREA,CF_NO_MOVE)
+		}
+		//突入前
+		else
+		{
+			set_chr( COLIN,57,		-1,-1,	-524,-191,0,	2,87,	20,"<TK_COLIN>")		//カウンター　柯林
+		//	set_chr( LA-RAIRA,23,	-1,-1,  -1016,-475,0,	2,0,	20,"<TK_LA-RAIRA>")	//拉莱拉	//★滑走路的方に移動
+		//	//モーション
+		//	F_set_chr(LA-RAIRA,CF_NO_MOVE)
+		}
+		F_set_chr(COLIN,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		set_chr( MILLIAM,29,	-1,-1,   -519,-170,0,  	52,90,	20,"<SHOP_MILLIAM>")		//カウンター　梅丽安
+		set_chr( GASHREA,61,	-1,-1, 5683,-4811,0, 	 2,70, 20,";")		//ダ小咪親方
+		F_set_chr(GASHREA,CF_NO_CSP)
+		F_set_chr(GASHREA,CF_NO_ZIMEN)
+		F_set_chr(GASHREA,CF_NO_HEIGHT)
+
+		F_set_chr(MILLIAM,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//配置追加しました。
+	if( F4_05_OnVillage2 )
+	{
+		set_chr( GASHREA,61,	-1,-1,   -41,-269,1,	 52,179, 20,"<SHOP_GASHREA>")		//ルートムーブ　格苏雷
+		EV("MOVE_GASHREA")
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ的フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		set_chr( MILLIAM,29,	-1,-1,   -519,-170,0,  	52,90,	20,"<SHOP_MILLIAM>")		//カウンター　梅丽安
+		set_chr( GASHREA,61,	-1,-1,   600,0,0,	 52,270, 20,"<SHOP_GASHREA>")		//エンジン的前　格苏雷
+		
+		//モーション
+		MOT_SET(GASHREA,150,-1,410,410,-1,0)	//格苏雷
+		MOT(GASHREA,150,0)
+		F_set_chr(MILLIAM,CF_NO_MOVE)
+		F_set_chr(GASHREA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村的人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵的正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		set_chr( MILLIAM,29,	-1,-1,   -519,-170,0,  	2,90,	20,"<SHOP_MILLIAM>")		//カウンター　梅丽安
+		set_chr( GASHREA,61,	-1,-1,  498,-231,1,	 2,178, 20,"<SHOP_GASHREA>")		//机的前　格苏雷
+
+		//モーション
+		MOT_SET(GASHREA,150,-1,414,414,-1,0)	//格苏雷　仁王立ち
+		MOT(GASHREA,150,0)
+		EV("TENTEN_GASHREA")
+
+		F_set_chr(MILLIAM,CF_NO_MOVE)
+		F_set_chr(GASHREA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎的パーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇的森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		set_chr( MILLIAM,29,	-1,-1,   -519,-170,0,  	52,90,	20,"<SHOP_MILLIAM>")		//カウンター　梅丽安
+		set_chr( GASHREA,61,	-1,-1,   -41,-269,1,	 52,179, 20,"<SHOP_GASHREA>")		//ルートムーブ　格苏雷
+		EV("MOVE_GASHREA")
+
+		set_chr( ANJE,42,	-1,-1,   -785,-185,0,	 2,260, 20,"<TK_ANJE>")		//カウンターで梅丽安と会話	安洁
+		F_set_chr(MILLIAM,CF_NO_MOVE)
+		F_set_chr(ANJE,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		set_chr( MILLIAM,29,	-1,-1,   -519,-170,0,  	52,90,	20,"<SHOP_MILLIAM>")		//カウンター　梅丽安
+		set_chr( GASHREA,61,	-1,-1,   600,0,0,	 52,270, 20,"<SHOP_GASHREA>")		//エンジン的前　格苏雷
+		
+		//モーション
+		MOT_SET(GASHREA,150,-1,410,410,-1,0)	//格苏雷
+		MOT(GASHREA,150,0)
+		F_set_chr(MILLIAM,CF_NO_MOVE)
+		F_set_chr(GASHREA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		set_chr( MILLIAM,29,	-1,-1,   -519,-170,0,  	52,90,	20,"<SHOP_MILLIAM>")		//カウンター　梅丽安
+		set_chr( GASHREA,61,	-1,-1,   -41,-269,1,	 2,179, 20,"<SHOP_GASHREA>")		//ルートムーブ　格苏雷
+		EV("MOVE_GASHREA")
+		F_set_chr(MILLIAM,CF_NO_MOVE)
+	}
+	
+
+	
+	//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼酒场で改造を頼んだ時
+		EV("TUNE_PART_SAKABAGASHREA")
+	}
+
+}
+//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼ガシュレ－　ルートムーブ（テスト）
+//──────────────────────────────
+MOVE_GASHREA
+{
+	if(!F202)
+//	rot(GASHREA,60,16)
+	move( GASHREA, 20,	WALK1,	227,319,0, 0)
+	wait_move( GASHREA )
+
+	if(!F202)
+	rot(GASHREA,60,50)
+	wait(50)
+
+	if(!F202)
+	rot(GASHREA,60,321)
+	wait(50)
+
+	if(!F202)
+//	rot(GASHREA,60,214)
+	move( GASHREA, 20,	WALK1, 158,70,0, 0)
+	wait_move( GASHREA )
+
+	if(!F202)
+	rot(GASHREA,60,278)
+	wait(50)
+
+	if(!F202)
+	rot(GASHREA,60,324)
+
+	if(!F202)
+	EMO(GASHREA,EMO_TENTEN)
+	wait(30)
+
+	if(!F202)
+	rot(GASHREA,60,229)
+	wait(50)
+
+	if(!F202)
+//	rot(GASHREA,60,216)
+	move( GASHREA, 20,	WALK1, 554,-279,1, 0)
+	wait_move( GASHREA )
+
+	if(!F202)
+	rot(GASHREA,60,178)
+	wait(50)
+
+	if(!F202)
+//	rot(GASHREA,60,92)
+	move( GASHREA, 20,	WALK1, -41,-269,1, 0)
+	wait_move( GASHREA )
+
+	if(!F202)
+	rot(GASHREA,60,179)
+	wait(50)
+
+	loop
+
+}
+
+
+//親方···emo
+TENTEN_GASHREA
+{
+	EFF_chr(25124,GASHREA,0,100,0,"Bone_Head")
+	wait(80)
+	loop
+}
+
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+
+
+TUNE_PART_SAKABAGASHREA
+{
+		EV_begin()
+		wait(10)
+		EV("TUNE_PARTS_ChrSet")
+		wait_EV("TUNE_PARTS_ChrSet")
+
+		//改造処理本体を呼ぶ。座標指定は使わない。
+		EV("TUNE_PARTS")
+		wait_EV("TUNE_PARTS")
+
+		//──────────────────────────────
+		//	キャラ戻し
+		//──────────────────────────────
+		EV("TUNE_PARTS_ChrReturn")
+		wait_EV("TUNE_PARTS_ChrReturn")
+}
+
+
+TT
+{
+
+	chr_scale(RAGNA,	"Bone_RightSword",	0,0,0,	0,	1)
+	chr_equip( RAGNA,"wp_003d2", "Bone_RightSword", 100)
+	chr_equip( MILLIAM,"wp_003d2", "Bone_RightSword", 100)
+
+
+	set_chr(99,	  1010,-1,-1, -65,209,0, 2,180,0, "")	
+//	chr_scale(99,	"Bone_RightSword",	0,0,0,	0,	1)
+//	chr_equip( 99,"wp_003d2", "Bone_RightSword", 100)
+
+//	set_equip(2,001)													// 装備する(パーツ，フックギア)
+
+
+}
+
+
+TT2
+{
+				MOT(RAGNA,10,15)
+				wait(12)
+				SE(143,0)
+				wait_MOT(RAGNA,10)
+				MOT(RAGNA,11,15)
+				wait(11)
+				SE(145,0)
+				wait_MOT(RAGNA,11)
+
+
+				MOT(99,10,15)
+				wait(12)
+				SE(143,0)
+				wait_MOT(99,10)
+				MOT(99,11,15)
+				wait(11)
+				SE(145,0)
+				wait_MOT(99,11)
+
+
+//	chr_equip2( PLAYER1,	"ch_040",	"Bone_LeftShoulder",	70,		-10,80,90,	0,20,10)
+
+}
+
+/*
+TUNE_PART_SAKABAGASHREA
+{
+	TK_begin()
+	
+	//　　フェードアウト。
+	fade_in( 100, 1, BLACK)	//フェードアウト
+	wait_fade()
+	
+//――――――――――――――――――――――――――
+//	初期化処理
+//――――――――――――――――――――――――――
+//⑥亚尔迪夜で的改造はそ的场的フェードインアウトで行う？
+//	カメラセット
+	CAM_move(434,96,124,0,0)
+	CAM(50,50,124,34,207,0,0)
+	
+//	キャラクター再配置
+	chr_pos(RAGNA,414,24,0,213,2)
+	
+	//奥迪莎がいる
+	if(F5_08_JoinOdessa && !F5_13_KillDygald)
+	{
+		chr_pos(PARTNER,257,-23,1,260,2)
+	}
+	
+	chr_pos(PET,314,140,1,2010,2)
+	
+	
+	set_chr(GASHREA,61,-1,-1, 588,-235,0,	2,40, 0,"")		//ダ小咪　格苏雷(熊猫楼からワープしてきた時用)
+//		chr_pos(GASHREA,588,-235,0,40,2)
+
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(GASHREA, "1", "1", "1")	
+	
+//――――――――――――――――――――――――――
+//	イベント開始
+//――――――――――――――――――――――――――
+		
+	//今まで改造した個数を計算。
+	workL(0,SET,0)
+	if(IT001>0)//フックギア
+	{
+		workL(0,ADD,1)
+	}
+	if(IT002>0)//バーニングギア
+	{
+		workL(0,ADD,1)
+	}
+	if(IT003>0)//グライドギア
+	{
+		workL(0,ADD,1)
+	}
+	if(IT004>0)//ソードギア
+	{
+		workL(0,ADD,1)
+	}
+	if(GW_WEAPON_RANGE>=1)//強化パーツ分
+	{
+		workL(0,ADD,1)
+	}
+	if(GW_WEAPON_RANGE>=2)//強化パーツ分
+	{
+		workL(0,ADD,1)
+	}
+	
+	//□パーツが通常改造
+	if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0)
+	{
+
+
+	//　　ＳＥが鳴って，ギアが強化される。
+	//	MES(GASHREA,"C4◆ＳＥが鳴って，ギアが強化される。",0)
+	//	MES_close(GASHREA)
+
+			SE(23,0)//改造SE
+			wait(75)
+
+		//今回が最後的场合。
+		if(WK000>=5)
+		{
+			rot(GASHREA,60,180)
+			
+		//　　ゆっくりフェードイン。
+		//　　親方は工房装置的方を向いている。
+			fade_in( 0, 30, BLACK)	//フェードイン
+			wait_fade()
+
+		//	name("親方")
+			MES(GASHREA,"好的……\n就是这里吧。",0)
+			MES_close(GASHREA)
+
+			rot(GASHREA,60,40)
+		//　　親方，やって来る。
+		//	name("親方")
+			MES(GASHREA,"看，组装好了。",0)
+			MES_close(GASHREA)
+
+		//　　アイテム入手ウィンドウ表示。
+		//　　共通処理とする。
+			fade_in(30,10,BLACK)
+		}
+
+	//────────────────────────────────────────────────────────────────
+		//	name("□強化パーツ的场合")
+		if(IT128>0)
+		{
+		//	name("ナレーション")
+			SE(24,0)//ギア的レベルアップ
+			MES(0,"C3S2锚剑的攻击范围扩大了。",2)
+			MES_close(0)
+			
+			//◆武器的长さアップ
+			workG(GW_WEAPON_RANGE,ADD,1)
+
+		//	設計図を消す
+			get_item(128,-1,1)
+			
+		}
+		//	name("□フックパーツ的场合")
+		else
+		if(IT129>0)
+		{
+		//	name("ナレーション")
+			SE(24,0)//ギア的レベルアップ
+			MES(0,"C3S2锚剑\n追加了《勾取》的能力。",2)
+			MES_close(0)
+
+		//	設計図を消す
+			get_item(129,-1,1)
+		
+		//	アイテム入手
+			get_item(001,1,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			
+			//装備
+			set_equip(2,001)
+			
+		}
+		//	name("□強化パーツ的场合")
+		else
+		if(IT130>0)
+		{
+		//	name("ナレーション")
+			SE(24,0)//ギア的レベルアップ
+			MES(0,"C3S2锚剑的攻击范围扩大了。",2)
+			MES_close(0)
+			
+			//◆武器的长さアップ
+			workG(GW_WEAPON_RANGE,ADD,1)
+
+		//	設計図を消す
+			get_item(130,-1,1)
+			
+		}
+		//	name("□バーニングパーツ的场合")
+		else
+		if(IT131>0)
+		{
+		//	name("ナレーション")
+			SE(24,0)//ギア的レベルアップ
+			MES(0,"C3S2锚剑\n追加了《燃烧》的能力。",2)
+			MES_close(0)
+			
+		//	設計図を消す
+			get_item(131,-1,1)
+
+		//	アイテム入手
+			get_item(002,1,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			//装備
+			set_equip(2,002)
+
+			
+		}
+		//	name("□グライドパーツ的场合")
+		else
+		if(IT132>0)
+		{
+		//	name("ナレーション")
+			SE(24,0)//ギア的レベルアップ
+			MES(0,"C3S2锚剑\n追加了《滑翔》的能力。",2)
+			MES_close(0)
+			
+		//	設計図を消す
+			get_item(132,-1,1)
+
+		//	アイテム入手
+			get_item(003,1,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			
+			//装備
+			set_equip(2,003)
+			
+		}
+		//────────────────────────────────────────────────────────────────
+
+	//　　工房にフェードイン。
+		if(WK000>=5)
+		{
+			fade_in(0,10,BLACK)
+			wait_fade()
+		}
+		else
+		{
+			fade_in( 0, 30, BLACK)	//フェードイン
+			wait_fade()
+		}
+
+		//今回が最後的场合。
+		if(WK000>=5)
+		{
+			MOT(RAGNA,52,15)
+
+			MES(GASHREA,"虽然是进行了相当乱来的改造……\n嘿，强化到这个地步\n已经变成可怕的武器了吧。",0)
+			MES(GASHREA,"拿着，好好干吧！",0)
+			MES_close(GASHREA)
+
+			MES(RAGNA,"啊啊。\n一直以来多谢了。",0)
+			MES(RAGNA,"谢谢你，师傅！",0)
+			MES_close(RAGNA)
+
+		//　　暗転になって，工房中央辺りから操作許可。
+		}
+		else
+		{
+		//　　暗転＆武器なし通常パタになって，工房中央辺りから操作許可。
+		//	name("□初めてでない场合")
+		//　　工房にフェードイン。
+		//　　拉古那たちは再配置しておく。
+			MOT(RAGNA,52,15)
+			MES(GASHREA,"要是发现了零件，\n还要带到我这里来啊！",0)
+			MES(GASHREA,"我会帮你改造的。",0)
+			MES_close(GASHREA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊啊。\n那就拜托你了，师傅！",0)
+			MES_close(RAGNA)
+
+		//　　暗転になって，工房中央辺りから操作許可。
+		}
+	}
+	//最強パーツ的改造。
+	else
+	{
+	//　　ＳＥが鳴る。
+	//　　ゆっくりフェードイン。
+	//　　親方は工房装置的方を向いている。
+
+		SE(23,0)//改造SE
+		wait(75)
+
+		rot(GASHREA,60,180)
+
+		fade_in( 0, 30, BLACK)	//フェードイン
+		wait_fade()
+
+	//	name("親方")
+		MES(GASHREA,"呼，哎呀呀……\n这次真是花了不少时间。",0)
+		MES_close(GASHREA)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"师傅……\n完成了吗？",0)
+		MES_close(RAGNA)
+
+	//　　親方，拉古那的元にやってくる。
+		rot(GASHREA,60,40)
+
+
+	//	name("親方")
+		MES(GASHREA,"啊啊，这下就完美了。",0)
+		MES(GASHREA,"我也没见过\n这样的锚剑。",0)
+		MES(GASHREA,"不可能再有\n比这更好的了吧。",0)
+		MES_close(GASHREA)
+
+	//　　親方，何かを差し出す仕草。
+	//	name("ナレーション")
+		SE(24,0)//ギア的レベルアップ
+		MES(0,"C3S2锚剑追加了\n最强的机能《刀片》。",2)
+		MES_close(0)
+
+	//	設計図を消す
+		get_item(133,-1,1)
+
+		fade_in(30,10,BLACK)
+	//	アイテム入手
+		get_item(004,1,0)
+		wait_key(0)
+
+		fade_in(0,10,BLACK)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+
+	//　　拉古那，ギアを装備して眺める。
+		//装備
+		cross_fade(20)
+		set_equip(2,004)
+		MOT(RAGNA,52,15)
+		SE(1014,0)//ギア構えSE
+		wait_fade()
+
+
+		MES(RAGNA,"这，这就是\n最強的锚剑……",0)
+		MES(RAGNA,"嘿嘿，居然变得\n这么帅气了……",0)
+		MES(RAGNA,"我得好好感谢你呢。\n一直以来都这么帮助我。",0)
+		MES_close(親方)
+
+	//	name("親方")
+		MES(GASHREA,"哈，我只是\n帮了点小忙而已。",0)
+		MES(GASHREA,"居然能经受住这样的改造，\n这原本就是个不错的东西啊。",0)
+		MES(GASHREA,"拉古那，要用它来做什么\n就全看你的意思了。",0)
+		MES(GASHREA,"……好好使用它啊。",0)
+		MES_close(GASHREA)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"啊啊，那是当然……！",0)
+		MES(RAGNA,"一直以来多谢了。\n非常感谢你，师傅！",0)
+		MES_close(RAGNA)
+
+	//　　一旦暗転して，操作許可を戻す。
+	}
+//	アイテム解説フラグをリセット
+	F_reset(FT_01_GashreaData)
+	
+	//――――――――――――――――――――――――――
+	//	イベント終了処理
+	//――――――――――――――――――――――――――
+	fade_in( 100, 30, BLACK)	//フェードアウト
+	wait_fade()
+	
+	workG(GW_ENTRY_EVENT,SET,2)
+	//▼□工房から酒场へ移動する
+
+	TK_end()
+	new_map(10120)
+}
+*/
+
+#EndScriptTable
+//====================================================================
+

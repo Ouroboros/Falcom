@@ -1,0 +1,960 @@
+//====================================================================
+//ステージトラップスクリプト
+//[me0h002][クリスタルバレー階段]
+//====================================================================
+
+#ScriptTable
+
+#LUE 		1
+#ODESSA		2
+#EVENT_RAGNA	3
+#ALWEN			4
+#MONSTER_A1		5
+#MONSTER_A2		6
+#MONSTER_A3		7
+#EFFDUMMY1		8
+#EFFDUMMY2		9
+#MONSTER_C1		10
+#MONSTER_C2		11
+#MONSTER_D1		12
+#MONSTER_D2		13
+#MONSTER_E1		14
+#MONSTER_F1		15
+#MONSTER_F2		16
+#ENTMONS_F		17
+
+// LocalFlags
+// 100 一般ザコ敵①出現エントリ
+// 101 一般ザコ敵②出現エントリ
+// 102 一般ザコ敵③出現エントリ
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//環境SE
+	SE(51,0)//風
+
+	//
+	// F5_07_BattleSky が立つまでは、ルゥが同行。
+	// F5_07_BattleSky がイベントでたった後は、ペットが同行。
+	// 以降、ペット同行。
+	
+
+
+//  set_chr  no typ     tip      x    y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	set_chr( 90,990,	-1,-1,   0, 20000,  93,	 180,  0, 0,";")			//クリスタルバレー祭壇（帰り専用）
+	set_chr( 91,990,	-1,-1,   0, -9700,5930,	   0, 0, 0,";")				//クリスタルバレー階段２（帰り専用）
+
+	set_chr( 95,990,	-1,-1,   0, 20300, -15,	 180,901, 6,"K1_10600;")	//クリスタルバレー祭壇（行き専用）
+	set_chr( 96,990,	-1,-1,   0,-10000,6000,	   0,901, 6,"K0_10602;")	//クリスタルバレー階段２（行き専用）
+
+	set_chr( 60,655,	-1,-1, -300, 20100,  0,		  2,   270, 0,";")	//⑤順路案内
+	set_chr( 61,655,	-1,-1, -300, -9900,6000,	  2,   270, 0,";")	//⑤順路案内
+
+//■ザコ配置
+	if(GW_ENTRY_EVENT==0 && F5_07_BattleSky)		//ＧＦ『★空中回廊で、魔物たちに襲われた』
+	{
+		// イベントで登場した奴ら
+		// 配置をばらけさせる
+		set_chr(MONSTER_A1,	  273,-1,-1,   -150,11500,1740,		 2, 270, 0, "")	// いわつつき
+		set_chr(MONSTER_A2,	  273,-1,-1,    150,13000,1440,		 2,  90, 0, "")	// いわつつき
+
+		set_chr(MONSTER_A3,	  381,-1,-1,      0, 9720,2200,		 2,   0, 0, "")	// うぃざーど
+			F_set_chr(MONSTER_A3, CF_NO_CLIP2)
+
+		// その他のザコ
+		EV("EV_LocateZacos")
+	}
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼螺旋要塞メルセデク出現．空中階段
+		EV("EV_5_22_ReturnCrystal")
+	}
+//	else
+//	if(GW_ENTRY_EVENT==2)
+//	{
+//		workG(GW_ENTRY_EVENT,SET,0)
+//		EV("EV_5_08_BattleSkyb")
+//	}
+	else
+	if(F4_11_EndFourth && !F5_17_EndFifth)
+	{
+	//５章
+		//ＧＦ『★空中回廊で、魔物たちに襲われた』立ってない
+		if(!F5_07_BattleSky)
+		{
+			//▼空飛ぶ魔物たちが現れる
+			set_chr( 80,990,	-1,-1,   0,11360,1760,  0, 0802,6,"<EV_5_08_BattleSky>;")
+		}
+	}
+}
+
+//====================================================================
+// 追加のザコ
+EV_LocateZacos
+{
+	set_chr(MONSTER_C2,	  273,-1,-1,    200, 5500,2940,		 2, 180, 0, "")	// いわつつき
+
+	set_chr(MONSTER_D1,	  144,-1,-1,      0, 1500,3740,		 2,   0, 0, "")	// くまこぶたー
+	set_chr(MONSTER_D2,	  144,-1,-1,      0,-1500,4340,		 2,   0, 0, "")	// くまこぶたー
+
+	set_chr(MONSTER_E1,	  273,-1,-1,      0,-3000,4640,		 2, 270, 0, "")	// いわつつき
+
+	set_chr(ENTMONS_F,	  990,-1,-1,      0,-5000,5040,		 0,0707, 6, "SF100;")	// 
+	set_chr(MONSTER_F1,	  381,-1,-1,      0,-6000,5240,		-1,   0, 8, "F100 V2_99;")	// うぃざーど
+	set_chr(MONSTER_F2,	  381,-1,-1,      0,-4000,4840,		-1,   0, 8, "F100 V2_99;")	// うぃざーど
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼空飛ぶ魔物たちが現れる
+//──────────────────────────────
+//　　ルゥと共に天への階段を登っていくと、
+//　　１／４ほど行ったところで以下のイベントが発生する。
+EV_5_08_BattleSky
+{
+	EV_begin()
+
+	cross_fade(15)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 130,10650,1910,180,2)
+	color(RAGNA,-1)
+	color(PET,  -1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1,  130,11630,1716, 2,180,0, "")
+	wait(1)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	move( EVENT_RAGNA, 0, 20,130,10650,1910,0)
+
+	set_chr(LUE,	  1015,-1,-1,  -130,11836,1674, 2,180,0, "")
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	
+	set_chr(MONSTER_A1,	  273,-1,-1,  800,10020,3160, 2,60,0, "")
+//	set_chr(MONSTER_A2,	  273,-1,-1,  -800,10520,3160, 2,280,0, "")
+	set_chr(MONSTER_A2,	  273,-1,-1,  -700,10020,3160,, 2,280,0, "")
+	set_chr(MONSTER_A3,	  381,-1,-1,  100,9720,2960, 2,0,0, "")	
+	set_chr(EFFDUMMY1,	  749,-1,-1,  0,0,0, 0,0,0, "")	
+	set_chr(EFFDUMMY2,	  749,-1,-1,  0,0,0, 0,0,0, "")	
+
+	F_set_chr(EFFDUMMY1,CF_NO_CLIP)
+	F_set_chr(EFFDUMMY1,CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY1,CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY1,CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY1,CF_NO_CSP)
+	F_set_chr(EFFDUMMY2,CF_NO_CLIP)
+	F_set_chr(EFFDUMMY2,CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY2,CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY2,CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY2,CF_NO_CSP)
+	
+		
+	F_set_chr(MONSTER_A1,CF_NO_HEIGHT)
+	F_set_chr(MONSTER_A1,CF_NO_CLIP)
+	F_set_chr(MONSTER_A1,CF_NO_CLIP2)
+	F_set_chr(MONSTER_A1,CF_NO_CSP)
+	F_set_chr(MONSTER_A2,CF_NO_HEIGHT)
+	F_set_chr(MONSTER_A2,CF_NO_CLIP)
+	F_set_chr(MONSTER_A2,CF_NO_CLIP2)
+	F_set_chr(MONSTER_A2,CF_NO_CSP)
+	F_set_chr(MONSTER_A3,CF_NO_HEIGHT)
+	F_set_chr(MONSTER_A3,CF_NO_CLIP)
+	F_set_chr(MONSTER_A3,CF_NO_CLIP2)
+	F_set_chr(MONSTER_A3,CF_NO_CSP)
+	color(MONSTER_A1,-1)
+	color(MONSTER_A2,-1)
+	color(MONSTER_A3,-1)
+	color(LUE, -1)
+	
+	KAO(EVENT_RAGNA, "C","1","3")
+	KAO(LUE,         "C","1","1")
+	
+	MOT_SET(EVENT_RAGNA, 150,-1, 3010,3029, -1,-1 )										//ギア構え
+
+	chr_equip_chr(EFFDUMMY1, EVENT_RAGNA, "Bone_RightSword",100, 0,0,0,	0,0,0);
+	chr_equip_chr(EFFDUMMY2, LUE,         "Bone_Spine",     100, 0,0,0,	0,0,0);
+	
+	//カメラ初期位置
+	CAM_move(130,-11110,1970,0,0)
+	CAM(-250,70,40,40,225,0,0)
+//	CAM_move(340,-10470,2290,60,0)
+//	CAM(-160,110,2300,30,234,60,0)
+
+//CAM_move(0,-10470,2030,150,0)
+//CAM(200,75,2030,30,223,150,0)
+
+	CAM_move(-60,-10590,2010,150,0)
+	CAM(158,61,2010,30,297,150,0)
+
+	move( EVENT_RAGNA, 0, 20,130,10650,1910,0)
+
+	wait(5)
+//	move( LUE, 0, 20,-130,10500,1960,0)
+
+	wait_move(EVENT_RAGNA)
+
+	look(EVENT_RAGNA, "Bone_Head", 0,0,0,10,0,0,20)
+	
+//　　ラグナの頭に！マーク。
+	stop_BGM(90)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(15)
+	KAO(EVENT_RAGNA, "C", "1233321D","2")
+	MES(EVENT_RAGNA,"っ……！？",0)
+	MES_close(EVENT_RAGNA)
+
+	//ルゥ、出現
+	chr_pos(LUE, 	-130,10500,1960,270,2)
+	wait(1)
+	EFF_chr(6830,LUE,0,100,0,"Bone_Spine")		//エフェクト：ルゥが剣から出てくる
+	EFF_chr(6825,LUE,0,100,0,"Bone_Spine")		//エフェクト：ルゥが剣から出てくる
+	EFF_chr(6835,LUE,0,100,0,"Bone_Spine")		//エフェクト：ルゥが剣から出てくる
+	SE(1059,0)//ルゥ出現SE
+	wait(15)
+	KAO(LUE,"B","3","1")
+	color(LUE,30)
+	wait_color(LUE)
+
+
+//	rot(LUE,30,270)
+	look_chr( LUE, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+
+	wait_CAM()
+	wait_CAM_move()
+	wait(5)
+
+	
+	KAO(LUE,"B232BZ2","321","4")
+	MES(LUE,"なによ、どうしたの？",0)
+	MES_close(LUE)
+
+	MOT(EVENT_RAGNA, 150, 10)															//ギア構え
+	wait(10)
+	SE(1014,0)//ギア構えSE
+	KAO(EVENT_RAGNA, "C232CZ4", "123332A","3")
+	MES(EVENT_RAGNA,"ああ……\nおいでなすったようだぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"B232B2","12321DE","6")
+	MES(LUE,"P1ええっ！？",0)
+	MES_close(LUE)
+	wait_MES(LUE)
+
+	wait_BGM()
+	BGM(57)
+//	workG(GW_DEF_BGM,SET,57)		//デフォルト曲を変更する（★ＢＧＭ変更はプログラム対応なので必要ナシ）
+//　　次の瞬間、何匹かの空飛ぶ魔物たちが飛来。
+//　　頭に！マークを出してから慌てるルゥ。
+
+//	cross_fade(15)
+	color(MONSTER_A1,1)
+	color(MONSTER_A2,1)
+	color(MONSTER_A3,1)
+	jump(MONSTER_A1,0,90, 800,10020,2160,0)
+	jump(MONSTER_A2,0,90,-700,10020,2260,,0)
+	jump(MONSTER_A3,0,60, 100,9720,2460,0)
+
+
+//	CAM_move(300,-10450,2290,0,0)
+//	CAM(-120,111,2290,31,208,0,0)
+
+	CAM_move(300,-10450,2290,90,0)
+	CAM(-120,111,2290,31,208,90,0)
+
+
+	wait(60)
+
+	KAO(LUE,"B","12321D","5")
+	EMO(LUE,EMO_BIKKURI)
+	wait(15)
+	look_off(LUE)
+	rot(LUE,30,150)
+	wait(15)
+	move(LUE,0,6,-80,10650,1910,0)
+	MES(LUE,"はわわっ！",0)
+	MES_close(LUE)
+	wait_MES(LUE)
+	wait_CAM_move()
+	wait_CAM()
+
+	jump(MONSTER_A3,0,60, 100,9720,2300,0)
+
+//	cross_fade(15)
+//	CAM_move(230,-9850,2330,0,0)
+//	CAM(-160,110,2330,30,234,0,0)
+
+	CAM_move(-10,-10750,2300,150,0)
+	CAM(-80,91,2300,30,179,150,0)
+	
+//	wait_CAM_move()
+	wait_CAM()
+
+	MES(EVENT_RAGNA,"どうやら蹴散らしながら\n登る必要があるみてぇだな……",0)
+	MES(EVENT_RAGNA,"気合を入れるぞ、ルゥ！",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(LUE,"い、言われなくても！",0)
+	MES_close(LUE)
+
+	CAM_move(-10,-10750,2100,90,0)
+
+//　　ルゥ、ここでラグナのアンカーギアと同化する。
+
+	EFF_chr(6830,LUE,0,100,0,"Bone_Spine")						//エフェクト：ルゥが宿る
+	EFF_chr(6825,LUE,0,100,0,"Bone_Spine")						//エフェクト：ルゥが宿る
+	SE(1059,0)//ルゥ宿りSE
+	wait(15)
+	color(LUE,-30)
+	wait_color(LUE)
+	EFF_chr(6815, LUE, 0,100,EFFDUMMY1,"Bone_Hips")	//エフェクト：ルゥが宿る
+//	EFF_chr(6690, LUE, 0,100,EFFDUMMY1,"Bone_Hips")	//エフェクト：ルゥが宿る
+	SE(1035,0)//ルゥ宿りSE
+
+	wait(30)
+	
+//　　操作許可になると同時に、魔物たちも攻撃を開始する。
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(LUE)
+	delete(EFFDUMMY1)
+	
+	//当たりの中に再配置
+	chr_pos(MONSTER_A1,  280,10800,2100, 60,2)
+	chr_pos(MONSTER_A2, -280,10800,2100,280,2)
+	chr_pos(MONSTER_A3,    0, 9720,2200, 0,2)
+	chr_pos(RAGNA,	 130,10650,1910,180,2)
+	color(RAGNA,1)
+	color(PET,  1)
+	
+	F_reset_chr(MONSTER_A1,CF_NO_HEIGHT)
+	F_reset_chr(MONSTER_A1,CF_NO_CLIP)
+	F_reset_chr(MONSTER_A1,CF_NO_CLIP2)
+	F_reset_chr(MONSTER_A1,CF_NO_CSP)
+	F_reset_chr(MONSTER_A2,CF_NO_HEIGHT)
+	F_reset_chr(MONSTER_A2,CF_NO_CLIP)
+	F_reset_chr(MONSTER_A2,CF_NO_CLIP2)
+	F_reset_chr(MONSTER_A2,CF_NO_CSP)
+	F_reset_chr(MONSTER_A3,CF_NO_HEIGHT)
+	F_reset_chr(MONSTER_A3,CF_NO_CLIP)
+	F_reset_chr(MONSTER_A3,CF_NO_CLIP2)
+	F_reset_chr(MONSTER_A3,CF_NO_CSP)
+
+	// その他の一般ザコ配置
+	EV("EV_LocateZacos")
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★空中回廊で、魔物たちに襲われた』を立てる。
+	F_set(F5_07_BattleSky)
+
+//	F_reset(F5_02_UseTodome)//ルウ連れてる
+
+
+//　　ダミーマップ（ルーとペットの読み替えのため）
+//	workG(GW_ENTRY_EVENT,SET,4)
+//	new_map(10800)
+
+	fade_in(0,30,0)
+	wait_fade()
+
+
+	EV_end()
+}
+
+/*
+//---------------------------------------------------------------------
+EV_5_08_BattleSkyb
+{
+	EV_begin()
+	
+	fade_in(100,0,0)
+	wait_fade()
+
+	chr_pos(RAGNA,	 130,10650,1911,180,2)
+	set_chr(MONSTER_A1,	  273,-1,-1,    280,10800,2100, 2,60,0, "")
+	set_chr(MONSTER_A2,	  273,-1,-1,   -280,10800,2100, 2,280,0, "")
+	set_chr(MONSTER_A3,	  381,-1,-1,      0, 9720,2200, 2,0,0, "")
+		
+	
+//ＧＦ『★空中回廊で、魔物たちに襲われた』を立てる。
+	F_set(F5_07_BattleSky)		
+	
+//	F_set(F5_02_UseTodome)//ルウ連れてる
+	
+//	workG(GW_ACTIONTYPE,SET,1)	// 戦闘許可
+	
+	fade_in(0,30,0)
+	wait_fade()
+		
+	EV_end()	
+}
+
+*/
+
+
+//──────────────────────────────
+//▼螺旋要塞メルセデク出現．空中階段
+//──────────────────────────────
+//　　暗転後、しばらくしてからフェードインして
+//　　空中階段を降りてくるラグナ、アルウェン、オデッサ。
+//　　ルゥもアンカーギアから離れてアルウェンに付いて来ている。
+//　　空中回廊から見える空、不気味に鳴動し、不穏な雰囲気。
+EV_5_22_ReturnCrystal
+{
+	set_namebmp(0,0)
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 -220,23160,-590,0,2)
+	chr_pos(PARTNER,	 -20,23160,-590,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1,  100,-9100,5850, 2,0,0, "")
+	set_chr(ALWEN,	 		 1011,-1,-1,  -90,-9060,5850, 2,0,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+//	set_chr(ODESSA,	  1019,-1,-1,  30,-9400,5920, 2,0,0, "")
+	set_chr(ODESSA,	    12,-1,-1,  30,-9400,5920, 2,0,0, "")
+	set_chr(LUE, 	  1015,-1,-1, -140,-9352,5910, 2,0,0, "")
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(AWEN,53,1)										//アルウェンの右手を開かせる。
+
+	//カメラ初期位置
+	CAM_move(600,4400,6400,0,0)
+	CAM(550,170,6400,40,210,0,0)
+
+	KAO(EVENT_RAGNA, "B","1","3")
+	KAO(LUE,         "B","1","4")
+	KAO(ODESSA,      "B","1","3")
+	KAO(ALWEN,       "C","1","3")
+
+	move( EVENT_RAGNA, 0, 20,100,22400,-440,0)
+	move( LUE, 0, 20,-140,22400,-440,0)
+	wait(3)
+	move( ODESSA, 0, 20,30,22400,-440,0)
+	wait(2)
+	move( ALWEN, 0, 20,-90,22400,-440,0)
+
+	CAM_move(300,3200,6400,240,0)
+	CAM(390,80,6400,40,188,240,0)
+
+	SE(1154,0)//大気鳴動SE
+
+	//フェードイン
+	fade_in(0,90,0)
+	wait_fade()
+
+	wait_CAM_move()
+	wait_CAM()
+	cross_fade(30)
+	CAM_move(300,4920,5280,0,0)
+	CAM(-170,60,5280,40,240,0,0)
+	CAM_move(0,-8240,2600,780,2)
+//	CAM(-220,50,2600,40,218,780,2)
+	CAM(-470,50,2600,40,218,780,2)
+	wait(30)
+
+//　　ラグナたち、駆け下りながら以下のメッセージ。
+	KAO(ODESSA,"B232BZ4","1233321","3")	
+	MES_pos(ODESSA,"大気が哭（な）いている……",0,400,180,0,0)
+//	wait(120)
+	wait(80)
+	KAO(ODESSA,"B232BZ4","1","3")		
+	MES_pos(ODESSA,"まさにそんな感じだね。",0,400,180,0,0)
+//	wait(120)
+	wait(80)
+	MES_close(ODESSA)
+	wait_MES(ODESSA)
+	
+	KAO(ALWEN,"C232CZ5","123332A","3")	
+	MES_pos(ALWEN,"うむ……\nそれに凄まじい魔力を感じる。",0,300,220,0,0)
+//	wait(120)
+	wait(100)
+	KAO(ALWEN,"C232CZ4","A233321","3")	
+	MES_pos(ALWEN,"確かに尋常ではない雰囲気だ。",0,300,220,0,0)
+//	wait(120)
+	wait(100)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+	
+	KAO(LUE,"B232BZ3","1233321D","4")
+//	MES_pos(LUE,"こ、これってまさか……",0,390,190,0,0)
+	MES_pos(LUE,"こ、これってまさか……",0,350,200,0,0)
+//	wait(120)
+	wait(80)
+	MES_close(LUE)
+	wait_MES(LUE)
+
+	KAO(EVENT_RAGNA, "B","1233321","3")
+//	MES_pos(EVENT_RAGNA,"…………………………………",0,440,210,0,0)
+	MES_pos(EVENT_RAGNA,"…………………………………",0,380,210,0,0)
+//	wait(120)
+	wait(100)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　ラグナたち、そのまま一気に駆け下りていく。
+//　　それと合わせるようにして画面フェードアウト。
+	wait(30)
+	EV("EV_1154_fadeout")//大気鳴動SEフェードアウト
+	EV("EV_51_fadeout")//風SEフェードアウト
+	fade_in(100,60,0)
+	wait_fade()
+
+	delete(LUE)
+	delete(ODESSA)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+//　　クリスタルバレー祭壇へ(ev10600)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(10600)
+
+//	EV_end()
+}
+
+//大気鳴動SEフェードアウト
+EV_1154_fadeout
+{
+	SE_vol(1154,100,0)
+	wait(1)
+	SE_vol(1154,99,0)
+	wait(1)
+	SE_vol(1154,98,0)
+	wait(1)
+	SE_vol(1154,97,0)
+	wait(1)
+	SE_vol(1154,96,0)
+	wait(1)
+	SE_vol(1154,95,0)
+	wait(1)
+	SE_vol(1154,94,0)
+	wait(1)
+	SE_vol(1154,93,0)
+	wait(1)
+	SE_vol(1154,92,0)
+	wait(1)
+	SE_vol(1154,91,0)
+	wait(1)
+	SE_vol(1154,90,0)
+	wait(1)
+	SE_vol(1154,89,0)
+	wait(1)
+	SE_vol(1154,88,0)
+	wait(1)
+	SE_vol(1154,87,0)
+	wait(1)
+	SE_vol(1154,86,0)
+	wait(1)
+	SE_vol(1154,85,0)
+	wait(1)
+	SE_vol(1154,84,0)
+	wait(1)
+	SE_vol(1154,83,0)
+	wait(1)
+	SE_vol(1154,82,0)
+	wait(1)
+	SE_vol(1154,81,0)
+	wait(1)
+	SE_vol(1154,80,0)
+	wait(1)
+	SE_vol(1154,79,0)
+	wait(1)
+	SE_vol(1154,78,0)
+	wait(1)
+	SE_vol(1154,77,0)
+	wait(1)
+	SE_vol(1154,76,0)
+	wait(1)
+	SE_vol(1154,75,0)
+	wait(1)
+	SE_vol(1154,74,0)
+	wait(1)
+	SE_vol(1154,73,0)
+	wait(1)
+	SE_vol(1154,72,0)
+	wait(1)
+	SE_vol(1154,71,0)
+	wait(1)
+	SE_vol(1154,70,0)
+	wait(1)
+	SE_vol(1154,69,0)
+	wait(1)
+	SE_vol(1154,68,0)
+	wait(1)
+	SE_vol(1154,67,0)
+	wait(1)
+	SE_vol(1154,66,0)
+	wait(1)
+	SE_vol(1154,65,0)
+	wait(1)
+	SE_vol(1154,64,0)
+	wait(1)
+	SE_vol(1154,63,0)
+	wait(1)
+	SE_vol(1154,62,0)
+	wait(1)
+	SE_vol(1154,61,0)
+	wait(1)
+	SE_vol(1154,60,0)
+	wait(1)
+	SE_vol(1154,59,0)
+	wait(1)
+	SE_vol(1154,58,0)
+	wait(1)
+	SE_vol(1154,57,0)
+	wait(1)
+	SE_vol(1154,56,0)
+	wait(1)
+	SE_vol(1154,55,0)
+	wait(1)
+	SE_vol(1154,54,0)
+	wait(1)
+	SE_vol(1154,53,0)
+	wait(1)
+	SE_vol(1154,52,0)
+	wait(1)
+	SE_vol(1154,51,0)
+	wait(1)
+	SE_vol(1154,50,0)
+	wait(1)
+	SE_vol(1154,49,0)
+	wait(1)
+	SE_vol(1154,48,0)
+	wait(1)
+	SE_vol(1154,47,0)
+	wait(1)
+	SE_vol(1154,46,0)
+	wait(1)
+	SE_vol(1154,45,0)
+	wait(1)
+	SE_vol(1154,44,0)
+	wait(1)
+	SE_vol(1154,43,0)
+	wait(1)
+	SE_vol(1154,42,0)
+	wait(1)
+	SE_vol(1154,41,0)
+	wait(1)
+	SE_vol(1154,40,0)
+	wait(1)
+	SE_vol(1154,39,0)
+	wait(1)
+	SE_vol(1154,38,0)
+	wait(1)
+	SE_vol(1154,37,0)
+	wait(1)
+	SE_vol(1154,36,0)
+	wait(1)
+	SE_vol(1154,35,0)
+	wait(1)
+	SE_vol(1154,34,0)
+	wait(1)
+	SE_vol(1154,33,0)
+	wait(1)
+	SE_vol(1154,32,0)
+	wait(1)
+	SE_vol(1154,31,0)
+	wait(1)
+	SE_vol(1154,30,0)
+	wait(1)
+	SE_vol(1154,29,0)
+	wait(1)
+	SE_vol(1154,28,0)
+	wait(1)
+	SE_vol(1154,27,0)
+	wait(1)
+	SE_vol(1154,26,0)
+	wait(1)
+	SE_vol(1154,25,0)
+	wait(1)
+	SE_vol(1154,24,0)
+	wait(1)
+	SE_vol(1154,23,0)
+	wait(1)
+	SE_vol(1154,22,0)
+	wait(1)
+	SE_vol(1154,21,0)
+	wait(1)
+	SE_vol(1154,20,0)
+	wait(1)
+	SE_vol(1154,19,0)
+	wait(1)
+	SE_vol(1154,18,0)
+	wait(1)
+	SE_vol(1154,17,0)
+	wait(1)
+	SE_vol(1154,16,0)
+	wait(1)
+	SE_vol(1154,15,0)
+	wait(1)
+	SE_vol(1154,14,0)
+	wait(1)
+	SE_vol(1154,13,0)
+	wait(1)
+	SE_vol(1154,12,0)
+	wait(1)
+	SE_vol(1154,11,0)
+	wait(1)
+	SE_vol(1154,10,0)
+	wait(1)
+	SE_vol(1154,9,0)
+	wait(1)
+	SE_vol(1154,8,0)
+	wait(1)
+	SE_vol(1154,7,0)
+	wait(1)
+	SE_vol(1154,6,0)
+	wait(1)
+	SE_vol(1154,5,0)
+	wait(1)
+	SE_vol(1154,4,0)
+	wait(1)
+	SE_vol(1154,3,0)
+	wait(1)
+	SE_vol(1154,2,0)
+	wait(1)
+	stop_SE(1154)
+}
+
+//風SEフェードアウト
+EV_51_fadeout
+{
+	SE_vol(51,100,0)
+	wait(1)
+	SE_vol(51,99,0)
+	wait(1)
+	SE_vol(51,98,0)
+	wait(1)
+	SE_vol(51,97,0)
+	wait(1)
+	SE_vol(51,96,0)
+	wait(1)
+	SE_vol(51,95,0)
+	wait(1)
+	SE_vol(51,94,0)
+	wait(1)
+	SE_vol(51,93,0)
+	wait(1)
+	SE_vol(51,92,0)
+	wait(1)
+	SE_vol(51,91,0)
+	wait(1)
+	SE_vol(51,90,0)
+	wait(1)
+	SE_vol(51,89,0)
+	wait(1)
+	SE_vol(51,88,0)
+	wait(1)
+	SE_vol(51,87,0)
+	wait(1)
+	SE_vol(51,86,0)
+	wait(1)
+	SE_vol(51,85,0)
+	wait(1)
+	SE_vol(51,84,0)
+	wait(1)
+	SE_vol(51,83,0)
+	wait(1)
+	SE_vol(51,82,0)
+	wait(1)
+	SE_vol(51,81,0)
+	wait(1)
+	SE_vol(51,80,0)
+	wait(1)
+	SE_vol(51,79,0)
+	wait(1)
+	SE_vol(51,78,0)
+	wait(1)
+	SE_vol(51,77,0)
+	wait(1)
+	SE_vol(51,76,0)
+	wait(1)
+	SE_vol(51,75,0)
+	wait(1)
+	SE_vol(51,74,0)
+	wait(1)
+	SE_vol(51,73,0)
+	wait(1)
+	SE_vol(51,72,0)
+	wait(1)
+	SE_vol(51,71,0)
+	wait(1)
+	SE_vol(51,70,0)
+	wait(1)
+	SE_vol(51,69,0)
+	wait(1)
+	SE_vol(51,68,0)
+	wait(1)
+	SE_vol(51,67,0)
+	wait(1)
+	SE_vol(51,66,0)
+	wait(1)
+	SE_vol(51,65,0)
+	wait(1)
+	SE_vol(51,64,0)
+	wait(1)
+	SE_vol(51,63,0)
+	wait(1)
+	SE_vol(51,62,0)
+	wait(1)
+	SE_vol(51,61,0)
+	wait(1)
+	SE_vol(51,60,0)
+	wait(1)
+	SE_vol(51,59,0)
+	wait(1)
+	SE_vol(51,58,0)
+	wait(1)
+	SE_vol(51,57,0)
+	wait(1)
+	SE_vol(51,56,0)
+	wait(1)
+	SE_vol(51,55,0)
+	wait(1)
+	SE_vol(51,54,0)
+	wait(1)
+	SE_vol(51,53,0)
+	wait(1)
+	SE_vol(51,52,0)
+	wait(1)
+	SE_vol(51,51,0)
+	wait(1)
+	SE_vol(51,50,0)
+	wait(1)
+	SE_vol(51,49,0)
+	wait(1)
+	SE_vol(51,48,0)
+	wait(1)
+	SE_vol(51,47,0)
+	wait(1)
+	SE_vol(51,46,0)
+	wait(1)
+	SE_vol(51,45,0)
+	wait(1)
+	SE_vol(51,44,0)
+	wait(1)
+	SE_vol(51,43,0)
+	wait(1)
+	SE_vol(51,42,0)
+	wait(1)
+	SE_vol(51,41,0)
+	wait(1)
+	SE_vol(51,40,0)
+	wait(1)
+	SE_vol(51,39,0)
+	wait(1)
+	SE_vol(51,38,0)
+	wait(1)
+	SE_vol(51,37,0)
+	wait(1)
+	SE_vol(51,36,0)
+	wait(1)
+	SE_vol(51,35,0)
+	wait(1)
+	SE_vol(51,34,0)
+	wait(1)
+	SE_vol(51,33,0)
+	wait(1)
+	SE_vol(51,32,0)
+	wait(1)
+	SE_vol(51,31,0)
+	wait(1)
+	SE_vol(51,30,0)
+	wait(1)
+	SE_vol(51,29,0)
+	wait(1)
+	SE_vol(51,28,0)
+	wait(1)
+	SE_vol(51,27,0)
+	wait(1)
+	SE_vol(51,26,0)
+	wait(1)
+	SE_vol(51,25,0)
+	wait(1)
+	SE_vol(51,24,0)
+	wait(1)
+	SE_vol(51,23,0)
+	wait(1)
+	SE_vol(51,22,0)
+	wait(1)
+	SE_vol(51,21,0)
+	wait(1)
+	SE_vol(51,20,0)
+	wait(1)
+	SE_vol(51,19,0)
+	wait(1)
+	SE_vol(51,18,0)
+	wait(1)
+	SE_vol(51,17,0)
+	wait(1)
+	SE_vol(51,16,0)
+	wait(1)
+	SE_vol(51,15,0)
+	wait(1)
+	SE_vol(51,14,0)
+	wait(1)
+	SE_vol(51,13,0)
+	wait(1)
+	SE_vol(51,12,0)
+	wait(1)
+	SE_vol(51,11,0)
+	wait(1)
+	SE_vol(51,10,0)
+	wait(1)
+	SE_vol(51,9,0)
+	wait(1)
+	SE_vol(51,8,0)
+	wait(1)
+	SE_vol(51,7,0)
+	wait(1)
+	SE_vol(51,6,0)
+	wait(1)
+	SE_vol(51,5,0)
+	wait(1)
+	SE_vol(51,4,0)
+	wait(1)
+	SE_vol(51,3,0)
+	wait(1)
+	SE_vol(51,2,0)
+	wait(1)
+	stop_SE(51)
+}
+
+#EndScriptTable
+//====================================================================
+

@@ -1,0 +1,4127 @@
+//====================================================================
+//ステージトラップスクリプト
+//[me0i002][クリスタルバレー祭壇]
+//====================================================================
+
+#ScriptTable
+
+
+#PIPIRO 	1
+#POCKLE 	2
+#FIONA 		3
+#LUE 		4
+#ODESSA		5
+#LA-RAIRA	6
+#KLODE 		7
+#ALWEN 		8
+#EVENT_RAGNA 	9
+
+#TELMIDORL	10
+#SPIRIT_A	20
+#SPIRIT_B	21
+#SPIRIT_C	22
+
+#MONTBLANC	23
+#MIA		24
+#CLEESE		25
+
+#EFFDUMMY1	26
+#EFFDUMMY2	27
+#EFFDUMMY3	28
+#EFFDUMMY4	29
+#EFFDUMMY5	30
+#SWORD		31
+#ALWENROD	32
+#S_MONTBLANC	33
+#EFFPIPI	34		//ピピロの杖エフェクト
+#EFFDUMMY6	35		//七支刀を扉に差し込むときの光
+
+
+//ローカルフラグ
+//F000				イベントで使用
+//WK001				使用
+
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//環境SE
+	SE(51,0)
+
+//  set_chr  no typ     tip      x    y   z   	    mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	set_chr( 90,990,	-1,-1, -1150, 4900,-1382,  165, 901, 6,"K7_10000;")	//フィールドマップ
+	set_chr( 91,990,	-1,-1,     0,-6250,  493,    0,   0, 0,";")			//クリスタルバレー階段（帰り専用）
+
+	if(F5_06_RunCrystal && !F6_00_GoToMeru )			//ＧＦ『★クリスタルバレーを起動した』を立てる。～　▼⑫飛行機でメルセデクに乗り込むことにした
+	{
+	}
+	else
+	{
+		set_chr( 92,991,	-1,-1,     0,-5700, 400,	 0,050501,6,";")		//扉の当たり　イベントでdeleteします
+	}
+
+	set_chr( 95,990,	-1,-1, -1750, 4800,-1365,  165, 601, 6,"K7_10000;")	//フィールドマップ （行き専用）
+	set_chr( 96,990,	-1,-1,     0,-6250,  600,    0, 901, 6,"K0_10601;")	//クリスタルバレー階段（行き専用）
+
+	set_chr(100,990,	-1,-1,     0,-5300,  200,    0, 0813, 6,"<EV_SeeFirst>")	//初見イベント用
+
+	//NPC
+	
+
+
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		//イベント後すぐに会話可能にするためにセットして見えないところに隠しておく
+		if(!FM_13_MontblancMiss && FE_03_KinkaCleese)
+		{
+			//ミニモンブランは使い魔イベントまで隠す
+			set_chr( S_MONTBLANC,482,	-1,-1,  2551,-5694,201,	2,310,20,"<TK_MONTBLANC>")	//ミニモンブラン
+
+			color(S_MONTBLANC,-1)//透過
+
+			F_set_chr(S_MONTBLANC,CF_NO_ZIMEN)
+			F_set_chr(S_MONTBLANC,CF_NO_CSP)
+			F_set_chr(S_MONTBLANC,CF_NO_HEIGHT)
+
+			//クレースはすれ違うイベントまで隠す
+			if(!FE_13_MeetCleese)
+			{
+				set_chr( CLEESE,83,			-1,-1, 	2712,-5710,201,	53,130, 20,"<TK_CLEESE>")	//クレース
+
+				color(CLEESE,-1)//透過
+				F_set_chr(CLEESE,CF_NO_ZIMEN)
+				F_set_chr(CLEESE,CF_NO_CSP)
+				F_set_chr(CLEESE,CF_NO_HEIGHT)
+			}
+		}
+
+
+		//クレースと契約するまでは通常サイズモンブラン
+		if(!FE_13_MeetCleese)
+		{
+			set_chr( MONTBLANC,1025,		-1,-1,  -3,-5016,200,	2,180,20,"<TK_MONTBLANC>")	//モンブラン　祭壇
+			F_set_chr(MONTBLANC,CF_NO_MOVE)
+
+			//クレースに幸運の金貨を返していると出口近くにイベント発生エントリ出現
+			if(!FE_13_MeetCleese && FE_03_KinkaCleese && FM_13_TalkMontblanc)
+			{
+				//ここのset_chrが実行されることはない
+				set_chr(101,990,	-1,-1,     0,-2000,-100,    0, 2401, 6,"<EV_Meets_Cleese>;")	//クレースとすれ違うイベント
+			}
+		}
+		//クレースとすれ違った後
+		else
+		if(FE_13_MeetCleese && !FM_13_MontblancMiss)
+		{
+			set_chr( MONTBLANC,1025,		-1,-1,  -3,-5016,200,	2,180,20,"<TK_MONTBLANC>")	//モンブラン　祭壇
+			set_chr( CLEESE,83,	-1,-1, 	227,-4828,201,	53,130, 20,"<TK_CLEESE>")	//　クレース　モンブランの横
+
+			F_set_chr(MONTBLANC,CF_NO_MOVE)
+			F_set_chr(CLEESE,CF_NO_MOVE)
+
+			set_chr(101,990,	-1,-1,  -3,-5016,200, 0, 2010, 6,"<EV_Survant_Cleese>;")	//モンブランがクレースの使い魔になるイベント
+		}
+		//◆契約後はネコサイズに
+		else
+		if(FM_13_MontblancMiss)
+		{
+			set_chr( S_MONTBLANC,482,		-1,-1,  -3,-5016,200,	2,310,20,"<TK_MONTBLANC>")	//モンブラン　祭壇
+
+			set_chr( CLEESE,83,	-1,-1, 124,-4936,201,	2,130, 20,"<TK_CLEESE>")	//　クレース　モンブランの横
+			MOT_SET(CLEESE,153,-1,453,453,-1,-1)	//膝を突く
+			MOT(CLEESE,153,0)
+			F_set_chr(S_MONTBLANC,CF_NO_MOVE)
+			F_set_chr(CLEESE,CF_NO_MOVE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		set_chr( MONTBLANC,1025,		-1,-1,  -3,-5016,200,	2,180,20,"<TK_MONTBLANC>")	//モンブラン　祭壇
+		F_set_chr(MONTBLANC,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar && GW_ENTRY_EVENT==0)
+	{
+		//──────────────────────────────
+		//クリスタルバレーの扉を開いた後
+		//──────────────────────────────
+		if(F5_06_RunCrystal)
+		{
+			//NPC配置用のイベント
+			EV("EV_NPCSetPos2")
+			wait_EV("EV_NPCSetPos2")
+		}
+		//──────────────────────────────
+		//クリスタルバレーの扉を開く前
+		//──────────────────────────────
+		else
+		{
+			//NPC配置用のイベント
+			EV("EV_NPCSetPos")
+			wait_EV("EV_NPCSetPos")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		set_chr( SPIRIT_A,84,	-1,-1,	11,-5345,247,	 11,180, 20,"<TK_SPIRIT_A>")	//マリン
+		set_chr( SPIRIT_B,85,	-1,-1,	339,-4163,0,	 10,0, 20,"<TK_SPIRIT_B>")	//リッキー
+		set_chr( SPIRIT_C,86,	-1,-1,	914,-5255,201,	 10,280, 20,"<TK_SPIRIT_C>")	//ジョー
+		EV("FREEMOVE_SPIRIT_C")
+		F_set_chr(SPIRIT_A,CF_NO_MOVE)
+		F_set_chr(SPIRIT_B,CF_NO_MOVE)
+		F_set_chr(SPIRIT_C,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	if(F2_00_GoForest && !F2_14_TalkEnemy)
+	{
+		set_chr( TELMIDORL,27,	-1,-1,   -0,-5000,201,	 2,180, 20,"<TK_TELMIDORL>")		//テルミドール
+		F_set_chr(TELMIDORL,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+//	if( F1_15_GoVillage && !F2_00_GoForest)//★間違い
+	if( F1_15_GoVillage && !F2_00_GoForest)
+	{
+//		//②神殿探索開始後からオデッサ配置	//★間違い
+//		if(F1_19_InTemple)
+//		if(F1_22_EndFirst)		//ＧＦ：第１章終了
+//		{
+//			set_chr( ODESSA,19,	-1,-1,   948,-3625,1,	 2,0, 20,"<TK_ODESSA>")		//オデッサ
+//			EV("FREEMOVE_ODESSA")
+//		}
+		set_chr( ODESSA,19,	-1,-1,   948,-3625,1,	 2,0, 20,"<TK_ODESSA>")		//オデッサ
+		EV("FREEMOVE_ODESSA")
+
+	}
+
+//■冒険開始後、クリスタルバレーに来たことが一度でもある
+	if(F1_01_GameStart)
+	{
+		//ＧＦ『★すでにクリスタルバレーに行っていた』立てる
+		F_set(F1_35_GoneValley)
+	}
+
+//■イベント
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼プロローグ～トリスタン号墜落・続き
+		set_namebmp(0,0)
+		EV("EV_0_01_AlwenInCrystal")
+	}
+	else
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼螺旋要塞メルセデク出現・クリスタルバレー
+		EV("EV_5_23_AppearMeru")
+	}
+
+	if(F4_11_EndFourth && !F5_17_EndFifth)
+	{
+	//５章
+		//ＧＦ『★ラーライラに協力を申し込んだ』を立っている。
+		//ＧＦ『★ピピロに協力を申し込んだ』を立っている。
+		//ＧＦ『★フィオナに協力を申し込んだ』を立っている。
+		//ＧＦ『★クリスタルバレーを起動した』立ってない
+		//★クリスタルバレーを起動するイベントで「まだ開かない」を選択した
+		if(!F5_06_WaitCrystal && F5_03_OfferLaraira && F5_04_OfferPipiro && F5_05_OfferFiona && !F5_06_RunCrystal)
+		{
+			//▼クリスタルバレーの扉を開く
+		//	EV("EV_5_07_RunCrystal")
+			set_chr( 80,990,	-1,-1,   -50,-1000,-20,  0, 1401,6,"<EV_5_07_RunCrystal>;")
+		}
+	}
+
+}
+
+//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+///──────────────────────────────
+//▽フリームーブ　オデッサ
+//──────────────────────────────
+FREEMOVE_ODESSA
+{
+	move(ODESSA, 25,	WALK1,	600,600,0,	200)
+//	wait_move(ODESSA)
+	wait(60)
+	loop
+
+}
+//──────────────────────────────
+//▽⑦フラフラする妖精C
+//──────────────────────────────
+FREEMOVE_SPIRIT_C
+{
+	move(SPIRIT_C, 25,	WALK1,	500,500,0,	200)
+	wait_move(SPIRIT_C )
+	wait(50)
+	loop
+
+}
+//──────────────────────────────
+//⑪▽ポックルたちに事情を話した
+//　　ピピロと共にクリスタルバレーの一角にいる。
+//	name("★初回（ピピロと共通／１回のみ／イベント処理）")
+//　　話しかけるとキャラ再配置してイベント発生。
+//　　ピピロと共通なので、あちらで起こすと発生しない。
+//──────────────────────────────
+TALK_POCPIP_11
+{
+	cross_fade(30)
+
+	EV_begin()
+	CAM_move(-612,3788,101,0,0)
+	CAM(-10,52,101,40,133,0,0)
+
+	chr_pos(RAGNA,	 -752,-3548,0,180,2)
+	chr_pos(PET,	 -659,-3550,0,130,2)
+	chr_pos(POCKLE,	 -659,-3879,0,10,2)
+	chr_pos(PIPIRO,	 -880,-3843,1,315,2)
+
+
+	KAO(RAGNA, "1", "1", "1")
+	KAO(PARTNER,"1", "1", "1")
+	KAO(PIPIRO, "1", "1", "1")
+	KAO(POCKLE, "1", "1", "1")
+
+	wait_fade()
+
+
+	KAO(POCKLE,"12321Z5","1","1")
+	MES(POCKLE,"そういえば……\nスバルちゃん、心配ですよね。",0)
+	KAO(POCKLE,"12321Z5","1","1")
+	MES(POCKLE,"早く良くなってくれると\nいいんですけど……",0)
+	MES_close(POCKLE)
+
+//	name2(RAGNA)
+	MES(RAGNA,"ああ……",0)
+	MES_close(RAGNA)
+
+//　　ここでラグナの頭に！マーク。
+	EMO(RAGNA,EMO_BIKKURI)
+	wait(30)
+
+	MES(RAGNA,"って、待て！？",0)
+	MES(RAGNA,"お前、あいつが女の子だって\nちゃんと気付いていたのか！？",0)
+	MES_close(RAGNA)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z3","1","1")
+	MES(POCKLE,"へっ……？",0)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"気付くもなにも\n見たまんまのような気が……",0)
+	MES_close(POCKLE)
+
+	rot_chr(PET,60,RAGNA)
+//	name2(LUE)
+	KAO(PET,"12321Z6","2","1")
+	MES(PET,"フン、気付いてなかったのは\nアンタくらいじゃないの？",0)
+	KAO(PET,"12321Z4","3","1")
+	MES(PET,"まったくトーヘンボクなんだから。",0)
+	MES_close(PET)
+
+	look_chr( RAGNA, PET,"Bone_Head")
+
+//	name2(RAGNA)
+	MES(RAGNA,"うぐっ……\nわ、悪かったな。",0)
+	MES_close(RAGNA)
+
+	look_off(RAGNA)
+
+	rot_chr(PIPIRO,60,RAGNA)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z5","1","1")
+	MES(PIPIRO,"ま、確かにあの子、\nボーイッシュではあるからね。",0)
+	rot_chr(RAGNA,60,PIPIRO)
+	KAO(PIPIRO,"12321Z6","1","1")
+	MES(PIPIRO,"お兄さんも鈍いとは思うけど\n気付かなくても不思議じゃないわ。",0)
+	KAO(PIPIRO,"12321Z6","2","1")
+	look_chr( PIPIRO, POCKLE,"Bone_Head")
+	MES(PIPIRO,"ポックルがすぐに気付いたのは\nやっぱムッツリ君だからじゃない？",0)
+	MES_close(PIPIRO)
+
+	rot_chr(POCKLE,60,PIPIRO)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z3","8","1")
+	MES(POCKLE,"ちょ、ちょっとぉ！？",0)
+	MES_close(POCKLE)
+
+	rot_chr(PET,60,POCKLE)
+
+//	name2(PET)
+	KAO(PET,"12321Z4","1","1")
+	MES(PET,"た、確かに\n尻尾なんか生えてるし……",0)
+	KAO(PET,"12321Z5","1","1")
+	MES(PET,"そうは見えないけど\n実はケダモノってわけ！？",0)
+	MES_close(PET)
+
+	rot_chr(POCKLE,60,PET)
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z4","8","B")
+	MES(POCKLE,"ル、ルゥさんまで～……",0)
+	KAO(POCKLE,"12321Z4","8","B")
+	MES(POCKLE,"この尻尾はアクセサリ！",0)
+	KAO(POCKLE,"12321Z4","8","B")
+	MES(POCKLE,"オデッサさんとは違って\n本物じゃないですから！",0)
+	MES_close(POCKLE)
+
+	rot_chr(RAGNA,60,POCKLE)
+
+//	name2(RAGNA)
+	MES(RAGNA,"（そうだったのか……）",0)
+	MES_close(RAGNA)
+
+//――――――――――――――――――――――――――
+//	イベント終了処理
+//――――――――――――――――――――――――――
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+
+	KAO(RAGNA, "1", "1", "1")
+	KAO(PARTNER,"1", "1", "1")
+	KAO(PIPIRO, "1", "1", "1")
+	KAO(POCKLE, "1", "1", "1")
+
+	chr_pos(POCKLE,	 -659,-3879,0,20,150)
+	chr_pos(PIPIRO,	 -880,-3843,1,315,150)
+
+	look_off( PIPIRO )
+	F_set(FM_11_TalkPocPip)
+
+	EV_end()
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+//	プレイヤー操作許可
+//――――――――――――――――――――――――――
+}
+
+
+//──────────────────────────────
+//▽⑬クリスタルバレーから出ようとするとイベント
+//──────────────────────────────
+//　　※幸運の金貨を返却している場合、
+//　　　クリスタルバレーから出ようとするとクレースとすれ違うイベントがあります。
+//　　祭壇から少し離れた辺りのエントリで引っ掛ける。
+EV_Meets_Cleese
+{
+//――――――――――――――――――――――――――
+//	初期化処理
+//――――――――――――――――――――――――――
+	cross_fade(30)			//クロスフェード
+	EV_begin()
+
+	//カメラセット
+	CAM_move(72,1805,198,0,0)
+	CAM(-290,37,198,40,352,0,0)
+
+	//キャラ再配置
+	chr_pos(RAGNA,353,-1903,-2,0,2)
+	chr_pos(PARTNER,407,-2105,0,8,2)//ミア
+	chr_pos(PET,558,-1969,0,24,2)//アルウェン
+	chr_pos(CLEESE, -54,-696,-92,180,2)//クレース
+	color(CLEESE,1)//透過解除
+
+	KAO(RAGNA,	"1", "1", "1")
+	KAO(PARTNER,"1", "1", "1")
+	KAO(PET, 	"1", "1", "1")
+	KAO(CLEESE, "1", "1", "1")
+
+	F_reset_chr(CLEESE,CF_NO_ZIMEN)
+	F_reset_chr(CLEESE,CF_NO_CSP)
+	F_reset_chr(CLEESE,CF_NO_HEIGHT)
+//――――――――――――――――――――――――――
+//	イベント開始
+//――――――――――――――――――――――――――
+
+//　　入り口の方から声がする。
+//	name("声")
+	move(CLEESE, 0, WALK1,-8,-1734,-6,0)	//クレース祭壇側へ移動
+
+	CAM_move(356,1995,127,100,0)
+	CAM(109,70,127,25,323,100,0)
+
+	wait_fade()
+	KAO(CLEESE,"12321Z4","1","1")
+	MES_pos(CLEESE,"おや～？　ここはどこかな～？",0,0,0,0,0)
+	wait(60)
+	MES_close(CLEESE)
+//	chr_rename(CLEESE,"声")//0902修正
+
+
+//　　クレースがやって来て、すれ違おうとする。
+
+
+//　　ラグナにＰＡエモーション。クレースに振り向く。
+
+	EMO(RAGNA,EMO_PA)
+	rot(RAGNA,10,65)
+	MES(RAGNA,"あれ、あんたは確か……",0)
+	MES(RAGNA,"以前大切な金貨を無くしたとか\n言ってた旅行者じゃねえか。",0)
+	MES_close(RAGNA)
+
+	wait_move(CLEESE)
+	rot_chr(RAGNA,60,CLEESE)
+	rot_chr(PARTNER,30,CLEESE)
+	rot_chr(PET,30,CLEESE)
+	rot_chr(CLEESE,30,RAGNA)
+//	chr_rename(CLEESE,"クレース")//0902修正
+
+//	name2(CLEESE)
+	KAO(CLEESE,"12321Z4","1","1")
+	MES(CLEESE,"あ、あなたはあの時の～。",0)
+	KAO(CLEESE,"12321Z6","1","1")
+	MES(CLEESE,"いや～、あの節は\nありがとうございました～。",0)
+	KAO(CLEESE,"12321Z6","1","1")
+	MES(CLEESE,"あの幸運の金貨のお陰で、\n僕の運勢もバッチリみたいですよ～？",0)
+	MES_close(CLEESE)
+
+	//──────────────────────────────
+	//	name("⇒①②③⑤⑥⑫のいずれかでクレースと会ったことがある場合")
+	if(FE_01_MeetCleese || FE_12_TalkCleese)
+	{
+		MES(PET,"ううむ、本当かのう……",0)
+		MES(PET,"ちなみに、最近は\nどの辺りを旅しておったのだ？",0)
+		MES_close(PET)
+	}
+	else
+	{
+	//	name("⇒それ以外")
+		MES(RAGNA,"うっ、本当かよ……",0)
+		MES(RAGNA,"ちなみに、最近は\nどの辺りを旅してたんだ？",0)
+		MES_close(RAGNA)
+	}
+	//──────────────────────────────
+
+	KAO(CLEESE,"12321Z2","1","1")
+	MES(CLEESE,"ほえ～？",0)
+	KAO(CLEESE,"12321Z6","1","1")
+	MES(CLEESE,"うーん、どこかは\n分からないんですけど、\n一日中綺麗な夜空で……",0)
+	KAO(CLEESE,"12321Z6","1","1")
+	MES(CLEESE,"体がフワフワ浮く、\n変わった所でしたよ～？",0)
+	MES_close(CLEESE)
+
+	chr_rename(RAGNA,"一同")
+
+//	name("一同")
+	KAO(RAGNA,"12321Z6","8","1")
+	KAO(PARTNER,"12321Z6","8","1")
+	KAO(PET,"12321Z6","8","1")
+	MES_pos(RAGNA,"P1S7え゛っ……？",0,	0,0,0,0)
+	wait_key(0)
+	MES_close(RAGNA)
+
+
+//	name2(CLEESE)
+	KAO(CLEESE,"12321Z6","1","1")
+	MES(CLEESE,"一月くらいかなぁ、\nずーっと出れなかったんですけど……",0)
+	KAO(CLEESE,"12321Z6","1","1")
+	MES(CLEESE,"いろんな門を潜ってるうちに、\nこんな所に出てきちゃったんですよね～。",0)
+	KAO(CLEESE,"12321Z6","1","1")
+	MES(CLEESE,"うーん、ここはどこかな～？",0)
+	MES_close(CLEESE)
+
+//　　◆クレース、辺りを見渡す。
+
+//　　ラグナたちに青ざめエモーション。
+	EMO(RAGNA,EMO_AOZAME)
+	EMO(PET,EMO_AOZAME)
+	EMO(PARTNER,EMO_AOZAME)
+	wait(30)
+
+	chr_rename(RAGNA,"ラグナ")
+
+	MES(RAGNA,"一体どんな方向感覚してるんだ……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"す、凄い人ですね……",0)
+	MES_close(PARTNER)
+
+//	name2(CLEESE)
+	KAO(CLEESE,"12321Z4","1","1")
+	MES(CLEESE,"あ、じゃあ僕は\nそろそろ失礼しますね～。",0)
+	KAO(CLEESE,"12321Z4","1","1")
+	MES(CLEESE,"どこかで町か村を探さないと～。",0)
+	MES_close(CLEESE)
+
+
+
+//　　クレース、祭壇の方に去っていく。
+	rot(CLEESE,60,180)
+	move(CLEESE, 0, WALK1,72,-2450,0,0)	//クレース祭壇側へ移動
+
+	look_chr( RAGNA, CLEESE ,"Bone_Head")
+	look_chr( PET, CLEESE ,"Bone_Head")
+	look_chr( PARTNER, CLEESE ,"Bone_Head")
+
+//　　ラグナたち、それを見送る。
+	MES(RAGNA,"が、頑張れよ……",0)
+	MES_close(RAGNA)
+
+//	name2(PET)
+	MES(PET,"（うーむ、あれほど\n  迷っても平気とは……）",0)
+	MES(PET,"（あの男、やはり幸運が\n  宿っているのかもしれんな……）",0)
+	MES_close(PET)
+
+	wait_move(CLEESE)
+//――――――――――――――――――――――――――
+//	イベント終了処理
+//――――――――――――――――――――――――――
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	look_off(RAGNA)
+	look_off(PET)
+	look_off(PARTNER)
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+
+	chr_pos(CLEESE, 227,-4828,201,130,53)//クレース
+	set_chr(101,990,	-1,-1,  -3,-5016,200, 0, 2010, 6,"<EV_Survant_Cleese>;")	//モンブランがクレースの使い魔になるイベント
+
+	//★クレースとすれちがった
+	F_set(FE_13_MeetCleese)
+
+
+
+	//フェードイン----------------------
+	EV_end()
+	fade_in(0,30,BLACK)
+//	プレイヤー操作許可
+//――――――――――――――――――――――――――
+}
+
+//──────────────────────────────
+//▽モンブランとクレースのイベント
+//──────────────────────────────
+//　　※クレースとすれ違うイベント後、
+//　　　クレースは祭壇で、モンブランに話しかけるように立っている。
+//　　２人の手前に近づくと、自動起動する。
+//──────────────────────────────
+EV_Survant_Cleese
+{
+//――――――――――――――――――――――――――
+//	初期化処理
+//――――――――――――――――――――――――――
+	cross_fade(30)			//クロスフェード
+	EV_begin()
+
+//　　カメラ、フェードインでモンブランたちに寄せる。
+	//カメラセット
+	CAM_move(2,4802,344,0,0)
+	CAM(-250,28,60,40,136,0,0)
+
+	KAO(RAGNA,	"1", "1", "1")
+	KAO(PARTNER,"1", "1", "1")
+	KAO(PET, 	"1", "1", "1")
+	KAO(CLEESE, "1", "1", "1")
+	KAO(MONTBLANC, "1", "1", "1")
+
+	//キャラ再配置
+	chr_pos(RAGNA,-665,-5101,201,270,2)
+	chr_pos(PARTNER,-684,-5001,201,270,2)
+	chr_pos(PET,-666,-5246,200,280,2)
+	chr_pos(MONTBLANC,-3,-5016,200,180,2)
+	chr_pos(CLEESE,	227,-4828,201,130,53)
+
+	//モーション
+	MOT_SET(CLEESE,150,-1,509,509,151,15)	//金貨を差し出す
+	MOT_SET(CLEESE,151,-1,510,510,152,15)
+	MOT_SET(CLEESE,152,-1,511,511,-1,15)
+	MOT_SET(CLEESE,153,-1,453,453,-1,-1)	//膝を突く
+
+	F_set_chr(CLEESE,CF_NO_CSP)
+	F_reset_chr(MONTBLANC,CF_NO_MOVE)
+	F_reset_chr(CLEESE,CF_NO_MOVE)
+
+	wait_fade()
+//――――――――――――――――――――――――――
+//	イベント開始
+//――――――――――――――――――――――――――
+
+//　　（ラグナたちは映らない形・再配置しておく）
+	KAO(CLEESE,"12321Z6","1","1")
+	MES(CLEESE,"どうしたの、君。\nそんなにしょぼくれちゃって……",0)
+	KAO(CLEESE,"12321Z5","1","1")
+	MES(CLEESE,"僕でよかったら、\nお話、聞いてあげるよ～？",0)
+	MES_close(CLEESE)
+
+//　　モンブラン、クレースに振り向く。
+	rot_chr(MONTBLANC,60,CLEESE)
+	MES(MONTBLANC,"う、うるさいニャ！",0)
+	MES(MONTBLANC,"何ニャ、お前……",0)
+	MES(MONTBLANC,"ただの人間のクセに、\n突然やってきて\n纏わり付くんじゃないニャ！",0)
+	MES_close(MONTBLANC)
+
+//　　モンブラン、そっぽを向く。
+	rot(MONTBLANC,60,180)
+
+	MES(MONTBLANC,"ううっ……この姿で\nいられるのも、もう限界ニャ。",0)
+	MES(MONTBLANC,"しかし使い魔を従えるほどの\n魔力の持ち主など、そう簡単に\n見つかるものじゃないニャ……",0)
+	MES(MONTBLANC,"い、いやニャ……\nただの猫に戻るなど……",0)
+	MES(MONTBLANC,"ぐすん、それだけは嫌ニャあ……！",0)
+	MES_close(MONTBLANC)
+
+//　　クレースに・・・エモーション。
+	EMO(CLEESE,EMO_TENTEN)
+	wait(30)
+
+	KAO(CLEESE,"12321Z4","1","1")
+	MES(CLEESE,"う～ん、何だか\nよく分からないけど……",0)
+	KAO(CLEESE,"12321Z6","1","1")
+	MES(CLEESE,"そんなにしょぼくれてると、\n幸運も逃げだしちゃうよ～？",0)
+	MES_close(CLEESE)
+
+//　　クレースにひらめきエモーション。
+	EMO(CLEESE,EMO_PA)
+	wait(30)
+
+	KAO(CLEESE,"12321Z2","1","1")
+	MES(CLEESE,"あ、そうだ……",0)
+	KAO(CLEESE,"12321Z4","1","1")
+	MES(CLEESE,"そんな君に、\nこれを貸してあげよう～。",0)
+	KAO(CLEESE,"12321Z6","1","1")
+	MES(CLEESE,"ふふ、僕のとっておき。\nこれを身に付けていれば\nきっといい事あるよ～。",0)
+	MES_close(CLEESE)
+
+//　　クレース、モンブランに近づいて◆何かを差し出す仕草。
+	move(CLEESE, 0, WALK1,102,-4968,199,0)
+	wait_move(CLEESE)
+	MOT(CLEESE,150,15)
+
+//　　ラグナ・アルウェン、画面外からメッセージ。
+	MES_pos(RAGNA,"W9あっ……",0,50,120,0,0)
+	wait_key(0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES_pos(PET,"W9むむ、あの金貨は……",0,90,180,0,0)
+	wait_key(0)
+	MES_close(PET)
+
+//	name("システムメッセージ")
+	fade_in(30,10,BLACK)
+	MES(0,"C3S2クレースはモンブランの首に\n『幸運の金貨』を掛けた。",2)
+	MES_close(0)
+	fade_in(0,10,BLACK)
+
+	move(CLEESE, 0, WALK1,	227,-4828,201,0)
+	wait_move(CLEESE)
+	MOT(CLEESE,53,15)
+
+//　　モンブランに！エモーション。
+	EMO(MONTBLANC,EMO_BIKKURI)
+	wait(30)
+
+	EMO(MONTBLANC,EMO_ASEASE)
+	rot_chr(MONTBLANC,60,CLEESE)
+	wait(30)
+//　　あせあせエモーションで振り返る。
+	MES(MONTBLANC,"ニャッ……！？",0)
+	MES(MONTBLANC,"ま、待つニャ。\nこの金貨は何ニャ？",0)
+	MES(MONTBLANC,"……ま、まさか………",0)
+	MES_close(MONTBLANC)
+
+//　◆　モンブラン、光エフェクトと共に通常猫サイズになる。
+	fade_in(100,30,WHITE)
+	wait_fade()
+	delete(MONTBLANC)
+	chr_pos(S_MONTBLANC,-3,-5016,200,310,2)
+	color(S_MONTBLANC,1)//透過解除
+//	chr_scale( MONTBLANC,	"Bone_Hips",	60,60,60,	0,	1);	//チビ化
+	fade_in(0,30,WHITE)
+	wait_fade()
+//　　モンブランに・・・エモーション。
+	EMO(S_MONTBLANC,EMO_TENTEN)
+	wait(30)
+
+//　　その後、アセアセエモーション。
+	EMO(S_MONTBLANC,EMO_ASEASE)
+	wait(30)
+
+	MES(S_MONTBLANC,"わ～、どうしてくれるニャ～！？",0)
+	MES(S_MONTBLANC,"契約してしまったニャ～ッ！！",0)
+	MES(S_MONTBLANC,"し、しかもよりによって\n魔力のない人間などと……",0)
+	MES(S_MONTBLANC,"ふにゃ～！！　最悪ニャ～！！",0)
+	MES_close(S_MONTBLANC)
+
+	wait_MES(S_MONTBLANC)
+
+//　　カメラクロスフェードでモンブランたちとラグナたち、両方映るようにする。
+	cross_fade(30)
+	CAM_move(42,4682,344,0,0)
+	CAM(-250,30,344,40,207,0,0)
+	wait_fade()
+
+//	MES(RAGNA,"あ、あの金貨……\nまだ使えたのか……",0)
+	KAO(RAGNA,"12321Z6","1","1")
+	MES(RAGNA,"あ、あの金貨……\nそういや魔力が\n宿ってたんだったな……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	KAO(PET,"12321Z6","1","1")
+	MES(PET,"ふむ、契約を行うだけの力を\n秘めておったようだ。",0)
+	KAO(PET,"12321Z6","1","1")
+	MES(PET,"しかし、所詮は\nアイテムに頼った契約……",0)
+	KAO(PET,"12321Z6","1","1")
+	MES(PET,"当の主人に魔力がなければ、\nろくに魔法も使えぬであろ。",0)
+	MES_close(PET)
+
+//	name2(PARTNER)
+	KAO(PARTNER,"12321Z3","1","1")
+	MES(PARTNER,"モンブラン……\n大丈夫でしょうか……",0)
+	MES_close(PARTNER)
+
+//　　カメラ、少しクレースたちに寄せる。
+	CAM_move(102,4522,344,60,0)
+	CAM(-250,21,344,40,193,60,0)
+
+//　　クレースに？エモーション。
+	EMO(CLEESE,EMO_HATENA)
+	wait(30)
+
+	MES(CLEESE,"えっと……\nどうしちゃったのかな～？",0)
+	MES_close(CLEESE)
+
+//　　クレース、モンブランの前に膝を突く。
+	move(CLEESE, 0, WALK1,124,-4936,201,0)
+	wait_move(CLEESE)
+	MOT(CLEESE,153,15)
+
+	MES(CLEESE,"まあいいかぁ～。\n君、よく見たら結構かわいいし……",0)
+	MES(CLEESE,"よーし、\nこれから２人で旅に出ようよ。",0)
+	MES(CLEESE,"ふふ、きっと楽しいよ～。",0)
+	MES_close(CLEESE)
+
+//　　モンブランにアセアセエモーションで◆振動。
+	EMO(S_MONTBLANC,EMO_ASEASE)
+	wait(30)
+
+	MES(S_MONTBLANC,"わああ、やめるニャ～！？",0)
+	MES(S_MONTBLANC,"でも拒否できないにゃあぁ～……",0)
+	MES_close(S_MONTBLANC)
+
+//　　クレース、♪エモーション。
+	EMO(CLEESE,EMO_ONPU)
+	wait(30)
+
+//　　ラグナたちに冷や汗エモーション。
+	EMO(RAGNA,EMO_HIYAASE)
+	EMO(PET,EMO_HIYAASE)
+	EMO(PARTNER,EMO_HIYAASE)
+	wait(30)
+
+//　　以下のポップアップは同時表示＆消去。
+	cross_fade(30)
+	CAM_move(-538,5022,364,0,0)
+	CAM(-130,9,364,40,241,0,0)
+
+	KAO(RAGNA,"9","2","6")
+	KAO(PET,"7","2","1")
+	KAO(PARTNER,"6","6","6")
+	wait_fade()
+
+	MES_pos(RAGNA,"（意外と名コンビ……？）",0,0,0,0,0)
+	MES_pos(PET,"（意外と名コンビ……？）",0,0,0,0,0)
+	MES_pos(PARTNER,"（意外と仲良さそう……）",0,0,0,0,0)
+
+	wait_key(0)
+	MES_close(PET)
+	MES_close(RAGNA)
+	MES_close(PARTNER)
+
+//　　一旦暗転し、操作許可を戻す。
+//――――――――――――――――――――――――――
+//	イベント終了処理
+//――――――――――――――――――――――――――
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+
+	F_reset_chr(CLEESE,CF_NO_CSP)
+
+	KAO(RAGNA,"1","1","1")
+	KAO(PET,"1","1","1")
+	KAO(PARTNER,"1","1","1")
+	
+	F_set_chr(S_MONTBLANC,CF_NO_MOVE)
+	F_set_chr(CLEESE,CF_NO_MOVE)
+
+	F_reset_chr(S_MONTBLANC,CF_NO_ZIMEN)
+	F_reset_chr(S_MONTBLANC,CF_NO_CSP)
+	F_reset_chr(S_MONTBLANC,CF_NO_HEIGHT)
+
+	//★モンブランがクレースと契約した
+	F_set(FM_13_MontblancMiss)
+
+	//フェードイン----------------------
+	EV_end()
+	fade_in(0,30,BLACK)
+	//★クレース【モンブラン】
+	F_set_note(-83,2)
+	//★モンブラン【クレース】
+	F_set_note(-25,2)
+
+//	プレイヤー操作許可
+//――――――――――――――――――――――――――
+//　　モンブランは通常猫サイズになっている。
+}
+
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼プロローグ～トリスタン号墜落・続き
+//──────────────────────────────
+//　　遠景で丘にトリスタン号の煙が立ち昇っているのを見せる。
+//　　画面クロスフェードして、夕暮れのクリスタルバレーの一角。
+//　　南を見ながら、アルウェンが背を向けて佇んでいるの見せる。
+EV_0_01_AlwenInCrystal
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,BLACK)
+	wait_fade()
+
+	map_color(100,80,75,0)//R,G,B, time 100%
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 0,-3940,0,0,2)
+	color(RAGNA,-1)//透過
+
+	set_chr(ALWEN,	  1011,-1,-1,  1440,-3095,1, 2,240,0, "")
+
+	MOT_SET(ALWEN,150,-1,400,400,-1,-1)//腰に手を当てる（左）
+	MOT_SET(ALWEN,151,152,4870,4900,-1,-1)//
+	MOT_SET(ALWEN,152,152,4905,4945,-1,-1)//
+	MOT(ALWEN,150,0)
+	look(ALWEN,"Bone_Head",0,0,0,10,0,0,10)
+
+	//カメラ初期位置
+	CAM_move(2040,2936,480,0,0)
+	CAM(-250,68,480,40,116,0,0)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる。
+
+	wait(30)
+	CAM_move(1660,3136,200,300,0)
+	CAM(-250,68,200,40,134,300,0)
+
+	//フェードイン
+	fade_in(0,120,BLACK)
+	wait_fade()
+	wait_CAM_move()
+	wait_CAM()
+
+//	MES(ALWEN,"◆未入力項目\n夕暮れのブランデーヶ丘を、\nクリスタルバレーから遠景で眺めているような構図。",0)
+//	MES_close(ALWEN)
+	wait(30)
+
+	chr_rename(ALWEN,"黒衣の娘")//
+//	name("黒衣の娘")
+	KAO(ALWEN,"B232BZ5","123","5")//
+	MES(ALWEN,"……やれやれ。\n期待させておいてあの程度か。",0)
+
+	KAO(ALWEN,"B232BZ6","3","5")//
+	MES(ALWEN,"まったく、何があったかは知らぬが\n絶好の機会を逃しおって……",0)
+
+	KAO(ALWEN,"B","3","2")//
+	MES(ALWEN,"………………………………",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(15)
+	CAM_move(1180,3056,190,0,0)
+	CAM(-690,40,190,30,264,0,0)
+	rot(ALWEN,-1,240)
+	look(ALWEN,"Bone_Head",0,0,0,10,0,0,0)
+	wait(30)
+
+	IK(ALWEN,"Bone_LeftWing1",0)
+	IK(ALWEN,"Bone_RightWing1",0)
+	MOT(ALWEN,133,15)
+//	cross_fade(30)
+	CAM(-690,42,230,30,264,45,0)
+//	chr_scale( ALWEN,	"Bone_LeftWing1",		120,120,120,	0,	1);
+//	chr_scale( ALWEN,	"Bone_LeftWing2",		120,120,120,	0,	1);
+//	chr_scale( ALWEN,	"Bone_LeftWingEnd",		120,120,120,	0,	1);
+//	chr_scale( ALWEN,	"Bone_RightWing1",		120,120,120,	0,	1);
+//	chr_scale( ALWEN,	"Bone_RightWing2",		120,120,120,	0,	1);
+//	chr_scale( ALWEN,	"Bone_RightWingEnd",	120,120,120,	0,	1);
+	SE(1032,0)//羽を広げるSE
+	wait(75)
+	cross_fade(15)
+	CAM_move(1240,3036,70,0,0)
+	CAM(-170,44,70,30,280,0,0)
+//	wait_CAM_move()
+//	wait_CAM()
+	wait(30)
+
+//　　カメラを変えて、アルウェンの表情を見せる。
+//　　アルウェン、おもむろに己の体を抱きしめるような動作。
+//　　背中にある漆黒の翼が大きく広がり、バサリと音を立てる。
+//	MES(ALWEN,"◆未入力項目\nおもむろに己の体を抱きしめるような動作。\n背中にある漆黒の翼が大きく広がり、\nバサリと音を立てる。",0)
+//	MES_close(ALWEN)
+
+//	name("黒衣の娘")
+	KAO(ALWEN,"12321Z5","32","2")//
+	MES(ALWEN,"……まあいい、この目で\n確かめてみるとしようぞ。",0)
+
+	KAO(ALWEN,"12321Z6","2","2")//
+	MES(ALWEN,"あの間抜けな翼乗りの青年が\n我が下僕にふさわしいか、をな。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　アルウェン、そのまま転位エフェクトに包まれて消える。
+	CAM_move(1240,3036,70,150,0)
+//	CAM(-170,74,70,30,280,120,0)
+	CAM(-170,74,70,30,280,150,0)	//★ボイス演出追加
+	KAO(ALWEN,"1","3","1")//
+//	MOT(ALWEN,59,15)
+	MOT(ALWEN,151,15)
+	VOICE(147,0)	//★ボイス演出追加
+	wait(15)
+	wait(30)	//★ボイス演出追加
+
+	EFF_chr(24580,ALWEN,0,100,0,"charbase0")
+	SE(1016,0)//ワープSE
+	wait(5)
+	color(ALWEN,-10)
+	wait(40)
+
+//　　画面、ゆっくりとフェードアウト。
+//　　ここで以下のテキストビジュアルが表示される。
+	fade_in(100,60,0)
+	wait_fade()
+//	wait(30)
+	wait(60)
+
+	chr_rename(ALWEN,"アルウェン")//
+	delete(ALWEN)
+
+//	name("テキストビジュアル")
+
+	Load_BMP(14,"sys\\text01.itm","sys\\text01a.itm")
+	menuBMP(0,	14,	408,0,408,56)
+	menu(0,	0,	120,210,  0,	408, 56,	 0,  0,0)
+	menu(0,	0,	120,210,  0,	408, 56,   120,100,0)
+//	wait(120)
+	wait(180)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	120,0,0)
+	
+//	MES_pos(RAGNA,"C3ＺｗｅｉⅡ\n～○○○○○○～",1,320,240,0,0)
+//	wait_key(0)
+//	MES_close(RAGNA)
+//	wait_MES(RAGNA)
+
+	wait(30)
+
+	EV("EV_fadeout") //風の音フェードアウト
+
+	stop_BGM(120)
+	wait_BGM()
+	wait(60)
+
+	//宿酒場昼マップへ(ev00120)
+	workG(GW_DEF_BGM,SET,99)		//無音にする
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(10120)
+
+//	EV_end()
+}
+
+//──────────────────────────────
+//▼クリスタルバレーの扉を開く
+//──────────────────────────────
+//　　イルバード各地にいる、ラーライラ、ピピロ、フィオナに
+//　　話しかけると、それぞれ助力を頼むイベントが発生する。
+//　　イベントをこなすと、ラーライラ、ピピロ＆ポックル、
+//　　フィオナ＆クロードがそれぞれクリスタルバレーへ移動。
+//　　全員揃った状態で、扉の前まで来るとイベントが発生する。
+//　　（それぞれの会話イベントは一般方面にお任せ）
+//
+//EV_5_04_OfferLaraira
+//ＧＦ『★ラーライラに協力を申し込んだ』を立てる。
+//	F_set(F5_03_OfferLaraira)
+//EV_5_05_OfferPipiro
+//ＧＦ『★ピピロに協力を申し込んだ』を立てる。
+//	F_set(F5_04_OfferPipiro)
+//EV_5_06_OfferFiona
+//ＧＦ『★フィオナに協力を申し込んだ』を立てる。
+//	F_set(F5_05_OfferFiona)
+//──────────────────────────────
+//　　カメラ切り替えして、扉のオブジェに注目しつつ、
+//　　それを囲むようにしてラーライラたちがいるのを見せる。
+//　　（※こちらに移動しているフィオナは甲冑バージョン）
+//　　そこに画面外から、ラグナがルゥを連れて歩み寄っていく。
+EV_5_07_RunCrystal
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 -1300,-4500,0,180,2)
+	color(RAGNA,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1,  -76,-1800,0, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	set_chr(LUE,	 	1015,-1,-1, 60,-1740,0, 2,180,0, "")
+
+
+/*
+	delete(KLODE)
+	delete(FIONA)
+	delete(LUE)
+	delete(POCKLE)
+	delete(PIPIRO)
+	delete(LA-RAIRA)
+	set_chr(KLODE,	 	1018,-1,-1, 94,-3772,0, 2,40,0, "")
+	set_chr(FIONA,		1017,-1,-1, 227,-3624,0,2,52,0, "")
+//	set_chr(POCKLE,	 	1012,-1,-1, -216,-3842,0, 2,330,0, "")
+	set_chr(POCKLE,	 	1012,-1,-1, -176,-3761,1,2, 315,0, "")
+//	set_chr(PIPIRO,	 	1013,-1,-1, -116,-3762,0, 2,320,0, "")
+	set_chr(PIPIRO,	 	1013,-1,-1, -81,-3865,1,2, 344, 0, "")
+	set_chr(LA-RAIRA,	1023,-1,-1, -180,-3500,0, 2,215,0, "")
+*/
+	chr_pos(KLODE, 94,-3772,0,40, 2)
+	chr_pos(FIONA, 227,-3624,0,52, 2)
+	chr_pos(LUE,   60,-1740,0, 180,2)
+	chr_pos(POCKLE, -216,-3842,0, 330,2)
+	chr_pos(PIPIRO,  -116,-3762,0, 320,2)
+	chr_pos(LA-RAIRA,  -180,-3500,0, 215,2)
+
+	F_set_chr(LUE,CF_NO_ZIMEN)
+	F_set_chr(LUE,CF_NO_HEIGHT)
+	F_set_chr(LUE,CF_NO_CSP)
+
+	F_set_chr(KLODE,CF_NO_CLIP)
+	F_set_chr(KLODE,CF_NO_CLIP2)
+	F_set_chr(KLODE,CF_NO_CSP)
+	F_set_chr(FIONA,CF_NO_CLIP)
+	F_set_chr(FIONA,CF_NO_CLIP2)
+	F_set_chr(FIONA,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(POCKLE,CF_NO_CLIP)
+	F_set_chr(POCKLE,CF_NO_CLIP2)
+	F_set_chr(POCKLE,CF_NO_CSP)
+	F_set_chr(PIPIRO,CF_NO_CLIP)
+	F_set_chr(PIPIRO,CF_NO_CLIP2)
+	F_set_chr(PIPIRO,CF_NO_CSP)
+	F_set_chr(LA-RAIRA,CF_NO_CLIP)
+	F_set_chr(LA-RAIRA,CF_NO_CLIP2)
+	F_set_chr(LA-RAIRA,CF_NO_CSP)
+
+	KAO(EVENT_RAGNA,"1","1","1")
+	KAO(LUE,        "1","1","1")
+	KAO(LA-RAIRA,   "1","1","1")
+	KAO(POCKLE,     "1","1","1")
+	KAO(PIPIRO,     "1","1","1")
+	KAO(FIONA,      "1","1","1")
+	KAO(KLODE,      "1","1","1")
+
+	//モーション定義
+	MOT_SET(FIONA,150,-1,421,421,-1,-1)//
+	MOT_SET(FIONA,151,-1,423,423,-1,-1)//
+	MOT_SET(PIPIRO,150,-1,405,405,-1,-1)//
+
+
+	//カメラ初期位置
+	CAM_move(0,5660,2240,0,0)
+	CAM(-310,124,2240,40,180,0,0)
+
+	CAM_move(0,5660,840,300,0)
+	CAM(-610,114,840,40,145,300,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+	cross_fade(30)
+	CAM_move(0,5180,1120,0,0)
+	CAM(550,190,760,40,142,0,0)
+	CAM_move(-380,2900,1120,300,0)
+	CAM(550,190,1120,40,150,300,0)
+
+	wait(180)
+	move( EVENT_RAGNA, 0, 9,-76,-3200,0,0)
+	wait(10)
+	move( LUE, 0, 10,60,-3140,-100,0)
+
+	wait_CAM_move()
+	wait_CAM()
+
+	cross_fade(30)
+//	CAM_move(114,3560,64,0,0)
+//	CAM(210,78,64,34,136,0,0)
+CAM(-270,68,164,34,218,0,0)
+CAM_move(-106,3560,164,0,0)
+	wait(30)
+
+	wait_move(EVENT_RAGNA)
+	wait_move(LUE)
+
+	KAO(EVENT_RAGNA,"12321Z4","1233321","1")
+	MES(EVENT_RAGNA,"よし……\nみんな揃ってるみたいだな。",0)
+	MES_close(EVENT_RAGNA)
+
+	rot_chr(LA-RAIRA,30,EVENT_RAGNA)
+	wait(5)
+	rot_chr(FIONA,30,EVENT_RAGNA)
+	rot_chr(KLODE,30,EVENT_RAGNA)
+	wait(4)
+	rot_chr(POCKLE,30,EVENT_RAGNA)
+	rot_chr(PIPIRO,30,EVENT_RAGNA)
+	wait(13)
+
+	KAO(LA-RAIRA,"12321Z4","-","-")
+	MES(LA-RAIRA,"こちらの準備はバッチリさ。",0)
+	KAO(LA-RAIRA,"12321Z7","-","-")
+	MES(LA-RAIRA,"ただ、あの扉を開き続けるには\n魔力を込め続ける必要があるようだ。",0)
+	KAO(LA-RAIRA,"12321Z6","-","-")
+	MES(LA-RAIRA,"あんたが向こうに行ってる間、\nアタシたちは釘付けってワケだね。",0)
+	MES_close(LA-RAIRA)
+
+	KAO(EVENT_RAGNA,"B232BZ2","1233321","4")
+	MES(EVENT_RAGNA,"そうなのか……",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(PIPIRO,150,10)
+	KAO(PIPIRO,"B232BZ4","123332A","5")
+	MES(PIPIRO,"うー……\n思った以上にメンドイわね。",0)
+	MES_close(PIPIRO)
+
+	KAO(PIPIRO,"1","2321","1")
+	MOT(PIPIRO,2,10)
+
+	KAO(FIONA,"B232BZ5","123","4")
+	MES(FIONA,"それに、ここにいる全員で\n乗り込めないのは誤算でしたわね。",0)
+	KAO(FIONA,"B232BZ5","321","4")
+	MES(FIONA,"さすがにラグナさんお一人に\n行かせるわけにも行きませんし……",0)
+	MES_close(FIONA)
+
+//　　ここでフィオナの頭にＰＡマーク。
+//　　ぽんと手を合わせてクロードの方を見る。
+	KAO(FIONA,"E","1233321","6")
+	MOT(FIONA,150,8)
+	wait(10)
+	EMO(FIONA,EMO_PA)
+	MOT(FIONA,151,3)
+	wait(30)
+	MOT(FIONA,2,15)
+	rot_chr(FIONA,30,KLODE)
+	wait(15)
+	KAO(FIONA,"12321Z3","1","6")
+	MES(FIONA,"そうです、クロード！",0)
+	MES_close(FIONA)
+
+	look_chr(KLODE,FIONA,"Bone_Head")
+	look_chr(PIPIRO,FIONA,"Bone_Head")
+	look_chr(POCKLE,FIONA,"Bone_Head")
+	look_chr(LA-RAIRA,FIONA,"Bone_Head")
+
+	KAO(FIONA,"12321Z5","1233321","6")
+	MES(FIONA,"ラグナさんに同行して\n手助けしてあげてくれませんか？",0)
+	KAO(FIONA,"12321Z5","1236","6")
+	MES(FIONA,"あなたの腕ならきっと\nラグナさんも心強いでしょう。",0)
+	MES_close(FIONA)
+
+//	rot_chr(KLODE,30,FIONA)
+
+	wait(15)
+
+	KAO(KLODE,"B232BZ3","123332A","4")
+	MES(KLODE,"し、しかしお嬢様………",0)
+	MES_close(KLODE)
+
+	look_chr( EVENT_RAGNA, FIONA ,"Bone_Head")
+	wait(15)
+
+	KAO(EVENT_RAGNA,"B232BZ5","123","2")
+	MES(EVENT_RAGNA,"──いや。\nいつ敵が現れるかもしれねぇ。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","321","2")
+	MES(EVENT_RAGNA,"執事の兄さんとポックルは\nここを守ってた方がいいだろ。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(FIONA,EVENT_RAGNA,"Bone_Head")
+	KAO(FIONA,"2","321D","6")
+	MES(FIONA,"あ……",0)
+	MES_close(FIONA)
+
+	look_chr(PIPIRO,EVENT_RAGNA,"Bone_Head")
+	KAO(PIPIRO,"B232BZ6","123","5")
+	MES(PIPIRO,"あー、確かに扉を開いてる間は、\nわたしたち無防備になっちゃうか。",0)
+	MES_close(PIPIRO)
+
+	look_chr(POCKLE,EVENT_RAGNA,"Bone_Head")
+	KAO(POCKLE,"B232BZ5","1233321","5")
+	MES(POCKLE,"そ、それじゃあ確かに\n守っておく必要があるかも……",0)
+	MES_close(POCKLE)
+
+	KAO(FIONA,"B","12321","4")
+	rot_chr(FIONA,30,EVENT_RAGNA)
+	wait(10)
+	rot_chr(KLODE,30,EVENT_RAGNA)
+	wait(10)
+
+	look_chr(KLODE,EVENT_RAGNA,"Bone_Head")
+	KAO(KLODE,"B232BZ3","A23","4")
+	MES(KLODE,"……申し訳ありません。",0)
+	MES_close(KLODE)
+
+	KAO(EVENT_RAGNA,"12321Z5","321","1")
+	MES(EVENT_RAGNA,"なに、気にすんな。\nそれがあんたの仕事だろ。",0)
+	MES_close(EVENT_RAGNA)
+	look_off( EVENT_RAGNA )
+	wait(15)
+
+	KAO(FIONA,"B","12321","1")
+	KAO(PIPIRO,"B","321","1")
+	KAO(POCKLE,"B","12321","1")
+	KAO(KLODE,"B","321","1")
+
+	look_chr(LA-RAIRA,EVENT_RAGNA,"Bone_Head")
+
+	KAO(EVENT_RAGNA,"B232BZ5","1233321","2")
+	MES(EVENT_RAGNA,"まずは俺とルゥで\n扉の向こうに行ってくる。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1","2")
+	MES(EVENT_RAGNA,"手に負えなさそうだったら\n改めて対策を練るとしようぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LA-RAIRA,"12321Z4","-","-")
+	MES(LA-RAIRA,"ふむ……\nそうするしかなさそうだね。",0)
+	KAO(LA-RAIRA,"12321Z3","-","-")
+	MES(LA-RAIRA,"それでどうする、ラグナ？",0)
+	KAO(LA-RAIRA,"12321Z3","-","-")
+	MES(LA-RAIRA,"とっとと《扉》を開くかい？",0)
+	MES_close(LA-RAIRA)
+
+//	name("選択テキスト")
+//	MES(EVENT_RAGNA,"◆未入力項目\n選択テキスト",0)
+//	MES(EVENT_RAGNA,"扉を開く\nまだ開かない",0)
+//	MES_close(EVENT_RAGNA)
+
+//	workL(WK_CANCEL,SET,2)//【やめる】
+	workL(WK_CANCEL,SET,0)//【やめる】
+	MES_pos(EVENT_RAGNA,"??W9【扉を開く】\n【まだ開かない】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)//閉じきるまで待つ
+
+//─────────────────────
+	if(WK_YESNO==2)
+	{
+	//	name("⇒まだ開かない")
+
+		KAO(LA-RAIRA,"12321Z5","-","-")
+		MES(LA-RAIRA,"まあ、万全の準備を\nしといた方がいいだろうね。",0)
+		KAO(LA-RAIRA,"12321Z6","-","-")
+		MES(LA-RAIRA,"アタシらはここで待ってるから\n準備ができたら声をかけるといい。",0)
+		MES_close(LA-RAIRA)
+
+		KAO(EVENT_RAGNA,"B232BZ2","1233321","2")
+		MES(EVENT_RAGNA,"ああ、了解だ。",0)
+		MES_close(EVENT_RAGNA)
+
+	//　　イベント終了、プレイヤー操作許可。
+		fade_in(100,30,0)
+		wait_fade()
+
+		delete(EVENT_RAGNA)
+		delete(LUE)
+		
+		/*
+		delete(FIONA)
+		delete(KLODE)
+		delete(PIPIRO)
+		delete(LA-RAIRA)
+		delete(POCKLE)
+		*/
+		chr_pos(RAGNA,	 -76,-3200,0,180,2)
+		chr_pos(PET,      42,-3169,0,180,2)
+		color(RAGNA,1)
+
+		F_reset_chr(KLODE,CF_NO_CLIP)
+		F_reset_chr(KLODE,CF_NO_CLIP2)
+		F_reset_chr(KLODE,CF_NO_CSP)
+		F_reset_chr(FIONA,CF_NO_CLIP)
+		F_reset_chr(FIONA,CF_NO_CLIP2)
+		F_reset_chr(FIONA,CF_NO_CSP)
+		F_reset_chr(LUE,CF_NO_CLIP)
+		F_reset_chr(LUE,CF_NO_CLIP2)
+		F_reset_chr(LUE,CF_NO_CSP)
+		F_reset_chr(POCKLE,CF_NO_CLIP)
+		F_reset_chr(POCKLE,CF_NO_CLIP2)
+		F_reset_chr(POCKLE,CF_NO_CSP)
+		F_reset_chr(PIPIRO,CF_NO_CLIP)
+		F_reset_chr(PIPIRO,CF_NO_CLIP2)
+		F_reset_chr(PIPIRO,CF_NO_CSP)
+		F_reset_chr(LA-RAIRA,CF_NO_CLIP)
+		F_reset_chr(LA-RAIRA,CF_NO_CLIP2)
+		F_reset_chr(LA-RAIRA,CF_NO_CSP)
+
+		//★クリスタルバレーを起動するイベントで「まだ開かない」を選択した
+		F_set(F5_06_WaitCrystal)
+
+		CAM_return(0)
+		wait(30)
+
+		//NPC配置イベント
+//		EV("EV_NPCSetPos")
+//		wait_EV("EV_NPCSetPos")
+
+		look_off(KLODE)
+		look_off(FIONA)
+		look_off(LA-RAIRA)
+		look_off(POCKLE)
+		look_off(PIPIRO)
+		
+		chr_pos(KLODE,		755,-3850,1,60, 53)
+		chr_pos(FIONA,		634,-3958,0,340, 2)
+		chr_pos(POCKLE,		-659,-3879,0, 20,52)
+		chr_pos(PIPIRO,		-880,-3843,1, 315,2)
+		chr_pos(LA-RAIRA,	295,-4612,200,150,2)
+		
+		MOT_SET(PIPIRO,150,-1,399,399,-1,-1)
+		MOT(PIPIRO,150,0)
+		MOT_SET(POCKLE,150,-1,400,400,-1,20)
+		MOT(POCKLE,150,0)
+
+		fade_in(0,30,0)
+
+		EV_end()
+	}
+	else
+	if(WK_YESNO==1)
+	{
+	//	name("⇒扉を開く")
+
+		//　　以下のイベントに接続。
+		EV("EV_5_07_OpenCrystal")
+
+	//	EV_end()
+	}
+//─────────────────────
+
+}
+
+//──────────────────────────────
+// 扉に入る前のNPC配置
+//──────────────────────────────
+EV_NPCSetPos
+{
+			//ピピロに協力を頼んだ後
+			if(F5_04_OfferPipiro)
+			{
+				set_chr( POCKLE,1012,		-1,-1,  -659,-3879,0, 	52,20,20,"<TK_POCKLE>")	//ポックル
+				set_chr( PIPIRO,1013,		-1,-1,  -880,-3843,1, 	2,315,20,"<TK_PIPIRO>")	//ピピロ
+
+				//モーション
+				MOT_SET(PIPIRO,150,-1,399,399,-1,-1)
+				MOT(PIPIRO,150,0)
+				MOT_SET(POCKLE,150,-1,400,400,-1,20)
+				MOT(POCKLE,150,0)
+				F_set_chr(POCKLE,CF_NO_MOVE)
+				F_set_chr(PIPIRO,CF_NO_MOVE)
+			}
+
+			//フィオナに協力を頼んだ後
+			if(F5_05_OfferFiona)
+			{
+				set_chr( FIONA,1017,	-1,-1, 634,-3958,0, 2,340, 20,"<TK_FIONA>")		//　フィオナ
+				set_chr( KLODE,1018,	-1,-1, 755,-3850,1, 53,60, 20,"<TK_KLODE>")				//　クロード
+
+				F_set_chr(FIONA,CF_NO_MOVE)
+				F_set_chr(KLODE,CF_NO_MOVE)
+			}
+			//ラーライラに協力を頼んだ後
+			if(F5_03_OfferLaraira)
+			{
+				set_chr( LA-RAIRA,1023,	-1,-1,  295,-4612,200,		2,150,	20,"<TK_LA-RAIRA>")	//ラーライラ
+				F_set_chr(LA-RAIRA,CF_NO_MOVE)
+			}
+}
+
+//──────────────────────────────
+// 扉に入った後のNPC配置
+//──────────────────────────────
+EV_NPCSetPos2
+{
+			set_chr( KLODE,1018,-1,-1, -700,-5200,200,			53,283,20, "<TK_KLODE>")//　クロード
+
+			//ダイガルドを倒した後
+			if(F5_13_KillDygald)
+			{
+				set_chr( POCKLE,1012,		-1,-1,  504,-5163,200,	2,80,20,"<TK_POCKLE>")	//ポックル　ピピロの傍
+			}
+			//それ以前
+			else
+			{
+				set_chr( POCKLE,1012,		-1,-1,  787,-4960,200, 	2,90,20,"<TK_POCKLE>")	//ポックル　ピピロを見ている
+			}
+
+			set_chr(PIPIRO,  1013, -1,-1,  312,-5161,200, 2, 90,20, "<TK_PIPIRO>")		//ピピロ　祭壇
+			set_chr(FIONA,   1017,-1,-1, -284,-5175,200, 2,270,20, "<TK_FIONA>")		//フィオナ　祭壇
+			set_chr(LA-RAIRA,1023,-1,-1,   -6,-4690,200, 2,180,20, "<TK_LA-RAIRA>")		//ラーライラ 祭壇
+
+			set_chr(EFFDUMMY1,  749,-1,-1, 0,0,0, 0,0,0, "")		//詠唱エフェクト
+			set_chr(EFFDUMMY2,  749,-1,-1, 0,0,0, 0,0,0, "")		//詠唱エフェクト
+			set_chr(EFFDUMMY3,  749,-1,-1, 0,0,0, 0,0,0, "")		//詠唱エフェクト
+			set_chr(EFFPIPI,    749,-1,-1, 0,0,0, 0,0,0, "")		//ピピロの杖光エフェクト
+			SE_distance(1061,0,5160,340)//詠唱中SE
+
+			F_set_chr(EFFDUMMY1, CF_NO_CSP)
+			F_set_chr(EFFDUMMY2, CF_NO_CSP)
+			F_set_chr(EFFDUMMY3, CF_NO_CSP)
+			F_set_chr(EFFDUMMY3, EFFPIPI)
+
+			chr_equip_chr(EFFDUMMY1, FIONA,    "Bone_Hips",100,		0,0,0,	0,0,0);
+			chr_equip_chr(EFFDUMMY2, PIPIRO,   "Bone_Hips",100,		0,0,0,	0,0,0);
+			chr_equip_chr(EFFDUMMY3, LA-RAIRA, "Bone_Hips",100,		0,0,0,	0,0,0);
+			chr_equip_chr(EFFPIPI,   PIPIRO,   "wtop",     100,		0,0,0,	0,0,0);
+			MOT(EFFDUMMY1, 8, 0)	//エフェクト：詠唱
+			MOT(EFFDUMMY2, 8, 0)	//エフェクト：詠唱
+			MOT(EFFDUMMY3, 8, 0)	//エフェクト：詠唱
+			MOT(EFFPIPI,  18, 0)	//エフェクト：詠唱
+			MOT_SET(PIPIRO,     156,156, 115,175, -1,0)	//詠唱
+//			MOT_SET(FIONA,      156,156, 1600,1639, -1,0)	//詠唱
+			MOT_SET(FIONA,      156,156, 1130,1190, -1,0)	//詠唱
+			MOT_SET(LA-RAIRA,   156,156, 140,200, -1,0)	//詠唱
+			wait(1)
+			MOT(PIPIRO,  156,0)
+			MOT(FIONA,   156,0)
+			MOT(LA-RAIRA,156,0)
+
+			MOT_SET(POCKLE,150,-1,400,400,-1,20)
+			MOT(POCKLE,150,0)
+
+			mot_obj("door_left","open0")		//扉開く
+			mot_obj("door_right","open0")		//扉開く
+			mot_obj("obj04_2","anime")			//階段フェードイン
+			mot_obj("kiwa2_add","anime")			//階段フェードイン
+
+			F_set_chr(PIPIRO,CF_NO_MOVE)
+			F_set_chr(FIONA,CF_NO_MOVE)
+			F_set_chr(LA-RAIRA,CF_NO_MOVE)
+
+			F_set_chr(POCKLE,CF_NO_MOVE)
+			F_set_chr(KLODE,CF_NO_MOVE)
+}
+
+//---------------------------------------------------------------------
+/*
+//　etc/s_t023.txt(ラーライラ)に移植しました　宮崎
+TK_LA-RAIRA
+{
+	TK_begin()
+
+	rot_chr(LA-RAIRA,60,PLAYER1)
+
+	MES(LA-RAIRA,"どうする、ラグナ。\nそろそろ《扉》を開くかい？",0)
+	MES_close(LA-RAIRA)
+
+	MES(RAGNA,"??『扉を開く』\n『まだ開かない』",0)
+	wait_W(WK_YESNO)
+	MES_close(RAGNA)
+
+	if(WK_YESNO==2)
+	{
+	//	name("⇒まだ開かない")
+
+		wait(30)
+		KAO(LA-RAIRA,"12321Z5","-","-")
+		MES(LA-RAIRA,"まあ、万全の準備を\nしといた方がいいだろうね。",0)
+		KAO(LA-RAIRA,"12321Z7","-","-")
+		MES(LA-RAIRA,"アタシらはここで待ってるから\n準備ができたら声をかけるといい。",0)
+		MES_close(LA-RAIRA)
+
+		KAO(RAGNA,"12321Z2","1","1")
+		MES(RAGNA,"ああ、了解だ。",0)
+		MES_close(RAGNA)
+	}
+	else
+	if(WK_YESNO==1)
+	{
+	//	name("⇒扉を開く")
+
+		//フェードアウト
+		fade_in(100,30,0)
+		wait_fade()
+
+		workL(1,SET,1)		//扉イベントへ接続
+
+		//　　以下のイベントに接続。
+		EV("EV_5_07_OpenCrystal")
+	}
+
+	TK_end()
+}
+*/
+//──────────────────────────────
+//▼クリスタルバレーの扉を開く・選択後
+//──────────────────────────────
+EV_5_07_OpenCrystal
+{
+	EV_begin()
+
+	//開発用----
+//	set_chr(KLODE,	 	1018,-1,-1, 94,-3772,0, 2,40,0, "")
+//	set_chr(FIONA,		1017,-1,-1, 227,-3624,0,2,52,0, "")
+//	set_chr(LUE,	 	1015,-1,-1, 60,-1740,0, 2,180,0, "")
+//	set_chr(POCKLE,	 	1012,-1,-1, -176,-3761,1,2, 315,0, "")
+//	set_chr(PIPIRO,	 	1013,-1,-1, -81,-3865,1,2, 344, 0, "")
+//	set_chr(LA-RAIRA,	1023,-1,-1, -180,-3500,0, 2,215,0, "")
+	//----------------------------------
+
+
+
+
+
+
+	if(WK001==1)	//一般メッセージからの接続
+	{
+		workL(1,SET,0)
+
+		CAM(-270,68,164,34,218,0,0)
+		CAM_move(-106,3560,164,0,0)
+
+		chr_pos(KLODE,	 	94,-3772,0, 20,2)
+		chr_pos(FIONA,		227,-3624,0,52,2)
+		chr_pos(LUE,	 	60,-1740,0, 180,2)
+		chr_pos(POCKLE,	 	-176,-3761,1, 315,2)
+		chr_pos(PIPIRO,	 	-81,-3865,1, 344, 2)
+		chr_pos(LA-RAIRA,	-180,-3500,0, 0,2)
+		chr_pos(EVENT_RAGNA, 9,-76,-3200, 0,2)
+
+
+
+
+		delete(EVENT_RAGNA)
+		set_chr(EVENT_RAGNA,  1014,-1,-1, -76,-3200,  0,2,180,0, "")
+		set_chr(LUE,          1015,-1,-1, 60,-3140,-100,2,180,0, "")
+		F_set_chr(LUE,  CF_NO_HEIGHT)
+		F_set_chr(LUE,  CF_NO_ZIMEN)
+		F_set_chr(LUE,  CF_NO_CSP)
+		F_set_chr(EVENT_RAGNA,  CF_NO_HEIGHT)
+		F_set_chr(EVENT_RAGNA,  CF_NO_ZIMEN)
+		F_set_chr(EVENT_RAGNA,  CF_NO_CSP)
+
+
+		KAO(EVENT_RAGNA, "1","1","1")
+		KAO(LUE,         "1","1","1")
+		KAO(PIPIRO,      "1","1","1")
+		KAO(POCKLE,      "1","1","1")
+		KAO(LA-RAIRA,    "1","1","1")
+		KAO(KLODE,       "1","1","1")
+		KAO(FIONA,       "1","1","1")
+
+		color(RAGNA,-1)
+		color(PET,  -1)
+		color(PARTNER,-1)
+
+		fade_in(0,30,0)
+		wait_fade()
+
+	}
+
+	set_chr(SWORD,      745,-1,-1, -1,-5548,396,180,0,0, "")
+	set_chr(EFFDUMMY1,  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY2,  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY3,  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY4,  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY5,  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY6,  749,-1,-1, 0,0,0, 0,0,0, "")
+
+	F_set_chr(EFFDUMMY4,  CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY4,  CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY4,  CF_NO_CSP)
+	F_set_chr(EFFDUMMY4,  CF_NO_CLIP)
+	F_set_chr(EFFDUMMY4,  CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY5,  CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY5,  CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY5,  CF_NO_CSP)
+	F_set_chr(EFFDUMMY5,  CF_NO_CLIP)
+	F_set_chr(EFFDUMMY5,  CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY6,  CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY6,  CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY6,  CF_NO_CSP)
+	F_set_chr(EFFDUMMY6,  CF_NO_CLIP)
+	F_set_chr(EFFDUMMY6,  CF_NO_CLIP2)
+
+	MOT_SET(PIPIRO,     155, -1, 464, 464, -1,0)	//ほーい
+	MOT_SET(PIPIRO,     156,156, 115,175, -1,0)	//詠唱
+//	MOT_SET(FIONA,      156,156, 1600,1639, -1,0)	//詠唱
+	MOT_SET(FIONA,      156,156, 1130,1190, -1,0)	//詠唱
+	MOT_SET(LA-RAIRA,   156,156, 140,200, -1,0)	//詠唱
+	MOT_SET(SWORD,      150, -1,    2,   2, -1,0)	//刀を縦向きに
+
+//	delete(EVENT_RAGNA)
+//	set_chr(EVENT_RAGNA,  1014,-1,-1, -76,-3200,  0,2,180,0, "")
+//	set_chr(LUE,          1015,-1,-1, 60,-3140,-100,2,180,0, "")
+//	F_set_chr(LUE,  CF_NO_HEIGHT)
+//	F_set_chr(LUE,  CF_NO_ZIMEN)
+//	F_set_chr(LUE,  CF_NO_CSP)
+//	F_set_chr(EVENT_RAGNA,  CF_NO_HEIGHT)
+//	F_set_chr(EVENT_RAGNA,  CF_NO_ZIMEN)
+//	F_set_chr(EVENT_RAGNA,  CF_NO_CSP)
+
+	F_set_chr(SWORD,  CF_NO_HEIGHT)
+	F_set_chr(SWORD,  CF_NO_ZIMEN)
+	F_set_chr(SWORD,  CF_NO_CSP)
+	F_set_chr(SWORD,  CF_NO_CLIP)
+	F_set_chr(SWORD,  CF_NO_CLIP2)
+
+	F_set_chr(PIPIRO,  CF_NO_CSP)
+	F_set_chr(PIPIRO,  CF_NO_CLIP)
+	F_set_chr(PIPIRO,  CF_NO_CLIP2)
+	F_set_chr(POCKLE,  CF_NO_CSP)
+	F_set_chr(POCKLE,  CF_NO_CLIP)
+	F_set_chr(POCKLE,  CF_NO_CLIP2)
+	F_set_chr(FIONA,  CF_NO_CSP)
+	F_set_chr(FIONA,  CF_NO_CLIP)
+	F_set_chr(FIONA,  CF_NO_CLIP2)
+	F_set_chr(LA-RAIRA,  CF_NO_CSP)
+	F_set_chr(LA-RAIRA,  CF_NO_CLIP)
+	F_set_chr(LA-RAIRA,  CF_NO_CLIP2)
+	F_set_chr(LUE,  CF_NO_CSP)
+	F_set_chr(LUE,  CF_NO_CLIP)
+	F_set_chr(LUE,  CF_NO_CLIP2)
+	
+	wait(1)
+
+	wait(30)
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","2")
+	MES(EVENT_RAGNA,"よし……\nお願いするぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LA-RAIRA,"12321Z2","-","-")
+	MES(LA-RAIRA,"了解だ。",0)
+	MES_close(LA-RAIRA)
+
+	look_off(LA-RAIRA)
+//　　ラーライラ、ピピロとフィオナに話しかける。
+	rot(LA-RAIRA,30,215)
+	wait(5)
+	rot_chr(FIONA,30,LA-RAIRA)
+	rot_chr(KLODE,30,LA-RAIRA)
+	wait(4)
+	rot_chr(POCKLE,30,LA-RAIRA)
+	rot_chr(PIPIRO,30,LA-RAIRA)
+	wait(15)
+
+	KAO(LA-RAIRA,"12321Z4","-","-")
+	MES(LA-RAIRA,"アンタたち。\nやり方は話した通りだ。",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")
+	MES(LA-RAIRA,"難しいことは考えずに、\nただ魔力を解放すればいい。",0)
+	MES_close(LA-RAIRA)
+
+	MOT(PIPIRO, 155, 10)
+	KAO(PIPIRO,"12333321","1233321","1")
+	MES(PIPIRO,"ほ～い。",0)
+	MES_close(PIPIRO)
+
+	KAO(FIONA,"B232BZ3","1233321","2")
+	MES(FIONA,"分かりましたわ。",0)
+	MES_close(FIONA)
+
+//　　画面、いったんここでフェードアウト。
+	fade_in(100,60,0)
+	wait_fade()
+	stop_BGM(90)
+	wait_BGM()
+
+	delete(EVENT_RAGNA)
+	set_chr(EVENT_RAGNA,  1014,-1,-1, -76,-3200,  0,2,180,0, "")	//武器なしラグナに変更
+	F_set_chr(EVENT_RAGNA,  CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,  CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,  CF_NO_CSP)
+	MOT_SET(EVENT_RAGNA,150,-1,5001,5061,-1,-1)		//剣前出し
+	MOT_SET(EVENT_RAGNA,151,-1,5064,5086,-1,-1)		//差込み構え
+	MOT_SET(EVENT_RAGNA,152,-1,5092,5119,-1,-1)		//剣差込み
+	MOT_SET(EVENT_RAGNA,153,-1,5092,5150,-1,-1)		//剣差込み
+
+
+	chr_pos(EVENT_RAGNA,	 0,-5100,200,180,2)
+	chr_pos(KLODE,	 -900,-5200,200,260,2)
+//	chr_pos(FIONA,	 -500,-5280,200,270,2)
+	chr_pos(LUE,	 130,-5000,200,170,2)
+	chr_pos(POCKLE,	 -850,-5000,200,260,2)
+//	chr_pos(PIPIRO,	 500,-5280,200,90,2)
+//	chr_pos(LA-RAIRA,0,-4620,200,180,2)
+
+	chr_pos(FIONA,		-284,-5175,200,214,2)
+	chr_pos(PIPIRO,	 	312,-5161,200, 123, 2)
+	chr_pos(LA-RAIRA,	-6,-4690,200,180,2)
+	KAO(FIONA,"B","3","2")
+	KAO(PIPIRO,"B","3","2")
+
+	set_chr(EFFPIPI,    749,-1,-1, 0,0,0, 0,0,0, "")		//ピピロの杖光エフェクト
+	set_chr(EFFDUMMY6,  749,-1,-1, 0,-5650,530,0,0,0, "")		//ピピロの杖光エフェクト
+
+	wait(60)
+	CAM_move(0,5160,540,0,0)
+	CAM(270,100,540,40,200,0,0)
+	CAM_move(0,5160,340,150,0)
+	CAM(270,100,340,40,180,150,0)
+
+	look_chr(KLODE,  EVENT_RAGNA, "Bone_Head")
+	look_chr(PIPIRO, EVENT_RAGNA, "Bone_Head")
+
+	chr_equip(EVENT_RAGNA, "eq_055", "Bone_RightSword",100);
+	chr_equip_chr(EFFDUMMY1, FIONA,   "Bone_Hips",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFDUMMY2, PIPIRO,   "Bone_Hips",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFDUMMY3, LA-RAIRA, "Bone_Hips",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFPIPI,   PIPIRO,   "wtop",100,		0,0,0,	0,0,0);
+
+	MOT(EFFDUMMY1,8,0)
+	MOT(EFFDUMMY2,8,0)
+	MOT(EFFDUMMY3,8,0)
+	MOT(EFFPIPI, 18,0)
+	MOT(FIONA,   156,0)
+	MOT(PIPIRO,  156,0)
+	MOT(LA-RAIRA,156,0)
+//──────────────────────────────
+//　　画面フェードインして、少し離れた位置で、
+//　　３方向から扉を取り囲むラーライラ、ピピロ、フィオナたち。
+//　　既に魔力を解放しており、淡い光に包まれている状態。
+//　　扉の前には、月支の剣を持ったラグナとルゥが立っており、
+//　　ポックルとクロードは、少し離れた場所で見守っている。
+//　　以上の様子をカメラで見せながら、魔力に反応して、
+//　　扉の紋様に光が走り、淡く輝き始めるのを見せる。
+	BGM(53)
+//	workG(GW_DEF_BGM,SET,53)		//デフォルト曲を変更する（★ＢＧＭ変更はプログラム対応なので必要ナシ）
+	SE_distance(1061,0,5160,340)//詠唱中SE
+	fade_in(0,60,0)
+	wait_fade()
+
+
+
+	wait_CAM_move()
+	wait_CAM()
+
+
+	mot_obj("door_leftmoya_add","anime")			//
+	mot_obj("door_rightmoya_add","anime")			//
+
+	EV("EV_1128_loop")//扉反応SE処理
+
+
+//	MES(EVENT_RAGNA,"◆未入力項目\nラーライラ、ピピロ、フィオナたち、\n既に魔力を解放しており、淡い光に包まれている状態。\n扉の紋様に光が走り、淡く輝き始めるのを見せる。",0)
+//	MES_close(EVENT_RAGNA)
+
+
+	wait(30)
+
+	MES(LUE,"あ……！",0)
+	MES_close(LUE)
+
+	MES(LA-RAIRA,"……成功のようだね。",0)
+	MES(LA-RAIRA,"さあ、ラグナ。\n《鍵》を使うがいい。",0)
+	MES_close(LA-RAIRA)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"ああ。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　ラグナ、月支の剣を掲げて扉に近づける。
+
+	KAO(EVENT_RAGNA, "C","1","3")
+
+//　　剣が扉と共鳴し、淡く光り始める。
+//　　ラグナ、扉の紋様の中心に剣を差し込んでいく。
+
+	look_off(PIPIRO)
+	look_off(FIONA)
+	look_chr(POCKLE, EVENT_RAGNA, "Bone_Head")
+	look_chr(KLODE,  EVENT_RAGNA, "Bone_Head")
+
+
+//	CAM_move(0,5680,500,70,0)
+//	CAM(-10,64,500,30,220,70,0)
+
+	//ラグナアップカメラ
+	cross_fade(10)
+	CAM_move(20,5520,520,0,0)
+	CAM(-249,20,520,37,302,0,0)
+
+	//ラグナ扉の前へ移動
+//	move(EVENT_RAGNA,0,9,0,-5550,390,0)
+	move(EVENT_RAGNA,0,9,0,-5500,390,0)
+	wait_move(EVENT_RAGNA)
+
+/	rot(FIONA,30,215)
+//	rot(PIPIRO,30,145)
+	rot(KLODE,30,240)
+	rot(POCKLE,30,240)
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n月支の剣を掲げて扉に近づける。\n剣が扉と共鳴し、淡く光り始める。\n扉の紋様の中心に剣を差し込んでいくと\nそのまま扉の中へと吸い込まれてしまう。",0)
+//	MES_close(EVENT_RAGNA)
+
+
+//	F_set_obj("door_left",NP_HIDE)
+//	F_set_obj("door_right",NP_HIDE)
+
+
+	MOT(EVENT_RAGNA, 150, 10)
+	wait(50)
+
+	KAO(EVENT_RAGNA, "C","1233321","3")
+	MOT(EVENT_RAGNA, 151, 10)
+	SE(1033,0)//剣構え
+	wait(50)
+
+	MOT(EVENT_RAGNA, 152, 10)
+	wait(25)
+	SE(1129,0)//剣突き立てるSE
+	wait(25)
+
+	//刀吸い込まれカメラ
+	cross_fade(5)
+	CAM_move(40,5520,540,0,0)
+	CAM(-249,20,540,37,215,0,0)
+	chr_pos(SWORD,       0,-5500,530,0,0)
+	chr_pos(EVENT_RAGNA, 0,-5450,350,180,0)
+	MOT(EFFDUMMY6, 37, 0)		//エフェクト：七支刀を扉に差し込むときの光
+	SE(1051,0)
+	MOT(SWORD, 150,0)
+	MOT(EVENT_RAGNA, 2, 0)
+	F_set_Node(EVENT_RAGNA, "Bone_RightSword", NP_HIDE)
+
+//	wait_fade()
+	wait(5)
+
+	move(SWORD,       42, 5, 0, 200, 0, 0)
+	move(EVENT_RAGNA,  0, 5, 0,-5100,199, 0)
+
+	wait(30)
+	chr_pos(EFFDUMMY4,   0,-5683,400,0,0 )
+
+
+
+	wait(30)
+	CAM_quake("464646L")
+	MOT(EFFDUMMY6, 0, 0)		//エフェクト：七支刀を扉に差し込むときの光終了
+	EV("EV_1024_loop")//地鳴りSE処理
+
+
+	delete(SWORD)
+
+	look_off(PIPIRO)
+	look_off(FIONA)
+	look_off(KLODE)
+
+	CAM_move(80,5160,580,90,0)
+	CAM(-649,52,580,37,232,90,0)
+	wait_CAM()
+
+//	EFF_chr(3950, EFFDUMMY4,  0,100,0, "Bone_Head")
+//	EFF_chr(3950, EFFDUMMY5,  0,100,0, "Bone_Head")
+
+	KAO(POCKLE,"23Z3","12321DE","6")
+	MES(POCKLE,"わわっ……！",0)
+	MES_close(POCKLE)
+
+	KAO(KLODE,"B232BZ2","12321D","2")
+	MES(KLODE,"これは……",0)
+	MES_close(KLODE)
+	wait_MES(KLODE)
+
+//}
+//EV_
+//{
+
+
+//　　輝きが増し、ゴゴゴと音を立てて扉が開いていく。
+//　　同時に扉から空中に目掛けて魔力の力場が現れ、
+//　　天に向かって真っ直ぐ伸びていくのを見せる。
+//	MES(EVENT_RAGNA,"◆未入力項目\nゴゴゴと音を立てて扉が開いていく。\n同時に扉から空中に目掛けて魔力の力場が現れ、\n天に向かって真っ直ぐ伸びていくのを見せる。",0)
+//	MES_close(EVENT_RAGNA)
+
+	EV_stop("EV_1128_loop")//扉反応SE止め
+	EV_stop("EV_1128_loop2")//扉反応SE止め
+	EV_stop("EV_1024_loop")//地鳴りSE止め
+	EV_stop("EV_1024_loop2")//地鳴りSE止め
+
+	mot_obj("door_left","open")			//扉開く
+	mot_obj("door_right","open")		//扉開く
+	SE(1130,0)//扉開くSE
+	wait(10)
+	SE(1131,0)//扉開くSE
+
+	CAM_move(0,6100,950,0,0)
+	CAM(-650,120,950,40,180,0,0)
+//	CAM(-650,100,950,40,180,90,0)
+	CAM(-650,100,950,40,180,120,0)
+
+
+//	CAM_quake("4628L")
+//	wait_CAM()
+	CAM_quake("")
+	wait(90)
+	SE(1130,0)//扉開くSE
+	
+
+	KAO(POCKLE,"2","D","6")
+
+	//階段カメラ
+	cross_fade(15)
+	CAM_move(-1200,13500,2620,0,0)
+	CAM(30,300,2620,40,224,0,0)
+	SE(1050,0)							//階段出現SE
+	mot_obj("obj04_2","f_in")			//階段フェードイン
+//	CAM_move(-600,6780,640,120,0)
+//	CAM(-210,330,640,30,204,120,0)
+	CAM_move(-600,6780,640,300,0)
+	CAM(-210,330,640,30,204,300,0)
+
+	//詠唱終了
+//	MOT(EFFDUMMY1, 0, 0)
+//	MOT(EFFDUMMY2, 0, 0)
+//	MOT(EFFDUMMY3, 0, 0)
+//	MOT(FIONA,    2, 0)
+//	MOT(LA-RAIRA, 2, 0)
+//	MOT(PIPIRO,   2, 0)
+	wait_CAM_move()
+	wait_CAM()
+
+//	mot_obj("obj04","f_in")			//階段明滅
+//	wait(30)
+	mot_obj("obj04","anime")			//階段明滅
+	mot_obj("obj04_2","anime")			//階段明滅
+	mot_obj("kiwa2_add","anime")		//階段明滅
+
+cross_fade(15)
+//CAM_move(-80,6780,1580,0,0)
+//CAM(-330,168,1580,44,182,0,0)
+//color(LA-RAIRA,-1)
+
+
+CAM_move(44,5000,420,0,0)
+CAM(110,54,60,40,221,0,0)
+//CAM_move(-26,5002,420,1200,0)
+//CAM(110,54,60,40,142,1200,0)
+CAM_move(-26,5002,420,1600,0)
+CAM(110,54,60,40,142,1600,0)
+wait_fade()
+
+	wait(30)
+	KAO(EVENT_RAGNA,"B232B2Z2","12321D","6")
+	MES(EVENT_RAGNA,"こ、こいつは……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(FIONA,"B232BZ3","321D","6")
+	MES(FIONA,"す、凄いですわね……",0)
+	MES_close(FIONA)
+
+	KAO(PIPIRO,"12321Z3","321","2")
+	MES(PIPIRO,"ふーん……\n大した仕掛けじゃない。",0)
+	MES_close(PIPIRO)
+
+	KAO(EVENT_RAGNA,"B","12321","2")
+
+	KAO(LA-RAIRA,"12321Z6","-","-")
+	MES(LA-RAIRA,"おそらく、階段を登った先に\n異世界への入口があるはずだ。",0)
+	KAO(LA-RAIRA,"12321Z4","-","-")
+	MES(LA-RAIRA,"２人とも、\n気をつけて行っておいで。",0)
+	MES_close(LA-RAIRA)
+
+	rot_chr(LUE,30,LA-RAIRA)
+	wait(5)
+	rot_chr(EVENT_RAGNA,30,LA-RAIRA)
+	wait(10)
+
+	KAO(LUE,"B232BZ2","1233321","2")
+	MES(LUE,"う、うん！",0)
+	MES_close(LUE)
+
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","2")
+	MES(EVENT_RAGNA,"分かった、行ってくる！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　そのままイベント終了、プレイヤー操作許可。
+//　　フリーで操作して階段を登っていくことが出来る。
+//　　また、ラーライラたちにも話しかけることが可能。
+	fade_in(100,30,0)
+	wait_fade()
+//	stop_BGM(90)
+//	wait_BGM()
+
+
+//	chr_pos(RAGNA,	 0,-5550,390,180,2)
+//	chr_pos(PET, 	-11,-5446,323,180,2)
+	chr_pos(RAGNA,	 0,-5437,317,180,2)
+	chr_pos(PET, 	10,-5375,269,180,2)
+	color(RAGNA,1)
+
+	F_reset_chr(KLODE,CF_NO_CLIP)
+	F_reset_chr(KLODE,CF_NO_CLIP2)
+	F_reset_chr(KLODE,CF_NO_CSP)
+	F_reset_chr(FIONA,CF_NO_CLIP)
+	F_reset_chr(FIONA,CF_NO_CLIP2)
+	F_reset_chr(FIONA,CF_NO_CSP)
+	F_reset_chr(LUE,CF_NO_CLIP)
+	F_reset_chr(LUE,CF_NO_CLIP2)
+	F_reset_chr(LUE,CF_NO_CSP)
+	F_reset_chr(POCKLE,CF_NO_CLIP)
+	F_reset_chr(POCKLE,CF_NO_CLIP2)
+	F_reset_chr(POCKLE,CF_NO_CSP)
+	F_reset_chr(PIPIRO,CF_NO_CLIP)
+	F_reset_chr(PIPIRO,CF_NO_CLIP2)
+	F_reset_chr(PIPIRO,CF_NO_CSP)
+	F_reset_chr(LA-RAIRA,CF_NO_CLIP)
+	F_reset_chr(LA-RAIRA,CF_NO_CLIP2)
+	F_reset_chr(LA-RAIRA,CF_NO_CSP)
+
+	delete(EVENT_RAGNA)
+	delete(LUE)
+	
+	/*
+	delete(FIONA)
+	delete(KLODE)
+	delete(PIPIRO)
+	delete(POCKLE)
+	delete(LA-RAIRA)
+	*/
+	delete(EFFDUMMY1)
+	delete(EFFDUMMY2)
+	delete(EFFDUMMY3)
+	delete(EFFDUMMY4)
+	delete(EFFDUMMY5)
+	delete(EFFDUMMY6)
+	delete(EFFPIPI)
+
+	color(RAGNA,1)
+	color(PET,  1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+//	EV("EV_NPCSetPos2")
+	//再配置/////////////////////////////////////////////////
+	chr_pos(KLODE,		-700,-5200,200,283,53)
+	chr_pos(POCKLE,		787,-4960,200,90,2)
+	chr_pos(PIPIRO,		 312,-5161,200,90,2)
+	chr_pos(FIONA, 		-284,-5175,200,270,2)
+	chr_pos(LA-RAIRA,	-6,-4690,200,180,2)
+	
+	KAO(PIPIRO,      "1","1","1")
+	KAO(POCKLE,      "1","1","1")
+	KAO(LA-RAIRA,    "1","1","1")
+	KAO(KLODE,       "1","1","1")
+	KAO(FIONA,       "1","1","1")
+	
+	set_chr(EFFDUMMY1,  749,-1,-1, 0,0,0, 0,0,0, "")		//詠唱エフェクト
+	set_chr(EFFDUMMY2,  749,-1,-1, 0,0,0, 0,0,0, "")		//詠唱エフェクト
+	set_chr(EFFDUMMY3,  749,-1,-1, 0,0,0, 0,0,0, "")		//詠唱エフェクト
+	set_chr(EFFPIPI,    749,-1,-1, 0,0,0, 0,0,0, "")		//ピピロの杖光エフェクト
+
+	F_set_chr(EFFDUMMY1, CF_NO_CSP)
+	F_set_chr(EFFDUMMY2, CF_NO_CSP)
+	F_set_chr(EFFDUMMY3, CF_NO_CSP)
+	F_set_chr(EFFDUMMY3, EFFPIPI)
+
+	chr_equip_chr(EFFDUMMY1, FIONA,    "Bone_Hips",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFDUMMY2, PIPIRO,   "Bone_Hips",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFDUMMY3, LA-RAIRA, "Bone_Hips",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFPIPI,   PIPIRO,   "wtop",     100,		0,0,0,	0,0,0);
+	MOT(EFFDUMMY1, 8, 0)	//エフェクト：詠唱
+	MOT(EFFDUMMY2, 8, 0)	//エフェクト：詠唱
+	MOT(EFFDUMMY3, 8, 0)	//エフェクト：詠唱
+	MOT(EFFPIPI,  18, 0)	//エフェクト：詠唱
+	MOT_SET(PIPIRO,     156,156, 115,175, -1,0)	//詠唱
+//			MOT_SET(FIONA,      156,156, 1600,1639, -1,0)	//詠唱
+	MOT_SET(FIONA,      156,156, 1130,1190, -1,0)	//詠唱
+	MOT_SET(LA-RAIRA,   156,156, 140,200, -1,0)	//詠唱
+	wait(1)
+	MOT(PIPIRO,  156,0)
+	MOT(FIONA,   156,0)
+	MOT(LA-RAIRA,156,0)
+
+	MOT_SET(POCKLE,150,-1,400,400,-1,20)
+	MOT(POCKLE,150,0)
+
+	mot_obj("door_left","open0")		//扉開く
+	mot_obj("door_right","open0")		//扉開く
+	mot_obj("obj04_2","anime")			//階段フェードイン
+	mot_obj("kiwa2_add","anime")			//階段フェードイン
+
+	F_set_chr(PIPIRO,CF_NO_MOVE)
+	F_set_chr(FIONA,CF_NO_MOVE)
+	F_set_chr(LA-RAIRA,CF_NO_MOVE)
+
+	F_set_chr(POCKLE,CF_NO_MOVE)
+	F_set_chr(KLODE,CF_NO_MOVE)
+	
+	//各キャラのLFを下げた状態にしておく
+	F_reset(PIPIRO)
+	F_reset(POCKLE)
+	F_reset(KLODE)
+	F_reset(FIONA)
+	F_reset(LA-RAIRA)
+	/////////////////////////////////////////////////
+	get_item(136,-1,1)							//月支の剣破棄
+			
+//ＧＦ『★クリスタルバレーを起動した』を立てる。
+	F_set(F5_06_RunCrystal)
+	F_set(F5_02_UseTodome)						//ルウ連れてる
+	delete(92)									//扉の当たり消す
+	
+//	BGM(29)
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+//──────────────────────────────
+//▼螺旋要塞メルセデク出現・クリスタルバレー
+//──────────────────────────────
+//　　画面切り替えしてクリスタルバレー。
+//　　こちらでも空が不穏な状態になっているのが分かる。
+//　　そのまま空中階段から降りてくるラグナたち。
+//　　フィオナたち女性陣は魔法詠唱を続けてくれており、
+//　　ポックルとクロードがラグナたちを出迎えてくれる。
+EV_5_23_AppearMeru
+{
+	EV_begin()
+
+//	fade_in(100,60,0)
+//	wait_fade()
+
+
+//	F_set(F5_16_AppearMeru)
+//	F_set(F5_17_EndFifth)
+//	workG(GW_DEF_BGM,SET,51)		//デフォルト曲を変更
+//	workG(GW_ENTRY_EVENT,SET,5)		//アルッテの町
+//	new_map(10100)
+//}
+//EV
+//{
+
+
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 -1300,-4500,0,180,2)
+	chr_pos(PARTNER,	 -1300,-4300,0,180,2)
+//	color(RAGNA,-1)
+//	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	1010,-1,-1,  90,-8110,1422, 2,0,0, "")
+	set_chr(ALWEN,	 		1011,-1,-1,  -90,-8110,1422, 2,0,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	set_chr(KLODE,	 	1018,-1,-1, -350,-4900,200, 2,210,0, "")
+	set_chr(FIONA,		1017,-1,-1, -400,-5080,200, 2,270,0, "")
+	set_chr(LUE,	 	1015,-1,-1, -80,-8342,1514,2,0,0, "")
+	set_chr(POCKLE,	 	1012,-1,-1, 330,-4880,200, 2,140,0, "")
+	set_chr(PIPIRO,	 	1013,-1,-1, 400,-5080,200, 2,90,0, "")
+	set_chr(LA-RAIRA,	1023,-1,-1, 0,-4620,200, 2,180,0, "")
+	set_chr(ODESSA,		1019,-1,-1, 100,-8342,1514, 2,0,0, "")
+	set_chr(EFFDUMMY1,  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY2,  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY3,  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY4,  749,-1,-1, -28,-4910,199, 0,90,0, "")
+
+
+	set_chr(EFFPIPI,    749,-1,-1, 0,0,0, 0,0,0, "")
+//	set_chr(ALWENROD,   753,-1,-1, 0,0,0, 0,0,0, "")
+	F_set_chr(EFFDUMMY1, CF_NO_CSP)
+	F_set_chr(EFFDUMMY2, CF_NO_CSP)
+	F_set_chr(EFFDUMMY3, CF_NO_CSP)
+	F_set_chr(KLODE,CF_NO_CLIP)
+	F_set_chr(KLODE,CF_NO_CLIP2)
+	F_set_chr(KLODE,CF_NO_CSP)
+	F_set_chr(FIONA,CF_NO_CLIP)
+	F_set_chr(FIONA,CF_NO_CLIP2)
+	F_set_chr(FIONA,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(POCKLE,CF_NO_CLIP)
+	F_set_chr(POCKLE,CF_NO_CLIP2)
+	F_set_chr(POCKLE,CF_NO_CSP)
+	F_set_chr(PIPIRO,CF_NO_CLIP)
+	F_set_chr(PIPIRO,CF_NO_CLIP2)
+	F_set_chr(PIPIRO,CF_NO_CSP)
+	F_set_chr(LA-RAIRA,CF_NO_CLIP)
+	F_set_chr(LA-RAIRA,CF_NO_CLIP2)
+	F_set_chr(LA-RAIRA,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(EFFDUMMY4,CF_NO_CLIP)
+	F_set_chr(EFFDUMMY4,CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY4,CF_NO_CSP)	
+	F_set_chr(EFFDUMMY4,CF_NO_HEIGHT)	
+	F_set_chr(EFFDUMMY4,CF_NO_ZIMEN)	
+	
+	mot_obj("door_left","open0")		//扉開く
+	mot_obj("door_right","open0")		//扉開く
+	mot_obj("obj04_2","anime")			//階段フェードイン
+	mot_obj("kiwa2_add","anime")			//階段フェードイン
+	chr_equip_chr(EFFDUMMY1, FIONA,   "Bone_Hips",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFDUMMY2, PIPIRO,   "Bone_Hips",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFDUMMY3, LA-RAIRA, "Bone_Hips",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFPIPI,   PIPIRO,   "wtop",     100,		0,0,0,	0,0,0);
+
+
+	MOT(EFFDUMMY1, 8, 0)	//エフェクト：詠唱
+	MOT(EFFDUMMY2, 8, 0)	//エフェクト：詠唱
+	MOT(EFFDUMMY3, 8, 0)	//エフェクト：詠唱
+	MOT(EFFPIPI,  18, 0)	//エフェクト：詠唱
+
+	MOT_SET(PIPIRO,     156,156, 115,175, -1,0)	//詠唱
+//	MOT_SET(FIONA,      156,156, 1600,1639, -1,0)	//詠唱
+	MOT_SET(FIONA,      156,156, 1130,1190, -1,0)	//詠唱
+	MOT_SET(LA-RAIRA,   156,156, 140,200, -1,0)	//詠唱
+	MOT(PIPIRO,  156,0)	//詠唱
+	MOT(FIONA,   156,0)
+	MOT(LA-RAIRA,156,0)
+
+	KAO(EVENT_RAGNA,"B","1","2")
+	KAO(ALWEN,      "B","1","2")
+	KAO(LUE,        "B","1","2")
+	KAO(ODESSA,     "B","1","2")
+
+	KAO(FIONA,"B","3","2")
+	KAO(KLODE,"B","1","2")
+	KAO(PIPIRO,"B","3","2")
+	KAO(POCKLE,"B","1","2")
+	KAO(LA-RAIRA,"1","-","-")
+
+	wait(1)
+	F_set_Node(ODESSA,"Bone_RightSword",NP_HIDE)
+
+	chr_equip( ALWEN,"wp_004b", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(AWEN,53,1)										//アルウェンの右手を開かせる。
+//	chr_equip_chr(ALWENROD, ALWEN, "Bone_RightSword",100,		0,0,0,	0,0,0);
+//	MOT(ALWENROD, 1, 0)
+
+
+	//モーション定義
+	MOT_SET(ALWEN,150,-1,439,439,-1,-1)//謝々
+	MOT_SET(ALWEN,151,-1,502,502,-1,-1)//あっちだ
+	MOT_SET(ALWEN,152,-1,400,400,-1,-1)//片腕腰
+	MOT_SET(FIONA,150,-1,404,404,-1,-1)//どういうことよ
+	MOT_SET(FIONA,151,-1,446,446,-1,-1)//なんですの「」
+	MOT_SET(PIPIRO,150,-1,401,401,-1,-1)//片手腰
+	MOT_SET(PIPIRO,151,-1,410,410,-1,-1)//思い出す
+	MOT_SET(PIPIRO,152,-1,579,579,-1,-1)//アイスいたい
+	MOT_SET(KLODE, 150,-1,471,471,-1,-1)//
+	MOT_SET(ODESSA,150,-1,395,395,-1,-1)//腕組
+	MOT_SET(ODESSA,151,-1,471,471,-1,-1)//
+	MOT_SET(LUE,   150,-1,1094,1094,-1,-1)//抱きつく
+
+	wait(30)
+
+	//カメラ初期位置
+	CAM_move(-100,5220,370,0,0)
+	CAM(70,90,370,40,214,0,0)
+
+	CAM_move(-100,5220,270,150,0)
+	CAM(70,80,270,40,214,150,0)
+
+	move( EVENT_RAGNA, 0, 20,90,-4950,200,0)
+	wait(5)
+	move( ALWEN, 0, 20,-90,-4950,200,0)
+	move( ODESSA, 0, 20,100,-5180,200,0)
+	wait(5)
+	move( LUE, 0, 20,-80,-5120,200,0)
+
+	SE(1155,0)					//大気鳴動SE
+	SE_distance(1061,0,5160,340)//詠唱中SE
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+
+
+
+	wait(90)
+	rot(POCKLE,30,100)
+	wait(10)
+	rot(KLODE,30,250)
+
+	wait_move(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,305)
+	wait_move(ALWEN)
+	rot(ALWEN,30,70)
+	wait_move(ODESSA)
+	rot(ODESSA,30,290)
+	wait_move(LUE)
+	rot(LUE,30,30)
+
+	KAO(POCKLE,"12321Z4","1236","6")
+	MES(POCKLE,"ラグナさん！\nアルウェンさん！",0)
+	MES_close(POCKLE)
+
+	KAO(KLODE,"12321Z3","1236","6")
+	MES(KLODE,"ご無事で何よりです。",0)
+	MES_close(KLODE)
+
+	look_chr(KLODE, LA-RAIRA, "Bone_Head")
+	wait(30)
+
+	KAO(KLODE,"12321Z4","321","6")
+	MES(KLODE,"──皆さん。\nもう結構ですよ。",0)
+	MES_close(KLODE)
+
+	look_off(KLODE)
+
+//　　フィオナたち、それぞれ魔法詠唱を止める。
+//　　それと同時に扉の輝きが消え、空中階段が消えていく。
+//	MES(FIONA,"◆未入力項目\nそれぞれ魔法詠唱を止める。\n扉の輝きが消え、空中階段が消えていく。",0)
+//	MES_close(FIONA)
+
+	EV("EV_1061_fadeout")		//詠唱SEフェードアウト
+	MOT(EFFPIPI,   0, 0)		//エフェクト：杖の光終了
+	MOT(EFFDUMMY2, 0, 0)		//エフェクト：終了
+	MOT(PIPIRO,   2, 10)
+	KAO(PIPIRO,"B","321","2")
+	wait(5)
+	MOT(EFFDUMMY1, 0, 0)		//エフェクト：終了
+	MOT(FIONA,    2, 10)
+	KAO(FIONA,"B","321","2")
+	wait(5)
+	MOT(EFFDUMMY3, 0, 0)		//エフェクト：終了
+	MOT(LA-RAIRA, 2, 10)
+	wait(30)
+
+	CAM_quake("4646L")
+	EV("EV_1113")				//地鳴りSE処理2
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(0,5683,1179,0,0)
+	CAM(-1090,66,620,40,180,0,0)
+	CAM_move(23,5683,859,120,0)
+	color(LUE,-1)
+	color(ODESSA,-1)
+	color(ALWEN,-1)
+	color(EVENT_RAGNA,-1)
+	wait(30)
+	mot_obj("obj04_2","f_out")			//階段フェードアウト
+	mot_obj("kiwa2_add","f_out")		//階段フェードアウト
+//	SE(1128,0)							//階段消えるSE
+	SE(1050,0)							//階段消えるSE
+	wait(30)
+	mot_obj("door_left","close")		//扉閉じる
+	mot_obj("door_right","close")		//扉閉じる
+	wait(5)
+	SE(1091,0)							//ガコンSE
+	SE(1131,0)							//扉閉じるSE
+
+	wait(95)
+	CAM_quake("37373646")
+	SE(1130,0)							//ガコンSE
+	EV_stop("EV_1113")					//地鳴りSE止め
+	EV_stop("EV_1113_2")				//地鳴りSE止め
+	wait(15)
+
+	cross_fade(5)
+	CAM_move(244,5272,1139,0,0)
+	CAM(-130,101,780,40,210,0,0)
+	CAM(-130,131,780,40,210,60,0)
+	wait(90)
+
+	fade_in(100,30,0)
+	wait_fade()
+	wait(15)
+
+	cross_fade(15)
+//	CAM_move(-24,4993,265,0,0)
+//	CAM(470,79,-100,28,300,0,0)
+
+	CAM_move(-24,4993,265,0,0)
+	CAM(470,118,265,28,141,0,0)
+	CAM(470,70,265,28,224,1200,0)
+
+//	chr_pos(FIONA, -265,-5084,200,293,2)
+	color(LUE,1)
+	color(ODESSA,1)
+	color(ALWEN,1)
+	color(EVENT_RAGNA,1)
+
+	KAO(FIONA,"B","3","5")
+	KAO(PIPIRO,"C","3","5")
+	KAO(POCKLE,"1","1","1")
+	KAO(KLODE,"1","1","1")
+
+	fade_in(0,30, 0)
+	wait_fade()
+
+	KAO(FIONA,"B232BZ4","5","4")
+	MES(FIONA,"さ、さすがに……\n……堪えましたわね……",0)
+	MES_close(FIONA)
+
+	KAO(LA-RAIRA,"B232BZ5","-","-")
+	MES(LA-RAIRA,"ふう、あの状態で\n遠話はキツかったかねぇ。",0)
+	MES_close(LA-RAIRA)
+
+//	MOT(PIPIRO, 152, 10)
+	KAO(PIPIRO,"C232CZ3","3","5")
+	MES(PIPIRO,"うー……\nアイス食べたい～……",0)
+	MES_close(PIPIRO)
+
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+	wait(15)
+
+	KAO(POCKLE,"12321Z4","1236","5")
+	MES(POCKLE,"あはは……\nあとで幾らでも奢るよ。",0)
+	MES_close(POCKLE)
+
+	KAO(KLODE,"12321Z5","1233321","1")
+	MES(KLODE,"お嬢様、皆さん。\nどうもお疲れ様でした。",0)
+	MES_close(KLODE)
+
+	MOT(PIPIRO, 2, 10)
+
+	MOT(ALWEN,150,15)
+	wait(15)
+
+	KAO(ALWEN,"12321Z4","123","6")
+	MES(ALWEN,"──そなたら全員に感謝を。",0)
+	KAO(ALWEN,"12321Z4","321","6")
+	MES(ALWEN,"この礼は必ずや\nさせてもらうつもりだ。",0)
+	MES_close(ALWEN)
+
+	KAO(FIONA,"12321Z3","3","6")
+	MES(FIONA,"ふふ、お互い様ですわ。",0)
+	KAO(FIONA,"B232BZ4","321","2")
+	MES(FIONA,"それより……\nこの大気の鳴動は一体……",0)
+	MES_close(FIONA)
+
+
+//　　ここでゴゴゴと大気の鳴動が大きくなる。
+//　　雷鳴なども鳴り始め、ラグナたちの頭に！マーク。
+//	MES(LUE,"◆未入力項目\nゴゴゴと大気の鳴動が大きくなる。",0)
+//	MES_close(LUE)
+
+	//振動
+	EV("EV_1113")		//地鳴り
+	CAM_quake("4646L")
+	wait(15)
+	CAM_quake("4747L")
+	wait(15)
+	CAM_quake("3737L")
+	wait(15)
+
+	KAO(ALWEN,       "B","12321D","2")
+	KAO(EVENT_RAGNA, "B","12321D","2")
+	KAO(KLODE,       "B","12321D","2")
+	KAO(FIONA,       "2","12321D","4")
+	KAO(POCKLE,      "2","321D","6")
+	KAO(PIPIRO,      "F","321D","6")
+	KAO(LUE,     	 "2","12321DE","6")
+	KAO(LA-RAIRA,    "2","-","-")
+	KAO(ODESSA,   	 "B","12321D","2")
+	look_chr(LA-RAIRA, POCKLE, "Bone_Head")
+	look_chr(ODESSA,   POCKLE, "Bone_Head")
+	look_chr(ALWEN,    POCKLE, "Bone_Head")
+	look_chr(FIONA,    POCKLE, "Bone_Head")
+	MOT(KLODE, 150, 10)
+	MOT(ALWEN, 152, 10)
+
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	rot(EVENT_RAGNA,30,330)
+	EMO(ALWEN,EMO_BIKKURI)
+	MOT(ALWEN,2,10)
+	wait(2)
+	EMO(LUE,EMO_BIKKURI)
+	rot(LUE,30,60)
+	EMO(ODESSA,EMO_BIKKURI)
+	rot(ODESSA,30,270)
+	wait(2)
+	EMO(PIPIRO,EMO_BIKKURI)
+	EMO(POCKLE,EMO_BIKKURI)
+	look_off( POCKLE )
+	wait(2)
+	EMO(FIONA,EMO_BIKKURI)
+	rot(FIONA,30,230)
+	EMO(KLODE,EMO_BIKKURI)
+	rot(KLODE,30,350)
+	EMO(LA-RAIRA,EMO_BIKKURI)
+	rot(LA-RAIRA,30,140)
+	wait(30)
+
+	CAM_quake("3737L")
+	wait(15)
+	CAM_quake("4747L")
+	wait(15)
+	CAM_quake("4646L")
+	wait(15)
+	CAM_quake("")
+	wait_CAM_quake()
+	EV_stop("EV_1113")					//地鳴りSE止め
+	EV_stop("EV_1113_2")				//地鳴りSE止め
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(-24,5013,365,0,0)
+	CAM(-10,73,365,28,133,0,0)
+	KAO(ALWEN,       "B","1","2")
+	KAO(EVENT_RAGNA, "B","1","2")
+	KAO(KLODE,       "B","1","2")
+	KAO(FIONA,       "B","1","4")
+	KAO(POCKLE,      "B","1","2")
+	KAO(PIPIRO,      "B","1","2")
+	KAO(LUE,     	 "1","D","6")
+	KAO(LA-RAIRA,    "1","-","-")
+	wait_fade()
+
+	KAO(LUE,"C232C2Z2","1233321","4")
+	MES(LUE,"な、なんなのよ……！？",0)
+	MES_close(LUE)
+
+	SE(1156,0)			//遠雷SE
+
+	KAO(ODESSA,"C232CZ4","1233321","3")
+	MES(ODESSA,"分からないが……\n相当ヤバそうな雰囲気だ。",0)
+	MES_close(ODESSA)
+	wait_MES(ODESSA)
+
+
+	cross_fade(5)
+	CAM_move(360,4980,330,0,0)
+	CAM(-250,52,350,25,84,0,0)
+	color(LUE, -1)
+	color(EVENT_RAGNA, -1)
+	color(ALWEN, -1)
+	color(ODESSA, -1)
+	wait_fade()
+
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+	wait(15)
+
+	KAO(POCKLE,"C232C2Z2","12321D","3")
+	MES(POCKLE,"ピピロ……これって！？",0)
+	MES_close(POCKLE)
+
+	MOT(PIPIRO,151,15)
+	look_chr( PIPIRO, POCKLE ,"Bone_Head")
+	wait(15)
+
+	KAO(PIPIRO,"C232CZ5","123332","3")
+	MES(PIPIRO,"うーん……\nイヤな記憶が甦ってくるわね。",0)
+	KAO(PIPIRO,"C232CZ5","23","5")
+	MES(PIPIRO,"しかもあの時よりも\nはるかにヤバイ感じかも……",0)
+	MES_close(PIPIRO)
+	wait_MES(PIPIRO)
+
+	cross_fade(5)
+	CAM_move(-80,5220,270,0,0)
+	CAM(70,111,270,23,210,0,0)
+	color(LUE, 1)
+	color(EVENT_RAGNA, 1)
+	color(ALWEN, 1)
+	color(ODESSA, 1)
+	MOT(KLODE,2,0)
+	KAO(LUE,"C","1","4")
+	wait_fade()
+
+	rot_chr(FIONA,30,POCKLE)
+	wait(5)
+	rot_chr(KLODE,30,POCKLE)
+	rot_chr(EVENT_RAGNA,30,POCKLE)
+	wait(2)
+	rot_chr(LUE,30,POCKLE)
+	rot_chr(ALWEN,30,POCKLE)
+	wait(2)
+	rot_chr(LA-RAIRA,30,POCKLE)
+	rot_chr(ODESSA,30,POCKLE)
+	MOT(FIONA,150,15)
+	MOT(ODESSA,150,10)
+	wait(15)
+
+	KAO(FIONA,"C232CZ3","12321D","4")
+	MES(FIONA,"ど、どういう事ですか？",0)
+	MES_close(FIONA)
+
+	look_off(POCKLE)
+	wait(15)
+
+	KAO(POCKLE,"C232CZ2","123","4")
+	MES(POCKLE,"そ、その……",0)
+	KAO(POCKLE,"C232CZ6","321","4")
+	MES(POCKLE,"僕たち、前にアルジェスで\n似たような経験をしてるんです。",0)
+	MES_close(POCKLE)
+
+	look_off(PIPIRO)
+	MOT(PIPIRO,2,15)
+	wait(15)
+
+	KAO(PIPIRO,"C232CZ7","321","1")
+	MES(PIPIRO,"で、最後に現れた\n《セルペンティナ》ってのが\n敵の親玉がいた場所なんだけど……",0)
+	KAO(PIPIRO,"C232CZ5","123","5")
+	MES(PIPIRO,"それが現れた時と、\nそっくりな雰囲気なのよね～。",0)
+	MES_close(PIPIRO)
+
+	MOT(FIONA,2,15)
+	wait(15)
+
+
+	KAO(FIONA,"C232C2","12321D","4")
+	MES(FIONA,"そ、そんな……",0)
+	MES_close(FIONA)
+
+	KAO(LA-RAIRA,"12321Z3","-","-")
+	MES(LA-RAIRA,"……聞き捨てならない話だね。",0)
+	MES_close(LA-RAIRA)
+
+//　　ラーライラ、ラグナたちの方を見る。
+	rot(LA-RAIRA,30,180)
+	look_chr(LA-RAIRA,ALWEN, "Bone_Head")
+	wait(15)
+	rot_chr(ALWEN,30,LA-RAIRA)
+	look_chr(EVENT_RAGNA, ALWEN, "Bone_Head")
+	look_chr(ALWEN,       LA-RAIRA ,"Bone_Head")
+
+	KAO(LA-RAIRA,"12321Z4","-","-")
+	MES(LA-RAIRA,"姫を助けたのはいいとして……",0)
+	KAO(LA-RAIRA,"12321Z4","-","-")
+	MES(LA-RAIRA,"《ルナ＝ムンドゥス》で\n何があったんだい？",0)
+	MES_close(LA-RAIRA)
+	wait_MES(LA-RAIRA)
+
+	cross_fade(10)
+	CAM_move(-12,4920,379,0,0)
+	CAM(-170,50,379,22,210,0,0)
+	color(LA-RAIRA,-1)
+	KAO(EVENT_RAGNA,"B","1","2")
+	KAO(PIPIRO,"B","1","2")
+	KAO(POCKLE,"B","1","2")
+	KAO(FIONA,"B","1","4")
+	wait_fade()
+
+	rot_chr(FIONA,30,ALWEN)
+	rot_chr(KLODE,30,ALWEN)
+	wait(2)
+	rot_chr(LUE,30,ALWEN)
+	wait(2)
+	rot(EVENT_RAGNA,30,30)
+	look_chr(PIPIRO, EVENT_RAGNA, "Bone_Head")
+	look_chr(ODESSA, EVENT_RAGNA, "Bone_Head")
+	wait(10)
+
+
+	KAO(ALWEN,"B232BZ2","123332A","4")
+	MES(ALWEN,"それは……",0)
+	MES_close(ALWEN)
+
+//　　アルウェン、ラグナの方に視線を向ける。
+//　　ラグナ、それに頷いてから真剣な表情になる。
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(5)
+	KAO(ALWEN,"B","A23","4")
+	wait(25)
+	KAO(ALWEN,"B","321","4")
+	wait(15)
+	KAO(EVENT_RAGNA,"C","1233321","3")
+	wait(15)
+	look_off( EVENT_RAGNA )
+	rot_chr(EVENT_RAGNA,30,LA-RAIRA)
+	look_chr( LUE, EVENT_RAGNA ,"Bone_Head")
+	look_chr( ODESSA, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"C232CZ3","1","3")
+	MES(EVENT_RAGNA,"──俺から説明する。",0)
+	MES_close(EVENT_RAGNA)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(80,5100,290,0,0)
+	CAM(30,118,290,21,133,0,0)
+	CAM(-90,111,290,22,134,600,0)
+	color(LA-RAIRA,1)
+//	chr_pos(LUE, -8,-5039,200,340, 2)	//ルゥ、ラグナへ抱きつき準備
+	chr_pos(LUE,  4,-5000,200,340, 2)	//ルゥ、ラグナへ抱きつき準備
+	wait_fade()
+
+	KAO(EVENT_RAGNA,"C232CZ5","123","3")
+	MES(EVENT_RAGNA,"姫さんを捕まえていた\nザハールは死んだ。",0)
+	KAO(EVENT_RAGNA,"C232CZ4","3","3")
+	MES(EVENT_RAGNA,"手下の一人に裏切られてな。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラーライラたちの頭に！マーク。
+	EMO(PIPIRO,EMO_BIKKURI)
+	KAO(PIPIRO,"B","12321D","6")
+	EMO(POCKLE,EMO_BIKKURI)
+	KAO(POCKLE,"B","12321D","6")
+	EMO(FIONA,EMO_BIKKURI)
+	KAO(FIONA,"B","12321D","6")
+	EMO(KLODE,EMO_BIKKURI)
+	KAO(KLODE,"B","12321D","2")
+	EMO(LA-RAIRA,EMO_BIKKURI)
+	KAO(LA-RAIRA,"2","-","-")
+	KAO(ODESSA,      "B","12321D","6")
+	wait(30)
+
+	KAO(FIONA,"2","12321D","6")
+	MES(FIONA,"な……",0)
+	MES_close(FIONA)
+
+	KAO(LA-RAIRA,"12321Z3","-","-")
+	MES(LA-RAIRA,"それは本当かい！？",0)
+	MES_close(LA-RAIRA)
+
+	KAO(EVENT_RAGNA,"B232BZ5","321","2")
+	MES(EVENT_RAGNA,"ああ、だが……\nそれで終わりじゃない。",0)
+	KAO(EVENT_RAGNA,"C232CZ4","123","B")
+	MES(EVENT_RAGNA,"その後、ミアが……\n俺の妹が──",0)
+	MES_close(EVENT_RAGNA)
+
+	stop_BGM(90)
+
+//　　ここで一際大きな雷鳴が鳴り響く。
+//　　ラグナたちの頭に！マーク。
+//　　続いて猛烈な風が吹き始め、あおられるラグナたち。
+//	MES(EVENT_RAGNA,"◆未入力項目\n一際大きな雷鳴が鳴り響く。\n猛烈な風が吹き始め、あおられるラグナたち。",0)
+//	MES_close(EVENT_RAGNA)
+
+	SE(1157,0)	//近雷
+
+	EFF_chr(9210, EFFDUMMY4, 90, 200, 0, "Bone_Head")		//エフェクト：強風
+
+	CAM_quake("4646L")
+	wait(10)
+	KAO(EVENT_RAGNA, "B","321D","6")
+	KAO(ALWEN,       "B","1231D","3")
+	KAO(POCKLE,      "2","12321DE","6")
+	KAO(PIPIRO,"B","12321DE","6")
+	KAO(LUE,      "2","12321DE","6")
+	MOT(KLODE, 150, 5)
+	KAO(KLODE,      "B","12321D","6")
+	MOT(ODESSA, 151,5)
+	KAO(ODESSA,      "B","12321D","3")
+	KAO(FIONA,"B2","12321DE","6")
+	look_off(ALWEN)
+	
+	wait(45)
+	CAM_quake("")
+
+	chr_pos(EFFDUMMY4, -28,-4910,0, 0, 0 )
+	wait(1)
+	EFF_chr(9210, EFFDUMMY4, 90, 200, 0, "Bone_Head")		//エフェクト：強風
+	SE(1018,0)//風SE
+
+	look(EVENT_RAGNA, "Bone_Head", 0,0,10,10, 0,10,0)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	EMO(LUE,EMO_BIKKURI)
+	EMO(ODESSA,EMO_BIKKURI)
+	EMO(PIPIRO,EMO_BIKKURI)
+	EMO(POCKLE,EMO_BIKKURI)
+	EMO(FIONA,EMO_BIKKURI)
+	EMO(KLODE,EMO_BIKKURI)
+	EMO(LA-RAIRA,EMO_BIKKURI)
+	wait(25)
+
+	chr_pos(EFFDUMMY4, -28,-4910,50, 0, 0 )
+	wait(1)
+	EFF_chr(9210, EFFDUMMY4, 90, 200, 0, "Bone_Head")		//エフェクト：強風
+
+	rot(LUE, 30, 330 )
+	move(LUE, 40, RUN1, 60,-4980,200,0)		//ラグナへ抱きつく
+	MOT(LUE, 150, 15)
+	SE(1120,0)
+
+	CAM_quake("46")
+	KAO(LUE,"23Z6","D1234","5")
+//	MES(LUE,"P1S5きゃああっ！？",0)
+	MES_pos(LUE,"P1きゃああっ！？",0,0,0,0,0)
+	wait(35)
+
+	chr_pos(EFFDUMMY4, -28,-4910,0, 0, 0 )
+	wait(1)
+	EFF_chr(9210, EFFDUMMY4, 90, 200, 0, "Bone_Head")		//エフェクト：強風
+
+	KAO(EVENT_RAGNA, "C","1BC","3")
+	MES_pos(EVENT_RAGNA,"くっ……！？",0,0,0,0,0)
+	wait(5)
+	MES_close(LUE)
+	wait(35)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+	wait_move(LUE)
+//	KAO(EVENT_RAGNA, "C","C","6")
+
+//　　ルゥ、思わずラグナに掴まってしまう。
+
+//	wait(15)
+	chr_pos(EFFDUMMY4, -28,-4910,50, 0, 0 )
+	wait(1)
+	EFF_chr(9210, EFFDUMMY4, 90, 200, 0, "Bone_Head")		//エフェクト：強風
+
+	cross_fade(15)
+	//見上げるカメラ
+	CAM_move(64,4823,339,0,0)
+	CAM(-690,28,40,40,228,0,0)
+
+	look_chr(EVENT_RAGNA, ALWEN,"Bone_Head")
+
+	chr_pos(ALWEN, -56,-4839,201,256, 2)
+//	chr_pos(LUE,     1,-4941,200,300, 2)
+//	KAO(LUE, "2","L","4")
+//	KAO(EVENT_RAGNA, "C","1","3")
+	wait_fade()
+
+//　　アルウェン、！マークを出して空の向こうを指す。
+	EMO(ALWEN,EMO_BIKKURI)
+//	KAO(ALWEN,"C","1232D","6")
+	KAO(ALWEN,"C","1232","3")
+	wait(20)
+
+//	KAO(ALWEN,"C","2","3")
+	move(ALWEN, 0,RUN1, 25,-4781,200,0)
+	wait_move(ALWEN)
+	wait(15)
+	look(ALWEN,"Bone_Head",0,0,0,10,0,0,10)
+	KAO(ALWEN,"C232C2","233321","3")
+	MES_pos(ALWEN,"──あそこだ！",0,0,0,0,0)
+	wait(40)
+	MES_close(ALWEN)
+
+	BGM(07)
+//	BGM(39)		//★正式なものが入るまで仮
+	KAO(EVENT_RAGNA, "C","1233321","3")
+	look_off(EVENT_RAGNA)
+	look(EVENT_RAGNA, "Bone_Head", 0,0,0,10,0,0,10)
+	rot(EVENT_RAGNA,30,250)
+	wait(2)
+	move(LUE, 40, 8, 1,-4941,200,0)		//ラグナから離れる
+	MOT(LUE, 2, 15)
+	KAO(LUE, "B","L233321D","4")
+	look_off(LUE)
+	rot(LUE,30,250)
+	rot(LA-RAIRA,30,250)
+	wait(2)
+	rot(PIPIRO,30,250)
+	rot(POCKLE,30,250)
+	wait(2)
+	rot(FIONA,30,250)
+	KAO(KLODE,      "B","1233321","3")
+	rot(KLODE,30,250)
+	wait(2)
+//	KAO(LUE, "B","L233321D","4")
+//	look_off(LUE)
+//	rot(LUE,30,250)
+	KAO(FIONA,"B","D123332","3")
+	look_off(ODESSA)
+	rot(ODESSA,30,250)
+	MOT(ODESSA,2,10)
+	look(ODESSA, "Bone_Head", 0,0,0,10,0,0,10)
+
+	//フェードアウト
+	EV("EV_51_fadeout")		//風フェードアウト
+	EV("EV_1155_fadeout")	//大気鳴動フェードアウト
+	EV("EV_1156_fadeout")	//遠雷フェードアウト
+	fade_in(100,60,0)
+	wait_fade()
+
+	look_off(FIONA)
+	look_off(ODESSA)
+	look_off(LA-RAIRA)
+	look_off(PIPIRO)
+
+//──────────────────────────────
+//　　画面切り替えして、螺旋要塞登場シーン。（ムービー？）
+//　　暴風に晒されたイルバードを遠景でなめるように見せつつ、
+//　　１０㎞ほど離れた場所に、巨大な積乱雲が発生している。
+//　　そして稲妻と共に、巨大な独楽のような機械要塞が出現。
+//　　それが唸りを上げて回転し始めた直後、
+//　　その周囲に、天地を貫くような巨大な竜巻が発生する。
+//──────────────────────────────
+
+	load_MMV("SYS\ins_01.mpg")
+	MMV()
+	wait_MMV()
+
+	look_del(FIONA)
+	look_del(ODESSA)
+	look_del(LA-RAIRA)
+	look_del(PIPIRO)
+
+	CAM_move(4,4843,339,0,0)
+	CAM_move(4,4843,339,0,0)
+	CAM(-290,42,339,33,248,0,0)
+	CAM(-290,35,339,33,248,900,0)
+
+//	chr_pos(LUE, -42,-5050,200,277,2)
+	chr_pos(LUE,     -40,-4941,200,250, 2)
+	chr_pos(FIONA,    -450,-5080,200,250, 2)
+
+	MOT(ALWEN,2,0)
+	MOT(FIONA,151,0)
+	look(ODESSA, "Bone_Head", 0,0,0,10,0,0,10)
+	look(FIONA, "Bone_Head", 0,0,0,10,0,0,10)
+	look(KLODE, "Bone_Head", 0,0,0,10,0,0,10)
+	look(POCKLE, "Bone_Head", 0,0,0,10,0,0,20)
+	look(PIPIRO, "Bone_Head", 0,0,0,10,0,0,10)
+	look(LA-RAIRA, "Bone_Head", 0,0,0,10,0,0,10)
+	look(EVENT_RAGNA, "Bone_Head", 0,0,0,10,0,0,20)
+	look(LUE,      "Bone_Head", 0,0,0,10,0,0,10)
+
+	KAO(EVENT_RAGNA, "C","D","3")
+	KAO(ALWEN, "C","D","3")
+	KAO(FIONA, "B","E","6")
+	KAO(LUE, "B","E","6")
+
+//環境SE元に戻す
+	SE(51,0)
+	SE(1155,0)
+
+//　　画面、再びクリスタルバレーのラグナたち。
+	fade_in(0,30,0)
+	wait_fade()
+
+
+	KAO(LUE,"2323Z3","D12321DE","7")
+	MES(LUE,"S5なああああっ！？",0)
+	MES_close(LUE)
+
+	KAO(FIONA,"C232CZ3","D12321D","5")
+	MES(FIONA,"な、なんですのっ！？",0)
+	MES_close(FIONA)
+
+	KAO(EVENT_RAGNA,"C232CZ3","123332A","3")
+	MES(EVENT_RAGNA,"姫さん、あれは……！",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"C232CZ3","123","3")
+	MES(ALWEN,"うむ……間違いない。",0)
+//	KAO(ALWEN,"C232CZ3","3","3")
+//	MES(ALWEN,"《螺旋要塞》メルセデク──",0)
+//	KAO(ALWEN,"C232CZ7","321","3")
+//	MES(ALWEN,"魔法大戦でその名を轟かせた\n《金色の魔王》ルシアンの居城だ。",0)
+	KAO(ALWEN,"C232CZ7","3","3")
+	MES(ALWEN,"魔法大戦でその名を轟かせた\n《金色の魔王》の居城──",0)
+	KAO(ALWEN,"C232CZ3","321","3")
+	MES(ALWEN,"《螺旋要塞》メルセデクだ。",0)
+	MES_close(ALWEN)
+
+//　　画面、そのままゆっくりとフェードアウト。
+
+	EV("EV_51_fadeout")
+	EV("EV_1155_fadeout")
+	fade_in(100,60,0)
+	wait_fade()
+
+
+
+	stop_BGM(120)
+	wait_BGM()
+	wait(60)
+
+	delete(ODESSA)
+	delete(FIONA)
+	delete(KLODE)
+	delete(POCKLE)
+	delete(PIPIRO)
+	delete(LA-RAIRA)
+	delete(EVENT_RAGNA)
+	delete(LUE)
+	delete(ALWEN)
+	delete(EFFDUMMY1)
+	delete(EFFDUMMY2)
+	delete(EFFDUMMY3)
+	delete(EFFPIPI)
+
+
+//ＧＦ『★螺旋要塞メルセデクが出現した』を立てる。
+	F_set(F5_16_AppearMeru)
+
+//ＧＦ『★ＧＦ：第５章終了』を立てる。
+	F_set(F5_17_EndFifth)
+
+//　　アルッテの町（昼）へ(ev00100)
+	workG(GW_DEF_BGM,SET,51)		//デフォルト曲を変更
+
+	workG(GW_ENTRY_EVENT,SET,5)		//アルッテの町
+	new_map(10100)
+
+//	workG(GW_ENTRY_EVENT,SET,2)	//デバッグ：直接フィオナ邸へ
+//	new_map(10130)
+
+
+//	EV_end()
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//▽クリスタルバレーの感想（アルウェンが場所の説明）
+//　　初回祭壇前にやってきたときに自動起動。
+//　　（フラグ①のみ発生）
+EV_SeeFirst
+{
+	if( !F1_32_SeeCristal && !F1_22_EndFirst )
+	{
+		EV_begin()
+		fade_in(100,40,0)
+		wait_fade()
+
+		set_chr(EVENT_RAGNA,	  1010,-1,-1,  -76,-1800,0, 2,180,0, "")
+		set_chr(ALWEN,	  1011,-1,-1,  -76,-1800,0, 2,180,0, "")
+		chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+		color(RAGNA,-1)
+		color(PARTNER,-1)
+
+		chr_pos(EVENT_RAGNA,-88,-5065,201,183,2)
+		chr_pos(ALWEN,143,-4929,201,176,2)
+
+		CAM_move(-100,5787,1605,0,0)
+		CAM(110,111,1040,30,213,0,0)
+
+		fade_in(0,30,0)
+		wait_fade()
+
+		CAM_move(-100,5787,543,180,0)
+		wait(60)
+	//　　少しカメラを動かして見せる。
+		MES_pos(EVENT_RAGNA,"W9こいつは黒水晶の遺跡……？",0,120,400,0,0)
+
+		wait_key(0)
+		MES_close(EVENT_RAGNA)
+		wait_CAM_move()
+		wait(30)
+
+		cross_fade(30)
+//		CAM_move(-75,5442,443,0,0)
+//		CAM(-90,111,-120,28,213,0,0)
+		CAM_move(-75,5442,323,0,0)
+		CAM(-50,111,323,25,211,0,0)
+		wait_fade()
+
+		wait_MES(EVENT_RAGNA)
+
+	//	name2(ALWEN)
+		MES(ALWEN,"フフ、私のお気に入りの場所だ。",0)
+		MES(ALWEN,"黒水晶は魔宝石の一種……\n中々幻想的な光景であろ。",0)
+		MES_close(ALWEN)
+
+	//	name2(EVENT_RAGNA)
+		MES(EVENT_RAGNA,"はは、確かにな。",0)
+		MES_close(EVENT_RAGNA)
+
+	//　　ラグナきょろきょろ。
+		MOT(EVENT_RAGNA,51,0)//キョロキョロ
+		MES(EVENT_RAGNA,"魔物もいねえみたいだし……",0)
+		MES(EVENT_RAGNA,"時間があれば、ゆっくり弁当でも\n食いたい気分だぜ。",0)
+		MES_close(EVENT_RAGNA)
+
+	//	name2(ALWEN)
+		look(ALWEN,"Bone_Head",0,		0,3,0,			0,-30,0)
+		MES(ALWEN,"おお、それは気付かなかった。\n今度は是非そうするとしよう。",0)
+		MES_close(ALWEN)
+
+	//　　アルウェンに♪エモーション。
+	//　　ラグナに冷や汗エモーション。
+		look(ALWEN,"Bone_Head",0,		0,2,0,			0,0,0)
+		EMO(ALWEN,EMO_ONPU)
+		wait(45)
+		EMO(EVENT_RAGNA,EMO_AOZAME)
+		wait(30)
+
+	//　　顔を背ける。
+
+		rot_chr(EVENT_RAGNA,30,ALWEN)
+		MES(EVENT_RAGNA,"（しまった、ウカツな事を\n  言うんじゃなかったぜ……）",0)
+		MES_close(EVENT_RAGNA)
+
+		fade_in(100,30,0)
+		wait_fade()
+
+		delete(EVENT_RAGNA)
+		delete(ALWEN)
+
+		chr_pos(PLAYER1,-88,-5008,200,194,2)
+		chr_pos(PLAYER2,97,-4923,201,183,2)
+		color(RAGNA, 1)
+		color(PARTNER, 1)
+
+		CAM_return(0)
+		wait(30)
+		fade_in(0,30,0)
+		wait_fade()
+
+		F_set(F1_32_SeeCristal)
+		EV_end()
+
+	}
+}
+
+//風の音フェードアウト────────────────────
+EV_fadeout
+{
+	SE_vol(51,100,0)
+	wait(10)
+	SE_vol(51,90,0)
+	wait(10)
+	SE_vol(51,80,0)
+	wait(10)
+	SE_vol(51,70,0)
+	wait(10)
+	SE_vol(51,60,0)
+	wait(10)
+	SE_vol(51,50,0)
+	wait(10)
+	SE_vol(51,40,0)
+	wait(10)
+	SE_vol(51,30,0)
+	wait(10)
+	SE_vol(51,20,0)
+	wait(10)
+	SE_vol(51,10,0)
+	wait(10)
+	stop_SE(51)
+}
+//──────────────────────────────
+
+//扉反応SE処理
+EV_1128_loop
+{
+	SE(1128,0)
+	wait(56)
+	EV("EV_1128_loop2")
+}
+EV_1128_loop2
+{
+	SE(1128,0)
+	wait(57)
+	EV("EV_1128_loop")
+}
+
+
+
+//地鳴りSE処理
+EV_1024_loop
+{
+	SE(1024,0)
+	wait(130)
+	EV("EV_1024_loop2")
+}
+
+EV_1024_loop2
+{
+	SE(1024,0)
+	wait(130)
+	EV("EV_1024_loop")
+}
+
+//詠唱SEフェードアウト
+EV_1061_fadeout
+{
+	SE_vol(1061,100,0)
+	wait(1)
+	SE_vol(1061,99,0)
+	wait(1)
+	SE_vol(1061,98,0)
+	wait(1)
+	SE_vol(1061,97,0)
+	wait(1)
+	SE_vol(1061,96,0)
+	wait(1)
+	SE_vol(1061,95,0)
+	wait(1)
+	SE_vol(1061,94,0)
+	wait(1)
+	SE_vol(1061,93,0)
+	wait(1)
+	SE_vol(1061,92,0)
+	wait(1)
+	SE_vol(1061,91,0)
+	wait(1)
+	SE_vol(1061,90,0)
+	wait(1)
+	SE_vol(1061,89,0)
+	wait(1)
+	SE_vol(1061,88,0)
+	wait(1)
+	SE_vol(1061,87,0)
+	wait(1)
+	SE_vol(1061,86,0)
+	wait(1)
+	SE_vol(1061,85,0)
+	wait(1)
+	SE_vol(1061,84,0)
+	wait(1)
+	SE_vol(1061,83,0)
+	wait(1)
+	SE_vol(1061,82,0)
+	wait(1)
+	SE_vol(1061,81,0)
+	wait(1)
+	SE_vol(1061,80,0)
+	wait(1)
+	SE_vol(1061,79,0)
+	wait(1)
+	SE_vol(1061,78,0)
+	wait(1)
+	SE_vol(1061,77,0)
+	wait(1)
+	SE_vol(1061,76,0)
+	wait(1)
+	SE_vol(1061,75,0)
+	wait(1)
+	SE_vol(1061,74,0)
+	wait(1)
+	SE_vol(1061,73,0)
+	wait(1)
+	SE_vol(1061,72,0)
+	wait(1)
+	SE_vol(1061,71,0)
+	wait(1)
+	SE_vol(1061,70,0)
+	wait(1)
+	SE_vol(1061,69,0)
+	wait(1)
+	SE_vol(1061,68,0)
+	wait(1)
+	SE_vol(1061,67,0)
+	wait(1)
+	SE_vol(1061,66,0)
+	wait(1)
+	SE_vol(1061,65,0)
+	wait(1)
+	SE_vol(1061,64,0)
+	wait(1)
+	SE_vol(1061,63,0)
+	wait(1)
+	SE_vol(1061,62,0)
+	wait(1)
+	SE_vol(1061,61,0)
+	wait(1)
+	SE_vol(1061,60,0)
+	wait(1)
+	SE_vol(1061,59,0)
+	wait(1)
+	SE_vol(1061,58,0)
+	wait(1)
+	SE_vol(1061,57,0)
+	wait(1)
+	SE_vol(1061,56,0)
+	wait(1)
+	SE_vol(1061,55,0)
+	wait(1)
+	SE_vol(1061,54,0)
+	wait(1)
+	SE_vol(1061,53,0)
+	wait(1)
+	SE_vol(1061,52,0)
+	wait(1)
+	SE_vol(1061,51,0)
+	wait(1)
+	SE_vol(1061,50,0)
+	wait(1)
+	SE_vol(1061,49,0)
+	wait(1)
+	SE_vol(1061,48,0)
+	wait(1)
+	SE_vol(1061,47,0)
+	wait(1)
+	SE_vol(1061,46,0)
+	wait(1)
+	SE_vol(1061,45,0)
+	wait(1)
+	SE_vol(1061,44,0)
+	wait(1)
+	SE_vol(1061,43,0)
+	wait(1)
+	SE_vol(1061,42,0)
+	wait(1)
+	SE_vol(1061,41,0)
+	wait(1)
+	SE_vol(1061,40,0)
+	wait(1)
+	SE_vol(1061,39,0)
+	wait(1)
+	SE_vol(1061,38,0)
+	wait(1)
+	SE_vol(1061,37,0)
+	wait(1)
+	SE_vol(1061,36,0)
+	wait(1)
+	SE_vol(1061,35,0)
+	wait(1)
+	SE_vol(1061,34,0)
+	wait(1)
+	SE_vol(1061,33,0)
+	wait(1)
+	SE_vol(1061,32,0)
+	wait(1)
+	SE_vol(1061,31,0)
+	wait(1)
+	SE_vol(1061,30,0)
+	wait(1)
+	SE_vol(1061,29,0)
+	wait(1)
+	SE_vol(1061,28,0)
+	wait(1)
+	SE_vol(1061,27,0)
+	wait(1)
+	SE_vol(1061,26,0)
+	wait(1)
+	SE_vol(1061,25,0)
+	wait(1)
+	SE_vol(1061,24,0)
+	wait(1)
+	SE_vol(1061,23,0)
+	wait(1)
+	SE_vol(1061,22,0)
+	wait(1)
+	SE_vol(1061,21,0)
+	wait(1)
+	SE_vol(1061,20,0)
+	wait(1)
+	SE_vol(1061,19,0)
+	wait(1)
+	SE_vol(1061,18,0)
+	wait(1)
+	SE_vol(1061,17,0)
+	wait(1)
+	SE_vol(1061,16,0)
+	wait(1)
+	SE_vol(1061,15,0)
+	wait(1)
+	SE_vol(1061,14,0)
+	wait(1)
+	SE_vol(1061,13,0)
+	wait(1)
+	SE_vol(1061,12,0)
+	wait(1)
+	SE_vol(1061,11,0)
+	wait(1)
+	SE_vol(1061,10,0)
+	wait(1)
+	SE_vol(1061,9,0)
+	wait(1)
+	SE_vol(1061,8,0)
+	wait(1)
+	SE_vol(1061,7,0)
+	wait(1)
+	SE_vol(1061,6,0)
+	wait(1)
+	SE_vol(1061,5,0)
+	wait(1)
+	SE_vol(1061,4,0)
+	wait(1)
+	SE_vol(1061,3,0)
+	wait(1)
+	SE_vol(1061,2,0)
+	wait(1)
+	stop_SE(1061)
+}
+
+//地鳴りSE処理2
+EV_1113
+{
+	SE(1113,0)
+	wait(21)
+	EV("EV_1113_2")
+}
+
+EV_1113_2
+{
+	SE(1113,0)
+	wait(21)
+	EV("EV_1113")
+}
+
+//環境SEフェードアウト
+EV_51_fadeout
+{
+	SE_vol(51,100,0)
+	wait(1)
+	SE_vol(51,99,0)
+	wait(1)
+	SE_vol(51,98,0)
+	wait(1)
+	SE_vol(51,97,0)
+	wait(1)
+	SE_vol(51,96,0)
+	wait(1)
+	SE_vol(51,95,0)
+	wait(1)
+	SE_vol(51,94,0)
+	wait(1)
+	SE_vol(51,93,0)
+	wait(1)
+	SE_vol(51,92,0)
+	wait(1)
+	SE_vol(51,91,0)
+	wait(1)
+	SE_vol(51,90,0)
+	wait(1)
+	SE_vol(51,89,0)
+	wait(1)
+	SE_vol(51,88,0)
+	wait(1)
+	SE_vol(51,87,0)
+	wait(1)
+	SE_vol(51,86,0)
+	wait(1)
+	SE_vol(51,85,0)
+	wait(1)
+	SE_vol(51,84,0)
+	wait(1)
+	SE_vol(51,83,0)
+	wait(1)
+	SE_vol(51,82,0)
+	wait(1)
+	SE_vol(51,81,0)
+	wait(1)
+	SE_vol(51,80,0)
+	wait(1)
+	SE_vol(51,79,0)
+	wait(1)
+	SE_vol(51,78,0)
+	wait(1)
+	SE_vol(51,77,0)
+	wait(1)
+	SE_vol(51,76,0)
+	wait(1)
+	SE_vol(51,75,0)
+	wait(1)
+	SE_vol(51,74,0)
+	wait(1)
+	SE_vol(51,73,0)
+	wait(1)
+	SE_vol(51,72,0)
+	wait(1)
+	SE_vol(51,71,0)
+	wait(1)
+	SE_vol(51,70,0)
+	wait(1)
+	SE_vol(51,69,0)
+	wait(1)
+	SE_vol(51,68,0)
+	wait(1)
+	SE_vol(51,67,0)
+	wait(1)
+	SE_vol(51,66,0)
+	wait(1)
+	SE_vol(51,65,0)
+	wait(1)
+	SE_vol(51,64,0)
+	wait(1)
+	SE_vol(51,63,0)
+	wait(1)
+	SE_vol(51,62,0)
+	wait(1)
+	SE_vol(51,61,0)
+	wait(1)
+	SE_vol(51,60,0)
+	wait(1)
+	SE_vol(51,59,0)
+	wait(1)
+	SE_vol(51,58,0)
+	wait(1)
+	SE_vol(51,57,0)
+	wait(1)
+	SE_vol(51,56,0)
+	wait(1)
+	SE_vol(51,55,0)
+	wait(1)
+	SE_vol(51,54,0)
+	wait(1)
+	SE_vol(51,53,0)
+	wait(1)
+	SE_vol(51,52,0)
+	wait(1)
+	SE_vol(51,51,0)
+	wait(1)
+	SE_vol(51,50,0)
+	wait(1)
+	SE_vol(51,49,0)
+	wait(1)
+	SE_vol(51,48,0)
+	wait(1)
+	SE_vol(51,47,0)
+	wait(1)
+	SE_vol(51,46,0)
+	wait(1)
+	SE_vol(51,45,0)
+	wait(1)
+	SE_vol(51,44,0)
+	wait(1)
+	SE_vol(51,43,0)
+	wait(1)
+	SE_vol(51,42,0)
+	wait(1)
+	SE_vol(51,41,0)
+	wait(1)
+	SE_vol(51,40,0)
+	wait(1)
+	SE_vol(51,39,0)
+	wait(1)
+	SE_vol(51,38,0)
+	wait(1)
+	SE_vol(51,37,0)
+	wait(1)
+	SE_vol(51,36,0)
+	wait(1)
+	SE_vol(51,35,0)
+	wait(1)
+	SE_vol(51,34,0)
+	wait(1)
+	SE_vol(51,33,0)
+	wait(1)
+	SE_vol(51,32,0)
+	wait(1)
+	SE_vol(51,31,0)
+	wait(1)
+	SE_vol(51,30,0)
+	wait(1)
+	SE_vol(51,29,0)
+	wait(1)
+	SE_vol(51,28,0)
+	wait(1)
+	SE_vol(51,27,0)
+	wait(1)
+	SE_vol(51,26,0)
+	wait(1)
+	SE_vol(51,25,0)
+	wait(1)
+	SE_vol(51,24,0)
+	wait(1)
+	SE_vol(51,23,0)
+	wait(1)
+	SE_vol(51,22,0)
+	wait(1)
+	SE_vol(51,21,0)
+	wait(1)
+	SE_vol(51,20,0)
+	wait(1)
+	SE_vol(51,19,0)
+	wait(1)
+	SE_vol(51,18,0)
+	wait(1)
+	SE_vol(51,17,0)
+	wait(1)
+	SE_vol(51,16,0)
+	wait(1)
+	SE_vol(51,15,0)
+	wait(1)
+	SE_vol(51,14,0)
+	wait(1)
+	SE_vol(51,13,0)
+	wait(1)
+	SE_vol(51,12,0)
+	wait(1)
+	SE_vol(51,11,0)
+	wait(1)
+	SE_vol(51,10,0)
+	wait(1)
+	SE_vol(51,9,0)
+	wait(1)
+	SE_vol(51,8,0)
+	wait(1)
+	SE_vol(51,7,0)
+	wait(1)
+	SE_vol(51,6,0)
+	wait(1)
+	SE_vol(51,5,0)
+	wait(1)
+	SE_vol(51,4,0)
+	wait(1)
+	SE_vol(51,3,0)
+	wait(1)
+	SE_vol(51,2,0)
+	wait(1)
+	SE_vol(51,1,0)
+	wait(1)
+	stop_SE(51)
+}
+
+EV_1155_fadeout
+{
+	SE_vol(1155,100,0)
+	wait(1)
+	SE_vol(1155,99,0)
+	wait(1)
+	SE_vol(1155,98,0)
+	wait(1)
+	SE_vol(1155,97,0)
+	wait(1)
+	SE_vol(1155,96,0)
+	wait(1)
+	SE_vol(1155,95,0)
+	wait(1)
+	SE_vol(1155,94,0)
+	wait(1)
+	SE_vol(1155,93,0)
+	wait(1)
+	SE_vol(1155,92,0)
+	wait(1)
+	SE_vol(1155,91,0)
+	wait(1)
+	SE_vol(1155,90,0)
+	wait(1)
+	SE_vol(1155,89,0)
+	wait(1)
+	SE_vol(1155,88,0)
+	wait(1)
+	SE_vol(1155,87,0)
+	wait(1)
+	SE_vol(1155,86,0)
+	wait(1)
+	SE_vol(1155,85,0)
+	wait(1)
+	SE_vol(1155,84,0)
+	wait(1)
+	SE_vol(1155,83,0)
+	wait(1)
+	SE_vol(1155,82,0)
+	wait(1)
+	SE_vol(1155,81,0)
+	wait(1)
+	SE_vol(1155,80,0)
+	wait(1)
+	SE_vol(1155,79,0)
+	wait(1)
+	SE_vol(1155,78,0)
+	wait(1)
+	SE_vol(1155,77,0)
+	wait(1)
+	SE_vol(1155,76,0)
+	wait(1)
+	SE_vol(1155,75,0)
+	wait(1)
+	SE_vol(1155,74,0)
+	wait(1)
+	SE_vol(1155,73,0)
+	wait(1)
+	SE_vol(1155,72,0)
+	wait(1)
+	SE_vol(1155,71,0)
+	wait(1)
+	SE_vol(1155,70,0)
+	wait(1)
+	SE_vol(1155,69,0)
+	wait(1)
+	SE_vol(1155,68,0)
+	wait(1)
+	SE_vol(1155,67,0)
+	wait(1)
+	SE_vol(1155,66,0)
+	wait(1)
+	SE_vol(1155,65,0)
+	wait(1)
+	SE_vol(1155,64,0)
+	wait(1)
+	SE_vol(1155,63,0)
+	wait(1)
+	SE_vol(1155,62,0)
+	wait(1)
+	SE_vol(1155,61,0)
+	wait(1)
+	SE_vol(1155,60,0)
+	wait(1)
+	SE_vol(1155,59,0)
+	wait(1)
+	SE_vol(1155,58,0)
+	wait(1)
+	SE_vol(1155,57,0)
+	wait(1)
+	SE_vol(1155,56,0)
+	wait(1)
+	SE_vol(1155,55,0)
+	wait(1)
+	SE_vol(1155,54,0)
+	wait(1)
+	SE_vol(1155,53,0)
+	wait(1)
+	SE_vol(1155,52,0)
+	wait(1)
+	SE_vol(1155,51,0)
+	wait(1)
+	SE_vol(1155,50,0)
+	wait(1)
+	SE_vol(1155,49,0)
+	wait(1)
+	SE_vol(1155,48,0)
+	wait(1)
+	SE_vol(1155,47,0)
+	wait(1)
+	SE_vol(1155,46,0)
+	wait(1)
+	SE_vol(1155,45,0)
+	wait(1)
+	SE_vol(1155,44,0)
+	wait(1)
+	SE_vol(1155,43,0)
+	wait(1)
+	SE_vol(1155,42,0)
+	wait(1)
+	SE_vol(1155,41,0)
+	wait(1)
+	SE_vol(1155,40,0)
+	wait(1)
+	SE_vol(1155,39,0)
+	wait(1)
+	SE_vol(1155,38,0)
+	wait(1)
+	SE_vol(1155,37,0)
+	wait(1)
+	SE_vol(1155,36,0)
+	wait(1)
+	SE_vol(1155,35,0)
+	wait(1)
+	SE_vol(1155,34,0)
+	wait(1)
+	SE_vol(1155,33,0)
+	wait(1)
+	SE_vol(1155,32,0)
+	wait(1)
+	SE_vol(1155,31,0)
+	wait(1)
+	SE_vol(1155,30,0)
+	wait(1)
+	SE_vol(1155,29,0)
+	wait(1)
+	SE_vol(1155,28,0)
+	wait(1)
+	SE_vol(1155,27,0)
+	wait(1)
+	SE_vol(1155,26,0)
+	wait(1)
+	SE_vol(1155,25,0)
+	wait(1)
+	SE_vol(1155,24,0)
+	wait(1)
+	SE_vol(1155,23,0)
+	wait(1)
+	SE_vol(1155,22,0)
+	wait(1)
+	SE_vol(1155,21,0)
+	wait(1)
+	SE_vol(1155,20,0)
+	wait(1)
+	SE_vol(1155,19,0)
+	wait(1)
+	SE_vol(1155,18,0)
+	wait(1)
+	SE_vol(1155,17,0)
+	wait(1)
+	SE_vol(1155,16,0)
+	wait(1)
+	SE_vol(1155,15,0)
+	wait(1)
+	SE_vol(1155,14,0)
+	wait(1)
+	SE_vol(1155,13,0)
+	wait(1)
+	SE_vol(1155,12,0)
+	wait(1)
+	SE_vol(1155,11,0)
+	wait(1)
+	SE_vol(1155,10,0)
+	wait(1)
+	SE_vol(1155,9,0)
+	wait(1)
+	SE_vol(1155,8,0)
+	wait(1)
+	SE_vol(1155,7,0)
+	wait(1)
+	SE_vol(1155,6,0)
+	wait(1)
+	SE_vol(1155,5,0)
+	wait(1)
+	SE_vol(1155,4,0)
+	wait(1)
+	SE_vol(1155,3,0)
+	wait(1)
+	SE_vol(1155,2,0)
+	wait(1)
+	SE_vol(1155,1,0)
+	wait(1)
+	SE_vol(1155,0,0)
+	wait(1)
+	stop_SE(1155)
+}
+
+EV_1156_fadeout
+{
+	SE_vol(1156,100,0)
+	wait(1)
+	SE_vol(1156,99,0)
+	wait(1)
+	SE_vol(1156,98,0)
+	wait(1)
+	SE_vol(1156,97,0)
+	wait(1)
+	SE_vol(1156,96,0)
+	wait(1)
+	SE_vol(1156,95,0)
+	wait(1)
+	SE_vol(1156,94,0)
+	wait(1)
+	SE_vol(1156,93,0)
+	wait(1)
+	SE_vol(1156,92,0)
+	wait(1)
+	SE_vol(1156,91,0)
+	wait(1)
+	SE_vol(1156,90,0)
+	wait(1)
+	SE_vol(1156,89,0)
+	wait(1)
+	SE_vol(1156,88,0)
+	wait(1)
+	SE_vol(1156,87,0)
+	wait(1)
+	SE_vol(1156,86,0)
+	wait(1)
+	SE_vol(1156,85,0)
+	wait(1)
+	SE_vol(1156,84,0)
+	wait(1)
+	SE_vol(1156,83,0)
+	wait(1)
+	SE_vol(1156,82,0)
+	wait(1)
+	SE_vol(1156,81,0)
+	wait(1)
+	SE_vol(1156,80,0)
+	wait(1)
+	SE_vol(1156,79,0)
+	wait(1)
+	SE_vol(1156,78,0)
+	wait(1)
+	SE_vol(1156,77,0)
+	wait(1)
+	SE_vol(1156,76,0)
+	wait(1)
+	SE_vol(1156,75,0)
+	wait(1)
+	SE_vol(1156,74,0)
+	wait(1)
+	SE_vol(1156,73,0)
+	wait(1)
+	SE_vol(1156,72,0)
+	wait(1)
+	SE_vol(1156,71,0)
+	wait(1)
+	SE_vol(1156,70,0)
+	wait(1)
+	SE_vol(1156,69,0)
+	wait(1)
+	SE_vol(1156,68,0)
+	wait(1)
+	SE_vol(1156,67,0)
+	wait(1)
+	SE_vol(1156,66,0)
+	wait(1)
+	SE_vol(1156,65,0)
+	wait(1)
+	SE_vol(1156,64,0)
+	wait(1)
+	SE_vol(1156,63,0)
+	wait(1)
+	SE_vol(1156,62,0)
+	wait(1)
+	SE_vol(1156,61,0)
+	wait(1)
+	SE_vol(1156,60,0)
+	wait(1)
+	SE_vol(1156,59,0)
+	wait(1)
+	SE_vol(1156,58,0)
+	wait(1)
+	SE_vol(1156,57,0)
+	wait(1)
+	SE_vol(1156,56,0)
+	wait(1)
+	SE_vol(1156,55,0)
+	wait(1)
+	SE_vol(1156,54,0)
+	wait(1)
+	SE_vol(1156,53,0)
+	wait(1)
+	SE_vol(1156,52,0)
+	wait(1)
+	SE_vol(1156,51,0)
+	wait(1)
+	SE_vol(1156,50,0)
+	wait(1)
+	SE_vol(1156,49,0)
+	wait(1)
+	SE_vol(1156,48,0)
+	wait(1)
+	SE_vol(1156,47,0)
+	wait(1)
+	SE_vol(1156,46,0)
+	wait(1)
+	SE_vol(1156,45,0)
+	wait(1)
+	SE_vol(1156,44,0)
+	wait(1)
+	SE_vol(1156,43,0)
+	wait(1)
+	SE_vol(1156,42,0)
+	wait(1)
+	SE_vol(1156,41,0)
+	wait(1)
+	SE_vol(1156,40,0)
+	wait(1)
+	SE_vol(1156,39,0)
+	wait(1)
+	SE_vol(1156,38,0)
+	wait(1)
+	SE_vol(1156,37,0)
+	wait(1)
+	SE_vol(1156,36,0)
+	wait(1)
+	SE_vol(1156,35,0)
+	wait(1)
+	SE_vol(1156,34,0)
+	wait(1)
+	SE_vol(1156,33,0)
+	wait(1)
+	SE_vol(1156,32,0)
+	wait(1)
+	SE_vol(1156,31,0)
+	wait(1)
+	SE_vol(1156,30,0)
+	wait(1)
+	SE_vol(1156,29,0)
+	wait(1)
+	SE_vol(1156,28,0)
+	wait(1)
+	SE_vol(1156,27,0)
+	wait(1)
+	SE_vol(1156,26,0)
+	wait(1)
+	SE_vol(1156,25,0)
+	wait(1)
+	SE_vol(1156,24,0)
+	wait(1)
+	SE_vol(1156,23,0)
+	wait(1)
+	SE_vol(1156,22,0)
+	wait(1)
+	SE_vol(1156,21,0)
+	wait(1)
+	SE_vol(1156,20,0)
+	wait(1)
+	SE_vol(1156,19,0)
+	wait(1)
+	SE_vol(1156,18,0)
+	wait(1)
+	SE_vol(1156,17,0)
+	wait(1)
+	SE_vol(1156,16,0)
+	wait(1)
+	SE_vol(1156,15,0)
+	wait(1)
+	SE_vol(1156,14,0)
+	wait(1)
+	SE_vol(1156,13,0)
+	wait(1)
+	SE_vol(1156,12,0)
+	wait(1)
+	SE_vol(1156,11,0)
+	wait(1)
+	SE_vol(1156,10,0)
+	wait(1)
+	SE_vol(1156,9,0)
+	wait(1)
+	SE_vol(1156,8,0)
+	wait(1)
+	SE_vol(1156,7,0)
+	wait(1)
+	SE_vol(1156,6,0)
+	wait(1)
+	SE_vol(1156,5,0)
+	wait(1)
+	SE_vol(1156,4,0)
+	wait(1)
+	SE_vol(1156,3,0)
+	wait(1)
+	SE_vol(1156,2,0)
+	wait(1)
+	SE_vol(1156,1,0)
+	wait(1)
+	stop_SE(1156)
+}
+
+#EndScriptTable
+//====================================================================
+

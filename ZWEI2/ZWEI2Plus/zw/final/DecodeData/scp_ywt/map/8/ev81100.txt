@@ -1,0 +1,324 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[18010][梫嵡亅擖岥]
+//====================================================================
+
+#ScriptTable
+
+
+#LUE 		1
+#EVENT_RAGNA 	2
+#ALWEN	 		3
+#LUEDUMMY		4
+
+// 101 擖岥
+
+INIT
+{
+//娐嫬SE
+	SE(70,0)
+
+//  -------  no typ   	  tip      x     y     z    mot     岦 忬  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+	map_color(70,60,90,0)
+//仭奒抜丒斷
+	set_chr( 90,990,	-1,-1,   800,10800,    0,   180,     0, 0,";")	//嘆僟儈乕 弶婜埵抲
+	set_chr( 91,990,	-1,-1,     0, 6500, -200,     0,     0, 0,";")	//嘆僟儈乕 儊僀儞嘆偐傜栠傝
+
+	set_chr( 92,990,	-1,-1,     0, 6750,-1050,     0,081210, 0,"K0_18011;")	//嘆僄儞僩儕亅儊僀儞嘆
+	set_chr(150,990,	-1,-1,     0, 7550,   50,     0,071001, 6,"SF101 #6_92 #6_82;")		// 僄儗儀乕僞乕壓傝桳岠壔梡僄儞僩儕
+	set_chr( 82,990,	-1,-1,     0, 6750,   50,     0,081210, 0,"<EV_Down>;")	//嘆僄儞僩儕亅儊僀儞嘆
+
+//仭僗僀僢僠丒娕斅
+	set_chr( 50,620,	-1,-1,  -1450,8350,    0,	  0,   270, 0,";")			//嘆僙乕僽OBJ
+	F_set_chr( 50,     CF_NO_CLIP);
+
+	set_chr( 56,648,	-1,-1,     0, 8150,   -26,	 26,     0, 0,";")	//儗儀儖僾儗乕僩
+	color2( 56, 100,75,85,0,0,0)
+
+//仭僀儀儞僩
+	if(WK_ENTRY==91)//奒抜91 偐傜棃偨帪乮婣傝乯
+	{
+		mot_obj("move_yuka","anime1")
+		EV("EV_ElevatorSE")
+	}
+	else
+	{
+		mot_obj("move_yuka","stop0")
+	}
+
+
+	if(GW_ENTRY_EVENT==1)
+	{
+		set_namebmp(0,0)
+		workG(GW_ENTRY_EVENT,SET,0)
+		//仴嫄戝棾姫傪撍攋偟偰嬻拞梫嵡偵摓拝偡傞
+		EV("EV_6_07_OnMeru")
+	}
+
+//仭応柺屌桳愝掕
+}
+
+//====================================================================
+EV_Down
+{
+	mot_obj("move_yuka","anime0")
+	SE(1314,0)
+}
+
+//僄儗儀乕僞乕偺俽俤嵞惗乮僞僀儈儞僌庢傞偨傔僗儗僢僪壔乯乮08.08.28傂乯
+EV_ElevatorSE
+{
+	wait(40)
+	SE(1314,0)
+}
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嫄戝棾姫傪撍攋偟偰嬻拞梫嵡偵摓拝偡傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂夋柺偟偽傜偔埫揮偟偨屻丄備偭偔傝偲僼僃乕僪僀儞丅
+//丂丂梿慁梫嵡偺堦妏偵僩儕僗僞儞崋偑拝棨偟偰偍傝丄
+//丂丂儔僌僫偲傾儖僂僃儞丄偦偟偰儖僁偑偦偺懁偵棫偭偰偄傞丅
+//丂丂偦傟傜傪墦宨偱尒偣側偑傜丄抧柤昞帵傪峴偆丅
+//丂丂梫嵡偺埿梕傪尒忋偘側偑傜尩偟偄昞忣偺儔僌僫偨偪丅
+EV_6_07_OnMeru
+{
+	EV_begin()
+
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+
+	F_set_chr( 56,     CF_NO_CLIP)
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,	 3630,5470,-17,180,2)
+	chr_pos(PARTNER,	 3630,5270,-17,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(LUEDUMMY,   	  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 470,10340,-17, 2,150,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 522,10580,-17, 2,130,0, "")
+	set_chr(LUE,	 1015,-1,-1,  340,10580,3, 2,130,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_HEIGHT)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+
+	KAO(EVENT_RAGNA,"B","1","2")
+	KAO(ALWEN,"B","1","2")
+	KAO(LUE,"B","1","2")
+
+//	MOT_SET(EVENT_RAGNA, 150,-1,3090,3101,-1,0)				//僊傾撍偒弌偡
+	MOT_SET(EVENT_RAGNA, 150,-1,3035,3057,-1,0)				//僊傾撍偒弌偡
+
+	wait(30)											//僇儊儔儘僢僋傪夞旔
+	chr_equip( ALWEN,"wp_004b", "Bone_RightSword", 100)	//忨傪憰旛偝偣傞偺偼偙偪傜丅
+//	MOT(ALWEN,53,1)										//傾儖僂僃儞偺塃庤傪奐偐偣傞丅
+	chr_equip_chr(LUEDUMMY, EVENT_RAGNA, "Bone_RightSword", 100,		0,0,0,	0,0,0);
+
+	//僇儊儔弶婜埵抲
+	CAM_move(4224,7970,19690,0,0)
+	CAM(-610,80,19690,58,284,0,0)
+
+	CAM_move(464,-10430,3870,360,0)
+	CAM(-610,50,3870,58,220,360,0)
+
+	//僼僃乕僪僀儞
+	fade_in(0,90,0)
+	wait_fade()
+
+	wait(60)
+	set_namebmp(16,0)										//抧柤
+
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(30)
+	CAM_move(1004,-5850,1490,0,0)
+	CAM(190,324,1490,46,210,0,0)
+	CAM_move(464,-10430,970,300,0)
+	CAM(190,280,970,46,238,300,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(30)
+	CAM_move(464,-10430,390,0,0)
+	CAM(-530,50,190,38,220,0,0)
+	CAM_move(464,-10430,190,120,0)
+	wait_CAM_move()
+	wait(15)
+
+	MES(LUE,"好…好壯觀……",0)
+	MES_close(LUE)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"這就是……\n魔王的城堡嗎？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"「螺旋要塞」梅爾賽迪克。",0)
+	MES(ALWEN,"曾經在魔法大戰中展現出壓倒性的力量，\n是「金色魔王」的城堡。",0)
+	MES(ALWEN,"而它如今……\n在你妹妹的掌控之下。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B","1","2")
+	MES(EVENT_RAGNA,"嗯……",0)
+	MES_close(EVENT_RAGNA)
+
+	CAM_move(464,-10470,110,60,0)
+	CAM(-170,33,110,37,234,60,0)
+
+//丂丂儔僌僫丄偙偙偱傾儖僂僃儞偨偪偵岦偒捈傞丅
+
+	rot_chr(EVENT_RAGNA,20,ALWEN)
+	wait(15)
+
+//	wait_BGM()
+	wait_CAM()
+	wait_CAM_move()
+//	BGM(33)
+//	workG(GW_DEF_BGM,SET,0)		//僨僼僅儖僩嬋傪尦偵栠偡
+
+	KAO(EVENT_RAGNA,"B232BZ5","123","2")
+	MES(EVENT_RAGNA,"不管這要塞有多大，\n我都要走到米婭面前。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","3","2")
+	MES(EVENT_RAGNA,"而且我也有話要對\n那個裝腔作勢的傢伙說。",0)
+	KAO(EVENT_RAGNA,"B232BZ4","321","2")
+	MES(EVENT_RAGNA,"你們兩位……\n也會幫助我吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	wait_MES(EVENT_RAGNA)
+
+	stop_BGM(90)
+
+	cross_fade(15)
+	CAM(-130,33,130,37,299,0,0)
+	CAM_move(464,-10470,130,0,0)
+	CAM(-370,33,130,37,299,300,0)
+
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(5)
+	rot_chr(LUE,30,EVENT_RAGNA)
+	wait(10)
+	wait_fade()
+
+	KAO(ALWEN,"12321Z3","1233321","3")
+	MES(ALWEN,"唔，包在我身上。",0)
+	MES_close(ALWEN)
+
+	KAO(LUE,"B232BZ4","123","2")
+	MES(LUE,"嗯……\n不過這也應該是最後一次了。",0)
+	MES_close(LUE)
+
+	look_chr(EVENT_RAGNA, LUE, "Bone_Head")
+	
+	wait_BGM()
+	BGM(33)
+	wait_MES(LUE)
+	
+//丂丂儖僁丄偦偺傑傑儔僌僫偺傾儞僇乕僊傾傊偲廻傞丅
+//	MOT(EVENT_RAGNA, 150, 10)
+
+//	stop_BGM(90)
+	cross_fade(15)
+	CAM_move(464,-10470,110,0,0)
+//	CAM(149,33,110,37,144,0,0)
+	CAM(149,33,110,37,241,0,0)
+	
+	wait(15)
+	EFF_chr(6830,LUE,0,100,0,"Bone_Spine")						//僄僼僃僋僩丗儖僁偑廻傞
+	EFF_chr(6825,LUE,0,100,0,"Bone_Spine")						//僄僼僃僋僩丗儖僁偑廻傞
+	SE(1059,0)//儖僁廻傝
+	wait(15)
+
+	MOT(EVENT_RAGNA, 150, 10)	
+
+	EV("EV_1014")//僊傾峔偊SE
+
+	color(LUE,-30)
+	wait_color(LUE)
+	EFF_chr(6815, LUE, 0,100,LUEDUMMY,"Bone_Hips")	//僄僼僃僋僩丗儖僁偑廻傞
+	SE(1035,0)//儖僁廻傝
+
+	wait(60)
+
+	look_off(EVENT_RAGNA)
+	MOT(EVENT_RAGNA, 2, 10)							//儔僌僫丄懸婡
+	wait(15)
+	
+//	wait_BGM()
+//	BGM(33)
+
+	KAO(EVENT_RAGNA,"12321Z3","1233321","2")
+	MES(EVENT_RAGNA,"好……準備完成。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	cross_fade(15)
+	CAM_move(464,-10470,190,0,0)
+	CAM(-570,33,190,37,237,0,0)
+//	CAM_move(464,-10470,230,150,0)
+//	CAM(-970,33,230,37,237,150,0)
+	CAM_move(464,-10470,230,90,0)
+	CAM(-970,33,230,37,237,90,0)
+//丂丂儔僌僫丄夵傔偰梿慁梫嵡偺埿梕傪尒忋偘傞丅
+	rot(EVENT_RAGNA,20,150)	
+	rot(ALWEN,30,130)
+	wait_CAM()
+	wait_CAM_move()
+	workG(GW_DEF_BGM,SET,0)		//僨僼僅儖僩嬋傪尦偵栠偡
+
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","3")	
+	MES(EVENT_RAGNA,"——等我過去，米婭！",0)
+	MES_close(EVENT_RAGNA)
+
+//	CAM_move(464,-10430,240,60,0)
+	fade_in(100,60,0)
+	wait_fade()
+
+	F_reset_chr( 56,     CF_NO_CLIP)
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(LUE)
+	delete(LUEDUMMY)
+
+	chr_pos(RAGNA,	 470,10340,-17,180,2)
+	chr_pos(PARTNER,	 522,10580,-17,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+//俧俥亀仛梿慁梫嵡儊儖僙僨僋偵摓拝偟偨亁傪棫偰傞丅
+	F_set(F6_02_OnMeru)
+
+	fade_in(0,30,0)
+
+	EV_end()
+
+	color(PET,-1)
+}
+
+EV_1014
+{
+	wait(15)
+	SE(1014,0)//僊傾峔偊
+}
+
+#EndScriptTable
+//====================================================================
+

@@ -1,0 +1,607 @@
+//──────────────────────────────
+//	name("◆安娜（女仆Ａ）Anna")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_ANNA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(ANNA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ANNA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ANNA)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ANNA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※屋敷控え室，奥之椅子に座っている。
+	//　　　テ～ブル之上にはカップが一つ。
+	if( F6_05_EndSixth )
+	{
+		look_chr(ANNA, PLAYER1,"Bone_Head")
+		if(!F_ANNA)
+		{
+			MES(ANNA,"哎呀……",0)
+			MES(ANNA," 小姐她们，\n早就出门去啦～。",0)
+			MES(ANNA,"我想现在正在\n机场等着。",0)
+			MES_close(ANNA)
+
+		//　　安娜に少し···エモ～ション。
+			EMO(ANNA,EMO_TENTEN)
+			wait(30)
+			MES(ANNA,"我话说在前头哦，\n我可不是在偷懒哟～。",0)
+			MES(ANNA,"现在是休息时间啊～。",0)
+			MES_close(ANNA)
+
+			F_set(ANNA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(ANNA,"……没什么事也，\n真是闲的挺无聊的呢～。",0)
+			MES_close(ANNA)
+
+		//　　安娜に少し···エモ～ション。
+			EMO(ANNA,EMO_TENTEN)
+			wait(30)
+
+			MES(ANNA,"去喝点咖啡吧？",0)
+			MES(ANNA,"我泡给你喝哦～。",0)
+			MES_close(ANNA)
+		}
+		look_off(ANNA)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※屋敷横之滝前啊たりを掃除している。（ホウキ持ち）
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(ANNA,30,PLAYER1)
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+		EV("MOTION_TK_ANNA")
+		if(!F_ANNA)
+		{
+			MES(ANNA,"听村里的传言，\n可怕的龙卷风好像正袭击过来呢～。",0)
+			MES(ANNA,"……………………………………",0)
+			MES(ANNA,"……海蕾娜，\n可能又要哭呢～。",0)
+			MES_close(ANNA)
+
+		//　　安娜，向きを戻す。
+			rot(ANNA,30,0)
+			look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+			MES(ANNA,"快点，把这里扫完吧。",0)
+			MES_close(ANNA)
+
+			F_set(ANNA)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(ANNA,"房子里边，安洁应该\n在关窗户了～。",0)
+			rot(ANNA,30,0)
+			MES(ANNA,"……快点，把这里扫完吧。",0)
+			MES_close(ANNA)
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※屋敷·広間を掃除している。（ホウキ持ち）
+	if( F5_00_HearLunar )
+	{
+		EV("MOTION_TK_ANNA")
+		if(!FT_11_TalkAnna)
+		{
+		//	name("□フラグ①または②之初回イベントを見ている场合。")
+			if(FT_01_TalkAnna || FT_02_TalkAnna )
+			{
+				MES(RAGNA,"诶，怎么？\n难得在劳动呢……",0)
+				MES_close(RAGNA)
+
+			//	name2(ANNA)
+				rot_chr(ANNA,30,PLAYER1)
+				MES(ANNA,"多……多嘴～。",0)
+				MES(ANNA,"干什么，\n不都是我的自由～么。",0)
+				MES_close(ANNA)
+			}
+
+			EMO(ANNA,EMO_HATENA)
+			wait(30)
+			rot_chr(ANNA,30,PET)
+			look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+			MES(ANNA,"嗯～……",0)
+			MES_close(ANNA)
+
+//			MES(ANNA,"C4◆安娜，少し···エモ～ションを出しながら露に顔を近づけてくる。",0)
+//			MES_close(ANNA)
+		//　　安娜，少し···エモ～ションを出しながら露に顔を近づけてくる。"
+			EMO(ANNA,EMO_TENTEN)
+			wait(40)
+			EMO(ANNA,EMO_TENTEN)
+			wait(50)
+			//顔を近づける
+
+			MES(ANNA,"盯～………",0)
+			MES(ANNA,"那个红红的，是啥？",0)
+			MES(ANNA,"好像之前就一直在屋子里\n晃来晃去的……",0)
+			KAO(ANNA,"1","2","2")
+			MES(ANNA,"呜……看不清楚……",0)
+			MES_close(ANNA)
+
+		//　　露に気付きエモ～ション。
+			EMO(PET,EMO_PA)
+			rot_chr(PET,30,ANNA)
+			wait(30)
+			
+			MES(PET,"吓，是指我吗？",0)
+			MES_close(PET)
+
+			EMO(PET,EMO_AOSUZI)
+			wait(30)
+
+			MES(PET,"搞，搞什么\n这个无理的女仆……",0)
+			MES(PET,"我是艾尔雯大人的家臣！\n身材妖娆的暗妖精哟！",0)
+			MES(PET,"即便是你们的小姐，我也不会帮忙的！",0)
+			MES_close(PET)
+
+		//	name2(RAGNA)
+			look_chr(RAGNA,PET,"Bone_Head")
+			MES(RAGNA,"哈哈……",0)
+			MES_close(RAGNA)
+
+		//　　拉古那，安娜に向く。
+			look_off(RAGNA)
+
+			//──────────────────────────────
+			//	name("□フラグ②之初回を見ていない场合")
+			if(!FT_02_TalkAnna)
+			{
+				MES(RAGNA,"这么说，你是不是\n眼睛不好用啊？",0)
+				MES(RAGNA,"戴个眼镜不好么……",0)
+				MES_close(RAGNA)
+			}
+			//	name("□フラグ②之初回を見ている场合")
+			else
+			{
+				MES(RAGNA,"这么说，\n你还是赶紧\n戴副眼镜吧……",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+			rot_chr(ANNA,30,RAGNA)
+		
+			KAO(ANNA,"1","1","1")
+			MES(ANNA,"多嘴啊～。\n多管闲事～。",0)
+			rot_chr(ANNA,30,PET)
+			MES(ANNA,"嗯，也不是谁都可以的吧……",0)
+			MES(ANNA,"模仿海蕾娜的方法做的排骨肉，\n让大家吃一惊。\n真不错。",0)
+			MES_close(ANNA)
+
+		//	name2(PET)
+			MES(PET,"当，当然不会去做啦，\n那样的事。",0)
+			MES(PET,"真是的，竟然把女士也这样抓着\n真是失礼的人类呢……",0)
+			MES_close(PET)
+
+			F_set(FT_11_TalkAnna)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+			if(!F_ANNA)
+			{
+				MES(ANNA,"哎呀……可以不要弄脏\n已经扫除过的地方不？",0)
+				MES(ANNA,"还有你的鞋，尽是泥。",0)
+				MES(ANNA,"好不容易搞好的全被糟蹋了。",0)
+				MES_close(ANNA)
+
+			//──────────────────────────────
+			//	name("□フラグ①または②之初回イベントを見ており，海蕾娜之繰り返しを見ている场合。")
+				if(FT_01_TalkAnna || FT_02_TalkAnna )
+				{
+					if(F_HELENA)
+					{
+						MES(RAGNA,"（虽然干活\n  很认真的样子……）",0)
+						MES(RAGNA,"（嘴巴还是\n  和以前一样犀利啊……）",0)
+						MES_close(RAGNA)
+					}
+				}
+				
+				F_set(ANNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(ANNA,"喂～，那边那个。\n不要糟蹋别人\n的努力成果啊～。",0)
+				MES(ANNA,"没完没了不是。",0)
+				MES_close(ANNA)
+			}
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※屋敷之前で掃除している。（ホウキ持ち）
+	if( F4_00_StartSolo )
+	{
+		rot_chr(ANNA,30,PLAYER1)
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+		EV("MOTION_TK_ANNA")
+
+		if(!F_ANNA)
+		{
+			MES(ANNA,"小姐说了，\n今天休息一整天也没关系～。",0)
+			MES(ANNA,"……但是，\n什么事都不做的话有点不安呢。",0)
+			MES(ANNA,"也的确没什么\n特别要做的事。",0)
+			MES_close(ANNA)
+
+		//　　安娜に少し···エモ～ション。
+			MES(ANNA,"稍微，\n打扫一下这里。",0)
+			MES_close(ANNA)
+			F_set(ANNA)
+		//　　★安娜【根是い奴】
+			F_set_note(ANNA,2)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(ANNA,"……找小姐的话\n在里面哟～。",0)
+			MES(ANNA,"有急事的话\n就快点进去吧～？",0)
+			MES_close(ANNA)
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった
+	//──────────────────────────────
+	//　　※屋敷·控え室，海蕾娜之傍に立っている。
+	if( F3_00_GoMoonCastle )
+	{
+		EV("MOTION_TK_ANNA")
+		if(!F_ANNA)
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			MES(ANNA,"……第一个被袭击的是，\n海蕾娜吗。",0)
+			MES(ANNA,"怪物好像是\n越过后面的悬崖来的～。",0)
+			MES(ANNA,"……………………………………",0)
+			MES(ANNA,"说不定只是蚊子～。",0)
+			MES_close(ANNA)
+			F_set(ANNA)
+		}
+	//　　★繰りかえし
+		else
+		{
+		//　　※振り返らない。
+			MES(ANNA,"……海蕾娜，\n怪物已经没了哦～。",0)
+			MES(ANNA,"……喂～，不要哭啦～。\n马上给我擦干眼泪～。",0)
+			MES_close(ANNA)
+		}
+		rot_chr(ANNA,30,HELENA)
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵之正体が明かされた
+	//──────────────────────────────
+	//　　※镇，噴水右辺り之ベンチに座っている。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_ANNA)
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			EV("MOTION_TK_ANNA")
+			MES(ANNA,"在捉弄海蕾娜玩的时候，\n被安洁那家伙发现了～。",0)
+			MES(ANNA,"作为惩罚，要去负责\n买东西哦～。",0)
+			MES(ANNA,"切，那个混蛋小不点女仆长……\n下次得好好报复一下。",0)
+			MES(ANNA,"在账本上\n涂鸦『这个混蛋小个子』～。",0)
+			MES_close(ANNA)
+
+		//　　２人に冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			//★安娜【時には失敗】
+			F_set_note(ANNA,1)
+
+			F_set(ANNA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない。
+			MES(ANNA,"呜……\n今天有点热……",0)
+			MES_close(ANNA)
+
+		//　　安娜振り返る。
+			rot_chr(ANNA,30,PLAYER1)
+			EV("MOTION_TK_ANNA")
+			//振り返る処理
+			MES(ANNA,"……我讨厌，太阳。",0)
+			MES(ANNA,"感觉真是烦人的东西。",0)
+			MES_close(ANNA)
+		}
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※屋敷之前を掃除している。（ホウキ持ち）
+	if( F2_00_GoForest )
+	{
+		rot_chr(ANNA,30,PLAYER1)
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+		EV("MOTION_TK_ANNA")
+		if(!F_ANNA)
+		{
+			MES(ANNA,"今天小姐他们\n回来了哦～。",0)
+			MES(ANNA,"切，\n亏我还刚准备要翘班呢……",0)
+			MES(ANNA,"真不走运呢～。",0)
+			MES_close(ANNA)
+			F_set(ANNA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(ANNA,"……我对付不了，\n那个管家呀～。",0)
+			MES(ANNA,"因为太安静了\n完全不能感觉他的存在。",0)
+			MES(ANNA,"不知道为什么，\n总觉得一直在被盯着\n没办法安下心来啊～。",0)
+			MES_close(ANNA)
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※屋敷控え室に配置。
+	//　　　部屋之隅で頭を抱えている。（額に手を当てる，口に手を当てるで代用？）
+	if( F1_15_GoVillage )
+	{
+		if(!FT_02_TalkAnna)
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			MES(ANNA,"疼疼疼……",0)
+			MES(ANNA,"整个人一头，撞到了\n那个橱柜上去了啊～。",0)
+			MES(ANNA,"……真是的\n看不清啊。",0)
+			MES(ANNA,"讨厌\n为什么那种地方会有橱柜呢～。",0)
+			MES_close(ANNA)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"哎呀，也就是说……",0)
+				MES(RAGNA,"难不成，\n你视力不好？",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾尔雯先頭")
+			else
+			{
+				MES(PARTNER,"嗯，你的眼睛……",0)
+				MES(PARTNER,"难道\n视力很差？",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			MES(ANNA,"呃……",0)
+			MES(ANNA,"讨厌啊～。",0)
+			MES(ANNA,"那种事情，\n不关你的事吧～。",0)
+			MES_close(ANNA)
+			F_set(FT_02_TalkAnna)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_ANNA)
+			{
+			//　　※振り返らない。
+				MES(ANNA,"哇～，疼疼疼……",0)
+				MES(ANNA,"哎呀，真不走运～。\n干脆翘班吧。",0)
+				MES_close(ANNA)
+
+			//　　安娜振り返る。
+				rot_chr(ANNA,30,PLAYER1)
+			//	★振り返る処理
+			
+				MES(ANNA,"啊……跟你说过了。\n是因为还不熟悉这间屋子才会\n重重的撞了一下头哦～。",0)
+				MES(ANNA,"在家里的时候，\n比这个要撞得轻多了。",0)
+				MES_close(ANNA)
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"果，果然\n眼睛不好呀……",0)
+					MES(RAGNA,"戴个眼镜不就好了么……",0)
+					MES_close(RAGNA)
+				}
+				//	name("□艾尔雯先頭")
+				else
+				{
+					MES(PARTNER,"不，不要硬撑\n戴眼镜吧……",0)
+					MES_close(PARTNER)
+				}
+				F_set(ANNA)
+			}
+			//──────────────────────────────
+			//　　★繰り返し
+			else
+			{
+				rot_chr(ANNA,30,PLAYER1)
+				MES(ANNA,"哼……",0)
+				MES(ANNA,"眼镜那么土的东西我可\n不打算戴哦～。",0)
+				MES(ANNA,"我才不要变成像海蕾娜\n那样傻的脸呢～。",0)
+				MES_close(ANNA)
+
+				//★安娜【視力も悪い】
+				F_set_note(ANNA,0)
+			}
+		}
+		rot(ANNA,30,270)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※屋敷控え室，台所に立つ。
+	//　　※初回イベント
+	if( F1_01_GameStart )
+	{
+		if(!FT_01_TalkAnna)
+		{
+			MES(ANNA,"啊～啊，干不完啦。",0)
+			MES(ANNA,"后面的清理工作，\n就丢给海蕾娜吧～……",0)
+			MES_close(ANNA)
+
+		//　　安娜，？エモ～ションで振り返る。
+			EMO(ANNA,EMO_HATENA)
+			rot_chr(ANNA,30,PLAYER1)
+			wait(30)
+
+			EV("MOTION_TK_ANNA")
+			MES(ANNA,"盯～……",0)
+			MES_close(ANNA)
+
+		//　　安娜に···エモ～ション。
+			EMO(ANNA,EMO_TENTEN)
+			wait(30)
+
+			MES(ANNA,"干啥啊你们。\n陌生面孔呢～。",0)
+			MES(ANNA,"虽然也不像什么可疑的家伙～。",0)
+			MES(ANNA,"在屋子里做什么\n小动作的话我可揍人哦。\n听到没～。",0)
+			MES_close(ANNA)
+			
+			F_set(FT_01_TalkAnna)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			EV("MOTION_TK_ANNA")
+			rot_chr(ANNA,30,PLAYER1)
+			if(!F_ANNA)
+			{
+				MES(ANNA,"房子里现在\n有两个客人在哦～。",0)
+				MES(ANNA,"两个都是小孩子～。\n１４，５岁的样子～。",0)
+				MES(ANNA,"经常外出，\n也不是那么需要人照顾的年纪\n不必太在意。",0)
+				MES(ANNA,"但是人一多，就很难有\n偷懒的机会了，真郁闷啊～。",0)
+				MES_close(ANNA)
+				
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（干，干活去。）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□艾尔雯先頭")
+				{
+					MES(PARTNER,"（啊，这仆人真是岂有此理……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				F_set(ANNA)
+			}
+			//　　★繰り返し
+			else
+			{
+				MES(ANNA,"那些孩子一来，\n就不到偷懒的机会了。",0)
+				MES(ANNA,"啊～啊，干不完啦～。",0)
+				MES_close(ANNA)
+			}
+			rot(ANNA,30,90)
+		}
+		MOT(ANNA,2,15)
+	}
+	
+	TK_end()
+}
+
+//会話時之モ～ション
+MOTION_TK_ANNA
+{
+	MOT_SET(ANNA,150,-1,401,401,-1,-1)
+	MOT(ANNA,150,15)
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

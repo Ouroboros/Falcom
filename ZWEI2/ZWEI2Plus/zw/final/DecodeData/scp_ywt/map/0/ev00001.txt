@@ -1,0 +1,197 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[10001][僼傿乕儖僪儅僢僾乮栭乯]
+//====================================================================
+
+#ScriptTable
+
+#EFFECT 		1
+#EFFECT2 		2
+
+//=====================================================================
+//=== 弶婜壔張棟 ======================================================
+//=====================================================================
+INIT
+{
+//娐嫬SE
+	SE(51,0)//晽
+
+//  set_chr  no typ     tip        x     y     z 	 mot   岦  忬      000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+	map_color(68,68,98,0);//R,G,B, time 100%
+
+//仭僄儞僩儕乕
+	set_chr( 90,990,	-1,-1,   960, 3800, -770,      0, 070301,   0,";")	//傾儖僢僥偺奨栭
+	set_chr( 91,990,	-1,-1,   320, 2350, -410,      0, 070202,  11,"<EV_STOP_01>")	//僽儔儞僨乕儢媢乮栭側偟乯
+	set_chr( 92,990,	-1,-1,  -820, 2900, -480,    300, 070202,  11,"<EV_STOP_02>")	//旘峴応乮栭側偟乯
+	set_chr( 93,990,	-1,-1,  1800, 5700,-1700,      0, 070402,  11,"K0_11052;")	//攑岯亅擖岥栭
+	set_chr( 94,990,	-1,-1,  2550,    0,  170,    305, 070202,   0,";")	//儘傾儖僞懞丒搶乮栭乯
+	set_chr( 95,990,	-1,-1, -3460,-1540,  640,    270, 070303,  11,"K0_13052;")	//怷亅擖岥栭
+	F_reset_obj("fire00",NP_HIDE)
+	F_reset_obj("fire01_add",NP_HIDE)
+	F_reset_obj("maguma01",NP_HIDE)
+	F_reset_obj("maguma00",NP_HIDE)
+	F_reset_obj("kemuri",NP_HIDE)
+	set_chr( 96,990,-1,-1,   -80,-3940,  420,      0, 070403,	2,"K0_14001;")	//戝揝搩亅擖岥婲摦
+	F_set_obj("isi_light_add",NP_HIDE)
+	set_chr( 97,990,	-1,-1, -2300,-1200,   20,      0, 070502,  11,"<EV_STOP_03>")	//僋儕僗僞儖僶儗乕嵳抎乮栭側偟乯
+	//幚懱
+	F_reset_obj("castle01_walk",NP_HIDE)
+	F_reset_obj("castle01",NP_HIDE)
+	F_set_obj("eff_castle01_add",NP_HIDE)
+	F_set_obj("eff_castle02_add",NP_HIDE)
+	set_chr( 98,990,	-1,-1, -970,   -10,  380,     90, 070202,  11,"K0_15000;")	//忛亅擖岥
+	set_chr( 99,990,	-1,-1,  3750,-4850, 1050,     45, 070707,  11,"K0_16076;")	//嶳亅擖岥
+	set_chr(100,990,	-1,-1,  2750, -630,  270,    250, 070202,   0,";")	//儘傾儖僞懞丒杒乮栭乯
+	set_chr(101,990,	-1,-1,  2030, -680,  270,    125, 070202,   0,";")	//儘傾儖僞懞丒惣乮栭乯
+	set_chr(102,990,	-1,-1,  3980,-1180,  180,     60, 070202,  11,"K0_12052;")	//悈拞恄揳栭
+	set_chr(103,990,	-1,-1,   460, 3150, -470,     90, 070102,   0,";")	//傾儖僢僥偺奨栭惣
+
+	set_chr( 104,990,	-1,-1,   960, 3190, -470,      0, 070707,  11,"K0_10101;")	//傾儖僢僥偺奨栭拞墰
+	set_chr( 105,990,	-1,-1,   2300,-310, 230,       0, 070810,  11,"K0_10301;")	//儘傾儖僞懞栭拞墰
+
+	//俧俥亀仛儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨亁棫偭偰偄傞俧俥亀仛儉乕儞僽儕傾忛偺寢奅傪攋夡偟偨亁棫偭偰偄側偄
+	if( F3_00_GoMoonCastle && !F3_01_BreakBaria )
+	{
+		set_chr( EFFECT2,749,	-1,-1,  0,0,600,     71, 0, 0,"")
+	}
+//仭僀儀儞僩
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//仴憓擖儉乕價乕嘆偺戙傢傝
+		set_namebmp(0,0)
+		EV("EV_3_02_CastleDispF")
+	}
+}
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+
+//仱僽儔儞僨乕儢媢偺僗僩僢僷乕乮偙偙偵旐奞偼側偝偦偆偩乯
+EV_STOP_01
+{
+	TK_begin()
+	if( GW_MAN==1 )
+	{
+		MES(RAGNA,"怪物們好像\n也還沒來過這裡。",0)
+		MES(RAGNA,"我們現在趕快前往公主殿下的城堡吧。",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+		MES(PARTNER,"嗯，沒有怪物出現過的氣息……",0)
+		MES(PARTNER,"現在必須儘快趕到叔父大人身邊。",0)
+		MES_close(PARTNER)
+	}
+	TK_end()
+}
+
+//仱旘峴応偺僗僩僢僷乕乮偙偙偵旐奞偼側偝偦偆偩乯
+EV_STOP_02
+{
+	TK_begin()
+	if( GW_MAN==1 )
+	{
+		MES(RAGNA,"飛機場這邊好像\n沒有受損的跡象……",0)
+		MES(RAGNA,"現在必須馬上回到公主殿下的城堡去。",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+		MES(PARTNER,"我們這邊好像\n也沒有出現過怪物。",0)
+		MES(PARTNER,"……現在馬上趕到叔父大人身邊吧。",0)
+		MES_close(PARTNER)
+	}
+	TK_end()
+}
+
+//仱僋儕僗僞儖僶儗乕偺僗僩僢僷乕乮婑傝摴偟偰偄傞帪娫偑惿偟偄乯
+EV_STOP_03
+{
+	TK_begin()
+	if( GW_MAN==1 )
+	{
+		MES(RAGNA,"現在不是繞遠路的時候……",0)
+		MES(RAGNA,"公主殿下的城堡近在眼前了！",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+		MES(PARTNER,"繞遠路會耽誤時間的……",0)
+		MES(PARTNER,"要趕快趕到叔父大人身邊去……！",0)
+		MES_close(PARTNER)
+	}
+	TK_end()
+}
+
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴憓擖儉乕價乕嘆偺戙傢傝
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+EV_3_02_CastleDispF
+{
+	EV_begin()
+
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+
+	F_set_obj("castle01_walk",NP_HIDE)
+	F_set_obj("castle01",NP_HIDE)
+	F_reset_obj("eff_castle01_add",NP_HIDE)
+	F_reset_obj("eff_castle02_add",NP_HIDE)
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,	  960,4050,-770,0,2)
+	chr_pos(PARTNER,	760,4050,-770,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr( EFFECT,749,	-1,-1,  0,0,150,     31, 0, 0,"")
+
+	//僇儊儔弶婜埵抲
+	CAM_move(0,0,200,0,0)
+	CAM(340,360,200,48,148,0,0)
+	wait(30)
+
+	CAM_move(0,0,220,360,0)
+	CAM(240,200,220,48,126,360,0)
+
+	//僼僃乕僪僀儞
+	SE(1071,0)//忛傪曪傓僆乕儔
+	fade_in(0,120,0)
+	wait_fade()
+
+	wait(60)
+	cross_fade(60)
+	F_reset_obj("castle01_walk",NP_HIDE)
+	F_reset_obj("castle01",NP_HIDE)
+	F_set_obj("eff_castle01_add",NP_HIDE)
+	F_set_obj("eff_castle02_add",NP_HIDE)
+	MOT(EFFECT,0,0)
+	EFF(6520,0,0,600,0,35,-1)
+	SE(1072,0)//寢奅弌尰
+	wait(90)
+
+	fade_in(100,60,0)
+	wait(10)
+	EFF(6520,0,0,600,0,35,-1)
+	wait_fade()
+	wait(60)
+
+//丂丂忛亅擖岥傊(ev50000)
+	workG(GW_ENTRY_EVENT,SET,2)
+	new_map(15000)
+
+//	EV_end()
+}
+
+
+
+#EndScriptTable
+//====================================================================
+

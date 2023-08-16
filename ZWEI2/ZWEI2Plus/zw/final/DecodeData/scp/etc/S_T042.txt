@@ -1,0 +1,649 @@
+//──────────────────────────────
+//	name("◆安洁（女仆Ｃ）Anje")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_ANJE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(ANJE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ANJE)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ANJE)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANJE)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANJE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANJE)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANJE)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ANJE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※屋敷玄関で掃除している。（ホウキ持ち）
+	if( F6_05_EndSixth )
+	{
+		rot_chr(ANJE,30,PLAYER1)
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+		EV("MOTION_TK_ANJE")
+		if(!FT_13_TalkAnje)
+		{
+			
+			MOT_SET(ANJE,151,-1,579,579,-1,15)		//1礼
+			MOT_SET(ANJE,152,-1,410,410,-1,-1)
+
+		//　　※初回イベント。
+			MES(ANJE,"那么大家……",0)
+			MES(ANJE,"都辛苦了。",0)
+			MES(ANJE,"托大家的福，城镇又重新\n安稳了下来。",0)
+			MES(ANJE,"──请允许我向你们\n表示感谢。\n真的是十分的感谢大家。",0)
+			MES_close(ANJE)
+
+		//　　安洁，軽く一礼する。
+			MOT(ANJE,151,15)
+			wait(20)
+			MOT(ANJE,150,15)
+			
+			MES(ANJE,"小姐也说了，\n如果还有机会的话\n无论何时都欢迎来此游玩。",0)
+			MES(ANJE,"那时一定要\n用最盛大的场面招待你们。",0)
+			MES_close(ANJE)
+
+			F_set(FT_13_TalkAnje)
+		}
+		else
+		{
+			if(!F_ANJE)
+			{
+			//──────────────────────────────
+			//　　※以下通常一般メッセ～ジ。
+				MES(ANJE,"如果还有机会的话\n无论何时都欢迎来此游玩。",0)
+				MES(ANJE,"……而且，还有。",0)
+				MES(ANJE,"如果可以的话，\n瓦伦斯的本家那边也请过去看看吧。",0)
+				MES(ANJE,"那个时候，我一定已经\n长高了呢。",0)
+				MES_close(ANJE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哈，哈哈……",0)
+				MES_close(RAGNA)
+
+			//──────────────────────────────
+			//	name("□フラグ①之通常メッセ～ジを聞いている场合。")
+				if(FT_01_AnjeTb)
+				{
+					MES(PET,"（还是对此耿耿于怀呢……）",0)
+					MES_close(PET)
+				}
+			//──────────────────────────────
+			
+				F_set(ANJE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(ANJE,"如果还有机会的话\n无论何时都欢迎来此游玩。",0)
+				MES(ANJE,"……如果可以的话，\n瓦伦斯的本家那边也请过去看看吧。",0)
+				MES(ANJE,"那个时候，我一定已经\n长高了呢。",0)
+				MES_close(ANJE)
+			}
+		}
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(ANJE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※屋敷·執務室で窓之戸締りをしている。
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_TK_ANJE")
+		rot_chr(ANJE,30,PLAYER1)
+		if(!F_ANJE)
+		{
+			MES(ANJE,"从小姐那里\n已经听说了事情的大概了。",0)
+			MES(ANJE,"好像要阻止那个\n可怕的大龙卷呢。",0)
+			MES(ANJE,"……无论如何请小心。",0)
+			MES(ANJE,"虽然微不足道，\n但我们也会为你们祈祷的。",0)
+			MES_close(ANJE)
+			
+			F_set(ANJE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(ANJE,"请不要担心我们这里。",0)
+			MES(ANJE,"这次，我们\n也做足了心里准备。",0)
+			MES(ANJE,"……无论如何请小心。\n我们也会为\n成功而祈祷的。",0)
+			MES_close(ANJE)
+		}
+		MOT(ANJE,151,5)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※亚尔迪熊猫楼前で，利普顿と話している。
+	if( F5_00_HearLunar )
+	{
+		EV("MOTION_TK_ANJE")
+		rot_chr(ANJE,30,PLAYER1)
+		if(!F_ANJE)
+		{
+			MES(ANJE,"不久前，不只是联络信\n连收音机还有通讯机等设备也\n都不通了……",0)
+			MES(ANJE,"小姐她们也忙碌了起来，\n在伊尔巴特这边\n果然出了什么事吗。",0)
+			MES(ANJE,"……但是我们，\n却什么都不清楚哦。",0)
+			MES(ANJE,"这时候还能说这么轻松的话……\n唉，真是笨蛋啊。",0)
+			MES_close(ANJE)
+			
+			F_set(ANJE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(ANJE,"现在伊尔巴特\n一定发生了什么事情。",0)
+			MES(ANJE,"小姐她们也一定，\n为了那件事\n而忙碌着。",0)
+			MES(ANJE,"但是这家伙却……",0)
+			MES(ANJE,"礼帽那么高实在是浪费了，真是的",0)
+			MES_close(ANJE)
+		}
+		MOT(ANJE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//　　※屋敷前を掃除（ホウキ持ち）。
+	if( F4_09_GoShrineMia)
+	{
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+		EV("MOTION_TK_ANJE")
+		rot_chr(ANJE,30,PLAYER1)
+		MES(ANJE,"哎呀，两人都在啊……",0)
+		MES(ANJE,"这么大清早\n有什么事吗？",0)
+		MES(ANJE,"大家都还\n在睡觉呢……",0)
+		MES_close(ANJE)
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(ANJE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※屋敷·控え室之台所前に立つ。
+	if( F4_00_StartSolo )
+	{
+		if(!FT_07_TalkAnje && F4_02_GoVillage2)
+		{
+			MOT_SET(ANJE,151,-1,476,476,-1,15)		//うれしそうなモ～ション
+		//　　※フラグ⑦－Ｂ，昴と合流後之会話です。
+		//　　※初回イベント
+		//　　安洁，昴に向く。
+			rot_chr(ANJE,30,PARTNER)
+			rot_chr(PARTNER,30,ANJE)
+		
+			MES(PARTNER,"啊，安洁……",0)
+			MES(PARTNER,"刚才真是谢谢了。\n突然占用厨房……",0)
+			MES_close(PARTNER)
+
+		//	name2(ANJE)
+			MES(ANJE,"没什么，别在意。",0)
+			MES(ANJE,"我也不太有机会\n制作和风的点心……",0)
+			MES(ANJE,"从昴大人的手法里\n也学到了很多。",0)
+			MES_close(ANJE)
+
+		//　　安洁，考える素振り。
+			EV("MOTION_TK_ANJE")
+			//★考えるモ～ション
+			
+			MES(ANJE,"而且，我和昴大人的\n个子也差不多高……",0)
+			MES(ANJE,"往后也请一定\n过来玩。",0)
+			MES_close(ANJE)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嘻嘻，那再见了\n有机会我会再来玩的！",0)
+			MES_close(PARTNER)
+
+		//　　安洁にキラキラエモ～ション。
+			MOT(ANJE,151,15)
+			EMO(ANJE,EMO_KIRAKIRA)
+			wait(30)
+			
+			MES(ANJE,"好的，我等你！",0)
+			MES_close(ANJE)
+			
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（嗯～，似乎打心底高兴呢……）",0)
+			MES_close(RAGNA)
+			//★安洁【昴と友人】
+			F_set_note(ANJE,2)
+
+			F_set(FT_07_TalkAnje)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			EV("MOTION_TK_ANJE")
+			rot_chr(ANJE,30,PLAYER1)
+			if(!F_ANJE)
+			{
+				MES(ANJE,"虽然担心\n失落的海蕾娜……",0)
+				MES(ANJE,"但同时也担心\n小姐的情况。",0)
+				MES(ANJE,"前几天一直在忙活，\n连晚上都不休息。",0)
+				MES(ANJE,"真希望她能够注意一下\n自己的身体……",0)
+				MES_close(ANJE)
+				
+				F_set(ANJE)
+			}
+			//　　★繰り返し
+			else
+			{
+				MES(ANJE,"唉，真希望小姐能\n注意一下\n自己的身体……",0)
+				MES(ANJE,"但这又不是女仆\n我该说的话。",0)
+				MES(ANJE,"我能说的只有，请至少\n喝一杯茶吧\n这一类的话。",0)
+				MES_close(ANJE)
+			}
+		}
+		MOT(ANJE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	//　　※夜マップ。
+	//　　※屋敷控え室之入り口付近に立っている。
+	{
+		EV("MOTION_TK_ANJE")
+		rot_chr(ANJE,30,RAGNA)
+		if(!F_ANJE)
+		{
+			MES(ANJE,"啊……",0)
+			MES(ANJE,"刚才真危险。\n怪物不知道\n从哪突然出现……",0)
+			MES(ANJE,"安娜拉着海蕾娜的手\n逃进屋子了。",0)
+			MES(ANJE,"怪物就一直追在\n她们背后……",0)
+			MES(ANJE,"虽然窗户啊门啊都关死了，\n但怪物一直在\n房子周围徘徊。",0)
+			MES_close(ANJE)
+			
+			F_set(ANJE)
+		}
+	//　　★繰り返し
+		else
+		{
+		MES(ANJE,"幸运的是，小姐和克罗德\n及时赶到……",0)
+		MES(ANJE,"好像给海蕾娜\n留下了一段相当恐怖的记忆。",0)
+		MES(ANJE,"……也难怪。\n连我都感到害怕呢……",0)
+		MES_close(ANJE)
+		}
+		rot(ANJE,30,350)
+		MOT(ANJE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵之正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	//　　※屋敷控え室，座って帳簿記入している。
+	//　　　机之上にはノ～トを広げておく。
+	{	
+		look_chr(ANJE, PLAYER1,"Bone_Head")
+
+		if(!F_ANJE)
+		{
+			MES(ANJE,"安娜和海蕾娜，\n作为女仆\n的心还不够细。",0)
+			MES(ANJE,"小姐大人在交谈的时候\n在那里吵吵嚷嚷……",0)
+			MES(ANJE,"这种时候，我们女仆\n应该屏息待命。\n做到这种程度是应该的吧。",0)
+			MES(ANJE,"而她们真是的……\n有作为瓦伦斯家女仆\n的自觉性吗。",0)
+			MES_close(ANJE)
+			//★安洁【女仆之誇り】
+			F_set_note(ANJE,1)
+
+			F_set(ANJE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(ANJE,"说起来……",0)
+			MES(ANJE,"在亚尔迪村里，\n好像有时候会看到\n戴斗笠的人。",0)
+			MES(ANJE,"……是上门推销的人吗。\n有能让人哗啦一下子长高的药吗\n一定要向他问问……",0)
+			MES_close(ANJE)
+
+			//　　拉古那たちに冷や汗エモ～ション。
+			//──────────────────────────────
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"我刚才，\n没说过要\n打起精神来吗……？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□艾尔雯先頭")
+				MES(PARTNER,"真是让人\n烦恼的家伙……",0)
+				MES_close(PARTNER)
+			}
+			//★鸦【訪問販売？】
+			F_set_note(-60,0)
+		}
+		look_off(ANJE)
+
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※飞机场·工房カウンタ～で梅丽安と話している。
+	if( F2_00_GoForest )
+	{
+		EV("MOTION_TK_ANJE")
+		if(!F_ANJE)
+		{
+		//　　※振り返らない。
+			MES(ANJE,"吓……\n邮寄，还没到吗？",0)
+			MES(ANJE,"联络信晚了……\n那，那样啊……",0)
+			MES(ANJE,"唉，好不容易才\n订的能让个子哗啦一下子长高\n的营养剂……",0)
+			MES_close(ANJE)
+			
+		//　　２人に冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（就这么\n  想长高吗……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾尔雯先頭")
+			{
+				MES(PARTNER,"（哗啦一下子长高的药……？）",0)
+				MES(PARTNER,"（听起来很匪夷呢……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			F_set(ANJE)
+		}
+		else
+		{
+		//　　★繰り返し
+			rot_chr(ANJE,50,PLAYER1)
+			MES(ANJE,"说起来，\n这里的柜台还真高呢。",0)
+			MES_close(ANJE)
+
+			EMO(ANJE,EMO_AOSUZI)
+			wait(30)
+
+			MES(ANJE,"什么意思？\n你是故意找我碴吗？",0)
+			MES_close(ANJE)
+
+		//　　２人に冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+		}
+		MOT(ANJE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※屋敷·執務室で植木に水遣りをしている。
+	if( F1_15_GoVillage )
+	{
+		EV("MOTION_TK_ANJE")
+		rot_chr(ANJE,30,PLAYER1)
+		if(!F_ANJE)
+		{
+			MES(ANJE,"唉，今天的打扫也\n很完美呢。",0)
+			MES(ANJE,"果然把万事都处理完美了\n心情就爽快了呢。",0)
+			MES(ANJE,"但是呢……\n安娜和海蕾娜，\n都在把我当傻子呢。",0)
+			MES(ANJE,"安娜有机会就偷懒\n海蕾娜是晃晃悠悠不得安宁。",0)
+			MES(ANJE,"肯定是说我个子矮\n在小看我！",0)
+			MES_close(ANJE)
+			
+			F_set(ANJE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(ANJE,"我先说明白，\n我可比安娜她们年长哦？",0)
+			MES(ANJE,"而且我是女仆长。",0)
+			MES(ANJE,"但她们两个，\n根本就不听我的话。",0)
+			MES(ANJE,"肯定是觉得我个子矮\n把我当个笨蛋……！",0)
+			MES_close(ANJE)
+		}
+		MOT(ANJE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※屋敷·広間之手前之方を掃除している。
+	//　　（ホウキ持ち）
+	if( F1_01_GameStart )
+	{
+	//　　※初回イベント
+		if(!FT_01_TalkAnje)
+		{
+			//　　安洁，気付きエモ～ションで振り返る。
+			EMO(ANJE,EMO_PA)
+			rot_chr(ANJE,30,PLAYER1)
+			look(ANJE,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+			wait(30)
+			
+			EV("MOTION_TK_ANJE")
+			MES(ANJE,"哎呀，是客人呀。",0)
+			MES(ANJE,"我是本宅的女仆长叫安洁。",0)
+			MES(ANJE,"十分抱歉，\n现在小姐不在家。",0)
+//			MES_close(ANJE)
+//
+//		//──────────────────────────────
+//		//	name("□拉古那先頭")
+//			if(GW_MAN==1)
+//			{
+//				MES(RAGNA,"诶……是你家小姐\n的房子啊？",0)
+//				MES_close(RAGNA)
+//			}
+//			else
+//		//	name("□艾尔雯先頭")
+//			{
+//				MES(PARTNER,"嚯……こ之屋敷は\nどこぞ之子女之も之之ようだな。",0)
+//				MES_close(PARTNER)
+//			}
+//		//──────────────────────────────
+//		
+////			MES(ANJE,"嗯，菲欧娜小姐的\n别墅是也。",0)
+//			MES(ANJE,"嗯，菲欧娜小姐的\n别墅是也。",0)
+//			MES(ANJE,"不好意思，您找小姐\n有什么事吗？",0)
+
+			MES(ANJE,"大概傍晚的时候\n就会回来吧……",0)
+			MES_close(ANJE)
+
+			MES(RAGNA,"不是的，我们是游客而已。",0)
+			MES(RAGNA,"只是顺路来参观一下。",0)
+			MES_close(RAGNA)
+
+		//	name2(ANJE)
+		//	MES(ANJE,"这样啊……\n（好像也不像什么坏人……）",0)
+			MES(ANJE,"这样啊……",0)
+			MES(ANJE,"嗯，那么\n进屋里看看\n也没关系的。",0)
+			MES(ANJE,"请尽情参观。",0)
+			MES_close(ANJE)
+			MOT(ANJE,2,15)
+
+			F_set(FT_01_TalkAnje)
+		}
+		else
+		{
+			if(!F_ANJE)
+			{
+			//──────────────────────────────
+			//　　※以下通常一般メッセ～ジ。
+			//　　安洁は振り返らない。
+			//　　安洁に！エモ～ション。
+				EMO(ANJE,EMO_BIKKURI)
+				wait(30)
+
+				MES(ANJE,"啊……",0)
+				MES_close(ANJE)
+
+			//　　安洁，素早く振り返る。
+				look(ANJE,"Bone_RightForeArm",0,	10,0,10,	0,0,0)//掃除中·手戻し
+//				EV("MOTION_TK_ANJE")
+				MOT_SET(ANJE,150,-1,410,410,-1,-1)
+				MOT(ANJE,150,10)
+				rot_chr(ANJE,80,PLAYER1)
+
+				MES(ANJE,"刚才，是在嘲笑我是个豆丁吗？",0)
+				MES(ANJE,"在觉得\n我是个豆丁女仆吗？",0)
+				MES_close(ANJE)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"没，没有……？",0)
+					MES_close(RAGNA)
+				}
+			//	name("□艾尔雯先頭")
+				else
+				{
+					MES(PARTNER,"没，没有……？",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+			
+				MES(ANJE,"那，那样啊。\n那抱歉了。",0)
+				MES(ANJE,"请随意。",0)
+				MES_close(ANJE)
+				MOT(ANJE,2,15)
+				//★安洁【背が低い】
+				F_set_note(ANJE,0)
+
+				rot(ANJE,30,252)
+				F_set(ANJE)
+			}
+			else
+			{
+				rot_chr(ANJE,30,PLAYER1)
+				look(ANJE,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+				EV("MOTION_TK_ANJE")
+			//　　★繰り返し
+				MES(ANJE,"……真的没\n觉得我是个豆丁吗？",0)
+				MES(ANJE,"真没觉得我是个小屁孩吗，\n或者是个侏儒什么的？",0)
+				MES(ANJE,"嗯，那就好。",0)
+				MES_close(ANJE)
+
+			//　　２人に冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+			
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（那么在意么……？）",0)
+					MES_close(RAGNA)
+				}
+			//	name("□艾尔雯先頭")
+				else
+				{
+					MES(PARTNER,"（特别的在意啊……）",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+			
+			//	▼①通常会話·身长を気にする安洁
+				if(!FT_01_AnjeTb)
+				{
+					F_set(FT_01_AnjeTb)
+				}
+			}
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		}
+	}
+	
+	TK_end()
+}
+
+MOTION_TK_ANJE
+{
+	MOT_SET(ANJE,150,-1,410,410,-1,-1)
+	MOT(ANJE,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

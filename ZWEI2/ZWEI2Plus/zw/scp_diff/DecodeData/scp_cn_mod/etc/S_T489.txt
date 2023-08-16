@@ -1,0 +1,373 @@
+//──────────────────────────────
+//	name("◆忍者Ｅ　Ninjya_E")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_NINJYA_E
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(NINJYA_E, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,NINJYA_E)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,NINJYA_E)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_E)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_E)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_E)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_E)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,NINJYA_E)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//いない
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if(F6_00_GoToMeru)
+	{
+	//　　※里之見張りＤに立っている。
+	//　　　空を見上げているような感じ。
+	//	name("忍者")
+
+		//──────────────────────────────
+		//▼　わらしべイベント
+		//	name("９·汎用忍者（星降之里）		『修枝剪刀』□『手裏剑』")151
+		//──────────────────────────────
+		if(FV_11_Warasi_8_Lot && !FV_11_Warasi_9_Nja)
+		{
+			if(!F_NINJYA_E)
+			{
+			//　　※振り返らない。
+			//	name("忍者")
+				MES(NINJYA_E,"啊、真是为难啊……",0)
+				MES(NINJYA_E,"想告诉茜这个想法。\n但是、对于茜来说\n自己只是一个弟子而已……",0)
+				MES(NINJYA_E,"啊……这样下去的话\n自我了断也是早晚的问题、对吧……",0)
+				MES_close(NINJYA_E)
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+				//	name("□拉古那先頭")
+					MES(RAGNA,"（啊、这个忍者……\n  在想那种事情吗。）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□艾雯先頭")
+					MES(PARTNER,"嗯、在这种地方\n烦恼的人……",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+			//　　忍者にＰＡエモ～ション。
+				EMO(NINJYA_E,EMO_PA)
+				look(NINJYA_E, "Bone_Head", 0, 0, 0, 10, 0,0,0)
+			//　　振り返る。
+				MOT(NINJYA_E,2,10)
+				rot_chr(NINJYA_E,30,PLAYER1)
+				wait(30)
+			//	name("忍者")
+				MES(NINJYA_E,"噢呀、你的那个就是\n『修枝剪刀』！？",0)
+				MES(NINJYA_E,"就是那个！　就是那个哦！",0)
+				MES(NINJYA_E,"茜的爸爸\n限爷爷很喜欢大型盆栽哦。",0)
+				MES(NINJYA_E,"如果把修枝剪刀当礼物送给他\n一定能博得好感。绝对没错！",0)
+				MES(NINJYA_E,"怎么样、能把那个\n让给我吗。",0)
+				MES_close(NINJYA_E)
+
+				F_set(NINJYA_E)
+			}
+			else
+			{
+				rot_chr(NINJYA_E,30,PLAYER1)
+				look(NINJYA_E, "Bone_Head", 0, 0, 0, 10, 0,0,0)
+				MOT(NINJYA_E,2,10)
+		//	name("□２回目以降")
+			//	name("忍者")
+				MES(NINJYA_E,"茜的爸爸\n限爷爷很喜欢大型盆栽……",0)
+				MES(NINJYA_E,"只要有那个『修枝剪刀』、\n一定能博得好感。绝对没错！",0)
+				MES(NINJYA_E,"怎么样、能把那个\n让给我吗。",0)
+				MES_close(NINJYA_E)
+			}
+			
+			
+			//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【取消】
+			MES_pos(PLAYER1,"??W9【仅此一回哦】\n【当然不行啦】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			//──────────────────────────────
+			//	name("□【今回だけだぞ】")
+			//──────────────────────────────
+			if(WK_YESNO==1)
+			{
+			//	name("忍者")
+				MES(NINJYA_E,"喔喔、得救了！",0)
+				MES(NINJYA_E,"……不、你真是很亲切的人啊。\n作为酬谢把这个给你吧。",0)
+				MES_close(NINJYA_E)
+
+			//	name("アイテム入手テキスト")
+			//	MES(NINJYA_E,"『手裏剑』を貰った。",0)
+				//―――――――――――――――――――――――
+				fade_in(30,10,BLACK)
+
+				get_item(150,-1,1)
+				get_item(151,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//―――――――――――――――――――――――
+
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+				//	name("□拉古那先頭")
+					MES(RAGNA,"谢、谢谢。",0)
+					MES(RAGNA,"那么、有了修枝剪刀\n一定能行吧？",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□艾雯先頭")
+					MES(PARTNER,"嗯、拿着吧。",0)
+					MES(PARTNER,"那么您、\n有了修枝剪刀的话\n一定没问题吧？",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				
+			//	name("忍者")
+				MES(NINJYA_E,"嗯、不用担心。\n虽然这个样子\n我可是忍者哦……",0)
+				MES(NINJYA_E,"只要这份热情还没燃尽、\n花多少年我也不会放弃。",0)
+				MES_close(NINJYA_E)
+
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+				
+				MES(PET,"（这个状态是不错……\n  但是会不会\n  被认为是骚扰呢。）",0)
+				MES_close(PET)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（嘛、对方也是忍者\n  那样的事情应该没问题……）",0)
+				MES_close(RAGNA)
+
+				F_set(FV_11_Warasi_9_Nja)
+				F_reset(NINJYA_E)
+
+			}
+			//──────────────────────────────
+			//	name("□【ダメに決まってるだろ】")
+			//──────────────────────────────
+			else
+			{
+				MES(NINJYA_E,"那、那样啊。\n真是遗憾啊……",0)
+				MES_close(NINJYA_E)
+			}
+		}
+		else
+		if(!F_NINJYA_E)
+		{	
+			MOT(NINJYA_E,2,10)
+			rot_chr(NINJYA_E,30,PLAYER1)
+			look(NINJYA_E, "Bone_Head", 0, 0, 0, 10, 0,0,0)
+			MES(NINJYA_E,"那样吗？\n天山大人是那样讲的吗……",0)
+			MES(NINJYA_E,"要塞──与其说是这个\n更像是一种巨大兵器\n的东西。",0)
+			MES(NINJYA_E,"那种东西来袭击的话、\n无论如何也不是忍术\n能解决的事呢……",0)
+			MES_close(NINJYA_E)
+			
+			F_set(930)
+		}
+		//　　★繰り返し
+		else
+		{
+			look(NINJYA_E, "Bone_Head", 0, 0, 0, 10, 0,0,0)
+			MOT(NINJYA_E,2,10)
+		//	name("忍者")
+			MES(NINJYA_E,"那种东西来袭击的话、\n无论如何也不是忍术\n能解决的事呢……",0)
+			MES(NINJYA_E,"我们要\n怎么办才好……",0)
+			MES_close(NINJYA_E)
+		}
+		MOT(NINJYA_E,52,10)
+		look(NINJYA_E, "Bone_Head", 0, 0, 0, 10, 0,0,30)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		MOT(NINJYA_E,2,10)
+		rot_chr(NINJYA_E,30,0)
+		if(!F_NINJYA_E)
+		{
+		//　　※里之見張りＤに立っている。
+		//	name("忍者")
+			MES(NINJYA_E,"昨天的袭击中有许多重伤者──\n奇迹的是没有人员死亡。",0)
+			MES(NINJYA_E,"还好女人和孩子们都没事、\n但没能保护天山大人和昴大人\n简直是耻辱到了极点……",0)
+			MES(NINJYA_E,"……自己也应该\n更加努力修行才对。",0)
+			MES_close(NINJYA_E)
+			
+			//　　★忍者【修行不足】
+//			F_set_note(-79,1)
+			F_set(NINJYA_E)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("忍者")
+			MES(NINJYA_E,"我和大家、都受了不小的\n打击呢。",0)
+			MES(NINJYA_E,"但是在戒队长重伤的现在、\n我们队里的人手又不足……",0)
+			MES(NINJYA_E,"没功夫怨天尤人了。\n现在首先要、\n把寨子修整才是。",0)
+			MES_close(NINJYA_E)
+		}
+		MOT(NINJYA_E,52,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia )
+	{
+	//　　※数合わせ出演です。
+	//　　※戒之傍で倒れている。（主脚本参照）
+	//	name("忍者")
+		MES(NINJYA_E,"……队、队长…………",0)
+		MES_close(NINJYA_E)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	if( F4_06_StopAttack )
+	{
+	//　　※数合わせ出演です。
+	//　　※戒之傍で倒れている。（主脚本参照）
+	//	name("忍者")
+		MES(NINJYA_E,"……队、队长…………",0)
+		MES_close(NINJYA_E)
+	}
+	else
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//　　※里之見張りＤに立っている。
+	if( F4_05_OnVillage2 )
+	{
+		MOT(NINJYA_E,2,10)
+		rot_chr(NINJYA_E,30,PLAYER1)
+	//　　※初回後で、ＧＦ『茜ノ～ト之話題を聞いた』が立っている场合。
+	//　　　１回だけこ之メッセ～ジを表示します。
+		if(FS_08_TalkNinjya_E && FS_08_Akane_Nt && !FS_08_Ninjya_E_Nt)
+		{
+		//	name("忍者")
+			MES(NINJYA_E,"啊、对了。\n只可以在这里说的话……",0)
+			MES(NINJYA_E,"茜姐姐、很了不起呢。",0)
+			MES(NINJYA_E,"经常召开宴会、\n也是表现出对我们十分在乎呢。",0)
+			MES(NINJYA_E,"总在这种雪山里\n放哨、\n也的确是很让人泄气呢。",0)
+			MES(NINJYA_E,"……嗯、真的是\n很好的一个人呢……",0)
+			MES(NINJYA_E,"虽然有点强人所难。",0)
+			MES_close(NINJYA_E)
+			
+			F_set(FS_08_Ninjya_E_Nt)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+			if(!FS_08_TalkNinjya_E)
+			{
+			//	name("忍者")
+				MES(NINJYA_E,"刚才，依稀看到了戒队长的妹妹\n的身影了。",0)
+				rot(NINJYA_E,30,147)
+
+				MES(NINJYA_E,"那么小的年纪就能熟练掌握分身术，\n肯定是有相当的才能……",0)
+				rot_chr(NINJYA_E,30,PLAYER1)
+
+				MES(NINJYA_E,"那个，有点分心了哟。",0)
+				MES(NINJYA_E,"啊，真没办法……",0)
+				MES_close(NINJYA_E)
+			
+			//　　※ＧＦ『フラグ⑧忍者Ｅと話した』を立てる。
+				F_set(FS_08_TalkNinjya_E)
+			}
+			//　　★繰り返し
+			else
+			{
+			//	name("忍者")
+				MES(NINJYA_E,"自己是在这里值班的，\n总是和队长的妹妹照面。",0)
+				MES(NINJYA_E,"而且还，被邀请\n一起去玩……",0)
+				MES(NINJYA_E,"如果那样的话\n会被队长骂的哦。",0)
+				MES(NINJYA_E,"队长，可是严厉的一塌糊涂的。",0)
+				MES_close(NINJYA_E)
+			}
+		}
+		MOT(NINJYA_E,52,10)
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

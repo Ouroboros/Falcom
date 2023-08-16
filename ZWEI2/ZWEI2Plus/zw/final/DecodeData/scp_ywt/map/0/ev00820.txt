@@ -1,0 +1,286 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[???????][儔僌僫偺壠乮幒撪乯]
+//====================================================================
+
+#ScriptTable
+
+#MINIRAGNA 	1
+#MIA 		2
+#BOY 		3
+
+//=====================================================================
+//=== 弶婜壔張棟 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip      x    y   z   	 mot  岦 忬  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭僄儞僩儕乕
+
+//仭僀儀儞僩
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//仴儔僌僫偺婰壇
+		EV("EV_2_16_RagnaMemory")
+	}
+
+}
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴儔僌僫偺婰壇
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂夋柺埫揮偟偨忬懺偱丄儈傾偺僥乕儅傪棳偡丅
+//丂丂墦偔偐傜暦偙偊偰偔傞傛偆側儃僀僗傪嵞惗偟偰備偔丅
+//丂丂壜擻側傜僔儖僄僢僩揑側僀儀儞僩僔乕儞偲偟偰峔惉丅
+//丂丂柍棟側傜價僕儏傾儖傪梡堄偟丄偦偺忋偵儊僢僙乕僕傪梡堄丅
+EV_2_16_RagnaMemory
+{
+	EV_begin()
+
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+
+	//僉儍儔嵞攝抲
+	chr_pos(PARTNER,855,2201,1,90,2)
+	chr_pos(RAGNA,793,1825,0,0,2)
+	color(PARTNER,-1)
+	color(RAGNA,-1)
+
+	set_chr(MINIRAGNA,	11,-1,-1, 0,500,73, 2,180,0, "")
+	set_chr(MIA,		87,-1,-1, 0,200,38, 2,0,0, "")
+	set_chr(BOY,		749,-1,-1,100,1000,73, 0,270,0, "")
+	F_set_chr(BOY,CF_NO_ZIMEN)
+	F_set_chr(BOY,CF_NO_HEIGHT)
+	color(BOY,-1)
+	wait_color(BOY)
+	KAO(MINIRAGNA,"1","1","1")//
+//	KAO(MIA,"C","L","5")//
+	KAO(MIA,"C","3","5")//
+
+	//儌乕僔儑儞掕媊
+	MOT_SET(MINIRAGNA,150,-1,407,407,-1,-1)	//偳偆側偺傛2
+	MOT_SET(MINIRAGNA,151,-1,431,431,-1,-1)	//傗偭偰傗傞
+	MOT_SET(MINIRAGNA,152,-1,414,414,-1,-1)	//偲偭偰偍偒偩
+	MOT_SET(MINIRAGNA,153,-1,543,543,-1,-1)	//柍棟偐傕
+	MOT_SET(MINIRAGNA,154,-1,468,468,-1,-1)	//偆偖
+	MOT_SET(MIA,150,-1,2020,2020,-1,-1)	//傗偩傗偩
+	MOT_SET(MIA,151,-1,2020,2040,-1,-1)	//傗偩傗偩
+	MOT_SET(MIA,152,-1,476,476,-1,-1)	//憗偔婣偭偰
+	MOT_SET(MIA,153,-1,458,458,-1,-1)	//栺懇
+	MOT_SET(MIA,154,154,1911,1951,-1,-1)	//
+	MOT(MIA,154,0)
+
+//	look(MIA,"Bone_Head",0,0,0,16,0,0,16)
+
+	filter(1,50,0)
+
+	//僇儊儔弶婜埵抲
+	CAM_move(-80,-130,130,0,0)
+	CAM(-10,56,130,32,200,0,0)
+
+	wait(90)
+	VOICE(708,0)
+	wait(30)
+	BGM(56)
+	wait(60)
+	wait(60)
+
+	//僼僃乕僪僀儞
+	fade_in(0,60,0)
+	wait_fade()
+
+	CAM_move(-80,-130,160,1200,0)
+	CAM(-130,50,160,32,200,1200,0)
+	wait(15)
+//	chr_rename(MIA,"梒偄彮彈")//
+	chr_rename(MIA,"小女孩")//
+//	KAO(MIA,"B232BZ2","L23332L","5")//
+	KAO(MIA,"B232BZ2","3","5")//
+	MES(MIA,"嗚……嗚……",0)
+//	KAO(MIA,"B232BZ3","L","5")//
+	KAO(MIA,"B232BZ3","3","5")//
+	MES(MIA,"米婭……\n……米婭也要去……！",0)
+	MES_close(MIA)
+
+	MOT(MINIRAGNA,150,15)
+	wait(15)
+	chr_rename(MINIRAGNA,"少年")//
+//	name("彮擭偺惡")
+	MES(MINIRAGNA,"我都說了……\n今天不能帶你去。",0)
+	MES(MINIRAGNA,"你回來的路上\n一定會睏得睡著……",0)
+	MES(MINIRAGNA,"那樣的話，不就和以前一樣，\n又要我背你了嗎？",0)
+	MES_close(MINIRAGNA)
+
+	KAO(MIA,"B","23332L","5")//
+	MOT(MIA,151,20)
+	wait(20)
+//	name("梒偄惡")
+//	KAO(MIA,"B232BZ3","L23332L","3")//
+//	KAO(MIA,"B232BZ3","23332L","3")//
+	KAO(MIA,"B232BZ3","L23332L","5")//
+	MES(MIA,"才，才沒有睡……！",0)
+	KAO(MIA,"B232BZ4","L","5")//
+	MES(MIA,"米婭……米婭和哥哥在一起，都是醒著的……！",0)
+	MES_close(MIA)
+
+	MOT(MINIRAGNA,2,15)
+	wait(15)
+//	name("彮擭偺惡")
+	MES(MINIRAGNA,"但是，上次才剛挨了\n爸爸一頓罵……",0)
+	MES(MINIRAGNA,"媽媽不是也\n擔心得要命嗎？",0)
+	MES(MINIRAGNA,"乖……\n今天自己在家玩吧。",0)
+	MES_close(MINIRAGNA)
+
+//	KAO(MIA,"B","L23","5")//
+//	MOT(MIA,151,0)
+//	wait(20)
+//	name("梒偄惡")
+	KAO(MIA,"B232BZ4","L23","5")//
+	MES(MIA,"不要……！\n我要和哥哥在一起！",0)
+	MES_close(MIA)
+
+	chr_rename(BOY,"其他少年的聲音")//
+//	name("暿偺彮擭偺惡")
+	MES_pos(BOY,"W9喂～！",0,120,380,0,0)
+	wait_key(0)
+	MES_pos(BOY,"W9你在幹什麼！\n再不快走就丟下你了！",0,120,380,0,0)
+	wait_key(0)
+	MES_close(BOY)
+
+//	name("彮擭偺惡")
+	rot(MINIRAGNA,30,120)
+	look_chr( MINIRAGNA, BOY ,"Bone_Head")
+	wait(15)
+	CAM_quake("46")
+	KAO(MINIRAGNA,"B232B2Z3","W","2")//
+	MES(MINIRAGNA,"S3啊啊真是的！\n等一下嘛！",0)
+	MES_close(MINIRAGNA)
+	rot(MINIRAGNA,30,180)
+	look_off( MINIRAGNA )
+	wait(15)
+	MES(MINIRAGNA,"米婭最聽話了……",0)
+	MOT(MINIRAGNA,151,12)
+	wait(12)
+	MES(MINIRAGNA,"乖乖待在家，\n到時候哥哥\n給你帶超棒的禮物回來！",0)
+	MES_close(MINIRAGNA)
+
+	KAO(MIA,"E","321","4")//
+	look(MIA,"Bone_Head",0,0,0,1,0,0,8)
+	MOT(MIA,2,15)
+	wait(15)
+//	name("梒偄惡")
+	KAO(MIA,"B232BZ2","12321","4")//
+	MES(MIA,"禮物……？",0)
+	MES_close(MIA)
+
+	MOT(MINIRAGNA,152,12)
+	wait(15)
+//	name("彮擭偺惡")
+	MES(MINIRAGNA,"嗯，非常少見的喔！",0)
+	MES(MINIRAGNA,"難得去一趟城鎮。\n我會買很多東西的。",0)
+	MES(MINIRAGNA,"髮飾你喜歡嗎？\n還是說想要蛋糕之類的？",0)
+	MES_close(MINIRAGNA)
+	look(MINIRAGNA,"Bone_Head",0,0,0,1,0,0,-14)
+	MOT(MINIRAGNA,153,15)
+	wait(15)
+	MES(MINIRAGNA,"那，那個……買太貴的東西\n對我來說可能有些吃力……",0)
+	MES_close(MINIRAGNA)
+
+	KAO(MIA,"B","1232A","4")//
+	look(MIA,"Bone_Head",0,0,0,2,0,0,-14)
+	wait(15)
+//	name("梒偄惡")
+	MES(MIA,"………………………………",0)
+	KAO(MIA,"B232BZ2","23","4")//
+	MES(MIA,"……沒關係，米婭可以忍。",0)
+	MES_close(MIA)
+
+	look(MINIRAGNA,"Bone_Head",0,0,0,1,0,0,0)
+	MOT(MINIRAGNA,2,15)
+//	name("彮擭偺惡")
+	MES(MINIRAGNA,"咦……？",0)
+	MES_close(MINIRAGNA)
+
+//	name("梒偄惡")
+	KAO(MIA,"B232BZ3","32A","4")//
+	MES(MIA,"米婭知道的……",0)
+	KAO(MIA,"B232BZ5","A","4")//
+	MES(MIA,"哥哥這月的零用錢\n幾乎都花光了……",0)
+	KAO(MIA,"B232BZ3","A23","4")//
+	MES(MIA,"所以……米婭什麼也不要。",0)
+	MES_close(MIA)
+
+	MOT(MINIRAGNA,154,8)
+	wait(8)
+//	name("彮擭偺惡")
+	MES(MINIRAGNA,"唔……",0)
+	MES(MINIRAGNA,"但，但是……",0)
+	MES_close(MINIRAGNA)
+
+	KAO(MIA,"B","321","5")//
+	look(MIA,"Bone_Head",0,0,0,2,0,0,8)
+	MOT(MIA,152,15)
+	wait(15)
+//	name("梒偄惡")
+	KAO(MIA,"B232BZ5","1","5")//
+	MES(MIA,"……但是……\n哥哥要早點回來……",0)
+	KAO(MIA,"B232BZ4","1","5")//
+	MES(MIA,"我只要……\n只要哥哥今天能早點回來就好……",0)
+	KAO(MIA,"B232BZ4","123332L","5")//
+	MES(MIA,"求求你了……哥哥……",0)
+	MES_close(MIA)
+
+	MOT(MINIRAGNA,2,15)
+	wait(15)
+//	name("彮擭偺惡")
+	MES(MINIRAGNA,"……我知道了。",0)
+	MES_close(MINIRAGNA)
+	MOT(MINIRAGNA,151,12)
+	wait(15)
+	CAM_quake("46")
+	MES(MINIRAGNA,"我今天會盡量\n早點回來的！",0)
+	MES(MINIRAGNA,"我向你保證，米婭！",0)
+	MES_close(MINIRAGNA)
+
+	look(MIA,"Bone_Head",0,0,0,1,0,0,16)
+	MOT(MIA,153,12)
+	wait(12)
+//	name("梒偄惡")
+	KAO(MIA,"12321Z4","236","6")//
+	MES(MIA,"嗯！\n拉格那哥哥……！",0)
+	MES_close(MIA)
+
+//丂丂夋柺丄備偭偔傝偲僼僃乕僪傾僂僩丅
+//丂丂偦偺傑傑俛俧俵偲岠壥壒側偳傕僼僃乕僪偟偰備偔
+	fade_in(100,60,0)
+	wait_fade()
+
+	stop_BGM(120)
+	wait_BGM()
+	wait(30)
+
+	filter(0,0,0)
+
+	chr_rename(BOY,"Dummy")//
+	chr_rename(MIA,"少女米婭")//
+	chr_rename(MINIRAGNA,"少年拉格那")//
+	delete(MIA)
+	delete(MINIRAGNA)
+	delete(BOY)
+
+//丂丂怷亅儃僗晹壆儅僢僾傊(ev30993)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(13099)
+
+//	EV_end()
+}
+
+
+#EndScriptTable
+//====================================================================
+

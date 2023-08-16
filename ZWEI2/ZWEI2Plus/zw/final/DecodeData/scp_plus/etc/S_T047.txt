@@ -1,0 +1,717 @@
+//──────────────────────────────
+//	name("◆シスター．イザベラ（やさぐれシスター）Isabella")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_ISABELLA
+{
+	TK_begin()
+	rot_chr(ISABELLA,30,PLAYER1)
+
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(ISABELLA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ISABELLA)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ISABELLA)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ISABELLA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※教会に入った所でタバコを吸っている。
+	if( F6_05_EndSixth )
+	{
+	//　　※初回イベント
+		if(!FT_13_TalkIsabella)
+		{
+
+			cross_fade(30)			//クロスフェード
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(119,-1019,215,0,0)
+			CAM(-130,64,215,30,151,0,0)
+			//キャラ再配置
+			chr_pos(RAGNA,	119,1019,0,260,2)
+			chr_pos(PET,112,853,0,280,2)
+			chr_pos(PARTNER,5,972,0,270,2)
+			rot_chr(ISABELLA,30,PARTNER)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(PARTNER,"9", "1", "7")	
+			KAO(ISABELLA, "1", "1", "1")	
+			
+			F_reset_chr(ISABELLA,CF_NO_MOVE)
+
+			wait_fade()
+			wait(15)
+
+		//────────────────────────
+		//	name("□イザベラに会った事がある場合")
+			if(FT_01_IsabellaEnc)
+			{
+			//	name("イザベラ")
+				KAO(ISABELLA,"12321Z3","1","1")
+				MES(ISABELLA,"あら……",0)
+				KAO(ISABELLA,"12321Z6","1","1")
+				MES(ISABELLA,"今日は随分と大勢ね。\n１２００ペンネくらいかしら。",0)
+				MES_close(ISABELLA)
+
+				MES(RAGNA,"だ、誰も\n懺悔するなんて言ってねえだろ。",0)
+				MES_close(RAGNA)
+
+				MES(PET,"そなた、相変わらずだな……",0)
+				MES(PET,"その横柄な態度を\n何とかしたらどうなのだ。",0)
+				MES_close(PET)
+			}
+		//	name("□会った事がない場合")
+			else
+			{
+			//	name("イザベラ")
+				KAO(ISABELLA,"12321Z3","1","1")
+				MES(ISABELLA,"あら……",0)
+				KAO(ISABELLA,"12321Z5","1","1")
+				MES(ISABELLA,"随分と大勢が来たわね。",0)
+				KAO(ISABELLA,"12321Z8","1","1")
+				MES(ISABELLA,"行いの懺悔なら５００ペンネ、\n重犯罪クラスなら１２００ペンネよ。",0)
+				MES_close(ISABELLA)
+
+				MES(RAGNA,"だ、誰も\n懺悔するなんて言ってねえだろ。",0)
+				MES_close(RAGNA)
+
+				MES(PET,"むう、何というシスターだ……",0)
+				MES(PET,"その横柄な態度、\n何とかしたらどうなのだ。",0)
+				MES_close(PET)
+
+			}
+		//────────────────────────
+			KAO(ISABELLA,"12321Z1","23","1")
+			MES(ISABELLA,"クク……",0)
+			MES_close(ISABELLA)
+
+		//　　シスター、ミアに向く。
+			KAO(ISABELLA,"1","321","1")
+			rot_chr(ISABELLA,30,PARTNER)
+			wait(30)
+			KAO(ISABELLA,"12321Z8","1","1")
+			MES(ISABELLA,"……どうやら\n自分の犯した過ちについては\n気付いているようね。",0)
+			MES_close(ISABELLA)
+
+			MES(PARTNER,"……あ………",0)
+			MES(PARTNER,"…………はい。",0)
+			MES_close(PARTNER)
+
+			KAO(ISABELLA,"12321Z8","1","1")
+			MES(ISABELLA,"それを繰り返したくないのなら、\n今は真っ直ぐ前に進みなさい。",0)
+			KAO(ISABELLA,"12321ZA","1","1")
+			MES(ISABELLA,"そして、\n全てを一人で抱え込んでいたこと……\nそれがどれだけ罪だったかを知りなさい。",0)
+			KAO(ISABELLA,"12321Z8","1","1")
+			MES(ISABELLA,"人の罪は、持って生まれた性質や\nその境遇によるものではないわ。",0)
+			KAO(ISABELLA,"12321Z7","1","1")
+			MES(ISABELLA,"あなたには、今も昔も\n支えてくれる存在がいるのだから。",0)
+			MES_close(ISABELLA)
+
+			MES(PARTNER,"……はい。",0)
+			MES(PARTNER,"ありがとうごさいます、\nシスターさん。",0)
+			MES_close(PARTNER)
+
+		//　　カメラをアルウェンたちに寄せる。
+			wait(15)
+			MES(PET,"い、意外とマトモなことを……",0)
+			MES_close(PET)
+
+			MES(RAGNA,"うーん、謎なシスターだぜ……",0)
+			MES_close(RAGNA)
+
+			KAO(ISABELLA,"12321Z1","23","1")
+			MES(ISABELLA,"クク……",0)
+			MES_close(ISABELLA)
+
+		//　　シスター、タバコをふかす。
+			MOT(ISABELLA,68,15)
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			wait(60)
+			MOT(ISABELLA,52,15)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+			
+		//	name("イザベラ")
+			KAO(ISABELLA,"12321Z3","21","1")
+			MES(ISABELLA,"ああ、そういえば。",0)
+			KAO(ISABELLA,"12321Z4","1","1")
+			MES(ISABELLA,"今一人、弟子を預かっているのよ。",0)
+			MES_close(ISABELLA)
+
+		//　　一同に？エモーション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			EMO(PET,EMO_HATENA)
+			wait(30)
+			
+			MES(PET,"弟子……？",0)
+			MES_close(PET)
+
+		//	name("イザベラ")
+			KAO(ISABELLA,"12321Z3","1","1")
+			MES(ISABELLA,"奥の部屋にいるわ。",0)
+			KAO(ISABELLA,"12321Z4","1","1")
+			MES(ISABELLA,"よかったら、会っていきなさい。",0)
+			MES_close(ISABELLA)
+		
+			fade_in(100,30,BLACK)
+			wait_fade()
+			F_set_chr(ISABELLA,CF_NO_MOVE)
+
+			//★イザベラ【出来る人物】
+			F_set_note(ISABELLA,2)
+			F_set(FT_13_TalkIsabella)
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			EV_end()
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+	//	name("イザベラ")
+		else
+		{
+			MES(ISABELLA,"私からは以上よ。",0)
+			MES(ISABELLA,"それと……\n今一人、弟子を預かっているのよ。",0)
+			MES(ISABELLA,"よかったら会っていきなさい。",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※教会の中でタバコを吸っている。
+	if( F6_00_GoToMeru )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("イザベラ")
+			MES(ISABELLA,"……中々いい\n顔つきになってきたわね。",0)
+			MES(ISABELLA,"何をしようと\nしているのかは知らないけど、\nせいぜい後悔の無いようになさい。",0)
+			MES(ISABELLA,"懺悔で過去は変えられない──",0)
+			MES(ISABELLA,"人は結局、今を\n懸命に生きるしかないのだから。",0)
+			MES_close(ISABELLA)
+			
+			F_set(ISABELLA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("イザベラ")
+			MES(ISABELLA,"……人は結局、今を\n懸命に生きるしかないのよ。",0)
+			MES(ISABELLA,"心配は要らないわ。",0)
+			MES(ISABELLA,"この教会は、馬鹿やって玉砕した\n人間の冥福も祈ってあげるから。",0)
+			MES(ISABELLA,"１人３９８０ペンネくらいでね。",0)
+			MES_close(ISABELLA)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（安売り価格みてえな設定だな……）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"（こやつにだけは\n  冥福を祈られたくないのう……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※懺悔室、窓の向こうにいる。
+	//　　　懺悔室にはモーリスが座らされている。
+	if( F5_00_HearLunar )
+	{
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+	//　　　懺悔室の窓あたりのＬＰを調べると反応する。
+		//	name("イザベラ")
+		MES(ISABELLA,"今は取り込み中よ。\n懺悔したいなら順番を待ちなさい。",0)
+		MES(ISABELLA,"それと、邪魔だから\n出て行きなさい。",0)
+		MES_close(ISABELLA)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※教会の中で、タバコをふかせている。
+	//	name("イザベラ")
+	if( F4_00_StartSolo )
+	{
+		if(!F_ISABELLA)
+		{
+			MES(ISABELLA,"例の一件の影響かしら。",0)
+			MES(ISABELLA,"呼び込まなくても\nちらほらと客が来るのよ。",0)
+			MES_close(ISABELLA)
+
+		//　　シスター、タバコをふかす。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+
+		//	name("イザベラ")
+			MES(ISABELLA,"……目障りね。\n少し減らしましょうか。",0)
+			MES_close(ISABELLA)
+		
+			F_set(ISABELLA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("イザベラ")
+			MES(ISABELLA,"今も、将来に不安を感じる\nとかいうご夫人が来ているのよ。",0)
+			MES(ISABELLA,"……目障りね。\nとっとと帰って欲しいものだわ。",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※教会外でタバコをふかせている。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("イザベラ")
+			MES(ISABELLA,"あら、こんな時間に出かけるの？",0)
+			MES(ISABELLA,"ご苦労なことね。",0)
+			MES_close(ISABELLA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"あ、ああ……",0)
+			MES(RAGNA,"にしても、この辺りは\n特に被害もなかったみたいだな。",0)
+			MES_close(RAGNA)
+
+		//	name("イザベラ")
+			MES(ISABELLA,"クク……",0)
+			MES_close(ISABELLA)
+
+		//　　シスター、ゆっくりタバコをふかす。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+
+		//	name("イザベラ")
+			MES(ISABELLA,"……そうみたいね。",0)
+			MES_close(ISABELLA)
+
+		//　　アルウェン、ラグナに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			MES(RAGNA,"（やっぱコイツが\n  追い払ったのか……？）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（むう……おおかた\n  『タバコじゅっ……！』\n  のような真似をしたのであろ。）",0)
+			MES_close(PARTNER)
+		
+			F_set(ISABELLA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("イザベラ")
+			MES(ISABELLA,"私はね、一日１０時間\n寝ないと気が済まないの。",0)
+			MES(ISABELLA,"私の睡眠時間を削るなんて、\n魔物風情がいい度胸ね。",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※教会の外でタバコを吸っている。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("イザベラ")
+			MES(ISABELLA,"まず１人……",0)
+			MES_close(ISABELLA)
+
+		//　　イザベラにＰＡエモーション、ニップルたちに向く。
+			EMO(ISABELLA,EMO_PA)
+			wait(30)
+			
+			rot_chr(ISABELLA,30,NIPPLE)
+
+		//	name("イザベラ")
+			MES(ISABELLA,"あら、そこにも子供がいるわね。",0)
+			MES_close(ISABELLA)
+
+		//　　シスター、タバコをふかす。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+
+		//	name("イザベラ")
+			MES(ISABELLA,"……呼び寄せましょうか。",0)
+			MES_close(ISABELLA)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（このシスター、\n  非常に危険な気がするんだが……）",0)
+				MES(RAGNA,"（何故だ……？）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"（な、何か良からぬものを感じる……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			F_set(ISABELLA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　シスター、タバコをふかす。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+
+		//	name("イザベラ")
+			MES(ISABELLA,"人は誰しも、\n心の中に闇を抱えているものよ。",0)
+			MES(ISABELLA,"教会（ココ）に呼び寄せるくらい、\n造作もないわ。",0)
+			MES_close(ISABELLA)
+
+		//　　２人に冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			//★イザベラ【心を熟知】
+			F_set_note(ISABELLA,0)
+		}
+		F_set(FT_05_TalkIsabella)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※教会の外でタバコを吸っている。
+	//　　※初回イベント。
+	//	name("イザベラ")
+	if( F2_00_GoForest )
+	{
+		if(!FT_03_TalkIsabella	)
+		{
+			MES(ISABELLA,"フゥ……",0)
+			MES(ISABELLA,"この教会は風通しが\n悪くて困るわね。",0)
+			MES(ISABELLA,"空気が篭っていけないわ。",0)
+			MES_close(ISABELLA)
+
+			//　　２人に冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+		//──────────────────────────────
+		//	name("□シスターの初回イベントを見たことがある場合。")
+			if(FT_01_IsabellaEnc)
+			{
+				MES(PARTNER,"ヘビースモーカーが\n何を言っておる……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"つーかこの教会って、\nいつも誰も居ねえよな。",0)
+				MES(RAGNA,"本当に人が来ることとか\nあるのかよ。",0)
+				MES_close(RAGNA)
+			}
+		//	name("□見たことがない場合。")
+			else
+			{
+				MES(PARTNER,"その割に\nスパスパ吸っておるようだが……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"シスターがタバコ……",0)
+				MES(RAGNA,"こんな教会に人が来んのか？",0)
+				MES_close(RAGNA)
+			}
+
+		//──────────────────────────────
+		//	name("イザベラ")
+			MES(ISABELLA,"あら……",0)
+			MES(ISABELLA,"クク、そんなの簡単なことよ。",0)
+			MES_close(ISABELLA)
+
+		//　　シスター、タバコをふかす。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+			
+		//	name("イザベラ")
+			MES(ISABELLA,"何なら、そのうち\n見せてあげましょうか？",0)
+			MES_close(ISABELLA)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（マフィアの親分みたいな\n  言い草だな……）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"（……フン、一体\n  何を見せるというのだ。）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			F_set(FT_03_TalkIsabella)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+		//	name("イザベラ")
+			MES(ISABELLA,"ここは教会よ。\n客なんていくらでも来るわ。",0)
+			MES(ISABELLA,"何なら、そのうち\n見せてあげましょうか？",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※教会でタバコを吸っている。
+	//　　　会話中も喫煙モーションは止まらない。（か、もしくは手動で挟む）
+	if( F1_15_GoVillage )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("イザベラ")
+			MES(ISABELLA,"そうそう、言い忘れていたけど……",0)
+			MES(ISABELLA,"ここは結構\n由緒正しい教会なのよ。",0)
+			MES(ISABELLA,"神聖王国の王家とも\n縁（ゆかり）があったらしいわ。",0)
+			MES(ISABELLA,"……そのスジでは結構有名よ。\nここへ来るときは弁えておくことね。",0)
+			MES_close(ISABELLA)
+
+			MES(PARTNER,"（このシスター、\n  何故こうも横柄なのだ……）",0)
+			MES_close(PARTNER)
+
+			F_set(ISABELLA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("イザベラ")
+			MES(ISABELLA,"ここは神聖王国の王家とも\n縁（ゆかり）のある、由緒正しい教会なのよ。",0)
+			MES(ISABELLA,"祈りたかったら祈りなさい。",0)
+			MES(ISABELLA,"もっとも、祈りなんて\n最も無駄な行為の一つでしょうけど。",0)
+			MES_close(ISABELLA)
+
+		//　　２人に冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※教会でタバコを吸っている。
+	if( F1_01_GameStart )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("イザベラ")
+			MES(ISABELLA,"あら……\n懺悔する気になったの？",0)
+			MES_close(ISABELLA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"フン、生憎とその予定は無いぞ。",0)
+			MES(PARTNER,"それ以前に、そなた\nそのタバコは止めぬか。\n来客に無礼であろう。",0)
+			MES_close(PARTNER)
+
+		//　　シスター、タバコを吐きかける。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+		//	name("イザベラ")
+			MES(ISABELLA,"……懺悔する気もないの？",0)
+			MES_close(ISABELLA)
+
+		//	name2(ISABELLA)
+			MES(ISABELLA,"なら出直してきなさい。\nまず教会に来る態度がなってないわ。",0)
+			MES_close(ISABELLA)
+
+		//　　２人に冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+			//	MES(RAGNA,"（こ、怖えシスターだな……）",0)
+				MES(RAGNA,"（とんでもないシスターだな……）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"え、偉そうな……",0)
+				MES_close(PARTNER)
+			}
+
+			F_set(ISABELLA)
+		}
+	//──────────────────────────────
+	//　　★繰り返し
+		else
+		{
+		//	name("イザベラ")
+			MES(ISABELLA,"悩み相談なら１００ペンネ、\n聖典訓話なら２００ペンネ。",0)
+			MES_close(ISABELLA)
+
+		//	name2(ISABELLA)
+			MES(ISABELLA,"行いの懺悔なら５００ペンネ、\n重犯罪クラスなら１２００ペンネよ。",0)
+			MES_close(ISABELLA)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（ぼったくりシスター……？）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"そ、その予定は無いと\n言っておろう……",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+		}
+	}
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

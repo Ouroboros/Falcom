@@ -1,0 +1,572 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仠僥儖儈僪乕儖")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+TK_TELMIDORL
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(TELMIDORL, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,TELMIDORL)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,TELMIDORL)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,TELMIDORL)
+	}
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂梿慁梫嵡丒拞儃僗偱婥愨偟偰搢傟偰偄傞丅
+	if( F6_00_GoToMeru )
+	{
+		MES(LOSE_TELMI,"………………………………",0)
+		MES_close(LOSE_TELMI)
+
+	//	name("僥僉僗僩乮怓姺偊丒昞帵偟側偄乯")
+		MES(0,"C3S2特米多爾精疲力竭昏倒在地。",2)
+		MES_close(0)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂僋儕僗僞儖僶儗乕偺斷偺嵳抎偺慜偵棫偭偰偄傞丅
+	//丂丂僆僨僢僒偲偼堎側傝丄斷偦偺傕偺傪嬅帇偟偰偄傞暤埻婥丅
+	if( F2_00_GoForest )
+	{
+		//儌乕僔儑儞僙僢僩
+		MOT_SET(TELMIDORL,150, -2,405,405,-1,15)
+	//	name("仛弶夞乮侾夞偺傒乛僀儀儞僩張棟乯")
+		if(!FM_03_TalkTelmidorl)
+		{
+		//丂丂榖偟偐偗傞偲僉儍儔嵞攝抲偟偰僀儀儞僩敪惗丅
+
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	弶婜壔張棟
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			cross_fade(30)			//僋儘僗僼僃乕僪
+			
+			EV_begin()
+			//僇儊儔僙僢僩
+			CAM_move(-26,5303,440,0,0)
+			CAM(-570,46,80,40,168,0,0)
+			
+			//僉儍儔嵞攝抲
+			chr_pos(RAGNA,294,-4863,200,110,2)
+			chr_pos(PARTNER,178,-4712,201,140,2)
+			chr_pos(TELMIDORL,-0,-5000,201,180,2)
+			
+			//婄弶婜壔
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(TELMIDORL,"1", "1", "1")	
+			
+			look(TELMIDORL,"Bone_Head",0,		0,0,2,			0,0,30)
+
+			wait_fade()
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	僀儀儞僩奐巒
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+			if(!FM_01_TalkTelmidorl)
+			{
+				chr_rename(TELMIDORL,"青年")//
+			}
+
+			MES(TELMIDORL,"這就是黑水晶柱……\n哎呀，真是奇特的景象。",0)
+			MES(TELMIDORL,"可是那\n大門一般的祭壇到底是……",0)
+			MES_close(TELMIDORL)
+
+		//丂丂僥儖儈僪乕儖丄俹俙儅乕僋側偳傪弌偟偰怳傝曉傞丅
+		
+
+			EMO(TELMIDORL,EMO_PA)
+			wait(30)
+			look(TELMIDORL,"Bone_Head",0,		0,0,5,			0,0,0)
+			
+//			CAM_move(13,3560,139,60,0)
+//			CAM(-49,17,139,41,150,60,0)
+//			CAM_move(153,4900,339,60,0)
+//			CAM(-88,38,339,40,142,60,0)
+
+			cross_fade(30)
+			CAM_move(153,4900,339,0,0)
+			CAM(-87,38,339,40,224,0,0)
+			rot_chr(TELMIDORL,30,RAGNA)
+//			wait_CAM_move()
+			wait_fade()
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀埲慜僥儖儈僪乕儖偲夛偭偰偄傞応崌")
+			if(FM_01_TalkTelmidorl)
+			{
+				MOT(TELMIDORL,150,10)
+				wait(15)
+				KAO(TELMIDORL,"12321Z4","1","1")
+				MES(TELMIDORL,"唉呀，是你們啊。\n又見面了呢。",0)
+				MES_close(TELMIDORL)
+			}
+		//	name("佀埲慜僥儖儈僪乕儖偲夛偭偰偄側偄応崌")
+			else
+			{
+				MES(RAGNA,"你是……？",0)
+				MES_close(RAGNA)
+
+				MOT(TELMIDORL,150,10)
+				wait(15)
+				KAO(TELMIDORL,"12321Z5","1","1")
+				MES(TELMIDORL,"啊，請原諒。\n一不小心就看呆了。",0)
+				KAO(TELMIDORL,"12321Z5","1","1")
+				MES(TELMIDORL,"我叫特米多爾。\n只是一位隨性的詩人。",0)
+				MES_close(TELMIDORL)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+		//丂丂僥儖儈僪乕儖丄斷偺嵳抎偺曽傪岦偔丅
+			MOT(TELMIDORL,2,10)
+			wait(15)
+			look(TELMIDORL,"Bone_Head",0,		0,0,2,			0,0,20)
+			rot(TELMIDORL,30,180)
+			wait(15)
+			chr_rename(TELMIDORL,"特米多爾")//
+			MES(TELMIDORL,"來看看吧。\n這是多麼美妙的景象。",0)
+			MES(TELMIDORL,"看起來像是從巨大的水晶礦脈中\n切削製成的祭壇……",0)
+			MES(TELMIDORL,"唔—，建起祭壇\n的目的究竟是什麼呢。",0)
+			MES(TELMIDORL,"我已經問過不少人了，\n可是沒有得到答案。",0)
+			MES_close(TELMIDORL)
+
+			rot(RAGNA,30,170)
+			rot(PARTNER,30,180)
+			wait(10)
+
+//			cross_fade(30)			//僋儘僗僼僃乕僪
+//			CAM_move(153,4900,399,0,0)
+//			CAM(-448,42,399,40,217,0,0)
+//			CAM_move(153,4900,399,60,0)
+//			CAM(-448,42,399,40,217,60,0)
+			CAM_move(153,4900,439,60,0)
+			CAM(-447,41,439,40,213,60,0)
+			look(PARTNER,"Bone_Head",0,		0,0,2,			0,0,20)
+//			wait_fade()
+			wait(60)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"………………………………",0)
+			MES(PARTNER,"（這麼想來……父親大人\n 也常常來這裡遊玩呢。）",0)
+			MES(PARTNER,"（每次帶我離開城堡時，\n 肯定都會來到這裡。）",0)
+			MES(PARTNER,"（……最後一次來這裡玩\n 是什麼時候呢……？）",0)
+			MES_close(PARTNER)
+
+		//丂丂儔僌僫偺摢偵丠儅乕僋傪昞帵丅
+			EMO(RAGNA,EMO_HATENA)
+			wait(30)
+		
+		//丂丂偦偺傑傑傾儖僂僃儞偺曽偵岦偒捈傞丅
+			rot_chr(RAGNA,30,PARTNER)
+			
+			KAO(RAGNA,"12321Z2","1","1")
+			MES(RAGNA,"公主殿下……？",0)
+			MES_close(RAGNA)
+
+//			wait_MES(RAGNA)
+//			cross_fade(30)			//僋儘僗僼僃乕僪
+//			CAM_move(153,4900,339,0,0)
+//			CAM(-87,38,339,40,224,0,0)
+//			wait_fade()
+			
+			MES(PARTNER,"啊……沒什麼。",0)
+			MES_close(PARTNER)
+
+			CAM_move(153,4900,339,50,0)
+			CAM(-87,38,339,40,224,50,0)
+			rot_chr(PARTNER,30,RAGNA)
+//			look_chr(PARTNER,RAGNA,"Bone_Head")
+			look(PARTNER,"Bone_Head",0,		0,0,5,			0,0,0)
+			wait(50)
+			KAO(PARTNER,"12321Z6","1","1")
+			MES(PARTNER,"現在我們也沒有時間\n在這裡閒逛了。",0)
+			KAO(PARTNER,"12321Z4","1","1")
+			MES(PARTNER,"走吧，拉格那。",0)
+			MES_close(PARTNER)
+
+			KAO(RAGNA,"12321Z2","1","1")
+			MES(RAGNA,"嗯，是啊。",0)
+			MES_close(RAGNA)
+
+		//丂丂儔僌僫丄僥儖儈僪乕儖偺曽傪尒傞丅
+			rot_chr(RAGNA,30,TELMIDORL)
+			rot_chr(PARTNER,30,TELMIDORL)
+			wait(20)
+			KAO(RAGNA,"12321Z6","1","1")
+			MES(RAGNA,"再見了，是叫特米多爾吧。\n太入迷的話可是會不小心摔倒的哦。",0)
+			KAO(RAGNA,"12321Z4","1","1")
+			MES(RAGNA,"在這裡摔倒肯定會很痛吧？",0)
+			MES_close(RAGNA)
+
+			look(TELMIDORL,"Bone_Head",0,		0,0,5,			0,0,0)
+			rot_chr(TELMIDORL,30,RAGNA)
+			MOT(TELMIDORL,150,10)
+			wait(15)
+			KAO(TELMIDORL,"12321Z3","23","1")
+			MES(TELMIDORL,"呵呵……多謝忠告。",0)
+			MES_close(TELMIDORL)
+
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	僀儀儞僩廔椆張棟
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			MOT(TELMIDORL,2,0)
+			KAO(TELMIDORL,"1","1","1")
+			
+			//僇儊儔傪弶婜愝掕偵
+			CAM_return( 0 )
+			wait(30)
+			F_set(FM_03_TalkTelmidorl)
+			EV_end()
+
+			
+			//僼僃乕僪僀儞----------------------
+			fade_in(0,30,BLACK)
+
+//			//仛僥儖儈僪乕儖
+//			F_set_note(TELMIDORL,-1)
+
+		//	僾儗僀儎乕憖嶌嫋壜
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			rot_chr(TELMIDORL,30,PLAYER1)
+			MOT(TELMIDORL,150,10)
+			wait(15)
+			if(!F_TELMIDORL)
+			{
+				MES(TELMIDORL,"呼，差不多該回去\n開始創作詩歌了。",0)
+				MES(TELMIDORL,"這次我的劇本打算用\n一位不幸少女當主角。",0)
+				MES(TELMIDORL,"終章的詩歌\n就使用這裡的意象吧。",0)
+				MES_close(TELMIDORL)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"………………………………",0)
+				MES_close(PARTNER)
+
+				MOT(TELMIDORL,2,10)
+				F_set(TELMIDORL)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(TELMIDORL,"差不多要回去\n開始創作詩歌了。",0)
+				MES(TELMIDORL,"這次我的劇本打算用\n一位不幸少女當主角。",0)
+				MES(TELMIDORL,"呵呵……\n敬請期待。",0)
+				MES_close(TELMIDORL)
+				MOT(TELMIDORL,2,10)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂攷暔娰偱僥僆娰挿偲岦偐偄崌偭偰偄傞忬懺丅
+	if( F1_15_GoVillage )
+	{
+		rot_chr(TELMIDORL,30,PLAYER1)
+		MOT_SET(TELMIDORL,150, -2,405,405,-1,15)
+
+	//	name("仛弶夞")
+		if(!F_TELMIDORL)
+		{
+			MOT(TELMIDORL,150,15)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀埲慜僥儖儈僪乕儖偲夛偭偰偄傞応崌")
+			if(FM_01_TalkTelmidorl)
+			{
+				MES(TELMIDORL,"喲，是你們啊。",0)
+				
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			MES(TELMIDORL,"知道嗎？\n在北方的一個村莊\n郊外有一個古老的神殿。",0)
+			MES(TELMIDORL,"叫做歐蒂姆神殿。\n現在應該已經很少有人知道了……",0)
+			MES(TELMIDORL,"在之前的魔法大戰中，據說\n有很多人在那裡堅守奮戰。",0)
+			MES(TELMIDORL,"只可惜現在好像已經\n沈入湖底了。",0)
+			MES_close(TELMIDORL)
+
+			F_set(TELMIDORL)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(TELMIDORL,"呵呵，這次就用\n它來構建劇本吧。",0)
+			MES(TELMIDORL,"被湖水吞沒的\n光輝之神殿，奧蒂姆……",0)
+			MES(TELMIDORL,"好像和悲劇\n很相配呢。",0)
+			MES_close(TELMIDORL)
+		}
+		MOT(TELMIDORL,52,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂廻庰応偺偳偙偐偵嵗偭偰偄傞丅
+	//丂丂攑岯偱僆僨僢僒偲夛偭偨傜斵彈傕庰応偵尰傟傞偺偱
+	//丂丂偁傑傝報徾偑偐傇傜側偄傛偆丄埵抲偼側傞傋偔棧偟偰偍偔丅
+	if( F1_01_GameStart )
+	{
+		MOT_SET(TELMIDORL,151, -2,568,568,-1,0)		//僥儖儈僪乕儖丂夛榖儌乕僔儑儞
+	//	name("仛弶夞乮侾夞偺傒乛僀儀儞僩張棟乯")
+		if(!FM_01_TalkTelmidorl)
+		{
+		//丂丂榖偟偐偗傞偲僉儍儔嵞攝抲偟偰僀儀儞僩敪惗丅
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	弶婜壔張棟
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			cross_fade(30)			//僋儘僗僼僃乕僪
+			
+			EV_begin()
+			//僇儊儔僙僢僩
+			CAM_move(-799,1008,135,0,0)
+			CAM(-130,47,-25,27,296,0,0)
+
+			//儖乕僩儉乕僽拞偺儊僀偲傇偮偐傜側偄傛偆偵徚偡
+			color(MEI,-1)//摟夁
+			
+			//儖乕僩儉乕僽巭傔傞
+			move(MEI, 99, 0,0,0,0,0)//0905捛壛
+			EV_stop("MOVE_MEI")
+			//儊僀傪弶婜埵抲傊
+			chr_pos(MEI,298,-1505,1,351,2)
+			
+			//僉儍儔嵞攝抲
+			chr_pos(RAGNA,-916,-846,0,166,2)
+			chr_pos(PARTNER,-741,-877,1,135,2)
+			chr_pos(TELMIDORL,-1030,-1100,0,240,150)
+			
+			//婄弶婜壔
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(TELMIDORL,"1", "1", "1")	
+			
+
+			wait_fade()
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	僀儀儞僩奐巒
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		
+			look_chr( TELMIDORL, RAGNA,"Bone_Head")
+
+		//	name("惵擭")
+			KAO(TELMIDORL,"12321Z3","1","1")
+			MES(TELMIDORL,"哦，你們是……",0)
+			KAO(TELMIDORL,"12321Z6","1","1")
+			MES(TELMIDORL,"昨天晚上住在\n樓上房間裡的人吧？",0)
+			KAO(TELMIDORL,"12321Z3","1","1")
+			MES(TELMIDORL,"從其他地方來的旅客？",0)
+			MES_close(TELMIDORL)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z3","1","1")
+			MES(RAGNA,"啊，嗯。\n就是這樣。",0)
+			KAO(RAGNA,"12321Z3","1","1")
+			MES(RAGNA,"你也是旅客嗎？",0)
+			MES_close(RAGNA)
+
+			KAO(TELMIDORL,"12321Z4","23","1")
+			MES(TELMIDORL,"呵呵，我叫做\n特米多爾。",0)
+			chr_rename(TELMIDORL,"特米多爾")
+			KAO(TELMIDORL,"12321Z6","3","1")
+			MES(TELMIDORL,"為了追求無盡的浪漫\n而在維蘭世界中漂泊的\n隨性的吟游詩人。",0)
+			MES_close(TELMIDORL)
+
+			KAO(PARTNER,"12321Z2","D","1")
+			MES(PARTNER,"哦……",0)
+			MES_close(PARTNER)
+
+			KAO(RAGNA,"12321Z3","D","1")
+			MES(RAGNA,"嗯……詩人啊。",0)
+			MES_close(RAGNA)
+
+			KAO(TELMIDORL,"12321Z6","21","6")
+			MES(TELMIDORL,"現在伊魯巴特四處的\n傳說都令我入迷。",0)
+			KAO(TELMIDORL,"12321Z6","26","6")
+			MES(TELMIDORL,"……不，\n呵呵，應該說我已經愛上它們了吧。",0)
+			KAO(TELMIDORL,"12321Z6","6","6")
+			MES(TELMIDORL,"我的創作熱情也得到激發，\n新的詩作不斷湧現出來。",0)
+			MES_close(TELMIDORL)
+
+		//丂丂僥儖儈僪乕儖丄敮傪憕偒梘偘傞巇憪丅
+			KAO(PARTNER,"12321Z2","1","1")
+			MES(PARTNER,"（唔，有意思……）",0)
+			KAO(PARTNER,"12321Z5","1","1")
+			MES(PARTNER,"（人類之中原來也有\n 這等飄逸的雅客。）",0)
+			MES_close(PARTNER)
+
+			look_chr( RAGNA, PARTNER,"Bone_Head")
+			KAO(RAGNA,"1","11TTUU","1")
+			wait(15)
+			KAO(RAGNA,"12321Z5","U","1")
+			MES(RAGNA,"（不過這種人\n 也只佔很少一部分……）",0)
+			MES_close(RAGNA)
+
+			look_off(RAGNA)
+			KAO(RAGNA,"1","UTT11","1")
+			KAO(TELMIDORL,"12321Z6","21","1")
+			MES(TELMIDORL,"我聽說除了\n這個古代神殿遺跡以外\n還有一些很有意思的地方呢。",0)
+			KAO(TELMIDORL,"12321Z3","1","1")
+			MES(TELMIDORL,"古老的巨大鐵塔。",0)
+			KAO(TELMIDORL,"12321Z4","1","1")
+			MES(TELMIDORL,"進入之後就再也沒有辦法\n離開的魔法森林。",0)
+			KAO(TELMIDORL,"12321Z5","23","1")
+			MES(TELMIDORL,"還有隱居著\n高貴魔族的城堡……",0)
+			MES_close(TELMIDORL)
+
+			KAO(RAGNA,"12321Z5","A","1")
+			MES(RAGNA,"啊，難道說那指的是……\n吸血鬼的城堡嗎？",0)
+			MES_close(RAGNA)
+
+			KAO(TELMIDORL,"12321Z6","21D","6")
+			MES(TELMIDORL,"沒錯，你居然也知道。\n觀光手冊上明明沒有\n提到過這些……",0)
+			KAO(TELMIDORL,"12321Z6","23","1")
+			MES(TELMIDORL,"——據說這座神秘而壯麗的\n城堡就位於伊魯巴特的某處，\n只有滿月時才會現出形貌……",0)
+			KAO(TELMIDORL,"12321Z6","2B","6")
+			MES(TELMIDORL,"呵呵，你們也喜歡\n這種故事嗎？",0)
+			MES_close(TELMIDORL)
+
+			KAO(RAGNA,"12321Z5","26","1")
+			MES(RAGNA,"哈哈哈……\n這倒不是。",0)
+			MES_close(RAGNA)
+
+		//丂丂傾儖僂僃儞偺摢偵乧儅乕僋丅
+			EMO(PARTNER,EMO_TENTEN)
+			KAO(PARTNER,"1","23","1")
+			wait(30)
+
+			KAO(PARTNER,"1","2A","1")
+			MES(PARTNER,"（…………哼……………）",0)
+			MES_close(PARTNER)
+			
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	僀儀儞僩廔椆張棟
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			//儖乕僩儉乕僽拞偺儊僀偲傇偮偐傜側偄傛偆偵徚偡
+			color(MEI,1)//摟夁
+			
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(TELMIDORL,"1", "1", "1")	
+
+			//儂傾儞弶夞屻側傜儖乕僩儉乕僽奐巒
+			EV("MOVE_MEI")
+			
+
+			EV_end()
+			F_set(FM_01_TalkTelmidorl)
+			look_off(TELMIDORL)
+			CAM_return( 0 )			//僇儊儔傪弶婜愝掕偵
+			fade_in(0,30,BLACK)
+			
+//			//仛僥儖儈僪乕儖
+//			F_set_note(TELMIDORL,-1)
+		//	僾儗僀儎乕憖嶌嫋壜
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		}
+		else
+		{
+			look_chr( TELMIDORL, PLAYER,"Bone_Head")
+			MOT(TELMIDORL,151,15)
+		//	name("仛俀夞栚")
+			if(!F_TELMIDORL)
+			{
+				MES(TELMIDORL,"事實上，我以前就\n出過詩集，\n可是銷量不太好。",0)
+				MES(TELMIDORL,"哎，那可花了我\n不少錢呢……",0)
+				MES_close(TELMIDORL)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（難道是自費出版嗎……？）",0)
+				MES_close(RAGNA)
+				
+				F_set(TELMIDORL)
+			}
+		//	name("仛埲屻丄孞傝曉偟")
+			else
+			{
+				MES(TELMIDORL,"我是想找到一個有錢的資助者，\n然後依照自己的愛好執筆寫作。",0)
+				MES(TELMIDORL,"可是現實\n總是沒有那麼理想……",0)
+				MES_close(TELMIDORL)
+			}
+			MOT(TELMIDORL,150,15)
+			look_off(TELMIDORL)
+		}
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

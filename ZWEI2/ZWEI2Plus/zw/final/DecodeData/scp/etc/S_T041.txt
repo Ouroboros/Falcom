@@ -1,0 +1,585 @@
+//──────────────────────────────
+//	name("◆海蕾娜（女仆Ｂ）Helena")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_HELENA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(HELENA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,HELENA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,HELENA)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,HELENA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※屋敷·執務室で本棚を掃除。
+	if( F6_05_EndSixth )
+	{
+		if(!F_HELENA)
+		{
+		//　　※振り返らない。
+			MES(HELENA,"嗯嗯……\n如果说是为了·小·姐·的话～☆",0)
+			MES_close(HELENA)
+
+		//　　海蕾娜振り返る。
+			rot_chr(HELENA,30,PLAYER1)
+			EV("MOTION_TK_HELENA")
+
+			MES(HELENA,"小姐，已经在和本家那边联络了\n近期一直很忙碌的样子……",0)
+			MES(HELENA,"但好像事情也终于\n告一段落了。",0)
+			MES(HELENA,"所以今天，我要把房间\n打扫的闪闪发光。",0)
+			MES(HELENA,"呵呵，特意与小安娜\n换了班哦～。",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//　　★繰り返し
+		else
+		{
+			EV("MOTION_TK_HELENA")
+			rot_chr(HELENA,30,PLAYER1)
+			MES(HELENA,"为了今天，\n特意与小安娜\n换了班哦。",0)
+			MES(HELENA,"而且，这可是瞄准了小姐和管家\n都出门去了的隐秘作战……",0)
+			MES(HELENA,"呵呵，我也变的\n很厉害了对吧？",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,151,5)
+	}
+	else
+	//──────────────────────────────
+	//▼□□　わらしべイベント
+	//	name("３·海蕾娜（亚尔迪≈敷）	『お手元ライト』□『新品ノ～ト』")145
+	//──────────────────────────────
+	if(F5_00_HearLunar && FV_11_Warasi_2_Teo && !FV_11_Warasi_3_Hln)
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		//──────────────────────────────
+		//	name("□初回")
+		if(!F_HELENA)
+		{
+			MES(HELENA,"哎呀呀，我说客人啊……",0)
+			MES(HELENA,"您有一件很趁手的\n手电筒呢。",0)
+			MES_close(HELENA)
+
+		//　　海蕾娜にＰＡエモ～ション。
+			EMO(HELENA,EMO_PA)
+			wait(30)
+			
+			MES(HELENA,"对呀，作为给小安娜的\n礼物不是正好么……",0)
+			MES(HELENA,"不好意思，你能把那个『手电筒』，\n转让给我吗！？",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+		else
+		{
+		//	name("□２回目以降")
+			MES(HELENA,"那个『手电筒』，\n拿着十分顺手呢。",0)
+			MES(HELENA,"不好意思，能把那个\n转让给我吗！？",0)
+			MES(HELENA,"我想送给小安娜\n当礼物……",0)
+			MES_close(HELENA)
+		}
+		//──────────────────────────────
+		
+	//	name("選択テキスト")
+		workL(WK_CANCEL,SET,2)//【取消】
+		MES_pos(PLAYER1,"??W9【没问题】\n【我拒绝】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+		//──────────────────────────────
+		//	name("□【いいとも】")
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+		//──────────────────────────────
+			MES(HELENA,"哇，谢谢！",0)
+			MES(HELENA,"嗯，小安娜只要有了\n这个的话，\n晚上上厕所就不用害怕了吧？",0)
+			MES(HELENA,"作为回礼\n请把这个拿去吧的！",0)
+			MES_close(HELENA)
+
+		//	name("アイテム入手テキスト")
+		//	MES(this,"得到了『新品笔记』。",0)
+			//―――――――――――――――――――――――
+			fade_in(30,10,BLACK)
+
+			get_item(144,-1,1)
+			get_item(145,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//―――――――――――――――――――――――
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哦，谢谢。",0)
+			MES(RAGNA,"但是……那个女仆\n晚上上厕所会害怕\n真叫人难以想像。",0)
+			MES_close(RAGNA)
+
+		//	name2(HELENA)
+			MES(HELENA,"其实，小安娜\n很害怕晚上去上厕所的。",0)
+			MES(HELENA,"总是听见咣啊嘭啊的声音之后，\n就听见她会大叫『哇靠！？』。",0)
+			MES_close(HELENA)
+
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			
+			//艾尔雯が居る
+			if(F6_00_GoToMeru)
+			{
+				EMO(PARTNER,EMO_HIYAASE)
+			}
+			else
+			//奥迪莎が居る
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_HIYAASE)
+			}
+			wait(30)
+
+		//──────────────────────────────
+		if(FT_02_TalkAnna || FT_11_TalkAnna)
+		{
+			if(F6_00_GoToMeru)
+			{
+			//	name("□安娜·フラグ②または□之初回を見ており，艾尔雯がいる场合")
+				MES(PARTNER,"那是……\n碰到头了吧。",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("□安娜·フラグ②または□之初回を見ており，艾尔雯がいない场合")
+				MES(RAGNA,"那是……\n撞到头了吧。",0)
+				MES_close(RAGNA)
+			}
+		}
+		else
+		{
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+			//	name("□奥迪莎がいる场合")
+				MES(PARTNER,"大叫『哇靠！？』……\n不会是因为撞到头了吧？",0)
+				MES_close(PARTNER)
+			}
+			else
+			if(F6_00_GoToMeru)
+			{
+			//	name("□安娜·フラグ②と□之初回を見ておらず，艾尔雯がいる场合")
+				MES(PARTNER,"那大概是……\n碰到头了吧。",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("□それ以外")
+				MES(RAGNA,"那大概是……\n碰到头了吧。",0)
+				MES_close(RAGNA)
+				
+				MES(PET,"也许送她个手电筒是\n非常正确的。",0)
+				MES_close(PET)
+			}
+
+			//2008.08.12.根田移動
+			//★海蕾娜【安娜にプレゼント】
+			//F_set_note(HELENA,2)
+
+			//F_set(FV_11_Warasi_3_Hln)
+			//F_reset(HELENA)
+		}
+
+		//2008.08.12.根田移動
+		//★海蕾娜【安娜にプレゼント】
+		F_set_note(HELENA,2)
+
+		F_set(FV_11_Warasi_3_Hln)
+		F_reset(HELENA)
+
+		//──────────────────────────────
+		}
+		//──────────────────────────────
+		//	name("□やめる")
+		//──────────────────────────────
+		else
+		{
+		//	name("□【拒否する】")
+			MES(HELENA,"哦，这样啊。\n唉……",0)
+			MES_close(HELENA)
+		}
+		//──────────────────────────────
+		if( F6_00_GoToMeru )
+		{
+			MOT(HELENA,151,5)
+		}
+		else
+		{
+			MOT(HELENA,75,15)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※屋敷·客室で窓之戸締りをしている。
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		if(!F_HELENA)
+		{
+			MES(HELENA,"我，在大家说话的时候。\n偶然听到了……",0)
+			MES(HELENA,"虽然小姐说\n不用担心，\n其实却非常危险。",0)
+			MES(HELENA,"……但是，一定会没事的。",0)
+			MES(HELENA,"因为强大而充满爱的人们\n都聚集在了一起。",0)
+			MES(HELENA,"大家齐心协力，\n没有做不到的事！\n我海蕾娜敢为此做保证！",0)
+			MES_close(HELENA)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"哈哈。\n谢，谢谢……",0)
+				MES_close(RAGNA)
+			}
+			//	name("□艾尔雯先頭")
+			else
+			{
+				MES(PARTNER,"嗯，虽然不是很明白\n心意我就领了。",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			
+			F_set(HELENA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HELENA,"大家齐心协力，\n没有做不到的事的！",0)
+			MES(HELENA,"我海蕾娜敢对此保证。",0)
+			MES(HELENA,"大家，无论如何\n请加油吧！",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,151,5)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※屋敷·控え室之食器棚前。
+	if( F5_00_HearLunar )
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		if(!F_HELENA)
+		{
+			MES(HELENA,"马上就要准备\n开始干活了。",0)
+			MES(HELENA,"那个怪物果然很恐怖，\n小姐虽然对我说\n不用太勉强自己……",0)
+			MES(HELENA,"但是我讨厌，不能帮助小姐\n的自己。",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HELENA,"话说最近，小安娜\n对我很温柔了呢。",0)
+			MES(HELENA,"不，虽然还是和以前一样\n的欺负我……\n只是稍微，好了那么一点点。",0)
+			MES(HELENA,"……我也必须要\n加油了。",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,75,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+	//　　※屋敷女仆部屋，椅子に座ってうなだれている。
+		MES(HELENA,"……呼………呼…………",0)
+		MES_close(HELENA)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった
+	//──────────────────────────────
+	//　　※屋敷控え室，手前之椅子に座ってうなだれている。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_HELENA)
+		{
+		//　　※振り返らない。
+			MES(HELENA,"呜呜，不要再\n这样子下去了……",0)
+			MES(HELENA,"好可怕，我想回家了……",0)
+			MES_close(HELENA)
+			F_set(HELENA)
+		}
+		else
+		{
+	//　　★繰り返し
+			MES(HELENA,"呜呜呜，小姐……",0)
+			MES(HELENA,"抽泣抽泣……",0)
+			MES_close(HELENA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵之正体が明かされた
+	//──────────────────────────────
+	//　　※屋敷·客室でベッド梅クしている。
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(HELENA,30,PLAYER1)
+		EV("MOTION_TK_HELENA")
+		if(!F_HELENA)
+		{
+			MES(HELENA,"唉……\n任务又失败了。",0)
+			MES(HELENA,"我去厨房洗盘子，\n但那时小安娜过来了……",0)
+			MES(HELENA,"『海蕾娜，你认识吗～？\n  在房子里住下的那些小孩……』",0)
+		//	MES(HELENA,"『其实不是人类，\n  好像是是小姐的使魔～。』\n……她这样说的！",0)
+			MES(HELENA,"『其实不是人类，\n  好像是最新的机器人偶哦～。』\n……她又这样说的！",0)
+			MES(HELENA,"一下子吓的我\n把端的托盘统统打翻了，\n总共打碎了三十枚盘子呢。",0)
+			MES(HELENA,"小姐大人啊，对不起……",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HELENA,"回头想想，\n好像是骗人的呢。",0)
+			MES(HELENA,"但是我，一下子\n居然相信了……",0)
+			MES(HELENA,"小安娜真是个坏蛋。",0)
+			MES(HELENA,"但是会上当的我\n也真是大傻瓜呀……",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,151,5)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※亚尔迪·熊猫楼カウンタ～で贺安と話している。
+	if( F2_00_GoForest )
+	{
+		look_chr( HELENA, PLAYER1,"Bone_Head")
+
+		if(!F_HELENA)
+		{
+			MES(HELENA,"昨天晚上，小姐她们\n一直聊到很晚。",0)
+			MES(HELENA,"啊……，\n是什么话题啊。",0)
+			MES(HELENA,"我每天都是\n８点就睡，\n所以就没去探查。",0)
+			MES(HELENA,"难道是，大家要去哪里\n旅游的计划。\n我很在意哦……",0)
+			MES_close(HELENA)
+
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（８点就睡……\n  不觉得有点早吗？）",0)
+				MES_close(RAGNA)
+			}
+			//★海蕾娜【８時就寝】
+			F_set_note(HELENA,1)
+			
+			F_set(HELENA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(HELENA,"我想，去亚尔迪的博物馆\n参观一次。",0)
+			MES(HELENA,"好不容易来到伊尔巴特，\n却还没\n到过什么地方去观光？",0)
+			MES(HELENA,"嗯，肯定是说那个事。",0)
+			MES(HELENA,"绝对是想先对我们保密，\n然后吓我们一跳\n给我们个惊喜。",0)
+			MES_close(HELENA)
+		}
+		look_off(HELENA)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※屋敷近く之滝之前。滝を見ている。
+	if( F1_15_GoVillage )
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		if(!F_HELENA)
+		{
+			MES(HELENA,"小姐真是大好人，\n真是十分的为我们\n着想呢。",0)
+			MES(HELENA,"而且也很坚强……\n一但发生了什么事，\n也是很可靠的人哦。",0)
+			MES(HELENA,"嘻嘻，我就是因为\n崇拜小姐才当女仆的。",0)
+			MES(HELENA,"虽说现在还是新人……\n到时候一定，能成为有用的\n华丽的女仆的！",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HELENA,"我的梦想是，\n做一个干活秒杀型女仆。",0)
+			MES(HELENA,"为了小姐\n像风儿一样驰骋，\n用超高速来完成工作。",0)
+			MES(HELENA,"你不觉的很帅吗？",0)
+			MES_close(HELENA)
+			
+			
+			//　　２人に冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（这到底是怎样的女仆啊……）",0)
+				MES_close(RAGNA)
+			}
+			//	name("□艾尔雯先頭")
+			else
+			{
+				MES(PARTNER,"（快接近魔法师的地步了……）",0)
+				MES_close(PARTNER)
+			//──────────────────────────────
+			}
+			//★海蕾娜【将来之夢】
+			F_set_note(HELENA,0)
+		}
+		MOT(HELENA,2,5)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※屋敷·広間後ろ啊たりを掃除している。
+	//　　※初回イベント。
+	//　　※振り返らない。
+	if( F1_01_GameStart )
+	{
+		if(!FT_01_TalkHelena)
+		{
+			MES(HELENA,"嘻嘻…………\n如果说是为了·小·姐·的话～☆",0)
+			MES_close(HELENA)
+
+		//　　海蕾娜振り返る。
+			rot_chr(HELENA,30,PLAYER1)
+			look(HELENA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+			EV("MOTION_TK_HELENA")
+			
+			MES(HELENA,"啊，你知道吗？\n这可要保密哦……",0)
+			MES(HELENA,"不久前，这屋子里\n进过小偷呢～。",0)
+			MES(HELENA,"而且呢，小姐的\n房间里好像有什么\n很重要的东西被偷了呢！",0)
+			MES(HELENA,"虽然不知道是什么东西……\n但一定是，非常非常非常\n重要的东西。",0)
+			MES(HELENA,"现在正好有客人在，\n一定要更加留神哦。",0)
+			MES_close(HELENA)
+			
+			F_set(FT_01_TalkHelena)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			rot_chr(HELENA,30,PLAYER1)
+			look(HELENA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+		//　　※以下通常一般メッセ～ジ。
+			EV("MOTION_TK_HELENA")
+			MES(HELENA,"唉，我被人家说\n总是在发傻……",0)
+			MES(HELENA,"之前还被客人说是\n『先天性白痴女仆』。\n呜呜，抽泣抽泣抽泣……",0)
+			MES_close(HELENA)
+		//　　★繰り返し
+		}
+		look(HELENA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		//待机モ～ション
+		MOT(HELENA,2,5)
+	}
+	
+	TK_end()
+}
+
+//会話時之モ～ション
+MOTION_TK_HELENA
+{
+	MOT_SET(HELENA,150,-1,439,439,-1,-1)
+	MOT(HELENA,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

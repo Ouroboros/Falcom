@@ -1,0 +1,541 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧媿俛乮仸傾儖僂僃儞偑偍傝丄巜椫傪憰拝偟偰偄傞応崌偺傒僙儕僼偑尒傟傞乯")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸僼僃僨儕僇偑帞偭偰偄傞媿偱偡丅
+//丂丂仸僜儘儌儞儕儞僌憰旛帪偺傒儊僢僙乕僕傪昞帵丅
+//丂丂丂偦傟埲奜偼怳傝岦偄偰柭偒惡俽俤傪柭傜偡偩偗丅
+//丂丂仸儊僢僙乕僕偼慡偰怓姺偊乮拑怓乯偲偟傑偡丅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_USI_B
+{
+	TK_begin()
+//	MOT(USI_B,2,5)
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(USI_B, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,USI_B)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,USI_B)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,USI_B)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,USI_B)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,USI_B)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,USI_B)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,USI_B)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌憰旛帪偼堦斒儊僢僙乕僕
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(EQ092)
+	{
+		MOT(USI_B,2,5)//0905捛壛
+
+		chr_rename(USI_B,"美惠")
+		F_set(FV_FF_NameUsi_B)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘗僄儞僨傿儞僌捈慜偱僜儘儌儞儕儞僌強帩
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸曻杚抧偵偄傞丅
+		if( F6_05_EndSixth )
+		{
+		//丂丂仸弶夞僀儀儞僩
+			EV_stop("FREEMOVE_USI_B")//0905捛壛
+			if(!FV_13_TalkUsi_B)
+			{
+			//丂丂儈傾偺曽傪岦偔丅
+				rot_chr(USI_B,10,PARTNER)
+				
+			//	name("媿")
+				MES(USI_B,"C4哎呀，那邊的人……",0)
+				MES_close(USI_B)
+
+
+			//丂丂儈傾偵丠僄儌乕僔儑儞丅
+				EMO(PARTNER,EMO_HATENA)
+				wait(30)
+				rot_chr(PARTNER,30,USI_B)
+				MES(PARTNER,"那個……\n是說我嗎……？",0)
+				MES_close(PARTNER)
+
+			//	name("媿")
+				MES(USI_B,"C4對，就是你。",0)
+				MES(USI_B,"C4第一次來這裡？\n我沒見過你呢。",0)
+				MES(USI_B,"C4算了，沒什麼，以後記得\n要好好打招呼哦。",0)
+				MES_close(USI_B)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"啊，知道了。\n以後一定注意。",0)
+				MES_close(PARTNER)
+
+			//	name("媿")
+				MES(USI_B,"C4嗯，很懂事的孩子呢。\n又有禮貌，合格了。",0)
+				MES_close(USI_B)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+				MES(PARTNER,"（啊，啊哈哈……）",0)
+				MES_close(PARTNER)
+				
+				F_set(FV_13_TalkUsi_B)
+			}
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			else
+			{
+				rot_chr(USI_B,10,PLAYER1)
+			//	name("媿")
+				MES(USI_B,"C4知道嗎？　從牛的面前走過\n是很不禮貌的。",0)
+				MES(USI_B,"C4這個時候要點個頭，\n或者打個招呼才行。",0)
+				MES(USI_B,"C4不過，看來你們\n也明白這些，\n這次就算了。",0)
+				MES_close(USI_B)
+			}
+			EV("FREEMOVE_USI_B")//0905捛壛
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸曻杚抧偵偄傞丅
+		if( F6_00_GoToMeru )
+		{
+			EV_stop("FREEMOVE_USI_B")//0905捛壛
+			rot_chr(USI_B,10,PLAYER1)
+			if(!F_USI_B)
+			{
+			//	name("媿")
+				MES(USI_B,"C4哎呀，你們這是怎麼了。\n看起來好像非常著急啊。",0)
+				MES(USI_B,"C4說起來，村子裡也很吵鬧……",0)
+				MES(USI_B,"C4到底怎麼了。",0)
+				MES_close(USI_B)
+				
+				F_set(USI_B)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("媿")
+				MES(USI_B,"C4費德利卡早上起來以後\n好像也很忙。",0)
+				MES(USI_B,"C4……難道在我不知道的地方\n發生了什麼事嗎？",0)
+				MES_close(USI_B)
+			}
+			EV("FREEMOVE_USI_B")//0905捛壛
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸曻杚抧丄僼僃僨儕僇偺嬤偔偵偄傞丅
+		if( F5_00_HearLunar )
+		{
+			EV_stop("FREEMOVE_USI_B")//0905捛壛
+			rot_chr(USI_B,10,PLAYER1)
+			if(!F_USI_B)
+			{
+			//	name("媿")
+				MES(USI_B,"C4呵呵，聽我說。",0)
+				MES(USI_B,"C4費德利卡的\n感冒好像終於治好了。\n她很久沒有照顧我們了呢。",0)
+				MES(USI_B,"C4期待了很久的淋浴……！",0)
+				MES(USI_B,"C4呼，還是不能\n少了這個啊……",0)
+				MES_close(USI_B)
+
+				F_set(USI_B)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("媿")
+				MES(USI_B,"C4洗完澡以後\n還給我乾草吃……",0)
+				MES(USI_B,"C4嗯，我最喜歡\n費德利卡了。",0)
+				MES(USI_B,"C4她果然能\n理解我的想法呢～。",0)
+				MES_close(USI_B)
+			}
+			EV("FREEMOVE_USI_B")//0905捛壛
+		}
+		else
+		//嘔
+		if( F4_09_GoShrineMia )
+		{
+		//	name("媿")
+			MES(USI_B,"C4呼，有些頭疼……",0)
+			MES_close(USI_B)
+
+		//丂丂媿怳傝岦偔丅
+			rot_chr(USI_B,10,PLAYER1)
+			MES(USI_B,"C4我有低血壓呢。\n不要一大早就來找我，好嗎？",0)
+			MES_close(USI_B)
+			MES_close(USI_B)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨乣嘔
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸曻杚抧偵偄傞丅
+		if( F4_00_StartSolo )
+		{
+			EV_stop("FREEMOVE_USI_B")//0905捛壛
+			if(!F_USI_B)
+			{
+			//丂丂媿丄俹俙僄儌乕僔儑儞偱怳傝曉傞丅
+				EMO(USI_B,EMO_PA)
+				wait(30)
+				rot_chr(USI_B,10,PLAYER1)
+			//	name("媿")
+				MES(USI_B,"C4啊，聽我說。",0)
+				MES(USI_B,"C4今天早上費德利卡\n沒來餵我們吃草。",0)
+				MES(USI_B,"C4她明明一直很健康，\n也很守時……",0)
+				MES(USI_B,"C4怎麼回事呢。\n難道是感冒了……",0)
+				MES_close(USI_B)
+				
+				F_set(USI_B)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//丂丂媿丄儔僌僫偵岦偔丅
+				rot_chr(USI_B,10,RAGNA)
+				
+				MES(USI_B,"C4話說回來，你的臉色\n看來也不太好……",0)
+				
+			//丂丂仸埲壓偺偄偢傟偐傪儔儞僟儉偱昞帵丅
+				workL(0,RAND,3)
+				if(WK000==0)
+				{
+				//丂丂仛儊僢僙乕僕侾
+				//	name("媿")
+					MES(USI_B,"C4……被女朋友甩了？",0)
+					MES(USI_B,"C4唉，人生總是\n會經歷這種過程的。",0)
+					MES(USI_B,"C4所以呢，不要擺出這麼陰鬱的表情。\n一定要向前看。",0)
+					MES_close(USI_B)
+				}
+				else
+				if(WK000==1)
+				{
+				//丂丂仛儊僢僙乕僕俀
+				//	name("媿")
+					MES(USI_B,"C4……難道主人不給你吃飯了？",0)
+					MES(USI_B,"C4唉，這就是所謂的棄養吧。\n據說最近很常見呢。",0)
+					MES(USI_B,"C4去找主人談一下比較好哦。\n說不定反而能得到重視呢……\n有什麼不滿可不能憋在心裡哦？",0)
+					MES_close(USI_B)
+				}
+				else
+				{
+				//丂丂仛儊僢僙乕僕俁
+				//	name("媿")
+					MES(USI_B,"C4……最近總是倒楣嗎？",0)
+					MES(USI_B,"C4呼，這確實與運氣也有關係，\n不過也有可能是因為生活節奏被打亂了。",0)
+					MES(USI_B,"C4一定要抬頭挺胸。\n否則幸運是不會找上門的。",0)
+					MES_close(USI_B)
+				}
+
+			//丂丂仛儊僢僙乕僕屻丄侾夞偩偗憓擖丅
+				if(!FV_07_TalkUsi_B)
+				{
+					MES(RAGNA,"啊…啊……\n（牛都幫我操心……）",0)
+					MES_close(RAGNA)
+					F_set(FV_07_TalkUsi_B)
+				}
+			}
+			EV("FREEMOVE_USI_B")//0905捛壛
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸偄側偄丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸曻杚抧偵偄傞丅
+		if( F2_14_TalkEnemy )
+		{
+			EV_stop("FREEMOVE_USI_B")//0905捛壛
+			rot_chr(USI_B,10,PLAYER1)
+			if(!F_USI_B)
+			{
+			//	name("媿")
+				MES(USI_B,"C4就算是牛，生活\n也需要最起碼的常識哦。",0)
+				MES(USI_B,"C4比如能夠預測明天的天氣，\n或者能夠和麻雀聊聊天。",0)
+				MES(USI_B,"C4每天就知道吃乾草的話，\n肯定很無聊吧？",0)
+				MES(USI_B,"C4那樣的話我覺得\n就喪失生存的價值了。",0)
+				MES_close(USI_B)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（牛也分成很多種啊……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"（這就是人生論，不，牛生論吧……）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				
+				F_set(USI_B)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("媿")
+				MES(USI_B,"C4還有……\n剛才那個木箱旁邊\n有個奇怪的男孩子呢。",0)
+				MES(USI_B,"C4費德利卡……好像\n看不見他啊。",0)
+				MES(USI_B,"C4難道是我的錯覺……",0)
+				MES_close(USI_B)
+			}
+			EV("FREEMOVE_USI_B")//0905捛壛
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘋墛偺僷乕僣傪擖庤偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仸柍偟
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸曻杚抧偵偄傞丅
+		if( F2_00_GoForest )
+		{
+			rot_chr(USI_B,10,PLAYER1)
+			if(!F_USI_B)
+			{
+			//	name("媿")
+				MES(USI_B,"C4哎，另外一隻牛……？",0)
+				MES(USI_B,"C4哦，它現在\n去鎮裡了。",0)
+				MES(USI_B,"C4為什麼……\n好像是幫費德利卡\n去批發蔬菜了吧。",0)
+				MES(USI_B,"C4哼，對那個乾草笨蛋而言\n是個不錯的運動呢。",0)
+				MES_close(USI_B)
+
+				F_set(USI_B)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("媿")
+				MES(USI_B,"C4另外一隻牛\n相當隨便呢。",0)
+				MES(USI_B,"C4腦袋裡就知道乾草。\n其他的事走三步就全忘光了。",0)
+				MES(USI_B,"C4我喜歡費德利卡。\n她工作都很準時。",0)
+				MES(USI_B,"C4可是我討厭另外一隻牛。\n那傢伙太散漫了。",0)
+				MES_close(USI_B)
+				
+				//仛僼僃僨儕僇亂摦暔偵恖婥亃
+				F_set_note(-70,0)
+			}
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸曻杚抧偵偄傞丅
+		//丂丂仸弶夞僀儀儞僩
+		if( F1_15_GoVillage )
+		{
+			EV_stop("FREEMOVE_USI_B")//0905捛壛
+			if(!FV_02_TalkUsi_B)
+			{
+			//丂丂媿偵俹俙僄儌乕僔儑儞丄怳傝曉傞丅
+				EMO(USI_B,EMO_PA)
+				wait(30)
+				rot_chr(USI_B,10,PLAYER1)
+			//	name("媿")
+				MES(USI_B,"C4哎呀，你們……",0)
+				MES_close(USI_B)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僼儔僌嘆偱榖偟偐偗偨偙偲偑偁傞丅")
+				if(FV_01_TalkUsi_B)
+				{
+				//	name("媿")
+					MES(USI_B,"C4以前也來過吧。",0)
+					MES_close(USI_B)
+				}
+			//	name("佀僼儔僌嘆偱榖偟偐偗偨偙偲偑側偄丅")
+				else
+				{
+				//	name("媿")
+					MES(USI_B,"C4陌生的面孔呢。",0)
+					MES_close(USI_B)
+				}
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("媿")
+				MES(USI_B,"C4你們好。\n在這裡做什麼呢。",0)
+				MES_close(USI_B)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"沒…沒什麼。\n要說做什麼的話……",0)
+					MES(RAGNA,"（喂喂……\n 真的能對話了……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"唔。\n差不多就是散步吧。",0)
+					MES(PARTNER,"（唔……真的\n 能互相交流嗎……？）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			//	name("媿")
+				MES(USI_B,"C4這樣啊。\n我就不細問了。",0)
+				MES(USI_B,"C4這裡是費德利卡的牧場。",0)
+				MES(USI_B,"C4來這裡玩的話，\n還是先和費德利卡\n說一聲比較好。",0)
+				MES_close(USI_B)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"嗯，確實是啊。\n（我也不是來玩的……）",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"（看來真的能\n 聽懂動物的話呢……）",0)
+					MES_close(PARTNER)
+
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"唔，說得沒錯。\n（我們確實不是來玩的……）",0)
+					MES_close(PARTNER)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（看來真的能\n 和動物溝通呢……）",0)
+					MES_close(RAGNA)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				F_set(FV_02_TalkUsi_B)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			else
+			{
+				rot_chr(USI_B,10,PLAYER1)
+				if(!F_USI_B)
+				{
+				//	name("媿")
+					MES(USI_B,"C4啊，對了。\n你來這裡的時候\n希望能記住一點。",0)
+					MES(USI_B,"C4不是還有一頭牛嗎？",0)
+					MES(USI_B,"C4希望你不要把我和它\n搞混了。",0)
+					MES(USI_B,"C4不知道為什麼，\n人們經常\n把我們兩個弄錯。",0)
+					MES(USI_B,"C4真是的，饒了我吧。",0)
+					MES_close(USI_B)
+
+					F_set(USI_B)
+				}
+			//丂丂仛孞傝曉偟
+				else
+				{
+				//	name("媿")
+					MES(USI_B,"C4能分清我們的\n只有費德利卡一個人。",0)
+					MES(USI_B,"C4……為什麼？\n我們兩個完全不一樣啊。",0)
+					MES_close(USI_B)
+
+					//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+					//	name("佀儔僌僫愭摢")
+					if(GW_MAN==1)
+					{
+						MES(RAGNA,"（不好意思，看起來完全一樣……）",0)
+						MES_close(RAGNA)
+					}
+					else
+					//	name("佀傾儖僂僃儞愭摢")
+					{
+						MES(PARTNER,"（抱歉，我還是分不清……）",0)
+						MES_close(PARTNER)
+					}
+					//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				}
+			}
+			EV("FREEMOVE_USI_B")//0905捛壛
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸曻杚抧偵偄傞丅
+		//丂丂仸僜儘儌儞儕儞僌偑柍偄偨傔丄儊僢僙乕僕側偟丅
+		//丂丂丂偨偩偟榖偟偐偗偨偐偳偆偐偺敾掕偼峴偭偰偍偔丅
+		
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌旕憰旛帪偼怳傝岦偒偲俽俤
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	{
+	//	rot_chr(USI_B,10,PLAYER1)
+		
+		//媿偺柭偒惡
+		SE(35,USI_B)
+	}
+	TK_end()
+
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

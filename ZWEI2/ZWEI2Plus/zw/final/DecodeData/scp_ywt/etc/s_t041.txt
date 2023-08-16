@@ -1,0 +1,585 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僿儗僫乮儊僀僪偝傫俛乯Helena")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_HELENA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(HELENA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,HELENA)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,HELENA)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,HELENA)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘丒幏柋幒偱杮扞傪憒彍丅
+	if( F6_05_EndSixth )
+	{
+		if(!F_HELENA)
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			MES(HELENA,"啦～啦啦～……\n為了大·小·姐～?",0)
+			MES_close(HELENA)
+
+		//丂丂僿儗僫怳傝曉傞丅
+			rot_chr(HELENA,30,PLAYER1)
+			EV("MOTION_TK_HELENA")
+
+			MES(HELENA,"小姐為了和本家取得聯絡\n最近一直都很忙……",0)
+			MES(HELENA,"不過現在似乎也終於\n告一段落了。",0)
+			MES(HELENA,"所以今天我要把\n房間打掃得乾淨一點。",0)
+			MES(HELENA,"呵呵，我為了這個\n還特地和安娜換了班呢。",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			EV("MOTION_TK_HELENA")
+			rot_chr(HELENA,30,PLAYER1)
+			MES(HELENA,"為了這一天，\n我還特地和\n安娜換了班。",0)
+			MES(HELENA,"而且這還是趁小姐和管家都不在\n的時候進行的秘密作戰……",0)
+			MES(HELENA,"呵呵，\n我也很厲害吧？",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,151,5)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕嘖丂傢傜偟傋僀儀儞僩
+	//	name("俁丏僿儗僫乮傾儖僢僥丒壆晘乯	亀偍庤尦儔僀僩亁佀亀怴昳僲乕僩亁")145
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar && FV_11_Warasi_2_Teo && !FV_11_Warasi_3_Hln)
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀弶夞")
+		if(!F_HELENA)
+		{
+			MES(HELENA,"哎呀，這位客人……",0)
+			MES(HELENA,"您有一個非常不錯的\n手電筒呢。",0)
+			MES_close(HELENA)
+
+		//丂丂僿儗僫偵俹俙僄儌乕僔儑儞丅
+			EMO(HELENA,EMO_PA)
+			wait(30)
+			
+			MES(HELENA,"對了，這個可能很適合\n送給安娜作禮物……",0)
+			MES(HELENA,"對不起，能把那支「手電筒」\n送給我嗎！？",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+		else
+		{
+		//	name("佀俀夞栚埲崀")
+			MES(HELENA,"那個「手電筒」\n看來非常不錯呢。",0)
+			MES(HELENA,"對不起，能把那個「手電筒」\n送給我嗎！？",0)
+			MES(HELENA,"我想把它\n送給安娜當禮物……",0)
+			MES_close(HELENA)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		
+	//	name("慖戰僥僉僗僩")
+		workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+		MES_pos(PLAYER1,"??W9【好啊】\n【拒絕】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀亂偄偄偲傕亃")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(WK_YESNO==1)
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			MES(HELENA,"哇，太感謝了！",0)
+			MES(HELENA,"嗯，安娜只要有了這個，\n晚上去廁所\n一定不會怕了吧？",0)
+			MES(HELENA,"請收下這個，\n這是回禮！",0)
+			MES_close(HELENA)
+
+		//	name("傾僀僥儉擖庤僥僉僗僩")
+		//	MES(this,"亀怴昳僲乕僩亁傪栣偭偨丅",0)
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			fade_in(30,10,BLACK)
+
+			get_item(144,-1,1)
+			get_item(145,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，多謝。",0)
+			MES(RAGNA,"不過……沒想到\n那個女傭居然會害怕\n半夜去上廁所。",0)
+			MES_close(RAGNA)
+
+		//	name2(HELENA)
+			MES(HELENA,"安娜好像很討厭\n半夜去廁所。",0)
+			MES(HELENA,"經常會發出「咣」「鐺」之類的聲音，\n然後還會大叫。",0)
+			MES_close(HELENA)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			
+			//傾儖僂僃儞偑嫃傞
+			if(F6_00_GoToMeru)
+			{
+				EMO(PARTNER,EMO_HIYAASE)
+			}
+			else
+			//僆僨僢僒偑嫃傞
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_HIYAASE)
+			}
+			wait(30)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(FT_02_TalkAnna || FT_11_TalkAnna)
+		{
+			if(F6_00_GoToMeru)
+			{
+			//	name("佀傾儞僫丒僼儔僌嘇傑偨偼嘕偺弶夞傪尒偰偍傝丄傾儖僂僃儞偑偄傞応崌")
+				MES(PARTNER,"那應該是……\n撞到頭了吧。",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("佀傾儞僫丒僼儔僌嘇傑偨偼嘕偺弶夞傪尒偰偍傝丄傾儖僂僃儞偑偄側偄応崌")
+				MES(RAGNA,"那應該是……\n撞到頭了吧。",0)
+				MES_close(RAGNA)
+			}
+		}
+		else
+		{
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+			//	name("佀僆僨僢僒偑偄傞応崌")
+				MES(PARTNER,"大叫……\n難道不是因為撞到腦袋了嗎？",0)
+				MES_close(PARTNER)
+			}
+			else
+			if(F6_00_GoToMeru)
+			{
+			//	name("佀傾儞僫丒僼儔僌嘇偲嘕偺弶夞傪尒偰偍傜偢丄傾儖僂僃儞偑偄傞応崌")
+				MES(PARTNER,"那應該是……\n撞到頭了才對。",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("佀偦傟埲奜")
+				MES(RAGNA,"那應該是……\n撞到頭了吧。",0)
+				MES_close(RAGNA)
+				
+				MES(PET,"送她手電筒\n應該是個正確的選擇呢。",0)
+				MES_close(PET)
+			}
+
+			//2008.08.12.崻揷堏摦
+			//仛僿儗僫亂傾儞僫偵僾儗僛儞僩亃
+			//F_set_note(HELENA,2)
+
+			//F_set(FV_11_Warasi_3_Hln)
+			//F_reset(HELENA)
+		}
+
+		//2008.08.12.崻揷堏摦
+		//仛僿儗僫亂傾儞僫偵僾儗僛儞僩亃
+		F_set_note(HELENA,2)
+
+		F_set(FV_11_Warasi_3_Hln)
+		F_reset(HELENA)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傗傔傞")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		{
+		//	name("佀亂嫅斲偡傞亃")
+			MES(HELENA,"不…不行嗎？\n嗚嗚……",0)
+			MES_close(HELENA)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if( F6_00_GoToMeru )
+		{
+			MOT(HELENA,151,5)
+		}
+		else
+		{
+			MOT(HELENA,75,15)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘丒媞幒偱憢偺屗掲傝傪偟偰偄傞丅
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		if(!F_HELENA)
+		{
+			MES(HELENA,"我無意間聽到了\n大家的會話……",0)
+			MES(HELENA,"雖然小姐告訴我\n不要擔心，\n但實際上還是很危險的吧。",0)
+			MES(HELENA,"……不過，一定會成功的。",0)
+			MES(HELENA,"因為小姐身邊\n有這麼多堅強而又溫柔的夥伴在呢。",0)
+			MES(HELENA,"只要大家齊心合力，\n就沒有做不到的事情！\n我海蓮娜可以保證！",0)
+			MES_close(HELENA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"哈哈。\n多…多謝……",0)
+				MES_close(RAGNA)
+			}
+			//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"唔，雖然不太明白，\n不過你的好意我們就收下了。",0)
+				MES_close(PARTNER)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+			F_set(HELENA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(HELENA,"只要大家齊心合力，\n就沒有做不到的事情！",0)
+			MES(HELENA,"我海蓮娜可以保證。",0)
+			MES(HELENA,"各位請一定\n要加油！",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,151,5)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘丒峊偊幒偺怘婍扞慜丅
+	if( F5_00_HearLunar )
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		if(!F_HELENA)
+		{
+			MES(HELENA,"我也差不多該\n開始工作了。",0)
+			MES(HELENA,"那個怪物確實好可怕，\n大小姐也告訴我\n不要勉強自己……",0)
+			MES(HELENA,"可是我也不想\n待在小姐身邊，卻派不上用場。",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(HELENA,"最近安娜也變得\n溫柔了一些呢。",0)
+			MES(HELENA,"雖然還是和以前一樣\n會欺負人……\n不過確實變得溫柔了一些。",0)
+			MES(HELENA,"……我也必須要\n努力才行呢。",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,75,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_00_StartSolo )
+	{
+	//丂丂仸壆晘儊僀僪晹壆丄堉巕偵嵗偭偰偆側偩傟偰偄傞丅
+		MES(HELENA,"……嗚………嗚…………",0)
+		MES_close(HELENA)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘峊偊幒丄庤慜偺堉巕偵嵗偭偰偆側偩傟偰偄傞丅
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_HELENA)
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			MES(HELENA,"嗚嗚，\n我已經受不了了……",0)
+			MES(HELENA,"好可怕啊，我想回老家……",0)
+			MES_close(HELENA)
+			F_set(HELENA)
+		}
+		else
+		{
+	//丂丂仛孞傝曉偟
+			MES(HELENA,"小姐……",0)
+			MES(HELENA,"嗚嗚……",0)
+			MES_close(HELENA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘丒媞幒偱儀僢僪儊僀僋偟偰偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(HELENA,30,PLAYER1)
+		EV("MOTION_TK_HELENA")
+		if(!F_HELENA)
+		{
+			MES(HELENA,"唉……工作上\n又出了差錯。",0)
+			MES(HELENA,"我在廚房洗盤子的時候，\n安娜走了過來，對我說……",0)
+			MES(HELENA,"「海蓮娜聽說了嗎？\n 住在這裡的兩個小孩……」",0)
+		//	MES(HELENA,"亀幚偼恖娫偠傖側偔偰丄\n  偍忟條偺巊偄杺傜偟偄傢傛乕丅亁\n乧乧側傫偰尵偆傫偱偡偭両",0)
+			MES(HELENA,"「實際上並不是人，\n 好像是最新型的\n 機械人偶呢。」",0)
+			MES(HELENA,"我嚇了一跳，\n結果碰翻了碗架，\n摔碎了三十多個盤子。",0)
+			MES(HELENA,"小姐，真的對不起……",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(HELENA,"而且她\n好像是在騙我。",0)
+			MES(HELENA,"我當時\n竟然還相信了……",0)
+			MES(HELENA,"安娜真是愛欺負人。",0)
+			MES(HELENA,"不過相信那種謊話\n也是我的錯呢……",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,151,5)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥丒廻庰応僇僂儞僞乕偱儂傾儞偲榖偟偰偄傞丅
+	if( F2_00_GoForest )
+	{
+		look_chr( HELENA, PLAYER1,"Bone_Head")
+
+		if(!F_HELENA)
+		{
+			MES(HELENA,"昨天晚上，小姐她們\n好像一直談到很晚。",0)
+			MES(HELENA,"唔—，究竟在\n說些什麼呢。",0)
+			MES(HELENA,"我一向都是\n晚上八點睡覺，\n所以沒有去探聽情況。",0)
+			MES(HELENA,"難道大家在計劃\n去觀光旅行嗎？\n真是讓人在意呢……",0)
+			MES_close(HELENA)
+
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（八點睡覺……\n 是不是早了一點呢？）",0)
+				MES_close(RAGNA)
+			}
+			//仛僿儗僫亂俉帪廇怮亃
+			F_set_note(HELENA,1)
+			
+			F_set(HELENA)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			MES(HELENA,"我一直想\n去參觀一次\n阿魯特博物館。",0)
+			MES(HELENA,"畢竟是好不容易才來到伊魯巴特，\n可是目前為止還沒有\n觀光過。",0)
+			MES(HELENA,"嗯，她們肯定是在談這個話題。",0)
+			MES(HELENA,"一定是想瞞著我們，\n打算嚇我們\n一跳。",0)
+			MES_close(HELENA)
+		}
+		look_off(HELENA)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘嬤偔偺戧偺慜丅戧傪尒偰偄傞丅
+	if( F1_15_GoVillage )
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		if(!F_HELENA)
+		{
+			MES(HELENA,"小姐非常體貼，\n經常掛念\n著我們。",0)
+			MES(HELENA,"實際上她也十分堅強……\n一旦發生什麼問題的時候\n小姐也很可靠。",0)
+			MES(HELENA,"嘿嘿嘿，我就是因為仰慕\n大小姐才當上了女傭。",0)
+			MES(HELENA,"現在雖然還是新人……\n但是今後我一定能夠成為\n小姐的得力助手！",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(HELENA,"我的夢想是\n做一名必殺女傭。",0)
+			MES(HELENA,"如疾風一般現身，\n為了大小姐\n以超高的速度完成任務。",0)
+			MES(HELENA,"不覺得很棒嗎？",0)
+			MES_close(HELENA)
+			
+			
+			//丂丂俀恖偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（這是什麼女傭啊……）",0)
+				MES_close(RAGNA)
+			}
+			//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"（已經可以算是使魔了吧……）",0)
+				MES_close(PARTNER)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+			//仛僿儗僫亂彨棃偺柌亃
+			F_set_note(HELENA,0)
+		}
+		MOT(HELENA,2,5)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘丒峀娫屻傠偁偨傝傪憒彍偟偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩丅
+	//丂丂仸怳傝曉傜側偄丅
+	if( F1_01_GameStart )
+	{
+		if(!FT_01_TalkHelena)
+		{
+			MES(HELENA,"啦～啦啦～……\n為了大·小·姐～?",0)
+			MES_close(HELENA)
+
+		//丂丂僿儗僫怳傝曉傞丅
+			rot_chr(HELENA,30,PLAYER1)
+			look(HELENA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+			EV("MOTION_TK_HELENA")
+			
+			MES(HELENA,"啊，你們知道嗎？\n這件事可要保密……",0)
+			MES(HELENA,"前幾天，有小偷\n闖進了這裡。",0)
+			MES(HELENA,"然後呢，小姐的房間裡\n好像丟了一件\n非常重要的東西！",0)
+			MES(HELENA,"雖然不知道丟的究竟是什麼……\n但絕對是非常非常\n重要的東西，不會錯。",0)
+			MES(HELENA,"現在正好還有客人住在這裡，\n還是必須要加強\n警戒才行吧？",0)
+			MES_close(HELENA)
+			
+			F_set(FT_01_TalkHelena)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			rot_chr(HELENA,30,PLAYER1)
+			look(HELENA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			EV("MOTION_TK_HELENA")
+			MES(HELENA,"唉，一直\n有人說\n我經常發呆……",0)
+			MES(HELENA,"前一陣還有客人把我叫作\n「天然呆女傭」呢。\n嗚嗚嗚……",0)
+			MES_close(HELENA)
+		//丂丂仛孞傝曉偟
+		}
+		look(HELENA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//憒彍拞
+		//懸婡儌乕僔儑儞
+		MOT(HELENA,2,5)
+	}
+	
+	TK_end()
+}
+
+//夛榖帪偺儌乕僔儑儞
+MOTION_TK_HELENA
+{
+	MOT_SET(HELENA,150,-1,439,439,-1,-1)
+	MOT(HELENA,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

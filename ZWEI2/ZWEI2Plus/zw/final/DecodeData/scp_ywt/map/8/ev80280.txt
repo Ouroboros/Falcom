@@ -1,0 +1,821 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[18028][梫嵡亅杺墹儈傾]
+//====================================================================
+
+#ScriptTable
+
+#BOSS		9	//杺墹儈傾杮懱
+#GOLDMAO	10
+#EFFDUMMY1	11	//岝偺夠
+#EVENT_RAGNA	12
+#ALWEN			13
+#EFFDUMMY2	14
+#MOVDUMMY	15
+#MOVDUMMY2	16
+#MOVDUMMY3	17
+#MOVDUMMY4	18
+#EFFDUMMY3	19
+#EFFDUMMY4	20
+
+#SHIELD1	21
+#SHIELD2	22
+
+INIT
+{
+
+	SE(1177,0)//娐嫬SE
+
+//  -------  no typ   	  tip      x    y   z       mot     岦 忬  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭奒抜丒斷
+//	set_chr( 90,990,	-1,-1,   -1391,-986,2500,	90,  0102, 6,"K1_18029;")	//嘆僄儞僩儕 儃僗廔
+//	set_chr(100,549,	-1,-1,   -1391,-986,2500,	 0,    90, 0,";")			//嘆傾乕僠乮儔僗僩乯
+//	set_chr(BOSS,	408,		-1,-1,   -1391,-986,0500,  2,  0,	0,"") //杺墹儈傾
+
+//仭僀儀儞僩
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//仴杺墹儈傾曄宍搊応
+		EV("EV_Battle")
+	}
+	else
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//仴杺墹儈傾曄宍搊応
+		EV("EV_6_17_GoldMia")
+	}
+	else
+	//儃僗嵞愴梡
+	if(GW_ENTRY_EVENT==100)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BattleBossOnly")
+	}
+	else
+	//僎乕僙儞梡
+	if(GW_ENTRY_EVENT==101)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BattleBossOnly_02")
+	}
+//仭応柺屌桳愝掕
+}
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+EV_6_17_GoldMia
+{
+	EV_begin()
+
+	//僼僃乕僪傾僂僩
+	fade_in(100,-1,0)
+	wait_fade()
+	
+	
+	set_namebmp(0,0)				//抧柤僆僼
+	
+	//抧媴傪徚偡
+	F_set_obj("back00_add", NP_HIDE)
+	F_set_obj("back01", NP_HIDE)
+	F_set_obj("back02", NP_HIDE)
+	F_set_obj("back03", NP_HIDE)
+	F_set_obj("back04", NP_HIDE)
+	F_set_obj("back05", NP_HIDE)
+	
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	set_chr(EVENT_RAGNA, 1010,		-1,-1,   0,0,0,  2,  0,	0,"") //
+	set_chr(ALWEN,       1011,		-1,-1,   0,0,0,  2,  0,	0,"") //
+//	set_chr(GOLDMAO,      410,		-1,-1,   0,0,0,  2,  0,	0,"") //杺墹儈傾(僀儀儞僩梡乯
+	set_chr(GOLDMAO,      410,		-1,-1,   0,0,-3500,  2,  0,	0,"") //杺墹儈傾(僀儀儞僩梡乯
+	set_chr(EFFDUMMY1,    749,		-1,-1,   0,0,-3500, 54,  0,	0,"") //岝偺夠
+	set_chr(EFFDUMMY2,    749,		-1,-1,   0,500,0,  0,  0,	0,"") //
+	set_chr(EFFDUMMY3,    749,		-1,-1,   0,0,0,  0,  0,	0,"") //	儔僗儃僗丄岝偺棻巕
+	set_chr(EFFDUMMY4,    749,		-1,-1,   0,0,0,  0,  0,	0,"") //	儔僗儃僗丄拞怱岝
+	set_chr(SHIELD1,      749,		-1,-1,   0,0,0,  0,  0,	0,"") //
+	set_chr(SHIELD2,      749,		-1,-1,   0,0,0,  0,  0,	0,"") //
+	set_chr(MOVDUMMY,     764,		-1,-1,   0,-1000,0,  0,  0,	0,"") //
+	set_chr(MOVDUMMY2,    764,		-1,-1, 200, 1500,100,  0,180,	0,"") //
+	set_chr(MOVDUMMY3,    764,		-1,-1,-200, 1500,100,  0,180,	0,"") //
+
+	
+	F_set_chr(MOVDUMMY, CF_NO_CLIP)
+	F_set_chr(MOVDUMMY, CF_NO_CLIP2)
+	F_set_chr(MOVDUMMY, CF_NO_CSP)
+	F_set_chr(MOVDUMMY, CF_NO_HEIGHT)
+	F_set_chr(MOVDUMMY, CF_NO_ZIMEN)
+	F_set_chr(MOVDUMMY2, CF_NO_CLIP)
+	F_set_chr(MOVDUMMY2, CF_NO_CLIP2)
+	F_set_chr(MOVDUMMY2, CF_NO_CSP)
+	F_set_chr(MOVDUMMY2, CF_NO_HEIGHT)
+	F_set_chr(MOVDUMMY2, CF_NO_ZIMEN)
+	F_set_chr(MOVDUMMY3, CF_NO_CLIP)
+	F_set_chr(MOVDUMMY3, CF_NO_CLIP2)
+	F_set_chr(MOVDUMMY3, CF_NO_CSP)
+	F_set_chr(MOVDUMMY3, CF_NO_HEIGHT)
+	F_set_chr(MOVDUMMY3, CF_NO_ZIMEN)
+	F_set_chr(MOVDUMMY3, CF_NO_ZIMEN)			
+	F_set_chr(GOLDMAO, CF_NO_CLIP)
+	F_set_chr(GOLDMAO, CF_NO_CLIP2)
+	F_set_chr(GOLDMAO, CF_NO_CSP)
+	F_set_chr(GOLDMAO, CF_NO_HEIGHT)
+	F_set_chr(GOLDMAO, CF_NO_ZIMEN)
+	
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA, CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA, CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA, CF_NO_ZIMEN)	
+
+	F_set_chr(ALWEN, CF_NO_CLIP)
+	F_set_chr(ALWEN, CF_NO_CLIP2)
+	F_set_chr(ALWEN, CF_NO_CSP)
+	F_set_chr(ALWEN, CF_NO_HEIGHT)
+	F_set_chr(ALWEN, CF_NO_ZIMEN)	
+
+	F_set_chr(EFFDUMMY1, CF_NO_CLIP)
+	F_set_chr(EFFDUMMY1, CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY1, CF_NO_ANIME)
+	F_set_chr(EFFDUMMY1, CF_NO_DEAD)
+	F_set_chr(EFFDUMMY1, CF_NO_CSP)
+	F_set_chr(EFFDUMMY1, CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY1, CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY1, CF_MAXMOVE)
+	F_set_chr(EFFDUMMY2, CF_NO_CLIP)
+	F_set_chr(EFFDUMMY2, CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY2, CF_NO_CSP)
+	F_set_chr(EFFDUMMY2, CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY2, CF_NO_ZIMEN)	
+	F_set_chr(EFFDUMMY3, CF_NO_CLIP)
+	F_set_chr(EFFDUMMY3, CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY3, CF_NO_CSP)
+	F_set_chr(EFFDUMMY3, CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY3, CF_NO_ZIMEN)			
+	F_set_chr(EFFDUMMY4, CF_NO_CLIP)
+	F_set_chr(EFFDUMMY4, CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY4, CF_NO_CSP)
+	F_set_chr(EFFDUMMY4, CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY4, CF_NO_ZIMEN)	
+		
+	chr_pos(EVENT_RAGNA,   100,1500, 0, 180,2 )
+	chr_pos(ALWEN,        -100,1500, 0, 180,2 )
+	
+	chr_pos(RAGNA,   100,1500, 0, 180,2 )
+	chr_pos(PARTNER,-100,1500, 0, 180,2 )
+	chr_equip( ALWEN,"wp_004b", "Bone_RightSword", 100)	//忨傪憰旛偝偣傞偺偼偙偪傜丅
+
+
+	F_set_Node(MOVDUMMY, "dummy_object", NP_HIDE)
+	F_set_Node(MOVDUMMY2, "dummy_object", NP_HIDE)
+	F_set_Node(MOVDUMMY3, "dummy_object", NP_HIDE)
+
+//	MOT_SET(GOLDMAO, 		150, -1, 1850,1850, -1, 0)		//搊応懸婡
+	MOT_SET(GOLDMAO, 		150,150, 2520,2549, -1, 0)		//搊応懸婡//塇暵偠偨儖乕僾
+	MOT_SET(GOLDMAO, 		151, -1, 1850,1944, -1, 15)	//搊応奐偔
+	MOT_SET(GOLDMAO, 		152, 153, 0160, 0204, -1 ,00) //懸婡01偐傜懸婡02傊
+	MOT_SET(GOLDMAO, 		153, 153, 0210, 0269, -1 ,00) //懸婡02	
+	MOT_SET(GOLDMAO, 		154, 154, 0005, 0064, -1, 00) //懸婡01
+	MOT_SET(GOLDMAO, 		154, 154, 0005, 0064, -1, 00) //
+	MOT_SET(MOVDUMMY,		150, 151, 0100, 0300, -1, 00) //忋徃
+	MOT_SET(MOVDUMMY2,		150, 151, 0000, 0300, -1, 00) //忋徃
+	MOT_SET(MOVDUMMY3,		150, 151, 0020, 0300, -1, 00) //忋徃
+	MOT_SET(MOVDUMMY,		151,  -1, 0300, 0300, -1, 00) //忋徃
+	MOT_SET(MOVDUMMY2,		151,  -1, 0300, 0300, -1, 00) //忋徃
+	MOT_SET(MOVDUMMY3,		151,  -1, 0300, 0300, -1, 00) //忋徃
+
+	MOT_SET(ALWEN,			151,151,4905,4945,-1,-1)//晜梀
+	MOT_SET(EVENT_RAGNA,	151,-1,251,251,-1,-1)//晜偒忋偑傞2
+
+	CAM_move(0,-600,-4989,0,0)
+	CAM(1110,363,-4989,50,180,0,0)
+
+	chr_equip_chr(SHIELD1,   EVENT_RAGNA, "Bone_Spine1", 100,0,0,0, 0,0,0)
+	chr_equip_chr(SHIELD2,   ALWEN,       "Bone_Spine1", 100,0,0,0, 0,0,0)
+	chr_equip_chr(EFFDUMMY1,   MOVDUMMY, "test_null", 100,0,0,0, 0,0,0)
+	chr_equip_chr(EFFDUMMY2,   MOVDUMMY, "test_null", 100,0,0,0, 0,0,0)
+	chr_equip_chr(EFFDUMMY4,   MOVDUMMY, "test_null", 100,0,0,0, 0,0,0)
+	chr_equip_chr(EVENT_RAGNA, MOVDUMMY2, "test_null", 100,0,0,0, 0,0,0)	
+	chr_equip_chr(ALWEN,       MOVDUMMY3, "test_null", 100,0,0,0, 0,0,0)	
+	chr_equip_chr(EFFDUMMY3,   GOLDMAO,   "Bone_Kosi", 100,0,0,0, 0,0,0)
+
+	Load_BMP(14,"sys\\text01.itm","sys\\text01a.itm")
+	
+	EV("EV_1174")//僆乕儔SE彫
+	SE(1071,0)
+
+	color(GOLDMAO,-1)
+//	color(EVENT_RAGNA,-1)
+//	color(ALWEN,      -1)
+
+//	chr_pos(EFFDUMMY1, 0,0,-0,0,0)			//棾姫偺拞偵攝抲
+	MOT(EFFDUMMY2,59, 0)						//僄僼僃僋僩丗岝偺怟旜		
+	MOT(EFFDUMMY4,53, 0)						//僄僼僃僋僩丗岝偺拞怱		
+	
+	wait(30)
+
+	MOT(GOLDMAO,		150, 0)
+//	MOT(GOLDMAO, 		108, 0)					//塇娵傔懸婡
+	MOT(MOVDUMMY,		150, 0)
+ 	MOT(ALWEN,			151, 0 )
+ 	MOT(EVENT_RAGNA,	151, 0 )
+
+ 	MOT(SHIELD1, 48, 0)	
+ 	MOT(SHIELD2, 48, 0)	
+	MOT(MOVDUMMY2,150,0)
+	MOT(MOVDUMMY3,150,0)
+	wait(5)
+	
+	MOT(ALWEN, 151, 0)								//塇偽偨偒
+	IK(ALWEN,"Bone_LeftWing1",0)
+	IK(ALWEN,"Bone_RightWing1",0)
+	
+	//僼僃乕僪僀儞
+	fade_in(0,60,0)
+	wait_fade()
+	CAM_move(0,-626,217,150,0)
+	CAM(151,150,217,50,180,150,0)
+	
+//	wait(15)
+	EV("EV_MoveAlwen")							//傾儖僂僃儞丄忋徃
+//	wait(15)
+	EV("EV_MoveRagna")							//儔僌僫丄忋徃
+
+	wait(70)
+	SE(1092,0)//儈傾摓拝
+
+	wait(80)
+	MOT(EFFDUMMY2,0, 0)							//僄僼僃僋僩丗岝偺怟旜	廔椆	
+	SE(1074,0)//儔僌僫偨偪摓拝
+	SE(1040,0)//儔僌僫偨偪摓拝
+
+
+	CAM(-360,100,217,50,180,150,0)
+
+//	wait_EV("EV_MoveAlwen")
+//	wait_EV("EV_MoveRagna")
+	
+	wait(150)
+	CAM_move(0,874,37,90,0)
+
+	chr_pos(GOLDMAO, 0,-1000,0,0,150) //
+
+	stop_BGM(90)
+//	EFF_chr(6250, EFFDUMMY2, 0,500,0,"Bone_Head")		//戝敋敪
+	EFF_chr(6250, EFFDUMMY1, 0,500,0,"Bone_Head")		//戝敋敪
+	SE(1088,0)//儂儚僀僩傾僂僩SE
+	SE(1042,0)//儂儚僀僩傾僂僩SE
+	MOT(EFFDUMMY1,0,0)									//僄僼僃僋僩丗廔椆
+	MOT(EFFDUMMY4,0,0)									//僄僼僃僋僩丗廔椆
+	MOT(EFFDUMMY3,63,0)									//僄僼僃僋僩丗岝偺棻巕
+	wait(30)
+	SE(1137,0)//儂儚僀僩傾僂僩SE
+	SE(1153,0)//儂儚僀僩傾僂僩SE
+	wait(30)
+	color(GOLDMAO,1)
+	
+	EV_stop("EV_1174")
+	EV_stop("EV_1174_2")
+	
+	CAM_move(0,874,-123,0,0)
+	CAM(-87,133,-123,50,180,0,0)
+	
+	CAM_move(0,874,17,0,0)
+	CAM(-287,186,17,54,180,0,0)
+	CAM_move(0,874,-300,180,0)
+	CAM(113,186,-663,54,180,180,0)
+	wait(120)
+	
+	SE(1050,0)//塇傪峀偘傞		
+	MOT(GOLDMAO,151, 0)									//塇傪峀偘傞		
+	MOT(EFFDUMMY3, 0,0)
+	wait(15)
+	EFF_chr(7210, GOLDMAO, 0,100,0,"Bone_Hips")		//僄僼僃僋僩 塇
+	wait(35)
+	CAM_quake("463746")
+	SE(1072,0)//塇傪峀偘傞		
+	SE(1140,0)//塇傪峀偘傞		
+	EFF_chr(7150, GOLDMAO, 0,100,0,"Bone_Hips")		//僄僼僃僋僩
+	EFF_chr(7210, GOLDMAO, 0,100,0,"Bone_Hips")		//僄僼僃僋僩 塇
+	EFF_chr(6120, GOLDMAO, 0,200,0,"Bone_Hips")		//僄僼僃僋僩丗嬥怓僷乕僥傿僋儖
+	
+	CAM_move(0,874,257,60,0)
+	CAM(-46,60,257,49,180,60,0)
+
+//	wait(100)	
+	wait(60)	
+
+//	stop_BGM(90)
+	MOT(GOLDMAO,2, 15)									//懸婡儌乕僔儑儞
+
+	cross_fade(10)
+	CAM_move(0,874,257,0,0)
+	CAM(-966,67,257,33,144,0,0)
+	SE(1141,0)//僶儞両
+	wait(5)
+	fade_in(100, 10, 0)
+	wait(10)
+	fade_in(0,0,0)
+	CAM_move(0,874,257,0,0)
+	CAM(-966,67,257,33,212,0,0)
+	SE(1141,0)//僶儞両
+	wait(5)	
+	fade_in(100,10, 0)	
+	wait(10)
+	fade_in(0,0,0)	
+	CAM_move(0,874,397,0,0)
+	CAM(33,65,397,23,180,0,0)
+	SE(1141,0)//僶儞両
+	wait(5)	
+	fade_in(100, 10, 0)	
+	wait(20)
+
+//	wait_BGM()
+	BGM(42)
+//	BGM_vol(85,0)
+	workG(GW_DEF_BGM,SET,42)									//僨僼僅儖僩嬋傪曄峏
+
+	//儃僗傾僢僾僇儊儔
+	fade_in(0,60,0)	
+	CAM_move(0,874,297,0,0)
+	CAM(-126,100,297,23,180,0,0)
+	CAM_move(0,874,297,600,0)	
+	CAM(-126,126,297,23,180,600,0)
+	EFF_chr(6120, GOLDMAO, 0,200,0,"Bone_Hips")		//僄僼僃僋僩丗嬥怓僷乕僥傿僋儖
+	
+	wait_fade()
+
+//	Load_BMP(14,"sys\\text01.itm","sys\\text01a.itm")
+
+	VOICE(684,0)	//仛乽婍偺堄巙偼晻偠偨乧乿
+//	MES_pos(GOLDMAO,"W9C2婍偺堄巙偼晻偠偨乧",0,320,280,0,0)
+//	wait(80)
+//	MES_close(GOLDMAO)
+	menuBMP(0,	14,	408,320,408,32)
+	menu(0,	0,	120,260,  0,	408, 32,	 0,  0,0)
+	menu(0,	0,	120,260,  0,	408, 32,	30,100,0)
+	wait(80)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	30,0,0)						//暥帤僼僃乕僪傾僂僩
+	wait(5)
+		
+	VOICE(685,0)	//仛乽変偑柤偼嬥怓偺儖僔傾儞乧乿
+//	MES_pos(GOLDMAO,"W9C2変偑柤偼嬥怓偺儖僔傾儞乧",0,320,280,0,0)
+//	wait(80)
+//	MES_close(GOLDMAO)		
+	menuBMP(1,	14,	408,349,408,32)
+	menu(1,	0,	120,260,  0,	408, 32,	 0,  0,0)
+	menu(1,	0,	120,260,  0,	408, 32,	30,100,0)
+	wait(80)
+	menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)						//暥帤僼僃乕僪傾僂僩
+	wait(5)
+
+	VOICE(686,0)	//仛乽彈恄偵攚偒偟懧揤巊偺堦恖側傝乧乿
+//	MES_pos(GOLDMAO,"W9C2彈恄偵攚偒偟懧揤巊偺堦恖側傝乧",0,320,280,0,0)
+//	wait(120)
+//	MES_close(GOLDMAO)			
+//	wait(15)
+	menuBMP(0,	14,	408,383,408,32)
+	menu(0,	0,	120,260,  0,	408, 32,	 0,  0,0)
+	menu(0,	0,	120,260,  0,	408, 32,	30,100,0)
+	wait(120)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	30,0,0)						//暥帤僼僃乕僪傾僂僩
+	wait(5)
+	
+	VOICE(687,0)	//仛乽嬸偐側傞恖娫丄偦偟偰恀慶偺柡傛乧乿
+//	MES_pos(GOLDMAO,"W9C2嬸偐側傞恖娫丄偦偟偰恀慶偺柡傛乧",0,320,280,0,0)
+//	wait(125)
+//	MES_close(GOLDMAO)		
+	menuBMP(1,	14,	408,416,408,32)
+	menu(1,	0,	120,260,  0,	408, 32,	 0,  0,0)
+	menu(1,	0,	120,260,  0,	408, 32,	30,100,0)
+	wait(125)
+	menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)						//暥帤僼僃乕僪傾僂僩
+	wait(5)
+
+	VOICE(688,0)	//仛乽変偑暅妶傪庻乮偙偲傎乯偖偑傛偄乧両乿
+//	MES_pos(GOLDMAO,"W9C2変偑暅妶傪庻偖偑傛偄乧両",0,320,280,0,0)
+//	wait(90)
+//	MES_close(GOLDMAO)	
+	menuBMP(0,	14,	408,448,408,32)
+	menu(0,	0,	120,260,  0,	408, 32,	 0,  0,0)
+	menu(0,	0,	120,260,  0,	408, 32,	60,100,0)
+	wait(90)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	30,0,0)							//暥帤僼僃乕僪傾僂僩
+
+//	CAM_move(20,-260,95,90,0)
+//	CAM(-90,137,95,42,179,90,0)
+	CAM_move(20,-260,95,65,0)
+	CAM(-90,137,95,42,179,65,0)
+	wait(65)
+	CAM(-130,136,95,41,179,600,0)
+	
+	VOICE(162,0)	//仛乽抯傟尵傪乧両乿
+	MES_pos(ALWEN,"開玩笑…！",0,0,0,0,0)
+	wait(50)
+	MES_close(ALWEN)		
+
+	VOICE(073,0)	//仛乽傆丄傆偞偗傫偠傖偹偊偭両乿
+	MES_pos(EVENT_RAGNA,"別…別開玩笑了！",0,0,0,0,0)
+	wait(60)
+	MES_close(EVENT_RAGNA)		
+	
+	VOICE(074,0)	//仛乽儈傾丄懸偭偰傠両乿
+	MES_pos(EVENT_RAGNA,"米婭，你等著！",0,0,0,0,0)
+	wait(40)
+	MES_close(EVENT_RAGNA)
+			
+	VOICE(075,0)	//仛乽愨懳偵乧乧愨懳偵彆偗傞偐傜側両乿
+	MES_pos(EVENT_RAGNA,"我絕對……\n絕對會把你救出來的！",0,0,0,0,0)
+	wait(80)
+	MES_close(EVENT_RAGNA)	
+
+//	BGM_vol(100,30)
+
+	//----------------------------------------------------------------------------
+	//僼僃乕僪傾僂僩
+	fade_in(100,60,0)
+	wait_fade()	
+	
+	MOT(EFFDUMMY3,0,0)									//僄僼僃僋僩丗岝偺棻巕廔椆
+
+
+	chr_pos(RAGNA,   200,1500,0, 0,2)
+	chr_pos(PARTNER,-200,1500,0, 0,2)	
+	wait(1)
+	CAM_return(0)
+	wait(1)
+	
+	delete(GOLDMAO)	
+	delete(EVENT_RAGNA)	
+	delete(ALWEN)	
+	delete(MOVDUMMY)	
+	delete(MOVDUMMY2)	
+	delete(MOVDUMMY3)	
+	delete(SHIELD1)
+	delete(SHIELD2)
+	delete(EFFDUMMY1)
+	delete(EFFDUMMY2)
+	delete(EFFDUMMY3)
+	delete(EFFDUMMY4)
+	
+	EV("EV_Battle")
+}
+
+EV_MoveRagna
+{
+//	MOT(MOVDUMMY2,150,0)
+	wait(60)
+	color(EVENT_RAGNA, 1)
+ //	MOT(SHIELD1, 48, 0)	
+//	wait(100)
+//	MOT(MOVDUMMY2,0,0)
+	wait_MOT(MOVDUMMY2,150)
+	MOT(SHIELD1, 0, 0)
+	
+	//拝抧
+	chr_equip_off(EVENT_RAGNA)
+	F_reset_chr(EVENT_RAGNA, CF_NO_HEIGHT)
+	F_reset_chr(EVENT_RAGNA, CF_NO_ZIMEN)
+	jump(EVENT_RAGNA, 0,30, 200,1500,0,0)
+	MOT(EVENT_RAGNA, 2, 15)
+}
+
+EV_MoveAlwen
+{
+//	MOT(MOVDUMMY3,150,0)
+	wait(60)
+	color(ALWEN, 1)
+ //	MOT(SHIELD2, 48, 0)	
+//	wait(100)
+//	MOT(MOVDUMMY3,0,0)
+	wait_MOT(MOVDUMMY3,150)
+	MOT(SHIELD2, 0,0)
+	
+	chr_equip_off(ALWEN)
+	F_reset_chr(ALWEN, CF_NO_HEIGHT)
+	F_reset_chr(ALWEN, CF_NO_ZIMEN)	
+	jump(ALWEN, 0,60,-200,1500,0,0)	
+
+	MOT(ALWEN,134,15)	
+	wait_move(ALWEN)
+	MOT(ALWEN,2,10)	
+	
+	IK(ALWEN,"Bone_LeftWing1",1)
+	IK(ALWEN,"Bone_RightWing1",1)
+	
+	wait_move(ALWEN)	
+}
+
+//--------------------------------------------------------------------
+// 儃僗愴
+EV_Battle
+{
+	//抧媴傪徚偡
+	F_set_obj("back00_add", NP_HIDE)
+	F_set_obj("back01", NP_HIDE)
+	F_set_obj("back02", NP_HIDE)
+	F_set_obj("back03", NP_HIDE)
+	F_set_obj("back04", NP_HIDE)
+	F_set_obj("back05", NP_HIDE)
+	
+	//廳偄偺偱棾姫傕堦晹徚偡
+	F_set_obj("taihoo01", NP_HIDE)
+	F_set_obj("taihoo02", NP_HIDE)
+	F_set_obj("taihoo03", NP_HIDE)
+	F_set_obj("taihoo04", NP_HIDE)
+	F_set_obj("taihoo05", NP_HIDE)
+
+//	set_chr(BOSS,408,		-1,-1,   -1391,-986,0500,  2,  0,	0,"<EV_LastBattleEnd>;") //杺墹儈傾
+	set_chr(BOSS,408,		-1,-1,   0,-1000,0500,  2,  0,	0,"<EV_LastBattleEnd>;") //杺墹儈傾
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)	//BOSS丵俫俹昞帵
+
+	//儚乕僾晻偠
+	workG(GW_WARP_FLAG,SET,0)					//儚乕僾晻偠傞丅
+	
+	//儔僌僫儊儌梡
+//	F_set(F6_09_BattleMao)//仛儔僗儃僗亂杺墹儈傾亃偲愴摤奐巒
+	
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,   100,1500,0, 180,2)
+	chr_pos(PARTNER,-100,1500,0, 180,2)	
+	chr_pos(PET,       0,1550,0, 180,2)	
+	
+	color(RAGNA, 1)
+	color(PARTNER, 1)
+	
+	
+	//嵞愴梡僆乕僩僙乕僽
+	workG(GW_ENTRY_EVENT,SET,100)
+	workG(GW_DEF_BGM,SET,99)						//僨僼僅儖僩嬋傪曄峏偡傞 柍壒
+	AutoSave(0)
+	workG(GW_ENTRY_EVENT,SET,0)
+	workG(GW_DEF_BGM,SET,42)							//僨僼僅儖僩嬋傪曄峏偡傞 儅僢僾嬋
+
+	
+	//僼僃乕僪僀儞
+	
+	set_namebmp(26,0)							//嬥怓儈傾
+
+	CAM_return(0)
+	wait(30)
+//	CAM(234,63,215,43,202,0,0)
+
+	fade_in(0,60,0)
+//	wait_fade()
+
+	SCORE(0,0,0)//擮偺偨傔僗僐傾弶婜壔
+	//儖乕僩僗僞乕僩
+	workG(GW_NOW_ROUTE,SET,109);//杺墹儈傾
+
+	EV_end()	
+}
+
+//---------------------------------------------------------------------
+// 嵞愴梡
+//---------------------------------------------------------------------
+EV_BattleBossOnly
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+	
+	wait(30)									//GAME OVER嬋懸偪
+
+	//抧媴傪徚偡
+	F_set_obj("back00_add", NP_HIDE)
+	F_set_obj("back01", NP_HIDE)
+	F_set_obj("back02", NP_HIDE)
+	F_set_obj("back03", NP_HIDE)
+	F_set_obj("back04", NP_HIDE)
+	F_set_obj("back05", NP_HIDE)
+	
+	//廳偄偺偱棾姫傕堦晹徚偡
+	F_set_obj("taihoo01", NP_HIDE)
+	F_set_obj("taihoo02", NP_HIDE)
+	F_set_obj("taihoo03", NP_HIDE)
+	F_set_obj("taihoo04", NP_HIDE)
+	F_set_obj("taihoo05", NP_HIDE)
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,   100,1500,0, 180,2)
+	chr_pos(PARTNER,-100,1500,0, 180,2)	
+	chr_pos(PET,       0,1550,0, 180,2)	
+	
+	color(RAGNA, 1)
+	color(PARTNER, 1)
+
+	set_chr(BOSS,408,		-1,-1,   -1391,-986,0500,  2,  0,	0,"<EV_LastBattleEnd>;") //杺墹儈傾
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)					//BOSS丵俫俹昞帵
+
+	//儚乕僾晻偠
+	workG(GW_WARP_FLAG,SET,0)					//儚乕僾晻偠傞丅
+	workG(GW_DEF_BGM,SET,42)						//僨僼僅儖僩嬋傪曄峏
+
+	BGM(42)
+	
+	CAM_return(0)
+	wait(15)
+	
+	//僼僃乕僪僀儞
+	set_namebmp(26,0)							//嬥怓儈傾	
+	fade_in(0,30,0)
+
+	SCORE(0,0,0)//擮偺偨傔僗僐傾弶婜壔
+	//儖乕僩僗僞乕僩
+	workG(GW_NOW_ROUTE,SET,109);//杺墹儈傾
+
+	EV_end()	
+}
+
+//---------------------------------------------------------------------
+// 杺墹儖僔傾儞愴	僎乕僙儞梡
+//---------------------------------------------------------------------
+EV_BattleBossOnly_02
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+	
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////俫俹0偱傕徚偊側偄丂僉儍儔0偼巰朣帪偵"EV_DEAD"傪嵞惗
+
+	wait(30)									//GAME OVER嬋懸偪
+
+	//抧媴傪徚偡
+	F_set_obj("back00_add", NP_HIDE)
+	F_set_obj("back01", NP_HIDE)
+	F_set_obj("back02", NP_HIDE)
+	F_set_obj("back03", NP_HIDE)
+	F_set_obj("back04", NP_HIDE)
+	F_set_obj("back05", NP_HIDE)
+	
+	//廳偄偺偱棾姫傕堦晹徚偡
+	F_set_obj("taihoo01", NP_HIDE)
+	F_set_obj("taihoo02", NP_HIDE)
+	F_set_obj("taihoo03", NP_HIDE)
+	F_set_obj("taihoo04", NP_HIDE)
+	F_set_obj("taihoo05", NP_HIDE)
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,   200,1500,0, 0,2)
+	chr_pos(PARTNER,-200,1500,0, 0,2)	
+	chr_pos(PET,       0,1550,0, 0,2)	
+	
+	color(RAGNA, 1)
+	color(PARTNER, 1)
+
+	set_chr(BOSS,408,		-1,-1,   -1391,-986,0500,  2,  0,	0,"<EV_YOUWIN>;") //杺墹儈傾
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)					//BOSS丵俫俹昞帵
+
+	//儚乕僾晻偠
+	workG(GW_WARP_FLAG,SET,0)					//儚乕僾晻偠傞丅
+	workG(GW_DEF_BGM,SET,42)						//僨僼僅儖僩嬋傪曄峏
+
+	//BGM(42)
+	
+	CAM_return(0)
+	wait(15)
+	
+	//僼僃乕僪僀儞
+	set_namebmp(26,0)							//嬥怓儈傾	
+	fade_in(0,30,0)
+
+	SCORE(0,0,0)//擮偺偨傔僗僐傾弶婜壔
+	//儖乕僩僗僞乕僩
+	workG(GW_NOW_ROUTE,SET,109);//杺墹儈傾
+
+	EV_end()	
+}
+//攕杒帪---------------------
+EV_DEAD
+{
+	wait_EV("EV_YOUWIN")
+
+	EV_begin()
+	EFF(21660,320,240,0,0,200,0)//LOSE
+
+	wait(60)
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//慡夣
+	workG(GW_ENTRY_EVENT,SET,115)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//G儈儏乕僕傾儉偵
+}
+
+//彑棙帪---------------------
+EV_YOUWIN
+{
+	wait_EV("EV_DEAD")
+
+	SCORE(-1,-1,-1)//嫮惂儖乕僩廔椆仌儊僯儏乕昞帵
+	EFF(21650,320,240,0,0,100,0)//WIN
+
+//	wait(100)	//1僼儗乕儉恑傔側偄偲丄僇儊儔偑夡傟傞丅乮儃僗偺僇儊儔偺偨傔乯
+//	VOICE(701,0)	//仛乽攏幁側乧偁傝偊偸乧両乿
+	VOICE2(701,1,100)	//仛乽攏幁側乧偁傝偊偸乧両乿
+	wait(80)
+	wait(100)	
+//	VOICE(702,0)	//仛乽偍偍偍偍偍偍偍偍偍偭乧両乿
+	VOICE2(702,1,100)	//仛乽偍偍偍偍偍偍偍偍偍偭乧両乿
+
+	EV_begin()
+	fade_in(100,150,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//慡夣
+
+	//惉愌偵墳偠偰僼傿僊儏傾擖庤	//	->Figure F2839乮杺墹儖僔傾儞乯
+	if(!F2839)
+	{
+		SE(24,0)//僎僢僩SE
+		MES(0,"得到了L667金色魔王路西安L777的模型！！",2)
+		MES_close(0)
+		F_set(2839)
+	}
+
+	workG(GW_ENTRY_EVENT,SET,115)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//G儈儏乕僕傾儉偵
+}
+
+
+
+EV_NextStage
+{
+	F_set_chr(PLAYER1,CF_HI_JUMP)
+	F_set_chr(PLAYER2,CF_HI_JUMP)
+
+	//抧媴傪徚偡
+	F_reset_obj("back00_add", NP_HIDE)
+	F_reset_obj("back01", NP_HIDE)
+	F_reset_obj("back02", NP_HIDE)
+	F_reset_obj("back03", NP_HIDE)
+	F_reset_obj("back04", NP_HIDE)
+	F_reset_obj("back05", NP_HIDE)
+
+	//棾姫傪徚偡
+	F_set_obj("b_uzu", NP_HIDE)
+	F_set_obj("uzu00", NP_HIDE)
+	F_set_obj("taihoo01", NP_HIDE)
+	F_set_obj("taihoo02", NP_HIDE)
+	F_set_obj("taihoo03", NP_HIDE)
+	F_set_obj("taihoo04", NP_HIDE)
+	F_set_obj("taihoo05", NP_HIDE)
+	F_set_obj("taihoo06", NP_HIDE)
+	F_set_obj("taihoo07", NP_HIDE)
+	F_set_obj("taihoo08", NP_HIDE)
+	F_set_obj("taihoo09", NP_HIDE)
+	F_set_obj("taihoo010", NP_HIDE)
+	F_set_obj("taihoo011", NP_HIDE)
+	F_set_obj("taihoo012", NP_HIDE)
+	
+	
+}
+
+//--------------------------------------------------------------------
+EV_LastBattleEnd
+{
+	SCORE(-1,-1,-1)//嫮惂儖乕僩廔椆仌儊僯儏乕昞帵
+
+//	VOICE(701,0)	//仛乽攏幁側乧偁傝偊偸乧両乿
+	VOICE2(701,1,100)	//仛乽攏幁側乧偁傝偊偸乧両乿
+	wait(80)
+	wait(100)	
+//	VOICE(702,0)	//仛乽偍偍偍偍偍偍偍偍偍偭乧両乿
+	VOICE2(702,1,100)	//仛乽偍偍偍偍偍偍偍偍偍偭乧両乿
+
+	fade_in(100,150,WHITE)
+	wait(100)
+	EV_begin()
+		
+	//儂儚僀僩傾僂僩
+	wait_fade()
+	
+	//梫嵡丄夡傟儅僢僾傊
+	workG(GW_ENTRY_EVENT,SET,3)
+	new_map(18033)
+}
+
+//僆乕儔SE張棟----------------------------------
+EV_1174//壒検戝
+{
+	SE(1174,0)
+	wait(60)
+	EV("EV_1174_2")
+}
+EV_1174_2
+{
+	SE(1174,0)
+	wait(60)
+	EV("EV_1174")
+}
+
+#EndScriptTable
+//====================================================================
+

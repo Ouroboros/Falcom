@@ -1,0 +1,2206 @@
+//====================================================================
+//ステージトラップスクリプト
+//[???????][ス戒マップ]
+//====================================================================
+
+#ScriptTable
+
+#PLANE_R		1
+#MONTBLANC 		2
+#EXE-MAXINA		3
+#DRAGON-W		4
+#DRAGON-B		5
+#RAGNA2 		6
+
+#ALWEN			8
+#FIONA 			9
+#KLODE			10
+#PIPIRO 		11
+#POCKLE 		12
+#LA-RAIRA		13
+#ODESSA			14
+
+#PLANE_K 		15
+#PLANE_P 		16
+#PLANE_O 		17
+#PLANEALL 		18
+#EVENT_RAGNA 	19
+#EFFECT1		20
+#EFFECT2		21
+
+#VAPER_R_R1		22
+#VAPER_R_L1		23
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip      x    y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+
+//■エントリー
+
+//■イベント
+	if(GW_ENTRY_EVENT==10)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼２週目引继ぎ処理
+		EV("EV_6_17_GameClear_to2")
+	}
+	else
+	if(GW_ENTRY_EVENT==7)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_4_15_KillBoss5Start")
+	}
+	else
+	if(GW_ENTRY_EVENT==6)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_5_18_KillOverDygaldEnd")
+	}
+	else
+//	if(GW_ENTRY_EVENT==5)
+//	{
+//		workG(GW_ENTRY_EVENT,SET,0)
+//		EV("EV_5_13_VSFakeAlwenBattle")
+//	}
+//	else
+	if(GW_ENTRY_EVENT==4)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_5_08_BattleSky_End")
+	}
+	else
+	if(GW_ENTRY_EVENT==3)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_4_12_JoinAlwen_End")
+	}
+	else
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼伊尔巴特上空で合流する
+		EV("EV_6_05_Plane4Join")
+	}
+	else
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼プロローグ～特里斯坦号墜落
+		EV("EV_0_00_Opening")
+	}
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼プロローグ～特里斯坦号墜落
+//──────────────────────────────
+//　　ゲーム開始後、暗転したまま以下之ナレーション。
+//　　エフェクト付き之グラフィックで表示し、声も再生する。
+EV_0_00_Opening
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,BLACK)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 0,0,0,0,2)
+
+	if(F6_14_ClearData)
+	{
+		//引继ぎ用処理------------------------------------------
+		//◆クリアデータ用フラグ初期化
+		F_reset(F6_14_ClearData)//★クリアデータ用フラグ
+
+		//◆主人公レベルを１に設定。
+		system_chack(98)	// ２週目引继ぎ用初期化読み込み後用
+
+		//◆パーティ解散。又はリセット。
+	}
+
+
+/*
+	MES(RAGNA,"??W9『◆イベントへ』\n『◆村へ』",0)
+	wait_W(WK_YESNO)
+	MES_close(RAGNA)
+	wait_MES(RAGNA)
+//─────────────────────
+	if(WK_YESNO==2)
+	{
+		fade_in(0,1,0)
+		wait_fade()
+
+		join_party(1)//ALWEN
+		CAM_return( 0 )
+
+		EV_end()
+
+		new_map(10100)
+	}
+	else
+	if(WK_YESNO==1)
+	{
+	}
+//─────────────────────
+*/
+	//イベント用キャラ配置
+	set_chr(EFFECT1,	749,-1,-1,  0,0,0,		0,	0,		0,"")	//
+	set_chr(EFFECT2,	749,-1,-1,  0,0,0,		0,	0,		0,"")	//
+	set_chr(PLANE_R,	 	857,-1,-1,0,-1000,0,		0,	0,		0,"")	//特里斯坦号
+	set_chr(DRAGON-W,	464,-1,-1,-3000,4000,1000,	0,	215,	0,"")	//
+	set_chr(DRAGON-B,	463,-1,-1,-3000,5000,1500,	0,	145,	0,"")	//
+	set_chr(MONTBLANC,	1025,-1,-1,-3000,4000,1000,	2,	215,	0,"")	//
+	set_chr(EXE-MAXINA,	1031,-1,-1,-3000,5000,1500,	2,	145,	0,"")	//
+	set_chr(RAGNA2,	 	 10,-1,-1,0,0,0,		2,	0,		0,"")	//
+	set_chr(EVENT_RAGNA,1014,-1,-1,0,0,0,		2,	0,		0,"")	//
+	color(EVENT_RAGNA,-1)
+	color(RAGNA,-1)
+
+//	F_set_Node(RAGNA,"wepon",NP_HIDE)
+//	chr_scale( RAGNA,	"Bone_Bag",		0,0,0,	0,0);
+	chr_scale( EVENT_RAGNA,	"Bone_Bag",		0,0,0,	0,0);
+	chr_scale( RAGNA2,	"Bone_Bag",		0,0,0,	0,0);
+	chr_equip_chr(EFFECT1, PLANE_R, "null", 100,0,0,0, 0,0,0)
+	chr_equip_chr(EFFECT2, DRAGON-W,"Bone_Spine1", 100,0,0,0, 0,0,0)
+	
+	MOT_SET(PLANE_R, 150,150,0,56,-1,-1)//飛行
+	MOT_SET(PLANE_R, 151,152,250,280,-1,-1)	//フレーム(左旋回、通常飛行状態から接続可能)
+	MOT_SET(PLANE_R, 152,152,280,309,-1,-1)	//左旋回状態保持)
+	MOT_SET(PLANE_R, 153,150,400,439,-1,-1)	//左旋回状態から通常飛行状態へ接続)
+
+
+//	MOT_SET(RAGNA,150,-1,487,487,-1,-1)//座り
+	MOT_SET(EVENT_RAGNA,150,-1,487,487,-1,-1)//座り
+	MOT_SET(EVENT_RAGNA,151,-1,8336,8360,-1,-1)//ゴーグルを取る　岡田追記
+	MOT_SET(RAGNA2,150,-1,487,487,-1,-1)//座り
+	MOT_SET(RAGNA2,151,-1,8325,8335,-1,-1)//ゴーグルを取る　岡田追記
+	MOT_SET(MONTBLANC,150,-1,551,551,-1,-1)//座り
+	MOT_SET(EXE-MAXINA,150,-1,551,551,-1,-1)//座り
+	MOT_SET(DRAGON-W,150,150,765,804,-1,-1)//
+	MOT_SET(DRAGON-B,150,150,765,804,-1,-1)//
+
+	IK(MONTBLANC,"Bone_LeftWing1",1)
+	IK(MONTBLANC,"Bone_RightWing1",1)
+	MOT(PLANE_R,150,0)
+	MOT(EVENT_RAGNA,150,0)
+	MOT(RAGNA2,150,0)
+	MOT(MONTBLANC,51,0)
+	MOT(EXE-MAXINA,150,0)
+
+	F_set_chr(PLANE_R,CF_NO_CLIP)
+	F_set_chr(PLANE_R,CF_NO_CLIP2)
+	F_set_chr(PLANE_R,CF_NO_CSP)
+	F_set_chr(PLANE_R,CF_NO_HEIGHT)
+	F_set_chr(PLANE_R,CF_NO_ZIMEN)
+	F_set_chr(PLANE_R,CF_MAX_MOVE)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(RAGNA2,CF_NO_CLIP)
+	F_set_chr(RAGNA2,CF_NO_CLIP2)
+	F_set_chr(RAGNA2,CF_NO_CSP)
+	F_set_chr(DRAGON-W,CF_NO_CLIP)
+	F_set_chr(DRAGON-W,CF_NO_CLIP2)
+	F_set_chr(DRAGON-W,CF_NO_CSP)
+	F_set_chr(DRAGON-W,CF_NO_HEIGHT)
+	F_set_chr(DRAGON-W,CF_NO_ZIMEN)
+	F_set_chr(DRAGON-W,CF_MAX_MOVE)
+	F_set_chr(DRAGON-B,CF_NO_CLIP)
+	F_set_chr(DRAGON-B,CF_NO_CLIP2)
+	F_set_chr(DRAGON-B,CF_NO_CSP)
+	F_set_chr(DRAGON-B,CF_NO_HEIGHT)
+	F_set_chr(DRAGON-B,CF_NO_ZIMEN)
+	F_set_chr(DRAGON-B,CF_MAX_MOVE)
+	F_set_chr(MONTBLANC,CF_NO_CLIP)
+	F_set_chr(MONTBLANC,CF_NO_CLIP2)
+	F_set_chr(EXE-MAXINA,CF_NO_CLIP)
+	F_set_chr(EXE-MAXINA,CF_NO_CLIP2)
+//	chr_equip_chr(RAGNA,PLANE_R,"isu01",100,		0,0,0,	0,120,0);
+	chr_equip_chr(EVENT_RAGNA,PLANE_R,"isu01",100,		0,0,0,	0,120,0);
+	chr_equip_chr(RAGNA2,PLANE_R,"isu01",100,		0,0,0,	0,120,0);
+	chr_equip_chr(MONTBLANC,DRAGON-W,"RideNull",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EXE-MAXINA,DRAGON-B,"RideNull",100,		0,0,0,	0,0,0);
+
+	F_set_Node(PLANE_R, "fun01", NP_HIDE)
+	F_set_Node(PLANE_R, "fun02", NP_HIDE)
+
+	MOT(DRAGON-W,150,0)
+	MOT(DRAGON-B,150,0)
+	color(MONTBLANC,-1)
+	color(EXE-MAXINA,-1)
+	color(DRAGON-W,-1)
+	color(DRAGON-B,-1)
+
+	//カメラ初期位置
+	CAM_move(0,-1000,0,0,0)
+	CAM(610,300,0,46,240,0,0)
+
+//　　★XP194を流し始める。
+//	BGM(1)
+	BGM(02)
+	wait(30)
+//　　ゲーム開始後、暗転したまま以下之ナレーション。
+//　　エフェクト付き之グラフィックで表示し、声も再生する。
+//	name("ナレーション")
+
+	//元画像*0.8換算
+
+	
+//	MES_pos(EVENT_RAGNA,"S4C3　　　库朗毕林──\n　\n　　　それは古之時代、\n　　二柱之女神によって創造された\n　　　　　　　　　大いなる魔法世界。　　　　　　",1,320,200,0,0)
+	
+	Load_BMP(14,"sys\\text01.itm","sys\\text01a.itm")
+	menuBMP(0,	14,	0,0,398,32)
+//	menu(0,	0,	122,188,  0,	398, 32,	 0,  0,0)
+//	menu(0,	0,	122,188,  0,	398, 32,	60,100,0)
+	menu(0,	0,	122,178,  0,	398, 32,	 0,  0,0)
+	menu(0,	0,	122,178,  0,	398, 32,	60,100,0)
+	wait(60)
+	
+	menuBMP(1,	14,	0,32,398,83)
+//	menu(1,	0,	122,216,  0,	398, 83,	 0,  0,0)
+//	menu(1,	0,	122,216,  0,	398, 83,	60,100,0)
+	menu(1,	0,	122,226,  0,	398, 83,	 0,  0,0)
+	menu(1,	0,	122,226,  0,	398, 83,	60,100,0)
+	wait(150)
+	menu(1,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)
+
+//　　ここで库朗毕林之イメージを表示。
+//　　古地図之ような雰囲気でアニメしているも之が望ましい。
+//　　以後、ナレーション之内容に合わせてイメージを展開する。
+
+//ナレーション
+//	MES_pos(EVENT_RAGNA,"S4C3　大小様々な浮游大陆によって\n成り立つこ之世界は、およそ五百年ほど前、\n六人之魔王によって滅亡之危机に瀕していた。",1,320,200,0,0)
+
+	menuBMP(0,	14,	0,114,398,78)
+	menu(0,	0,	120,200,  0,	398, 78,	 0,  0,0)
+	menu(0,	0,	120,200,  0,	398, 78,	60,100,0)
+	wait(180)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)	
+
+//	MES_pos(EVENT_RAGNA,"S4C3　しかし、時之神圣王国を治めていた\n　　瓦伦斯家之呼びかけによって\n　人と精霊、そして龙たちは力を結集し……",1,320,200,0,0)
+
+	menuBMP(0,	14,	0,192,398,78)
+	menu(0,	0,	120,200,  0,	398, 78,	 0,  0,0)
+	menu(0,	0,	120,200,  0,	398, 78,	60,100,0)
+	wait(180)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)
+
+//	MES_pos(EVENT_RAGNA,"S4C3　　永きに渡る战い之果て、\nついに六人之魔王は封印される事となる。",1,320,200,0,0)
+
+	menuBMP(0,	14,	0,270,398,58)
+	menu(0,	0,	120,210,  0,	398, 58,	 0,  0,0)
+	menu(0,	0,	120,210,  0,	398, 58,	60,100,0)
+	wait(150)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)
+
+//	MES_pos(EVENT_RAGNA,"S4C3　　しかしこ之战い──\n《魔法大战》之後、神圣王国は崩壊し、\n絶頂を極めた魔法文明は急速に衰退した。",1,320,200,0,0)
+
+	menuBMP(0,	14,	0,326,398,76)
+	menu(0,	0,	120,200,  0,	398, 76,	 0,  0,0)
+	menu(0,	0,	120,200,  0,	398, 76,	60,100,0)
+	wait(180)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)
+
+//	MES_pos(EVENT_RAGNA,"S4C3　浮游大陆間を結ぶゲートも失われ、\n孤立する人々が困り果てていたそ之時──",1,320,200,0,0)
+
+//	menuBMP(0,	14,	0,515,398,68)
+	menuBMP(0,	14,	0,414,398,56)
+	menu(0,	0,	120,212,  0,	398, 68,	 0,  0,0)
+	menu(0,	0,	120,212,  0,	398, 68,	60,100,0)
+	wait(150)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)
+
+//	MES_pos(EVENT_RAGNA,"S4C3　急速に発達し始めた机械技術によって\nある画期的な発明が生み出された之である。",1,320,200,0,0)
+
+	Load_BMP(14,"sys\\text01.itm","sys\\text01a.itm")	
+	menuBMP(0,	14,	0,467,398,60)
+	menu(0,	0,	120,212,  0,	398, 60,	 0,  0,0)
+	menu(0,	0,	120,212,  0,	398, 60,	60,100,0)
+	wait(150)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)
+
+//	MES_pos(EVENT_RAGNA,"S4C3　　　机械之心臓に火を点けて\n　　空を自由に駆ける鋼铁之翼──",1,320,200,0,0)
+
+	menuBMP(0,	14,	0,528,398,54)
+	menu(0,	0,	120,212,  0,	398, 54,	 0,  0,0)
+	menu(0,	0,	120,212,  0,	398, 54,	60,100,0)
+	wait(150)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)
+
+
+//	MES_pos(EVENT_RAGNA,"S4C3すなわち『飛行机（エアロシップ）』である。",1,320,200,0,0)
+
+	menuBMP(0,	14,	0,577,398,35)
+	menu(0,	0,	120,224,  0,	398, 35,	 0,  0,0)
+	menu(0,	0,	120,224,  0,	398, 35,	60,100,0)
+	wait(150)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)
+	
+	wait_menu(0)
+
+
+//エンジン音
+//	SE(1010,1)
+	SE_attach(1010, EVENT_RAGNA)
+
+	jump(PLANE_R,0,240, 0,0,0, 0)
+
+	CAM_move(0,0,150,300,0)
+	CAM(330,150,150,46,220,300,0)
+
+	stop_BGM(150)
+//	wait_BGM()
+
+	//フェードイン
+	fade_in(0,60,BLACK)
+	wait_fade()
+
+//风之音
+	SE(51,0)
+
+//　　画面フェードインして、雲海を見下ろすカメラ。
+//　　拉古那之特里斯坦号が巡航している之を見せながら、
+//　　以下之メッセージをグラフィックで表示していく。
+
+//	MES_pos(EVENT_RAGNA,"S4C3库朗毕林北西部、\n西経78度、北緯48度付近──\n浮游大陆《伊尔巴特》近郊。",1,320,200,0,0)
+
+	menuBMP(0,	14,	0,617,398,80)
+//	menu(0,	0,	120,200,  0,	398, 80,	 0,  0,0)
+//	menu(0,	0,	120,200,  0,	398, 80,	60,100,0)
+	menu(0,	0,	120,300,  0,	398, 80,	 0,  0,0)
+	menu(0,	0,	120,300,  0,	398, 80,	60,100,0)
+	wait(150)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)
+
+//	MES_pos(EVENT_RAGNA,"S4C3トレジャーハンター協会所属、\n拉古那·バレンタイン所有飛行机、\n『特里斯坦号』──",1,320,200,0,0)
+
+	menuBMP(0,	14,	0,690,398,80)
+//	menu(0,	0,	120,200,  0,	398, 80,	 0,  0,0)
+//	menu(0,	0,	120,200,  0,	398, 80,	60,100,0)
+	menu(0,	0,	120,300,  0,	398, 80,	 0,  0,0)
+	menu(0,	0,	120,300,  0,	398, 80,	60,100,0)
+	wait(150)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(60)
+
+	wait_CAM_move()
+	wait_CAM()
+
+	wait_move(PLANE_R)
+	chr_pos(PLANE_R,-1,-1,-1,-1,-1)
+	wait(15)
+
+//　　カメラ、巡航する特里斯坦号を見せながら、
+//　　操縦席にいるゴーグルを付けた拉古那に近寄っていく。
+	cross_fade(30)
+	CAM_move(20,140,430,0,0)
+	CAM(-150,40,430,22,280,0,0)
+	CAM(-150,32,430,22,270,300,0)
+	
+	MOT(EFFECT1, 65, 0)								//気流
+	wait(30)
+
+	KAO(RAGNA2,"12321Z4","1233321","1")//
+	MES(RAGNA2,"那么……\n马上就要见面了吗。",0)
+	KAO(RAGNA2,"12321Z7","1","1")//
+	MES(RAGNA2,"不过、マッコイ那家伙。\n居然做到这种地步……",0)
+	KAO(RAGNA2,"12321Z7","1","1")//
+	MES(RAGNA2,"可能、是他说的太好听了吧。\n安装了新型的飞机、什么啊。",0)
+	MES_close(RAGNA2)
+	wait_MES(RAGNA2)
+
+//　　ここで拉古那、ゴーグルを外して視線を前方に。
+	//岡田編集
+	cross_fade(15)
+	CAM_move(0,140,410,0,0)
+	CAM(-230,40,410,20,190,0,0)
+	wait(15)
+	MOT(RAGNA2,151,0)
+	wait(15)
+	KAO(EVENT_RAGNA,"1","3","1")//
+	SE(1022,0)//ゴーグルを外すSE
+	cross_fade(15)
+	MOT(EVENT_RAGNA,151,0)
+	color(RAGNA2,-1)
+	color(EVENT_RAGNA,1)
+	wait(15)
+	KAO(EVENT_RAGNA,"1","321","1")//
+	wait(15)
+	//岡田編集ここまで
+
+//　　特里斯坦号之プロペラに切り替え、
+//　　シュイーンと軽快に回っている様子を見せる。
+//	CAM_move(10,-80,260,120,0)
+//	CAM(730,100,260,22,220,120,0)
+	CAM_move(10,-80,260,60,0)
+	CAM(90,54,260,40,210,60,0)
+	wait_CAM_move()
+	wait_CAM()
+
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z4","12333321","6")//
+	MES(EVENT_RAGNA,"W1……呵呵。\n算了、好象还是有价值的。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","6")//
+	MES(EVENT_RAGNA,"W1稳定性很突出、\n并且很容易适应风向的变化。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1236","6")//
+	MES(EVENT_RAGNA,"W1真不亏是飞机。\n能够做到这样啊。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　ここで操縦席之拉古那にカメラを戻す。
+	cross_fade(15)
+//	CAM_move(-540,40,350,0,0)
+//	CAM(-150,80,350,22,280,0,0)
+	CAM_move(20,140,430,0,0)
+	CAM(-350,34,430,22,132,0,0)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z6","6321","6")//
+	MES(EVENT_RAGNA,"确实《伊尔巴特》\n也有机场的样子。",0)
+	KAO(EVENT_RAGNA,"12321Z6","1","6")//
+	MES(EVENT_RAGNA,"引擎的状态很好、\n飞一次看看吧。",0)
+	KAO(EVENT_RAGNA,"12321Z3","1233321","2")//
+	MES(EVENT_RAGNA,"好ー、就这么决定了……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　★ＢＧＭをフェードアウト。
+//	stop_BGM(120)
+
+//　　ここで拉古那之頭に！マーク（より戯画化されたも之）。
+	wait_MES(EVENT_RAGNA)
+	CAM_move(20,160,430,0,0)
+	CAM(210,52,430,20,120,0,0)
+
+//　　視線を斜め横へと巡らせる。
+//	chr_pos(DRAGON-W,-3000,0,500,215,-1)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(EVENT_RAGNA,"E","12321D","6")//
+	wait(15)
+//	look_chr( EVENT_RAGNA, MONTBLANC ,"Bone_Head" )
+	look(EVENT_RAGNA,"Bone_Head",0,0,2,2,0,24,14)
+	
+	MOT(EFFECT1, 0, 0)								//気流
+		
+//	VOICE(072,0)	//★ボイス追加演出
+	wait(15)
+	KAO(EVENT_RAGNA,"B232B2","D","6")//
+	MES(EVENT_RAGNA,"……怎么……？",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　画面、急速に上空にスクロールする。
+//　　白之翼龙（背中には蒙布兰）に画面が切り替わる。
+	color(MONTBLANC,1)
+	color(DRAGON-W,1)
+	chr_pos(DRAGON-W,-3000,4000,1000,215,-1)
+	look(MONTBLANC,"Bone_Head",0,0,0,3,0,0,-10)
+	
+
+	CAM_move(-1980,-1540,2430,90,0)
+	CAM(810,502,2430,20,120,90,0)
+	wait(51)
+	SE(1011,0)//羽ばたきSEループ
+	wait(9)
+
+//エンジン音止め
+//	stop_SE(1010)
+	stop_attach_SE(EVENT_RAGNA)
+
+	cross_fade(30)
+//	CAM_move(-2500,-3640,60,0,0)
+//	CAM(290,124,60,14,296,0,0)
+//	CAM_move(-2500,-3640,1300,60,0)
+//	CAM(-790,124,1300,14,296,60,0)
+	CAM_move(-2500,-3640,700,0,0)
+	CAM(-790,124,700,14,296,0,0)
+	CAM_move(-2500,-3640,1300,90,0)
+	CAM(-790,124,1300,14,296,90,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	VOICE(336,0)	//★ボイス追加演出
+	chr_rename(MONTBLANC,"？？？")//
+	KAO(MONTBLANC,"12321Z6","1233321","-")//
+	MES(MONTBLANC,"呵呵、居然在这种时候来到伊尔巴特\n真是个运气不好的人喵。",0)
+	KAO(MONTBLANC,"12321Z5","1","-")//
+	MES(MONTBLANC,"真是遗憾喵……\n马上让你结束喵！",0)
+	MES_close(MONTBLANC)
+
+//　　★XR094を流し始める。
+//　　鳴き声を上げて羽ばたき、加速を開始する白龙。
+//	wait_BGM()
+	BGM(45)
+
+//	MOT(DRAGON-W,57,15)
+	wait(30)
+/*
+	CAM_move(-2640,-3900,1260,40,0)
+	CAM(290,122,1260,48,156,40,0)
+	jump(DRAGON-W,0,120, -1000,1000,0, 0)
+	wait(60)
+*/
+	EV("EV_habataki_fadeout")//羽ばたきSEフェードアウト
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+//	wait_move(DRAGON-W)
+	look_off( EVENT_RAGNA )
+
+//风之音止め
+	stop_SE(51)
+
+//──────────────────────────────
+//　　ドッグファイトムービー①
+//　　襲ってくる白龙をかわして反撃に転じる特里斯坦号。
+//──────────────────────────────
+	load_MMV("SYS\event_01.mpg")
+	MMV()
+	wait_MMV()
+
+	color(EVENT_RAGNA,-1)
+	color(RAGNA2,1)
+
+//	CAM_move(-100,-1400,0,0,0)
+//	CAM(10,216,0,42,352,0,0)
+	CAM_move(60,480,460,0,0)
+	CAM(10,52,460,40,342,0,0)
+	CAM_move(0,400,324,0,0)
+	CAM(-150,70,324,34,196,0,0)
+
+	chr_pos(PLANE_R,0,-500,0,0,0)
+	chr_pos(DRAGON-W,0,3500,0,0,57)
+	look(MONTBLANC,"Bone_Head",0,0,0,10,0,0,0)
+	KAO(MONTBLANC,"C","2","-")
+
+	MOT(EFFECT1, 65, 0)								//気流
+
+//风之音
+	SE(51,0)
+//エンジン音
+//	SE(1010,1)
+	SE_attach(1010,EVENT_RAGNA)
+
+//　　画面、フェードインして再びス戒ボックス。
+//　　特里斯坦号が、蒙布兰之白龙之背後を取って
+//　　机銃であおりながら追撃している之を見せる。
+	fade_in(0,30,BLACK)
+	wait_fade()
+	VOICE(018,0)	//★ボイス追加演出
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","1233321","3")
+	MES(EVENT_RAGNA,"啊·啊！\n这次轮到我了！",0)
+	KAO(EVENT_RAGNA,"12321Z6","1","3")
+	MES(EVENT_RAGNA,"不过是个魔物\n就想跟拉古那大人的操作\n一比胜负么！",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	MOT(EFFECT1, 0, 0)								//気流
+	
+	//左旋回、攻撃準備！
+//	move(PLANE_R, 40, 20, 0,-500,0, 0)
+//	wait_move(PLANE_R)
+	VOICE(044,0)	//★ボイス追加演出
+	MOT(PLANE_R, 151, 5)						//左旋回
+	wait(15)
+	move(PLANE_R, 42, 50, 1000,-1000,-100, 0)
+	wait(60)
+
+	//蒙布兰、後方ビュー
+	CAM_move(-260,-1400,0,0,0)
+	CAM(90,190,0,46,190,0,0)
+	CAM_move(-20,360,460,100,0)
+	CAM(130,94,460,46,344,100,0)
+	MOT(PLANE_R, 153, 0)						//左旋回→通常
+	chr_pos(PLANE_R,-1000,-1000, 1000,0,0)
+	move(PLANE_R, 40,50,0,-500,0,0)
+
+	wait(105)
+
+	cross_fade(15)
+	CAM_move(-20,500,420,0,0)
+	CAM(-150,76,420,46,197,0,0)
+	
+		
+	wait_fade()
+
+	CAM_quake("46464646464646")
+//	EFF_chr(6600,PLANE_R,0,100,0,"gun_eff01")	//机銃
+//	EFF_chr(6600,PLANE_R,0,100,0,"gun_eff02")	//机銃
+	EFF_chr(6605,PLANE_R,0,100,0,"gun_eff01")	//机銃
+	EFF_chr(6605,PLANE_R,0,100,0,"gun_eff02")	//机銃
+
+//机銃SE
+	SE(1012,0)
+
+	VOICE(045,0)	//★ボイス追加演出
+	wait(15)
+//	VOICE(046,0)	//★ボイス追加演出
+
+
+//　　画面切り替えして、蒙布兰之白龙。
+//　　背後から特里斯坦号之机銃に追いたてられている状態。
+	cross_fade(15)
+	chr_pos(PLANE_R,0,-500,100,0,0)
+	chr_pos(DRAGON-W,0,3000,0,0,57)
+
+	MOT(EFFECT2, 65, 0)								//気流
+
+	CAM_move(520,-1840,880,0,0)
+	CAM(-910,162,880,40,149,0,0)
+	CAM_move(-260,-1400,0,90,0)
+	CAM(89,189,0,46,197,90,0)
+
+	chr_pos(DRAGON-W, 0,3000,-100,0,57)
+	wait(30)
+
+//	CAM_quake("46464646464646")
+	EFF_chr(6605,PLANE_R,0,100,0,"gun_eff01")	//机銃
+	EFF_chr(6605,PLANE_R,0,100,0,"gun_eff02")	//机銃
+
+//机銃SE
+	SE(1013,0)
+
+	move(DRAGON-W, 40, 30,-200,3000,-200, 0)
+	wait_move(DRAGON-W)
+	wait(15)
+	VOICE(046,0)	//★ボイス追加演出
+
+	move(DRAGON-W, 40, 30, 200,3000, 200, 0)
+//	wait_move(DRAGON-W)
+	wait(30)
+
+	move(DRAGON-W, 42, 00,0,0,0, 0)
+	chr_pos(DRAGON-W,-1,-1,-1,-1,-1)
+	chr_pos(PLANE_R, 0,-2500,0,0,0)
+	chr_pos(DRAGON-W, 0,3000,0,0,57)
+
+	//カメラ之前を通り過ぎる２机
+	CAM_move(-60,-4660,360,0,0)
+	CAM(130,89,300,29,242,0,0)
+
+	MOT(EFFECT1, 65,0)										//気流
+
+//追従エンジン音を一時消して単発エンジン音に
+	stop_attach_SE(EVENT_RAGNA)
+
+	F_set_chr(DRAGON-W, CF_MAXMOVE)
+	F_set_chr(PLANE_R,  CF_MAXMOVE)
+	chr_pos(PLANE_R,0,-2000,0,0,0)
+	move(DRAGON-W, 42, 150, 0,-10000,  00, 0)
+	move(PLANE_R,  42, 150, 0,-10000,  00, 0)
+	SE(1023,0)//ドラゴン滑空SE
+	SE(1009,0)//単発エンジンSE
+	wait_move(DRAGON-W)
+	wait_move(PLANE_R)
+
+	wait_CAM_move()
+	wait_CAM()
+
+	F_reset_chr(DRAGON-W, CF_MAXMOVE)
+	F_reset_chr(PLANE_R,  CF_MAXMOVE)
+
+	//蒙布兰アップカメラ
+	cross_fade(15)
+//	CAM_move(520,-1840,320,0,0)
+//	CAM(-150,163,320,40,157,0,0)
+	CAM_move(-200,-1940,320,0,0)
+	CAM(-110,150,320,40,195,0,0)
+	CAM_move(100,-1940,320,180,0)
+	CAM(-110,150,320,40,166,180,0)
+	chr_pos(PLANE_R, 0,-3500,800,0,0)
+	move(PLANE_R,   40, 20, 200,-2500,0,0)
+	chr_pos(DRAGON-W, 0,3000,0,0,57)
+
+	MOT(EFFECT1, 0,0)										//気流、終了
+
+	wait_fade()
+
+	look_chr(MONTBLANC, EVENT_RAGNA, "Bone_Head")
+	KAO(MONTBLANC,"C232CKZ3","2321DE","-")
+	MES(MONTBLANC,"哇啊啊啊……\n什、什么人啊喵！",0)
+	KAO(MONTBLANC,"C232CKZ4","E","-")
+	MES(MONTBLANC,"用那样的铁鸟\n来追我蒙布兰大人的\n翼龙……！",0)
+	MES_close(MONTBLANC)
+	wait_MES(MONTBLANC)
+
+//　　蒙布兰、顔之向きを変えて語りかけるような仕草。
+//	look_chr( MONTBLANC, EXE-MAXINA ,"Bone_Head" )
+	look(MONTBLANC,"Bone_Head",0,0,2,2,0,30,6)
+	wait(15)
+	chr_rename(MONTBLANC,"蒙布兰")//
+	KAO(MONTBLANC,"C232CZ3","D12321","-")
+	MES(MONTBLANC,"喂、人偶小姑娘！\n应该听的到喵！",0)
+	KAO(MONTBLANC,"C232CZ3","1","-")
+	MES(MONTBLANC,"不要在那里看\n快帮我喵！",0)
+	MES_close(MONTBLANC)
+	wait(15)
+
+	chr_rename(EXE-MAXINA,"娘之声")//
+	MES_pos(EXE-MAXINA,"C4W9……没有见过的\n操纵方法……",0,140,120,0,0)
+	wait_key(0)
+	MES_pos(EXE-MAXINA,"C4W9好象自信满满的样子\n而且只是一个人。",0,140,120,0,0)
+	wait_key(0)
+	MES_close(EXE-MAXINA)
+
+	KAO(MONTBLANC,"C232CGZ2","123332","-")
+	MES(MONTBLANC,"多、多嘴喵！",0)
+	KAO(MONTBLANC,"C232CZ4","23","-")
+	MES(MONTBLANC,"伊尔巴特附近的侵入者\n全部消灭──",0)
+	KAO(MONTBLANC,"C232CZ4","32","-")
+	MES(MONTBLANC,"忘记了那位大人的话了喵！？",0)
+	MES_close(MONTBLANC)
+
+//　　★ＢＧＭをフェードアウト。
+	stop_BGM(90)
+	wait(30)
+
+//	name("娘之声（色換え）")
+	MES_pos(EXE-MAXINA,"C4W9…………知道了。",0,140,120,0,0)
+	wait_key(0)
+	MES_close(EXE-MAXINA)
+	wait_MES(EXE-MAXINA)
+
+	wait_BGM()
+
+//　　★XR096を流し始める。
+	BGM(49)
+
+//　　ここでクロスフェードして、
+//　　離れた高ぶ置でホバリングする黒之翼龙を映す。
+//　　背中にはフードをかぶった爱克斯玛绮娜が乗っている状態。
+	cross_fade(30)
+	MOT(EFFECT2, 0,0)										//気流、終了
+	look_off( MONTBLANC )
+	color(EXE-MAXINA,1)
+	color(DRAGON-B,1)
+	chr_pos(DRAGON-B,-3000,-5000,1500,325,-1)
+	chr_pos(DRAGON-W,3000,7000,0,1,57)
+	chr_pos(PLANE_R,3000,3000,0,0,0)
+	look(MONTBLANC,"Bone_Head",0,0,30,6,0,0,0)
+//	CAM_move(-2100,1840,420,0,0)
+//	CAM(340,296,420,54,10,0,0)
+	CAM_move(-2900,4780,2080,0,0)
+	CAM(140,92,2080,30,348,0,0)
+	CAM(140,82,2080,30,348,300,0)
+	SE(1011,0)//羽ばたきSEループ
+	wait(60)
+
+	chr_rename(EXE-MAXINA,"戴帽子的女孩")//
+	KAO(EXE-MAXINA,"B","-","-")
+	MES(EXE-MAXINA,"………………………………",0)
+	KAO(EXE-MAXINA,"B232BZ3","-","-")
+	MES(EXE-MAXINA,"……去吧、噩梦龙。",0)
+	KAO(EXE-MAXINA,"B232BZ4","-","-")
+	MES(EXE-MAXINA,"让他坠落也好。\n追上干掉他也好。",0)
+	MES_close(EXE-MAXINA)
+
+//　　黒之翼龙、返事之鳴き声をあげて急降下を始める。
+	EV("EV_habataki_fadeout")//羽ばたきSEフェードアウト
+	CAM_move(-2740,4780,2080,30,0)
+	CAM(140,62,2080,46,380,30,0)
+	MOT(DRAGON-B,56,15)
+	wait(15)
+
+//	blur(1,100,15)
+//	rot(DRAGON-B,2,360)
+	jump(DRAGON-B,0,90, 800,1000,400, 0)
+	wait(30)
+	fade_in(100,30,BLACK)
+	wait_fade()
+//	blur(0,0,0)
+	wait(30)
+
+//风之音止め
+	stop_SE(51)
+//エンジン音止め
+//	stop_SE(1010)
+//	stop_attach_SE(EVENT_RAGNA)
+
+//──────────────────────────────
+//　　ドッグファイトムービー②
+//　　急降下して襲ってくる黒龙之襲撃を受けてピンチに陥るも、
+//　　インメルマンターンで形勢逆転して反撃しようとする拉古那。
+//　　しかし爱克斯玛绮娜之瞳を見て動揺し、見逃してしまう。
+//　　そこに蒙布兰之白龙が現れて特里斯坦号を撃墜し、
+//　　そ之まま伊尔巴特之一角へと墜落していく特里斯坦号。
+//　　（最後之あたりで、空が淡く夕焼けに染まり始める状態）
+//──────────────────────────────
+	load_MMV("SYS\event_02.mpg")
+	MMV()
+	wait_MMV()
+
+//夕方は無し
+//	map_color(100,80,75,0)//R,G,B, time 100%
+	look_chr( MONTBLANC, EVENT_RAGNA ,"Bone_Head" )
+	look_chr( EXE-MAXINA, EVENT_RAGNA ,"Bone_Head" )
+
+	chr_pos(DRAGON-W, 600,0,0,30,53)
+	chr_pos(DRAGON-B,-600,-400,200,340,53)
+	look(DRAGON-W,"Bone_Hips",0,0,10,0,0,0,0)
+	look(DRAGON-B,"Bone_Hips",0,0,24,0,0,0,0)
+
+	chr_pos(PLANE_R,0,2000,-1000,0,0)
+	MOT(DRAGON-W,150,0)
+	SE(1011,0)//羽ばたきSE
+	wait(10)
+	MOT(DRAGON-B,150,0)
+	color(PLANE_R,-1)
+	color(EVENT_RAGNA,-1)
+	color(RAGNA2,-1)
+
+	KAO(MONTBLANC,"1","1","-")
+	KAO(EXE-MAXINA,"B","-","-")
+
+	CAM_Roll(0,1)
+//	CAM_move(780,800,660,0,0)
+//	CAM(-270,174,660,42,126,0,0)
+	CAM_move(780,800,280,0,0)
+	CAM(50,174,280,42,126,0,0)
+	CAM_move(780,800,920,360,0)
+	CAM(-550,174,920,42,126,360,0)
+
+//　　画面、フェードインして再びス戒ボックス。
+//　　すでに太陽は落ち始め、空は淡い夕焼けに包まれている。
+//　　白龙と黒龙が、共にホバリングしているような状態。
+	fade_in(0,30,BLACK)
+	wait_fade()
+	wait(15)
+
+	SE(51,0)
+
+//	VOICE(336,0)	//★ボイス追加演出
+	VOICE(337,0)	//★ボイス追加演出
+//	VOICE(340,0)	//★ボイス追加演出
+	KAO(MONTBLANC,"12321Z3","1236","-")
+	MES(MONTBLANC,"喵哈哈哈哈！\n就这感觉喵！",0)
+	KAO(MONTBLANC,"12321Z7","6","-")
+	MES(MONTBLANC,"好象运气很好的落到伊尔巴特了\n不过在这样的高度\n应该活不下来喵！",0)
+	MES_close(MONTBLANC)
+
+	wait(15)
+//	name("戴帽子的女孩")
+	MES(EXE-MAXINA,"……………………………",0)
+	MES(EXE-MAXINA,"（……攻击停止了…………）",0)
+	MES(EXE-MAXINA,"（…………为什么…………？）",0)
+	MES_close(EXE-MAXINA)
+	wait_MES(EXE-MAXINA)
+	chr_rename(EXE-MAXINA,"爱克斯玛绮娜")//
+
+//　　★ＢＧＭをフェードアウト。
+	stop_BGM(120)
+
+//羽ばたきSEフェードアウト
+	EV("EV_habataki_fadeout")
+
+//风之音止め
+	stop_SE(51)
+
+//　　画面、ゆっくりとフェードアウト。
+	fade_in(100,60,0)
+	wait_fade()
+	wait_BGM()
+
+	//水晶峡谷祭壇マップへ(ev00600)
+	workG(GW_ENTRY_EVENT,SET,2)
+	new_map(10600)
+
+//	EV_end()
+}
+
+
+//──────────────────────────────
+//▼伊尔巴特上空で合流する
+//──────────────────────────────
+//　　画面フェードアウト抜けで、伊尔巴特上空。（ムービー？）
+//　　蒙布利亚城之威容を見下ろしながら特里斯坦が旋回。
+//　　それと同時に、別之方向から他之３机が現れ、
+//　　特里斯坦を援護するようなフォーメーションを組む。
+//　　そ之まま巨大龙卷へ針路を変え、飛び去っていく飛行机たち。
+EV_6_05_Plane4Join
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+
+		map_color(75,75,80,0);//R,G,B, time 100%
+
+	chr_pos(RAGNA,	  	0,350,0,0,2)
+	chr_pos(PARTNER,	0,0,0,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(RAGNA)
+
+
+	set_chr(PLANE_R,	 		857,-1,-1,0,0,0,  0,	0, 0,"")	//特里斯坦号
+	set_chr(PLANE_K,	 		859,-1,-1,0,0,0,  0,	0, 0,"")	//克劳德号
+	set_chr(PLANE_P,	 		858,-1,-1,0,0,0,  0,	0, 0,"")	//布库尔号
+	set_chr(PLANE_O,	 		860,-1,-1,0,0,0,  0,	0, 0,"")	//奥蒂莎号
+	set_chr(KLODE,	 			1018,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(FIONA,				1017,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(ODESSA,	  			1019,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(POCKLE,	 			1012,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(PIPIRO,	 			1013,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(LA-RAIRA,			1023,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(EVENT_RAGNA,		1014,-1,-1,0,-0,0, 2,0,0, "")
+	set_chr(ALWEN,				1011,-1,-1,0,-0,0, 2,0,0, "")
+
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+//	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+//	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+//	F_set_chr(ALWEN,CF_NO_HEIGHT)
+//	F_set_chr(ALWEN,CF_NO_ZIMEN)
+	chr_scale( EVENT_RAGNA,	"Bone_Bag",		0,0,0,	0,0);
+
+	KAO(EVENT_RAGNA,	"B","1","3")
+	KAO(ALWEN,			"B","1","3")
+	KAO(KLODE,			"B","1","3")
+	KAO(FIONA,			"B","1","3")
+	KAO(ODESSA,			"B","1","3")
+	KAO(POCKLE,			"B","1","3")
+	KAO(PIPIRO,			"B","1","3")
+	KAO(LA-RAIRA,		"1","-","-")
+
+	F_set_chr(KLODE,CF_NO_CLIP)
+	F_set_chr(KLODE,CF_NO_CLIP2)
+//	F_set_chr(KLODE,CF_NO_CSP)
+//	F_set_chr(KLODE,CF_NO_HEIGHT)
+//	F_set_chr(KLODE,CF_NO_ZIMEN)
+//	F_set_chr(KLODE,CF_MAXMOVE)
+	F_set_chr(FIONA,CF_NO_CLIP)
+	F_set_chr(FIONA,CF_NO_CLIP2)
+//	F_set_chr(FIONA,CF_NO_CSP)
+//	F_set_chr(FIONA,CF_NO_HEIGHT)
+//	F_set_chr(FIONA,CF_NO_ZIMEN)
+//	F_set_chr(FIONA,CF_MAXMOVE)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_HEIGHT)
+	F_set_chr(ODESSA,CF_NO_ZIMEN)
+	F_set_chr(POCKLE,CF_NO_CLIP)
+	F_set_chr(POCKLE,CF_NO_CLIP2)
+	F_set_chr(POCKLE,CF_NO_CSP)
+	F_set_chr(POCKLE,CF_NO_HEIGHT)
+	F_set_chr(POCKLE,CF_NO_ZIMEN)
+	F_set_chr(PIPIRO,CF_NO_CLIP)
+	F_set_chr(PIPIRO,CF_NO_CLIP2)
+	F_set_chr(PIPIRO,CF_NO_CSP)
+	F_set_chr(PIPIRO,CF_NO_HEIGHT)
+	F_set_chr(PIPIRO,CF_NO_ZIMEN)
+	F_set_chr(LA-RAIRA,CF_NO_CLIP)
+	F_set_chr(LA-RAIRA,CF_NO_CLIP2)
+	F_set_chr(LA-RAIRA,CF_NO_CSP)
+	F_set_chr(LA-RAIRA,CF_NO_HEIGHT)
+	F_set_chr(LA-RAIRA,CF_NO_ZIMEN)
+	F_set_chr(PLANE_R,CF_NO_CLIP)
+	F_set_chr(PLANE_R,CF_NO_CLIP2)
+	F_set_chr(PLANE_R,CF_NO_CSP)
+	F_set_chr(PLANE_R,CF_NO_HEIGHT)
+	F_set_chr(PLANE_R,CF_NO_ZIMEN)
+	F_set_chr(PLANE_R,CF_NO_FALL)
+	F_set_chr(PLANE_R,CF_MAXMOVE)
+	F_set_chr(PLANE_K,CF_NO_CLIP)
+	F_set_chr(PLANE_K,CF_NO_CLIP2)
+	F_set_chr(PLANE_K,CF_NO_CSP)
+	F_set_chr(PLANE_K,CF_NO_HEIGHT)
+	F_set_chr(PLANE_K,CF_NO_ZIMEN)
+	F_set_chr(PLANE_R,CF_NO_FALL)
+	F_set_chr(PLANE_K,CF_MAXMOVE)
+	F_set_chr(PLANE_P,CF_NO_CLIP)
+	F_set_chr(PLANE_P,CF_NO_CLIP2)
+	F_set_chr(PLANE_P,CF_NO_CSP)
+	F_set_chr(PLANE_P,CF_NO_HEIGHT)
+	F_set_chr(PLANE_P,CF_NO_ZIMEN)
+	F_set_chr(PLANE_P,CF_MAXMOVE)
+	F_set_chr(PLANE_O,CF_NO_CLIP)
+	F_set_chr(PLANE_O,CF_NO_CLIP2)
+	F_set_chr(PLANE_O,CF_NO_CSP)
+	F_set_chr(PLANE_O,CF_NO_HEIGHT)
+	F_set_chr(PLANE_O,CF_NO_ZIMEN)
+	F_set_chr(PLANE_O,CF_MAXMOVE)
+
+	F_set_Node(PLANE_R, "fun01", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_R, "fun02", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_K, "fun01", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_O, "fun01", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_O, "fun02", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_P, "fun01", NP_HIDE)							//ペラ非表示
+
+
+
+	MOT_SET(PLANE_R, 150,150, 0, 59, -1, 0)					//飛行
+	MOT_SET(PLANE_K, 150,150, 0, 59, -1, 0)					//飛行
+	MOT_SET(PLANE_O, 150,150, 0, 59, -1, 0)					//飛行
+	MOT_SET(PLANE_P, 150,150, 0, 59, -1, 0)					//飛行
+//	MOT_SET(PLANE_K, 151,152,320,349, -1, 10)				//右バンク
+//	MOT_SET(PLANE_K, 152,153,380,389, -1, 0)				//右→平常
+//	MOT_SET(PLANE_K, 153,154,250,279, -1, 0)				//平常→左バンク
+//	MOT_SET(PLANE_K, 154,150,400,439, -1, 0)				//左バンク→平常
+	MOT_SET(PLANE_K, 151,150,500,529, -1, 0)				//左右バンク
+
+	MOT_SET(PLANE_K, 156,157,320,349, -1, 10)				//右バンク開始
+	MOT_SET(PLANE_K, 157,157,350,379, -1, 10)				//右バンク
+
+	MOT_SET(PLANE_P, 156,157,320,349, -1, 10)				//右バンク開始
+	MOT_SET(PLANE_P, 157,157,350,379, -1, 10)				//右バンク
+	MOT_SET(PLANE_O, 156,157,320,349, -1, 10)				//右バンク開始
+	MOT_SET(PLANE_O, 157,157,350,379, -1, 10)				//右バンク
+	MOT_SET(PLANE_R, 156,157,320,349, -1, 10)				//右バンク開始
+	MOT_SET(PLANE_R, 157,157,350,379, -1, 10)				//右バンク
+
+
+	MOT_SET(KLODE,			150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(FIONA,			150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(EVENT_RAGNA,	150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(ALWEN,			150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(ODESSA,			150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(LA-RAIRA,		150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(POCKLE,			150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(PIPIRO,			150, -1, 485, 485, -1, 0)				//座り
+
+	F_set_Node(PIPIRO,   "Bone_RightSword", NP_HIDE)
+	F_set_Node(LA-RAIRA, "Bone_RightSword", NP_HIDE)
+
+	chr_equip_chr(KLODE,			PLANE_K,"isu01_Null",100,		0,0,0,	0,-40,-60);
+	chr_equip_chr(FIONA,			PLANE_K,"isu02_Null",100,		0,0,0,	0,-40,-40);
+	chr_equip_chr(EVENT_RAGNA,		PLANE_R,"isu01_Null",100,		0,0,0,	0,-40,-40);
+	chr_equip_chr(ALWEN,			PLANE_R,"isu02_Null",100,		0,0,0,	0,-40,-40);
+	chr_equip_chr(ODESSA,			PLANE_O,"isu01_Null",100,		0,0,0,	0,-60,-60);
+	chr_equip_chr(LA-RAIRA,			PLANE_O,"isu02_Null",100,		0,0,0,	0,-30,-40);
+	chr_equip_chr(POCKLE,			PLANE_P,"isu01_Null",100,		0,0,0,	0,-40,-60);
+	chr_equip_chr(PIPIRO,			PLANE_P,"isu02_Null",100,		0,0,0,	0,-40,-60);
+
+	MOT(PLANE_R, 		150, 0)
+	MOT(KLODE,			150, 0)
+	MOT(FIONA,			150, 0)
+	MOT(EVENT_RAGNA,	150, 0)
+	MOT(ALWEN, 			150, 0)
+	MOT(ODESSA,			150, 0)
+	MOT(LA-RAIRA,		150, 0)
+	MOT(PIPIRO,			150, 0)
+	MOT(POCKLE,			150, 0)
+	wait(15)
+	wait(3)		//同期ずらし
+	chr_pos(PLANE_K,    0, -2000,  1000, 0, 150)
+	wait(3)		//同期ずらし
+	chr_pos(PLANE_O, 1500, -2000,   500, 0, 150)
+	wait(3)		//同期ずらし
+	chr_pos(PLANE_P,-1500, -4000, -1000, 0, 150)
+
+	color(PLANE_K, -1)
+	color(PLANE_P, -1)
+	color(PLANE_O, -1)
+	color(LA-RAIRA, -1)
+	color(ODESSA, -1)
+	color(PIPIRO, -1)
+	color(POCKLE, -1)
+	color(KLODE, -1)
+	color(FIONA, -1)
+
+	SE(52,0)//強风SE
+	EV("EV_1160")//プロペラSE処理
+
+//	BGM(57)
+	BGM(08)
+//	CAM_move(160,-1330,-34,0,0)
+//	CAM(2330,257,-34,34,123,0,0)
+	CAM_move(180,-1370,726,0,0)
+	CAM(290,615,726,18,198,0,0)
+	CAM_move(160,70,306,200,0)
+	CAM(-30,64,306,34,271,200,0)
+	fade_in(0,90,0)
+	wait_fade()
+
+
+	wait_CAM()
+
+	color(PLANE_K,1)
+	color(PLANE_O,1)
+	color(PLANE_P,1)
+	color(LA-RAIRA, 1)
+	color(ODESSA, 1)
+	color(PIPIRO, 1)
+	color(POCKLE, 1)
+	color(KLODE, 1)
+	color(FIONA, 1)
+
+	EV("EV_MovePlaneP")
+	wait(40)
+
+
+//	CAM_move(60,-300,-114,120,0)
+	CAM_move(60,-300, 200,120,0)
+	CAM(48,287,-114,34,255,120,0)
+	wait(30)
+	KAO(ALWEN,			"B","1233321","3")
+
+	EV("EV_MovePlaneO")
+	wait(40)
+
+	EV("EV_MovePlaneK")
+	wait(30)
+	CAM_move(140,-1490,-34,150,0)
+	CAM(-32,401,-34,25,195,150,0)
+	wait(180)
+
+
+	//正面カメラ
+	cross_fade(15)
+	CAM_move(240,-1370,66,0,0)
+	CAM(-150,220,66,18,176,0,0)
+
+	chr_pos(PLANE_K, 200, 3000, 0000, 0, 150 )
+	move(PLANE_K, 42, 0, 0,0,0, 0)
+
+
+	//左右にバンクを振る
+//	look_chr(KLODE, POCKLE, "Bone_Head")
+	wait(30)
+
+	MOT(PLANE_K, 151, 0)
+	wait(40)
+	SE(1170,0)//旋回SE
+	KAO(KLODE,			"B","1233321","3")
+//	look_off(KLODE)
+
+//}
+//EV_
+//{
+
+	CAM_move(-1000,-1450,66,120,0)
+	CAM(-72,426,66,28,170,90,0)
+
+	wait(15)
+	EV("EV_MovePlaneK2")
+	wait(30)
+	EV("EV_MovePlaneO2")
+	wait(20)
+	EV("EV_MovePlaneP2")
+
+	CAM(-72,425,66,27,299,120,0)
+	wait(15)
+	wait(20)
+
+	EV_stop("EV_1160")//プロペラSE止め
+	EV_stop("EV_1160_2")//プロペラSE止め
+
+	EV("EV_MovePlaneR2")
+
+	wait(80)
+	EV("EV_52_fadeout")//強风SEフェードアウト
+	fade_in(100,60,0)
+	wait_fade()
+
+//　　布兰迪山丘（ev00701）へ。
+//	workG(GW_ENTRY_EVENT,SET,4)
+//	new_map(10701)
+
+//──────────────────────────────
+//　　以下之シーンはムービーで之想定で。
+//　　克劳德机、奥蒂莎机、布库尔机を従える特里斯坦号。
+//　　巨大龙卷が次第に近付いて来て、いよいよ作战がスタート。
+//　　特里斯坦号之道を切り開くため
+//　　他之３机がエンジンを震わせて先行してゆく。
+//　　乗っていた拉莱拉、菲奥娜、皮皮洛が魔法を発動させ、
+//　　それぞれ之魔力が膨れ上がった上で、巨大な魔法弾と化す。
+//　　３つ之魔法弾、回転方向とは反対之ベクトルから、
+//　　龙卷之一点に向けてそれぞれぶち当たり、綻びを生み出す。
+//　　それに目掛けて、一気に突っ込んでいく特里斯坦号。
+//　　しかし綻びはすぐに戻り、翻弄されそうになる特里斯坦。
+//　　ここで艾雯之光·闇·地·水·火·风之魔法が発動。
+//　　七色之結界となって特里斯坦号を包み込む。
+//　　そ之まま一気に龙卷之中を突き抜けてゆく特里斯坦号。
+//　　そして龙卷を抜けた所で、螺旋要塞梅尔塞迪克が現れる。
+//　　特里斯坦号、龙卷之内壁と螺旋要塞之间を旋回しながら、
+//　　そ之ままゆっくりと画面フェードアウト。
+//──────────────────────────────
+
+	load_MMV("SYS\ins_02.mpg")
+	MMV()
+	wait_MMV()
+
+	stop_BGM(120)
+	wait_BGM()
+	wait(60)
+
+	delete(PLANE_K)
+	delete(PLANE_P)
+	delete(PLANE_R)
+	delete(PLANE_O)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(ODESSA)
+	delete(LA-RAIRA)
+	delete(PIPIRO)
+	delete(POCKLE)
+
+//　　要塞－入口（ev80100）へ。
+//	workG(GW_DEF_BGM,SET,99)		//デフォルト曲を無音
+	workG(GW_DEF_BGM,SET,51)		//デフォルト曲を変更
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(18010)
+
+
+}
+
+
+//克劳德机
+EV_MovePlaneK
+{
+	move(PLANE_K, 40, 80, 200, 2500,  600, 00)
+	wait(50)
+	move(PLANE_K, 40, 40, 200, 2700,  200, 00)
+	wait(30)
+	move(PLANE_K, 40, 20, 200, 3000, 0000, 00)
+	wait_move(PLANE_K)
+}
+
+//布库尔机
+EV_MovePlaneP
+{
+	move(PLANE_P, 40, 80,-1500, 1300,  700, 00)
+	wait(40)
+	move(PLANE_P, 40, 40,-1500, 1600,  500, 00)
+	wait(20)
+	move(PLANE_P, 40, 20,-1500, 1800, 0250, 00)
+	wait_move(PLANE_P)
+}
+
+//奥蒂莎机
+EV_MovePlaneO
+{
+	move(PLANE_O, 40, 80, 1500, 0800,  000, 0)
+	wait(35)
+	move(PLANE_O, 40, 40, 1500, 1100,  000, 0)
+	wait(20)
+	move(PLANE_O, 40, 20, 1500, 1300, 0000, 0)
+	wait_move(PLANE_O)
+}
+
+//克劳德机
+EV_MovePlaneK2
+{
+	MOT(PLANE_K, 156, 0)
+	move(PLANE_K, 42, 20, -9000, -4000, 4000, 0 )
+	wait(10)
+	move(PLANE_K, 42, 50, -9000, -5000, 4000, 0 )
+	wait(10)
+	move(PLANE_K, 42,100, -9000, -6000, 4000, 0 )
+	wait(10)
+	move(PLANE_K, 42,150, -9000, -8000, 4000, 0 )
+	SE(1170,0)//旋回SE
+	wait_move(PLANE_K)
+}
+
+//布库尔机
+EV_MovePlaneP2
+{
+
+	MOT(PLANE_P, 156, 0)
+	move(PLANE_P, 42, 20, -9000, -4000, 4000, 0 )
+	wait(10)
+	move(PLANE_P, 42, 50, -9000, -5000, 4000, 0 )
+	wait(10)
+	move(PLANE_P, 42,100, -9000, -8000, 4000, 0 )
+	wait(10)
+	move(PLANE_P, 42,150, -9000,-10000, 4000, 0 )
+	wait_move(PLANE_P)
+}
+
+//奥蒂莎机
+EV_MovePlaneO2
+{
+	rot(PLANE_O, 10, 20)
+	MOT(PLANE_O, 156, 0)
+	move(PLANE_O, 42, 20, -9000, -4000, 4000, 0 )
+	wait(10)
+	move(PLANE_O, 42, 50, -9000, -5000, 4000, 0 )
+	wait(10)
+	move(PLANE_O, 42,100, -9000, -6000, 4000, 0 )
+	wait(10)
+	move(PLANE_O, 42,150, -9000,-10000, 4000, 0 )
+	wait_move(PLANE_O)
+}
+
+//拉古那机
+EV_MovePlaneR2
+{
+//	ベイパーテスト。长くなってくれない
+//	set_chr(VAPER_R_R1,  749, -1,-1, 0,0,0,0,0,0,"")
+//	set_chr(VAPER_R_L1,  749, -1,-1, 0,0,0,0,0,0,"")
+//	chr_equip_chr(VAPER_R_R1, PLANE_R,"R1_b_null",100,	0,0,0,	0,0,0);
+//	chr_equip_chr(VAPER_R_L1, PLANE_R,"L1_b_null",100,	0,0,0,	0,0,0);
+//	EFF_chr(1218, PLANE_R, 0, 100, VAPER_R_R1, "R1_a_null" );
+//	EFF_chr(1218, PLANE_R, 0, 100, VAPER_R_L1, "L1_a_null" );
+	
+	rot(PLANE_R, 10, 20)
+	MOT(PLANE_R, 156, 0)
+	move(PLANE_R, 42, 20, -9000, -4000, 4000, 0 )
+	wait(10)
+	move(PLANE_R, 42, 50, -9000, -8000, 4000, 0 )
+	SE(1165,0)//旋回SE
+	wait(10)
+	move(PLANE_R, 42,100, -9000,-10000, 4000, 0 )
+	wait(10)
+	move(PLANE_R, 42,150, -9000,-10000, 4000, 0 )
+	wait_move(PLANE_R)
+}
+
+
+
+
+//──────────────────────────────
+//▼ダミー処理
+//──────────────────────────────
+EV_4_12_JoinAlwen_End
+{
+	EV_begin()
+
+//	fade_in(0,60,0)
+//	wait_fade()
+	chr_pos(RAGNA,	  	0,350,0,0,2)
+	chr_pos(PARTNER,	0,0,0,0,2)
+	F_set_chr(RAGNA, CF_NO_ZIMEN)
+	F_set_chr(RAGNA, CF_NO_HEIGHT)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(RAGNA)
+	wait(1)
+	workG(GW_ENTRY_EVENT,SET,3)
+	new_map(10401)
+}
+
+//──────────────────────────────
+//▼ダミー処理
+//──────────────────────────────
+EV_5_08_BattleSky_End
+{
+	EV_begin()
+
+
+	chr_pos(RAGNA,	  	0,350,0,0,2)
+	chr_pos(PARTNER,	0,0,0,0,2)
+	F_set_chr(RAGNA, CF_NO_ZIMEN)
+	F_set_chr(RAGNA, CF_NO_HEIGHT)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(RAGNA)
+	wait(1)
+	workG(GW_ENTRY_EVENT,SET,2)
+	new_map(10601)
+}
+
+/*
+//──────────────────────────────
+//▼ダミー処理
+//──────────────────────────────
+EV_5_13_VSFakeAlwenBattle
+{
+	workG(GW_ENTRY_EVENT,SET,2)
+	new_map(17019)
+}
+*/
+
+//羽ばたきSEフェードアウト処理
+EV_habataki_fadeout
+{
+	SE_vol(1011,100,0)
+	wait(1)
+	SE_vol(1011,99,0)
+	wait(1)
+	SE_vol(1011,98,0)
+	wait(1)
+	SE_vol(1011,97,0)
+	wait(1)
+	SE_vol(1011,96,0)
+	wait(1)
+	SE_vol(1011,95,0)
+	wait(1)
+	SE_vol(1011,94,0)
+	wait(1)
+	SE_vol(1011,93,0)
+	wait(1)
+	SE_vol(1011,92,0)
+	wait(1)
+	SE_vol(1011,91,0)
+	wait(1)
+	SE_vol(1011,90,0)
+	wait(1)
+	SE_vol(1011,89,0)
+	wait(1)
+	SE_vol(1011,88,0)
+	wait(1)
+	SE_vol(1011,87,0)
+	wait(1)
+	SE_vol(1011,86,0)
+	wait(1)
+	SE_vol(1011,85,0)
+	wait(1)
+	SE_vol(1011,84,0)
+	wait(1)
+	SE_vol(1011,83,0)
+	wait(1)
+	SE_vol(1011,82,0)
+	wait(1)
+	SE_vol(1011,81,0)
+	wait(1)
+	SE_vol(1011,80,0)
+	wait(1)
+	SE_vol(1011,79,0)
+	wait(1)
+	SE_vol(1011,78,0)
+	wait(1)
+	SE_vol(1011,77,0)
+	wait(1)
+	SE_vol(1011,76,0)
+	wait(1)
+	SE_vol(1011,75,0)
+	wait(1)
+	SE_vol(1011,74,0)
+	wait(1)
+	SE_vol(1011,73,0)
+	wait(1)
+	SE_vol(1011,72,0)
+	wait(1)
+	SE_vol(1011,71,0)
+	wait(1)
+	SE_vol(1011,70,0)
+	wait(1)
+	SE_vol(1011,69,0)
+	wait(1)
+	SE_vol(1011,68,0)
+	wait(1)
+	SE_vol(1011,67,0)
+	wait(1)
+	SE_vol(1011,66,0)
+	wait(1)
+	SE_vol(1011,65,0)
+	wait(1)
+	SE_vol(1011,64,0)
+	wait(1)
+	SE_vol(1011,63,0)
+	wait(1)
+	SE_vol(1011,62,0)
+	wait(1)
+	SE_vol(1011,61,0)
+	wait(1)
+	SE_vol(1011,60,0)
+	wait(1)
+	SE_vol(1011,59,0)
+	wait(1)
+	SE_vol(1011,58,0)
+	wait(1)
+	SE_vol(1011,57,0)
+	wait(1)
+	SE_vol(1011,56,0)
+	wait(1)
+	SE_vol(1011,55,0)
+	wait(1)
+	SE_vol(1011,54,0)
+	wait(1)
+	SE_vol(1011,53,0)
+	wait(1)
+	SE_vol(1011,52,0)
+	wait(1)
+	SE_vol(1011,51,0)
+	wait(1)
+	SE_vol(1011,50,0)
+	wait(1)
+	SE_vol(1011,49,0)
+	wait(1)
+	SE_vol(1011,48,0)
+	wait(1)
+	SE_vol(1011,47,0)
+	wait(1)
+	SE_vol(1011,46,0)
+	wait(1)
+	SE_vol(1011,45,0)
+	wait(1)
+	SE_vol(1011,44,0)
+	wait(1)
+	SE_vol(1011,43,0)
+	wait(1)
+	SE_vol(1011,42,0)
+	wait(1)
+	SE_vol(1011,41,0)
+	wait(1)
+	SE_vol(1011,40,0)
+	wait(1)
+	SE_vol(1011,39,0)
+	wait(1)
+	SE_vol(1011,38,0)
+	wait(1)
+	SE_vol(1011,37,0)
+	wait(1)
+	SE_vol(1011,36,0)
+	wait(1)
+	SE_vol(1011,35,0)
+	wait(1)
+	SE_vol(1011,34,0)
+	wait(1)
+	SE_vol(1011,33,0)
+	wait(1)
+	SE_vol(1011,32,0)
+	wait(1)
+	SE_vol(1011,31,0)
+	wait(1)
+	SE_vol(1011,30,0)
+	wait(1)
+	SE_vol(1011,29,0)
+	wait(1)
+	SE_vol(1011,28,0)
+	wait(1)
+	SE_vol(1011,27,0)
+	wait(1)
+	SE_vol(1011,26,0)
+	wait(1)
+	SE_vol(1011,25,0)
+	wait(1)
+	SE_vol(1011,24,0)
+	wait(1)
+	SE_vol(1011,23,0)
+	wait(1)
+	SE_vol(1011,22,0)
+	wait(1)
+	SE_vol(1011,21,0)
+	wait(1)
+	SE_vol(1011,20,0)
+	wait(1)
+	SE_vol(1011,19,0)
+	wait(1)
+	SE_vol(1011,18,0)
+	wait(1)
+	SE_vol(1011,17,0)
+	wait(1)
+	SE_vol(1011,16,0)
+	wait(1)
+	SE_vol(1011,15,0)
+	wait(1)
+	SE_vol(1011,14,0)
+	wait(1)
+	SE_vol(1011,13,0)
+	wait(1)
+	SE_vol(1011,12,0)
+	wait(1)
+	SE_vol(1011,11,0)
+	wait(1)
+	SE_vol(1011,10,0)
+	wait(1)
+	SE_vol(1011,9,0)
+	wait(1)
+	SE_vol(1011,8,0)
+	wait(1)
+	SE_vol(1011,7,0)
+	wait(1)
+	SE_vol(1011,6,0)
+	wait(1)
+	SE_vol(1011,5,0)
+	wait(1)
+	SE_vol(1011,4,0)
+	wait(1)
+	SE_vol(1011,3,0)
+	wait(1)
+	SE_vol(1011,2,0)
+	wait(1)
+	stop_SE(1011)
+}
+
+//プロペラSE処理
+EV_1160
+{
+	SE(1160,0)
+	wait(27)
+	EV("EV_1160_2")
+}
+EV_1160_2
+{
+	SE(1160,0)
+	wait(27)
+	EV("EV_1160")
+}
+
+EV_52_fadeout
+{
+	SE_vol(52,100,0)
+	wait(1)
+	SE_vol(52,99,0)
+	wait(1)
+	SE_vol(52,98,0)
+	wait(1)
+	SE_vol(52,97,0)
+	wait(1)
+	SE_vol(52,96,0)
+	wait(1)
+	SE_vol(52,95,0)
+	wait(1)
+	SE_vol(52,94,0)
+	wait(1)
+	SE_vol(52,93,0)
+	wait(1)
+	SE_vol(52,92,0)
+	wait(1)
+	SE_vol(52,91,0)
+	wait(1)
+	SE_vol(52,90,0)
+	wait(1)
+	SE_vol(52,89,0)
+	wait(1)
+	SE_vol(52,88,0)
+	wait(1)
+	SE_vol(52,87,0)
+	wait(1)
+	SE_vol(52,86,0)
+	wait(1)
+	SE_vol(52,85,0)
+	wait(1)
+	SE_vol(52,84,0)
+	wait(1)
+	SE_vol(52,83,0)
+	wait(1)
+	SE_vol(52,82,0)
+	wait(1)
+	SE_vol(52,81,0)
+	wait(1)
+	SE_vol(52,80,0)
+	wait(1)
+	SE_vol(52,79,0)
+	wait(1)
+	SE_vol(52,78,0)
+	wait(1)
+	SE_vol(52,77,0)
+	wait(1)
+	SE_vol(52,76,0)
+	wait(1)
+	SE_vol(52,75,0)
+	wait(1)
+	SE_vol(52,74,0)
+	wait(1)
+	SE_vol(52,73,0)
+	wait(1)
+	SE_vol(52,72,0)
+	wait(1)
+	SE_vol(52,71,0)
+	wait(1)
+	SE_vol(52,70,0)
+	wait(1)
+	SE_vol(52,69,0)
+	wait(1)
+	SE_vol(52,68,0)
+	wait(1)
+	SE_vol(52,67,0)
+	wait(1)
+	SE_vol(52,66,0)
+	wait(1)
+	SE_vol(52,65,0)
+	wait(1)
+	SE_vol(52,64,0)
+	wait(1)
+	SE_vol(52,63,0)
+	wait(1)
+	SE_vol(52,62,0)
+	wait(1)
+	SE_vol(52,61,0)
+	wait(1)
+	SE_vol(52,60,0)
+	wait(1)
+	SE_vol(52,59,0)
+	wait(1)
+	SE_vol(52,58,0)
+	wait(1)
+	SE_vol(52,57,0)
+	wait(1)
+	SE_vol(52,56,0)
+	wait(1)
+	SE_vol(52,55,0)
+	wait(1)
+	SE_vol(52,54,0)
+	wait(1)
+	SE_vol(52,53,0)
+	wait(1)
+	SE_vol(52,52,0)
+	wait(1)
+	SE_vol(52,51,0)
+	wait(1)
+	SE_vol(52,50,0)
+	wait(1)
+	SE_vol(52,49,0)
+	wait(1)
+	SE_vol(52,48,0)
+	wait(1)
+	SE_vol(52,47,0)
+	wait(1)
+	SE_vol(52,46,0)
+	wait(1)
+	SE_vol(52,45,0)
+	wait(1)
+	SE_vol(52,44,0)
+	wait(1)
+	SE_vol(52,43,0)
+	wait(1)
+	SE_vol(52,42,0)
+	wait(1)
+	SE_vol(52,41,0)
+	wait(1)
+	SE_vol(52,40,0)
+	wait(1)
+	SE_vol(52,39,0)
+	wait(1)
+	SE_vol(52,38,0)
+	wait(1)
+	SE_vol(52,37,0)
+	wait(1)
+	SE_vol(52,36,0)
+	wait(1)
+	SE_vol(52,35,0)
+	wait(1)
+	SE_vol(52,34,0)
+	wait(1)
+	SE_vol(52,33,0)
+	wait(1)
+	SE_vol(52,32,0)
+	wait(1)
+	SE_vol(52,31,0)
+	wait(1)
+	SE_vol(52,30,0)
+	wait(1)
+	SE_vol(52,29,0)
+	wait(1)
+	SE_vol(52,28,0)
+	wait(1)
+	SE_vol(52,27,0)
+	wait(1)
+	SE_vol(52,26,0)
+	wait(1)
+	SE_vol(52,25,0)
+	wait(1)
+	SE_vol(52,24,0)
+	wait(1)
+	SE_vol(52,23,0)
+	wait(1)
+	SE_vol(52,22,0)
+	wait(1)
+	SE_vol(52,21,0)
+	wait(1)
+	SE_vol(52,20,0)
+	wait(1)
+	SE_vol(52,19,0)
+	wait(1)
+	SE_vol(52,18,0)
+	wait(1)
+	SE_vol(52,17,0)
+	wait(1)
+	SE_vol(52,16,0)
+	wait(1)
+	SE_vol(52,15,0)
+	wait(1)
+	SE_vol(52,14,0)
+	wait(1)
+	SE_vol(52,13,0)
+	wait(1)
+	SE_vol(52,12,0)
+	wait(1)
+	SE_vol(52,11,0)
+	wait(1)
+	SE_vol(52,10,0)
+	wait(1)
+	SE_vol(52,9,0)
+	wait(1)
+	SE_vol(52,8,0)
+	wait(1)
+	SE_vol(52,7,0)
+	wait(1)
+	SE_vol(52,6,0)
+	wait(1)
+	SE_vol(52,5,0)
+	wait(1)
+	SE_vol(52,4,0)
+	wait(1)
+	SE_vol(52,3,0)
+	wait(1)
+	SE_vol(52,2,0)
+	wait(1)
+	stop_SE(52)
+}
+
+
+
+//---------------------------------------------------------------------
+//异次元、真帝嘉鲁德战から之接続
+//奥蒂莎をパーティからはずすためにマップ切り替えをはさむ
+EV_5_18_KillOverDygaldEnd
+{
+	chr_pos(RAGNA,	  	0,350,0,0,2)
+	chr_pos(PARTNER,	0,0,0,0,2)
+	F_set_chr(RAGNA, CF_NO_ZIMEN)
+	F_set_chr(RAGNA, CF_NO_HEIGHT)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(RAGNA)
+	//パーティから奥蒂莎をはずすため、ダミーマップへ一度飛ぶ
+	wait(1)
+	workG(GW_ENTRY_EVENT,SET,2)
+	new_map(17029)
+}
+
+//嘉鲁卡利昂を倒した後からイベントへ接続（ボススクリプトによるカメラ不具合を回避）
+EV_4_15_KillBoss5Start
+{
+	stop_BGM(0)
+	chr_pos(RAGNA,	  	0,350,0,0,2)
+	chr_pos(PARTNER,	0,0,0,0,2)
+	F_set_chr(RAGNA, CF_NO_ZIMEN)
+	F_set_chr(RAGNA, CF_NO_HEIGHT)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(RAGNA)
+	wait(1)
+	workG(GW_ENTRY_EVENT,SET,3)
+	new_map(16099)
+}
+
+
+
+//---------------------------------------------------------------------
+// ２週目引继ぎ処理
+//---------------------------------------------------------------------
+//
+//	○トレジャーボーナス
+//		トレジャー獲得％によって、スタート時に持っているアイテムが変わる。
+//	00％～49％	：１列目之フードを一つずつ、計11個
+//	50％～74％	：２列目之フードを一つずつ、計11個
+//	75％～99％	：３列目之フードを一つずつ、計11個
+//	100％		：４列目之フードを一つずつ、計11個
+//
+//
+//	○ハンターランクボーナス
+//		最終ハンターランクによって、スタート時に持っているお金が変わる。
+//
+//	０：ノーマルハンター（初期状態）	0-2		
+//	１：ダンジョンハンター補佐			3-5		
+//	２：ダンジョンハンター				6		
+//	３：ワイルドハンター補佐			9      	
+//	４：ワイルドハンター				12		
+//	５：ベテランハンター補佐			15      
+//	６：ベテランハンター				18		
+//	７：ゴージャスハンター補佐			21      
+//	８：ゴージャスハンター				24		
+//	９：スペシャルハンター補佐			27      	1000//念之ため
+//	10：スペシャルハンター				30			1万//最低クリア時之ランク
+//	11：ビューティハンター補佐			33      	5万
+//	12：ビューティハンター				36			10万
+//	13：マーベラスハンター補佐			39      	20万
+//	14：マーベラスハンター				42      	50万
+//	15：アルティメットハンター			45      	200万
+//	16：伝説之赤毛（コンプリート）		48			1000万
+//
+//
+//	○人物メモ＆魔物メモ
+//		人物情報と魔物情報が全て引き继げる。
+//
+//	○ペット之経験値
+//		入手した時点で以前之レベル之ペットを使用可能。
+//
+//	○モンスター手办
+//		全て之手办之入手情報が引き继がれる。
+//
+//	○音楽ＣＤ
+//		入手済み之音楽ＣＤが引き继げる。
+//
+//	○嘉兰多之馆之机能（スクリプト之範疇）
+//		全て之ゲーム机が開放されている。
+//		全て之手办馆が開放されている。
+//		斗技场で前回入手していたアイテムが初めから貰える。
+//
+//---------------------------------------------------------------------
+//    ※具体的には以下之フラグを引き继ぐ※
+/*
+	//人物メモ				1600-1999
+	//CD交換した			2480-2499
+	//敵倒した				2500-2699
+	//手办ＧＥＴ		2700-2899
+
+	#FV_FF_WinGyarandow	1585	//★斗技场で嘉兰多に勝った
+	#FV_FF_WinPenguin	1586	//★斗技场でペンギンに勝った
+	#FV_FF_WinMaurice	1587	//★斗技场で莫里斯に勝った
+	#FV_FF_WinOdessa	1588	//★斗技场で奥蒂莎に勝った
+	#FV_FF_WinPockle	1589	//★斗技场で布库尔に勝った
+	#FV_FF_WinPipiro	1590	//★斗技场で皮皮洛に勝った
+	#FV_FF_WinSubaru	1591	//★斗技场で昴に勝った
+	#FV_FF_WinFiona		1592	//★斗技场で菲奥娜に勝った
+	#FV_FF_WinKlode		1593	//★斗技场で克劳德に勝った
+	#FV_FF_FBTalkLotte	1596	//★斗技场に初挑战する時之露缇と之会話
+	#FE_FF_TkGyarandowF	1539	//★馆内嘉兰多·初回会話
+
+	※FV_02_VisitGyakataが立っている際、以下之フラグをたてて引き继ぎます。		（FV_02_VisitGyakata自体は初期化）
+
+	#FV_FF_Gyakata2		1599	//★斗技场·２週目処理（１週目で斗技场に行っているとは限らない之で）
+
+	※こ之他、ペット之経験値が引き继がれます。
+*/
+//---------------------------------------------------------------------
+EV_6_17_GameClear_to2
+{
+
+	EV_begin()
+
+	//初期化処理------------------------------------------
+	//◆上記以外之フラグをリセット
+	//GW_HUNTER_RANK、GW_TREASURE、ペット之経験値は残しておく。
+
+//	F_reset(0000-1599)...
+//	F_reset(0000-1599)...
+//	F_reset(0000-1599)...
+//	F_reset(0000-1599)...
+
+
+	//◆経験値を初期化
+	//◆所持アイテムを初期化
+	//◆各種ワークをを初期化
+	//※レベルはクリアデータに表示されてしまう之で、ここでは初期化しない。
+	//　ゲーム開始時に１に強制設定します。
+	//プレイ時間もここでは初期化しません。
+
+	//斗技场·２週目処理フラグを立てる。
+	if(FV_02_VisitGyakata)
+	{
+		system_chack(99)	// ２週目引继ぎ用初期化
+		F_reset(FV_02_VisitGyakata)
+		F_set(FV_FF_Gyakata2)
+	}
+	else
+	{
+		system_chack(99)	// ２週目引继ぎ用初期化
+	}
+
+	//ＧＦ『★ＺｗｅｉⅡをクリアした』を立てる。
+	F_set(F6_11_GameClear)
+
+	//クリアデータ用フラグを立てる。
+	F_set(F6_14_ClearData)//★クリアデータ用フラグ（２週目を始めるとクリアされる）
+
+
+	//引继ぎ処理------------------------------------------
+	//◆トレジャー寄贈に応じてご褒美をセット。
+
+	if(GW_TREASURE<24)
+	{
+		get_item(160,1,1)
+		get_item(164,1,1)
+		get_item(168,1,1)
+		get_item(172,1,1)
+		get_item(176,1,1)
+		get_item(180,1,1)
+		get_item(184,1,1)
+		get_item(188,1,1)
+		get_item(192,1,1)
+		get_item(196,1,1)
+		get_item(200,1,1)
+	}
+	else
+	if(GW_TREASURE<36)
+	{
+		get_item(161,1,1)
+		get_item(165,1,1)
+		get_item(169,1,1)
+		get_item(173,1,1)
+		get_item(177,1,1)
+		get_item(181,1,1)
+		get_item(185,1,1)
+		get_item(189,1,1)
+		get_item(193,1,1)
+		get_item(197,1,1)
+		get_item(201,1,1)
+	}
+	else
+	if(GW_TREASURE<48)				//パッチ 2008/09/22 47 -> 48 変更
+	{
+		get_item(162,1,1)
+		get_item(166,1,1)
+		get_item(170,1,1)
+		get_item(174,1,1)
+		get_item(178,1,1)
+		get_item(182,1,1)
+		get_item(186,1,1)
+		get_item(190,1,1)
+		get_item(194,1,1)
+		get_item(198,1,1)
+		get_item(202,1,1)
+	}
+	else
+	{
+		get_item(163,1,1)
+		get_item(167,1,1)
+		get_item(171,1,1)
+		get_item(175,1,1)
+		get_item(179,1,1)
+		get_item(183,1,1)
+		get_item(187,1,1)
+		get_item(191,1,1)
+		get_item(195,1,1)
+		get_item(199,1,1)
+		get_item(203,1,1)
+	}
+
+	//◆ハンターランクに応じてご褒美をセット。
+
+	if(GW_HUNTER_RANK<10)
+		get_gold(1000,RAGNA)
+	else
+	if(GW_HUNTER_RANK<11)
+		get_gold(10000,RAGNA)
+	else
+	if(GW_HUNTER_RANK<12)
+		get_gold(50000,RAGNA)
+	else
+	if(GW_HUNTER_RANK<13)
+		get_gold(100000,RAGNA)
+	else
+	if(GW_HUNTER_RANK<14)
+		get_gold(200000,RAGNA)
+	else
+	if(GW_HUNTER_RANK<15)
+		get_gold(500000,RAGNA)
+	else
+	if(GW_HUNTER_RANK<16)
+	{
+//		get_gold(2000000,RAGNA)
+		//一度に高額之取得は出来ないため
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//10
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//20
+	}
+	else
+	{
+//		get_gold(10000000,RAGNA)
+		//一度に高額之取得は出来ないため
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//10
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//20
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//30
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//40
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//50
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//60
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//70
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//80
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//90
+		get_gold(500000,RAGNA)
+		get_gold(500000,RAGNA)	//100
+	}
+
+	//※済みません。これを忘れていました。
+
+	//◆手办アイテムゲット。
+//	if(手办フラグ１個でも立ってたら)		アイテムとして手办ゲット。
+//	141	モンスター手办 IT13	10 	124	0	------ 	0	0	0	0	魔物が落としていった手办。\nどこか之场所に並べられるらしい。//敵が落としていった手办。\nどこかに陳列されるらしい。（西）
+
+
+	//◆音楽ＣＤアイテムゲット。
+//	if(ＣＤフラグ１個でも立ってたら)			アイテムとして音楽ＣＤゲット。
+//	142	音楽ＣＤ		IT14	10 	125	0		------ 	0	0	0	0	色々な音楽之ＣＤ。専用之ガジェットを使って楽しもう。//どこか別之世界之ＣＤ。聴くためにはガジェットが必要。（西）
+
+
+
+	//◆GW_HUNTER_RANK初期化。
+	//◆GW_TREASURE初期化。
+
+	workG(GW_HUNTER_RANK,SET,0)
+	workG(GW_TREASURE,SET,0)
+
+	//--------------セーブ処理----------------------
+	menu(1,		3,	206,170,0,	228,110,	-20,0,0)
+	menuTXT(1,	"",	20,GREEN)
+	menuEVENT(1,"0","0","0")
+
+	menu(2,		3,	222,190,0,	196,30,		-20,0,0)
+	menuTXT(2,	"■クリアデータをセーブする",	20,GREEN)
+	menuEVENT(2,"EV_SAVE_ON","EV_SAVE_OFF","")
+
+	menu(3,		3,	222,230,0,	196,30,		-20,0,0)
+	menuTXT(3,	"■セーブしない",	20,GREEN)
+	menuEVENT(3,"EV_SAVE_OFF","EV_SAVE_OFF","")
+
+//	name("システムメッセージ")
+	MES_pos(0,"C3このクリアデータをロードすることにより、\n一部のデータを引き継いだ状態で、\n物語の始めからプレーする事ができます。\nまた各種追加要素も遊べるようになります。",2,172,296,300,100)
+
+	wait_W(WK_YESNO)
+
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(2,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(3,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	wait_menu(1)
+
+	MES_close(0)
+
+	if(WK_YESNO==2)
+	{
+	}
+	else
+	if(WK_YESNO==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,1)//クリアデータ。"EV_0_00_Opening"から再開できる。
+		shop_open(-1)
+		wait_W(WK_YESNO)
+	}
+	workG(GW_ENTRY_EVENT,SET,0)
+	wait(30)
+
+	EV_end()
+
+	fade_in(0,1,0)
+	wait_fade()
+
+	title()
+
+}
+
+EV_SAVE_ON
+{
+	workL(WK_YESNO,SET,1)
+}
+EV_SAVE_OFF
+{
+	workL(WK_YESNO,SET,2)
+}
+
+
+
+
+#EndScriptTable
+//====================================================================
+

@@ -1,0 +1,504 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僲乕僩儞惍旛堳乮怑恖乯Norton")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_NORTON
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(NORTON, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,NORTON)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,NORTON)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NORTON)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NORTON)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NORTON)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NORTON)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,NORTON)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_05_EndSixth )
+	{
+		//儌乕僔儑儞
+		MOT_SET(NORTON,150,-1,544,544,151,15)	//僲乕僩儞
+		MOT_SET(NORTON,151,-1,546,546,150,15)	//僲乕僩儞
+
+		rot_chr(NORTON,30,PLAYER1)
+		if(!F_NORTON)
+		{
+		//丂丂仸岺朳恀傫拞偁偨傝偱丄僐儕儞偲榖偟偰偄傞丅
+		//	name("僲乕僩儞")
+			MOT(NORTON,150,15)
+			MES(NORTON,"喲，是你們啊。",0)
+			MES(NORTON,"那個正在見習的孩子\n問了我好多問題。",0)
+			MES(NORTON,"嗯，看來那孩子\n相當熱衷呢。",0)
+			MES(NORTON,"而且資質也不錯……\n呵呵，他已經成為\n將來的希望了。",0)
+			MES_close(NORTON)
+
+			F_set(NORTON)
+			MOT(NORTON,53,15)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("僲乕僩儞")
+			MES(NORTON,"大家都在\n跑道上呢。",0)
+			MES(NORTON,"米莉安用一個晚上\n整修了你的機體。",0)
+			MES(NORTON,"記住不要忘帶東西。\n……一路保重。",0)
+			MES_close(NORTON)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儊儖僙僨僋撍擖慜偼僆僨僢僒婡偺嬤偔偵偄傞丅
+	//丂丂丂僼儔僌嘊偺弶夞傪尒偰偄傞偲丄僆僨僢僒婡偺梼偺忋偵數偑攝抲偝傟傞丅
+	//丂丂仸僼儔僌嘊偺弶夞傪尒偰傞応崌偺傒丄弶夞僀儀儞僩
+	//丂丂丂尒偰偄側偄応崌偼丄棳偟偰捠忢儊僢僙乕僕傪昞帵偟傑偡丅
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(NORTON,30,PLAYER1)
+
+		MOT_SET(NORTON,152,-1,538,538,-1,0)
+		MOT(NORTON,152,15)
+
+		if(!F6_02_OnMeru)
+		{
+			if(FT_03_TalkNorton && !FT_12_TalkNorton)
+			{
+				
+			//	name("僲乕僩儞")
+				MES(NORTON,"奧迪莎小姐的機體\n正在加油。",0)
+				MES(NORTON,"馬上就完成了，\n不要擔心。",0)
+				MES(NORTON,"另外……",0)
+				MES_close(NORTON)
+
+			//丂丂僲乕僩儞丄偼偲偵怳傝曉傞丅
+			//	name("僲乕僩儞")
+				MES(NORTON,"這傢伙\n最近也在幫我幹活。",0)
+				MES(NORTON,"能察看飛機的狀態，\n還能幫我拿零件。",0)
+				MES_close(NORTON)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哎，這樣啊。\n這傢伙很聰明啊……",0)
+					MES_close(RAGNA)
+				}
+				//	name("佀傾儖僂僃儞愭摢")
+				else
+				{
+					MES(PARTNER,"唔，看來這傢伙\n確實很講人情呢。",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				
+			//	name("僲乕僩儞")
+				MES(NORTON,"嗯，也難得。\n就給他起個名字吧。",0)
+				MES_close(NORTON)
+
+			//丂丂僲乕僩儞偵偟偽傜偔丒丒丒僄儌乕僔儑儞丅
+				EMO(NORTON,EMO_TENTEN)
+				wait(30)
+
+			//	name("僲乕僩儞")
+				MES(NORTON,"……叫「鴿子」怎麼樣。",0)
+				MES_close(NORTON)
+
+			//	name2(RAGNA)
+				MES_pos(RAGNA,"根本沒變啊！？",0,0,0,0,0)
+				MES_pos(PARTNER,"W1本來就是這樣吧！！",0,0,0,0,0)
+				wait_key(0)
+				MES_close(RAGNA)
+				MES_close(PARTNER)
+
+			//丂丂僲乕僩儞丄傾僙傾僙偱怳傝曉傞丅
+				EMO(NORTON,EMO_ASEASE)
+				wait(30)
+
+			//	name("僲乕僩儞")
+				MES(NORTON,"咦？　不行嗎……？",0)
+				MES_close(NORTON)
+
+			//丂丂埲崀丄僜儘儌儞儕儞僌偱數偵榖偟偐偗傞偲丄柤慜偑亀傐偭傐亁偵側傞丅
+				chr_rename(POPPO,"鴿子")//		
+				//仛僲乕僩儞亂僱乕儈儞僌僙儞僗亃
+				F_set_note(NORTON,2)
+				F_set(FT_12_TalkNorton)
+
+				MOT(NORTON,150,15)
+			}
+			else
+			{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂仸儊儖僙僨僋撍擖慜偺捠忢堦斒儊僢僙乕僕丅
+				if(!F_NORTON)
+				{
+				//	name("僲乕僩儞")
+					MES(NORTON,"奧迪莎小姐的機體\n正在加油。",0)
+					MES(NORTON,"馬上就完成了，\n不要擔心。",0)
+					MES(NORTON,"作戰不久後就要開始了，\n你們也去布蘭迪丘陵吧。",0)
+					MES_close(NORTON)
+					
+					F_set(NORTON)
+				}
+				else
+				{
+				//丂丂仛孞傝曉偟
+				//	name("僲乕僩儞")
+					MES(NORTON,"啊，對了……\n工房那邊\n已經拜託科林看管了。",0)
+					MES(NORTON,"他已經被收為學徒，\n在工房裡見習了。",0)
+					MES(NORTON,"現在因為這個\n工房裡沒有人，\n所以就拜託他了。",0)
+					MES_close(NORTON)
+				}
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂仸儊儖僙僨僋撍擖屻偼妸憱楬偱懸婡丅
+		}
+		else
+		{
+				rot_chr(NORTON,30,PLAYER1)
+
+				MOT_SET(NORTON,152,-1,402,402,-1,0)
+				MOT(NORTON,152,10)
+				rot_chr(NORTON,30,PLAYER1)
+				if(!F_NORTON)
+				{
+				//	name("僲乕僩儞")
+					MES(NORTON,"大家都已經\n成功起飛了。",0)
+					MES(NORTON,"哎呀，三架飛機連續\n起飛可是很少見的。",0)
+					MES(NORTON,"就連我都有些\n緊張呢。",0)
+					MES_close(NORTON)
+
+					F_set(NORTON)
+				}
+			//丂丂仛孞傝曉偟
+				else
+				{
+					//	name("僲乕僩儞")
+					MES(NORTON,"好了，接下來就要準備收容了。",0)
+					MES(NORTON,"旋風畢竟那麼大，\n靠近一點都會對\n機體造成很大損傷。",0)
+					MES(NORTON,"為了讓你們那些\n受損的飛機能夠平安返航，\n這邊必須要做好準備。",0)
+					MES_close(NORTON)
+				}
+				MOT(NORTON,2,15)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸妸憱楬朤偁偨傝偱僐儕儞偲榖傪偟偰偄傞丅
+	if( F5_00_HearLunar )
+	{
+		look_chr(NORTON,PLAYER1,"Bone_Head")
+		if(!F_NORTON)
+		{
+		//	name("僲乕僩儞")
+			MES(NORTON,"這孩子說他想\n在工房當學徒。",0)
+			MES(NORTON,"嗯，我也理解他的熱情，\n可是這工作也不是那麼簡單的……",0)
+			MES(NORTON,"我也做不了主。",0)
+			MES(NORTON,"還是要向師傅說一下。",0)
+			MES_close(NORTON)
+			
+			F_set(NORTON)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("僲乕僩儞")
+			MES(NORTON,"不知道為什麼，師傅和米莉安\n最近好像特別忙。",0)
+			MES(NORTON,"嗯，這孩子也很聰明，\n我覺得也可以讓他試試看……",0)
+			MES(NORTON,"找個空閒時間去和師傅談一談吧。",0)
+			MES_close(NORTON)
+		}
+		look_off(NORTON)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸妸憱楬晅嬤傪僼儕乕儉乕僽丅
+	//丂丂丂僼儔僌嘊偺弶夞傪尒偰偄傞偲丄妸憱楬偵數偑攝抲偝傟傞丅
+	if( F4_00_StartSolo )
+	{
+		rot_chr(NORTON,30,PLAYER1)
+
+		MOT_SET(NORTON,152,-1,402,402,-1,0)
+		MOT(NORTON,152,10)
+
+		if(!F_NORTON)
+		{
+		//	name("僲乕僩儞")
+			MES(NORTON,"為了慎重起見，我正在\n檢查跑道有沒有損壞。",0)
+			MES(NORTON,"我感覺機場這邊\n沒有遭到怪物襲擊……",0)
+			MES(NORTON,"可是有個萬一\n就麻煩了。",0)
+			MES_close(NORTON)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僼儔僌嘊偺弶夞傪尒偰偄傞応崌")
+		//	name("僲乕僩儞")
+			if(FT_03_TalkNorton)
+			{
+				look_chr(NORTON,POPPO,"Bone_Head")
+				MES(NORTON,"不過最近……這孩子\n好像會過來幫忙。",0)
+				look_off(NORTON)
+				MES(NORTON,"嗯—，我們以前幫助過他一次。\n他很講人情嘛。",0)
+				MES_close(NORTON)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(NORTON)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("僲乕僩儞")
+			MES(NORTON,"嗯，這附近\n似乎沒有問題。",0)
+			MES(NORTON,"差不多該回工房去了。",0)
+			MES(NORTON,"師傅好像又開始\n沈思了。",0)
+			MES_close(NORTON)
+		}
+		MOT(NORTON,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸攝抲偝傟側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(NORTON,30,PLAYER1)
+		MOT_SET(NORTON,152,-1,538,538,-1,0)
+		MOT(NORTON,152,15)
+
+		if(!F_NORTON)
+		{
+		//丂丂仸妸憱楬朤偁偨傝偱旛昳偺惍棟丅
+		//	name("僲乕僩儞")
+			MES(NORTON,"艾羅蒂克公司\n大約每過四五年\n就會發表新型機體……",0)
+			MES(NORTON,"這次應該就是明年吧。",0)
+			MES(NORTON,"嗯—，我也想去看啊。",0)
+			MES(NORTON,"可能的話，\n我還想跟那些技術人員交流一下。",0)
+			MES_close(NORTON)
+
+			F_set(NORTON)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("僲乕僩儞")
+			MES(NORTON,"飛機公司的新機體發佈會，\n通稱飛行展。",0)
+			MES(NORTON,"同時還會進行\n新機體的試飛。",0)
+			MES(NORTON,"呼，我也想請假\n過去參觀呢。",0)
+			MES_close(NORTON)
+		}
+		MOT(NORTON,150,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸妸憱楬朤偁偨傝偱數偵僄僒傪傗偭偰偄傞丅
+	//丂丂丂妸憱楬偵偼僆僨僢僒婡傪攝抲丅
+	//丂丂仸弶夞僀儀儞僩乮僲乕僩儞偺偼偲偲嫟捠乯
+	if( F2_00_GoForest )
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+	//丂丂仸妸憱楬丄僆僨僢僒婡傪惍旛偟偰偄傞丅
+		rot_chr(NORTON,30,PLAYER1)
+//		MOT_SET(NORTON,152,-1,538,538,-1,0)
+//		MOT(NORTON,152,15)
+		if(!F_NORTON)
+		{
+		//	name("僲乕僩儞")
+//			MES(NORTON,"僆僨僢僒偝傫偺婡懱偩傛丅\n椙偔巊偄崬傑傟偰偄傞傛偹丅",0)
+			MES(NORTON,"那邊是\n奧迪莎小姐的飛機。",0)
+			MES(NORTON,"我維修飛機已經很久了，\n從飛機上一眼就能\n看出飛行員的習慣。",0)
+			MES(NORTON,"奧迪莎小姐\n以前做過不少粗暴的事情吧。",0)
+			MES(NORTON,"你看……\n機關槍的使用痕跡。",0)
+			MES_close(NORTON)
+
+			F_set(NORTON)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("僲乕僩儞")
+//			MES(NORTON,"偐側傝峳偭傐偄愓偑巆偭偰傞偗偳乧乧\n偒偪傫偲惍旛偡傟偽丄\n偁偲俆侽擭偼旘傋傞傛丅",0)
+			MES(NORTON,"雖然有些嚴重的損傷……\n不過仔細修理的話\n至少還能飛２０年。",0)
+			MES(NORTON,"話說回來很多尋寶獵人\n都有屬於自己的飛機啊。",0)
+			MES(NORTON,"呼，真讓人羨慕。",0)
+			MES_close(NORTON)
+		}
+//		MOT(NORTON,150,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸妸憱楬晅嬤傪僼儕乕儉乕僽丅
+	if( F1_15_GoVillage )
+	{
+		rot_chr(NORTON,30,PLAYER1)
+
+		MOT_SET(NORTON,152,-1,402,402,-1,0)
+		MOT(NORTON,152,10)
+
+		if(!F_NORTON)
+		{
+		//	name("僲乕僩儞")
+			MES(NORTON,"跑道正在整修。",0)
+			MES(NORTON,"有航班馬上就要降落了，\n必須要徹底檢查一下。",0)
+			MES(NORTON,"不過飛機好像\n是延誤了……",0)
+			MES(NORTON,"難道在途中遇到颱風了嗎？",0)
+			MES_close(NORTON)
+
+		//丂丂丠僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HATENA)
+			wait(30)
+
+			MES(RAGNA,"（不對，最近\n 天氣應該不錯……）",0)
+			MES(RAGNA,"（……還是\n 那隻貓搞的鬼……？）",0)
+			MES_close(RAGNA)
+	
+			F_set(NORTON)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("僲乕僩儞")
+			MES(NORTON,"遠程航班受天氣影響很大，\n晚點也十分常見……",0)
+			MES(NORTON,"可是這次也太久了……",0)
+			MES_close(NORTON)
+		}
+		MOT(NORTON,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸妸憱楬偵億僢僋儖婡傪攝抲丅
+	//丂丂丂僲乕僩儞偼旘峴婡偺棤懁偵偍傝丄椙偔尒偊側偄埵抲丅
+	//丂丂丂嬤偯偔偲僄儕傾婲摦偡傞丅
+	if( F1_01_GameStart )
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		rot_chr(NORTON,30,PLAYER1)
+
+		MOT_SET(NORTON,152,-1,538,538,-1,0)
+		MOT(NORTON,152,15)
+		
+		if(!F_NORTON)
+		{
+			MES(NORTON,"因為工作，我這裡\n保管著很多機體。",0)
+			MES(NORTON,"我個人最喜歡\n調整這種機體了。",0)
+			MES(NORTON,"喜歡把老舊的飛機修好\n然後看它飛起來的感覺。",0)
+			MES_close(NORTON)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"我知道、我知道啊……！",0)
+			MES(RAGNA,"這就是男人的浪漫呢！！",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（唔……人類仔細看來\n 還真是奇怪……）",0)
+			MES_close(PARTNER)
+
+			F_set(NORTON)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(NORTON,"入門機體都很簡單，\n可以自由地調整性能。",0)
+			MES(NORTON,"我個人最喜歡\n調整這種機體了。",0)
+			MES_close(NORTON)
+		}
+		MOT(NORTON,150,15)
+	}
+	
+	TK_end()
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

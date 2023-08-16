@@ -1,0 +1,1590 @@
+//──────────────────────────────
+//	name("◆克雷斯（旅行者）Cleese")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_CLEESE
+{
+	TK_begin()
+
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(CLEESE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,CLEESE)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,CLEESE)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CLEESE)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CLEESE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CLEESE)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CLEESE)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,CLEESE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※使用蒙布兰魔法后、克雷斯的一般消息。
+
+	if( F6_05_EndSixth )
+	{
+		rot_chr(CLEESE,30,PLAYER1)
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//克雷斯
+		MOT(CLEESE,150,15)
+		if(!F_CLEESE)
+		{
+			MES(CLEESE,"我也想\n下次去更南边旅行。",0)
+			MES(CLEESE,"嗯，好可爱！\n陪着去的人也有了……",0)
+			MES(CLEESE,"很期待这个旅行",0)
+			MES_close(CLEESE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（这个家伙……\n  实际上是最强的吗……？）",0)
+			MES_close(RAGNA)
+			
+			F_set(CLEESE)
+		}
+	//　　★繰り返し反复
+		else
+		{
+			MES(CLEESE,"我也想\n下次去更南边旅行。",0)
+			MES(CLEESE,"嗯，好可爱！\n陪着去的人也有了……",0)
+			MES(CLEESE,"很期待这个旅行",0)
+			MES_close(CLEESE)
+		}
+		rot_chr(CLEESE,30,MONTBLANC)
+		MOT(CLEESE,153,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※在星降り故乡，入口附近。
+	if( F6_00_GoToMeru )
+	{
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//克雷斯
+		MOT(CLEESE,150,10)
+	//　　※初回イベント初次事件
+		rot_chr(CLEESE,30,PLAYER1)
+		if(!FE_12_TalkCleese)
+		{
+			rot_chr(RAGNA,30,CLEESE)
+			rot_chr(PARTNER,30,CLEESE)
+			rot_chr(PET,30,CLEESE)
+		//──────────────────────────────
+		//	name("□克雷斯と会った事がある场合")
+		//──────────────────────────────
+			if(FE_FF_MeetCleese)
+			{
+			//　　拉古那·艾雯に！エモーション。
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PARTNER,EMO_BIKKURI)
+				
+				//──────────────────────────────
+				//　　（如果在フラグ见到的情况下，给露动作）
+				if(FE_11_TalkCleese)
+				{
+					EMO(PET,EMO_BIKKURI)
+					wait(30)
+				//	name("□フラグ□で会っている场合")
+					MES(PET,"啊，你是……",0)
+					MES_close(PET)
+
+					if(FE_01_MeetCleese)
+					{
+						MES(PARTNER,"以前迷过路的\n旅行者吗。",0)
+						MES_close(PARTNER)
+					}
+					else
+					{
+						MES(RAGNA,"以前迷过路的\n旅行者吗。",0)
+						MES_close(RAGNA)
+					}
+				}
+				//	name("□フラグ①②③⑤⑩之いずれかで会っており、艾雯先頭之场合")
+				else
+				if(FE_01_MeetCleese && GW_MEN==0)
+				{
+					wait(30)
+					MES(PARTNER,"你，你是……",0)
+					MES(PARTNER,"以前迷过路的\n旅行者吗。",0)
+					MES_close(PARTNER)
+				}
+				//	name("□それ以外")除此之外
+				else
+				{
+					wait(30)
+					MES(RAGNA,"你，你是……",0)
+					MES(RAGNA,"以前迷过路的\n旅行者吗。",0)
+					MES_close(RAGNA)
+				}
+				//──────────────────────────────
+				MES(CLEESE,"好冷好冷……\n哦，好久不见～。",0)
+				MES_close(CLEESE)
+				
+			//	name2(RAGNA)
+				MES(RAGNA,"说是好久不见、\n怎么在这种地方……",0)
+				MES_close(RAGNA)
+			}
+		//	name("□克雷斯と会った事がない场合")
+			else
+			{
+				MES(CLEESE,"好冷好冷……\n啊，早上好……",0)
+				MES_close(CLEESE)
+
+				//　　拉古那たちに？エモーション。
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PARTNER,EMO_HATENA)
+				EMO(PET,EMO_HATENA)
+				wait(30)
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"你，你不是……？",0)
+					MES(RAGNA,"这个地方的人吧？……？",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"你……？",0)
+					MES(PARTNER,"好像不是这个地方的人吧……",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+			}
+			
+			MES(CLEESE,"啊，那个呀……",0)
+			MES(CLEESE,"在伊尔巴特到处走的时候\n突然发现下雪了。",0)
+			MES(CLEESE,"而且雪很大……\n一直走一直走\n终于走到了村庄。",0)
+			MES(CLEESE,"……对了、\n这里是哪儿呢？",0)
+			MES_close(CLEESE)
+
+		//　　拉古那たちに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PARTNER,EMO_AOZAME)
+			EMO(PET,EMO_AOZAME)
+			wait(30)
+
+/*			MES(PET,"到底有什么\n方向感呢？……",0)
+			MES_close(PET)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"我已经无语了……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"首，首先……",0)
+			MES(RAGNA,"起码没有在\n山里遇难……",0)
+			MES_close(RAGNA)
+*/
+
+			MES(PARTNER,"那，那是……",0)
+			MES(PARTNER,"难道是在走的时候\n不知不觉间走进了星峰吗？",0)
+			MES_close(PARTNER)
+
+			MES(PET,"但，\n居然走到这样的地方……",0)
+			MES(PET,"到底是什\n方向感呢……",0)
+			MES_close(PET)
+
+			MES(RAGNA,"首，首先……",0)
+			MES(RAGNA,"起码没有在\n山里遇难……",0)
+			MES_close(RAGNA)
+
+			F_set(FE_12_TalkCleese)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+	//──────────────────────────────
+		//──────────────────
+		//金貨を返すイベント还钱的事情
+		//──────────────────
+		else
+		if(IT139>0)
+		{
+		//　　克雷斯にＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+
+			rot(CLEESE,100,160)
+			MOT(CLEESE,2,0)
+			fade_in(0,60,BLACK)
+			wait_fade()
+		}
+		//──────────────────────────────
+		//▼　わらしべイベント
+		//	name("12·克雷斯（星降之里）		『ばんそうこう』□『阿尔杰斯之地図』")154
+		//──────────────────────────────
+		else
+		if(FV_11_Warasi11_Vml && !FV_11_Warasi13_Cls)
+		{
+			//──────────────────────────────
+			if(!F_CLEESE)
+			{
+			//	name("□初回")
+				MES(CLEESE,"啊？。\n冻伤了吗……",0)
+			MES_close(CLEESE)
+
+			//　　克雷斯にＰＡエモーション。
+				EMO(CLEESE,EMO_PA)
+				wait(30)
+				
+				MES(CLEESE,"啊，也许……\n你带着创可贴吗～？",0)
+				MES(CLEESE,"哇，有救了！\n这个请一定让给我～。",0)
+				MES_close(CLEESE)
+
+				F_set(CLEESE)
+			}
+			else
+			{
+			//	name("□２回目以降")
+				MES(CLEESE,"这个『创可贴』\n可以让给我吗～？",0)
+				MES(CLEESE,"实际上我冻伤了～。",0)
+				MES_close(CLEESE)
+			}
+			//──────────────────────────────
+			
+		//	name("選択テキスト")选择课本
+			workL(WK_CANCEL,SET,2)//【停止】
+			MES_pos(PLAYER1,"??W9【拿去吧】\n【不行、不给】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			//──────────────────────────────
+			//	name("□【どうぞ】")
+			//──────────────────────────────
+			if(WK_YESNO==1)
+			{
+				MES(CLEESE,"哇，\n谢谢～。",0)
+				MES(CLEESE,"恩，实际\n我经常受伤。",0)
+				MES(CLEESE,"有一次，我走的山崖崩裂了\n从山上落下来了……",0)
+				MES(CLEESE,"那时候弄\n了很多擦伤。",0)
+				MES_close(CLEESE)
+
+			//　　拉古那たちに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				EMO(PET,EMO_AOZAME)
+				wait(30)
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+				//	name("□拉古那先頭")
+					MES(RAGNA,"没，没事吧。",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□艾雯先頭")
+					MES(PARTNER,"仅仅只有\n擦伤吗……？",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				MES(PET,"真的，不知道\n是否是好运的人？……",0)
+				MES_close(PET)
+
+			//　　克雷斯にＰＡエモーション。
+//				EMO(CLEESE,EMO_PA)
+//				wait(30)
+				
+				MES(CLEESE,"啊，这样呀。\n不还什么不行吧～。",0)
+				MES(CLEESE,"这样吧\n给大家我的地图吧～。",0)
+				MES(CLEESE,"是很准确的地图、\n所以肯定会有所帮助吧～。",0)
+				MES_close(CLEESE)
+
+			//	name("アイテム入手テキスト")
+			//	MES(this,"『阿尔杰斯之地図』を手に入れた。",0)
+				//―――――――――――――――――――――――
+				fade_in(30,10,BLACK)
+
+				get_item(153,-1,1)
+				get_item(154,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//―――――――――――――――――――――――
+
+			//　　拉古那たちにしばらく···エモーション。
+				wait(20)
+				EFF_chr(25124,PLAYER1,0,100,0,"Bone_Head")
+				EFF_chr(25124,PLAYER2,0,100,0,"Bone_Head")
+				EFF_chr(25124,PET,0,100,0,"Bone_Head")
+				wait(80)
+
+				MES(PET,"有……有吗？？？",0)
+				MES_close(PET)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"啊啊、古兰瓦雷恩西南边\n的边境大陆吗……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"你……\n不会是……",0)
+				MES(PARTNER,"依靠这个地图\n在伊尔巴特旅行吧……？",0)
+				MES_close(PARTNER)
+
+			//　　克雷斯に？エモーション。
+				EMO(CLEESE,EMO_HATENA)
+				wait(30)
+				rot_chr(CLEESE,30,PARTNER)
+				MES(CLEESE,"有什么不好吗?～？",0)
+				MES(CLEESE,"啊、所有做过标记的\n就是我露营过的地方～。",0)
+				MES(CLEESE,"恩，现在在\n右下的废墟的附近吧～。",0)
+				MES_close(CLEESE)
+
+			//　　チーンというＳＥ。
+//				MES(RAGNA,"C4◆チーンというＳＥ。",0)
+//				MES_close(RAGNA)
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				EMO(PET,EMO_AOZAME)
+				wait(30)
+
+				rot_chr(RAGNA,30,PARTNER)
+				rot_chr(PARTNER,30,RAGNA)
+				rot_chr(PET,30,PARTNER)
+				wait(20)
+				MES(RAGNA,"不行……\n总觉得这个男的不行……",0)
+				MES_close(RAGNA)
+
+			//	name2(PET)
+				MES(PET,"公、公主殿下……\n连我也觉得好像有点晕眩……",0)
+				MES_close(PET)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"嗯……这个男生是个方向白痴\n肯定不会改变前面的路线……",0)
+				MES_close(PARTNER)
+
+				wait(10)
+				EMO(CLEESE,EMO_HATENA)
+				wait(30)
+
+			//　　一旦暗転し、操作許可を戻す。
+				fade_in( 100, 60, BLACK)	//フェードアウト
+				wait_fade()
+
+				rot_chr(RAGNA,120,CLEESE)
+				rot_chr(PARTNER,120,CLEESE)
+				rot_chr(PET,120,CLEESE)
+				//手動向き戻し
+				rot(CLEESE,120,160)
+				MOT(CLEESE,2,0)
+
+				fade_in( 0, 30, BLACK)	//フェードイン
+				wait_fade()
+				
+				F_reset(CLEESE)
+				F_set(FV_11_Warasi13_Cls)
+			}
+			//──────────────────────────────
+			//	name("□【ダメ、譲れない】")
+			//──────────────────────────────
+			else
+			{
+				MES(CLEESE,"这、样呀……\n失望啊。",0)
+				MES_close(CLEESE)
+			}
+		}
+		else
+		{
+			
+ 			if(!F_CLEESE)
+			{
+				MES(CLEESE,"好冷好冷、冷、冷啊……",0)
+				MES(CLEESE,"突然下起了雪、\n伊尔巴特的\n气候好像不安定呢。",0)
+				MES(CLEESE,"刚才也突然起风了……",0)
+				MES_close(CLEESE)
+				F_set(CLEESE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(CLEESE,"果然伊尔巴特的\n天气好像不稳定呀……",0)
+				MES_close(CLEESE)
+			}
+			
+		//──────────────────────────────
+		//	name("□幸運之金貨を返却している场合")
+			if(FE_03_KinkaCleese)
+			{
+				MES(CLEESE,"下次旅行的时候\n去更南边吧……",0)
+				MES_close(CLEESE)
+				F_set(CLEESE)
+			}
+			else
+			{
+			//	name("□それ以外")
+				MES(CLEESE,"已经放弃了幸运金币的事、\n下次的旅行\n去更南边吧……",0)
+				MES_close(CLEESE)
+			}
+		}
+		MOT(CLEESE,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※森入り口マップでフリームーブしている。森林入口
+	if( F5_00_HearLunar )
+	{
+		rot_chr(CLEESE,30,PLAYER1)
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//克雷斯
+		MOT(CLEESE,150,10)
+		if(!FE_11_TalkCleese)
+		{
+			EV("EV_11_TalkCleese")
+		}
+	//──────────────────────────────
+	//　　※克雷斯は、１/４之確立で配置される。
+		//	金貨を持っていたら金貨を返すイベント
+		else
+		if(IT139>0)
+		{
+		//　　克雷斯にＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+
+			MOT(CLEESE,2,0)
+			fade_in(0,60,BLACK)
+			wait_fade()
+		}
+		else
+		{
+			//　　※以下通常一般メッセージ。
+			if(!F_CLEESE)
+			{
+				MES(CLEESE,"啊、又见面了～。",0)
+				MES(CLEESE,"实际上我感觉\n从森林里面出不去了……",0)
+				MES(CLEESE,"肯定是判断错了。\n啊哈",0)
+				MES(CLEESE,"因为这里肯定、\n已经是森林外面了～。",0)
+				MES_close(CLEESE)
+
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（真是的、怎么搭话\n才好呢……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□奥蒂莎先頭")
+				{
+					MES(PARTNER,"（嗯、就算有人引路\n也可能走到相反方向吧……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				F_set(CLEESE)
+			}
+		//　　★繰り返し
+			else
+			{
+				if(FE_03_KinkaCleese)
+				{
+				//	name("□幸運之金貨を返却している场合")
+					MES(CLEESE,"啊、这么说来……",0)
+					MES(CLEESE,"刚才、看到了好像一个\n很奇怪的虫子～？",0)
+					MES(CLEESE,"３只、笑着吵着呀\n飘飘忽忽的飞走了。",0)
+					MES(CLEESE,"嗯、那到底是\n什么东西呢～？",0)
+					MES_close(CLEESE)
+				}
+				else
+				{
+				//	name("□それ以外")
+					MES(CLEESE,"即使这样……",0)
+					MES(CLEESE,"我的『幸运的金币』\n去哪儿了呢～……",0)
+					MES(CLEESE,"在湖里被淹的时候不见的、\n最后也没有找到。",0)
+					MES(CLEESE,"哎、回家的话\n一定会被爷爷\n大骂一顿的……",0)
+					MES_close(CLEESE)
+				}
+			}
+		}
+		MOT(CLEESE,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//　　※大道芸人ステージで布団を敷いて寝ている。（掛け布団だけで可）
+	//　　　克雷斯にＺＺＺエモーション出しっぱなし。
+	if( F4_09_GoShrineMia)
+	{
+	//★克雷斯に会った见到库乐斯
+		F_set(FE_01_MeetCleese)
+		if(!F_CLEESE)
+		{
+			MES(CLEESE,"嗯、嗯呀嗯呀……",0)
+			MES(CLEESE,"啊哈哈、这里是天国吗～？",0)
+			MES_close(CLEESE)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"差、差不多\n醒醒比较好吧……？",0)
+				MES_close(RAGNA)
+			}
+			//	name("□艾雯先頭")
+			else
+			{
+				MES(PARTNER,"（到底\n要旅行到哪里去啊……）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			F_set(CLEESE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CLEESE,"嗯、嗯呀嗯呀……",0)
+			MES(CLEESE,"啊哈哈、这里是天国吗～？",0)
+			MES_close(CLEESE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し没有
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し没有
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※阿鲁迪亚、噴水右辺りで噴水を見ている。
+	if( F4_00_StartSolo )
+	{
+		rot_chr(CLEESE,30,PLAYER1)
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//克雷斯
+		MOT(CLEESE,150,10)
+
+		//	金貨を持っていたら金貨を返すイベント
+		if(IT139>0)
+		{
+		//　　克雷斯にＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+
+			rot(CLEESE,100,120)
+			MOT(CLEESE,2,0)
+			fade_in(0,60,BLACK)
+			wait_fade()
+		}
+		else
+		if(!F_CLEESE)
+		{
+			MES(CLEESE,"终于到了阿鲁迪。\n哎～、真长呀～。",0)
+			MES(CLEESE,"即使这样、要进入小镇\n不爬山崖不行啊……",0)
+			MES(CLEESE,"嗯、比想象中更艰苦～。",0)
+			MES_close(CLEESE)
+
+			//──────────────────────────────
+			//	name("□昴がいて、拉古那先頭")
+			if(F4_02_GoVillage2)
+			{
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"又是从乱七八糟的道路……",0)
+					MES_close(RAGNA)
+				}
+				//	name("□昴先頭")
+				else
+				{
+					MES(PARTNER,"啊、和我一样的路线……",0)
+					MES_close(PARTNER)
+
+				//　　拉古那に冷や汗エモーション。
+					EMO(RAGNA,EMO_HIYAASE)
+					wait(30)
+				
+					MES(RAGNA,"２个人都……从今以后能\n很平常的使用门了呀。",0)
+					MES_close(RAGNA)
+				}
+			}
+			//──────────────────────────────
+
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+			look(CLEESE,"Bone_Head",0,		0,2,0,			0,30,0)
+			MES(CLEESE,"但是、为什么\n为什么城里好像\n乱七八糟的……",0)
+			look(CLEESE,"Bone_Head",0,		0,2,0,			0,0,0)
+			MES(CLEESE,"嗯、为什么呢。\n难道是我的错觉吗……？",0)
+			MES_close(CLEESE)
+
+			F_set(CLEESE)
+		}
+	//　　★繰り返し
+	//──────────────────────────────
+		else
+		{
+		//	name("□幸運之金貨を返却している场合")
+			if(FE_03_KinkaCleese)
+			{
+				MES(CLEESE,"咿呀～、但是\n终于到达阿鲁迪亚镇了。",0)
+				MES(CLEESE,"呼、真的很长呢～。",0)
+				MES(CLEESE,"城里好像\n乱七八糟的……",0)
+				MES(CLEESE,"嗯、一定\n是我的错觉。",0)
+				MES_close(CLEESE)
+			}
+		//	name("□それ以外")
+			else
+			{
+				MES(CLEESE,"实际上、我溺在湖里时\n把『幸运的金币』\n弄丢的……",0)
+				MES(CLEESE,"虽然很努力很努力找了、\n还是没找到、没办法呀。",0)
+				MES(CLEESE,"差不多该回家了、\n放弃吧～……",0)
+				MES_close(CLEESE)
+			}
+		}
+		MOT(CLEESE,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※廃坑入り口にいる。
+	if( F3_00_GoMoonCastle )
+	{
+	//★克雷斯に会った
+		F_set(FE_01_MeetCleese)
+		rot_chr(CLEESE,30,PLAYER1)
+		MOT(CLEESE,2,10)
+		//	金貨を持っていたら金貨を返すイベント
+		if(IT139>0)
+		{
+
+		//　　克雷斯にＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+
+			rot(CLEESE,100,37)
+			fade_in(0,60,BLACK)
+			wait_fade()
+
+		}
+		else
+		if(!F_CLEESE)
+		{
+			MES(CLEESE,"嗯、今晚\n在这附近露宿吧。",0)
+			MES(CLEESE,"今天也走来走去的\n累死了～。",0)
+			MES_close(CLEESE)
+			
+			//──────────────────────────────
+			//	name("□幸運之金貨を返却していない场合")
+			if(!FE_03_KinkaCleese)
+			{
+				MES(CLEESE,"到最后\n也没有发现『幸运的金币』……",0)
+				MES_close(CLEESE)
+			}
+
+			//──────────────────────────────
+			
+		//　　克雷斯にＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+			
+			MES(CLEESE,"啊、没关系的。\n因为我带着睡袋。",0)
+			MES_close(CLEESE)
+
+			MES(PARTNER,"（睡、睡袋……？）",0)
+			MES_close(PARTNER)
+
+		//──────────────────────────────
+		//	name("□克雷斯に会ったことがない")
+			if(!FE_FF_MeetCleese)
+			{
+				MES(RAGNA,"（在这种时候……\n真是不紧不慢的家伙啊……）",0)
+				MES_close(□发生了什么事。)
+			}
+			else
+			{
+			//	name("□あった事がある。")
+				MES(RAGNA,"（还是没变呢\n真是不紧不慢的家伙啊……）",0)
+				MES_close(RAGNA)
+			}
+		//──────────────────────────────
+
+			F_set(CLEESE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CLEESE,"哼哼、别看我这样\n怎么说也是旅行的专家哦。\n露营什么的小菜一碟。",0)
+			MES(CLEESE,"顺便一提、我的特技是\n装死。",0)
+			MES(CLEESE,"进入睡袋里变成圆圆的话、\n基本上怪物都不会来袭击的～。",0)
+			MES_close(CLEESE)
+			
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			//★克雷斯【死んだフリ】
+			F_set_note(CLEESE,1)
+		}
+		MOT(CLEESE,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※罗亚鲁塔村·风車小屋つき民家で、お茶をご馳走になっている。在咯啊如他村，带有风车小屋的民家里，正在喝茶
+	if( F2_14_TalkEnemy )
+	{
+		//★克雷斯に会った
+		F_set(FE_01_MeetCleese)
+
+		//	金貨を持っていたら金貨を返すイベント
+		if(IT139>0)
+		{
+			look_chr( CLEESE, PLAYER1,"Bone_Head")
+
+		//　　克雷斯にＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+//			rot(CLEESE,30,350)
+			look_off(CLEESE)
+
+			fade_in(0,60,BLACK)
+			wait_fade()
+
+		}
+		else
+		if(!FE_03_KinkaCleese)
+		{
+			if(!F_CLEESE)
+			{
+			//　　※振り返らない。不能返回
+				MES(CLEESE,"啊、有了～。",0)
+				MES(CLEESE,"经常有好心人\n帮助～。",0)
+				MES(CLEESE,"但是以后咋办呢。\n『幸运的金币』\n沉入湖里了……",0)
+				MES(CLEESE,"都结束了吗、要不要回家呢～。",0)
+				MES_close(CLEESE)
+
+			//──────────────────────────────
+			//	name("□フラグ①②で話をした事がある场合")
+			//──────────────────────────────
+				if(FE_01_MeetCleese)
+				{
+					//──────────────────────────────
+					//	name("□拉古那先頭")
+					if(GW_MAN==1)
+					{
+						MES(RAGNA,"（不要……\n能否带着回家\n还是个问题……）",0)
+						MES_close(RAGNA)
+					}
+					else
+					//	name("□艾雯先頭")
+					{
+						MES(PARTNER,"（要说回家\n的话……？）",0)
+						MES_close(PARTNER)
+					}
+					//──────────────────────────────
+				}
+
+				F_set(CLEESE)
+			}
+		//　　★繰りかえし
+		//──────────────────────────────
+			else
+			{
+				MES(CLEESE,"但、幸运的金币\n没了啊……",0)
+				MES(CLEESE,"以后就要变得\n倒霉了、担心啊～。",0)
+				MES_close(CLEESE)
+
+				//──────────────────────────────
+				//	name("□フラグ①②で話をした事がある场合")
+				if(FE_01_MeetCleese)
+				{
+				//　　拉古那たちに冷や汗エモーション。
+					EMO(RAGNA,EMO_HIYAASE)
+					EMO(PARTNER,EMO_HIYAASE)
+					wait(30)
+					MES(RAGNA,"（即使带着金币也会倒霉啊……）",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"（是啊、明显和这个没关系……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+			}
+		}
+	//──────────────────────────────
+	//　　※幸運之金貨返却後之通常一般メッセージ。
+		else
+		{
+			if(!F_CLEESE)
+			{
+				MES(CLEESE,"啊、有了～。",0)
+				look_chr( CLEESE, PLAYER1,"Bone_Head")
+				MES(CLEESE,"总是有热心的人\n帮助我～。",0)
+				MES(CLEESE,"太好了、幸运的金币\n也回来了……",0)
+				MES(CLEESE,"剩下的就是、找到回家\n的方法～。",0)
+				MES_close(CLEESE)
+
+				//　　拉古那たちに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				wait(30)
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（你不记得、家在哪么……？）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"（也许……家肯定是有的\n就是忘了在哪了……？）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				F_set(CLEESE)
+			}
+			else
+			{
+				look_chr( CLEESE, PLAYER1,"Bone_Head")
+			//　　★繰りかえし
+				MES(CLEESE,"好了、幸運的金貨也\n拿回来了……",0)
+				MES(CLEESE,"因此运气也就旺旺的了。",0)
+				MES_close(CLEESE)
+				look_off(CLEESE)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パーツを入手した
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※神殿入り口マップで、座り込んでいる。
+	if( F2_00_GoForest )
+	{
+		MOT_SET(CLEESE,151,-1,403,403,-1,0)		//克雷斯
+//		MOT(CLEESE,151,10)
+//		rot_chr(CLEESE,30,PLAYER1)
+	//★克雷斯に会った
+		F_set(FE_01_MeetCleese)
+		
+	//　　※初回イベント
+		if(!FE_03_TalkCleese)
+		{
+			look_chr(CLEESE,PLAYER1,"Bone_Head")
+			MES(CLEESE,"哈、可怕的遭遇啊。",0)
+			MES(CLEESE,"走到这附近、突然\n被谁给推倒了。",0)
+			MES(CLEESE,"然后、『碍事的人类喵』\n就听到这个……",0)
+			MES(CLEESE,"那会究竟是怎么一回事啊～……",0)
+			MES_close(CLEESE)
+
+		//　　拉古那たちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"（可能是哪个笨猫……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（嗯、看来伊尔巴特里面\n也有很多洞呢。）",0)
+			MES_close(PARTNER)
+
+		//　　克雷斯にＰＡエモーション。
+			look_off(CLEESE)
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+			
+		//　　きょろきょろする。
+			look(CLEESE,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(20)
+			look(CLEESE,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(40)
+			look(CLEESE,"Bone_Head",0,		0,2,0,			0,0,0)
+			
+			MES(CLEESE,"那个、这么说来\nL337『幸运的金币』L400的坠饰\n好像没有找到……",0)
+			MES(CLEESE,"掉进湖里的时候\n丢掉了……",0)
+			MES_close(CLEESE)
+
+		//　　ここでＬＦも立てておく。
+			F_set(FE_03_TalkCleese)
+
+			F_set(CLEESE)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		//	交还金货的信息
+		if(IT139>0)
+		{
+		//　　克雷斯にＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			MOT(CLEESE,151,15)
+			rot_chr(CLEESE,30,PLAYER1)
+			wait(10)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+
+			MOT(CLEESE,150,0)
+			rot(CLEESE,100,324)
+
+			fade_in(0,60,BLACK)
+			wait_fade()
+
+		}
+		else
+		{
+			look_chr(CLEESE,PLAYER1,"Bone_Head")
+			if(!FE_03_KinkaCleese)
+			{
+				if(!F_CLEESE)
+				{
+					MES(CLEESE,"意想不到的噩运啊～。\n被推进了湖里……",0)
+					MES(CLEESE,"还有、\n我不会游泳。",0)
+					MES(CLEESE,"掉进去的时候、幸运的金币也\n也丢掉了……",0)
+					MES(CLEESE,"哈、那个金币可是\n我的命根子啊～。",0)
+					MES_close(CLEESE)
+
+					F_set(CLEESE)
+				}
+			//　　★繰り返し
+				else
+				{
+					MES(CLEESE,"那个幸运的金币可是、\n我家祖代守护的宝贝～。",0)
+					MES(CLEESE,"为爷爷保管的……\n哈哈、要没了的话一定会发怒的……",0)
+					MES_close(CLEESE)
+				}
+			}
+			//──────────────────────────────
+			//　　※幸運之金貨返却後之通常一般メッセージ。
+			else
+			{
+				if(!F_CLEESE)
+				{
+					MES(CLEESE,"真的、真的\n非常感谢。",0)
+					MES(CLEESE,"我也稍微休息下、\n决定回家去了～。",0)
+					MES_close(CLEESE)
+
+				//──────────────────────────────
+				//	name("□フラグ①②で話をした事がある场合")
+				//──────────────────────────────
+					if(FE_01_MeetCleese)
+					{
+						//──────────────────────────────
+						//	name("□拉古那先頭")
+						if(GW_MAN==1)
+						{
+							MES(RAGNA,"还是平安的回家好……",0)
+							MES_close(RAGNA)
+						}
+						else
+						//	name("□艾雯先頭")
+						{
+							MES(PARTNER,"还是不迷路的好。",0)
+							MES_close(PARTNER)
+						}
+						//──────────────────────────────
+					}
+					
+					F_set(CLEESE)
+				}
+			//　　★繰り返し
+				else
+				{
+					MES(CLEESE,"真的、真的\n非常感谢。",0)
+					MES(CLEESE,"我也稍微休息下、\n决定回家去了～。",0)
+					MES_close(CLEESE)
+				}
+			}
+			look_off(CLEESE)
+		}
+//		MOT(CLEESE,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※罗亚鲁塔村、神殿出口あたりをフリームーブ。
+	if( F1_15_GoVillage )
+	{
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//克雷斯
+		MOT(CLEESE,150,10)
+		rot_chr(CLEESE,30,PLAYER1)
+	//★克雷斯に会った
+		F_set(FE_01_MeetCleese)
+		if(!F_CLEESE)
+		{
+			MES(CLEESE,"啊、好像\n迷路了……",0)
+			MES(CLEESE,"这个村子没出口吗～。",0)
+			MES(CLEESE,"究竟怎么了这是？",0)
+			MES_close(CLEESE)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"这个也好那个也好、\n出口就在那里啊……",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"不、你。\n出口就再那里？",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+		//　　克雷斯に？エモーション。
+			EMO(CLEESE,EMO_HATENA)
+			wait(30)
+
+			F_set(CLEESE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CLEESE,"不可思议啊。\n竟然出不去村子……",0)
+			MES(CLEESE,"肯定是喜欢恶作剧的\n什么精灵、\n又来烦我了～。",0)
+			MES_close(CLEESE)
+		}
+		MOT(CLEESE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※罗亚鲁塔村で、村长と話している。
+	//　　※初回イベント。
+	if( F1_01_GameStart )
+	{
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//克雷斯
+		MOT(CLEESE,150,10)
+	//★克雷斯に会った
+		F_set(FE_01_MeetCleese)
+		if(!FE_01_TalkCleese)
+		{
+		//　　克雷斯、ＰＡエモーションで振り返る。
+			EMO(CLEESE,EMO_PA)
+			rot_chr(CLEESE,30,PLAYER1)
+			wait(30)
+			MES(CLEESE,"啊、你好～。",0)
+			MES(CLEESE,"真是的、伊尔巴特果真是\n超大的大陆呀。",0)
+			MES(CLEESE,"连阿鲁迪亚街都、\n这么大的让人迷路啊。",0)
+			MES_close(CLEESE)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"啊、啊啊……\n（怎么会迷路呢……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"嗯……？\n（不至于迷路吧。）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			MES(CLEESE,"其实我是、听说阿鲁迪\n有好的旅馆\n特地来……",0)
+			MES(CLEESE,"这个方向、这里是\n罗亚鲁村子吧。",0)
+			MES(CLEESE,"奇怪啊～……",0)
+			MES_close(CLEESE)
+
+		//　　拉古那たちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（路痴……？）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（就是路痴……）",0)
+				MES_close(PARTNER)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"（路痴……？）",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（就是路痴……）",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+
+			F_set(FE_01_TalkCleese)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			rot_chr(CLEESE,30,PLAYER1)
+			if(!F_CLEESE)
+			{
+				MES(CLEESE,"可是这里、\n是《伊尔巴特》啊～。",0)
+				MES(CLEESE,"哈、果真是\n坐错了飞机吗～。",0)
+				MES_close(CLEESE)
+
+			//　　拉古那たちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"彻底迷路了……",0)
+					MES_close(RAGNA)
+
+				}
+				else
+				//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"彻底的搞错了啊……",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				MES(CLEESE,"不是啊、我已经有８年的旅行年龄了。\n虽然想赶紧\n回到家里去但。",0)
+				MES_close(CLEESE)
+
+			//　　克雷斯に···エモーション。
+				EMO(CLEESE,EMO_TENTEN)
+				wait(30)
+				MES(CLEESE,"怎么回去才对呢\n又给忘了。\n啊哈哈哈啊哈……",0)
+				MES_close(CLEESE)
+			//　　拉古那たちに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				wait(30)
+
+				//★克雷斯【方向音痴】
+				F_set_note(CLEESE,0)
+				F_set(CLEESE)
+			}
+			else
+			//　　★繰り返し
+			{
+				MES(CLEESE,"据村长说、\n这附近有个神殿～。",0)
+				MES(CLEESE,"嗯、顺路的话\n去看看喽～。",0)
+				MES_close(CLEESE)
+			}
+		}
+		MOT(CLEESE,50,10)
+	}
+	
+	F_set(FE_FF_MeetCleese)
+	TK_end()
+}
+
+
+
+//──────────────────────────────
+//▼幸運之金貨を返すイベント
+//　　※フラグ③～□で起こるイベント。
+//　　※幸運之金貨を持っている状態だと、こ之イベントが優先されます。
+//　　　各フラグで初回イベントがある场合は、そっちが優先されます。
+//　　　フラグ⑩では、克雷斯が寝ているため発生しません。
+//──────────────────────────────
+COMEBACK_KINKA
+{
+	MES(CLEESE,"那个～、\n那个L337『幸运的金币』L400是……",0)
+	MES_close(CLEESE)
+
+//	name2(RAGNA)
+	MES(RAGNA,"啊、迷宫中\n捡到的……",0)
+	MES(RAGNA,"仔细看看是这个么。",0)
+	MES_close(RAGNA)
+
+//	name2(CLEESE)
+	MES(CLEESE,"唉、好像大概是～。",0)
+	MES_close(CLEESE)
+
+	//────────────────────
+	//	name("□フラグ③之场合")
+	if(F2_00_GoForest && !F2_14_TalkEnemy)
+	{
+		MES(CLEESE,"刚才被谁\n推进湖里的时候\n丢掉的。",0)
+		MES_close(CLEESE)
+	}
+//	name("□それ以外")
+	else
+	{
+		MES(CLEESE,"神殿前、被人\n推进了湖里。",0)
+		MES(CLEESE,"那个时候\n丢掉的。",0)
+		MES_close(CLEESE)
+	}
+	//────────────────────
+	MES(CLEESE,"这么说来、『碍事的人类喵』\n好像听到了这句话……",0)
+	MES(CLEESE,"嗯、那\n究竟是怎么一回事啊～？",0)
+	MES_close(CLEESE)
+	
+	//────────────────────
+	//	name("□フラグ③で、フラグ③初回を見ている场合")
+	if(F2_00_GoForest && !F2_14_TalkEnemy && FE_03_TalkCleese)
+	{
+		MES(PARTNER,"哦、想不到的噩运啊……",0)
+		MES_close(PARTNER)
+	}
+	//────────────────────
+	//それ以外
+	else
+	{
+	//　　拉古那たちに冷や汗エモーション。
+		EMO(RAGNA,EMO_HIYAASE)
+		if( !F4_00_StartSolo )//パートナーがいる
+			EMO(PARTNER,EMO_HIYAASE)
+		else
+		if( F4_02_GoVillage2 && !F5_00_HearLunar )
+			EMO(PARTNER,EMO_HIYAASE)
+		else
+		if( F5_08_JoinOdessa && !F5_13_KillDygald )
+			EMO(PARTNER,EMO_HIYAASE)
+		else
+		if( F6_00_GoToMeru )
+			EMO(PARTNER,EMO_HIYAASE)
+
+		if( F5_00_HearLunar )//露がいる
+			EMO(PET,EMO_HIYAASE)
+		wait(40)
+		
+		//	name("□艾雯がいる场合")
+		if(!F4_00_StartSolo || F6_00_GoToMeru)
+		{
+			MES(PARTNER,"（……是那个\n蒙布兰干的……）",0)
+			MES_close(PARTNER)
+		}
+		//	name("□露がいる场合")
+		else
+		if(F5_00_HearLunar)
+		{
+			MES(PET,"（那、那个傻猫……\n竟然喜欢推人家……）",0)
+			MES_close(PET)
+		}
+		//	name("□昴がいる场合")
+		else
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			MES(PARTNER,"（那个、那样的话\n难道……）",0)
+			MES_close(PARTNER)
+			
+		//	name2(RAGNA)
+			MES(RAGNA,"（蒙布兰那家伙干的……）",0)
+			MES_close(RAGNA)
+		}
+		//	name("□そ之他")
+		else
+		{
+			MES(RAGNA,"（蒙布兰那家伙干的……）",0)
+			MES_close(RAGNA)
+		}
+	}
+	//────────────────────
+
+	MES(RAGNA,"赶、赶紧\n还给那家伙。",0)
+	MES_close(RAGNA)
+
+//　　拉古那、克雷斯にアイテムを渡す。
+//　　アイテム欄から幸運之金貨を削除。
+
+
+	MES(CLEESE,"哇、真的吗？\n谢谢～。",0)
+	MES(CLEESE,"这个呢、是家里代代相传的\n要守护的宝贝～。",0)
+	MES(CLEESE,"替爷爷保管的\n要是丢失了的话、\n就完了～。",0)
+	MES_close(CLEESE)
+
+//	name2(RAGNA)
+	MES(RAGNA,"这、这样啊。",0)
+	MES_close(RAGNA)
+	//────────────────────
+	//	name("□フラグ⑦□之场合")
+	//⑦
+	if(F4_00_StartSolo && !F4_05_OnVillage2)
+	{
+		MES(RAGNA,"听到的话……",0)
+		MES(RAGNA,"这个金币、应该是\n隐藏着魔力的魔法物品。",0)
+		MES(RAGNA,"你不是说过这个非常好么……",0)
+		MES(RAGNA,"你要是有些基础能力、\n也许会使用些魔法。",0)
+		MES_close(RAGNA)
+	}
+	//□
+	else
+	if(F5_00_HearLunar && !F6_00_GoToMeru)
+	{
+		MES(RAGNA,"听到的话……",0)
+		MES(RAGNA,"这个金币、应该是\n隐藏着魔力的魔法物品。",0)
+		MES(RAGNA,"你不是说过这个金货非常好么……",0)
+		MES(RAGNA,"你要是有些基础能力、\n也许会使用些魔法。",0)
+		MES_close(RAGNA)
+	}
+	//	name("□それ以外")
+	else
+	{
+		MES(RAGNA,"这么说、这个金货\n应该是蕴涵魔力的极品。",0)
+		MES_close(RAGNA)
+
+		MES(PARTNER,"嗯嗯、就平常带在身上\n也说很幸运……",0)
+		MES(PARTNER,"你要是有些基础素质、\n多少也能使用些魔法。",0)
+		MES_close(PARTNER)
+	}
+	//────────────────────
+
+//　　克雷斯に？エモーション。
+
+	EMO(CLEESE,EMO_HATENA)
+	wait(30)
+
+//	name2(CLEESE)
+	MES(CLEESE,"唉、呵呵。\n是吗～。",0)
+	MES(CLEESE,"好像爷爷\n也这么说过……",0)
+	MES(CLEESE,"嗯、已经有8年\n没回过家了、\n忘的一干二净～。",0)
+	MES_close(CLEESE)
+
+//　　拉古那たちに冷や汗エモーション。
+	EMO(RAGNA,EMO_HIYAASE)
+	if( !F4_00_StartSolo )//パートナーがいる
+		EMO(PARTNER,EMO_HIYAASE)
+	else
+	if( F4_02_GoVillage2 && !F5_00_HearLunar )
+		EMO(PARTNER,EMO_HIYAASE)
+	else
+	if( F5_08_JoinOdessa && !F5_13_KillDygald )
+		EMO(PARTNER,EMO_HIYAASE)
+	else
+	if( F6_00_GoToMeru )
+		EMO(PARTNER,EMO_HIYAASE)
+
+	if( F5_00_HearLunar )//露がいる
+		EMO(PET,EMO_HIYAASE)
+	wait(40)
+
+	MES(RAGNA,"（嗯、还真是\n没有什么天赋可言……）",0)
+	MES_close(RAGNA)
+
+	//────────────────────
+	//	name("□フラグ□之场合")
+	if(F6_00_GoToMeru)
+	{
+		MES(PARTNER,"（呜、可惜哦。\n感觉能\n用些什么……）",0)
+		MES_close(PARTNER)
+
+		MES(PET,"不知道是什么但是、\n真是笨手笨脚的人呢。",0)
+		MES_close(PET)
+
+	//　　露、克雷斯に向く。
+		MES(PET,"先不说这个、\n好不容易拿回来的。\n又要给出去了？",0)
+		MES_close(PET)
+	}
+	else
+	//	name("□奥蒂莎がいる场合")
+	if( F5_08_JoinOdessa && !F5_13_KillDygald )
+	{
+		MES(PARTNER,"呵呵、虽然不知道情况\n那人还是死心的好。",0)
+		MES(PARTNER,"这个小朋友、\n这么重视那个。",0)
+		MES(PARTNER,"即使是作为古董、\n也好像有不菲的价值。",0)
+		MES_close(PARTNER)
+	}
+	else
+	//	name("□露がいる场合")
+	if( F5_00_HearLunar )
+	{
+		MES(PET,"虽然不知道是怎么回事、\n真是笨手笨脚的人啊……",0)
+		MES(PET,"先不说这个、\n好不容易拿回来的。\n又要给出去了？",0)
+		MES_close(PET)
+	}
+	else
+	//	name("□艾雯がいる场合")
+	if( !F4_00_StartSolo )
+	{
+		MES(PARTNER,"（呜、可惜哦。\n感觉能\n用在什么上……）",0)
+		MES(PARTNER,"暂且不说、光靠这个能让他回忆起故乡\n也是不错的。",0)
+		MES(PARTNER,"这个东西、很贵重啊。",0)
+		MES_close(PARTNER)
+	}
+	else
+	//	name("□それ以外")
+	{
+		MES(RAGNA,"真是的、又给你\n找回来了。",0)
+		MES(RAGNA,"别再弄丢了。",0)
+		MES_close(RAGNA)
+	}
+	//────────────────────
+	MES(CLEESE,"是、以后我会小心的～。",0)
+	MES(CLEESE,"……啊、对了。\n作为报答把这个给你～。",0)
+	MES_close(CLEESE)
+
+//	name("アイテム入手テキスト")
+	//幸運之金貨を消す
+	get_item(139,-1,1)
+
+	//―――――――――――――――――――――――
+	fade_in(30,10,BLACK)
+	
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼□すきやき
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		get_item(167,1,0)
+	}
+	else
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼□海鮮丼
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		get_item(163,1,0)
+	}
+	else
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼⑦ワンタンメン
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		get_item(186,1,0)
+	}
+	else
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼⑥カルボナーラ
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		get_item(174,1,0)
+	}
+	else
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼⑤ハンバーグ
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		get_item(166,1,0)
+	}
+	else
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼③④七草かゆ
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		get_item(161,1,0)
+	}
+	
+	wait(10)
+	wait_key(0)
+	
+	fade_in(0,10,BLACK)
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	//―――――――――――――――――――――――
+
+
+//　　※各フラグに応じて、結構良いフードが貰える予定。
+	MES(CLEESE,"咿呀、真是\n太感谢你们了。",0)
+	MES_close(CLEESE)
+
+	MES(RAGNA,"啊啊、以后要小心哦。",0)
+	MES_close(RAGNA)
+
+//　　軽く暗転してから、操作許可を戻す。
+	fade_in(100,40,BLACK)
+	wait_fade()
+	//★克雷斯に金貨を返した
+	F_set(FE_03_KinkaCleese)
+	wait(20)
+	
+	//本当は暗転中に向きを戻したい。
+	
+
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

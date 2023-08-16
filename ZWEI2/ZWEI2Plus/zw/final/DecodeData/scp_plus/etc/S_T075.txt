@@ -1,0 +1,333 @@
+//■Zwei2一般メッセージ．星降りの里 TEST
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆ヤサク（きこり）Yasaku")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_YASAKU
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(YASAKU, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,YASAKU)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,YASAKU)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□□　わらしべイベント
+	//	name("１．ヤサク（星降りの里）		□『鷹の彫り物』")143
+	//──────────────────────────────
+	if(F5_00_HearLunar && !FV_11_Warasi_1_Ysk)
+	{
+	//　　ヤサク、ラグナに向く。
+		//□では首だけ動かす
+		if(!F6_00_GoToMeru)
+		{
+			look_chr(YASAKU, RAGNA, "Bone_Head")
+		}
+		//□では体ごと動かす
+		else
+		{
+			MOT(YASAKU,52,10)
+			rot_chr(YASAKU,30,PLAYER1)
+		}
+
+		MES(YASAKU,"お前たちか……",0)
+		MES(YASAKU,"昨日は世話になったな。\nこれを持って行くがいい。",0)
+		MES_close(YASAKU)
+
+	//	name("アイテム入手テキスト")
+	//	MES(this,"『鷹の彫り物』を手に入れた。",0)
+		//―――――――――――――――――――――――
+		fade_in(30,10,BLACK)
+
+		get_item(143,1,0)
+		wait(10)
+		wait_key(0)
+		
+		fade_in(0,10,BLACK)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		//―――――――――――――――――――――――
+
+		MES(RAGNA,"あ、ああ。サンキュー。",0)
+		MES_close(RAGNA)
+
+	//	name2(PET)
+		MES(PET,"へえ……\n随分リアルな彫刻よね。",0)
+		MES_close(PET)
+
+		//──────────────────────────────
+		//	name("□アルウェン先頭")
+		if(GW_MAN==0 && F6_00_GoToMeru)
+		{
+			MES(PARTNER,"ふむ、かなり丁寧に\n作り込んである品のようだな。",0)
+			MES_close(PARTNER)
+		}
+		//	name("□ラグナ先頭")
+//		else
+//		{
+//			MES(RAGNA,"ああ、かなり丁寧に\n作り込んである品みたいだな。",0)
+//			MES_close(RAGNA)			
+//		}
+		//──────────────────────────────
+
+		MES(YASAKU,"３年かけて彫り上げた傑作だ。\n大切にしてくれよ。",0)
+		MES_close(YASAKU)
+
+	//　　ラグナたちに冷や汗エモーション。
+		EMO(RAGNA,EMO_HIYAASE)
+		EMO(PET,EMO_HIYAASE)
+		
+		//アルウェンが居る
+		if(F6_00_GoToMeru)
+		{
+			EMO(PARTNER,EMO_HIYAASE)
+		}
+		else
+		//オデッサが居る
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			EMO(PARTNER,EMO_HIYAASE)
+		}
+		wait(30)
+		
+		MES(RAGNA,"（イキナリ重たいものを\n  渡されちまったぜ。）",0)
+		MES(RAGNA,"（ど、どーすっかな……）",0)
+		MES_close(RAGNA)
+		
+		//★ヤサク【彫り物をする】
+		F_set_note(YASAKU,1)
+		F_set(FV_11_Warasi_1_Ysk)
+		
+		if(!F6_00_GoToMeru)
+		{
+			look_off(YASAKU)
+		}
+		else
+		{
+			MOT(YASAKU,2,10)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※民家１の前あたりで、仕事している。
+	if(F6_00_GoToMeru)
+	{
+		MOT(YASAKU,52,10)
+		rot_chr(YASAKU,30,PLAYER1)
+		if(!F_YASAKU)
+		{
+//			MES(YASAKU,"……よそ者が\n迷い込むとは珍しいな。",0)
+//			MES(YASAKU,"まあ近頃は、里の連中も\n頭が柔らかくなってきた。",0)
+//			MES(YASAKU,"見た所大人しそうな男ではあるし、\n大事には至らんだろう。",0)
+//			MES_close(YASAKU)
+
+			look_chr(YASAKU,CLEESE,"Bone_Head")
+			MES(YASAKU,"ふむ、あの若者……\nどうやら迷い込んでしまった\n旅人のようだな。",0)
+			look_off(YASAKU)
+			MES(YASAKU,"このような時に\n珍しい事もあるものだ。",0)
+			MES(YASAKU,"まあ近頃は、里の連中も\n頭が柔らかくなってきた。",0)
+			MES(YASAKU,"見た所大人しそうな男ではあるし、\n大事には至らんだろう。",0)
+			MES_close(YASAKU)
+
+/*			//	name("□まだ『鷹の彫り物』を貰ってない場合")
+			if( !FV_00_Warasi_1_Ysk )
+			{
+				MES(YASAKU,"ところで……",0)
+				MES(YASAKU,"お前たちには\n先日も世話になったな。",0)
+				MES(YASAKU,"これを持って行くがいい。",0)
+				MES_close(YASAKU)
+
+			//	name("アイテム入手テキスト")
+				fade_in(30,10,BLACK)
+
+				get_item(143,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			//　　※わらしべイベント用のアイテムです。
+
+				MES(YASAKU,"俺が作ったものだ。",0)
+				MES(YASAKU,"大したものではないが、\n受け取っておいてくれ。",0)
+				MES_close(YASAKU)
+				
+				F_set(FV_00_Warasi_1_Ysk)
+			}
+*/			
+			F_set(YASAKU)
+		}
+		//★繰り返し
+		else
+		{
+			MES(YASAKU,"近頃は、里の連中も\n頭が柔らかくなってきた。",0)
+			MES(YASAKU,"……いい傾向なのかもしれんな。",0)
+			MES_close(YASAKU)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//　　※民家１、縁側に座っている。
+		//　　※初回イベント。
+		look_chr(YASAKU, RAGNA, "Bone_Head")
+		if(!F_YASAKU)
+		{
+			//　　※以下通常一般メッセージ。
+			MES(YASAKU,"ともあれ、ダイゴローが\n無事で良かった。",0)
+			MES(YASAKU,"あの襲撃の中、俺も\n途中で守りきれなくなってな。\nカラス殿に託したのだが……",0)
+			MES(YASAKU,"あの子は泣きもせず\n大人しくしていたようだ。",0)
+			MES(YASAKU,"ふむ……\n俺も体を張って守った甲斐が\nあったというものだ。",0)
+			MES_close(YASAKU)
+			
+			//★ダイゴロー【泣かない】
+			F_set_note(-74,1)
+			F_set(YASAKU)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　★繰り返し
+			MES(YASAKU,"さて、俺もそろそろ\n仕事をせねばならんな。",0)
+			MES(YASAKU,"この分だと、山から木を\n切り出してくる必要がありそうだ。",0)
+			MES(YASAKU,"まだ傷も痛むが……\n今の時期に雪山の奥まで入れるのは\n俺しかいないからな。",0)
+			MES_close(YASAKU)
+		}
+		look_off(YASAKU)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//　　※里入り口付近で倒れている。
+	if( F4_09_GoShrineMia )
+	{
+		MES(YASAKU,"………………………………",0)
+		MES_close(YASAKU)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//　　※里入り口付近で倒れている。
+	if( F4_06_StopAttack )
+	{
+		MES(YASAKU,"………………………………",0)
+		MES_close(YASAKU)
+	}
+	else
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//　　※民家１の前あたりで、仕事している。
+	if( F4_05_OnVillage2 )
+	{
+		MOT(YASAKU,52,10)
+		rot_chr(YASAKU,30,PLAYER1)
+		//　　※初回メッセージ
+		if( !FS_08_TalkYasaku )
+		{
+			MES(YASAKU,"ふむ、修行場を通ってきたのか。",0)
+			MES(YASAKU,"あの辺りの魔物は\nまだ大人しい方だ。",0)
+			MES(YASAKU,"裏手の峰……特に社の付近は\n凶暴な魔物も出るからな。",0)
+			MES(YASAKU,"日が落ちてからは\n出步くんじゃないぞ。",0)
+			MES_close(YASAKU)
+			F_set(FS_08_TalkYasaku)
+			
+		//名前付きキャラ全員に話しかけると露天風呂が開く
+			EV("EV_F4_12_OkRoten")
+		}
+		//※以下通常一般メッセージ。
+		else
+		{
+			if(!F_YASAKU)
+			{
+				MES(YASAKU,"裏手の峰には、\n里の象徴とされる社がある。",0)
+				MES(YASAKU,"だが、あの辺りには\n凶暴な魔物も多いからな。",0)
+				MES(YASAKU,"日が落ちてからは特に危険だろう。",0)
+				MES(YASAKU,"今からの時間、\n勝手に出步くんじゃないぞ。",0)
+				MES_close(YASAKU)
+				F_set(YASAKU)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(YASAKU,"ところで、\nダイゴローを見なかったか？",0)
+				MES(YASAKU,"さっきまでよろず屋の前で\n遊んでいたはずだが……",0)
+				MES(YASAKU,"ふむ、あの子ときたら\nすぐにフラフラと出かけてしまう。",0)
+//				MES(YASAKU,"今度からは誰かに\n預けておくとするか……",0)
+				MES(YASAKU,"まったく誰に似たのやら……",0)
+				MES_close(YASAKU)
+				
+				//★ヤサク【ダイゴローは息子】
+				//★ダイゴロー【フラフラ出かける】
+				F_set_note(YASAKU,0)
+				F_set_note(-74,0)
+			}
+		}
+		MOT(YASAKU,2,10)
+	}
+	TK_end()
+}
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

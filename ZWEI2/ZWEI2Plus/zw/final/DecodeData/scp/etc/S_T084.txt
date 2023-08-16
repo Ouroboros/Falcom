@@ -1,0 +1,952 @@
+//──────────────────────────────
+//	name("◆妖精３姉妹　Spiritシリーズ")
+//──────────────────────────────
+//玛琳（妖精A）
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+//妖精之ショップ処理(□之み)
+SHOP_SPIRIT_A
+{
+	TK_begin()
+	rot_chr(SPIRIT_A,30,PLAYER1)
+	rot_chr(PLAYER1,30,SPIRIT_A)
+	rot_chr(PLAYER2,30,SPIRIT_A)
+	rot_chr(PET,30,SPIRIT_A)
+	KAO(SPIRIT_A, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(PLAYER2, "1", "1", "1")	
+	KAO(PET, "1", "1", "1")	
+	
+	//①で話していなかった场合之初回イベント
+	if(!FE_12_TalkSpirit_A && !FE_01_TalkSpirit)
+	{
+		//□之会話を分けています
+		EV("TK_SPIRIT_A_12")
+		wait_EV("TK_SPIRIT_A_12")
+		
+		EV("SHOP_SPIRIT_A_LOOP")
+		wait_EV("SHOP_SPIRIT_A_LOOP")
+	}
+	else
+	{
+		rot_chr(PLAYER1,30,SPIRIT_A)
+
+		VOICE(729,0)				//「いらっしゃいまし」		
+		MES(SPIRIT_A,"欢迎光临。",0)
+
+//		MES(SPIRIT_A,"来来，\n请进来看看。",0)
+		MES_close(SPIRIT_A)
+
+
+		EV("SHOP_SPIRIT_A_LOOP")
+		wait_EV("SHOP_SPIRIT_A_LOOP")
+
+	}
+	TK_end()
+}
+
+
+SHOP_SPIRIT_A_LOOP
+{
+//	name("選択テキスト")
+	workL(WK_CANCEL,SET,3)//【不用了】
+	MES_pos(PLAYER1,"??W9【交谈】\n【买点东西吧】\n【不用了】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	//──────────────────────────────
+	//	name("□交谈")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		EV("TK_SPIRIT_A_12")
+		wait_EV("TK_SPIRIT_A_12")
+		loop
+	}
+	else
+	//──────────────────────────────
+	//	name("□买点东西吧")
+	//──────────────────────────────
+	if(WK_YESNO==2)
+	{
+		MES(SPIRIT_A,"今天买点什么呢。",0)
+		MES_close(SPIRIT_A)
+		shop_open(5)
+
+		wait_W(WK_YESNO)
+
+		if(IT046>0)
+			F_set(FE_FF_BuySpiritWear)//★妖精之店で洋服を買った
+
+		if(IT019>0 && IT046>0 && IT095>0)
+			F_set(FE_FF_SpiritSoldout)//★妖精之店がが売り切れた
+
+		if(!FE_FF_BuySpirit && IT019>0 )
+		{
+			EV("EV_BuyFeary")
+			wait_EV("EV_BuyFeary")
+		}
+		else
+		{
+			loop
+		}
+	}
+	//──────────────────────────────
+	//	name("□不用了")
+	//　　会話処理終了。
+	//──────────────────────────────
+	else
+	{
+		MES(SPIRIT_A,"多谢惠顾哦。",0)
+//		MES(SPIRIT_A,"またどうか\nいらしてくださいませ。",0)
+
+		VOICE(733,0)				//「またお越しくださいませ」
+		MES(SPIRIT_A,"再来哦。",0)		
+		MES_close(SPIRIT_A)
+	}
+}
+
+//──────────────────────────────
+//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+//──────────────────────────────
+//　　※森入り口で開店している。
+//　　　玛琳がカウンターに入り，莉琪がそ之傍。
+//　　　少し離れて修が浮遊している。
+//　　※初回は，露と之絡みイベントがあります。
+//　　　近づくとイベント開始。
+TK_SPIRIT_A_12
+{
+	if(!FE_12_TalkSpirit_A && !FE_01_TalkSpirit)
+	{
+	//	name("玛琳")
+		rot_chr(SPIRIT_A,30,PARTNER)
+		MES(SPIRIT_A,"真的，\n真的是真祖吗……",0)
+		MES(SPIRIT_A,"一直没有注意到，\n无礼了。",0)
+		MES_close(SPIRIT_A)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"呵呵，\n没什么啦。",0)
+		MES(PARTNER,"让我看看你的店吧。",0)
+		MES_close(PARTNER)
+
+
+		//──────────────────────────────
+		//	name("□『★３人は闇妖精』之フラグが立っている场合")
+		if(!FE_02_SpiritOfDark)
+		{
+			MES(PARTNER,"其实我也\n很期待呢。",0)
+			MES_close(PARTNER)
+		}
+		//	name("□それ以外")
+		else
+		{
+			MES(PARTNER,"妖精开的服装店，\n好像很有意思哦。",0)
+			MES_close(PARTNER)
+		}
+		//──────────────────────────────
+
+	//	name("玛琳")
+		MES(SPIRIT_A,"是，是这样。",0)
+		MES(SPIRIT_A,"因为刚刚开始营业，\n真祖大人可是第一位客人啊。",0)
+		MES(SPIRIT_A,"来来，请您\n慢慢看。",0)
+		MES_close(SPIRIT_A)
+
+		//　　□ショップ選択肢に飛ぶ。
+		
+		F_set(FE_12_TalkSpirit_A)
+	}
+//──────────────────────────────
+//　　※以下通常一般メッセージ。
+	else
+	{
+		//	name("＞フェアリー買い直後之一般。")
+		if(F_LUE)
+		{
+			//　　※フラグ①見てる版。
+			if(FE_01_TalkSpirit)
+			{
+				if(!F_SPIRIT_A)
+				{
+					MES(SPIRIT_A,"我们『精灵』也\n可以和通常的宠物一样使用。",0)
+					MES(SPIRIT_A,"在去迷宫之前，\n请在状态画面选择\n不要忘记哦。",0)
+					MES(SPIRIT_A,"我玛琳作为长女\n将随同您一起前进。",0)
+					MES(SPIRIT_A,"请您一定使用\n『精灵』！",0)
+					MES_close(SPIRIT_A)
+					F_set(SPIRIT_A)
+				}
+				else
+				{
+				//　　★繰り返し
+					MES(SPIRIT_A,"请在状态画面选择\n『精灵』。",0)
+					MES(SPIRIT_A,"我玛琳作为长女\n代表我们３人\n将随同您一起前进。",0)
+					MES(SPIRIT_A,"请您一定使用\n『精灵』！",0)
+					MES_close(SPIRIT_A)
+				}
+			}
+			else
+			{
+			//　　※フラグ①見てない版。
+				if(!F_SPIRIT_A)
+				{
+					MES(SPIRIT_A,"我们『精灵』也\n可以和通常的宠物一样使用。",0)
+					MES(SPIRIT_A,"在去迷宫之前，\n请在状态画面\n不要忘记选择。",0)
+					MES(SPIRIT_A,"我玛琳作为长女\n将随同您一起前进。",0)
+					MES_close(SPIRIT_A)
+					F_set(SPIRIT_A)
+				}
+				else
+				{
+				//　　★繰り返し
+					MES(SPIRIT_A,"请在状态画面选择\n『精灵』。",0)
+					MES(SPIRIT_A,"我玛琳作为长女\n代表我们３人\n将随同您一起前进。",0)
+					MES_close(SPIRIT_A)
+				}
+			}
+		}
+		else
+		{
+			if(!F_SPIRIT_A)
+			{
+			//	name("玛琳")
+				MES(SPIRIT_A,"啊，从刚才\n天气就有点奇怪……",0)
+				MES(SPIRIT_A,"好不容易开店\n这时您又来这里光临，\n真不想关门啊。",0)
+				MES_close(SPIRIT_A)
+
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"是，是吗……",0)
+					MES(RAGNA,"可，风变强的话\n还是去森林里避避吧？",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□艾尔雯先頭")
+				{
+					MES(PARTNER,"是，是吗……",0)
+					MES(PARTNER,"但是，风力太强的话\n还是去森林里避避吧？",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+			//	name("玛琳")
+				MES(SPIRIT_A,"没事，没关系。\n趁着现在\n天气还没变。",0)
+				MES(SPIRIT_A,"来来，\n请您先看看吧。",0)
+				MES_close(SPIRIT_A)
+
+				F_set(SPIRIT_A)
+			}
+			else
+			{
+			//	name("玛琳")
+				MES(SPIRIT_A,"好不容易开店的时候\n迎来了客人。",0)
+				MES(SPIRIT_A,"又遇上台风暴雨，\n真不想关店啊。",0)
+				MES(SPIRIT_A,"来来，请您\n先看看。",0)
+				MES_close(SPIRIT_A)
+			}
+		}
+	}
+}
+
+
+TK_SPIRIT_A
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(SPIRIT_A, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,SPIRIT_A)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,SPIRIT_A)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_A)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_A)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_A)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_A)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,SPIRIT_A)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※フラグ①または□で妖精たちに会っていない场合，
+	//　　　妖精たちは配置しない。
+	//　　　森入り口に店だけ置いて，誰も居ない状態。
+	//　　　カウンター（もしくは看板）ＬＰを調べると，以下之メッセージ。
+	//MES(SPIRIT_A,"本日臨時休業。\n材料探しに行ってます……噴",0)
+	//MES_close(SPIRIT_A)
+//　　※以外场合，在森入口配置妖精的店面。
+	if( F6_05_EndSixth )
+	{
+	//	name("●玛琳")
+	//　　※初回イベント。
+	//	rot_chr(SPIRIT_A,30,PLAYER1)
+		rot_chr(SPIRIT_A,30,RAGNA)
+		if(!FE_13_TalkSpirit_A)
+		{
+		//	name("玛琳")
+			MES(SPIRIT_A,"今天就要……和你们２人\n分开了吗。",0)
+			MES(SPIRIT_A,"呜呜，要寂寞了。",0)
+			MES_close(SPIRIT_A)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈……",0)
+			MES(RAGNA,"公主殿下\n和露不是在吗。",0)
+			MES_close(RAGNA)
+
+		//	name("玛琳")
+			MES(SPIRIT_A,"哎，也对……",0)
+			MES(SPIRIT_A,"还有呢，这个店\n是寄托了大家希望\n所开的。",0)
+			MES(SPIRIT_A,"为了让大家更加满意，\n玛琳，作为老大的我\n会竭尽全力努力的。",0)
+			MES_close(SPIRIT_A)
+
+		//　　玛琳，お辞儀をする。（もしくは２人を見比べて瞑目）
+			rot_chr(SPIRIT_A,30,RAGNA)
+			wait(15)
+			rot_chr(SPIRIT_A,30,PARTNER)
+			wait(15)
+			rot_chr(SPIRIT_A,30,RAGNA)
+			
+			KAO(SPIRIT_A,"D","4","4")
+		
+		//	name("玛琳")
+			MES(SPIRIT_A,"请您２人，小心。\n祝你们旅程愉快。",0)
+			MES_close(SPIRIT_A)
+			
+			F_set(FE_13_TalkSpirit_A)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		//	name("玛琳")
+			MES(SPIRIT_A,"以后就该\n寂寞喽……",0)
+			MES(SPIRIT_A,"我会\n竭尽全力努力的。",0)
+			MES(SPIRIT_A,"这毕竟是托大家的福\n所开的希望之店。",0)
+			MES_close(SPIRIT_A)
+
+		//　　玛琳，お辞儀をする。（もしくは２人を見比べて瞑目）
+			rot_chr(SPIRIT_A,30,RAGNA)
+			wait(15)
+			rot_chr(SPIRIT_A,30,PARTNER)
+			wait(15)
+			rot_chr(SPIRIT_A,30,RAGNA)
+			
+			KAO(SPIRIT_A,"D","4","4")
+
+		//	name("玛琳")
+			MES(SPIRIT_A,"请您２人，小心。\n祝你们旅程愉快。",0)
+			MES_close(SPIRIT_A)
+		}
+	}
+	else
+	/*
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※森入り口で開店している。
+	//　　　玛琳がカウンターに入り，莉琪がそ之傍。
+	//　　　少し離れて修が浮遊している。
+	//　　※初回は，露と之絡みイベントがあります。
+	//　　　近づくとイベント開始。
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(SPIRIT_A,30,PLAYER1)
+
+		if(!FE_12_TalkSpirit_A && !FE_01_TalkSpirit)
+		{
+		//	name("玛琳")
+			MES(SPIRIT_A,"真的，\n真的是真祖吗……",0)
+			MES(SPIRIT_A,"一直没有注意到，\n无礼了。",0)
+			MES_close(SPIRIT_A)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"呵呵，\n没有关系。",0)
+			MES(PARTNER,"不如让我看看商品吧。",0)
+			MES_close(PARTNER)
+
+
+			//──────────────────────────────
+			//	name("□『★３人は闇妖精』之フラグが立っている场合")
+			if(!FE_02_SpiritOfDark)
+			{
+				MES(PARTNER,"我私下\n还是很期待的。",0)
+				MES_close(PARTNER)
+			}
+			//	name("□それ以外")
+			else
+			{
+				MES(PARTNER,"妖精開的店，\n好像很有意思哦。",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+		//	name("玛琳")
+			MES(SPIRIT_A,"是，是这样。",0)
+			MES(SPIRIT_A,"刚刚开始营业，\n真祖様可是头一位客人哦。",0)
+			MES(SPIRIT_A,"来来，\n请您慢慢看。",0)
+			MES_close(SPIRIT_A)
+
+			//　　□ショップ選択肢に飛ぶ。
+			
+			F_set(FE_12_TalkSpirit_A)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_SPIRIT_A)
+			{
+			//	name("玛琳")
+				MES(SPIRIT_A,"啊，从刚才\n天气就有点奇怪……",0)
+				MES(SPIRIT_A,"好不容易开店\n这时您又来这里光临，\n真不想关门啊。",0)
+				MES_close(SPIRIT_A)
+
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"是，是吗……",0)
+					MES(RAGNA,"可，要是风力变强的话\n还是去森林里避避吧？",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□艾尔雯先頭")
+				{
+					MES(PARTNER,"这样啊……",0)
+					MES(PARTNER,"但是，风力太强的话\n还是去森林里避避吧？",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+			//	name("玛琳")
+				MES(SPIRIT_A,"没事，没关系。\n趁着现在\n天气还没变。",0)
+				MES(SPIRIT_A,"来来，请您\n先看看吧。",0)
+				MES_close(SPIRIT_A)
+
+				F_set(SPIRIT_A)
+			}
+			else
+			{
+			//	name("玛琳")
+				MES(SPIRIT_A,"好不容易开店的时候\n迎来了客人。",0)
+				MES(SPIRIT_A,"又遇上台风暴雨，\n真不想关店啊。",0)
+				MES(SPIRIT_A,"来来，请您\n先看看。",0)
+				MES_close(SPIRIT_A)
+			}
+		}
+	}
+	else
+	*/
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※森入り口に店だけ置いて，誰も居ない。
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//　　※森入り口に配置。３人で背を向けている。
+	if( F4_09_GoShrineMia)
+	{
+	//	name("●玛琳")
+	//　　※振り返らない。
+	//	name("玛琳")
+		MES(SPIRIT_A,"啊，多么漂亮的地方啊……",0)
+		MES(SPIRIT_A,"就决定在这里了！",0)
+		MES(SPIRIT_A,"这里很合适哦！",0)
+		MES_close(SPIRIT_A)
+
+	//　　□玛琳之分岐処理を呼び出す。
+		if(!FE_10_TalkSpirit)
+		{
+			EV("Talk_Spirit_10")
+			wait_EV("Talk_Spirit_10")
+		}
+		F_set(SPIRIT_C)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※水晶祭坛に配置。
+	//　　※祭壇ど真ん前で祭壇を向いている。
+	if( F4_00_StartSolo )
+	{
+		if(!F_SPIRIT_A)
+		{
+		//　　※振り返らない
+		//	name("玛琳")
+			MES(SPIRIT_A,"什么，这个。",0)
+			MES(SPIRIT_A,"捐的钱吗？",0)
+			MES_close(SPIRIT_A)
+
+		//　　玛琳，手を差し出すような仕草。
+			look(SPIRIT_A,"Bone_RightArm",0,		10,10,10,			30,-45,60)
+			wait(20)
+			SE(008,PLAYER1)
+
+			MES(SPIRIT_A,"叮当。……",0)
+			MES_close(SPIRIT_A)
+
+		//　　玛琳，こ之まま手を合わせる仕草となる。
+			look(SPIRIT_A,"Bone_RightArm",0,		10,10,10,			0,0,0)
+//			KAO(SPIRIT_A,"1","3","3")
+
+			MES(SPIRIT_A,"为了我们即将要\n成功的店……！",0)
+			MES_close(SPIRIT_A)
+
+			F_set(SPIRIT_A)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない
+		//	name("玛琳")
+			MES(SPIRIT_A,"为了我们成功的\n店面……！",0)
+			MES_close(SPIRIT_A)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※神殿中继にいる。玛琳を一番手前に配置しておきます。
+	//　　　近づくと，玛琳之初回イベントが起動。
+	if( F3_00_GoMoonCastle )
+	{
+		MES(SPIRIT_A,"发抖……\n太恐怖了。",0)
+		MES(SPIRIT_A,"你们２个，一定不要\n离开我好吗～？",0)
+		MES_close(SPIRIT_A)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵之正体が明かされた
+	//──────────────────────────────
+	//　　※大铁塔入り口，跳ね橋之前で背を向けている。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_SPIRIT_A)
+		{
+		//　　※振り返らない。
+		//	name("玛琳")
+			MES(SPIRIT_A,"哎呀～？\n还和以前没变？",0)
+			MES(SPIRIT_A,"太热了～。",0)
+			MES_close(SPIRIT_A)
+
+		//　　□玛琳之挿入部分を呼び出す。（３人之共通処理）
+			if(!FE_05_TalkSpirit)
+			{
+				EV("Talk_Spirit_05")
+				wait_EV("Talk_Spirit_05")
+			}
+		
+			F_set(SPIRIT_A)
+		}
+		else
+		{
+		//　　★繰り返し
+		//　　※振り返らない。
+		//	name("玛琳")
+			MES(SPIRIT_A,"莉琪～～？\n人很恐怖，\n妖怪也可怕～？",0)
+			MES(SPIRIT_A,"可恶的妖怪，\n会吃掉我们这些妖精的～。",0)
+			MES_close(SPIRIT_A)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パーツを入手した
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※廃坑入り口
+	if( F2_00_GoForest )
+	{
+		if(!F_SPIRIT_A)
+		{
+		//　　※振り返らない
+		//　　玛琳に少し□エモーションを飛ばす。
+			EMO(SPIRIT_A,EMO_ONPU)
+			wait(30)
+
+		//	name("玛琳")
+			MES(SPIRIT_A,"我们的服装店……□",0)
+			MES(SPIRIT_A,"嗯，这里\n离人类的城镇有点太近了～。",0)
+			MES(SPIRIT_A,"不管怎样气氛有点不够～。\n还得更浪漫一点。",0)
+			MES_close(SPIRIT_A)
+
+			//──────────────────────────────
+			//　　□『★３人は闇妖精』之フラグが立っていない场合
+			if(!FE_02_SpiritOfDark)
+			{
+			//　　拉古那，艾尔雯に向く。
+				rot_chr(RAGNA,30,PARTNER)
+
+				MES(RAGNA,"（这些家伙……\n公主的朋友？）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（不是……\n和露同是闇妖精，\n但这是第一次见面。）",0)
+				MES(PARTNER,"（嗯，做什么呢……？）",0)
+				MES_close(PARTNER)
+			//　　『★３人は闇妖精』之フラグを立てる。
+				F_set(FE_02_SpiritOfDark)
+			}
+			//──────────────────────────────
+			F_set(SPIRIT_A)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない
+		//	name("玛琳")
+			MES(SPIRIT_A,"这里气氛\n不太满意啊～。",0)
+			MES_close(SPIRIT_A)
+
+		//　　玛琳にＰＡエモーション。
+			EMO(SPIRIT_A,EMO_PA)
+			wait(30)
+
+		//	name("玛琳")
+			MES(SPIRIT_A,"啊，而且总觉得……\n汗臭味？",0)
+			MES(SPIRIT_A,"不行～，绝对不能在这里\n开店～。",0)
+			MES_close(SPIRIT_A)
+		}
+
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※山入り口マップにいる。
+	if( F1_15_GoVillage )
+	{
+		if(!F_SPIRIT_A)
+		{
+		//　　※振り返らない
+		//	name("玛琳")
+			MES(SPIRIT_A,"这儿太冷了～。\n也不能在这里～。",0)
+			MES(SPIRIT_A,"……，不能放弃。",0)
+			MES_close(SPIRIT_A)
+
+		//──────────────────────────────
+			//	name("□フラグ①初回を見ている场合。")
+			if(FE_01_TalkSpirit)
+			{
+			//	name("玛琳")
+				MES(SPIRIT_A,"不管怎么说，\n这里都是真祖统治的地域。",0)
+				MES(SPIRIT_A,"一定会有\n开店的好地方！",0)
+				MES_close(SPIRIT_A)
+
+			}
+			else
+			{
+			//	name("□見ていない场合")
+			//	name("玛琳")
+				MES(SPIRIT_A,"一定有，一定会有适合\n我们开店的理想地点。",0)
+				MES_close(SPIRIT_A)
+
+				//──────────────────────────────
+				//　　□『★３人は闇妖精』之フラグが立っていない场合
+				if(!FE_02_SpiritOfDark)
+				{
+				//　　拉古那，艾尔雯に向く。
+					rot_chr(RAGNA,30,PARTNER)
+
+					MES(RAGNA,"（这些家伙……\n是公主的熟人？）",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"（不是……\n和露同是闇妖精，\n但这是第一次见。）",0)
+					MES(PARTNER,"（嗯，在做什么呢……？）",0)
+					MES_close(PARTNER)
+					
+				//　　『★３人は闇妖精』之フラグを立てる。
+					F_set(FE_02_SpiritOfDark)
+				}
+				//──────────────────────────────
+			}
+			F_set(SPIRIT_A)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない
+		//	name("玛琳")
+			MES(SPIRIT_A,"嗯，怎么办。",0)
+			MES(SPIRIT_A,"再去一下\n刚才那里吧……",0)
+			MES_close(SPIRIT_A)
+		}
+
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※大铁塔（沈黙時）入り口。
+	//　　　３人で，背中を向けて話し込んでいる。
+	//　　　話しかけるとイベント開始。
+	//　　　クロスフェードで拉古那たち之位置を再配置する。
+	if( F1_01_GameStart )
+	{
+		if(!FE_01_TalkSpirit)
+		{
+			EV("Talk_Spirit_01")
+		}
+		else
+		{
+			if(!F_SPIRIT_A)
+			{
+				rot_chr(SPIRIT_A,30,PLAYER1)
+
+			//	name("玛琳")
+				MES(SPIRIT_A,"刚才让您看见了\n让我难为情的事。",0)
+				MES(SPIRIT_A,"请您一定要忘掉。",0)
+				MES_close(SPIRIT_A)
+
+			//　　玛琳，軽く頭を下げる仕草。
+			//	name("玛琳")
+				MES(SPIRIT_A,"这里虽然人类不常来\n虽然不错但……\n还是有点欠缺。",0)
+				MES(SPIRIT_A,"可能还有\n更好的地方吧\n慢慢走走看喽。",0)
+				MES_close(SPIRIT_A)
+				F_set(SPIRIT_A)
+			}
+		//　　★繰り返し
+			else
+			{
+			//　　※振り返らない。
+			//	name("玛琳")
+				MES(SPIRIT_A,"嗯，还是有些\n煞风景啊……",0)
+				MES(SPIRIT_A,"不浪漫～。",0)
+				MES_close(SPIRIT_A)
+			}
+		}
+		rot(SPIRIT_A,30,200)
+	}
+	
+	TK_end()
+}
+
+
+//──────────────────────────────
+//▼⑤妖精３人メッセージ分岐先
+//──────────────────────────────
+Talk_Spirit_05
+{
+	//	name("□フラグ①之初回を見ていた场合，１回だけ挿入")
+	if(FE_01_TalkSpirit)
+	{
+	//　　艾尔雯に冷や汗エモーション。
+		EMO(PARTNER,EMO_HIYAASE)
+		wait(30)
+		MES(PARTNER,"又，又打起来了吗……",0)
+		MES_close(PARTNER)
+
+	//　　拉古那，艾尔雯に向く。
+		rot_chr(RAGNA,30,PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"哈哈……",0)
+		MES(RAGNA,"那家伙要是看见了\n妖精给你做的衣服，又要担心了吧。",0)
+		MES_close(RAGNA)
+
+		MES(PARTNER,"嗯，其实我的衣服\n也是由妖精缝制的。",0)
+		MES(PARTNER,"使用他们特殊的能力\n精心缝制的衣服，\n绝对是世间的珍品。",0)
+		MES(PARTNER,"妖精缝制的衣服\n都是独一无二的，\n我很期待哦……",0)
+		MES_close(PARTNER)
+
+	//　　艾尔雯，玛琳たちを見比べる。
+		look_chr( PARTNER, SPIRIT_A ,"Bone_Head")
+		wait(20)
+		look_chr( PARTNER, SPIRIT_B ,"Bone_Head")
+		wait(20)
+		look_chr( PARTNER, SPIRIT_C ,"Bone_Head")
+		wait(20)
+
+		//解除
+			look_off(RAGNA)
+		
+		MES(PARTNER,"有耐性啊……",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"哈哈……\n没有比那个更好的了吧。",0)
+		MES_close(RAGNA)
+		
+		//★莉琪【妖精之能力】
+		F_set_note(SPIRIT_B,1)
+		F_set(FE_05_TalkSpirit)	
+	}
+	//	name("□『★３人は闇妖精』之フラグが立っている场合，１回だけ挿入")
+	else
+	if(FE_02_SpiritOfDark)
+	{
+		MES(PARTNER,"又吵架了吗……",0)
+		MES_close(PARTNER)
+
+	//　　拉古那，艾尔雯に向く。
+		rot_chr(RAGNA,30,PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"哈哈……",0)
+		MES(RAGNA,"那家伙要是见到妖精的店，\n又要担心了……",0)
+		MES_close(RAGNA)
+		F_set(FE_05_TalkSpirit)	
+	}
+	//　　□『★３人は闇妖精』之フラグが立っていない场合
+	else
+	if(!FE_02_SpiritOfDark)
+	{
+	//　　拉古那，艾尔雯に向く。
+		rot_chr(RAGNA,30,PARTNER)
+
+		MES(RAGNA,"（这些家伙……\n是公主的熟人？）",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"（不是……\n虽然和露同是闇妖精，\n但这是初次见面。）",0)
+		MES(PARTNER,"（嗯，在这里\n干什么呢……？）",0)
+		MES_close(PARTNER)
+		F_set(FE_05_TalkSpirit)	
+
+	//　　『★３人は闇妖精』之フラグを立てる。
+		F_set(FE_02_SpiritOfDark)
+	}
+}
+
+
+
+EV_BuyFeary
+{
+	wait(20)
+	MES(SPIRIT_A,"呵呵，谢谢您\n购买。",0)
+	MES_close(SPIRIT_A)
+
+	if(GW_MAN==1)
+	{
+		MES(RAGNA,"那个……",0)
+		MES(RAGNA,"说是妖精\n难道……",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+		MES(PARTNER,"嗯，话说回来……",0)
+		MES(PARTNER,"说是妖精\n或许……",0)
+		MES_close(PARTNER)
+	}
+
+	//──────────────────────────────
+	//	name("□フラグ①で会っている场合")
+	if(FE_01_TalkSpirit)
+	{
+		MES(SPIRIT_A,"唉，当然是\n我们的事！",0)
+		MES(SPIRIT_A,"一直想给真祖大人\n准备礼物……",0)
+		MES(SPIRIT_A,"就请让我玛琳\n帮助您。",0)
+		MES(SPIRIT_A,"请在关键时刻\n呼唤我们。",0)
+		MES(SPIRIT_A,"不管何处，\n我们也愿意！",0)
+		MES_close(SPIRIT_A)
+	}
+	else
+	{
+	//	name("□それ以外")
+	//	name("玛琳")
+		MES(SPIRIT_A,"唉，当然是\n我们的事！",0)
+		MES(SPIRIT_A,"就请让我玛琳\n帮助您。",0)
+		MES(SPIRIT_A,"请在关键时刻\n呼唤我们。",0)
+		MES_close(SPIRIT_A)
+	//──────────────────────────────
+	}
+
+//	name("システムメッセージ")
+	MES(0,"L711『妖精』L777使用可能！",2)
+	MES_close(0)
+
+//　　※ペットチュートリアルがまだ之场合，表示。
+
+	if(!F0_14_TutoPet)
+	{
+		//●チュートリアル：ペット
+		Load_BMP(20,"sys\\tuto14.itm","0")
+		menuBMP(1,	20,	0,0,288,384)
+		menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+		menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+		SE(043,PLAYER1)
+		wait(40)
+		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+		F_set(F0_14_TutoPet)
+	}
+	
+	F_set(FE_FF_BuySpirit)
+
+	F_reset(SPIRIT_A)
+	//莉琪·修之会話が変化する场合，ＬＦをリセット。
+	if(FE_01_TalkSpirit)
+	{
+		F_reset(SPIRIT_B)
+		F_reset(SPIRIT_C)
+	}
+	F_set(LUE)//ローカル判定·買ぶ直後と判断する。
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

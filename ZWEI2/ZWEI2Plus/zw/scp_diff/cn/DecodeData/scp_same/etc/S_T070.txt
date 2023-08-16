@@ -1,0 +1,733 @@
+//──────────────────────────────
+//	name("◆菲缇莉卡（牛舎之お姉）Federica")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_FEDERICA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(FEDERICA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,FEDERICA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,FEDERICA)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,FEDERICA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※放牧地をフリ～ム～ブ。
+	if( F6_05_EndSixth )
+	{
+		MOT_SET(FEDERICA,150,-1,450,450,-1,40)
+		MOT(FEDERICA,150,10)
+		rot_chr(FEDERICA,30,PLAYER1)
+
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"巴兰先生也不简单嘛。\n居然认识那么漂亮的人。",0)
+			MES(FEDERICA,"呵呵，虽然我只是远远地看着，\n不过他们不是很登对吗。",0)
+			MES(FEDERICA,"没准意外地\n会像这样顺利发展下去呢。",0)
+			MES(FEDERICA,"嗯，这就是\n所谓的善有善报吧。",0)
+			MES_close(FEDERICA)
+
+			F_set(FEDERICA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(FEDERICA,"那么，\n我也去工作吧。",0)
+			MES(FEDERICA,"呵呵，不如\n明天去见见亚妮迪吧。",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※罗亚鲁塔村入り口前辺りで、呆然としている。
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+
+		MOT(FEDERICA,2,10)
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"刚，刚才啊……",0)
+			MES(FEDERICA,"有个奇怪的肌肉男\n从这里经过呢……",0)
+			MES_close(FEDERICA)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"奇，奇怪的肌肉男……？",0)
+					MES_close(RAGNA)
+
+					//	name("□嘉兰多に会った事が啊る")
+//					if(FV_02_VisitGyakata)
+					if(FE_FF_GetSkil_1)
+					{
+						MES(PARTNER,"唔，我只能\n想到一个人……",0)
+						MES_close(PARTNER)
+					}
+				}
+				else
+			//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"奇怪的肌肉男啊……",0)
+					MES_close(PARTNER)
+
+					//	name("□嘉兰多に会った事が啊る")
+//					if(FV_02_VisitGyakata)
+					if(FE_FF_GetSkil_1)
+					{
+						MES(RAGNA,"除了他以外，\n应该不可能有别人了……",0)
+						MES_close(RAGNA)
+					}
+				}
+			//──────────────────────────────
+			
+		//　　菲缇莉卡、顔を背ける。
+			MOT(FEDERICA,150,10)
+			look(FEDERICA,"Bone_Head",0,		0,3,0,			0,-45,0)
+			MES(FEDERICA,"唔唔，总觉得\n看到了很可怕的东西呢。",0)
+			MES(FEDERICA,"就好像从梦里出来的那样恐怖……",0)
+			MES_close(FEDERICA)
+
+			//──────────────────────────────
+			//	name("□嘉兰多に会った事が啊る")
+//			if(FV_02_VisitGyakata)
+			if(FE_FF_GetSkil_1)
+			{
+
+			//　　以下之ポップアップは同時に表示＆消去。
+				MES_pos(RAGNA,"（这种感觉，我很理解……）",0,0,0,0,0)
+				MES_pos(PARTNER,"W1（这种感觉，我很理解……）",0,0,0,0,0)
+
+				wait_key(0)
+				MES_close(PARTNER)
+				MES_close(RAGNA)
+
+				if(IT137<1)//丘でＧと会ってない
+				{
+				//　　露に？エモ～ション。
+					EMO(PET,EMO_HATENA)
+					wait(30)
+
+					MES(PET,"到底在说什么……？",0)
+					MES_close(PET)
+				}
+			}
+			//	name("□嘉兰多に会った事がない")
+			//──────────────────────────────
+			else
+			//丘で嘉兰多と会った
+			if(IT137>0)
+			{
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（呃，这么说，果然是……？）",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"（唔，应该是\n  在说他吧……）",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+			}
+			else
+			{
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（看来是个\n  很令人吃惊的人啊。\n  虽然不大想像得出来……）",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"（看来真是相当震惊啊。\n  ……虽然无法想像\n  那是个怎样的人……）",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+			}
+
+		//──────────────────────────────
+
+			//★菲缇莉卡【啊之人物を目撃】
+			F_set_note(FEDERICA,2)
+			F_set(FEDERICA)
+		}
+		//──────────────────────────────
+		//　　★繰り返し
+		else
+		{
+			MES(FEDERICA,"我打完水，\n转过头一看……",0)
+			MES(FEDERICA,"就在那了。\n那个肌肉男……",0)
+			MES_close(FEDERICA)
+
+		//　　菲缇莉卡、顔を背ける。
+			MOT(FEDERICA,150,10)
+			look(FEDERICA,"Bone_Head",0,		0,3,0,			0,-45,0)
+			MES(FEDERICA,"那真是强烈的印象呢。\n可能一辈子都忘不了了……",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,150,10)
+		look(FEDERICA,"Bone_Head",0,		0,5,0,			0,0,0)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※放牧地をフリ～ム～ブ。
+	if( F5_00_HearLunar )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+		MOT_SET(FEDERICA,150,-1,445,445,-1,-1)//　　額に手を当てて俯く
+
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"呼……干草的量\n有这么多就够了吧。",0)
+			MES(FEDERICA,"虽然还有点头晕，\n不过不照顾这些孩子们不行了。",0)
+			MES(FEDERICA,"不过，村子里恢复得最慢的，\n难不成……是我？",0)
+			MES_close(FEDERICA)
+
+		//　　菲缇莉卡に···エモ～ション。
+			EMO(FEDERICA,EMO_TENTEN)
+			wait(30)
+		
+		//　　額に手を当てて俯くような仕草。
+			MOT(FEDERICA,150,10)
+		
+			MES(FEDERICA,"啊啊受打击了……\n我明明才２２啊……",0)
+			MES_close(FEDERICA)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哈哈哈……\n没事啦，别人回复得再快\n也是有极限的，呐？",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("□奥蒂莎先頭")
+				{
+					MES(PARTNER,"哦呀，你和我一样大嘛。",0)
+					MES_close(PARTNER)
+
+					rot_chr(RAGNA,30,PARTNER)
+				//　　拉古那と露に冷や汗エモ～ション。
+					EMO(RAGNA,EMO_HIYAASE)
+					EMO(PET,EMO_HIYAASE)
+					wait(30)
+					
+					MES(RAGNA,"那个，奥蒂莎……\n不要压低年龄啊……",0)
+					MES_close(RAGNA)
+				}
+			//──────────────────────────────
+			F_set(FEDERICA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(FEDERICA,"真的很受打击呢……\n我宁愿想信\n大家都是硬撑着出来工作的。",0)
+			MES(FEDERICA,"不过，巴兰先生和拉乌妮婆婆\n到阿鲁迪亚的教会去了呢。",0)
+			MES_close(FEDERICA)
+
+		//　　菲缇莉卡に青ざめエモ～ション。
+			EMO(FEDERICA,EMO_AOZAME)
+			wait(30)
+			
+			MOT(FEDERICA,150,10)
+			MES(FEDERICA,"不能认输……\n我还这么年轻怎么能认输呢……",0)
+			MES_close(FEDERICA)
+
+		//	name2(PET)
+			MES(PET,"（现在说什么都没用了吧。）",0)
+			MES_close(PET)
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+	//　　※牛舎民家之台所に立っている。
+		MOT_SET(FEDERICA,150,-1,446,446,-1,-1)
+		if(!F_FEDERICA)
+		{
+		//　　菲缇莉卡にＰＡエモ～ションで振り返る。
+			EMO(FEDERICA,EMO_PA)
+			wait(30)
+			rot_chr(FEDERICA,30,PLAYER1)
+			MOT(FEDERICA,150,5)
+			MES(FEDERICA,"咦，你们这么早就……",0)
+			MOT(FEDERICA,2,10)
+			MES(FEDERICA,"呵呵，起得真早呢。",0)
+			MES(FEDERICA,"我也正要去\n照顾动物们呢。",0)
+			MES(FEDERICA,"最近一直卧床休息，\n不努力不行了。",0)
+			MES_close(FEDERICA)
+			F_set(FEDERICA)
+			
+			rot(FEDERICA,30,90)
+		}
+		else
+		{
+		//　　★繰り返し
+		//　　※振り返らない。
+			MES(FEDERICA,"对了，在那之前\n得先垫垫肚子。",0)
+			MES(FEDERICA,"啊啊，手也没什么力气了……",0)
+			MES(FEDERICA,"果然老是躺在床上，\n体力就会下降呢～……",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,151,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※牛舎民家、ベッド之上で起き上がっている。
+	//　　※『★星降之里へ向かうことにした』之前は、
+	//　　　亚妮迪がお見舞いに来ている。
+	if( F4_00_StartSolo )
+	{
+		//　　※亚妮迪と共通之初回イベント。
+		//　　※振り返らない。
+		if(!FT_07_TalkAneFede && !F4_02_GoVillage2)
+		{
+			EV("TALK_FA")
+			wait_EV("TALK_FA")
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下『★星降之里へ向かうことにした』前之通常一般メッセ～ジ。
+			if(!F4_02_GoVillage2)
+			{
+				look_chr(FEDERICA,PLAYER1,"Bone_Head")
+				if(!F_FEDERICA)
+				{
+					MES(FEDERICA,"啊哈哈……好像让亚妮迪\n非常担心呢。",0)
+					MES(FEDERICA,"嗯……\n不过呢，我觉得\n这样也不错。",0)
+					MES(FEDERICA,"那个，只有偶尔\n……偶尔会这么想。",0)
+					MES(FEDERICA,"因为，这孩子\n平时很少过来呢。",0)
+					MES_close(FEDERICA)
+
+					F_set(FEDERICA)
+				}
+				//　　★繰り返し
+				else
+				{
+					MES(FEDERICA,"亚妮迪\n好像很担心……",0)
+					MES(FEDERICA,"不过，她来看望我，\n我真的很高兴。",0)
+					MES(FEDERICA,"这孩子\n平时很少来，\n我有点寂寞呢。",0)
+					MES_close(FEDERICA)
+				}
+				look_off(FEDERICA)
+				look_chr(FEDERICA,ANNETTE,"Bone_Head")
+			}
+		//──────────────────────────────
+		//　　※『★星降之里へ向かうことにした』之後。
+			else
+			{
+				look_chr(FEDERICA,PLAYER1,"Bone_Head")
+				if(!F_FEDERICA)
+				{
+					MES(FEDERICA,"刚才\n妹妹来看我了。",0)
+					MES(FEDERICA,"嗯，虽然是很生气地说\n『我很担心啊！』呢。",0)
+					MES(FEDERICA,"不过，其实我有点高兴呢。",0)
+					MES(FEDERICA,"因为，那孩子\n难得能来看我呢。",0)
+					MES_close(FEDERICA)
+
+					F_set(FEDERICA)
+				}
+	//　　★繰り返し
+				else
+				{
+					MES(FEDERICA,"这次的事，\n好像让亚妮迪很担心呢……",0)
+					MES(FEDERICA,"不过，其实我觉得\n这样也不错。",0)
+					MES(FEDERICA,"因为，那孩子\n难得能来看我呢。\n这样不是有点寂寞吗？",0)
+					MES_close(FEDERICA)
+				}
+				look_off(FEDERICA)
+			}
+			//★菲缇莉卡【亚妮迪之見舞い】
+			F_set_note(FEDERICA,1)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//倒れている。
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※放牧地から、切斯克が積み上げた木箱を見ている。
+	if( F2_14_TalkEnemy )
+	{
+		MOT_SET(FEDERICA,151,-1,402,402,-1,0)	//菲缇莉卡　訝しげに木箱を見ている
+		if(!F_FEDERICA)
+		{
+		//　　※振り返らない
+			MES(FEDERICA,"咦，咦……？",0)
+			MES_close(FEDERICA)
+
+		//　　菲缇莉卡振りかえる。
+			MOT(FEDERICA,151,10)
+			rot_chr(FEDERICA,30,PLAYER1)
+
+			MES(FEDERICA,"刚才，我感觉到\n那边的木箱喀哒喀哒地动呢。",0)
+			MES(FEDERICA,"说起来，明明\n巴兰先生今早才整理过的，\n怎么还堆在这里呢……",0)
+			MES(FEDERICA,"不过这种事是不可能的吧。\n明明一个人都没有，\n木箱却自己动起来了什么的。",0)
+			MES_close(FEDERICA)
+
+//			MES(FEDERICA,"刚才木箱自己动了起来，\n堆成那个样子了。",0)
+//			MES(FEDERICA,"真灵异啊……\n明明什么人都没有的说。",0)
+//			MES_close(FEDERICA)
+
+		//　　拉古那たちに？エモ～ション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+
+			MES(RAGNA,"（什么谁都没有啊……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（不是有\n  那个少年在吗……？）",0)
+			MES_close(PARTNER)
+
+			F_set(FEDERICA)
+		}
+		//　　★繰り返し
+		else
+		{
+			rot_chr(FEDERICA,30,PLAYER1)
+//			MES(FEDERICA,"刚才，那些木箱确实自己飘起来，\n然后就堆成这样了。",0)
+			MES(FEDERICA,"一眼看过去，那些木箱是\n一个一个堆起来的。",0)
+			MES(FEDERICA,"说起来，听说\n每年收获祭典临近的时候，\n到处都会发生怪事呢……",0)
+			MES(FEDERICA,"难道说的就是这个……？",0)
+			MES_close(FEDERICA)
+			
+		}
+		MOT(FEDERICA,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※阿鲁迪亚、雑貨屋で話している。
+	//　　　ついでに、雑貨屋之前辺り之ベンチ付近に、牛を一頭置いておきます。
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		MOT_SET(FEDERICA,150,-1,405,405,-1,40)
+		MOT(FEDERICA,150,10)
+		if(!FT_03_TalkAneFede)
+		{
+			//　　※初回は亚妮迪之初回イベントが起動する。
+			//　　※振り返らない。
+
+			MES(FEDERICA,"亚妮迪的偏见太强了。",0)
+			MES(FEDERICA,"这里的生活\n也没有那么差啊。",0)
+			MES(FEDERICA,"不过在亚妮迪看来，\n或许是有些土气……",0)
+			MES_close(FEDERICA)
+
+		//	name2(ANNETTE)
+			MES(ANNETTE,"哼～、所以说\n我不是那个意思……",0)
+			MES(ANNETTE,"我说的是，大姐啊。",0)
+			MES(ANNETTE,"我们可是双胞胎，\n一起生活不是理所当然的吗。",0)
+			MES(ANNETTE,"也就是说，\n我只要和大姐在一起就可以了！\n为什么就是不明白呢……",0)
+			MES_close(ANNETTE)
+
+		/*
+		//	name2(FEDERICA)
+			MES(FEDERICA,"哎呀哎呀，冷静一点啦。",0)
+			MES(FEDERICA,"啊，这个是礼物。\n今天早上烤的红茶蛋糕哦。",0)
+			MES_close(FEDERICA)
+
+		//	name2(ANNETTE)
+			MES(ANNETTE,"唔……\n别想用蛋糕蒙混过关。\n虽然说我是肯定会收下的……",0)
+			MES_close(ANNETTE)
+		*/	
+			//★亚妮迪
+			F_set_note(ANNETTE,-1)
+			//★菲缇莉卡
+			F_set_note(FEDERICA,-1)
+			
+			//★亚妮迪【双子之姉】
+			F_set_note(ANNETTE,1)
+
+			F_set(FT_03_TalkAneFede)
+
+		}
+	//　　※以下通常一般メッセ～ジ。
+	//　　※振り返らない。
+		else
+		{
+			if(!F_FEDERICA)
+			{
+				MES(FEDERICA,"哎，我们也各有各的生活，\n就算是不在一起生活\n也没什么不好嘛。",0)
+				MES(FEDERICA,"……对了亚妮迪、\n我的蛋糕好吃吗？",0)
+				MES(FEDERICA,"要不，什么时候开间卖蛋糕的\n小咖啡店怎么样呢……",0)
+				MES_close(FEDERICA)
+
+			//	name2(ANNETTE)
+				MES(ANNETTE,"咦～不行！\n要开的话就到我那里开～。",0)
+				MES(ANNETTE,"这样也能增加店里的客人，\n一石二鸟，不是吗？",0)
+				MES_close(ANNETTE)
+
+				F_set(FEDERICA)
+			}
+	//　　★繰り返し
+			else
+			{
+			//　　※振り返らない。
+				MES(FEDERICA,"呵呵，对不起啊……\n我这里还有动物们要照顾，\n没办法照亚妮迪说的做呢。",0)
+				MES(FEDERICA,"话说，亚妮迪\n你也多到我这里来露个脸嘛。",0)
+				MES(FEDERICA,"总觉得\n一直都只是我去看你呢。",0)
+				MES_close(FEDERICA)
+			}
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※牛舎辺りで仕事している。
+	if( F1_15_GoVillage )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+		MOT_SET(FEDERICA,150,-1,450,450,-1,40)
+		MOT(FEDERICA,150,10)
+
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"嗯，差不多\n得开始打包货物了。",0)
+			MES(FEDERICA,"为了把蔬菜批发到阿鲁迪亚镇，\n需要做些准备。",0)
+			MES(FEDERICA,"村子里收获的各种蔬菜，\n都是像这样装在牛背上运过去的。",0)
+			MES(FEDERICA,"呵呵，很有趣吧。",0)
+			MES_close(FEDERICA)
+
+			F_set(FEDERICA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(FEDERICA,"把收获的粮食运到阿鲁迪亚\n这就是我的工作。",0)
+			MES(FEDERICA,"一个月大概要去２～３次吧。",0)
+			MES(FEDERICA,"呵呵，这一次打算\n顺便去看看亚妮迪的情况。\n真是期待啊。",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※放牧地でフリ～ム～ブ。
+	if( F1_01_GameStart )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+		MOT_SET(FEDERICA,150,-1,450,450,-1,40)
+		MOT(FEDERICA,150,10)
+
+		if(!FV_01_TalkFederica)
+		{
+		//　　※初回イベント
+			MES(FEDERICA,"哎呀，旅行者？\n真是难得呢，居然来到了这里。",0)
+			MES(FEDERICA,"呵呵，难道\n你们对照顾动物有兴趣吗？",0)
+			MES_close(FEDERICA)
+
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【取消】
+			MES_pos(PLAYER1,"??W9【当然】\n【没兴趣】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			//──────────────────────────────
+			//	name("□興味なし")
+			//──────────────────────────────
+			if(WK_YESNO==2)
+			{
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哈哈，不好意思，没什么兴趣……\n（而且，现在必须\n  先找回公主的魔力……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"唔，对不起……\n（我反而\n  是专攻美食的啊。）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				
+				MES(FEDERICA,"是吧，真可惜。",0)
+				MES(FEDERICA,"不过这个村子很不错哦，\n气氛挺悠闲的。",0)
+				MES(FEDERICA,"虽然我妹妹总说\n『土里土气』什么的。",0)
+				MES(FEDERICA,"要是愿意的话就来吧。\n像这样给它们喂食，\n也挺愉快的不是吗？",0)
+				MES_close(FEDERICA)
+			}
+			//──────────────────────────────
+			//	name("□もちろん")
+			//──────────────────────────────
+			else
+			{
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"啊，呃，也不会讨厌啦。\n（虽然我倒是喜欢照料飞机。）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"唔，不讨厌哦。\n（在蒙布利亚城里\n  也是有鸡的。）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				MES(FEDERICA,"噢，真的吗？",0)
+				MES(FEDERICA,"呵呵，我就在想会不会是这样。",0)
+				MES(FEDERICA,"如果只是游客的话，\n是不会到这种放牧场来的吧。",0)
+				MES_close(FEDERICA)
+
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哈哈，也是啊。",0)
+					MES(RAGNA,"说起来，这个牧场\n就只有你一个人经营吗……？",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"唔，这个牧场\n就只有你一个人经营吗……？",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				MES(FEDERICA,"嗯，是这样的。",0)
+				MES(FEDERICA,"虽然我妹妹总说\n『土里土气』的，\n但我无论如何也想做一做。",0)
+				MES(FEDERICA,"呵呵，要是愿意的话就来吧。\n像这样给它们喂食，\n也挺愉快的不是吗？",0)
+				MES_close(FEDERICA)
+			}
+			//──────────────────────────────
+			F_set(FV_01_TalkFederica)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_FEDERICA)
+			{
+				MES(FEDERICA,"这个村子很不错哦，气氛挺悠闲的。",0)
+				MES(FEDERICA,"虽然我妹妹总说\n『土里土气』什么的。",0)
+				MES(FEDERICA,"要是愿意的话就来吧。\n像这样给它们喂食，\n也挺愉快的不是吗？",0)
+				MES_close(FEDERICA)
+
+				F_set(FEDERICA)
+			}
+			//　　★繰り返し
+			else
+			{
+				MES(FEDERICA,"那么，工作工作。",0)
+				MES(FEDERICA,"趁现在\n收集些干草来如何呢。",0)
+				MES_close(FEDERICA)
+			}
+		}
+		MOT(FEDERICA,2,10)
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

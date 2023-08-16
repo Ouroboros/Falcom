@@ -1,0 +1,1174 @@
+//====================================================================
+//ステージトラップスクリプト
+//[18018][要塞－テルミドール]
+//====================================================================
+#ScriptTable
+
+#LUE 		1
+#TELMIDORL 	2
+#AM_TELMI 	3
+#BOSS		4
+#EVENT_RAGNA 	5
+#ALWEN			6
+#LUEDUMMY		7
+#EFFDUMMY1		8
+#EFFDUMMY2		9
+
+#LOSE_TELMI 	10
+#DUMMY1		 	11
+#DUMMY2		 	12
+#DUMMY3		 	13
+
+INIT
+{
+//環境SE
+	SE(70,0)
+
+//■イベント
+	set_chr( 80,990,	-1,-1,   0, 6950,4500,		  0,011211, 6,"#6_95;")		// メイン③へのエントリを有効化
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+	map_color(90,80,100,0)
+//■階段・扉
+	set_chr( 90,990,	-1,-1,  -250,6950,210,		270,     0, 0,"0;")				//①エントリ メイン③から
+	set_chr( 91,990,	-1,-1,     0,-500,5350,		  0,     0, 0,"0;")				//②エントリ ボス①へ
+
+	set_chr( 92,990,	-1,-1,     0,6950,4800,		180,021211, 0,"K1_18019;")		//①エントリ メイン③へ
+//	set_chr( 92,990,	-1,-1,     0,6950,160,		180,021211, 0,"K1_18019;")		//①エントリ メイン③へ
+	set_chr( 93,990,	-1,-1,     0,-450,5350,		  0,050302, 6,"K0_18020;")		//②エントリ ボス①へ
+
+	set_chr(150,990,	-1,-1,     0,6150,5300,       0,071001, 6,"SF101 #6_95 #6_82 #6_92;")		// エレベーター下り有効化用エントリ
+	set_chr( 82,990,	-1,-1,     0,6950,5350,       0,081207, 0,"<EV_Down>;")						//①エントリ エレベーター下り開始エントリ
+
+
+
+//■スイッチ・看板
+	set_chr( 50,620,	 3, 1,     0,-300,  0,		  0,     0, 0,";")			//①セーブOBJ
+
+//■イベント
+	if(WK_ENTRY==91)//階段91 から来た時（帰り）
+	{
+		mot_obj("move_yuka","stop1")
+	}
+	else
+	{
+		mot_obj("move_yuka","anime0")
+		EV("EV_ElevatorSE")
+	}
+
+	//◆デバッグチェック用
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_6_09_KillTelm")
+	}
+	else
+	//◆デバッグチェック用
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_6_08_BossOnly")
+	}
+	else
+	//再戦用
+	if(GW_ENTRY_EVENT==100)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_6_08_BossOnly")
+	}
+	else
+	//ゲーセン用
+	if(GW_ENTRY_EVENT==101)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_6_08_BossOnly_02")
+	}
+	else	
+	if(F5_17_EndFifth && !F6_05_EndSixth)
+	{
+	//６章
+		//ＧＦ『★中ボス⑧【真テルミドール】を倒した』立ってない
+		if(!F6_03_KillTelmi)
+		{
+			//▼テルミドールとの決着を付ける・前
+		//	EV("EV_6_08_VSOverTelmi")
+			set_chr( 80,990,	-1,-1,   0,4700,5326,  0, 0801,6,"<EV_6_08_VSOverTelmi>;")
+			
+			
+			//テルミドールが倒れている(会話用ダミーなので表示してはいけません
+			set_chr(LOSE_TELMI,	 	1036,-1,-1,  0,311,5351, 2,0,20, "<TK_TELMIDORL>")	//名前が出てしまうので、変なところに配置
+			color(LOSE_TELMI,-1)//透過
+			F_set_chr(LOSE_TELMI, CF_NO_MOVE)
+			F_set_chr(LOSE_TELMI, CF_NO_CSP)
+
+		}
+		else
+		{
+		
+			//テルミドールが倒れている
+			set_chr(DUMMY1,	 	 749,-1,-1,  0,2419,5041, 0,0,00, "")	//頭アタリ
+			set_chr(DUMMY2,	 	 749,-1,-1,-106,2452,5041, 0,0,00, "")	//右はねアタリ
+			set_chr(DUMMY3,	 	 749,-1,-1, 115,2457,5041, 0,0,00, "")	//左はねアタリ
+			set_chr(LOSE_TELMI,	 	1036,-1,-1,  0,2284,5040, 2,0,20, "<TK_TELMIDORL>")
+	//		MOT_SET(LOSE_TELMI,150,-1,523,523,-1,-1)	//たおれ
+			MOT_SET(LOSE_TELMI,150,-1,2930,2930,-1,-1)	//たおれ
+			MOT(LOSE_TELMI,150,0)
+			F_set_chr(LOSE_TELMI, CF_NO_MOVE)
+			
+			IK(LOSE_TELMI,"Bone_RightWing1",0)		//揺れボーンOFF
+			IK(LOSE_TELMI,"Bone_LeftWing1",0)		//揺れボーンOFF
+
+		}
+		
+		
+		
+	}
+
+//■場面固有設定
+
+}
+
+//====================================================================
+EV_Down
+{
+	mot_obj("move_yuka","anime1")
+	SE(1314,0)
+}
+
+//エレベーターのＳＥ再生（タイミング取るためスレッド化）（08.08.28ひ）
+EV_ElevatorSE
+{
+	wait(290)
+	SE(1314,0)
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼テルミドールとの決着を付ける・前
+//──────────────────────────────
+//　　テルミドール戦のマップに入るとイベント発生。
+EV_6_08_VSOverTelmi
+{
+	EV_begin()
+
+	//暗転
+	stop_BGM(90)
+	fade_in(100,30,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,		0,300,5350,0,2)
+	chr_pos(PARTNER,	0,500,5350,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,1010,-1,-1,-100,4650,5330, 2,180,0, "")
+	set_chr(ALWEN,		1011,-1,-1,100,4650,5330, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	set_chr(LUE, 	 	1015,-1,-1,-100,3160,5040, 2,180,0, "")
+	set_chr(TELMIDORL, 	1028,-1,-1, 0,2284,5500, 2,0,0, "")
+	set_chr(AM_TELMI,	1036,-1,-1, 0,2284,5040, 2,0,0, "")
+	set_chr(LUEDUMMY,	749, -1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY1,	749, -1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY2,	749, -1,-1, 0,0,0, 0,0,0, "")
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(TELMIDORL,CF_NO_HEIGHT)
+	F_set_chr(TELMIDORL,CF_NO_CLIP)
+	F_set_chr(TELMIDORL,CF_NO_CLIP2)
+	F_set_chr(TELMIDORL,CF_NO_CSP)
+	F_set_chr(AM_TELMI,CF_NO_CLIP)
+	F_set_chr(AM_TELMI,CF_NO_CLIP2)
+	F_set_chr(AM_TELMI,CF_NO_CSP)
+	color(LUE,-1)
+	color(TELMIDORL,-1)
+	color(AM_TELMI,-1)
+	wait_color(LUE)
+	MOT(TELMIDORL,54,0)
+
+	//モーション定義
+	MOT_SET(TELMIDORL,150,-1,190,210,-1,-1)//着地
+	MOT_SET(TELMIDORL,151,-1,405,405,-1,-1)	//どうなのよ
+	MOT_SET(TELMIDORL,152,-1,2000,2060,2,5)	//高笑い
+	MOT_SET(TELMIDORL,153,154,3500,3539,-1,1)	//漆黒の魔剣を掲げて呪文詠唱を開始。最終形態へ
+	MOT_SET(TELMIDORL,154,154,3540,3580,-1,1)	//漆黒の魔剣を掲げて呪文詠唱を開始。最終形態へ
+	MOT_SET(AM_TELMI,150,-1,2775,2798,-1,-1)//剣を構える
+	MOT_SET(EVENT_RAGNA, 150, -1, 3010, 3029, -1,1)		//ｷﾞｱ、構える
+	MOT_SET(ALWEN,       150, -1, 6130, 6145, -1,1)		//杖、構える
+
+
+	KAO(EVENT_RAGNA,"B","1","3")
+	KAO(ALWEN,      "B","1","3")
+	KAO(TELMIDORL,  "1","1","1")
+	KAO(AM_TELMI,   "1","1","1")
+	
+	chr_equip_chr(LUEDUMMY,  EVENT_RAGNA, "Bone_RightSword",100,		0,0,0,	0,0,0);		//ルゥ
+	chr_equip_chr(EFFDUMMY1, TELMIDORL,   "charbase0",100,		0,0,0,	0,0,0);		//
+	chr_equip_chr(EFFDUMMY2, TELMIDORL,   "charbase0",100,		0,0,0,	0,0,0);		//
+	wait(1)
+	chr_equip( ALWEN,"wp_004b", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる。
+
+	//カメラ初期位置
+//	CAM_move(0,-4160,5450,0,0)
+//	CAM(-410,27,5180,36,180,0,0)
+	CAM_move(-16,-2334,5296,0,0)
+	CAM(-649,40,94,36,181,0,0)
+	
+	CAM_move(-25,-3209,5536,0,0)
+	CAM(-289,141,334,34,181,0,0)
+	wait(30)
+	
+	//フェードイン
+	fade_in(0,60,0)
+	VOICE(404,0)	//★ボイス入力演出
+	wait(30)
+	wait_fade()
+
+	chr_rename(TELMIDORL,"青年の声")//
+	MES_pos(TELMIDORL,"W9──ようこそ。\n招かれざる来訪者よ。",0,320,160,0,0)
+	wait_key(0)
+	MES_close(TELMIDORL)
+
+//　　ラグナたちの頭に！マーク。
+//　　画面スクロールして、テルミドール（魔族ver）を映す。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(30)
+
+	BGM(55)
+//	cross_fade(15)
+//	CAM_move(0,-2280,5310,0,0)
+//	CAM(-650,47,5310,36,180,0,0)
+//	CAM_move(0,-2280,5170,60,0)
+//	CAM(-410,27,5180,36,180,60,0)
+	CAM(-649,48,94,36,181,60,0)
+	CAM_move(-16,-2334,5536,60,0)
+	wait_CAM()
+	
+//	CAM_move(-16,-2334,5296,60,0)
+	CAM_move(-16,-2334,5196,60,0)
+	CAM(-129,47,5196,35,180,60,0)
+	
+	KAO(TELMIDORL,"1","3","1")
+	jump(TELMIDORL,0,60,0,2284,5040,0)
+	EFF_chr(24580,TELMIDORL,0,100,0,"charbase0")				//エフェクト：転位
+	SE(1016,0)//ワープSE
+	SE(1090,0)//羽音
+	color(TELMIDORL,30)
+//	wait_color(TELMIDORL)
+	wait(40)
+	MOT(TELMIDORL,150,0)
+	wait_move(TELMIDORL)
+	KAO(TELMIDORL,"1","321","1")
+	MOT(TELMIDORL,2,15)
+	wait(15)
+
+	MES_pos(EVENT_RAGNA,"テルミドール……！",0,220,420,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナたち、間合いを取ってテルミドールの前へ移動。
+	CAM(-169,100,5196,35,179,90,0)
+	CAM_move(-16,-2334,5196,90,0)
+
+	move(EVENT_RAGNA,0,20,-100,3160,5040,0)
+	wait(5)
+	move(ALWEN,0,20,100,3190,5040,0)
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+//	wait_fade()
+	
+//	wait_CAM_move()
+//	wait_CAM()
+
+	wait(30)
+
+	//テルミドールアップカメラ
+	cross_fade(15)	
+	CAM(-689,30,54,36,180,0,0)
+	CAM_move(5,-2296,5204,0,0)
+	CAM(-689,25,5204,36,180,600,0)
+	wait_fade()
+	wait(15)
+
+	chr_rename(TELMIDORL,"テルミドール")//
+	KAO(TELMIDORL,"92329Z6","123","6")
+	MES(TELMIDORL,"フフ、まさかあんな苦し紛れで\nこの竜巻を突破してしまうとはね。",0)
+	KAO(TELMIDORL,"12321Z5","3","2")
+	MES(TELMIDORL,"しかし、あんなやり方が\n通用するのは一度きり……",0)
+	MES_close(TELMIDORL)
+	MOT(TELMIDORL,151,15)
+	wait(15)
+	KAO(TELMIDORL,"92329Z7","3QP","6")
+	MES(TELMIDORL,"この《螺旋要塞》が動き始めれば\nグランヴァレン全土の崩壊は免れまい。",0)
+	KAO(TELMIDORL,"92329Z6","P","6")
+	MES(TELMIDORL,"こんな所まで来て、どうやって\n世界の破滅を食い止めるつもりだい？",0)
+	MES_close(TELMIDORL)
+	wait_MES(TELMIDORL)
+
+	cross_fade(15)
+	CAM_move(0,-2860,5190,0,0)
+	CAM(-249,85,5190,18,176,0,0)
+	CAM(-249,85,5190,18,186,600,0)
+	wait_fade()
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z5","123","6")
+	MES(EVENT_RAGNA,"ヘッ……\nそいつは余計な心配ってもんだ。",0)
+	KAO(EVENT_RAGNA,"12321Z6","321","2")
+	MES(EVENT_RAGNA,"別に、世界を救うだなんて\n大それた事は考えちゃいない。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","2")
+	MES(EVENT_RAGNA,"俺たちはただ、\nミアを連れ戻しに来ただけさ。",0)
+	KAO(EVENT_RAGNA,"12321Z6","1233321","2")
+	MES(EVENT_RAGNA,"この要塞をどうするかは\nそれから考えれば済むことだ。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(TELMIDORL,2,15)
+	wait(15)
+	
+	KAO(TELMIDORL,"9","PQ3","6")
+	MES(TELMIDORL,"フフフ……",0)
+	MES_close(TELMIDORL)
+	wait_MES(TELMIDORL)
+	
+	cross_fade(10)
+	CAM_move(-20,-2380,5200,0,0)
+	CAM(-530,16,5200,36,158,0,0)
+	CAM(-530,10,5200,36,158,900,0)
+	wait_fade()
+	
+//　　ここでテルミドール、うつむいて僅かに震える。
+//　　次の瞬間、高笑いの動作をしながら哄笑する。
+//	VOICE(405,0)	//★ボイス入力演出
+//	wait(15)
+//	CAM_quake("4646")
+//	MOT(TELMIDORL,152,10)									//高笑い
+//	KAO(TELMIDORL,"2424Z7","6","1")
+//	MES(TELMIDORL,"S5ハハハハハハハハハッ！",0)
+//	MES_close(TELMIDORL)
+//
+//	wait_MOT(TELMIDORL, 152 )
+
+//　　テルミドール、哄笑をしてから以下のメッセージ。
+	wait(15)
+	CAM_quake("46")
+	KAO(TELMIDORL,"C232CZ3","32A","3")
+	MES(TELMIDORL,"S3ミア様を連れ戻す！？",0)
+	MES_close(TELMIDORL)
+	wait(15)
+	CAM_quake("4646")
+	KAO(TELMIDORL,"C232CZ6","A","3")
+	MES(TELMIDORL,"S3君はまだ、そのような\n夢みたいな事を言っているのかね！？",0)
+	KAO(TELMIDORL,"C232CZ6","A","3")
+	MES(TELMIDORL,"S3君の妹だった少女は\nもうどこにも存在しないというのに！",0)
+	MES_close(TELMIDORL)
+
+	MES_pos(EVENT_RAGNA,"W9…………………………",0,480,420,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(TELMIDORL,"B232BZ6","A23","3")
+	MES(TELMIDORL,"この５００年……\n私はルシアン様の魂を捜し続けた。",0)
+	KAO(TELMIDORL,"B232BZ6","3","3")	
+	MES(TELMIDORL,"ギスカール公の謀反によって\nこの世から失われた我が主君を……",0)
+	KAO(TELMIDORL,"C232CZ5","321","3")	
+	MES(TELMIDORL,"その果てに、ミア様を見出したのだ！",0)
+	KAO(TELMIDORL,"C232CZ6","1","3")	
+	MES(TELMIDORL,"ルシアン様の魂を受け継ぎ、\n力の全てを使いこなすあの方を！",0)
+	KAO(TELMIDORL,"B232BZ8","123","3")	
+	MES(TELMIDORL,"そして《螺旋要塞》は動き出し、\n世界の全てを巻き込む大戦の幕が\n切って落とされようとしている……",0)
+	KAO(TELMIDORL,"B232BZ6","32A","3")
+	MES(TELMIDORL,"もはや君一人の感傷で\n何かが変わる状況ではないのだよ！",0)
+	MES_close(TELMIDORL)
+
+	wait_MES(TELMIDORL)
+	cross_fade(15)
+	CAM_move(-40,-2680,5160,0,0)
+	CAM(-130,74,5160,20,344,0,0)
+//	CAM_move(-40,-2680,5160,900,0)
+//	CAM(-130,74,5160,20,334,900,0)
+	CAM_move(20,-2680,5160,900,0)
+	CAM(-210,111,5160,11,341,900,0)
+	
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z2","123","1")
+	MES(EVENT_RAGNA,"ははっ……",0)
+	KAO(EVENT_RAGNA,"12321Z5","3","1")	
+	MES(EVENT_RAGNA,"──テルミドール。\nあんたには礼を言っておくぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ以外の頭に！マーク。
+	EMO(ALWEN,EMO_BIKKURI)
+	KAO(ALWEN,"B","12321D","6")
+//	EMO(TELMIDORL,EMO_BIKKURI)
+	EFF_chr(25100,TELMIDORL,0,90,1,"Bone_Neck")
+	wait(15)
+	look_chr(ALWEN, EVENT_RAGNA, "Bone_Head")
+	wait(15)
+
+	KAO(TELMIDORL,"12321Z6","1","3")
+	MES(TELMIDORL,"な……！",0)
+	MES_close(TELMIDORL)
+
+	chr_rename(LUEDUMMY,"ルゥ")//
+	MES(LUEDUMMY,"C4はぁ！？",0)
+	MES_close(LUEDUMMY)
+
+	KAO(ALWEN,"B232BZ2","12321","4")
+	MES(ALWEN,"ラ、ラグナ……？",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B232BZ6","3","6")
+	MES(EVENT_RAGNA,"どうやらこの７年間……\nミアの面倒を見てくれたようだな。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","3","6")	
+	MES(EVENT_RAGNA,"辛くて、哀しくて、心細かった\nあいつの側に居てやってくれた……",0)
+	KAO(EVENT_RAGNA,"12321Z3","321","1")	
+	MES(EVENT_RAGNA,"……そうなんだろう？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"F","1233321","1")
+	MES(ALWEN,"あ……",0)
+	MES_close(ALWEN)
+
+	KAO(TELMIDORL,"12321Z3","1","1")
+	MES(TELMIDORL,"……何を言うかと思えば。",0)
+	KAO(TELMIDORL,"12321Z6","1","1")	
+	MES(TELMIDORL,"私は、私の主君に対して\n忠義を尽くしてきただけのこと。",0)
+	KAO(TELMIDORL,"12321Z8","1","1")
+	MES(TELMIDORL,"それに７年前、\n私が急にお迎えに上がったために\nミア様は我を失ってしまったのだ。",0)
+	KAO(TELMIDORL,"12321Z6","1","1")	
+	MES(TELMIDORL,"そして力を暴走させてしまい……\nご両親の命は失われてしまった。",0)
+	KAO(TELMIDORL,"12321Z6","1","1")
+	MES(TELMIDORL,"君には恨まれこそすれ、\n感謝される筋合いなどないだろう。",0)
+	MES_close(TELMIDORL)
+
+	KAO(EVENT_RAGNA,"B232BZ5","123","4")
+	MES(EVENT_RAGNA,"７年前のことは……\n誰が悪いって話じゃなさそうだ。",0)
+	KAO(EVENT_RAGNA,"12321Z6","32A","6")
+	MES(EVENT_RAGNA,"お前はお前で、自分の主人を\n迎えに行っただけなんだろう？",0)
+	KAO(EVENT_RAGNA,"B232BZ5","A23","2")	
+	MES(EVENT_RAGNA,"ミアが悪くないのは言うまでもねぇ。",0)
+	KAO(EVENT_RAGNA,"C232CZ6","3","1")
+	MES(EVENT_RAGNA,"そして俺は……\n町に遊びに行かなければって\n何度思ったかしれねぇが……",0)
+	KAO(EVENT_RAGNA,"B232BZ6","32A","1")
+	MES(EVENT_RAGNA,"それだって、自分を責めることで\n何とか納得しようとしてただけだ。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(TELMIDORL,"C","1","1")
+	MES(TELMIDORL,"…………………………………",0)
+	MES_close(TELMIDORL)
+
+	KAO(EVENT_RAGNA,"B232BZ6","A233321","1")
+	MES(EVENT_RAGNA,"確かなのは、この７年間、\nお前がミアの面倒を見ていたことだ。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","123","4")	
+	MES(EVENT_RAGNA,"本当だったら、兄貴の俺が\nやらなくちゃならなかったのに……",0)
+	KAO(EVENT_RAGNA,"12321Z6","321","6")	
+	MES(EVENT_RAGNA,"だから……ありがとう。\nせめて礼だけでも言わせてもらうぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B","12321","1")
+
+	KAO(TELMIDORL,"L","1","3")
+	MES(TELMIDORL,"………っ……………",0)
+	MES_close(TELMIDORL)
+
+	KAO(EVENT_RAGNA,"B232BZ7","123332","9")
+	MES(EVENT_RAGNA,"ま、お前なんかに\n俺の役目を肩代わりされたのは\n正直かなりムカついてるが……",0)
+	KAO(EVENT_RAGNA,"12321Z5","23","9")	
+	MES(EVENT_RAGNA,"だがまあ、そいつは\nみっともない嫉妬ってヤツさ。",0)
+	KAO(EVENT_RAGNA,"12321Z3","6","6")
+	MES(EVENT_RAGNA,"見逃してくれや。",0)
+	MES_close(EVENT_RAGNA)
+
+//	look(TELMIDORL,  "Bone_Head", 0,0,0,5, 0,0,-20)
+	KAO(TELMIDORL,"1","123","6")
+	MES(TELMIDORL,"ククク……",0)
+	MES_close(TELMIDORL)
+
+	wait_MES(TELMIDORL)
+	CAM_move(-40,-2380,5240,0,0)
+	CAM(470,16,5240,36,158,0,0)
+	CAM(470,14,5240,36,158,15,0)
+//	cross_fade(10)
+///	CAM_move(-18,-2275,5225,0,0)
+//	CAM(-849,28,94,36,181,0,0)
+	wait_fade()
+
+//　　ここでテルミドール、うつむいて僅かに震える。
+//　　次の瞬間、高笑いの動作をしながら哄笑する。
+//	look(TELMIDORL,  "Bone_Head", 0,0,0,0, 0,0,0)
+	VOICE(405,0)	//★ボイス入力演出
+	wait(15)
+	CAM_quake("4646")
+	MOT(TELMIDORL, 152, 10)
+	KAO(TELMIDORL,"A787AZ9","3QP","6")
+//	MES(TELMIDORL,"S5ハハハハハハハハハッ！",0)
+	MES_pos(TELMIDORL,"S5ハハハハハハハハハッ！",0,0,0,0,0)
+	wait(70)
+	MES_close(TELMIDORL)
+	wait(30)
+
+//　　テルミドール、哄笑をしてから以下のメッセージ。
+	KAO(TELMIDORL,"92329Z4","PQ3","6")
+	MES(TELMIDORL,"さすがは\nミア様の兄というわけか……",0)
+	KAO(TELMIDORL,"B232BZ6","3","3")	
+	MES(TELMIDORL,"だが、君には君の想いがあるように\n私にも私の立場というものがある。",0)
+	KAO(TELMIDORL,"B232BZ5","321","3")	
+	MES(TELMIDORL,"ましてや今のミア様の前に\n君たちを通すわけにはいかない。",0)
+	MES_close(TELMIDORL)
+	wait_MES(TELMIDORL)
+
+	stop_BGM(90)
+//　　テルミドール、漆黒の魔剣を掲げて呪文詠唱を開始。
+//　　そのまま漆黒のオーラが覆って、最終形態へと変化してゆく。
+	CAM_move(5,-2289,5255,0,0)
+	CAM(-809,42,54,30,170,0,0)
+	CAM(-809,42,54,30,185,150,0)
+
+
+	MOT(TELMIDORL, 153, 10)	//魔剣を掲げる
+	wait(15)
+	SE(1033,0)//剣構え
+	wait(15)
+	MOT(EFFDUMMY1, 39, 0)								//エフェクト：テルミドール、不気味な光
+	SE(1072,0)//変身エフェクトSE
+	wait(15)
+	VOICE(396,0)	//★ボイス入力演出
+	MOT(EFFDUMMY2, 39, 0)								//エフェクト：テルミドール、不気味な光
+	EFF_chr(6220, TELMIDORL, 0, 100,0, "Bone_Spine")		//エフェクト：ゆがみ
+	wait(30)
+	SE(1051,0)
+	wait(15)
+	wait(15)
+	color(TELMIDORL,-20)
+	KAO(AM_TELMI,"B","1","3")	
+	color(AM_TELMI,20)
+	SE(1066,0)
+	SE(1050,0)
+	wait(30)	
+	MOT(EFFDUMMY1,0,0)
+	MOT(EFFDUMMY2,0,0)
+	
+	look_off(ALWEN)
+	look_off(ALWEN)
+	wait(45)
+
+	BGM(41)
+	
+	CAM_move(-40,-2880,5120,60,0)
+//	CAM(230,44,5120,44,200,60,0)
+	CAM(470,43,5120,44,200,60,0)
+	wait_CAM_move()
+	wait_CAM()
+
+	//アルウェン、ラグナカメラ
+//	cross_fade(10)
+
+	MES(LUEDUMMY,"C4ひ、姫さま……！",0)
+	MES_close(LUEDUMMY)
+
+	KAO(ALWEN,"12321Z5","1","1")
+	MES(ALWEN,"魔力と闘気を実体化させる\n暗黒の奥義《魔神鎧》……",0)
+	KAO(ALWEN,"12321Z5","1","1")	
+	MES(ALWEN,"どうやら大将軍クラスの\n高位魔族だったようだな……",0)
+	MES_close(ALWEN)
+
+//　　テルミドール、最終形態になった上で、
+//　　攻撃的なシルエットの翼をバサリと広げる。
+	//テルミアップカメラ
+	wait(15)
+	VOICE(403,0)	//★ボイス入力演出
+	cross_fade(15)
+	CAM_move(-40,-2225,5255,0,0)
+	CAM(-529,34,5255,36,198,0,0)
+	CAM_move(19,-2225,5255,600,0)
+	wait_fade()
+	KAO(AM_TELMI,"B","123","3")
+	MOT(AM_TELMI,150,0)
+	SE(466,0)//
+	SE(1033,0)//剣構えSE
+	look(AM_TELMI, "Bone_Head", 0,0,10,0, 0,20,0)
+	wait(60)
+
+	KAO(AM_TELMI,"B232BZ5","3","3")	
+	MES(AM_TELMI,"──これより先はミア様から\n誰も通すなと申し付かっている。",0)
+	KAO(AM_TELMI,"B232BZ5","3","3")		
+	MES(AM_TELMI,"それでも通ると言うなら\nこの私が全力でお相手しよう。",0)
+	MES_close(AM_TELMI)
+		
+//	CAM(-529,30,5255,36,198,15,0)	
+	
+	blur(1,100,30)
+	CAM_move(11,-2235,5257,15,0)
+	CAM(-369,18,494,36,196,15,0)	
+	wait_CAM_move()
+	wait_CAM()
+	blur(0,0,0)
+	wait(15)
+	CAM_quake("37")
+	KAO(AM_TELMI,"C232CZ5","321","3")	
+	MES(AM_TELMI,"S3金色の魔王が右腕──\n《聖討大将軍》テルミドールが！",0)
+	MES_close(AM_TELMI)
+	
+	//アルウェン、ラグナアップカメラ
+	wait(15)
+	cross_fade(10)	
+	CAM_move(8,-3179,5235,0,0)
+	CAM(-409,42,34,36,340,0,0)
+	CAM(-409,42,34,36,380,600,0)
+	KAO(EVENT_RAGNA,"B","1","3")
+	KAO(ALWEN,"B","1","3")
+	wait_fade()
+
+	KAO(EVENT_RAGNA,"12321Z2","1233321","3")	
+	MES(EVENT_RAGNA,"ヘッ、上等だ……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナとアルウェン、そのまま武器を構えて不敵な笑み。
+	MOT(EVENT_RAGNA, 150, 10)													//ラグナ：ぎあ構える
+	wait(13)
+	SE(1014,0)
+	look(EVENT_RAGNA, "Bone_Head,", 0,0,0,10, 0,0,20)
+	KAO(EVENT_RAGNA,"B232BZ3","123","3")	
+	MES(EVENT_RAGNA,"もう言葉はいらねぇ……",0)
+	KAO(EVENT_RAGNA,"B232BZ6","321","3")		
+	MES(EVENT_RAGNA,"意地と意地がぶつかり合って\nどっちが貫き通せるかってだけだ！",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B232BZ3","123","3")	
+	MES(ALWEN,"私も助太刀させてもらおう。",0)
+	MES_close(ALWEN)
+		
+	MOT(ALWEN, 150, 10)													//アルウェン：杖構える
+	wait(7)
+	SE(1015,0)
+	wait(8)
+	SE(1033,0)
+	wait(15)
+
+	KAO(ALWEN,"B232BZ5","321","3")	
+	MES(ALWEN,"魔王の側近たる大将軍……\n相手にとって不足はない。",0)
+	MES_close(ALWEN)
+
+	//テルミアップカメラ
+	wait(15)
+	cross_fade(10)
+	CAM_move(-40,-2225,5255,0,0)
+	CAM(-529,34,5255,36,198,0,0)
+	CAM_move(19,-2225,5255,600,0)
+	wait_fade()
+	
+	KAO(AM_TELMI,"C232CZ3","123","3")	
+	MES(AM_TELMI,"ならば思い知るがいい……",0)
+	MES_close(AM_TELMI)
+	wait(15)
+	CAM_quake("37")
+	KAO(AM_TELMI,"C232CZ3","32A","3")	
+	MES(AM_TELMI,"S3P1永きに渡る我が使命と忠誠を！",0)
+	MES_close(AM_TELMI)
+	wait(15)
+	CAM_quake("3737")
+	KAO(AM_TELMI,"C232CZ5","233321","3")	
+	MES(AM_TELMI,"S3P1苦難の末に邂逅を果たした\nミア様への想いを！",0)
+	MES_close(AM_TELMI)
+
+	//フェードアウト
+//	VOICE(403,0)	//★ボイス入力演出
+	VOICE(423,0)	//★ボイス入力演出
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(TELMIDORL)
+	delete(LUE)
+	delete(LUEDUMMY)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(EFFDUMMY1)
+	delete(EFFDUMMY2)
+	delete(ALWEN)
+	delete(AM_TELMI)
+
+
+	F_reset_chr(AM_TELMI,CF_NO_CLIP)
+	F_reset_chr(AM_TELMI,CF_NO_CLIP2)
+	F_reset_chr(AM_TELMI,CF_NO_CSP)
+
+	set_chr( BOSS,		36,-1,-1, 0,2110,5040,	0, 0,	0,"<EV_6_09_KillTelm>;")	//アーマーテルミドール
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)	//BOSS＿ＨＰ表示
+
+	//アタリ
+	set_chr( 81,991,	-1,-1,	 0,1290,5040,   0,  1002,	0,";")
+	set_chr( 82,991,	-1,-1,	 0,3970,5040,   0,  1002,	0,";")
+	
+	chr_pos(RAGNA,		-100,3416,5043,180,2)
+	chr_pos(PARTNER, 	127,3378,5043,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)//ワープ封じる。
+
+	//ラグナメモ用
+	F_set(F6_08_BattleTelmi)//★中ボス⑧【真テルミドール】と戦闘開始
+
+	//再戦用オートセーブ
+	workG(GW_ENTRY_EVENT,SET,100)
+	workG(GW_DEF_BGM,SET,99)						//デフォルト曲を変更する 無音
+	AutoSave(0)
+	workG(GW_ENTRY_EVENT,SET,0)
+	workG(GW_DEF_BGM,SET,0)							//デフォルト曲を変更する マップ曲
+
+	CAM_return(0)
+	wait(30)
+
+//	CAM(49,113,294,42,179,0,0)						//マップのカメラ値
+	CAM(529,91,194,43,179,0,0)
+
+	fade_in(0,30,0)
+	set_namebmp(33,0)	//聖討将軍テルミドール		螺旋要塞メルセデク
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,106);//真テルミドール
+
+	EV_end()
+
+//──────────────────────────────
+//　　中ボス戦【真テルミドール】との戦い。
+//　　実質上、人間サイズのボスとしては最強の敵となる。
+//　　ラグナとアルウェンの力を使い分けないと勝利は不可能。
+//──────────────────────────────
+}
+//---------------------------------------------------------------------
+// テルミドール、再戦用
+//---------------------------------------------------------------------
+EV_6_08_BossOnly
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+	
+	wait(60)									//GAME OVER曲待ち
+
+	//キャラ再配置
+	chr_pos(RAGNA,		-100,3300,5020,180,2)
+	chr_pos(PARTNER,	100,3300,5040,180,2)
+
+	//アタリ
+	set_chr( 81,991,	-1,-1,	 0,1290,5040,   0,  1002,	0,";")
+	set_chr( 82,991,	-1,-1,	 0,3970,5040,   0,  1002,	0,";")
+	set_chr( BOSS,		36,-1,-1,0,1800,5040,	0, 0,	0,"<EV_6_09_KillTelm>;")	//アーマーテルミドール
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)					//BOSS＿ＨＰ表示
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)					//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)						//デフォルト曲を変更する マップ曲
+
+	BGM(41)										//ボス曲 テルミドール戦
+
+	CAM_return(0)
+	wait(15)
+
+//	CAM(49,113,294,42,179,0,0)						//マップのカメラ値
+	CAM(529,91,194,43,179,0,0)
+
+	fade_in(0,30,0)
+	set_namebmp(33,0)	//聖討将軍テルミドール		螺旋要塞メルセデク
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,106);//真テルミドール
+
+	EV_end()
+
+//──────────────────────────────
+//　　中ボス戦【真テルミドール】との戦い。
+//　　実質上、人間サイズのボスとしては最強の敵となる。
+//　　ラグナとアルウェンの力を使い分けないと勝利は不可能。
+//──────────────────────────────
+}
+//---------------------------------------------------------------------
+//将軍テルミドール、ゲーセン用
+//---------------------------------------------------------------------
+EV_6_08_BossOnly_02
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+	
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////ＨＰ0でも消えない　キャラ0は死亡時に"EV_DEAD"を再生
+
+	wait(60)									//GAME OVER曲待ち
+
+	//キャラ再配置
+	chr_pos(RAGNA,		-100,3300,5020,180,2)
+	chr_pos(PARTNER,	100,3300,5040,180,2)
+
+	//アタリ
+	set_chr( 81,991,	-1,-1,	 0,1290,5040,   0,  1002,	0,";")
+	set_chr( 82,991,	-1,-1,	 0,3970,5040,   0,  1002,	0,";")
+	set_chr( BOSS,		36,-1,-1,0,1800,5040,	0, 0,	0,"<EV_YOUWIN>;")	//アーマーテルミドール
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)					//BOSS＿ＨＰ表示
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)					//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)						//デフォルト曲を変更する マップ曲
+
+	//BGM(41)										//ボス曲 テルミドール戦
+
+	CAM_return(0)
+	wait(15)
+
+//	CAM(49,113,294,42,179,0,0)						//マップのカメラ値
+	CAM(529,91,194,43,179,0,0)
+	wait(20)
+
+	fade_in(0,30,0)
+	set_namebmp(33,0)	//聖討将軍テルミドール		螺旋要塞メルセデク
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,106);//真テルミドール
+
+	EV_end()
+
+}
+//敗北時---------------------
+EV_DEAD
+{
+	wait_EV("EV_YOUWIN")
+
+	EV_begin()
+	EFF(21660,320,240,0,0,100,0)//LOSE
+
+	wait(60)
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+	workG(GW_ENTRY_EVENT,SET,113)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//Gミュージアムに
+}
+
+//勝利時---------------------
+EV_YOUWIN
+{
+	wait_EV("EV_DEAD")
+
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+	EFF(21650,320,240,0,0,100,0)//WIN
+
+//	VOICE(412,0)	//★ボイス入力演出
+	VOICE2(412,1,100)	//★「おおおおおおおおおっ！」
+	wait(1)	//1フレーム進めないと、カメラが壊れる。（ボスのカメラのため）
+	EV_begin()
+
+	wait(130)
+
+	fade_in(100,100,BLACK)
+	wait_fade()
+	EV_begin()
+
+	set_hp(PLAYER1,100)//全快
+
+	//成績に応じてフィギュア入手	//	聖討将軍テルミドール戦	->Figure F2887
+	if(!F2887)
+	{
+		SE(24,0)//ゲットSE
+		MES(0,"L667聖討大将軍テルミドールL777のフィギュアを手に入れた！！",2)
+		MES_close(0)
+		F_set(2887)
+	}
+
+	workG(GW_ENTRY_EVENT,SET,113)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//Gミュージアムに
+}
+
+
+//──────────────────────────────
+//▼テルミドールとの決着を付ける・後
+//──────────────────────────────
+EV_6_09_KillTelm
+{
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+
+//	VOICE(412,0)	//★ボイス入力演出
+	VOICE2(412,1,100)	//★「おおおおおおおおおっ！」
+	wait(130)
+	EV_begin()
+
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	stop_BGM(90)
+
+	delete(81)
+	delete(82)
+	delete(BOSS)
+	
+	//キャラ再配置
+	chr_pos(RAGNA,		0,300,5350,0,2)
+	chr_pos(PARTNER,	0,500,5350,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	workG(GW_WARP_FLAG,SET,1)//ワープ解除。
+
+	set_chr(EVENT_RAGNA,1010,-1,-1,-100,3160,5040, 2,180,0, "")
+	set_chr(ALWEN,		1011,-1,-1,100,3130,5040, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	set_chr(LUE, 	 	1015,-1,-1, 0,3260,5040, 2,180,0, "")
+	set_chr(AM_TELMI,	1036,-1,-1, 0,2284,5040, 2,0,0, "")
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(AM_TELMI,CF_NO_CLIP)
+	F_set_chr(AM_TELMI,CF_NO_CLIP2)
+	F_set_chr(AM_TELMI,CF_NO_CSP)
+	color(LUE,-1)
+	wait_color(LUE)
+
+	KAO(AM_TELMI, "1","A","4")
+	KAO(LUE,      "B","1","2")
+	KAO(ALWEN,    "B","1","2")
+	KAO(EVENT_RAGNA,  "B","1","2")
+
+	rot_chr(ALWEN,       -1, AM_TELMI)
+	rot_chr(EVENT_RAGNA, -1, AM_TELMI)
+	look_chr(ALWEN,       AM_TELMI, "Bone_Head")
+	look_chr(EVENT_RAGNA, AM_TELMI, "Bone_Head")
+
+	wait(1)
+	F_set_Node(AM_TELMI, "Bone_RightSword", NP_HIDE )
+	chr_equip( ALWEN,"wp_004b", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる。
+
+	//モーション定義
+	MOT_SET(AM_TELMI,150,-1,452,452,-1,-1)//膝つき
+	MOT_SET(AM_TELMI,151,-1,523,523,-1,-1)//倒れ
+	MOT_SET(AM_TELMI,152,152,3000,3060,-1,-1)//ふらついて待機 [3000-3060] 
+//	MOT_SET(AM_TELMI,153, -1,2840,2870,-1,-1)//立ち～片ひざ
+	MOT_SET(AM_TELMI,153, -1,2850,2870,-1,-1)//立ち～片ひざ
+	MOT_SET(AM_TELMI,154, -1,2880,2930,-1,-1)// 片ひざ～倒れ
+
+	MOT(AM_TELMI, 152, 0)			//よろめき待機
+
+	//カメラ初期位置
+	CAM_reset()
+	CAM_move(-9,-2267,5179,0,0)
+	CAM(31,33,54,36,163,0,0)
+	wait_BGM()
+
+	wait(60)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	wait_CAM()
+	wait(15)
+
+//　　戦闘終了後、よろめきつつ立つテルミドール。
+
+	KAO(AM_TELMI,"12321Z4","A23332A","4")
+	MES(AM_TELMI,"は、はは……まさか……",0)
+	KAO(AM_TELMI,"12321Z6","A","4")
+	MES(AM_TELMI,"ミア様の力を受けた私が……\n………よもや敗れるとは………",0)
+	MES_close(AM_TELMI)
+	wait_MES(AM_TELMI)
+
+//　　テルミドール、そのまま苦悶の笑みを浮かべ膝を付く。
+	CAM_move(-2,-2298,5155,60,0)
+	CAM(-169,29,5155,36,159,60,0)
+	
+	KAO(AM_TELMI,"C","A23","4")
+	MOT(AM_TELMI, 153, 15)		//かたひざ
+	wait(15)
+	SE(1029,0)
+	wait(30)
+	
+	KAO(AM_TELMI,"C232CZ4","3Q","4")
+	MES(AM_TELMI,"君たちならば……あるいは……",0)
+	KAO(AM_TELMI,"C232CZ4","Q","4")	
+	MES(AM_TELMI,"あるいはミア様のことを……",0)
+	KAO(AM_TELMI,"C","Q3","5")	
+	MES(AM_TELMI,"……………………………………",0)
+	MES_close(AM_TELMI)
+
+//　　テルミドール、そのまま崩れ落ちてしまう。
+//　　それを見たラグナたちの頭に…マーク。
+	CAM_move(-15,-2411,5163,60,0)
+	CAM(-89,36,-26,36,153,60,0)
+
+
+
+	IK(AM_TELMI,"Bone_RightWing1",0)		//揺れボーンOFF
+	IK(AM_TELMI,"Bone_LeftWing1",0)		//揺れボーンOFF
+	wait(1)	
+	MOT(AM_TELMI, 154, 10)		//かたひざ　⇒　倒れ
+	wait(30)
+	SE(1139,0)
+	wait(90)
+
+
+
+	//ラグナ、アルウェンカメラ
+	cross_fade(15)
+//	CAM_move(-14,-3149,5255,0,0)
+//	CAM(-129,46,54,36,30,0,0)
+//	CAM_move(-14,-3149,5195,900,0)
+//	CAM(-289,35,5215,36,30,900,0)
+	
+	CAM_move(14,-2996,5197,0,0)
+	CAM(-329,76,-6,24,17,0,0)
+	
+	wait_fade()
+	wait(10)
+	
+	//ルゥ、出現
+	EFF_chr(6830,LUE,0,100,0,"Bone_Spine")		//エフェクト：ルゥが剣から出てくる
+	EFF_chr(6825,LUE,0,100,0,"Bone_Spine")		//エフェクト：ルゥが剣から出てくる
+	EFF_chr(6835,LUE,0,100,0,"Bone_Spine")		//エフェクト：ルゥが剣から出てくる
+	SE(1059,0)
+	wait(15)
+	color(LUE,30)
+	wait_color(LUE)
+	wait(30)
+
+
+	EMO(EVENT_RAGNA,EMO_TENTEN)
+	EMO(ALWEN,EMO_TENTEN)
+	EMO(LUE,EMO_TENTEN)
+	wait(60)
+
+	KAO(ALWEN,"B232BZ3","1233321","2")
+	MES(ALWEN,"力尽きたようだな……",0)
+	KAO(ALWEN,"B232BZ6","1","2")	
+	MES(ALWEN,"しばらくは動けないだろうから\nこのまま放っておくとしよう。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B232BZ2","123","2")
+	MES(EVENT_RAGNA,"……ああ……",0)
+	KAO(EVENT_RAGNA,"12321Z6","321","1")
+	MES(EVENT_RAGNA,"へヘッ……\nただのキザ野郎と思ってたが\nとんでもなく熱いヤツじゃねえか。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(LUE, EVENT_RAGNA, "Bone_Head")
+	wait(15)
+
+	CAM_move(-46,-2996,5197,300,0)
+	CAM(-329,44,5197,23,17,300,0)
+
+	KAO(LUE,"12321Z4","123332","6")
+	MES(LUE,"ふふん。\n実はアンタと同類ってワケね。",0)
+	MES_close(LUE)
+
+	look_chr(EVENT_RAGNA, ALWEN,       "Bone_Head")
+	look_chr(ALWEN,       EVENT_RAGNA, "Bone_Head")
+	
+	KAO(EVENT_RAGNA,"12321Z3","123","6")
+	MES(EVENT_RAGNA,"はは、そうかもな……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ、振り返ってアルウェンの方に向き直る。
+	BGM(33)
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+	KAO(LUE,"1","2321","2")
+	workG(GW_DEF_BGM,SET,0)		//デフォルト曲を元に戻す
+	KAO(EVENT_RAGNA,"B232BZ4","321","3")	
+//	MES(EVENT_RAGNA,"これで……\n最後の障害は無くなった。",0)
+	MES(EVENT_RAGNA,"これで……\n最後の壁は乗り越えた。",0)
+	KAO(EVENT_RAGNA,"B232BZ3","1","3")	
+	MES(EVENT_RAGNA,"あとはミアと会うだけだ。",0)
+	MES_close(EVENT_RAGNA)
+
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(5)
+	look_off(LUE)
+	rot_chr(LUE,30,EVENT_RAGNA)
+	wait(10)
+	
+	KAO(ALWEN,"B232BZ4","123","3")	
+	MES(ALWEN,"うむ……\n存分に兄妹で語り合うがいい。",0)
+	KAO(ALWEN,"12321Z4","321","3")	
+	MES(ALWEN,"せめて私たちは\n見届けさせてもらうとしよう。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z3","1233321","3")	
+	MES(EVENT_RAGNA,"ああ……よろしく頼む。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　画面、いったんフェードアウトしてキャラ再配置。
+//　　フェードインしてイベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(LUE)
+
+	chr_pos(RAGNA,		-100,3160,5040,180,2)
+	chr_pos(PARTNER,	100,3130,5040,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+
+	//↓、Initで配置したLOSE_TELMI だと、なぜか羽が倒れない！ そのままイベント用キャラを表示し、ダミーに話しかける。
+//	delete(AM_TELMI)
+//	//テルミドールを消してダミーを呼ぶ
+	chr_pos(LOSE_TELMI,0,2284,5040,0,2)
+//	MOT_SET(LOSE_TELMI,150,-1,523,523,-1,-1)	//たおれ
+//	MOT(LOSE_TELMI,150,0)
+//	color(LOSE_TELMI,1)//透過解除
+//	F_set_chr(LOSE_TELMI,CF_NO_MOVE)
+//	IK(LOSE_TELMI,"Bone_RightWing1",0)		//揺れボーンOFF
+//	IK(LOSE_TELMI,"Bone_LeftWing1",0)		//揺れボーンOFF
+
+	set_chr(DUMMY1,	 	 749,-1,-1,  0,2419,5041, 0,0,00, "")	//頭アタリ
+	set_chr(DUMMY2,	 	 749,-1,-1,-106,2452,5041, 0,0,00, "")	//右はねアタリ
+	set_chr(DUMMY3,	 	 749,-1,-1, 115,2457,5041, 0,0,00, "")	//左はねアタリ
+	
+	
+	F_reset_chr(AM_TELMI,CF_NO_CSP)
+	F_set_chr(AM_TELMI,CF_NO_MOVE)
+	
+	CAM_return(0)
+	wait(30)
+	CAM(49,113,294,42,179,0,0)
+
+//ＧＦ『★中ボス⑧【真テルミドール】を倒した』を立てる。
+	F_set(F6_03_KillTelmi)
+	//★テルミドール【聖討将軍】
+	F_set_note(-27,2)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+#EndScriptTable
+//====================================================================

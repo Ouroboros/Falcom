@@ -1,0 +1,764 @@
+//====================================================================
+//ステージトラップスクリプト
+//[11010][廃坑－入口分岐]
+//====================================================================
+
+#ScriptTable
+
+#EVENT_RAGNA 	1
+#ALWEN	 		2
+
+#PENGUIN	10
+#GATEROPE	11	//G斗技场へ之道を塞ぐロープ
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+	/*
+	if (Fx_MUGEN_TI_20B )
+	{
+		if (Fx_MUGEN_SUI_20B )
+		{
+			if ( Fx_MUGEN_FUU_20B )
+			{
+				if ( Fx_MUGEN_KA_20B )
+				{
+					F_set(Fx_MUGEN2_OPENED)
+				}
+			}
+		}
+	}
+	*/
+	
+	if ( F6_11_GameClear )
+	{
+		F_set(Fx_MUGEN2_OPENED)
+	}
+	
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+	//⑥では夜マップへ移動する)
+	if( F3_00_GoMoonCastle && !F4_00_StartSolo )
+	{
+		set_chr( 90,990,	 5, 7,     0,   0,  0,		180,  0501, 6,"K1_11052;")	//①エントリ 入口
+	}
+	else
+	{
+		set_chr( 90,990,	 5, 7,     0,   0,  0,		180,  0501, 6,"K1_11000;")	//①エントリ 入口
+	}
+
+	set_chr( 91,990,	 5, 4,     0,   0,  0,		  0,  0201, 6,"K0_11011;")	//②エントリ 梅ン①
+	set_obj("@obx0032a", 5, 4,     0,   0,  0,	 0)								//②アーチ（廃坑）
+	set_chr(191,1400,	 5, 4,     0,   0,  0,		  0,     0, 0,";")			//アーチ（ダミー）
+
+	set_chr( 92,990,	 3, 6,     0,   0,  0,		180,  0201, 6,"K0_11041;")	//③エントリ サブ①
+	set_obj("@obx0032a", 3, 6,     0,   0,  0,   180)							//③アーチ（廃坑）
+	set_chr(192,1400,	 3, 6,     0,   0,  0,		180,   180, 0,";")			//アーチ（ダミー）
+
+	set_chr( 93,990,	 6, 3,     0,   0,  0,		  0,  0201, 6,"RF2060 K0_11051;")	//④エントリ 無幻①
+	set_obj("@obx0032a", 6, 3,     0,   0,  0,	 0)								//④アーチ（廃坑）
+	set_chr(193,1400,	 6, 3,     0,   0,  0,		  0,     0, 0,";")			//アーチ（ダミー）
+
+	if( Fx_MUGEN2_OPENED )
+	{
+		set_chr( 95,990,	 6, 2,     0,   0,  0,		  0,  0201, 6,"SF2060 K0_11051;")	//エントリ 無幻EX①
+		set_obj("@obx0032a", 6, 2,     0,   0,  0,	 0)								//アーチ（廃坑）
+		set_chr(195,1400,	 6, 2,     0,   0,  0,		  0,     0, 0,";")			//アーチ（ダミー）
+
+//		set_chr( 60,648,	 6, 2,     0, 450,  0,		 99,    0, 0,";")	//③レベルプレート
+		set_chr( 61,654,	 6, 2,  -250, 450,  0,		  6,  262, 0,";")	//③順路案内（無限）
+		set_chr( 61,654,	 6, 2,  -250, 450,140,		  6,  278, 0,";")	//③順路案内（無限）
+
+		set_obj2("mp10202",   6, 2, -450,-450,  0,	 0) //
+		set_obj2("mp10212",   6, 2,  450,-450,  0,	 0) //
+		set_obj2("mp10462",   6, 2, -450, 450,  0,	 0) //
+		set_obj2("mp10472",   6, 2,  450, 450,  0,	 0) //
+
+		set_obj2("mp10442",   6, 3, -450,-450,  0,	 0) //
+		set_obj2("mp10452",   6, 3,  450,-450,  0,	 0) //
+		set_obj2("mp10462",   6, 3, -450, 450,  0,	 0) //
+		set_obj2("mp10472",   6, 3,  450, 450,  0,	 0) //
+	}
+	else
+	{
+		set_obj("mp10162",    6, 2, -450,-450,  0,	 0) //
+
+		set_obj2("mp10202",   6, 3, -450,-450,  0,	 0) //
+		set_obj2("mp10212",   6, 3,  450,-450,  0,	 0) //
+		set_obj2("mp10462",   6, 3, -450, 450,  0,	 0) //
+		set_obj2("mp10472",   6, 3,  450, 450,  0,	 0) //
+	}
+
+	set_chr( 53,502,	 6, 3,     0, 750,  0,		 7,    180, 6,";")			//⑥扉（岩） 一通
+	if ( !F6_00_GoToMeru )
+	{
+		set_chr(149,769,	 6, 3,     0, 750,175,		  0,    0, 0,";")	//無限封印
+		set_chr(150,991,	 6, 3,     0, 750,  0,		  0, 0502, 0,";")	//無限封印アタリ
+	}
+	else
+	{
+		MOT( 53, 6, 0 )
+	}
+
+//	set_chr( 51,502,	 6, 2,     0, 900,  0,		 7,    180, 6,";")			//扉（岩） 一通
+//	if ( !Fx_MUGEN2_OPENED )
+//	{
+//		set_chr(147,769,	 6, 2,     0, 900,175,		  0,    0, 0,";")	//無限封印
+//		set_chr(148,991,	 6, 2,     0, 900,  0,		  0, 0502, 0,";")	//無限封印アタリ
+//	}
+//	else
+//	{
+//		MOT( 51, 6, 0 )
+//	}
+
+	//ペンギンにピンクチケットを渡すとエントリ出現
+	if(FV_02_OpenGyakata)
+	{
+		set_chr( 94,990,	 3, 4,     0,   0,  0,		270,  0102, 6,"K0_10500;")	//⑦エントリ Ｇ-コロッセヲへ
+	}
+	else
+	{
+		//それまではロープが道を塞いでいる
+		set_chr(GATEROPE, 716, 	3,4,	100,0,  0,		  0,    90, 0,";")	//ロープ		obx0500
+	}
+	set_obj("@obx0032a",3,4,     0,   0,  0,	 270)					//⑦アーチ（廃坑）
+	set_chr(194,1400,	 3, 4,     0,   0,  0,		  0,   270, 0,";")			//アーチ（ダミー）
+
+//■スイッチ·看板
+	set_chr( 54,648,	 5, 5,     0,-600,  0,		  1,    0, 0,";")	//①等级之证 
+	set_chr( 57,654,	 5, 5,  -150,-350,  0,		  2,    0, 0,";")	//①順路案内（梅ン）
+
+	set_chr( 55,648,	 4, 5,     0,   0,  0,		  4,  270, 0,";")	//②等级之证 
+	set_chr( 58,654,	 4, 5,  -300,-300,  0,		  5,  270, 0,";")	//②順路案内（サブ）
+
+	set_chr( 56,648,	 6, 4,     0,-600,  0,		 99,    0, 0,";")	//③等级之证 
+	set_chr( 59,654,	 6, 4,  -250,-475,  0,		  6,    0, 0,";")	//③順路案内（無限）
+
+	set_chr( 50,620,	 5, 6,  -350,   0,  0,		  0,  270, 0,";")	//④セーブOBJ
+
+//■罠·障害物
+
+	set_chr( 76,640,	 4, 5,  -600,-125,  0,		  2,    0, 0,";")	//①风之柱a
+	set_chr( 77,640,	 4, 5,  -600, 125,  0,		  2,  180, 0,";")	//①风之柱b
+
+//	set_chr( 78,990,	 5, 5,     0, 400,  0,		180,  505, 6,"<EV_STOP_01>")	//ストッパー
+
+
+
+//■ＮＰＣ
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//▼④炎之パーツを入手した
+	//▼③金暗之森へ向かうことにした
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//斗技场へ之道が開いているときは別之マップへ
+	//⑦⑧⑩□は別マップに
+	//□は同じマップ之違う场所でパンツを干す
+	//⑥之時は常時ZZZ
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if(!FV_02_VisitGyakata && !F6_05_EndSixth)
+	{
+		if(!FE_FF_HearSyouheki)
+		{
+			set_chr( PENGUIN,81,	-1,-1,  7300,9450,0,		56,90,	20,"<TK_PENGUIN>")	//魔法障壁之前
+			F_set_chr(PENGUIN,CF_NO_MOVE)
+		}
+		else
+		{
+			workL(0,RAND,2)
+			//②以降で、入り口から入った時1/2之確立で配置が変わる
+			if(WK_ENTRY==90 && WK000==1 && F1_15_GoVillage)
+			{
+				set_chr( PENGUIN,81,	-1,-1,  9420,11300,0,		2,0,	20,"<TK_PENGUIN>")	//宣传员企鹅
+				set_chr( 150,990,	-1,-1,     9420,11700,0,  180,0501,	6,"<ESCAPE_PENGUIN_1>;")			//エントリ ペンギンが逃げる①
+				set_chr( 151,990,	-1,-1,     8200,9450,1,  180,0105,	6,"<ESCAPE_PENGUIN_2>;")			//エントリ ペンギンが逃げる①
+			}
+			//それいがいは斗技场扉前
+			else
+			{
+				set_chr( PENGUIN,81,	-1,-1,  6116,7482,0,		2,270,	20,"<TK_PENGUIN>")	//Ｇ－斗技场へ之道を塞ぐ　宣传员企鹅
+				F_set_chr(PENGUIN,CF_NO_MOVE)
+			}
+		}
+	}
+	else
+	{
+		//──────────────────────────────
+		//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+		//──────────────────────────────
+		if( F6_00_GoToMeru )
+		{
+			set_chr( PENGUIN,81,	-1,-1,  11015,7343,1,		56,160,	20,"<TK_PENGUIN>")	//　宣传员企鹅 無限迷宫前
+			F_set_chr(PENGUIN,CF_NO_MOVE)
+
+			//初回を見た後は看板を切り替え続けている
+			if(FE_12_TalkPenguin)
+			{
+				EV("CHANGE_PENGUIN")
+			}
+		}
+		else
+		//──────────────────────────────
+		//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+		//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+		//──────────────────────────────
+		//　阿鲁迪亚教会前広场
+		//──────────────────────────────
+		//▼⑨汎用忍者が倒れているだけ之フラグ。
+		//▼⑧星降之里に到着した（拉古那·昴）
+		//▼⑦拉古那は単独行動を始めた
+		//──────────────────────────────
+		//　阿鲁迪亚教会内
+		//──────────────────────────────
+		//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+		//▼⑤魔女拉莱拉から、敵之正体が明かされた
+		//▼④炎之パーツを入手した
+		//▼③金暗之森へ向かうことにした
+		//▼①城を取り戻すために行動を開始した
+		//──────────────────────────────
+		if( F1_01_GameStart && !F4_00_StartSolo)
+		{
+			set_chr( PENGUIN,81,	-1,-1,  6116,7482,0,		2,270,	20,"<TK_PENGUIN>")	//宣传员企鹅
+			if( F3_00_GoMoonCastle )
+			{
+				EV("SLEEP_PENGUIN")
+			}
+			F_set_chr(PENGUIN,CF_NO_MOVE)
+		}
+		
+	}
+	
+//■イベント
+	if(F1_02_EndPrologue && !F1_22_EndFirst)
+	{
+	//１章
+		//ＧＦ『★廃坑之探索を開始した』立ってない
+		if(!F1_11_InCave)
+		{
+			//▼廃坑内部に足を踏み入れる
+			EV("EV_1_01_InCave")
+		}
+	}
+
+//■场面固有設定
+	map_color(100,100,100,0);//R,G,B, time 100%
+	map_spotbmp(30);//100%
+
+}//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼ペンギンが逃げる　嘉兰多看板まで
+//──────────────────────────────
+ESCAPE_PENGUIN_1
+{
+	TK_begin()
+	rot_chr(PENGUIN,60,PLAYER1)
+	rot_chr(PLAYER1,60,PENGUIN)
+	EMO(PENGUIN,EMO_BIKKURI)
+	wait(30)
+	TK_end()
+	EV("ASEASE_PENGUIN")
+
+	EMO(PENGUIN,EMO_ASEASE)
+	rot(PENGUIN,60,180)
+	move(PENGUIN, 0, 50,9420,9450,1,0)
+	wait_move(PENGUIN)
+	rot(PENGUIN,60,90)
+	move(PENGUIN, 0, 50,7650,9450,1,0)
+	wait_move(PENGUIN)
+	EV_stop("ASEASE_PENGUIN")
+	rot(PENGUIN,60,270)
+}
+ESCAPE_PENGUIN_2
+{
+	TK_begin()
+	rot_chr(PENGUIN,60,PLAYER1)
+	rot_chr(PLAYER1,60,PENGUIN)
+	EMO(PENGUIN,EMO_BIKKURI)
+	wait(30)
+	TK_end()
+	EV("ASEASE_PENGUIN")
+	
+	EMO(PENGUIN,EMO_ASEASE)
+	rot(PENGUIN,60,180)
+	move(PENGUIN, 0, 50,7650,7650,1,0)
+	wait_move(PENGUIN)
+	rot(PENGUIN,60,90)
+	move(PENGUIN, 0, 50,6116,7482,0,0)
+	wait_move(PENGUIN)
+	EV_stop("ASEASE_PENGUIN")
+	rot(PENGUIN,60,270)
+	
+	//ペンギンが疲れる
+	F_set(PARTNER)
+	F_set_chr(PENGUIN,CF_NO_MOVE)
+}
+
+ASEASE_PENGUIN
+{
+	EMO(PENGUIN,EMO_ASEASE)
+	wait(30)
+	loop
+}
+
+//──────────────────────────────
+//▼常時ZZZエモーション　ペンギン
+//──────────────────────────────
+SLEEP_PENGUIN
+{
+	EMO(PENGUIN,EMO_ZZZ)
+	wait(30)
+	loop
+}
+//──────────────────────────────
+//▼ペンギンパタパタ
+//──────────────────────────────
+PATAPATA_PENGUIN
+{
+	MOT(PENGUIN,55,5)
+	wait(40)
+
+	workL(000,RAND,3)
+	if(WK000==1)
+		wait(20)
+
+	MOT(PENGUIN,57,5)
+	wait(120)
+
+	workL(000,RAND,3)
+	if(WK000==1)
+		wait(60)
+
+	loop
+
+}
+
+
+//──────────────────────────────
+//▼無限回廊之看板を切り替える　ペンギン
+//──────────────────────────────
+CHANGE_PENGUIN
+{
+	workL(0,RAND,7)
+	workL(0,ADD,1)
+	
+	//ランダムで看板が切り替わっている
+	//◆SE　ガチャガチャ
+	MOT(59,WK000,0)
+
+	wait(5)
+	workL(3,RAND,4)
+	if(WK003==0)
+		wait(10)
+	if(WK003==1)
+		wait(40)
+	
+	loop
+}
+
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼廃坑内部に足を踏み入れる
+//──────────────────────────────
+//　　廃坑最初之分岐マップに入った所で以下之イベント。
+//　　外へ之入口から、拉古那たちが入ってくる之を見せる。
+EV_1_01_InCave
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	F_set_chr(54,CF_NO_CLIP)
+	F_set_chr(54,CF_NO_CLIP2)
+	F_set_chr(57,CF_NO_CLIP)
+	F_set_chr(57,CF_NO_CLIP2)
+	F_set_chr(60,CF_NO_CLIP)
+	F_set_chr(60,CF_NO_CLIP2)
+	F_set_chr(101,CF_NO_CLIP)
+	F_set_chr(101,CF_NO_CLIP2)
+
+	//キャラ再配置
+	chr_pos(RAGNA,9540,11860,1,180,2)
+	chr_pos(PARTNER,9360,11890,1,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 9540,13360,1, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 9360,13390,1, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	color(EVENT_RAGNA,1)
+	color(ALWEN,1)
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	KAO(ALWEN,"1","1","1")//デフォルト
+
+	//モーション定義
+	MOT_SET(ALWEN,150,-1,399,399,-1,-1)//腰に手を当てる（左）
+	MOT_SET(ALWEN,151,-1,439,439,-1,-1)//胸手
+
+	MOT_SET(EVENT_RAGNA,      150,-1,491,491,-1,-1)	//ちがうちがう
+	MOT_SET(EVENT_RAGNA,      151,-1,493,493,-1,-1)	//
+	MOT_SET(EVENT_RAGNA,152,-1,405,405,-1,-1)	//どうな之よ
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる
+
+	//カメラ初期位置
+	CAM_move(9450,-8402,40,0,0)
+	CAM(160,170,40,23,180,0,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+//	CAM_move(9370,-11882,60,240,0)
+//	CAM(160,130,60,24,196,240,0)
+	CAM_move(9350,-11802,-20,240,0)
+	CAM(188,126,-20,24,196,240,0)
+	wait(180)
+	move( EVENT_RAGNA, 0, WALK1,9540,12360,1,0)
+	wait(30)
+	move( ALWEN, 0, WALK1,9360,12390,1,0)
+
+	wait_move(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,51,15)//キョロキョロ
+	wait(30)
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"这家伙……\n真的是很神秘的遗迹呢。",0)
+	KAO(EVENT_RAGNA,"12321Z6","1","1")//
+	MES(EVENT_RAGNA,"并且好象还有很多宝物的样子\n财宝猎人的血又开始沸腾了。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　艾雯之頭に…マーク。
+	wait_move(ALWEN)
+	KAO(ALWEN,"B","123","2")//
+	EMO(ALWEN,EMO_TENTEN)
+	wait(60)
+	KAO(ALWEN,"B232BZ4","3","2")//
+	MES(ALWEN,"……没错。\n魔力的感觉很强。",0)
+	KAO(ALWEN,"B232BZ4","3","2")//
+	MES(ALWEN,"我力量的一部分……\n《地之魔力》在这里。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(15)
+	CAM_move(9454,-12362,110,0,0)
+	CAM(20,58,110,20,328,0,0)
+	CAM_move(9454,-12362,120,1200,0)
+	CAM(-20,58,120,20,320,1200,0)
+	look_chr(EVENT_RAGNA,ALWEN,"Bone_Head")
+	wait(30)
+
+	KAO(EVENT_RAGNA,"1232F","1233321","6")//
+	MES(EVENT_RAGNA,"哈……？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z6","3","2")//
+	MES(ALWEN,"呼呼呼……\n卑劣的被“白天袭击”\n夺城后半个月了……",0)
+	KAO(ALWEN,"12321Z6","32","3")//
+	MES(ALWEN,"一点都不知道羞耻的贼人……\n终于被我找到啦！",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B232BZ5","12321D","7")//
+	MES(EVENT_RAGNA,"好、好象\n来到这里了。",0)
+//	MES_close(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B","123","1")//
+	look_off(EVENT_RAGNA)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z5","3","1")//
+	MES(EVENT_RAGNA,"算了、那个力量到底\n是什么样子？",0)
+	MES_close(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"1","321","1")//
+	MOT(EVENT_RAGNA,52,0)//アンカーギアを整備
+	wait(15)
+	SE(1014,0)//ギア構えSE
+	KAO(EVENT_RAGNA,"12321Z5","1","1")//
+	MES(EVENT_RAGNA,"因为等一下可能会碰到\n告诉我下详细的特征吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"E","233321D","6")//
+//	look_chr(ALWEN,EVENT_RAGNA,"Bone_Head")
+	look(ALWEN,"Bone_Head",0, 0,2,0, 0,30,0)
+	wait(15)
+	KAO(ALWEN,"2","D","6")//
+	MES(ALWEN,"唉……",0)
+	MES_close(ALWEN)
+
+	look_chr(EVENT_RAGNA,ALWEN,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"那个、是想取回被盗走\n的力量吧？",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","1")//
+	MES(EVENT_RAGNA,"所以、这之前\n就交给我先。",0)
+	MES_close(EVENT_RAGNA)
+
+//	look_off(ALWEN)
+	look(ALWEN,"Bone_Head",0, 0,2,0, 0,24,0)
+	rot(ALWEN,30,210)
+	wait(15)
+	KAO(ALWEN,"123212Z3","1233321D","6")//
+	MES(ALWEN,"你……\n难道担心我么？",0)
+	MOT(ALWEN,151,15)
+	wait(15)
+	KAO(ALWEN,"123212Z2","1233321D","6")//
+	MES(ALWEN,"担心作为真祖的公主、的我？",0)
+	MES_close(ALWEN)
+
+	wait_MOT(EVENT_RAGNA,52)
+	rot(EVENT_RAGNA,30,110)
+	wait(15)
+	MOT(EVENT_RAGNA,152,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z5","1233321","4")//
+	MES(EVENT_RAGNA,"不是、那个所谓的真祖\n到底是什么我心里毫无概念。",0)
+	KAO(EVENT_RAGNA,"12321Z6","1","1")//
+	MES(EVENT_RAGNA,"你到是、见到的时候感觉十分奢华、\n这样的遗迹的话应该对你来说很难吧？",0)
+	KAO(EVENT_RAGNA,"12321Z3","1","1")//
+	MES(EVENT_RAGNA,"这里是我的本职工作嘛。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　艾雯、目を丸くして…マーク。
+	MOT(ALWEN,2,15)
+	KAO(ALWEN,"-","12321E","7")//
+	EMO(ALWEN,EMO_TENTEN)
+	wait(60)
+
+	KAO(ALWEN,"1","D123","1")//
+	look(ALWEN,"Bone_Head",0, 0,0,1, 0,24,-14)
+	wait(15)
+	KAO(ALWEN,"12321Z2","3","1")//
+	MES(ALWEN,"呵呵呵……",0)
+	MES_close(ALWEN)
+
+//　　次之瞬間、こらえきれずに笑うような動作。
+	look(ALWEN,"Bone_Head",0, 0,0,2, 0,24,0)
+	wait(12)
+	CAM_quake("46")
+	KAO(ALWEN,"176716Z2","6","6")//
+	MES(ALWEN,"S5哈哈哈哈哈哈哈！",0)
+	KAO(ALWEN,"12321Z5","3","6")//
+	MES(ALWEN,"居然会担心这个\n能够封闭黑暗领域的我……！",0)
+	KAO(ALWEN,"12321Z4","6","6")//
+	MES(ALWEN,"嗯嗯……\n不过正因为这样人类才有意思！",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA, 150, 5)
+	wait(5)
+	MOT(EVENT_RAGNA, 151, 5)
+	wait(5)
+	MOT(EVENT_RAGNA, 150, 5)
+	wait(5)
+	MOT(EVENT_RAGNA, 151, 5)
+	KAO(EVENT_RAGNA,"B232B2Z4","23IHGK","7")//
+	MES(EVENT_RAGNA,"哪、哪有啊！\n一点都没有担心你！",0)
+	MOT(EVENT_RAGNA, 2, 10)
+	KAO(EVENT_RAGNA,"B232BZ6","G","2")//
+	MES(EVENT_RAGNA,"只是说怕你太碍事\n我一个人去就行了！",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z4","3","6")//
+	MES(ALWEN,"呵呵……\n感谢你的担心。",0)
+	KAO(ALWEN,"12321Z3","321","6")//
+	MES(ALWEN,"不过、我是黑暗的眷属。",0)
+	KAO(ALWEN,"12321Z7","1","6")//
+	MES(ALWEN,"就算力量被夺走、\n也不会象那些低等魔物那样\n什么都做不到。",0)
+	KAO(ALWEN,"12321Z4","1236","6")//
+	MES(ALWEN,"不要管太多带我去就行了。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,53,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","1","5")//
+	MES(EVENT_RAGNA,"虽、虽然那样说……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z5","3","1")//
+	MES(ALWEN,"并且、我的魔力\n并不能简单的拿过来。",0)
+	KAO(ALWEN,"12321Z6","32A","1")//
+	MES(ALWEN,"不仅你不能使用\n可能你连碰都不能碰。",0)
+	KAO(ALWEN,"12321Z4","A","1")//
+	MES(ALWEN,"也就是说我不去是不行滴。",0)
+	MES_close(ALWEN)
+
+	wait_MOT(EVENT_RAGNA,53)
+	KAO(EVENT_RAGNA,"12321Z4","123","4")//
+	MES(EVENT_RAGNA,"哦……\n这样的话就没办法了。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_off(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,180)
+	wait(15)
+	MOT(EVENT_RAGNA,50,15)	//左足トントン
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z6","321","2")//
+	MES(EVENT_RAGNA,"……这里\n好象很久以前\n有一个很大的陷阱在这里。",0)
+	KAO(EVENT_RAGNA,"12321Z6","1","2")//
+	MES(EVENT_RAGNA,"为了不让你受伤\n绝对不要离开我身边。",0)
+	MES_close(EVENT_RAGNA)
+
+//	look_off(ALWEN)
+	look(ALWEN,"Bone_Head",0, 0,2,2, 0,0,0)
+	rot(ALWEN,30,180)
+	wait(15)
+	MOT(ALWEN,150,15)
+	wait(15)
+	KAO(ALWEN,"12321Z2","A23","6")//
+	MES(ALWEN,"呼呼、知道啦。",0)
+//	MOT(ALWEN,51,0)//ストレッチ
+//	wait(30)
+	KAO(ALWEN,"12321Z6","32A","1")//
+	MES(ALWEN,"“财宝猎人”的力量、\n就让我好好见识一下吧。",0)
+	MES_close(ALWEN)
+//	wait_MOT(ALWEN,51)
+
+//　　イベント終了、プレイヤー操作許可。
+//　　可能ならここで操作チュートリアルを出しておく。
+//　　食べ物による回復＆レベルアップは、ここでやるか、
+//　　最初之ルート之小部屋あたりに仕込んでおく。
+//　　（壷を壊して食べ物を取ったら表示されるなど）
+	//暗転
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	F_reset_chr(54,CF_NO_CLIP)
+	F_reset_chr(54,CF_NO_CLIP2)
+	F_reset_chr(57,CF_NO_CLIP)
+	F_reset_chr(57,CF_NO_CLIP2)
+	F_reset_chr(60,CF_NO_CLIP)
+	F_reset_chr(60,CF_NO_CLIP2)
+	F_reset_chr(101,CF_NO_CLIP)
+	F_reset_chr(101,CF_NO_CLIP2)
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	//キャラ再配置
+	chr_pos(RAGNA,9512,12350,1,180,2)
+	chr_pos(PARTNER,9312,12350,1,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return( 0 )
+	wait(30)
+
+//ＧＦ『★廃坑之探索を開始した』を立てる。
+	F_set(F1_11_InCave)
+
+	//フェードイン
+	fade_in(0,30,BLACK)
+
+	EV_end()
+}
+
+/*
+//　　まだ休憩所チュートリアルを受けていない场合、廃坑入り口マップ分岐に差し掛かるとストッパー。
+//　　（休憩所チュートリアルを受けるまで通れない）
+EV_STOP_01
+{
+
+
+	if( !F0_02_TutoSave )
+	{
+		TK_begin()
+		if( !F_RAGNA )
+		{
+
+		//　　艾雯、休憩所之ほうを向く。
+		//　　カメラスクロールで休憩所を映す。
+			look_chr(PARTNER,RAGNA,"Bone_Head")
+
+			MES(PARTNER,"嗯、说起来\n真的很在意呢……",0)
+			MES_close(PARTNER)
+
+//			CAM_move(9159,-10946,160,60,0)
+			CAM_move(9199,-10886,160,60,0)
+			CAM(790,107,160,25,225,60,0)
+			look_off(PARTNER)
+			rot_chr(PARTNER,60,90)
+			wait(20)
+			rot_chr(RAGNA,60,90)
+
+			wait_CAM_move()
+
+			MES(PARTNER,"在那里、\n像长椅子一样的东西是什么啊？",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"是呢、好象在阿鲁迪亚的城里\n好象见过呢……",0)
+			MES(RAGNA,"稍微调查一下吧。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+
+			F_set(RAGNA)
+
+			chr_pos(RAGNA,9416,10463,0,347,2)
+			CAM_return(0)
+			cross_fade( 30 )
+			wait_fade()	
+
+		}
+		else
+		{
+		//　　２回目以降。
+			if(GW_MAN==0)
+			{
+			//　　※拉古那先頭
+				MES(RAGNA,"那个长椅子、\n在阿鲁迪亚城\n好象见过呢……",0)
+				MES(RAGNA,"稍微调查一下吧。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+
+				chr_pos(RAGNA,9416,10463,0,347,2)
+				CAM_return(0)
+				cross_fade( 30 )
+				wait_fade()	
+
+			}
+			else
+			{
+			//　　※艾雯先頭
+				MES(PARTNER,"恩、好象有个长椅子……",0)
+				MES(PARTNER,"稍微调查一下吧。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+
+				chr_pos(PARTNER,9416,10463,0,347,2)
+				CAM_return(0)
+				cross_fade( 30 )
+				wait_fade()	
+
+			}
+
+
+			MES(RAGNA,"◆真的的话不好好接受一下\n就不能前进了……",0)
+			MES(RAGNA,"太烦人了解除掉吧……",0)
+			MES_close(RAGNA)
+			F_set(F0_02_TutoSave)
+			workG(GW_WARP_FLAG,SET,1)//ついでにワープが使えるようになる。
+
+		}
+
+		TK_end()
+	}
+
+}
+*/
+
+#EndScriptTable
+//====================================================================
+

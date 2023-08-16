@@ -1,0 +1,724 @@
+//──────────────────────────────
+//	name("◆巴兰（风車之管理人）Barom")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_BAROM
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(BAROM, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,BAROM)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,BAROM)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BAROM)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BAROM)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BAROM)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BAROM)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,BAROM)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+	//　　※罗亚鲁塔村·入り口付近で瑟菲拉と話している。
+	//　　※初回イベント（巴兰と共通）
+	//　　※振り返らない。
+		if(!FV_13_TalkBaromCeph)
+		{
+			EV("TALK_BC")
+			wait_EV("TALK_BC")
+		}
+		else
+		{
+		//	rot_chr(BAROM,30,PLAYER1)
+			rot_chr(BAROM,30,RAGNA)
+			MOT_SET(BAROM,152,-1,418,418,153,40)	//な、なるほど……
+			MOT_SET(BAROM,153,-1,420,420,-1,40)
+			if(!F_BAROM)
+			{
+				MES(BAROM,"那个、突然有个歌手\n来拜访……",0)
+				MES(BAROM,"嗯、确实以前\n有帮过她的忙……",0)
+				MES(BAROM,"但是、嗯……",0)
+				MES_close(BAROM)
+
+			//　　巴兰に···エモ～ション。
+				EMO(BAROM,EMO_TENTEN)
+				wait(30)
+				
+				MES(BAROM,"那、那个、怎么办\n才好呢。",0)
+				MES_close(BAROM)
+
+			//　　拉古那に冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+
+				MES(RAGNA,"别、别问我啊……",0)
+				MES_close(RAGNA)
+
+			//	name2(PET)
+				MES(PET,"嗯、总之\n带我们进去看看怎么样？",0)
+				MES_close(PET)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"呵呵、说的也是。\n光在这呆着也很无聊吧……",0)
+				MES_close(PARTNER)
+
+				MOT(BAROM,152,10)
+			//	name2(BAROM)
+				MES(BAROM,"原、原来如此……\n这我倒没有发觉。",0)
+				MES_close(BAROM)
+
+			//　　拉古那に青ざめエモ～ション。
+				EMO(RAGNA,EMO_AOZAME)
+				wait(30)
+				
+			//　　軽く米娅たちに振り返る。
+				rot_chr(RAGNA,30,PARTNER)
+				
+				MES(RAGNA,"（怎么这么起劲呢……）",0)
+				MES_close(RAGNA)
+				
+				F_set(BAROM)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(BAROM,"嗯、确实。\n光是站着也不能好好说话……",0)
+				MOT(BAROM,152,10)
+				MES(BAROM,"泡、泡个茶什么的\n怎么样啊……？",0)
+				MES_close(BAROM)
+
+			//　　拉古那に冷や汗エモ～ション。
+				MES(RAGNA,"不要问我啊……",0)
+				MES_close(RAGNA)
+			}
+			MOT(BAROM,150,10)
+		}
+		rot_chr(BAROM,30,CEPHEILA)
+	}
+	else
+	//──────────────────────────────
+	//▼□□　わらしべイベント
+	//	name("７·巴兰（罗亚鲁塔村）		『海胆罐头』□『猫じゃらし』")149
+	//──────────────────────────────
+	if(F5_00_HearLunar && FV_11_Warasi_6_Sls && !FV_11_Warasi_7_brm)
+	{
+		//	name("□初回")
+		if(!F_BAROM)
+		{
+			//──────────────────────────────
+			//	name("□フラグ□之场合")
+			if( !F6_00_GoToMeru )
+			{
+				MES(BAROM,"接下来、差不多\n该回村子里了……",0)
+				MES_close(BAROM)
+				rot_chr(BAROM,30,PLAYER1)
+			}
+			//	name("□フラグ□之场合")
+			else
+			{
+				look_chr(BAROM,PLAYER1,"Bone_Head")
+			}		
+			//──────────────────────────────
+		//　　巴兰にＰＡエモ～ション。
+			EMO(BAROM,EMO_PA)
+			wait(30)
+			MES(BAROM,"哦呀、你们拿着的那个……？\n难道是『海胆罐头』吗。",0)
+			MES(BAROM,"嗯、实际上海胆是\n我双亲最喜欢的食物。",0)
+			MES(BAROM,"差不多也该给家里写封信了、\n如果再加上这个的话\n他们一定会很高兴的。",0)
+			MES(BAROM,"怎么样、\n让给我吧。",0)
+			MES_close(BAROM)
+			
+			F_set(BAROM)
+		}
+		else
+		{
+			//──────────────────────────────
+			//	name("□フラグ□之场合")
+			if( !F6_00_GoToMeru )
+			{
+				rot_chr(BAROM,30,PLAYER1)
+			}
+			//	name("□フラグ□之场合")
+			else
+			{
+				look_chr(BAROM,PLAYER1,"Bone_Head")
+			}		
+			//──────────────────────────────
+		//	name("□２回目以降。")
+			MES(BAROM,"实际上我的双亲\n很喜欢海胆哦。",0)
+			MES(BAROM,"把这个和信一起寄回去\n他们一定会很高兴的。",0)
+			MES(BAROM,"怎么样、那个『海胆罐头』\n让给我怎么样。",0)
+			MES_close(BAROM)
+		}
+
+	//──────────────────────────────
+	//	name("選択テキスト")
+		workL(WK_CANCEL,SET,2)//【取消】
+		MES_pos(PLAYER1,"??W9【这样的话】\n【非常抱歉】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("□【そういう事なら】")
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+			MES(BAROM,"非常感谢。\n双亲一定会很高兴的。",0)
+			MES(BAROM,"……哦、但是\n现在我身上没有带着\n可以回赠给你们的东西……",0)
+			MES(BAROM,"对了、这个给你们吧。\n混在收获物里面的。",0)
+			MES_close(BAROM)
+
+		//	name("アイテム入手テキスト")
+		//	MES(this,"『猫じゃらし』を貰った。",0)
+			//―――――――――――――――――――――――
+			fade_in(30,10,BLACK)
+
+			get_item(148,-1,1)
+			get_item(149,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//―――――――――――――――――――――――
+
+		//──────────────────────────────
+			if(GW_MAN==0)
+			{
+				if(F6_00_GoToMeru)
+				{
+				//	name("□艾雯先頭")
+					MES(PARTNER,"这、这个就是传说中\n逗猫的植物……？",0)
+					MES(PARTNER,"呵呵呵、\n你得到好东西了呢。",0)
+					MES(PARTNER,"快去试试吧！",0)
+					MES_close(PARTNER)
+
+				//	name2(BAROM)
+					MES(BAROM,"哈、哈啊……",0)
+					MES(BAROM,"（难道、是第一次见到\n  猫猫草吗……？）",0)
+					MES_close(BAROM)
+				}
+				else
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+				//	name("□奥蒂莎先頭")
+					MES(PARTNER,"猫、猫猫草啊……",0)
+					MES_close(PARTNER)
+
+					rot_chr(PET,30,PLAYER1)
+				//	name2(PET)
+					MES(PET,"对你有效吗？",0)
+					MES_close(PET)
+
+					rot_chr(PLAYER1,30,PET)
+				//	name2(PARTNER)
+					MES(PARTNER,"那个嘛、我是人狼吧？",0)
+					MES(PARTNER,"猫那帮家伙\n应该会喜欢吧。",0)
+					MES_close(PARTNER)
+				}
+			}
+			else
+			{
+			//	name("□拉古那先頭")
+				MES(RAGNA,"猫、猫猫草吗……",0)
+				MES(RAGNA,"（还真有喜欢的家伙\n  存在呢……）",0)
+				MES_close(RAGNA)
+			}
+			F_reset(BAROM)
+			F_set(FV_11_Warasi_7_brm)
+		//──────────────────────────────
+		}
+		//──────────────────────────────
+		//	name("□【ごめんなさい】")
+		//──────────────────────────────
+		else
+		{
+			MES(BAROM,"没有的事、突然\n说了那样的话……",0)
+			MES(BAROM,"是我失礼了。\n请不要在意。",0)
+			MES_close(BAROM)
+		}
+		//──────────────────────────────
+		//	name("□フラグ□之场合")
+		if(F6_00_GoToMeru)
+		{
+			look_off(BAROM)
+		}		
+		//──────────────────────────────
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※风車小屋民家之傍。
+	if( F6_00_GoToMeru )
+	{
+		look_chr(BAROM,PLAYER1,"Bone_Head")
+		if(!F_BAROM)
+		{
+			MES(BAROM,"从村长的话来看、\n要来大暴风了。",0)
+			MES(BAROM,"嗯、大家分开行动\n好好把东西整备好。",0)
+			MES(BAROM,"屋顶和窗户\n最好用木板钉上。",0)
+			MES(BAROM,"这样就不会被风吹走了。",0)
+			MES_close(BAROM)
+
+			F_set(BAROM)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(BAROM,"平常看起来是不错的天气、\n也要做好完全的准备啊。",0)
+			MES(BAROM,"还有、风车的翼也是\n不要伸到外面。",0)
+			MES(BAROM,"被风吹到的话\n可能会坏的。",0)
+			MES_close(BAROM)
+		}
+		look_off(BAROM)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※阿鲁迪亚熊猫楼１階、谢斯塔と話している。
+	//　　※振り返らない
+	if( F5_00_HearLunar )
+	{
+		if(!F_BAROM)
+		{
+			MES(SHESTOR,"……不过真是帮了大忙啊。",0)
+			MES(SHESTOR,"没想到瑟菲拉那家伙\n被绊倒了。",0)
+			MES(SHESTOR,"应该我说声谢谢。",0)
+			MES_close(SHESTOR)
+
+		//	name2(BAROM)
+			MES(BAROM,"没什么、我也是偶然\n路过那里的……",0)
+			MES(BAROM,"没有什么大不了的。\n请不要在意。",0)
+			MES(BAROM,"我必须得去教会那里\n接婆婆了。",0)
+			MES(BAROM,"嗯、差不多该告辞了。",0)
+			MES_close(BAROM)
+
+		//	name2(SHESTOR)
+			MES(SHESTOR,"啊、哦……",0)
+			MES(SHESTOR,"你也很不容易啊……",0)
+			MES_close(SHESTOR)
+
+			//★巴兰【瑟菲拉】
+			F_set_note(BAROM,2)
+
+			//★谢斯塔
+			F_set_note(SHESTOR,-1)
+			
+			F_set(BAROM)
+		}
+	//　　★繰り返し
+	//　　※振り返らない
+		else
+		{
+			MES(BAROM,"嗯、没受什么大伤\n真是太好了。",0)
+			MES(BAROM,"请对她说\n请多保重。",0)
+			MES(BAROM,"嗯、那么我就此告辞了……",0)
+			MES_close(BAROM)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//　　※风車小屋民家、木箱之前にいる。
+	if( F4_09_GoShrineMia)
+	{
+		look_chr(BAROM,PLAYER1,"Bone_Head")
+		MES(BAROM,"哦呀……\n怎么了？",0)
+		MES(BAROM,"阿鲁贝尔和玛莎、\n还在休息呢。",0)
+		MES_close(BAROM)
+		look_off(BAROM)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※外、にんじん畑でフリ～ム～ブ。
+	if( F4_00_StartSolo )
+	{
+		MOT_SET(BAROM,150,-1,400,400,-1,40)
+		MOT(BAROM,150,10)
+		F_set_chr(BAROM,CF_NO_MOVE)
+		rot_chr(BAROM,30,PLAYER1)
+		if(!F_BAROM)
+		{
+			MES(BAROM,"阿鲁贝尔和玛莎\n都倒下了……",0)
+			MES(BAROM,"只有我自己动手\n去打水了。",0)
+			MES(BAROM,"还没有恢复正常啊、\n我就只有体力好是优点。",0)
+			MES(BAROM,"除了这种时候\n还真派不上用场。",0)
+			MES_close(BAROM)
+
+			F_set(BAROM)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(BAROM,"咳咳……\n还没有恢复正常啊。",0)
+			MES(BAROM,"……但是………\n村长殿下很健康呢。",0)
+			MES(BAROM,"比安斯也是\n一点都没有变化……",0)
+			MES_close(BAROM)
+
+		//　　巴兰に···エモ～ション。
+			EMO(BAROM,EMO_TENTEN)
+			wait(30)
+			
+			MES(BAROM,"那两个人\n到底是什么做的呢。",0)
+			MES_close(BAROM)
+		}
+		F_reset_chr(BAROM,CF_NO_MOVE)
+		MOT(BAROM,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※倒れている。メッセ～ジなし。（梅ン参照）
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※风車小屋之手前、木箱が積んで啊る所。
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(BAROM,30,PLAYER1)
+		MOT(BAROM,2,15)
+	//　　※初回イベント
+		if(!FV_05_TalkBarom)
+		{
+			MES(BAROM,"那个、您知道吗。",0)
+			MES(BAROM,"村子的那边、水晶峡谷的方向\n隐约有轻雾\n弥漫着。",0)
+			MES_close(BAROM)
+
+		//　　拉古那たちに気付きエモ～ション。
+			EMO(RAGNA,EMO_PA)
+			EMO(PARTNER,EMO_PA)
+			wait(30)
+			MES(RAGNA,"唉……？",0)
+			MES_close(RAGNA)
+
+		//　　拉古那たち、顔を見合わせる。
+			rot_chr(RAGNA,30,PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			
+			MES(RAGNA,"（那个说的是……\n  蒙布利亚城吗？）",0)
+			MES_close(RAGNA)
+
+			rot_chr(RAGNA,30,BAROM)
+			rot_chr(PARTNER,30,BAROM)
+		//──────────────────────────────
+		//	name("□フラグ②之初回イベントを見ている场合")
+			if(FV_02_TalkBarom)
+			{
+				MES(PARTNER,"（果、果然这个男人、\n  目光很敏锐啊……）",0)
+				MES_close(PARTNER)
+
+			//	name2(BAROM)
+				MES(BAROM,"每天都不一定、有时候能看见\n有时候看不见。",0)
+				MES(BAROM,"嗯……那个果然是\n错觉吗。",0)
+				MES_close(BAROM)
+			}
+			else
+			{
+			//	name("□見ていない场合")
+				MES(PARTNER,"（这、这个男人、\n  目光很敏锐啊……）",0)
+				MES_close(PARTNER)
+
+			//	name2(BAROM)
+				MES(BAROM,"每天都不一定、有时候能看见\n有时候看不见。",0)
+				MES(BAROM,"嗯……是自己的\n错觉吗。",0)
+				MES_close(BAROM)
+			}
+
+		//──────────────────────────────
+			//★巴兰【敏感】
+			F_set_note(BAROM,1)
+			F_set(FV_05_TalkBarom)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_BAROM)
+			{
+				MES(BAROM,"话说回来……你知道最近\n在村子里面玩耍的小孩子吗？",0)
+				MES_close(BAROM)
+
+				look_chr(BAROM,WADE,"Bone_Head")
+				MES(BAROM,"实际上前几天、\n坐在木箱子上面玩。",0)
+				look_off(BAROM)
+				MES(BAROM,"有精神头是好事\n但是……",0)
+				MES(BAROM,"果然还是太危险了。\n不注意点不行啊。",0)
+				MES_close(BAROM)
+				F_set(BAROM)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(BAROM,"那孩子、偶尔\n就到村子里面\n来玩耍。",0)
+				MES(BAROM,"从打扮上来看、\n相当奇怪的小孩……",0)
+				MES(BAROM,"这么做、很危险\n不注意点不行啊。",0)
+				MES_close(BAROM)
+			}
+		}
+		MOT(BAROM,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※村広场で、鸡之世話をしている。
+	//　　　（放牧地之鸡配置をこちらに移し、巴兰はフリ～ム～ブ）
+	if( F2_00_GoForest )
+	{
+		MOT_SET(BAROM,150,-1,405,405,-1,40)
+		MOT(BAROM,150,10)
+		rot_chr(BAROM,30,PLAYER1)
+		if(!F_BAROM)
+		{
+			MES(BAROM,"你知道吗、\n最近村子里面的宠物商店\n开张了。",0)
+			MES(BAROM,"……但是、店里的那位\n是一个相当不得要领的人……",0)
+			MES(BAROM,"总是笑呵呵的、\n到底在想着什么\n也没人知道。",0)
+			MES(BAROM,"好像是第一次到村子里来、\n屋子盖的也左右相反的……",0)
+			MES_close(BAROM)
+
+			F_set(BAROM)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(BAROM,"宠物店的那位\n虽然也说过几次话、\n是一个相当不得要领的人。",0)
+			MES(BAROM,"总之、这次的收获祭\n也要过来帮忙。",0)
+			MES(BAROM,"唉、稍微有点安心……",0)
+			MES(BAROM,"一成不变的呵呵笑着、\n到底在想着什么\n也没人知道。",0)
+			MES_close(BAROM)
+		}
+		MOT(BAROM,2,5)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※风車小屋之手前、木箱が積んで啊る所。
+	if( F1_15_GoVillage )
+	{
+	//　　※初回イベント
+		MOT(BAROM,2,10)
+		rot_chr(BAROM,30,PLAYER1)
+		if(!FV_02_TalkBarom)
+		{
+			MES(BAROM,"正在整理收获物……",0)
+			MES_close(BAROM)
+
+		//　　巴兰きょろきょろ。
+			look(BAROM,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(BAROM,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(BAROM,"Bone_Head",0,		0,2,0,			0,0,0)
+			
+			MES(BAROM,"实际上前几天、\n感觉到了奇妙的味道。",0)
+			MES(BAROM,"那个、好像不是人类\n的感觉似的……",0)
+			MES_close(BAROM)
+
+		//　　拉古那たちに気付きエモ～ション。
+			EMO(RAGNA,EMO_PA)
+			EMO(PARTNER,EMO_PA)
+			wait(30)
+			
+			MES(RAGNA,"唉……？",0)
+			MES_close(RAGNA)
+
+		//　　拉古那たち、顔を見合わせる。
+			rot_chr(RAGNA,30,PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			
+			MES(RAGNA,"（不像人类……\n  难道、是公主的气息？）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（嗯……不、不是我哦？）",0)
+			MES(PARTNER,"（我整天、\n  都有好好的抑制住力量。）",0)
+			MES(PARTNER,"（原本、魔力还没有很好地\n  取回来呢。）",0)
+			MES_close(PARTNER)
+
+		//　　艾雯に···エモ～ション。
+			EMO(PARTNER,EMO_TENTEN)
+			wait(30)
+			
+		//　　顔を背けて考える素振り。
+			
+			MES(PARTNER,"难道……\n是因为今天早上偷偷\n多点的饺子的缘故？",0)
+			MES_close(PARTNER)
+
+		//　　拉古那に青ざめエモ～ション。
+			EMO(RAGNA,EMO_AOZAME)
+			wait(30)
+			
+			MES(RAGNA,"不、不是那样吧。\n（话说那件事什么时候做的……）",0)
+			MES(RAGNA,"（明明是吸血鬼\n  遇到大蒜也没问题吗……？）",0)
+			MES_close(RAGNA)
+
+		//──────────────────────────────
+			F_set(FV_02_TalkBarom)
+		}
+	//　　★繰り返し
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+			if(!F_BAROM)
+			{
+				MES(BAROM,"实际上前几天、\n我感觉到了一种奇妙的气息……",0)
+				MES(BAROM,"可能是错觉。",0)
+				MES(BAROM,"赶快整理好收获物、\n去镇上卸了吧。",0)
+				MES_close(BAROM)
+
+			//──────────────────────────────
+			//	name("□艾雯先頭")
+				if(GW_MAN==0)
+				{
+					rot_chr(PARTNER,30,BAROM)
+					MES(PARTNER,"嗯、那个倒是很急呢。",0)
+					MES_close(PARTNER)
+
+				//　　拉古那に冷や汗エモ～ション。
+					EMO(RAGNA,EMO_HIYAASE)
+					wait(30)
+				}
+				F_set(BAROM)
+			}
+			else
+			{
+				MES(BAROM,"实际上前几天、\n我感觉到了一种奇妙的气息……",0)
+				MES(BAROM,"赶快整理好收获物、\n去镇上卸了吧。",0)
+				MES(BAROM,"……关于气息这件事、\n请不要太介意。",0)
+				MES_close(BAROM)
+			}
+		}
+		MOT(BAROM,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※罗亚鲁塔村、风車小屋前で柵を直している。
+	if( F1_01_GameStart )
+	{
+		if(!F_BAROM)
+		{
+		//　　巴兰にＰＡエモ～ションで首だけ振り向く。
+			EMO(BAROM,EMO_PA)
+			wait(30)
+			look_chr(BAROM,PLAYER1,"Bone_Head")
+			
+			MES(BAROM,"哦、请小心。",0)
+			MES(BAROM,"这里的栅栏快倒了、\n正准备修理呢。",0)
+			MES(BAROM,"路过的时候有点危险哦。",0)
+			MES_close(BAROM)
+
+			
+			//ここで釘うちモ～ションを止め、向き直る。
+			look_off(BAROM)
+			MOT(BAROM,2,15)
+			wait(20)
+			rot_chr(BAROM,40,PLAYER1)
+			
+			MES(BAROM,"我通常\n都是管理风车的、\n像这种作业还是很在行的。",0)
+			MES(BAROM,"村子里面年老的人比较多。\n不好好注意点不行啊。",0)
+			MES_close(BAROM)
+			//★巴兰【风車之管理】
+			F_set_note(BAROM,0)
+
+			F_set(BAROM)
+		}
+		//　　★繰り返し
+		else
+		{
+			MOT(BAROM,2,15)
+			wait(20)
+			rot_chr(BAROM,40,PLAYER1)
+			MES(BAROM,"嗯……\n或许村子里面的谁\n还会用呢。",0)
+			MES(BAROM,"那样的话、去问问玛莎婆婆\n阿鲁贝尔爷爷\n比较好。",0)
+			MES(BAROM,"那两个人、\n相当的亲切呢。",0)
+			MES_close(BAROM)
+		}
+		MOT(BAROM,150,10)
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

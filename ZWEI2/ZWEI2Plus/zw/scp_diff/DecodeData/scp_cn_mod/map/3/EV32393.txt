@@ -1,0 +1,880 @@
+//====================================================================
+//ステージトラップスクリプト
+//[13039][森－ボス終]
+//====================================================================
+
+#ScriptTable
+
+#PLAYER		252	//操作キャラクター
+#PLAYER2 	253	//非操作キャラクター
+
+#LUE 			1
+#EVENT_RAGNA 	2
+#ALWEN		 	3
+
+#IBARA_TYP	734
+//#IBARA_TYP	454
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境SE
+	SE(73,0)//鳥3
+	SE(74,0)//鳥4
+	SE(62,0)//虫
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段
+
+	// 入口
+	if ( F2_03_FindBaria && !F2_04_IntoTower)
+		set_chr( 90,991, 2, 9,     0,   0,  0,		180,070201, 6,"<EV_STOP_01>")	//ストッパー：①エントリ BOSS③
+	else
+		set_chr( 90,990, 2, 9,     0,   0,  0,		180,070201, 6,"K1_13033;")	//①エントリ BOSS③
+
+	set_obj("@obx0033c", 2, 9,     0,   0,  0,		180)						//①アーチ（森紫）
+	set_chr(190,1400,	 2, 9,	   0,   0,  0,		180,     0, 0,";")			//アーチ（ダミー）
+
+
+	// 出口
+	if(F3_00_GoMoonCastle && !F4_00_StartSolo)
+		set_chr( 91,991, 4, 4,     0,-1000, 0,		  0,070301, 6,"<EV_STOP_02>")	//②エントリ 森魔女家·外
+	else
+		set_chr( 91,990, 4, 4,     0,-1000, 0,		  0,070301, 6,"K0_13098;")	//②エントリ 森魔女家·外
+
+	set_obj("@obx0043c", 4, 4,     0,-900,  0,		  0)						//①アーチ（魔女）
+	set_chr(191,1400,	 4, 4,	   0,-900,  0,		  0,     0, 0,";")			//アーチ（ダミー）
+
+
+	//艾雯が攫われて露だけ之時
+	if( F4_11_EndFourth && !F5_17_EndFifth )
+	{
+		set_chr( 92,991,	-1,-1,   4089,15959,0,  180,1001,6,"<EV_STOP_03>")	//ストッパー：戻り-ボス終
+	}
+
+
+//■スイッチ·看板
+	set_chr( 50,620,	 2, 7,  -350,   0,  0,		  0,   270, 0,";")			//①セーブOBJ
+
+	set_chr( 56,772,	 4, 4,     0,-450,  0,		 11,     0, 0,";")	//②レベルプレート
+	color2(56, 85,80,100, 0,0,0)
+	set_chr( 54,657,	 4, 6,  -425,-230,  0,		  0,     0, 0,";")	//③ハテナ看板
+
+	// BOSS警報和危険看板
+//	set_chr( 60,658,	 4, 4,  -175, 900,  0,		  0,     0, 0,";")	//③中ボス看板
+//	if(!F2_13_KillBoss3)
+//	{
+//		set_chr( 81,990,	 4, 4,     0, 800,  0,		  0,070501, 6,"#8_99 S0_2 WT?150;")//警報出現
+//	}
+
+//■圈套·障害物
+//■イベント
+	if (!F2_03_FindBaria)
+	{
+		//▼发现灌木结界
+		set_chr( 80,990,-1,-1, 6750,11274,  0,		  0,  0206, 6,"<EV_2_03_FindBaria>;")
+	}
+	else
+	if (!F2_04_IntoTower)
+	{
+		set_chr( 75,IBARA_TYP, 4, 5,    0, 1100,  0,		  2,     0, 0,";") //①灌木结界
+		//▼露登场～听大铁塔的异変
+		set_chr( 81,990, 1, 1,     0,   0,  0,		  0,     0, 8,"Mi?75 WT?15 <EV_2_04_GotoTower>;") //茨之結界
+	}
+	else
+	if (!F2_11_CancelBaria)
+	{
+		set_chr( 75,IBARA_TYP, 4, 5,     0,1100,  0,		  2,     0, 0,";") //①茨之結界
+		//▼烧光了灌木结界
+		set_chr( 82,990, 1, 1,     0,   0,  0,		  0,     0, 8,"M1?75 WT?15 <EV_2_12_CancelBaria>;") //灌木结界
+	}
+	else
+	{
+	//	set_chr( 75,IBARA_TYP, 4, 5,     0,1100,  0,		  0,     0, 0,";") //破壊灌木结界
+	}
+
+//■场面固有設定
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼茨之結界を発見
+//──────────────────────────────
+//　　森之梅ンルート②をクリアした後、
+//　　来到通往魔女家的エントリ的跟前时间就会発生。
+EV_2_03_FindBaria
+{
+	EV_begin()
+
+	set_chr( 75,IBARA_TYP, 4, 5,    0, 1100,  0,		  2,     0, 0,";") //灌木结界
+
+//　　拉古那と艾雯之頭に！マーク。
+	EMO(RAGNA,EMO_BIKKURI)
+	EMO(PARTNER,EMO_BIKKURI)
+	wait(15)
+	rot_chr(RAGNA,30,75)
+	rot_chr(PARTNER,30,75)
+	wait(15)
+
+//	EMO(RAGNA,EMO_HATENA)
+//	wait(30)
+//	MES(RAGNA,"？マーク。",0)
+	MES(RAGNA,"那个是……",0)
+	MES_close(RAGNA)
+
+//	EMO(PARTNER,EMO_HATENA)
+//	wait(30)
+//	MES(PARTNER,"？マーク。",0)
+//	MES_close(PARTNER)
+
+//　　画面スクロールして、茨之結界を見せる。
+//　　（通路堵塞、斟酌关于包围着异次元门的事情）
+	CAM_move(7578,-10396,160,60,0)
+	CAM(790,100,160,25,225,60,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+
+	cross_fade(30)
+	CAM_move(7650,-10326,160,0,0)
+	CAM(610,80,160,28,180,0,0)
+	CAM_move(7650,-10636,160,120,0)
+	CAM(270,100,160,28,180,120,0)
+//	wait_CAM_move()
+//	wait_CAM()
+	wait(60)
+	chr_pos(RAGNA,		7560,11436,0,180,2)
+	chr_pos(PARTNER,	7720,11448,0,180,2)
+
+//　　拉古那和艾雯进来了。
+	move( RAGNA, 0,WALK1,7560,10936,0,0)
+	wait(10)
+	move( PARTNER, 0,WALK1,7720,10948,0,0)
+	wait_move( RAGNA )
+	wait_move( PARTNER )
+	wait(15)
+
+	MES(PARTNER,"嗯……\n这好像很麻烦啊。",0)
+	MES(PARTNER,"好像是谁在这里\n设置了结界。",0)
+	MES_close(PARTNER)
+
+	MES(RAGNA,"……是吗。",0)
+	MES(RAGNA,"暂且、先试试各种方法\n看能否通过。",0)
+	MES_close(RAGNA)
+
+	fade_in(100,30,0)
+	wait_fade()
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★发现了灌木結界』を立てる。
+	F_set(F2_03_FindBaria)
+
+//灌木結界攻撃可能
+	set_chr( 81,990, 1, 1,     0,   0,  0,		  0,     0, 8,"Mi?75 <EV_2_04_GotoTower>;") //灌木結界
+
+//ボス側之エントリを置き換える
+	delete(90)
+	//set_chr( 90,991,	2,9,     0,   0,  0,   180,0201,6,"<EV_STOP_01>;")	//ストッパー：①エントリ ボス③
+	set_chr( 90,991, 2, 9,     0,   0,  0,		180,070201, 6,"<EV_STOP_01>")	//ストッパー：①エントリ ボス③
+	workG(GW_WARP_FLAG,SET,0)//ワープも封じる。
+
+	fade_in(0,30,0)
+
+//　　事件終了、プレイヤー操作許可。
+	EV_end()
+}
+
+
+//──────────────────────────────
+//▼露登场～大铁塔之异変を聞く
+//──────────────────────────────
+//　　用アンカーギア攻击灌木结界、
+//　　魔法攻击事件也会发生。
+//　　キャラクターを再配置してカメラを調整する。
+EV_2_04_GotoTower
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  7550,10936,0,180,2)
+	chr_pos(PARTNER,  7710,10948,0,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 7550,11030,0, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 7750,11000,0, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	KAO(ALWEN,"1","1","1")//デフォルト
+
+//	set_chr(LUE,	  1015,-1,-1, 7420,11300,0, 2,270,0, "")
+	set_chr(LUE,	  1015,-1,-1, 6420,11300,0, 2,270,0, "")
+	color(LUE,-1)
+	wait_color(LUE)
+	F_set_chr(LUE,CF_NO_ZIMEN)
+	F_set_chr(LUE,CF_NO_HEIGHT)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+
+	//モーション定義
+	MOT_SET(LUE,150,-1,1055,1095,-1,-1)//艾雯抱住
+	MOT_SET(ALWEN,150,-1,165,168,2,10)//艾雯被抱住
+	MOT_SET(ALWEN,151,-1,6400,6400,-1,-1)//抱ルウ
+//	MOT_SET(ALWEN,152,-1,6401,6401,-1,-1)//看见ルウ
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる
+
+	//カメラ初期位置
+	CAM_move(7680,-10496,280,0,0)
+	CAM(590,68,280,30,206,0,0)
+
+	//フェードイン
+	fade_in(0,30,0)
+	wait_fade()
+	wait(30)
+
+	CAM_move(7620,-10676,180,90,0)
+	CAM(230,96,180,30,224,90,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	KAO(EVENT_RAGNA,"B232BZ5","1","1")//
+	MES(EVENT_RAGNA,"不行……\n一点也不起作用啊。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","1")//
+	MES(EVENT_RAGNA,"难道这个是\n魔法之类的东西？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","123","2")//
+	MES(ALWEN,"嗯、《荆棘结界》。",0)
+	KAO(ALWEN,"B232BZ7","32","2")//
+	MES(ALWEN,"要是有《炎之魔法》的话\n一瞬间就能烧掉。",0)
+	MES_close(ALWEN)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321FZ7","1233321","6")//
+	MES(EVENT_RAGNA,"啊、那样的话\n点火烧掉不就行了？",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ6","23","2")//
+	MES(ALWEN,"不是、用普通的火魔法烧掉后\n马上会再生的。",0)
+	KAO(ALWEN,"B232BZ6","321","2")//
+	MES(ALWEN,"要寻找一种能够彻底\n烧尽这些荆棘的火焰。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"C232CZ4","123","5")//
+	MES(EVENT_RAGNA,"这好像很难……",0)
+	MES_close(EVENT_RAGNA)
+
+	chr_rename(LUE,"声音")//
+//	name("声")
+	KAO(LUE,"2","6","7")//
+	VOICE2(200,0,90)		//★ボイス演出
+	MES_pos(LUE,"P1S8W9公主殿下！",0,120,140,0,0)
+	wait_key(0)
+	MES_close(LUE)
+
+//　　拉古那と艾雯之頭に！マーク。
+//　　这里的入口方向、露飞来。
+	color(LUE,1)
+	wait_color(LUE)
+
+	KAO(EVENT_RAGNA,"E","321D","6")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(ALWEN,"E","1233321D","6")//
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	look_off(ALWEN)
+	rot(ALWEN,30,90)
+	look_off(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,90)
+	wait(30)
+
+	cross_fade(30)
+	look_chr( EVENT_RAGNA, LUE ,"Bone_Head")
+	//look_chr( ALWEN, LUE ,"Bone_Head")
+	chr_pos(EVENT_RAGNA,	  7360,11090,0,20,2)
+	chr_pos(ALWEN,  7450,11300,0,90,2)
+//	CAM_move(5470,-11216,20,0,0)
+	CAM_move(6470,-11216,20,0,0)
+	CAM(240,88,20,18,246,0,0)
+
+	//move( LUE, 0,25,7420,11300,-20,0)
+	move( LUE, 0,25,7420,11300,-70,0) //okada
+	CAM_move(6940,-11036,-10,45,2)
+	CAM(30,112,-10,18,240,45,2)
+	wait_move( LUE )
+	chr_pos(LUE,-1,-1,-1,-1,-1)
+	MOT(ALWEN,150,0) //okada
+	MOT(LUE,150,5)
+	wait(50)
+
+	KAO(EVENT_RAGNA,"2","D","7")//
+	MES(EVENT_RAGNA,"呃……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MOT(ALWEN,151,15)//抱ルウ okada
+	KAO(ALWEN,"12321Z2","1233321DE","6")//ルウを抱く
+	MES(ALWEN,"喔喔、是露啊！",0)
+	MES_close(ALWEN)
+
+	chr_rename(LUE,"露")//
+//　　露、艾雯に抱きつくような動き。
+//	MES(LUE,"◆未入力項目\n露、要抱艾雯的动作。",0)
+	KAO(LUE,"12321Z5","6","7")//
+	MES(LUE,"啊啊、公主殿下！\n没事比什么都好！",0)
+	MES_close(LUE)
+//	look_chr( LUE, EVENT_RAGNA ,"Bone_Head")
+	look(LUE,"Bone_Head",0,0,2,0,0,-30,0)
+	wait(15)
+	KAO(LUE,"B232BZ5","32","2")//
+	MES(LUE,"……这个禽兽\n欺负您了吗？",0)
+	MES_close(LUE)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"C232CZ2","12","5")//
+	MES(EVENT_RAGNA,"你啊……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+//	wait(15)//okada
+//	MOT(ALWEN,152,15)//看见ルウ okada
+	KAO(ALWEN,"12321Z4","D123332A","6")//
+	MES(ALWEN,"呵呵、怎么还那么爱操心啊。",0)
+	KAO(ALWEN,"12321Z4","A","6")//
+	MES(ALWEN,"对了、出什么事了？",0)
+	KAO(ALWEN,"12321Z7","A","6")//
+	MES(ALWEN,"你也是来这里\n寻找魔力的吗？",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+	MOT(ALWEN,2,12)//okada
+
+	cross_fade(15)
+	CAM_move(6340,-11016,-140,0,0)
+	CAM(50,124,-140,22,254,0,0)
+	chr_pos(EVENT_RAGNA,	  7320,11110,0,20,2)
+	look(LUE,"Bone_Head",0,0,3,0,0,0,0)
+	look_off( LUE )
+	KAO(LUE,"1","23","1")//
+	move( LUE, 0,18,7220,11330,20,0)
+	wait_move( LUE )
+	chr_pos(LUE,-1,-1,-1,-1,-1,)
+	KAO(EVENT_RAGNA,"1","321","1")//
+	look_chr( ALWEN, LUE ,"Bone_Head")//okada//场所変更
+
+//	name2(LUE)
+	KAO(LUE,"12321Z2","321","1")//
+	MES(LUE,"啊、是的。",0)
+	KAO(LUE,"12321Z2","F","1")//
+	MES(LUE,"不仅仅是这、\n伊尔巴特全境都是……",0)
+	KAO(LUE,"B232BZ2","12321D","2")//
+	MES(LUE,"公主殿下！\n发生了不得了的事情！",0)
+	MES_close(LUE)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321FZ3","233321","6")//
+	MES(ALWEN,"不得了……？",0)
+	MES_close(ALWEN)
+
+//	name2(LUE)
+	KAO(LUE,"B232BZ2","1232A","1")//
+	MES(LUE,"是、是……",0)
+	KAO(LUE,"B232BZ6","A","1")//
+	MES(LUE,"从这里往北\n是《奥伦大铁塔》……",0)
+	KAO(LUE,"B232BZ6","233321D","2")//
+	MES(LUE,"就在刚才的时候、那个塔好像、\n红彤彤的燃烧了起来！",0)
+	MES_close(LUE)
+
+//　　拉古那と艾雯之頭に！マーク。
+	KAO(EVENT_RAGNA,"C","DE","7")//
+//	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EFF(25100,	7310,-11110,130,	0,90,0)
+	KAO(ALWEN,"E","DE","7")//
+//	EMO(ALWEN,EMO_BIKKURI)
+	EFF(25100,	7450,-11300,130,	0,80,0)
+	wait(30)
+
+	KAO(EVENT_RAGNA,"B232BZ2","D1233321","2")//
+	MES(EVENT_RAGNA,"什么！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B2Z2","D1233321","2")//
+	MES(ALWEN,"真的吗！？",0)
+	MES_close(ALWEN)
+
+//	name2(LUE)
+	KAO(LUE,"B232BZ2","123","4")//
+	MES(LUE,"是、是的……！",0)
+	KAO(LUE,"B232BZ6","3","4")//
+	MES(LUE,"周围熔岩流动着、\n喷出了漫天的蒸气……",0)
+	KAO(LUE,"B232BZ5","321","2")//
+	MES(LUE,"而、而且……\n强烈的感觉到公主殿下的魔力。",0)
+	MES_close(LUE)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ2","123","1")//
+	MES(ALWEN,"这样啊……",0)
+	MES_close(ALWEN)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ6","1233321","2")//
+	MES(EVENT_RAGNA,"暂且、\n先终止森林的探索吧。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1","2")//
+	MES(EVENT_RAGNA,"怎么也应该\n先去那里看看。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B","321","2")//
+	MES(ALWEN,"嗯……！",0)
+	KAO(ALWEN,"B232BZ4","1","2")//
+	MES(ALWEN,"赶快朝大铁塔\n出发吧！",0)
+	MES_close(ALWEN)
+
+//　　画面、ゆっくりとフェードアウト。
+	CAM(50,130,-140,22,254,60,0)
+	fade_in(100,60,0)
+	wait_fade()
+
+	stop_BGM(60)
+	wait_BGM()
+
+	workG(GW_WARP_FLAG,SET,1)//ワープ解除。
+
+//　　奥伦大铁塔入口起動時マップへ(ev40000)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(14001)
+
+//	EV_end()
+}
+
+
+//──────────────────────────────
+//▼茨之結界を焼き切る
+//──────────────────────────────
+//　　アンカーギア加入了炎属性后、
+//　　森林的《茨之結界》用拉古那炎攻撃就会、
+//　　被烧尽、完全的消失。
+//　　这样キャラ再配置以后的事件発生。
+EV_2_12_CancelBaria
+{
+	EV_begin()
+
+	cross_fade(30)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  7550,11030,0,180,2)
+	chr_pos(PARTNER,  7710,11000,0,180,2)
+	KAO(RAGNA,"1","1","1")//デフォルト
+	KAO(PARTNER,"1","1","1")//デフォルト
+
+	//カメラ初期位置
+	CAM_move(7680,-10496,280,0,0)
+	CAM(590,68,280,30,206,0,0)
+
+	SE(1020,0)//イバラを焼き切る音
+
+	wait(60)
+
+//	MES(RAGNA,"◆未入力項目\n灌木被火炎烧尽、\n能看到全部已被消灭。",0)
+//	MES_close(RAGNA)
+
+	CAM_move(7620,-10676,180,90,0)
+	CAM(230,96,180,30,224,90,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	rot(PARTNER,30,140)
+	look_chr( PARTNER, RAGNA ,"Bone_Head")
+	wait(15)
+	KAO(PARTNER,"12321Z3","1236","6")//
+	MES(PARTNER,"成功了、拉古那！",0)
+	KAO(PARTNER,"12321Z6","6","6")//
+	MES(PARTNER,"这个“安卡基亚”\n想不到会用在这里。",0)
+	MES_close(PARTNER)
+
+	rot(RAGNA,30,220)
+	look_chr( RAGNA, PARTNER ,"Bone_Head")
+	wait(15)
+//	name2(RAGNA)
+	KAO(RAGNA,"12321Z4","123","6")//
+	MES(RAGNA,"呵呵、那是当然了。",0)
+	MES_close(RAGNA)
+	MOT(RAGNA,50,0)	//左足トントン
+	wait(30)
+	KAO(RAGNA,"12321Z5","321","2")//
+	MES(RAGNA,"还有……\n大铁塔不能不去啊。",0)
+	KAO(RAGNA,"12321Z6","1","2")//
+	MES(RAGNA,"找魔女问问情况之后\n再回去那里吧。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	KAO(PARTNER,"12321","321","2")//
+	MES(PARTNER,"嗯！",0)
+	MES_close(PARTNER)
+
+	fade_in(100,30,0)
+	wait_fade()
+
+	look_off( RAGNA )
+	look_del( RAGNA )
+	look_off( PARTNER )
+	look_del( PARTNER )
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★烧尽灌木結界』を立てる。
+	F_set(F2_11_CancelBaria)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+//▽マップから出られないストッパー（首先请各种尝试）
+//　　マップから出ようとするとストッパー。（※当然ワープも封じる）
+//　　（『★能进入大铁塔』时ストッパー解除）
+EV_STOP_01
+{
+	TK_begin()
+	if( GW_MAN==1 )
+	{
+	//　　※拉古那先頭
+		MES(RAGNA,"啊……",0)
+		MES(RAGNA,"结界不能被破坏吗、\n首先必须要做各种各样的尝试。",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	{
+	//　　※艾雯先頭
+		MES(PARTNER,"魔女家好像在那里面……",0)
+		MES(PARTNER,"嗯、先试试怎么样。",0)
+		MES_close(PARTNER)
+		wait_MES(PARTNER)
+	}
+
+	chr_pos(PLAYER1,4071,16000,0,181,2)
+	chr_pos(PLAYER2,4071,16200,0,181,2)
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()
+	TK_end()
+
+}
+
+
+//　　进入魔女家的地图時ストッパー事件。
+//　　□进入地图前ストッパー。
+EV_STOP_02
+{
+	TK_begin()
+	MES(PARTNER,"与魔女殿下的联络\n就交给露吧。",0)
+	MES(PARTNER,"现在赶紧去\n城堡吧。",0)
+	MES_close(PARTNER)
+
+	MES(RAGNA,"啊啊、同意！",0)
+	MES_close(RAGNA)
+	wait_MES(RAGNA)
+
+	chr_pos(PLAYER1,7644,7442,0,346,2)
+	chr_pos(PLAYER2,7700,7302,1,20,2)
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()
+
+	TK_end()
+}
+
+//---------------------------------------------------------------------------------
+//▽魔女之家から出られないストッパー（ダンジョンに入るつもり？　因时间紧迫请使用ワープ）
+//　　エントリ之少し手前で引っ掛ける。
+//---------------------------------------------------------------------------------
+EV_STOP_03
+{
+	set_chr(LUE,	  1015,-1,-1, 4106,15730,0, 2,270,0, "")
+	color(LUE,-1)
+	TK_begin()
+	chr_rename(LUE,"露的声音")//
+	if( !F5_03_OfferLaraira )
+	{
+	//　　※没有与拉莱拉打招呼的场合
+		MES(LUE,"W9C4……等等拉古那！？\n你要去哪啊！",0)
+		MES(LUE,"W9C4我们现在是要去\n找魔女啊！C0",0)
+		MES_close(LUE)
+
+		MES(RAGNA,"对、对不起。\n分心了。",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	if( F5_03_OfferLaraira && F5_04_OfferPipiro && F5_05_OfferFiona && !F5_06_RunCrystal )
+	{
+	//　　※全員に声を掛けてからは以下之ストッパー
+		MES(RAGNA,"呼……\n现在不是玩的时候。",0)
+		MES(RAGNA,"赶快去\n水晶峡谷……！",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	if( !F5_06_RunCrystal )
+	{
+//　　初回之み以下之イベント。
+		if(!F5_23_LueJump_3)
+		{
+		//	name("□これで全員に声を掛けた")
+			if(F5_03_OfferLaraira && F5_04_OfferPipiro && F5_05_OfferFiona)
+			{
+				MES(RAGNA,"啊、这里是迷宫吗……",0)
+				MES(RAGNA,"现在赶快去\n水晶峡谷。",0)
+				MES(RAGNA,"在镇上做好准备的话、\n我们就出发吧。",0)
+				MES_close(RAGNA)
+
+				if( F5_22_LueJump_2 )
+				{
+				//	name("□森入り口之ストッパーイベントを見た")
+					MES(LUE,"W9C4那么、\n用传送魔法的话……C0",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+				else
+				{
+				//	name("□見ていない")
+					MES(LUE,"W9C4这样的话用我的传送吗？\n应该一下就能飞到镇里去的。C0",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+			}
+			else
+			if(F5_05_OfferFiona)
+			{
+			//	name("□菲奥娜に声を掛けた")
+				MES(RAGNA,"那么……\n赶紧回镇上去吧？",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4嗯、那个人的话\n在杂货屋看过以后\n肯定是在哪里闲逛呢吧。C0",0)
+				MES_close(LUE)
+
+				if( F5_22_LueJump_2 )
+				{
+				//	name("□森入り口之ストッパーイベントを見た")
+					MES(LUE,"W9C4使用传送魔法……C0",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+				else
+				{
+				//	name("□見ていない")
+					MES(LUE,"W9C4用我的传送魔法吗？\n应该一下就能飞到镇里去的。",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+		}
+			else
+			{
+				MES(RAGNA,"接下来……",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4回镇上喽。C0",0)
+				MES_close(LUE)
+
+				if( F5_22_LueJump_2 )
+				{
+				//	name("□森入り口之ストッパーイベントを見た")
+					MES(LUE,"W9C4这样的话、\n用传送魔法……C0",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+				else
+				{
+				//	name("□見ていない")
+					MES(LUE,"W9C4使用传送魔法吗？\n应该一下就能飞到镇里去的。C0",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+			}
+
+			//---------------------------------------------------------------------------------------------------------------
+			if(F5_22_LueJump_2)
+			{
+			//	name("□森入り口之ストッパーイベントを見た")
+				MES(RAGNA,"哈哈、对的啊。",0)
+				MES(RAGNA,"一番好意、这次也难得\n让我使使嘛。",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4虽、虽这么说、\n不觉得走路很浪费时间吗？",0)
+				MES(LUE,"W9C4要是这样、\n公主都被那些家伙\n给抓住了！C0",0)
+				MES_close(LUE)
+
+				MES(RAGNA,"……啊啊、这我也\n很清楚。",0)
+				MES(RAGNA,"赶快行动吧、露！",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4明、明白了！C0",0)
+				MES_close(LUE)
+				wait_MES(LUE)
+
+			}
+			else
+			{
+			//	name("□見てない")
+				MES(RAGNA,"哈哈、这倒也是。",0)
+				MES(RAGNA,"这么说你……",0)
+				MES(RAGNA,"难道、\n想用传送魔法吗……？",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4什么……！？",0)
+				MES(LUE,"W9C4才、才没有那回事呢！\n我已经很累了！",0)
+				MES(LUE,"W9C4只是感觉走路\n太浪费时间了。",0)
+				MES(LUE,"W9C4要是这样、\n公主都被那些家伙\n给抓住了！C0",0)
+				MES_close(LUE)
+
+				MES(RAGNA,"……啊啊、这我也\n很清楚。",0)
+				MES(RAGNA,"赶快行动吧、露！",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4明、明白了！C0",0)
+				MES_close(LUE)
+				wait_MES(LUE)
+			}
+			F_set(F5_23_LueJump_3)
+		}
+		else
+		{
+		//　　※２回目以降は以下之ストッパー。
+			if( !F_RAGNA)
+			{
+				MES(LUE,"W9C4……什么啊。\n不能使用传送魔法吗？C0",0)
+				MES_close(LUE)
+
+				MES(RAGNA,"哈哈、不让人担心吗。\n好好使用哦。",0)
+				MES_close(RAGNA)
+
+			//　　露、拉古那之頭にキックする。
+				MES(LUE,"W9C4谁、\n谁也没有担心啊！！C0",0)
+				MES_close(LUE)
+				//wait_MES(RAGNA)
+				wait_MES(LUE)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(LUE,"W9C4用我的传送魔法的话一下子就飞回去了。",0)
+				MES(LUE,"W9C4要用的话请快点啊！C0",0)
+				MES_close(LUE)
+
+				MES(RAGNA,"哈哈哈……明白啦。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		}
+	}
+	else
+	if( !F5_17_EndFifth )
+	{
+//	name("·水晶峡谷起動後")
+
+		if( GW_MAN==1 )
+		{
+		//　　※拉古那先頭
+			if( !F_RAGNA )
+			{
+				MES(LUE,"W9C4拉古那、你要去哪啊！",0)
+				MES(LUE,"W9C4快点去救公主殿下吧！C0",0)
+				MES_close(LUE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"啊啊、明白。",0)
+				MES(RAGNA,"快点准备、\n向水晶峡谷前进。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(RAGNA,"快做好准备、\n去迎接我们的公主！",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		}
+		else
+		{
+		//　　※奥蒂莎先頭
+			if( !F_RAGNA )
+			{
+				MES(LUE,"W9C4等等狼女、你要干什么去！",0)
+				MES(LUE,"W9C4快点去救公主殿下！C0",0)
+				MES_close(LUE)
+
+				MES(PARTNER,"哈哈、明白啦。",0)
+				MES(PARTNER,"赶快做好准备、\n到那些家伙那里去吧。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(PARTNER,"没有绕远的闲工夫……",0)
+				MES(PARTNER,"赶快做好准备、\n到那些家伙那里去。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+			}
+		}
+	}
+
+	chr_pos(PLAYER,4123,15413,1,180,2)
+	//奥蒂莎がいる
+	if(F5_08_JoinOdessa && !F5_13_KillDygald)
+	{
+		chr_pos(PLAYER2,4041,15577,0,200,2)
+	}
+
+//	chr_pos(PET,4200,15612,1,105,2)
+
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()
+
+	chr_rename(LUE,"露")//
+	TK_end()
+
+}
+
+#EndScriptTable
+//====================================================================
+

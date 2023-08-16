@@ -1,0 +1,4279 @@
+//Zwei2一般メッセ～ジ·阿鲁迪亚镇（※卡尔蒂娜）
+//────────────────────────────────────────────────────────────
+//阿鲁迪亚
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆卡尔蒂娜（ギルド受付、元·一般人女性）Cardina")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_CARDINA
+{
+
+	TK_begin()
+	rot_chr(CARDINA,30,PLAYER1)
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(CARDINA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,CARDINA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,CARDINA)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CARDINA)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CARDINA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CARDINA)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CARDINA)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,CARDINA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		EV("TK_CARDINA")
+		wait_EV("TK_CARDINA")
+	}
+	else
+	//──────────────────────────────
+	//①～□　ギルド受付初回イベント
+	//──────────────────────────────
+	if(!FT_01_Guildbigin)
+	{
+		EV("EV_FT_01_Guildbigin")
+		wait_EV("EV_FT_01_Guildbigin")
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		VOICE(717,0)						//「ようこそ、ハンタ～ズ猎人公会」	
+
+		MES(CARDINA,"欢迎、欢迎来到猎人公会。",0)
+//		MES(CARDINA,"欢迎、来到\n伊尔巴特·猎人公会。",0)
+		MES_close(CARDINA)
+		
+		EV("SHOP_CARDINA_LOOP")
+		wait_EV("SHOP_CARDINA_LOOP")
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//初回イベント
+		if(!FT_11_TalkCardina)
+		{
+			EV("TK_CARDINA")
+			wait_EV("TK_CARDINA")
+		}
+		//以下通常受け付け処理
+		else
+		{
+			VOICE(717,0)						//「ようこそ、ハンタ～ズ猎人公会」	
+
+			MES(CARDINA,"欢迎、欢迎来到猎人公会。",0)
+
+			MOT(CARDINA,151,5)
+//			MES(CARDINA,"欢迎来到，\n伊尔巴特·猎人公会。",0)
+			MES_close(CARDINA)
+			
+			EV("SHOP_CARDINA_LOOP")
+			wait_EV("SHOP_CARDINA_LOOP")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+		//モ～ション
+		MOT_SET(CARDINA,152, -2,450,450,-1,0)	//卡尔蒂娜
+		MOT(CARDINA,152,10)
+
+		//初回イベント
+		if(!FT_10_TalkCardina)
+		{
+			EV("TK_CARDINA")
+			wait_EV("TK_CARDINA")
+
+			EV("SHOP_CARDINA_LOOP")
+			wait_EV("SHOP_CARDINA_LOOP")
+		}
+		//以下通常受け付け処理
+		else
+		{
+			VOICE(717,0)						//「ようこそ、ハンタ～ズ猎人公会」
+			MES(CARDINA,"欢迎、欢迎来到猎人公会。",0)
+			
+//			MES(CARDINA,"欢迎来到，\n伊尔巴特·猎人公会。",0)
+			MES_close(CARDINA)
+			
+			EV("SHOP_CARDINA_LOOP")
+			wait_EV("SHOP_CARDINA_LOOP")
+		}
+		
+		//モ～ション復帰
+		MOT(CARDINA,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		VOICE(717,0)						//「ようこそ、ハンタ～ズ猎人公会」
+		MES(CARDINA,"欢迎、欢迎来到猎人公会。",0)
+//		MES(CARDINA,"欢迎来到，\n伊尔巴特·猎人公会。",0)
+		MES_close(CARDINA)
+		
+		EV("SHOP_CARDINA_LOOP")
+		wait_EV("SHOP_CARDINA_LOOP")
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		//初回イベント
+		if(!FT_06_TalkCardina)
+		{
+			EV("TK_CARDINA")
+			wait_EV("TK_CARDINA")
+		}
+		//以下通常受け付け処理
+		else
+		{
+			VOICE(717,0)						//「ようこそ、ハンタ～ズ猎人公会」
+			MES(CARDINA,"欢迎、欢迎来到猎人公会。",0)
+//			MES(CARDINA,"欢迎来到，\n伊尔巴特·猎人公会。",0)
+			MES_close(CARDINA)
+			
+			EV("SHOP_CARDINA_LOOP")
+			wait_EV("SHOP_CARDINA_LOOP")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		VOICE(717,0)						//「ようこそ、ハンタ～ズ猎人公会」
+		MES(CARDINA,"欢迎、欢迎来到猎人公会。",0)
+	
+//		MES(CARDINA,"欢迎来到，\n伊尔巴特·猎人公会。",0)
+		MES_close(CARDINA)
+		
+		EV("SHOP_CARDINA_LOOP")
+		wait_EV("SHOP_CARDINA_LOOP")
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//③で酒场にいる時はギルド受付初回イベント発生を回避するため直接TK_CARDINAを読みます
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		VOICE(717,0)						//「ようこそ、ハンタ～ズ猎人公会」
+		MES(CARDINA,"欢迎、欢迎来到猎人公会。",0)
+//		MES(CARDINA,"欢迎来到，\n伊尔巴特·猎人公会。",0)
+		MES_close(CARDINA)
+		
+		EV("SHOP_CARDINA_LOOP")
+		wait_EV("SHOP_CARDINA_LOOP")
+	}
+	
+	TK_end()
+}
+
+SHOP_CARDINA_LOOP
+{
+
+	if(FT_FF_TreasureComp)//财宝コンプ済み
+	{
+	//	name("選択テキスト")
+		workL(WK_CANCEL,SET,3)//【取消】
+		MES_pos(PLAYER1,"??W9【对话】\n【猎人等级确认】\n【取消】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("□对话")
+		//　　通常会話処理へ飛ぶ。
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+			EV("TK_CARDINA")
+			wait_EV("TK_CARDINA")
+			loop
+		}
+		else
+		//──────────────────────────────
+		//	name("□ハンタ～ランクを確認する")
+		//　　ハンタ～ランク確認処理へ飛ぶ。
+		//──────────────────────────────
+		if(WK_YESNO==2)
+		{
+			EV("CHECK_RANK_CARDINA")
+			wait_EV("CHECK_RANK_CARDINA")
+			loop
+		}
+		//──────────────────────────────
+		//	name("□やめる")
+		//　　会話処理終了。
+		//──────────────────────────────
+		else
+		{
+			VOICE(720,0)												//「頑張ってくださいね」
+			MES(CARDINA,"请多多加油。",0)
+			
+//			MES(CARDINA,"欢迎再次光临。",0)
+			MES_close(CARDINA)
+		}
+	}
+	else
+	{
+
+		workL(WK_CANCEL,SET,4)//【取消】
+		MES_pos(PLAYER1,"??W9【对话】\n【猎人等级确认】\n【财宝捐赠】\n【取消】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+
+		//──────────────────────────────
+		//	name("□对话")
+		//　　通常会話処理へ飛ぶ。
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+			EV("TK_CARDINA")
+			wait_EV("TK_CARDINA")
+			loop
+		}
+		else
+		//──────────────────────────────
+		//	name("□ハンタ～ランクを確認する")
+		//　　ハンタ～ランク確認処理へ飛ぶ。
+		//──────────────────────────────
+		if(WK_YESNO==2)
+		{
+			EV("CHECK_RANK_CARDINA")
+			wait_EV("CHECK_RANK_CARDINA")
+			loop
+		}
+		else
+		//──────────────────────────────
+		//	name("□财宝を寄贈する")
+		//　　财宝寄贈処理へ飛ぶ。
+		//──────────────────────────────
+		if(WK_YESNO==3)
+		{
+			EV("PRESENT_TREASURE_CARDINA")
+			wait_EV("PRESENT_TREASURE_CARDINA")
+
+			//寄贈しなかった场合之み、loop
+			if(F_PARTNER)
+				loop
+		}
+		//──────────────────────────────
+		//	name("□やめる")
+		//　　会話処理終了。
+		//──────────────────────────────
+		else
+		{
+			VOICE(720,0)												//「頑張ってくださいね」
+			MES(CARDINA,"请多多加油。",0)
+			
+//			MES(CARDINA,"欢迎再次光临。",0)
+			MES_close(CARDINA)
+		}
+	}
+}
+
+//──────────────────────────────
+//▼ギルド受付·初回イベント
+//──────────────────────────────
+EV_FT_01_Guildbigin
+{
+	//●チュ～トリアル：ギルドシステム
+	Load_BMP(20,"sys\\tuto08.itm","0")
+	Load_BMP(21,"sys\\tuto09.itm","0")
+	menuBMP(1,	20,	0,0,288,384)
+	menuBMP(2,	21,	0,0,288,384)
+
+	//──────────────────────────────
+	//▼⑥～□、ギルド受付·初回イベント
+	//──────────────────────────────
+	if(F3_00_GoMoonCastle)
+	{
+		//──────────────────────────────
+		//	name("□フラグ⑩之场合")
+		if(F4_09_GoShrineMia && !F5_00_HearLunar)
+		{
+			MOT_SET(CARDINA,152, -2,450,450,-1,0)	//卡尔蒂娜
+			MOT(CARDINA,152,10)
+			MES(CARDINA,"咿、咿……？\n这么早……",0)
+			MES(CARDINA,"嘿嘿、真早呢。\n欢迎来到，\n伊尔巴特·猎人公会。",0)
+			MES_close(CARDINA)
+		}
+		else
+		{
+			MES(CARDINA,"欢迎来到，\n伊尔巴特·猎人公会。",0)
+			MES_close(CARDINA)
+		}
+
+	//──────────────────────────────
+	//	name("□艾雯が居ない场合")
+		if(F4_00_StartSolo && !F4_09_GoShrineMia)
+		{
+			rot_chr(CARDINA,30,RAGNA)
+			MES(CARDINA,"你是……\n拉古那吗？",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"嗯、是。是的……",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(F5_00_HearLunar && !F6_00_GoToMeru)
+		{
+			rot_chr(CARDINA,30,RAGNA)
+			MES(CARDINA,"你是……\n拉古那吗？",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"嗯、是。是的……",0)
+			MES_close(RAGNA)
+		}
+	//	name("□艾雯がいる场合")
+		else
+		{
+			MES(CARDINA,"请问是……拉古那跟\n艾雯吗？",0)
+			MES_close(CARDINA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯、正是……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈、\n变的那么有名了吗……？",0)
+			MES_close(RAGNA)
+		}
+	//──────────────────────────────
+
+		MES(CARDINA,"嘿嘿、正在听你说。",0)
+		MES(CARDINA,"伊尔巴特里好象正在\n进行猎人的什么活动。",0)
+		MES(CARDINA,"是吗、那么\n参加吗。",0)
+		MES(CARDINA,"这里是接待处、正举行\n符合L337『猎人等级』L400评定。",0)
+		MES_close(CARDINA)
+
+	//　　拉古那にＰＡエモ～ション。
+		EMO(RAGNA,EMO_PA)
+		wait(30)
+
+		MES(RAGNA,"哎、猎人等级的评定吗……\n完全忘记了。",0)
+		MES_close(RAGNA)
+
+	//　　※ハンタ～ランクＢＭＰ表示。
+		menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+		menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+		SE(043,PLAYER1)
+		wait(40)
+		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//		wait(30)
+
+		//──────────────────────────────
+		//	name("□艾雯がいる场合")
+		if( F6_00_GoToMeru || !F4_00_StartSolo )
+		{
+			MES(PARTNER,"呼呼、对应等级\n能够得到道具哦。",0)
+			MES_close(PARTNER)
+
+			look_chr(RAGNA,PARTNER,"Bone_Head")
+			MES(RAGNA,"是吗、真的是\n方便的道具很多呢。",0)
+			MES(RAGNA,"迷宫探索让人很愉快、\n但是要当心呢。",0)
+			MES_close(RAGNA)
+		}
+		else
+		if( F4_09_GoShrineMia && !F5_00_HearLunar )
+		{
+			MES(PARTNER,"呼呼、对应等级\n能够得到道具哦。",0)
+			MES_close(PARTNER)
+
+			look_chr(RAGNA,PARTNER,"Bone_Head")
+			MES(RAGNA,"是吗、真的是\n方便的道具很多呢。",0)
+			MES(RAGNA,"迷宫探索让人很愉快、\n但是要当心呢。",0)
+			MES_close(RAGNA)
+		}
+		//	name("□それ以外")
+		else
+		{
+			MES(RAGNA,"从公会得到的道具\n相当方便、\n但是如果不注意的话。",0)
+			MES_close(RAGNA)
+		}
+		//──────────────────────────────
+
+		MES(CARDINA,"呵呵、那么在本公会\n举行购买\nL337『财宝』L400的活动吧。",0)
+		MES_close(CARDINA)
+
+	//　　拉古那·艾雯に？エモ～ション。
+		look_off(RAGNA)
+		EMO(RAGNA,EMO_HATENA)
+		if(!F4_00_StartSolo || F6_00_GoToMeru)
+			EMO(PARTNER,EMO_HATENA)
+		if( F4_09_GoShrineMia && !F5_00_HearLunar )
+			EMO(PARTNER,EMO_HATENA)
+		wait(30)
+
+		if(!F4_00_StartSolo || F6_00_GoToMeru)
+		{
+			MES(PLAYER1,"财宝……？",0)
+			MES_close(PLAYER1)
+		}
+		else
+		{
+			MES(RAGNA,"财宝……？",0)
+			MES_close(RAGNA)
+		}
+
+	//　　※财宝買取ＢＭＰ表示。
+		menu(2,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+		menu(2,	0,	176, 48,  0,	288, 384,	40,100,0)
+		SE(043,PLAYER1)
+		wait(40)
+		wait_key(0)
+		menu(2,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//		wait(30)
+
+		MES(CARDINA,"呼呼、与这里一样\n跟博物馆在一起的本公会、\n别处没有吧。",0)
+		MES(CARDINA,"因为猎人活动很意思、\n无论如何让我参加。",0)
+		MES_close(CARDINA)
+
+		MES(RAGNA,"啊、３Ｑ。",0)
+		MES(RAGNA,"（说起来、现在为止\n  都没在公会聚过……）",0)
+		MES(RAGNA,"知道了、现在开始\n放心使用吧。",0)
+		MES_close(RAGNA)
+
+		MES(CARDINA,"呵呵、久等了。",0)
+		MES_close(CARDINA)
+
+		//　　※フラグ⑩之场合、⑩初回イベントは起こらなくなる。
+		//	name("□フラグ⑩之场合")
+		if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			F_set(FT_10_TalkCardina)
+	}
+	else
+	//──────────────────────────────
+	//▼①②⑤、ギルド受付·初回イベント
+	//──────────────────────────────
+	if(F1_01_GameStart)
+	{
+		MES(CARDINA,"欢迎、\n欢迎来到阿鲁迪亚私人博物馆。",0)
+		MES(CARDINA,"是来参观的吗？",0)
+		MES_close(CARDINA)
+
+	//　　拉古那たちに？エモ～ション。
+		EMO(RAGNA,EMO_HATENA)
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+		
+		MES(RAGNA,"嗯？\n博物馆……？",0)
+		MES(RAGNA,"不是猎人公会吗……？",0)
+		MES_close(RAGNA)
+
+	//　　卡尔蒂娜にＰＡエモ～ション。
+		EMO(CARDINA,EMO_PA)
+		wait(30)
+		
+		MES(CARDINA,"啊呀……您是猎人呀。",0)
+		MES(CARDINA,"呵呵、真是失礼了。",0)
+		MES_close(CARDINA)
+
+	//　　卡尔蒂娜、軽く手で案内するような素振り。
+		//★モ～ション
+	
+		MES(CARDINA,"是啊、这里\n真的是猎人公会啊。",0)
+		MES(CARDINA,"在同一个建筑物里\n还有博物馆、\n不过都是相同的接待处。",0)
+		MES(CARDINA,"抱歉、\n稍微弄的有点乱。",0)
+		MES_close(CARDINA)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"没事、不过说起来\n猎人公会的变化真大。",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"哦……是吗？",0)
+		MES_close(PARTNER)
+		
+	//拉古那、艾雯に向く
+		rot_chr(RAGNA,30,PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"嗯、大多数猎人都是\n很放浪、一般都是独来独往的家伙。",0)
+		MES(RAGNA,"不找任何人帮忙、\n也不是一定的帮助公会。\n无论做什么都是利益交换。",0)
+		MES(RAGNA,"但是、只要作为猎人\n一旦认同公会活动的话、就会作出\n与公会相应的援助。",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"呵呵、现在在\n培养素质高的猎人……",0)
+		MES(CARDINA,"虽说是公会、大多数\n都是根据管理人的喜好\n所开的组织罢了。",0)
+		MES(CARDINA,"不要想的\n太过于正式了。",0)
+		MES_close(CARDINA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"哦？……\n挑选喜欢的伙伴\n做喜欢的事吗。",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"说、说过了吧、\n猎人世界是很严酷的。",0)
+		MES(RAGNA,"虽说自由、但是\n背负的责任是很大的。",0)
+		MES_close(RAGNA)
+
+	//　　拉古那、卡尔蒂娜に向く。
+		rot_chr(RAGNA,30,CARDINA)
+		
+		MES(RAGNA,"那～、那个。\n才说到拉古那·瓦伦汀\n……",0)
+	//	MES(RAGNA,"今天要是不去道歉的话\n可不行呢。",0)
+		MES(RAGNA,"这里是博物馆的话\n那么不道歉就不行了。",0)
+		MES(RAGNA,"这里拜托我运送的货物\n出了些差错、\n运送途中飞机坠落了。",0)
+		MES(RAGNA,"……对不起、在那时\n货物全部都掉了下去。",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"哦、是那样吗。",0)
+		MES(CARDINA,"听过坠落的传闻了、\n好象驾驶的是拉古那呢。",0)
+		MES(CARDINA,"不过真的是奇迹呢、完全\n一点伤都没受的样子……",0)
+		MES(CARDINA,"呵呵、真是个运气好的人。",0)
+		MES_close(CARDINA)
+
+	//　　拉古那と艾雯、顔を見合わせる。
+		rot_chr(RAGNA,30,PARTNER)
+		rot_chr(PARTNER,30,RAGNA)
+		EMO(RAGNA,EMO_TENTEN)
+		EMO(PARTNER,EMO_TENTEN)
+		wait(30)
+		
+		rot_chr(RAGNA,30,CARDINA)
+		rot_chr(PARTNER,30,CARDINA)
+
+		MES(RAGNA,"哈、哈哈。是吧……",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"是吗……\n货物都是馆长所订的。",0)
+		MES(CARDINA,"建议、\n直接去馆长那里去比较好。",0)
+		MES_close(CARDINA)
+
+	//──────────────────────────────
+	//	name("□フラグ⑤之场合")
+		if(F2_14_TalkEnemy)
+		{
+			MES(CARDINA,"刚才、在等人的话\n到酒馆去比较好。",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"是吗……\n知道了、去打个招呼吧。",0)
+			MES_close(RAGNA)
+		}
+		else
+	//	name("□フラグ②之场合")
+		if(F1_15_GoVillage)
+		{
+			MES(CARDINA,"到那里了的话、\n去打个招呼吧。",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"嗯、知道了。",0)
+			MES(RAGNA,"（那个、说起来那个人……）",0)
+			MES_close(RAGNA)
+		}
+		else
+	//	name("□フラグ①之场合")
+		if(F1_01_GameStart)
+		{
+			MES(CARDINA,"现在这个时间、\n想在公会前加一些管子。",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"是吗……\n知道了、去打个招呼。",0)
+			MES(RAGNA,"（说起来那个在公会前的那个人吧……）",0)
+			MES(RAGNA,"（……算了、\n  不管怎样去看看吧。）",0)
+			MES_close(RAGNA)
+		}
+
+	//	name("＜卡尔蒂娜①～⑤＞")
+	//　　※初回イベント最後に挿入。
+		MES(CARDINA,"呵呵、那么拉古那。",0)
+		MES_close(CARDINA)
+
+		EMO(RAGNA,EMO_HATENA)
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+
+		MES(CARDINA,"想在伊尔巴特\n进行猎人活动的话、请一定\n来我们的公会。",0)
+		MES(CARDINA,"本公会正在实施符合L337『猎人等级』L400\n的评定行动。",0)
+		MES_close(CARDINA)
+
+	//　　拉古那にＰＡエモ～ション。
+		EMO(RAGNA,EMO_PA)
+		wait(30)
+
+		MES(RAGNA,"啊呀、忘记了。\n猎人等级的评定嘛……",0)
+		MES_close(RAGNA)
+
+	//　　※ハンタ～ランクＢＭＰ表示。
+		menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+		menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+		SE(043,PLAYER1)
+		wait(40)
+		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+	//	wait(30)
+
+		MES(PARTNER,"哦？根据等级\n能够得到道具哦。",0)
+		MES_close(PARTNER)
+
+		look_chr(RAGNA,PARTNER,"Bone_Head")
+		MES(RAGNA,"嗯、\n有相当多的便利道具。",0)
+		MES(RAGNA,"探索迷宫很有意思、\n但是一定要小心。",0)
+		MES_close(RAGNA)
+
+		MES(CARDINA,"呵呵、本公会还展开\nL337『财宝』L400\n的买取活动。",0)
+		MES_close(CARDINA)
+
+	//　　拉古那と艾雯に？エモ～ション。
+		look_off(RAGNA)
+		EMO(RAGNA,EMO_HATENA)
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+
+		MES(PLAYER1,"财宝……？",0)
+		MES_close(PLAYER1)
+
+	//　　※财宝買取ＢＭＰ表示。
+		menu(2,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+		menu(2,	0,	176, 48,  0,	288, 384,	40,100,0)
+		SE(043,PLAYER1)
+		wait(40)
+		wait_key(0)
+		menu(2,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+	//	wait(30)
+
+		MES(CARDINA,"呵呵、像这里\n跟博物馆在一起的公会、\n别处应该没有吧。",0)
+		MES(CARDINA,"对猎人活动\n应该会很有用、\n请好好利用吧。",0)
+		MES_close(CARDINA)
+
+		MES(RAGNA,"哈哈、谢谢。",0)
+		MES(RAGNA,"有时间我会常来的。",0)
+		MES_close(RAGNA)
+
+		MES(CARDINA,"呵呵、等着你哦。",0)
+		MES_close(CARDINA)
+
+	//──────────────────────────────
+	}
+
+	//⑩モ～ション復帰
+	if( F4_09_GoShrineMia && !F5_00_HearLunar )
+		MOT(CARDINA,150,10)
+
+	F_set(F0_08_TutoHunter)
+
+	//初回メッセ～ジをみたフラグ
+	F_set(FT_01_Guildbigin)
+}
+
+//──────────────────────────────
+//▼卡尔蒂娜通常会話処理
+//──────────────────────────────
+TK_CARDINA
+{
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	if( F6_05_EndSixth )
+	{
+		if(!F_CARDINA)
+		{
+			MES(CARDINA,"那个以后已经一个月了。",0)
+			MES(CARDINA,"遇到了\n很多事呢……",0)
+			MES(CARDINA,"伊尔巴特能回归到平和中\n全靠大家的功劳。\n大家辛苦了。",0)
+			MES(CARDINA,"拉古那、米娅。\n路上小心。",0)
+			MES_close(CARDINA)
+			
+			F_set(CARDINA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CARDINA,"呵呵、我的性格\n果然很适合做接待呢。",0)
+			MES(CARDINA,"能够跟你们这样的人相遇……\n真感到光荣。",0)
+			MES(CARDINA,"拉古那、米娅。\n一路小心。",0)
+			MES_close(CARDINA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	if( F6_00_GoToMeru )
+	{
+		//ハンタ～ランク最大之時
+		if(GW_HUNTER_RANK==16)
+		{
+			if(!F_CARDINA)
+			{
+				MES(RAGNA,"那么，卡尔蒂娜、\n我也该告辞了。",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"嗯、不要着急。",0)
+				MES(PARTNER,"将我们的力量合在一起的话、\n应该能够与六魔王匹敌了吧。",0)
+				MES_close(PARTNER)
+
+			//	name2(PET)
+				MES(PET,"哈、只是传说吧。",0)
+				MES_close(PET)
+
+			//	name2(CARDINA)
+				MES(CARDINA,"嗯、等你回来。",0)
+				MES(CARDINA,"大家、\n无论如何也要平安回来。",0)
+				MES_close(CARDINA)
+				
+				F_set(CARDINA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(CARDINA,"大家应该没问题的。",0)
+				MES(CARDINA,"希望大家、\n能够早点平安归来。",0)
+				MES_close(CARDINA)
+			}
+		}
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"我没事也会拜访的。",0)
+				MES(CARDINA,"魔王复活的梅尔塞迪克要塞……\n出了大事了。",0)
+				MES(CARDINA,"要是有我\n能帮忙的地方就好了……",0)
+				MES_close(CARDINA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"不了……龙卷那里\n交给我们好了。",0)
+				MES(RAGNA,"不过、村里人那方面\n拜托了……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"嗯、不过\n还是造成了一定的恐慌呢。",0)
+				MES_close(PARTNER)
+
+			//	name2(CARDINA)
+				MES(CARDINA,"……嗯。\n刚才村长跟大家讲过话、\n稍微平静下来了……",0)
+				MES(CARDINA,"知道了。\n我会跟大家\n好好说明情况的。",0)
+				MES(CARDINA,"这个委托也想以前一样\n尽可能的发挥作用吧、\n随时出发。",0)
+				MES_close(CARDINA)
+
+				if(!FT_12_TalkCardina)
+				{
+					EMO(CARDINA,EMO_TENTEN)
+					wait(30)
+
+					MES(CARDINA,"那个、还有……",0)
+					MES_close(CARDINA)
+
+				//　　？エモ～ション。
+					EMO(RAGNA,EMO_HATENA)
+					EMO(PARTNER,EMO_HATENA)
+					EMO(PET,EMO_HATENA)
+					wait(30)
+
+					if(GW_MAN==1)
+					{
+						MES(RAGNA,"怎么了？",0)
+						MES_close(RAGNA)
+					}
+					else
+					{
+						MES(PARTNER,"嗯……？\n怎么了？",0)
+						MES_close(PARTNER)
+					}
+
+					MES(CARDINA,"那个、格林\n需要指示……",0)
+					MES(CARDINA,"各地的迷宫入口、\n有一个绝对不能打开的门\n知道吗？",0)
+					MES(CARDINA,"前几天、有人目击到\n那些门\n打开了。",0)
+					MES_close(CARDINA)
+
+				//　　卡尔蒂娜に···エモ～ション。
+					EMO(CARDINA,EMO_TENTEN)
+					wait(40)
+
+					MES(CARDINA,"那门、传说是在魔法大战时期\n被封印起来了。",0)
+					MES(CARDINA,"现在这个时候打开了……\n跟梅尔塞迪克的出现\n可能有着某种联系吧……",0)
+					MES_close(CARDINA)
+					F_set(FT_12_TalkCardina)
+				}
+				F_set(CARDINA)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(CARDINA,"阿鲁迪亚的人们、\n由我们来说明吧。",0)
+				MES(CARDINA,"这个委托也会向以前那样\n发挥作用的、\n欢迎大家再来。",0)
+				MES_close(CARDINA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	//　　※初回イベント。
+	if( F5_00_HearLunar )
+	{
+		if(!FT_11_TalkCardina)
+		{
+		//　　卡尔蒂娜にＰＡエモ～ション。
+			EMO(CARDINA,EMO_PA)
+			wait(30)
+	
+			MES(CARDINA,"哎呀……",0)
+			MES_close(CARDINA)
+
+		//　　卡尔蒂娜、露之方を向く。
+			rot_chr(CARDINA,30,PET)
+			MOT(CARDINA,151,5)
+			
+			MES(CARDINA,"欢迎、来到猎人公会。",0)
+			MES(CARDINA,"呵呵、妖精真是少见呢。\n在帮拉古那？",0)
+			MES_close(CARDINA)
+			
+			rot_chr(PET,30,CARDINA)
+
+		//	name2(PET)
+			MES(PET,"没、没那回事！",0)
+			MES(PET,"那个、发生了\n很多事……",0)
+			MES(PET,"不管怎样、现在\n借给你特别的力量。",0)
+			MES(PET,"我是露。\n艾雯大人的臣下。",0)
+			MES_close(PET)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"咿呀、不只是拉古那\n艾雯的……？",0)
+			MES(CARDINA,"呵呵、真是失礼了。",0)
+			MES(CARDINA,"我是在这里负责接待的\n叫卡尔蒂娜。\n以后多多关照。",0)
+			MES_close(CARDINA)
+
+		//	name2(PET)
+			MES(PET,"啊、嗯。\n……多、多多关照……",0)
+			MES_close(PET)
+
+			rot_chr(RAGNA,30,PET)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈哈……\n（把露按了下去……）",0)
+			MES_close(RAGNA)
+
+		//　　拉古那、卡尔蒂娜に向く。
+			rot_chr(RAGNA,30,CARDINA)
+
+			MES(RAGNA,"说起来、卡尔蒂娜好象\n一点都没动……",0)
+			MES(RAGNA,"一点都不惊讶吗？",0)
+			MES_close(RAGNA)
+
+			rot_chr(CARDINA,30,RAGNA)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"呵呵、我以前也是猎人……\n习惯妖精了。",0)
+			MES_close(CARDINA)
+
+		//　　卡尔蒂娜、露に向く。
+			rot_chr(CARDINA,30,PET)
+			
+			MES(CARDINA,"露、我经常\n在这里负责接待……",0)
+			MES(CARDINA,"要是有什么麻烦的事\n找我谈谈吧。",0)
+			MES_close(CARDINA)
+
+		//	name2(PET)
+			MES(PET,"咦……？",0)
+			MES(PET,"嗯、嗯。\n我考虑下吧……",0)
+			MES_close(PET)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（真感到恐怖\n  公会的接待……）",0)
+			MES_close(RAGNA)
+			
+			//★卡尔蒂娜【露にも負けない】
+			F_set_note(CARDINA,2)
+			F_set(FT_11_TalkCardina)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"今天早上、在星之峰的时候\n看到升起了一股烟。",0)
+				MES(CARDINA,"在雪山发生火灾、\n真的是很奇怪啊。",0)
+				MES(CARDINA,"难道……\n与之前魔物的骚动\n有什么联系。",0)
+				MES_close(CARDINA)
+				F_set(CARDINA)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(CARDINA,"先不说之前魔物的骚动、\n现在真是到处都有奇怪的事。",0)
+				MES(CARDINA,"好象整个伊尔巴特\n都被不平稳的空气所包围着。",0)
+				MES(CARDINA,"我们所不知道的地方\n发生了什么事吧……",0)
+				MES_close(CARDINA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+	//　　※ギルド之掲示板之前に立っている。
+	//　　※初回イベント
+		if(!FT_10_TalkCardina)
+		{
+		//　　卡尔蒂娜、ＰＡエモ～ションで振り返る。
+			EMO(CARDINA,EMO_PA)
+			wait(30)
+			
+			MES(CARDINA,"咦、怎么……？",0)
+			MES(CARDINA,"你们俩、今天真早呢。",0)
+			MES(CARDINA,"虽然公会还在准备中、\n但是现在要使用吗？",0)
+			MES_close(CARDINA)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"嗯、办的到的话拜托了。",0)
+				MES(RAGNA,"对不起、这么早就开始。",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"嗯、对不起。\n这么早。",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			MES(CARDINA,"呵呵、没关系。",0)
+			MES(CARDINA,"对在迷宫中过夜\n的猎人来说、黎明\n就开始工作了。",0)
+			MES(CARDINA,"……想要点什么吗？",0)
+			MES_close(CARDINA)
+			F_set(FT_10_TalkCardina)
+			
+		//　　□通常受付処理之、選択肢に飛ぶ。
+			
+		//──────────────────────────────
+		}
+		else
+		{
+		//　　※以下通常一般メッセ～ジ。
+			MES(CARDINA,"要是有什么需要的、\n不要在意问我就好了。",0)
+			MES(CARDINA,"对于猎人来说\n是没有什么早上晚上的。",0)
+			MES_close(CARDINA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	//　　※フラグ⑦－Ａ（『★星降之里へ向かうことにした』以前）之み発動。
+	//　　　昴と合流後は、無視して通常一般メッセ～ジを流します。
+	if( F4_00_StartSolo )
+	{
+		if(!F_CARDINA && !F4_02_GoVillage2)
+		{
+			MES(CARDINA,"拉古那……？",0)
+			MES(CARDINA,"发生什么事了？\n脸色看起来不太好……",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"嗯、怎么……",0)
+			MES(RAGNA,"没什么大碍。",0)
+			MES(RAGNA,"只是在考虑\n今后的行动罢了。",0)
+			MES_close(RAGNA)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"是吗……",0)
+			MES(CARDINA,"有事的话跟我说哦。",0)
+			MES(CARDINA,"小事也是、\n也许\n有我能够帮忙的地方。",0)
+			MES_close(CARDINA)
+			F_set(CARDINA)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"村里的人、好象\n没有太大的伤亡。",0)
+				MES(CARDINA,"虽然看起来很凄惨、\n但是好象没有人受重伤。",0)
+				MES(CARDINA,"至于是什么\n原因还不太清楚……",0)
+				MES(CARDINA,"不过\n目前的状况还是令人放心。",0)
+				MES_close(CARDINA)
+				
+				F_set(CARDINA)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(CARDINA,"馆长的话、早上\n就去罗亚鲁塔村了。",0)
+				MES(CARDINA,"村里出现了魔物、\n那里可能\n会有人受伤也不一定。",0)
+				MES(CARDINA,"一晚就袭击了城镇跟村庄、\n果然、有点不能理解呢……",0)
+				MES_close(CARDINA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	if( F3_00_GoMoonCastle )
+	{
+	//　　※初回イベント。
+		if(!FT_06_TalkCardina)
+		{
+		//　　卡尔蒂娜にＰＡエモ～ション。
+			EMO(CARDINA,EMO_PA)
+			wait(30)
+
+			MES(CARDINA,"咦、你们两个……",0)
+			MES(CARDINA,"现在\n还外出探索吗？",0)
+			MES_close(CARDINA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"……嗯。",0)
+			MES(PARTNER,"有些\n不得不去办的事。",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"对不起、现在\n不能说……",0)
+			MES_close(RAGNA)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"是吗……",0)
+			MES(CARDINA,"今天伊尔巴特\n好象被不稳的空气所包围着。",0)
+			MES(CARDINA,"现在魔物都变的很凶暴了、\n别毫无意义的仿效别人。",0)
+			MES_close(CARDINA)
+			
+			F_set(FT_06_TalkCardina)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"门口格林站在那里、\n我也学过点护身术。",0)
+				MES(CARDINA,"这种事\n请不必担心。",0)
+				MES(CARDINA,"只是……城里的情况\n到底会变的怎么样呢。",0)
+				MES(CARDINA,"又听说\n有被魔物袭击的人……",0)
+				MES_close(CARDINA)
+				
+				F_set(CARDINA)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(CARDINA,"虽然这里很完全、\n但是很担心城里的人。",0)
+				MES(CARDINA,"但是不能确保\n再有魔物出现……",0)
+				MES_close(CARDINA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※初回イベント。（こ之イベントは、通所会話ル～チン之中で判定する）
+	if( F2_14_TalkEnemy )
+	{
+		if(!FT_05_TalkCardina)
+		{
+			MES(CARDINA,"说起来……\n刚才见到\n奥蒂莎了。",0)
+			MES(CARDINA,"来到伊尔巴特\n、真吃了一惊。",0)
+			MES_close(CARDINA)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"喔……卡尔蒂娜跟\n奥蒂莎认识的吗。",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"嗯、认识\n他们吗？",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			MES(CARDINA,"嗯、以前在役的时候\n见过几次。",0)
+			MES(CARDINA,"奥蒂莎还是\n成名前的时候……",0)
+			MES(CARDINA,"从那时开始、\n就是那样厉害了。",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"好、好象能想到……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯、好象\n能够想到。",0)
+			MES_close(PARTNER)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"呵呵……稍微闲谈了下\n好象又是因为\n赏金而来。",0)
+			MES(CARDINA,"还不怀好意的笑着说、\n『不要插手』\n真像给叮了一下。",0)
+			MES(CARDINA,"真的、好象一点都没变呢。",0)
+			MES_close(CARDINA)
+
+			
+			F_set(FT_05_TalkCardina)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CARDINA,"奥蒂莎\n来到伊尔巴特\n、真吓了一跳。",0)
+			MES(CARDINA,"每次都是一个人的开展、\n并且\n也不太使用公会的人。",0)
+			MES(CARDINA,"呵呵、希望在伊尔巴特\n也能常见\n请多照顾。",0)
+			MES_close(CARDINA)
+
+		//	//──────────────────────────────
+		//	//	name("□拉古那先頭")
+		//	if(GW_MAN==1)
+		//	{
+		//		MES(RAGNA,"（好象强压着笑脸……）",0)
+		//		MES_close(RAGNA)
+		//	}
+		//	else
+		//	//	name("□艾雯先頭")
+		//	{
+		//		MES(PARTNER,"（他的话、只要喜欢\n  就能做出那种样子吧。）",0)
+		//		MES_close(PARTNER)
+		//	}
+		//	//──────────────────────────────
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				//MES(RAGNA,"（好象强装着笑脸呢……）",0)
+				//MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"（他的话、只要喜欢\n  就能做出那种样子吧。）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※熊猫楼·手前之円卓に座る。
+	//　　　梅·瑟菲拉と同席。
+	//　　　卡尔蒂娜之前には紅茶を置き、卡尔蒂娜はカップを持った状態。
+	//　　　　　　 カル
+	//　　　瑟菲　○　梅
+	//　　※初回は梅之初回イベントが起動する。
+	if( F2_00_GoForest )
+	{
+		TK_begin()
+		rot_chr(PLAYER1,30,CARDINA)
+		rot_chr(PLAYER2,30,CARDINA)
+		if(!FT_03_TalkMei)
+		{
+			EV("EV_TALK_MSC")
+			wait_EV("EV_TALK_MSC")
+			
+			F_set(FT_03_TalkMei)
+		}
+		else
+		{
+			if(!F_CARDINA)
+			{
+			//　　※以下通常一般メッセ～ジ。
+			//　　※振り返らない。
+				look_chr( CARDINA, MEI,"Bone_Head")
+
+				MES(CARDINA,"呵、梅真是的……",0)
+				MES_close(CARDINA)
+
+			//　　卡尔蒂娜、瞑目してカップを口に運びながら。
+				//★モ～ション
+				
+				MES(CARDINA,"做可笑的事还有这样的、\n我发起火来的话？",0)
+				MES_close(CARDINA)
+				
+				
+			//　　梅に鋭く気付きエモ～ション。
+			//　　卡尔蒂娜に振り返る。
+				EMO(MEI,EMO_TOGEBIKKURI)
+				wait(30)
+				look_chr( MEI, CARDINA,"Bone_Head")
+
+				
+				MES(MEI,"哈……！？\n（卡尔蒂娜说了那话后、\n  那里传来一股压力～……）",0)
+				MES_close(MEI)
+
+				look_off(MEI)
+				look_off(CARDINA)
+
+				F_set(CARDINA)
+			}
+			else
+			{
+				look_chr( CARDINA, MEI,"Bone_Head")
+			//　　★繰り返し
+			//　　※振り返らない。
+				MES(CARDINA,"呵、梅真是的……",0)
+				MES(CARDINA,"做出可笑的事\n还有这种程度？",0)
+				MES_close(CARDINA)
+				look_off(CARDINA)
+			}
+		}
+		TK_end()
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	if( F1_15_GoVillage )
+	{
+		if(!FT_02_TalkCardina)
+		{
+			MES(CARDINA,"呵呵、在入口准备好的\n观光宣传手册知道吗？",0)
+			MES(CARDINA,"来伊尔巴特观光的\n到博物馆的很多呢……",0)
+			MES(CARDINA,"那么\n就由我来带领他们好了。",0)
+			MES_close(CARDINA)
+
+			MES(RAGNA,"唉、诶……",0)
+			MES(RAGNA,"难道、参观的人\n也很多吗？",0)
+			MES_close(RAGNA)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"嗯、是呢……",0)
+			MES(CARDINA,"呵呵、每年\n给我们特产的人\n也很多呢。",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈、果然是那样。\n（卡尔蒂娜\n  是美人的原因吗……）",0)
+			MES_close(RAGNA)
+
+		//	name2(ALWEN)
+			MES(PARTNER,"（嗯、好象本人从来不\n  在意那种事。）",0)
+			MES_close(PARTNER)
+
+		//　　★卡尔蒂娜【観光案内もする】
+			F_set_note(CARDINA,0)
+
+			F_set(FT_02_TalkCardina)
+			//　　※ここでＬＦも立てておく。
+			F_set(CARDINA)
+
+		}
+//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"来伊尔巴特观光的人、\n大多数来博物馆。",0)
+				MES(CARDINA,"真的是不容易、最近\n就由我来带领他们观光好了。",0)
+				MES(CARDINA,"呵呵、在入口那里\n的宣传手册\n可是我做的哦。",0)
+				MES_close(CARDINA)
+				F_set(F_CARDINA)
+			}
+			else
+			//　　★繰り返し
+			{
+				MES(CARDINA,"找到财宝的话、\n『寄送财宝』\n选择。",0)
+				MES(CARDINA,"还有、有时也确认\n下猎人等级比较好。",0)
+				MES(CARDINA,"等级提升的时候、\n本公会\n多少会给你些援助的。",0)
+				MES_close(CARDINA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		if(!FT_01_TalkCardina)
+		{
+		//　　※初回イベント
+			MES(CARDINA,"拉古那、在伊尔巴特\n展开猎人活动的话、\n请一定使用本公会哦。",0)
+			MES(CARDINA,"本工会、\n会根据地下城的通过等级\n来评定『猎人登记』。",0)
+			MES(CARDINA,"等级提升的时候、会\n给予一定的援助。",0)
+			MES(CARDINA,"呵呵、有时间\n确定下你的猎人等级。",0)
+			MES(CARDINA,"还有……\n本公会\n还会赠与些东西。",0)
+			MES_close(CARDINA)
+
+		//	name("アイテム入手テキスト")
+		//	MES(0,"爆弾を受け取った。",2)
+		//	MES_close(0)
+
+			get_item(216,1,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			MES(RAGNA,"啊、抱歉。",0)
+			MES(RAGNA,"因为是狩猎财宝\n的必需品、我想\n还是收集些好……",0)
+			MES_close(RAGNA)
+
+			MES(CARDINA,"呵呵、如果买的话\n在城外工房\n那里去。",0)
+			MES(CARDINA,"两人、\n加油哦。",0)
+			MES_close(CARDINA)
+
+			F_set(FT_01_TalkCardina)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"本公会进行猎人等级的\n査定、还购买\n财宝……",0)
+				MES(CARDINA,"有关财宝、\n详细的地方\n去问问格林吧。",0)
+				MES(CARDINA,"一脸愁容\n的在里面的展示室里、方便的话\n去看看吧。",0)
+				MES_close(CARDINA)
+				F_set(CARDINA)
+
+			}
+			else
+			{
+			//　　★繰り返し
+				workL(0,ADD,1)
+				if(WK000==1)
+				{
+			//　　★メッセ～ジ①
+					MES(CARDINA,"进入地下城的话、\n最好常常带上『炸弹』\n比较好。",0)
+					MES(CARDINA,"道路被岩石堵住\n无法通过的时候、\n就用这种非常的攻击手段。",0)
+					MES(CARDINA,"有备无患嘛、俗话说。",0)
+					MES_close(CARDINA)
+				}
+				else
+				if(WK000==2)
+				{
+			//　　★メッセ～ジ②
+					MES(CARDINA,"地下城里\n有各种各样的陷阱。",0)
+					MES(CARDINA,"按键的组合与\n宝箱的开关、以及怪物全灭\n的情况都有。",0)
+					MES(CARDINA,"多试试比较好。",0)
+					MES_close(CARDINA)
+				}
+				else
+				if(WK000==3)
+				{
+			//　　★メッセ～ジ③
+					MES(CARDINA,"猎人等级的评定\n与通过地下城的等级\n有关。",0)
+					MES(CARDINA,"不受伤害通过、\n与破坏很多东西\n这样的成绩会更好。",0)
+					MES(CARDINA,"通过地下城后\n会显示获得了多少奖牌……",0)
+					MES(CARDINA,"财宝明细的小传\n会记载到猎人点书里。\n请参考一下。",0)
+					MES_close(CARDINA)
+				}
+				else
+				{
+			//　　★メッセ～ジ④
+					MES(CARDINA,"稀有的发掘品\n有的地方能够买的到。",0)
+					MES(CARDINA,"切实的评价猎人成果、\n会提供下次的活动费用──",0)
+					MES(CARDINA,"这也是\n猎人公会的职责。",0)
+					MES(CARDINA,"在这里的接待处\n选择『寄赠财宝』\n。",0)
+					MES_close(CARDINA)
+					
+					//ここまできたら1にもドル
+					workL(0,SET,0)
+				}
+			}
+		}
+	}
+}
+
+
+//=================================================================================================
+//▼财宝寄贈·開始処理（卡尔蒂娜版）
+//=================================================================================================
+PRESENT_TREASURE_CARDINA
+{
+
+	EV("Cal_TREASURENum")
+	wait_EV("Cal_TREASURENum")
+
+	//	name("□有効な财宝を持っていない场合。")
+	if(WK003==0)
+	{
+		//　　※メッセ～ジを表示後、イベント処理を終了する。
+		if(!F_RAGNA)
+		{
+			MES(CARDINA,"好象没有带着\n财宝呢。",0)
+			MES(CARDINA,"所谓财宝、\n就是在地下城中发现的\n遗物与发掘品之类。",0)
+			MES(CARDINA,"要是找到那样的东西的话、\n请带到这里来。",0)
+			MES_close(CARDINA)
+			F_set(RAGNA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CARDINA,"所谓财宝、\n就是在地下城中发现的\n遗物与发掘品之类。",0)
+			MES(CARDINA,"要是找到那样的东西的话、\n请带到这里来。",0)
+			MES_close(CARDINA)
+		}
+		//ル～プ用LF
+		F_set(PARTNER)
+	}
+//──────────────────────────────
+//　　※以下は有効な财宝を持っていることが前提。
+	else
+	{
+	
+		MES(CARDINA,"哪个财宝……\n好象需要鉴定呢。",0)
+		
+		VOICE(719,0)							//「では、担当之者を呼びますね」（财宝を預ける時）
+		MES(CARDINA,"那么、叫下管理人吧。",0)
+		
+//		MES(CARDINA,"马上叫管理人出来吧。",0)
+		MES_close(CARDINA)
+
+	//　　一旦フェ～ドアウトし、ギルド受付前。
+
+		fade_in( 100, 60, BLACK)	//フェ～ドアウト
+		wait_fade()
+
+		workL(10,SET,1)//WK010= 0:卡尔蒂娜いない／1:卡尔蒂娜いる
+		EV("PRESENT_TREASURE")
+		wait_EV("PRESENT_TREASURE")
+
+	}
+}
+
+
+//=================================================================================================
+//财宝寄贈、共通処理ル～チン
+//=================================================================================================
+PRESENT_TREASURE
+{
+	EV_begin()//
+	{
+	//　　カメラ＆キャラを再配置する。
+	//　　正面に格林、向き合って主人公たち、横から卡尔蒂娜が見守る形。
+	//　　※财宝は一括寄贈できます。
+
+		CAM_move(373,0,136,0,0)
+		CAM(-180,76,-25,25,167,0,0)
+		
+//		set_chr( GREIN,45,	-1,-1,  287,-54,0,	 0,335, 0,"")		//格林
+		chr_pos(GREIN,287,-54,0,335,2)								//格林
+		if(WK010==1)
+			chr_pos(CARDINA,428,-168,0,24,2)							//卡尔蒂娜
+		
+		chr_pos(RAGNA,473,200,0,121,2)
+		chr_pos(PARTNER,154,325,1,184,2)
+
+		if(F5_00_HearLunar)
+//			chr_pos(PET,40,219,1,235,11)
+			chr_pos(PET,500,408,1,147,11)
+
+		//顔初期化
+		KAO(RAGNA, "1", "1", "1")	
+		KAO(PARTNER,"1", "1", "1")	
+		KAO(GREIN, "1", "1", "1")	
+		KAO(CARDINA,"1", "1", "1")	
+		fade_in( 0, 60, BLACK)	//フェ～ドイン
+		wait_fade()
+
+		//财宝个数再計算
+		EV("Cal_TREASURENum")
+		wait_EV("Cal_TREASURENum")
+
+
+		//単体寄贈用
+		if(WK003==1)
+		{
+
+//			EV("Cal_TREASUREType")
+//			wait_EV("Cal_TREASUREType")
+
+//			system_chack(2)//自動财宝寄贈。呼び出したタイミングで寄贈されてしまう。
+
+			MES(GREIN,"让我好好鉴定一下……",0)
+//			MES(GREIN,"X4这是『%s』嘛。",0)
+			MES_close(GREIN)
+//			EV("TREASURE_Kansou1")
+//			wait_EV("TREASURE_Kansou1")
+
+
+			EV("Cal_RoboNum")
+			wait_EV("Cal_RoboNum")
+
+			workL(1,SET,1)//Loop１回目。
+			EV("EV_PRESENT_Loop")
+			wait_EV("EV_PRESENT_Loop")
+
+//			MES(GREIN,"X5根据我的经验有着\n%d的价值呢。",0)
+			MES(GREIN,"这个东西一定卖给我吧……",0)
+			MES_close(GREIN)
+
+		}
+		//複数一括寄贈用
+		else
+		{
+
+			MES(GREIN,"让我好好\n鉴定一下……",0)
+			MES_close(GREIN)
+
+			EV("Cal_RoboNum")
+			wait_EV("Cal_RoboNum")
+
+			workL(1,SET,1)//Loop１回目。
+			EV("EV_PRESENT_Loop")
+			wait_EV("EV_PRESENT_Loop")
+
+			MES(GREIN,"果然那一个个都是不错的东西。\n都让我买下吧……",0)
+			MES_close(GREIN)
+
+		}
+
+	//　　格林、一步前に出て何かを渡す仕草。
+	//	name("システムメッセ～ジ")
+//		MES(this,"○○芬尼入手。",0)
+
+		fade_in(30,10,BLACK)
+		wait_fade()
+
+		SE(24,0)	//お金之音だと味気ない
+		MES(0,"C3入手作为报酬的芬尼。",2)
+		MES_close(0)
+
+		fade_in(0,10,BLACK)
+		wait_fade()
+
+		////////////////////////////////////////////////////////////////////
+		//	name("＞コンプしている场合。
+		if(GW_TREASURE>=48)//财宝全部で48个。
+		{
+
+		//　　格林に···エモ～ション。
+			EMO(GREIN,EMO_TENTEN)
+			wait(30)
+		
+			MES(GREIN,"……不过真了不起。\n收集了这么多财宝……",0)
+			MES(GREIN,"远远超出\n预期的成果呢……",0)
+			MES_close(GREIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈、真的吗？",0)
+			MES(RAGNA,"真是辛苦了。",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"呵呵、我们能做到\n这样的成果、肯定是当然的咯。",0)
+			MES_close(PARTNER)
+
+		//	name2(GREIN)
+			MES(GREIN,"是吗……\n大家合作的很好呢……",0)
+			MES(GREIN,"我管理的展示室\n也是靠大家\n而填满的那。",0)
+			MES(GREIN,"真是太感谢你们了……",0)
+			MES_close(GREIN)
+
+		//　　格林、卡尔蒂娜に向く。
+			look_chr(GREIN,CARDINA,"Bone_Head")
+		
+			MES(GREIN,"卡尔蒂娜、你要的……",0)
+			MES_close(GREIN)
+
+		//	name2(CARDINA)
+			look_chr(CARDINA,GREIN,"Bone_Head")
+			MES(CARDINA,"嗯。",0)
+			MES_close(CARDINA)
+
+		//　　卡尔蒂娜、少し前に出る。
+			look_off(CARDINA)
+			look_off(GREIN)
+			rot(CARDINA,30,0)
+			move(CARDINA,0,WALK1,415,-17,1,0)
+			wait_move(CARDINA)
+
+			MES(CARDINA,"拉古那、艾雯。\n无论如何\n请收下。",0)
+			MES_close(CARDINA)
+
+			fade_in(30,10,BLACK)
+			get_item(163,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(167,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(171,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(175,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(179,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(183,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(187,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(191,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(195,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(199,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(217,5,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			MES(0,"C3作为特别报酬、请收下１０万芬尼。",2)
+			MES_close(0)
+
+			get_gold(100000,RAGNA)
+			fade_in( 0, 10, BLACK)	//フェ～ドイン
+			wait_fade()
+
+			move(CARDINA,0,WALK1,428,-108,0,0)
+			wait_move(CARDINA)
+
+			MES(GREIN,"让给我们的东西、\n并且还在保存状态\n马上拿去展示吧。",0)
+			MES(GREIN,"以后也\n请多到博物馆来。",0)
+			MES(GREIN,"都是、你们所收集的\n财宝呢……",0)
+			MES_close(GREIN)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"大家、真的是\n辛苦你们了。",0)
+			MES_close(CARDINA)
+			F_set(FT_FF_TreasureComp)
+
+		}
+		else
+		{
+		//	name2(GREIN)
+			MES(GREIN,"让给我们的东西、\n并且还在保存状态\n马上展示吧。",0)
+			MES(GREIN,"好好等着吧。",0)
+			MES_close(GREIN)
+
+			if(WK010==1)
+			{
+				rot_chr(CARDINA,30,RAGNA)
+				
+				if( F4_00_StartSolo && !F4_02_GoVillage2)//拉古那１人
+				{
+					MES(CARDINA,"呵呵、辛苦了。",0)
+					MES_close(CARDINA)
+				}
+				else
+				{
+					MES(CARDINA,"呵呵、大家\n也辛苦了。",0)
+					MES_close(CARDINA)
+				}
+			}
+		}
+
+//		VOICE(720,0)												//「頑張ってくださいね」
+
+	//　　暗転し、キャラ通常配置に戻す。
+		fade_in( 100, 60, BLACK)	//フェ～ドアウト
+		wait_fade()
+		
+		//フラグ⑩之场合は配置変更
+		if(F4_09_GoShrineMia && !F5_00_HearLunar)
+		{
+			chr_pos(CARDINA,-1000,-500,0,180,150)							//卡尔蒂娜を掃除へ。
+			chr_pos(GREIN,3629,-1831,0,70,2)							//格林をダ小咪へ。
+		}
+		else
+		if(WK010==1)
+		{
+			chr_pos(CARDINA,938,-100,1,45,150)							//卡尔蒂娜を受付へ。
+			chr_pos(GREIN,3629,-1831,0,70,2)							//格林をダ小咪へ。
+		}
+		else
+		{
+			chr_pos(GREIN,938,-100,1,45,2)								//格林を受付へ。
+			chr_pos(CARDINA,3629,-1831,0,70,2)							//卡尔蒂娜をダ小咪へ。
+		}
+
+		//主人公たちを再配置
+		chr_pos(PLAYER1,587,117,1,223,2)
+
+		//誰だか知らないけどパ～トナ～がいる
+		if( !F4_00_StartSolo )
+			chr_pos(PLAYER2,443,  0,0,258,2)
+		else
+		if( F4_02_GoVillage2 && !F5_00_HearLunar )
+			chr_pos(PLAYER2,443,  0,0,258,2)
+		else
+		if( F5_08_JoinOdessa && !F5_13_KillDygald )
+			chr_pos(PLAYER2,443,  0,0,258,2)
+		else
+		if( F6_00_GoToMeru )
+			chr_pos(PLAYER2,443,  0,0,258,2)
+
+		//露がいる
+		if( F5_00_HearLunar )
+			chr_pos(PET,297, 92,1,226,2)
+
+		//カメラを初期設定に
+		CAM_return( 0 )
+		wait(30)
+
+		//いじったワ～クを初期化
+		workL(0,SET,0)
+
+		//★格林
+		F_set_note(-45,-1)
+
+		fade_in( 0, 60, BLACK)	//フェ～ドイン
+	//　　ギルド受付前から操作許可を戻す。
+		EV_end()//
+	}
+}
+
+
+//=================================================================================================
+//寄贈loopル～チン。（単体寄贈でも、１回は呼び出される）
+//=================================================================================================
+EV_PRESENT_Loop
+{
+
+	EV("Cal_TREASUREType")
+	wait_EV("Cal_TREASUREType")
+
+	//判定順は、海之生物□宝石□化石□ロボ□最高級。
+	//絵画シリ～ズ未対応。
+
+	system_chack(2)//自動财宝寄贈。呼び出したタイミングで寄贈されてしまう。
+
+	if( WK002<=24 || WK002>=49 )
+	{
+
+		//最初之一个
+		if(WK001==1)
+		{
+			MES(GREIN,"X4这是『%s』嘛。",0)
+			MES_close(GREIN)
+		}
+		else
+		//最後之一个
+		if(WK003==1)
+		{
+			MES(GREIN,"X4这是『%s』嘛。",0)
+			MES_close(GREIN)
+		}
+		else
+		{
+			workL(0,RAND,2)
+			if(WK000==0)
+			{
+				MES(GREIN,"X4『%s』……",0)
+				MES_close(GREIN)
+			}
+			else
+			{
+				MES(GREIN,"X4还有『%s』……",0)
+				MES_close(GREIN)
+			}
+		}
+		EV("TREASURE_Kansou1")
+		wait_EV("TREASURE_Kansou1")
+	}
+	else
+	//□化石分割シリ～ズだった场合、揃ったか判定。
+	if( WK002>=25 && WK002<=40 )
+	{
+		if( WK002>=25 && WK002<=28 )//今回寄贈した之が雷龙
+		{
+			workL(4,SET,0)
+			if(F2425)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2426)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2427)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2428)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回雷龙を複数寄贈するか。
+			if(F2325 && !F2425)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2326 && !F2426)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2327 && !F2427)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2328 && !F2428)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+			//単体用にメッセ～ジ分岐必要。
+				MES(GREIN,"『雷龙的前脚骨骼』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『雷龙的后脚骨骼』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『雷龙的胸部骨骼』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『雷龙的头部骨骼』……",0)
+				MES_close(GREIN)
+				MES(GREIN,"很好、\n这样整个骨骼收集齐了……",0)
+				MES(GREIN,"今天可是个特别的日子、\n请收下这个。",0)
+				MES_close(GREIN)
+
+				MES(0,"C3得到１万芬尼。",2)
+				MES_close(0)
+				get_gold(10000,RAGNA)
+			}
+
+		}
+		if( WK002>=29 && WK002<=32 )//今回寄贈した之が肉食龙
+		{
+			workL(4,SET,0)
+			if(F2429)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2430)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2431)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2432)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回雷龙を複数寄贈するか。
+			if(F2329 && !F2429)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2330 && !F2430)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2331 && !F2431)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2332 && !F2432)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+				MES(GREIN,"『肉食龙的后脚骨骼』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『肉食龙的胸部骨骼』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『肉食龙的前脚骨骼』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『肉食龙的头部骨骼』……",0)
+				MES_close(GREIN)
+				MES(GREIN,"很好、\n这样整个骨骼收集齐了……",0)
+				MES(GREIN,"今天可是个特别的日子、\n请收下这个。",0)
+				MES_close(GREIN)
+
+				MES(0,"C3得到１万芬尼。",2)
+				MES_close(0)
+				get_gold(10000,RAGNA)
+			}
+
+		}
+		if( WK002>=33 && WK002<=36 )//今回寄贈した之が剑龙
+		{
+			workL(4,SET,0)
+			if(F2433)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2434)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2435)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2436)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回剑龙を複数寄贈するか。
+			if(F2333 && !F2433)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2334 && !F2434)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2335 && !F2435)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2336 && !F2436)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+				MES(GREIN,"『剑龙的前脚骨骼』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『剑龙的后脚骨骼』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『剑龙的胸部骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『剑龙的头部骨格』……",0)
+				MES_close(GREIN)
+				MES(GREIN,"很好、\n这样整个骨骼收集齐了……",0)
+				MES(GREIN,"今天可是个特别的日子、\n请收下这个。",0)
+				MES_close(GREIN)
+
+				MES(0,"C3得到１万芬尼。",2)
+				MES_close(0)
+				get_gold(10000,RAGNA)
+			}
+		}
+		if( WK002>=37 && WK002<=40 )//今回寄贈した之が角龙
+		{
+			workL(4,SET,0)
+			if(F2437)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2438)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2439)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2440)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回剑龙を複数寄贈するか。
+			if(F2337 && !F2437)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2338 && !F2438)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2339 && !F2439)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2340 && !F2440)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+				MES(GREIN,"『角龙的前脚骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『角龙的后脚骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『角龙的胸部骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『角龙的头部骨格』……",0)
+				MES_close(GREIN)
+				MES(GREIN,"很好、\n这样整个骨骼收集齐了……",0)
+				MES(GREIN,"今天可是个特别的日子、\n请收下这个。",0)
+				MES_close(GREIN)
+
+				MES(0,"C3得到１万芬尼。",2)
+				MES_close(0)
+				get_gold(10000,RAGNA)
+
+			}
+		}
+	}
+	else
+	//□ロボ分割シリ～ズだった场合、揃ったか判定。
+	if( WK002>=41 && WK002<=48 )
+	{
+		if( WK002>=41 && WK002<=44 )//今回寄贈した之がキャプテン
+		{
+			workL(4,SET,0)
+			if(F2441)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2442)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2443)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2444)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回剑龙を複数寄贈するか。
+			if(F2341 && !F2441)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2342 && !F2442)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2343 && !F2443)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2344 && !F2444)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+				MES(GREIN,"『队长２１号的电池』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『队长２１号的身体』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『队长２１号的脚』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『队长２１号的头』……",0)
+				MES_close(GREIN)
+
+				if(WK006<=1)//最後は１个だけ持ってきた。
+				{
+					MES(GREIN,"很好、终于将所有部分收集齐了……\n快点再现吧……",0)
+					MES_close(GREIN)
+				}
+				else		//　　＞一括版。
+				{
+					MES(GREIN,"很好、终于将所有部分收集齐了……\n快点再现吧……",0)
+					MES_close(GREIN)
+				}
+				MES(GREIN,"……终于搞定了。\n今天真是个特别的日子、\n收下这个吧。",0)
+				MES_close(GREIN)
+
+				MES(0,"C3得到２万芬尼。",2)
+				MES_close(0)
+				get_gold(20000,RAGNA)
+			}
+		}
+		else
+		if( WK002>=45 && WK002<=48 )//今回寄贈した之がダサイダ～
+		{
+			workL(4,SET,0)
+			if(F2445)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2446)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2447)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2448)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回剑龙を複数寄贈するか。
+			if(F2345 && !F2445)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2346 && !F2446)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2347 && !F2447)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2348 && !F2448)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+				MES(GREIN,"『烈焰机体的部件』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『烈焰机体的连接剂』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『烈焰机体的追加部件』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリ～ズ一括寄贈之最後之み、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『烈焰机体的热血灵魂』……",0)
+				MES_close(GREIN)
+
+				if(WK006<=1)//最後は１个だけ持ってきた。
+				{
+					MES(GREIN,"就是这个……\n这样也不够……",0)
+					MES(GREIN,"好了、马上把它\n装起来好了……",0)
+					MES_close(GREIN)
+				}
+				else		//　　＞一括版。
+				{
+					MES(GREIN,"很好、\n收集了这么多应该没问题了……",0)
+					MES(GREIN,"马上\n装起来看看……",0)
+					MES_close(GREIN)
+				}
+				MES(GREIN,"……终于做好了。\n今天真是个特别的日子、\n收下这个。",0)
+				MES_close(GREIN)
+
+				MES(0,"C3收下了２万芬尼。",2)
+				MES_close(0)
+				get_gold(20000,RAGNA)
+			}
+		}
+	}
+
+	workL(1,ADD,1)//Loop回数。＝今回一括寄贈した个数。
+	workL(3,SUB,1)//寄贈予定数は減らす。
+	
+	if(WK003<=0)
+	{
+		//処理終了
+		EV_stop("EV_PRESENT_Loop")
+	}
+	else
+	{
+		loop
+	}
+
+}
+
+
+
+//	WK000：ランダムワ～ク。
+//	WK001：複数寄贈回数計算。
+//	WK002：财宝之シリ～ズＮｏ。	高価シリ～ズ000/宝石シリ～ズ100/海洋堂シリ～ズ200/化石分割シリ～ズ300/ロボ分割シリ～ズ400/絵画シリ～ズ500
+//																						雷龙	325-328		キャプテン	441-444
+//																						肉食龙	329-332		ダサイダ～	445-448
+//																						剑龙	333-336
+//																						角龙	337-340
+//	WK003：今回之财宝寄贈个数
+//	WK004：分割シリ～ズ用計算（全部揃ったか）
+//	WK005：分割シリ～ズ用計算（同じ分割品を複数持っているか）
+//	WK006：キャプテン之一括寄贈个数
+//	WK007：ダサイダ～之一括寄贈个数
+
+//　※調べた所、WK之値は256を超えると卷き戻る。
+
+
+//=================================================================================================
+//今回寄贈する财宝之个数を計算する。
+//	取った个数-寄付した个数。
+//=================================================================================================
+Cal_TREASURENum
+{
+	workL(3,SET,0)//WK003が、今回寄贈する个数ですよ。
+
+	//都合により逆順。
+	if( F2356 && !F2456 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2355 && !F2455 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2354 && !F2454 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2353 && !F2453 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2352 && !F2452 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2351 && !F2451 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2350 && !F2450 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2349 && !F2449 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2348 && !F2448 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2347 && !F2447 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2346 && !F2446 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2345 && !F2445 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2344 && !F2444 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2343 && !F2443 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2342 && !F2442 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2341 && !F2441 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2340 && !F2440 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2339 && !F2439 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2338 && !F2438 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2337 && !F2437 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2336 && !F2436 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2335 && !F2435 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2334 && !F2434 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2333 && !F2433 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2332 && !F2432 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2331 && !F2431 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2330 && !F2430 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2329 && !F2429 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2328 && !F2428 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2327 && !F2427 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2326 && !F2426 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2325 && !F2425 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2324 && !F2424 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2323 && !F2423 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2322 && !F2422 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2321 && !F2421 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2320 && !F2420 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2319 && !F2419 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2318 && !F2418 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2317 && !F2417 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2316 && !F2416 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2315 && !F2415 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2314 && !F2414 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2313 && !F2413 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2312 && !F2412 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2311 && !F2411 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2310 && !F2410 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2309 && !F2409 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2308 && !F2408 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2307 && !F2407 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2306 && !F2406 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2305 && !F2405 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2304 && !F2404 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2303 && !F2403 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2302 && !F2402 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2301 && !F2401 )
+	{
+		workL(3,ADD,1)
+	}
+
+}
+
+
+//=================================================================================================
+//今寄贈処理中之财宝ＩＤを調べる。
+//	WK002に放り込んでおく。
+//=================================================================================================
+
+Cal_TREASUREType
+{
+	workL(2,SET,0)
+
+//　※調べた所、WK之値は256を超えると卷き戻る。
+
+	//都合により『海之生物□宝石□化石□ロボ□最高級』を逆順。
+	//高価シリ～ズ000
+	if( F2308 && !F2408 )
+	{
+		workL(2,SET,08)
+	}
+	if( F2307 && !F2407 )
+	{
+		workL(2,SET,07)
+	}
+	if( F2306 && !F2406 )
+	{
+		workL(2,SET,06)
+	}
+	if( F2305 && !F2405 )
+	{
+		workL(2,SET,05)
+	}
+	if( F2304 && !F2404 )
+	{
+		workL(2,SET,04)
+	}
+	if( F2303 && !F2403 )
+	{
+		workL(2,SET,03)
+	}
+	if( F2302 && !F2402 )
+	{
+		workL(2,SET,02)
+	}
+	if( F2301 && !F2401 )
+	{
+		workL(2,SET,01)
+	}
+
+	//ロボ分割シリ～ズ004
+	if( F2348 && !F2448 )
+	{
+		workL(2,SET,48)
+	}
+	if( F2347 && !F2447 )
+	{
+		workL(2,SET,47)
+	}
+	if( F2346 && !F2446 )
+	{
+		workL(2,SET,46)
+	}
+	if( F2345 && !F2445 )
+	{
+		workL(2,SET,45)
+	}
+	if( F2344 && !F2444 )
+	{
+		workL(2,SET,44)
+	}
+	if( F2343 && !F2443 )
+	{
+		workL(2,SET,43)
+	}
+	if( F2342 && !F2442 )
+	{
+		workL(2,SET,42)
+	}
+	if( F2341 && !F2441 )
+	{
+		workL(2,SET,41)
+	}
+/*
+	//絵画シリ～ズ005
+	if( F2356 && !F2456 )
+	{
+		workL(2,SET,56)
+	}
+	if( F2355 && !F2455 )
+	{
+		workL(2,SET,55)
+	}
+	if( F2354 && !F2454 )
+	{
+		workL(2,SET,54)
+	}
+	if( F2353 && !F2453 )
+	{
+		workL(2,SET,53)
+	}
+	if( F2352 && !F2452 )
+	{
+		workL(2,SET,52)
+	}
+	if( F2351 && !F2451 )
+	{
+		workL(2,SET,51)
+	}
+	if( F2350 && !F2450 )
+	{
+		workL(2,SET,50)
+	}
+	if( F2349 && !F2449 )
+	{
+		workL(2,SET,49)
+	}
+*/
+	//化石分割シリ～ズ003
+	if( F2340 && !F2440 )
+	{
+		workL(2,SET,40)
+	}
+	if( F2339 && !F2439 )
+	{
+		workL(2,SET,39)
+	}
+	if( F2338 && !F2438 )
+	{
+		workL(2,SET,38)
+	}
+	if( F2337 && !F2437 )
+	{
+		workL(2,SET,37)
+	}
+	if( F2336 && !F2436 )
+	{
+		workL(2,SET,36)
+	}
+	if( F2335 && !F2435 )
+	{
+		workL(2,SET,35)
+	}
+	if( F2334 && !F2434 )
+	{
+		workL(2,SET,34)
+	}
+	if( F2333 && !F2433 )
+	{
+		workL(2,SET,33)
+	}
+	if( F2332 && !F2432 )
+	{
+		workL(2,SET,32)
+	}
+	if( F2331 && !F2431 )
+	{
+		workL(2,SET,31)
+	}
+	if( F2330 && !F2430 )
+	{
+		workL(2,SET,30)
+	}
+	if( F2329 && !F2429 )
+	{
+		workL(2,SET,29)
+	}
+	if( F2328 && !F2428 )
+	{
+		workL(2,SET,28)
+	}
+	if( F2327 && !F2427 )
+	{
+		workL(2,SET,27)
+	}
+	if( F2326 && !F2426 )
+	{
+		workL(2,SET,26)
+	}
+	if( F2325 && !F2425 )
+	{
+		workL(2,SET,25)
+	}
+	//宝石シリ～ズ001
+	if( F2316 && !F2416 )
+	{
+		workL(2,SET,16)
+	}
+	if( F2315 && !F2415 )
+	{
+		workL(2,SET,15)
+	}
+	if( F2314 && !F2414 )
+	{
+		workL(2,SET,14)
+	}
+	if( F2313 && !F2413 )
+	{
+		workL(2,SET,13)
+	}
+	if( F2312 && !F2412 )
+	{
+		workL(2,SET,12)
+	}
+	if( F2311 && !F2411 )
+	{
+		workL(2,SET,11)
+	}
+	if( F2310 && !F2410 )
+	{
+		workL(2,SET,10)
+	}
+	if( F2309 && !F2409 )
+	{
+		workL(2,SET,09)
+	}
+	//海洋堂シリ～ズ002
+	if( F2324 && !F2424 )
+	{
+		workL(2,SET,24)
+	}
+	if( F2323 && !F2423 )
+	{
+		workL(2,SET,23)
+	}
+	if( F2322 && !F2422 )
+	{
+		workL(2,SET,22)
+	}
+	if( F2321 && !F2421 )
+	{
+		workL(2,SET,21)
+	}
+	if( F2320 && !F2420 )
+	{
+		workL(2,SET,20)
+	}
+	if( F2319 && !F2419 )
+	{
+		workL(2,SET,19)
+	}
+	if( F2318 && !F2418 )
+	{
+		workL(2,SET,18)
+	}
+	if( F2317 && !F2417 )
+	{
+		workL(2,SET,17)
+	}
+
+}
+
+//=================================================================================================
+//ロボ分割シリ～ズがど之くらい集まっているか。
+//寄贈処理之初めに１回だけ呼び出して計算。
+//	WK006==キャプテン之寄贈済み个数
+//	WK006==烈焰机体之寄贈済み个数
+//=================================================================================================
+Cal_RoboNum
+{
+	workL(6,SET,0)
+	workL(7,SET,0)
+
+	//都合により逆順。
+	//ロボ分割シリ～ズ004
+	if( F2348 && !F2448 )
+	{
+		workL(7,ADD,1)
+	}
+	if( F2347 && !F2447 )
+	{
+		workL(7,ADD,1)
+	}
+	if( F2346 && !F2446 )
+	{
+		workL(7,ADD,1)
+	}
+	if( F2345 && !F2445 )
+	{
+		workL(7,ADD,1)
+	}
+
+	if( F2344 && !F2444 )
+	{
+		workL(6,ADD,1)
+	}
+	if( F2343 && !F2443 )
+	{
+		workL(6,ADD,1)
+	}
+	if( F2342 && !F2442 )
+	{
+		workL(6,ADD,1)
+	}
+	if( F2341 && !F2441 )
+	{
+		workL(6,ADD,1)
+	}
+}
+
+//=================================================================================================
+//财宝之感想処理。
+//シリ～ズごとに异なる感想をランダムで話す。
+//=================================================================================================
+TREASURE_Kansou1
+{
+	//	name("○最高級")
+	if(WK002<=8)
+	{
+		workL(0,RAND,4)
+		if(WK000==0)
+		{
+			MES(GREIN,"……居然找到那样的东西……",0)
+			MES(GREIN,"X5已经不是芬尼的问题了、\n要是拿出价格的话值%d芬尼……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==1)
+		{
+			MES(GREIN,"那种东西……\n到底那里才有……",0)
+			MES(GREIN,"X5已经不是芬尼的问题了、\n要是拿出价格的话值%d芬尼……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==2)
+		{
+			MES(GREIN,"我以前、找到的东西。\n居然在这里见到……",0)
+			MES(GREIN,"X5已经不是芬尼的问题了、\n要是拿出价格的话值%d芬尼……",0)
+			MES_close(GREIN)
+		}
+		else
+		{
+
+			MES(GREIN,"虽然知道的不太清楚、\n但这也许是世纪大发现……",0)
+			MES(GREIN,"X5已经不是芬尼的问题了、\n要是拿出价格的话值%d芬尼……",0)
+			MES_close(GREIN)
+		}
+
+	}
+	else
+	//	name("○宝石")
+	if(WK002<=16)
+	{
+		workL(0,RAND,4)
+		if(WK000==0)
+		{
+			MES(GREIN,"保存的很好……\n发现好东西了呢……",0)
+			MES(GREIN,"X5行情上该值%d芬尼\n……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==1)
+		{
+			MES(GREIN,"一直都\n不是太清楚这个到那里去了……",0)
+			MES(GREIN,"X5用%d芬尼买下了……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==2)
+		{
+			MES(GREIN,"真是少有的极品……\n放在手心也在闪闪发光……",0)
+			MES(GREIN,"X5用%d芬尼\n买下了……",0)
+			MES_close(GREIN)
+		}
+		else
+		{
+
+			MES(GREIN,"X5……居然找到了这种东西哪……\n值%d芬尼……",0)
+			MES_close(GREIN)
+		}
+
+	}
+	else
+	//	name("○海之生物")
+	if(WK002<=24)
+	{
+		workL(0,RAND,4)
+		if(WK000==0)
+		{
+			MES(GREIN,"X5价值%d芬尼的东西呀。\n品像也好……\n早点去拿去展示吧……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==1)
+		{
+			MES(GREIN,"真实少有的极品……\n放在手中也会闪闪发光吧……",0)
+			MES(GREIN,"X5行情%d芬尼\n怎么样……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==2)
+		{
+			MES(GREIN,"X5正是我喜欢的……\n我出%d芬尼……",0)
+			MES_close(GREIN)
+		}
+		else
+		{
+			MES(GREIN,"X5……居然找到了这样的东西……\n值%d芬尼……",0)
+			MES_close(GREIN)
+		}
+	}
+	else
+	//	name("○化石")
+	if(WK002<=40)
+	{
+		workL(0,RAND,4)
+		if(WK000==0)
+		{
+			MES(GREIN,"保存状态完美──\n这也许是世纪大发现……",0)
+			MES(GREIN,"X5怎么看\n也值%d芬尼……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==1)
+		{
+			MES(GREIN,"真实少有的极品……\n放在手中也会闪闪发光吧……",0)
+			MES(GREIN,"X5行情%d芬尼\n怎么样……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==2)
+		{
+			MES(GREIN,"这真是国宝级……",0)
+			MES(GREIN,"X5怎么看\n也值%d芬尼……",0)
+			MES_close(GREIN)
+		}
+		else
+		{
+			MES(GREIN,"X5……居然找到了这样的东西……\n值%d芬尼……",0)
+			MES_close(GREIN)
+		}
+	}
+	else
+	//ロボ１。
+	if(WK002<=44)
+	{
+		if(WK004==1)
+		{
+			MES(GREIN,"X5这是……特别价%d芬尼。",0)
+			MES(GREIN,"………………………………",0)
+			MES(GREIN,"……明白了、\n但是只有电池的话什么都做不到……",0)
+			MES(GREIN,"先放在这里吧、早点\n找到身体比较好……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK004==2)
+		{
+			MES(GREIN,"X5这个值%d芬尼吧。",0)
+			MES(GREIN,"很好、快点开始展示吧……",0)
+			MES(GREIN,"不过、没有脚的话\n就不能走了……",0)
+			MES(GREIN,"早点把脚找到吧……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK004==3)
+		{
+			MES(GREIN,"………………………………",0)
+			MES(GREIN,"重要的头部没有……",0)
+			MES(GREIN,"真遗憾……\n早点能把头部找到的话……",0)
+			MES(GREIN,"X5不管怎样样……\n%d芬尼买下了。",0)
+			MES_close(GREIN)
+		}
+	}
+	else
+	//ロボ２。
+	if(WK002<=48)
+	{
+		if(WK004==1)
+		{
+			MES(GREIN,"X5这是……特别价格%d芬尼买下了。",0)
+			MES(GREIN,"但是、没有连接剂\n就不能组装了吧。",0)
+			MES(GREIN,"怎么办呢……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK004==2)
+		{
+			MES(GREIN,"X5……%d芬尼买下了。",0)
+			MES(GREIN,"终于能够组装了……",0)
+			MES(GREIN,"但是、实际上烈焰机体\n还应该需要准备\n“选择零件”啊。",0)
+			MES(GREIN,"要是没有那些的话、就不能够\n完成了……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK004==3)
+		{
+			MES(GREIN,"X5……%d芬尼买下了。",0)
+			MES(GREIN,"很好、这样就收集好了部件了。",0)
+			MES(GREIN,"但是、总感觉还少点什么……",0)
+			MES(GREIN,"到底怎么回事啊……\n……这种虚无感……",0)
+			MES_close(GREIN)
+		}
+	}
+	else
+	//絵画シリ～ズは未入力。
+	{
+	}
+
+}
+
+
+
+
+//──────────────────────────────
+//▼ハンタ～ランク確認処理
+//──────────────────────────────
+//　　※ハンタ～ランクは以下之通り。
+
+//		Rank	Name							point		□返す値は1/10！
+//		０：平凡猎人（初期状態）		  0- 29			 0-2
+//		１：迷宫猎人助理				 30- 59			 3-5
+//		２：迷宫猎人					 60-			 6
+//		３：狂野猎人助理				 90-			 9
+//		４：狂野猎人					120-			12
+//		５：资深猎人助理				150-			15
+//		６：资深猎人					180-			18
+//		７：华丽猎人助理				210-			21
+//		８：华丽猎人					240-			24
+//		９：特别猎人助理				270-			27
+//		10：特别猎人					300-			30
+//		11：魅力猎人助理				330-			33
+//		12：魅力猎人					360-			36
+//		13：超凡猎人助理				390-			39
+//		14：超凡猎人					420-			42
+//		15：终极猎人				450-			45
+//		16：传说的红毛（コンプリ～ト）			480				48
+
+//──────────────────────────────
+CHECK_RANK_CARDINA
+{
+
+	//ハンタ～ランク査定
+	system_chack(3)
+
+//	workG(GW_HUNTER_RANK,SET,15)	//動作チェック用
+//	workG(GW_HUNTER_POINT,SET,48)	//動作チェック用
+	
+	//	传说的红毛へ昇格（□之み）
+	if( GW_HUNTER_POINT>=48 && F6_00_GoToMeru && GW_HUNTER_RANK<16)
+	{
+		MES(CARDINA,"拉古那现在的\n猎人等级是……",0)
+		MES(CARDINA,"……………………………………",0)
+		MES_close(CARDINA)
+		
+		
+	//　　拉古那たちに？エモ～ション。
+		EMO(RAGNA,EMO_HATENA)
+		EMO(PET,EMO_HATENA)
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+		
+		MES(CARDINA,"哪个、十分抱歉。\n拉古那的功绩\n已经能够升格了……",0)
+		MES(CARDINA,"但是在猎人公会里的规定里、\n没有在这之上的等级了。",0)
+		MES_close(CARDINA)
+		
+	//	name2(RAGNA)
+		MES(RAGNA,"啊、什么？\n这样子吗……？",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"嗯、专程来\n真的是很抱歉……",0)
+		MES(CARDINA,"不过、就是这样……",0)
+		MES(CARDINA,"猎人等级里、公会规定\n的等级、有各个公会发行\n的称号所决定。",0)
+		MES_close(CARDINA)
+		
+		//──────────────────────────────
+		//	name("□财宝もコンプリ～トしている")
+		if(GW_TREASURE==48)
+		{
+			MES(CARDINA,"拉古那为了这间博物馆\n作出了独一无二的\n贡献……",0)
+		}
+		//	name("□财宝もコンプリ～ト率が高い（８０％以上）")
+		else
+		if(GW_TREASURE>=38)
+		{
+			MES(CARDINA,"拉古那为这间博物馆\n作出了很大的贡献……",0)
+		}
+		//	name("□财宝コンプリ～ト率はそこそこ（５０％以上）")
+		else
+		if(GW_TREASURE>=24)
+		{
+			MES(CARDINA,"拉古那为这间博物馆\n寄赠了很多东西……",0)
+		}
+		//	name("□序盤でキチンと提欧に謝っている")
+		else
+		if(FT_01_TeoSolly)
+		{
+			MES(CARDINA,"拉古那只是我的熟人……",0)
+		}
+		//	name("□それ以外")
+		else
+		{
+			MES(CARDINA,"拉古那的功绩\n让人无法忘记……",0)
+		}
+		//──────────────────────────────
+
+
+		MES(CARDINA,"本公会、授予拉古那\n猎人等级L700“传说的红毛”L400。",0)
+		MES_close(CARDINA)
+
+	//　　拉古那たちに冷や汗エモ～ション。
+		EMO(RAGNA,EMO_HIYAASE)
+		EMO(PARTNER,EMO_HIYAASE)
+		EMO(PET,EMO_HIYAASE)
+		wait(30)
+		
+		MES(PET,"啥、传说的……",0)
+		MES_close(PET)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"嗯、传说的红毛……",0)
+		MES_close(PARTNER)
+
+	//　　拉古那にアセアセエモ～ション。
+		EMO(RAGNA,EMO_ASEASE)
+		wait(30)
+		
+		MES(RAGNA,"不、不要卡尔蒂娜。\n不是太夸张了吧……？",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"呵呵、虽然\n这样想过、但是\n现在的我也只能做点这样的事了。",0)
+		MES(CARDINA,"无论如何、请接受吧。",0)
+		MES_close(CARDINA)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"不要啦、这家伙是靠公主\n的力量得到的成绩……\n真的这样说的话……",0)
+		MES_close(RAGNA)
+
+	//　　艾雯瞑目でため息。
+		KAO(PARTNER,"D","4","4")
+
+		MES(PARTNER,"哼、没太费心虽然很不错……",0)
+		MES_close(PARTNER)
+
+	//　　艾雯、拉古那に向く。
+		look_chr( PARTNER, RAGNA ,"Bone_Head")
+
+		MES(PARTNER,"拉古那、还记得吗？",0)
+		MES_close(PARTNER)
+
+	//　　拉古那に？エモ～ション。
+		EMO(RAGNA,EMO_HATENA)
+		wait(30)
+
+		rot_chr(RAGNA,30,PARTNER)
+		MES(RAGNA,"什、什么事公主……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"我们是拍档吧？",0)
+		MES(PARTNER,"拍档的话、就必须站在对等的\n立场。\n同甘共苦吧。",0)
+		MES(PARTNER,"与你一起旅行很多地方\n并且遇到了很多事……\n对我来说挺开心的。",0)
+		MES(PARTNER,"仅仅靠契约、能够\n办到这么多事。",0)
+		MES(PARTNER,"那就是──\n我与我的拍档一起旅行留下的证据吧。",0)
+		MES_close(PARTNER)
+
+	//　　艾雯、拉古那に向く解除
+		look_off(PARTNER)
+	
+	//　　艾雯、体ごと拉古那に向く。
+		rot_chr(PARTNER,30,RAGNA)
+		
+		MES(PARTNER,"如果想让我承认你是搭档的话……\n提出的要求、老老实实\n接受就好。",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"公主……",0)
+		MES_close(RAGNA)
+
+
+		rot_chr(PET,30,RAGNA)
+	//	name2(PET)
+		MES(PET,"就、就是呢。\n公主象这样信任你。",0)
+		MES(PET,"这样不接受的话\n就失礼了哦、拉古那。",0)
+		MES_close(PET)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"嗯、就那样做吧。",0)
+		MES_close(CARDINA)
+
+	//　　拉古那、瞑目。
+		KAO(RAGNA,"D","4","4")
+		MES(RAGNA,"……知道了。",0)
+		MES(RAGNA,"好象我说的\n太任性了。",0)
+		rot_chr(RAGNA,30,CARDINA)
+		MES(RAGNA,"卡尔蒂娜、那个称号\n我就诚心诚意的接受了。",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"呵呵、谢谢。",0)
+		MES_close(CARDINA)
+
+		//すでに终极猎人まで之褒賞を入手済み。
+		if( GW_HUNTER_RANK==15 )
+		{
+			VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時		
+		
+			fade_in(30,10,BLACK)
+			wait_fade()
+			
+		//	name("システムテキスト")
+			MES(0,"C3拉古那得到了最高的猎人称号\n“传说的红毛”。",2)
+			MES(0,"C3得到奖赏『龙骨』。",2)
+			MES_close(0)
+
+			//アイテム入手
+			get_item(203,1,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		}
+		else
+		{
+			VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+				
+			MES(0,"C3拉古那得到了最高的猎人称号\n“传说的红毛”。",2)
+			MES_close(0)
+
+			//アイテム入手
+			EV("RANK_ITEMGET")
+			wait_EV("RANK_ITEMGET")
+		}
+		
+	//　　一旦暗転してゆっくりフェ～ドイン。
+		fade_in( 100, 60, BLACK)	//フェ～ドアウト
+		wait(100)
+
+		workG(GW_HUNTER_RANK,SET,16)
+
+		fade_in( 0, 60, BLACK)	//フェ～ドイン
+		wait(30)
+	}
+
+//────────────────────────────────────────────────────────────
+
+	//	终极猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=45 && GW_HUNTER_RANK<15)
+	{
+			
+		MES(CARDINA,"……好象\n有着十分了不起的成就呢。",0)
+		
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜了。\n拉古那正式认定为L337终极猎人L400。",0)
+		MES(CARDINA,"这是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"终极猎人、\n是赠给作出无数功绩的猎人的\n、究极等级。",0)
+		MES(CARDINA,"这么年轻就升格成终极\n猎人……\n真令人惊讶。",0)
+		MES(CARDINA,"我也会\n为你的升格自豪。",0)
+		MES(CARDINA,"拉古那、无论如何\n以后也要以猎人的身份\n作出更了不起的成就。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,15)
+	}
+
+/*	//『终极猎人助理』、無くなりました。
+//	终极猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=65 && GW_HUNTER_RANK<15)
+	{
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+			
+		MES(CARDINA,"……好象\n有着十分了不起的成就呢。",0)
+		MES(CARDINA,"恭喜了。\n拉古那现在认定为终极猎人助理。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手（仮）
+		get_item(160,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		MES(CARDINA,"终极猎人、\n是赠给作出无数功绩的猎人的\n、究极等级。",0)
+		MES(CARDINA,"我也会\n为你的升格自豪。",0)
+		MES(CARDINA,"拉古那、以后\n期待你作出更了不起的成就。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,15)
+	}
+*/
+
+//────────────────────────────────────────────────────────────
+
+	//	超凡猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=42 && GW_HUNTER_RANK<14)
+	{
+			
+		MES(CARDINA,"……好象\n有着十分了不起的成就呢。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n拉古那将正式认定为\nL337超凡猎人L400。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"超凡猎人、\n只是授予精通所有领域的猎人的\n称号。",0)
+		MES(CARDINA,"我也会\n为你的升格自豪。",0)
+		MES(CARDINA,"拉古那、以后\n期待你作出更了不起的成就。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,14)
+	}
+//	超凡猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=39 && GW_HUNTER_RANK<13)
+	{
+			
+		MES(CARDINA,"……好象\n有着十分了不起的成就呢。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n拉古那将正式认定为\nL337超凡猎人L400助理。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"超凡猎人、\n只是授予精通所有领域的猎人的\n称号。",0)
+		MES(CARDINA,"我也会\n为你的升格自豪。",0)
+		MES(CARDINA,"拉古那、以后\n期待你作出更了不起的成就。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,13)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	魅力猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=36 && GW_HUNTER_RANK<12)
+	{
+			
+		MES(CARDINA,"……好象\n有着十分了不起的成就呢。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n拉古那现在将正式认定为\nL337魅力猎人L400。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"魅力猎人、\n是赠与光荣的典范、受歌颂世间的猎人\n的称号。",0)
+		MES(CARDINA,"拉古那、以后\n期待你作出更了不起的成就。",0)
+		MES(CARDINA,"加油哦。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,12)
+	}
+//	魅力猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=33 && GW_HUNTER_RANK<11)
+	{
+			
+		MES(CARDINA,"……好象\n有着十分了不起的成就呢。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n拉古那现在认定你为\nL337魅力猎人助理L400。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"魅力猎人、\n是赠与光荣的典范、受歌颂世间的猎人\n的称号。",0)
+		MES(CARDINA,"拉古那、以后\n期待你作出更了不起的成就。",0)
+		MES(CARDINA,"加油哦。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,11)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	特别猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=30 && GW_HUNTER_RANK<10)
+	{
+			
+		MES(CARDINA,"……好象\n有着十分了不起的成就呢。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n拉古那现在正式认定你为\nL337特别猎人L400。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"特别猎人、\n是赠给留下丰功伟绩的猎人\n的称号。",0)
+		MES(CARDINA,"拉古那、以后\n期待你作出更了不起的成就。",0)
+		MES(CARDINA,"加油哦。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,10)
+	}
+//	特别猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=27 && GW_HUNTER_RANK<9)
+	{
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+			
+		MES(CARDINA,"这……\n真的是很努力呢。",0)
+		MES(CARDINA,"恭喜。\n拉古那现在认定你为\nL337特别猎人助理L400。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"特别猎人、\n是赠给留下丰功伟绩的猎人\n的称号。",0)
+		MES(CARDINA,"拉古那、以后\n期待你作出更了不起的成就。",0)
+		MES(CARDINA,"加油哦。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,9)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	华丽猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=24 && GW_HUNTER_RANK<8)
+	{
+			
+		MES(CARDINA,"这……\n真的是很努力呢。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n拉古那现在正式认定你为\nL337华丽猎人L400。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+		MES(CARDINA,"华丽猎人、\n是赠给受万人景仰、羡慕的猎人\n的称号。",0)
+		MES(CARDINA,"拉古那、以后\n期待你作出更了不起的成就。",0)
+		MES(CARDINA,"加油哦。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,8)
+	}
+//	华丽猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=21 && GW_HUNTER_RANK<7)
+	{
+			
+		MES(CARDINA,"这……\n真的是很努力呢。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n拉古那现在认定你为\nL337华丽猎人助理L400。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"华丽猎人、\n是赠给受万人景仰、羡慕的猎人\n的称号。",0)
+		MES(CARDINA,"拉古那、以后\n期待你作出更了不起的成就。",0)
+		MES(CARDINA,"加油哦。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,7)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	资深猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=18 && GW_HUNTER_RANK<6)
+	{
+			
+		MES(CARDINA,"呵呵、好象很努力嘛。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n现在正式认定你为\nL337资深猎人L400。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"资深猎人、\n是赠与给治理上作出十分业绩的猎人\n的称号。",0)
+		MES(CARDINA,"拉古那、\n以后也要加油。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,6)
+	}
+//	资深猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=15 && GW_HUNTER_RANK<5)
+	{
+			
+		MES(CARDINA,"呵呵、好象很努力嘛。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n拉古那现在正式认定你为\nL337资深猎人L400助理。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"资深猎人、\n是赠与给治理上作出十分业绩的猎人\n的称号。",0)
+		MES(CARDINA,"拉古那、\n以后也要加油。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,5)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	狂野猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=12 && GW_HUNTER_RANK<4)
+	{
+			
+		MES(CARDINA,"呵呵、好象很努力嘛。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n拉古那现在正式认定你为\nL337狂野猎人L400。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"狂野猎人、\n是授予给实施各种各样野心活动的猎人\n的称号。",0)
+		MES(CARDINA,"拉古那、\n以后也要加油。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,4)
+	}
+//	狂野猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=9 && GW_HUNTER_RANK<3)
+	{
+			
+		MES(CARDINA,"呵呵、好象很努力嘛。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n拉古那现在正式认定你为\nL337狂野猎人L400助理。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"狂野猎人、\n是授予给实施各种各样野心活动的猎人\n的称号。",0)
+		MES(CARDINA,"拉古那、\n以后也要加油。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,3)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	迷宫猎人へ昇格
+	else
+	if( GW_HUNTER_POINT>=6 && GW_HUNTER_RANK<2)
+	{
+	
+		MES(CARDINA,"呵呵、好象很努力嘛。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時
+		MES(CARDINA,"恭喜。\n拉古那现在正式认定你为\nL337迷宫猎人L400。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"迷宫猎人、\n是授予给长期在迷宫探索的猎人的\n称号。",0)
+		MES(CARDINA,"拉古那、\n以后也要加油。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,2)
+	}
+//	迷宫猎人助理へ昇格
+	else
+	if( GW_HUNTER_POINT>=3 && GW_HUNTER_RANK<1)
+	{
+		MES(CARDINA,"呵呵、好象很努力嘛。",0)
+
+		VOICE(718,0)					//「呵呵、おめでとうございます」（ハンタ～ランクが上がった時	
+		MES(CARDINA,"恭喜。\n拉古那现在正式认定你为\nL337迷宫猎人L400助理。",0)
+		MES(CARDINA,"这里是本公会\n的奖赏。\n请收下吧。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"迷宫猎人、\n是授予给长期在迷宫探索的猎人的\n称号。",0)
+		MES(CARDINA,"拉古那、\n以后也要加油。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,1)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	name("□昇格がない场合")
+	else
+	{
+		if(GW_HUNTER_RANK==0)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337普通猎人L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==1)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是は\nL337迷宫猎人助理L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==2)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337迷宫猎人L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==3)
+		{
+			MES(CARDINA,"拉古那现在的\n猎人等级是L337狂野猎人助理L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==4)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337狂野猎人L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==5)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337资深猎人助理L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==6)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337资深猎人L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==7)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337华丽猎人助理L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==8)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337华丽猎人L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==9)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337特别猎人助理L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==10)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337特别猎人L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==11)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337魅力猎人助理L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==12)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337魅力猎人L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==13)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337超凡猎人助理L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==14)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337超凡猎人L400。",0)
+			MES(CARDINA,"地下城的通过等级过低了些\n下一次超过吧。",0)
+			MES(CARDINA,"本公会、会提供\n一定的援助的。",0)
+			MES_close(CARDINA)
+		}
+		else
+/*		if(GW_HUNTER_RANK==15)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337终极猎人助理L400。",0)
+		}
+		else
+*/		if(GW_HUNTER_RANK==15)
+		{
+			MES(CARDINA,"拉古那现在的猎人等级是\nL337终极猎人L400。",0)
+			MES(CARDINA,"那么年轻就升格成\n终极猎人……\n真令人惊讶。",0)
+			MES(CARDINA,"拉古那、无论如何\n从这以后\n以猎人的身份加油作出更了不起的事情。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==16)
+		{
+			MES(CARDINA,"拉古那现在的\n猎人等级是\nL700传说的红毛L400。",0)
+			MES(CARDINA,"“传说的红毛”是、很久以前\n旅行于库朗毕林间\n有名的冒险家的名字。",0)
+			MES(CARDINA,"呵呵、向他那样自由的生活、\n并且留下了许多的功绩\n所有的一切都是猎人所希望的。",0)
+			MES_close(CARDINA)
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+			//　　拉古那に青ざめエモ～ション。
+				EMO(RAGNA,EMO_AOZAME)
+				wait(30)
+
+				MES(RAGNA,"不要吧、果然\n好象太夸张了吗……？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□艾雯先頭")
+			//　　艾雯、少し拉古那之嚯を見る。
+				look_chr(PARTNER,RAGNA,"Bone_Head")
+				MES(PARTNER,"呵呵、你也是\n为了不辱没你的名声而这么努力吧！",0)
+				MES_close(PARTNER)
+
+			//　　拉古那に青ざめエモ～ション。
+				EMO(RAGNA,EMO_AOZAME)
+				wait(30)
+
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+				MES(RAGNA,"不要、所以\n要是再夸张些的话……",0)
+				MES_close(RAGNA)
+				look_off(RAGNA)
+				look_off(PARTNER)
+			}
+			//──────────────────────────────
+		}
+	
+	}
+}
+
+
+
+//=================================================================================================
+//ハンタ～ランク査定。
+//取り逃したアイテム含めて、報酬を一括で貰えるル～チン
+//昇格が啊ったことを前提にしている。
+//
+//		091	姐御之テヌグイ	AC27	06 	87	0		------ 	0	0	0	0	気合之入ったテヌグイ。\n体力満タン之時は魔力を消費しなくなる。			//斗技场
+//		084	グルメなおハシ	 AC20	06 	96	0		------ 	-1	-1	-1	0	誰之手にもクリティカルフィる不思議ハシ。\nフ～ド之回復量アップ。		//ハンタ～ランク
+//		081	停滞防止之お守り AC17	06 	89	0		------ 	0	0	0	0	移動妨害を防止するお守り。\n氷結·マヒ状態を予防する。					//ハンタ～ランク
+//		085	セレブなお財布	 AC21	06 	97	0		------ 	-1	-1	-1	0	金銀之装飾がなされたハデハデなサイフ。\n手に入れるお金之額が増加する。	//ハンタ～ランク
+//		083	呪い返し之お守り AC19	06 	91	0		------ 	0	0	0	0	呪いを無効化するお守り。\n呪縛状態を予防する。							//ハンタ～ランク
+//		087	イナセなお面	 AC23	06 	99	0		------ 	-1	-1	-1	0	粋でイナセな怪人之お面。\nショップ店員を誘惑して安く買ぶできる。		//ハンタ～ランク
+//		089	アンチトラップ	AC25	06 	85	0		------ 	0	0	0	0	トラップ之ダメ～ジを無効化する魔法之盾。								//斗技场
+//		086	サンタなおヒゲ	 AC22	06 	98	0		------ 	1	1	1	0	たくましい白銀之付けヒゲ。\n敵がアイテムを落としやすくなる。			//ハンタ～ランク
+//
+//=================================================================================================
+/*
+ハンタ～ランク報酬之アクセサリを必要なときに入手できるよう順番調整しました。
+
+迷宫猎人		：姐御之テヌグイ	＞停滞防止之お守り	※変更
+狂野猎人		：グルメなおハシ	＞グルメなおハシ
+资深猎人		：停滞防止之お守り	＞呪い返し之お守り	※変更
+华丽猎人		：セレブなお財布	＞セレブなお財布
+特别猎人		：呪い返し之お守り	＞姐御之テヌグイ	※変更
+魅力猎人		：イナセなお面		＞サンタなおヒゲ	※変更
+超凡猎人		：アンチトラップ	＞アンチトラップ	
+终极猎人	：サンタなおヒゲ	＞イナセなお面		※変更
+传说的红毛				：無し				＞無し
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+迷宫猎人助理	：キャンディ～  （EXP40）		＞生ハム	         （EXP75）
+狂野猎人助理	：しいたけ        （EXP480）	＞チャ～ハン      （EXP375）
+资深猎人助理	：生ハム          （EXP75）		＞カレ～ライス    （EXP900）
+华丽猎人助理  ：チョコレ～ト   （EXP600）		＞うなぎ之蒲焼   （EXP1575）
+特别猎人助理  ：カレ～ライス  （EXP900）		＞タ～キ～        （EXP3150）
+魅力猎人助理  ：カルボナ～ラ  （EXP2250） 	＞ショ～トケ～キ （EXP9000）
+超凡猎人助理  ：まつたけ       （EXP108000）	＞ドリアン	         （EXP64125）
+
+//=================================================================================================
+
+迷宫猎人助理	：生ハム	     
+迷宫猎人		：停滞防止之お守り	※変更
+狂野猎人助理	：チャ～ハン     
+狂野猎人		：グルメなおハシ
+资深猎人助理	：カレ～ライス   
+资深猎人		：呪い返し之お守り	※変更
+华丽猎人助理  ：うなぎ之蒲焼   
+华丽猎人		：セレブなお財布
+特别猎人助理  ：タ～キ～       
+特别猎人		：姐御之テヌグイ	※変更
+魅力猎人助理  ：ショ～トケ～キ 
+魅力猎人		：サンタなおヒゲ	※変更
+超凡猎人助理  ：ドリアン	     
+超凡猎人		：アンチトラップ	
+终极猎人	：イナセなお面		※変更
+传说的红毛				：無し
+
+//=================================================================================================
+*/
+
+
+RANK_ITEMGET
+{
+	//フ～ド系アイテムは仮仕様。現在はすべてかっぱ卷き。
+	//ver.2008/8/7 仮更新　巴兰ス調整が必要
+	//―――――――――――――――――――――――
+
+	//通过这次的查定、等级到达了『迷宫猎人助理』。
+	//ver.2008/8/7 キャンディ～
+//0829 迷宫猎人助理	：生ハム	     		165 生ハム			FD05 	20	63	0		------ 	75		16	0	0	塩漬け之生ハム。\nメロンに乗せると高級オ～ドブルに早変わり。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<1 && GW_HUNTER_POINT>=3 )
+	{
+		get_item(165,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『迷宫猎人』。
+//0829 迷宫猎人		：停滞防止之お守り		081	停滞防止之お守り AC17	06 	89	0		------ 	0	0	0	0	移動妨害を防止するお守り。\nマヒ状態を予防する。					//★ハンタ～ランク
+	if( GW_HUNTER_RANK<2 && GW_HUNTER_POINT>=6 )
+	{
+		get_item(081,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『狂野猎人助理』。
+	//ver.2008/8/7 しいたけ
+//0829 狂野猎人助理		：チャ～ハン     		185	チャ～ハン		FD25 	20	42	0		------ 	375		21	0	0	強火で炒めたエビ入りチャ～ハン。\n米同士がくっついていない絶妙之パラパラ感。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<3 && GW_HUNTER_POINT>=9 )
+	{
+		get_item(185,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『狂野猎人』。
+	if( GW_HUNTER_RANK<4 && GW_HUNTER_POINT>=12 )
+	{
+		get_item(084,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『资深猎人助理』。
+	//ver.2008/8/7 生ハム
+//0829 资深猎人助理		：カレ～ライス   		162 カレ～ライス	FD02 	20	55	0		------ 	900		25	0	0	正統派ビ～フカレ～（中辛）。\nほどよい辛さが食欲をそそる。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<5 && GW_HUNTER_POINT>=15 )
+	{
+		get_item(162,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『资深猎人』。
+//0829 资深猎人			：呪い返し之お守り		083	呪い返し之お守り AC19	06 	91	0		------ 	0	0	0	0	呪いを無効化するお守り。\n呪縛状態を予防する。						//★ハンタ～ランク
+	if( GW_HUNTER_RANK<6 && GW_HUNTER_POINT>=18 )
+	{
+		get_item(083,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『华丽猎人助理』。
+	//ver.2008/8/7 チョコレ～ト
+//0829 华丽猎人助理 	：うなぎ之蒲焼   		170 うなぎ之蒲焼	FD10 	20	72	0		------ 	1575	27	0	0	秘伝之タレでじりじり焼いたうなぎ。\nふんわり柔らかな阿鲁迪亚风。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<7 && GW_HUNTER_POINT>=21 )
+	{
+		get_item(170,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『华丽猎人』。
+	if( GW_HUNTER_RANK<8 && GW_HUNTER_POINT>=24 )
+	{
+		get_item(085,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『特别猎人助理』。
+	//ver.2008/8/7 カレ～ライス
+//0829 特别猎人助理  	：タ～キ～       		178 タ～キ～		FD18 	20	43	0		------ 	3150	29	0	0	皮までおいしい七面鳥之ロ～スト。\nパ～ティ会场之中心が指定席。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<9 && GW_HUNTER_POINT>=27 )
+	{
+		get_item(178,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『特别猎人』。
+//0829 特别猎人		：姐御之テヌグイ		091	姐御之テヌグイ	AC27	06 	87	0		------ 	0	0	0	0	気合之入ったテヌグイ。\n体力満タン之時は魔力を消費しなくなる。					//☆ハンタ～ランク
+	if( GW_HUNTER_RANK<10 && GW_HUNTER_POINT>=30 )
+	{
+		get_item(091,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『魅力猎人助理』。
+	//ver.2008/8/7 カルボナ～ラ
+//0829 魅力猎人助理  	：ショ～トケ～キ 		194	ショ～トケ～キ	FD34 	20	54	0		------ 	9000	33	0	0	大きなイチゴを乗せた正統派ケ～キ。\n祝い之席には欠かせない。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<11 && GW_HUNTER_POINT>=33 )
+	{
+		get_item(194,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『魅力猎人』。
+//0829 魅力猎人		：サンタなおヒゲ		086	サンタなおヒゲ	AC22	06 	98	0		------ 	0	0	0	0	たくましい白銀之付けヒゲ。\n敵がアイテムを落としやすくなる。								//☆ハンタ～ランク
+	if( GW_HUNTER_RANK<12 && GW_HUNTER_POINT>=36 )
+	{
+		get_item(086,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『超凡猎人助理』。
+	//ver.2008/8/7 エリンギ
+//0829 超凡猎人助理  	：ドリアン	     		183	ドリアン		FD23 	20	62	0		------ 	64125	40	0	0	なめらかな食感と確かな甘さを持つ果物王。\n強烈な臭いが啊るため好みは分かれる。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<13 && GW_HUNTER_POINT>=39 )
+	{
+		get_item(183,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『超凡猎人』。
+	if( GW_HUNTER_RANK<14 && GW_HUNTER_POINT>=42 )
+	{
+		get_item(089,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『终极猎人』。
+//0829 终极猎人	：イナセなお面			087	イナセなお面	AC23	06 	99	0		------ 	0	0	0	0	粋でイナセな怪人之お面。\nショップ店員を誘惑して安く買ぶできる。							//☆ハンタ～ランク
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<15 && GW_HUNTER_POINT>=45 )
+	{
+		get_item(087,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//通过这次的查定、等级到达了『传说的红毛』。
+	if( GW_HUNTER_RANK<16 && GW_HUNTER_POINT>=48 )
+	{
+		get_item(203,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+}
+
+
+//―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+//アイテムゲット·表示無し版（エピロ～グ用）
+//―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+RANK_ITEMGET_BLIND
+{
+
+	//通过这次的查定、等级到达了『迷宫猎人助理』。
+	if( GW_HUNTER_RANK<1 && GW_HUNTER_POINT>=3 )
+		get_item(165,1,1)
+	//通过这次的查定、等级到达了『迷宫猎人』。
+	if( GW_HUNTER_RANK<2 && GW_HUNTER_POINT>=6 )
+		get_item(081,1,1)
+	//通过这次的查定、等级到达了『狂野猎人助理』。
+	if( GW_HUNTER_RANK<3 && GW_HUNTER_POINT>=9 )
+		get_item(185,1,1)
+	//通过这次的查定、等级到达了『狂野猎人』。
+	if( GW_HUNTER_RANK<4 && GW_HUNTER_POINT>=12 )
+		get_item(084,1,1)
+	//通过这次的查定、等级到达了『资深猎人助理』。
+	if( GW_HUNTER_RANK<5 && GW_HUNTER_POINT>=15 )
+		get_item(162,1,1)
+	//通过这次的查定、等级到达了『资深猎人』。
+	if( GW_HUNTER_RANK<6 && GW_HUNTER_POINT>=18 )
+		get_item(083,1,1)
+	//通过这次的查定、等级到达了『华丽猎人助理』。
+	if( GW_HUNTER_RANK<7 && GW_HUNTER_POINT>=21 )
+		get_item(170,1,1)
+	//通过这次的查定、等级到达了『华丽猎人』。
+	if( GW_HUNTER_RANK<8 && GW_HUNTER_POINT>=24 )
+		get_item(085,1,1)
+	//通过这次的查定、等级到达了『特别猎人助理』。
+	if( GW_HUNTER_RANK<9 && GW_HUNTER_POINT>=27 )
+		get_item(178,1,1)
+	//通过这次的查定、等级到达了『特别猎人』。
+	if( GW_HUNTER_RANK<10 && GW_HUNTER_POINT>=30 )
+		get_item(091,1,1)
+	//通过这次的查定、等级到达了『魅力猎人助理』。
+	if( GW_HUNTER_RANK<11 && GW_HUNTER_POINT>=33 )
+		get_item(194,1,1)
+	//通过这次的查定、等级到达了『魅力猎人』。
+	if( GW_HUNTER_RANK<12 && GW_HUNTER_POINT>=36 )
+		get_item(086,1,1)
+	//通过这次的查定、等级到达了『超凡猎人助理』。
+	if( GW_HUNTER_RANK<13 && GW_HUNTER_POINT>=39 )
+		get_item(183,1,1)
+	//通过这次的查定、等级到达了『超凡猎人』。
+	if( GW_HUNTER_RANK<14 && GW_HUNTER_POINT>=42 )
+		get_item(089,1,1)
+	//通过这次的查定、等级到达了『终极猎人』。
+	if( GW_HUNTER_RANK<15 && GW_HUNTER_POINT>=45 )
+		get_item(087,1,1)
+	//通过这次的查定、等级到达了『传说的红毛』。
+	if( GW_HUNTER_RANK<16 && GW_HUNTER_POINT>=48 )
+		get_item(203,1,1)
+
+}
+
+
+#EndScriptTable
+////////////////////////////////////////////////////////////////////////////////////////////////////

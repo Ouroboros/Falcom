@@ -1,0 +1,1327 @@
+//Zwei2一般メッセ～ジ·阿鲁迪亚镇（※贺安）
+//────────────────────────────────────────────────────────────
+//阿鲁迪亚
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆贺安（コック）Hoan")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+//--- ロ～カルワ～ク --------------------------------------------------
+//ロ～カルワ～ク
+//WK000  配置換えに使用(実体は ev00120に啊り）
+//WK001  メッセ～ジランダム分岐
+//WK015　そのときのフード交換回数（ホアン、メイで使う）
+//---------------------------------------------------------------------
+
+//　　※贺安がカウンタ～係之场合は、初めに選択肢を表示する。
+//　　　ただし初回イベントが設定されている场合、そちらを優先。
+TK_HOAN
+{
+	TK_begin()
+	rot_chr(HOAN,30,PLAYER1)
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(HOAN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,HOAN)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,HOAN)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HOAN)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HOAN)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HOAN)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HOAN)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,HOAN)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+
+	//初回
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※酒场カウンタ～内。
+	//　　※初回イベント。選択肢には飛ばない。
+	if( F6_05_EndSixth )
+	{
+		if(!FT_13_TalkHoan)
+		{
+			rot_chr(PARTNER,30,HOAN)
+
+			MES(HOAN,"嗨～欢迎光临。",0)
+			MES(HOAN,"想吃点什么吗？",0)
+			MES_close(HOAN)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"店长先生……",0)
+			MES(PARTNER,"能让我留宿\n太谢谢了。",0)
+			MES(PARTNER,"说出那样突然的话……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈哈……",0)
+			MES(RAGNA,"我坠机的时候\n不但把我送到这里来\n而且还收留了我。",0)
+			MES(RAGNA,"那时候真的是太感谢了。",0)
+			MES_close(RAGNA)
+
+		//	name2(HOAN)
+			MES(HOAN,"什么嘛～小事一桩而已。",0)
+			MES(HOAN,"来者都是客，随时欢迎\n下次再来",0)
+			MES(HOAN,"本来就是\n为那理由而开的店嘛。",0)
+		//	MES(HOAN,"不过……不管怎样\n也要付房租。",0)
+			MES_close(HOAN)
+
+		//	name2(RAGNA)
+		//	MES(RAGNA,"哈、哈哈哈……",0)
+			MES(RAGNA,"是吗……",0)
+			MES_close(RAGNA)
+
+		//	name2(HOAN)
+			MES(HOAN,"虽然今天很多人。\n但是想吃点什么的话尽管点菜就行了。",0)
+			MES(HOAN,"肚子填不饱的话\n就不能战斗了吧。",0)
+			MES_close(HOAN)
+
+			//　　★贺安【米娅受け入れ】
+			F_set_note(HOAN,2)
+
+			F_set(FT_13_TalkHoan)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_HOAN)
+			{
+				MES(HOAN,"想吃点什么的话\n尽管点菜就可以了。",0)
+				MES(HOAN,"空着肚子的话就不能战斗了吧。",0)
+				MES(HOAN,"在路上的话、空着肚子\n也应该不好受吧。",0)
+				MES_close(HOAN)
+			/*
+				MES(HOAN,"顺便说下……\n你们已经住了○○回、\n要是换成房租的话要○○芬尼。",0)
+
+			//　　※○○は宿屋で全回復をした回数、及び×２００芬尼した金額。
+			//　　　システム的にカウントできない场合は、こ之メッセ～ジを削除とします。
+			//★保留中
+			//─────────────────────
+			
+			//	name("□宿泊回数０回。")
+				MES(HOAN,"完全没有战役呢。",0)
+				MES_close(□宿泊回数１～１０回。)
+
+			//	name("□宿泊回数１～１０回。")
+				MES(HOAN,"这种程度\n不太在意呢。",0)
+				MES(HOAN,"一想到是为了保护村庄这点\n这点不算什么。",0)
+				MES_close(□宿泊回数１１～４０回。)
+
+			//	name("□宿泊回数１１～４０回。")
+				MES(HOAN,"没有那么在意呐。",0)
+				MES(HOAN,"一想到是为了保护村庄这点\n这点不算什么。",0)
+				MES_close(□宿泊回数４１回以上。)
+
+			//	name("□宿泊回数４１回以上。")
+				MES(HOAN,"哎呀……怎么都想要你\n把房租付了的说。",0)
+				MES_close(HOAN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哈、哈哈哈……",0)
+				MES_close(RAGNA)
+			*/
+
+				F_set(HOAN)
+			}
+		//─────────────────────
+		//　　★繰り返し
+			else
+			{
+				MES(HOAN,"想吃点什么的话\n点菜就可以了。",0)
+				MES(HOAN,"空着肚子的话就不能战斗了吧。",0)
+				MES(HOAN,"在路上的话、空着肚子\n也应该不好受吧。",0)
+				MES_close(HOAN)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□□　わらしべイベント
+	//	name("５·贺安（阿鲁迪亚镇）		『謎之ペットフ～ド』□『おしぼり』")147
+	//──────────────────────────────
+	if(F5_00_HearLunar && FV_11_Warasi_4_Bns && !FV_11_Warasi_5_Han && !FV_11_Warasi_Fake)
+	{
+	//	name("□初回之场合。")
+		if(!F_HOAN)
+		{
+		//　　※振り返らない。
+		//──────────────────────────────
+			if(F6_00_GoToMeru)
+			{
+			//	name("□フラグ□之场合。")
+				MES(HOAN,"真是的……\n大家都在考虑那种不可能的事。",0)
+				MES_close(HOAN)
+			}
+			else
+			{
+			//	name("□フラグ□之场合。")
+				MES(HOAN,"嗯……\n开旅馆的话\n一定会起到作用。",0)
+				MES_close(HOAN)
+			}
+		//──────────────────────────────
+		//　　贺安、振り返る。
+			rot_chr(HOAN,30,RAGNA)
+			MES(HOAN,"你们、\n好象带着不错的东西呢。",0)
+			MES(HOAN,"把那东西、让给我\n怎么样。",0)
+			MES_close(HOAN)
+
+		//　　先頭キャラにＰＡエモ～ション。
+			EMO(RAGNA,EMO_PA)
+			wait(30)
+			MES(RAGNA,"这个……就是\n『谜的宠物饲料』吗？",0)
+			MES_close(RAGNA)
+
+		//	name2(HOAN)
+			MES(HOAN,"宠物饲料？",0)
+			MES(HOAN,"不是不是、这个\n是珍稀美味·熊掌。",0)
+			MES(HOAN,"这可以做个美味的料理。\n这东西很难到手哦。",0)
+			MES_close(HOAN)
+
+			//★初回
+			F_set(HOAN)
+		}
+		else
+		{		
+			rot_chr(HOAN,30,PLAYER1)
+		//	name("□２回目以降。")
+			MES(HOAN,"喂你们、\n带着珍稀美味·熊掌呢。",0)
+			MES(HOAN,"这可以做个美味的料理。\n这东西很难到手哦。",0)
+			MES(HOAN,"怎样、让给我\n怎么样。",0)
+			MES_close(HOAN)
+		}
+
+	//──────────────────────────────
+	//	name("選択テキスト")
+		workL(WK_CANCEL,SET,2)//【不给】
+		MES_pos(PLAYER1,"??W9【给】\n【不给】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("□【给】")
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+			MES(HOAN,"太感谢了。这样\n又能试到新的美味了。",0)
+			MES(HOAN,"虽然没有什么好东西、\n但收下这个吧。",0)
+			MES_close(HOAN)
+
+		//	name("アイテム入手テキスト")
+		//	MES(this,"『おしぼり』を貰った。",0)
+			//―――――――――――――――――――――――
+			fade_in(30,10,BLACK)
+
+			get_item(146,-1,1)
+			get_item(147,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//―――――――――――――――――――――――
+
+		//──────────────────────────────
+		//	name("□艾雯がいる场合")
+			if(F6_00_GoToMeru)
+			{
+				rot_chr(PARTNER,30,HOAN)
+				MES(PARTNER,"嗯、哪个……",0)
+				MES(PARTNER,"这个东西的话、\n作为料理的话可以很不错的东西\n先给我怎样？",0)
+				MES_close(PARTNER)
+
+				rot_chr(RAGNA,30,PARTNER)
+			//	name2(RAGNA)
+				MES(RAGNA,"喂、喂公主……\n又做那样的事……",0)
+				MES_close(RAGNA)
+
+			//	name2(HOAN)
+				MES(HOAN,"真的呢、你们\n不努力可不行那。",0)
+				MES(HOAN,"那种事交给我好了。\n……稍微等一下。",0)
+				MES_close(HOAN)
+
+			//　　一旦暗転。
+			//―――――――――――――――――――――――
+			//　　ゆっくりフェ～ドインして同じ構図。
+			
+				fade_in(100,30,BLACK)
+				wait_fade()
+				rot_chr(RAGNA,30,HOAN)
+				fade_in(0,30,BLACK)
+				wait_fade()
+
+			//―――――――――――――――――――――――
+			//	name("アイテム入手テキスト")
+			//	MES(this,"『小汪タンメン』を貰った。",0)
+			//ver.2008/8/7 タ～キ～
+			//―――――――――――――――――――――――
+				fade_in(30,10,BLACK)
+
+				get_item(178,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//―――――――――――――――――――――――
+			}
+		//──────────────────────────────
+			MES(HOAN,"我、虽然不太清楚\n你们想做的事……",0)
+			MES(HOAN,"但是出去的话\n要十分小心。",0)
+			MES_close(HOAN)
+
+			F_set(FV_11_Warasi_5_Han)
+			F_reset(HOAN)
+		}
+		//──────────────────────────────
+		//	name("□【不给】")
+		//──────────────────────────────
+		else
+		{
+			MES(HOAN,"好象、说了\n些很无礼的话……",0)
+			MES(HOAN,"不过有兴趣的话。\n稍微考虑一下吧。",0)
+			MES_close(HOAN)
+		}
+	}
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※配置をランダムで２パタ～ン用意する。
+	//　　　①酒场カウンタ～内（梅は店内で瑟菲拉を見る）
+	//　　　②調理场に向いている（梅はカウンタ～に入りフ～ド交換係）
+	//　　　阿鲁迪亚□酒场之エントリをくぐった時点で、どちら之配置になるかがランダムで決まる。
+	//　　※初回イベント。
+	//　　※梅尔塞迪克突入後は、こ之イベントは起動しません。
+	//　　　通常メッセ～ジへ流します。
+	else
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(HOAN,30,PLAYER1)
+		if(!FT_12_TalkHoan && !F6_02_OnMeru)
+		{
+			MES(HOAN,"那个……\n好象飞机准备起飞了。",0)
+		//	MES(HOAN,"真想问问\n龙卷都那么近了、到底打算做什么。",0)
+			MES(HOAN,"龙卷靠近的话\n应该想想怎么逃出去吧。",0)
+			MES(HOAN,"不过\n好象有什么别的事一样。",0)
+			MES(HOAN,"……………………………………",0)
+			MES_close(HOAN)
+
+			//　　贺安、向きを戻す。
+			
+			if(WK000==0)
+			{
+				rot(HOAN,30,30)	//カウンタ～之场合
+			}
+			else
+			{
+				rot(HOAN,30,270)	//調理场之场合
+			}
+			
+			MES(HOAN,"你们大家、这个时候\n应该慎重行动。",0)
+		//	MES(HOAN,"无谋无理是不行的。",0)
+			MES(HOAN,"只有勇气而无谋是不行的。",0)
+			MES_close(HOAN)
+
+			MES(RAGNA,"嗯、知道了。",0)
+			MES(RAGNA,"（说起来、\n  看穿了吗……？）",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"（嗯、好象察觉了\n  我们大致的行动内容……）",0)
+			MES_close(PARTNER)
+
+		//　　贺安、首だけ軽く振り返る。
+			look_chr(HOAN,PLAYER1,"Bone_Head")
+			MES(HOAN,"虽然不是太清楚原由、\n但是请平安回来。",0)
+		//	MES(HOAN,"你们大家、可是很\n了不起的阿鲁迪亚的人。",0)
+			MES(HOAN,"你们大家、可是很\n了不起的本店常客。",0)
+			look_off(HOAN)
+			
+			MES_close(HOAN)
+			F_set(FT_12_TalkHoan)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		//カウンタ～に居るときはカウンタ～処理
+		else
+		if(WK000==0)
+		{
+			VOICE(742,0)		//「ハイ、いらっしゃい」
+			MES(HOAN,"嗨、欢迎光临。",0)
+			
+//			MES(HOAN,"欢迎光临。",0)
+			MES(HOAN,"需要交换食物服务吗？",0)
+			MES_close(HOAN)
+			
+			EV("COUNTER_HOAN")
+			wait_EV("COUNTER_HOAN")
+			rot(HOAN,30,0)	//カウンタ～之场合
+		}
+		//でなければそ之まま通常会話
+		else
+		{
+			EV("NORMAL_TK_HOAN")
+			wait_EV("NORMAL_TK_HOAN")		
+			rot(HOAN,30,272)
+		}
+	}
+	//──────────────────────────────
+	//▼□通常会話
+	//──────────────────────────────
+	else
+	if( F5_00_HearLunar )
+	{
+		EV("NORMAL_TK_HOAN")
+		wait_EV("NORMAL_TK_HOAN")		
+	}
+	//──────────────────────────────
+	//▼⑤
+	//──────────────────────────────
+	//カウンタ～に居るときはカウンタ～処理
+	else
+	if( F2_14_TalkEnemy && !F3_00_GoMoonCastle )
+	{
+		rot_chr(HOAN,30,PLAYER1)
+		if(WK000==0)
+		{
+			VOICE(742,0)		//「ハイ、いらっしゃい」
+			MES(HOAN,"嗨、欢迎光临。",0)
+			
+//			MES(HOAN,"欢迎光临。",0)
+			MES(HOAN,"需要交换食物服务吗？",0)
+			MES_close(HOAN)
+			
+			EV("COUNTER_HOAN")
+			wait_EV("COUNTER_HOAN")
+		}
+		//でなければそ之まま通常会話
+		else
+		{
+			EV("NORMAL_TK_HOAN")
+			wait_EV("NORMAL_TK_HOAN")		
+		}
+	}
+	//──────────────────────────────
+	//▼①初回
+	//──────────────────────────────
+	else
+	if(F1_01_GameStart && !FT_01_TalkHoan && !F1_15_GoVillage)
+	{
+
+
+//仕様変更になったが、勿体無い之でどこかで再利用したい……
+/*	//――――――――――――――――――――――――――
+	//	初期化処理
+	//――――――――――――――――――――――――――
+		cross_fade(30)			//クロスフェ～ド
+
+		//カメラセット
+		CAM_move(800,670,115,0,0)
+		CAM(110,68,115,27,224,0,0)
+
+
+		//キャラ再配置
+		chr_pos(RAGNA,	827,-504,0,206,2)
+		chr_pos(PARTNER,620,-510,0,239,2)
+		chr_pos(HOAN,	986,-798,1,270,53)
+		chr_pos(MEI,	780,-1071,0,90,2)
+		
+		//顔初期化
+		KAO(RAGNA, "1", "1", "1")	
+		KAO(PARTNER,"1", "1", "1")	
+		KAO(HOAN, "1", "1", "1")	
+		KAO(MEI,"1", "1", "1")	
+		
+		//モ～ション
+		MOT_SET(MEI,150,-1,405,405,-1,0)//お客たちに耳寄り情報ネ㈱
+		MOT_SET(HOAN,150,-1,449,449,-1,0)//よろしくアル～㈱
+	
+	//――――――――――――――――――――――――――
+	//	イベント開始
+	//――――――――――――――――――――――――――
+		rot_chr(HOAN,30,RAGNA)
+		MES(HOAN,"啊～……真是你啊、\n负伤送过来了啊。",0)
+		MES_close(HOAN)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"嗯、是的……",0)
+		MES_close(RAGNA)
+
+	//	name2(MEI)
+		rot(MEI,30,335)
+		MES(MEI,"是的。\n正是那样大叔。",0)
+		MES_close(MEI)
+
+	//　　食器棚之前にいた梅がやって来て、贺安之隣に並ぶ。
+		rot(MEI,30,0)
+		move( MEI, 0,	8,	821,-851,0, 0)
+
+		
+	//　　贺安は梅を待たずに次を話し始める。
+		MES(HOAN,"关于2楼的房间的事。",0)
+		MES_close(HOAN)
+
+	//	name2(MEI)
+		rot_chr(MEI,30,RAGNA)
+		MES(MEI,"从客人那里听到的情报㈱",0)
+		MES_close(MEI)
+
+	//	name2(HOAN)
+		MES(HOAN,"现在\n好象没有什么客人。",0)
+		MES(HOAN,"所以这段时间、\n请随便休息好了。",0)
+		MES_close(HOAN)
+
+	//	name2(MEI)
+		MOT(MEI,150,5)
+		MES(MEI,"没有什么好客气的。\n叔叔这样说了。",0)
+		MES_close(MEI)
+		MOT(MEI,2,5)
+
+	//	name2(HOAN)
+		MES(HOAN,"生病了颜色很差呢。\n好好修养下。",0)
+		MES_close(HOAN)
+
+	//	name2(MEI)
+		MOT(MEI,75,5)
+		MES(MEI,"这个饭馆\n《大熊猫楼》哟～㈱",0)
+		MES_close(MEI)
+
+	//	name2(HOAN)
+		MOT(HOAN,150,5)
+ 		MES(HOAN,"拜托咯～㈱",0)
+		MES_close(HOAN)
+
+	//　　贺安、梅に向く。
+		MOT(HOAN,53,5)
+		rot_chr(HOAN,30,MEI)
+	
+		MES(HOAN,"……呃\n不是把我当傻瓜吗。",0)
+		MES(HOAN,"早点回去工作了。",0)
+		MES_close(HOAN)
+
+		rot_chr(MEI,30,HOAN)
+
+	//	name2(MEI)
+		MOT(MEI,90,5)
+		MES(MEI,"哈、\n生气咯～……！",0)
+		MES_close(MEI)
+		MOT(MEI,2,5)
+		
+		
+	//　　梅は去っていき、店内之ル～ト巡回を始める。
+		EV("EV_MOVE_MEI_1")
+		rot(HOAN,10,155)
+		wait(80)
+		
+		MES(HOAN,"哼、哪个家伙～\n好象很粘他呢……",0)
+		MES_close(HOAN)
+
+	//　　拉古那たちに冷や汗エモ～ション。
+		EMO(RAGNA,EMO_HIYAASE)
+		EMO(PARTNER,EMO_HIYAASE)
+		wait(30)
+		MES(RAGNA,"呃……",0)
+		MES_close(RAGNA)
+
+	//　　贺安、２人に向き直る。
+		rot_chr(HOAN,30,RAGNA)
+		MES(HOAN,"不管怎样客人们、\n2楼的房间请随便使用。",0)
+		MES(HOAN,"什么、房租什么的不要太在意。\n没打算想受伤的人\n收钱嘛。",0)
+		MES_close(HOAN)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"啊、是吗。这样啊。",0)
+		MES(RAGNA,"（其实、受伤的哪个\n  已经治好了……）",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		rot_chr(PARTNER,30,RAGNA)
+		MES(PARTNER,"不是很好吗。",0)
+		MES(PARTNER,"楼下不是可以\n做出很多料理吗？",0)
+		MES(PARTNER,"店主这样说、\n没理由拒绝吧。",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		rot_chr(RAGNA,30,PARTNER)
+		MES(RAGNA,"那里吗……",0)
+		MES(RAGNA,"……呵呵、算了。\n把这里当成探索的据点好了。",0)
+		MES_close(RAGNA)
+
+	//　　拉古那、贺安に向く。
+		rot_chr(RAGNA,30,HOAN)
+		MES(RAGNA,"那么店长、那么就承\n您好意我们就不客气了。",0)
+		MES_close(RAGNA)
+
+	//	name2(HOAN)
+		MES(HOAN,"嗯、那样就好。",0)
+//		MES(HOAN,"调查床的话就能恢复体力、\n感到疲劳的话就休息吧。",0)
+		MES_close(HOAN)
+	//――――――――――――――――――――――――――
+	//	イベント終了処理
+	//――――――――――――――――――――――――――
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		color(MEI,1)//梅を表示
+		
+		//贺安初回後ならル～トム～ブ再開
+		if(FT_01_TalkHoan)
+		{
+			EV("MOVE_MEI")
+		}
+
+		//カメラを初期設定に
+		CAM_return( 0 )
+		wait(30)
+		F_set(FT_01_TalkHoan)
+		
+		//フェ～ドイン----------------------
+		fade_in(0,30,BLACK)
+	//	プレイヤ～操作許可
+	//――――――――――――――――――――――――――
+
+*/
+		//●チュ～トリアル：フ～ド交換システム
+		Load_BMP(20,"sys\\tuto07.itm","0")//チュ～トリアル画像ロ～ド
+		menuBMP(1,	20,	0,0,288,384)
+		rot_chr(HOAN,30,RAGNA)
+
+//		VOICE(742,0)		//「ハイ、いらっしゃい」
+
+		MES(HOAN,"嗨、欢迎。",0)
+		MES(HOAN,"昨天睡的好吗？",0)
+		MES_close(HOAN)
+
+		MES(RAGNA,"啊、店长呀。",0)
+		MES(RAGNA,"不好意思、\n麻烦您了。",0)
+		MES(RAGNA,"突然对我们这样\n真不知道怎样报答才好……",0)
+		MES_close(RAGNA)
+
+	//　　拉古那、ちらりと艾雯之方を向く。
+		look_chr(RAGNA,PARTNER,"Bone_Head")
+		
+	//　　艾雯は笑顔で□エモ～ション。
+
+		look_off(RAGNA)
+
+		MES(RAGNA,"这里是住宿与吃饭的钱\n请收下吧。",0)
+		MES_close(RAGNA)
+
+	//	name2(HOAN)
+		MES(HOAN,"什么啊、不要太见外了。",0)
+		MES(HOAN,"刚好观光季节过了\n说到底也房间也是空着。",0)
+		MES(HOAN,"病了的话可是很麻烦的。\n要是在有什么事的话\n就跟我说好了。",0)
+		MES(HOAN,"对了、我这里还做\n食物交换服务。",0)
+		MES_close(HOAN)
+
+		//──────────────────────────────
+		//	name("□まだ交換サ～ビスチュ～トリアルを見てない场合")
+		if(!F0_07_TutoFoodEx)
+		{
+		//　　拉古那たちに？エモ～ション。
+			//　　拉古那たちに？エモ～ション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+
+			MES(PLAYER1,"食物交换服务？",0)
+			MES_close(PLAYER1)
+
+		//	name2(HOAN)
+			MES(HOAN,"最近开展的服务。",0)
+			MES(HOAN,"相同食物１０个\n交换高价食物。",0)
+			MES(HOAN,"对于升级\n是很方便的服务。",0)
+			MES_close(HOAN)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（噢……\n  真是期待……）",0)
+			MES_close(PARTNER)
+
+			MES(HOAN,"很多猎人\n经常使用、\n你也放心的使用就行了。",0)
+			MES_close(HOAN)
+
+		//　　※一枚絵表示。
+			menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+			menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+			SE(043,PLAYER1)
+			wait(40)
+			wait_key(0)
+			menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//			wait(30)
+
+			F_set(F0_07_TutoFoodEx)
+
+		}
+		else
+		{
+		//	name("□見ている。")
+
+			MES(RAGNA,"嗯、确实……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"收集相同的食物、\n然后交换高级食物\n的服务？",0)
+			MES(PARTNER,"呵呵、这个店正在开展吗。",0)
+			MES_close(PARTNER)
+
+		//	name2(HOAN)
+			MES(HOAN,"对于升级\n是很方便的服务。",0)
+			MES(HOAN,"很多猎人\n经常使用、\n你也放心的使用就行了。",0)
+			MES_close(HOAN)
+		}
+		//──────────────────────────────
+		F_set(FT_01_TalkHoan)
+	}
+	//──────────────────────────────
+	//　　カウンタ～処理選択肢
+	//──────────────────────────────
+	//初回イベントが無いとき、カウンタ～に居るときはカウンタ～処理
+	else
+	{
+		VOICE(742,0)		//「ハイ、いらっしゃい」
+		MES(HOAN,"嗨、欢迎。",0)
+//		MES(HOAN,"欢迎光临。",0)
+		MES(HOAN,"使用食物交换服务吗？",0)
+		MES_close(HOAN)
+		
+		EV("COUNTER_HOAN")
+		wait_EV("COUNTER_HOAN")
+	}
+	
+	TK_end()
+}
+
+//──────────────────────────────
+//　　カウンタ～処理選択肢
+//　　※贺安がカウンタ～係之场合は、初めに選択肢を表示する。
+//　　　ただし初回イベントが設定されている场合、そちらを優先。
+//──────────────────────────────
+COUNTER_HOAN
+{	
+	workL(WK_CANCEL,SET,4)//【取消】
+	MES_pos(PLAYER1,"??W9【对话】\n【食物交换】\n【食物交换是什么？】\n【取消】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	//──────────────────────────────
+	//	name("□对话")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		//通常会話処理へ
+		EV("NORMAL_TK_HOAN")
+		wait_EV("NORMAL_TK_HOAN")
+		loop
+	}
+	//──────────────────────────────
+	//	name("□食物交换")
+	//──────────────────────────────
+	else
+	if(WK_YESNO==2)
+	{
+		workL(015,SET,0)												//交換回数
+		EV("EV_FOOD_EXCHANGE")
+		wait_EV("EV_FOOD_EXCHANGE")	
+
+		//　　※カウンター処理選択肢に戻る。
+		loop
+
+	}
+	//──────────────────────────────
+	//	name("□フード交換って？)
+	//──────────────────────────────
+	else
+	if(WK_YESNO==3)
+	{
+		MES(HOAN,"フード交換サービスは\n同じフード１０個を、より高いグレードの\nフードと交換するサービスね。",0)
+		MES(HOAN,"例えば、かっぱ巻き１０個は\n七草かゆ１個と交換できるよ。",0)
+		MES(HOAN,"七草かゆ１個の方が、\nかっぱ巻き１０個食べるより\n得られる経験値が大きいね。",0)
+		MES(HOAN,"つまりレベルアップには、\nどんどん交換サービスを\n使うのが早道ね。",0)
+		MES_close(HOAN)
+
+		//──────────────────────────────
+		//	name("□まだフード交換をした事が無くフラグ①②の場合、一度だけ挿入。")
+		if(!FT_FF_FoodExUse && !FT_FF_FoodExHelp && !F2_00_GoForest)
+		{
+			system_chack(0)//Foodチェック
+			//──────────────────────────────
+			//	name("□フード１０個揃ってる。")
+			if(WK_ITEMBOX1)
+			{
+				MES(RAGNA,"（なるほど……\n  よし、いっちょ試してみるか。）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□フード１０個揃ってない。")
+			{
+				MES(PARTNER,"ふむ、しかし……\n交換するにも、まずは\nフードを集めねばのう……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+				MES(RAGNA,"フードなら、ダンジョンで\n手に入るはずだぜ。",0)
+				look_off(RAGNA)
+				MES(RAGNA,"まずはダンジョン探索\nからって事だな。",0)
+				MES_close(RAGNA)
+			}
+			F_set(FT_FF_FoodExHelp)
+			//──────────────────────────────
+		}
+		else
+		{
+		//	name("□それ以外")
+			MES(HOAN,"……どうするかね？",0)
+			MES_close(HOAN)
+		}
+		//──────────────────────────────
+
+		//　　※カウンター処理選択肢に戻る。
+		loop
+	}
+	//──────────────────────────────
+	//	name("□やめる")
+	//　　会話処理終了。
+	//──────────────────────────────
+	else
+	{
+		VOICE(745,0)															//「また来るといいヨ」
+		MES(HOAN,"また来るといいよ。",0)
+		
+//		MES(HOAN,"毎度あり。\n今後もご贔屓にお願いね。",0)
+//		MES(HOAN,"今後もご贔屓にお願いね。",0)
+		MES_close(HOAN)
+	}
+}
+
+//──────────────────────────────
+//フード交換実体
+//──────────────────────────────
+EV_FOOD_EXCHANGE
+{
+	//	name("□持有10个相同食物的场合")
+		system_chack(0)//Foodチェック
+		if(WK_ITEMBOX1)
+		{
+			//─────────────────────────────────────────────────────
+			//交換がラスト　ＣＤに
+			//flag2480-2499を参照してプログラム側で自動判定
+			//─────────────────────────────────────────────────────
+			if(WK_ITEMBOX2==142)
+			{
+			//	MES(HOAN,"X3『%s』虽然带着１０个……\n但是不能再交换了。",0)
+			//	MES(HOAN,"没办法了。\n不过把这个给你、\n作为奖赏吧。",0)
+				MES(HOAN,"X3『%s』虽然带着１０个……\n但是没有这个等级的食物了。",0)
+				MES(HOAN,"没办法了。\n不过把这个给你、\n作为交换吧。",0)
+				MES_close(HOAN)
+				
+				get_item(142,1,0)//142	古ぼけたＣＤ
+				wait_key(0)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+				if(WK_ITEMBOX1==163)	//163	海鮮丼
+				{
+					get_item(163,-10,1)
+					MES(HOAN,"这次的ＣＤ里\n有着很奔放的乐曲呢。",0)
+				}
+				else
+				if(WK_ITEMBOX1==167)	//167	すきやき		
+				{
+					get_item(167,-10,1)
+					MES(HOAN,"这次的ＣＤ里、收录着\n让人振奋的曲子。",0)
+				}
+				else
+				if(WK_ITEMBOX1==171)	//171	鯛之おつくり	
+				{
+					get_item(171,-10,1)
+					MES(HOAN,"这次的ＣＤ里、收录着\n阴郁的曲子。",0)
+				}
+				else
+				if(WK_ITEMBOX1==175)	//175	グラたん		
+				{
+					get_item(175,-10,1)
+					MES(HOAN,"这次的ＣＤ里\n收录的都是很轻快的曲子。",0)
+				}
+				else
+				if(WK_ITEMBOX1==179)	//179	フォアグラ		
+				{
+					get_item(179,-10,1)
+					MES(HOAN,"这次的ＣＤ里\n准备了一些经典的东西。",0)
+					MES(HOAN,"全都是我喜欢的曲子。",0)
+				}
+				else
+				if(WK_ITEMBOX1==183)	//183	ドリアン		
+				{
+					get_item(183,-10,1)
+					MES(HOAN,"这次的ＣＤ里\n收录着很雄浑的曲子。",0)
+				}
+				else
+				if(WK_ITEMBOX1==187)	//187	フカヒレス～プ	
+				{
+					get_item(187,-10,1)
+					MES(HOAN,"这次的ＣＤ里\n收录着战斗乐曲。",0)
+				}
+				else
+				if(WK_ITEMBOX1==191)	//191	まつたけ		
+				{
+					get_item(191,-10,1)
+					MES(HOAN,"这次的ＣＤ里\n收录的都是神妙的曲子。",0)
+				}
+				else
+				if(WK_ITEMBOX1==195)	//195	パフェ			
+				{
+					get_item(195,-10,1)
+					MES(HOAN,"这次的ＣＤ里、\n收录着很自豪的曲子。",0)
+					MES(HOAN,"你也应该\n会喜欢。",0)
+				}
+				else
+				if(WK_ITEMBOX1==199)	//199	銘菓啊るって	
+				{
+					get_item(199,-10,1)
+					MES(HOAN,"这次的ＣＤ里、\n收录了最有兴趣的曲子。",0)
+					MES(HOAN,"你也应该\n会喜欢。",0)
+				}
+
+				MES(HOAN,"虽然这次将食物拿过来、\n但下次会什么都拿不到\n要注意哦。",0)
+				MES_close(HOAN)
+			}
+			//─────────────────────────────────────────────────────
+			//普通食物交换
+			//─────────────────────────────────────────────────────
+			else
+			{
+				MES(HOAN,"X3『%s』拿着１０个。\n那么能够换取『%s』\n一个。",0)
+				MES_close(HOAN)
+
+			//	name("選択テキスト")
+				workL(WK_CANCEL,SET,2)//【不要】
+				MES_pos(PLAYER1,"??W9【交换】\n【不要】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//閉じきるまで待つ
+
+				//──────────────────────────────
+				//	name("□をする")
+				//──────────────────────────────
+				if(WK_YESNO==1)
+				{
+					workL(1,RAND,2)
+					if(WK001==0)
+					{
+						VOICE(743,0)											//「ホイ、交換したヨ」　
+						MES(HOAN,"嗯、交换了哦。",0)
+					}
+					else
+					{
+						VOICE(744,0)											//「ハイ、まいど啊りネ」
+						MES(HOAN,"嗯、收下了。",0)
+					}
+//					MES(HOAN,"哟、收下了。",0)
+					MES_close(HOAN)
+					//　　※フ～ド交換処理を行う。
+					system_chack(1)//交換
+					F_set(FT_FF_FoodExUse)
+					
+					workL(015,ADD,1)												//交換したか記録
+	
+					loop	//くりかえし　
+					
+				}
+				//──────────────────────────────
+				//	name("□やめる")
+				//──────────────────────────────
+				else
+				{
+//					VOICE(745,0)												//「また来るといいヨ」
+//					MES(HOAN,"下次再来。",0)
+//					MES(HOAN,"嗯、下次再来。",0)
+					MES(HOAN,"……どうするかね？",0)
+					MES_close(HOAN)
+				}
+			}
+		}
+	//──────────────────────────────
+	//	name("□同じフ～ドを１０个持っていない场合")
+		else
+		{
+			//一回しか交換してない場合はメッセージなし
+			if(WK015==1)
+			{
+			}
+			else
+			if(WK015>1)
+			{
+				//何回か交換した場合
+				MES(HOAN,"同じフード、\nもう１０個持ってないみたいね。",0)
+				MES(HOAN,"……どうするかね？",0)
+				MES_close(HOAN)
+			}
+			else
+			{
+				//最初に交換しようとしたとき
+				MES(HOAN,"同じフード、\n１０個持ってないみたいね。",0)
+				MES(HOAN,"それでは交換できないよ。",0)
+				MES(HOAN,"……どうするかね？",0)
+				MES_close(HOAN)
+			}
+		//　　※カウンタ～処理選択肢に戻る。
+//		loop
+		}
+}
+
+//①初回で之梅之動き
+EV_MOVE_MEI_1
+{
+	rot(MEI,30,178)
+	move( MEI, 0,	8,	769,-1708,0, 0)
+	wait_move( MEI )
+	rot(MEI,30,73)
+	
+	move( MEI, 0,	8,	312,-1707,0, 0)
+	wait_move( MEI )
+	rot(MEI,30,8)
+
+	move( MEI, 0,	8,	298,-1505,1, 0)
+	wait_move( MEI )
+	EV("MOVE_MEI")
+}
+
+//──────────────────────────────
+//贺安通常会話
+//──────────────────────────────
+NORMAL_TK_HOAN
+{
+	
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※配置をランダムで２パタ～ン用意する。
+	//　　　①酒场カウンタ～内（梅は店内で瑟菲拉を見る）
+	//　　　②調理场に向いている（梅はカウンタ～に入りフ～ド交換係）
+	//　　　阿鲁迪亚□酒场之エントリをくぐった時点で、どちら之配置になるかがランダムで決まる。
+	//　　※初回イベント。
+	//　　※梅尔塞迪克突入後は、こ之イベントは起動しません。
+	//　　　通常メッセ～ジへ流します。
+	if( F6_00_GoToMeru )
+	{
+		MES(HOAN,"勇气与无谋不一样。\n一定要在事前\n就计划好。",0)
+		MES(HOAN,"最后提醒下\n一定要平安回来。",0)
+	//	MES(HOAN,"你们大家、可是很\n了不起的阿鲁迪亚的住人。",0)
+		MES(HOAN,"你们大家、可是很\n了不起的本店常客。",0)
+		MES_close(HOAN)
+
+	}
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※酒场、冷蔵庫之前にいる。
+	else
+	if( F5_00_HearLunar )
+	{
+		if(!F_HOAN)
+		{
+			MES(HOAN,"那个歌手、\n好象脚扭了。",0)
+			MES(HOAN,"好象说\n要在二楼休息的说。",0)
+			MES(HOAN,"嗯……\n果然开旅馆的话\n能起到作用呢。",0)
+			MES(HOAN,"有一天、\n把从飞机上掉下来的人\n运到这里来了。",0)
+			MES_close(HOAN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈、哈哈……\n（真是受他照顾过了……）",0)
+			MES_close(RAGNA)
+			F_set(HOAN)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(HOAN,"扭伤不是很重、\n用冰敷下就好了。",0)
+			MES(HOAN,"马上提欧也回来。\n之后让他看看的话应该没问题了。",0)
+			MES_close(HOAN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//　　※熊猫楼、食器棚之前に居る。
+	if( F4_09_GoShrineMia)
+	{
+		if(!F_HOAN)
+		{
+			MES(HOAN,"哎呀……",0)
+			MES(HOAN,"真早呢。\n我也是刚起来。",0)
+			MES(HOAN,"现在就去准备\n跟你们做早餐。",0)
+			MES(HOAN,"虽然现在能使用食物交换服务、\n但是想吃东西的话等开店后。",0)
+			MES_close(HOAN)
+			
+			F_set(HOAN)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(HOAN,"你们起的真是早呢。\n我才刚起来。",0)
+			MES(HOAN,"虽然现在能使用食物交换服务、\n但是想吃东西的话得等开店后。",0)
+			MES_close(HOAN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※酒场カウンタ～内。
+	if( F4_00_StartSolo )
+	{
+		if(!F_HOAN)
+		{
+//			MES(HOAN,"喂、欢迎光临。\n《大熊猫楼》今天\n也跟平常一样营业。",0)
+			MES(HOAN,"《大熊猫楼》今天\n也跟平常一样营业。",0)
+			MES(HOAN,"虽然半夜好象发生了很多事、\n但是没听说有受伤的人。\n不过应该会让人很放心的。",0)
+			MES(HOAN,"不过……对这个骚动\n完全不在意的人也大有人在。",0)
+			MES(HOAN,"──真的太迟钝了。\n稍微注意下自己周围比较好。",0)
+			MES_close(HOAN)
+			F_set(HOAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HOAN,"不管怎样、谁都没有受伤\n真是太好了。",0)
+			MES(HOAN,"店里也是\n没有什么大损害。",0)
+			MES(HOAN,"《大熊猫楼》今天也\n象平常一样营业。",0)
+			MES_close(HOAN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※酒场カウンタ～内。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_HOAN)
+		{
+			MES(HOAN,"从执事那里、\n听了下大概情况。",0)
+			MES(HOAN,"他跟说\n不论怎样也不能让哪个人出去。",0)
+			MES(HOAN,"魔物好象已经被治退了、\n也没有越过警戒。",0)
+			MES_close(HOAN)
+
+			F_set(HOAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HOAN,"舞台的两个人、\n也在２楼休息了。",0)
+			MES(HOAN,"魔物好象已经被击退了、\n也没有越过警戒。",0)
+			MES_close(HOAN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※配置をランダムで２パタ～ン用意する。
+	//　　　①酒场カウンタ～内（梅は店内をル～トム～ブ）
+	//　　　②調理场に向いている（梅はカウンタ～に入りフ～ド交換係）
+	//　　　阿鲁迪亚□酒场之エントリをくぐった時点で、どちら之配置になるかがランダムで決まる。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_HOAN)
+		{
+			MES(HOAN,"哎呀……\n好象有点累了。",0)
+			MES(HOAN,"不要藏起来。\n专业的料理人、一定看的到。",0)
+			MES(HOAN,"吃点什么比较好。\n不管怎样、体力是必要的。",0)
+			MES_close(HOAN)
+			
+			F_set(HOAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HOAN,"疲劳这东西、\n本人要是没有意识到的话\n那可很是很危险的。",0)
+			MES(HOAN,"没在意的时候\n可能会出大问题。",0)
+			MES(HOAN,"喝点汤吧。\n用了特别材料、\n能够恢复疲劳。",0)
+			MES_close(HOAN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※酒场、調理场に向いている。
+	if( F2_00_GoForest )
+	{
+		if(!F_HOAN)
+		{
+			MES(HOAN,"这个店、\n是我哥哥开起来的。",0)
+			MES(HOAN,"那时候飞机场还没建起来。\n阿鲁迪亚那时可是个安静的城镇。",0)
+			MES(HOAN,"跟那时候比起来\n现在变的很热闹了。",0)
+			MES(HOAN,"虽然各个不在了、\n但是现在店变的更大了\n他女儿梅也在健康成长。",0)
+			MES(HOAN,"哥哥、\n现在一定很放心。",0)
+			MES_close(HOAN)
+			
+		//★贺安【梅之父と開店】】
+			F_set_note(HOAN,1)
+			F_set(HOAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HOAN,"虽然那样……\n梅～好象很多嘴。",0)
+			MES(HOAN,"小时候就开始帮店里忙、\n做事也很快……",0)
+			MES(HOAN,"经常跟客人们聊天、\n也很容易跟他们谈成一片。",0)
+			MES(HOAN,"特别是跟朋友、说的话倍增。\n哎、真的是～很烦人的性格。",0)
+			MES_close(HOAN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※酒场カウンタ～内。
+	if( F1_15_GoVillage )
+	{
+		if(!F_HOAN)
+		{
+			MES(HOAN,"欢迎。\n吃点啥？",0)
+			MES(HOAN,"日本菜、法国菜、意大利菜。\n甜品也没问题哦。",0)
+			MES(HOAN,"不过、可以的话\n还是希望你们能点中国菜。\n我的中国菜做的最好。",0)
+			MES_close(HOAN)
+
+			MES(PARTNER,"嗯、刚听起来\n就能刺激食欲……",0)
+			MES(PARTNER,"不过厨师真不错呢。\n自己能够做出美味的食物\n并且只吃自己喜欢的……",0)
+			MES_close(PARTNER)
+
+		//　　拉古那に冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			look_chr(RAGNA,PARTNER,"Bone_Head")
+			wait(30)
+			
+			MES(RAGNA,"（与城被夺取想比、\n  好象没有什么不好的紧迫感……）",0)
+			MES_close(RAGNA)
+			look_off(RAGNA)
+
+		//　　★贺安【中華料理】
+			F_set_note(HOAN,0)
+			F_set(HOAN)
+		}
+		else
+		{
+		//　　★繰り返し
+		//　　贺安、艾雯に向く。
+			rot_chr(HOAN,20,PARTNER)
+			MES(HOAN,"嗯……虽然以前\n有点在意。",0)
+			MES(HOAN,"难道说你、\n想成为一个厨师？",0)
+			MES(HOAN,"我可是没什么问题\n能够教你很多\n专业知识。",0)
+			MES_close(HOAN)
+
+			MES(PARTNER,"呵呵、店主。真是有精神。",0)
+			MES(PARTNER,"不过很不巧\n我是专门吃的那种……！",0)
+			MES_close(PARTNER)
+
+		//　　艾雯にキラリエフェクト。
+			EMO(PARTNER,EMO_KIRAKIRA)
+			look_chr(RAGNA,PARTNER,"Bone_Head")
+			wait(30)
+
+			MES(RAGNA,"（真是丢脸……）",0)
+			MES_close(RAGNA)
+			look_off(RAGNA)
+			rot_chr(HOAN,20,PLAYER1)
+		}
+
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※酒场カウンタ～内。
+	if( F1_01_GameStart )
+	{
+		if(!F_HOAN)
+		{
+			MES(HOAN,"这间店、\n也开展食物交换服务。",0)
+			MES(HOAN,"相同的食物收集到１０个\n的话试下这个服务吧。",0)
+			MES(HOAN,"因为有梅在\n唉～弄的这间店感觉上\n很吵。",0)
+			MES(HOAN,"不过\n请随意。",0)
+			MES_close(HOAN)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(HOAN,"这间店、\n也开展食物交换服务。",0)
+			MES(HOAN,"因为有梅在\n唉～弄的这间店感觉上\n很吵。",0)
+			MES(HOAN,"不过\n请随意。",0)
+			MES_close(HOAN)
+		}
+	}
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

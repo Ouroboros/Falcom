@@ -1,0 +1,963 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10431][テンザン屋敷（夜）]
+//====================================================================
+
+#ScriptTable
+
+
+#SUBARU		1
+#TENZAN		2
+#MONTBLANC	3
+#EXE-MAXINA	4
+#YAE		5
+#LUE		6
+
+#NINJYA_A	7
+#NINJYA_C	8
+#NINJYA_G	9
+
+#MONSTER_A	10
+#MONSTER_B	11
+#MONSTER_C	12
+
+#EVENT_RAGNA	13
+#EVENT_RAGNA2	14
+#EFFDUMMY1		15
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip      x    y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+	map_color(80,75,90,0);//R,G,B, time 100%
+//■エントリー
+
+
+	if(F4_06_StopAttack)	//ＧＦ『★襲撃を止めるために行動を開始した』
+	{
+		//下のイベント内にコピペあり
+		set_chr( 90,990,	-1,-1,	  5100,    0,-50, 	 90,0206, 6,"K2_10401;")//エントリ テンザンの屋敷・土間→里夜
+	}
+	else
+	{
+		set_chr( 90,990,	-1,-1,	  5100,    0,-50, 	 90,0206, 6,"K2_10400;")//エントリ テンザンの屋敷・土間→里
+	}
+	set_chr( 91,990,	-1,-1,	  3975,    0, 0, 	270,0204, 6,"K2_3")		//エントリ テンザンの屋敷・土間→居間
+	set_chr( 92,990,	-1,-1,	   125,    0, 0, 	 90,0204, 6,"K1_3")		//エントリ テンザンの屋敷・中庭→土中庭
+
+	set_chr( 93,990,	-1,-1,	  -700,-1325, 0, 	  0,0302, 6,"K7_3")		//エントリ テンザンの屋敷・中庭→右手前の部屋
+	set_chr( 94,990,	-1,-1,	 -1500,-1325, 0, 	  0,0302, 6,"K8_3")		//エントリ テンザンの屋敷・中庭→右手奥の部屋
+	set_chr( 95,990,	-1,-1,	  -600, 1325, 0, 	180,0402, 6,"K9_3")		//エントリ テンザンの屋敷・中庭→左手前の部屋
+	set_chr( 96,990,	-1,-1,	 -1400, 1325, 0, 	180,0402, 6,"Ka_3")		//エントリ テンザンの屋敷・中庭→左手奥の部屋
+
+	set_chr( 97,990,	-1,-1,	  5000,-4875, 0, 	180,0402, 6,"K3_3")		//エントリ テンザンの屋敷・右手前→中庭の部屋
+	set_chr( 98,990,	-1,-1,	     0,-4875, 0, 	180,0402, 6,"K4_3")		//エントリ テンザンの屋敷・右手奥→中庭の部屋
+	set_chr( 99,990,	-1,-1,	  5000, 4875, 0, 	  0,0302, 6,"K5_3")		//エントリ テンザンの屋敷・左手前→中庭の部屋
+	set_chr(100,990,	-1,-1,	  -100, 4875, 0, 	  0,0302, 6,"K6_3")		//エントリ テンザンの屋敷・左手奥→中庭の部屋
+	
+	
+	//ＮＰＣ配置
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia )
+	{
+		set_chr( NINJYA_C,89,	-1,-1, 	-362,1061,0,	2,140, 20,"<TK_NINJYA_C>")	//テンザンの屋敷・廊下左隅で倒れている　忍者Ｃレイカ
+		set_chr( NINJYA_G,491,	-1,-1, 	-509,991,0,		2,300, 20,"<TK_NINJYA_G>")		//テンザンの屋敷・忍者Ｃレイカを介抱　忍者Ｇ(汎用)
+	
+		//モーション
+		MOT_SET(NINJYA_C, 150, -1, 523,523,-1,-1)	//倒れ
+		MOT(NINJYA_C, 150, 0)
+		MOT_SET(NINJYA_G,150,-1,455,455,-1,-1)		//陰に潜んでいる　忍者B
+		MOT(NINJYA_G,150,0)
+		F_set_chr(NINJYA_G,CF_NO_MOVE)
+		F_set_chr(NINJYA_C,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	if( F4_06_StopAttack )
+	{
+		set_chr( NINJYA_A,79,	-1,-1,	4293,348,0,		2,320, 20,"<TK_NINJYA_A>")		//テンザンの屋敷・玄関　忍者Ａアカトキ
+		set_chr( NINJYA_C,89,	-1,-1, 	-362,1061,0,	2,140, 20,"<TK_NINJYA_C>")	//テンザンの屋敷・廊下左隅で倒れている　忍者Ｃレイカ
+
+		//モンスター配置
+		if(!F4_07_JoinAlwen)			//ＧＦ『★アルウェン・ルゥと合流した』
+		{
+			set_chr( MONSTER_A,231, -1,-1  -1327,-258,-48,   0,  0,	0,";") //こどもいえてぃ
+			set_chr( MONSTER_B,231, -1,-1  -216,-531,1,     0,  0,	0,";") //こどもいえてぃ
+		}
+
+		if( GW_ENTRY_EVENT==0 )
+		{
+			set_chr(EFFDUMMY1,749,	-1,-1,    680,0,0,55,0, 0,"")		//火の粉：	//パッチ修正 2008/09/22
+			F_set_chr(EFFDUMMY1,CF_NO_CSP)
+			F_set_chr(EFFDUMMY1,CF_NO_HEIGHT)
+			F_set_chr(EFFDUMMY1,CF_NO_ZIMEN)
+			map_color(80,60,60,0);//R,G,B, time 100%
+		}
+
+		//モーション
+		MOT_SET(NINJYA_A, 150, -1, 523,523,-1,-1)	//倒れ
+		MOT_SET(NINJYA_C, 150, -1, 523,523,-1,-1)	//倒れ
+		MOT(NINJYA_A, 150, 0)
+		MOT(NINJYA_C, 150, 0)
+		
+		//ＧＦ『★アルウェン・ルゥと合流した』を立てる。
+		if(!F4_07_JoinAlwen)
+		{
+			workG(GW_ACTIONTYPE,SET,1)	// 戦闘許可
+		}
+		F_set_chr(NINJYA_A,CF_NO_MOVE)
+		F_set_chr(NINJYA_C,CF_NO_MOVE)
+	}
+
+//■マップ設定
+	F_set_obj("back02", NP_HIDE)		//マップオブジェクトのフラグを立てる
+	F_set_obj("back03", NP_HIDE)		//マップオブジェクトのフラグを立てる
+	F_set_obj("back0a", NP_HIDE)		//マップオブジェクトのフラグを立てる
+
+
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼里の秘密～里が襲われる
+		EV("EV_4_11_StopAttack")
+	}
+	else
+	if(GW_ENTRY_EVENT==101)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼里の秘密～里が襲われるセーブから
+		EV("EV_4_11_Save")
+	}
+}
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼里の秘密～里が襲われる
+//──────────────────────────────
+//　　画面、暗転してからしばらく無音。
+//　　再び虫の音が聞こえてきて、画面フェードイン。
+//　　離れの客間の布団にラグナが眠っており、
+//　　その寝顔をスバルが眺めているようなシチュエーション。
+EV_4_11_StopAttack
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	set_chr(EVENT_RAGNA,      9,-1,-1, -25,5809,35, 2,270,0, "")//ゴーグルなし
+	set_chr(SUBARU,	 	   1047,-1,-1, -98,5630,0, 2,313,0, "")	//布団の頭の方	
+	set_chr(TENZAN,	 	   1048,-1,-1,-109,4878,0, 2,360,0, "")
+	set_chr(MONTBLANC,	   1025,-1,-1, 12,-4874,0, 2,360,0, "")
+	set_chr(EXE-MAXINA,	   1030,-1,-1, 12,-4874,0, 2,360,0, "")
+	color(MONSTER_A,-1)
+	color(MONSTER_B,-1)	
+//	color(TENZAN,-1)
+	color(MONTBLANC,-1)
+	color(EXE-MAXINA,-1)
+
+	chr_pos(RAGNA, 4554,-453,0,232, 2)
+	
+//	wait_color(TENZAN)
+	wait(30)											//カメラがくつき抑制
+	
+	F_set_chr(SUBARU,CF_NO_CSP)
+//	F_set_chr(SUBARU,CF_NO_ZIMEN)
+//	F_set_chr(SUBARU,CF_NO_HEIGHT)
+	F_set_chr(SUBARU,CF_NO_CLIP)
+	F_set_chr(SUBARU,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(MONTBLANC,CF_NO_CSP)
+	F_set_chr(MONTBLANC,CF_NO_CLIP)
+	F_set_chr(MONTBLANC,CF_NO_CLIP2)
+	F_set_chr(MONTBLANC,CF_NO_ZIMEN)
+	F_set_chr(MONTBLANC,CF_NO_HEIGHT)
+	F_set_chr(EXE-MAXINA,CF_NO_CSP)
+	F_set_chr(EXE-MAXINA,CF_NO_CLIP)
+	F_set_chr(EXE-MAXINA,CF_NO_CLIP2)
+	F_set_chr(EXE-MAXINA,CF_NO_ZIMEN)
+	F_set_chr(EXE-MAXINA,CF_NO_HEIGHT)
+				
+	//--- モーション設定 --------------------------------------------------
+//	MOT_SET(EVENT_RAGNA,150,-1,1005,1005,-1,-1)		//眠り
+	MOT_SET(EVENT_RAGNA,150,-1,1450,1450,-1,-1)		//眠り
+	MOT_SET(EVENT_RAGNA,151,-1,1450,1484,-1,-1)		//305寝～起き上がり
+	MOT_SET(EVENT_RAGNA,152,-1,505,506,-1,-1)		//
+	MOT_SET(SUBARU,     150,-1,1744,1744,-1,-1)		//正座
+	MOT_SET(SUBARU,     151,-1,468,468,-1,-1)		//立ち驚き
+	
+	MOT_SET(TENZAN,     150,-1,1650,1650,-1,-1)		//あぐら
+	MOT_SET(TENZAN,     151,151,325,385,-1,-1)		//後ろ手
+	MOT_SET(EXE-MAXINA, 150,150,6115,6155,-1,-1)		//浮遊待機
+	
+	MOT(EVENT_RAGNA,    150, 1)
+	MOT(SUBARU,         150, 1)
+	MOT(EXE-MAXINA,     150, 1)	
+//	MOT(TENZAN,         151, 1)
+	
+	//--- デフォルト表情 --------------------------------------------------
+	KAO(EVENT_RAGNA, "1","3","1")
+	KAO(SUBARU,      "B","A","4")
+	KAO(TENZAN,       "1","1","1")
+//	KAO(EXE-MAXINA,      "1","1","1")
+	KAO(EXE-MAXINA,      "1","1","6")
+	KAO(MONTBLANC,      "1","1","1")
+
+	look(EVENT_RAGNA, "Bone_Head", 0,2,2,2, 0,0,-20)	
+	chr_scale(EVENT_RAGNA, "Bone_LeftToeBase", 0,0,0, 0, 0)
+	chr_scale(EVENT_RAGNA, "Bone_RightToeBase", 0,0,0, 0, 0)
+	
+	//中庭カメラ
+	CAM_move(-2160,575,66,0,0)
+	CAM(-130,100,-45,27,253,0,0)
+	CAM_move(-2140,-84,66,150,0)
+	CAM(-130,100,-45,27,282,150,0)
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	wait_CAM()
+	wait_CAM_move()
+
+	//フェードアウト
+	fade_in(100,30,0)
+	wait_fade()
+
+	//カメラ初期位置
+	CAM_move(67,-5844,275,0,0)
+	CAM(290,50,150,15,223,0,0)
+	CAM_move(67,-5844,170,90,0)
+	CAM(290,50,150,15,223,90,0)
+
+//	look_chr(SUBARU,EVENT_RAGNA,"Bone_Head")
+	look(SUBARU, "Bone_Head", 0,0,4,0, 0,30,0)	
+
+	
+	fade_in(0,30,0)
+	wait_fade()
+	
+
+	wait(30)	//ｷｬﾗのアニメが見えちゃうのでウェイト
+	wait(30)
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+	
+	KAO(SUBARU,"B","A23332A","4")
+	MES(SUBARU,"（……ご飯を食べるなり\n  うたたねをしちゃうなんて……）",0)
+	KAO(SUBARU,"B","A","4")
+	MES(SUBARU,"（やっぱり疲れてたんだね……）",0)
+	KAO(SUBARU,"B","A23","4")
+	MES(SUBARU,"………………………………",0)
+	MES_close(SUBARU)
+
+//　　スバル、めくれていた布団を直してやる。
+//	MES(SUBARU,"◆未入力項目\nめくれていた布団を直してやる。",0) なし
+
+	KAO(SUBARU,"12321Z3","321","1")
+	MES(SUBARU,"お休みなさい、ラグナ師匠。",0)
+	KAO(SUBARU,"12321Z3","1","1")	
+	MES(SUBARU,"また……\n明日には元気になれますよ。",0)
+	MES_close(SUBARU)
+
+//　　スバル、そっと立ち上がって部屋から出て行く。
+//　　そのまま廊下に出て、ふすまをそっと閉める。
+
+//	MOT(SUBARU,2,10)		//立ち上がる
+
+
+//	cross_fade(15)
+//	CAM_move(-1442,-1002,136,0,0)
+//	CAM(150,114,-25,17,221,0,0)
+//	MOT(SUBARU,150,1)
+//	chr_pos(SUBARU, -1442,1122,1,0,2)
+//	chr_pos(TENZAN, -692,1017,1,270,2)
+//	wait(15)
+//	
+//	MOT(SUBARU,2,10)		//立ち上がる
+
+	chr_rename(TENZAN,"老人の声")
+	MES_pos(TENZAN,"W2……スバル。",0,650,20,0,0)
+	wait_key(0)
+	MES_close(TENZAN)
+
+//　　スバルの頭に！マーク。
+	KAO(SUBARU,"E","12321D","6")
+	EMO(SUBARU,EMO_BIKKURI)
+	wait(30)
+
+	//cross_fade(15)
+	CAM_move(307,-6084,435,120,0)
+	CAM(150,38,435,15,208,120,0)
+
+	rot(SUBARU,100,254)
+	look_chr(SUBARU,TENZAN,"Bone_Head")
+	wait(15)
+	
+	KAO(SUBARU,"B232BZ2","12321D","1")
+	MES(SUBARU,"お、お祖父ちゃん……",0)
+	MES_close(SUBARU)
+
+//	MOT(SUBARU,2,10)		//立ち上がる
+
+//　　廊下の向こうからテンザンが現れる。
+	color(TENZAN,1)
+	wait_color(TENZAN)
+
+	move(TENZAN, 0, WALK1, -82,5114,0,0)
+//	move(TENZAN, 0, WALK1, -1042,1036,0,0)
+	wait_move(TENZAN)
+	wait(15)
+	MOT(TENZAN,         151, 15)
+	
+	chr_rename(TENZAN,"テンザン老人")
+	KAO(TENZAN,"12321Z3","1233321","1")
+	MES(TENZAN,"ラグナ殿は眠ったか。",0)
+	KAO(TENZAN,"12321Z4","1","1")	
+	MES(TENZAN,"どうやら相当、\n疲れておったようじゃの。",0)
+	MES_close(TENZAN)
+
+	KAO(SUBARU,"B232BZ2","1233321","4")
+	MES(SUBARU,"うん……",0)
+	KAO(SUBARU,"B232BZ2","1","4")
+	MES(SUBARU,"さっきも話したけど\n師匠には色々とあって……",0)
+	KAO(SUBARU,"B232BZ2","1","4")
+	MES(SUBARU,"今夜はゆっくりと\n寝かせてあげたいんだ。",0)
+	MES_close(SUBARU)
+
+	KAO(TENZAN,"12321Z3","123","6")
+	MES(TENZAN,"うむ、それがいいじゃろう。",0)
+	KAO(TENZAN,"B232BZ5","321","2")	
+	MES(TENZAN,"それよりも……\n思った以上に深刻な事態が\n起こっているようじゃの。",0)
+	KAO(TENZAN,"B232BZ4","1","2")
+	MES(TENZAN,"まさかムーンブリア城で\nそんな事が起こったとは……",0)
+	MES_close(TENZAN)
+
+	KAO(SUBARU,"E","12321D","1")
+	EMO(SUBARU,EMO_BIKKURI)
+	wait(15)
+	KAO(SUBARU,"B232BZ4","12321","1")
+	MES(SUBARU,"お祖父ちゃん……\nあのお城のことを知ってるの？",0)
+	KAO(SUBARU,"B232BZ5","1","1")	
+	MES(SUBARU,"そういえば、さっきも何か\n気にしてた感じだったけど……",0)
+	MES_close(SUBARU)
+
+	KAO(TENZAN,"B232BZ4","123","2")
+	MES(TENZAN,"うむ……\nお前には話しておくべきかの。",0)
+	KAO(TENZAN,"B232BZ5","321","1")	
+	MES(TENZAN,"ひとまずワシの部屋に行くぞ。\nここでは彼を起こしてしまう。",0)
+	MES_close(TENZAN)
+
+	KAO(SUBARU,"B232BZ2","1233321","1")
+	MES(SUBARU,"あ……うん。",0)
+	MES_close(SUBARU)
+
+//　　ここで画面フェードアウト。
+	fade_in(100,60,0)
+	wait_fade()
+
+	//キャラ再配置----------------------------------------------------
+
+	chr_pos(SUBARU,	 0,-5640,0,180,2)
+	chr_pos(TENZAN,	 0,-5890,0,0,2)
+//	set_chr(TENZAN,	 		24,-1,-1,  -8,-5845,0, 2, 0,0, "")
+		
+	MOT(TENZAN,    150, 1)	//正座
+	MOT(SUBARU,    150, 1)	//正座
+	
+	color(EVENT_RAGNA,-1)
+	wait_color(EVENT_RAGNA)
+
+	KAO(TENZAN,"B","1","2")
+	KAO(SUBARU,"1","1","2")
+
+	CAM_move(55,5750,110,0,0)
+	CAM(-209,30,95,27,271,0,0)
+	wait(30)
+
+	fade_in(0,60,0)
+	wait_fade()
+
+//──────────────────────────────
+//　　一拍置いて、画面フェードイン。
+//　　夜の居間でテンザンの前にスバルが座っている。
+//　　縁側からは夜の中庭の様子が伺えるような構図。
+	wait(15)
+	
+	KAO(TENZAN,"B232BZ5","1233321","2")
+	MES(TENZAN,"……お前も里の者ならば\n我々の通り名を知っておろう。",0)
+	KAO(TENZAN,"B232BZ5","1","2")	
+	MES(TENZAN,"ただの忍びではなく、\n使命としての課せられた名を。",0)
+	MES_close(TENZAN)
+
+	KAO(SUBARU,"12321Z4","1233321","2")
+	MES(SUBARU,"『星降る里の護人（まもりびと）』……",0)
+	KAO(SUBARU,"12321Z4","1","2")	
+	MES(SUBARU,"たしかボクたち、\nそう呼ばれてるんだよね？",0)
+	MES_close(SUBARU)
+
+	KAO(TENZAN,"B232BZ5","123","2")
+	MES(TENZAN,"うむ、その名で呼ぶ者は\n今は居なくなってしまったがな。",0)
+	KAO(TENZAN,"B232BZ5","3","2")	
+	MES(TENZAN,"ワシらをそう呼んでいた\n最後の人物は他でもない……",0)
+	KAO(TENZAN,"B232BZ5","321","2")	
+	MES(TENZAN,"かのムーンブリア城の前城主、\nギスカール公であったじゃろう。",0)
+	MES_close(TENZAN)
+
+//　　スバルの頭に！マーク。
+	KAO(SUBARU,"1","12321D","6")
+	EMO(SUBARU,EMO_BIKKURI)
+	wait(30)
+	KAO(SUBARU,"12321Z3","12321D","1")	
+	MES(SUBARU,"アルウェンさんのお父さん！",0)
+	KAO(SUBARU,"12321Z3","D","1")	
+	MES(SUBARU,"お祖父ちゃん、知ってたの！？",0)
+	MES_close(SUBARU)
+
+	KAO(TENZAN,"12321Z6","1","1")
+	MES(TENZAN,"彼が滅びたのは１００年前……\nさすがのワシも面識はないさ。",0)
+	KAO(TENZAN,"B232BZ7","1233321","2")	
+	MES(TENZAN,"じゃが、この里は代々、\nギスカール公との盟約を\n密かに受け継いできていた。",0)
+	KAO(TENZAN,"B232BZ8","1","2")
+	MES(TENZAN,"５００年前の大戦で\n彼と共に《金色の魔王》と戦った\n人間たちの末裔としてな。",0)
+	MES_close(TENZAN)
+
+	KAO(SUBARU,"12321Z3","123","5")
+	MES(SUBARU,"な、何がなんだか……",0)
+	KAO(SUBARU,"12321Z7","321","1")	
+	MES(SUBARU,"でも、それじゃあ\n今この島で何が起こっているのか\nお祖父ちゃんには分かっているの？",0)
+	KAO(SUBARU,"12321Z5","123332A","4")
+	MES(SUBARU,"悪いヤツらが消えていった\n《月の世界（ルナ＝ムンドゥス）》……",0)
+	KAO(SUBARU,"12321Z5","A","4")	
+	MES(SUBARU,"みんなその手がかりを\n探しているみたいなんだけど……",0)
+	MES_close(SUBARU)
+
+	KAO(TENZAN,"B232BZ5","123","2")
+	MES(TENZAN,"うむ、それを知るのは\n恐らく島ではワシ一人じゃろう。",0)
+	KAO(TENZAN,"B232BZ4","3","2")	
+	MES(TENZAN,"状況を聞く限り、\nもはや一刻の猶予も無い。",0)
+	KAO(TENZAN,"B232BZ5","321","2")	
+	MES(TENZAN,"明日、ラグナ殿が起きたら\n一通りの事情を伝えようかと思う。",0)
+	MES_close(TENZAN)
+
+	KAO(SUBARU,"12321Z3","A23332A","4")
+	MES(SUBARU,"ラグナ師匠に……",0)
+	KAO(SUBARU,"1","A23","4")
+	MES(SUBARU,"…………………………………",0)
+	MES_close(SUBARU)
+
+	KAO(TENZAN,"12321Z3","1233321","1")
+	MES(TENZAN,"何じゃ、心配か？",0)
+	KAO(TENZAN,"12321Z4","1","1")	
+	MES(TENZAN,"今の彼には負担が\n大きすぎるのではないかと？",0)
+	MES_close(TENZAN)
+
+	KAO(SUBARU,"A232AZ4","321","6")
+	MES(SUBARU,"──ううん。\n師匠なら大丈夫だよ。",0)
+	KAO(SUBARU,"A232AZ5","1","6")	
+	MES(SUBARU,"今はちょっと参ってるけど\n絶対に元気になってくれるから。",0)
+	KAO(SUBARU,"A232AZ6","123332A","6")	
+	MES(SUBARU,"そういう人なんだ。\n出会って少ししか経ってないけど\nボクには分かるから……",0)
+	MES_close(SUBARU)
+
+	KAO(TENZAN,"12321Z5","1236","6")
+	MES(TENZAN,"はっはっはっ。\n自信たっぷりに言うもんじゃ。",0)
+	KAO(TENZAN,"12321Z6","6321","6")	
+	MES(TENZAN,"これは“選んだ”というのも\nあながちその場しのぎの\n口実では無いかもしれんのう。",0)
+	MES_close(TENZAN)
+
+//　　スバル、真っ赤になりながら抗議する表情。
+	KAO(SUBARU,"12321Z2","23IIHGK","6")
+	MES(SUBARU,"お、お祖父ちゃん！",0)
+	MES_close(SUBARU)
+
+	KAO(TENZAN,"12321Z5","123","6")
+	MES(TENZAN,"いやはや。\n色気の欠片もなかった\nわが孫娘がこんなにも……",0)
+	KAO(TENZAN,"12321Z6","36","6")	
+	MES(TENZAN,"これは明日、\nラグナ殿に話をするついでに\nお前のことも頼んでおくかのう。",0)
+	MES_close(TENZAN)
+	
+	KAO(SUBARU,"12321Z4","GHI","5")
+	MES(SUBARU,"も、もう！\nお祖父ちゃんったら……！",0)
+	MES_close(SUBARU)
+
+	wait(15)
+	stop_BGM(90)
+	VOICE2(336,0,93)
+	chr_rename(MONTBLANC,"声")
+	MES_pos(MONTBLANC,"W3C4──残念ながら\nそれは叶わぬ相談ニャ。",0,1,20,0,0)
+	wait_key(0)
+	MES_close(MONTBLANC)
+	wait_MES(MONTBLANC)
+
+//　　テンザンとスバルの頭に！マーク。
+//　　次の瞬間、２人ともその場から飛び退り、
+//　　武装して縁側の向こうにある中庭の方に向き直る。
+//	rot_chr(SUBARU,30,EXE-MAXINA)
+//	rot_chr(TENZAN,30,MONTBLANC)
+//	wait(15)
+
+	EMO(SUBARU, EMO_BIKKURI)
+	EMO(TENZAN, EMO_BIKKURI)
+	KAO(SUBARU,"1","321D","6")
+	KAO(TENZAN,"C","321D","3")
+	wait(25)
+
+	KAO(TENZAN,"C232CZ2","123332","3")
+	MES(TENZAN,"誰じゃ！",0)
+	MES_close(TENZAN)
+	wait(15)
+	
+//　　カメラ、中庭の方にスクロールしてゆく。
+//　　月光が照らす中、転位魔法のエフェクトと共に、
+//　　モンブランとエクスマキナが空中に浮遊して現れる。
+
+	//まずは通常カメラでテンザン、スバルが出てくるところを見せると決まった
+	cross_fade(15)
+	CAM_move(-1472,943,136,0,0)
+	CAM(430,85,-25,27,225,0,0)
+	KAO(TENZAN,"B","1","2")
+	KAO(SUBARU,"B","1","2")
+	chr_pos(SUBARU, -1499,-1347,0,0,2)
+	chr_pos(TENZAN, -1499,-1347,0,0,2)
+	color(SUBARU,-1)
+
+	move(TENZAN, 0, RUN1, -1440,-897,0,10 )
+	wait(15)
+	EV("EV_MoveSubaru")
+
+	wait_move(TENZAN)
+	look(TENZAN, "Bone_Head", 0,0,0,4, 0,0,20)
+	EMO(TENZAN, EMO_BIKKURI)
+	KAO(TENZAN,"B","12321D","2")
+	
+//	wait_move(SUBARU)
+	wait_EV("EV_MoveSubaru")
+	wait(30)
+
+	cross_fade(15)
+	//CAM(-650,54,235,28,320,0,0)	//かっこいいアングル
+	//CAM_move(-1606,540,235,0,0)
+	CAM_move(-1785,562,214,0,0)
+	CAM(-450,85,214,27,289,0,0)
+	CAM_move(-1785,562,234,0,0)
+	CAM(-530,85,234,24,294,1200,0)
+
+	F_reset_obj("back02", NP_HIDE)		//マップオブジェクトのフラグを立てる
+	F_reset_obj("back03", NP_HIDE)		//マップオブジェクトのフラグを立てる
+	F_reset_obj("back0a", NP_HIDE)		//マップオブジェクトのフラグを立てる
+	
+	chr_pos(TENZAN, -1453,-884,0,0,2)
+	chr_pos(SUBARU, -1231,-911,1,0,2)
+	chr_pos(MONTBLANC, -2156,101,450,220,2)
+	chr_pos(EXE-MAXINA,-2356,101,450,220,150)
+	KAO(EXE-MAXINA,"1","R","1")
+
+	//スバルとテンザン駆けでてくる
+//	chr_pos(SUBARU, -1313,-1113,0,0,2)
+//	move(SUBARU, 0, RUN1, -1231,-831,1,0)
+//	wait(5)
+//	chr_pos(TENZAN, -1499,-1054,0,0,2)
+//	//move(TENZAN, 0, RUN1, -1453,-884,0,0)
+//	move(TENZAN, 0, RUN1, -1453,-934,0,0)
+//	wait_move(SUBARU)
+//	MOT(SUBARU,151,5)
+
+
+	chr_pos(SUBARU, -1231,-831,0,10,5)
+	chr_pos(TENZAN, -1453,-934,0,0,2)
+	look_chr(MONTBLANC, SUBARU, "Bone_Head")
+	look_chr(EXE-MAXINA, SUBARU, "Bone_Head")	
+	MOT(SUBARU,151,1)
+	wait(5)
+
+
+	EFF_chr(24580,MONTBLANC,0,100,0,"Bone_Hips")		//ワープ　転位
+	color(MONTBLANC,30)
+	SE(1016,MONTBLANC)//ワープSE
+	wait(5)
+	EFF_chr(24580,EXE-MAXINA,0,100,0,"Bone_Hips")		//ワープ　転位
+	color(EXE-MAXINA,30)
+
+	wait(60)
+
+//	VOICE(336,0)
+//	wait(15)
+	chr_rename(MONTBLANC, "モンブラン")
+	KAO(MONTBLANC,"123213Z2","1236","6")
+	MES(MONTBLANC,"ニャーッハッハッハッ！",0)
+	MES_close(MONTBLANC)
+
+	KAO(EXE-MAXINA,"1","RS333SR","1")
+	MES(EXE-MAXINA,"……………………………",0)
+	MES_close(EXE-MAXINA)
+
+	KAO(TENZAN,"B232BZ2","1233321","2")
+	MES(TENZAN,"魔道師……！？",0)
+	MES_close(TENZAN)
+
+	KAO(SUBARU,"B232BZ3","12321D","2")
+	MES(SUBARU,"ラ、ラグナ師匠の……！",0)
+	MES_close(SUBARU)
+
+//　　画面、そのままフェードアウト。
+	fade_in(100,60,0)
+	wait_fade()
+	wait(30)
+
+	clear_party(PARTNER)
+	delete(PARTNER)
+	delete(TENZAN)
+	delete(MONTBLANC)
+	delete(EXE-MAXINA)
+	delete(SUBARU)
+
+	delete(EVENT_RAGNA)
+	
+	//ラグナメモ用
+	F_set(F4_18_AfterRoten)	//★スバルと露天風呂に入った
+	workG(GW_DEF_BGM,SET,99)		//デフォルト曲を無音にする（ロード用）
+	
+	EV("EV_OPEN_SAVE")
+}
+
+EV_MoveSubaru
+{
+	color(SUBARU,1)
+	move(SUBARU,0,RUN1, -1472,-1151,0,10)
+	wait_move(SUBARU)
+	rot(SUBARU, 60, 320 )
+	move(SUBARU,0,RUN1, -1256,-895,0,10)
+	wait_move(SUBARU)
+	EMO(SUBARU, EMO_BIKKURI)
+	KAO(SUBARU,"B","12321D","2")
+	rot(SUBARU, 60, 14 )
+	look(SUBARU, "Bone_Head", 0,0,0,4, 0,0,30)
+	MOT(SUBARU,151,5)
+}
+
+
+
+
+//──────────────────────────────
+//▼襲撃を止めるために行動を開始したセーブ後
+//──────────────────────────────
+EV_4_11_Save
+{
+//	BGM(00)
+
+	EV_begin()		//ロードから来る場合があるので必要
+
+	fade_in(100,1,0)
+	wait_fade()
+	set_hp(PLAYER1,100)//全快
+
+	//キャラ再配置
+	set_chr(EVENT_RAGNA,      9,-1,-1, -25,5809,15, 2,270,0, "")			//ゴーグルなし
+	set_chr(EVENT_RAGNA2,  1010,-1,-1, -25,5809,35, 2,270,0, "")			//武装ラグナ
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)	
+	F_set_chr(EVENT_RAGNA2,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP2)
+
+						
+	//--- モーション設定 --------------------------------------------------
+//	MOT_SET(EVENT_RAGNA,150,-1,1005,1005,-1,-1)		//眠り
+	MOT_SET(EVENT_RAGNA,150,-1,1450,1450,-1,-1)		//眠り
+//	MOT_SET(EVENT_RAGNA,151,-1,1450,1484,-1,-1)		//305寝～起き上がり
+//	MOT_SET(EVENT_RAGNA,151,-1,1018,1018,-1,-1)		//寝～起き上がり
+	MOT_SET(EVENT_RAGNA,151,-1,521,521,-1,-1)		//寝～起き上がり
+	MOT_SET(EVENT_RAGNA,152,-1,505,506,-1,-1)		//
+
+	MOT(EVENT_RAGNA,    150, 1)
+
+	//--- デフォルト表情 --------------------------------------------------
+	KAO(EVENT_RAGNA, "1","3","1")
+
+	set_chr(EFFDUMMY1,749,	-1,-1,    680,0,0,55,0, 0,"")		//火の粉：	//パッチ修正 2008/09/22
+	F_set_chr(EFFDUMMY1,CF_NO_CSP)
+	F_set_chr(EFFDUMMY1,CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY1,CF_NO_ZIMEN)
+	map_color(80,60,60,0);//R,G,B, time 100%
+
+	look(EVENT_RAGNA, "Bone_Head", 0,2,2,2, 0,0,-20)	
+	chr_scale(EVENT_RAGNA, "Bone_LeftToeBase", 0,0,0, 0, 0)
+	chr_scale(EVENT_RAGNA, "Bone_RightToeBase", 0,0,0, 0, 0)
+
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 -211,5649,0,214,2)
+	color(RAGNA,-1)
+	color(EVENT_RAGNA2,-1)
+	wait_color(RAGNA)
+
+//──────────────────────────────
+//　　画面暗転・無音のまま、ごくわずかな音量で、
+//　　炎の爆ぜる音と剣戟の音が少しずつ大きくなっていく。
+//　　少しだけ耳障りになったレベルくらいで以下のメッセージ。
+	CAM_move(167,-5944,175,0,0)
+	CAM(370,51,14,16,221,0,0)
+	color(EVENT_RAGNA,1)
+
+	wait(30)		//ラグナの髪の毛が落ち着くのを待つ
+	
+	
+//	MES(EVENT_RAGNA,"◆未入力項目\n炎の爆ぜる音と剣戟の音が少しずつ大きくなっていく。。",0)
+//	MES_close(EVENT_RAGNA)
+
+	SE(1031,0)//襲撃SEフェードイン
+	EV("EV_fadein") //襲撃SEループ　呼び出し実行
+	wait(60)
+
+	//フェードイン
+	fade_in(0,90,0)
+	wait_fade()
+	wait(30)
+
+	KAO(EVENT_RAGNA,"C2C","4","B")	
+	MES(EVENT_RAGNA,"……これは………",0)
+	KAO(EVENT_RAGNA,"C2CZ3","4","B")	
+	MES(EVENT_RAGNA,"火が爆ぜる音………\n……あの時の夢の……？",0)
+	KAO(EVENT_RAGNA,"C2C","3","3")		
+	MES(EVENT_RAGNA,"…………違う………！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　画面フェードインして、布団から跳ね起きるラグナ。
+//　　部屋の光は僅かに紅く、剣戟と炎の音が遠くに聞こえる。
+	BGM(49)
+	workG(GW_DEF_BGM,SET,49)		//デフォルト曲を変更する
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n布団から跳ね起きるラグナ。\n僅かに紅く、剣戟と炎の音が遠くに聞こえる。",0)
+	KAO(EVENT_RAGNA,"C","321","3")	
+	wait(30)
+	
+	cross_fade(15)
+	CAM_move(47,-6004,155,0,0)
+	CAM(90,50,155,15,195,0,0)
+	MOT(EVENT_RAGNA, 151,0)						//ラグナ起き上がる
+	SE(1029,0)
+	F_set_obj("huton01C", NP_HIDE)				//めくれ布団ON
+	chr_pos(EVENT_RAGNA, -45,5809,0,270,151)
+	look(EVENT_RAGNA, "Bone_Head", 0,2,2,2, 0,0,0)
+
+	wait_fade()
+	wait(15)
+	
+	KAO(EVENT_RAGNA,"C232C2","12321D","1")	
+	MES(EVENT_RAGNA,"なんだ！？",0)
+	MES_close(EVENT_RAGNA)
+	
+	look(EVENT_RAGNA, "Bone_Head", 0,0,5,0,0,-30,0)
+	
+	
+	KAO(EVENT_RAGNA,"C232CZ3","12321","2")		
+	MES(EVENT_RAGNA,"これは炎と……剣戟の音！",0)
+	KAO(EVENT_RAGNA,"C232CZ3","1","2")		
+	MES(EVENT_RAGNA,"クソッ……\nいったい何が起こっている！？",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ、飛び起きてから荷物のある場所に駆け寄る。
+//　　それと合わせて、画面もすぐにフェードアウト。
+//　　間を置かずにフェードインし、正規の服装になったラグナ。
+//　　すでにアンカーギアも装備した状態になっている。
+
+//　　画面、そのままフェードアウト。
+	fade_in(100,30,0)
+	wait_fade()
+	
+	look(EVENT_RAGNA, "Bone_Head", 0,0,5,0,0,0,0)
+	color(EVENT_RAGNA,-1)
+	color(EVENT_RAGNA2,1)
+
+	CAM_move(-263,-5632,136,0,0)	
+//	CAM(-210,62,136,27,242,0,0)	
+	CAM(-170,54,136,27,242,0,0)
+	chr_pos(RAGNA,        -211,5649,1,306,152)	//  ラグナ
+	chr_pos(EVENT_RAGNA2, -211,5649,1,306,152)	//　武装ラグナ
+	chr_pos(SUBARU, -88,5104,0,279,2)		//ダミー
+	KAO(EVENT_RAGNA2,"C","3","2")	
+	wait(30)
+
+	fade_in(0,30,0)
+	wait_fade()
+	
+//	飛び起きてから荷物のある場所に駆け寄る。\n正規の服装になるラグナ。
+
+	KAO(EVENT_RAGNA2,"B232BZ3","3","2")	
+	MES(EVENT_RAGNA2,"よし……これで準備完了だ。",0)
+	MES_close(EVENT_RAGNA2)
+	
+	KAO(EVENT_RAGNA2,"B","321","2")		
+	look_chr(EVENT_RAGNA2, SUBARU, "Bone_Head" )
+	rot(EVENT_RAGNA2, 30, 260 )
+	wait(15)
+	
+
+	KAO(EVENT_RAGNA2,"B232BZ4","1","2")		
+	MES(EVENT_RAGNA2,"とにかく只事じゃない……\n急いでスバルたちを探すぞ！",0)
+	MES_close(EVENT_RAGNA2)
+
+	look_off(EVENT_RAGNA2)
+	
+//　　イベント終了、プレイヤー操作許可。
+//　　この状況では村の中全般でアンカーギアが使える。
+//　　なお、それなりに強いザコがあたりを村を徘徊しており、
+//　　所々で汎用の忍びたちが傷だらけで倒れている状態。
+
+	fade_in(100,60,0)
+	wait_fade()
+	
+	CAM(350,79,-5,25,240,0,0)
+	CAM_move(-248,-5525,154,0,0)
+	
+	CAM_return(0)
+	wait(30)
+	
+//	フラグセットを星降りの里夜での回想イベント後に移動
+//ＧＦ『★襲撃を止めるために行動を開始した』を立てる。
+//	F_set(F4_06_StopAttack)
+
+	//ラグナメモ用--------------
+	//★スバルと露天風呂に入った　を下ろす
+	//現状のフラグ位置を変えないため、セーブ前にフラグをセットし、
+	//ラグナが起きるイベント後にフラグを下ろします。
+	F_reset(F4_18_AfterRoten)
+	//ラグナメモ用--------------
+
+	workG(GW_ACTIONTYPE,SET,1)	// 戦闘許可
+
+	delete(SUBARU)
+	delete(EVENT_RAGNA)
+	delete(EVENT_RAGNA2)
+
+	delete(90)
+	set_chr( 90,990,	-1,-1,	  5100,    0,-50, 	 90,0206, 6,"K2_10401;")//エントリ テンザンの屋敷・土間→里夜
+
+	color(RAGNA,    1)
+	color(NINJYA_A, 1)
+	color(NINJYA_C, 1)
+	color(MONSTER_A,1)
+	color(MONSTER_B,1)
+
+	EV("EV_fadeout") //襲撃SEフェードアウト
+
+	fade_in(0,30,0)
+//	wait_fade()	//無いほうがいい
+	
+
+	EV_end()
+}
+
+
+EV_OPEN_SAVE
+{
+	//選択肢　セーブしますか？
+
+//	EV_begin()
+
+	fade_in(100,1,0)
+	wait_fade()
+
+	workL(WK_YESNO,SET,0)
+
+	menu(1,		3,	256,150,0,	128,110,	-20,0,0)
+	menuTXT(1,	"",	20,GREEN)
+	menuEVENT(1,"0","0","0")
+
+	menu(2,		3,	272,170,0,	96,30,		-20,0,0)
+	menuTXT(2,	"■セーブします",	20,GREEN)
+	menuEVENT(2,"EV_SAVE_ON","EV_SAVE_OFF","")
+
+	menu(3,		3,	272,210,0,	96,30,		-20,0,0)
+	menuTXT(3,	"■セーブしない",	20,GREEN)
+	menuEVENT(3,"EV_SAVE_OFF","EV_SAVE_OFF","")
+
+	wait_W(WK_YESNO)
+
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(2,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(3,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	wait_menu(1)
+
+	if(WK_YESNO==2)
+	{
+	}
+	else
+	if(WK_YESNO==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,101)
+		shop_open(-1)
+		wait_W(WK_YESNO)
+		//▼襲撃を止めるために行動を開始した
+	}
+	workG(GW_ENTRY_EVENT,SET,0)
+	
+
+	
+	EV("EV_4_11_Save")
+
+}
+EV_SAVE_ON
+{
+	workL(WK_YESNO,SET,1)
+}
+EV_SAVE_OFF
+{
+	workL(WK_YESNO,SET,2)
+}
+
+//襲撃SEフェードイン─────────────────────
+EV_fadein
+{
+	wait(120)
+	SE(1030,0)
+}
+//襲撃SEフェードアウト────────────────────
+EV_fadeout
+{
+	SE_vol(1030,100,0)
+	wait(10)
+	SE_vol(1030,90,0)
+	wait(10)
+	SE_vol(1030,80,0)
+	wait(10)
+	SE_vol(1030,70,0)
+	wait(10)
+	SE_vol(1030,60,0)
+	wait(10)
+	SE_vol(1030,50,0)
+	wait(10)
+	SE_vol(1030,40,0)
+	wait(10)
+	SE_vol(1030,30,0)
+	wait(10)
+	SE_vol(1030,20,0)
+	wait(10)
+	SE_vol(1030,10,0)
+	wait(10)
+	stop_SE(1030)
+}
+//──────────────────────────────
+
+
+#EndScriptTable
+//====================================================================
+

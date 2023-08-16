@@ -1,0 +1,623 @@
+//====================================================================
+//ステージトラップスクリプト
+//[me0f000][Ｇ-斗技场外観]
+//====================================================================
+
+#ScriptTable
+
+
+#EVENT_RAGNA	1
+#ALWEN			2
+
+#GYARANDOW	10
+
+INIT
+{
+//  set_chr  no typ     tip        x   y   z    mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+	set_chr( 90,550,	-1,-1,    0, 6000,  0,     0,   180, 6,"K4_11010;")	//①アーチ（廃坑）
+	set_chr( 91,990,	-1,-1,    0, 1100,200,     0,050303, 6,"K0_10510;")	//①エントリ 
+	set_chr( 92,716,	-1,-1, -274, 5900,-26,     0,     0, 0,";")	//ロープ 
+	set_chr( 93,716,	-1,-1,  294, 5900,-26,     0,     0, 0,";")	//ロープ
+
+
+//	set_chr( 94,990,	-1,-1,  -24,2665,200,     0,  1002, 6,"<CAM_RESET>")	//カメラ
+//	set_chr( 95,990,	-1,-1,  -40,2064,200,     0,  1002, 6,"<CAM_ENTRY>")	//カメラ
+
+
+	//■イベント
+	//嘉兰多が居るタイミングなら初回イベント発生
+	
+	if(!FV_02_VisitGyakata)
+	{
+	//	//②開始～⑥礼拜堂的扉を開けるまで(⑦⑧⑨□□はギャランドウが居ない)
+	//	if(F1_15_GoVillage && !F3_10_OpenChapel)
+	//	{
+	//	//Ｇ－斗技场にはじめて行った
+	//		EV("EV_F_02_VisitGyakata")
+	//	}
+	//	else
+	//	//⑩開始～終了
+	//	if(F4_09_GoShrineMia && !F5_00_HearLunar)
+	//	{
+	//	//Ｇ－斗技场にはじめて行った
+	//		EV("EV_F_02_VisitGyakata")
+	//	}
+	//	else
+		if(F6_00_GoToMeru)
+		{
+			//嘉兰多がいない時はフラグ
+			F_set(FV_02_VisitGyakata)
+		}
+		else
+		{
+			EV("EV_F_02_VisitGyakata")
+		}
+	}
+		
+	//馆Lｖが上がるときはそ的イベントへ
+	if(GW_ENTRY_EVENT==1)
+	{
+	//	企鹅娘or嘉兰多に勝って馆LｖMAXになるイベント
+		if(GW_TRY_CUP==9)
+		{
+			EV("EV_F_FF_GYakataLvup_MAX")
+		}
+		else
+	//	万能執事杯に勝って馆Lｖ３になるイベント
+		if(GW_TRY_CUP==7)
+		{
+			EV("EV_F_FF_GYakataLvup_3")
+		}
+		else
+	//	チビッ子忍者杯に勝って馆Lｖ２になるイベント
+		if(GW_TRY_CUP==3)
+		{
+			EV("EV_F_FF_GYakataLvup_2")
+		}
+	}
+
+}
+
+CAM_ENTRY
+{
+	CAM(-410,102,155,32,178,40,0)
+
+}
+
+CAM_RESET
+{
+	CAM(-530,120,535,49,152,40,0)
+}
+
+
+TT
+{
+	CAM_move(24,-1444,414,0,0)
+	CAM(-330,62,414,27,145,0,0)
+	CAM_move(24,-1324,414,90,0)
+	CAM(-530,58,414,27,170,90,0)
+
+	set_chr(GYARANDOW,21,	-1,-1,  36,587,258,	5,0,0,"")	//　嘉兰多
+	F_set_chr(GYARANDOW,CF_NO_CSP)
+	F_set_chr(GYARANDOW,CF_NO_ZIMEN)
+	F_set_chr(GYARANDOW,CF_NO_HEIGHT)
+
+	move(GYARANDOW,0,WALK1,-33,1380,258,0)
+	wait(90)
+	F_reset_chr(GYARANDOW,CF_NO_CSP)
+	F_reset_chr(GYARANDOW,CF_NO_ZIMEN)
+	F_reset_chr(GYARANDOW,CF_NO_HEIGHT)
+
+	wait(900)
+	CAM_return(0)
+}
+
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//	name("◆斗技场出現イベント")
+//──────────────────────────────
+//　　※初回、Ｇ－斗技场にやってきたとき的イベント。
+//　　　廃坑サブルート最奥をくぐると、真っ暗、または真っ暗に近い空間に出る。
+//　　　こ的マップに入るとイベント開始。
+EV_F_02_VisitGyakata
+{
+	set_namebmp(0,0)										//地名ＯＦＦ
+	//暗転
+	fade_in(100,1,BLACK)
+	wait_fade()
+	EV_begin()
+	
+	stop_BGM(0)
+	
+	chr_pos(RAGNA,-132,5242,-4,0,2)
+	chr_pos(PARTNER,129,5269,-4,0,2)
+	
+	color(RAGNA,-1)//透過
+	color(PARTNER,-1)//透過
+	
+	//ハイポリキャラセット
+	set_chr(EVENT_RAGNA,1010,-1,-1, 134,4800,-4,	2,180,0, "")
+	set_chr(ALWEN,   	1011,-1,-1, -112,4800,-4,	2,180,0, "")
+	
+//	set_chr(GYARANDOW,21,	-1,-1,  -10,2402,199,	5,0,0,"")	//　嘉兰多
+
+	//-------------------------------
+	set_chr(GYARANDOW,21,	-1,-1,  36,587,258,	5,0,0,"")	//　嘉兰多
+	F_set_chr(GYARANDOW,CF_NO_CSP)
+	F_set_chr(GYARANDOW,CF_NO_ZIMEN)
+	F_set_chr(GYARANDOW,CF_NO_HEIGHT)
+	//-------------------------------
+	color(GYARANDOW,-1)//透過
+
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")
+	
+	//明かりを消す	
+	F_set_obj("light01",NP_HIDE)	//道的ライト
+	F_set_obj("light02",NP_HIDE)	//ライト
+	F_set_obj("light03",NP_HIDE)	//ライト
+	F_set_obj("light04",NP_HIDE)	//ライト
+	F_set_obj("light05",NP_HIDE)	//ライト
+	F_set_obj("fire0_p01",NP_HIDE)	//花火
+	F_set_obj("fire0_p02",NP_HIDE)	//花火
+	F_set_obj("fire0_p03",NP_HIDE)	//花火
+	F_set_obj("obj02_add",NP_HIDE)	//ARENA嘉兰多　看板
+	F_set_obj("obj03_add",NP_HIDE)	//IN
+	F_set_obj("obj04_add",NP_HIDE)	//ARENA嘉兰多　門
+	F_set_obj("neon02_add",NP_HIDE)	//ネオン
+	F_set_obj("mizu01_add",NP_HIDE)	//水
+	F_set_obj("black_add",NP_HIDE)	//建物内部的明かり
+
+	map_color(0,0,0,0);//R,G,B, time 100%
+	map_color(30,30,30,100);//R,G,B, time 100%
+
+	F_set_Node(EVENT_RAGNA, "Bone_RightSword", NP_HIDE)
+
+	CAM_move(152,-3581,-190,0,0)
+	CAM(350,112,-190,49,166,0,0)
+	
+	//フェードイン
+//	fade_in(75,30,BLACK)
+	fade_in(0,30,BLACK)
+	wait_fade()
+
+//	MES(RAGNA,"C4◆廃坑サブルート最奥をくぐると、真っ暗、または真っ暗に近い空間に出る。",0)
+
+	
+//　　拉古那と艾雯、走りながら進入してくるが、
+//　　立ち止まって？エモーションを出す。
+	move( EVENT_RAGNA, 0, RUN1,134,4088,-4,0)
+	move( ALWEN, 0, RUN1,-112,4088,-4,0)
+
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+	MOT(EVENT_RAGNA,51,0)//キョロキョロ
+	wait(30)
+
+	EMO(EVENT_RAGNA,EMO_HATENA)
+	EMO(ALWEN,EMO_HATENA)
+	wait(30)
+	
+//	CAM_move(132,-3581,210,300,0)			//バニーが見えるカメラ
+//	CAM(-410,65,210,49,159,300,0)
+	
+	MES(EVENT_RAGNA,"喂，喂喂，\n这不是一片乌七抹黑吗。",0)
+	MES(EVENT_RAGNA,"什么都看不见嘛。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"不，等等，拉古那。\n我感觉到了某个人的气息……",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+
+//　　暗闇的中から、Ｇ－斗技场が出現する。
+//　　３段階くらいで徐々にライトアップして出現。
+	cross_fade(10)
+	CAM_move(-552,78,2428,0,0)
+	CAM(470,189,2428,49,152,0,0)
+	CAM_move(348,78,2068,200,0)
+	CAM(110,265,2068,49,206,200,0)
+	wait(30)
+	
+
+	//1段階
+	map_color(70,70,70,0);//R,G,B, time 100%
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	F_reset_obj("light02",NP_HIDE)	//ライト
+	F_reset_obj("light03",NP_HIDE)	//ライト	
+	F_reset_obj("obj03_add",NP_HIDE)	//IN
+	SE(1141,0)
+	wait(50)
+
+	//2段階
+	map_color(90,90,90,0);//R,G,B, time 100%	
+	F_reset_obj("light04",NP_HIDE)	//ライト
+	F_reset_obj("light05",NP_HIDE)	//ライト
+	SE(1141,0)
+	wait(50)
+	
+	//3段階
+	map_color(100,100,100,0);//R,G,B, time 100%
+	F_reset_obj("obj02_add",NP_HIDE)	//ARENA嘉兰多　看板
+	F_reset_obj("black_add",NP_HIDE)	//建物内部的明かり
+	F_reset_obj("mizu01_add",NP_HIDE)	//水
+	SE(1141,0)
+	wait(100)
+//	wait(80)	
+
+	BGM(19)
+
+map_specular(70,70,70,10)
+wait(10)
+
+	//バニーアップ
+//	cross_fade(10)
+	CAM_move(-71,-965,2043,0,0)
+	CAM(-10,81,1910,43,213,0,0)
+	CAM_move(-47,-1011,2043,90,0)
+	CAM(-690,57,1910,43,206,90,0)
+map_specular(0,0,0,12)
+	wait_CAM_move()
+	wait_CAM()	
+
+map_specular(70,70,70,10)
+wait(10)
+
+	//看板アップ
+//	cross_fade(10)	
+	CAM_move(872,-381,1950,0,0)
+	CAM(-250,54,1950,54,197,0,0)
+	CAM_move(872,-381,1630,90,0)	
+map_specular(0,0,0,12)
+	wait_CAM_move()
+
+map_specular(70,70,70,10)
+wait(10)
+
+	//正面アップ
+//	cross_fade(10)	
+	CAM_move(0,-1321,1930,0,0)
+	CAM(230,83,1930,48,180,0,0)
+	CAM_move(0,-1321,1430,90,0)
+	CAM(-650,83,1430,48,180,90,0)
+map_specular(0,0,0,12)
+	wait_CAM_move()
+	wait_CAM()
+	
+
+	F_reset_obj("obj04_add",NP_HIDE)	//ARENA嘉兰多　門
+	F_reset_obj("neon02_add",NP_HIDE)	//ネオン	
+	F_reset_obj("light01",NP_HIDE)		//道的ライト	
+	SE(1141,0)
+
+map_specular(40,40,40,15)
+
+	wait(15)	
+
+	CAM_move(0,-3363,622,150,0)
+	CAM(-649,61,490,47,180,150,0)
+map_specular(0,0,0,90)
+//	wait(15)
+	wait(30)
+	
+	set_namebmp(18,0)										//地名	
+	
+	F_reset_obj("fire0_p01",NP_HIDE)	//花火
+	F_reset_obj("fire0_p02",NP_HIDE)	//花火
+	F_reset_obj("fire0_p03",NP_HIDE)	//花火
+	
+	wait(180)
+
+	MES_close(EVENT_RAGNA)
+
+//　　最後にファンファーレが鳴り、花火が打ち上げられる。
+//　　クロスフェードで拉古那と艾雯を映す。
+	cross_fade(30)
+	color(GYARANDOW, 1)//表示
+	
+/*	F_reset_Node(EVENT_RAGNA, "Bone_RightSword", NP_HIDE)
+
+	if(!F4_09_GoShrineMia)
+		chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる的はこちら。
+	else
+		chr_equip( ALWEN,"wp_004b", "Bone_RightSword", 100)	//杖を装備させる的はこちら。
+*/
+	CAM_move(12,-4101,110,0,0)
+	CAM(-250,26,110,43,357,0,0)
+//　　２人は呆然と立っている表情。
+	KAO(EVENT_RAGNA, "7", "7", "7")	
+	KAO(ALWEN,"N", "N", "1")
+	wait_CAM_move()
+
+	wait(10)
+	EFF_chr(25124,EVENT_RAGNA,0,100,0,"Bone_Head")
+	EFF_chr(25124,ALWEN,0,100,0,"Bone_Head")
+	wait(80)
+	KAO(ALWEN,"N", "NN33N", "1")
+	MES_close(EVENT_RAGNA)
+
+	chr_rename(GYARANDOW,"渋い男的声")
+//	name("渋い男的声")
+//	MES(GYARANDOW,"W9……よく来たな。",0)
+	MES_pos(GYARANDOW,"W9……你们终于来了。",0,320,100,0,0)
+	wait_key(0)
+	MES_close(GYARANDOW)
+//	wait_MES(GYARANDOW)
+
+//　　カメラを回すと、嘉兰多がこちらに步いてくる。
+	CAM_move(0,-3841,170,80,0)
+	CAM(-210,44,170,43,180,80,0)
+
+//	move( GYARANDOW, 0, WALK1,4,3727,-6,0)
+	wait_CAM_move()
+	chr_rename(GYARANDOW,"嘉兰多")
+
+	//----------------------------------
+	CAM(-210,34,170,43,180,80,0)
+	cross_fade(40)
+	CAM_move(24,-1444,414,0,0)
+	CAM(-330,62,414,27,145,0,0)
+	wait(30)
+	CAM_move(24,-1324,414,90,0)
+	CAM(-530,58,414,27,170,90,0)
+
+	move(GYARANDOW,0,WALK1,-33,1380,258,0)
+	wait(90)
+	F_reset_chr(GYARANDOW,CF_NO_CSP)
+	F_reset_chr(GYARANDOW,CF_NO_ZIMEN)
+	F_reset_chr(GYARANDOW,CF_NO_HEIGHT)
+	wait(30)
+
+	cross_fade(40)
+	chr_pos( GYARANDOW, 4,3350,100,0,0)
+	move( GYARANDOW, 0, WALK1,4,3727,-6,0)
+	CAM_move(0,-3841,170,0,0)
+	CAM(-210,44,170,43,180,0,0)
+	wait_fade()
+//	wait_move(GYARANDOW)
+	//----------------------------------
+
+	
+//	name("怪人嘉兰多")
+//	MES(GYARANDOW,"ロード·オブ·ザ·ピンク……\n──さあ、華やかな舞台へようこそ。",0)
+	wait(30)
+
+	MES(GYARANDOW,"Road of the Pink……",0)
+	MES(GYARANDOW,"──欢迎来到这个灿烂的舞台。",0)
+	MES(GYARANDOW,"这里是Ｇ－斗技场，\n是为战士们所准备的\n场馆（赛场）。",0)
+	wait_move(GYARANDOW)
+	MOT(GYARANDOW,51,15)
+	if(!FV_FF_Gyakata2)//★斗技场·２週目処理
+		MES(GYARANDOW,"会来到这里，就说明\n你们也是对此有兴趣的吧？",0)
+	else
+		MES(GYARANDOW,"……不过，\n再次来到这里，\n就说明你们很喜欢这里吧？",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那たち、ブンブンと首を横に振る。
+	EMO(EVENT_RAGNA,EMO_ASEASE)
+	EMO(ALWEN,EMO_ASEASE)
+	look(EVENT_RAGNA,"Bone_Head",0,		0,15,0,			0,30,0)
+	look(ALWEN,"Bone_Head",0,		0,15,0,			0,30,0)
+	wait(5)
+	look(EVENT_RAGNA,"Bone_Head",0,		0,15,0,			0,-30,0)
+	look(ALWEN,"Bone_Head",0,		0,15,0,			0,-30,0)
+	wait(5)
+	look(EVENT_RAGNA,"Bone_Head",0,		0,15,0,			0,30,0)
+	look(ALWEN,"Bone_Head",0,		0,15,0,			0,30,0)
+	wait(5)
+	look(EVENT_RAGNA,"Bone_Head",0,		0,15,0,			0,-30,0)
+	look(ALWEN,"Bone_Head",0,		0,15,0,			0,-30,0)
+	wait(10)
+	look(EVENT_RAGNA,"Bone_Head",0,		0,10,0,			0,0,0)
+	look(ALWEN,"Bone_Head",0,		0,10,0,			0,0,0)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"呵呵，不用不好意思。",0)
+	MES(GYARANDOW,"年轻时，\n谁都会有难以抑制的冲动的。",0)
+	MES_close(GYARANDOW)
+
+	wait_move(GYARANDOW)
+//　　嘉兰多、向きを変えてＧ－斗技场的方へ促す。
+//	name("怪人嘉兰多")
+	rot(GYARANDOW,30,180)
+	wait(20)
+
+
+	MES(GYARANDOW,"那么，跟我来吧。",0)
+	MES(GYARANDOW,"然后就攀上\n吾辈所在的高处吧……",0)
+	MES_close(GYARANDOW)
+
+
+	CAM(-609,43,230,43,180,80,0)
+	CAM_move(0,-3841,230,80,0)
+
+
+//　　嘉兰多、馆的中に去っていく。
+	move( GYARANDOW, 0, WALK1,-3,1563,199,,0)
+	wait(80)
+
+//--------------------------------
+wait(60)
+cross_fade(40)
+CAM_move(40,-3941,110,0,0)
+CAM(-288,35,110,40,197,0,0)
+color(GYARANDOW,-1)
+wait_fade()
+wait(30)
+//--------------------------------
+	
+	//　　嘉兰多が見えなくなってから。
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	KAO(ALWEN,"12321Z4", "N", "1")
+	MES(ALWEN,"……拉古那，你怎么了？",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	look_chr(EVENT_RAGNA,ALWEN,"Bone_Head")
+	MES(EVENT_RAGNA,"就算你问我怎么了……",0)
+	MES_close(EVENT_RAGNA)
+
+
+
+	//暗転
+	fade_in(100,60,BLACK)
+	wait_fade()
+	delete(GYARANDOW)	
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	color(RAGNA,1)	//透過解除
+	color(PARTNER,1)//透過解除
+	chr_pos(RAGNA,134,4800,-15,180,2)
+	chr_pos(PARTNER,-112,4800,-15,180,2)
+
+	
+	CAM_return( 0 )
+	wait(30)
+	
+//ＧＦ『★Ｇ－斗技场に行った』を立てる。
+	F_set(FV_02_VisitGyakata)
+	//★嘉兰多【Ｇ－斗技场】
+	F_set_note(GYARANDOW,0)
+	
+	//フェードイン
+	fade_in(0,30,BLACK)
+	EV_end()
+
+
+//　　操作許可を戻す。
+//　　以降、Ｇ－斗技场には通常進入できるようになり、
+//　　ワープで飛んでくることもできる。
+//──────────────────────────────
+
+}
+
+//──────────────────────────────
+//	チビッ子忍者杯に勝って馆Lｖ２になるイベント
+//──────────────────────────────
+EV_F_FF_GYakataLvup_2
+{
+
+	//　　一旦フェードアウトして馆外観マップ、ファンファーレと共にネオンサインが灯り、馆がド派手な最終段階になる的を見せる。
+	//　　暗転＆フェードインして、斗技场受付前から操作許可を戻す。
+	
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+	EV_begin()
+	
+	CAM_move(-229,-2138,1398,0,0)
+	CAM(70,145,1135,54,152,0,0)
+	
+	chr_pos(RAGNA,-41,4613,-5,180,2)
+	chr_pos(PARTNER,-267,4613,-4,180,2)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	
+	
+	//暗転
+	fade_in(100,60,0)
+	wait_fade()
+	
+	//★馆Lｖ2になった（前半コースクリア）
+	MES(0,"C3S2场馆等级上升为2级。（暂时）",2)
+	MES_close(0)
+	F_set(FV_FF_GyakataLv2)
+
+	CAM_return( 0 )
+	new_map(10510)
+	
+	EV_end()
+}
+
+//──────────────────────────────
+//	万能執事杯に勝って馆Lｖ３になるイベント
+//──────────────────────────────
+EV_F_FF_GYakataLvup_3
+{
+	//　　一旦フェードアウトして馆外観マップ、ファンファーレと共にネオンサインが灯り、馆がド派手な最終段階になる的を見せる。
+	//　　暗転＆フェードインして、斗技场受付前から操作許可を戻す。
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+	EV_begin()
+	
+	CAM_move(-229,-2138,1398,0,0)
+	CAM(70,145,1135,54,152,0,0)
+	
+	chr_pos(RAGNA,-41,4613,-5,180,2)
+	chr_pos(PARTNER,-267,4613,-4,180,2)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+
+	//暗転
+	fade_in(100,60,0)
+	wait_fade()
+
+	//★馆Lｖ3になった（嘉兰多と企鹅娘以外クリア）
+	MES(0,"C3S2场馆等级上升为3级。（暂时）",2)
+	MES_close(0)
+
+	F_set(FV_FF_GyakataLv3)
+
+	CAM_return( 0 )
+	new_map(10510)
+	
+	
+	EV_end()
+}
+
+//──────────────────────────────
+//	企鹅娘or嘉兰多に勝って馆LｖMAXになるイベント
+//──────────────────────────────
+EV_F_FF_GYakataLvup_MAX
+{
+	//　　一旦フェードアウトして馆外観マップ、ファンファーレと共にネオンサインが灯り、馆がド派手な最終段階になる的を見せる。
+	//　　暗転＆フェードインして、斗技场受付前から操作許可を戻す。
+	
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+	EV_begin()
+	
+	CAM_move(-229,-2138,1398,0,0)
+	CAM(70,145,1135,54,152,0,0)
+	
+	chr_pos(RAGNA,-41,4613,-5,180,2)
+	chr_pos(PARTNER,-267,4613,-4,180,2)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+	
+	//暗転
+	fade_in(100,60,0)
+	wait_fade()
+
+	F_set(FV_FF_GyakataMAX)
+
+	//★馆LｖMAXになった（全コースクリア）
+	MES(0,"C3S2场馆等级上升为最高级。（暂时）",2)
+	MES_close(0)
+	
+	CAM_return( 0 )
+	new_map(10510)
+	
+	EV_end()
+}
+
+#EndScriptTable
+//====================================================================
+

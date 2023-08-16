@@ -1,0 +1,3079 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10130][阿鲁迪亚≈敷（昼）]
+//====================================================================
+
+#ScriptTable
+
+#FIONA 		1
+#KLODE		2
+#PIPIRO 	3
+#POCKLE 	4
+#LUE 		5
+#SUBARU		6
+#LA-RAIRA	7
+#ODESSA		8
+
+#ANNA		9
+#HELENA		10
+#ANJE		11
+#ALWEN 		12
+#EVENT_RAGNA 	13
+#EVENT_LUE		14
+#EVENT_RAGNA2	15
+#JACKET			16
+#DUMMY			17
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+
+//ノード制御
+	F_set_obj("model6", NP_HIDE)//執務部屋影非表示
+	F_set_obj("maid_bk", NP_HIDE)
+
+//  set_chr  no typ     tip          x     y   z  	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	set_chr( 90,990,	-1,-1,	  5100,    0, 0, 	 90,0206, 6,"K9_10100;")//エントリ 阿鲁迪亚屋敷·玄関→阿鲁迪亚镇（昼）
+	set_chr( 92,990,	-1,-1,	  3400, -825,100,  	  0,0302, 6,"K5_3")		//エントリ 阿鲁迪亚屋敷·玄関→右
+	set_chr( 93,990,	-1,-1,	  3400,  850,100, 	180,0302, 6,"K6_3")		//エントリ 阿鲁迪亚屋敷·玄関→左
+	set_chr( 94,990,	-1,-1,	   100,    0, 0,  	 90,0203, 6,"K1_3")		//エントリ 阿鲁迪亚屋敷·奥→玄関
+	set_chr( 95,990,	-1,-1,	  5000,-4800, 0,  	180,0302, 6,"K2_3")		//エントリ 阿鲁迪亚屋敷·右→玄関
+	set_chr( 96,990,	-1,-1,	  5000, 4825, 0,	  0,0302, 6,"K3_3")		//エントリ 阿鲁迪亚屋敷·左→玄関
+
+	// フラグ⑤的みストッパー
+	// また、こ的とき的み扉が出現する。
+	if(F2_14_TalkEnemy && !F3_00_GoMoonCastle)
+	{
+		set_chr( 91,991,	-1,-1,	  2925,    0,200, 	270,0203, 2,"<EV_STOP_01>")		//エントリ 阿鲁迪亚屋敷·玄関→奥
+		F_reset_obj("door", NP_HIDE)
+	}
+	else
+	{
+		set_chr( 91,990,	-1,-1,	  2925,    0,100, 	270,0203, 6,"K4_3")		//エントリ 阿鲁迪亚屋敷·玄関→奥
+		F_set_obj("door", NP_HIDE)
+	}
+
+	//ＮＰＣ
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		set_chr( HELENA,41,	-1,-1,  -1549,-458,0,	 10,81, 20,"<TK_HELENA>")		//客室　本棚掃除	海蕾娜
+		set_chr( ANJE,42,	-1,-1, 4391,265,1,	 10,251, 20,"<TK_ANJE>")		//広間　玄関掃除		安洁
+		chr_equip2(ANJE,"wp_041","Bone_RightSword",	100,	0,0,0,	0,0,0);		//安洁的ホウキ
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	90,0,40)
+		EV("MOTION_SOZI_ANJE")
+
+		set_chr( ANNA,40,	-1,-1,  5600,5540,0,	 63,270, 20,"<TK_ANNA>")		//控え室　いすに座っている	安娜
+		F_set_Node(ANNA,"Bone_RightSword",NP_HIDE)	//安娜的皿を消す
+		wait(1)
+		chr_equip2(ANNA,"eq_051","Bone_RightSword",	100,	0,0,0,	0,0,0);		//カップ
+
+		//モーション
+		MOT_SET(HELENA,151,-1,461,461,152,15)		//本棚掃除
+		MOT_SET(HELENA,152,-1,462,462,151,15)		//本棚掃除
+		MOT(HELENA,151,0)
+
+		F_set_chr(ANNA,CF_NO_MOVE)
+		F_set_chr(HELENA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		set_chr( HELENA,41,	-1,-1,  5200,-5822,1,	 10,150, 20,"<TK_HELENA>")		//客室　窓的戸締り	海蕾娜
+		set_chr( ANJE,42,	-1,-1,  -1110,-647,0,	 10,180, 20,"<TK_ANJE>")		//執務室　戸締り	安洁
+		//モーション
+		MOT_SET(HELENA,151,-1,571,571,-1,15)		//戸締り
+		MOT(HELENA,151,0)
+		MOT_SET(ANJE,151,-1,571,571,-1,15)		//戸締り
+		MOT(ANJE,151,0)
+
+		F_set_chr(ANJE,CF_NO_MOVE)
+		F_set_chr(HELENA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		set_chr( ANNA,40,	-1,-1,  4550,-238,0,	 2,0, 20,"<TK_ANNA>")		//広間　掃除中	安娜
+		chr_equip2(ANNA,"wp_041","Bone_RightSword",	100,	0,0,0,	0,-15,0);		//安娜的ホウキ
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		EV("MOTION_SOZI_ANNA")
+
+		set_chr( HELENA,41,	-1,-1,  5500,5168,0,	 75,173, 20,"<TK_HELENA>")		//控え室　食器棚的前	海蕾娜
+
+//		F_set_chr(ANNA,CF_NO_MOVE)
+		F_set_chr(HELENA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ的フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		//昴が仲間になった後配置
+		if(F4_02_GoVillage2)
+		{
+			set_chr( FIONA,1016,	-1,-1, -1400,0,20,	 2,270, 20,"<TK_FIONA>")		//執務室　菲奥娜
+//			set_chr( KLODE,1018,	-1,-1, -1575,-519,1,	 53,270,20,"<TK_KLODE>")	//執務室　克劳德
+			set_chr( KLODE,1018,	-1,-1, -1575,-542,1,	 53,90,20,"<TK_KLODE>")	//執務室　克劳德
+
+			//モーション
+			MOT_SET(FIONA,150,-1,485,485,-1,15)
+			MOT(FIONA,150,0)
+			F_set_chr(FIONA,CF_NO_ZIMEN)
+			F_set_chr(FIONA,CF_NO_CSP)
+			F_set_chr(FIONA,CF_NO_HEIGHT)
+
+			F_set_chr(FIONA,CF_NO_MOVE)
+			F_set_chr(KLODE,CF_NO_MOVE)
+		}
+
+//		set_chr( ANJE,42,	-1,-1,  4450,5480,1,	 2,90, 20,"<TK_ANJE>")		//控え室　台所		安洁
+		set_chr( ANJE,42,	-1,-1,  4525,5832,0,	 2,90, 20,"<TK_ANJE>")		//控え室　台所		安洁
+		set_chr( HELENA,41,	-1,-1,  5600,5540,50,	 63,270, 20,"<TK_HELENA>")		//屋敷：控え室　うなだれ中	海蕾娜
+
+		//モーション
+		MOT_SET(HELENA,151,-1,558,558,-1,15)		//机に突っ伏す※米娅的へこむポーズで代用してます
+		MOT(HELENA,151,0)
+		//足を消す
+		chr_scale(HELENA,	"Bone_LeftLeg",		1,1,1,	0,	1);
+		chr_scale(HELENA,	"Bone_RightLeg",	1,1,1,	0,	1);
+		F_set_chr(HELENA,CF_NO_HEIGHT)
+		F_set_chr(HELENA,CF_NO_FALL)
+
+		F_set_chr(ANJE,CF_NO_MOVE)
+		F_set_chr(HELENA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵的正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		set_chr( HELENA,41,	-1,-1,   5536,-5310,1,	 2,0, 20,"<TK_HELENA>")		//客室　ベット梅ク中	海蕾娜
+		set_chr( ANJE,42,	-1,-1,	5600,5540,30,	 63,270, 20,"<TK_ANJE>")		//控え室　帳簿つけ	安洁
+		F_set_chr(ANJE,CF_NO_FALL)
+		F_set_chr(ANJE,CF_NO_HEIGHT)
+		F_reset_obj("maid_bk", NP_HIDE)
+
+		//モーション
+		MOT_SET(HELENA,151,-1,460,460,152,15)		//ベット梅ク中
+		MOT_SET(HELENA,152,-1,459,459,151,15)		//ベット梅ク中2
+		MOT(HELENA,151,0)
+
+		F_set_chr(ANJE,CF_NO_MOVE)
+		F_set_chr(HELENA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎的パーツを入手した
+	//▼③金闇的森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		set_chr( FIONA,1016,	-1,-1, -1400,0,20,	 2,270, 20,"<TK_FIONA>")		//執務室　菲奥娜
+		set_chr( KLODE,1018,	-1,-1, -1600,257,1,	 53,250, 20,"<TK_KLODE>")		//執務室　克劳德
+
+		//モーション
+		MOT_SET(FIONA,150,-1,485,485,-1,15)
+		MOT(FIONA,150,0)
+		F_set_chr(FIONA,CF_NO_ZIMEN)
+		F_set_chr(FIONA,CF_NO_CSP)
+		F_set_chr(FIONA,CF_NO_HEIGHT)
+
+		F_set_chr(FIONA,CF_NO_MOVE)
+		F_set_chr(KLODE,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		set_chr( ANNA,40,	-1,-1,  5666,5274,0,	2,270, 20,"<TK_ANNA>")		//安娜
+		set_chr( ANJE,42,	-1,-1, -147,-496,0,	 2,161, 20,"<TK_ANJE>")		//執務室　植木に水遣り	安洁
+
+		//モーション
+		MOT_SET(ANNA,150,-1,446,446,-1,15)		//アタマをぶつけて痛がっている安娜
+		chr_equip2(ANNA,"wp_040","Bone_RightSword",	100,	0,0,0,	0,0,0);		//安娜的皿
+		MOT(ANNA,150,0)
+
+		F_set_chr(ANNA,CF_NO_MOVE)
+		F_set_chr(ANJE,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		set_chr( ANJE,42,	-1,-1,   4645,316,0,	 2,0, 20,"<TK_ANJE>")		//広間　掃除中	安洁
+		set_chr( HELENA,41,	-1,-1,   3253,-383,1,	 2,0, 20,"<TK_HELENA>")		//広間　掃除中	海蕾娜
+
+		set_chr( ANNA,40,	-1,-1,   4465,5506,0,	 2,90, 20,"<TK_ANNA>")		//台所	安娜
+		chr_equip2(ANNA,"wp_040","Bone_RightSword",	100,	0,0,0,	0,0,0);		//安娜的皿
+
+		chr_equip2(ANJE,"wp_041","Bone_RightSword",	100,	0,0,0,	0, -20,0);		//安洁的ホウキ
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	90,0,40)
+		EV("MOTION_SOZI_ANJE")
+		chr_equip2(HELENA,"wp_041","Bone_RightSword",	100,	0,0,0,	0,-10,0);		//海蕾娜的ホウキ
+		look(HELENA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)
+		EV("MOTION_SOZI_HELENA")
+
+		F_set_chr(ANNA,CF_NO_MOVE)
+		F_set_chr(HELENA,CF_NO_MOVE)
+	}
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼失意的拉古那
+		EV("EV_4_01_ByebyeRagna")
+	}
+	else
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼巨大龙卷に挑むことにする
+		EV("EV_6_01_GoToMeru")
+	}
+	else
+	if( F5_00_HearLunar && !F5_18_Fiona&Klode )	//★天山からルナ·ムンドゥス的話を聞いた ★サブイベント：執務室的菲奥娜と克劳德と話した
+	{
+		//サブイベント
+		set_chr( 81,990,	-1,-1,	  -150,0,0,	  0,0302, 6,"<EV_Fiona_Klode>;")		//
+	}
+		//	EV("EV_Fiona_Klode")
+}
+
+//====================================================================
+//=== モーション処理 =================================================
+//====================================================================
+//待机モーション
+
+//───────────────────────────────
+//安洁(掃除)
+//──────────────────────────────
+MOTION_SOZI_ANJE
+{
+	move( ANJE, 25,	WALK1,	700,700,0,	200)
+	wait(50)
+	loop
+}
+//───────────────────────────────
+//海蕾娜(掃除)
+//──────────────────────────────
+MOTION_SOZI_HELENA
+{
+	move( HELENA, 25,	WALK1,	500,500,0,	200)
+	wait(70)
+	loop
+}
+
+//───────────────────────────────
+//安娜(掃除)
+//──────────────────────────────
+MOTION_SOZI_ANNA
+{
+	move( ANNA, 25,	WALK1,	500,500,0,	200)
+	wait(50)
+	loop
+}
+
+//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+
+//──────────────────────────────
+//	③菲奥娜　克劳德共通初回イベント
+//──────────────────────────────
+//	name("★初回（克劳德と共通／一回的み／イベント処理）")
+//　　話しかけるとキャラ再配置してイベント発生。
+//　　克劳德と共通なため、あちらで起こしたら発生しない。
+//──────────────────────────────
+
+TALK_FIOKLO_03
+{
+	cross_fade(30)
+	EV_begin()
+
+	//カメラセット
+	CAM_move(-1036,-18,135,0,0)
+	CAM(110,60,135,27,266,0,0)
+
+	//キャラ位置セット
+	chr_pos(RAGNA,	-929,-91,1,70,2)
+	chr_pos(PARTNER,-929,146,0,100,2)
+	chr_pos(FIONA,	-1400,0,20,270,150)
+	chr_pos(KLODE,-1600,257,1,250,53)
+	KAO(RAGNA, "1", "1", "1")
+	KAO(PARTNER,"1", "1", "1")
+	KAO(FIONA,"1", "1", "1")
+	KAO(KLODE, "1", "1", "1")
+
+	MOT_SET(KLODE,154,-1,3810,3849,-1,-1)//お辞儀
+	MOT_SET(KLODE,155,-1,3860,3892,-1,-1)//お辞儀戻り
+
+	wait_fade()
+
+	KAO(KLODE,"1","D","1")
+	MES(KLODE,"……！",0)
+	MES_close(KLODE)
+	KAO(KLODE,"1","1","1")
+
+	//─────────────────────
+	//	name("□菲奥娜たちを一度でも見かけている场合")
+	if(F1_25_F&KinForest || F1_26_F&KinTower)
+	{
+		KAO(FIONA,"12321Z2","1","1")
+		MES(FIONA,"你们是……",0)
+		MES_close(FIONA)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"（那时候的人……\n  这间房子的主人吗。）",0)
+		MES_close(RAGNA)
+
+	//	name2(ALWEN)
+		MES(PARTNER,"（唔……这样的话\n  也只有稍微问问了。）",0)
+		MES_close(PARTNER)
+
+	//	name2(FIONA)
+		KAO(FIONA,"12321Z4","1","1")
+		MES(FIONA,"……呵呵，初次见面。",0)
+		KAO(FIONA,"12321Z6","1","1")
+		MES(FIONA,"是拉古那先生和\n艾雯小姐吧？",0)
+		MES_close(FIONA)
+	}
+	//	name("□菲奥娜たちを今まで見かけていない场合")
+	else
+	{
+		KAO(FIONA,"12321Z2","1","1")
+		MES(FIONA,"你们是……",0)
+		KAO(FIONA,"12321Z4","1","1")
+		MES(FIONA,"……呵呵，初次见面。",0)
+		KAO(FIONA,"12321Z6","1","1")
+		MES(FIONA,"是拉古那先生和\n艾雯小姐吧？",0)
+		MES_close(FIONA)
+	}
+	//─────────────────────
+//　　拉古那たち的頭に！マーク。
+	EMO(RAGNA,EMO_BIKKURI)
+	EMO(PARTNER,EMO_BIKKURI)
+	wait(30)
+
+	MES(RAGNA,"咦……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"哦……\n你知道我们的名字啊。",0)
+	MES_close(PARTNER)
+
+//	name2(FIONA)
+	look_chr( FIONA, PARTNER,"Bone_Head")
+	KAO(FIONA,"12321Z4","1","1")
+	MES(FIONA,"是，因为镇上\n正传闻着你们的事情。",0)
+	KAO(FIONA,"12321Z5","1","1")
+	look_chr( FIONA, RAGNA,"Bone_Head")
+	MES(FIONA,"而且，你们也见过\n布库尔他们了吧？",0)
+	MES_close(FIONA)
+
+//	name2(RAGNA)
+	MES(RAGNA,"布库尔……\n原来你认识他们吗。",0)
+	MES_close(RAGNA)
+
+//	name2(FIONA)
+	KAO(FIONA,"12321Z5","1","1")
+	MES(FIONA,"嗯，他们\n是我请来的客人呢。",0)
+	KAO(FIONA,"12321Z6","1","1")
+	look_off(FIONA)
+	MES(FIONA,"──重新自报家门吧。\n我是这幢房子的主人，\n菲奥娜。",0)
+	KAO(FIONA,"12321Z5","1","1")
+	look_chr( FIONA, KLODE,"Bone_Head")
+	MES(FIONA,"这位，\n是我的管家克劳德。",0)
+	MES_close(FIONA)
+
+//　　克劳德、優雅に一礼する。
+	MOT(KLODE,154,15)
+
+	KAO(KLODE,"12321Z5","3","1")
+	MES(KLODE,"初次见面。\n拉古那先生，艾雯小姐。",0)
+	MES_close(KLODE)
+	MOT(KLODE,155,15)
+
+	KAO(KLODE,"1","1","1")
+	MOT(KLODE,53,15)
+
+//	name2(RAGNA)
+	MES(RAGNA,"嗯，哦……",0)
+	MES(RAGNA,"你们应该知道了吧，\n我是拉古那·瓦伦泰恩。",0)
+	MES(RAGNA,"隶属于协会的宝物猎人，\n最近刚来到这座岛上。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"我叫艾雯。\n今后请多指教。",0)
+	MES_close(PARTNER)
+
+//	name2(FIONA)
+	KAO(FIONA,"12321Z3","1","1")
+	MES(FIONA,"是，彼此彼此。",0)
+	KAO(FIONA,"12321Z6","1","1")
+	look_chr( FIONA, RAGNA,"Bone_Head")
+	MES(FIONA,"我听说，拉古那先生\n的飞机坠毁了……",0)
+	KAO(FIONA,"12321Z5","1","1")
+	MES(FIONA,"如果有什么为难的，\n请来找我不用客气。",0)
+	KAO(FIONA,"12321Z4","1","1")
+	MES(FIONA,"我想我能帮忙出些主意。",0)
+	MES_close(FIONA)
+
+	//─────────────────────
+	//	name("□菲奥娜たちを一度でも見かけている场合")
+	if(F1_25_F&KinForest || F1_26_F&KinTower)
+	{
+		MES(RAGNA,"哈哈，你真是好心人，谢谢了。",0)
+		MES(RAGNA,"（不过，这事的背后\n  貌似没这么简单……）",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"（唔，果然，\n  太蹊跷了。）",0)
+		MES_close(PARTNER)
+
+	//　　菲奥娜的頭に？マーク。
+		EMO(FIONA,EMO_HATENA)
+		wait(30)
+
+		KAO(FIONA,"12321Z3","1","1")
+		MES(FIONA,"怎么了？",0)
+		MES_close(FIONA)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"不，没什么……",0)
+		MES(RAGNA,"……嗯，有什么事的话\n我会来找你商量的。",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+		MES(RAGNA,"哈哈，你真是好心人，谢谢了。",0)
+		MES(RAGNA,"嗯，有什么事的话\n我会来找你商量的。",0)
+		MES_close(RAGNA)
+	}
+	//─────────────────────
+	KAO(FIONA,"12321Z3","1","1")
+	MES(FIONA,"嗯，请不必客气。",0)
+	MES_close(FIONA)
+
+//――――――――――――――――――――――――――
+//	イベント終了処理
+//――――――――――――――――――――――――――
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	look_off(FIONA)
+
+	F_set(FM_03_TalkFioKlo)
+	//★菲奥娜
+	F_set_note(-16,-1)
+	//★克劳德
+	F_set_note(-18,-1)
+
+
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+//	プレイヤー操作許可
+//――――――――――――――――――――――――――
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼失意的拉古那
+//──────────────────────────────
+//　　画面切り替えして、菲奥娜的屋敷的広間。
+//　　菲奥娜、克劳德、皮皮洛、布库尔組と、
+//　　艾雯、露、拉莱拉、拉古那、昴組が、
+//　　それぞれ情報交換をしているような構図となっている。
+//　　菲奥娜はすでに甲冑姿から通常的ドレス姿に戻っている。
+//　　拉古那は、昴と共に離れて傍観しているような感じ。
+EV_4_01_ByebyeRagna
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置画面外
+	chr_pos(RAGNA,	 	-1366,-547,0,137,2)
+	chr_pos(PARTNER,	-1536,-377,0,11,2)
+	color(RAGNA, -1)
+	color(PARTNER, -1)
+	//カメラ初期位置
+	CAM_move(-539,457,135,0,0)
+	CAM(30,82,136,26,225,0,0)
+
+
+	//      no          typ tip    x   y   z mot deg state sc
+	set_chr(KLODE,    1018,-1,-1,-0906,175,0, 2, 210, 0, "")
+	set_chr(FIONA,    1016,-1,-1,-0951,-20,0, 2, 270, 0, "")
+
+	set_chr(LUE,        15,-1,-1, -763,-252,  0, 2, 0,0, "")
+	set_chr(PIPIRO,   1013,-1,-1, -715, 176,0, 2,180,0, "")
+	set_chr(POCKLE,   1012,-1,-1, -585,  78,0, 2,100,0, "")
+	set_chr(LA-RAIRA,   23,-1,-1, -864,-175,0, 2,310,0, "")
+	set_chr(ALWEN,    1011,-1,-1, -598,-161,0, 2,360,0, "")
+
+	set_chr(JACKET,        748,-1,-1, -700,-600,-40,0,200,0, "")	//ジャケット
+	set_chr(EVENT_RAGNA2, 1052,-1,-1, -650,-518,0,2,0,0, "")	//包帯
+	set_chr(EVENT_RAGNA,  1014,-1,-1, -650,-518,0,2,0,0, "")
+	set_chr(SUBARU,      20, -1,-1, -510,-475,0,2,30,0, "")
+	set_chr(DUMMY,      749, -1,-1, 110,25,0,0,00,0, "")
+
+//	wait(1)	//武器に対してF_set_Nodeをやる前に、キャラモーションを更新する必要がある。
+
+	F_set_Node(PIPIRO, "Bone_RightSword", NP_HIDE)				//武器非表示
+	F_set_Node(POCKLE, "Bone_RightSword", NP_HIDE)				//武器非表示
+	F_set_chr(EVENT_RAGNA, CF_NO_ZIMEN )			//当たり無視
+	F_set_chr(EVENT_RAGNA, CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA, CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP2)
+
+	F_set_chr(EVENT_RAGNA2, CF_NO_ZIMEN )			//当たり無視
+	F_set_chr(EVENT_RAGNA2, CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA2, CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2, CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA2, CF_NO_CLIP2)
+
+	F_set_chr(JACKET, CF_NO_ZIMEN )			//当たり無視
+	F_set_chr(JACKET, CF_NO_HEIGHT)
+	F_set_chr(JACKET, CF_NO_CSP)
+	F_set_chr(JACKET, CF_NO_CLIP)
+	F_set_chr(JACKET, CF_NO_CLIP2)
+
+	F_set_chr(LUE,         CF_NO_HEIGHT)
+	F_set_chr(ALWEN,         CF_NO_CSP)
+	F_set_chr(FIONA,         CF_NO_CSP)
+	F_set_chr(SUBARU,         CF_NO_CLIP)
+	F_set_chr(SUBARU,         CF_NO_CLIP2)
+
+//	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる的はこちら。
+	MOT(ALWEN,53,1)										//艾雯的右手を開かせる。
+//	color(EVENT_RAGNA,-1)
+	color(EVENT_RAGNA2,-1)
+	color(JACKET,-1)
+
+	//--- デフォルト表情 --------------------------------------------------
+//	KAO(EVENT_RAGNA, "B","1","3");
+//	KAO(EVENT_RAGNA2,"B","1","3");
+	KAO(EVENT_RAGNA, "B","V","3");
+	KAO(EVENT_RAGNA2,"B","V","3");
+	KAO(ALWEN,       "B","1","4");
+	KAO(LUE,         "B","1","4");
+	KAO(LA-RAIRA,    "B","1","4");
+	KAO(PIPIRO,      "B","1","4");
+	KAO(POCKLE,      "B","1","4");
+	KAO(FIONA,       "B","1","4");
+	KAO(KLODE,       "B","1","3");
+	KAO(SUBARU,      "B","1","4");
+
+    //---------------------------------------------------------------------
+	//拉古那、演技モーション設定
+	MOT_SET(EVENT_RAGNA,150,-2,3411,3411,-1,-1)	//腕組座り
+	MOT_SET(EVENT_RAGNA2,150,-2,3411,3411,-1,-1)	//腕組座り
+	MOT(EVENT_RAGNA,150,0)
+	MOT(EVENT_RAGNA2,150,0)
+
+	//艾雯、演技モーション設定
+	MOT_SET(ALWEN,150,-1,405,405,-1,-1)
+	MOT_SET(ALWEN,151,-1,440,440,-1,-1)			//胸に手を当てる
+	MOT_SET(ALWEN,153,-1,4555,4555,-1,-1)		//握手
+//	MOT_SET(ALWEN,154,-1,4540,4555,-1,-1)		//握手
+
+	//菲奥娜、演技モーション設定
+	MOT_SET(FIONA,152,-1,450,450,-1,-1)	//神妙
+	MOT_SET(FIONA,150,-1,408,408,-1,-1)	//フム
+	MOT_SET(FIONA,153,-1,478,478,-1,-1)	//謝礼
+//	MOT_SET(FIONA,154,-1,2000,2015,-1,-1)		//握手
+	MOT_SET(FIONA,154,-1,2000,2000,-1,-1)		//握手
+
+	//布库尔、演技モーション設定
+//	MOT_SET(POCKLE,150,-1,469,469,-1,-1)	//
+	MOT_SET(POCKLE,150,-1,479,479,-1,-1)	//
+
+	//皮皮洛、演技モーション設定
+	MOT_SET(PIPIRO,150,-1,417,417,-1,-1)	//
+
+	MOT_SET(SUBARU,150,-1,446,446,-1,-1)	//あはは
+
+	MOT_SET(KLODE,150,150,9210,9270,-1,-1)	//手を後ろに回して待机
+
+	MOT(FIONA,152,0)
+	MOT(KLODE,150,0)
+
+	//カメラ初期位置
+	CAM_move(-539,457,135,0,0)
+	CAM(30,82,136,26,225,0,0)
+
+
+	//フェードイン
+	fade_in(0,60,0)
+//	wait_fade()
+
+	//スクロール
+//	CAM_move(-761,46,116,90,0)
+	CAM_move(-761,46,116,120,0)
+	wait_CAM()
+	wait_CAM_move()
+
+	//场面切り替え
+	cross_fade(15)
+	CAM_move(-761,46,116,0,0)
+	CAM(110,74,116,18,244,0,0)
+//	CAM(110,74,116,18,301,4200,1)
+	CAM(110,74,116,18,280,3000,0)
+
+//	CAM_return(0)
+//	EV_end()
+//}
+//EV_AAA
+//{
+
+	look_chr(ALWEN,FIONA,"Bone_Head")
+	wait_fade()
+	wait(15)
+
+	KAO(FIONA,"B232BZ4","1233321","4")//
+	MES(FIONA,"原来如此……是这样啊。",0)
+	MES_close(FIONA)
+
+	KAO(ALWEN,"12321","1","4")//
+	MES(ALWEN,"唔……",0)
+	KAO(ALWEN,"12321Z5","1233321","4")//
+	MES(ALWEN,"虽说夺回城堡是件好事，\n不过又出现了新的谜团。",0)
+	KAO(ALWEN,"12321Z5","1","4")//
+	MES(ALWEN,"那扇门的前方\n究竟通向哪里呢。",0)
+	MES_close(ALWEN)
+
+	MES(POCKLE,"总觉得那前方\n铺展着不可思议的空间……",0)
+	MES(POCKLE,"而且，《虹之宝玉》……\n他们到底要用来做什么呢？",0)
+	MES_close(POCKLE)
+
+	look_chr(FIONA, PIPIRO, "Bone_Head")
+
+	look_chr(PIPIRO,LA-RAIRA,"Bone_Head")
+	KAO(PIPIRO,"B232BZ4","1233321","4")//
+	MES(PIPIRO,"呐，时髦奶奶。\n你有什么想法吗？",0)
+	KAO(PIPIRO,"B232BZ3","1","4")//
+	MES(PIPIRO,"你不是活了很久了吗？",0)
+	MES_close(PIPIRO)
+
+	look_chr(POCKLE,LA-RAIRA,"Bone_Head")
+	look_chr(ALWEN, LA-RAIRA,"Bone_Head")
+
+	look_chr(LA-RAIRA, PIPIRO,"Bone_Head")
+//	rot(LA-RAIRA,30,70)	//拉莱拉、皮皮洛を向く
+
+	MOT_SET(LA-RAIRA,150,-2,475,475,-1,-1)	//両手を挙げる1
+	MOT_SET(LA-RAIRA,151,-2,473,473,-1,-1)	//両手を挙げる2
+	MOT(LA-RAIRA,150,5)
+	wait(5)
+	MOT(LA-RAIRA,151,5)
+	wait(5)
+	MOT(LA-RAIRA,150,5)
+	wait(5)
+	MOT(LA-RAIRA,151,5)
+	wait(5)
+	MOT(LA-RAIRA,150,5)
+
+	look_chr(FIONA, LA-RAIRA, "Bone_Head")
+
+	KAO(LA-RAIRA,"12321Z3","-","-")//
+	MES(LA-RAIRA,"谁时髦啊，谁啊？",0)
+	KAO(LA-RAIRA,"12321Z7","-","-")//
+	MES(LA-RAIRA,"像你这样的小丫头，\n怎么可能知道\n时尚的精华乐趣所在呢？",0)
+	MES_close(LA-RAIRA)
+
+	MOT(LA-RAIRA,2,10)
+	KAO(PIPIRO,"B232BZ4","1233321","1")//
+	MES(PIPIRO,"唔，你那身打扮\n我觉得就有啊。",0)
+	KAO(PIPIRO,"B232BZ7","1","1")//
+	MES(PIPIRO,"个性到底是很重要的，\n要是决定得不彻底的话，\n那还不如大胆一点好，不是吗？",0)
+	MES_close(PIPIRO)
+
+	look_chr(LA-RAIRA,PIPIRO,"Bone_Head")
+
+	KAO(LA-RAIRA,"12321Z5","-","-")//
+	MES(LA-RAIRA,"哦，你小子。\n你挺懂行的嘛。",0)
+	MES_close(LA-RAIRA)
+
+	look_off(FIONA)
+
+	MES(POCKLE,"好像谈得挺来的……",0)
+	MES_close(POCKLE)
+
+	KAO(LUE,"12321Z3","23","5")
+	MES(LUE,"这是个难以理解的世界啊。",0)
+	MES_close(LUE)
+	wait_MES(LUE)
+
+	//拉莱拉场面----------------------------------------------
+	cross_fade(15)
+	CAM_move(-901,186,116,0,0)
+	CAM(-330,60,116,22,246,0,0)
+
+//	rot(LA-RAIRA,30,30)	//拉莱拉、艾雯を向く
+	look_chr(LA-RAIRA, ALWEN,    "Bone_Head")
+	look_chr(LUE,      LA-RAIRA, "Bone_Head")
+	wait(15)
+	KAO(LUE,"B","1","21")
+
+	KAO(LA-RAIRA,"12321Z3","-","-")//
+	MES(LA-RAIRA,"嗯，这个先放一边。",0)
+	KAO(LA-RAIRA,"12321Z4","-","-")//
+	MES(LA-RAIRA,"扎哈鲁候爵\n确实是这么说过吧？",0)
+	KAO(LA-RAIRA,"12321Z4","-","-")//
+	MES(LA-RAIRA,"《月之世界（月·异世界）》。",0)
+	MES_close(LA-RAIRA)
+
+	look_chr(POCKLE, ALWEN,    "Bone_Head")
+
+	KAO(ALWEN,"B232BZ2","1233321","3")//
+	MES(ALWEN,"唔，确实是听他这么说的。",0)
+	KAO(ALWEN,"B232BZ2","1","3")//
+	MES(ALWEN,"魔女大人，你知道吗？",0)
+	MES_close(ALWEN)
+
+	KAO(LA-RAIRA,"12321Z6","-","-")//
+	MES(LA-RAIRA,"不，我到现在\n也不过活了两百年左右。",0)
+	KAO(LA-RAIRA,"12321Z6","-","-")//
+	MES(LA-RAIRA,"吉斯卡鲁公大人在五百年前\n做过什么事我也不知道。",0)
+	KAO(LA-RAIRA,"12321Z7","-","-")//
+	MES(LA-RAIRA,"我只是从公爵那里听说，\n在那个礼拜堂里\n封着什么。",0)
+	MES_close(LA-RAIRA)
+
+
+	look_chr(ALWEN, FIONA,"Bone_Head")
+	KAO(ALWEN,"B232BZ2","123","2")//
+	MES(ALWEN,"……那个《镜》吗？",0)
+	MES_close(ALWEN)
+
+	KAO(LA-RAIRA,"12321","-","-")//
+	MES(LA-RAIRA,"唔……",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")//
+	MES(LA-RAIRA,"吉斯卡鲁公大人说，\n那面镜子是『敛厄之扉』。",0)
+	KAO(LA-RAIRA,"12321Z6","-","-")//
+	MES(LA-RAIRA,"于是，为了禁止它的利用，\n将之郑重地封印在了礼拜堂里。",0)
+	KAO(LA-RAIRA,"12321Z6","-","-")//
+	MES(LA-RAIRA,"看来，《虹之宝玉》\n是用来解除那个封印了。",0)
+	MES_close(LA-RAIRA)
+	wait_MES(LA-RAIRA)
+
+	cross_fade(15)
+	CAM(110,74,116,18,244,0,0)
+	CAM_move(-761,46,116,0,0)
+	wait(15)
+
+//	KAO(ALWEN,"B","1","1")
+	KAO(POCKLE,"12321","1233321","5")//
+	MES(POCKLE,"怎，怎么这样……",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"B232BZ5","1233321","4")//
+	MES(PIPIRO,"总而言之，就是\n非常顺利地被利用了吧。",0)
+	MES_close(PIPIRO)
+
+	KAO(ALWEN,"B232BZ6","3","2")//
+	MES(ALWEN,"然后，使用了《镜》而出现的门扉，\n其前方有不可思议的场所……",0)
+
+	look_chr(ALWEN,      LA-RAIRA, "Bone_Head")
+	MOT(ALWEN,150,15)
+
+	KAO(ALWEN,"B232BZ5","321","2")//
+	MES(ALWEN,"也就是说，\n那个地方就是《月·异世界》吧？",0)
+	MES_close(ALWEN)
+
+	KAO(LA-RAIRA,"12321Z3","-","-")//
+	MES(LA-RAIRA,"嗯，应该没错。",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")//
+	MES(LA-RAIRA,"看来，有一些《灾难》沉睡在那里，\n我们应该这么考虑了。",0)
+	MES_close(LA-RAIRA)
+
+	look_off(LA-RAIRA)
+
+	MOT_SET(FIONA,151,-2,407,407,-1,-1)	//両手を広げる
+	MOT(FIONA,151,10)
+	MOT(ALWEN, 2,10)
+	look_chr(FIONA,   LA-RAIRA,    "Bone_Head")
+
+	KAO(FIONA,"C232C2Z2","12321D","5")
+	MES(FIONA,"等，等一下！",0)
+
+	look_chr(POCKLE,   FIONA,    "Bone_Head")
+	look_chr(LA-RAIRA, FIONA,    "Bone_Head")
+
+	KAO(FIONA,"C232C2Z4","1233321","5")
+	MES(FIONA,"那个可怕的吸血鬼，把他的部下\n带到那里去了吗！？",0)
+
+	look_off(FIONA)
+
+	KAO(FIONA,"C232CZ3","1","5")
+	MES(FIONA,"这，这样的话不就……",0)
+	MES_close(FIONA)
+
+	KAO(KLODE,"C232CZ4","123","3")
+	MES(KLODE,"……什么问题都没有解决。",0)
+	KAO(KLODE,"B232BZ5","321","3")
+	MES(KLODE,"不，反过来说，或许\n现在开始才是动真格的。",0)
+	MES_close(KLODE)
+
+	MOT(FIONA,150,10)				//考えてるモーション
+
+	KAO(FIONA,"C","1233321","3")
+	MES(FIONA,"唔……",0)
+	MES_close(FIONA)
+	wait_MES(FIONA)
+
+	//艾雯场面------------------------------------------------------
+	cross_fade(15)
+	CAM_move(-941,526,116,0,0)
+//	CAM(-210,63,116,31,217,0,0)
+//	CAM(-210,66,116,31,216,0,0)
+	CAM(-210,62,116,31,219,0,0)
+
+	rot_chr(POCKLE,  60, ALWEN )
+
+	look_chr(LUE,      ALWEN, "Bone_Head")
+	look_chr(POCKLE,   ALWEN, "Bone_Head")
+	look_chr(LA-RAIRA, ALWEN, "Bone_Head")
+
+	KAO(LUE,  "B","1","5")
+	KAO(ALWEN,"B","3","3")
+	wait_fade()
+	wait(15)
+
+	MES(ALWEN,"…………………………………",0)
+	MES_close(ALWEN)
+
+	KAO(LUE,"B232BZ4","1","5")
+	MES(LUE,"公主大人……\n请不要担心。",0)
+	KAO(LUE,"B232BZ5","1233321","5")
+	MES(LUE,"好不容易夺回了城堡。\n现在请好好地休息……",0)
+	MES_close(LUE)
+
+	look_chr(ALWEN,      LUE, "Bone_Head")
+
+	KAO(ALWEN,"B232BZ4","32","3")//
+	MES(ALWEN,"不，不能这么做。",0)
+	KAO(ALWEN,"B232BZ5","2","3")//
+	MES(ALWEN,"父亲所封印的灾难之扉，\n现在由我叔叔打开了。",0)
+
+	look_off(ALWEN)
+	KAO(ALWEN,"B232BZ4","23","3")//
+	MES(ALWEN,"那么我便责无旁贷。",0)
+	MES_close(ALWEN)
+
+	KAO(LUE,"B232BZ2","1233321","5")
+	MES(LUE,"公主大人……",0)
+	MES_close(LUE)
+
+	KAO(ALWEN,"B","321","3")//
+	look_chr(ALWEN,   FIONA, "Bone_Head")
+	wait(15)
+	KAO(ALWEN,"B232BZ4","1","3")
+	MES(ALWEN,"魔女大人，还有菲奥娜小姐。",0)
+	KAO(ALWEN,"B232BZ5","1","3")
+	MES(ALWEN,"此次，由于我亲属\n的肆意妄为给你们添麻烦了。",0)
+	KAO(ALWEN,"B232BZ5","1","3")
+	MES(ALWEN,"然则，请务必\n更加尽力的协助我。",0)
+	KAO(ALWEN,"B232BZ5","1233321","3")
+	MES(ALWEN,"为了防灾难于未然，\n也为了夺回真正的和平。",0)
+	MES_close(ALWEN)
+
+	KAO(FIONA,"B","1","1")//デフォルト
+
+	wait(15)
+	cross_fade(15)
+	KAO(LUE,  "1","1","4")
+	CAM(110,74,116,18,244,0,0)
+	CAM_move(-761,46,116,0,0)
+
+	MOT(FIONA, 2, 0)
+	wait(15)
+
+	KAO(POCKLE,"B232BZ2","12321D","6")//
+	MES(POCKLE,"艾雯姐姐……",0)
+	MES_close(POCKLE)
+
+	KAO(LA-RAIRA,"12321Z5", "-", "-")
+	MES(LA-RAIRA,"嗯，我原本\n就打算要帮忙了。",0)
+	MES_close(LA-RAIRA)
+	look_chr( LA-RAIRA, FIONA, "Bone_Head")
+	KAO(LA-RAIRA,"12321Z4", "-", "-")
+	MES(LA-RAIRA,"这位小姐，你怎么样？",0)
+	MES_close(LA-RAIRA)
+
+
+	MES(FIONA,"………………………………",0)
+	KAO(FIONA,"B232BZ7","123","4")
+	MES(FIONA,"……实话说，\n与魔族联手合作，对过去的我而言\n是难以想像的。",0)
+	KAO(FIONA,"B232BZ6","3","4")
+	MES(FIONA,"因为，这数百年来，\n我等一族都是从魔族的威胁中\n暗中守护着人们。",0)
+	MES_close(FIONA)
+
+	KAO(ALWEN,"B232BZ2","123332A","1")
+	MES(ALWEN,"……的确如此。",0)
+	MES_close(ALWEN)
+
+	KAO(FIONA,"B232BZ6","321","2")
+	MES(FIONA,"然而，过去你的父亲\n与人类结成了同盟。",0)
+	KAO(FIONA,"B232BZ6","1","2")
+	MES(FIONA,"并且提供协助，\n剿灭了六魔王之一。",0)
+	KAO(FIONA,"12321Z4","1233321","1")
+	MES(FIONA,"因此，艾雯小姐。",0)
+	KAO(FIONA,"12321Z7","1","1")
+	MES(FIONA,"在这样的困难面前，\n我们没有任何理由不提供协助。",0)
+	MES_close(FIONA)
+
+	look_chr( LA-RAIRA, ALWEN, "Bone_Head")
+
+	KAO(ALWEN,"12321","123","6")//
+	MES(ALWEN,"是吗……",0)
+	MES_close(ALWEN)
+
+//　　艾雯、菲奥娜に手を差し出す。
+
+	wait(15)
+	cross_fade(15)
+	KAO(LUE,  "1","1","1")
+	KAO(SUBARU,   "1","1","1");
+	CAM_move(-841,-114,156,0,0)
+	CAM_move(-790,-54,156,0,0)
+	CAM(-170,34,156,20,180,0,0)
+	color(PIPIRO,-1)
+	color(KLODE,-1)
+	chr_pos(LA-RAIRA, -980,-175,0,310,2)
+	chr_pos(ALWEN,    -680,-22,0,90, 2)
+	KAO(ALWEN,"1","3","1")//
+	rot_chr(POCKLE, -1, ALWEN )
+	move(ALWEN, 0, WALK1, -730,-22,0,0)
+	wait_fade()
+
+	wait_move(ALWEN)
+	MOT(ALWEN, 153, 10)	//手を差し出す
+
+	KAO(ALWEN,"14641Z5","32A","1")//
+	MES(ALWEN,"──感谢你。\n菲奥娜·艾尔·瓦伦斯。",0)
+	MES_close(ALWEN)
+
+	look_off(LUE)
+
+	move(FIONA, 0, WALK1, -850,-22,0,0)
+	wait_move(FIONA)
+
+	MOT(FIONA, 154, 10)	//握手
+
+//　　菲奥娜、艾雯的手を取って握手。
+	KAO(FIONA,"12321Z3","123332A","1")
+	MES(FIONA,"彼此彼此。",0)
+//	MOT(FIONA,153,15)
+	KAO(FIONA,"12321Z4","A","4")
+	MES(FIONA,"那个，挥剑相向的无礼，\n请务必原谅。",0)
+	MES_close(FIONA)
+
+//	MOT(ALWEN, 2, 15)
+	KAO(ALWEN,"12321Z3","1236","1")
+	MES(ALWEN,"唔，就让它过去吧。",0)
+	MES_close(ALWEN)
+
+	wait(15)
+	cross_fade(15)
+	KAO(ALWEN,"1","A","1")//デフォルト
+	CAM_move(-780,-66,175,0,0)
+	CAM(230,48,175,28,178,0,0)
+
+	color(PIPIRO,1)
+	color(KLODE,1)
+	wait_fade()
+
+	KAO(LA-RAIRA,"12321Z3","-","-")
+	MES(LA-RAIRA,"哎呀哎呀。",0)
+	MES_close(LA-RAIRA)
+
+
+	KAO(POCKLE,"12321Z4","1232A","6")//
+	MES(POCKLE,"哈～，太好了。\n没有吵架……",0)
+	MES_close(POCKLE)
+
+	look_chr(PIPIRO, POCKLE,"Bone_Head")
+
+
+	MES(PIPIRO,"布库尔，你又来了。",0)
+	MES(PIPIRO,"漂亮的大姐姐们强强联手，\n然后又谈崩，\n你明明就很期待这个～。",0)
+	MES_close(PIPIRO)
+
+	rot_chr(  POCKLE, 30, PIPIRO )
+	look_chr(POCKLE,PIPIRO, "Bone_Head")
+
+	KAO(POCKLE,"B232B3Z2","A233321","4")
+	MES(POCKLE,"我才没有啊！",0)
+	MOT(POCKLE, 150, 10 )
+	EMO(POCKLE, EMO_ASEASE)
+	KAO(POCKLE,"B232BZ5", "1", "4")
+	MES(POCKLE,"这里还有初次见到面的人，\n不要说这种让人误会的话啊～！",0)
+	MES_close(POCKLE)
+
+	KAO(SUBARU,"A232AZ2","1236","5")
+	MES(SUBARU,"啊哈哈……",0)
+	MES_close(SUBARU)
+
+	look_off(LUE)
+	KAO(LUE,"12321Z3", "123", "5")
+	MES(LUE,"唉，真是悠闲的孩子们啊～。",0)
+	MES_close(LUE)
+
+	wait(15)
+	//--------------------------------------------------------------------------------
+	cross_fade(15)
+	CAM_move(-780,534,135,0,0)
+	CAM(110,54,135,28,217,0,0)
+	CAM_move(-780,454,135,210,0)
+	CAM(-50,54,135,29,234,210,0)
+	chr_pos(ALWEN,  -598,-161,0,360, 2)
+	KAO(ALWEN,"1","1","1")
+//	KAO(SUBARU,"1","1","1")
+
+	MOT(FIONA,2,0)
+//	MOT(ALWEN,2,0)
+	wait(30)
+
+//　　ここで露的頭にＰＡマーク。
+//　　ふと気付いたように拉古那的方を向く。
+	KAO(LUE,"E", "12321D", "6")
+	EMO(LUE, EMO_PA )
+	wait(20)
+
+	rot_chr(LUE,30,EVENT_RAGNA)
+	wait(15)
+
+	move(LUE,0, WALK1,-728,-331,0,0)
+
+	KAO(LUE,"12321Z4", "D12321", "1")
+	MES(LUE,"我说你……\n到底怎么了？",0)
+	KAO(LUE,"12321Z4", "1", "1")
+	MES(LUE,"从刚才开始，\n就一句话也不说。",0)
+	MES_close(LUE)
+
+	KAO(SUBARU,"2","6321","1")
+	MES(SUBARU,"啊……",0)
+	MES_close(SUBARU)
+
+//　　ここで皆が拉古那に注目する。
+	look_off(ALWEN)
+	look_off(POCKLE)
+	look_off(PIPIRO)
+	look_off(LA-RAIRA)
+	MOT(POCKLE,2,60)
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	rot_chr(FIONA,30,EVENT_RAGNA)
+	rot_chr(KLODE,30,EVENT_RAGNA)
+	rot_chr(SUBARU,30,EVENT_RAGNA)
+	rot_chr(PIPIRO,30,EVENT_RAGNA)
+	rot_chr(POCKLE,30,EVENT_RAGNA)
+	rot_chr(LA-RAIRA,30,EVENT_RAGNA)
+	wait(30)
+
+	MES(ALWEN,"……………………………",0)
+	MES_close(ALWEN)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(-620,474,135,0,0)
+	CAM(-250,31,135,30,203,0,0)
+	wait(15)
+
+	KAO(SUBARU, "B232BZ3","1233321","5")
+	MES(SUBARU,"师父……\n伤口还在痛吗？",0)
+	KAO(SUBARU, "B232BZ6","1","5")
+	MES(SUBARU,"我这里有\n从爷爷那拿来的\n很好用的软膏……",0)
+	MES_close(SUBARU)
+
+	look_chr(EVENT_RAGNA, SUBARU, "Bone_Head" );
+
+//	KAO(EVENT_RAGNA, "12321Z3","1","1")
+//	KAO(EVENT_RAGNA, "12321Z3","A","4")
+	KAO(EVENT_RAGNA, "B232BZ3","123","4")
+	MES(EVENT_RAGNA,"……不，伤已经没事了。",0)
+//	KAO(EVENT_RAGNA, "12321Z6","1","1")
+	KAO(EVENT_RAGNA, "B232BZ5","32A","4")
+	MES(EVENT_RAGNA,"也没受到致命伤，\n只不过被揍得狠了点而已。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU, "B232BZ2","1233321","5")
+	MES(SUBARU,"拉古那师父……",0)
+	MES_close(SUBARU)
+
+	look_off(EVENT_RAGNA);
+
+	KAO(EVENT_RAGNA, "B232BZ2","A23","2")
+	MES(EVENT_RAGNA,"不过，呢。",0)
+	MES_close(EVENT_RAGNA)
+
+//	wait_MES()
+//	cross_fade(15)
+//	CAM_move(-1020,440,35,0,0)
+//	CAM(30,92,35,33,221,0,0)
+//	color(EVENT_RAGNA2,-1)
+//	color(EVENT_RAGNA,  1)
+	MOT(EVENT_RAGNA, 2, 10)			//立ち上がる
+	wait(5)
+	SE(1029,0)//立ち上がるSE
+	wait(20)
+
+//	rot(SUBARU, -1, 70 )
+//	chr_pos(EVENT_RAGNA, -621,-464,0,0,2)
+//	wait_fade()
+
+	KAO(EVENT_RAGNA, "B232BZ6","321","2")
+	MES(EVENT_RAGNA,"在你们这么有干劲的时候说这个真是不好意思。\n不过我打算就在这里退出了。",0)
+	MES_close(EVENT_RAGNA)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(-1020,440,35,0,0)
+	CAM(30,92,35,33,221,0,0)
+	rot(SUBARU, -1, 70 )
+	chr_pos(EVENT_RAGNA, -621,-464,0,0,2)
+	wait(15)
+
+//　　艾雯たち的頭に！マーク。
+	EMO(ALWEN,    EMO_BIKKURI )
+	EMO(PIPIRO,   EMO_BIKKURI )
+	EMO(POCKLE,  EMO_BIKKURI )
+	EMO(FIONA,    EMO_BIKKURI )
+	EMO(LA-RAIRA, EMO_BIKKURI )
+	EMO(LUE,      EMO_BIKKURI )
+	EMO(SUBARU,   EMO_BIKKURI )
+	EMO(KLODE,   EMO_BIKKURI )
+	wait(15)
+
+	MES(LUE,"咦咦！？",0)
+	MES_close(LUE)
+
+	KAO(SUBARU, "B232B2Z2","12321D","6")
+	MES(SUBARU,"师，师父！？",0)
+	MES_close(SUBARU)
+
+	KAO(SUBARU, "2","1","4")
+
+	wait(15)
+	//拉古那と艾雯アップ
+	//cross_fade(15)
+	CAM_move(-1220,740,35,120,0)
+	CAM(-130,92,35,36,234,120,0)
+
+
+	//菲奥娜、克劳德、昴再配置
+	F_set_chr(KLODE, CF_NO_CSP)
+	F_set_chr(FIONA, CF_NO_CSP)
+	F_set_chr(SUBARU, CF_NO_CSP)
+	wait(15)
+
+	KAO(ALWEN,"B232BZ2","1233321","2")
+	MES(ALWEN,"拉古那，你……",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA, "B232BZ3","1233321","2")
+	MES(EVENT_RAGNA,"我们的契约是到夺回城为止……",0)
+	KAO(EVENT_RAGNA, "B232BZ5","1","2")
+	MES(EVENT_RAGNA,"这也差不多算\n把人情还够了吧？",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(ALWEN,"……的确如此。",0)
+	MES(ALWEN,"虽然，《血之契约》的影响\n暂时还将持续……",0)
+	MES(ALWEN,"不过你已经\n不是我的《血这战士》了。",0)
+	MES_close(ALWEN)
+
+
+//	KAO(EVENT_RAGNA, "12321Z3","1","1")
+	KAO(EVENT_RAGNA, "12321Z3","123","4")
+	MES(EVENT_RAGNA,"那么，我就凭自己的意志行动了。",0)
+//	KAO(EVENT_RAGNA, "12321Z5","1","1")
+	KAO(EVENT_RAGNA, "12321Z5","3","4")
+	MES(EVENT_RAGNA,"之前我一直陪着你，\n都没去修理特里斯坦号。",0)
+//	KAO(EVENT_RAGNA, "12321Z5","1","1")
+	KAO(EVENT_RAGNA, "12321Z4","32A","4")
+	MES(EVENT_RAGNA,"再不管它的话\n它就要生气了。",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(ALWEN,"…………………………………",0)
+	MES_close(ALWEN)
+
+//	KAO(LUE, "12321Z5","1","1")
+	KAO(LUE, "G232GHZ3","123332","3")
+	MES(LUE,"你，你这家伙！\n为什么在这种时候说这种……",0)
+	MES_close(LUE)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(-820,340,35,0,0)
+	CAM(390,68,35,23,236,0,0)
+
+//	rot_chr(SUBARU, -1, EVENT_RAGNA )
+
+	//菲奥娜再配置
+//	F_set_chr(FIONA, CF_NO_ZIMEN )			//当たり無視
+//	F_set_chr(FIONA, CF_NO_HEIGHT)
+	F_set_chr(FIONA, CF_NO_CSP)
+
+//	chr_pos(SUBARU, -480,-475,0, 180,2)
+	chr_pos(SUBARU, -480,-475,0, 90,2)
+	chr_pos(FIONA, -983,-259,0,230,2)
+//	chr_pos(FIONA, -826,-332,0,230,2)
+	chr_pos(KLODE, -757,-08,0, 180,150)
+	move(FIONA,0, WALK1,-826,-332,0,0)
+
+
+	//克劳德再配置
+//	move(KLODE,0, WALK1,-732,-66,0,0)
+//	F_set_chr(KLODE, CF_NO_ZIMEN )			//当たり無視
+//	F_set_chr(KLODE, CF_NO_HEIGHT)
+	F_set_chr(KLODE, CF_NO_CSP)
+
+	wait_move(FIONA)
+
+//	KAO(FIONA, "12321Z2","1","1")
+	KAO(FIONA, "B232BZ2","1","1")
+	MES(FIONA,"那个，拉古那。",0)
+//	KAO(FIONA, "12321Z5","1","1")
+	KAO(FIONA, "B232BZ5","123332A","1")
+	MES(FIONA,"如果要修理飞机的话，\n我们也可以帮忙的。",0)
+
+	look_chr( EVENT_RAGNA, FIONA, "Bone_Head");
+
+//	KAO(FIONA, "12321Z4","1","1")
+	KAO(FIONA, "B232BZ4","A","1")
+	MES(FIONA,"或者也可以垫付修理费……",0)
+	MES_close(FIONA)
+
+//	KAO(EVENT_RAGNA, "12321Z4","1","1")
+	KAO(EVENT_RAGNA, "12321Z3","123","4")
+	MES(EVENT_RAGNA,"喂喂，够了。",0)
+//	KAO(EVENT_RAGNA, "12321Z6","1","1")
+	KAO(EVENT_RAGNA, "12321Z5","32","4")
+	MES(EVENT_RAGNA,"向我卖这么个人情，\n是想让我做什么？",0)
+	MES_close(EVENT_RAGNA)
+
+//	KAO(FIONA, "12321Z2","1","1")
+	KAO(FIONA, "B232BZ2","12321D","5")
+	MES(FIONA,"这，这个……",0)
+	MES_close(FIONA)
+
+//	KAO(KLODE, "12321Z2","1","1")
+	KAO(KLODE, "B232BZ2","123","1")
+	MES(KLODE,"……拉古那先生。",0)
+	MES_close(KLODE)
+
+//	KAO(EVENT_RAGNA, "12321Z4","1","1")//
+	KAO(EVENT_RAGNA, "B232BZ4","A23","5")//
+	MES(EVENT_RAGNA,"对不起，我并不是\n想要讽刺你们。",0)
+//	KAO(EVENT_RAGNA, "12321Z4","1","1")//
+	KAO(EVENT_RAGNA, "B232BZ4","32A","5")//
+	MES(EVENT_RAGNA,"但是……\n总之，请允许我回绝吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_off( EVENT_RAGNA );
+
+//　　拉古那、出口的方に向き直って他的者たちに背を向ける。
+	KAO(EVENT_RAGNA, "B","A23","1")//
+	rot(EVENT_RAGNA,30,0)
+	wait(15)
+
+	KAO(EVENT_RAGNA, "12321Z4","321","1")//
+	MES(EVENT_RAGNA,"……嗯，这事虽然很难办，\n不过你们还是好好加油吧。",0)
+	KAO(EVENT_RAGNA, "12321Z5","1","1")//
+	MES(EVENT_RAGNA,"特里斯坦号修好之后，\n我就会离开伊鲁巴特。",0)
+//	KAO(EVENT_RAGNA, "1232CZ2","1","1")
+	KAO(EVENT_RAGNA, "12321Z2","123","1")
+	MES(EVENT_RAGNA,"那么，再见了。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU, "2","1","4")
+	KAO(FIONA,  "B","1","1")
+	KAO(KLODE,  "B","1","1")
+	KAO(ALWEN,  "B","1","1")
+	KAO(LUE,    "2","1","1")
+
+	CAM_move(-780,260,35,90,0)
+	CAM(-10,92,35,27,242,90,0)
+
+//　　拉古那、手を振りながらそ的まま去っていく。
+
+//	EV("EV_LOOK_RAGUNA")				//拉古那を見続けるイベント開始
+
+	rot_chr( ALWEN, 5, DUMMY );
+	rot_chr( LUE,   5, DUMMY );
+	rot_chr( PIPIRO,5, DUMMY );
+	rot_chr( POCKLE,5, DUMMY );
+	rot_chr( KLODE, 5, DUMMY );
+	rot_chr( FIONA, 5, DUMMY );
+	rot_chr( SUBARU, 5, DUMMY );
+	rot_chr( LA-RAIRA, 5, DUMMY );
+
+	KAO(EVENT_RAGNA, "B","3","1")
+	rot( EVENT_RAGNA, 10, 310 )
+//	move(ch,typ,速,X,Y,Z,Len)	キャラ移動　typ[0=座標指定 1=キャラX的位置+Z 2=自分相対位置 3=自分位置＆xyzが-1以外で直位置　5=フリムブ] Len=到達範囲距離 typeが10以上で自動モーション切り替えなし
+	move(EVENT_RAGNA,0, WALK1,-81,-11,0,0)
+	wait_move(EVENT_RAGNA)
+	move(EVENT_RAGNA,0, WALK1,119,  0,0,0)
+	rot( EVENT_RAGNA, 10, 270 )
+
+	color(EVENT_RAGNA,-30)
+	wait_move(EVENT_RAGNA)
+	wait_color(EVENT_RAGNA)
+
+//	EV_stop("EV_LOOK_RAGUNA")
+
+	KAO(SUBARU, "B232BZ2","1233321","4")
+	MES(SUBARU,"拉古那师父……",0)
+	MES_close(SUBARU)
+
+	KAO(POCKLE, "B232BZ4","1233321","1")
+	MES(POCKLE,"ラ、拉古那大哥，\n他这是怎么了？",0)
+	KAO(POCKLE, "B232BZ5","1","1")
+	MES(POCKLE,"那个时候，好像\n拼命地叫着谁的名字……",0)
+	MES_close(POCKLE)
+
+	MOT(PIPIRO,150,15)
+	KAO(PIPIRO, "12321Z4","123","1")
+	MES(PIPIRO,"谁知道，总之发生了很多事吧。",0)
+//	KAO(PIPIRO, "12321Z5","1","1")
+	KAO(PIPIRO, "12321Z5","3","5")
+	MES(PIPIRO,"如果可以的话，\n我也想早点离开这里～。",0)
+//	KAO(PIPIRO, "12321Z5","1","1")
+	KAO(PIPIRO, "12321Z5","3","5")
+	MES(PIPIRO,"总觉得接下来的事\n会变得更麻烦。",0)
+	MES_close(PIPIRO)
+
+	KAO(POCKLE, "B","1","5")
+	rot_chr(POCKLE, 30, PIPIRO )
+	KAO(POCKLE, "B232BZ2","1","5")
+	MES(POCKLE,"皮皮洛～……",0)
+	MES_close(POCKLE)
+
+	KAO(LA-RAIRA, "12321Z4","-","-")
+	MES(LA-RAIRA,"哎呀呀……\n看错他了啊。",0)
+	KAO(LA-RAIRA, "12321Z5","-","-")
+	MES(LA-RAIRA,"还以为他会\n更沉着一点呢。",0)
+	MES_close(LA-RAIRA)
+
+	KAO(FIONA, "B232BZ3","1233321","1")
+	MES(FIONA,"……我也这么想呢。",0)
+	MES_close(FIONA)
+
+//	KAO(SUBARU, "12321Z3","1","1")
+//	KAO(SUBARU, "12321Z3","1","5")
+//	MES(SUBARU,"………拉古那师父…………",0)
+//	MES_close(SUBARU)
+
+	wait(10)
+	//艾雯アップ
+	cross_fade(15)
+//	CAM_move(-1320,440,35,0,0)
+//	CAM(-90,86,35,36,249,0,0)
+	
+	CAM_move(-480,120,155,0,0)
+	CAM(-130,24,155,36,248,0,0)
+	wait(15)
+
+//	KAO(LUE, "C232CZ5","1","3")
+	KAO(LUE, "C232CZ4","123","3")
+	MES(LUE,"啊啊算了！\n那种家伙鬼才管他啊！",0)
+
+	look_chr( LUE, ALWEN, "Bone_Head" );
+
+//	KAO(LUE, "C232CZ5","1","3")
+	KAO(LUE, "C232CZ4","32A","1")
+	MES(LUE,"公主大人！\n我们就随他去吧！",0)
+//	KAO(LUE, "C232CZ5","1","3")
+	KAO(LUE, "C232CZ4","A","1")
+//	MES(LUE,"反正也不过是个只会动嘴巴的\n无情无义的男人罢了──",0)
+	MES_pos(LUE,"反正也不过是个只会动嘴巴的\n无情无义的男人罢了──",0,0,0,0,0)
+//	MES_close(LUE)
+	wait(20)
+
+	wait(15)
+	CAM_quake("46")
+//	KAO(ALWEN,"C232C","1","1")//
+	KAO(ALWEN,"C232C","123","3")//
+	MES(ALWEN,"S5──不对！",0)
+	MES_close(ALWEN)
+	MES_close(LUE)
+
+//　　露的頭に！マーク。
+	KAO(LUE, "C","D","6")
+	EMO(LUE,EMO_BIKKURI)
+	rot_chr(LUE,30,ALWEN )
+	KAO(FIONA,"E","1","1")
+	KAO(KLODE,"B","1","1")
+	look_chr( FIONA, ALWEN, "Bone_Head" );
+	look_chr( KLODE, ALWEN, "Bone_Head" );
+	wait(20)
+//	KAO(LUE, "B232BZ1","1","4")
+//	KAO(LUE, "B232BZ1","D","1")
+	KAO(LUE, "B232B2Z2","D2321D","6")
+	MES(LUE,"公，公主大人……？",0)
+	MES_close(LUE)
+
+//	KAO(ALWEN,"C232CZ3","1","1")
+	KAO(ALWEN,"C232CZ2","32","2")
+	MES(ALWEN,"……对不起，露。",0)
+//	KAO(ALWEN,"C232CZ5","1","1")
+	KAO(ALWEN,"C232CZ4","2","2")
+	MES(ALWEN,"看来，我好像\n差点就把约定给忘了。",0)
+//	KAO(ALWEN,"C232CZ5","1","1")
+	KAO(ALWEN,"C232CZ4","23332","2")
+	MES(ALWEN,"我马上就回来，\n大家请稍等。",0)
+	MES_close(ALWEN)
+
+//	look_off( LUE );
+//	CAM(-169,38,155,36,229,50,0)
+	CAM_move(-780,260,35,60,0)
+	CAM(-9,91,35,26,241,60,0)
+//　　艾雯、出口的方に走っていく。
+	move(ALWEN, 0, RUN1,119,  0,0,0)
+
+//	wait_move(ALWEN)
+
+//　　画面、そ的ままフェードアウト。
+	fade_in(100,60,0)
+
+	wait_fade()
+
+	clear_party(PARTNER)//0830追加
+
+	stop_BGM(90)
+	wait_BGM()
+	wait(30)
+	workG(GW_DEF_BGM,SET,62)		//デフォルト曲を変更する
+
+//　　阿鲁迪亚镇（昼）（ev00100）へ。
+	workG(GW_ENTRY_EVENT,SET,4)
+	new_map(10100)
+
+//	EV_end()
+}
+//
+//EV_LOOK_RAGUNA
+//{
+//	rot_chr( ALWEN, 5, DUMMY );
+//	rot_chr( LUE,   5, DUMMY );
+//	rot_chr( PIPIRO,5, DUMMY );
+//	rot_chr( POCKLE,5, DUMMY );
+//	rot_chr( KLODE, 5, DUMMY );
+//	rot_chr( FIONA, 5, DUMMY );
+//	rot_chr( SUBARU, 5, DUMMY );
+//	rot_chr( LA-RAIRA, 5, DUMMY );
+//
+//	wait(5)
+//	loop
+//}
+//
+
+//──────────────────────────────
+//▼巨大龙卷に挑むことにする
+//──────────────────────────────
+//　　画面切り替えして、菲奥娜的屋敷的応接間。
+//　　艾雯、露、拉莱拉、菲奥娜、克劳德、
+//　　布库尔、皮皮洛、奥蒂莎がいるが拉古那は居ない状況。
+EV_6_01_GoToMeru
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,		-99,495,1,0,2)
+	chr_pos(PARTNER,	-99,295,1,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	color(PET,-1)
+
+	set_chr(EVENT_RAGNA, 1014,-1,-1, 120,20,0,2,90,0, "")
+	set_chr(ALWEN,    1011,-1,-1, -530,30,0, 2,80,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	color(EVENT_RAGNA,-1)
+//	set_chr(KLODE,    1018,-1,-1,-1030,120,0, 2, 260, 0, "")
+	set_chr(KLODE,    1018,-1,-1,-947,147,0,2, 260, 0, "")
+	set_chr(FIONA,    1016,-1,-1,-930,0,0, 2, 280, 0, "")
+//	set_chr(LUE,       1015,-1,-1, -420,-60,0, 2, 70,0, "")
+	set_chr(LUE,       1015,-1,-1, -568,-169,-50,2, 24,0, "")
+	set_chr(PIPIRO,   1013,-1,-1, -610,370,0, 2,160,0, "")
+	set_chr(POCKLE,   1012,-1,-1, -770,260,0, 2,170,0, "")
+	set_chr(LA-RAIRA,   1023,-1,-1, -760,-210,0, 2,0,0, "")
+	set_chr(ODESSA,	  	1019,-1,-1, -424,250,0, 2,120,0, "")
+	F_set_chr(KLODE,CF_NO_CLIP)
+	F_set_chr(KLODE,CF_NO_CLIP2)
+	F_set_chr(KLODE,CF_NO_CSP)
+	F_set_chr(FIONA,CF_NO_CLIP)
+	F_set_chr(FIONA,CF_NO_CLIP2)
+	F_set_chr(FIONA,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(PIPIRO,CF_NO_CLIP)
+	F_set_chr(PIPIRO,CF_NO_CLIP2)
+	F_set_chr(PIPIRO,CF_NO_CSP)
+	F_set_chr(POCKLE,CF_NO_CLIP)
+	F_set_chr(POCKLE,CF_NO_CLIP2)
+	F_set_chr(POCKLE,CF_NO_CSP)
+	F_set_chr(LA-RAIRA,CF_NO_CLIP)
+	F_set_chr(LA-RAIRA,CF_NO_CLIP2)
+	F_set_chr(LA-RAIRA,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+
+	wait(30)			//これがないと、奥蒂莎的武器が消えない。
+
+	F_set_chr(LUE, CF_NO_HEIGHT)
+	F_set_chr(LUE, CF_NO_ZIMEN)
+	F_set_Node(PIPIRO, "Bone_RightSword", NP_HIDE)				//武器非表示
+	F_set_Node(POCKLE, "Bone_RightSword", NP_HIDE)				//武器非表示
+	F_set_Node(ODESSA, "Bone_RightSword", NP_HIDE)				//武器非表示
+//	F_set_Node(LA-RAIRA, "Bone_RightSword", NP_HIDE)				//武器非表示
+
+//	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる的はこちら。
+	MOT(ALWEN,53,1)										//艾雯的右手を開かせる。
+
+	F_set_Node(ODESSA, "Bone_RightSword", NP_HIDE)
+
+	//モーション定義
+	MOT_SET(FIONA,150,-1,450,450,-1,-1)	//神妙
+	MOT_SET(FIONA,151,-1,421,421,-1,-1)	//ポン
+	MOT_SET(FIONA,152,-1,423,423,-1,-1)	//
+	MOT_SET(FIONA,153,-1,407,407,-1,-1)	//どうしたら
+	MOT_SET(FIONA,154,-1,436,436,-1,-1)	//胸に手
+	MOT_SET(FIONA,155,-1,411,411,-1,-1)	//くっ
+	MOT_SET(KLODE,150,-1,482,482,-1,-1)	//おぅ
+	MOT_SET(KLODE,151,151,9210,9270,-1,-1)	//手を後ろに回して待机
+	MOT_SET(KLODE,152,-1,3810,3849,-1,-1)	//お辞儀
+	MOT_SET(KLODE,153,-1,3860,3892,-1,-1)	//お辞儀
+	MOT_SET(ODESSA,150,-1,405,405,-1,-1)	//どうな的よ
+	MOT_SET(ODESSA,151,-1,396,396,-1,-1)	//片手腰
+	MOT_SET(ODESSA,152,-1,395,395,-1,-1)	//腕組
+	MOT_SET(ODESSA,153,-1,430,430,-1,-1)	//おぅ
+	MOT_SET(LA-RAIRA,150,-1,410,410,-1,-1)	//フム
+	MOT_SET(EVENT_RAGNA,150,-1,405,405,-1,-1)	//どうな的よ
+	MOT_SET(EVENT_RAGNA,151,-1,541,541,152,10)	//
+	MOT_SET(EVENT_RAGNA,152,-1,543,543,-1,-1)	//
+	MOT_SET(EVENT_RAGNA,153,-1,404,404,-1,-1)	//
+	MOT_SET(EVENT_RAGNA,154,-1,400,400,-1,-1)	//左腕腰
+	MOT_SET(ALWEN,150,-1,414,414,-1,-1)	//両手腰
+	MOT_SET(ALWEN,151,-1,411,411,-1,-1)	//くっ
+	MOT_SET(ALWEN,152,-1,399,399,-1,-1)//腰に手を当てる（左）
+	MOT_SET(PIPIRO,150,-1,415,415,151,8)	//やれやれ
+	MOT_SET(PIPIRO,151,-1,417,417,-1,-1)	//
+	MOT_SET(PIPIRO,152,-1,515,515,-1,-1)	//おぅ
+	MOT_SET(POCKLE,150,-1,407,407,-1,-1)	//どうしたら
+	MOT_SET(POCKLE,151,-1,472,472,-1,-1)	//聞いてないよ
+	MOT_SET(POCKLE,152,-1,115,115,-1,-1)	//おお！
+	MOT_SET(LUE,   151,151,500,560,-1,-1)	//おお！
+
+	MOT(FIONA, 150,0)
+	MOT(KLODE, 151,0)
+	MOT(ODESSA,152,0)
+
+	//カメラ初期位置
+//	CAM_move(-468,-60,120,0,0)
+//	CAM(150,74,120,24,235,0,0)
+//	CAM_move(-668,-60,120,120,0)
+//	CAM(150,74,120,24,235,120,0)		//最後にがくっとなるからやめる
+
+	CAM_move(-668,-60,120,0,0)
+	CAM(150,74,120,24,235,0,0)
+
+	//デフォルト表情
+	KAO(FIONA, "B","1","2")
+	KAO(KLODE, "C","1","2")
+	KAO(ALWEN, "C","1","2")
+	KAO(POCKLE,"B","1","2")
+	KAO(ODESSA,"B","1","2")
+	KAO(PIPIRO,"B","1","2")
+	KAO(LUE,   "B","1","2")
+	KAO(LA-RAIRA,"1","-","-")
+
+	//フェードイン
+	fade_in(0,90,0)
+	wait_fade()
+
+	wait_CAM()
+
+	KAO(FIONA,"B232BZ5","1233321","3")
+	MES(FIONA,"──情况\n比想像中的严竣。",0)
+	KAO(FIONA,"B232BZ7","1","3")
+	MES(FIONA,"由于那个巨大的龙卷，\n伊鲁巴特周边的气流\n被扰乱得相当严重……",0)
+	KAO(FIONA,"B232BZ6","3","5")
+	MES(FIONA,"我们再次\n遭到了孤立。",0)
+	MES_close(FIONA)
+
+	KAO(ALWEN,"C232CZ7","1","2")
+	MES(ALWEN,"……并且，那个要塞\n若是真正开始运作，\n就不止是伊鲁巴特的问题了。",0)
+	KAO(ALWEN,"C232CZ3","123","2")
+	MES(ALWEN,"《螺旋要塞》梅尔塞迪克──",0)
+	KAO(ALWEN,"C232CZ6","3","2")
+	MES(ALWEN,"传说在那场大战中，\n它摧毁了众多浮游岛。",0)
+	MES_close(ALWEN)
+
+	look_chr( ODESSA, ALWEN ,"Bone_Head")
+	wait(15)
+
+	KAO(ODESSA,"B232BZ6","123","2")
+	MES(ODESSA,"也存在着让库朗毕林\n全境陷入毁灭的可能性……",0)
+	KAO(ODESSA,"B232BZ3","321","2")
+	MES(ODESSA,"也就是说，是这么回事吧？",0)
+	MES_close(ODESSA)
+
+	KAO(FIONA,"B232BZ2","321","5")
+	MES(FIONA,"怎，怎么会……！",0)
+	MES_close(FIONA)
+
+	MOT(POCKLE,150,15)
+	wait(15)
+	KAO(POCKLE,"B232BZ2","1233321","5")
+	MES(POCKLE,"要，要怎么办……",0)
+	MES_close(POCKLE)
+
+	MOT(PIPIRO,150,8)
+	wait(20)
+
+	KAO(PIPIRO,"B232BZ4","123","5")
+	MES(PIPIRO,"哎呀呀。\n变成麻烦事了呢～。",0)
+	MES_close(PIPIRO)
+	wait_MES(PIPIRO)
+
+	wait(15)
+	cross_fade(15)
+//	CAM_move(-758,70,120,0,0)
+//	CAM(70,52,120,24,242,0,0)
+	CAM_move(-758,50,120,0,0)
+	CAM(70,63,120,23,195,0,0)
+	MOT(POCKLE,2,0)
+	MOT(PIPIRO,2,0)
+	KAO(PIPIRO,"B","1","2")
+	KAO(FIONA,"B","1","4")
+	KAO(ALWEN,"B","1","2")
+	wait(15)
+
+//	MOT(LA-RAIRA,150,15)
+//	wait(15)
+
+	chr_rename(LA-RAIRA,"魔女拉莱拉")//
+	KAO(LA-RAIRA,"12321Z2","-","-")
+	MES(LA-RAIRA,"不过……",0)
+	MES_close(LA-RAIRA)
+
+	look_chr( LUE, LA-RAIRA ,"Bone_Head")
+	wait(2)
+	look_chr( ALWEN, LA-RAIRA ,"Bone_Head")
+	wait(2)
+	MOT(FIONA,2,15)
+	look_chr( FIONA, LA-RAIRA ,"Bone_Head")
+	look_chr( KLODE, LA-RAIRA ,"Bone_Head")
+	look_chr( ODESSA, LA-RAIRA ,"Bone_Head")
+
+	KAO(LA-RAIRA,"12321Z7","-","-")
+	MES(LA-RAIRA,"抓住我的那个小女孩，\n是《金色魔王》路西昂\n的转世啊……",0)
+	KAO(LA-RAIRA,"12321Z7","-","-")
+	MES(LA-RAIRA,"不过，这么说来的话\n占卜不起作用\n就说得通了。",0)
+	MES_close(LA-RAIRA)
+
+
+	KAO(LUE,"C232CZ3","1233321","5")
+	MES(LUE,"什么，怎么回事？",0)
+	MES_close(LUE)
+
+	look_chr( LA-RAIRA, ALWEN,"Bone_Head")
+	wait(15)
+
+	KAO(LA-RAIRA,"12321Z7","-","-")
+	MES(LA-RAIRA,"我可以通过占卜\n大体预测出\n逼近身边的危险。",0)
+	KAO(LA-RAIRA,"12321Z7","-","-")
+	MES(LA-RAIRA,"但是，在之前被抓的时候，\n关于那个女孩的事\n却一点也没有占卜出来。",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")
+	MES(LA-RAIRA,"然后就轻而易举地\n被捉住了。",0)
+	MES_close(LA-RAIRA)
+
+	KAO(ALWEN,"B232BZ5","123","2")
+	MES(ALWEN,"……她的魂魄和前缘\n太过于强大了……",0)
+	KAO(ALWEN,"B232BZ6","321","2")
+	MES(ALWEN,"所以以魔女大人的占卜术\n也不能容易地预测出来吗。",0)
+	MES_close(ALWEN)
+
+	KAO(LA-RAIRA,"12321Z4","-","-")
+	MES(LA-RAIRA,"啊啊，就是这么回事。",0)
+	KAO(LA-RAIRA,"12321Z6","-","-")
+	MES(LA-RAIRA,"在现在这个巨大的龙卷面前，\n占卜已经不起作用了。",0)
+//	MOT(LA-RAIRA,2,15)
+//	wait(15)
+	KAO(LA-RAIRA,"12321Z5","-","-")
+	MES(LA-RAIRA,"接下来将会如何……\n只有女神知道了。",0)
+	MES_close(LA-RAIRA)
+	wait_MES(LA-RAIRA)
+
+	cross_fade(15)
+	CAM_move(-848,-20,80,0,0)
+	CAM(30,86,80,24,250,0,0)
+	wait(15)
+
+	look_off(FIONA)
+	wait(15)
+
+	MOT(FIONA, 155, 10)
+	KAO(FIONA, "C","123","B")
+	MES(FIONA,"唔……",0)
+	KAO(FIONA,"C232CZ6","3","B")
+	MES(FIONA,"要是有什么办法\n能突破龙卷抵达要塞的话……",0)
+	MES_close(FIONA)
+	wait(15)
+
+	EMO(FIONA,EMO_PA)
+	KAO(FIONA,"B","3","6")
+	MOT(FIONA,151,8)
+	wait(10)
+	MOT(FIONA,152,3)
+	wait(15)
+	KAO(FIONA,"12321Z5","321","6")
+	MES(FIONA,"对了！\n用飞机怎么样！？",0)
+	MES_close(FIONA)
+
+	look_off(ODESSA)
+	wait(2)
+	look_off(ALWEN)
+	look_off(LUE)
+	wait(2)
+	look_chr( KLODE, FIONA ,"Bone_Head")
+	look_chr( LA-RAIRA, FIONA ,"Bone_Head")
+	wait(2)
+	look_chr( POCKLE, FIONA ,"Bone_Head")
+	look_chr( PIPIRO, FIONA ,"Bone_Head")
+	MOT(ODESSA,150,15)
+	wait(15)
+
+	KAO(ODESSA,"C232CZ3","1233321","4")
+	MES(ODESSA,"没用的，大小姐。",0)
+	MES_close(ODESSA)
+
+	look_chr( FIONA, ODESSA ,"Bone_Head")
+
+	KAO(ODESSA,"C232CZ6","1","4")
+	MES(ODESSA,"飞进那种龙卷中去的话，\n不管是什么飞机都会被撕成碎片的。",0)
+	MES_close(ODESSA)
+	MOT(ODESSA,2,15)
+
+	KAO(KLODE,"C232CZ3","123","4")
+	MES(KLODE,"……我也这么认为，小姐。",0)
+	KAO(KLODE,"C232CZ5","321","4")
+	MES(KLODE,"若是被卷入，\n最后机体只会被暴风摧毁。",0)
+	MES_close(KLODE)
+
+	KAO(FIONA,"C","123","5")
+	MOT(FIONA,150,15)
+	wait(15)
+	KAO(FIONA,"C232CZ2","3","5")
+	MES(FIONA,"是，是这样吗……",0)
+	MES_close(FIONA)
+
+	look_off(POCKLE)
+	wait(15)
+
+	KAO(POCKLE,"C22CZ6","1233321","4")
+	MES(POCKLE,"难道有飞机，\n却什么也做不到……",0)
+	MES_close(POCKLE)
+
+	look_off(PIPIRO)
+	wait(15)
+
+	KAO(PIPIRO,"B232BZ4","123","2")
+	MES(PIPIRO,"嗯，真是急死人了。",0)
+	KAO(PIPIRO,"B232BZ6","3","2")
+	MES(PIPIRO,"这可是《拉车马布库尔号》\n难得的精彩镜头啊。",0)
+	MES_close(PIPIRO)
+
+	rot_chr(POCKLE,30,PIPIRO)
+	wait(15)
+
+//	KAO(POCKLE,"C232CZ6","1","4")
+//	MES(POCKLE,"不是这个名字啊！\n都说了是《蓝色惑星号》～！",0)
+	KAO(POCKLE,"C232CZ3","123","5")
+	MES(POCKLE,"不是这个名字啊！",0)
+	KAO(POCKLE,"C232CZ4","321","5")
+	MES(POCKLE,"都说了是《蓝色惑星号》～！",0)
+	MES_close(POCKLE)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(-708,220,80,0,0)
+	CAM(110,72,80,23,181,0,0)
+	KAO(FIONA,"C","1","4")
+	wait_fade()
+
+	KAO(ALWEN,"B","123","3")
+	MES(ALWEN,"………………………………",0)
+	MES_close(ALWEN)
+
+	look_chr( LUE, ALWEN ,"Bone_Head")
+	wait(15)
+
+	KAO(LUE,"C232CZ2","123332A","4")
+	MES(LUE,"公主大人……？",0)
+	MES_close(LUE)
+
+	look_chr( FIONA, ALWEN ,"Bone_Head")
+	look_chr( ALWEN, LUE,   "Bone_Head")
+
+	KAO(ALWEN,"B232BZ2","321","1")
+	MES(ALWEN,"啊，没什么。",0)
+	KAO(ALWEN,"B232BZ5","1","1")
+	MES(ALWEN,"我只是想到，从前\n听到过一句话，和当下的状况很相似。",0)
+	KAO(ALWEN,"B232BZ6","123","2")
+	MES(ALWEN,"『──即便如此，有时\n  也必须无畏地闯入风暴中。』",0)
+	MES_close(ALWEN)
+
+	KAO(LUE,"2","A233321D","6")
+	MES(LUE,"啊……",0)
+	MES_close(LUE)
+
+	look_chr( LA-RAIRA, ALWEN ,"Bone_Head")
+	wait(5)
+	look_chr( ODESSA, ALWEN ,"Bone_Head")
+	wait(4)
+	KAO(POCKLE,"B","1","1")
+	rot_chr(POCKLE,30,ALWEN)
+	wait(3)
+	look_chr( PIPIRO, ALWEN ,"Bone_Head")
+	KAO(KLODE,"B","1","1")
+	look_chr( KLODE, ALWEN ,"Bone_Head")
+	wait(2)
+
+	KAO(LA-RAIRA,"12321Z3","-","-")
+	MES(LA-RAIRA,"那个红毛小子的话啊。",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")
+	MES(LA-RAIRA,"说起来……\n那小子怎么样了？",0)
+	MES_close(LA-RAIRA)
+
+	look_chr( ALWEN ,LA-RAIRA, "Bone_Head")
+	KAO(ALWEN,"B","321","2")
+
+	KAO(LUE,"C232CZ2","123","2")
+	MES(LUE,"那，那家伙该不会……",0)
+	KAO(LUE,"C232C2Z4","32","2")
+	MES(LUE,"还在郁闷他妹妹的事情，\n在哪缩着不肯出来么！？",0)
+	MES_close(LUE)
+
+	KAO(ALWEN,"B232BZ6","1233321","1")
+	MES(ALWEN,"不，拉古那\n应该会先顺路去个地方之后再过来。",0)
+	KAO(ALWEN,"B232BZ4","1","1")
+	MES(ALWEN,"他说过有事要办……",0)
+	MES_close(ALWEN)
+
+	stop_BGM(45)
+	chr_rename(EVENT_RAGNA,"青年的声")//
+	MES_pos(EVENT_RAGNA,"W2──久等了。",0,640,220,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+
+//　　艾雯たち的頭に！マーク。
+//　　扉が開く音がして、拉古那が部屋に入ってくる。
+	color(EVENT_RAGNA,1)
+	wait_color(EVENT_RAGNA)
+
+//	CAM_move(-108,-60,120,30,0)
+//	CAM(150,84,120,24,236,30,0)
+	CAM_move(-320,-10,136,0,0)
+	CAM(110,68,-25,27,167,0,0)
+	F_reset_obj("model6", NP_HIDE)
+
+
+	EMO(ALWEN,EMO_BIKKURI)
+	EMO(LUE,EMO_BIKKURI)
+	EMO(LA-RAIRA,EMO_BIKKURI)
+	EMO(POCKLE,EMO_BIKKURI)
+	EMO(PIPIRO,EMO_BIKKURI)
+	EMO(ODESSA,EMO_BIKKURI)
+	EMO(FIONA,EMO_BIKKURI)
+	EMO(KLODE,EMO_BIKKURI)
+//	wait(15)
+	KAO(ALWEN,"E","12321D","6")
+	look_chr(ALWEN,EVENT_RAGNA,"Bone_Head")
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	KAO(LUE,"E","2321D","6")
+	look_off(LUE)
+//	rot_chr(LUE,30,EVENT_RAGNA)
+	rot_chr(LUE,30,ODESSA)
+	look_chr(LUE,EVENT_RAGNA,"Bone_Head")
+	look_off(LA-RAIRA)
+	rot_chr(LA-RAIRA,30,EVENT_RAGNA)
+	rot_chr(POCKLE,30,EVENT_RAGNA)
+	KAO(PIPIRO,"E","321D","6")
+	look_off(PIPIRO)
+	rot_chr(PIPIRO,30,EVENT_RAGNA)
+	look_off(ODESSA)
+	rot_chr(ODESSA,30,EVENT_RAGNA)
+	MOT(FIONA,2,15)
+	rot_chr(FIONA,30,EVENT_RAGNA)
+	look_off(KLODE)
+	rot_chr(KLODE,30,EVENT_RAGNA)
+
+//	wait_CAM_move()
+//	wait_CAM()
+//	wait(30)
+
+	wait_BGM()
+	BGM(53)
+//	CAM_move(-448,-100,120,30,0)
+//	CAM(40,78,120,24,242,30,0)
+	move(EVENT_RAGNA,0,10,-160,20,0,0)
+	wait_move(EVENT_RAGNA)
+	wait_CAM_move()
+	wait_CAM()
+
+	KAO(ALWEN,"12321Z2","1233321","2")
+	MES(ALWEN,"拉古那、你来了。",0)
+	MES_close(ALWEN)
+
+	wait(15)
+	cross_fade(15)
+	F_set_obj("model6", NP_HIDE)
+	CAM_move(-307,-174,214,0,0)
+	CAM(30,73,214,18,241,0,0)
+	KAO(ALWEN,"B","1","2")
+	KAO(LUE,"B","1","2")
+	KAO(ODESSA,"B","1","2")
+	KAO(PIPIRO,"B","1","2")
+	KAO(POCKLE,"B","1","2")
+	KAO(FIONA,"B","1","2")
+	KAO(KLODE,"B","1","2")
+	KAO(LA-RAIRA,"1","-","-")
+	wait_fade()
+
+	chr_rename(EVENT_RAGNA,"拉古那")//
+
+	KAO(EVENT_RAGNA,"B232BZ3","123","2")
+	MES(EVENT_RAGNA,"我都听到了。",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","2")
+	MES(EVENT_RAGNA,"使用飞机的方案……\n现在放弃还太早了。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　艾雯たち的頭に！マーク。
+	EMO(ALWEN,EMO_BIKKURI)
+	EMO(LUE,EMO_BIKKURI)
+	EMO(LA-RAIRA,EMO_BIKKURI)
+	EMO(POCKLE,EMO_BIKKURI)
+	EMO(PIPIRO,EMO_BIKKURI)
+	EMO(ODESSA,EMO_BIKKURI)
+	EMO(FIONA,EMO_BIKKURI)
+	EMO(KLODE,EMO_BIKKURI)
+	KAO(ALWEN,"B","12321D","6")
+	KAO(LUE,"2","12321D","6")
+	KAO(ODESSA,"B","12321D","2")
+	KAO(PIPIRO,"B","12321D","6")
+	KAO(POCKLE,"B","12321D","6")
+	KAO(FIONA,"B","12321D","6")
+	KAO(KLODE,"B","12321D","2")
+	KAO(LA-RAIRA,"2","-","-")
+	wait(30)
+
+//	cross_fade()
+//	F_set_obj("model6", NP_HIDE)
+//	CAM_move(-460,-110,136,0,0)
+//	CAM(190,58,136,27,249,0,0)
+//	wait_fade()
+
+	KAO(POCKLE,"B232B2","D","6")
+	MES(POCKLE,"咦咦！？",0)
+	MES_close(POCKLE)
+
+	KAO(ODESSA,"12321Z6","1233321","1")
+	MES(ODESSA,"不愧是《飞机狂人》。\n你有什么妙计？",0)
+	MES_close(ODESSA)
+
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(-175,-22,116,0,0)
+	CAM(-50,47,116,27,109,0,0)
+	F_reset_obj("model6", NP_HIDE)
+	wait_fade()
+
+	MOT(EVENT_RAGNA, 154, 10)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","123","2")
+	MES(EVENT_RAGNA,"那个龙卷确实很棘手。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","3","2")
+	MES(EVENT_RAGNA,"一股脑地直接冲过去，\n只会变得七零八落。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","321","3")
+	MES(EVENT_RAGNA,"──但是，只要能制造出破绽，\n要进入其中也不是不可能的。",0)
+	MES_close(EVENT_RAGNA)
+
+	//みんなカメラ
+	wait(15)
+	cross_fade(15)
+	F_set_obj("model6", NP_HIDE)
+	CAM_move(-307,-174,214,0,0)
+	CAM(30,73,214,18,241,0,0)
+	KAO(ALWEN,"C","1","2")
+	KAO(LUE,"B","1","2")
+	KAO(ODESSA,"B","1","2")
+	KAO(PIPIRO,"B","1","2")
+	KAO(POCKLE,"B","1","2")
+	KAO(FIONA,"B","1","2")
+	KAO(KLODE,"B","1","2")
+	KAO(LA-RAIRA,"1","-","-")
+	wait_fade()
+
+	MOT(ALWEN,151,10)
+	wait(15)
+	KAO(ALWEN,"C232CZ2","123332","2")
+	MES(ALWEN,"破绽……",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B232BZ6","1233321","2")
+	MES(EVENT_RAGNA,"啊啊，把与龙卷方向相反的力\n集中于一点击出。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","2")
+	MES(EVENT_RAGNA,"虽然马上就会被抵消，\n但在那一瞬间就能制造出破绽。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1233321","1")
+	MES(EVENT_RAGNA,"然后从那个缝隙突入，这就是计划。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LA-RAIRA,"12321Z6","-","-")
+	MES(LA-RAIRA,"唔，飞机我不在行，\n不过理论上好像说得通。",0)
+	MES_close(LA-RAIRA)
+
+	KAO(KLODE,"C232CZ2","123332A","5")
+	MES(KLODE,"但是，拉古那先生。",0)
+	KAO(KLODE,"C232CZ6","A","5")
+	MES(KLODE,"这个与龙卷方向相反的力，\n又要如何得到呢？",0)
+	MES_close(KLODE)
+
+	//拉古那カメラ
+	wait(15)
+	cross_fade(15)
+//	CAM_move(-175,-22,116,0,0)
+//	CAM(-50,47,116,27,109,0,0)
+	CAM_move(-767,-154,174,0,0)
+	CAM(110,73,174,22,125,0,0)
+	F_reset_obj("model6", NP_HIDE)
+	wait_fade()
+
+	KAO(EVENT_RAGNA,"B232BZ2","1233321","2")
+	MES(EVENT_RAGNA,"啊啊，这就是重点了。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1","2")
+	MES(EVENT_RAGNA,"我想请你们\n务必助我一臂之力。",0)
+	KAO(EVENT_RAGNA,"B232BZ4","1","2")
+	MES(EVENT_RAGNA,"好让我抵达要塞。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　艾雯たち的頭に！マーク。
+	EMO(ALWEN,EMO_BIKKURI)
+	EMO(LUE,EMO_BIKKURI)
+	EMO(LA-RAIRA,EMO_BIKKURI)
+	EMO(POCKLE,EMO_BIKKURI)
+	EMO(PIPIRO,EMO_BIKKURI)
+	EMO(ODESSA,EMO_BIKKURI)
+	EMO(FIONA,EMO_BIKKURI)
+	EMO(KLODE,EMO_BIKKURI)
+	wait(30)
+
+	KAO(POCKLE,"B232B2","12321D","6")
+	MES(POCKLE,"咦咦！？",0)
+	MES_close(POCKLE)
+
+	MOT(FIONA,153,15)
+	wait(15)
+
+	KAO(FIONA,"C232CZ3","123321","5")
+	MES(FIONA,"这，这到底是……",0)
+	MES_close(FIONA)
+
+	KAO(EVENT_RAGNA,"B232BZ2","123","2")
+	MES(EVENT_RAGNA,"具体来说……",0)
+	KAO(EVENT_RAGNA,"B232BZ6","32A","3")
+	MES(EVENT_RAGNA,"我的打算是，让能使用魔法的人\n乘上你们的飞机。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","A","3")
+	MES(EVENT_RAGNA,"然后，把所有人的魔力\n攻向龙卷的同一点。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","A233321","3")
+	MES(EVENT_RAGNA,"我就用特里斯坦号\n全力冲入那个破绽。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(EVENT_RAGNA,153,10)
+	KAO(EVENT_RAGNA,"12321Z2","123","6")
+	MES(EVENT_RAGNA,"嗯，就是这样。",0)
+	MES_close(EVENT_RAGNA)
+
+
+//　　艾雯たち的頭に…マーク。
+	EMO(ALWEN,EMO_TENTEN)
+	EMO(LUE,EMO_TENTEN)
+	EMO(LA-RAIRA,EMO_TENTEN)
+	EMO(POCKLE,EMO_TENTEN)
+	EMO(PIPIRO,EMO_TENTEN)
+	EMO(ODESSA,EMO_TENTEN)
+	EMO(FIONA,EMO_TENTEN)
+	EMO(KLODE,EMO_TENTEN)
+	wait(45)
+
+	KAO(EVENT_RAGNA,"1","321","5")
+	MOT(EVENT_RAGNA,151,15)
+	wait(25)
+	MOT(EVENT_RAGNA,151,10)
+	wait(20)
+	KAO(EVENT_RAGNA,"12321Z5","1","5")
+	MES(EVENT_RAGNA,"……呃。\n果然是太自私了吗？",0)
+	MES_close(EVENT_RAGNA)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(-307,-174,214,0,0)
+	CAM(30,73,214,18,241,0,0)
+	CAM(30,73,214,18,251,900,0)
+	F_set_obj("model6", NP_HIDE)
+
+//	KAO(ALWEN,"B","D","2")
+//	KAO(LUE,"B","D","1")
+//	KAO(ODESSA,"B","D","1")
+//	KAO(PIPIRO,"B","D","1")
+//	KAO(POCKLE,"B","D","1")
+//	KAO(FIONA,"B","D","1")
+//	KAO(KLODE,"B","D","1")
+	KAO(LA-RAIRA,"1","-","-")
+	KAO(ALWEN,"B","1","2")
+	KAO(LUE,"B","1","1")
+	KAO(ODESSA,"B","1","1")
+	KAO(KLODE,"B","1","1")
+	KAO(PIPIRO,"B","1","1")
+	KAO(POCKLE,"B","1","1")
+	KAO(FIONA,"B","1","1")
+	wait_fade()
+
+	MOT(FIONA,2,15)
+	wait(15)
+	KAO(FIONA,"B232BZ3","123","5")
+	MES(FIONA,"什，什么自私啊……",0)
+	KAO(FIONA,"B232BZ3","321","5")
+	MES(FIONA,"亏你想得出\n这种异想天开的办法……",0)
+	MES_close(FIONA)
+
+	MOT(ODESSA,151,15)
+	wait(15)
+
+	KAO(ODESSA,"C232CZ4","123","2")
+	MES(ODESSA,"走错一步的话\n你就没命了……",0)
+	KAO(ODESSA,"C232CZ3","32A","2")
+	MES(ODESSA,"你应该明白的吧？",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA,2,15)
+	look_chr( EVENT_RAGNA, ODESSA ,"Bone_Head")
+	look_chr( LUE,         ODESSA ,"Bone_Head")
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z7","1","1")
+	MES(EVENT_RAGNA,"不管走哪条路，就这样置之不理的话\n我们的不利状态也不会改变。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")
+	MES(EVENT_RAGNA,"既然这样，我们有什么理由不去做呢？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"1231BZ3","A23","6")
+	MES(ODESSA,"……那倒是。",0)
+	KAO(ODESSA,"12321Z3","321","6")
+	MES(ODESSA,"好吧，我会坐上去的。",0)
+	KAO(ODESSA,"12321Z5","1","6")
+	MES(ODESSA,"虽然魔法我没辙，\n不过开飞机我还是会的。",0)
+	MES_close(ODESSA)
+
+	rot_chr(LA-RAIRA,30,ODESSA)
+	wait(15)
+
+	KAO(LA-RAIRA,"12321Z5","-","-")
+	MES(LA-RAIRA,"唔，那样的话\n就让我坐你的飞机吧。",0)
+	KAO(LA-RAIRA,"12321Z3","-","-")
+	MES(LA-RAIRA,"多指教了，狼人小姐。",0)
+	MES_close(LA-RAIRA)
+
+	MOT(ODESSA,2,15)
+	rot_chr(ODESSA,30,LA-RAIRA)
+	wait(15)
+
+	KAO(ODESSA,"12321Z4","1236","5")
+	MES(ODESSA,"哈哈……\n小姐就免了吧。",0)
+	MES_close(ODESSA)
+
+	//菲奥娜、布库尔カメラ
+	wait(15)
+	cross_fade(15)
+	CAM_move(-983,-165,74,0,0)
+	CAM(-10,60,-85,27,257,0,0)
+	color(ODESSA,-1)
+	KAO(ODESSA,"1","1","1")
+	KAO(FIONA,"1","1","1")
+	wait_fade()
+
+	MOT(FIONA,154,15)
+	wait(15)
+
+	KAO(FIONA,"12321Z5","1233321","6")
+	MES(FIONA,"……既然如此，\n也请让我们全力相助。",0)
+	MOT(FIONA,2,15)
+
+	KAO(FIONA,"1","123","6")
+	rot(FIONA,30,320)
+	look_chr( FIONA, KLODE ,"Bone_Head")
+	wait(15)
+
+	KAO(FIONA,"12321Z4","321","6")
+	MES(FIONA,"克劳德。\n就有劳你进行操纵了。",0)
+	MES_close(FIONA)
+
+	rot(KLODE, 30,228 )
+//	look_chr(KLODE, FIONA, "Bone_Head")
+//	wait(15)
+//お辞儀させてみた0826
+	KAO(KLODE,"1","123","6")
+	MOT(KLODE,152,15)
+//	wait(50)
+	wait(40)
+	KAO(KLODE,"12321Z3","3","6")
+	MES(KLODE,"是，小姐。",0)
+	MES_close(KLODE)
+	MOT(KLODE,153,0)
+	wait(15)
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+	wait(15)
+	KAO(KLODE,"1","321","6")
+
+	KAO(POCKLE,"B232BZ3","1233321","4")
+	MES(POCKLE,"那个，皮皮洛……",0)
+	KAO(POCKLE,"B232BZ4","1","4")
+	MES(POCKLE,"我的操作技术\n你可能不大放心，不过……",0)
+	MES_close(POCKLE)
+
+	look_chr( PIPIRO, POCKLE ,"Bone_Head")
+	wait(15)
+
+	KAO(PIPIRO,"B232BZ5","123","5")
+	MES(PIPIRO,"啊，虽然很麻烦，\n不过我也会适当帮忙的。",0)
+	KAO(PIPIRO,"B232BZ3","32","2")
+	MES(PIPIRO,"不过呢，我要超量装的草莓泡芙十杯，你请客。",0)
+	MES_close(PIPIRO)
+
+	look_chr( EVENT_RAGNA, POCKLE ,"Bone_Head")
+	wait(5)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(-767,-154,174,0,0)
+	CAM(110,73,174,21,125,0,0)
+	color(ODESSA,1)
+	look_chr(ALWEN, POCKLE, "Bone_Head")
+	look_chr(FIONA, EVENT_RAGNA, "Bone_Head")
+	look_chr(KLODE, EVENT_RAGNA, "Bone_Head")
+	F_reset_obj("model6", NP_HIDE)
+	MOT(KLODE,151,0)
+	wait_fade()
+
+	KAO(EVENT_RAGNA,"12321Z4","1236","6")
+	MES(EVENT_RAGNA,"哈哈……\n这样还真是太便宜我了呢。",0)
+	KAO(EVENT_RAGNA,"B232BZ7","3","4")
+	MES(EVENT_RAGNA,"实话说，我真不愿意把你们这些孩子\n卷入危险之中……",0)
+	KAO(EVENT_RAGNA,"B232BZ5","321","1")
+	MES(EVENT_RAGNA,"毕竟，接下来\n估计是要打得天昏地暗了。",0)
+	KAO(EVENT_RAGNA,"12321Z3","1233321","6")
+	MES(EVENT_RAGNA,"那就拜托你们了。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_off(POCKLE)
+	wait(5)
+	look_off(PIPIRO)
+	wait(10)
+
+	KAO(POCKLE,"12321Z2","123332A","6")
+	MES(POCKLE,"拉古那大哥……",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"12321Z3","3","1")
+	MES(PIPIRO,"嗯～、适当地交给我们就行了。",0)
+	KAO(PIPIRO,"12321Z6","3","1")
+	MES(PIPIRO,"还有，草莓泡芙\n不是对大哥你说的。",0)
+	KAO(PIPIRO,"12321Z3","321","1")
+	MES(PIPIRO,"因为布库尔会请我的。",0)
+	MES_close(PIPIRO)
+
+	rot_chr(POCKLE,60,PIPIRO)
+	MOT(POCKLE,151,5)
+	wait(5)
+
+	KAO(POCKLE,"B232B2Z2","12321D","6")
+	MES(POCKLE,"什么！？",0)
+	MES_close(POCKLE)
+
+	KAO(ALWEN,"12321Z2","123","6")
+	MES(ALWEN,"呵呵……",0)
+	MES_close(ALWEN)
+	look_chr(ALWEN, EVENT_RAGNA, "Bone_Head")
+	MOT(ALWEN,2,15)
+	wait(15)
+	KAO(ALWEN,"12321Z5","321","2")
+	MES(ALWEN,"那么，拉古那。\n我与你同行吧。",0)
+	KAO(ALWEN,"12321Z6","1","2")
+	MES(ALWEN,"这样一来，我也能用结界\n保护你的钢铁之翼。",0)
+	MES_close(ALWEN)
+
+//　　拉古那と露的頭に！マーク。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(EVENT_RAGNA,"B","12321D","6")
+	EMO(LUE,EMO_BIKKURI)
+	KAO(LUE,"E","12321D","6")
+	wait(15)
+	MOT(POCKLE,2,15)
+	rot_chr(FIONA, 30,ALWEN)
+	rot_chr(LA-RAIRA,30,ALWEN)
+	rot_chr(POCKLE,30,ALWEN)
+	rot_chr(PIPIRO,30,ALWEN)
+	rot_chr(ODESSA,30,ALWEN)
+	look_off(FIONA)
+	rot_chr(KLODE,30,ALWEN)
+
+	look_off(EVENT_RAGNA)
+	rot(LUE,30,350)
+	look_chr( LUE, ALWEN ,"Bone_Head")
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(-138,-180,180,0,0)
+	CAM(-80,40,180,20,242,0,0)
+	CAM(-80,35,180,20,242,600,0)
+	F_set_obj("model6", NP_HIDE)
+	KAO(POCKLE,"1","1","1")
+	KAO(FIONA,"1","1","1")
+	wait(15)
+
+
+	KAO(LUE,"B232B2Z2","12321D","5")
+	MES(LUE,"公，公主大人！？",0)
+	MES_close(LUE)
+
+	MOT(EVENT_RAGNA,150,15)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"B232BZ2","1","1")
+	MES(EVENT_RAGNA,"……这样好吗？",0)
+	KAO(EVENT_RAGNA,"B232BZ7","1","1")
+	MES(EVENT_RAGNA,"刚才也说过了……\n这可是走错一步\n就会没命的哦？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z3","123","6")
+	MES(ALWEN,"呵……\n正因如此，我才如此决定。",0)
+	MOT(ALWEN,150,20)
+	wait(20)
+	KAO(ALWEN,"12321Z7","321","1")
+	MES(ALWEN,"我与你，\n至今为止\n经受了多少考验？",0)
+	KAO(ALWEN,"12321Z5","123","3")
+	MES(ALWEN,"而且……真正的考验\n并非那巨大的龙卷。",0)
+	KAO(ALWEN,"12321Z3","321","3")
+	MES(ALWEN,"而是在那更前方，不是吗？",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z2","A","1")
+	MES(EVENT_RAGNA,"公主……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"B232BZ4","123","5")
+	MES(LUE,"唉……\n阻止也没用了。",0)
+	rot_chr(LUE,30,EVENT_RAGNA)
+	look_off(LUE)
+	wait(15)
+	KAO(LUE,"B232BZ5","321","3")
+	MES(LUE,"──拉古那。\n我也会一起去的。",0)
+	KAO(LUE,"C232CZ6","123332","3")
+	MES(LUE,"为了不给公主大人添麻烦，\n你可要往死里拼命哦！？",0)
+	MES_close(LUE)
+
+	KAO(EVENT_RAGNA,"12321Z2","6","4")
+	MES(EVENT_RAGNA,"哈哈……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　拉古那、満足したように目を閉じる。
+//　　そして目を見開いて、全員に語りかける。
+//	cross_fade(15)
+//	CAM_move(-448,-100,120,0,0)
+//	CAM(40,78,120,24,242,0,0)
+//	rot_chr(LA-RAIRA,30,EVENT_RAGNA)
+//	rot_chr(POCKLE,30,EVENT_RAGNA)
+//	rot_chr(ODESSA,30,EVENT_RAGNA)
+//	rot_chr(KLODE,30,EVENT_RAGNA)
+//	MOT(ALWEN,2,15)
+//	wait(30)
+
+	//拉古那カメラ
+	wait(15)
+	cross_fade(15)
+//	CAM_move(-767,-154,174,0,0)
+//	CAM(110,73,174,22,125,0,0)
+	CAM_move(-175,-22,116,0,0)
+	CAM(-50,47,116,27,109,0,0)
+	F_reset_obj("model6", NP_HIDE)
+	rot_chr(LA-RAIRA,30,EVENT_RAGNA)
+	rot_chr(POCKLE,30,EVENT_RAGNA)
+	rot_chr(ODESSA,30,EVENT_RAGNA)
+	rot_chr(KLODE,30,EVENT_RAGNA)
+	MOT(KLODE,2,0)
+	rot_chr(PIPIRO,30,EVENT_RAGNA)
+	KAO(EVENT_RAGNA, "1","3","6")
+	wait_fade()
+
+	wait(30)
+//	KAO(EVENT_RAGNA,"1","321","1")
+//	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z2","321","1")
+	MES(EVENT_RAGNA,"──谢谢。",0)
+	KAO(EVENT_RAGNA,"12321Z7","1","1")
+	MES(EVENT_RAGNA,"这次作战能否成功，\n就看大家的努力了。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1233321","3")
+	MES(EVENT_RAGNA,"各位，拜托了！",0)
+	MES_close(EVENT_RAGNA)
+
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(-448,-100,120,0,0)
+	CAM(40,58,120,23,242,0,0)
+	F_set_obj("model6", NP_HIDE)
+	KAO(PIPIRO, "2","1","1")
+	KAO(POCKLE, "2","1","6")
+	KAO(FIONA,  "2","1","1")
+	KAO(KLODE,  "2","1","2")
+	KAO(LUE,    "2","1","3")
+	KAO(ODESSA, "2","1","2")
+	KAO(ALWEN,"1","1","6")
+	wait_fade()
+	wait(5)
+	CAM_quake("37")
+	MOT(PIPIRO,152,10)
+	MOT(POCKLE,152,10)
+	MOT(ODESSA,153,10)
+	MOT(KLODE, 150,10)
+	MOT(LUE,   151,10)
+
+	KAO(PIPIRO, "2","26","1")
+	KAO(FIONA,  "2","26","1")
+	KAO(LUE,    "2","26","3")
+	KAO(ODESSA, "2","26","2")
+	KAO(ALWEN, "2","26","1")
+	chr_rename(ALWEN,"みんな")//	
+//	MES_pos(ALWEN,"S6W9啊啊！",0,320,100,0,0)
+	MES_pos(ALWEN,"S6W9P1哦！",0,320,100,0,0)
+	wait_key(0)
+	MES_close(ALWEN)
+
+//　　画面、ゆっくりとフェードアウト。
+	CAM(40,85,120,24,242,150,0)
+	fade_in(100,60,0)
+	wait_fade()
+	wait(30)
+
+	chr_rename(ALWEN,"艾雯")//
+
+//ＧＦ『★飛行机で梅尔塞迪克に乗り込むことにした』を立てる。
+	F_set(F6_00_GoToMeru)
+	F_set(F5_02_UseTodome)	//ルウ連れてる
+	//★拉莱拉【千里眼】
+	F_set_note(-23,2)
+
+//　　阿鲁迪亚镇（昼）（ev00100）へ。
+	workG(GW_DEF_BGM,SET,53)		//デフォルト曲を変更
+	workG(GW_ENTRY_EVENT,SET,6)
+	new_map(10100)
+
+//	EV_end()
+}
+
+
+//──────────────────────────────
+//▼水晶峡谷について、菲奥娜と克劳德に説明する
+//──────────────────────────────
+//　　執務室に入ると、以下的イベントが発生する。
+//　　画面フェードインして、執務室にいる菲奥娜と克劳德。
+EV_Fiona_Klode
+{
+	EV_begin()
+
+	//	F_set( F5_18_Fiona&Klode ) //★サブイベント：執務室的菲奥娜と克劳德と話した
+
+	delete(81)
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+
+	chr_pos(RAGNA,    -197,423,0,349,2 )
+	set_chr(KLODE,    1018,-1,-1,-1000, 110, 0,2,200, 0, "")
+	set_chr(FIONA,    1016,-1,-1,-1000,-110,0,2,340, 0, "")
+	set_chr(EVENT_LUE,     15,-1,-1, -300,-9,0, 2, 90,0, "")
+	set_chr(EVENT_RAGNA, 1010,-1,-1, -300,-9,0, 2, 90,0, "")
+
+	F_set_chr(FIONA, CF_NO_CLIP)
+	F_set_chr(FIONA, CF_NO_CLIP2)
+	F_set_chr(FIONA, CF_NO_CSP)
+	F_set_chr(KLODE, CF_NO_CLIP)
+	F_set_chr(KLODE, CF_NO_CLIP2)
+	F_set_chr(KLODE, CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA, CF_NO_CSP)
+	F_set_chr(EVENT_LUE, CF_NO_CLIP)
+	F_set_chr(EVENT_LUE, CF_NO_CLIP2)
+	F_set_chr(EVENT_LUE, CF_NO_CSP)
+
+
+	CAM_move(-911,-69,155,0,0)
+	CAM(-90,56,-5,27,246,0,0)
+//	CAM(-90,56,-5,27,260,1200,0)	//回転してると、MES_pos()が、吹っ飛んでくる
+	KAO(FIONA,"B", "1", "2")
+	KAO(KLODE,"B", "1","2")
+	KAO(EVENT_LUE,  "C","1","3")
+	KAO(EVENT_RAGNA,  "C","1","3")
+
+	MOT_SET(EVENT_RAGNA, 150, -1, 579, 579, -1, 0)	//お辞儀
+	MOT_SET(FIONA,       150, -1, 410, 410, -1, 0)	//お
+	MOT_SET(FIONA,       151, -1, 446, 446, -1, 0)	//お
+	MOT_SET(KLODE,150,150,9210,9270,-1,-1)	//手を後ろに回して待机
+	MOT_SET(KLODE,151,-1,3810,3849,-1,-1)	//お辞儀
+	MOT_SET(KLODE,152,-1,3860,3892,-1,-1)	//お辞儀
+	MOT(FIONA, 150, 0)
+	MOT(KLODE, 150, 0)
+
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	color(PET,-1)
+
+	//フェードイン
+	fade_in( 0,60,0)
+	wait_fade()
+
+
+
+	KAO(FIONA,"B232BZ7", "123", "2")
+	MES(FIONA,"……果然，\n找不到\n《月·异世界》的线索呢。",0)
+	KAO(FIONA,"B232BZ6", "321", "2")
+	MES(FIONA,"艾雯他们\n进行得怎么样了呢？",0)
+	MES_close(FIONA)
+
+	KAO(KLODE,"B232BZ6", "1233321","2")
+	MES(KLODE,"据她父亲所留下的线索\n还遗留在城里的可能性很高。",0)
+	KAO(KLODE,"B232BZ5", "1","2")
+	MES(KLODE,"如今只能在\n这个可能性上赌一把了。",0)
+	MES_close(KLODE)
+
+	KAO(FIONA,"B232BZ4", "123","5")
+	MES(FIONA,"唔……真令人着急啊。",0)
+	MES_close(FIONA)
+
+//　　ここでノック的音が聞こえてくる。
+//	MES(FIONA,"◆未入力項目\nここでノック的音が聞こえてくる。",0)
+//	MES_close(FIONA)
+//
+//	EMO(FIONA, EMO_PA)
+//	EMO(KLODE, EMO_PA)
+//	wait(30)
+//	rot(FIONA, 30, 290 )
+//	look_chr(FIONA, EVENT_RAGNA, "Bone_Head")
+//	look_chr(KLODE, EVENT_RAGNA, "Bone_Head")
+//	KAO(FIONA,"12321Z2","21","1")
+//	MES(FIONA,"哎呀？",0)
+//	MES_close(FIONA)
+//
+//　　扉的音が開いて、以下的メッセージ。
+//	MES(FIONA,"◆未入力項目\n扉を開ける音",0)
+//	MES_close(FIONA)
+
+	SE(1021,0)//ノックSE
+	wait(30)
+
+	MES_pos(EVENT_LUE,"W4你很碍事啊！",0,600,350,0,0)
+	wait_key(0)
+	MES_close(EVENT_LUE)
+
+	MES_pos(EVENT_RAGNA,"W4对不起，对不起。",0,600,350,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+
+	EMO(FIONA, EMO_PA)
+	EMO(KLODE, EMO_PA)
+	wait(30)
+	rot(FIONA, 30, 290 )
+	look_chr(FIONA, EVENT_RAGNA, "Bone_Head")
+	KAO(KLODE,"B", "1","6")
+	look_chr(KLODE, EVENT_RAGNA, "Bone_Head")
+	KAO(FIONA,"B232BZ2","321","6")
+	MES(FIONA,"哎呀？",0)
+	MES_close(FIONA)
+
+//　　拉古那と露が部屋的中に入ってくる。
+
+	move(EVENT_RAGNA,     0, WALK1, -713,-8,0, 0)
+	wait(10)
+	move(EVENT_LUE,       0, WALK1, -680,145,0, 0)
+
+	wait_move(EVENT_RAGNA)
+	wait_move(EVENT_LUE)
+
+
+	cross_fade(15)
+	CAM_move(-849,-14,155,0,0)
+	CAM(-210,48,-5,27,179,0,0)
+	rot(KLODE, -1, 260 )
+	wait_fade()
+	wait(15)
+	MOT(FIONA, 2, 10)
+
+	KAO(FIONA, "B232BZ3", "1233321", "6")
+	MES(FIONA,"呃……拉古那？",0)
+	MES_close(FIONA)
+
+	KAO(KLODE, "B232BZ4", "1233321", "6")
+	MES(KLODE,"还有露小姐……\n怎么了？",0)
+	MES_close(KLODE)
+
+	KAO(EVENT_RAGNA, "C232CZ3", "123", "B")
+	MES(EVENT_RAGNA,"啊啊，是紧急事态。",0)
+	KAO(EVENT_RAGNA, "C232CZ3", "32A", "B")
+	MES(EVENT_RAGNA,"……公主被抓走了。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　菲奥娜たち的頭に！マーク。
+	EMO(FIONA, EMO_BIKKURI)
+	KAO(FIONA, "B", "12321DE", "6")
+	EMO(KLODE, EMO_KLODE)
+	KAO(KLODE, "B", "12321DE", "6")
+	wait(30)
+	MOT(FIONA, 151,10)
+	KAO(FIONA, "B232B2", "D12321D", "6")
+	MES(FIONA,"咦咦……！？",0)
+	MES_close(FIONA)
+
+	KAO(KLODE, "C232CZ3", "D12321D", "3")
+	MES(KLODE,"这到底是……",0)
+	MES_close(KLODE)
+
+//	name("テキスト（色換え·表示しない）")
+//	MES(this,"拉古那向菲奥娜他们\n说明了隐之村发生的事。",2)
+//	MES_close(this)
+
+	fade_in(50,10,0)
+	wait_fade()
+	MES(EVENT_RAGNA,"C3S2拉古那向菲奥娜他们\n说明了隐之村发生的事。",2)
+	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+	fade_in(0,10,0)
+	wait_fade()
+
+	MOT(FIONA, 2, 10)
+	KAO(FIONA, "B232BZ3", "12321D", "6")
+	MES(FIONA,"发，发生了这种事吗……",0)
+	KAO(FIONA, "C232CZ5", "1233321", "3")
+	MES(FIONA,"那么，艾雯被带到\n《月·异世界》去了？",0)
+	MES_close(FIONA)
+
+	KAO(KLODE, "B", "12321", "2")
+
+	KAO(EVENT_RAGNA, "C232CZ3", "A233321","3")
+	MES(EVENT_RAGNA,"啊啊，应该没错。",0)
+	KAO(EVENT_RAGNA, "C232CZ8", "123","3")
+	MES(EVENT_RAGNA,"天山爷爷说，\n要想打开水晶峡谷之扉，\n就必须有能使用魔法的人。",0)
+	KAO(EVENT_RAGNA, "C232CZ4", "3","5")
+	MES(EVENT_RAGNA,"事到如今，虽然我不知道\n该如何请求你才会答应……",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(EVENT_LUE, EVENT_RAGNA, "Bone_Head")
+
+//　　拉古那、深々と頭を下げる。
+	MOT(EVENT_RAGNA, 150, 10)
+	KAO(EVENT_RAGNA, "C", "3". "5")
+	wait(30)
+	KAO(EVENT_RAGNA, "C232CZ4", "3","5")
+	MES(EVENT_RAGNA,"拜托了……\n小姐，请帮助我。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(EVENT_LUE, "C232CZ2", "1233321", "4")
+	MES(EVENT_LUE,"拉古那……",0)
+	MES_close(EVENT_LUE)
+
+	move(FIONA, 0, WALK1, -950,-110,0,0)
+	wait_move(FIONA)
+	wait(15)
+
+	KAO(FIONA, "C232CZ4", "123", "3")
+	MES(FIONA,"……拉古那。\n请抬起头来。",0)
+	KAO(FIONA, "C232CZ4", "3", "3")
+	MES(FIONA,"艾雯的安危\n虽然我也很担心……",0)
+	KAO(FIONA, "C232CZ5", "321", "3")
+	MES(FIONA,"原本，现也正在为了去往月·异世界\n而寻找线索。",0)
+	KAO(FIONA, "12321Z4", "1233321", "1")
+	MES(FIONA,"我非常乐意帮忙。",0)
+	MES_close(FIONA)
+
+	KAO(EVENT_RAGNA, "1", "3", "1")
+	MOT(EVENT_RAGNA, 2, 10)
+	wait(15)
+
+	KAO(EVENT_RAGNA, "12321Z3", "321", "6")
+	MES(EVENT_RAGNA,"谢谢……不胜感激。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(EVENT_LUE, "C", "12321", "1")
+
+	KAO(FIONA, "12321Z2", "1236", "1")
+	MES(FIONA,"呵呵，彼此彼此。",0)
+	KAO(FIONA, "12321Z5", "321", "2")
+	MES(FIONA,"那么，我们就\n先到水晶峡谷去了。",0)
+	MES_close(FIONA)
+
+	rot(FIONA, 30, 340 )
+	look_chr(FIONA, KLODE, "Bone_Head")
+	look_chr(KLODE, FIONA, "Bone_Head")
+	wait(10)
+
+	KAO(FIONA, "B232BZ4", "1233321", "2")
+	MES(FIONA,"克劳德，剑和甲胄就麻烦你了。",0)
+	MES_close(FIONA)
+
+//お辞儀させてみた0826
+	look_off(KLODE)
+	rot_chr(KLODE,30,FIONA)
+	wait(15)
+	KAO(KLODE, "1", "123", "2")
+	MOT(KLODE,151,15)
+	wait(50)
+	KAO(KLODE, "12321", "123", "2")
+	MES(KLODE,"是。",0)
+	MES_close(KLODE)
+
+	MOT(KLODE,152,0)
+	wait(15)
+
+	look_off(FIONA)
+	CAM_move(-669,-14,155,200,0)
+	look_chr(EVENT_RAGNA, FIONA, "Bone_Head")
+	look_chr(EVENT_LUE,   FIONA, "Bone_Head")
+	rot(EVENT_RAGNA, 6, 260 )
+	rot(EVENT_LUE, 6, 260 )
+	EV("MV_MoveFiona")
+	wait(15)
+	EV("MV_MoveKlode")
+
+	wait(120)
+//	wait_EV("MV_MoveFiona")
+//	wait_EV("MV_MoveKlode")
+	EV_stop("MV_MoveFiona")
+	EV_stop("MV_MoveKlode")
+
+	cross_fade(15)
+	CAM_move(-729,-54,155,0,0)
+	CAM(-10,47,155,27,225,0,0)
+	rot(EVENT_RAGNA, -1, 270 )
+	rot(EVENT_LUE, -1, 270 )
+
+	wait_fade()
+
+//　　菲奥娜と克劳德、部屋から去っていく。
+//　　それを見送ってから以下的メッセージ。
+//─────────────────────
+
+
+//	name("□魔女と布库尔たちに事情を説明した")
+	if(F5_04_OfferPipiro && F5_03_OfferLaraira)		//★拉莱拉に協力を申し込んだ ★皮皮洛に協力を申し込んだ
+	{
+		KAO(EVENT_RAGNA,"12321Z4", "123", "2")
+		MES(EVENT_RAGNA,"好的……\n最后一个的小姐也搞定了。",0)
+
+		rot(EVENT_RAGNA, 30, 320 )
+		look_chr(EVENT_RAGNA, EVENT_LUE, "Bone_Head")
+		wait(10)
+
+		KAO(EVENT_RAGNA,"12321Z4", "321", "2")
+		MES(EVENT_RAGNA,"这样就和大家都打过招呼了。",0)
+		MES_close(EVENT_RAGNA)
+
+		look_chr(EVENT_LUE, EVENT_RAGNA, "Bone_Head")
+		wait(10)
+
+		KAO(EVENT_LUE,"B232BZ6", "1233321", "2")
+		MES(EVENT_LUE,"嗯，我们也快些\n到水晶峡谷去吧！",0)
+		MES_close(EVENT_LUE)
+
+		KAO(EVENT_RAGNA,"12321Z2", "1233321", "2")
+		MES(EVENT_RAGNA,"啊啊……！",0)
+		MES_close(EVENT_RAGNA)
+
+		//★手帳用フラグ：全員に交渉後
+		F_set(F5_33_OfferEnd)
+
+	}
+	else
+	if(F5_03_OfferLaraira)	//★拉莱拉に協力を申し込んだ
+	{
+//	name("□魔女に事情を説明した")
+		KAO(EVENT_RAGNA,"12321Z4", "123", "2")
+		MES(EVENT_RAGNA,"好的……\n这样一来小姐也搞定了。",0)
+		MES_close(EVENT_RAGNA)
+
+		rot(EVENT_RAGNA, 30, 320 )
+		look_chr(EVENT_RAGNA, EVENT_LUE, "Bone_Head")
+		wait(10)
+
+		KAO(EVENT_RAGNA,"12321Z3", "321", "2")
+		MES(EVENT_RAGNA,"接下来就只剩下皮皮洛了。",0)
+		MES_close(EVENT_RAGNA)
+
+		look_chr(EVENT_LUE, EVENT_RAGNA, "Bone_Head")
+		wait(10)
+
+		KAO(EVENT_LUE,"B232BZ5", "123", "4")
+		MES(EVENT_LUE,"老实说，那孩子的话，\n只能是到处找找了。",0)
+		KAO(EVENT_LUE,"B232BZ3", "321", "2")
+		MES(EVENT_LUE,"应该在镇上的什么地方。",0)
+		MES_close(EVENT_LUE)
+
+		KAO(EVENT_RAGNA,"B232BZ3", "1233321", "2")
+		MES(EVENT_RAGNA,"啊啊，总之先找再说吧。",0)
+		MES_close(EVENT_RAGNA)
+
+		//★手帳用フラグ：菲奥娜に協力を申し込んだ（こ的キャラが２人目·残りが皮皮洛）
+		F_set(F5_32_OfferFioLar)
+	}
+	else
+	if(F5_04_OfferPipiro)
+	{
+	//	name("□布库尔たちに事情を説明した")
+		KAO(EVENT_RAGNA,"12321Z4", "123", "2")
+		MES(EVENT_RAGNA,"好的……\n这样一来小姐也搞定了。",0)
+
+		rot(EVENT_RAGNA, 30, 320 )
+		look_chr(EVENT_RAGNA, EVENT_LUE, "Bone_Head")
+		wait(10)
+
+		KAO(EVENT_RAGNA,"12321Z4", "321", "2")
+		MES(EVENT_RAGNA,"之后就只剩\n拉莱拉婆婆了。",0)
+		MES_close(EVENT_RAGNA)
+
+		look_chr(EVENT_LUE, EVENT_RAGNA, "Bone_Head")
+		wait(10)
+
+		KAO(EVENT_LUE,"B232BZ5", "123", "2")
+		MES(EVENT_LUE,"那个老婆婆的话，\n大概是在森林里的家中。",0)
+		KAO(EVENT_LUE,"B232BZ5", "321", "2")
+		MES(EVENT_LUE,"利用我的能力也可以瞬移到那里，\n赶紧去找她吧。",0)
+		MES_close(EVENT_LUE)
+
+		KAO(EVENT_RAGNA,"B232BZ3", "1233321", "2")
+		MES(EVENT_RAGNA,"啊啊，就这么办。",0)
+		MES_close(EVENT_RAGNA)
+		
+		//★手帳用フラグ：菲奥娜に協力を申し込んだ（こ的キャラが２人目·残りが拉莱拉）
+		F_set(F5_31_OfferFioPip)
+
+	}
+	else
+	{
+	//	name("□魔女と布库尔たちに事情を説明していない")
+		KAO(EVENT_RAGNA,"12321Z4", "123", "2")
+		MES(EVENT_RAGNA,"好的……\n这样一来小姐也搞定了。",0)
+		MES_close(EVENT_RAGNA)
+
+		rot(EVENT_RAGNA, 30, 320 )
+		look_chr(EVENT_RAGNA, EVENT_LUE, "Bone_Head")
+		wait(10)
+
+		KAO(EVENT_RAGNA,"12321Z5", "321", "2")
+		MES(EVENT_RAGNA,"之后就是皮皮洛和\n拉莱拉婆婆了。",0)
+		MES_close(EVENT_RAGNA)
+
+		look_chr(EVENT_LUE, EVENT_RAGNA, "Bone_Head")
+		wait(10)
+
+		KAO(EVENT_LUE,"B232BZ5", "123", "2")
+		MES(EVENT_LUE,"那个老婆婆的话，\n大概是在森林里的家中。",0)
+		KAO(EVENT_LUE,"B232BZ5", "321", "4")
+		MES(EVENT_LUE,"皮皮洛的话……\n只能是到处找找了。",0)
+		MES_close(EVENT_LUE)
+
+		KAO(EVENT_RAGNA,"B232BZ4", "1233321", "2")
+		MES(EVENT_RAGNA,"啊啊，总之先找再说吧。",0)
+		MES_close(EVENT_RAGNA)
+	}
+
+
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(FIONA)
+	delete(KLODE)
+	delete(EVENT_LUE)
+	delete(EVENT_RAGNA)
+	chr_pos(RAGNA,   -726,-12,1,270,2 )
+	chr_pos(PET,     -723,149,1,270,2 )
+	color(RAGNA,1)
+	color(PARTNER,1)
+	color(PET,1)
+
+	CAM_return(0)
+
+	//★菲奥娜に協力を頼んだ
+	F_set( F5_05_OfferFiona )
+
+	F_set( F5_18_Fiona&Klode ) //★サブイベント：執務室的菲奥娜と克劳德と話した
+	//フェードイン
+	fade_in( 0,30,0)
+//	wait_fade()
+	EV_end()
+}
+
+MV_MoveFiona
+{
+	rot(FIONA, 60,250 )
+	wait(10)
+	move(FIONA, 0, WALK1, -730,-200,1,0)
+	wait_move(FIONA)
+	rot(FIONA, 60,280 )
+	move(FIONA, 0, WALK1,  32,0,0, 0)
+	wait_move(FIONA)
+}
+
+MV_MoveKlode
+{
+	rot(FIONA, 60,240 )
+	wait(10)
+	move(KLODE, 0, WALK1, -858,-92,1,0)
+	wait_move(KLODE)
+	rot(KLODE, 60,260 )
+	move(KLODE, 0, WALK1, -684,-148,1,0)
+	wait_move(KLODE)
+	rot(KLODE, 60,280 )
+	move(KLODE, 0, WALK1,  32,0,0, 0)
+	wait_move(KLODE)
+}
+
+
+
+
+//──────────────────────────────
+//　　屋敷的執務室的扉にストッパー。
+//　　菲奥娜·克劳德·布库尔·皮皮洛が中にいる設定。
+//　　エントリは切られており、以下的メッセージを表示する。
+//──────────────────────────────
+EV_STOP_01
+{
+	TK_begin()
+	rot_chr(RAGNA,30,91)
+	rot_chr(PARTNER,30,91)
+	cross_fade(30)
+	CAM_move(2808,108,275,0,0)
+	wait_fade()
+
+	fade_in(50,10,0)
+	wait_fade()
+	MES(RAGNA,"C3S2门上了锁，\n不过可以听到里面的说话声。",2)
+	MES_close(RAGNA)
+//	wait_MES(RAGNA)
+	fade_in(0,10,0)
+	wait_fade()
+
+	//─────────────────────
+	//	name("□初回的み")
+	if(!FM_05_TalkFiona)
+	{
+	//	name("娘的声")
+		chr_rename(RAGNA,"娘的声")
+		MES_pos(RAGNA,"W9C4……是这样吗。\n在那种地方和他们……",0,150,100,0,0)
+		wait_key(0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+
+	//	name("少年的声")
+		chr_rename(RAGNA,"少年的声")
+		MES_pos(RAGNA,"W9C4还，还不能\n断定他们\n很可疑，不过……",0,400,180,0,0)
+		wait_key(0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+
+	//	name("少女的声")
+		chr_rename(RAGNA,"少女的声")
+		MES_pos(RAGNA,"W9C4不，要说可疑的话，\n他们是非常可疑吧。",0,100,240,0,0)
+		wait_key(0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+
+	//	name("青年的声")
+		chr_rename(RAGNA,"青年的声")
+		MES_pos(RAGNA,"W9C4不可妄自揣测……\n然而，我们或许应小心为妙。",0,320,100,0,0)
+		wait_key(0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+
+		chr_rename(RAGNA,"拉古那")
+		F_set(FM_05_TalkFiona)
+	}
+	//─────────────────────
+	cross_fade(30)
+	CAM_return(0)
+	CAM(110,88,15,23,240,0,0)
+	wait_fade()
+
+	TK_end()
+}
+
+
+
+#EndScriptTable
+//====================================================================
+

@@ -1,0 +1,7860 @@
+//──────────────────────────────
+//	name("◆嘉兰多（★梅ンキャラ）Gyarandow")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+//斗技场で之会話モ～ション(マッスルポ～ズをランダムで)
+MOTION_TK_GYARANDOW
+{
+	//モ～ション
+	MOT_SET(GYARANDOW,150,-1,514,514,-1,-1)
+	MOT_SET(GYARANDOW,151,-1,515,515,-1,-1)
+	MOT_SET(GYARANDOW,152,-1,516,516,-1,-1)
+	MOT_SET(GYARANDOW,153,-1,517,517,-1,-1)
+	MOT_SET(GYARANDOW,154,-1,518,518,-1,-1)
+
+	workL(0,RAND,5)
+	if(WK000==0)
+		MOT(GYARANDOW,150,10)
+	else
+	if(WK000==1)
+		MOT(GYARANDOW,151,10)
+	else
+	if(WK000==2)
+		MOT(GYARANDOW,152,10)
+	else
+	if(WK000==3)
+		MOT(GYARANDOW,153,10)
+	else
+		MOT(GYARANDOW,154,10)
+
+}
+TK_GYARANDOW
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(GYARANDOW, "1", "1", "1")
+	KAO(PLAYER1, "1", "1", "1")
+	rot_chr(PLAYER1,30,GYARANDOW)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")
+		rot_chr(PET,30,GYARANDOW)
+
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")
+			rot_chr(PLAYER2,30,GYARANDOW)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")
+			rot_chr(PLAYER2,30,GYARANDOW)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")
+			rot_chr(PLAYER2,30,GYARANDOW)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")
+			rot_chr(PLAYER2,30,GYARANDOW)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")
+		rot_chr(PLAYER2,30,GYARANDOW)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　嘉兰多から技を教わっている场合之み、
+	//　　廃坑入口之手前之、陽之当たる场所に立っている。
+	//　　プロレスラ～立ちで直立しているような状態。
+	if( F4_00_StartSolo && !F4_05_OnVillage2)
+	{
+	//	name("★初回（１回之み／イベント処理）")
+		if(!FM_07_TkGyarandow1)
+		{
+		//　　話しかけるとキャラ再配置してイベント発生。
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			stop_BGM(60)
+			cross_fade(30)			//クロスフェ～ド
+			EV_begin()
+
+			//カメラセット
+			CAM_move(-19,308,341,0,0)
+			CAM(-450,28,341,40,183,0,0)
+
+			//キャラ再配置
+			chr_pos(RAGNA,100,147,0,154,2)
+			chr_pos( GYARANDOW,-9,-279,101,0,51)
+
+			KAO(GYARANDOW,"1", "1", "1")
+			KAO(RAGNA, "1", "1", "1")
+
+			//	name("□昴がいる场合")
+			if(F4_02_GoVillage2 && !F4_06_StopAttack)
+			{
+				KAO(PARTNER,"1", "1", "1")
+				chr_pos(PARTNER,-83,236,0,188,2)
+				MOT_SET(PARTNER,150,-1,472,472,-1,-1)		//！
+			}
+
+			MOT_SET(RAGNA,150,-1,472,472,-1,-1)		//！
+
+			MOT_SET(GYARANDOW,150,-1,515,515,151,20)		//ぬううううんんん！
+			MOT_SET(GYARANDOW,151,-1,514,514,-1,-1)		//ぬううううんんん！
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+
+			VOICE(610,0)	//★「ぬううううん！」
+			MOT(GYARANDOW,150,15)
+			MES(GYARANDOW,"P1S5嚎嚎嚎嚎嚎嚎嚎嚎！",0)
+			MES_close(GYARANDOW)
+
+			CAM_move(241,-132,161,40,0)
+			CAM(-450,20,161,41,241,40,0)
+			wait_CAM_move()
+
+			//─────────────────────
+			//	name("□昴がいる场合")
+			if(F4_02_GoVillage2 && !F4_06_StopAttack)
+			{
+			//　　拉古那之頭に！マ～ク。
+//				EMO(RAGNA,EMO_BIKKURI)
+				EMO(RAGNA,EMO_TOGEBIKKURI)
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+				wait(30)
+				MOT(RAGNA,150,10)
+				MOT(PARTNER,150,10)
+				KAO(PARTNER,"1232Z2","D","6")
+				MES(PARTNER,"哇哇哇哇……！？",0)
+				MES_close(PARTNER)
+
+				MES(RAGNA,"是嘉兰多大叔……",0)
+				MES_close(RAGNA)
+
+				MOT(PARTNER,2,15)
+				MOT(RAGNA,2,15)
+			}
+			else
+			{
+			//　　拉古那之頭に！マ～ク。
+//				EMO(RAGNA,EMO_BIKKURI)
+				EMO(RAGNA,EMO_TOGEBIKKURI)
+				wait(30)
+				MOT(RAGNA,150,10)
+				wait(15)
+				MES(RAGNA,"嘉兰多大叔……",0)
+				MES_close(RAGNA)
+				MOT(RAGNA,2,15)
+			}
+			//─────────────────────
+
+			wait_BGM()
+			BGM(19)
+			wait(30)
+
+			MES(RAGNA,"你、在干什么？\n在这种地方……",0)
+			MES_close(RAGNA)
+
+			look_chr( GYARANDOW, RAGNA,"Bone_Head")
+			MOT(GYARANDOW,51,15)
+			wait(30)
+			MES(GYARANDOW,"哼哼、沐浴着太阳的光芒、\n将那炙热的黄金之光的能量\n溶进肌肉里。",0)
+			MES(GYARANDOW,"这是我每天都要做的事情。",0)
+			MES_close(GYARANDOW)
+
+			MES(RAGNA,"是、是吗……",0)
+			MES_close(RAGNA)
+
+			//─────────────────────
+			//	name("□昴がいる场合")
+			if(F4_02_GoVillage2 && !F4_06_StopAttack)
+			{
+				rot_chr(PARTNER,30,RAGNA)
+				KAO(PARTNER,"1232Z4","D","6")
+				MES(PARTNER,"拉古那师父。\n这，这个人是谁……？",0)
+				MES_close(PARTNER)
+
+				rot_chr(RAGNA,30,PARTNER)
+				MES(RAGNA,"啊、虽然是个怪人\n但是并不坏，所以别担心。",0)
+				MES_close(RAGNA)
+			}
+			//─────────────────────
+
+
+			MES(GYARANDOW,"唔、话说回来\n怎么没见到你的伙伴。",0)
+			MES(GYARANDOW,"发生什么事了吗？",0)
+			MES_close(GYARANDOW)
+
+			//─────────────────────
+			//	name("□昴がいる场合")
+			if(F4_02_GoVillage2 && !F4_06_StopAttack)
+			{
+
+			rot_chr(PARTNER,30,GYARANDOW)
+			rot_chr(RAGNA,30,GYARANDOW)
+			wait(15)
+			}
+			//─────────────────────
+
+			MES(RAGNA,"啊……\n我和公主已经分道扬镳了。",0)
+			MES(RAGNA,"我原本就只是为了履行约定才和她搭档的\n我们只不过是契约关系罢了。",0)
+			MES(RAGNA,"哈哈、你交给我们的绝技\n看来没法再派上用场了。",0)
+			MES_close(RAGNA)
+
+			//─────────────────────
+			//	name("□昴がいる场合")
+			if(F4_02_GoVillage2 && !F4_06_StopAttack)
+			{
+//				rot_chr(PARTNER,30,RAGNA)
+				look_chr( PARTNER, RAGNA,"Bone_Head")
+				KAO(PARTNER,"12321Z2","1","4")
+				MES(PARTNER,"拉古那师父……",0)
+				MES_close(PARTNER)
+			}
+			//─────────────────────
+			MES(GYARANDOW,"嗯嗯……",0)
+			MES(GYARANDOW,"拉古那啊。\n这是你的心里话吗？",0)
+			MES_close(GYARANDOW)
+
+		//　　拉古那之頭に！マ～ク。
+			EMO(RAGNA,EMO_BIKKURI)
+//			rot_chr(PARTNER,30,GYARANDOW)
+			look_chr( PARTNER, GYARANDOW,"Bone_Head")
+			wait(30)
+
+			MES(RAGNA,"诶……",0)
+			MES_close(RAGNA)
+
+		//	name2(GYARANDOW)
+			MES(GYARANDOW,"的确、每个人都有自己的路要走\n并不一定要交错在一起。",0)
+			MES(GYARANDOW,"邂逅、然后分离……\n本是世间常情。",0)
+			MES(GYARANDOW,"但是你的内心、真的认可了\n这次的分离吗？",0)
+			MES_close(GYARANDOW)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"这、这个……",0)
+			MES_close(RAGNA)
+
+			//─────────────────────
+			//	name("□昴がいる场合")
+			if(F4_02_GoVillage2 && !F4_06_StopAttack)
+			{
+				MES(PARTNER,"………………………………",0)
+				MES_close(PARTNER)
+			}
+			//	name("□それ以外")
+			else
+			{
+				MES(RAGNA,"………………………………",0)
+				MES_close(RAGNA)
+			}
+			//─────────────────────
+
+			MES(GYARANDOW,"我能说的只有这些。",0)
+			MES(GYARANDOW,"是挣扎、是迷惑、还是逃避\n全是你自己的问题……",0)
+			MES(GYARANDOW,"试着倾听一下自己的心声吧。",0)
+			MES_close(GYARANDOW)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"……您说的是…………",0)
+			MES_close(RAGNA)
+//			wait_MES(RAGNA)
+
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			cross_fade(30)			//クロスフェ～ド
+			look_off(GYARANDOW)
+			//─────────────────────
+			//	name("□昴がいる场合")
+			if(F4_02_GoVillage2 && !F4_06_StopAttack)
+			{
+				F_set(FM_07_TkGyarandow1)
+			}
+			//	name("□それ以外")
+			else
+			{
+				F_set(FM_07_TkGyarandow1)
+				F_set(FM_07_TkGyarandow1R)
+			}
+			//─────────────────────
+			CAM_return( 0 )			//カメラを初期設定に
+			wait(30)
+
+			EV_end()
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+
+
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+
+		}
+		else
+		{
+		//	name("★２回目（１回之み／昴がいる场合之み／イベント処理）")
+			if(F4_02_GoVillage2 && !F4_06_StopAttack && !FM_07_TkGyarandow2)
+			{
+			//――――――――――――――――――――――――――
+			//	初期化処理
+			//――――――――――――――――――――――――――
+				cross_fade(30)			//クロスフェ～ド
+				EV_begin()
+
+			//――――――――――――――――――――――――――
+			//	イベント開始
+			//――――――――――――――――――――――――――
+			//　　話しかけるとキャラ再配置してイベント発生。
+				look_chr( GYARANDOW, PARTNER,"Bone_Head")
+
+				if(FM_07_TkGyarandow1R)		//拉古那１人で廃坑之嘉兰多と会っている
+				{
+					stop_BGM(60)
+					//カメラセット
+					CAM_move(-19,308,341,0,0)
+					CAM(-450,28,341,40,183,0,0)
+
+					//キャラ再配置
+					chr_pos(RAGNA,100,147,0,154,2)
+					chr_pos( GYARANDOW,-9,-279,101,0,51)
+
+					KAO(GYARANDOW,"1", "1", "1")
+					KAO(RAGNA, "1", "1", "1")
+
+					KAO(PARTNER,"1", "1", "1")
+					chr_pos(PARTNER,-83,236,0,188,2)
+					MOT_SET(PARTNER,150,-1,472,472,-1,-1)		//！
+
+					MOT_SET(RAGNA,150,-1,472,472,-1,-1)		//！
+
+					MOT_SET(GYARANDOW,150,-1,515,515,151,20)		//ぬううううんんん！
+					MOT_SET(GYARANDOW,151,-1,514,514,-1,-1)		//ぬううううんんん！
+					wait_fade()
+
+					VOICE(610,0)	//★「ぬううううん！」
+					MOT(GYARANDOW,150,15)
+					MES(GYARANDOW,"P1S5嚎嚎嚎嚎嚎嚎嚎嚎！",0)
+					MES_close(GYARANDOW)
+
+					CAM_move(241,-132,161,40,0)
+					CAM(-450,20,161,41,241,40,0)
+					wait_CAM_move()
+
+				//	EMO(RAGNA,EMO_TOGEBIKKURI)
+					EMO(PARTNER,EMO_TOGEBIKKURI)
+					wait(30)
+				//	MOT(RAGNA,150,10)
+					MOT(PARTNER,150,10)
+					KAO(PARTNER,"1232Z2","D","6")
+					MES(PARTNER,"哇哇哇……！？",0)
+					MES_close(PARTNER)
+
+				//	MES(RAGNA,"嘉兰多大叔……",0)
+				//	MES_close(RAGNA)
+
+				//	MOT(RAGNA,2,15)
+
+					wait_BGM()
+					BGM(19)
+					wait(15)
+
+					MES(RAGNA,"大叔……\n又在晒日光浴啊。",0)
+					MES_close(RAGNA)
+
+					look_chr( GYARANDOW, RAGNA,"Bone_Head")
+					MOT(GYARANDOW,51,15)
+					wait(30)
+					MES(GYARANDOW,"嗯、今天太阳的光辉\n格外灿烂。",0)
+					MES(GYARANDOW,"我要让肌肉的每处细胞\n都沐浴在太阳的金光之下。",0)
+					MES_close(GYARANDOW)
+
+					MES(RAGNA,"是、是吗……",0)
+					MES_close(RAGNA)
+
+					MOT(PARTNER,2,15)
+					rot_chr(PARTNER,30,RAGNA)
+					wait(15)
+					KAO(PARTNER,"1232Z4","D","6")
+					MES(PARTNER,"拉古那师父。\n这、这个人是谁……？",0)
+					MES_close(PARTNER)
+
+					rot_chr(RAGNA,30,PARTNER)
+					MES(RAGNA,"啊、虽然是个怪人\n但不是坏蛋，不要怕。",0)
+					MES_close(RAGNA)
+
+					MES(GYARANDOW,"嗯……",0)
+					MES(GYARANDOW,"你也是个\n可造之材。",0)
+					MES_close(GYARANDOW)
+
+					rot_chr(PARTNER,30,GYARANDOW)
+					rot_chr(RAGNA,30,GYARANDOW)
+					wait(15)
+
+				} 
+				else
+				{
+					//カメラセット
+					CAM_move(241,-132,161,0,0)
+					CAM(-450,20,161,41,241,0,0)
+
+					KAO(RAGNA, "1", "1", "1")
+					KAO(PARTNER,"1", "1", "1")
+					//キャラ再配置
+					chr_pos(RAGNA,100,147,0,154,2)
+					chr_pos(GYARANDOW,-9,-279,101,0,51)
+					chr_pos(PARTNER,-83,236,0,188,2)
+					wait_fade()
+
+					MES(GYARANDOW,"还有这一位……",0)
+					MES(GYARANDOW,"你的资质\n也很不错。",0)
+					MES_close(GYARANDOW)
+				}
+
+				KAO(PARTNER,"12321Z4","D","6")
+				MES(PARTNER,"诶诶……\n是，是在说我吗？",0)
+				MES_close(PARTNER)
+
+				MES(GYARANDOW,"没错、如果你拜我为师的话\n就能得到像我这般即美型又结实\n的肌肉啦，想不想试试？",0)
+				MES_close(GYARANDOW)
+
+			//　　嘉兰多、少し顔を背ける。
+				//◆現在ダンジョン之入り口を見るようにしています
+				look_chr( GYARANDOW,91,"Bone_Head")
+
+				MES(GYARANDOW,"S1而且、我的健美操\n还含有增高的\n效果……（哼哼）",0)
+				MES_close(GYARANDOW)
+
+
+			//　　昴之頭に！マ～ク。
+				EMO(PARTNER,EMO_BIKKURI)
+				wait(30)
+
+				CAM_quake("46")
+				KAO(PARTNER,"12321Z3","E","6")
+				MES(PARTNER,"S3真、真的这么神奇！？",0)
+				KAO(PARTNER,"12321Z3","1","4")
+				MES(PARTNER,"啊……但是……",0)
+				MES_close(PARTNER)
+
+				look_chr( GYARANDOW,PARTNER,"Bone_Head")
+			//　　昴之頭に…マ～ク。
+				EMO(PARTNER,EMO_TENTEN)
+				wait(60)
+
+				KAO(PARTNER,"12321Z5","26","6")
+				MES(PARTNER,"嘿嘿嘿、很感谢您\n但我还是算了。",0)
+//				MES_close(PARTNER)
+//				look_chr( PARTNER,RAGNA,"Bone_Head")
+//				wait(15)
+				KAO(PARTNER,"12321Z4","6","6")
+				MES(PARTNER,"因为我已经\n有师傅啦。",0)
+				MES_close(PARTNER)
+
+//				rot_chr(RAGNA,30,PARTNER)
+				look_chr(RAGNA, PARTNER,"Bone_Head")
+				wait(15)
+				MES(RAGNA,"喂，昴……",0)
+				MES_close(RAGNA)
+				look_off(PARTNER)
+			//	name2(GYARANDOW)
+				MES(GYARANDOW,"哼哼、你的这份心情、\n真是难能可贵。",0)
+				MES(GYARANDOW,"那么就走你自己所\n坚信的道路吧。",0)
+				MES_close(GYARANDOW)
+
+				KAO(PARTNER,"12321Z2","6","6")
+				MES(PARTNER,"是！",0)
+				MES_close(PARTNER)
+
+//				wait_MES(GYARANDOW)
+			//――――――――――――――――――――――――――
+			//	イベント終了処理
+			//――――――――――――――――――――――――――
+				fade_in(100,30,BLACK)
+				wait_fade()
+
+				look_off(RAGNA)
+				look_off(PARTNER)
+				cross_fade(30)			//クロスフェ～ド
+				look_off(GYARANDOW)
+				F_set(FM_07_TkGyarandow2)
+
+				CAM_return( 0 )			//カメラを初期設定に
+				wait(30)
+
+				EV_end()
+				//フェ～ドイン----------------------
+				fade_in(0,30,BLACK)
+			//	プレイヤ～操作許可
+			//――――――――――――――――――――――――――
+			}
+		//	name("★以後、繰り返し")
+			else
+			{
+				MOT(GYARANDOW,52,15)
+				rot_chr(GYARANDOW,30,RAGNA)
+				MES(GYARANDOW,"拉古那啊。\n倾听一下自己的心声吧。",0)
+				MES(GYARANDOW,"是挣扎、是彷徨、还是逃避\n全是你自己的\n问题。",0)
+				MES_close(GYARANDOW)
+				MOT(GYARANDOW,51,15)
+			}
+		}
+	//──────────────────────────────
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※『★礼拜堂へ之道が開いた』後は、罗亚鲁塔村に配置されています。
+	if( F3_10_OpenChapel && !F4_00_StartSolo)
+	{
+		//▽礼拜堂へ之道を開いた
+		//　　菲奥娜たち之代わりに村人を見ている。
+		//　　プロレスラ～立ちで直立しているような状態。
+		//	name("★初回（１回之み／イベント処理）")
+		//　　話しかけるとキャラ再配置してイベント発生。
+		if(!FM_06_TalkGyarandow)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(20)			//クロスフェ～ド
+			EV_begin()
+
+			//カメラセット
+			CAM_move(403,-4095,238,0,0)
+			CAM(-210,22,238,27,179,0,0)
+
+			//キャラ再配置
+			chr_pos(RAGNA,523,4175,-23,160,2)
+			chr_pos(PARTNER,285,4175,-23,220,2)
+			chr_pos(GYARANDOW,413,3793,-21,0,51)
+
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")
+			KAO(PARTNER,"1", "1", "1")
+			KAO(GYARANDOW,"1", "1", "1")
+
+			MOT_SET(GYARANDOW,150,-1,515,515,151,20)		//ぬううううんんん！
+			MOT_SET(GYARANDOW,151,-1,514,514,-1,-1)		//ぬううううんんん！
+
+			MOT_SET(RAGNA,150,-1,472,472,-1,-1)		//！
+			MOT_SET(PARTNER,150,-1,472,472,-1,-1)		//！
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			if(FE_FF_GetSkil_1)
+			{
+				MOT(GYARANDOW,150,15)
+				CAM_move(403,-4095,158,40,0)
+				CAM(-210,68,20,27,179,40,0)
+
+				VOICE(610,0)	//★「ぬううううん！」
+				MES(GYARANDOW,"P1S5嚎嚎嚎嚎嚎嚎嚎嚎！",0)
+				MES_close(GYARANDOW)
+
+			//　　拉古那たち之頭に！マ～ク。
+//				EMO(RAGNA,EMO_BIKKURI)
+//				EMO(PARTNER,EMO_BIKKURI)
+				EMO(RAGNA,EMO_TOGEBIKKURI)
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+				MOT(RAGNA,150,10)
+				MOT(PARTNER,150,10)
+				wait(30)
+
+				MES(PARTNER,"唔唔……是你！？",0)
+				MES_close(PARTNER)
+
+				//─────────────────────
+				//	name("□習った技が２つ以下")
+				if(!FE_FF_GetSkil_3)
+				{
+					MES(RAGNA,"戴着面具的肌肉男！？",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□習った技が３つ以上")
+					MES(RAGNA,"嘉兰多大叔！？",0)
+					MES_close(RAGNA)
+				}
+				//─────────────────────
+
+				MOT(RAGNA,2,15)
+				MOT(PARTNER,2,15)
+
+				MES(RAGNA,"为、为什么\n你会在这里！？",0)
+				MES_close(RAGNA)
+
+				MOT(GYARANDOW,52,15)
+				MES(GYARANDOW,"哼、真是愚蠢的问题。",0)
+				MES(GYARANDOW,"当然是应正义之风的召唤……\n难道还会有别的理由吗。",0)
+				MES_close(GYARANDOW)
+
+				MES(PARTNER,"原来如此……\n那真是没办法。",0)
+				MES_close(PARTNER)
+
+//				rot_chr(RAGNA,30,PARTNER)
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+				wait(5)
+
+				KAO(RAGNA,"12321Z3","1","1")
+				MES(RAGNA,"不过、我还是不太明白。",0)
+				MES_close(RAGNA)
+
+//				rot_chr(RAGNA,30,GYARANDOW)
+				look_chr(RAGNA,GYARANDOW,"Bone_Head")
+
+				MES(GYARANDOW,"通俗一点说\n我是受菲奥娜殿所托。",0)
+				MES(GYARANDOW,"因为她要赶去城里所以希望我代替她\n照顾受伤的村民。",0)
+				MES(GYARANDOW,"于是我很爽快地就答应了。",0)
+				MES_close(GYARANDOW)
+
+				MES(RAGNA,"这、这样啊……",0)
+				MES(RAGNA,"也就是说、也许能和大小姐们\n在城里会合。",0)
+				MES_close(RAGNA)
+
+				MES(PARTNER,"嗯、我们也尽快赶往\n礼拜堂吧。",0)
+				MES(PARTNER,"假面啊。\n这里就拜托你了。",0)
+				MES_close(PARTNER)
+
+				MES(GYARANDOW,"嗯、我办事你放心。",0)
+				MES_close(GYARANDOW)
+			}
+		//	name("□教わっていない场合")
+			else
+			{
+				chr_rename(GYARANDOW,"奇怪的巨汉")
+				MOT(GYARANDOW,150,15)
+
+				CAM_move(403,-4095,158,40,0)
+				CAM(-210,68,20,27,179,40,0)
+
+				VOICE(610,0)	//★「ぬううううん！」
+				MES(GYARANDOW,"P1S5嚎嚎嚎嚎嚎嚎嚎嚎！",0)
+				MES_close(GYARANDOW)
+
+			//　　拉古那たち之頭に！マ～ク。
+//				EMO(RAGNA,EMO_BIKKURI)
+//				EMO(PARTNER,EMO_BIKKURI)
+				EMO(RAGNA,EMO_TOGEBIKKURI)
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+				MOT(RAGNA,150,10)
+				MOT(PARTNER,150,10)
+				wait(30)
+
+				MES(PARTNER,"唔唔……！？",0)
+				MES_close(PARTNER)
+
+				MES(RAGNA,"你、你是干什么的！？",0)
+				MES(RAGNA,"为什么在这里！？",0)
+				MES_close(RAGNA)
+
+				MOT(GYARANDOW,52,15)
+				MES(GYARANDOW,"哼、真是愚蠢的问题。",0)
+				MES(GYARANDOW,"当然是应正义之风的召唤……\n难道还会有别的理由吗。",0)
+				MES_close(GYARANDOW)
+
+				MOT(RAGNA,2,15)
+				MOT(PARTNER,2,15)
+
+				MES(PARTNER,"原来如此……\n那真是没办法……啊？",0)
+				MES_close(PARTNER)
+
+//				rot_chr(RAGNA,30,PARTNER)
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+				wait(5)
+
+				KAO(RAGNA,"12321Z3","1","1")
+				MES(RAGNA,"不过、实在太可疑了。",0)
+
+//				rot_chr(RAGNA,30,GYARANDOW)
+				look_chr(RAGNA,GYARANDOW,"Bone_Head")
+
+				MES(RAGNA,"波库鲁和大小姐她们\n应该在这里的。",0)
+				MES(RAGNA,"你这家伙……\n难道和扎哈鲁这混蛋是一伙的？",0)
+				MES_close(RAGNA)
+
+				MES(GYARANDOW,"哼、拜托你不要把我和\n那种人混为一谈。",0)
+				MES_close(GYARANDOW)
+
+				MES(GYARANDOW,"吾名为嘉兰多──",0)
+				MES_close(GYARANDOW)
+
+				chr_rename(GYARANDOW,"嘉兰多")
+//				MES(GYARANDOW,"我乃传业师，将我的健美体操传授给世人\n让人人都有一身美型的肌肉\n此乃我的天职！",0)
+				MES(GYARANDOW,"为了让人人都能有一身美型的肌肉\n一直奋战在第一线的传业师是也！",0)
+				MES_close(GYARANDOW)
+
+				MES(RAGNA,"哈、哈啊……",0)
+				MES_close(RAGNA)
+
+				MES(PARTNER,"呵……\n人类的世界真是无奇不有。",0)
+				MES(PARTNER,"居然把这种行当当成天职\n这在你们人类世界很普遍吗。",0)
+				MES_close(PARTNER)
+
+//				rot_chr(RAGNA,30,PARTNER)
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+				wait(5)
+
+				KAO(RAGNA,"12321Z3","1","1")
+				MES(RAGNA,"一、一点都不普遍。",0)
+
+//				rot_chr(RAGNA,30,GYARANDOW)
+				look_chr(RAGNA,GYARANDOW,"Bone_Head")
+
+				MES(RAGNA,"那个你……\n为什么在这里？",0)
+				MES(RAGNA,"原先在这里\n的其他人呢？",0)
+				MES_close(RAGNA)
+
+				MES(GYARANDOW,"通俗一点说\n我是受菲奥娜殿所托。",0)
+				MES(GYARANDOW,"因为她要赶去城堡，所以希望我代替她\n照顾受伤的村民。",0)
+				MES(GYARANDOW,"于是我很爽快地就答应了。",0)
+				MES_close(GYARANDOW)
+
+				MES(RAGNA,"这、这样啊……？",0)
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+				MES(RAGNA,"（我们到底该不该\n  相信他说的话呢……）",0)
+				MES_close(RAGNA)
+
+				MES(PARTNER,"（嗯、最起码这个人看起来\n  不像在撒谎的样子。）",0)
+				MES(PARTNER,"（而且看样子这家伙有两下子\n  就交给他吧、怎么样？）",0)
+				MES_close(PARTNER)
+
+				MES(RAGNA,"（说、说的也对……）",0)
+				MES(RAGNA,"（大小姐她们\n  似乎已经赶去城堡了\n  我们也快点回去比较妥当。）",0)
+				MES_close(RAGNA)
+				look_chr(RAGNA,GYARANDOW,"Bone_Head")
+				wait(30)
+				MES(RAGNA,"是叫嘉兰多吧。\n这里就交给你了。",0)
+				MES_close(RAGNA)
+
+				MES(GYARANDOW,"嗯、我办事你放心。",0)
+				MES_close(GYARANDOW)
+			}
+
+			//――――――――――――――――――――――――――
+			//	イベント終了処理
+			//――――――――――――――――――――――――――
+
+				fade_in(100,30,BLACK)
+				wait_fade()
+
+				F_set(FM_06_TalkGyarandow)
+
+				CAM_return( 0 )			//カメラを初期設定に
+				wait(30)
+				EV_end()
+				fade_in(0,30,BLACK)
+
+			//	プレイヤ～操作許可
+			//――――――――――――――――――――――――――
+		}
+		else
+		{
+			VOICE(605,0)	//★「ふんっ！」
+			MOT(GYARANDOW,150,5)
+			rot_chr(GYARANDOW,30,PLAYER1)
+			//	name("□嘉兰多に技を教わっている场合")
+			if(FE_FF_GetSkil_1)
+			{
+				MES(GYARANDOW,"这里就交给我吧\n你们快返回城里去吧。",0)
+				MES(GYARANDOW,"你们两个、\n一定要多加小心啊。",0)
+				MES_close(GYARANDOW)
+			}
+			else
+			{
+			//	name("□教わっていない场合")
+				MES(GYARANDOW,"这里就交给我吧\n你们快返回城里去吧。",0)
+				MES(GYARANDOW,"年轻人啊。\n你们一定要多加小心啊。",0)
+				MES_close(GYARANDOW)
+			}
+			MOT(GYARANDOW,51,15)
+		}
+	}
+	else
+	///////////////////////////////////////////////////////////////////////////////
+	//以下馆内之会話。
+	///////////////////////////////////////////////////////////////////////////////
+	if(!FE_FF_TkGyarandowF)
+	{
+	//──────────────────────────────
+	//▼馆内Ｇ初回会話
+		if(F2_00_GoForest && !F2_14_TalkEnemy)
+			EV_stop("GYARANDOW_EX_03")
+
+		MOT(GYARANDOW,51,15)
+		rot_chr(GYARANDOW,30,PLAYER1)
+
+		MES(GYARANDOW,"哼哼哼、你们\n果然来了。",0)
+		MES_close(GYARANDOW)
+
+	//　　嘉兰多、うなずく。
+		look(GYARANDOW,"Bone_Head",0,		0,0,2,			0,0,-20)
+		wait(15)
+		look(GYARANDOW,"Bone_Head",0,		0,0,2,			0,0,0)
+		wait(20)
+		MES(GYARANDOW,"─┲也十分能体会\n那种感觉。",0)
+		MES_close(GYARANDOW)
+
+	//　　拉古那たちに冷や汗エモ～ション。
+		EMO(RAGNA,EMO_HIYAASE)
+		EMO(PARTNER,EMO_HIYAASE)
+		wait(30)
+
+		MES(PARTNER,"你一个人\n在自言自语些什么……",0)
+		MES(PARTNER,"假面啊，我要事先说明啊、\n其实我对你那──",0)
+		MES_close(PARTNER)
+
+		MES(GYARANDOW,"这里是梦幻战士的\n集结之馆……",0)
+		MES(GYARANDOW,"非常适合你们\n进行修炼。",0)
+		MES(GYARANDOW,"去吧、抱着必胜的心态\n去勇敢挑战把！",0)
+		MES_close(GYARANDOW)
+
+	//　　拉古那たちに青ざめエモ～ション。
+		EMO(RAGNA,EMO_AOZAME)
+		EMO(PARTNER,EMO_AOZAME)
+		wait(30)
+
+		MES(RAGNA,"（这位大叔果然、\n  是耳背……）",0)
+		MES_close(RAGNA)
+		F_set(FE_FF_TkGyarandowF)
+
+		if(F2_00_GoForest && !F2_14_TalkEnemy)
+		{
+			F_set(GYARANDOW)//LF
+			EV("GYARANDOW_EX_03")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※フラグ③では、嘉兰多は断続的にエクササイズを踊っています。（動き之研究中）
+	//　　※フラグ①または②でＧ－斗技场に来たことが啊り、
+	//　　　フラグ③之範囲之み、初回イベントが啊ります。
+	if( F2_00_GoForest && !F2_14_TalkEnemy && !FE_03_TalkGyarandow)
+	{
+
+		EV_stop("GYARANDOW_EX_03")
+//		MOT(GYARANDOW,51,15)
+//		rot_chr(GYARANDOW,30,PLAYER1)
+
+		//──────────────────────────────
+		//	name("□Ｇ初回メッセ～ジを見た直後（ＬＦ制御）")
+		if(F_GYARANDOW)
+		{
+			look_chr( GYARANDOW, PLAYER1,"Bone_Head")
+			wait(30)
+
+			MES(GYARANDOW,"不过你们。\n来得正是时候。",0)
+			MES_close(GYARANDOW)
+		}
+		else
+		{
+		//	name("□それ以外")
+
+		//　　嘉兰多、ＰＡエモ～ションで振り向く。
+			EMO(GYARANDOW,EMO_PA)
+			look_chr( GYARANDOW, PLAYER1,"Bone_Head")
+			wait(30)
+
+			MES(GYARANDOW,"哦哦、来得正是时候。",0)
+			MES_close(GYARANDOW)
+		}
+		//──────────────────────────────
+
+	//　　拉古那たちに？エモ～ション。
+		EMO(RAGNA,EMO_HATENA)
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+		if(GW_MAN==1)
+		{
+			MES(RAGNA,"干、干什么突然……\n（我有一种不好的预感……）",0)
+			MES_close(RAGNA)
+		}
+		else
+		//	name("□艾雯先頭")
+		{
+			MES(PARTNER,"怎么突然说出这么一句没头没脑的话……",0)
+			MES(PARTNER,"如果你是要求我办事的话、还是\n另请高明吧。",0)
+			MES_close(PARTNER)
+		}
+		//──────────────────────────────
+
+	//	name("超人嘉兰多")
+		MES(GYARANDOW,"哼哼、不要这么冷淡嘛。",0)
+		MES(GYARANDOW,"其实啊，我一不小心\n把一件非常重要的事给忘了。",0)
+		MES(GYARANDOW,"事情是这样的，因为我太醉心于体操的研究、\n把给企鹅送东西这件事给忘了",0)
+		MES_close(GYARANDOW)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+		if(GW_MAN==1)
+		{
+			MES(PARTNER,"企鹅……？\n就是在入口站着的那位。",0)
+			MES_close(PARTNER)
+		}
+		else
+		//	name("□艾雯先頭")
+		{
+			MES(RAGNA,"企鹅……\n就是在入口站着的那位企鹅。",0)
+			MES_close(RAGNA)
+		}
+		//──────────────────────────────
+
+	//	name("超人嘉兰多")
+		MES(GYARANDOW,"他是我的部下、\n他脑子里只有一根筋……",0)
+		MES(GYARANDOW,"吩咐他的事、只要不叫停，他会死心塌地\n无休止的执行。",0)
+		MES_close(GYARANDOW)
+
+	//　　拉古那たちに冷や汗エモーション。
+		EMO(RAGNA,EMO_HIYAASE)
+		EMO(PARTNER,EMO_HIYAASE)
+		wait(30)
+
+	//	name("超人嘉兰多")
+		MES(GYARANDOW,"昨晚有事，没能接他回来、\n现在也一定还在\n那里傻站着吧。",0)
+		MES(GYARANDOW,"他一定还没有吃饭\n把这个帮我带给他。",0)
+		MES_close(GYARANDOW)
+
+	//　　※フ～ドを受け取る。
+	//　　　森梅ンル～トで手に入る最高フ～ドより、小汪ランク上之も之を想定。
+
+	//	name("システムメッセ～ジ")
+		//―――――――――――――――――――――――
+		fade_in(30,10,BLACK)
+
+
+		get_item(185,1,0)
+		wait(10)
+		wait_key(0)
+
+		fade_in(0,10,BLACK)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		//―――――――――――――――――――――――
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+		if(GW_MAN==1)
+		{
+			MES(RAGNA,"啊、我帮你做没问题……\n但是你自己为什么不亲自送去？",0)
+			MES_close(RAGNA)
+		}
+		else
+		//	name("□艾雯先頭")
+		{
+			MES(PARTNER,"（嗯嗯、看来是件正经的\n  差事。）",0)
+			MES(PARTNER,"啊、我帮你做没问题……\n不过假面啊，你为什么不亲自送去？",0)
+			MES_close(PARTNER)
+		}
+		//──────────────────────────────
+	//	name("超人嘉兰多")
+		MES(GYARANDOW,"哼哼……不巧得很、我现在\n正在养精蓄锐。\n分不开身啊。",0)
+		MES(GYARANDOW,"这件事就拜托你们二人了。",0)
+		MES_close(GYARANDOW)
+
+		look_off(GYARANDOW)
+		EV("GYARANDOW_EX_03")
+		F_set(FE_03_TalkGyarandow)
+	}
+	else
+	if(GW_WINLOSE>0)//斗技场で战った後之通常メッセ～ジ(勝敗で分岐)
+	{
+		if(F2_00_GoForest && !F2_14_TalkEnemy)
+			EV_stop("GYARANDOW_EX_03")
+
+		EV("MOTION_TK_GYARANDOW")
+		rot_chr(GYARANDOW,30,PLAYER1)
+		if(GW_WINLOSE==1)
+		{
+			//──────────────────────────────
+			//▼斗技场でペンギンに勝った直後之メッセ～ジ
+			//　　※マップを切り替えるまでこ之メッセ～ジを表示。
+			//──────────────────────────────
+			if(GW_TRY_CUP==9)
+			{
+				if(!F_GYARANDOW)
+				{
+				//	name("超人嘉兰多")
+					MES(GYARANDOW,"终于有人打败我的\n企鹅了吗……",0)
+					MES(GYARANDOW,"太出色了。\n我感动的无法用言语表达。",0)
+
+					//全コ～スクリア済み
+					if(FV_FF_WinMaurice && FV_FF_WinOdessa && FV_FF_WinPockle && FV_FF_WinPipiro && FV_FF_WinSubaru && FV_FF_WinFiona && FV_FF_WinKlode)
+						MES(GYARANDOW,"很遗憾，没有更高的挑战项目了\n不过这里聚集的战士\n每天都在不懈的修炼本领……",0)
+					else
+					if(GW_TRY_CHARA==0)
+						MES(GYARANDOW,"但是拉古那啊、\n这里聚集的战士\n每天都在不懈的修炼本领……",0)
+					else
+						MES(GYARANDOW,"但是艾雯啊、\n这里聚集的战士\n每天都在不懈的修炼本领……",0)
+
+					MES(GYARANDOW,"不可骄傲自满哦\n否则早晚会被别人超过的。",0)
+					MES(GYARANDOW,"今后也希望你们能\n不懈的锻炼本领。",0)
+					MES_close(GYARANDOW)
+
+					F_set(GYARANDOW)
+				}
+			//　　★繰り返し
+				else
+				{
+				//	name("超人嘉兰多")
+					MES(GYARANDOW,"今后也要\n不懈的努力。",0)
+					MES(GYARANDOW,"有机会的话再来玩。\n我随时可以当你的对手。",0)
+					MES_close(GYARANDOW)
+				}
+			}
+			//──────────────────────────────
+			//▼斗技场で嘉兰多に勝った直後之メッセ～ジ
+			//　　※マップを切り替えるまでこ之メッセ～ジを表示。
+			//　　※既にペンギンに勝っている场合は無効。馆内·通常会話となる。
+			//──────────────────────────────
+			else
+			if(GW_TRY_CUP==8)
+			{
+				if(!FV_FF_WinPenguin)
+				{
+				//	name("超人嘉兰多")
+					MES(GYARANDOW,"居然能超过我真是了不起。",0)
+					MES(GYARANDOW,"很出色。\n我、真是有些感动哦。",0)
+					MES(GYARANDOW,"但是这个竞技场内、\n有一个比我还要厉害的人物。",0)
+					MES(GYARANDOW,"哼哼、想挑战的话就\n要再好好努力修行一下哦。",0)
+					MES_close(GYARANDOW)
+				}
+				else
+				{
+					EV("TALK_GYARANDOW")
+					wait_EV("TALK_GYARANDOW")
+				}
+			}
+			//──────────────────────────────
+			//▼斗技场で勝った直後之メッセ～ジ
+			//　　※嘉兰多に勝利している场合は無効。
+			//　　※マップを切り替えるまでこ之メッセ～ジを表示。
+			//──────────────────────────────
+			else
+			{
+				if(!FV_FF_WinGyarandow)
+				{
+					if(!F_GYARANDOW)
+					{
+					//	name("超人嘉兰多")
+						MES(GYARANDOW,"可以可贺。",0)
+
+						if(GW_TRY_CUP==1)
+							MES(GYARANDOW,"夺得莫里斯杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==2)
+							MES(GYARANDOW,"夺得西部牛仔杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==3)
+							MES(GYARANDOW,"夺得纯情少男杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==4)
+							MES(GYARANDOW,"夺得魔法少女杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==5)
+							MES(GYARANDOW,"夺得袖珍忍者杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==6)
+							MES(GYARANDOW,"夺得戎装小姐杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==7)
+							MES(GYARANDOW,"夺得万能执事杯、\n真是太英勇啦。",0)
+
+						MES(GYARANDOW,"尤其是中场那招霹雳无敌旋风腿\n实在是\n精彩之极。",0)
+						MES_close(GYARANDOW)
+
+						//　　※○○は直前に挑战したコ～ス名。
+						//──────────────────────
+						//	name("□直前之挑战者が拉古那だった")
+						if(GW_TRY_CHARA==0)
+						{
+							MES(RAGNA,"我，我\n可没用那招……",0)
+							MES_close(RAGNA)
+						}
+						else
+						//	name("□直前之挑战者が艾雯だった")
+						{
+							MES(PARTNER,"我可不知道还有那种招数……",0)
+							MES_close(PARTNER)
+						}
+						//──────────────────────────────
+
+						F_set(GYARANDOW)
+					}
+					else
+					{
+					//　　★繰り返し
+					//	name("超人嘉兰多")
+
+						if(GW_TRY_CUP==1)
+							MES(GYARANDOW,"夺得莫里斯杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==2)
+							MES(GYARANDOW,"夺得西部牛仔杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==3)
+							MES(GYARANDOW,"夺得纯情少男杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==4)
+							MES(GYARANDOW,"夺得魔法少女杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==5)
+							MES(GYARANDOW,"夺得袖珍忍着杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==6)
+							MES(GYARANDOW,"夺得戎装小姐杯、\n真是太英勇啦。",0)
+						else
+						if(GW_TRY_CUP==7)
+							MES(GYARANDOW,"夺得万能执事杯、\n真是太英勇啦。",0)
+
+						MES(GYARANDOW,"但是、天外有天人外有人。",0)
+						MES(GYARANDOW,"哼哼、快点达到\n我所达到的境界吧……！",0)
+						MES_close(GYARANDOW)
+					}
+				}
+				else
+				{
+					EV("TALK_GYARANDOW")
+					wait_EV("TALK_GYARANDOW")
+				}
+			}
+		}
+	///////////////////敗北
+		else
+		{
+		//──────────────────────────────
+		//▼斗技场でペンギンに負けた直後之メッセ～ジ
+		//　　※マップを切り替えるまでこ之メッセ～ジを表示。
+		//──────────────────────────────
+			if(GW_TRY_CUP==9)
+			{
+				if(!F_GYARANDOW)
+				{
+				//	name("超人嘉兰多")
+					MES(GYARANDOW,"果然没能战胜\n我的企鹅啊……",0)
+					MES(GYARANDOW,"哼哼、不过，你们不用觉得遗憾。",0)
+					MES(GYARANDOW,"因为我的企鹅是绝无仅有的\n空前绝后的强悍。",0)
+					MES_close(GYARANDOW)
+
+				//　　嘉兰多に···エモ～ション。
+					EMO(GYARANDOW,EMO_TENTEN)
+					wait(30)
+				//──────────────────────
+				//	name("□直前之挑战者が拉古那だった")
+					if(GW_TRY_CHARA==0)
+					{
+					//	name("超人嘉兰多")
+						MES(GYARANDOW,"拉古那啊、只能给你这个\n营养剂了……",0)
+						MES_close(GYARANDOW)
+
+					//	name2(RAGNA)
+						MES(RAGNA,"又、又来了……",0)
+						MES_close(RAGNA)
+					}
+					//	name("□直前之挑战者が艾雯だった")
+					else
+					{
+					//	name("超人嘉兰多")
+						MES(GYARANDOW,"艾雯啊、只能给你这个\n营养剂了……",0)
+						MES_close(GYARANDOW)
+
+					//	name2(PARTNER)
+						MES(PARTNER,"我不是说了不要这种东西嘛！",0)
+						MES_close(PARTNER)
+					}
+
+					F_set(GYARANDOW)
+				}
+				//──────────────────────
+				//　　★繰り返し
+				else
+				{
+				//	name("超人嘉兰多")
+					MES(GYARANDOW,"哼哼、虽然没能打败\n我的企鹅、\n但你们不用觉得遗憾。",0)
+					MES(GYARANDOW,"加倍努力的锻炼肌肉吧、\n争取更上一层楼……！",0)
+					MES_close(GYARANDOW)
+				}
+			}
+			//──────────────────────────────
+			//▼斗技场で嘉兰多に負けた直後之メッセ～ジ
+			//　　※マップを切り替えるまでこ之メッセ～ジを表示。
+			//　　※既にペンギンに勝っている场合は無効。馆内·通常会話となる。
+			//──────────────────────────────
+			else
+			if(GW_TRY_CUP==8)
+			{
+				if(!FV_FF_WinPenguin)
+				{
+					if(!F_GYARANDOW)
+					{
+					//	name("□直前之挑战者が拉古那だった")
+						if(GW_TRY_CHARA==0)
+						{
+						//	name("超人嘉兰多")
+							MES(GYARANDOW,"哎呀、都打到这里了，没想到还是败了……",0)
+							MES(GYARANDOW,"拉古那啊、\n吾人、有些失望哦。",0)
+							MES(GYARANDOW,"没办法、只能给你这个\n营养剂了……",0)
+							MES_close(GYARANDOW)
+							MES(RAGNA,"还、还是你自己留着吧……",0)
+							MES_close(RAGNA)
+						}
+						else
+						{
+						//	name("□直前之挑战者が艾雯だった")
+						//	name("超人嘉兰多")
+							MES(GYARANDOW,"哎呀、都打到这里了，没想到还是败了……",0)
+							MES(GYARANDOW,"艾雯啊、\n我、有些失望哦。",0)
+							MES(GYARANDOW,"没办法、只能给你这个\n营养剂了……",0)
+							MES_close(GYARANDOW)
+
+						//	name2(PARTNER)
+							MES(PARTNER,"我才不要这种东西！",0)
+							MES_close(PARTNER)
+						}
+
+						F_set(GYARANDOW)
+					}
+					//──────────────────────
+					//　　★繰り返し
+					else
+					{
+					//	name("超人嘉兰多")
+						MES(GYARANDOW,"哎呀、都打到这里了，没想到还是败了……",0)
+						MES(GYARANDOW,"吾人、有些失望哦。",0)
+						MES(GYARANDOW,"你们要加倍努力锻炼肌肉、\n争取早日\n赶上我吧……！",0)
+						MES_close(GYARANDOW)
+					}
+				}
+				else
+				{
+					EV("TALK_GYARANDOW")
+					wait_EV("TALK_GYARANDOW")
+				}
+			}
+			//──────────────────────────────
+			//▼斗技场で負けた直後之メッセ～ジ
+			//　　※嘉兰多に勝利している场合は無効。
+			//　　※マップを切り替えるまでこ之メッセ～ジを表示。
+			//──────────────────────
+			else
+			{
+				if(!FV_FF_WinGyarandow)
+				{
+					if(!F_GYARANDOW)
+					{
+						if(GW_TRY_CUP==1)
+							MES(GYARANDOW,"嗯、没能夺得莫里斯杯啊……",0)
+						else
+						if(GW_TRY_CUP==2)
+							MES(GYARANDOW,"嗯、没能夺得西部牛仔杯啊……",0)
+						else
+						if(GW_TRY_CUP==3)
+							MES(GYARANDOW,"嗯、没能夺得纯情少年杯啊……",0)
+						else
+						if(GW_TRY_CUP==4)
+							MES(GYARANDOW,"嗯、没能夺得魔法少女杯啊……",0)
+						else
+						if(GW_TRY_CUP==5)
+							MES(GYARANDOW,"嗯、没能夺得袖珍忍者杯啊……",0)
+						else
+						if(GW_TRY_CUP==6)
+							MES(GYARANDOW,"嗯、没能夺得戎装小姐杯啊……",0)
+						else
+						if(GW_TRY_CUP==7)
+							MES(GYARANDOW,"嗯、没能夺得万能执事杯啊……",0)
+
+						//──────────────────────
+						//	name("□直前之挑战者が拉古那だった")
+						if(GW_TRY_CHARA==0)
+						{
+						//	name("超人嘉兰多")
+							MES(GYARANDOW,"看来你的修行\n还不够啊、拉古那啊。",0)
+							MES(GYARANDOW,"没办法、只能给你这个\n营养剂了……",0)
+							MES_close(GYARANDOW)
+
+						//	name2(RAGNA)
+							MES(RAGNA,"还、还是你自己留着吧……",0)
+							MES_close(RAGNA)
+						}
+						else
+						//	name("□直前之挑战者が艾雯だった")
+						{
+						//	name("超人嘉兰多")
+
+							MES(GYARANDOW,"看来你的修行\n还不够啊、艾雯啊。",0)
+							MES(GYARANDOW,"没办法、只能给你\n这个营养剂了……",0)
+							MES_close(GYARANDOW)
+
+						//	name2(PARTNER)
+							MES(PARTNER,"我才不要这种东西！",0)
+							MES_close(PARTNER)
+						}
+						//──────────────────────────────
+						F_set(GYARANDOW)
+					}
+					else
+					{
+					//──────────────────────
+					//　　★繰り返し
+					//	name("超人嘉兰多")
+						if(GW_TRY_CUP==1)
+							MES(GYARANDOW,"诶呀、没能夺得莫里斯杯啊……",0)
+						else
+						if(GW_TRY_CUP==2)
+							MES(GYARANDOW,"诶呀、没能夺得西部牛仔杯啊……",0)
+						else
+						if(GW_TRY_CUP==3)
+							MES(GYARANDOW,"诶呀、没能夺得纯情少年杯啊……",0)
+						else
+						if(GW_TRY_CUP==4)
+							MES(GYARANDOW,"诶呀、没能夺得魔法少女杯啊……",0)
+						else
+						if(GW_TRY_CUP==5)
+							MES(GYARANDOW,"诶呀、没能夺得袖珍忍者杯啊……",0)
+						else
+						if(GW_TRY_CUP==6)
+							MES(GYARANDOW,"诶呀、没能夺得戎装小姐杯啊……",0)
+						else
+						if(GW_TRY_CUP==7)
+							MES(GYARANDOW,"诶呀、没能夺得万能执事杯啊……",0)
+
+						MES(GYARANDOW,"我、有些失望哦。",0)
+						MES(GYARANDOW,"你们要加倍努力锻炼肌肉、\n争取早日\n赶上我吧……！",0)
+						MES_close(GYARANDOW)
+					}
+				}
+				else
+				{
+					EV("TALK_GYARANDOW")
+					wait_EV("TALK_GYARANDOW")
+				}
+			}
+		}
+		if(F2_00_GoForest && !F2_14_TalkEnemy)
+			EV("GYARANDOW_EX_03")
+		else
+			MOT(GYARANDOW,51,15)
+	}
+	else
+	if(GW_WINLOSE==0)//斗技场で战ったフラグが立つ前之通常会話
+	{
+		if(F2_00_GoForest && !F2_14_TalkEnemy)
+			EV_stop("GYARANDOW_EX_03")
+
+		EV("MOTION_TK_GYARANDOW")
+		EV("TALK_GYARANDOW")
+		wait_EV("TALK_GYARANDOW")
+
+		if(F2_00_GoForest && !F2_14_TalkEnemy)
+			EV("GYARANDOW_EX_03")
+		else
+			MOT(GYARANDOW,51,15)
+	}
+
+	TK_end()
+}
+
+/──────────────────────────────
+//　　※以下は馆内·通常会話です。
+//　　　いつも斗技场受付フロア之真ん中辺りに立っています。
+//　　※フラグ⑥『★礼拜堂へ之道が開いた』後、
+//　　　及びフラグ□は配置を消します。
+//──────────────────────────────
+TALK_GYARANDOW
+{
+	workL(008,ADD,1)
+	//──────────────────────────────
+	//▼馆内·通常会話（全コ～ス終了）
+	//　　※以下之メッセ～ジをランダムで表示する。
+	//──────────────────────────────
+	if(FV_FF_GyakataLvMAX)
+	{
+		rot_chr(GYARANDOW,30,PLAYER1)
+		if(WK008==1)
+		{
+		//　　★メッセ～ジ１
+			MES(GYARANDOW,"不过真是没想到我的企鹅\n居然被\n打败了……",0)
+			MES(GYARANDOW,"开设这个竞技场\n果然是正确的。\n……我现在真是感慨万千啊。",0)
+			MES(GYARANDOW,"现在的你们、\n无论走到哪里\n都不用害怕了。",0)
+			MES(GYARANDOW,"拉古那啊、还有艾雯啊。\n以后你们就一心一意地\n去冒险吧！",0)
+			MES_close(GYARANDOW)
+
+			//──────────────────────
+			//	name("□こ之メッセ～ジを見る之が初めて。")
+			if(!FE_FF_TkGyarandowL4)
+			{
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"啊。谢谢夸奖。",0)
+					MES(RAGNA,"（这家伙\n  原来也有正经的一面啊。）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+					MES(PARTNER,"嗯。我们会的。",0)
+					MES(PARTNER,"（这个人……果然\n  是为了帮我们……？）",0)
+					MES_close(PARTNER)
+				}
+				MES(GYARANDOW,"……不过、那个……\n希望你们常来\n这里看我。",0)
+				MES_close(GYARANDOW)
+
+			//　　嘉兰多、顔を背ける。
+				look(GYARANDOW,"Bone_Head",0,		0,2,1,			0,30,-10)
+				wait(20)
+
+				MES(GYARANDOW,"这个……\n如果没有锻炼的地方，\n你们也会感到寂寞吧。",0)
+				MES_close(GYARANDOW)
+
+			//　　２人に冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+
+			//	name("先頭キャラ")
+				if(GW_MAN==1)
+				{
+					MES(PLAYER1,"（没想到还是个容易寂寞的人……？）",0)
+					MES_close(PLAYER1)
+				}
+				else
+				{
+					MES(PLAYER1,"（没想到还是个\n  容易寂寞的人……？）",0)
+					MES_close(PLAYER1)
+				}
+				look(GYARANDOW,"Bone_Head",0,		0,2,1,			0,0,0)
+				F_set(FE_FF_TkGyarandowL4)
+			}
+			//	name("□初めてでない。")
+			else
+			{
+			//　　嘉兰多、顔を背ける。
+				look(GYARANDOW,"Bone_Head",0,		0,2,1,			0,30,-10)
+				wait(20)
+				MES(GYARANDOW,"……其实是，这个啊……\n偶尔来看看我\n对你们也有好处嘛。",0)
+				MES_close(GYARANDOW)
+
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+
+				if(GW_MAN==1)
+				{
+					MES(PLAYER1,"（就是说……\n  希望我们来常看你。）",0)
+					MES_close(PLAYER1)
+				}
+				else
+				{
+					MES(PLAYER1,"（不就是说……\n  希望我们来\n  常看你嘛。）",0)
+					MES_close(PLAYER1)
+				}
+				look(GYARANDOW,"Bone_Head",0,		0,2,1,			0,0,0)
+			}
+			//──────────────────────
+		}
+		else
+		if(WK008==2)
+		{
+		//　　★メッセ～ジ２
+
+			//全コ～スクリア済み
+			if(FV_FF_WinMaurice && FV_FF_WinOdessa && FV_FF_WinPockle && FV_FF_WinPipiro && FV_FF_WinSubaru && FV_FF_WinFiona && FV_FF_WinKlode)
+				MES(GYARANDOW,"很遗憾没有更高的\n挑战项目了……",0)
+			else
+				MES(GYARANDOW,"在这里你们已经\n无人能敌了……",0)
+
+			MES(GYARANDOW,"另外、作为我兴趣之一的手办\n也已在博物馆\n正式展览。",0)
+			MES(GYARANDOW,"感到无聊的话\n随时来玩。",0)
+			MES(GYARANDOW,"哼哼、希望和我一起\n锻炼肌肉的话\n我可是非常的欢迎哦！",0)
+			MES_close(GYARANDOW)
+
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+		}
+		else
+		if(WK008==3)
+		{
+		//　　★メッセ～ジ３
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"还有、差点忘了说……",0)
+			MES(GYARANDOW,"普及健美操的重任就交给你们了\n要加油哦。",0)
+			MES_close(GYARANDOW)
+
+		//　　拉古那たちに青ざめエモ～ション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PARTNER,EMO_AOZAME)
+			wait(30)
+			MES(RAGNA,"普及健美操……？",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"谁说要做那种事……",0)
+			MES_close(PARTNER)
+
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"你们现在的力量已在我之上、\n将健美操发扬光大的重任\n自然就落在你们的肩上喽。",0)
+			MES(GYARANDOW,"我十分地看好你们哦。",0)
+			MES_close(GYARANDOW)
+
+		//　　拉古那たちに青ざめエモ～ション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PARTNER,EMO_AOZAME)
+			wait(30)
+			workL(008,SET,0)
+		}
+	}
+	//──────────────────────────────
+	//▼馆内·通常会話（馆レベル３·残るはペンギン之み）
+	//──────────────────────────────
+	else
+	if(FV_FF_GyakataLv3 && FV_FF_WinGyarandow)
+	{
+		rot_chr(GYARANDOW,30,PLAYER1)
+		if(WK008==1)
+		{
+		//　　★メッセ～ジ１
+			MES(GYARANDOW,"哼哼……没想到\n这么短的时间内\n你们已经成长到如此程度。",0)
+			MES(GYARANDOW,"果然是、吾人所教的\n健美操奏效了。",0)
+			MES_close(GYARANDOW)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"啊……我\n可不这么认为……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□艾雯先頭")
+				MES(PARTNER,"事，事先说明啊假面。\n和那个体操一点关系都没有……",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			MES(GYARANDOW,"──你们要走的路、\n有无数的困难\n要克服。",0)
+			MES(GYARANDOW,"不过、放心大胆的前进吧。",0)
+			MES(GYARANDOW,"因为有我在暗地里守护着你们。",0)
+			MES_close(GYARANDOW)
+
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（这个『暗地里』是什么意思……？）",0)
+				MES_close(□艾雯先頭)
+			}
+			else
+			{
+			//	name("□艾雯先頭")
+				MES(PARTNER,"（这个『暗地里』背后\n  肯定有着不可告人\n  的企图……）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+		}
+		else
+		if(WK008==2)
+		{
+		//　　★メッセ～ジ２
+		//	name("怪人嘉兰多")
+			MES(GYARANDOW,"了不起，居然超过了我。",0)
+			MES(GYARANDOW,"真是太出色了。\n我、真的有点感动。",0)
+			MES(GYARANDOW,"但是在这竞技场内、\n有一位比我还要\n厉害的人物。",0)
+			MES(GYARANDOW,"哼哼……\n如果你们也是战士的话、就应该\n加倍地修炼本领，然后来挑战！",0)
+			MES_close(GYARANDOW)
+		}
+		else
+		if(WK008==3)
+		{
+			//　　★メッセ～ジ３
+			//──────────────────────
+			if(GW_MAN==1)
+			{
+			//	name("□拉古那先頭")
+			//	name("怪人嘉兰多")
+				MES(GYARANDOW,"我说、拉古那啊……",0)
+				MES(GYARANDOW,"这件事结束后、一起\n去喝一杯怎么样？",0)
+				MES(GYARANDOW,"我们双方似乎很有\n共同语言。",0)
+				MES_close(GYARANDOW)
+
+				MES(RAGNA,"呀、不好意思\n我对你一向无语。",0)
+				MES_close(RAGNA)
+
+			//　　嘉兰多、顔を背ける。
+				look(GYARANDOW,"Bone_Head",0,		0,2,1,			0,30,-10)
+				wait(20)
+			//	name("怪人嘉兰多")
+				MES(GYARANDOW,"这、这样吗……",0)
+				MES(GYARANDOW,"我可是非常看好你\n觉得能继承我衣钵的人\n只有你一个……",0)
+				MES_close(GYARANDOW)
+
+			//　　拉古那にアセアセエモ～ション。
+				EMO(RAGNA,EMO_ASEASE)
+				wait(30)
+
+				MES(RAGNA,"我、求求你了\n你就饶了我吧……！",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□艾雯先頭")
+			//	name("怪人嘉兰多")
+				MES(GYARANDOW,"我说、艾雯啊……",0)
+				MES(GYARANDOW,"这件事结束后、一起\n去喝一杯怎么样？",0)
+				MES(GYARANDOW,"我们双方似乎很有\n共同语言。",0)
+				MES_close(GYARANDOW)
+
+				MES(PARTNER,"……很遗憾、我对你没兴趣。",0)
+				MES_close(PARTNER)
+
+			//　　嘉兰多、顔を背ける。
+				look(GYARANDOW,"Bone_Head",0,		0,2,1,			0,30,-10)
+				wait(20)
+			//	name("怪人嘉兰多")
+				MES(GYARANDOW,"这、这样吗……",0)
+				MES(GYARANDOW,"本想和你聊聊我最感兴趣的话题\n我们两人一定会\n聊得很投机的……",0)
+				MES_close(GYARANDOW)
+
+			//　　艾雯にムカエモ～ション。
+				EMO(PARTNER,EMO_AOSUZI)
+				wait(30)
+
+				MES(PARTNER,"你……\n你还是去找酒馆\n的老头聊吧，你们一定会很投机的！",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────
+			look(GYARANDOW,"Bone_Head",0,		0,2,1,			0,0,0)
+		}
+		else
+		if(WK008==4)
+		{
+		//　　★メッセ～ジ４
+			MES(GYARANDOW,"嗯、这个\n怎么说好呢……",0)
+			MES(GYARANDOW,"今天你们超过了我\n实在是个值得\n纪念的日子。",0)
+			MES(GYARANDOW,"为了庆祝\n我们来痛痛快快的做一次体操吧？",0)
+			MES_close(GYARANDOW)
+
+			MES_pos(RAGNA,"我拒绝。",0,0,0,0,0)
+			MES_pos(PARTNER,"我拒绝。",0,0,0,0,0)
+			wait_key(0)
+			MES_close(RAGNA)
+			MES_close(PARTNER)
+			workL(008,SET,0)
+		}
+	}
+	//──────────────────────────────
+	//▼馆内·通常会話（馆レベル３）
+	//　　※嘉兰多とペンギン以外、全員倒した段階を想定。
+	//　　※以下之メッセ～ジをランダムで表示する。
+	//──────────────────────────────
+	else
+	if(FV_FF_GyakataLv3 && !FV_FF_WinGyarandow)
+	{
+		if(WK008==1)
+		{
+			rot_chr(GYARANDOW,30,PLAYER1)
+		//　　★メッセ～ジ１
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"这一刻终于到来了。",0)
+			MES(GYARANDOW,"没想到这么快就\n要和我决战了。",0)
+			MES(GYARANDOW,"哼哼……我、今天非常地\n高兴。",0)
+			MES(GYARANDOW,"全身的肌肉都\n充满了力量……！",0)
+			MES_close(GYARANDOW)
+
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（为什么\n  这么高兴……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"（看你这欣喜若狂的样子、\n  就不能含蓄点……）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			MES(GYARANDOW,"去吧，快点去服务台登记、\n向我挑战吧！",0)
+			MES_close(GYARANDOW)
+		}
+		else
+		if(WK008==2)
+		{
+		//　　★メッセ～ジ２
+		//　　※振り返らない
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"哼哼、战斗前这种热血沸腾的感觉\n真是太棒了。",0)
+			MES(GYARANDOW,"这种发自内心的兴奋\n已经贯穿了我的全身……",0)
+			MES_close(GYARANDOW)
+
+		//　　嘉兰多、振り返る。
+			rot_chr(GYARANDOW,30,PLAYER1)
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"你们现在的感受想必\n也和我一样的吧？",0)
+			MES_close(GYARANDOW)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"不要征求\n我的意见……",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"不要征求我的意见……",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+		}
+		else
+		if(WK008==3)
+		{
+		//　　★メッセ～ジ３
+		//	name("超人嘉兰多")
+			rot_chr(GYARANDOW,30,PLAYER1)
+			MES(GYARANDOW,"其实我最近\n有一件烦心事……",0)
+			MES(GYARANDOW,"是关于这个会馆将来扩建的问题、\n不知你们理想的外形是什么样子\n一时很难决定。",0)
+			MES(GYARANDOW,"如果能把你们的愿望\n写出来我会非常高兴的，每个人可以写三行……",0)
+			MES_close(GYARANDOW)
+
+		//　　以下はポップアップ同時表示＆消去。
+		//	name2(PARTNER)
+			MES_pos(RAGNA,"请关灯。",0,0,0,0,0)
+			MES_pos(PARTNER,"请关灯。",0,0,0,0,0)
+			wait_key(0)
+			MES_close(RAGNA)
+			MES_close(PARTNER)
+		}
+		else
+		if(WK008==4)
+		{
+		//　　★メッセ～ジ４
+		//	name("超人嘉兰多")
+			rot_chr(GYARANDOW,30,PLAYER1)
+			MES(GYARANDOW,"我在那边的博物馆\n放置了\n游戏机。",0)
+			MES(GYARANDOW,"而且奖品也都\n准备好了、就当作是放松消遣\n挑战一下吧。",0)
+			MES(GYARANDOW,"嘿嘿、顺便告诉你们最高得分的保持者\n是露缇。",0)
+			MES(GYARANDOW,"如果你们超过的话\n一定要告诉我。",0)
+			MES_close(GYARANDOW)
+			workL(008,SET,0)
+		}
+	}
+	//──────────────────────────────
+	//▼馆内·通常会話（馆レベル２）
+	//　　※前半キャラを攻略し終えた状態を想定。
+	//　　※以下之メッセ～ジをランダムで表示する。
+	//──────────────────────────────
+	else
+	if(FV_FF_GyakataLv2)
+	{
+		rot_chr(GYARANDOW,30,PLAYER1)
+
+		if(WK008==1)
+		{
+		//　　★メッセ～ジ１
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"看来你们正在努力\n向冠军冲刺啊。",0)
+			MES(GYARANDOW,"我、高兴得\n想把这个会馆扩建一下。",0)
+			MES_close(GYARANDOW)
+
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"为什么要在那里扩建……",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"（唔唔、真是受不了……\n  这个家伙……）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"哼哼哼……",0)
+			MES(GYARANDOW,"早点达到我\n的境界吧……！",0)
+			MES_close(GYARANDOW)
+//			//★嘉兰多【戎】
+//			F_set_note(GYARANDOW,1)
+		}
+		else
+		if(WK008==2)
+		{
+		//　　★メッセ～ジ２
+		//	name("怪人嘉兰多")
+			MES(GYARANDOW,"顺便一说这个会馆原本是\n我为了锻炼身体而\n修建的。",0)
+			MES(GYARANDOW,"如果只有我一个人用岂不太浪费了、所以我决定\n也对那些有志健美事业的人开放。",0)
+			MES(GYARANDOW,"嘿嘿、因为大家志同道合\n所以这个会馆越建越\n壮观了……",0)
+			MES(GYARANDOW,"唔……你们怎么了。\n有什么问题么？",0)
+			MES_close(GYARANDOW)
+
+		//　　２人、顔を背ける。
+			KAO(RAGNA,"9","3","9")
+			KAO(PARTNER,"N","N","9")
+			look(PLAYER1,"Bone_Head",0,		0,2,0,			0,40,0)
+			look(PLAYER2,"Bone_Head",0,		0,2,0,			0,-40,0)
+		
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"没、没有……",0)
+				MES(RAGNA,"（果然那个外观\n  也是你的兴趣吧……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□艾雯先頭")
+				MES(PARTNER,"没、没有……",0)
+				MES(PARTNER,"（诶诶、不要靠得\n  这么近……！）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			look(PLAYER1,"Bone_Head",0,		0,2,0,			0,0,0)
+			look(PLAYER2,"Bone_Head",0,		0,2,0,			0,0,0)
+			KAO(RAGNA,"1","1","1")
+			KAO(PARTNER,"1","1","1")
+		}
+		else
+		if(WK008==3)
+		{
+		//　　★メッセ～ジ３
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"可以挑战的奖项\n每满足一定的条件就会增加。",0)
+			MES(GYARANDOW,"……也就是说、露缇\n会仅凭表现来判断。",0)
+			MES(GYARANDOW,"想挑战更高的奖项\n的话、\n需要提升L337『猎人～等级』L300。",0)
+			MES(GYARANDOW,"只要在城镇的协会\n商谈相关事宜便可。",0)
+			MES_close(GYARANDOW)
+
+			//★露缇【見た目で判断】
+			F_set_note(-82,0)
+		}
+		else
+		if(WK008==4)
+		{
+		//　　★メッセ～ジ３
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"哼哼……吾人\n随时接受你们的挑战。",0)
+			MES(GYARANDOW,"想要挑战的话、\n就选择L337『最强男人杯』L300。",0)
+			MES(GYARANDOW,"即使实力不够、\n也应该尝试一下。",0)
+			MES(GYARANDOW,"因为可以成为\n你们奋斗的目标。",0)
+			MES_close(GYARANDOW)
+		}
+		else
+		if(WK008==5)
+		{
+		//　　★メッセ～ジ４
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"你们有坚持做健美操吗？",0)
+			MES(GYARANDOW,"我传授给你们的健美操\n有各种各样的功能。",0)
+			MES(GYARANDOW,"不仅能强身健体、\n还能滋阴补肾而且对风湿关节痛等疑难杂症\n也有奇效。",0)
+			MES(GYARANDOW,"嗯、我今天也才只\n做了５８次……\n接下来一起做怎么样？",0)
+			MES_close(GYARANDOW)
+
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PARTNER,EMO_AOZAME)
+			wait(30)
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（你饶了我吧……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"诶诶、不要靠近我……！",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+		}
+		else
+		if(WK008==6)
+		{
+		//　　★メッセ～ジ５
+			MES(GYARANDOW,"在那边的博物馆里\n我放置了\n游戏机。",0)
+			MES(GYARANDOW,"而且奖品也\n都准备好了、就当作是放松消遣\n去挑战一下吧。",0)
+			MES(GYARANDOW,"嘿嘿、顺便告诉你们最高得分的保持者\n是露缇。",0)
+			MES(GYARANDOW,"如果你们超过的话\n一定要告诉我。",0)
+			MES_close(GYARANDOW)
+
+			if(!FE_03_Gyarandow)
+				workL(008,SET,0)
+		}
+		else
+		{
+		//　　★メッセ～ジ６（※フラグ③クエスト請負後に追加）
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"还有……\n露缇虽然也是我的部下、\n但她是个非常有主见的女孩。",0)
+			MES(GYARANDOW,"对于馆内的事情\n让她做的她做不让她做的也做。\n啊呀、连我都惧他三分……",0)
+			MES(GYARANDOW,"前几天我向她提岀\n新建一个健身房的方案、\n结果被她很爽快的驳回了。",0)
+			MES_close(GYARANDOW)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"这也难怪……",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"这也难怪……",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			workL(008,SET,0)
+		}
+	}
+	//──────────────────────────────
+	//▼馆内·通常会話（馆レベル１）
+	//　　※馆之初期状態です。
+	//　　※以下之メッセ～ジをランダムで表示する。
+	//──────────────────────────────
+	else
+	{
+		rot_chr(GYARANDOW,30,PLAYER1)
+		if(WK008==1)
+		{
+		//　　★メッセ～ジ１
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"地位、名声、一展身手──",0)
+			MES(GYARANDOW,"这里是满足你们\n这些欲望的地方。",0)
+			MES(GYARANDOW,"哼哼、在这里\n你们会受益匪浅的。",0)
+			MES(GYARANDOW,"不要害羞、去吧\n去前台登记、\n申请挑战吧！",0)
+			MES_close(GYARANDOW)
+		}
+		else
+		if(WK008==2)
+		{
+		//　　★メッセ～ジ２
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"可以挑战的奖项\n每满足一定的条件就会增加。",0)
+			MES(GYARANDOW,"……也就是说、露缇\n会仅凭表现来判断。",0)
+			MES(GYARANDOW,"想挑战更高的奖项\n的话、\n需要提升L337『猎人～等级』L300。",0)
+			MES(GYARANDOW,"只要在城镇的协会\n商谈相关事宜便可。",0)
+			MES_close(GYARANDOW)
+
+			//★露缇【見た目で判断】
+			F_set_note(-82,0)
+		}
+		else
+		if(WK008==3)
+		{
+		//　　★メッセ～ジ３
+		//	name("超人嘉兰多")
+			MES(GYARANDOW,"哼哼……我\n随时接受你们的挑战。",0)
+			MES(GYARANDOW,"想挑战的话、\n就选择L337『最强男人杯』L300吧。",0)
+			MES(GYARANDOW,"即使实力不够、\n也可以尝试一次。",0)
+			MES(GYARANDOW,"因为可以成为你们\n的奋斗目标。",0)
+			MES_close(GYARANDOW)
+		}
+		else
+		if(WK008==4)
+		{
+		//　　★メッセ～ジ４
+			MES(GYARANDOW,"在那边的博物馆里\n我放置了\n游戏机。",0)
+			MES(GYARANDOW,"而且奖品也\n都准备好了、就当作是放松消遣\n去挑战一下吧。",0)
+			MES(GYARANDOW,"嘿嘿、顺便告诉你们最高得分的保持者\n是露缇。",0)
+			MES(GYARANDOW,"如果你们超过的话\n一定要告诉我。",0)
+			MES_close(GYARANDOW)
+		}
+		else
+		if(WK008==5)
+		{
+			system_chack(3)
+			//　　★メッセ～ジ５
+			//──────────────────────────────
+			//	name("□手办馆が完成していない场合")
+			//if(GW_FIGUER<137)
+			if(GW_FIGUER<158)	//0922変更
+			{
+				MES(GYARANDOW,"唔……\n其实那边的那个手办展览馆？",0)
+				MES(GYARANDOW,"是因为我最近对手办非常地有兴趣\n所以才打算开设的。",0)
+				MES(GYARANDOW,"从各地收集来的手办\n我打算逐个的\n放到那里去展览……",0)
+				MES(GYARANDOW,"那些可都是非常稀有的。\n哼哼、我费了好大的劲\n才搞到手。",0)
+				MES_close(GYARANDOW)
+
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+			}
+			else
+			{
+			//	name("□手办馆が完成している（２週目之ことを考えて用意）")
+				MES(GYARANDOW,"唔……\n其实那边的展览馆里的手办？",0)
+				MES(GYARANDOW,"全是我的珍藏\n我对手办可是非常有兴趣、\n如果想参观的话尽管去看。",0)
+				MES(GYARANDOW,"嘿嘿、其中有很多稀有的\n手办，搞到它们\n费了好大的劲……",0)
+				EMO(GYARANDOW,EMO_KIRAKIRA)
+				wait(30)
+				MES(GYARANDOW,"果然将它们展览出来\n是正确的决定、嗯。",0)
+				MES_close(GYARANDOW)
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+			}
+			//──────────────────────────────
+			workL(008,SET,0)
+		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//											　奥義伝授イベント　
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//伝授イベント本体です。
+//４マップ（ev10492／ev20491／ev30493／ev40490）共通之ため、
+//カメラ等も４マップで共通之も之を使用する必要が啊ります。
+
+EXERCISE_MAIN
+{
+//22frmで１テンポ
+	MOT_SET(GYARANDOW,160,-1,2045,2065,161,2)//両手上マッスル
+	MOT_SET(GYARANDOW,161,-1,2065,2085,160,2)//両手上マッスル
+	MOT_SET(GYARANDOW,162,-1,2000,2020,163,2)//両手上回し
+	MOT_SET(GYARANDOW,163,-1,2020,2040,162,2)//両手上回し
+	MOT_SET(GYARANDOW,164,-1,2090,2112,165,10)//腰ひねり
+	MOT_SET(GYARANDOW,165,-1,2112,2122,166,2)//腰ひねり
+	MOT_SET(GYARANDOW,166,-1,2122,2145,167,10)//腰ひねり
+	MOT_SET(GYARANDOW,167,-1,2145,2155,164,1)//腰ひねり
+	MOT_SET(GYARANDOW,168,-1,2175,2195,169,2)//マッスルマッスル
+	MOT_SET(GYARANDOW,169,-1,2195,2215,168,2)//マッスルマッスル
+	MOT_SET(GYARANDOW,170,-1,2410,2430,171,2)//左右マッスル
+	MOT_SET(GYARANDOW,171,-1,2430,2450,170,2)//左右マッスル
+	MOT_SET(GYARANDOW,172,-1,2455,2495,173,4)//両手回し
+	MOT_SET(GYARANDOW,173,-1,2495,2535,172,4)//両手回し
+	MOT_SET(GYARANDOW,174,175,2330,2345,-1,-1)//左手前回し準備
+	MOT_SET(GYARANDOW,175,175,2345,2367,-1,-1)//左手前回し
+	MOT_SET(GYARANDOW,176,177,2370,2385,-1,-1)//右手前回し準備
+	MOT_SET(GYARANDOW,177,177,2385,2407,-1,-1)//右手前回し
+	MOT_SET(GYARANDOW,178,178,2220,2270,-1,-1)//小鸡左
+	MOT_SET(GYARANDOW,179,179,2275,2325,-1,-1)//小鸡右
+	MOT_SET(GYARANDOW,180,-1,514,514,-1,-1)
+	MOT_SET(GYARANDOW,181,-1,515,515,-1,-1)
+	MOT_SET(GYARANDOW,182,-1,516,516,-1,-1)
+	MOT_SET(GYARANDOW,183,-1,517,517,-1,-1)
+	MOT_SET(GYARANDOW,184,-1,518,518,-1,-1)
+	MOT_SET(GYARANDOW,185,-1,2205,2205,-1,-1)
+	MOT_SET(GYARANDOW,186,-1,2275,2275,-1,-1)
+	MOT_SET(GYARANDOW,187,-1,550,550,-1,-1)
+	MOT_SET(GYARANDOW,188,-1,2440,2440,-1,-1)
+	MOT_SET(GYARANDOW,189,-1,6925,6925,-1,-1)
+	MOT_SET(GYARANDOW,190,-1,548,548,-1,-1)
+	MOT_SET(GYARANDOW,191,-1,2220,2220,-1,-1)
+	MOT_SET(GYARANDOW,192,-1,2420,2420,-1,-1)
+
+	MOT_SET(EVENT_RAGNA2,160,-1,2045,2065,161,2)//両手上マッスル
+	MOT_SET(EVENT_RAGNA2,161,-1,2065,2085,160,2)//両手上マッスル
+	MOT_SET(EVENT_RAGNA2,162,-1,2000,2020,163,2)//両手上回し
+	MOT_SET(EVENT_RAGNA2,163,-1,2020,2040,162,2)//両手上回し
+	MOT_SET(EVENT_RAGNA2,164,-1,2090,2112,165,10)//腰ひねり
+	MOT_SET(EVENT_RAGNA2,165,-1,2112,2122,166,2)//腰ひねり
+	MOT_SET(EVENT_RAGNA2,166,-1,2122,2145,167,10)//腰ひねり
+	MOT_SET(EVENT_RAGNA2,167,-1,2145,2155,164,1)//腰ひねり
+	MOT_SET(EVENT_RAGNA2,168,-1,2175,2195,169,2)//マッスルマッスル
+	MOT_SET(EVENT_RAGNA2,169,-1,2195,2215,168,2)//マッスルマッスル
+	MOT_SET(EVENT_RAGNA2,170,-1,2410,2430,171,2)//左右マッスル
+	MOT_SET(EVENT_RAGNA2,171,-1,2430,2450,170,2)//左右マッスル
+	MOT_SET(EVENT_RAGNA2,172,-1,2455,2495,173,4)//両手回し
+	MOT_SET(EVENT_RAGNA2,173,-1,2495,2535,172,4)//両手回し
+	MOT_SET(EVENT_RAGNA2,174,175,2330,2345,-1,-1)//左手前回し準備
+	MOT_SET(EVENT_RAGNA2,175,175,2345,2367,-1,-1)//左手前回し
+	MOT_SET(EVENT_RAGNA2,176,177,2370,2385,-1,-1)//右手前回し準備
+	MOT_SET(EVENT_RAGNA2,177,177,2385,2407,-1,-1)//右手前回し
+	MOT_SET(EVENT_RAGNA2,178,178,2220,2270,-1,-1)//小鸡左
+	MOT_SET(EVENT_RAGNA2,179,179,2275,2325,-1,-1)//小鸡右
+	MOT_SET(EVENT_RAGNA2,180,-1,514,514,-1,-1)
+	MOT_SET(EVENT_RAGNA2,181,-1,515,515,-1,-1)
+	MOT_SET(EVENT_RAGNA2,182,-1,516,516,-1,-1)
+	MOT_SET(EVENT_RAGNA2,183,-1,517,517,-1,-1)
+	MOT_SET(EVENT_RAGNA2,184,-1,518,518,-1,-1)
+	MOT_SET(EVENT_RAGNA2,185,-1,2205,2205,-1,-1)
+	MOT_SET(EVENT_RAGNA2,186,-1,2275,2275,-1,-1)
+	MOT_SET(EVENT_RAGNA2,187,-1,550,550,-1,-1)
+	MOT_SET(EVENT_RAGNA2,188,-1,2440,2440,-1,-1)
+	MOT_SET(EVENT_RAGNA2,189,-1,6925,6925,-1,-1)
+	MOT_SET(EVENT_RAGNA2,190,-1,548,548,-1,-1)
+	MOT_SET(EVENT_RAGNA2,191,-1,2220,2220,-1,-1)
+	MOT_SET(EVENT_RAGNA2,192,-1,2420,2420,-1,-1)
+
+	MOT_SET(ALWEN,160,-1,4045,4065,161,2)//両手上マッスル
+	MOT_SET(ALWEN,161,-1,4065,4085,160,2)//両手上マッスル
+	MOT_SET(ALWEN,162,-1,4000,4020,163,2)//両手上回し
+	MOT_SET(ALWEN,163,-1,4020,4040,162,2)//両手上回し
+	MOT_SET(ALWEN,164,-1,4090,4112,165,10)//腰ひねり
+	MOT_SET(ALWEN,165,-1,4112,4122,166,2)//腰ひねり
+	MOT_SET(ALWEN,166,-1,4122,4145,167,10)//腰ひねり
+	MOT_SET(ALWEN,167,-1,4145,4155,164,1)//腰ひねり
+	MOT_SET(ALWEN,168,-1,4175,4195,169,2)//マッスルマッスル
+	MOT_SET(ALWEN,169,-1,4195,4215,168,2)//マッスルマッスル
+	MOT_SET(ALWEN,170,-1,4410,4430,171,2)//左右マッスル
+	MOT_SET(ALWEN,171,-1,4430,4450,170,2)//左右マッスル
+	MOT_SET(ALWEN,172,-1,4455,4495,173,4)//両手回し
+	MOT_SET(ALWEN,173,-1,4495,4535,172,4)//両手回し
+	MOT_SET(ALWEN,174,175,4330,4345,-1,-1)//左手前回し準備
+	MOT_SET(ALWEN,175,175,4345,4367,-1,-1)//左手前回し
+	MOT_SET(ALWEN,176,177,4370,4385,-1,-1)//右手前回し準備
+	MOT_SET(ALWEN,177,177,4385,4407,-1,-1)//右手前回し
+	MOT_SET(ALWEN,178,178,4220,4270,-1,-1)//小鸡左
+	MOT_SET(ALWEN,179,179,4275,4325,-1,-1)//小鸡右
+	MOT_SET(ALWEN,180,-1,514,514,-1,-1)
+	MOT_SET(ALWEN,181,-1,515,515,-1,-1)
+	MOT_SET(ALWEN,182,-1,516,516,-1,-1)
+	MOT_SET(ALWEN,183,-1,517,517,-1,-1)
+	MOT_SET(ALWEN,184,-1,518,518,-1,-1)
+	MOT_SET(ALWEN,185,-1,4205,4205,-1,-1)
+	MOT_SET(ALWEN,186,-1,4275,4275,-1,-1)
+	MOT_SET(ALWEN,187,-1,550,550,-1,-1)
+	MOT_SET(ALWEN,188,-1,4440,4440,-1,-1)
+	MOT_SET(ALWEN,189,-1,6025,6025,-1,-1)
+	MOT_SET(ALWEN,190,-1,548,548,-1,-1)
+	MOT_SET(ALWEN,191,-1,4220,4220,-1,-1)
+	MOT_SET(ALWEN,192,-1,4420,4420,-1,-1)
+	MOT_SET(ALWEN,001,001,0825 0842,-1,-1)
+
+	BGM(48)
+
+	EV("G_EXERCISE")
+
+	wait(88)
+	wait(22)
+	wait(24)
+	wait(12)
+	wait(12)
+	wait(12)
+	wait(12)
+	wait(16)
+	wait(176)
+	wait(154)
+	wait(10)
+	wait(10)
+	wait(14)
+	wait(176)
+	wait(132)
+	wait(11)
+	wait(22)
+	wait(11)
+	wait(198)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(11)
+	wait(44)
+	wait(11)
+	wait(242)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(10)
+	wait(10)
+	wait(14)
+	wait(190)
+	wait(18)
+	wait(122)
+	wait(12)
+	wait(12)
+
+	stop_BGM(30)
+}
+
+G_EXERCISE
+{
+	if(!FE_FF_GetSkil_1)
+	{
+		EV("R_EXERCISE_1")
+		EV("A_EXERCISE_1")
+	}
+	else
+	{
+		EV("R_EXERCISE_2")
+		EV("A_EXERCISE_2")
+	}
+	//両手上マッスル
+	MOT(GYARANDOW,160,5)
+	wait(88)
+
+	//1,2
+	MOT(GYARANDOW,185,10)
+	wait(22)
+	MOT(GYARANDOW,181,10)
+	wait(24)
+
+	//1,2,3,アウ
+	MOT(GYARANDOW,187, 5)
+	wait(12)
+	MOT(GYARANDOW,188, 5)
+	wait(12)
+	MOT(GYARANDOW,186, 5)
+	wait(12)
+	MOT(GYARANDOW,190, 5)
+	wait(12)
+	MOT(GYARANDOW,189, 5)
+	wait(16)
+
+	//両手上回し＆回転
+	VOICE(624,0)	//★「ふっ、ふっ、はっ、はっ…」
+	MOT(GYARANDOW,162,5)
+	rot(GYARANDOW,4,135)
+	wait(176)
+	rot(GYARANDOW,4,0)
+	wait(154)
+
+	//タンタンタン
+	MOT(GYARANDOW,185, 5)
+	wait(10)
+	MOT(GYARANDOW,191, 5)
+	wait(10)
+	MOT(GYARANDOW,192, 5)
+	wait(14)
+
+	//両手上回し＆回転
+	VOICE(626,0)	//★「燃やせ！　燃やす之だ！」
+	MOT(GYARANDOW,162,5)
+	rot(GYARANDOW,4,225)
+	wait(176)
+	rot(GYARANDOW,4,0)
+	wait(132)
+
+	//画面左へ
+	MOT(GYARANDOW,2,11)
+	rot(GYARANDOW,30,90)
+	wait(11)
+	CAM_move(6450,-8100,180,22,2)
+	MOT(GYARANDOW,1,5)
+	jump(GYARANDOW,0,22,6450,8000,0,0)
+	wait_move(GYARANDOW)
+	MOT(GYARANDOW,2,5)
+	rot(GYARANDOW,30,0)
+	wait(11)
+
+	//左手前回し
+	MOT(GYARANDOW,174,12)
+//	wait(198)
+	wait(22)
+	VOICE(805,0)	//★「１、２、３、４、２、２、３、４…」
+	wait(176)
+
+	cross_fade(15)
+	CAM_move(6450,-7900,140,0,0)
+	CAM(150,74,180,25,140,0,0)
+
+	//マッスルマッスル＆回転
+	VOICE(627,0)	//★「マッスル、マッスルぅ！」
+	MOT(GYARANDOW,168,5)
+	wait(22)
+	rot(GYARANDOW,30,270)
+	wait(22)
+	rot(GYARANDOW,30,180)
+	wait(22)
+	rot(GYARANDOW,30,90)
+	wait(22)
+	rot(GYARANDOW,30,0)
+	wait(22)
+
+	cross_fade(15)
+	CAM_move(6450,-8100,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+
+	//画面右へ
+	MOT(GYARANDOW,2,11)
+	rot(GYARANDOW,30,270)
+	wait(11)
+	CAM_move(7050,-8100,180,44,2)
+	MOT(GYARANDOW,1,5)
+	jump(GYARANDOW,0,44,7050,8000,0,0)
+	wait_move(GYARANDOW)
+	MOT(GYARANDOW,2,5)
+	rot(GYARANDOW,30,0)
+	wait(11)
+
+	//右手前回し
+	MOT(GYARANDOW,176,12)
+//	wait(242)
+	wait(22)
+	VOICE(805,0)	//★「１、２、３、４、２、２、３、４…」
+	wait(220)
+
+	cross_fade(15)
+	CAM_move(7050,-7900,140,0,0)
+	CAM(150,74,180,25,220,0,0)
+
+	//両手上マッスル＆回転
+	VOICE(625,0)	//★「いいぞ！　いいぞ！」
+	MOT(GYARANDOW,160,5)
+	wait(22)
+	rot(GYARANDOW,30,90)
+	wait(22)
+	rot(GYARANDOW,30,180)
+	wait(22)
+	rot(GYARANDOW,30,270)
+	wait(22)
+	rot(GYARANDOW,30,0)
+	wait(22)
+
+	//タンタンタン
+	MOT(GYARANDOW,187, 5)
+	wait(10)
+	MOT(GYARANDOW,188, 5)
+	wait(10)
+	MOT(GYARANDOW,186, 5)
+	wait(14)
+
+	cross_fade(15)
+	CAM_move(7050,-8100,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+
+	//左右マッスル
+	VOICE(628,0)	//★「お前たちならやれるっ！」
+	MOT(GYARANDOW,170,5)
+	wait(190)
+	MOT(GYARANDOW,180,5)
+	wait(18)
+	MOT(GYARANDOW,170,5)
+	wait(122)
+	MOT(GYARANDOW,187, 5)
+	wait(12)
+	MOT(GYARANDOW,186, 5)
+	wait(12)
+	MOT(GYARANDOW,182, 5)
+}
+
+EXERCISE_MAIN3
+{
+//22frmで１テンポ
+	MOT_SET(GYARANDOW,160,-1,2045,2065,161,2)//両手上マッスル
+	MOT_SET(GYARANDOW,161,-1,2065,2085,160,2)//両手上マッスル
+	MOT_SET(GYARANDOW,162,-1,2000,2020,163,2)//両手上回し
+	MOT_SET(GYARANDOW,163,-1,2020,2040,162,2)//両手上回し
+	MOT_SET(GYARANDOW,164,165,2090,2112,-1,-1)//腰ひねり
+	MOT_SET(GYARANDOW,165,164,2112,2134,-1,-1)//腰ひねり
+	MOT_SET(GYARANDOW,168,-1,2175,2195,169,2)//マッスルマッスル
+	MOT_SET(GYARANDOW,169,-1,2195,2215,168,2)//マッスルマッスル
+	MOT_SET(GYARANDOW,170,-1,2410,2430,171,2)//左右マッスル
+	MOT_SET(GYARANDOW,171,-1,2430,2450,170,2)//左右マッスル
+	MOT_SET(GYARANDOW,172,173,2455,2499,-1,-1)//両手回し
+	MOT_SET(GYARANDOW,173,172,2500,2543,-1,-1)//両手回し
+	MOT_SET(GYARANDOW,174,175,2330,2345,-1,-1)//左手前回し準備
+	MOT_SET(GYARANDOW,175,175,2345,2367,-1,-1)//左手前回し
+	MOT_SET(GYARANDOW,176,177,2370,2385,-1,-1)//右手前回し準備
+	MOT_SET(GYARANDOW,177,177,2385,2407,-1,-1)//右手前回し
+	MOT_SET(GYARANDOW,178,178,2220,2270,-1,-1)//小鸡左
+	MOT_SET(GYARANDOW,179,179,2275,2325,-1,-1)//小鸡右
+	MOT_SET(GYARANDOW,180,-1,514,514,-1,-1)
+	MOT_SET(GYARANDOW,181,-1,515,515,-1,-1)
+	MOT_SET(GYARANDOW,182,-1,516,516,-1,-1)
+	MOT_SET(GYARANDOW,183,-1,517,517,-1,-1)
+	MOT_SET(GYARANDOW,184,-1,518,518,-1,-1)
+	MOT_SET(GYARANDOW,185,-1,2205,2205,-1,-1)//マッスル
+	MOT_SET(GYARANDOW,186,-1,2275,2275,-1,-1)//小鸡右
+	MOT_SET(GYARANDOW,187,-1,550,550,-1,-1)//屈伸
+	MOT_SET(GYARANDOW,188,-1,2440,2440,-1,-1)//左右マッスル
+	MOT_SET(GYARANDOW,189,-1,6925,6925,-1,-1)//は～
+	MOT_SET(GYARANDOW,190,-1,548,548,-1,-1)//大之字
+	MOT_SET(GYARANDOW,191,-1,2220,2220,-1,-1)//小鸡左
+	MOT_SET(GYARANDOW,192,-1,2420,2420,-1,-1)//左右マッスル
+	MOT_SET(GYARANDOW,193,-1,533,533,-1,-1)
+	MOT_SET(GYARANDOW,194,-1,534,534,-1,-1)
+	MOT_SET(GYARANDOW,196,-1,525,525,197,5)
+	MOT_SET(GYARANDOW,197,-1,526,526,198,5)
+	MOT_SET(GYARANDOW,198,-1,527,527,199,5)
+	MOT_SET(GYARANDOW,199,-1,528,528,196,5)
+
+	MOT_SET(EVENT_RAGNA2,160,-1,2045,2065,161,2)//両手上マッスル
+	MOT_SET(EVENT_RAGNA2,161,-1,2065,2085,160,2)//両手上マッスル
+	MOT_SET(EVENT_RAGNA2,162,-1,2000,2020,163,2)//両手上回し
+	MOT_SET(EVENT_RAGNA2,163,-1,2020,2040,162,2)//両手上回し
+	MOT_SET(EVENT_RAGNA2,164,165,2090,2112,-1,-1)//腰ひねり
+	MOT_SET(EVENT_RAGNA2,165,164,2112,2134,-1,-1)//腰ひねり
+	MOT_SET(EVENT_RAGNA2,168,-1,2175,2195,169,2)//マッスルマッスル
+	MOT_SET(EVENT_RAGNA2,169,-1,2195,2215,168,2)//マッスルマッスル
+	MOT_SET(EVENT_RAGNA2,170,-1,2410,2430,171,2)//左右マッスル
+	MOT_SET(EVENT_RAGNA2,171,-1,2430,2450,170,2)//左右マッスル
+	MOT_SET(EVENT_RAGNA2,172,173,2455,2499,-1,-1)//両手回し
+	MOT_SET(EVENT_RAGNA2,173,172,2500,2543,-1,-1)//両手回し
+	MOT_SET(EVENT_RAGNA2,174,175,2330,2345,-1,-1)//左手前回し準備
+	MOT_SET(EVENT_RAGNA2,175,175,2345,2367,-1,-1)//左手前回し
+	MOT_SET(EVENT_RAGNA2,176,177,2370,2385,-1,-1)//右手前回し準備
+	MOT_SET(EVENT_RAGNA2,177,177,2385,2407,-1,-1)//右手前回し
+	MOT_SET(EVENT_RAGNA2,178,178,2220,2270,-1,-1)//小鸡左
+	MOT_SET(EVENT_RAGNA2,179,179,2275,2325,-1,-1)//小鸡右
+	MOT_SET(EVENT_RAGNA2,180,-1,514,514,-1,-1)
+	MOT_SET(EVENT_RAGNA2,181,-1,515,515,-1,-1)
+	MOT_SET(EVENT_RAGNA2,182,-1,516,516,-1,-1)
+	MOT_SET(EVENT_RAGNA2,183,-1,517,517,-1,-1)
+	MOT_SET(EVENT_RAGNA2,184,-1,518,518,-1,-1)
+	MOT_SET(EVENT_RAGNA2,185,-1,2205,2205,-1,-1)//マッスル
+	MOT_SET(EVENT_RAGNA2,186,-1,2275,2275,-1,-1)//小鸡右
+	MOT_SET(EVENT_RAGNA2,187,-1,550,550,-1,-1)//屈伸
+	MOT_SET(EVENT_RAGNA2,188,-1,2440,2440,-1,-1)//左右マッスル
+	MOT_SET(EVENT_RAGNA2,189,-1,6925,6925,-1,-1)//は～
+	MOT_SET(EVENT_RAGNA2,190,-1,548,548,-1,-1)//大之字
+	MOT_SET(EVENT_RAGNA2,191,-1,2220,2220,-1,-1)//小鸡左
+	MOT_SET(EVENT_RAGNA2,192,-1,2420,2420,-1,-1)//左右マッスル
+	MOT_SET(EVENT_RAGNA2,193,-1,533,533,-1,-1)
+	MOT_SET(EVENT_RAGNA2,194,-1,534,534,-1,-1)
+	MOT_SET(EVENT_RAGNA2,196,-1,525,525,197,5)
+	MOT_SET(EVENT_RAGNA2,197,-1,526,526,198,5)
+	MOT_SET(EVENT_RAGNA2,198,-1,527,527,199,5)
+	MOT_SET(EVENT_RAGNA2,199,-1,528,528,196,5)
+
+	MOT_SET(ALWEN,160,-1,4045,4065,161,2)//両手上マッスル
+	MOT_SET(ALWEN,161,-1,4065,4085,160,2)//両手上マッスル
+	MOT_SET(ALWEN,162,-1,4000,4020,163,2)//両手上回し
+	MOT_SET(ALWEN,163,-1,4020,4040,162,2)//両手上回し
+	MOT_SET(ALWEN,164,165,4090,4112,-1,-1)//腰ひねり
+	MOT_SET(ALWEN,165,164,4112,4134,-1,-1)//腰ひねり
+	MOT_SET(ALWEN,168,-1,4175,4195,169,2)//マッスルマッスル
+	MOT_SET(ALWEN,169,-1,4195,4215,168,2)//マッスルマッスル
+	MOT_SET(ALWEN,170,-1,4410,4430,171,2)//左右マッスル
+	MOT_SET(ALWEN,171,-1,4430,4450,170,2)//左右マッスル
+	MOT_SET(ALWEN,172,173,4455,4499,-1,-1)//両手回し
+	MOT_SET(ALWEN,173,172,4500,4543,-1,-1)//両手回し
+	MOT_SET(ALWEN,174,175,4330,4345,-1,-1)//左手前回し準備
+	MOT_SET(ALWEN,175,175,4345,4367,-1,-1)//左手前回し
+	MOT_SET(ALWEN,176,177,4370,4385,-1,-1)//右手前回し準備
+	MOT_SET(ALWEN,177,177,4385,4407,-1,-1)//右手前回し
+	MOT_SET(ALWEN,178,178,4220,4270,-1,-1)//小鸡左
+	MOT_SET(ALWEN,179,179,4275,4325,-1,-1)//小鸡右
+	MOT_SET(ALWEN,180,-1,514,514,-1,-1)
+	MOT_SET(ALWEN,181,-1,515,515,-1,-1)
+	MOT_SET(ALWEN,182,-1,516,516,-1,-1)
+	MOT_SET(ALWEN,183,-1,517,517,-1,-1)
+	MOT_SET(ALWEN,184,-1,518,518,-1,-1)
+	MOT_SET(ALWEN,185,-1,4205,4205,-1,-1)//マッスル
+	MOT_SET(ALWEN,186,-1,4275,4275,-1,-1)//小鸡右
+	MOT_SET(ALWEN,187,-1,550,550,-1,-1)//屈伸
+	MOT_SET(ALWEN,188,-1,4440,4440,-1,-1)//左右マッスル
+	MOT_SET(ALWEN,189,-1,6025,6025,-1,-1)//は～
+	MOT_SET(ALWEN,190,-1,548,548,-1,-1)//大之字
+	MOT_SET(ALWEN,191,-1,4220,4220,-1,-1)//小鸡左
+	MOT_SET(ALWEN,192,-1,4420,4420,-1,-1)//左右マッスル
+	MOT_SET(ALWEN,193,-1,533,533,-1,-1)
+	MOT_SET(ALWEN,194,-1,534,534,-1,-1)
+	MOT_SET(ALWEN,196,-1,525,525,197,5)
+	MOT_SET(ALWEN,197,-1,526,526,198,5)
+	MOT_SET(ALWEN,198,-1,527,527,199,5)
+	MOT_SET(ALWEN,199,-1,528,528,196,5)
+
+	BGM(48)
+
+	EV("G_EXERCISE_3")
+
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(24)
+	wait(12)
+	wait(12)
+	wait(12)
+	wait(12)
+	wait(16)
+	wait(176)
+	wait(154)
+	wait(10)
+	wait(10)
+	wait(14)
+	wait(176)
+	wait(132)
+	wait(11)
+	wait(22)
+	wait(11)
+	wait(198)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(11)
+	wait(44)
+	wait(11)
+	wait(242)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(10)
+	wait(10)
+	wait(14)
+	wait(190)
+	wait(18)
+	wait(122)
+	wait(12)
+	wait(12)
+
+	stop_BGM(30)
+}
+
+G_EXERCISE_3
+{
+
+	if(!FE_FF_GetSkil_3)
+	{
+		EV("R_EXERCISE_3")
+		EV("A_EXERCISE_3")
+	}
+	else
+	{
+		EV("R_EXERCISE_4")
+		EV("A_EXERCISE_4")
+	}
+	//両手上マッスル
+	MOT(GYARANDOW,160,5)
+	wait(22)
+	MOT(GYARANDOW,170,5)
+	wait(22)
+	MOT(GYARANDOW,161,5)
+	wait(22)
+	MOT(GYARANDOW,171,5)
+	wait(22)
+
+	//1,2
+	MOT(GYARANDOW,185,10)
+	wait(22)
+	MOT(GYARANDOW,181,10)
+	wait(24)
+
+	//1,2,3,アウ
+	MOT(GYARANDOW,187, 5)
+	wait(12)
+	MOT(GYARANDOW,189, 5)
+	wait(12)
+	MOT(GYARANDOW,186, 5)
+	wait(12)
+	MOT(GYARANDOW,193, 5)
+	wait(12)
+	MOT(GYARANDOW,194, 5)
+	wait(16)
+
+	//両手上回し＆回転
+	VOICE(624,0)	//★「ふっ、ふっ、はっ、はっ…」
+	MOT(GYARANDOW,162,5)
+	rot(GYARANDOW,4,135)
+	wait(176)
+	rot(GYARANDOW,4,0)
+	wait(154)
+
+	//タンタンタン
+	MOT(GYARANDOW,185, 5)
+	wait(10)
+	MOT(GYARANDOW,191, 5)
+	wait(10)
+	MOT(GYARANDOW,192, 5)
+	wait(14)
+
+	//両手上回し＆回転
+	VOICE(626,0)	//★「燃やせ！　燃やす之だ！」
+	MOT(GYARANDOW,162,5)
+	rot(GYARANDOW,4,225)
+	wait(176)
+	rot(GYARANDOW,4,0)
+	wait(132)
+
+	//画面左へ
+	MOT(GYARANDOW,196,5)
+	rot(GYARANDOW,30,90)
+	wait(11)
+	CAM_move(6450,-8100,180,22,2)
+	jump(GYARANDOW,0,22,6450,8000,0,0)
+	wait_move(GYARANDOW)
+	MOT(GYARANDOW,2,5)
+	rot(GYARANDOW,30,0)
+	wait(11)
+
+	//両手回し
+	VOICE(805,0)	//★「１、２、３、４、２、２、３、４…」
+	MOT(GYARANDOW,172,12)
+	wait(198)
+
+	cross_fade(15)
+	CAM_move(6450,-7900,140,0,0)
+	CAM(150,74,180,25,140,0,0)
+
+	//マッスルマッスル＆回転
+	VOICE(627,0)	//★「マッスル、マッスルぅ！」
+	MOT(GYARANDOW,168,5)
+	wait(22)
+	rot(GYARANDOW,30,270)
+	wait(22)
+	rot(GYARANDOW,30,180)
+	wait(22)
+	rot(GYARANDOW,30,90)
+	wait(22)
+	rot(GYARANDOW,30,0)
+	wait(22)
+
+	cross_fade(15)
+	CAM_move(6450,-8100,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+
+	//画面右へ
+//	MOT(GYARANDOW,2,11)
+	MOT(GYARANDOW,196,5)
+	rot(GYARANDOW,30,270)
+	wait(11)
+	CAM_move(7050,-8100,180,44,2)
+//	MOT(GYARANDOW,1,5)
+	jump(GYARANDOW,0,44,7050,8000,0,0)
+	wait_move(GYARANDOW)
+	MOT(GYARANDOW,2,5)
+	rot(GYARANDOW,30,0)
+	wait(11)
+
+	//両手回し
+	VOICE(805,0)	//★「１、２、３、４、２、２、３、４…」
+	MOT(GYARANDOW,172,12)
+	wait(242)
+
+	cross_fade(15)
+	CAM_move(7050,-7900,140,0,0)
+	CAM(150,74,180,25,220,0,0)
+
+	//両手上マッスル＆回転
+	VOICE(625,0)	//★「いいぞ！　いいぞ！」
+	MOT(GYARANDOW,160,5)
+	wait(22)
+	rot(GYARANDOW,30,90)
+	wait(22)
+	rot(GYARANDOW,30,180)
+	wait(22)
+	rot(GYARANDOW,30,270)
+	wait(22)
+	rot(GYARANDOW,30,0)
+	wait(22)
+
+	//タンタンタン
+	MOT(GYARANDOW,187, 5)
+	wait(10)
+	MOT(GYARANDOW,188, 5)
+	wait(10)
+	MOT(GYARANDOW,186, 5)
+	wait(14)
+
+	cross_fade(15)
+	CAM_move(7050,-8100,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+
+	//左右マッスル
+	VOICE(628,0)	//★「お前たちならやれるっ！」
+	MOT(GYARANDOW,164,5)
+	wait(190)
+	MOT(GYARANDOW,180,5)
+	wait(18)
+	MOT(GYARANDOW,164,5)
+	wait(122)
+	MOT(GYARANDOW,187, 5)
+	wait(12)
+	MOT(GYARANDOW,186, 5)
+	wait(12)
+	MOT(GYARANDOW,181, 5)
+}
+
+T_EXERCISE_MAIN
+{
+//22frmで１テンポ
+	MOT_SET(EVENT_RAGNA2,160,-1,2045,2065,161,2)//両手上マッスル
+	MOT_SET(EVENT_RAGNA2,161,-1,2065,2085,160,2)//両手上マッスル
+	MOT_SET(EVENT_RAGNA2,162,-1,2000,2020,163,2)//両手上回し
+	MOT_SET(EVENT_RAGNA2,163,-1,2020,2040,162,2)//両手上回し
+	MOT_SET(EVENT_RAGNA2,164,-1,2090,2112,165,10)//腰ひねり
+	MOT_SET(EVENT_RAGNA2,165,-1,2112,2122,166,2)//腰ひねり
+	MOT_SET(EVENT_RAGNA2,166,-1,2122,2145,167,10)//腰ひねり
+	MOT_SET(EVENT_RAGNA2,167,-1,2145,2155,164,1)//腰ひねり
+	MOT_SET(EVENT_RAGNA2,168,-1,2175,2195,169,2)//マッスルマッスル
+	MOT_SET(EVENT_RAGNA2,169,-1,2195,2215,168,2)//マッスルマッスル
+	MOT_SET(EVENT_RAGNA2,170,-1,2410,2430,171,2)//左右マッスル
+	MOT_SET(EVENT_RAGNA2,171,-1,2430,2450,170,2)//左右マッスル
+	MOT_SET(EVENT_RAGNA2,172,-1,2455,2495,173,4)//両手回し
+	MOT_SET(EVENT_RAGNA2,173,-1,2495,2535,172,4)//両手回し
+	MOT_SET(EVENT_RAGNA2,174,-1,2330,2345,175,7)//左手前回し準備
+	MOT_SET(EVENT_RAGNA2,175,175,2345,2367,-1,-1)//左手前回し
+	MOT_SET(EVENT_RAGNA2,176,-1,2370,2385,177,7)//右手前回し準備
+	MOT_SET(EVENT_RAGNA2,177,177,2385,2407,-1,-1)//右手前回し
+	MOT_SET(EVENT_RAGNA2,178,178,2220,2270,-1,-1)//小鸡左
+	MOT_SET(EVENT_RAGNA2,179,179,2275,2325,-1,-1)//小鸡右
+	MOT_SET(EVENT_RAGNA2,180,-1,514,514,-1,-1)
+	MOT_SET(EVENT_RAGNA2,181,-1,515,515,-1,-1)
+	MOT_SET(EVENT_RAGNA2,182,-1,516,516,-1,-1)
+	MOT_SET(EVENT_RAGNA2,183,-1,517,517,-1,-1)
+	MOT_SET(EVENT_RAGNA2,184,-1,518,518,-1,-1)
+	MOT_SET(EVENT_RAGNA2,185,-1,2205,2205,-1,-1)
+	MOT_SET(EVENT_RAGNA2,186,-1,2275,2275,-1,-1)
+	MOT_SET(EVENT_RAGNA2,187,-1,550,550,-1,-1)
+	MOT_SET(EVENT_RAGNA2,188,-1,2440,2440,-1,-1)
+	MOT_SET(EVENT_RAGNA2,189,-1,6925,6925,-1,-1)
+	MOT_SET(EVENT_RAGNA2,190,-1,548,548,-1,-1)
+	MOT_SET(EVENT_RAGNA2,191,-1,2220,2220,-1,-1)
+	MOT_SET(EVENT_RAGNA2,192,-1,2420,2420,-1,-1)
+
+	MOT_SET(ALWEN,160,-1,4045,4065,161,2)//両手上マッスル
+	MOT_SET(ALWEN,161,-1,4065,4085,160,2)//両手上マッスル
+	MOT_SET(ALWEN,162,-1,4000,4020,163,2)//両手上回し
+	MOT_SET(ALWEN,163,-1,4020,4040,162,2)//両手上回し
+	MOT_SET(ALWEN,164,-1,4090,4112,165,10)//腰ひねり
+	MOT_SET(ALWEN,165,-1,4112,4122,166,2)//腰ひねり
+	MOT_SET(ALWEN,166,-1,4122,4145,167,10)//腰ひねり
+	MOT_SET(ALWEN,167,-1,4145,4155,164,1)//腰ひねり
+	MOT_SET(ALWEN,168,-1,4175,4195,169,2)//マッスルマッスル
+	MOT_SET(ALWEN,169,-1,4195,4215,168,2)//マッスルマッスル
+	MOT_SET(ALWEN,170,-1,4410,4430,171,2)//左右マッスル
+	MOT_SET(ALWEN,171,-1,4430,4450,170,2)//左右マッスル
+	MOT_SET(ALWEN,172,-1,4455,4495,173,4)//両手回し
+	MOT_SET(ALWEN,173,-1,4495,4535,172,4)//両手回し
+	MOT_SET(ALWEN,174,-1,4330,4345,175,7)//左手前回し準備
+	MOT_SET(ALWEN,175,175,4345,4367,-1,-1)//左手前回し
+	MOT_SET(ALWEN,176,-1,4370,4385,177,7)//右手前回し準備
+	MOT_SET(ALWEN,177,177,4385,4407,-1,-1)//右手前回し
+	MOT_SET(ALWEN,178,178,4220,4270,-1,-1)//小鸡左
+	MOT_SET(ALWEN,179,179,4275,4325,-1,-1)//小鸡右
+	MOT_SET(ALWEN,180,-1,514,514,-1,-1)
+	MOT_SET(ALWEN,181,-1,515,515,-1,-1)
+	MOT_SET(ALWEN,182,-1,516,516,-1,-1)
+	MOT_SET(ALWEN,183,-1,517,517,-1,-1)
+	MOT_SET(ALWEN,184,-1,518,518,-1,-1)
+	MOT_SET(ALWEN,185,-1,4205,4205,-1,-1)
+	MOT_SET(ALWEN,186,-1,4275,4275,-1,-1)
+	MOT_SET(ALWEN,187,-1,550,550,-1,-1)
+	MOT_SET(ALWEN,188,-1,4440,4440,-1,-1)
+	MOT_SET(ALWEN,189,-1,6025,6025,-1,-1)
+	MOT_SET(ALWEN,190,-1,548,548,-1,-1)
+	MOT_SET(ALWEN,191,-1,4220,4220,-1,-1)
+	MOT_SET(ALWEN,192,-1,4420,4420,-1,-1)
+	MOT_SET(ALWEN,001,001,0825 0842,-1,-1)
+
+//	BGM(48)
+
+	EV("T_EXERCISE")
+
+//	wait(88)
+//	wait(22)//110
+//	wait(24)//134
+//	wait(12)//146
+//	wait(12)//158
+//	wait(12)//170
+//	wait(12)//182
+//	wait(16)//198
+
+	wait(176)
+	wait(154)
+	wait(10)
+	wait(10)
+	wait(14)
+	wait(176)
+	wait(132)
+	wait(11)
+	wait(22)
+	wait(11)
+	wait(198)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(11)
+	wait(44)
+	wait(11)
+	wait(242)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(22)
+	wait(10)
+	wait(10)
+	wait(14)
+	wait(190)
+	wait(18)
+	wait(122)
+	wait(12)
+	wait(12)
+
+	stop_BGM(30)
+}
+
+
+T_EXERCISE
+{
+
+	EV("R_EXERCISE_T")
+	EV("A_EXERCISE_T")
+
+//	MOT(GYARANDOW,160,5)
+//	wait(88)
+
+//	MOT(GYARANDOW,185,10)
+//	wait(22)
+//	MOT(GYARANDOW,181,10)
+//	wait(24)
+
+//	MOT(GYARANDOW,187, 5)
+//	wait(12)
+//	MOT(GYARANDOW,188, 5)
+//	wait(12)
+//	MOT(GYARANDOW,186, 5)
+//	wait(12)
+//	MOT(GYARANDOW,190, 5)
+//	wait(12)
+//	MOT(GYARANDOW,189, 5)
+//	wait(16)
+
+//	MOT(GYARANDOW,162,5)
+//	rot(GYARANDOW,4,135)
+	wait(176)
+//	rot(GYARANDOW,4,0)
+	wait(154)
+
+//	MOT(GYARANDOW,185, 5)
+	wait(10)
+//	MOT(GYARANDOW,191, 5)
+	wait(10)
+//	MOT(GYARANDOW,192, 5)
+	wait(14)
+
+//	MOT(GYARANDOW,162,5)
+//	rot(GYARANDOW,4,225)
+	wait(176)
+//	rot(GYARANDOW,4,0)
+	wait(132)
+
+//	MOT(GYARANDOW,2,11)
+//	rot(GYARANDOW,30,90)
+	wait(11)
+	CAM_move(6450,-8100,180,22,2)
+//	MOT(GYARANDOW,1,5)
+//	jump(GYARANDOW,0,22,6450,8000,0,0)
+//	wait_move(GYARANDOW)
+	wait(22)
+//	MOT(GYARANDOW,2,5)
+//	rot(GYARANDOW,30,0)
+	wait(11)
+
+//	MOT(GYARANDOW,174,5)
+	wait(198)
+
+	cross_fade(15)
+	CAM_move(6450,-7900,140,0,0)
+	CAM(150,74,180,25,140,0,0)
+
+//	MOT(GYARANDOW,168,5)
+	wait(22)
+//	rot(GYARANDOW,30,270)
+	wait(22)
+//	rot(GYARANDOW,30,180)
+	wait(22)
+//	rot(GYARANDOW,30,90)
+	wait(22)
+//	rot(GYARANDOW,30,0)
+	wait(22)
+
+	cross_fade(15)
+	CAM_move(6450,-8100,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+
+//	MOT(GYARANDOW,2,11)
+//	rot(GYARANDOW,30,270)
+	wait(11)
+	CAM_move(7050,-8100,180,44,2)
+//	MOT(GYARANDOW,1,5)
+//	jump(GYARANDOW,0,44,7050,8000,0,0)
+//	wait_move(GYARANDOW)
+	wait(44)
+//	MOT(GYARANDOW,2,5)
+//	rot(GYARANDOW,30,0)
+	wait(11)
+
+//	MOT(GYARANDOW,176,5)
+	wait(242)
+
+	cross_fade(15)
+	CAM_move(7050,-7900,140,0,0)
+	CAM(150,74,180,25,220,0,0)
+
+//	MOT(GYARANDOW,160,5)
+	wait(22)
+//	rot(GYARANDOW,30,90)
+	wait(22)
+//	rot(GYARANDOW,30,180)
+	wait(22)
+//	rot(GYARANDOW,30,270)
+	wait(22)
+//	rot(GYARANDOW,30,0)
+	wait(22)
+
+//	MOT(GYARANDOW,187, 5)
+	wait(10)
+//	MOT(GYARANDOW,188, 5)
+	wait(10)
+//	MOT(GYARANDOW,186, 5)
+	wait(14)
+
+	cross_fade(15)
+	CAM_move(7050,-8100,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+
+//	MOT(GYARANDOW,170,5)
+	wait(190)
+//	MOT(GYARANDOW,180,5)
+	wait(18)
+//	MOT(GYARANDOW,170,5)
+	wait(122)
+//	MOT(GYARANDOW,187, 5)
+	wait(12)
+//	MOT(GYARANDOW,186, 5)
+	wait(12)
+//	MOT(GYARANDOW,182, 5)
+}
+
+R_EXERCISE_4
+{
+	//両手上マッスル
+	MOT(EVENT_RAGNA2,160,5)
+	wait(22)
+	MOT(EVENT_RAGNA2,170,5)
+	wait(22)
+	MOT(EVENT_RAGNA2,161,5)
+	wait(22)
+	MOT(EVENT_RAGNA2,171,5)
+	wait(22)
+
+	//1,2
+	MOT(EVENT_RAGNA2,185,10)
+	wait(22)
+	MOT(EVENT_RAGNA2,181,10)
+	wait(24)
+
+	//1,2,3,アウ
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,189, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,193, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,194, 5)
+	wait(16)
+
+	//両手上回し＆回転
+	MOT(EVENT_RAGNA2,162,5)
+	rot(EVENT_RAGNA2,4,135)
+	wait(176)
+	rot(EVENT_RAGNA2,4,0)
+	wait(154)
+
+	//タンタンタン
+	MOT(EVENT_RAGNA2,185, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,191, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,192, 5)
+	wait(14)
+
+	//両手上回し＆回転
+	MOT(EVENT_RAGNA2,162,5)
+	rot(EVENT_RAGNA2,4,225)
+	wait(176)
+	rot(EVENT_RAGNA2,4,0)
+	wait(132)
+
+	//画面左へ
+//	MOT(EVENT_RAGNA2,2,11)
+	MOT(EVENT_RAGNA2,196,5)
+	rot(EVENT_RAGNA2,30,90)
+	wait(11)
+//	MOT(EVENT_RAGNA2,1,5)
+	jump(EVENT_RAGNA2,0,22,6650,7900,0,0)
+	wait_move(EVENT_RAGNA2)
+	MOT(EVENT_RAGNA2,2,5)
+	rot(EVENT_RAGNA2,30,0)
+	wait(11)
+
+	//左手前回し
+	//MOT(EVENT_RAGNA2,174,12)
+	//両手回し
+	MOT(EVENT_RAGNA2,172,12)
+	wait(198)
+
+	//マッスルマッスル＆回転
+	MOT(EVENT_RAGNA2,168,5)
+	wait(22)
+	rot(EVENT_RAGNA2,30,270)
+	wait(22)
+	rot(EVENT_RAGNA2,30,180)
+	wait(22)
+	rot(EVENT_RAGNA2,30,90)
+	wait(22)
+	rot(EVENT_RAGNA2,30,0)
+	wait(22)
+
+	//画面右へ
+//	MOT(EVENT_RAGNA2,2,11)
+	MOT(EVENT_RAGNA2,196,5)
+	rot(EVENT_RAGNA2,30,270)
+	wait(11)
+//	MOT(EVENT_RAGNA2,1,5)
+	jump(EVENT_RAGNA2,0,44,7250,7900,0,0)
+	wait_move(EVENT_RAGNA2)
+	MOT(EVENT_RAGNA2,2,5)
+	rot(EVENT_RAGNA2,30,0)
+	wait(11)
+
+	//右手前回し
+	//MOT(EVENT_RAGNA2,176,12)
+	//両手回し
+	MOT(EVENT_RAGNA2,172,12)
+	wait(242)
+
+	//両手上マッスル＆回転
+	MOT(EVENT_RAGNA2,160,5)
+	wait(22)
+	rot(EVENT_RAGNA2,30,90)
+	wait(22)
+	rot(EVENT_RAGNA2,30,180)
+	wait(22)
+	rot(EVENT_RAGNA2,30,270)
+	wait(22)
+	rot(EVENT_RAGNA2,30,0)
+	wait(22)
+
+	//タンタンタン
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,188, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(14)
+
+	//左右マッスル
+	MOT(EVENT_RAGNA2,164,5)
+	wait(190)
+	MOT(EVENT_RAGNA2,180,5)
+	wait(18)
+	MOT(EVENT_RAGNA2,164,5)
+	wait(122)
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,181, 5)
+}
+
+R_EXERCISE_3
+{
+	//両手上マッスル
+	MOT(EVENT_RAGNA2,160,5)
+	wait(24)
+	MOT(EVENT_RAGNA2,170,5)
+	wait(24)
+	MOT(EVENT_RAGNA2,161,5)
+	wait(24)
+	MOT(EVENT_RAGNA2,171,5)
+	wait(24)
+//8frm+
+	//1,2
+	MOT(EVENT_RAGNA2,185,10)
+	wait(22)
+	MOT(EVENT_RAGNA2,181,10)
+	wait(24)
+//8frm+
+	//1,2,3,アウ
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,189, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,193, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,194, 5)
+	wait(16)
+//8frm+
+	//両手上回し＆回転
+	MOT(EVENT_RAGNA2,162,5)
+	rot(EVENT_RAGNA2,4,135)
+	wait(176)
+	rot(EVENT_RAGNA2,4,0)
+	wait(154)
+//8frm+
+	//タンタンタン
+	MOT(EVENT_RAGNA2,185, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,191, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,192, 5)
+	wait(14)
+//8frm+
+	//両手上回し＆回転
+	MOT(EVENT_RAGNA2,162,5)
+	rot(EVENT_RAGNA2,4,225)
+	wait(176)
+	rot(EVENT_RAGNA2,4,0)
+	wait(132)
+//8frm+
+	//画面左へ
+//	MOT(EVENT_RAGNA2,2,11)
+	MOT(EVENT_RAGNA2,196,5)
+	rot(EVENT_RAGNA2,30,90)
+	wait(11)
+//	MOT(EVENT_RAGNA2,1,5)
+	jump(EVENT_RAGNA2,0,22,6650,7900,0,0)
+	wait_move(EVENT_RAGNA2)
+	MOT(EVENT_RAGNA2,2,5)
+	rot(EVENT_RAGNA2,30,0)
+	wait(11)
+//8frm+
+	//左手前回し
+	//MOT(EVENT_RAGNA2,174,12)
+	//両手回し
+	MOT(EVENT_RAGNA2,172,12)
+	wait(194)
+//4frm+
+	//マッスルマッスル＆回転
+	MOT(EVENT_RAGNA2,168,5)
+	wait(22)
+	rot(EVENT_RAGNA2,30,270)
+	wait(22)
+	rot(EVENT_RAGNA2,30,180)
+	wait(22)
+	rot(EVENT_RAGNA2,30,90)
+	wait(22)
+	rot(EVENT_RAGNA2,30,0)
+	wait(22)
+//4frm+
+	//画面右へ
+//	MOT(EVENT_RAGNA2,2,11)
+	MOT(EVENT_RAGNA2,196,5)
+	rot(EVENT_RAGNA2,30,270)
+	wait(11)
+//	MOT(EVENT_RAGNA2,1,5)
+	jump(EVENT_RAGNA2,0,44,7250,7900,0,0)
+	wait_move(EVENT_RAGNA2)
+	MOT(EVENT_RAGNA2,2,5)
+	rot(EVENT_RAGNA2,30,0)
+	wait(11)
+//4frm+
+	//右手前回し
+	//MOT(EVENT_RAGNA2,176,12)
+	//両手回し
+	MOT(EVENT_RAGNA2,172,12)
+	wait(238)
+
+	//両手上マッスル＆回転
+	MOT(EVENT_RAGNA2,160,5)
+	wait(22)
+	rot(EVENT_RAGNA2,30,90)
+	wait(22)
+	rot(EVENT_RAGNA2,30,180)
+	wait(22)
+	rot(EVENT_RAGNA2,30,270)
+	wait(22)
+	rot(EVENT_RAGNA2,30,0)
+	wait(22)
+
+	//タンタンタン
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,188, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(14)
+
+	//左右マッスル
+	MOT(EVENT_RAGNA2,164,5)
+	wait(190)
+	MOT(EVENT_RAGNA2,180,5)
+	wait(18)
+	MOT(EVENT_RAGNA2,164,5)
+	wait(122)
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,181, 5)
+}
+
+R_EXERCISE_2
+{
+	MOT(EVENT_RAGNA2,160,5)
+	wait(88)
+
+	MOT(EVENT_RAGNA2,185,10)
+	wait(22)
+	MOT(EVENT_RAGNA2,181,10)
+	wait(24)
+
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,188, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,190, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,189, 5)
+	wait(16)
+
+	MOT(EVENT_RAGNA2,162,5)
+	rot(EVENT_RAGNA2,4,135)
+	wait(176)
+	rot(EVENT_RAGNA2,4,0)
+	wait(154)
+
+	MOT(EVENT_RAGNA2,185, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,191, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,192, 5)
+	wait(14)
+
+	MOT(EVENT_RAGNA2,162,5)
+	rot(EVENT_RAGNA2,4,225)
+	wait(176)
+	rot(EVENT_RAGNA2,4,0)
+	wait(132)
+
+	MOT(EVENT_RAGNA2,2,11)
+	rot(EVENT_RAGNA2,30,90)
+	wait(11)
+	MOT(EVENT_RAGNA2,1,5)
+	jump(EVENT_RAGNA2,0,22,6650,7900,0,0)
+	wait_move(EVENT_RAGNA2)
+	MOT(EVENT_RAGNA2,2,5)
+	rot(EVENT_RAGNA2,30,0)
+	wait(11)
+
+	MOT(EVENT_RAGNA2,174,12)
+	wait(198)
+
+	MOT(EVENT_RAGNA2,168,5)
+	wait(22)
+	rot(EVENT_RAGNA2,30,270)
+	wait(22)
+	rot(EVENT_RAGNA2,30,180)
+	wait(22)
+	rot(EVENT_RAGNA2,30,90)
+	wait(22)
+	rot(EVENT_RAGNA2,30,0)
+	wait(22)
+
+	MOT(EVENT_RAGNA2,2,11)
+	rot(EVENT_RAGNA2,30,270)
+	wait(11)
+	MOT(EVENT_RAGNA2,1,5)
+	jump(EVENT_RAGNA2,0,44,7250,7900,0,0)
+	wait_move(EVENT_RAGNA2)
+	MOT(EVENT_RAGNA2,2,5)
+	rot(EVENT_RAGNA2,30,0)
+	wait(11)
+
+	MOT(EVENT_RAGNA2,176,12)
+	wait(242)
+
+	MOT(EVENT_RAGNA2,160,5)
+	wait(22)
+	rot(EVENT_RAGNA2,30,90)
+	wait(22)
+	rot(EVENT_RAGNA2,30,180)
+	wait(22)
+	rot(EVENT_RAGNA2,30,270)
+	wait(22)
+	rot(EVENT_RAGNA2,30,0)
+	wait(22)
+
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,188, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(14)
+
+	MOT(EVENT_RAGNA2,170,5)
+	wait(190)
+	MOT(EVENT_RAGNA2,180,5)
+	wait(18)
+	MOT(EVENT_RAGNA2,170,5)
+	wait(122)
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,182, 5)
+}
+
+R_EXERCISE_1
+{
+//	MOT(EVENT_RAGNA2,160,5)
+	wait(88)
+
+	wait(8)
+	MOT(EVENT_RAGNA2,185,10)
+	wait(22)
+	MOT(EVENT_RAGNA2,181,10)
+	wait(24)
+//8frm+
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,188, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,190, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,189, 5)
+	wait(16)
+//8frm+
+	MOT(EVENT_RAGNA2,162,5)
+	rot(EVENT_RAGNA2,4,135)
+	wait(176)
+	rot(EVENT_RAGNA2,4,0)
+	wait(154)
+//8frm+
+	MOT(EVENT_RAGNA2,185, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,191, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,192, 5)
+	wait(14)
+//8frm+
+	MOT(EVENT_RAGNA2,162,5)
+	rot(EVENT_RAGNA2,4,225)
+	wait(176)
+	rot(EVENT_RAGNA2,4,0)
+//	wait(132)
+	wait(126)
+//4frm+
+	MOT(EVENT_RAGNA2,2,11)
+	rot(EVENT_RAGNA2,30,90)
+	wait(11)
+	MOT(EVENT_RAGNA2,1,5)
+	jump(EVENT_RAGNA2,0,22,6650,7900,0,0)
+	wait_move(EVENT_RAGNA2)
+	MOT(EVENT_RAGNA2,2,5)
+	rot(EVENT_RAGNA2,30,0)
+	wait(11)
+//4frm+
+	MOT(EVENT_RAGNA2,174,12)
+	wait(198)
+//4frm+
+	MOT(EVENT_RAGNA2,168,5)
+	wait(22)
+	rot(EVENT_RAGNA2,30,270)
+	wait(22)
+	rot(EVENT_RAGNA2,30,180)
+	wait(22)
+	rot(EVENT_RAGNA2,30,90)
+	wait(22)
+	rot(EVENT_RAGNA2,30,0)
+	wait(22)
+//4frm+
+	MOT(EVENT_RAGNA2,2,11)
+	rot(EVENT_RAGNA2,30,270)
+	wait(11)
+	MOT(EVENT_RAGNA2,1,5)
+	jump(EVENT_RAGNA2,0,44,7250,7900,0,0)
+	wait_move(EVENT_RAGNA2)
+	MOT(EVENT_RAGNA2,2,5)
+	rot(EVENT_RAGNA2,30,0)
+	wait(11)
+//4frm+
+	MOT(EVENT_RAGNA2,176,12)
+	wait(238)
+
+	MOT(EVENT_RAGNA2,160,5)
+	wait(22)
+	rot(EVENT_RAGNA2,30,90)
+	wait(22)
+	rot(EVENT_RAGNA2,30,180)
+	wait(22)
+	rot(EVENT_RAGNA2,30,270)
+	wait(22)
+	rot(EVENT_RAGNA2,30,0)
+	wait(22)
+
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,188, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(14)
+
+	MOT(EVENT_RAGNA2,170,5)
+	wait(190)
+	MOT(EVENT_RAGNA2,180,5)
+	wait(18)
+	MOT(EVENT_RAGNA2,170,5)
+	wait(122)
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,182, 5)
+}
+
+R_EXERCISE_T
+{
+//	MOT(EVENT_RAGNA2,160,5)
+//	wait(88)
+
+//	MOT(EVENT_RAGNA2,185,10)
+//	wait(22)
+//	MOT(EVENT_RAGNA2,181,10)
+//	wait(24)
+
+//	MOT(EVENT_RAGNA2,187, 5)
+//	wait(12)
+//	MOT(EVENT_RAGNA2,188, 5)
+//	wait(12)
+//	MOT(EVENT_RAGNA2,186, 5)
+//	wait(12)
+//	MOT(EVENT_RAGNA2,190, 5)
+//	wait(12)
+//	MOT(EVENT_RAGNA2,189, 5)
+//	wait(16)
+
+	MOT(EVENT_RAGNA2,162,5)
+	rot(EVENT_RAGNA2,4,135)
+	wait(176)
+	rot(EVENT_RAGNA2,4,0)
+	wait(154)
+
+	MOT(EVENT_RAGNA2,185, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,191, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,192, 5)
+	wait(14)
+
+	MOT(EVENT_RAGNA2,162,5)
+	rot(EVENT_RAGNA2,4,225)
+	wait(176)
+	rot(EVENT_RAGNA2,4,0)
+	wait(132)
+
+	MOT(EVENT_RAGNA2,2,11)
+	rot(EVENT_RAGNA2,30,90)
+	wait(11)
+	MOT(EVENT_RAGNA2,1,5)
+	jump(EVENT_RAGNA2,0,22,6650,7900,0,0)
+	wait_move(EVENT_RAGNA2)
+	MOT(EVENT_RAGNA2,2,5)
+	rot(EVENT_RAGNA2,30,0)
+	wait(11)
+
+	MOT(EVENT_RAGNA2,174,12)
+	wait(198)
+
+	MOT(EVENT_RAGNA2,168,5)
+	wait(22)
+	rot(EVENT_RAGNA2,30,270)
+	wait(22)
+	rot(EVENT_RAGNA2,30,180)
+	wait(22)
+	rot(EVENT_RAGNA2,30,90)
+	wait(22)
+	rot(EVENT_RAGNA2,30,0)
+	wait(22)
+
+	MOT(EVENT_RAGNA2,2,11)
+	rot(EVENT_RAGNA2,30,270)
+	wait(11)
+	MOT(EVENT_RAGNA2,1,5)
+	jump(EVENT_RAGNA2,0,44,7250,7900,0,0)
+	wait_move(EVENT_RAGNA2)
+	MOT(EVENT_RAGNA2,2,5)
+	rot(EVENT_RAGNA2,30,0)
+	wait(11)
+
+	MOT(EVENT_RAGNA2,176,12)
+	wait(242)
+
+	MOT(EVENT_RAGNA2,160,5)
+	wait(22)
+	rot(EVENT_RAGNA2,30,90)
+	wait(22)
+	rot(EVENT_RAGNA2,30,180)
+	wait(22)
+	rot(EVENT_RAGNA2,30,270)
+	wait(22)
+	rot(EVENT_RAGNA2,30,0)
+	wait(22)
+
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,188, 5)
+	wait(10)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(14)
+
+	MOT(EVENT_RAGNA2,170,5)
+	wait(190)
+	MOT(EVENT_RAGNA2,180,5)
+	wait(18)
+	MOT(EVENT_RAGNA2,170,5)
+	wait(122)
+	MOT(EVENT_RAGNA2,187, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,186, 5)
+	wait(12)
+	MOT(EVENT_RAGNA2,182, 5)
+}
+
+A_EXERCISE_4
+{
+	//両手上マッスル
+	MOT(ALWEN,160,5)
+	wait(22)
+	MOT(ALWEN,170,5)
+	wait(22)
+	MOT(ALWEN,161,5)
+	wait(22)
+	MOT(ALWEN,171,5)
+	wait(22)
+
+	//1,2
+	MOT(ALWEN,185,10)
+	wait(22)
+	MOT(ALWEN,181,10)
+	wait(24)
+
+	//1,2,3,アウ
+	MOT(ALWEN,187, 5)
+	wait(12)
+	MOT(ALWEN,189, 5)
+	wait(12)
+	MOT(ALWEN,186, 5)
+	wait(12)
+	MOT(ALWEN,193, 5)
+	wait(12)
+	look(ALWEN,"Bone_RightUpLeg",0,0,3,6,0,-15,-30)
+	MOT(ALWEN,194, 5)
+	wait(16)
+
+	//両手上回し＆回転
+	look(ALWEN,"Bone_RightUpLeg",0,0,3,6,0,0,0)
+	MOT(ALWEN,162,5)
+	rot(ALWEN,4,135)
+	wait(176)
+	rot(ALWEN,4,0)
+	wait(154)
+
+	//タンタンタン
+	MOT(ALWEN,185, 5)
+	wait(10)
+	MOT(ALWEN,191, 5)
+	wait(10)
+	MOT(ALWEN,192, 5)
+	wait(14)
+
+	//両手上回し＆回転
+	MOT(ALWEN,162,5)
+	rot(ALWEN,4,225)
+	wait(176)
+	rot(ALWEN,4,0)
+	wait(132)
+
+	//画面左へ
+//	MOT(ALWEN,2,11)
+	MOT(ALWEN,196,5)
+	rot(ALWEN,30,90)
+	wait(11)
+//	MOT(ALWEN,1,5)
+	jump(ALWEN,0,22,6250,7900,0,0)
+	wait_move(ALWEN)
+	MOT(ALWEN,2,5)
+	rot(ALWEN,30,0)
+	wait(11)
+
+	//左手前回し
+	//MOT(ALWEN,174,12)
+	//両手回し
+	MOT(ALWEN,172,12)
+	wait(198)
+
+	//マッスルマッスル＆回転
+	MOT(ALWEN,168,5)
+	wait(22)
+	rot(ALWEN,30,270)
+	wait(22)
+	rot(ALWEN,30,180)
+	wait(22)
+	rot(ALWEN,30,90)
+	wait(22)
+	rot(ALWEN,30,0)
+	wait(22)
+
+	//画面右へ
+//	MOT(ALWEN,2,11)
+	MOT(ALWEN,196,5)
+	rot(ALWEN,30,270)
+	wait(11)
+//	MOT(ALWEN,1,5)
+	jump(ALWEN,0,44,6850,7900,0,0)
+	wait_move(ALWEN)
+	MOT(ALWEN,2,5)
+	rot(ALWEN,30,0)
+	wait(11)
+
+	//右手前回し
+	//MOT(ALWEN,176,12)
+	//両手回し
+	MOT(ALWEN,172,12)
+	wait(242)
+
+	//両手上マッスル＆回転
+	MOT(ALWEN,160,5)
+	wait(22)
+	rot(ALWEN,30,90)
+	wait(22)
+	rot(ALWEN,30,180)
+	wait(22)
+	rot(ALWEN,30,270)
+	wait(22)
+	rot(ALWEN,30,0)
+	wait(22)
+
+	//タンタンタン
+	MOT(ALWEN,187, 5)
+	wait(10)
+	MOT(ALWEN,188, 5)
+	wait(10)
+	MOT(ALWEN,186, 5)
+	wait(14)
+
+	//左右マッスル
+	MOT(ALWEN,164,5)
+	wait(190)
+	MOT(ALWEN,180,5)
+	wait(18)
+	MOT(ALWEN,164,5)
+	wait(122)
+	MOT(ALWEN,187, 5)
+	wait(12)
+	MOT(ALWEN,186, 5)
+	wait(12)
+	MOT(ALWEN,181, 5)
+}
+
+A_EXERCISE_3
+{
+	//両手上マッスル
+	MOT(ALWEN,160,5)
+	wait(24)
+	MOT(ALWEN,170,5)
+	wait(24)
+	MOT(ALWEN,161,5)
+	wait(24)
+	MOT(ALWEN,171,5)
+	wait(24)
+//8frm+
+	//1,2
+	MOT(ALWEN,185,10)
+	wait(22)
+	MOT(ALWEN,181,10)
+	wait(24)
+//8frm+
+	//1,2,3,アウ
+	MOT(ALWEN,187, 5)
+	wait(12)
+	MOT(ALWEN,189, 5)
+	wait(12)
+	MOT(ALWEN,186, 5)
+	wait(12)
+	MOT(ALWEN,193, 5)
+	wait(12)
+	look(ALWEN,"Bone_RightUpLeg",0,0,3,6,0,-15,-30)
+	MOT(ALWEN,194, 5)
+	wait(16)
+//8frm+
+	//両手上回し＆回転
+	look(ALWEN,"Bone_RightUpLeg",0,0,3,6,0,0,0)
+	MOT(ALWEN,162,5)
+	rot(ALWEN,4,135)
+	wait(176)
+	rot(ALWEN,4,0)
+	wait(154)
+//8frm+
+	//タンタンタン
+	MOT(ALWEN,185, 5)
+	wait(10)
+	MOT(ALWEN,191, 5)
+	wait(10)
+	MOT(ALWEN,192, 5)
+	wait(14)
+//8frm+
+	//両手上回し＆回転
+	MOT(ALWEN,162,5)
+	rot(ALWEN,4,225)
+	wait(176)
+	rot(ALWEN,4,0)
+	wait(132)
+//8frm+
+	//画面左へ
+//	MOT(ALWEN,2,11)
+	MOT(ALWEN,196,5)
+	rot(ALWEN,30,90)
+	wait(11)
+//	MOT(ALWEN,1,5)
+	jump(ALWEN,0,22,6250,7950,0,0)
+	wait_move(ALWEN)
+	MOT(ALWEN,2,5)
+	rot(ALWEN,30,0)
+	wait(11)
+//8frm+
+	//左手前回し
+	//MOT(ALWEN,174,12)
+	//両手回し
+	MOT(ALWEN,172,12)
+	wait(194)
+//4frm+
+	//マッスルマッスル＆回転
+	MOT(ALWEN,168,5)
+	wait(22)
+	rot(ALWEN,30,270)
+	wait(22)
+	rot(ALWEN,30,180)
+	wait(22)
+	rot(ALWEN,30,90)
+	wait(22)
+	rot(ALWEN,30,0)
+	wait(22)
+//4frm+
+	//画面右へ
+//	MOT(ALWEN,2,11)
+	MOT(ALWEN,196,5)
+	rot(ALWEN,30,270)
+	wait(11)
+//	MOT(ALWEN,1,5)
+	jump(ALWEN,0,44,6850,7900,0,0)
+	wait_move(ALWEN)
+	MOT(ALWEN,2,5)
+	rot(ALWEN,30,0)
+	wait(11)
+//4frm+
+	//右手前回し
+	//MOT(ALWEN,176,12)
+	//両手回し
+	MOT(ALWEN,172,12)
+	wait(238)
+
+	//両手上マッスル＆回転
+	MOT(ALWEN,160,5)
+	wait(22)
+	rot(ALWEN,30,90)
+	wait(22)
+	rot(ALWEN,30,180)
+	wait(22)
+	rot(ALWEN,30,270)
+	wait(22)
+	rot(ALWEN,30,0)
+	wait(22)
+
+	//タンタンタン
+	MOT(ALWEN,187, 5)
+	wait(10)
+	MOT(ALWEN,188, 5)
+	wait(10)
+	MOT(ALWEN,186, 5)
+	wait(14)
+
+	//左右マッスル
+	MOT(ALWEN,164,5)
+	wait(190)
+	MOT(ALWEN,180,5)
+	wait(18)
+	MOT(ALWEN,164,5)
+	wait(122)
+	MOT(ALWEN,187, 5)
+	wait(12)
+	MOT(ALWEN,186, 5)
+	wait(12)
+	MOT(ALWEN,181, 5)
+}
+
+A_EXERCISE_2
+{
+	MOT(ALWEN,160,5)
+	wait(88)
+
+	MOT(ALWEN,185,10)
+	wait(22)
+	MOT(ALWEN,181,10)
+	wait(24)
+
+	MOT(ALWEN,187, 5)
+	wait(12)
+	MOT(ALWEN,188, 5)
+	wait(12)
+	MOT(ALWEN,186, 5)
+	wait(12)
+	MOT(ALWEN,190, 5)
+	wait(12)
+	MOT(ALWEN,189, 5)
+	wait(16)
+
+	MOT(ALWEN,162,5)
+	rot(ALWEN,4,135)
+	wait(176)
+	rot(ALWEN,4,0)
+	wait(154)
+
+	MOT(ALWEN,185, 5)
+	wait(10)
+	MOT(ALWEN,191, 5)
+	wait(10)
+	MOT(ALWEN,192, 5)
+	wait(14)
+
+	MOT(ALWEN,162,5)
+	rot(ALWEN,4,225)
+	wait(176)
+	rot(ALWEN,4,0)
+	wait(132)
+
+	MOT(ALWEN,2,11)
+	rot(ALWEN,30,90)
+	wait(11)
+	MOT(ALWEN,1,5)
+	jump(ALWEN,0,22,6250,7900,0,0)
+	wait_move(ALWEN)
+	MOT(ALWEN,2,5)
+	rot(ALWEN,30,0)
+	wait(11)
+
+	MOT(ALWEN,174,12)
+	wait(198)
+
+	MOT(ALWEN,168,5)
+	wait(22)
+	rot(ALWEN,30,270)
+	wait(22)
+	rot(ALWEN,30,180)
+	wait(22)
+	rot(ALWEN,30,90)
+	wait(22)
+	rot(ALWEN,30,0)
+	wait(22)
+
+	MOT(ALWEN,2,11)
+	rot(ALWEN,30,270)
+	wait(11)
+	MOT(ALWEN,1,5)
+	jump(ALWEN,0,44,6850,7900,0,0)
+	wait_move(ALWEN)
+	MOT(ALWEN,2,5)
+	rot(ALWEN,30,0)
+	wait(11)
+
+	MOT(ALWEN,176,12)
+	wait(242)
+
+	MOT(ALWEN,160,5)
+	wait(22)
+	rot(ALWEN,30,90)
+	wait(22)
+	rot(ALWEN,30,180)
+	wait(22)
+	rot(ALWEN,30,270)
+	wait(22)
+	rot(ALWEN,30,0)
+	wait(22)
+
+	MOT(ALWEN,187, 5)
+	wait(10)
+	MOT(ALWEN,188, 5)
+	wait(10)
+	MOT(ALWEN,186, 5)
+	wait(14)
+
+	MOT(ALWEN,170,5)
+	wait(190)
+	MOT(ALWEN,180,5)
+	wait(18)
+	MOT(ALWEN,170,5)
+	wait(122)
+	MOT(ALWEN,187, 5)
+	wait(12)
+	MOT(ALWEN,186, 5)
+	wait(12)
+	MOT(ALWEN,182, 5)
+}
+
+A_EXERCISE_1
+{
+//	MOT(ALWEN,160,5)
+	wait(88)
+
+	wait(8)
+	MOT(ALWEN,185,10)
+	wait(22)
+	MOT(ALWEN,181,10)
+	wait(24)
+//8frm+
+	MOT(ALWEN,187, 5)
+	wait(12)
+	MOT(ALWEN,188, 5)
+	wait(12)
+	MOT(ALWEN,186, 5)
+	wait(12)
+	MOT(ALWEN,190, 5)
+	wait(12)
+	MOT(ALWEN,189, 5)
+	wait(16)
+//8frm+
+	MOT(ALWEN,162,5)
+	rot(ALWEN,4,135)
+	wait(176)
+	rot(ALWEN,4,0)
+	wait(154)
+//8frm+
+	MOT(ALWEN,185, 5)
+	wait(10)
+	MOT(ALWEN,191, 5)
+	wait(10)
+	MOT(ALWEN,192, 5)
+	wait(14)
+//8frm+
+	MOT(ALWEN,162,5)
+	rot(ALWEN,4,225)
+	wait(176)
+	rot(ALWEN,4,0)
+//	wait(132)
+	wait(128)
+//4frm+
+	MOT(ALWEN,2,11)
+	rot(ALWEN,30,90)
+	wait(11)
+	MOT(ALWEN,1,5)
+	jump(ALWEN,0,22,6250,7900,0,0)
+	wait_move(ALWEN)
+	MOT(ALWEN,2,5)
+	rot(ALWEN,30,0)
+	wait(11)
+//4frm+
+	MOT(ALWEN,174,12)
+	wait(198)
+//4frm+
+	MOT(ALWEN,168,5)
+	wait(22)
+	rot(ALWEN,30,270)
+	wait(22)
+	rot(ALWEN,30,180)
+	wait(22)
+	rot(ALWEN,30,90)
+	wait(22)
+	rot(ALWEN,30,0)
+	wait(22)
+//4frm+
+	MOT(ALWEN,2,11)
+	rot(ALWEN,30,270)
+	wait(11)
+	MOT(ALWEN,1,5)
+	jump(ALWEN,0,44,6850,7900,0,0)
+	wait_move(ALWEN)
+	MOT(ALWEN,2,5)
+	rot(ALWEN,30,0)
+	wait(11)
+//4frm+
+	MOT(ALWEN,176,12)
+	wait(238)
+
+	MOT(ALWEN,160,5)
+	wait(22)
+	rot(ALWEN,30,90)
+	wait(22)
+	rot(ALWEN,30,180)
+	wait(22)
+	rot(ALWEN,30,270)
+	wait(22)
+	rot(ALWEN,30,0)
+	wait(22)
+
+	MOT(ALWEN,187, 5)
+	wait(10)
+	MOT(ALWEN,188, 5)
+	wait(10)
+	MOT(ALWEN,186, 5)
+	wait(14)
+
+	MOT(ALWEN,170,5)
+	wait(190)
+	MOT(ALWEN,180,5)
+	wait(18)
+	MOT(ALWEN,170,5)
+	wait(122)
+	MOT(ALWEN,187, 5)
+	wait(12)
+	MOT(ALWEN,186, 5)
+	wait(12)
+	MOT(ALWEN,182, 5)
+}
+
+A_EXERCISE_T
+{
+//	MOT(ALWEN,160,5)
+//	wait(88)
+
+//	MOT(ALWEN,185,10)
+//	wait(22)
+//	MOT(ALWEN,181,10)
+//	wait(24)
+
+//	MOT(ALWEN,187, 5)
+//	wait(12)
+//	MOT(ALWEN,188, 5)
+//	wait(12)
+//	MOT(ALWEN,186, 5)
+//	wait(12)
+//	MOT(ALWEN,190, 5)
+//	wait(12)
+//	MOT(ALWEN,189, 5)
+//	wait(16)
+
+	MOT(ALWEN,162,5)
+	rot(ALWEN,4,135)
+	wait(176)
+	rot(ALWEN,4,0)
+	wait(154)
+
+	MOT(ALWEN,185, 5)
+	wait(10)
+	MOT(ALWEN,191, 5)
+	wait(10)
+	MOT(ALWEN,192, 5)
+	wait(14)
+
+	MOT(ALWEN,162,5)
+	rot(ALWEN,4,225)
+	wait(176)
+	rot(ALWEN,4,0)
+	wait(132)
+
+	MOT(ALWEN,2,11)
+	rot(ALWEN,30,90)
+	wait(11)
+	MOT(ALWEN,1,5)
+	jump(ALWEN,0,22,6250,7900,0,0)
+	wait_move(ALWEN)
+	MOT(ALWEN,2,5)
+	rot(ALWEN,30,0)
+	wait(11)
+
+	MOT(ALWEN,174,12)
+	wait(198)
+
+	MOT(ALWEN,168,5)
+	wait(22)
+	rot(ALWEN,30,270)
+	wait(22)
+	rot(ALWEN,30,180)
+	wait(22)
+	rot(ALWEN,30,90)
+	wait(22)
+	rot(ALWEN,30,0)
+	wait(22)
+
+	MOT(ALWEN,2,11)
+	rot(ALWEN,30,270)
+	wait(11)
+	MOT(ALWEN,1,5)
+	jump(ALWEN,0,44,6850,7900,0,0)
+	wait_move(ALWEN)
+	MOT(ALWEN,2,5)
+	rot(ALWEN,30,0)
+	wait(11)
+
+	MOT(ALWEN,176,12)
+	wait(242)
+
+	MOT(ALWEN,160,5)
+	wait(22)
+	rot(ALWEN,30,90)
+	wait(22)
+	rot(ALWEN,30,180)
+	wait(22)
+	rot(ALWEN,30,270)
+	wait(22)
+	rot(ALWEN,30,0)
+	wait(22)
+
+	MOT(ALWEN,187, 5)
+	wait(10)
+	MOT(ALWEN,188, 5)
+	wait(10)
+	MOT(ALWEN,186, 5)
+	wait(14)
+
+	MOT(ALWEN,170,5)
+	wait(190)
+	MOT(ALWEN,180,5)
+	wait(18)
+	MOT(ALWEN,170,5)
+	wait(122)
+	MOT(ALWEN,187, 5)
+	wait(12)
+	MOT(ALWEN,186, 5)
+	wait(12)
+	MOT(ALWEN,182, 5)
+}
+
+EXERCISE_STOP
+{
+	wait_key(1)	
+	workL(WK_YESNO,SET,0)//
+	workL(WK_CANCEL,SET,2)//
+	MES_pos(PLAYER1,"??W9【跳过】\n【不跳过】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+	if(WK_YESNO==1)
+	{
+		stop_BGM(30)
+		EV_stop("EXERCISE_MAIN")
+	}
+	else
+	if(WK_YESNO==2)
+	{
+		loop
+	}
+
+//	wait_key(1)	
+//	stop_BGM(30)
+//	EV_stop("EXERCISE_MAIN")
+}
+
+EXERCISE_STOP3
+{
+	wait_key(1)	
+	workL(WK_YESNO,SET,0)//
+	workL(WK_CANCEL,SET,2)//
+	MES_pos(PLAYER1,"??W9【跳过】\n【不跳过】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+	if(WK_YESNO==1)
+	{
+		stop_BGM(30)
+		EV_stop("EXERCISE_MAIN3")
+	}
+	else
+	if(WK_YESNO==2)
+	{
+		loop
+	}
+
+//	wait_key(1)	
+//	stop_BGM(30)
+//	EV_stop("EXERCISE_MAIN3")
+}
+
+T_EXERCISE_STOP
+{
+	wait_key(1)	
+	workL(WK_YESNO,SET,0)//
+	workL(WK_CANCEL,SET,2)//
+	MES_pos(PLAYER1,"??W9【跳过】\n【不跳过】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+	if(WK_YESNO==1)
+	{
+		stop_BGM(30)
+		EV_stop("T_EXERCISE_MAIN")
+	}
+	else
+	if(WK_YESNO==2)
+	{
+		loop
+	}
+
+//	wait_key(1)	
+//	stop_BGM(30)
+//	EV_stop("T_EXERCISE_MAIN")
+}
+
+
+EXERCISE_KAO1
+{
+	wait(30)
+	KAO(EVENT_RAGNA2,"B","D1233321D","5")//
+	wait(15)
+	KAO(ALWEN,"B","D123I","5")//
+	wait(360)
+	KAO(EVENT_RAGNA2,"B","1232A","5")//
+	wait(15)
+	KAO(ALWEN,"B","IH","5")//
+	wait(420)
+	KAO(ALWEN,"B","HI","5")//
+	wait(180)
+	KAO(ALWEN,"B","32L","5")//
+	wait(15)
+	KAO(EVENT_RAGNA2,"B","A23","5")//
+	wait(420)
+	KAO(EVENT_RAGNA2,"B","32A","5")//
+}
+
+EXERCISE_KAO2
+{
+	wait(360)
+	KAO(EVENT_RAGNA2,"B","32A","5")//
+	wait(15)
+	KAO(ALWEN,"B","53IH","5")//
+	wait(420)
+	KAO(ALWEN,"B","HI","5")//
+	wait(240)
+	KAO(ALWEN,"B","IHG","5")//
+	wait(15)
+	KAO(EVENT_RAGNA2,"B","A23","5")//
+	wait(240)
+	KAO(EVENT_RAGNA2,"B","32A","5")//
+}
+
+EXERCISE_KAO3
+{
+	EMO(EVENT_RAGNA2,EMO_ASEASE)
+	EMO(ALWEN,EMO_ASEASE)
+	KAO(EVENT_RAGNA2,"B","D12321D","6")//
+	KAO(ALWEN,"B","D12321D","6")//
+	wait(360)
+	KAO(EVENT_RAGNA2,"C","D12321D","5")//
+	wait(15)
+	KAO(ALWEN,"C","D12","5")//
+	wait(360)
+	KAO(EVENT_RAGNA2,"B","1232U","2")//
+	wait(15)
+	KAO(ALWEN,"B","35","5")//
+	wait(360)
+	KAO(EVENT_RAGNA2,"B","U233321","2")//
+	wait(15)
+	KAO(ALWEN,"E","532W","2")//
+	wait(360)
+	KAO(ALWEN,"B","W233321","2")//
+}
+
+EXERCISE_KAO4
+{
+	wait(360)
+	KAO(EVENT_RAGNA2,"1","1233321","1")//
+	wait(15)
+	KAO(ALWEN,"F","1233321","1")//
+	wait(420)
+	KAO(EVENT_RAGNA2,"1","1236","5")//
+	wait(15)
+	KAO(ALWEN,"1","123","6")//
+	wait(360)
+	KAO(EVENT_RAGNA2,"1","6321","6")//
+	wait(15)
+	KAO(ALWEN,"1","321","2")//
+	wait(300)
+	KAO(EVENT_RAGNA2,"1","1236","7")//
+	KAO(ALWEN,"1","1236","7")//
+}
+
+T_EXERCISE_KAO
+{
+	EMO(EVENT_RAGNA2,EMO_ASEASE)
+	EMO(ALWEN,EMO_ASEASE)
+	wait(360)
+	KAO(EVENT_RAGNA2,"B","D1232A","5")//
+	wait(15)
+	KAO(ALWEN,"B","123I","5")//
+	wait(420)
+	KAO(EVENT_RAGNA2,"B","A23","5")//
+	wait(15)
+	KAO(ALWEN,"B","IHGK","6")//
+	wait(420)
+	KAO(EVENT_RAGNA2,"B","32A","5")//
+	wait(15)
+	KAO(ALWEN,"B","KGHI332L","5")//
+}
+
+//──────────────────────────────
+//	name("◆奥義伝授イベント·そ之一")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ル～ト之属性に応じた奥義を習得する。
+//　　※嘉兰多は各サブル～ト最奥にいる。
+//　　　初め姿が見えなぶ置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_1
+{
+	TK_begin()
+
+	chr_pos(GYARANDOW,6750,8000,0,180,2)
+
+	MOT(RAGNA,2,15)
+	MOT(PARTNER,2,15)
+
+	stop_BGM(90)//★ＢＧＭ制御
+	chr_rename(GYARANDOW,"男人浑厚的声音")
+//	name("男人浑厚的声音")
+	MES(GYARANDOW,"W9……你们终于来了。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那·艾雯に？エモ～ション。
+	EMO(RAGNA,EMO_HATENA)
+	EMO(PARTNER,EMO_HATENA)
+	rot_chr(RAGNA,30,GYARANDOW)
+	rot_chr(PARTNER,30,GYARANDOW)
+	wait(30)
+
+//　　前進すると共に、カメラスクロ～ルして嘉兰多を映す。
+	fade_in(100,30,BLACK)	//暗転
+	wait_fade()
+	wait(30)
+
+	//初期化------------------------------------------------
+
+	TK_end()
+	EV_begin()
+
+	if(WK010==1)
+		map_spotbmp(50)
+
+	//キャラ配置
+	chr_pos(RAGNA,	 7550,9250,0,135,	2)
+	chr_pos(PARTNER, 7350,9250,0,135,	2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA, 1010,	-1,-1,	7540,9250,0,2,135,0,";")
+	set_chr(EVENT_RAGNA2,1014,	-1,-1,	7540,9250,0,2,135,0,";")
+	set_chr(ALWEN,		1011,	-1,-1,	7360,9250,0,2,135,0,";")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	color(EVENT_RAGNA2,-1)
+
+	F_set_chr(GYARANDOW,CF_NO_CLIP)
+	F_set_chr(GYARANDOW,CF_NO_CLIP2)
+	F_set_chr(GYARANDOW,CF_NO_CSP)
+	F_reset_chr(GYARANDOW,CF_NO_HEIGHT)
+	F_reset_chr(GYARANDOW,CF_NO_ZIMEN)
+
+	//モ～ション定義
+	MOT_SET(EVENT_RAGNA2,150,-1,1844,1844,-1,-1)//膝つき
+	MOT_SET(EVENT_RAGNA2,151,-1,1910,1949,-1,-1)//膝つき
+	MOT_SET(EVENT_RAGNA2,152,-1,416,416,-1,-1)//
+	MOT_SET(ALWEN,150,-1,6349,6349,-1,-1)//膝つき
+	MOT_SET(ALWEN,151,-1,6355,6395,-1,-1)//膝つき
+	MOT_SET(ALWEN,152,-1,511,511,-1,-1)//
+	MOT_SET(ALWEN,153,-1,400,400,-1,-1)//
+	MOT_SET(GYARANDOW,150,-1,514,514,-1,-1)
+	MOT_SET(GYARANDOW,151,-1,515,515,-1,-1)
+	MOT_SET(GYARANDOW,152,-1,516,516,-1,-1)
+	MOT_SET(GYARANDOW,153,-1,517,517,-1,-1)
+	MOT_SET(GYARANDOW,154,-1,518,518,-1,-1)
+	MOT_SET(GYARANDOW,155,159,6850,6897,-1,-1)
+	MOT_SET(GYARANDOW,156,-1,8260,8280,-1,-1)
+	MOT_SET(GYARANDOW,157,-1,8280,8300,-1,-1)
+	MOT_SET(GYARANDOW,158,-1,8300,8320,-1,-1)
+	MOT_SET(GYARANDOW,159,159,6897,6925,-1,-1)
+	MOT_SET(GYARANDOW,195,-1,6925,6940,-1,-1)
+	MOT(GYARANDOW,51,0)
+	color(GYARANDOW,1)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる
+
+	//カメラ初期位置
+	CAM_move(7450,-9250,180,0,0)
+	CAM(430,80,180,25,135,0,0)
+
+	move(EVENT_RAGNA,0,20,6840,8350,0,0)
+	wait(5)
+	move(ALWEN,0,20,6660,8350,0,0)
+
+	wait_BGM()//★ＢＧＭ制御
+	fade_in(0,60,BLACK)	//フェ～ドイン
+
+	CAM_move(6750,-8200,180,60,2)
+	CAM(150,74,180,25,180,60,2)
+
+	wait_move(EVENT_RAGNA)
+	EMO(EVENT_RAGNA,EMO_TOGEBIKKURI)
+	look(EVENT_RAGNA,"Bone_Head",0,0,1,0,0,-15,0)
+	rot(EVENT_RAGNA,30,180)
+
+	wait_move(ALWEN)
+	EMO(ALWEN,EMO_TOGEBIKKURI)
+	look(ALWEN,"Bone_Head",0,0,1,0,0,15,0)
+	rot(ALWEN,30,180)
+
+	wait_CAM_move()
+	wait_CAM()
+//	wait(30)
+//	BGM(19)
+	wait(30)
+
+//　　嘉兰多、丁度振り返るところ。
+//	name("迷之假面")
+	chr_rename(GYARANDOW,"迷之假面")
+	MES(GYARANDOW,"我等你们好久了。",0)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+	rot(GYARANDOW,15,0)
+	wait(10)
+
+//嘉兰多を見せる①
+	cross_fade(15)
+	CAM_move(6750,-8000,160,0,0)
+	CAM(710,46,160,25,206,0,0)
+	CAM(710,40,160,25,206,15,0)
+	rot(GYARANDOW,-1,0)
+	VOICE(605,0)	//★「ふんっ！」
+	MOT(GYARANDOW,152,10)
+	wait_fade()
+	wait(30)
+
+//嘉兰多を見せる②
+	VOICE(606,0)	//★「は啊っ！」
+	cross_fade(15)
+	CAM_move(6750,-8000,180,0,0)
+	CAM(350,46,180,25,152,0,0)
+	CAM(350,40,180,25,152,15,0)
+	look(GYARANDOW,"Bone_Head",0,0,4,1,0,40,10)
+	MOT(GYARANDOW,154,10)
+	wait_fade()
+	wait(30)
+
+//嘉兰多を見せる③
+	VOICE(610,0)	//★「ぬううううん！」
+	cross_fade(15)
+	CAM_move(6750,-8000,140,0,0)
+	CAM(110,56,140,25,180,0,0)
+	CAM(110,50,140,25,180,15,0)
+	look(GYARANDOW,"Bone_Head",0,0,4,0,0,0,10)
+	MOT(GYARANDOW,150,10)
+	wait_fade()
+	wait(45)
+
+//　　拉古那と艾雯、唖然とするフェイス。
+	BGM(19)
+	cross_fade(30)
+	CAM_move(6730,-8350,120,0,0)
+	CAM(70,52,120,24,54,0,0)
+	CAM(70,48,120,24,58,300,0)
+	color(GYARANDOW,-1)
+	look(EVENT_RAGNA,"Bone_Head",0,0,15,0,0,0,0)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,0,0)
+	KAO(EVENT_RAGNA,"B","7","6")//
+	KAO(ALWEN,"B","7","6")//
+	wait(60)
+
+//	MES_pos(0,"◆拉古那と艾雯、唖然とするフェイス。",0,0,0,0,0)
+//	wait_key(0)
+//	MES_close(0)
+
+//クリッピングした
+//	EMO(EVENT_RAGNA,EMO_TOGEBIKKURI)
+//	EMO(ALWEN,EMO_TOGEBIKKURI)
+//	EFF_chr(25140,EVENT_RAGNA,0,80,1,"Bone_Head")
+//	EFF_chr(25140,ALWEN,0,80,1,"Bone_Head")
+	SE(1002,0)//トゲビックリSE
+	EFF(25140,6660,-8460,140,0,100,-1)
+	EFF(25140,6840,-8410,140,0,100,-1)
+	KAO(EVENT_RAGNA,"B23K","12321DE","7")//
+	KAO(ALWEN,"B23K","12321DE","7")//
+	MES(EVENT_RAGNA,"啥……！？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B","D123332","5")//
+	MES(ALWEN,"（这男的是谁啊……）",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(15)
+	CAM_move(6750,-8200,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+	CAM(150,78,180,25,180,300,0)
+	color(GYARANDOW,1)
+	MOT(GYARANDOW,52,0)
+	look(GYARANDOW,"Bone_Head",0,0,0,10,0,0,0)
+	look(EVENT_RAGNA,"Bone_Head",0,0,15,0,0,-15,0)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,15,0)
+	wait_fade()
+
+//	name("迷之假面")
+	MES(GYARANDOW,"探索迷宫、很辛苦吧。",0)
+	MES(GYARANDOW,"今天打算把、我的独门\n奥义传授给你们。",0)
+	MES(GYARANDOW,"所以一直在这里恭候。",0)
+	MES_close(GYARANDOW)
+
+	EMO(EVENT_RAGNA,EMO_HIYAASE)
+	wait(30)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"看、看起来是个可疑的家伙……",0)
+	MES(EVENT_RAGNA,"突然说要传授给我们奥义、\n看来不是敌人…………",0)
+	MES_close(EVENT_RAGNA)
+
+//	MES(ALWEN,"ふむ、そ之ようなも之は必要ない。\nこ之私が真祖本来之力を用いれば……",0)
+	MES(ALWEN,"哼哼、不好意思\n你的好意我心领了。",0)
+	MES(ALWEN,"我堂堂真祖之尊\n岂会使用人类的技能……",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	VOICE(607,0)	//★「だ啊っ！」
+	cross_fade(15)
+	CAM_move(6750,-8000,200,0,0)
+	CAM(710,46,200,25,194,0,0)
+	CAM(710,40,200,25,212,15,0)
+	look(GYARANDOW,"Bone_Head",0,0,4,1,0,-40,10)
+	MOT(GYARANDOW,153,10)
+	wait_fade()
+	wait(15)
+	EMO(GYARANDOW,EMO_KIRAKIRA)
+	wait(15)
+
+//	name("迷之假面")
+	MES(GYARANDOW,"我的名字是嘉兰多──\n既伟大又拉风的美男。",0)
+	MES_close(GYARANDOW)
+
+//	name2(EVENT_RAGNA)
+	MES_pos(EVENT_RAGNA,"没、没问你这个……",0,140,400,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	cross_fade(15)
+	CAM_move(6750,-8200,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+	color(GYARANDOW,1)
+	look(GYARANDOW,"Bone_Head",0,0,40,10,0,0,0)
+	MOT(GYARANDOW,52,0)
+	wait(30)
+
+//	name("超人嘉兰多")
+	chr_rename(GYARANDOW,"超人嘉兰多")
+	MES(GYARANDOW,"哼哼、不要怕。\n你们就把这看做是命运的安排吧。",0)
+	MES_close(GYARANDOW)
+	stop_BGM(60)//★ＢＧＭ制御
+	MOT(GYARANDOW,151,10)
+//	wait(15)
+//	MES(GYARANDOW,"さあ、レッツ·エクササイズ……！",0)
+//	MES_close(GYARANDOW)
+
+	fade_in(100,30,BLACK)	//暗転
+	wait_fade()
+	VOICE(635,0)	//★「それではレ～ッツ、エクササイズ！」
+	wait(15)
+//	MES(GYARANDOW,"W9那么一起来健美吧！",0)
+	MES_pos(GYARANDOW,"W9那么ＬＥＴ’Ｓ　ＥＸＥＲＣＩＳＥ！",0,320,250,0,0)
+	wait(80)
+	MES_close(GYARANDOW)
+	CAM_move(6750,-8100,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+
+	delete(EVENT_RAGNA)
+
+	chr_pos(ALWEN,6550,7900,0,0,2)
+	F_set_Node(ALWEN,"Bone_RightSword",NP_HIDE)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,0,0)
+	MOT(ALWEN,53,1)	//艾雯之右手を開かせる。
+
+	chr_pos(EVENT_RAGNA2,6950,7900,0,0,2)
+	color(EVENT_RAGNA2,1)
+
+	KAO(EVENT_RAGNA2,"1","1","1")//
+	KAO(ALWEN,"1","1","1")//
+
+	chr_pos(GYARANDOW,6750,8100,0,0,2)
+
+	wait(30)
+	fade_in(0,30,BLACK)	//暗転
+	wait_fade()
+
+//　　エクササイズ用之ＢＧＭが鳴り始める。
+	wait_BGM()//★ＢＧＭ制御
+//	BGM(48)
+//	wait(30)
+
+	EV("EXERCISE_MAIN")
+
+//　　嘉兰多、エクササイズを踊りだす。
+	wait(30)
+
+//	name("超人嘉兰多")
+	MES_pos(GYARANDOW,"你么俩、\n跟着我来做！",0,0,0,0,0)
+	wait(45)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+//	MES(EVENT_RAGNA,"※エクササイズはメッセ～ジそ之他と\n同期を取る必要が啊る之で未入力。",0)
+//	MES(EVENT_RAGNA,"廃坑サブ終（ｅｖ10492）之ＥＸＥＲＣＩＳＥ\nル～チンにサンプル版アリ。",0)
+//	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B","12321DE","7")//
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA2,"23232","12321DE","7")//
+	MES_pos(EVENT_RAGNA2,"诶、诶诶……！？",0,0,0,0,0)
+	wait(45)
+	MES_close(EVENT_RAGNA2)
+	wait_MES(GYARANDOW)
+
+//　　嘉兰多、激しく踊りだす。
+	wait(60)
+
+//	name("超人嘉兰多")
+	MES_pos(GYARANDOW,"这才刚刚！\n开始哦！",0,0,0,0,0)
+	wait(45)
+	MES_close(GYARANDOW)
+
+//　　拉古那と艾雯も慌てて踊りだす。
+//　　（※踊りだす前に、武器を外す）
+
+//　EXERCISE_KAO1へ
+//	wait(30)
+//	KAO(EVENT_RAGNA2,"B","D1233321D","5")//
+//	wait(15)
+//	KAO(ALWEN,"B","D123I","5")//
+//	wait(360)
+//	KAO(EVENT_RAGNA2,"B","1232A","5")//
+//	wait(15)
+//	KAO(ALWEN,"B","IH","5")//
+//	wait(420)
+//	KAO(ALWEN,"B","HI","5")//
+//	wait(180)
+//	KAO(ALWEN,"B","32L","5")//
+//	wait(15)
+//	KAO(EVENT_RAGNA2,"B","A23","5")//
+//	wait(420)
+//	KAO(EVENT_RAGNA2,"B","32A","5")//
+
+	EV("EXERCISE_STOP")
+	EV("EXERCISE_KAO1")
+
+	wait_EV("EXERCISE_MAIN")
+	EV_stop("EXERCISE_STOP")
+	MES_close(PLAYER1)
+	menu(0,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(1,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(2,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(3,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(4,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(5,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(6,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(7,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(8,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	VOICE(621,0)	//★「フッ、まだまだ修行不足だな」
+
+//　　２人がてんでバラバラに動く演出。
+
+//　　次第に嘉兰多に合わせて踊る演出。
+
+//　　３人が踊りながら、画面フェ～ドアウト。
+
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()
+
+	move(GYARANDOW, 99, 0,0,0,0,0)
+	move(EVENT_RAGNA2, 99, 0,0,0,0,0)
+	move(ALWEN, 99, 0,0,0,0,0)
+	EV_stop("G_EXERCISE")
+	EV_stop("R_EXERCISE_1")
+	EV_stop("A_EXERCISE_1")
+	EV_stop("EXERCISE_KAO1")
+
+	stop_BGM(90)//★ＢＧＭ制御
+	wait_BGM()
+	wait(30)
+
+	chr_pos(ALWEN,6660,8350,0,180,2)
+	chr_pos(EVENT_RAGNA2,6840,8350,0,180,2)
+	MOT(EVENT_RAGNA2,150,0)
+	MOT(ALWEN,150,0)
+
+	chr_pos(GYARANDOW,6750,8000,0,0,2)
+	MOT(GYARANDOW,52,0)
+
+	CAM_move(6750,-8200,180,0,0)
+	CAM(150,70,180,25,225,0,0)
+
+//　　しばらくしてフェ～ドイン。
+	BGM(19)
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　同じ構図で、拉古那·艾雯がバテている。
+	MES(EVENT_RAGNA2,"呼、呼呼……",0)
+	MES_close(EVENT_RAGNA2)
+
+//　　拉古那たち、ふら付きながら立ち上がる。
+	MOT(EVENT_RAGNA2,151,0)
+//	look(EVENT_RAGNA2,"Bone_Head",0,0,1,0,0,-15,0)
+	wait(15)
+	MOT(ALWEN,151,0)
+//	look(ALWEN,"Bone_Head",0,0,1,0,0,15,0)
+	wait(40)
+//	name2(ALWEN)
+//	MES(ALWEN,"ええい、何ということだ。",0)
+///	MES(ALWEN,"こ之私にこ之ようなことを\nやらせおって……",0)
+	MES(ALWEN,"太荒唐了。",0)
+	MES(ALWEN,"竟敢让我做\n那么丢人的动作……",0)
+	MES_close(ALWEN)
+
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"哼哼、做的不错嘛。",0)
+	MES(GYARANDOW,"给了肌肉组织\n很大的刺激。",0)
+	MES(GYARANDOW,"你们稍微闭上一下眼睛。",0)
+	MES_close(GYARANDOW)
+
+//　　２人に？エモ～ション。
+	EMO(EVENT_RAGNA2,EMO_HATENA)
+	EMO(ALWEN,EMO_HATENA)
+	wait(30)
+
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"愣着干啥。\n快闭眼。",0)
+	MES_close(GYARANDOW)
+
+//	name2(EVENT_RAGNA2)
+	MES(EVENT_RAGNA2,"啊、好……",0)
+	MES_close(EVENT_RAGNA2)
+	wait_MES(EVENT_RAGNA2)
+
+//　　拉古那と艾雯、目を閉じる。
+//　　嘉兰多、２人に向かって手を突き出す。
+	cross_fade(15)
+	CAM_move(6750,-8140,120,0,0)
+	CAM(150,80,120,25,270,0,0)
+
+	look(EVENT_RAGNA2,"Bone_Head",0,0,15,0,0,-15,0)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,15,0)
+	KAO(EVENT_RAGNA2,"B","3","2")//
+	KAO(ALWEN,"B","3","2")//
+	wait(15)
+	CAM(150,65,120,25,270,30,0)
+	MOT(GYARANDOW,2,0)
+//	CAM_quake("46L")
+	MOT(GYARANDOW,155,0)
+	VOICE(605,0)	//★「ふんっ！」
+//	MES_pos(GYARANDOW,"唔～～～……",0,0,0,0,0)
+	MES_pos(GYARANDOW,"S3唔唔！",0,0,0,0,0)
+	wait(30)
+	MES_close(GYARANDOW)
+	CAM_quake("")
+	cross_fade(5)
+	CAM_move(6750,-8000,80,0,0)
+	CAM(110,70,80,25,180,0,0)
+	wait(15)
+	EFF(6920,6750,-8000,0,0,100,-1)
+	CAM(110,85,100,25,180,60,0)
+	CAM_quake("46L")
+	VOICE(610,0)	//★「ぬううううん！」
+	SE(1121,0)		//衝撃波SE
+//	MES_pos(GYARANDOW,"呼……！！",0,0,0,0,0)
+	MES_pos(GYARANDOW,"S5嗷嗷嗷嗷……！",0,0,0,0,0)
+	wait(45)
+	CAM_quake("")
+	wait(13)
+	MOT(GYARANDOW,195,0)
+	wait(2)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+//　　奥義習得之ＳＥが鳴る。
+
+	MOT(GYARANDOW,51,15)
+	wait(30)
+	MES(GYARANDOW,"好了、睁开眼吧。",0)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+//　　拉古那と艾雯、目を開ける。
+	cross_fade(15)
+	CAM_move(6750,-8160,200,0,0)
+	CAM(110,50,200,25,315,0,0)
+	look(EVENT_RAGNA2,"Bone_Head",0,0,10,10,0,-5,10)
+	look(ALWEN,"Bone_Head",0,0,0,5,0,10,5)
+	wait(30)
+
+	KAO(EVENT_RAGNA2,"B232B2Z2","321D","6")//
+	MES(EVENT_RAGNA2,"这、这是……？",0)
+	MES_close(EVENT_RAGNA2)
+
+	look(ALWEN,"Bone_Head",0,0,0,1,0,10,-10)
+	MOT(ALWEN,152,15)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321FZ3","32A","1")//
+	MES(ALWEN,"感觉有一股不可思议的力量\n在全身涌动……",0)
+	MES_close(ALWEN)
+
+	MES(GYARANDOW,"我传给你们了一个奥义。",0)
+	if(WK010==1)
+	{
+		MES(GYARANDOW,"运用大地的魔力\nL711『奥义·烈狱震激破』L400。",0)
+	//	MES(GYARANDOW,"名づけて『奥義·ギガントハンマー』。\nお前たち２人之力を\n練り合わせて発する攻撃技だ。",0)
+	//	MES_close(GYARANDOW)
+		get_item(097,1,1)
+		//★地之奥義を修得
+		F_set(FE_FF_Skil_TI)
+	}
+	else
+	if(WK010==2)
+	{
+		MES(GYARANDOW,"运用水的魔力\nL711『奥义·冰气乱结旋』L400。",0)
+	//	MES(GYARANDOW,"名づけて『奥義·ダイアモンドダスト』。\nお前たち２人之力を\n練り合わせて発する攻撃技だ。",0)
+	//	MES_close(GYARANDOW)
+		get_item(098,1,1)
+		//★水之奥義を修得
+		F_set(FE_FF_Skil_MIZU)
+	}
+	else
+	if(WK010==3)
+	{
+		MES(GYARANDOW,"运用风的魔力\nL711『奥义·清华瞬刹天』L400。",0)
+	//	MES(GYARANDOW,"名づけて『奥義·グランストリーム』。\nお前たち２人之力を\n練り合わせて発する攻撃技だ。",0)
+	//	MES_close(GYARANDOW)
+		get_item(099,1,1)
+		//★风之奥義を修得
+		F_set(FE_FF_Skil_KAZE)
+	}
+	else
+	if(WK010==4)
+	{
+		MES(GYARANDOW,"运用火的魔力\nL711『奥义·炎瘴印斗牙』L400。",0)
+	//	MES(GYARANDOW,"名づけて『奥義·ドラゴンフレア』。\nお前たち２人之力を\n練り合わせて発する攻撃技だ。",0)
+	//	MES_close(GYARANDOW)
+		get_item(100,1,1)
+		//★火之奥義を修得
+		F_set(FE_FF_Skil_HI)
+	}
+	MES(GYARANDOW,"还有使用无属性\n的魔法发动的L711『通常奥義』L400。",0)
+	MES(GYARANDOW,"联合你们2人之力\n发动的攻击技能。",0)
+	MES_close(GYARANDOW)
+	get_item(096,1,1)	//無属性奥義
+	workG(GW_BOM,ADD,1)
+
+//　　※『○○○○○』之内容は、ダンジョン之属性に合わせて以下之ようにする。
+//　　　地：烈獄震激破
+//　　　水：氷氣乱結旋
+//　　　风：清華瞬刹天
+//　　　火：炎瘴印闘牙
+
+	KAO(EVENT_RAGNA2,"B232BZ3","123332A","6")//
+	MES(EVENT_RAGNA2,"嘿嘿……\n这名字听起来的确强悍。",0)
+	KAO(EVENT_RAGNA2,"12321Z4","A2321","1")//
+	MES(EVENT_RAGNA2,"啊、在探索迷宫时\n也许能帮上忙。",0)
+	MES_close(EVENT_RAGNA2)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","3","1")//
+	MES(ALWEN,"唔、但是……",0)
+	look(ALWEN,"Bone_Head",0,0,0,1,0,10,5)
+	MOT(ALWEN,2,15)
+	wait(15)
+	KAO(ALWEN,"B232BZ6","2","3")//
+	MES(ALWEN,"我说假面啊、学习奥义应该和\n刚才的那个体操\n没有直接关系吧？",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(30)
+	CAM_move(6900,-8350,160,0,0)
+	CAM(150,70,160,25,225,0,0)
+	KAO(EVENT_RAGNA2,"B","A23332","9")//
+
+	rot(GYARANDOW,30,330)
+	wait(15)
+	move(GYARANDOW,0,12,6980,8350,0,0)
+	look_chr(EVENT_RAGNA2,GYARANDOW,"Bone_Head")
+	look_chr(ALWEN,GYARANDOW,"Bone_Head")
+	wait(30)
+	look_off(ALWEN)
+	rot(ALWEN,30,270)
+	wait_move(GYARANDOW)
+	look_chr(ALWEN,GYARANDOW,"Bone_Head")
+	rot(GYARANDOW,30,360)
+	MOT(GYARANDOW,156,15)
+	wait(30)
+	SE(1029,0)//肩に手を置くSE
+	wait(30)
+
+//　　嘉兰多、拉古那之隣まで来て肩を叩く。
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"哈哈哈。\n给你们这个。",0)
+	MES_close(GYARANDOW)
+
+//　　パン、とＳＥがする。
+//	name("アイテム入手テキスト")
+	MES(0,"W9L777从嘉兰多那里得到了L733『粉色的入场券』L777！",2)
+//	MES_close(0)
+
+	BGM_vol(50,15)				//BGMフェ～ド
+	wait(20)
+	fade_in(30,10,BLACK)		//少し暗転
+	get_item(137,1,0)
+	wait(70)
+	wait_key(0)
+	BGM_vol(100,30)				//BGM戻し
+	fade_in(0,10,BLACK)			//暗転解除
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+	MOT(GYARANDOW,157,0)
+	wait(20)
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"你们二人，要不懈努力哦、。",0)
+	MES_close(GYARANDOW)
+
+//　　嘉兰多、入り口之方に去っていく。
+	MOT(GYARANDOW,158,0)
+	wait(20)
+	rot(GYARANDOW,30,315)
+	wait(15)
+	VOICE(632,0)	//★「は～っはっはっはっはっはっ！」
+	move(GYARANDOW, 0,	12,7880,9250,0,	0)
+	wait(30)
+
+//　　２人は···エモ～ションで見送る。
+	look_off(EVENT_RAGNA2)
+	rot(EVENT_RAGNA2,30,315)
+	wait(15)
+	look_off(ALWEN)
+	rot(ALWEN,30,315)
+	wait(45)
+	EMO(EVENT_RAGNA2,EMO_TENTEN)
+	EMO(ALWEN,EMO_TENTEN)
+	wait(60)
+
+//　　そ之後、顔を見合わせる。
+	cross_fade(30)
+	CAM_move(6750,-8350,120,0,0)
+	CAM(190,50,120,25,118,0,0)
+	look_del(EVENT_RAGNA2)
+	look_del(ALWEN)
+	KAO(EVENT_RAGNA2,"B","2","9")//
+	KAO(ALWEN,"B","2","3")//
+	wait_fade()
+
+	KAO(EVENT_RAGNA2,"B","23","5")//
+	rot_chr(EVENT_RAGNA2,30,ALWEN)
+	wait(10)
+	rot_chr(ALWEN,30,EVENT_RAGNA2)
+	wait(5)
+	KAO(EVENT_RAGNA2,"B232BZ3","3","5")//
+	MES(EVENT_RAGNA2,"暂、暂且……",0)
+	MOT(EVENT_RAGNA2,152,15)
+	wait(15)
+	KAO(EVENT_RAGNA2,"B232BZ7","32A","5")//
+	MES(EVENT_RAGNA2,"不要管那个肌肉男了。\n好好使用\n这个绝技就是了。",0)
+	MES_close(EVENT_RAGNA2)
+
+	MOT(ALWEN,153,15)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","23","2")//
+//	MES(ALWEN,"うむ、色々と\n気にかかることはあるが……",0)
+	MES(ALWEN,"嗯、虽然有很多\n不太明白的事……",0)
+	KAO(ALWEN,"B232BZ5","321","2")//
+	MES(ALWEN,"但老在意这些事就太傻了。\n还是忘掉吧。",0)
+	MES_close(ALWEN)
+
+//　　イベント終了、操作許可を戻す。
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+	stop_BGM(90)//★ＢＧＭ制御
+	wait_BGM()
+
+	chr_rename(GYARANDOW,"嘉兰多")
+	delete(GYARANDOW)
+	delete(EVENT_RAGNA2)
+	delete(ALWEN)
+
+	chr_pos(PLAYER1,6840,8350,0,180,2)
+	chr_pos(PLAYER2,6660,8350,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+
+	//●チュ～トリアル：溜め魔法（奥義）
+	Load_BMP(20,"sys\\tuto10.itm","0")
+	menuBMP(1,	20,	0,0,288,384)
+	menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+	menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+	SE(043,PLAYER1)
+	wait(40)
+	wait_key(0)
+	menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+
+	if(WK010==1)
+	{
+//		BGM(21)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+		map_spotbmp(70);//100%
+	}
+	else
+	if(WK010==2)
+//		BGM(22)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==3)
+//		BGM(23)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==4)
+//		BGM(24)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+
+	//●チュ～トリアル：溜め魔法（奥義）
+//	Load_BMP(20,"sys\\tuto10.itm","0")
+//	menuBMP(1,	20,	0,0,288,384)
+
+	//１つ目之奥義を修得した
+	F_set(FE_FF_GetSkil_1)
+	//★嘉兰多
+	F_set_note(-21,-1)
+
+	//フェ～ドイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+	TK_begin()
+
+//	menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+//	menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+//	SE(043,PLAYER1)
+//	wait(40)
+//	wait_key(0)
+//	menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+
+	F_set(F0_10_TutoOugi)
+	TK_end()
+}
+
+//──────────────────────────────
+//	name("◆奥義伝授イベント·そ之二")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ル～ト之属性に応じた奥義を習得する。
+//　　※嘉兰多は各サブル～ト最奥にいる。
+//　　　初め姿が見えなぶ置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_2
+{
+	TK_begin()
+
+	chr_pos(GYARANDOW,6750,8000,0,180,2)
+
+	MOT(RAGNA,2,15)
+	MOT(PARTNER,2,15)
+
+	stop_BGM(90)//★ＢＧＭ制御
+//	name("男人浑厚的声音")
+	chr_rename(GYARANDOW,"男人浑厚的声音")
+	MES(GYARANDOW,"W9……好久不见了、二位。",0)
+	MES_close(GYARANDOW)
+
+	rot_chr(RAGNA,30,GYARANDOW)
+	rot_chr(PARTNER,30,GYARANDOW)
+	wait(15)
+
+//	name2(RAGNA)
+	MES(RAGNA,"唔……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"这个声音是……",0)
+	MES_close(PARTNER)
+
+	fade_in(100,30,BLACK)	//暗転
+	wait_fade()
+	wait(30)
+
+	//初期化------------------------------------------------
+
+	TK_end()
+	EV_begin()
+
+	if(WK010==1)
+		map_spotbmp(50)
+
+	//キャラ配置
+	chr_pos(RAGNA,	 7550,9250,0,135,	2)
+	chr_pos(PARTNER, 7350,9250,0,135,	2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA, 1010,	-1,-1,	7540,9250,0,2,135,0,";")
+	set_chr(EVENT_RAGNA2,1014,	-1,-1,	7540,9250,0,2,135,0,";")
+	set_chr(ALWEN,		1011,	-1,-1,	7360,9250,0,2,135,0,";")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	color(EVENT_RAGNA2,-1)
+
+	F_set_chr(GYARANDOW,CF_NO_CLIP)
+	F_set_chr(GYARANDOW,CF_NO_CLIP2)
+	F_set_chr(GYARANDOW,CF_NO_CSP)
+	F_reset_chr(GYARANDOW,CF_NO_HEIGHT)
+	F_reset_chr(GYARANDOW,CF_NO_ZIMEN)
+
+	//モ～ション定義
+	MOT_SET(EVENT_RAGNA2,150,-1,1844,1844,-1,-1)//膝つき
+	MOT_SET(EVENT_RAGNA2,151,-1,1910,1949,-1,-1)//膝つき
+	MOT_SET(EVENT_RAGNA2,152,-1,405,405,-1,-1)//
+	MOT_SET(ALWEN,150,-1,6349,6349,-1,-1)//膝つき
+	MOT_SET(ALWEN,151,-1,6355,6395,-1,-1)//膝つき
+	MOT_SET(ALWEN,152,-1,511,511,-1,-1)//
+	MOT_SET(ALWEN,153,-1,400,400,-1,-1)//
+	MOT_SET(GYARANDOW,150,-1,514,514,-1,-1)
+	MOT_SET(GYARANDOW,151,-1,515,515,-1,-1)
+	MOT_SET(GYARANDOW,152,-1,516,516,-1,-1)
+	MOT_SET(GYARANDOW,153,-1,517,517,-1,-1)
+	MOT_SET(GYARANDOW,154,-1,518,518,-1,-1)
+	MOT_SET(GYARANDOW,155,159,6850,6897,-1,-1)
+	MOT_SET(GYARANDOW,156,-1,6785,6805,-1,-1)
+	MOT_SET(GYARANDOW,157,-1,6805,6825,-1,-1)
+	MOT_SET(GYARANDOW,158,-1,6825,6845,-1,-1)
+	MOT_SET(GYARANDOW,159,159,6897,6925,-1,-1)
+	MOT_SET(GYARANDOW,195,-1,6925,6940,-1,-1)
+	MOT(GYARANDOW,51,0)
+	color(GYARANDOW,1)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる
+
+	//カメラ初期位置
+	CAM_move(7450,-9250,180,0,0)
+	CAM(430,80,180,25,135,0,0)
+
+	move(EVENT_RAGNA,0,20,6840,8350,0,0)
+	wait(5)
+	move(ALWEN,0,20,6660,8350,0,0)
+
+	wait_BGM()//★ＢＧＭ制御
+	fade_in(0,60,BLACK)	//フェ～ドイン
+
+	CAM_move(6750,-8200,180,60,2)
+	CAM(150,74,180,25,180,60,2)
+
+	wait_move(EVENT_RAGNA)
+	EMO(EVENT_RAGNA,EMO_TOGEBIKKURI)
+	look(EVENT_RAGNA,"Bone_Head",0,0,1,0,0,-15,0)
+	rot(EVENT_RAGNA,30,180)
+
+	wait_move(ALWEN)
+	EMO(ALWEN,EMO_TOGEBIKKURI)
+	look(ALWEN,"Bone_Head",0,0,1,0,0,15,0)
+	rot(ALWEN,30,180)
+
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+	CAM(150,78,180,25,180,300,0)
+	rot(GYARANDOW,30,0)
+	wait(30)
+	BGM(19)
+
+//	MES(EVENT_RAGNA,"果，果然是你\n肌肉男……",0)
+	MES(EVENT_RAGNA,"果，果然是你。\n肌肉男……",0)
+	MES_close(EVENT_RAGNA)
+
+	chr_rename(GYARANDOW,"嘉兰多")
+	MES(GYARANDOW,"似乎正在探索、\n迷宫吗。",0)
+	MES(GYARANDOW,"了不起了不起。",0)
+	MES_pos(GYARANDOW,"那么和上次一样、\n传授你们奥义吧──",0,0,0,0,0)
+
+//　　嘉兰多之セリフ後半に重ねて、艾雯之ポップアップを出す。
+	wait(30)
+	CAM_quake("46")
+	MES_pos(ALWEN,"S3──不要。",0,0,0,0,0)
+//	wait_key(0)
+	wait(30)
+	MES_close(ALWEN)
+	MES_close(GYARANDOW)
+
+//	name("超人嘉兰多")
+	look(GYARANDOW,"Bone_Head",0,0,1,1,0,10,-10)
+	wait(5)
+	look(EVENT_RAGNA,"Bone_Head",0,0,1,0,0,-30,0)
+	wait(10)
+	MES(GYARANDOW,"嗯……？",0)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+	cross_fade(30)
+	CAM_move(6730,-8350,120,0,0)
+	CAM(70,52,120,24,54,0,0)
+	CAM(70,48,120,24,58,300,0)
+	color(GYARANDOW,-1)
+	look(EVENT_RAGNA,"Bone_Head",0,0,1,0,0,-30,0)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,0,0)
+	KAO(EVENT_RAGNA,"E","W","6")//
+	KAO(ALWEN,"B","3","3")//
+	wait(60)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","32","3")//
+	MES(ALWEN,"还不是又打算让我们跳\n那个奇怪的舞蹈吧。",0)
+	KAO(ALWEN,"B232BZ2","23","3")//
+	MES(ALWEN,"坚决不跳。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"E","W23332W","6")//
+	MES(EVENT_RAGNA,"（噢噢……\n  公主拒绝的真干脆。）",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	cross_fade(15)
+	CAM_move(6750,-8200,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+	CAM(150,78,180,25,180,600,0)
+	color(GYARANDOW,1)
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,0,0,-25,0)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,15,0)
+	wait_fade()
+/
+//　　嘉兰多に···エモ～ション。
+	EMO(GYARANDOW,EMO_TENTEN)
+	wait(60)
+
+//　　顔を背ける。
+	look(GYARANDOW,"Bone_Head",0,	0,3,1,	0,-38,0)
+	wait(15)
+//	name("超人嘉兰多")
+//	MES(GYARANDOW,"しかし、な……　そ之……\n奥義が使えると、\n色々といいことがあると思うぞ？",0)
+	MES(GYARANDOW,"但是、其实……那个……\n能使用奥义、\n会有很多好的事情发生哦？",0)
+	MES(GYARANDOW,"比如在故事的结尾用来守护爱与和平的\n几乎全是必杀技啊……",0)
+	MES_close(GYARANDOW)
+	look(GYARANDOW,"Bone_Head",0,	0,0,1,	0,-38,10)
+	MOT(GYARANDOW,153,15)
+	wait(15)
+	MES(GYARANDOW,"在学校里也可以在朋友面前炫耀。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那に冷や汗エモ～ション。
+	look(EVENT_RAGNA,"Bone_Head",0,0,1,0,0,-15,0)
+	EMO(EVENT_RAGNA,EMO_HIYAASE)
+	wait(30)
+//	rot_chr(EVENT_RAGNA,60,GYARANDOW)
+	MES(EVENT_RAGNA,"（想用奥义引诱我们……）",0)
+	MES_close(EVENT_RAGNA)
+
+//	MES(ALWEN,"な、何を言っておる之か\nサッパリ分からんが……",0)
+//	MES(ALWEN,"フン、これでも私は\n吸血鬼之真祖な之でな。\nあ之程度之技之一つや二つ……",0)
+	MES(ALWEN,"你、你在说什么\n我完全听不懂。",0)
+//	MES(ALWEN,"大体、森羅万象を操るこ之身に\nあ之程度之技など必要あるはずが……",0)
+	MES(ALWEN,"能够操纵世间万物的我\n岂会需要那种程度的技能……",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　艾雯に···エモ～ション。
+	EMO(ALWEN,EMO_TENTEN)
+	wait(60)
+
+//	MES(ALWEN,"そ、それは\nあれば便利ではあるが……",0)
+	MES(ALWEN,"那个\n有总比没有好吧……",0)
+	MES_close(ALWEN)
+
+//嘉兰多顔背け解除
+	look(GYARANDOW,"Bone_Head",0,	0,6,2,	0,10,-10)
+	MOT(GYARANDOW,51,10)
+	wait(15)
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"哼哼、艾雯啊。\n我就知道你会这么说。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那と艾雯にＰＡエモ～ション。
+	stop_BGM(90)//★ＢＧＭ制御
+	EMO(EVENT_RAGNA,EMO_TOGEBIKKURI)
+	EMO(ALWEN,EMO_TOGEBIKKURI)
+	wait(30)
+
+	MES(ALWEN,"诶……？",0)
+	MES_close(ALWEN)
+
+	MES(EVENT_RAGNA,"喂，喂！？",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(GYARANDOW,152,10)
+	look(GYARANDOW,"Bone_Head",0,	0,1,1,	0,0,0)
+	wait(15)
+//	name("超人嘉兰多")
+//	MES(GYARANDOW,"それでは、\nレッツ·エクササイズ……！",0)
+//	MES_close(GYARANDOW)
+//
+//	MES(EVENT_RAGNA,"え、ええっ～……！？",0)
+//	MES_close(EVENT_RAGNA)
+//
+//	fade_in(100,30,BLACK)	//暗転
+//	wait_fade()
+
+	fade_in(100,30,BLACK)	//暗転
+	wait_fade()
+	VOICE(635,0)	//★「それではレ～ッツ、エクササイズ！」
+	wait(15)
+//	MES(GYARANDOW,"W9それではレ～ッツ、エクササイズ！",0)
+	MES_pos(GYARANDOW,"W9那么、\nＬＥＴ‘Ｓ　ＥＸＥＲＣＩＳＥ！",0,320,250,0,0)
+	wait(80)
+	MES_close(GYARANDOW)
+	CAM_move(6750,-8100,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+
+	delete(EVENT_RAGNA)
+
+	chr_pos(ALWEN,6550,7900,0,0,2)
+	F_set_Node(ALWEN,"Bone_RightSword",NP_HIDE)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,0,0)
+	MOT(ALWEN,53,1)	//艾雯之右手を開かせる。
+
+	chr_pos(EVENT_RAGNA2,6950,7900,0,0,2)
+	color(EVENT_RAGNA2,1)
+
+	KAO(EVENT_RAGNA2,"B","3","5")//
+	KAO(ALWEN,"B","3","5")//
+
+	chr_pos(GYARANDOW,6750,8100,0,0,2)
+
+	wait(30)
+	fade_in(0,30,BLACK)	//暗転
+	wait_fade()
+
+//　　エクササイズ用之ＢＧＭが流れ始める。
+	wait_BGM()//★ＢＧＭ制御
+//	BGM(48)
+//	wait(30)
+
+	EV("EXERCISE_MAIN")
+
+//　　嘉兰多に続き、拉古那·艾雯が踊りながらフェ～ドアウト。
+//　　（※踊りだす前に、武器を外す）
+
+//	wait(360)
+//	KAO(EVENT_RAGNA2,"B","32A","5")//
+//	wait(15)
+//	KAO(ALWEN,"B","53IH","5")//
+//	wait(420)
+//	KAO(ALWEN,"B","HI","5")//
+//	wait(240)
+//	KAO(ALWEN,"B","IHG","5")//
+//	wait(15)
+//	KAO(EVENT_RAGNA2,"B","A23","5")//
+//	wait(240)
+//	KAO(EVENT_RAGNA2,"B","32A","5")//
+
+	EV("EXERCISE_KAO2")
+	wait(60)
+	EV("EXERCISE_STOP")
+
+	wait_EV("EXERCISE_MAIN")
+	EV_stop("EXERCISE_STOP")
+	MES_close(PLAYER1)
+	menu(0,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(1,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(2,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(3,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(4,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(5,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(6,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(7,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(8,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	VOICE(620,0)	//★「筋肉だ、筋肉が足らぬ之だ」
+
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()
+
+	move(GYARANDOW, 99, 0,0,0,0,0)
+	move(EVENT_RAGNA2, 99, 0,0,0,0,0)
+	move(ALWEN, 99, 0,0,0,0,0)
+	EV_stop("G_EXERCISE")
+	EV_stop("R_EXERCISE_2")
+	EV_stop("A_EXERCISE_2")
+	EV_stop("EXERCISE_KAO2")
+
+	stop_BGM(90)//★ＢＧＭ制御
+	wait_BGM()
+	wait(30)
+
+	chr_pos(ALWEN,6660,8350,0,180,2)
+	chr_pos(EVENT_RAGNA2,6840,8350,0,180,2)
+	MOT(EVENT_RAGNA2,150,0)
+	MOT(ALWEN,150,0)
+
+	chr_pos(GYARANDOW,6750,8000,0,0,2)
+	MOT(GYARANDOW,52,0)
+
+	CAM_move(6750,-8200,180,0,0)
+	CAM(150,70,180,25,225,0,0)
+
+//　　しばらくしてフェ～ドイン。
+	BGM(19)
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　同じ構図で、拉古那·艾雯がバテている。
+	MES(ALWEN,"呼呼呼……\n你、你这个家伙……",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA2)
+	MES(EVENT_RAGNA2,"真是个强人所难的家伙……",0)
+	MES_close(EVENT_RAGNA2)
+
+//　　２人が立ち直ると、嘉兰多が一步前に出てくる。
+	MOT(EVENT_RAGNA2,151,0)
+//	look(EVENT_RAGNA2,"Bone_Head",0,0,1,0,0,-15,0)
+	wait(15)
+	MOT(ALWEN,151,0)
+//	look(ALWEN,"Bone_Head",0,0,1,0,0,15,0)
+	wait(40)
+
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"那么、你们二人。\n闭上眼睛。",0)
+	MES_close(GYARANDOW)
+
+//	name2(ALWEN)
+	MES(ALWEN,"唔……\n事已至此多说无益……",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　拉古那と艾雯、目を閉じる。
+//　　嘉兰多、２人に向かって手を突き出す。
+	cross_fade(15)
+	CAM_move(6750,-8140,120,0,0)
+	CAM(150,80,120,25,270,0,0)
+
+	look(EVENT_RAGNA2,"Bone_Head",0,0,15,0,0,-15,0)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,15,0)
+	KAO(EVENT_RAGNA2,"B","3","2")//
+	KAO(ALWEN,"B","3","2")//
+	wait(15)
+	CAM(150,65,120,25,270,30,0)
+	MOT(GYARANDOW,2,0)
+//	CAM_quake("46L")
+	MOT(GYARANDOW,155,0)
+//	name("超人嘉兰多")
+	VOICE(605,0)	//★「ふんっ！」
+//	MES_pos(GYARANDOW,"呼～～～……",0,0,0,0,0)
+	MES_pos(GYARANDOW,"S3哼！",0,0,0,0,0)
+	wait(30)
+	MES_close(GYARANDOW)
+	CAM_quake("")
+	cross_fade(5)
+	CAM_move(6750,-8000,80,0,0)
+	CAM(110,70,80,25,180,0,0)
+	wait(15)
+	EFF(6920,6750,-8000,0,0,100,-1)
+	CAM(110,85,100,25,180,60,0)
+	CAM_quake("46L")
+	SE(1121,0)		//衝撃波SE
+	VOICE(610,0)	//★「ぬううううん！」
+//	MES_pos(GYARANDOW,"喝……！！",0,0,0,0,0)
+	MES_pos(GYARANDOW,"S5唔唔唔……！",0,0,0,0,0)
+	wait(45)
+	CAM_quake("")
+	wait(13)
+	MOT(GYARANDOW,195,0)
+	wait(2)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+//　　奥義習得之ＳＥが鳴る。
+
+	MOT(GYARANDOW,51,15)
+	wait(30)
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"好了、可以睁开眼了。",0)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+//　　拉古那と艾雯、目を開ける。
+	cross_fade(15)
+	CAM_move(6750,-8160,200,0,0)
+	CAM(110,50,200,25,315,0,0)
+	look(EVENT_RAGNA2,"Bone_Head",0,0,10,10,0,-5,10)
+	look(ALWEN,"Bone_Head",0,0,5,5,0,10,5)
+	wait(30)
+
+	KAO(EVENT_RAGNA2,"1","321","1")//
+	wait(5)
+	KAO(ALWEN,"1","321","1")//
+	wait(10)
+
+//──────────────────────────────
+	if(WK010==1)
+	{
+		MES(GYARANDOW,"这次传给你们的是\nL711『奥义·烈狱震激破』L400。",0)
+		MES(GYARANDOW,"这个奥义能迸发岀震裂大地的气波、\n攻击四面的敌人。",0)
+		MES_close(GYARANDOW)
+		get_item(097,1,1)
+		//★地之奥義を修得
+		F_set(FE_FF_Skil_TI)
+
+		KAO(EVENT_RAGNA2,"B232BZ4","123332A","6")//
+		MES(EVENT_RAGNA2,"诶、诶……\n这次是地属性的技能啊。",0)
+		KAO(EVENT_RAGNA2,"12321Z5","A2321","1")//
+		MES(EVENT_RAGNA2,"看样子能够在探索凶险的迷宫时\n派上用场嘛。",0)
+		MES_close(EVENT_RAGNA2)
+	}
+	else
+	if(WK010==2)
+	{
+		MES(GYARANDOW,"这次传给你们的是\nL711『奥义·冰气乱结旋』L400。",0)
+		MES(GYARANDOW,"这个奥义是利用冰冷的寒气结晶而成的冰块\n将敌人长时间冻结。",0)
+		MES_close(GYARANDOW)
+		get_item(098,1,1)
+		//★水之奥義を修得
+		F_set(FE_FF_Skil_MIZU)
+
+		KAO(EVENT_RAGNA2,"B232BZ4","123332A","6")//
+		MES(EVENT_RAGNA2,"诶、诶……\n这次是水属性的技能啊。",0)
+		KAO(EVENT_RAGNA2,"12321Z5","A2321","1")//
+		MES(EVENT_RAGNA2,"看样子能够在探索凶险的迷宫时\n派上用场嘛。",0)
+		MES_close(EVENT_RAGNA2)
+	}
+	else
+	if(WK010==3)
+	{
+		MES(GYARANDOW,"这次传给你们的是\nL711『奥义·清华瞬刹天』L400。",0)
+		MES(GYARANDOW,"这个奥义能释放出撕裂一切的旋风\n将敌人大卸八块。",0)
+		MES_close(GYARANDOW)
+		get_item(099,1,1)
+		//★风之奥義を修得
+		F_set(FE_FF_Skil_KAZE)
+
+		KAO(EVENT_RAGNA2,"B232BZ4","123332A","6")//
+		MES(EVENT_RAGNA2,"诶、诶……\n这次是风属性的技能啊。",0)
+		KAO(EVENT_RAGNA2,"12321Z5","A2321","1")//
+		MES(EVENT_RAGNA2,"看样子能够在探索凶险的迷宫时\n派上用场嘛。",0)
+		MES_close(EVENT_RAGNA2)
+	}
+	else
+	if(WK010==4)
+	{
+		MES(GYARANDOW,"这次传给你们的是\nL711『奥义·炎瘴印斗牙』L400。",0)
+//		MES(GYARANDOW,"这个奥义是从黑暗中放出６个火球\n给与敌人重创。",0)
+		MES(GYARANDOW,"巨大な火龍と化した闘気が\n敵に大ダメージを与える奥義だ。",0)
+		MES_close(GYARANDOW)
+		get_item(100,1,1)
+		//★火之奥義を修得
+		F_set(FE_FF_Skil_HI)
+
+		KAO(EVENT_RAGNA2,"B232BZ4","123332A","6")//
+		MES(EVENT_RAGNA2,"诶、诶……\n这次是火属性的技能啊。",0)
+		KAO(EVENT_RAGNA2,"12321Z5","A2321","1")//
+		MES(EVENT_RAGNA2,"看样子能够在探索凶险的迷宫时\n派上用场嘛。",0)
+		MES_close(EVENT_RAGNA2)
+	}
+	workG(GW_BOM,ADD,1)
+//──────────────────────────────
+
+//　　※○之中身は、入手した奥義之属性。
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"嗯嗯、\n今后也要勤加修炼本领哦。",0)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+//　　嘉兰多、去っていく。
+//　　２人はそれを見送る。
+	cross_fade(30)
+	CAM_move(6900,-8350,160,0,0)
+	CAM(150,70,160,25,225,0,0)
+	KAO(EVENT_RAGNA2,"B","1","1")//
+	KAO(ALWEN,"B","1","1")//
+	look_chr(EVENT_RAGNA2,GYARANDOW,"Bone_Head")
+	look_chr(ALWEN,GYARANDOW,"Bone_Head")
+	chr_pos(GYARANDOW,6880,8150,0,0,2)
+
+	rot(GYARANDOW,30,315)
+	wait(15)
+	VOICE(632,0)	//★「は～っはっはっはっはっはっ！」
+	move(GYARANDOW, 0,	12,7780,9050,0,	0)
+	wait(60)
+	look_off(EVENT_RAGNA2)
+	rot(EVENT_RAGNA2,15,315)
+	wait(15)
+	look_off(ALWEN)
+	rot(ALWEN,15,315)
+	wait_move(GYARANDOW)
+	wait(30)
+
+	MOT(ALWEN,153,15)
+	wait(15)
+	KAO(ALWEN,"B","123","2")//
+	MES(ALWEN,"………………………………",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　拉古那に？エモ～ション。
+	cross_fade(30)
+	CAM_move(6750,-8350,120,0,0)
+	CAM(190,50,120,25,118,0,0)
+	look_del(EVENT_RAGNA2)
+	look_del(ALWEN)
+	wait(30)
+
+	rot_chr(EVENT_RAGNA2,30,ALWEN)
+	KAO(EVENT_RAGNA2,"E","12321D","6")//
+	EMO(EVENT_RAGNA2,EMO_HATENA)
+	wait(15)
+	MOT(EVENT_RAGNA2,152,15)
+	wait(15)
+	KAO(EVENT_RAGNA2,"B232BZ3","12321","6")//
+	MES(EVENT_RAGNA2,"公主……？\n怎么了？",0)
+	MES_close(EVENT_RAGNA2)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B","3","2")//
+	MES(ALWEN,"没什么……",0)
+	KAO(ALWEN,"B232BZ4","3","2")//
+	MES(ALWEN,"我只是在想世上\n居然有这么强人所难的男人。",0)
+	MES_close(ALWEN)
+	wait(20)
+
+	rot_chr(ALWEN,30,EVENT_RAGNA2)
+	MOT(ALWEN,2,15)
+	wait(15)
+	KAO(ALWEN,"12321Z5","321","1")//
+	MES(ALWEN,"不管了、\n不要在意这些琐之事了\n向前出发吧。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA2,2,15)
+	wait(15)
+//	name2(EVENT_RAGNA2)
+	KAO(EVENT_RAGNA2,"12321Z2","1233321","1")//
+	MES(EVENT_RAGNA2,"啊、说的对。",0)
+	MES_close(EVENT_RAGNA2)
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+	stop_BGM(90)//★ＢＧＭ制御
+	wait_BGM()
+
+	delete(GYARANDOW)
+	delete(EVENT_RAGNA2)
+	delete(ALWEN)
+
+	chr_pos(PLAYER1,6840,8350,0,180,2)
+	chr_pos(PLAYER2,6660,8350,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+
+	if(WK010==1)
+	{
+//		BGM(21)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+		map_spotbmp(70);//100%
+	}
+	else
+	if(WK010==2)
+//		BGM(22)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==3)
+//		BGM(23)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==4)
+//		BGM(24)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+
+	//２つ目之奥義を修得した
+	F_set(FE_FF_GetSkil_2)
+
+	//フェ～ドイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+}
+
+//──────────────────────────────
+//	name("◆奥義伝授イベント·そ之三")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ル～ト之属性に応じた奥義を習得する。
+//　　※嘉兰多は各サブル～ト最奥にいる。
+//　　　初め姿が見えなぶ置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_3
+{
+	TK_begin()
+
+	chr_pos(GYARANDOW,6750,8000,0,180,2)
+
+	MOT(RAGNA,2,15)
+	MOT(PARTNER,2,15)
+
+	stop_BGM(90)//★ＢＧＭ制御
+//	name("男人浑厚的声音")
+	chr_rename(GYARANDOW,"男人浑厚的声音")
+	MES(GYARANDOW,"W9我、这次稍微\n调整了一下动作。",0)
+	MES(GYARANDOW,"W9这次的健美操\n一定比以前更加完美无缺。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那と艾雯に冷や汗エモ～ション。
+	EMO(RAGNA,EMO_HIYAASE)
+	EMO(PARTNER,EMO_HIYAASE)
+	rot_chr(RAGNA,30,GYARANDOW)
+	rot_chr(PARTNER,30,GYARANDOW)
+	wait(30)
+
+	MES(RAGNA,"一张嘴就是健美操，真是三句话不离本行……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"已经不必确认了\n肯定是他……",0)
+	MES_close(PARTNER)
+
+	fade_in(100,30,BLACK)	//暗転
+	wait_fade()
+	wait(30)
+
+	//初期化------------------------------------------------
+
+	TK_end()
+	EV_begin()
+
+	if(WK010==1)
+		map_spotbmp(50)
+
+	//キャラ配置
+	chr_pos(RAGNA,	 7550,9250,0,135,	2)
+	chr_pos(PARTNER, 7350,9250,0,135,	2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA, 1010,	-1,-1,	7540,9250,0,2,135,0,";")
+	set_chr(EVENT_RAGNA2,1014,	-1,-1,	7540,9250,0,2,135,0,";")
+	set_chr(ALWEN,		1011,	-1,-1,	7360,9250,0,2,135,0,";")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	color(EVENT_RAGNA2,-1)
+
+	F_set_chr(GYARANDOW,CF_NO_CLIP)
+	F_set_chr(GYARANDOW,CF_NO_CLIP2)
+	F_set_chr(GYARANDOW,CF_NO_CSP)
+	F_reset_chr(GYARANDOW,CF_NO_HEIGHT)
+	F_reset_chr(GYARANDOW,CF_NO_ZIMEN)
+
+	//モ～ション定義
+	MOT_SET(EVENT_RAGNA2,150,-1,1844,1844,-1,-1)//膝つき
+	MOT_SET(EVENT_RAGNA2,151,-1,1910,1949,-1,-1)//膝つき
+	MOT_SET(EVENT_RAGNA,152,-1,405,405,-1,-1)//
+	MOT_SET(EVENT_RAGNA,153,-1,469,469,-1,-1)//
+	MOT_SET(ALWEN,150,-1,6349,6349,-1,-1)//膝つき
+	MOT_SET(ALWEN,151,-1,6355,6395,-1,-1)//膝つき
+	MOT_SET(ALWEN,152,-1,511,511,-1,-1)//
+	MOT_SET(ALWEN,153,-1,400,400,-1,-1)//
+	MOT_SET(GYARANDOW,150,-1,514,514,-1,-1)
+	MOT_SET(GYARANDOW,151,-1,515,515,-1,-1)
+	MOT_SET(GYARANDOW,152,-1,516,516,-1,-1)
+	MOT_SET(GYARANDOW,153,-1,517,517,-1,-1)
+	MOT_SET(GYARANDOW,154,-1,518,518,-1,-1)
+	MOT_SET(GYARANDOW,155,159,6850,6897,-1,-1)
+	MOT_SET(GYARANDOW,156,-1,6785,6805,-1,-1)
+	MOT_SET(GYARANDOW,157,-1,6805,6825,-1,-1)
+	MOT_SET(GYARANDOW,158,-1,6825,6845,-1,-1)
+	MOT_SET(GYARANDOW,159,159,6897,6925,-1,-1)
+	MOT_SET(GYARANDOW,195,-1,6925,6940,-1,-1)
+	MOT(GYARANDOW,51,0)
+	color(GYARANDOW,1)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる
+
+	//カメラ初期位置
+	CAM_move(7450,-9250,180,0,0)
+	CAM(430,80,180,25,135,0,0)
+
+	move(EVENT_RAGNA,0,20,6840,8350,0,0)
+	wait(5)
+	move(ALWEN,0,20,6660,8350,0,0)
+
+//　　拉古那と艾雯が進むと、奥に立っていた嘉兰多が振り向く。
+
+	wait_BGM()//★ＢＧＭ制御
+	fade_in(0,60,BLACK)	//フェ～ドイン
+
+	CAM_move(6750,-8200,180,60,2)
+	CAM(150,74,180,25,180,60,2)
+
+	wait_move(EVENT_RAGNA)
+	EMO(EVENT_RAGNA,EMO_PA)
+	look(EVENT_RAGNA,"Bone_Head",0,0,1,0,0,-15,0)
+	rot(EVENT_RAGNA,30,180)
+
+	wait_move(ALWEN)
+	EMO(ALWEN,EMO_PA)
+	look(ALWEN,"Bone_Head",0,0,1,0,0,15,0)
+	rot(ALWEN,30,180)
+
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+	CAM(150,78,180,25,180,300,0)
+	rot(GYARANDOW,30,0)
+	wait(30)
+	BGM(19)
+
+	MOT(ALWEN,153,15)
+	wait(15)
+	MES(ALWEN,"假面啊、我承认你的奥义\n对我们很有用。",0)
+	MES(ALWEN,"但是、那个舞蹈就免了吧……",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,152,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"对啊、而且\n那个体操和传授奥义没有关系吧？",0)
+	MES(EVENT_RAGNA,"那个健美操先放一边、\n只教给我们奥义\n行吗？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name("超人嘉兰多")
+	chr_rename(GYARANDOW,"嘉兰多")
+	MES(GYARANDOW,"嚯……",0)
+	MOT(GYARANDOW,152,10)
+	wait(15)
+	MES(GYARANDOW,"那么、你们的意思是先教奥义\n然后你们才肯做健美操喽？",0)
+	MES_close(GYARANDOW)
+
+	MOT(EVENT_RAGNA,153,10)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"我，我才不是\n那意思！？",0)
+	MES(EVENT_RAGNA,"其实那个健美操原本就、\n和奥义没什么联系吧！！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　艾雯に···エモ～ション。
+	EMO(ALWEN,EMO_TENTEN)
+	wait(60)
+	MOT(ALWEN,2,15)
+	MES(ALWEN,"嘉兰多……",0)
+	MES(ALWEN,"你为什么如此固执的\n要教我们本领？",0)
+	MES_close(ALWEN)
+
+	look(GYARANDOW,"Bone_Head",0,0,1,1,0,10,-10)
+	MOT(GYARANDOW,52,15)
+	wait(5)
+	MOT(EVENT_RAGNA,2,15)
+	wait(10)
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"唔……？",0)
+	MES_close(GYARANDOW)
+
+//	name2(ALWEN)
+	MES(ALWEN,"……你每次都\n事先埋伏在洞窟里面、\n如此的处心积虑究竟是为什么。",0)
+	MES_close(ALWEN)
+
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"哼哼、想知道的话\n就告诉你们──",0)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+	VOICE(605,0)	//★「ふんっ！」
+	cross_fade(15)
+	CAM_move(6750,-8000,200,0,0)
+	CAM(710,46,200,25,194,0,0)
+	CAM(710,40,200,25,212,15,0)
+	look(GYARANDOW,"Bone_Head",0,0,5,2,0,-40,10)
+	MOT(GYARANDOW,153,10)
+	wait_fade()
+	wait(15)
+	EMO(GYARANDOW,EMO_KIRAKIRA)
+	wait(15)
+
+	MES(GYARANDOW,"那是因为你们二人\n在健美操这方面很有天赋。",0)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+	cross_fade(15)
+	CAM_move(6730,-8350,120,0,0)
+	CAM(70,52,120,24,54,0,0)
+	CAM(70,48,120,24,58,300,0)
+	color(GYARANDOW,-1)
+	look(EVENT_RAGNA,"Bone_Head",0,0,15,0,0,0,0)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,0,0)
+//	KAO(EVENT_RAGNA,"C","B","9")//
+//	KAO(ALWEN,"C","B","9")//
+	KAO(EVENT_RAGNA,"C","N","9")//
+	KAO(ALWEN,"C","N","9")//
+	wait(15)
+
+//　　ち～んというＳＥが鳴って、２人に冷や汗エモ～ション。
+//	EMO(EVENT_RAGNA,EMO_AOZAME)
+//	EMO(ALWEN,EMO_AOZAME)
+	SE(1004,0)//
+	EFF_chr(25160,EVENT_RAGNA,0,80,1,"Bone_Head")
+	EFF_chr(25160,ALWEN,0,80,1,"Bone_Head")
+	wait(60)
+
+//	MES(EVENT_RAGNA,"（天、天赋……）",0)
+	MES(EVENT_RAGNA,"（健，健美操的天赋……）",0)
+	MES_close(EVENT_RAGNA)
+
+//	MES(ALWEN,"（嬉しくない話だな……）",0)
+	MES(ALWEN,"（真是让人高兴不起来的天赋……）",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(15)
+	CAM_move(6750,-8200,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+	CAM(150,78,180,25,180,300,0)
+	color(GYARANDOW,1)
+	look(GYARANDOW,"Bone_Head",0,0,40,10,0,0,0)
+	MOT(GYARANDOW,52,0)
+	look(EVENT_RAGNA,"Bone_Head",0,0,15,0,0,-15,0)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,15,0)
+	wait(30)
+
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"好好发挥你们的天赋的话，\n将来你们也许会成为超越\n我的体操健将。",0)
+	MES(GYARANDOW,"──不管怎么说、你们的肩上还背负着\n这个世界的未来……",0)
+	MES(GYARANDOW,"所以，把你们锻炼成才\n是我的职责。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那たち、目をパチパチして少し驚く表情。
+	stop_BGM(90)//★ＢＧＭ制御
+
+	MES(EVENT_RAGNA,"诶……？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"哼哼……\n我们开始吧。",0)
+	MES_close(GYARANDOW)
+
+	MOT(GYARANDOW,150,10)
+//	wait(15)
+//	MES(GYARANDOW,"レッツ·エクササイズ……！",0)
+//	MES_close(GYARANDOW)
+//
+//	fade_in(100,30,BLACK)	//暗転
+//	wait_fade()
+//
+//	CAM_move(6750,-8100,180,0,0)
+//	CAM(150,74,180,25,180,0,0)
+
+	fade_in(100,30,BLACK)	//暗転
+	wait_fade()
+	VOICE(635,0)	//★「それではレ～ッツ、エクササイズ！」
+	wait(15)
+	MES_pos(GYARANDOW,"W9那么ＬＥＴ‘Ｓ　ＥＸＥＲＣＩＳＥ！",0,320,250,0,0)
+	wait(80)
+	MES_close(GYARANDOW)
+	CAM_move(6750,-8100,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+
+	delete(EVENT_RAGNA)
+
+	chr_pos(ALWEN,6550,7900,0,0,2)
+	F_set_Node(ALWEN,"Bone_RightSword",NP_HIDE)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,0,0)
+	MOT(ALWEN,53,1)	//艾雯之右手を開かせる。
+
+	chr_pos(EVENT_RAGNA2,6950,7900,0,0,2)
+	color(EVENT_RAGNA2,1)
+
+	KAO(EVENT_RAGNA2,"B","3","5")//
+	KAO(ALWEN,"B","3","5")//
+
+	chr_pos(GYARANDOW,6750,8100,0,0,2)
+
+	wait(30)
+	fade_in(0,30,BLACK)	//暗転
+	wait_fade()
+
+	wait_BGM()//★ＢＧＭ制御
+//	BGM(48)
+//	wait(30)
+
+	EV("EXERCISE_MAIN3")
+
+	wait(60)
+
+//　　エクササイズ用之ＢＧＭが流れ始める。
+//　　嘉兰多にエクササイズを踊りだす。
+//　　※嘉兰多之踊りは、
+//　　　速度を上げる＆同じモ～ション部分を２回再生する、などで
+//　　　アレンジ化したも之にする。
+//　　続いて２人も踊り始めるが、速度が合っていない。
+//　　（もしくは従来之エクササイズモ～ションを再生）
+//　　（※踊りだす前に、武器を外す）
+
+	KAO(ALWEN,"B","321DE","7")//
+
+	KAO(EVENT_RAGNA2,"B232BZ4","321DE","7")//
+	MES_pos(EVENT_RAGNA2,"喂、喂喂……\n怎么和平时的动作不一样……",0,0,0,0,0)
+	wait(45)
+	MES_close(EVENT_RAGNA2)
+	wait_MES(EVENT_RAGNA2)
+
+//	name("超人嘉兰多")
+	MES_pos(GYARANDOW,"──不是说了吗。\n这个是新型健美操！",0,0,0,0,0)
+	wait(45)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+//　　２人にアセアセエモ～ション。
+//	EMO(EVENT_RAGNA2,EMO_ASEASE)
+//	EMO(ALWEN,EMO_ASEASE)
+//	KAO(EVENT_RAGNA2,"B","D12321D","6")//
+//	KAO(ALWEN,"B","D12321D","6")//
+//	wait(360)
+//	KAO(EVENT_RAGNA2,"C","D12321D","5")//
+//	wait(15)
+//	KAO(ALWEN,"C","D12","5")//
+//	wait(360)
+//	KAO(EVENT_RAGNA2,"B","1232U","2")//
+//	wait(15)
+//	KAO(ALWEN,"B","35","5")//
+//	wait(360)
+//	KAO(EVENT_RAGNA2,"B","U233321","2")//
+//	wait(15)
+//	KAO(ALWEN,"E","532W","2")//
+//	wait(360)
+//	KAO(ALWEN,"B","W233321","2")//
+
+	EV("EXERCISE_STOP3")
+	EV("EXERCISE_KAO3")
+
+	wait_EV("EXERCISE_MAIN3")
+	EV_stop("EXERCISE_STOP3")
+	MES_close(PLAYER1)
+	menu(0,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(1,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(2,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(3,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(4,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(5,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(6,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(7,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(8,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	VOICE(636,0)	//★「燃えよ闘魂！　真っ白に燃え尽きるまで！」
+
+//　　２人が嘉兰多に合わせようとしながら、フェ～ドアウト。
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()
+
+	move(GYARANDOW, 99, 0,0,0,0,0)
+	move(EVENT_RAGNA2, 99, 0,0,0,0,0)
+	move(ALWEN, 99, 0,0,0,0,0)
+	EV_stop("G_EXERCISE_3")
+	EV_stop("R_EXERCISE_3")
+	EV_stop("A_EXERCISE_3")
+	EV_stop("EXERCISE_KAO3")
+
+	stop_BGM(90)//★ＢＧＭ制御
+	wait_BGM()
+	wait(30)
+
+	chr_pos(ALWEN,6660,8350,0,180,2)
+	chr_pos(EVENT_RAGNA2,6840,8350,0,180,2)
+	MOT(EVENT_RAGNA2,150,0)
+	MOT(ALWEN,150,0)
+
+	chr_pos(GYARANDOW,6750,8000,0,0,2)
+	MOT(GYARANDOW,52,0)
+
+	CAM_move(6750,-8200,180,0,0)
+	CAM(150,70,180,25,225,0,0)
+
+//　　しばらくしてフェ～ドイン。
+	BGM(19)
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　同じ構図で、拉古那·艾雯がバテている。
+	MES(ALWEN,"呼、呼呼……",0)
+	MES_close(ALWEN)
+
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"哼哼、从来没有过这么畅快淋漓的感觉吧。",0)
+	MES(GYARANDOW,"那么、闭上眼睛吧。",0)
+	MES_close(GYARANDOW)
+
+	MES(EVENT_RAGNA2,"呼呼呼……算了\n既然都已经到这地步了。",0)
+	MES_close(EVENT_RAGNA2)
+
+//　　拉古那と艾雯、立ち上がって目を閉じる。
+//　　嘉兰多、２人に向かって手を突き出す。
+	MOT(EVENT_RAGNA2,151,0)
+//	look(EVENT_RAGNA2,"Bone_Head",0,0,1,0,0,-15,0)
+	wait(15)
+	MOT(ALWEN,151,0)
+//	look(ALWEN,"Bone_Head",0,0,1,0,0,15,0)
+	wait(40)
+
+	cross_fade(15)
+	CAM_move(6750,-8140,120,0,0)
+	CAM(150,80,120,25,270,0,0)
+
+	look(EVENT_RAGNA2,"Bone_Head",0,0,15,0,0,-15,0)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,15,0)
+	KAO(EVENT_RAGNA2,"B","3","2")//
+	KAO(ALWEN,"B","3","2")//
+	wait(15)
+	CAM(150,65,120,25,270,30,0)
+	MOT(GYARANDOW,2,0)
+//	CAM_quake("46L")
+	MOT(GYARANDOW,155,0)
+	VOICE(605,0)	//★「ふんっ！」
+//	MES_pos(GYARANDOW,"唔唔～～～……",0,0,0,0,0)
+	MES_pos(GYARANDOW,"S3喝！",0,0,0,0,0)
+	wait(30)
+	MES_close(GYARANDOW)
+	CAM_quake("")
+	cross_fade(5)
+	CAM_move(6750,-8000,80,0,0)
+	CAM(110,70,80,25,180,0,0)
+	wait(15)
+	EFF(6920,6750,-8000,0,0,100,-1)
+	CAM(110,85,100,25,180,60,0)
+	CAM_quake("46L")
+	SE(1121,0)		//衝撃波SE
+	VOICE(610,0)	//★「ぬううううん！」
+//	MES_pos(GYARANDOW,"喝……！！",0,0,0,0,0)
+	MES_pos(GYARANDOW,"S5嗷嗷嗷……！",0,0,0,0,0)
+	wait(45)
+	CAM_quake("")
+	wait(13)
+	MOT(GYARANDOW,195,0)
+	wait(2)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+//　　奥義習得之ＳＥが鳴る。
+
+	MOT(GYARANDOW,51,15)
+	wait(30)
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"可以了、睁开眼吧。",0)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+//　　拉古那と艾雯、目を開ける。
+	cross_fade(15)
+	CAM_move(6750,-8160,200,0,0)
+	CAM(110,50,200,25,315,0,0)
+	look(EVENT_RAGNA2,"Bone_Head",0,0,10,10,0,-5,10)
+	look(ALWEN,"Bone_Head",0,0,5,5,0,10,5)
+	wait(30)
+
+	KAO(EVENT_RAGNA2,"1","321","1")//
+	wait(5)
+	KAO(ALWEN,"1","321","1")//
+	wait(10)
+
+//──────────────────────────────
+	if(WK010==1)
+	{
+		KAO(EVENT_RAGNA2,"B232BZ4","123332A","6")//
+		MES(EVENT_RAGNA2,"这个是……\n地属性的奥义吧。",0)
+		MES_close(EVENT_RAGNA2)
+
+		MES(GYARANDOW,"正是。",0)
+		MES_close(GYARANDOW)
+
+		MOT(GYARANDOW,152,10)
+		wait(15)
+		MES(GYARANDOW,"这个奥义是、L711『奥义·烈狱震激破』L400\n迸发岀震裂大地的气波、攻击四面的\n敌人的绝技。",0)
+		MES(GYARANDOW,"能连续发动攻击、\n在混战的时候最能体现威力。",0)
+		MES_close(GYARANDOW)
+		get_item(097,1,1)
+		//★地之奥義を修得
+		F_set(FE_FF_Skil_TI)
+	}
+	else
+	if(WK010==2)
+	{
+		KAO(EVENT_RAGNA2,"B232BZ4","123332A","6")//
+		MES(EVENT_RAGNA2,"这个是……\n水属性的奥义吧。",0)
+		MES_close(EVENT_RAGNA2)
+
+		MES(GYARANDOW,"正是。",0)
+		MES_close(GYARANDOW)
+
+		MOT(GYARANDOW,152,10)
+		wait(15)
+		MES(GYARANDOW,"这个奥义是、L711『奥义·冰气乱结旋』L400\n利用寒冷的冰之结晶而成的冰块\n将敌人长时间冻结的绝技。",0)
+		MES(GYARANDOW,"被强敌包围时\n最能体现威力。",0)
+		MES_close(GYARANDOW)
+		get_item(098,1,1)
+		//★水之奥義を修得
+		F_set(FE_FF_Skil_MIZU)
+	}
+	else
+	if(WK010==3)
+	{
+		KAO(EVENT_RAGNA2,"B232BZ4","123332A","6")//
+		MES(EVENT_RAGNA2,"这个是……\n风属性的奥义吧。",0)
+		MES_close(EVENT_RAGNA2)
+
+		MES(GYARANDOW,"正是。",0)
+		MES_close(GYARANDOW)
+
+		MOT(GYARANDOW,152,10)
+		wait(15)
+		MES(GYARANDOW,"这个奥义是、L711『奥义·清华瞬刹天』L400\n释放出撕裂一切的旋风\n将敌人大卸八块的绝技。",0)
+		MES(GYARANDOW,"全身被强风覆盖、\n短时间内会变成无敌状态。",0)
+		MES_close(GYARANDOW)
+		get_item(099,1,1)
+		//★风之奥義を修得
+		F_set(FE_FF_Skil_KAZE)
+	}
+	else
+	if(WK010==4)
+	{
+		KAO(EVENT_RAGNA2,"B232BZ4","123332A","6")//
+		MES(EVENT_RAGNA2,"这个是……\n火属性的奥义吧。",0)
+		MES_close(EVENT_RAGNA2)
+
+		MES(GYARANDOW,"正是。",0)
+		MES_close(GYARANDOW)
+
+		MOT(GYARANDOW,152,10)
+		wait(15)
+		MES(GYARANDOW,"そう、L711『奥義．ドラゴンフレア』L400は\n巨大な火龍と化した闘気が\n敵に大ダメージを与える奥義だ。",0)
+ 		MES(GYARANDOW,"在全部属性的奥义中\n是威力最大的。",0)
+		MES_close(GYARANDOW)
+		get_item(100,1,1)
+		//★火之奥義を修得
+		F_set(FE_FF_Skil_HI)
+	}
+	workG(GW_BOM,ADD,1)
+//──────────────────────────────
+
+	KAO(ALWEN,"B232BFZ4","1233321","6")//
+	MES(ALWEN,"原来如此……奥义似乎能最大程度地\n发挥属性的性质。",0)
+	MES_close(ALWEN)
+
+	MOT(GYARANDOW,51,15)
+	wait(15)
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"哼哼哼、应该能在你们\n的冒险过程中派上大用场吧。",0)
+	MES(GYARANDOW,"那么再回了、二人。",0)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+//　　嘉兰多、去っていく。
+//　　２人は···エモ～ションでそれを見送る。
+	cross_fade(30)
+	CAM_move(6900,-8350,160,0,0)
+	CAM(150,70,160,25,225,0,0)
+	KAO(EVENT_RAGNA2,"B","1","6")//
+	KAO(ALWEN,"B","1","6")//
+	look_chr(EVENT_RAGNA2,GYARANDOW,"Bone_Head")
+	look_chr(ALWEN,GYARANDOW,"Bone_Head")
+	chr_pos(GYARANDOW,6880,8150,0,0,2)
+
+	rot(GYARANDOW,30,315)
+	wait(15)
+	VOICE(632,0)	//★「は～っはっはっはっはっはっ！」
+	move(GYARANDOW, 0,	12,7780,9050,0,	0)
+	wait(60)
+	look_off(EVENT_RAGNA2)
+	rot(EVENT_RAGNA2,15,315)
+	wait(15)
+	look_off(ALWEN)
+	rot(ALWEN,15,315)
+	wait_move(GYARANDOW)
+	EMO(EVENT_RAGNA2,EMO_TENTEN)
+	EMO(ALWEN,EMO_TENTEN)
+//	EFF_chr(25125,EVENT_RAGNA2,0,100,0,"Bone_Head")
+//	EFF_chr(25125,ALWEN,0,100,0,"Bone_Head")
+	wait(60)
+
+	cross_fade(30)
+	CAM_move(6750,-8350,120,0,0)
+	CAM(190,50,120,25,118,0,0)
+	look_del(EVENT_RAGNA2)
+	look_del(ALWEN)
+	wait(30)
+
+	KAO(EVENT_RAGNA2,"B","123","5")//
+	rot_chr(EVENT_RAGNA2,30,ALWEN)
+	wait(5)
+	rot_chr(ALWEN,30,EVENT_RAGNA2)
+	wait(10)
+	KAO(EVENT_RAGNA2,"12321Z4","321","5")//
+	MES(EVENT_RAGNA2,"虽然不知什么原因……\n没想到这家伙也有正经的一面。",0)
+	MES_close(EVENT_RAGNA2)
+
+	MOT(ALWEN,153,15)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","A23","2")//
+	MES(ALWEN,"嗯……\n只是那套装素实在不敢恭维。",0)
+	KAO(ALWEN,"B232BZ4","3","2")//
+	MES(ALWEN,"他究竟长\n什么样子呢……",0)
+	MES_close(ALWEN)
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+	stop_BGM(90)//★ＢＧＭ制御
+	wait_BGM()
+
+	delete(GYARANDOW)
+	delete(EVENT_RAGNA2)
+	delete(ALWEN)
+
+	chr_pos(PLAYER1,6840,8350,0,180,2)
+	chr_pos(PLAYER2,6660,8350,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+
+	if(WK010==1)
+	{
+//		BGM(21)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+		map_spotbmp(70);//100%
+	}
+	else
+	if(WK010==2)
+//		BGM(22)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==3)
+//		BGM(23)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==4)
+//		BGM(24)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+
+	//３つ目之奥義を修得した
+	F_set(FE_FF_GetSkil_3)
+
+	//フェ～ドイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+}
+
+//──────────────────────────────
+//	name("◆奥義伝授イベント·そ之四")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ル～ト之属性に応じた奥義を習得する。
+//　　※嘉兰多は各サブル～ト最奥にいる。
+//　　　初め姿が見えなぶ置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_4
+{
+	TK_begin()
+
+	chr_pos(GYARANDOW,6750,8000,0,180,2)
+
+	MOT(RAGNA,2,15)
+	MOT(PARTNER,2,15)
+
+	stop_BGM(90)//★ＢＧＭ制御
+
+//　　２人に！エモ～ション。
+	EMO(RAGNA,EMO_BIKKURI)
+	EMO(PARTNER,EMO_BIKKURI)
+	rot_chr(RAGNA,30,GYARANDOW)
+	rot_chr(PARTNER,30,GYARANDOW)
+	wait(30)
+
+	MES(PARTNER,"等一下、拉古那。",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	MES(RAGNA,"啊、我也感觉到了。",0)
+	MES(RAGNA,"笼罩在这个地方的奇异气氛、\n再加上空气中流动的这股闷骚的气息……",0)
+	MES_close(RAGNA)
+
+//	name("男人浑厚的声音")
+	chr_rename(GYARANDOW,"男人浑厚的声音")
+	MES(GYARANDOW,"W9哈哈、被你们发现喽。",0)
+	MES_close(GYARANDOW)
+
+	fade_in(100,30,BLACK)	//暗転
+	wait_fade()
+	wait(30)
+
+	//初期化------------------------------------------------
+
+	TK_end()
+	EV_begin()
+
+	if(WK010==1)
+		map_spotbmp(50)
+
+	//キャラ配置
+	chr_pos(RAGNA,	 7550,9250,0,135,	2)
+	chr_pos(PARTNER, 7350,9250,0,135,	2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA, 1010,	-1,-1,	7540,9250,0,2,135,0,";")
+	set_chr(EVENT_RAGNA2,1014,	-1,-1,	7540,9250,0,2,135,0,";")
+	set_chr(ALWEN,		1011,	-1,-1,	7360,9250,0,2,135,0,";")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	color(EVENT_RAGNA2,-1)
+
+	F_set_chr(GYARANDOW,CF_NO_CLIP)
+	F_set_chr(GYARANDOW,CF_NO_CLIP2)
+	F_set_chr(GYARANDOW,CF_NO_CSP)
+	F_reset_chr(GYARANDOW,CF_NO_HEIGHT)
+	F_reset_chr(GYARANDOW,CF_NO_ZIMEN)
+
+	//モ～ション定義
+	MOT_SET(EVENT_RAGNA2,150,-1,1844,1844,-1,-1)//膝つき
+	MOT_SET(EVENT_RAGNA2,151,-1,1910,1949,-1,-1)//膝つき
+	MOT_SET(EVENT_RAGNA,152,-1,405,405,-1,-1)//
+	MOT_SET(EVENT_RAGNA,153,-1,469,469,-1,-1)//
+	MOT_SET(ALWEN,150,-1,6349,6349,-1,-1)//膝つき
+	MOT_SET(ALWEN,151,-1,6355,6395,-1,-1)//膝つき
+	MOT_SET(ALWEN,152,-1,511,511,-1,-1)//
+	MOT_SET(ALWEN,153,-1,400,400,-1,-1)//
+	MOT_SET(GYARANDOW,150,-1,514,514,-1,-1)
+	MOT_SET(GYARANDOW,151,-1,515,515,-1,-1)
+	MOT_SET(GYARANDOW,152,-1,516,516,-1,-1)
+	MOT_SET(GYARANDOW,153,-1,517,517,-1,-1)
+	MOT_SET(GYARANDOW,154,-1,518,518,-1,-1)
+	MOT_SET(GYARANDOW,155,-1,6925,6925,-1,-1)
+	MOT_SET(GYARANDOW,156,2,6925,6940,-1,-1)
+	MOT(GYARANDOW,51,0)
+	color(GYARANDOW,1)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる
+
+	//カメラ初期位置
+	CAM_move(7450,-9250,180,0,0)
+	CAM(430,80,180,25,135,0,0)
+
+	move(EVENT_RAGNA,0,20,6840,8350,0,0)
+	wait(5)
+	move(ALWEN,0,20,6660,8350,0,0)
+
+//　　拉古那と艾雯が進むと、奥に立っていた嘉兰多が振り向く。
+
+	wait_BGM()//★ＢＧＭ制御
+	fade_in(0,60,BLACK)	//フェ～ドイン
+
+	CAM_move(6750,-8200,180,60,2)
+	CAM(150,74,180,25,180,60,2)
+
+	wait_move(EVENT_RAGNA)
+	look(EVENT_RAGNA,"Bone_Head",0,0,1,0,0,-15,0)
+	rot(EVENT_RAGNA,30,180)
+
+	wait_move(ALWEN)
+	look(ALWEN,"Bone_Head",0,0,1,0,0,15,0)
+	rot(ALWEN,30,180)
+
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+	CAM(150,78,180,25,180,300,0)
+	rot(GYARANDOW,30,0)
+	wait(30)
+	BGM(19)
+
+//　　カメラスクロ～ルすると、奥に立っていた嘉兰多が振り向く。
+//　　拉古那と艾雯もやって来る。
+//	MES(EVENT_RAGNA,"果然是你、\n嘉兰多……",0)
+	MES(EVENT_RAGNA,"果然是你、\n嘉兰多……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"你不说我也清楚。",0)
+	MES(ALWEN,"今天也要传授奥义、\n而且在那之前\n必须跳舞是吧。",0)
+	MES_close(ALWEN)
+
+	chr_rename(GYARANDOW,"嘉兰多")
+	MES(GYARANDOW,"哼哼、正是如此──",0)
+//	MES(GYARANDOW,"果たしてどうする、\n拉古那、艾雯よ。",0)
+	MES(GYARANDOW,"你们是跳还是不跳呢。\n拉古那、还有艾雯。",0)
+	MES_close(GYARANDOW)
+
+//　　２人に···エモ～ション。
+	EMO(EVENT_RAGNA,EMO_TENTEN)
+	EMO(ALWEN,EMO_TENTEN)
+	wait(60)
+
+//　　そ之後顔を見合わせる。
+	look(EVENT_RAGNA,"Bone_Head",0,0,2,0,0,-45,0)
+	look(ALWEN,"Bone_Head",0,0,2,0,0,45,0)
+	wait(15)
+	MES(EVENT_RAGNA,"唉、没办法。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"……唔。",0)
+	MES(ALWEN,"我就多少忍耐一下吧。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　拉古那と艾雯、ＳＥつきで武器を外す。
+	stop_BGM(60)//★ＢＧＭ制御
+
+	fade_in(100,30,BLACK)	//暗転
+	wait_fade()
+
+	CAM_move(6750,-8100,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+
+	delete(EVENT_RAGNA)
+
+	chr_pos(ALWEN,6550,7900,0,0,2)
+	F_set_Node(ALWEN,"Bone_RightSword",NP_HIDE)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,0,0)
+	MOT(ALWEN,53,1)	//艾雯之右手を開かせる。
+
+	chr_pos(EVENT_RAGNA2,6950,7900,0,0,2)
+	color(EVENT_RAGNA2,1)
+
+	KAO(EVENT_RAGNA2,"B","1","2")//
+	KAO(ALWEN,"B","1","2")//
+
+	chr_pos(GYARANDOW,6750,8100,0,0,2)
+
+	wait(30)
+	fade_in(0,30,BLACK)	//暗転
+	wait_fade()
+
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"顺便告诉你们一下\n这个健美操现在只有７节歌词。",0)
+	MES(GYARANDOW,"８节之后的正在征集中。",0)
+	MES_close(GYARANDOW)
+
+	look(EVENT_RAGNA2,"Bone_Head",0,	0,2,0,	0,20,0)
+	wait(15)
+//	name2(EVENT_RAGNA2)
+	KAO(EVENT_RAGNA2,"B232BZ3","123IIH","3")//
+	MES(EVENT_RAGNA2,"谁、谁会听\n你那歌词啊……！",0)
+	MES_close(EVENT_RAGNA2)
+
+	look(ALWEN,"Bone_Head",0,	0,2,0,	0,-20,0)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","123IIH","3")//
+	MES(ALWEN,"废话少说\n快开始吧！",0)
+	MES_close(ALWEN)
+
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"嚯……今天的你们\n看来比以往更加有干劲。",0)
+	look(GYARANDOW,"Bone_Head",0,	0,1,1,	0,10,-10)
+	wait(15)
+	MES(GYARANDOW,"S1今天就先做到第７节吧……",0)
+	MES_close(GYARANDOW)
+
+//	name2(EVENT_RAGNA2)
+	KAO(EVENT_RAGNA2,"B232BGZ2","HIIIH","3")//
+	MES(EVENT_RAGNA2,"我觉得做到第一节就可以了！！",0)
+	MES_close(EVENT_RAGNA2)
+	wait_MES(EVENT_RAGNA2)
+
+	VOICE(635,0)	//★「それではレ～ッツ、エクササイズ！」
+	wait(15)
+//　　エクササイズ用之ＢＧＭが流れ始める。
+	wait_BGM()//★ＢＧＭ制御
+//	BGM(48)
+//	wait(30)
+
+	look(GYARANDOW,"Bone_Head",0,	0,1,1,	0,0,0)
+	look(EVENT_RAGNA2,"Bone_Head",0,	0,2,0,	0,0,0)
+	look(ALWEN,"Bone_Head",0,	0,2,0,	0,0,0)
+	KAO(EVENT_RAGNA2,"B","I321","2")//
+	KAO(ALWEN,"B","HI321","2")//
+
+	EV("EXERCISE_MAIN3")
+
+//	wait(30)
+	wait(60)
+
+//	name("超人嘉兰多")
+	MES_pos(GYARANDOW,"差点忘了告诉你们……",0,0,0,0,0)
+	wait(45)
+	MES_pos(GYARANDOW,"今天是最后一次\n教你们、\n体操了。",0,0,0,0,0)
+//	wait(45)
+	wait(60)
+	MES_pos(GYARANDOW,"你们二人、\n要全力以赴啊！",0,0,0,0,0)
+//	wait(45)
+	wait(50)
+	MES_close(GYARANDOW)
+
+//　　嘉兰多に続いて、２人もエクササイズを踊りだす。
+//　　（伝授三で行った之と同じ、激しいバ～ジョン）
+//　　できればここで、３人が啊わせて踊っている様子をきちんと映す。
+//　　３人が踊りながら、フェ～ドアウト。
+
+//	wait(360)
+//	KAO(EVENT_RAGNA2,"1","1233321","1")//
+//	wait(15)
+//	KAO(ALWEN,"F","1233321","1")//
+//	wait(420)
+//	KAO(EVENT_RAGNA2,"1","1236","5")//
+//	wait(15)
+//	KAO(ALWEN,"1","123","6")//
+//	wait(360)
+//	KAO(EVENT_RAGNA2,"1","6321","6")//
+//	wait(15)
+//	KAO(ALWEN,"1","321","2")//
+//	wait(300)
+//	KAO(EVENT_RAGNA2,"1","1236","7")//
+//	KAO(ALWEN,"1","1236","7")//
+
+	EV("EXERCISE_STOP3")
+	EV("EXERCISE_KAO4")
+
+	wait_EV("EXERCISE_MAIN3")
+	EV_stop("EXERCISE_STOP3")
+	MES_close(PLAYER1)
+	menu(0,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(1,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(2,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(3,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(4,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(5,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(6,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(7,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(8,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	VOICE(622,0)	//★「見事だ、免許皆伝で啊る…」
+
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()
+
+	move(GYARANDOW, 99, 0,0,0,0,0)
+	move(EVENT_RAGNA2, 99, 0,0,0,0,0)
+	move(ALWEN, 99, 0,0,0,0,0)
+	EV_stop("G_EXERCISE_3")
+	EV_stop("R_EXERCISE_4")
+	EV_stop("A_EXERCISE_4")
+	EV_stop("EXERCISE_KAO4")
+
+	stop_BGM(90)//★ＢＧＭ制御
+	wait_BGM()
+	wait(30)
+
+	SE(19,0)
+
+//　　暗転状態で、奥義習得ＳＥが鳴る。
+//	name("システムメッセ～ジ")
+
+	if(WK010==1)
+	{
+		MES(0,"L711『奥义·烈狱震激破』L070学得！",2)
+		MES(0,"L070能够使用地属性的奥义了！",2)
+		MES_close(0)
+
+		get_item(097,1,1)
+		//★地之奥義を修得
+		F_set(FE_FF_Skil_TI)
+	}
+	else
+	if(WK010==2)
+	{
+		MES(0,"L711『奥义·冰气乱结旋』L070学得！",2)
+		MES(0,"L070能够使用水属性的奥义了！",2)
+		MES_close(0)
+
+		get_item(098,1,1)
+		//★水之奥義を修得
+		F_set(FE_FF_Skil_MIZU)
+	}
+	else
+	if(WK010==3)
+	{
+		MES(0,"L711『奥义·清华瞬刹天』L070学得！",2)
+		MES(0,"L070能够使用风属性的奥义了！",2)
+		MES_close(0)
+
+		get_item(099,1,1)
+		//★风之奥義を修得
+		F_set(FE_FF_Skil_KAZE)
+	}
+	else
+	if(WK010==4)
+	{
+		MES(0,"L711『奥义·炎瘴印斗牙』L070学得！",2)
+		MES(0,"L070能够使用火属性的奥义了！",2)
+		MES_close(0)
+
+		get_item(100,1,1)
+		//★火之奥義を修得
+		F_set(FE_FF_Skil_HI)
+	}
+	workG(GW_BOM,ADD,1)
+
+//　　※『○○○○○』之内容は、ダンジョン之属性に合わせて以下之ようにする。
+//　　　地：烈獄震激破
+//　　　水：氷氣乱結旋
+//　　　风：清華瞬刹天
+//　　　火：炎瘴印闘牙
+//　　※○属性は、ダンジョン之属性。
+//　　ゆっくりフェ～ドインして、同じ構図之３人。
+
+	chr_pos(EVENT_RAGNA2,6840,8350,0,180,2)
+	chr_pos(ALWEN,6660,8350,0,180,2)
+
+	chr_pos(GYARANDOW,6750,8000,0,0,2)
+	MOT(GYARANDOW,155,0)
+
+	CAM_move(6750,-8200,180,0,0)
+	CAM(150,70,180,25,225,0,0)
+
+	BGM(19)
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　嘉兰多は２人に手を突き出している状態。
+//　　嘉兰多、手を下ろす。
+	MOT(GYARANDOW,156,0)
+	wait(15)
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"做得很不错嘛。",0)
+	MES(GYARANDOW,"我所能做的事\n都已经做了。",0)
+	MES(GYARANDOW,"剩下的道路\n就靠你们自己的双手去开拓啦。",0)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+	cross_fade(15)
+	CAM_move(6750,-8160,200,0,0)
+	CAM(110,50,200,25,315,0,0)
+	look(EVENT_RAGNA2,"Bone_Head",0,0,5,10,0,-5,10)
+	look(ALWEN,"Bone_Head",0,0,10,5,0,10,5)
+	KAO(EVENT_RAGNA2,"1","3","1")//
+	KAO(ALWEN,"1","3","1")//
+	wait(15)
+
+	KAO(EVENT_RAGNA2,"1","321","1")//
+	wait(5)
+	KAO(ALWEN,"1","321","1")//
+	wait(10)
+//	name2(EVENT_RAGNA2)
+	KAO(EVENT_RAGNA2,"12321","1","2")//
+	MES(EVENT_RAGNA2,"……啊。",0)
+	KAO(EVENT_RAGNA2,"12321Z7","1","1")//
+	MES(EVENT_RAGNA2,"嘉兰多、\n你传授给我们的技能\n总是能帮上我们。",0)
+	KAO(EVENT_RAGNA2,"12321Z4","1236","6")//
+	MES(EVENT_RAGNA2,"我得向你表示感谢。\n Thank you。",0)
+	MES_close(EVENT_RAGNA2)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z4","1233321","6")//
+	MES(ALWEN,"嗯、今天\n是最后一次了吗……",0)
+	KAO(ALWEN,"12321Z3","1","6")//
+	MES(ALWEN,"真是承蒙关照啊。",0)
+	MES_close(ALWEN)
+
+	MOT(GYARANDOW,51,15)
+	wait(15)
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"哈哈、不必这么郑重。",0)
+	MES(GYARANDOW,"体操的精髓已经镌刻在\n你们的肉体中、\n你们的身体已经和我一样了……",0)
+	MES(GYARANDOW,"这就犹如我常伴在你们左右一般。\n你们不会再感到寂寞了。",0)
+	MES_close(GYARANDOW)
+
+//　　２人に青ざめエモ～ション。
+	EMO(EVENT_RAGNA2,EMO_AOZAME)
+	KAO(EVENT_RAGNA2,"C","32","5")//
+	EMO(ALWEN,EMO_AOZAME)
+	KAO(ALWEN,"C","1232","5")//
+	wait(30)
+
+	KAO(ALWEN,"C232CZ4","23332","5")//
+	MES(ALWEN,"不要说这种让人\n产生奇怪联想的话……",0)
+	MES_close(ALWEN)
+
+//	name("超人嘉兰多")
+	MES(GYARANDOW,"再回了、二人。",0)
+	MES(GYARANDOW,"我随时都守护在你们身边……\n要不断努力哦。",0)
+	MES_close(GYARANDOW)
+	wait_MES(GYARANDOW)
+
+//　　嘉兰多、去っていく。
+//　　２人はそれを見送る。
+	cross_fade(30)
+	CAM_move(6900,-8350,160,0,0)
+	CAM(150,70,160,25,225,0,0)
+	KAO(EVENT_RAGNA2,"1","1","6")//
+	KAO(ALWEN,"1","1","6")//
+	look_chr(EVENT_RAGNA2,GYARANDOW,"Bone_Head")
+	look_chr(ALWEN,GYARANDOW,"Bone_Head")
+	chr_pos(GYARANDOW,6880,8150,0,0,2)
+
+	rot(GYARANDOW,30,315)
+	wait(15)
+	VOICE(623,0)	//★「成长したな、我が弟子よ…」
+	move(GYARANDOW, 0,	12,7780,9050,0,	0)
+	wait(60)
+	look_off(EVENT_RAGNA2)
+	rot(EVENT_RAGNA2,15,315)
+	wait(15)
+	look_off(ALWEN)
+	rot(ALWEN,15,315)
+	wait_move(GYARANDOW)
+	wait(30)
+
+	cross_fade(30)
+	CAM_move(6750,-8350,120,0,0)
+	CAM(190,50,120,25,118,0,0)
+	look_del(EVENT_RAGNA2)
+	look_del(ALWEN)
+	wait(30)
+
+	KAO(EVENT_RAGNA2,"B232BZ4","123","5")//
+	MES(EVENT_RAGNA2,"唔、发生了这么多事\n感觉好累啊……",0)
+	MES_close(EVENT_RAGNA2)
+	rot_chr(EVENT_RAGNA2,30,ALWEN)
+	wait(15)
+	KAO(EVENT_RAGNA2,"12321Z3","321","6")//
+	MES(EVENT_RAGNA2,"我们出发吧。",0)
+	MES_close(EVENT_RAGNA2)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","123","1")//
+	MES(ALWEN,"唔。\n真是个奇怪的男人……",0)
+	MES(ALWEN,"……………………………………",0)
+	MES_close(ALWEN)
+	rot_chr(ALWEN,30,EVENT_RAGNA2)
+	wait(15)
+	KAO(ALWEN,"12321Z4","321","6")//
+	MES(ALWEN,"……应该还会见面的。\n我们先做自己应做的事吧。",0)
+	MES_close(ALWEN)
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+	stop_BGM(90)//★ＢＧＭ制御
+	wait_BGM()
+
+	delete(GYARANDOW)
+	delete(EVENT_RAGNA2)
+	delete(ALWEN)
+
+	chr_pos(PLAYER1,6840,8350,0,180,2)
+	chr_pos(PLAYER2,6660,8350,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+
+	if(WK010==1)
+	{
+//		BGM(21)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+		map_spotbmp(70);//100%
+	}
+	else
+	if(WK010==2)
+//		BGM(22)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==3)
+//		BGM(23)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==4)
+//		BGM(24)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+
+	//４つ目之奥義を修得した
+	F_set(FE_FF_GetSkil_4)
+
+	//★嘉兰多【歌詞】
+	F_set_note(-21,1)
+
+	//フェ～ドイン----------------------
+	fade_in(0,30,BLACK)
+
+	EV_end()
+}
+
+//──────────────────────────────
+//	name("◆奥義伝授イベント·宝箱版")
+//──────────────────────────────
+//　　※フラグ□で各サブル～トに初めて来た场合、
+//　　　宝箱が配置されている。
+//　　　調べると、各奥義を入手できる。
+//　　クロスフェ～ドで拉古那たちを再配置しておく。
+EV_GetSkil_BOX
+{
+	//『宝箱から之奥義入手』が初めて之场合。
+	if(!FE_FF_GetTakaraSkil)
+	{
+		EV("EV_GetSkil_BOX_First")
+		wait_EV("EV_GetSkil_BOX_First")
+	}
+	//『宝箱から之奥義入手』が２回目以降之场合。
+	else
+	{
+		EV("EV_GetSkil_BOX_Second")
+		wait_EV("EV_GetSkil_BOX_Second")
+	}
+}
+
+
+//―――――――――――――――――――――――――――――――
+//●宝箱入手１回目
+//―――――――――――――――――――――――――――――――
+EV_GetSkil_BOX_First
+{
+	EV_begin()
+
+	fade_in(100,30,BLACK)	//暗転
+	stop_BGM(60)//★ＢＧＭ制御
+	wait_fade()
+
+	//初期化------------------------------------------------
+
+	if(WK010==1)
+		map_spotbmp(50)
+
+	//キャラ配置
+	chr_pos(RAGNA,	 7550,9250,0,135,	2)
+	chr_pos(PARTNER, 7350,9250,0,135,	2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA, 1010,	-1,-1,	6840,8350,0,2,180,0,";")
+	set_chr(EVENT_RAGNA2,1014,	-1,-1,	6840,8350,0,2,180,0,";")
+	set_chr(ALWEN,		 1011,	-1,-1,	6660,8350,0,2,180,0,";")
+	set_chr(EVENT_LUE, 	  749,  -1,-1,  0,0,0,0,0,0, "")
+	set_chr(EVENT_LUE2,	 1015,  -1,-1,  6750,8450,0, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	F_set_chr(EVENT_LUE,CF_NO_CLIP)
+	F_set_chr(EVENT_LUE,CF_NO_CLIP2)
+	F_set_chr(EVENT_LUE,CF_NO_CSP)
+	F_set_chr(EVENT_LUE2,CF_NO_CLIP)
+	F_set_chr(EVENT_LUE2,CF_NO_CLIP2)
+	F_set_chr(EVENT_LUE2,CF_NO_CSP)
+	color(EVENT_RAGNA2,-1)
+	color(EVENT_LUE,-1)
+	color(EVENT_LUE2,-1)
+	KAO(EVENT_RAGNA,"1","1","1")//
+	KAO(ALWEN,"1","1","1")//
+	KAO(EVENT_LUE2,"1","1","1")//
+
+	//モ～ション定義
+	MOT_SET(EVENT_RAGNA2,150,-1,1844,1844,-1,-1)//膝つき
+	MOT_SET(EVENT_RAGNA2,151,-1,1910,1949,-1,-1)//膝つき
+	MOT_SET(EVENT_RAGNA,150,-1,454,454,-1,-1)//
+	MOT_SET(EVENT_RAGNA,152,-1,428,428,-1,-1)//
+	MOT_SET(EVENT_RAGNA,153,-1,469,469,-1,-1)//
+
+	MOT_SET(ALWEN,150,-1,6349,6349,-1,-1)//膝つき
+	MOT_SET(ALWEN,151,-1,6355,6395,-1,-1)//膝つき
+	MOT_SET(ALWEN,152,-1,511,511,-1,-1)//
+	MOT_SET(ALWEN,153,-1,400,400,-1,-1)//
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる
+//	chr_rename(EVENT_LUE,"露之声")
+	chr_rename(EVENT_LUE,"露")
+	chr_equip_chr(EVENT_LUE, EVENT_RAGNA,"Bone_RightSword",100,		0,0,0,	0,0,0);
+
+	//カメラ初期位置
+	CAM_move(6750,-8200,160,0,0)
+	CAM(150,74,160,25,225,0,0)
+
+	wait_BGM()//★ＢＧＭ制御
+	fade_in(0,30,BLACK)	//フェ～ドイン
+	wait_fade()
+
+	//宝箱が開く
+	SE(277,0)
+	MOT(TAKARA_CH,5,0)
+	wait(33)
+
+	fade_in(50,10,BLACK)	//フェ～ドイン
+	wait_fade()
+
+	MES(0,"W9L070粉色的纸片在里面。",2)
+	MES_close(0)
+	wait(15)
+//	MES(0,"W9L377『──你们终于来了。』",1)
+//	MES(0,"W9L377『吾人将要告诉你们的事\nL377  要好好记在心里。』",1)
+	MES_pos(0,"W9L377『──你们终于来了。』",1,320,160,0,0)
+	wait_key(0)
+	MES_pos(0,"W9L377『吾人将要告诉你们的事\nL377  你们要铭记在心。』",1,320,160,0,0)
+	wait_key(0)
+	MES_close(0)
+	fade_in(0,10,BLACK)	//フェ～ドイン
+	wait_fade()
+
+//　　拉古那に？エモ～ション。
+	EMO(EVENT_RAGNA,EMO_HATENA)
+	wait(30)
+
+//　　手を伸ばすような仕草。
+	MOT(EVENT_RAGNA,152,15)
+	wait(15)
+	MES(EVENT_RAGNA,"这是什么……",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(EVENT_LUE,"C4？？　怎么了？",0)
+	MES_close(EVENT_LUE)
+
+	EMO(ALWEN,EMO_BIKKURI)
+	KAO(ALWEN,"B","1","2")//
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(30)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","12321D","6")//
+	MES(ALWEN,"等、等一下拉古那。\n不要随便碰。",0)
+	KAO(ALWEN,"C232CZ4","12321","3")//
+	MES(ALWEN,"那个纸片\n被施了某种法术！",0)
+	MES_close(ALWEN)
+
+//　　拉古那に？エモ～ション。
+//　　艾雯に向く。
+	EMO(EVENT_RAGNA,EMO_HATENA)
+	wait(15)
+	MOT(EVENT_RAGNA,2,15)
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+	MES(EVENT_RAGNA,"咦……？",0)
+	MES_close(EVENT_RAGNA)
+//	wait(20)
+
+//　　エクササイズ之ＢＧＭが鳴り出す。
+	wait_BGM()//★ＢＧＭ制御
+	BGM(48)
+	wait(28)
+
+//　　拉古那たち、アセアセできょろきょろする。
+	KAO(EVENT_RAGNA,"2","12321DE","7")//
+	EMO(EVENT_RAGNA,EMO_ASEASE)
+	look(EVENT_RAGNA,"Bone_Head",0,0,1,1,0,10,10)
+	rot(EVENT_RAGNA,30,240)
+	wait(5)//33
+	KAO(ALWEN,"2","12321DE","7")//
+	EMO(ALWEN,EMO_ASEASE)
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,10)
+	rot(ALWEN,30,120)
+	wait(15)//48
+
+//　　以下之メッセ～ジはオ～トで閉じるポップアップ。
+	KAO(EVENT_RAGNA,"B232B2Z2","D12321DE","7")//
+	MES_pos(EVENT_RAGNA,"什、什么……？",0,0,0,0,0)
+	wait(45)//93
+	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+	wait(15)//108
+
+//	name2(ALWEN)
+	MES_pos(ALWEN,"这首曲子是……！？",0,0,0,0,0)
+	wait(45)//153
+	MES_close(ALWEN)
+
+//	stop_BGM(60)//★ＢＧＭ制御
+//　　ＢＧＭ之イントロが終わると、拉古那たちはエクササイズを踊りだす。
+	fade_in(100,15,BLACK)	//暗転
+	wait_fade()//168
+
+	CAM_move(6750,-8100,180,0,0)
+	CAM(150,74,180,25,180,0,0)
+
+//	delete(EVENT_RAGNA)
+	color(EVENT_RAGNA,-1)
+
+	chr_pos(ALWEN,6550,7900,0,0,2)
+	F_set_Node(ALWEN,"Bone_RightSword",NP_HIDE)
+	look(ALWEN,"Bone_Head",0,0,15,0,0,0,0)
+	MOT(ALWEN,53,1)	//艾雯之右手を開かせる。
+
+	chr_pos(EVENT_RAGNA2,6950,7900,0,0,2)
+	color(EVENT_RAGNA2,1)
+
+	KAO(EVENT_RAGNA2,"B","D","6")//
+	KAO(ALWEN,"B","D","6")//
+
+	chr_pos(TAKARA_CH,6750,7700,0,0,7)
+
+	wait(30)//198
+	fade_in(0,30,BLACK)	//暗転
+//	wait_fade()
+
+	EV("T_EXERCISE_MAIN")//198frm
+	wait(30)
+
+//　　以下之メッセ～ジはオ～トで閉じるポップアップ。
+	KAO(EVENT_RAGNA2,"23232","12321DE","7")//
+	CAM_quake("46")
+	MES_pos(EVENT_RAGNA2,"S5啊、啊啊啊啊啊！？",0,0,0,0,0)
+	wait(45)
+	MES_close(EVENT_RAGNA2)
+	wait_MES(EVENT_RAGNA2)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","12321D","5")//
+	MES_pos(ALWEN,"身……身体不由自主地……",0,0,0,0,0)
+	wait(45)
+	MES_close(ALWEN)
+
+//　　拉古那たちがアセアセで踊りながら、フェ～ドアウト。
+//	EMO(EVENT_RAGNA2,EMO_ASEASE)
+//	EMO(ALWEN,EMO_ASEASE)
+//	wait(360)
+//	KAO(EVENT_RAGNA2,"B","D1232A","5")//
+//	wait(15)
+//	KAO(ALWEN,"B","123I","5")//
+//	wait(420)
+//	KAO(EVENT_RAGNA2,"B","A23","5")//
+//	wait(15)
+//	KAO(ALWEN,"B","IHGK","6")//
+//	wait(420)
+//	KAO(EVENT_RAGNA2,"B","32A","5")//
+//	wait(15)
+//	KAO(ALWEN,"B","KGHI332L","5")//
+
+	EV("T_EXERCISE_STOP")
+	EV("T_EXERCISE_KAO")
+
+	wait_EV("T_EXERCISE_MAIN")
+	EV_stop("T_EXERCISE_STOP")
+	MES_close(PLAYER1)
+	menu(0,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(1,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(2,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(3,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(4,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(5,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(6,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(7,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	menu(8,	-1,-1,-1,-1,-1,-1,	0,0,0)
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()
+
+	move(EVENT_RAGNA2, 99, 0,0,0,0,0)
+	move(ALWEN, 99, 0,0,0,0,0)
+	EV_stop("T_EXERCISE")
+	EV_stop("R_EXERCISE_T")
+	EV_stop("A_EXERCISE_T")
+	EV_stop("T_EXERCISE_KAO")
+
+	stop_BGM(90)//★ＢＧＭ制御
+	wait_BGM()
+	wait(30)
+
+//　　暗転状態で、奥義習得ＳＥが鳴る。
+//	name("システムメッセ～ジ")
+
+	if(WK010==1)
+	{
+		SE(19,0)
+		MES(0,"L711『奥義·烈狱震激破』L070学得！",2)
+		MES(0,"L070能够使用地属性的奥义了！",2)
+		MES_close(0)
+		get_item(097,1,1)
+		//★地之奥義を修得
+		F_set(FE_FF_Skil_TI)
+		F_set(FE_FF_TakaraSkil1)
+	}
+	else
+	if(WK010==2)
+	{
+		SE(19,0)
+		MES(0,"L711『奥义·冰气乱结旋』L070学得！",2)
+		MES(0,"L070能够使用水属性的奥义了！",2)
+		MES_close(0)
+		get_item(098,1,1)
+		//★水之奥義を修得
+		F_set(FE_FF_Skil_MIZU)
+		F_set(FE_FF_TakaraSkil2)
+	}
+	else
+	if(WK010==3)
+	{
+		SE(19,0)
+		MES(0,"L711『奥义·清华瞬刹天』L070学得！",2)
+		MES(0,"L070能够使用风属性的奥义了！",2)
+		MES_close(0)
+		get_item(099,1,1)
+		//★风之奥義を修得
+		F_set(FE_FF_Skil_KAZE)
+		F_set(FE_FF_TakaraSkil3)
+	}
+	else
+	if(WK010==4)
+	{
+		SE(19,0)
+		MES(0,"L711『奥义·炎瘴印斗牙』L070学得！",2)
+		MES(0,"L070能够使用火属性的奥义了！",2)
+		MES_close(0)
+		get_item(100,1,1)
+		//★火之奥義を修得
+		F_set(FE_FF_Skil_HI)
+		F_set(FE_FF_TakaraSkil4)
+	}
+//	MES(0,"L070另外L711『通常奥義』L070学得！。",2)
+///	MES(0,"L070能够使用无属性的奥义了！",2)
+//	MES_close(0)
+//	get_item(096,1,1)	//無属性奥義
+	workG(GW_BOM,ADD,1)
+
+//　　※『○○○○○』之内容は、ダンジョン之属性に合わせて以下之ようにする。
+//　　　地：烈獄震激破
+//　　　水：氷氣乱結旋
+//　　　风：清華瞬刹天
+//　　　火：炎瘴印闘牙
+//　　※○属性は、ダンジョン之属性。
+//　　フェ～ドインで、宝箱之前でばてている２人。
+	chr_pos(ALWEN,6660,8350,0,180,2)
+	F_reset_Node(ALWEN,"Bone_RightSword",NP_HIDE)
+	MOT(ALWEN,55,1)	//
+	wait(1)
+	MOT(ALWEN,150,0)
+	chr_pos(EVENT_RAGNA,6840,8350,0,180,2)
+	look(EVENT_RAGNA,"Bone_Head",0,0,10,10,0,0,0)
+	MOT(EVENT_RAGNA,150,0)
+	color(EVENT_RAGNA,1)
+	color(EVENT_RAGNA2,-1)
+	chr_pos(TAKARA_CH,6750,8000,0,0,7)
+
+	CAM_move(6750,-8200,160,0,0)
+	CAM(150,74,160,25,225,0,0)
+
+	BGM(19)
+	fade_in(0,60,0)
+	wait_fade()
+
+//──────────────────────────────
+	if(!FE_FF_GetSkil_1)
+	{
+	//	name("□嘉兰多に奥義を教わった事が無い。")
+		MES(EVENT_RAGNA,"刚、刚才的是什么……\n莫非是敌人新发明的陷阱……？",0)
+		MES_close(EVENT_RAGNA)
+
+	//	name2(PARTNER)
+		MES(ALWEN,"不、不清楚……",0)
+		MES(ALWEN,"唔、刚才好像跳了一段\n非常恶心的舞蹈……",0)
+		MES_close(ALWEN)
+	}
+	else
+	{
+	//	name("□嘉兰多に奥義を教わった事が啊る。")
+		MES(EVENT_RAGNA,"刚才的、莫非是……",0)
+		MES_close(EVENT_RAGNA)
+
+	//	name2(ALWEN)
+		MES(ALWEN,"一定是那个假面怪人干的好事……",0)
+		MES_close(ALWEN)
+	}
+//──────────────────────────────
+
+//　　拉古那たち、立ち上がる。
+//	MOT(EVENT_RAGNA2,151,0)
+	MOT(EVENT_RAGNA,2,15)
+	wait(5)
+	MOT(ALWEN,151,0)
+	wait(40)
+
+	EFF_chr(6830,EVENT_LUE2,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	EFF_chr(6825,EVENT_LUE2,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	EFF_chr(6835,EVENT_LUE2,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	SE(1059,0)//露宿りオ～ラSE
+	wait(15)
+	look(EVENT_LUE2,"Bone_Head",0, 0,1,0, 0,-30,0)
+	color(EVENT_LUE2,30)
+	wait_color(EVENT_LUE2)
+
+	MES(EVENT_LUE2,"公主陛下、您没事吧！？\n究竟发生了什么事……",0)
+	MES_close(EVENT_LUE2)
+
+	KAO(ALWEN,"B","1","5")//
+	look(ALWEN,"Bone_Head",0, 0,1,0, 0,15,0)
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(15)
+	KAO(ALWEN,"B232BZ4","123332T","5")//
+	MES(ALWEN,"没。\n没什么大不了的事。",0)
+	KAO(ALWEN,"B232BZ7","T23I","5")//
+//	MES(ALWEN,"只是没……没想到我堂堂真祖、	\n在疏忽大意下竟然蒙受\n这样的耻辱。",0)
+	MES(ALWEN,"竟然被那种法术操纵\n不由自主地跳起舞来\n真是奇耻大辱……",0)
+	MES_close(ALWEN)
+
+	EMO(EVENT_LUE2,EMO_HIYAASE)
+	wait(30)
+	MES(EVENT_LUE2,"那、那个……",0)
+	MES_close(EVENT_LUE2)
+
+	MOT(EVENT_RAGNA,50,15)
+	wait(45)
+	MES(EVENT_RAGNA,"看来身体没有异常状况……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MOT(EVENT_RAGNA,50)
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+	MES(EVENT_RAGNA,"公主、先\n把这事忘了吧。",0)
+	MES(EVENT_RAGNA,"我们、现在\n可有必须要完成的事情。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B","3","2")//
+	look(ALWEN,"Bone_Head",0, 0,1,0, 0,0,0)
+	wait(15)
+	KAO(ALWEN,"B232BZ4","321","2")//
+	MES(ALWEN,"嗯……的确老计较这种已经发生的事\n也于事无补。",0)
+	MES_close(ALWEN)
+//　　艾雯にムカエモ～ション。
+	KAO(ALWEN,"C","123","3")//
+	EMO(ALWEN,EMO_AOSUZI)
+	wait(30)
+	KAO(ALWEN,"C232CZ3","3","3")//
+	MES(ALWEN,"还是不去想它了。",0)
+	MES_close(ALWEN)
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+	stop_BGM(90)//★ＢＧＭ制御
+	wait_BGM()
+
+	delete(EVENT_RAGNA)
+	delete(EVENT_RAGNA2)
+	delete(ALWEN)
+	delete(EVENT_LUE)
+	delete(EVENT_LUE2)
+
+	chr_pos(PLAYER1,6840,8350,0,180,2)
+	chr_pos(PLAYER2,6660,8350,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	delete(TAKARA_CH)
+	set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			7,	0,	0,";")//宝箱·空
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+
+	F_set(FE_FF_GetTakaraSkil)//★嘉兰多▼宝箱から奥義を修得した
+
+	if(!F0_10_TutoOugi)
+	{
+		//●チュ～トリアル：溜め魔法（奥義）
+		Load_BMP(20,"sys\\tuto10a.itm","0")
+		menuBMP(1,	20,	0,0,288,384)
+
+		menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+		menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+		SE(43,0)
+		wait(40)
+		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+
+		F_set(F0_10_TutoOugi)
+	}
+
+	if(WK010==1)
+	{
+//		BGM(21)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+		map_spotbmp(70);//100%
+	}
+	else
+	if(WK010==2)
+//		BGM(22)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==3)
+//		BGM(23)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==4)
+//		BGM(24)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+
+	//フェ～ドイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+
+//	if(!F0_10_TutoOugi)
+//	{
+//		TK_begin()
+//
+//		//●チュ～トリアル：溜め魔法（奥義）
+//		Load_BMP(20,"sys\\tuto10a.itm","0")
+//		menuBMP(1,	20,	0,0,288,384)
+//
+//		menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+//		menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+//		SE(043,PLAYER1)
+//		wait(40)
+//		wait_key(0)
+//		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//
+//		F_set(F0_10_TutoOugi)
+//		TK_end()
+//	}
+
+}
+
+
+//―――――――――――――――――――――――――――――――
+//●宝箱入手２回目以降
+//―――――――――――――――――――――――――――――――
+EV_GetSkil_BOX_Second
+{
+	EV_begin()
+
+//　　宝箱を調べると、２人を宝箱之前に再配置する。
+//	MES(RAGNA,"◆宝箱を調べると、２人を\n宝箱之前に再配置する。",0)
+//	MES_close(RAGNA)
+
+	fade_in(100,30,BLACK)	//暗転
+	stop_BGM(60)//★ＢＧＭ制御
+	wait_fade()
+
+	//初期化------------------------------------------------
+
+	if(WK010==1)
+		map_spotbmp(50)
+
+	//キャラ配置
+	chr_pos(RAGNA,	 7550,9250,0,135,	2)
+	chr_pos(PARTNER, 7350,9250,0,135,	2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA, 1010,	-1,-1,	6840,8350,0,2,180,0,";")
+	set_chr(EVENT_RAGNA2,1014,	-1,-1,	6840,8350,0,2,180,0,";")
+	set_chr(ALWEN,		 1011,	-1,-1,	6660,8350,0,2,180,0,";")
+	set_chr(EVENT_LUE, 	  749,  -1,-1,  0,0,0,0,0,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	F_set_chr(EVENT_LUE,CF_NO_CLIP)
+	F_set_chr(EVENT_LUE,CF_NO_CLIP2)
+	F_set_chr(EVENT_LUE,CF_NO_CSP)
+	color(EVENT_RAGNA2,-1)
+	color(EVENT_LUE,-1)
+	KAO(EVENT_RAGNA,"1","1","1")//
+	KAO(ALWEN,"1","1","1")//
+
+	//モ～ション定義
+	MOT_SET(ALWEN,150,-1,410,410,-1,-1)//
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる
+//	chr_rename(EVENT_LUE,"露之声")
+	chr_rename(EVENT_LUE,"露")
+	chr_equip_chr(EVENT_LUE, EVENT_RAGNA,"Bone_RightSword",100,		0,0,0,	0,0,0);
+
+	//カメラ初期位置
+	CAM_move(6750,-8200,160,0,0)
+	CAM(150,74,160,25,225,0,0)
+
+	wait_BGM()//★ＢＧＭ制御
+	fade_in(0,30,BLACK)	//フェ～ドイン
+	wait_fade()
+
+	if(!F_RAGNA)
+	{
+		MES(EVENT_RAGNA,"这个宝箱……",0)
+		MES_close(EVENT_RAGNA)
+
+	//　　２人に冷や汗エモ～ション。
+		EMO(EVENT_RAGNA,EMO_HIYAASE)
+		EMO(ALWEN,EMO_HIYAASE)
+		wait(30)
+
+		MES(EVENT_RAGNA,"如果打开这个东西\n将会发生什么事、\n我大概能想像得到……",0)
+		MES_close(EVENT_RAGNA)
+
+		MES(ALWEN,"唔、唔……",0)
+		MES(ALWEN,"虽说是为了奥义、\n但是我不想再做那事了……",0)
+		MES_close(ALWEN)
+
+	//　　★こ之やり取りは、繰り返し（ＬＦ制御）ではカットする。
+		F_set(RAGNA)
+	}
+
+	workL(WK_CANCEL,SET,2)//【取消】
+	MES_pos(PLAYER1,"??W9【打开】\n【不打开】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	//──────────────────────────────
+	//　開ける
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		SE(277,0)
+		MOT(TAKARA_CH,5,0)
+		wait(33)
+
+		BGM(48)
+		wait(60)
+
+		EMO(EVENT_RAGNA,EMO_AOZAME)
+		EMO(ALWEN,EMO_AOZAME)
+		wait(60)
+	
+		fade_in(100,30,BLACK)	//暗転
+		wait_fade()
+
+		/*
+		//宝箱之２回目以降はエクササイズカットしました
+		CAM_move(6750,-8100,180,0,0)
+		CAM(150,74,180,25,180,0,0)
+
+	//	delete(EVENT_RAGNA)
+		color(EVENT_RAGNA,-1)
+
+		chr_pos(ALWEN,6550,7900,0,0,2)
+		F_set_Node(ALWEN,"Bone_RightSword",NP_HIDE)
+		look(ALWEN,"Bone_Head",0,0,15,0,0,0,0)
+		MOT(ALWEN,53,1)	//艾雯之右手を開かせる。
+
+		chr_pos(EVENT_RAGNA2,6950,7900,0,0,2)
+		color(EVENT_RAGNA2,1)
+
+		KAO(EVENT_RAGNA2,"B","D","6")//
+		KAO(ALWEN,"B","D","6")//
+
+		chr_pos(TAKARA_CH,6750,7700,0,0,7)
+
+		wait(60)
+		fade_in(0,30,BLACK)	//暗転
+	//	wait_fade()
+
+		EV("T_EXERCISE_MAIN")//
+		wait(30)
+
+		EV("T_EXERCISE_STOP")
+		EV("T_EXERCISE_KAO")
+
+		wait_EV("T_EXERCISE_MAIN")
+		EV_stop("T_EXERCISE_STOP")
+		fade_in(100,60,BLACK)	//暗転
+		wait_fade()
+
+		move(EVENT_RAGNA2, 99, 0,0,0,0,0)
+		move(ALWEN, 99, 0,0,0,0,0)
+		EV_stop("T_EXERCISE")
+		EV_stop("R_EXERCISE_T")
+		EV_stop("A_EXERCISE_T")
+		EV_stop("T_EXERCISE_KAO")
+		*/
+
+		wait(60)
+		stop_BGM(90)//★ＢＧＭ制御
+		wait_BGM()
+		wait(30)
+
+//		MES(PLAYER1,"◆宝箱入手２回目以降\nイベント開始。",0)
+//		MES(PLAYER1,"◆暗転状態で属性奥義を入手する。",0)
+//		MES_close(PLAYER1)
+
+		//奥義入手------------------------------
+		if(WK010==1)
+		{
+			SE(19,0)
+			MES(0,"L711『奥义·烈狱震激破』L070学得！",2)
+			MES(0,"L070能够使用地属性的奥义了！",2)
+			MES_close(0)
+			get_item(097,1,1)
+			//★地之奥義を修得
+			F_set(FE_FF_Skil_TI)
+			F_set(FE_FF_TakaraSkil1)
+		}
+		else
+		if(WK010==2)
+		{
+			SE(19,0)
+			MES(0,"L711『奥义·冰气乱结旋』L070学得！",2)
+			MES(0,"L070能够使用水属性的奥义了！",2)
+			MES_close(0)
+			get_item(098,1,1)
+			//★水之奥義を修得
+			F_set(FE_FF_Skil_MIZU)
+			F_set(FE_FF_TakaraSkil2)
+		}
+		else
+		if(WK010==3)
+		{
+			SE(19,0)
+			MES(0,"L711『奥义·清华瞬刹天』L070学得！",2)
+			MES(0,"L070能够使用风属性的奥义了！",2)
+			MES_close(0)
+			get_item(099,1,1)
+			//★风之奥義を修得
+			F_set(FE_FF_Skil_KAZE)
+			F_set(FE_FF_TakaraSkil3)
+		}
+		else
+		if(WK010==4)
+		{
+			SE(19,0)
+			MES(0,"L711『奥义·炎瘴印斗牙』L070学得！",2)
+			MES(0,"L070能够使用火属性的奥义了！",2)
+			MES_close(0)
+			get_item(100,1,1)
+			//★火之奥義を修得
+			F_set(FE_FF_Skil_HI)
+			F_set(FE_FF_TakaraSkil4)
+		}
+//		MES(0,"L070另外L711『通常奥義』L070学得！。",2)
+//		MES(0,"L070能够使用无属性的奥义了！",2)
+//		MES_close(0)
+//		get_item(096,1,1)	//無属性奥義
+		workG(GW_BOM,ADD,1)
+
+		delete(TAKARA_CH)
+		set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			7,	0,	0,";")//宝箱·空
+
+		//―――――――――――――――――――――――――――――――
+		//□これで４属性之奥義が揃った场合。
+		if(FE_FF_Skil_TI && FE_FF_Skil_MIZU && FE_FF_Skil_KAZE  && FE_FF_Skil_HI)
+		{
+			//　　２人を宝箱之前に再配置してフェ～ドインする。
+			chr_pos(ALWEN,6660,8350,0,180,2)
+			F_reset_Node(ALWEN,"Bone_RightSword",NP_HIDE)
+			MOT(ALWEN,55,1)	//
+			chr_pos(EVENT_RAGNA,6840,8350,0,180,2)
+			color(EVENT_RAGNA,1)
+			color(EVENT_RAGNA2,-1)
+
+			CAM_move(6750,-8200,160,0,0)
+			CAM(150,74,160,25,225,0,0)
+
+			BGM(19)
+			fade_in(0,60,0)
+			wait_fade()
+
+			MES(EVENT_RAGNA,"奥义……\n这样差不多都\n学完了吧。",0)
+			MES_close(EVENT_RAGNA)
+
+		//	name2(ALWEN)
+			KAO(ALWEN,"B232BZ6","123","5")//
+			MES(ALWEN,"唔唔……\n虽说学到了很实用的技能\n但是付出的代价也太大了……",0)
+			MES_close(ALWEN)
+			MOT(ALWEN,150,15)
+			wait(15)
+			KAO(ALWEN,"B","3","2")//
+			MES(ALWEN,"………………………………",0)
+			MES_close(ALWEN)
+
+		//　　艾雯、考え込むような仕草。
+		//	MES(RAGNA,"◆艾雯、在沉思的样子。",0)
+		//	MES_close(RAGNA)
+
+		//　　拉古那に？エモ～ション。
+			EMO(EVENT_RAGNA,EMO_HATENA)
+			wait(15)
+			rot_chr(EVENT_RAGNA,30,ALWEN)
+			wait(15)
+			MES(EVENT_RAGNA,"公主？",0)
+			MES_close(EVENT_RAGNA)
+
+		//	name2(PET)
+			MES(EVENT_LUE,"C4公主陛下、从刚才就一直不说话\n您怎么了……？",0)
+			MES_close(EVENT_LUE)
+
+		//　　艾雯、瞑目したまま軽く笑う。
+			KAO(ALWEN,"12321Z3","3","1")//
+			MES(ALWEN,"……没、没什么。",0)
+			MES_close(ALWEN)
+			MOT(ALWEN,2,15)
+			rot_chr(ALWEN,30,EVENT_RAGNA)
+			wait(15)
+			KAO(ALWEN,"12321Z4","321","2")//
+			MES(ALWEN,"拉古那、露。\n快忘掉这些琐事\n继续前进吧。",0)
+			KAO(ALWEN,"12321Z4","1","2")//
+			MES(ALWEN,"现在不是\n在这里浪费时间\n的时候。",0)
+			MES_close(ALWEN)
+
+		//	name2(EVENT_RAGNA)
+			MES(EVENT_RAGNA,"啊、说的对！",0)
+			MES_close(EVENT_RAGNA)
+
+		//	name2(PET)
+		//	MES(EVENT_LUE,"C4快向前出发吧！",0)
+			MES(EVENT_LUE,"C4是、公主陛下！",0)
+			MES_close(EVENT_LUE)
+
+		//　　一旦暗転して操作許可を戻す。
+		}
+	}
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+	stop_BGM(90)//★ＢＧＭ制御
+	wait_BGM()
+
+	delete(EVENT_RAGNA)
+	delete(EVENT_RAGNA2)
+	delete(ALWEN)
+	delete(EVENT_LUE)
+
+	chr_pos(PLAYER1,6840,8350,0,180,2)
+	chr_pos(PLAYER2,6660,8350,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+
+	if(WK010==1)
+	{
+//		BGM(21)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+		map_spotbmp(70);//100%
+	}
+	else
+	if(WK010==2)
+//		BGM(22)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==3)
+//		BGM(23)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+	else
+	if(WK010==4)
+//		BGM(24)//★ＢＧＭ制御
+		BGM(02)//★ＢＧＭ制御
+
+	//フェ～ドイン----------------------
+	fade_in(0,30,BLACK)
+
+	EV_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

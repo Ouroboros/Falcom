@@ -1,0 +1,479 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10320][ロアルタ村・ペット]
+//====================================================================
+
+#ScriptTable
+
+#LUE		1
+#POCKLE		4
+#PIPIRO		5
+
+#BIANS	10
+#HIYOKO_A	12
+#HIYOKO_B	13
+#HIYOKO_C	14
+
+#DOG_A	15
+#DOG_B	16
+#CAT_A	17
+#CAT_B	18
+#MOFU_A	20
+#MOFU_B	21
+#DOG_C	22
+#CAT_C	23
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip     	 x     y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	set_chr( 90,990,	-1,-1,       0,  425,  0,    180,070303, 6,"K4_10300;")	//ロアルタ村へ
+
+	//ＮＰＣ
+	set_chr( DOG_B,447,-1,-1,	811,-212,0,		10,0,	20,"<TK_DOG_B>")	//いぬＢ
+	chr_scale(DOG_B,	"charbase0",	92,92,92,	0,	1)
+	set_chr( DOG_C,448,-1,-1,	867,-409,0,		10,0,	20,"<TK_DOG_C>")	//いぬＣ
+	chr_scale(DOG_C,	"charbase0",	105,105,105,	0,	1)
+
+	set_chr( CAT_B,494,-1,-1,	186,-1123,0,	10,0,	20,"<TK_CAT_B>")	//猫Ｂ
+	set_chr( CAT_C,495,-1,-1,	582,-1121,0,	10,0,	20,"<TK_CAT_C>")	//猫Ｃ
+	chr_scale(CAT_C,	"charbase0",	105,105,105,	0,	1)
+
+	set_chr( MOFU_A,498,-1,-1,	398,-1076,164,		6,0,	20,"<TK_MOFU_A>")	//モフモフ
+	chr_scale(MOFU_A,	"charbase0",	80,80,80,	0,	1)
+	F_set_chr(MOFU_A,	CF_NO_MINIMAP)	// ミニマップ非表示
+
+	set_chr( MOFU_B,499,-1,-1,	819,-1100,162,		10,90,	20,"<TK_MOFU_B>")	//ネズミ
+	chr_scale(MOFU_B,	"charbase0",	75,75,75,	0,	1)
+	F_set_Node(MOFU_B,"Bone_Cage",NP_HIDE)//消したいけど消えない・・・
+	F_set_chr(MOFU_B,	CF_NO_MINIMAP)	// ミニマップ非表示
+
+
+	set_chr( HIYOKO_A,496,-1,-1,	-835,-735,401,		2,0,	0,"")	//ヒヨコ
+	set_chr( HIYOKO_B,496,-1,-1,	-675,-825,400,		2,0,	0,"")	//ヒヨコ
+	set_chr( HIYOKO_C,496,-1,-1,	-780,-918,401,		2,0,	0,"")	//ヒヨコ
+
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+//		set_chr( BIANS,64,	-1,-1,	-650, -350,1,	53,270,	20,"<SHOP_BIANS>")	//カウンター　ビアンス
+		set_chr( BIANS,64,	-1,-1,	-170,-985,0,	53,174,	20,"<SHOP_BIANS>")	//カウンター　ビアンス
+		F_set_chr(BIANS,CF_NO_MOVE)
+
+		//モーション
+		MOT_SET(BIANS,151,-1,461,461,152,15)		//本棚掃除
+		MOT_SET(BIANS,152,-1,462,462,151,15)		//本棚掃除
+		MOT(BIANS,151,0)
+
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		if(!FV_11_TalkBians)
+		{
+			set_chr( BIANS,64,	-1,-1,	-669,-885,1,	53,180,	20,"<SHOP_BIANS>")	//窓から外見る　ビアンス
+		}
+		else
+		{
+			set_chr( BIANS,64,	-1,-1,	-650, -350,1,	53,270,	20,"<SHOP_BIANS>")	//カウンター　ビアンス
+		}
+		set_chr( DOG_A,446,-1,-1,	880,-298,0,		2,356,	20,"<TK_DOG_A>")	//いぬＡ
+		chr_scale(DOG_A,	"charbase0",	106,106,106,	0,	1)
+		chr_pos(DOG_B,867,-157,0,180,0)
+		EV("FREEMOVE_DOG")
+
+		set_chr( CAT_A,449,-1,-1,	801,-1102,1,		10,0,	20,"<TK_CAT_A>")	//ねこＡ
+
+		set_chr( 96,499,-1,-1,	1001,-914,130,		10,90,	20,"<TK_MOFU_B>")	//ネズミダミー
+		F_set_chr(96,CF_NO_CSP)
+		F_set_chr(96,CF_NO_CSP2)
+		F_set_chr(96,CF_NO_FALL)
+		F_set_chr(96,CF_NO_HEIGHT)
+		F_set_chr(96,	CF_NO_MINIMAP)	// ミニマップ非表示
+		color(96,-1)
+
+		F_set_chr(BIANS,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		if(!FV_11_TalkBians)
+		{
+			set_chr( BIANS,64,	-1,-1,	-669,-885,1,	53,180,	20,"<SHOP_BIANS>")	//窓から外見る　ビアンス
+		}
+		else
+		{
+			set_chr( BIANS,64,	-1,-1,	-650, -350,1,	53,270,	20,"<SHOP_BIANS>")	//カウンター　ビアンス
+		}
+		F_set_chr(BIANS,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+		set_chr( BIANS,64,	-1,-1,	233,-833,0,	53,186,	20,"<SHOP_BIANS>")	//ペットルーム前　ビアンス
+		F_set_chr(BIANS,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		//スバルが仲間になった後配置
+		if(F4_02_GoVillage2)
+		{
+			set_chr( PIPIRO,3,		-1,-1,  -348,-936,0, 	2,250,20,"<TK_PIPIRO>")				//ピピロ
+			set_chr( POCKLE,1012,		-1,-1,  -209,-894,0, 	2,160,20,"<TK_POCKLE>")	//ポックル
+			
+			//モーション
+			MOT_SET(PIPIRO,150,-1,410,410,-1,-1)
+			MOT(PIPIRO,150,0)
+//			MOT_SET(POCKLE,150,-1,400,400,-1,20)
+//			MOT(POCKLE,150,0)
+			F_set_chr(PIPIRO,CF_NO_MOVE)
+			F_set_chr(POCKLE,CF_NO_MOVE)
+		}
+
+		set_chr( BIANS,64,	-1,-1,	-650, -350,1,	53,270,	20,"<SHOP_BIANS>")	//カウンター　ビアンス
+		F_set_chr(BIANS,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		set_chr( BIANS,64,	-1,-1,	-650, -350,1,	53,270,	20,"<SHOP_BIANS>")	//カウンター　ビアンス
+		F_set_chr(BIANS,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		set_chr( BIANS,64,	-1,-1,	-650, -350,1,	53,270,	20,"<SHOP_BIANS>")	//カウンター　ビアンス
+		F_set_chr(BIANS,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		set_chr( BIANS,64,	-1,-1,	-650, -350,1,	53,270,	20,"<SHOP_BIANS>")	//カウンター　ビアンス
+		F_set_chr(BIANS,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		set_chr( BIANS,64,	-1,-1,	-650, -350,1,	53,270,	20,"<SHOP_BIANS>")	//カウンター　ビアンス
+		F_set_chr(BIANS,CF_NO_MOVE)
+	}
+
+}
+
+
+
+FREEMOVE_DOG
+{
+	move( DOG_C, 25,	WALK1,	400,400,0,	200)
+	wait(120)
+	loop
+}
+
+
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+TALK_POCPIP_07
+{
+//――――――――――――――――――――――――――
+//	初期化処理
+//――――――――――――――――――――――――――
+	cross_fade(30)			//クロスフェード
+	EV_begin()
+
+	CAM_move(-264,699,115,0,0)
+	CAM(270,67,115,23,198,0,0)
+
+	//キャラ再配置
+//	chr_pos(RAGNA,	-164,-536,0,170,2)
+	chr_pos(RAGNA,	-225,-629,0,170,2)
+//	chr_pos(RAGNA,	-210,-629,0,170,2)
+//	chr_pos(PARTNER,-365,-536,1,190,2)
+	chr_pos(PARTNER,-330,-536,1,190,2)
+//	chr_pos(PARTNER,-320,-536,1,190,2)
+	chr_pos(PIPIRO,	-348,-936,0,250,2)
+	chr_pos(POCKLE,	-209,-894,0,180,2)
+	KAO(RAGNA, "1", "1", "1")
+	KAO(PARTNER,"1", "1", "1")
+	KAO(PIPIRO, "1", "1", "1")
+	KAO(POCKLE,"1", "1", "1")
+	wait_fade()
+	
+	//モーション
+	MOT_SET(POCKLE,151,-1,546,546,-1,0)	//照れ
+//――――――――――――――――――――――――――
+//	イベント開始
+//――――――――――――――――――――――――――
+	rot(POCKLE,30,0)
+//	rot(PIPIRO,60,0)
+	rot(PIPIRO,60,355)
+//	rot_chr(PIPIRO,60,RAGNA)
+
+	KAO(POCKLE,"12321Z3","1","1")
+	MES(POCKLE,"あ、ラグナさん……！",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z4","1","1")
+	MES(PIPIRO,"忍びっ子も一緒か。\n何してんの、こんな所で。",0)
+	MES_close(PIPIRO)
+
+//	name2(RAGNA)
+	MES(RAGNA,"ああ……\nちょいとスバルの案内で\n山の方に行く途中でな。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"えへへ、そうなんです。",0)
+	MES(PARTNER,"ピピロさんたちは\nお買い物に来たんですか？",0)
+	MES_close(PARTNER)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z5","1","1")
+	MES(PIPIRO,"そ、うちのペットへの\nお土産を買おうと思ってね。",0)
+	MES_close(PIPIRO)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"一応、村の人たちが\nちゃんと元気になったか\n見に来たついでですけど……",0)
+	MES_close(POCKLE)
+
+//	name2(RAGNA)
+	MES(RAGNA,"そうか……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"えっと、その……",0)
+	MES(PARTNER,"ピピロさんたちって\nペットを飼ってるんですね？",0)
+	MES(PARTNER,"その、こっちには\n連れてこなかったんですか？",0)
+	MES_close(PARTNER)
+
+//	rot_chr(POCKLE,60,PARTNER)
+	look_chr(POCKLE, PARTNER, "Bone_Head")
+
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"うん、飛行機に乗せるのは\nちょっと不安だったからね。",0)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"留守にしている間、\nお隣さんに預けているんだ。",0)
+	MES_close(POCKLE)
+
+	MES(PARTNER,"そ、そうなんですか～。",0)
+	MES_close(PARTNER)
+
+	look_chr( RAGNA, PARTNER,"Bone_Head")
+	wait(15)
+
+	MES(RAGNA,"……はは。\nそんなに気を使うなっての。",0)
+	MES_close(RAGNA)
+
+	look_chr( RAGNA, POCKLE,"Bone_Head")
+	wait(20)
+
+	MES(RAGNA,"悪いな、２人とも。",0)
+	MES(RAGNA,"あんな風に１人だけ\n抜けるような真似しちまって。",0)
+	MES_close(RAGNA)
+
+	look_chr(POCKLE, RAGNA, "Bone_Head")
+
+	KAO(POCKLE,"12321Z2","1","1")
+	MES(POCKLE,"いえ、そんな……",0)
+	MES_close(POCKLE)
+
+//	rot_chr(PIPIRO,60,RAGNA)
+	look_chr(PIPIRO, RAGNA, "Bone_Head")
+
+	KAO(PIPIRO,"12321Z6","1","1")
+	MES(PIPIRO,"ま、何をするのかは\n本人の自由じゃないの～？",0)
+	KAO(PIPIRO,"12321Z6","1","1")
+	MES(PIPIRO,"ティアラとの約束がなければ\nわたしもパスしてた所だし。",0)
+	MES_close(PIPIRO)
+
+	look_chr(POCKLE, PIPIRO, "Bone_Head")
+	KAO(POCKLE,"12321Z2","8","B")
+	MES(POCKLE,"ちょ、ちょっとピピロ～。",0)
+	MES_close(POCKLE)
+
+//	name2(RAGNA)
+	MES(RAGNA,"ティアラ……？",0)
+	MES_close(RAGNA)
+
+	look_off(POCKLE)
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"あ、僕たちのお隣さんで\nいつもお世話になっている\nお姉さんなんです。",0)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"パラディスっていうお兄さんと\n一緒に暮らしてるんですけど……",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z6","1","1")
+	MES(PIPIRO,"例の《虹の宝玉》は\n本来だったらその２人が\n届けるはずだったのよね～。",0)
+	KAO(PIPIRO,"12321Z6","1","1")
+	MES(PIPIRO,"何かティアラとフィオナって\n遠い親戚同士みたいでさ～。",0)
+	KAO(PIPIRO,"12321Z6","1","1")
+	MES(PIPIRO,"吸血鬼退治の助けにするため\n貸すことにしたってわけ。",0)
+	MES_close(PIPIRO)
+
+//	name2(RAGNA)
+	MES(RAGNA,"なるほど……\nそんな事情だったのか。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"でも、どうしてまた\nその人たちに代わってお２人が\n届けることになったんですか？",0)
+	MES_close(PARTNER)
+
+//　　ポックルの頭にアセアセマーク。
+	EMO(POCKLE,EMO_ASEASE)
+//	KAO(POCKLE,"12321Z3","4","1")
+	KAO(POCKLE,"1232Z4","HK","6")
+	MOT(POCKLE,151,15)
+	MES(POCKLE,"あ、えっと、それは……",0)
+	MES_close(POCKLE)
+
+	look_chr( PIPIRO, POCKLE,"Bone_Head")
+
+	KAO(PIPIRO,"12321Z3","2","1")
+	MES(PIPIRO,"な～に照れてんだか。",0)
+	MES_close(PIPIRO)
+
+	look_chr( PIPIRO, PARTNER,"Bone_Head")
+	wait(15)
+
+	KAO(PIPIRO,"12321Z3","1","1")
+	MES(PIPIRO,"おめでたよ、おめでた。",0)
+	MES_close(PIPIRO)
+
+	MES(PARTNER,"あ、なるほど……",0)
+	MES(PARTNER,"それじゃ、無理するわけには\nいきませんよね。",0)
+	MES_close(PARTNER)
+
+	MES(RAGNA,"まあ、旦那の方も\n付いててやりたいだろうしな。",0)
+	MES(RAGNA,"それでお前達が\n代わりを買って出たわけか。",0)
+	MES_close(RAGNA)
+
+	look_chr( PIPIRO, RAGNA,"Bone_Head")
+	MOT(POCKLE,2,15)
+	KAO(POCKLE,"12321Z4","1","1")
+	MES(POCKLE,"は、はい。\nそういう事なんです。",0)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"僕たちもアルジェスの外を\n一度見たかったこともあって……",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"12321Z6","1","1")
+	MES(PIPIRO,"何せ、村一つしかない\nド田舎な島だったからね～。",0)
+	KAO(PIPIRO,"12321Z6","1","1")
+	MES(PIPIRO,"まさに一石二鳥だったけど、\nこんな面倒なことになるとは。",0)
+	MES_close(PIPIRO)
+
+	MES(RAGNA,"……そうだな。",0)
+	MES(RAGNA,"それで、お前たちは\nこれからどうするつもりだ？",0)
+	MES_close(RAGNA)
+
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"とりあえず、\nこのままフィオナさんたちに\n協力しようと思います。",0)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"吸血鬼退治はともかく\n《虹の宝玉》は何とかして\n取り戻さないといけないし……",0)
+	MES_close(POCKLE)
+
+	MES(RAGNA,"そうか……",0)
+	MES(RAGNA,"……力にはなれなさそうだが\n手がかりを掴んだら知らせるぜ。",0)
+	MES_close(RAGNA)
+
+	KAO(POCKLE,"12321Z4","1","1")
+	MES(POCKLE,"あ、はい。\nよろしくお願いします。",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"12321Z4","1","1")
+	MES(PIPIRO,"ま、期待しないで待ってるわ。",0)
+	MES_close(PIPIRO)
+
+
+//――――――――――――――――――――――――――
+//	イベント終了処理
+//――――――――――――――――――――――――――
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	rot(PIPIRO,60,250)
+//	rot(POCKLE,60,180)
+	rot(POCKLE,60,160)
+	MOT_SET(PIPIRO,150,-1,410,410,-1,-1)
+	MOT(PIPIRO,150,0)
+//	MOT_SET(POCKLE,150,-1,400,400,-1,20)
+//	MOT(POCKLE,150,0)
+	look_off(POCKLE)
+	look_off(PIPIRO)
+	F_set_chr(POCKLE,CF_NO_MOVE)
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	//★⑦初回
+
+	F_set(FM_07_TalkPocPip)
+	//★フィオナ【虹の宝玉】
+	F_set_note(-16,2)
+	//★ピピロ【虹の宝玉】
+	F_set_note(PIPIRO,1)
+
+
+	EV_end()
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+//	プレイヤー操作許可
+//――――――――――――――――――――――――――
+}
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+
+
+
+#EndScriptTable
+//====================================================================
+

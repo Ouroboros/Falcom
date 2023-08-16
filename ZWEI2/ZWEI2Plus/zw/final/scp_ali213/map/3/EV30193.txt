@@ -1,0 +1,1307 @@
+//====================================================================
+//ステージトラップスクリプト
+//[13019][森－中继分岐]
+//====================================================================
+
+#ScriptTable
+
+
+#SUBARU 	1
+#EVENT_RAGNA 	2
+#ALWEN	 		3
+#JUMP_SUBARU 	4
+
+// 110 プロペラ移動床を起動（初回）
+
+//--------------------------------------------------------------------
+INIT
+{
+//■地形
+	set_obj("obx0524",	 3, 2,	 0,900,0,		 0)	//穴大
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+	set_chr( 90,990,	 3, 7,     0,   0,  0,		180,  0201, 6,"K1_13013;")	//①エントリ 梅ン③
+	set_obj("@obx0033a", 3, 7      0,   0,  0,		180)						//①アーチ（森緑）
+	set_chr(190,1400,	 3, 7,	   0,   0,  0,		  0,   180, 0,";")			//アーチ（ダミー）
+
+	set_chr( 91,990,	 3, 1,     0,   0,  0,		  0,  0201, 6,"K0_13021;")	//②エントリ 武器①
+	set_obj("@obx0033b", 3, 1,     0,   0,  0,		  0)						//②アーチ（森金）
+	set_chr(191,1400,	 3, 1,	   0,   0,  0,		  0,     0, 0,";")			//アーチ（ダミー）
+
+	set_chr( 92,990,	 4, 4,     0,   0,  0,		 90,  0102, 6,"K0_13031;")	//③エントリ ボス①
+	set_obj("@obx0033c", 4, 4,     0,   0,  0,		 90)						//③アーチ（森紫）
+	set_chr(192,1400,	 4, 4,	   0,   0,  0,		  0,    90, 0,";")			//アーチ（ダミー）
+
+	// チェックポイント
+	set_chr( 95,990,	-1,-1,  5850,4050,  0,		180,071202, 6,"k5_0")
+	set_chr( 96,990,	-1,-1,  5850,5850,  0,		  0,071202, 6,"k6_0")
+
+//■スイッチ·看板
+	set_chr( 50,620,	 3, 4,  -350,   0,  0,		  0,   270, 0,";")			//①セーブOBJ
+
+	set_chr( 55,648,	 3, 4,    0,-900,   0,		 12,     0, 0,";")	//③等级之证 
+	set_chr( 57,654,	 3, 4, -200,-600,   0,		  4,     0, 0,";")	//③順路案内（武器）
+
+	set_chr( 56,648,	 3, 4,  900,   0,   0,		  8,    90, 0,";")	//④等级之证 
+	set_chr( 58,654,	 3, 4,  700,-200,   0,		  3,     0, 0,";")	//④順路案内（ボス）
+	color2(56, 88,83,100, 0,0,0)
+
+
+
+//■罠·障害物
+
+	if(WK_ENTRY==91)//階段91 から来た時（帰り）
+	{
+		set_chr( 59,660,	 3, 2,     0,  0,   0,		  2,   180, 8,"(WT?30 M4?99 SF110 Z1_50 Y2_-1800 M5_99 Z1_-50 WT?30 M4?99 Z1_50 Y2_1800 M5_99 Z1_-50);")//②プロペラ移動床
+	}
+	else 
+	{
+		set_chr( 59,660,	 3, 3,     0,  0,   0,		  2,   180, 8,"(WT?30 M4?99 SF110 Z1_50 Y2_1800 M5_99 Z1_-50 WT?30 M4?99 Z1_50 Y2_-1800 M5_99 Z1_-50);")//②プロペラ移動床
+	}
+	set_chr( 64,990,	 0, 0,     0,   0,  0,		  0,     0, 8,"F110 O1_18;")
+
+//■イベント用オブジェクト
+//	set_chr( 80,730,	 3, 7,  -500, -500,  0,  	 0,0, 0,";")	//木　昴出現イベント用
+
+//■イベント
+	if(F1_22_EndFirst && !F2_17_EndSecond)
+	{
+	//２章
+		//ＧＦ『★森林中继地点见到昴』立ってない
+		if(!F2_02_MeetSubaru)
+		{
+			//▼和昴见面
+			set_namebmp(0,0)
+			EV("EV_2_02_MeetSubaru")
+		}
+	}
+
+//■场面固有設定
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼昴と之出会い
+//──────────────────────────────
+//　　森之梅ンルート①をクリアした所でイベント発生。
+//　　拉古那たちが中继マップに入ってくるところを見せる。
+EV_2_02_MeetSubaru
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  5934,12770,1,180,2)
+	chr_pos(PARTNER,  5766,12690,0,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 5934,12770,1, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 5766,12690,0, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"B","1","2")//
+	KAO(ALWEN,"1","1","1")//
+
+	set_chr(SUBARU,	  1020,-1,-1, 5760,10482,400, 2,180,0, "")
+	F_set_chr(SUBARU,CF_NO_CSP)
+	F_set_chr(SUBARU,CF_NO_CLIP)
+	F_set_chr(SUBARU,CF_NO_CLIP2)
+	F_set_chr(SUBARU,CF_NO_HEIGHT)
+	color(SUBARU,-1)
+	wait_color(SUBARU)
+
+	set_chr(JUMP_SUBARU,	  6,-1,-1, 5760,10482,0, 2,180,0, "")
+	F_set_chr(JUMP_SUBARU,CF_NO_CSP)
+	F_set_chr(JUMP_SUBARU,CF_NO_CLIP)
+	F_set_chr(JUMP_SUBARU,CF_NO_CLIP2)
+	color(JUMP_SUBARU,-1)
+
+	//モーション定義
+	MOT_SET(SUBARU,150,-1,521,521,-1,-1)//しりもち仮
+	MOT_SET(SUBARU,151,-1,441,441,-1,-1)//胸に手
+	MOT_SET(SUBARU,152,-1,457,457,-1,-1)//膝つき
+	MOT_SET(SUBARU,153,-1,495,495,-1,-1)//
+	MOT_SET(SUBARU,154,-1,4270,4300,-1,-1)//握手
+	MOT_SET(SUBARU,155,-1,4305,4345,-1,-1)//手を離す
+	MOT_SET(SUBARU,156,-1,1236,1269,-1,-1)//木から落下
+	MOT_SET(SUBARU,157,158,1270,1305,-1,-1)//上体起こし
+	MOT_SET(SUBARU,158,159,1306,1316,-1,-1)//上半身半起～手放再屁股下
+	MOT_SET(SUBARU,159,159,1317,1334,-1,-1)//尻さすりループ
+	MOT_SET(SUBARU,160,-1,1336,1349,-1,-1)//半起两手支撑
+	MOT_SET(SUBARU,161,-1,1236,1236,-1,-1)//从树上掉下
+	MOT_SET(SUBARU,162,-1,579,579,-1,-1)//行礼
+	MOT_SET(SUBARU,163,-1,450,450,-1,-1)//
+	MOT_SET(JUMP_SUBARU,150,-1,863,863,-1,-1)//しゃがみ
+	MOT_SET(JUMP_SUBARU,151,-1,800,800,-1,-1)//ジャンプ
+	MOT_SET(EVENT_RAGNA,150,-1,469,469,-1,-1)//うわ
+	MOT_SET(EVENT_RAGNA,151,-1,410,410,-1,-1)//フム
+	MOT_SET(EVENT_RAGNA,152,-1,544,544,154,10)//頭かき
+//	MOT_SET(EVENT_RAGNA,153,-1,545,545,154,-1)//頭かき
+	MOT_SET(EVENT_RAGNA,154,-1,546,546,152,10)//頭かき
+	MOT_SET(EVENT_RAGNA,155,-1,508,508,-1,-1)//手をだす
+	MOT_SET(EVENT_RAGNA,156,-1,428,428,-1,-1)//等待
+	MOT_SET(EVENT_RAGNA,157,-1,4000,4030,-1,-1)//被握手
+	MOT_SET(EVENT_RAGNA,158,-1,4035,4075,-1,-1)//撒开手
+	MOT_SET(EVENT_RAGNA,159,-1,3010,3029,-1,-1)//アンカーギア
+	MOT_SET(EVENT_RAGNA,160,-1,407,407,-1,-1)	//どうな之よ2
+	MOT_SET(ALWEN,150,-1,401,401,-1,-1)//左手腰
+
+	//カメラ初期位置
+	CAM_move(5700,-12988,80,0,0)
+	CAM(390,156,80,28,306,0,0)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる。
+
+	CAM_move(5700,-10028,80,420,0)
+	CAM(70,80,80,28,324,420,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+//	wait_fade()
+	wait(30)
+
+	move( ALWEN, 0,	9, 5766,9900,0,0)
+	wait(10)
+	move( EVENT_RAGNA, 0,	9, 5934,10010,1,0)
+
+	wait(120)
+//	set_namebmp(24,0)
+
+	wait_CAM_move()
+	wait_CAM()
+	wait_move( ALWEN )
+
+	MOT(ALWEN,150,15)
+	wait(15)
+	KAO(ALWEN,"12321Z4","123332A","1")//
+	MES(ALWEN,"嗯……\n来到中继地区了吗。",0)
+	KAO(ALWEN,"12321Z6","A","1")//
+	MES(ALWEN,"魔力感变强了。\n肯定在里面。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B","123","2")//
+	MES(EVENT_RAGNA,"……………………………",0)
+	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+
+	stop_BGM(90)
+
+	cross_fade(15)
+	CAM_move(5762,-9958,90,0,0)
+	CAM(30,78,90,18,276,0,0)
+	CAM_move(5762,-9998,90,600,0)
+	CAM(30,78,90,18,302,600,0)
+	color(50,-1)
+	color(90,-1)
+	color(100,-1)
+	color(91,-1)
+	color(101,-1)
+	color(92,-1)
+	color(102,-1)
+	color(55,-1)
+	color(56,-1)
+	color(57,-1)
+	color(58,-1)
+	wait(15)
+
+//　　艾雯之頭に？マーク。
+	KAO(ALWEN,"E","233321D","6")//
+	EMO(ALWEN,EMO_HATENA)
+	MOT(ALWEN,2,15)
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(30)
+	KAO(ALWEN,"12321FZ4","D","6")//
+	MES(ALWEN,"拉古那？\n刚才你再做什么？",0)
+	MES_close(ALWEN)
+
+	wait_BGM()
+	BGM(47)
+//	BGM(46)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z2","3","1")//
+	MES(EVENT_RAGNA,"……啊啊、这个啊。",0)
+	KAO(EVENT_RAGNA,"12321Z5","3","1")//
+	MES(EVENT_RAGNA,"我虽然不能像你一样\n能感到魔力什么的……",0)
+	KAO(EVENT_RAGNA,"12321Z5","3","1")//
+	MES(EVENT_RAGNA,"驾驶飞机时\n享受风的感觉还是很满足的。",0)
+	KAO(EVENT_RAGNA,"12321Z7","321","2")//
+	MES(EVENT_RAGNA,"这个可是、\n被宝物猎人\n相当重视的哦。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B","1","2")//
+	MES(ALWEN,"什么……？",0)
+	MES_close(ALWEN)
+
+//　　拉古那、这时准备アンカーギア的表情。
+//　　おもむろに振り返って、把アンカーギア放在树下。
+	KAO(EVENT_RAGNA,"1","11111123","2")//
+	MOT(EVENT_RAGNA,52,15)
+	EV("EV_1014")//ギア構えSE再生処理
+	wait_MOT(EVENT_RAGNA,52)
+//	MOT(EVENT_RAGNA,159,0)
+//	wait(35)
+
+//	cross_fade(15)
+//	CAM_move(5000,-10488,340,0,0)
+//	CAM(-490,148,340,24,294,0,0)
+//	wait(15)
+//
+//	rot(EVENT_RAGNA,30,50)
+//	wait(15)
+//
+//	CAM_move(5000,-10488,340,15,0)
+//	CAM(-490,130,340,24,294,15,0)
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n把アンカーギア放到树下。",0)
+//	MES_close(EVENT_RAGNA)
+
+	cross_fade(15)
+	CAM_move(5820,-10228,180,0,0)
+	CAM(30,32,180,24,160,0,0)
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,1,0,0,14)
+	rot(EVENT_RAGNA,30,50)
+	wait(15)
+
+	MOT(EVENT_RAGNA,120,5)
+	KAO(EVENT_RAGNA,"232","321","3")//
+//	VOICE(034,0)		//★ボイス演出
+//	MES(EVENT_RAGNA,"P1S8看招吧！！",0)
+	MES_pos(EVENT_RAGNA,"P1S8看招吧！！",0,0,0,0,0)
+//	MES_pos(EVENT_RAGNA,"P1S8尝尝这个！！",0,0,0,0,0)
+	wait(15)
+	VOICE(006,0)		//★ボイス演出
+	CAM_move(5600,-10268,280,10,0)
+	CAM(30,80,280,24,156,10,0)
+	SE(145,0)//ギア振りSE
+	SE(146,0)//ギア振りSE
+	wait(6)
+	EFF(24440 ,5440,-10340,300,0,120,-1)
+	wait(4)
+	CAM_quake("28372837")
+	wait(25)
+	MES_close(EVENT_RAGNA)
+
+	stop_BGM(90)
+
+//　　アンカーギア之先端、とある木之幹にガスンと突き刺さる。
+//　　树受到冲击的同時以下事件。
+	chr_rename(SUBARU,"声音")//
+//	name("声")
+	KAO(SUBARU,"3454345","5","5")//
+//	MES_pos(SUBARU,"P1S8哇啊啊啊！？",0,120,100,0,0)
+	VOICE(218,0)	//★ボイス演出
+	MES_pos(SUBARU,"P1S8W9哇啊啊啊！？",0,420,80,0,0)
+	wait(40)
+//	wait_key(0)
+	MES_close(SUBARU)
+	CAM_quake("")
+
+//　　从木梢附近、昴和葉子一起掉了下来。
+	EFF(6665,5760,-10482,400,0,100,-1)
+	color(SUBARU,1)
+	MOT(SUBARU,161,0)
+	CAM_move(5700,-10368,140,20,0)
+	jump(SUBARU,2,20 ,0,0,-400,50)
+	wait(8)
+	SE(1045,0)//昴落下SE
+	wait(8)
+	MOT(SUBARU,156,0)
+	wait_move(SUBARU)
+	F_reset_chr(SUBARU,CF_NO_HEIGHT)
+	wait_CAM_quake()
+	CAM_quake("2828")
+
+//　　艾雯之頭に！マーク。
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	rot_chr(ALWEN,30,SUBARU)
+	wait(5)
+	KAO(EVENT_RAGNA,"21","1","1")//
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,1,0,0,0)
+	rot_chr(EVENT_RAGNA,30,SUBARU)
+	wait(10)
+	KAO(ALWEN,"F","1233321DE","7")//
+	MES(ALWEN,"喔……！？",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","1233321","1")//
+	MES(EVENT_RAGNA,"嘿……\n还真在这儿啊。",0)
+	KAO(EVENT_RAGNA,"2","D","6")//
+	MES(EVENT_RAGNA,"啧啧──",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　这里的镜头、能很清楚的照到昴。
+//　　昴好像很喜欢摔跤似的把手放在脑袋上。
+	cross_fade(30)
+//	look_chr( ALWEN, SUBARU ,"Bone_Head")
+//	look_chr( EVENT_RAGNA, SUBARU ,"Bone_Head")
+	look_off(ALWEN)
+	look_del(ALWEN)
+	look_off(EVENT_RAGNA)
+	look_del(EVENT_RAGNA)
+	look(ALWEN,"Bone_Head",0,0,0,6,0,0,-6)
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,6,0,0,-6)
+	chr_pos(ALWEN,5796,9900,0,10,2)
+	KAO(SUBARU,"C","C","5")//
+	CAM_move(5350,-11588,-290,0,0)
+	CAM(70,136,-290,22,340,0,0)
+	CAM_move(5350,-11588,-180,240,0)
+	CAM(-50,126,-180,22,340,240,0)
+	wait(30)
+	KAO(SUBARU,"C","C23","5")//
+	MOT(SUBARU,157,0)
+	wait(60)
+
+	chr_rename(SUBARU,"？？？")//
+//	name("？？？")
+	KAO(SUBARU,"C232CZ2","5","5")//
+	VOICE(219,0)		//★ボイス演出
+//	MES(SUBARU,"好疼啊……",0)
+	MES(SUBARU,"好疼啊……",0)
+	MES_close(SUBARU)
+	wait(30)
+
+	wait_BGM()
+	BGM(54)
+
+	MOT(SUBARU,160,5)
+	wait(5)
+//	name2(this)
+	KAO(SUBARU,"C232CZ5","3332L","5")//
+	MES(SUBARU,"这、这……\n完全没动静了……",0)
+	MES_close(SUBARU)
+	wait_MES(SUBARU)
+
+	wait_CAM_move()
+	wait_CAM()
+//	CAM_move(5340,-11688,-500,0,0)
+//	CAM(150,206,-500,16,344,0,0)
+	CAM_move(5610,-8348,-56,0,0)
+	CAM(-212,226,-56,18,186,0,0)
+	KAO(SUBARU,"C","235","5")//
+	MOT(SUBARU,159,15)
+
+//　　拉古那と艾雯之頭に…マーク。
+	EMO(EVENT_RAGNA,EMO_TENTEN)
+	EMO(ALWEN,EMO_TENTEN)
+	wait(60)
+	KAO(ALWEN,"B232BZ2","D1233321D","6")//
+	MES(ALWEN,"……那、拉古那。",0)
+	KAO(ALWEN,"B232BZ3","D","6")//
+	MES(ALWEN,"你的熟人？",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232B","1233321D","6")//
+	MES(EVENT_RAGNA,"不、不……",0)
+	KAO(EVENT_RAGNA,"B232BZ5","D","6")//
+	MES(EVENT_RAGNA,"以为应该是公主\n的敌人。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　拉古那、接近昴伸出了手。
+//	cross_fade(15)
+//	CAM_move(5590,-8348,-56,0,0)
+//	CAM(-212,218,-56,18,186,0,0)
+
+	KAO(EVENT_RAGNA,"1","12321","1")//
+	KAO(ALWEN,"1","12321","1")//
+	move( EVENT_RAGNA, 0,	9,5888,10280,0,0)
+	wait(25)
+	move( ALWEN, 0,	9,5776,10090,0,0)
+	wait_move( EVENT_RAGNA )
+	rot_chr(EVENT_RAGNA,30,SUBARU)
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,1,0,0,-10)
+	MOT(EVENT_RAGNA,155,15)
+	wait(15)
+	wait_move( ALWEN )
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,-10)
+//	look_chr( ALWEN, SUBARU ,"Bone_Head")
+
+	KAO(EVENT_RAGNA,"12321Z5","233321","5")//
+	MES(EVENT_RAGNA,"糟了。\n好像把他吓坏了。",0)
+	KAO(EVENT_RAGNA,"12321Z6","1","5")//
+	MES(EVENT_RAGNA,"但是呢、你也不对啊。\n偷偷的躲在那里。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(SUBARU,160,10)
+//	look_chr( SUBARU, EVENT_RAGNA ,"Bone_Head")
+	look(SUBARU,"Bone_Head",0,0,1,1,0,12,12)
+	wait(15)
+//	name("？？？")
+	KAO(SUBARU,"F","233321","4")//
+	MES(SUBARU,"啊……",0)
+	MES_close(SUBARU)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","233321","1")//
+	MES(EVENT_RAGNA,"你、是谁？",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"这么奇怪的\n衣服──",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//	cross_fade(15)
+//	CAM_move(5310,-12228,-56,0,0)
+//	CAM(-212,216,-56,18,346,0,0)
+	CAM_move(5750,-10502,90,0,0)
+	CAM(-212,108,90,10,346,0,0)
+	chr_pos(EVENT_RAGNA,5918,10180,0,30,2)
+	rot(ALWEN,-1,340)
+//	wait(15)
+
+//　　昴之頭に！マーク。
+//　　ばっと飛びすさって、在拉古那身前支起腿来。
+	KAO(SUBARU,"E","12321D","6")//
+	EMO(SUBARU,EMO_BIKKURI)
+	wait(30)
+
+//	MOT(EVENT_RAGNA,2,15)
+	look(SUBARU,"Bone_Head",0,0,2,2,0,0,12)
+	rot(SUBARU,30,190)
+	KAO(SUBARU,"C","D123","5")//
+	jump(SUBARU,2,15 ,-10,-20,0,100)
+	SE(466,0)//ジャンプSE
+	MOT(SUBARU,152,10)
+	wait(15)
+	SE(1058,0)//着地
+	wait(15)
+
+//	name("？？？")
+	KAO(SUBARU,"C232CZ3","3","5")//
+	MES(SUBARU,"失礼了！",0)
+	KAO(SUBARU,"C232CZ6","3","5")//
+	MES(SUBARU,"这么随便的尾随……\n再加上被人家看破……",0)
+	MES_close(SUBARU)
+
+	KAO(SUBARU,"1","321","1")//
+	look(SUBARU,"Bone_Head",0,0,0,2,0,0,28)
+	wait(15)
+	KAO(SUBARU,"12321Z5","1","1")//
+	MES(SUBARU,"我……\n叫我下忍的昴就可以了！",0)
+	KAO(SUBARU,"B232BZ6","1","2")//
+	MES(SUBARU,"其实、想拜托\n您两位一件事！",0)
+	MES_close(SUBARU)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","1233321D","6")//
+	MES(EVENT_RAGNA,"W9下、下忍？\n拜托……？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321FZ3","1233321","6")//
+	MES(ALWEN,"W9我和拉古那吗？",0)
+	MES_close(ALWEN)
+
+	KAO(SUBARU,"B","123","5")//
+	look(SUBARU,"Bone_Head",0,0,0,2,0,0,12)
+	wait(15)
+	chr_rename(SUBARU,"昴")//
+//	name2(SUBARU)
+	KAO(SUBARU,"B232BZ2","3","5")//
+	MES(SUBARU,"是、是的……",0)
+	KAO(SUBARU,"B232BZ4","32A","5")//
+	MES(SUBARU,"这个、怎么说呢、\n请做我的……我的……",0)
+	MES_close(SUBARU)
+
+//　　昴、直截了当的一再请求的動作。
+//　　そ之まま画面暗転してから以下之メッセージ。
+	KAO(SUBARU,"B","233321","2")//
+	look(SUBARU,"Bone_Head",0,0,0,1,0,0,24)
+
+	//暗転
+//	CAM(-212,220,-56,18,346,30,0)
+	CAM(-212,104,90,10,346,30,0)
+	fade_in(100,30,0)
+	wait_fade()
+
+	wait(15)
+	CAM_quake("37")
+	MES_pos(SUBARU,"P1S4W9请做我的师傅！？",0,320,240,0,0)
+	wait_key(0)
+	MES_close(SUBARU)
+	wait_MES(SUBARU)
+	stop_BGM(90)
+	wait(90)
+
+//	color(SUBARU,1)
+//	F_reset_chr(SUBARU,CF_NO_HEIGHT)
+
+//──────────────────────────────
+//　　しばらく暗転時間を入れてから、
+//　　画面フェードインして、休憩所附近。
+//　　拉古那和艾雯面前昴在。
+	chr_pos(EVENT_RAGNA,	  5920,9400,1,10,2)
+	chr_pos(ALWEN,  5750,9420,1,330,2)
+	chr_pos(SUBARU,	  5850,9660,0,180,2)
+	look_off(EVENT_RAGNA)
+	look_del(EVENT_RAGNA)
+	look_off(ALWEN)
+	look_del(ALWEN)
+	look_off(SUBARU)
+	look_del(SUBARU)
+
+	KAO(EVENT_RAGNA,"1","1","1")//
+	KAO(ALWEN,"1","1","1")//
+	KAO(SUBARU,"1","1","1")//
+
+	CAM_move(5750,-9560,20,0,0)
+	CAM(640,140,20,28,298,0,0)
+	CAM_move(5750,-9560,40,210,0)
+	CAM(470,100,40,28,324,210,0)
+
+	wait_BGM()
+	BGM(12)
+//	BGM(52)
+//	BGM(61)
+
+	fade_in(0,120,0)
+	wait_fade()
+	wait_CAM_move()
+	wait_CAM()
+
+	cross_fade(30)
+//	CAM_move(5750,-9680,60,0,0)
+//	CAM(110,68,60,22,324,0,0)
+//	CAM_move(5670,-9720,56,600,0)
+//	CAM(-10,68,56,22,316,600,0)
+	CAM_move(5630,-9760,120,0,0)
+	CAM(-290,80,120,22,316,0,0)
+	CAM_move(5630,-9640,80,900,0)
+	CAM(-170,84,80,22,302,900,0)
+	wait(30)
+
+	KAO(EVENT_RAGNA,"12321Z2","123332A","1")//
+	MES(EVENT_RAGNA,"原来如此啊……",0)
+	KAO(EVENT_RAGNA,"12321Z5","A","1")//
+	MES(EVENT_RAGNA,"看到了我的安卡基亚和\n公主的魔法的缘故啊。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(SUBARU)
+	KAO(SUBARU,"12321Z5","1236","6")//
+	MES(SUBARU,"是的！\n真是、超棒的忍者武器啊！",0)
+	KAO(SUBARU,"12321Z8","3","6")//
+	MES(SUBARU,"而且、那地魔法和水魔法、\n至今可是从来没见过的……",0)
+	KAO(SUBARU,"12321Z5","6","7")//
+	MES(SUBARU,"看了一眼就、\n相当的憧憬！",0)
+	MES_close(SUBARU)
+
+//　　拉古那和艾雯、相互面觑…マーク。
+	KAO(EVENT_RAGNA,"B","233321D","6")//
+	KAO(ALWEN,"B","233321D","6")//
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+
+	EFF(25120,	5920,-9400,130,	0,90,0)
+	EFF(25120,	5750,-9420,130,	0,90,0)
+//	EMO(EVENT_RAGNA,EMO_TENTEN)
+//	EMO(ALWEN,EMO_TENTEN)
+	wait(60)
+
+	MOT(SUBARU,151,12)
+	wait(15)
+//　　昴、跪下恳求的样子。
+	KAO(SUBARU,"B232BZ4","321","2")//
+	MES(SUBARU,"教我一点点也好！",0)
+	KAO(SUBARU,"B232BZ9","1","2")//
+	MES(SUBARU,"刚才那技艺和法术、\n我知道是不能那么简单的\n传授给他人的！",0)
+	KAO(SUBARU,"B232BZ6","1","5")//
+	MES(SUBARU,"但是我、非常想成为一个\n有能力的忍者……",0)
+	MES_close(SUBARU)
+
+	look_chr( ALWEN, SUBARU ,"Bone_Head")
+	look_chr( EVENT_RAGNA, SUBARU ,"Bone_Head")
+	KAO(EVENT_RAGNA,"1","D12321","1")//
+	KAO(ALWEN,"1","D12321","1")//
+	wait(30)
+
+//　　昴、跪地的动作。
+	KAO(SUBARU,"B","123","2")//
+	MOT(SUBARU,162,10)
+	wait(15)
+	KAO(SUBARU,"B232BZ4","3","2")//
+	MES(SUBARU,"请拜托了！",0)
+	KAO(SUBARU,"B232BZ7","3","2")//
+	MES(SUBARU,"从做饭到洗澡的伺候\n徒弟我什么都乐意！",0)
+	MES_close(SUBARU)
+	KAO(SUBARU,"B","321","2")//
+	look(SUBARU,"Bone_Head",0,0,0,7,0,0,70)
+	wait(10)
+	KAO(SUBARU,"B232BZ6","321","2")//
+	MES(SUBARU,"啊、我、我厨艺\n相当了得！",0)
+	KAO(SUBARU,"B232BZ6","1","2")//
+//	MES(SUBARU,"酱汤咸菜\n受到御代婆婆的亲手传授……",0)
+	MES(SUBARU,"酱汤咸菜\n从奶奶那里学到的……",0)
+	MES_close(SUBARU)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321FZ4","12332A","1")//
+	MES(ALWEN,"嗯嗯……\n这还真有诱惑力啊。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B","123","5")//
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ4","3","5")//
+	MES(EVENT_RAGNA,"公主……\n你怎么不说话。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"1","233321","1")//
+	look_chr( EVENT_RAGNA, SUBARU ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","321","1")//
+	MES(EVENT_RAGNA,"那个……是叫昴吗。",0)
+	KAO(EVENT_RAGNA,"B232BZ3","1","1")//
+	MES(EVENT_RAGNA,"快起来吧。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　昴、抬起了头路出高兴的表情。
+	look(SUBARU,"Bone_Head",0,0,0,14,0,0,0)
+	MOT(SUBARU,2,15)
+	wait(5)
+	look(SUBARU,"Bone_Head",0,0,0,7,0,0,0)
+	wait(13)
+	rot(SUBARU,30,190)
+	KAO(SUBARU,"12321Z2","1236","6")//
+	MES(SUBARU,"那么……！",0)
+	MES_close(SUBARU)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232B","1233321","1")//
+	MES(EVENT_RAGNA,"还是、不行。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","1")//
+	MES(EVENT_RAGNA,"……教是可以、\n但我想你好像搞错了。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(SUBARU)
+	KAO(SUBARU,"F","321D","6")//
+	MES(SUBARU,"唉……",0)
+	MES_close(SUBARU)
+	wait_MES(SUBARU)
+
+//　　拉古那、アンカーギアを昴に見せる。
+	cross_fade(15)
+	CAM_move(5790,-9420,80,0,0)
+	CAM(-10,68,80,22,218,0,0)
+	CAM_move(5830,-9440,80,900,0)
+	CAM(70,74,80,22,204,900,0)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	KAO(ALWEN,"E","V","1")//
+	look_off(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,52,15)
+	EV("EV_1014")//ギア構えSE
+	wait(30)
+	EV("EV_wait_MOT")
+
+	KAO(EVENT_RAGNA,"12321Z5","123","1")//
+	MES(EVENT_RAGNA,"我的安卡基亚不仅仅\n是武器。",0)
+	KAO(EVENT_RAGNA,"12321Z8","3","1")//
+	MES(EVENT_RAGNA,"切、抓、投……\n在找寻财宝以及打猎时用的\n装有机关的自动机械。",0)
+	KAO(EVENT_RAGNA,"12321Z3","321","1")//
+	MES(EVENT_RAGNA,"喂、你明白机械吗？",0)
+	MES_close(EVENT_RAGNA)
+//	wait_MOT(EVENT_RAGNA,52)
+//	look_chr( EVENT_RAGNA, SUBARU ,"Bone_Head")
+
+//	name2(SUBARU)
+	KAO(SUBARU,"12321Z4","1233321","1")//
+	MES(SUBARU,"那个……\n好像听过。",0)
+	MES_close(SUBARU)
+
+	wait_EV("EV_wait_MOT")
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z8","23332A","6")//
+	MES(EVENT_RAGNA,"嘛、因为是特别订造\n所以机械师和金钱\n都是很重要的事情。",0)
+	KAO(EVENT_RAGNA,"12321Z6","A","6")//
+	MES(EVENT_RAGNA,"而且呢定期的保养\n也是很重要的。",0)
+	KAO(EVENT_RAGNA,"12321Z5","A","6")//
+	MES(EVENT_RAGNA,"老实说呢、很麻烦的东西。",0)
+	MES_close(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,160,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z6","A233321","2")//
+	MES(EVENT_RAGNA,"……这个麻烦的东西\n怎么使用知道吗？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(SUBARU)
+	KAO(SUBARU,"B232BZ2","123332A","5")//
+	MES(SUBARU,"不知道、这个……",0)
+	MES_close(SUBARU)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z4","1233321","2")//
+	MES(EVENT_RAGNA,"这个是、商业道具。",0)
+	KAO(EVENT_RAGNA,"12321Z9","1","2")//
+	MES(EVENT_RAGNA,"因为工作需要、\n即使麻烦但也要一直使用的\n重要的伙伴。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(SUBARU)
+	KAO(SUBARU,"2","23332A","6")//
+	MES(SUBARU,"あ……",0)
+	KAO(SUBARU,"B","A","5")//
+	MES(SUBARU,"………………………………",0)
+	MES_close(SUBARU)
+
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","123","1")//
+	MES(EVENT_RAGNA,"啊、这样啊。",0)
+	KAO(EVENT_RAGNA,"12321Z5","3","1")//
+	MES(EVENT_RAGNA,"如果不是有必要的话\n一般是不用这家伙的。",0)
+	KAO(EVENT_RAGNA,"12321Z4","321","1")//
+	MES(EVENT_RAGNA,"每人都有、适合自己的东西。",0)
+	KAO(EVENT_RAGNA,"12321Z7","1","1")//
+	MES(EVENT_RAGNA,"剑啊、枪啊、刀什么的。\n乐器和圣书这样的武器也有。",0)
+	KAO(EVENT_RAGNA,"12321Z6","233321","1")//
+	MES(EVENT_RAGNA,"要好好考虑\n适合自己的武器对吗？",0)
+	MES_close(EVENT_RAGNA)
+
+//　　昴、うつむいてシュンとした表情となる。
+	KAO(SUBARU,"B","A23","5")//
+	look(SUBARU,"Bone_Head",0,0,0,2,0,0,-30)
+	wait(15)
+//	name2(SUBARU)
+	KAO(SUBARU,"B","3","5")//
+	MES(SUBARU,"………………………………",0)
+	MES_close(SUBARU)
+
+	KAO(ALWEN,"B","123","1")//
+	look_chr( ALWEN, SUBARU ,"Bone_Head")
+	wait(15)
+	KAO(ALWEN,"B232B","3","1")//
+	MES(ALWEN,"嗯……",0)
+	KAO(ALWEN,"B232BZ5","32A","1")//
+	MES(ALWEN,"我的魔法呢\n是与生俱来的。",0)
+	KAO(ALWEN,"12321Z9","A","5")//
+	MES(ALWEN,"正因为这样\n就算想教你\n也没有办法。",0)
+	MES_close(ALWEN)
+
+	wait_MES(ALWEN)
+	cross_fade(15)
+	CAM_move(5830,-9440,160,0,0)
+	CAM(70,36,160,22,10,0,0)
+	CAM_move(5830,-9440,140,600,0)
+	CAM(-50,38,140,22,10,600,0)
+	wait(15)
+
+//	name2(SUBARU)
+	KAO(SUBARU,"B232BZ2","3","5")//
+	MES(SUBARU,"………是、吗…………",0)
+	KAO(SUBARU,"B232BZ4","32L","5")//
+	MES(SUBARU,"……啊哈哈。\n我、真是笨蛋……",0)
+	KAO(SUBARU,"B232BZ8","L","5")//
+	MES(SUBARU,"爷爷也总是说\n三思而后行\n而我……",0)
+	KAO(SUBARU,"B","L23","5")//
+	MES(SUBARU,"………………………………",0)
+	MES_close(SUBARU)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ4","123","5")//
+	MES(EVENT_RAGNA,"……那个。\n不好、说过分了吗。",0)
+	MES_close(EVENT_RAGNA)
+
+	look(SUBARU,"Bone_Head",0,0,0,2,0,0,0)
+	MOT(SUBARU,2,15)
+	wait(15)
+//	name2(SUBARU)
+	KAO(SUBARU,"12321","3","5")//
+	MES(SUBARU,"不……",0)
+//　　昴、立ち上がってペコリと一礼する。
+	KAO(SUBARU,"12321Z7","32A","5")//
+	MES(SUBARU,"谢谢你\n安慰我\n我很清楚。",0)
+	MES_close(SUBARU)
+
+	KAO(SUBARU,"1","123","5")//
+	MOT(SUBARU,162,15)
+	wait(15)
+	KAO(SUBARU,"12321Z6","3","5")//
+	MES(SUBARU,"谢谢。\n拉古那、艾雯。",0)
+	MES_close(SUBARU)
+
+	MOT(SUBARU,2,15)
+	wait(15)
+	KAO(SUBARU,"12321Z3","32A","5")//
+	MES(SUBARU,"我……我这就回去了。",0)
+	MES_close(SUBARU)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BF","33321D","6")//
+	MES(EVENT_RAGNA,"喂、喂。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z4","23332A","1")//
+	MES(ALWEN,"嗯……\n路上小心。",0)
+	MES_close(ALWEN)
+
+	rot(SUBARU,30,160)
+	wait(15)
+//	name2(SUBARU)
+	KAO(SUBARU,"12321Z2","A236","5")//
+	MES(SUBARU,"啊哈哈、是的。",0)
+	KAO(SUBARU,"12321Z3","32A","5")//
+	MES(SUBARU,"您两人也请、小心。",0)
+	MES_close(SUBARU)
+
+	wait_MES(SUBARU)
+	cross_fade(15)
+	CAM_move(5830,-9540,100,0,0)
+	CAM(30,60,100,22,200,0,0)
+	look_off(EVENT_RAGNA)
+	look_del(EVENT_RAGNA)
+
+//　　昴、森之出口方面へとトボトボ去っていく。
+	KAO(SUBARU,"B","123","5")//
+	rot(SUBARU,30,0)
+	wait(30)
+	move( SUBARU, 0,	8, 5850,10214,0,0)
+
+//　　边目送、拉古那边挠头。
+	wait(30)
+	MOT(EVENT_RAGNA,53,15)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"B232BZ2","123","5")//
+//	MES(EVENT_RAGNA,"啊还有……",0)
+	MES_pos(EVENT_RAGNA,"啊啊还有……",0,0,0,0,0)
+	wait(50)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那、让昴站住的动作。
+//	CAM_move(5830,-9980,80,60,0)
+//	CAM(30,72,80,22,204,60,0)
+	KAO(ALWEN,"E","233321D","6")//
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	rot_chr( EVENT_RAGNA,30,SUBARU )
+	move( EVENT_RAGNA, 0,	9,5920,9664,0,0)
+	wait_move( EVENT_RAGNA )
+	MOT(EVENT_RAGNA,156,15)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"B232B2Z2","1","2")//
+	MES(EVENT_RAGNA,"──稍微等下。",0)
+	KAO(EVENT_RAGNA,"B232B2Z4","1","2")//
+	MES(EVENT_RAGNA,"我们也没说什么都不教你\n之类的话啊？",0)
+	MES_close(EVENT_RAGNA)
+	wait(15)
+
+	wait_move( SUBARU )
+	CAM_move(5860,-9940,100,30,0)
+	CAM(-130,64,100,20,190,30,0)
+	wait_CAM_move()
+	wait_CAM()
+
+//　　昴、ピタリと立ち止まる。
+	KAO(SUBARU,"F","321DE","7")//
+	MES(SUBARU,"唉……",0)
+	MES_close(SUBARU)
+
+//　　昴、拉古那之方に向き直る。
+	KAO(EVENT_RAGNA,"B","1","2")//
+	rot_chr(SUBARU,30,EVENT_RAGNA)
+	wait(30)
+
+	KAO(EVENT_RAGNA,"B","1233321T","1")//
+	MOT(EVENT_RAGNA,2,15)
+	look(EVENT_RAGNA,"Bone_Head",0,0,2,0,0,26,0)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ2","T","1")//
+	MES(EVENT_RAGNA,"这个、这个……",0)
+	KAO(EVENT_RAGNA,"B232BZ7","T123","1")//
+	MES(EVENT_RAGNA,"我不是很清楚\n这个安卡基亚是否合适你\n但是……",0)
+	KAO(EVENT_RAGNA,"B232BZ6","3","1")//
+	MES(EVENT_RAGNA,"机械的知识\n教你一些也是可以的。",0)
+	KAO(EVENT_RAGNA,"B232BZ8","3","1")//
+	MES(EVENT_RAGNA,"还有、风的运用和\n猎宝的技术也能\n教你一些。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(SUBARU)
+	KAO(SUBARU,"2","1233321","1")//
+	MES(SUBARU,"あ……",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"B","321","2")//
+	look(EVENT_RAGNA,"Bone_Head",0,0,2,0,0,0,0)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ7","1","2")//
+	MES(EVENT_RAGNA,"还有、能介绍一些\n适合你的老师。",0)
+	KAO(EVENT_RAGNA,"B232BZ8","1","2")//
+	MES(EVENT_RAGNA,"如果都不是你所向往的\n在当今、掌握些机械的知识\n也不是件坏事吧。",0)
+	MES_close(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,160,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z5","1232A","6")//
+	MES(EVENT_RAGNA,"─┲说的这些、怎么样？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(SUBARU)
+	KAO(SUBARU,"1","1233321","1")//
+	MES(SUBARU,"…………！",0)
+	MES_close(SUBARU)
+	wait_MES(SUBARU)
+
+//　　昴、跑到拉古那身前紧紧抱住。
+	MOT(SUBARU,1,5)
+	move( SUBARU, 30,15,5920,9778,0,0)	//★拉古那之手が昴にめり込まないよう仮調整
+	wait(15)
+	cross_fade(15)
+	MOT(EVENT_RAGNA,2,0)
+	look_off(SUBARU)
+	look_del(SUBARU)
+//	chr_pos(ALWEN,	  5800,9510,1,320,2)
+	chr_pos(ALWEN,	  5760,9600,1,330,2)
+	look_chr( ALWEN, SUBARU ,"Bone_Head")
+
+	CAM_move(5830,-10060,80,0,0)
+	CAM(30,66,80,22,310,0,0)
+	CAM_move(5830,-9810,80,30,0)
+	CAM(30,66,80,22,324,30,0)			//★昴之顔が良く見えるよう仮調整
+
+	wait_move( SUBARU )
+//	MOT(SUBARU,2,5)
+//	MOT(EVENT_RAGNA,150,15)
+	MOT(SUBARU,154,15)
+	MOT(EVENT_RAGNA,157,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232B","233321D","6")//
+	MES(EVENT_RAGNA,"喂、喂……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z2","123332A","6")//
+	MES(ALWEN,"呦呦。",0)
+	MES_close(ALWEN)
+
+//	name2(SUBARU)
+//	VOICE(774,0)		//★ボイス演出
+	KAO(SUBARU,"12321Z5","1236","6")//
+	MES(SUBARU,"谢谢！\n我、太高兴了！",0)
+	KAO(SUBARU,"12321Z5","3","6")//
+	MES(SUBARU,"太好了！\n请您一定教教我……！",0)
+//	VOICE(775,0)		//★ボイス演出
+	KAO(SUBARU,"12321Z5","321","6")//
+	MES(SUBARU,"那个那个！\n现在起叫师傅可以吗！？",0)
+	MES_close(SUBARU)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ4","1233321DE","7")//
+	MES(EVENT_RAGNA,"师、师傅！？\n这家伙还真……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(SUBARU)
+	KAO(SUBARU,"12321Z3","1232A","5")//
+	MES(SUBARU,"不、不能吗……？",0)
+	MES_close(SUBARU)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ5","D123","3")//
+	MES(EVENT_RAGNA,"……啊没事！\n高兴的话就叫吧！",0)
+	KAO(EVENT_RAGNA,"B232BZ5","321","3")//
+	MES(EVENT_RAGNA,"但是、现在不可以。\n我们还有一些重要的事情要做。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1","3")//
+	MES(EVENT_RAGNA,"事情办完了、\n马上就会教你。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1","3")//
+	MES(EVENT_RAGNA,"这样可以吗！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(SUBARU)
+	KAO(SUBARU,"12321Z3","236","6")//
+	MES(SUBARU,"是、拉古那师傅！",0)
+	MES_close(SUBARU)
+
+//　　昴、好不容易离开了拉古那。
+	KAO(SUBARU,"1","3","6")//
+	MOT(SUBARU,155,0)
+	MOT(EVENT_RAGNA,158,0)
+	wait(40)
+
+	move( SUBARU, 0,7,5920,9900,0,0)
+	wait_move( SUBARU )
+//	rot( SUBARU,30,180 )
+	rot( SUBARU,30,170 )
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+
+	KAO(SUBARU,"12321Z6","321","6")//
+	MES(SUBARU,"这样、我、\n去告诉爷爷！",0)
+	KAO(SUBARU,"12321Z5","1236","6")//
+	MES(SUBARU,"正式成为拉古那的\n徒弟的这件事！",0)
+	MES_close(SUBARU)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"2","1233321D","6")//
+	MES(EVENT_RAGNA,"S4唉。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(SUBARU)
+	KAO(SUBARU,"12321Z4","321","6")//
+	MES(SUBARU,"师傅、艾雯！",0)
+	KAO(SUBARU,"12321Z7","1","6")//
+	MES(SUBARU,"虽然不知道您有什么事情、\n但请你们一定要小心啊！",0)
+	MES_close(SUBARU)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z4","23332A","6")//
+	MES(ALWEN,"嗯。\n你也小心点。",0)
+	MES_close(ALWEN)
+
+//　　昴、行礼后、跳到树上
+//　　树木间飞跃瞬间消失。
+	MOT(SUBARU,162,12)
+	wait(25)
+	MOT(SUBARU,2,15)
+	wait(20)
+	rot( SUBARU,30,0 )
+	wait(30)
+	CAM_move(5830,-10560,80,45,2)
+	chr_pos(JUMP_SUBARU,5920,9900,0,0,2)
+	color(JUMP_SUBARU,1)
+	color(SUBARU,-1)
+	wait(1)
+	move( JUMP_SUBARU, 0,RUN1,5880,10600,0,0)
+	wait_move( JUMP_SUBARU )
+
+	chr_pos(ALWEN,	  5800,9510,1,350,2)
+	look_off(ALWEN)
+	look_del(ALWEN)
+
+	rot(JUMP_SUBARU,30,40)
+	wait(15)
+	F_set_chr(JUMP_SUBARU,CF_NO_HEIGHT)
+	F_set_chr(JUMP_SUBARU,CF_NO_ZIMEN)
+	MOT(JUMP_SUBARU,150,5)
+	wait(10)
+	VOICE(207,0)		//★ボイス演出
+//	VOICE(206,0)		//★ボイス演出
+	CAM_move(5830,-10560,280,15,0)
+//	EFF(6305,	5880,-10600,100,	0,80,0)
+	EFF_chr(6655, JUMP_SUBARU, 0,100,-1, "charbase0" )
+	look(JUMP_SUBARU,"Bone_Head",0,0,0,8,0,0,40)
+	MOT(JUMP_SUBARU,151,2)
+	jump(JUMP_SUBARU,2,30,-400,-400,0,400)
+	SE(1017,0)//瞬間移動SE
+	color(JUMP_SUBARU,-10)
+	wait_move( JUMP_SUBARU )
+	wait(30)
+
+	cross_fade(30)
+	CAM_move(5690,-9800,50,0,0)
+	CAM(30,90,50,22,324,0,0)
+	CAM_move(5716,-9880,40,900,0)
+	CAM(-10,90,40,22,336,900,0)
+	wait(30)
+
+	KAO(EVENT_RAGNA,"B232BZ2","1233321D","6")//
+	MES(EVENT_RAGNA,"…………………（惊讶）",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,150,15)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z4","23332A","6")//
+	MES(ALWEN,"呵呵……\n还真是像小狗狗一样的孩子呢。",0)
+	MES_close(ALWEN)
+
+	look_off(ALWEN)
+	rot(ALWEN,30,310)
+	wait(15)
+	KAO(ALWEN,"12321Z5","233321D","6")//
+	MES(ALWEN,"怎么了、拉古那？\n呆呆的表情。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","6")//
+	MES(EVENT_RAGNA,"啊没什么、徒弟……",0)
+	KAO(EVENT_RAGNA,"B232BZ3","1","6")//
+	MES(EVENT_RAGNA,"这不很突然吗？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z6","123","1")//
+	MES(ALWEN,"你到底还是\n接受了啊。",0)
+	KAO(ALWEN,"12321Z5","32","6")//
+	MES(ALWEN,"呵呵……\n要重新看待你喽、拉古那。",0)
+	KAO(ALWEN,"12321Z5","2","6")//
+	MES(ALWEN,"『人各有志』……",0)
+	KAO(ALWEN,"12321Z7","23","6")//
+	MES(ALWEN,"你也是呢、考虑了很多事情\n选择了自己的道路走到现在。",0)
+	MES_close(ALWEN)
+
+	look_off(EVENT_RAGNA)
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"C232CZ5","12","2")//
+	MES(EVENT_RAGNA,"喂喂……\n把我想成什么了？",0)
+	KAO(EVENT_RAGNA,"12321Z5","21","1")//
+	MES(EVENT_RAGNA,"呵呵……算了。\n这可能也是缘分吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(EVENT_RAGNA,151,15)
+	wait(15)
+//　　ここで拉古那、正在思考什么的表情。
+	KAO(EVENT_RAGNA,"12321Z2","123","6")//
+	MES(EVENT_RAGNA,"可是、昴……",0)
+	KAO(EVENT_RAGNA,"12321Z5","3","6")//
+	MES(EVENT_RAGNA,"身法轻盈、\n却那么瘦弱。",0)
+	KAO(EVENT_RAGNA,"12321Z7","3","6")//
+	MES(EVENT_RAGNA,"给他点训练什么\n让那个小家伙\n锻炼锻炼肌肉比较好。",0)
+	KAO(EVENT_RAGNA,"12321Z5","3","6")//
+	MES(EVENT_RAGNA,"嗯、至少也让\n小家伙……",0)
+	KAO(EVENT_RAGNA,"12321Z4","6","6")//
+	MES(EVENT_RAGNA,"决定了！\n先从肌肉开始、肌肉锻炼！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"F","321DE","7")//
+	MES(ALWEN,"…………………………………",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　艾雯之頭に…マーク。
+	EMO(ALWEN,EMO_TENTEN)
+	wait(60)
+
+//　　それに気付いた拉古那之頭に？マーク。
+	KAO(EVENT_RAGNA,"E","321D","6")//
+	MOT(EVENT_RAGNA,2,15)
+	EMO(EVENT_RAGNA,EMO_HATENA)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(30)
+	KAO(EVENT_RAGNA,"12321Z5","D","6")//
+	MES(EVENT_RAGNA,"嗯、什么？\n这么狡诈的表情……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z2","D123","6")//
+	MES(ALWEN,"啊啊……没什么。",0)
+	KAO(ALWEN,"12321Z6","3","6")//
+	MES(ALWEN,"你自己没有发现的话\n那也很有趣呢。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"F","1233321DE","7")//
+	MES(EVENT_RAGNA,"唉？",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,2,15)
+	rot(ALWEN,30,180)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z5","3","6")//
+	MES(ALWEN,"呵呵呵……\n人间也不是那么无聊。",0)
+	KAO(ALWEN,"12321Z4","3","6")//
+	MES(ALWEN,"这开始也变得有趣。",0)
+	MES_close(ALWEN)
+
+	move( ALWEN, 0,9,5804,9014,0,0)
+	wait(15)
+
+	rot(EVENT_RAGNA,30,180)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"C232C2Z2","1233321","2")//
+	MES(EVENT_RAGNA,"喂……\n什么啊这都是！？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(EVENT_RAGNA,"C","1","2")//
+	move( EVENT_RAGNA, 0,WALK1,5956,9164,0,0)
+
+//　　画面、渐渐的フェードアウト。
+//　　一拍おいてから画面フェードイン。
+//　　そ之ままイベント終了、プレイヤー操作許可。
+	//暗転
+	fade_in(100,60,0)
+	wait_fade()
+	stop_BGM(90)
+
+	wait_move( ALWEN )
+	wait_move( EVENT_RAGNA )
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(SUBARU)
+	delete(JUMP_SUBARU)
+
+	chr_pos(RAGNA,	  	6000,8500,1,180,2)
+	chr_pos(PARTNER,	5800,8500,1,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+//	F_reset_chr(RAGNA,CF_NO_CLIP)
+//	F_reset_chr(RAGNA,CF_NO_CLIP2)
+//	F_reset_chr(RAGNA,CF_NO_CSP)
+//	F_reset_chr(PARTNER,CF_NO_CLIP)
+//	F_reset_chr(PARTNER,CF_NO_CLIP2)
+//	F_reset_chr(PARTNER,CF_NO_CSP)
+
+	color(50,1)
+	color(90,1)
+	color(100,1)
+	color(91,1)
+	color(101,1)
+	color(92,1)
+	color(102,1)
+	color(55,1)
+	color(56,1)
+	color(57,1)
+	color(58,1)
+
+	CAM_return(0)
+	wait(90)
+
+	wait_BGM()
+	BGM(23)
+
+//ＧＦ『★森林中继地点见到昴』を立てる。
+	F_set(F2_02_MeetSubaru)
+	//★昴
+	F_set_note(-20,-1)
+	//★昴【料理】
+	F_set_note(-20,0)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+EV_wait_MOT
+{
+	wait_MOT(EVENT_RAGNA,52)
+	look_chr( EVENT_RAGNA, SUBARU ,"Bone_Head")
+}
+
+//ギア構えSE再生処理
+EV_1014
+{
+	wait(30)
+	SE(1014,0)
+}
+
+#EndScriptTable
+//====================================================================
+

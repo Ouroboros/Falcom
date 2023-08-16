@@ -1,0 +1,594 @@
+//■Zwei2一般メッセージ·亚尔迪镇（※谢斯塔）
+//────────────────────────────────────────────────────────────
+//■亚尔迪
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆谢斯塔（ピアニスト）Shestor")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_SHESTOR
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(SHESTOR, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,SHESTOR)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,SHESTOR)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,SHESTOR)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※熊猫楼·真ん中之円卓に座る。
+	//　　　谢斯塔之前にはグラスが置かれている。
+	//　　　谢斯塔は新聞を読んでいる。
+	//　　　谢斯塔に···エモーション出しっぱなし。
+	if( F6_05_EndSixth )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		if(!F_SHESTOR)
+		{
+		//　　※振り返らない。
+			MES(SHESTOR,"唔……看来，\n信息杂志上\n一点也没提到大事呢。",0)
+			MES(SHESTOR,"在伊鲁巴特近郊发生的异常天气……\n连络航班欠航──",0)
+			MES(SHESTOR,"还有那个龙卷和金色粒子，\n全都一句也没提到。",0)
+			MES(SHESTOR,"……呵呵，算了。\n就让这些骚动\n只留在我们的心中吧。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(SHESTOR,"要找瑟菲拉的话，\n她正好到罗亚鲁塔村去了。",0)
+			MES(SHESTOR,"好像是有什么重要的事情呢。",0)
+			MES(SHESTOR,"具体情况我不清楚……\n嗯，偶尔歇口气也不是件坏事。",0)
+			MES_close(SHESTOR)
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※酒场ステージでピアノを弾いている。
+	//　　※初回イベント
+	if( F6_00_GoToMeru )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+
+		if(!FT_12_TalkShestor)
+		{
+		//　　※初回イベント
+		//──────────────────────────────
+		//	name("□谢斯塔と話した事がある场合")
+			MES(SHESTOR,"……是你们啊。",0)
+			MES_close(SHESTOR)
+
+		//──────────────────────────────
+			MES(SHESTOR,"我都听说了。\n情况似乎\n相当棘手呢。",0)
+			MES(SHESTOR,"嗯，这种时候，\n让周围的人平静下来\n也是音乐家的使命啊。",0)
+			MES(SHESTOR,"停留在风暴之中\n不断地演奏，\n这样也不错……",0)
+			MES_close(SHESTOR)
+
+//			MES(RAGNA,"そ，そいつはちょっと……",0)
+			MES(RAGNA,"是吗……",0)
+			MES_close(RAGNA)
+
+//			MES(PARTNER,"うむ，あまり感心できぬ話だな。",0)
+			MES(PARTNER,"唔，相当高尚的品德呢。",0)
+			MES_close(PARTNER)
+
+//			MES(SHESTOR,"フフ，だが今之伊鲁巴特に\n絶対安全な场所なんてないんだろう？",0)
+//			MES(SHESTOR,"なら同じ事さ。",0)
+			MES(SHESTOR,"呵呵，因为事到如今，\n就算是惊慌失措也无处可逃啊。",0)
+			MES(SHESTOR,"如果愿意的话，\n你们也来听听吧。\n我想瑟菲拉也会高兴的。",0)
+			MES_close(SHESTOR)
+			F_set(FT_12_TalkShestor)
+
+		//──────────────────────────────
+
+		}
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"啊啊……\n是说瑟菲拉的歌\n和以往不同了吗？",0)
+				MES(SHESTOR,"呵呵，不止是歌哦。\n虽然不清楚是怎么回事，\n不过看样子她恢复状态了。",0)
+				MES(SHESTOR,"重新唱出了不知何时失去的美妙歌声……\n今天的舞台有一种不同的感觉。",0)
+				MES(SHESTOR,"嗯，可以的话就来听听吧。",0)
+				MES_close(SHESTOR)
+				F_set(SHESTOR)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(SHESTOR,"瑟菲拉的脚\n好像还没痊愈……",0)
+				MES(SHESTOR,"呵呵，算了，\n这次就尊重她本人的意愿吧。",0)
+				MES(SHESTOR,"……不用担心。\n我们会在歌手做出乱来的举动之前\n切实阻止她的。",0)
+				MES_close(SHESTOR)
+			}
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+	//　　※酒场１階階段下で，巴兰と話している。
+	//　　※初回イベント。
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		if(!FT_11_TalkShestor)
+		{
+			MES(SHESTOR,"瑟菲拉她……\n还以为怎么这么晚还不回来，\n没想到是扭伤了脚而倒下了。",0)
+			MES(SHESTOR,"这是位先生\n背她回来的。",0)
+			MES_close(SHESTOR)
+
+			//──────────────────────────────
+			//	name("□瑟菲拉と会った事がある")
+			if(FT_05_TalkCepheila || FT_01_TalkCepheila )
+			{
+				MES(RAGNA,"哦，是这样啊。",0)
+				MES(RAGNA,"那么，不要紧吧？\n要是扭得不好的话，\n可是很难恢复的……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□ない")
+				MES(RAGNA,"咦，那这还真是遭糕呢。",0)
+				MES(RAGNA,"那个……不要紧吧？",0)
+				MES(RAGNA,"要是扭得不好的话，\n可是很难恢复的……",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+			MES(SHESTOR,"啊，现在她正在２楼休息。",0)
+			MES(SHESTOR,"虽然她自己说没关系，\n不过现在的状况是她自己一个人根本站不起来。",0)
+			MES_close(SHESTOR)
+			F_set(FT_11_TalkShestor)
+
+			//★巴兰【瑟菲拉】
+			F_set_note(BAROM,2)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"瑟菲拉\n去布兰迪山丘练唱，\n回来的时候摔倒了。",0)
+				MES(SHESTOR,"她很粗心吧。\n哎呀呀，真是让人担心。",0)
+				MES(SHESTOR,"总之，舞台演出\n也暂时停止吧。",0)
+				MES(SHESTOR,"因为只靠一个人也没法完成呢。",0)
+				MES_close(SHESTOR)
+
+			//	MES(RAGNA,"（うーん，しばらく村に\n  帰ってない間にそんな事がなあ……）",0)
+			//	MES_close(RAGNA)
+			//
+			//	MES(PET,"（しばらくって言っても，\n  ほん之一日二日だけどね。）",0)
+			//	MES_close(PET)
+			//
+			//	MES(RAGNA,"（うっ……そりゃそうだが。\n  そ之，気分的にな。）",0)
+			//	MES_close(RAGNA)
+				F_set(SHESTOR)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(SHESTOR,"找瑟菲拉的话，\n她现在正在２楼休息。",0)
+				MES(SHESTOR,"总之，舞台演出\n也暂时停止吧。",0)
+				MES(SHESTOR,"因为只靠一个人也没法完成呢。",0)
+				MES_close(SHESTOR)
+			}
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//7/24イベント追加しました。
+
+	//　　※フラグ⑤で瑟菲拉が布兰迪山丘に配置されている场合之み出現。
+	//　　※布兰迪山丘に来ている。
+	//　　　左側から，空や景色を眺めているような雰囲気。
+	if( F4_09_GoShrineMia && FT_05_CepheilaSt)
+	{
+		//　　※初回イベント
+		if(!FT_10_TalkShestor)
+		{
+			//────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"咦……？",0)
+				MES(RAGNA,"这不是那个弹钢琴的吗。\n这么早在干什么呢……？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□艾尔雯先頭")
+				MES(PARTNER,"唔……？",0)
+				MES(PARTNER,"我记得，你是\n这个镇上的钢琴家吧。",0)
+				MES_close(PARTNER)
+
+				MES(RAGNA,"这么一大早的，\n在干什么呢……？",0)
+				MES_close(RAGNA)
+			//────────────────────────
+			}
+
+			rot_chr(SHESTOR,30,PLAYER1)
+			wait(30)
+			MES(SHESTOR,"哦，是你们啊。",0)
+			MES(SHESTOR,"也没什么，\n就是早晨散步而已。",0)
+			MES(SHESTOR,"这里是我喜欢的地方。",0)
+			MES_close(SHESTOR)
+
+			//────────────────────────
+			//	name("□艾尔雯先頭")
+			if(GW_MAN==0)
+			{
+				MES(RAGNA,"说起来……\n这里的空气似乎很清澈，\n或许正是个散步的好地方。",0)
+				MES(RAGNA,"那个歌手\n好像也常常到这里练习……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□拉古那先頭")
+				MES(PARTNER,"唔，这个山丘的空气\n似乎一直都很清澈，\n或许正适合散步。",0)
+				MES(PARTNER,"那位歌手\n似乎也时常到这里来练习……",0)
+				MES_close(PARTNER)
+			}
+			//────────────────────────
+
+		//　　谢斯塔にＰＡエモーション。
+			EMO(SHESTOR,EMO_PA)
+			wait(30)
+			MES(SHESTOR,"啊啊，原来如此。\n听了瑟菲拉的话的\n就是你们吗。",0)
+			MES_close(SHESTOR)
+
+		//　　谢斯塔，辺りを見渡す。
+			MES(SHESTOR,"建议她到这里来的\n就是我啊。",0)
+			MES(SHESTOR,"嗯，最近她似乎走进瓶颈了，\n我想改变一下环境或许会好些。",0)
+			MES(SHESTOR,"歌手陷入低谷，\n他人也无法\n从旁帮助……",0)
+			MES(SHESTOR,"不过，总还是\n会稍微有些担心。",0)
+			MES_close(SHESTOR)
+
+		//　　★谢斯塔【散步を進言】
+			F_set_note(SHESTOR,2)
+			F_set(FT_10_TalkShestor)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+		//　　※振り向かない。
+			MES(SHESTOR,"呼，不过\n早上的空气果然很舒服呢。",0)
+			MES_close(SHESTOR)
+
+		//　　谢斯塔，軽く振り向く。
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"……你们找我\n有什么事吗？",0)
+			MES(SHESTOR,"因为你们看起来\n好像有点急的样子。",0)
+			MES_close(SHESTOR)
+			look_off(SHESTOR)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※熊猫楼前之壊された木箱，あるいは荒らされた付近で片付けている。
+	if( F4_00_StartSolo )
+	{
+		rot_chr(SHESTOR,30,PLAYER1)
+		if(!F_SHESTOR)
+		{
+			MES(SHESTOR,"今天替店里帮忙。\n做些打扫整理的事。",0)
+			MES(SHESTOR,"嗯，现在这个样子，\n客流量也会暂时减少吧。",0)
+			MES(SHESTOR,"况且，也不好意思\n让老板自己处理这么麻烦的事……",0)
+			MES(SHESTOR,"所以多少也帮些忙吧。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(SHESTOR,"话说回来……\n街上居然有魔物肆虐呢。",0)
+			MES(SHESTOR,"虽说我也挺习惯\n麻烦事了，不过\n被魔物破坏了舞台演出倒还是第一次。",0)
+			MES(SHESTOR,"唔……\n觉得事有蹊跷的\n难道只有我吗？",0)
+			MES_close(SHESTOR)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※熊猫楼２階，一番右之部屋で窓から外を見ている。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_SHESTOR)
+		{
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"今晚的舞台演出临时取消──\n我们就这样待命吧。",0)
+			MES(SHESTOR,"……就看老板的通知吧。",0)
+			MES(SHESTOR,"虽然不大清楚情况，\n不过事态看来是有点紧急呢。",0)
+			MES_close(SHESTOR)
+
+			F_set(SHESTOR)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(SHESTOR,"虽然如此……",0)
+			MES_close(SHESTOR)
+
+		//　　谢斯塔，瑟菲拉之ほうを向く。
+			look_chr(SHESTOR,CEPHEILA,"Bone_Head")
+			MES(SHESTOR,"瑟菲拉睡着了吗……\n她比以前\n更能睡了啊。",0)
+			MES(SHESTOR,"最近她状态似乎不太好，\n是积劳过度了吗……？",0)
+			MES_close(SHESTOR)
+		}
+//		look_off(SHESTOR)
+		look_chr(SHESTOR,94,"Bone_Head")
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵之正体が明かされた
+	//──────────────────────────────
+	//　　※カウンター近く，提欧之傍に立って話している
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_SHESTOR)
+		{
+			look_chr(TEO,SHESTOR,"Bone_Head")
+		//　　※振り返らない。
+			MES(SHESTOR,"嗯，我正在读\n借来的杂志。",0)
+			MES(SHESTOR,"呵呵，要是能有刊登\n历史考察的版面就好了。",0)
+			MES(SHESTOR,"虽然我对古董并不在行，\n不过对于隐藏在事物背后的故事，\n我还是很有共鸣的哦。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+			look_off(TEO)
+		}
+		else
+		{
+		//　　★繰り返し
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"那个……你们几位。\n你们见到过瑟菲拉吗？",0)
+			MES(SHESTOR,"虽说应该是出去练习了，\n但却没回来呢。",0)
+			MES(SHESTOR,"……嗯，算了。\n反正今天也没法公演。",0)
+			MES_close(SHESTOR)
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※熊猫楼·真ん中之円卓に座る。
+	//　　　本を読んでいる。
+	//　　　···エモーション出しっぱなし。
+	if( F2_00_GoForest )
+	{
+		EV_stop("TENTEN_SHESTOR")
+		if(!F_SHESTOR)
+		{
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"嗯……是说这本书吗？",0)
+			MES(SHESTOR,"书名是『蘑菇们的挽歌』──\n以喜欢蘑菇为主题\n的随笔集。",0)
+			MES_close(SHESTOR)
+
+			MES(PLAYER1,"蘑，蘑菇……？",0)
+			MES_close(PLAYER1)
+
+			MES(SHESTOR,"啊啊，我很喜欢看书，\n而且这本相当独特有趣。",0)
+			MES(SHESTOR,"是推荐书目之一哦。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+		}
+	//　　★繰り返し
+		else
+		{
+			look_chr(SHESTOR,CEPHEILA,"Bone_Head")
+			MES(SHESTOR,"不过话说回来……\n瑟菲拉还在聊天吗。",0)
+			MES(SHESTOR,"嗯，其实无所谓，只要\n不给其他客人添麻烦就好。",0)
+			MES_close(SHESTOR)
+		}
+		look_off(SHESTOR)
+		EV("TENTEN_SHESTOR")
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※熊猫楼·真ん中之円卓に座る。
+	//　　　谢斯塔之前には食事皿が置かれている。
+	if( F1_15_GoVillage )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		
+	//　　※初回イベント（瑟菲拉と共通之ＧＦ）
+		if(!FT_02_TalkCepShes)
+		{
+			MES(SHESTOR,"哎呀，不好意思。\n今天没有表演。",0)
+			MES(SHESTOR,"舞台演出也是需要休息的。",0)
+			MES(SHESTOR,"晚上还会有公演。\n愿意的话就来听吧。",0)
+			MES_close(SHESTOR)
+			F_set(FT_02_TalkCepShes)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"我们正在演奏旅行的途中，\n至今已经在许多地方\n进行了公演……",0)
+				MES(SHESTOR,"这里的舞台很不错。",0)
+				MES(SHESTOR,"融合了不同的文化，\n形成了\n非常平静的气氛。",0)
+				MES(SHESTOR,"看来这是老板的兴趣啊。\n真是相当不错的品味。",0)
+				MES_close(SHESTOR)
+				//　　★谢斯塔【演奏旅行中】
+				F_set_note(SHESTOR,0)
+				F_set(SHESTOR)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(SHESTOR,"虽然考虑着\n是不是该到另一个大陆去了……",0)
+				MES(SHESTOR,"可是那里就不一定\n会有这里的气氛了。",0)
+				MES(SHESTOR,"呵呵，是沉浸在美味的料理中时\n不知不觉地又留了下来吧？",0)
+				MES_close(SHESTOR)
+
+				//──────────────────────────────
+				//	name("□艾尔雯先頭")
+				if( GW_MAN==0)
+				{
+					MES(PARTNER,"唔，这点我同意。",0)
+					MES_close(PARTNER)
+
+				//　　拉古那に冷や汗エモーション。
+					EMO(RAGNA,EMO_HIYAASE)
+					wait(30)
+				}
+				//──────────────────────────────
+			}
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※酒场ステージでピアノを弾いている。
+	if( F1_01_GameStart )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		if(!FT_01_TalkShestor)
+		{
+		//　　※初回イベント。
+			MES(SHESTOR,"喂喂……\n有人会在演奏中的时候爬上来吗。",0)
+			MES(SHESTOR,"他人的演出，\n是应该默默地侧耳倾听的吧。",0)
+			MES_close(SHESTOR)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"……啊，对不起。",0)
+				MES(RAGNA,"不知不觉就……",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾尔雯先頭")
+			{
+				MES(PARTNER,"唔，真是对不起。",0)
+				MES(PARTNER,"我只是想\n上来一次看看。",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			MES(SHESTOR,"呵呵，算了。",0)
+			MES(SHESTOR,"……坐下如何。\n你们会得到享受的。",0)
+			MES_close(SHESTOR)
+
+			F_set(FT_01_TalkShestor)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"瑟菲拉的歌唱得很不错吧。\n虽然纤细却有很强的穿透力。",0)
+				MES(SHESTOR,"虽然作为歌手，\n她还有许多有待磨练的地方。",0)
+				MES(SHESTOR,"不过她的歌声却是非常棒的。\n嗯，你们就细细听吧。",0)
+				MES_close(SHESTOR)
+				F_set(SHESTOR)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(SHESTOR,"你们，\n是游人吗？",0)
+				MES(SHESTOR,"总之，今后请多关照。",0)
+				MES_close(SHESTOR)
+			}
+
+		}
+		look_off(SHESTOR)
+	}
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

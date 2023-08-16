@@ -1,0 +1,1695 @@
+//──────────────────────────────
+//	name("◆カッパ（ミニゲーム）")
+//──────────────────────────────
+//────────────────────────────────────────────────────────────
+//　　※星降りの里の井戸に、カッパが住んでいます。
+//　　　話しかけるとミニゲーム（サブルート扱い）を遊ぶ事ができます。
+//　　※発動範囲に、特に制限はありません。
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_KAPPA
+{
+	TK_begin()
+	rot_chr(KAPPA,30,PLAYER1)
+
+	rot_chr(PLAYER1,60,KAPPA)
+	rot_chr(PLAYER2,60,KAPPA)
+	rot_chr(PET,60,KAPPA)
+	
+	KAO(PLAYER1,"1","1","1")//デフォルト
+	KAO(PLAYER2,"1","1","1")//デフォルト
+	KAO(PET,"1","1","1")//デフォルト
+
+	workG(GW_SKI_MISS,SET,0)	//ミスの回数を初期化
+	workG(GW_SKI_DOWN,SET,0)	//難易度ダウンを初期化
+
+	if( !FV_FF_TalkKappa )
+	{
+	//▼カッパに会うのが初回
+	//　　※井戸のＬＰを調べると、選択肢が出ます。
+	//	name("選択テキスト")
+
+		workL(WK_CANCEL,SET,2)//【やめる】
+		MES_pos(PLAYER1,"??W9【１００ペンネ入れる】\n【入れない】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		if(WK_YESNO==1)
+		{
+		//	name("□「１００ペンネ入れる」でお金が足りない")
+			if(SP002<100)												//何故か判定できない．．．
+			{
+				MES(0,"C3S2所持金が足りない……",2)
+				MES_close(0)
+			}
+			else
+			{
+			//	name("□「１００ペンネ入れる」でお金がある")
+				//　　※所持金を１００ペンネ減らす。
+				SE(008,PLAYER1)
+				get_gold(-100,RAGNA)
+				wait(30)
+
+				EMO(KAPPA,EMO_TENTEN)
+				wait(30)
+
+				//　　井戸からカッパが顔を出す。
+				rot_chr(KAPPA,30,PLAYER1)
+				move(KAPPA,2,RUN1,0,0,220,0)
+				wait_move(KAPPA)
+				wait(20)
+
+				MES(KAPPA,"なに君たち。\n今何かした？",0)
+				MES(KAPPA,"何かしたでしょ。\n僕のお皿にこちんって……",0)
+				MES_close(KAPPA)
+				wait_MES(KAPPA)
+
+			//　　カッパに．．．エモーション。
+				EMO(KAPPA,EMO_TENTEN)
+				wait(30)
+
+				MES(KAPPA,"まあいいや。\n丁度ヒマだったし。",0)
+				MES(KAPPA,"……遊ぶ？",0)
+				MES_close(KAPPA)
+			//	F_set(FV_FF_TalkKappa)
+
+				workL(WK_CANCEL,SET,2)//【やめる】
+				MES_pos(PLAYER1,"??W9【挑戦する】\n【やめとく】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//閉じきるまで待つ
+
+				if(WK_YESNO==1)
+				{
+				//	name("□「Ｌｖ１に挑戦」")
+
+					if(IT003>0)
+					{
+						F_set(FV_FF_TalkKappa)
+
+					//	name("□グライドギアに改造済みの場合")
+						MES(KAPPA,"うん、分かったし。",0)
+						MES_close(KAPPA)
+
+						move(KAPPA,2,RUN1,0,0,-220,0)
+						F_set_note(-80,-1)
+						fade_in( 100, 60, BLACK)	//暗転
+						wait_fade()
+
+						if(SP004==5)
+						{
+							workG(GW_SKI_PARTNER,SET,5)	//オデッサ
+						}
+						else if(SP004==12)
+						{
+							workG(GW_SKI_PARTNER,SET,12)	//オデッサ
+						}
+						else if(SP004==13)
+						{
+							workG(GW_SKI_PARTNER,SET,13)	//オデッサ
+						}
+						else if(SP004==6)
+						{
+							workG(GW_SKI_PARTNER,SET,6)	//スバル
+						}
+						else if(SP004==1)
+						{
+							workG(GW_SKI_PARTNER,SET,1)	//アルウェン
+						}
+
+						clear_party(PARTNER)	//パートナー消去
+
+						workG(GW_ENTRY_EVENT,SET,1)
+						new_map(10490)
+					}
+					else
+					{
+					//	name("□まだグライドギアに改造していない")
+						EV("KAPPA_Gia_Check")
+						wait_EV("KAPPA_Gia_Check")
+						F_set(FV_FF_TalkKappa)
+					}
+				}
+				else
+				if(WK_YESNO==2)//□「やめとく」
+				{
+					F_set(FV_FF_TalkKappa)
+
+					MES(KAPPA,"あっそ、まあいいや。",0)
+					MES(KAPPA,"また別の人を誘うし。",0)
+					MES_close(KAPPA)
+
+				//　　カッパ、井戸の中に消えていく。
+					move(KAPPA,2,RUN1,0,0,-220,0)
+					F_set_note(-80,-1)
+					wait_move(KAPPA)
+					wait(20)
+
+				}
+			}
+		}
+		else
+		if(WK_YESNO==2)//□「入れない」
+		{
+		}
+	}
+	else	//▼２回目以降-----------------------------------------------------------------------------------------------------------------------------
+	{
+	//　　※井戸のＬＰを調べると、選択肢が出ます。
+		workL(WK_CANCEL,SET,2)//【やめる】
+		MES_pos(PLAYER1,"??W9【１００ペンネ入れる】\n【入れない】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		if(WK_YESNO==1)
+		{
+		//	name("□「１００ペンネ入れる」でお金が足りない")
+			if(SP002<100)												//何故か判定できない．．．
+			{
+				MES(0,"C3S2所持金が足りない……",2)
+				MES_close(0)
+			}
+			else
+			{
+			//	name("□「１００ペンネ入れる」でお金がある")
+				//　　※所持金を１００ペンネ減らす。
+				SE(008,PLAYER1)
+				get_gold(-100,RAGNA)
+				wait(30)
+
+				//　　井戸からカッパが顔を出す。
+				rot_chr(KAPPA,30,PLAYER1)
+				move(KAPPA,2,RUN1,0,0,220,0)
+				wait_move(KAPPA)
+				wait(20)
+
+				if(IT003<=0)
+				{
+				//	name("□まだグライドギアに改造していない")
+					EV("KAPPA_Gia_Check")
+					wait_EV("KAPPA_Gia_Check")
+				}
+				else
+				{
+					if(!F_KAPPA)
+					{
+					//　　□ＬＦが立ってない（１回目）
+						MES(KAPPA,"君たち……\nひょっとしてヒマ？",0)
+						MES(KAPPA,"実は僕もヒマ。",0)
+						MES(KAPPA,"昔は大きな社で\n番をしてたんだけど。",0)
+						MES(KAPPA,"もう人間に譲っちゃったから\n特にやる事もないし。",0)
+						MES(KAPPA,"……遊ぶ？",0)
+						MES_close(KAPPA)
+						//★カッパ【社の番人】
+						F_set_note(-80,0)
+						F_set(KAPPA)
+					}
+					else
+					{
+					//	name("□ＬＦが立っている（繰り返し）")
+						MES(KAPPA,"……ヒマだね、お互い。",0)
+						MES(KAPPA,"遊ぶ？",0)
+						MES_close(KAPPA)
+					}
+
+				//──────────────────────────────
+				//　　※以下は、挑戦できるコースまでを選択肢表示。
+				//　　　できれば前回挑戦時のコースを記憶しておきたい。
+
+//					F_set(FV_FF_KappaSki_04)	// デバッグ
+
+					if( FV_FF_KappaSki_03 || FV_FF_KappaSki_04 )
+					{
+						// LV3以上をクリアしている
+						workL(WK_CANCEL,SET,5)//【やめる】
+						MES_pos(PLAYER1,"??W9【Ｌｖ４に挑戦】\n【Ｌｖ３に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//閉じきるまで待つ
+						if(WK_YESNO==1)
+							workL(WK_YESNO,SET,4)	//強制変更
+						else if(WK_YESNO==2)
+							workL(WK_YESNO,SET,3)	//強制変更
+						else if(WK_YESNO==3)
+							workL(WK_YESNO,SET,2)	//強制変更
+						else if(WK_YESNO==4)
+							workL(WK_YESNO,SET,1)	//強制変更
+					}
+					else if( FV_FF_KappaSki_02)
+					{
+						// LV2をクリアしている
+						workL(WK_CANCEL,SET,4)//【やめる】
+						MES_pos(PLAYER1,"??W9【Ｌｖ３に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//閉じきるまで待つ
+						if(WK_YESNO==1)
+							workL(WK_YESNO,SET,3)	//強制変更
+						else if(WK_YESNO==2)
+							workL(WK_YESNO,SET,2)	//強制変更
+						else if(WK_YESNO==3)
+							workL(WK_YESNO,SET,1)	//強制変更
+						else if(WK_YESNO==4)
+							workL(WK_YESNO,SET,5)	//「やめとく」を５に強制変更
+					}
+					else if( FV_FF_KappaSki_01)
+					{
+						// LV1をクリアしている
+						workL(WK_CANCEL,SET,3)//【やめる】
+						MES_pos(PLAYER1,"??W9【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//閉じきるまで待つ
+						if(WK_YESNO==1)
+							workL(WK_YESNO,SET,2)	//強制変更
+						else if(WK_YESNO==2)
+							workL(WK_YESNO,SET,1)	//強制変更
+						else if(WK_YESNO==3)
+							workL(WK_YESNO,SET,5)	//「やめとく」を５に強制変更
+					}
+					else
+					{
+						// まだクリアしていない
+						workL(WK_CANCEL,SET,2)//【やめる】
+						MES_pos(PLAYER1,"??W9【挑戦する】\n【やめとく】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//閉じきるまで待つ
+						if(WK_YESNO==2)
+							workL(WK_YESNO,SET,5)	//「やめとく」を５に強制変更
+					}
+
+					if(WK_YESNO<5)
+					{
+					//	name("□Ｌｖ１～Ｌｖ４")
+						MES(KAPPA,"うん、分かったし。",PAUSE,CLR)
+						MES_close(KAPPA)
+					//	name("該当レベルのスキーマップのイベントに繋げる。")
+						move(KAPPA,2,RUN1,0,0,-220,0)
+						fade_in( 100, 60, BLACK)	//暗転
+						wait_fade()
+
+						workG(GW_ENTRY_EVENT,SET,1)	//スキー開始
+
+						workG(GW_SKI_PARTNER,SET,0)	//ラグナだけ
+						if(SP004==5)
+						{
+							workG(GW_SKI_PARTNER,SET,5)	//オデッサ
+						}
+						else if(SP004==12)
+						{
+							workG(GW_SKI_PARTNER,SET,12)	//オデッサ
+						}
+						else if(SP004==13)
+						{
+							workG(GW_SKI_PARTNER,SET,13)	//オデッサ
+						}
+						else if(SP004==6)
+						{
+							workG(GW_SKI_PARTNER,SET,6)	//スバル
+						}
+						else if(SP004==1)
+						{
+							workG(GW_SKI_PARTNER,SET,1)	//アルウェン
+						}
+
+						clear_party(PARTNER)	//パートナー消去
+
+						if(WK_YESNO==4)
+							new_map(10493)
+						else if(WK_YESNO==3)
+							new_map(10492)
+						else if(WK_YESNO==2)
+							new_map(10491)
+						else
+							new_map(10490)
+					}
+					else
+					{
+					//	name("□「やめとく」")
+
+						MES(KAPPA,"あっそ、まあいいや。",0)
+						MES(KAPPA,"また別の人を誘うし。",0)
+						MES_close(KAPPA)
+
+					//　　カッパ、井戸の中に消えていく。
+						move(KAPPA,2,RUN1,0,0,-220,0)
+						wait_move(KAPPA)
+						wait(20)
+					}
+				}
+			}
+		}
+		else
+		{
+		//	name("□「入れない」")
+		}
+	}
+
+	TK_end()
+}
+
+//	name("□まだグライドギアに改造していない")
+KAPPA_Gia_Check
+{
+
+	//	name("この話を聞くのが初回")
+	if(!FV_FF_Kappa_TkGia)
+	{
+		if(!FV_FF_TalkKappa)
+		{
+		//カッパに初めて話しかけて「挑戦する」を選んだ場合
+			MES(KAPPA,"うん、分かったし。",0)
+			MES_close(KAPPA)
+		}
+		else
+		{
+		//カッパに初めて話しかけて「やめとく」を選び、再びカッパに話しかけた場合
+		//	MES(KAPPA,"◆やっぱり遊びたいんじゃん。\nみたいなメッセージ",0)
+			MES(KAPPA,"なんだ、やっぱり遊びたいんじゃん。",0)
+			MES(KAPPA,"うん、分かったし。",0)
+			MES_close(KAPPA)
+		}
+	//　　カッパ、一度頭を引っ込めるが、途中でまた出てくる。
+		move(KAPPA,2,RUN1,0,0,-150,0)
+		wait_move(KAPPA)
+		move(KAPPA,2,RUN2,0,0, 150,0)
+		wait_move(KAPPA)
+
+		MES(KAPPA,"ってあれ、君たち\nまだ滑れないじゃん。",0)
+		MES(KAPPA,"ダメダメ、そんなのじゃ。\n星ヶ峰の雪原は乗り切れないし。",0)
+		MES(KAPPA,"まあ、『滑れる』ように\nなったらまた来てよ。\n無理かもしんないけど。",0)
+		MES_close(KAPPA)
+		F_set(FV_FF_Kappa_TkGia)
+	}
+	else
+	{
+		MES(KAPPA,"だから、君たち\nまだ滑れないでしょ？",0)
+		MES(KAPPA,"それじゃ遊べないし。\n星ヶ峰の雪原は乗り切れないし。",0)
+		MES(KAPPA,"まあ、どこかで\nいいアイテムでも見つけて……",0)
+		MES(KAPPA,"『滑れる』ように\nなったらまた来てよ。",0)
+		MES_close(KAPPA)
+	}
+
+	//　　カッパ、頭を引っ込めてしまう。
+	move(KAPPA,2,RUN1,0,0,-220,0)
+	F_set_note(-80,-1)
+	wait_move(KAPPA)
+	wait(20)
+
+}
+
+
+
+
+//──────────────────────────────
+//▼ゲーム終了後のイベント
+//　　ゲーム終了後、フェードインして
+//　　ラグナたちは星ヶ峰入り口マップに立っている。
+//　　カッパもその近くに立っている。
+//──────────────────────────────
+
+/*
+	//　　※初めて金メダルを取ったときのみ、
+	//　　　カッパが自分から步いてきます。（イベント自動起動）
+		MES(KAPPA,"……金メダルゲット！\nおめでとう。",0)
+		MES(KAPPA,"うん、中々やるね。\nカッパ的にも結構楽しかったし。",0)
+		MES(KAPPA,"そんな君たちには\n僕の取っておきをあげる。",0)
+		MES_close(KAPPA)
+
+	//　　カッパ、頭をかく。
+	//　　そのまま手を差し出す。
+		MES(KAPPA,"はいコレ。",0)
+		MES_close(アイテム入手メッセージ)
+
+	//	name("アイテム入手メッセージ")
+		MES(this,"『○○』を貰った。",0)
+		MES_close(this)
+
+	//　　※トレジャーを入手します。
+		MES(KAPPA,"まあこれで一応\nクリアな訳だけど。",0)
+		MES(KAPPA,"まだお遊びのコースも\n用意してあるし。",0)
+		MES(KAPPA,"また気が向いたら\n遊びに来てよ。",0)
+		MES_close(KAPPA)
+
+	//　　カッパ、定位置に戻っていく。
+
+*/
+
+//──────────────────────────────
+//　　※通常は、話しかけると成績に応じてメッセージを表示する。
+//──────────────────────────────
+//  1=スキーLV1クリア(銅)
+//  2=スキーLV2クリア(銀)
+//  3=スキーLV3クリア(金)
+//  4=スキーLV4クリア(プラチナ)
+//  5=スキークリア済みメダル
+//  6=スキー失敗(奈落)
+//  7=スキー失敗(死亡)
+//  8=スキー失敗(ツボ、おしい)
+//  9=スキー失敗(ダメージ)
+// 10=スキー失敗(タイム)
+// 11=スキー失敗(ツボ、足りない)
+// 12=スキー失敗(ツボ、ゼロ)
+// 13=スキー失敗(カッパに負けた)
+//
+// スキーのクリア判定は、カッパが行っています。
+// 規定内でクリアしていたとしても、カッパに話しかけないと、クリアしたことになりません。
+//
+
+TK_KAPPA2
+{
+	TK_begin()
+	rot_chr(KAPPA,30,PLAYER1)
+
+	rot_chr(PLAYER1,60,KAPPA)
+	rot_chr(PLAYER2,60,KAPPA)
+	rot_chr(PET,60,KAPPA)
+
+	KAO(PLAYER1,"1","1","1")//デフォルト
+	KAO(PLAYER2,"1","1","1")//デフォルト
+	KAO(PET,"1","1","1")//デフォルト
+
+// チェック用
+//	workL(00,SET,4)
+//	F_reset(F_KAPPA)
+//	F_set(FV_FF_KappaSki_04)
+//	workL(02,SET,4)
+//	F_reset(1975)
+
+	//初コースクリアは最優先
+	if(WK000==4 && !FV_FF_KappaSki_04)	// 初めてLV4をクリアしてきた
+	{
+	//　　□新しくプラチナメダルをゲットした。
+		F_set(FV_FF_KappaSki_04)	//プラチナ
+		if(!F200 && !F2859)		//２週目の場合、すでに持っている可能性がある
+		{
+			EV("TK_FIGURE")
+			wait_EV("TK_FIGURE")
+			F_set(200)
+		}
+		else
+		{
+			if(!F200)
+			{
+				MES(KAPPA,"……プラチナメダル！\nワンダフル。",0)
+				F_set(200)
+			}
+
+			MES(KAPPA,"ところでそのそのプラチナ、\nどこで採れたか知ってる？",0)
+			MES(KAPPA,"昔は魔法使いの中には\n錬金術師ってのがいてさ、\nそいつらが色々作ってたの。",0)
+			MES(KAPPA,"綺麗なブレスレットとか\n細工品とか、露天で色々売ってたし。",0)
+			MES(KAPPA,"でもね、それはちょっと別。\n端っこで売ってた安物だし。",0)
+			MES(KAPPA,"多分ノームか誰かが\n適当に掘り当てた横流し品だね。",0)
+			MES(KAPPA,"……もう一度やる？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	//魔法入手後１回だけ聞けるメッセージ。（アルウェンいるとき限定）（ＧＦ制御で１回のみ）
+	if(IT101>0 && !FV_FF_Kappa_TkMaho && GW_SKI_PARTNER==1 )
+	{
+		MES(KAPPA,"ああ、それね。\nある人から預かってたし。",0)
+		MES_close(KAPPA)
+
+	//　　カッパ、アルウェンの方に向く。
+		look_chr(KAPPA,PARTNER,"Bone_Head")
+
+		MES(KAPPA,"そうそう、確か\nそんな感じの杖を\n持ってる人だったし。",0)
+		look_off(KAPPA)
+		MES(KAPPA,"でもさ、長いこと預かってて\n普通に渡すのも癪でしょ？\nそう思うでしょ？",0)
+		MES(KAPPA,"だからレースのご褒美に\nする事にしたし。",0)
+		MES(KAPPA,"まあ……本当は\n昨日まで押入れの奥に\n忘れてただけだけど。",0)
+		MES(KAPPA,"……もう一回やるよね？",0)
+		MES_close(KAPPA)
+		//★カッパ【光の奥義】
+		F_set_note(-80,2)
+		F_set(FV_FF_Kappa_TkMaho)
+	}
+	else
+	//未入手で、既にＬｖ３クリア済みだが、アルウェンがいないため入手できない。（ＬＦ制御で１回目のみ）
+	if(IT101<0 && WK000!=3 && FV_FF_KappaSki_03 && GW_SKI_PARTNER!=1 && !F_KAPPA)
+	{
+		MES(KAPPA,"本当はね、今日は\n君たちにご褒美を用意しとく\nつもりだったし。",0)
+		MES(KAPPA,"まあ中々頑張ってるみたいだし、\nたまにはサービスするのも\nいいでしょ？　そうでしょ？",0)
+		MES(KAPPA,"……でもね、\n持ってくるの忘れたし。",0)
+		MES(KAPPA,"まあまた探しとくから、\n後でL337魔法が使える人と一緒に\n取りに来てよ。",0)
+		MES(KAPPA,"……もう一回やる？",0)
+		MES_close(KAPPA)
+		F_set(KAPPA)
+	}
+	else
+	if(WK002>0)	//同じレベルをクリア済みなので、雑談
+	{
+	//　　□クリア成績だったが、すでにメダルを入手済み。
+	//　　※ランダムでコネタを話します。
+
+		//ランダム設定はマップＩＮＩＴに埋め込む。
+		if(!F1975)//ヤサクの情報③を持っていない
+		{
+			workL(010,SET,2)//強制的に２にセット。
+		}
+
+		if(WK010==0)
+		{
+		//　　※パターン１
+			MES(KAPPA,"星ヶ峰ってさ、道狭いよね。",0)
+			MES(KAPPA,"しかも雪ばっかりだし。\nコースの雪かきも大変。",0)
+			MES(KAPPA,"……言ってる意味、分かるよね？",0)
+			MES_close(KAPPA)
+
+			workL(WK_CANCEL,SET,2)//【やめる】
+			MES_pos(PLAYER1,"??W9【はい】\n【いいえ】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			if(WK_YESNO==1)
+			{
+				MES(KAPPA,"うん、じゃあもう一度やる？",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				MES(KAPPA,"そう、じゃあもう一度やる？",0)
+				MES_close(KAPPA)
+			}
+		}
+		else
+		if(WK010==1)
+		{
+		//　　※パターン２
+		//　　カッパに．．．エモーション。
+			EFF_chr(25124,KAPPA,0,100,0,"Bone_Head")
+			wait(80)
+			
+			MES(KAPPA,"昨日オカンがさぁ……",0)
+			MES_close(KAPPA)
+
+		//　　カッパ、手を振って誤魔化す。
+			EV("MOTION_KAPPA")
+			wait_EV("MOTION_KAPPA")
+			
+			MES(KAPPA,"……やっぱやめ。\n何でもない、何でもないし。",0)
+			MES(KAPPA,"……もう一回やる？",0)
+			MES_close(KAPPA)
+		}
+		else
+		if(WK010==2)
+		{
+		//　　※パターン４
+			MES(KAPPA,"……人間の里にさ、\nヤサクって人いるよね。",0)
+			MES(KAPPA,"この前ばったり出くわして、\nマジびびったし。",0)
+			MES(KAPPA,"何なの、なんで\n熊とか被ってるわけ？",0)
+			MES(KAPPA,"ワケ分かんないし。\n思わず逃げちゃったじゃん。",0)
+			MES(KAPPA,"あ、そこ笑う所じゃないし。\nいきなり出くわしたら\n誰でもマジで怖いから。",0)
+			MES(KAPPA,"……はい、もう１回やるよね？",0)
+			MES_close(KAPPA)
+			//★カッパ【ヤサク】
+			F_set_note(-80,1)
+			//★ヤサク【カッパと知り合い】
+			F_set_note(-75,2)
+		}
+		else
+		if(WK010==3)
+		{
+		//　　※パターン５
+			MES(KAPPA,"昨日おみくじでさ、\n小吉だったんだよね。",0)
+			MES(KAPPA,"油断してると足元\nすくわれるかもって\n書いてあったし。",0)
+			MES(KAPPA,"…………………………",0)
+			MES_close(KAPPA)
+
+		//　　カッパ、手をバタバタ。
+			EV("MOTION_KAPPA")
+			wait_EV("MOTION_KAPPA")
+
+			MES(KAPPA,"……なに見てるの？\n別に僕って見世物じゃないし。",0)
+			MES(KAPPA,"はい、もう１回やるよね？",0)
+			MES_close(KAPPA)
+		}
+		else
+		if(WK010==4)
+		{
+		//　　※パターン３．伝説のの勇者限定。
+			MES(KAPPA,"あれ、君。\nいつの間にか伝説の赤毛とか\n呼ばれてるの？",0)
+			MES(KAPPA,"ちょっと生意気じゃない？\n全コース制覇したからって、\nちょっと生意気だし。",0)
+			MES(KAPPA,"あのね、言っとくけど\nこう見えて僕も結構強いし。",0)
+			MES(KAPPA,"昔は町内大会で\n優勝した事もあるし。",0)
+			MES(KAPPA,"……あ、いま\n昔の話ばっかり持ち出して\nウザイとか思ったでしょ。",0)
+			MES_close(KAPPA)
+
+			workL(WK_CANCEL,SET,2)//【やめる】
+			MES_pos(PLAYER1,"??W9【はい】\n【いいえ】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			if(WK_YESNO==1)
+			{
+				MES(KAPPA,"あっそう、じゃあ\nもう一度やる？",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				MES(KAPPA,"そう、じゃあもう一度やる？",0)
+				MES_close(KAPPA)
+			}
+		}
+	}
+	else
+	if(WK000==4)	// 今LV4をクリアしてきた
+	{
+	//　　□新しくプラチナメダルをゲットした。
+		F_set(FV_FF_KappaSki_04)	//プラチナ
+		if(!F200 && !F2859)
+		{
+			EV("TK_FIGURE")
+			wait_EV("TK_FIGURE")
+			F_set(200)
+		}
+		else
+		{
+			if(!F200)
+			{
+				MES(KAPPA,"……プラチナメダル！\nワンダフル。",0)
+				F_set(200)
+			}
+
+			MES(KAPPA,"ところでそのそのプラチナ、\nどこで採れたか知ってる？",0)
+			MES(KAPPA,"昔は魔法使いの中には\n錬金術師ってのがいてさ、\nそいつらが色々作ってたの。",0)
+			MES(KAPPA,"綺麗なブレスレットとか\n細工品とか、露天で色々売ってたし。",0)
+			MES(KAPPA,"でもね、それはちょっと別。\n端っこで売ってた安物だし。",0)
+			MES(KAPPA,"多分ノームか誰かが\n適当に掘り当てた横流し品だね。",0)
+			MES(KAPPA,"……もう一度やる？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	if(WK000==3)	// 今LV3をクリアしてきた
+	{
+	//　　□新しく金メダルをゲットした。
+		F_set(FV_FF_KappaSki_03)	//ゴールド
+		if(!F_KAPPA)
+		{
+			//	name("□アルウェンがいる")
+			if(GW_SKI_PARTNER==1)
+			{
+				MES(KAPPA,"……金メダルゲット！\nおめでとう。",0)
+				MES(KAPPA,"うん、中々やるね。\nカッパ的にも結構楽しかったし。",0)
+				MES(KAPPA,"そんな君たちには\n僕の取っておきをあげる。",0)
+				MES_close(KAPPA)
+
+			//　　※宝箱が出現する。
+
+				MOT_SET(KAPPA,150,-1,463,463,-1,-1)//
+				MOT(KAPPA,150,10)
+				wait(10)
+
+				cross_fade(30)
+				chr_pos(TAKARA_CH,1212,-1386,1,0,6)
+				wait(1)
+				SE(PLAYER1,019)//適当なＳＥ
+				wait_fade()
+				F_set(FV_FF_Kappa_Maho)
+
+				MOT(KAPPA,2,10)
+				MES(KAPPA,"まあこれで一応\nクリアな訳だけど。",0)
+				MES(KAPPA,"まだお遊びのコースも\n用意してあるし。",0)
+				MES(KAPPA,"また気が向いたら\n遊びに来てよ。",0)
+				MES_close(KAPPA)
+				workL(005,SET,1)//リトライ処理を飛ばす。
+			}
+			else
+			{
+			//	name("□アルウェンいない")
+				MES(KAPPA,"……金メダルゲット！\nおめでとう。",0)
+				MES(KAPPA,"うん、中々やるね。\nカッパ的にも結構楽しかったし。",0)
+				MES_close(KAPPA)
+
+			//　　カッパに．．．エモーション。
+				EMO(KAPPA,EMO_TENTEN)
+				wait(30)
+
+				MES(KAPPA,"本当はね、今日は\n君たちにご褒美を用意しとく\nつもりだったし。",0)
+				MES(KAPPA,"まあ中々頑張ってるみたいだし、\nたまにはサービスするのも\nいいでしょ？　そうでしょ？",0)
+				MES(KAPPA,"……でもね、\n持ってくるの忘れたし。",0)
+				MES(KAPPA,"まあまた探しとくから、\n後でL337魔法が使える人と一緒に\n取りに来てよ。",0)
+				MES(KAPPA,"……もう一回やる？",0)
+				MES_close(KAPPA)
+			}
+			F_set(KAPPA)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(KAPPA,"ところでその金メダル、\nどこで手に入れたか知ってる？",0)
+			MES(KAPPA,"昔イルバードには\n砂金が取れる川があって。",0)
+			MES(KAPPA,"そこに住んでるドジョウで、\n砂金を集めてる奴がいたの。",0)
+			MES(KAPPA,"そいつと物々交換したわけ。",0)
+			MES(KAPPA,"そのメダル、\n多少ドジョウ臭いけど\n気にしないでね。",0)
+			MES(KAPPA,"……もう一度やる？",0)
+			MES_close(KAPPA)
+		}
+
+	}
+	else
+	if(WK000==2)	// 今LV2をクリアしてきた
+	{
+	//　　□新しく銀メダルをゲットした。
+		F_set(FV_FF_KappaSki_02)	//シルバー
+		MES(KAPPA,"銀メダルゲットじゃん。\nおめでとう。",0)
+		MES(KAPPA,"ちなみにその銀、\nどこで手に入れたか知ってる？",0)
+		MES(KAPPA,"前にね、星ヶ峰に\n登山しにきたお金持ちが\nいたんだけど。",0)
+		MES(KAPPA,"３０時間くらい迷って\n逃げ帰っちゃったのね。",0)
+		MES(KAPPA,"そのお金持ちが捨ててった銀時計。\nそれを溶かして作ったし。",0)
+		MES(KAPPA,"中々イケてるでしょ？",0)
+		MES_close(KAPPA)
+
+		workL(WK_CANCEL,SET,2)//【やめる】
+		MES_pos(PLAYER1,"??W9【はい】\n【いいえ】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		if(WK_YESNO==1)
+		{
+			MES(KAPPA,"うん、じゃあもう一度やる？",0)
+			MES_close(KAPPA)
+		}
+		else
+		{
+			MES(KAPPA,"そう、じゃあもう一度やる？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	if(WK000==1)	// 今LV1をクリアしてきた
+	{
+	//　　□新しく銅メダルをゲットした。
+		F_set(FV_FF_KappaSki_01)	//ブロンズ
+		MES(KAPPA,"銅メダルゲット。\nおめでとう。",0)
+		MES(KAPPA,"…………………………",0)
+		MES(KAPPA,"でもまあ、所詮銅メダルだから。\n大騒ぎするほどのことじゃないし。",0)
+		MES(KAPPA,"ちなみにそれ、この前\nゲレンデに落ちてたのを\n拾ったやつだし。",0)
+		MES(KAPPA,"たぶん飛行機の部品か何かだね。\n時々ぽろっと落ちてくるし。",0)
+		MES(KAPPA,"……もう一度やる？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==10)
+	{
+	//　　□タイムが非常に遅かった。
+		MES(KAPPA,"……遅いね。\n途中で何してたの？",0)
+		MES(KAPPA,"何かしてたでしょ。\n絶対何かしてたし。",0)
+		MES(KAPPA,"内職？　化粧直し？\n居眠り？　立ちション？",0)
+		MES(KAPPA,"まあ何でもいいけど、\nもうちょっと真面目にやんないと。",0)
+		MES(KAPPA,"……もう一度やる？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==7)
+	{
+	//　　□死亡＆ギブアップ
+		MES(KAPPA,"あれ、もう終わり？",0)
+		MES(KAPPA,"早いじゃん。\nちょっと拍子抜けだし。",0)
+		MES(KAPPA,"今日急ぎなの？\n何か急いでるみたいだったし。",0)
+		MES(KAPPA,"まあ何でもいいけど。",0)
+		MES(KAPPA,"……もう一回やる？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==6 || WK000==9)
+	{
+	//　　□(奈落)(ダメージ)
+		if(WK001==4)
+		{
+		//	name("□カッパと競争中だった。（Ｌｖ４）")
+			MES(KAPPA,"あれ、何してたの？",0)
+			MES(KAPPA,"今回ちょっと遅くない？\nうん、絶対遅かったし。",0)
+			MES(KAPPA,"多分アレだね、よそ見してて\nどこかにぶつかってたし。",0)
+			MES(KAPPA,"油断大敵って言うよね。\n……君たちちゃんと知ってる？",0)
+			MES_close(KAPPA)
+
+			workL(WK_CANCEL,SET,2)//【やめる】
+			MES_pos(PLAYER1,"??W9【はい】\n【いいえ】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			if(WK_YESNO==1)
+			{
+				MES(KAPPA,"あっそう、じゃあ\nもう一度やる？",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				MES(KAPPA,"そう、じゃあもう一度やる？",0)
+				MES_close(KAPPA)
+			}
+		}
+		else
+		{
+		//	name("□それ以外")
+			MES(KAPPA,"……痛かったね。\nちゃんと前見てた？",0)
+			MES(KAPPA,"よそ見してちゃダメでしょ。\nまわり何も無いし。",0)
+			MES(KAPPA,"それともまだ慣れてないの？\n背中に若葉マーク張っとく？",0)
+			MES(KAPPA,"まあどうでもいいけど、\n次からは気をつけてね。",0)
+			MES(KAPPA,"……もう一度やる？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	if(WK000==12)
+	{
+	//　　□壷を一個も割れなかった。
+		MES(KAPPA,"……あのさ君たち、\n真面目にやってる？",0)
+		MES(KAPPA,"途中の壷を\n割らなきゃダメじゃん。",0)
+		MES(KAPPA,"ただ滑るだけなら\n皿でもできるでしょ？\nそうでしょ？",0)
+		MES(KAPPA,"……もう一度やる？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==11)
+	{
+	//　　□壷をあまり割れなかった。
+		MES(KAPPA,"壷の位置とかはさ、\n頑張れば覚えられるし。",0)
+		MES(KAPPA,"うん、きっと覚えられる。\nそのうち覚えられるから。",0)
+		MES(KAPPA,"はい、次頑張ってね。",0)
+		MES(KAPPA,"……もう一度やる？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==8)
+	{
+	//　　□壷をたくさん割ったがメダルに届かなかった。
+		MES(KAPPA,"いい線行ってると思うよ、\nカッパ的には。",0)
+		MES(KAPPA,"でももうちょっと。\nもうちょっと何かが\n足りない感じだよね。",0)
+		MES(KAPPA,"……ビタミンＣとか摂ってみたら？",0)
+		MES(KAPPA,"君たち足りてなさそうだから。",0)
+		MES(KAPPA,"……もう一度やる？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==13)
+	{
+	//	name("□カッパの方が早かった")
+		MES(KAPPA,"……僕の勝ちだね。\nくやしい？",0)
+		MES(KAPPA,"まあアレだよね。\n僕ってこう見えても\nカッパだから。",0)
+//		MES(KAPPA,"多分君たちより\n運動神経いいし。",0)
+		MES(KAPPA,"ほら、君たちより\n運動神経良さそうでしょ？",0)
+		MES(KAPPA,"分身とかもね、カッパ的には\n常識の範疇だし。",0)
+		MES(KAPPA,"……もう一度やる？",0)
+		MES_close(KAPPA)
+	}
+
+	if(WK005!=1)
+	{
+		//──────────────────────────────
+		workL(WK_CANCEL,SET,3)//【やめる】
+		MES_pos(PLAYER1,"??W9【もう一度やる】\n【もう里に帰る】\n【やめる】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		if(WK_YESNO==1)	//	name("□「もう一度やる」")
+		{
+			if(SP002<100)												//何故か判定できない．．．
+			{
+			//	name("□１００ペンネ持ってない場合。")
+				MES(KAPPA,"……君たち貧乏だね。",0)
+				MES(KAPPA,"１００ペンネないと遊べないよ。",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				if( FV_FF_KappaSki_03 || FV_FF_KappaSki_04 )
+				{
+					// LV3以上をクリアしている
+					workL(WK_CANCEL,SET,5)//【やめる】
+					MES_pos(PLAYER1,"??W9【Ｌｖ４に挑戦】\n【Ｌｖ３に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+					wait_W(WK_YESNO)
+					MES_close(PLAYER1)
+					wait_MES(PLAYER1)//閉じきるまで待つ
+					if(WK_YESNO==1)
+						workL(WK_YESNO,SET,4)	//強制変更
+					else if(WK_YESNO==2)
+						workL(WK_YESNO,SET,3)	//強制変更
+					else if(WK_YESNO==3)
+						workL(WK_YESNO,SET,2)	//強制変更
+					else if(WK_YESNO==4)
+						workL(WK_YESNO,SET,1)	//強制変更
+				}
+				else if( FV_FF_KappaSki_02)
+				{
+					// LV2をクリアしている
+					workL(WK_CANCEL,SET,4)//【やめる】
+					MES_pos(PLAYER1,"??W9【Ｌｖ３に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+					wait_W(WK_YESNO)
+					MES_close(PLAYER1)
+					wait_MES(PLAYER1)//閉じきるまで待つ
+					if(WK_YESNO==1)
+						workL(WK_YESNO,SET,3)	//強制変更
+					else if(WK_YESNO==2)
+						workL(WK_YESNO,SET,2)	//強制変更
+					else if(WK_YESNO==3)
+						workL(WK_YESNO,SET,1)	//強制変更
+					else if(WK_YESNO==4)
+						workL(WK_YESNO,SET,5)	//「やめとく」を５に強制変更
+				}
+				else if( FV_FF_KappaSki_01)
+				{
+					// LV1をクリアしている
+					workL(WK_CANCEL,SET,3)//【やめる】
+					MES_pos(PLAYER1,"??W9【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+					wait_W(WK_YESNO)
+					MES_close(PLAYER1)
+					wait_MES(PLAYER1)//閉じきるまで待つ
+					if(WK_YESNO==1)
+						workL(WK_YESNO,SET,2)	//強制変更
+					else if(WK_YESNO==2)
+						workL(WK_YESNO,SET,1)	//強制変更
+					else if(WK_YESNO==3)
+						workL(WK_YESNO,SET,5)	//「やめとく」を５に強制変更
+				}
+				else
+				{
+					// まだクリアしていない
+					// □まだクリアしていない場合は、問答無用でＬｖ１を開始。
+					workL(WK_YESNO,SET,1)
+				}
+
+				if(WK_YESNO<5)
+				{
+					//	name("□Ｌｖ１～Ｌｖ４")
+					EV("KAPPA_RETRY")
+					wait_EV("KAPPA_RETRY")
+				}
+				else	//	name("□「やめる」")
+				{
+					MES(KAPPA,"あっそ。",0)
+					MES_close(KAPPA)
+				}
+			}
+		}
+		else
+		if(WK_YESNO==2)	//もう里に帰る
+		{
+			MES(KAPPA,"うん、分かったし。",0)
+			MES(KAPPA,"また遊ぼうね。",0)
+			MES_close(KAPPA)
+
+		//　　フェードアウト＆ゆっくりフェードインして、星降りの里．井戸の前に出る。
+			fade_in( 100, 60, BLACK)	//暗転
+			wait_fade()
+
+			workG(GW_ENTRY_EVENT,SET,3)	//スキーから戻り
+			new_map(10400)
+
+		//　　イベント終了、操作許可。
+		}
+		else	//	name("□「やめる」")
+		{
+			MES(KAPPA,"あっそ。",0)
+			MES_close(KAPPA)
+		}
+	}
+	workL(005,SET,0)
+
+	TK_end()
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+// カッパスキーのリトライ処理
+// {のネストが深くなってしまったので、分割した
+
+KAPPA_RETRY
+{
+	//前回のコースと今回のコースが一致している？
+	workL(07,SET,0)
+
+	//コース保存
+	if(WK_YESNO==1)
+		workL(06,SET,1)
+	else if(WK_YESNO==2)
+		workL(06,SET,2)
+	else if(WK_YESNO==3)
+		workL(06,SET,3)
+	else if(WK_YESNO==4)
+		workL(06,SET,4)
+	else
+		workL(06,SET,0)
+
+	//同じコース？
+	if(WK006==1 && WK001==1)
+	{
+		workL(07,SET,1)
+	}
+	else
+	if(WK006==2 && WK001==2)
+	{
+		workL(07,SET,1)
+	}
+	else
+	if(WK006==3 && WK001==3)
+	{
+		workL(07,SET,1)
+	}
+	else
+	if(WK006==4 && WK001==4)
+	{
+		workL(07,SET,1)
+	}
+	else
+	{
+		//違うコースを選択した
+		workL(07,SET,0)
+		workG(GW_SKI_MISS,SET,0)	//ミスの回数を初期化
+		workG(GW_SKI_DOWN,SET,0)	//難易度ダウンを初期化
+	}
+
+	//同じコースで３回以上ミス？
+	if(WK007==1 && GW_SKI_MISS>=5 && GW_SKI_DOWN<3)
+	{
+		//再挑戦
+		workL(WK_CANCEL,SET,4)//【やめとく】
+		if(GW_SKI_DOWN>=2)
+		{
+			//３段階（一番簡単）下げる。
+			MES(KAPPA,"……あれ？",0)
+			MES_close(KAPPA)
+
+//　　カッパに．．．エモーション。
+			EMO(KAPPA,EMO_TENTEN)
+			wait(30)
+
+			MES(KAPPA,"君たちってさ、もしかして……",0)
+			MES(KAPPA,"まだこのコース、\nてこずってるの？",0)
+			MES(KAPPA,"おかしいし。\nもう随分簡単になったはずだし。",0)
+			MES(KAPPA,"カッパ的には居眠りしながらでも\nクリアできるレベルなんだけど。",0)
+			MES_close(KAPPA)
+
+//　　カッパに．．．エモーション。
+			EMO(KAPPA,EMO_TENTEN)
+			wait(30)
+
+			MES(KAPPA,"……仕方ないし。",0)
+			MES(KAPPA,"今日は特別、最後の最後に\nすごく簡単にしてあげるし。",0)
+			MES(KAPPA,"……やってみる？",0)
+			MES_close(KAPPA)
+
+			MES_pos(PLAYER1,"??W9【すごく簡単にして欲しい（￥９００上乗せ）】\n【このまま挑戦】\n【コツを聞く】\n【やめとく】",0,320,240,0,0)
+		}
+		else if(GW_SKI_DOWN==1)
+		{
+			//２段階下げる
+			MES(KAPPA,"ところでさ……",0)
+
+			if( F6_11_GameClear)	//★ＺｗｅｉⅡをクリアした
+			{
+				MES(KAPPA,"君たち知ってる？\n最近、新しいフィギュアが\n出たんだよね。",0)
+				MES(KAPPA,"シークレットの\nラインナップも増えてて、\n集めるの大変だし。",0)
+				MES(KAPPA,"それにアレってさ、\n結構高いんだよね。\nカッパも今月厳しいし。",0)
+				MES(KAPPA,"……言ってる意味、\n分かるよね？",0)
+			}
+			else//一周目
+			{
+				MES(KAPPA,"君たち知ってる？\n近々、新しいフィギュアが\n発売になるんだって。",0)
+				MES(KAPPA,"シークレットの\nラインナップも増えてて、\n集めるの大変みたい。",0)
+				MES(KAPPA,"それにアレってさ、\n結構高いみたいで。\nカッパも今月厳しいし。",0)
+				MES(KAPPA,"……言ってる意味、\n分かるよね？",0)
+			}
+
+			MES_close(KAPPA)
+
+			MES_pos(PLAYER1,"??W9【もっと簡単にして欲しい（￥４００上乗せ）】\n【このまま挑戦】\n【コツを聞く】\n【やめとく】",0,320,240,0,0)
+		}
+		else
+		{
+			//１段階下げる
+		//　　カッパに．．．エモーション。
+			EMO(KAPPA,EMO_TENTEN)
+			wait(30)
+
+			MES(KAPPA,"あのさ……",0)
+			MES(KAPPA,"ひょっとして、苦労してる？",0)
+			MES_close(KAPPA)
+
+		//　　カッパ、手をパタパタ。
+			EV("MOTION_KAPPA")
+			wait_EV("MOTION_KAPPA")
+
+			MES(KAPPA,"途中の壷を割るだけじゃん。\n君たちの感性で滑ればいいだけだし。",0)
+			MES(KAPPA,"……まあ、君たちって\n最近よく来てるし。",0)
+			MES(KAPPA,"サービスで、少しくらいなら\n簡単にしてあげてもいいけどね。\nカッパ的には。",0)
+			MES(KAPPA,"どうする？",0)
+			MES_close(KAPPA)
+
+			MES_pos(PLAYER1,"??W9【簡単にして欲しい（￥１００上乗せ）】\n【このまま挑戦】\n【コツを聞く】\n【やめとく】",0,320,240,0,0)
+		}
+
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		if(WK_YESNO==1)
+		{
+			//難易度下げてリトライ
+			//　　所持金を減らす。
+			if(GW_SKI_DOWN>=2)
+			{
+				if(SP002<1000)
+				{
+				//	name("□１０００ペンネ持ってない場合。")
+					MES(KAPPA,"……君たち貧乏だね。",0)
+					MES(KAPPA,"１０００ペンネないと変えられないよ。",0)
+					MES_close(KAPPA)
+
+					//お金が足りないので、終了
+					workL(07,SET,2)
+				}
+				else
+				{
+					MES(KAPPA,"うん、分かったし。",0)
+					if(WK006==4)
+					{
+						// LV4
+						MES(KAPPA,"壷１０個までならミスしても\n大丈夫ってことにするし。",0)
+						MES(KAPPA,"ついでにダメージもね、\n５回は目を瞑ってあげるし。",0)
+					}
+					else
+					if(WK006==3)
+					{
+						// LV3
+						MES(KAPPA,"壷１６個までならミスしても\n大丈夫ってことにするし。",0)
+						MES(KAPPA,"ついでにダメージもね、\n５回は目を瞑ってあげるし。",0)
+					}
+					else
+					if(WK006==2)
+					{
+						// LV2
+						MES(KAPPA,"壷２０個までならミスしても\n大丈夫ってことにするし。",0)
+					}
+					else
+					{
+						// LV1
+						MES(KAPPA,"壷１６個までならミスしても\n大丈夫ってことにするし。",0)
+					}
+					MES(KAPPA,"はい、頑張ってね。",0)
+					MES_close(KAPPA)
+
+					MES(KAPPA,"じゃあ１０００ペンネ貰うね。",0)
+					SE(008,PLAYER1)
+					get_gold(-1000,RAGNA)
+					MES(KAPPA,"これ、手数料\nみたいなものだし。",0)
+					MES_close(KAPPA)
+
+					//簡単にする
+					workG(GW_SKI_DOWN,ADD,1)	//これまでより簡単に
+					workG(GW_SKI_MISS,SET,0)	//ミスの回数を初期化
+				}
+			}
+			else
+			if(GW_SKI_DOWN>=1)
+			{
+				if(SP002<500)
+				{
+				//	name("□５００ペンネ持ってない場合。")
+					MES(KAPPA,"……君たち貧乏だね。",0)
+					MES(KAPPA,"５００ペンネないと変えられないよ。",0)
+					MES_close(KAPPA)
+
+					//お金が足りないので、終了
+					workL(07,SET,2)
+				}
+				else
+				{
+					MES(KAPPA,"うん、分かったし。",0)
+					if(WK006==4)
+					{
+						// LV4
+						MES(KAPPA,"壷５個までならミスしても\n大丈夫ってことにするし。",0)
+						MES(KAPPA,"ついでにダメージもね、\n３回は目を瞑ってあげるし。",0)
+					}
+					else
+					if(WK006==3)
+					{
+						// LV3
+						MES(KAPPA,"壷８個までならミスしても\n大丈夫ってことにするし。",0)
+						MES(KAPPA,"ついでにダメージもね、\n３回は目を瞑ってあげるし。",0)
+					}
+					else
+					if(WK006==2)
+					{
+						// LV2
+						MES(KAPPA,"壷１０個までならミスしても\n大丈夫ってことにするし。",0)
+					}
+					else
+					{
+						// LV1
+						MES(KAPPA,"壷８個までならミスしても\n大丈夫ってことにするし。",0)
+					}
+					MES(KAPPA,"はい、頑張ってね。",0)
+					MES_close(KAPPA)
+
+					MES(KAPPA,"じゃあ５００ペンネ貰うね。",0)
+					SE(008,PLAYER1)
+					get_gold(-500,RAGNA)
+					MES(KAPPA,"これ、手数料\nみたいなものだし。",0)
+					MES_close(KAPPA)
+
+					//簡単にする
+					workG(GW_SKI_DOWN,ADD,1)	//これまでより簡単に
+					workG(GW_SKI_MISS,SET,0)	//ミスの回数を初期化
+				}
+			}
+			else
+			{
+				if(SP002<200)
+				{
+				//	name("□２００ペンネ持ってない場合。")
+					MES(KAPPA,"……君たち貧乏だね。",0)
+					MES(KAPPA,"２００ペンネないと変えられないよ。",0)
+					MES_close(KAPPA)
+
+					//お金が足りないので、終了
+					workL(07,SET,2)
+				}
+				else
+				{
+
+
+					MES(KAPPA,"うん、分かったし。",0)
+					if(WK006==4)
+					{
+						// LV4
+						MES(KAPPA,"壷２個までならミスしても\n大丈夫ってことにするし。",0)
+						MES(KAPPA,"ついでにダメージもね、\n１回は目を瞑ってあげるし。",0)
+					}
+					else
+					if(WK006==3)
+					{
+						// LV3
+						MES(KAPPA,"壷４個までならミスしても\n大丈夫ってことにするし。",0)
+						MES(KAPPA,"ついでにダメージもね、\n１回は目を瞑ってあげるし。",0)
+					}
+					else
+					if(WK006==2)
+					{
+						// LV2
+						MES(KAPPA,"壷５個までならミスしても\n大丈夫ってことにするし。",0)
+					}
+					else
+					{
+						// LV1
+						MES(KAPPA,"壷４個までならミスしても\n大丈夫ってことにするし。",0)
+					}
+					MES(KAPPA,"はい、頑張ってね。",0)
+					MES_close(KAPPA)
+
+					MES(KAPPA,"じゃあ２００ペンネ貰うね。",0)
+					SE(008,PLAYER1)
+					get_gold(-200,RAGNA)
+					MES(KAPPA,"これ、手数料\nみたいなものだし。",0)
+					MES_close(KAPPA)
+
+					//簡単にする
+					workG(GW_SKI_DOWN,ADD,1)	//これまでより簡単に
+					workG(GW_SKI_MISS,SET,0)	//ミスの回数を初期化
+				}
+			}
+		}
+		else
+		if(WK_YESNO==2)
+		{
+			//このまま
+			workL(07,SET,0)
+		}
+		else
+		if(WK_YESNO==3)
+		{
+			//コツを聞く
+			MES(KAPPA,"ここの常連に、スキー好きの\nネズミがいるんだけどさ。",0)
+			MES(KAPPA,"そいつが言ってたし。",0)
+			MES_close(KAPPA)
+
+			//ここから色変えしてほしい
+			//コース別アドバイス
+			if(WK006==4)
+			{
+				// LV4
+				MES(KAPPA,"『スキーが苦手なアナタに\n　アドバイスなの。』",0)
+				MES(KAPPA,"『Ｌｖ４だと、\n　ムダな減速は厳禁なの。』",0)
+				MES(KAPPA,"『不必要なジャンプや\n　体のひねりは\n　ムダの元なの。』",0)
+				MES(KAPPA,"『最短ルートを\n　見極めるのも重要なの。』",0)
+				MES(KAPPA,"『ジャンプ注意！\n　ムダ厳禁！　なの。』",0)
+			}
+			else
+			if(WK006==3)
+			{
+				// LV3
+				MES(KAPPA,"『スキーが苦手なアナタに\n　アドバイスなの。』",0)
+				MES(KAPPA,"『Ｌｖ３だと、ジャンプの\n　タイミングが重要なの。』",0)
+				MES(KAPPA,"『いくつか重要なポイントがあるの。』",0)
+				MES(KAPPA,"『①：分岐右の２個のツボは\n　　　１個目を引っ掛けながらジャンプ、\n　　　着地で２個目を踏むの。』",0)
+				MES(KAPPA,"『②：谷越えは、\n　　　手前でジャンプして\n　　　位置調整するの。』",0)
+				MES(KAPPA,"『③：通路上では\n　　　２回ジャンプして\n　　　スピード調整するといいの。』",0)
+				MES(KAPPA,"『④：そして３回目のジャンプで\n　　　ツボを踏みながら\n　　　谷越えするの。』",0)
+				MES(KAPPA,"『タイミング注意！\n　とにかく集中！　なの。』",0)
+			}
+			else
+			if(WK006==2)
+			{
+				// LV2
+				MES(KAPPA,"『スキーが苦手なアナタに\n　アドバイスなの。』",0)
+				MES(KAPPA,"『最初に加速しすぎると\n　ツボが壊せない事があるの。』",0)
+				MES(KAPPA,"『減速しながら\n　ツボを壊すといいの。』",0)
+				MES(KAPPA,"『減速のための横向きと\n　曲がるための横向き。』",0)
+				MES(KAPPA,"『違いを意識しながら\n　練習するといいの。』",0)
+				MES(KAPPA,"『スピードを制するものは\n　スキーを制す！　なの。』",0)
+			}
+			else
+			{
+				// LV1
+				MES(KAPPA,"『スキーが苦手なアナタに\n　アドバイスなの。』",0)
+				MES(KAPPA,"『アナログパッドは\n　上に入れっぱなしに\n　しておくといいの。』",0)
+				MES(KAPPA,"『そこからまわすように\n　左右に入れると\n　方向が微調整しやすいの。』",0)
+				MES(KAPPA,"『速度が上がりすぎると\n　曲がりきれなくなってしまうの。』",0)
+				MES(KAPPA,"『そんな時は、アナログパッドを\n　下に入れると減速しやすいの。』",0)
+				MES(KAPPA,"『それに、体を横に向けたり\n　ジャンプすることでも\n　速度の調節ができるの。』",0)
+				MES(KAPPA,"『スピード注意！\n　スキーは急に曲がれない！　なの。』",0)
+			}
+
+			MES(KAPPA,"……だって。\n参考になった？",0)
+			MES_close(KAPPA)
+
+			//お金を支払わず終了
+			workL(07,SET,2)
+		}
+		else	//	name("□「やめる」")
+		{
+			MES(KAPPA,"あっそ。",0)
+			MES_close(KAPPA)
+
+			//お金を支払わず終了
+			workL(07,SET,2)
+		}
+	}
+	else
+		workL(07,SET,0)
+
+	if(WK007==0)
+	{
+		//普通にリトライ
+		MES(KAPPA,"じゃあ１００ペンネ貰うね。",0)
+		SE(008,PLAYER1)
+		MES(KAPPA,"これ、リフト代\nみたいなものだし。",0)
+		MES_close(KAPPA)
+
+		//所持金判定はすでに済んでいる
+		//　　所持金を１００ペンネ減らす。
+		get_gold(-100,RAGNA)
+	}
+
+	if(WK007!=2)	//お金が足りて支払っていれば、スキー場へ行く
+	{
+		fade_in( 100, 60, BLACK)	//暗転
+		wait_fade()
+
+		workG(GW_SKI_PARTNER,SET,0)	//ラグナだけ
+		if(SP004==5)
+		{
+			workG(GW_SKI_PARTNER,SET,5)	//オデッサ
+		}
+		else if(SP004==12)
+		{
+			workG(GW_SKI_PARTNER,SET,12)	//オデッサ
+		}
+		else if(SP004==13)
+		{
+			workG(GW_SKI_PARTNER,SET,13)	//オデッサ
+		}
+		else if(SP004==6)
+		{
+			workG(GW_SKI_PARTNER,SET,6)	//スバル
+		}
+		else if(SP004==1)
+		{
+			workG(GW_SKI_PARTNER,SET,1)	//アルウェン
+		}
+
+		clear_party(PARTNER)	//パートナー消去
+
+		//　　フェードアウトし、もう一度スキーマップのイベントから開始する。
+		workG(GW_ENTRY_EVENT,SET,1)	//スキー開始
+
+		if(WK006==1)
+			new_map(10490)
+		else if(WK006==2)
+			new_map(10491)
+		else if(WK006==3)
+			new_map(10492)
+		else if(WK006==4)
+			new_map(10493)
+		else
+			new_map(10490)
+	}
+}
+
+
+TK_FIGURE
+{
+
+			if(WK000==4)
+				MES(KAPPA,"……プラチナメダル！\nワンダフル。",0)
+			else
+				MES(KAPPA,"……ところで君たち、\nプラチナメダル取ってるよね。",0)
+
+			MES(KAPPA,"やるね君たち。",0)
+			MES(KAPPA,"星ヶ峰で僕に勝つとか\nなかなか出来る事じゃないし。",0)
+			MES_close(KAPPA)
+			wait_MES(KAPPA)
+
+		//　　カッパに．．．エモーション。
+			EFF_chr(25124,KAPPA,0,100,0,"Bone_Head")
+			wait(80)
+
+			MES(KAPPA,"こういう時ってさ、\nやっぱりご褒美を渡すものだよね。",0)
+			MES(KAPPA,"……仕方ないし。\n僕のコレクションから\n１個あげるし。",0)
+			MES(KAPPA,"まあちょっと\n驚くかも知んないけど……",0)
+			EV("MOTION_KAPPA2")
+			wait_EV("MOTION_KAPPA2")
+			MES(KAPPA,"はいこれ。",0)
+			MES_close(KAPPA)
+
+		//　　＞ルゥのフィギュアゲット。
+
+			fade_in(30,10,BLACK)
+
+			Load_BMP(14,"sys\\icon00.itm","sys\\icon00a.itm")
+			menuBMP(3,	14,	0,40,20,20)
+
+			F_set(2859)//ルゥ
+			SE(019,PLAYER1)
+
+			menu(3,	0,	230, 225,  0,	32, 32,	 0,  0,0)
+			menu(3,	0,	230, 225,  0,	32, 32,	10,100,0)
+
+			menu(0,	3,	200,210,0,	280,60,	-20,0,0)
+			menuTXT(0,	"L446ルゥのフィギュアL777を手に入れた。",	20,WHITE)
+			menuTextPos(0,70,23)
+			menuEVENT(0,"0","0","0")
+			wait_key(0)
+			menu(3,	-1,	-1, -1, -1,	-1, -1,	0,0,0)
+			menu(0,	-1,	-1, -1, -1,	-1, -1,	0,0,0)
+			menuTextPos(0,0,0)
+
+			fade_in(0,10,BLACK)
+			wait_fade()
+			MOT(KAPPA,2,15)
+
+		//　　ラグナたちに気付きエモーション。
+			EMO(RAGNA,EMO_TOGEBIKKURI)
+
+			//誰だか知らないけどパートナーがいる
+			if( !F4_00_StartSolo )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+			else
+			if( F4_02_GoVillage2 && !F5_00_HearLunar )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+			else
+			if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+			else
+			if( F6_00_GoToMeru )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+
+			if( F5_00_HearLunar )
+				EMO(PET,EMO_TOGEBIKKURI)
+			wait(30)
+
+		//	name("先頭キャラ．またはルゥ")
+			if( F5_00_HearLunar )
+			{
+				MES(PET,"えっ……！？",0)
+				MES_close(PET)
+			}
+			else
+			{
+				MES(PLAYER1,"えっ……！？",0)
+				MES_close(PLAYER1)
+			}
+
+			MES(KAPPA,"ほら、驚いたでしょ？\nやっぱりそうでしょ？",0)
+			MES(KAPPA,"これ、いわゆるシークレット\nフィギュアってやつだし。",0)
+			MES(KAPPA,"かなりレアだから、\n僕が持ってると\nみんな驚くんだよね。",0)
+			MES(KAPPA,"あ……それ、\nちゃんと大切にしてよね。",0)
+			MES(KAPPA,"多分もう手に入んないし。",0)
+			MES_close(KAPPA)
+			workL(005,SET,1)//リトライ処理を飛ばす。
+
+
+}
+
+
+
+
+MOTION_KAPPA
+{
+
+	MOT_SET(KAPPA,151,151,461,461,-1,-1)	//
+	MOT_SET(KAPPA,152,152,463,463,-1,-1)	//
+	MOT(KAPPA,152,10)
+	wait(10)
+	MOT(KAPPA,151,6)
+	wait(6)
+	MOT(KAPPA,152,6)
+	wait(6)
+
+	MOT(KAPPA,151,6)
+	wait(6)
+	MOT(KAPPA,152,6)
+	wait(6)
+	MOT(KAPPA,151,6)
+	wait(6)
+	MOT(KAPPA,152,6)
+	wait(6)
+
+	MOT(KAPPA,2,10)
+
+}
+
+MOTION_KAPPA2
+{
+
+	MOT_SET(KAPPA,153,-1,509,509,154,0)	//何か渡す仕草
+	MOT_SET(KAPPA,154,-1,510,510,155,0)
+	MOT_SET(KAPPA,155,-1,511,511,-1,0)
+	MOT(KAPPA,153,15)
+
+}
+
+
+//  1=スキーLV1クリア(銅)
+//  2=スキーLV2クリア(銀)
+//  3=スキーLV3クリア(金)
+//  4=スキーLV4クリア(プラチナ)
+//  5=スキークリア済みメダル
+//  6=スキー失敗(奈落)
+//  7=スキー失敗(死亡)
+//  8=スキー失敗(ツボ、おしい)
+//  9=スキー失敗(ダメージ)
+// 10=スキー失敗(タイム)
+// 11=スキー失敗(ツボ、足りない)
+// 12=スキー失敗(ツボ、ゼロ)
+// 13=スキー失敗(カッパに負けた)
+
+//DB_CLEAR_2：クリア済み成績（ランダムでコネタ）
+
+DB_SKY_1
+{
+	workL(000,SET,1)// 00 結果のコピー
+}
+DB_SKY_2
+{
+	workL(000,SET,2)// 00 結果のコピー
+}
+DB_SKY_3
+{
+	workL(000,SET,3)// 00 結果のコピー
+}
+DB_SKY_4
+{
+	workL(000,SET,4)// 00 結果のコピー
+}
+DB_SKY_5
+{
+	workL(000,SET,5)// 00 結果のコピー
+}
+DB_SKY_6
+{
+	workL(000,SET,6)// 00 結果のコピー
+}
+DB_SKY_7
+{
+	workL(000,SET,7)// 00 結果のコピー
+}
+DB_SKY_8
+{
+	workL(000,SET,8)// 00 結果のコピー
+}
+DB_SKY_9
+{
+	workL(000,SET,9)// 00 結果のコピー
+}
+DB_SKY_10
+{
+	workL(000,SET,10)// 00 結果のコピー
+}
+DB_SKY_11
+{
+	workL(000,SET,11)// 00 結果のコピー
+}
+DB_SKY_12
+{
+	workL(000,SET,12)// 00 結果のコピー
+}
+DB_SKY_13
+{
+	workL(000,SET,13)// 00 結果のコピー
+}
+
+
+DB_CLEAR_2
+{
+	workL(002,SET,2)// 02 クリア済み判定用
+}
+
+LUE_FIGURE_CLR
+{
+	F_reset(2859)
+}
+
+Yasaku_Memo_CLR
+{
+	F_reset(1980)
+	F_reset(1975)
+}
+
+WK010_RAND
+{
+	//カッパ一般会話用のWK
+	if( GW_HUNTER_RANK>=16 )
+		workL(010,RAND,5)
+	else
+		workL(010,RAND,4)
+
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

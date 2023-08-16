@@ -1,0 +1,2209 @@
+//====================================================================
+//ステージトラップスクリプト
+//[17019][异－梅ン終]
+//====================================================================
+
+#ScriptTable
+
+
+#LUE 		1
+#EVENT_RAGNA 	2
+#ODESSA 		3
+#ALWEN		4
+#MONTBLANC	5
+#BOSS		6
+#EVENT_RAGNA2 	7
+#EFFDUMMY1		8
+#EFFDUMMY2		9
+#LUEDUMMY		10
+#HOOKGEAR		11
+#EFFALROD		12
+#ALWENROD		13
+#EFFDUMMY3		14	//露之融合先
+
+//#STOPPER1		15
+//#STOPPER2		16
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境SE
+	SE(68,0)
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+	set_chr( 90,990,	-1,-1,     0 ,8000,  0,		180,050201, 6,"K1_17013;")	//①エントリ 梅ン③
+	set_chr( 91,990,	-1,-1, -2750,-2750,3100,	315,050101, 6,"K0_17021;")	//①エントリ ボス１①
+
+//■スイッチ·看板
+	set_chr( 50,620,	-1,-1,   730, 7080, 0,		  0,    83, 0,";")			//①セーブOBJ
+
+	set_chr( 53,648,	-1,-1,   -50,6400,  0,		 21,     0, 0,";")	//②等级之证 
+	color2( 53,  75,75,100, 0,0,0)	// 异次元之等级之证 之色
+
+	set_chr( 55,648,	-1,-1,  -2100,-2100,3100,	 22,   315, 0,";")	//③等级之证 
+	color2( 55,  75,75,100, 0,0,0)	// 异次元之等级之证 之色
+	set_chr( 56,654,	-1,-1,  -2240,-1965,3100,	  3,   315, 0,";")	//③順路案内（ボス）
+
+	set_chr( 60,658,	-1, -1,   250,5350,450,		  0,     0, 0,";")	//④中ボス看板
+
+	if(GW_ENTRY_EVENT==101)	//ゲーセン用
+	{
+	}
+	else
+	if( !F5_11_FakeAlwen )
+	{
+		set_chr( 81,990,	-1, -1,     0,5250,450,		  0,070501, 6,"#8_99 S0_1 WT?120;")//警報出現
+	}
+
+
+//	set_chr( STOPPER1, 991, -1,-1,    0,1500,2372,   0, 100802, 0, ";")			//战闘中、階段ストッパー
+//	set_chr( STOPPER2, 992, -1,-1, -955,-949,2300,   45, 100802, 6, ";")			//战闘中、階段ストッパー
+//	set_chr( STOPPER2, 770, -1,-1, -1527,-1539,2300, 0, 0, 0, ";")			//战闘中、階段ストッパー
+//	set_chr( STOPPER1, 735, -1,-1,    0,1336,2400,0,0,0,";")
+//	set_chr( STOPPER2, 735, -1,-1, -912,-896,2399,0,150,0,";")
+//	MOT(STOPPER1, 7, 0)
+//	MOT(STOPPER2, 7, 0)
+
+
+	if(GW_ENTRY_EVENT==101)	//ゲーセン用
+	{
+	}
+	else
+	{
+		if(F5_11_FakeAlwen)			//ＧＦ『★中ボス⑤【偽艾雯】を倒した』
+		{
+			F_reset_obj("bossatari", NP_GROUND)												//ストッパー当たりOFF
+		}
+
+		//倒れ蒙布兰
+		if(F5_11_FakeAlwen && !F6_00_GoToMeru)	//ＧＦ『★中ボス⑤【偽艾雯】を倒した』
+		{
+			set_chr(MONTBLANC, 1025,-1,-1, -190,-280,2401,0,0,20,"<TK_MONTBLANC>")
+			MOT_SET(MONTBLANC,150,-1,167,167,-1,-1)	//倒れ
+			MOT(MONTBLANC, 150, 0)
+			KAO(MONTBLANC,"5","3","4")
+			F_set_chr(MONTBLANC,CF_NO_MOVE)
+		}
+	}
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼囚われ之艾雯続きへ
+			EV("EV_5_15_AlwenRoom2")
+	}
+	else
+//	if(GW_ENTRY_EVENT==2)
+//	{	
+//		F_set_obj("bossatari", NP_GROUND)												//ストッパー当たりON
+//		//偽艾雯战
+//		workG(GW_ENTRY_EVENT,SET,0)
+//		EV("EV_5_13_BossFakeAlwen")
+//	}
+//	else
+	//ボス再战用
+	if(GW_ENTRY_EVENT==100)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_5_13_BossFakeAlwen")
+	}
+	//ゲーセン用
+	else	
+	if(GW_ENTRY_EVENT==101)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_5_13_BossFakeAlwen_02")
+	}
+	else	
+	if(F4_11_EndFourth && !F5_17_EndFifth)
+	{
+	//５章
+		//ＧＦ『★中ボス⑤【偽艾雯】を倒した』立ってない
+		if(!F5_11_FakeAlwen)
+		{
+			//▼偽艾雯と之战い·前
+			set_chr( 80,990,	-1,-1,   0,1574,2368,  0, 0601,6,"<EV_5_13_VSFakeAlwen>;")
+	//		set_chr( 80,990,	-1,-1,   0,1574,2368,  0, 0601,6,"<EV_5_14_MontblancDown>;")	//後
+		}
+		//ＧＦ『★库朗毕林之形を確認した』立ってない
+		if(!F5_10_CheckGulan)
+		{
+			//▼地球（库朗毕林）を確認する
+			EV("EV_5_12_CheckGulan")
+		}
+	}
+
+//■场面固有設定
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼地球（库朗毕林）を確認する
+//──────────────────────────────
+//　　ルート①をクリアし、休憩所付近まで来たらイベント発生。
+EV_5_12_CheckGulan
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 	-800,7610,0,100,2)
+	chr_pos(PARTNER, 	-650,7770,0,100,2)
+	color(RAGNA,-1)
+//	color(PARTNER,-1)
+	
+	set_chr(LUE,	 		  1015,-1,-1,  -600,7620,0, 2,100,0, "")
+//	set_chr(ODESSA,			  12,  -1,-1,  -650,7770,0, 2, 100,0, "")
+	set_chr(ODESSA,			  1019,-1,-1,  -650,7770,0, 2, 100,0, "")
+	set_chr(EVENT_RAGNA,	  1010,-1,-1,  -800,7610,0, 2,100,0, "")
+//	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+//	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(PARTNER,CF_NO_CLIP)
+	F_set_chr(PARTNER,CF_NO_CLIP2)
+	F_set_chr(PARTNER,CF_NO_CSP)
+		
+	
+	//モーション定義
+	MOT_SET(ODESSA,150,-1,410,410,-1,-1)	//フム
+
+	chr_pos(EVENT_RAGNA, 27,7911,11,180,2)
+//	chr_pos(ODESSA,      -50,8005,44,180,2)
+	chr_pos(PARTNER,     -46,8003,44,180,2)
+	chr_pos(LUE,         -2,8046,59,180,2)
+	color(LUE,-1)
+	color(ODESSA,-1)
+
+	color(EVENT_RAGNA,-1)
+	color(LUE, -1)
+	color(PARTNER,-1)
+	KAO(EVENT_RAGNA,"1","1","1")
+	KAO(LUE,"1","1","1")
+	KAO(PARTNER,"1","1","1")
+
+	//カメラ初期位置
+//	CAM_move(-3078,-7434,160,0,0)
+//	CAM(-40,66,160,16,220,0,0)
+//	CAM_move(-50,-8005,164,0,0)
+//	CAM(150,112,-40,35,300,0,0)
+
+	CAM_move(-50,-7685,164,0,0)
+	CAM(150,108,164,34,310,0,0)
+	CAM_move(-50,-7685,164,300,0)
+	CAM(470,137,164,34,350,300,0)
+	
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+
+	color(EVENT_RAGNA,15)
+	move(EVENT_RAGNA, 0,WALK1,51,7424,1, 0)
+	wait(15)
+	color(PARTNER,15)
+	move(PARTNER,      0,WALK1,-93,7473,0, 0)
+	wait(15)	
+	color(LUE,15)
+	move(LUE,         0,WALK1,-9,7621,0, 0)
+
+	wait(30)
+
+	wait_move(EVENT_RAGNA)
+	wait_move(PARTNER)
+	wait_move(LUE)
+	wait(30)
+
+
+	//フェード
+	fade_in(100,60,0)
+	wait_fade()
+
+	wait(5)
+//	cross_fade(15)
+	fade_in(0,60,0)	
+	CAM_move(-3078,-7434,160,0,0)
+	CAM(-40,66,160,16,220,0,0)
+	
+	chr_pos(LUE,  		-600,7620,0, 100,2)
+	chr_pos(PARTNER,	-650,7770,0, 100,2)
+	chr_pos(EVENT_RAGNA,-800,7610,0, 100,2)	
+	
+		
+	wait_fade()	
+	wait(30)
+	
+		
+//	cross_fade(15)	
+	CAM_move(-1018,-7534,160,120,0)
+	CAM(70,110,160,24,214,120,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait_fade()	
+	
+	CAM_move(-978,-7434,90,900,0)
+	CAM(30,92,90,24,208,900,0)
+
+	MES(LUE,"我、我一直纳闷……",0)
+	MES(LUE,"先不说那些像鲸鱼似的漂浮物，\n那个蓝色球体究竟是什么？",0)
+	MES(LUE,"真是大的邪乎……",0)
+	MES_close(LUE)
+
+	MOT(PARTNER,150,15)
+	wait(15)
+
+	MES(PARTNER,"唔……是什么呢。",0)
+	MES_close(PARTNER)
+	
+	MES(EVENT_RAGNA,"……………………………",0)
+	MES(EVENT_RAGNA,"不会是……\n《库朗毕林》吧？",0)
+	MES_close(EVENT_RAGNA)
+
+//　　露と奥蒂莎之頭に！マーク。
+	EMO(PARTNER,EMO_BIKKURI)
+	EMO(LUE,EMO_BIKKURI)
+	wait(15)
+	rot_chr(PARTNER,30,EVENT_RAGNA)
+	rot_chr(LUE,30,EVENT_RAGNA)
+	wait(15)
+	KAO(LUE,"B232B","12321D","9")	
+	MES(LUE,"哈啊！？",0)
+	MES_close(LUE)
+	
+	MES(PARTNER,"诶……\n你为什么这样认为？",0)
+	MES_close(PARTNER)
+
+	KAO(EVENT_RAGNA,"B","1","1")
+	rot_chr(EVENT_RAGNA,30,PARTNER)
+	wait(15)
+	
+	KAO(EVENT_RAGNA,"B232BZ5","1232F","6")
+	MES(EVENT_RAGNA,"我们平时所见的月亮\n现在就在我们的脚下……",0)
+	KAO(EVENT_RAGNA,"B232BZ5","F2321","6")	
+	MES(EVENT_RAGNA,"所以我想我们所住的世界\n会不会也在反向的位置呢？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"2","12321D","6")
+	MES(LUE,"啊……",0)
+	MES_close(LUE)
+
+	MES(PARTNER,"原来如此、有道理。",0)
+	MES_close(PARTNER)
+
+	KAO(EVENT_RAGNA,"12321Z6","123","1")
+	MES(EVENT_RAGNA,"而且把飞机放上天空的话\n和天空的界限看起来不就像一个圆形？",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","6")
+	MES(EVENT_RAGNA,"我还一直在想是什么原因……\n也许就是这么回事吧？"\n,0)
+	MES_close(EVENT_RAGNA)
+
+	MES(PARTNER,"的确如此……",0)
+	MES_close(PARTNER)
+	MOT(PARTNER,2,15)
+	wait(15)
+	MES(PARTNER,"哼哼、你果然是\n天生的宝物猎人。",0)
+	MES(PARTNER,"在这件事上你所表现出的洞察力\n就是最好的证明。",0)
+	MES_close(PARTNER)
+
+	MOT(EVENT_RAGNA,53,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z7","1236","5")
+	MES(EVENT_RAGNA,"嘿、被你这样的行家\n这样一说我还真有点受宠若惊。",0)
+	KAO(EVENT_RAGNA,"12321Z4","3","1")
+	MES(EVENT_RAGNA,"好了不多说了、我们还有很长的路要走。",0)
+	KAO(EVENT_RAGNA,"12321Z4","321","1")
+	MES(EVENT_RAGNA,"稍微休息一下然后出发吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"12321","1233321","6")
+	MES(LUE,"嗯！",0)
+	MES_close(LUE)
+
+	MES(PARTNER,"了解。",0)
+	MES_close(PARTNER)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(ODESSA)
+	delete(LUE)
+
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★库朗毕林之形を確認した』を立てる。
+	F_set(F5_10_CheckGulan)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+//──────────────────────────────
+//▼偽艾雯と之战い·前
+//──────────────────────────────
+//　　休憩所之先にある中ボスマップに入り、
+//　　中ボス战があるエリアまで来たらイベント発生。
+EV_5_13_VSFakeAlwen
+{
+	EV_begin()
+
+//	cross_fade(30)
+	fade_in(100,30,0)
+	wait_fade()
+
+	//キャラ再配置
+//	chr_pos(RAGNA,	 	-100,190,2400,180,2)
+	chr_pos(RAGNA,	 	-694,-580,2401,180,2)
+	chr_pos(PARTNER, 	-650,7770,0,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, -110,1350,2400, 2,180,0, "")
+//	set_chr(EVENT_RAGNA2,	  1010,-1,-1, -110,750,2400, 2,180,0, "")
+	set_chr(ALWEN,	  1011,-1,-1, 0,-320,2600, 2,0,0, "")
+	set_chr(ODESSA,	  34,-1,-1, 110,1450,2400, 2,180,0, "")
+	set_chr(LUE, 	  1015,-1,-1, -100,1350,2400, 2,180,0, "")
+	set_chr(EFFDUMMY1, 	  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY2, 	  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(LUEDUMMY, 	  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(ALWENROD, 	  753,-1,-1, 0,0,0, 0,0,0, "")		//艾雯之杖	
+	set_chr(EFFALROD, 	  749,-1,-1, 0,0,0, 0,0,0, "")		//艾雯之杖之光
+	set_chr(EFFDUMMY3, 	  749,-1,-1, 0,0,0, 0,0,0, "")		//露之融合先
+	
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_HEIGHT)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(EFFALROD,CF_NO_CLIP)
+	F_set_chr(EFFALROD,CF_NO_CLIP2)
+	F_set_chr(EFFALROD,CF_NO_CSP)	
+	F_set_chr(ALWENROD,CF_NO_CSP)	
+	
+	color(EVENT_RAGNA2,-1)
+	color(LUE,-1)
+	color(ALWEN,-1)
+	color(ALWENROD,-1)
+	wait_color(ALWEN)
+	chr_scale( ALWEN,	"Bone_LeftWing1",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWing2",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWingEnd",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing1",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing2",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWingEnd",	120,120,120,	0,	1);
+
+	//デフォルト表情
+	KAO(ALWEN,       "1","3","1")
+	KAO(EVENT_RAGNA, "1","1","1")
+	KAO(EVENT_RAGNA2,"1","1","1")
+	KAO(LUE,         "1","1","1")
+	KAO(ODESSA,      "1","1","1")
+
+	IK(ALWEN,"Bone_LeftWing1",0)
+	IK(ALWEN,"Bone_RightWing1",0)
+
+	wait(1)
+	chr_equip_chr(EFFDUMMY3,EVENT_RAGNA, "Bone_RightSword", 100,0,0,0, 0,0,0)		//露之融合先
+	chr_equip_chr(ALWENROD, ALWEN, "Bone_RightSword", 100,0,0,0, 0,0,0)		//艾雯之杖
+	chr_equip_chr(EFFALROD, ALWENROD, "wtop", 100,0,0,0, 0,0,0)		//艾雯之杖之光
+	
+//	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(AWEN,53,1)										//艾雯之右手を開かせる。
+
+	//モーション定義
+	MOT_SET(ALWEN,150,-1,512,512,-1,-1)	//魔法
+	MOT_SET(ALWEN,151,151,4905,4945,-1,-1)	//浮遊待机
+	MOT_SET(ALWEN,152,-1,1133,1158,-1,-1)	//魔法 杖を右から左へ振る
+	MOT_SET(ALWEN,153,-1,1173,1196,-1,-1)	//魔法 杖を左から右へ振る
+	MOT_SET(ALWEN,154,-1,1099,1124,-1,-1)	//魔法 杖振り下ろし	
+	MOT_SET(ALWEN,155,-1,1278,1278,-1,-1)	//魔法 構え
+	MOT_SET(ALWEN,156,-1,6130,6145,-1,-1)	//杖を突きつける
+	
+	MOT_SET(EVENT_RAGNA,150,-1,481,481,-1,-1)	//つかむ
+	MOT_SET(EVENT_RAGNA,151,-1,286,286,-1,-1)	//Jump
+//	MOT_SET(EVENT_RAGNA,152,-1,270,270,-1,-1)	//着地
+	MOT_SET(EVENT_RAGNA,152,-1,788,788,-1,-1)	//着地
+	MOT_SET(EVENT_RAGNA,153,-1,1442,1442,-1,-1)	//まかしときな
+//	MOT_SET(EVENT_RAGNA,153,-1,1403,1403,-1,-1)	//まかしときな
+	MOT_SET(EVENT_RAGNA,154,-1,3057,3057,-1,-1)	//ギア防御
+		
+//	MOT_SET(EVENT_RAGNA2,150,-1,270,274,-1,-1)	//着地
+	MOT_SET(PARTNER,150,-1,881,881,-1,-1)	//ジャンプ
+	
+//	MOT_SET(ODESSA, 150,-1,836,849,-1,-1)	//
+	MOT_SET(ODESSA, 150,-1,499,499,-1,-1)	//後ろジャンプ
+	MOT_SET(ODESSA, 151,-1,495,495,-1,-1)	//着地
+	MOT_SET(ODESSA, 152,-1,549,549,-1,-1)	//ファイティング
+
+	//カメラ初期位置
+	CAM_move(-120,-1000,2520,0,0)
+	CAM(-10,110,2520,30,210,0,0)
+
+	fade_in(0,30,0)
+	wait_fade()
+
+	chr_rename(ALWEN,"娘之声")
+	MES_pos(ALWEN,"W9哼哼……\n竟然能来到这里。",0,480,140,0,0)
+	wait_key(0)
+	MES_close(ALWEN)
+
+//　　拉古那たち之頭に！マーク。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ODESSA,EMO_BIKKURI)
+	wait(30)
+
+	MES(EVENT_RAGNA,"这声音是……！",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(LUE,"C4W9不、不会吧……！",0)
+	MES_close(LUE)
+//	wait_MES(LUE)
+	wait(15)
+	
+//　　露、拉古那之アンカーギアから出てくる。
+//　　画面スクロールして転位エフェクトと共に艾雯登场。
+//　　そ之まま大きな翼を羽ばたかせながら降りてくる。
+	cross_fade(30)
+	CAM_move(-100,540,2750,0,0)
+	CAM(-490,72,2660,25,204,0,0)
+	wait_fade()
+	
+	EFF_chr(24580,ALWEN,0,100,0,"Bone_Hips")//　転位
+	MOT(ALWEN,151,0)	
+	KAO(ALWEN,"1","3","2")
+	SE(1016,0)//ワープSE
+	color(ALWEN,30)
+	color(ALWENROD,30)
+	
+	wait_color(ALWEN)
+
+	EV("EV_1126")//羽音SE処理
+	wait(5)
+	
+	CAM_move(-12,580,2420,60,0)
+	CAM(150,62,2420,25,184,60,0)
+	jump(ALWEN,0,60,0,-320,2400,0)
+//	move(ALWEN,40,60,0,-320,2400,0)
+	wait(30)
+	MOT(ALWEN,134,15)	
+	wait_move(ALWEN)
+	MOT(ALWEN,2,10)
+
+		
+	F_reset_chr(ALWEN,CF_NO_HEIGHT)
+	chr_scale( ALWEN,	"Bone_LeftWing1",		83,83,83,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWing2",		83,83,83,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWingEnd",		83,83,83,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing1",		83,83,83,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing2",		83,83,83,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWingEnd",	83,83,83,	0,	1);
+	wait(15)
+	
+	IK(ALWEN,"Bone_LeftWing1",1)
+	IK(ALWEN,"Bone_RightWing1",1)
+
+	SE(104,ALWEN)//着地
+
+	CAM_move(-200,320,2440,60,0)
+	CAM(-89,120,2440,20,203,60,0)
+	
+	chr_pos(EVENT_RAGNA, -105,1103,2400,180,2)	
+	move( EVENT_RAGNA, 0, 20,-80,340,2400,0)
+	wait(5)
+	chr_pos(ODESSA, 75,1188,2400,180, 2)
+	move( ODESSA, 0, 20,80,380,2400,0)
+	wait(15)
+
+	wait_CAM_move()
+	wait_CAM()
+
+	chr_pos(LUE, 	-170,140,2400,210,2)
+	wait(1)
+	SE(1059,0)//露出てくるSE
+	EFF_chr(6830,LUE,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	EFF_chr(6825,LUE,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	EFF_chr(6835,LUE,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	wait(15)
+	color(LUE,30)
+	wait_color(LUE)
+//	wait(30)
+	move( LUE, 0, 20,-160,50,2400,0)
+	wait_move(LUE)
+
+	KAO(LUE,"12321Z2","E","3")
+	MES(LUE,"公、公主陛下！",0)
+	KAO(LUE,"12321Z4","1","3")	
+	MES(LUE,"您平安无事！\n真是太好了！？",0)
+	MES_close(LUE)
+
+//　　艾雯、目を閉じて含み笑い。
+	chr_rename(ALWEN,"艾雯")//
+	KAO(ALWEN,"12321Z4","3","2")
+	MES(ALWEN,"哼哼哼……\n你们是专程来迎接我的吗。",0)
+	KAO(ALWEN,"12321Z4","3","2")	
+	MES(ALWEN,"你们几个凑在一起远道而来真是辛苦了。",0)
+	MES_close(ALWEN)
+	stop_BGM(60)
+//	wait(15)
+//	KAO(ALWEN,"12321Z4","QP","1")
+	wait(30)
+
+	KAO(ALWEN,"92329Z4","3S","3")
+	MES(ALWEN,"C2──只可惜是来\n白白送死。",0)
+	MES_close(ALWEN)
+
+
+	MOT(EFFALROD, 18, 0)		//艾雯之杖之光
+	wait(10)
+	SE(1034,0)//杖光るSE
+
+	KAO(LUE,"2","12321DE","4")
+	MES(LUE,"诶……",0)
+	MES_close(LUE)
+
+	CAM_move(-440,-240,2440,0,0)
+	CAM(-89,106,2440,20,314,0,0)
+
+	look_chr( EVENT_RAGNA,ALWEN,"Bone_Head")
+	MOT(EVENT_RAGNA,150,8)
+	move( EVENT_RAGNA, 30, 25,-100,190,2400,0)
+	wait_move(EVENT_RAGNA)
+
+	MOT(ALWEN,   156,15)	
+	wait(12)
+	SE(466,0)
+
+	CAM_quake("46")
+	KAO(EVENT_RAGNA,"B232B2","1233321","3")
+	MES_pos(EVENT_RAGNA,"P1──闪开！",0,0,0,0,0)
+	wait(30)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+
+//　　拉古那、露をひっ捕まえてそ之场を離れる。
+//　　次之瞬間、艾雯が魔法を発動させ、
+//　　火之魔法が拉古那たちに向けて次々と放たれる。
+//　　拉古那たち、何とかそれをかわして以下之メッセージ。
+//　　艾雯からはそれなり之距離が取られている状態。
+
+//	chr_pos(EFFDUMMY1, 50,-220,2500,0,0)
+//	chr_pos(EFFDUMMY2,-50,-220,2500,0,0)
+	wait(1)
+
+
+	CAM_move(18,211,2544,0,0)
+	CAM(-90,30,40,25,192,0,0)
+	MOT(ALWEN, 155, 5)
+//	KAO(ALWEN,"1111P","1PQ","3")	//ニヤリ
+	KAO(ALWEN,"9","S","3")	//ニヤリ
+	wait(5)
+	SE(466,0)
+	wait(10)
+	rot_chr(ALWEN,60,LUE)
+	MOT(ALWEN, 10, 5)
+
+	CAM_move(-1,51,2559,60,0)
+	CAM(-170,68,0,25,332,60,0)
+	wait(5)
+
+//	VOICE(149,0)	//★ボイス入力演出
+	VOICE(151,0)	//★ボイス入力演出
+//	EFF_chr(24740, ALWEN, 10,100,LUE,"Bone_Hips")		//艾雯魔法
+//	EFF_chr(1565, ALWEN, 0,100,0,"wtop")		//艾雯魔法
+	EFF_chr(6855, ALWEN, 10,100,LUE,"Bone_Hips")		//艾雯魔法
+	SE(1121,0)//艾雯魔法SE
+	EMO(LUE,EMO_ASEASE)
+	jump(LUE,0,15,-403,557,2400,100)					//露避ける
+	SE(466,0)
+
+	wait(10)
+	MOT(ALWEN, 11, 5)	
+	wait(10)
+//	VOICE(149,0)	//★ボイス入力演出
+//	EFF_chr(24740, ALWEN, 0,100,EVENT_RAGNA,"Bone_Hips")
+//	EFF_chr(1565, ALWEN, 0,100,0,"wtop")		//艾雯魔法
+	EFF_chr(6855, ALWEN, 0,100,EVENT_RAGNA,"Bone_Hips")		//艾雯魔法
+	SE(1121,0)//艾雯魔法SE
+	rot_chr(ALWEN,60,ODESSA)
+	EV("EV_JumpRagna")
+	wait(10)
+	MOT(ALWEN, 12, 5)	
+	SE(466,0)
+	wait(10)
+//	VOICE(150,0)	//★ボイス入力演出
+//	EFF_chr(24740, ALWEN, -10,100,ODESSA,"Bone_Hips")
+//	EFF_chr(1565, ALWEN, 0,100,0,"wtop")		//艾雯魔法
+	EFF_chr(6855, ALWEN, -10,100,ODESSA,"Bone_Hips")		//艾雯魔法
+	SE(1121,0)//艾雯魔法SE
+	jump(ODESSA,0,15,110,750,2400,100)					//奥蒂莎避ける
+	MOT(ODESSA, 151, 5)
+	wait(15)
+	MOT(ODESSA, 152, 0)
+	wait(15)
+	MOT(ODESSA, 2, 10)
+
+	MOT(EFFALROD,0,0)
+
+	wait(15)
+//	KAO(ALWEN,"1","S","1")	//ニヤリ
+	look_chr(ODESSA,ALWEN,"Bone_Head")
+
+	CAM_move(-300,73,2500,0,0)
+	CAM(-210,120,-60,13,181,0,0)
+	CAM_move(32,73,2500,90,0)
+	CAM(-210,120,-60,13,181,90,0)
+	wait(90)
+
+	cross_fade(15)
+	CAM_move(-1,51,2559,0,0)
+	CAM(-170,68,0,25,332,0,0)
+
+	wait_fade()
+
+	KAO(ODESSA,"C232CZ3","12321D","2")
+	MES(ODESSA,"唔……！\n你的招呼打得太没有礼貌了吧！",0)
+	MES_close(ODESSA)
+
+	KAO(LUE,"B232B2Z2","12321D","5")
+	MES(LUE,"公、公主陛下……为什么！？",0)
+	MES_close(LUE)
+
+	KAO(EVENT_RAGNA,"B","CB1","2")
+	MES(EVENT_RAGNA,"………………………",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　艾雯、邪悪なオーラをまとう雰囲気。
+	
+	BGM(49)
+	chr_equip_chr(EFFDUMMY1, ALWEN, "charbase0", 100, 0,0,0, 0,0,0)
+	MOT(EFFDUMMY1, 10, 0)		//オーラエフェクト
+	wait(5)
+	SE(1037,ALWEN)//オーラSE
+	SE(1065,ALWEN)//艾雯オーラ
+
+	KAO(ALWEN,"1","S","2")	
+	cross_fade(15)
+	CAM_move(0,320,2520,0,0)
+	CAM(-90,26,2520,30,204,0,0)
+	chr_pos(LUE,-220,620,2400,200,2)
+	MOT(ALWEN,2,0)
+	CAM(-90,30,2520,30,214,60,0)
+	wait(30)
+//	MOT(EFFDUMMY1, 0, 0)		//オーラ終了
+	wait(30)
+
+	wait(15)
+	KAO(ALWEN,"9","3","1")	
+	MES(ALWEN,"C2呵呵呵呵呵……",0)
+	MES_close(ALWEN)
+	look(ALWEN,"Bone_Head", 0,0,0,5,0,0,20)
+	wait(15)
+	CAM_quake("463746")
+//	KAO(ALWEN,"234","6","6")
+//	KAO(ALWEN,"97679Z5","Q","3")	
+	KAO(ALWEN,"126","Q","3")	
+	MES(ALWEN,"C2S5哈──哈哈哈哈哈！",0)
+//	MES(ALWEN,"C2S5啊哈哈哈哈哈！",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+	wait_CAM()
+
+	look(ALWEN,"Bone_Head", 0,0,0,5,0,0,0)
+//	KAO(ALWEN, "P","S","1")
+
+//　　そ之まま狂ったように哄笑する艾雯。
+//	CAM_move(-360,0,2280,60,0)
+//	CAM(190,120,2280,30,218,60,0)
+	
+	cross_fade(15)
+	CAM_move(-71,-633,2560,0,0)
+	CAM(-170,46,0,25,347,0,0)
+	wait_fade()
+	wait_CAM_move()
+	wait_CAM()
+	
+	KAO(LUE,"C232CZ2","D12321D","5")
+	MES(LUE,"公、公主陛下……！",0)
+	MES_close(LUE)
+	
+	KAO(ODESSA,"B232BZ5","123332A","4")
+	MES(ODESSA,"糟了……\n好像是被操纵了。",0)
+	KAO(ODESSA,"B232BZ4","A2321","2")
+	MES(ODESSA,"必须要想办法使她恢复理智……",0)
+	MES_close(ODESSA)
+	
+	KAO(EVENT_RAGNA,"B232B","123","3")
+	MES(EVENT_RAGNA,"──不对。",0)
+	KAO(EVENT_RAGNA,"B232BZ4","3","3")	
+	MES(EVENT_RAGNA,"她没岀问题。\n就这样直接将她打倒。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　露と奥蒂莎之頭に！マーク。
+	EMO(LUE,EMO_BIKKURI)
+	KAO(LUE,"B","12321DE","6")	
+	EMO(ODESSA,EMO_BIKKURI)
+	KAO(ODESSA,"B","12321DE","6")	
+	wait(15)
+	rot(LUE,30,250)
+	look_chr( LUE,EVENT_RAGNA,"Bone_Head")
+	look_chr( ODESSA,EVENT_RAGNA,"Bone_Head")
+	wait(15)
+	KAO(LUE,"B232BZ2","D12321D","5")	
+	MES(LUE,"你、你说什么！？",0)
+	MES_close(LUE)
+	
+	KAO(ODESSA,"B232BZ2","D1233321","2")
+	MES(ODESSA,"……这样好吗？",0)
+	KAO(ODESSA,"B232BZ6","1","2")
+	MES(ODESSA,"对方可是真祖的公主啊、\n真交起手来我们也许讨不到便宜？",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA, 2, 10)
+
+	KAO(EVENT_RAGNA,"12321Z4","321","2")
+	MES(EVENT_RAGNA,"放心……\n不会陷入苦战的。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","2")	
+	MES(EVENT_RAGNA,"时间紧迫，\n快点将对手收拾了吧。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　露、憤然とした表情になって拉古那に抗議。
+	CAM_move(-71,-573,2560,30,0)
+	CAM(-170,31,2560,25,325,30,0)
+
+	look_off(LUE)
+	rot_chr(LUE,30,EVENT_RAGNA)
+	wait(15)
+	KAO(LUE,"C232CGZ3","D123332","3")
+	MES(LUE,"你、你这家伙……\n究竟打算干什么！？",0)
+	KAO(LUE,"C232CZ5","2","3")
+	MES(LUE,"虽然失去了理智，\n但公主陛下就是公主陛下怎能冒犯──",0)
+	MES_close(LUE)
+
+
+//	look_chr(EVENT_RAGNA, LUE, "Bone_Head")
+	look(EVENT_RAGNA, "Bone_Head", 0,2,2,2, 0,-20,0)
+
+	KAO(EVENT_RAGNA,"B232BZ3","123321","2")
+	MES(EVENT_RAGNA,"露、相信我。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　露之頭に！マーク。
+	KAO(LUE,"B","2321DE","7")
+	EMO(LUE,EMO_BIKKURI)
+	wait(30)
+	KAO(LUE,"3","E","7")
+	MES(LUE,"什……",0)
+	MES_close(LUE)
+
+	KAO(EVENT_RAGNA,"B232BZ5","123","1")
+	MES(EVENT_RAGNA,"如果你不想参战的话，在一旁\n观望也可以……",0)
+	KAO(EVENT_RAGNA,"B232BZ5","321","1")	
+	MES(EVENT_RAGNA,"不过如果可以的话，最好\n和我们一起战斗。",0)
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","2")	
+	MES(EVENT_RAGNA,"不、我希望你和我们一起战斗。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"L","D123","3")
+	MES(LUE,"～～～唔唔唔！！！",0)
+	MES_close(LUE)
+	wait_MES(LUE)
+
+//	look_off(EVENT_RAGNA)
+	
+//　　露、思い余ったか之ように輝き、
+//　　そ之ままアンカーギアへと吸い込まれていく。
+
+	EFF_chr(6830,LUE,0,100,0,"Bone_Spine")		//エフェクト：
+	EFF_chr(6825,LUE,0,100,0,"Bone_Spine")		//エフェクト：
+	SE(1059,0)
+	color(LUE,-30)	
+	wait_color(LUE)	
+	
+	MOT(EVENT_RAGNA, 154, 15)	
+	wait(15)
+
+	EFF_chr(6815,LUE,0,100,EFFDUMMY3,"Bone_Head")		//エフェクト：露、融合
+	SE(1035,0)
+
+	wait(30)	
+	
+	look(EVENT_RAGNA, "Bone_Head", 0,2,2,2, 0,40,-10)	
+	
+	MOT(EVENT_RAGNA, 2, 15)
+	wait(15)	
+	
+	chr_rename(LUEDUMMY,"露")
+	chr_equip_chr(LUEDUMMY, EVENT_RAGNA,"Bone_RightSword", 100, 0,0,0, 0,0,0)
+	
+	MES(LUEDUMMY,"C4我还有疑问……\n不过暂且先听你的吧！",0)
+	MES(LUEDUMMY,"C4如果造成严重的后果，\n我绝对饶不了你！？",0)
+	MES_close(LUEDUMMY)
+	wait(15)
+	
+	cross_fade(15)
+	CAM_move(-171,-553,2560,0,0)
+	CAM(-250,31,2560,25,37,0,0)
+	look_off(EVENT_RAGNA)
+	wait_fade()
+	
+	
+	MOT(EVENT_RAGNA, 153, 10)
+	wait(10)
+	SE(1014,0)//ギア構えSE
+	KAO(EVENT_RAGNA,"12321Z3","1233321","1")
+	MES(EVENT_RAGNA,"啊啊、交给我吧。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//	cross_fade(15)
+//	CAM_move(0,260,2430,0,0)
+//	CAM(-130,108,2430,34,180,0,0)
+//	color(ODESSA,1)
+
+	rot(EVENT_RAGNA,30,180)
+//	look_chr( EVENT_RAGNA,ODESSA,"Bone_Head")
+	look(EVENT_RAGNA, "Bone_Head", 0,2,2,2, 0,40,0)
+
+//	wait(15)
+	KAO(EVENT_RAGNA,"12321Z3","123332U","2")
+	MES(EVENT_RAGNA,"奥蒂莎、你准备好了吗？",0)
+	MES_close(EVENT_RAGNA)
+	
+	MOT(ODESSA, 152, 15)
+	
+	KAO(ODESSA,"12321Z4","1233321","2")
+	MES(ODESSA,"啊啊……\n准备好了。",0)
+	MES_close(ODESSA)
+	wait_MES(ODESSA)
+
+//　　画面、杖を構えた艾雯に戻る。
+//　　艾雯、邪悪な笑みを浮かべながら
+//　　禍々しいオーラをただよわせる。
+
+//	VOICE(148,0)	//★ボイス入力演出
+	cross_fade(15)
+	CAM_move(0,260,2510,0,0)
+	CAM(-170,108,2510,11,180,0,0)
+
+	KAO(EVENT_RAGNA,"B","1","3")
+	KAO(ALWEN,"1","S","3")
+
+
+//	color(ODESSA,1)
+	look_off(EVENT_RAGNA)
+	look_off(ODESSA)	
+	wait_fade()
+//	CAM_move(0,260,2430,60,0)
+//	CAM(-130,108,2430,34,180,60,0)
+	CAM_move(0,260,2430,90,0)
+	CAM(-130,108,2430,34,180,90,0)
+//	wait_CAM()
+
+//	KAO(EVENT_RAGNA,"12321Z4","1","3")
+//	MES(EVENT_RAGNA,"好……\n开始吧！",0)
+//	MES_close(EVENT_RAGNA)
+
+//	CAM_move(0,1020,2410,90,0)
+//	wait(30)
+
+	VOICE(148,0)	//★ボイス入力演出
+	EV("EV_1065_fadeout")//オーラフェードアウト
+
+	wait(90)
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(LUE)
+	delete(LUEDUMMY)
+	delete(EFFDUMMY1)
+	delete(EFFDUMMY2)
+	delete(EFFDUMMY3)
+	delete(ODESSA)
+	delete(EVENT_RAGNA)
+	delete(EVENT_RAGNA2)
+	delete(ALWEN)
+	delete(ALWENROD)
+	delete(EFFALROD)
+
+	chr_pos(RAGNA,	 	-110,750,2400,180,2)
+	chr_pos(PARTNER, 	110,750,2400,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+	
+	//拉古那メモ用
+	F_set(F5_34_BattleFake)//★中ボス⑤【偽艾雯】と战闘開始
+
+	set_chr( BOSS,		14,-1,-1,0,0,2400,	0, 0,	0,"<EV_5_14_MontblancDown>;")	//ダーク艾雯
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)	//BOSS＿ＨＰ表示
+
+	CAM_return(0)
+	wait(30)
+	wait(30)				//エフェクトが消える之を待つ
+	
+
+	//↓、ここでやっても意味無かった。INIT でしか反応せず。→直ったかも
+	F_set_obj("bossatari", NP_GROUND)												//ストッパー当たりON
+
+//	workG(GW_ENTRY_EVENT,SET,5)
+//	new_map(10800)
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)//ワープ封じる。
+
+	//再战用オートセーブ
+	workG(GW_ENTRY_EVENT,SET,100)
+	workG(GW_DEF_BGM,SET,99)				//デフォルト曲を変更する 無音
+	AutoSave(0)
+	workG(GW_ENTRY_EVENT,SET,0)
+	workG(GW_DEF_BGM,SET,0)					//デフォルト曲を変更する マップ曲
+
+	fade_in(0,30,0)
+	set_namebmp(31,0)	//ダーク艾雯			ルナ·ムンドゥス（蒙布兰之変装）
+
+	SCORE(0,0,0)//念之ためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,96);//ダーク艾雯
+
+	EV_end()
+}
+
+EV_JumpRagna
+{
+	jump(EVENT_RAGNA,00,2,-110,750,2400,50)				//拉古那避ける
+	MOT(EVENT_RAGNA, 151, 1)
+	wait(10)
+	KAO(EVENT_RAGNA,"C","1BC","3")
+	MOT(EVENT_RAGNA, 152,1)
+
+}
+
+
+//──────────────────────────────
+//　　中ボス战【偽艾雯】と之战い。
+//　　基本的に艾雯と同じ魔法を使って攻撃してくるが、
+//　　ダメージを与えていくと、段階的に擬態之魔法が解除され、
+//　　ネコミミやヒゲなどが生えてくる之を战闘中にも見せる。
+//──────────────────────────────
+
+//　　休憩所之先にある中ボスマップに入り、
+//　　中ボス战があるエリアまで来たらイベント発生。
+EV_5_13_BossFakeAlwen
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+	
+	wait(30)									//GAME OVER曲待ち
+	
+	//キャラ再配置
+	chr_pos(RAGNA,	 	-110,750,2400,180,2)
+	chr_pos(PARTNER, 	110,750,2400,180,2)
+	chr_pos(PET, 		110,750,2400,180,2)
+
+	set_chr( BOSS,		14,-1,-1,54,-640,2400,	0, 0,	0,"<EV_5_14_MontblancDown>;")	//ダーク艾雯
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)					//BOSS＿ＨＰ表示
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)					//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)						//デフォルト曲を変更する マップ曲
+	
+	BGM(49)										//ボス曲
+	
+	CAM_return(0)
+	wait(15)
+
+	fade_in(0,30,0)
+	set_namebmp(31,0)	//ダーク艾雯			ルナ·ムンドゥス（蒙布兰之変装）
+
+	SCORE(0,0,0)//念之ためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,96);//ダーク艾雯
+
+	EV_end()
+}
+
+//なおworkL 10 11はモーションスクリプトで使用中
+EV_ALWEN_CAT
+{
+	chr_equip(BOSS,"eq_048", "Bone_Spine_Dummy", 100)	//尻尾を装備させる之はこちら。
+	chr_equip(BOSS,"eq_049", "Bone_Head", 100)			//耳を装備させる之はこちら。
+	KAO(BOSS,"M","M","4")
+}
+
+//──────────────────────────────
+//　　中ボス战【偽艾雯】と之战い。	ゲーセン用
+//──────────────────────────────
+EV_5_13_BossFakeAlwen_02
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+	
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////ＨＰ0でも消えない　キャラ0は死亡時に"EV_DEAD"を再生
+
+	wait(30)									//GAME OVER曲待ち
+	
+	//キャラ再配置
+	chr_pos(RAGNA,	 	-110,750,2400,180,2)
+	chr_pos(PARTNER, 	110,750,2400,180,2)
+	chr_pos(PET, 		110,750,2400,180,2)
+
+	set_chr( BOSS,		14,-1,-1,54,-640,2400,	0, 0,	0,"<EV_YOUWIN>;")	//ダーク艾雯
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)					//BOSS＿ＨＰ表示
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)					//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)						//デフォルト曲を変更する マップ曲
+	
+	//BGM(49)										//ボス曲
+	
+	CAM_return(0)
+	wait(30)
+
+	fade_in(0,30,0)
+	set_namebmp(31,0)	//ダーク艾雯			ルナ·ムンドゥス（蒙布兰之変装）
+
+	SCORE(0,0,0)//念之ためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,96);//ダーク艾雯
+
+	EV_end()
+}
+//敗北時---------------------
+EV_DEAD
+{
+	wait_EV("EV_YOUWIN")
+
+	EV_begin()
+	EFF(21660,320,240,0,0,100,0)//LOSE
+
+	wait(60)
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+	workG(GW_ENTRY_EVENT,SET,109)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//G斗技场に
+}
+
+//勝利時---------------------
+EV_YOUWIN
+{
+	wait_EV("EV_DEAD")
+
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+	EFF(21650,320,240,0,0,100,0)//WIN
+
+//	VOICE(160,0)	//★ボイス入力演出
+	wait(30)
+	VOICE2(160,1,100)	//★「お、お之れ…うにゃあああっ！」
+	wait(1)	//1フレーム進めないと、カメラが壊れる。（ボス之カメラ之ため）
+	EV_begin()
+
+	wait(130)
+
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+
+	//成績に応じて手办入手	//	ダーク艾雯战		->Figure F2884
+	if(!F2884)
+	{
+		SE(24,0)//ゲットSE
+		MES(0,"L667得到黑暗艾雯L777的手办！！",2)
+		MES_close(0)
+		F_set(2884)
+	}
+
+	workG(GW_ENTRY_EVENT,SET,109)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//G斗技场に
+}
+
+
+
+//──────────────────────────────
+//▼偽艾雯と之战い·後
+//──────────────────────────────
+//　　战闘終了後、膝をつく偽艾雯。
+//　　ネコミミ·ヒゲ·ネコ目·尻尾が完全に出ている状態。
+EV_5_14_MontblancDown
+{
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+//	VOICE(160,0)	//★ボイス入力演出
+	wait(30)
+	VOICE2(160,1,100)	//★「お、お之れ…うにゃあああっ！」
+	wait(100)
+
+	EV_begin()
+
+	F_reset_obj("bossatari", NP_GROUND)												//ストッパー当たりOFF
+
+	//暗転
+	stop_BGM(90)
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(BOSS)
+
+	//キャラ再配置
+//	chr_pos(RAGNA,	 	-2150,-2150,3100,180,2)
+	chr_pos(RAGNA,	 	 417,-254,2401,180,2)
+	chr_pos(PARTNER, 	-2000,-2000,3100,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	workG(GW_WARP_FLAG,SET,2)//ワープ解除。（露）
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 200,380,2400, 2,155,0, "")
+
+	set_equip(2,001)													// 装備する(パーツ、フックギア)
+	set_chr(EVENT_RAGNA2,	  1010,-1,-1, -110,750,2400, 2,180,0, "")	
+	
+	set_chr(ALWEN,	  1011,-1,-1, -50,-50,2400, 2,315,0, "")
+	set_chr(ODESSA,	  1034,-1,-1, 380,200,2400, 2,115,0, "")
+	set_chr(LUE, 	  1015,-1,-1, 280,180,2400, 2,125,0, "")
+	set_chr(MONTBLANC,	1025,-1,-1,-200,-200,2400, 2,315,0, "")
+	set_chr(HOOKGEAR,	767, -1,-1,0,0,0, 0,0,0, "")					//フックギア
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CSP)	
+	F_set_chr(ALWEN,CF_NO_HEIGHT)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(MONTBLANC,CF_NO_CLIP)
+	F_set_chr(MONTBLANC,CF_NO_CLIP2)
+	F_set_chr(MONTBLANC,CF_NO_CSP)
+	color(LUE,-1)
+	color(MONTBLANC,-1)
+	color(HOOKGEAR,-1)
+	wait_color(MONTBLANC)
+
+	//モーション定義
+	MOT_SET(ALWEN,150,-1,557,557,-1,-1)	//
+//	MOT_SET(MONTBLANC,150,-1,167,167,-1,-1)	//倒れ
+	MOT_SET(MONTBLANC,150,-1,840,840,-1,-1)	//うつぶせ倒れ
+	MOT_SET(MONTBLANC,151,-1,130,0167,-1,-1)	//
+	MOT_SET(MONTBLANC,152,-1,131,131,-1,-1)	//ギアに掴まれてる
+	MOT_SET(MONTBLANC,153,-1,171,171,-1,-1)	//ギアに掴まれてる
+	MOT_SET(MONTBLANC,154, 2,840,900,-1,-1)	//うつ伏せから起き上がり
+	MOT_SET(EVENT_RAGNA,150,-1,1440,1440,-1,-1)	//ギアを前に突き出す
+	MOT_SET(EVENT_RAGNA2,150,-1,1440,1440,-1,-1)	//ギアを前に突き出す
+//	MOT_SET(ODESSA,     150,-1,395,395,-1,-1)	//腕組
+	MOT_SET(ODESSA,     150,-1,401,401,-1,-1)	//腕組
+	MOT_SET(ODESSA,     151,-1,401,401,-1,-1)	//腰腕
+	MOT(ALWEN,150,0)
+
+	//カメラ初期位置
+	CAM_move(106,8,2500,0,0)
+	CAM(30,80,2500,25,178,0,0)
+
+	chr_equip(ALWEN,"eq_048", "Bone_Spine_Dummy", 100)	//尻尾を装備させる之はこちら。
+	chr_equip(ALWEN,"eq_049", "Bone_Head", 100)			//耳を装備させる之はこちら。
+	
+	KAO(ALWEN,"M","M","4")
+	KAO(EVENT_RAGNA,"1","1","1")
+	KAO(MONTBLANC,"1","1","1")
+	KAO(ODESSA,"1","1","1")
+	KAO(LUE,"1","1","1")
+
+	CAM_reset()
+	CAM_move(-43,37,2479,0,0)
+	CAM(310,42,-80,25,192,0,0)
+	CAM_move(-17,50,2486,150,0)
+	CAM(-90,34,-60,25,246,150,0)
+	
+	color(EVENT_RAGNA2,-1)
+	color(EVENT_RAGNA,-1)
+	color(ODESSA,-1)
+	color(LUE,-1)
+
+	wait_BGM()
+	BGM(47)
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+	wait_CAM()
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(265,-236,2559,0,0)
+	CAM(-210,61,2559,15,105,0,0)
+	color(EVENT_RAGNA,1)
+	color(ODESSA,1)	
+	
+	KAO(ODESSA,"B","D","6")	
+	KAO(LUE,   "B","D","6")
+		
+	wait_fade()
+	
+
+//　　露、アンカーギアから出てきて驚愕之表情。
+	EFF_chr(6830,LUE,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	EFF_chr(6825,LUE,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	EFF_chr(6835,LUE,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	SE(1059,0)//露出てくるSE
+	wait(15)
+	color(LUE,30)
+	wait_color(LUE)
+	
+
+	KAO(LUE,"B232B2Z2","12321DE","1")
+	MES(LUE,"这、这是怎么回事……！",0)
+	MES_close(LUE)
+
+	MOT(ODESSA,150,10)
+	KAO(ODESSA,"B232BZ3","123332A","4")
+	MES(ODESSA,"唉呀唉呀……\n完全被她骗了。",0)
+	MES_close(ODESSA)
+
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(-38,38,2500,0,0)
+	CAM(-250,34,-40,25,206,0,0)
+	CAM(-250,32,-40,25,206,300,0)
+	wait(20)
+//	KAO(ALWEN,"M","MMMM3MMMM3M","4")
+	wait_fade()
+
+	chr_rename(ALWEN,"艾雯？")//
+	KAO(ALWEN,"M232MZ2","M","3")
+	MES(ALWEN,"你、你们这些混蛋……",0)
+	KAO(ALWEN,"M232MZ6","M","3")	
+	MES(ALWEN,"我堂堂真祖的公主\n你们也敢喵犯……",0)
+	KAO(ALWEN,"M232MZ4","M","3")	
+	MES(ALWEN,"不可饶恕喵！\n快给我切腹自杀的喵！",0)
+	MES_close(ALWEN)
+	
+	wait(15)
+	KAO(EVENT_RAGNA,"C","2","5")	
+	cross_fade(15)
+	CAM_move(265,-236,2559,0,0)
+	CAM(-210,61,2559,15,105,0,0)
+	KAO(LUE,   "C","1","2")
+	KAO(ODESSA,"B","1","1")		
+	wait_fade()
+	
+	EMO(EVENT_RAGNA,EMO_HIYAASE)
+	wait(30)
+	KAO(EVENT_RAGNA,"C232CZ3","23","3")
+	MES(EVENT_RAGNA,"你还是省省吧。",0)
+	KAO(EVENT_RAGNA,"C232CZ3","2","3")	
+	MES(EVENT_RAGNA,"你的词尾露马脚了、词尾。",0)
+	MES_close(EVENT_RAGNA)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(166,-52,2500,0,0)
+	CAM(30,80,2500,25,178,0,0)
+	color(EVENT_RAGNA,1)
+	color(ODESSA,1)	
+	wait_fade()
+
+
+//　　偽艾雯之頭に！マーク。
+	EMO(ALWEN,EMO_BIKKURI)
+	KAO(ALWEN,"M","M","6")
+	wait(30)
+
+	KAO(ALWEN,"2","M","6")
+	MES(ALWEN,"喵！？",0)
+	MES_close(ALWEN)
+
+	KAO(LUE,"C232CGZ2","123","3")
+	MES(LUE,"这、这家伙～～～！！！",0)
+	MES_close(LUE)
+
+//　　露、そ之まま偽艾雯に突撃。
+//　　体当たりするようなノリでぶっ飛ばす。
+	CAM_move(-34,68,2460,15,0)
+	CAM(30,80,2460,25,198,15,0)
+
+	VOICE(174,0)	//★ボイス入力演出
+	KAO(LUE,"L","32","3")
+	move(LUE,0,30,40,40,2400,0)
+	wait_move(LUE)
+	rot(EVENT_RAGNA,30,150)
+	rot(ODESSA,30,120)
+	CAM_quake("19371937")
+	SE(1044,0)//露どつくSE
+	jump(ALWEN,0,15,-200,-200,2400,200)
+	MOT(ALWEN,101,15)
+	KAO(ALWEN,"23232323","5","5")
+	VOICE(327,0)	//★ボイス入力演出
+	SE(1045,0)//ネコぶっ飛びSE
+	MES(ALWEN,"P1S5喵啊啊！",0)
+	MES_close(ALWEN)
+
+//　　偽艾雯、ぶっ飛ばされた衝撃で
+//　　ドロンなど之音と合わせて蒙布兰之姿に戻る。
+	wait_move(ALWEN)
+	cross_fade(30)
+	KAO(MONTBLANC,"B","5","-")
+	EFF_chr(6220,ALWEN,0,60,0,"Bone_Head")
+	SE(1051,0)//どろろ～んSE
+	color(ALWEN,-1)
+	color(MONTBLANC,1)
+	MOT(MONTBLANC,150,0)
+	wait(90)
+	wait_color(MONTBLANC)
+	wait_color(ALWEN)
+	delete(ALWEN)
+	
+	
+	MES(LUE,"这、这只笨猫……",0)
+	MES(LUE,"变谁不好，偏偏变成公主陛下的样子\n来骗我……",0)	
+	MES(LUE,"不可原谅！\n绝对不能原谅！",0)
+	MES_close(LUE)
+
+	KAO(MONTBLANC,"B","3","-")
+//	MOT(MONTBLANC,96,0)
+	MOT(MONTBLANC,154,0)					//うつぶせから起き上がり
+	wait(30)
+
+	look_chr(MONTBLANC, EVENT_RAGNA, "Bone_Head")
+	KAO(MONTBLANC,"B232BZ2","32B","-")
+	MES(MONTBLANC,"呜……为什么喵！",0)
+	KAO(MONTBLANC,"B232BZ2","B","-")	
+	MES(MONTBLANC,"我的变身魔法应该是\n无懈可击的……",0)
+	KAO(MONTBLANC,"B232BZ2","B233321","-")	
+	MES(MONTBLANC,"为什么你会发觉喵、人类！",0)
+	MES_close(MONTBLANC)
+
+
+	MES(EVENT_RAGNA,"啊、因为我和公主的契约\n还没有失效。",0)
+	MES(EVENT_RAGNA,"所以不会不明白\n眼前的人是不是自己\n该守护的对象？",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( LUE,EVENT_RAGNA,"Bone_Head")
+	rot(LUE,30,20)
+	move(LUE,30,5,50,30,2400,0)
+	wait_move(LUE)
+
+	KAO(LUE,"2","12321D","1")
+	MES(LUE,"啊……",0)
+	MES_close(LUE)
+
+	KAO(MONTBLANC,"B232B5Z3","1233321DE","-")
+	MES(MONTBLANC,"可恶……\n这一点居然疏忽了喵！",0)
+	MES_close(MONTBLANC)
+
+	MES(EVENT_RAGNA,"并且、那个公主\n岂会甘心被人操纵。",0)
+	MES(EVENT_RAGNA,"她是那个公主哦？\n她是那个心高气傲的公主哦。",0)
+	MES(EVENT_RAGNA,"就算是整个库朗毕林\n翻过来也不可能。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"C232CZ4","1233321","3")
+	MES(LUE,"唔唔……\n虽然你的说法听着挺别扭不过的确如此。",0)
+	KAO(LUE,"C232CZ4","123","B")
+	MES(LUE,"啊，气死人了、居然被这只笨蛋猫\n耍的团团转……！",0)
+	MES_close(LUE)
+
+	look_off(MONTBLANC)	
+	KAO(MONTBLANC,"B232BGZ2","D1232","-")
+	MES(MONTBLANC,"可恶……没办法。",0)
+	KAO(MONTBLANC,"B232BZ5","2","-")
+	MES(MONTBLANC,"暂时撤退\n回去向扎哈鲁大人报告……",0)
+	MES_close(MONTBLANC)
+
+	
+	KAO(EVENT_RAGNA,"C","12321","3")	
+	MES(EVENT_RAGNA,"──哪里逃。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"C","321","2")
+
+//	look(MONTBLANC,"Bone_Head", 0,10,10,10, 0,0,0)
+//　　拉古那、アンカー之モードをキャッチに切り替え、
+//　　そ之まま蒙布兰を攻撃し、空中で捕まえてしまう。
+	
+	F_set_chr(MONTBLANC, CF_NO_HEIGHT)
+	F_set_chr(MONTBLANC, CF_NO_ZIMEN)
+
+CAM_move(-194,68,2560,30,0)
+CAM(-410,52,2560,25,197,30,0)
+
+	rot(MONTBLANC, 30, 140)
+	move(MONTBLANC, 0, WALK1, -532,-521,2700,0)
+
+//	chr_pos(RAGNA, 200,380,2400,155,2)
+	chr_pos(EVENT_RAGNA2, 200,380,2400,155,2)
+//	color(RAGNA,1)
+	color(EVENT_RAGNA2,1)											//フックギア版拉古那
+	SE(12,0)//ギア切り替えSE
+	
+	color(EVENT_RAGNA,-1)	
+
+	rot(EVENT_RAGNA2, 30, 140 )
+	move(EVENT_RAGNA2,0, RUN1, -40,75,2401,0)
+	
+	wait_move(EVENT_RAGNA2)
+//	move(MONTBLANC, 2, 5, 0,0,0,0)
+	move(MONTBLANC, 0, WALK2,-532,-521,2700,0)
+
+	//蒙布兰をギアにアタッチ
+//	chr_equip_chr(MONTBLANC, EVENT_RAGNA2, "topNull",100,0,90,180, -100,-20,0)	
+	MOT(EVENT_RAGNA2, 122, 0 )											//ギア、伸ばす
+	SE(143,0)
+
+	//これでは駄目らしい。専用之番号を使わないと。
+//	MOT_SET(RAGNA, 150,-1,1133,1158,-1, 0)		//ギア伸ばし
+//	MOT_SET(RAGNA, 151,-1,1099,1124,-1, 0)		//縦回転
+//	MOT_SET(RAGNA, 152,-1,1213,1242,-1, 0)		//横回転
+//	MOT(RAGNA, 150, 0)	//1133 1158
+//	wait(10)
+//	chr_equip_chr(MONTBLANC, RAGNA, "topNull",100,0,0,0, 0,0,0)
+//	wait(10)
+//	MOT(RAGNA, 152, 0)	
+//	wait(30)
+//	MOT(RAGNA, 151, 0)	
+//	wait(30)
+
+
+	//蒙布兰をキャッチ
+//	MOT(RAGNA, 10, 0)
+//	MOT(EVENT_RAGNA, 120, 0)
+	wait(20)
+
+	F_reset_chr(MONTBLANC, CF_NO_HEIGHT)
+	F_reset_chr(MONTBLANC, CF_NO_ZIMEN )
+	chr_pos(MONTBLANC,-1,-1,-1,-1,-1)
+	chr_equip_chr(MONTBLANC, EVENT_RAGNA2, "topNull",100,0,90,180, -100,-20,0)	
+
+	SE(368,0)//ハッタリSE
+	SE(168,0)//フックギア
+	CAM_quake("37373")	
+//	CAM_move(-42,8,2541,0,0)
+//	CAM(-90,50,0,25,52,0,0)
+//	CAM(-90,50,0,25,77,300,0)
+	
+//	CAM_move(-62,248,2541,0,0)
+//	CAM(150,89,2541,25,77,0,0)
+	
+	KAO(EVENT_RAGNA2, "1","3","3")	
+	KAO(MONTBLANC,    "4","4","-")
+		
+
+	look_chr(LUE, MONTBLANC, "Bone_Head")
+	
+//	color(RAGNA,-1)	
+//	color(EVENT_RAGNA,1)	
+//	chr_pos(EVENT_RAGNA, -42,71,2401,155,150)
+//	chr_equip_chr(MONTBLANC, EVENT_RAGNA, "Bone_RightSword",100,180,180,180, 0,0,0)
+//	MOT(RAGNA, 150, 0)
+//	chr_equip_off(MONTBLANC)
+//	chr_pos(MONTBLANC,  -100,-70,2410,155,152)
+//	F_set_chr(MONTBLANC, CF_NO_HEIGHT)
+//	F_set_chr(MONTBLANC, CF_NO_ZIMEN)
+	
+	VOICE(326,0)	//★ボイス入力演出
+	MES(MONTBLANC,"喵……！？",0)
+	MES_close(MONTBLANC)
+
+
+	MOT(EVENT_RAGNA2, 123, 0 )										//ギア、引っ込める
+	SE(143,0)
+	wait(10)
+
+	
+//	CAM_move(-62,248,2541,0,0)
+//	CAM(150,89,2541,25,77,0,0)
+	CAM_move(-62,48,2541,0,0)
+	CAM(190,49,2541,25,76,0,0)
+	move(MONTBLANC, 2, 0, 0,0,0, 0)
+	chr_pos(MONTBLANC,    -1,-1,-1,-1,-1)
+	chr_pos(EVENT_RAGNA2, -42,71,2401,155,150)
+	chr_pos(MONTBLANC,  -100,-70,2410,155,152)
+	chr_equip_off(MONTBLANC)
+	chr_pos(LUE,    230,-162,2401,71, 2)
+	chr_pos(ODESSA, 350,37,2401,104, 150)
+	KAO(EVENT_RAGNA2,"C","1","3")	
+
+	look(EVENT_RAGNA2,"Bone_Head", 0,5,5,5,0,10,10)
+	KAO(EVENT_RAGNA2,"C232CZ5","123","3")
+	MES(EVENT_RAGNA2,"……对于刚才你的变身\n我感到有些生气。",0)
+	KAO(EVENT_RAGNA2,"C232CZ5","32","3")	
+	MES(EVENT_RAGNA2,"你这是对公主的亵渎……",0)
+	MES_close(EVENT_RAGNA2)
+
+
+	look_del(MONTBLANC)
+	look(MONTBLANC, "Bone_Head", 0,0,10,10, 0,10,30)
+	KAO(MONTBLANC,"5","32L","-")
+	MES(MONTBLANC,"啊……",0)
+	MES_close(MONTBLANC)
+
+	look_chr(LUE, EVENT_RAGNA2,"Bone_Head")
+	wait(15)
+
+	KAO(LUE,"12321Z2","1233321","6")
+	MES(LUE,"拉古那……",0)
+	MES_close(LUE)
+
+	KAO(EVENT_RAGNA2,"C232CZ5","23","3")
+	MES(EVENT_RAGNA2,"你太碍事了。\n就稍微睡一会吧。",0)
+	MES_close(EVENT_RAGNA2)
+
+	look_chr(LUE, MONTBLANC,"Bone_Head")
+	KAO(LUE, "C","12321","3")
+
+//　　拉古那、キャッチした蒙布兰を鞭之要領で
+//　　反動を付けながら容赦なく地面に叩きつける。
+	
+//	CAM_move(306,-212,2300,0,0)
+//	CAM(230,80,2300,25,64,0,0)
+	CAM_move(86,368,2360,60,0)
+	CAM(149,66,2360,25,146,60,0)
+	KAO(MONTBLANC,    "5","L235","-")	
+	KAO(EVENT_RAGNA2, "C","321","3")
+	
+	chr_equip_chr(MONTBLANC, EVENT_RAGNA2, "topNull",100,0,0,0, 0,0,0)
+	look(MONTBLANC, "Bone_Head", 0, 10, 10, 10,0,0,0)
+	F_reset_chr(MONTBLANC, CF_NO_ZIMEN)
+	F_reset_chr(MONTBLANC, CF_NO_HEIGHT)
+	
+//	MOT(RAGNA, 13, 0)
+//	wait(20)
+	
+	//振り回す
+	VOICE(006,0)	//★ボイス入力演出
+	MOT(EVENT_RAGNA2, 14, 0)
+	SE(146,0)//振り回しSE
+	wait(35)	
+
+	//たたきつける
+	VOICE(004,0)	//★ボイス入力演出
+	look_chr(EVENT_RAGNA2, MONTBLANC,"Bone_Head")
+	MOT(EVENT_RAGNA2, 12, 0)	
+	SE(169,0)
+	wait(10)
+
+	CAM_quake("373756")
+	SE(421,0)//どしーんSE
+	SE(368,0)
+	SE(1045,0)
+	chr_equip_off(MONTBLANC)
+	chr_pos(MONTBLANC, -152,-166,2401,151, 95)
+	MOT(MONTBLANC, 151, 0)
+	wait(1)
+	VOICE(329,0)	//★ボイス入力演出
+	EFF_chr(1170, MONTBLANC, 0,100,0,"charbase0")	//エフェクト：砂埃
+	jump(MONTBLANC, 0, 15, -188,-254,2401,100)
+	wait(10)
+	EFF_chr(1170, MONTBLANC, 0,50,0,"charbase0")	//エフェクト：砂埃
+	move(MONTBLANC, 40, 5, -190,-280,2401,0 )
+	
+	wait_move(MONTBLANC)
+
+	MES(MONTBLANC,"P1S5啊喵！",0)	
+	MES_close(MONTBLANC)
+	
+	wait(15)
+	cross_fade(15)
+	color(EVENT_RAGNA2,-1)
+	color(EVENT_RAGNA,1)
+	chr_pos(EVENT_RAGNA, -42,71,2401,155,2)						//通常ギア
+	CAM_move(-62,108,2561,0,0)
+	CAM(-10,62,0,25,99,0,0)
+	CAM_move(-62,108,2521,60,0)
+	chr_pos(LUE, 	4,-197,2401,101,2)
+	KAO(EVENT_RAGNA, "C","1","3")
+	KAO(MONTBLANC,"5","5","-")
+	
+	look_off(LUE)
+	rot_chr(LUE,30,MONTBLANC)
+
+	KAO(MONTBLANC,"52325Z2","523332L","-")
+	MES(MONTBLANC,"呜、呜呜……",0)
+	MES_close(MONTBLANC)
+
+//　　蒙布兰、そ之ま崩れ落ちてま気絶してしまう。
+
+
+//	VOICE(348,0)	//★ボイス入力演出
+	KAO(MONTBLANC,"C","L23","-")
+	look(MONTBLANC, "Bone_Head", 0, 0,5,5, 0,-30,-10)
+	wait(30)
+	
+	look_chr(ODESSA, MONTBLANC, "Bone_Head")
+	move( ODESSA, 0, WALK1, 102,-8,2401,0)
+//	wait_move(ODESSA)
+		
+	MOT(EVENT_RAGNA,53,15)
+	wait(30)
+	KAO(EVENT_RAGNA, "B232BZ3","123332A","6")
+	MES(EVENT_RAGNA,"唉呀……\n是不是下手太重了。",0)
+	MES_close(EVENT_RAGNA)
+	
+	KAO(LUE,"C232CZ3","123332","3")
+	MES(LUE,"不必在意！",0)
+	KAO(LUE,"C232CZ5","2","3")	
+	MES(LUE,"竟敢骗我，看我把它的胡子、一根一根的、\n全拔下来！",0)
+	MES_close(LUE)
+
+	MOT(ODESSA, 151, 10)
+	KAO(ODESSA,"12321Z4","1236","6")
+	MES(ODESSA,"哈哈、的确如果真这么做的话\n它也许真能吸取一些教训。",0)
+	MES_close(ODESSA)
+
+	CAM_move(98,48,2521,90,0)
+	CAM(-289,58,2521,25,77,90,0)
+
+	KAO(ODESSA,"1","1","6")
+
+	look_chr(EVENT_RAGNA, ODESSA, "Bone_Head")
+	wait(15)
+	KAO(ODESSA,"1","321","1")
+	look_chr(ODESSA, EVENT_RAGNA, "Bone_Head")
+	KAO(LUE,"B","12321","1")
+	look_chr(LUE, EVENT_RAGNA, "Bone_Head")
+
+	KAO(EVENT_RAGNA,"B232BZ5","A23","2")
+	MES(EVENT_RAGNA,"好了、不要在这家伙身上\n浪费时间了。",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","1")	
+	MES(EVENT_RAGNA,"真的公主就在前方。\n快出发吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	rot(LUE,30, 40 )
+	wait(5)
+
+	KAO(LUE,"12321Z1","1233321","6")
+	MES(LUE,"嗯！",0)
+	MES_close(LUE)
+
+	KAO(ODESSA,"12321Z2","1233321","6")
+	MES(ODESSA,"OK！",0)
+	MES_close(ODESSA)
+
+	chr_rename(ALWEN,"艾雯")//
+
+//　　画面、ここで一旦フェードアウト。
+	CAM(-289,62,2521,25,77,90,0)
+	fade_in(100,60,0)
+	wait_fade()
+	EV("EV_68_fadeout")//環境SEフェードアウト
+	stop_BGM(90)
+	wait_BGM()
+	wait(30)
+
+	delete(EVENT_RAGNA)
+	delete(EVENT_RAGNA2)
+	delete(ODESSA)
+	delete(LUE)
+//	delete(MONTBLANC)
+
+//ＧＦ『★中ボス⑤【偽艾雯】を倒した』を立てる。
+	F_set(F5_11_FakeAlwen)
+	//★蒙布兰【艾雯に化けた】
+	F_set_note(-25,1)
+
+	set_equip(2,000)													// 装備を戻す
+
+//　　月·异世界－旧蒙布兰へ(ev70182)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(17018)
+
+//	EV_end()
+}
+
+
+//──────────────────────────────
+//▼囚われ之艾雯·続き
+//──────────────────────────────
+//　　画面フェードインして、中ボスマップ之拉古那たち。
+//　　そ之まま台詞無しでイベント終了、プレイヤー操作許可。
+//　　异次元クリアまで、蒙布兰は気絶させておく。
+EV_5_15_AlwenRoom2
+{
+//	EV_begin()			//これがあるとペットが非表示になってしまう。
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+//	chr_pos(RAGNA,	 	-150,150,2400,135,2)
+//	chr_pos(PARTNER, 	150,-150,2400,135,2)
+	
+	chr_pos(RAGNA,	 	-280,-6,2400,135,2)
+	chr_pos(PARTNER, 	-36,-50,2400,135,2)	
+	chr_pos(PET, 		-36,-50,2400,135,2)	
+	
+	CAM_return(0)
+//	wait(30)
+
+	//フェードイン
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+//艾雯羽音処理
+EV_1126
+{
+	SE(1126,0)
+	wait(38)
+	SE(1126,0)
+	wait(9)
+	SE(1032,0)
+}
+
+//艾雯オーラフェードアウト
+EV_1065_fadeout
+{
+	SE_vol(1065,100,0)
+	wait(1)
+	SE_vol(1065,99,0)
+	wait(1)
+	SE_vol(1065,98,0)
+	wait(1)
+	SE_vol(1065,97,0)
+	wait(1)
+	SE_vol(1065,96,0)
+	wait(1)
+	SE_vol(1065,95,0)
+	wait(1)
+	SE_vol(1065,94,0)
+	wait(1)
+	SE_vol(1065,93,0)
+	wait(1)
+	SE_vol(1065,92,0)
+	wait(1)
+	SE_vol(1065,91,0)
+	wait(1)
+	SE_vol(1065,90,0)
+	wait(1)
+	SE_vol(1065,89,0)
+	wait(1)
+	SE_vol(1065,88,0)
+	wait(1)
+	SE_vol(1065,87,0)
+	wait(1)
+	SE_vol(1065,86,0)
+	wait(1)
+	SE_vol(1065,85,0)
+	wait(1)
+	SE_vol(1065,84,0)
+	wait(1)
+	SE_vol(1065,83,0)
+	wait(1)
+	SE_vol(1065,82,0)
+	wait(1)
+	SE_vol(1065,81,0)
+	wait(1)
+	SE_vol(1065,80,0)
+	wait(1)
+	SE_vol(1065,79,0)
+	wait(1)
+	SE_vol(1065,78,0)
+	wait(1)
+	SE_vol(1065,77,0)
+	wait(1)
+	SE_vol(1065,76,0)
+	wait(1)
+	SE_vol(1065,75,0)
+	wait(1)
+	SE_vol(1065,74,0)
+	wait(1)
+	SE_vol(1065,73,0)
+	wait(1)
+	SE_vol(1065,72,0)
+	wait(1)
+	SE_vol(1065,71,0)
+	wait(1)
+	SE_vol(1065,70,0)
+	wait(1)
+	SE_vol(1065,69,0)
+	wait(1)
+	SE_vol(1065,68,0)
+	wait(1)
+	SE_vol(1065,67,0)
+	wait(1)
+	SE_vol(1065,66,0)
+	wait(1)
+	SE_vol(1065,65,0)
+	wait(1)
+	SE_vol(1065,64,0)
+	wait(1)
+	SE_vol(1065,63,0)
+	wait(1)
+	SE_vol(1065,62,0)
+	wait(1)
+	SE_vol(1065,61,0)
+	wait(1)
+	SE_vol(1065,60,0)
+	wait(1)
+	SE_vol(1065,59,0)
+	wait(1)
+	SE_vol(1065,58,0)
+	wait(1)
+	SE_vol(1065,57,0)
+	wait(1)
+	SE_vol(1065,56,0)
+	wait(1)
+	SE_vol(1065,55,0)
+	wait(1)
+	SE_vol(1065,54,0)
+	wait(1)
+	SE_vol(1065,53,0)
+	wait(1)
+	SE_vol(1065,52,0)
+	wait(1)
+	SE_vol(1065,51,0)
+	wait(1)
+	SE_vol(1065,50,0)
+	wait(1)
+	SE_vol(1065,49,0)
+	wait(1)
+	SE_vol(1065,48,0)
+	wait(1)
+	SE_vol(1065,47,0)
+	wait(1)
+	SE_vol(1065,46,0)
+	wait(1)
+	SE_vol(1065,45,0)
+	wait(1)
+	SE_vol(1065,44,0)
+	wait(1)
+	SE_vol(1065,43,0)
+	wait(1)
+	SE_vol(1065,42,0)
+	wait(1)
+	SE_vol(1065,41,0)
+	wait(1)
+	SE_vol(1065,40,0)
+	wait(1)
+	SE_vol(1065,39,0)
+	wait(1)
+	SE_vol(1065,38,0)
+	wait(1)
+	SE_vol(1065,37,0)
+	wait(1)
+	SE_vol(1065,36,0)
+	wait(1)
+	SE_vol(1065,35,0)
+	wait(1)
+	SE_vol(1065,34,0)
+	wait(1)
+	SE_vol(1065,33,0)
+	wait(1)
+	SE_vol(1065,32,0)
+	wait(1)
+	SE_vol(1065,31,0)
+	wait(1)
+	SE_vol(1065,30,0)
+	wait(1)
+	SE_vol(1065,29,0)
+	wait(1)
+	SE_vol(1065,28,0)
+	wait(1)
+	SE_vol(1065,27,0)
+	wait(1)
+	SE_vol(1065,26,0)
+	wait(1)
+	SE_vol(1065,25,0)
+	wait(1)
+	SE_vol(1065,24,0)
+	wait(1)
+	SE_vol(1065,23,0)
+	wait(1)
+	SE_vol(1065,22,0)
+	wait(1)
+	SE_vol(1065,21,0)
+	wait(1)
+	SE_vol(1065,20,0)
+	wait(1)
+	SE_vol(1065,19,0)
+	wait(1)
+	SE_vol(1065,18,0)
+	wait(1)
+	SE_vol(1065,17,0)
+	wait(1)
+	SE_vol(1065,16,0)
+	wait(1)
+	SE_vol(1065,15,0)
+	wait(1)
+	SE_vol(1065,14,0)
+	wait(1)
+	SE_vol(1065,13,0)
+	wait(1)
+	SE_vol(1065,12,0)
+	wait(1)
+	SE_vol(1065,11,0)
+	wait(1)
+	SE_vol(1065,10,0)
+	wait(1)
+	SE_vol(1065,9,0)
+	wait(1)
+	SE_vol(1065,8,0)
+	wait(1)
+	SE_vol(1065,7,0)
+	wait(1)
+	SE_vol(1065,6,0)
+	wait(1)
+	SE_vol(1065,5,0)
+	wait(1)
+	SE_vol(1065,4,0)
+	wait(1)
+	SE_vol(1065,3,0)
+	wait(1)
+	SE_vol(1065,2,0)
+	wait(1)
+	stop_SE(1065)
+}
+
+EV_68_fadeout
+{
+	SE_vol(68,100,0)
+	wait(1)
+	SE_vol(68,99,0)
+	wait(1)
+	SE_vol(68,98,0)
+	wait(1)
+	SE_vol(68,97,0)
+	wait(1)
+	SE_vol(68,96,0)
+	wait(1)
+	SE_vol(68,95,0)
+	wait(1)
+	SE_vol(68,94,0)
+	wait(1)
+	SE_vol(68,93,0)
+	wait(1)
+	SE_vol(68,92,0)
+	wait(1)
+	SE_vol(68,91,0)
+	wait(1)
+	SE_vol(68,90,0)
+	wait(1)
+	SE_vol(68,89,0)
+	wait(1)
+	SE_vol(68,88,0)
+	wait(1)
+	SE_vol(68,87,0)
+	wait(1)
+	SE_vol(68,86,0)
+	wait(1)
+	SE_vol(68,85,0)
+	wait(1)
+	SE_vol(68,84,0)
+	wait(1)
+	SE_vol(68,83,0)
+	wait(1)
+	SE_vol(68,82,0)
+	wait(1)
+	SE_vol(68,81,0)
+	wait(1)
+	SE_vol(68,80,0)
+	wait(1)
+	SE_vol(68,79,0)
+	wait(1)
+	SE_vol(68,78,0)
+	wait(1)
+	SE_vol(68,77,0)
+	wait(1)
+	SE_vol(68,76,0)
+	wait(1)
+	SE_vol(68,75,0)
+	wait(1)
+	SE_vol(68,74,0)
+	wait(1)
+	SE_vol(68,73,0)
+	wait(1)
+	SE_vol(68,72,0)
+	wait(1)
+	SE_vol(68,71,0)
+	wait(1)
+	SE_vol(68,70,0)
+	wait(1)
+	SE_vol(68,69,0)
+	wait(1)
+	SE_vol(68,68,0)
+	wait(1)
+	SE_vol(68,67,0)
+	wait(1)
+	SE_vol(68,66,0)
+	wait(1)
+	SE_vol(68,65,0)
+	wait(1)
+	SE_vol(68,64,0)
+	wait(1)
+	SE_vol(68,63,0)
+	wait(1)
+	SE_vol(68,62,0)
+	wait(1)
+	SE_vol(68,61,0)
+	wait(1)
+	SE_vol(68,60,0)
+	wait(1)
+	SE_vol(68,59,0)
+	wait(1)
+	SE_vol(68,58,0)
+	wait(1)
+	SE_vol(68,57,0)
+	wait(1)
+	SE_vol(68,56,0)
+	wait(1)
+	SE_vol(68,55,0)
+	wait(1)
+	SE_vol(68,54,0)
+	wait(1)
+	SE_vol(68,53,0)
+	wait(1)
+	SE_vol(68,52,0)
+	wait(1)
+	SE_vol(68,51,0)
+	wait(1)
+	SE_vol(68,50,0)
+	wait(1)
+	SE_vol(68,49,0)
+	wait(1)
+	SE_vol(68,48,0)
+	wait(1)
+	SE_vol(68,47,0)
+	wait(1)
+	SE_vol(68,46,0)
+	wait(1)
+	SE_vol(68,45,0)
+	wait(1)
+	SE_vol(68,44,0)
+	wait(1)
+	SE_vol(68,43,0)
+	wait(1)
+	SE_vol(68,42,0)
+	wait(1)
+	SE_vol(68,41,0)
+	wait(1)
+	SE_vol(68,40,0)
+	wait(1)
+	SE_vol(68,39,0)
+	wait(1)
+	SE_vol(68,38,0)
+	wait(1)
+	SE_vol(68,37,0)
+	wait(1)
+	SE_vol(68,36,0)
+	wait(1)
+	SE_vol(68,35,0)
+	wait(1)
+	SE_vol(68,34,0)
+	wait(1)
+	SE_vol(68,33,0)
+	wait(1)
+	SE_vol(68,32,0)
+	wait(1)
+	SE_vol(68,31,0)
+	wait(1)
+	SE_vol(68,30,0)
+	wait(1)
+	SE_vol(68,29,0)
+	wait(1)
+	SE_vol(68,28,0)
+	wait(1)
+	SE_vol(68,27,0)
+	wait(1)
+	SE_vol(68,26,0)
+	wait(1)
+	SE_vol(68,25,0)
+	wait(1)
+	SE_vol(68,24,0)
+	wait(1)
+	SE_vol(68,23,0)
+	wait(1)
+	SE_vol(68,22,0)
+	wait(1)
+	SE_vol(68,21,0)
+	wait(1)
+	SE_vol(68,20,0)
+	wait(1)
+	SE_vol(68,19,0)
+	wait(1)
+	SE_vol(68,18,0)
+	wait(1)
+	SE_vol(68,17,0)
+	wait(1)
+	SE_vol(68,16,0)
+	wait(1)
+	SE_vol(68,15,0)
+	wait(1)
+	SE_vol(68,14,0)
+	wait(1)
+	SE_vol(68,13,0)
+	wait(1)
+	SE_vol(68,12,0)
+	wait(1)
+	SE_vol(68,11,0)
+	wait(1)
+	SE_vol(68,10,0)
+	wait(1)
+	SE_vol(68,9,0)
+	wait(1)
+	SE_vol(68,8,0)
+	wait(1)
+	SE_vol(68,7,0)
+	wait(1)
+	SE_vol(68,6,0)
+	wait(1)
+	SE_vol(68,5,0)
+	wait(1)
+	SE_vol(68,4,0)
+	wait(1)
+	SE_vol(68,3,0)
+	wait(1)
+	SE_vol(68,2,0)
+	wait(1)
+	stop_SE(68)
+}
+
+#EndScriptTable
+//====================================================================
+

@@ -1,0 +1,304 @@
+//====================================================================
+//ステージトラップスクリプト
+//[12019][水没神殿－中继分岐]
+//====================================================================
+
+#ScriptTable
+
+#EVENT_RAGNA	1
+#ALWEN		 	2
+
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//環境SE
+	SE(59,0)//湖
+
+//■地形
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+	set_chr( 90,990,	-1,-1,   -16,2650,  0,		185,070402, 6,"K1_12013;")	//①エントリ 梅ン③
+	set_chr( 91,990,	-1,-1,  -1680,-2320,0,		323,070103, 6,"K0_12021;")	//②エントリ 武器①
+	set_chr( 92,990,	-1,-1,  1710,-2350, 0,		 40,070103, 6,"K0_12031;")	//③エントリ ボス①
+
+	set_chr( 95,990,	-1,-1,  -1680,-2320,0,		323,070301, 6,"K0_12021;")	//②エントリ 武器① 補助当たり
+	set_chr( 96,990,	-1,-1,  1710,-2350, 0,		 40,070301, 6,"K0_12031;")	//③エントリ ボス① 補助当たり
+
+//■スイッチ·看板
+	set_chr( 50,620,	-1,-1,  -650, 275,100,		  0,   253, 0,";")	//①セーブOBJ
+
+	set_chr( 55,648,	-1,-1, -760,-1050,  0,		  5,   324, 0,";")	//等级之证 
+	set_chr( 57,654,	-1,-1, -1025,-900,  0,		  4,   324, 0,";")	//順路案内（武器）
+
+	set_chr( 56,648,	-1,-1, 765,-1045,  0,		  5,    36, 0,";")	//等级之证 
+	set_chr( 58,654,	-1,-1, 625,-1225,  0,		  3,    21, 0,";")	//順路案内（ボス）
+
+//■イベント
+	if(F1_02_EndPrologue && !F1_22_EndFirst)
+	{
+	//１章
+		//ＧＦ『★神殿：中继マップに到着した』立ってない
+		if(!F1_20_OnTempleHalf)
+		{
+			//▼中继マップに到着するイベント
+			set_namebmp(0,0)
+			EV("EV_1_11_OnTem")
+		}
+	}
+
+//■场面固有設定
+
+	// 神殿之等级之证 之色
+	color2( 55, 61, 76,100, 0,0,0)
+	color2( 56, 61, 76,100, 0,0,0)
+}
+//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼中继マップに到着するイベント
+//──────────────────────────────
+//　　梅ンルート①をクリアした所でイベント発生。
+//　　拉古那たちが中继マップに入ってくるところを見せる。
+//　　出てすぐ之所か、中央之大きな広間でやるかは要検討。
+EV_1_11_OnTem
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,BLACK)
+	wait_fade()
+
+//	delete(90)
+
+	F_set_chr(50,CF_NO_CLIP)
+	F_set_chr(50,CF_NO_CLIP2)
+	F_set_chr(55,CF_NO_CLIP)
+	F_set_chr(55,CF_NO_CLIP2)
+	F_set_chr(56,CF_NO_CLIP)
+	F_set_chr(56,CF_NO_CLIP2)
+	F_set_chr(57,CF_NO_CLIP)
+	F_set_chr(57,CF_NO_CLIP2)
+	F_set_chr(58,CF_NO_CLIP)
+	F_set_chr(58,CF_NO_CLIP2)
+
+	//キャラ再配置
+	chr_pos(RAGNA,70,525,100,180,2)
+	chr_pos(PARTNER,-64,645,100,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 70,2663,0, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, -64,2763,0, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	KAO(ALWEN,"1","1","1")//デフォルト
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる
+
+	//モーション定義
+	MOT_SET(ALWEN,150,-1,399,399,-1,-1)//腰に手を当てる（左）
+	MOT_SET(ALWEN,151,-1,6015,6035,-1,-1)//両手を振って怒る
+	MOT_SET(EVENT_RAGNA,150,-1,472,472,-1,-1)//之けぞる（左）
+	MOT_SET(EVENT_RAGNA,151,-1,407,407,-1,-1)	//どうな之よ2
+
+	//カメラ初期位置
+	CAM_move(0,-1015,-160,0,0)
+	CAM(-10,170,-160,38,180,0,0)
+
+	CAM_move(0,-515,-160,120,0)
+
+	move( EVENT_RAGNA, 0, WALK1,70,525,100,0)
+	wait(20)
+	move( ALWEN, 0, WALK1,-64,645,100,0)
+
+	//フェードイン
+	fade_in(0,60,BLACK)
+	wait_fade()
+
+	wait_CAM_move()
+	CAM_move(-200,-165,-80,150,0)
+	CAM(470,280,-80,40,208,150,0)
+
+//	wait(30)
+//	set_namebmp(16,0)
+
+	wait_move(EVENT_RAGNA)
+	rot(EVENT_RAGNA,20,220)
+	wait_move(ALWEN)
+	rot(ALWEN,20,120)
+
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+
+	cross_fade(30)
+	CAM_move(-800,-435,-60,0,0)
+	CAM(150,124,-60,25,260,0,0)
+	CAM_move(-840,-505,0,500,0)
+	CAM(70,118,0,25,265,500,0)
+
+	MOT(EVENT_RAGNA,51,15)	//首キョロキョロ
+	wait(30)
+
+	MOT(ALWEN,150,15)	//腰に手を当てる（左）
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z4","123","1")//
+	MES(ALWEN,"哼……不错啊。",0)
+	MES_close(ALWEN)
+
+	wait_MOT(EVENT_RAGNA,51)
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z6","1","1")//
+	MES(EVENT_RAGNA,"公主、辛苦啦。\n在这歇口气吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","321","6")//
+	MES(ALWEN,"恩、那就让我歇会吧。",0)
+	KAO(ALWEN,"B232BZ3","123332","2")//
+	MES(ALWEN,"……但是你。",0)
+	KAO(ALWEN,"B232BZ5","2","2")//ジト目
+	MES(ALWEN,"好像刚才、一直把我\n当个小孩子对待是吧？",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	CAM_move(40,415,-70,0,0)
+	CAM(68,132,-70,24,178,0,0)
+	CAM_move(290,415,10,900,0)
+	CAM(-52,132,10,24,164,900,0)
+
+	MOT(EVENT_RAGNA,150,5)	//之けぞる（左）
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"D","12321DE","7")//
+	MES(EVENT_RAGNA,"（ギクッ……）",0)
+	MOT(EVENT_RAGNA,2,15)	//デフォルト
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","D1236","5")//笑顔
+	MES(EVENT_RAGNA,"哈哈、那是你的幻觉。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B","3","1")//線目
+	MOT(ALWEN,2,15)	//デフォルト
+	rot(ALWEN,30,45)
+	wait(15)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","3","1")//
+	MES(ALWEN,"哼……算了。",0)
+	KAO(ALWEN,"B232BZ6","321","1")//
+	MES(ALWEN,"只要拿回《水之魔力》的话\n水也只不过是我的仆人罢了……",0)
+	KAO(ALWEN,"12321Z5","1236","6")//笑顔
+	MES(ALWEN,"哼哼哼、那样的话\n我就什么都不怕了！",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","321","6")//
+	MES(EVENT_RAGNA,"呵呵、那样啊。",0)
+	KAO(EVENT_RAGNA,"12321Z6","1","6")//
+	MES(EVENT_RAGNA,"也就是说、在能力被剥夺之前\n你也很能游泳是吧。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"C","3I","5")//テレ
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,-10)
+	wait(10)
+	MES(ALWEN,"………………………………",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"1","123","5")//
+	MOT(EVENT_RAGNA,53,15)	//髪をセット
+	wait(30)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","3","5")//
+	MES(EVENT_RAGNA,"啊……那啥、不好意思。",0)
+	wait_MOT(EVENT_RAGNA,53)
+	MOT(EVENT_RAGNA,151,15)	//
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z5","321","1")//
+	MES(EVENT_RAGNA,"下次有机会的话\n我教你游泳吧？",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"手把手的、教你哦~",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//	CAM_move(-940,-985,180,0,0)
+//	CAM(-212,104,180,24,292,0,0)
+//	CAM(-212,108,180,24,292,15,0)
+	CAM_move(-60,-625,220,0,0)
+	CAM(-52,32,220,24,292,0,0)
+	CAM(-52,38,220,24,292,15,0)
+	chr_pos(EVENT_RAGNA,114,484,100,180,151)
+	rot_chr(EVENT_RAGNA,-1,ALWEN)
+	rot_chr(ALWEN,60,EVENT_RAGNA)
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,4)
+	MOT(ALWEN,151,15)
+	wait(15)
+
+//	name2(ALWEN)
+	CAM_quake("46")
+	KAO(ALWEN,"B232B2Z3","2L","3")//涙目
+	MES(ALWEN,"唉！\n真是多管闲事啊！",0)
+	MES_close(ALWEN)
+
+//　　イベント終了、プレイヤー操作許可。
+//	CAM(-212,110,180,24,292,30,0)
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	F_reset_chr(50,CF_NO_CLIP)
+	F_reset_chr(50,CF_NO_CLIP2)
+	F_reset_chr(55,CF_NO_CLIP)
+	F_reset_chr(55,CF_NO_CLIP2)
+	F_reset_chr(56,CF_NO_CLIP)
+	F_reset_chr(56,CF_NO_CLIP2)
+	F_reset_chr(57,CF_NO_CLIP)
+	F_reset_chr(57,CF_NO_CLIP2)
+	F_reset_chr(58,CF_NO_CLIP)
+	F_reset_chr(58,CF_NO_CLIP2)
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	//キャラ再配置
+	chr_pos(RAGNA,70,525,100,180,2)
+	chr_pos(PARTNER,-64,645,100,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return( 0 )
+	wait(30)
+
+//ＧＦ『★神殿：中继マップに到着した』を立てる。
+	F_set(F1_20_OnTempleHalf)
+
+//	set_chr( 90,990,	-1,-1,  -16,2650,0,    185, 0402,	6,"K1_12013;")	//①エントリ 梅ン③
+
+	fade_in(0,30,BLACK)	//フェードイン
+
+	EV_end()
+}
+
+#EndScriptTable
+//====================================================================
+

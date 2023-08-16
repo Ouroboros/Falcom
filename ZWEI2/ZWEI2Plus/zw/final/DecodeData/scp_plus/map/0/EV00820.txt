@@ -1,0 +1,286 @@
+//====================================================================
+//ステージトラップスクリプト
+//[???????][ラグナの家（室内）]
+//====================================================================
+
+#ScriptTable
+
+#MINIRAGNA 	1
+#MIA 		2
+#BOY 		3
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip      x    y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼ラグナの記憶
+		EV("EV_2_16_RagnaMemory")
+	}
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼ラグナの記憶
+//──────────────────────────────
+//　　画面暗転した状態で、ミアのテーマを流す。
+//　　遠くから聞こえてくるようなボイスを再生してゆく。
+//　　可能ならシルエット的なイベントシーンとして構成。
+//　　無理ならビジュアルを用意し、その上にメッセージを用意。
+EV_2_16_RagnaMemory
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(PARTNER,855,2201,1,90,2)
+	chr_pos(RAGNA,793,1825,0,0,2)
+	color(PARTNER,-1)
+	color(RAGNA,-1)
+
+	set_chr(MINIRAGNA,	11,-1,-1, 0,500,73, 2,180,0, "")
+	set_chr(MIA,		87,-1,-1, 0,200,38, 2,0,0, "")
+	set_chr(BOY,		749,-1,-1,100,1000,73, 0,270,0, "")
+	F_set_chr(BOY,CF_NO_ZIMEN)
+	F_set_chr(BOY,CF_NO_HEIGHT)
+	color(BOY,-1)
+	wait_color(BOY)
+	KAO(MINIRAGNA,"1","1","1")//
+//	KAO(MIA,"C","L","5")//
+	KAO(MIA,"C","3","5")//
+
+	//モーション定義
+	MOT_SET(MINIRAGNA,150,-1,407,407,-1,-1)	//どうなのよ2
+	MOT_SET(MINIRAGNA,151,-1,431,431,-1,-1)	//やってやる
+	MOT_SET(MINIRAGNA,152,-1,414,414,-1,-1)	//とっておきだ
+	MOT_SET(MINIRAGNA,153,-1,543,543,-1,-1)	//無理かも
+	MOT_SET(MINIRAGNA,154,-1,468,468,-1,-1)	//うぐ
+	MOT_SET(MIA,150,-1,2020,2020,-1,-1)	//やだやだ
+	MOT_SET(MIA,151,-1,2020,2040,-1,-1)	//やだやだ
+	MOT_SET(MIA,152,-1,476,476,-1,-1)	//早く帰って
+	MOT_SET(MIA,153,-1,458,458,-1,-1)	//約束
+	MOT_SET(MIA,154,154,1911,1951,-1,-1)	//
+	MOT(MIA,154,0)
+
+//	look(MIA,"Bone_Head",0,0,0,16,0,0,16)
+
+	filter(1,50,0)
+
+	//カメラ初期位置
+	CAM_move(-80,-130,130,0,0)
+	CAM(-10,56,130,32,200,0,0)
+
+	wait(90)
+	VOICE(708,0)
+	wait(30)
+	BGM(56)
+	wait(60)
+	wait(60)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+	CAM_move(-80,-130,160,1200,0)
+	CAM(-130,50,160,32,200,1200,0)
+	wait(15)
+//	chr_rename(MIA,"幼い少女")//
+	chr_rename(MIA,"女の子")//
+//	KAO(MIA,"B232BZ2","L23332L","5")//
+	KAO(MIA,"B232BZ2","3","5")//
+	MES(MIA,"ひっく……ひっく……",0)
+//	KAO(MIA,"B232BZ3","L","5")//
+	KAO(MIA,"B232BZ3","3","5")//
+	MES(MIA,"ミアも……\n……ミアも行くのぉ……！",0)
+	MES_close(MIA)
+
+	MOT(MINIRAGNA,150,15)
+	wait(15)
+	chr_rename(MINIRAGNA,"少年")//
+//	name("少年の声")
+	MES(MINIRAGNA,"だ、だから……\n今日は連れてけないんだってば。",0)
+	MES(MINIRAGNA,"お前、帰るころくらいに\nゼッタイ眠くなるだろうし……",0)
+	MES(MINIRAGNA,"そうすると、この前みたいに\nオレが背負うことになるじゃんか。",0)
+	MES_close(MINIRAGNA)
+
+	KAO(MIA,"B","23332L","5")//
+	MOT(MIA,151,20)
+	wait(20)
+//	name("幼い声")
+//	KAO(MIA,"B232BZ3","L23332L","3")//
+//	KAO(MIA,"B232BZ3","23332L","3")//
+	KAO(MIA,"B232BZ3","L23332L","5")//
+	MES(MIA,"ね、寝ないもん……！",0)
+	KAO(MIA,"B232BZ4","L","5")//
+	MES(MIA,"ミア……お兄ちゃんと一緒に\nずっと起きてるんだからぁ……！",0)
+	MES_close(MIA)
+
+	MOT(MINIRAGNA,2,15)
+	wait(15)
+//	name("少年の声")
+	MES(MINIRAGNA,"でも、こないだもオヤジに\nゲンコ喰らったばかりだし……",0)
+	MES(MINIRAGNA,"母さんにだってものすごく\n心配かけちゃったじゃないか。",0)
+	MES(MINIRAGNA,"いい子だからさ……\n今日はウチで遊んでてくれよ。",0)
+	MES_close(MINIRAGNA)
+
+//	KAO(MIA,"B","L23","5")//
+//	MOT(MIA,151,0)
+//	wait(20)
+//	name("幼い声")
+	KAO(MIA,"B232BZ4","L23","5")//
+	MES(MIA,"やっ……！\nお兄ちゃんと一緒がいいのぉ！",0)
+	MES_close(MIA)
+
+	chr_rename(BOY,"別の少年の声")//
+//	name("別の少年の声")
+	MES_pos(BOY,"W9おーい！",0,120,380,0,0)
+	wait_key(0)
+	MES_pos(BOY,"W9何やってんだよ！\nそろそろ行かないとヤバイぞ！",0,120,380,0,0)
+	wait_key(0)
+	MES_close(BOY)
+
+//	name("少年の声")
+	rot(MINIRAGNA,30,120)
+	look_chr( MINIRAGNA, BOY ,"Bone_Head")
+	wait(15)
+	CAM_quake("46")
+	KAO(MINIRAGNA,"B232B2Z3","W","2")//
+	MES(MINIRAGNA,"S3ああもう！\nちょっと待ってろよっ！",0)
+	MES_close(MINIRAGNA)
+	rot(MINIRAGNA,30,180)
+	look_off( MINIRAGNA )
+	wait(15)
+	MES(MINIRAGNA,"なあミア……",0)
+	MOT(MINIRAGNA,151,12)
+	wait(12)
+	MES(MINIRAGNA,"だったら兄ちゃん、\nお前のためにスゴイ土産を\n買って帰ってやるからさ！",0)
+	MES_close(MINIRAGNA)
+
+	KAO(MIA,"E","321","4")//
+	look(MIA,"Bone_Head",0,0,0,1,0,0,8)
+	MOT(MIA,2,15)
+	wait(15)
+//	name("幼い声")
+	KAO(MIA,"B232BZ2","12321","4")//
+	MES(MIA,"おみやげ……？",0)
+	MES_close(MIA)
+
+	MOT(MINIRAGNA,152,12)
+	wait(15)
+//	name("少年の声")
+	MES(MINIRAGNA,"ああ、とっておきだ！",0)
+	MES(MINIRAGNA,"せっかく町に行くんだ。\n色々買ってきてやれるぜ。",0)
+	MES(MINIRAGNA,"髪かざりなんてどうだ？\nそれともお菓子の方がいいか？",0)
+	MES_close(MINIRAGNA)
+	look(MINIRAGNA,"Bone_Head",0,0,0,1,0,0,-14)
+	MOT(MINIRAGNA,153,15)
+	wait(15)
+	MES(MINIRAGNA,"そ、その……あんまり高いのは\nちょっと無理かもだけど……",0)
+	MES_close(MINIRAGNA)
+
+	KAO(MIA,"B","1232A","4")//
+	look(MIA,"Bone_Head",0,0,0,2,0,0,-14)
+	wait(15)
+//	name("幼い声")
+	MES(MIA,"………………………………",0)
+	KAO(MIA,"B232BZ2","23","4")//
+	MES(MIA,"……いい、ガマンする。",0)
+	MES_close(MIA)
+
+	look(MINIRAGNA,"Bone_Head",0,0,0,1,0,0,0)
+	MOT(MINIRAGNA,2,15)
+//	name("少年の声")
+	MES(MINIRAGNA,"えっ……？",0)
+	MES_close(MINIRAGNA)
+
+//	name("幼い声")
+	KAO(MIA,"B232BZ3","32A","4")//
+	MES(MIA,"ミア知ってるもん……",0)
+	KAO(MIA,"B232BZ5","A","4")//
+	MES(MIA,"お兄ちゃん、今月のおこづかい\nだいぶ使っちゃったって……",0)
+	KAO(MIA,"B232BZ3","A23","4")//
+	MES(MIA,"だから……なんにもいらない。",0)
+	MES_close(MIA)
+
+	MOT(MINIRAGNA,154,8)
+	wait(8)
+//	name("少年の声")
+	MES(MINIRAGNA,"うぐっ……",0)
+	MES(MINIRAGNA,"で、でもそれじゃあ……",0)
+	MES_close(MINIRAGNA)
+
+	KAO(MIA,"B","321","5")//
+	look(MIA,"Bone_Head",0,0,0,2,0,0,8)
+	MOT(MIA,152,15)
+	wait(15)
+//	name("幼い声")
+	KAO(MIA,"B232BZ5","1","5")//
+	MES(MIA,"……そのかわり……\nできるだけ早く帰ってきて……",0)
+	KAO(MIA,"B232BZ4","1","5")//
+	MES(MIA,"それだけで……\n今日はそれだけでいいから……",0)
+	KAO(MIA,"B232BZ4","123332L","5")//
+	MES(MIA,"おねがい……お兄ちゃん……",0)
+	MES_close(MIA)
+
+	MOT(MINIRAGNA,2,15)
+	wait(15)
+//	name("少年の声")
+	MES(MINIRAGNA,"……分かった。",0)
+	MES_close(MINIRAGNA)
+	MOT(MINIRAGNA,151,12)
+	wait(15)
+	CAM_quake("46")
+	MES(MINIRAGNA,"今日はなるべく早く\n帰ってきてやるからな！",0)
+	MES(MINIRAGNA,"約束だぞ、ミア！",0)
+	MES_close(MINIRAGNA)
+
+	look(MIA,"Bone_Head",0,0,0,1,0,0,16)
+	MOT(MIA,153,12)
+	wait(12)
+//	name("幼い声")
+	KAO(MIA,"12321Z4","236","6")//
+	MES(MIA,"うんっ！\nラグナお兄ちゃん……！",0)
+	MES_close(MIA)
+
+//　　画面、ゆっくりとフェードアウト。
+//　　そのままＢＧＭと効果音などもフェードしてゆく
+	fade_in(100,60,0)
+	wait_fade()
+
+	stop_BGM(120)
+	wait_BGM()
+	wait(30)
+
+	filter(0,0,0)
+
+	chr_rename(BOY,"吹き出し用ダミ")//
+	chr_rename(MIA,"少女ミア")//
+	chr_rename(MINIRAGNA,"少年ラグナ")//
+	delete(MIA)
+	delete(MINIRAGNA)
+	delete(BOY)
+
+//　　森－ボス部屋マップへ(ev30993)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(13099)
+
+//	EV_end()
+}
+
+
+#EndScriptTable
+//====================================================================
+

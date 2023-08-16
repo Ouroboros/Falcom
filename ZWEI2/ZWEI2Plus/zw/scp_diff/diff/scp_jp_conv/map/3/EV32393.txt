@@ -1,0 +1,880 @@
+//====================================================================
+//ステージトラップスクリプト
+//[13039][森－ボス終]
+//====================================================================
+
+#ScriptTable
+
+#PLAYER		252	//操作キャラクター
+#PLAYER2 	253	//非操作キャラクター
+
+#LUE 			1
+#EVENT_RAGNA 	2
+#ALWEN		 	3
+
+#IBARA_TYP	734
+//#IBARA_TYP	454
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境SE
+	SE(73,0)//鳥3
+	SE(74,0)//鳥4
+	SE(62,0)//虫
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段
+
+	// 入口
+	if ( F2_03_FindBaria && !F2_04_IntoTower)
+		set_chr( 90,991, 2, 9,     0,   0,  0,		180,070201, 6,"<EV_STOP_01>")	//ストッパー：①エントリ ボス③
+	else
+		set_chr( 90,990, 2, 9,     0,   0,  0,		180,070201, 6,"K1_13033;")	//①エントリ ボス③
+
+	set_obj("@obx0033c", 2, 9,     0,   0,  0,		180)						//①アーチ（森紫）
+	set_chr(190,1400,	 2, 9,	   0,   0,  0,		180,     0, 0,";")			//アーチ（ダミー）
+
+
+	// 出口
+	if(F3_00_GoMoonCastle && !F4_00_StartSolo)
+		set_chr( 91,991, 4, 4,     0,-1000, 0,		  0,070301, 6,"<EV_STOP_02>")	//②エントリ 森魔女の家．外
+	else
+		set_chr( 91,990, 4, 4,     0,-1000, 0,		  0,070301, 6,"K0_13098;")	//②エントリ 森魔女の家．外
+
+	set_obj("@obx0043c", 4, 4,     0,-900,  0,		  0)						//①アーチ（魔女）
+	set_chr(191,1400,	 4, 4,	   0,-900,  0,		  0,     0, 0,";")			//アーチ（ダミー）
+
+
+	//アルウェンが攫われてルゥだけの時
+	if( F4_11_EndFourth && !F5_17_EndFifth )
+	{
+		set_chr( 92,991,	-1,-1,   4089,15959,0,  180,1001,6,"<EV_STOP_03>")	//ストッパー：戻り-ボス終
+	}
+
+
+//■スイッチ．看板
+	set_chr( 50,620,	 2, 7,  -350,   0,  0,		  0,   270, 0,";")			//①セーブOBJ
+
+	set_chr( 56,648,	 4, 4,     0,-450,  0,		 11,     0, 0,";")	//②レベルプレート
+	color2(56, 85,80,100, 0,0,0)
+	set_chr( 54,657,	 4, 6,  -425,-230,  0,		  0,     0, 0,";")	//③ハテナ看板
+
+	// ボス警報と危険看板
+//	set_chr( 60,658,	 4, 4,  -175, 900,  0,		  0,     0, 0,";")	//③中ボス看板
+//	if(!F2_13_KillBoss3)
+//	{
+//		set_chr( 81,990,	 4, 4,     0, 800,  0,		  0,070501, 6,"#8_99 S0_2 WT?150;")//警報出現
+//	}
+
+//■罠．障害物
+//■イベント
+	if (!F2_03_FindBaria)
+	{
+		//▼茨の結界を発見
+		set_chr( 80,990,-1,-1, 6750,11274,  0,		  0,  0206, 6,"<EV_2_03_FindBaria>;")
+	}
+	else
+	if (!F2_04_IntoTower)
+	{
+		set_chr( 75,IBARA_TYP, 4, 5,    0, 1100,  0,		  2,     0, 0,";") //①茨の結界
+		//▼ルゥ登場～大鉄塔の異変を聞く
+		set_chr( 81,990, 1, 1,     0,   0,  0,		  0,     0, 8,"Mi?75 WT?15 <EV_2_04_GotoTower>;") //茨の結界
+	}
+	else
+	if (!F2_11_CancelBaria)
+	{
+		set_chr( 75,IBARA_TYP, 4, 5,     0,1100,  0,		  2,     0, 0,";") //①茨の結界
+		//▼茨の結界を焼き切る
+		set_chr( 82,990, 1, 1,     0,   0,  0,		  0,     0, 8,"M1?75 WT?15 <EV_2_12_CancelBaria>;") //茨の結界
+	}
+	else
+	{
+	//	set_chr( 75,IBARA_TYP, 4, 5,     0,1100,  0,		  0,     0, 0,";") //茨の結界破壊
+	}
+
+//■場面固有設定
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼茨の結界を発見
+//──────────────────────────────
+//　　森のメインルート②をクリアした後、
+//　　魔女の家に通じるエントリの手前まで来るとイベント発生。
+EV_2_03_FindBaria
+{
+	EV_begin()
+
+	set_chr( 75,IBARA_TYP, 4, 5,    0, 1100,  0,		  2,     0, 0,";") //茨の結界
+
+//　　ラグナとアルウェンの頭に！マーク。
+	EMO(RAGNA,EMO_BIKKURI)
+	EMO(PARTNER,EMO_BIKKURI)
+	wait(15)
+	rot_chr(RAGNA,30,75)
+	rot_chr(PARTNER,30,75)
+	wait(15)
+
+//	EMO(RAGNA,EMO_HATENA)
+//	wait(30)
+//	MES(RAGNA,"？マーク。",0)
+	MES(RAGNA,"あれは……",0)
+	MES_close(RAGNA)
+
+//	EMO(PARTNER,EMO_HATENA)
+//	wait(30)
+//	MES(PARTNER,"？マーク。",0)
+//	MES_close(PARTNER)
+
+//　　画面スクロールして、茨の結界を見せる。
+//　　（通路を塞いでいるか、異次元ドアを囲むかは要相談）
+	CAM_move(7578,-10396,160,60,0)
+	CAM(790,100,160,25,225,60,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+
+	cross_fade(30)
+	CAM_move(7650,-10326,160,0,0)
+	CAM(610,80,160,28,180,0,0)
+	CAM_move(7650,-10636,160,120,0)
+	CAM(270,100,160,28,180,120,0)
+//	wait_CAM_move()
+//	wait_CAM()
+	wait(60)
+	chr_pos(RAGNA,		7560,11436,0,180,2)
+	chr_pos(PARTNER,	7720,11448,0,180,2)
+
+//　　ラグナとアルウェンが入ってくる。
+	move( RAGNA, 0,WALK1,7560,10936,0,0)
+	wait(10)
+	move( PARTNER, 0,WALK1,7720,10948,0,0)
+	wait_move( RAGNA )
+	wait_move( PARTNER )
+	wait(15)
+
+	MES(PARTNER,"ふむ……\nこれは面倒そうだな。",0)
+	MES(PARTNER,"どうやら何者かの仕掛けた\n結界のたぐいであるらしい。",0)
+	MES_close(PARTNER)
+
+	MES(RAGNA,"……そうなのか。",0)
+	MES(RAGNA,"まあいい、まずは色々と\n試してみるとしようぜ。",0)
+	MES_close(RAGNA)
+
+	fade_in(100,30,0)
+	wait_fade()
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★茨の結界を発見した』を立てる。
+	F_set(F2_03_FindBaria)
+
+//茨の結界攻撃可能に
+	set_chr( 81,990, 1, 1,     0,   0,  0,		  0,     0, 8,"Mi?75 <EV_2_04_GotoTower>;") //茨の結界
+
+//ボス側のエントリを置き換える
+	delete(90)
+	//set_chr( 90,991,	2,9,     0,   0,  0,   180,0201,6,"<EV_STOP_01>;")	//ストッパー：①エントリ ボス③
+	set_chr( 90,991, 2, 9,     0,   0,  0,		180,070201, 6,"<EV_STOP_01>")	//ストッパー：①エントリ ボス③
+	workG(GW_WARP_FLAG,SET,0)//ワープも封じる。
+
+	fade_in(0,30,0)
+
+//　　イベント終了、プレイヤー操作許可。
+	EV_end()
+}
+
+
+//──────────────────────────────
+//▼ルゥ登場～大鉄塔の異変を聞く
+//──────────────────────────────
+//　　茨の結界をアンカーギアで攻撃し、
+//　　かつ魔法でも攻撃したらそのままイベント発生。
+//　　キャラクターを再配置してカメラを調整する。
+EV_2_04_GotoTower
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  7550,10936,0,180,2)
+	chr_pos(PARTNER,  7710,10948,0,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 7550,11030,0, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 7750,11000,0, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	KAO(ALWEN,"1","1","1")//デフォルト
+
+//	set_chr(LUE,	  1015,-1,-1, 7420,11300,0, 2,270,0, "")
+	set_chr(LUE,	  1015,-1,-1, 6420,11300,0, 2,270,0, "")
+	color(LUE,-1)
+	wait_color(LUE)
+	F_set_chr(LUE,CF_NO_ZIMEN)
+	F_set_chr(LUE,CF_NO_HEIGHT)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+
+	//モーション定義
+	MOT_SET(LUE,150,-1,1055,1095,-1,-1)//アルウェン抱きつき
+	MOT_SET(ALWEN,150,-1,165,168,2,10)//アルウェン抱きつかれ
+	MOT_SET(ALWEN,151,-1,6400,6400,-1,-1)//ルウを抱く
+//	MOT_SET(ALWEN,152,-1,6401,6401,-1,-1)//ルウを見る
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+
+	//カメラ初期位置
+	CAM_move(7680,-10496,280,0,0)
+	CAM(590,68,280,30,206,0,0)
+
+	//フェードイン
+	fade_in(0,30,0)
+	wait_fade()
+	wait(30)
+
+	CAM_move(7620,-10676,180,90,0)
+	CAM(230,96,180,30,224,90,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	KAO(EVENT_RAGNA,"B232BZ5","1","1")//
+	MES(EVENT_RAGNA,"ダメだ……\n傷一つ付いちゃいないぜ。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","1")//
+	MES(EVENT_RAGNA,"やっぱりコイツも\nなんかの魔法の代物なのか？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","123","2")//
+	MES(ALWEN,"うむ、《茨の結界》だな。",0)
+	KAO(ALWEN,"B232BZ7","32","2")//
+	MES(ALWEN,"《炎の魔法》さえあれば\n一瞬で焼き払ってくれるものを。",0)
+	MES_close(ALWEN)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321FZ7","1233321","6")//
+	MES(EVENT_RAGNA,"あ、だったら火を起こして\n焼いちまえばいいんじゃないか？",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ6","23","2")//
+	MES(ALWEN,"いや、普通の炎では\nすぐに再生してしまうであろ。",0)
+	KAO(ALWEN,"B232BZ6","321","2")//
+	MES(ALWEN,"再生できぬほど切り刻みながら\n炎を放てば可能かもしれぬが。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"C232CZ4","123","5")//
+	MES(EVENT_RAGNA,"そいつは難しそうだな……",0)
+	MES_close(EVENT_RAGNA)
+
+	chr_rename(LUE,"声")//
+//	name("声")
+	KAO(LUE,"2","6","7")//
+	VOICE2(200,0,90)		//★ボイス演出
+	MES_pos(LUE,"P1S8W9姫さまああっ！",0,120,140,0,0)
+	wait_key(0)
+	MES_close(LUE)
+
+//　　ラグナとアルウェンの頭に！マーク。
+//　　ここで入口の方から、ルゥが飛行しながら現れる。
+	color(LUE,1)
+	wait_color(LUE)
+
+	KAO(EVENT_RAGNA,"E","321D","6")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(ALWEN,"E","1233321D","6")//
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	look_off(ALWEN)
+	rot(ALWEN,30,90)
+	look_off(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,90)
+	wait(30)
+
+	cross_fade(30)
+	look_chr( EVENT_RAGNA, LUE ,"Bone_Head")
+	//look_chr( ALWEN, LUE ,"Bone_Head")
+	chr_pos(EVENT_RAGNA,	  7360,11090,0,20,2)
+	chr_pos(ALWEN,  7450,11300,0,90,2)
+//	CAM_move(5470,-11216,20,0,0)
+	CAM_move(6470,-11216,20,0,0)
+	CAM(240,88,20,18,246,0,0)
+
+	//move( LUE, 0,25,7420,11300,-20,0)
+	move( LUE, 0,25,7420,11300,-70,0) //okada
+	CAM_move(6940,-11036,-10,45,2)
+	CAM(30,112,-10,18,240,45,2)
+	wait_move( LUE )
+	chr_pos(LUE,-1,-1,-1,-1,-1)
+	MOT(ALWEN,150,0) //okada
+	MOT(LUE,150,5)
+	wait(50)
+
+	KAO(EVENT_RAGNA,"2","D","7")//
+	MES(EVENT_RAGNA,"げっ……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MOT(ALWEN,151,15)//ルウを抱く okada
+	KAO(ALWEN,"12321Z2","1233321DE","6")//ルウを抱く
+	MES(ALWEN,"おお、ルゥか！",0)
+	MES_close(ALWEN)
+
+	chr_rename(LUE,"ルゥ")//
+//　　ルゥ、アルウェンに抱きつくような動き。
+//	MES(LUE,"◆未入力項目\nルゥ、アルウェンに抱きつくような動き。",0)
+	KAO(LUE,"12321Z5","6","7")//
+	MES(LUE,"ああ、姫さま！\nご無事で何よりでした！",0)
+	MES_close(LUE)
+//	look_chr( LUE, EVENT_RAGNA ,"Bone_Head")
+	look(LUE,"Bone_Head",0,0,2,0,0,-30,0)
+	wait(15)
+	KAO(LUE,"B232BZ5","32","2")//
+	MES(LUE,"……このケダモノに\n何かされておりませんよね？",0)
+	MES_close(LUE)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"C232CZ2","12","5")//
+	MES(EVENT_RAGNA,"お前なぁ……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+//	wait(15)//okada
+//	MOT(ALWEN,152,15)//ルウを見る okada
+	KAO(ALWEN,"12321Z4","D123332A","6")//
+	MES(ALWEN,"フフ、相変わらず心配性だな。",0)
+	KAO(ALWEN,"12321Z4","A","6")//
+	MES(ALWEN,"それよりも、どうした？",0)
+	KAO(ALWEN,"12321Z7","A","6")//
+	MES(ALWEN,"そなたも私の魔力を探して\nここを調べに来ていたのか？",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+	MOT(ALWEN,2,12)//okada
+
+	cross_fade(15)
+	CAM_move(6340,-11016,-140,0,0)
+	CAM(50,124,-140,22,254,0,0)
+	chr_pos(EVENT_RAGNA,	  7320,11110,0,20,2)
+	look(LUE,"Bone_Head",0,0,3,0,0,0,0)
+	look_off( LUE )
+	KAO(LUE,"1","23","1")//
+	move( LUE, 0,18,7220,11330,20,0)
+	wait_move( LUE )
+	chr_pos(LUE,-1,-1,-1,-1,-1,)
+	KAO(EVENT_RAGNA,"1","321","1")//
+	look_chr( ALWEN, LUE ,"Bone_Head")//okada//場所変更
+
+//	name2(LUE)
+	KAO(LUE,"12321Z2","321","1")//
+	MES(LUE,"あ、はい。",0)
+	KAO(LUE,"12321Z2","F","1")//
+	MES(LUE,"ここだけではなく、\nイルバード全体ですけど……",0)
+	KAO(LUE,"B232BZ2","12321D","2")//
+	MES(LUE,"それよりも姫さま！\n大変なことがあったんです！",0)
+	MES_close(LUE)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321FZ3","233321","6")//
+	MES(ALWEN,"大変なこと……？",0)
+	MES_close(ALWEN)
+
+//	name2(LUE)
+	KAO(LUE,"B232BZ2","1232A","1")//
+	MES(LUE,"は、はい……",0)
+	KAO(LUE,"B232BZ6","A","1")//
+	MES(LUE,"ここから北の方にある\n《アウロン大鉄塔》なんですが……",0)
+	KAO(LUE,"B232BZ6","233321D","2")//
+	MES(LUE,"つい先ほど、あの塔が動き出し、\n真っ赤に燃え始めたんです！",0)
+	MES_close(LUE)
+
+//　　ラグナとアルウェンの頭に！マーク。
+	KAO(EVENT_RAGNA,"C","DE","7")//
+//	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EFF(25100,	7310,-11110,130,	0,90,0)
+	KAO(ALWEN,"E","DE","7")//
+//	EMO(ALWEN,EMO_BIKKURI)
+	EFF(25100,	7450,-11300,130,	0,80,0)
+	wait(30)
+
+	KAO(EVENT_RAGNA,"B232BZ2","D1233321","2")//
+	MES(EVENT_RAGNA,"なに！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B2Z2","D1233321","2")//
+	MES(ALWEN,"まことか！？",0)
+	MES_close(ALWEN)
+
+//	name2(LUE)
+	KAO(LUE,"B232BZ2","123","4")//
+	MES(LUE,"は、はい……！",0)
+	KAO(LUE,"B232BZ6","3","4")//
+	MES(LUE,"周りには溶岩があふれ出し、\n蒸気もいっぱい吹き出していて……",0)
+	KAO(LUE,"B232BZ5","321","2")//
+	MES(LUE,"そ、そして……\n姫さまの魔力を強く感じました。",0)
+	MES_close(LUE)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ2","123","1")//
+	MES(ALWEN,"そうか……",0)
+	MES_close(ALWEN)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ6","1233321","2")//
+	MES(EVENT_RAGNA,"こりゃあ、いったん、\n森の探索は中止した方がいいな。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1","2")//
+	MES(EVENT_RAGNA,"どう考えても\nそっちの方がヤバそうだぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B","321","2")//
+	MES(ALWEN,"うむ……！",0)
+	KAO(ALWEN,"B232BZ4","1","2")//
+	MES(ALWEN,"さっそく\n大鉄塔に向かうとしようぞ！",0)
+	MES_close(ALWEN)
+
+//　　画面、ゆっくりとフェードアウト。
+	CAM(50,130,-140,22,254,60,0)
+	fade_in(100,60,0)
+	wait_fade()
+
+	stop_BGM(60)
+	wait_BGM()
+
+	workG(GW_WARP_FLAG,SET,1)//ワープ解除。
+
+//　　アウロン大鉄塔入口起動時マップへ(ev40000)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(14001)
+
+//	EV_end()
+}
+
+
+//──────────────────────────────
+//▼茨の結界を焼き切る
+//──────────────────────────────
+//　　炎のパーツをアンカーギアに組み込んだ後、
+//　　森の《茨の結界》をラグナの炎攻撃で攻撃すると、
+//　　茨が炎に包まれながら焼き切れ、完全に消滅するのを見せる。
+//　　そのままキャラ再配置して以下のイベントが発生。
+EV_2_12_CancelBaria
+{
+	EV_begin()
+
+	cross_fade(30)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  7550,11030,0,180,2)
+	chr_pos(PARTNER,  7710,11000,0,180,2)
+	KAO(RAGNA,"1","1","1")//デフォルト
+	KAO(PARTNER,"1","1","1")//デフォルト
+
+	//カメラ初期位置
+	CAM_move(7680,-10496,280,0,0)
+	CAM(590,68,280,30,206,0,0)
+
+	SE(1020,0)//イバラを焼き切る音
+
+	wait(60)
+
+//	MES(RAGNA,"◆未入力項目\n茨が炎に包まれながら焼き切れ、\n完全に消滅するのを見せる。",0)
+//	MES_close(RAGNA)
+
+	CAM_move(7620,-10676,180,90,0)
+	CAM(230,96,180,30,224,90,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	rot(PARTNER,30,140)
+	look_chr( PARTNER, RAGNA ,"Bone_Head")
+	wait(15)
+	KAO(PARTNER,"12321Z3","1236","6")//
+	MES(PARTNER,"やったな、ラグナ！",0)
+	KAO(PARTNER,"12321Z6","6","6")//
+	MES(PARTNER,"その“あんかーぎあ”が\nまさかそこまで使えるとはのう。",0)
+	MES_close(PARTNER)
+
+	rot(RAGNA,30,220)
+	look_chr( RAGNA, PARTNER ,"Bone_Head")
+	wait(15)
+//	name2(RAGNA)
+	KAO(RAGNA,"12321Z4","123","6")//
+	MES(RAGNA,"ヘッ、当たり前だっつーの。",0)
+	MES_close(RAGNA)
+	MOT(RAGNA,50,0)	//左足トントン
+	wait(30)
+	KAO(RAGNA,"12321Z5","321","2")//
+	MES(RAGNA,"さてと……\n大鉄塔の方も放っておけねぇ。",0)
+	KAO(RAGNA,"12321Z6","1","2")//
+	MES(RAGNA,"魔女ってのに話を聞いたら\nあっちに戻るとしようぜ。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	KAO(PARTNER,"12321","321","2")//
+	MES(PARTNER,"うむ！",0)
+	MES_close(PARTNER)
+
+	fade_in(100,30,0)
+	wait_fade()
+
+	look_off( RAGNA )
+	look_del( RAGNA )
+	look_off( PARTNER )
+	look_del( PARTNER )
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★茨の結界を焼き切った』を立てる。
+	F_set(F2_11_CancelBaria)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+//▽マップから出られないストッパー（まずは色々試してみよう）
+//　　マップから出ようとするとストッパー。（※当然ワープも封じる）
+//　　（『★大鉄塔に入れるようになった』後はストッパー解除）
+EV_STOP_01
+{
+	TK_begin()
+	if( GW_MAN==1 )
+	{
+	//　　※ラグナ先頭
+		MES(RAGNA,"っと……",0)
+		MES(RAGNA,"結界ってのが壊せないか、\nまずは色々と試してみないとな。",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	{
+	//　　※アルウェン先頭
+		MES(PARTNER,"魔女殿の家はあの奥のはずだが……",0)
+		MES(PARTNER,"ふむ、まずは試してみるとするか。",0)
+		MES_close(PARTNER)
+		wait_MES(PARTNER)
+	}
+
+	chr_pos(PLAYER1,4071,16000,0,181,2)
+	chr_pos(PLAYER2,4071,16200,0,181,2)
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()
+	TK_end()
+
+}
+
+
+//　　魔女の家のマップに入った時点でストッパーイベント。
+//　　□マップに入る前にストッパー。
+EV_STOP_02
+{
+	TK_begin()
+	MES(PARTNER,"魔女殿への連絡は\nルゥに任せておこう。",0)
+	MES(PARTNER,"今は一刻も早く\n城に向かうとしよう。",0)
+	MES_close(PARTNER)
+
+	MES(RAGNA,"ああ、そうだな！",0)
+	MES_close(RAGNA)
+	wait_MES(RAGNA)
+
+	chr_pos(PLAYER1,7644,7442,0,346,2)
+	chr_pos(PLAYER2,7700,7302,1,20,2)
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()
+
+	TK_end()
+}
+
+//---------------------------------------------------------------------------------
+//▽魔女の家から出られないストッパー（ダンジョンに入るつもり？　時間がないからワープ使いなさい）
+//　　エントリの少し手前で引っ掛ける。
+//---------------------------------------------------------------------------------
+EV_STOP_03
+{
+	set_chr(LUE,	  1015,-1,-1, 4106,15730,0, 2,270,0, "")
+	color(LUE,-1)
+	TK_begin()
+	chr_rename(LUE,"ルゥの声")//
+	if( !F5_03_OfferLaraira )
+	{
+	//　　※ラーライラに声を掛けてない場合
+		MES(LUE,"W9C4……ちょっとラグナ！？\nどこへ行く気よ！",0)
+		MES(LUE,"W9C4さっさと魔女の婆さんに\n話を付けに行くわよ！C0",0)
+		MES_close(LUE)
+
+		MES(RAGNA,"わ、悪い。\nちょいと間違えたぜ。",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	if( F5_03_OfferLaraira && F5_04_OfferPipiro && F5_05_OfferFiona && !F5_06_RunCrystal )
+	{
+	//　　※全員に声を掛けてからは以下のストッパー
+		MES(RAGNA,"おっと……\n遊んでる場合じゃねえな。",0)
+		MES(RAGNA,"今はクリスタルバレーに\n急がねえと……！",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	if( !F5_06_RunCrystal )
+	{
+//　　初回のみ以下のイベント。
+		if(!F5_23_LueJump_3)
+		{
+		//	name("□これで全員に声を掛けた")
+			if(F5_03_OfferLaraira && F5_04_OfferPipiro && F5_05_OfferFiona)
+			{
+				MES(RAGNA,"っと、こっちはダンジョンか……",0)
+				MES(RAGNA,"今はクリスタルバレーに\n急がねえとな。",0)
+				MES(RAGNA,"町で準備を済ませたら、\nとっとと向かうとしようぜ。",0)
+				MES_close(RAGNA)
+
+				if( F5_22_LueJump_2 )
+				{
+				//	name("□森入り口のストッパーイベントを見た")
+					MES(LUE,"W9C4それなら、\nアタシの転位術を使えば……C0",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+				else
+				{
+				//	name("□見ていない")
+					MES(LUE,"W9C4それならアタシの転位を使ったら？\nひとっ飛びだと思うわよ。C0",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+			}
+			else
+			if(F5_05_OfferFiona)
+			{
+			//	name("□フィオナに声を掛けた")
+				MES(RAGNA,"さて……\nとりあえず町に戻ってみるか？",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4うん、あの子の事だから\n雑貨屋を見て回った後にどこかを\nブラついてるんじゃないかしら。C0",0)
+				MES_close(LUE)
+
+				if( F5_22_LueJump_2 )
+				{
+				//	name("□森入り口のストッパーイベントを見た")
+					MES(LUE,"W9C4アタシの転位術を使えば……C0",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+				else
+				{
+				//	name("□見ていない")
+					MES(LUE,"W9C4アタシの転位を使ったら？\n町までひとっ飛びだと思うわよ。",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+		}
+			else
+			{
+				MES(RAGNA,"さて……",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4町に戻るのよね。C0",0)
+				MES_close(LUE)
+
+				if( F5_22_LueJump_2 )
+				{
+				//	name("□森入り口のストッパーイベントを見た")
+					MES(LUE,"W9C4それなら、\nアタシの転位術を使えば……C0",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+				else
+				{
+				//	name("□見ていない")
+					MES(LUE,"W9C4それならアタシの転位を使ったら？\nひとっ飛びだと思うわよ。C0",0)
+					MES_close(LUE)
+					wait_MES(LUE)
+				}
+			}
+
+			//---------------------------------------------------------------------------------------------------------------
+			if(F5_22_LueJump_2)
+			{
+			//	name("□森入り口のストッパーイベントを見た")
+				MES(RAGNA,"はは、そうだったな。",0)
+				MES(RAGNA,"折角の好意だ、今回も\nありがたく使わせてもらうとするか。",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4い、言っとくけど、\n移動する時間がもったいないだけよ？",0)
+				MES(LUE,"W9C4こうしてる間にも、\n姫さまはあの連中に\n捕まっちゃってるんだから！C0",0)
+				MES_close(LUE)
+
+				MES(RAGNA,"……ああ、そいつは\n俺も十分わかってるって。",0)
+				MES(RAGNA,"とっとと行くとしようぜ、ルゥ！",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4りょ、了解よ！C0",0)
+				MES_close(LUE)
+				wait_MES(LUE)
+
+			}
+			else
+			{
+			//	name("□見てない")
+				MES(RAGNA,"はは、それもそうだな。",0)
+				MES(RAGNA,"というかお前……",0)
+				MES(RAGNA,"もしかして、転位術を\n使って欲しいのか……？",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4なっ……！？",0)
+				MES(LUE,"W9C4そ、そんなワケないでしょ！\nこれだって結構疲れるんだから！",0)
+				MES(LUE,"W9C4単に移動する時間が\nもったいないだけよ。",0)
+				MES(LUE,"W9C4こうしてる間にも、\n姫さまはあの連中に\n捕まっちゃってるんだから！C0",0)
+				MES_close(LUE)
+
+				MES(RAGNA,"……ああ、そいつは\n俺も十分わかってるって。",0)
+				MES(RAGNA,"とっとと行くとしようぜ、ルゥ！",0)
+				MES_close(RAGNA)
+
+				MES(LUE,"W9C4りょ、了解よ！C0",0)
+				MES_close(LUE)
+				wait_MES(LUE)
+			}
+			F_set(F5_23_LueJump_3)
+		}
+		else
+		{
+		//　　※２回目以降は以下のストッパー。
+			if( !F_RAGNA)
+			{
+				MES(LUE,"W9C4……なによ。\n転位術、使うんじゃなかったの？C0",0)
+				MES_close(LUE)
+
+				MES(RAGNA,"はは、心配すんなって。\nちゃんと使うからよ。",0)
+				MES_close(RAGNA)
+
+			//　　ルゥ、ラグナの頭にキックする。
+				MES(LUE,"W9C4だ、誰も\n心配なんてしてないわよ！！C0",0)
+				MES_close(LUE)
+				//wait_MES(RAGNA)
+				wait_MES(LUE)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(LUE,"W9C4アタシの転位を使えばひとっ飛びよ。",0)
+				MES(LUE,"W9C4使うならさっさとしなさいよね！C0",0)
+				MES_close(LUE)
+
+				MES(RAGNA,"ははは……了解だぜ。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		}
+	}
+	else
+	if( !F5_17_EndFifth )
+	{
+//	name("．クリスタルバレー起動後")
+
+		if( GW_MAN==1 )
+		{
+		//　　※ラグナ先頭
+			if( !F_RAGNA )
+			{
+				MES(LUE,"W9C4ラグナ、どこに行く気よ！",0)
+				MES(LUE,"W9C4早く姫様を助けに行くわよ！C0",0)
+				MES_close(LUE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"ああ、そうだな。",0)
+				MES(RAGNA,"早いとこ準備を整えて、\nクリスタルバレーへ向かわねえと。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(RAGNA,"早いとこ準備を整えて、\n姫さんを迎えに行かねえとな！",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		}
+		else
+		{
+		//　　※オデッサ先頭
+			if( !F_RAGNA )
+			{
+				MES(LUE,"W9C4ちょっと狼女、どこに行く気よ！",0)
+				MES(LUE,"W9C4早く姫様を助けに行くわよ！C0",0)
+				MES_close(LUE)
+
+				MES(PARTNER,"はは、わかってるさ。",0)
+				MES(PARTNER,"さっさと準備を整えて、\n連中の元へ乗り込むとしようか。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(PARTNER,"寄り道をしてる暇はない……",0)
+				MES(PARTNER,"さっさと準備を整えて、\n連中の元へ乗り込まないとね。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+			}
+		}
+	}
+
+	chr_pos(PLAYER,4123,15413,1,180,2)
+	//オデッサがいる
+	if(F5_08_JoinOdessa && !F5_13_KillDygald)
+	{
+		chr_pos(PLAYER2,4041,15577,0,200,2)
+	}
+
+//	chr_pos(PET,4200,15612,1,105,2)
+
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()
+
+	chr_rename(LUE,"ルゥ")//
+	TK_end()
+
+}
+
+#EndScriptTable
+//====================================================================
+

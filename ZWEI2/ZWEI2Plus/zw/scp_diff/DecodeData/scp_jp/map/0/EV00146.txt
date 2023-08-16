@@ -1,0 +1,1268 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10146][アルッテ・博物舘２Ｆ]
+//====================================================================
+
+#ScriptTable
+
+INIT
+{
+
+#GREIN		5
+
+
+//トレジャー
+#NAZO		10
+#ROBO1		11
+#ROBO2		12
+#JEWELRY	13
+#KANE		14
+#PEARL		15
+#BUTUZO		16
+#MANMOS		17
+#GALAXY		18
+#FARAO		19
+#MOYAI_A	20
+#MOYAI_B	21
+#MOYAI_C	22
+#MOYAI_D	23
+
+//トレジャー説明
+#NAZO_TXT		24
+#ROBO1_TXT		25
+#ROBO2_TXT		26
+#JEWELRY_TXT	27
+#KANE_TXT		28
+#PEARL_TXT		29
+#BUTUZO_TXT		30
+#MANMOS_TXT		31
+#GALAXY_TXT		32
+#FARAO_TXT		33
+#MOYAI_TXT		34
+	
+//  set_chr  no typ     tip      x    y   z    mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段・扉
+	set_chr( 90,990,	2,4,     0, 0,  0,    270,0102,6,"K0_1;")	//①エントリ 
+	set_chr(100,1318,	2,4,     0, 0,  0,  	 0, 270,	0,";")			//①階段下（博物館）
+
+	//⑫飛行機を寄贈しているとグレイン配置
+	if( F6_00_GoToMeru && !F6_05_EndSixth )
+	{
+		if(F2408)
+		{
+			set_chr( GREIN,45,	-1,-1,  5129,4003,0,	 52,279, 20,"<SHOP_GREIN>")		//グレイン
+			F_set_chr(GREIN,CF_NO_MOVE)
+		}
+	}
+
+
+//	set_chr(108, 714,		3,4,	-400,-400,0,		0,	315,	8,"L2?99 [9991 トレジャー博物館２Ｆ\n【オーパーツ展】] WT?30 L2!99 [9903]);");	//２階案内
+	set_chr(108, 714,		3,4,	-340,-340,0,		0,	315,	8,"L2?99 [9991 トレジャー博物館２Ｆ\n【オーパーツ展】] WT?30 L2!99 [9903]);");	//２階案内0830位置修正
+
+
+//トレジャー本体
+	set_chr(NAZO, 713,  	3,2,	0,-100,0,			0,315,0,";")		//ジェット機			obx0340
+	chr_scale(NAZO,	"obx0340",	95,95,95,	0,	1)
+
+	set_chr(ROBO1, 682,  	2,1,	-300,-350,0,	0,	0,	0,";")			//ロボ①完成形	obx0110
+	set_chr(ROBO2, 687,  	2,1,	300,-350,0,	0,	0,	0,";")				//ロボ②完成形	obx0160
+	
+	set_chr(JEWELRY, 688, 	4,1,	0,0,0,			0,0,0,";")				//宝石８個セット	obx0170 	stone_01～stone_08
+
+	set_chr(MANMOS, 678,  	2,2,	500,0,0,	0,0,0,";")					//マンモス		obx0070
+	set_chr(PEARL, 689,  	4,2,	-500,0,0,	0,315,0,";")				//黒真珠			obx0180
+
+
+	set_chr(GALAXY, 712,  	2,3,	400,-950,0,		0,45,0,";")				//ロケット			obx0330
+	set_chr(FARAO, 681,  	2,3,	400,-550,0,		0,45,0,";")				//ファラオの棺	obx0100	body
+	
+	set_chr(KANE, 680,  	4,3,	-400,-950,0,	0,315,0,";")			//金のなる木		obx0090
+	set_chr(BUTUZO, 679,  	4,3,	-400,-550,0,	0,315,0,";")			//仏像			obx0080
+	
+
+
+	set_chr(MOYAI_A, 674,  	3,3,	-400,-400,0,	0,315,0,";")			//モアイ			obx0060
+	set_chr(MOYAI_B, 674,  	3,3,	400,-400,0,		0,45,0,";")				//モアイ			obx0060
+	set_chr(MOYAI_C, 674,  	3,3,	-400,400,0,		0,225,0,";")			//モアイ			obx0060
+	set_chr(MOYAI_D, 674,  	3,3,	400,400,0,		0,135,0,";")			//モアイ			obx0060
+	
+
+
+	//トレジャー説明
+//	set_chr(NAZO_TXT,	714,  	3,2,	100,100,50,		0,0,2,"<LP_NAZO>")		//トレジャー説明 ジェット機		obx0350		//⇒寄贈判定に移植
+	set_chr(ROBO1_TXT, 	714,  	2,1,	-180,0,0,	0,0,2,"<LP_ROBO1>")			//トレジャー説明　ロボ①	obx0350
+	set_chr(ROBO2_TXT, 	714,  	2,1,	180,0,0,		0,0,2,"<LP_ROBO2>")		//トレジャー説明　ロボ②		obx0350
+	set_chr(JEWELRY_TXT,714, 	4,1,	0,400,0,	0,0,2,"<LP_JEWELRY>")		//トレジャー説明　宝石		obx0350
+
+	set_chr(MANMOS_TXT, 714,  	2,2,	300,200,0,		0,45,2,"<LP_MANMOS>")	//トレジャー説明　マンモス		obx0350
+	set_chr(PEARL_TXT, 714,  	4,2,	-300,200,0,		0,315,2,"<LP_PEARL>")	//トレジャー説明　黒真珠		obx0350
+	
+	set_chr(GALAXY_TXT, 714,  	2,3		100,-830,0,		0,45,2,"<LP_GALAXY>")	//トレジャー説明 ロケット		obx0350
+	set_chr(FARAO_TXT, 714,  	2,3,	100,-430,0,		0,45,2,"<LP_FARAO>")		//トレジャー説明　ファラオ		obx0350
+	
+	set_chr(KANE_TXT, 714,  	4,3,	-100,-830,0,	0,315,2,"<LP_KANE>")		//トレジャー説明　金の成る木	obx0350
+	set_chr(BUTUZO_TXT, 714,  	4,3,	-100,-430,0,	0,315,2,"<LP_BUTUZO>")	//トレジャー説明　仏像		obx0350
+                                
+	
+	set_chr(MOYAI_TXT, 714, 	3,3,	0,0,0,			0,0,2,"<LP_MOYAI>")		//トレジャー説明　モアイ	obx0350
+
+//展示ロープ
+	//ジェットを囲むロープ
+//	set_chr(170, 716, 	3,2,	0,600,0,		0,0,0,";")	//博物館ロープ		obx0500
+//	set_chr(171, 716, 	3,2,	600,-360,0,		0,90,0,";")	//博物館ロープ		obx0500
+//	set_chr(172, 716, 	3,2,	600,-10,0,		0,90,0,";")	//博物館ロープ		obx0500
+//	set_chr(173, 716, 	3,2,	600,340,0,		0,90,0,";")	//博物館ロープ		obx0500
+//	set_chr(174, 716, 	3,2,	-600,-360,0,	0,270,0,";")	//博物館ロープ		obx0500
+//	set_chr(175, 716, 	3,2,	-600,-10,0,		0,270,0,";")	//博物館ロープ		obx0500
+//	set_chr(176, 716, 	3,2,	-600,340,0,		0,270,0,";")	//博物館ロープ		obx0500
+
+	set_chr(170, 716, 	3,2,	-550,-400,0,		0, 90,0,";")	//博物館ロープ		obx0500
+	set_chr(170, 716, 	3,2,	-550, -50,0,		0, 90,0,";")	//博物館ロープ		obx0500
+	set_chr(170, 716, 	3,2,	 550,-400,0,		0, 90,0,";")	//博物館ロープ		obx0500
+	set_chr(170, 716, 	3,2,	 550, -50,0,		0, 90,0,";")	//博物館ロープ		obx0500
+
+
+
+	//ロボを囲むロープ
+	set_chr(177, 716, 	2,1,	0,-100,0,		0,0,0,";")	//博物館ロープ		obx0500
+	set_chr(178, 716, 	2,1,	-350,-100,0,		0,0,0,";")	//博物館ロープ		obx0500
+	set_chr(179, 716, 	2,1,	350,-100,0,		0,0,0,";")	//博物館ロープ		obx0500
+
+	//宝石を囲むロープ
+	set_chr(180, 716, 	4,1,	150,330,0,		0,0,0,";")	//博物館ロープ		obx0500
+	set_chr(181, 716, 	4,1,	-150,330,0,		0,0,0,";")	//博物館ロープ		obx0500
+	set_chr(182, 716, 	4,1,	150,-330,0,		0,180,0,";")	//博物館ロープ		obx0500
+	set_chr(199, 716, 	4,1,	-150,-330,0,		0,180,0,";")	//博物館ロープ		obx0500
+	set_chr(200, 716, 	4,1,	330,150,0,		0,90,0,";")	//博物館ロープ		obx0500
+	set_chr(201, 716, 	4,1,	330,-150,0,		0,90,0,";")	//博物館ロープ		obx0500
+	set_chr(202, 716, 	4,1,	-330,150,0,		0,270,0,";")	//博物館ロープ		obx0500
+	set_chr(203, 716, 	4,1,	-330,-150,0,		0,270,0,";")	//博物館ロープ		obx0500
+
+	//マンモスを囲むロープ
+	set_chr(183, 716, 	2,2,	500,250,0,		0,0,0,";")	//博物館ロープ		obx0500
+	set_chr(184, 716, 	2,2,	500,-250,0,		0,180,0,";")	//博物館ロープ		obx0500
+	set_chr(185, 716, 	2,2,	250,0,0,		0,90,0,";")	//博物館ロープ		obx0500
+	set_chr(186, 716, 	2,2,	750,0,0,		0,270,0,";")	//博物館ロープ		obx0500
+
+	set_chr(186, 991, 	-1,-1,	4385,3915,0,	0,0101,0,";")	//ダミー当たり
+	set_chr(186, 991, 	-1,-1,	4711,3962,0,	0,0101,0,";")	//ダミー当たり
+	set_chr(186, 991, 	-1,-1,	4678,4175,0,	0,0101,0,";")	//ダミー当たり
+
+
+	//黒真珠を囲むロープ
+	set_chr(187, 716, 	4,2,	-500,180,0,		0,0,0,";")	//博物館ロープ		obx0500
+	set_chr(188, 716, 	4,2,	-500,-180,0,		0,180,0,";")	//博物館ロープ		obx0500
+	set_chr(189 716, 	4,2,	-320,0,0,		0,90,0,";")	//博物館ロープ		obx0500
+	set_chr(190, 716, 	4,2,	-680,0,0,		0,270,0,";")	//博物館ロープ		obx0500
+
+	//ロケット、ファラオを囲むロープ
+	set_chr(191, 716, 	2,3,	400,-350,0,		0,0,0,";")	//博物館ロープ		obx0500
+	set_chr(192, 716, 	2,3,	400,-1150,0,	0,0,0,";")	//博物館ロープ		obx0500
+	set_chr(193, 716, 	2,3,	200,-560,0,		0,90,0,";")	//博物館ロープ		obx0500
+	set_chr(194, 716, 	2,3,	200,-940,0,		0,90,0,";")	//博物館ロープ		obx0500
+
+	//木、仏像囲むロープ
+	set_chr(195, 716, 	4,3,	-400,-350,0,	0,0,0,";")	//博物館ロープ		obx0500
+	set_chr(196, 716, 	4,3,	-400,-1150,0,	0,0,0,";")	//博物館ロープ		obx0500
+	set_chr(197, 716, 	4,3,	-200,-560,0,	0,90,0,";")	//博物館ロープ		obx0500
+	set_chr(198, 716, 	4,3,	-200,-940,0,	0,90,0,";")	//博物館ロープ		obx0500
+
+
+
+	
+//ノード制御
+	//---------------------------最高級---------------------------------
+	if(!F2401)//	001	モヤイ像			9800	//地
+	{
+		delete(MOYAI_A)
+		delete(MOYAI_B)
+		delete(MOYAI_C)
+		delete(MOYAI_D)
+	}
+	//寄贈後
+	else
+	{
+		//モアイ囲むロープ
+		set_chr(204, 716, 	3,3,	-400,-250,0,	0,0,0,";")	//博物館ロープ		obx0500
+		set_chr(205, 716, 	3,3,	-250,-400,0,	0,270,0,";")	//博物館ロープ		obx0500
+		set_chr(206, 716, 	3,3,	400,-250,0,	0,0,0,";")	//博物館ロープ		obx0500
+		set_chr(207, 716, 	3,3,	250,-400,0,	0,270,0,";")	//博物館ロープ		obx0500
+
+		set_chr(208, 716, 	3,3,	-400,250,0,	0,0,0,";")	//博物館ロープ		obx0500
+		set_chr(209, 716, 	3,3,	-250,400,0,	0,270,0,";")	//博物館ロープ		obx0500
+		set_chr(210, 716, 	3,3,	400,250,0,	0,0,0,";")	//博物館ロープ		obx0500
+		set_chr(211, 716, 	3,3,	250,400,0,	0,270,0,";")	//博物館ロープ		obx0500
+		//トレジャー説明が正規のものに
+		F_set(MOYAI)
+	}
+	
+	if(!F2402)//	002	氷漬けのマンモス	19800	//水
+	{
+		//台座だけ設定
+		F_set_Node(MANMOS,"manmos01",NP_HIDE)
+		F_set_Node(MANMOS,"ice01",NP_HIDE)
+		F_set_Node(MANMOS,"ice02",NP_HIDE)
+		MOT(MANMOS,1,0)//エフェクト削除
+	}
+	//寄贈後
+	else
+	{
+		//トレジャー説明が正規のものに
+		F_set(MANMOS)
+	}
+	
+	if(!F2403)//	003	ロケット			29800	//火
+	{
+		//台座だけ設定
+		F_set_Node(GALAXY,"obx0330",NP_HIDE)
+		F_reset_Node(GALAXY,"desk",NP_HIDE)
+	}
+	//寄贈後
+	else
+	{
+		//トレジャー説明が正規のものに
+		F_set(GALAXY)
+	}
+
+	
+	if(!F2404)//	004	金のなる木			39800	//風
+	{
+		//台座だけ設定
+		F_set_Node(KANE,"obx0090",NP_HIDE)
+		F_set_Node(KANE,"reef01",NP_HIDE)
+		F_set_Node(KANE,"mi01",NP_HIDE)
+		MOT(KANE,1,0)//エフェクト削除
+	}
+	//寄贈後
+	else
+	{
+		//トレジャー説明が正規のものに
+		F_set(KANE)
+	}
+	
+	if(!F2405)//	005	ファラ王の棺		49800	//城
+	{
+		//台座だけ設定
+		F_set_Node(FARAO,"obx0100",NP_HIDE)
+		MOT(FARAO,1,0)//エフェクト削除
+	}
+	//寄贈後
+	else
+	{
+		//トレジャー説明が正規のものに
+		F_set(FARAO)
+	}
+	
+	if(!F2406)//	006	仏像				59800	//山
+	{
+		//台座だけ設定
+		F_set_Node(BUTUZO,"god01",NP_HIDE)
+		MOT(BUTUZO,1,0)//エフェクト削除
+	}
+	//寄贈後
+	else
+	{
+		//トレジャー説明が正規のものに
+		F_set(BUTUZO)
+	}
+	
+	if(!F2407)//	007	黒真珠				69800	//異次元
+	{
+		//台座だけ設定
+		F_set_Node(PEARL,"stone09_mul",NP_HIDE)
+		F_set_Node(PEARL,"stone09_add",NP_HIDE)
+		F_set_Node(PEARL,"fire",NP_HIDE)
+		MOT(PEARL,1,0)//エフェクト削除
+	}
+	//寄贈後
+	else
+	{
+		//トレジャー説明が正規のものに
+		F_set(PEARL)
+	}
+	
+	if(!F2408)//	008	謎の竜殻飛翔装置	79800	//ラスダン
+	{
+		delete(NAZO)
+
+		set_chr(197, 716, 	-1,-1,	5507,3652,0,	0,-30,0,";")	//博物館ロープ		obx0500
+		set_chr(197, 716, 	-1,-1,	5507,3752,0,	0,-30,0,";")	//博物館ロープ		obx0500
+		set_chr(197, 716, 	-1,-1,	5507,3852,0,	0,-30,0,";")	//博物館ロープ		obx0500
+		set_chr(197, 716, 	-1,-1,	5507,3952,0,	0,-30,0,";")	//博物館ロープ		obx0500
+		set_chr(197, 716, 	-1,-1,	5507,4052,0,	0,-30,0,";")	//博物館ロープ		obx0500
+
+		set_chr(197, 716, 	-1,-1,	6107,3692,0,	0,-30,0,";")	//博物館ロープ		obx0500
+		set_chr(197, 716, 	-1,-1,	6107,3792,0,	0,-30,0,";")	//博物館ロープ		obx0500
+		set_chr(197, 716, 	-1,-1,	6107,3892,0,	0,-30,0,";")	//博物館ロープ		obx0500
+		set_chr(197, 716, 	-1,-1,	6107,3992,0,	0,-30,0,";")	//博物館ロープ		obx0500
+
+		set_chr(197, 714, 	-1,-1,	5725,3645,0,	0,-30,0,";")	//トレジャー説明
+		set_chr(197, 714, 	-1,-1,	5725,3745,0,	0,-30,0,";")	//トレジャー説明
+		set_chr(197, 714, 	-1,-1,	5725,3845,0,	0,-30,0,";")	//トレジャー説明
+		set_chr(197, 714, 	-1,-1,	5855,3645,0,	0,-30,0,";")	//トレジャー説明
+		set_chr(197, 714, 	-1,-1,	5855,3745,0,	0,-30,0,";")	//トレジャー説明
+
+		set_chr(197, 804, 	-1,-1,	6268,4069,0,	0,  0,8,"(L2?99 [9991こちらは整理中の資材となります。\nお手を触れないよう\nお願い申し上げます。] WT?30 L2!99 [9903]);")	//看板
+
+	}
+	//寄贈後
+	else
+	{
+		//トレジャー説明が正規のものに
+		set_chr(NAZO_TXT,	714,  	3,2,	100,100,50,		0,0,2,"<LP_NAZO>")		//トレジャー説明 ジェット機		obx0350
+		F_set(NAZO)
+		
+		//ジェット見上げカメラ出現
+		set_chr( 291,990,	3,2,     0, -200,  0,    0,   0,8,"(L7?99 <CAM_NAZO> WT?30 L7!99 <CAM_RESET>);")
+		set_chr( 170,991,	3,2,     0, -80,  0,    0,0506,0,";")//アタリ
+		set_chr( 170,991,	3,2,     0,    0,  0,    0,0603,0,";")//アタリ左右
+		set_chr( 170,991,	3,2,     0,   80,  0,    0,0303,0,";")//アタリ手前
+		set_chr( 170,991, -1,-1,     5619,3871,0,    0,0101,0,";")//アタリ左上
+	}
+
+	//---------------------------ロボ①---------------------------------
+	workL(6,SET,0)//寄贈状況
+	if(F2341)
+		workL(6,ADD,1)
+	if(F2342)
+		workL(6,ADD,1)
+	if(F2343)
+		workL(6,ADD,1)
+	if(F2344)
+		workL(6,ADD,1)
+
+	if(WK006<4)
+	{
+		F_set_Node(ROBO1,"p_head",NP_HIDE)
+	}
+	if(WK006<3)
+	{
+		F_set_Node(ROBO1,"p_leg",NP_HIDE)
+	}
+	if(WK006<2)
+	{
+		F_set_Node(ROBO1,"p_body",NP_HIDE)
+		F_set_Node(ROBO1,"p_arm",NP_HIDE)
+	}
+	if(WK006<1)
+	{
+	}
+
+	if(WK006==4)
+	{	//ロボ見上げカメラ出現
+		set_chr( 292,990,	2,1,     -300, -50,  0,    0,0501,8,"(L1?99 <CAM_ROBO1> WT?30 L2!99 <CAM_RESET>);")	
+
+	}
+//	if(WK006==4)
+//	{
+//		//完成看板出現。
+//	}
+//	else
+//	{
+//		//準備中看板。
+//		delete(57)//トレジャー説明
+//	}
+	//---------------------------ロボ②---------------------------------
+	workL(7,SET,0)//寄贈状況
+	if(F2345)
+		workL(7,ADD,1)
+	if(F2346)
+		workL(7,ADD,1)
+	if(F2347)
+		workL(7,ADD,1)
+	if(F2348)
+		workL(7,ADD,1)
+
+	if(WK007<4)
+	{
+		F_set_Node(ROBO2,"p_head",NP_HIDE)
+	}
+	if(WK007<3)
+	{
+		F_set_Node(ROBO2,"p_arm",NP_HIDE)
+	}
+	if(WK007<2)
+	{
+		F_set_Node(ROBO2,"p_body",NP_HIDE)
+	}
+	if(WK007<1)
+	{
+		F_set_Node(ROBO2,"p_leg",NP_HIDE)
+	}
+	if(WK007==4)
+	{	//ロボ見上げカメラ出現
+		set_chr( 293,990,	2,1,     300, -50,  0,    0,0501,8,"(L1?99 <CAM_ROBO2> WT?30 L2!99 <CAM_RESET>);")	
+	}
+//	else
+//	{
+//		//トレジャー説明が正規のものに
+//		F_set(ROBO2)
+//		//準備中看板
+//		delete(57)//トレジャー説明
+//	}
+	//---------------------------宝石---------------------------------
+	if(!F2409)//	009	トパーズ			500		//地		stone_02
+		F_set_Node(JEWELRY,"stone_02",NP_HIDE)
+	if(!F2410)//	010	ダイヤモンド		500		//異次元    stone_04
+		F_set_Node(JEWELRY,"stone_04",NP_HIDE)
+	if(!F2411)//	011	アメジスト			500		//城        stone_08
+		F_set_Node(JEWELRY,"stone_08",NP_HIDE)
+	if(!F2412)//	012	アンバー			500		//山        stone_05
+		F_set_Node(JEWELRY,"stone_05",NP_HIDE)
+	if(!F2413)//	013	エメラルド			500		//風        stone_01
+		F_set_Node(JEWELRY,"stone_01",NP_HIDE)
+	if(!F2414)//	014	ルビー				500		//火        stone_03
+		F_set_Node(JEWELRY,"stone_03",NP_HIDE)
+	if(!F2415)//	015	アクアマリン		500		//水        stone_06
+		F_set_Node(JEWELRY,"stone_06",NP_HIDE)
+	if(!F2416)//	016	ピンクダイヤ		500		//ラスダン  stone_07
+		F_set_Node(JEWELRY,"stone_07",NP_HIDE)
+
+//	if( !F2409 || !F2410 || !F2411 || !F2412 || !F2413 || !F2414 || !F2415 || !F2416 )
+//		delete(59)//トレジャー説明
+	if( F2409 || F2410 || F2411 || F2412 || F2413 || F2414 || F2415 || F2416 )
+	{
+		//トレジャー説明が正規のものに
+		F_set(JEWELRY)
+	}
+}
+
+
+//──────────────────────────────────────
+//	name("○宝石")
+//──────────────────────────────────────
+//	name("宝石")
+LP_JEWELRY
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,JEWELRY_TXT)
+	
+	if(F_JEWELRY)
+	{
+//		MES(JEWELRY_TXT,"C4W9イルバード各地で見つかった宝石。\n\n※高価なものですので、\n＿絶対にケースに触れないでください！！",0)
+		MES(JEWELRY_TXT,"C4W9宝石【Ｊｅｗｅｌｒｙ’ｓ】\nイルバード各地で発見された宝石。",0)
+		MES(JEWELRY_TXT,"C4W9とても高価なものですので、\nケースに触れないようご注意下さい。\n",0)
+		MES_close(JEWELRY_TXT)
+	}
+	else
+	{
+	//	展示前
+		MES(JEWELRY_TXT,"C4W9～準備中～\n展示物としてトレジャーを募集しています。\n寄贈していただける方は、\n是非とも受付までご連絡ください。",0)
+		MES_close(JEWELRY_TXT)
+	}
+	
+	TK_end()
+}
+//──────────────────────────────────────
+//	name("○最高級")
+//──────────────────────────────────────
+//	name("モヤイ像")
+LP_MOYAI
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,MOYAI_TXT)
+
+	if(F_MOYAI)
+	{
+	//	MES(MOYAI_TXT,"モヤイ像【Moyai】\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n本当は南西諸島の孤島・ミスッター島にあるはずだが\n最近は渋谷駅前にあったりもするのでいいのかもしれない。\nもともと帽子を被っていたが、どこかで落としたらしい。",0)
+	
+//		MES(MOYAI_TXT,"C4W9モヤイ像\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n\n本当は南西諸島の孤島・ミスッター島にあるはずだが\n最近は渋谷駅前にあったりもするのでいいのかもしれない。\nもともと帽子を被っていたが、どこかで落としたらしい。",0)
+		MES(MOYAI_TXT,"C4W9モアイ像【Ｍｏａｉ】\n南西諸島の孤島に見られる有名なオーパーツ。\n何故かイルバードのダンジョンで発見された。",0)
+		MES(MOYAI_TXT,"C4W9長い間用途不明だったが、近年の調査で\n像の口内から武器らしき物が発見され、\n一種の兵器だという説が有力になっている。",0)
+		MES_close(MOYAI_TXT)
+	}
+	else
+	{
+	//	展示前
+		MES(MOYAI_TXT,"C4W9～準備中～\n展示物としてトレジャーを募集しています。\n寄贈していただける方は、\n是非とも受付までご連絡ください。",0)
+		MES_close(MOYAI_TXT)
+	}
+	
+	TK_end()
+}
+
+//──────────────────────────────────────
+//	name("マンモス")
+LP_MANMOS
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,MANMOS_TXT)
+
+	if(F_MANMOS)
+	{
+	//	MES(this,"氷漬けのマンモス【Mammuthus primigenius】\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n氷河期に生息していたらしき大型哺乳類。\n大きな牙を自慢して歩き回っているうちに\nクレバスに落ちて凍り付いたらしい。\n良く見るとドジっ子そうな顔をしている。",0)
+	
+//		MES(MANMOS_TXT,"C4W9氷漬けのマンモス\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。",0)
+//		MES(MANMOS_TXT,"C4W9氷河期に生息していたらしき大型哺乳類。\n大きな牙を自慢して歩き回っているうちに\nクレバスに落ちて凍り付いたらしい。\n良く見るとドジっ子そうな顔をしている。\n（※押すと回る）",0)
+		MES(MANMOS_TXT,"C4W9氷漬けのマンモス【Ｍａｍｍｕｔｈｕｓ ｐｒｉｍｉｇｅｎｉｕｓ】\n氷河期に生息していたらしき大型哺乳類が、\n生きたまま氷の中に閉じ込められたもの。",0)
+		MES(MANMOS_TXT,"C4W9氷を溶かせば蘇生も可能だが、\n希少価値の高いトレジャーであるため、\n当博物館は現状維持していく予定。",0)
+
+		MES_close(MANMOS_TXT)
+	}
+	else
+	{
+	//	展示前
+		MES(MANMOS_TXT,"C4W9～準備中～\n展示物としてトレジャーを募集しています。\n寄贈していただける方は、\n是非とも受付までご連絡ください。",0)
+		MES_close(MANMOS_TXT)
+	}
+	TK_end()
+	
+}
+//──────────────────────────────────────
+//	name("ギャラクシー号")
+LP_GALAXY
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,GALAXY_TXT)
+
+	if(F_GALAXY)
+	{
+	//	MES(GALAXY_TXT,"ギャラクシー号\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n古代魔族の誰かが\n現実から脱出しようと作ったらしい。\n底の方に『ルシアン様に振られた。』と\n落書きしてあるのを確認した。",0)
+//		MES(GALAXY_TXT,"C4W9ギャラクシー号\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n\n古代魔族の誰かが\n現実から脱出しようと作ったらしい。\n底の方に『ルシアン様に振られた。』と\n落書きしてあるのを確認した。",0)
+		MES(GALAXY_TXT,"C4W9ギャラクシー号【Ｌｏａｄ ｏｆ Ｇａｌａｘｙ】\n古代魔族の誰かが辛い現実から逃げ出すために\n作ったと見られる。\n",0)
+		MES(GALAXY_TXT,"C4W9底の方に、『●●●●様にフラれた。』などというメモを確認。\n残念ながら●●●●の部分は判読不能だったが、\n今現在この場所に存在している事から、\nどうやら使用はされなかったようだ。",0)
+		MES_close(GALAXY_TXT)
+	}
+	else
+	{
+	//	展示前
+		MES(GALAXY_TXT,"C4W9～準備中～\n展示物としてトレジャーを募集しています。\n寄贈していただける方は、\n是非とも受付までご連絡ください。",0)
+		MES_close(GALAXY_TXT)
+	}
+	
+	TK_end()
+}
+
+//──────────────────────────────────────
+//	name("金の成る木")
+LP_KANE
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,KANE_TXT)
+
+	if(F_KANE)
+	{
+	//	MES(KANE_TXT,"金の成る木【Crassula ovata】\n現代に残されたオーパーツ。\n詳細は調査中。\nハンターの父・ゲーテルボイスが\n幻の桃亜郷源大陸から持ち帰った一品。\n実の代わりに純金をつけると評判だったが、\nのちに肥料として大量の金粉を\n与えなければいけないことが判明。\nそれって意味ないじゃんと轟々たる\n非難を浴びた。",0)
+//		MES(KANE_TXT,"C4W9金の成る木\n現代に残されたオーパーツ。\n詳細は調査中。",0)
+//		MES(KANE_TXT,"C4W9ハンターの父・ゲーテルボイスが\n幻の桃亜郷源大陸から持ち帰った一品。\n実の代わりに純金をつけると評判だったが、\nのちに肥料として大量の金粉を\n与えなければいけないことが判明。\nそれって意味ないじゃんと轟々たる\n非難を浴びた。",0)
+		MES(KANE_TXT,"C4W9金の成る木【Ｃｒａｓｓｕｌａ ｏｖａｔａ】\n純金の実を落とす幻の植物。\n幻の桃源郷大陸に発生したとされる。",0)
+		MES(KANE_TXT,"C4W9落とす実以上の莫大な金粉を\n肥料にする必要があり、\n実用には至らなかったという。",0)
+		MES_close(KANE_TXT)
+	}
+	else
+	{
+	//	展示前
+		MES(KANE_TXT,"C4W9～準備中～\n展示物としてトレジャーを募集しています。\n寄贈していただける方は、\n是非とも受付までご連絡ください。",0)
+		MES_close(KANE_TXT)
+	}
+	
+	TK_end()
+}
+
+//──────────────────────────────────────
+//	name("ファラオの棺")
+LP_FARAO
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,FARAO_TXT)
+
+	if(F_FARAO)
+	{
+	//	MES(FARAO_TXT,"ファラオの棺【Pharaoh's coffin】\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n昔の偉い人が入っているはずだという説と\nどこかの芸人が入っているのではいう説がある。\n開けてみれば話は早いのだが、\n一応国宝級なので許可を申請中。",0)
+//		MES(FARAO_TXT,"C4W9ファラオの棺\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n\n昔の偉い人が入っているはずだという説と\nどこかの芸人が入っているのではいう説がある。\n開けてみれば話は早いのだが、\n一応国宝級なので許可を申請中。",0)
+		MES(FARAO_TXT,"C4W9ファラオの棺【Ｐｈａｒａｏ’ｓ ｃｏｆｆｉｎ】\n大昔の砂漠の王の棺とされるもの。\n純金製。",0)
+		MES(FARAO_TXT,"C4W9棺を開ける者にはもれなく呪いがついてくるので、\n罰ゲームなどにも利用されていたらしい。",0)
+		MES_close(FARAO_TXT)
+	}
+	else
+	{
+	//	展示前
+		MES(FARAO_TXT,"C4W9～準備中～\n展示物としてトレジャーを募集しています。\n寄贈していただける方は、\n是非とも受付までご連絡ください。",0)
+		MES_close(FARAO_TXT)
+	}
+	
+	TK_end()
+}
+
+//──────────────────────────────────────
+//	name("仏像")
+LP_BUTUZO
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,BUTUZO_TXT)
+
+	if(F_BUTUZO)
+	{
+	//	MES(BUTUZO_TXT,"仏像【a Statue of Buddha】\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n本当はどこかのお寺にあるはずだが、\n返却先が分からず当博物館が保管している。\n係員にはムダに神々しくて邪魔と不評。",0)
+	
+	//	MES(BUTUZO_TXT,"C4W9仏像\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n\n本当はどこかのお寺にあるはずだが、\n返却先が分からず当博物館が保管している。\n係員にはムダに神々しくて邪魔と不評。",0)
+		MES(BUTUZO_TXT,"C4W9仏像【ａ Ｓｔａｔｕｅ ｏｆ Ｂｕｄｄｈａ】\n仏と呼ばれる大変徳の高い人物を模した像。\n神々しいオーラを発している。",0)
+		MES(BUTUZO_TXT,"C4W9本当はどこかのお寺の所蔵品のはずだが、\n返却先が分からず当博物館が保管している。\n心当たりのある寺院関係者の方は係員まで。",0)
+		MES_close(BUTUZO_TXT)
+	}
+	else
+	{
+	//	展示前
+		MES(BUTUZO_TXT,"C4W9～準備中～\n展示物としてトレジャーを募集しています。\n寄贈していただける方は、\n是非とも受付までご連絡ください。",0)
+		MES_close(BUTUZO_TXT)
+	}
+	
+	TK_end()
+}
+
+//──────────────────────────────────────
+//	name("黒真珠")
+LP_PEARL
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,PEARL_TXT)
+
+	if(F_PEARL)
+	{
+	//	MES(PEARL_TXT,"黒真珠【The Black Pearl】\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n莫大な“魔”を溜め込んだ品で、\n素手で触れるのは大変危険。\n何故このような危険物が\n紛れ込んだのかは不明だが、\nどこかの勇者がうっかり\n回収し忘れたのかもしれない。",0)
+	//	MES(PEARL_TXT,"C4W9黒真珠\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n\n莫大な“魔”を溜め込んだ品で、\n素手で触れるのは大変危険。\n何故このような危険物が\n紛れ込んだのかは不明だが、\nどこかの勇者がうっかり\n回収し忘れたのかもしれない。",0)
+		MES(PEARL_TXT,"C4W9黒真珠【Ｔｈｅ Ｂｌａｃｋ Ｐｅａｒｌ】\n莫大な“魔”を溜め込んだ品で、\n素手で触れるのは大変危険。",0)
+		MES(PEARL_TXT,"C4W9その性質と禍々しさから魔族には人気が高く、\n大型の者はアクセサリーのように身につけて、\n他の魔族に見せびらかしたという。",0)
+		MES_close(PEARL_TXT)
+	}
+	else
+	{
+	//	展示前
+		MES(PEARL_TXT,"C4W9～準備中～\n展示物としてトレジャーを募集しています。\n寄贈していただける方は、\n是非とも受付までご連絡ください。",0)
+		MES_close(PEARL_TXT)
+	}
+	
+	TK_end()
+}
+
+//──────────────────────────────────────
+//	name("謎の竜殻飛翔装置")
+LP_NAZO
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,NAZO_TXT)
+
+	if(F_NAZO)
+	{
+	//	MES(NAZO_TXT,"謎の竜殻飛翔装置【a Mysterious Mechanical】\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\nメルセデク建造期に、ついでに\n製造されたらしいが用途は不明。\n端っこに『軽油オンリー』と書かれた\n弁が付いている。",0)
+//		MES(NAZO_TXT,"C4W9謎の竜殻飛翔装置\nどこからか紛れ込んだオーパーツ。\n詳細は調査中。\n\nメルセデク建造期に、ついでに\n製造されたらしいが用途は不明。\n端っこに『軽油オンリー』と書かれた\n弁が付いている。",0)
+		MES(NAZO_TXT,"C4W9謎の竜殻飛翔装置【ａ Ｍｙｓｔｅｒｉｏｕｓ Ｍｅｃｈａｎｉｃａｌ】\n魔法大戦後期に建造されたらしい謎の飛翔装置。\nどうやら重要な部品を\n取り外されているらしく、動作はしない。",0)
+		MES(NAZO_TXT,"C4W9構造などは全くの不明だが、\n後部には『燃料注入口　↓　ココ』\nなどの表記が見られる。",0)
+		MES(NAZO_TXT,"C4W9かすかに魔力反応があることから\n魔力を使用して飛翔していたのかもしれない。",0)
+		MES_close(NAZO_TXT)
+	}
+	else
+	{
+	//	展示前
+		MES(NAZO_TXT,"C4W9～準備中～\n展示物としてトレジャーを募集しています。\n寄贈していただける方は、\n是非とも受付までご連絡ください。",0)
+		MES_close(NAZO_TXT)
+	}
+	
+	TK_end()
+}
+
+
+//──────────────────────────────────────
+//	name("○ロボ")
+//──────────────────────────────────────
+LP_ROBO1
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,ROBO1_TXT)
+/*
+	if(WK006==0)
+	{
+		MES(ROBO1_TXT,"準備チュウ。",0)
+		MES_close(ROBO1_TXT)
+	}
+*/
+	if(WK006==1)
+	{
+//		MES(ROBO1_TXT,"C4W9キャプテン２１号【Ｃａｐｔａｉｎ＿21】（展示予定）\n現在電池のみが寄贈されている。\n言うまでも無いが、\n電池だけではどうしようもない。",0)
+		MES(ROBO1_TXT,"C4W9キャプテン２１号【Ｃａｐｔａｉｎ＿21】\n（組み立てＬｖ１：展示予定）",0)
+		MES(ROBO1_TXT,"C4W9現在電池のみが寄贈されている。\n……言うまでも無いが、\n電池だけではどうしようもない。",0)
+		MES_close(ROBO1_TXT)
+	}
+	else
+	if(WK006==2)
+	{
+//		MES(ROBO1_TXT,"C4W9キャプテン２１号【Ｃａｐｔａｉｎ＿21】\nようやくボディが見つかったものの、\n足が無ければ歩けない。\n折角の動くオモチャが台無しだ。",0)
+		MES(ROBO1_TXT,"C4W9キャプテン２１号【Ｃａｐｔａｉｎ＿21】\n（組み立てＬｖ２）",0)
+		MES(ROBO1_TXT,"C4W9ボディを発見！\nしかし足が無ければ歩けない。\n折角の動くオモチャが台無しだ。",0)
+		MES_close(ROBO1_TXT)
+	}
+	else
+	if(WK006==3)
+	{
+//		MES(ROBO1_TXT,"C4W9キャプテン２１号【Ｃａｐｔａｉｎ＿21】\n現在アタマを捜索中。\nアタマには受信機が入っているので、\nアタマを付ければ動くはずだ。",0)
+		MES(ROBO1_TXT,"C4W9キャプテン２１号【Ｃａｐｔａｉｎ＿21】\n（組み立てＬｖ３）",0)
+		MES(ROBO1_TXT,"C4W9足も見つけて大分、形になった。\n受信機が入っているアタマを探し出し、\n装着すれば完成だ！",0)
+		MES_close(ROBO1_TXT)
+	}
+	else
+	if(WK006==4)
+	{
+//		MES(ROBO1_TXT,"C4W9キャプテン２１号【Ｃａｐｔａｉｎ＿21】\n――ヘイ兄貴！\nオレはどこまでも付いて行くぜ！\n（※ノリっぽい説明文募集中。\n＿おもちゃの謳い文句など）",0)
+		MES(ROBO1_TXT,"C4W9キャプテン２１号【Ｃａｐｔａｉｎ＿21】\nやっと完成、古き良きブリキのおもちゃ。\n稼動部は少なめだがそこに味がある。",0)
+		MES(ROBO1_TXT,"C4W9──やぁ、オイラはキャプテン２１号！\n電池の続く限りどこまでも歩くよ！\n小さいお子様の手の届かないところに保管してね！",0)
+		MES_close(ROBO1_TXT)
+		wait_MES(ROBO1_TXT)
+
+		//からくり入手イベント。山のボスルート攻略できるタイミングで起こせる。
+		//パターン
+		//　●ラグナ・アルウェン			（⑩）
+		//　●ラグナ・ルゥ					（⑪前・オデッサ脱け後）
+		//　●ラグナ・オデッサ・ルゥ		（⑪後）
+		//　●ラグナ・アルウェン・ルゥ		（⑫）
+	//	if(!FT_FF_TalkROBO1)
+		if(!FT_FF_TalkROBO1 && !F6_05_EndSixth)		//エピローグでは発生しない
+		{
+			delete(292)
+			wait(2)
+
+			cross_fade(20)
+			CAM_move(3860,-2145,240,0,0)
+			CAM(310,113,80,25,180,0,0)
+			
+			chr_pos(PLAYER1,3838,2392,0,208,2)
+			chr_pos(PLAYER2,4011,2433,0,219,2)
+			chr_pos(PET,4057,2671,0,219,2)
+			rot_chr(RAGNA,60,ROBO1)
+			rot_chr(PARTNER,60,ROBO1)
+			rot_chr(PET,60,ROBO1)
+			wait_fade()
+
+			//	アルウェンがいる場合
+			if( F6_00_GoToMeru || !F5_00_HearLunar )
+			{
+				MES(PARTNER,"ふむ、ところでラグナよ。",0)
+				look_chr(PARTNER,RAGNA,"Bone_Head")
+				MES(PARTNER,"このような物も\n“とれじゃあ”と呼ぶのかのう？",0)
+				MES_close(PARTNER)
+
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+				MES(RAGNA,"ああ、まあ\nこういったオモチャに\n価値を見出す人もいるからな。",0)
+				look_off(RAGNA)
+				MES(RAGNA,"誰かが大切だって思えるもの……\nそれがトレジャーなんじゃねえか？",0)
+				MES_close(RAGNA)
+
+				if(F5_00_HearLunar)
+				{
+					rot_chr(PET,30,RAGNA)
+					MES(PET,"うっ……\nなによ、そのクサイ台詞……",0)
+					MES_close(PET)
+				}
+
+				look_off(PARTNER)
+				MES_pos(PARTNER,"フフ、格好をつけおったのう──",0,0,0,0,0)
+				wait(40)
+
+			}
+			//アルウェンがいない場合：ルゥは必ずいる！
+			else
+			{
+				MES(RAGNA,"ブリキのおもちゃか……\n中々よくできてるな。",0)
+				MES_close(RAGNA)
+
+				MES(PET,"ふ～ん……",0)
+				MES(PET,"こんな物の\nどこがいいのかしらね。",0)
+				MES_close(PET)
+
+				look_chr(RAGNA,PET,"Bone_Head")
+				MES(RAGNA,"ああ、まあ\nこういったオモチャに\n価値を見出す人もいるからな。",0)
+				look_off(RAGNA)
+				MES(RAGNA,"誰かが大切だって思えるもの……\nそれがトレジャーなんじゃねえか？",0)
+				MES_close(RAGNA)
+
+				//オデッサがいる
+				if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				{
+					rot_chr(PET,30,RAGNA)
+					MES(PET,"うっ……\nなによ、そのクサイ台詞……",0)
+					MES_close(PET)
+
+					MES_pos(PARTNER,"フフ、坊やも中々\n言うじゃないか。",0,0,0,0,0)
+					wait(40)
+				}
+				else
+				{
+					rot_chr(PET,30,RAGNA)
+					MES_pos(PET,"うっ……\nなによ、そのクサイ台詞……",0,0,0,0,0)
+					wait(40)
+				}
+
+			}
+
+		//　　アルウェンのメッセージに重ねて次のポップアップ表示。
+		//	name("システムメッセージ")
+		
+			F_set_Node(ROBO1,"eye01_add",NP_HIDE)
+			F_set_Node(ROBO1,"eye02_add",NP_HIDE)
+			F_set_Node(ROBO1,"lamp_add",NP_HIDE)
+
+			chr_rename(ROBO1,"？？？")
+			MES_pos(ROBO1,"W9L171ういーん、ういーん……",0,0,0,0,0)
+			wait_key(0)
+
+			MES_close(PARTNER)
+			MES_close(PET)
+			MES_close(ROBO1)
+
+			wait(20)
+			EV("ROBO_Tenmetu")
+			MES(ROBO1,"W9L171ガガガガガ……",0)
+			MES_close(ROBO1)
+//			EV_stop("ROBO_Tenmetu")
+
+		//　　ラグナたちに！エモーション。
+			EMO(RAGNA,EMO_BIKKURI)
+			//PARTNER----------------
+			if( F6_00_GoToMeru || !F5_00_HearLunar )
+				EMO(PARTNER,EMO_BIKKURI)
+			else
+			if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				EMO(PARTNER,EMO_BIKKURI)
+			//PET--------------------
+			if( F5_00_HearLunar )
+				EMO(PET,EMO_BIKKURI)
+			wait(30)
+
+
+		//　　きょろきょろしてロボに向く。
+			EV("Look_Ragna")
+			wait(2)
+			//PET--------------------
+			if( F5_00_HearLunar )
+			{
+				EV("Look_Pet")
+				wait(5)
+			}
+			//PARTNER----------------
+			if( F6_00_GoToMeru || !F5_00_HearLunar )
+				EV("Look_Partner")
+			else
+			if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				EV("Look_Partner")
+			wait(30)
+
+		//　　ロボ、ラグナたちを向く。
+			look_chr(ROBO1,PLAYER1,"p_Head")
+			chr_rename(ROBO1,"キャプテン２１号")
+			MES(ROBO1,"W9L171アナタ達ガ、\nL171私ヲ救ってクレタノデスカ？",0)
+			EV_stop("ROBO_Tenmetu")
+			F_reset_Node(ROBO1,"eye02_add",NP_HIDE)
+			MES(ROBO1,"W9L171アリガトウ、\nL171トテモアリガトウ。",0)
+			MES(ROBO1,"W9L171コノゴ恩ハ忘レナイ。\nL171私ハアナタ達ノチカラニナロウ。",0)
+			MES(ROBO1,"W9L171きゃぷてん２１号ノ名ニ掛ケテ。",0)
+			MES_close(ROBO1)
+
+		//	name("メッセージ")
+//			MES(0this,"L070『キャプテン２１号』L777を手に入れた！",2)
+//			MES_close(0)
+
+			fade_in(30,10,BLACK)
+			wait_fade()
+
+			get_item(020,1,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			fade_in(0,10,BLACK)
+			wait_fade()
+
+		//　　ラグナたちにアセアセエモーション。
+			EMO(RAGNA,EMO_ASEASE)
+			//PARTNER----------------
+			if( F6_00_GoToMeru || !F5_00_HearLunar )
+				EMO(PARTNER,EMO_ASEASE)
+			else
+			if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				EMO(PARTNER,EMO_ASEASE)
+			//PET--------------------
+			if( F5_00_HearLunar )
+				EMO(PET,EMO_ASEASE)
+			wait(30)
+
+			MES(RAGNA,"え、ええっ……！？",0)
+			MES_close(RAGNA)
+
+			if(F5_00_HearLunar)
+			{
+				MES(PET,"な、何なのアンタ……",0)
+				MES_close(PET)
+			}
+
+			MES(ROBO1,"W9L171私ノ名ハきゃぷてん２１号。\nL171子供タチガ愛スルひーろーダ。",0)
+			MES(ROBO1,"W9L171必要ナ時ハイツデモ呼ンデ欲シイ。\nL171私ハアナタ達ノチカラニナロウ。",0)
+			MES_close(ROBO1)
+
+			fade_in(100,60,BLACK)
+			wait_fade()
+//			TK_end()
+			F_reset_Node(ROBO1,"eye01_add",NP_HIDE)
+			F_reset_Node(ROBO1,"eye02_add",NP_HIDE)
+			F_reset_Node(ROBO1,"lamp_add",NP_HIDE)
+			CAM_return(0)
+			wait(30)
+			F_set(FT_FF_TalkROBO1)
+
+			look_del(RAGNA)
+			set_chr( 292,990,	2,1,     -300, -50,  0,    0,0501,8,"(L1?99 <CAM_ROBO1> WT?30 L2!99 <CAM_RESET>);")	
+
+			fade_in(0,30,BLACK)
+			wait_fade()
+
+			if(!F0_14_TutoPet)
+			{
+				//●チュートリアル：ペット
+				Load_BMP(20,"sys\\tuto14.itm","0")
+				menuBMP(1,	20,	0,0,288,384)
+
+				menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+				menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+				SE(043,PLAYER1)
+				wait(40)
+				wait_key(0)
+				menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+				F_set(F0_14_TutoPet)
+			}
+
+		}
+	}
+	else
+	{
+	//	展示前
+		MES(ROBO1_TXT,"C4W9～準備中～\n展示物としてトレジャーを募集しています。\n寄贈していただける方は、\n是非とも受付までご連絡ください。",0)
+		MES_close(ROBO1_TXT)
+	}
+	
+
+	TK_end()
+}
+
+ROBO_Tenmetu
+{
+
+	workL(0,RAND,5)
+	workL(1,RAND,5)
+
+	F_set_Node(ROBO1,"eye02_add",NP_HIDE)
+	wait(3)
+	if(WK000<=2)
+		wait(5)
+	F_reset_Node(ROBO1,"eye02_add",NP_HIDE)
+	wait(2)
+
+	loop
+}
+
+
+Look_Ragna
+{
+	if(!FT_FF_TalkROBO1 && !FT_FF_TalkROBO2)
+		EMO(RAGNA,EMO_ASEASE)
+	look(RAGNA,"Bone_Head",0,		0,8,0,			0,40,0)
+	wait(20)
+	look(RAGNA,"Bone_Head",0,		0,8,0,			0,-40,0)
+	wait(20)
+	look(RAGNA,"Bone_Head",0,		0,8,0,			0,40,0)
+	wait(20)
+	look(RAGNA,"Bone_Head",0,		0,6,0,			0,0,0)
+
+}
+
+Look_Partner
+{
+	if(!FT_FF_TalkROBO1 && !FT_FF_TalkROBO2)
+		EMO(PARTNER,EMO_ASEASE)
+	look(PARTNER,"Bone_Head",0,		0,8,0,			0,-40,0)
+	wait(20)
+	look(PARTNER,"Bone_Head",0,		0,8,0,			0,40,0)
+	wait(20)
+	look(PARTNER,"Bone_Head",0,		0,8,0,			0,-40,0)
+	wait(20)
+	look(PARTNER,"Bone_Head",0,		0,6,0,			0,0,0)
+
+}
+
+Look_Pet
+{
+	if(!FT_FF_TalkROBO1 && !FT_FF_TalkROBO2)
+		EMO(PET,EMO_ASEASE)
+	look(PET,"Bone_Head",0,		0,8,0,			0,30,0)
+	wait(20)
+	look(PET,"Bone_Head",0,		0,8,0,			0,-30,0)
+	wait(20)
+	look(PET,"Bone_Head",0,		0,8,0,			0,30,0)
+	wait(20)
+	look(PET,"Bone_Head",0,		0,6,0,			0,0,0)
+
+}
+
+
+
+
+//──────────────────────────────────────
+LP_ROBO2
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,ROBO2_TXT)
+
+/*
+	if(WK007==0)
+	{
+		MES(ROBO2_TXT,"準備チュウ。",0)
+		MES_close(ROBO2_TXT)
+	}
+*/
+	if(WK007==1)
+	{
+		MES(ROBO2_TXT,"C4W9超温融合フレイムバイザー【ＦＬＡＭＥＶＩＳＯＲ】\n（組み立てＬｖ１）",0)
+		MES(ROBO2_TXT,"C4W9基本的な部品は揃っているものの、\n接着剤は入手できなかった。\n我慢できず、足だけは組み立ててみたが\nやはりビミョーだ。",0)
+		MES_close(ROBO2_TXT)
+	}
+	else
+	if(WK007==2)
+	{
+//		MES(ROBO2_TXT,"C4W9超温融合フレイムバイザー【ＦＬＡＭＥＶＩＳＯＲ】\n順調に組み立て中のフレイムバイザー。\nしかしオプションパーツが\n揃っていないのが気がかりだ。\nあれが無ければ、地球を\n救う事はできない。",0)
+		MES(ROBO2_TXT,"C4W9超温融合フレイムバイザー【ＦＬＡＭＥＶＩＳＯＲ】\n（組み立てＬｖ２）",0)
+		MES(ROBO2_TXT,"C4W9順調に組み立て中のフレイムバイザー。\nしかしオプションパーツが揃っていない。\nこのままでは、グランヴァレンを救う事はできない。",0)
+		MES_close(ROBO2_TXT)
+	}
+	else
+	if(WK007==3)
+	{
+//		MES(ROBO2_TXT,"C4W9超温融合フレイムバイザー【ＦＬＡＭＥＶＩＳＯＲ】\n何かが足りず、未完成のまま\n放置されているフレイムバイザー。\n何か重要なものが欠けているらしいが、\n何が足りないのかは不明。",0)
+		MES(ROBO2_TXT,"C4W9超温融合フレイムバイザー【ＦＬＡＭＥＶＩＳＯＲ】\n（組み立てＬｖ３）",0)
+		MES(ROBO2_TXT,"C4W9未完成のまま放置されているフレイムバイザー。\n何か重要なものが欠けているらしい……",0)
+		MES_close(ROBO2_TXT)
+	}
+	else
+	if(WK007==4)
+	{
+//		MES(ROBO2_TXT,"C4W9超温融合フレイムバイザー【ＦＬＡＭＥＶＩＳＯＲ】\nついに完成したフレイムバイザー。\n最終回は、やっぱり太陽の中に消えるのか。\n（※ノリっぽい説明文募集中。\n＿主題歌熱唱系など）",0)
+		MES(ROBO2_TXT,"C4W9超温融合フレイムバイザー【ＦＬＡＭＥＶＩＳＯＲ】\nついに完成したフレイムバイザー。\n",0)
+//		MES(ROBO2_TXT,"C4W9――グランヴァレンを救え僕らのフレイムバイザー！\n超温フレイムパンチで悪を焼き尽くせ！！\n超温融合フレイムバイザー～！！！",0)
+		MES(ROBO2_TXT,"C4W9──世界を救え僕らのフレイムバイザー！\n必殺・超温フレイムパンチで悪を焼き尽くせ！！\n今だ、合体！\n超温融合フレイムバイザー～ッ！！",0)
+		MES(ROBO2_TXT,"C4W9でも一度融合したら\n分離できないよ、フレイムバイザー。",0)
+		MES_close(ROBO2_TXT)
+		wait_MES(ROBO2_TXT)
+
+	//	if(!FT_FF_TalkROBO2)
+		if(!FT_FF_TalkROBO2 && !F6_05_EndSixth)		//エピローグでは発生しない
+		{
+			delete(293)
+			wait(2)
+
+			cross_fade(20)
+			CAM_move(4389,-2049,240,0,0)
+			CAM(510,102,80,26,180,0,0)	
+
+			chr_pos(PLAYER1,4215,2381,0,184,2)
+			chr_pos(PLAYER2,4379,2431,0,184,2)
+			chr_pos(PET,4499,2292,0,219,2)
+			rot_chr(RAGNA,60,ROBO2)
+			rot_chr(PARTNER,60,ROBO2)
+			rot_chr(PET,60,ROBO2)
+			wait_fade()
+
+			//	アルウェンがいる場合
+			if( F6_00_GoToMeru || !F5_00_HearLunar )
+			{
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				if(F5_00_HearLunar)
+					EMO(PET,EMO_AOZAME)
+				wait(30)
+
+				MES(RAGNA,"え……\n分離できない、のか……？",0)
+				MES_close(RAGNA)
+
+				MES(PARTNER,"詳しくは知らぬが、\n不憫な……",0)
+				MES_close(PARTNER)
+
+			}
+			//アルウェンがいない場合：ルゥは必ずいる！
+			else
+			{
+				EMO(RAGNA,EMO_AOZAME)
+				if(F5_00_HearLunar)
+					EMO(PET,EMO_AOZAME)
+				wait(30)
+
+				MES(RAGNA,"え……\n分離できない、のか……？",0)
+				MES_close(RAGNA)
+
+				//オデッサがいる
+				if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				{
+					MES(PARTNER,"ふむ、そういう物なのかい？",0)
+					MES_close(PARTNER)
+				}
+
+				MES(PET,"何かマヌケな気がするけど。",0)
+				MES_close(PET)
+			}
+
+		//	name("？？？")
+			chr_rename(ROBO2,"？？？")
+			MES(ROBO2,"W9L711キュイイイン……",0)
+			MES_close(ROBO2)
+
+		//　　ラグナたちに？エモーション。
+			EMO(RAGNA,EMO_HATENA)
+			//PARTNER----------------
+			if( F6_00_GoToMeru || !F5_00_HearLunar )
+				EMO(PARTNER,EMO_HATENA)
+			else
+			if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				EMO(PARTNER,EMO_HATENA)
+			//PET--------------------
+			if( F5_00_HearLunar )
+				EMO(PET,EMO_HATENA)
+			wait(30)
+
+			EV("Look_Ragna")
+			wait(2)
+			//PET--------------------
+			if( F5_00_HearLunar )
+			{
+				EV("Look_Pet")
+				wait(5)
+			}
+			//PARTNER----------------
+			if( F6_00_GoToMeru || !F5_00_HearLunar )
+				EV("Look_Partner")
+			else
+			if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				EV("Look_Partner")
+			wait(30)
+
+		//	name("フレイムバイザー")
+			chr_rename(ROBO2,"フレイムバイザー")
+			MES(ROBO2,"W9L711そなたらか、\nL711私を現世に呼び戻したのは……",0)
+			MES(ROBO2,"W9L711私はな、これでも勇者だったんだぞ？",0)
+			MES(ROBO2,"W9L711グランヴァレンを救った\nL711本物の勇者なんだぞ？",0)
+			MES(ROBO2,"W9L711まあその、仲間の裏切りとか\nL711博士が敵に攫われてしまったりとか\nL711単純に動力切れとか色々あったが。",0)
+			MES_close(ROBO2)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			//PARTNER----------------
+			if( F6_00_GoToMeru || !F5_00_HearLunar )
+				EMO(PARTNER,EMO_HIYAASE)
+			else
+			if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				EMO(PARTNER,EMO_HIYAASE)
+			//PET--------------------
+			if( F5_00_HearLunar )
+				EMO(PET,EMO_HIYAASE)
+			wait(30)
+
+			if(F5_00_HearLunar)
+			{
+				MES(PET,"（また変なのが\n  出てきたわね……）",0)
+				MES_close(PET)
+			}
+
+			MES(ROBO2,"W9L711……そなたらには礼をせねばな。",0)
+			MES(ROBO2,"W9L711どれ、私の力を分けてやろう。",0)
+			MES_close(ROBO2)
+			wait(20)
+
+			fade_in(30,10,BLACK)
+
+		//　　※適当なＳＥ。アンカーギア改造と同じか。
+			SE(24,0)
+			workG(GW_BOM,SET,99)
+
+		//	name("アイテム入手テキスト")
+		//	MES(ROBO2,"C3ボム回数が最大まで増えた！",2)
+			MES(ROBO2,"C3奥義ポイントが最大まで増えた！",2)
+			MES_close(ROBO2)
+
+			fade_in(0,10,BLACK)
+			wait_fade()
+
+			MES(RAGNA,"こ、こりゃどうも……",0)
+			MES_close(RAGNA)
+
+		//	name("フレイムバイザー")
+			MES(ROBO2,"W9L711勇者といえば正義の拳。\nL711正義の拳といえばアッパーボムだ。",0)
+			MES(ROBO2,"W9L711その拳を持って\nL711己の正義を貫いてみせるがいい……！",0)
+			MES_close(ROBO2)
+
+
+			fade_in(100,60,BLACK)
+			wait_fade()
+//			TK_end()
+			CAM_return(0)
+			wait(30)
+			F_set(FT_FF_TalkROBO2)
+
+			look_del(RAGNA)
+			set_chr( 293,990,	2,1,     300, -50,  0,    0,0501,8,"(L1?99 <CAM_ROBO2> WT?30 L2!99 <CAM_RESET>);")	
+
+			fade_in(0,30,BLACK)
+			wait_fade()
+		}
+
+	}
+	else
+	{
+	//	展示前
+		MES(ROBO2_TXT,"C4W9～準備中～\n展示物としてトレジャーを募集しています。\n寄贈していただける方は、\n是非とも受付までご連絡ください。",0)
+		MES_close(ROBO2_TXT)
+	}
+	TK_end()
+}
+//──────────────────────────────────────
+
+
+//カメラが寄贈品カメラに切り替わる
+//ジェットを見上げるカメラ
+CAM_NAZO
+{
+	cross_fade( 10 )
+//	CAM_move(5845,-4841,720,0,0)
+//	CAM(830,88,560,23,180,0,0)
+	CAM(510,88,80,25,180,0,0)
+
+}
+
+
+
+
+//ロボを見上げるカメラ
+CAM_ROBO1
+{
+	cross_fade( 10 )
+//	CAM_move(3745,-2444,420,0,0)
+	CAM(150,72,80,23,180,0,0)
+}
+CAM_ROBO2
+{
+//	CAM_move(4338,-2504,601,0,0)
+	CAM(390,144,80,23,180,0,0)
+	cross_fade( 10 )
+}
+
+//通常カメラに切り替わる
+CAM_RESET
+{
+	cross_fade( 10 )
+	CAM_return(0)
+}
+
+
+TT
+{
+			MES(ROBO1,"L711ガガガガガ……",0)
+			MES_close(ROBO1)
+
+}
+
+#EndScriptTable
+//====================================================================
+

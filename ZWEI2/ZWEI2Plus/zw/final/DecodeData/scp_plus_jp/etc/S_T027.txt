@@ -1,0 +1,572 @@
+//──────────────────────────────
+//	name("●テルミドール")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+//会話処理へ
+////////////////////////////////////////////////////////////////
+TK_TELMIDORL
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(TELMIDORL, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,TELMIDORL)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,TELMIDORL)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,TELMIDORL)
+	}
+	
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　螺旋要塞・中ボスで気絶して倒れている。
+	if( F6_00_GoToMeru )
+	{
+		MES(LOSE_TELMI,"………………………………",0)
+		MES_close(LOSE_TELMI)
+
+	//	name("テキスト（色換え・表示しない）")
+		MES(0,"C3S2テルミドールは力尽きて気絶している。",2)
+		MES_close(0)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　クリスタルバレーの扉の祭壇の前に立っている。
+	//　　オデッサとは異なり、扉そのものを凝視している雰囲気。
+	if( F2_00_GoForest )
+	{
+		//モーションセット
+		MOT_SET(TELMIDORL,150, -2,405,405,-1,15)
+	//	name("★初回（１回のみ／イベント処理）")
+		if(!FM_03_TalkTelmidorl)
+		{
+		//　　話しかけるとキャラ再配置してイベント発生。
+
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(-26,5303,440,0,0)
+			CAM(-570,46,80,40,168,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,294,-4863,200,110,2)
+			chr_pos(PARTNER,178,-4712,201,140,2)
+			chr_pos(TELMIDORL,-0,-5000,201,180,2)
+			
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(TELMIDORL,"1", "1", "1")	
+			
+			look(TELMIDORL,"Bone_Head",0,		0,0,2,			0,0,30)
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+
+			if(!FM_01_TalkTelmidorl)
+			{
+				chr_rename(TELMIDORL,"青年")//
+			}
+
+			MES(TELMIDORL,"これは黒水晶の柱……\nいやはや、不思議な光景だ。",0)
+			MES(TELMIDORL,"しかし、この\n扉のような祭壇は一体……",0)
+			MES_close(TELMIDORL)
+
+		//　　テルミドール、ＰＡマークなどを出して振り返る。
+		
+
+			EMO(TELMIDORL,EMO_PA)
+			wait(30)
+			look(TELMIDORL,"Bone_Head",0,		0,0,5,			0,0,0)
+			
+//			CAM_move(13,3560,139,60,0)
+//			CAM(-49,17,139,41,150,60,0)
+//			CAM_move(153,4900,339,60,0)
+//			CAM(-88,38,339,40,142,60,0)
+
+			cross_fade(30)
+			CAM_move(153,4900,339,0,0)
+			CAM(-87,38,339,40,224,0,0)
+			rot_chr(TELMIDORL,30,RAGNA)
+//			wait_CAM_move()
+			wait_fade()
+
+			//─────────────────────
+			//	name("⇒以前テルミドールと会っている場合")
+			if(FM_01_TalkTelmidorl)
+			{
+				MOT(TELMIDORL,150,10)
+				wait(15)
+				KAO(TELMIDORL,"12321Z4","1","1")
+				MES(TELMIDORL,"やあ、君たちか。\nまた会ったね。",0)
+				MES_close(TELMIDORL)
+			}
+		//	name("⇒以前テルミドールと会っていない場合")
+			else
+			{
+				MES(RAGNA,"あんたは……？",0)
+				MES_close(RAGNA)
+
+				MOT(TELMIDORL,150,10)
+				wait(15)
+				KAO(TELMIDORL,"12321Z5","1","1")
+				MES(TELMIDORL,"ああ、これは失礼。\nつい夢中になってしまってね。",0)
+				KAO(TELMIDORL,"12321Z5","1","1")
+				MES(TELMIDORL,"私はテルミドールという。\n気ままな一介の詩人さ。",0)
+				MES_close(TELMIDORL)
+			}
+			//──────────────────────────────
+			
+		//　　テルミドール、扉の祭壇の方を向く。
+			MOT(TELMIDORL,2,10)
+			wait(15)
+			look(TELMIDORL,"Bone_Head",0,		0,0,2,			0,0,20)
+			rot(TELMIDORL,30,180)
+			wait(15)
+			chr_rename(TELMIDORL,"テルミドール")//
+			MES(TELMIDORL,"ほら、見てくれたまえよ。\n素晴らしい光景だろう？",0)
+			MES(TELMIDORL,"どうやら巨大な水晶の鉱脈から\n削り出した祭壇らしいんだが……",0)
+			MES(TELMIDORL,"うーん、一体\n何のためにあるのだろうね。",0)
+			MES(TELMIDORL,"色々な人に聞いてみたんだが\n良く分からないんだ。",0)
+			MES_close(TELMIDORL)
+
+			rot(RAGNA,30,170)
+			rot(PARTNER,30,180)
+			wait(10)
+
+//			cross_fade(30)			//クロスフェード
+//			CAM_move(153,4900,399,0,0)
+//			CAM(-448,42,399,40,217,0,0)
+//			CAM_move(153,4900,399,60,0)
+//			CAM(-448,42,399,40,217,60,0)
+			CAM_move(153,4900,439,60,0)
+			CAM(-447,41,439,40,213,60,0)
+			look(PARTNER,"Bone_Head",0,		0,0,2,			0,0,20)
+//			wait_fade()
+			wait(60)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"………………………………",0)
+			MES(PARTNER,"（思えば……ここにはよく\n  父上と遊びに来たものだな。）",0)
+			MES(PARTNER,"（城の外に連れ出してくれる時、\n  訪れるのは決まってここであった。）",0)
+			MES(PARTNER,"（……最後に遊びに来たのは\n  いつの頃であったか……？）",0)
+			MES_close(PARTNER)
+
+		//　　ラグナの頭に？マークを表示。
+			EMO(RAGNA,EMO_HATENA)
+			wait(30)
+		
+		//　　そのままアルウェンの方に向き直る。
+			rot_chr(RAGNA,30,PARTNER)
+			
+			KAO(RAGNA,"12321Z2","1","1")
+			MES(RAGNA,"姫さん……？",0)
+			MES_close(RAGNA)
+
+//			wait_MES(RAGNA)
+//			cross_fade(30)			//クロスフェード
+//			CAM_move(153,4900,339,0,0)
+//			CAM(-87,38,339,40,224,0,0)
+//			wait_fade()
+			
+			MES(PARTNER,"いや……何でもない。",0)
+			MES_close(PARTNER)
+
+			CAM_move(153,4900,339,50,0)
+			CAM(-87,38,339,40,224,50,0)
+			rot_chr(PARTNER,30,RAGNA)
+//			look_chr(PARTNER,RAGNA,"Bone_Head")
+			look(PARTNER,"Bone_Head",0,		0,0,5,			0,0,0)
+			wait(50)
+			KAO(PARTNER,"12321Z6","1","1")
+			MES(PARTNER,"あまり道草を食っている\n場合でもなさそうだ。",0)
+			KAO(PARTNER,"12321Z4","1","1")
+			MES(PARTNER,"行くとしよう、ラグナ。",0)
+			MES_close(PARTNER)
+
+			KAO(RAGNA,"12321Z2","1","1")
+			MES(RAGNA,"ああ、そうだな。",0)
+			MES_close(RAGNA)
+
+		//　　ラグナ、テルミドールの方を見る。
+			rot_chr(RAGNA,30,TELMIDORL)
+			rot_chr(PARTNER,30,TELMIDORL)
+			wait(20)
+			KAO(RAGNA,"12321Z6","1","1")
+			MES(RAGNA,"じゃあな、テルミドールだっけか。\nあんまり夢中になりすぎて転ぶなよ。",0)
+			KAO(RAGNA,"12321Z4","1","1")
+			MES(RAGNA,"多分メチャクチャ痛いぞ、ここ。",0)
+			MES_close(RAGNA)
+
+			look(TELMIDORL,"Bone_Head",0,		0,0,5,			0,0,0)
+			rot_chr(TELMIDORL,30,RAGNA)
+			MOT(TELMIDORL,150,10)
+			wait(15)
+			KAO(TELMIDORL,"12321Z3","23","1")
+			MES(TELMIDORL,"フフ……忠告感謝するよ。",0)
+			MES_close(TELMIDORL)
+
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			MOT(TELMIDORL,2,0)
+			KAO(TELMIDORL,"1","1","1")
+			
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			F_set(FM_03_TalkTelmidorl)
+			EV_end()
+
+			
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+
+//			//★テルミドール
+//			F_set_note(TELMIDORL,-1)
+
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+	//　　★繰り返し
+		else
+		{
+			rot_chr(TELMIDORL,30,PLAYER1)
+			MOT(TELMIDORL,150,10)
+			wait(15)
+			if(!F_TELMIDORL)
+			{
+				MES(TELMIDORL,"ふう、そろそろ戻って\n詩の創作を始めないといけないな。",0)
+				MES(TELMIDORL,"今回は、薄幸の少女を主人公にした\n戯曲仕立てで行こうと思っているんだ。",0)
+				MES(TELMIDORL,"フィナーレの詩には\nここのイメージを使わせてもらうよ。",0)
+				MES_close(TELMIDORL)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"………………………………",0)
+				MES_close(PARTNER)
+
+				MOT(TELMIDORL,2,10)
+				F_set(TELMIDORL)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(TELMIDORL,"そろそろ戻って\n詩の創作を始めないといけないな。",0)
+				MES(TELMIDORL,"今回は、薄幸の少女を主人公にした\n戯曲仕立てで行こうと思っているんだ。",0)
+				MES(TELMIDORL,"フフ……\n楽しみにしていてくれたまえ。",0)
+				MES_close(TELMIDORL)
+				MOT(TELMIDORL,2,10)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　博物館でテオ館長と向かい合っている状態。
+	if( F1_15_GoVillage )
+	{
+		rot_chr(TELMIDORL,30,PLAYER1)
+		MOT_SET(TELMIDORL,150, -2,405,405,-1,15)
+
+	//	name("★初回")
+		if(!F_TELMIDORL)
+		{
+			MOT(TELMIDORL,150,15)
+			//─────────────────────
+			//	name("⇒以前テルミドールと会っている場合")
+			if(FM_01_TalkTelmidorl)
+			{
+				MES(TELMIDORL,"やあ、君たちか。",0)
+				
+			}
+			//─────────────────────
+			MES(TELMIDORL,"知っているかい？\n北の方にある村の外れに\n古い神殿が残っているそうだよ。",0)
+			MES(TELMIDORL,"オルディウム神殿といってね。\n今ではあまり知られていないが……",0)
+			MES(TELMIDORL,"かの魔法大戦では、多くの人々が\n立てこもって戦ったという話だ。",0)
+			MES(TELMIDORL,"もっとも今では、哀れ湖に\n沈んでしまったそうだけどね。",0)
+			MES_close(TELMIDORL)
+
+			F_set(TELMIDORL)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(TELMIDORL,"フフ、今回は\n戯曲仕立てにしてみようかな。",0)
+			MES(TELMIDORL,"湖に飲み込まれた\n輝ける神殿、オルディウム……",0)
+			MES(TELMIDORL,"何となく悲劇が\n似合いそうじゃないか。",0)
+			MES_close(TELMIDORL)
+		}
+		MOT(TELMIDORL,52,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　宿酒場のどこかに座っている。
+	//　　廃坑でオデッサと会ったら彼女も酒場に現れるので
+	//　　あまり印象がかぶらないよう、位置はなるべく離しておく。
+	if( F1_01_GameStart )
+	{
+		MOT_SET(TELMIDORL,151, -2,568,568,-1,0)		//テルミドール　会話モーション
+	//	name("★初回（１回のみ／イベント処理）")
+		if(!FM_01_TalkTelmidorl)
+		{
+		//　　話しかけるとキャラ再配置してイベント発生。
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(-799,1008,135,0,0)
+			CAM(-130,47,-25,27,296,0,0)
+
+			//ルートムーブ中のメイとぶつからないように消す
+			color(MEI,-1)//透過
+			
+			//ルートムーブ止める
+			move(MEI, 99, 0,0,0,0,0)//0905追加
+			EV_stop("MOVE_MEI")
+			//メイを初期位置へ
+			chr_pos(MEI,298,-1505,1,351,2)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,-916,-846,0,166,2)
+			chr_pos(PARTNER,-741,-877,1,135,2)
+			chr_pos(TELMIDORL,-1030,-1100,0,240,150)
+			
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(TELMIDORL,"1", "1", "1")	
+			
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		
+			look_chr( TELMIDORL, RAGNA,"Bone_Head")
+
+		//	name("青年")
+			KAO(TELMIDORL,"12321Z3","1","1")
+			MES(TELMIDORL,"おや、君たちは……",0)
+			KAO(TELMIDORL,"12321Z6","1","1")
+			MES(TELMIDORL,"昨日の晩、上の階で\n部屋を取っていた人たちだね。",0)
+			KAO(TELMIDORL,"12321Z3","1","1")
+			MES(TELMIDORL,"外からきた旅行者かな？",0)
+			MES_close(TELMIDORL)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z3","1","1")
+			MES(RAGNA,"あ、ああ。\nまあそんなところだ。",0)
+			KAO(RAGNA,"12321Z3","1","1")
+			MES(RAGNA,"あんたも旅行者かい？",0)
+			MES_close(RAGNA)
+
+			KAO(TELMIDORL,"12321Z4","23","1")
+			MES(TELMIDORL,"フフ、私の名は\nテルミドールという。",0)
+			chr_rename(TELMIDORL,"テルミドール")
+			KAO(TELMIDORL,"12321Z6","3","1")
+			MES(TELMIDORL,"見果てぬロマンを求めて\nグランヴァレン中をさすらう\n気ままな一介の詩人さ。",0)
+			MES_close(TELMIDORL)
+
+			KAO(PARTNER,"12321Z2","D","1")
+			MES(PARTNER,"ほう……",0)
+			MES_close(PARTNER)
+
+			KAO(RAGNA,"12321Z3","D","1")
+			MES(RAGNA,"へえ……詩人ねぇ。",0)
+			MES_close(RAGNA)
+
+			KAO(TELMIDORL,"12321Z6","21","6")
+			MES(TELMIDORL,"今はイルバード各地に伝わる\n伝承に魅せられていてね。",0)
+			KAO(TELMIDORL,"12321Z6","26","6")
+			MES(TELMIDORL,"……いや、\nフフ、恋してしまったのかな。",0)
+			KAO(TELMIDORL,"12321Z6","6","6")
+			MES(TELMIDORL,"どうにも創作意欲が刺激されて\n新しい詩が次々に湧いてくるんだよ。",0)
+			MES_close(TELMIDORL)
+
+		//　　テルミドール、髪を掻き揚げる仕草。
+			KAO(PARTNER,"12321Z2","1","1")
+			MES(PARTNER,"（ふむ、興味深い……）",0)
+			KAO(PARTNER,"12321Z5","1","1")
+			MES(PARTNER,"（人の子にも、それなりに\n  風流を解する者がいるのだな。）",0)
+			MES_close(PARTNER)
+
+			look_chr( RAGNA, PARTNER,"Bone_Head")
+			KAO(RAGNA,"1","11TTUU","1")
+			wait(15)
+			KAO(RAGNA,"12321Z5","U","1")
+			MES(RAGNA,"（ま、こういう気障なのは\n  かなり少数派だとは思うが……）",0)
+			MES_close(RAGNA)
+
+			look_off(RAGNA)
+			KAO(RAGNA,"1","UTT11","1")
+			KAO(TELMIDORL,"12321Z6","21","1")
+			MES(TELMIDORL,"聞いた話によると\n古代神殿のような遺跡の他にも\n興味深い場所があるらしいね。",0)
+			KAO(TELMIDORL,"12321Z3","1","1")
+			MES(TELMIDORL,"古代の巨大な大鉄塔。",0)
+			KAO(TELMIDORL,"12321Z4","1","1")
+			MES(TELMIDORL,"一度踏み込めば\n二度と出られない魔性の森。",0)
+			KAO(TELMIDORL,"12321Z5","23","1")
+			MES(TELMIDORL,"そして高貴なる魔族が\n隠れ住んでいるという城……",0)
+			MES_close(TELMIDORL)
+
+			KAO(RAGNA,"12321Z5","A","1")
+			MES(RAGNA,"あー、そいつはもしかして……\n吸血鬼の城ってやつか？",0)
+			MES_close(RAGNA)
+
+			KAO(TELMIDORL,"12321Z6","21D","6")
+			MES(TELMIDORL,"そうそう、よく知っているね。\nこれは観光パンフレットにも\n書いてなかったのに……",0)
+			KAO(TELMIDORL,"12321Z6","23","1")
+			MES(TELMIDORL,"──このイルバードのどこかに\n満月の夜のみ現れる、妖しくも\n壮麗な城があるという……",0)
+			KAO(TELMIDORL,"12321Z6","2B","6")
+			MES(TELMIDORL,"フフ、君たちも\nこの手の話が好きなのかい？",0)
+			MES_close(TELMIDORL)
+
+			KAO(RAGNA,"12321Z5","26","1")
+			MES(RAGNA,"ははは……\nそういうわけじゃねえけどよ。",0)
+			MES_close(RAGNA)
+
+		//　　アルウェンの頭に…マーク。
+			EMO(PARTNER,EMO_TENTEN)
+			KAO(PARTNER,"1","23","1")
+			wait(30)
+
+			KAO(PARTNER,"1","2A","1")
+			MES(PARTNER,"（…………ふむ……………）",0)
+			MES_close(PARTNER)
+			
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			//ルートムーブ中のメイとぶつからないように消す
+			color(MEI,1)//透過
+			
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(TELMIDORL,"1", "1", "1")	
+
+			//ホアン初回後ならルートムーブ開始
+			EV("MOVE_MEI")
+			
+
+			EV_end()
+			F_set(FM_01_TalkTelmidorl)
+			look_off(TELMIDORL)
+			CAM_return( 0 )			//カメラを初期設定に
+			fade_in(0,30,BLACK)
+			
+//			//★テルミドール
+//			F_set_note(TELMIDORL,-1)
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+			look_chr( TELMIDORL, PLAYER,"Bone_Head")
+			MOT(TELMIDORL,151,15)
+		//	name("★２回目")
+			if(!F_TELMIDORL)
+			{
+				MES(TELMIDORL,"実は以前にも\n詩集を書いたことがあるんだが、\nこれが中々売れなくてね。",0)
+				MES(TELMIDORL,"はあ、あれには相当のペンネを\nつぎ込んだんのだがねぇ……",0)
+				MES_close(TELMIDORL)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（自費出版だったのか……？）",0)
+				MES_close(RAGNA)
+				
+				F_set(TELMIDORL)
+			}
+		//	name("★以後、繰り返し")
+			else
+			{
+				MES(TELMIDORL,"本当は金持ちのパトロンを見つけて\n心の赴くまま筆を走らせたいんだ。",0)
+				MES(TELMIDORL,"現実はそう\n上手くいかないけどねえ……",0)
+				MES_close(TELMIDORL)
+			}
+			MOT(TELMIDORL,150,15)
+			look_off(TELMIDORL)
+		}
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

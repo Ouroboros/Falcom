@@ -1,0 +1,450 @@
+//──────────────────────────────
+//	name("◆阿鲁贝尔おじ（おじ）Albers")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_ALBERS
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(ALBERS, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ALBERS)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ALBERS)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ALBERS)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※村広场之後ろ之方に立っている。
+	//　　※初回は玛莎と共通之イベント。
+	//　　※巴兰たち之嚯を向いて，振り返らない。
+	if( F6_05_EndSixth )
+	{
+		if(!FV_13_TalkAlbMar)
+		{
+			EV("TALK_AM")
+			wait_EV("TALK_AM")
+		}
+		else
+		{
+			EV_stop("FREEMOVE_ALBERS")
+			rot_chr(ALBERS,30,PLAYER1)
+			MOT_SET(ALBERS,153,-1,414,414,-1,40)
+			MOT(ALBERS,153,10)
+			if(!F_ALBERS)
+			{
+			//──────────────────────────────
+			//　　※以下通常一般メッセ～ジ。
+			//	name("阿鲁贝尔")
+				MES(ALBERS,"嗯，不管怎么说……\n今年的收获祭典\n也圆满结束了。",0)
+				MES(ALBERS,"咳……这事可是我负责的\n成功也是理所当然了。",0)
+				MES(ALBERS,"那么，差不多也该开始进行\n明年的播种了……",0)
+				MES_close(ALBERS)
+				//★阿鲁贝尔【収穫祭】
+				F_set_note(ALBERS,2)
+
+				F_set(ALBERS)
+			}
+			else
+			{
+			//　　★繰り返し
+			//	name("阿鲁贝尔")
+				MES(ALBERS,"可是，真没想到\n瑟菲拉小姐……",0)
+				MES(ALBERS,"不，没什么。\n我得赶紧把活干完才行。",0)
+				MES_close(ALBERS)
+			}
+			MOT(ALBERS,2,10)
+			EV("FREEMOVE_ALBERS")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリ～ム～ブ）
+	if( F6_00_GoToMeru )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"据说，好像有个巨大的风暴\n正在接近伊尔巴特。",0)
+			MES(ALBERS,"和村长商量了一下，\n决定暂时停止田里的工作。\n得为这事做点准备。",0)
+			MES(ALBERS,"……那个人，\n偶尔也有靠得住的时候嘛。",0)
+			MES(ALBERS,"虽然游手好闲这点还是没变……\n但好像是有认真地\n在为村子着想和下决定啊。",0)
+			MES_close(ALBERS)
+
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("阿鲁贝尔")
+		//	MES(ALBERS,"村长说了没关系，\n那就应该是没关系吧。",0)
+		//	MES(ALBERS,"因为，那个人虽然就像我刚才说的那样……\n不过，为村子着想这一点\n却不是假的。",0)
+		//	MES(ALBERS,"现在就相信他，赶紧想办法打理家田吧。",0)
+			MES(ALBERS,"说起来，今天早上\n我送菜到镇上的时候去了一趟酒馆……",0)
+			MES(ALBERS,"那位歌手小姐\n她的歌声\n比从前更加美妙了。",0)
+			MES_close(ALBERS)
+			wait_MES(ALBERS)
+
+			EMO(ALBERS,EMO_TENTEN)
+			wait(30)
+
+			MES(ALBERS,"是叫瑟菲拉吗……\n我越来越欣赏她了。",0)
+			MES_close(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリ～ム～ブ）
+	if( F5_00_HearLunar )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"醒来的时候，\n田里已经变成一团糟了。",0)
+			MES(ALBERS,"……到底是谁\n把田地破坏成这样……！",0)
+			MES(ALBERS,"是魔物吗？\n是不是闯进村子里的\n那些魔物干的？",0)
+			MES_close(ALBERS)
+
+			MES(RAGNA,"（说到破坏田地……）",0)
+			MES_close(RAGNA)
+
+			MES(PET,"（那个，\n  不是你们这些被控制的人\n  自己干的吗……？）",0)
+			MES_close(PET)
+
+		//　　？エモ～ション。
+			EMO(ALBERS,EMO_HATENA)
+			wait(30)
+			look_chr(ALBERS,PET,"Bone_Head")
+
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"干嘛，\n我脸上有什么吗！？",0)
+			look_chr(ALBERS,RAGNA,"Bone_Head")
+			MES_close(ALBERS)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"不，没有。哈哈哈……\n什么事也没有。",0)
+			MES_close(RAGNA)
+
+		//　　奥迪莎がいる场合，奥迪莎に？エモ～ション。
+
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_HATENA)
+				wait(30)
+			}
+			look_off(ALBERS)
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"真是的，\n种的庄稼都一塌糊涂了。",0)
+			MES(ALBERS,"全都得重新耕种了。",0)
+			MES_close(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※风車小屋民家で寝込んでいる。
+	if( F4_00_StartSolo )
+	{
+	//	name("阿鲁贝尔")
+		MES(ALBERS,"……呜，呃…………",0)
+		MES_close(ALBERS)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※倒れている。メッセ～ジなし。（梅ン参照）
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵之正体が明かされた
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリ～ム～ブ）
+	if( F2_14_TalkEnemy )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"现在，好像有歌手\n来到了亚尔迪。",0)
+			MES(ALBERS,"……真是美妙的歌声………",0)
+			MES(ALBERS,"我从以前就有\n欣赏唱片的习惯，所以不会看错的。",0)
+			MES(ALBERS,"她是最棒的歌手。\n现在在维兰已经造成话题了。",0)
+			MES_close(ALBERS)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（嘿，喜欢听唱片啊。\n  挺高雅的嘛……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾尔雯先頭")
+			{
+				MES(PARTNER,"（哦，这个兴趣\n  还真是意外呢……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"虽然我常常抽空\n去听她唱歌……",0)
+			MES(ALBERS,"不过收获祭典就快到了，\n最近总是很忙。",0)
+			MES_close(ALBERS)
+
+		//　　阿鲁贝尔に···エモ～ション。
+			EMO(ALBERS,EMO_TENTEN)
+			wait(30)
+			
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"要是村长也能认真工作的话，\n就不会有任何问题了……",0)
+			MES_close(ALBERS)
+			//★阿鲁贝尔【瑟菲拉之ファン】
+			F_set_note(ALBERS,1)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリ～ム～ブ）
+	if( F2_00_GoForest )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"收获祭典也快到了。",0)
+			MES(ALBERS,"向村子的精灵献上收获的粮食\n这件重要的工作\n每年都由我负责。",0)
+			MES(ALBERS,"大家都趁着工作的空闲\n抓紧准备着。",0)
+			MES(ALBERS,"既然是我来负责，\n就一定要让它成功。",0)
+			MES_close(ALBERS)
+
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"要是……\n村长也能稍微帮点忙就好了。",0)
+			MES(ALBERS,"不对，其实\n组织村里的收获祭典本来就应该是村长的工作。",0)
+			MES(ALBERS,"算了，不要乱说些奇怪的话，\n我还是干活去吧……！",0)
+			MES_close(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリ～ム～ブ）
+	if( F1_15_GoVillage )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"前几天我去了镇上，\n从酒馆出来的时候\n撞到了一个像是无业游民一样的人。",0)
+			MES_close(ALBERS)
+
+		//　　阿鲁贝尔にムカエモ～ション。
+			EMO(ALBERS,EMO_AOSUZI)
+			wait(30)
+			
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"不过，那身\n叮叮当当的打扮算什么啊……",0)
+			MES(ALBERS,"那种轻浮的男人\n没人会看得顺眼吧。",0)
+			MES(ALBERS,"男人就应该踏实地工作。\n你们也要好好记住。",0)
+			MES_close(ALBERS)
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"没人会喜欢游手好闲的人。",0)
+			MES(ALBERS,"是男人的就该每天踏踏实实地工作。",0)
+			MES(ALBERS,"真是的……\n多少也向巴兰学习学习。\n男人就得像那样。",0)
+			MES_close(ALBERS)
+			//★阿鲁贝尔【巴兰を買っている】
+			F_set_note(ALBERS,0)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリ～ム～ブ）
+	if( F1_01_GameStart )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"喂喂，\n别把田地踩坏了。",0)
+			MES(ALBERS,"这边的地里\n还有没收割完的庄稼啊。",0)
+			MES(ALBERS,"如果有什么事想问的话，\n就去村长家里找\n一个叫拉乌妮的人吧。",0)
+			MES(ALBERS,"她见多识广，\n比村长更靠得住。",0)
+			MES_close(ALBERS)
+
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//　　阿鲁贝尔，軽く村长宅之方を向く。
+			look_chr(ALBERS, WIDEZEN ,"Bone_Head")
+			
+		//	name("阿鲁贝尔")
+			MES(ALBERS,"站在那里的\n就是这个村的村长……",0)
+			MES(ALBERS,"不过不要太相信他哦。",0)
+		//	MES(ALBERS,"因为那个人不仅举止奇怪，\n而且光说不做。",0)
+			MES(ALBERS,"只会痴人说梦，\n光有一张嘴，\n什么事都不干。",0)
+			MES_close(ALBERS)
+
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（说得真过分啊……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾尔雯先頭")
+			{
+				MES(PARTNER,"（说得这么斩钉截铁……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		//解除
+			look_off(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

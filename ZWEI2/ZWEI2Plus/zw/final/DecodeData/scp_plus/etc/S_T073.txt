@@ -1,0 +1,522 @@
+//──────────────────────────────
+//	name("◆サラサ（露天風呂従業員）Salasya")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_SALASYA
+{
+	TK_begin()
+	rot_chr(PLAYER1,30,SALASYA)
+
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(SALASYA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,SALASYA)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,SALASYA)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	//──────────────────────────────
+	//▼□□　わらしべイベント
+	//	name("６．サラサ（星降りの里）		『おしぼり』□『うに缶』")148
+	//──────────────────────────────
+	if(F5_00_HearLunar && FV_11_Warasi_5_Han && !FV_11_Warasi_6_Sls)
+	{
+		//会話モーション
+		MOT_SET(SALASYA,150,-1,427,427,151,10)
+		MOT_SET(SALASYA,151,-1,428,428,150,10)
+		//──────────────────────────────
+		if(!F_SALASYA)
+		{
+		//	name("□初回")
+			MES(SALASYA,"あらやだ、\nまた手が荒れちゃったわ。",0)
+			MES(SALASYA,"やっぱり水仕事ばかりだと\nお肌に良くないわねぇ……",0)
+			MES_close(SALASYA)
+
+		//　　サラサ、ＰＡエモーションで振り返る。
+			EMO(SALASYA,EMO_PA)
+			rot_chr(SALASYA,30,RAGNA)
+			wait(30)
+	
+			MOT(SALASYA,150,10)
+			MES(SALASYA,"あら、ラグナちゃん？\n丁度いいもの持ってるじゃない。",0)
+			MES(SALASYA,"その『おしぼり』、\nおばさんに譲ってくれないかしら？",0)
+			MES_close(SALASYA)
+			
+			F_set(SALASYA)
+		}
+		else
+		{
+		//	name("□２回目以降")
+			rot_chr(SALASYA,30,RAGNA)
+			MOT(SALASYA,150,10)
+			MES(SALASYA,"お風呂場の水仕事ばかりで、\nお肌が荒れちゃったのよね。",0)
+			MES(SALASYA,"ねえラグナちゃん。\nその『おしぼり』、おばさんに\n譲ってくれないかしら？",0)
+			MES_close(SALASYA)
+		}
+		//──────────────────────────────
+		
+	//	name("選択テキスト")
+		workL(WK_CANCEL,SET,2)//【やめる】
+		MES_pos(PLAYER1,"??W9【どうぞどうぞ】\n【これはちょっと……】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("□【どうぞどうぞ】")
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+			MES(SALASYA,"うふふ、ありがと。\nこれと塗り薬を使えば\n肌荒れも良くなりそうね。",0)
+			MES(SALASYA,"ああそうだわ、\n折角だからこれをあげるわね。",0)
+			MES(SALASYA,"うふふ、交換ってことかしら。",0)
+			MES_close(SALASYA)
+
+		//	name("アイテム入手テキスト")
+		//	MES(this,"『うに缶』を貰った。",0)
+			//―――――――――――――――――――――――
+			fade_in(30,10,BLACK)
+
+			get_item(147,-1,1)
+			get_item(148,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//―――――――――――――――――――――――
+
+		//	name2(RAGNA)
+			MES(RAGNA,"う、うに缶……？",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"うにの缶詰よ。\n前にお土産に貰ったの。",0)
+			MES(SALASYA,"でもこの里って山地でしょう？\nうにが苦手って人も多くて、\n中々出す機会が無いのよね。",0)
+			MES_close(SALASYA)
+
+			//──────────────────────────────
+			if(GW_MAN==0 && F6_00_GoToMeru)
+			{
+			//	name("□アルウェン先頭")
+				MES(PARTNER,"ほうほう、見たことの\n無い食べ物だ……",0)
+				MES(PARTNER,"これは生のまま食すのか？",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（さっそく興味津津だな……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□ラグナ先頭")
+				MES(RAGNA,"はは、そうだったのか。",0)
+				MES(RAGNA,"（……実は俺も、\n  うには苦手なんだよな……）",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+			F_reset(SALASYA)
+			F_set(FV_11_Warasi_6_Sls)
+		}
+		//──────────────────────────────
+		//	name("□【これはちょっと……】")
+		//──────────────────────────────
+		else
+		{
+			MES(SALASYA,"あらそう、残念。",0)
+			MES(SALASYA,"塗り薬だけで\n我慢しようかしら。",0)
+			MES_close(SALASYA)
+		}
+		MOT(SALASYA,152,10)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	if(F6_00_GoToMeru)
+	{
+		rot_chr(SALASYA,30,PLAYER1)
+
+		EV("MOTION_TK_SALASYA")
+		if(!FS_12_TalkSalasya)
+		{
+
+		//　　※風呂屋で仕事をしている。
+			MES(SALASYA,"あらぁ、ラグナちゃん……",0)
+			MES(SALASYA,"お風呂に入りに来てくれたの？\nうふふ、大歓迎よ㈱",0)
+
+			if(SP001>60000)
+			{
+				MES(SALASYA,"こんなときこそ、\nお風呂でゆっくり\n疲れを取っておかないとね。",0)
+				MES_close(SALASYA)
+
+				MES(RAGNA,"ははは、まあな……",0)
+			}
+			else
+			{
+				MES(SALASYA,"あら、でもちょうど\n掃除中だったかしら……？",0)
+				MES_close(SALASYA)
+
+				MES(RAGNA,"いや、気にしないでくれ。",0)
+			}
+			MES(RAGNA,"そうだ、あの後もずっと\nスバルの看病をしてくれてたんだよな。",0)
+			MES(RAGNA,"サンキューな、礼を言っとくぜ。",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"あらやだ、そんなの\n気にしなくていいのに……",0)
+			MES(SALASYA,"スバルちゃんは\n私の娘みたいなものですからね。\n看病するくらいは当然のことよ。",0)
+			MES_close(SALASYA)
+
+		//　　サラサに．．．エモーション。
+			EMO(SALASYA,EMO_TENTEN)
+			wait(30)
+
+			MES(SALASYA,"それで……\nお式の方はどうするの？",0)
+			MES_close(SALASYA)
+
+		//　　ラグナたちに？エモーション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			EMO(PET,EMO_HATENA)
+			wait(30)
+
+			MES(RAGNA,"へ……？",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"まあ焦ることはないでしょうけど……",0)
+			MES(SALASYA,"ほら、スバルちゃんも来年で１５だし。\nもうそろそろいいお年だと思うの。",0)
+			MES(SALASYA,"……あら、ラグナちゃんったら\nまだ何も考えてないの？",0)
+			MES_close(SALASYA)
+
+		//　　ラグナ、そっぽを向く。もしくは青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+			wait(30)
+			MES(RAGNA,"あー、うー、えーっと……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"ほほう……\n随分と話が進んでおるのう。",0)
+			MES_close(PARTNER)
+
+		//　　ラグナ、アセアセでアルウェンに向く。
+			rot_chr(RAGNA,30,PARTNER)
+
+			EMO(RAGNA,EMO_ASEASE)
+			wait(30)
+			MES(RAGNA,"これはその、前に\n里に来たときの言い訳にな、な？",0)
+			MES_close(RAGNA)
+
+		//	name2(PET)
+			MES(PET,"……サイッテー。",0)
+			MES_close(PET)
+			F_set(FS_12_TalkSalasya)
+		}
+		//──────────────────────────────
+		else
+		{
+			if(!F_SALASYA)
+			{
+				rot_chr(SALASYA,30,RAGNA)			//　　ラグナに向く。
+
+		//　　※以下通常一般メッセージ。
+				MES(SALASYA,"実はおばさんも\n里の外から嫁いできたのよ。",0)
+				MES(SALASYA,"だからラグナちゃんが迷っちゃう\n気持ちも分からなくはないけど……",0)
+				MES(SALASYA,"やっぱりこういう事は\n早めに決めておいた方が\nいいんじゃないかしら。",0)
+				MES(SALASYA,"それに、あのスバルちゃんが\n綺麗におめかしして\n花嫁衣裳だなんて……",0)
+				MES(SALASYA,"きゃっ、おばさん\n想像しただけでメロメロだわ～㈱",0)
+				MES_close(SALASYA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（ダメだ、どっかで\n  誤解を解いておかねえと……）",0)
+				MES_close(RAGNA)
+				//★サラサ【２人の仲に賛成】
+				F_set_note(SALASYA,2)
+				F_set(SALASYA)
+			}
+		//　　★繰り返し
+			else
+			{
+			//	if(EQ112 && SP001<=60000)	//万步計を装備していて６万步以下の場合はヒントを出す
+				if(IT112>0 && SP001>50000 && SP001<=60000)	//万步計を持っていて５万より上、６万步以下の場合はヒントを出す
+				{
+					MES(SALASYA,"ごめんなさいね。\nお風呂の掃除は\nまだかかりそうなのよ。",0)
+					MES(SALASYA,"おばさん、すぐに終わらせるから\nジョギングでもしてきたら？",0)
+					MES(SALASYA,"そうね、その万步計が\n６万步くらいまで行ったら\n掃除も終わると思うけど。",0)
+					MES_close(SALASYA)
+				}
+				else
+				{
+					MES(SALASYA,"そりゃあ生活習慣の違い\nなんかもあるから、迷っちゃう\n気持ちも分からなくはないけど……",0)
+					MES(SALASYA,"ちゃんと真剣に\n考えておいて頂戴ね。",0)
+					MES(SALASYA,"うふふ、おばさん\n応援してるわよ㈱",0)
+					MES_close(SALASYA)
+				}
+			}
+		}
+		MOT(SALASYA,152,10)
+	}
+	
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※よろず屋、棚の前にいる。
+	if( F5_00_HearLunar )
+	{
+		//会話モーション
+		EV("MOTION_TK_SALASYA")
+		if(!FS_11_TalkSalasya)
+		{	
+			rot_chr(SALASYA,30,PLAYER1)
+			MES(SALASYA,"火の手が上がったときは\n本当に驚いたけど……",0)
+			MES(SALASYA,"上忍さんたちの誘導で\n女子供はみんな隠れていたの。\nお陰で怪我も無かったわ。",0)
+			MES(SALASYA,"ふう……\n後はスバルちゃんね。",0)
+			MES(SALASYA,"もうお熱は引いたから\n大丈夫だとは思うんだけど。",0)
+			MES_close(SALASYA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"……そうか。",0)
+			MES(RAGNA,"すまねえが、もう少し\nあいつの事を頼むぜ。",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"あら、ラグナちゃん。\nそんな顔しなくてもいいのよ？",0)
+			MES(SALASYA,"あの子も体力だけはあるんだし。\nおばさんがキッチリ\n看病しておいてあげますからね。",0)
+			MES_close(SALASYA)
+			F_set(FS_11_TalkSalasya)
+			rot(SALASYA,30,170)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_SALASYA)
+			{
+				rot_chr(SALASYA,30,PLAYER1)
+				MES(SALASYA,"スバルちゃんの事なら\n心配しなくていいわよ。",0)
+				MES(SALASYA,"おばさん、小さい頃から\nずっと面倒を見てるんだから。",0)
+				MES(SALASYA,"このくらいの事は任せて頂戴。\nきっとすぐに元気になるわ。",0)
+				MES_close(SALASYA)
+				F_set(SALASYA)
+				rot(SALASYA,30,170)
+			}
+			//　　★繰り返し
+			else
+			{
+			//　　※振り返らない。
+				MES(SALASYA,"ええと、包帯と熱さまし……",0)
+				MES(SALASYA,"そうだ、そろそろ\nお粥も用意しておかなくちゃ。",0)
+				MES(SALASYA,"スバルちゃん、目が覚めたら\nお腹が空いてるに違いないものね。",0)
+				MES_close(SALASYA)
+			}
+		}
+		MOT(SALASYA,152,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//　　※風呂屋の前で掃除している。
+	if( F4_05_OnVillage2 )
+	{
+		
+		//会話モーション
+		look(SALASYA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中．手戻し
+		EV("MOTION_TK_SALASYA")
+
+		if( !FS_08_TalkSalasya )
+		{
+			rot_chr(SALASYA,30,PARTNER)
+			MES(SALASYA,"あっらぁ……\nスバルちゃん？",0)
+			MES(SALASYA,"どこ行ってたのよ、もう～……\nおばさん、うんと心配したのよ？",0)
+			MES_close(SALASYA)
+
+		//	name2(RAGNA)
+			rot_chr(RAGNA,30,PARTNER)
+			MES(RAGNA,"ははは、『スバルちゃん』か。",0)
+			MES(RAGNA,"スバルって結構、\n里じゃ可愛がられてるんだな。",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			MES(PARTNER,"もう、師匠ってば\nからかわないでくださいよ～。",0)
+			MES(PARTNER,"ただサラサおばちゃんには\n小さい頃から\nお世話になってるから……",0)
+			MES_close(PARTNER)
+
+		//	name2(SALASYA)
+			rot_chr(SALASYA,30,RAGNA)
+			MES(SALASYA,"うふふ、ご両親が病で\nお亡くなりになっちゃってからは\nずーっと面倒を見てましたからね。",0)
+			MES(SALASYA,"それで……\nあなたが例の人？",0)
+			MES_close(SALASYA)
+
+		//　　ラグナに？エモーション。
+			EMO(RAGNA,EMO_HATENA)
+			rot_chr(RAGNA,30,SALASYA)
+			wait(30)
+			
+			MES(RAGNA,"例の人……？？",0)
+			MES_close(RAGNA)
+
+		//　　スバル、アセアセでラグナに向く。
+			EMO(PARTNER,EMO_ASEASE)
+			rot_chr(PARTNER,30,RAGNA)
+			wait(30)
+
+			MES(PARTNER,"あああ、ええと。\nこれはその、あの……",0)
+			MES(PARTNER,"あ、そうだサラサおばちゃん！",0)
+			MES_close(PARTNER)
+			
+		//　　スバル、サラサに向く。
+			rot_chr(PARTNER,30,SALASYA)			
+
+			MES(PARTNER,"ボク、ラグナ師匠を\nお風呂に入れてあげたいんだけど……",0)
+			MES_close(PARTNER)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"あらなんだ、そうだったの。\nこりゃ失礼しちゃったわ。",0)
+			MES(SALASYA,"でもね、今は\n生憎と大掃除中なのよ。",0)
+			MES(SALASYA,"ごめんなさいね。\nおばさんすぐに済ませるから、\nそれから来て貰えるかしら？",0)
+			MES_close(SALASYA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"あ、はい。\nそういうことなら……",0)
+			MES_close(PARTNER)
+
+		//　　スバル、ラグナに向く。
+			rot_chr(PARTNER,30,RAGNA)
+			MES(PARTNER,"えっとじゃあ、もう少し\n里の中を回っていましょうか。",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ああ、別に\n急いでるわけじゃねえしな。",0)
+			MES_close(RAGNA)
+
+		//　　ラグナ、サラサに向く。
+			rot_chr(RAGNA,30,SALASYA)
+			MES(RAGNA,"んじゃあ、\nまた後で寄らせてもらうぜ。",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"うふふ、またね。\nスバルちゃん、ラグナちゃん㈱",0)
+			MES_close(SALASYA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"あ、ああ……\n（俺までラグナちゃんかよ……）",0)
+			MES_close(RAGNA)
+			
+			//★テンザン【息子夫婦は病死】
+			F_set_note(-24,0)
+			//★サラサ【スバルの母親代わり】
+			F_set_note(SALASYA,0)
+			
+			F_set(FS_08_TalkSalasya)
+
+		//名前付きキャラ全員に話しかけると露天風呂が開く
+		}
+		//──────────────────────────────
+		//　　★テンザン【息子夫婦は病死】
+		//　　★サラサ【スバルの母親代わり】
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			rot_chr(SALASYA,30,PLAYER1)
+			if(!F_SALASYA)
+			{
+				MES(SALASYA,"そうね……\n私も“例外”だったから\n少しは分かるけど……",0)
+				MES(SALASYA,"最初は居心地悪く\n感じちゃうことがあると思うの。",0)
+				MES(SALASYA,"でもここの人たちは、\nみんな本当に優しくてあったかいのよ。",0)
+				MES(SALASYA,"まあ段々と分かってくるわ。",0)
+				MES(SALASYA,"これからもよろしくね。\nラグナちゃん㈱",0)
+				MES_close(SALASYA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"は、はあ……",0)
+				MES_close(RAGNA)
+				F_set(SALASYA)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(SALASYA,"うふふ、でもスバルちゃんが\n里の抜け出していたのって\nこういうことだったのね。",0)
+				MES(SALASYA,"よし、おばさん今晚は\n腕を振るっちゃうわよ！",0)
+				MES(SALASYA,"２人とも、ご馳走\n楽しみにしていて頂戴ね㈱",0)
+				MES_close(SALASYA)
+				//★サラサ【手料理が得意】
+				F_set_note(SALASYA,1)
+			}
+		}
+		look(SALASYA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(SALASYA,2,10)
+	}
+	TK_end()
+}
+
+//会話時モーション
+MOTION_TK_SALASYA
+{
+	MOT_SET(SALASYA,150,-1,427,427,151,10)
+	MOT_SET(SALASYA,151,-1,428,428,150,10)
+	MOT(SALASYA,150,10)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

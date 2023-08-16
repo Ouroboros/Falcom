@@ -1,0 +1,450 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧傾儖儀乕儖偍偠偝傫乮偍偠偝傫乯Albers")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_ALBERS
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(ALBERS, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ALBERS)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ALBERS)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ALBERS)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸懞峀応偺屻傠偺曽偵棫偭偰偄傞丅
+	//丂丂仸弶夞偼儅乕僒偲嫟捠偺僀儀儞僩丅
+	//丂丂仸僶儔儞偨偪偺傎偆傪岦偄偰丄怳傝曉傜側偄丅
+	if( F6_05_EndSixth )
+	{
+		if(!FV_13_TalkAlbMar)
+		{
+			EV("TALK_AM")
+			wait_EV("TALK_AM")
+		}
+		else
+		{
+			EV_stop("FREEMOVE_ALBERS")
+			rot_chr(ALBERS,30,PLAYER1)
+			MOT_SET(ALBERS,153,-1,414,414,-1,40)
+			MOT(ALBERS,153,10)
+			if(!F_ALBERS)
+			{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			//	name("傾儖儀乕儖")
+				MES(ALBERS,"總…總而言之……\n今年的收穫祭\n也已經圓滿結束。",0)
+				MES(ALBERS,"咳……這也是應該的，\n因為是由我主持的嘛。",0)
+				MES(ALBERS,"接下來，就要\n播種下一期的作物了……",0)
+				MES_close(ALBERS)
+				//仛傾儖儀乕儖亂廂妌嵳亃
+				F_set_note(ALBERS,2)
+
+				F_set(ALBERS)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+			//	name("傾儖儀乕儖")
+				MES(ALBERS,"可是，沒想到\n雪菲拉小姐會……",0)
+				MES(ALBERS,"不，沒什麼。\n必須要儘快完成工作才行。",0)
+				MES_close(ALBERS)
+			}
+			MOT(ALBERS,2,10)
+			EV("FREEMOVE_ALBERS")
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偐傏偪傖敤偱擾嶌嬈傪偟偰偄傞丅乮僼儕乕儉乕僽乯
+	if( F6_00_GoToMeru )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"據說好像有颱風\n向伊魯巴特接近。",0)
+			MES(ALBERS,"和村長商量了一下，\n決定暫停耕種。\n我正在為這個做準備。",0)
+			MES(ALBERS,"……那個人偶爾\n也值得別人信賴嘛。",0)
+			MES(ALBERS,"雖然和以前一樣不耕種……\n不過這次也是為村莊\n著想才得出了這個結論吧。",0)
+			MES_close(ALBERS)
+
+			F_set(ALBERS)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("傾儖儀乕儖")
+		//	MES(ALBERS,"懞挿偑戝忎晇偩偲偄偆傫偩丄\n懡暘戝忎晇側傫偩傠偆丅",0)
+		//	MES(ALBERS,"偁偺恖偼丄偁偺捠傝偺恖偩偑乧乧\n懞偺偨傔傪峫偊偰偄傞偲偄偆偺偼\n塕偱偼側偄偐傜側丅",0)
+		//	MES(ALBERS,"崱偼怣偠偰丄敤偺懳嶔傪媫偖偝丅",0)
+			MES(ALBERS,"說起來今天上午，我到鎮裡\n批發蔬菜的時候上了酒館……",0)
+			MES(ALBERS,"那位歌手\n的歌聲比以前都要\n動聽呢。",0)
+			MES_close(ALBERS)
+			wait_MES(ALBERS)
+
+			EMO(ALBERS,EMO_TENTEN)
+			wait(30)
+
+			MES(ALBERS,"是叫雪菲拉小姐吧……\n我已經成為她的歌迷了。",0)
+			MES_close(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偐傏偪傖敤偱擾嶌嬈傪偟偰偄傞丅乮僼儕乕儉乕僽乯
+	if( F5_00_HearLunar )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"我早上起來就發現\n田裡被弄得一團糟。",0)
+			MES(ALBERS,"……到底是誰\n把南瓜田糟蹋成這樣……！",0)
+			MES(ALBERS,"怪物嗎？\n是那些據說曾經闖進\n村裡的怪物幹的嗎？",0)
+			MES_close(ALBERS)
+
+			MES(RAGNA,"（南瓜田被糟蹋了……）",0)
+			MES_close(RAGNA)
+
+			MES(PET,"（這難道\n 不就是他們\n 被控制以後……？）",0)
+			MES_close(PET)
+
+		//丂丂丠僄儌乕僔儑儞丅
+			EMO(ALBERS,EMO_HATENA)
+			wait(30)
+			look_chr(ALBERS,PET,"Bone_Head")
+
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"怎麼了，\n我臉上沾了什麼東西嗎！？",0)
+			look_chr(ALBERS,RAGNA,"Bone_Head")
+			MES_close(ALBERS)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"沒…沒什麼。哈哈哈……\n沒事。",0)
+			MES_close(RAGNA)
+
+		//丂丂僆僨僢僒偑偄傞応崌丄僆僨僢僒偵丠僄儌乕僔儑儞丅
+
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_HATENA)
+				wait(30)
+			}
+			look_off(ALBERS)
+			F_set(ALBERS)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"真是的，\n作物都被毀了。",0)
+			MES(ALBERS,"必須要重新種才行啊。",0)
+			MES_close(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸晽幵彫壆柉壠偱怮崬傫偱偄傞丅
+	if( F4_00_StartSolo )
+	{
+	//	name("傾儖儀乕儖")
+		MES(ALBERS,"……唔，嗯…………",0)
+		MES_close(ALBERS)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸搢傟偰偄傞丅儊僢僙乕僕側偟丅乮儊僀儞嶲徠乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偐傏偪傖敤偱擾嶌嬈傪偟偰偄傞丅乮僼儕乕儉乕僽乯
+	if( F2_14_TalkEnemy )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"現在阿魯特鎮上\n有一位歌手吧。",0)
+			MES(ALBERS,"……歌喉很優美呢………",0)
+			MES(ALBERS,"我以前聽過\n她的唱片，不會錯的。",0)
+			MES(ALBERS,"她是最厲害的歌手了。\n現在整個維蘭大陸上都在討論她呢。",0)
+			MES_close(ALBERS)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（咦，喜歡聽唱片？\n 相當古雅的興趣呢……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"（哦，沒想到\n 在這裡也有人喜歡她啊……）",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(ALBERS)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"有空閒時間的話，我都會\n過去聽她唱歌……",0)
+			MES(ALBERS,"可是現在收穫祭近在眼前，\n實在是很忙。",0)
+			MES_close(ALBERS)
+
+		//丂丂傾儖儀乕儖偵丒丒丒僄儌乕僔儑儞丅
+			EMO(ALBERS,EMO_TENTEN)
+			wait(30)
+			
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"本來只要村長肯認真幹活，\n就不應該有問題的……",0)
+			MES_close(ALBERS)
+			//仛傾儖儀乕儖亂僙僼傿乕儔偺僼傽儞亃
+			F_set_note(ALBERS,1)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偐傏偪傖敤偱擾嶌嬈傪偟偰偄傞丅乮僼儕乕儉乕僽乯
+	if( F2_00_GoForest )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"很快就要到收穫祭了。",0)
+			MES(ALBERS,"這是每年向村中的精靈\n獻祭獲物的活動，一直\n都是由我主持。",0)
+			MES(ALBERS,"現在大家都在工作間隙\n抽出時間進行準備。",0)
+			MES(ALBERS,"既然要做，\n就要把事情做好。",0)
+			MES_close(ALBERS)
+
+			F_set(ALBERS)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"村長真是……\n我也希望他能幫點忙呢。",0)
+			MES(ALBERS,"不對，本來這種全村的活動\n就應該由村長主辦的。",0)
+			MES(ALBERS,"少說些夢話，\n多做點正事才對……！",0)
+			MES_close(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偐傏偪傖敤偱擾嶌嬈傪偟偰偄傞丅乮僼儕乕儉乕僽乯
+	if( F1_15_GoVillage )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"前兩天我去過一次阿魯特鎮，\n從酒館裡走出來的時候\n正好撞上了一個游手好閒的人。",0)
+			MES_close(ALBERS)
+
+		//丂丂傾儖儀乕儖偵儉僇僄儌乕僔儑儞丅
+			EMO(ALBERS,EMO_AOSUZI)
+			wait(30)
+			
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"那身吊兒郎當的\n打扮算什麼東西啊……",0)
+			MES(ALBERS,"那種無所事事的男人\n沒有什麼像樣的。",0)
+			MES(ALBERS,"男人就應該老老實實地工作。\n你們也要記住哦。",0)
+			MES_close(ALBERS)
+			F_set(ALBERS)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"游手好閒的人裡沒什麼好傢伙。",0)
+			MES(ALBERS,"男人每天都應該老老實實地工作。",0)
+			MES(ALBERS,"真是的……\n向巴朗學學吧。\n男人那樣下去可不行。",0)
+			MES_close(ALBERS)
+			//仛傾儖儀乕儖亂僶儔儞傪攦偭偰偄傞亃
+			F_set_note(ALBERS,0)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偐傏偪傖敤偱擾嶌嬈傪偟偰偄傞丅乮僼儕乕儉乕僽乯
+	if( F1_01_GameStart )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"喂，你們，\n不要糟蹋作物啊。",0)
+			MES(ALBERS,"這附近還有些\n作物沒有收穫呢。",0)
+			MES(ALBERS,"有什麼疑問的話，\n就去村長家\n找一個叫勞尼的老婆婆。",0)
+			MES(ALBERS,"她知道得很多，\n而且也比村長可靠。",0)
+			MES_close(ALBERS)
+
+			F_set(ALBERS)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//丂丂傾儖儀乕儖丄寉偔懞挿戭偺曽傪岦偔丅
+			look_chr(ALBERS, WIDEZEN ,"Bone_Head")
+			
+		//	name("傾儖儀乕儖")
+			MES(ALBERS,"站在那邊的人就是\n這裡的村長……",0)
+			MES(ALBERS,"不過別太相信他。",0)
+		//	MES(ALBERS,"偪傚偭偲偍偐偟側忋丄岥愭偩偗偱\n帺暘偱偼壗傕偟側偄恖偩偐傜側丅",0)
+			MES(ALBERS,"他可是整天\n只會說些夢話，\n什麼事都不做。",0)
+			MES_close(ALBERS)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（這評價真是過分啊……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"（竟然說得如此肯定……）",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//夝彍
+			look_off(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

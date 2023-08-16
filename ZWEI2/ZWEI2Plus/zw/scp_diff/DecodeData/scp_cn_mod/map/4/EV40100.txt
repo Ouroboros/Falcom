@@ -1,0 +1,389 @@
+//====================================================================
+//ステージトラップスクリプト
+//[14010][大铁塔－入口分岐]
+//====================================================================
+
+#ScriptTable
+
+#PLAYER		252	//操作キャラクター
+#PLAYER2 	253	//非操作キャラクター
+
+#PENGUIN	10
+
+//--------------------------------------------------------------------
+INIT
+{
+	/*
+	if (Fx_MUGEN_TI_20B )
+	{
+		if (Fx_MUGEN_SUI_20B )
+		{
+			if ( Fx_MUGEN_FUU_20B )
+			{
+				if ( Fx_MUGEN_KA_20B )
+				{
+					F_set(Fx_MUGEN2_OPENED)
+				}
+			}
+		}
+	}
+	*/
+
+	if ( F6_11_GameClear )
+	{
+		F_set(Fx_MUGEN2_OPENED)
+	}
+
+//環境SE
+	SE(63,0)
+	SE(65,0)
+
+//■地形
+	set_obj("mp40160",	 4, 2,  -425,-625,1350,	 0) //歯車
+	set_obj2("mp40200",	 5, 2,  -450,-250,2000,	 0) //┏
+	set_obj2("mp40460",	 5, 2,  -450, 650,2000,	 0) //┗
+	set_obj2("mp40210",	 5, 2,   450,-250,2000,	 0) //┓
+	set_obj("mp40160",	 5, 2,     0,   0, 450,	 0) //歯車
+	set_obj2("mp40470",	 5, 2,   450, 650,2000,	 0) //┛
+	set_obj2("obx001k",	 5, 2,     0,1100,2000,  180) //铁塔縁↓
+	set_obj("mp40160",	 4, 3,  -425,-425,1300,	 0) //歯車
+	set_obj("mp40160",	 6, 3,  -450,-450,2000,	 0) //歯車
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+	set_chr( 90,990,	 5, 6,     0, 300,  0,		180,  0503, 6,"K1_14001;")	//①エントリ 入口
+
+	set_chr( 91,990,	 5, 2,     0, -50,2000,		  0,  0201, 6,"K0_14011;")	//②エントリ 梅ン①
+	set_obj("@ob40020a", 5, 2,     0, -50,2000,		  0)						//①アーチ（塔）
+	set_chr(191,1400,	 5, 2,     0, -50,2000,		  0,     0, 0,";")			//アーチ（ダミー）
+
+	set_chr( 92,990,	 3, 4,     0,   0,  0,		270,  0102, 6,"K0_14041;")	//③エントリ サブ①
+	set_obj("@ob40020a", 3, 4,     0,   0,  0,		270)						//③アーチ（塔）
+	set_chr(192,1400,	 3, 4,	   0,   0,  0,		  0,   270, 0,";")			//アーチ（ダミー）
+
+	set_chr( 93,990,	 7, 4,     0,   0,  0,		 90,  0102, 6,"RF2060 K0_14051;")	//④エントリ 無幻①
+	set_obj("@ob40020a", 7, 4,     0,   0,  0,		 90)						//④アーチ（塔）
+	set_chr(193,1400,	 7, 4,	   0,   0,  0,		  0,    90, 0,";")			//アーチ（ダミー）
+
+	if( Fx_MUGEN2_OPENED )
+	{
+		set_chr( 94,990,	 6, 5,     0, 150,  0,		180,  0102, 6,"SF2060 K0_14051;")	//エントリ 無幻EX①
+		set_obj("@ob40020a", 6, 5,     0, 150,  0,		180)						//アーチ（塔）
+		set_chr(194,1400,	 6, 5,	   0, 150,  0,		  0,   180, 0,";")			//アーチ（ダミー）
+
+//x		set_chr( 60,648,	 6, 5,     0,-450,  0,		 99,   180, 0,";")	//レベルプレート
+//x		color2( 60, 100,88,91,0,0,0)
+		set_chr( 61,654,	 6, 5,  -250,-450,  0,		  6,   262, 0,";")	//順路案内（無限EX）
+		set_chr( 62,654,	 6, 5,  -250,-450,140,		  6,   278, 0,";")	//順路案内（無限EX）
+
+		set_obj2("mp40480",   6, 4, -450,-450,  0,	 0) //
+		set_obj2("mp40490",   6, 4,  450,-450,  0,	 0) //
+		set_obj2("mp40260",   6, 4, -450, 450,  0,	 0) //
+		set_obj2("mp40270",   6, 4,  450, 450,  0,	 0) //
+
+		set_obj2("mp40440",   6, 5, -450,-450,  0,	 0) //
+		set_obj2("mp40450",   6, 5,  450,-450,  0,	 0) //
+		set_obj2("mp40220",   6, 5, -450, 450,  0,	 0) //
+		set_obj2("mp40230",   6, 5,  450, 450,  0,	 0) //
+	}
+	else
+	{
+		set_obj2("mp40480",   6, 4, -450,-450,  0,	 0) //
+		set_obj2("mp40490",   6, 4,  450,-450,  0,	 0) //
+		set_obj2("mp40500",   6, 4, -450, 450,  0,	 0) //
+		set_obj2("mp40510",   6, 4,  450, 450,  0,	 0) //
+
+		set_obj("mp40160",    6, 5, -450,-450,  0,	 0) //
+	}
+
+	set_chr( 52,500,	 4, 4,  -900,   0,  0,		  3,    90, 6,";")			//⑤扉（塔）自由
+	set_chr( 53,500,	 6, 4,   900,   0,  0,		  7,   270, 6,";")			//⑥扉（塔）一通
+	if ( F6_11_GameClear )
+	{
+		set_chr( 51,500,	 6, 5,     0,-900,  0,		 7,      0, 6,";")			//扉（塔） 一通
+	}
+	if ( !F6_00_GoToMeru )
+	{
+		set_chr(149,769,	 6, 4,   900,   0,175,		  0,  270, 0,";")	//無限封印
+		set_chr(150,991,	 6, 4,   900,   0,  0,		  0, 0205, 0,";")	//無限封印アタリ
+		if ( F6_11_GameClear )
+		{
+			set_chr(147,769,	 6, 5,     0,-900,175,		  0,  180, 0,";")	//無限封印
+			set_chr(148,991,	 6, 5,     0,-900,  0,		180, 0502, 0,";")	//無限封印アタリ
+		}
+	}
+	else
+	{
+		MOT( 53, 6, 0 )
+		if( Fx_MUGEN2_OPENED )
+		{
+			MOT( 51, 6, 0 )
+		}
+	}
+
+//	set_chr( 51,500,	 6, 5,     0,-900,  0,		 7,      0, 6,";")			//扉（塔） 一通
+//	if ( !Fx_MUGEN2_OPENED )
+//	{
+//		set_chr(147,769,	 6, 5,     0,-900,175,		  0,  180, 0,";")	//無限封印
+//		set_chr(148,991,	 6, 5,     0,-900,  0,		180, 0502, 0,";")	//無限封印アタリ
+//	}
+//	else
+//	{
+//		MOT( 51, 6, 0 )
+//	}
+
+	set_chr(161,991,	 5, 3,  -650,   0,2000,		  0,200113, 0,";")	//空気壁 L┃
+	set_chr(162,991,	 5, 3,  -450, 600,2000,		  0,200501, 0,";")	//空気壁 L┗
+	set_chr(163,991,	 5, 3,   650,   0,2000,		  0,200113, 0,";")	//空気壁 R┃
+	set_chr(164,991,	 5, 3,   450, 600,2000,		  0,200501, 0,";")	//空気壁 R┛
+
+//■スイッチ·看板
+	set_chr( 54,648,	 5, 4,     0,-600,  0,		 09,     0, 0,";")	//①等级之证 
+	color2( 54, 100,88,91,0,0,0)
+	set_chr( 57,654,	 5, 4,  -150,-350,  0,		  2,     0, 0,";")	//①順路案内（梅ン）
+
+	set_chr( 55,648,	 4, 4,  -600,   0,  0,		 13,   270, 0,";")	//②等级之证 
+	color2( 55, 100,88,91,0,0,0)
+	set_chr( 58,654,	 4, 4,  -600,-175,  0,		  5,     0, 0,";")	//②順路案内（サブ）
+
+	set_chr( 56,648,	 6, 4,   600,   0,  0,		 99,    90, 0,";")	//③等级之证 
+	color2( 56, 100,88,91,0,0,0)
+	set_chr( 59,654,	 6, 4,   600,-175,  0,		  6,     0, 0,";")	//③順路案内（無限）
+
+	set_chr( 65,660,	 5, 3,     0,-325,  0,		  2,     0, 8,"(M4?99 WT?15 Z1_50 Z2_1875 WT?60 Z3_-1875 M5_99 Z1_-50);")	//②プロペラ移動床
+	set_chr( 66,669,	 5, 3,  -425,-325,  0,		  2,   270, 0," ;")	//③扇风机
+	set_chr( 67,570,	 5, 3,     0   75,  0,		  6,     0, 5,"SF102")	//⑤ボタンスイッチ
+	set_chr( 68,990,	 0, 0,     0    0,  0,		  0,     0, 8,"F102 O1_18;")
+
+	set_chr( 50,620,	 5, 5,  -400,   0,  0,		  0,   270, 0,";")	//④セーブOBJ
+	set_chr( 70,652,	 5, 5,  -400, -99,  0,		  0,     0, 0,";")		//ブランク床
+	set_chr( 72,652,	 5, 5,  -400, 107,  0,		  0,     0, 0,";")		//ブランク床
+
+
+//■罠·障害物
+	set_chr( 75,637,	 4, 4,  -150, -60,  0,		  2,    90, 0,";")	//①氷之柱a
+	set_chr( 76,637,	 4, 4,  -150, 190,  0,		  2,   270, 0,";")	//①氷之柱b
+	set_chr( 77,637,	 4, 4,  -150, 440,  0,		  2,     0, 0,";")	//①氷之柱c
+
+//■イベント
+	set_chr( 83,990,	 0, 0,     0,   0,  0,		  0,     0, 8,"(F102 M5_67 M3_66 WT?15 M4_65 WT?60 M4_67 WT?15 M5_66 WT?30 RF102);");	// ⑤ボタンスイッチ押下
+
+	if(F1_22_EndFirst && !F2_17_EndSecond)
+	{
+	//２章
+		//ＧＦ『★大铁塔之探索を開始した』立ってない
+		if(!F2_05_InTower)
+		{
+			//▼大铁塔内部に入る
+			set_namebmp(0,0)
+			EV("EV_2_06_InTower")
+		}
+	}
+	
+	if( F4_09_GoShrineMia && !F5_00_HearLunar && FV_02_VisitGyakata)
+	{
+		set_chr( PENGUIN,81,	-1,-1,  11339,7712,1,	2,0,	20,"<TK_PENGUIN>")	//宣传员企鹅
+		EV("FREEMOVE_PENGUIN")														//ペンギンフリームーブ
+	}
+	else
+	if(!FV_02_VisitGyakata)
+	{
+		set_chr( PENGUIN,81,	-1,-1,  7687,7357,0,	2,313,	20,"<TK_PENGUIN_S>")	//宣传员企鹅
+		F_set_chr(PENGUIN,CF_NO_MOVE)
+	}
+
+
+//■场面固有設定
+}
+
+//──────────────────────────────
+//▼宣传员企鹅	フリームーブ
+//──────────────────────────────
+FREEMOVE_PENGUIN
+{
+	move( PENGUIN, 25,	WALK1,	500,500,0,	200)
+	wait_move( PENGUIN )
+	wait(50)
+	loop
+}
+
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼大铁塔内部に入る
+//──────────────────────────────
+//　　入口マップから最初之分岐マップに入るとイベント発生。
+//　　内部之様子を見せながらスクロールして拉古那たちを映す。
+EV_2_06_InTower
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	F_set_chr(52,CF_NO_CLIP)
+	F_set_chr(52,CF_NO_CLIP2)
+	F_set_chr(53,CF_NO_CLIP)
+	F_set_chr(53,CF_NO_CLIP2)
+	F_set_chr(54,CF_NO_CLIP)
+	F_set_chr(54,CF_NO_CLIP2)
+	F_set_chr(55,CF_NO_CLIP)
+	F_set_chr(55,CF_NO_CLIP2)
+	F_set_chr(56,CF_NO_CLIP)
+	F_set_chr(56,CF_NO_CLIP2)
+	F_set_chr(57,CF_NO_CLIP)
+	F_set_chr(57,CF_NO_CLIP2)
+	F_set_chr(58,CF_NO_CLIP)
+	F_set_chr(58,CF_NO_CLIP2)
+	F_set_chr(59,CF_NO_CLIP)
+	F_set_chr(59,CF_NO_CLIP2)
+	F_set_chr(61,CF_NO_CLIP)
+	F_set_chr(61,CF_NO_CLIP2)
+	F_set_chr(65,CF_NO_CLIP)
+	F_set_chr(65,CF_NO_CLIP2)
+	F_set_chr(66,CF_NO_CLIP)
+	F_set_chr(66,CF_NO_CLIP2)
+	F_set_chr(67,CF_NO_CLIP)
+	F_set_chr(67,CF_NO_CLIP2)
+//	F_set_chr(75,CF_NO_CLIP)
+//	F_set_chr(75,CF_NO_CLIP2)
+//	F_set_chr(76,CF_NO_CLIP)
+//	F_set_chr(76,CF_NO_CLIP2)
+//	F_set_chr(77,CF_NO_CLIP)
+//	F_set_chr(77,CF_NO_CLIP2)
+	F_set_chr(101,CF_NO_CLIP)
+	F_set_chr(101,CF_NO_CLIP2)
+	F_set_chr(102,CF_NO_CLIP)
+	F_set_chr(102,CF_NO_CLIP2)
+	F_set_chr(103,CF_NO_CLIP)
+	F_set_chr(103,CF_NO_CLIP2)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  9342,8972,1,180,2)
+	chr_pos(PARTNER,	  9515,8975,1,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	//ペンギン消去
+	color(PENGUIN,-1)
+
+	//カメラ初期位置
+	CAM_move(11275,-8344,340,0,0)
+	CAM(110,210,340,38,224,0,0)
+
+	//フェードイン
+	CAM_move(11275,-8344,640,240,0)
+	CAM(110,210,640,38,224,240,0)
+	fade_in(0,90,0)
+	wait_fade()
+	wait(120)
+
+	cross_fade(30)
+	CAM_move(9735,-3984,1560,0,0)
+	CAM(530,250,1560,38,160,0,0)
+//	CAM_move(9735,-3984,1560,240,0)
+	CAM(430,210,1560,38,160,240,0)
+	wait(210)
+
+	cross_fade(30)
+	color(RAGNA,1)
+	color(PARTNER,1)
+	F_set_chr(75,CF_NO_CLIP)
+	F_set_chr(75,CF_NO_CLIP2)
+	F_set_chr(76,CF_NO_CLIP)
+	F_set_chr(76,CF_NO_CLIP2)
+	F_set_chr(77,CF_NO_CLIP)
+	F_set_chr(77,CF_NO_CLIP2)
+
+	CAM_move(9495,-7564,160,0,0)
+	CAM(510,210,160,52,195,0,0)
+//	set_namebmp(34,0)
+	wait(30)
+	CAM_move(9495,-8824,220,240,0)
+	CAM(30,100,220,26,188,240,0)
+	wait(180)
+
+	MOT(RAGNA,51,15)//キョロキョロ
+	wait_CAM_move()
+	wait_CAM()
+
+//	name2(RAGNA)
+	MES(RAGNA,"这地方……\n看起来相当凶险啊。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"啊啊……\n徘徊在这里的魔物\n感觉上也非同小可。",0)
+	MES(PARTNER,"看来《水之魔法》的威力\n在这里能派上大用场。",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	MES(RAGNA,"啊啊、拜托了。",0)
+	MES(RAGNA,"那么、开始搜索吧！",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"うむ！",0)
+	MES_close(PARTNER)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+
+	F_reset_chr(52,CF_NO_CLIP)
+	F_reset_chr(52,CF_NO_CLIP2)
+	F_reset_chr(53,CF_NO_CLIP)
+	F_reset_chr(53,CF_NO_CLIP2)
+	F_reset_chr(54,CF_NO_CLIP)
+	F_reset_chr(54,CF_NO_CLIP2)
+	F_reset_chr(55,CF_NO_CLIP)
+	F_reset_chr(55,CF_NO_CLIP2)
+	F_reset_chr(56,CF_NO_CLIP)
+	F_reset_chr(56,CF_NO_CLIP2)
+	F_reset_chr(57,CF_NO_CLIP)
+	F_reset_chr(57,CF_NO_CLIP2)
+	F_reset_chr(58,CF_NO_CLIP)
+	F_reset_chr(58,CF_NO_CLIP2)
+	F_reset_chr(59,CF_NO_CLIP)
+	F_reset_chr(59,CF_NO_CLIP2)
+	F_reset_chr(61,CF_NO_CLIP)
+	F_reset_chr(61,CF_NO_CLIP2)
+	F_reset_chr(65,CF_NO_CLIP)
+	F_reset_chr(65,CF_NO_CLIP2)
+	F_reset_chr(66,CF_NO_CLIP)
+	F_reset_chr(66,CF_NO_CLIP2)
+	F_reset_chr(67,CF_NO_CLIP)
+	F_reset_chr(67,CF_NO_CLIP2)
+	F_reset_chr(75,CF_NO_CLIP)
+	F_reset_chr(75,CF_NO_CLIP2)
+	F_reset_chr(76,CF_NO_CLIP)
+	F_reset_chr(76,CF_NO_CLIP2)
+	F_reset_chr(77,CF_NO_CLIP)
+	F_reset_chr(77,CF_NO_CLIP2)
+	F_reset_chr(101,CF_NO_CLIP)
+	F_reset_chr(101,CF_NO_CLIP2)
+	F_reset_chr(102,CF_NO_CLIP)
+	F_reset_chr(102,CF_NO_CLIP2)
+	F_reset_chr(103,CF_NO_CLIP)
+	F_reset_chr(103,CF_NO_CLIP2)
+
+	//ペンギン表示
+	color(PENGUIN,1)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★大铁塔之探索を開始した』を立てる。
+	F_set(F2_05_InTower)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+#EndScriptTable
+//====================================================================
+

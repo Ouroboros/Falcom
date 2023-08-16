@@ -1,0 +1,1832 @@
+FM_03_TalkOdessa_1//──────────────────────────────
+//	name("●奥蒂莎")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+
+
+TK_ODESSA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(ODESSA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ODESSA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ODESSA)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ODESSA)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ODESSA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ODESSA)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ODESSA)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ODESSA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　自分之飛行机之前にいる。
+	if( F6_00_GoToMeru )
+	{
+	//	name("★１回目")
+//		if(!F_ODESSA)
+		if(!FM_12_TalkOdessa_1)
+		{
+			cross_fade(30)			//クロスフェ～ド
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(630,-352,119,0,0)
+			CAM(89,55,119,24,128,0,0)
+			//キャラ再配置
+			chr_pos(RAGNA,830,293,-75,161,2)
+			chr_pos(PARTNER,583,324,-73,216,2)
+			chr_pos(PET,664,483,-73,190,2)
+//			VOICE(280,0)	//★「唉…やれやれだ」
+			rot_chr(ODESSA,30,PLAYER1)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　話しかけるとキャラ再配置してイベント発生。
+		
+			wait(15)
+			KAO(ODESSA,"12321Z9","23","1")
+			MES(ODESSA,"欧呀欧呀、我本以为我多年的夙愿\n达成了就没事了呢\n没想到事情会变成这个样子……",0)
+			KAO(ODESSA,"12321Z7","3","1")
+			MES(ODESSA,"啊，算了、如果不克服眼前这个困难的话\n一定会被帝嘉鲁德骂的。",0)
+			KAO(ODESSA,"12321Z6","21","1")
+			MES(ODESSA,"就让我陪你们\n走完这最后一程吧。",0)
+			MES_close(ODESSA)
+
+			KAO(RAGNA,"12321Z3","2","1")
+			MES(RAGNA,"啊啊、拜托了。",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"人狼族的骄傲、\n让我好好见识一下吧。",0)
+			MES_close(PARTNER)
+
+			KAO(ODESSA,"12321Z3","26","1")
+			MES(ODESSA,"呵呵、就看我的吧。",0)
+			MES_close(ODESSA)
+//			wait_MES(ODESSA)
+
+			EMO(ODESSA,EMO_PA)
+//			VOICE(310,0)	//★「さてと…」
+			KAO(ODESSA,"E","2F","6")
+			wait(30)
+//			wait(15)
+			KAO(ODESSA,"12321Z5","F","6")
+			MES(ODESSA,"但是、要载着\n那个老婆婆上天吗……",0)
+			KAO(ODESSA,"12321Z9","23","1")
+			MES(ODESSA,"算了、听说她曾骑着扫把\n环绕库朗毕林旅行\n乘飞机应该没问题吧。",0)
+			MES_close(ODESSA)
+			rot(ODESSA,30,180)
+			wait(15)
+			MES(ODESSA,"要加油哦~《碧奥鲁夫号》。",0)
+			MES_close(ODESSA)
+
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			look_off( ODESSA )
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			KAO(RAGNA, "1", "1", "1")
+			KAO(PARTNER,"1", "1", "1")
+			KAO(PET,"1", "1", "1")
+			KAO(ODESSA,"1", "1", "1")
+
+			EV_end()
+//			F_set(ODESSA)
+			F_set(FM_12_TalkOdessa_1)
+
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+
+		}
+		else
+		{
+		//	name("★２回目以降（※振り返らない）")
+			MES(ODESSA,"嗯、要载着\n那个老婆婆上天啊……",0)
+			MES(ODESSA,"算了、听说她曾骑着扫把\n环绕库朗毕林旅行\n乘飞机应该没问题吧。",0)
+			MES(ODESSA,"要加油哦、《碧奥鲁夫号》。",0)
+			MES_close(ODESSA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//──────────────────────────────
+		//▽真帝嘉鲁德を倒した
+		//──────────────────────────────
+		//　　◆异次元·中ボス地点２で気絶して倒れている。
+		//　　月·异世界攻略終了までこ之まま置き続ける。
+		//──────────────────────────────
+		MES(ODESSA,"………………………………",0)
+		MES_close(ODESSA)
+
+	//	name("テキスト（色換え·表示しない）")
+		MES(0,"C3S2奥蒂莎力竭晕倒。",2)
+		MES_close(0)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//　　Ｇ斗技场之どこかに現れている。
+	if( F4_09_GoShrineMia)
+	{
+	//	name("★初回（一回之み／イベント処理）")
+		if(!FM_10_TalkOdessa)
+		{
+		//　　話しかけるとキャラ再配置してイベント発生。
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			EV_begin()
+			
+			//カメラセット
+//			CAM_move(9271,-5547,80,0,0)
+//			CAM(-10,52,80,31,163,0,0)
+			CAM_move(9148,-6108,81,0,0)
+			CAM(30,50,81,31,253,0,0)
+			
+			//キャラ再配置
+//			chr_pos(RAGNA,9320,5633,0,120,2)
+//			chr_pos(PARTNER,9290,5833,0,165,2)
+//			chr_pos(ODESSA,9091,5455,-8,0,52)
+			chr_pos(RAGNA,9179,6021,0,25,2)
+			chr_pos(PARTNER,9410,6100,0,63,2)
+			chr_pos(ODESSA,9040,6235,0,270,52)
+
+			if(F2848)//Ｇ手办
+			{
+				color(95,-1)//ロ～プ
+				color(96,-1)//ロ～プ
+			}
+
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			look_chr( ODESSA, RAGNA,"Bone_Head")
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"欧呀……\n你们也来啦。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"奥蒂莎！？\n为什么你在这里……",0)
+			MES_close(RAGNA)
+
+			//─────────────────────
+			//	name("□森之入口で会っている场合")
+			if(FM_07_TalkOdessa)
+			{
+				KAO(ODESSA,"12321Z5","1","1")
+				MES(ODESSA,"上次不是说了吗。\n我要彻底的重新修炼一下。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"其实上次和你见面后、一个戴面具的\n身材魁梧的肌肉男叫住了我。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"他说这里是个修炼的好地方\n于是就介绍我来了。",0)
+				MES_close(ODESSA)
+			}
+			//	name("□会っていない场合")
+			else
+			{
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"啊、那之后因为发生了很多事。",0)
+				KAO(ODESSA,"12321Z5","1","1")
+				MES(ODESSA,"我决定要彻底的\n重新修炼一下。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"这时、一个戴着面具\n身材高大的肌肉男叫住了我。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"他说这里是个修炼的好地方\n于是就介绍我来了。",0)
+				MES_close(ODESSA)
+			}
+			//─────────────────────
+			
+			MES(RAGNA,"嘉兰多之おっが……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯嗯……\n看来他邀请的人还不少。",0)
+			MES(PARTNER,"那么、你也被强迫\n跳那个奇怪的舞蹈了吧。",0)
+			MES_close(PARTNER)
+
+			look_chr( ODESSA, PARTNER,"Bone_Head")
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","3","1")
+			MES(ODESSA,"啊、是啊……\n虽然很不情愿。",0)
+			MES_close(ODESSA)
+
+			//─────────────────────
+			//	name("□森之入口で会っている场合")
+			if(FM_07_TalkOdessa)
+			{
+				look_chr( ODESSA, RAGNA,"Bone_Head")
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"……不过、拉古那。\n你的精神比上次好多了？",0)
+				MES_close(ODESSA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"唉……",0)
+				MES_close(RAGNA)
+
+			//	name2(ODESSA)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"昨天的你\n像一只落水狗一样\n无精打采的……",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"虽然你现在还是毛毛躁躁的\n但内心似乎已经振作起来了。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"勇敢面对将来所要发生的事\n你现在应该有这个觉悟了吧？",0)
+				MES_close(ODESSA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"……啊啊。\n因为有人在背后不断激励我。",0)
+				look_chr( RAGNA, PARTNER,"Bone_Head")
+				MES(RAGNA,"不仅仅是那个孩子……\n包括公主和其他朋友们\n都给了我很大帮助。",0)
+				MES_close(RAGNA)
+
+				look_chr(PARTNER, RAGNA, "Bone_Head")
+			//	name2(PARTNER)
+				MES(PARTNER,"拉古那……",0)
+				MES_close(PARTNER)
+
+			//	name2(ODESSA)
+				KAO(ODESSA,"12321Z5","1","1")
+				MES(ODESSA,"呵呵、看你现在的样子\n我似乎没有什么可担心的了。",0)
+				MES_close(ODESSA)
+				
+				look_off(RAGNA)
+			}
+			//─────────────────────
+			
+			KAO(ODESSA,"12321Z5","1","1")
+			MES(ODESSA,"……事态似乎很\n严重。",0)
+			KAO(ODESSA,"12321Z5","1","1")
+			MES(ODESSA,"需要帮忙的话\n随时招呼一声。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"谢谢。\n如果真到那时的话少不了麻烦你。",0)
+			MES_close(RAGNA)
+
+		//　　画面フェ～ドアウト抜けでイベント終了。
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+			look_off(ODESSA)
+			look_off(PARTNER)
+
+			if(F2848)//Ｇ手办
+			{
+				color(95,1)//ロ～プ
+				color(96,1)//ロ～プ
+			}
+			EV_end()
+			F_set(FM_10_TalkOdessa)
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			fade_in(0,30,BLACK)
+
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+	//	name("★以後、繰り返し")
+		else
+		{
+			rot_chr(ODESSA,30,PLAYER1)
+			MES(ODESSA,"事态似乎很\n严重。",0)
+			MES(ODESSA,"需要帮忙的话\n随时招呼一声。",0)
+			MES_close(ODESSA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　◆森之入口、泉之ほとり之近くにうずくまっている。
+	//　　◆テンガロンハットはかぶっておらず、
+	//　　石碑にもたれかかっているような雰囲気でもよい。
+	if( F4_00_StartSolo )
+	{
+		if(!FM_07_TalkOdessa)
+		{
+		//	name("★昴がいない场合（一回之み／イベント処理）")
+			if(!F4_02_GoVillage2)
+			{
+			//　　話しかけるとキャラ再配置してイベント発生。
+			//――――――――――――――――――――――――――
+			//	初期化処理
+			//――――――――――――――――――――――――――
+				cross_fade(30)			//クロスフェ～ド
+				EV_begin()
+				
+				//カメラセット
+				CAM_move(841,-1846,380,0,0)
+				CAM(50,27,380,19,252,0,0)
+				
+				//キャラ再配置
+				chr_pos(RAGNA,151,1513,0,75,2)
+				chr_pos(ODESSA, -165,1583,1,17,150)
+
+				//顔初期化
+				KAO(RAGNA, "1", "1", "1")	
+				KAO(ODESSA,"1", "1", "1")	
+				wait_fade()
+				wait_fade()
+			//――――――――――――――――――――――――――
+			//	イベント開始
+			//――――――――――――――――――――――――――
+				MES(RAGNA,"喂……\n你没事吧、奥蒂莎！？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"1","2","1")
+				look_chr( ODESSA, RAGNA,"Bone_Head")
+				wait(15)
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"呵……是你啊，小朋友。",0)
+				KAO(ODESSA,"12321Z2","3","1")
+				MOT(ODESSA,2,15)
+				MES(ODESSA,"……嗨。",0)
+				MES_close(ODESSA)
+				wait(15)
+				rot_chr(ODESSA,30,RAGNA)
+				wait(30)
+
+				MES(RAGNA,"不是说了，不要叫我小朋友了嘛。",0)
+				MES(RAGNA,"一直没见到你有些担心\n没想到你居然在这地方……",0)
+				MES(RAGNA,"看来伤的好重啊，能动吗？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"没事……\n好得差不多了。",0)
+				KAO(ODESSA,"12321Z5","1","1")
+				MES(ODESSA,"我为了疗伤、来这里吸取一些\n泉水和树木的能量。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"你果然……\n是被那头混账野狼给打倒的？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","23","3")
+				MES(ODESSA,"啊啊……\n而且败得很惨。",0)
+				KAO(ODESSA,"12321Z5","3","3")
+				MES(ODESSA,"我真是有负《恶狼狩》之名……\n没用几分钟就被打败了，唉！复仇不成反被打倒。",0)
+				KAO(ODESSA,"12321Z4","3","3")
+				MES(ODESSA,"真是没有比这更丢人的了。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"……………………………",0)
+				MES(RAGNA,"莫非……\n你……也是……",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","21","1")
+				MES(ODESSA,"……是啊。\n我和帝嘉鲁德一样也是人狼族人。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"其实、我离开故乡\n做猎人这一行当\n就是为了找出那个男的。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"理所当然的，这几年来、\n我已经完全融入了人类世界\n过起了悠闲自在的生活。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"……………………………",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","23","1")
+				MES(ODESSA,"不过真是糟糕透顶了……",0)
+				KAO(ODESSA,"12321Z6","3","1")
+				MES(ODESSA,"虽然我一直告诫自己不可得意忘形\n但万万没想到实力的差距居然如此之大。",0)
+				KAO(ODESSA,"12321Z5","3","1")
+				MES(ODESSA,"看来我有必要、彻底的\n重新修炼一次。",0)
+				MES_close(ODESSA)
+
+			//　　拉古那之頭に！マ～ク。
+				EMO(RAGNA,EMO_BIKKURI)
+				wait(30)
+
+				MES(RAGNA,"呃……",0)
+				MES(RAGNA,"奥蒂莎、你……\n还打算战斗吗！？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"那是自然。",0)
+				KAO(ODESSA,"12321Z6","2","1")
+				MES(ODESSA,"虽然我这次败了\n但只要我的双腿\n还能站起来。",0)
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"就要报仇雪恨？",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"…………………………………",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z5","23","1")
+				MES(ODESSA,"嗯……\n看来你也有很多心事。",0)
+				KAO(ODESSA,"12321Z4","21","6")
+				MES(ODESSA,"不过呢、这只是我个人的执着罢了。",0)
+				KAO(ODESSA,"12321Z5","1","6")
+				MES(ODESSA,"你只要做你希望的事\n就可以了。",0)
+				KAO(ODESSA,"12321Z3","23","1")
+				MES(ODESSA,"那么再见了、拉古那。",0)
+				MES_close(ODESSA)
+
+			//　　奥蒂莎、そ之まま森から去っていく。
+				look_chr( RAGNA,ODESSA, "Bone_Head")
+				look_off(ODESSA)
+				EV("MV_MOVE_ODESSA_7")
+
+
+			//　　それを見送りながら拉古那之頭に…マ～ク。
+				KAO(RAGNA,"B","A","1")
+				rot(RAGNA,10,320)
+				wait(120)
+
+
+			//　　完全に奥蒂莎が去ってから以下之メッセ～ジ。
+				KAO(RAGNA,"12321Z3","A","1")
+				MES(RAGNA,"我自己希望的事……吗。",0)
+				KAO(RAGNA,"12321Z3","23","4")
+				MES(RAGNA,"……哈哈。\n我究竟想要什么？",0)
+				MES_close(RAGNA)
+
+			//　　画面フェ～ドアウト抜けでイベント終了。
+			}
+			else
+			{
+			//	name("★昴がいる场合（一回之み／イベント処理）")
+			//　　話しかけるとキャラ再配置してイベント発生。
+			//――――――――――――――――――――――――――
+			//	初期化処理
+			//――――――――――――――――――――――――――
+				cross_fade(30)
+				EV_begin()
+				
+				//カメラセット
+				CAM_move(841,-1846,380,0,0)
+				CAM(50,27,380,19,252,0,0)
+				
+				//キャラ再配置
+				chr_pos(RAGNA,151,1513,0,75,2)
+				chr_pos(PARTNER,-27,1296,0,26,2)
+				chr_pos(ODESSA, -165,1583,1,0,150)
+				
+				//顔初期化
+				KAO(RAGNA, "1", "1", "1")	
+				KAO(PARTNER,"1", "1", "1")	
+				KAO(ODESSA,"B", "3", "3")	
+				wait_fade()
+			//――――――――――――――――――――――――――
+			//	イベント開始
+			//――――――――――――――――――――――――――
+				MES(PARTNER,"师、师父……这个人是！",0)
+				MES_close(PARTNER)
+
+				MES(RAGNA,"喂……\n你没事吧、奥蒂莎！？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"1","2","1")
+				look_chr( ODESSA, RAGNA,"Bone_Head")
+				wait(15)
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"呵……是你啊小朋友。",0)
+				KAO(ODESSA,"12321Z2","3","1")
+				MOT(ODESSA,2,15)
+				MES(ODESSA,"……嗨。",0)
+				MES_close(ODESSA)
+				wait(15)
+				rot_chr(ODESSA,30,RAGNA)
+				wait(30)
+
+				KAO(ODESSA,"12321Z5","21","1")
+				MES(ODESSA,"咦、和你一起的女孩\n好可爱啊。",0)
+				MES_close(ODESSA)
+
+				MES(PARTNER,"可、可爱……",0)
+				MES_close(PARTNER)
+
+				MES(RAGNA,"不是说了 不要叫我小朋友了嘛。",0)
+				MES(RAGNA,"一直没见到你有些担心\n没想到你居然在这地方……",0)
+				MES(RAGNA,"看来伤的好重啊，能动了吗？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"没事……\n好得差不多了。",0)
+				KAO(ODESSA,"12321Z5","1","1")
+				MES(ODESSA,"我为了疗伤、来这里吸取一些\n泉水和树木的能量。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"你果然……\n是被那头混账野狼给打倒的？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","23","3")
+				MES(ODESSA,"啊啊……\n而且败得很惨。",0)
+				KAO(ODESSA,"12321Z5","3","3")
+				MES(ODESSA,"我真是有负《恶狼狩》之名……\n没用几分钟就被打倒了，唉！复仇不成反被打倒。",0)
+				KAO(ODESSA,"12321Z4","3","3")
+				MES(ODESSA,"真是没有比这更丢人的了。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"……………………………",0)
+				MES(RAGNA,"莫非……\n你……也是……",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","21","1")
+				MES(ODESSA,"……是啊。\n我和帝嘉鲁德一样也是人狼族人。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"其实、我离开故乡\n做猎人这一行当\n就是为了找出那个男的。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"理所当然的，这几年来\n我已经完全融入了人类世界\n过起了悠闲自在的生活。",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"……………………………",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","23","1")
+				MES(ODESSA,"不过真是糟糕透顶了……",0)
+				KAO(ODESSA,"12321Z6","3","1")
+				MES(ODESSA,"虽然我一直告诫自己不可得意忘形\n但万万没想到实力的差距居然如此之大。",0)
+				KAO(ODESSA,"12321Z5","3","1")
+				MES(ODESSA,"看来我有必要、彻底的\n重新修炼一次。",0)
+				MES_close(ODESSA)
+
+			//　　拉古那之頭に！マ～ク。
+				EMO(RAGNA,EMO_BIKKURI)
+				wait(30)
+
+				MES(RAGNA,"呃……",0)
+				MES(RAGNA,"奥蒂莎、你……\n还打算战斗吗！？",0)
+				MES_close(RAGNA)
+
+				rot_chr(PARTNER,30,RAGNA)
+				KAO(PARTNER,"12321Z2","D","6")
+				MES(PARTNER,"师、师父……？",0)
+				MES_close(PARTNER)
+
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"那是自然。",0)
+				KAO(ODESSA,"12321Z6","2","1")
+				MES(ODESSA,"虽然我这次败了\n但只要我的双腿\n还能站起来。",0)
+				KAO(ODESSA,"12321Z4","2","1")
+				MES(ODESSA,"就要报仇雪恨？",0)
+				MES_close(ODESSA)
+
+				MES(RAGNA,"…………………………………",0)
+				MES_close(RAGNA)
+
+				KAO(PARTNER,"12321Z2","1","4")
+				MES(PARTNER,"……拉古那师父………",0)
+				MES_close(PARTNER)
+
+				KAO(ODESSA,"12321Z5","23","1")
+				MES(ODESSA,"嗯……\n看来你也有很多心事。",0)
+				KAO(ODESSA,"12321Z4","21","6")
+				MES(ODESSA,"不过呢、这只是我个人的执着罢了。",0)
+				KAO(ODESSA,"12321Z5","1","6")
+				MES(ODESSA,"你只要做你自己希望的事\n就可以了。",0)
+				KAO(ODESSA,"12321Z5","23","1")
+				MES(ODESSA,"那么再见了。\n拉古那、还有你身边的那个小朋友。",0)
+				MES_close(ODESSA)
+
+			//　　奥蒂莎、そ之まま森から去っていく。
+				look_chr( RAGNA,ODESSA, "Bone_Head")
+				look_off(ODESSA)
+				EV("MV_MOVE_ODESSA_7")
+
+			//　　それを見送りながら拉古那之頭に…マ～ク。
+				KAO(RAGNA,"B","A","1")
+				rot(RAGNA,10,320)
+				rot(PARTNER,10,320)
+				
+				wait(120)
+
+			//　　完全に奥蒂莎が去ってから以下之メッセ～ジ。
+				KAO(RAGNA,"12321Z3","A","1")
+				MES(RAGNA,"我自己希望的事……吗。",0)
+				KAO(RAGNA,"12321Z3","23","4")
+				MES(RAGNA,"……哈哈。\n我究竟想要什么？",0)
+				MES_close(RAGNA)
+
+				rot_chr(PARTNER,30,RAGNA)
+				KAO(PARTNER,"12321Z2","1","4")
+				MES(PARTNER,"拉古那师父……",0)
+				MES_close(PARTNER)
+
+				KAO(RAGNA,"12321Z3","3","4")
+				MES(RAGNA,"……不好意思、自言自语罢了。",0)
+				MES_close(RAGNA)
+				KAO(RAGNA,"1","2A","1")
+				look_off(RAGNA)
+				rot_chr(RAGNA,30,PARTNER)
+				wait(30)
+				KAO(RAGNA,"12321Z6","2","1")
+				MES(RAGNA,"好像绕了远路了。\n我们快向山里出发吧。",0)
+				MES_close(RAGNA)
+
+			//　　画面フェ～ドアウト抜けでイベント終了。
+			}
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+			delete(ODESSA)
+			EV_end()
+			F_set(FM_07_TalkOdessa)
+			//★奥蒂莎【人狼族】
+			F_set_note(-19,2)
+			
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			fade_in(0,30,BLACK)
+
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+	//　　镇之熊猫楼で酒を飲んでいる。
+		if(!FM_05_TalkOdessa)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(11,906,134,0,0)
+			CAM(-10,50,134,25,204,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,0,-892,1,240,2)
+			chr_pos(PARTNER,-134,-831,1,250,2)
+//			chr_pos(RAGNA,15,-884,0,210,2)
+//			chr_pos(PARTNER,136,-821,0,180,2)
+			chr_pos(ODESSA,100,-1080,5,110,150)
+
+
+
+			//ル～トム～ブ中之梅とぶつからないように消す
+			if(WK000==0)	//0922追加
+			{
+				color(MEI,-1)//透過
+				
+				//ホアン初回後ならルートムーブ止める
+				move(MEI, 99, 0,0,0,0,0)//0905追加
+				EV_stop("MOVE_MEI")
+				//メイを初期位置へ
+				chr_pos(MEI,298,-1505,1,351,2)
+			}
+			F_set_chr(RAGNA,CF_NO_ZIMEN)
+			F_set_chr(RAGNA,CF_NO_CSP)
+			F_set_chr(RAGNA,CF_NO_HEIGHT)
+			F_set_chr(PARTNER,CF_NO_ZIMEN)
+			F_set_chr(PARTNER,CF_NO_CSP)
+			F_set_chr(PARTNER,CF_NO_HEIGHT)
+		
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			
+			wait_fade()
+			look(ODESSA,"Bone_Head",0,		0,2,0,			0,-60,0)
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//	name("★初回（飞机场で彼女が去った场合／一回之み／イベント処理）")
+			if(FM_03_TalkOdessa_2)
+			{
+			//　　話しかけるとキャラ再配置してイベント発生。
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"呀啊、是你们啊……",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z3","1","1")
+				MES(RAGNA,"呦、奥蒂莎。",0)
+				MES_close(RAGNA)
+
+				KAO(PARTNER,"12321Z7","1","1")
+				MES(PARTNER,"看样子、你还没有找到\n你要找的人吧。",0)
+				MES_close(PARTNER)
+
+				KAO(ODESSA,"12321Z3","23","1")
+				MES(ODESSA,"……算是吧。",0)
+				KAO(ODESSA,"12321Z6","3","1")
+				MES(ODESSA,"呵呵、你们真的是\n很辛苦啊。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z3","D","1")
+				MES(RAGNA,"你怎么知道的……",0)
+				KAO(RAGNA,"12321Z5","1","1")
+				MES(RAGNA,"难道我们看起来\n真的是一副很累的样子吗？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","2B","1")
+				MES(ODESSA,"呀、其实是从你们的身上散发出一种气味。",0)
+				KAO(ODESSA,"12321Z5","B","1")
+				MES(ODESSA,"这气味确实是植物系的魔物吧……\n似乎和很棘手的魔物战斗了呢。",0)
+				MES_close(ODESSA)
+
+			//　　拉古那たち之頭に！マ～ク。
+				KAO(RAGNA,"1","D","6")
+				KAO(PARTNER,"1","D","6")
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PARTNER,EMO_BIKKURI)
+				wait(30)
+
+				KAO(PARTNER,"12321Z2","1","1")
+				MES(PARTNER,"嚯……",0)
+				MES_close(PARTNER)
+
+				KAO(RAGNA,"12321Z3","D","1")
+				MES(RAGNA,"猜、猜得真准。",0)
+				KAO(RAGNA,"12321Z6","1","1")
+				MES(RAGNA,"之前见你的时候我还在想\n一流猎人的嗅觉\n居然灵敏到如此程度？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","26","1")
+				MES(ODESSA,"哈哈、其实是我的鼻子很特别。",0)
+				KAO(ODESSA,"12321Z6","6","1")
+				MES(ODESSA,"一般情况下我都能根据鼻子闻到的气味\n发现出目标的行踪来。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z2","1","1")
+				MES(RAGNA,"是嘛……",0)
+				KAO(RAGNA,"12321Z6","1","1")
+				MES(RAGNA,"你这个鼻子的确厉害、在赏金猎人\n和宝物猎人这两个行当上都能派上大用场。",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","21","1")
+				MES(ODESSA,"呵呵、我想我天生就适合干这类职业的。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"不过话又说回来、直到现在我还没\n掌握那家伙的行踪。",0)
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"看来我的嗅觉迟钝了好多。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z4","1","3")
+				MES(RAGNA,"那家伙……\n是那个叫帝嘉鲁德的狼男。",0)
+				MES_close(RAGNA)
+
+				KAO(PARTNER,"12321Z4","1","3")
+				MES(PARTNER,"唔……\n老实讲、的确是个强劲的对手。",0)
+				MES_close(PARTNER)
+
+				KAO(ODESSA,"12321Z4","23","3")
+				MES(ODESSA,"……啊。\n那家伙强的一塌糊涂。",0)
+				KAO(ODESSA,"12321Z5","3","3")
+				MES(ODESSA,"但是我无论如何\n也要把他找岀来。",0)
+				KAO(ODESSA,"12321Z4","2","3")
+				MES(ODESSA,"赌上我《恶狼狩》之名。",0)
+				MES_close(ODESSA)
+				
+			}
+			else
+			{
+			//	name("★初回（飞机场で去っていない场合／一回之み／イベント処理）")
+			//　　話しかけるとキャラ再配置してイベント発生。
+//				look_chr( ODESSA, RAGNA,"Bone_Head")
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"呀、受累啦。",0)
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"看来你们真的是\n很辛苦呢。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z3","D","1")
+				MES(RAGNA,"你怎么知道的……",0)
+				KAO(RAGNA,"12321Z5","1","1")
+				MES(RAGNA,"难道我们看起来\n真的是一副很累的样子吗？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","23","1")
+				MES(ODESSA,"呀、其实是从你们的身上散发出一种气味。",0)
+				KAO(ODESSA,"12321Z6","B","1")
+				MES(ODESSA,"这气味确实是植物系的魔物吧……\n似乎和很棘手的魔物战斗了呢。",0)
+				MES_close(ODESSA)
+
+			//　　拉古那たち之頭に！マ～ク。
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PARTNER,EMO_BIKKURI)
+				KAO(RAGNA,"1","D","1")
+				KAO(PARTNER,"1","D","1")
+				wait(30)
+				
+				KAO(PARTNER,"12321Z2","1","1")
+				MES(PARTNER,"嚯……",0)
+				MES_close(PARTNER)
+
+				KAO(RAGNA,"12321Z3","D","1")
+				MES(RAGNA,"猜、猜得真准。",0)
+				KAO(RAGNA,"12321Z5","1","1")
+				MES(RAGNA,"一流猎人的嗅觉\n居然灵敏到如此程度？",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","26","1")
+				MES(ODESSA,"哈哈、其实是我的鼻子很特别。",0)
+				KAO(ODESSA,"12321Z6","6","1")
+				MES(ODESSA,"一般情况下我都能根据鼻子闻到的气味\n发现出目标的行踪来。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z3","1","1")
+				MES(RAGNA,"是嘛……",0)
+				KAO(RAGNA,"12321Z6","1","1")
+				MES(RAGNA,"你这个鼻子的确厉害、在赏金猎人\n和宝物猎人这两个行当上都能派上大用场。",0)
+				MES_close(RAGNA)
+
+				KAO(ODESSA,"12321Z4","21","1")
+				MES(ODESSA,"呵呵、我想我天生就适合干这类职业的。",0)
+				KAO(ODESSA,"12321Z6","1","1")
+				MES(ODESSA,"不过话又说回来、直到现在我还没\n掌握那家伙的行踪。",0)
+				KAO(ODESSA,"12321Z4","1","1")
+				MES(ODESSA,"看来我的嗅觉迟钝了好多。",0)
+				MES_close(ODESSA)
+
+				KAO(RAGNA,"12321Z6","1","3")
+				MES(RAGNA,"那家伙……\n就是你一直在找的赏金首。",0)
+				MES_close(RAGNA)
+
+				KAO(PARTNER,"12321Z4","1","3")
+				MES(PARTNER,"唔。\n老实讲、那家伙是个强劲的对手？",0)
+				MES_close(PARTNER)
+
+				KAO(ODESSA,"12321Z4","23","3")
+				MES(ODESSA,"……啊。\n那家伙的确强的一塌糊涂。",0)
+				KAO(ODESSA,"12321Z6","3","3")
+				MES(ODESSA,"但是我无论如何\n也要把他找岀来。",0)
+				KAO(ODESSA,"12321Z4","2","3")
+				MES(ODESSA,"赌上我《恶狼狩》之名。",0)
+				MES_close(ODESSA)
+					
+			}
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+
+			if(WK000==0)	//0922追加
+			{
+				color(MEI,1)//メイを表示
+				EV("MOVE_MEI")
+			}
+			look(ODESSA,"Bone_Head",0,		0,10,0,			0,0,0)
+			
+			F_reset_chr(RAGNA,CF_NO_ZIMEN)
+			F_reset_chr(RAGNA,CF_NO_CSP)
+			F_reset_chr(RAGNA,CF_NO_HEIGHT)
+			F_reset_chr(PARTNER,CF_NO_ZIMEN)
+			F_reset_chr(PARTNER,CF_NO_CSP)
+			F_reset_chr(PARTNER,CF_NO_HEIGHT)
+			 
+			KAO(ODESSA,"1","1","1")
+			chr_pos(ODESSA,110,-1095,5,135,150)
+			F_set(FM_05_TalkOdessa)
+			//カメラを初期設定に
+			CAM_return( 0 )
+			EV_end()
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+	//	name("★以後、繰り返し")
+		else
+		{
+			look_chr( ODESSA, 0,"Bone_Head")
+			MES(ODESSA,"……我在这个岛上发现了他的踪迹。\n一定在这里没错。",0)
+			MES(ODESSA,"我一定会把他找出来。",0)
+			MES_close(ODESSA)
+		}
+		look_off(ODESSA)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+	//　　飞机场之滑走路に奥蒂莎之飛行机が出ており、
+	//　　そ之前に奥蒂莎が立って、整備之ようなことをしている。
+	//	name("★初回（一回之み／イベント処理）")
+	//　　話しかけるとキャラ再配置してイベント発生。
+		if(!FM_03_TalkOdessa_1)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)
+			
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(778,-488,161,0,0)
+			CAM(-71,25,161,34,190,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,642,316,-73,212,2)
+			chr_pos(PARTNER,490,111,-73,226,2)
+			chr_pos(ODESSA,841,27,-75,180,2)
+			chr_pos(PLANE_O,1009,-270,-73,70,0)
+			F_set_chr(RAGNA,CF_NO_ZIMEN)
+			F_set_chr(RAGNA,CF_NO_CSP)
+			F_set_chr(RAGNA,CF_NO_HEIGHT)
+		
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			rot_chr(ODESSA,30,RAGNA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"呀、原来是你们俩啊。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"喔、打扰了。",0)
+			MES(RAGNA,"好棒啊……\n这个是你的飞机吗。",0)
+			MES_close(RAGNA)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"是的。\n叫《碧奥鲁夫号》。",0)
+			MES_close(ODESSA)
+			
+			wait(10)
+			
+			cross_fade(30)
+			
+		//　画面スクロ～ルして奥蒂莎机をじっくり見せる。
+		
+			EV("MV_MOVE_CAM_3")
+//			wait_fade()
+//			wait_EV("MV_MOVE_CAM_3")
+			wait(150)
+			MES_pos(PARTNER,"W9嚯……\n好凶猛的外形啊。",0,120,240,0,0)
+			wait_key(0)
+			MES_pos(PARTNER,"W9不过感觉上并没有\n你的红翼速度快。",0,120,240,0,0)
+			wait_key(0)
+			MES_close(PARTNER)
+
+			MES_pos(RAGNA,"W9那是因为我的特里斯坦\n偏重机动性和速度。",0,230,320,0,0)
+			wait_key(0)
+			MES_pos(RAGNA,"W9然而这架飞机\n在火力和机甲方面\n进行了大幅的强化。",0,230,320,0,0)
+			wait_key(0)
+			MES_pos(RAGNA,"W9虽然如此速度和机动性\n也并不很差\n十分适合格斗战。",0,230,320,0,0)
+			wait_key(0)
+			MES_pos(RAGNA,"W9这就是所谓的翱翔在天空之上\n的钢铁雄鹰。",0,230,320,0,0)
+			wait_key(0)
+			MES_close(RAGNA)
+
+			MES_pos(PARTNER,"W9嗯……原来如此。",0,120,240,0,0)
+			wait_key(0)
+			MES_close(PARTNER)
+			wait_MES(PARTNER)
+
+			//カメラ戻す
+			cross_fade(30)
+			CAM_move(778,-488,161,0,0)
+			CAM(-71,25,161,34,190,0,0)
+			wait_fade()
+
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"呵呵、了不起。",0)
+			KAO(ODESSA,"12321Z6","1","1")
+			MES(ODESSA,"只一眼就了解到这种程度\n不愧是行家。",0)
+			MES_close(ODESSA)
+
+			MES(RAGNA,"嘿嘿。\n这没什么的啦。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+
+		//◆　　拉古那、奥蒂莎机に近寄ってマジマジと見回す。
+			CAM_move(518,-408,161,80,0)
+			CAM(-71,21,161,34,161,80,0)
+			
+			rot(RAGNA,30,180)
+			move(RAGNA,0,WALK1,636,-125,-75,0)
+			wait(30)
+			
+			rot(ODESSA,30,12)
+			move(ODESSA,0,WALK1,726,249,-74,0)
+			
+			wait_move(ODESSA)
+			rot_chr(ODESSA,30,RAGNA)
+
+			wait_move(RAGNA)
+			rot(RAGNA,30,209)
+			rot_chr(PARTNER,30,RAGNA)
+		
+			MOT(RAGNA,51,0)//キョロキョロ
+			MES(RAGNA,"不过、不愧是一流的猎人。\n机体上使用的配件都好贵啊。",0)
+			MES(RAGNA,"哇哇、装备的引擎\n居然是康尼锡商社\n特制的产品……",0)
+			MES_close(RAGNA)
+
+			EMO(RAGNA,EMO_BIKKURI)
+			wait(30)
+			MES(RAGNA,"噢噢！？\n连散热器也是特别订购的！？",0)
+			MES(RAGNA,"原来如此、这么做\n就能减少重量负荷……",0)
+			MES_close(RAGNA)
+
+		//　　奥蒂莎と艾雯之頭に冷や汗マ～ク。
+			EMO(ODESSA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			MES(PARTNER,"嗯唔、这些哪里好\n我一点都看不出来。",0)
+			MES(PARTNER,"你们这些有飞机的\n都是这个样子吗？",0)
+			MES_close(PARTNER)
+
+		//	name2(ODESSA)
+			MES(ODESSA,"哈哈、其实是那个小朋友比较特别啦。",0)
+			MES(ODESSA,"我虽然也略知一二\n但细节部分一般都交给专业人员。",0)
+			MES_close(ODESSA)
+
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+		//　　画面フェ～ドアウト抜けでイベント終了。
+			fade_in(100,30,BLACK)
+			wait_fade()
+			
+			//キャラ再配置
+			chr_pos(RAGNA,642,316,-73,212,2)
+			chr_pos(PARTNER,490,111,-73,226,2)
+			chr_pos(ODESSA,841,27,-75,180,2)
+			chr_pos(PLANE_O,1009,-270,-73,70,0)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			F_set_chr(ODESSA,CF_NO_MOVE)
+
+			CAM_return( 0 )			//カメラを初期設定に
+			wait(30)
+			F_reset_chr(RAGNA,CF_NO_ZIMEN)
+			F_reset_chr(RAGNA,CF_NO_CSP)
+			F_reset_chr(RAGNA,CF_NO_HEIGHT)
+
+			F_set(FM_03_TalkOdessa_1)
+			//★奥蒂莎【碧奥鲁夫号】
+			F_set_note(-19,1)
+
+			EV_end()
+			fade_in(0,30,BLACK)
+			
+			
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+	//	name("★２回目（一回之み／イベント処理）")
+	//　　話しかけるとキャラ再配置してイベント発生。
+		else
+		if(!FM_03_TalkOdessa_2)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)
+
+			EV_begin()
+			//カメラセット
+			CAM_move(920,460,75,0,0)
+			CAM(-231,72,75,23,167,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,642,316,-73,212,2)
+			chr_pos(PARTNER,490,111,-73,226,2)
+			chr_pos(ODESSA,841,27,-75,180,2)
+			chr_pos(PLANE_O,1009,-270,-73,70,0)
+
+			F_reset_chr(ODESSA,CF_NO_MOVE)
+			F_set_chr(ODESSA,CF_NO_CSP)
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			wait_fade()
+		
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　奥蒂莎之頭に？マ～ク。
+			EMO(ODESSA,EMO_HATENA)
+			wait(30)
+			rot_chr(ODESSA,30,RAGNA)
+			KAO(ODESSA,"B232BZ4","1","1")
+			MES(ODESSA,"嗯……\n小朋友、先别走。",0)
+			MES_close(ODESSA)
+
+		//　　奥蒂莎、飛行机から離れて拉古那之前に移動。
+		//	name2(RAGNA)
+			move(ODESSA,0,WALK1,713,315,-74,0)
+			CAM_move(640,-180,55,50,0)
+//			CAM(-191,57,55,23,165,50,0)
+			CAM(-191,55,55,23,165,50,0)
+			wait(20)
+			KAO(RAGNA,"12321Z4","2","1")
+			MES_pos(RAGNA,"我说、\n别老小朋友，小朋友的，行不！",0,0,0,0,0)
+			wait(40)
+			MES_close(RAGNA)
+			KAO(RAGNA,"12328Z2","8","1")
+			rot_chr(PARTNER,30,RAGNA)
+			wait_move(ODESSA)
+			rot(ODESSA,30,30)
+			MOT(ODESSA,50,10)
+		//　　◆首筋之啊たりにかがみ込むようなポジションになる。
+			KAO(PARTNER,"E","E","1")
+			KAO(ODESSA,"1","3","1")
+			look(ODESSA,"Bone_Head",0,		0,2,3,			0,20,-30)
+			wait(5)
+			look(RAGNA,"Bone_Head",0,		0,2,2,			0,-20,20)
+			MES(RAGNA,"喂、你干什么……",0)
+			MES_close(RAGNA)
+	
+			MES(RAGNA,"（太、太近了……！？）",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"嚯……",0)
+			MES_close(PARTNER)
+
+		//	name2(ODESSA)
+			MES(ODESSA,"………………………………",0)
+			KAO(ODESSA,"B232BZ4","2","1")
+			MES(ODESSA,"……拉古那。\n你、最近究竟遇到谁了？",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			KAO(PARTNER,"1","1","1")
+			KAO(RAGNA,"12321Z2","8","1")
+			MES(RAGNA,"我说……\n你、不要靠这么近！",0)
+			MES_close(RAGNA)
+			
+			CAM_move(660,-200,75,50,0)
+			CAM(-191,56,75,23,188,50,0)
+			rot(ODESSA,30,30)
+			move(ODESSA,0,WALK1,763,173,-74,0)
+			look(ODESSA,"Bone_Head",0,		0,2,2,			0,0,0)
+			look(RAGNA,"Bone_Head",0,		0,2,2,			0,0,0)
+			KAO(RAGNA,"1","1","1")
+
+		//　　奥蒂莎、拉古那から一旦離れる。
+			wait_move(ODESSA)
+			rot_chr(PARTNER,30,ODESSA)
+			MOT(ODESSA,50,10)
+			wait(15)
+			KAO(ODESSA,"B232BZ6","2","1")
+			MES(ODESSA,"因为油的气味\n虽然我没能立刻觉察到……",0)
+			KAO(ODESSA,"B232BZ5","2","1")
+			MES(ODESSA,"但是在你的身上\n我确实感觉到了那男人的气息。",0)
+			KAO(ODESSA,"B232BZ3","2","1")
+			MES(ODESSA,"不对、应该是说『兽』的气息。",0)
+			MES_close(ODESSA)
+
+			KAO(PARTNER,"B","D","6")
+			EMO(RAGNA,EMO_BIKKURI)
+			EMO(PARTNER,EMO_BIKKURI)
+			wait(20)
+
+			KAO(RAGNA,"12321","D","1")
+			MES(RAGNA,"啊……",0)
+			MES_close(RAGNA)
+
+			KAO(PARTNER,"12321Z3","1","1")
+			MES(PARTNER,"嗯、好敏锐。",0)
+			MES_close(PARTNER)
+
+			KAO(RAGNA,"1","1","1")
+		//	name("テキスト（色換え·表示しない）")
+			fade_in(50,10,BLACK)
+			wait_fade()
+			MES(0,"C3S2把在神殿的遭遇\n简短的向奥蒂莎作了说明。",2)
+			MES_close(0)
+			fade_in(0,10,BLACK)
+			wait_fade()
+
+			KAO(ODESSA,"B232BZ3","3","1")
+			MES(ODESSA,"……嗯嗯、原来如此。",0)
+			KAO(ODESSA,"B232BZ6","2","1")
+			MES(ODESSA,"是在被水淹没的神殿啊……\n先调查那里就好了。",0)
+			MES_close(ODESSA)
+
+			KAO(RAGNA,"12321Z3","1","1")
+			MES(RAGNA,"那、那个……",0)
+			KAO(RAGNA,"12321Z6","1","1")
+			MES(RAGNA,"那个叫帝嘉鲁德的混账\n就是你一直在寻找的对手吗？",0)
+			MES_close(RAGNA)
+
+			KAO(ODESSA,"B232BZ3","3","1")
+			MES(ODESSA,"嗯、就是他。",0)
+			KAO(ODESSA,"B232BZ6","21","1")
+			MES(ODESSA,"啊，算了、只要确定他在这个岛上\n就是一大收获。",0)
+			KAO(ODESSA,"B232BZ3","1","1")
+			MES(ODESSA,"……不好意思、我先行一步了。",0)
+			MES_close(ODESSA)
+			wait_MES(ODESSA)
+			
+		//　　奥蒂莎、そ之まま飛行机から離れて去っていく。
+			look_chr( RAGNA, ODESSA,"Bone_Head")
+			EV("MV_MoveOdessa_03")
+			CAM_move(600,-200,55,90,0)
+			CAM(-191,56,55,23,78,90,0)
+		//	name2(RAGNA)
+		
+			wait(15)
+
+			rot(RAGNA,7,280)
+			rot(PARTNER,7,280)
+			
+			MES_pos(RAGNA,"啊、喂。",0,0,0,0,0)
+			wait(30)
+			MES_close(RAGNA)
+
+			
+			wait(80)
+
+			MES(RAGNA,"走远了……",0)
+			MES(RAGNA,"真是的、在搞什么。",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"哼哼、看来\n和我们颇有渊源。",0)
+			MES(PARTNER,"将来有机会的话\n也许能并肩作战。",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"……啊啊、说的也是。",0)
+			MES_close(RAGNA)
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+		//　　画面フェ～ドアウト抜けでイベント終了。
+			fade_in(100,30,BLACK)
+			wait_fade()
+			EV_end()
+			delete(ODESSA)
+			look_off( RAGNA )
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+
+			CAM_return( 0 )			//カメラを初期設定に
+			wait(30)
+
+			fade_in(0,30,BLACK)
+			F_set(FM_03_TalkOdessa_2)
+		
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+		
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		//──────────────────────────────
+		//▼フラグ②（神殿之探索へ向かう）
+		//──────────────────────────────
+		//　　水晶峡谷にいる。（特尔米多鲁とは別位置）
+		//　　特尔米多鲁とは違い、扉を凝視はしておらず、
+		//　　啊たりを見回して誰かを探しているような雰囲気。
+		//──────────────────────────────
+		if(!FM_02_TalkOdessa)
+		{
+		//	name("★初回（一回之み／イベント処理）")
+		//　　話しかけるとキャラ再配置してイベント発生。F1_19_InTemple
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			EV_begin()
+			
+			move(ODESSA, 99, 0,0,0,0,0)//0905追加
+			EV_stop("FREEMOVE_ODESSA")
+			MOT_SET(ODESSA,150,-1,399,399,-1,-1)		//片手腰
+			
+			//カメラセット
+			CAM_move(847,3434,139,0,0)
+			CAM(-50,44,-20,40,193,0,0)
+			
+			//キャラ再配置
+			chr_pos(ODESSA,	997,-3575,-2,30,	2)
+			chr_pos(RAGNA,	862,-3274,0,190,	2)
+			chr_pos(PARTNER,707,-3434,1,250,	2)
+
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			MOT(ODESSA,150,10)
+			wait(15)
+
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"偶啊……\n又在这种奇怪的地方遇到你们了。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"呦、我们又见面了。",0)
+			MES(RAGNA,"你在这种地方\n究竟在干什么？",0)
+			MES_close(RAGNA)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"我不是说过吗、在寻找猎物。",0)
+			KAO(ODESSA,"12321Z6","1","1")
+			MES(ODESSA,"看来、你们是第一次\n来这里吧。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"唉……\n居然这么清楚。",0)
+			MES(RAGNA,"这就是所谓的赏金猎人特有的\n直觉吧？",0)
+			MES_close(RAGNA)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"啊、就是如此。",0)
+			MES_close(ODESSA)
+
+//			rot_chr(ODESSA,30,PARTNER)
+			look_chr( ODESSA, PARTNER,"Bone_Head")
+			wait(15)
+			KAO(ODESSA,"12321Z5","1","1")
+			MES(ODESSA,"……那个，公主陛下。\n问你一件事可以吗？",0)
+			MES_close(ODESSA)
+
+			KAO(PARTNER,"12321Z4","1","1")
+			MES(PARTNER,"嗯、什么事？",0)
+			MES_close(PARTNER)
+
+			KAO(ODESSA,"12321Z5","1","1")
+			MES(ODESSA,"这个遗迹……\n有着怎样的渊源？",0)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"似乎颇有来历的样子。",0)
+			MES_close(ODESSA)
+
+			KAO(PARTNER,"12321Z6","23","1")
+			MES(PARTNER,"呵呵……\n我不询问你为什么\n问我这件事的理由。",0)
+			MES_close(PARTNER)
+
+		//　　艾雯之頭に…マ～ク。
+			KAO(PARTNER,"1","21","1")
+			wait(15)
+			EMO(PARTNER,EMO_TENTEN)
+			wait(30)
+
+		//　　艾雯、扉之嚯に視線を向ける。
+			look_chr( PARTNER, 100,"Bone_Head")
+			wait(20)
+		
+			cross_fade(30)
+			
+			
+			CAM_move(-476,3923,1220,0,0)
+			CAM(190,86,1220,39,194,0,0)
+			
+			CAM_move(764,5123,1220,400,0)
+			CAM(430,164,1220,32,208,400,0)
+			wait_fade()
+
+		//　　画面スクロ～ルするなりして扉之祭坛なども映す。
+		//	name2(PARTNER)
+			MES_pos(PARTNER,"W9……水晶峡谷遺跡。",0,180,120,0,0)
+			wait_key(0)
+			MES_pos(PARTNER,"W9乃是500年前吾族之民\n修建而成。",0,180,120,0,0)
+			wait_key(0)
+			MES_pos(PARTNER,"W9遗憾的是修此遗迹的原因\n我不得而知。",0,180,120,0,0)
+			wait_key(0)
+			MES_close(PARTNER)
+
+		//	name2(ODESSA)
+			MES_pos(ODESSA,"W9嗯……原来如此。",0,420,340,0,0)
+			wait_key(0)
+			MES_pos(ODESSA,"W9……似乎和那个家伙\n没有直接的关系。",0,420,340,0,0)
+			wait_key(0)
+			MES_close(ODESSA)
+			wait_MES(ODESSA)
+
+			cross_fade(30)
+			CAM_move(847,3434,139,0,0)
+			CAM(-50,44,-20,40,193,0,0)
+			
+			wait_fade()
+
+		//	name2(RAGNA)
+			look_chr( RAGNA, PARTNER,"Bone_Head")
+			MES(RAGNA,"？？？",0)
+			MES(RAGNA,"不过、５００年前啊……",0)
+			MES(RAGNA,"不正是魔法大战刚刚\n结束的时代嘛。",0)
+			MES(RAGNA,"这样一想、这个遗迹\n一定埋藏了很多宝物。",0)
+			MES_close(RAGNA)
+
+			look_off(PARTNER)
+
+		//　　艾雯と奥蒂莎、拉古那之方に向き直る。
+			look_off(ODESSA)
+			rot_chr(ODESSA,30,RAGNA)
+			rot_chr(PARTNER,30,RAGNA)
+//			look_chr( ODESSA, RAGNA,"Bone_Head")
+//			look_chr( PARTNER, RAGNA,"Bone_Head")
+
+			KAO(PARTNER,"1","2","1")
+			KAO(ODESSA,"1","2","1")
+		//　　それぞれ…マ～ク。
+			EMO(ODESSA,EMO_TENTEN)
+			EMO(PARTNER,EMO_TENTEN)
+			wait(30)
+			
+			look_off(RAGNA)
+
+
+			MES(RAGNA,"看、看什么？",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z3","2","1")
+			MES(PARTNER,"……我在想。",0)
+			KAO(PARTNER,"12321Z6","2","1")
+			MES(PARTNER,"你不会在盘算着\n把这个遗迹的某部分给打碎\n然后带回家吧？",0)
+			MES_close(PARTNER)
+
+			rot_chr(RAGNA,30,PARTNER)
+			
+		//	name2(RAGNA)
+			MES(RAGNA,"唉……",0)
+			MES_close(RAGNA)
+
+			KAO(ODESSA,"12321Z6","23","1")
+			MES(ODESSA,"确实在猎人当中也有一些\n没有职业道德的家伙。",0)
+			KAO(ODESSA,"12321Z4","21","1")
+			MES(ODESSA,"你又是怎么想的？",0)
+			MES_close(ODESSA)
+
+			rot_chr(RAGNA,30,ODESSA)
+			MES(RAGNA,"不要搞错！",0)
+			MES(RAGNA,"宝物猎人可不是\n盗墓贼。",0)
+			MES(RAGNA,"回收重要的文化遗产\n不使其遗失\n这才是我的工作。",0)
+			MES(RAGNA,"我对类种遗迹充满的敬意\n犹如滔滔江水连绵不绝。",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z3","1","1")
+			MES(PARTNER,"嗯、那最好。",0)
+			MES_close(PARTNER)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"呵呵……\n有职业操守，值得夸奖。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"我说\n不要老把我当小孩！",0)
+			MES_close(RAGNA)
+			
+
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			look_off(ODESSA)
+			
+			EV("FREEMOVE_ODESSA")
+			F_set(FM_02_TalkOdessa)
+			MOT(ODESSA,2,10)
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			EV_end()
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+	//	name("★以後、繰り返し")
+		else
+		{
+			MOT(ODESSA,52,10)
+			rot_chr(ODESSA,30,PLAYER1)
+			MES(ODESSA,"哼、虽然如此\n我找了好久还是没发现他的踪迹。",0)
+			MES(ODESSA,"不过、我确信那个家伙\n一定来到了这个岛上。",0)
+			MES(ODESSA,"一定要逮到那个家伙……",0)
+			MES_close(ODESSA)
+			MOT(ODESSA,2,10)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		//──────────────────────────────
+		//▽中继地点で奥蒂莎と会った
+		//──────────────────────────────
+		//　　熊猫楼之席に座っている（特尔米多鲁とは絡めない）
+		//　　バ～ボンをロックで嗜んでいるような雰囲気？
+		//	name("★初回（一回之み／イベント処理）")
+		//　　話しかけるとキャラ再配置してイベント発生。
+		//──────────────────────────────
+		if(!FM_01_TalkOdessa)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(11,906,134,0,0)
+			CAM(-10,50,134,25,204,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,0,-892,1,240,2)
+			chr_pos(PARTNER,-134,-831,1,250,2)
+			chr_pos(ODESSA,100,-1080,5,110,150)
+
+			//ル～トム～ブ中之梅とぶつからないように消す
+			color(MEI,-1)//透過
+			
+			//贺安初回後ならル～トム～ブ止める
+			move(MEI, 99, 0,0,0,0,0)//0905追加
+			EV_stop("MOVE_MEI")
+			//梅を初期位置へ
+			chr_pos(MEI,298,-1505,1,351,2)
+			
+			F_set_chr(RAGNA,CF_NO_ZIMEN)
+			F_set_chr(RAGNA,CF_NO_CSP)
+			F_set_chr(RAGNA,CF_NO_HEIGHT)
+			F_set_chr(PARTNER,CF_NO_ZIMEN)
+			F_set_chr(PARTNER,CF_NO_CSP)
+			F_set_chr(PARTNER,CF_NO_HEIGHT)
+		
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+			
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+//			rot(ODESSA,30,110)
+			look(ODESSA,"Bone_Head",0,		0,2,0,			0,-60,0)
+//			look_chr( ODESSA, RAGNA,"Bone_Head")
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"呀、是你们啊。",0)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"找到你们要找的东西了吗？",0)
+			MES_close(ODESSA)
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z4","1","1")
+			MES(RAGNA,"还没有。",0)
+			KAO(RAGNA,"12321Z5","1","1")
+			MES(RAGNA,"不过那个废坑、\n真的是个很麻烦的洞窟。",0)
+			KAO(RAGNA,"12321Z6","1","1")
+			MES(RAGNA,"虽然魔物不是很强\n但那些机关陷阱却很棘手。",0)
+			MES_close(RAGNA)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z4","1","1")
+			MES(ODESSA,"哼哼、那还只是个开始。",0)
+			KAO(ODESSA,"12321Z6","1","1")
+			MES(ODESSA,"这个岛上所分布的洞窟\n似乎更加凶险。",0)
+			KAO(ODESSA,"12321Z6","1","1")
+			MES(ODESSA,"食物要备足、做好万全的准备\n才好去冒险。",0)
+			MES_close(ODESSA)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z4","23","3")
+			MES(RAGNA,"我、我知道。",0)
+			KAO(RAGNA,"12321Z4","2","3")
+			MES(RAGNA,"我又不是新手\n不要把我当小孩。",0)
+			MES_close(RAGNA)
+
+		//	name2(ODESSA)
+			KAO(ODESSA,"12321Z2","23","1")
+			MES(ODESSA,"呵呵……",0)
+			MES_close(ODESSA)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"1", "2", "7")	
+			MES(PARTNER,"（完全把你当小孩来看了……）",0)
+			MES_close(PARTNER)
+			
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(ODESSA,"1", "1", "1")	
+
+			color(MEI,1)//梅を表示
+			
+			EV("MOVE_MEI")
+			look(ODESSA,"Bone_Head",0,		0,10,0,			0,0,0)
+			
+			F_reset_chr(RAGNA,CF_NO_ZIMEN)
+			F_reset_chr(RAGNA,CF_NO_CSP)
+			F_reset_chr(RAGNA,CF_NO_HEIGHT)
+			F_reset_chr(PARTNER,CF_NO_ZIMEN)
+			F_reset_chr(PARTNER,CF_NO_CSP)
+			F_reset_chr(PARTNER,CF_NO_HEIGHT)
+			 
+			chr_pos(RAGNA,0,-892,1,240,2)
+			chr_pos(PARTNER,-145,-831,1,250,2)
+			
+			chr_pos(ODESSA,110,-1095,5,135,150)
+			F_set(FM_01_TalkOdessa)
+			//カメラを初期設定に
+			CAM_return( 0 )
+			EV_end()
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+			look_chr( ODESSA, 0,"Bone_Head")
+		//	name("★２回目")
+			if(!F_ODESSA)
+			{
+				MES(ODESSA,"身为一个宝物猎人、\n在食物的使用方面\n是必须要仔细考虑的。",0)
+				MES(ODESSA,"建议在这酒馆里\n交换高等级的食物\n这样所获得的经验值也会更多……",0)
+				MES(ODESSA,"在探索的过程中舍不得使用食物的话\n很有可能会因等级不够而送命。",0)
+				MES(ODESSA,"以十个为一单位这样管理\n剩下的用于回复……",0)
+				MES(ODESSA,"每当探索完一个区域\n要勤回城镇交换食物……",0)
+				MES(ODESSA,"个人的风格不同，先在探索的过程中摸索岀\n适合自己的套路吧。",0)
+				MES_close(ODESSA)
+				F_set(ODESSA)
+			}
+		//	name("★それ以降")
+			else
+			{
+				MES(ODESSA,"身为一个宝物猎人、\n在食物的使用方面\n是必须要仔细考虑的。",0)
+				MES(ODESSA,"先在探索的过程中摸索岀\n适合自己的套路吧。",0)
+				MES_close(ODESSA)
+			}
+		}
+		look_off(ODESSA)
+	//──────────────────────────────
+	}
+	
+	TK_end()
+}
+
+
+MV_MoveOdessa_03
+{
+	rot(ODESSA,30,300)
+	move(ODESSA,0,WALK1,1670,634,-74,0)
+	wait_move(ODESSA)
+	rot(ODESSA,30,326)
+	move(ODESSA,0,WALK1,2165,1407,-74,0)
+	wait_move(ODESSA)
+	
+	move(ODESSA,20,WALK1,1637,2054,-74,0)
+	
+}
+
+MV_MOVE_ODESSA_7
+{
+	rot(ODESSA,30,304)
+	move(ODESSA, 0, WALK1,156,1798,1,0)
+	wait_move(ODESSA)
+	
+	rot(ODESSA,30,263)
+	move(ODESSA, 0, WALK1,600,1773,0,0)
+	wait_move(ODESSA)
+
+	rot(ODESSA,30,340)
+	move(ODESSA, 0, WALK1,698,2186,100,0)
+}
+
+MV_MOVE_CAM_3
+{
+	CAM_move(1638,-188,461,0,0)
+	CAM(449,45,461,26,218,0,0)
+	
+	CAM_move(638,-228,461,150,0)
+	CAM(449,45,461,26,161,150,0)
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

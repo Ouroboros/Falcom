@@ -1,0 +1,1695 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僇僢僷乮儈僯僎乕儉乯")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸惎崀傝偺棦偺堜屗偵丄僇僢僷偑廧傫偱偄傑偡丅
+//丂丂丂榖偟偐偗傞偲儈僯僎乕儉乮僒僽儖乕僩埖偄乯傪梀傇帠偑偱偒傑偡丅
+//丂丂仸敪摦斖埻偵丄摿偵惂尷偼偁傝傑偣傫丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_KAPPA
+{
+	TK_begin()
+	rot_chr(KAPPA,30,PLAYER1)
+
+	rot_chr(PLAYER1,60,KAPPA)
+	rot_chr(PLAYER2,60,KAPPA)
+	rot_chr(PET,60,KAPPA)
+	
+	KAO(PLAYER1,"1","1","1")//僨僼僅儖僩
+	KAO(PLAYER2,"1","1","1")//僨僼僅儖僩
+	KAO(PET,"1","1","1")//僨僼僅儖僩
+
+	workG(GW_SKI_MISS,SET,0)	//儈僗偺夞悢傪弶婜壔
+	workG(GW_SKI_DOWN,SET,0)	//擄堈搙僟僂儞傪弶婜壔
+
+	if( !FV_FF_TalkKappa )
+	{
+	//仴僇僢僷偵夛偆偺偑弶夞
+	//丂丂仸堜屗偺俴俹傪挷傋傞偲丄慖戰巿偑弌傑偡丅
+	//	name("慖戰僥僉僗僩")
+
+		workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+		MES_pos(PLAYER1,"??W9【投入１００芬尼】\n【離開】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+		if(WK_YESNO==1)
+		{
+		//	name("佀乽侾侽侽儁儞僱擖傟傞乿偱偍嬥偑懌傝側偄")
+			if(SP002<100)												//壗屘偐敾掕偱偒側偄丒丒丒
+			{
+				MES(0,"C3S2金錢不足……",2)
+				MES_close(0)
+			}
+			else
+			{
+			//	name("佀乽侾侽侽儁儞僱擖傟傞乿偱偍嬥偑偁傞")
+				//丂丂仸強帩嬥傪侾侽侽儁儞僱尭傜偡丅
+				SE(008,PLAYER1)
+				get_gold(-100,RAGNA)
+				wait(30)
+
+				EMO(KAPPA,EMO_TENTEN)
+				wait(30)
+
+				//丂丂堜屗偐傜僇僢僷偑婄傪弌偡丅
+				rot_chr(KAPPA,30,PLAYER1)
+				move(KAPPA,2,RUN1,0,0,220,0)
+				wait_move(KAPPA)
+				wait(20)
+
+				MES(KAPPA,"怎麼了。\n你們剛才幹了什麼？",0)
+				MES(KAPPA,"是你們吧。\n把東西扔到我頭頂上……",0)
+				MES_close(KAPPA)
+				wait_MES(KAPPA)
+
+			//丂丂僇僢僷偵丒丒丒僄儌乕僔儑儞丅
+				EMO(KAPPA,EMO_TENTEN)
+				wait(30)
+
+				MES(KAPPA,"算了。\n反正我也有空。",0)
+				MES(KAPPA,"……一起玩嗎？",0)
+				MES_close(KAPPA)
+			//	F_set(FV_FF_TalkKappa)
+
+				workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+				MES_pos(PLAYER1,"??W9【進行挑戰】\n【還是算了】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+				if(WK_YESNO==1)
+				{
+				//	name("佀乽俴倴侾偵挧愴乿")
+
+					if(IT003>0)
+					{
+						F_set(FV_FF_TalkKappa)
+
+					//	name("佀僌儔僀僪僊傾偵夵憿嵪傒偺応崌")
+						MES(KAPPA,"嗯，知道了。",0)
+						MES_close(KAPPA)
+
+						move(KAPPA,2,RUN1,0,0,-220,0)
+						F_set_note(-80,-1)
+						fade_in( 100, 60, BLACK)	//埫揮
+						wait_fade()
+
+						if(SP004==5)
+						{
+							workG(GW_SKI_PARTNER,SET,5)	//僆僨僢僒
+						}
+						else if(SP004==12)
+						{
+							workG(GW_SKI_PARTNER,SET,12)	//僆僨僢僒
+						}
+						else if(SP004==13)
+						{
+							workG(GW_SKI_PARTNER,SET,13)	//僆僨僢僒
+						}
+						else if(SP004==6)
+						{
+							workG(GW_SKI_PARTNER,SET,6)	//僗僶儖
+						}
+						else if(SP004==1)
+						{
+							workG(GW_SKI_PARTNER,SET,1)	//傾儖僂僃儞
+						}
+
+						clear_party(PARTNER)	//僷乕僩僫乕徚嫀
+
+						workG(GW_ENTRY_EVENT,SET,1)
+						new_map(10490)
+					}
+					else
+					{
+					//	name("佀傑偩僌儔僀僪僊傾偵夵憿偟偰偄側偄")
+						EV("KAPPA_Gia_Check")
+						wait_EV("KAPPA_Gia_Check")
+						F_set(FV_FF_TalkKappa)
+					}
+				}
+				else
+				if(WK_YESNO==2)//佀乽傗傔偲偔乿
+				{
+					F_set(FV_FF_TalkKappa)
+
+					MES(KAPPA,"啊，那就算了。",0)
+					MES(KAPPA,"我去找其他人。",0)
+					MES_close(KAPPA)
+
+				//丂丂僇僢僷丄堜屗偺拞偵徚偊偰偄偔丅
+					move(KAPPA,2,RUN1,0,0,-220,0)
+					F_set_note(-80,-1)
+					wait_move(KAPPA)
+					wait(20)
+
+				}
+			}
+		}
+		else
+		if(WK_YESNO==2)//佀乽擖傟側偄乿
+		{
+		}
+	}
+	else	//仴俀夞栚埲崀-----------------------------------------------------------------------------------------------------------------------------
+	{
+	//丂丂仸堜屗偺俴俹傪挷傋傞偲丄慖戰巿偑弌傑偡丅
+		workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+		MES_pos(PLAYER1,"??W9【投入１００芬尼】\n【離開】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+		if(WK_YESNO==1)
+		{
+		//	name("佀乽侾侽侽儁儞僱擖傟傞乿偱偍嬥偑懌傝側偄")
+			if(SP002<100)												//壗屘偐敾掕偱偒側偄丒丒丒
+			{
+				MES(0,"C3S2金錢不足……",2)
+				MES_close(0)
+			}
+			else
+			{
+			//	name("佀乽侾侽侽儁儞僱擖傟傞乿偱偍嬥偑偁傞")
+				//丂丂仸強帩嬥傪侾侽侽儁儞僱尭傜偡丅
+				SE(008,PLAYER1)
+				get_gold(-100,RAGNA)
+				wait(30)
+
+				//丂丂堜屗偐傜僇僢僷偑婄傪弌偡丅
+				rot_chr(KAPPA,30,PLAYER1)
+				move(KAPPA,2,RUN1,0,0,220,0)
+				wait_move(KAPPA)
+				wait(20)
+
+				if(IT003<=0)
+				{
+				//	name("佀傑偩僌儔僀僪僊傾偵夵憿偟偰偄側偄")
+					EV("KAPPA_Gia_Check")
+					wait_EV("KAPPA_Gia_Check")
+				}
+				else
+				{
+					if(!F_KAPPA)
+					{
+					//丂丂佀俴俥偑棫偭偰側偄乮侾夞栚乯
+						MES(KAPPA,"你們……\n莫非很閒？",0)
+						MES(KAPPA,"其實我也正好有空。",0)
+						MES(KAPPA,"以前我還要\n看守一個很大的神社。",0)
+						MES(KAPPA,"現在已經交給人類管理了，\n所以也沒什麼事做。",0)
+						MES(KAPPA,"……一起玩嗎？",0)
+						MES_close(KAPPA)
+						//仛僇僢僷亂幮偺斣恖亃
+						F_set_note(-80,0)
+						F_set(KAPPA)
+					}
+					else
+					{
+					//	name("佀俴俥偑棫偭偰偄傞乮孞傝曉偟乯")
+						MES(KAPPA,"……咱們都很閒呢。",0)
+						MES(KAPPA,"一起玩嗎？",0)
+						MES_close(KAPPA)
+					}
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//丂丂仸埲壓偼丄挧愴偱偒傞僐乕僗傑偱傪慖戰巿昞帵丅
+				//丂丂丂偱偒傟偽慜夞挧愴帪偺僐乕僗傪婰壇偟偰偍偒偨偄丅
+
+//					F_set(FV_FF_KappaSki_04)	// 僨僶僢僌
+
+					if( FV_FF_KappaSki_03 || FV_FF_KappaSki_04 )
+					{
+						// LV3埲忋傪僋儕傾偟偰偄傞
+						workL(WK_CANCEL,SET,5)//亂傗傔傞亃
+						MES_pos(PLAYER1,"??W9【挑戰Ｌｖ４】\n【挑戰Ｌｖ３】\n【挑戰Ｌｖ２】\n【挑戰Ｌｖ１】\n【還是算了】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+						if(WK_YESNO==1)
+							workL(WK_YESNO,SET,4)	//嫮惂曄峏
+						else if(WK_YESNO==2)
+							workL(WK_YESNO,SET,3)	//嫮惂曄峏
+						else if(WK_YESNO==3)
+							workL(WK_YESNO,SET,2)	//嫮惂曄峏
+						else if(WK_YESNO==4)
+							workL(WK_YESNO,SET,1)	//嫮惂曄峏
+					}
+					else if( FV_FF_KappaSki_02)
+					{
+						// LV2傪僋儕傾偟偰偄傞
+						workL(WK_CANCEL,SET,4)//亂傗傔傞亃
+						MES_pos(PLAYER1,"??W9【挑戰Ｌｖ３】\n【挑戰Ｌｖ２】\n【挑戰Ｌｖ１】\n【還是算了】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+						if(WK_YESNO==1)
+							workL(WK_YESNO,SET,3)	//嫮惂曄峏
+						else if(WK_YESNO==2)
+							workL(WK_YESNO,SET,2)	//嫮惂曄峏
+						else if(WK_YESNO==3)
+							workL(WK_YESNO,SET,1)	//嫮惂曄峏
+						else if(WK_YESNO==4)
+							workL(WK_YESNO,SET,5)	//乽傗傔偲偔乿傪俆偵嫮惂曄峏
+					}
+					else if( FV_FF_KappaSki_01)
+					{
+						// LV1傪僋儕傾偟偰偄傞
+						workL(WK_CANCEL,SET,3)//亂傗傔傞亃
+						MES_pos(PLAYER1,"??W9【挑戰Ｌｖ２】\n【挑戰Ｌｖ１】\n【還是算了】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+						if(WK_YESNO==1)
+							workL(WK_YESNO,SET,2)	//嫮惂曄峏
+						else if(WK_YESNO==2)
+							workL(WK_YESNO,SET,1)	//嫮惂曄峏
+						else if(WK_YESNO==3)
+							workL(WK_YESNO,SET,5)	//乽傗傔偲偔乿傪俆偵嫮惂曄峏
+					}
+					else
+					{
+						// 傑偩僋儕傾偟偰偄側偄
+						workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+						MES_pos(PLAYER1,"??W9【進行挑戰】\n【還是算了】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+						if(WK_YESNO==2)
+							workL(WK_YESNO,SET,5)	//乽傗傔偲偔乿傪俆偵嫮惂曄峏
+					}
+
+					if(WK_YESNO<5)
+					{
+					//	name("佀俴倴侾乣俴倴係")
+						MES(KAPPA,"嗯，知道了。",PAUSE,CLR)
+						MES_close(KAPPA)
+					//	name("奩摉儗儀儖偺僗僉乕儅僢僾偺僀儀儞僩偵宷偘傞丅")
+						move(KAPPA,2,RUN1,0,0,-220,0)
+						fade_in( 100, 60, BLACK)	//埫揮
+						wait_fade()
+
+						workG(GW_ENTRY_EVENT,SET,1)	//僗僉乕奐巒
+
+						workG(GW_SKI_PARTNER,SET,0)	//儔僌僫偩偗
+						if(SP004==5)
+						{
+							workG(GW_SKI_PARTNER,SET,5)	//僆僨僢僒
+						}
+						else if(SP004==12)
+						{
+							workG(GW_SKI_PARTNER,SET,12)	//僆僨僢僒
+						}
+						else if(SP004==13)
+						{
+							workG(GW_SKI_PARTNER,SET,13)	//僆僨僢僒
+						}
+						else if(SP004==6)
+						{
+							workG(GW_SKI_PARTNER,SET,6)	//僗僶儖
+						}
+						else if(SP004==1)
+						{
+							workG(GW_SKI_PARTNER,SET,1)	//傾儖僂僃儞
+						}
+
+						clear_party(PARTNER)	//僷乕僩僫乕徚嫀
+
+						if(WK_YESNO==4)
+							new_map(10493)
+						else if(WK_YESNO==3)
+							new_map(10492)
+						else if(WK_YESNO==2)
+							new_map(10491)
+						else
+							new_map(10490)
+					}
+					else
+					{
+					//	name("佀乽傗傔偲偔乿")
+
+						MES(KAPPA,"啊，那就算了。",0)
+						MES(KAPPA,"我去找其他人。",0)
+						MES_close(KAPPA)
+
+					//丂丂僇僢僷丄堜屗偺拞偵徚偊偰偄偔丅
+						move(KAPPA,2,RUN1,0,0,-220,0)
+						wait_move(KAPPA)
+						wait(20)
+					}
+				}
+			}
+		}
+		else
+		{
+		//	name("佀乽擖傟側偄乿")
+		}
+	}
+
+	TK_end()
+}
+
+//	name("佀傑偩僌儔僀僪僊傾偵夵憿偟偰偄側偄")
+KAPPA_Gia_Check
+{
+
+	//	name("偙偺榖傪暦偔偺偑弶夞")
+	if(!FV_FF_Kappa_TkGia)
+	{
+		if(!FV_FF_TalkKappa)
+		{
+		//僇僢僷偵弶傔偰榖偟偐偗偰乽挧愴偡傞乿傪慖傫偩応崌
+			MES(KAPPA,"嗯，知道了。",0)
+			MES_close(KAPPA)
+		}
+		else
+		{
+		//僇僢僷偵弶傔偰榖偟偐偗偰乽傗傔偲偔乿傪慖傃丄嵞傃僇僢僷偵榖偟偐偗偨応崌
+		//	MES(KAPPA,"仧傗偭傁傝梀傃偨偄傫偠傖傫丅\n傒偨偄側儊僢僙乕僕",0)
+			MES(KAPPA,"什麼嘛，還是想玩嘛。",0)
+			MES(KAPPA,"嗯，知道了。",0)
+			MES_close(KAPPA)
+		}
+	//丂丂僇僢僷丄堦搙摢傪堷偭崬傔傞偑丄搑拞偱傑偨弌偰偔傞丅
+		move(KAPPA,2,RUN1,0,0,-150,0)
+		wait_move(KAPPA)
+		move(KAPPA,2,RUN2,0,0, 150,0)
+		wait_move(KAPPA)
+
+		MES(KAPPA,"咦，你們還不會\n滑行呢。",0)
+		MES(KAPPA,"不行不行，你們這樣\n根本沒辦法穿越星之峰的雪原。",0)
+		MES(KAPPA,"等到可以「滑行」\n以後再過來吧。\n如果能學會的話。",0)
+		MES_close(KAPPA)
+		F_set(FV_FF_Kappa_TkGia)
+	}
+	else
+	{
+		MES(KAPPA,"所以說，\n你們還不會滑行吧？",0)
+		MES(KAPPA,"那就沒辦法一起玩了。\n你們這樣沒辦法穿越星之峰的雪原。",0)
+		MES(KAPPA,"看看能不能找到\n一些道具……",0)
+		MES(KAPPA,"讓你們可以「滑行」\n以後再過來吧。",0)
+		MES_close(KAPPA)
+	}
+
+	//丂丂僇僢僷丄摢傪堷偭崬傔偰偟傑偆丅
+	move(KAPPA,2,RUN1,0,0,-220,0)
+	F_set_note(-80,-1)
+	wait_move(KAPPA)
+	wait(20)
+
+}
+
+
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴僎乕儉廔椆屻偺僀儀儞僩
+//丂丂僎乕儉廔椆屻丄僼僃乕僪僀儞偟偰
+//丂丂儔僌僫偨偪偼惎儢曯擖傝岥儅僢僾偵棫偭偰偄傞丅
+//丂丂僇僢僷傕偦偺嬤偔偵棫偭偰偄傞丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+/*
+	//丂丂仸弶傔偰嬥儊僟儖傪庢偭偨偲偒偺傒丄
+	//丂丂丂僇僢僷偑帺暘偐傜曕偄偰偒傑偡丅乮僀儀儞僩帺摦婲摦乯
+		MES(KAPPA,"乧乧嬥儊僟儖僎僢僩両\n偍傔偱偲偆丅",0)
+		MES(KAPPA,"偆傫丄拞乆傗傞偹丅\n僇僢僷揑偵傕寢峔妝偟偐偭偨偟丅",0)
+		MES(KAPPA,"偦傫側孨偨偪偵偼\n杔偺庢偭偰偍偒傪偁偘傞丅",0)
+		MES_close(KAPPA)
+
+	//丂丂僇僢僷丄摢傪偐偔丅
+	//丂丂偦偺傑傑庤傪嵎偟弌偡丅
+		MES(KAPPA,"偼偄僐儗丅",0)
+		MES_close(傾僀僥儉擖庤儊僢僙乕僕)
+
+	//	name("傾僀僥儉擖庤儊僢僙乕僕")
+		MES(this,"亀仜仜亁傪栣偭偨丅",0)
+		MES_close(this)
+
+	//丂丂仸僩儗僕儍乕傪擖庤偟傑偡丅
+		MES(KAPPA,"傑偁偙傟偱堦墳\n僋儕傾側栿偩偗偳丅",0)
+		MES(KAPPA,"傑偩偍梀傃偺僐乕僗傕\n梡堄偟偰偁傞偟丅",0)
+		MES(KAPPA,"傑偨婥偑岦偄偨傜\n梀傃偵棃偰傛丅",0)
+		MES_close(KAPPA)
+
+	//丂丂僇僢僷丄掕埵抲偵栠偭偰偄偔丅
+
+*/
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸捠忢偼丄榖偟偐偗傞偲惉愌偵墳偠偰儊僢僙乕僕傪昞帵偡傞丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//  1=僗僉乕LV1僋儕傾(摵)
+//  2=僗僉乕LV2僋儕傾(嬧)
+//  3=僗僉乕LV3僋儕傾(嬥)
+//  4=僗僉乕LV4僋儕傾(僾儔僠僫)
+//  5=僗僉乕僋儕傾嵪傒儊僟儖
+//  6=僗僉乕幐攕(撧棊)
+//  7=僗僉乕幐攕(巰朣)
+//  8=僗僉乕幐攕(僣儃丄偍偟偄)
+//  9=僗僉乕幐攕(僟儊乕僕)
+// 10=僗僉乕幐攕(僞僀儉)
+// 11=僗僉乕幐攕(僣儃丄懌傝側偄)
+// 12=僗僉乕幐攕(僣儃丄僛儘)
+// 13=僗僉乕幐攕(僇僢僷偵晧偗偨)
+//
+// 僗僉乕偺僋儕傾敾掕偼丄僇僢僷偑峴偭偰偄傑偡丅
+// 婯掕撪偱僋儕傾偟偰偄偨偲偟偰傕丄僇僢僷偵榖偟偐偗側偄偲丄僋儕傾偟偨偙偲偵側傝傑偣傫丅
+//
+
+TK_KAPPA2
+{
+	TK_begin()
+	rot_chr(KAPPA,30,PLAYER1)
+
+	rot_chr(PLAYER1,60,KAPPA)
+	rot_chr(PLAYER2,60,KAPPA)
+	rot_chr(PET,60,KAPPA)
+
+	KAO(PLAYER1,"1","1","1")//僨僼僅儖僩
+	KAO(PLAYER2,"1","1","1")//僨僼僅儖僩
+	KAO(PET,"1","1","1")//僨僼僅儖僩
+
+// 僠僃僢僋梡
+//	workL(00,SET,4)
+//	F_reset(F_KAPPA)
+//	F_set(FV_FF_KappaSki_04)
+//	workL(02,SET,4)
+//	F_reset(1975)
+
+	//弶僐乕僗僋儕傾偼嵟桪愭
+	if(WK000==4 && !FV_FF_KappaSki_04)	// 弶傔偰LV4傪僋儕傾偟偰偒偨
+	{
+	//丂丂佀怴偟偔僾儔僠僫儊僟儖傪僎僢僩偟偨丅
+		F_set(FV_FF_KappaSki_04)	//僾儔僠僫
+		if(!F200 && !F2859)		//俀廡栚偺応崌丄偡偱偵帩偭偰偄傞壜擻惈偑偁傞
+		{
+			EV("TK_FIGURE")
+			wait_EV("TK_FIGURE")
+			F_set(200)
+		}
+		else
+		{
+			if(!F200)
+			{
+				MES(KAPPA,"……白金獎章！\n幹得漂亮。",0)
+				F_set(200)
+			}
+
+			MES(KAPPA,"知道這白金\n是從哪裡來的嗎？",0)
+			MES(KAPPA,"從前魔導士中\n有一些煉金術士，\n他們做了好多東西。",0)
+			MES(KAPPA,"漂亮的手鐲，還有其他一些\n工藝品，就在露天集市上出售。",0)
+			MES(KAPPA,"但是這個不一樣。\n這只是在角落裡找到的便宜貨。",0)
+			MES(KAPPA,"可能是諾姆\n挖出來以後被偷運走的。",0)
+			MES(KAPPA,"……再來一次吧？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	//杺朄擖庤屻侾夞偩偗暦偗傞儊僢僙乕僕丅乮傾儖僂僃儞偄傞偲偒尷掕乯乮俧俥惂屼偱侾夞偺傒乯
+	if(IT101>0 && !FV_FF_Kappa_TkMaho && GW_SKI_PARTNER==1 )
+	{
+		MES(KAPPA,"啊，那個是\n從一個人那裡拿到的。",0)
+		MES_close(KAPPA)
+
+	//丂丂僇僢僷丄傾儖僂僃儞偺曽偵岦偔丅
+		look_chr(KAPPA,PARTNER,"Bone_Head")
+
+		MES(KAPPA,"對了，那個人就拿著\n差不多那樣的\n魔杖。",0)
+		look_off(KAPPA)
+		MES(KAPPA,"可是保管了這麼久，\n很平常地送出去也不合適？\n對吧？",0)
+		MES(KAPPA,"所以我就把它\n當成獎賞了。",0)
+		MES(KAPPA,"嗯……其實\n直到昨天它還在\n壁櫥最下面，我都已經忘了。",0)
+		MES(KAPPA,"……再來一次吧？",0)
+		MES_close(KAPPA)
+		//仛僇僢僷亂岝偺墱媊亃
+		F_set_note(-80,2)
+		F_set(FV_FF_Kappa_TkMaho)
+	}
+	else
+	//枹擖庤偱丄婛偵俴倴俁僋儕傾嵪傒偩偑丄傾儖僂僃儞偑偄側偄偨傔擖庤偱偒側偄丅乮俴俥惂屼偱侾夞栚偺傒乯
+	if(IT101<0 && WK000!=3 && FV_FF_KappaSki_03 && GW_SKI_PARTNER!=1 && !F_KAPPA)
+	{
+		MES(KAPPA,"其實今天\n我本來打算幫你們\n準備獎賞的。",0)
+		MES(KAPPA,"你們看來也挺努力的，\n我送給你們一些東西\n也是應該的？　對吧？",0)
+		MES(KAPPA,"……可是\n我忘記帶過來了。",0)
+		MES(KAPPA,"我會回去再找的，\n記得以後和\nL337會使用魔法的人一起回來拿。",0)
+		MES(KAPPA,"……再來一次吧？",0)
+		MES_close(KAPPA)
+		F_set(KAPPA)
+	}
+	else
+	if(WK002>0)	//摨偠儗儀儖傪僋儕傾嵪傒側偺偱丄嶨択
+	{
+	//丂丂佀僋儕傾惉愌偩偭偨偑丄偡偱偵儊僟儖傪擖庤嵪傒丅
+	//丂丂仸儔儞僟儉偱僐僱僞傪榖偟傑偡丅
+
+		//儔儞僟儉愝掕偼儅僢僾俬俶俬俿偵杽傔崬傓丅
+		if(!F1975)//儎僒僋偺忣曬嘊傪帩偭偰偄側偄
+		{
+			workL(010,SET,2)//嫮惂揑偵俀偵僙僢僩丅
+		}
+
+		if(WK010==0)
+		{
+		//丂丂仸僷僞乕儞侾
+			MES(KAPPA,"星之峰上面路很窄呢。",0)
+			MES(KAPPA,"而且還有很多積雪。\n每次在滑雪道上耙雪都很累啊。",0)
+			MES(KAPPA,"……明白我的意思吧？",0)
+			MES_close(KAPPA)
+
+			workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【知道】\n【不知道】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+			if(WK_YESNO==1)
+			{
+				MES(KAPPA,"嗯，那再來一次吧？",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				MES(KAPPA,"哦，那再來一次吧？",0)
+				MES_close(KAPPA)
+			}
+		}
+		else
+		if(WK010==1)
+		{
+		//丂丂仸僷僞乕儞俀
+		//丂丂僇僢僷偵丒丒丒僄儌乕僔儑儞丅
+			EFF_chr(25124,KAPPA,0,100,0,"Bone_Head")
+			wait(80)
+			
+			MES(KAPPA,"昨天那個……",0)
+			MES_close(KAPPA)
+
+		//丂丂僇僢僷丄庤傪怳偭偰岆杺壔偡丅
+			EV("MOTION_KAPPA")
+			wait_EV("MOTION_KAPPA")
+			
+			MES(KAPPA,"……還是算了。\n沒什麼，沒什麼。",0)
+			MES(KAPPA,"……再來一次吧？",0)
+			MES_close(KAPPA)
+		}
+		else
+		if(WK010==2)
+		{
+		//丂丂仸僷僞乕儞係
+			MES(KAPPA,"……人類的村莊裡\n有個叫野佐久的人。",0)
+			MES(KAPPA,"之前突然間碰上他\n把我嚇了一大跳。",0)
+			MES(KAPPA,"什麼嘛，為什麼\n要披著熊皮？",0)
+			MES(KAPPA,"莫名其妙。\n我下意識地就逃掉了。",0)
+			MES(KAPPA,"啊，這可不是說笑。\n突然間遇到的話\n誰都會害怕的。",0)
+			MES(KAPPA,"……再來一次吧？",0)
+			MES_close(KAPPA)
+			//仛僇僢僷亂儎僒僋亃
+			F_set_note(-80,1)
+			//仛儎僒僋亂僇僢僷偲抦傝崌偄亃
+			F_set_note(-75,2)
+		}
+		else
+		if(WK010==3)
+		{
+		//丂丂仸僷僞乕儞俆
+			MES(KAPPA,"昨天抽籤\n得了小吉。",0)
+			MES(KAPPA,"簽上寫著\n如果太大意\n可能就會摔跤。",0)
+			MES(KAPPA,"…………………………",0)
+			MES_close(KAPPA)
+
+		//丂丂僇僢僷丄庤傪僶僞僶僞丅
+			EV("MOTION_KAPPA")
+			wait_EV("MOTION_KAPPA")
+
+			MES(KAPPA,"……看什麼？\n我又不是耍雜技的。",0)
+			MES(KAPPA,"……再來一次吧？",0)
+			MES_close(KAPPA)
+		}
+		else
+		if(WK010==4)
+		{
+		//丂丂仸僷僞乕儞俁丒揱愢偺偺桬幰尷掕丅
+			MES(KAPPA,"咦。\n你什麼時候開始\n被稱作紅髮勇者了？",0)
+			MES(KAPPA,"有些自大了吧？\n因為通過了所有挑戰\n就有些自大了。",0)
+			MES(KAPPA,"那個，話說在前，\n別看我這樣，我也是很厲害的。",0)
+			MES(KAPPA,"曾經在鎮上的\n運動會中拿過冠軍呢。",0)
+			MES(KAPPA,"……啊，你剛剛\n是不是覺得我總是\n在講以前的故事很煩啊。",0)
+			MES_close(KAPPA)
+
+			workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【是啊】\n【不是】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+			if(WK_YESNO==1)
+			{
+				MES(KAPPA,"這樣啊，\n那再來一次吧？",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				MES(KAPPA,"哦，那再來一次吧？",0)
+				MES_close(KAPPA)
+			}
+		}
+	}
+	else
+	if(WK000==4)	// 崱LV4傪僋儕傾偟偰偒偨
+	{
+	//丂丂佀怴偟偔僾儔僠僫儊僟儖傪僎僢僩偟偨丅
+		F_set(FV_FF_KappaSki_04)	//僾儔僠僫
+		if(!F200 && !F2859)
+		{
+			EV("TK_FIGURE")
+			wait_EV("TK_FIGURE")
+			F_set(200)
+		}
+		else
+		{
+			if(!F200)
+			{
+				MES(KAPPA,"……白金獎章！\n幹得漂亮。",0)
+				F_set(200)
+			}
+
+			MES(KAPPA,"另外你知道這白金\n是從哪裡來的嗎？",0)
+			MES(KAPPA,"從前魔導士中\n有一些煉金術士，\n他們做了好多東西。",0)
+			MES(KAPPA,"漂亮的手鐲，還有其他一些\n工藝品，就在露天集市上出售。",0)
+			MES(KAPPA,"但是這個不一樣。\n這只是在角落裡找到的便宜貨。",0)
+			MES(KAPPA,"應該是諾姆\n挖出來以後被偷運走的。",0)
+			MES(KAPPA,"……再來一次吧？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	if(WK000==3)	// 崱LV3傪僋儕傾偟偰偒偨
+	{
+	//丂丂佀怴偟偔嬥儊僟儖傪僎僢僩偟偨丅
+		F_set(FV_FF_KappaSki_03)	//僑乕儖僪
+		if(!F_KAPPA)
+		{
+			//	name("佀傾儖僂僃儞偑偄傞")
+			if(GW_SKI_PARTNER==1)
+			{
+				MES(KAPPA,"……黃金獎章！\n恭喜。",0)
+				MES(KAPPA,"嗯，幹得不錯。\n我也玩得很開心。",0)
+				MES(KAPPA,"就把我珍藏的\n東西送給你吧。",0)
+				MES_close(KAPPA)
+
+			//丂丂仸曮敔偑弌尰偡傞丅
+
+				MOT_SET(KAPPA,150,-1,463,463,-1,-1)//
+				MOT(KAPPA,150,10)
+				wait(10)
+
+				cross_fade(30)
+				chr_pos(TAKARA_CH,1212,-1386,1,0,6)
+				wait(1)
+				SE(PLAYER1,019)//揔摉側俽俤
+				wait_fade()
+				F_set(FV_FF_Kappa_Maho)
+
+				MOT(KAPPA,2,10)
+				MES(KAPPA,"這樣也算是\n通過了。",0)
+				MES(KAPPA,"不過我還準備了更高級的\n賽道。",0)
+				MES(KAPPA,"有空的時候\n還可以過來玩。",0)
+				MES_close(KAPPA)
+				workL(005,SET,1)//儕僩儔僀張棟傪旘偽偡丅
+			}
+			else
+			{
+			//	name("佀傾儖僂僃儞偄側偄")
+				MES(KAPPA,"……黃金獎章！\n恭喜。",0)
+				MES(KAPPA,"嗯，幹得不錯。\n我也玩得很開心。",0)
+				MES_close(KAPPA)
+
+			//丂丂僇僢僷偵丒丒丒僄儌乕僔儑儞丅
+				EMO(KAPPA,EMO_TENTEN)
+				wait(30)
+
+				MES(KAPPA,"其實今天\n我本來打算給你們\n準備獎賞的。",0)
+				MES(KAPPA,"你們看來也挺努力的，\n我送給你們一些東西\n也是應該的？　對吧？",0)
+				MES(KAPPA,"……可是\n我忘記帶過來了。",0)
+				MES(KAPPA,"我會回去再找的，\n記得以後和\nL337會使用魔法的人一起回來拿。",0)
+				MES(KAPPA,"……再來一次吧？",0)
+				MES_close(KAPPA)
+			}
+			F_set(KAPPA)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(KAPPA,"另外你知道這枚\n獎章是怎麼來的嗎？",0)
+			MES(KAPPA,"從前伊魯巴特\n有一條可以淘到金子的河。",0)
+			MES(KAPPA,"有一隻住在那裡的泥鰍\n收集了不少。",0)
+			MES(KAPPA,"我就把它交換來了。",0)
+			MES(KAPPA,"那枚獎章可能\n還有些腥味，\n你就不要在意了。",0)
+			MES(KAPPA,"……再來一次吧？",0)
+			MES_close(KAPPA)
+		}
+
+	}
+	else
+	if(WK000==2)	// 崱LV2傪僋儕傾偟偰偒偨
+	{
+	//丂丂佀怴偟偔嬧儊僟儖傪僎僢僩偟偨丅
+		F_set(FV_FF_KappaSki_02)	//僔儖僶乕
+		MES(KAPPA,"白銀獎章啊。\n恭喜。",0)
+		MES(KAPPA,"另外，你知道\n這些銀是從哪裡來的嗎？",0)
+		MES(KAPPA,"從前有一個\n有錢人來\n攀登星之峰。",0)
+		MES(KAPPA,"在這裡迷路了３０個小時，\n最後逃回去了。",0)
+		MES(KAPPA,"他丟掉了一塊銀質的懷錶。\n這個就是用那些銀熔鑄的。",0)
+		MES(KAPPA,"還不錯吧？",0)
+		MES_close(KAPPA)
+
+		workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+		MES_pos(PLAYER1,"??W9【是啊】\n【不是】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+		if(WK_YESNO==1)
+		{
+			MES(KAPPA,"嗯，那再來一次吧？",0)
+			MES_close(KAPPA)
+		}
+		else
+		{
+			MES(KAPPA,"哦，那再來一次吧？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	if(WK000==1)	// 崱LV1傪僋儕傾偟偰偒偨
+	{
+	//丂丂佀怴偟偔摵儊僟儖傪僎僢僩偟偨丅
+		F_set(FV_FF_KappaSki_01)	//僽儘儞僘
+		MES(KAPPA,"青銅獎章。\n恭喜。",0)
+		MES(KAPPA,"…………………………",0)
+		MES(KAPPA,"不過也就是青銅獎章了。\n不值得太高興。",0)
+		MES(KAPPA,"另外這是\n以前在滑雪場裡\n撿到的。",0)
+		MES(KAPPA,"大概是飛機的零件吧。\n經常會掉落在這裡。",0)
+		MES(KAPPA,"……再來一次吧？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==10)
+	{
+	//丂丂佀僞僀儉偑旕忢偵抶偐偭偨丅
+		MES(KAPPA,"……太慢了。\n你在路上做什麼呢？",0)
+		MES(KAPPA,"一定在做什麼吧。\n一定是的。",0)
+		MES(KAPPA,"副業？補妝？\n打瞌睡？隨地大小便？",0)
+		MES(KAPPA,"算了，不管怎樣，\n你要再認真一點才行。",0)
+		MES(KAPPA,"……再來一次吧？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==7)
+	{
+	//丂丂佀巰朣仌僊僽傾僢僾
+		MES(KAPPA,"咦，不玩了？",0)
+		MES(KAPPA,"還很早嘛。\n有些掃興。",0)
+		MES(KAPPA,"今天有急事嗎？\n看起來好像很著急的樣子。",0)
+		MES(KAPPA,"算了。",0)
+		MES(KAPPA,"……再來一次吧？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==6 || WK000==9)
+	{
+	//丂丂佀(撧棊)(僟儊乕僕)
+		if(WK001==4)
+		{
+		//	name("佀僇僢僷偲嫞憟拞偩偭偨丅乮俴倴係乯")
+			MES(KAPPA,"咦，你在做什麼呢？",0)
+			MES(KAPPA,"這次有些慢吧？\n嗯，絕對慢了。",0)
+			MES(KAPPA,"大概是這樣吧，\n東張西望，最後撞在牆上。",0)
+			MES(KAPPA,"不要粗心大意啊。\n……你們知道吧？",0)
+			MES_close(KAPPA)
+
+			workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【知道】\n【不知道】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+			if(WK_YESNO==1)
+			{
+				MES(KAPPA,"這樣啊，\n那再來一次吧？？",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				MES(KAPPA,"哦，那再來一次吧？",0)
+				MES_close(KAPPA)
+			}
+		}
+		else
+		{
+		//	name("佀偦傟埲奜")
+			MES(KAPPA,"……很疼吧。\n滑雪的時候向前看了嗎？",0)
+			MES(KAPPA,"不能東張西望啊。\n周圍也什麼都沒有。",0)
+			MES(KAPPA,"還是說沒有習慣？\n要不要在你背後貼新手上路啊？",0)
+			MES(KAPPA,"算了，不管怎樣，\n下次要注意啊。",0)
+			MES(KAPPA,"……再來一次吧？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	if(WK000==12)
+	{
+	//丂丂佀捹傪堦屄傕妱傟側偐偭偨丅
+		MES(KAPPA,"……那個，\n你們有認真滑嗎？",0)
+		MES(KAPPA,"不打破路上的\n罐子可不行啊。",0)
+		MES(KAPPA,"只是滑下來的話\n連盤子都做得到吧？\n對吧？",0)
+		MES(KAPPA,"……再來一次吧？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==11)
+	{
+	//丂丂佀捹傪偁傑傝妱傟側偐偭偨丅
+		MES(KAPPA,"罐子的位置\n稍微努力一下就能記住。",0)
+		MES(KAPPA,"嗯，肯定能記住。\n很快就會記住的。",0)
+		MES(KAPPA,"好了，下次加油。",0)
+		MES(KAPPA,"……再來一次吧？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==8)
+	{
+	//丂丂佀捹傪偨偔偝傫妱偭偨偑儊僟儖偵撏偐側偐偭偨丅
+		MES(KAPPA,"路線選擇得不錯哦，\n就我來看。",0)
+		MES(KAPPA,"可是還差一點。\n感覺上就差\n那麼一點。",0)
+		MES(KAPPA,"……吃一點維他命Ｃ如何？",0)
+		MES(KAPPA,"感覺你們一定缺乏維他命Ｃ。",0)
+		MES(KAPPA,"……再來一次吧？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==13)
+	{
+	//	name("佀僇僢僷偺曽偑憗偐偭偨")
+		MES(KAPPA,"……我贏了。\n後悔嗎？",0)
+		MES(KAPPA,"不過，\n再怎麼說\n我也是河童呢。",0)
+//		MES(KAPPA,"懡暘孨偨偪傛傝\n塣摦恄宱偄偄偟丅",0)
+		MES(KAPPA,"大概比你們\n運動神經更發達一些。",0)
+		MES(KAPPA,"分身之類的對河童而言\n也都是常識。",0)
+		MES(KAPPA,"……再來一次吧？",0)
+		MES_close(KAPPA)
+	}
+
+	if(WK005!=1)
+	{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		workL(WK_CANCEL,SET,3)//亂傗傔傞亃
+		MES_pos(PLAYER1,"??W9【再來一次】\n【回到落星之鄉】\n【放棄】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+		if(WK_YESNO==1)	//	name("佀乽傕偆堦搙傗傞乿")
+		{
+			if(SP002<100)												//壗屘偐敾掕偱偒側偄丒丒丒
+			{
+			//	name("佀侾侽侽儁儞僱帩偭偰側偄応崌丅")
+				MES(KAPPA,"……你們真窮啊。",0)
+				MES(KAPPA,"沒有１００芬尼是不能玩的哦。",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				if( FV_FF_KappaSki_03 || FV_FF_KappaSki_04 )
+				{
+					// LV3埲忋傪僋儕傾偟偰偄傞
+					workL(WK_CANCEL,SET,5)//亂傗傔傞亃
+					MES_pos(PLAYER1,"??W9【挑戰Ｌｖ４】\n【挑戰Ｌｖ３】\n【挑戰Ｌｖ２】\n【挑戰Ｌｖ１】\n【還是算了】",0,320,240,0,0)
+					wait_W(WK_YESNO)
+					MES_close(PLAYER1)
+					wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+					if(WK_YESNO==1)
+						workL(WK_YESNO,SET,4)	//嫮惂曄峏
+					else if(WK_YESNO==2)
+						workL(WK_YESNO,SET,3)	//嫮惂曄峏
+					else if(WK_YESNO==3)
+						workL(WK_YESNO,SET,2)	//嫮惂曄峏
+					else if(WK_YESNO==4)
+						workL(WK_YESNO,SET,1)	//嫮惂曄峏
+				}
+				else if( FV_FF_KappaSki_02)
+				{
+					// LV2傪僋儕傾偟偰偄傞
+					workL(WK_CANCEL,SET,4)//亂傗傔傞亃
+					MES_pos(PLAYER1,"??W9【挑戰Ｌｖ３】\n【挑戰Ｌｖ２】\n【挑戰Ｌｖ１】\n【還是算了】",0,320,240,0,0)
+					wait_W(WK_YESNO)
+					MES_close(PLAYER1)
+					wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+					if(WK_YESNO==1)
+						workL(WK_YESNO,SET,3)	//嫮惂曄峏
+					else if(WK_YESNO==2)
+						workL(WK_YESNO,SET,2)	//嫮惂曄峏
+					else if(WK_YESNO==3)
+						workL(WK_YESNO,SET,1)	//嫮惂曄峏
+					else if(WK_YESNO==4)
+						workL(WK_YESNO,SET,5)	//乽傗傔偲偔乿傪俆偵嫮惂曄峏
+				}
+				else if( FV_FF_KappaSki_01)
+				{
+					// LV1傪僋儕傾偟偰偄傞
+					workL(WK_CANCEL,SET,3)//亂傗傔傞亃
+					MES_pos(PLAYER1,"??W9【挑戰Ｌｖ２】\n【挑戰Ｌｖ１】\n【還是算了】",0,320,240,0,0)
+					wait_W(WK_YESNO)
+					MES_close(PLAYER1)
+					wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+					if(WK_YESNO==1)
+						workL(WK_YESNO,SET,2)	//嫮惂曄峏
+					else if(WK_YESNO==2)
+						workL(WK_YESNO,SET,1)	//嫮惂曄峏
+					else if(WK_YESNO==3)
+						workL(WK_YESNO,SET,5)	//乽傗傔偲偔乿傪俆偵嫮惂曄峏
+				}
+				else
+				{
+					// 傑偩僋儕傾偟偰偄側偄
+					// 佀傑偩僋儕傾偟偰偄側偄応崌偼丄栤摎柍梡偱俴倴侾傪奐巒丅
+					workL(WK_YESNO,SET,1)
+				}
+
+				if(WK_YESNO<5)
+				{
+					//	name("佀俴倴侾乣俴倴係")
+					EV("KAPPA_RETRY")
+					wait_EV("KAPPA_RETRY")
+				}
+				else	//	name("佀乽傗傔傞乿")
+				{
+					MES(KAPPA,"啊，是嗎。",0)
+					MES_close(KAPPA)
+				}
+			}
+		}
+		else
+		if(WK_YESNO==2)	//傕偆棦偵婣傞
+		{
+			MES(KAPPA,"嗯，我知道了。",0)
+			MES(KAPPA,"再來玩哦。",0)
+			MES_close(KAPPA)
+
+		//丂丂僼僃乕僪傾僂僩仌備偭偔傝僼僃乕僪僀儞偟偰丄惎崀傝偺棦丒堜屗偺慜偵弌傞丅
+			fade_in( 100, 60, BLACK)	//埫揮
+			wait_fade()
+
+			workG(GW_ENTRY_EVENT,SET,3)	//僗僉乕偐傜栠傝
+			new_map(10400)
+
+		//丂丂僀儀儞僩廔椆丄憖嶌嫋壜丅
+		}
+		else	//	name("佀乽傗傔傞乿")
+		{
+			MES(KAPPA,"啊，是嗎。",0)
+			MES_close(KAPPA)
+		}
+	}
+	workL(005,SET,0)
+
+	TK_end()
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+// 僇僢僷僗僉乕偺儕僩儔僀張棟
+// {偺僱僗僩偑怺偔側偭偰偟傑偭偨偺偱丄暘妱偟偨
+
+KAPPA_RETRY
+{
+	//慜夞偺僐乕僗偲崱夞偺僐乕僗偑堦抳偟偰偄傞丠
+	workL(07,SET,0)
+
+	//僐乕僗曐懚
+	if(WK_YESNO==1)
+		workL(06,SET,1)
+	else if(WK_YESNO==2)
+		workL(06,SET,2)
+	else if(WK_YESNO==3)
+		workL(06,SET,3)
+	else if(WK_YESNO==4)
+		workL(06,SET,4)
+	else
+		workL(06,SET,0)
+
+	//摨偠僐乕僗丠
+	if(WK006==1 && WK001==1)
+	{
+		workL(07,SET,1)
+	}
+	else
+	if(WK006==2 && WK001==2)
+	{
+		workL(07,SET,1)
+	}
+	else
+	if(WK006==3 && WK001==3)
+	{
+		workL(07,SET,1)
+	}
+	else
+	if(WK006==4 && WK001==4)
+	{
+		workL(07,SET,1)
+	}
+	else
+	{
+		//堘偆僐乕僗傪慖戰偟偨
+		workL(07,SET,0)
+		workG(GW_SKI_MISS,SET,0)	//儈僗偺夞悢傪弶婜壔
+		workG(GW_SKI_DOWN,SET,0)	//擄堈搙僟僂儞傪弶婜壔
+	}
+
+	//摨偠僐乕僗偱俁夞埲忋儈僗丠
+	if(WK007==1 && GW_SKI_MISS>=5 && GW_SKI_DOWN<3)
+	{
+		//嵞挧愴
+		workL(WK_CANCEL,SET,4)//亂傗傔偲偔亃
+		if(GW_SKI_DOWN>=2)
+		{
+			//俁抜奒乮堦斣娙扨乯壓偘傞丅
+			MES(KAPPA,"……咦？",0)
+			MES_close(KAPPA)
+
+//丂丂僇僢僷偵丒丒丒僄儌乕僔儑儞丅
+			EMO(KAPPA,EMO_TENTEN)
+			wait(30)
+
+			MES(KAPPA,"你們難道是……",0)
+			MES(KAPPA,"還在糾結\n這個遊戲嗎？",0)
+			MES(KAPPA,"好奇怪哦。\n應該對你來說很簡單呀。",0)
+			MES(KAPPA,"我可以一邊打瞌睡\n一邊過關呢。",0)
+			MES_close(KAPPA)
+
+//丂丂僇僢僷偵丒丒丒僄儌乕僔儑儞丅
+			EMO(KAPPA,EMO_TENTEN)
+			wait(30)
+
+			MES(KAPPA,"……真沒辦法。",0)
+			MES(KAPPA,"今天在最後，\n我就對你特殊照顧一下，讓你輕鬆過關吧。",0)
+			MES(KAPPA,"……要試試嗎？",0)
+			MES_close(KAPPA)
+
+			MES_pos(PLAYER1,"??W9【希望輕鬆過關（交出９００￥）】\n【直接挑戰】\n【聽訣竅】\n【還是算了】",0,320,240,0,0)
+		}
+		else if(GW_SKI_DOWN==1)
+		{
+			//俀抜奒壓偘傞
+			MES(KAPPA,"對了……",0)
+
+			if( F6_11_GameClear)	//仛倅倵倕倝嘦傪僋儕傾偟偨
+			{
+				MES(KAPPA,"你們知道嗎？\n最近好像出了\n新的模型哦。",0)
+				MES(KAPPA,"隱藏模型的數量\n有所增加，\n收集起來很困難呢。",0)
+				MES(KAPPA,"而且啊，\n價錢都很貴。\n河童這月手頭很緊。",0)
+				MES(KAPPA,"……你應該明白\n我的意思了吧？",0)
+			}
+			else//堦廃栚
+			{
+				MES(KAPPA,"你們知道嗎？\n最近據說有很多\n新模型發售哦。",0)
+				MES(KAPPA,"隱藏模型的數量\n有所增加，\n收集起來很困難呢。",0)
+				MES(KAPPA,"而且啊，\n價錢都很貴。\n河童這月手頭很緊。",0)
+				MES(KAPPA,"……你應該明白\n我的意思了吧？",0)
+			}
+
+			MES_close(KAPPA)
+
+			MES_pos(PLAYER1,"??W9【希望更簡單些（交出４００￥）】\n【直接挑戰】\n【聽訣竅】\n【還是算了】",0,320,240,0,0)
+		}
+		else
+		{
+			//侾抜奒壓偘傞
+		//丂丂僇僢僷偵丒丒丒僄儌乕僔儑儞丅
+			EMO(KAPPA,EMO_TENTEN)
+			wait(30)
+
+			MES(KAPPA,"我說……",0)
+			MES(KAPPA,"你是不是很辛苦啊？",0)
+			MES_close(KAPPA)
+
+		//丂丂僇僢僷丄庤傪僷僞僷僞丅
+			EV("MOTION_KAPPA")
+			wait_EV("MOTION_KAPPA")
+
+			MES(KAPPA,"只是撞破路上的罐子而已。\n憑自己的感覺去滑就可以了。",0)
+			MES(KAPPA,"……話說，你們最近\n經常來呢。",0)
+			MES(KAPPA,"河童覺得，稍微給你們\n減輕下難度\n也是可以的。",0)
+			MES(KAPPA,"你們覺得呢？",0)
+			MES_close(KAPPA)
+
+			MES_pos(PLAYER1,"??W9【希望簡單些（交出１００￥）】\n【直接挑戰】\n【聽訣竅】\n【還是算了】",0,320,240,0,0)
+		}
+
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+		if(WK_YESNO==1)
+		{
+			//擄堈搙壓偘偰儕僩儔僀
+			//丂丂強帩嬥傪尭傜偡丅
+			if(GW_SKI_DOWN>=2)
+			{
+				if(SP002<1000)
+				{
+				//	name("佀侾侽侽侽儁儞僱帩偭偰側偄応崌丅")
+					MES(KAPPA,"……你們真是寒酸啊。",0)
+					MES(KAPPA,"不拿出１０００芬尼是不會有所改變的。",0)
+					MES_close(KAPPA)
+
+					//偍嬥偑懌傝側偄偺偱丄廔椆
+					workL(07,SET,2)
+				}
+				else
+				{
+					MES(KAPPA,"嗯，我知道了。",0)
+					if(WK006==4)
+					{
+						// LV4
+						MES(KAPPA,"給你減少\n１０個罐子吧。",0)
+						MES(KAPPA,"受傷次數\n不得超過５次。",0)
+					}
+					else
+					if(WK006==3)
+					{
+						// LV3
+						MES(KAPPA,"給你減少\n１６個罐子吧。",0)
+						MES(KAPPA,"受傷次數\n不得超過５次。",0)
+					}
+					else
+					if(WK006==2)
+					{
+						// LV2
+						MES(KAPPA,"給你減少\n２０個罐子吧。",0)
+					}
+					else
+					{
+						// LV1
+						MES(KAPPA,"給你減少\n１６個罐子吧。",0)
+					}
+					MES(KAPPA,"那麼請加油。",0)
+					MES_close(KAPPA)
+
+					MES(KAPPA,"收你１０００芬尼。",0)
+					SE(008,PLAYER1)
+					get_gold(-1000,RAGNA)
+					MES(KAPPA,"這算是\n手續費啦。",0)
+					MES_close(KAPPA)
+
+					//娙扨偵偡傞
+					workG(GW_SKI_DOWN,ADD,1)	//偙傟傑偱傛傝娙扨偵
+					workG(GW_SKI_MISS,SET,0)	//儈僗偺夞悢傪弶婜壔
+				}
+			}
+			else
+			if(GW_SKI_DOWN>=1)
+			{
+				if(SP002<500)
+				{
+				//	name("佀俆侽侽儁儞僱帩偭偰側偄応崌丅")
+					MES(KAPPA,"……你們真是寒酸呢。",0)
+					MES(KAPPA,"不拿出５００芬尼是不會有所改變的。",0)
+					MES_close(KAPPA)
+
+					//偍嬥偑懌傝側偄偺偱丄廔椆
+					workL(07,SET,2)
+				}
+				else
+				{
+					MES(KAPPA,"嗯。我知道了。",0)
+					if(WK006==4)
+					{
+						// LV4
+						MES(KAPPA,"給你減少\n５個罐子吧。",0)
+						MES(KAPPA,"受傷次數\n不得超過３次。",0)
+					}
+					else
+					if(WK006==3)
+					{
+						// LV3
+						MES(KAPPA,"給你減少\n８個罐子吧。",0)
+						MES(KAPPA,"受傷次數\n不得超過３次。",0)
+					}
+					else
+					if(WK006==2)
+					{
+						// LV2
+						MES(KAPPA,"給你減少\n１０個罐子吧。",0)
+					}
+					else
+					{
+						// LV1
+						MES(KAPPA,"給你減少\n８個罐子吧。",0)
+					}
+					MES(KAPPA,"那麼請加油。",0)
+					MES_close(KAPPA)
+
+					MES(KAPPA,"收你５００芬尼。",0)
+					SE(008,PLAYER1)
+					get_gold(-500,RAGNA)
+					MES(KAPPA,"這算是\n手續費啦。",0)
+					MES_close(KAPPA)
+
+					//娙扨偵偡傞
+					workG(GW_SKI_DOWN,ADD,1)	//偙傟傑偱傛傝娙扨偵
+					workG(GW_SKI_MISS,SET,0)	//儈僗偺夞悢傪弶婜壔
+				}
+			}
+			else
+			{
+				if(SP002<200)
+				{
+				//	name("佀俀侽侽儁儞僱帩偭偰側偄応崌丅")
+					MES(KAPPA,"……你們真是寒酸呢。",0)
+					MES(KAPPA,"不拿出２００芬尼是不會有所改變的。",0)
+					MES_close(KAPPA)
+
+					//偍嬥偑懌傝側偄偺偱丄廔椆
+					workL(07,SET,2)
+				}
+				else
+				{
+
+
+					MES(KAPPA,"嗯。我知道了。",0)
+					if(WK006==4)
+					{
+						// LV4
+						MES(KAPPA,"給你減少\n２個罐子吧。",0)
+						MES(KAPPA,"受傷次數\n不得超過１次。",0)
+					}
+					else
+					if(WK006==3)
+					{
+						// LV3
+						MES(KAPPA,"給你減少\n４個罐子吧。",0)
+						MES(KAPPA,"受傷次數\n不得超過１次。",0)
+					}
+					else
+					if(WK006==2)
+					{
+						// LV2
+						MES(KAPPA,"給你減少\n５個罐子吧。",0)
+					}
+					else
+					{
+						// LV1
+						MES(KAPPA,"給你減少\n４個罐子吧。",0)
+					}
+					MES(KAPPA,"那麼請加油。",0)
+					MES_close(KAPPA)
+
+					MES(KAPPA,"收你２００芬尼。",0)
+					SE(008,PLAYER1)
+					get_gold(-200,RAGNA)
+					MES(KAPPA,"這算是\n手續費啦。",0)
+					MES_close(KAPPA)
+
+					//娙扨偵偡傞
+					workG(GW_SKI_DOWN,ADD,1)	//偙傟傑偱傛傝娙扨偵
+					workG(GW_SKI_MISS,SET,0)	//儈僗偺夞悢傪弶婜壔
+				}
+			}
+		}
+		else
+		if(WK_YESNO==2)
+		{
+			//偙偺傑傑
+			workL(07,SET,0)
+		}
+		else
+		if(WK_YESNO==3)
+		{
+			//僐僣傪暦偔
+			MES(KAPPA,"有個老鼠很喜歡滑雪，\n是這裡的常客。",0)
+			MES(KAPPA,"它曾經這麼說過。",0)
+			MES_close(KAPPA)
+
+			//偙偙偐傜怓曄偊偟偰傎偟偄
+			//僐乕僗暿傾僪僶僀僗
+			if(WK006==4)
+			{
+				// LV4
+				MES(KAPPA,"『給不擅長滑雪的你\n幾點建議。』",0)
+				MES(KAPPA,"『如果挑戰第四關，\n切記不要隨便減速。』",0)
+				MES(KAPPA,"『無謂的跳躍\n或者隨便轉身\n也會導致失敗。』",0)
+				MES(KAPPA,"『看准最短的路線\n非常重要。』",0)
+				MES(KAPPA,"『切記！\n不要隨便跳躍！』",0)
+			}
+			else
+			if(WK006==3)
+			{
+				// LV3
+				MES(KAPPA,"『給不擅長滑雪的你\n幾點建議。』",0)
+				MES(KAPPA,"『如果挑戰第三關，\n跳躍的時機非常關鍵。』",0)
+				MES(KAPPA,"『有幾個重點需要注意。』",0)
+				MES(KAPPA,"『①分歧點右側的２個罐子。\n撞上第一個後馬上跳躍，\n著地時正好踩上第二個。』",0)
+				MES(KAPPA,"『②：越過山谷的時候。\n最後關頭再跳躍，\n調整好落地位置。』",0)
+				MES(KAPPA,"『③：在通路上\n跳躍兩次，\n調整好速度。』",0)
+				MES(KAPPA,"『④：第三次躍起的時候，\n踩到罐子的同時\n越過山谷。』",0)
+				MES(KAPPA,"『注意時機！\n總之，集中精神！』",0)
+			}
+			else
+			if(WK006==2)
+			{
+				// LV2
+				MES(KAPPA,"『給不擅長滑雪的你\n幾點建議。』",0)
+				MES(KAPPA,"『一開始加速，\n也有可能無法撞到罐子。』",0)
+				MES(KAPPA,"『要一邊減速，\n一邊破壞罐子。』",0)
+				MES(KAPPA,"『要為了減速側身滑行，\n也要為了轉彎側身滑行。』",0)
+				MES(KAPPA,"『如果找不到感覺，\n可以先稍作練習。』",0)
+				MES(KAPPA,"『控制好速度，\n就能控制好滑雪！』",0)
+			}
+			else
+			{
+				// LV1
+				MES(KAPPA,"『給不擅長滑雪的你\n幾點建議。』",0)
+				MES(KAPPA,"『搖杆最好先調整到\n一直向上的\n狀態。』",0)
+				MES(KAPPA,"『這樣有助於轉彎，\n也助於進行\n方向的調整。』",0)
+				MES(KAPPA,"『速度過快的話，\n有可能無法轉彎。』",0)
+				MES(KAPPA,"『這時將搖桿向下\n用於減速。』",0)
+				MES(KAPPA,"『而且身體側傾和\n跳躍的時候，\n也可以調整速度。』",0)
+				MES(KAPPA,"『注意速度！\n滑雪時切勿急轉彎！請牢記！』",0)
+			}
+
+			MES(KAPPA,"……就是這樣。\n對你有幫助嗎？",0)
+			MES_close(KAPPA)
+
+			//偍嬥傪巟暐傢偢廔椆
+			workL(07,SET,2)
+		}
+		else	//	name("佀乽傗傔傞乿")
+		{
+			MES(KAPPA,"對了。",0)
+			MES_close(KAPPA)
+
+			//偍嬥傪巟暐傢偢廔椆
+			workL(07,SET,2)
+		}
+	}
+	else
+		workL(07,SET,0)
+
+	if(WK007==0)
+	{
+		//晛捠偵儕僩儔僀
+		MES(KAPPA,"那麼要收１００芬尼。",0)
+		SE(008,PLAYER1)
+		MES(KAPPA,"這個就算是\n登山費。",0)
+		MES_close(KAPPA)
+
+		//強帩嬥敾掕偼偡偱偵嵪傫偱偄傞
+		//丂丂強帩嬥傪侾侽侽儁儞僱尭傜偡丅
+		get_gold(-100,RAGNA)
+	}
+
+	if(WK007!=2)	//偍嬥偑懌傝偰巟暐偭偰偄傟偽丄僗僉乕応傊峴偔
+	{
+		fade_in( 100, 60, BLACK)	//埫揮
+		wait_fade()
+
+		workG(GW_SKI_PARTNER,SET,0)	//儔僌僫偩偗
+		if(SP004==5)
+		{
+			workG(GW_SKI_PARTNER,SET,5)	//僆僨僢僒
+		}
+		else if(SP004==12)
+		{
+			workG(GW_SKI_PARTNER,SET,12)	//僆僨僢僒
+		}
+		else if(SP004==13)
+		{
+			workG(GW_SKI_PARTNER,SET,13)	//僆僨僢僒
+		}
+		else if(SP004==6)
+		{
+			workG(GW_SKI_PARTNER,SET,6)	//僗僶儖
+		}
+		else if(SP004==1)
+		{
+			workG(GW_SKI_PARTNER,SET,1)	//傾儖僂僃儞
+		}
+
+		clear_party(PARTNER)	//僷乕僩僫乕徚嫀
+
+		//丂丂僼僃乕僪傾僂僩偟丄傕偆堦搙僗僉乕儅僢僾偺僀儀儞僩偐傜奐巒偡傞丅
+		workG(GW_ENTRY_EVENT,SET,1)	//僗僉乕奐巒
+
+		if(WK006==1)
+			new_map(10490)
+		else if(WK006==2)
+			new_map(10491)
+		else if(WK006==3)
+			new_map(10492)
+		else if(WK006==4)
+			new_map(10493)
+		else
+			new_map(10490)
+	}
+}
+
+
+TK_FIGURE
+{
+
+			if(WK000==4)
+				MES(KAPPA,"……白金獎章！\n幹得漂亮。",0)
+			else
+				MES(KAPPA,"……說起來你們\n拿到了白金獎章呢。",0)
+
+			MES(KAPPA,"很厲害嘛。",0)
+			MES(KAPPA,"在星之峰上戰勝我\n不是那麼容易的。",0)
+			MES_close(KAPPA)
+			wait_MES(KAPPA)
+
+		//丂丂僇僢僷偵丒丒丒僄儌乕僔儑儞丅
+			EFF_chr(25124,KAPPA,0,100,0,"Bone_Head")
+			wait(80)
+
+			MES(KAPPA,"這種時候還是要\n給你們一些獎勵呢。",0)
+			MES(KAPPA,"……沒有辦法。\n從我的收藏中\n拿出一個吧。",0)
+			MES(KAPPA,"說不定\n能讓你們大吃一驚……",0)
+			EV("MOTION_KAPPA2")
+			wait_EV("MOTION_KAPPA2")
+			MES(KAPPA,"拿著。",0)
+			MES_close(KAPPA)
+
+		//丂丂亜儖僁偺僼傿僊儏傾僎僢僩丅
+
+			fade_in(30,10,BLACK)
+
+			Load_BMP(14,"sys\\icon00.itm","sys\\icon00a.itm")
+			menuBMP(3,	14,	0,40,20,20)
+
+			F_set(2859)//儖僁
+			SE(019,PLAYER1)
+
+			menu(3,	0,	230, 225,  0,	32, 32,	 0,  0,0)
+			menu(3,	0,	230, 225,  0,	32, 32,	10,100,0)
+
+			menu(0,	3,	200,210,0,	280,60,	-20,0,0)
+			menuTXT(0,	"得到了L446露的模型L777。",	20,WHITE)
+			menuTextPos(0,70,23)
+			menuEVENT(0,"0","0","0")
+			wait_key(0)
+			menu(3,	-1,	-1, -1, -1,	-1, -1,	0,0,0)
+			menu(0,	-1,	-1, -1, -1,	-1, -1,	0,0,0)
+			menuTextPos(0,0,0)
+
+			fade_in(0,10,BLACK)
+			wait_fade()
+			MOT(KAPPA,2,15)
+
+		//丂丂儔僌僫偨偪偵婥晅偒僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_TOGEBIKKURI)
+
+			//扤偩偐抦傜側偄偗偳僷乕僩僫乕偑偄傞
+			if( !F4_00_StartSolo )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+			else
+			if( F4_02_GoVillage2 && !F5_00_HearLunar )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+			else
+			if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+			else
+			if( F6_00_GoToMeru )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+
+			if( F5_00_HearLunar )
+				EMO(PET,EMO_TOGEBIKKURI)
+			wait(30)
+
+		//	name("愭摢僉儍儔丒傑偨偼儖僁")
+			if( F5_00_HearLunar )
+			{
+				MES(PET,"哎……！？",0)
+				MES_close(PET)
+			}
+			else
+			{
+				MES(PLAYER1,"哎……！？",0)
+				MES_close(PLAYER1)
+			}
+
+			MES(KAPPA,"看，大吃一驚了吧？\n果然沒錯？",0)
+			MES(KAPPA,"這個畢竟是所謂的\n稀有模型。",0)
+			MES(KAPPA,"相當稀有呢，\n每個人知道我有這個模型\n都會吃驚的。",0)
+			MES(KAPPA,"啊……那個\n要小心保管呢。",0)
+			MES(KAPPA,"大概別的地方已經找不到了。",0)
+			MES_close(KAPPA)
+			workL(005,SET,1)//儕僩儔僀張棟傪旘偽偡丅
+
+
+}
+
+
+
+
+MOTION_KAPPA
+{
+
+	MOT_SET(KAPPA,151,151,461,461,-1,-1)	//
+	MOT_SET(KAPPA,152,152,463,463,-1,-1)	//
+	MOT(KAPPA,152,10)
+	wait(10)
+	MOT(KAPPA,151,6)
+	wait(6)
+	MOT(KAPPA,152,6)
+	wait(6)
+
+	MOT(KAPPA,151,6)
+	wait(6)
+	MOT(KAPPA,152,6)
+	wait(6)
+	MOT(KAPPA,151,6)
+	wait(6)
+	MOT(KAPPA,152,6)
+	wait(6)
+
+	MOT(KAPPA,2,10)
+
+}
+
+MOTION_KAPPA2
+{
+
+	MOT_SET(KAPPA,153,-1,509,509,154,0)	//壗偐搉偡巇憪
+	MOT_SET(KAPPA,154,-1,510,510,155,0)
+	MOT_SET(KAPPA,155,-1,511,511,-1,0)
+	MOT(KAPPA,153,15)
+
+}
+
+
+//  1=僗僉乕LV1僋儕傾(摵)
+//  2=僗僉乕LV2僋儕傾(嬧)
+//  3=僗僉乕LV3僋儕傾(嬥)
+//  4=僗僉乕LV4僋儕傾(僾儔僠僫)
+//  5=僗僉乕僋儕傾嵪傒儊僟儖
+//  6=僗僉乕幐攕(撧棊)
+//  7=僗僉乕幐攕(巰朣)
+//  8=僗僉乕幐攕(僣儃丄偍偟偄)
+//  9=僗僉乕幐攕(僟儊乕僕)
+// 10=僗僉乕幐攕(僞僀儉)
+// 11=僗僉乕幐攕(僣儃丄懌傝側偄)
+// 12=僗僉乕幐攕(僣儃丄僛儘)
+// 13=僗僉乕幐攕(僇僢僷偵晧偗偨)
+
+//DB_CLEAR_2丗僋儕傾嵪傒惉愌乮儔儞僟儉偱僐僱僞乯
+
+DB_SKY_1
+{
+	workL(000,SET,1)// 00 寢壥偺僐僺乕
+}
+DB_SKY_2
+{
+	workL(000,SET,2)// 00 寢壥偺僐僺乕
+}
+DB_SKY_3
+{
+	workL(000,SET,3)// 00 寢壥偺僐僺乕
+}
+DB_SKY_4
+{
+	workL(000,SET,4)// 00 寢壥偺僐僺乕
+}
+DB_SKY_5
+{
+	workL(000,SET,5)// 00 寢壥偺僐僺乕
+}
+DB_SKY_6
+{
+	workL(000,SET,6)// 00 寢壥偺僐僺乕
+}
+DB_SKY_7
+{
+	workL(000,SET,7)// 00 寢壥偺僐僺乕
+}
+DB_SKY_8
+{
+	workL(000,SET,8)// 00 寢壥偺僐僺乕
+}
+DB_SKY_9
+{
+	workL(000,SET,9)// 00 寢壥偺僐僺乕
+}
+DB_SKY_10
+{
+	workL(000,SET,10)// 00 寢壥偺僐僺乕
+}
+DB_SKY_11
+{
+	workL(000,SET,11)// 00 寢壥偺僐僺乕
+}
+DB_SKY_12
+{
+	workL(000,SET,12)// 00 寢壥偺僐僺乕
+}
+DB_SKY_13
+{
+	workL(000,SET,13)// 00 寢壥偺僐僺乕
+}
+
+
+DB_CLEAR_2
+{
+	workL(002,SET,2)// 02 僋儕傾嵪傒敾掕梡
+}
+
+LUE_FIGURE_CLR
+{
+	F_reset(2859)
+}
+
+Yasaku_Memo_CLR
+{
+	F_reset(1980)
+	F_reset(1975)
+}
+
+WK010_RAND
+{
+	//僇僢僷堦斒夛榖梡偺WK
+	if( GW_HUNTER_RANK>=16 )
+		workL(010,RAND,5)
+	else
+		workL(010,RAND,4)
+
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

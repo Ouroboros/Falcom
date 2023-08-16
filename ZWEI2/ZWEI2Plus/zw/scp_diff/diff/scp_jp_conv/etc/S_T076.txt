@@ -1,0 +1,485 @@
+//──────────────────────────────
+//	name("◆カイ（一般人男）Kai")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_KAI
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(KAI, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,KAI)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,KAI)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KAI)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KAI)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KAI)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KAI)
+		}
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□
+	//──────────────────────────────
+	//　　※アルッテの町、噴水の右側に立っている。
+	//　　※初回イベント。
+	if(F6_05_EndSixth)
+	{
+		rot_chr(KAI,30,PLAYER1)
+		MOT(KAI,50,15)
+		if(!FS_13_TalkKai)
+		{
+			MES(RAGNA,"カイ……？",0)
+			MES(RAGNA,"こっちに来てたのか。",0)
+			MES_close(RAGNA)
+
+		//	name2(KAI)
+			MES(KAI,"フン、勘違いするなよ。\n町の偵察に来ただけだ。",0)
+			MES(KAI,"断じて、見送りに\n来たわけじゃないからな。",0)
+			MES_close(KAI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（だ、誰もそんなこと\n  聞いてないだろ……）",0)
+			MES_close(RAGNA)
+
+		//	name2(KAI)
+			MES(KAI,"──それとは別に、だ。",0)
+			MES(KAI,"テンザン様からお前たちに\n言付かっている事がある。",0)
+			MES(KAI,"『少し所用で出かけており、\n  見送りには立ち会えそうにない。\n  申し訳ない。』",0)
+			MES(KAI,"『だが、恐らくスバルが\n  立ち会っているだろうから、\n  あの子を里の代表と思ってくれ。』",0)
+			MES(KAI,"『お２人はまだ若い。\n  これから先も素晴らしい人生が\n  待っている事だろう。』",0)
+			MES(KAI,"『２人の未来に幸あらんことを。』\n……だそうだ。",0)
+			MES_close(KAI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"そうか……",0)
+			MES(RAGNA,"サンキュー、\nわざわざ伝えてくれてよ。",0)
+			MES_close(RAGNA)
+
+		//	name2(ミア)
+			MES(PARTNER,"ご丁寧に、\nありがとうございました。",0)
+			MES_close(PARTNER)
+
+		//	name2(KAI)
+			MES(KAI,"いや……言伝も\n俺たち忍びの仕事だからな。",0)
+			MES(KAI,"さっさと行け。\n飛行場に人を待たせているんだろう？",0)
+			MES(KAI,"あまり遅れると、\nスバルの奴が捜しに来るぞ。",0)
+			MES_close(KAI)
+			//★テンザン【暖かい伝言】
+			F_set_note(-24,2)
+			F_set(FS_13_TalkKai)
+		}
+
+		//　　★テンザン【暖かい伝言】
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			MES(KAI,"俺たちは町の偵察に来ただけだ。",0)
+			MES(KAI,"カラスさんも、情報収集のために\n別の大陸へ行ってしまったからな。",0)
+			MES(KAI,"しばらくは俺たちが\n町に来ることになるだろう。",0)
+			MES(KAI,"……それだけだ。\n分かったらさっさと\n飛行場とやらに行け。",0)
+			MES_close(KAI)
+		}
+		MOT(KAI,52,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※里の見張りＣから里の外を見ている。
+	//　　　カイは普段着で包帯姿。．．．エモーション出しっぱなし。
+	//　　※初回イベント。
+	if(F6_00_GoToMeru)
+	{
+		if(!FS_12_TalkKai)
+		{
+			EV_stop("TENTEN_KAI")
+
+			MES(RAGNA,"ん……？",0)
+			MES(RAGNA,"どうかしたのか？\nこんな所で……",0)
+			MES_close(RAGNA)
+
+		//　　カイ、振り向く。
+			MOT(KAI,50,15)
+			rot_chr(KAI,30,PLAYER1)
+			MES(KAI,"……ああ、あんたたちか。",0)
+			MES(KAI,"いや、里の雰囲気も\n変わってきたなと思ってな。",0)
+			MES_close(KAI)
+
+		//　　カイ、向きを戻す。
+			rot(KAI,30,7)
+			MES(KAI,"ここの所、事件ばかり続くから\n気にしている間もなかったが……",0)
+			MES(KAI,"我々が守り続けてきた\n《護人》の使命も\n終わってしまったんだな。",0)
+			MES_close(KAI)
+
+		//　　カイに．．．エモーション。
+			EMO(RAGNA,EMO_TENTEN)
+			wait(30)
+
+			MES(KAI,"ならば、多少\n雰囲気が変わるのも当然か。",0)
+			MES(KAI,"それに……これからは\nその方がいいのかもしれない。",0)
+			MES(KAI,"俺たちは忍びとして生きてきた。\n当然、今はこの事態を乗り切ることに\n全力を尽くすが……",0)
+			MES(KAI,"ルリたち次の世代には\nもっと自由に生きて欲しいからな。",0)
+			MES_close(KAI)
+
+		//　　ラグナ、目をぱちくり。
+			MES(RAGNA,"へえ……",0)
+			MES_close(RAGNA)
+
+		//　　カイに？エモーション、振り返る。
+			EMO(KAI,EMO_HATENA)
+			rot_chr(KAI,30,RAGNA)
+			wait(30)
+
+			MES(KAI,"なんだ、どうかしたか？",0)
+			MES_close(KAI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"い、いや……\nお前も変わったなと思ってよ。",0)
+			MES_close(RAGNA)
+
+		//	name2(KAI)
+			MES(KAI,"フン……",0)
+			MES(KAI,"言っておくが、\n俺は今までのやり方を\n変えるつもりはない。",0)
+			MES(KAI,"テンザン様から\n任務変更の指示がない以上、\n里の守りは徹底するからな。",0)
+			MES_close(KAI)
+
+		//　　カイ、里の下のほうを向く。
+			rot(KAI,30,7)
+			
+			MES(KAI,"下に余所者が来ているな。",0)
+			MES(KAI,"とりあえず押さえてあるようだし\n……後で質しておくか。",0)
+			MES_close(KAI)
+			
+			//★カイ【里開きには賛成】
+		//	F_set_note(KAI,2)
+			F_set_note(-76,2)
+			F_set(FS_12_TalkKai)
+	
+		}
+		else
+		{
+		//　　★カイ【里開きには賛成】
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			rot_chr(KAI,30,RAGNA)
+
+			MOT(KAI,50,15)
+			if(!F_KAI)
+			{
+				MES(KAI,"俺も一度、町へ\n降りてみようかと思っている。",0)
+				MES(KAI,"町にはカラスさんたち上忍がいるし、\n色々と見て回るのは\n勉強になりそうだからな。",0)
+				MES_close(KAI)
+
+			//　　カイに．．．エモーション。
+				EMO(KAI,EMO_TENTEN)
+				wait(30)
+			//　　ラグナに？エモーション。
+				EMO(RAGNA,EMO_HATENA)
+				wait(30)
+				
+				MES(KAI,"……勿論許可を取ってだぞ。",0)
+				MES(KAI,"無許可で里を降りるような真似は\nこの俺が許さん。",0)
+				MES_close(KAI)
+				
+				MES(RAGNA,"（あ、頭が固いのは\n  相変わらずみたいだな……）",0)
+				MES_close(RAGNA)
+				
+				F_set(KAI)
+			}
+			else
+			{
+			//	name2(RAGNA)
+
+			//　　★繰り返し
+				MES(KAI,"俺も一度、町へ\n降りてみようかと思っている。",0)
+				MES(KAI,"近頃はルリも\n落ち着いてきたようだしな。",0)
+				MES(KAI,"色々と見て回って\n勉強するのも悪くないだろう。",0)
+				MES_close(KAI)
+			}
+		}
+		MOT(KAI,52,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※カイの家（民家２）にいる。
+	//　　※初回イベント。
+	//　　　カイの家に入るとイベント開始します。
+	//　　※オデッサがいる可能性があることに注意！
+	//　　カイは土間に座っており、ルリが支えているところ。
+	//　　カイは普段着包帯姿。
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		if(!FS_11_TalkKai)
+		{
+		//　　カイは普段着包帯姿。
+			MES(RAGNA,"お、おい……\nもう起き上がって平気なのか？",0)
+			MES_close(RAGNA)
+
+			look_chr( KAI, RAGNA,"Bone_Head")
+			look_chr( LURI, RAGNA,"Bone_Head")
+			MES(PET,"ちょっと、アンタも結構\n酷い怪我だったんじゃないの？",0)
+			MES_close(PET)
+
+			MOT(LURI,2,15)
+			rot(LURI,10,330)
+			MOT(KAI,2,60)
+
+			MES(KAI,"ああ、いや……",0)
+			KAO(KAI,"C","1","1")
+			MES(KAI,"あんたたちが発つと聞いたから、\n礼を言っておきたくてな。",0)
+			MES(KAI,"……スバルとテンザン様を\n助けてくれたこと、感謝する。",0)
+			MES_close(KAI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"はは、そんなの\n怪我が治ってからでいいのによ。",0)
+			MES(RAGNA,"……それに、２人を助けられたのは\nどちらかっつーと姫さんのお陰だぜ。",0)
+			MES(RAGNA,"モンブランを追い払えたのも\n姫さんの魔法があったからだしな。\n俺は大したことはしてねえよ。",0)
+			MES(RAGNA,"結局……その姫さんまで\n攫われちまったしな。",0)
+			MES_close(RAGNA)
+
+		//	name2(PET)
+			MES(PET,"………………………………",0)
+			MES_close(PET)
+
+			look_off(KAI)
+			KAO(KAI,"B","3","1")
+			MES(KAI,"そうか、\nあのときの女性が……",0)
+			MES_close(KAI)
+
+		//　　カイに少し．．．エモーション。
+			EMO(KAI,EMO_TENTEN)
+			wait(30)
+
+		//　　カイが姿勢を崩し、ルリが支える。
+			look_del(KAI)
+			look(KAI,"Bone_Head",0,		0,2,2,			0,0,-10)
+			MOT(KAI,150,10)
+			MOT(LURI,150,10)
+			rot(LURI,30,270)
+			KAO(KAI,"2","3","1")
+			look_off(LURI)
+			MES(KAI,"くっ……",0)
+			MES_close(KAI)
+
+			MES(LURI,"にーちゃ……",0)
+			MES_close(LURI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"お、おいおい……\n無理すんなって。",0)
+			MES_close(RAGNA)
+
+		//	name2(PET)
+			MES(PET,"そうそう、後の事は\nあたしたちに任せて、\n大人しく休んでなさいよ。",0)
+			MES_close(PET)
+
+			look(KAI,"Bone_Head",0,		0,2,2,			0,0,0)
+			look_chr( LURI, RAGNA,"Bone_Head")
+			//look_chr( KAI, RAGNA,"Bone_Head")
+//			KAO(KAI,"C","1","1")
+			MES(KAI,"そうだな……",0)
+			KAO(KAI,"B","3","1")
+			MES(KAI,"すまない、ならば\n少し休ませてもらう。",0)
+			MES_close(KAI)
+
+			look_off(KAI)
+			look_off(LURI)
+		//　　カイ、ルリにもたれ込むような感じ。（もしくは俯く）
+			look(KAI,"Bone_Head",0,		0,2,2,			0,0,-30)
+			//────────────────────────
+			//	name("□オデッサがいる場合")
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				MES(ODESSA,"（へえ……若いのに中々\n  義理堅いのがいるじゃないか。）",0)
+				MES_close(ODESSA)
+			}
+			else
+			{
+			//	name("□オデッサがいない場合")
+				MES(PET,"（ふう、まったく。）",0)
+				MES(PET,"（この里の連中は\n  意地っ張りが多いんだから……）",0)
+				MES_close(PET)
+			}
+			//────────────────────────
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+		//　　以降、カイは布団に寝ている状態。
+			TK_end()
+			chr_pos(KAI,4658,-987,1,270,2)
+			chr_pos(LURI,4660,-185,-49,90,2)
+			TK_begin()
+			look(KAI,"Bone_Head",0,		0,2,20,			0,0,0)
+			MOT(KAI,151,0)
+			wait(30)
+
+			fade_in(0,30,BLACK)
+			wait_fade()
+			F_set(FS_11_TalkKai)
+
+		}
+		else
+		{
+			//　　※以下通常一般メッセージ。
+			//──────────────────────────────
+			KAO(KAI,"B","3","1")//寝顔
+			MES(KAI,"……スー………スー………",0)
+			MES_close(KAI)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia )
+	{
+		//　　※里中央広場で倒れている。（メインシナリオ参照）
+		//　　　目を閉じたまま、うなされてる。
+			MES(KAI,"……くっ……うう………",0)
+			MES(KAI,"……みんな……逃げろ……\n………逃げるんだ……………",0)
+			MES_close(KAI)
+
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	if( F4_06_StopAttack )
+	{
+	//　　※里中央広場にいる。（メインシナリオ参照）
+		MES(KAI,"………………………………",0)
+		MES_close(KAI)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"ラグナよ、今は先を急ごう。",0)
+		MES(PARTNER,"……確か裏手の扉だったな。",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"ああ……！",0)
+		MES_close(RAGNA)
+	}
+	else
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//　　※里の見張りＢに立っている。
+	//　　※初回イベント
+	if( F4_05_OnVillage2 )
+	{
+		if(!FS_08_TalkKai)
+		{
+		//　　※振り返らない
+			MES(KAI,"………………………………",0)
+			MES_close(KAI)
+
+		//　　カイ、ラグナに振り返る。
+			MOT(KAI,50,15)
+			rot_chr(KAI,30,RAGNA)
+			MES(KAI,"テンザン様もああ仰っている。\nあんたが里に滞在することは認めよう。",0)
+			MES(KAI,"だが、スバルとのことを\nそう簡単に許すわけにはいかない。",0)
+			MES_close(KAI)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"カイ兄、それはえっと……",0)
+			MES_close(PARTNER)
+
+		//　　カイ、スバルに向く。
+			rot_chr(KAI,30,PARTNER)
+			MES(KAI,"スバル、これだけは言っておくぞ。",0)
+			MES(KAI,"お前は腕も未熟で考えが浅い。",0)
+			MES(KAI,"おまけに成長は遅いし、\n本当に真面目に修行しているのかと\n叱りつけたくなる。",0)
+			MES_close(KAI)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"ううっ……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"お、おいおい。\n何もそこまで言わなくても……",0)
+			MES_close(RAGNA)
+
+		//	name2(KAI)
+			MES(KAI,"だがな、お前は\nあのテンザン様の跡取りなんだ。",0)
+			MES(KAI,"みなお前を大切に思っているし、\n立派になって欲しいと願っている。",0)
+			MES(KAI,"それだけの期待と責任を\n背負っていることを忘れるな。",0)
+			MES_close(KAI)
+
+		//　　カイ、ラグナに向く。
+			rot_chr(KAI,30,RAGNA)
+			MES(KAI,"そしてあんたもだ。",0)
+			MES(KAI,"これからもスバルと\n行動を共にするつもりなら……\nそれなりの覚悟はしておくんだな。",0)
+			MES_close(KAI)
+			
+			F_set(FS_08_TalkKai)
+
+		//名前付きキャラ全員に話しかけると露天風呂が開く
+			EV("EV_F4_12_OkRoten")
+		}
+		else
+		{
+			MOT(KAI,50,15)
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		//　　カイ、ラグナの方を向く。
+			rot_chr(KAI,30,RAGNA)
+			MES(KAI,"あまりウロウロせぬことだ。",0)
+			MES(KAI,"俺はテンザン様から\n里の守りを任されている……",0)
+			MES(KAI,"あんたが不審な動きを見せれば、\nすぐに拘束するからな。",0)
+			MES_close(KAI)
+		}
+		MOT(KAI,52,15)
+	}
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

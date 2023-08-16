@@ -1,0 +1,1209 @@
+//====================================================================
+//ステージトラップスクリプト
+//[14049][大鉄塔－サブ終]
+//====================================================================
+
+#ScriptTable
+
+#GYARANDOW		10
+#EVENT_RAGNA	11
+#ALWEN			12
+#EVENT_RAGNA2	13
+#EVENT_LUE		14
+#EVENT_LUE2		15
+
+#TAKARA_CH		48
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境SE
+	SE(63,0)
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段．扉
+	set_chr( 90,990,	 5, 4,  -250,   0,  0,		270,  0102, 6,"K1_14043;")	//①エントリ サブ③
+	set_obj("@ob40020a", 5, 4,  -250,   0,  0,		270)						//①アーチ（塔）
+	set_chr(190,1400,	 5, 4,  -250,   0,  0,		  0,   270, 0,";")			//アーチ（ダミー）
+
+//■スイッチ．看板
+	set_chr( 50,620,	 5, 5,     0, 350,  0,		  0,   180, 0,";")			//①セーブOBJ
+
+	set_chr(GYARANDOW,1021, -1,-1, 6579,3198,0,	5,	0,	20,";")	//ギャランドゥ
+	F_set_chr(GYARANDOW,CF_NO_CLIP)
+	F_set_chr(GYARANDOW,CF_NO_CLIP2)
+	F_set_chr(GYARANDOW,CF_NO_CSP)
+	F_set_chr(GYARANDOW,CF_NO_HEIGHT)
+	F_set_chr(GYARANDOW,CF_NO_ZIMEN)
+	color(GYARANDOW,-1)
+	workL(10,SET,4)//火のダンジョン
+
+	//ギャランドゥ必殺技修得イベント
+	//すでにその属性の必殺技があると発生しない
+	//□ではギャランドゥの宝箱を置く
+	if(!FE_FF_Skil_HI)
+	{
+		//その４
+		if(FE_FF_GetSkil_3 && !FE_FF_GetSkil_4)
+		{
+			if( F6_00_GoToMeru )
+				set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			6,	0,	2,"<EV_GetSkil_BOX>")//宝箱
+			else
+				set_chr( 94,990,	-1,-1,  8115,9475,0,	 0,0106,6,"<EV_GetSkil_4>;")
+		}
+		//その３
+		else
+		if(FE_FF_GetSkil_2)
+		{
+			if( F6_00_GoToMeru )
+				set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			6,	0,	2,"<EV_GetSkil_BOX>")//宝箱
+			else
+				set_chr( 94,990,	-1,-1,  8115,9475,0,	 0,0106,6,"<EV_GetSkil_3>;")
+		}
+		//その２
+		else
+		if(FE_FF_GetSkil_1)
+		{
+			if( F6_00_GoToMeru )
+				set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			6,	0,	2,"<EV_GetSkil_BOX>")//宝箱
+			else
+				set_chr( 94,990,	-1,-1,  8115,9475,0,	 0,0106,6,"<EV_GetSkil_2>;")
+		}
+		//その１
+		else
+		{
+			if( F6_00_GoToMeru )
+				set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			6,	0,	2,"<EV_GetSkil_BOX>")//宝箱
+			else
+				set_chr( 94,990,	-1,-1,  8115,9475,0,	 0,0106,6,"<EV_GetSkil_1>;")
+		}
+	}
+
+	//宝箱から入手した場合、空宝箱を放置。
+	if(FE_FF_TakaraSkil4)
+		set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			7,	0,	0,";")//宝箱
+
+//■場面固有設定
+}
+
+/*
+//──────────────────────────────
+//	name("◆必殺技伝授イベント．その一")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ルートの属性に応じた奥義を習得する。
+//　　※ギャランドゥは各サブルート最奥にいる。
+//　　　初め姿が見えない位置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_1
+{
+	EV_begin()
+
+	fade_in(100,1,BLACK)	//暗転
+	wait_fade()	
+
+	//初期化------------------------------------------------
+	//キャラ再配置
+	chr_pos(RAGNA,	 12271,8048,1,170,	2)
+	chr_pos(PARTNER, 12015,8048,1,180,	2)
+
+	//イベント用キャラ配置
+	set_chr(GYARANDOW,21, -1,-1, 12151,7668,1,	5,	0,	0,"")	//ギャランドゥ
+
+	//カメラ初期位置
+	CAM_move(12243,-7899,160,0,0)
+	CAM(70,100,0,21,225,0,0)
+	fade_in(0,60,BLACK)	//フェードイン
+	wait_fade()	
+
+	//イベント------------------------------------------------
+//	name("渋い男の声")	
+	MES(GYARANDOW,"……よく来たな。",0)
+	MES_close(GYARANDOW)
+
+//　　ラグナ．アルウェンに？エモーション。
+	EMO(RAGNA,EMO_HATENA)
+	EMO(PARTNER,EMO_HATENA)
+	wait(30)
+	
+//　　前進すると共に、カメラスクロールしてギャランドゥを映す。
+//　　ギャランドゥ、丁度振り返るところ。
+//	name("謎の覆面")
+	MES(GYARANDOW,"お前たちを待っていたぞ。",0)
+	MES_close(GYARANDOW)
+
+//　　ラグナとアルウェン、唖然とするフェイス。
+	MES(RAGNA,"な……っ！？",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"（何なのだ、この男……）",0)
+	MES_close(PARTNER)
+
+//	name("謎の覆面")
+	MES(GYARANDOW,"ダンジョン巡り、頑張っているようだな。",0)
+	MES(GYARANDOW,"今日はそんなお前たちに、とっておきの\n必殺技を伝授してやろうと思ってな。",0)
+	MES(GYARANDOW,"こうして待ち受けていたというわけだ。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"み、見るからに怪しい奴だな……",0)
+	MES(RAGNA,"敵ってわけじゃなさそうだが、\n……イキナリ必殺技の伝授って……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"ふむ、そのようなものは必要ない。\nこの私が真祖本来の力を用いれば……",0)
+	MES_close(PARTNER)
+
+//	name("謎の覆面")
+	MES(GYARANDOW,"我輩の名はギャランドゥ――\nダンディかつグレートな男だ。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"聞いちゃいねえ……",0)
+	MES_close(RAGNA)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"フフ、恐れることは無いぞ。\n運命とでも思って受け入れたまえ。",0)
+	MES(GYARANDOW,"さあ、レッツ．エクササイズ……！",0)
+	MES_close(GYARANDOW)
+
+//　　エクササイズ用のＢＧＭが鳴り始める。
+//　　ギャランドゥ、エクササイズを踊りだす。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"２人とも、\n我輩についてきたまえ！",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"え、ええっ……！？",0)
+	MES_close(RAGNA)
+
+//　　ギャランドゥ、激しく踊りだす。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"まだまだ！\nこんなものではないぞッ！",0)
+	MES_close(GYARANDOW)
+
+//　　ラグナとアルウェンも慌てて踊りだす。
+//　　（※踊りだす前に、武器を外す）
+//　　３人が踊りながら、画面フェードアウト。
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()	
+	
+//　　しばらくしてフェードイン。
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　同じ構図で、ラグナ．アルウェンがバテている。
+	MES(RAGNA,"ぜ、ぜえぜえ……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"ええい、何ということだ。",0)
+	MES(PARTNER,"この私にこのようなことを\nやらせおって……",0)
+	MES_close(PARTNER)
+
+//　　ラグナたち、ふら付きながら立ち上がる。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"フフ、よく頑張ったな。",0)
+	MES(GYARANDOW,"筋肉組織にも\n程よい刺激が走ったことだろう。",0)
+	MES(GYARANDOW,"それでは少しの間、目を閉じたまえ。",0)
+	MES_close(GYARANDOW)
+
+//　　２人に？エモーション。
+	EMO(RAGNA,EMO_HATENA)
+	EMO(PARTNER,EMO_HATENA)
+	wait(30)
+	
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"何をしている。\n早く目を閉じるのだ。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"あ、ああ……",0)
+	MES_close(RAGNA)
+
+//　　ラグナとアルウェン、目を閉じる。
+//　　ギャランドゥ、２人に向かって手を突き出す。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"ぬぅ～～～……",0)
+	MES(GYARANDOW,"ハアーッ……！！",0)
+	MES_close(GYARANDOW)
+
+//　　必殺技習得のＳＥが鳴る。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"よし、もういいぞ。",0)
+	MES_close(GYARANDOW)
+
+//　　ラグナとアルウェン、目を開ける。
+	MES(RAGNA,"こ、これは……？",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"なにやら不思議な力が\n沸いてくるのう……",0)
+	MES_close(PARTNER)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"名づけて『奥義．炎瘴印闘牙』。\nお前たち２人の力を\n練り合わせて発する攻撃技だ。",0)
+	MES_close(GYARANDOW)
+
+//　　※『○○○○○』の内容は、ダンジョンの属性に合わせて以下のようにする。
+//　　　地：烈獄震激破
+//　　　水：氷氣乱結旋
+//　　　風：清華瞬刹天
+//　　　火：炎瘴印闘牙
+	MES(RAGNA,"へ、へえ……\n確かに強そうな名前だな。",0)
+	MES(RAGNA,"まあ、ダンジョン探索でも\n色々と使えるかもしれねえ。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"うむ、しかし……",0)
+	MES(PARTNER,"覆面よ、もしや\n先ほどのエクササイズは\n全く関係ないのではないか？",0)
+	MES_close(PARTNER)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"ハッハッハ。\nお前たちにはこれを渡しておこう。",0)
+	MES_close(GYARANDOW)
+
+//　　ギャランドゥ、ラグナの隣まで来て肩を叩く。
+//　　パン、とＳＥがする。
+//	name("アイテム入手テキスト")
+	MES(0,"W9ギャランドゥに『ピンクチケット』を渡された。",0)
+	MES_close(0)
+	
+	get_item(137,1,0)
+	wait_key(0)
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"精進するのだぞ、２人とも。",0)
+	MES_close(GYARANDOW)
+
+//　　ギャランドゥ、入り口の方に去っていく。
+	rot(GYARANDOW,60,100)
+	move(GYARANDOW, 0,	WALK1,10974,7680,1,	0)
+	wait(80)
+	
+//　　２人は．．．エモーションで見送る。
+	rot_chr(RAGNA,60,GYARANDOW)
+	rot_chr(PARTNER,60,GYARANDOW)
+	EMO(RAGNA,EMO_TENTEN)
+	EMO(PARTNER,EMO_TENTEN)
+	wait(50)
+	delete(GYARANDOW)
+	
+//　　その後、顔を見合わせる。
+	rot_chr(RAGNA,60,PARTNER)
+	rot_chr(PARTNER,60,RAGNA)
+	
+	MES(RAGNA,"と、とりあえずだ……",0)
+	MES(RAGNA,"あのマッチョのことは忘れよう。\nこの技だけ、ありがたく\n使わせてもらおうぜ。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"うむ、色々と\n気にかかることはあるが……",0)
+	MES(PARTNER,"気にかけるのも馬鹿馬鹿しい。\nさっさと忘れてしまうとしよう。",0)
+	MES_close(PARTNER)
+
+//　　イベント終了、操作許可を戻す。
+	
+	//イベント終了--------------------------------------------
+
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+	
+	//１つ目の必殺技を修得した
+	F_set(FE_FF_GetSkil_1)
+
+	//★火の必殺技を修得
+	F_set(FE_FF_Skil_HI)
+}
+
+//──────────────────────────────
+//	name("◆必殺技伝授イベント．その二")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ルートの属性に応じた奥義を習得する。
+//　　※ギャランドゥは各サブルート最奥にいる。
+//　　　初め姿が見えない位置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_2
+{
+	EV_begin()
+
+	fade_in(100,1,BLACK)	//暗転
+	wait_fade()	
+
+	//初期化------------------------------------------------
+	//キャラ再配置
+	chr_pos(RAGNA,	 12271,8048,1,170,	2)
+	chr_pos(PARTNER, 12015,8048,1,180,	2)
+
+	//イベント用キャラ配置
+	set_chr(GYARANDOW,21, -1,-1, 12151,7668,1,	5,	0,	0,"")	//ギャランドゥ
+
+	//カメラ初期位置
+	CAM_move(12243,-7899,160,0,0)
+	CAM(70,100,0,21,225,0,0)
+	fade_in(0,60,BLACK)	//フェードイン
+	wait_fade()	
+
+	
+	//イベント------------------------------------------------
+
+//	name("渋い男の声")
+	MES(GYARANDOW,"……久しいな、２人とも。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"うっ……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"この声は……",0)
+	MES_close(PARTNER)
+
+//　　ラグナとアルウェン、ギャランドゥの前へ向かう。
+	MES(RAGNA,"や、やはりお前か\nマッチョ男……",0)
+	MES_close(RAGNA)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"ダンジョン巡り、\n進んでいるようだな。",0)
+	MES(GYARANDOW,"感心感心。",0)
+	MES_pos(GYARANDOW,"それでは前回同様、\n必殺技を授けてやろう――",0,0,0,0,0)
+//　　ギャランドゥのセリフ後半に重ねて、アルウェンのポップアップを出す。
+	wait(15)
+	MES_pos(PARTNER,"――いやだ。",0,0,0,0,0)
+
+	wait_key(0)
+	MES_close(PARTNER)
+	MES_close(GYARANDOW)
+
+
+//	name("怪人ギャランドゥ")
+	rot_chr(GYARANDOW,60,PARTNER)
+	MES(GYARANDOW,"む……？",0)
+	MES_close(GYARANDOW)
+
+//	name2(PARTNER)
+	MES(PARTNER,"またあの変な踊りを\nやらせるつもりであろう。",0)
+	MES(PARTNER,"断固断る。",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	rot_chr(RAGNA,60,PARTNER)
+	MES(RAGNA,"（おお……\n  姫さんがキッパリ言いやがった。）",0)
+	MES_close(RAGNA)
+
+//　　ギャランドゥに．．．エモーション。
+	EMO(GYARANDOW,EMO_TENTEN)
+	wait(30)
+	
+//　　顔を背ける。
+	look_chr( GYARANDOW, RAGNA ,"Bone_Head")
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"しかし、な……　その……\n必殺技が使えると、\n色々といいことがあると思うぞ？",0)
+	MES(GYARANDOW,"大抵最終回で愛や平和を守るのは\n必殺技の役目であるし……",0)
+	MES(GYARANDOW,"学校で友達に自慢できたり、な。",0)
+	MES_close(GYARANDOW)
+
+//　　ラグナに冷や汗エモーション。
+	EMO(RAGNA,EMO_HIYAASE)
+	wait(30)
+
+	rot_chr(RAGNA,60,GYARANDOW)
+	MES(RAGNA,"（必殺技で釣ろうとしている……）",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"な、何を言っておるのか\nサッパリ分からんが……",0)
+	MES(PARTNER,"フン、これでも私は\n吸血鬼の真祖なのでな。\nあの程度の技の一つや二つ……",0)
+	MES_close(PARTNER)
+
+//　　アルウェンに．．．エモーション。
+	EMO(PARTNER,EMO_TENTEN)
+	wait(30)
+
+	MES(PARTNER,"そ、それは\nあれば便利ではあるが……",0)
+	MES_close(PARTNER)
+
+//ギャランドゥ顔背け解除
+	look_off(GYARANDOW)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"フフ、アルウェンよ。\nそう言うと思っていたぞ。",0)
+	MES_close(GYARANDOW)
+
+//　　ラグナとアルウェンにＰＡエモーション。
+	EMO(RAGNA,EMO_PA)
+	EMO(PARTNER,EMO_PA)
+	wait(30)
+
+	MES(PARTNER,"えっ……？",0)
+	MES_close(PARTNER)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"それでは、\nレッツ．エクササイズ……！",0)
+	MES_close(GYARANDOW)
+
+//　　エクササイズ用のＢＧＭが流れ始める。
+	MES(RAGNA,"え、ええっ～……！？",0)
+	MES_close(RAGNA)
+
+//　　ギャランドゥに続き、ラグナ．アルウェンが踊りながらフェードアウト。
+//　　（※踊りだす前に、武器を外す）
+
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()	
+	
+//　　しばらくしてフェードイン。
+	fade_in(0,60,0)
+	wait_fade()
+	
+//　　同じ構図で、ラグナ．アルウェンがバテている。
+	MES(PARTNER,"はあはあ……\nお、おのれ……",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	MES(RAGNA,"なんて強引な奴だ……",0)
+	MES_close(RAGNA)
+
+//　　２人が立ち直ると、ギャランドゥが一步前に出てくる。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"さあ、２人とも。\n目を閉じるがいい。",0)
+	MES_close(GYARANDOW)
+
+//	name2(PARTNER)
+	MES(PARTNER,"くっ……\nここまで来れば仕方あるまい……",0)
+	MES_close(PARTNER)
+
+//　　ラグナとアルウェン、目を閉じる。
+//　　ギャランドゥ、２人に向かって手を突き出す。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"ぬぅ～～～……",0)
+	MES(GYARANDOW,"ハアーッ……！！",0)
+	MES_close(GYARANDOW)
+
+//　　必殺技習得のＳＥが鳴る。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"よし、もういいぞ。",0)
+	MES_close(GYARANDOW)
+
+//　　ラグナとアルウェン、目を開ける。
+//──────────────────────────────
+//	name("□ダンジョンが火属性")
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"今回授けたのは\n『奥義．炎瘴印闘牙』。",0)
+	MES(GYARANDOW,"闇より出ずる六つの火球が\n敵に大ダメージを与える必殺技だ。",0)
+	MES_close(GYARANDOW)
+//──────────────────────────────
+	MES(RAGNA,"へ、へえ……\n今回は火属性の技みてえだな。",0)
+	MES(RAGNA,"手強いダンジョンなんかじゃ\n役に立ちそうな気がするぜ。",0)
+	MES_close(RAGNA)
+
+//　　※○の中身は、入手した必殺技の属性。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"うむうむ、\n今後も精進を怠るなよ。",0)
+	MES_close(GYARANDOW)
+
+//　　ギャランドゥ、去っていく。
+//　　２人はそれを見送る。
+	rot(GYARANDOW,60,100)
+	move(GYARANDOW, 0,	WALK1,10974,7680,1,	0)
+	wait(80)
+
+	rot_chr(RAGNA,60,GYARANDOW)
+	rot_chr(PARTNER,60,GYARANDOW)
+	wait(50)
+	delete(GYARANDOW)
+	
+	MES(PARTNER,"………………………………",0)
+	MES_close(PARTNER)
+
+//　　ラグナに？エモーション。
+	EMO(RAGNA,EMO_HATENA)
+	rot_chr(RAGNA,60,PARTNER)
+	wait(30)
+	
+
+	MES(RAGNA,"姫さん……？\nどうかしたのか？",0)
+	MES_close(RAGNA)
+
+	rot_chr(PARTNER,60,RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"いや……",0)
+	MES(PARTNER,"なんともまあ\n強引な男だと思ってな。",0)
+	MES(PARTNER,"まあよい、\n細かいことはさっさと忘れて\n今は先に進むとしよう。",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	MES(RAGNA,"ああ、そうだな。",0)
+	MES_close(RAGNA)
+	
+	//イベント終了--------------------------------------------
+
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+	
+	//2つ目の必殺技を修得した
+	F_set(FE_FF_GetSkil_2)
+
+	//★火の必殺技を修得
+	F_set(FE_FF_Skil_HI)
+}
+
+//──────────────────────────────
+//	name("◆必殺技伝授イベント．その三")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ルートの属性に応じた奥義を習得する。
+//　　※ギャランドゥは各サブルート最奥にいる。
+//　　　初め姿が見えない位置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_3
+{
+	EV_begin()
+
+	fade_in(100,1,BLACK)	//暗転
+	wait_fade()	
+
+	//初期化------------------------------------------------
+	//キャラ再配置
+	chr_pos(RAGNA,	 12271,8048,1,170,	2)
+	chr_pos(PARTNER, 12015,8048,1,180,	2)
+
+	//イベント用キャラ配置
+	set_chr(GYARANDOW,21, -1,-1, 12151,7668,1,	5,	0,	0,"")	//ギャランドゥ
+
+	//カメラ初期位置
+	CAM_move(12243,-7899,160,0,0)
+	CAM(70,100,0,21,225,0,0)
+	fade_in(0,60,BLACK)	//フェードイン
+	wait_fade()	
+
+	//イベント------------------------------------------------
+//	name("渋い男の声")
+	MES(GYARANDOW,"我輩、今回は少し\nアレンジを加えてみてな。",0)
+	MES(GYARANDOW,"より素晴らしい\nエクササイズとなったぞ。",0)
+	MES_close(GYARANDOW)
+
+//　　ラグナとアルウェンに冷や汗エモーション。
+	EMO(RAGNA,EMO_HIYAASE)
+	EMO(PARTNER,EMO_HIYAASE)
+	wait(30)
+	
+	MES(RAGNA,"第一声がそれかよ……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"もはや確認するまでもなく\nお約束だのう……",0)
+	MES_close(PARTNER)
+
+//　　ラグナとアルウェンが進むと、奥に立っていたギャランドゥが振り向く。
+	MES(PARTNER,"覆面よ、そなたの必殺技が\n便利なのは認めよう。",0)
+	MES(PARTNER,"だが、あの踊りはどうもな……",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	MES(RAGNA,"ああ、それに実は\n技の伝授とは関係ねえんだろ？",0)
+	MES(RAGNA,"エクササイズは置いておいて、\n必殺技だけ教えるってワケに\n行かないのか？",0)
+	MES_close(RAGNA)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"ほう……",0)
+	MES(GYARANDOW,"では、先に教えれば\nエクササイズするというのだな？",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"い、言ってないだろ\nそんなこと！？",0)
+	MES(RAGNA,"つーかやっぱり、\n無関係なんじゃねえか！！",0)
+	MES_close(RAGNA)
+
+//　　アルウェンに．．．エモーション。
+	EMO(PARTNER,EMO_TENTEN)
+	wait(30)
+	
+	MES(PARTNER,"ギャランドゥとやら……",0)
+	MES(PARTNER,"お主、何故そこまでして\n我らに技を教えようというのだ？",0)
+	MES_close(PARTNER)
+
+	rot_chr(GYARANDOW,60,PARTNER)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"む……？",0)
+	MES_close(GYARANDOW)
+
+//	name2(PARTNER)
+	MES(PARTNER,"……毎回ダンジョンに\n先回りして待ち伏せとは、\n手が込んでおるではないか。",0)
+	MES_close(PARTNER)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"フフ、知りたければ\n教えてやろう――",0)
+	MES(GYARANDOW,"それはな、お前たち２人に\nエクササイズの才能があるからだ。",0)
+	MES_close(GYARANDOW)
+
+//　　ち～んというＳＥが鳴って、２人に冷や汗エモーション。
+	EMO(RAGNA,EMO_HIYAASE)
+	EMO(PARTNER,EMO_HIYAASE)
+	wait(30)
+	
+	MES(RAGNA,"（さ、才能……）",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"（嬉しくない話だな……）",0)
+	MES_close(PARTNER)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"お前たちの才能を持ってすれば、\n我輩を超えるエクササイズマスターと\nなるかもしれん。",0)
+	MES(GYARANDOW,"――なにより、お前たちは\nこの世界の将来を担っている……",0)
+	MES(GYARANDOW,"そんな若者にお節介を焼くのも\n我輩の勤めであるからな。",0)
+	MES_close(GYARANDOW)
+
+//　　ラグナたち、目をパチパチして少し驚く表情。
+	MES(RAGNA,"へ……？",0)
+	MES_close(RAGNA)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"フフ……\nそろそろ始めるとしようか。",0)
+	MES(GYARANDOW,"レッツ．エクササイズ……！",0)
+	MES_close(GYARANDOW)
+
+//　　エクササイズ用のＢＧＭが流れ始める。
+//　　ギャランドゥにエクササイズを踊りだす。
+//　　※ギャランドゥの踊りは、
+//　　　速度を上げる＆同じモーション部分を２回再生する、などで
+//　　　アレンジ化したものにする。
+//　　続いて２人も踊り始めるが、速度が合っていない。
+//　　（もしくは従来のエクササイズモーションを再生）
+//　　（※踊りだす前に、武器を外す）
+	MES(RAGNA,"お、おいおい……\nいつもと動きが違うような……",0)
+	MES_close(RAGNA)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"――言ったろう。\nこれが新しいエクササイズだああッ！",0)
+	MES_close(GYARANDOW)
+
+//　　２人にアセアセエモーション。
+	EMO(RAGNA,EMO_ASEASE)
+	EMO(PARTNER,EMO_ASEASE)
+	wait(30)
+	
+//　　２人がギャランドゥに合わせようとしながら、フェードアウト。
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()	
+	
+//　　しばらくしてフェードイン。
+	fade_in(0,60,0)
+	wait_fade()
+	
+//　　同じ構図で、ラグナ．アルウェンがバテている。
+	MES(PARTNER,"はあ、はあ……",0)
+	MES_close(PARTNER)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"フフ、いつになく激しかったろう。",0)
+	MES(GYARANDOW,"さあ、目を閉じるがいい。",0)
+	MES_close(GYARANDOW)
+
+	MES(RAGNA,"ははは……まあ\nここまで来ちまったからな。",0)
+	MES_close(RAGNA)
+
+//　　ラグナとアルウェン、立ち上がって目を閉じる。
+//　　ギャランドゥ、２人に向かって手を突き出す。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"ぬぅ～～～……",0)
+	MES_close(GYARANDOW)
+
+//	name2(GYARANDOW)
+	MES(GYARANDOW,"ハアーッ……！！",0)
+	MES_close(GYARANDOW)
+
+//　　必殺技習得のＳＥが鳴る。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"よし、もういいぞ。",0)
+	MES_close(GYARANDOW)
+
+//　　ラグナとアルウェン、目を開ける。
+	MES(RAGNA,"こいつは……\n火属性の必殺技みてえだな。",0)
+	MES_close(怪人ギャランドゥ)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"気付いたようだな。",0)
+	MES_close(GYARANDOW)
+
+//──────────────────────────────
+//	name("□ダンジョンが火属性")
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"そう、『奥義．炎瘴印闘牙』は\n闇より出ずる六つの火球が\n敵に大ダメージを与える必殺技だ。",0)
+	MES(GYARANDOW,"全属性中でも\n最大の威力を備えているぞ。",0)
+	MES_close(GYARANDOW)
+//──────────────────────────────
+	MES(PARTNER,"なるほど……属性の性質を\n最大限に生かしておるようだのう。",0)
+	MES_close(PARTNER)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"フフフ、お前たちの\n冒険に役立てるといい。",0)
+	MES(GYARANDOW,"それではな、２人とも。",0)
+	MES_close(GYARANDOW)
+
+//　　ギャランドゥ、去っていく。
+//　　２人は．．．エモーションでそれを見送る。
+	rot(GYARANDOW,60,100)
+	move(GYARANDOW, 0,	WALK1,10974,7680,1,	0)
+	wait(80)
+	
+//　　２人は．．．エモーションで見送る。
+	rot_chr(RAGNA,60,GYARANDOW)
+	rot_chr(PARTNER,60,GYARANDOW)
+	EMO(RAGNA,EMO_TENTEN)
+	EMO(PARTNER,EMO_TENTEN)
+	wait(50)
+	delete(GYARANDOW)
+	
+	rot_chr(RAGNA,60,PARTNER)
+	rot_chr(PARTNER,60,RAGNA)
+
+	MES(RAGNA,"何だか知らねえが……\n意外とまともな奴みてえだな。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"うむ……\nあの格好はいただけんがな。",0)
+	MES(PARTNER,"一体どんな\n素顔をしておるのやら……",0)
+	MES_close(PARTNER)
+
+	//イベント終了--------------------------------------------
+
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+	
+	//３つ目の必殺技を修得した
+	F_set(FE_FF_GetSkil_3)
+
+	//★火の必殺技を修得
+	F_set(FE_FF_Skil_HI)
+}
+
+//──────────────────────────────
+//	name("◆必殺技伝授イベント．その四")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ルートの属性に応じた奥義を習得する。
+//　　※ギャランドゥは各サブルート最奥にいる。
+//　　　初め姿が見えない位置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_4
+{
+	EV_begin()
+
+	fade_in(100,1,BLACK)	//暗転
+	wait_fade()	
+
+	//初期化------------------------------------------------
+	//キャラ再配置
+	chr_pos(RAGNA,	 12271,8048,1,170,	2)
+	chr_pos(PARTNER, 12015,8048,1,180,	2)
+
+	//イベント用キャラ配置
+	set_chr(GYARANDOW,21, -1,-1, 12151,7668,1,	5,	0,	0,"")	//ギャランドゥ
+
+	//カメラ初期位置
+	CAM_move(12243,-7899,160,0,0)
+	CAM(70,100,0,21,225,0,0)
+	fade_in(0,60,BLACK)	//フェードイン
+	wait_fade()	
+
+	//イベント------------------------------------------------
+//　　２人に！エモーション。
+	EMO(RAGNA,EMO_BIKKURI)
+	EMO(PARTNER,EMO_BIKKURI)
+	wait(30)
+	
+	MES(PARTNER,"待て、ラグナ。",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	MES(RAGNA,"ああ、俺にも分かるぜ。",0)
+	MES(RAGNA,"この場所の雰囲気、\nそれに妙に熱い気配……",0)
+	MES_close(RAGNA)
+
+//	name("渋い男の声")
+	MES(GYARANDOW,"フフ、良くぞ見抜いたな。",0)
+	MES_close(GYARANDOW)
+
+//　　カメラスクロールすると、奥に立っていたギャランドゥが振り向く。
+//　　ラグナとアルウェンもやって来る。
+	MES(RAGNA,"やはりお前か、\nギャランドゥ……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"いや、言わずとも分かっておるぞ。",0)
+	MES(PARTNER,"今日も必殺技を授ける、\nそしてその前に踊らなければ\n駄目だというのであろう。",0)
+	MES_close(PARTNER)
+
+	MES(GYARANDOW,"フフ、その通りだ――",0)
+	MES(GYARANDOW,"果たしてどうする、\nラグナ、アルウェンよ。",0)
+	MES_close(GYARANDOW)
+
+//　　２人に．．．エモーション。
+	EMO(RAGNA,EMO_TENTEN)
+	EMO(PARTNER,EMO_TENTEN)
+	wait(30)
+	
+//　　その後顔を見合わせる。
+	MES(RAGNA,"ふう、仕方ねえか。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"……うむ。",0)
+	MES(PARTNER,"この際、多少の恥は忍ぶとしよう。",0)
+	MES_close(PARTNER)
+
+//　　ラグナとアルウェン、ＳＥつきで武器を外す。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"ちなみにこのエクササイズには、\n７番まで歌詞があってな。",0)
+	MES(GYARANDOW,"７番以降の歌詞は公募中だ。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"だ、誰も聞いてねえだろ\nそんなこと……！",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"くだらぬ事を言わずに\nさっさと始めるがよい！",0)
+	MES_close(PARTNER)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"ほう……いつになく\nやる気に満ち溢れているようだな。",0)
+	MES(GYARANDOW,"今日は７番までやるか……（ぼそっ）",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"い、１番だけでいいッ！！",0)
+	MES_close(RAGNA)
+
+//　　エクササイズ用のＢＧＭが流れ始める。
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"言い忘れていたが……",0)
+	MES(GYARANDOW,"お前たちに\nエクササイズを教えられるのは、\n今日が最後となる。",0)
+	MES(GYARANDOW,"２人とも、\n全力でついて来たまえっ！",0)
+	MES_close(GYARANDOW)
+
+//　　ギャランドゥに続いて、２人もエクササイズを踊りだす。
+//　　（伝授三で行ったのと同じ、激しいバージョン）
+//　　できればここで、３人があわせて踊っている様子をきちんと映す。
+//　　３人が踊りながら、フェードアウト。
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()	
+	
+
+//　　暗転状態で、必殺技習得ＳＥが鳴る。
+//	name("システムメッセージ")
+	MES(0,"『奥義．炎瘴印闘牙』を習得した！",2)
+	MES(0,"火属性の必殺技が使えるようになった！",2)
+	MES_close(0)
+
+//　　※『○○○○○』の内容は、ダンジョンの属性に合わせて以下のようにする。
+//　　　地：烈獄震激破
+//　　　水：氷氣乱結旋
+//　　　風：清華瞬刹天
+//　　　火：炎瘴印闘牙
+//　　※○属性は、ダンジョンの属性。
+//　　ゆっくりフェードインして、同じ構図の３人。
+
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　ギャランドゥは２人に手を突き出している状態。
+//　　ギャランドゥ、手を下ろす。
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"よく頑張ったな。",0)
+	MES(GYARANDOW,"我輩にしてやれるのは\nここまでだ。",0)
+	MES(GYARANDOW,"後は自分たちの手で\n切り拓いていくがいい。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"……ああ。",0)
+	MES(RAGNA,"ギャランドゥ、\nあんたに授けてもらった技は\nいつも役に立ってる。",0)
+	MES(RAGNA,"一応礼を言っておくぜ。\nサンキュー。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"うむ、今日で\n最後と言っていたが……",0)
+	MES(PARTNER,"何かと世話になったようだな。",0)
+	MES_close(PARTNER)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"フフ、神妙になる必要などない。",0)
+	MES(GYARANDOW,"お前たちの肉体に\nエクササイズが刻み込まれた今、\nその身は我輩と同質……",0)
+	MES(GYARANDOW,"常に傍に立っているようなものだ。\n寂しがることはないぞ。",0)
+	MES_close(GYARANDOW)
+
+//　　２人に青ざめエモーション。
+	EMO(RAGNA,EMO_AOZAME)
+	EMO(PARTNER,EMO_AOZAME)
+	wait(30)
+	
+	MES(PARTNER,"み、妙なことを\n想像させるでない……",0)
+	MES_close(PARTNER)
+
+//	name("怪人ギャランドゥ")
+	MES(GYARANDOW,"それではな、２人とも。",0)
+	MES(GYARANDOW,"我輩はいつでも見守っている……\n精進するのだぞ。",0)
+	MES_close(GYARANDOW)
+
+//　　ギャランドゥ、去っていく。
+//　　２人はそれを見送る。
+	rot(GYARANDOW,60,100)
+	move(GYARANDOW, 0,	WALK1,10974,7680,1,	0)
+	wait(80)
+
+	rot_chr(RAGNA,60,GYARANDOW)
+	rot_chr(PARTNER,60,GYARANDOW)
+	wait(50)
+	delete(GYARANDOW)
+
+	rot_chr(RAGNA,60,PARTNER)
+	rot_chr(PARTNER,60,RAGNA)
+
+	MES(RAGNA,"ふう、色々あって\n疲れちまったが……",0)
+	MES(RAGNA,"そろそろ先に進むか。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"うむ。\nおかしな男ではあったが……",0)
+	MES(PARTNER,"……………………………………",0)
+	MES(PARTNER,"……また会うこともあろう。\n我らはすべき事をするとしよう。",0)
+	MES_close(PARTNER)
+
+	//イベント終了--------------------------------------------
+
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+	
+	//４つ目の必殺技を修得した
+	F_set(FE_FF_GetSkil_1)
+
+	//★火の必殺技を修得
+	F_set(FE_FF_Skil_HI)
+}
+
+//──────────────────────────────
+//	name("◆必殺技伝授イベント．宝箱版")
+//──────────────────────────────
+//　　※フラグ□で各サブルートに初めて来た場合、
+//　　　宝箱が配置されている。
+//　　　調べると、各必殺技を入手できる。
+//　　クロスフェードでラグナたちを再配置しておく。
+EV_GetSkil_BOX
+{
+	EV_begin()
+
+	fade_in(100,1,BLACK)	//暗転
+	wait_fade()	
+
+	//初期化------------------------------------------------
+	//キャラ再配置
+	chr_pos(RAGNA,	 12271,8048,1,170,	2)
+	chr_pos(PARTNER, 12015,8048,1,180,	2)
+
+	//カメラ初期位置
+	CAM_move(12243,-7899,160,0,0)
+	CAM(70,100,0,21,225,0,0)
+	fade_in(0,60,BLACK)	//フェードイン
+	wait_fade()	
+
+	//イベント------------------------------------------------
+//	name("システムメッセージ")
+	MES(0,"W9ピンク色の紙切れが入っている。",0)
+	MES_close(0)
+
+//	name("ナレーション")
+	MES(0,"W9よく来たな。",0)
+	MES(0,"W9これから我輩の伝える事を\nよく覚えておくのだ。",0)
+	MES_close(0)
+
+//　　ラグナに？エモーション。
+	EMO(RAGNA,EMO_HATENA)
+	wait(30)
+//　　手を伸ばすような仕草。
+	MES(RAGNA,"なんだこりゃ……",0)
+	MES_close(RAGNA)
+
+	rot_chr(PARTNER,60,RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"ま、待てラグナ。\n迂闊に触るでない。",0)
+	MES(PARTNER,"その紙切れには\n何か術が掛けられておるぞ！",0)
+	MES_close(PARTNER)
+
+//　　ラグナに？エモーション。
+	EMO(RAGNA,EMO_HATENA)
+	wait(30)
+//　　アルウェンに向く。
+	rot_chr(RAGNA,60,PARTNER)
+	MES(RAGNA,"へ……？",0)
+	MES_close(RAGNA)
+
+//　　エクササイズのＢＧＭが鳴り出す。
+//　　ラグナたち、アセアセできょろきょろする。
+	EMO(RAGNA,EMO_ASEASE)
+	EMO(PARTNER,EMO_ASEASE)
+	wait(30)
+
+//　　以下のメッセージはオートで閉じるポップアップ。
+
+	MES_pos(RAGNA,"な、何だ……？",0,0,0,0,0)
+	wait(40)
+	MES_close(RAGNA)
+	
+//	name2(PARTNER)
+	MES_pos(PARTNER,"この音楽は……！？",0,0,0,0,0)
+	wait(40)
+	MES_close(PARTNER)
+
+//　　ＢＧＭのイントロが終わると、ラグナたちはエクササイズを踊りだす。
+//　　以下のメッセージはオートで閉じるポップアップ。
+	MES_pos(RAGNA,"な、なあああぁっ！？",0,0,0,0,0)
+	wait(40)
+	MES_close(RAGNA)
+	
+//	name2(PARTNER)
+	MES_pos(PARTNER,"か……体が勝手に……",0,0,0,0,0)
+	wait(40)
+	MES_close(PARTNER)
+
+
+//　　ラグナたちがアセアセで踊りながら、フェードアウト。
+//　　暗転状態で、必殺技習得ＳＥが鳴る。
+/
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()	
+	
+/	name("システムメッセージ")
+	MES(0,"W9『奥義．炎瘴印闘牙』を習得した！",2)
+	MES_close(0)
+
+//	name2(GYARANDOW)
+	MES(0,"W9火属性の必殺技が使えるようになった！",2)
+	MES_close(0)
+	
+//　　フェードイン。
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　※『○○○○○』の内容は、ダンジョンの属性に合わせて以下のようにする。
+//　　　地：烈獄震激破
+//　　　水：氷氣乱結旋
+//　　　風：清華瞬刹天
+//　　　火：炎瘴印闘牙
+//　　※○属性は、ダンジョンの属性。
+//　　フェードインで、宝箱の前でばてている２人。
+//──────────────────────────────
+//	name("□ギャランドゥに必殺技を教わった事が無い。")
+	if(!FE_FF_GetSkil_1)
+	{
+		MES(RAGNA,"な、何だったんだ、今のは……\n新手のトラップか……？",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"わ、分からぬが……",0)
+		MES(PARTNER,"うう、なにやら気持ち悪い踊りを\n踊らされてしまったのう……",0)
+		MES_close(PARTNER)
+	}
+	else
+	{
+	//	name("□ギャランドゥに必殺技を教わった事がある。")
+		MES(RAGNA,"い、今のはまさか……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"あの覆面怪人の仕業か……",0)
+		MES_close(PARTNER)
+	}
+
+//──────────────────────────────
+//　　ラグナたち、立ち上がる。
+	MES(RAGNA,"体に異常はねえみたいだな……",0)
+	MES(RAGNA,"姫さん、とりあえず\nこの事は忘れちまおうぜ。",0)
+	MES(RAGNA,"俺たちには、今は\nやらなきゃいけねえ事があるんだ。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"うむ……このような事を\n覚えていても致し方あるまい。",0)
+	MES_close(PARTNER)
+
+//　　アルウェンにムカエモーション。
+	MES(PARTNER,"さっさと忘れてしまうとしよう。",0)
+	MES_close(PARTNER)
+	//イベント終了--------------------------------------------
+
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+
+	//★火の必殺技を修得
+	F_set(FE_FF_Skil_HI)
+}
+*/
+
+#EndScriptTable
+//====================================================================
+

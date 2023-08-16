@@ -1,0 +1,515 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僎儞栮偝傫乮掚巘丄尦丒壆戜偺恊晝乯Gen")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_GEN
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(GEN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,GEN)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,GEN)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GEN)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GEN)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GEN)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GEN)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,GEN)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仛僎儞亂憪栘偺庤擖傟岲偒亃
+	//丂丂仸傾儖僢僥偺挰丄僊儖僪偺怉栘慜偱憪栘偺庤擖傟傪偟偰偄傞丅
+	if(F6_05_EndSixth)
+	{
+	//	怳傝曉傞
+		MOT(GEN,52,15)
+		rot_chr(GEN,30,PLAYER1)
+		
+	//	name("僎儞")
+		MES(GEN,"……我從鴉\n那裡聽說了。",0)
+		MES(GEN,"你們兩個要返回故鄉了吧。",0)
+		MES(GEN,"打起精神來。\n走路不要被絆倒哦。",0)
+		MES_close(GEN)
+		MOT(GEN,150,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥偺挰丄暚悈墶偺怉栘慜偱憪栘偺庤擖傟傪偟偰偄傞丅
+	//	仛榖偟偐偗偨帪揰偱偼怳傝岦偐側偄
+	if(F6_00_GoToMeru)
+	{
+		if(!F_GEN)
+		{
+		//	name("僎儞")
+			MES(GEN,"最近都沒有\n照料它們。",0)
+			MES(GEN,"現在要剪齊就很麻煩了。",0)
+			MES_close(GEN)
+
+		//丂丂僎儞丄岦偒傪栠偡丅
+			MOT(GEN,52,15)
+			rot_chr(GEN,30,PLAYER1)
+				
+			MES(GEN,"我和首領保持著聯絡。\n你們有什麼事都可以告訴我或者鴉。",0)
+			MES(GEN,"我會為你們傳話的。",0)
+			MES_close(GEN)
+
+			//	name("佀儔僌僫愭摢")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"嗯，多謝。\n（說起來，他很自然地\n 融入這邊的社會裡了……）",0)
+				MES_close(RAGNA)	
+			}
+			//	name("佀傾儖僂僃儞愭摢")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			{
+				MES(PARTNER,"嗯……有機會的話一定會過來的。\n（會用鴿子傳話嗎……）",0)
+				MES_close(PARTNER)
+			}
+		//丂丂僎儞丄岦偒傪栠偡丅
+			MOT(GEN,150,15)
+			
+			F_set(GEN)
+		}
+		else
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仛孞傝曉偟
+		//丂丂仸怳傝曉傜側偄
+		//	name("僎儞")
+			MES(GEN,"刮起大風的話，\n樹枝有可能會折斷。",0)
+			MES(GEN,"……順便把\n樹木也整理一下吧。",0)
+			MES_close(GEN)
+			
+			//	name("佀儔僌僫愭摢")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（嗯，喜歡花草樹木\n 好像不是裝出來的呢……）",0)
+				MES_close(RAGNA)
+			}
+			//	name("佀傾儖僂僃儞愭摢")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			{
+				MES(PARTNER,"（看來喜歡修剪草木\n 的確是實話……）",0)
+				MES_close(PARTNER)
+			}
+			//仛僎儞亂憪栘岲偒亃
+			F_set_note(GEN,2)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸拑壆偺慜偺挿偄偡偵嵗偭偰偄傞丅
+	//丂丂丂栻攧傝偲榖偟崌偆傛偆側奿岲丅
+	if( F5_00_HearLunar )
+	{
+	
+	//	怳傝曉傞
+		look_chr( GEN, PLAYER1,"Bone_Head")
+
+		
+		if(!F_GEN)
+		{
+		//	name("僎儞")
+			MES(GEN,"哎呀……\n終於結束了。",0)
+			MES(GEN,"哼，逼得我這種老頭子\n都要工作。\n那些傢伙真是不得了。",0)
+			MES(GEN,"還好有你們\n和鴉幫忙……",0)
+			MES(GEN,"受損實在是\n相當嚴重呢。",0)
+			MES_close(GEN)
+			F_set(GEN)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("僎儞")
+			MES(GEN,"不要在意那個茶攤了。\n本來那就只是出於茜的興趣。",0)
+			MES(GEN,"不久以後應該還會重建起來……\n我更擔心城鎮那邊。",0)
+			MES(GEN,"……最近有一段時間\n沒有修整草木了。",0)
+			MES(GEN,"必須要回去一趟。",0)
+			MES_close(GEN)
+		}
+		look_off(GEN)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸拑壆僇僂儞僞乕偵擖偭偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩
+	//	name("僎儞")
+	if( F4_05_OnVillage2 )
+	{
+	//	怳傝曉傞
+		rot_chr(GEN,30,PLAYER1)
+		
+		//儌乕僔儑儞
+		MOT_SET(GEN,150,-1,414,414,-1,-1)
+		MOT(GEN,150,10)
+		if(!FS_08_TalkGen)
+		{
+			MES(GEN,"……喲，要休息嗎？",0)
+			MES_close(GEN)
+			
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僇儔僗偲偺弶夞夛榖偑傑偩")
+			if(!FS_08_TalkKarasu)
+			{
+				EMO(RAGNA,EMO_HATENA)			//丂丂儔僌僫偵丠僄儌乕僔儑儞丅
+				wait(30)
+
+				MES(RAGNA,"咦……？\n好像在哪裡……",0)
+				MES_close(RAGNA)
+
+				//丂丂儔僌僫偵彮偟丒丒丒僄儌乕僔儑儞
+				EMO(RAGNA,EMO_TENTEN)
+				wait(30)
+
+				MES(RAGNA,"對了，是阿魯特鎮。",0)
+				MES(RAGNA,"你不是在鎮上\n修整草木的嗎……？",0)
+				MES_close(RAGNA)
+
+			//	name("僎儞")
+				look_chr(GEN,RAGNA,"Bone_Head")
+				MES(GEN,"哎，不要在意\n那些小事。",0)
+				MES_close(GEN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"就…就算你要我別在意……",0)
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+				MES(RAGNA,"（他在這裡，也就是說\n 他也是忍者……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("佀僇儔僗偲弶夞夛榖嵪傒")
+				MES(RAGNA,"咦……？",0)
+				MES(RAGNA,"你以前在\n阿魯特鎮那裡吧？",0)
+				MES(RAGNA,"好像是在\n修整草木……",0)
+				MES_close(RAGNA)
+
+			//	name("僎儞")
+				look_chr(GEN,RAGNA,"Bone_Head")
+				MES(GEN,"哎，不要在意\n那些小事。",0)
+				MES_close(GEN)
+
+			//	name2(RAGNA)
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+				MES(RAGNA,"（他也是\n 負責收集情報的\n 忍者嗎……）",0)
+				MES_close(RAGNA)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			look_chr(PARTNER,RAGNA,"Bone_Head")
+			MES(PARTNER,"（哈哈……）",0)
+			MES(PARTNER,"（健爺爺一直以來\n 好像都在負責\n 諜報與偵查。）",0)
+			MES(PARTNER,"（具體的事情\n 我也不太清楚……）",0)
+			MES_close(PARTNER)
+			look_off(RAGNA)
+			look_off(PARTNER)
+
+		//	name("僎儞")
+			MES(GEN,"這裡是我們用來交換情報的\n集會所。",0)
+			MES(GEN,"當然也算是茶店。\n能夠提供一些茶水。",0)
+			MES(GEN,"你可以在這裡休息一下。",0)
+			MES_close(GEN)	
+			look_off(GEN)
+			//仛僎儞亂幚偼擡傃亃
+			F_set_note(GEN,1)
+			F_set(FS_08_TalkGen)
+
+		//僒儔僒埲奜偺柤慜晅偒僉儍儔慡堳偵榖偟偐偗傞偲業揤晽楥偑奐偒丄僒儔僒傪徚偡
+			EV("EV_F4_12_OkRoten")
+		}
+		else
+		
+		//丂丂仛僎儞亂忣曬廂廤偲拑壆亃
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸弶夞屻偱丄俧俥亀傾僇僱偝傫僲乕僩偺榖戣傪暦偄偨亁偑棫偭偰偄傞応崌丅
+		//丂丂丂侾夞偩偗偙偺儊僢僙乕僕傪昞帵偟傑偡丅
+		if(FS_08_Akane_Nt && !FS_08_Gen_Nt)
+		{
+		//	name("僎儞")
+			MES(GEN,"茜的筆記……？",0)
+			MES(GEN,"哦，那個情報小冊子啊。",0)
+			MES(GEN,"因為茜負責監督\n年輕人。",0)
+			MES(GEN,"所以她就把\n大家品行還有犯下的錯誤全都記下來了。",0)
+			MES(GEN,"然後用那個在酒席上欺負屬下\n……唉，真是有點丟臉。",0)
+			MES_close(GEN)
+			
+		//	仛僎儞嘒丒傾僇僱僲乕僩
+			F_set(FS_08_Gen_Nt)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			//1夞栚
+			if(!F_GEN)
+			{
+			//	name("僎儞")
+				MES(GEN,"茜那傢伙馬上又要\n在這裡舉辦宴會了。",0)
+				MES(GEN,"不過畢竟這家店\n就是在她主張下開的。",0)
+				MES(GEN,"現在已經完全變成\n她的宴會會場了。",0)
+				MES(GEN,"哎呀，我還是比較喜歡\n修整草木呢……",0)
+				MES_close(GEN)
+				F_set(GEN)
+			}
+			//擇夞栚埲崀丂丂仛孞傝曉偟
+			else
+			{
+			//	name("僎儞")
+				MES(GEN,"茜那傢伙馬上又要\n在這裡舉辦宴會了。",0)
+				MES(GEN,"而且還使喚我，\n要我去準備禮品……",0)
+				MES(GEN,"……我還是比較喜歡\n修整草木呢。",0)
+				MES(GEN,"雖說是任務，\n不過還是後者能讓人平靜下來啊。",0)
+				MES_close(GEN)
+			}
+		}
+		MOT(GEN,52,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘慜偱憪栘偺庤擖傟傪偟偰偄傞丅
+	if( F2_00_GoForest )
+	{
+	//丂丂仸怳傝曉傜側偄丅
+		if(!F_GEN)
+		{
+		//	name("僎儞")
+			MES(GEN,"哼，這件宅邸的草叢……\n太隨便了吧。",0)
+			MES(GEN,"看看，我就擅自把它修剪一下吧。",0)
+			MES_close(GEN)
+
+		//丂丂愭摢僉儍儔偵傾僙傾僙僄儌乕僔儑儞丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+//				EMO(RAGNA,EMO_ASEASE)
+//				wait(30)
+				
+				MES(RAGNA,"喂喂……",0)
+				MES(RAGNA,"這麼做\n好嗎……？",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+//				EMO(PARTNER,EMO_ASEASE)
+//				wait(30)
+				
+				MES(PARTNER,"你……\n這是別人的房屋吧？",0)
+				MES(PARTNER,"這樣擅自修剪好嗎？",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		//丂丂僎儞丄怳傝偐偊傞丅
+			MOT(GEN,52,15)
+			rot_chr(GEN,30,PLAYER1)
+
+		//	name("僎儞")
+			MES(GEN,"哼……我絕不會放過\n隨便修剪的草叢。",0)
+			MES(GEN,"我不做\n就沒有人做了吧。",0)
+			MES_close(GEN)
+			//仛僎儞亂怑恖敡亃
+			F_set_note(GEN,0)
+
+			F_set(GEN)
+			MOT(GEN,150,15)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//丂丂仸怳傝曉傜側偄丅
+		//	name("僎儞")
+			MES(GEN,"（哼……我也差不多要\n 回去了……）",0)
+			MES_close(GEN)
+			MES(GEN,"再仔細看一下吧……",0)
+			MES_close(GEN)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸挰丄僊儖僪奒抜慜曈傝偱憪栘偺庤擖傟傪偟偰偄傞丅
+	//	name("僎儞")
+	if( F1_15_GoVillage )
+	{
+		//丂丂仸怳傝曉傜側偄丅
+		if(!F_GEN)
+		{
+			MES(GEN,"哎，又有煙頭……",0)
+			MES(GEN,"遊客們扔掉的嗎？\n這鎮上亂扔垃圾真是普遍。",0)
+			MES_close(GEN)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僔僗僞乕偲榖偟偨帠偑偁傞応崌")
+			if(FT_01_IsabellaEnc)
+			{
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"（不對，那難道是……）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（不是那個\n 修女的嗎……？）",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(GEN)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			rot_chr(GEN,30,PLAYER1)
+			MOT(GEN,52,15)
+		//	name("僎儞")
+			MES(GEN,"……阿魯特鎮裡\n花壇和樹木很多。",0)
+			MES(GEN,"所以我必須要照料它們。",0)
+			MES_close(GEN)
+
+		//丂丂僎儞丄岦偒傪栠偡丅
+			rot(GEN,30,170)
+			
+		//	name("僎儞")
+			MES(GEN,"這個……\n再剪短一點吧。",0)
+			MES_close(GEN)
+		}
+		MOT(GEN,150,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸挰丄暚悈塃懁偁偨傝偱憪栘偺庤擖傟傪偟偰偄傞丅
+	//丂丂仸怳傝曉傜側偄丅
+	if( F1_01_GameStart )
+	{
+		if(!F_GEN)
+		{
+		//	name("僎儞")
+			MES(GEN,"在中午之前\n要把它們修整完。",0)
+			MES(GEN,"……因為曬太陽時間過長\n也不好啊。",0)
+			MES_close(GEN)
+
+		//丂丂僎儞丄怳傝曉傞丅
+			look_chr(GEN,PLAYER1,"Bone_Head")
+			
+		//	name("僎儞")
+			MES(GEN,"什麼，有事嗎？",0)
+			MES(GEN,"從那裡出去就是阿魯特的正門。\n走過去就看見了。",0)
+			MES_close(GEN)
+			look_off(GEN)
+			
+			F_set(GEN)
+		}
+		//丂丂仛孞傝曉偟
+		//丂丂仸怳傝曉傜側偄丅
+		else
+		{
+		//	name("僎儞")
+			MES(GEN,"………………………………",0)
+			MES(GEN,"今天也是個大晴天啊。",0)
+			MES_close(GEN)
+		}
+		MOT(GEN,150,10)
+	}
+
+	TK_end()
+}
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

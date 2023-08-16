@@ -1,0 +1,427 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[17010][堎亅擖岥]
+//====================================================================
+
+#ScriptTable
+
+#LUE 		1
+#EVENT_RAGNA 	2
+#ODESSA 		3
+#B_ODESSA 		4
+#C_ODESSA 		5		//曄恎拞愱梡僆僨僢僒
+#EFFDUMMY1		6
+#EFFDUMMY2		7
+
+
+INIT
+{
+
+//擖岥偺傒僨僼僅偵僇儊儔儘乕儖傪擖傟傞
+	CAM_Roll(9,0)
+
+//娐嫬SE
+	SE(68,0)
+
+//  -------  no typ     tip      x    y   z       mot  岦 忬     000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭奒抜丒斷
+
+	if( !F5_17_EndFifth )//奒抜徚柵屻偼丄僎乕僩帺懱偑徚偊傑偡丅徚偊傞偼偢丅
+	{
+		set_chr( 90,990,	-1,-1,   0,4800,-800, 	  180,050201, 6,"K1_10602;")	//嘆僄儞僩儕乮僋儕僗僞儖僶儗乕栧傊乯
+	}
+	else
+	{
+		set_chr( 90,990,	-1,-1,   0,4800,-800, 	  180,050201, 6,"<EV_STOP_01>")	//嘆僄儞僩儕乮僋儕僗僞儖僶儗乕栧傊乯
+	}
+
+	set_chr( 91,990,	-1,-1,	 0,-3900,700,       0,050201, 6,"K0_17011;")	//嘇僄儞僩儕 儊僀儞嘆
+
+
+	set_chr( 50,620,	-1,-1,  -450,3850,-800, 	0,270,	0,";")	//嘆僙乕僽OBJ
+
+	set_chr( 51,648,	-1,-1,     0,-2975, 700,   20,  0,	0,";")	//嘆儗儀儖僾儗乕僩
+	color2( 51,  75,75,100, 0,0,0)	// 堎師尦偺儗儀儖僾儗乕僩偺怓
+	set_chr( 52,654,	-1,-1,  -190,-2975, 700,    2,  0,	0,";")	//嘆弴楬埬撪乮儊僀儞乯
+
+//仭僀儀儞僩
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//仴儖僫亖儉儞僪僁僗偵摓拝偡傞
+		EV("EV_5_11_OnLunar")
+	}
+
+//仭応柺屌桳愝掕
+}
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴儖僫亖儉儞僪僁僗偵摓拝偡傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂夋柺偟偽傜偔埫揮偟偰偐傜丄
+//丂丂悢攺抲偄偰丄儖僫亖儉儞僪僁僗偺擖岥儅僢僾丅
+//丂丂夋柺僗僋儘乕儖偟偰丄攚宨偵尒偊傞抧媴傗惎寏傪尒偣側偑傜
+//丂丂擖岥晅嬤偵偄傞儔僌僫丄僆僨僢僒丄儖僁偵夋柺傪愗傝懼偊傞丅
+EV_5_11_OnLunar
+{
+	EV_begin()
+
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,	 	462,3700,-800,180,2)
+	chr_pos(PARTNER, 	262,3700,-800,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+//	set_chr(EVENT_RAGNA,	  1010,-1,-1,  -632,4582,-798, 2,90,0, "")
+	set_chr(EVENT_RAGNA,	  1010,-1,-1,  40,4182,-798, 2,300,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"B","D","6")
+
+	set_chr(ODESSA,		1019,-1,-1, -100,4042,-800, 2,90,0, "")
+	set_chr(B_ODESSA,	34,-1,-1, -100,4042,-800, 2,90,0, "")
+	set_chr(C_ODESSA,	90,-1,-1, -100,4042,-800, 2,90,0, "")
+	set_chr(LUE, 	 	1015,-1,-1, 88,4040,-798, 2,240,0, "")
+	set_chr(EFFDUMMY1,	749, -1,-1,-100,4042,-800, 0,0,0, "")
+	set_chr(EFFDUMMY2,	749, -1,-1,-0,0,-00, 0,0,0, "")
+	F_set_chr(LUE,CF_NO_ZIMEN)
+	F_set_chr(LUE,CF_NO_HEIGHT)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(B_ODESSA,CF_NO_CLIP)
+	F_set_chr(B_ODESSA,CF_NO_CLIP2)
+	F_set_chr(B_ODESSA,CF_NO_CSP)
+	F_set_chr(C_ODESSA,CF_NO_CLIP)
+	F_set_chr(C_ODESSA,CF_NO_CLIP2)
+	F_set_chr(C_ODESSA,CF_NO_CSP)	
+	color(B_ODESSA,-1)
+	color(C_ODESSA,-1)
+	KAO(LUE,"B","D","6")
+
+	//儌乕僔儑儞掕媊
+	MOT_SET(EVENT_RAGNA,150,-1,405,405,-1,-1)	//偳偆側偺傛
+	MOT_SET(EVENT_RAGNA,151,-1,468,468,-1,-1)	//偍偳傠偒
+	MOT_SET(ODESSA,150,-1,459,459,-1,-1)	//偨傔
+	MOT_SET(B_ODESSA,150,-1,459,459,-1,-1)	//偨傔
+	MOT_SET(B_ODESSA,151,-1,396,396,-1,-1)	//曅庤崢
+
+
+	MOT_SET(C_ODESSA, 150, 151,0005,0084,-1,-1) //朮巕傪庢傞
+//	MOT_SET(C_ODESSA, 151, 152,0086,0129,-1,-1) //億乕僘傪庢傞
+	MOT_SET(C_ODESSA, 151, -1,0086,0129,-1,-1) //億乕僘傪庢傞
+	MOT_SET(C_ODESSA, 152, -1,0135,0234,-1,-1) //帹偑惗偊傞
+	MOT_SET(C_ODESSA, 153, -1,0240,0269,-1, -1) //億乕僘仺棫偪
+
+
+	F_set_Node(C_ODESSA, "Bone_RightSword", NP_HIDE)	
+
+	chr_equip_chr(EFFDUMMY2, ODESSA, "charbase0", 100, 0,0,0, 0,0,0)
+	chr_equip_chr(EFFDUMMY1, ODESSA, "charbase0", 100, 0,0,0, 0,0,50)
+	wait(30)															//僇儊儔偑偔偮偒梷惂
+	
+	//僇儊儔弶婜埵抲
+//	CAM_Roll(9,0)
+	CAM_move(0,0,1000,0,0)
+	CAM(470,540,100,42,180,0,0)
+	CAM_move(0,-1500,-200,300,0)
+	CAM(470,440,-200,42,210,300,0)
+
+	//僼僃乕僪僀儞
+	fade_in(0,90,0)
+//	wait_fade()
+//	wait(30)
+
+//	攚宨偺抧媴傗惎寏傪尒偣傞丅
+
+	wait_CAM_move()
+	wait_CAM()
+//	wait(30)
+	CAM_move(-80,-4042,-680,120,0)
+	CAM(30,80,-680,36,244,120,0)
+	wait_CAM_move()
+	wait_CAM()
+
+	MOT(EVENT_RAGNA,51,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","12321D","6")
+	MES(EVENT_RAGNA,"這裡就是「月之世界」……",0)
+	KAO(EVENT_RAGNA,"B232BZ5","D","6")	
+	MES(EVENT_RAGNA,"果然超越了\n我的想像啊……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"B232BZ4","12321D","6")		
+	MES(LUE,"好像空中也\n飄著各式各樣的東西……",0)
+	KAO(LUE,"B232BZ5","12321D","5")	
+	MES(LUE,"公…公主殿下\n竟然會被帶到這種地方……",0)
+//	KAO(LUE,"12321Z4","1","1")		
+//	MES(LUE,"偦丄偦傟偵乧乧\n壓偵峀偑偭偰偄傞偺偼乧乧",0)
+	MES_close(LUE)
+
+	MES(ODESSA,"…………………………………",0)
+	MES_close(ODESSA)
+
+//丂丂儔僌僫偺摢偵俹俙儅乕僋丅
+	KAO(EVENT_RAGNA,"B","12321","6")
+	KAO(LUE,"B","12321","6")
+	EMO(EVENT_RAGNA,EMO_PA)
+	wait(15)
+	rot_chr(EVENT_RAGNA,30,ODESSA)
+
+	rot_chr(LUE,30,ODESSA)
+	wait(15)
+
+	MOT(EVENT_RAGNA,150,15)
+	wait(15)		
+	MES(EVENT_RAGNA,"怎麼了，奧迪莎？",0)
+	MES(EVENT_RAGNA,"難道你也\n被這景色震撼了嗎？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"12321Z2","123","6")	
+	MES(ODESSA,"呵…呵呵……",0)
+	MES_close(ODESSA)
+	wait(15)
+	CAM_quake("46464646")
+	KAO(ODESSA,"343434343","6","6")		
+	MES(ODESSA,"S5哈哈哈哈哈哈哈哈！",0)
+	MES_close(ODESSA)
+	wait_MES(ODESSA)
+
+//丂丂師偺弖娫丄僆僨僢僒偺恎懱偑惵敀偄僆乕儔偵曪傑傟傞丅
+//丂丂僥儞僈儘儞僴僢僩傪庢偭偰丄帹偑怢傃偰栚傕嬥怓偵側傞丅
+//丂丂偨偩偟姰慡側廱壔乮僽乕僗僩儌乕僪帪偺宍懺乯偱偼側偄丅
+
+	cross_fade(15)
+	CAM_move(-88,-4030,-680,0,0)
+	CAM(70,38,-680,34,118,0,0)
+	MOT(EVENT_RAGNA,2,0)
+
+	KAO(EVENT_RAGNA,"B","D","6")
+	KAO(LUE,"B","D","6")
+	KAO(ODESSA,"B","1","2")
+	KAO(C_ODESSA,"B","1","2")//
+	color(ODESSA,-1)
+	color(C_ODESSA,1)
+	wait_fade()
+	
+	//朮巕丄曄恎
+	EV("EV_ODESSA_SE")//僆僨僢僒SE張棟
+	MOT(C_ODESSA,3,5)
+	wait(5)
+	wait(79)
+//	CAM(110,33,-680,34,118,200,0)	
+	CAM(70,33,-680,34,117,200,0)
+
+	MOT(C_ODESSA,151,0)											//億乕僘傪偲傞
+	wait(10)
+	MES_pos(ODESSA,"S5哦哦哦哦哦哦哦！",0,0,0,0,0)
+	KAO(C_ODESSA,"2","21","2")//
+	wait(2)
+	KAO(C_ODESSA,"3","1","3")//
+	wait(2)
+	KAO(C_ODESSA,"4","1","3")//
+	wait(6)	
+	MOT(EFFDUMMY2,69, 0)		//僄僼僃僋僩丗嬥怓偺僆乕儔懌尦
+	MOT(EFFDUMMY1, 9, 0)		//僄僼僃僋僩丗嬥怓偺僆乕儔
+	wait(20)
+	MOT(C_ODESSA,5,0)											//帹惗偊傞
+	wait(40)
+	KAO(EVENT_RAGNA,"2","12321DE","7")
+	KAO(LUE,        "2","12321DE","7")
+	
+	wait(60)
+	MES_close(ODESSA)
+	EFF_chr(6320, C_ODESSA, 0,100,0, "charbase0")
+	wait(10)
+	EFF_chr(6320, C_ODESSA, 0,100,0, "charbase0")
+	wait(15)
+	wait(30)
+	MOT(C_ODESSA,	153,0)					//億乕僘仺棫偪
+	MOT(EFFDUMMY1, 0, 0)
+	MOT(EFFDUMMY2, 0, 0)
+	wait(25)		
+	KAO(C_ODESSA,"32B","123","2")			//栚傪偮傓傞
+	wait(10)
+
+	cross_fade(30)
+	color(ODESSA,-1)
+	color(C_ODESSA,-1)
+	color(B_ODESSA,1)
+	KAO(B_ODESSA,"B","3","2")
+	CAM(70,33,-680,34,118,0,0)
+	wait(30)
+
+	MOT(EVENT_RAGNA,151,5)
+	wait(5)
+	KAO(EVENT_RAGNA,"B232B2Z2","D12321D","6")
+	MES(EVENT_RAGNA,"奧…奧迪莎！？",0)
+	MES_close(EVENT_RAGNA)
+	
+	KAO(LUE,"B232B2Z2","D12321D","6")
+	MES(LUE,"這…這種力量……",0)
+	KAO(LUE,"B232BZ2","D12321","2")
+	MES(LUE,"難道這裡是……！？",0)
+	MES_close(LUE)
+
+	KAO(B_ODESSA,"B232BZ4","3","2")
+	MES(B_ODESSA,"「月之世界」……",0)
+	KAO(B_ODESSA,"B232BZ6","321","2")	
+	MES(B_ODESSA,"正如其名，腳下的這片大地\n就是月亮本身吧。",0)
+	MES_close(B_ODESSA)
+
+//丂丂儔僌僫偺摢偵両儅乕僋丅
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(EVENT_RAGNA,"B","12321DE","7")
+	EMO(LUE,EMO_BIKKURI)
+	KAO(LUE,"B","12321D","1")
+	wait(15)
+	MOT(EVENT_RAGNA,2,15)
+	wait(5)
+	KAO(EVENT_RAGNA,"2","E","7")
+	MES(EVENT_RAGNA,"什麼……！？",0)
+	KAO(EVENT_RAGNA,"B232B2Z2","D12321D","2")	
+	MES(EVENT_RAGNA,"月亮……\n是夜空中的那個月亮嗎！？",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	cross_fade(15)
+	CAM_move(-8,-4070,-680,0,0)
+	CAM(310,46,-680,30,180,0,0)
+	rot_chr(B_ODESSA,30,EVENT_RAGNA)
+	wait(15)
+
+	MOT(B_ODESSA,151,15)
+	wait(15)
+
+	KAO(B_ODESSA,"B232BZ5","123","1")
+	MES(B_ODESSA,"嗯，我感到自己的力量\n前所未有地強大。",0)
+	KAO(B_ODESSA,"B232BZ5","32A","1")	
+	MES(B_ODESSA,"如果這裡是在月亮上的話，\n那也就可以理解了。",0)
+	MES_close(B_ODESSA)
+
+	KAO(LUE,"B232BZ3","1233321","4")
+	MES(LUE,"真…真是出乎意料呢……",0)
+	MES_close(LUE)
+
+	MES(EVENT_RAGNA,"唉……\n居然來到了這種地方。",0)
+	MES(EVENT_RAGNA,"算了，不管這裡是哪裡，\n我們的目標都不會變。",0)
+	MES(EVENT_RAGNA,"作好準備前進吧！",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( LUE, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+
+	KAO(LUE,"12321Z1","1233321","2")
+	MES(LUE,"唔…嗯……！",0)
+	MES_close(LUE)
+
+	MOT(B_ODESSA,2,15)
+//	wait(15)
+	
+	KAO(B_ODESSA,"12321Z3","A233321","2")
+	MES(B_ODESSA,"嗯……明白了！",0)
+	MES_close(B_ODESSA)
+
+//丂丂僀儀儞僩廔椆丄僾儗僀儎乕憖嶌嫋壜丅
+//丂丂側偍儖僁偼丄旕愴摤儅僢僾偱偼弌偟偭傁側偟偵偟偰偍偔丅
+//丂丂愴摤儅僢僾偵擖偭偨傜嵟弶偐傜傾儞僇乕僊傾偵廻偭偨忬懺丅
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(LUE)
+	delete(ODESSA)
+	delete(B_ODESSA)
+	delete(C_ODESSA)
+	delete(EVENT_RAGNA)
+	delete(EFFDUMMY1)
+	delete(EFFDUMMY2)
+
+//	chr_pos(RAGNA,	 -632,4582,-798,90,2)
+//	chr_pos(PARTNER,	 -772,4442,-800,90,2)
+	chr_pos(RAGNA,	 40,4182,-798,90,2)
+	chr_pos(PARTNER,	 -100,4042,-800,90,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+	CAM_Roll(9,0)
+
+//俧俥亀仛儖僫丒儉儞僪僁僗偵摓拝偟偨亁傪棫偰傞丅
+	F_set(F5_09_OnLunar)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+//僆僨僢僒楾壔SE張棟
+EV_ODESSA_SE
+{
+	wait(30)
+	SE(1029,0)//朮巕扙偖SE
+	wait(30)
+	SE(466,0)//朮巕搳偘幪偰傞SE
+	wait(40)
+	EV("EV_1082_loop")//楾懓僆乕儔SE
+	SE(1067,0)//僆乕儔SE曗懌
+	wait(110)
+	wait(15)
+	SE(1088,0)
+	SE(1042,0)
+	wait(20)
+	EV_stop("EV_1082_loop")//楾懓僆乕儔SE巭傔傞
+	EV_stop("EV_1082_loop2")//楾懓僆乕儔SE巭傔傞
+}
+
+//楾懓僆乕儔SE
+EV_1082_loop
+{
+	SE(1082,0)
+	wait(30)
+	EV("EV_1082_loop2")
+}
+EV_1082_loop2
+{
+	SE(1082,0)
+	wait(30)
+	EV("EV_1082_loop")
+}
+
+EV_STOP_01
+{
+	EV_begin()
+
+//	name("僥僉僗僩乮怓姺偊丒昞帵偟側偄乯")
+	fade_in(30,10,BLACK)
+	MES(0,"C3S2通向水晶谷的門\n似乎已經被關閉了。",2)
+	MES_close(0)
+	fade_in(0,10,BLACK)
+
+	cross_fade( 30 )
+	chr_pos(PLAYER1,-7,4383,-800,178,2)
+	chr_pos(PLAYER2,211,4573,-791,145,2)
+	chr_pos(PET,-89,4516,-800,110,2)
+
+	EV_end()
+	CAM_return(0)
+	wait_fade()	
+
+}
+
+#EndScriptTable
+//====================================================================
+

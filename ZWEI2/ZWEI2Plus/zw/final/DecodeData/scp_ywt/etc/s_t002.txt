@@ -1,0 +1,392 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仠億僢僋儖")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_POCKLE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(POCKLE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,POCKLE)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,POCKLE)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,POCKLE)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,POCKLE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,POCKLE)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,POCKLE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,POCKLE)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴僼儔僌嘖乮儊儖僙僨僋偵忔傝崬傓乯
+	//丂丂僺僺儘偲嫟偵旘峴応偺億僢僋儖婡偺慜偵偄傞丅
+	//	name("仛弶夞乮僺僺儘偲嫟捠乛侾夞偺傒乛僀儀儞僩張棟乯")
+	//丂丂榖偟偐偗傞偲僉儍儔嵞攝抲偟偰僀儀儞僩敪惗丅
+	//丂丂僺僺儘偲嫟捠側偨傔丄偁偪傜偱婲偙偟偨傜敪惗偟側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_00_GoToMeru )
+	{	
+		if(!FM_12_TalkPocPip)
+		{
+			//僺僺儘偲嫟捠弶夞僀儀儞僩
+			EV("TALK_POCPIP_12")
+			wait_EV("TALK_POCPIP_12")
+		}
+		else
+		{
+		//	name("仛埲屻丄孞傝曉偟乮旘峴婡傪尒懕偗偰偄傞丠乯")
+			MES(POCKLE,"（乘坐這架飛機\n 去挑戰大旋風…？）",0)
+			MES(POCKLE,"（唔—，\n 心都怦怦地跳著呢。）",0)
+			MES(POCKLE,"（上次有這種感覺好像是\n 和皮皮洛一起在「幻之大陸」上戰鬥的時候……）",0)
+			MES_close(POCKLE)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仱僋儕僗僞儖僶儗乕傪婲摦偟偨
+		//丂丂僋儕僗僞儖僶儗乕偱僺僺儘偨偪傪尒庣偭偰偄傞丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if( F5_06_RunCrystal )
+		{
+			rot_chr(POCKLE,30,PLAYER1)
+
+			//夛榖梡儌乕僔儑儞
+			MOT_SET(POCKLE,151,-1,434,434,-1,0)		//捠忢
+			MOT_SET(POCKLE,152,-1,407,407,-1,0)		//偁丄僆僨僢僒偝傫両
+			
+		//	name("佀僟僀僈儖僪傪搢偟偨")
+		//丂丂僺僺儘偺嬤偔偵婑偭偰偄傞忬懺丅
+			if(F5_13_KillDygald)
+			{
+				MOT(POCKLE,151,10)
+				MES(POCKLE,"皮皮洛她們\n應該已經很難再前進了……",0)
+				MES(POCKLE,"拉格那，請你務必要加油！",0)
+				MES_close(POCKLE)
+			}
+		//	name("佀僟僀僈儖僪傪搢偟偰偄側偄")
+			else
+			if(F5_08_JoinOdessa)
+			{
+			//	name("仛侾夞栚")
+				if(!F_POCKLE)
+				{
+					MOT(POCKLE,152,10)
+					rot_chr(POCKLE,30,PARTNER)
+					MES(POCKLE,"啊，奧迪莎！",0)
+					MES_close(POCKLE)
+
+					rot_chr(PARTNER,30,POCKLE)
+				//	name2(PARTNER)
+					MES(PARTNER,"喲，波克爾。",0)
+					MES(PARTNER,"我要和拉格那一起行動，\n這裡就交給你們了。",0)
+					MES_close(PARTNER)
+
+				//	name2(POCKLE)
+					MES(POCKLE,"啊，是……！",0)
+					MES(POCKLE,"（哎，大姐還是\n 這麼帥呀㈱）",0)
+					MES_close(POCKLE)
+					
+					F_set(POCKLE)
+				}
+				else
+				{
+					MOT(POCKLE,151,10)
+				//	name("仛埲屻丄孞傝曉偟")
+					MES(POCKLE,"拉格那，奧迪莎！",0)
+					MES(POCKLE,"你們兩個人都要加油啊！",0)
+					MES_close(POCKLE)
+				}
+			}
+			else
+			{
+				MOT(POCKLE,151,10)
+		//	name("佀僆僨僢僒偑拠娫偵側偭偰偄側偄")
+				MES(POCKLE,"就算有魔獸出現，\n我們也會想辦法解決的！",0)
+				MES(POCKLE,"拉格那請務必小心！",0)
+				MES_close(POCKLE)
+			}
+			MOT(POCKLE,150,10)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//嘕仱億僢僋儖偨偪偵帠忣傪榖偟偨
+		//丂丂僺僺儘偲嫟偵僋儕僗僞儖僶儗乕偺堦妏偵偄傞丅
+		//	name("仛弶夞乮僺僺儘偲嫟捠乛侾夞偺傒乛僀儀儞僩張棟乯")
+		//丂丂榖偟偐偗傞偲僉儍儔嵞攝抲偟偰僀儀儞僩敪惗丅
+		//丂丂僺僺儘偲嫟捠側偺偱丄偁偪傜偱婲偙偡偲敪惗偟側偄丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		if(!F5_04_OfferPipiro)
+		{
+			//僺僺儘偲偺嫟捠夛榖
+			EV("EV_05_04_OfferPipiro")
+			wait_EV("EV_05_04_OfferPipiro")
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//嘕愢摼屻
+		//丂丂僺僺儘偲嫟偵僋儕僗僞儖僶儗乕偺堦妏偵偄傞丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		{
+			if(!FM_11_TalkPocPip)
+			{
+				//	name("仛弶夞乮僺僺儘偲嫟捠乛侾夞偺傒乛僀儀儞僩張棟乯")
+				//丂丂榖偟偐偗傞偲僉儍儔嵞攝抲偟偰僀儀儞僩敪惗丅
+				//丂丂僺僺儘偲嫟捠側偺偱丄偁偪傜偱婲偙偡偲敪惗偟側偄丅
+				EV("TALK_POCPIP_11")
+				wait_EV("TALK_POCPIP_11")
+				
+			}
+			else
+			{
+				MOT(POCKLE,2,10)
+				rot_chr(POCKLE,30,PLAYER1)
+			//	name("仛埲屻丄孞傝曉偟")
+				MES(POCKLE,"唔—，差不多\n可以把這件飾品摘下來了吧。",0)
+				MES(POCKLE,"可是，感覺微笑徽章還有這個\n已經變成我的標幟了……",0)
+				MES_close(POCKLE)
+				rot(POCKLE,30,0)
+				MOT(POCKLE,150,10)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨丂仱僗僶儖偑拠娫偵側偭偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂懞偺儁僢僩僔儑僢僾偵僺僺儘偲嫟偵偄傞丅
+	//丂丂抲偔偵偁傞扞偺慜偱昳懙偊傪尒偰偄傞傛偆側姶偠丅
+	//	name("仛弶夞乮僺僺儘偲嫟捠乛堦夞偺傒乛僀儀儞僩張棟乯")
+	//丂丂榖偟偐偗傞偲僉儍儔嵞攝抲偟偰僀儀儞僩敪惗丅
+	//丂丂僺僺儘偲嫟捠側偺偱丄偁偪傜偱婲偙偟偨傜敪惗偟側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_02_GoVillage2 )
+	{
+		if(!FM_07_TalkPocPip)
+		{
+			EV("TALK_POCPIP_07")
+			wait_EV("TALK_POCPIP_07")
+		}
+		else
+		{
+		//	name("仛埲屻丄孞傝曉偟")
+			MES(POCKLE,"寵物食品啊……\n哪一種比較好呢？",0)
+			MES(POCKLE,"是加了肉的\n還是加了魚的好呢…？",0)
+			MES(POCKLE,"哇，居然還有大豆做的\n健康食品。",0)
+			MES_close(POCKLE)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F3_00_GoMoonCastle )
+	{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仱忛偺尯娭峀娫偵擖偭偨
+		//丂丂儘傾儖僞懞偺峀応偵偄傞丅
+		//丂丂搢傟偨懞恖傪夘書偟偰偄傞傛偆側摦嶌丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F3_02_InMoonCastle)
+		{
+			MES(POCKLE,"太好了……\n臉色好了很多。",0)
+			MES(POCKLE,"就這樣讓他\n再好好休息一下……",0)
+			MES_close(POCKLE)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴僼儔僌嘐乮栭丒儘傾儖僞懞廝寕捈屻乯
+		//丂丂儘傾儖僞懞偺峀応偵偄傞丅
+		//丂丂搢傟偨懞恖傪夘書偟偰偄傞傛偆側摦嶌丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(!FM_06_TalkPockle)
+		{
+		//	name("仛弶夞乮侾夞偺傒乛僀儀儞僩張棟乯")
+			MES(POCKLE,"不行……\n還是毫無精神。",0)
+			MES(POCKLE,"可是話說回來……\n居然能這樣用吸血\n操縱人類……",0)
+			MES_close(POCKLE)
+
+		//丂丂億僢僋儖丄傾儖僂僃儞偺曽偵岦偒捈傞丅
+			MOT(POCKLE,2,15)
+			rot_chr(POCKLE,30,PARTNER)
+			wait(10)
+			EMO(POCKLE,EMO_TENTEN)
+			wait(30)
+			
+			rot_chr(PARTNER,30,POCKLE)
+			MES(PARTNER,"哼……你害怕我嗎？",0)
+			MES(PARTNER,"確實，這種事\n我也能做得到。",0)
+			MES(PARTNER,"不過這實在算不上優雅，\n目前為止我還沒有試過。",0)
+			MES_close(PARTNER)
+
+		//	name2(POCKLE)
+			MES(POCKLE,"不…不是的！",0)
+			MES(POCKLE,"我…我相信\n艾爾文是絕對\n不會做出這種事的！",0)
+			MES_close(POCKLE)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"哦……？",0)
+			MES_close(PARTNER)
+
+		//	name2(PIPIRO)
+			rot_chr(PIPIRO,30,POCKLE)
+			MES(PIPIRO,"哼，你一定只是覺得，\n這麼漂亮的大小姐\n怎麼可能會做出這種事吧？",0)
+			MES_close(PIPIRO)
+
+			rot_chr(POCKLE,30,PIPIRO)
+		//	name2(POCKLE)
+			MES(POCKLE,"是…是沒錯啦……",0)
+			MES_close(POCKLE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"唉……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"呵呵，謝謝你。",0)
+			MES_close(PARTNER)
+			
+			rot(POCKLE,30,120)
+			rot(PIPIRO,30,220)
+			MOT(POCKLE,150,15)
+			F_set(FM_06_TalkPockle)
+		}
+	//	name("仛埲屻丄孞傝曉偟")
+		else
+		{
+			look_chr( POCKLE, PLAYER1,"Bone_Head")
+			MES(POCKLE,"這些昏迷的村民\n就交給我們。",0)
+			MES(POCKLE,"兩位趕快去城堡吧！",0)
+			MES_close(POCKLE)
+			look_off(POCKLE)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仱戝揝搩偱億僢僋儖偨偪偲夛偭偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂戝揝搩拞宲丄墛偺斷嬤偔僺僺儘偲嫟偵偄傞丅
+	if( F1_22_EndFirst && !F2_17_EndSecond )
+	{
+		rot_chr(POCKLE,30,PLAYER1)
+	//	name("仛嵍塃偺偳偪傜傕夝彍偟偰偄側偄")
+		if(!F100 && !F101)
+		{
+			MES(POCKLE,"那個……\n接下來要怎麼做呢？",0)
+			MES_close(POCKLE)
+		}
+	//	name("仛嵍塃偺偳偪傜偐傪夝彍偟偨")
+		else
+		{
+			MES(POCKLE,"哎……",0)
+			MES_close(POCKLE)
+		}
+		rot(POCKLE,30,80)//庤摦偱擖傟偰傕岦偒偑栠傜側偄乧乧
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仱恄揳慜偱億僢僋儖偨偪偲夛偭偨
+	//丂丂僺僺儘偲嫟偵庰応偺僥乕僽儖偵嵗偭偰偄傞丅
+	//丂丂乮岦偐偄崌傢偣偱偼側偔丄椬傝崌傢偣偺惾攝抲偱乯
+	//丂丂僺僺儘偺慜偵偼僀僠僑埱恗僷僼僃偲枙拑僔僼僅儞働乕僉丄
+	//丂丂億僢僋儖偺慜偵偼擔杮拑偲僙儞儀僀側偳偑抲偐傟偰偄傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F1_15_GoVillage )
+	{
+	//	2夞栚偺僀儀儞僩傑偱偼僺僺儘偲嫟捠僀儀儞僩
+		if(!FM_02_TalkPocPip_1)
+		{
+			EV("TALK_POCPIP_02_1")
+			wait_EV("TALK_POCPIP_02_1")
+		}
+		else
+		if(!FM_02_TalkPocPip_2)
+		{
+			EV("TALK_POCPIP_02_2")
+			wait_EV("TALK_POCPIP_02_2")
+		}
+	//	name("仛埲屻丄孞傝曉偟")
+		else
+		{
+			look_chr( POCKLE, PLAYER1,"Bone_Head")
+
+			MES(POCKLE,"嗯，不知怎麼回事，\n忽然有了自信呢㈱",0)
+			MES(POCKLE,"好，從今天開始\n以一天十個笑話\n為目標?",0)
+			MES_close(POCKLE)
+
+			look_chr( PIPIRO, POCKLE,"Bone_Head")
+		//	name2(PIPIRO)
+			MES(PIPIRO,"喂，別得意忘形了。",0)
+			MES_close(PIPIRO)
+			look_off(PIPIRO)
+			look_off(POCKLE)
+		}
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

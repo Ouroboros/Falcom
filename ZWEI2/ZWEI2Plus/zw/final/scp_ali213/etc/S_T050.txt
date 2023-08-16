@@ -1,0 +1,888 @@
+//Zwei2一般メッセ～ジ·阿鲁迪亚镇（※瑟菲拉）
+//────────────────────────────────────────────────────────────
+//阿鲁迪亚
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆瑟菲拉（歌手）Cepheila")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_CEPHEILA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+//	KAO(CEPHEILA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,CEPHEILA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,CEPHEILA)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CEPHEILA)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CEPHEILA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CEPHEILA)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CEPHEILA)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,CEPHEILA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+	//　　※罗亚鲁塔村·入り口付近で巴兰と話している。
+	//　　※初回イベント（巴兰と共通）
+	//　　※振り返らない。
+		if(!FV_13_TalkBaromCeph)
+		{
+			EV("TALK_BC")
+			wait_EV("TALK_BC")
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+	//　　※振り返らない。
+		else
+		{
+			if(!CEPHEILA)
+			{
+				MES(CEPHEILA,"呵呵……\n这村子很合胃口。",0)
+				MES(CEPHEILA,"这里的空气\n也很清新呢。",0)
+				MES(CEPHEILA,"去逛逛怎么样？",0)
+				MES_close(CEPHEILA)
+
+			//	name2(BAROM)
+				MES(BAROM,"啊、是、好的。",0)
+				MES(BAROM,"那么、我来带路。\n虽然没有什么特别的东西……",0)
+				MES_close(BAROM)
+				
+				F_set(CEPHEILA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(CEPHEILA,"呵呵……\n这村子很合胃口。",0)
+				MES(CEPHEILA,"能够很自然的\n让人放松呢。",0)
+				MES(CEPHEILA,"……有时间来这里玩玩吧。",0)
+				MES_close(CEPHEILA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※できればこ之タイミングでは、酒场をボ～カル付きＢＧＭに切り替えておき、
+	//　　　通常メッセ～ジでは話しかける処理を外す。
+	if( F6_00_GoToMeru )
+	{
+	//　　※初回イベント。
+	//　　　ボ～カル付きＢＧＭ之场合は、初回イベント中はＢＧＭ之音量を下げる。
+		if(!FT_12_TalkCepheila)
+		{
+
+			MES(RAGNA,"咦、怎么？\n今天搭着舞台。",0)
+			MES_close(RAGNA)
+
+		//　　瑟菲拉に気付きエモ～ション。振り向く。
+			EMO(CEPHEILA,EMO_PA)
+			wait(30)
+			
+			look_chr(CEPHEILA,PLAYER1,"Bone_Head")
+			
+			EV_stop("SING_CEPHEILA")
+
+			MES(CEPHEILA,"喂、你好。",0)
+			MES(CEPHEILA,"在这种时候\n居然有公演、真抱歉。",0)
+			MES_close(CEPHEILA)
+
+			MES(PARTNER,"嗯、没有\n必要道歉。",0)
+			MES(PARTNER,"不过对村里造成这样的混乱\n真感到有点意外。",0)
+			MES_close(PARTNER)
+
+			MES(CEPHEILA,"是吗、其实\n到这种情况\n我们也要去避难呢……",0)
+			MES(CEPHEILA,"不过正是这种时候、\n就是我歌唱的东西。",0)
+			MES(CEPHEILA,"我的歌能给大家勇气的话……\n也许是件很变化好的事呢。",0)
+			MES_close(CEPHEILA)
+
+		//──────────────────────────────
+		//	name("□フラグ⑤で「还是赶快从这里出去比较好」之選択をした")
+			if(FT_05_CepheilaSt)
+			{
+				MES(CEPHEILA,"呵呵、谢谢。\n不必担心。",0)
+				MES(CEPHEILA,"虽然看起来很忙、\n那么慢慢欣赏吧。",0)
+				MES_close(CEPHEILA)
+
+			}
+		//	name("□それ以外")
+			else
+			{
+				MES(CEPHEILA,"虽然看起来很忙、\n那么慢慢欣赏吧。",0)
+				MES_close(CEPHEILA)
+			}
+			
+		//──────────────────────────────
+			EV("SING_CEPHEILA")
+			
+			F_set(FT_12_TalkCepheila)
+			look_off(CEPHEILA)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+	//　　　ボ～カル付きＢＧＭ之场合は、ＢＧＭ之音量を下げる。
+		else
+		{
+			look_chr(CEPHEILA,PLAYER1,"Bone_Head")
+			EV_stop("SING_CEPHEILA")
+			if(!F_CEPHEILA)
+			{
+				MES(CEPHEILA,"我呀、到现在都\n经常喜欢考虑些很复杂的事。",0)
+				MES(CEPHEILA,"要是不快点变的更强的话、\n就不能满足客人的需要了。",0)
+				MES(CEPHEILA,"不过……我还是\n喜欢这样唱歌。",0)
+				MES(CEPHEILA,"今天、就让我\n这样唱吧。",0)
+				MES_close(CEPHEILA)
+				F_set(CEPHEILA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(CEPHEILA,"正因为是这种时候、\n所以\n才想唱这样的歌。",0)
+				MES(CEPHEILA,"虽然感觉很忙、\n但是还是好好欣赏吧。",0)
+				MES_close(CEPHEILA)
+			}
+			look_off(CEPHEILA)
+			EV("SING_CEPHEILA")
+		}
+		rot(CEPHEILA,30,353)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※熊猫楼·２階小部屋
+	//　　　ベッドに腰掛けている。
+	if( F5_00_HearLunar )
+	{
+	//　　瑟菲拉、首だけで振り返る。
+		look_chr(CEPHEILA,PLAYER1,"Bone_Head")
+		
+		if(!F_CEPHEILA)
+		{
+			MES(CEPHEILA,"嗯、大家太夸张了。",0)
+			MES(CEPHEILA,"只是轻轻的动了一下、\n就把脚扭到了而已……",0)
+			MES(CEPHEILA,"真的不是什么大事吧？",0)
+			MES(CEPHEILA,"哪个叫巴兰的人\n那么夸张的跟过来、\n让大家这样担心。",0)
+			MES(CEPHEILA,"不过……因为大家都是\n很亲切的人呢。",0)
+			MES_close(CEPHEILA)
+			F_set(CEPHEILA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CEPHEILA,"哼、果然\n还是不能安心……",0)
+			MES(CEPHEILA,"想早点变的出名、\n还有客人们的喝彩……",0)
+			MES(CEPHEILA,"老是太在意这样的事、\n弄的我喜欢的歌\n都没有了。",0)
+			MES_close(CEPHEILA)
+		}
+		
+		look_off(CEPHEILA)
+		//瑟菲拉と会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※熊猫楼·食器棚之前にいる。
+	if( F4_00_StartSolo )
+	{
+		rot_chr(CEPHEILA,30,PLAYER1)
+		MOT(CEPHEILA,2,15)
+		if(!F_CEPHEILA)
+		{
+			MES(CEPHEILA,"今天的公演\n中止了。",0)
+			MES(CEPHEILA,"哎、真是遗憾。",0)
+			MES(CEPHEILA,"最近唱歌也毫无感觉\n正烦着呢……",0)
+			MES(CEPHEILA,"不过要是没有公演\n又太冷清了。",0)
+			MES_close(CEPHEILA)
+			
+			F_set(CEPHEILA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CEPHEILA,"最近没有按想的那样唱\n正烦着……",0)
+			MES(CEPHEILA,"果然没有公演的话\n就放心不下呢。",0)
+			MES(CEPHEILA,"不能在台上唱歌、\n有种很冷清的感觉……",0)
+			MES_close(CEPHEILA)
+		}
+		MOT(CEPHEILA,150,15)
+		//瑟菲拉と会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※熊猫楼２階小部屋で寝ている。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_CEPHEILA)
+		{
+			MES(CEPHEILA,"呼～……呼～……",0)
+			EV("MOTION_CEPHEILA_SLEEPING")
+			MES(CEPHEILA,"嗯、嗯～……\n再让我多睡一下……",0)
+			MES_close(CEPHEILA)
+			F_set(CEPHEILA)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(CEPHEILA,"嗯～……\n再让我……多睡五分钟……",0)
+			MES(CEPHEILA,"呼～……呼～……",0)
+			MES_close(CEPHEILA)
+		}
+		//瑟菲拉と会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※教会、礼拝席真ん中辺りに立っている。
+	//　　※初回イベント。（多分キャラを再配置した方が良い）
+	if( F2_14_TalkEnemy )
+	{
+		if(!FT_05_TalkCepheila)
+		{
+			
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(2,-77,94,0,0)
+			CAM(30,65,94,30,168,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,111,241,0,146,2)
+			chr_pos(PARTNER,-110,287,1,200,2)
+			chr_pos(CEPHEILA,0,80,0,180,150)
+			
+			F_reset_chr(CEPHEILA,CF_NO_MOVE)
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(CEPHEILA,"1", "1", "1")	
+			
+			MOT_SET(CEPHEILA,151, -2,445,445,-1,0)	//ケホケホ
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			wait_fade()
+			
+		//　　瑟菲拉にＰＡエモ～ション。振り返る。
+			EMO(CEPHEILA,EMO_PA)
+			wait(30)
+
+			rot(CEPHEILA,30,0)
+			MOT(CEPHEILA,2,5)
+			
+			KAO(CEPHEILA,"12321Z2","1","1")
+			MES(CEPHEILA,"咦、哪个  ……",0)
+			MES_close(CEPHEILA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"咦、你是……\n是在酒场唱歌的哪个人吧？",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯、你\n在那种地方做什么啊？",0)
+			MES_close(PARTNER)
+
+		//	name2(CEPHEILA)
+
+			look_chr( CEPHEILA, PARTNER,"Bone_Head")
+
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"是、是的。\n哪个、是每天练习\n歌唱的地方……",0)
+			MES_close(CEPHEILA)
+
+		//　　瑟菲拉に少し···エモ～ション。
+			EMO(CEPHEILA,EMO_TENTEN)
+			wait(30)
+	
+			KAO(CEPHEILA,"12321Z5","1","1")
+			MES(CEPHEILA,"其实、\n最近都没什么状态。",0)
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"也不能好好唱出来……\n今天在台上也是、\n不能唱出来。",0)
+			MES_close(CEPHEILA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"唉、咦……\n真的吗。",0)
+			MES_close(RAGNA)
+
+			look_chr( CEPHEILA, RAGNA,"Bone_Head")
+		//	name2(CEPHEILA)
+			KAO(CEPHEILA,"12321","1","1")
+			MES(CEPHEILA,"嗯……",0)
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"并且刚才、有个修女一样的人跟我说\n『你、有些烦恼的事呢』……",0)
+			MES_close(CEPHEILA)
+
+		//　　拉古那たちに青ざめエモ～ション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PARTNER,EMO_AOZAME)
+			wait(30)
+			//──────────────────────────────
+			//	name("□修女·フラグ③之メッセ～ジを見ている场合")
+			if(FT_03_TalkIsabella)
+			{
+				MES(PARTNER,"那、那个修女……\n用十分卑鄙的方法招揽客人……",0)
+				MES_close(PARTNER)
+			}
+			else
+			//	name("□修女と話した事が無い")
+			if(!FT_01_IsabellaEnc)
+			{
+				MES(RAGNA,"原、原来是这样。\n那么应该在教会吧。",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"那个修女、好象\n不怎么正派的样子……",0)
+				MES_close(PARTNER)
+			}
+			//	name("□それ以外")
+			//──────────────────────────────
+			else
+			{
+				MES(RAGNA,"原、原来是这样。\n那么应该在教会吧。",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"果然那个修女、\n不是很粗心的人……",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+		//　　瑟菲拉、少し向きを変える。
+			look_off(CEPHEILA)
+		//★少し向きを変える
+			rot(CEPHEILA,30,270)
+
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"唉、不能完美的唱出来\n真是受打击……",0)
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"虽然大家、跟以前一样赞扬\n我的歌\n但是总感觉不是太舒服。",0)
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"大家好象根本\n没有感觉到歌有什么坏的地方\n……不过里面确实少了些东西。",0)
+			KAO(CEPHEILA,"1","3","1")
+			MES(CEPHEILA,"（……我的话………\n  是为什么在唱歌呢……）",0)
+			MES_close(CEPHEILA)
+
+		//　　瑟菲拉に？エモ～ション。
+			EMO(CEPHEILA,EMO_HATENA)
+			KAO(CEPHEILA,"1","1","1")
+			rot(CEPHEILA,30,0)
+			wait(30)
+			
+		//　　周囲を見渡して、口に手を当てる。
+			look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,0,0)
+
+			MOT(CEPHEILA,151,10)
+		
+			KAO(CEPHEILA,"12321Z4","3","B")
+			MES(CEPHEILA,"哎呀、怎么了……\n咳咳……",0)
+			KAO(CEPHEILA,"12321Z4","3","B")
+			MES(CEPHEILA,"这里、满是烟味。",0)
+			KAO(CEPHEILA,"12321Z4","3","B")
+			MES(CEPHEILA,"咳咳……\n嗓子好疼……",0)
+			MES_close(CEPHEILA)
+
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			//──────────────────────────────
+			//	name("□修女と話した事が無い")
+			if(!FT_01_IsabellaEnc)
+			{
+				MES(RAGNA,"（那个修女、好象\n  经常吸烟……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□それ以外")
+				MES(PARTNER,"那个吸烟修女……",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			
+		//★瑟菲拉【悩み】	
+			F_set_note(CEPHEILA,1)
+				
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【取消】
+			MES_pos(PLAYER1,"??W9【还是赶快从这里出去比较好】\n【难得来了还是祷告一下吧】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+			//──────────────────────────────
+			//	name("□「还是赶快从这里出去比较好」")
+			if(WK_YESNO==1)
+			{
+				MOT(CEPHEILA,2,15)
+				KAO(CEPHEILA,"1","1","1")
+				EV("EV_CEPHEILA_GO_HILL")
+				wait_EV("EV_CEPHEILA_GO_HILL")
+			}
+			else
+			//──────────────────────────────
+			//	name("□「难得来了还是祷告一下吧」")
+			if(WK_YESNO==2)
+			{
+				look_chr( CEPHEILA, RAGNA,"Bone_Head")
+				MES(RAGNA,"虽然是特意的……\n但是做下祷告的话\n不是很好吗？",0)
+				MES_close(RAGNA)
+
+				MOT(CEPHEILA,2,15)
+			//	name2(CEPHEILA)
+				KAO(CEPHEILA,"12321Z4","1","1")
+				MES(CEPHEILA,"嗯、是呢。\n可是特意来到教会的说。",0)
+				KAO(CEPHEILA,"12321Z6","1","1")
+				MES(CEPHEILA,"想找到以前唱歌的感觉……\n所以想祷告一下。",0)
+				MES_close(CEPHEILA)
+
+			//──────────────────────────────
+			}
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			F_set_chr(CEPHEILA,CF_NO_MOVE)
+			MOT(CEPHEILA,150,0)
+			F_set(FT_05_TalkCepheila)
+			look_off(CEPHEILA)
+			
+			EV_end()
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+			rot_chr(CEPHEILA,30,PLAYER1)
+
+			if(!FT_05_CepheilaSt)
+			{
+			//──────────────────────────────
+			//　　※教会配置·通常一般メッセ～ジ。
+				MOT(CEPHEILA,2,5)
+				MES(CEPHEILA,"特意来到教会。\n想祷告一下的说。",0)
+				MES(CEPHEILA,"咳、咳咳……\n但是有股烟味……",0)
+				MES_close(CEPHEILA)
+
+			//──────────────────────────────
+			//	name("選択テキスト")
+				workL(WK_CANCEL,SET,2)//【取消】
+				MES_pos(PLAYER1,"??W9【还是赶快从这里出去比较好】\n【难得来了还是祷告一下吧】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//閉じきるまで待つ
+
+				//──────────────────────────────
+				//	name("□「还是赶快从这里出去比较好」")
+					if(WK_YESNO==1)
+					{
+					//――――――――――――――――――――――――――
+					//	初期化処理
+					//――――――――――――――――――――――――――
+						cross_fade(30)			//クロスフェ～ド
+						
+						EV_begin()
+						//カメラセット
+						CAM_move(2,-77,94,0,0)
+						CAM(30,65,94,30,168,0,0)
+						
+						//キャラ再配置
+						chr_pos(RAGNA,111,241,0,146,2)
+						chr_pos(PARTNER,-110,287,1,200,2)
+						chr_pos(CEPHEILA,0,80,0,0,2)
+						
+						//顔初期化
+						KAO(RAGNA, "1", "1", "1")	
+						KAO(PARTNER,"1", "1", "1")	
+						KAO(CEPHEILA,"1", "1", "1")	
+						
+						wait_fade()
+					//――――――――――――――――――――――――――
+					//	イベント開始
+					//――――――――――――――――――――――――――
+						EV("EV_CEPHEILA_GO_HILL")
+						wait_EV("EV_CEPHEILA_GO_HILL")
+					//――――――――――――――――――――――――――
+					//	イベント終了処理
+					//――――――――――――――――――――――――――
+						fade_in(100,30,BLACK)
+						wait_fade()
+
+						//カメラを初期設定に
+						CAM_return( 0 )
+						wait(30)
+						EV_end()
+
+						//フェ～ドイン----------------------
+						fade_in(0,30,BLACK)
+					//	プレイヤ～操作許可
+					//――――――――――――――――――――――――――
+					}
+					else
+				//──────────────────────────────
+				//	name("□「难得来了还是祷告一下吧」")
+					if(WK_YESNO==2)
+					{
+						MES(RAGNA,"虽然是特意的……\n但是做下祷告的话\n不是很好吗？",0)
+						MES_close(RAGNA)
+
+					//	name2(CEPHEILA)
+						MES(CEPHEILA,"嗯、是呢。\n可是特意来到教会的说。",0)
+						MES(CEPHEILA,"想找到以前唱歌的感觉……\n所以想祷告一下。",0)
+						MES_close(CEPHEILA)
+				//──────────────────────────────
+						MOT(CEPHEILA,150,5)
+						rot(CEPHEILA,30,180)
+					}
+			}
+			//　　※瑟菲拉が教会から去った後は、布兰迪山丘に配置される。
+			//　　　通常時□エモ～ション出しっぱなしで、話しかけるとエモ～ションを停止する。
+			//──────────────────────────────
+			else
+			{
+				EV_stop("SING_CEPHEILA")
+				if(!F_CEPHEILA)
+				{
+					MES(CEPHEILA,"唉、果然\n还是不能……",0)
+					MES(CEPHEILA,"每天都不懈的练习、\n但是并没有变得更好……",0)
+					MES(CEPHEILA,"唉、刚开始唱歌的时候\n明明没有这样的事……",0)
+					MES_close(CEPHEILA)
+					
+					F_set(CEPHEILA)
+				}
+			//　　★繰り返し
+				else
+				{
+					MES(CEPHEILA,"想唱的更好、\n但是最近却达不到状态。",0)
+					MES(CEPHEILA,"唉、刚开始唱歌的时候\n明明没有这样的事……",0)
+					MES_close(CEPHEILA)
+				}
+				EV("SING_CEPHEILA")
+				rot(CEPHEILA,30,180)
+			}
+		}
+		//瑟菲拉と会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※熊猫楼·手前之円卓に座る。
+	//　　　卡尔蒂娜·梅と同席。
+	//　　　　　　 カル
+	//　　　瑟菲　○　梅
+	//　　※初回は梅之初回イベントが起動する。
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+	//　　※以下通常一般メッセ～ジ。
+		if(!FT_03_TalkMei)
+		{
+			EV("EV_TALK_MSC")
+			wait_EV("EV_TALK_MSC")
+		
+			F_set(FT_03_TalkMei)
+		}
+		else
+		{
+			if(!F_CEPHEILA)
+			{
+			//　　※振り返らない。
+				look_chr( CEPHEILA,CARDINA,"Bone_Head")
+				look_chr( CARDINA,CEPHEILA,"Bone_Head")
+
+				MES(CEPHEILA,"呵呵、卡尔蒂娜也是呢。",0)
+				MES(CEPHEILA,"但是一定没问题。\n卡尔蒂娜\n原来是猎人呢？",0)
+				MES(CEPHEILA,"到那时候\n打一顿就行了。",0)
+				MES_close(CEPHEILA)
+
+				MES(CARDINA,"什么啊……\n那种事、怎么会去做。",0)
+				MES(CARDINA,"瑟菲拉也是\n这样说啊？",0)
+				MES_close(CARDINA)
+
+				F_set(CEPHEILA)
+				look_off(CARDINA)
+			}
+		//　　★繰り返し
+			else
+			{
+				look_chr( CEPHEILA,PLAYER1,"Bone_Head")
+				MES(CEPHEILA,"哎呀……",0)
+				MES(CEPHEILA,"对不起、\n只顾说话了。",0)
+				MES(CEPHEILA,"呵呵、跟梅说起来的话\n就会变的这样了。",0)
+				MES_close(CEPHEILA)
+			}
+		}
+		look_off(CEPHEILA)
+		//瑟菲拉と会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+	//　　※熊猫楼·真ん中之円卓に座る。
+	//　　　瑟菲拉之前にはジュ～ス之グラスが一つ。
+	//　　※初回イベント（谢斯塔と共通之ＧＦ）
+		
+		if(!F_CEPHEILA)
+		{
+		//　　出来れば、机に片肘を突くポ～ズ。
+		//　　※振り返らない。
+			MES(CEPHEILA,"唉、好累啊。",0)
+			MES(CEPHEILA,"今天好象\n唱过头了……",0)
+			MES_close(CEPHEILA)
+
+		//	name2(SHESTOR)
+			MES(SHESTOR,"真是的、\n你不要太感情用事。",0)
+			MES(SHESTOR,"你应该明白\n就算把休息时间也省下去唱歌的话、\n世界也不会变的更好。",0)
+			MES(SHESTOR,"稍微分配一下进度\n比较好哦。",0)
+			MES_close(SHESTOR)
+
+		//	name2(CEPHEILA)
+			MES(CEPHEILA,"知道了、\n以后会注意。",0)
+			MES(CEPHEILA,"不过……有客人拜托这样\n不好拒绝嘛……",0)
+			MES_close(CEPHEILA)
+			F_set(CEPHEILA)
+			
+			//★谢斯塔
+			F_set_note(SHESTOR,-1)
+		}
+		else
+		{
+			look_chr(CEPHEILA,PLAYER1,"Bone_Head")
+		//　　★繰り返し
+			MES(CEPHEILA,"唉、今天好象\n唱过头了。",0)
+			MES(CEPHEILA,"我好象、回应了\n所有的要求呢。",0)
+			MES(CEPHEILA,"跟修女说的一样、\n稍微注意下\n节奏就行了……",0)
+			MES_close(CEPHEILA)
+			look_off(CEPHEILA)
+		}
+		//瑟菲拉と会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※酒场ステ～ジで歌っている。
+	//　　　□エモ～ション出しっぱなし。
+	//　　※できればこ之タイミングでは、酒场をボ～カル付きＢＧＭに切り替えておき、
+	//　　　話しかける処理を外す。
+	if( F1_01_GameStart )
+	{
+
+		EV_stop("SING_CEPHEILA")
+		if(!FT_01_TalkCepheila)
+		{
+			look_chr(CEPHEILA,RAGNA,"Bone_Head")
+		//　　※話しかけると、ＢＧＭ之ボリュ～ムを下げる。
+		//　　瑟菲拉、首だけで振り返る。
+			MES(CEPHEILA,"咦……客人？",0)
+			MES(CEPHEILA,"呵呵、请自便。",0)
+			MES_close(CEPHEILA)
+
+			MES(RAGNA,"啊、谢谢～。",0)
+			MES(RAGNA,"（流行歌手吗……\n  这个城里也有各种各样的人呢。）",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"你好象\n昨天也唱了这首歌呢……",0)
+			MES(PARTNER,"嗯、虽然是人类\n但是真是不错的歌喉。",0)
+			MES(PARTNER,"很合意。",0)
+			MES_close(PARTNER)
+
+		//　　拉古那に冷や汗エモ～ション。
+			look_chr(CEPHEILA,PARTNER,"Bone_Head")
+			EMO(CEPHEILA,EMO_HATENA)
+			EMO(RAGNA,EMO_AOZAME)
+			wait(30)
+			rot_chr(RAGNA,30,PARTNER)
+			MES(RAGNA,"（啥……！？）",0)
+			MES_close(RAGNA)
+
+			MES(CEPHEILA,"呵呵、真是有趣的人。",0)
+			MES(CEPHEILA,"我们……是呢。\n旅行的音乐家。",0)
+			MES(CEPHEILA,"如你所见、在这个\n旅店进行公演。",0)
+			MES(CEPHEILA,"你们大家\n也请慢慢欣赏好了。",0)
+			MES_close(CEPHEILA)
+
+		//　　メッセ～ジが閉じると、ボリュ～ムを元に戻す。
+			F_set(FT_01_TalkCepheila)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		//　　※話しかけると、ＢＧＭ之ボリュ～ムを下げる。
+			look_chr(CEPHEILA,PLAYER1,"Bone_Head")
+			MES(CEPHEILA,"呵呵、你们\n真的很有趣呢。",0)
+			MES(CEPHEILA,"这个是很特别的、\n请慢慢欣赏。",0)
+			MES_close(CEPHEILA)
+
+		//　　メッセ～ジが閉じると、ボリュ～ムを元に戻す。
+		}
+		look_off(CEPHEILA)
+		EV("SING_CEPHEILA")
+
+	}
+	TK_end()
+}
+
+EV_CEPHEILA_GO_HILL
+{
+	MES(RAGNA,"那～个、不过这样的话\n对喉咙可不好……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"嗯、在这样的教会里\n不会有什么好处的。",0)
+	MES(PARTNER,"早点去做\n歌唱练习的话好点。",0)
+	MES_close(PARTNER)
+
+//	name2(CEPHEILA)
+	KAO(CEPHEILA,"12321Z3","1","1")
+	MES(CEPHEILA,"是、是吗。",0)
+	KAO(CEPHEILA,"12321Z6","1","1")
+	MES(CEPHEILA,"……嗯、\n就那样办吧。",0)
+	KAO(CEPHEILA,"12321Z6","1","1")
+	MES(CEPHEILA,"虽然今天也想去\n布兰迪山丘、不早点去的话\n太阳就要下山咯。",0)
+	MES_close(CEPHEILA)
+
+//　　瑟菲拉、２人を見比べる。
+	look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,30,0)
+	wait(20)
+	look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,-30,0)
+	wait(40)
+	look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,0,0)
+
+	KAO(CEPHEILA,"12321Z3","1","1")
+	MES(CEPHEILA,"谢谢、能倾听我的事。\n拜拜啦。",0)
+	MES_close(CEPHEILA)
+
+//　　瑟菲拉、出口之方へ步いて消える。
+	F_reset_chr(CEPHEILA,CF_NO_MOVE)
+	
+	rot(CEPHEILA,10,0)
+	rot(RAGNA,10,30)
+	rot(PARTNER,30,330)
+	move(CEPHEILA, 0, WALK1,0,1100,0,0)
+
+	wait(70)
+
+	delete(CEPHEILA)
+
+//　　拉古那たちはそれを見送る。
+//　　※以降、瑟菲拉は布兰迪山丘に配置され、教会配置は消す。
+	F_set(FT_05_CepheilaSt)
+}
+
+
+
+MOTION_CEPHEILA_SLEEPING
+{
+
+	look(CEPHEILA,"Bone_Head",0,			0,1,0,	0,-10,10)
+	wait(50)
+	look(CEPHEILA,"Bone_Head",0,			0,1,0,	0,-30,10)
+
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

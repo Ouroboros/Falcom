@@ -1,0 +1,175 @@
+//====================================================================
+//==僩儗僕儍乕BOX 堦斒夛榖 ========================================================
+//====================================================================
+#ScriptTable
+
+
+//--------------------------------------------------------------------
+//僩儗僕儍乕敪尒
+TK_TREASURE
+{
+	TK_begin()
+	rot_chr(0,60,TREASURE_CH)
+
+	//曮敔偑奐偔
+	MOT(TREASURE_CH,1,0)
+
+	//曮墘弌
+	BGM_vol(50,15)				//BGM僼僃乕僪
+	wait(20)
+	fade_in(30,10,BLACK)		//彮偟埫揮
+
+	F_set(Fx_TREASURE)//2300乣2400
+	get_item(140,1,0)//撲偺彫敔丂娪掕慜
+	wait(70)
+	wait_key(0)
+	BGM_vol(100,30)				//BGM栠偟
+	fade_in(0,10,BLACK)			//埫揮夝彍
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+	TK_end()
+}
+
+//--------------------------------------------------------------------
+//僩儗僕儍乕敪尒
+TK_TREASURE2
+{
+	TK_begin()
+	rot_chr(0,60,TREASURE2_CH)
+
+	//曮敔偑奐偔
+	MOT(TREASURE2_CH,1,0)
+
+	//曮墘弌
+	BGM_vol(50,15)				//BGM僼僃乕僪
+	wait(20)
+	fade_in(30,10,BLACK)		//彮偟埫揮
+
+	F_set(Fx_TREASURE2)//2300乣2400
+	get_item(140,1,0)//撲偺彫敔丂娪掕慜
+	wait(70)
+	wait_key(0)
+	BGM_vol(100,30)				//BGM栠偟
+	fade_in(0,10,BLACK)			//埫揮夝彍
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+	TK_end()
+}
+
+//--------------------------------------------------------------------
+//傾儞僇乕僊傾偺夵憿僷乕僣傪弶擖庤偟偨帪
+TK_PART
+{
+	TK_begin()
+	rot_chr(0,60,TREASURE_CH)
+
+	//曮敔偑奐偔
+	MOT(TREASURE_CH,1,0)
+
+	//曮墘弌
+	BGM_vol(50,15)				//BGM僼僃乕僪
+	wait(20)
+	fade_in(30,10,BLACK)		//彮偟埫揮
+
+	get_item(IT_TREASURE,1,0)//僷乕僣擖庤僥僉僗僩
+	wait(70)
+	wait_key(0)
+	BGM_vol(100,30)				//BGM栠偟
+	fade_in(0,10,BLACK)			//埫揮夝彍
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+
+	TK_end()
+	
+	//曮敔偐傜僷乕僣傪擖庤偟偨偺偑弶傔偰偺応崌
+	if(!FE_FF_GetPart)
+	{
+		EV_begin()
+		
+		//僋儘僗僼僃乕僪
+		cross_fade(30)
+		
+		//僉儍儔偺嵞攝抲(傾僀僥儉偺庬椶偱攝抲傪暘婒)
+		//A僷乕僣(幩掱嫍棧墑挿/僙僋儞僪僁儉攑岯)
+		if(IT128==1)
+		{
+			chr_pos(RAGNA,7736,11267,1,4,2)
+			chr_pos(PARTNER,7540,11201,1,319,2)
+		}
+		//B僷乕僣(僼僢僋僊傾/僆儖僨傿僂儉恄揳)
+		else
+		if(IT129==1)
+		{
+			chr_pos(RAGNA,11300,7643,0,153,2)
+			chr_pos(PARTNER,11216,7774,0,167,2)
+		}
+		//C僷乕僣(幩掱嫍棧墑挿/嬥埮偺怷)
+		else
+		if(IT130==1)
+		{
+			chr_pos(RAGNA,7459,6828,0,93,2)
+			chr_pos(PARTNER,7582,7016,0,119,2)
+		}
+/*
+		//儊僀儞僀儀儞僩拞晲婍廔儅僢僾偵僀儀儞僩傾儕
+	  	//D僷乕僣(僶乕僯儞僌僊傾/傾僂儘儞戝揝搩)
+		else
+		if(IT131==1)
+		{
+			chr_pos(RAGNA,7764,11251,0,8,2)
+			chr_pos(PARTNER,7562,11189,0,328,2)
+		}
+		
+*/
+		//E僷乕僣(僌儔僀僪僊傾/惎偑曯)
+		else
+		if(IT132==1)
+		{
+			chr_pos(RAGNA,13079,7682,0,180,2)
+			chr_pos(PARTNER,12937,7754,0,191,2)
+		}
+/*
+		//E僷乕僣(嵟嫮僷乕僣/丠丠)
+		else
+		{
+			chr_pos(RAGNA,7764,11251,0,8,2)
+			chr_pos(PARTNER,7562,11189,0,328,2)
+		}
+*/		
+		
+		MES(PARTNER,"這是……？",0)
+		MES(PARTNER,"這東西好像很舊了……",0)
+		MES_close(PARTNER)
+
+		rot_chr(RAGNA,60,PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"嗯，看起來像是某種零件。",0)
+		MES(RAGNA,"生了不少鏽，\n而且我也從沒見過這種零件……",0)
+		MES_close(RAGNA)
+	//丂丂儔僌僫偵俹俙僄儌乕僔儑儞丅
+	
+		EMO(RAGNA,EMO_PA)
+		wait(30)
+
+		MES(RAGNA,"對了，去找\n米莉安問一下吧。\n他可能會知道些什麼。",0)
+		MES_close(RAGNA)
+
+		fade_in(100,30,BLACK)
+		wait_fade(
+		
+		//仛夵憿僷乕僣傪擖庤偟偨仴弶夞
+		F_set(FE_FF_GetPart)
+		fade_in(0,30,BLACK)
+		
+		EV_end()
+		//丂丂憖嶌嫋壜傪栠偡丅
+	}
+}
+
+#EndScriptTable
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////

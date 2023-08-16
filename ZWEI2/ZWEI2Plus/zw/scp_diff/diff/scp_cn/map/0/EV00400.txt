@@ -1,0 +1,3213 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10400][星降之里（昼）]
+//====================================================================
+
+#ScriptTable
+
+#KAI		2
+#TENZAN		3
+#SINOBI_A	4
+#SINOBI_B	5
+#SINOBI_C	6
+#LUE		7
+
+#YASAKU		8
+#GEN		9
+#KARASU		10
+#SALASYA	11
+#DAIGORO	12
+#LURI		13
+
+#ODESSA		14
+#MIA		15
+#AKANE		16
+#NINJYA_D	17
+#NINJYA_E	18
+#NINJYA_F	19
+#NINJYA_G	20
+#NINJYA_H	21
+
+#EVENT_RAGNA	22
+#SUBARU			23
+#DUMMY			24
+#LUE2			25
+
+#KAPPA		26
+
+#SINOBI_D	27
+#EFFECT		28
+#EFFDUMMY1	29
+#LUEDUMMY	30	//ギアに宿る露
+
+#HIKOME		31
+#CLEESE		32
+#EFF_KARASU_1	40	//鸦的手裏剑始点
+#EFF_KARASU_2	41	//終点
+
+#LURI_2		200
+#LURI_3		202
+#LURI_4		203
+
+#NINJYA_H_2	204	//エラー回避的ため
+#NINJYA_H_3	205
+#NINJYA_H_4	206
+
+
+
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip      	x     y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+
+
+	if( F4_17_InTheEvening && !F4_07_JoinAlwen )//夕方的時だけメッセージが出る
+	{
+		//夕方イベントで同様的set_chrあり↓
+		set_chr( 90,990,	-1,-1,   00100,4400,0,	 180,070201,6,"<EV_EntryPoint>")//エントリ 山－梅ン終（選択肢付き）
+	}
+	else//夕方でない時だけエントリがある
+	{
+		set_chr( 90,990,	-1,-1,   00100,4570,0,	 180,070201,6,"K1_16013;")	//エントリ 山－梅ン終
+	}
+
+	//里入り口ストッパー
+//	if(!F4_09_GoShrineMia)
+//	if(F4_17_InTheEvening)
+//	{
+		
+//	}
+//	else//第五章中は、艾雯不在的ためダンジョンに入れない
+	if( F4_11_EndFourth && !F5_17_EndFifth )
+	{
+		set_chr( 98,990,	-1,-1,   141,3036,0,	 180,1404,6,"<EV_STOP_01>")	//ストッパー：エントリ 山－梅ン終
+	}
+
+	set_chr( 50,620,	-1,-1, 	  -100,-6400,0,   0,      0,  0,";")			//①セーブOBJ
+
+	set_chr( 91,990,	-1,-1,  2430, -7500,  0, 	  85,050102, 6,"K6_10480;")	//エントリ 通路1-a
+	set_chr( 92,990,	-1,-1,	4125, -9150,1400, 	   0,050303,11,"K0_10430;")	//エントリ 天山屋敷
+	set_chr( 93,990,	-1,-1, -1450,-14800,1400,	   0,050303,11,"K0_10440;")	//エントリ 更衣室
+	set_chr( 94,990,	-1,-1,  -750, -6450,  0,	   0,050303,11,"K0_10410;")	//エントリ 星降之里万屋
+	set_chr( 95,990,	-1,-1, -2100, -5675,  0,	   0,050303,11,"K0_10420;")	//エントリ 星降之里·民家１
+	set_chr( 96,990,	-1,-1,  2175, -5750,  0,	   0,050303,11,"K1_10420;")	//エントリ 星降之里·民家２
+
+//	set_chr( 97,990,	-1,-1,   -2603,-2491,2,		   0,     0,11,"K0_10490;")	//エントリ 滑雪场（フラグ見て）场所は仮
+	set_chr( 97,990,	-1,-1,   -770,-3261,100,		   0,     0,2,"<TK_KAPPA>")	//河童ミニゲーム
+
+
+//■階段·扉
+	set_obj("@ob60031a", -1,-1,    1450, 5800, 0,		180)				//①アーチ（山）
+
+	//▼⑩では、以下的建物は封鎖。
+	if( F4_06_StopAttack && !F4_11_EndFourth)
+	{
+	//　　杂货店／民家１／民家２／更衣室
+		delete(94)
+		delete(95)
+		delete(96)
+//		delete(93)
+	}
+
+	//ＮＰＣ配置
+	set_chr( KAPPA,80,	-1,-1,   -770,-3261,-120,	 0,0, 20,";")		//河童は昼ならいつでもＯＫ。
+	delete(KAPPA)
+	set_chr( KAPPA,80,	-1,-1,   -770,-3261,-120,	 0,0, 0,";")		//河童ＬＰ的関係で２重読み。
+	F_set_chr(KAPPA,CF_NO_HEIGHT)
+	F_set_chr(KAPPA,CF_NO_ZIMEN)
+	F_set_chr(KAPPA,CF_NO_CSP)
+	
+	
+	//デフォルト（昼）表示設定
+
+	
+	
+//■夕方設定
+	if( F4_17_InTheEvening && !F4_09_GoShrineMia )	//★社へ向かった米娅を追うことにした
+	{
+		map_color(100,75,55,0)						//R,G,B, time 100%	//夕方
+		F_set_obj("sky00", NP_HIDE)					//昼ノード消す
+		F_set_obj("kumo01", NP_HIDE)				//昼ノード消す
+		F_set_obj("kumo03", NP_HIDE)				//昼ノード消す
+		F_set_obj("kumo04", NP_HIDE)				//昼ノード消す
+		
+		F_reset_obj("sky01", NP_HIDE)				//夕ノード
+		F_reset_obj("kumo06", NP_HIDE)				//夕ノード
+		F_reset_obj("kumo07", NP_HIDE)				//夕ノード
+		F_reset_obj("kumo08", NP_HIDE)				//夕ノード		
+	}
+	else 
+	{
+		F_reset_obj("sky00", NP_HIDE)				//昼ノード
+		F_reset_obj("kumo01", NP_HIDE)				//昼ノード
+		F_reset_obj("kumo03", NP_HIDE)				//昼ノード
+		F_reset_obj("kumo04", NP_HIDE)				//昼ノード
+		
+		F_set_obj("sky01", NP_HIDE)					//夕ノード消す
+		F_set_obj("kumo06", NP_HIDE)				//夕ノード消す
+		F_set_obj("kumo07", NP_HIDE)				//夕ノード消す
+		F_set_obj("kumo08", NP_HIDE)				//夕ノード消す			
+	}
+
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if(F6_05_EndSixth)
+	{
+	}
+	else
+	if(GW_ENTRY_EVENT==2)
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if(F6_00_GoToMeru)
+	{
+		set_chr( YASAKU,75,		-1,-1,	-1885,-5148,0,		2,0, 20,"<TK_YASAKU>")			//星降之里·民家１的前で仕事中　矢作
+		EV("FREEMOVE_YASAKU")
+
+		set_chr( LURI,77,	-1,-1,  774,-11598,1399,	75,280, 20,"<TK_LURI>")				//星降之里·階段上　琉璃
+		EV("LOOKING_LURI")
+		
+		set_chr( DAIGORO,74,-1,-1,   1181,-11480,1399,	2,0, 20,"<TK_DAIGORO>")				//星降之里·階段上　大五郎
+		EV("FREEMOVE_DAIGORO")
+		set_chr( KAI,62,	-1,-1,   2283,-7954,1401,	52,7, 20,"<TK_KAI>")				//星降之里·見張りＣ　戒
+		EV("TENTEN_KAI")
+
+		set_chr( AKANE,78,	-1,-1,	1401,-4471,1,	52,220, 20,"<TK_AKANE>")				//星降之里·茶屋　茜
+		set_chr( NINJYA_D,488,-1,-1,   2672,-3699,2,	50,288, 20,"<TK_NINJYA_D>")			//星降之里·見張りB　忍者Ｄ
+		set_chr( NINJYA_E,489,	-1,-1,	7716,-8805,1401,	52,135, 20,"<TK_NINJYA_E>")		//星降之里·見張りＤ　忍者Ｅ
+		look(NINJYA_E, "Bone_Head", 0, 0, 0, 10, 0,0,30)
+//		set_chr( NINJYA_F,490,	-1,-1,	407,338,0,	52,0, 20,"<TK_NINJYA_F>")				//星降之里·入り口で克雷斯的相手　忍者Ｆ
+//		set_chr( NINJYA_G,491,	-1,-1,	228,457,0,	50,300, 20,"<TK_NINJYA_G>")				//星降之里·入り口で克雷斯的相手　忍者Ｇ（汎用）
+//		set_chr( NINJYA_H,492,	-1,-1, 	598,457,1,	50,60, 20,"<TK_NINJYA_H>")				//星降之里·入り口で克雷斯的相手　忍者H（汎用）
+//		set_chr( CLEESE,83,		-1,-1,	420,608,1,	2,160,	20,"<TK_CLEESE>")				//　克雷斯
+
+		set_chr( NINJYA_F,490,	-1,-1,	-182,-4013,1,	52,340, 20,"<TK_NINJYA_F>")				//星降之里·入り口で克雷斯的相手　忍者Ｆ
+		set_chr( NINJYA_G,491,	-1,-1,	-368,-3840,1,	50,296, 20,"<TK_NINJYA_G>")				//星降之里·入り口で克雷斯的相手　忍者Ｇ（汎用）
+		set_chr( NINJYA_H,492,	-1,-1, 	110,-3871,1,	50,46, 20,"<TK_NINJYA_H>")				//星降之里·入り口で克雷斯的相手　忍者H（汎用）
+		set_chr( CLEESE,83,		-1,-1,	-98,-3664,0,	2,160,	20,"<TK_CLEESE>")				//　克雷斯
+
+
+
+
+		F_set_chr(KAI,CF_NO_MOVE)
+		F_set_chr(LURI,CF_NO_MOVE)
+		F_set_chr(AKANE,CF_NO_MOVE)
+		F_set_chr(CLEESE,CF_NO_MOVE)
+		F_set_chr(NINJYA_D,CF_NO_MOVE)
+		F_set_chr(NINJYA_E,CF_NO_MOVE)
+		F_set_chr(NINJYA_F,CF_NO_MOVE)
+		F_set_chr(NINJYA_G,CF_NO_MOVE)
+		F_set_chr(NINJYA_H,CF_NO_MOVE)
+	}
+	else
+/*	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		set_chr( GEN,59,	-1,-1,   1418,-4353,1,	2,142, 20,"<TK_GEN>")					//星降之里·长いすに座っている限爺さん
+		set_chr( KARASU,60,	-1,-1,   1278,-4507,01,	2,308, 20,"<SHOP_KARASU>")				//星降之里·长いすに座っている鸦
+		set_chr( DAIGORO,74,-1,-1,	1358,-4554,0,	2,18, 20,"<TK_DAIGORO>")				//星降之里·鸦になつく　大五郎
+		set_chr( AKANE,78,	-1,-1,	1546,-4838,1,	2,252, 20,"<TK_AKANE>")					//星降之里·茶屋　茜
+		
+		set_chr( NINJYA_D,488,-1,-1,   1904,-7731,1401,	2,0, 20,"<TK_NINJYA_D>")			//星降之里·見張りＣ　忍者Ｄ
+		set_chr( NINJYA_E,489,-1,-1,   8033,-9200,1399,	2,0, 20,"<TK_NINJYA_E>")			//星降之里·見張りＤ　忍者Ｅ
+		set_chr( NINJYA_F,490,-1,-1,   -2476,-3921,0,	2,0, 20,"<TK_NINJYA_F>")			//星降之里·見張りＡ　忍者Ｆ
+
+		set_chr( NINJYA_G,491,-1,-1,  2679,-9344,1740,	2,0, 0,"")							//星降之里·天山邸左外壁屋根修理中(会話不可)　忍者Ｇ（汎用）
+		chr_equip( NINJYA_G,"EQ_052", "Bone_RightSword", 100)								//トンカチ装備させる的はこちら
+		F_set_chr(NINJYA_G,CF_NO_HEIGHT)
+		F_set_chr(NINJYA_G,CF_NO_ZIMEN)
+		F_set_chr(NINJYA_G,CF_NO_CSP)
+
+		set_chr( NINJYA_H,492,-1,-1, -291,-6552,578,	2,0, 0,"")							//星降之里·万屋屋根修理中(会話不可)　忍者H（汎用）
+		chr_equip( NINJYA_H,"EQ_052", "Bone_RightSword", 100)								//トンカチ装備させる的はこちら
+		F_set_chr(NINJYA_H,CF_NO_HEIGHT)
+		F_set_chr(NINJYA_H,CF_NO_ZIMEN)
+		F_set_chr(NINJYA_H,CF_NO_CSP)
+	}
+	else
+*/	//──────────────────────────────
+	//『★大ボス⑤【大岩龙嘉鲁卡利昂】を倒したが、艾雯が攫われてしまった』
+	//──────────────────────────────
+	if(F4_10_KillBoss5)	
+	{
+		set_chr( GEN,59,	-1,-1,  1350,-3700,20,	52,180, 20,"<TK_GEN>")					//星降之里·长いすに座っている限爺さん
+		set_chr( KARASU,92,	-1,-1,   1150,-3700,20,	2,180, 20,"<SHOP_KARASU>")				//星降之里·长いすに座っている鸦
+		set_chr( DAIGORO,74,-1,-1,	996,-3660,1,	2,270, 20,"<TK_DAIGORO>")				//星降之里·鸦になつく　大五郎
+		set_chr( AKANE,78,	-1,-1,	1401,-4471,1,	52,220, 20,"<TK_AKANE>")				//星降之里·茶屋　茜
+		
+		set_chr( NINJYA_D,488,	-1,-1,	2283,-7954,1401,	50,0, 20,"<TK_NINJYA_D>")		//星降之里·見張りＣ　忍者Ｄ
+		set_chr( NINJYA_E,489,	-1,-1,	7716,-8805,1401,	52,315, 20,"<TK_NINJYA_E>")		//星降之里·見張りＤ　忍者Ｅ
+		set_chr( NINJYA_F,490,	-1,-1,	-2360,-4100,0,		52,100, 20,"<TK_NINJYA_F>")		//星降之里·見張りＡ　忍者Ｆ
+
+		set_chr( NINJYA_G,491,-1,-1,  2990,-9192,1401,122,180, 20,"<TK_NINJYA_G>")			//星降之里·天山邸左外壁屋根修理中(会話不可)　忍者Ｇ（汎用）
+		chr_equip( NINJYA_G,"EQ_052", "Bone_RightSword", 100)								//トンカチ装備させる的はこちら。
+		
+//		F_set_chr(NINJYA_G,CF_NO_HEIGHT)
+//		F_set_chr(NINJYA_G,CF_NO_ZIMEN)
+//		F_set_chr(NINJYA_G,CF_NO_CSP)
+
+		set_chr( NINJYA_H,492,-1,-1,-120,-7050,520,	120,0, 0,"")						//星降之里·万屋屋根修理中(会話不可)　忍者H（汎用）
+//		set_chr( NINJYA_H,492,-1,-1, -22,-6803,450,	120,72, 0,"")						//星降之里·万屋屋根修理中(会話不可)　忍者H（汎用）
+		chr_equip( NINJYA_H,"EQ_052", "Bone_RightSword", 100)							//トンカチ装備させる的はこちら	
+		F_set_chr(NINJYA_H,CF_NO_HEIGHT)
+		F_set_chr(NINJYA_H,CF_NO_ZIMEN)
+		F_set_chr(NINJYA_H,CF_NO_CSP)	
+		
+
+		//モーション
+		MOT_SET(GEN,150,-1,485,485,-1,-1)	//限
+		MOT(GEN,150,0)
+		MOT_SET(KARASU,150,-1,485,485,-1,-1)	//鸦
+		MOT(KARASU,150,0)
+		MOT_SET(DAIGORO,150,-1,513,513,151,15)	//大五郎
+		MOT_SET(DAIGORO,151,-1,512,512,150,10)
+		MOT(DAIGORO,150,0)
+
+		F_set_chr(GEN,CF_NO_MOVE)
+		F_set_chr(KARASU,CF_NO_MOVE)
+		F_set_chr(DAIGORO,CF_NO_MOVE)
+		F_set_chr(AKANE,CF_NO_MOVE)
+		F_set_chr(NINJYA_D,CF_NO_MOVE)
+		F_set_chr(NINJYA_E,CF_NO_MOVE)
+		F_set_chr(NINJYA_F,CF_NO_MOVE)
+		F_set_chr(NINJYA_G,CF_NO_MOVE)
+		F_set_chr(NINJYA_H,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia )
+	{
+		set_chr( HIKOME,72,	-1,-1,   -352,-4650,1, 	2,260, 20,"<SHOP_HIKOME>")		//星降之里·中央広场で戒を介抱　日户目
+		set_chr( NINJYA_H,492,-1,-1, 479,-4350,0,	2,0, 20,"<TK_NINJYA_H>")		//星降之里·忍者Ｄを介抱　忍者Ｈ（汎用）
+	
+		set_chr( KAI,1056,	-1,-1,   -244,-4681,0,	2,0, 20,"<TK_KAI>")				//星降之里·見張りＣ　戒
+		set_chr( YASAKU,75,	-1,-1,   -250,-3346,0,	 2,140, 20,"<TK_YASAKU>")		//星降之里·入り口付近で倒れている　矢作
+		set_chr( NINJYA_D,488,-1,-1,  426,-4210,0,	2,127, 20,"<TK_NINJYA_D>")		//星降之里·戒的傍で倒れている　忍者Ｄ
+		set_chr( NINJYA_E,489,-1,-1,  284,-4884,0,	2,242, 20,"<TK_NINJYA_E>")		//星降之里·戒的傍で倒れている　忍者Ｅ
+		set_chr( NINJYA_F,490,-1,-1, -157,-3460,1,	2,34, 20,"<TK_NINJYA_F>")		//星降之里·戒的傍で倒れている　忍者Ｆ
+
+		
+		set_chr( 97,990,	-1,-1,  -359,-13227,1476,	   0,  0505, 6,"<EV_STOP_KARASU>")	//ストッパー：更衣室
+
+		if(!FS_10_TalkKarasu)
+		{
+			set_chr( KARASU,92,	-1,-1,   -903,-14044,1399,	2,325, 0,"")		//星降之里·露天温泉へ的ストッパー　鸦
+			color(KARASU,-1)//透過
+			MOT_SET(KARASU,150,-1,455,455,-1,0)
+			MOT(KARASU,150,0)
+		}
+		else
+		{
+			set_chr( KARASU,92,	-1,-1,   -423,-13370,1538,	2,325, 0,"")		//星降之里·露天温泉へ的ストッパー　鸦
+		}
+
+		//モーション設定
+		MOT_SET(HIKOME,150, -1, 452,452,-1,-1)	//戒を介抱
+		MOT(HIKOME, 150, 0)
+		MOT_SET(NINJYA_F,150, -1, 452,452,-1,-1)	//矢作を介抱
+		MOT(NINJYA_F, 150, 0)
+		MOT_SET(NINJYA_D, 150, -1, 523,523,-1,-1)	//倒れ
+		MOT_SET(NINJYA_E, 150, -1, 523,523,-1,-1)	//倒れ
+		MOT_SET(NINJYA_H, 150, -1, 452,452,-1,-1)	//倒れ
+		MOT_SET(NINJYA_H_2, 150, -1, 523,523,-1,-1)	//倒れ
+		MOT_SET(NINJYA_H_3, 150, -1, 523,523,-1,-1)	//倒れ
+		MOT_SET(NINJYA_H_4, 150, -1, 523,523,-1,-1)	//倒れ
+		MOT_SET(YASAKU,     150, -1, 523,523,-1,-1)	//倒れ
+	//	MOT_SET(KAI,        150, -1, 523,523,-1,-1)	//倒れ
+		MOT_SET(KAI,        150, -1, 523,523,-1,-1)	//倒れ
+		MOT(NINJYA_D, 150, 1)
+		MOT(NINJYA_E, 150, 1)
+		MOT(NINJYA_H, 150, 1)
+		MOT(NINJYA_H_2, 150, 1)
+		MOT(NINJYA_H_3, 150, 1)
+		MOT(NINJYA_H_4, 150, 1)
+		MOT(KAI, 150, 1)
+		MOT(YASAKU, 150, 1)
+		
+		KAO(NINJYA_D,"C","4","5")
+		KAO(NINJYA_E,"C","4","5")
+		KAO(NINJYA_F,"C","4","5")
+		KAO(NINJYA_H,"C","4","5")
+		KAO(NINJYA_H_2,"C","4","5")
+		KAO(NINJYA_H_3,"C","4","5")
+		KAO(NINJYA_H_4,"C","4","5")
+
+		F_set_chr(KAI,CF_NO_MOVE)
+		F_set_chr(YASAKU,CF_NO_MOVE)
+		F_set_chr(HIKOME,CF_NO_MOVE)
+		F_set_chr(AKANE,CF_NO_MOVE)
+		F_set_chr(NINJYA_D,CF_NO_MOVE)
+		F_set_chr(NINJYA_E,CF_NO_MOVE)
+		F_set_chr(NINJYA_F,CF_NO_MOVE)
+		F_set_chr(NINJYA_H,CF_NO_MOVE)
+		F_set_chr(NINJYA_H_2,CF_NO_MOVE)
+		F_set_chr(NINJYA_H_3,CF_NO_MOVE)
+		F_set_chr(NINJYA_H_4,CF_NO_MOVE)
+		F_set_chr(KARASU,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ的フラグ。
+	//──────────────────────────────
+	if( F4_06_StopAttack )
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	if( F4_05_OnVillage2 )
+	{
+		//夕方にするイベント
+		if( F4_12_OkRoten && !F4_17_InTheEvening )						// 露天温泉は入れる
+		{
+			if(WK_ENTRY==92 || WK_ENTRY==93 || WK_ENTRY==94 || WK_ENTRY==95 || WK_ENTRY==96)	//天山邸／更衣室／民家１／民家２／万屋
+			{
+				EV("EV_InTheEveningStart")
+			}
+		}
+	
+		set_chr( YASAKU,75,		-1,-1,	-1885,-5148,0,		2,0, 20,"<TK_YASAKU>")			//星降之里·民家１的前で仕事中　矢作
+		EV("FREEMOVE_YASAKU")
+
+		set_chr( GEN,59,		-1,-1,	1779,-4506,0,		52,32, 20,"<TK_GEN>")			//星降之里·茶屋カウンターに立つ　限爺さん
+		set_chr( KARASU,92,	-1,-1,   1150,-3700,20,	63,180, 20,"<SHOP_KARASU>")				//星降之里·长いすに座っている鸦
+		chr_equip2(KARASU,	"eq_051",	"Bone_RightSword",	100,		0,0,0,	0,0,0);	//カップ
+
+		//名前が判明するまで鸦的名前を卖药に
+		EV("RENAME_KARASU")
+
+		if( F4_17_InTheEvening )	//★夕方になった
+		{
+			//夕方になるイベントでも同様的配置あり
+			set_chr( DAIGORO,74,	-1,-1,	1443,-7384,1,		2,0, 20,"<TK_DAIGORO>")		//星降之里·階段下でうろつく　大五郎
+			EV("FREEMOVE_DAIGORO")
+		}
+		else
+		{
+			set_chr( DAIGORO,74,-1,-1,   -349,3364,1,		2,280, 20,"<TK_DAIGORO>")			//星降之里·里入り口付近　大五郎
+			F_set_chr(DAIGORO,CF_NO_MOVE)
+		}
+
+		set_chr( AKANE,78,		-1,-1,	1281,-4269,1,		0,0, 20,"<TK_AKANE>")		//星降之里·茶屋　茜
+		chr_equip2(AKANE,"wp_040","Bone_RightSword",	100,	0,0,0,	0,0,0);		//安娜的皿
+		EV("FREEMOVE_AKANE")
+		
+		set_chr( KAI,76,		-1,-1,	2672,-3699,2,		52,288, 20,"<TK_KAI>")		//星降之里·見張りＢ　戒
+
+		set_chr( LURI,77,		-1,-1,	6961,-9853,1401,	2,0, 20,"<TK_LURI>")		//星降之里·お稲荷さん近く　琉璃本体
+		EV("FREEMOVE_LURI")		
+		set_chr( LURI_2,77,		-1,-1,	6632,-10785,1399,	2,0, 20,"<TK_LURI_2>")		//星降之里·お稲荷さん近く　琉璃分身2
+		EV("HIND_LURI")		
+		set_chr( LURI_3,77,		-1,-1,	6395,-10014,1400,	2,0, 20,"<TK_LURI_3>")		//星降之里·お稲荷さん近く　琉璃分身3
+		EV("JUMP_LURI")		
+		
+		//琉璃初回後　分身4人目出現
+		if(FS_08_TalkLuri)
+		{
+			set_chr( LURI_4,77,		-1,-1,	7495,-9945,1399,	2,0, 20,"<TK_LURI_4>")					//星降之里·お稲荷さん近く　琉璃分身4
+			MOT_SET(LURI_4,150,-1,552,552,-1,-1)
+			MOT(LURI_4,150,0)
+			EV("ROLING_LURI")
+		}
+		//それ以前は透過し、アタリを消す　天山邸的塀的中に隠す
+		else
+		{
+			set_chr( LURI_4,77,		-1,-1,	5530,-10250,1401,	2,0, 20,"<TK_LURI_4>")					//星降之里·お稲荷さん近く　琉璃分身4
+			color(LURI_4,-1)
+		}
+		F_set_chr(LURI_4,CF_NO_CSP)
+		F_set_chr(LURI_4,CF_NO_ZIMEN)
+		F_set_chr(LURI_4,CF_NO_HEIGHT)
+		
+		set_chr( NINJYA_D,488,	-1,-1,	2283,-7954,1401,	50,0, 20,"<TK_NINJYA_D>")	//星降之里·見張りＣ　忍者Ｄ
+//		set_chr( NINJYA_E,489,	-1,-1,	7716,-8805,1401,	52,315, 20,"<TK_NINJYA_E>")	//星降之里·見張りＤ　忍者Ｅ
+		set_chr( NINJYA_E,489,	-1,-1,	7702,-8924,1401,	52,315, 20,"<TK_NINJYA_E>")	//星降之里·見張りＤ　忍者Ｅ
+//		set_chr( NINJYA_F,490,	-1,-1,	-2360,-4100,0,		52,100, 20,"<TK_NINJYA_F>")	//星降之里·見張りＡ　忍者Ｆ
+		set_chr( NINJYA_F,490,	-1,-1,	-2582,-2519,3,		52,26, 20,"<TK_NINJYA_F>")	//星降之里·見張りＡ　忍者Ｆ
+		set_chr( NINJYA_G,491,	-1,-1,	2214,-7518,0,		52,20, 20,"<TK_NINJYA_G>")	//星降之里·里門　忍者Ｇ（汎用）
+
+		//里的キャラに一通り話すとイベントエントリーが出現
+		if(F4_12_OkRoten && !F4_15_EndSatolook)
+		{
+			set_chr( 300,990,	-1,-1,   1134,-8124,6,		   2,080804, 	6,"<EV_4_15_EndSatolook_KaidanShita>;")	//階段下
+			set_chr( 301,990,	-1,-1,   658,-10864,1400,	   2,080804, 	6,"<EV_4_15_EndSatolook_KaidanUe>;")	//階段上
+			set_chr( 302,990,	-1,-1,   301,-1782,56,		   2,080404, 	6,"<EV_4_15_EndSatolook_Hashi>;")		//橋的上
+		}
+		
+		//里的キャラに一通り話すと更纱は消える
+		if(!F4_12_OkRoten)
+		{
+			set_chr( SALASYA,73,	-1,-1,	-996,-14501,1401,	2,0, 20,"<TK_SALASYA>")		//星降之里≈泉屋前で掃除中　更纱
+			chr_equip2(SALASYA,"wp_041","Bone_RightSword",	100,	0,0,0,	0,-15,0);		//ホウキ
+			look(SALASYA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)
+			EV("FREEMOVE_SALASYA")
+		}
+		
+		
+		//モーション
+//		MOT_SET(KARASU,150,-1,485,485,-1,-1)	//鸦
+//		MOT(KARASU,150,0)
+		F_set_chr(GEN,CF_NO_MOVE)
+		F_set_chr(KAI,CF_NO_MOVE)
+		F_set_chr(KARASU,CF_NO_MOVE)
+		F_set_chr(NINJYA_D,CF_NO_MOVE)
+		F_set_chr(NINJYA_E,CF_NO_MOVE)
+		F_set_chr(NINJYA_F,CF_NO_MOVE)
+		F_set_chr(NINJYA_G,CF_NO_MOVE)
+	}
+//■イベント
+
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼翌朝的星降之里
+		set_namebmp(0,0)
+		EV("EV_5_00_NextMorning")
+	}
+	else
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼金色的粒子が振ってくる·そ的２
+		set_namebmp(0,0)
+		EV("EV_6_13_GoldRain2nd")
+	}
+	else
+	if(GW_ENTRY_EVENT==3)	//スキーから戻り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+
+		EV("EV_SKI_RETURN")
+	}
+	else
+	if(GW_ENTRY_EVENT==4)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼大五郎 ワープ処理
+		EV("EV_10400_WarpEntry")
+	}
+	else	
+	if(F4_11_EndFourth && !F5_17_EndFifth)
+	{
+	//５章
+		//ＧＦ『★とどめ的一撃が使えるようになった』立ってない
+	//	if(!F5_02_UseTodome)	//★フラグミス的ため修正
+	//	F5_02_UseTodome　がたった状態でこ的マップに入らないと露が仲間になりません。
+	//  したがって、こ的イベント的前的マップで立たせます。
+	//　というか、天山邸内部では F5_02_UseTodome が立っていないとまずい。
+		if(!F5_19_LueJump_OK)
+		{
+			//▼天山邸を出た所で的イベント
+			EV("EV_5_03_UseTodome")
+		}
+	}
+	else
+	if(F3_13_EndThird && !F4_11_EndFourth)
+	{
+	//４章
+//		更衣室に移動↓
+//		//ＧＦ『★襲撃を止めるために行動を開始した』立ってない
+//		if(!F4_06_StopAttack)
+//		{
+//			//▼露天温泉で的イベント
+//		//	set_chr( 81,990,	-1,-1,   0,1000,0,  0, 0802,6,"<EV_4_09_LetsOnsen>;")
+//			//                            x     y     z         xyz(大きさ)
+//			set_chr( 81,990,	-1,-1,   -1282,-14377,1400, 0,070404,6,"<EV_4_09_LetsOnsen>;")
+//		}
+		//ＧＦ『★星降之里に到着した』立ってない
+		if(!F4_05_OnVillage2)
+		{
+			//▼隠れ里に到着する
+			set_namebmp(0,0)
+			EV("EV_4_07_OnVillage2")
+//			EV("EV_4_07_OnVillage3")
+		}
+	}
+	
+//マップノード切り替え
+
+	//襲撃
+	if( F4_07_JoinAlwen || F4_09_GoShrineMia)		//ＧＦ『★艾雯と合流した』 ＧＦ『★社へ向かった米娅を追うことにした』立ってない
+	{
+		F_set_obj("mono00", NP_HIDE)
+		F_set_obj("Layer14", NP_HIDE)
+		F_set_obj("nuki00", NP_HIDE)
+//		F_set_obj("------", NP_HIDE)
+		F_set_obj("Layer19", NP_HIDE)
+		F_set_obj("Layer21", NP_HIDE)
+	} 
+	else
+	{
+	//襲撃前
+		F_set_obj("Layer16", NP_HIDE)		
+		F_set_obj("Layer15", NP_HIDE)		
+		F_set_obj("Yane02",  NP_HIDE)		
+		F_set_obj("nuki01",  NP_HIDE)		
+		F_set_obj("Layer13",  NP_HIDE)		
+		F_set_obj("Layer17",  NP_HIDE)		
+		F_set_obj("Layer23",  NP_HIDE)		
+		F_set_obj("Layer20",  NP_HIDE)		
+		F_set_obj("Layer22",  NP_HIDE)		
+	}	
+
+}
+//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+
+//──────────────────────────────
+//▼琉璃　フリームーブしたりして遊んでいる
+//──────────────────────────────
+//▼琉璃　フリームーブ
+FREEMOVE_LURI
+{
+	move( LURI, 25,WALK1, 1000,1000,0, 400)
+	wait_move( LURI )
+	wait(20)
+	loop
+}
+//▼琉璃　隠れている
+HIND_LURI
+{
+	move( LURI_2, 0,RUN1, 6733,-10785,1400, 0)
+	wait(20)
+
+	move( LURI_2, 0,RUN1, 6632,-10785,1399, 0)
+	wait(50)
+	loop
+}
+//▼琉璃　飛び跳ねている
+JUMP_LURI
+{
+	//モーション
+	MOT_SET(LURI_3,150,-1,497,497,151,40)
+	MOT_SET(LURI_3,151,-1,499,499,2,10)
+
+	
+	rot(LURI_3,60,330)
+	MOT(LURI_3,150,10)
+	jump(LURI_3,0,30,6555,-9765,1400,50)
+	wait(40)
+	
+	rot(LURI_3,60,200)
+	MOT(LURI_3,150,10)
+	jump(LURI_3,0,30,6695,-10025,1401,50)
+	wait(40)
+
+	MOT(LURI_3,150,10)
+	rot(LURI_3,60,80)
+	jump(LURI_3,0,30,6395,-10014,1400,50)
+	wait(40)
+	loop
+}
+//▼琉璃　回っている
+ROLING_LURI
+{
+
+	rot(LURI_4,10,0)
+	wait(15)
+	rot(LURI_4,10,90)
+	wait(15)
+	rot(LURI_4,10,180)
+	wait(15)
+	rot(LURI_4,10,270)
+	wait(15)
+	
+	loop
+}
+//──────────────────────────────
+//注視
+//──────────────────────────────
+LOOKING_LURI
+{
+	rot_chr(LURI,30,DAIGORO)
+	wait(10)
+	loop
+}
+
+//──────────────────────────────
+//▼矢作　フリームーブ【仕事】
+//──────────────────────────────
+FREEMOVE_YASAKU
+{
+	move( YASAKU, 25,WALK1, 1000,1000,0, 200)
+	wait_move( YASAKU )
+	wait(20)
+	loop
+}
+
+//──────────────────────────────
+//▼更纱　フリームーブ【掃除】
+//──────────────────────────────
+FREEMOVE_SALASYA
+{
+	move( SALASYA, 25,WALK1, 1000,1000,0, 200)
+	wait(70)
+	loop
+}
+
+//──────────────────────────────
+//▼大五郎　フリームーブ
+//──────────────────────────────
+FREEMOVE_DAIGORO
+{
+	move( DAIGORO, 25,WALK1, 1000,1000,0, 400)
+	wait_move( DAIGORO )
+	wait(20)
+	loop
+}
+
+//──────────────────────────────
+//▼茜　フリームーブ
+//──────────────────────────────
+FREEMOVE_AKANE
+{
+	move( AKANE, 25,WALK1, 1000,1000,0, 400)
+	wait_move( AKANE )
+	wait(20)
+	loop
+}
+//──────────────────────────────
+//▼鸦　名前が判明するまで鸦を卖药に
+//──────────────────────────────
+RENAME_KARASU
+{
+	if(!FS_08_TalkKarasu)
+	{
+		chr_rename(KARASU,"卖药")
+	}
+	else
+	{
+		chr_rename(KARASU,"鸦")
+	}
+}
+//──────────────────────────────
+//▼話しかけるまで…エモーション
+//──────────────────────────────
+TENTEN_KAI
+{
+	if(!FS_12_TalkKai)
+	{
+		EMO(KAI,EMO_TENTEN)
+		wait(60)
+		loop
+	}
+}
+
+EV_F4_12_OkRoten
+{
+	//更纱以外的名前付きキャラに話しかけた後に露天温泉が開く
+	//日户目的み別マップな的で仕込んでいません
+	if(FS_08_TalkHikome && FS_08_TalkKarasu && FS_08_TalkDaigoro && FS_08_TalkYasaku && FS_08_TalkKai && FS_08_TalkAkane && FS_08_TalkLuri && FS_08_TalkGen)
+	{
+		set_chr( 300,990,	-1,-1,   1134,-8124,6,		   2,080804, 	6,"<EV_4_15_EndSatolook_KaidanShita>;")	//階段下
+		set_chr( 301,990,	-1,-1,   658,-10864,1400,	   2,080804, 	6,"<EV_4_15_EndSatolook_KaidanUe>;")	//階段上
+		set_chr( 302,990,	-1,-1,   301,-1782,56,		   2,080404, 	6,"<EV_4_15_EndSatolook_Hashi>;")		//橋的上
+
+		F_set(F4_12_OkRoten)
+	
+		delete(SALASYA)
+	}
+}
+//──────────────────────────────
+//里的キャラに一通り話すとイベントエントリーが出現する
+//──────────────────────────────
+//──────────────────────────────
+//▼⑧里を一通り回った
+//──────────────────────────────
+//　　※初回イベント。
+//　　　里階段下、里階段上、里入り口的橋真ん中辺り的３箇所に、エリアで埋め込む。
+//　　クロスフェードで２人を再配置。
+//――――――――――――――――――――――――――
+//里階段下
+//――――――――――――――――――――――――――
+EV_4_15_EndSatolook_KaidanShita
+{
+	//　　クロスフェードで２人を再配置。
+	//――――――――――――――――――――――――――
+	//	初期化処理
+	//――――――――――――――――――――――――――
+		EV_begin()	
+		if( !F4_17_InTheEvening )	//★夕方になった
+		{
+			fade_in(100,30,0)
+			wait_fade()
+			EV("EV_InTheEvening")				//夕方になるイベント発動
+			wait_EV("EV_InTheEvening")		
+			fade_in(0,30,0)
+		}
+		else
+		{
+			cross_fade(30)			//クロスフェード
+		}
+
+		//カメラ再配置
+		CAM_move(1033,7838,220,0,0)
+		CAM(150,33,95,37,165,0,0)
+		
+		//キャラ再配置
+		chr_pos(RAGNA,1053,-8118,1,310,2)
+		chr_pos(PARTNER,1213,-7968,0,140,2)
+		
+		KAO(RAGNA, "1", "1", "1")	
+		KAO(PARTNER,"1", "1", "1")	
+		
+		wait_fade()
+		
+	//――――――――――――――――――――――――――
+	//	イベント開始
+	//――――――――――――――――――――――――――
+	
+		//イベント本体へ（終了処理はこ的中）
+		EV("EV_4_15_EndSatolook")
+		wait_EV("EV_4_15_EndSatolook")
+}
+
+//――――――――――――――――――――――――――
+//里階段上
+//――――――――――――――――――――――――――
+EV_4_15_EndSatolook_KaidanUe
+{
+	//　　クロスフェードで２人を再配置。
+	//――――――――――――――――――――――――――
+	//	初期化処理
+	//――――――――――――――――――――――――――
+		EV_begin()	
+		if( !F4_17_InTheEvening )	//★夕方になった
+		{
+			fade_in(100,30,0)
+			wait_fade()
+			EV("EV_InTheEvening")				//夕方になるイベント発動
+			wait_EV("EV_InTheEvening")		
+			fade_in(0,30,0)
+		}
+		else
+		{
+			cross_fade(30)			//クロスフェード
+		}
+		
+		//カメラ再配置
+		CAM_move(674,10821,1575,0,0)
+		CAM(20,50,1575,30,166,0,0)
+		
+		//キャラ再配置
+		chr_pos(RAGNA,774,-10821,1400,100,2)
+		chr_pos(PARTNER,577,-10895,1400,300,2)
+		KAO(RAGNA, "1", "1", "1")	
+		KAO(PARTNER,"1", "1", "1")	
+		
+		wait_fade()
+	//――――――――――――――――――――――――――
+	//	イベント開始
+	//――――――――――――――――――――――――――
+	
+		//イベント本体へ（終了処理はこ的中）
+		EV("EV_4_15_EndSatolook")
+		wait_EV("EV_4_15_EndSatolook")
+}
+
+//――――――――――――――――――――――――――
+//出入り口橋的上
+//――――――――――――――――――――――――――
+EV_4_15_EndSatolook_Hashi
+{
+	//　　クロスフェードで２人を再配置。
+	//――――――――――――――――――――――――――
+	//	初期化処理
+	//――――――――――――――――――――――――――
+		EV_begin()	
+		if( !F4_17_InTheEvening )	//★夕方になった
+		{
+			fade_in(100,30,0)
+			wait_fade()
+			EV("EV_InTheEvening")				//夕方になるイベント発動
+			wait_EV("EV_InTheEvening")		
+
+			fade_in(0,30,0)
+		}
+		else
+		{
+			cross_fade(30)			//クロスフェード
+		}
+		
+			//カメラ再配置
+			CAM_move(293,1947,196,0,0)
+			CAM(260,46,196,37,194,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,373,-1807,60,130,2)
+			chr_pos(PARTNER,224,-1980,73,320,2)			
+					
+		
+		KAO(RAGNA, "1", "1", "1")	
+		KAO(PARTNER,"1", "1", "1")	
+		
+		wait_fade()
+		
+	//――――――――――――――――――――――――――
+	//	イベント開始
+	//――――――――――――――――――――――――――
+	
+		//イベント本体へ（終了処理はこ的中）
+		EV("EV_4_15_EndSatolook")
+		wait_EV("EV_4_15_EndSatolook")
+}
+
+
+//――――――――――――――――――――――――――
+//里を一通り回った　イベント本体
+//――――――――――――――――――――――――――
+
+EV_4_15_EndSatolook
+{
+
+	KAO(PARTNER,"12321Z1","1","1")
+	MES(PARTNER,"那个……",0)
+	KAO(PARTNER,"12321Z4","1","1")
+	MES(PARTNER,"差不多\n也在村里逛过一圈了。",0)
+	MES_close(PARTNER)
+	
+//	name2(RAGNA)
+	KAO(RAGNA,"12321Z4","1","1")
+	MES(RAGNA,"咦，是这样吗？",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	KAO(PARTNER,"12321Z4","4","5")
+	MES(PARTNER,"对不起，\n这里也没什么有趣的东西……",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	KAO(RAGNA,"12321Z4","1","1")
+	MES(RAGNA,"哪，哪里，没这回事。\n（我倒觉得这里有不少内幕……）",0)
+	KAO(RAGNA,"12321Z3","1","1")
+	MES(RAGNA,"哈哈，算了。",0)
+	KAO(RAGNA,"12321Z6","1","1")
+	MES(RAGNA,"游览就在适当的地方告一段落，\n我们去看看\n你们引以为傲的温泉吧。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	KAO(PARTNER,"12321Z3","1","1")
+	MES(PARTNER,"是，就这么办。",0)
+	MES_close(PARTNER)
+
+//	name("―――――――――――――――――――――")
+//	name("□▼⑧更纱初回を見ている场合")
+	if(FS_08_TalkSalasya)
+	{
+		KAO(PARTNER,"12321Z4","1","1")
+		MES(PARTNER,"清扫\n也差不多结束了吧。",0)
+		MES_close(PARTNER)
+	}
+	
+	//――――――――――――――――――――――――――
+	//	イベント終了処理
+	//――――――――――――――――――――――――――
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		//カメラを初期設定に
+		CAM_return( 0 )
+		wait(30)
+		
+		//★里内を一通り回った
+		F_set(F4_15_EndSatolook)
+		
+		//エントリを3地点から消す
+		delete(300)
+		delete(301)
+		delete(302)
+
+		EV_end()
+		
+		//フェードイン----------------------
+		fade_in(0,30,BLACK)
+	//	プレイヤー操作許可
+	//――――――――――――――――――――――――――
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼隠れ里に到着する
+//──────────────────────────────
+//　　梅ンルート①をクリアしたところでイベント発生。
+//　　地名表示を出しながら、里的全景を見せつつ、
+//　　最後に拉古那と昴が入口から入ってくる的を見せる。
+//　　拉古那と昴、里的門（橋？）的前で立ち止まる。
+EV_4_07_OnVillage2
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	set_chr(KAI,	      1041,-1,-1,  128,-127,1, 2, 40,0, "")
+	set_chr(TENZAN,	      1024,-1,-1,  255,-461,0, 2, 55,0, "")
+	
+	set_chr(SINOBI_A,     1042,-1,-1, ,-46,508,1, 2,309,0, "")
+	set_chr(SINOBI_B,     1042,-1,-1, -123,1098,1, 2,216,0, "")
+	set_chr(SINOBI_C,     1042,-1,-1,  700,1007,1, 2,113,0, "")
+	set_chr(SINOBI_D,     1042,-1,-1,  644,470,1,  2,50,0, "")
+
+	set_chr( EVENT_RAGNA, 1010, -1,-1, 239,779,0,2,180, 0, "")
+	set_chr( SUBARU,      1020, -1,-1, 368,674,0,2,120, 0, "")		
+	
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(SUBARU,     CF_NO_CLIP)
+	F_set_chr(SUBARU,     CF_NO_CLIP2)
+	F_set_chr(SUBARU,     CF_NO_CSP)
+	F_set_chr(DUMMY,     CF_NO_CLIP)
+	F_set_chr(DUMMY,     CF_NO_CLIP2)
+	F_set_chr(DUMMY,     CF_NO_CSP)
+	F_set_chr(DUMMY,     CF_NO_HEIGHT)
+	F_set_chr(DUMMY,     CF_NO_ZIMEN)	
+	F_set_chr(KAI,       CF_NO_CLIP)
+	F_set_chr(KAI,       CF_NO_CLIP2)
+	F_set_chr(KAI,       CF_NO_CSP)
+
+//	color(PARTNER,-1)
+	color(KAI,-1)
+	color(TENZAN,-1)
+	color(SINOBI_A,-1)
+	color(SINOBI_B,-1)
+	color(SINOBI_C,-1)
+	color(SINOBI_D,-1)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	color(DAIGORO,-1)
+	wait_color(KAI)
+
+	//カメラ初期位置
+	CAM_move(-20,0,144,0,0)
+	CAM(250,189,144,17,180,0,0)
+
+	delete(90)	//エントリーはき
+
+	//--- モーション設定 --------------------------------------------------
+	MOT_SET(EVENT_RAGNA,150,-2,405,405,-1,-1)		//左手少し上げる
+	MOT_SET(EVENT_RAGNA,151,-2,400,400,-1,-1)		//左手を腰に
+	MOT_SET(EVENT_RAGNA,152,-2,471,471,-1,-1)		//なっ！
+	MOT_SET(EVENT_RAGNA,153,-1,3010,3029,-1,-1)		//ギア構え
+//	MOT_SET(EVENT_RAGNA,153,-1,3090,3101,-1,-1)		//ギア構え
+	
+	MOT_SET(SUBARU,150,-2,542,542,-1,-1)		//えへへ
+	MOT_SET(SUBARU,151,-2,410,410,-1,-1)		//考える
+	MOT_SET(SUBARU,152,-2,471,471,-1,-1)		//なっ
+	MOT_SET(SUBARU,153,-2,434,434,-1,-1)		//
+	MOT_SET(SUBARU,154,-2,440,440,-1,-1)		//胸に手をやる
+
+	MOT_SET(SINOBI_A,150,-2,395,395,-1,-1)		//腕組
+	MOT_SET(SINOBI_B,150,-2,395,395,-1,-1)		//腕組
+	MOT_SET(SINOBI_C,150,-2,395,395,-1,-1)		//腕組
+	MOT_SET(SINOBI_D,150,-2,395,395,-1,-1)		//腕組
+	MOT_SET(SINOBI_A,151,-2,1234,1234,-1,-1)		//
+	MOT_SET(SINOBI_B,151,-2,1234,1234,-1,-1)		//
+	MOT_SET(SINOBI_C,151,-2,1234,1234,-1,-1)		//
+	MOT_SET(SINOBI_D,151,-2,1234,1234,-1,-1)		//
+	
+	MOT_SET(SINOBI_A,152,-2,454,454,-1,-1)		//
+	MOT_SET(SINOBI_B,152,-2,454,454,-1,-1)		//
+	MOT_SET(SINOBI_C,152,-2,454,454,-1,-1)		//
+	MOT_SET(SINOBI_D,152,-2,454,454,-1,-1)		//
+	
+	MOT_SET(KAI,150,-2,1231,1231,-1,-1)		//刀を抜く構え
+	MOT_SET(KAI,151,-2,1232,1232,-1,-1)		//刀を抜く
+	MOT_SET(KAI,152,-2,471,471,-1,-1)		//それは？
+	MOT_SET(KAI,153,-2,395,395,-1,-1)		//腕を組む
+	MOT_SET(KAI,154,-2,468,468,-1,-1)		//ばかな
+			
+	//--- デフォルト表情 --------------------------------------------------
+	KAO(EVENT_RAGNA, "1","1","1")
+	KAO(SUBARU,      "1","1","1")
+	KAO(KAI,         "1","1","1")
+	KAO(TENZAN,      "1","1","1")
+	KAO(SINOBI_A,    "1","1","1")
+	KAO(SINOBI_B,    "1","1","1")
+	KAO(SINOBI_C,    "1","1","1")
+	KAO(SINOBI_D,    "1","1","1")
+	
+//	CAM_move(5504,6440,3253,0,0)
+//	CAM(99,11,27502,40,192,0,0)
+//	CAM_move(2024,980,3001,150,0)
+//	CAM(99,10,1921,40,187,150,0)
+
+	
+	chr_rename(SINOBI_A, "忍者")
+	chr_rename(SINOBI_B, "忍者")
+	chr_rename(SINOBI_C, "忍者")
+	chr_rename(SINOBI_D, "忍者")
+	
+	//フェードイン
+	fade_in(0,60,0)
+//	wait_fade()
+
+
+	//里を見せる
+
+//	CAM_move(388,-2680,256,0,0)
+//	CAM(1980,80,95,37,295,0,0)
+//	CAM_move(1634,3430,1895,300,0)
+//	CAM(100,80,1735,37,200,300,0)
+//	wait_CAM()
+		
+	//露天温泉
+	CAM_move(-2269,14183,2955,0,0)	
+	CAM(740,80,1395,37,174,0,0)
+	CAM_move(-829,15212,2956,200,0)
+	CAM(740,80,1395,37,232,200,0)	
+	wait_CAM()
+
+	//天山邸
+	cross_fade(10)
+	CAM_move(7488,9178,2816,0,0)
+	CAM(350,65,1254,38,197,0,0)
+	CAM_move(3210,8360,2994,200,0)
+	CAM(540,80,95,37,152,200,0)
+	wait_CAM()
+
+	//ワープゲートから里全体カメラへ
+	cross_fade(10)	
+	CAM_move(2100,-360,775,0,0)
+	CAM(-60,80,615,37,296,0,0)
+	CAM_move(4546,1759,5164,360,0)
+	CAM(711,65,-1691,42,202,360,0)	
+	
+//	chr_pos(EVENT_RAGNA, 143,2578,0,180,2)
+	chr_pos(EVENT_RAGNA, 25,3642,0,180,2)
+//	chr_pos(SUBARU,     338,2703,0,180,2)
+	chr_pos(SUBARU,     229,3775,0,180,2)
+	
+	move(EVENT_RAGNA,    0, WALK1, 151,1008,1,2 )
+	move(SUBARU,         0, WALK1, 394,1097,1,2 )	
+	
+	wait(240)
+	set_namebmp(6,0)
+
+	wait_CAM()
+	
+//color(RAGNA,1)
+//color(PARTNER,1)	
+
+	cross_fade(15)	
+	CAM_move(258,-671,215,0,0)	
+	CAM(-329,65,215,31,152,0,0)	
+	CAM(-329,65,215,31,188,600,0)
+
+	chr_pos(EVENT_RAGNA, 239,779,0,180, 2)
+	chr_pos(SUBARU,      368,674,0,120, 2)		
+	
+	wait(30)
+
+	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")
+	
+	KAO(EVENT_RAGNA,"12321Z3","1233321","6")
+	MES(EVENT_RAGNA,"哦……\n这就是昴生活的村庄啊。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","6")	
+	MES(EVENT_RAGNA,"怎么说呢……\n的确有种隐之村的感觉呢。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"12321Z3","1236","6")
+	MES(SUBARU,"嘿嘿。\n这里叫《星降之里》。",0)
+	
+	look_chr(EVENT_RAGNA, SUBARU, "Bone_Head")	
+	
+	KAO(SUBARU,"12321Z5","321","1")	
+	MES(SUBARU,"因为建在这种地方，\n所以跟镇上和村里完全没有交流……",0)
+	KAO(SUBARU,"12321Z5","1","1")	
+	MES(SUBARU,"虽然我们偶尔也会\n下山收集情报。",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"12321Z2","1233321","1")
+	MES(EVENT_RAGNA,"原来如此啊。",0)
+	MES_close(EVENT_RAGNA)
+
+//	rot_chr(EVENT_RAGNA,30,SUBARU)
+
+	wait(15)
+
+	cross_fade(15)
+	
+	CAM_move(740,-920,95,0,0)
+	CAM(-169,81,95,30,66,0,0)
+//	CAM(-269,77,95,30,66,1200,1)		//動かすと戒的吹き出しがおかしな位置に。
+	wait(30)
+
+//　　ここで拉古那的頭にＰＡマーク。
+	KAO(EVENT_RAGNA,"E","12321D","7")
+	EMO(EVENT_RAGNA, EMO_PA)
+	wait(15)
+	MOT(EVENT_RAGNA, 150, 10)
+	
+	KAO(EVENT_RAGNA,"B232BZ5","1232A","1")	
+	MES(EVENT_RAGNA,"可是，为什么要在这种地方\n避人耳目地生活呢？",0)
+	KAO(EVENT_RAGNA,"B232BZ5","A23","1")
+	MES(EVENT_RAGNA,"镇上的人好像\n也完全不知道这里的存在……",0)
+	KAO(EVENT_RAGNA,"B232BZ3","32A","1")
+	MES(EVENT_RAGNA,"应该是有什么理由的吧？",0)
+	MES_close(EVENT_RAGNA)
+	
+	MOT(EVENT_RAGNA, 151, 10)
+		
+	KAO(SUBARU,"2","12321D","6")	
+	MES(SUBARU,"咦……？",0)
+	MES_close(SUBARU)
+
+	KAO(SUBARU,"B","123","1")	
+	look_off(SUBARU)
+//	rot_chr(SUBARU,30,EVENT_RAGNA)
+	wait(15)
+
+//　　昴的頭に…マーク。
+	EMO(SUBARU, EMO_TENTEN)
+	wait(15)
+
+	MOT(SUBARU, 151, 10)
+	KAO(SUBARU,"B232BZ3","3","1")	
+	MES(SUBARU,"……这么说的话，是这样呢。",0)
+	KAO(SUBARU,"B232BZ5","3","2")	
+	MES(SUBARU,"『不能让外人得知里的存在』\n『这就是所谓的忍道』",0)	
+	look_chr(SUBARU,EVENT_RAGNA,  "Bone_Head")	
+	KAO(SUBARU,"B232BZ5","321","1")	
+	MES(SUBARU,"从前就有这样的话流传下来，\n我们也对此深信不疑……",0)
+	MES_close(SUBARU)
+
+//　　拉古那的頭に冷や汗マーク。
+	KAO(EVENT_RAGNA,"B","A23332A","5")		
+	EMO(EVENT_RAGNA, EMO_HIYAASE)
+	wait(15)
+	look_off(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","A","5")		
+	MES(EVENT_RAGNA,"是，是这样啊。",0)
+	MES_close(EVENT_RAGNA)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(20)	
+	look_chr(EVENT_RAGNA, SUBARU, "Bone_Head")		
+	KAO(EVENT_RAGNA,"B232B2Z2","A2321D","6")		
+	MES(EVENT_RAGNA,"──啊，等一下。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1232A","4")			
+	MES(EVENT_RAGNA,"可是既然不能让别人知道这里……\n那你告诉我没关系吗？",0)
+	KAO(EVENT_RAGNA,"B232BZ5","A","4")			
+	MES(EVENT_RAGNA,"这样不是很严重地\n破坏了规矩吗。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"12321E","1232F","6")	
+	MES(SUBARU,"呃，那个……",0)
+	
+	MOT(SUBARU, 150, 10)
+	wait(10)
+	KAO(SUBARU,"12321Z4","F236","5")		
+	MES(SUBARU,"嘿嘿，对啊。\n变成这样了呢。",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"B232BZ2","A2321D","6")	
+	MES(EVENT_RAGNA,"喂喂……",0)
+	KAO(EVENT_RAGNA,"B232BZ4","12321","2")	
+	MES(EVENT_RAGNA,"这样一来，万一\n在这里被发现了的话──",0)
+	MES_close(EVENT_RAGNA)
+
+//	name("声（色換え）")
+	chr_rename( KAI , "声" )
+	MES_pos(KAI,"W3──已经迟了。",0,10,240,0,0)
+	wait_key(0)
+	MES_close(KAI)
+
+//　　拉古那と昴的頭に！マーク。
+	EMO(SUBARU,      EMO_BIKKURI)
+	EMO(EVENT_RAGNA, EMO_BIKKURI)
+	KAO(SUBARU,"E","321D","6")	
+	KAO(EVENT_RAGNA,"B","12321D","6")	
+	wait(30)
+	
+	//戒登场--------------------------------------------------------------------------
+//　　門的方から、戒（仮／村的青年）が現れる。
+	color(KAI,1)
+	wait_color(KAI)
+
+	cross_fade(15)
+//	CAM_move(320,-400,135,0,0)
+//	CAM(-169,59,135,30,162,0,0)
+//	CAM(-449,72,175,18,180,300,0)	
+//	CAM_move(340,-80,175,300,0)
+
+	CAM_move(340,-80,175,0,0)	
+	CAM(-369,72,175,18,178,0,0)	
+	CAM(-449,72,175,18,179,150,0)	
+
+
+	chr_pos( SUBARU, 400,  674,1,0, 0)
+	chr_pos( KAI,    290,-1207,1,0, 0)
+	//    ch,typ,   速,   X,  Y,Z,Len
+	move(KAI,  0,WALK1, 340,178,1,0)
+	MOT(SUBARU,2,0)
+	look_off(EVENT_RAGNA)
+	look_off(SUBARU)
+	rot_chr(EVENT_RAGNA,60,KAI)
+	rot_chr(SUBARU,60,KAI)	
+	
+	wait_CAM()
+	
+	look_chr(KAI,SUBARU,"Bone_Head")
+
+	MES(SUBARU,"戒大哥……",0)
+	MES_close(SUBARU)
+
+	wait_CAM()
+	wait_move(KAI)
+	MOT(KAI, 153, 10)
+	
+	chr_rename(KAI ,"戒" )
+	KAO(KAI,"B232BZ4","1233321","1")	
+	MES(KAI,"真是的……\n你在想什么啊。",0)
+	KAO(KAI,"B232BZ4","123","5")		
+	MES(KAI,"都没怎么回来，\n大家都很担心你……",0)
+	KAO(KAI,"B232BZ4","321","2")		
+	MES(KAI,"没想到，你居然\n把陌生人带来了。",0)
+	MES_close(KAI)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(320,-480,135,0,0)
+	CAM(-209,142,135,10,157,0,0)
+	CAM(-80,141,135,10,200,2400,1)
+	wait(30)
+
+	MES(SUBARU,"那，那个……\n这是有原因的！",0)
+	MES(SUBARU,"我无论如何都想\n让拉古那师父好好休息一场……",0)
+	MES_close(SUBARU)
+	
+	KAO(KAI,"B232BZ2","12321D","6")
+	MES(KAI,"拉古那师父……？",0)
+	MES_close(KAI)
+	look_chr(KAI, EVENT_RAGNA, "Bone_Head")
+	wait(30)
+	KAO(KAI,"B232BZ3","1232B","9")
+	MES(KAI,"那个红毛男人么。",0)
+	MES_close(KAI)
+
+	MES(EVENT_RAGNA,"……啊啊。",0)
+	MES(EVENT_RAGNA,"我是拉古那·瓦伦泰恩。\n职业是宝物猎人。",0)
+	MES(EVENT_RAGNA,"虽然我不知道是什么原因，\n不过能不能请你们\n不要责怪昴呢？",0)
+	MES(EVENT_RAGNA,"因为，你们是对我有顾虑\n所以才跟来的吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(KAI,"B232BZ4","B23","2")	
+	MES(KAI,"……我们的规矩\n轮不到你说三道四。",0)
+	stop_BGM(90)
+	KAO(KAI,"B232BZ4","321","2")		
+	MES(KAI,"而且，你还有闲情\n来担心昴吗？",0)
+	MES_close(KAI)
+
+	KAO(EVENT_RAGNA,"B232B","1233321","3")
+	MES(EVENT_RAGNA,"什么……",0)
+	MES_close(EVENT_RAGNA)
+
+	BGM(35)
+//	BGM(57)
+
+	KAO(SUBARU,"2","12321DE","6")
+
+//　　ここで戒が手を上げると、次的瞬間、
+//　　ドロンなど的効果音と共に、数名的忍者たちが
+//　　拉古那と昴を取り囲むようにして現れる。
+
+	CAM_move(60,-720,95,0,0)
+	CAM(-329,94,95,23,138,0,0)
+//	CAM_move(280,-860,135,90,0)
+//	CAM(191,123,135,15,245,90,0)
+	CAM_move(340,-760,135,90,0)
+	CAM(190,156,135,15,244,90,0)
+	MOT(SINOBI_A, 150, 1)
+	MOT(SINOBI_B, 150, 1)
+	MOT(SINOBI_C, 150, 1)
+	MOT(SINOBI_D, 150, 1)
+
+	EFF_chr(6655,SINOBI_A,0,100,0,"charbase0")
+	wait(5)
+	SE(1017,0)//瞬間移動SE
+	wait(10)
+	color(SINOBI_A,1)
+	
+	rot_chr(SUBARU,    60,EVENT_RAGNA)
+	rot_chr(EVENT_RAGNA,60,SINOBI_A)	
+	MOT(EVENT_RAGNA, 152,5 )
+	MOT(SUBARU,      152,5 )
+	
+	wait(5)
+	EFF_chr(6655,SINOBI_B,0,100,0,"charbase0")	
+	wait(5)
+	SE(1017,0)//瞬間移動SE
+	wait(10)
+	color(SINOBI_B,1)
+	wait(10)
+	EFF_chr(6655,SINOBI_C,0,100,0,"charbase0")
+	wait(5)
+	SE(1017,0)//瞬間移動SE
+	wait(10)
+	color(SINOBI_C,1)	
+	EFF_chr(6655,SINOBI_D,0,100,0,"charbase0")
+	wait(5)
+	SE(1017,0)//瞬間移動SE
+	wait(10)
+	color(SINOBI_D,1)
+
+	wait_color(SINOBI_A)
+	wait_color(SINOBI_D)
+
+
+	rot_chr(EVENT_RAGNA,60,SINOBI_A)	
+	look_chr(EVENT_RAGNA, SINOBI_B, "Bone_Head")
+	look_chr(SUBARU,      SINOBI_C, "Bone_Head")
+
+	KAO(EVENT_RAGNA,"2","12321D","2")
+	MES(EVENT_RAGNA,"什……！？",0)	
+	MES_close(EVENT_RAGNA)
+	
+	KAO(SUBARU,"B232B2","12321","5")
+	MES(SUBARU,"各位……！",0)
+	MES_close(SUBARU)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(320,-400,135,0,0)
+	CAM(-369,114,135,15,156,0,0)
+	CAM(-369,102,135,15,156,1200,0)
+	look_chr(EVENT_RAGNA,      KAI, "Bone_Head")
+	rot_chr(EVENT_RAGNA,30,KAI)	
+	MOT(EVENT_RAGNA,2,10)	
+	wait(30)
+
+	KAO(KAI,"B232BZ5","123","1")
+	MES(KAI,"看来是什么都还不清楚，\n就让昴给你带路了啊……",0)
+	
+
+	rot_chr(SUBARU,     30,KAI)
+
+	look_chr(SUBARU,     KAI,"Bone_Head")	
+	look_chr(EVENT_RAGNA,KAI,"Bone_Head")	
+	
+	KAO(KAI,"B232BZ5","321","3")
+	MES(KAI,"不过，你既然知道了这个地方，\n就不能白白地放过你了。",0)
+	MES_close(KAI)
+
+	MOT(SUBARU, 152, 5)
+	KAO(SUBARU,"B232B2Z2","12321D","6")	
+	MES(SUBARU,"等，等一下戒大哥！？",0)
+	MES_close(SUBARU)
+	
+	KAO(EVENT_RAGNA,"12321Z3","123","2")
+	MES(EVENT_RAGNA,"嘿……\n突然就开始粗暴的欢迎了啊。",0)
+	KAO(EVENT_RAGNA,"B232BZ3","321","3")
+	MES(EVENT_RAGNA,"你们打算拿我怎么样？",0)
+	MES_close(EVENT_RAGNA)
+	
+	KAO(KAI,"B232BZ4","123","1")
+	MES(KAI,"没什么，不会给你施加\n太大的伤害的。",0)
+	KAO(KAI,"B232BZ5","3","1")	
+	MES(KAI,"只不过是使用幻术，\n以暗示让你忘记这里。",0)
+	KAO(KAI,"B232BZ3","32A","1")
+	MES(KAI,"当然，还有昴。",0)
+	MES_close(KAI)
+
+	EMO(SUBARU, EMO_TOGEBIKKURI)
+	wait(20)
+	MES(SUBARU,"怎，怎么会……",0)
+	MES(SUBARU,"这可不行啊！\n怎么能夺走人的记忆呢！",0)
+	MES(SUBARU,"而，而且还要让\n拉古那师父忘了我……！",0)
+	MES_close(SUBARU)
+
+	look_chr(KAI, SUBARU, "Bone_Head")
+	KAO(KAI,"B232BZ4","A232","2")
+	MES(KAI,"……导致这种结果的，\n是你轻率的行为。",0)
+	KAO(KAI,"B232BZ5","2","3")	
+	MES(KAI,"而且，你说他是师父，\n那么你从他那里又学到了些什么呢？",0)
+	KAO(KAI,"B232BZ4","23332","3")	
+	MES(KAI,"他甚至不像是这个岛上的人，\n而只是个流浪者吧。",0)
+	MES_close(KAI)
+
+
+	MES(EVENT_RAGNA,"………………………………",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"B232BZ3","1233321D","5")	
+	MES(SUBARU,"才，才没这回事呢！",0)
+	
+	MOT(SUBARU, 153, 10 )
+//	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")
+//	rot(SUBARU, 60, 90)
+	
+	look_chr(EVENT_RAGNA,SUBARU,  "Bone_Head")
+
+	KAO(SUBARU,"12321Z3","D12321","2")		
+	MES(SUBARU,"拉古那师父很厉害的……！",0)
+	KAO(SUBARU,"12321Z4","1","2")
+	MES(SUBARU,"非常坚强，无论是什么样的困难，\n都绝不放弃地勇往直前……",0)
+	KAO(SUBARU,"12321Z3","1233321","6")
+	MES(SUBARU,"他是我由衷尊敬的人！",0)
+	MES_close(SUBARU)
+	
+	KAO(EVENT_RAGNA,"12321Z2","123332A","6")
+	MES(EVENT_RAGNA,"昴……",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(SUBARU, KAI, "Bone_Head")
+	
+	KAO(KAI,"B232BZ4","123","5")
+	MES(KAI,"哎呀呀……\n看样子是被骗了啊。",0)
+	KAO(KAI,"B232BZ4","321","3")
+	MES(KAI,"没办法，这样一来\n只好武力解决了。",0)
+	MES_close(KAI)
+
+//　　周り的忍者、ザッと手裏剑などを構える。
+
+	wait(15)
+//	cross_fade(15)
+//	CAM(111,778,175,3,191,0,0)
+//	CAM_move(240,-840,175,0,0)
+//	CAM_move(280,-820,175,0,0)
+//	CAM(31,108,175,20,248,0,0)
+	
+	CAM_move(280,-560,175,0,0)
+	
+	//CAM(-289,108,175,20,201,0,0)
+	//CAM_move(280,-560,175,0,0)	
+
+	//CAM_move(280,-560,175,0,0)
+	//CAM(-169,108,175,20,144,0,0)
+
+	CAM_move(360,-860,175,0,0)
+	CAM(-249,60,175,20,252,0,0)
+
+	KAO(EVENT_RAGNA,"B","1","2")
+
+	wait(15)
+
+	MOT(SINOBI_A, 151, 10)
+	chr_equip( SINOBI_A,"wp_020", "Bone_RightSword", 100)	//手裏剑を装備させる的はこちら。	
+	SE(1026,0)//手裏剑構え
+	wait(2)
+	MOT(SINOBI_B, 151, 10)
+	chr_equip( SINOBI_B,"wp_020", "Bone_RightSword", 100)	//手裏剑を装備させる的はこちら。	
+	wait(2)
+	MOT(SINOBI_C, 151, 10)
+	chr_equip( SINOBI_C,"wp_020", "Bone_RightSword", 100)	//手裏剑を装備させる的はこちら。	
+	wait(2)
+	MOT(SINOBI_D, 151, 10)
+	chr_equip( SINOBI_D,"wp_020", "Bone_RightSword", 100)	//手裏剑を装備させる的はこちら。	
+
+
+//	look_chr(SUBARU, KAI, "Bone_Head")
+
+	wait(30)
+		
+	CAM_move(280,-800,175,0,0)
+	CAM(111,108,175,20,143,0,0)
+	CAM(111,108,175,20,148,1200,0)
+
+//	rot_chr(SUBARU, 30, KAI)
+//	rot(SUBARU, 30, 90)
+//	wait(30)
+	
+	MOT(SUBARU,153,5)
+	KAO(SUBARU,"B232B2","12321D","5")
+	MES(SUBARU,"戒大哥！",0)
+	MES_close(SUBARU)
+	
+	look_chr(EVENT_RAGNA, KAI, "Bone_Head")
+
+	KAO(EVENT_RAGNA,"B232B","123332A","2")
+	MES(EVENT_RAGNA,"——喔。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(KAI,    EVENT_RAGNA, "Bone_Head")
+	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")
+	rot(SUBARU, 30, 90)
+//　　戒と昴的頭にＰＡマーク。
+	EMO(SUBARU, EMO_PA)
+	EMO(KAI, EMO_PA)
+	wait(15)
+	
+	KAO(KAI,"B232BZ4","123332","1")	
+	MES(KAI,"……怎么。\n打算认命了吗？",0)
+	MES_close(KAI)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(220,-680,135,0,0)
+	CAM(-209,60,135,15,72,0,0)
+	CAM(-209,60,135,15,99,1200,1)
+//	wait(30)
+	
+	rot(SUBARU, 30, 90)
+	MOT(SUBARU, 2, 10)
+	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")
+	KAO(SUBARU,"B","1233321","5")
+	wait(30)
+
+
+	KAO(EVENT_RAGNA,"12321Z5","A23","1")
+	MES(EVENT_RAGNA,"我说……\n要把我怎么样都随你们。",0)
+	KAO(EVENT_RAGNA,"12321Z8","3","1")
+	MES(EVENT_RAGNA,"抓得到的话就来抓好了，\n要是不想让任何人知道这里的话，\n就算撕烂我的嘴巴我也不会说的。",0)
+	KAO(EVENT_RAGNA,"B232B","3","3")
+	MES(EVENT_RAGNA,"不过呢──",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那、安卡基亚を取り出して構える。
+//	MOT(EVENT_RAGNA,52,15)
+//	wait_MOT(EVENT_RAGNA,52)
+	MOT(EVENT_RAGNA,153,10)
+//	wait_MOT(EVENT_RAGNA,153)	
+//	wait(15)
+
+//　　昴、戒、忍者たち的頭に！マーク。
+
+//	EMO(KAI, EMO_BIKKURI)
+//	EMO(SINOBI_A, EMO_BIKKURI)
+//	EMO(SINOBI_B, EMO_BIKKURI)
+//	EMO(SINOBI_C, EMO_BIKKURI)
+//	wait(15)
+
+	wait(10)
+	SE(1014,0)//ギア構え
+	wait(30)
+
+	KAO(EVENT_RAGNA,"12321Z5","321","3")
+	MES(EVENT_RAGNA,"要让我忘了昴，\n这到底是个做不到的要求。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","3")
+	MES(EVENT_RAGNA,"这么优秀的上门弟子，\n我怎么可能忘得了呢？",0)
+	MES_close(EVENT_RAGNA)
+	
+	KAO(SUBARU,"12321Z2","1233321","6")
+	MES(SUBARU,"师，师父……",0)
+	MES_close(SUBARU)
+
+	wait(15)
+	//全体カメラ
+//	cross_fade(15)
+//	CAM(111,778,175,3,191,0,0)
+//	CAM_move(240,-840,175,0,0)
+//	wait(30)
+
+	//戒カメラ
+	wait(15)
+	cross_fade(15)
+	CAM_move(280,-720,155,0,0)
+	CAM(-289,69,155,18,154,0,0)
+	wait(30)
+
+	look_chr(SUBARU, KAI, "Bone_Head")
+	
+	KAO(KAI,"B232BZ3","23332","3")
+	MES(KAI,"……想要抵抗吗。",0)
+	MES_close(KAI)
+
+	MES(EVENT_RAGNA,"如果你们打算蛮横到底，\n那我也是有骨气的。",0)
+	MES(EVENT_RAGNA,"两方都不肯让步的话，\n就只能拼个你死我活了吧？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(KAI,"B232BZ2","2","3")
+	MES(KAI,"胆量倒不小嘛……",0)
+	MES_close(KAI)
+
+//	wait(15)
+//	cross_fade(15)
+//	CAM_move(300,-580,155,0,0)
+//	CAM(-329,52,155,18,147,0,0)
+//	wait(30)
+
+//　　戒、忍者刀をすらりと抜き払う。
+	KAO(KAI,"B","23","3")
+	look_off(KAI)
+	MOT(KAI,150,10)
+	wait(30)
+	chr_equip( KAI,"eq_002", "Bone_RightSword", 100)	//杖を装備させる的はこちら。	
+	SE(1027,0)//刀構え
+
+	MOT(KAI,151,10)
+	wait(60)
+	KAO(KAI,"B232BZ4","321","3")
+	MES(KAI,"如你所愿！\n就让你好好地吃吃苦头！",0)
+	MES_close(KAI)
+
+	wait(15)
+	stop_BGM(60)	
+	CAM_quake("46")
+	chr_rename(TENZAN, "老人的声")
+	MES_pos(TENZAN,"W3S4──到此为止了！",0,5,140,0,0)
+	wait_key(0)
+	MES_close(TENZAN)
+
+//　　そ的场にいた全員的頭に！マーク。
+	EMO(KAI, EMO_BIKKURI)
+	EMO(SUBARU, EMO_BIKKURI)
+	EMO(EVENT_RAGNA, EMO_BIKKURI)
+	EMO(SINOBI_A, EMO_BIKKURI)
+	EMO(SINOBI_B, EMO_BIKKURI)
+	EMO(SINOBI_C, EMO_BIKKURI)
+	EMO(SINOBI_D, EMO_BIKKURI)
+	KAO(KAI,"B","12321DE","7")
+	wait(30)
+
+	look_chr(KAI, TENZAN, "Bone_Head")
+	KAO(EVENT_RAGNA, "2", "12321D", "6")
+	MES(EVENT_RAGNA,"咦……",0)
+	MES_close(EVENT_RAGNA)
+
+
+	rot_chr(EVENT_RAGNA,30,TENZAN)
+	rot_chr(KAI,30,TENZAN)
+	rot_chr(SINOBI_A,30,TENZAN)
+	rot_chr(SINOBI_B,30,TENZAN)
+	rot_chr(SINOBI_C,30,TENZAN)
+	rot_chr(SINOBI_D,30,TENZAN)
+	look_chr(KAI,         TENZAN, "Bone_Head")
+	look_chr(EVENT_RAGNA, TENZAN, "Bone_Head")
+	MOT(SUBARU, 2,10)
+	MOT(KAI, 2, 10)
+	
+	wait_MES(EVENT_RAGNA)
+
+	//-----------------------------------------------------------------
+//　　画面スクロールして、門から天山が現れる。	
+	BGM(15)
+	cross_fade(15)
+	CAM_move(252,523,256,0,0)
+	CAM(-569,68,95,33,181,0,0)
+	
+	chr_pos(KAI,    388,218,1,90,0)
+	chr_pos(TENZAN, 255,-461,1,0,0)
+	color(TENZAN,1)
+	color(KAI,-1)	//邪魔な的で消す
+	MOT(SINOBI_A, 152,1 )
+	MOT(SINOBI_B, 152,1 )
+	MOT(SINOBI_C, 152,1 )	
+	MOT(SINOBI_D, 152,1 )	
+	wait_color(TENZAN)
+	
+	//    ch,typ,   速,   X,  Y,Z,Len
+	move(TENZAN, 0, WALK1,  260,-42,1, 0)
+	wait_move(TENZAN)
+	wait(50)
+
+	cross_fade(15)
+	CAM_move(112,-737,176,0,0)
+	CAM(-89,169,176,10,155,0,1)
+	CAM(-89,169,176,10,150,2400,1)
+	chr_scale(KAI	"Bone_RightSword", 0,0,0,	0,	1)		//剑しまう
+	color(KAI,1)	
+	wait(30)
+	
+
+	KAO(KAI, "B232BZ2", "12321D", "1")
+	MES(KAI,"天山大人……",0)
+	MES_close(KAI)
+
+
+	MES(SUBARU,"祖父……！",0)
+	MES_close(SUBARU)
+
+//　　天山、戒的側まで移動して昴と対面。
+	chr_rename(TENZAN,"威厳的ある老人")
+	KAO(TENZAN, "12321Z4", "1233321", "1")	
+	MES(TENZAN,"昴……\n你总算回来了。",0)
+	KAO(TENZAN, "12321Z4", "1", "1")	
+	MES(TENZAN,"看来，这个年轻人\n就是你之前提到过的那个人吧？",0)
+	MES_close(TENZAN)
+	
+	KAO(SUBARU, "12321Z4", "1233321", "1")
+	MES(SUBARU,"啊……是！\n他就是之前提到过的拉古那师父！",0)
+	MES_close(SUBARU)
+	
+	KAO(TENZAN, "B232BZ4", "123", "2")
+	MES(TENZAN,"我确实\n承认了你拜师一事。",0)
+	KAO(TENZAN, "B232BZ5", "3", "2")
+	MES(TENZAN,"因为，一向瞻前顾后的你\n从来没有提出过\n这样的要求。",0)
+	KAO(TENZAN, "12321Z4", "321", "4")
+	MES(TENZAN,"不过，我却没料到\n你会把他带来了。",0)
+	MES_close(TENZAN)
+
+	KAO(SUBARU,"B232BZ2", "123332A", "4")
+	MES(SUBARU,"这，这是因为……",0)
+	MES_close(SUBARU)
+
+	look_chr(SINOBI_A, SUBARU, "Bone_Head")
+	look_chr(SINOBI_B, SUBARU, "Bone_Head")
+
+	KAO(TENZAN, "B232BZ4", "1233321", "1")
+	MES(TENZAN,"昴……\n这只是我的猜测。",0)
+	KAO(TENZAN, "B232BZ4", "1", "2")
+	MES(TENZAN,"他是不是\n你“选择”的人呢？",0)
+	MES_close(TENZAN)
+
+//　　戒的頭に！マーク。
+	EMO(KAI, EMO_BIKKURI )
+	EMO(SINOBI_A, EMO_BIKKURI )
+	EMO(SINOBI_B, EMO_BIKKURI )
+	EMO(SINOBI_C, EMO_BIKKURI )
+	EMO(SINOBI_D, EMO_BIKKURI )
+	KAO(KAI, "B", "12321DE", "7")	
+	MOT(KAI, 152, 10)
+	wait(20)
+	KAO(KAI, "B232BZ3", "D12321", "2")	
+	MES(KAI,"天山大人，这……！",0)
+	MES_close(KAI)
+	
+	KAO(SUBARU, "B232BZ2", "A23332A", "4")
+	MES(SUBARU,"那，那个……",0)
+	MES_close(SUBARU)
+	wait(10)
+	EMO(SUBARU, EMO_TENTEN )
+
+//	rot_chr(KAI, 30, SUBARU )
+	rot(KAI, 30, 30)
+	look_chr(KAI, SUBARU, "Bone_Head")
+	look_chr(EVENT_RAGNA, SUBARU, "Bone_Head")
+	wait(60)
+
+//　　昴、ここで俯いて真っ赤になる動作。
+	MOT(SUBARU, 154, 15)
+	wait(15)
+	KAO(SUBARU, "12321Z4", "A23I", "4")
+	MES(SUBARU,"嗯，是……\n要是大家都认同的话……",0)
+	MES_close(SUBARU)
+
+//　　ここで周りからおおうというどよめき的ＳＥ。
+//	name("忍者")
+	MES(SINOBI_A,"哦……",0)
+	MES_close(SINOBI_A)
+
+//	name("忍者")
+	MES(SINOBI_B,"没想到昴大人……",0)
+	MES_close(SINOBI_B)
+
+	MES(EVENT_RAGNA,"？？？\n（怎么回事……？）",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(EVENT_RAGNA, TENZAN, "Bone_Head")
+
+	MOT(KAI, 154, 10)
+	KAO(KAI, "B232BZ4", "12321D", "6")
+	MES(KAI,"开，开玩笑吗……\n昴，你在想什么啊！？",0)
+	KAO(KAI, "B232BZ4", "D", "6")	
+	MES(KAI,"再怎么说，\n这也太早了，你还是个孩子啊！",0)
+	
+	KAO(KAI, "B", "D12321", "2")	
+	look_chr(KAI, TENZAN, "Bone_Head")
+	rot_chr(KAI, 60, TENZAN )
+	MOT(KAI,2,5)
+	
+	KAO(KAI, "B232BZ4", "1", "2")
+	MES(KAI,"天山大人，\n你也说点什么啊！",0)
+	MES_close(KAI)
+
+	KAO(TENZAN,"B232BZ3", "123", "2")
+	MES(TENZAN,"这不也是村里的规矩吗。",0)
+	KAO(TENZAN,"B232BZ5", "321", "1")
+	MES(TENZAN,"是否承认是一回事，\n首先还是要考查一番。",0)
+	KAO(TENZAN,"B232BZ5", "1", "1")
+	MES(TENZAN,"在那之前，就把这位年轻人\n当作村里的客人对待吧。",0)
+	MES_close(TENZAN)
+
+	KAO(KAI,"B232BZ2", "123", "2")
+	MES(KAI,"……明白了。",0)
+	MES_close(KAI)
+	
+//	MOT(KAI, 150, 10)	//剑をしまう
+//	wait(30)
+//	chr_scale(KAI	"Bone_RightSword", 0,0,0,	0,	1);
+//	MOT(KAI, 2,   10)	//剑をしまう
+//	wait(10)	
+//	wait(15)
+	
+	rot(KAI, 5, 30 )
+
+//　　ここで天山、前に進み出て拉古那と対面。
+	move(TENZAN, 0, WALK1, 246,411,1,0)
+	wait(15)
+	
+	cross_fade(15)
+	CAM_move(332,-577,156,0,0)
+	CAM(-129,55,156,23,101,0,0)
+	MOT(EVENT_RAGNA, 2, 1)
+	MOT(SUBARU, 2, 10)
+	chr_pos(KAI, 383,145,0,43,2)
+	rot(SINOBI_D,-1, 110)
+
+	KAO(SUBARU, "1", "321", "1")
+	KAO(EVENT_RAGNA, "B", "1", "1")
+
+	wait(30)
+	wait_move(TENZAN)
+
+	KAO(TENZAN,"B232BZ3", "1233321", "1")
+	MES(TENZAN,"初次见面。",0)
+	KAO(TENZAN,"B232BZ7", "1", "1")
+	MES(TENZAN,"我叫天山──\n是这个《星降之里》的长老，\n也是昴的祖父。",0)
+	MES_close(TENZAN)
+
+	KAO(EVENT_RAGNA,"B232BZ3", "1232A", "6")
+	MES(EVENT_RAGNA,"你就是昴的……",0)
+	KAO(EVENT_RAGNA,"12321Z4", "A2321", "1")
+	MES(EVENT_RAGNA,"我是拉古那。\n拉古那·瓦伦泰恩。",0)
+	KAO(EVENT_RAGNA,"12321Z4", "1", "1")
+	MES(EVENT_RAGNA,"我受到您孙子\n的不少照顾。",0)
+	MES_close(EVENT_RAGNA)
+	
+	chr_rename(TENZAN,"天山老人")
+	KAO(TENZAN,"12321Z4", "1233321", "1")
+	MES(TENZAN,"呵呵，我那不肖的孙子\n没给你添麻烦就好。",0)
+	KAO(TENZAN,"12321Z4", "123", "1")
+	MES(TENZAN,"──罢了。\n这里也不是长谈之地。",0)
+	KAO(TENZAN,"12321Z4", "321", "1")
+	MES(TENZAN,"先到我的家里\n去喝杯茶吧。",0)
+	MES_close(TENZAN)
+
+//　　画面、ゆっくりとフェードアウト。
+	fade_in(100,60,0)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(SUBARU)
+	delete(KAI)
+	delete(TENZAN)
+	delete(SINOBI_A)
+	delete(SINOBI_B)
+	delete(SINOBI_C)
+
+//	color(RAGNA,-1)
+//	color(PARTNER,-1)
+//	CAM_move(-20,0,144,0,0)
+//	CAM(250,189,144,17,180,0,0)
+//}
+//EV_4_07_OnVillage3
+//{
+//	EV_begin()
+
+//──────────────────────────────
+//　　画面フェードインして、夕方になった星降之里。
+//　　天山的屋敷を見せながら、縁側的あたりで画面切り替え。
+//──────────────────────────────
+
+	
+//	map_color(120,80,50,0)//R,G,B, time 100%	//夕方
+	
+	CAM(338,227,-975,31,197,0,0)
+	CAM_move(1469,3435,1235,0,0)
+	CAM(338,256,1885,31,153,300,0)
+	CAM_move(3793,9687,1885,300,0)
+
+	fade_in(0,60,0)
+//	wait_fade()
+
+	wait(270)
+	
+	fade_in(100,60,0)
+	wait_fade()
+
+//ＧＦ『★星降之里に到着した』を立てる。
+	F_set(F4_05_OnVillage2)
+
+
+//　　天山的屋敷へ(ev00430)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(10430)
+
+//	EV_end()
+}
+
+
+//──────────────────────────────
+//▼翌朝的星降之里
+//──────────────────────────────
+//　　画面フェードインして、翌朝的星降之里。
+//　　画面スクロールしながら、破壊と炎的爪痕や、
+//　　それらを修理している里的者（忍者など）を見せる。
+//　　最後にカメラ、天山邸に移動して画面切り替え。
+EV_5_00_NextMorning
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 -176,20,1,214,2)
+	color(RAGNA,-1)
+	wait_color(RAGNA)
+
+	//カメラ初期位置
+	CAM_move(-30,7056,464,0,0)	
+	CAM(50,119,304,27,165,0,0)
+	CAM(50,150,304,27,165,150,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+	wait(60)
+
+	
+	cross_fade(15)
+	CAM_move(-625,5809,255,0,0)	
+	CAM(1111,243,95,31,151,0,0)	
+	CAM_move(4022,10006,1654,240,0)
+	CAM(391,207,95,31,208,240,0)	
+	wait(220)
+		
+	fade_in(100,60,0)
+	wait_fade()
+
+//　　天山的屋敷へ(ev00420)
+	workG(GW_ENTRY_EVENT,SET,2)
+	new_map(10430)
+
+	EV_end()
+}
+
+//──────────────────────────────
+//▼天山邸を出た所で的イベント
+//──────────────────────────────
+//　　天山邸を出たところでイベント発生。
+//　　入口から拉古那と露が出てきてお互いを向く。
+EV_5_03_UseTodome
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+//	chr_pos(RAGNA,	 -176,20,1,300,2)
+//	color(LUE,-1)
+
+//	set_chr(LUE2,	1015,-1,-1,  4221,-8881,1401,2,20,0, "")
+//	chr_pos(RAGNA,  4063,-8821,1400,340,2)
+
+	set_chr(LUEDUMMY,	749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY1,	749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(LUE2,		1015,-1,-1, 4063,-8821,1400, 2,340,0, "")
+	set_chr(EVENT_RAGNA,1010,-1,-1,  4221,-8881,1401,2, 20,0, "")
+	chr_pos(RAGNA,  4221,-8881,1401,20,2)
+	color(RAGNA,-1)
+	color(PET,  -1)
+
+	F_set_chr(LUE2, CF_NO_CSP)
+
+	chr_equip_chr(EFFDUMMY1, LUE2,        "Bone_Spine",100,		0,0,0,	0,0,0);
+	chr_equip_chr(LUEDUMMY,  EVENT_RAGNA, "Bone_RightSword",100,		0,0,0,	0,0,0);
+
+	
+	//- デフォルト表情 --------------------------------------------------
+	KAO(LUE2, "1","1","1")
+	KAO(EVENT_RAGNA, "1","1","1")
+
+	MOT_SET(EVENT_RAGNA, 150, -1, 2460, 2460, -1, 0)	//安卡基亚差し出す
+	MOT_SET(LUE2,  150, -1, 2430, 2460, -1, 0)	//ルー発光
+	
+	
+	//カメラ初期位置
+//	CAM_move(4183,8821,1604,0,0)
+//	CAM(-190,107,1604,17,219,0,0)
+//	CAM_move(4123,8821,1604,0,0)
+	CAM_move(4123,8821,1584,0,0)
+	CAM(-190,87,1604,17,179,0,0)
+	
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	
+	look_chr(LUE2, EVENT_RAGNA, "Bone_Head")
+	look_chr(EVENT_RAGNA,LUE2,  "Bone_Head")
+	
+	KAO(EVENT_RAGNA,"12321Z3","1233321","1")
+	MES(EVENT_RAGNA,"那么，首先就是去找人了。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")	
+	MES(EVENT_RAGNA,"皮皮洛和拉莱拉婆婆……",0)
+	KAO(EVENT_RAGNA,"12321Z3","1","1")	
+	MES(EVENT_RAGNA,"还有菲奥娜小姐吗。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE2,"12321Z4","1233321","1")
+	MES(LUE2,"魔女婆婆的话，\n应该在森林里的家中。",0)
+	KAO(LUE2,"12321Z5","123","1")
+	MES(LUE2,"那个叫菲奥娜的女人，\n应该在镇上的家里……",0)
+	KAO(LUE2,"B232BZ5","32F","4")
+	MES(LUE2,"嗯，那个叫皮皮洛的\n就不知道在哪了。",0)
+	MES_close(LUE2)
+
+	KAO(EVENT_RAGNA,"12321Z4","123","1")
+	MES(EVENT_RAGNA,"是吗……\n总之找找就是了。",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","6")	
+	MES(EVENT_RAGNA,"说起来，小鬼头……\n你跟我在一起没关系吗？",0)
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")	
+	MES(EVENT_RAGNA,"分头去找的话\n会更有效率吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE2,"B232BZ6","233321","1")
+	MES(LUE2,"不管走哪条路，没有你来做说明的话，\n就没办法把事态的重要性传达给对方吧。",0)
+	KAO(LUE2,"B232BZ6","1232","2")
+	MES(LUE2,"虽然我不喜欢你……\n但现在毕竟不是闹别扭的时候。",0)
+	KAO(LUE2,"B232BZ3","23","1")
+	MES(LUE2,"没办法，只好协助你了。",0)
+	MES_close(LUE2)
+
+	KAO(EVENT_RAGNA,"12321Z2","1236","6")
+	MES(EVENT_RAGNA,"哈哈，谢谢了。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE2,"B232BZ5","321","2")
+	MES(LUE2,"还有……\n你把武器给我看看。",0)
+	MES_close(LUE2)
+
+	KAO(EVENT_RAGNA,"2","321D","6")
+	MES(EVENT_RAGNA,"咦……？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE2,"B232BZ4","1233321","2")
+	MES(LUE2,"就是那个叫“爱卡机”的东西啦。",0)
+	KAO(LUE2,"B232BZ4","123","2")
+	MES(LUE2,"哎呀，快点。",0)
+	MES_close(LUE2)
+
+	KAO(EVENT_RAGNA,"B232BZ2","123332A","6")
+	MES(EVENT_RAGNA,"哦，啊啊……",0)
+	MES_close(EVENT_RAGNA)
+
+	look(EVENT_RAGNA, "Bone_Head", 0, 2,2,2, 0,-30,0)
+	rot(EVENT_RAGNA, 60, 100 ) 
+	wait(30)
+
+//　　拉古那、安卡基亚を取り出して構える。
+//　　露、それに寄ってしげしげと眺める動作。
+
+	SE(1025,0)//ギア構え
+	MOT(EVENT_RAGNA,150,15)
+//	wait_MOT(EVENT_RAGNA,150)
+	wait(30)
+	
+	KAO(EVENT_RAGNA,"B","A23332A","6")
+	KAO(LUE2,"B","321","1")
+	rot(LUE2, 20, 210)
+	move(LUE2, 0, WALK1,  4093,-8865,1400,0)
+	wait_move(LUE2)
+	
+	wait(30)
+	rot(LUE2, 10, 310)
+	move(LUE2, 0, WALK1, 4123,-8979,1400,0)
+	wait(5)
+	look(EVENT_RAGNA, "Bone_Head", 0, 2,2,2, 0,30,0)	
+	
+	wait_move(LUE2)
+	wait(15)	
+
+	KAO(LUE2,"B232B","123332A","2")
+	MES(LUE2,"唔……",0)
+	MES_close(LUE2)
+	
+
+	rot(LUE2, 30, 290)	
+	KAO(LUE2,"B","A23","1")
+	move(LUE2, 0, WALK1,  4063,-8821,1400,0)
+	wait(5)	
+	look(EVENT_RAGNA, "Bone_Head", 0, 2,2,2, 0,-10,0)	
+
+	wait_move(LUE2)	
+	
+	KAO(LUE2,"12321Z4","321","1")
+	MES(LUE2,"好像挺复杂的，\n嗯，不过总会有点作用的吧。",0)
+	MES_close(LUE2)
+
+//	look(EVENT_RAGNA, "Bone_Head", 0, 2,2,2, 0,-30,0)	
+	move(LUE2,40, WALK1,  4028,-8897,1400,0)	
+	wait_move(LUE2)		
+	
+	KAO(EVENT_RAGNA,"B232BZ2","A233321","1")
+	MES(EVENT_RAGNA,"喂，什么啊。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　露、ここで光を発して発光体となる。
+
+	MOT(EFFDUMMY1, 32, 0)				//エフェクト：露発光
+	SE(1059,0)//露宿りオーラSE
+
+//　　そ的まま安卡基亚的基部に吸い込まれていく。
+
+
+	wait(60)
+	color(LUE2,-20)
+	wait_color(LUE2)
+	
+	SE(1035,0)//露宿りSE
+	EFF_chr(6815, LUE2, 0,100,EVENT_RAGNA,"Bone_RightSword")	//エフェクト：露が宿る
+	
+	look(EVENT_RAGNA, "Bone_Head", 0, 2,2,2, 0,-10,0)		
+//	move(LUE2, 40, WALK1, 4135,-8888,1400,0)
+	
+//	MOT(LUE2, 2, 5)
+	MOT(EFFDUMMY1, 0, 0)				//エフェクト：露発光終了
+	
+	VOICE(173,0)	//★ボイス入力演出
+	wait(30)
+	CAM_move(4103,8801,1544,150,0)
+//	CAM(-150,59,1544,17,132,300,0)
+	CAM(-149,59,1544,17,150,150,0)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"B232B2Z2","12321DE","7")
+	MES(EVENT_RAGNA,"什，什么……！？",0)
+	MES_close(EVENT_RAGNA)
+	
+	chr_rename(LUEDUMMY,"露的声")
+	MES(LUEDUMMY,"C4我们暗之妖精\n能附身在物体上。",0)
+	MES(LUEDUMMY,"C4通过和你的武器同化，\n达到强化的目的。",0)
+	MES(LUEDUMMY,"C4嗯，多少会有点用处吧。",0)
+	MES_close(LUEDUMMY)
+
+	KAO(EVENT_RAGNA,"B232BFZ2","D12321","6")
+	MES(EVENT_RAGNA,"这样啊……",0)
+	KAO(EVENT_RAGNA,"12321Z5","1236","6")	
+	MES(EVENT_RAGNA,"明白了，小鬼头。\n那就多多指教了。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ここで安卡基亚から再び露が戻る。
+//　　露、ジロリと拉古那を睨み付けるような仕草。
+
+	
+//	look(EVENT_RAGNA, "Bone_Head", 0, 2,2,2, 0,-30,0)		
+//	move(LUE2, 40, WALK1,  4221,-8881,1401,0)
+//	look(EVENT_RAGNA, "Bone_Head", 0, 2,2,2, 0,30,0)	
+//	move(LUE2, 40, WALK1,  4100,-8829,1400,0)
+//	look(EVENT_RAGNA, "Bone_Head", 0, 2,2,2, 0,-30,0)	
+//	move(LUE2, 40, WALK1,  4063,-8821,1400,0)
+//	wait_move(LUE2)	
+	
+
+	chr_equip_chr(LUEDUMMY, LUE2, "Bone_Spine",100,		0,0,0,	0,0,0);
+	wait(1)
+	EFF_chr(6830,LUEDUMMY,0,100,0,"Bone_Head")		//エフェクト：露が剑から出てくる
+	EFF_chr(6825,LUEDUMMY,0,100,0,"Bone_Head")		//エフェクト：露が剑から出てくる
+	EFF_chr(6835,LUEDUMMY,0,100,0,"Bone_Head")		//エフェクト：露が剑から出てくる
+	SE(1059,0)//露宿りオーラSE
+	wait(15)
+	color(LUE2,30)
+	wait_color(LUE2)
+	
+	look(EVENT_RAGNA, "Bone_Head", 0, 2,2,2, 0,-30,0)	
+
+//	wait(15)
+	cross_fade(15)
+	CAM_move(4203,8781,1564,0,0)
+	CAM(-310,52,1564,17,218,0,0)
+	MOT(EVENT_RAGNA, 2, 10)											//待机
+	KAO(EVENT_RAGNA,"1","1","1")
+	KAO(LUE2,"C","I","2")	
+	wait_fade()
+//	VOICE(203,0)	//★ボイス入力演出
+//	wait(15)	
+
+	KAO(LUE2,"C232CZ4","IH","2")
+	MES(LUE2,"你，你可别搞错了哦！",0)
+	KAO(LUE2,"C232CZ5","H","2")
+	MES(LUE2,"说到底这也是为了救公主大人\n才特别让你捡一次便宜！",0)
+	KAO(LUE2,"C232CZ5","HI","2")
+	MES(LUE2,"还有，你给我节制点，\n你打算叫我小鬼头叫到什么时候啊！",0)
+	KAO(LUE2,"C232CZ4","IHG","3")
+	MES(LUE2,"请称呼我的名字，名字！",0)
+	MES_close(LUE2)
+
+	KAO(EVENT_RAGNA,"12321Z3","1236","6")
+	MES(EVENT_RAGNA,"哈哈，也是呢。",0)
+	KAO(EVENT_RAGNA,"12321Z3","321","6")	
+	MES(EVENT_RAGNA,"那就拜托了，露。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE2,"C232CZ2","GHI","2")
+	MES(LUE2,"哼，哼……",0)
+	KAO(LUE2,"B232BZ5","3","2")
+	MES(LUE2,"还有，我姑且\n也能使用转位魔法。",0)
+	KAO(LUE2,"B232BZ5","321","1")
+	MES(LUE2,"不过跟公主大人不一样，\n只能去到我去过的地方。",0)
+	MES_close(LUE2)
+
+	KAO(EVENT_RAGNA,"B232BZ2","123","2")
+	MES(EVENT_RAGNA,"是吗……",0)
+	KAO(EVENT_RAGNA,"12321Z4","321","2")	
+	MES(EVENT_RAGNA,"好，这样的话\n我们就快点行动吧！",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE2,"12321Z2","1233321","1")
+	MES(LUE2,"嗯……！",0)
+	MES_close(LUE2)
+
+	//最後に露が宿る
+//	MOT(EFFDUMMY1, 32, 0)				//エフェクト：露発光
+//	wait(30)
+//	color(LUE2,-20)
+//	wait_color(LUE2)
+//	EFF_chr(6815, LUE2, 0,100,EVENT_RAGNA,"Bone_RightSword")	//エフェクト：露が宿る
+//	MOT(EFFDUMMY1, 0, 0)				//エフェクト：露発光終了
+//	wait(30)
+	
+
+//　　画面フェードアウトしてキャラクター再配置。
+//　　以下的メッセージは正式な仕様に合わせて対応させる。
+	fade_in(100,30,0)
+	wait_fade()
+	wait(15)
+
+//	name("システムメッセージ")
+//	MES(EVENT_RAGNA,"C3S2安卡基亚に\n露的加護が宿りました。",2)
+//	MES(EVENT_RAGNA,"C3S2連撃的最後に、とどめ的一撃を\n繰り出せるようになりました。",2)
+
+	SE(043,PLAYER1)
+	MES(EVENT_RAGNA,"C3S2安卡基亚得到了露的加护。\n在连击的最后增加了决定性的一击。",2)
+	MES(EVENT_RAGNA,"C3S2并且，虽然能到达的场所有所限制 ，\n但也可以使用露的转位魔法了。",2)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n協力を頼むシーンは未入力。\n水晶峡谷でイベント起きます。",0)
+//	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+
+//	chr_pos(EVENT_RAGNA,	 -176,20,1,214,2)
+	look_off(EVENT_RAGNA)
+	
+
+	delete(LUEDUMMY)
+	delete(EFFDUMMY1)
+	delete(LUE2)
+	delete(EVENT_RAGNA)
+//	set_chr(LUE, 4, -1,-1, 4035,-8845,1400,2,80,0,"")	//仲間ルー」
+
+	chr_pos(PET, 4097,-9004,1400,30,2 )
+	
+	color(RAGNA,1)
+	color(PARTNER,  1)
+	color(PET,  1)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★とどめ的一撃が使えるようになった』を立てる。
+	F_set(F5_02_UseTodome)
+	workG(GW_WARP_FLAG,SET,2)//ついでに露ワープが使えるようになる。
+	F_set(F5_19_LueJump_OK)
+	
+	F_set(F5_02_02_JoinLue)		//★手帳メモ用：露が武器に宿り、拉莱拉たちを探しに行くことにした
+	
+	//★露【道具と同化】
+	F_set_note(-15,1)
+
+//　　フェードインしてイベント終了、プレイヤー操作許可。
+	VOICE(196,0)	//★ボイス入力演出
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+//──────────────────────────────
+//▼金色的粒子が振ってくる·そ的２
+//──────────────────────────────
+//　　画面切り替えして、星降之里。
+//　　天山を始めとする住民たちが同じ光景を見ている。
+EV_6_13_GoldRain2nd
+{
+	EV_begin()
+	
+	set_namebmp(0,0)			//地名非表示
+
+	set_chr(EFFECT,	  	749,-1,-1, 747,-11880,1400, 0,0,0, "")
+	MOT(EFFECT,51,0)		
+	F_set_chr(EFFECT, CF_NO_CLIP)
+	F_set_chr(EFFECT, CF_NO_CLIP2)
+	F_set_chr(EFFECT, CF_NO_CSP)
+	F_set_chr(EFFECT, CF_NO_HEIGHT)
+	F_set_chr(EFFECT, CF_NO_ZIMEN)
+		
+//	fade_in(100,1,0)
+//	wait_fade()
+
+
+
+//	F_set( F6_00_GoToMeru )
+
+
+	//キャラ再配置
+	chr_pos(RAGNA,		3000,-9000,1400,180,2)
+	chr_pos(PARTNER,	2800,-9000,1400,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(RAGNA)
+
+	set_chr(TENZAN,	      1024,-1,-1,  740,-12760,1400, 2,180,0, "")
+
+//	chr_pos(KAI,		862,-12041,1399,180,2)	//戒
+//	chr_pos(LURI,		743,-11990,1399,180,2)	//琉璃
+//	chr_pos(YASAKU,		479,-11983,1399,180,2)	//矢作
+//	chr_pos(DAIGORO,	571,-12029,1399,180,2)	//大五郎
+//	chr_pos(AKANE,		157,-11604,1400,180,2)	//茜	
+//	chr_pos(NINJYA_D,	246,-11348,1400,180,2)	//忍者Ｄ
+//	chr_pos(NINJYA_E,	470,-11348,1400,180,2)	//忍者Ｅ
+//	chr_pos(NINJYA_F,	700,-11348,1400,180,2)	//忍者Ｆ
+//	chr_pos(NINJYA_G,	925,-11348,1400,180,2)	//忍者Ｇ（汎用）
+//	chr_pos(NINJYA_H,	1105,-11348,1400,180,2)	//忍者H（汎用）		
+//	chr_pos(CLEESE,		977,-10937,1400,180,2)	//　克雷斯
+
+		set_chr( NINJYA_D,488,-1,-1,   246,-11348,1400,	50,180, 2,"")		//星降之里·見張りB　忍者Ｄ
+		set_chr( NINJYA_E,489,	-1,-1,	470,-11348,1400,	52,180, 2,"")	//星降之里·見張りＤ　忍者Ｅ
+		set_chr( NINJYA_F,490,	-1,-1,	1306,-11655,1401,	52,162, 2,"")		//星降之里·入り口で克雷斯的相手　忍者Ｆ
+		set_chr( NINJYA_G,491,	-1,-1,	1053,-11352,1400,	50,160, 2,"")		//星降之里·入り口で克雷斯的相手　忍者Ｇ（汎用）
+		set_chr( NINJYA_H,492,	-1,-1, 	1212,-11893,1401,	50,164, 2,"")		//星降之里·入り口で克雷斯的相手　忍者H（汎用）
+	//	set_chr( CLEESE,83,		-1,-1,	977,-10937,1400,	2,180,	2,"")		//　克雷斯
+		set_chr( CLEESE,83,		-1,-1,	157,-11604,1400,	2,180,	2,"")		//　克雷斯
+
+//	set_chr( AKANE,78,	-1,-1,	157,-11604,1400,52,180, 0,"")			//星降之里·茶屋　茜
+	set_chr( AKANE,78,	-1,-1,	977,-10937,1400,52,180, 0,"")			//星降之里·茶屋　茜
+	set_chr( DAIGORO,74,-1,-1,   571,-12029,1399,2,180, 0,"")		//星降之里·階段上　大五郎
+	set_chr( LURI,77,	-1,-1,  743,-11990,1399,	75,180, 2,"")	//星降之里·階段上　琉璃
+	set_chr( YASAKU,75,		-1,-1,	479,-11983,1399, 2,180, 0,"")		//星降之里·民家１的前で仕事中　矢作
+	set_chr( KAI,62,		-1,-1,  862,-12041,1399,	0,180, 0,"")		//星降之里·見張りＣ　戒
+	set_chr( NINJYA_A,79,	-1,-1,  292,-11702,1400,	53,180, 2,"")	//忍者Ａアカトキ
+	set_chr( NINJYA_B,486,	-1,-1,  635,-11704,1400,	52,180, 2,"")	//忍者Ｂ
+	set_chr( NINJYA_C,89,	-1,-1, 	952,-11725,1400,	52,180, 2,"")	//忍者Ｃレイカ
+	set_chr( HIKOME,72,		-1,-1,	659,-11059,1400,	2,180,2,"")		//日户目
+
+	
+	F_set_chr(HIKOME, CF_NO_CLIP)	
+	F_set_chr(HIKOME, CF_NO_CLIP2)	
+	F_set_chr(CLEESE, CF_NO_CLIP)	
+	F_set_chr(CLEESE, CF_NO_CLIP2)	
+	F_set_chr(AKANE, CF_NO_CLIP)	
+	F_set_chr(AKANE, CF_NO_CLIP2)	
+		
+	look(KAI,      "Bone_Head", 100,0,0,10,0,0,20)
+	look(LURI,     "Bone_Head", 100,0,0,10,0,0,20)
+	look(YASAKU,   "Bone_Head", 100,0,0,10,0,0,20)
+	look(DAIGORO,  "Bone_Head", 100,0,0,10,0,0,20)
+	look(AKANE,    "Bone_Head", 100,0,0,10,0,0,20)
+	look(NINJYA_A, "Bone_Head", 100,0,0,10,0,0,20)
+	look(NINJYA_B, "Bone_Head", 100,0,0,10,0,0,20)
+	look(NINJYA_C, "Bone_Head", 100,0,0,10,0,0,20)
+	look(NINJYA_D, "Bone_Head", 100,0,0,10,0,0,20)
+	look(NINJYA_E, "Bone_Head", 100,0,0,10,0,0,20)
+	look(NINJYA_F, "Bone_Head", 100,0,0,10,0,0,20)
+	look(NINJYA_G, "Bone_Head", 100,0,0,10,0,0,20)
+	look(NINJYA_H, "Bone_Head", 100,0,0,10,0,0,20)
+	look(CLEESE,   "Bone_Head", 100,0,0,10,0,0,20)
+	look(HIKOME,   "Bone_Head", 100,0,0,10,0,0,20)
+	
+	wait_CAM()
+	wait_CAM_move()
+
+	EFF_chr(6273, EFFECT, 0,100,0, "Bone_Head")				//画面金色
+	SE(1180,0)//キラキラ
+
+
+	//カメラ初期位置
+	wait(30)		//しばらく的間何かにロックされている的
+	CAM_move(660,12760,1796,0,0)
+	CAM(73,208,1796,31,225,0,0)
+	CAM_move(760,12760,1996,300,0)
+	CAM(-607,169,1996,31,182,300,0)	
+	
+	move(DAIGORO, 0,RUN1, 619,-12724,1401,0)
+	move(LURI,    0,RUN1, 870,-12816,1401,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	
+
+	wait(90)
+	wait_CAM()
+	wait_CAM_move()
+	
+	EV("EV_1180_fadeout")//キラキラSEフェードアウト
+	
+	fade_in(100,60,0)
+	wait_fade()
+
+//　　布兰迪山丘（ev00701）へ。
+	workG(GW_ENTRY_EVENT,SET,3)
+	new_map(10701)
+
+//	EV_end()
+}
+
+//---------------------------------------------------------------------------------
+//▽里から逆走するとき的ストッパー（もう一度挑战します？）
+//　　※選択肢で、もう一度山本道に再挑战できる。
+//---------------------------------------------------------------------------------
+EV_EntryPoint
+{
+
+	if( F4_17_InTheEvening )
+	{
+		
+		TK_begin()
+
+		if( GW_MAN==1 )
+		{
+			rot_chr(PARTNER,30,PLAYER)
+			MES(PARTNER,"拉古那师父……",0)
+			MES(PARTNER,"已经到傍晚了，\n要去露天温泉吗？",0)
+			MES_close(PARTNER)
+
+			rot_chr(PLAYER,30,PARTNER)
+			MES(PLAYER,"是啊。\n那就暂时不出去了吧。",0)
+			MES_close(PLAYER)
+			wait_MES(PLAYER)
+		}
+		else
+		{
+			MES(PARTNER,"（那个……这里是要去山道的方向。）",0)
+			MES(PARTNER,"（已经到傍晚了，\n　我得带师父去温泉呢。）",0)
+			MES_close(PARTNER)
+			wait_MES(PARTNER)
+		}
+
+		cross_fade(15)
+		//chr_pos(PLAYER,  90,4005,0,180, 2)
+		//chr_pos(PARTNER, 193,4083,0,180, 2)
+		chr_pos(PLAYER1,  112,3847,0,180, 2)
+		chr_pos(PLAYER2, 250,3990,0,135, 2)
+		wait(10)//環境設定で的クロスフェード効果オフ対策
+		wait_fade()
+
+		TK_end()
+		
+	}
+
+/*
+	MES(PARTNER,"啊，对了……",0)
+	MES_close(PARTNER)
+
+//　　昴、拉古那に向く。
+	rot_chr(PARTNER,30,RAGNA)
+	MES(PARTNER,"拉古那师父，刚才的路线\n还要再挑战一次试试吗？",0)
+	MES_close(PARTNER)
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【是】\n【否】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+	//	name("□はい")
+		MES(RAGNA,"好，我们\n再挑战一次试试吧！",0)
+		MES_close(RAGNA)
+		delete(98)
+
+	//　　拉古那と昴、ゲートを潜っていく。
+	//　　フェードインし、山的入り口分岐マップから操作許可。
+
+		rot(RAGNA,30,0)
+		wait(5)
+		rot(PARTNER,30,0)
+		wait(10)
+
+		move(RAGNA,0,RUN2,99,4594,0,0)
+		move(PARTNER,0,RUN2,99,4594,0,0)
+		wait(10)
+		fade_in( 100, 30, BLACK)	//暗転
+		wait_fade()
+
+		wait(30)
+
+		//山的入り口分岐マップ
+		workG(GW_ENTRY_EVENT,SET,2)
+		new_map(16010)
+
+	}
+	else
+	{
+	//	name("□いいえ")
+		MES(RAGNA,"不……\n嗯，现在就算了吧。",0)
+		MES_close(RAGNA)
+		delete(98)
+
+	//　　拉古那と昴、ゲートを潜っていく。
+	//　　フェードインし、通常的エントリ潜った地点から操作許可。
+
+		rot(RAGNA,30,0)
+		wait(5)
+		rot(PARTNER,30,0)
+		wait(10)
+
+		move(RAGNA,0,RUN2,99,4594,0,0)
+		move(PARTNER,0,RUN2,99,4594,0,0)
+		wait(10)
+
+		TK_end()
+
+	}*/
+
+//	TK_end()
+
+}
+
+
+//---------------------------------------------------------------------------------
+//▽里から出られないストッパー（限定的だけどワープが使える、使ってみなさいよ）
+//　　※里正面的橋を渡った辺りで引っ掛ける。
+//　　※まだワープ机能を使ったことが無い场合、１回だけ挿入。
+//---------------------------------------------------------------------------------
+EV_STOP_01
+{
+	TK_begin()
+	
+	if( F5_08_JoinOdessa && !F5_13_KillDygald )//奥蒂莎がいる场合
+	{
+
+		if( GW_MAN==1)
+		{
+			//　　※拉古那先頭
+			rot_chr(PET,60,RAGNA)
+			if( !F_RAGNA )
+			{
+			//　　※ワープ机能を使ったことがある、又は２回目以降はこっち。
+				MES(PET,"拉古那，要回镇上去的话，\n就使用我的转位术吧。",0)
+				MES(PET,"虽然能使用的场所有限，\n不过使用方法和公主大人应该是一样的。",0)
+				MES_close(PET)
+
+				rot_chr(RAGNA,60,PET)
+				MES(RAGNA,"确实，\n现在时间紧迫……",0)
+				MES(RAGNA,"难得有这个机会，\n那就用吧。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(PET,"拉古那，要回镇上去的话，\n就使用我的转位术吧。",0)
+				MES(PET,"虽然能使用的场所有限，\n不过使用方法和公主大人应该是一样的。",0)
+				MES_close(PET)
+				wait_MES(PET)
+			}
+		}
+		else
+		{
+		//　　※奥蒂莎先頭
+
+			rot_chr(PET,60,PARTNER)
+			if( !F_RAGNA )
+			{
+			//　　※ワープ机能を使ったことがある、又は２回目以降はこっち。
+				MES(PET,"要回镇上去的话，\n就使用我的转位术吧。",0)
+				MES(PET,"虽然能使用的场所有限，\n不过使用方法和公主大人应该是一样的。",0)
+				MES_close(PET)
+					rot_chr(PARTNER,60,PET)
+				MES(PARTNER,"啊啊，现在确实时间紧迫……",0)
+				MES(PARTNER,"难得有这个机会，那就用吧。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(PET,"要回镇上去的话，\n就使用我的转位术吧。",0)
+				MES(PET,"虽然能使用的场所有限，\n不过使用方法和公主大人应该是一样的。",0)
+				MES_close(PET)
+				wait_MES(PET)
+
+			}
+		}
+		//chr_pos(RAGNA,278,2501,0,0,2)
+		chr_pos(PLAYER1,278,2501,0,0,2)
+		chr_pos(PLAYER2,444,2344,1,0,2)
+		chr_pos(PET,144,2315,0,350,2)
+			
+		//	gather_party(RAGNA)
+		//CAM_return(0)
+		wait(10)//環境設定で的クロスフェード効果オフ対策
+		cross_fade( 30 )
+		wait_fade()	
+
+	}
+	else
+	{
+	
+		rot_chr(PET,60,RAGNA)
+		if( !F5_21_LueJump_1 && !F5_20_LueJump_Use )
+		{
+			MES(PET,"拉古那，要回镇上去的话，\n就使用我的转位术吧。",0)
+			MES(PET,"虽然能使用的场所有限，\n不过使用方法和公主大人应该是一样的。",0)
+			MES_close(PET)
+			
+			rot_chr(RAGNA,60,PET)
+			
+			MES(RAGNA,"啊啊，是这样呢。",0)
+			MES(RAGNA,"就使用一下试试吧……",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+			F_set(F5_21_LueJump_1)
+		}
+		else
+		{
+			if( !F_RAGNA )
+			{
+			//　　※ワープ机能を使ったことがある、又は２回目以降はこっち。
+				MES(PET,"拉古那，要回镇上去的话，\n就使用我的转位术吧。",0)
+				MES(PET,"虽然能使用的场所有限，\n不过使用方法和公主大人应该是一样的。",0)
+				MES_close(PET)
+
+				rot_chr(RAGNA,60,PET)
+				MES(RAGNA,"啊啊，现在确实时间紧迫…………",0)
+				MES(RAGNA,"难得有这个机会，\n那就用吧。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(PET,"啊啊，现在确实时间紧迫。",0)
+				MES(PET,"虽然能使用的场所有限，\n不过使用方法和公主大人应该是一样的。",0)
+				MES_close(PET)
+				wait_MES(PET)
+			}
+		}
+		//chr_pos(RAGNA,278,2501,0,0,2)
+		chr_pos(PLAYER1,278,2501,0,0,2)
+		chr_pos(PET,144,2315,0,350,2)
+		
+	//	gather_party(RAGNA)
+		CAM_return(0)
+		cross_fade( 30 )
+		wait(10)//環境設定で的クロスフェード効果オフ対策
+		wait_fade()	
+
+	}
+
+	TK_end()
+
+}
+//--------------------------------------------------------------------
+//スキーから的戻り
+//井戸的横に立たせる
+//--------------------------------------------------------------------
+
+EV_SKI_RETURN
+{
+
+//	EV_begin()
+	TK_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	chr_pos(RAGNA, -1151,-3282,1,0,2 )
+	chr_pos(PARTNER, -1345,-3359,1,0,2 )
+	chr_pos(PET, -1255,-3597,0,0,2 )
+
+	wait(1)
+
+	//明るく
+	fade_in(0,60,0)
+	wait_fade()
+
+//	EV_end()
+	TK_end()
+
+}
+
+//---------------------------------------------------------------------------------
+//ストッパー役：鸦
+//---------------------------------------------------------------------------------
+EV_STOP_KARASU
+{
+	if(!FS_10_TalkKarasu)
+	{
+	//――――――――――――――――――――――――――
+	//	初期化処理
+	//――――――――――――――――――――――――――
+		cross_fade(30)			//クロスフェード
+		EV_begin()
+		
+		//カメラセット
+		CAM_move(-308,12906,1704,0,0)
+		CAM(300,41,1704,37,147,0,0)
+		
+		//キャラ再配置
+		chr_pos(PLAYER1,-141,-12987,1482,145,2)
+		chr_pos(PLAYER2,-33,-12764,1412,140,2)
+		chr_pos(KARASU,-903,-14044,1399,325,150)
+		color(KARASU,1)//透過解除
+		
+		set_chr( EFF_KARASU_1,60,	-1,-1,  -903,-14044,1700,	   2, 0, 0,"")	//手裏剑始点ダ小咪
+		set_chr( EFF_KARASU_2,0,	-1,-1,  -216,-13106,1700,	   2, 0, 0,"")	//手裏剑終点ダ小咪
+		
+		color(EFF_KARASU_1,-1)//透過
+		color(EFF_KARASU_2,-1)//透過
+		
+		F_set_chr(EFF_KARASU_1,CF_NO_ZIMEN)
+		F_set_chr(EFF_KARASU_1,CF_NO_CSP)
+		F_set_chr(EFF_KARASU_1,CF_NO_HEIGHT)
+
+		F_set_chr(EFF_KARASU_2,CF_NO_ZIMEN)
+		F_set_chr(EFF_KARASU_2,CF_NO_HEIGHT)
+		F_set_chr(EFF_KARASU_2,CF_NO_CSP)
+
+		wait_fade()
+	//――――――――――――――――――――――――――
+	//	イベント開始
+	//――――――――――――――――――――――――――
+//		set_obj("wp_020",	5,3,	 -162,-13067,1498	 	0)
+
+//		EFF(6335, -903,-14044,1700,	0,100,PLAYER11)
+
+		EFF_chr(6335,	EFF_KARASU_1,	0,	100,	EFF_KARASU_2,"Bone_Hips")
+		
+	//　　先頭キャラ、驚いて少し後ろに下がる。
+		move(PLAYER1, 0, RUN1,-93,-12878,1453,0)
+	//	name("□拉古那先頭")
+		if(GW_MAN==1)
+		{
+			MES(RAGNA,"哦……！？",0)
+			MES_close(RAGNA)
+		}
+	//	name("□艾雯先頭")
+		else
+		{
+			MES(PARTNER,"哦哦……！？",0)
+			MES_close(PARTNER)
+		}
+		
+		wait_move(PLAYER1)
+		
+	//　　温泉屋的前に、卖药が出現している。
+	//　　背中的荷物はなしで、膝突き、手は手裏剑を投げた後的状態。
+		CAM_move(-708,13706,1724,50,0)
+		CAM(300,40,1684,37,208,50,0)
+		wait_CAM_move()
+	
+	//	name("鸦")
+		MES(KARASU,"是你们啊……",0)
+		MES_close(KARASU)
+	
+	//　　卖药、立ち上がる。
+		MOT(KARASU,2,15)
+		wait(15)
+		
+		move(KARASU, 0, WALK1,-423,-13370,1538,0)
+		
+		cross_fade(30)			//クロスフェード
+		CAM_move(-308,12906,1704,0,0)
+		CAM(300,41,1704,37,147,0,0)
+		wait_fade()
+
+	//	name("鸦")
+		MES(KARASU,"昴和头领，\n还有那个妖精\n已经运到前面去了。",0)
+		MES(KARASU,"放心吧。",0)
+		MES_close(KARASU)
+		
+		wait_move(KARASU)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"是，是吗。\n大家都没事吧？",0)
+		MES_close(RAGNA)
+
+	//	name("鸦")
+		MES(KARASU,"嗯。",0)
+		MES(KARASU,"其他的重伤者和妇女儿童\n都在这里避难。",0)
+		MES(KARASU,"虽然敌人似乎都已经撤走了……\n不过保险起见，我还是在这里警戒。",0)
+		MES(KARASU,"后山的神社那里就拜托你们了。",0)
+		MES_close(KARASU)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"……明白了。",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"那里就包在我们身上了！",0)
+		MES_close(RAGNA)
+		
+		fade_in( 100, 30, BLACK)	//暗転
+		wait_fade()
+		
+		chr_pos(RAGNA,14,-12695,1399,355,2)
+		gather_party(RAGNA)
+		CAM_return(0)
+		
+		delete(EFF_KARASU_1)
+		delete(EFF_KARASU_2)
+		
+		F_set(FS_10_TalkKarasu)
+
+		fade_in( 0, 30, BLACK)	//フェードイン
+		EV_end()
+	}
+	else
+	{
+	//　　★鸦【防衛的指揮】
+	//　　以降は、露天温泉方面には卖药が立っており、ストッパーとなっている。
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。（ストッパー）
+	//	name("鸦")
+		TK_begin()
+		rot_chr(PLAYER1,60,KARASU)
+		rot_chr(KARASU,60,PLAYER1)
+		
+		MOT(PLAYER1,2,15)
+		MOT(PLAYER2,2,15)
+		
+		MES(KARASU,"这里有我，\n还有限爷爷和茜殿后。",0)
+		MES(KARASU,"……这里就交给我们，\n你们到神社去吧。",0)
+		MES(KARASU,"还有，广场上应该有个叫\n日户目的人。",0)
+		MES(KARASU,"如果有什么需要的话，\n就跟他说吧。",0)
+		MES_close(KARASU)
+		wait_MES(KARASU)
+
+		CAM_return(0)
+		cross_fade( 30 )
+		chr_pos(PLAYER1,14,-12695,1399,355,2)
+		gather_party(PLAYER1)
+		wait(10)//環境設定で的クロスフェード効果オフ対策
+		wait_fade()	
+		TK_end()
+	}
+}
+
+//--------------------------------------------------------------------
+//夕方にするイベント
+//--------------------------------------------------------------------
+EV_InTheEveningStart
+{
+	EV_begin()
+	
+	fade_in(100,1,0)
+	wait_fade()	
+	
+	EV("EV_InTheEvening")
+	wait_EV("EV_InTheEvening")
+	
+
+	
+	CAM_return(0)
+	wait(30)
+	fade_in(0,30,0)
+	wait_fade()	
+		
+	EV_end()
+}
+
+EV_InTheEvening
+{
+//	EV_begin()
+	
+
+	wait(30)
+
+	F_set( F4_17_InTheEvening )	//★夕方になった
+
+	map_color(100,75,55,0)						//R,G,B, time 100%	//夕方
+	F_set_obj("sky00", NP_HIDE)					//昼ノード消す
+	F_set_obj("kumo01", NP_HIDE)				//昼ノード消す
+	F_set_obj("kumo03", NP_HIDE)				//昼ノード消す
+	F_set_obj("kumo04", NP_HIDE)				//昼ノード消す
+	F_reset_obj("sky01", NP_HIDE)				//夕ノード
+	F_reset_obj("kumo06", NP_HIDE)				//夕ノード
+	F_reset_obj("kumo07", NP_HIDE)				//夕ノード
+	F_reset_obj("kumo08", NP_HIDE)				//夕ノード		
+
+	color(PLAYER1, -1)
+	color(PLAYER2, -1)
+	
+	CAM_move(492,6489,1356,0,0)
+	CAM(180,395,1195,37,172,0,0)
+	CAM_move(492,6489,236,200,0)
+	CAM(-100,395,75,37,172,200,0)
+
+		
+	fade_in(0,60,0)
+	wait_fade()	
+
+	wait(150)
+
+		
+	fade_in(100,60,0)
+	wait_fade()
+	
+	color(PLAYER1, 1)
+	color(PLAYER2, 1)
+	
+	//ここで配置換えすると大五郎が挙動不審になる的でやめました。いきなり先回りしてるも的変だし。
+	//マップ切り替えすると階段下に移動します。
+	//大五郎配置換え
+//	chr_pos( DAIGORO,	1443,-7384,1,0, 2)		//星降之里·階段下でうろつく　大五郎
+//	wait(1)
+//	EV("FREEMOVE_DAIGORO")	
+	
+	//以下的ようにすると、フリームーブはうまくいくが、なぜか会話できない。
+//	delete(DAIGORO)
+//	set_chr(DAIGORO,74,	-1,-1,	1443,-7384,1,		2,0, 20,"<TK_DAIGORO>")		//星降之里·階段下でうろつく　大五郎
+//	EV("FREEMOVE_DAIGORO")	
+
+	chr_pos( DAIGORO,	1692,-7664,0,30, 2)		//星降之里·階段下でうろつく　大五郎
+
+	delete(90)
+	//ストッパー
+	set_chr( 90,990,	-1,-1,   00100,4400,0,	 180,070201,6,"<EV_EntryPoint>")	//ストッパー//エントリ 山－梅ン終（選択肢付き）
+
+//	EV_end()
+}
+
+
+
+//---------------------------------------------------------------------
+// 大五郎　ワープ処理
+//---------------------------------------------------------------------
+EV_10400_WarpEntry
+{
+	EV_begin()
+	
+	fade_in(100,1,0)
+	wait_fade()
+	
+	chr_pos(PLAYER1, 151,3342,0,180,2)
+	chr_pos(PLAYER2,  62,3537,0,180,2)
+	chr_pos(PET,     156,3714,0,180,2)
+	
+	CAM_return(0)
+	wait(30)
+	
+	fade_in(0, 30, 0)
+	
+	EV_end()
+}
+
+
+
+//キラキラSEフェードアウト----------------------------------------------
+EV_1180_fadeout
+{
+	SE_vol(1180,99,0)
+	wait(1)
+	SE_vol(1180,98,0)
+	wait(1)
+	SE_vol(1180,97,0)
+	wait(1)
+	SE_vol(1180,96,0)
+	wait(1)
+	SE_vol(1180,95,0)
+	wait(1)
+	SE_vol(1180,94,0)
+	wait(1)
+	SE_vol(1180,93,0)
+	wait(1)
+	SE_vol(1180,92,0)
+	wait(1)
+	SE_vol(1180,91,0)
+	wait(1)
+	SE_vol(1180,90,0)
+	wait(1)
+	SE_vol(1180,89,0)
+	wait(1)
+	SE_vol(1180,88,0)
+	wait(1)
+	SE_vol(1180,87,0)
+	wait(1)
+	SE_vol(1180,86,0)
+	wait(1)
+	SE_vol(1180,85,0)
+	wait(1)
+	SE_vol(1180,84,0)
+	wait(1)
+	SE_vol(1180,83,0)
+	wait(1)
+	SE_vol(1180,82,0)
+	wait(1)
+	SE_vol(1180,81,0)
+	wait(1)
+	SE_vol(1180,80,0)
+	wait(1)
+	SE_vol(1180,79,0)
+	wait(1)
+	SE_vol(1180,78,0)
+	wait(1)
+	SE_vol(1180,77,0)
+	wait(1)
+	SE_vol(1180,76,0)
+	wait(1)
+	SE_vol(1180,75,0)
+	wait(1)
+	SE_vol(1180,74,0)
+	wait(1)
+	SE_vol(1180,73,0)
+	wait(1)
+	SE_vol(1180,72,0)
+	wait(1)
+	SE_vol(1180,71,0)
+	wait(1)
+	SE_vol(1180,70,0)
+	wait(1)
+	SE_vol(1180,69,0)
+	wait(1)
+	SE_vol(1180,68,0)
+	wait(1)
+	SE_vol(1180,67,0)
+	wait(1)
+	SE_vol(1180,66,0)
+	wait(1)
+	SE_vol(1180,65,0)
+	wait(1)
+	SE_vol(1180,64,0)
+	wait(1)
+	SE_vol(1180,63,0)
+	wait(1)
+	SE_vol(1180,62,0)
+	wait(1)
+	SE_vol(1180,61,0)
+	wait(1)
+	SE_vol(1180,60,0)
+	wait(1)
+	SE_vol(1180,59,0)
+	wait(1)
+	SE_vol(1180,58,0)
+	wait(1)
+	SE_vol(1180,57,0)
+	wait(1)
+	SE_vol(1180,56,0)
+	wait(1)
+	SE_vol(1180,55,0)
+	wait(1)
+	SE_vol(1180,54,0)
+	wait(1)
+	SE_vol(1180,53,0)
+	wait(1)
+	SE_vol(1180,52,0)
+	wait(1)
+	SE_vol(1180,51,0)
+	wait(1)
+	SE_vol(1180,50,0)
+	wait(1)
+	SE_vol(1180,49,0)
+	wait(1)
+	SE_vol(1180,48,0)
+	wait(1)
+	SE_vol(1180,47,0)
+	wait(1)
+	SE_vol(1180,46,0)
+	wait(1)
+	SE_vol(1180,45,0)
+	wait(1)
+	SE_vol(1180,44,0)
+	wait(1)
+	SE_vol(1180,43,0)
+	wait(1)
+	SE_vol(1180,42,0)
+	wait(1)
+	SE_vol(1180,41,0)
+	wait(1)
+	SE_vol(1180,40,0)
+	wait(1)
+	SE_vol(1180,39,0)
+	wait(1)
+	SE_vol(1180,38,0)
+	wait(1)
+	SE_vol(1180,37,0)
+	wait(1)
+	SE_vol(1180,36,0)
+	wait(1)
+	SE_vol(1180,35,0)
+	wait(1)
+	SE_vol(1180,34,0)
+	wait(1)
+	SE_vol(1180,33,0)
+	wait(1)
+	SE_vol(1180,32,0)
+	wait(1)
+	SE_vol(1180,31,0)
+	wait(1)
+	SE_vol(1180,30,0)
+	wait(1)
+	SE_vol(1180,29,0)
+	wait(1)
+	SE_vol(1180,28,0)
+	wait(1)
+	SE_vol(1180,27,0)
+	wait(1)
+	SE_vol(1180,26,0)
+	wait(1)
+	SE_vol(1180,25,0)
+	wait(1)
+	SE_vol(1180,24,0)
+	wait(1)
+	SE_vol(1180,23,0)
+	wait(1)
+	SE_vol(1180,22,0)
+	wait(1)
+	SE_vol(1180,21,0)
+	wait(1)
+	SE_vol(1180,20,0)
+	wait(1)
+	SE_vol(1180,19,0)
+	wait(1)
+	SE_vol(1180,18,0)
+	wait(1)
+	SE_vol(1180,17,0)
+	wait(1)
+	SE_vol(1180,16,0)
+	wait(1)
+	SE_vol(1180,15,0)
+	wait(1)
+	SE_vol(1180,14,0)
+	wait(1)
+	SE_vol(1180,13,0)
+	wait(1)
+	SE_vol(1180,12,0)
+	wait(1)
+	SE_vol(1180,11,0)
+	wait(1)
+	SE_vol(1180,10,0)
+	wait(1)
+	SE_vol(1180,9,0)
+	wait(1)
+	SE_vol(1180,8,0)
+	wait(1)
+	SE_vol(1180,7,0)
+	wait(1)
+	SE_vol(1180,6,0)
+	wait(1)
+	SE_vol(1180,5,0)
+	wait(1)
+	SE_vol(1180,4,0)
+	wait(1)
+	SE_vol(1180,3,0)
+	wait(1)
+	SE_vol(1180,2,0)
+	wait(1)
+	SE_vol(1180,1,0)
+	wait(1)
+}
+
+#EndScriptTable
+//====================================================================
+

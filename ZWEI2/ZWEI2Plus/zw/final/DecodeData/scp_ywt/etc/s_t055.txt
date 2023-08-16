@@ -1,0 +1,540 @@
+//仭Zwei2堦斒儊僢僙乕僕丒傾儖僢僥偺挰乮仸僴僥傿乯
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭傾儖僢僥
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僴僥傿乮尦丒儘傾儖僞懞偺彈偺巕乯Haty")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_HATY
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(HATY, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,HATY)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,HATY)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HATY)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HATY)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HATY)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HATY)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,HATY)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_05_EndSixth )
+	{
+		MOT(HATY,75,15)
+		rot_chr(HATY,30,PLAYER1)
+		F_set_chr(HATY,CF_NO_MOVE)
+		if(!F_HATY)
+		{
+		//丂丂仸暚悈嵍懁偺儀儞僠慜傪僼儕乕儉乕僽丅
+			MES(HATY,"爸爸今天\n休息。",0)
+			MES(HATY,"我纏著他\n和我一起去郊遊。",0)
+			MES(HATY,"還要去洛塔村\n看牛伯伯。",0)
+			MES(HATY,"呵呵，真是令人期待！",0)
+			MES_close(HATY)
+
+			F_set(HATY)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(HATY,"還有，前幾天\n我終於等到了\n媽媽的回信。",0)
+			MES(HATY,"媽媽說這次要\n到阿魯特來！",0)
+			MES_close(HATY)
+
+		//丂丂僴僥傿偵侓僄儌乕僔儑儞丅
+			EMO(HATY,EMO_ONPU)
+			wait(30)
+			
+			MES(HATY,"嘿嘿，我都等不及了！\n一定要把村裡的人們介紹給她！",0)
+			MES_close(HATY)
+		}
+		F_reset_chr(HATY,CF_NO_MOVE)
+		MOT(HATY,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸戝摴寍恖僗僥乕僕偵偄傞儌乕儕僗傪丄墦傔偵尒偰偄傞丅
+	if( F6_00_GoToMeru )
+	{
+		MOT(HATY,75,15)
+		rot_chr(HATY,30,PLAYER1)
+		if(!F_HATY)
+		{
+			MES(HATY,"爸爸在演講……",0)
+			MES(HATY,"雖然講得不好\n……但還是讓我有些感動。",0)
+			MES(HATY,"我從來沒想到\n正裝和他那麼相配……",0)
+			MES_close(HATY)
+			//仛僴僥傿亂晝恊傪尒捈偟偨亃
+			F_set_note(HATY,2)
+			F_set(HATY)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(HATY,"旋風確實很可怕，不過一定沒事的。",0)
+			MES(HATY,"爸爸也是為了\n這個才去演講的。",0)
+			MES(HATY,"……哈蒂也必須要\n好好聽話才行……！",0)
+			MES_close(HATY)
+		}
+		rot(HATY,30,159)
+		MOT(HATY,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸柉壠俁偺慜傪僼儕乕儉乕僽丅
+	if( F5_00_HearLunar )
+	{
+		rot_chr(HATY,30,PLAYER1)
+		F_set_chr(HATY,CF_NO_MOVE)
+		MOT(HATY,75,15)
+		if(!F_HATY)
+		{
+			MES(HATY,"有兄弟姐妹真好啊……",0)
+			MES(HATY,"哈蒂沒有兄弟姐妹，\n所以一直只能一個人玩。",0)
+			MES(HATY,"剛剛搬過來，\n還沒有交到朋友……",0)
+			MES(HATY,"唉，愛普真幸福啊。\n每天都能和科林一起玩……",0)
+			MES_close(HATY)
+			
+			//仛僴僥傿亂孼掜偑傎偟偄亃
+			F_set_note(HATY,1)
+
+			F_set(HATY)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(HATY,"說起來，\n剛才科林\n出去了……",0)
+			MES(HATY,"發生什麼事了嗎？",0)
+			MES(HATY,"明明約好三人一起玩的……",0)
+			MES_close(HATY)
+		}
+		F_reset_chr(HATY,CF_NO_MOVE)
+		MOT(HATY,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸柉壠俀偺拞丅暻偺曽側偳傪岦偄偰偄傞丅
+	if( F4_00_StartSolo )
+	{
+		rot_chr(HATY,30,PLAYER1)
+		MOT(HATY,75,15)
+		if(!F_HATY)
+		{
+			MES(HATY,"愛普邀請我\n去他家住。",0)
+			MES(HATY,"可是到夜裡，\n我忽然聽到很大的聲音……",0)
+			MES(HATY,"後來才聽說當時外面\n有怪物在四處遊蕩……",0)
+			MES_close(HATY)
+
+		//丂丂僴僥傿偵丒丒丒僄儌乕僔儑儞丅
+			EMO(HATY,EMO_TENTEN)
+			wait(30)
+
+			MES(HATY,"哈蒂和媽媽一起\n住就好了。",0)
+			MES(HATY,"哈蒂不想離開……",0)
+			MES_close(HATY)
+
+			F_set(HATY)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(HATY,"我也知道\n媽媽工作很忙……",0)
+			MES(HATY,"但還是在一起最好了。",0)
+			MES(HATY,"只靠信件對話太寂寞了……",0)
+			MES_close(HATY)
+		}
+		MOT(HATY,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛慜偺儀儞僠慜偱丄僯僢僾儖偲榖偟偰偄傞丅
+	//丂丂仸弶夞偼僯僢僾儖偺僀儀儞僩偑婲摦偡傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F2_14_TalkEnemy )
+	{
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		if(!FT_05_TalkNipHat)
+		{
+			EV("EV_TALK_HN")
+			wait_EV("EV_TALK_HN")
+		
+			F_set(FT_05_TalkNipHat)
+		}
+		else
+		{
+			rot_chr(HATY,30,PLAYER1)
+			if(!F_HATY)
+			{
+				MOT(HATY,75,15)
+				MES(HATY,"那個……",0)
+				MES(HATY,"哈蒂的爸爸\n太差勁了。",0)
+				MES(HATY,"看起來就無精打采的……\n在一起的時候\n總讓人著急。",0)
+				MES_close(HATY)
+
+				MOT(HATY,2,15)
+			//丂丂僴僥傿偵丒丒丒僄儌乕僔儑儞丅
+				EMO(HATY,EMO_TENTEN)
+				wait(30)
+				
+				MES(HATY,"媽媽為什麼\n會和這樣的爸爸結婚呢……",0)
+				MES_close(HATY)
+
+				F_set(HATY)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MOT(HATY,75,15)
+				MES(HATY,"哈蒂的爸爸\n太差勁了。",0)
+				MES(HATY,"最近忽然開始\n在家裡做體操，\n還對著鏡子擺造型……",0)
+				MES_close(HATY)
+
+				MOT(HATY,2,15)
+			//丂丂僴僥傿偵丒丒丒僄儌乕僔儑儞丅
+				EMO(HATY,EMO_TENTEN)
+				wait(30)
+
+				MES(HATY,"媽媽為什麼\n會和這樣的爸爸結婚呢……",0)
+				MES_close(HATY)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛偵忋偑傞慜偺峀応偵棫偪丄丒丒丒僄儌乕僔儑儞弌偟偭傁側偟丅
+	if( F2_00_GoForest )
+	{
+		EV_stop("TENTEN_HATY")
+		rot_chr(HATY,30,PLAYER1)
+		if(!F_HATY)
+		{
+			MES(HATY,"剛才我見到教會\n就進去看了看……",0)
+			MES_close(HATY)
+
+		//丂丂僴僥傿偵丒丒丒僄儌乕僔儑儞丅
+			EMO(HATY,EMO_TENTEN)
+			wait(30)
+			
+			MES(HATY,"裡面的修女\n吐了一口煙，\n問我「來幹嘛的？」。",0)
+			MES(HATY,"真的嚇到我了……",0)
+			MES_close(HATY)
+
+		//丂丂俀恖偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀夛偭偨帠偑柍偄")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(!FT_01_IsabellaEnc && !FT_03_TalkIsabella)
+			{
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（那到底是什麼修女呀……）",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"（唔，那是什麼修女啊……）",0)
+					MES_close(PARTNER)
+				}
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僔僗僞乕偵夛偭偨帠偑偁傞丅")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			{
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（那個修女\n 到底在做什麼……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"（那…那個可惡的修女。\n 居然還嚇唬小孩子……）",0)
+					MES_close(PARTNER)
+				}
+			}
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(HATY)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(HATY,"那個修女\n嚇到我了……",0)
+			MES(HATY,"哈蒂以後\n會小心的……",0)
+			MES_close(HATY)
+
+			if(!FT_01_IsabellaEnc && !FT_03_TalkIsabella)
+			{
+			}
+			else
+			{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（原來如此，這樣做的話\n 以後去教會的人就越來越少了。）",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"唔，這就對了。\n不要隨便接近\n那個修女。",0)
+					MES_close(PARTNER)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+		}
+		EV("TENTEN_HATY")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸廻庰応偺慜偵棫偭偰偄傞丅
+	if( F1_15_GoVillage )
+	{
+		if(!F_HATY)
+		{
+			MOT(HATY,75,15)
+			rot_chr(HATY,30,PLAYER1)
+			MES(HATY,"呼，太開心了。",0)
+			MES(HATY,"在服裝店裡看了衣服，\n然後又去了博物館。",0)
+			MES(HATY,"……展示廳裡的大哥哥\n雖然話有點多……",0)
+			MES(HATY,"但是給我畫了很多畫，\n畫得非常漂亮。",0)
+			MES(HATY,"好，就在給母親的\n信裡報告一下吧。",0)
+			MES_close(HATY)
+
+			F_set(HATY)
+			rot(HATY,30,140)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MOT_SET(HATY,150,-1,476,476,-1,-1)
+			MOT(HATY,150,15)
+			look(HATY,"Bone_Head",0,		0,0,10,			0,0,20)
+		//丂丂仸怳傝曉傜側偄丅
+			MES(HATY,"接下來是這家店吧……",0)
+			MES(HATY,"大…大熊……？",0)
+			MES(HATY,"是熊貓店吧。\n「有一家奇怪的商店」\n……嗯。",0)
+			MES_close(HATY)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（寫得這麼詳細。\n 真是用功呢……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"（寄給母親的信嗎……\n 感覺不錯呢。）",0)
+				MES_close(PARTNER)
+			}
+			//仛僴僥傿亂曣傊偺庤巻亃
+			F_set_note(HATY,0)
+			look_off(HATY)
+		}
+		MOT(HATY,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸柉壠侾慜偐傜抮傪尒壓傠偟偰偄傞丅
+	//丂丂仸怳傝曉傜側偄
+	if( F1_01_GameStart )
+	{
+		MOT(HATY,75,15)
+		rot_chr(HATY,30,PLAYER1)
+		if(!FT_01_TalkHaty)
+		{
+			if(GW_MAN==1)
+			{
+			//	name("佀儔僌僫愭摢")
+				MES(HATY,"咦……",0)
+				MES(HATY,"大哥哥，你們住在阿魯特嗎？",0)
+				MES_close(HATY)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"不是，只是有些事情，\n才從其他大陸上過來的……",0)
+				MES(RAGNA,"總之，因為又發生了不少事，\n所以現在會逗留在這裡。",0)
+				MES_close(RAGNA)
+
+			//	name2(HATY)
+				MES(HATY,"哼，這樣啊……",0)
+				MES_close(HATY)
+			}
+			else
+			{
+			//	name("佀傾儖僂僃儞愭摢")
+				MES(HATY,"咦……",0)
+				MES(HATY,"大姐姐，你們住在阿魯特嗎？",0)
+				MES_close(HATY)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"不，我不是\n住在這裡的人。",0)
+				MES(PARTNER,"說得更準確一些，\n我甚至不是人類……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（公主殿下……！\n 拜託，不要毫無顧忌地\n 把這些事洩露出去……）",0)
+				MES_close(RAGNA)
+
+			//	name2(HATY)
+				MES(HATY,"（那個……？？\n 應該還是來觀光的吧……）",0)
+				MES_close(HATY)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+
+			MES(HATY,"哈蒂也是\n最近才搬到這裡的。",0)
+			MES(HATY,"阿魯特總讓人\n感覺很奇怪呢。",0)
+			MES_close(HATY)
+
+		//丂丂僴僥傿丄僉儑儘僉儑儘丅
+			look(HATY,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(HATY,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(HATY,"Bone_Head",0,		0,2,0,			0,0,0)
+
+		
+			MES(HATY,"不過找到一個新的城鎮，\n確實有些開心☆",0)
+			MES(HATY,"好吧，哈蒂\n也要四處逛逛了。",0)
+			MES_close(HATY)
+			
+			F_set(FT_01_TalkHaty)
+
+		}
+		else
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			if(!F_HATY)
+			{
+				MES(HATY,"鎮上既有瀑布\n又有噴泉……",0)
+				MES(HATY,"而且給人感覺\n很熱鬧呢。",0)
+				MES(HATY,"呵呵，必須要\n把這些告訴媽媽！",0)
+				MES_close(HATY)
+
+				F_set(HATY)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(HATY,"哈蒂的媽媽\n是一名攝影師呢。",0)
+				MES(HATY,"她總是很忙，\n最近剛剛出去旅行……",0)
+				MES(HATY,"如果我告訴她有這樣的城鎮的話，\n她一定也會高興的。\n呵呵，待會兒一定要寫在信裡。",0)
+				MES_close(HATY)
+			}
+		}
+		MOT(HATY,2,15)
+	}
+	
+	TK_end()
+}
+//僉儑儘僉儑儘
+KyoroKyoro
+{
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

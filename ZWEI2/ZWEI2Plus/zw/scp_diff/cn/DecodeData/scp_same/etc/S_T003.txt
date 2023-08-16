@@ -1,0 +1,372 @@
+//──────────────────────────────
+//	name("●皮皮洛")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_PIPIRO
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(PIPIRO, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,PIPIRO)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,PIPIRO)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PIPIRO)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PIPIRO)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PIPIRO)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PIPIRO)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,PIPIRO)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//▼フラグ□（梅尔塞迪克に乗り込む）
+	//　　皮皮洛と共に飞机场之布库尔机之前にいる。
+	//	name("★初回（皮皮洛と共通／１回之み／イベント処理）")
+	//　　話しかけるとキャラ再配置してイベント発生。
+	//　　皮皮洛と共通なため、あちらで起こしたら発生しない。
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{	
+		if(!FM_12_TalkPocPip)
+		{
+			//皮皮洛と共通初回イベント
+			EV("TALK_POCPIP_12")
+			wait_EV("TALK_POCPIP_12")
+		}
+		else
+		{
+			rot_chr(PIPIRO,30,PLAYER1)
+			MES(PIPIRO,"接下来飞机的准备工作就\n交给布库尔了……",0)
+			MES(PIPIRO,"我呢，就去树阴下\n睡个午觉什么的吧。",0)
+			MES_close(PIPIRO)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if(F5_00_HearLunar)
+	{
+		//──────────────────────────────
+		//▽水晶峡谷を起動した
+		//　　水晶峡谷で皮皮洛たちを見守っている。
+		//─────────────────────
+		if( F5_06_RunCrystal )
+		{
+
+			if(F5_08_JoinOdessa)
+			{
+				//	name("★布库尔之ＬＦが立っている")
+				//かつ皮皮洛之ＬＦが立っていない场合//	name("（布库尔が奥蒂莎にデレた後、一回だけ表示する）")
+				if(!F_PIPIRO && F_POCKLE)
+				{
+					look_chr( PIPIRO, POCKLE,"Bone_Head")
+					MES(PIPIRO,"呼~又开始了啊。",0)
+					MES(PIPIRO,"再系一遍会更\n也许是为了自己呢。",0)
+					MES_close(PIPIRO)
+
+				//	name2(POCKLE)
+					look_chr( POCKLE, PIPIRO,"Bone_Head")
+					MES(POCKLE,"（开始……）",0)
+					MES_close(POCKLE)
+					
+					F_set(PIPIRO)
+					look_off(POCKLE)
+				}
+			//	name("★それ以外")
+				else
+				{
+					look_chr( PIPIRO, PLAYER1,"Bone_Head")
+				//	name("□帝嘉鲁德を倒していない")
+					if(!F5_13_KillDygald)
+					{
+						MES(PIPIRO,"呜、这种样子\n时间长了好像也挺累的。",0)
+						MES(PIPIRO,"但是不保持姿势的话\n就不能集中精神解放魔力了。",0)
+						MES(PIPIRO,"或许非常麻烦……",0)
+						MES_close(PIPIRO)
+					}
+					else
+					{
+					//	name("□帝嘉鲁德を倒した")
+						MES(PIPIRO,"呜~~~~\n觉得好疲惫啊。",0)
+						MES(PIPIRO,"虽然魔力还有些剩余\n但手已经麻了……",0)
+						MES(PIPIRO,"呜呜……结束了的话\n要请我吃甜品啊~",0)
+						MES_close(PIPIRO)
+
+					//	name2(RAGNA)
+						MES(RAGNA,"啊啊……\n你想吃什么都行。",0)
+						MES_close(RAGNA)
+					}
+				}
+			}
+			else
+			{
+		//	name("□奥蒂莎が仲間になっていない")
+			//	name("★１回目")
+				if(!F_PIPIRO)
+				{
+					look_chr( PIPIRO, PLAYER1,"Bone_Head")
+					MES(PIPIRO,"哼、的确像是\n大喰らい之门呢。",0)
+					MES(PIPIRO,"但是、这种程度的话\n也许可以保持数个小时。",0)
+					MES(PIPIRO,"嘛~不是说了先交给\n皮皮洛么？",0)
+					MES_close(PIPIRO)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（总，总觉得很了不起的样子……）",0)
+					MES_close(RAGNA)
+
+				//	name2(LUE)
+					MES(PET,"（好像是某种天才呢……）",0)
+					MES_close(PET)
+					
+					F_set(PIPIRO)
+				}
+				else
+				{
+					look_chr( PIPIRO, PLAYER1,"Bone_Head")
+				//	name("★それ以降")
+					MES(PIPIRO,"喂、这边交给我\n快走吧。",0)
+					MES_close(PIPIRO)
+				}
+				//★皮皮洛【魔法之天才】
+				F_set_note(-3,2)
+			}
+			look_off(PIPIRO)
+		}
+		//──────────────────────────────
+		//□▽布库尔たちに事情を話した
+		//　　皮皮洛と共に水晶峡谷之一角にいる。
+		//	name("★初回（皮皮洛と共通／１回之み／イベント処理）")
+		//　　話しかけるとキャラ再配置してイベント発生。
+		//　　皮皮洛と共通な之で、あちらで起こすと発生しない。
+		//──────────────────────────────
+		else
+		if(!F5_04_OfferPipiro)
+		{
+			//皮皮洛と之共通会話
+			EV("EV_05_04_OfferPipiro")
+			wait_EV("EV_05_04_OfferPipiro")
+		}
+		//──────────────────────────────
+		//□説得後
+		//　　皮皮洛と共に水晶峡谷之一角にいる。
+		//──────────────────────────────
+		else
+		{
+			rot_chr(PIPIRO,30,PLAYER1)
+			if(!FM_11_TalkPocPip)
+			{
+				//	name("★初回（皮皮洛と共通／１回之み／イベント処理）")
+				//　　話しかけるとキャラ再配置してイベント発生。
+				//　　皮皮洛と共通な之で、あちらで起こすと発生しない。
+				EV("TALK_POCPIP_11")
+				wait_EV("TALK_POCPIP_11")
+				
+			}
+			else
+			{
+				MOT(PIPIRO,2,10)
+				if(!F_PIPIRO)
+				{
+					MES(PIPIRO,"尾巴暂且不说……\n男人居然喜欢徽章之类的。",0)
+					MES(PIPIRO,"没想到哥哥也带着。",0)
+					MES_close(PIPIRO)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"啊啊、这个是\n只有乘坐飞机才能得到的\n收藏品哦。",0)
+					MES(RAGNA,"虽然有点孩子气\n不过看起来也不错嘛。",0)
+					MES_close(RAGNA)
+
+				//	name2(PIPIRO)
+					MES(PIPIRO,"哼哼、就是那东西？",0)
+					MES_close(PIPIRO)
+					
+					F_set(PIPIRO)
+				}
+				else
+				{
+				//	name("★以後、繰り返し")
+					MES(PIPIRO,"顺便一提、我的标志是\n这顶可爱的粉红色贝雷帽□",0)
+					MES(PIPIRO,"白白的毛绒球似的感觉\n非常的可爱哟㈱",0)
+					MES(PIPIRO,"虽然也有别的帽子\n但还是最喜欢这顶。",0)
+					MES_close(PIPIRO)
+				}
+				MOT(PIPIRO,150,10)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた　▽昴が仲間になった
+	//──────────────────────────────
+	//　　村之宠物店に皮皮洛と共にいる。
+	//　　置くにある棚之前で品揃えを見ているような感じ。
+	//	name("★初回（皮皮洛と共通／一回之み／イベント処理）")
+	//　　話しかけるとキャラ再配置してイベント発生。
+	//　　皮皮洛と共通な之で、あちらで起こしたら発生しない。
+	//──────────────────────────────
+	if( F4_02_GoVillage2 )
+	{
+		if(!FM_07_TalkPocPip)
+		{
+			EV("TALK_POCPIP_07")
+			wait_EV("TALK_POCPIP_07")
+		}
+		else
+		{
+		//	name("★以後、繰り返し")
+			MES(PIPIRO,"蜂蜜与橡子熬出的\n宠物点心么……",0)
+			MES(PIPIRO,"嗯、看起来好吃得不得了呢㈱",0)
+			MES(PIPIRO,"好勒~就试试买十个\n当礼物吧！",0)
+			MES_close(PIPIRO)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		look_chr( PIPIRO, PLAYER1,"Bone_Head")
+		//──────────────────────────────
+		//▽城之玄関広間に入った
+		//　　罗亚鲁塔村之広场にいる。
+		//　　倒れた村人を介抱しているような動作。
+		//──────────────────────────────
+		if(F3_02_InMoonCastle)
+		{
+			MES(PIPIRO,"哼～、毒气好像终于\n散开了。",0)
+			MES(PIPIRO,"嗯、似乎行了。",0)
+			MES_close(PIPIRO)
+		}
+		//──────────────────────────────
+		//▼フラグ⑥（夜·罗亚鲁塔村襲撃直後）
+		//　　罗亚鲁塔村之広场にいる。
+		//　　倒れた村人を介抱しているような動作。
+		//──────────────────────────────
+		else
+		{
+			MES(PIPIRO,"外伤虽然不碍事\n但是生命力似乎被夺走了～。",0)
+			MES(PIPIRO,"嗯、这时候如果有\n《虹之宝玉》在的话\n就可以用光之力量治愈了……",0)
+			MES_close(PIPIRO)
+		}
+		look_off(PIPIRO)
+	}
+	else
+	//──────────────────────────────
+	//▽大铁塔で布库尔たちと会った
+	//──────────────────────────────
+	//　　大铁塔中继、炎之扉近く皮皮洛と共にいる。
+	if( F1_22_EndFirst && !F2_17_EndSecond )
+	{
+		rot_chr(PIPIRO,30,PLAYER1)
+	//	name("★左右之どちらも解除していない")
+		if(!F100 && !F101)
+		{
+			MES(PIPIRO,"呜~~……好热~~……",0)
+			MES(PIPIRO,"虽然不知道要干什么\n既然要干的话就一鼓作气吧～。",0)
+			MES_close(PIPIRO)
+		}
+	//	name("★左右之どちらかを解除した")
+		else
+		{
+			MES(PIPIRO,"！？",0)
+			MES_close(PIPIRO)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//▽神殿前で布库尔たちと会った
+	//　　皮皮洛と共に酒场之テ～ブルに座っている。
+	//　　（向かい合わせではなく、隣り合わせ之席配置で）
+	//　　皮皮洛之前にはイチゴ杏仁パフェと抹茶シフォンケ～キ、
+	//　　布库尔之前には日本茶とセンベイなどが置かれている。
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+	//	2回目之イベントまでは皮皮洛と共通イベント
+		if(!FM_02_TalkPocPip_1)
+		{
+			EV("TALK_POCPIP_02_1")
+			wait_EV("TALK_POCPIP_02_1")
+		}
+		else
+		if(!FM_02_TalkPocPip_2)
+		{
+			EV("TALK_POCPIP_02_2")
+			wait_EV("TALK_POCPIP_02_2")
+		}
+	//	name("★以後、繰り返し")
+		else
+		{
+			look_chr( PIPIRO, PLAYER1,"Bone_Head")
+
+			MES(PIPIRO,"草莓杏仁冻糕再加上\n抹茶蛋糕□",0)
+			MES(PIPIRO,"嗯、这里的开关\n每个都是对的啊㈱",0)
+			MES_close(PIPIRO)
+			look_off(PIPIRO)
+		}
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

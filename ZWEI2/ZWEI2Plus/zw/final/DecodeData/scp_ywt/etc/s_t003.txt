@@ -1,0 +1,372 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仠僺僺儘")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_PIPIRO
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(PIPIRO, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,PIPIRO)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,PIPIRO)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PIPIRO)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PIPIRO)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PIPIRO)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PIPIRO)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,PIPIRO)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴僼儔僌嘖乮儊儖僙僨僋偵忔傝崬傓乯
+	//丂丂僺僺儘偲嫟偵旘峴応偺億僢僋儖婡偺慜偵偄傞丅
+	//	name("仛弶夞乮僺僺儘偲嫟捠乛侾夞偺傒乛僀儀儞僩張棟乯")
+	//丂丂榖偟偐偗傞偲僉儍儔嵞攝抲偟偰僀儀儞僩敪惗丅
+	//丂丂僺僺儘偲嫟捠側偨傔丄偁偪傜偱婲偙偟偨傜敪惗偟側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_00_GoToMeru )
+	{	
+		if(!FM_12_TalkPocPip)
+		{
+			//僺僺儘偲嫟捠弶夞僀儀儞僩
+			EV("TALK_POCPIP_12")
+			wait_EV("TALK_POCPIP_12")
+		}
+		else
+		{
+			rot_chr(PIPIRO,30,PLAYER1)
+			MES(PIPIRO,"接下來，飛機的準備工作\n就交給波克爾……",0)
+			MES(PIPIRO,"我還是在樹蔭下\n睡個午覺吧。",0)
+			MES_close(PIPIRO)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仱僋儕僗僞儖僶儗乕傪婲摦偟偨
+		//丂丂僋儕僗僞儖僶儗乕偱僺僺儘偨偪傪尒庣偭偰偄傞丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if( F5_06_RunCrystal )
+		{
+
+			if(F5_08_JoinOdessa)
+			{
+				//	name("仛億僢僋儖偺俴俥偑棫偭偰偄傞")
+				//偐偮僺僺儘偺俴俥偑棫偭偰偄側偄応崌//	name("乮億僢僋儖偑僆僨僢僒偵僨儗偨屻丄堦夞偩偗昞帵偡傞乯")
+				if(!F_PIPIRO && F_POCKLE)
+				{
+					look_chr( PIPIRO, POCKLE,"Bone_Head")
+					MES(PIPIRO,"唉，又～來了。",0)
+					MES(PIPIRO,"為了他著想，\n還是應該給他點顏色看看吧。",0)
+					MES_close(PIPIRO)
+
+				//	name2(POCKLE)
+					look_chr( POCKLE, PIPIRO,"Bone_Head")
+					MES(POCKLE,"（嗚……）",0)
+					MES_close(POCKLE)
+					
+					F_set(PIPIRO)
+					look_off(POCKLE)
+				}
+			//	name("仛偦傟埲奜")
+				else
+				{
+					look_chr( PIPIRO, PLAYER1,"Bone_Head")
+				//	name("佀僟僀僈儖僪傪搢偟偰偄側偄")
+					if(!F5_13_KillDygald)
+					{
+						MES(PIPIRO,"唔，總是這樣站著\n也有點累了。",0)
+						MES(PIPIRO,"可是不保持好姿勢的話，\n又不能集中精神解放魔力。",0)
+						MES(PIPIRO,"還真是麻煩……",0)
+						MES_close(PIPIRO)
+					}
+					else
+					{
+					//	name("佀僟僀僈儖僪傪搢偟偨")
+						MES(PIPIRO,"唔—……\n身體好像開始疲勞了。",0)
+						MES(PIPIRO,"魔力倒是沒有問題，\n但是手已經發麻了……",0)
+						MES(PIPIRO,"嗚……以後\n一定要請我吃甜點哦？",0)
+						MES_close(PIPIRO)
+
+					//	name2(RAGNA)
+						MES(RAGNA,"嗯……\n你想吃多少都行。",0)
+						MES_close(RAGNA)
+					}
+				}
+			}
+			else
+			{
+		//	name("佀僆僨僢僒偑拠娫偵側偭偰偄側偄")
+			//	name("仛侾夞栚")
+				if(!F_PIPIRO)
+				{
+					look_chr( PIPIRO, PLAYER1,"Bone_Head")
+					MES(PIPIRO,"哼—，這扇門\n容量還真是大。",0)
+					MES(PIPIRO,"不過呢，這樣\n應該能維持幾個小時才對。",0)
+					MES(PIPIRO,"總之，就交給\n我皮皮洛吧?",0)
+					MES_close(PIPIRO)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（好…好像很厲害……）",0)
+					MES_close(RAGNA)
+
+				//	name2(LUE)
+					MES(PET,"（也算是某種天才了……）",0)
+					MES_close(PET)
+					
+					F_set(PIPIRO)
+				}
+				else
+				{
+					look_chr( PIPIRO, PLAYER1,"Bone_Head")
+				//	name("仛偦傟埲崀")
+					MES(PIPIRO,"好啦，這裡就交給我，\n你們趕緊走吧。",0)
+					MES_close(PIPIRO)
+				}
+				//仛僺僺儘亂杺朄偺揤嵥亃
+				F_set_note(-3,2)
+			}
+			look_off(PIPIRO)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//嘕仱億僢僋儖偨偪偵帠忣傪榖偟偨
+		//丂丂僺僺儘偲嫟偵僋儕僗僞儖僶儗乕偺堦妏偵偄傞丅
+		//	name("仛弶夞乮僺僺儘偲嫟捠乛侾夞偺傒乛僀儀儞僩張棟乯")
+		//丂丂榖偟偐偗傞偲僉儍儔嵞攝抲偟偰僀儀儞僩敪惗丅
+		//丂丂僺僺儘偲嫟捠側偺偱丄偁偪傜偱婲偙偡偲敪惗偟側偄丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		if(!F5_04_OfferPipiro)
+		{
+			//僺僺儘偲偺嫟捠夛榖
+			EV("EV_05_04_OfferPipiro")
+			wait_EV("EV_05_04_OfferPipiro")
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//嘕愢摼屻
+		//丂丂僺僺儘偲嫟偵僋儕僗僞儖僶儗乕偺堦妏偵偄傞丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		{
+			rot_chr(PIPIRO,30,PLAYER1)
+			if(!FM_11_TalkPocPip)
+			{
+				//	name("仛弶夞乮僺僺儘偲嫟捠乛侾夞偺傒乛僀儀儞僩張棟乯")
+				//丂丂榖偟偐偗傞偲僉儍儔嵞攝抲偟偰僀儀儞僩敪惗丅
+				//丂丂僺僺儘偲嫟捠側偺偱丄偁偪傜偱婲偙偡偲敪惗偟側偄丅
+				EV("TALK_POCPIP_11")
+				wait_EV("TALK_POCPIP_11")
+				
+			}
+			else
+			{
+				MOT(PIPIRO,2,10)
+				if(!F_PIPIRO)
+				{
+					MES(PIPIRO,"尾巴是一回事……\n不過男孩子看來都很喜歡徽章呢。",0)
+					MES(PIPIRO,"你居然也戴著一個。",0)
+					MES_close(PIPIRO)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"啊，這個嗎，\n這是只有飛機愛好者\n才會收集的徽章。",0)
+					MES(RAGNA,"雖然有點孩子氣，\n不過就是這點吸引人呀。",0)
+					MES_close(RAGNA)
+
+				//	name2(PIPIRO)
+					MES(PIPIRO,"哼—，是這樣嗎？",0)
+					MES_close(PIPIRO)
+					
+					F_set(PIPIRO)
+				}
+				else
+				{
+				//	name("仛埲屻丄孞傝曉偟")
+					MES(PIPIRO,"順帶一提，我的註冊標記就是\n這頂可愛的粉紅色扁帽了?",0)
+					MES(PIPIRO,"這個白色的毛茸茸的\n裝飾特別可愛呢㈱",0)
+					MES(PIPIRO,"雖然也有不少其他帽子，\n我還是最喜歡這頂。",0)
+					MES_close(PIPIRO)
+				}
+				MOT(PIPIRO,150,10)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨丂仱僗僶儖偑拠娫偵側偭偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂懞偺儁僢僩僔儑僢僾偵僺僺儘偲嫟偵偄傞丅
+	//丂丂抲偔偵偁傞扞偺慜偱昳懙偊傪尒偰偄傞傛偆側姶偠丅
+	//	name("仛弶夞乮僺僺儘偲嫟捠乛堦夞偺傒乛僀儀儞僩張棟乯")
+	//丂丂榖偟偐偗傞偲僉儍儔嵞攝抲偟偰僀儀儞僩敪惗丅
+	//丂丂僺僺儘偲嫟捠側偺偱丄偁偪傜偱婲偙偟偨傜敪惗偟側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_02_GoVillage2 )
+	{
+		if(!FM_07_TalkPocPip)
+		{
+			EV("TALK_POCPIP_07")
+			wait_EV("TALK_POCPIP_07")
+		}
+		else
+		{
+		//	name("仛埲屻丄孞傝曉偟")
+			MES(PIPIRO,"蜂蜜和橡實混合製成的\n類似點心的寵物食品……",0)
+			MES(PIPIRO,"唔—，說不定非常好吃呢㈱",0)
+			MES(PIPIRO,"好，就暫且買上１０個\n當禮物吧！",0)
+			MES_close(PIPIRO)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F3_00_GoMoonCastle )
+	{
+		look_chr( PIPIRO, PLAYER1,"Bone_Head")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仱忛偺尯娭峀娫偵擖偭偨
+		//丂丂儘傾儖僞懞偺峀応偵偄傞丅
+		//丂丂搢傟偨懞恖傪夘書偟偰偄傞傛偆側摦嶌丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F3_02_InMoonCastle)
+		{
+			MES(PIPIRO,"呼～，瘴氣看來\n也已經消散了。",0)
+			MES(PIPIRO,"嗯，總是會有辦法的。",0)
+			MES_close(PIPIRO)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴僼儔僌嘐乮栭丒儘傾儖僞懞廝寕捈屻乯
+		//丂丂儘傾儖僞懞偺峀応偵偄傞丅
+		//丂丂搢傟偨懞恖傪夘書偟偰偄傞傛偆側摦嶌丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		{
+			MES(PIPIRO,"外傷倒是沒有大礙，\n只是生命力似乎被奪去了不少～。",0)
+			MES(PIPIRO,"唔—，這種時候要是有\n「虹彩之寶玉」的話，\n就能用光之力為大家治療了……",0)
+			MES_close(PIPIRO)
+		}
+		look_off(PIPIRO)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仱戝揝搩偱億僢僋儖偨偪偲夛偭偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂戝揝搩拞宲丄墛偺斷嬤偔僺僺儘偲嫟偵偄傞丅
+	if( F1_22_EndFirst && !F2_17_EndSecond )
+	{
+		rot_chr(PIPIRO,30,PLAYER1)
+	//	name("仛嵍塃偺偳偪傜傕夝彍偟偰偄側偄")
+		if(!F100 && !F101)
+		{
+			MES(PIPIRO,"嗚～……熱死了～……",0)
+			MES(PIPIRO,"雖然不清楚究竟是怎麼回事，\n但是既然要做就趕快吧～。",0)
+			MES_close(PIPIRO)
+		}
+	//	name("仛嵍塃偺偳偪傜偐傪夝彍偟偨")
+		else
+		{
+			MES(PIPIRO,"！？",0)
+			MES_close(PIPIRO)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仱恄揳慜偱億僢僋儖偨偪偲夛偭偨
+	//丂丂僺僺儘偲嫟偵庰応偺僥乕僽儖偵嵗偭偰偄傞丅
+	//丂丂乮岦偐偄崌傢偣偱偼側偔丄椬傝崌傢偣偺惾攝抲偱乯
+	//丂丂僺僺儘偺慜偵偼僀僠僑埱恗僷僼僃偲枙拑僔僼僅儞働乕僉丄
+	//丂丂億僢僋儖偺慜偵偼擔杮拑偲僙儞儀僀側偳偑抲偐傟偰偄傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F1_15_GoVillage )
+	{
+	//	2夞栚偺僀儀儞僩傑偱偼僺僺儘偲嫟捠僀儀儞僩
+		if(!FM_02_TalkPocPip_1)
+		{
+			EV("TALK_POCPIP_02_1")
+			wait_EV("TALK_POCPIP_02_1")
+		}
+		else
+		if(!FM_02_TalkPocPip_2)
+		{
+			EV("TALK_POCPIP_02_2")
+			wait_EV("TALK_POCPIP_02_2")
+		}
+	//	name("仛埲屻丄孞傝曉偟")
+		else
+		{
+			look_chr( PIPIRO, PLAYER1,"Bone_Head")
+
+			MES(PIPIRO,"草莓杏仁聖代和\n抹茶蛋糕?",0)
+			MES(PIPIRO,"唔—，這裡\n每種甜點都很合我意呢㈱",0)
+			MES_close(PIPIRO)
+			look_off(PIPIRO)
+		}
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,380 @@
+//====================================================================
+//ステージトラップスクリプト
+//[16076][山－入口(夜)]
+//====================================================================
+
+#ScriptTable
+
+#PARTNER	255
+#PET 		254
+#RAGNA 		0
+
+#PLAYER		252	//操作キャラクター
+#PLAYER2 	253	//非操作キャラクター
+
+#MONTBLANC	2
+#EVENT_RAGNA	3
+#SUBARU			4
+#DUMMY			5
+#ALWEN			6
+#POCKLE			7
+#PIPIRO			8
+
+#SPIRIT_A	10
+#SPIRIT_B	11
+#SPIRIT_C	12
+
+#KAPPA		15
+
+#ZIZOU_1	20
+#ZIZOU_2	21
+#ZIZOU_3	22
+#ZIZOU_4	23
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境SE
+	SE(51,0)
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+map_color(68,68,98,0);//R,G,B, time 100%
+
+//■階段·扉
+
+	set_chr( 90,990,	-1,-1,   -450,3000,-300,   	180,  1201, 6,"K9_10001;")	//①エントリ フィールド
+
+//	set_chr( 91,990,	-1,-1,   -100,-1330,0,  	330,050202, 6,"K0_16010;")	//①エントリ 入口分岐
+	set_chr( 92,991,	-1,-1,   3344,-3040,337, 	 38,  1001, 6,"<EV_STOP_01>")	//①エントリ 坂上適当
+
+
+	//地蔵
+	//	 	管理no/typ		tip座標	 +座標		  mot 向き 状態  EasyScript
+	//地蔵
+	if( F4_04_OpenRoad )	//開いた後	//ＧＦ『★隠れ里へ之道を開いた』
+	{
+		set_chr(ZIZOU_1, 651, -1,-1, -286,-796,1,  0, 0,    3,"") 
+		set_chr(ZIZOU_2, 651, -1,-1, -115,-911,1,  0,  0,    3,"") 
+		set_chr(ZIZOU_3, 651, -1,-1,  224,-1139,1,  0,0,    3,"") 
+		set_chr(ZIZOU_4, 651, -1,-1,  412,-1247,1,  0, 0,    3,"") 
+	}
+	else 					//開く前
+	{	//地蔵
+		set_chr(ZIZOU_1, 651, -1,-1, -286,-796,1,  0, 90,    3,"") 
+		set_chr(ZIZOU_2, 651, -1,-1, -115,-911,1,  0,  0,    3,"") 
+		set_chr(ZIZOU_3, 651, -1,-1,  224,-1139,1,  0,270,    3,"") 
+		set_chr(ZIZOU_4, 651, -1,-1,  412,-1247,1,  0, 90,    3,"") 
+	}
+	F_set_chr(ZIZOU_1, CF_NO_CLIP)
+	F_set_chr(ZIZOU_2, CF_NO_CLIP)
+	F_set_chr(ZIZOU_3, CF_NO_CLIP)
+	F_set_chr(ZIZOU_4, CF_NO_CLIP)
+	F_set_chr(ZIZOU_1, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_2, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_3, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_4, CF_NO_CLIP2)
+
+
+//■イベント
+
+//■场面固有設定
+	if( F4_04_OpenRoad )
+	{
+		mot_obj("rockgate", "open0")		//扉開く
+	}
+
+	EV("EV_SnowFall")
+}
+
+//-------------------------------------------------------------------
+EV_SnowFall
+{
+	EFF_chr(4292, 0, 0,100, -1, "charbase0" )
+	wait( 50 )
+	loop
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+
+//　　山道を登ろうとすると滑って落ちてしまう。
+EV_STOP_01
+{
+
+	TK_begin()
+
+//	if( F4_09_GoShrineMia )
+	//{
+	move(PLAYER,0,RUN2,2644,-1934,0,200)
+	//move(PLAYER2,0,RUN2,2644,-1934,0,50)
+	move(PLAYER2,0,RUN2,2632,-1874,0,50)
+	wait_move(PLAYER)
+	wait_move(PLAYER2)
+
+	if( !F_RAGNA )
+	{
+		if(GW_MAN==1)
+		{
+		//　　※拉古那先頭之场合
+			MES(RAGNA,"呼……",0)
+			MES(RAGNA,"这里\n不是玩的地方。",0)
+			MES(RAGNA,"要尽快赶往城里。",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//　　※艾尔雯先頭之场合
+			MES(PARTNER,"唔唔……好滑……",0)
+			MES(PARTNER,"不能在这里\n耽搁时间。",0)
+			MES(PARTNER,"要尽快赶往我的蒙布利亚。",0)
+			MES_close(PARTNER)
+		}
+		F_set(RAGNA)
+	}
+	//}
+
+	TK_end()
+}
+//---------------------------------------------------------------------
+//地蔵スイッチ
+//全て之地蔵之頭を元之角度（正面）にすれば，扉が開く
+//攻略法
+//初期角度 0,270,270,180之状態から①を１回，②を２回，４を１回　でＯＫ。ただ之加算な之で回す順番は関係なし
+//
+EV_ZIZOU_CHECK
+{
+	if(WK001==0 && WK002==0 && WK003==0 && WK004==0)
+	{
+		EV("EV_4_06_OpenRoad")	//扉開くイベント開始
+		wait_EV("EV_4_06_OpenRoad")
+	}
+}
+//---------------------------------------------------------------------
+//--- 地蔵1 -----------------------------------------------------------
+//地蔵1を回すと，地蔵3，地蔵4も回る
+EV_ZIZOU_1
+{
+	TK_begin()
+	EV("EV_ZIZOU_1b")
+	EV("EV_ZIZOU_3b")
+	EV("EV_ZIZOU_4b")	
+	wait_EV("EV_ZIZOU_1b")
+	wait_EV("EV_ZIZOU_3b")
+	wait_EV("EV_ZIZOU_4b")
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end()
+}
+//---------------------------------------------------------------------
+//--- 地蔵2 -----------------------------------------------------------
+//地蔵2を回すと，地蔵1，地蔵3も回る
+EV_ZIZOU_2
+{
+	TK_begin()
+	EV("EV_ZIZOU_1b")
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_3b")	
+	wait_EV("EV_ZIZOU_1b")
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_3b")
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+	TK_end()
+}
+//---------------------------------------------------------------------
+//--- 地蔵3 -----------------------------------------------------------
+//地蔵2を回すと，地蔵3，地蔵4も回る
+EV_ZIZOU_3
+{
+	TK_begin()
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_3b")
+	EV("EV_ZIZOU_4b")	
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_3b")
+	wait_EV("EV_ZIZOU_4b")	
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end()
+}
+//---------------------------------------------------------------------
+//--- 地蔵4 -----------------------------------------------------------
+//地蔵4を回すと，地蔵1，地蔵2も回る
+EV_ZIZOU_4
+{
+	TK_begin()
+	EV("EV_ZIZOU_1b")
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_4b")	
+	wait_EV("EV_ZIZOU_1b")
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_4b")	
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end()
+}
+
+//地蔵１回転
+EV_ZIZOU_1b
+{
+	if(WK001==0)
+	{
+		rot(ZIZOU_1, 30, 270)
+		workL(1,SET,27)		
+	
+//		MES(ZIZOU_1,"角度270",0)
+	}
+	else
+	if(WK001==9)
+	{
+		rot(ZIZOU_1, 30, 0)
+		workL(1,SET,0)
+			
+//		MES(ZIZOU_1,"角度000",0)
+	}
+	else
+	if(WK001==18)
+	{
+		rot(ZIZOU_1, 30, 90)
+		workL(1,SET,9)	
+		
+//		MES(ZIZOU_1,"角度090",0)
+	}
+	else
+	if(WK001==27)
+	{
+		rot(ZIZOU_1, 30, 180)
+		workL(1,SET,18)
+//		MES(ZIZOU_1,"角度180",0)
+
+	}
+	else
+	{
+		MES(ZIZOU_1,"角度？",0)
+	}
+	MES_close(ZIZOU_1)	
+	
+	wait(30)
+}
+
+//地蔵２回転
+EV_ZIZOU_2b
+{
+	EMO(ZIZOU_2, EMO_BIKKURI)
+	if(WK002==0)
+	{
+		rot(ZIZOU_2, 30, 270)
+		workL(2,SET,27)	
+	}
+	else
+	if(WK002==9)
+	{
+		rot(ZIZOU_2, 30, 360)
+		workL(2,SET,0)
+	}
+	else
+	if(WK002==18)
+	{
+		rot(ZIZOU_2, 30, 90)
+		workL(2,SET,9)
+	}
+	else
+	if(WK002==27)
+	{
+		rot(ZIZOU_2, 30, 180)
+		workL(2,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_2,"角度？",0)
+
+	}
+	MES_close(ZIZOU_2)		
+	wait(30)
+}
+
+//地蔵３回転
+EV_ZIZOU_3b
+{
+	EMO(ZIZOU_3, EMO_BIKKURI)
+	if(WK003==0)
+	{
+		rot(ZIZOU_3, 30, 270)
+		workL(3,SET,27)	
+	}
+	else
+	if(WK003==9)
+	{
+		rot(ZIZOU_3, 30, 0)
+		workL(3,SET,0)
+	}
+	else
+	if(WK003==18)
+	{
+		rot(ZIZOU_3, 30, 90)
+		workL(3,SET,9)	
+	}
+	else
+	if(WK003==27)
+	{
+		rot(ZIZOU_3, 30, 180)
+		workL(3,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_3,"角度？",0)
+		MES_close(ZIZOU_3)	
+	}
+	wait(30)
+}
+
+//地蔵４回転
+EV_ZIZOU_4b
+{
+	if(WK004==0)
+	{
+		rot(ZIZOU_4, 30, 270)
+		workL(4,SET,27)	
+	}
+	else
+	if(WK004==9)
+	{
+		rot(ZIZOU_4, 30, 0)
+		workL(4,SET,0)
+	}
+	else
+	if(WK004==18)
+	{
+		rot(ZIZOU_4, 30, 90)
+		workL(4,SET,9)	
+	}
+	else
+	if(WK004==27)
+	{
+		rot(ZIZOU_4, 30, 180)
+		workL(4,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_4,"角度？",0)
+		MES_close(ZIZOU_4)	
+	}
+	wait(30)
+}
+
+#EndScriptTable
+//====================================================================
+

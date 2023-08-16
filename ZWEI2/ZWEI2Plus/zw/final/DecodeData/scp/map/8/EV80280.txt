@@ -1,0 +1,821 @@
+//====================================================================
+//ステージトラップスクリプト
+//[18028][要塞－魔王米娅]
+//====================================================================
+
+#ScriptTable
+
+#BOSS		9	//魔王米娅本体
+#GOLDMAO	10
+#EFFDUMMY1	11	//光之塊
+#EVENT_RAGNA	12
+#ALWEN			13
+#EFFDUMMY2	14
+#MOVDUMMY	15
+#MOVDUMMY2	16
+#MOVDUMMY3	17
+#MOVDUMMY4	18
+#EFFDUMMY3	19
+#EFFDUMMY4	20
+
+#SHIELD1	21
+#SHIELD2	22
+
+INIT
+{
+
+	SE(1177,0)//環境SE
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+//	set_chr( 90,990,	-1,-1,   -1391,-986,2500,	90,  0102, 6,"K1_18029;")	//①エントリ ボス終
+//	set_chr(100,549,	-1,-1,   -1391,-986,2500,	 0,    90, 0,";")			//①アーチ（ラスト）
+//	set_chr(BOSS,	408,		-1,-1,   -1391,-986,0500,  2,  0,	0,"") //魔王米娅
+
+//■イベント
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼魔王米娅変形登场
+		EV("EV_Battle")
+	}
+	else
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼魔王米娅変形登场
+		EV("EV_6_17_GoldMia")
+	}
+	else
+	//ボス再战用
+	if(GW_ENTRY_EVENT==100)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BattleBossOnly")
+	}
+	else
+	//ゲーセン用
+	if(GW_ENTRY_EVENT==101)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BattleBossOnly_02")
+	}
+//■场面固有設定
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+EV_6_17_GoldMia
+{
+	EV_begin()
+
+	//フェードアウト
+	fade_in(100,-1,0)
+	wait_fade()
+	
+	
+	set_namebmp(0,0)				//地名オフ
+	
+	//地球を消す
+	F_set_obj("back00_add", NP_HIDE)
+	F_set_obj("back01", NP_HIDE)
+	F_set_obj("back02", NP_HIDE)
+	F_set_obj("back03", NP_HIDE)
+	F_set_obj("back04", NP_HIDE)
+	F_set_obj("back05", NP_HIDE)
+	
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	set_chr(EVENT_RAGNA, 1010,		-1,-1,   0,0,0,  2,  0,	0,"") //
+	set_chr(ALWEN,       1011,		-1,-1,   0,0,0,  2,  0,	0,"") //
+//	set_chr(GOLDMAO,      410,		-1,-1,   0,0,0,  2,  0,	0,"") //魔王米娅(イベント用）
+	set_chr(GOLDMAO,      410,		-1,-1,   0,0,-3500,  2,  0,	0,"") //魔王米娅(イベント用）
+	set_chr(EFFDUMMY1,    749,		-1,-1,   0,0,-3500, 54,  0,	0,"") //光之塊
+	set_chr(EFFDUMMY2,    749,		-1,-1,   0,500,0,  0,  0,	0,"") //
+	set_chr(EFFDUMMY3,    749,		-1,-1,   0,0,0,  0,  0,	0,"") //	ラスボス，光之粒子
+	set_chr(EFFDUMMY4,    749,		-1,-1,   0,0,0,  0,  0,	0,"") //	ラスボス，中心光
+	set_chr(SHIELD1,      749,		-1,-1,   0,0,0,  0,  0,	0,"") //
+	set_chr(SHIELD2,      749,		-1,-1,   0,0,0,  0,  0,	0,"") //
+	set_chr(MOVDUMMY,     764,		-1,-1,   0,-1000,0,  0,  0,	0,"") //
+	set_chr(MOVDUMMY2,    764,		-1,-1, 200, 1500,100,  0,180,	0,"") //
+	set_chr(MOVDUMMY3,    764,		-1,-1,-200, 1500,100,  0,180,	0,"") //
+
+	
+	F_set_chr(MOVDUMMY, CF_NO_CLIP)
+	F_set_chr(MOVDUMMY, CF_NO_CLIP2)
+	F_set_chr(MOVDUMMY, CF_NO_CSP)
+	F_set_chr(MOVDUMMY, CF_NO_HEIGHT)
+	F_set_chr(MOVDUMMY, CF_NO_ZIMEN)
+	F_set_chr(MOVDUMMY2, CF_NO_CLIP)
+	F_set_chr(MOVDUMMY2, CF_NO_CLIP2)
+	F_set_chr(MOVDUMMY2, CF_NO_CSP)
+	F_set_chr(MOVDUMMY2, CF_NO_HEIGHT)
+	F_set_chr(MOVDUMMY2, CF_NO_ZIMEN)
+	F_set_chr(MOVDUMMY3, CF_NO_CLIP)
+	F_set_chr(MOVDUMMY3, CF_NO_CLIP2)
+	F_set_chr(MOVDUMMY3, CF_NO_CSP)
+	F_set_chr(MOVDUMMY3, CF_NO_HEIGHT)
+	F_set_chr(MOVDUMMY3, CF_NO_ZIMEN)
+	F_set_chr(MOVDUMMY3, CF_NO_ZIMEN)			
+	F_set_chr(GOLDMAO, CF_NO_CLIP)
+	F_set_chr(GOLDMAO, CF_NO_CLIP2)
+	F_set_chr(GOLDMAO, CF_NO_CSP)
+	F_set_chr(GOLDMAO, CF_NO_HEIGHT)
+	F_set_chr(GOLDMAO, CF_NO_ZIMEN)
+	
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA, CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA, CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA, CF_NO_ZIMEN)	
+
+	F_set_chr(ALWEN, CF_NO_CLIP)
+	F_set_chr(ALWEN, CF_NO_CLIP2)
+	F_set_chr(ALWEN, CF_NO_CSP)
+	F_set_chr(ALWEN, CF_NO_HEIGHT)
+	F_set_chr(ALWEN, CF_NO_ZIMEN)	
+
+	F_set_chr(EFFDUMMY1, CF_NO_CLIP)
+	F_set_chr(EFFDUMMY1, CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY1, CF_NO_ANIME)
+	F_set_chr(EFFDUMMY1, CF_NO_DEAD)
+	F_set_chr(EFFDUMMY1, CF_NO_CSP)
+	F_set_chr(EFFDUMMY1, CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY1, CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY1, CF_MAXMOVE)
+	F_set_chr(EFFDUMMY2, CF_NO_CLIP)
+	F_set_chr(EFFDUMMY2, CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY2, CF_NO_CSP)
+	F_set_chr(EFFDUMMY2, CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY2, CF_NO_ZIMEN)	
+	F_set_chr(EFFDUMMY3, CF_NO_CLIP)
+	F_set_chr(EFFDUMMY3, CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY3, CF_NO_CSP)
+	F_set_chr(EFFDUMMY3, CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY3, CF_NO_ZIMEN)			
+	F_set_chr(EFFDUMMY4, CF_NO_CLIP)
+	F_set_chr(EFFDUMMY4, CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY4, CF_NO_CSP)
+	F_set_chr(EFFDUMMY4, CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY4, CF_NO_ZIMEN)	
+		
+	chr_pos(EVENT_RAGNA,   100,1500, 0, 180,2 )
+	chr_pos(ALWEN,        -100,1500, 0, 180,2 )
+	
+	chr_pos(RAGNA,   100,1500, 0, 180,2 )
+	chr_pos(PARTNER,-100,1500, 0, 180,2 )
+	chr_equip( ALWEN,"wp_004b", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+
+
+	F_set_Node(MOVDUMMY, "dummy_object", NP_HIDE)
+	F_set_Node(MOVDUMMY2, "dummy_object", NP_HIDE)
+	F_set_Node(MOVDUMMY3, "dummy_object", NP_HIDE)
+
+//	MOT_SET(GOLDMAO, 		150, -1, 1850,1850, -1, 0)		//登场待机
+	MOT_SET(GOLDMAO, 		150,150, 2520,2549, -1, 0)		//登场待机//羽閉じたループ
+	MOT_SET(GOLDMAO, 		151, -1, 1850,1944, -1, 15)	//登场開く
+	MOT_SET(GOLDMAO, 		152, 153, 0160, 0204, -1 ,00) //待机01から待机02へ
+	MOT_SET(GOLDMAO, 		153, 153, 0210, 0269, -1 ,00) //待机02	
+	MOT_SET(GOLDMAO, 		154, 154, 0005, 0064, -1, 00) //待机01
+	MOT_SET(GOLDMAO, 		154, 154, 0005, 0064, -1, 00) //
+	MOT_SET(MOVDUMMY,		150, 151, 0100, 0300, -1, 00) //上昇
+	MOT_SET(MOVDUMMY2,		150, 151, 0000, 0300, -1, 00) //上昇
+	MOT_SET(MOVDUMMY3,		150, 151, 0020, 0300, -1, 00) //上昇
+	MOT_SET(MOVDUMMY,		151,  -1, 0300, 0300, -1, 00) //上昇
+	MOT_SET(MOVDUMMY2,		151,  -1, 0300, 0300, -1, 00) //上昇
+	MOT_SET(MOVDUMMY3,		151,  -1, 0300, 0300, -1, 00) //上昇
+
+	MOT_SET(ALWEN,			151,151,4905,4945,-1,-1)//浮遊
+	MOT_SET(EVENT_RAGNA,	151,-1,251,251,-1,-1)//浮き上がる2
+
+	CAM_move(0,-600,-4989,0,0)
+	CAM(1110,363,-4989,50,180,0,0)
+
+	chr_equip_chr(SHIELD1,   EVENT_RAGNA, "Bone_Spine1", 100,0,0,0, 0,0,0)
+	chr_equip_chr(SHIELD2,   ALWEN,       "Bone_Spine1", 100,0,0,0, 0,0,0)
+	chr_equip_chr(EFFDUMMY1,   MOVDUMMY, "test_null", 100,0,0,0, 0,0,0)
+	chr_equip_chr(EFFDUMMY2,   MOVDUMMY, "test_null", 100,0,0,0, 0,0,0)
+	chr_equip_chr(EFFDUMMY4,   MOVDUMMY, "test_null", 100,0,0,0, 0,0,0)
+	chr_equip_chr(EVENT_RAGNA, MOVDUMMY2, "test_null", 100,0,0,0, 0,0,0)	
+	chr_equip_chr(ALWEN,       MOVDUMMY3, "test_null", 100,0,0,0, 0,0,0)	
+	chr_equip_chr(EFFDUMMY3,   GOLDMAO,   "Bone_Kosi", 100,0,0,0, 0,0,0)
+
+	Load_BMP(14,"sys\\text01.itm","sys\\text01a.itm")
+	
+	EV("EV_1174")//オーラSE小
+	SE(1071,0)
+
+	color(GOLDMAO,-1)
+//	color(EVENT_RAGNA,-1)
+//	color(ALWEN,      -1)
+
+//	chr_pos(EFFDUMMY1, 0,0,-0,0,0)			//龙卷之中に配置
+	MOT(EFFDUMMY2,59, 0)						//エフェクト：光之尻尾		
+	MOT(EFFDUMMY4,53, 0)						//エフェクト：光之中心		
+	
+	wait(30)
+
+	MOT(GOLDMAO,		150, 0)
+//	MOT(GOLDMAO, 		108, 0)					//羽丸め待机
+	MOT(MOVDUMMY,		150, 0)
+ 	MOT(ALWEN,			151, 0 )
+ 	MOT(EVENT_RAGNA,	151, 0 )
+
+ 	MOT(SHIELD1, 48, 0)	
+ 	MOT(SHIELD2, 48, 0)	
+	MOT(MOVDUMMY2,150,0)
+	MOT(MOVDUMMY3,150,0)
+	wait(5)
+	
+	MOT(ALWEN, 151, 0)								//羽ばたき
+	IK(ALWEN,"Bone_LeftWing1",0)
+	IK(ALWEN,"Bone_RightWing1",0)
+	
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	CAM_move(0,-626,217,150,0)
+	CAM(151,150,217,50,180,150,0)
+	
+//	wait(15)
+	EV("EV_MoveAlwen")							//艾尔雯，上昇
+//	wait(15)
+	EV("EV_MoveRagna")							//拉古那，上昇
+
+	wait(70)
+	SE(1092,0)//米娅到着
+
+	wait(80)
+	MOT(EFFDUMMY2,0, 0)							//エフェクト：光之尻尾	終了	
+	SE(1074,0)//拉古那たち到着
+	SE(1040,0)//拉古那たち到着
+
+
+	CAM(-360,100,217,50,180,150,0)
+
+//	wait_EV("EV_MoveAlwen")
+//	wait_EV("EV_MoveRagna")
+	
+	wait(150)
+	CAM_move(0,874,37,90,0)
+
+	chr_pos(GOLDMAO, 0,-1000,0,0,150) //
+
+	stop_BGM(90)
+//	EFF_chr(6250, EFFDUMMY2, 0,500,0,"Bone_Head")		//大爆発
+	EFF_chr(6250, EFFDUMMY1, 0,500,0,"Bone_Head")		//大爆発
+	SE(1088,0)//ホワイトアウトSE
+	SE(1042,0)//ホワイトアウトSE
+	MOT(EFFDUMMY1,0,0)									//エフェクト：終了
+	MOT(EFFDUMMY4,0,0)									//エフェクト：終了
+	MOT(EFFDUMMY3,63,0)									//エフェクト：光之粒子
+	wait(30)
+	SE(1137,0)//ホワイトアウトSE
+	SE(1153,0)//ホワイトアウトSE
+	wait(30)
+	color(GOLDMAO,1)
+	
+	EV_stop("EV_1174")
+	EV_stop("EV_1174_2")
+	
+	CAM_move(0,874,-123,0,0)
+	CAM(-87,133,-123,50,180,0,0)
+	
+	CAM_move(0,874,17,0,0)
+	CAM(-287,186,17,54,180,0,0)
+	CAM_move(0,874,-300,180,0)
+	CAM(113,186,-663,54,180,180,0)
+	wait(120)
+	
+	SE(1050,0)//羽を広げる		
+	MOT(GOLDMAO,151, 0)									//羽を広げる		
+	MOT(EFFDUMMY3, 0,0)
+	wait(15)
+	EFF_chr(7210, GOLDMAO, 0,100,0,"Bone_Hips")		//エフェクト 羽
+	wait(35)
+	CAM_quake("463746")
+	SE(1072,0)//羽を広げる		
+	SE(1140,0)//羽を広げる		
+	EFF_chr(7150, GOLDMAO, 0,100,0,"Bone_Hips")		//エフェクト
+	EFF_chr(7210, GOLDMAO, 0,100,0,"Bone_Hips")		//エフェクト 羽
+	EFF_chr(6120, GOLDMAO, 0,200,0,"Bone_Hips")		//エフェクト：金色パーティクル
+	
+	CAM_move(0,874,257,60,0)
+	CAM(-46,60,257,49,180,60,0)
+
+//	wait(100)	
+	wait(60)	
+
+//	stop_BGM(90)
+	MOT(GOLDMAO,2, 15)									//待机モーション
+
+	cross_fade(10)
+	CAM_move(0,874,257,0,0)
+	CAM(-966,67,257,33,144,0,0)
+	SE(1141,0)//バン！
+	wait(5)
+	fade_in(100, 10, 0)
+	wait(10)
+	fade_in(0,0,0)
+	CAM_move(0,874,257,0,0)
+	CAM(-966,67,257,33,212,0,0)
+	SE(1141,0)//バン！
+	wait(5)	
+	fade_in(100,10, 0)	
+	wait(10)
+	fade_in(0,0,0)	
+	CAM_move(0,874,397,0,0)
+	CAM(33,65,397,23,180,0,0)
+	SE(1141,0)//バン！
+	wait(5)	
+	fade_in(100, 10, 0)	
+	wait(20)
+
+//	wait_BGM()
+	BGM(42)
+//	BGM_vol(85,0)
+	workG(GW_DEF_BGM,SET,42)									//デフォルト曲を変更
+
+	//ボスアップカメラ
+	fade_in(0,60,0)	
+	CAM_move(0,874,297,0,0)
+	CAM(-126,100,297,23,180,0,0)
+	CAM_move(0,874,297,600,0)	
+	CAM(-126,126,297,23,180,600,0)
+	EFF_chr(6120, GOLDMAO, 0,200,0,"Bone_Hips")		//エフェクト：金色パーティクル
+	
+	wait_fade()
+
+//	Load_BMP(14,"sys\\text01.itm","sys\\text01a.itm")
+
+	VOICE(684,0)	//★「器之意志は封じた…」
+//	MES_pos(GOLDMAO,"W9C2容器的意志已被封印…",0,320,280,0,0)
+//	wait(80)
+//	MES_close(GOLDMAO)
+	menuBMP(0,	14,	408,320,408,32)
+	menu(0,	0,	120,260,  0,	408, 32,	 0,  0,0)
+	menu(0,	0,	120,260,  0,	408, 32,	30,100,0)
+	wait(80)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	30,0,0)						//文字フェードアウト
+	wait(5)
+		
+	VOICE(685,0)	//★「我が名は金色ルシアン…」
+//	MES_pos(GOLDMAO,"W9C2吾名乃金色的路西昂…",0,320,280,0,0)
+//	wait(80)
+//	MES_close(GOLDMAO)		
+	menuBMP(1,	14,	408,349,408,32)
+	menu(1,	0,	120,260,  0,	408, 32,	 0,  0,0)
+	menu(1,	0,	120,260,  0,	408, 32,	30,100,0)
+	wait(80)
+	menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)						//文字フェードアウト
+	wait(5)
+
+	VOICE(686,0)	//★「女神に背きし堕天使之一人なり…」
+//	MES_pos(GOLDMAO,"W9C2背叛了女神的堕天使中的一员…",0,320,280,0,0)
+//	wait(120)
+//	MES_close(GOLDMAO)			
+//	wait(15)
+	menuBMP(0,	14,	408,383,408,32)
+	menu(0,	0,	120,260,  0,	408, 32,	 0,  0,0)
+	menu(0,	0,	120,260,  0,	408, 32,	30,100,0)
+	wait(120)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	30,0,0)						//文字フェードアウト
+	wait(5)
+	
+	VOICE(687,0)	//★「愚かなる人間，そして真祖之娘よ…」
+//	MES_pos(GOLDMAO,"W9C2愚蠢的人类，以及真祖的女儿啊…",0,320,280,0,0)
+//	wait(125)
+//	MES_close(GOLDMAO)		
+	menuBMP(1,	14,	408,416,408,32)
+	menu(1,	0,	120,260,  0,	408, 32,	 0,  0,0)
+	menu(1,	0,	120,260,  0,	408, 32,	30,100,0)
+	wait(125)
+	menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)						//文字フェードアウト
+	wait(5)
+
+	VOICE(688,0)	//★「我が復活を寿（ことほ）ぐがよい…！」
+//	MES_pos(GOLDMAO,"W9C2为我的复活献上祝词吧…！",0,320,280,0,0)
+//	wait(90)
+//	MES_close(GOLDMAO)	
+	menuBMP(0,	14,	408,448,408,32)
+	menu(0,	0,	120,260,  0,	408, 32,	 0,  0,0)
+	menu(0,	0,	120,260,  0,	408, 32,	60,100,0)
+	wait(90)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	30,0,0)							//文字フェードアウト
+
+//	CAM_move(20,-260,95,90,0)
+//	CAM(-90,137,95,42,179,90,0)
+	CAM_move(20,-260,95,65,0)
+	CAM(-90,137,95,42,179,65,0)
+	wait(65)
+	CAM(-130,136,95,41,179,600,0)
+	
+	VOICE(162,0)	//★「痴れ言を…！」
+	MES_pos(ALWEN,"痴人说梦…！",0,0,0,0,0)
+	wait(50)
+	MES_close(ALWEN)		
+
+	VOICE(073,0)	//★「ふ，ふざけんじゃねえっ！」
+	MES_pos(EVENT_RAGNA,"开…开什么玩笑！",0,0,0,0,0)
+	wait(60)
+	MES_close(EVENT_RAGNA)		
+	
+	VOICE(074,0)	//★「米娅，待ってろ！」
+	MES_pos(EVENT_RAGNA,"米娅，等着我！",0,0,0,0,0)
+	wait(40)
+	MES_close(EVENT_RAGNA)
+			
+	VOICE(075,0)	//★「絶対に……絶対に助けるからな！」
+	MES_pos(EVENT_RAGNA,"我绝对……\n绝对会把你救出来的！",0,0,0,0,0)
+	wait(80)
+	MES_close(EVENT_RAGNA)	
+
+//	BGM_vol(100,30)
+
+	//----------------------------------------------------------------------------
+	//フェードアウト
+	fade_in(100,60,0)
+	wait_fade()	
+	
+	MOT(EFFDUMMY3,0,0)									//エフェクト：光之粒子終了
+
+
+	chr_pos(RAGNA,   200,1500,0, 0,2)
+	chr_pos(PARTNER,-200,1500,0, 0,2)	
+	wait(1)
+	CAM_return(0)
+	wait(1)
+	
+	delete(GOLDMAO)	
+	delete(EVENT_RAGNA)	
+	delete(ALWEN)	
+	delete(MOVDUMMY)	
+	delete(MOVDUMMY2)	
+	delete(MOVDUMMY3)	
+	delete(SHIELD1)
+	delete(SHIELD2)
+	delete(EFFDUMMY1)
+	delete(EFFDUMMY2)
+	delete(EFFDUMMY3)
+	delete(EFFDUMMY4)
+	
+	EV("EV_Battle")
+}
+
+EV_MoveRagna
+{
+//	MOT(MOVDUMMY2,150,0)
+	wait(60)
+	color(EVENT_RAGNA, 1)
+ //	MOT(SHIELD1, 48, 0)	
+//	wait(100)
+//	MOT(MOVDUMMY2,0,0)
+	wait_MOT(MOVDUMMY2,150)
+	MOT(SHIELD1, 0, 0)
+	
+	//着地
+	chr_equip_off(EVENT_RAGNA)
+	F_reset_chr(EVENT_RAGNA, CF_NO_HEIGHT)
+	F_reset_chr(EVENT_RAGNA, CF_NO_ZIMEN)
+	jump(EVENT_RAGNA, 0,30, 200,1500,0,0)
+	MOT(EVENT_RAGNA, 2, 15)
+}
+
+EV_MoveAlwen
+{
+//	MOT(MOVDUMMY3,150,0)
+	wait(60)
+	color(ALWEN, 1)
+ //	MOT(SHIELD2, 48, 0)	
+//	wait(100)
+//	MOT(MOVDUMMY3,0,0)
+	wait_MOT(MOVDUMMY3,150)
+	MOT(SHIELD2, 0,0)
+	
+	chr_equip_off(ALWEN)
+	F_reset_chr(ALWEN, CF_NO_HEIGHT)
+	F_reset_chr(ALWEN, CF_NO_ZIMEN)	
+	jump(ALWEN, 0,60,-200,1500,0,0)	
+
+	MOT(ALWEN,134,15)	
+	wait_move(ALWEN)
+	MOT(ALWEN,2,10)	
+	
+	IK(ALWEN,"Bone_LeftWing1",1)
+	IK(ALWEN,"Bone_RightWing1",1)
+	
+	wait_move(ALWEN)	
+}
+
+//--------------------------------------------------------------------
+// ボス战
+EV_Battle
+{
+	//地球を消す
+	F_set_obj("back00_add", NP_HIDE)
+	F_set_obj("back01", NP_HIDE)
+	F_set_obj("back02", NP_HIDE)
+	F_set_obj("back03", NP_HIDE)
+	F_set_obj("back04", NP_HIDE)
+	F_set_obj("back05", NP_HIDE)
+	
+	//重い之で龙卷も一部消す
+	F_set_obj("taihoo01", NP_HIDE)
+	F_set_obj("taihoo02", NP_HIDE)
+	F_set_obj("taihoo03", NP_HIDE)
+	F_set_obj("taihoo04", NP_HIDE)
+	F_set_obj("taihoo05", NP_HIDE)
+
+//	set_chr(BOSS,408,		-1,-1,   -1391,-986,0500,  2,  0,	0,"<EV_LastBattleEnd>;") //魔王米娅
+	set_chr(BOSS,408,		-1,-1,   0,-1000,0500,  2,  0,	0,"<EV_LastBattleEnd>;") //魔王米娅
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)	//BOSS＿ＨＰ表示
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)					//ワープ封じる。
+	
+	//拉古那メモ用
+//	F_set(F6_09_BattleMao)//★ラスボス【魔王米娅】と战闘開始
+	
+	//キャラ再配置
+	chr_pos(RAGNA,   100,1500,0, 180,2)
+	chr_pos(PARTNER,-100,1500,0, 180,2)	
+	chr_pos(PET,       0,1550,0, 180,2)	
+	
+	color(RAGNA, 1)
+	color(PARTNER, 1)
+	
+	
+	//再战用オートセーブ
+	workG(GW_ENTRY_EVENT,SET,100)
+	workG(GW_DEF_BGM,SET,99)						//デフォルト曲を変更する 無音
+	AutoSave(0)
+	workG(GW_ENTRY_EVENT,SET,0)
+	workG(GW_DEF_BGM,SET,42)							//デフォルト曲を変更する マップ曲
+
+	
+	//フェードイン
+	
+	set_namebmp(26,0)							//金色米娅
+
+	CAM_return(0)
+	wait(30)
+//	CAM(234,63,215,43,202,0,0)
+
+	fade_in(0,60,0)
+//	wait_fade()
+
+	SCORE(0,0,0)//念之ためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,109);//魔王米娅
+
+	EV_end()	
+}
+
+//---------------------------------------------------------------------
+// 再战用
+//---------------------------------------------------------------------
+EV_BattleBossOnly
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+	
+	wait(30)									//GAME OVER曲待ち
+
+	//地球を消す
+	F_set_obj("back00_add", NP_HIDE)
+	F_set_obj("back01", NP_HIDE)
+	F_set_obj("back02", NP_HIDE)
+	F_set_obj("back03", NP_HIDE)
+	F_set_obj("back04", NP_HIDE)
+	F_set_obj("back05", NP_HIDE)
+	
+	//重い之で龙卷も一部消す
+	F_set_obj("taihoo01", NP_HIDE)
+	F_set_obj("taihoo02", NP_HIDE)
+	F_set_obj("taihoo03", NP_HIDE)
+	F_set_obj("taihoo04", NP_HIDE)
+	F_set_obj("taihoo05", NP_HIDE)
+
+	//キャラ再配置
+	chr_pos(RAGNA,   100,1500,0, 180,2)
+	chr_pos(PARTNER,-100,1500,0, 180,2)	
+	chr_pos(PET,       0,1550,0, 180,2)	
+	
+	color(RAGNA, 1)
+	color(PARTNER, 1)
+
+	set_chr(BOSS,408,		-1,-1,   -1391,-986,0500,  2,  0,	0,"<EV_LastBattleEnd>;") //魔王米娅
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)					//BOSS＿ＨＰ表示
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)					//ワープ封じる。
+	workG(GW_DEF_BGM,SET,42)						//デフォルト曲を変更
+
+	BGM(42)
+	
+	CAM_return(0)
+	wait(15)
+	
+	//フェードイン
+	set_namebmp(26,0)							//金色米娅	
+	fade_in(0,30,0)
+
+	SCORE(0,0,0)//念之ためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,109);//魔王米娅
+
+	EV_end()	
+}
+
+//---------------------------------------------------------------------
+// 魔王路西昂战	ゲーセン用
+//---------------------------------------------------------------------
+EV_BattleBossOnly_02
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+	
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////ＨＰ0でも消えない　キャラ0は死亡時に"EV_DEAD"を再生
+
+	wait(30)									//GAME OVER曲待ち
+
+	//地球を消す
+	F_set_obj("back00_add", NP_HIDE)
+	F_set_obj("back01", NP_HIDE)
+	F_set_obj("back02", NP_HIDE)
+	F_set_obj("back03", NP_HIDE)
+	F_set_obj("back04", NP_HIDE)
+	F_set_obj("back05", NP_HIDE)
+	
+	//重い之で龙卷も一部消す
+	F_set_obj("taihoo01", NP_HIDE)
+	F_set_obj("taihoo02", NP_HIDE)
+	F_set_obj("taihoo03", NP_HIDE)
+	F_set_obj("taihoo04", NP_HIDE)
+	F_set_obj("taihoo05", NP_HIDE)
+
+	//キャラ再配置
+	chr_pos(RAGNA,   200,1500,0, 0,2)
+	chr_pos(PARTNER,-200,1500,0, 0,2)	
+	chr_pos(PET,       0,1550,0, 0,2)	
+	
+	color(RAGNA, 1)
+	color(PARTNER, 1)
+
+	set_chr(BOSS,408,		-1,-1,   -1391,-986,0500,  2,  0,	0,"<EV_YOUWIN>;") //魔王米娅
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)					//BOSS＿ＨＰ表示
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)					//ワープ封じる。
+	workG(GW_DEF_BGM,SET,42)						//デフォルト曲を変更
+
+	//BGM(42)
+	
+	CAM_return(0)
+	wait(15)
+	
+	//フェードイン
+	set_namebmp(26,0)							//金色米娅	
+	fade_in(0,30,0)
+
+	SCORE(0,0,0)//念之ためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,109);//魔王米娅
+
+	EV_end()	
+}
+//敗北時---------------------
+EV_DEAD
+{
+	wait_EV("EV_YOUWIN")
+
+	EV_begin()
+	EFF(21660,320,240,0,0,200,0)//LOSE
+
+	wait(60)
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+	workG(GW_ENTRY_EVENT,SET,115)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//G斗技场に
+}
+
+//勝利時---------------------
+EV_YOUWIN
+{
+	wait_EV("EV_DEAD")
+
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+	EFF(21650,320,240,0,0,100,0)//WIN
+
+//	wait(100)	//1フレーム進めないと，カメラが壊れる。（ボス之カメラ之ため）
+//	VOICE(701,0)	//★「馬鹿な…ありえぬ…！」
+	VOICE2(701,1,100)	//★「馬鹿な…ありえぬ…！」
+	wait(80)
+	wait(100)	
+//	VOICE(702,0)	//★「おおおおおおおおおっ…！」
+	VOICE2(702,1,100)	//★「おおおおおおおおおっ…！」
+
+	EV_begin()
+	fade_in(100,150,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+
+	//成績に応じて手办入手	//	->Figure F2839（魔王路西昂）
+	if(!F2839)
+	{
+		SE(24,0)//ゲットSE
+		MES(0,"L667金色魔王路西昂L777之手办を手に入れた！！",2)
+		MES_close(0)
+		F_set(2839)
+	}
+
+	workG(GW_ENTRY_EVENT,SET,115)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//G斗技场に
+}
+
+
+
+EV_NextStage
+{
+	F_set_chr(PLAYER1,CF_HI_JUMP)
+	F_set_chr(PLAYER2,CF_HI_JUMP)
+
+	//地球を消す
+	F_reset_obj("back00_add", NP_HIDE)
+	F_reset_obj("back01", NP_HIDE)
+	F_reset_obj("back02", NP_HIDE)
+	F_reset_obj("back03", NP_HIDE)
+	F_reset_obj("back04", NP_HIDE)
+	F_reset_obj("back05", NP_HIDE)
+
+	//龙卷を消す
+	F_set_obj("b_uzu", NP_HIDE)
+	F_set_obj("uzu00", NP_HIDE)
+	F_set_obj("taihoo01", NP_HIDE)
+	F_set_obj("taihoo02", NP_HIDE)
+	F_set_obj("taihoo03", NP_HIDE)
+	F_set_obj("taihoo04", NP_HIDE)
+	F_set_obj("taihoo05", NP_HIDE)
+	F_set_obj("taihoo06", NP_HIDE)
+	F_set_obj("taihoo07", NP_HIDE)
+	F_set_obj("taihoo08", NP_HIDE)
+	F_set_obj("taihoo09", NP_HIDE)
+	F_set_obj("taihoo010", NP_HIDE)
+	F_set_obj("taihoo011", NP_HIDE)
+	F_set_obj("taihoo012", NP_HIDE)
+	
+	
+}
+
+//--------------------------------------------------------------------
+EV_LastBattleEnd
+{
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+
+//	VOICE(701,0)	//★「馬鹿な…ありえぬ…！」
+	VOICE2(701,1,100)	//★「馬鹿な…ありえぬ…！」
+	wait(80)
+	wait(100)	
+//	VOICE(702,0)	//★「おおおおおおおおおっ…！」
+	VOICE2(702,1,100)	//★「おおおおおおおおおっ…！」
+
+	fade_in(100,150,WHITE)
+	wait(100)
+	EV_begin()
+		
+	//ホワイトアウト
+	wait_fade()
+	
+	//要塞，壊れマップへ
+	workG(GW_ENTRY_EVENT,SET,3)
+	new_map(18033)
+}
+
+//オーラSE処理----------------------------------
+EV_1174//音量大
+{
+	SE(1174,0)
+	wait(60)
+	EV("EV_1174_2")
+}
+EV_1174_2
+{
+	SE(1174,0)
+	wait(60)
+	EV("EV_1174")
+}
+
+#EndScriptTable
+//====================================================================
+

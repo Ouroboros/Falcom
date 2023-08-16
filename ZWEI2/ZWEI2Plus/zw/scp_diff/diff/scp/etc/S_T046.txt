@@ -1,0 +1,4286 @@
+//■Zwei2一般メッセージ・アルッテの町（※カルディナ）
+//────────────────────────────────────────────────────────────
+//■アルッテ
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆カルディナ（ギルド受付、元・一般人女性）Cardina")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_CARDINA
+{
+
+	TK_begin()
+	rot_chr(CARDINA,30,PLAYER1)
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(CARDINA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,CARDINA)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,CARDINA)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CARDINA)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CARDINA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CARDINA)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CARDINA)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,CARDINA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		EV("TK_CARDINA")
+		wait_EV("TK_CARDINA")
+	}
+	else
+	//──────────────────────────────
+	//①～⑫　ギルド受付初回イベント
+	//──────────────────────────────
+	if(!FT_01_Guildbigin)
+	{
+		EV("EV_FT_01_Guildbigin")
+		wait_EV("EV_FT_01_Guildbigin")
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		VOICE(717,0)						//「ようこそ、ハンターズギルドへ」	
+
+		MES(CARDINA,"ようこそ、ハンターズギルドへ。",0)
+//		MES(CARDINA,"ようこそ、イルバード・\nハンター協会へ。",0)
+		MES_close(CARDINA)
+		
+		EV("SHOP_CARDINA_LOOP")
+		wait_EV("SHOP_CARDINA_LOOP")
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//初回イベント
+		if(!FT_11_TalkCardina)
+		{
+			EV("TK_CARDINA")
+			wait_EV("TK_CARDINA")
+		}
+		//以下通常受け付け処理
+		else
+		{
+			VOICE(717,0)						//「ようこそ、ハンターズギルドへ」	
+
+			MES(CARDINA,"ようこそ、ハンターズギルドへ。",0)
+
+			MOT(CARDINA,151,5)
+//			MES(CARDINA,"ようこそ、イルバード・\nハンター協会へ。",0)
+			MES_close(CARDINA)
+			
+			EV("SHOP_CARDINA_LOOP")
+			wait_EV("SHOP_CARDINA_LOOP")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+		//モーション
+		MOT_SET(CARDINA,152, -2,450,450,-1,0)	//カルディナ
+		MOT(CARDINA,152,10)
+
+		//初回イベント
+		if(!FT_10_TalkCardina)
+		{
+			EV("TK_CARDINA")
+			wait_EV("TK_CARDINA")
+
+			EV("SHOP_CARDINA_LOOP")
+			wait_EV("SHOP_CARDINA_LOOP")
+		}
+		//以下通常受け付け処理
+		else
+		{
+			VOICE(717,0)						//「ようこそ、ハンターズギルドへ」
+			MES(CARDINA,"ようこそ、ハンターズギルドへ。",0)
+			
+//			MES(CARDINA,"ようこそ、イルバード・\nハンター協会へ。",0)
+			MES_close(CARDINA)
+			
+			EV("SHOP_CARDINA_LOOP")
+			wait_EV("SHOP_CARDINA_LOOP")
+		}
+		
+		//モーション復帰
+		MOT(CARDINA,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		VOICE(717,0)						//「ようこそ、ハンターズギルドへ」
+		MES(CARDINA,"ようこそ、ハンターズギルドへ。",0)
+//		MES(CARDINA,"ようこそ、イルバード・\nハンター協会へ。",0)
+		MES_close(CARDINA)
+		
+		EV("SHOP_CARDINA_LOOP")
+		wait_EV("SHOP_CARDINA_LOOP")
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		//初回イベント
+		if(!FT_06_TalkCardina)
+		{
+			EV("TK_CARDINA")
+			wait_EV("TK_CARDINA")
+		}
+		//以下通常受け付け処理
+		else
+		{
+			VOICE(717,0)						//「ようこそ、ハンターズギルドへ」
+			MES(CARDINA,"ようこそ、ハンターズギルドへ。",0)
+//			MES(CARDINA,"ようこそ、イルバード・\nハンター協会へ。",0)
+			MES_close(CARDINA)
+			
+			EV("SHOP_CARDINA_LOOP")
+			wait_EV("SHOP_CARDINA_LOOP")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		VOICE(717,0)						//「ようこそ、ハンターズギルドへ」
+		MES(CARDINA,"ようこそ、ハンターズギルドへ。",0)
+	
+//		MES(CARDINA,"ようこそ、イルバード・\nハンター協会へ。",0)
+		MES_close(CARDINA)
+		
+		EV("SHOP_CARDINA_LOOP")
+		wait_EV("SHOP_CARDINA_LOOP")
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//③で酒場にいる時はギルド受付初回イベント発生を回避するため直接TK_CARDINAを読みます
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		VOICE(717,0)						//「ようこそ、ハンターズギルドへ」
+		MES(CARDINA,"ようこそ、ハンターズギルドへ。",0)
+//		MES(CARDINA,"ようこそ、イルバード・\nハンター協会へ。",0)
+		MES_close(CARDINA)
+		
+		EV("SHOP_CARDINA_LOOP")
+		wait_EV("SHOP_CARDINA_LOOP")
+	}
+	
+	TK_end()
+}
+
+SHOP_CARDINA_LOOP
+{
+
+	if(FT_FF_TreasureComp)//トレジャーコンプ済み
+	{
+	//	name("選択テキスト")
+		workL(WK_CANCEL,SET,3)//【やめる】
+		MES_pos(PLAYER1,"??W9【話す】\n【ハンターランクを確認する】\n【やめる】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("⇒話をする")
+		//　　通常会話処理へ飛ぶ。
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+			EV("TK_CARDINA")
+			wait_EV("TK_CARDINA")
+			loop
+		}
+		else
+		//──────────────────────────────
+		//	name("⇒ハンターランクを確認する")
+		//　　ハンターランク確認処理へ飛ぶ。
+		//──────────────────────────────
+		if(WK_YESNO==2)
+		{
+			EV("CHECK_RANK_CARDINA")
+			wait_EV("CHECK_RANK_CARDINA")
+			loop
+		}
+		//──────────────────────────────
+		//	name("⇒やめる")
+		//　　会話処理終了。
+		//──────────────────────────────
+		else
+		{
+			VOICE(720,0)												//「頑張ってくださいね」
+			MES(CARDINA,"頑張ってくださいね。",0)
+			
+//			MES(CARDINA,"またお越しくださいね。",0)
+			MES_close(CARDINA)
+		}
+	}
+	else
+	{
+
+		workL(WK_CANCEL,SET,4)//【やめる】
+		MES_pos(PLAYER1,"??W9【話す】\n【ハンターランクを確認する】\n【トレジャーを寄贈する】\n【やめる】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+
+		//──────────────────────────────
+		//	name("⇒話をする")
+		//　　通常会話処理へ飛ぶ。
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+			EV("TK_CARDINA")
+			wait_EV("TK_CARDINA")
+			loop
+		}
+		else
+		//──────────────────────────────
+		//	name("⇒ハンターランクを確認する")
+		//　　ハンターランク確認処理へ飛ぶ。
+		//──────────────────────────────
+		if(WK_YESNO==2)
+		{
+			EV("CHECK_RANK_CARDINA")
+			wait_EV("CHECK_RANK_CARDINA")
+			loop
+		}
+		else
+		//──────────────────────────────
+		//	name("⇒トレジャーを寄贈する")
+		//　　トレジャー寄贈処理へ飛ぶ。
+		//──────────────────────────────
+		if(WK_YESNO==3)
+		{
+			EV("PRESENT_TREASURE_CARDINA")
+			wait_EV("PRESENT_TREASURE_CARDINA")
+
+			//寄贈しなかった場合のみ、loop
+			if(F_PARTNER)
+				loop
+		}
+		//──────────────────────────────
+		//	name("⇒やめる")
+		//　　会話処理終了。
+		//──────────────────────────────
+		else
+		{
+			VOICE(720,0)												//「頑張ってくださいね」
+			MES(CARDINA,"頑張ってくださいね。",0)
+			
+//			MES(CARDINA,"またお越しくださいね。",0)
+			MES_close(CARDINA)
+		}
+	}
+}
+
+//──────────────────────────────
+//▼ギルド受付・初回イベント
+//──────────────────────────────
+EV_FT_01_Guildbigin
+{
+	//●チュートリアル：ギルドシステム
+	Load_BMP(20,"sys\\tuto08.itm","0")
+	Load_BMP(21,"sys\\tuto09.itm","0")
+	menuBMP(1,	20,	0,0,288,384)
+	menuBMP(2,	21,	0,0,288,384)
+
+	//──────────────────────────────
+	//▼⑥～⑫、ギルド受付・初回イベント
+	//──────────────────────────────
+	if(F3_00_GoMoonCastle)
+	{
+		//──────────────────────────────
+		//	name("⇒フラグ⑩の場合")
+		if(F4_09_GoShrineMia && !F5_00_HearLunar)
+		{
+			MOT_SET(CARDINA,152, -2,450,450,-1,0)	//カルディナ
+			MOT(CARDINA,152,10)
+			MES(CARDINA,"あ、あら……？\nこんな朝早くから……",0)
+			MES(CARDINA,"ふふ、お早いんですね。\nようこそ、イルバード・\nハンター協会へ。",0)
+			MES_close(CARDINA)
+		}
+		else
+		{
+			MES(CARDINA,"ようこそ、イルバード・\nハンター協会へ。",0)
+			MES_close(CARDINA)
+		}
+
+	//──────────────────────────────
+	//	name("⇒アルウェンが居ない場合")
+		if(F4_00_StartSolo && !F4_09_GoShrineMia)
+		{
+			rot_chr(CARDINA,30,RAGNA)
+			MES(CARDINA,"あなたは……\nラグナさんでしょうか？",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"あ、ああ。そうだが……",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(F5_00_HearLunar && !F6_00_GoToMeru)
+		{
+			rot_chr(CARDINA,30,RAGNA)
+			MES(CARDINA,"あなたは……\nラグナさんでしょうか？",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"あ、ああ。そうだが……",0)
+			MES_close(RAGNA)
+		}
+	//	name("⇒アルウェンがいる場合")
+		else
+		{
+			MES(CARDINA,"あなた方は……ラグナさんと\nアルウェンさんでしょうか？",0)
+			MES_close(CARDINA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"うむ、その通りだが……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"はは、そんなに\n有名になっちまったか……？",0)
+			MES_close(RAGNA)
+		}
+	//──────────────────────────────
+
+		MES(CARDINA,"ふふ、お話は聞いています。",0)
+		MES(CARDINA,"イルバードでハンター活動を\nなさっているそうですね。",0)
+		MES(CARDINA,"それでしたら、どうか\n当ギルドを利用なさってください。",0)
+		MES(CARDINA,"こちらの受付で、L337『ハンターランク』L400に\n応じた援助などを行っていますから。",0)
+		MES_close(CARDINA)
+
+	//　　ラグナにＰＡエモーション。
+		EMO(RAGNA,EMO_PA)
+		wait(30)
+
+		MES(RAGNA,"おっと、ハンターランクの査定か……\nすっかり忘れてたぜ。",0)
+		MES_close(RAGNA)
+
+	//　　※ハンターランクＢＭＰ表示。
+		menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+		menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+		SE(043,PLAYER1)
+		wait(40)
+		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//		wait(30)
+
+		//──────────────────────────────
+		//	name("⇒アルウェンがいる場合")
+		if( F6_00_GoToMeru || !F4_00_StartSolo )
+		{
+			MES(PARTNER,"ふむ、ランクに応じて\nアイテムが貰えるようだな。",0)
+			MES_close(PARTNER)
+
+			look_chr(RAGNA,PARTNER,"Bone_Head")
+			MES(RAGNA,"ああ、結構\n便利なアイテムが多いんだ。",0)
+			MES(RAGNA,"ダンジョン探索も楽になるし、\n気をつけておかなきゃな。",0)
+			MES_close(RAGNA)
+		}
+		else
+		if( F4_09_GoShrineMia && !F5_00_HearLunar )
+		{
+			MES(PARTNER,"ふむ、ランクに応じて\nアイテムが貰えるようだな。",0)
+			MES_close(PARTNER)
+
+			look_chr(RAGNA,PARTNER,"Bone_Head")
+			MES(RAGNA,"ああ、結構\n便利なアイテムが多いんだ。",0)
+			MES(RAGNA,"ダンジョン探索も楽になるし、\n気をつけておかなきゃな。",0)
+			MES_close(RAGNA)
+		}
+		//	name("⇒それ以外")
+		else
+		{
+			MES(RAGNA,"ギルドで貰えるアイテムは\n結構便利なやつが多いし、\n気をつけておかなきゃな。",0)
+			MES_close(RAGNA)
+		}
+		//──────────────────────────────
+
+		MES(CARDINA,"ふふ、それに当ギルドでは\nL337『トレジャー』L400の\n買取なども行っているんです。",0)
+		MES_close(CARDINA)
+
+	//　　ラグナ・アルウェンに？エモーション。
+		look_off(RAGNA)
+		EMO(RAGNA,EMO_HATENA)
+		if(!F4_00_StartSolo || F6_00_GoToMeru)
+			EMO(PARTNER,EMO_HATENA)
+		if( F4_09_GoShrineMia && !F5_00_HearLunar )
+			EMO(PARTNER,EMO_HATENA)
+		wait(30)
+
+		if(!F4_00_StartSolo || F6_00_GoToMeru)
+		{
+			MES(PLAYER1,"トレジャー……？",0)
+			MES_close(PLAYER1)
+		}
+		else
+		{
+			MES(RAGNA,"トレジャー……？",0)
+			MES_close(RAGNA)
+		}
+
+	//　　※トレジャー買取ＢＭＰ表示。
+		menu(2,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+		menu(2,	0,	176, 48,  0,	288, 384,	40,100,0)
+		SE(043,PLAYER1)
+		wait(40)
+		wait_key(0)
+		menu(2,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//		wait(30)
+
+		MES(CARDINA,"ふふ、こちらは博物館と\n一緒になっている当ギルドならでは、\nかもしれませんね。",0)
+		MES(CARDINA,"ハンター活動の\nお役に立つと思いますから、\nどうか利用なさってくださいね。",0)
+		MES_close(CARDINA)
+
+		MES(RAGNA,"ああ、サンキュー。",0)
+		MES(RAGNA,"（そういや、今まで\n  ギルドには寄らなかったよな……）",0)
+		MES(RAGNA,"わかった、これからは\nちょくちょく利用させてもらうぜ。",0)
+		MES_close(RAGNA)
+
+		MES(CARDINA,"ふふ、お待ちしていますね。",0)
+		MES_close(CARDINA)
+
+		//　　※フラグ⑩の場合、⑩初回イベントは起こらなくなる。
+		//	name("⇒フラグ⑩の場合")
+		if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			F_set(FT_10_TalkCardina)
+	}
+	else
+	//──────────────────────────────
+	//▼①②⑤、ギルド受付・初回イベント
+	//──────────────────────────────
+	if(F1_01_GameStart)
+	{
+		MES(CARDINA,"ようこそ、\nアルッテ私設博物館へ。",0)
+		MES(CARDINA,"見学の方でしょうか？",0)
+		MES_close(CARDINA)
+
+	//　　ラグナたちに？エモーション。
+		EMO(RAGNA,EMO_HATENA)
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+		
+		MES(RAGNA,"ん？　博物館……？",0)
+		MES(RAGNA,"ハンター協会じゃないのか……？",0)
+		MES_close(RAGNA)
+
+	//　　カルディナにＰＡエモーション。
+		EMO(CARDINA,EMO_PA)
+		wait(30)
+		
+		MES(CARDINA,"あら……ハンターの方でしたか。",0)
+		MES(CARDINA,"ふふ、失礼してしまいましたね。",0)
+		MES_close(CARDINA)
+
+	//　　カルディナ、軽く手で案内するような素振り。
+		//★モーション
+	
+		MES(CARDINA,"ええ、ここは確かに\nハンター協会となっています。",0)
+		MES(CARDINA,"ただ同じ建物に\n博物館も入っていて、\n同じ受付になっているんですよ。",0)
+		MES(CARDINA,"すみません、\n少し紛らわしいですね。",0)
+		MES_close(CARDINA)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"いやまあ、ハンター協会なんて\n変わったところが多いからな。",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"ほう……そうなのか？",0)
+		MES_close(PARTNER)
+		
+	//ラグナ、アルウェンに向く
+		rot_chr(RAGNA,30,PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"ああ、基本的にハンターってのは\n自由気まま、独立独歩の連中だからな。",0)
+		MES(RAGNA,"他人に頼ったりしねえし、\nギルドも助けてくれるわけじゃない。\n何をするにもギブアンドテイクだぜ。",0)
+		MES(RAGNA,"ただ、ハンターとしての活動が\n認められれば、ギルドから見合った\n援助が出ることになってるんだ。",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"ふふ、質の良いハンターの育成\nという事になっていますけれど……",0)
+		MES(CARDINA,"ギルドにしても、大抵は\n管理人が好きで開いている\nような組織ですから。",0)
+		MES(CARDINA,"あまり堅苦しく\n考えないでください。",0)
+		MES_close(CARDINA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"ふむ……\n要するに好きな連中が\n好きなようにやっておるのだな。",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"い、言っておくが、\nハンターは厳しい世界だぜ。",0)
+		MES(RAGNA,"自由ってことは、それだけ\n背負ってる責任も大きいんだからな。",0)
+		MES_close(RAGNA)
+
+	//　　ラグナ、カルディナに向く。
+		rot_chr(RAGNA,30,CARDINA)
+		
+		MES(RAGNA,"えーっと、それでだ。\n俺はラグナ・バレンタインと\nいうんだが……",0)
+	//	MES(RAGNA,"実は今日は詫びとかねえと\nいけないことがあるんだ。",0)
+		MES(RAGNA,"ここが博物館ってことなら\n実は詫びとかねえと\nいけないことがあるんだ。",0)
+		MES(RAGNA,"こっちに運送を頼まれてた\n荷物があったハズなんだが、\n途中で飛行機が墜落しちまってな。",0)
+		MES(RAGNA,"……すまねえ、そのとき\n荷物の方も落しちまったらしいんだ。",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"まあ、そうだったのですか。",0)
+		MES(CARDINA,"墜落の噂は聞いていましたけれど、\nそれがラグナさんだったんですね。",0)
+		MES(CARDINA,"確か奇跡的に、ほとんど\n怪我もなされなかったとか……",0)
+		MES(CARDINA,"ふふ、強運な方なんですね。",0)
+		MES_close(CARDINA)
+
+	//　　ラグナとアルウェン、顔を見合わせる。
+		rot_chr(RAGNA,30,PARTNER)
+		rot_chr(PARTNER,30,RAGNA)
+		EMO(RAGNA,EMO_TENTEN)
+		EMO(PARTNER,EMO_TENTEN)
+		wait(30)
+		
+		rot_chr(RAGNA,30,CARDINA)
+		rot_chr(PARTNER,30,CARDINA)
+
+		MES(RAGNA,"は、はは。まあな……",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"そうですね……荷物の方は\n館長が注文なさった品だと思います。",0)
+		MES(CARDINA,"そのお話は、館長に直接\n仰った方が良さそうですね。",0)
+		MES_close(CARDINA)
+
+	//──────────────────────────────
+	//	name("⇒フラグ⑤の場合")
+		if(F2_14_TalkEnemy)
+		{
+			MES(CARDINA,"先ほど、待ち合わせがあるとかで\n宿酒場の方に向かわれたと思います。",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"そうか……\nわかった、声を掛けてみるぜ。",0)
+			MES_close(RAGNA)
+		}
+		else
+	//	name("⇒フラグ②の場合")
+		if(F1_15_GoVillage)
+		{
+			MES(CARDINA,"そちらにいらっしゃいますから、\n声を掛けてみてください。",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ああ、わかった。",0)
+			MES(RAGNA,"（あれ、というかあの人って……）",0)
+			MES_close(RAGNA)
+		}
+		else
+	//	name("⇒フラグ①の場合")
+		if(F1_01_GameStart)
+		{
+			MES(CARDINA,"今頃の時間なら、ギルドの前で\nパイプをくわえてらっしゃると\n思いますよ。",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"そうか……\nわかった、声を掛けてみるぜ。",0)
+			MES(RAGNA,"（でもギルドの前にいた人って……）",0)
+			MES(RAGNA,"（……まあいい、\n  とりあえず行ってみるか。）",0)
+			MES_close(RAGNA)
+		}
+
+	//	name("＜カルディナ①～⑤＞")
+	//　　※初回イベント最後に挿入。
+		MES(CARDINA,"ふふ、それとラグナさん。",0)
+		MES_close(CARDINA)
+
+		EMO(RAGNA,EMO_HATENA)
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+
+		MES(CARDINA,"イルバードでハンター活動を\n行われるなら、ぜひ当ギルドを\n利用になってくださいね。",0)
+		MES(CARDINA,"当ギルドではL337『ハンターランク』L400に\n応じた援助を行っていますから。",0)
+		MES_close(CARDINA)
+
+	//　　ラグナにＰＡエモーション。
+		EMO(RAGNA,EMO_PA)
+		wait(30)
+
+		MES(RAGNA,"おっと、忘れてたぜ。\nハンターランクの査定か……",0)
+		MES_close(RAGNA)
+
+	//　　※ハンターランクＢＭＰ表示。
+		menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+		menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+		SE(043,PLAYER1)
+		wait(40)
+		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+	//	wait(30)
+
+		MES(PARTNER,"ふむ、ランクに応じて\nアイテムが貰えるようだな。",0)
+		MES_close(PARTNER)
+
+		look_chr(RAGNA,PARTNER,"Bone_Head")
+		MES(RAGNA,"ああ、結構\n便利なアイテムが多いんだ。",0)
+		MES(RAGNA,"ダンジョン探索も楽になるし、\n気をつけておかなきゃな。",0)
+		MES_close(RAGNA)
+
+		MES(CARDINA,"ふふ、それに当ギルドでは\nL337『トレジャー』L400の\n買取なども行っているんです。",0)
+		MES_close(CARDINA)
+
+	//　　ラグナとアルウェンに？エモーション。
+		look_off(RAGNA)
+		EMO(RAGNA,EMO_HATENA)
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+
+		MES(PLAYER1,"トレジャー……？",0)
+		MES_close(PLAYER1)
+
+	//　　※トレジャー買取ＢＭＰ表示。
+		menu(2,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+		menu(2,	0,	176, 48,  0,	288, 384,	40,100,0)
+		SE(043,PLAYER1)
+		wait(40)
+		wait_key(0)
+		menu(2,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+	//	wait(30)
+
+		MES(CARDINA,"ふふ、こちらは博物館と\n一緒になっている当ギルドならでは、\nかもしれませんね。",0)
+		MES(CARDINA,"ハンター活動の\nお役に立つと思いますから、\nどうか利用なさってくださいね。",0)
+		MES_close(CARDINA)
+
+		MES(RAGNA,"はは、サンキュー。",0)
+		MES(RAGNA,"ちょくちょく\n顔を出させてもらうぜ。",0)
+		MES_close(RAGNA)
+
+		MES(CARDINA,"ふふ、お待ちしていますね。",0)
+		MES_close(CARDINA)
+
+	//──────────────────────────────
+	}
+
+	//⑩モーション復帰
+	if( F4_09_GoShrineMia && !F5_00_HearLunar )
+		MOT(CARDINA,150,10)
+
+	F_set(F0_08_TutoHunter)
+
+	//初回メッセージをみたフラグ
+	F_set(FT_01_Guildbigin)
+}
+
+//──────────────────────────────
+//▼カルディナ通常会話処理
+//──────────────────────────────
+TK_CARDINA
+{
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	if( F6_05_EndSixth )
+	{
+		if(!F_CARDINA)
+		{
+			MES(CARDINA,"あれからもう一月ですね。",0)
+			MES(CARDINA,"本当に色々な事が\nありましたけれど……",0)
+			MES(CARDINA,"イルバードに平和が戻ったのも\n皆さんのお陰だと思います。\n本当にお疲れ様でした。",0)
+			MES(CARDINA,"ラグナさん、ミアさん。\n道中お気をつけてくださいね。",0)
+			MES_close(CARDINA)
+			
+			F_set(CARDINA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CARDINA,"ふふ、私はやっぱり\n受付の仕事が\n性に合っているみたいですね。",0)
+			MES(CARDINA,"皆さんのような方に出会えて……\n本当に光栄でした。",0)
+			MES(CARDINA,"ラグナさん、ミアさん。\n道中お気をつけてくださいね。",0)
+			MES_close(CARDINA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	if( F6_00_GoToMeru )
+	{
+		//ハンターランク最大の時
+		if(GW_HUNTER_RANK==16)
+		{
+			if(!F_CARDINA)
+			{
+				MES(RAGNA,"じゃあカルディナさん、\n俺たちはそろそろ行かねえと。",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"うむ、だが案ずるでない。",0)
+				MES(PARTNER,"今の我らが力を合わせれば、\n六魔王にも匹敵するであろうからな。",0)
+				MES_close(PARTNER)
+
+			//	name2(PET)
+				MES(PET,"ま、一応伝説だしね。",0)
+				MES_close(PET)
+
+			//	name2(CARDINA)
+				MES(CARDINA,"ええ、お帰りをお待ちしています。",0)
+				MES(CARDINA,"どうか皆さん、\n無事にお戻りになってくださいね。",0)
+				MES_close(CARDINA)
+				
+				F_set(CARDINA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(CARDINA,"皆さんならきっと大丈夫でしょう。",0)
+				MES(CARDINA,"どうか一刻も早く、\n無事にお戻りになってくださいね。",0)
+				MES_close(CARDINA)
+			}
+		}
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"私も大まかな話は伺いました。",0)
+				MES(CARDINA,"魔王の復活にメルセデク要塞……\n大変な事になっているようですね。",0)
+				MES(CARDINA,"私にも出来る事が\nあればいいのですけれど……",0)
+				MES_close(CARDINA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"いや……竜巻の方は\n俺たちに任せてくれ。",0)
+				MES(RAGNA,"それより、町の人たちの事を\n頼みたいんだが……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"うむ、何やら軽い\nパニックになっていたようだしな。",0)
+				MES_close(PARTNER)
+
+			//	name2(CARDINA)
+				MES(CARDINA,"……そうですね。\n今は町長さんのお話もあって、\n少し落ち着いていますけれど……",0)
+				MES(CARDINA,"分かりました。\n皆さんには私の方からも\nうまく説明をしておきます。",0)
+				MES(CARDINA,"この受付も今まで通りに\n利用できるようにしておきますから、\nいつでもお寄りくださいね。",0)
+				MES_close(CARDINA)
+
+				if(!FT_12_TalkCardina)
+				{
+					EMO(CARDINA,EMO_TENTEN)
+					wait(30)
+
+					MES(CARDINA,"あの、それと……",0)
+					MES_close(CARDINA)
+
+				//　　？エモーション。
+					EMO(RAGNA,EMO_HATENA)
+					EMO(PARTNER,EMO_HATENA)
+					EMO(PET,EMO_HATENA)
+					wait(30)
+
+					if(GW_MAN==1)
+					{
+						MES(RAGNA,"どうかしたのか？",0)
+						MES_close(RAGNA)
+					}
+					else
+					{
+						MES(PARTNER,"ふむ……？\nどうかしたのか？",0)
+						MES_close(PARTNER)
+					}
+
+					MES(CARDINA,"いえ、グレインさんが\n仰っていたんですが……",0)
+					MES(CARDINA,"各地のダンジョンの入り口に、\n決して開かない扉があるのを\nご存知ですか？",0)
+					MES(CARDINA,"実は先日、その扉が\n開いているのを\n目撃されたそうなんです。",0)
+					MES_close(CARDINA)
+
+				//　　カルディナに・・・エモーション。
+					EMO(CARDINA,EMO_TENTEN)
+					wait(40)
+
+					MES(CARDINA,"あの扉は、魔法大戦の頃に\n封じられたと伝えられているんです。",0)
+					MES(CARDINA,"この時期に開いてしまうなんて……\nメルセデクの出現と何か関係が\nあるのかもしれませんね……",0)
+					MES_close(CARDINA)
+					F_set(FT_12_TalkCardina)
+				}
+				F_set(CARDINA)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(CARDINA,"アルッテの皆さんには、\n私の方からも説明をしておきましょう。",0)
+				MES(CARDINA,"この受付も今まで通りに\n利用できるようにしておきますから、\nいつでもお寄りくださいね。",0)
+				MES_close(CARDINA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	//　　※初回イベント。
+	if( F5_00_HearLunar )
+	{
+		if(!FT_11_TalkCardina)
+		{
+		//　　カルディナにＰＡエモーション。
+			EMO(CARDINA,EMO_PA)
+			wait(30)
+	
+			MES(CARDINA,"あら……",0)
+			MES_close(CARDINA)
+
+		//　　カルディナ、ルゥの方を向く。
+			rot_chr(CARDINA,30,PET)
+			MOT(CARDINA,151,5)
+			
+			MES(CARDINA,"ようこそ、ハンター協会へ。",0)
+			MES(CARDINA,"ふふ、妖精の方なんて珍しいですね。\nラグナさんのお手伝いですか？",0)
+			MES_close(CARDINA)
+			
+			rot_chr(PET,30,CARDINA)
+
+		//	name2(PET)
+			MES(PET,"そ、そんなんじゃないわよ！",0)
+			MES(PET,"これはその、色々あって\n成り行きで……",0)
+			MES(PET,"とにかく、今だけ\n特別に力を貸してやってるの。",0)
+			MES(PET,"あたしはルゥ。\nアルウェン様の臣下なんだから。",0)
+			MES_close(PET)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"あら、ラグナさんではなく\nアルウェンさんの……？",0)
+			MES(CARDINA,"ふふ、これは失礼致しました。",0)
+			MES(CARDINA,"私はここの受付をしている\nカルディナと申します。\n以後よろしくお願いしますね。",0)
+			MES_close(CARDINA)
+
+		//	name2(PET)
+			MES(PET,"あ、うん。\n……よ、よろしく……",0)
+			MES_close(PET)
+
+			rot_chr(RAGNA,30,PET)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ははは……\n（ルゥが押されてるぜ……）",0)
+			MES_close(RAGNA)
+
+		//　　ラグナ、カルディナに向く。
+			rot_chr(RAGNA,30,CARDINA)
+
+			MES(RAGNA,"っていうか、カルディナさんも\n全然動じないんだな……",0)
+			MES(RAGNA,"少しは驚かないのか？",0)
+			MES_close(RAGNA)
+
+			rot_chr(CARDINA,30,RAGNA)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"ふふ、私も元ハンターですし……\n妖精の方には慣れてますから。",0)
+			MES_close(CARDINA)
+
+		//　　カルディナ、ルゥに向く。
+			rot_chr(CARDINA,30,PET)
+			
+			MES(CARDINA,"ルゥさん、私は大抵\nここの受付にいますから……",0)
+			MES(CARDINA,"何か困った事があれば\n気兼ねなく相談なさってくださいね。",0)
+			MES_close(CARDINA)
+
+		//	name2(PET)
+			MES(PET,"え……？",0)
+			MES(PET,"う、うん。\nまあ考えとく……",0)
+			MES_close(PET)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（恐るべし\n  ギルドの受付だな……）",0)
+			MES_close(RAGNA)
+			
+			//★カルディナ【ルゥにも負けない】
+			F_set_note(CARDINA,2)
+			F_set(FT_11_TalkCardina)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"今朝、星ヶ峰を見上げたら\n一筋の煙が立っていました。",0)
+				MES(CARDINA,"あんな雪山で山火事なんて、\n少し妙な話ですね。",0)
+				MES(CARDINA,"もしかして……\nこの前の魔物騒動と\n何か関係があるのでしょうか。",0)
+				MES_close(CARDINA)
+				F_set(CARDINA)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(CARDINA,"この前の魔物騒動といい、\n先日から妙な事ばかりですね。",0)
+				MES(CARDINA,"まるでイルバード全体が\n不穏な空気に包まれているようです。",0)
+				MES(CARDINA,"私たちが知らない所で\n何かが起きているのでしょうか……",0)
+				MES_close(CARDINA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+	//　　※ギルドの掲示板の前に立っている。
+	//　　※初回イベント
+		if(!FT_10_TalkCardina)
+		{
+		//　　カルディナ、ＰＡエモーションで振り返る。
+			EMO(CARDINA,EMO_PA)
+			wait(30)
+			
+			MES(CARDINA,"あ、あら……？",0)
+			MES(CARDINA,"お２人とも、今日は早いんですね。",0)
+			MES(CARDINA,"まだギルドの方も準備中ですけれど、\nご利用になりますか？",0)
+			MES_close(CARDINA)
+
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"ああ、出来れば頼むぜ。",0)
+				MES(RAGNA,"済まねえな、こんな朝早くから。",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"うむ、済まぬな。\nこのような朝早くから。",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			MES(CARDINA,"ふふ、構いませんよ。",0)
+			MES(CARDINA,"ダンジョンで野宿した\nハンターの方などは、よく明け方に\nいらっしゃったりもしますから。",0)
+			MES(CARDINA,"……いかがなさいますか？",0)
+			MES_close(CARDINA)
+			F_set(FT_10_TalkCardina)
+			
+		//　　⇒通常受付処理の、選択肢に飛ぶ。
+			
+		//──────────────────────────────
+		}
+		else
+		{
+		//　　※以下通常一般メッセージ。
+			MES(CARDINA,"何か御用があれば、\n遠慮なさらず仰ってくださいね。",0)
+			MES(CARDINA,"ハンターズギルドには\n朝も夜もありませんから。",0)
+			MES_close(CARDINA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	//　　※フラグ⑦－Ａ（『★星降りの里へ向かうことにした』以前）のみ発動。
+	//　　　スバルと合流後は、無視して通常一般メッセージを流します。
+	if( F4_00_StartSolo )
+	{
+		if(!F_CARDINA && !F4_02_GoVillage2)
+		{
+			MES(CARDINA,"ラグナさん……？",0)
+			MES(CARDINA,"どうかなさいましたか？\n顔色が優れないようですが……",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ああ、いや……",0)
+			MES(RAGNA,"大したことじゃねえ。",0)
+			MES(RAGNA,"ちょいと今後の予定なんかを\n考えてただけだ。",0)
+			MES_close(RAGNA)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"そうですか……",0)
+			MES(CARDINA,"何かあれば仰ってくださいね。",0)
+			MES(CARDINA,"小さな事でも、\nお力になれることが\nあるかもしれませんから。",0)
+			MES_close(CARDINA)
+			F_set(CARDINA)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"町の方は、大きな被害も\n無かったようですね。",0)
+				MES(CARDINA,"多少荒らされてしまいましたが、\n大きな怪我人も出なかったそうです。",0)
+				MES(CARDINA,"原因に関しては\n分からない事もありますが……",0)
+				MES(CARDINA,"ひとまずは\n安心してよさそうですね。",0)
+				MES_close(CARDINA)
+				
+				F_set(CARDINA)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(CARDINA,"館長なら、朝から\nロアルタ村に向かわれましたよ。",0)
+				MES(CARDINA,"村の方にも魔物が現れて、\nあちらは怪我人も\n出てしまったそうです。",0)
+				MES(CARDINA,"一晩で町も村も襲われるなんて、\nやはり、少々不可解ですね……",0)
+				MES_close(CARDINA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	if( F3_00_GoMoonCastle )
+	{
+	//　　※初回イベント。
+		if(!FT_06_TalkCardina)
+		{
+		//　　カルディナにＰＡエモーション。
+			EMO(CARDINA,EMO_PA)
+			wait(30)
+
+			MES(CARDINA,"あら、お２人とも……",0)
+			MES(CARDINA,"こんな時間から\n探索に出られるのですか？",0)
+			MES_close(CARDINA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"……うむ。",0)
+			MES(PARTNER,"どうしても外せぬ\n用事があってな。",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"悪い、今はちょっと\n話せないんだが……",0)
+			MES_close(RAGNA)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"そうですか……",0)
+			MES(CARDINA,"今夜はイルバード中が\n不穏な空気に包まれているようです。",0)
+			MES(CARDINA,"魔物も凶暴になっているようですし、\n無茶な真似はしないでくださいね。",0)
+			MES_close(CARDINA)
+			
+			F_set(FT_06_TalkCardina)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"戸口にグレインさんが立っていますし、\n私も少々なら護身術の心得があります。",0)
+				MES(CARDINA,"ここの事は\n心配なさらないでください。",0)
+				MES(CARDINA,"ただ……町の様子が\nどうなっているのか気になりますね。",0)
+				MES(CARDINA,"魔物に襲われた方も\nいらっしゃるという話ですし……",0)
+				MES_close(CARDINA)
+				
+				F_set(CARDINA)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(CARDINA,"ここは安全だと思いますが、\n町の人々が心配ですね。",0)
+				MES(CARDINA,"いつまた魔物が現れるとも\n限りませんから……",0)
+				MES_close(CARDINA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※初回イベント。（このイベントは、通所会話ルーチンの中で判定する）
+	if( F2_14_TalkEnemy )
+	{
+		if(!FT_05_TalkCardina)
+		{
+			MES(CARDINA,"そういえば……\n先ほどオデッサさんが\nお見えになりましたよ。",0)
+			MES(CARDINA,"イルバードにいらしていた\nなんて、驚きました。",0)
+			MES_close(CARDINA)
+
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"へえ……カルディナさんって\nオデッサとも知り合いだったのか。",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"ふむ、あの者とも\n知り合いなのか？",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			MES(CARDINA,"ええ、現役の頃に\n何度かお会いした事があります。",0)
+			MES(CARDINA,"オデッサさんもまだ\n有名になる前でしたけど……",0)
+			MES(CARDINA,"当時からあの調子で、\n腕前の方も凄かったんですよ。",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"な、何となく想像が付くな……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"うむ、全く変わって\nおらぬのだろう。",0)
+			MES_close(PARTNER)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"ふふ……少し雑談しただけですが\nまた賞金首を追いかけて\nらっしゃるみたいですね。",0)
+			MES(CARDINA,"不敵な感じに笑って、\n『手を出すんじゃないよ』って\n釘を刺していかれました。",0)
+			MES(CARDINA,"本当に、相変わらずみたいですね。",0)
+			MES_close(CARDINA)
+
+			
+			F_set(FT_05_TalkCardina)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CARDINA,"オデッサさんが\nイルバードにいらしていた\nなんて、驚きました。",0)
+			MES(CARDINA,"いつも一人で活動なさってますし、\nあまりギルドも\n利用なさらない方ですけど。",0)
+			MES(CARDINA,"ふふ、イルバードにいる以上は\n時々顔を見せてくださいねと\nお願いしておきました。",0)
+			MES_close(CARDINA)
+
+		//	//──────────────────────────────
+		//	//	name("⇒ラグナ先頭")
+		//	if(GW_MAN==1)
+		//	{
+		//		MES(RAGNA,"（笑顔で押したみたいだな……）",0)
+		//		MES_close(RAGNA)
+		//	}
+		//	else
+		//	//	name("⇒アルウェン先頭")
+		//	{
+		//		MES(PARTNER,"（まああの者なら、気が向いたら\n  顔を出す程度であろうな。）",0)
+		//		MES_close(PARTNER)
+		//	}
+		//	//──────────────────────────────
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				//MES(RAGNA,"（笑顔で押したみたいだな……）",0)
+				//MES_close(RAGNA)
+			}
+			else
+			//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"（まああの者なら、気が向いたら\n  顔を出す程度であろうな。）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※宿酒場・手前の円卓に座る。
+	//　　　メイ・セフィーラと同席。
+	//　　　カルディナの前には紅茶を置き、カルディナはカップを持った状態。
+	//　　　　　　 カル
+	//　　　セフィ　○　メイ
+	//　　※初回はメイの初回イベントが起動する。
+	if( F2_00_GoForest )
+	{
+		TK_begin()
+		rot_chr(PLAYER1,30,CARDINA)
+		rot_chr(PLAYER2,30,CARDINA)
+		if(!FT_03_TalkMei)
+		{
+			EV("EV_TALK_MSC")
+			wait_EV("EV_TALK_MSC")
+			
+			F_set(FT_03_TalkMei)
+		}
+		else
+		{
+			if(!F_CARDINA)
+			{
+			//　　※以下通常一般メッセージ。
+			//　　※振り返らない。
+				look_chr( CARDINA, MEI,"Bone_Head")
+
+				MES(CARDINA,"ふう、メイさんったら本当に……",0)
+				MES_close(CARDINA)
+
+			//　　カルディナ、瞑目してカップを口に運びながら。
+				//★モーション
+				
+				MES(CARDINA,"お茶目もほどほどにしておかないと、\n私も怒ってしまいますよ？",0)
+				MES_close(CARDINA)
+				
+				
+			//　　メイに鋭く気付きエモーション。
+			//　　カルディナに振り返る。
+				EMO(MEI,EMO_TOGEBIKKURI)
+				wait(30)
+				look_chr( MEI, CARDINA,"Bone_Head")
+
+				
+				MES(MEI,"はうっ……！？\n（カルちゃんがそんな事を言うと、\n  どことなく迫力があるアル～……）",0)
+				MES_close(MEI)
+
+				look_off(MEI)
+				look_off(CARDINA)
+
+				F_set(CARDINA)
+			}
+			else
+			{
+				look_chr( CARDINA, MEI,"Bone_Head")
+			//　　★繰り返し
+			//　　※振り返らない。
+				MES(CARDINA,"ふう、メイさんったら本当に……",0)
+				MES(CARDINA,"お茶目もほどほどに\nしておいてくださいね？",0)
+				MES_close(CARDINA)
+				look_off(CARDINA)
+			}
+		}
+		TK_end()
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※ギルド受付に立っている。
+	if( F1_15_GoVillage )
+	{
+		if(!FT_02_TalkCardina)
+		{
+			MES(CARDINA,"ふふ、入り口に用意してある\n観光パンフレットをご存知ですか？",0)
+			MES(CARDINA,"イルバードに観光に来る方は\n博物館に寄られることが多いので……",0)
+			MES(CARDINA,"ついでに私が\n観光案内もさせて頂いているんです。",0)
+			MES_close(CARDINA)
+
+			MES(RAGNA,"へ、へえ……",0)
+			MES(RAGNA,"もしかして、リピーターの人とか\n多かったりするのか？",0)
+			MES_close(RAGNA)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"ええ、そうですね……",0)
+			MES(CARDINA,"ふふ、毎年お土産を\n持ってきてくださる方も\nいらっしゃいますよ。",0)
+			MES_close(CARDINA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"はは、やっぱりか。\n（カルディナさんは\n  美人だからなぁ……）",0)
+			MES_close(RAGNA)
+
+		//	name2(ALWEN)
+			MES(PARTNER,"（うむ、惜しい事に本人は全く\n  気付いておらぬようだがな。）",0)
+			MES_close(PARTNER)
+
+		//　　★カルディナ【観光案内もする】
+			F_set_note(CARDINA,0)
+
+			F_set(FT_02_TalkCardina)
+			//　　※ここでＬＦも立てておく。
+			F_set(CARDINA)
+
+		}
+//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"イルバードに観光に来られる方って、\n大抵この博物館にも寄られるんですよ。",0)
+				MES(CARDINA,"折角ですし、最近では\n私が観光案内もさせて頂いています。",0)
+				MES(CARDINA,"ふふ、入り口に用意してある\nパンフレットなんかも\n私の手作りなんですよ。",0)
+				MES_close(CARDINA)
+				F_set(F_CARDINA)
+			}
+			else
+			//　　★繰り返し
+			{
+				MES(CARDINA,"トレジャーを見つけられたら、\n『トレジャーを寄贈する』を\n選んでくださいね。",0)
+				MES(CARDINA,"また、時々はハンターランクを\n確認なさった方がいいと思います。",0)
+				MES(CARDINA,"ランク昇格の際には、\n当ギルドから多少の援助を\nさせていただきますから。",0)
+				MES_close(CARDINA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		if(!FT_01_TalkCardina)
+		{
+		//　　※初回イベント
+			MES(CARDINA,"ラグナさん、イルバードで\nハンター活動を行われるなら、\nぜひ当ギルドを利用なさってくださいね。",0)
+			MES(CARDINA,"当ギルドでは、\nダンジョンクリアの成績を元に\n『ハンターランク』を査定しています。",0)
+			MES(CARDINA,"ランク昇格の際には、多少の\n援助を行わせていただきますから。",0)
+			MES(CARDINA,"ふふ、時折はハンターランクを\n確認なさってください。",0)
+			MES(CARDINA,"それとこちらは……\n当ギルドからの\nささやかな贈り物です。",0)
+			MES_close(CARDINA)
+
+		//	name("アイテム入手テキスト")
+		//	MES(0,"爆弾を受け取った。",2)
+		//	MES_close(0)
+
+			get_item(216,1,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			MES(RAGNA,"お、済まねえな。",0)
+			MES(RAGNA,"トレジャーハントの必須アイテム\nだから、買い揃えとこうとは\n思ってたんだが……",0)
+			MES_close(RAGNA)
+
+			MES(CARDINA,"ふふ、購入されるのでしたら\n町外れの工房で\n取り扱ってらっしゃいますよ。",0)
+			MES(CARDINA,"お２人とも、\n頑張ってくださいね。",0)
+			MES_close(CARDINA)
+
+			F_set(FT_01_TalkCardina)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_CARDINA)
+			{
+				MES(CARDINA,"当ギルドではハンターランクの\n査定や、トレジャーの買取も\n行っているのですけど……",0)
+				MES(CARDINA,"トレジャーのお話は、\nグレインさんに伺った方が\nお詳しいと思います。",0)
+				MES(CARDINA,"奥の展示ルームで難しい顔を\nなさってると思うので、宜しければ\n声を掛けてみてくださいね。",0)
+				MES_close(CARDINA)
+				F_set(CARDINA)
+
+			}
+			else
+			{
+			//　　★繰り返し
+				workL(0,ADD,1)
+				if(WK000==1)
+				{
+			//　　★メッセージ①
+					MES(CARDINA,"ダンジョンに入る際は、\n常にいくつか『爆弾』を\n携帯していた方がいいですよ。",0)
+					MES(CARDINA,"道が岩で塞がれていて\n通れないこともありますし、\n非常用の攻撃手段としても使えます。",0)
+					MES(CARDINA,"備えあれば憂いなし、ですから。",0)
+					MES_close(CARDINA)
+				}
+				else
+				if(WK000==2)
+				{
+			//　　★メッセージ②
+					MES(CARDINA,"ダンジョンには\n様々なタイプの仕掛けが存在します。",0)
+					MES(CARDINA,"スイッチの組み合わせや\n宝箱の開閉、モンスターの全滅が\n鍵になっている場合もありますね。",0)
+					MES(CARDINA,"色々と試してみると良いと思います。",0)
+					MES_close(CARDINA)
+				}
+				else
+				if(WK000==3)
+				{
+			//　　★メッセージ③
+					MES(CARDINA,"ハンターランクの査定は\nダンジョンのクリア成績が\n関係していますよ。",0)
+					MES(CARDINA,"ダメージを受けずにクリアしたり、\nたくさん壷を壊した方が\n成績が良いという事になります。",0)
+					MES(CARDINA,"ダンジョンをクリアした後に\n獲得メダルが表示されますし……",0)
+					MES(CARDINA,"トレジャー手帳のプロフィールにも\nハンターポイントが記載されています。\n参考にしてくださいね。",0)
+					MES_close(CARDINA)
+				}
+				else
+				{
+			//　　★メッセージ④
+					MES(CARDINA,"希少な発掘品などは\n買い取れる場合もありますよ。",0)
+					MES(CARDINA,"ハンターの成果を適切に評価し、\n次の活動資金を提供する──",0)
+					MES(CARDINA,"それがハンター協会の\n役目でもありますから。",0)
+					MES(CARDINA,"こちらの受付で\n『トレジャーを寄贈する』を\n選んでくださいね。",0)
+					MES_close(CARDINA)
+					
+					//ここまできたら1にもドル
+					workL(0,SET,0)
+				}
+			}
+		}
+	}
+}
+
+
+//=================================================================================================
+//▼トレジャー寄贈・開始処理（カルディナ版）
+//=================================================================================================
+PRESENT_TREASURE_CARDINA
+{
+
+	EV("Cal_TREASURENum")
+	wait_EV("Cal_TREASURENum")
+
+	//	name("⇒有効なトレジャーを持っていない場合。")
+	if(WK003==0)
+	{
+		//　　※メッセージを表示後、イベント処理を終了する。
+		if(!F_RAGNA)
+		{
+			MES(CARDINA,"トレジャーを\nお持ちでないようですね。",0)
+			MES(CARDINA,"トレジャーとは、\nダンジョンの中などで見つかる\n遺物や発掘品のことです。",0)
+			MES(CARDINA,"もしそれらしき物を見かけたら、\nこちらへお持ちになってくださいね。",0)
+			MES_close(CARDINA)
+			F_set(RAGNA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CARDINA,"トレジャーとは、\nダンジョンの中などで見つかる\n遺物や発掘品のことです。",0)
+			MES(CARDINA,"もしそれらしき物を見かけたら、\nこちらへお持ちになってくださいね。",0)
+			MES_close(CARDINA)
+		}
+		//ループ用LF
+		F_set(PARTNER)
+	}
+//──────────────────────────────
+//　　※以下は有効なトレジャーを持っていることが前提。
+	else
+	{
+	
+		MES(CARDINA,"そのトレジャーは……\n鑑定する必要がありそうですね。",0)
+		
+		VOICE(719,0)							//「では、担当の者を呼びますね」（トレジャーを預ける時）
+		MES(CARDINA,"では、担当の者を呼びますね。",0)
+		
+//		MES(CARDINA,"すぐに担当の者をお呼びしましょう。",0)
+		MES_close(CARDINA)
+
+	//　　一旦フェードアウトし、ギルド受付前。
+
+		fade_in( 100, 60, BLACK)	//フェードアウト
+		wait_fade()
+
+		workL(10,SET,1)//WK010= 0:カルディナいない／1:カルディナいる
+		EV("PRESENT_TREASURE")
+		wait_EV("PRESENT_TREASURE")
+
+	}
+}
+
+
+//=================================================================================================
+//トレジャー寄贈、共通処理ルーチン
+//=================================================================================================
+PRESENT_TREASURE
+{
+	EV_begin()//
+	{
+	//　　カメラ＆キャラを再配置する。
+	//　　正面にグレイン、向き合って主人公たち、横からカルディナが見守る形。
+	//　　※トレジャーは一括寄贈できます。
+
+		CAM_move(373,0,136,0,0)
+		CAM(-180,76,-25,25,167,0,0)
+		
+//		set_chr( GREIN,45,	-1,-1,  287,-54,0,	 0,335, 0,"")		//グレイン
+		chr_pos(GREIN,287,-54,0,335,2)								//グレイン
+		if(WK010==1)
+			chr_pos(CARDINA,428,-168,0,24,2)							//カルディナ
+		
+		chr_pos(RAGNA,473,200,0,121,2)
+		chr_pos(PARTNER,154,325,1,184,2)
+
+		if(F5_00_HearLunar)
+//			chr_pos(PET,40,219,1,235,11)
+			chr_pos(PET,500,408,1,147,11)
+
+		//顔初期化
+		KAO(RAGNA, "1", "1", "1")	
+		KAO(PARTNER,"1", "1", "1")	
+		KAO(GREIN, "1", "1", "1")	
+		KAO(CARDINA,"1", "1", "1")	
+		fade_in( 0, 60, BLACK)	//フェードイン
+		wait_fade()
+
+		//トレジャー個数再計算
+		EV("Cal_TREASURENum")
+		wait_EV("Cal_TREASURENum")
+
+
+		//単体寄贈用
+		if(WK003==1)
+		{
+
+//			EV("Cal_TREASUREType")
+//			wait_EV("Cal_TREASUREType")
+
+//			system_chack(2)//自動トレジャー寄贈。呼び出したタイミングで寄贈されてしまう。
+
+			MES(GREIN,"じっくり鑑定させてもらった……",0)
+//			MES(GREIN,"X4あれは『%s』だな。",0)
+			MES_close(GREIN)
+//			EV("TREASURE_Kansou1")
+//			wait_EV("TREASURE_Kansou1")
+
+
+			EV("Cal_RoboNum")
+			wait_EV("Cal_RoboNum")
+
+			workL(1,SET,1)//Loop１回目。
+			EV("EV_PRESENT_Loop")
+			wait_EV("EV_PRESENT_Loop")
+
+//			MES(GREIN,"X5俺の見積もりでは\n%dペンネの価値はあるだろう。",0)
+			MES(GREIN,"この品は是非買い取らせてくれ……",0)
+			MES_close(GREIN)
+
+		}
+		//複数一括寄贈用
+		else
+		{
+
+			MES(GREIN,"まとめて鑑定させて\nもらったが……",0)
+			MES_close(GREIN)
+
+			EV("Cal_RoboNum")
+			wait_EV("Cal_RoboNum")
+
+			workL(1,SET,1)//Loop１回目。
+			EV("EV_PRESENT_Loop")
+			wait_EV("EV_PRESENT_Loop")
+
+			MES(GREIN,"やはりどれも中々いい品だな。\n是非買い取らせてくれ……",0)
+			MES_close(GREIN)
+
+		}
+
+	//　　グレイン、一歩前に出て何かを渡す仕草。
+	//	name("システムメッセージ")
+//		MES(this,"○○ペンネ入手した。",0)
+
+		fade_in(30,10,BLACK)
+		wait_fade()
+
+		SE(24,0)	//お金の音だと味気ない
+		MES(0,"C3報酬のペンネを入手した。",2)
+		MES_close(0)
+
+		fade_in(0,10,BLACK)
+		wait_fade()
+
+		////////////////////////////////////////////////////////////////////
+		//	name("＞コンプしている場合。
+		if(GW_TREASURE>=48)//トレジャー全部で48個。
+		{
+
+		//　　グレインに・・・エモーション。
+			EMO(GREIN,EMO_TENTEN)
+			wait(30)
+		
+			MES(GREIN,"……しかし素晴らしいな。\nこれほどトレジャーが集まるとは……",0)
+			MES(GREIN,"当初の予測を\nはるかに超えた成果だ……",0)
+			MES_close(GREIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"はは、そうなのか？",0)
+			MES(RAGNA,"まあ結構苦労したけどな。",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"フフ、我らに掛かれば\nこの程度の成果、当然であろう。",0)
+			MES_close(PARTNER)
+
+		//	name2(GREIN)
+			MES(GREIN,"そうか……\n君たちはいいコンビのようだな……",0)
+			MES(GREIN,"俺の管理している展示室も\n君たちのお陰で\n埋まってしまったようだ。",0)
+			MES(GREIN,"君たちには本当に感謝する……",0)
+			MES_close(GREIN)
+
+		//　　グレイン、カルディナに向く。
+			look_chr(GREIN,CARDINA,"Bone_Head")
+		
+			MES(GREIN,"カルディナ、例の物を……",0)
+			MES_close(GREIN)
+
+		//	name2(CARDINA)
+			look_chr(CARDINA,GREIN,"Bone_Head")
+			MES(CARDINA,"ええ。",0)
+			MES_close(CARDINA)
+
+		//　　カルディナ、少し前に出る。
+			look_off(CARDINA)
+			look_off(GREIN)
+			rot(CARDINA,30,0)
+			move(CARDINA,0,WALK1,415,-17,1,0)
+			wait_move(CARDINA)
+
+			MES(CARDINA,"ラグナさん、アルウェンさん。\nどうかこちらの品を\n受け取ってください。",0)
+			MES_close(CARDINA)
+
+			fade_in(30,10,BLACK)
+			get_item(163,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(167,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(171,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(175,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(179,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(183,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(187,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(191,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(195,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(199,3,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			get_item(217,5,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			SE(24,0)	//お金の音だと味気ない
+			MES(0,"C3特別報酬として、１０万ペンネを受け取った。",2)
+			MES_close(0)
+
+			get_gold(100000,RAGNA)
+			fade_in( 0, 10, BLACK)	//フェードイン
+			wait_fade()
+
+			move(CARDINA,0,WALK1,428,-108,0,0)
+			wait_move(CARDINA)
+
+			MES(GREIN,"譲り受けた品は、\n保存状態を確かめてから\nすぐにでも展示しよう。",0)
+			MES(GREIN,"どうかこれからも\nこの博物館に遊びに来てくれ。",0)
+			MES(GREIN,"全て、君たちの集めた\nトレジャーだからな……",0)
+			MES_close(GREIN)
+
+		//	name2(CARDINA)
+			MES(CARDINA,"皆さん、今まで本当に\nお疲れ様でした。",0)
+			MES_close(CARDINA)
+			F_set(FT_FF_TreasureComp)
+
+		}
+		else
+		{
+		//	name2(GREIN)
+			MES(GREIN,"譲り受けた品は、\n保存状態を確かめてから\nすぐにでも展示しよう。",0)
+			MES(GREIN,"楽しみにしていてくれ。",0)
+			MES_close(GREIN)
+
+			if(WK010==1)
+			{
+				rot_chr(CARDINA,30,RAGNA)
+				
+				if( F4_00_StartSolo && !F4_02_GoVillage2)//ラグナ１人
+				{
+					MES(CARDINA,"ふふ、お疲れ様でした。",0)
+					MES_close(CARDINA)
+				}
+				else
+				{
+					MES(CARDINA,"ふふ、皆さんも\nお疲れ様でした。",0)
+					MES_close(CARDINA)
+				}
+			}
+		}
+
+//		VOICE(720,0)												//「頑張ってくださいね」
+
+	//　　暗転し、キャラ通常配置に戻す。
+		fade_in( 100, 60, BLACK)	//フェードアウト
+		wait_fade()
+		
+		//フラグ⑩の場合は配置変更
+		if(F4_09_GoShrineMia && !F5_00_HearLunar)
+		{
+			chr_pos(CARDINA,-1000,-500,0,180,150)							//カルディナを掃除へ。
+			chr_pos(GREIN,3629,-1831,0,70,2)							//グレインをダミーへ。
+		}
+		else
+		if(WK010==1)
+		{
+			chr_pos(CARDINA,938,-100,1,45,150)							//カルディナを受付へ。
+			chr_pos(GREIN,3629,-1831,0,70,2)							//グレインをダミーへ。
+		}
+		else
+		{
+			chr_pos(GREIN,938,-100,1,45,2)								//グレインを受付へ。
+			chr_pos(CARDINA,3629,-1831,0,70,2)							//カルディナをダミーへ。
+		}
+
+		//主人公たちを再配置
+		chr_pos(PLAYER1,587,117,1,223,2)
+
+		//誰だか知らないけどパートナーがいる
+		if( !F4_00_StartSolo )
+			chr_pos(PLAYER2,443,  0,0,258,2)
+		else
+		if( F4_02_GoVillage2 && !F5_00_HearLunar )
+			chr_pos(PLAYER2,443,  0,0,258,2)
+		else
+		if( F5_08_JoinOdessa && !F5_13_KillDygald )
+			chr_pos(PLAYER2,443,  0,0,258,2)
+		else
+		if( F6_00_GoToMeru )
+			chr_pos(PLAYER2,443,  0,0,258,2)
+
+		//ルゥがいる
+		if( F5_00_HearLunar )
+			chr_pos(PET,297, 92,1,226,2)
+
+		//カメラを初期設定に
+		CAM_return( 0 )
+		wait(30)
+
+		//いじったワークを初期化
+		workL(0,SET,0)
+
+		//★グレイン
+		F_set_note(-45,-1)
+
+		fade_in( 0, 60, BLACK)	//フェードイン
+	//　　ギルド受付前から操作許可を戻す。
+		EV_end()//
+	}
+}
+
+
+//=================================================================================================
+//寄贈loopルーチン。（単体寄贈でも、１回は呼び出される）
+//=================================================================================================
+EV_PRESENT_Loop
+{
+
+	EV("Cal_TREASUREType")
+	wait_EV("Cal_TREASUREType")
+
+	//判定順は、海の生物⇒宝石⇒化石⇒ロボ⇒最高級。
+	//絵画シリーズ未対応。
+
+	system_chack(2)//自動トレジャー寄贈。呼び出したタイミングで寄贈されてしまう。
+
+	if( WK002<=24 || WK002>=49 )
+	{
+
+		//最初の一個
+		if(WK001==1)
+		{
+			MES(GREIN,"X4あれは『%s』だな。",0)
+			MES_close(GREIN)
+		}
+		else
+		//最後の一個
+		if(WK003==1)
+		{
+			MES(GREIN,"X4そして『%s』だな。",0)
+			MES_close(GREIN)
+		}
+		else
+		{
+			workL(0,RAND,2)
+			if(WK000==0)
+			{
+				MES(GREIN,"X4『%s』……",0)
+				MES_close(GREIN)
+			}
+			else
+			{
+				MES(GREIN,"X4それに『%s』……",0)
+				MES_close(GREIN)
+			}
+		}
+		EV("TREASURE_Kansou1")
+		wait_EV("TREASURE_Kansou1")
+	}
+	else
+	//⇒化石分割シリーズだった場合、揃ったか判定。
+	if( WK002>=25 && WK002<=40 )
+	{
+		if( WK002>=25 && WK002<=28 )//今回寄贈したのが雷竜
+		{
+			workL(4,SET,0)
+			if(F2425)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2426)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2427)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2428)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回雷竜を複数寄贈するか。
+			if(F2325 && !F2425)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2326 && !F2426)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2327 && !F2427)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2328 && !F2428)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+			//単体用にメッセージ分岐必要。
+				MES(GREIN,"『雷竜の前脚骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『雷竜の後脚骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『雷竜の胸部骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『雷竜の頭部骨格』……",0)
+				MES_close(GREIN)
+				MES(GREIN,"よし、これで\n全骨格が揃ったぞ……",0)
+				MES(GREIN,"今日は特別に、\nこれも受け取っておいてくれ。",0)
+				MES_close(GREIN)
+
+				SE(24,0)	//お金の音だと味気ない
+				MES(0,"C3１万ペンネ受け取った。",2)
+				MES_close(0)
+				get_gold(10000,RAGNA)
+			}
+
+		}
+		if( WK002>=29 && WK002<=32 )//今回寄贈したのが肉食竜
+		{
+			workL(4,SET,0)
+			if(F2429)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2430)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2431)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2432)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回雷竜を複数寄贈するか。
+			if(F2329 && !F2429)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2330 && !F2430)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2331 && !F2431)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2332 && !F2432)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+				MES(GREIN,"『肉食竜の後脚骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『肉食竜の胸部骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『肉食竜の前脚骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『肉食竜の頭部骨格』……",0)
+				MES_close(GREIN)
+				MES(GREIN,"よし、これで\n全骨格が揃ったぞ……",0)
+				MES(GREIN,"今日は特別に、\nこれも受け取っておいてくれ。",0)
+				MES_close(GREIN)
+
+				SE(24,0)	//お金の音だと味気ない
+				MES(0,"C3１万ペンネ受け取った。",2)
+				MES_close(0)
+				get_gold(10000,RAGNA)
+			}
+
+		}
+		if( WK002>=33 && WK002<=36 )//今回寄贈したのが剣竜
+		{
+			workL(4,SET,0)
+			if(F2433)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2434)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2435)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2436)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回剣竜を複数寄贈するか。
+			if(F2333 && !F2433)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2334 && !F2434)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2335 && !F2435)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2336 && !F2436)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+				MES(GREIN,"『剣竜の前脚骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『剣竜の後脚骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『剣竜の胸部骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『剣竜の頭部骨格』……",0)
+				MES_close(GREIN)
+				MES(GREIN,"よし、これで\n全骨格が揃ったぞ……",0)
+				MES(GREIN,"今日は特別に、\nこれも受け取っておいてくれ。",0)
+				MES_close(GREIN)
+
+				SE(24,0)	//お金の音だと味気ない
+				MES(0,"C3１万ペンネ受け取った。",2)
+				MES_close(0)
+				get_gold(10000,RAGNA)
+			}
+		}
+		if( WK002>=37 && WK002<=40 )//今回寄贈したのが角竜
+		{
+			workL(4,SET,0)
+			if(F2437)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2438)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2439)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2440)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回剣竜を複数寄贈するか。
+			if(F2337 && !F2437)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2338 && !F2438)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2339 && !F2439)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2340 && !F2440)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+				MES(GREIN,"『角竜の前脚骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『角竜の後脚骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『角竜の胸部骨格』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『角竜の頭部骨格』……",0)
+				MES_close(GREIN)
+				MES(GREIN,"よし、これで\n全骨格が揃ったぞ……",0)
+				MES(GREIN,"今日は特別に、\nこれも受け取っておいてくれ。",0)
+				MES_close(GREIN)
+
+				SE(24,0)	//お金の音だと味気ない
+				MES(0,"C3１万ペンネ受け取った。",2)
+				MES_close(0)
+				get_gold(10000,RAGNA)
+
+			}
+		}
+	}
+	else
+	//⇒ロボ分割シリーズだった場合、揃ったか判定。
+	if( WK002>=41 && WK002<=48 )
+	{
+		if( WK002>=41 && WK002<=44 )//今回寄贈したのがキャプテン
+		{
+			workL(4,SET,0)
+			if(F2441)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2442)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2443)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2444)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回剣竜を複数寄贈するか。
+			if(F2341 && !F2441)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2342 && !F2442)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2343 && !F2443)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2344 && !F2444)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+				MES(GREIN,"『キャプテン２１号の電池』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『キャプテン２１号のボディ』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『キャプテン２１号の足』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『キャプテン２１号の頭』……",0)
+				MES_close(GREIN)
+
+				if(WK006<=1)//最後は１個だけ持ってきた。
+				{
+					MES(GREIN,"よし、ようやく全ての部位が揃った……\n早速再現してみるとしよう……",0)
+					MES_close(GREIN)
+				}
+				else		//　　＞一括版。
+				{
+					MES(GREIN,"よし、これで全ての部位が揃ったな……\n早速再現してみるとしよう……",0)
+					MES_close(GREIN)
+				}
+				MES(GREIN,"……よくやってくれた。\n今日は特別に、これも\n受け取っておいてくれ。",0)
+				MES_close(GREIN)
+
+				SE(24,0)	//お金の音だと味気ない
+				MES(0,"C3２万ペンネ受け取った。",2)
+				MES_close(0)
+				get_gold(20000,RAGNA)
+			}
+		}
+		else
+		if( WK002>=45 && WK002<=48 )//今回寄贈したのがダサイダー
+		{
+			workL(4,SET,0)
+			if(F2445)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2446)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2447)
+			{
+				workL(4,ADD,1)
+			}
+			if(F2448)
+			{
+				workL(4,ADD,1)
+			}
+
+			workL(5,SET,0)//今回剣竜を複数寄贈するか。
+			if(F2345 && !F2445)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2346 && !F2446)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2347 && !F2447)
+			{
+				workL(5,ADD,1)
+			}
+			if(F2348 && !F2448)
+			{
+				workL(5,ADD,1)
+			}
+
+			if(WK004==1)
+			{
+				MES(GREIN,"『フレイムバイザーの部品』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==2)
+			{
+				MES(GREIN,"『フレイムバイザーの接着剤』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==3)
+			{
+				MES(GREIN,"『フレイムバイザーの追加パーツ』……",0)
+				MES_close(GREIN)
+				if(WK005<1)//分割シリーズ一括寄贈の最後のみ、解説を入れる。
+				{
+					EV("TREASURE_Kansou1")
+					wait_EV("TREASURE_Kansou1")
+				}
+			}
+			if(WK004==4)
+			{
+				MES(GREIN,"『フレイムバイザーの熱きソウル』……",0)
+				MES_close(GREIN)
+
+				if(WK006<=1)//最後は１個だけ持ってきた。
+				{
+					MES(GREIN,"これだ……\nこれが足りなかったんだ……",0)
+					MES(GREIN,"よし、すぐにでも\n組み立ててしまおう……",0)
+					MES_close(GREIN)
+				}
+				else		//　　＞一括版。
+				{
+					MES(GREIN,"よし、ここまで\n揃っていれば問題は無い……",0)
+					MES(GREIN,"すぐにでも\n組み立ててしまおう……",0)
+					MES_close(GREIN)
+				}
+				MES(GREIN,"……よくやってくれた。\n今日は特別に、これも\n受け取っておいてくれ。",0)
+				MES_close(GREIN)
+
+				SE(24,0)	//お金の音だと味気ない
+				MES(0,"C3２万ペンネ受け取った。",2)
+				MES_close(0)
+				get_gold(20000,RAGNA)
+			}
+		}
+	}
+
+	workL(1,ADD,1)//Loop回数。＝今回一括寄贈した個数。
+	workL(3,SUB,1)//寄贈予定数は減らす。
+	
+	if(WK003<=0)
+	{
+		//処理終了
+		EV_stop("EV_PRESENT_Loop")
+	}
+	else
+	{
+		loop
+	}
+
+}
+
+
+
+//	WK000：ランダムワーク。
+//	WK001：複数寄贈回数計算。
+//	WK002：トレジャーのシリーズＮｏ。	高価シリーズ000/宝石シリーズ100/海洋堂シリーズ200/化石分割シリーズ300/ロボ分割シリーズ400/絵画シリーズ500
+//																						雷竜	325-328		キャプテン	441-444
+//																						肉食竜	329-332		ダサイダー	445-448
+//																						剣竜	333-336
+//																						角竜	337-340
+//	WK003：今回のトレジャー寄贈個数
+//	WK004：分割シリーズ用計算（全部揃ったか）
+//	WK005：分割シリーズ用計算（同じ分割品を複数持っているか）
+//	WK006：キャプテンの一括寄贈個数
+//	WK007：ダサイダーの一括寄贈個数
+
+//　※調べた所、WKの値は256を超えると巻き戻る。
+
+
+//=================================================================================================
+//今回寄贈するトレジャーの個数を計算する。
+//	取った個数-寄付した個数。
+//=================================================================================================
+Cal_TREASURENum
+{
+	workL(3,SET,0)//WK003が、今回寄贈する個数ですよ。
+
+	//都合により逆順。
+	if( F2356 && !F2456 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2355 && !F2455 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2354 && !F2454 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2353 && !F2453 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2352 && !F2452 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2351 && !F2451 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2350 && !F2450 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2349 && !F2449 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2348 && !F2448 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2347 && !F2447 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2346 && !F2446 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2345 && !F2445 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2344 && !F2444 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2343 && !F2443 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2342 && !F2442 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2341 && !F2441 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2340 && !F2440 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2339 && !F2439 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2338 && !F2438 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2337 && !F2437 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2336 && !F2436 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2335 && !F2435 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2334 && !F2434 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2333 && !F2433 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2332 && !F2432 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2331 && !F2431 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2330 && !F2430 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2329 && !F2429 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2328 && !F2428 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2327 && !F2427 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2326 && !F2426 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2325 && !F2425 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2324 && !F2424 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2323 && !F2423 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2322 && !F2422 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2321 && !F2421 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2320 && !F2420 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2319 && !F2419 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2318 && !F2418 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2317 && !F2417 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2316 && !F2416 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2315 && !F2415 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2314 && !F2414 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2313 && !F2413 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2312 && !F2412 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2311 && !F2411 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2310 && !F2410 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2309 && !F2409 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2308 && !F2408 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2307 && !F2407 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2306 && !F2406 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2305 && !F2405 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2304 && !F2404 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2303 && !F2403 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2302 && !F2402 )
+	{
+		workL(3,ADD,1)
+	}
+	if( F2301 && !F2401 )
+	{
+		workL(3,ADD,1)
+	}
+
+}
+
+
+//=================================================================================================
+//今寄贈処理中のトレジャーＩＤを調べる。
+//	WK002に放り込んでおく。
+//=================================================================================================
+
+Cal_TREASUREType
+{
+	workL(2,SET,0)
+
+//　※調べた所、WKの値は256を超えると巻き戻る。
+
+	//都合により『海の生物⇒宝石⇒化石⇒ロボ⇒最高級』を逆順。
+	//高価シリーズ000
+	if( F2308 && !F2408 )
+	{
+		workL(2,SET,08)
+	}
+	if( F2307 && !F2407 )
+	{
+		workL(2,SET,07)
+	}
+	if( F2306 && !F2406 )
+	{
+		workL(2,SET,06)
+	}
+	if( F2305 && !F2405 )
+	{
+		workL(2,SET,05)
+	}
+	if( F2304 && !F2404 )
+	{
+		workL(2,SET,04)
+	}
+	if( F2303 && !F2403 )
+	{
+		workL(2,SET,03)
+	}
+	if( F2302 && !F2402 )
+	{
+		workL(2,SET,02)
+	}
+	if( F2301 && !F2401 )
+	{
+		workL(2,SET,01)
+	}
+
+	//ロボ分割シリーズ004
+	if( F2348 && !F2448 )
+	{
+		workL(2,SET,48)
+	}
+	if( F2347 && !F2447 )
+	{
+		workL(2,SET,47)
+	}
+	if( F2346 && !F2446 )
+	{
+		workL(2,SET,46)
+	}
+	if( F2345 && !F2445 )
+	{
+		workL(2,SET,45)
+	}
+	if( F2344 && !F2444 )
+	{
+		workL(2,SET,44)
+	}
+	if( F2343 && !F2443 )
+	{
+		workL(2,SET,43)
+	}
+	if( F2342 && !F2442 )
+	{
+		workL(2,SET,42)
+	}
+	if( F2341 && !F2441 )
+	{
+		workL(2,SET,41)
+	}
+/*
+	//絵画シリーズ005
+	if( F2356 && !F2456 )
+	{
+		workL(2,SET,56)
+	}
+	if( F2355 && !F2455 )
+	{
+		workL(2,SET,55)
+	}
+	if( F2354 && !F2454 )
+	{
+		workL(2,SET,54)
+	}
+	if( F2353 && !F2453 )
+	{
+		workL(2,SET,53)
+	}
+	if( F2352 && !F2452 )
+	{
+		workL(2,SET,52)
+	}
+	if( F2351 && !F2451 )
+	{
+		workL(2,SET,51)
+	}
+	if( F2350 && !F2450 )
+	{
+		workL(2,SET,50)
+	}
+	if( F2349 && !F2449 )
+	{
+		workL(2,SET,49)
+	}
+*/
+	//化石分割シリーズ003
+	if( F2340 && !F2440 )
+	{
+		workL(2,SET,40)
+	}
+	if( F2339 && !F2439 )
+	{
+		workL(2,SET,39)
+	}
+	if( F2338 && !F2438 )
+	{
+		workL(2,SET,38)
+	}
+	if( F2337 && !F2437 )
+	{
+		workL(2,SET,37)
+	}
+	if( F2336 && !F2436 )
+	{
+		workL(2,SET,36)
+	}
+	if( F2335 && !F2435 )
+	{
+		workL(2,SET,35)
+	}
+	if( F2334 && !F2434 )
+	{
+		workL(2,SET,34)
+	}
+	if( F2333 && !F2433 )
+	{
+		workL(2,SET,33)
+	}
+	if( F2332 && !F2432 )
+	{
+		workL(2,SET,32)
+	}
+	if( F2331 && !F2431 )
+	{
+		workL(2,SET,31)
+	}
+	if( F2330 && !F2430 )
+	{
+		workL(2,SET,30)
+	}
+	if( F2329 && !F2429 )
+	{
+		workL(2,SET,29)
+	}
+	if( F2328 && !F2428 )
+	{
+		workL(2,SET,28)
+	}
+	if( F2327 && !F2427 )
+	{
+		workL(2,SET,27)
+	}
+	if( F2326 && !F2426 )
+	{
+		workL(2,SET,26)
+	}
+	if( F2325 && !F2425 )
+	{
+		workL(2,SET,25)
+	}
+	//宝石シリーズ001
+	if( F2316 && !F2416 )
+	{
+		workL(2,SET,16)
+	}
+	if( F2315 && !F2415 )
+	{
+		workL(2,SET,15)
+	}
+	if( F2314 && !F2414 )
+	{
+		workL(2,SET,14)
+	}
+	if( F2313 && !F2413 )
+	{
+		workL(2,SET,13)
+	}
+	if( F2312 && !F2412 )
+	{
+		workL(2,SET,12)
+	}
+	if( F2311 && !F2411 )
+	{
+		workL(2,SET,11)
+	}
+	if( F2310 && !F2410 )
+	{
+		workL(2,SET,10)
+	}
+	if( F2309 && !F2409 )
+	{
+		workL(2,SET,09)
+	}
+	//海洋堂シリーズ002
+	if( F2324 && !F2424 )
+	{
+		workL(2,SET,24)
+	}
+	if( F2323 && !F2423 )
+	{
+		workL(2,SET,23)
+	}
+	if( F2322 && !F2422 )
+	{
+		workL(2,SET,22)
+	}
+	if( F2321 && !F2421 )
+	{
+		workL(2,SET,21)
+	}
+	if( F2320 && !F2420 )
+	{
+		workL(2,SET,20)
+	}
+	if( F2319 && !F2419 )
+	{
+		workL(2,SET,19)
+	}
+	if( F2318 && !F2418 )
+	{
+		workL(2,SET,18)
+	}
+	if( F2317 && !F2417 )
+	{
+		workL(2,SET,17)
+	}
+
+}
+
+//=================================================================================================
+//ロボ分割シリーズがどのくらい集まっているか。
+//寄贈処理の初めに１回だけ呼び出して計算。
+//	WK006==キャプテンの寄贈済み個数
+//	WK006==フレイムバイザーの寄贈済み個数
+//=================================================================================================
+Cal_RoboNum
+{
+	workL(6,SET,0)
+	workL(7,SET,0)
+
+	//都合により逆順。
+	//ロボ分割シリーズ004
+	if( F2348 && !F2448 )
+	{
+		workL(7,ADD,1)
+	}
+	if( F2347 && !F2447 )
+	{
+		workL(7,ADD,1)
+	}
+	if( F2346 && !F2446 )
+	{
+		workL(7,ADD,1)
+	}
+	if( F2345 && !F2445 )
+	{
+		workL(7,ADD,1)
+	}
+
+	if( F2344 && !F2444 )
+	{
+		workL(6,ADD,1)
+	}
+	if( F2343 && !F2443 )
+	{
+		workL(6,ADD,1)
+	}
+	if( F2342 && !F2442 )
+	{
+		workL(6,ADD,1)
+	}
+	if( F2341 && !F2441 )
+	{
+		workL(6,ADD,1)
+	}
+}
+
+//=================================================================================================
+//トレジャーの感想処理。
+//シリーズごとに異なる感想をランダムで話す。
+//=================================================================================================
+TREASURE_Kansou1
+{
+	//	name("○最高級")
+	if(WK002<=8)
+	{
+		workL(0,RAND,4)
+		if(WK000==0)
+		{
+			MES(GREIN,"……よくあんな物を見つけたな……",0)
+			MES(GREIN,"X5もはやペンネの問題じゃないが、\n値をつけるとすれば%dペンネか……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==1)
+		{
+			MES(GREIN,"あんな物……\n一体どこにあったんだ……",0)
+			MES(GREIN,"X5もはやペンネの問題じゃないが、\n値をつけるとすれば%dペンネだな……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==2)
+		{
+			MES(GREIN,"俺も昔、探していた品だ。\nこんな所でお目にかかれるとはな……",0)
+			MES(GREIN,"X5もはやペンネの問題じゃないが、\n値をつけるとすれば%dペンネか……",0)
+			MES_close(GREIN)
+		}
+		else
+		{
+
+			MES(GREIN,"詳しいことは分からないが、\nこれは世紀の大発見かもしれん……",0)
+			MES(GREIN,"X5もはやペンネの問題じゃないが、\n値をつけるとすれば%dペンネだな……",0)
+			MES_close(GREIN)
+		}
+
+	}
+	else
+	//	name("○宝石")
+	if(WK002<=16)
+	{
+		workL(0,RAND,4)
+		if(WK000==0)
+		{
+			MES(GREIN,"保存状態もいい……\n良い品を見つけたな……",0)
+			MES(GREIN,"X5相場では%dペンネと\nいうところだ……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==1)
+		{
+			MES(GREIN,"あれはずっと行方が\n分からなくなっていたんだ……",0)
+			MES(GREIN,"X5%dペンネで買い取りたいところだ……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==2)
+		{
+			MES(GREIN,"中々珍しい一品だ……\n手入れしてやれば光るだろう……",0)
+			MES(GREIN,"X5%dペンネで\n買い取りたいところだ……",0)
+			MES_close(GREIN)
+		}
+		else
+		{
+
+			MES(GREIN,"X5……よくあんな物を見つけたな……\n%dペンネの価値はあるぞ……",0)
+			MES_close(GREIN)
+		}
+
+	}
+	else
+	//	name("○海の生物")
+	if(WK002<=24)
+	{
+		workL(0,RAND,4)
+		if(WK000==0)
+		{
+			MES(GREIN,"X5%dペンネの品だろうな。\n鮮度もいい……\n早く展示してみたいものだ……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==1)
+		{
+			MES(GREIN,"中々珍しい一品だ……\n手入れしてやれば光るだろう……",0)
+			MES(GREIN,"X5相場では%dペンネと\nいうところだろうな……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==2)
+		{
+			MES(GREIN,"X5中々俺好みの一品だ……\n%dペンネは出すぞ……",0)
+			MES_close(GREIN)
+		}
+		else
+		{
+			MES(GREIN,"X5……よくあんな物を見つけたな……\n%dペンネの価値はあるぞ……",0)
+			MES_close(GREIN)
+		}
+	}
+	else
+	//	name("○化石")
+	if(WK002<=40)
+	{
+		workL(0,RAND,4)
+		if(WK000==0)
+		{
+			MES(GREIN,"保存状態も完璧──\nこれは世紀の大発見かもしれん……",0)
+			MES(GREIN,"X5どう見積もっても\n%dペンネの価値はあるな……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==1)
+		{
+			MES(GREIN,"中々珍しい一品だ……\n手入れしてやれば光るだろう……",0)
+			MES(GREIN,"X5%dペンネで\n買い取りたいところだ……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK000==2)
+		{
+			MES(GREIN,"あれは国宝級だぞ……",0)
+			MES(GREIN,"X5どう見積もっても\n%dペンネの価値はあるな……",0)
+			MES_close(GREIN)
+		}
+		else
+		{
+			MES(GREIN,"X5……よくあんな物を見つけたな……\n%dペンネの価値はあるぞ……",0)
+			MES_close(GREIN)
+		}
+	}
+	else
+	//ロボ１。
+	if(WK002<=44)
+	{
+		if(WK004==1)
+		{
+			MES(GREIN,"X5これは……特別に%dペンネで買い取ろう。",0)
+			MES(GREIN,"………………………………",0)
+			MES(GREIN,"……分かっていると思うが、\n電池だけでは何の役にも立たない……",0)
+			MES(GREIN,"一応預かっておくが、早く\nボディの方を見つけてきてくれ……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK004==2)
+		{
+			MES(GREIN,"X5これは%dペンネだろうな。",0)
+			MES(GREIN,"よし、早速展示を始めよう……",0)
+			MES(GREIN,"しかし当然だが、足が無ければ\n歩かせる事はできない……",0)
+			MES(GREIN,"早く足の方を見つけてきてくれ……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK004==3)
+		{
+			MES(GREIN,"………………………………",0)
+			MES(GREIN,"肝心の頭が無いのか……",0)
+			MES(GREIN,"残念だな……\n早く頭も見つけてきてくれ……",0)
+			MES(GREIN,"X5とりあえず……\n%dペンネで買い取ろう。",0)
+			MES_close(GREIN)
+		}
+	}
+	else
+	//ロボ２。
+	if(WK002<=48)
+	{
+		if(WK004==1)
+		{
+			MES(GREIN,"X5これは……特別に%dペンネで買い取ろう。",0)
+			MES(GREIN,"しかし、接着剤が無ければ\n組み立てられないな。",0)
+			MES(GREIN,"どうしたものか……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK004==2)
+		{
+			MES(GREIN,"X5……%dペンネで買い取らせてくれ。",0)
+			MES(GREIN,"これでようやく組み立てられる……",0)
+			MES(GREIN,"だが、実はフレイムバイザーには\nオプションパーツが\n用意されているはずなんだ。",0)
+			MES(GREIN,"あれが無ければ、完成したとは\n言えないだろうな……",0)
+			MES_close(GREIN)
+		}
+		else
+		if(WK004==3)
+		{
+			MES(GREIN,"X5……%dペンネで買い取らせてくれ。",0)
+			MES(GREIN,"よし、これでパーツは揃ったな。",0)
+			MES(GREIN,"だが、何かが足りない気がする……",0)
+			MES(GREIN,"一体何なんだ……\n……この虚無感は……",0)
+			MES_close(GREIN)
+		}
+	}
+	else
+	//絵画シリーズは未入力。
+	{
+	}
+
+}
+
+
+
+
+//──────────────────────────────
+//▼ハンターランク確認処理
+//──────────────────────────────
+//　　※ハンターランクは以下の通り。
+
+//		Rank	Name							point		⇒返す値は1/10！
+//		０：ノーマルハンター（初期状態）		  0- 29			 0-2
+//		１：ダンジョンハンター補佐				 30- 59			 3-5
+//		２：ダンジョンハンター					 60-			 6
+//		３：ワイルドハンター補佐				 90-			 9
+//		４：ワイルドハンター					120-			12
+//		５：ベテランハンター補佐				150-			15
+//		６：ベテランハンター					180-			18
+//		７：ゴージャスハンター補佐				210-			21
+//		８：ゴージャスハンター					240-			24
+//		９：スペシャルハンター補佐				270-			27
+//		10：スペシャルハンター					300-			30
+//		11：ビューティハンター補佐				330-			33
+//		12：ビューティハンター					360-			36
+//		13：マーベラスハンター補佐				390-			39
+//		14：マーベラスハンター					420-			42
+//		15：アルティメットハンター				450-			45
+//		16：伝説の赤毛（コンプリート）			480				48
+
+//──────────────────────────────
+CHECK_RANK_CARDINA
+{
+
+	//ハンターランク査定
+	system_chack(3)
+
+//	workG(GW_HUNTER_RANK,SET,15)	//動作チェック用
+//	workG(GW_HUNTER_POINT,SET,48)	//動作チェック用
+	
+	//	伝説の赤毛へ昇格（⑫のみ）
+	if( GW_HUNTER_POINT>=48 && F6_00_GoToMeru && GW_HUNTER_RANK<16)
+	{
+		MES(CARDINA,"ラグナさんの現在の\nハンターランクは……",0)
+		MES(CARDINA,"……………………………………",0)
+		MES_close(CARDINA)
+		
+		
+	//　　ラグナたちに？エモーション。
+		EMO(RAGNA,EMO_HATENA)
+		EMO(PET,EMO_HATENA)
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+		
+		MES(CARDINA,"あの、申し訳ありません。\nラグナさんの功績には\n昇格の価値があると思うのですが……",0)
+		MES(CARDINA,"どうやらハンターズギルドの規定には、\nこれ以上のランクが存在しないようです。",0)
+		MES_close(CARDINA)
+		
+	//	name2(RAGNA)
+		MES(RAGNA,"あ、あれ？\nそうなのか……？",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"ええ、折角来て頂いたのに\n申し訳ないのですが……",0)
+		MES(CARDINA,"ですが、そうですね……",0)
+		MES(CARDINA,"ハンターランクには、ギルド規定の\nもの以外にも、各ギルドが発行できる\n称号のようなものがあります。",0)
+		MES_close(CARDINA)
+		
+		//──────────────────────────────
+		//	name("⇒トレジャーもコンプリートしている")
+		if(GW_TREASURE==48)
+		{
+			MES(CARDINA,"ラグナさんは当博物館の方にも\nこれ以上は無いほどの貢献を\nしてくださった方ですし……",0)
+		}
+		//	name("⇒トレジャーもコンプリート率が高い（８０％以上）")
+		else
+		if(GW_TREASURE>=38)
+		{
+			MES(CARDINA,"ラグナさんは当博物館の方にも\nとても貢献してくださった方ですし……",0)
+		}
+		//	name("⇒トレジャーコンプリート率はそこそこ（５０％以上）")
+		else
+		if(GW_TREASURE>=24)
+		{
+			MES(CARDINA,"ラグナさんは当博物館の方にも\nたくさん寄贈してくださった方ですし……",0)
+		}
+		//	name("⇒序盤でキチンとテオに謝っている")
+		else
+		if(FT_01_TeoSolly)
+		{
+			MES(CARDINA,"ラグナさんは馴染みの方ですし……",0)
+		}
+		//	name("⇒それ以外")
+		else
+		{
+			MES(CARDINA,"ラグナさんの功績は\n捨てがたいですし……",0)
+		}
+		//──────────────────────────────
+
+
+		MES(CARDINA,"当ギルドは、ラグナさんに\nハンターランクL700“伝説の赤毛”L400を\n贈りたいと思います。",0)
+		MES_close(CARDINA)
+
+	//　　ラグナたちに冷や汗エモーション。
+		EMO(RAGNA,EMO_HIYAASE)
+		EMO(PARTNER,EMO_HIYAASE)
+		EMO(PET,EMO_HIYAASE)
+		wait(30)
+		
+		MES(PET,"で、伝説って……",0)
+		MES_close(PET)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"ふむ、伝説の赤毛とな……",0)
+		MES_close(PARTNER)
+
+	//　　ラグナにアセアセエモーション。
+		EMO(RAGNA,EMO_ASEASE)
+		wait(30)
+		
+		MES(RAGNA,"い、いやカルディナさん。\nちょっと大袈裟すぎねえか……？",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"ふふ、そう思われるかも\nしれませんが、私には今は\nこのくらいの事しか出来ませんし。",0)
+		MES(CARDINA,"どうか、受け取っておいてください。",0)
+		MES_close(CARDINA)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"いやでもよ、こいつは姫さんの\n力を借りての成績だし……\nやっぱこういうのは……",0)
+		MES_close(RAGNA)
+
+	//　　アルウェン瞑目でため息。
+		KAO(PARTNER,"D","4","4")
+
+		MES(PARTNER,"ふう、気を遣わずとも良いのに……",0)
+		MES_close(PARTNER)
+
+	//　　アルウェン、ラグナに向く。
+		look_chr( PARTNER, RAGNA ,"Bone_Head")
+
+		MES(PARTNER,"ラグナよ、覚えておるか？",0)
+		MES_close(PARTNER)
+
+	//　　ラグナに？エモーション。
+		EMO(RAGNA,EMO_HATENA)
+		wait(30)
+
+		rot_chr(RAGNA,30,PARTNER)
+		MES(RAGNA,"な、何だよ姫さん……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"我らは相棒であろう？",0)
+		MES(PARTNER,"相棒とは、対等な立場で\n互いを認めあうもの。\n苦楽を共にするものだ。",0)
+		MES(PARTNER,"そなたと各地を回って\n色んな出来事があったが……\n私はとても楽しかったのだ。",0)
+		MES(PARTNER,"ただの契約で、ここまでの事が\n成せるはずがなかろう。",0)
+		MES(PARTNER,"これはその証──\n我らが相棒として旅をした証であろう。",0)
+		MES_close(PARTNER)
+
+	//　　アルウェン、ラグナに向く解除
+		look_off(PARTNER)
+	
+	//　　アルウェン、体ごとラグナに向く。
+		rot_chr(PARTNER,30,RAGNA)
+		
+		MES(PARTNER,"私を相棒と認めているならば……\nこの者の申し出、大人しく\n受け取っておくがよかろう。",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"姫さん……",0)
+		MES_close(RAGNA)
+
+
+		rot_chr(PET,30,RAGNA)
+	//	name2(PET)
+		MES(PET,"ま、まあアレよね。\n姫さまもここまで仰ってるんだし。",0)
+		MES(PET,"ここは受け取っとかなきゃ\n失礼よ、ラグナ。",0)
+		MES_close(PET)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"ええ、そうしてください。",0)
+		MES_close(CARDINA)
+
+	//　　ラグナ、瞑目。
+		KAO(RAGNA,"D","4","4")
+		MES(RAGNA,"……分かった。",0)
+		MES(RAGNA,"どうやら我が侭を\n言っちまったみたいだな。",0)
+		rot_chr(RAGNA,30,CARDINA)
+		MES(RAGNA,"カルディナさん、その称号\nありがたく拝命させてもらうぜ。",0)
+		MES_close(RAGNA)
+
+	//	name2(CARDINA)
+		MES(CARDINA,"ふふ、ありがとうございます。",0)
+		MES_close(CARDINA)
+
+		//すでにアルティメットハンターまでの褒賞を入手済み。
+		if( GW_HUNTER_RANK==15 )
+		{
+			VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時		
+		
+			fade_in(30,10,BLACK)
+			wait_fade()
+			
+		//	name("システムテキスト")
+			MES(0,"C3ラグナは最高のハンターランク\n“伝説の赤毛”になった。",2)
+			MES(0,"C3褒賞品『竜骨』を受け取った。",2)
+			MES_close(0)
+
+			//アイテム入手
+			get_item(203,1,0)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		}
+		else
+		{
+			VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+				
+			MES(0,"C3ラグナは最高のハンターランク\n“伝説の赤毛”になった。",2)
+			MES_close(0)
+
+			//アイテム入手
+			EV("RANK_ITEMGET")
+			wait_EV("RANK_ITEMGET")
+		}
+		
+	//　　一旦暗転してゆっくりフェードイン。
+		fade_in( 100, 60, BLACK)	//フェードアウト
+		wait(100)
+
+		workG(GW_HUNTER_RANK,SET,16)
+
+		fade_in( 0, 60, BLACK)	//フェードイン
+		wait(30)
+	}
+
+//────────────────────────────────────────────────────────────
+
+	//	アルティメットハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=45 && GW_HUNTER_RANK<15)
+	{
+			
+		MES(CARDINA,"……どうやら\n目覚しい活躍をなされたようですね。",0)
+		
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんを正式にL337アルティメットハンターL400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"アルティメットハンターは、\n無二の功績を成し遂げたハンターに\n贈られる、究極のランクです。",0)
+		MES(CARDINA,"その若さでアルティメットハンターに\n昇格されるなんて……\n本当に驚きました。",0)
+		MES(CARDINA,"私もラグナさんの昇格を\n誇りに思います。",0)
+		MES(CARDINA,"ラグナさん、どうか\nこれからもハンターとして\n素晴らしい活躍を続けてくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,15)
+	}
+
+/*	//『アルティメットハンター補佐』、無くなりました。
+//	アルティメットハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=65 && GW_HUNTER_RANK<15)
+	{
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+			
+		MES(CARDINA,"……どうやら\n目覚しい活躍をなされたようですね。",0)
+		MES(CARDINA,"おめでとうございます。\nラグナさんをアルティメットハンター補佐と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手（仮）
+		get_item(160,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		MES(CARDINA,"アルティメットハンターは、\n無二の功績を数多成し遂げたハンターに\n贈られる、究極のランクです。",0)
+		MES(CARDINA,"私もラグナさんの昇格を誇りに思います。",0)
+		MES(CARDINA,"ラグナさん、これからも\n素晴らしい功績を期待していますね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,15)
+	}
+*/
+
+//────────────────────────────────────────────────────────────
+
+	//	マーベラスハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=42 && GW_HUNTER_RANK<14)
+	{
+			
+		MES(CARDINA,"……どうやら\nとても活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんを正式にL337マーベラスハンターL400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"マーベラスハンターは、\nありとあらゆる分野に精通したハンターに\nのみ贈られるランクです。",0)
+		MES(CARDINA,"私もラグナさんの昇格を誇りに思います。",0)
+		MES(CARDINA,"ラグナさん、これからも\n素晴らしい功績を期待していますね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,14)
+	}
+//	マーベラスハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=39 && GW_HUNTER_RANK<13)
+	{
+			
+		MES(CARDINA,"……どうやら\nとても活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんをL337マーベラスハンター補佐L400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"マーベラスハンターは、\nありとあらゆる分野に精通したハンターに\nのみ贈られるランクです。",0)
+		MES(CARDINA,"私もラグナさんの昇格を誇りに思います。",0)
+		MES(CARDINA,"ラグナさん、これからも\n素晴らしい功績を期待していますね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,13)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	ビューティハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=36 && GW_HUNTER_RANK<12)
+	{
+			
+		MES(CARDINA,"……どうやら\nとても活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんを正式にL337ビューティハンターL400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"ビューティハンターは、\n大いなる栄光を掴んだハンターに\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、これからも\n素晴らしい功績を期待しています。",0)
+		MES(CARDINA,"頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,12)
+	}
+//	ビューティハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=33 && GW_HUNTER_RANK<11)
+	{
+			
+		MES(CARDINA,"……どうやら\nとても活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんをL337ビューティハンター補佐L400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"ビューティハンターは、\n大いなる栄光を掴んだハンターに\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、これからも\n素晴らしい功績を期待しています。",0)
+		MES(CARDINA,"頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,11)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	スペシャルハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=30 && GW_HUNTER_RANK<10)
+	{
+			
+		MES(CARDINA,"これは……\n随分と活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんを正式にL337スペシャルハンターL400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"スペシャルハンターは、\n非常に優れた功績を残したハンターに\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、これからも\n素晴らしい功績を期待しています。",0)
+		MES(CARDINA,"頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,10)
+	}
+//	スペシャルハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=27 && GW_HUNTER_RANK<9)
+	{
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+			
+		MES(CARDINA,"これは……\n随分と活躍なされたようですね。",0)
+		MES(CARDINA,"おめでとうございます。\nラグナさんをL337スペシャルハンター補佐L400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"スペシャルハンターは、\n非常に優れた功績を残したハンターに\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、これからも\n素晴らしい功績を期待しています。",0)
+		MES(CARDINA,"頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,9)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	ゴージャスハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=24 && GW_HUNTER_RANK<8)
+	{
+			
+		MES(CARDINA,"これは……\n随分と活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんを正式にL337ゴージャスハンターL400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+		MES(CARDINA,"ゴージャスハンターは、\n誰もが羨む、ひとヤマ当てたハンターに\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、これからも\n素晴らしい功績を期待しています。",0)
+		MES(CARDINA,"頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,8)
+	}
+//	ゴージャスハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=21 && GW_HUNTER_RANK<7)
+	{
+			
+		MES(CARDINA,"これは……\n随分と活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんをL337ゴージャスハンター補佐L400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"ゴージャスハンターは、\n誰もが羨む、ひとヤマ当てたハンターに\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、これからも\n素晴らしい功績を期待しています。",0)
+		MES(CARDINA,"頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,7)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	ベテランハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=18 && GW_HUNTER_RANK<6)
+	{
+			
+		MES(CARDINA,"ふふ、大分活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんを正式にL337ベテランハンターL400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"ベテランハンターは、\nハンターとして十分な実績を収めた者に\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、\nこれからも頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,6)
+	}
+//	ベテランハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=15 && GW_HUNTER_RANK<5)
+	{
+			
+		MES(CARDINA,"ふふ、大分活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんをL337ベテランハンター補佐L400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"ベテランハンターは、\nハンターとして十分な実績を収めた者に\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、\nこれからも頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,5)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	ワイルドハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=12 && GW_HUNTER_RANK<4)
+	{
+			
+		MES(CARDINA,"ふふ、大分活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんを正式にL337ワイルドハンターL400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"ワイルドハンターは、\n様々な野心的活動を行ったハンターに\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、\nこれからも頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,4)
+	}
+//	ワイルドハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=9 && GW_HUNTER_RANK<3)
+	{
+			
+		MES(CARDINA,"ふふ、大分活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんをL337ワイルドハンター補佐L400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"ワイルドハンターは、\n様々な野心的活動を行ったハンターに\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、\nこれからも頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,3)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	ダンジョンハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=6 && GW_HUNTER_RANK<2)
+	{
+	
+		MES(CARDINA,"ふふ、大分活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時
+		MES(CARDINA,"おめでとうございます。\nラグナさんを正式にL337ダンジョンハンターL400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"ダンジョンハンターは、\nダンジョン探索に長じたハンターに\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、\nこれからも頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,2)
+	}
+//	ダンジョンハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=3 && GW_HUNTER_RANK<1)
+	{
+		MES(CARDINA,"ふふ、大分活躍なされたようですね。",0)
+
+		VOICE(718,0)					//「ふふ、おめでとうございます」（ハンターランクが上がった時	
+		MES(CARDINA,"おめでとうございます。\nラグナさんをL337ダンジョンハンター補佐L400と\n認定致します。",0)
+		MES(CARDINA,"こちらは当ギルドからの\n褒賞となります。\nどうぞお受け取りください。",0)
+		MES_close(CARDINA)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(CARDINA,"ダンジョンハンターは、\nダンジョン探索に長じたハンターに\n贈られるランクです。",0)
+		MES(CARDINA,"ラグナさん、\nこれからも頑張ってくださいね。",0)
+		MES_close(CARDINA)
+		
+		workG(GW_HUNTER_RANK,SET,1)
+	}
+
+//────────────────────────────────────────────────────────────
+
+//	name("⇒昇格がない場合")
+	else
+	{
+		if(GW_HUNTER_RANK==0)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337ノーマルハンターL400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==1)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337ダンジョンハンター補佐L400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==2)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337ダンジョンハンターL400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==3)
+		{
+			MES(CARDINA,"ラグナさんの現在の\nハンターランクはL337ワイルドハンター補佐L400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==4)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337ワイルドハンターL400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==5)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337ベテランハンター補佐L400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==6)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337ベテランハンターL400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==7)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337ゴージャスハンター補佐L400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==8)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337ゴージャスハンターL400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==9)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337スペシャルハンター補佐L400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==10)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337スペシャルハンターL400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==11)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337ビューティハンター補佐L400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==12)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337ビューティハンターL400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==13)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337マーベラスハンター補佐L400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==14)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337マーベラスハンターL400ですね。",0)
+			MES(CARDINA,"ダンジョンでクリア成績を溜められたら\nもう一度お越しください。",0)
+			MES(CARDINA,"当ギルドから、多少の\n援助をさせていただきますから。",0)
+			MES_close(CARDINA)
+		}
+		else
+/*		if(GW_HUNTER_RANK==15)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337アルティメットハンター補佐L400ですね。",0)
+		}
+		else
+*/		if(GW_HUNTER_RANK==15)
+		{
+			MES(CARDINA,"ラグナさんの現在のハンターランクは\nL337アルティメットハンターL400ですね。",0)
+			MES(CARDINA,"その若さでアルティメットハンターに\n昇格されるなんて……\n本当に驚くばかりです。",0)
+			MES(CARDINA,"ラグナさん、どうか\nこれからもハンターとして\n素晴らしい活躍を続けてくださいね。",0)
+			MES_close(CARDINA)
+		}
+		else
+		if(GW_HUNTER_RANK==16)
+		{
+			MES(CARDINA,"ラグナさんの現在の\nハンターランクは\nL700伝説の赤毛L400です。",0)
+			MES(CARDINA,"“伝説の赤毛”は、その昔\nグランヴァレン中を旅して回った\n高名な冒険家だと言われています。",0)
+			MES(CARDINA,"ふふ、彼のように自由に生き、\nたくさんの功績を残すことが\n全てのハンターの願いなんですよ。",0)
+			MES_close(CARDINA)
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+			//　　ラグナに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				wait(30)
+
+				MES(RAGNA,"いや、やっぱりちょっと\n大げさじゃないか……？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("⇒アルウェン先頭")
+			//　　アルウェン、少しラグナのほうを見る。
+				look_chr(PARTNER,RAGNA,"Bone_Head")
+				MES(PARTNER,"フフ、そなたも\n名前負けせぬよう頑張らねばのう！",0)
+				MES_close(PARTNER)
+
+			//　　ラグナに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				wait(30)
+
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+				MES(RAGNA,"いや、だからちょっと\n大げさなんだって……",0)
+				MES_close(RAGNA)
+				look_off(RAGNA)
+				look_off(PARTNER)
+			}
+			//──────────────────────────────
+		}
+	
+	}
+}
+
+
+
+//=================================================================================================
+//ハンターランク査定。
+//取り逃したアイテム含めて、報酬を一括で貰えるルーチン
+//昇格があったことを前提にしている。
+//
+//		091	姐御のテヌグイ	AC27	06 	87	0		------ 	0	0	0	0	気合の入ったテヌグイ。\n体力満タンの時は魔力を消費しなくなる。			//闘技場
+//		084	グルメなおハシ	 AC20	06 	96	0		------ 	-1	-1	-1	0	誰の手にもクリティカルフィる不思議ハシ。\nフードの回復量アップ。		//ハンターランク
+//		081	停滞防止のお守り AC17	06 	89	0		------ 	0	0	0	0	移動妨害を防止するお守り。\n氷結・マヒ状態を予防する。					//ハンターランク
+//		085	セレブなお財布	 AC21	06 	97	0		------ 	-1	-1	-1	0	金銀の装飾がなされたハデハデなサイフ。\n手に入れるお金の額が増加する。	//ハンターランク
+//		083	呪い返しのお守り AC19	06 	91	0		------ 	0	0	0	0	呪いを無効化するお守り。\n呪縛状態を予防する。							//ハンターランク
+//		087	イナセなお面	 AC23	06 	99	0		------ 	-1	-1	-1	0	粋でイナセな怪人のお面。\nショップ店員を誘惑して安く買い物できる。		//ハンターランク
+//		089	アンチトラップ	AC25	06 	85	0		------ 	0	0	0	0	トラップのダメージを無効化する魔法の盾。								//闘技場
+//		086	サンタなおヒゲ	 AC22	06 	98	0		------ 	1	1	1	0	たくましい白銀の付けヒゲ。\n敵がアイテムを落としやすくなる。			//ハンターランク
+//
+//=================================================================================================
+/*
+ハンターランク報酬のアクセサリを必要なときに入手できるよう順番調整しました。
+
+ダンジョンハンター		：姐御のテヌグイ	＞停滞防止のお守り	※変更
+ワイルドハンター		：グルメなおハシ	＞グルメなおハシ
+ベテランハンター		：停滞防止のお守り	＞呪い返しのお守り	※変更
+ゴージャスハンター		：セレブなお財布	＞セレブなお財布
+スペシャルハンター		：呪い返しのお守り	＞姐御のテヌグイ	※変更
+ビューティハンター		：イナセなお面		＞サンタなおヒゲ	※変更
+マーベラスハンター		：アンチトラップ	＞アンチトラップ	
+アルティメットハンター	：サンタなおヒゲ	＞イナセなお面		※変更
+伝説の赤毛				：無し				＞無し
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ダンジョンハンター補佐	：キャンディー  （EXP40）		＞生ハム	         （EXP75）
+ワイルドハンター補佐	：しいたけ        （EXP480）	＞チャーハン      （EXP375）
+ベテランハンター補佐	：生ハム          （EXP75）		＞カレーライス    （EXP900）
+ゴージャスハンター補佐  ：チョコレート   （EXP600）		＞うなぎの蒲焼   （EXP1575）
+スペシャルハンター補佐  ：カレーライス  （EXP900）		＞ターキー        （EXP3150）
+ビューティハンター補佐  ：カルボナーラ  （EXP2250） 	＞ショートケーキ （EXP9000）
+マーベラスハンター補佐  ：まつたけ       （EXP108000）	＞ドリアン	         （EXP64125）
+
+//=================================================================================================
+
+ダンジョンハンター補佐	：生ハム	     
+ダンジョンハンター		：停滞防止のお守り	※変更
+ワイルドハンター補佐	：チャーハン     
+ワイルドハンター		：グルメなおハシ
+ベテランハンター補佐	：カレーライス   
+ベテランハンター		：呪い返しのお守り	※変更
+ゴージャスハンター補佐  ：うなぎの蒲焼   
+ゴージャスハンター		：セレブなお財布
+スペシャルハンター補佐  ：ターキー       
+スペシャルハンター		：姐御のテヌグイ	※変更
+ビューティハンター補佐  ：ショートケーキ 
+ビューティハンター		：サンタなおヒゲ	※変更
+マーベラスハンター補佐  ：ドリアン	     
+マーベラスハンター		：アンチトラップ	
+アルティメットハンター	：イナセなお面		※変更
+伝説の赤毛				：無し
+
+//=================================================================================================
+*/
+
+
+RANK_ITEMGET
+{
+	//フード系アイテムは仮仕様。現在はすべてかっぱ巻き。
+	//ver.2008/8/7 仮更新　バランス調整が必要
+	//―――――――――――――――――――――――
+
+	//今回の査定で、初めて『ダンジョンハンター補佐』になった。
+	//ver.2008/8/7 キャンディー
+//0829 ダンジョンハンター補佐	：生ハム	     		165 生ハム			FD05 	20	63	0		------ 	75		16	0	0	塩漬けの生ハム。\nメロンに乗せると高級オードブルに早変わり。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<1 && GW_HUNTER_POINT>=3 )
+	{
+		get_item(165,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『ダンジョンハンター』になった。
+//0829 ダンジョンハンター		：停滞防止のお守り		081	停滞防止のお守り AC17	06 	89	0		------ 	0	0	0	0	移動妨害を防止するお守り。\nマヒ状態を予防する。					//★ハンターランク
+	if( GW_HUNTER_RANK<2 && GW_HUNTER_POINT>=6 )
+	{
+		get_item(081,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『ワイルドハンター補佐』になった。
+	//ver.2008/8/7 しいたけ
+//0829 ワイルドハンター補佐		：チャーハン     		185	チャーハン		FD25 	20	42	0		------ 	375		21	0	0	強火で炒めたエビ入りチャーハン。\n米同士がくっついていない絶妙のパラパラ感。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<3 && GW_HUNTER_POINT>=9 )
+	{
+		get_item(185,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『ワイルドハンター』になった。
+	if( GW_HUNTER_RANK<4 && GW_HUNTER_POINT>=12 )
+	{
+		get_item(084,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『ベテランハンター補佐』になった。
+	//ver.2008/8/7 生ハム
+//0829 ベテランハンター補佐		：カレーライス   		162 カレーライス	FD02 	20	55	0		------ 	900		25	0	0	正統派ビーフカレー（中辛）。\nほどよい辛さが食欲をそそる。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<5 && GW_HUNTER_POINT>=15 )
+	{
+		get_item(162,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『ベテランハンター』になった。
+//0829 ベテランハンター			：呪い返しのお守り		083	呪い返しのお守り AC19	06 	91	0		------ 	0	0	0	0	呪いを無効化するお守り。\n呪縛状態を予防する。						//★ハンターランク
+	if( GW_HUNTER_RANK<6 && GW_HUNTER_POINT>=18 )
+	{
+		get_item(083,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『ゴージャスハンター補佐』になった。
+	//ver.2008/8/7 チョコレート
+//0829 ゴージャスハンター補佐 	：うなぎの蒲焼   		170 うなぎの蒲焼	FD10 	20	72	0		------ 	1575	27	0	0	秘伝のタレでじりじり焼いたうなぎ。\nふんわり柔らかなアルッテ風。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<7 && GW_HUNTER_POINT>=21 )
+	{
+		get_item(170,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『ゴージャスハンター』になった。
+	if( GW_HUNTER_RANK<8 && GW_HUNTER_POINT>=24 )
+	{
+		get_item(085,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『スペシャルハンター補佐』になった。
+	//ver.2008/8/7 カレーライス
+//0829 スペシャルハンター補佐  	：ターキー       		178 ターキー		FD18 	20	43	0		------ 	3150	29	0	0	皮までおいしい七面鳥のロースト。\nパーティ会場の中心が指定席。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<9 && GW_HUNTER_POINT>=27 )
+	{
+		get_item(178,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『スペシャルハンター』になった。
+//0829 スペシャルハンター		：姐御のテヌグイ		091	姐御のテヌグイ	AC27	06 	87	0		------ 	0	0	0	0	気合の入ったテヌグイ。\n体力満タンの時は魔力を消費しなくなる。					//☆ハンターランク
+	if( GW_HUNTER_RANK<10 && GW_HUNTER_POINT>=30 )
+	{
+		get_item(091,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『ビューティハンター補佐』になった。
+	//ver.2008/8/7 カルボナーラ
+//0829 ビューティハンター補佐  	：ショートケーキ 		194	ショートケーキ	FD34 	20	54	0		------ 	9000	33	0	0	大きなイチゴを乗せた正統派ケーキ。\n祝いの席には欠かせない。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<11 && GW_HUNTER_POINT>=33 )
+	{
+		get_item(194,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『ビューティハンター』になった。
+//0829 ビューティハンター		：サンタなおヒゲ		086	サンタなおヒゲ	AC22	06 	98	0		------ 	0	0	0	0	たくましい白銀の付けヒゲ。\n敵がアイテムを落としやすくなる。								//☆ハンターランク
+	if( GW_HUNTER_RANK<12 && GW_HUNTER_POINT>=36 )
+	{
+		get_item(086,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『マーベラスハンター補佐』になった。
+	//ver.2008/8/7 エリンギ
+//0829 マーベラスハンター補佐  	：ドリアン	     		183	ドリアン		FD23 	20	62	0		------ 	64125	40	0	0	なめらかな食感と確かな甘さを持つ果物王。\n強烈な臭いがあるため好みは分かれる。
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<13 && GW_HUNTER_POINT>=39 )
+	{
+		get_item(183,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『マーベラスハンター』になった。
+	if( GW_HUNTER_RANK<14 && GW_HUNTER_POINT>=42 )
+	{
+		get_item(089,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『アルティメットハンター』になった。
+//0829 アルティメットハンター	：イナセなお面			087	イナセなお面	AC23	06 	99	0		------ 	0	0	0	0	粋でイナセな怪人のお面。\nショップ店員を誘惑して安く買い物できる。							//☆ハンターランク
+	//―――――――――――――――――――――――
+	if( GW_HUNTER_RANK<15 && GW_HUNTER_POINT>=45 )
+	{
+		get_item(087,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+	//今回の査定で、初めて『伝説の赤毛』になった。
+	if( GW_HUNTER_RANK<16 && GW_HUNTER_POINT>=48 )
+	{
+		get_item(203,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	}
+}
+
+
+//―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+//アイテムゲット・表示無し版（エピローグ用）
+//―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+RANK_ITEMGET_BLIND
+{
+
+	//今回の査定で、初めて『ダンジョンハンター補佐』になった。
+	if( GW_HUNTER_RANK<1 && GW_HUNTER_POINT>=3 )
+		get_item(165,1,1)
+	//今回の査定で、初めて『ダンジョンハンター』になった。
+	if( GW_HUNTER_RANK<2 && GW_HUNTER_POINT>=6 )
+		get_item(081,1,1)
+	//今回の査定で、初めて『ワイルドハンター補佐』になった。
+	if( GW_HUNTER_RANK<3 && GW_HUNTER_POINT>=9 )
+		get_item(185,1,1)
+	//今回の査定で、初めて『ワイルドハンター』になった。
+	if( GW_HUNTER_RANK<4 && GW_HUNTER_POINT>=12 )
+		get_item(084,1,1)
+	//今回の査定で、初めて『ベテランハンター補佐』になった。
+	if( GW_HUNTER_RANK<5 && GW_HUNTER_POINT>=15 )
+		get_item(162,1,1)
+	//今回の査定で、初めて『ベテランハンター』になった。
+	if( GW_HUNTER_RANK<6 && GW_HUNTER_POINT>=18 )
+		get_item(083,1,1)
+	//今回の査定で、初めて『ゴージャスハンター補佐』になった。
+	if( GW_HUNTER_RANK<7 && GW_HUNTER_POINT>=21 )
+		get_item(170,1,1)
+	//今回の査定で、初めて『ゴージャスハンター』になった。
+	if( GW_HUNTER_RANK<8 && GW_HUNTER_POINT>=24 )
+		get_item(085,1,1)
+	//今回の査定で、初めて『スペシャルハンター補佐』になった。
+	if( GW_HUNTER_RANK<9 && GW_HUNTER_POINT>=27 )
+		get_item(178,1,1)
+	//今回の査定で、初めて『スペシャルハンター』になった。
+	if( GW_HUNTER_RANK<10 && GW_HUNTER_POINT>=30 )
+		get_item(091,1,1)
+	//今回の査定で、初めて『ビューティハンター補佐』になった。
+	if( GW_HUNTER_RANK<11 && GW_HUNTER_POINT>=33 )
+		get_item(194,1,1)
+	//今回の査定で、初めて『ビューティハンター』になった。
+	if( GW_HUNTER_RANK<12 && GW_HUNTER_POINT>=36 )
+		get_item(086,1,1)
+	//今回の査定で、初めて『マーベラスハンター補佐』になった。
+	if( GW_HUNTER_RANK<13 && GW_HUNTER_POINT>=39 )
+		get_item(183,1,1)
+	//今回の査定で、初めて『マーベラスハンター』になった。
+	if( GW_HUNTER_RANK<14 && GW_HUNTER_POINT>=42 )
+		get_item(089,1,1)
+	//今回の査定で、初めて『アルティメットハンター』になった。
+	if( GW_HUNTER_RANK<15 && GW_HUNTER_POINT>=45 )
+		get_item(087,1,1)
+	//今回の査定で、初めて『伝説の赤毛』になった。
+	if( GW_HUNTER_RANK<16 && GW_HUNTER_POINT>=48 )
+		get_item(203,1,1)
+
+}
+
+
+#EndScriptTable
+////////////////////////////////////////////////////////////////////////////////////////////////////

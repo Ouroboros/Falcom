@@ -1,0 +1,506 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[mc52022][俧-摤媄応丂僇僢僷愱梡]
+//====================================================================
+
+#ScriptTable
+
+//懳愴憡庤偺儔儀儖傪 ENEMY_CHARA偵摑堦偟傑偟偨
+#ENEMY_CHARA	9
+
+#LOTTE		40
+
+
+//僇僢僷 11乣79
+
+//仭儘乕僇儖儚乕僋
+
+//仭儘乕僇儖僼儔僌
+//F100乣F110 僇僢僷摙敯僼儔僌
+//F120		 僀儀儞僩婲摦僼儔僌
+
+
+INIT
+{
+//  -------  no typ   	  tip      x    y   z       mot     岦 忬  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭奒抜丒斷
+
+	set_obj("@obx0082a", 6, 7,     0,   0,  0,		180)						//傾乕僠
+	set_obj("@obx0082a", 5, 4,     0,   0,  0,		0)						//傾乕僠(揋懁)
+	set_chr(191,1301,	 6, 7,     0,   0,  0,		  0,   180, 0,";")			//奒抜壓乮僟儈乕乯
+	set_chr(192,1301,	 5, 4,     0,   0,  0,		  0,   0, 0,";")			//奒抜忋乮僟儈乕乯
+
+	//娰撪偵偄傞傛俴俥丅
+	F_set(90)
+
+	//仴僇僢僷儌乕僪
+//	if(GW_ENTRY_EVENT==3)
+	{
+		chr_pos(PLAYER1, 10280,10210, 0, 0, 2 );
+		chr_pos(PLAYER2, 10280,10210, 0, 0, 2 );
+		chr_pos(PET,     10280,10210, 0, 0, 2 );
+		
+		EV("PRE_KAPPA_BATTLE")										//僇僢僷
+	}
+
+	set_chr( 91,716,	 6, 6,     0, 250,  0,		0,0,0,";")
+	set_chr( 92,716,	 5, 4,     0,1550,  0,		0,0,0,";")
+	set_chr( 93,991,	 6, 6,     0, 250,  0,		0,400501,0,";")	//僗僩僢僷乕
+	set_chr( 94,991,	 5, 4,     0,1550,  0,		0,400501,0,";")	//僗僩僢僷乕
+	
+	set_chr( LOTTE,1068,	-1,-1,  10388,10356,1,	0,0,0,"")	//丂儘僢僥		
+//	set_chr( LOTTE,1068,	-1,-1,  9549,9099,1,	0,0,0,"")	//丂儘僢僥		
+	map_color(85,80,80,0);//R,G,B, time 100%
+}
+
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+PRE_KAPPA_BATTLE
+{
+	//僷乕僥傿傪堦恖偵偡傞丅(仸僷乕僥傿偵俀恖偄傞偙偲慜採)
+//	if(GW_TRY_CHARA==0)
+//	{
+		clear_party(PARTNER)	//傾儖僂僃儞徚嫀
+		color(PLAYER2,-1)
+		color(PLAYER1, 1)
+//	}
+//	else
+//	{
+//		clear_party(99)			//傾儖僂僃儞偺傒偺憖嶌儌乕僪傊	
+//		color(PLAYER2,-1)
+//		color(PLAYER1, 1)
+//	}
+	
+	//儁僢僩徚偡
+	color(PET,-1)		
+
+	wait(30)
+
+	CAM_move(10388,-10456,162,0,0)
+	CAM(-50,80,162,21,180,0,0)
+	CAM_move(10388,-10456,162,100,0)
+	CAM(-50,50,162,21,180,100,0)
+
+
+	SE(591,0)//娊惡
+	KAO(LOTTE,"1","1","3")
+
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+	color(PLAYER1, -1)
+	
+	//僼僃乕僪僀儞
+	fade_in(0,30,0)
+	wait_fade()
+	wait(30)
+	
+	KAO(LOTTE,"52625Z6","1236","6")
+	MES(LOTTE,"P1S4接下來，\n馬上就到獎勵時間嘍！！",0)
+	MES_close(LOTTE)
+	wait_MES(LOTTE)
+	
+	
+		//弶夞尷掕
+		//儘僢僥傪偳偐偡
+		MOT(LOTTE,153,2)
+		rot(LOTTE,60,360)
+		KAO(LOTTE,"5","5","6")
+		jump(LOTTE,0,20,9549,9099,0,400)
+
+	color(PLAYER1, 1)
+	CAM_return(30)
+	
+	EV_end()
+	
+	//儁僢僩徚偡
+	color(PET,-1)	
+
+//	set_chr( 10,350,	0,0,9304,9619,800,0,	0,		8,"!F10 F1 F2 F3 F4 F5 F6 F7 F8 F9 <EV_KappaEnd>;")//戝僗儔僀儉
+
+	set_chr( 60,990,	0,0,0,0,0,		0,	0,		8,"F1  F2  F3  F4  F5  F6  F7  F8  F9  SF100 <EV_KappaEnd>;")//廔椆敾掕梡
+	set_chr( 61,990,	0,0,0,0,0,		0,	0,		8,"F11 F12 F13 F14 F15 F16 F17 F18 F19 SF101 <EV_KappaEnd>;")//廔椆敾掕梡
+	set_chr( 62,990,	0,0,0,0,0,		0,	0,		8,"F21 F22 F23 F24 F25 F26 F27 F28 F29 SF102 <EV_KappaEnd>;")//廔椆敾掕梡
+	set_chr( 63,990,	0,0,0,0,0,		0,	0,		8,"F31 F32 F33 F34 F35 F36 F37 F38 F39 SF103 <EV_KappaEnd>;")//廔椆敾掕梡
+	set_chr( 64,990,	0,0,0,0,0,		0,	0,		8,"F41 F42 F43 F44 F45 F46 F47 F48 F49 SF104 <EV_KappaEnd>;")//廔椆敾掕梡
+	set_chr( 65,990,	0,0,0,0,0,		0,	0,		8,"F51 F52 F53 F54 F55 F56 F57 F58 F59 SF105 <EV_KappaEnd>;")//廔椆敾掕梡
+	
+	//chr1乣10偼弶婜Spawn
+
+	//僇僢僷捛壛弌尰梡------------------------------------------------------------	
+		set_chr( 11,400,		-1,-1,10280,10010,0,	-1,	0,		8,"F001 WT?30 V3_99;")//
+		set_chr( 12,400,		-1,-1,10668, 9559,0,	-1,	0,		8,"F002 WT?30 V3_99;")//
+		set_chr( 13,400,		-1,-1, 9504, 9819,0,	-1,	0,		8,"F003 WT?30 V3_99;")//
+		set_chr( 14,400,		-1,-1,10867,10514,0,	-1,	0,		8,"F004 WT?30 V3_99;")//
+		set_chr( 15,400,		-1,-1, 9864, 9603,0,	-1,	0,		8,"F005 WT?30 V3_99;")//
+		set_chr( 16,400,		-1,-1, 9673, 9565,0,	-1,	0,		8,"F006 WT?30 V3_99;")//
+		set_chr( 17,400,		-1,-1,10128,10295,0,	-1,	0,		8,"F007 WT?30 V3_99;")//
+		set_chr( 18,400,		-1,-1,10668, 9359, 0,	-1,	0,		8,"F008 WT?30 V3_99;")//
+		set_chr( 19,400,		-1,-1, 9907,10291,0,	-1,	0,		8,"F009 WT?30 V3_99;")//	
+
+		chr_equip2( 16,"EQ_155", "Bone_Head", 100,	0,0,0,	0,0,0);
+		chr_equip2( 17,"EQ_009", "Bone_RightSword", 100,	0,0,0,	0,0,0);			//僴儕僙儞
+		chr_equip2( 18,"EQ_009", "Bone_RightSword", 100,	0,0,0,	0,0,0);			//僴儕僙儞
+		chr_equip2( 19,"EQ_008", "Bone_RightSword", 100,	0,0,0,	0,0,0);			//僴儕僙儞
+
+		set_chr( 21,400,		-1,-1, 9907,10791,0,	-1,	0,		8,"F011 WT?30 V3_99;")//
+		set_chr( 22,400,		-1,-1,10668, 9859,0,	-1,	0,		8,"F012 WT?30 V3_99;")//
+		set_chr( 23,400,		-1,-1,10128,10795,0,	-1,	0,		8,"F013 WT?30 V3_99;")//
+		set_chr( 24,400,		-1,-1, 9673, 9965,0,	-1,	0,		8,"F014 WT?30 V3_99;")//
+		set_chr( 25,400,		-1,-1, 9304, 9619,0,	-1,	0,		8,"F015 WT?30 V3_99;")//
+		set_chr( 26,400,		-1,-1,10668,9859,0,		-1,	0,		8,"F016 WT?30 V3_99;")//
+		set_chr( 27,400,		-1,-1, 9504, 9619,0,	-1,	0,		8,"F017 WT?30 V3_99;")//
+		set_chr( 28,400,		-1,-1,10668, 9859, 0,	-1,	0,		8,"F018 WT?30 V3_99;")//
+		set_chr( 29,400,		-1,-1,10280,10210,,0,	-1,	0,		8,"F019 WT?30 V3_99;")//	
+
+		chr_equip2( 21,"EQ_013", "Bone_RightSword", 100,	0,0,0,	0,0,0);
+		chr_equip2( 22,"EQ_014", "Bone_RightSword", 100,	0,0,0,	0,0,0);
+		chr_equip2( 23,"EQ_015", "Bone_RightSword", 100,	0,0,0,	0,0,0);
+		chr_equip2( 24,"EQ_016", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 25,"EQ_017", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 26,"EQ_018", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 27,"EQ_010", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 28,"EQ_014", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 29,"EQ_015", "Bone_RightSword", 100,	0,0,0,	0,0,0);		
+				
+		set_chr( 31,400,		-1,-1,10280,10210,0,	-1,	0,		8,"F021 WT?30 V3_99 F031 I_US04;")//
+		set_chr( 32,400,		-1,-1,10668, 9859,0,	-1,	0,		8,"F022 WT?30 V3_99 F032 I_US04;")//
+		set_chr( 33,400,		-1,-1, 9504, 9619,0,	-1,	0,		8,"F023 WT?30 V3_99 F033 I_US04;")//
+		set_chr( 34,400,		-1,-1,10867,11014,0,	-1,	0,		8,"F024 WT?30 V3_99 F034 I_US04;")//
+		set_chr( 35,400,		-1,-1, 9864,10103,0,	-1,	0,		8,"F025 WT?30 V3_99 F035 I_US04;")//
+		set_chr( 36,400,		-1,-1, 9673, 9965,0,	-1,	0,		8,"F026 WT?30 V3_99 F036 I_US04;")//
+		set_chr( 37,400,		-1,-1,10128,10795,0,	-1,	0,		8,"F027 WT?30 V3_99 F037 I_US04;")//
+		set_chr( 38,400,		-1,-1,10668, 9859,0,	-1,	0,		8,"F028 WT?30 V3_99 F038 I_US04;")//
+		set_chr( 39,400,		-1,-1, 9907,10791,0,	-1,	0,		8,"F029 WT?30 V3_99 F039 I_US04;")//	
+
+		chr_equip2( 31,"EQ_001", "Bone_RightSword", 100,	0,0,0,	0,0,0);
+		chr_equip2( 32,"EQ_002", "Bone_RightSword", 100,	0,0,0,	0,0,0);
+		chr_equip2( 33,"EQ_003", "Bone_RightSword", 100,	0,0,0,	0,0,0);
+		chr_equip2( 34,"EQ_004", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 35,"EQ_005", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 36,"EQ_006", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 37,"EQ_011", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 38,"EQ_012", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 39,"EQ_009", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+
+		chr_equip2( 31,"EQ_049", "Bone_Head", 100,	0,0,0,	0,0,0);		//擫傒傒
+		chr_equip2( 31,"EQ_048", "Bone_Spine_Dummy", 100,	0,0,0,	0,0,0);		//擫怟旜
+		chr_equip2( 35,"EQ_049", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 35,"EQ_048", "Bone_Spine_Dummy", 100,	0,0,0,	0,0,0);		//擫怟旜
+
+
+		set_chr( 41,400,		-1,-1, 9907,10791,0,	-1,	0,		8,"F031 WT?30 V3_99 F041 I_US04;")//
+		set_chr( 42,400,		-1,-1,10668, 9859,0,	-1,	0,		8,"F032 WT?30 V3_99 F042 I_US04;")//
+		set_chr( 43,400,		-1,-1,10128,10795,0,	-1,	0,		8,"F033 WT?30 V3_99 F043 I_US04;")//
+		set_chr( 44,400,		-1,-1, 9673, 9965,0,	-1,	0,		8,"F034 WT?30 V3_99 F044 I_US04;")//
+		set_chr( 45,400,		-1,-1, 9404, 9619,0,	-1,	0,		8,"F035 WT?30 V3_99 F045 I_US04;")//
+		set_chr( 46,400,		-1,-1,10668, 9859,0,	-1,	0,		8,"F036 WT?30 V3_99 F046 I_US04;")//
+		set_chr( 47,400,		-1,-1,10004, 9619,0,	-1,	0,		8,"F037 WT?30 V3_99 F047 I_US04;")//
+		set_chr( 48,400,		-1,-1,10668, 9859, 0,	-1,	0,		8,"F038 WT?30 V3_99 F048 I_US04;")//
+		set_chr( 49,400,		-1,-1,10280,10210,,0,	-1,	0,		8,"F039 WT?30 V3_99 F049 I_US04;")//	
+
+		chr_equip2( 41,"EQ_105", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 42,"EQ_150", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 43,"EQ_105", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 44,"EQ_150", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 45,"EQ_105", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 46,"EQ_151", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 47,"EQ_105", "Bone_Head", 100,	0,0,0,	0,0,0);		
+		chr_equip2( 48,"EQ_151", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 49,"EQ_150", "Bone_Head", 100,	0,0,0,	0,0,0);	
+
+		set_chr( 51,400,		0,0,10280,10210,0,	-1,	0,		8,"F041 WT?30 V3_99 F051 I_US04;")//
+		set_chr( 52,400,		0,0,10668, 9859,0,	-1,	0,		8,"F042 WT?30 V3_99 F052 I_US04;")//
+		set_chr( 53,400,		0,0, 9504, 9619,0,	-1,	0,		8,"F043 WT?30 V3_99 F053 I_US04;")//
+		set_chr( 54,400,		0,0,10867,11014,0,	-1,	0,		8,"F044 WT?30 V3_99 F054 I_US04;")//
+		set_chr( 55,400,		0,0, 9864,10103,0,	-1,	0,		8,"F045 WT?30 V3_99 F055 I_US04;")//
+		set_chr( 56,400,		0,0, 9673, 9965,0,	-1,	0,		8,"F046 WT?30 V3_99 F056 I_US04;")//
+		set_chr( 57,400,		0,0,10128,10795,0,	-1,	0,		8,"F047 WT?30 V3_99 F057 I_US04;")//
+		set_chr( 58,400,		0,0,10668, 9859, 0,	-1,	0,		8,"F048 WT?30 V3_99 F058 I_US04;")//
+		set_chr( 59,400,		0,0, 9907,10791,0,	-1,	0,		8,"F049 WT?30 V3_99 F059 I_US04;")//	
+
+		//摢
+		chr_equip2( 51,"EQ_105", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 52,"EQ_162", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 53,"EQ_057", "Bone_Head", 100,	0,0,0,	0,0,0);	
+//		chr_equip2( 54,"EQ_150", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 55,"EQ_151", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 56,"EQ_163", "Bone_Head", 100,	0,0,0,	0,0,0);		//偨傞
+		
+		chr_equip2( 57,"EQ_105", "Bone_Head", 100,	0,0,0,	0,0,0);		
+		chr_equip2( 58,"EQ_162", "Bone_Head", 100,	0,0,0,	0,0,0);	
+		chr_equip2( 59,"EQ_150", "Bone_Head", 100,	0,0,0,	0,0,0);		
+	
+		//晲婍
+		chr_equip2( 51,"EQ_001", "Bone_RightSword", 100,	0,0,0,	0,0,0);
+		chr_equip2( 52,"EQ_002", "Bone_RightSword", 100,	0,0,0,	0,0,0);
+		chr_equip2( 53,"EQ_003", "Bone_RightSword", 100,	0,0,0,	0,0,0);
+		chr_equip2( 54,"EQ_004", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 55,"EQ_005", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 56,"EQ_006", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 57,"EQ_011", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 58,"EQ_012", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 59,"EQ_009", "Bone_RightSword", 100,	0,0,0,	0,0,0);			
+
+		//弬
+		chr_equip2( 51,"EQ_101", "Bone_LeftHand", 100,	0,0,0,	0,0,0);
+		chr_equip2( 52,"EQ_102", "Bone_LeftHand", 100,	0,0,0,	0,0,0);
+		chr_equip2( 53,"EQ_152", "Bone_LeftHand", 100,	0,0,0,	0,0,0);
+		chr_equip2( 54,"EQ_154", "Bone_LeftHand", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 55,"EQ_101", "Bone_LeftHand", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 56,"EQ_102", "Bone_LeftHand", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 57,"EQ_154", "Bone_LeftHand", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 58,"EQ_152", "Bone_LeftHand", 100,	0,0,0,	0,0,0);			
+		chr_equip2( 59,"EQ_101", "Bone_LeftHand", 100,	0,0,0,	0,0,0);			
+
+/*		set_chr( 61,400,		-1,-1,10280,10010,0,	-1,	0,		8,"F051 WT?30 V3_99;")//
+		set_chr( 62,400,		-1,-1,10668, 9559,0,	-1,	0,		8,"F051 WT?30 V3_99;")//
+		set_chr( 63,400,		-1,-1, 9504, 9819,0,	-1,	0,		8,"F051 WT?30 V3_99;")//
+		set_chr( 64,400,		-1,-1,10867,10514,0,	-1,	0,		8,"F051 WT?30 V3_99;")//
+		set_chr( 65,400,		-1,-1, 9864, 9603,0,	-1,	0,		8,"F052 WT?30 V3_99;")//
+		set_chr( 66,400,		-1,-1, 9673, 9565,0,	-1,	0,		8,"F052 WT?30 V3_99;")//
+		set_chr( 67,400,		-1,-1,10128,10295,0,	-1,	0,		8,"F052 WT?30 V3_99;")//
+		set_chr( 68,400,		-1,-1,10668, 9359, 0,	-1,	0,		8,"F052 WT?30 V3_99;")//
+		set_chr( 69,400,		-1,-1, 9907,10291,0,	-1,	0,		8,"F052 WT?30 V3_99;")//	
+		set_chr( 71,400,		-1,-1,10280,10010,0,	-1,	0,		8,"F053 WT?30 V3_99;")//
+		set_chr( 72,400,		-1,-1,10668, 9559,0,	-1,	0,		8,"F053 WT?30 V3_99;")//
+		set_chr( 73,400,		-1,-1, 9504, 9819,0,	-1,	0,		8,"F053 WT?30 V3_99;")//
+		set_chr( 74,400,		-1,-1,10867,10514,0,	-1,	0,		8,"F053 WT?30 V3_99;")//
+		set_chr( 75,400,		-1,-1, 9864, 9603,0,	-1,	0,		8,"F053 WT?30 V3_99;")//
+		set_chr( 76,400,		-1,-1, 9673, 9565,0,	-1,	0,		8,"F054 WT?30 V3_99;")//
+		set_chr( 77,400,		-1,-1,10128,10295,0,	-1,	0,		8,"F054 WT?30 V3_99;")//
+		set_chr( 78,400,		-1,-1,10668, 9359, 0,	-1,	0,		8,"F054 WT?30 V3_99;")//
+		set_chr( 79,400,		-1,-1, 9907,10291,0,	-1,	0,		8,"F054 WT?30 V3_99;")//	
+*/
+		F_set_chr(11,CF_NO_DROPITEM)
+		F_set_chr(12,CF_NO_DROPITEM)
+		F_set_chr(13,CF_NO_DROPITEM)
+		F_set_chr(14,CF_NO_DROPITEM)
+		F_set_chr(15,CF_NO_DROPITEM)
+		F_set_chr(16,CF_NO_DROPITEM)
+		F_set_chr(17,CF_NO_DROPITEM)
+		F_set_chr(18,CF_NO_DROPITEM)
+		F_set_chr(19,CF_NO_DROPITEM)
+		F_set_chr(21,CF_NO_DROPITEM)
+		F_set_chr(22,CF_NO_DROPITEM)
+		F_set_chr(23,CF_NO_DROPITEM)
+		F_set_chr(24,CF_NO_DROPITEM)
+		F_set_chr(25,CF_NO_DROPITEM)
+		F_set_chr(26,CF_NO_DROPITEM)
+		F_set_chr(27,CF_NO_DROPITEM)
+		F_set_chr(28,CF_NO_DROPITEM)
+		F_set_chr(29,CF_NO_DROPITEM)
+		F_set_chr(31,CF_NO_DROPITEM)
+		F_set_chr(32,CF_NO_DROPITEM)
+		F_set_chr(33,CF_NO_DROPITEM)
+		F_set_chr(34,CF_NO_DROPITEM)
+		F_set_chr(35,CF_NO_DROPITEM)
+		F_set_chr(36,CF_NO_DROPITEM)
+		F_set_chr(37,CF_NO_DROPITEM)
+		F_set_chr(38,CF_NO_DROPITEM)
+		F_set_chr(39,CF_NO_DROPITEM)	
+		F_set_chr(41,CF_NO_DROPITEM)
+		F_set_chr(42,CF_NO_DROPITEM)
+		F_set_chr(43,CF_NO_DROPITEM)
+		F_set_chr(44,CF_NO_DROPITEM)
+		F_set_chr(45,CF_NO_DROPITEM)
+		F_set_chr(46,CF_NO_DROPITEM)
+		F_set_chr(47,CF_NO_DROPITEM)
+		F_set_chr(48,CF_NO_DROPITEM)
+		F_set_chr(49,CF_NO_DROPITEM)	
+		F_set_chr(51,CF_NO_DROPITEM)
+		F_set_chr(52,CF_NO_DROPITEM)
+		F_set_chr(53,CF_NO_DROPITEM)
+		F_set_chr(54,CF_NO_DROPITEM)
+		F_set_chr(55,CF_NO_DROPITEM)
+		F_set_chr(56,CF_NO_DROPITEM)
+		F_set_chr(57,CF_NO_DROPITEM)
+		F_set_chr(58,CF_NO_DROPITEM)
+		F_set_chr(59,CF_NO_DROPITEM)	
+/*		F_set_chr(61,CF_NO_DROPITEM)
+		F_set_chr(62,CF_NO_DROPITEM)
+		F_set_chr(63,CF_NO_DROPITEM)
+		F_set_chr(64,CF_NO_DROPITEM)
+		F_set_chr(65,CF_NO_DROPITEM)
+		F_set_chr(66,CF_NO_DROPITEM)
+		F_set_chr(67,CF_NO_DROPITEM)
+		F_set_chr(68,CF_NO_DROPITEM)
+		F_set_chr(69,CF_NO_DROPITEM)	
+/*		F_set_chr(71,CF_NO_DROPITEM)
+		F_set_chr(72,CF_NO_DROPITEM)
+		F_set_chr(73,CF_NO_DROPITEM)
+		F_set_chr(74,CF_NO_DROPITEM)
+		F_set_chr(75,CF_NO_DROPITEM)
+		F_set_chr(76,CF_NO_DROPITEM)
+		F_set_chr(77,CF_NO_DROPITEM)
+		F_set_chr(78,CF_NO_DROPITEM)
+		F_set_chr(79,CF_NO_DROPITEM)	
+*/
+
+	
+	//僇僢僷弌尰奐巒--------------------------------------------------------------	
+		set_chr( 1,400,		0,0, 9939,10610,0,	0,	0,		8,"V3_99;")//
+		F_set_chr(1,CF_NO_DROPITEM)		
+		wait(30)
+		set_chr( 2,400,		0,0,10668,9859,0,	0,	0,		8,"V3_99;")//
+		F_set_chr(2,CF_NO_DROPITEM)	
+		wait(30)
+		set_chr( 3,400,		0,0, 9304,9619,0,	0,	0,		8,"V3_99;")//
+		F_set_chr(3,CF_NO_DROPITEM)	
+		wait(30)
+		set_chr( 4,400,		0,0,10867,11014,0,	0,	0,		8,"V3_99;")//
+		F_set_chr(4,CF_NO_DROPITEM)	
+		wait(30)
+		set_chr( 5,400,		0,0, 9864,10103,0,	0,	0,		8,"V3_99;")//
+		F_set_chr(5,CF_NO_DROPITEM)	
+		wait(30)
+		set_chr( 6,400,		0,0, 9673,9965,0,	0,	0,		8,"V3_99;")//
+		F_set_chr(6,CF_NO_DROPITEM)	
+		wait(30)
+		set_chr( 7,400,		0,0,10128,10795,0,	0,	0,		8,"V3_99;")//
+		F_set_chr(7,CF_NO_DROPITEM)	
+		wait(30)
+		set_chr( 8,400,		0,0,10668,9859, 0,	0,	0,		8,"V3_99;")//
+		F_set_chr(8,CF_NO_DROPITEM)	
+		wait(30)
+		set_chr( 9,400,		0,0, 9907,10791,0,	0,	0,		8,"V3_99;")//
+		F_set_chr(9,CF_NO_DROPITEM)	
+		
+		
+	//帪娫惂尷僀儀儞僩奐巒
+	EV("EV_TimeLimite")
+}
+
+EV_TimeLimite
+{
+	//柍尷偵僾儗僀偱偒偰偟傑偆偺傪杊偖
+	wait(300)	//偼傑傝杊巭丠
+	wait(300)	//偼傑傝杊巭丠
+	wait(300)	//偼傑傝杊巭丠
+	
+	MES_pos(LOTTE,"W9S4還剩１０秒。",0,0,0,0,0)	
+	wait(60)
+	MES_close(LOTTE)
+	
+	wait(90)
+
+	MES_pos(LOTTE,"W9S4５",0,0,0,0,0)	
+	wait(30)
+	MES_pos(LOTTE,"W9S4４",0,0,0,0,0)	
+	wait(30)
+	MES_pos(LOTTE,"W9S4３",0,0,0,0,0)	
+	wait(30)	
+	MES_pos(LOTTE,"W9S4２",0,0,0,0,0)	
+	wait(30)
+	MES_pos(LOTTE,"W9S4１",0,0,0,0,0)	
+	wait(30)
+	MES_pos(LOTTE,"W9S4結束。",0,0,0,0,0)	
+
+	F_set(100)
+	F_set(101)
+	F_set(102)
+	F_set(103)
+	F_set(104)
+	F_set(105)
+	
+	if(!F120)
+	{
+		EV("EV_KappaEnd")
+	}
+}
+
+
+//---------------------------------------------------------------------------------
+//僇僢僷僶僩儖廔椆
+EV_KappaEnd
+{
+	if(F100 && F101 && F102 && F103 && F104 && F105)
+	{	
+		F_set(120)									//偙偺僀儀儞僩巒傑偭偨
+		
+		EV_stop("EV_TimeLimite")
+		wait(100)
+		MES_close(LOTTE)
+					
+		EV_begin()
+		wait(60)
+		fade_in(100,60,0)
+		wait_fade()
+
+		//偄側偄傎偆偺僉儍儔傪壛偊丄俀恖慻傒偵栠偡
+		if(GW_TRY_CHARA==0)
+		{
+			join_party(1)			//儔僌僫
+		}
+		else
+		{
+			join_party(0)			//傾儖僂僃儞
+		}	
+
+		workG(GW_ENTRY_EVENT,SET,3)
+		new_map(10520)
+	}
+}
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴摤媄拞丒攕杒帪偺張棟
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+EV_DEAD
+{
+	EV_begin()
+
+	EV_stop("PRE_KAPPA_BATTLE")
+	EV_stop("EV_KappaEnd")
+	EV_stop("EV_TimeLimite")
+	MES_close(LOTTE)
+		
+	//晧偗偨GW傪棫偰傞
+	workG(GW_WINLOSE,SET,2)
+	set_hp(PLAYER1,100)
+
+	CAM_return(0)
+	CAM(150,64,-60,34,180,0,0)
+	map_color(100,100,100, 5);//R,G,B, time 100%
+	map_specular(80,80,80, 5);//R,G,B, time 100%
+	wait(20)
+
+	KAO(PLAYER1,"5","5","5")
+	wait(1)
+	map_specular(0,0,0,20);//R,G,B, time 100%
+
+	MOT(PLAYER1,99,15)
+
+	wait(20)
+	EFF(21660,320,240,0,0,100,0)//LOSE
+	CAM(3230,68,-60,24,180,120,0)
+	map_color(80,80,80, 120);//R,G,B, time 100%
+	wait(30)
+	
+	//埫揮	
+	fade_in(100,90,0)
+	wait_fade()
+	stop_BGM(60)
+	wait_BGM()
+
+	//-- 晧偗偰庴晅偵栠傞 ------------------------------------------------
+	if(GW_TRY_CHARA==0)
+	{
+		join_party(1)//ALWEN傪僷乕僥傿乕偵栠偡
+	}
+	else
+	{
+		join_party(0)//RAGNA傪僷乕僥傿乕偵栠偡		
+	}	
+	workL(002,SET,0)
+
+	CAM_return( 0 )
+	new_map(10510)
+
+//	EV_end()
+}
+
+#EndScriptTable
+//====================================================================

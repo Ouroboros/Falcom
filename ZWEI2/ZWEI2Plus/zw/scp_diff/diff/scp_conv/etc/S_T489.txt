@@ -1,0 +1,373 @@
+//──────────────────────────────
+//	name("◆忍者Ｅ　Ninjya_E")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_NINJYA_E
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(NINJYA_E, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,NINJYA_E)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,NINJYA_E)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_E)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_E)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_E)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_E)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,NINJYA_E)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//いない
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	if(F6_00_GoToMeru)
+	{
+	//　　※里の見張りＤに立っている。
+	//　　　空を見上げているような感じ。
+	//	name("忍び")
+
+		//──────────────────────────────
+		//▼　わらしべイベント
+		//	name("９．汎用忍者（星降りの里）		『枝切りバサミ』□『手裏剣』")151
+		//──────────────────────────────
+		if(FV_11_Warasi_8_Lot && !FV_11_Warasi_9_Nja)
+		{
+			if(!F_NINJYA_E)
+			{
+			//　　※振り返らない。
+			//	name("忍び")
+				MES(NINJYA_E,"はあ、困ったな……",0)
+				MES(NINJYA_E,"アカネさんにこの想いを伝えたい。\nとはいえ、アカネさんにとって\n自分はただの教え子の一人……",0)
+				MES(NINJYA_E,"はあ……このままでは\n玉砕は必至、でしょうね……",0)
+				MES_close(NINJYA_E)
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+				//	name("□ラグナ先頭")
+					MES(RAGNA,"（あれ、この忍び……\n  そんな事考えてたのか。）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□アルウェン先頭")
+					MES(PARTNER,"ふむ、このような所で\n悩んでおる者が……",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+			//　　忍びにＰＡエモーション。
+				EMO(NINJYA_E,EMO_PA)
+				look(NINJYA_E, "Bone_Head", 0, 0, 0, 10, 0,0,0)
+			//　　振り返る。
+				MOT(NINJYA_E,2,10)
+				rot_chr(NINJYA_E,30,PLAYER1)
+				wait(30)
+			//	name("忍び")
+				MES(NINJYA_E,"おや、あなた方のそれは\n『枝切りバサミ』！？",0)
+				MES(NINJYA_E,"それだ！　それですよ！",0)
+				MES(NINJYA_E,"アカネさんの父君である\nゲン爺は大の植木好きです。",0)
+				MES(NINJYA_E,"枝切りバサミをプレゼントすれば\nきっと好感触。間違いなし！",0)
+				MES(NINJYA_E,"どうでしょう、それを\n譲ってはいただけませんか。",0)
+				MES_close(NINJYA_E)
+
+				F_set(NINJYA_E)
+			}
+			else
+			{
+				rot_chr(NINJYA_E,30,PLAYER1)
+				look(NINJYA_E, "Bone_Head", 0, 0, 0, 10, 0,0,0)
+				MOT(NINJYA_E,2,10)
+		//	name("□２回目以降")
+			//	name("忍び")
+				MES(NINJYA_E,"アカネさんの父君である\nゲン爺は大の植木好き……",0)
+				MES(NINJYA_E,"その『枝切りバサミ』さえあれば、\nきっと好感触。間違いなし！",0)
+				MES(NINJYA_E,"どうでしょう、それを\n譲ってはいただけませんか。",0)
+				MES_close(NINJYA_E)
+			}
+			
+			
+			//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【やめる】
+			MES_pos(PLAYER1,"??W9【今回だけだぞ】\n【ダメに決まってるだろ】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			//──────────────────────────────
+			//	name("□【今回だけだぞ】")
+			//──────────────────────────────
+			if(WK_YESNO==1)
+			{
+			//	name("忍び")
+				MES(NINJYA_E,"おお、助かりますよ！",0)
+				MES(NINJYA_E,"……いや、あなた方は実に親切だ。\nお礼にこれを差し上げましょう。",0)
+				MES_close(NINJYA_E)
+
+			//	name("アイテム入手テキスト")
+			//	MES(NINJYA_E,"『手裏剣』を貰った。",0)
+				//―――――――――――――――――――――――
+				fade_in(30,10,BLACK)
+
+				get_item(150,-1,1)
+				get_item(151,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//―――――――――――――――――――――――
+
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+				//	name("□ラグナ先頭")
+					MES(RAGNA,"ど、どうも。",0)
+					MES(RAGNA,"それで、枝切りバサミがあれば\nうまく行きそうなのか？",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□アルウェン先頭")
+					MES(PARTNER,"ふむ、受け取っておこう。",0)
+					MES(PARTNER,"それでそなた、\nその枝切りバサミがあれば\nうまく行きそうなのか？",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				
+			//	name("忍び")
+				MES(NINJYA_E,"ええ、ご心配なく。\nこう見えても我らは忍び……",0)
+				MES(NINJYA_E,"この情熱が尽きぬ限り、\n何年掛かっても諦めませんよ。",0)
+				MES_close(NINJYA_E)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+				
+				MES(PET,"（この格好といい……\n  ストーキングって\n  言われちゃわないかしら。）",0)
+				MES_close(PET)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（ま、相手も忍びだし\n  そこの所は大丈夫だろ……）",0)
+				MES_close(RAGNA)
+
+				F_set(FV_11_Warasi_9_Nja)
+				F_reset(NINJYA_E)
+
+			}
+			//──────────────────────────────
+			//	name("□【ダメに決まってるだろ】")
+			//──────────────────────────────
+			else
+			{
+				MES(NINJYA_E,"そ、そうですか。\n実に残念ですね……",0)
+				MES_close(NINJYA_E)
+			}
+		}
+		else
+		if(!F_NINJYA_E)
+		{	
+			MOT(NINJYA_E,2,10)
+			rot_chr(NINJYA_E,30,PLAYER1)
+			look(NINJYA_E, "Bone_Head", 0, 0, 0, 10, 0,0,0)
+			MES(NINJYA_E,"あれですか？\nテンザン様が仰っていたのは……",0)
+			MES(NINJYA_E,"要塞──というより\n一つの巨大な兵器のような\nものだそうですが。",0)
+			MES(NINJYA_E,"あんなものが襲って来るとなると、\n忍術程度でどうこうできる\n事態じゃありませんね……",0)
+			MES_close(NINJYA_E)
+			
+			F_set(930)
+		}
+		//　　★繰り返し
+		else
+		{
+			look(NINJYA_E, "Bone_Head", 0, 0, 0, 10, 0,0,0)
+			MOT(NINJYA_E,2,10)
+		//	name("忍び")
+			MES(NINJYA_E,"あんなものが襲って来るとなると、\n忍術程度でどうこうできる\n事態じゃありませんね……",0)
+			MES(NINJYA_E,"我々はどうしたら\nいいのでしょうか……",0)
+			MES_close(NINJYA_E)
+		}
+		MOT(NINJYA_E,52,10)
+		look(NINJYA_E, "Bone_Head", 0, 0, 0, 10, 0,0,30)
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		MOT(NINJYA_E,2,10)
+		rot_chr(NINJYA_E,30,0)
+		if(!F_NINJYA_E)
+		{
+		//　　※里の見張りＤに立っている。
+		//	name("忍び")
+			MES(NINJYA_E,"昨日の襲撃で重傷者多数──\n死者が出なかったのが奇跡ですよ。",0)
+			MES(NINJYA_E,"幸い女子供は全員無事でしたが、\nテンザン様とスバル様を\n守れなかったのは屈辱の極み……",0)
+			MES(NINJYA_E,"……自分ももっと\n修行に励んでおくべきでした。",0)
+			MES_close(NINJYA_E)
+			
+			//　　★忍者【修行不足】
+//			F_set_note(-79,1)
+			F_set(NINJYA_E)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("忍び")
+			MES(NINJYA_E,"自分を始め、みな少なからず\nショックを受けているようです。",0)
+			MES(NINJYA_E,"ですがカイ隊長が重傷の今、\n我々の班でも人手が足りなくて……",0)
+			MES(NINJYA_E,"あれこれと悩んでいる暇はありません。\n今はともかく、\n里を建て直すことが先決です。",0)
+			MES_close(NINJYA_E)
+		}
+		MOT(NINJYA_E,52,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia )
+	{
+	//　　※数合わせ出演です。
+	//　　※カイの傍で倒れている。（メインシナリオ参照）
+	//	name("忍び")
+		MES(NINJYA_E,"……た、隊長…………",0)
+		MES_close(NINJYA_E)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	if( F4_06_StopAttack )
+	{
+	//　　※数合わせ出演です。
+	//　　※カイの傍で倒れている。（メインシナリオ参照）
+	//	name("忍び")
+		MES(NINJYA_E,"……た、隊長…………",0)
+		MES_close(NINJYA_E)
+	}
+	else
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//　　※里の見張りＤに立っている。
+	if( F4_05_OnVillage2 )
+	{
+		MOT(NINJYA_E,2,10)
+		rot_chr(NINJYA_E,30,PLAYER1)
+	//　　※初回後で、ＧＦ『アカネさんノートの話題を聞いた』が立っている場合。
+	//　　　１回だけこのメッセージを表示します。
+		if(FS_08_TalkNinjya_E && FS_08_Akane_Nt && !FS_08_Ninjya_E_Nt)
+		{
+		//	name("忍び")
+			MES(NINJYA_E,"あ、そうだ。\nここだけの話なんですが……",0)
+			MES(NINJYA_E,"アカネ姐さんって、素敵ですよね。",0)
+			MES(NINJYA_E,"頻繁に宴会なんて開くのも、\n我々を気遣ってのことなんですよ。",0)
+			MES(NINJYA_E,"確かにこんな雪山の中で\n見張りばっかりじゃ、\n気が滅入っちゃいますからね。",0)
+			MES(NINJYA_E,"……ええ、本当はとっても\n優しい人なんですよ……",0)
+			MES(NINJYA_E,"ちょっと強引だけど。",0)
+			MES_close(NINJYA_E)
+			
+			F_set(FS_08_Ninjya_E_Nt)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			if(!FS_08_TalkNinjya_E)
+			{
+			//	name("忍び")
+				MES(NINJYA_E,"先ほどから、カイ隊長の妹さんが\nちらほらと姿を見せるのですよ。",0)
+				rot(NINJYA_E,30,147)
+
+				MES(NINJYA_E,"あの年で分身の術を使いこなすとは、\n相当才能があると思うんですが……",0)
+				rot_chr(NINJYA_E,30,PLAYER1)
+
+				MES(NINJYA_E,"その、少し気が散るんですよね。",0)
+				MES(NINJYA_E,"はあ、参ったな……",0)
+				MES_close(NINJYA_E)
+			
+			//　　※ＧＦ『フラグ⑧忍者Ｅと話した』を立てる。
+				F_set(FS_08_TalkNinjya_E)
+			}
+			//　　★繰り返し
+			else
+			{
+			//	name("忍び")
+				MES(NINJYA_E,"自分はここが担当なもので、\nよく妹さんとかち合うんですよね。",0)
+				MES(NINJYA_E,"しかも一緒に遊ぼ、とか\n誘われてしまいまして……",0)
+				MES(NINJYA_E,"そんなことをしていたら\n隊長に叱られますよ。",0)
+				MES(NINJYA_E,"隊長、滅茶苦茶厳しいんですから。",0)
+				MES_close(NINJYA_E)
+			}
+		}
+		MOT(NINJYA_E,52,10)
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

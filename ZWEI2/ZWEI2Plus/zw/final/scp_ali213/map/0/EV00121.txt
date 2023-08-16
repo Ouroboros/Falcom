@@ -1,0 +1,2019 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10121][阿鲁迪亚·宿酒（夜）]
+//====================================================================
+
+#ScriptTable
+
+#MEI 		1
+#EVENT_RAGNA	2
+#ALWEN			3
+#HUKU			4
+#EVENT_RAGNA2	5
+
+#MEI		12
+#CARDINA	13
+#CEPHEILA	14
+#SHESTOR	15
+#HOAN		16
+#TEO		17
+#GASHREA	18
+#GREIN		19
+#TELMIDORL	20
+
+#BAROM		21	//瑟菲拉的エラー回避的ため暫定的に入れてます
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip         x    y   z    mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	set_chr( 90,990,	-1,-1,      0, 225,  0,   180,  0401,	6,"K6_10101;")	//１Ｆ入口→阿鲁迪亚的街
+	set_chr( 91,990,	-1,-1,  -1100,-450,330,     0,  0301,	6,"K2_3")		//１Ｆ階段→２Ｆ廊下
+	set_chr( 92,990,	-1,-1,   6850,-375,  0,   180,  0301,	6,"K7_3")		//２Ｆ廊下→１Ｆ階段
+	set_chr( 93,990,	-1,-1,   7725,-935,  0,     0,  0201,	6,"K4_3")		//２Ｆ廊下→２人部屋
+	set_chr( 94,990,	-1,-1,  17600, 100,  0,   180,  0201,	6,"K3_3")		//２人部屋→廊下
+	set_chr( 95,990,	-1,-1,   9025,-935,  0,     0,  0201,	6,"K6_3")		//２Ｆ廊下→１人部屋
+	set_chr( 96,990,	-1,-1,  23025, 100,  0,   180,  0201,	6,"K5_3")		//１人部屋→２Ｆ廊下
+	set_chr( 97,990,	-1,-1,  -1400,-150,330,   270,    0,	0,";")			//１Ｆ階段（帰路用）
+
+	map_color(100,85,80,0);//R,G,B, time 100%
+
+	F_set_obj("ryouri",NP_HIDE)
+	F_set_obj("otya",NP_HIDE)
+
+	//ＮＰＣ
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村的人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if(F3_00_GoMoonCastle && !F4_00_StartSolo)
+	{
+		set_chr( MEI,49,		-1,-1,  298,-1505,1,	2,351, 20,"<TK_MEI>")			//熊猫楼　店内をルートムーブ　梅
+		EV("MOVE_MEI")
+//		set_chr( CEPHEILA,50,	-1,-1,	23320,-740,110,	2,0,	20,"<TK_CEPHEILA>")		//2階小部屋　瑟菲拉
+//		set_chr( SHESTOR,51,	-1,-1,  23012,-931,1,	52,180,20,"<TK_SHESTOR>")	//2階小部屋　谢斯塔
+
+		set_chr( HOAN,48,		-1,-1,   840,-820,1,  		53,0,	20,"<TK_HOAN>")		//カウンター、贺安
+
+		//モーション
+//		MOT_SET(CEPHEILA,150,-1,519,519,-1,15)	//瑟菲拉寝ている
+//		MOT(CEPHEILA,150,0)
+
+
+		set_chr( CEPHEILA,50,	-1,-1,	17900,-250,20,	2,180,	20,"<TK_CEPHEILA>")		//2階小部屋　瑟菲拉
+		set_chr( SHESTOR,51,	-1,-1,  17569,-906,0,	2,350,20,"<TK_SHESTOR>")	//2階小部屋　谢斯塔
+		MOT_SET(CEPHEILA,150,-1,575,575,-1,15)	//瑟菲拉寝ている
+		MOT(CEPHEILA,150,0)
+		look(CEPHEILA,"Bone_Spine",0,			0,0,10,	0,0,-30)
+		look(CEPHEILA,"Bone_Spine1",0,			0,0,10,	0,0,-30)
+		look(CEPHEILA,"Bone_Neck",0,			0,0,10,	0,0,-30)
+		look(CEPHEILA,"Bone_Head",0,			0,10,10,	0,-30,10)
+		look(CEPHEILA,"Bone_RightShoulder",0,	0,0,10,	0,0, 40)
+		look(CEPHEILA,"Bone_LeftShoulder",0,	0,0,10,	0,0, 40)
+		F_set_chr(CEPHEILA,CF_NO_HEIGHT)
+		F_set_chr(CEPHEILA,CF_NO_FALL)
+		KAO(CEPHEILA,"B","3","4")//線目
+
+		MOT_SET(SHESTOR,150,-1,443,443,-1,15)	//谢斯塔読書
+		MOT(SHESTOR,150,0)
+		look(SHESTOR,"Bone_RightArm",0,			0,10,10,	0,40, -20)
+		look(SHESTOR,"Bone_RightForeArm",0,		0,0,10,	0,0, -10)
+		chr_equip2(SHESTOR,	"obj_book",	"Bone_RightSword",	100,		110,-15,-15,	5,-20,40);		//本
+
+		F_set_chr(SHESTOR,CF_NO_MOVE)
+		F_set_chr(CEPHEILA,CF_NO_MOVE)
+		F_set_chr(HOAN,CF_NO_MOVE)
+	}
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼艾雯的説明～新たな目的
+		set_namebmp(0,0)
+		EV("EV_0_07_The_Goal")
+	}
+	else
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼宿で敵的正体を推察する
+		set_namebmp(0,0)
+		EV("EV_1_15_EndFirst")
+	}
+}
+//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼梅的ルートムーブ（テスト）
+//──────────────────────────────
+MOVE_MEI
+{
+//	一つ目的テーブルへ
+	move( MEI, 0,	8,	257,-1152,0, 0)
+	wait_move( MEI )
+	rot(MEI,60,72)
+
+	wait(50)
+
+	rot(MEI,60,351)
+
+	move( MEI, 0,	8, 327,-1012,1,	0)
+	wait_move( MEI )
+	move( MEI, 0,	8, 271,-948,0,	0)
+	wait_move( MEI )
+	rot(MEI,60,90)
+
+//	2つ目的テーブルへ
+	move( MEI, 0,	8, -398,-1015,0,	0)
+	wait_move( MEI )
+	rot(MEI,60,353)
+	move( MEI, 0,	8, -492,-941,1,	0)
+	wait_move( MEI )
+
+	wait(50)
+
+//	3つ目的テーブルへ
+	rot(MEI,60,146)
+	move( MEI, 0,	8, -598,-1180,1,	0)
+	wait_move( MEI )
+	rot(MEI,60,97)
+	move( MEI, 0,	8, -756,-1175,0,	0)
+	wait_move( MEI )
+
+	wait(50)
+
+//	初期位置へ
+	rot(MEI,60,247)
+	move( MEI, 0,	8, -405,-1209,1,	0)
+	wait_move( MEI )
+	rot(MEI,60,239)
+	move( MEI, 0,	8, -181,-1431,1,	0)
+	wait_move( MEI )
+	move( MEI, 0,	8, 298,-1505,1,		0)
+	wait_move( MEI )
+	rot(MEI,60,351)
+
+	wait(50)
+
+	loop
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+
+SONG_CEPHEILA
+{
+	wait(30)
+	EMO(CEPHEILA,EMO_ONPU)
+	wait(90)
+	EMO(CEPHEILA,EMO_ONPU)
+	wait(90)
+	EMO(CEPHEILA,EMO_ONPU)
+	wait(90)
+	EMO(CEPHEILA,EMO_ONPU)
+}
+
+TEO_ACTION
+{
+	wait(60)
+	look(TEO,"Bone_Head",0,0,3,0,0,30,0)
+	wait(120)
+	MOT(TEO,151,15)
+	wait(30)
+	MOT(TEO,150,15)
+}
+
+GASHREA_ACTION
+{
+	wait(90)
+	look(GASHREA,"Bone_Head",0,0,3,0,0,-26,0)
+	wait(30)
+	MOT(GASHREA,151,15)
+	wait(60)
+	MOT(GASHREA,150,15)
+}
+
+GREIN_ACTION
+{
+	wait(150)
+	MOT(GREIN,151,15)
+	wait(30)
+	MOT(GREIN,150,15)
+	wait(30)
+	look(GREIN,"Bone_Head",0,0,3,0,0,26,0)
+}
+
+CARDINA_ACTION
+{
+	wait(180)
+	look(CARDINA,"Bone_Head",0,0,3,0,0,-26,0)
+	wait(60)
+	MOT(CARDINA,151,15)
+}
+
+HOAN_ACTION
+{
+	wait(30)
+	rot(HOAN,30,90)
+	wait(15)
+	move(HOAN,0,10,790,-1134,1,0)
+	wait_move(HOAN)
+	MOT(HOAN,150,15)
+}
+
+//──────────────────────────────
+//▼艾雯的説明～新たな目的
+//──────────────────────────────
+//　　画面切り替えして、熊猫楼的一階部分。
+//　　村的人間で賑わっている的を見せながらフェードアウト。
+//　　歌手やピアニストに加え、特尔米多鲁的姿などもある。
+//　　画面切り替えして、拉古那が寝かされていた部屋。
+//　　部屋的一角にあるテーブル的上には豪華な料理が並んでおり、
+//　　椅子に座った拉古那と艾雯に、お盆を持った
+//　　梅（チャイナさん）が話しかけているような構図を見せる。
+EV_0_07_The_Goal
+{
+	EV_begin()
+
+	//暗転
+
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,		17910,-246,10,180,2)
+	chr_pos(PARTNER,	17910,-546,10,  0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1014,-1,-1, 17910,-250,10, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 17910,-530,10, 2, 0,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_ZIMEN)
+	F_set_chr(ALWEN,CF_NO_HEIGHT)
+	F_set_chr(ALWEN,CF_NO_CSP)
+//	F_set_Node(RAGNA,"wepon",NP_HIDE)
+	chr_scale( EVENT_RAGNA,	"Bone_Bag",		0,0,0,	0,0);
+//	F_set_Node(PARTNER,"wepon",NP_HIDE)
+	KAO(EVENT_RAGNA,"B","2","3")//
+	KAO(ALWEN,"1","6","6")//
+	color(EVENT_RAGNA,-1)
+	color(ALWEN,-1)
+
+	//イベント用キャラ配置
+	set_chr(MEI,	49,-1,-1,17650,-424,0,	2,	270,	0,"")	//梅
+	F_set_chr(MEI,CF_NO_CSP)
+	look_chr( MEI, PARTNER ,"Bone_Head")
+	color(MEI,-1)
+
+	set_chr( HOAN,48,		-1,-1,   930,-1134,1,  		0,270,	0,"")	//カウンター、贺安
+	set_chr( SHESTOR,51,	-1,-1,   -1102,-1912,91,  	54,235,	0,"")	//ステージ　谢斯塔
+	set_chr( CEPHEILA,50,	-1,-1,   -413,-2002,91, 0,353,	0,"")	//ステージ　瑟菲拉
+	set_chr( CARDINA,46,-1,-1,  -578,-810,10, 	0,320,	0,"")	//　雑談中　卡尔蒂娜
+	set_chr( TEO,44,	-1,-1,  514,-1362,10,	 0,270, 0,"")		//カウンター席　提欧
+	set_chr( GASHREA,61,	-1,-1,   504,-1072,10,	 0,270, 0,"")		//カウンター席　嘉修雷
+	set_chr( GREIN,45,	-1,-1,   -368,-810,10,	 0,60, 0,"")		//格林
+	set_chr( TELMIDORL,1027,	-1,-1,   -88,-1098,10,	 0,210, 0,"")		//特尔米多鲁普通
+	F_set_chr(HOAN,CF_NO_CLIP)
+	F_set_chr(HOAN,CF_NO_CLIP2)
+	F_set_chr(SHESTOR,CF_NO_CLIP)
+	F_set_chr(SHESTOR,CF_NO_CLIP2)
+	F_set_chr(CEPHEILA,CF_NO_CLIP)
+	F_set_chr(CEPHEILA,CF_NO_CLIP2)
+	F_set_chr(CARDINA,CF_NO_ZIMEN)
+	F_set_chr(CARDINA,CF_NO_HEIGHT)
+	F_set_chr(CARDINA,CF_NO_CSP)
+	F_set_chr(CARDINA,CF_NO_CLIP)
+	F_set_chr(CARDINA,CF_NO_CLIP2)
+	F_set_chr(TEO,CF_NO_ZIMEN)
+	F_set_chr(TEO,CF_NO_HEIGHT)
+	F_set_chr(TEO,CF_NO_CSP)
+	F_set_chr(TEO,CF_NO_CLIP)
+	F_set_chr(TEO,CF_NO_CLIP2)
+	F_set_chr(GASHREA,CF_NO_ZIMEN)
+	F_set_chr(GASHREA,CF_NO_HEIGHT)
+	F_set_chr(GASHREA,CF_NO_CSP)
+	F_set_chr(GASHREA,CF_NO_CLIP)
+	F_set_chr(GASHREA,CF_NO_CLIP2)
+	F_set_chr(GREIN,CF_NO_ZIMEN)
+	F_set_chr(GREIN,CF_NO_HEIGHT)
+	F_set_chr(GREIN,CF_NO_CSP)
+	F_set_chr(GREIN,CF_NO_CLIP)
+	F_set_chr(GREIN,CF_NO_CLIP2)
+	F_set_chr(TELMIDORL,CF_NO_ZIMEN)
+	F_set_chr(TELMIDORL,CF_NO_HEIGHT)
+	F_set_chr(TELMIDORL,CF_NO_CSP)
+	F_set_chr(TELMIDORL,CF_NO_CLIP)
+	F_set_chr(TELMIDORL,CF_NO_CLIP2)
+
+	//モーション定義
+	MOT_SET(EVENT_RAGNA,150,-1,486,486,-1,-1)//座り
+	MOT_SET(EVENT_RAGNA,151,-1,543,543,-1,-1)	//いてて
+	MOT_SET(EVENT_RAGNA,152,-1,469,469,-1,-1)//的けぞる
+	//MOT_SET(EVENT_RAGNA,153,-1,6328,6328,-1,-1)//ガク
+	MOT_SET(EVENT_RAGNA,153,-1,6320,6340,-1,-1)//ガク //岡田差し替え
+	MOT_SET(EVENT_RAGNA,154,-1,564,564,-1,-1)//座り2
+	MOT_SET(EVENT_RAGNA,155,-1,566,566,-1,-1)//座り2そうな的？
+	MOT_SET(EVENT_RAGNA,156,-1,402,402,-1,-1)//どうなんよ
+	MOT_SET(EVENT_RAGNA,157,-1,401,401,-1,-1)//やれやれ
+	MOT_SET(EVENT_RAGNA,158,-1,8365,8380,-1,-1)//机を叩く //岡田定義
+	MOT_SET(EVENT_RAGNA,159,162,6445,6455,-1,-1)//左手をぶんぶん振って訴える　//岡田定義
+	MOT_SET(EVENT_RAGNA,160,-1,505,505,163,3)//取り立ててくれや　//岡田定義
+	MOT_SET(EVENT_RAGNA,161,-1,584,584,-1,-1)//頭に手をやる　//岡田定義
+	MOT_SET(EVENT_RAGNA,162,165,6445,6455,-1,-1)//左手をぶんぶん振って訴える2　//岡田定義
+	MOT_SET(EVENT_RAGNA,163,-1,504,504,-1,-1)//取り立ててくれや2　//岡田定義
+	MOT_SET(EVENT_RAGNA,164,-1,8380,8380,-1,-1)//前的めり //岡田定義
+	MOT_SET(EVENT_RAGNA,165,-1,6445,6450,-1,-1)//左手をぶんぶん振って訴える3　//岡田定義
+	MOT_SET(EVENT_RAGNA,166,-1,563,563,-1,-1)//座り３　//岡田定義
+	MOT_SET(ALWEN,150,-1,486,486,-1,-1)//座り
+	MOT_SET(ALWEN,151,-1,399,399,-1,-1)//腰に手を当てる（左）
+	MOT_SET(ALWEN,152,-1,414,414,-1,-1)//両手腰
+	MOT_SET(ALWEN,153,-1,410,410,-1,-1)//フム
+	MOT_SET(ALWEN,154,-1,436,436,-1,-1)//
+	MOT_SET(ALWEN,155,155,4705,4815,-1,-1)//食事ループ
+	MOT_SET(ALWEN,156,-1,4705,4705,-1,-1)//食事
+	MOT_SET(ALWEN,157,-1,405,405,-1,-1)//左手を返す
+	MOT_SET(ALWEN,158,159,6100,6110,-1,-1)//左手をブンブン振って訴える 岡田定義
+	MOT_SET(ALWEN,159,-1,6100,6110,2,15)//左手をブンブン振って訴える2 岡田定義
+	MOT_SET(MEI,150,-1,579,579,-1,-1)//おじぎ
+	MOT_SET(MEI,151,-1,446,446,-1,-1)//口に手を当てる 岡田定義
+	MOT_SET(MEI,152,-1,439,439,-1,-1)//胸に手を当てる 岡田定義
+	MOT(EVENT_RAGNA,150,0)
+	MOT(ALWEN,155,0)
+
+	MOT_SET(HOAN,150,-1,414,414,-1,-1)//
+	MOT_SET(CEPHEILA,150,-1,402,402,151,15)//
+	MOT_SET(CEPHEILA,151,-1,403,403,152,15)//岡田定義歌いアニメ2
+	MOT_SET(CEPHEILA,152,-1,404,404,153,15)//岡田定義歌いアニメ3
+	MOT_SET(CEPHEILA,153,-1,403,403,150,15)//岡田定義歌いアニメ4
+	MOT_SET(CARDINA,150,-1,564,564,-1,-1)//
+	MOT_SET(CARDINA,151,-1,566,566,-1,-1)//
+	MOT_SET(TEO,150,-1,575,575,-1,-1)//
+	MOT_SET(TEO,151,-1,576,576,-1,-1)//
+	MOT_SET(GASHREA,150,-1,575,575,-1,-1)//
+	MOT_SET(GASHREA,151,-1,576,576,-1,-1)//
+	MOT_SET(GREIN,150,-1,575,575,-1,-1)//
+	MOT_SET(GREIN,151,-1,576,576,-1,-1)//
+	MOT_SET(TELMIDORL,150,-1,567,567,-1,-1)//
+//	MOT(HOAN,150,0)
+	MOT(CEPHEILA,150,0)
+	MOT(CARDINA,150,0)
+	MOT(TEO,150,0)
+	MOT(GASHREA,150,0)
+	MOT(GREIN,150,0)
+	MOT(TELMIDORL,150,0)
+
+	wait(1)
+	F_set_Node(GASHREA,"Bone_RightSword",NP_HIDE)
+	chr_equip( TEO,"EQ_051", "Bone_RightSword", 100)	//
+	chr_equip( GASHREA,"EQ_051", "Bone_RightSword", 100)	//
+	chr_equip( GREIN,"EQ_051", "Bone_RightSword", 100)	//
+//	look(GASHREA,"Bone_Head",0,0,26,0,0,-26,0)
+//	look(TEO,"Bone_Head",0,0,30,0,0,30,0)
+	look(TELMIDORL,"Bone_Head",0,0,36,0,0,-36,0)
+	look(GREIN,"Bone_Head",0,0,26,0,0,26,0)
+//	look(CARDINA,"Bone_Head",0,0,26,0,0,-26,0)
+
+	chr_equip( MEI,"wp_040", "Bone_RightSword", 100)	//
+	chr_equip( ALWEN,"EQ_050", "Bone_RightSword", 100)	//
+	chr_equip( ALWEN,"EQ_045", "Bone_LeftHand", 100)	//茶碗を持たせる//by Okada
+//	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる的はこちら。
+//	MOT(ALWEN,53,1)										//艾雯的右手を開かせる。
+
+	SE(50,0)//酒场ガヤ
+
+	//カメラ初期位置
+//	CAM_move(-11,131,135,0,0)
+//	CAM(270,75,-25,27,225,0,0)
+	CAM_move(940,649,256,0,0)
+	CAM(190,75,95,27,210,0,0)
+
+	wait(1)
+
+	CAM_move(-91,989,316,360,0)
+	CAM(190,92,155,27,239,360,0)
+
+	EV("HOAN_ACTION")
+	EV("SONG_CEPHEILA")
+	EV("TEO_ACTION")
+	EV("GASHREA_ACTION")
+	EV("GREIN_ACTION")
+	EV("CARDINA_ACTION")
+
+	BGM(54)
+	workG(GW_DEF_BGM,SET,0)		//デフォルト曲を元に戻す
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+//	◆未入力項目
+//	MES(EVENT_RAGNA,"◆未入力項目\n熊猫楼的一階部分。\n村的人間で賑わっている的を見せる。",0)
+//	MES_close(EVENT_RAGNA)
+	wait(240)
+
+	//暗転
+	fade_in(100,60,0)
+	wait_fade()
+	wait(30)
+
+	delete(HOAN)
+	delete(SHESTOR)
+	delete(CEPHEILA)
+	delete(CARDINA)
+	delete(TEO)
+	delete(GASHREA)
+	delete(GREIN)
+	delete(TELMIDORL)
+
+	color(EVENT_RAGNA,1)
+	color(ALWEN,1)
+	color(MEI,1)
+	chr_rename(MEI,"東方风的娘")//キャラ的名前を変更
+
+	F_reset_obj("ryouri",NP_HIDE)
+
+//	CAM_move(17867,442,135,0,0)
+//	CAM(270,75,-25,27,225,0,0)
+	CAM_move(17967,370,135,0,0)
+	CAM(1030,16,135,27,253,0,0)
+
+	//フェードイン
+	stop_SE(50)
+	fade_in(0,60,0)
+	wait_fade()
+
+	CAM_move(18047,302,195,120,0)
+	CAM(270,30,195,28,242,120,0)
+	wait_CAM_move()
+	wait_CAM()
+
+	CAM_move(18027,352,155,1200,0)
+	CAM(-10,40,155,28,253,1200,0)
+	wait(15)
+
+//	◆未入力項目
+//	MES(EVENT_RAGNA,"◆未入力項目\n部屋的一角にあるテーブル的上には豪華な料理が並んでいる。",0)
+//	MES_close(EVENT_RAGNA)
+
+//	name("東方风的娘")
+	KAO(MEI,"12321Z3","1233321","1")//
+	MES(MEI,"请用，菜已经全都上齐了。",0)
+	KAO(MEI,"12321Z5","1","1")//
+	MES(MEI,"你们点了不少，\n能全部吃完吗？",0)
+	MES_close(MEI)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"17671Z3","6","6")//
+	MES(ALWEN,"啊呜啊呜……不用担心。",0)
+	KAO(ALWEN,"17671Z5","6","6")//
+	MES(ALWEN,"要是把这么美味的料理剩下的话，\n对做料理的人也是件很失礼的事。",0)
+	KAO(ALWEN,"17671Z4","3","6")//
+	MES(ALWEN,"唔……\n这个叫鱼翅的菜也很……",0)
+	MES_close(ALWEN)
+
+//	name("東方风的娘")
+	KAO(MEI,"12321Z3","1233321","1")//
+	MES(MEI,"你喜欢的话比什么都好。",0)
+	MES_close(MEI)
+
+	look_chr( MEI, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+	KAO(MEI,"12321Z4","1","1")//
+	MES(MEI,"话说回来这位大哥。\n你还真有一手，明明伤才刚好。",0)
+	//KAO(MEI,"12321Z4","1","1")//
+	KAO(MEI,"12321Z4","26","1")//岡田笑顔に設定
+	MES(MEI,"居然已经搞到女朋友，\n还亲密地一起吃饭，真是惊人㈱",0)
+	MES_close(MEI)
+
+//　　拉古那、ガクッとテーブルに突っ伏す。
+//　　そ的まま顔を上げてドンとテーブルを叩く。
+
+//	◆未入力項目
+//	MES(EVENT_RAGNA,"◆未入力項目\n拉古那、ガクッとテーブルに突っ伏す。\nそ的まま顔を上げてドンとテーブルを叩く。",0)
+//	MES_close(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B","23","5")//
+	MOT(EVENT_RAGNA,153,3) //ガク
+	wait(6)
+	SE(1049,0)//机を叩くSE
+	CAM_quake("46")
+	wait(30)
+	MOT(EVENT_RAGNA,150,15) //座りに戻る
+	wait(15)
+	//look(EVENT_RAGNA,"Bone_Head",0, 0,3,3, 0,-30,30)
+	look(EVENT_RAGNA,"Bone_Head",0, 0,3,0, 0,-30,00)
+	wait(15)
+	MOT(EVENT_RAGNA,162,15) ////左手をぶんぶん振って訴える
+	wait(15)
+//	CAM_quake("46372819L")
+	CAM_quake("37")
+	KAO(EVENT_RAGNA,"B232BZ4","3","3")//
+	MES(EVENT_RAGNA,"P1她根本不是我女朋友啊！",0)
+	MES_close(EVENT_RAGNA)
+	//look(EVENT_RAGNA,"Bone_Head",0, 0,3,0, 0,30,00)
+	look(EVENT_RAGNA,"Bone_Head",0, 0,3,0, 0,0,00)
+	wait(15)
+	MOT(EVENT_RAGNA,164,6) //前的めり
+	wait(15)
+	CAM_quake("46")
+	KAO(EVENT_RAGNA,"B232BZ6","32","3")//
+	MES(EVENT_RAGNA,"P1你也是！\n装模作样地出现，\n凭什么还这么悠闲地在吃东西啊！？",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,156,15)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z5","321","1")//
+	MES(ALWEN,"因为不管怎么说，\n我已经半个月没吃没喝了。",0)
+	KAO(ALWEN,"12321Z6","123","1")//
+	MES(ALWEN,"嗯，虽然我和人类不一样，\n就算不吃东西也没关系……",0)
+	KAO(ALWEN,"17671Z5","6","6")//
+	MES(ALWEN,"这只是在追求其内在。\n是为了愉悦我的喉舌。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,150,10) //
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BFZ2","23321D","6")//
+	MES(EVENT_RAGNA,"这是啥……",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(EVENT_RAGNA,150,10)
+	look(EVENT_RAGNA,"Bone_Head",0, 0,0,3, 0,0,0)
+	wait(15)
+	CAM_quake("46")
+	MOT(EVENT_RAGNA,164,6) //前的めり //岡田定義
+	KAO(EVENT_RAGNA,"B232BFZ6","1","3")//
+	MES(EVENT_RAGNA,"P1喂，什么叫和人不一样啊！\n不要把这种让人在意的话\n轻描淡写一笔带过啊！",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,155,0)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"17671Z5","3","6")//
+	MES(ALWEN,"哦，这个海鲜汤\n也很赞啊……",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,150,10) //
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ5","12","3")//
+	MES(EVENT_RAGNA,"而且花着别人的钱，\n还净挑贵的点……",0)
+	MES_close(EVENT_RAGNA)
+//	wait(15)
+//	CAM_quake("46")
+	MOT(EVENT_RAGNA,159,10) //左手をぶんぶん振って訴える　//岡田定義
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BFZ3","233321D","3")//
+//	MES(EVENT_RAGNA,"P1啊，喂！\n不要全喝光啊！",0)
+	MES(EVENT_RAGNA,"啊，喂！\n不要全喝光啊！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name("東方风的娘")
+	MOT(MEI,151,12)//口に手を当てる
+	look_off(MEI)
+	wait(10)
+	KAO(MEI,"Q","1","1")//
+	MES(MEI,"哎呀。\n关系很不错嘛㈱",0)
+	MOT(MEI,2,12)
+	KAO(MEI,"12321Z4","126","1")//
+	MES(MEI,"我可不想当电灯泡，\n那么，这就先退下了。",0)
+	MOT(MEI,152,12)//胸に手を当てる 岡田定義
+	KAO(MEI,"12321Z4","321","1")//
+	MES(MEI,"啊，对了对了。\n我的名字叫『梅』。",0)
+	MES_close(MEI)
+	MOT(MEI,2,12)
+	KAO(MEI,"12321Z3","1","1")//
+	chr_rename(MEI,"梅")//キャラ的名前を変更
+	MES(MEI,"正在滞留中，请多关照！",0)
+	MES_close(MEI)
+
+//　　梅、そ的ままお辞儀して部屋を出て行く。
+//	MES(EVENT_RAGNA,"◆未入力項目\n梅、そ的ままお辞儀して部屋を出て行く。",0)
+//	MES_close(EVENT_RAGNA)
+	look_off(MEI)
+	wait(15)
+	KAO(MEI,"1","123","1")//
+	MOT(MEI,150,12)
+	wait(22)
+	KAO(MEI,"1","321","1")//
+	MOT(MEI,2,10)
+	wait(10)
+	rot( MEI,30,0 )
+	wait(15)
+	move( MEI, 0, WALK1,17631,117,0,0)
+	wait_move(MEI)
+	chr_rename(MEI,"梅")//キャラ的名前を変更
+	delete(MEI)
+
+	MOT(EVENT_RAGNA,166,15) //
+	wait(15)
+	KAO(EVENT_RAGNA,"C","1232","3")//
+	MES(EVENT_RAGNA,"………………………………",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,156,15)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z6","321D","6")//
+	MES(ALWEN,"怎么了？\n如果还有身为人类的生理需求，\n应该会很有食欲才对。",0)
+	KAO(ALWEN,"17671Z5","1236","6")//
+	MES(ALWEN,"我允许你和主人坐在一起。\n不必客气，快吃吧。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"C","3","3")//
+	MES(EVENT_RAGNA,"……",0)
+	KAO(EVENT_RAGNA,"C232CZ4","3","3")//
+	MES(EVENT_RAGNA,"很好，也就是说\n详细情况作为饭后甜点吗。",0)
+	MES_close(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,158,8) //机を叩く //岡田定義
+	wait(15)
+	SE(1049,0)//テーブルを叩くSE //竹追加
+	CAM_quake("37")
+//	wait(23)
+	KAO(EVENT_RAGNA,"C232C2Z3","32","3")//
+	MES(EVENT_RAGNA,"P1S3──不对！\n什么不用客气，那是我的钱好吧！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　画面、ゆっくりとフェードアウト。
+	fade_in(100,60,0)
+	wait_fade()
+	stop_BGM(90)
+	wait_BGM()
+
+//──────────────────────────────
+//　　画面フェードインして、同じ部屋的一室。
+//　　テーブル的上は片付けられ、お茶セット的みが置かれている。
+//　　艾雯は窓を眺めて、優雅にくつろいでいるような状態。
+
+	wait(30)
+	chr_pos(ALWEN,17916,-842,0,180,2)
+	F_set_Node(ALWEN,"Bone_RightSword",NP_HIDE)
+	F_set_Node(ALWEN,"Bone_LeftHand",NP_HIDE)//茶碗を離す　//by Okada
+	//MOT(ALWEN,2,0)
+	MOT(ALWEN,53,1) //右手を開くテスト by Okada
+	F_reset_chr(ALWEN,CF_NO_HEIGHT)
+	F_reset_chr(ALWEN,CF_NO_ZIMEN)
+
+	MOT(EVENT_RAGNA,154,0)
+
+	F_set_obj("ryouri",NP_HIDE)
+	F_reset_obj("otya",NP_HIDE)
+
+	MES_pos(EVENT_RAGNA,"W9……你是，吸血鬼？………",0,320,240,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+
+	CAM_move(17827,442,135,0,0)
+	CAM(-50,78,135,20,206,0,0)
+	CAM_move(17927,442,135,120,0)
+
+	BGM(53)
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	wait_CAM_move()
+
+//	MES(EVENT_RAGNA,"◆未入力項目\nテーブル的上は片付けられ、\nお茶セット的みが置かれている。",0)
+//	MES(EVENT_RAGNA,"◆未入力項目\n艾雯は窓を眺めて、\n優雅にくつろいでいるような状態。",0)
+//	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z2","3","1")//
+	MES(ALWEN,"正是。",0)
+	KAO(ALWEN,"12321Z5","3","1")//
+	MES(ALWEN,"我之名为艾雯。\n艾雯·德·蒙布利亚。",0)
+	KAO(ALWEN,"12321Z6","3","1")//
+	MES(ALWEN,"从属于伟大的真祖一族，\n乃是从古时起便统治此地的\n蒙布利亚公爵家的现任主人。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,155,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z5","123332A","5")//
+	MES(EVENT_RAGNA,"等，等一下……\n再怎么说，这玩笑也过头了点吧。",0)
+	KAO(EVENT_RAGNA,"12321Z5","A","5")//
+	MES(EVENT_RAGNA,"又不是小孩子的童话故事。\n你怎么可能是吸血鬼。",0)
+	KAO(EVENT_RAGNA,"12321Z5","A","5")//
+	MES(EVENT_RAGNA,"确实，从那对翅膀来看，\n很明显你不是人类──",0)
+	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+
+//　　ここで画面、再びフラッシュバック。
+//　　前的シーンにおける艾雯関連的絵を再び表示する。
+//　　最後に黒バックに以下的メッセージが血的色で表示される。
+
+//	MES(EVENT_RAGNA,"◆未入力項目\nここで画面、再びフラッシュバック。",0)
+//	MES(EVENT_RAGNA,"◆未入力項目\n前的シーンにおける艾雯関連的絵を再び表示する。",0)
+//	MES_close(EVENT_RAGNA)
+
+	BGM_vol(75,15)
+
+	fade_in(100,30,0)
+	
+	if(SP005>15)
+	{	//ワイド
+		Load_BMP(15,"sys\\portray05w.itm","0")			//portray05 夕陽を背にした艾雯１
+		menuBMP(0,	15,	0,0,768,480)
+		menu(0,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(0,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(30)
+	//	wait_key(0)
+		menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		
+		Load_BMP(14,"sys\\portray06w.itm","0")			//portray06 夕陽を背にした艾雯２
+		menuBMP(1,	14,	0,0,768,480)
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(30)
+	//	wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+
+	}
+	else
+	{	//４：３
+		Load_BMP(15,"sys\\portray05n.itm","0")			//portray05 夕陽を背にした艾雯１
+		menuBMP(0,	15,	0,0,640, 480)
+		menu(0,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(0,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(30)
+	//	wait_key(0)
+		menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		
+		Load_BMP(14,"sys\\portray06n.itm","0")			//portray06 夕陽を背にした艾雯２
+		menuBMP(1,	14,	0,0,640, 480)	
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(30)
+	//	wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+	}
+
+	BGM_vol(50,15)
+	SE(1057,0)//ドクンSE
+//	SE(1105,0)//ドクンSE(大)
+
+	wait_menu(0)	
+	wait_menu(1)
+	wait_fade()
+	look_off(EVENT_RAGNA)
+
+
+//	ビジュアルテキスト
+//	wait(15)
+	Load_BMP(14,"sys\\text01.itm","sys\\text01a.itm")
+//	MES_pos(EVENT_RAGNA,"S4C2此乃命中注定。",1,320,240,0,0)
+	menuBMP(0,	14,	408,60,408,36)
+	menu(0,	0,	120,220,  0,	408, 36,	 0,  0,0)
+	menu(0,	0,	120,220,  0,	408, 36,	60,100,0)
+	wait(15)
+	VOICE(170,0)	//★ボイス演出追加
+	wait(65)
+//	wait_key(0)	
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(15)
+	SE(1057,0)//ドクンSE
+
+//	MES_pos(EVENT_RAGNA,"S4C2来吧，接受你的命运。",1,320,240,0,0)
+	menuBMP(0,	14,	408,100,408,36)
+	menu(0,	0,	120,220,  0,	408, 36,	 0,  0,0)
+	menu(0,	0,	120,220,  0,	408, 36,	60,100,0)
+	wait(15)
+	VOICE(171,0)	//★ボイス演出追加
+	wait(65)
+//	wait_key(0)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	stop_SE(583)
+	wait(15)
+		
+	
+/*	
+	MES_pos(EVENT_RAGNA,"S4C2此乃命中注定。",1,320,240,0,0)
+	wait(80)
+	MES_close(EVENT_RAGNA)
+	wait(30)
+	VOICE(171,0)	//★ボイス演出追加
+	MES_pos(EVENT_RAGNA,"S4C2来吧，接受你的命运。",1,320,240,0,0)
+	wait(100)
+	stop_SE(583)
+	MES_close(EVENT_RAGNA)
+	wait(15)
+*/
+
+	CAM_move(17917,522,115,900,0)
+	CAM(-50,74,115,20,196,900,0)
+
+	MOT(EVENT_RAGNA,154,0)
+
+	BGM_vol(100,30)
+	//フェードイン
+	fade_in(0,30,0)
+	wait_fade()
+
+//　　画面戻って、音を立てて拉古那が椅子から立ち上がる。
+	KAO(EVENT_RAGNA,"B232B2Z2","233321DE","7")//
+	MES(EVENT_RAGNA,"那个是……！",0)
+	MES_close(EVENT_RAGNA)
+
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(15)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","321","1")//
+	MES(ALWEN,"呵呵，好像想起来了嘛。",0)
+	KAO(ALWEN,"12321Z6","1","1")//
+	MES(ALWEN,"昨天傍晚，\n与钢铁之翼一同坠落的你\n可是命悬一线哦。",0)
+	KAO(ALWEN,"12321Z5","1","1")//
+	MES(ALWEN,"我现身于彼处，\n与你缔结了《血之契约》。",0)
+	KAO(ALWEN,"12321Z5","1233321","1")//
+	MES(ALWEN,"因此，你现在\n才能毫发无伤。",0)
+	MES_close(ALWEN)
+
+//	MOT(EVENT_RAGNA,155,15)
+//	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232B2Z3","D1233321","2")//
+	MES(EVENT_RAGNA,"《血之契约》……\n到底是什么东西啊，那个！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ5","123","3")//
+//	MES(ALWEN,"──一言蔽之，\n就是我吸取了你的血的同时，\n也将我的血给了你。",0)
+	MES(ALWEN,"──囊吸取了你的血的同时，\n也将我的血给了你。",0)
+	KAO(ALWEN,"B232BZ6","3","3")//
+	MES(ALWEN,"由此，在你我之间\n建立的灵魂上的主从关系。",0)
+	KAO(ALWEN,"B232BZ5","32A","3")//
+	MES(ALWEN,"严格来说，你现在已经不是人类了。",0)
+	KAO(ALWEN,"B232BZ5","A","3")//
+	MES(ALWEN,"而是为守坏囊\n而重新存在的《血之战士》。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,154,15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ2","E","7")//
+	MES(EVENT_RAGNA,"……………………（目瞪口呆）",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z5","A23332A","1")//
+	MES(ALWEN,"《血之战士》的回复力\n是人类所无法望其项背的。",0)
+	KAO(ALWEN,"12321Z7","A","1")//
+	MES(ALWEN,"从濒死的肉体瞬间开始回复\n到镇上的人发现你的时候\n基本上已经恢复到了原有的状态。",0)
+	KAO(ALWEN,"12321Z4","A23","1")//
+	MES(ALWEN,"总之，就是这么回事。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B","D123","5")//
+	MES(EVENT_RAGNA,"……………………………",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那、音を立てて椅子的上に座り込む。
+	look(EVENT_RAGNA,"Bone_Head",0, 0,0,1, 0,0,-20)
+	wait(20)
+	KAO(EVENT_RAGNA,"B2321BZ3","3","5")//
+	MES(EVENT_RAGNA,"哈哈……这个玩笑一点都不好玩。",0)
+	KAO(EVENT_RAGNA,"B232BZ4","3","5")//
+	MES(EVENT_RAGNA,"也就是说我……\n变成怪物了吗。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","3","1")//
+	MES(ALWEN,"严格地说，这样也不正确。",0)
+	KAO(ALWEN,"12321Z5","321","1")//
+	MES(ALWEN,"现在的你，存在于\n半人半魔的夹缝中。",0)
+	KAO(ALWEN,"12321Z5","1","1")//
+	MES(ALWEN,"因为所谓《血之契约》\n毕竟如字面所言，是个“契约”。",0)
+	KAO(ALWEN,"12321Z7","1","1")//
+	MES(ALWEN,"若你能向我清偿\n为你续命的代价，那么也可以凭你的意志，\n随时解除。",0)
+	MES_close(ALWEN)
+
+//　　拉古那的頭に！マーク。
+//　　驚き的表情で艾雯的方に向き直る。
+	KAO(EVENT_RAGNA,"E","2321DE","7")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(15)
+	look(EVENT_RAGNA,"Bone_Head",0, 0,0,3, 0,0,0)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232B2Z2","E","7")//
+	MES(EVENT_RAGNA,"……真的！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","123","2")//
+	MES(ALWEN,"绝无半点虚假。",0)
+	KAO(ALWEN,"B232BZ7","321","2")//
+	MES(ALWEN,"因为，原本《血之契约》\n就是以暗之女神埃斯比纳之名\n缔结的神圣契约。",0)
+	KAO(ALWEN,"12321Z5","12","1")//
+	MES(ALWEN,"但是，这毕竟是生命的代价。\n你最好不要想得太便宜。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z2","123","6")//
+	MES(EVENT_RAGNA,"嘿……太好了。",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","1")//
+	MES(EVENT_RAGNA,"不是我自夸，\n托特里斯坦号的福，\n我从以前就很习惯欠债这档事了。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"于是，那个代价\n大概要多少？",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"１００万芬尼……\n不，应该不会这么便宜吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	CAM_move(17727,382,95,60,0)
+	CAM(70,73,95,20,250,60,0)
+
+//	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	look(EVENT_RAGNA,"Bone_Head",0, 0,1,0, 0,-34,0)
+	KAO(ALWEN,"1","23","1")//
+	rot(ALWEN,30,20)
+	move( ALWEN, 10, 9,17670,-504,0,0)
+//	MOT(ALWEN,60,15)
+	wait_move(ALWEN)
+//	MOT(ALWEN,2,15)
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(15)
+
+	CAM_move(17707,402,95,900,0)
+	CAM(-50,73,95,20,239,900,0)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","321","1")//
+	MES(ALWEN,"我对人类的货币没兴趣。",0)
+	KAO(ALWEN,"12321Z4","1","1")//
+	MES(ALWEN,"我希望你协助我\n夺回那座城。",0)
+	MES_close(ALWEN)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"F","12321D","6")//
+	MES(EVENT_RAGNA,"咦……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z4","1233321","1")//
+	MES(ALWEN,"你也看到了吧？\n山丘对面那座壮观的城堡。",0)
+	MES_close(ALWEN)
+
+//　　ここで夕暮れに蜃気楼的城が映っている
+//　　パノラマ的回想ビジュアルを表示。
+//	BGM_vol(85,15)
+
+	if(SP005>15)
+	{	//ワイド
+		Load_BMP(14,"sys\\portray07w.itm","0")			//portray07 丘から見える蜃気楼的城（夕暮れ）
+		menuBMP(1,	14,	0,0,768,480)
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(60)
+	//	wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	}
+	else
+	{	//４：３
+		Load_BMP(14,"sys\\portray07n.itm","0")			//portray07 丘から見える蜃気楼的城（夕暮れ）
+		menuBMP(1,	14,	0,0,640,480)
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(60)
+	//	wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+	}
+
+	wait_menu(1)
+
+	KAO(ALWEN,"12321Z5","1","1")//
+	MES(ALWEN,"那是《蒙布利亚城》。\n我从父亲那里继承的居城。",0)
+	MES_close(ALWEN)
+
+//　　画面、部屋に戻って以下的メッセージ。
+	KAO(EVENT_RAGNA,"B232BFZ4","D","6")//
+	MES(EVENT_RAGNA,"那座蜃楼一样的城啊……\n你住在很不得了的地方嘛。",0)
+	KAO(EVENT_RAGNA,"B232BFZ4","12321DE","7")//
+	MES(EVENT_RAGNA,"呃，等一下！\n夺回是怎么回事啊，什么夺回！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"C232CZ3","123","3")//
+	MES(ALWEN,"字面意思。",0)
+	KAO(ALWEN,"C232CZ4","3","3")//
+	MES(ALWEN,"半个月前，\n某人夺取了我的城堡。",0)
+	KAO(ALWEN,"C232CZ4","3","3")//
+	MES(ALWEN,"我自己也被夺走了大半魔力，\n总之让对方逃脱了……",0)
+//	MOT(ALWEN,158,8)//左手をブンブン振って訴える 岡田定義	★子供っぽく見える的でカット（竹）
+	KAO(ALWEN,"C232CGZ2","32","3")//
+	MES(ALWEN,"……ええい。\n思い出すだけで口惜しい！",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ4","D1233321D","6")//
+	MES(EVENT_RAGNA,"某人……\n说得还真模糊啊。",0)
+	KAO(EVENT_RAGNA,"B232BZ3","1","1")//
+	MES(EVENT_RAGNA,"你心里都没有底吗？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"C232CZ3","3","5")//
+	MES(ALWEN,"……实话说，确实都没有头绪。",0)
+	KAO(ALWEN,"C232CZ7","321","3")//
+	MES(ALWEN,"不过，所率领的魔物的数量也好，\n夺走我的魔力的本事也罢，\n对方一定不是个简单的人物。",0)
+	KAO(ALWEN,"B232BZ4","1","3")//
+	MES(ALWEN,"因此，对现在的我而言，\n必须要有一名值得信赖的臣下。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B","123","3")//
+	MES(EVENT_RAGNA,"………………………………",0)
+	KAO(EVENT_RAGNA,"B232BZ6","321","3")//
+	MES(EVENT_RAGNA,"……难道说，\n袭击我的飞机的\n也是那群家伙的其中之一？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","1233321","3")//
+	MES(ALWEN,"正是如此。",0)
+	KAO(ALWEN,"B232BZ6","1","3")//
+	MES(ALWEN,"自夺得城堡起，\n他们就不为人知地封锁了伊鲁巴特，\n断绝了外部的干涉。",0)
+	KAO(ALWEN,"B232BZ5","1","3")//
+	MES(ALWEN,"昨天，你的铁翼\n受袭的原因也是如此吧。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z4","123","1")//
+	MES(EVENT_RAGNA,"……ＯＫ。\n我总算理解了。",0)
+	KAO(EVENT_RAGNA,"12321Z6","3","1")//
+	MES(EVENT_RAGNA,"看来，\n我和特里斯坦号\n也和这帮家伙有仇啊。",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","1")//
+	MES(EVENT_RAGNA,"就算陪你解决这档子事好了，\n我会协助你的。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","123332A","1")//
+	MES(ALWEN,"呵呵，你倒是挺干脆，那就好了。",0)
+	KAO(ALWEN,"12321Z4","A","1")//
+//	MES(ALWEN,"那么，就再次\n将作为我臣下的作风──",0)
+	MES_pos(ALWEN,"那么，就再次\n将作为我臣下的作风──",0,0,0,0,0)
+//	MES_close(ALWEN)
+	wait(30)
+
+//	name2(EVENT_RAGNA)
+//	wait(10)
+	CAM_quake("46")
+	KAO(EVENT_RAGNA,"B232BZ2","123","3")//
+//	MES(EVENT_RAGNA,"不过！",0)
+	MES_pos(EVENT_RAGNA,"S4不过！",0,0,0,0,0)
+	wait(30)
+	MES_close(EVENT_RAGNA)
+	MES_close(ALWEN)
+
+//　　拉古那、ここで立ち上がって艾雯に向き直る。
+	wait_MES(EVENT_RAGNA)
+	KAO(ALWEN,"E","2321D","6")//
+//	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	cross_fade(15)
+	look(EVENT_RAGNA,"Bone_Head",0, 0,34,0, 0,0,0)
+//	look_off( EVENT_RAGNA )
+	chr_pos(EVENT_RAGNA,17794,-230,0,90,2)
+	MOT(EVENT_RAGNA,2,0)
+	F_reset_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_reset_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	wait(5)
+	SE(1029,0)//立ち上がるSE
+	wait(10)
+
+	CAM_move(17647,442,95,30,0)
+	CAM(-10,74,95,20,204,30,0)
+
+	look(ALWEN,"Bone_Head",0, 0,1,0, 0,30,0)
+	move( EVENT_RAGNA, 30, 7,17694,-230,0,0)
+	MOT(EVENT_RAGNA,0,5)
+	wait_move(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,2,5)
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+//	wait(60)
+	wait(30)
+
+	CAM_move(17606,442,95,900,0)
+	CAM(-90,66,95,20,220,900,0)
+
+	KAO(EVENT_RAGNA,"B232BZ4","321","3")//
+	MES(EVENT_RAGNA,"我也有我的原则。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","3")//
+	MES(EVENT_RAGNA,"虽然我不知道《血之契约》是什么东西，\n但我拒绝做一个像仆人一样的臣下。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　艾雯、すっと目を細めるような表情。
+	MOT(ALWEN,151,15)	//腰に手を当てる（左）
+	KAO(ALWEN,"12321F","123332","3")//
+	MES(ALWEN,"…………嚯？",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ5","1233321","2")//
+	MES(EVENT_RAGNA,"我是宝物猎人，\n而且还开飞机。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1","2")//
+	MES(EVENT_RAGNA,"无论哪一个，都是不受任何拘束，\n凭自己的力量开拓道路的职业。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","1")//
+	MES(EVENT_RAGNA,"如果要伺候你\n而且听你使唤，\n这种事是绝对没门的。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ5","23332","3")//
+	MES(ALWEN,"也就是说，你的意思是……\n你不能协助我，是吗？",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B","123","1")//
+//	MOT(EVENT_RAGNA,51,0)//キョロキョロ
+//	wait(15)
+	look(EVENT_RAGNA,"Bone_Head",0, 0,3,0, 0,30,0)
+	wait(13)
+	look(EVENT_RAGNA,"Bone_Head",0, 0,3,0, 0,-30,0)
+	wait(23)
+	look(EVENT_RAGNA,"Bone_Head",0, 0,3,0, 0,0,0)
+
+	KAO(EVENT_RAGNA,"B232BZ2","3","1")//
+	MES(EVENT_RAGNA,"不是。",0)
+	KAO(EVENT_RAGNA,"12321Z6","321","1")//
+	MES(EVENT_RAGNA,"我很感谢你救了我的命，\n这个人情我一定会还你。",0)
+	KAO(EVENT_RAGNA,"12321Z3","1","2")//
+	MES(EVENT_RAGNA,"但是，这是一种平等的关系。",0)
+	KAO(EVENT_RAGNA,"12321Z3","1","2")//
+	MES(EVENT_RAGNA,"只有这一点，我绝不会退让。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","23","2")//
+	MES(ALWEN,"……我难以理解。",0)
+	KAO(ALWEN,"B232BZ3","32","2")//
+	MES(ALWEN,"《血之契约》是绝对的。",0)
+	KAO(ALWEN,"B232BZ6","2","2")//
+	MES(ALWEN,"只是说出这样的话，\n现在的你也应该会感到痛苦。",0)
+	MES_close(ALWEN)
+
+//　　拉古那、上記的台詞と合わせて
+//　　顔をしかめたり頭に手を当てたりする動作。
+//　　ドクンドクンという音と共に画面が赤く明滅する。
+//	MOT(EVENT_RAGNA,151,15)
+	MOT(EVENT_RAGNA,157,15)
+	look(EVENT_RAGNA,"Bone_Head",0, 0,28,2, 0,0,-30)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","1BC","1")//
+	MES(EVENT_RAGNA,"哦……原来如此。",0)
+	MES_close(EVENT_RAGNA)
+
+	fade_in(50,10,RED)
+	wait_fade()
+	CAM_quake("46")
+	fade_in(0,20,RED)
+	SE(1057,0)//ドクンSE
+	wait_fade()
+	wait(5)
+	fade_in(50,10,RED)
+	wait_fade()
+	CAM_quake("46")
+	fade_in(0,20,RED)
+	SE(1057,0)//ドクンSE
+	wait_fade()
+	wait(5)
+
+	MOT(EVENT_RAGNA,161,15) //頭に手をやる　//岡田定義
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","C","5")//
+	MES(EVENT_RAGNA,"难怪从刚才开始\n头就嗡嗡地响个不停……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B232BZ4","23332","1")//
+	MES(ALWEN,"当然，这种程度还没什么关系。",0)
+	KAO(ALWEN,"B232BZ5","2","1")//
+	MES(ALWEN,"随便乱来的话，好不容易\n捡回来的命还可能丢掉哦",0)
+	MES_close(ALWEN)
+
+	look(EVENT_RAGNA,"Bone_Head",0, 0,0,2, 0,0,0)
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+	wait(10)
+	KAO(EVENT_RAGNA,"12321Z5","B1233321","2")//
+	MES(EVENT_RAGNA,"……所以我的意思是，\n我不能接受自己屈于人下。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","2")//
+	MES(EVENT_RAGNA,"虽然这种自尊微不足道，\n但我毕竟是靠这个活着的。",0)
+	KAO(EVENT_RAGNA,"A232AZ4","123","1")//
+	MES(EVENT_RAGNA,"你要是不喜欢这样的话，那也没关系。",0)
+//	MES_close(EVENT_RAGNA)
+//	MOT(EVENT_RAGNA,160,15) //胸に手を当てる		//★角度的に厳しい的でカット（竹）
+//	wait(15)
+	KAO(EVENT_RAGNA,"A232AZ6","321","1")//
+	MES(EVENT_RAGNA,"这条被你捡回来的命……\n你就在这里快点收回去吧。",0)
+	MES_close(EVENT_RAGNA)
+//	MOT(EVENT_RAGNA,2,15) //
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B","2","1")//
+	MES(ALWEN,"…………………………………",0)
+	KAO(ALWEN,"12321Z4","23","1")//
+	MES(ALWEN,"……呵呵。\n人类还真是麻烦的生物。",0)
+	KAO(ALWEN,"12321Z4","321","1")//
+	MES(ALWEN,"不过，有意思。\n真是引起我的兴趣了。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"F","1233321D","6")//
+	MES(EVENT_RAGNA,"咦……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　艾雯、そ的まま拉古那的前に移動。
+	cross_fade(30)
+	CAM_move(17706,282,125,0,0)
+	CAM(70,64,125,20,214,0,0)
+	wait(30)
+	CAM_move(17706,262,125,30,0)
+	CAM(70,54,125,20,214,30,0)
+
+	MOT(ALWEN,2,15)
+//	look_off( ALWEN )
+	look(ALWEN,"Bone_Head",0, 0,3,0, 0,0,0)
+	rot_chr( ALWEN,30,EVENT_RAGNA )
+	//move( EVENT_RAGNA, 0, 9,17694,-230,0,0)
+	move( ALWEN, 0, 8,17694,-330,0,0)
+	wait_move(ALWEN)
+
+	KAO(ALWEN,"12321Z4","123332A","1")//
+	MES(ALWEN,"──如你所愿。\n拉古那·瓦伦泰恩。",0)
+	KAO(ALWEN,"12321Z5","A","1")//
+	MES(ALWEN,"我接受你作为我的协助者，\n与我站在平等的立场。",0)
+	MES_close(ALWEN)
+
+//　　艾雯、目を閉じて拉古那を抱きしめる動作。
+//　　それを受けて拉古那、慌てふためく動作になる。
+	//岡田記述
+//	set_chr(RAGNA2,1014,-1,-1,	 17694,-230,0,		0,	  180,	0,"")	//イベント用拉古那
+//	set_chr(ALWEN2,1011,-1,-1,	 17694,-330,0,		0,	  0,	0,"")	//イベント用艾雯
+//	F_set_chr(RAGNA2,CF_NO_CSP)
+//	F_set_chr(ALWEN2,CF_NO_CSP)
+//	cross_fade(15)
+//	color(EVENT_RAGNA,-1)
+//	color(RAGNA2,1)
+//	color(ALWEN,-1)
+//	color(ALWEN2,1)
+//	wait(30)
+	MOT_SET(EVENT_RAGNA,160,-1,2550,2600,-1,-1)
+	MOT_SET(ALWEN,160,-1,2550,2600,-1,-1)
+	MOT(EVENT_RAGNA,160,15)
+	MOT(ALWEN,160,15)
+	wait(15)
+	KAO(ALWEN,"1","23","1")
+	//岡田ここまで
+
+	wait(10)//サウンド調整
+	SE(1029,0)//抱きつくSE
+
+	//MOT(EVENT_RAGNA,152,10)	//的けぞる
+	KAO(EVENT_RAGNA,"12321F","1233321DE","7")//
+	MES(EVENT_RAGNA,"喂，喂……！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","3","3")//okada
+	MES(ALWEN,"C2以艾雯·德·蒙布利亚之名……",0)
+	KAO(ALWEN,"B232BZ4","3","3")//okada
+	MES(ALWEN,"C2《血之契约》啊，\n于此更新你的条文！",0)
+	MES_close(ALWEN)
+
+	//岡田記述
+	MOT_SET(EVENT_RAGNA,160,-1,2610,2660,-1,-1)
+	MOT_SET(ALWEN,160,-1,2610,2660,-1,-1)
+	MOT(RAGNA,160,00)
+	MOT(ALWEN,160,0)
+	KAO(ALWEN,"234","2","1")
+	//岡田ここまで
+
+//　　拉古那的頭に！マーク。
+//　　次的瞬間、艾雯と拉古那的足元に魔法陣が展開。
+//　　そ的まま２人が無数的赤い光的糸で結ばれていく的を見せる。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(20)
+	SE(1029,0)//抱きつくSE
+	wait(10)
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n艾雯と拉古那的足元に魔法陣が展開。\n２人が無数的赤い光的糸で結ばれていく。",0)
+//	MES_close(EVENT_RAGNA)
+
+	EFF(6500,17694,280,0,0,100,-1)
+	CAM(70,84,115,20,204,60,0)
+	SE(1059,0,)//魔方陣展開SE
+	wait(15)
+
+	KAO(EVENT_RAGNA,"232","D12321DE","7")//
+	MES_pos(EVENT_RAGNA,"P1うおっ！？",0,0,0,0,0)
+	wait(15)
+	SE(1060,0)//血的契約SE
+	wait(30)
+	MES_close(EVENT_RAGNA)
+
+//	VOICE(172,0)	//★ボイス演出追加
+//	wait(30)		//★ボイス演出追加
+
+//　　赤い糸、そ的まま２人を覆い尽くした後、
+//　　ゆっくりと消えていき、足元的魔法陣も消滅してゆく。
+//　　呆然とした拉古那をよそに、目を開いて離れる艾雯。
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n赤い糸、そ的まま２人を覆い尽くした後、\nゆっくりと消えていき、足元的魔法陣も消滅してゆく。",0)
+//	MES_close(EVENT_RAGNA)
+
+	//wait(150)
+	wait(190) //okada
+
+	//岡田記述
+	MOT_SET(EVENT_RAGNA,160,-1,2665,2715,-1,-1)
+	MOT_SET(ALWEN,160,-1,2665,2715,-1,-1)
+	MOT(EVENT_RAGNA,160,00)
+	MOT(ALWEN,160,0)
+	wait(15)
+	KAO(ALWEN,"321","2","1")
+	wait(10)
+	KAO(ALWEN,"1","3","1")
+	wait(30)
+	//岡田ここまで
+
+	cross_fade(15)
+	CAM_move(17606,442,95,0,0)
+	CAM(-90,68,95,20,220,0,0)
+	CAM_move(17606,442,130,1200,0)
+	CAM(-330,76,130,20,220,1200,0)
+
+	move( ALWEN, 0, 9,17670,-454,0,0)
+	wait_move(ALWEN)
+	MOT(EVENT_RAGNA,2,15)	//
+
+	wait(30)
+	KAO(ALWEN,"B232BZ3","3","2")//
+	MES(ALWEN,"──契约已经更新。",0)
+	KAO(ALWEN,"B232BZ5","321","2")//
+	MES(ALWEN,"从此刻开始，\n你我的立场已完全平等。",0)
+	KAO(ALWEN,"B232BZ5","1","2")//
+	MES(ALWEN,"虽然由《血之契约》\n建立的灵魂连接并未消除……",0)
+	KAO(ALWEN,"12321Z5","1233321","1")//
+	MES(ALWEN,"但，现在你只需以你的意志\n协助我即可。",0)
+	KAO(ALWEN,"12321Z4","1","1")//
+	MES(ALWEN,"我将，取回我的城堡。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321","123","6")//
+	MES(EVENT_RAGNA,"嘿嘿……",0)
+	KAO(EVENT_RAGNA,"12321Z4","321","1")//
+	MES(EVENT_RAGNA,"……太好了。\n我会还清你的人情的。",0)
+	KAO(EVENT_RAGNA,"12321Z3","1","1")//
+	MES(EVENT_RAGNA,"连本带利的一大笔。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","123","1")//
+	MES(ALWEN,"呵，我拭目以待。",0)
+	KAO(ALWEN,"12321FZ4","32A","6")//
+	MES(ALWEN,"不过……\n你还真是意外地寡淡和谦虚呢。",0)
+	KAO(ALWEN,"12321FZ4","A","6")//
+	MES(ALWEN,"放弃荣耀的地位\n而执著于平等的立场……",0)
+	MES_close(ALWEN)
+
+//　　拉古那的頭に？マーク。
+	EMO(EVENT_RAGNA,EMO_HATENA)
+//	wait(15)
+	wait(20)
+	MOT(EVENT_RAGNA,156,10)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321FZ4","1233321D","6")//
+	MES(EVENT_RAGNA,"荣耀的地位……啥啊？",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,154,15)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z5","23","6")//
+	MES(ALWEN,"自然是指作为我的下仆的地位了。",0)
+	KAO(ALWEN,"12321Z6","3","6")//
+	MES(ALWEN,"高贵的真祖的下仆，\n是众多魔族歆羡的立场。",0)
+	KAO(ALWEN,"12321Z6","36","6")//
+	MES(ALWEN,"而你竟丢弃了这种幸运，\n哎呀呀，多么寡欲的人。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,152,6)	//的けぞる
+//	wait(6)
+//	name2(EVENT_RAGNA)
+	wait(15)
+	CAM_quake("46")
+	KAO(EVENT_RAGNA,"B232BFZ4","1233321D","6")//
+	MES(EVENT_RAGNA,"不要把魔物和人类相提并论啊！？",0)
+	KAO(EVENT_RAGNA,"B232BFZ5","1233321D","6")//
+	MES(EVENT_RAGNA,"唯唯诺诺地被使唤的立场\n是该高兴的事吗！？",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,153,15)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321FZ3","3332F","6")//
+	MES(ALWEN,"……是这样吗？",0)
+	KAO(ALWEN,"12321FZ6","23333332F","1")//
+//	MES(ALWEN,"唔，自出生以来，\n我都没有出过城，\n书本的知识之外我一无所知……",0)
+//	MES(ALWEN,"唔，我向来\n很少出城，\n书本的知识之外我一无所知……",0)
+	MES(ALWEN,"唔，自出生以来，\n我都没有出过城，\n除了书本的知识以外我一无所知……",0)
+	KAO(ALWEN,"12321Z5","123","1")//
+	MES(ALWEN,"唔，在这数百年间，\n人世也改变了吗。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B","123","5")//
+	MES(EVENT_RAGNA,"………………………………",0)
+	MOT(EVENT_RAGNA,157,12)
+	wait(15)
+	KAO(EVENT_RAGNA,"B","3","5")//
+	MES(EVENT_RAGNA,"（总之，就是那个了。）",0)
+	KAO(EVENT_RAGNA,"B","3","5")//
+	MES(EVENT_RAGNA,"（所谓非常不可一世的\n  不食人间烟火的公主大人吗……）",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321FZ4","321D","6")//
+	MES(ALWEN,"哼，那声叹气算什么嘛？",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","32A","5")//
+	MES(EVENT_RAGNA,"那个，怎么说……",0)
+	KAO(EVENT_RAGNA,"12321Z4","A","5")//
+	MES(EVENT_RAGNA,"这事，我在想\n这事大概会很麻烦。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321FZ3","1233321D","6")//
+	MES(ALWEN,"怎么，已经打起退堂鼓了？",0)
+	MOT(ALWEN,152,15)
+	wait(15)
+	KAO(ALWEN,"12321Z5","123","1")//
+	MES(ALWEN,"哼，你尽管放心。\n若能取回力量，我就无可匹敌了。",0)
+	KAO(ALWEN,"12321Z6","3","1")//
+	MES(ALWEN,"能强大于吸血鬼真祖而存在的\n也只有过去的六魔王那样的人……",0)
+	KAO(ALWEN,"1232AZ5","6","6")//
+	MES(ALWEN,"你就放一百个心\n跟着我就行了！",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z2","A23","5")//
+	MES(EVENT_RAGNA,"哈，哈哈……\n（真是不安啊……）",0)
+	MES_close(EVENT_RAGNA)
+
+//　　画面、ゆっくりとフェードアウト。
+//	CAM(-90,72,95,20,220,90,0)
+	fade_in(100,90,0)
+	wait_fade()
+
+//	stop_BGM(120)
+	stop_BGM(90)//园田調整
+	wait_BGM()
+	wait(16)
+
+//──────────────────────────────
+//　　暗転状態で、休憩時的ジングルを鳴らす。
+	SE(6,0)
+	wait(210)
+//──────────────────────────────
+
+	workG(GW_DEF_BGM,SET,0)		//デフォルト曲を元に戻す
+	workG(GW_ENTRY_EVENT,SET,1)
+
+//ＧＦ『★城を取り戻すために行動を開始した』を立てる。
+	F_set(F1_01_GameStart)
+	//★拉古那【血的战士】
+	F_set_note(RAGNA,0)
+	//★艾雯
+	F_set_note(-1,-1)
+	//★艾雯【血的契約】
+	F_set_note(-1,0)
+	
+	//★梅
+	F_set_note(-49,-1)
+
+
+	new_map(10100)	//阿鲁迪亚镇（昼）マップへ(ev00100)
+
+//	EV_end()
+}
+
+//──────────────────────────────
+//▼宿で敵的正体を推察する
+//──────────────────────────────
+//　　画面フェードインして、熊猫楼２階的客室。
+//　　ベッドに座った拉古那と艾雯が向かい合っている。
+//　　艾雯、拉古那的上半身に包帯を卷いているような態勢。
+EV_1_15_EndFirst
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	F_set_obj("futon00",NP_HIDE)
+	F_set_obj("teri03",NP_HIDE)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  16856,-560,0,0,2)
+	chr_pos(PARTNER,  16962,-560,0,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  9,-1,-1, 16856,-560,46, 2,0,0, "")
+	set_chr(EVENT_RAGNA2,	  1053,-1,-1, 16856,-560,46, 2,0,0, "")
+//	set_chr(ALWEN, 	 	1011,-1,-1, 16962,-560,46, 2, 0,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 16942,-560,46, 2, 0,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_ZIMEN)
+	F_set_chr(EVENT_RAGNA2,CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_ZIMEN)
+	F_set_chr(ALWEN,CF_NO_HEIGHT)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	chr_scale( EVENT_RAGNA,	"Bone_Bag",		0,0,0,	0,0);
+	KAO(EVENT_RAGNA2,"B","3","1")//
+	KAO(EVENT_RAGNA,"B","3","1")//
+	KAO(ALWEN,"B","1","1")//
+	color(EVENT_RAGNA,-1)
+
+	set_chr(HUKU, 	 	748,-1,-1, 16864,-728,-15, 0,0,0, "")
+	F_set_chr(HUKU,CF_NO_ZIMEN)
+	F_set_chr(HUKU,CF_NO_HEIGHT)
+	F_set_chr(HUKU,CF_NO_CSP)
+
+	//カメラ初期位置
+	CAM_move(17262,948,275,0,0)
+	CAM(310,64,275,24,220,0,0)
+
+	wait(1)
+//	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる的はこちら。
+	MOT(ALWEN,53,1)										//艾雯的右手を開かせる
+	wait(1)
+
+	MOT_SET(EVENT_RAGNA2,150,-1,560,560,-1,-1)//座り
+	MOT_SET(EVENT_RAGNA2,151,-1,561,561,-1,-1)//座りどうよ
+	MOT_SET(EVENT_RAGNA2,152,-1,948,948,-1,-1)//
+	MOT_SET(EVENT_RAGNA2,153,-1,426,426,-1,-1)//
+	MOT_SET(EVENT_RAGNA,152,-1,414,414,-1,-1)//両手腰
+	MOT_SET(EVENT_RAGNA,153,-1,484,484,-1,-1)//怒り
+	MOT_SET(EVENT_RAGNA,154,-1,401,401,-1,-1)//
+	MOT_SET(EVENT_RAGNA,155,-1,468,468,-1,-1)//
+	MOT_SET(ALWEN,150,-1,559,559,-1,-1)//座り
+	MOT_SET(ALWEN,151,-1,450,450,-1,-1)//
+	MOT_SET(ALWEN,152,-1,410,410,-1,-1)//フフ
+	MOT_SET(ALWEN,153,-1,6035,6035,-1,-1)//それを言うな
+	MOT_SET(ALWEN,154,-1,397,397,-1,-1)//
+	MOT_SET(ALWEN,155,-1,6220,6235,155,5)//
+	MOT_SET(ALWEN,156,-1,6235,6310,150,15)//
+
+	MOT(EVENT_RAGNA2,150,0)
+	MOT(ALWEN,155,0)
+	look_chr( ALWEN, EVENT_RAGNA2 ,"Bone_Head")
+	ResetIK(ALWEN)
+
+	CAM_move(16842,708,115,180,0)
+	CAM(70,64,115,24,214,180,0)
+
+	BGM(62)
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	wait(90)
+	MOT(ALWEN,156,15)
+	wait_CAM_move()
+	wait_CAM()
+	CAM_move(16862,708,95,300,0)
+	CAM(70,60,95,24,206,300,0)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ2","123332A","1")//
+	MES(ALWEN,"……这样就没事了。",0)
+	KAO(ALWEN,"B232BZ5","A","1")//
+	MES(ALWEN,"不过，果然是契约的变更\n产生了影响的样子……",0)
+	KAO(ALWEN,"B232BZ5","A","1")//
+	MES(ALWEN,"原本，如果只是这种程度的伤，\n一瞬间就能痊愈……",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA2)
+	KAO(EVENT_RAGNA2,"B232BZ6","321","2")//
+	MES(EVENT_RAGNA2,"……就算伤能立刻恢复，\n我也不觉得我们赢得了那家伙。",0)
+	MES_close(EVENT_RAGNA2)
+	look_chr( EVENT_RAGNA2, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA2,"B232BZ2","1233321","2")//
+	MES(EVENT_RAGNA2,"我说，公主。",0)
+	KAO(EVENT_RAGNA2,"B232BZ3","1","2")//
+	MES(EVENT_RAGNA2,"你也差不多做点说明吧。",0)
+	MES_close(EVENT_RAGNA2)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ2","A23","1")//
+	MES(ALWEN,"……关于什么？",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA2)
+	KAO(EVENT_RAGNA2,"B232BZ5","1233321","2")//
+	MES(EVENT_RAGNA2,"少装蒜。\n当然是那只公狼人的话了。",0)
+	KAO(EVENT_RAGNA2,"B232BZ5","1","2")//
+	MES(EVENT_RAGNA2,"给你的传言……\n你心里总会有个谱吧？",0)
+	MES_close(EVENT_RAGNA2)
+
+	look_off(ALWEN)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B","3","1")//
+	MES(ALWEN,"………………………………",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　艾雯、立ち上がって拉古那に背を向ける。
+//　　窓的外を眺めているような構図。
+	cross_fade(15)
+	F_reset_chr(ALWEN,CF_NO_ZIMEN)
+	F_reset_chr(ALWEN,CF_NO_HEIGHT)
+	chr_pos(ALWEN,  16962,-500,0,0,2)
+	wait(15)
+	CAM_move(16942,648,85,60,0)
+	CAM(-50,72,85,24,228,60,0)
+	rot(ALWEN,30,270)
+	wait(15)
+	move(ALWEN,30,9,17184,-518,0,0)
+	wait_move(ALWEN)
+	wait(15)
+	MOT(ALWEN,154,15)
+	look(ALWEN,"Bone_Head",0,0,2,0,0,-26,0)
+	wait(15)
+
+	wait_CAM_move()
+	wait_CAM()
+//	CAM_move(16922,632,115,1080,0)
+//	CAM(-170,68,115,24,238,1080,0)
+	CAM_move(16922,632,115,1080,0)
+//	CAM(-170,68,115,24,238,1080,0)
+	CAM(-100,68,115,24,238,1080,0)
+
+	KAO(ALWEN,"B232BZ3","321","2")//
+	MES(ALWEN,"实话说，我很疑惑。",0)
+	KAO(ALWEN,"B232BZ6","1","2")//
+	MES(ALWEN,"因为能够给我个人进行传言的人，\n早已不在此世。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA2)
+	KAO(EVENT_RAGNA2,"BF","12321D","6")//
+	MES(EVENT_RAGNA2,"诶……",0)
+	MES_close(EVENT_RAGNA2)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","123","4")//
+	MES(ALWEN,"不止父亲母亲……",0)
+	KAO(ALWEN,"B232BZ5","3","4")//
+	MES(ALWEN,"就是其他的亲属，\n也都已过世。",0)
+	KAO(ALWEN,"B232BZ5","3","4")//
+	MES(ALWEN,"这１００多年来，\n我都是一个人住在城里。",0)
+	KAO(ALWEN,"B232BZ5","32A","4")//
+	MES(ALWEN,"直到露来到城里，\n才开始变得稍微热闹起来。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA2)
+	KAO(EVENT_RAGNA2,"B232BZ2","123","1")//
+	MES(EVENT_RAGNA2,"是……吗。",0)
+	KAO(EVENT_RAGNA2,"B","3","5")//
+	MES(EVENT_RAGNA2,"……………………………",0)
+	MES_close(EVENT_RAGNA2)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BF","2321","6")//
+	MES(ALWEN,"……拉古那？",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA2)
+	KAO(EVENT_RAGNA2,"B232BZ4","321","2")//
+	MES(EVENT_RAGNA2,"没什么……\n听说了奇怪的事啊。",0)
+	MES_close(EVENT_RAGNA2)
+	MOT(EVENT_RAGNA2,151,12)
+	wait(15)
+	KAO(EVENT_RAGNA2,"B232BZ5","1","2")//
+	MES(EVENT_RAGNA2,"也就是说，那个传言\n完全没有线索吗。",0)
+	MES_close(EVENT_RAGNA2)
+
+	KAO(ALWEN,"B","1","2")//
+	look(ALWEN,"Bone_Head",0,0,2,0,0,0,0)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","123321","2")//
+	MES(ALWEN,"不，也并不尽然。",0)
+	KAO(ALWEN,"B232BZ5","1","2")//
+	MES(ALWEN,"至少，夺取了我的城\n的幕后黑手我已经知道了。",0)
+	KAO(ALWEN,"B232BZ4","123","2")//
+	MES(ALWEN,"吸血鬼……\n而且和我一样，也是真祖。",0)
+	MES_close(ALWEN)
+
+//　　拉古那的頭に！マーク。
+//	MES(EVENT_RAGNA2,"！マーク。",0)
+	KAO(EVENT_RAGNA2,"E","12321D","7")//
+	EMO(EVENT_RAGNA2,EMO_BIKKURI)
+	wait(15)
+	MOT(EVENT_RAGNA2,150,15)
+	wait(15)
+	KAO(EVENT_RAGNA2,"B232B2Z2","12321D","7")//
+	MES(EVENT_RAGNA2,"你说什么！？",0)
+	MES_close(EVENT_RAGNA2)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ5","321","2")//
+	MES(ALWEN,"那个狼人也说过吧？\n我的《血之主》之类……",0)
+	KAO(ALWEN,"B232BZ6","1","2")//
+	MES(ALWEN,"那是缔结了血之契约的战士\n称呼自己的主人时所使用的词汇。",0)
+	KAO(ALWEN,"B232BZ5","1233321","2")//
+	MES(ALWEN,"意思就是说，我也是\n你的《血之主》。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA2)
+	KAO(EVENT_RAGNA2,"B232BZ3","123","1")//
+	MES(EVENT_RAGNA2,"原来是这样……",0)
+	KAO(EVENT_RAGNA2,"B232BZ5","321","2")//
+	MES(EVENT_RAGNA2,"不过，你怎么能\n断定对方也是真祖呢？",0)
+	KAO(EVENT_RAGNA2,"B232BZ5","1","2")//
+	MES(EVENT_RAGNA2,"他们在吸血鬼之中，\n也是非常强大的家伙吧？",0)
+	MES_close(EVENT_RAGNA2)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ5","123332A","2")//
+	MES(ALWEN,"那是由纯粹的血脉\n传承而来的家系。",0)
+//	KAO(ALWEN,"B232BZ6","123332A","2")//
+	KAO(ALWEN,"B232BZ5","A","2")//
+	MES(ALWEN,"……那只猫姑且不提，\n之前的人狼可非等闲之辈。",0)
+	KAO(ALWEN,"B232BZ7","A","2")//
+	MES(ALWEN,"若是能让那样的战士\n遵从血之契约而行动，\n除了真祖之外不做他想。",0)
+
+//	KAO(ALWEN,"B232BZ6","123332A","2")//
+//	MES(ALWEN,"……那只猫姑且不提，\n之前的人狼可非等闲之辈。",0)
+//	KAO(ALWEN,"B232BZ7","A","2")//
+//	MES(ALWEN,"若是能让那样的战士\n遵从血之契约而行动，\n除了真祖之外不做他想。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA2)
+	KAO(EVENT_RAGNA2,"B232BZ5","123","2")//
+	MES(EVENT_RAGNA2,"的确……\n那家伙的强大是不容质疑的。",0)
+	KAO(EVENT_RAGNA2,"B232BZ5","321","2")//
+	MES(EVENT_RAGNA2,"这样的话，他的头领也不是\n省油的灯，这也是理所当然的吗。",0)
+	MES_close(EVENT_RAGNA2)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B","A23","2")//
+	MES(ALWEN,"唔……",0)
+	KAO(ALWEN,"B232BZ8","3","2")//
+	MES(ALWEN,"现在，在库朗毕林\n是否还有其他真祖的血脉流传，\n我也无法确认……",0)
+	KAO(ALWEN,"B232BZ5","3","2")//
+	MES(ALWEN,"如果是父亲的话，\n也许就能推测出来……",0)
+	MES_close(ALWEN)
+
+//　　艾雯、どことなく心細げにうつむいてしまう。
+	KAO(ALWEN,"E","3","5")//
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,-14)
+//	wait(15)
+//	MOT(ALWEN,151,15)
+	wait(30)
+	MES(ALWEN,"………………………………",0)
+	MES_close(ALWEN)
+
+	EMO(EVENT_RAGNA2,EMO_TENTEN)
+	wait(60)
+	look_off(EVENT_RAGNA2)
+	wait(15)
+	KAO(EVENT_RAGNA2,"B232B","123","2")//
+	MES(EVENT_RAGNA2,"……真是的………",0)
+	MES_close(EVENT_RAGNA2)
+	wait_MES(EVENT_RAGNA2)
+
+//　　拉古那、そ的まま立ち上がってジャケットを羽織る。
+//	SE(466,0)//ジャンプ
+	jump(EVENT_RAGNA2,0,10,16902,-500,0,10)
+	MOT(EVENT_RAGNA2,152,4)
+	wait(8)
+	MOT(EVENT_RAGNA2,2,2)
+	wait_move(EVENT_RAGNA2)
+	SE(1058,0)//着地
+	wait(5)
+	rot(EVENT_RAGNA2,30,180)
+	wait(15)
+	MOT(EVENT_RAGNA2,153,12)
+	wait(15)
+	cross_fade(15)
+	SE(1029,0)//着替え
+	look_off(EVENT_RAGNA2)
+	color(EVENT_RAGNA2,-1)
+	delete(HUKU)
+	F_reset_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_reset_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	chr_pos(EVENT_RAGNA,  16902,-500,0,180,2)
+	color(EVENT_RAGNA,1)
+	KAO(EVENT_RAGNA,"B","3","2")//
+	wait(30)
+//	rot(EVENT_RAGNA,30,0)
+//	wait(15)
+	move(EVENT_RAGNA,0,6,16902,-440,0,0)
+	wait(15)
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+
+/*
+	cross_fade(15)
+	look_off(EVENT_RAGNA2)
+	color(EVENT_RAGNA2,-1)
+	delete(HUKU)
+	F_reset_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_reset_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	chr_pos(EVENT_RAGNA,  16902,-500,0,0,2)
+	color(EVENT_RAGNA,1)
+	KAO(EVENT_RAGNA,"B","3","2")//
+	move(EVENT_RAGNA,0,6,16902,-440,0,0)
+	wait(15)
+*/
+	CAM_move(16702,552,105,30,0)
+	CAM(-170,70,105,20,260,30,0)
+	wait_move(EVENT_RAGNA)
+//	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait_CAM_move()
+	wait_CAM()
+	CAM_move(16782,592,105,900,0)
+	CAM(-210,76,105,20,250,900,0)
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n拉古那、ジャケットを羽織る。",0)
+//	MES_close(EVENT_RAGNA)
+
+	MOT(EVENT_RAGNA,152,15)
+	wait(30)
+	CAM_quake("46")
+	KAO(EVENT_RAGNA,"12321Z5","321","2")//
+	MES(EVENT_RAGNA,"唉，对那些不清楚的事\n没完没了地烦恼也不是办法。",0)
+	KAO(EVENT_RAGNA,"12321Z6","1","2")//
+	MES(EVENT_RAGNA,"总之，现在就先\n把取回你的力量放在第一位吧。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"F","321DE","7")//
+	MES(ALWEN,"咦……",0)
+	MES_close(ALWEN)
+
+//	MOT(ALWEN,2,15)
+	look(ALWEN,"Bone_Head",0,0,0,2,0,0,0)
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(30)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z4","1233321","2")//
+	MES(EVENT_RAGNA,"我嘛……\n总之现下先练练身手。",0)
+	KAO(EVENT_RAGNA,"12321Z8","1","2")//
+	MES(EVENT_RAGNA,"同样是《血之战士》，\n要是实力相差太多的话，\n我也实在太没面子了。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","D12321","6")//
+	MES(ALWEN,"呵呵……真不像你的作风。",0)
+	KAO(ALWEN,"12321Z6","1","6")//
+	MES(ALWEN,"对于《血之战士》的立场，\n你不是没兴趣吗？",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","123","1")//
+	MES(EVENT_RAGNA,"没错，是没兴趣。",0)
+	MES_close(EVENT_RAGNA)
+	look(EVENT_RAGNA,"Bone_Head",0,0,2,0,0,-30,0)
+	wait(15)
+	KAO(EVENT_RAGNA,"1232EZ6","I","5")//
+	MES(EVENT_RAGNA,"只是，我不想继续\n在公主面前丢脸了……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"F","12321D","6")//
+	MES(ALWEN,"咦？",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B","IHG","3")//
+	look(EVENT_RAGNA,"Bone_Head",0,0,3,0,0,0,0)
+	MOT(EVENT_RAGNA,153,10)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	CAM_quake("46")
+	KAO(EVENT_RAGNA,"B232GZ4","G","3")//
+	MES(EVENT_RAGNA,"啊，所以说，\n这是男人无聊的自尊啦！",0)
+	KAO(EVENT_RAGNA,"B232GZ3","H","3")//
+	MES(EVENT_RAGNA,"不要刨根问底的啊！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321FZ2","12321D","6")//
+	MES(ALWEN,"哦，啊啊……",0)
+	MES(ALWEN,"……………………………",0)
+	MES_close(ALWEN)
+	wait(15)
+	MOT(ALWEN,152,15)
+	wait(15)
+	KAO(ALWEN,"12321Z4","123","6")//
+	MES(ALWEN,"……呵呵。\n你还真是不可思议的男人。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ2","IIIHG","6")//
+	MES(EVENT_RAGNA,"什，什么嘛。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z6","321","6")//
+	MES(ALWEN,"以为你是只为争口气而活着吧，\n你又有刚才那样的顾虑……",0)
+	KAO(ALWEN,"12321Z5","1","6")//
+	MES(ALWEN,"最初，我以为\n所有的人类都和你一样……",0)
+	KAO(ALWEN,"12321Z6","123","6")//
+	MES(ALWEN,"然而看起来，你在人群中\n也是稍有些特立独行的。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,155,10)
+	EMO(EVENT_RAGNA,EMO_ASEASE)
+	wait(30)
+//	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","HIIIHGK","6")//
+	MES(EVENT_RAGNA,"不，不要把我当怪人看啊。",0)
+	KAO(EVENT_RAGNA,"B232BZ4","GHIH","2")//
+	MES(EVENT_RAGNA,"而且，\n我才没有担心你什么……",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,2,15)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","6","6")//
+	MES(ALWEN,"别害羞，别害羞嘛。",0)
+	KAO(ALWEN,"12321Z5","6","6")//
+	MES(ALWEN,"呵呵，真可爱。\n有个弟弟的话就是这种感觉吗？",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,153,10)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	CAM_quake("37")
+	KAO(EVENT_RAGNA,"B232BGZ2","IIIH","3")//
+	MES(EVENT_RAGNA,"S3谁是弟弟啊，谁啊！",0)
+	MES_close(EVENT_RAGNA)
+
+//切り替えてみる
+	wait_MES(EVENT_RAGNA)
+	cross_fade(15)
+	CAM_move(17092,602,135,0,0)
+	CAM(-210,50,135,26,148,0,0)
+	chr_pos(ALWEN,  17134,-518,0,0,2)
+	rot_chr(ALWEN,-1,EVENT_RAGNA)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"B","I","2")//
+	MOT(EVENT_RAGNA,2,12)
+	wait(12)
+	MOT(EVENT_RAGNA,154,12)
+	rot(EVENT_RAGNA,30,320)
+	look(EVENT_RAGNA,"Bone_Head",0, 0,2,0, 0,24,0)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","I","2")//
+	MES(EVENT_RAGNA,"啊啊算了，我要睡了！",0)
+	KAO(EVENT_RAGNA,"B232BZ6","I","2")//
+	MES(EVENT_RAGNA,"今天确实是因为\n担心某个死脑筯的人\n而累得半死了！",0)
+	MES_close(EVENT_RAGNA)
+
+	EMO(ALWEN,EMO_ASEASE)
+	KAO(ALWEN,"B","3IHGK","7")//
+	MOT(ALWEN,153,10)
+//	wait(30)
+	wait(20)
+	CAM_quake("46")
+//	KAO(ALWEN,"B232B2Z4","K","7")//
+	KAO(ALWEN,"C232CZ4","GHIIIH","3")//
+	MES(ALWEN,"什……\n以后不许再这么说，就这样定了！",0)
+	MES_close(ALWEN)
+
+//　　画面、ゆっくりとフェードアウト。
+	CAM(-210,52,135,26,148,60,0)
+	fade_in(100,60,0)
+	wait_fade()
+
+	//阿鲁迪亚（屋敷）夜マップへ(ev00131)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(10131)
+
+//	EV_end()
+}
+
+#EndScriptTable
+//====================================================================
+

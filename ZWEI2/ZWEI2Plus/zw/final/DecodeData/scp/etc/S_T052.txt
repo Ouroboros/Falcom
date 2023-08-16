@@ -1,0 +1,453 @@
+//■Zwei2一般メッセージ·亚尔迪镇（※利普顿）
+//────────────────────────────────────────────────────────────
+//■亚尔迪
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆利普顿（上流階級男）Rypton")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_RYPTON
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(RYPTON, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,RYPTON)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,RYPTON)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,RYPTON)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※犬を連れて，大道芸人之前にいる。
+	if( F6_05_EndSixth )
+	{
+		EV("MOTION_TK_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"所谓绅士，就是在任何情况下\n都能沉着冷静。",0)
+			MES(RYPTON,"当然，就是在那场骚乱中\n也不能高声喊叫。",0)
+			MES(RYPTON,"只是……\n风把我的礼帽吹跑了。",0)
+			MES(RYPTON,"呼，有些慌张了呢。",0)
+			MES_close(RYPTON)
+
+		//　　拉古那たちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+	
+		//──────────────────────────────
+		//	name("□フラグ⑤之メッセージを見たことがある场合")
+		if(FT_05_RyptonPs)
+		{
+			MES(RAGNA,"（明明发生了那种大骚动……）",0)
+			MES(RAGNA,"（嗯，直到最后\n  都很平静的人啊……）",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name("□それ以外")
+			MES(RAGNA,"（明明发生了那种大骚动。\n  平静的人啊……）",0)
+			MES_close(RAGNA)
+		}
+		//──────────────────────────────
+			F_set(RYPTON)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(RYPTON,"嗯，其实……",0)
+			MES(RYPTON,"现在戴着的礼帽\n是个备用品。",0)
+			MES(RYPTON,"……这是不行的。\n因为说不定又会失去了。",0)
+			MES(RYPTON,"必须得向下次的连络航班\n再订购一个。",0)
+			MES_close(RYPTON)
+			
+			//★利普顿【シルクハット】
+			F_set_note(RYPTON,2)
+		}
+		MOT(RYPTON,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_TK_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+		//　　※犬を連れて，噴水之後ろあたりで莫里斯之話を聞いている。
+			MES(RYPTON,"总而言之……\n就是有什么惊天动地\n的异变临近了对吧？",0)
+			MES(RYPTON,"唔……\n克拉克好像也亢奋起来了。",0)
+			MES(RYPTON,"据说，狗能够\n预知这种异变。",0)
+			MES(RYPTON,"这么说来，或许\n真是要发生什么不好的事了。",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(RYPTON,"克拉克也相当的亢奋。",0)
+			MES(RYPTON,"据说，狗能够\n预知天地的异变。",0)
+			MES(RYPTON,"唔，这么说来，或许\n真是要发生什么不好的事了。",0)
+			MES_close(RYPTON)
+		}
+		MOT(RYPTON,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※酒场前あたりで，安洁と話している。
+	//　　　傍に犬がうろうろしている。
+	if( F5_00_HearLunar )
+	{
+		if(!F_RYPTON)
+		{
+		//　　※振り返らない。
+			MES(RYPTON,"最近奇怪的事……？",0)
+			MES(RYPTON,"不，没什么特别的。",0)
+			MES(RYPTON,"也就是夫人心情不好，\n和我定阅的\n信息杂志没有送到这种程度吧。",0)
+			MES(RYPTON,"没什么，没关系的。\n反正我之后打算\n写信去抗议。",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない。
+			MES(RYPTON,"没什么……夫人有些神经质，\n就是所谓的心情不好吧。",0)
+			MES(RYPTON,"她最近\n好像一直把自己关在家里……",0)
+			MES(RYPTON,"总之没什么大事。\n让你们担心了，真不好意思。",0)
+			MES_close(RYPTON)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※亚尔迪上段（民家２前～教会前之広场）にかけて，犬之散步をしている。
+	if( F4_00_StartSolo )
+	{
+		EV("MOTION_TK_RYPTON")
+		F_set_chr(DOG,CF_NO_MOVE)
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"早上好，天气真不错。\n看来今天也是清爽的一天。",0)
+			MES(RYPTON,"愉快地迎来早晨的秘诀……\n那就是充足的睡眠。",0)
+			MES(RYPTON,"我昨晚当然是睡得饱饱的了。\n……虽然夫人好像没怎么睡。",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(RYPTON,"夫人似乎有什么放心不下的事，\n一大早就到教会去了。",0)
+			MES(RYPTON,"唔，那样神经质可不行。",0)
+			MES_close(RYPTON)
+		}
+		F_reset_chr(DOG,CF_NO_MOVE)
+		MOT(RYPTON,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//※いない
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵之正体が明かされた
+	//──────────────────────────────
+	//　　※民家１にいる。
+	if( F2_14_TalkEnemy )
+	{
+		EV("MOTION_TK_RYPTON")
+		EV_stop("LOOKING_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"我啊，就是世间俗称的\n所谓银行家。",0)
+			MES(RYPTON,"──最近，\n把事业都交给部下打理了。",0)
+			MES(RYPTON,"他们大约隔几年\n会寄来一次报告书。",0)
+			MES_close(RYPTON)
+
+		//　　拉古那たちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"（这，这个……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（唔，这难道不是\n  被人家抛弃了吗……？）",0)
+			MES_close(PARTNER)
+
+			//★利普顿【自称銀行家】
+			F_set_note(RYPTON,1)
+			F_set(RYPTON)
+			//平和な利普顿　フラグ
+			F_set(FT_05_RyptonPs)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(RYPTON,"今天克拉克的心情似乎也很好……",0)
+			MES(RYPTON,"呵呵，克拉克的心情\n我很清楚哦。",0)
+			MES(RYPTON,"因为，把握人心\n可是我最拿手的。",0)
+			MES_close(RYPTON)
+
+		//　　拉古那たちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（真的假的……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+				MES(PARTNER,"（真的吗……？）",0)
+				MES_close(PARTNER)
+			}
+		}
+		EV("LOOKING_RYPTON")
+		MOT(RYPTON,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※亚尔迪上段（民家２前～教会前之広场）にかけて，犬之散步をしている。
+	if( F2_00_GoForest )
+	{
+		EV("MOTION_TK_RYPTON")
+		F_set_chr(DOG,CF_NO_MOVE)
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"亚尔迪郊外，有一座\n从以前开始就完全没人使用的房子。\n……你应该知道吧？",0)
+			MES(RYPTON,"不过，最近似乎有\n滞留在这里的人住了进去。",0)
+			MES(RYPTON,"唔……\n是产权人改变了吗。",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(RYPTON,"那幢房子的产权人不明呢。\n我还以为一定是\n由镇上管理的……",0)
+			MES(RYPTON,"难道是因为金钱关系\n而放手了吗。",0)
+			MES(RYPTON,"唔，早知如此，\n还不如让我买下来得好。",0)
+			MES_close(RYPTON)
+		}
+		F_reset_chr(DOG,CF_NO_MOVE)
+		MOT(RYPTON,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※犬を連れて，大道芸人之前にいる。
+	if( F1_15_GoVillage )
+	{
+		EV("MOTION_TK_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"我的狗──克拉克\n懂得欣赏艺术哦。",0)
+			MES(RYPTON,"虽说是只狗，\n但却不是笨蛋。\n狗是非常聪明的动物。",0)
+			MES(RYPTON,"……只不过，克拉克\n不能表演自己的艺术。",0)
+			MES_close(RYPTON)
+
+			//★利普顿【犬之名前】
+			F_set_note(RYPTON,0)
+			F_set(RYPTON)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(RYPTON,"克拉克好像很喜欢\n这里的街头表演。",0)
+			MES(RYPTON,"我常常被克拉克\n要求而来到这里……",0)
+			MES(RYPTON,"这也就是\n狗和主人的关系了。",0)
+			MES_close(RYPTON)
+		}
+		MOT(RYPTON,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※亚尔迪上段（民家２前～教会前之広场）にかけて，犬之散步をしている。
+	//　　※初回イベント
+	if( F1_01_GameStart )
+	{
+		F_set_chr(DOG,CF_NO_MOVE)
+		rot_chr(RYPTON,30,PLAYER1)
+		
+		EV("MOTION_TK_RYPTON")
+		if(!FT_01_TalkRypton)
+		{
+			MES(RYPTON,"早上好。\n天气真是不错呢。",0)
+			MES_close(RYPTON)
+
+//		//──────────────────────────────
+//		//	name("□拉古那先頭")
+//			if(GW_MAN==1)
+//			{
+//				MES(RAGNA,"あ，ああ。どうも……",0)
+//				MES_close(RAGNA)
+//			}
+//		//	name("□艾尔雯先頭")
+//			else
+//			{
+//				MES(PARTNER,"うむ，確かに\nよく晴れておるな。",0)
+//				MES_close(PARTNER)
+//			}
+//		//──────────────────────────────
+		
+			MES(RYPTON,"你们也是来散步的吗？",0)
+			MES(RYPTON,"其实，\n散步也是我的每日必修课呢。",0)
+			MES(RYPTON,"通过早上感受到的镇上的空气，\n就能知道一天的状态了。",0)
+			MES(RYPTON,"今天早上穿套装也不错呢。",0)
+			MES(RYPTON,"看来会是清爽的一天啊。",0)
+			MES_close(RYPTON)
+
+//		//	name2(RAGNA)
+//			MES(RAGNA,"へ，へえ。そんなもんか。",0)
+//			MES_close(RAGNA)
+//
+//		//	name2(RYPTON)
+//			MES(RYPTON,"ああ，散步友達が増えて\n私も嬉しい……",0)
+//			MES_close(RYPTON)
+//
+//		//　　利普顿にＰＡエモーション。
+//			EMO(RYPTON,EMO_PA)
+//			wait(30)
+//			
+//			MES(RYPTON,"おっと，私はそろそろ失礼するよ。\n残り之散步がある之でね。",0)
+//			MES_close(RYPTON)
+
+		//　　ここでＬＦも立てる。
+			F_set(FT_01_TalkRypton)
+			F_set(RYPTON)		//※マップ切り替え前は繰り返しに飛ばす。
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_RYPTON)
+			{
+				MES(RYPTON,"早上好。\n天气真是不错呢。",0)
+				MES(RYPTON,"今天早上穿套装也不错呢。",0)
+				MES(RYPTON,"看来会是清爽的一天啊。",0)
+				MES_close(RYPTON)
+				F_set(RYPTON)
+			}
+		//　　★繰りかえし
+			else
+			{
+				MES(RYPTON,"我早上一定会喝红茶。",0)
+				MES(RYPTON,"然后还有新鲜的柠檬饭\n和黄油牛角面包。",0)
+				MES(RYPTON,"这是度过美好的一天\n所不可或缺的。",0)
+				MES_close(RYPTON)
+			}
+		}
+		F_reset_chr(DOG,CF_NO_MOVE)
+		MOT(RYPTON,150,15)
+	}
+	
+	TK_end()
+}
+//会話時之モーション
+MOTION_TK_RYPTON
+{
+	MOT_SET(RYPTON,150,-1,404,404,151,15)
+	MOT_SET(RYPTON,151,-1,402,402,150,15)
+	MOT(RYPTON,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

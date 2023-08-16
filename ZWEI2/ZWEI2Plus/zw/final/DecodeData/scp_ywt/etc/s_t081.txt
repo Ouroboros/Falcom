@@ -1,0 +1,1808 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧屇傃崬傒儁儞僊儞乮儁儞僊儞乯Penguin")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_PENGUIN
+{
+	TK_begin()
+
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(PENGUIN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,PENGUIN)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,PENGUIN)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PENGUIN)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PENGUIN)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PENGUIN)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PENGUIN)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,PENGUIN)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥嫵夛丒滒夨幒偺慜曈傝偵偄傞丅
+	if( F6_05_EndSixth )
+	{
+		rot_chr(PENGUIN,30,PLAYER1)
+		rot_chr(PET,30,PENGUIN)
+		rot_chr(PARTNER,30,PENGUIN)
+		
+	//丂丂仸弶夞僀儀儞僩丅
+		if(!FE_13_TalkPenguin)
+		{
+			cross_fade(30)			//僋儘僗僼僃乕僪
+			EV_begin()
+			
+			//僇儊儔僙僢僩
+		//	CAM_move(-7196,349,194,0,0)
+		//	CAM(150,58,194,25,129,0,0)
+		//	CAM_move(-7196,349,194,0,0)
+		//	CAM(150,62,194,25,132,0,0)
+			CAM_move(-7196,349,194,0,0)
+			CAM(70,57,194,25,125,0,0)
+			//僉儍儔嵞攝抲
+			chr_pos(RAGNA,	-7184,-365,0,180,2)
+			chr_pos(PET,-7063,-283,0,175,2)
+			chr_pos(PARTNER,-6903,-408,1,92,2)
+			rot_chr(PENGUIN,30,RAGNA)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(PARTNER,"9", "1", "7")	
+			KAO(PENGUIN, "1", "1", "1")	
+			
+			F_reset_chr(PENGUIN,CF_NO_MOVE)
+
+			wait_fade()
+			wait(15)
+
+			KAO(PENGUIN,"12321Z2","1","1")
+			MES(PENGUIN,"啊—……",0)
+			KAO(PENGUIN,"12321Z3","1","1")
+			MES(PENGUIN,"……要懺悔嗎？",0)
+			MES_close(PENGUIN)
+
+		//丂丂儔僌僫偨偪偵俹俙僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_PA)
+			EMO(PET,EMO_PA)
+			wait(30)
+			
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僐儘僢僙僆偵峴偭偨偙偲偑偁傞応崌")
+			if(FV_02_VisitGyakata)
+			{
+				MES(RAGNA,"你不是賈蘭杜大叔\n那裡的企鵝嗎……",0)
+				MES_close(RAGNA)
+
+			//	name2(PET)
+				MES(PET,"唔，為什麼會在這種地方……",0)
+				MES_close(PET)
+
+			//	name2(PENGUIN)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"企鵝最近一段時間\n都要待在這裡了。",0)
+				KAO(PENGUIN,"12321Z4","1","1")
+				MES(PENGUIN,"是先生吩咐的。",0)
+				MES_close(PENGUIN)
+
+			//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PET,EMO_HATENA)
+				wait(30)
+				
+				MES(RAGNA,"吩咐……？",0)
+				MES_close(RAGNA)
+
+			//	name2(PENGUIN)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"……先生和羅特\n出去旅行了。",0)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"企鵝沒有辦法\n和他們一起走。",0)
+				MES_close(PENGUIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"旅行……",0)
+				MES(RAGNA,"也…也對……\n自那之後確實沒見過\n賈蘭杜了呢……",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀峴偭偨偙偲偑側偄応崌")
+			else
+			{
+				MES(RAGNA,"企…企鵝……？",0)
+				MES_close(RAGNA)
+
+			//	name2(PET)
+				MES(PET,"話說好像在哪裡\n見過你……",0)
+				MES_close(PET)
+
+			//	name2(PENGUIN)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"企鵝最近一段時間\n都要待在這裡了。",0)
+				KAO(PENGUIN,"12321Z4","1","1")
+				MES(PENGUIN,"是先生吩咐的。",0)
+				MES_close(PENGUIN)
+
+			//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PET,EMO_HATENA)
+				wait(30)
+				
+				MES(RAGNA,"先生？？",0)
+				MES_close(RAGNA)
+
+			//	name2(PENGUIN)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"企鵝是\n先生忠實的部下。",0)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"可是先生\n已經去旅行了。",0)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"企鵝沒有辦法\n和他一起走。",0)
+				MES_close(PENGUIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"那個……",0)
+				MES(RAGNA,"難…難道先生指的是\n賈蘭杜大叔嗎……？",0)
+				MES(RAGNA,"確實自那之後\n就再也沒見過了呢……",0)
+				MES_close(RAGNA)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			MES(PET,"……………………………………",0)
+			MES_close(PET)
+
+			KAO(PARTNER,"92329Z6","1","1")
+			MES(PARTNER,"那個……\n賈蘭杜是……？",0)
+			MES_close(PARTNER)
+
+		//丂丂儔僌僫偵俹俙僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_PA)
+			wait(30)
+
+		//丂丂儈傾偵岦偔丅
+			rot_chr(RAGNA,30,PARTNER)
+			MES(RAGNA,"啊，米婭\n還沒有見過吧。",0)
+			MES(RAGNA,"雖然不知道他的目的，\n不過那個大叔\n幫了我們不少忙。",0)
+			MES(RAGNA,"那個，外表看起來\n很有衝擊力……",0)
+			MES_close(RAGNA)
+
+		//丂丂儔僌僫偵丒丒丒僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_TENTEN)
+			wait(30)
+			
+		//	rot_chr(RAGNA,30,PET)
+			look_chr( RAGNA,PET,"Bone_Head")
+			
+		//丂丂傾儖僂僃儞偵岦偔丅
+			MES(RAGNA,"喂，公主殿下。\n其實有一件事情\n我很在意。",0)
+			MES(RAGNA,"是從昴那裡聽來的，\n那大叔其實……",0)
+			MES_close(RAGNA)
+
+			rot_chr(PET,30,RAGNA)
+		//	look_chr( PET,RAGNA,"Bone_Head")
+
+			KAO(PET,"12321Z3","23","1")
+			MES(PET,"……嗯。",0)
+			KAO(PET,"12321Z6","3","1")
+			MES(PET,"他說不定就是我的父親，\n是這樣吧。",0)
+			MES_close(PET)
+
+		//丂丂儔僌僫偲儈傾偵俹俙僄儌乕僔儑儞丅
+			KAO(PARTNER,"1","D","6")
+			EMO(RAGNA,EMO_PA)
+			EMO(PARTNER,EMO_PA)
+			
+			rot_chr(PARTNER,30,PET)
+			rot_chr(PENGUIN,30,PET)
+			wait(30)
+			KAO(PARTNER,"12321Z1","D","6")
+			MES(PARTNER,"哎……？",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"公主殿下注意到了嗎……",0)
+			MES_close(RAGNA)
+
+			KAO(PET,"12321Z6","21","1")
+			MES(PET,"呵呵……\n只是有一點\n模糊的感覺而已。",0)
+			KAO(PET,"12321Z6","1","1")
+			MES(PET,"雖然服飾非常奇特，\n但卻令人很懷念……",0)
+			MES_close(PET)
+
+			KAO(PARTNER,"1","1","1")
+		//丂丂傾儖僂僃儞偵丒丒丒僄儌乕僔儑儞丅
+			EMO(PET,EMO_TENTEN)
+			wait(30)
+
+		//丂丂峫偊傞慺怳傝丅
+			KAO(PET,"12321Z7","23","1")
+			MES(PET,"不過他既然已經離開，\n我也就不必去找他了。",0)
+			KAO(PET,"12321Z9","3","1")
+			MES(PET,"本來用那種裝扮\n出場協助我們，\n就應該是有什麼原因。",0)
+			KAO(PET,"12321Z6","3","1")
+			MES(PET,"說實話，我現在也不能\n確信他是不是我的父親。",0)
+			MES_close(PET)
+
+		//丂丂傾儖僂僃儞丄婄傪栠偡丅
+			KAO(PET,"12321Z4","21","1")
+			MES(PET,"……可是，這樣不是也很好嗎？",0)
+			KAO(PET,"12321Z8","1","1")
+			MES(PET,"今後若得女神眷顧……\n也還可能與他重逢吧。",0)
+			MES_close(PET)
+
+			KAO(PARTNER,"9","26","7")
+			MES(PARTNER,"說的也是啊……",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"嗯……",0)
+			MES(RAGNA,"相信那一天總會到來的。",0)
+			MES_close(RAGNA)
+
+		//丂丂彮偟娫傪偍偔丅
+		//丂丂儁儞僊儞丄塇傪僶僞僶僞偝偣傞丅
+			MOT(PENGUIN,55,15)
+			KAO(PENGUIN,"12321Z3","1","1")
+			MES(PENGUIN,"打起精神來。",0)
+			KAO(PENGUIN,"12321Z5","1","1")
+			MES(PENGUIN,"企鵝可以聽你告解。",0)
+			MES_close(PENGUIN)
+			MOT(PENGUIN,57,15)
+
+		//丂丂堦摨偵椻傗娋僄儌乕僔儑儞丅
+			KAO(PARTNER,"1","D","6")
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			look_off( RAGNA )
+			KAO(PARTNER,"9","1","7")
+			rot_chr(RAGNA,30,PENGUIN)
+			rot_chr(PET,30,PENGUIN)
+			rot_chr(PARTNER,30,PENGUIN)
+			wait(30)
+
+			MES(PET,"多…多謝你的好意。",0)
+			MES_close(PET)
+
+			MES(RAGNA,"企鵝你……\n根本不知道告解是什麼意思吧……",0)
+			MES_close(RAGNA)
+
+			fade_in(100,30,BLACK)
+			wait_fade()
+			F_set_chr(PENGUIN,CF_NO_MOVE)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(PARTNER,"9", "1", "7")	
+			KAO(PENGUIN, "1", "1", "1")	
+
+			//仛僊儍儔儞僪僁亂惓懱亃
+			F_set_note(-21,2)
+			F_set(FE_13_TalkPenguin)
+
+			//僇儊儔傪弶婜愝掕偵
+			CAM_return( 0 )
+			wait(30)
+			EV_end()
+			//僼僃乕僪僀儞----------------------
+			fade_in(0,30,BLACK)
+
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸僀儀儞僩俀乮俧俥惂屼乯
+		else
+		if(FV_FF_WinGyarandow && !FE_13_TalkPenguin2)
+		{
+		//丂丂仸僐儘僢僙僆偱僊儍儔儞僪僁偵彑棙偟偰偄傞応崌偺傒敪摦偡傞丅
+			MES(RAGNA,"不過，企鵝，\n你沒有聽說什麼嗎？",0)
+			MES(RAGNA,"賈蘭杜大叔的\n留言之類的。",0)
+			MES_close(RAGNA)
+
+		//丂丂儁儞僊儞偵丠僄儌乕僔儑儞丅
+			EMO(PENGUIN,EMO_HATENA)
+			wait(30)
+			
+			MES(PENGUIN,"賈蘭杜？\n企鵝不認識叫這個名字的人。",0)
+			MES_close(PENGUIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"對…對了。\n不說先生，\n你是聽不懂的。",0)
+			MES_close(RAGNA)
+
+		//丂丂儁儞僊儞偵彮偟丒丒丒僄儌乕僔儑儞丅
+			EMO(PENGUIN,EMO_TENTEN)
+			wait(30)
+
+			MES(PENGUIN,"先生他……",0)
+			MES(PENGUIN,"有一天說\n自己必須要離開了，\n就把企鵝帶到了鎮上。",0)
+			MES(PENGUIN,"他說有一家值得信賴的教會，\n就把企鵝安置在這裡。",0)
+			MES(PENGUIN,"……只有這些。",0)
+			MES_close(PENGUIN)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"什麼都沒有\n解釋呢……",0)
+			MES_close(PARTNER)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僔僗僞乕偲榖偟偨偙偲偑偁傞応崌")
+			if(FT_01_IsabellaEnc)
+			{
+
+			//	name2(PET)
+				MES(PET,"唔……這裡居然是\n值得信賴的教會啊……",0)
+				MES_close(PET)
+
+				MES(RAGNA,"哈哈……\n總覺得企鵝\n來錯地方了……",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀偦傟埲奜")
+			else
+			{
+				MES(RAGNA,"嗯—，你也算是\n熟人了……",0)
+				MES(RAGNA,"好，接下來\n就去和修女打個招呼吧。",0)
+				MES_close(RAGNA)
+			}
+			F_set(FE_13_TalkPenguin2)
+		}
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_PENGUIN)
+			{
+				MES(PENGUIN,"要懺悔嗎？",0)
+				MES(PENGUIN,"每人３０分鐘\n５００芬尼。",0)
+				MES_close(PENGUIN)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僔僗僞乕偲榖偟偨偙偲偑偁傞応崌")
+				if(FT_01_IsabellaEnc)
+				{
+					MES(RAGNA,"（被那個修女毒害了……）",0)
+					MES_close(RAGNA)
+				}
+
+				F_set(PENGUIN)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(PENGUIN,"要懺悔嗎？",0)
+				MES(PENGUIN,"每人３０分鐘\n５００芬尼。",0)
+				MES_close(PENGUIN)
+			}
+		}
+	}
+	else
+	//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+	//仴傑偩杺朄忈暻偺榖傪暦偄偰偄側偄応崌
+	//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+	//丂丂仸攑岯擖傝岥暘婒丄杺朄忈暻慜偵偄傞丅
+	//丂丂仸弶夞僀儀儞僩
+	//丂丂仸偙偺僀儀儞僩偑婲偙傞傑偱偼丄
+	//丂丂丂攑岯擖傝岥暘婒偺杺朄忈暻偼夝彍偱偒側偄傛偆偵偟偰偍偔丅
+	//丂丂儁儞僊儞偼杺朄忈暻偺慜偵棫偭偰偄傞丅
+	//丂丂乮嶌嬈傪偟偰偄傞傛偆側摦嶌乯
+	if(!FE_FF_HearSyouheki)
+	{
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	弶婜壔張棟
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			cross_fade(30)			//僋儘僗僼僃乕僪
+			TK_end()
+			EV_begin()
+			
+			//僇儊儔僙僢僩
+			CAM_move(7560,-9580,220,0,0)
+			CAM(310,70,60,25,224,0,0)
+
+			//僉儍儔嵞攝抲
+			chr_pos(PENGUIN,7300,9450,0,100,56)
+			
+			chr_pos(RAGNA,7650,9450,0,80,2)
+			chr_pos(PARTNER,7600,9600,0,100,2)
+		
+			//婄弶婜壔
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(PENGUIN,"1", "1", "1")	
+			wait_fade()
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	僀儀儞僩奐巒
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		MES(PENGUIN,"啪嗒啪嗒、啪嗒啪嗒……",0)
+		MES_close(PENGUIN)
+
+	//丂丂儁儞僊儞偵丠僄儌乕僔儑儞丅怳傝曉傞丅
+		EMO(PENGUIN,EMO_HATENA)
+		wait(30)
+//		EV_stop("PATAPATA_PENGUIN")
+		MOT(PENGUIN,57,15)
+		rot(PENGUIN,30,270)
+		wait(30)
+
+	//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+		if(!FE_FF_MeetPenguin)
+		{
+		//	name("佀儁儞僊儞偲夛偆偺偑弶傔偰")
+			KAO(PENGUIN,"12321Z3","1","1")
+			MES(PENGUIN,"你們好。",0)
+			KAO(PENGUIN,"12321Z5","1","1")
+			MES(PENGUIN,"能在這種地方\n遇到客人真是難得。",0)
+			MES_close(PENGUIN)
+
+		//丂丂儔僌僫偨偪丄栚傪傁偪偔傝偟偰備偭偔傝丒丒丒僄儌乕僔儑儞丅
+			EFF_chr(25124,PLAYER1,0,100,0,"Bone_Head")
+			EFF_chr(25124,PLAYER2,0,100,0,"Bone_Head")
+			wait(60)
+
+			MES(RAGNA,"（企鵝……？）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（是企鵝啊……）",0)
+			MES_close(PARTNER)
+		}
+		else
+		{
+		//	name("佀儁儞僊儞偲夛偭偨帠偑偁傞")
+			KAO(PENGUIN,"12321Z3","1","1")
+			MES(PENGUIN,"你們好。",0)
+			KAO(PENGUIN,"12321Z5","1","1")
+			MES(PENGUIN,"有客人光臨，\n企鵝非常高興。",0)
+			MES_close(PENGUIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，嗯。可是……",0)
+			MES_close(RAGNA)
+
+		//丂丂儔僌僫偨偪偵備偭偔傝丒丒丒僄儌乕僔儑儞丅
+			EFF_chr(25124,PLAYER1,0,100,0,"Bone_Head")
+			EFF_chr(25124,PLAYER2,0,100,0,"Bone_Head")
+			wait(60)
+
+			MES(RAGNA,"（怎麼看都是企鵝啊……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（唔，這傢伙\n 怎麼看都是企鵝啊……）",0)
+			MES_close(PARTNER)
+		}
+
+	//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+		KAO(PENGUIN,"12321Z4","E","E")
+		MES(PENGUIN,"哦喲……？\n怎麼了？",0)
+		MES_close(PENGUIN)
+
+	//丂丂儁儞僊儞丄庤傪懪偪柭傜偡丅
+		MOT(PENGUIN,56,15)
+		wait(30)
+		MOT(PENGUIN,57,15)
+		wait(25)
+		KAO(PENGUIN,"12321Z3","1","1")
+		MES(PENGUIN,"知道了。\n二位……？　\n沒有見過這個吧。",0)
+		MES_close(PENGUIN)
+
+	//丂丂儁儞僊儞丄杺朄忈暻偵岦偔丅
+		rot(PENGUIN,20,90)
+		MES(PENGUIN,"這被稱為\nL337「魔法障壁」L400。",0)
+		rot_chr(PENGUIN,20,PLAYER1)
+		MES(PENGUIN,"必須要使用L337相對屬性的魔法L400\n才可以解除哦～？",0)
+		MES_close(PENGUIN)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"唔，原來如此……",0)
+		MES(PARTNER,"說起來，好像\n以前父親大人也對我這麼說過。",0)
+		MES_close(PARTNER)
+
+//	//丂丂儁儞僊儞丄儔僌僫偨偪偵岦偔丅
+//		rot_chr(PENGUIN,30,PLAYER1)
+		MOT(PENGUIN,56,15)
+		wait(40)
+		MOT(PENGUIN,57,15)
+		wait(20)
+		KAO(PENGUIN,"12321Z6","1","1")
+		MES(PENGUIN,"那麼企鵝\n就先告辭了。",0)
+		KAO(PENGUIN,"12321Z6","1","1")
+		MES(PENGUIN,"離開太久的話，\n先生會生氣的。",0)
+		MES_close(PENGUIN)
+		wait_MES(PENGUIN)
+		
+	//丂丂儁儞僊儞丄塃忋曽岦偵嫀偭偰偄偔丅
+	//丂丂儔僌僫偨偪丄偦傟傪尒憲傞丅
+		rot(RAGNA,8,180)
+		MOT(RAGNA,2,0)
+		rot(PARTNER,8,180)
+		MOT(PARTNER,2,0)
+
+		F_set_chr(PENGUIN,CF_NO_CLIP)
+		
+		rot(PENGUIN,30,225)
+		move(PENGUIN, 0, WALK1,7650,9200,0,0)
+		wait_move(PENGUIN)
+		rot(PENGUIN,30,180)
+		move(PENGUIN, 0, WALK1,7650,8000,0,0)
+//		wait_move(PENGUIN)
+		wait(60)
+		
+		F_reset_chr(PENGUIN,CF_NO_CLIP)
+
+	//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+		if(!FE_FF_MeetPenguin)
+		{
+		//	name("佀儁儞僊儞偲榖偡偺偑弶傔偰")
+			MES(RAGNA,"真是古怪的傢伙啊……",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name("佀儁儞僊儞偲夛偭偨帠偑偁傞")
+			MES(RAGNA,"還是那麼古怪啊……",0)
+			MES_close(RAGNA)
+		}
+	//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+		MES(RAGNA,"算了。\n畢竟他所說的\n對我們也很有幫助。",0)
+		MES_close(RAGNA)
+
+	//丂丂俀恖丄杺朄忈暻偺曽傪岦偔丅
+		rot_chr(RAGNA,30,76)
+		rot_chr(PARTNER,30,76)
+		
+		MES(RAGNA,"簡而言之，\n就是說這是必須用\n魔法才能解除的機關嘍？",0)
+		MES_close(RAGNA)
+	//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+	//	name("佀抧偺杺朄帩偭偰側偄")
+		if(!F1_14_KillBoss1)
+		{
+			MES(PARTNER,"唔，這障壁應該是L337風屬性L400的。",0)
+			MES(PARTNER,"必須用相對的L337地屬性魔法L400\n才能夠解除。",0)
+			MES(PARTNER,"還是必須要\n趕快取回魔力才行啊……",0)
+			MES_close(PARTNER)
+		}
+		else
+		{
+		//	name("佀抧偺杺朄帩偭偰傞")
+			MES(PARTNER,"唔，這障壁應該是L337風屬性L400的。",0)
+			MES(PARTNER,"使用相對的L337地屬性魔法L400\n就可以解除了哦。",0)
+			MES_close(PARTNER)
+		}
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	//	僀儀儞僩廔椆張棟
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		fade_in(100,30,BLACK)
+		wait_fade()
+		wait_move(PENGUIN)
+
+		//僇儊儔傪弶婜愝掕偵
+		CAM_return( 0 )
+		wait(30)
+
+		//仛儁儞僊儞偵夛偭偨	
+		F_set(FE_FF_MeetPenguin)
+		
+		//仛杺朄忈暻偺榖傪暦偄偨
+		F_set(FE_FF_HearSyouheki)
+		
+		//儁儞僊儞傪娰偺庣傝攝抲偵
+		chr_pos(PENGUIN,6116,7482,0,270,2)
+		TK_begin()
+		EV_end()
+		//僼僃乕僪僀儞----------------------
+		fade_in(0,30,BLACK)
+	//	僾儗僀儎乕憖嶌嫋壜
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僼儔僌嘆乣嘖偱俧亅僐儘僢僙僆傊偺摴偑奐偄偰偄側偄応崌偼丄
+	//丂丂丂昁偢攑岯擖傝岥偺丄僒僽儖乕僩斷慜偵棫偭偰偄傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(!FV_02_OpenGyakata)
+	{
+		rot_chr(PENGUIN,30,PLAYER1)
+		
+		if(!F_PENGUIN)
+		{
+		//	name("佀攑岯擖傝岥偺摝偘傞僀儀儞僩傪尒偨捈屻乮俴俥惂屼乯")
+			if(F_PARTNER)
+			{
+			//丂丂儁儞僊儞丄栚傪偮傇偭偰塇傪僶僞僶僞丅
+				KAO(PENGUIN,"4","5","5")
+				MOT(PENGUIN,56,5)
+				wait(40)
+				MOT(PENGUIN,57,5)
+				KAO(PENGUIN,"1","1","1")
+				wait(20)
+
+				MES(PENGUIN,"你…你好。",0)
+				MES(PENGUIN,"企鵝只是有些在意\n外面的情況。",0)
+				MES(PENGUIN,"絕對不是擅離\n工作崗位哦～？",0)
+				MES_close(PENGUIN)
+
+				EMO(PENGUIN,EMO_TENTEN)
+				wait(30)
+			}
+			else
+		//	name("佀僟儞僕儑儞偵愭夞傝偟偨儁儞僊儞偲榖偟偨偙偲偑偁傞応崌丅")
+			if(FE_FF_SakiPenguin)
+			{
+				MES(PENGUIN,"好久不見。",0)
+				MES_close(PENGUIN)
+			}
+			else
+			{
+			//	name("佀偦傟埲奜")
+				MES(PENGUIN,"你好。",0)
+				MES_close(PENGUIN)
+			}
+			
+			MOT(PENGUIN,2,15)
+			MES(PENGUIN,"有會員卡嗎？",0)
+			MES_close(PENGUIN)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僺儞僋僠働僢僩傪帩偭偰偄傞応崌丅")
+			if(IT137==1)
+			{
+			//	name("佀偙偺僀儀儞僩傪弶傔偰尒偨丅")
+				if(!FE_FF_HearCard)
+				{
+					MES(RAGNA,"會…會員卡……？",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("佀偙偺僀儀儞僩傪尒偨偙偲偑偁傞応崌")
+					MES(RAGNA,"那個，會員卡是……？",0)
+					MES_close(RAGNA)
+				}
+
+			//丂丂儁儞僊儞丄庤傪嵎偟弌偟偰傒偣傞丅
+				look(PENGUIN,"Bone_RightArm",0,		10,10,10,			30,-45,60)
+				
+				MES(PENGUIN,"差不多這麼大的\n一張入場券。",0)
+				MES_close(PENGUIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"入場券……",0)
+				MES(RAGNA,"莫非是這張\n「粉紅色的招待券」嗎！？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"唔……是那個面具怪人\n硬塞給我們的啊。",0)
+				MES_close(PARTNER)
+
+			//	name2(PENGUIN)
+				MES(PENGUIN,"啊—……",0)
+				MES_close(PENGUIN)
+				look(PENGUIN,"Bone_RightArm",0,		10,10,10,			0,0,0)
+
+			//丂丂儁儞僊儞丄塇傪偽偨偽偨偝偣傞丅
+				MOT(PENGUIN,55,5)
+				wait(45)
+				MOT(PENGUIN,57,15)
+				wait(30)
+				MES(PENGUIN,"……沒錯。",0)
+				MES_close(PENGUIN)
+
+				rot_chr(PENGUIN,20,GATEROPE)
+				wait(30)
+				
+			//丂丂儁儞僊儞丄僒僽儖乕僩偺摴傪嬻偗傞丅乮僋儘僗僼僃乕僪偱儘乕僾傪徚偡
+			//丂丂仧偑偪傖丄側偳偺俽俤丠
+				cross_fade(20)
+				delete(GATEROPE)
+				wait_fade()
+				
+			//丂丂偙偺僞僀儈儞僌偐傜丄僒僽儖乕僩偵怤擖偱偒傞傛偆偵側傞丅
+				rot_chr(PENGUIN,20,RAGNA)
+				wait(20)
+
+				MES(PENGUIN,"請進。",0)
+				MES_close(PENGUIN)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"啊，多謝……\n（裡面有什麼啊……？）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"唔……\n（裡面是什麼……？）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂偙偺僞僀儈儞僌偐傜丄僒僽儖乕僩偵怤擖偱偒傞傛偆偵側傞丅
+				set_chr( 94,990,	3,4,     0,   0,  0,   270,0102,6,"K0_10500;")	//嘑僄儞僩儕 俧-僐儘僢僙儝傊
+			//丂丂仸亀仛俧亅僐儘僢僙僆傊偺摴偑奐偄偨亁傪棫偰傞丅
+				F_set(FV_02_OpenGyakata)
+
+			}
+		//	name("佀帩偭偰偄側偄応崌丅")
+			else
+			{
+				MES(RAGNA,"會…會員卡……？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"那是什麼？",0)
+				MES_close(PARTNER)
+
+			//	name2(PENGUIN)
+				MES(PENGUIN,"會員卡在\n先生那裡。",0)
+				MES(PENGUIN,"去見先生就行了。",0)
+				MES_close(PENGUIN)
+
+			//丂丂儁儞僊儞丄塃庤傪忋偘傞丅乮僒僽儖乕僩偺曽傪巜偡乯
+				rot_chr(PENGUIN,30,92)
+				look(PENGUIN,"Bone_RightArm",0,		10,10,10,			30,-45,60)
+				MES(PENGUIN,"進那邊的迷宮\n看看吧～。",0)
+				MES_close(PENGUIN)
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀抧偺杺朄傪帩偭偰偄傞応崌")
+				if(F1_14_KillBoss1)
+				{
+					MES(PARTNER,"唔，那個有魔法障壁的地方啊。",0)
+					MES_close(PARTNER)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"雖然不知道怎麼回事……\n不過倒是\n值得一試。",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("佀帩偭偰偄側偄応崌")
+					MES(RAGNA,"好像是那個\n有魔法障壁的地方吧。",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"唔，沒辦法……\n以後再來吧。",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				look(PENGUIN,"Bone_RightArm",0,		10,10,10,			0,0,0)
+				
+			}
+			//夛堳僇乕僪偺榖傪暦偄偨
+			F_set(FE_FF_HearCard)
+			F_set(PENGUIN)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(PENGUIN,"必須要有會員卡\n才能通過。",0)
+			MES(PENGUIN,"這是先生吩咐的。",0)
+			MES_close(PENGUIN)
+		}
+	}
+	//僺儞僋僠働僢僩傪尒偣偰偄偰丄傑偩G僐儘僢僙僆偵峴偭偰偄側偄帪
+	else
+	if(!FV_02_VisitGyakata)
+	{
+		rot_chr(PENGUIN,30,PLAYER1)
+		MES(PENGUIN,"請進。",0)
+		MES_close(PENGUIN)
+	}
+	else
+	{
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸攑岯擖傝岥丄柌尪柪媨斷慜偵棫偭偰偄傞丅
+		//丂丂仸娰傊偺摴偑奐偄偰偄側偄応崌偼丄攑岯擖傝岥丒僒僽儖乕僩斷慜偵攝抲丅
+		//丂丂丂儊僢僙乕僕傕偦偪傜偺傕偺偱懳墳丅
+		//丂丂乮偦偺応崌丄俬俶俬俿傪捠傜側偄偲仴嘖偺儊僢僙乕僕偵愗傝懼傢傜側偄傛偆偵偡傞乯
+		if( F6_00_GoToMeru )
+		{
+			if(FE_12_TalkPenguin)
+			{
+				EV_stop("CHANGE_PENGUIN")
+			}
+			MOT(PENGUIN,2,15)
+			rot_chr(PENGUIN,30,PLAYER1)
+			if(!F_PENGUIN)
+			{
+				MES(PENGUIN,"不好了。\n封印好像解開了。",0)
+				MES_close(PENGUIN)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀侾夞偩偗憓擖")
+				if(!FE_12_TalkPenguin)
+				{
+				//	name("愭摢僉儍儔")
+					MES(PLAYER1,"封印……？",0)
+					MES_close(PLAYER1)
+					F_set(FE_12_TalkPenguin)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				
+			//丂丂儁儞僊儞丄岦偒傪栠偡丅
+				rot_chr(PENGUIN,10,59)//59==柍尷夞楲偺娕斅
+				wait(20)
+
+				MES(PENGUIN,"真是麻煩啊。\n恰好先生\n又不在。",0)
+				MES(PENGUIN,"必須要把它\n恢復原樣。",0)
+				MES_close(PENGUIN)
+
+			//丂丂僈僠儍僈僠儍丄偲俽俤丅
+				MOT(PENGUIN,56,10)
+				wait(15)
+				SE_vol(1182,80,0)
+				SE(1182,PENGUIN)
+//				MES(PENGUIN,"C4仧僈僠儍僈僠儍丄偲俽俤丅",0)
+//				MES_close(PENGUIN)
+				
+			//丂丂柌尪柪媨偺娕斅偑暿偺娕斅偵愗傝懼傢傞丅
+				MOT(59,2,0)
+				wait(30)
+
+				MOT(PENGUIN,2,15)
+				wait(30)
+				MES(PENGUIN,"哦喲……？",0)
+				MES_close(PENGUIN)
+
+			//丂丂僈僠儍僈僠儍丄偲俽俤丅
+			//丂丂俀丆俁搙丄娕斅偑暿偺娕斅偵愗傝懼傢傞丅
+				MOT(PENGUIN,56,10)
+				wait(20)
+				SE_vol(1182,80,0)
+				SE(1182,PENGUIN)
+				MOT(59,5,0)
+				wait(5)
+				MOT(59,3,0)
+				MOT(PENGUIN,2,15)
+				wait(30)
+
+				MOT(PENGUIN,56,10)
+				wait(20)
+				SE_vol(1182,80,0)
+				SE(1182,PENGUIN)
+				MOT(59,4,0)
+				wait(7)
+				MOT(59,2,0)
+				wait(7)
+				MOT(59,5,0)
+				wait(10)
+				MOT(PENGUIN,2,15)
+				wait(30)
+
+				MES(PENGUIN,"哦喲喲……？",0)
+				MES_close(PENGUIN)
+
+				EMO(PENGUIN,EMO_ASEASE)
+				wait(30)
+				MES(PENGUIN,"麻…麻煩了。\n這個變得很奇怪了……",0)
+				MES_close(PENGUIN)
+				
+				F_set(PENGUIN)
+			}
+			else
+			{
+			//丂丂埲崀丄儁儞僊儞偼掕婜揑偵娕斅傪愗傝懼偊偰偄傞丅
+			//丂丂仛孞傝曉偟
+				MES(PENGUIN,"企鵝本來的工作就是在這裡\n看守，防止封印被解開。",0)
+				MES(PENGUIN,"這…這絕對不是因為\n企鵝怠忽職守哦～？",0)
+				MES_close(PENGUIN)
+				//仛屇傃崬傒儁儞僊儞亂柪媨娗棟亃
+				F_set_note(PENGUIN,2)
+			}
+			
+			if(FE_12_TalkPenguin)
+			{
+				EV("CHANGE_PENGUIN")
+			}
+			MOT(PENGUIN,56,15)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸傾儖僢僥廻庰応偵棃偰偄傞丅
+		//丂丂仸娰傊偺摴偑奐偄偰偄側偄応崌偼丄攑岯擖傝岥丒僒僽儖乕僩斷慜偵攝抲丅
+		if( F5_00_HearLunar )
+		{
+			if(!FE_11_TalkPenguin)
+			{
+				rot_chr(PENGUIN,20,PLAYER1)
+				MES(PENGUIN,"今天企鵝出來採購。",0)
+				MES(PENGUIN,"聽說這裡的東西味道很好，\n所以先生要我\n買多一點。",0)
+				MES_close(PENGUIN)
+
+				rot_chr(PENGUIN,20,MEI)
+			//丂丂儁儞僊儞偵丠僄儌乕僔儑儞丅
+				EMO(PENGUIN,EMO_HATENA)
+				wait(30)
+
+			//丂丂岦偒傪栠偡丅
+				MES(PENGUIN,"買錯了……",0)
+				MES(PENGUIN,"把醬汁味和醬油味搞錯的話\n先生會生氣的。",0)
+				MES_close(PENGUIN)
+
+			//丂丂儁儞僊儞丄嵞傃愭摢僉儍儔偵岦偔丅
+				rot_chr(PENGUIN,20,PLAYER1)
+				MES(PENGUIN,"對了。\n這個送給你。",0)
+				MES_close(PENGUIN)
+
+			//	name("傾僀僥儉擖庤僥僉僗僩")
+			//	MES(this,"亀僷僼僃亁傪栣偭偨両",0)
+			//ver.2008/8/7 孖傛偆偐傫
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+				//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+				fade_in(30,10,BLACK)
+				get_item(197,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"啊，多謝……",0)
+					MES_close(RAGNA)
+
+				//丂丂儔僌僫偵丒丒丒僄儌乕僔儑儞丅
+					EMO(RAGNA,EMO_TENTEN)
+					wait(30)
+
+					MES(RAGNA,"可是，企鵝……\n羊羹沒有\n醬汁味和醬油味啊……",0)
+					MES_close(RAGNA)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			//丂丂儁儞僊儞偵丠僄儌乕僔儑儞丅
+				EMO(PENGUIN,EMO_HATENA)
+				wait(30)
+
+			
+				F_set(FE_11_TalkPenguin)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			else
+			{
+				rot_chr(PENGUIN,30,PLAYER1)
+				if(!F_PENGUIN)
+				{
+					MES(PENGUIN,"先生特別執著於口味。",0)
+					MES(PENGUIN,"每次企鵝買錯口味，\n先生都會生氣。",0)
+					MES(PENGUIN,"之前買披薩的時候，\n也是因為有冰淇淋味，\n結果被先生罵了。",0)
+					MES_close(PENGUIN)
+
+					//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+					//	name("佀儔僌僫愭摢")
+					if(GW_MAN==1)
+					{
+						MES(RAGNA,"你沒買錯\n東西吧……？",0)
+						MES_close(RAGNA)
+					}
+					//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+					F_set(PENGUIN)
+				}
+				else
+				{
+			//丂丂仛孞傝曉偟
+					MES(PENGUIN,"還有，羅特\n只吃速食。",0)
+					MES(PENGUIN,"今天早上他也\n吃了速食炒麵。",0)
+					MES(PENGUIN,"……這對身體不好。",0)
+					MES_close(PENGUIN)
+				}
+			}
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸戝揝搩擖傝岥暘婒丄柌尪柪媨偺慜偱僼儕乕儉乕僽丅
+		//丂丂仸娰傊偺摴偑奐偄偰偄側偄応崌偼丄攑岯擖傝岥丒僒僽儖乕僩斷慜偵攝抲丅
+		//丂丂丂儊僢僙乕僕傕偦偪傜偺傕偺偱懳墳丅
+		if( F4_09_GoShrineMia)
+		{
+			F_set_chr(PENGUIN,CF_NO_MOVE)
+			rot_chr(PENGUIN,30,PLAYER1)
+			if(!F_PENGUIN)
+			{
+				//	name("佀弶夞偺傒憓擖丅")
+				if(!FE_10_TalkPenguin)
+				{
+					MES(RAGNA,"咦？\n這裡竟然有企鵝……",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"唔，這麼熱\n好像也不怕呢……",0)
+					MES_close(PARTNER)
+					F_set(FE_10_TalkPenguin)
+				}
+				MES(PENGUIN,"呼，工作\n終於結束了。",0)
+				MES(PENGUIN,"……說起來，剛剛先生\n興高采烈地走了過去……",0)
+				MES(PENGUIN,"據說是新收了\n弟子。",0)
+				MES(PENGUIN,"而且好像是\n很有前途的人呢～？",0)
+				MES_close(PENGUIN)
+				
+				F_set(PENGUIN)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(PENGUIN,"剛才先生\n說收到了新弟子。",0)
+				MES(PENGUIN,"……企鵝也很在意。",0)
+				MES(PENGUIN,"真想快點\n回去見識一下。",0)
+				MES_close(PENGUIN)
+			}
+			F_reset_chr(PENGUIN,CF_NO_MOVE)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸傾儖僢僥偺挰偱丄戝摴寍恖傪尒偰偄傞丅
+		//丂丂仸娰傊偺摴偑奐偄偰偄側偄応崌偼丄攑岯擖傝岥丒僒僽儖乕僩斷慜偵攝抲丅
+		//丂丂丂儊僢僙乕僕傕偦偪傜偺傕偺偱懳墳丅
+		if( F4_00_StartSolo )
+		{
+			rot_chr(PENGUIN,30,PLAYER1)
+			if(!F_PENGUIN)
+			{
+				MES(PENGUIN,"是先生吩咐企鵝\n過來的。",0)
+				MES(PENGUIN,"因為客人很少，\n所以先生說要\n加強宣傳。",0)
+				MES_close(PENGUIN)
+
+			//丂丂儁儞僊儞丄岦偒傪栠偡丅
+				rot_chr(PENGUIN,30,VERMILIA)
+				
+				MES(PENGUIN,"……有很多奇怪的人。",0)
+				MES(PENGUIN,"人類的鎮上\n真是古怪。",0)
+				MES_close(PENGUIN)
+
+				//仛屇傃崬傒儁儞僊儞亂屇傃崬傒亃
+				F_set_note(PENGUIN,0)
+				F_set(PENGUIN)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(PENGUIN,"城鎮是很繁華的。",0)
+				MES(PENGUIN,"一定能招攬到\n很多客人。",0)
+				MES_close(PENGUIN)
+				rot_chr(PENGUIN,30,VERMILIA)
+			}
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸攑岯擖傝岥偺丄僒僽儖乕僩斷慜偵棫偭偰偄傞丅
+		//丂丂丂栚傪奐偗偨傑傑倅倅倅僄儌乕僔儑儞弌偟偭傁側偟丅
+		//丂丂丂墘媄儌乕僔儑儞側偳偼愗偭偰偍偔丅
+		//丂丂仸弶夞僀儀儞僩
+		//丂丂仸怳傝岦偐側偄
+		if( F3_00_GoMoonCastle )
+		{
+			if(!FE_06_TalkPenguin)
+			{
+				cross_fade(30)
+				EV_begin()
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"啊，睡著了……",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"睜著眼睛睡啊……",0)
+					MES_close(PARTNER)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"唔，睡著了嗎……？",0)
+					MES_close(PARTNER)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"睜著眼睛睡覺……\n這傢伙真厲害……",0)
+					MES_close(RAGNA)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+				EV_stop("SLEEP_PENGUIN")
+				
+			//丂丂儁儞僊儞偵両僄儌乕僔儑儞丅
+				EMO(PENGUIN,EMO_BIKKURI)
+			//丂丂寉偔旘傃忋偑傞丅
+				jump(PENGUIN,1,5,PENGUIN,0,50,0)
+				wait_move(PENGUIN)
+				
+				MES(PENGUIN,"啊……！？",0)
+				MES(PENGUIN,"啊，真危險真危險……",0)
+				MES(PENGUIN,"一不留神\n竟然睡著了……",0)
+				MES_close(PENGUIN)
+
+			//丂丂儁儞僊儞丄丠僄儌乕僔儑儞偱怳傝岦偔丅
+				EMO(PENGUIN,EMO_HATENA)
+				wait(30)
+				rot_chr(PENGUIN,30,PLAYER1)
+				
+				MES(PENGUIN,"這麼晚了，\n還在鍛鍊嗎？",0)
+				MES(PENGUIN,"真是辛苦啊。\n企鵝把宵夜\n分給你們一些吧。",0)
+				MES_close(PENGUIN)
+
+			//	name("傾僀僥儉擖庤僥僉僗僩")
+			//	MES(this,"亀乮僼乕僪柤乯亁傪栣偭偨両",0)
+				//ver.2008/8/7 僺僓
+				//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+				fade_in(30,10,BLACK)
+				get_item(173,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+			//	name2(PENGUIN)
+				MES(PENGUIN,"一定要努力啊，\n不要辜負先生的期望。",0)
+				MES_close(PENGUIN)
+				
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			//	僀儀儞僩廔椆張棟
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+				fade_in(100,30,BLACK)
+				wait_fade()
+
+				//僇儊儔傪弶婜愝掕偵
+				CAM_return( 0 )
+				wait(30)
+
+				EV_end()
+				//僼僃乕僪僀儞----------------------
+				fade_in(0,30,BLACK)
+			//	僾儗僀儎乕憖嶌嫋壜
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+				
+			//丂丂彮偟娫傪偍偄偰丄儁儞僊儞偵倅倅倅僄儌乕僔儑儞偑暅妶丅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				wait(30)
+				EV("SLEEP_PENGUIN")
+			
+				F_set(FE_06_TalkPenguin)
+			}
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		//丂丂丂儅僢僾傪愗傝懼偊傞偲丄儁儞僊儞偵倅倅倅僄儌乕僔儑儞偑暅妶偡傞巇條丅
+		//丂丂仸怳傝岦偐側偄
+		//丂丂儁儞僊儞丄両僄儌乕僔儑儞丅
+		//丂丂傾僙傾僙僄儌乕僔儑儞偱怳傝岦偔丅
+			else
+			{
+				EV_stop("SLEEP_PENGUIN")
+				EMO(PENGUIN,EMO_BIKKURI)
+				wait(30)
+				rot_chr(PENGUIN,30,PLAYER1)
+
+				MES(PENGUIN,"……沒有睡哦？",0)
+				MES(PENGUIN,"企鵝一直\n很清醒。",0)
+				MES_close(PENGUIN)
+				
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（話說回來……\n 好像也不用\n 一直站著吧……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"（唔……\n 沒有必要一直\n 站在這裡吧……？）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			}
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸攑岯擖傝岥偺丄僒僽儖乕僩斷慜偵棫偭偰偄傞丅
+		if( F2_14_TalkEnemy )
+		{
+			rot_chr(PENGUIN,30,PLAYER1)
+			if(!FE_05_TalkPenguin)
+			{
+				MES(PENGUIN,"……企鵝\n看見了。",0)
+				MES(PENGUIN,"剛才羅特\n在玩掌上遊戲機。",0)
+				MES(PENGUIN,"企鵝要借，\n但是他不肯。",0)
+				MES_close(PENGUIN)
+
+			//丂丂儁儞僊儞偵丒丒丒僄儌乕僔儑儞丅
+				EMO(PENGUIN,EMO_TENTEN)
+				wait(30)
+				
+				MES(PENGUIN,"羅特他欺負人。",0)
+				MES(PENGUIN,"他說企鵝的手\n沒有辦法按鍵。",0)
+				MES_close(PENGUIN)
+
+			//丂丂儔僌僫偨偪偵丒丒丒僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_TENTEN)
+				EMO(PARTNER,EMO_TENTEN)
+				wait(30)
+				
+				MES(RAGNA,"（把那個外套……\n 脫了就沒問題了吧，我覺得……）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（唔……總覺得\n 這好像的確不該說……）",0)
+				MES_close(PARTNER)
+
+			//丂丂儁儞僊儞偵丠僄儌乕僔儑儞丅
+				EMO(PENGUIN,EMO_HATENA)
+				wait(30)
+				
+				MES(PENGUIN,"怎麼了？",0)
+				MES_close(PENGUIN)
+				
+				//仛儘僢僥亂実懷僎乕儉婡亃
+				F_set_note(-82,1)
+				F_set(FE_05_TalkPenguin)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			else
+			{
+				MES(PENGUIN,"羅特躲在櫃檯後面\n偷偷地玩\n掌上遊戲機。",0)
+				MES(PENGUIN,"他太壞了。\n企鵝也想玩啊……",0)
+				MES_close(PENGUIN)
+			}
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘋墛偺僷乕僣傪擖庤偟偨
+		//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸攑岯擖傝岥偺丄僒僽儖乕僩斷慜偵棫偭偰偄傞丅
+		//丂丂仸僊儍儔儞僪僁偐傜僋僄僗僩傪庴偗晅偗偰偄側偄丄枖偼嵎偟擖傟僼乕僪傪侾偮傕帩偭偰偄側偄応崌
+		if( F2_00_GoForest )
+		{
+			rot_chr(PENGUIN,30,PLAYER1)
+
+			//僋僄僗僩忦審傪枮偨偟偰偄傞応崌
+			if(FE_03_TalkGyarandow && !FE_03_TalkPenguin && IT185>0)
+			{
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哦，在這裡。",0)
+					MES(RAGNA,"喂，企鵝，\n我們帶吃的來了。",0)
+					MES_close(RAGNA)
+
+				//丂丂儁儞僊儞偵丠僄儌乕僔儑儞丅
+					EMO(PENGUIN,EMO_HATENA)
+					wait(30)
+
+					MES(PENGUIN,"是食物嗎？",0)
+					MES_close(PENGUIN)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"嗯，是你的主人\n要我們帶來的。",0)
+					MES_close(PARTNER)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"在這裡啊。",0)
+					MES(PARTNER,"企鵝，我們給你\n送食物來了。",0)
+					MES_close(PARTNER)
+
+				//丂丂儁儞僊儞偵丠僄儌乕僔儑儞丅
+					EMO(PENGUIN,EMO_HATENA)
+					wait(30)
+					
+					MES(PENGUIN,"是食物嗎？",0)
+					MES_close(PENGUIN)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"嗯，你的主人\n要我們帶來的。",0)
+					MES_close(RAGNA)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			//丂丂儁儞僊儞偵両僄儌乕僔儑儞丅
+				EMO(PENGUIN,EMO_BIKKURI)
+				wait(15)
+				
+			//丂丂庤傪懪偪柭傜偡丅
+				MOT(PENGUIN,56,5)
+				wait(30)
+				MES(RAGNA,"高興了……？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"嗯，看來很高興呢……",0)
+				MES_close(PARTNER)
+
+			//丂丂儁儞僊儞丄庤傪懪偪柭傜偡偺傪傗傔傞丅
+				MOT(PENGUIN,2,15)
+				MES(PENGUIN,"正好企鵝\n肚子餓了。",0)
+				MES(PENGUIN,"那就不客氣了！",0)
+				MES_close(PENGUIN)
+
+			//丂丂堦扷埫揮偡傞丅
+				fade_in( 100, 60, BLACK)	//僼僃乕僪傾僂僩
+				wait_fade()
+
+			//丂丂偙偙偱丄嵎偟擖傟僼乕僪傪堦偮尭傜偡丅
+			//ver.2008/8/7 僠儍乕僴儞
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+				get_item(185,-1,1)
+
+			//丂丂彮偟娫傪庢偭偰僼僃乕僪僀儞丅
+				wait(30)
+				fade_in( 0, 60, BLACK)	//僼僃乕僪僀儞
+				wait_fade()
+				
+				MES(PENGUIN,"太好吃了。",0)
+				MES(PENGUIN,"兩位…？\n一定要收下企鵝的謝禮。",0)
+				MES(PENGUIN,"那種謝禮比較好呢？",0)
+				MES_close(PENGUIN)
+
+			//	name("慖戰僥僉僗僩")
+				MES_pos(PLAYER1,"??W9【質樸剛毅】\n【百花繚亂】\n【一獲千金】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+				//
+				//幙幚崉寬丗崅楉恖嶲俆			200	崅楉恖嶲		FD40 	20	80	0		------ 	100		0	0	0	帬梴嫮憇岠壥偑偁傞丄側偐側偐崅壙側恖嶲丅\n崅偄宱尡抣傪摼傜傟傞偑懱椡偼夞暅偟側偄丅
+				//昐壴銍棎丗敋抏俆侽			216	敋抏			US01	30	133	0		------ 	4070 	0	0	56	彫宆偺実懷梡敋抏丅揋傗忈奞暔傪悂偭旘偽偡丅\n帺敋偟側偄傛偆偵拲堄丅
+				//堦澓愮嬥丗偡乕傁乕枩擻栻俁	217	偡乕傁乕枩擻栻	US04	22	136	0		------ 	0		30	0	0	偁傜備傞忬懺堎忢傪夞暅偡傞枩擻栻丅\n塰梴僪儕儞僋晽枴丅
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀幙幚崉寬")
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				if(WK_YESNO==1)
+				{
+					MES(PENGUIN,"知道了。\n請收下謝禮吧。",0)
+					MES_close(PENGUIN)
+
+/*						//	name("僔僗僥儉儊僢僙乕僕")
+					fade_in(30,10,BLACK)
+					MES(0,"C3S2懱椡偑慡夞暅偟偨両",2)
+					MES_close(0)
+					fade_in(0,10,BLACK)
+					wait_fade()
+
+				//丂丂仸懱椡丒杺椡偑慡夞暅偡傞丅
+					set_hp( RAGNA, 100 )	
+*/
+					fade_in(30,10,BLACK)
+					wait_fade()
+
+					get_item(200,5,0)
+					wait_key(0)
+					menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+					menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+					fade_in(0,10,BLACK)
+					wait_fade()
+
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀昐壴銍棎")
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				else
+				if(WK_YESNO==2)
+				{
+					MES(PENGUIN,"知道了。\n請收下謝禮吧。",0)
+					MES_close(PENGUIN)
+
+/*					//	name("僔僗僥儉儊僢僙乕僕")
+					fade_in(30,10,BLACK)
+					MES(0,"C3S2僐儞儃峌寕夞悢偑憹偊偨両",2)
+					MES_close(0)
+					fade_in(0,10,BLACK)
+
+				//丂丂仸僐儞儃悢偑俵俙倃傑偱憹偊傞丅
+					workG(GW_BOM,SET,99)
+*/
+					fade_in(30,10,BLACK)
+					wait_fade()
+
+					get_item(216,50,0)
+					wait_key(0)
+					menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+					menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+					fade_in(0,10,BLACK)
+					wait_fade()
+
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀堦澓愮嬥")
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				else
+				{
+					MES(PENGUIN,"知道了。\n請收下謝禮吧。",0)
+					MES_close(PENGUIN)
+
+/*					//	name("僔僗僥儉儊僢僙乕僕")
+				//	MES(this,"儁僢僩僼乕僪傪栣偭偨両",0)
+				//丂丂仸儁僢僩僼乕僪傪俆屄擖庤偡傞丅
+					//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+					fade_in(30,10,BLACK)
+					get_item(218,5,0)
+					wait(10)
+					wait_key(0)
+					
+					fade_in(0,10,BLACK)
+					menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+					menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+*/
+					fade_in(30,10,BLACK)
+					wait_fade()
+
+					get_item(217,3,0)
+					wait_key(0)
+					menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+					menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+					fade_in(0,10,BLACK)
+					wait_fade()
+
+					//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+				}
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"多…多謝。\n（和預料中相差不少……\n 算了。）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"唔，我們收下了……\n（你真的理解\n 成語的意義嗎……？）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+				MES(PENGUIN,"有事的話\n隨時都可以過來。",0)
+				MES(PENGUIN,"客人很少\n企鵝也正無聊呢。",0)
+				MES_close(PENGUIN)
+				F_set(FE_03_TalkPenguin)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//仸僋僄僗僩屻偺儊僢僙乕僕丅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			if(FE_03_TalkPenguin)
+			{
+				if(!F_PENGUIN)
+				{
+					MES(PENGUIN,"太好吃了。",0)
+					MES(PENGUIN,"兩位…？\n非常感謝。",0)
+					MES_close(PENGUIN)
+
+					//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+					//	name("佀儔僌僫愭摢")
+					if(GW_MAN==1)
+					{
+						MES(RAGNA,"啊，可是……\n（為什麼叫我們兩位\n 的時候要加問號呢……？）",0)
+						MES_close(RAGNA)
+					}
+					else
+					//	name("佀傾儖僂僃儞愭摢")
+					{
+						MES(PARTNER,"呵呵，不必在意。",0)
+						MES(PARTNER,"（可是……這裡面\n 其實應該是人類吧？）",0)
+						MES_close(PARTNER)
+					}
+					//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+					F_set(PENGUIN)
+				}
+			//丂丂仛孞傝曉偟
+				else
+				{
+					MES(PENGUIN,"太好吃了。",0)
+					MES(PENGUIN,"兩位…？\n非常感謝。",0)
+					MES_close(PENGUIN)
+				}
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//仸偦傟埲奜丅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			{
+				if(!F_PENGUIN)
+				{
+					MES(PENGUIN,"對了……\n從昨天到現在企鵝還沒有吃過東西。",0)
+					MES(PENGUIN,"先生也不知為什麼，\n昨天都沒有過來。\n企鵝一直站在這裡呢。",0)
+					MES(PENGUIN,"嗚嗚，肚子餓了啊……",0)
+					MES_close(PENGUIN)
+					F_set(PENGUIN)
+				}
+			//丂丂仛孞傝曉偟
+				else
+				{
+					MES(PENGUIN,"企鵝從昨天\n到現在還沒有吃過東西。",0)
+					MES(PENGUIN,"肚子餓了啊……",0)
+					MES_close(PENGUIN)
+				}
+			}
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸攑岯擖傝岥偺丄僒僽儖乕僩斷慜偵棫偭偰偄傞丅
+		if( F1_15_GoVillage )
+		{
+			rot_chr(PENGUIN,30,PLAYER1)
+			if(!F_PENGUIN)
+			{
+				MES(PENGUIN,"請進。",0)
+				MES(PENGUIN,"先生在等著你們。",0)
+				MES_close(PENGUIN)
+
+				F_set(PENGUIN)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//丂丂儁儞僊儞偵丠僄儌乕僔儑儞丅
+				EMO(PENGUIN,EMO_HATENA)
+				wait(30)
+				
+			//丂丂僒僽儖乕僩奒抜偺曽傪巜偡丅
+				rot_chr(PENGUIN,30,94)
+				
+				MES(PENGUIN,"……快點請進！",0)
+				MES(PENGUIN,"先生一定會高興的！",0)
+				MES_close(PENGUIN)
+			}
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸攑岯擖傝岥偺丄僒僽儖乕僩斷慜偵棫偭偰偄傞丅
+		//丂丂仸僼儔僌嘆偱偼俧亅僐儘僢僙僆傊峴偗側偄堊丄
+		//丂丂丂偙偙偺儊僢僙乕僕偼偁傝傑偣傫丅
+	}
+	
+	TK_end()
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴奺僟儞僕儑儞偺擖傝岥偵愭夞傝
+//丂丂仸傑偩俧亅僐儘僢僙僆傊偺摴傪嬻偗偰偄側偄応崌丄
+//丂丂丂埲壓偺俁僟儞僕儑儞偺擖傝岥晅嬤偵愭夞傝偟偰偄傞丅乮忢帪攝抲偱俷俲乯
+//丂丂丂恄揳擖傝岥丂丗僒僽儖乕僩斷慜丅媥宔強慜偐傜懱偑彮偟尒偊傞埵抲丅
+//丂丂丂怷擖傝岥丂丂丗廫帤楬偺柌尪柪媨曽柺丅媥宔強慜偐傜懱偑彮偟尒偊傞埵抲丅
+//丂丂丂戝揝搩擖傝岥丗廫帤楬曈傝
+//丂丂丂僼儔僌嘖偱偼儖僫亖儉儞僪僁僗擖傝岥暘婒偵傕弌尰偡傞丅
+//丂丂仸儁儞僊儞偼怳傝岦偐側偄丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TK_PENGUIN_S
+{
+	TK_begin()
+	F_set_note(-81,-1)
+	rot_chr(PLAYER1,30,PENGUIN)
+	rot_chr(PLAYER2,30,PENGUIN)
+	rot_chr(PET,30,PENGUIN)
+
+	if(!F_PENGUIN)
+	{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(!FE_FF_MeetPenguin)
+		{
+		//	name("佀儁儞僊儞偵夛偆偺偑弶傔偰")
+		//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+		//	name("愭摢僉儍儔")
+			MES(PLAYER1,"企…企鵝……？",0)
+			MES_close(PLAYER1)
+
+		//丂丂儁儞僊儞偵俹俙僄儌乕僔儑儞丅
+			EMO(PENGUIN,EMO_PA)
+			wait(30)
+		//丂丂儔僌僫偨偪偵岦偔丅
+			rot_chr(PENGUIN,30,PLAYER1)
+		//	name2(PENGUIN)
+			MES(PENGUIN,"客官、客官……",0)
+			MES_close(PENGUIN)
+			F_set(FE_FF_MeetPenguin)
+		}
+		else
+		{
+		//丂丂儁儞僊儞偵俹俙僄儌乕僔儑儞丅
+			EMO(PENGUIN,EMO_PA)
+			wait(30)
+		//丂丂儔僌僫偨偪偵岦偔丅
+			rot_chr(PENGUIN,30,PLAYER1)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		MES(PENGUIN,"你們來得正好。",0)
+		MES(PENGUIN,"兩位……？　\n去見見先生吧。",0)
+		MES_close(PENGUIN)
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀愭夞傝儁儞僊儞偲榖偡偺偑俁夞栚埲崀")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(FE_FF_SakiPenguin2)
+		{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(GW_MAN==1)
+			{
+			//	name("佀儔僌僫愭摢")
+				MES(RAGNA,"還…還在招攬客人嗎……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"你也很辛苦呢……",0)
+				MES_close(PARTNER)
+
+			}
+			else
+			{
+			//	name("佀傾儖僂僃儞愭摢")
+				MES(PARTNER,"還…還在\n招攬客人嗎？",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"你還真辛苦啊……",0)
+				MES_close(RAGNA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀愭夞傝儁儞僊儞偲榖偡偺偑俀夞栚")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		if(FE_FF_SakiPenguin)
+		{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(GW_MAN==1)
+			{
+			//	name("佀儔僌僫愭摢")
+				MES(RAGNA,"又…又是你……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"可是你為什麼\n會在這種地方……",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("佀傾儖僂僃儞愭摢")
+				MES(PARTNER,"又…又是你嗎……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"是怎麼搶在\n我們前面來到這裡的……",0)
+				MES_close(RAGNA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(FE_FF_SakiPenguin2)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀愭夞傝儁儞僊儞偲榖偡偺偑弶傔偰")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(GW_MAN==1)
+			{
+			//	name("佀儔僌僫愭摢")
+				MES(RAGNA,"哎……？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"你突然這麼說\n我們也……",0)
+				MES_close(PARTNER)
+
+			}
+			else
+			{
+			//	name("佀傾儖僂僃儞愭摢")
+				MES(PARTNER,"哎……？",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"就算你突然這麼說……",0)
+				MES_close(RAGNA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+			F_set(FE_FF_SakiPenguin)
+		}
+		
+		MES(PENGUIN,"賽姆……\n賽姆肯德廢坑？　\n你們到那裡去。",0)
+		MES(PENGUIN,"進入口以後\n左轉。",0)
+		MES(PENGUIN,"先生在\n等著你們哦～？",0)
+		MES_close(PENGUIN)
+		
+		F_set(PENGUIN)
+	}
+	else
+	{
+	//丂丂仛孞傝曉偟
+		rot_chr(PENGUIN,30,PLAYER1)
+		MES(PENGUIN,"你們去見見\n先生吧。",0)
+		MES(PENGUIN,"這也是企鵝的工作。",0)
+		MES(PENGUIN,"賽姆……肯德廢坑？　\n的入口裡面\n向左轉～？",0)
+		MES_close(PENGUIN)
+	}
+	
+	TK_end()
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

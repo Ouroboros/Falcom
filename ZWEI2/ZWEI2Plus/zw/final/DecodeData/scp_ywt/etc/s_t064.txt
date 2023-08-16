@@ -1,0 +1,1531 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧價傾儞僗乮儁僢僩僔儑僢僾廬嬈堳乯Bians")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+//夛榖拞偺儌乕僔儑儞
+MOTION_TK_BIANS
+{
+	MOT_SET(BIANS,150,-1,422,422,151,15)
+	MOT_SET(BIANS,151,-1,423,423,150,15)
+	MOT(BIANS,150,15)
+}
+
+SHOP_BIANS
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(BIANS, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,BIANS)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,BIANS)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,BIANS)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_05_EndSixth )
+	{
+		EV("MOTION_TK_BIANS")
+		rot_chr(BIANS,30,PLAYER1)
+		EV("TK_BIANS")
+		wait_EV("TK_BIANS")
+		MOT_SET(BIANS,151,-1,461,461,152,15)		//杮扞憒彍
+		MOT_SET(BIANS,152,-1,462,462,151,15)		//杮扞憒彍
+		MOT(BIANS,151,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_00_GoToMeru )
+	{
+		//儁僢僩僔儑僢僾弶夞僀儀儞僩
+		if(!FV_01_TalkBians)
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		//嘕嘖傢傜偟傋僀儀儞僩
+		if(FV_11_Warasi_3_Hln && !FV_11_Warasi_4_Bns)
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		else
+		//嘕嘖嫟捠弶夞
+		if(!FV_11_TalkBians)
+		{
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		//埲崀偼儁僢僩僔儑僢僾張棟
+		else
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+
+			VOICE(738,0)			//乽僼僼丄偄傜偭偟傖偄傑偣乿
+			MES(BIANS,"呵呵，歡迎光臨。",0)
+			
+//			MES(BIANS,"偙傟偼偄傜偭偟傖偄傑偣丅",0)
+			MES(BIANS,"寵物店「安東尼」\n能夠為您提供\n最適合的寵物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F5_00_HearLunar )
+	{
+		//儁僢僩僔儑僢僾弶夞僀儀儞僩
+		if(!FV_01_TalkBians)
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		//嘕嘖傢傜偟傋僀儀儞僩
+		if(FV_11_Warasi_3_Hln && !FV_11_Warasi_4_Bns)
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		else
+		//嘕嘖嫟捠弶夞
+		if(!FV_11_TalkBians)
+		{
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		//埲崀偼儁僢僩僔儑僢僾張棟
+		else
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+
+			VOICE(738,0)			//乽僼僼丄偄傜偭偟傖偄傑偣乿
+			MES(BIANS,"呵呵，歡迎光臨。",0)
+			
+//			MES(BIANS,"偙傟偼偄傜偭偟傖偄傑偣丅",0)
+			MES(BIANS,"寵物店「安東尼」\n能夠為您提供\n最適合的寵物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_09_GoShrineMia)
+	{
+		//儁僢僩僔儑僢僾弶夞僀儀儞僩
+		if(!FV_01_TalkBians)
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		//弶夞偼儁僢僩僔儑僢僾慖戰巿偵擖傜偢捈愙夛榖
+		if(!FV_10_TalkBians)
+		{
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		//埲崀偼儁僢僩僔儑僢僾張棟
+		else
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("MOTION_TK_BIANS")
+
+			VOICE(738,0)			//乽僼僼丄偄傜偭偟傖偄傑偣乿
+			MES(BIANS,"呵呵，歡迎光臨。",0)
+			
+//			MES(BIANS,"偙傟偼偄傜偭偟傖偄傑偣丅",0)
+			MES(BIANS,"寵物店「安東尼」\n能夠為您提供\n最適合的寵物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_00_StartSolo )
+	{
+		EV("MOTION_TK_BIANS")
+		rot_chr(BIANS,30,PLAYER1)
+		//儁僢僩僔儑僢僾弶夞僀儀儞僩
+		if(!FV_01_TalkBians)
+		{
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		{
+			VOICE(738,0)			//乽僼僼丄偄傜偭偟傖偄傑偣乿
+			MES(BIANS,"呵呵，歡迎光臨。",0)
+
+//			MES(BIANS,"偙傟偼偄傜偭偟傖偄傑偣丅",0)
+			MES(BIANS,"寵物店「安東尼」\n能夠為您提供\n最適合的寵物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F3_00_GoMoonCastle )
+	{
+		EV("MOTION_TK_BIANS")
+		rot_chr(BIANS,30,PLAYER1)
+		//弶夞僀儀儞僩
+		if(!FV_06_TalkBians)
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		else
+		{
+			VOICE(738,0)			//乽僼僼丄偄傜偭偟傖偄傑偣乿
+			MES(BIANS,"呵呵，歡迎光臨。",0)
+			
+//			MES(BIANS,"偄傜偭偟傖偄傑偣丅",0)
+			MES(BIANS,"寵物店「安東尼」\n能夠為您提供\n最適合的寵物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F1_01_GameStart )
+	{
+		EV("MOTION_TK_BIANS")
+		
+		rot_chr(BIANS,30,PLAYER1)
+		//儁僢僩僔儑僢僾弶夞僀儀儞僩
+		if(!FV_01_TalkBians)
+		{
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		{
+			VOICE(738,0)			//乽僼僼丄偄傜偭偟傖偄傑偣乿
+			MES(BIANS,"呵呵，歡迎光臨。",0)
+			
+//			MES(BIANS,"偙傟偼偄傜偭偟傖偄傑偣丅",0)
+			MES(BIANS,"寵物店「安東尼」\n能夠為您提供\n最適合的寵物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+
+	TK_end()
+}
+
+SHOP_BIANS_LOOP
+{
+	workL(WK_CANCEL,SET,4)//亂傗傔傞亃
+	MES_pos(PLAYER1,"??W9【對話】\n【購買寵物】\n【聽取說明】\n【離開】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀榖傪偡傞")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(WK_YESNO==1)
+	{
+		//夛榖張棟
+		EV("TK_BIANS")
+		wait_EV("TK_BIANS")
+		loop
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀儁僢僩傪慖傇")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(WK_YESNO==2)
+	{
+	//	name("價傾儞僗")
+		MES(BIANS,"您想要哪種寵物呢？",0)
+		MES_close(BIANS)
+		
+		shop_open(3)//儁僢僩
+		wait_W(WK_YESNO)
+
+		if(IT016>0 && IT017>0 && IT018>0 )
+			F_set(FV_FF_PetSoldout)
+
+		if(!F0_14_TutoPet)
+		{
+			if(IT017>0 || IT016>0 || IT018>0)
+			{
+				//仠僠儏乕僩儕傾儖丗儁僢僩
+				Load_BMP(20,"sys\\tuto14.itm","0")
+				menuBMP(1,	20,	0,0,288,384)
+			//丂丂仸弶夞儁僢僩偍攦偄忋偘捈屻偵昞帵丅
+			//	name("價傾儞僗")
+				MES(BIANS,"呵呵，\n多謝惠顧。",0)
+				MES(BIANS,"那麼，就讓我簡單\n解釋一下寵物的\n飼養方法。",0)
+				MES(BIANS,"首先您所購買的寵物\n會出現在選單\n狀態欄之中。",0)
+				MES(BIANS,"請不要忘記選擇\n攜帶的寵物。",0)
+				MES(BIANS,"選好以後，\n它就會在迷宮\n中陪伴您一起冒險。",0)
+				MES(BIANS,"各種寵物會發揮不同的能力\n為您提供幫助，\n譬如參加攻擊或是拾取道具……",0)
+				MES(BIANS,"呵呵，請您\n愛惜地養育它們。",0)
+				MES_close(BIANS)
+				wait_MES(BIANS)
+
+				menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+				menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+				SE(043,PLAYER1)
+				wait(40)
+				wait_key(0)
+				menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+				wait(30)
+				F_set(F0_14_TutoPet)
+			}
+		}
+
+		loop
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀愢柧傪暦偔")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(WK_YESNO==3)
+	{
+	//	name("價傾儞僗")
+		MES(BIANS,"寵物店「安東尼」\n可以為您提供\n你喜歡的寵物。",0)
+		MES(BIANS,"寵物不僅會陪伴在您身邊，\n還會拾取物品，\n給予您支援。",0)
+		MES(BIANS,"它們的能力\n會為您帶來很大的幫助。",0)
+		MES(BIANS,"可以透過餵食\n寵物罐頭讓\n寵物們成長。",0)
+		MES(BIANS,"來吧，請您在寵物店「安東尼」中\n挑選喜歡的寵物吧。",0)
+		MES_close(BIANS)
+		
+	//丂丂仸朻摢慖戰巿偵栠傞丅
+		loop
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀傗傔傞")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	{
+		//	偍攦偄忋偘儁僢僩悢傪寁嶼丅
+		workL(0,SET,0)
+		if(IT016>0)
+		{
+			workL(0,ADD,1)
+		}
+		if(IT017>0)
+		{
+			workL(0,ADD,1)
+		}
+		if(IT019>0)
+		{
+			workL(0,ADD,1)
+		}
+
+		//偨偔偝傫攦偭偨傛両
+		if(WK000>2)
+		{
+			//	name("價傾儞僗")
+			MES(BIANS,"非常感謝\n您的惠顧。",0)
+//			MES(BIANS,"傑偨偺偍墇偟傪偍懸偪偟偰偍傝傑偡丅",0)
+			
+			VOICE(741,0)		//乽僼僼丄傑偨偳偆偧乿						
+			MES(BIANS,"呵呵，歡迎再來。",0)			
+			MES_close(BIANS)
+		}
+		else
+		//偦偙偦偙攦偭偨両
+		if(WK000>1)
+		{
+//			MES(BIANS,"偛垽梡偁傝偑偲偆偛偞偄傑偡丅\n傑偨偺偍墇偟傪偍懸偪偟偰偍傝傑偡丅",0)
+
+			MES(BIANS,"多謝您的惠顧。",0)
+			VOICE(741,0)		//乽僼僼丄傑偨偳偆偧乿						
+			MES(BIANS,"呵呵，歡迎再來。",0)
+			MES_close(BIANS)
+		}
+	//	name("佀仧壗偐傪攦偭偨応崌")
+		else
+		{
+			if(WK_ITEMBOX1>0)
+			{
+//				MES(BIANS,"偍攦偄忋偘丄偁傝偑偲偆偛偞偄傑偡丅\n傑偨偺偍墇偟傪偍懸偪偟偰偍傝傑偡丅",0)
+			
+				MES(BIANS,"多謝惠顧。",0)
+				VOICE(741,0)		//乽僼僼丄傑偨偳偆偧乿					
+				MES(BIANS,"呵呵，歡迎再來。",0)
+				MES_close(BIANS)
+			}
+		//	name("佀仧壗傕攦傢側偐偭偨応崌")
+			else
+			{	
+				VOICE(741,0)		//乽僼僼丄傑偨偳偆偧乿	
+				MES(BIANS,"呵呵，歡迎再來。",0)
+				
+//				MES(BIANS,"傑偨偺偍墇偟傪偍懸偪偟偰偍傝傑偡丅",0)
+				
+				MES_close(BIANS)
+			}
+		}
+//		VOICE(741,0)		//乽僼僼丄傑偨偳偆偧乿	
+		
+	}
+
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴儁僢僩僔儑僢僾弶夞僀儀儞僩
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸僼儔僌嘐嘔嘗偱偼敪惗偟側偄丅
+EV_FV_01_PetBegin
+{
+//	name("價傾儞僗")
+	MES(BIANS,"歡迎光臨。\n寵物店「安東尼」。",0)
+	MES(BIANS,"您是第一次\n來這裡吧？",0)
+	MES_close(BIANS)
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(GW_MAN==0)
+		{
+	//	name("佀傾儖僂僃儞愭摢")
+			//乣嘑丄嘖乣
+			if(!F4_00_StartSolo || F6_00_GoToMeru)
+			{
+				MES(PARTNER,"唔，沒錯。",0)
+				MES_close(PARTNER)
+			}
+			else
+			//嘔
+			if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			{
+				MES(PARTNER,"唔，沒錯。",0)
+				MES_close(PARTNER)
+			}
+			//僆僨僢僒X僶儖偺偲偒偼儊僢僙乕僕偑柍偄偺偱儔僌僫傪撉傓
+			else
+			{
+		//	name("佀儔僌僫愭摢")
+				MES(RAGNA,"嗯，是啊。",0)
+				MES_close(RAGNA)
+			}
+		}
+		else
+		{
+	//	name("佀儔僌僫愭摢")
+			MES(RAGNA,"嗯，是啊。",0)
+			MES_close(RAGNA)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+
+	MES(BIANS,"我是這裡的店員，\n叫做比安斯。",0)
+	MES(BIANS,"關於寵物，\n有什麼不明白的地方\n可以隨時向我咨詢。",0)
+	MES(BIANS,"無論什麼疑問，\n我都會全心全意地\n為您解答。",0)
+	MES_close(BIANS)
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(GW_MAN==0)
+		{
+	//	name("佀傾儖僂僃儞愭摢")
+			//乣嘑丄嘖乣
+			if(!F4_00_StartSolo || F6_00_GoToMeru)
+			{
+				MES(PARTNER,"唔，很有禮貌呢……",0)
+				MES_close(PARTNER)
+			}
+			else
+			//嘔
+			if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			{
+				MES(PARTNER,"唔，很有禮貌呢……",0)
+				MES_close(PARTNER)
+			}
+			//僆僨僢僒X僶儖偺偲偒偼儊僢僙乕僕偑柍偄偺偱儔僌僫傪撉傓
+			else
+			{
+		//	name("佀儔僌僫愭摢")
+				MES(RAGNA,"啊。\n多謝……",0)
+				MES_close(RAGNA)
+			}
+		}
+		else
+		{
+	//	name("佀儔僌僫愭摢")
+			MES(RAGNA,"啊。\n多謝……",0)
+			MES_close(RAGNA)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+	MES(BIANS,"呵呵……\n請您隨便看一看吧。",0)
+	MES_close(BIANS)
+
+	F_set(FV_01_TalkBians)
+}
+
+
+
+//夛榖張棟杮懱
+TK_BIANS
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儁僢僩僔儑僢僾慜傪憒彍偟偰偄傞丅乮儂僂僉帩偪乯
+	if( F6_05_EndSixth )
+	{
+		rot_chr(BIANS,30,PLAYER1)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸僼儔僌嘕嘖弶夞僀儀儞僩傪尒偰偄側偄応崌丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(!FV_11_TalkBians)
+		{
+			if(!F_BIANS)
+			{
+			//	name("價傾儞僗")
+				MES(BIANS,"歡迎光臨。",0)
+				MES(BIANS,"……不好意思。",0)
+				MES(BIANS,"寵物店「安東尼」\n今日休業。",0)
+				MES(BIANS,"歡迎你們\n以後再來。",0)
+				MES_close(BIANS)
+				
+				F_set(BIANS)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("價傾儞僗")
+				MES(BIANS,"寵物店「安東尼」\n今日休業。",0)
+				MES(BIANS,"歡迎你們\n以後再來。",0)
+				MES_close(BIANS)
+			}
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸僼儔僌嘕嘖弶夞僀儀儞僩傪尒偰偄傞応崌丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		{
+			if(!F_BIANS)
+			{
+			//	name("價傾儞僗")
+				MES(BIANS,"歡迎光臨。",0)
+				MES(BIANS,"……不好意思。\n寵物店「安東尼」\n今日休業。",0)
+				MES(BIANS,"啊，還有。",0)
+				MES(BIANS,"以前說的\n總店奪取計劃十分順利。",0)
+				MES(BIANS,"等到我當上總店店長的那一天，\n打算把這塊招牌改成\n「神奇寵物店·快樂比安斯」。",0)
+				MES(BIANS,"歡迎你們\n以後再來。",0)
+				MES_close(BIANS)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+			//	EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"（這個人\n 果然夠陰險……）",0)
+				MES_close(RAGNA)
+
+				F_set(FV_13_TalkBians)
+				F_set(BIANS)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("價傾儞僗")
+				MES(BIANS,"這塊招牌最近\n就會變成\n「神奇寵物店·快樂比安斯」。",0)
+				MES(BIANS,"歡迎你們\n以後再來。",0)
+				MES_close(BIANS)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕嘖丂傢傜偟傋僀儀儞僩
+	//	name("係丏價傾儞僗乮儘傾儖僞懞乯		亀怴昳僲乕僩亁佀亀撲偺儁僢僩僼乕僪亁")146
+	//仧弶夞僀儀儞僩/2夞栚埲崀暘妱梊掕
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸仴嘕嘖嫟捠弶夞僀儀儞僩傛傝傕桪愭偝傟傞丅
+	if(F5_00_HearLunar && FV_11_Warasi_3_Hln && !FV_11_Warasi_4_Bns)
+	{
+
+		rot_chr(BIANS,30,PLAYER1)
+
+		if(!F_BIANS)
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"唉呀……？",0)
+			MES(BIANS,"您有一件\n不錯的東西呢。",0)
+			MES(BIANS,"那本「新筆記本」，\n可以送給我嗎？",0)
+			MES_close(BIANS)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(GW_MAN==0 && F6_00_GoToMeru)
+			{
+			//	name("佀傾儖僂僃儞愭摢")
+				MES(PARTNER,"唔，你要\n如何使用呢？",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("佀儔僌僫愭摢")
+				MES(RAGNA,"啊，嗯……\n我想問一下你需要它的理由，可以嗎？",0)
+				MES_close(RAGNA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(FV_11_TalkBians)
+			{
+			//	name("佀仴嘕嘖嫟捠弶夞僀儀儞僩傪尒偰偄傞応崌丅")
+			//	name("價傾儞僗")
+				MES(BIANS,"嗯，我以前應該\n也說過……",0)
+				MES(BIANS,"我在進行奪取\n總店的計劃。",0)
+				MES(BIANS,"呵呵，為了搜集資金，\n差不多也需要開始作黑賬了。",0)
+				MES_close(BIANS)
+
+			//丂丂儔僌僫偨偪偵両僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PET,EMO_BIKKURI)
+				//傾儖僂僃儞偑嫃傞
+				if(F6_00_GoToMeru)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				else
+				//僆僨僢僒偑嫃傞
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				wait(30)
+				
+				MES(PET,"黑…黑賬本……",0)
+				MES_close(PET)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				if(GW_MAN==1)
+				{
+					if(F5_08_JoinOdessa && !F5_13_KillDygald)
+					{
+					//	name("佀儔僌僫愭摢偱丄僆僨僢僒偑偄傞")
+						MES(PARTNER,"你…你真的很毒辣啊……",0)
+						MES_close(PARTNER)
+					}
+					else
+					if(F6_00_GoToMeru)
+					{
+					//	name("佀儔僌僫愭摢偱丄傾儖僂僃儞偑偄傞応崌")
+						MES(PARTNER,"你確實\n相當毒辣啊……",0)
+						MES_close(PARTNER)
+					}
+				}
+				else
+				{
+				//	name("佀偦傟埲奜")
+					MES(RAGNA,"終…終於到這一步了……",0)
+					MES_close(RAGNA)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+			else
+			{
+			//	name("佀偦傟埲奜")
+			//	name("價傾儞僗")
+				MES(BIANS,"嗯，其實我——\n的目標是總店店長。",0)
+				MES(BIANS,"這裡不過是一家分店，\n所以就意味著我要奪取總店。",0)
+			 	MES(BIANS,"呵呵，為了蒐集資金，\n我正需要一本黑賬本。",0)
+				MES_close(BIANS)
+
+			//丂丂儔僌僫偨偪偵両僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PET,EMO_BIKKURI)
+				//傾儖僂僃儞偑嫃傞
+				if(F6_00_GoToMeru)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				else
+				//僆僨僢僒偑嫃傞
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				wait(30)
+
+			//	name("堦摨")
+				chr_rename(RAGNA,"一同")
+				MES(RAGNA,"（真…真是夠狠毒……）",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				chr_rename(RAGNA,"拉格那")
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("價傾儞僗")
+			MES(BIANS,"……怎麼樣？\n願意幫助我實現野心嗎？",0)
+			MES_close(BIANS)
+			F_set(BIANS)
+		}
+		else
+		{
+			MES(BIANS,"呵呵呵……客人們。",0)
+			MES(BIANS,"可以把那「新筆記本」\n送給我嗎？",0)
+			MES_close(BIANS)
+		}
+
+	//	name("慖戰僥僉僗僩")
+		workL(WK_CANCEL,SET,2)//亂愨懳搉偝側偄亃
+		MES_pos(PLAYER1,"??W9【給他筆記本】\n【絕對不給】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀亂僲乕僩傪搉偡亃")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(WK_YESNO==1)
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"呵呵，多謝……",0)
+			MES(BIANS,"作為交換，你們收下這個吧。",0)
+			MES(BIANS,"這混到我\n採購的貨物中了。",0)
+			MES_close(BIANS)
+
+		//	name("傾僀僥儉擖庤僥僉僗僩")
+		//	MES(BIANS,"亀撲偺儁僢僩僼乕僪亁傪傕傜偭偨丅",0)
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			fade_in(30,10,BLACK)
+
+			get_item(145,-1,1)
+			get_item(146,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(FV_11_TalkBians)
+			{
+			//	name("佀仴嘕嘖嫟捠弶夞僀儀儞僩傪尒偰偄傞応崌丅")
+			//	name("價傾儞僗")
+				MES(BIANS,"接下來，\n這樣資金也沒有問題了。",0)
+				MES(BIANS,"這個寵物店\n終於就要全部歸我所有了……\n呵呵呵呵……",0)
+				MES_close(BIANS)
+			}
+			else
+			{
+			//	name("佀尒偰偄側偄応崌丅")
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				if(GW_MAN==0 && F6_00_GoToMeru)
+				{
+				//	name("佀傾儖僂僃儞愭摢")
+					MES(PARTNER,"唔。\n我們就收下了……",0)
+					MES(PARTNER,"另外你要\n奪取總店是不是……",0)
+					MES_close(PARTNER)
+				}
+				else
+				{
+				//	name("佀儔僌僫愭摢")
+					MES(RAGNA,"多…多謝……",0)
+					MES(RAGNA,"另外，\n你要奪取總店……",0)
+					MES_close(RAGNA)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("價傾儞僗")
+				MES(BIANS,"呵呵呵，不必擔心。\n我的目標只是總店店長……",0)
+				MES(BIANS,"敝店還是會與以前一樣，\n全心全意地迎接客人。\n（微笑）",0)
+				MES_close(BIANS)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+		//丂丂儔僌僫偨偪偵惵偞傔僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PET,EMO_AOZAME)
+			//傾儖僂僃儞偑嫃傞
+			if(F6_00_GoToMeru)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			else
+			//僆僨僢僒偑嫃傞
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			wait(30)
+
+			MES(PET,"（好可怕……！）",0)
+			MES_close(PET)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(GW_MAN==1)
+			{
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+				//	name("佀儔僌僫愭摢偱丄僆僨僢僒偑偄傞")
+					MES(PARTNER,"（恐怖的微笑……）",0)
+					MES_close(PARTNER)
+				}
+				else
+				if(F6_00_GoToMeru)
+				{
+				//	name("佀儔僌僫愭摢偱丄傾儖僂僃儞偑偄傞応崌")
+					MES(PARTNER,"（笑…笑容很恐怖啊……）",0)
+					MES_close(PARTNER)
+				}
+			}
+			else
+			{
+			//	name("佀偦傟埲奜")
+				MES(RAGNA,"（這人的笑容真是恐怖……）",0)
+				MES_close(RAGNA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			//丂丂仸偙偺僀儀儞僩偑婲偙傞偲丄仴嘕嘖嫟捠弶夞僀儀儞僩偼敪惗偟側偔側傞丅
+			F_set(FV_11_TalkBians)
+			
+			//仛價傾儞僗亂棤挔曤亃
+			F_set_note(BIANS,2)
+			F_set(FV_11_Warasi_4_Bns)
+			F_reset(BIANS)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀亂愨懳搉偝側偄亃")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"唉呀，這樣啊。\n真是可惜……",0)
+			MES(BIANS,"以後改變想法的話\n隨時都可以過來。\n我會等著你們的。",0)
+			MES_close(BIANS)
+		}
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偙偺僀儀儞僩偑婲偙傞偲丄仴嘕嘖嫟捠弶夞僀儀儞僩偼敪惗偟側偔側傞丅
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕嘖丄嫟捠弶夞僀儀儞僩
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儁僢僩僔儑僢僾僇僂儞僞乕棤偺丄憢偐傜奜傪尒偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩
+	//	name("價傾儞僗")
+	if(F5_00_HearLunar && !FV_11_TalkBians)
+	{
+		MES(BIANS,"這個月的銷售額也不錯……",0)
+		MES(BIANS,"呵呵，那個計劃也在順利進行。",0)
+		MES(BIANS,"接下來只要資金足夠，\n那裡就全都歸我所有了……",0)
+		MES_close(BIANS)
+
+	//丂丂儔僌僫偨偪偵惵偞傔僄儌乕僔儑儞丅
+		EMO(RAGNA,EMO_AOZAME)
+		EMO(PET,EMO_AOZAME)
+		//傾儖僂僃儞偑嫃傞
+		if(F6_00_GoToMeru)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		else
+		//僆僨僢僒偑嫃傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		wait(30)
+		
+		rot_chr(PET,30,BIANS)
+		MES(PET,"你…你……",0)
+		MES_close(PET)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"剛才說了什麼……？",0)
+		MES_close(RAGNA)
+
+	//丂丂價傾儞僗偵俹俙僄儌乕僔儑儞丄怳傝曉傞丅
+		EMO(BIANS,EMO_PA)
+		wait(30)
+		rot_chr(BIANS,30,PLAYER1)
+
+	//	name("價傾儞僗")
+		EV("MOTION_TK_BIANS")
+		MES(BIANS,"哦，不好意思……\n被你們聽到了啊。",0)
+		MES(BIANS,"呵呵，不必在意。\n我只是在思考奪取\n總店的計劃。",0)
+		MES(BIANS,"敝店還是會與以前一樣，\n全心全意地迎接客人。",0)
+		MES(BIANS,"呵呵呵，不必擔心。",0)
+		MES_close(BIANS)
+
+	//丂丂儔僌僫偨偪偵惵偞傔僄儌乕僔儑儞丅
+		EMO(RAGNA,EMO_AOZAME)
+		EMO(PET,EMO_AOZAME)
+		//傾儖僂僃儞偑嫃傞
+		if(F6_00_GoToMeru)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		else
+		//僆僨僢僒偑嫃傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		wait(30)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傾儖僂僃儞偑偄傞応崌")
+		if(F6_00_GoToMeru)
+		{
+			MES(PARTNER,"我…我還以為\n他在想什麼……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"他居然誠實地\n說出了一切啊……",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+			//	name("佀僆僨僢僒偑偄傞")
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				MES(PARTNER,"居然這麼乾脆地\n說出來了……",0)
+				MES_close(PARTNER)
+			}
+			//	name("佀僆僨僢僒偑嫃側偄")
+			else
+			{
+				MES(RAGNA,"居…居然這麼誠實地\n說出了一切啊……",0)
+				MES_close(RAGNA)
+			}
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		MES(PET,"真…真是個\n陰險的人啊……",0)
+		MES_close(PET)
+		
+		F_set(FV_11_TalkBians)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嘕嘖丄嫟捠弶夞僀儀儞僩偑桪愭偝傟傞丅
+	//丂丂丂儅僢僾俬俶俬俿偺攝抲偼捠忢僇僂儞僞乕埵抲偲偡傞丅
+	if( F6_00_GoToMeru )
+	{
+		if(!F_BIANS)
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"……不必擔心。\n敝店一直準備周到。",0)
+			MES(BIANS,"地震、落雷、火災、洪水……",0)
+			MES(BIANS,"敝店申請了各式各樣的保險。",0)
+			MES_close(BIANS)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+			//丂丂儔僌僫偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+
+				MES(RAGNA,"這是保險的問題嗎……？",0)
+				MES_close(RAGNA)
+
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"（保險……？\n 唔，聽起來很方便呢……）",0)
+				MES_close(PARTNER)
+
+			//丂丂儔僌僫偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+
+				MES(RAGNA,"我覺得不是這麼回事。",0)
+				MES_close(RAGNA)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			F_set(BIANS)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"敝店一直準備周到。",0)
+			MES(BIANS,"因為申請了各式各樣的保險。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嘕嘖丄嫟捠弶夞僀儀儞僩偑桪愭偝傟傞丅
+	//丂丂丂儅僢僾俬俶俬俿偺攝抲偼捠忢僇僂儞僞乕埵抲偲偡傞丅
+	if( F5_00_HearLunar )
+	{
+		if(!F_BIANS)
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"呵呵，請不用擔心。",0)
+			MES(BIANS,"雖然我考慮過\n把總店佔為己有……",0)
+			MES(BIANS,"不過敝店還是與以前一樣，\n會全心全意地迎接客人。",0)
+			MES(BIANS,"希望您可以利用敝店，\n為我們提供銷售額。",0)
+			MES_close(BIANS)
+
+		//丂丂儔僌僫偨偪偵惵偞傔僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PET,EMO_AOZAME)
+			//僆僨僢僒偑嫃傞
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			wait(30)
+		
+			F_set(BIANS)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"就算成功霸佔總店，\n也不會對您\n造成麻煩的。",0)
+			MES(BIANS,"呵呵，請不用擔心。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸暲傫偱偄傞儁僢僩働乕僗慜丅
+	if( F4_09_GoShrineMia )
+	{
+	//丂丂仸弶夞僀儀儞僩
+		if(!FV_10_TalkBians)
+		{
+		//丂丂價傾儞僗丄俹俙僄儌乕僔儑儞偱怳傝曉傞丅
+			EMO(BIANS,EMO_PA)
+			wait(30)
+			rot_chr(BIANS,30,PLAYER1)
+
+		//	name("價傾儞僗")
+			MES(BIANS,"唉呀……？",0)
+			EV("MOTION_TK_BIANS")
+			MES(BIANS,"歡迎光臨。\n寵物店「安東尼」。",0)
+			MES(BIANS,"您來得真早啊。",0)
+			MES(BIANS,"不用擔心。\n馬上就到敝店的營業時間了，\n現在也可以為您提供服務哦。",0)
+			MES_close(BIANS)
+
+		//丂丂佀僔儑僢僾慖戰巿偵旘傇丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+			F_set(FV_10_TalkBians)
+		}
+		else
+		{
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		//	name("價傾儞僗")
+			MES(BIANS,"不好意思。\n現在是餵食時間。",0)
+			MES(BIANS,"有什麼需要的話\n就在這裡說吧。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儁僢僩僔儑僢僾僇僂儞僞乕丅
+	if( F4_00_StartSolo )
+	{
+		if(!F_BIANS)
+		{
+		//	name("價傾儞僗")
+//			MES(BIANS,"崱挬偼悘暘偲\n懞偺曽偑惷偐偱偡偹丅",0)
+//			MES(BIANS,"偄偮傕偼憗挬偐傜\n憶偑偟偄傕偺側偺偱偡偑丅",0)
+//			MES(BIANS,"乧乧傑偁丄摉揦偼偛棗偺捠傝\n偄偮傕捠傝偺憶偑偟偝偱偡偺偱丅",0)
+//			MES(BIANS,"壗傕曄傢傝傑偣傫偗偳偹丅",0)
+//			MES_close(BIANS)
+
+			MES(BIANS,"今天早上\n村莊裡很安靜。",0)
+			MES(BIANS,"平時都是很早\n就可以聽到\n耕作的聲音。",0)
+			MES(BIANS,"……不過敝店和平時一樣\n充滿活力。",0)
+			MES(BIANS,"這一點沒有變化呢。",0)
+			MES_close(BIANS)
+
+			F_set(BIANS)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"今天早上我出去打水，\n一個人也沒有看到。",0)
+			MES(BIANS,"洛塔村是農村……\n應該很早就有人開始勞動的。",0)
+//			MES(BIANS,"摉揦偼偄偮傕捠傝偺憶偑偟偝偱偡偑丄\n懞偱偼壗偐偁偭偨偺偱偟傚偆偐偹丅",0)
+			MES(BIANS,"到底發生了什麼事呢。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儁僢僩僔儑僢僾僇僂儞僞乕丅
+	if( F3_00_GoMoonCastle )
+	{
+	//丂丂仸弶夞僀儀儞僩丅
+		if(!FV_06_TalkBians)
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"歡迎光臨。",0)
+			MES(BIANS,"寵物店「安東尼」\n可以為您提供\n你喜歡的寵物。",0)
+			MES_close(BIANS)
+
+		//	name("佀僠僃僗僋弶夞傪尒偰偄側偄")
+			if(!FV_06_TalkWade)
+			{
+				MES(RAGNA,"喂喂……\n這種時候……",0)
+				MES(RAGNA,"你沒事嗎？",0)
+				MES_close(RAGNA)
+				F_set(BIANS)
+			}
+		//	name("佀僠僃僗僋弶夞傪尒偰偄傞")
+			else
+			{
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"看…看來你也\n沒有遭到襲擊啊。",0)
+				MES_close(RAGNA)
+			}
+		
+		//	name("價傾儞僗")
+			MES(BIANS,"沒事……？",0)
+			MES(BIANS,"嗯，敝店也有一些\n夜行性動物。",0)
+			MES(BIANS,"請到這邊\n來看一下。",0)
+			MES_close(BIANS)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"不，我不是\n這個意思……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"唔……",0)
+			MES_close(PARTNER)
+
+		//丂丂傾儖僂僃儞偒傚傠偒傚傠偡傞丅
+			look(PARTNER,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(PARTNER,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(PARTNER,"Bone_Head",0,		0,2,0,			0,0,0)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(!FV_06_TalkWade)
+			{
+			//	name("佀僠僃僗僋弶夞傪尒偰偄側偄")
+				MES(PARTNER,"這房間裡\n感覺不到邪氣。",0)
+				MES(PARTNER,"好像沒有被\n叔父大人注意到……",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("佀僠僃僗僋弶夞傪尒偰偄傞")
+				MES(PARTNER,"這房間裡\n果然感覺不到邪氣。",0)
+				MES(PARTNER,"是因為剛才的少年嗎，\n這裡好像沒有被\n叔父大人注意到……",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			MES(RAGNA,"是…是這樣嗎……",0)
+			MES_close(RAGNA)
+
+		//	name("價傾儞僗")
+			MES(BIANS,"——另外敝店\n還提供部分\n魔獸。",0)
+			MES(BIANS,"呵呵，請\n慢慢挑選。",0)
+			MES_close(BIANS)
+
+			F_set(FV_06_TalkBians)
+
+		//丂丂佀僔儑僢僾慖戰巿偵旘傇丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_BIANS)
+			{
+			//	name("價傾儞僗")
+				MES(BIANS,"你們也知道，\n寵物中有不少\n都是夜行性動物。",0)
+				MES(BIANS,"比如蟒蛇……",0)
+				MES(BIANS,"雖然有些大，\n不過相當可愛呢。",0)
+				MES(BIANS,"怎麼樣？",0)
+				MES_close(BIANS)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"這…這個就算了……",0)
+					MES_close(RAGNA)
+
+					//	name("佀僠僃僗僋弶夞傪尒偰偄傞応崌丄憓擖")
+					if(FV_06_TalkWade)
+					{
+						MES(RAGNA,"（話說回來，他沒有注意\n 到那位少年嗎……？）",0)
+						MES_close(RAGNA)
+					}
+				}
+				else
+			//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"還…還是不要這個了……",0)
+					MES_close(PARTNER)
+
+				//	name("佀僠僃僗僋弶夞傪尒偰偄傞応崌丄憓擖")
+					if(FV_06_TalkWade)
+					{
+						MES(PARTNER,"（唔，果然看不到\n 那位少年啊……）",0)
+						MES_close(PARTNER)
+					}
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+				F_set(BIANS)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("價傾儞僗")
+				MES(BIANS,"呵呵，我可以為您\n講解寵物的習性。",0)
+				MES(BIANS,"敝店也有一些\n夜行性動物。",0)
+				MES_close(BIANS)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儁僢僩僔儑僢僾僇僂儞僞乕丅
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_BIANS)
+		{
+			//	name("佀儁僢僩傪攦偭偨帠偑偁傞応崌")
+			if( IT016==1 || IT017==1 || IT018==1 || IT019==1 || IT020==1 || IT021==1 )
+			{
+			//	name("價傾儞僗")
+				MES(BIANS,"看來您也\n很喜歡寵物呢。",0)
+				MES(BIANS,"寵物會在幫助主人\n的過程中成長。",0)
+				MES(BIANS,"餵食寵物罐頭也能達到同樣的效果，\n不過帶在身邊才是最好的選擇。",0)
+				MES(BIANS,"所謂相會皆有緣。\n請您一定要愛惜寵物。",0)
+				MES_close(BIANS)
+
+			}
+		//	name("佀儁僢僩傪攦偭偨帠偑側偄応崌")
+			else
+			{
+			//	name("價傾儞僗")
+				MES(BIANS,"寵物會在幫助主人\n的過程中成長。",0)
+				MES(BIANS,"成長之後\n能力值將得到提升。",0)
+				MES(BIANS,"餵食寵物罐頭也能達到同樣的效果，\n不過帶在身邊才是最好的選擇。",0)
+				MES_close(BIANS)
+			}
+			
+			F_set(BIANS)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"飼養寵物時\n把它帶在身邊才是最好的選擇。",0)
+			MES(BIANS,"記得隨時帶著\n您想要培養的寵物。",0)
+			MES(BIANS,"對於寵物而言，\n也會是一次感覺不錯的散步。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儁僢僩僔儑僢僾僇僂儞僞乕
+	if( F2_00_GoForest )
+	{
+		if(!F_BIANS)
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"看來村裡最近就要\n舉辦收穫祭了。",0)
+			MES(BIANS,"我也被要求\n幫忙了。",0)
+			MES(BIANS,"呵呵……\n幫一下忙也好。",0)
+			MES(BIANS,"建立與當地居民的信賴關係\n也是經商的重要一環。",0)
+			MES_close(BIANS)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（這個人有些陰險啊……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"（這傢伙……\n 在考慮些什麼……）",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//仛價傾儞僗亂彜攧偺僐僣亃
+			F_set_note(BIANS,1)
+			F_set(BIANS)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"收穫祭是這裡全村的大事……\n哎呀，我也被要求\n幫忙了。",0)
+			MES(BIANS,"呵呵，沒辦法。",0)
+			MES(BIANS,"為了生意，我還是\n參加一下吧。",0)
+			MES_close(BIANS)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（營業微笑好可怕啊……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"（這就是所謂的營業微笑……）",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儁僢僩僔儑僢僾僇僂儞僞乕
+	if( F1_15_GoVillage )
+	{
+		if(!F_BIANS)
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"敝店是寵物連鎖店\n「安東尼」在伊魯巴特\n的分店。",0)
+			MES(BIANS,"這裡沒有的寵物\n也可以聯絡總店\n進行訂購。",0)
+			MES(BIANS,"其中包括一些稀有物種，\n我也先向您介紹一下。",0)
+			MES_close(BIANS)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"哎，是這樣啊。",0)
+				MES(RAGNA,"（可是現在公主殿下的對手\n 封鎖了伊魯巴特。）",0)
+				MES(RAGNA,"（訂購可能\n 很難吧……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"唔，稀有物種\n似乎很有趣……",0)
+				MES(PARTNER,"（現在有人\n 封鎖了伊魯巴特。）",0)
+				MES(PARTNER,"（訂購恐怕不夠現實。）",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			F_set(BIANS)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"敝店可以聯絡總店\n訂購稀有物種。",0)
+			MES(BIANS,"可是那一部分銷售額\n將被歸為總店……",0)
+			MES(BIANS,"敝店不推薦這種做法。",0)
+			MES_close(BIANS)
+			
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES_pos(RAGNA,"（這…這樣啊……）",0,0,0,0,0)
+			MES_pos(PARTNER,"（這…這樣啊……）",0,0,0,0,0)
+			wait_key(0)
+			MES_close(RAGNA)
+			MES_close(PARTNER)
+			//仛價傾儞僗亂巟揦偺揦挿亃
+			F_set_note(BIANS,0)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儁僢僩僔儑僢僾僇僂儞僞乕
+	if( F1_01_GameStart )
+	{
+		if(!F_BIANS)
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"購買寵物以後，\n選單的狀態欄中\n就會增加寵物圖示。",0)
+			MES(BIANS,"在那裡選擇\n你想要攜帶的寵物。",0)
+			MES(BIANS,"另外它們\n也各有各的性格。",0)
+			MES(BIANS,"有些擅長拾取物品，\n有些擅長參加戰鬥，\n它們會在各方面幫助你們的。",0)
+			MES_close(BIANS)
+			
+			F_set(BIANS)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("價傾儞僗")
+			MES(BIANS,"寵物們會在各個方面\n協助你們探索的。",0)
+			MES(BIANS,"你可以在敝店\n購買喜歡的寵物。",0)
+			MES_close(BIANS)
+		}
+	}
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

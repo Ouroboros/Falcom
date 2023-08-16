@@ -1,0 +1,427 @@
+//====================================================================
+//ステージトラップスクリプト
+//[17010][异－入口]
+//====================================================================
+
+#ScriptTable
+
+#LUE 		1
+#EVENT_RAGNA 	2
+#ODESSA 		3
+#B_ODESSA 		4
+#C_ODESSA 		5		//変身中専用奥迪莎
+#EFFDUMMY1		6
+#EFFDUMMY2		7
+
+
+INIT
+{
+
+//入口之みデフォにカメラロールを入れる
+	CAM_Roll(9,0)
+
+//環境SE
+	SE(68,0)
+
+//  -------  no typ     tip      x    y   z       mot  向 状     000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+
+	if( !F5_17_EndFifth )//階段消滅後は，ゲート自体が消えます。消えるはず。
+	{
+		set_chr( 90,990,	-1,-1,   0,4800,-800, 	  180,050201, 6,"K1_10602;")	//①エントリ（水晶祭坛門へ）
+	}
+	else
+	{
+		set_chr( 90,990,	-1,-1,   0,4800,-800, 	  180,050201, 6,"<EV_STOP_01>")	//①エントリ（水晶祭坛門へ）
+	}
+
+	set_chr( 91,990,	-1,-1,	 0,-3900,700,       0,050201, 6,"K0_17011;")	//②エントリ 梅ン①
+
+
+	set_chr( 50,620,	-1,-1,  -450,3850,-800, 	0,270,	0,";")	//①セーブOBJ
+
+	set_chr( 51,648,	-1,-1,     0,-2975, 700,   20,  0,	0,";")	//①等级之证 
+	color2( 51,  75,75,100, 0,0,0)	// 异次元之等级之证 之色
+	set_chr( 52,654,	-1,-1,  -190,-2975, 700,    2,  0,	0,";")	//①順路案内（梅ン）
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼月·异世界に到着する
+		EV("EV_5_11_OnLunar")
+	}
+
+//■场面固有設定
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼月·异世界に到着する
+//──────────────────────────────
+//　　画面しばらく暗転してから，
+//　　数拍置いて，月·异世界之入口マップ。
+//　　画面スクロールして，背景に見える地球や星鯨を見せながら
+//　　入口付近にいる拉古那，奥迪莎，露に画面を切り替える。
+EV_5_11_OnLunar
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 	462,3700,-800,180,2)
+	chr_pos(PARTNER, 	262,3700,-800,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+//	set_chr(EVENT_RAGNA,	  1010,-1,-1,  -632,4582,-798, 2,90,0, "")
+	set_chr(EVENT_RAGNA,	  1010,-1,-1,  40,4182,-798, 2,300,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"B","D","6")
+
+	set_chr(ODESSA,		1019,-1,-1, -100,4042,-800, 2,90,0, "")
+	set_chr(B_ODESSA,	34,-1,-1, -100,4042,-800, 2,90,0, "")
+	set_chr(C_ODESSA,	90,-1,-1, -100,4042,-800, 2,90,0, "")
+	set_chr(LUE, 	 	1015,-1,-1, 88,4040,-798, 2,240,0, "")
+	set_chr(EFFDUMMY1,	749, -1,-1,-100,4042,-800, 0,0,0, "")
+	set_chr(EFFDUMMY2,	749, -1,-1,-0,0,-00, 0,0,0, "")
+	F_set_chr(LUE,CF_NO_ZIMEN)
+	F_set_chr(LUE,CF_NO_HEIGHT)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(B_ODESSA,CF_NO_CLIP)
+	F_set_chr(B_ODESSA,CF_NO_CLIP2)
+	F_set_chr(B_ODESSA,CF_NO_CSP)
+	F_set_chr(C_ODESSA,CF_NO_CLIP)
+	F_set_chr(C_ODESSA,CF_NO_CLIP2)
+	F_set_chr(C_ODESSA,CF_NO_CSP)	
+	color(B_ODESSA,-1)
+	color(C_ODESSA,-1)
+	KAO(LUE,"B","D","6")
+
+	//モーション定義
+	MOT_SET(EVENT_RAGNA,150,-1,405,405,-1,-1)	//どうな之よ
+	MOT_SET(EVENT_RAGNA,151,-1,468,468,-1,-1)	//おどろき
+	MOT_SET(ODESSA,150,-1,459,459,-1,-1)	//ため
+	MOT_SET(B_ODESSA,150,-1,459,459,-1,-1)	//ため
+	MOT_SET(B_ODESSA,151,-1,396,396,-1,-1)	//片手腰
+
+
+	MOT_SET(C_ODESSA, 150, 151,0005,0084,-1,-1) //帽子を取る
+//	MOT_SET(C_ODESSA, 151, 152,0086,0129,-1,-1) //ポーズを取る
+	MOT_SET(C_ODESSA, 151, -1,0086,0129,-1,-1) //ポーズを取る
+	MOT_SET(C_ODESSA, 152, -1,0135,0234,-1,-1) //耳が生える
+	MOT_SET(C_ODESSA, 153, -1,0240,0269,-1, -1) //ポーズ→立ち
+
+
+	F_set_Node(C_ODESSA, "Bone_RightSword", NP_HIDE)	
+
+	chr_equip_chr(EFFDUMMY2, ODESSA, "charbase0", 100, 0,0,0, 0,0,0)
+	chr_equip_chr(EFFDUMMY1, ODESSA, "charbase0", 100, 0,0,0, 0,0,50)
+	wait(30)															//カメラがくつき抑制
+	
+	//カメラ初期位置
+//	CAM_Roll(9,0)
+	CAM_move(0,0,1000,0,0)
+	CAM(470,540,100,42,180,0,0)
+	CAM_move(0,-1500,-200,300,0)
+	CAM(470,440,-200,42,210,300,0)
+
+	//フェードイン
+	fade_in(0,90,0)
+//	wait_fade()
+//	wait(30)
+
+//	背景之地球や星鯨を見せる。
+
+	wait_CAM_move()
+	wait_CAM()
+//	wait(30)
+	CAM_move(-80,-4042,-680,120,0)
+	CAM(30,80,-680,36,244,120,0)
+	wait_CAM_move()
+	wait_CAM()
+
+	MOT(EVENT_RAGNA,51,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","12321D","6")
+	MES(EVENT_RAGNA,"这就是『月·异世界』……",0)
+	KAO(EVENT_RAGNA,"B232BZ5","D","6")	
+	MES(EVENT_RAGNA,"这个地方真是个\n超出了人类想像的场所……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"B232BZ4","12321D","6")		
+	MES(LUE,"空中还漂浮着\n各式各样的东西……",0)
+	KAO(LUE,"B232BZ5","12321D","5")	
+	MES(LUE,"公，公主就是被掳到了\n这个地方……",0)
+//	KAO(LUE,"12321Z4","1","1")		
+//	MES(LUE,"而，而且……\n下面这片广阔的大地是……",0)
+	MES_close(LUE)
+
+	MES(ODESSA,"…………………………………",0)
+	MES_close(ODESSA)
+
+//　　拉古那之頭にＰＡマーク。
+	KAO(EVENT_RAGNA,"B","12321","6")
+	KAO(LUE,"B","12321","6")
+	EMO(EVENT_RAGNA,EMO_PA)
+	wait(15)
+	rot_chr(EVENT_RAGNA,30,ODESSA)
+
+	rot_chr(LUE,30,ODESSA)
+	wait(15)
+
+	MOT(EVENT_RAGNA,150,15)
+	wait(15)		
+	MES(EVENT_RAGNA,"怎么了奥迪莎？",0)
+	MES(EVENT_RAGNA,"就连你也被这阵势\n吓到了吧？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"12321Z2","123","6")	
+	MES(ODESSA,"哼，哼哼……",0)
+	MES_close(ODESSA)
+	wait(15)
+	CAM_quake("46464646")
+	KAO(ODESSA,"343434343","6","6")		
+	MES(ODESSA,"S5啊哈哈哈哈哈哈！",0)
+	MES_close(ODESSA)
+	wait_MES(ODESSA)
+
+//　　次之瞬間，奥迪莎之身体が青白いオーラに包まれる。
+//　　テンガロンハットを取って，耳が伸びて目も金色になる。
+//　　ただし完全な獣化（ブーストモード時之形態）ではない。
+
+	cross_fade(15)
+	CAM_move(-88,-4030,-680,0,0)
+	CAM(70,38,-680,34,118,0,0)
+	MOT(EVENT_RAGNA,2,0)
+
+	KAO(EVENT_RAGNA,"B","D","6")
+	KAO(LUE,"B","D","6")
+	KAO(ODESSA,"B","1","2")
+	KAO(C_ODESSA,"B","1","2")//
+	color(ODESSA,-1)
+	color(C_ODESSA,1)
+	wait_fade()
+	
+	//帽子，変身
+	EV("EV_ODESSA_SE")//奥迪莎SE処理
+	MOT(C_ODESSA,3,5)
+	wait(5)
+	wait(79)
+//	CAM(110,33,-680,34,118,200,0)	
+	CAM(70,33,-680,34,117,200,0)
+
+	MOT(C_ODESSA,151,0)											//ポーズをとる
+	wait(10)
+	MES_pos(ODESSA,"S5噢噢噢噢噢噢噢噢噢！",0,0,0,0,0)
+	KAO(C_ODESSA,"2","21","2")//
+	wait(2)
+	KAO(C_ODESSA,"3","1","3")//
+	wait(2)
+	KAO(C_ODESSA,"4","1","3")//
+	wait(6)	
+	MOT(EFFDUMMY2,69, 0)		//エフェクト：金色オーラ足元
+	MOT(EFFDUMMY1, 9, 0)		//エフェクト：金色オーラ
+	wait(20)
+	MOT(C_ODESSA,5,0)											//耳生える
+	wait(40)
+	KAO(EVENT_RAGNA,"2","12321DE","7")
+	KAO(LUE,        "2","12321DE","7")
+	
+	wait(60)
+	MES_close(ODESSA)
+	EFF_chr(6320, C_ODESSA, 0,100,0, "charbase0")
+	wait(10)
+	EFF_chr(6320, C_ODESSA, 0,100,0, "charbase0")
+	wait(15)
+	wait(30)
+	MOT(C_ODESSA,	153,0)					//ポーズ→立ち
+	MOT(EFFDUMMY1, 0, 0)
+	MOT(EFFDUMMY2, 0, 0)
+	wait(25)		
+	KAO(C_ODESSA,"32B","123","2")			//目をつむる
+	wait(10)
+
+	cross_fade(30)
+	color(ODESSA,-1)
+	color(C_ODESSA,-1)
+	color(B_ODESSA,1)
+	KAO(B_ODESSA,"B","3","2")
+	CAM(70,33,-680,34,118,0,0)
+	wait(30)
+
+	MOT(EVENT_RAGNA,151,5)
+	wait(5)
+	KAO(EVENT_RAGNA,"B232B2Z2","D12321D","6")
+	MES(EVENT_RAGNA,"奥…奥迪莎！？",0)
+	MES_close(EVENT_RAGNA)
+	
+	KAO(LUE,"B232B2Z2","D12321D","6")
+	MES(LUE,"这，这股力量是……",0)
+	KAO(LUE,"B232BZ2","D12321","2")
+	MES(LUE,"莫非是因为这个地方！？",0)
+	MES_close(LUE)
+
+	KAO(B_ODESSA,"B232BZ4","3","2")
+	MES(B_ODESSA,"『月·异世界』……",0)
+	KAO(B_ODESSA,"B232BZ6","321","2")	
+	MES(B_ODESSA,"从名字就能想到，下面这片广阔的大地\n正是月亮的本体。",0)
+	MES_close(B_ODESSA)
+
+//　　拉古那之頭に！マーク。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(EVENT_RAGNA,"B","12321DE","7")
+	EMO(LUE,EMO_BIKKURI)
+	KAO(LUE,"B","12321D","1")
+	wait(15)
+	MOT(EVENT_RAGNA,2,15)
+	wait(5)
+	KAO(EVENT_RAGNA,"2","E","7")
+	MES(EVENT_RAGNA,"什……！？",0)
+	KAO(EVENT_RAGNA,"B232B2Z2","D12321D","2")	
+	MES(EVENT_RAGNA,"你说月亮……\n就是浮在夜空中的那个！？",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	cross_fade(15)
+	CAM_move(-8,-4070,-680,0,0)
+	CAM(310,46,-680,30,180,0,0)
+	rot_chr(B_ODESSA,30,EVENT_RAGNA)
+	wait(15)
+
+	MOT(B_ODESSA,151,15)
+	wait(15)
+
+	KAO(B_ODESSA,"B232BZ5","123","1")
+	MES(B_ODESSA,"啊，现在我的力量正在\n前所未有的爆发。",0)
+	KAO(B_ODESSA,"B232BZ5","32A","1")	
+	MES(B_ODESSA,"这里如果是月亮上的话，\n那一切就能说得通了。",0)
+	MES_close(B_ODESSA)
+
+	KAO(LUE,"B232BZ3","1233321","4")
+	MES(LUE,"真，真是匪夷所思……",0)
+	MES_close(LUE)
+
+	MES(EVENT_RAGNA,"啊啊……\n看来我们来到了一个不得了的地方。",0)
+	MES(EVENT_RAGNA,"不管了，不论来到什么地方，\n该做的事是不会变的。",0)
+	MES(EVENT_RAGNA,"打起精神准备出发吧！",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( LUE, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+
+	KAO(LUE,"12321Z1","1233321","2")
+	MES(LUE,"嗯，好……！",0)
+	MES_close(LUE)
+
+	MOT(B_ODESSA,2,15)
+//	wait(15)
+	
+	KAO(B_ODESSA,"12321Z3","A233321","2")
+	MES(B_ODESSA,"啊……了解！",0)
+	MES_close(B_ODESSA)
+
+//　　イベント終了，プレイヤー操作許可。
+//　　なお露は，非战闘マップでは出しっぱなしにしておく。
+//　　战闘マップに入ったら最初からアンカーギアに宿った状態。
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(LUE)
+	delete(ODESSA)
+	delete(B_ODESSA)
+	delete(C_ODESSA)
+	delete(EVENT_RAGNA)
+	delete(EFFDUMMY1)
+	delete(EFFDUMMY2)
+
+//	chr_pos(RAGNA,	 -632,4582,-798,90,2)
+//	chr_pos(PARTNER,	 -772,4442,-800,90,2)
+	chr_pos(RAGNA,	 40,4182,-798,90,2)
+	chr_pos(PARTNER,	 -100,4042,-800,90,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+	CAM_Roll(9,0)
+
+//ＧＦ『★ルナ·ムンドゥスに到着した』を立てる。
+	F_set(F5_09_OnLunar)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+//奥迪莎狼化SE処理
+EV_ODESSA_SE
+{
+	wait(30)
+	SE(1029,0)//帽子脱ぐSE
+	wait(30)
+	SE(466,0)//帽子投げ捨てるSE
+	wait(40)
+	EV("EV_1082_loop")//狼族オーラSE
+	SE(1067,0)//オーラSE補足
+	wait(110)
+	wait(15)
+	SE(1088,0)
+	SE(1042,0)
+	wait(20)
+	EV_stop("EV_1082_loop")//狼族オーラSE止める
+	EV_stop("EV_1082_loop2")//狼族オーラSE止める
+}
+
+//狼族オーラSE
+EV_1082_loop
+{
+	SE(1082,0)
+	wait(30)
+	EV("EV_1082_loop2")
+}
+EV_1082_loop2
+{
+	SE(1082,0)
+	wait(30)
+	EV("EV_1082_loop")
+}
+
+EV_STOP_01
+{
+	EV_begin()
+
+//	name("テキスト（色換え·表示しない）")
+	fade_in(30,10,BLACK)
+	MES(0,"C3S2通往水晶祭坛的大门\n已经关闭。",2)
+	MES_close(0)
+	fade_in(0,10,BLACK)
+
+	cross_fade( 30 )
+	chr_pos(PLAYER1,-7,4383,-800,178,2)
+	chr_pos(PLAYER2,211,4573,-791,145,2)
+	chr_pos(PET,-89,4516,-800,110,2)
+
+	EV_end()
+	CAM_return(0)
+	wait_fade()	
+
+}
+
+#EndScriptTable
+//====================================================================
+

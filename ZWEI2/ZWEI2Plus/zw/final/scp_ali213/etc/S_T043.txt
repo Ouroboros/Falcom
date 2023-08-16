@@ -1,0 +1,1324 @@
+//──────────────────────────────
+//	name("◆亚妮迪（雑貨屋店員）Annette")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_ANNETTE
+{
+	TK_begin()
+
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(ANNETTE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ANNETTE)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ANNETTE)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ANNETTE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		//モ～ション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+//		MOT(ANNETTE,2,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		if(!FT_12_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			VOICE(709,0)									//「哈イ、いらっしゃい」			
+			MES(ANNETTE,"嗨、欢迎光临。",0)		
+//			MES(ANNETTE,"嗨、欢迎光临。\n请随便看。",0)
+			MES_close(ANNETTE)
+			EV("SHOP_ANNETE_LOOP")
+			wait_EV("SHOP_ANNETE_LOOP")
+		}
+		//モ～ション復帰
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//モ～ション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+//		MOT(ANNETTE,2,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		if(!FT_11_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			VOICE(709,0)									//「哈イ、いらっしゃい」			
+			MES(ANNETTE,"嗨、欢迎光临。",0)
+//			MES(ANNETTE,"嗨、欢迎光临。\n请随便看。",0)
+			MES_close(ANNETTE)
+		}
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//モ～ション復帰
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+		if(!FT_10_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			//モ～ション初期化
+			//EV_stop("MOTION_ANETTE")
+			//EV_stop("LOOKING_ANETTE")
+			MOT(ANNETTE,50,15)
+//			MOT(ANNETTE,2,15)
+			rot_chr(ANNETTE,30,PLAYER1)
+
+			VOICE(709,0)									//「哈イ、いらっしゃい」
+
+//			MES(ANNETTE,"欢迎光临。\n请随便看。",0)
+			MES(ANNETTE,"嗨、欢迎光临。",0)
+			MES_close(ANNETTE)
+		}
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//モ～ション復帰
+		MOT(ANNETTE,51,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦－Ｂ星降り之へ向かう事にした
+	//──────────────────────────────
+	if( F4_02_GoVillage2 )
+	{
+		//モ～ション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//「哈イ、いらっしゃい」
+
+//		MES(ANNETTE,"欢迎光临。\n请随便看。",0)
+		MES(ANNETTE,"嗨、欢迎光临。",0)	
+		MES_close(ANNETTE)
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//モ～ション復帰
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼⑦－Ａ拉古那は単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		EV("TK_ANNETTE")
+		wait_EV("TK_ANNETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		//モ～ション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//「哈イ、いらっしゃい」
+
+		if(!F_ANNETTE)
+		{
+//			MES(ANNETTE,"啊、欢迎光临。\n请随便看。",0)
+			MES(ANNETTE,"嗨、欢迎光临。",0)
+			MES_close(ANNETTE)
+		}
+	//　　★繰り返し
+		else
+		{
+//			MES(ANNETTE,"欢迎光临。\n请随便看。",0)
+			MES(ANNETTE,"嗨、欢迎光临。",0)
+			
+			MES_close(ANNETTE)
+		}
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		MOT(ANNETTE,75,15)
+		//モ～ション復帰
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		//モ～ション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//「哈イ、いらっしゃい」
+
+//		MES(ANNETTE,"嗨、欢迎光临。\n欢迎来到《亚妮迪》服装店！",0)
+		MES(ANNETTE,"嗨、欢迎光临。",0)
+		MES_close(ANNETTE)
+		
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//モ～ション復帰
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		if(!FT_03_TalkAneFede)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			MOT_SET(ANNETTE,150,-1,406,406,-1,0)
+			if(!F_ANNETTE)
+			{
+			//　　亚妮迪、ＰＡエモ～ションで振り返る。
+				EMO(ANNETTE,EMO_PA)
+				wait(30)
+				rot_chr(ANNETTE,30,PLAYER1)
+
+				//モ～ション初期化
+//				EV_stop("MOTION_ANETTE_03")
+//				MOT(ANNETTE,2,15)
+				MOT(ANNETTE,150,10)
+
+				MES(ANNETTE,"啊、不好意思。\n。正好姐姐来了。",0)
+				MES(ANNETTE,"……您要看点什么吗？",0)
+				MES_close(ANNETTE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MOT(SHESTOR,150,10)
+				//モ～ション初期化
+//				EV_stop("MOTION_ANETTE_03")
+//				MOT(ANNETTE,2,15)
+				MOT(ANNETTE,50,15)
+				rot_chr(ANNETTE,30,PLAYER1)
+
+				VOICE(709,0)									//「哈イ、いらっしゃい」
+		
+//				MES(ANNETTE,"欢迎光临。\n请随便看。",0)
+				MES(ANNETTE,"嗨、欢迎光临。",0)
+				MES_close(ANNETTE)
+			}
+			EV("SHOP_ANNETE_LOOP")
+			wait_EV("SHOP_ANNETE_LOOP")
+
+			
+			//モ～ション復帰
+//			EV("MOTION_ANETTE_03")
+
+			MOT(ANNETTE,50,15)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		//モ～ション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		//MOT(ANNETTE,2,15)
+		MOT(ANNETTE,52,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//「哈イ、いらっしゃい」
+
+		if(!F_ANNETTE)
+		{
+//			MES(ANNETTE,"啊、欢迎光临。",0)
+			MES(ANNETTE,"嗨、欢迎光临。",0)
+			MES(ANNETTE,"正好在换新品……\n您要看点什么吗？",0)
+			MES_close(ANNETTE)
+		}
+	//　　★繰り返し
+		else
+		{
+//			MES(ANNETTE,"欢迎光临。\n请随便看。",0)
+			MES(ANNETTE,"嗨、欢迎光临。",0)
+			MES_close(ANNETTE)
+		}
+		
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//モ～ション復帰
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+		MOT(ANNETTE,75,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		//モ～ション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,52,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		if(!FT_01_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			VOICE(709,0)									//「哈イ、いらっしゃい」
+		
+//			MES(ANNETTE,"嗨、欢迎光临。\n欢迎来到《亚妮迪》服装店！",0)
+			MES(ANNETTE,"嗨、欢迎光临。",0)
+			MES_close(ANNETTE)
+			EV("SHOP_ANNETE_LOOP")
+			wait_EV("SHOP_ANNETE_LOOP")
+		}
+		//モ～ション復帰
+		//EV("MOTION_ANETTE")
+//		//EV("LOOKING_ANETTE")
+		MOT(ANNETTE,75,15)
+	}
+	
+	TK_end()
+}
+
+SHOP_ANNETE_LOOP
+{
+	workL(WK_CANCEL,SET,3)//【取消】
+	MES_pos(PLAYER1,"??W9【对话】\n【购买物品】\n【取消】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	//──────────────────────────────
+	//	name("□对话")
+	//　　通常会話処理へ飛ぶ。
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		EV("TK_ANNETTE")
+		wait_EV("TK_ANNETTE")
+		loop
+	}
+	else
+	//──────────────────────────────
+	//	name("□买东西")
+	//　　ショップ処理を挟む。
+	//──────────────────────────────
+	if(WK_YESNO==2)
+	{
+
+		MES(ANNETTE,"请慢慢看吧☆",0)
+		MES_close(ANNETTE)
+
+		//品揃え変える＆安売り
+		if( F5_00_HearLunar )
+		{
+			shop_open(10)
+		}
+		else
+		{
+			shop_open(0)
+		}
+		wait_W(WK_YESNO)
+		
+//		if(WK_ITEMBOX1==1)			//何か買った
+//		{	
+//			workL(0,RAND,2)	
+//			if(WK000==0)
+//			{
+//				VOICE(710,0)				//「谢谢光顾～」　　　　（服を買った直後）
+//			}
+//			else
+//			{
+//				VOICE(711,0)				//「哇、很合身呢」（服を買った直後）
+//			}
+//		}
+//		workL(WK_ITEMBOX1,SET,0)
+		
+		loop
+	}
+	//──────────────────────────────
+	//	name("□停止")
+	//　　会話処理終了。
+	//──────────────────────────────
+	else
+	{
+		VOICE(712,0)													//「またどうぞ～」
+	
+		MES(ANNETTE,"欢迎下次再来～！",0)
+		MES_close(ANNETTE)
+	}
+}
+
+TK_ANNETTE
+{
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※梅ンキャラ之一般メッセ～ジを参照
+	//　　※雑貨屋·奥之棚之前に配置。
+	//　　※初回イベント。
+	//　　　話しかけるとクロスフェ～ドで拉古那たちを再配置する。
+	if( F6_05_EndSixth )
+	{
+		if(!FT_13_TalkAnnette)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(-1097,-224,135,0,0)
+			CAM(270,64,-25,27,239,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,-1097,44,1,38,2)
+			chr_pos(PET,-973,415,1,110,2)
+			
+			
+			chr_pos(PARTNER,-1323,-362,1,349,2)
+			color(PARTNER,-1)//透過		
+			
+			//ハイポリキャラセット
+			set_chr(MIA,1091,-1,-1, -932,240,0,	2,70,0, "")
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(MIA,"1", "1", "1")	
+			KAO(ANETTE,"1", "1", "1")	
+			
+			MOT_SET(MIA,150,-1,579,579,-1,0)
+			wait_fade()
+
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			rot_chr(ANNETTE,30,MIA)
+
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"啊、欢迎光临。\n欢迎来到《亚妮迪》服装店！",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"咦、这不是米娅吗。",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"嗯嗯、果然这件衣服\n最合身呢□",0)
+			MES_close(ANNETTE)
+
+		//	name2(MIA)
+			MES(MIA,"啊哈哈、十分感谢。",0)
+			MES_close(MIA)
+
+		//	name2(RAGNA)
+			look_chr(RAGNA,MIA,"Bone_Head")
+			MES(RAGNA,"喔、是吗……\n那件衣服、\n是在这里选的啊。",0)
+			MES_close(RAGNA)
+
+			rot_chr(ANNETTE,30,RAGNA)
+		//	name2(ANNETTE)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"嘿嘿、是皮皮洛\n带过来的。",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"拉古那也真是的。\n那么可爱的妹妹\n都不介绍给我认识下☆",0)
+			MES_close(ANNETTE)
+			look_off(RAGNA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈、不好意思……\n（话说回来、现在\n  是道歉的时候吗……？）",0)
+			MES_close(RAGNA)
+			rot_chr(ANNETTE,30,MIA)
+			
+		//　　亚妮迪、３人を見渡す。
+			look(ANNETTE,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(ANNETTE,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(ANNETTE,"Bone_Head",0,		0,2,0,			0,0,0)
+			
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"但是……\n今天、怎么了。",0)
+			KAO(ANNETTE,"12321Z5","1","1")
+			MES(ANNETTE,"难道是全体一起\n来买东西吗……",0)
+			MES_close(ANNETTE)
+
+		//	name2(PET)
+			MES(PET,"嗯、那倒不错……",0)
+			MES(PET,"其实店主、今天\n这两个人说要离开。",0)
+			MES(PET,"我们要和大家打个招呼。",0)
+			MES_close(PET)
+
+		//　　亚妮迪に！エモ～ション。
+			EMO(ANNETTE,EMO_BIKKURI)
+			look_chr(ANNETTE,PET,"Bone_Head")
+			wait(30)
+
+			KAO(ANNETTE,"12321Z3","1","1")
+			MES(ANNETTE,"诶、诶～……！？",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"两个人、都要回去了吗？",0)
+			MES_close(ANNETTE)
+			
+			look_off(ANNETTE)
+
+		//	name2(MIA)
+			MES(MIA,"亚妮迪、\n谢谢你的洋装。",0)
+			MES(MIA,"还多谢你帮我试穿呢……",0)
+			MES_close(MIA)
+
+		//	name2(ANNETTE)
+			rot_chr(ANNETTE,30,MIA)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"啊、没关系没关系。\n我也喜欢这样做。",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"啊、不过以后会好寂寞啊～。",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"我本来还有很多衣服\n想让米娅试穿呢……",0)
+			MES_close(ANNETTE)
+
+		//	name2(MIA)
+			MES(MIA,"阿哈哈……\n那个、很抱歉……",0)
+			MES_close(MIA)
+
+		//	name2(ANNETTE)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"嗯、\n米娅不需要道歉。",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"虽然少了一个\n可爱的客人……\n不过、这也是没办法的。",0)
+			MES_close(ANNETTE)
+
+		//　　亚妮迪、拉古那に向く。
+			rot_chr(ANNETTE,30,RAGNA)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"喂、拉古那、\n我原本想送你围巾作为礼物的。",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"还有冬季的衣物之类的、\n但这样的话你行李包会变大不少吧？",0)
+			MES_close(ANNETTE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊、别太在意嘛。",0)
+			MES(RAGNA,"旅途所必要的东西\n我都已经准备好了。",0)
+			MES_close(RAGNA)
+
+		//	name2(ANNETTE)
+			KAO(ANNETTE,"12321Z2","1","1")
+			MES(ANNETTE,"是吗……",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"嗯、那我就不多说了。",0)
+			rot_chr(ANNETTE,30,MIA)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"多保重啊、你们两个！\n在故乡也要多加努力啊！",0)
+			MES_close(ANNETTE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈、知道了。",0)
+			MES_close(RAGNA)
+
+		//　　◆米娅、軽くお辞儀をする。
+			MOT(MIA,150,15)
+
+			MES(MIA,"承蒙照顾。",0)
+			MES_close(MIA)
+
+		//　　軽く暗転してから操作許可を戻す。
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+			
+			rot(ANNETTE,30,100)
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			delete(MIA)
+			color(PARTNER,1)//透過解除
+			chr_pos(PARTNER,-932,240,0,70,2)
+			MOT(MIA,2,0)
+			
+			
+			F_set(FT_13_TalkAnnette)
+			EV_end()
+			
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+		//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			TK_begin()
+			rot_chr(ANNETTE,30,PLAYER1)
+			MES(ANNETTE,"虽然少了\n一位可爱的客人……",0)
+			MES(ANNETTE,"但天下没有不散之筵席。\n唉、这也是没办法的呢。",0)
+			MES(ANNETTE,"要多保重啊、你们两个！\n在故乡也要多加努力哦！",0)
+			MES_close(ANNETTE)
+			TK_end()
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※雑貨屋·カウンタ～に配置。
+	if( F6_00_GoToMeru )
+	{
+//　　（※初回イベントに分離します）
+//　　※雑貨屋·カウンタ～に配置。
+//　　※初回イベント
+		rot_chr(ANNETTE,30,PLAYER1)
+		if(!FT_12_TalkAnnette)
+		{
+			MES(ANNETTE,"龙卷风一来\n大家都惶惶不安。",0)
+			MES(ANNETTE,"我也差不多\n该关门歇业了吧……",0)
+			MES_close(ANNETTE)
+
+		//　　亚妮迪にＰＡエモ～ション。
+			EMO(ANNETTE,EMO_PA)
+			wait(30)
+			
+			MES(ANNETTE,"啊、说起来。",0)
+			MES(ANNETTE,"刚才皮皮洛来过了、\n预定了几件可爱系的服装\n还说……",0)
+			MES(ANNETTE,"『我去解决那个。\n  交给我咯☆』",0)
+			MES_close(ANNETTE)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(ANNETTE,"如何……\n拉古那、你明白她的意思吗？",0)
+				MES_close(ANNETTE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哈哈、马马虎虎……\n（皮皮洛这家伙、\n  真是意外的起劲呢……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(ANNETTE,"如何……\n艾雯、你懂她的意思吗？",0)
+				MES_close(ANNETTE)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"嗯、大体上能够想象的到。",0)
+				MES(PARTNER,"（要是没有时装店的话、\n  就会感到很难过吧。）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			
+			F_set(FT_12_TalkAnnette)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(ANNETTE,"皮皮洛她……\n发生什么事了。",0)
+			MES(ANNETTE,"难道\n是与那个龙卷风有关吗。",0)
+			MES(ANNETTE,"嗯～～～～嗯………\n到底有着什么样的关系呢……",0)
+			MES_close(ANNETTE)
+
+		//　　亚妮迪に少し···エモ～ション。
+			EMO(ANNETTE,EMO_TENTEN)
+			wait(30)
+			
+			MES(ANNETTE,"虽然不是太明白……\n但就交给我吧、皮皮洛！",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※雑貨屋·カウンタ～に配置。
+	if( F5_00_HearLunar )
+	{
+		//　　※初回イベント
+		if(!FT_11_TalkAnnette)
+		{
+			VOICE(709,0)									//「哈イ、いらっしゃい」			
+			MES(ANNETTE,"嗨、欢迎光临。",0)		
+//			MES(ANNETTE,"嗨、欢迎光临。\n欢迎来到《亚妮迪》服装店！",0)
+			MES(ANNETTE,"你发现了吗？\n全部改成朴素的商品了。",0)
+			MES(ANNETTE,"那是因为、我给以前的商品\n都降了价的缘故、\n变的更容易卖了。",0)
+			MES(ANNETTE,"呵呵、请随便看看吧☆",0)
+			MES_close(ANNETTE)
+			
+			//★亚妮迪【結構商売上手】
+			F_set_note(ANNETTE,2)
+			F_set(FT_11_TalkAnnette)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			MES(ANNETTE,"虽然没有春天的新作、\n但是追加了一些装饰哦。",0)
+			MES(ANNETTE,"这可是刚刚发表出来\n有名的设计人设计的品牌哟。",0)
+			MES(ANNETTE,"哦、虽然价格稍微有点贵……\n这点就请将就一下吧☆",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//　　※屋敷前を掃除（ホウキ持ち）。
+	//　　※雑貨屋、商品之手入れをしている。
+	if( F4_09_GoShrineMia)
+	{
+	//　　※初回イベント。
+		if(!FT_10_TalkAnnette)
+		{
+			MES(ANNETTE,"啪嗒啪嗒、啪嗒啪嗒……",0)
+			MES_close(ANNETTE)
+
+		//　　亚妮迪、ＰＡエモ～ションで振り返る。
+			EMO(ANNETTE,EMO_PA)
+			rot_chr(ANNETTE,30,PLAYER1)
+			wait(30)
+			MOT(ANNETTE,50,15)
+			MES(ANNETTE,"咦、咦？\n你们两个、很早呢～。",0)
+			MES(ANNETTE,"虽然还在准备中……\n不嫌弃的话就随便看看吧？",0)
+			MES_close(ANNETTE)
+			
+			F_set(FT_10_TalkAnnette)
+
+		//　　□ショップ選択肢に飛ぶ。
+		//──────────────────────────────
+		}
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			MES(ANNETTE,"今天早上无论如何～\n也要早点爬起来。",0)
+			MES(ANNETTE,"啊、真的是好久都没有\n这样早起了～……",0)
+			MES(ANNETTE,"为了不浪费时间、\n开店前先用掸子扫扫灰尘吧。",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※『★星降之里へ向かうことにした』之前は、
+	//　　　罗亚鲁塔村に来ている。
+	//　　※罗亚鲁塔村·牛舎つき民家で、ベッド之そばにいる。
+	//　　※初回は、菲缇莉卡之イベントが起動する。
+	if( F4_00_StartSolo )
+	{
+		//──────────────────────────────
+		//　　※以下『★星降之里へ向かうことにした』前之通常一般メッセ～ジ。
+		//　　※振り返らない。
+		if(!F4_02_GoVillage2)
+		{
+		//　　※亚妮迪と共通之初回イベント。
+		//　　※振り返らない。
+			TK_begin()
+			
+			MOT_SET(ANNETTE,151,-1,458,458,152,3)
+			MOT_SET(ANNETTE,152,-1,459,459,153,3)
+			MOT_SET(ANNETTE,153,-1,458,458,154,3)
+			MOT_SET(ANNETTE,154,-1,459,459,150,10)
+			if(!FT_07_TalkAneFede)
+			{
+				EV("TALK_FA")
+				wait_EV("TALK_FA")
+			}
+			else
+			{
+				MES(ANNETTE,"真的真的……",0)
+				MES(ANNETTE,"抽泣、要是早知道的话、\n我是绝对不会留下我姐姐一个人……",0)
+				MOT(ANNETTE,151,5)
+				MES(ANNETTE,"干嘛啊、你笑什么！？",0)
+				MES_close(ANNETTE)
+				MOT(ANNETTE,150,10)
+			}
+			TK_end()
+		}
+		//──────────────────────────────
+		//　　※『★星降之里へ向かうことにした』之後は、阿鲁迪亚に戻っています。
+		//　　※雑貨屋·カウンタ～に配置。
+		else
+		{
+			if(!F_ANNETTE)
+			{
+				MES(ANNETTE,"刚才、\n我去看望了姐姐。",0)
+				MES(ANNETTE,"嗯……不过看起来\n比我预料的要有精神，稍稍有些安心了。",0)
+				MES(ANNETTE,"虽然有点乱来\n但我还是想把她接过来……\n镇子里又刚闹完怪物。",0)
+				MES(ANNETTE,"生活上彼此能有个照应……\n果然不该强颜振作呢～。",0)
+				MES_close(ANNETTE)
+				
+				//──────────────────────────────
+				//	name("□こ之フラグでラ～ライラと話している场合、１回だけ挿入。")
+				if(!FT_07_TalkAnnette)
+				{
+					MES(ANNETTE,"话说回来……",0)
+					MES_close(ANNETTE)
+
+				//　　亚妮迪、ラ～ライラを見てから、向きを戻す。
+					rot_chr(ANNETTE,30,LA-RAIRA)
+					CAM_move(-1071,173,134,90,0)
+					wait_CAM_move()
+					
+					wait(30)
+					cross_fade(30)
+					CAM_return(0)
+					CAM(230,80,-25,25,225,0,0)
+					wait_fade()
+					
+					rot_chr(ANNETTE,30,PLAYER1)
+					MES(ANNETTE,"（那个老婆婆、是谁？）",0)
+					MES(ANNETTE,"（以前从来没见过呢……\n  刚才回店的时候、\n  她正在物色商品）",0)
+					MES(ANNETTE,"（应该、不是什么怪人吧？？）",0)
+					MES_close(ANNETTE)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（啊、这个。）",0)
+					MES(RAGNA,"（虽然看起来很可疑、\n  但不是坏人啦……）",0)
+					MES_close(RAGNA)
+
+				//	name2(SUBARU)
+					MES(PARTNER,"（嗯、那老婆婆\n  只是很时尚而已！）",0)
+					MES_close(PARTNER)
+
+				//	name2(ANNETTE)
+					MES(ANNETTE,"（是、是吗……）",0)
+					MES(ANNETTE,"（虽然不是很明白，但我知道了。\n  谢谢了，二位！）",0)
+					MES_close(ANNETTE)
+					F_set(FT_07_TalkAnnette)
+				}
+				
+				F_set(ANNETTE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(ANNETTE,"我打算、\n再去看望一次。",0)
+				MES(ANNETTE,"提欧先生虽说没什么问题、\n但我还是有点担心呢……",0)
+				MES(ANNETTE,"直到现在\n我好象都没有怎么去拜访过她呢。",0)
+				MES(ANNETTE,"嗯、以后时不时地抽个空\n去拜访拜访她吧。",0)
+				MES_close(ANNETTE)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※雑貨屋·カウンタ～に配置。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_ANNETTE)
+		{
+			MES(ANNETTE,"啊、糟了。\n已经这么晚了……",0)
+			MES(ANNETTE,"只是稍微\n睡了下嘛。",0)
+			MES_close(ANNETTE)
+
+		//　　亚妮迪にＰＡエモ～ション。
+			EMO(ANNETTE,EMO_PA)
+			wait(30)
+			
+			MES(ANNETTE,"说起来、\n刚才就一直感觉很吵……\n……外面出什么事啦？",0)
+			MES_close(ANNETTE)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"这……",0)
+				MES(RAGNA,"总之、\n不要跑到店外头去。",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"嗯、现在有点小问题。",0)
+				MES(PARTNER,"还是不要出去的好。",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			
+			F_set(ANNETTE)
+		}
+		else
+		{
+	//　　★繰り返し
+			MES(ANNETTE,"好象一考虑到店的布置问题\n就会马上睡着。",0)
+			MES(ANNETTE,"好象太晚了呢。\n也该关门了……",0)
+			MES_close(ANNETTE)
+
+		//　　亚妮迪にＰＡエモ～ション。
+			EMO(ANNETTE,EMO_PA)
+			wait(30)
+			
+			MES(ANNETTE,"啊、别担心。\n两位要买东西的话\n我会一直在的。",0)
+			MES(ANNETTE,"如果有什么事的话告诉我一声。",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※雑貨屋·カウンタ～に配置。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_ANNETTE)
+		{
+			MES(ANNETTE,"嗯、飞机真的是慢啊～……",0)
+			MES(ANNETTE,"这次的联络件中\n原本有春季新款式的……",0)
+			MES(ANNETTE,"没办法、\n先更新一下\n橱窗的展示吧。",0)
+			MES(ANNETTE,"如果没有新鲜感的话、\n客人会变少的。",0)
+			MES_close(ANNETTE)
+			
+			F_set(ANNETTE)
+		}
+	//　　★繰りかえし
+		else
+		{
+			MES(ANNETTE,"就个人来说、差不多该是\n短裙裤与紧身裤\n流行的时候了。",0)
+			MES(ANNETTE,"最近不停的出新花样、\n整理方面没问题吗？",0)
+			MES(ANNETTE,"嗯、这边已经差不多了\n也该考虑下布置方面了。",0)
+			MES_close(ANNETTE)
+		}
+	}
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※雑貨屋·カウンタ～で菲缇莉卡と話している。
+	//　　※２人共通之初回イベント
+	//　　※２人とも振り返らない。
+	else
+	if( F2_00_GoForest )
+	{
+		if(!FT_03_TalkAneFede)
+		{
+			//共通会話。
+			EV("TK_FEDERICA")
+			wait_EV("TK_FEDERICA")
+		}
+		else
+		{
+			if(!F_ANNETTE)
+			{
+				MES(ANNETTE,"姐姐她、\n住在罗亚鲁塔村哦。",0)
+				MES(ANNETTE,"她一直在说\n因为近所以一起住吧……",0)
+				MES(ANNETTE,"呵、你问为什么\n好象是不想离开村子吧。",0)
+				MES(ANNETTE,"真的是很顽固呢～。",0)
+				MES_close(ANNETTE)
+				
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哈哈、你说她顽固吗……\n其实双方都有点呢。",0)
+					MES_close(RAGNA)
+
+				//	name2(ANNETTE)
+					MES(ANNETTE,"啊、拉古那。\n你站在姐姐那一边吗。",0)
+					MES(ANNETTE,"啥、不可原谅。\n把价格调高点咋样？",0)
+					MES_close(ANNETTE)
+
+				//　　拉古那に青ざめエモ～ション。
+					EMO(RAGNA,EMO_AOZAME)
+					wait(30)
+					
+					MES(RAGNA,"对不起、原谅我吧。",0)
+					MES_close(RAGNA)
+				}
+			//	name("□艾雯先頭")
+				else
+				{
+					MES(PARTNER,"看起来是吵架\n其实好象很高兴呢……",0)
+					MES_close(PARTNER)
+
+				//	name2(ANNETTE)
+					MES(ANNETTE,"唉～、我可是很认真的……",0)
+					MES(ANNETTE,"艾雯？\n对说出这样话的人\n提高价格咋样～？",0)
+					MES_close(ANNETTE)
+
+				//　　艾雯に冷や汗エモ～ション。
+					EMO(PARTNER,EMO_HIYAASE)
+					wait(30)
+					
+					MES(PARTNER,"对不起、我为我的无礼道歉。",0)
+					MES_close(PARTNER)
+				}
+
+				F_set(ANNETTE)
+			}
+			else
+			{
+				MES(ANNETTE,"我们是双胞胎、\n一起生活当然是很自然的事。",0)
+				MES(ANNETTE,"不过我是想、\n和姐姐一起\n生活在这个店里……",0)
+				MES(ANNETTE,"呵、真是顽固呢……",0)
+				MES_close(ANNETTE)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※雑貨屋·フロアで商品之手入れをしている。
+	if( F1_15_GoVillage )
+	{
+		if(!F_ANNETTE)
+		{
+			MES(ANNETTE,"我们的常客、\n真有女人缘呢。",0)
+			MES(ANNETTE,"虽然每天都十分热心的来光顾……\n但是本期的新作\n还没到呢～。",0)
+			MES(ANNETTE,"好象飞机又误点了呢。",0)
+			MES(ANNETTE,"唉～、请耐心等待。\n下周可能就到了。",0)
+			MES_close(ANNETTE)
+			
+			F_set(ANNETTE)
+		}
+	//　　★繰り返し
+		else
+		{
+			look(ANNETTE,"Bone_Head",0,		0,1,0,			0,-30,0)
+			MES(ANNETTE,"嗯～、不过总觉得\n今天静不下来……",0)
+			look(ANNETTE,"Bone_Head",0,		0,1,0,			0,0,0)
+			MES(ANNETTE,"其实、差不多\n姐姐该来了吧。",0)
+			MES(ANNETTE,"嗯、虽然没什么大不了……\n不过应该今天或者明天就到了。",0)
+			MES_close(ANNETTE)
+
+		//　　亚妮迪、横を向いて···エモ～ション。
+			EMO(ANNETTE,EMO_TENTEN)
+			wait(30)
+//			look(ANNETTE,"Bone_Head",0,		0,1,1,			0,20,-10)
+			
+			MES(ANNETTE,"啊～、总感觉静不下来呢。\n早点来就好了……",0)
+			MES_close(ANNETTE)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（好象很期待呢……）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾雯先頭")
+			else
+			{
+				MES(PARTNER,"（嗯、看起来\n  真的是很期待的样子……）",0)
+				MES_close(PARTNER)
+			}
+//			look(ANNETTE,"Bone_Head",0,		0,1,1,			0,0,0)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※雑貨屋·カウンタ～に配置。
+	if( F1_01_GameStart )
+	{
+	//　　※初回イベント。
+		if(!FT_01_TalkAnnette)
+		{
+			MES(ANNETTE,"嗨、欢迎光临。\n欢迎来到《亚妮迪》服装店！",0)
+			MES(ANNETTE,"咿、那个孩子……",0)
+			MES_close(ANNETTE)
+
+		//　　亚妮迪、艾雯を見る。
+			rot_chr(ANNETTE,30,PARTNER)
+			
+			MES(ANNETTE,"咿、好漂亮的翅膀～……",0)
+			MES(ANNETTE,"喂、喂、在哪里买的？",0)
+			MES_close(ANNETTE)
+
+		//	name2(PARTNER)
+			rot_chr(PARTNER,30,ANNETTE)
+			
+			MES(PARTNER,"嗯、这个翅膀\n可是我引以为傲的蒙布里亚家的象征……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			rot_chr(RAGNA,30,PARTNER)
+			MES(RAGNA,"等、等一下公主……",0)
+			MES_close(RAGNA)
+
+		//　　拉古那、慌てて艾雯に向く。
+			MES(RAGNA,"（你在说什么啊。\n  暴露身份了可如何是好。）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			MES(PARTNER,"（只是报上家名\n  应该没问题吧。）",0)
+			MES(PARTNER,"（体会到这对翅膀的优越性之后、\n  对其垂涎若渴的人也是不少呢……）",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（不、不是这方面的问题。）",0)
+			MES_close(RAGNA)
+
+		//	name2(ANNETTE)
+			MES(ANNETTE,"？？？\n虽然不是太明白……",0)
+			MES_close(ANNETTE)
+
+		//　　拉古那と艾雯、向きを戻す。
+			rot_chr(RAGNA,30,ANNETTE)
+			rot_chr(PARTNER,30,ANNETTE)
+			
+			MES(ANNETTE,"唉、算了。\n不深究了。",0)
+			MES(ANNETTE,"你们请随便看看吧。\n我这里装饰用的小物品\n也有不少哦。",0)
+			MES_close(ANNETTE)
+
+			F_set(FT_01_TalkAnnette)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!FT_01_TalkAnnette2)
+			{
+			//　　※初回イベント２を追加。
+			//　　　こ之イベントは普通之初回とは違い、「对话」を選んだ後之
+			//　　　TK_ANETTEル～チン内で判定してください。
+				MES(ANNETTE,"话说回来……",0)
+				MES(ANNETTE,"你们两个、就是传闻中的拉古那\n拉古那和艾雯吗？",0)
+				MES_close(ANNETTE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"啊、正是……",0)
+				MES(RAGNA,"……传闻么？\n（难道公主那家伙\n  做了什么太显眼的事……）",0)
+				MES_close(RAGNA)
+
+				rot_chr(ANNETTE,30,RAGNA)
+			//	name2(ANNETTE)
+				MES(ANNETTE,"拉古那的飞机\n好像是坠落了呢。",0)
+				MES(ANNETTE,"不过多亏这样\n才能与艾雯一见钟情、\n当天就闪电求婚了。",0)
+				MES(ANNETTE,"昨天梅\n可是到处在宣扬此事呢。",0)
+				MES_close(ANNETTE)
+
+				
+			//　　拉古那に青ざめエモ～ション。
+				EMO(RAGNA,EMO_AOZAME)
+				wait(30)
+				
+			//　　チ～ンというＳＥ。				
+//				MES(RAGNA,"C4◆チ～ンというＳＥ。",0)
+//				MES_close(RAGNA)
+				
+			//　　顔を落す。（もしくはため息）
+				look(RAGNA,"Bone_Head",0,		0,28,2,			0,0,-30)
+				MES_close(RAGNA)
+				
+				MES(RAGNA,"怎、怎么这么说啊……",0)
+				MES(RAGNA,"而且变成了\n这么激烈的不顾名声的对话……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"哼哼、我这么不值得信任\n真是对不住啦。",0)
+				MES_close(PARTNER)
+
+				look(RAGNA,"Bone_Head",0,		0,0,1,			0,0,0)
+				rot_chr(PARTNER,30,ANNETTE)
+			//　　艾雯、キョロキョロ。
+				look(PARTNER,"Bone_Head",0,		0,2,0,			0,30,0)
+				wait(20)
+				look(PARTNER,"Bone_Head",0,		0,2,0,			0,-30,0)
+				wait(40)
+				look(PARTNER,"Bone_Head",0,		0,2,0,			0,0,0)
+				
+				MES(PARTNER,"但是……\n好象是个很有意思的店。",0)
+				MES(PARTNER,"这个店、是店主\n一个人打理的吗？",0)
+				MES_close(PARTNER)
+
+				rot_chr(ANNETTE,30,PARTNER)
+			//	name2(ANNETTE)
+				MES(ANNETTE,"啊、艾雯\n喜欢吗？",0)
+				MES(ANNETTE,"呵呵、\n其实店才开了一年。",0)
+				MES_close(ANNETTE)
+
+			//　　亚妮迪、軽く商品之嚯を向く。
+				rot(ANNETTE,30,45)			
+				MES(ANNETTE,"刚开始只是凭兴趣开起来的、\n不过眼下已经很有规模了呢。",0)
+				
+				rot_chr(ANNETTE,30,PLAYER1)
+				MES(ANNETTE,"两个人都请仔细看看哦。\n在这里的是、经我选出的\nＴｈｅ　Ｂｅｓｔ商品☆",0)
+				MES_close(ANNETTE)
+				
+				//★亚妮迪【戎之店】
+				F_set_note(ANNETTE,0)
+
+			//　　（※通常一般メッセ～ジは、既存之物を使用）
+				F_set(FT_01_TalkAnnette2)
+			}
+			else
+			{
+				if(!F_ANNETTE)
+				{
+					rot_chr(ANNETTE,30,PARTNER)
+					MES(ANNETTE,"是呢～……\n艾雯的衣服、\n和大件的饰品也很相称呢。",0)
+					MES(ANNETTE,"我这里\n也有一些装饰类的小物品。",0)
+					MES(ANNETTE,"请好好挑选吧☆",0)
+					MES_close(ANNETTE)
+
+				//　　艾雯に□エモ～ション。
+					EMO(PARTNER,EMO_ONPU)
+					wait(30)
+					MES(PARTNER,"嗯、我会的。",0)
+					MES_close(PARTNER)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（说话的时候\n  别说一些奇怪的东西……）",0)
+					MES_close(RAGNA)
+
+					F_set(ANNETTE)
+				}
+			//　　★繰り返し
+				else
+				{
+				//　　亚妮迪にＰＡエモ～ション。
+					EMO(ANNETTE,EMO_PA)
+					wait(30)
+					MES(ANNETTE,"啊、难道\n是为选哪个在犯愁？",0)
+					MES(ANNETTE,"那边的橱窗里、\n有很多推荐的小商品。",0)
+					MES(ANNETTE,"中意的话选个看看吧☆",0)
+					MES_close(ANNETTE)
+				}
+			}
+		}
+	}
+}
+
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

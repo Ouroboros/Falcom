@@ -1,0 +1,619 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧梔惛俁巓枀丂Spirit僔儕乕僘")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//儕僢僉乕乮梔惛C乯
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_SPIRIT_C
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(SPIRIT_C, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,SPIRIT_C)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,SPIRIT_C)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_C)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_C)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_C)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_C)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,SPIRIT_C)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僼儔僌嘆傑偨偼嘖偱梔惛偨偪偵夛偭偰偄側偄応崌丄
+	//丂丂丂梔惛偨偪偼攝抲偟側偄丅
+	//丂丂丂怷擖傝岥偵揦偩偗抲偄偰丄扤傕嫃側偄忬懺丅
+	//丂丂丂僇僂儞僞乕乮傕偟偔偼娕斅乯俴俹傪挷傋傞偲丄埲壓偺儊僢僙乕僕丅
+	//	name("僥僉僗僩")
+	//	MES(SPIRIT_B,"杮擔椪帪媥嬈丅\n嵽椏扵偟偵峴偭偰傑偡乧乧噴",0)
+	//	MES_close(SPIRIT_B)
+	if( F6_05_EndSixth )
+	{
+		//丂丂仸弶夞僀儀儞僩
+		if(!FE_13_TalkSpirit_C)
+		{
+			rot_chr(SPIRIT_C,30,PARTNER)
+			rot_chr(PARTNER,30,SPIRIT_B)
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"什麼……",0)
+			MES(SPIRIT_C,"好不容易才相見，\n馬上就要分別……",0)
+			MES(SPIRIT_C,"米婭……\n我要怎麼辦才好呀～？",0)
+			MES_close(SPIRIT_C)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"哈哈……",0)
+			MES(PARTNER,"真是對不起啊。\n確實很突然……",0)
+			MES_close(PARTNER)
+
+			rot_chr(RAGNA,30,SPIRIT_C)
+		//	name2(RAGNA)
+			MES(RAGNA,"說起來，你確實……\n曾經被米婭\n救過一次吧。",0)
+			MES(RAGNA,"之前好像是這麼說的。",0)
+			MES_close(RAGNA)
+
+			rot_chr(SPIRIT_C,30,RAGNA)
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"嗯，沒錯，大哥。\n我的心從那天開始\n就是米婭的了㈱",0)
+			MES_close(SPIRIT_C)
+
+		//丂丂儔僌僫偵惵偞傔僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_AOZAME)
+			wait(30)
+
+			MES(RAGNA,"誰…誰是大哥啊……",0)
+			MES_close(RAGNA)
+			
+			//仛僕儑乕亂儈傾偵怳傜傟偨亃
+			F_set_note(SPIRIT_C,2)
+			F_set(FE_13_TalkSpirit_C)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_SPIRIT_C)
+			{
+				rot_chr(SPIRIT_C,30,PARTNER)
+			//	name("僕儑乕")
+				MES(SPIRIT_C,"唉，如果米婭還\n有魔力的話，\n我就可以作她的使魔了……",0)
+				MES(SPIRIT_C,"真是可惜。\n真是可惜呀，米婭～……！",0)
+				MES_close(SPIRIT_C)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（這可不行……\n 就算米婭還有魔力，\n 我也不會同意的。）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（哈哈哈哈……）",0)
+				MES_close(PARTNER)
+
+				F_set(SPIRIT_C)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				rot_chr(SPIRIT_C,30,PARTNER)
+			//	name("僕儑乕")
+				MES(SPIRIT_C,"唉，如果能做米婭的使魔，\n我就能永遠在米婭身邊了……",0)
+				MES(SPIRIT_C,"真是可惜。\n真是可惜呀，米婭……！",0)
+				MES_close(SPIRIT_C)
+			}
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸怷擖傝岥偱奐揦偟偰偄傞丅
+	//丂丂丂儅儕儞偑僇僂儞僞乕偵擖傝丄儕僢僉乕偑偦偺朤丅
+	//丂丂丂彮偟棧傟偰僕儑乕偑晜梀偟偰偄傞丅
+	//丂丂仸弶夞偼丄儖僁偲偺棈傒僀儀儞僩偑偁傝傑偡丅
+	if( F6_00_GoToMeru )
+	{
+		//亜僼僃傾儕乕攦偄捈屻偺堦斒丅嘆偱夛偭偰傞応崌偺傒儊僢僙乕僕偑曄傢傞丅
+		if(F_LUE && FE_01_TalkSpirit)
+		{
+			if(!F_SPIRIT_C)
+			{
+				EMO(SPIRIT_C,EMO_PA)
+				wait(30)
+				rot_chr(SPIRIT_C,30,PLAYER1)
+				MES(SPIRIT_C,"啊，你還是\n買了「妖精」？",0)
+				MES(SPIRIT_C,"嘖，瑪琳姐\n真是狡猾～。",0)
+				MES(SPIRIT_C,"居然讓我們在這裡看著店面，\n自己卻跑出去。",0)
+				MES(SPIRIT_C,"唉，不過也只有\n瑪琳姐才會用回復魔法，\n這也沒有辦法～……",0)
+				MES_close(SPIRIT_C)
+
+				MES(PET,"怎麼啦，喬，\n你也想跟我們\n一起走嗎？",0)
+				MES_close(PET)
+
+			//丂丂僕儑乕偵傾僙傾僙僄儌乕僔儑儞丅
+				EMO(SPIRIT_C,EMO_ASEASE)
+				rot_chr(SPIRIT_C,30,PET)
+				wait(30)
+
+				MES(SPIRIT_C,"我…我可不是\n那個意思～。",0)
+				MES_close(SPIRIT_C)
+				F_set(SPIRIT_C)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+				rot_chr(SPIRIT_C,30,PET)
+				MES(SPIRIT_C,"說起來，最狡猾的是露吧？",0)
+				MES(SPIRIT_C,"跟著主人\n四處旅行，\n真好啊～……",0)
+				MES(SPIRIT_C,"還是應該把店交給利奇，\n我也出去四處走走吧～。",0)
+				MES_close(SPIRIT_C)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+
+				MES(PET,"你還真是一點都沒變呢……\n認真工作吧。",0)
+				MES_close(PET)
+			}
+		}
+		else
+		{
+			if(!FE_12_TalkSpirit_C)
+			{
+				rot_chr(SPIRIT_C,30,PET)
+				rot_chr(PET,30,SPIRIT_C)
+			//	name("僕儑乕")
+				MES(SPIRIT_C,"話說回來，露，\n你在這附近見過\n一位漂亮的小姐嗎？",0)
+				MES(SPIRIT_C,"這樣，身材嬌小可愛，\n臉龐嬌小玲瓏……",0)
+				MES_close(SPIRIT_C)
+
+			//	name2(PET)
+				MES(PET,"嗚……\n你愛搭訕的毛病\n也沒改啊。",0)
+				MES(PET,"肯定又是對哪個\n女孩子一見鍾情了吧。",0)
+				MES_close(PET)
+
+			//	name("僕儑乕")
+				MES(SPIRIT_C,"不是啊，嘿嘿嘿……",0)
+				MES(SPIRIT_C,"之前在危急時刻\n被她救了出來～。",0)
+				MES(SPIRIT_C,"這次是真的。\n真的讓我非常激動。",0)
+				MES(SPIRIT_C,"可是自那以來，\n我就再也沒見過她了～。",0)
+				MES(SPIRIT_C,"唉……\n我都抑制不住這令人苦惱的愛情了……",0)
+				MES_close(SPIRIT_C)
+				
+				F_set(FE_12_TalkSpirit_C)
+			}
+			else
+			{
+				if(!F_SPIRIT_C)
+				{
+					rot_chr(SPIRIT_C,30,PET)
+					rot_chr(PET,30,SPIRIT_C)
+					MES(SPIRIT_C,"唉，露也沒見到\n她嗎……",0)
+					MES(SPIRIT_C,"自那之後我一直在找她，\n可是一無所獲～。",0)
+					MES(SPIRIT_C,"我都抑制不住\n這令人苦惱的愛情了……",0)
+					MES_close(SPIRIT_C)
+
+				//	name2(PET)
+					MES(PET,"唔—，看來你是認真的啊……",0)
+					MES(PET,"不然，我揍你一頓\n讓你清醒一點怎麼樣。",0)
+					MES_close(PET)
+
+				//丂丂僕儑乕偵椻傗娋僄儌乕僔儑儞丅
+					EMO(SPIRIT_C,EMO_HIYAASE)
+					wait(30)
+					
+				//	name("僕儑乕")
+					MES(SPIRIT_C,"喂，露……\n為什麼要那樣？",0)
+					MES_close(SPIRIT_C)
+					
+					F_set(SPIRIT_C)
+				}
+				else
+				{
+					rot_chr(SPIRIT_C,30,PLAYER1)
+					MES(SPIRIT_C,"唉，果然還是\n沒有找到啊～……",0)
+					MES(SPIRIT_C,"我都抑制不住\n這令人苦惱的愛情了……",0)
+					MES_close(SPIRIT_C)
+				}
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸怷擖傝岥偵揦偩偗抲偄偰丄扤傕嫃側偄丅
+	//丂丂丂僇僂儞僞乕乮傕偟偔偼娕斅乯俴俹傪挷傋傞偲丄埲壓偺儊僢僙乕僕丅
+	//	name("僥僉僗僩")
+	//	MES(SPIRIT_B,"嬤乆奐揦梊掕丅\n偍妝偟傒偵乧乧噴",0)
+	//	MES_close(SPIRIT_B)
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_09_GoShrineMia)
+	{
+	//丂丂仸怳傝曉傜側偄丅
+	//	name("僕儑乕")
+		MES(SPIRIT_C,"嗯，這裡的天氣\n很不錯呢。",0)
+		MES(SPIRIT_C,"而且那位穿斗篷的小姐\n也可能會路過……㈱",0)
+		MES(SPIRIT_C,"難得意見如此統一呢。",0)
+		MES_close(SPIRIT_C)
+
+	//丂丂佀儅儕儞偺暘婒張棟傪屇傃弌偡丅
+		if(!FE_10_TalkSpirit)
+		{
+			EV("Talk_Spirit_10")
+			wait_EV("Talk_Spirit_10")
+		}
+		F_set(SPIRIT_C)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸抂偺傎偆傪僼儔僼儔偟偰偄傞丅
+	if( F4_00_StartSolo )
+	{
+		rot_chr(SPIRIT_C,30,PLAYER1)
+		if(!F_SPIRIT_C)
+		{
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"嘿嘿，這裡\n不是很適合約會嗎？",0)
+			MES(SPIRIT_C,"嗯，如果能在這裡\n見到那位小姐的話……",0)
+			MES_close(SPIRIT_C)
+
+		//丂丂僕儑乕偵僴乕僩僄儌乕僔儑儞丅
+			EMO(SPIRIT_C,EMO_HATO)
+			wait(30)
+
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"啊，真希望我心中的\n熱情能夠傳達給你……！",0)
+			MES_close(SPIRIT_C)
+
+			F_set(SPIRIT_C)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"事實上我有一次\n在危急時刻被一位\n戴著斗篷的小姐所救。",0)
+			MES_close(SPIRIT_C)
+
+		//丂丂僕儑乕偵僴乕僩僄儌乕僔儑儞丅
+			EMO(SPIRIT_C,EMO_HATO)
+			wait(30)
+
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"啊，她那清澈的眼眸……\n真是太美了㈱",0)
+			MES(SPIRIT_C,"如果能在這裡相見，\n那一定是命運安排的……",0)
+			MES_close(SPIRIT_C)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸恄揳拞宲偵偄傞丅儅儕儞傪堦斣庤慜偵攝抲偟偰偍偒傑偡丅
+	//丂丂丂嬤偯偔偲丄儅儕儞偺弶夞僀儀儞僩偑婲摦丅
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_SPIRIT_C)
+		{
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"（直打哆嗦）……",0)
+			MES(SPIRIT_C,"我…我可沒有\n害怕哦？",0)
+			MES(SPIRIT_C,"她們兩個\n突然逃了出來，\n我只是跟上來而已～……",0)
+			MES_close(SPIRIT_C)
+
+		//丂丂僕儑乕偵丒丒丒僄儌乕僔儑儞丅
+			EMO(SPIRIT_C,EMO_TENTEN)
+			wait(30)
+
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"話說這裡是哪裡？？\n喂，瑪琳姐，是哪裡啊。",0)
+			MES_close(SPIRIT_C)
+
+			F_set(SPIRIT_C)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"喂，瑪琳姐，\n這是哪裡？",0)
+			MES(SPIRIT_C,"你逃跑的時候\n沒有迷路吧～？",0)
+			MES_close(SPIRIT_C)
+		}
+		rot(SPIRIT_C,30,50)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸戝揝搩擖傝岥丄挼偹嫶偺慜偱攚傪岦偗偰偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(SPIRIT_C,30,PLAYER1)
+		if(!F_SPIRIT_C)
+		{
+
+			MES(SPIRIT_C,"呼，真是危險……",0)
+			MES(SPIRIT_C,"剛才和姐姐她們走散了，\n就有一隻狗頭人舉著大斧衝了過來。",0)
+			MES(SPIRIT_C,"我在迷宮裡東躲西藏……\n真的以為會被殺掉啊。",0)
+			MES(SPIRIT_C,"不過，還好我被一位戴著斗篷的\n小姐所救……",0)
+			MES_close(SPIRIT_C)
+
+		//丂丂僕儑乕偵僴乕僩僄儌乕僔儑儞丅
+			EMO(SPIRIT_C,EMO_HATO)
+			wait(30)
+			
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"嘿嘿，真漂亮啊～……\n不知還有沒有機會相見……㈱",0)
+			MES_close(SPIRIT_C)
+
+		//丂丂佀儅儕儞偺憓擖晹暘傪屇傃弌偡丅乮俁恖偺嫟捠張棟乯
+			if(!FE_02_SpiritOfDark)
+			{
+				EV("Talk_Spirit_05")
+				wait_EV("Talk_Spirit_05")
+			}
+			F_set(SPIRIT_C)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(SPIRIT_C,"嘿嘿，那位小姐……\n摘下斗篷可是超級漂亮的美女～。",0)
+			MES(SPIRIT_C,"還有沒有可能見到她呢～。\n我非常想接近她啊……㈱",0)
+			MES_close(SPIRIT_C)
+		}
+		
+		rot(SPIRIT_C,30,160)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸攑岯擖傝岥
+	if( F2_00_GoForest )
+	{
+		rot_chr(SPIRIT_C,30,PLAYER1)
+		if(!F_SPIRIT_C)
+		{
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"唉……以前我們曾經\n親眼見到同伴被人類劫走。",0)
+			MES(SPIRIT_C,"瑪琳姐和利奇\n都很神經質呢。",0)
+			MES(SPIRIT_C,"唉，那也難怪\n會受到打擊啊～……",0)
+			MES_close(SPIRIT_C)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂佀亀仛俁恖偼埮梔惛亁偺僼儔僌偑棫偭偰偄側偄応崌
+			if(!FE_02_SpiritOfDark)
+			{
+				MES(RAGNA,"是…是嗎……\n（不知為何讓人有些罪惡感……）",0)
+				MES_close(RAGNA)
+
+				rot(SPIRIT_C,30,151)
+			//丂丂儔僌僫丄傾儖僂僃儞偵岦偔丅
+				rot_chr(RAGNA,30,PARTNER)
+
+				MES(RAGNA,"（他們……\n 是公主殿下的朋友嗎？）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（不是……\n 應該和露一樣是闇妖精，\n 不過我也以前也沒見過他們。）",0)
+				MES(PARTNER,"（闇妖精長老\n 據說在幾百年前\n 就不知所蹤了。）",0)
+				MES(PARTNER,"（失去了統領以後，\n 闇妖精就分散在世界各處，\n 也可能會發生那種情形……）",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（這樣啊……）",0)
+				MES_close(RAGNA)
+
+			//丂丂亀仛俁恖偼埮梔惛亁偺僼儔僌傪棫偰傞丅
+				F_set(FE_02_SpiritOfDark)
+			}
+			else
+			{
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"是…是嗎……",0)
+					rot(SPIRIT_C,30,151)
+					MES(RAGNA,"（雖說這事與我無關……）",0)
+					MES(RAGNA,"（不知為何讓人有些罪惡感……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"唔，這樣啊……",0)
+					rot(SPIRIT_C,30,151)
+					MES(PARTNER,"（闇妖精長老\n 據說在幾百年前\n 就不知所蹤了。）",0)
+					MES(PARTNER,"（失去了統領以後，\n 闇妖精就分散在世界各處，\n 也可能會發生那種情形……）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+			F_set(SPIRIT_C)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"我是不太清楚\n其它同類的消息了。",0)
+			MES(SPIRIT_C,"不過聽說也有\n和人類相處不錯的。",0)
+			MES_close(SPIRIT_C)
+
+		//丂丂僕儑乕偵丒丒丒僄儌乕僔儑儞丅
+			EMO(SPIRIT_C,EMO_TENTEN)
+			wait(30)
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"……我也有些羨慕啊。\n瑪琳姐和利奇都有些神經質，\n總是擔心我會遇到那種事。",0)
+			MES_close(SPIRIT_C)
+			rot(SPIRIT_C,30,151)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嶳擖傝岥儅僢僾偵偄傞丅
+	if( F1_15_GoVillage )
+	{
+		rot_chr(SPIRIT_C,30,PLAYER1)
+		if(!F_SPIRIT_C)
+		{
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"嘿嘿，我們以前一直在\n比較溫暖的小島上生活。",0)
+			MES(SPIRIT_C,"瑪琳姐和利奇\n都有些怕冷。",0)
+			MES(SPIRIT_C,"……我？我也不\n希望在這裡開店。",0)
+			MES(SPIRIT_C,"就算有漂亮的大姐姐\n路過，肯定都穿得很厚吧。",0)
+			MES_close(SPIRIT_C)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂佀亀仛俁恖偼埮梔惛亁偺僼儔僌偑棫偭偰偄側偄応崌
+			if(!FE_02_SpiritOfDark)
+			{
+			//丂丂儔僌僫丄傾儖僂僃儞偵岦偔丅
+				rot_chr(RAGNA,30,PARTNER)
+
+				MES(RAGNA,"（他們……\n 是公主殿下的朋友嗎？）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（不是……\n 應該和露一樣是闇妖精，\n 不過我也以前也沒見過他們。）",0)
+				MES(PARTNER,"（唔，他們在做什麼……？）",0)
+				MES_close(PARTNER)
+
+			//丂丂亀仛俁恖偼埮梔惛亁偺僼儔僌傪棫偰傞丅
+				F_set(FE_02_SpiritOfDark)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//仛僕儑乕亂僫儞僷側惈奿亃
+			F_set_note(SPIRIT_C,0)
+			F_set(SPIRIT_C)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("僕儑乕")
+			MES(SPIRIT_C,"不過，那個小島很溫暖，\n非常適合生活呢。",0)
+			MES(SPIRIT_C,"可是總是沒有客人來。",0)
+			MES(SPIRIT_C,"在那裡開店\n也毫無意義啊。",0)
+			MES_close(SPIRIT_C)
+		}
+		rot(SPIRIT_C,30,112)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸戝揝搩乮捑栙帪乯擖傝岥丅
+	//丂丂丂俁恖偱丄攚拞傪岦偗偰榖偟崬傫偱偄傞丅
+	//丂丂丂榖偟偐偗傞偲僀儀儞僩奐巒丅
+	//丂丂丂僋儘僗僼僃乕僪偱儔僌僫偨偪偺埵抲傪嵞攝抲偡傞丅
+	if( F1_01_GameStart )
+	{
+		rot_chr(SPIRIT_C,30,PLAYER1)
+		if(!FE_01_TalkSpirit)
+		{
+			EV("Talk_Spirit_01")
+		}
+		else
+		{
+			if(!F_SPIRIT_C)
+			{
+			//	name("僕儑乕")
+				MES(SPIRIT_C,"我倒是不在意\n人類經常路過。",0)
+				MES(SPIRIT_C,"不過，僅限漂亮的大姐姐。",0)
+				MES(SPIRIT_C,"嘿嘿嘿……反正要開店，\n就找一個經常能\n見到大姐姐的地方吧。",0)
+				MES_close(SPIRIT_C)
+
+				F_set(SPIRIT_C)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("僕儑乕")
+				MES(SPIRIT_C,"話說，在這裡\n開店就好了吧？",0)
+				MES(SPIRIT_C,"也挺像是個風景名勝的。",0)
+				MES(SPIRIT_C,"嘿嘿嘿……說不定就會有\n漂亮的大姐姐路過呢！",0)
+				MES_close(SPIRIT_C)
+			}
+		}
+		rot(SPIRIT_C,30,160)
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

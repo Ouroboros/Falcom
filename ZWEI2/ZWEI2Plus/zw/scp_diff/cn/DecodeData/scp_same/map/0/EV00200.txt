@@ -1,0 +1,3366 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10200][飞机场（昼）]
+//====================================================================
+
+#ScriptTable
+
+#FIONA 		1
+#KLODE		2
+#PIPIRO 	3
+#POCKLE 	4
+#LA-RAIRA	5
+#ODESSA		6
+#ALWEN		7
+#LUE		8
+#MIA		9
+#SUBARU		10
+#NORTON		11
+#COLIN		12
+#PLANE_P	13
+#PLANE_K	14
+#PLANE_O	15
+#POPPO		16
+#PLANE		17
+#MILLIAM	18
+#EVENT_RAGNA	19
+#NIPPLE		20	//柯林的エラー回避
+#DUMMY		21
+
+//#PLANE_P	22
+//#PLANE_K	23
+//#PLANE_O	24
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip     	 x    y   z   	 mot     向 状 000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	set_chr( 90,990,	-1,-1,       0,6600,-75,  	135,072202, 6,"K2_10000;")	//フィールドマップへ
+	set_chr( 91,990,	-1,-1,     -50,4200,-63,  	 90,     0, 3,";")			//工房から（来る専用）
+	set_chr( 92,990,	-1,-1,    -100,4200,  0,  	 90,070202,11,"K1_10210;")	//工房へ（行く専用）
+
+	//ＮＰＣ
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		set_chr( POPPO,480,	-1,-1,	-1051,4007,-73,	 0,341, 20,"<TK_POPPO>")	//工房前　诺顿的鸽子
+		EV("FREEMOVE_POPPO")
+		//诺顿□初回を見ていると名前が啵啵に
+		if(FT_12_TalkNorton)
+		{
+			chr_rename(POPPO,"啵啵")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru)
+	{
+		//梅尔塞迪克突入後
+		if(F6_02_OnMeru)
+		{
+			set_chr( NORTON,63,	-1,-1,	1033,-362,-75,	 2,0, 20,"<TK_NORTON>")		//滑走路·诺顿
+			EV("MOTION_NORTON_02")
+		}
+		else
+		//梅尔塞迪克に乗り込む前で、出発イベントでないとき
+		if(!F6_02_OnMeru && GW_ENTRY_EVENT==0)
+		{
+			set_chr( PIPIRO,3,		-1,-1,  -1073,54,-74,	2,200,20,"<TK_PIPIRO>")		//皮皮洛
+			set_chr( POCKLE,2,		-1,-1,  -901,11,-74, 	2,110,20,"<TK_POCKLE>")		//布库尔
+			
+			set_chr( FIONA,16,	-1,-1, -2968,-288,-74, 		51,190,20,"<TK_FIONA>")		//菲奥娜
+			set_chr( KLODE,18,	-1,-1, -2801,-302,-74,		 53,160, 20,"<TK_KLODE>")	//克劳德
+
+			set_chr( ODESSA,19,	-1,-1,   	780,28,-74,  52,150, 20,"<TK_ODESSA>")		//奥蒂莎
+
+			set_chr( LA-RAIRA,23,	-1,-1,  -8188,-1249,-74,	2,180,	20,"<TK_LA-RAIRA>")	//拉莱拉	//★滑走路的方に移動
+
+			set_chr( PLANE_P,851,	-1,-1,	-1300,-200,-75,	 0,90, 0,"")	//滑走路　布库尔机
+			set_chr( PLANE_K,852,	-1,-1,	-3100,-530,-73,	 0,70, 0,"")	//滑走路　克劳德机
+			set_chr( PLANE_O,853,	-1,-1,	660,-412,-73,	 0,120, 0,"")	//滑走路　奥蒂莎机
+
+			set_obj("as02_CA",        0,0, -1750,-650,-75,90)					//布库尔机当たり set_objは内部でX+450, Y+450される。
+			set_obj("as01_CA",        0,0, -3550,-980,-73,70)					//克劳德机当たり set_objは内部でX+450, Y+450される。
+			set_obj("as03_CA",        0,0,   210,-862,-73,120)					//奥蒂莎机当たり set_objは内部でX+450, Y+450される。
+			F_set_obj("as02_CA",NP_HIDE)
+			F_set_obj("as01_CA",NP_HIDE)
+			F_set_obj("as03_CA",NP_HIDE)
+		
+			
+			set_chr( NORTON,63,	-1,-1,	417,-184,-74,	 52,220, 20,"<TK_NORTON>")		//滑走路·诺顿
+			EV("MOTION_NORTON_01")
+			
+			//诺顿③初回を見ていると鸽子が居る
+			if(FT_03_TalkNorton)
+			{
+				set_chr( POPPO,480,	-1,-1,	472,-250,280,	 8,0, 20,"<TK_POPPO>")	//奥蒂莎机上　诺顿的鸽子
+				set_chr( 99,480,	-1,-1,	400,-300,140,	 8,080505, 20,"<TK_POPPO>")	//奥蒂莎机上　诺顿的鸽子
+				F_set_chr(POPPO,CF_NO_FALL)
+				F_set_chr(POPPO,CF_NO_HEIGHT)
+				F_set_chr(99,CF_NO_FALL)
+				F_set_chr(99,CF_NO_HEIGHT)
+				color(99,-1)
+
+				//诺顿□初回を見ていると名前が啵啵に
+				if(FT_12_TalkNorton)
+				{
+					chr_rename(POPPO,"啵啵")
+					chr_rename(99,"啵啵")
+				}
+			}
+			
+			//モーション
+			MOT_SET(PIPIRO,150,-1,410,410,-1,-1)
+			MOT(PIPIRO,150,0)
+			MOT_SET(POCKLE,150,-1,400,400,-1,20)
+			MOT(POCKLE,150,0)
+			
+			F_set_chr(NORTON,CF_NO_MOVE)
+			F_set_chr(ODESSA,CF_NO_MOVE)
+			F_set_chr(POPPO,CF_NO_MOVE)
+
+			F_set_chr(PIPIRO,CF_NO_MOVE)
+			F_set_chr(POCKLE,CF_NO_MOVE)
+			F_set_chr(FIONA,CF_NO_MOVE)
+			F_set_chr(KLODE,CF_NO_MOVE)
+
+			F_set_chr(PLANE_P,CF_NO_MOVE)
+			F_set_chr(PLANE_P,CF_NO_CSP)
+			F_set_chr(PLANE_P,CF_NO_ZIMEN)
+			F_set_chr(PLANE_P,CF_NO_HEIGHT)			
+			F_set_chr(PLANE_K,CF_NO_MOVE)
+			F_set_chr(PLANE_K,CF_NO_CSP)
+			F_set_chr(PLANE_K,CF_NO_ZIMEN)
+			F_set_chr(PLANE_K,CF_NO_HEIGHT)
+			F_set_chr(PLANE_O,CF_NO_MOVE)
+			F_set_chr(PLANE_O,CF_NO_CSP)
+			F_set_chr(PLANE_O,CF_NO_ZIMEN)
+			F_set_chr(PLANE_O,CF_NO_HEIGHT)
+			F_set_chr(PLANE_P,CF_NO_MINIMAP)	// ミニマップ非表示
+			F_set_chr(PLANE_K,CF_NO_MINIMAP)	// ミニマップ非表示
+			F_set_chr(PLANE_O,CF_NO_MINIMAP)	// ミニマップ非表示
+
+			F_set_chr(LA-RAIRA,CF_NO_MOVE)		//★滑走路的方に移動
+
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		set_chr( NORTON,63,	-1,-1,	-378,5099,-73,	 52,320, 20,"<TK_NORTON>")		//滑走路·诺顿
+		set_chr( COLIN,57,	-1,-1,	-238,5293,-75,	 2,140, 20,"<TK_COLIN>")		//滑走路傍　柯林
+		F_set_chr(NORTON,CF_NO_MOVE)
+		F_set_chr(COLIN,CF_NO_MOVE)
+
+			set_chr( POPPO,480,	-1,-1,	2536,913,-74,	 0,0, 20,"<TK_POPPO>")	//滑走路　诺顿的鸽子
+			EV("FREEMOVE_POPPO")
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia )
+	{
+			SE(36,0)//朝的SE
+			SE(61,0)//鳥的SE
+			set_chr( POPPO,480,	-1,-1,	-1150,-857,-74,	 0,0, 20,"<TK_POPPO>")	//滑走路　诺顿的鸽子
+			EV("FREEMOVE_POPPO")
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ的フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		set_chr( NORTON,63,	-1,-1,	1033,-362,-75,	 2,0, 20,"<TK_NORTON>")		//滑走路·诺顿
+		EV("MOTION_NORTON_02")
+
+		if(FT_03_TalkNorton)
+		{
+			set_chr( POPPO,480,	-1,-1,	1544,-261,-73,	 0,0, 20,"<TK_POPPO>")	//滑走路　诺顿的鸽子
+			EV("FREEMOVE_POPPO")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村的人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵的正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		set_chr( NORTON,63,	-1,-1,	580,586,-73,	 5,284, 20,"<TK_NORTON>")		//滑走路·诺顿
+
+		MOT_SET(NORTON,150,-1,452,452,-1,0)
+		MOT(NORTON,150,5)
+		
+		set_chr( POPPO,480,	-1,-1,	1544,-261,-73,	 0,0, 20,"<TK_POPPO>")	//滑走路　诺顿的鸽子
+		EV("FREEMOVE_POPPO")
+	}
+	else
+	//──────────────────────────────
+	//▼④炎的パーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇的森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		set_chr( PLANE_O,853,	-1,-1,	1009,-270,-73,	 0,70, 0,"")	//滑走路　奥蒂莎机
+		
+		//2回目的イベントメッセージを見るまで
+		if(!FM_03_TalkOdessa_2)
+		{
+			set_chr( ODESSA,19,	-1,-1,   841,27,-75,  10,180, 20,"<TK_ODESSA>")		//奥蒂莎
+			F_set_chr(ODESSA,CF_NO_MOVE)
+		}
+
+		set_chr( POPPO,480,	-1,-1,	2526,-1295,-74,	 8,310, 20,"<TK_POPPO>")	//	诺顿的鸽子
+
+		if(!FT_03_TalkNorton)
+		{
+			set_chr( NORTON,63,	-1,-1,	2604,-1143,-75,	 10,180, 20,"<TK_NORTON>")		//滑走路·鸽子にえさ　诺顿
+			set_chr( 92,990,	-1,-1,	2604,-1143,-75, 	135,1212, 6,"<EV_FT_03_TalkNorton>;")	//诺顿初回イベントエントリ
+			MOT_SET(NORTON,153,-1,452,452,-1,-1)
+			chr_equip2( NORTON,	"wp_040",	"Bone_RightSword",100,	0,0,0,	0,0,0);	//皿装備
+			MOT(NORTON,153,0)
+		}
+		else
+		{
+//			set_chr( NORTON,63,	-1,-1,		1596,-455,-75,	 10,90, 20,"<TK_NORTON>")		//滑走路·诺顿
+//			chr_equip2( NORTON,	"EQ_007",	"Bone_RightSword",100,	0,0,0,	0,0,0);	//スパナ装備
+//			EV("MOTION_NORTON_01")
+			set_chr( NORTON,63,	-1,-1,		2604,-1143,-75,	 10,160, 20,"<TK_NORTON>")		//滑走路·诺顿
+		}
+
+		F_set_chr(POPPO,CF_NO_MOVE)
+		F_set_chr(NORTON,CF_NO_MOVE)
+		F_set_chr(PLANE_O,CF_NO_MOVE)
+		F_set_chr(PLANE_O,CF_NO_MINIMAP)	// ミニマップ非表示
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		set_chr( NORTON,63,	-1,-1,	1033,-362,-75,	 2,0, 20,"<TK_NORTON>")		//滑走路·诺顿
+		EV("MOTION_NORTON_02")
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		set_chr( PLANE_P,851,	-1,-1,	1084,-347,-74,	 0,70, 0,"")	//滑走路　布库尔机
+		
+		if(!FT_01_TalkNorton)
+		{
+			set_chr( NORTON,63,	-1,-1,	1234,-644,-73,	 2,340, 20,"<TK_NORTON>")		//滑走路·飛行机的裏诺顿
+			set_chr( 92,990,	-1,-1,	1084,-347,-74, 	135,1218, 6,"<EV_FT_01_TalkNorton>;")	//诺顿初回イベントエントリ
+		}
+		else
+		{
+			set_chr( NORTON,63,	-1,-1,		864,-89,-75,	 2,210, 20,"<TK_NORTON>")		//滑走路·飛行机的手前诺顿
+			chr_equip2( NORTON,	"EQ_007",	"Bone_RightSword",100,	0,0,0,	0,0,0);	//スパナ装備
+			EV("MOTION_NORTON_01")
+
+		}
+
+		F_set_chr(NORTON,CF_NO_MOVE)
+		F_set_chr(PLANE_P,CF_NO_MOVE)
+		F_set_chr(PLANE_P,CF_NO_MINIMAP)	// ミニマップ非表示
+	}
+
+//■イベント
+	if(F6_05_EndSixth && F6_10_EndEpilogue)//米娅連れてる
+	{
+	//エピローグ
+	//	set_chr(MIA,	  7,-1,-1, 0,0,0, 2,0,0, "")
+
+		//▼エピローグ～旅立ちと再会的約束
+		set_chr( 80,990,	-1,-1,	 2300,1150,-75,   0,  2002,	6,"<EV_6_16_EndEp>;")
+		
+
+		set_chr(KLODE,	 	1018,-1,-1, 185,48,-74,   2, 303,0, "")
+		set_chr(FIONA,		1016,-1,-1, 256,-41,-74,, 2, 294,0, "")
+		set_chr(LUE,	 	1015,-1,-1, 718,-330,-73, 2, 305,0, "")
+		set_chr(SUBARU,	  	1020,-1,-1, 712,-212,-74, 2, 294,0, "")
+		set_chr(PIPIRO,	 	1013,-1,-1, 684,-809,-73, 2,   6,0, "")
+		set_chr(POCKLE,	 	1012,-1,-1, 558,-777,-74, 2, 294,0, "")
+		set_chr(LA-RAIRA,	1023,-1,-1, 416,-263,-74, 2, 355,0, "")
+		set_chr(ODESSA,	  	1019,-1,-1, 250,-200,-74, 2, 270,0, "")
+		set_chr(MILLIAM,	  29,-1,-1,-109,-189,-74,2, 248,0, "")
+		set_chr(PLANE,	 	857,-1,-1,-450,-350,-74,  0,	90, 0,"")	//特里斯坦
+		MOT_SET(PLANE, 150, -1, 70, 70, -1, 0)
+		MOT(PLANE, 150, 0)
+		wait(1)
+		F_set_Node(  PLANE, "fun01_spin1", NP_HIDE)
+		F_set_Node(  PLANE, "fun02_spin2", NP_HIDE)
+//		F_reset_Node(PLANE, "fun01", NP_HIDE)							//ペラ非表示
+	
+		F_set_chr(PLANE,CF_NO_CLIP)
+		F_set_chr(PLANE,CF_NO_CLIP2)
+		F_set_chr(PLANE,CF_NO_CSP)
+		F_set_chr(PLANE,CF_NO_HEIGHT)
+		F_set_chr(PLANE,CF_NO_ZIMEN)
+		F_set_chr(PLANE,CF_MAXMOVE)
+
+		F_set_chr(PIPIRO,CF_NO_CLIP)
+		F_set_chr(PIPIRO,CF_NO_CLIP2)
+		F_set_chr(PIPIRO,CF_NO_CSP)	
+		F_set_chr(POCKLE,CF_NO_CLIP)
+		F_set_chr(POCKLE,CF_NO_CLIP2)
+		F_set_chr(POCKLE,CF_NO_CSP)	
+		F_set_chr(SUBARU,CF_NO_CLIP)
+		F_set_chr(SUBARU,CF_NO_CLIP2)
+		F_set_chr(SUBARU,CF_NO_CSP)	
+
+		F_set_chr(KLODE,CF_NO_CLIP)
+		F_set_chr(KLODE,CF_NO_CLIP2)
+		F_set_chr(KLODE,CF_NO_CSP)	
+		F_set_chr(FIONA,CF_NO_CLIP)
+		F_set_chr(FIONA,CF_NO_CLIP2)
+		F_set_chr(FIONA,CF_NO_CSP)	
+		F_set_chr(MILLIAM,CF_NO_CLIP)
+		F_set_chr(MILLIAM,CF_NO_CLIP2)
+		F_set_chr(MILLIAM,CF_NO_CSP)	
+		F_set_chr(ODESSA,CF_NO_CLIP)
+		F_set_chr(ODESSA,CF_NO_CLIP2)
+		F_set_chr(ODESSA,CF_NO_CSP)	
+		F_set_chr(LA-RAIRA,CF_NO_CLIP)
+		F_set_chr(LA-RAIRA,CF_NO_CLIP2)
+		F_set_chr(LA-RAIRA,CF_NO_CSP)									
+		F_set_chr(LUE,CF_NO_CLIP)
+		F_set_chr(LUE,CF_NO_CLIP2)
+		F_set_chr(LUE,CF_NO_CSP)	
+		
+		F_set_Node(POCKLE,"Bone_RightSword",NP_HIDE)
+		F_set_Node(PIPIRO,"Bone_RightSword",NP_HIDE)
+		F_set_Node(ODESSA,"Bone_RightSword",NP_HIDE)
+
+				
+	}
+
+//	if(GW_ENTRY_EVENT==2)
+//	{
+//		workG(GW_ENTRY_EVENT,SET,0)
+//		//▼エピローグ～旅立ちと再会的約束
+//		EV("EV_6_16_EndEp")
+//	}
+//	else
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼飛行机に乗り込む·飞机场
+		EV("EV_6_05_Plane3Go")
+	}
+
+	//はとヒント用Ｌワーク初期化
+	workL(005,SET,0)
+}
+
+//====================================================================
+//=== モーション処理 =================================================
+//====================================================================
+
+//=======================================
+//汎用モーション
+//=======================================
+//──────────────────────────────
+//▼诺顿　飛行机修理モーション
+//──────────────────────────────
+//スパナ
+MOTION_NORTON_01
+{
+	MOT_SET(NORTON,150,-1,461,461,151,15)
+	MOT_SET(NORTON,151,-1,462,462,150,15)
+
+	MOT(NORTON,150,0)
+}
+//滑走路整備
+MOTION_NORTON_02
+{
+	MOT_SET(NORTON,150,-1,454,454,-1,-1)
+	move( NORTON, 25,	WALK1,	500,500,0,	40)
+	wait_move( NORTON )
+	wait(20)
+	MOT(NORTON,150,15)
+	wait(50)
+	MOT(NORTON,2,15)
+	wait(20)
+	loop
+}
+
+//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+FREEMOVE_NORTON
+{
+	move( NORTON, 25,	WALK1,	500,500,0,	200)
+	wait_move( NORTON )
+	wait(50)
+	loop
+}
+
+//──────────────────────────────
+//▼诺顿的鸽子	フリームーブ
+//──────────────────────────────
+FREEMOVE_POPPO
+{
+	move( POPPO, 25,	WALK1,	500,500,0,	40)
+	wait_move( POPPO )
+	wait(20)
+	MOT(POPPO,9,15)
+	wait(50)
+	MOT(POPPO,2,15)
+	wait(20)
+	loop
+}
+
+//──────────────────────────────
+//①诺顿初回イベント
+//──────────────────────────────
+//　　※滑走路に布库尔机を配置。
+//　　　诺顿は飛行机的裏側におり、良く見えなさ幕置。
+//　　　近づくとエリア起動する。
+//　　拉古那に！エモーション。
+//──────────────────────────────
+EV_FT_01_TalkNorton
+{
+//　　拉古那に！エモーション。
+	TK_begin()
+	
+	MOT(RAGNA,2,5)
+	MOT(PARTNER,2,5)
+	
+	EMO(RAGNA,EMO_BIKKURI)
+	rot_chr(RAGNA,30,PLANE_P)
+	wait(30)
+
+	MES(RAGNA,"咦，这是……",0)
+	MES(RAGNA,"这不是艾路毕查斯社\n制造的轻型飞机吗。",0)
+	MES_close(RAGNA)
+	
+
+//　　軽く暗転して再配置。
+//――――――――――――――――――――――――――
+//	初期化処理
+//――――――――――――――――――――――――――
+	fade_in(100,30,BLACK)
+	wait_fade()
+	
+	//カメラセット
+	CAM_move(1128,503,42,0,0)
+	CAM(-31,124,42,28,206,0,0)
+
+	//キャラ再配置
+	F_reset_chr(NORTON,CF_NO_MOVE)
+	chr_pos(RAGNA,1548,24,-74,120,2)
+	chr_pos(PARTNER,1361,106,-74,160,2)
+	chr_pos(PLANE_P,1084,-347,-74,70,2)
+	chr_pos(NORTON,1234,-644,-73,340,2)
+	
+	//顔初期化
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(NORTON,"1", "1", "1")	
+	wait(15)
+	fade_in(0,30,BLACK)
+
+//――――――――――――――――――――――――――
+//	イベント開始
+//――――――――――――――――――――――――――
+	wait_fade()
+	wait(15)
+
+//　　拉古那、飛行机的前に移動して眺める。
+	MES(RAGNA,"记得大约是在１０年前\n发布的机型吧。",0)
+	MES(RAGNA,"与一般标准的入门机相比，\n操作性和稳定性都相当出众，\n造成了相当强烈的反响。",0)
+	MES_close(RAGNA)
+
+//	name("诺顿")
+	MES(NORTON,"哈哈，你知道得真不少嘛。",0)
+	MES_close(NORTON)
+
+	CAM_move(1288,503,62,60,0)
+	CAM(-151,114,62,28,213,60,0)
+	
+//　　诺顿、飛行机を回り込んでやってくる。
+	rot(NORTON,30,270)
+	move(NORTON, 0, WALK1,1642,-557,-74,0)
+	wait_move(NORTON)
+	rot_chr(NORTON,30,RAGNA)
+
+	rot_chr(RAGNA,30,NORTON)
+	rot_chr(PARTNER,30,NORTON)
+	MES(RAGNA,"哦，你是整备人员吗？",0)
+	MES_close(RAGNA)
+
+	KAO(NORTON,"12321Z9","1","1")
+	MES(NORTON,"嗯，我是这个机场的专属整备员。\n这里的机体基本上都由我负责。",0)
+	MES_close(NORTON)
+
+//　　诺顿、飛行机に向く。
+	KAO(NORTON,"12321Z5","1","1")
+	MES(NORTON,"平时查看的\n多数是货机……",0)
+	KAO(NORTON,"12321Z7","1","1")
+	MES(NORTON,"不过，我个人还是最喜欢\n偶尔照看一下这种朴素的机体。",0)
+	KAO(NORTON,"12321Z8","1","1")
+	MES(NORTON,"你看，只要下点工夫\n就能自由地改造它的性能了。",0)
+	MES_close(NORTON)
+
+	MES(RAGNA,"嘿嘿，原来如此……\n这种感情我太理解了！",0)
+	MES(RAGNA,"飞机到底是要\n亲手改造才有意义嘛！",0)
+	MES(RAGNA,"哎呀，其实\n我最初也想从入门机入手的……",0)
+	MES_close(RAGNA)
+
+//	look_chr(PARTNER,RAGNA,"Bone_Head")
+	rot_chr(PARTNER,30,RAGNA)
+	wait(15)
+//	MES(PARTNER,"喂，到底怎么了？",0)
+//	MES(PARTNER,"突然就侃了起来……\n有什么让你兴奋的事吗？",0)
+	KAO(PARTNER,"12321Z5","23","1")
+	MES(PARTNER,"唔，人类的想法\n果然很难理解呢。",0)
+	KAO(PARTNER,"12321Z5","21","1")
+	MES(PARTNER,"像孩子那样两眼放光……\n居然兴奋成这样了吗？",0)
+	MES_close(PARTNER)
+
+	KAO(RAGNA,"B","2","1")
+	EMO(RAGNA,EMO_HIYAASE)
+	MES(RAGNA,"唔……",0)
+	MES_close(RAGNA)
+	rot_chr(RAGNA,30,PARTNER)
+	wait(15)
+
+	KAO(RAGNA,"B232BZ6","1","1")
+	MES(RAGNA,"公，公主你不懂的啦。",0)
+	MES_close(RAGNA)
+
+//　　艾雯に？エモーション。
+	EMO(PARTNER,EMO_HATENA)
+	wait(30)
+
+//――――――――――――――――――――――――――
+//	イベント終了処理
+//――――――――――――――――――――――――――
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//★诺顿初回①
+	F_set(FT_01_TalkNorton)
+
+	chr_pos(NORTON,864,-89,-75,210,2)
+	rot(RAGNA,30,120)
+	rot(PARTNER,30,160)
+//	look_off(PARTNER)
+	
+	chr_equip2( NORTON,	"EQ_007",	"Bone_RightSword",100,	0,0,0,	0,0,0);	//スパナ装備
+	EV("MOTION_NORTON_01")
+
+	F_set_chr(NORTON,CF_NO_MOVE)
+	
+	TK_end()
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	//★诺顿
+	F_set_note(NORTON,-1)
+	//★诺顿【飛行机マニア】
+	F_set_note(NORTON,0)
+//	プレイヤー操作許可
+//――――――――――――――――――――――――――
+
+}
+
+//――――――――――――――――――――――――――
+//	③诺顿初回イベント
+//――――――――――――――――――――――――――
+EV_FT_03_TalkNorton
+{
+//――――――――――――――――――――――――――
+//	初期化処理
+//――――――――――――――――――――――――――
+	cross_fade(30)			//クロスフェード
+//	TK_begin()
+	EV_begin()
+	
+	//カメラセット
+	CAM_move(2449,968,81,0,0)
+	CAM(-111,56,81,31,110,0,0)
+	
+	//キャラ再配置
+	chr_pos(RAGNA,2519,-852,-73,175,2)
+	chr_pos(PARTNER,2373,-756,-73,180,2)
+
+	chr_pos(NORTON,2604,-1143,-75,180,2)
+	chr_pos(POPPO,2526,-1295,-74,310,8)
+	rot_chr(NORTON,30,POPPO)
+	
+	F_set_chr(NORTON,CF_NO_ZIMEN)
+	F_set_chr(NORTON,CF_NO_CSP)
+	F_set_chr(NORTON,CF_NO_HEIGHT)
+	
+	MOT_SET(NORTON,153,-1,452,452,-1,-1)
+	MOT(NORTON,153,0)
+
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(NORTON, "1", "1", "1")	
+	F_reset_chr(NORTON,CF_NO_MOVE)
+
+
+//――――――――――――――――――――――――――
+//	イベント開始
+//――――――――――――――――――――――――――
+//　　诺顿、ＰＡエモーションで振り返る。
+	EMO(NORTON,EMO_PA)
+	wait(30)
+
+	MOT(NORTON,2,15)
+
+	rot_chr(NORTON,30,PLAYER1)
+//	name("诺顿")
+//	MES(NORTON,"……哦，是你们啊。",0)
+//	MES(NORTON,"呼，真没想到，有点吃惊呢。",0)
+
+	if(FT_01_TalkNorton)	//诺顿と知り合っている
+	{
+		MES(NORTON,"……哦，是你们啊。",0)
+	}
+	else
+	{
+		MES(NORTON,"哦，你们是……",0)
+	}
+	MES_close(NORTON)
+
+//	MES(RAGNA,"那个……",0)
+//	MES(RAGNA,"你在给鸽子喂食吗？",0)
+	MES(RAGNA,"哟。\n在给鸽子喂食吗？",0)
+	MES_close(RAGNA)
+
+	MES(NORTON,"嗯，算是吧。",0)
+	MES_close(NORTON)
+
+//　　诺顿、はとに向く。
+	rot_chr(NORTON,30,POPPO)
+	
+//	name("诺顿")
+	MES(NORTON,"前阵子，我在跑道上\n发现它受伤了。",0)
+	MES_close(NORTON)
+
+//	name2(NORTON)
+	MES(NORTON,"我给它做了下处理……\n那之后它似乎就变得很依赖我。\n常常过来找我。",0)
+	MES_close(NORTON)
+
+//　　诺顿、拉古那たちに向く。
+	rot_chr(NORTON,30,PLAYER1)
+	
+//	name("诺顿")
+	MES(NORTON,"啊，不过\n这事对师傅要保密哦。",0)
+	MES(NORTON,"要是和飞机相撞就很危险了，\n所以这里是禁止饲养动物的。",0)
+	MES_close(NORTON)
+
+//	name2(RAGNA)
+	MES(RAGNA,"啊，知道了。\n我会替你保密的。",0)
+	MES_close(RAGNA)
+
+//	name("诺顿")
+	MES(NORTON,"哈哈，谢谢了。",0)
+	MES_close(NORTON)
+//	MES(NORTON,"那么，我也\n是时候回到工作中去了。",0)
+//	MES(NORTON,"要是总休息的话，\n就容易露馅了。",0)
+//	MES_close(NORTON)
+	
+//　　诺顿、奥蒂莎机的方に步いていく。
+//	rot(NORTON,30,60)
+//	rot(RAGNA,8,80)
+//	rot(PARTNER,8,80)
+//	move( NORTON, 0, WALK1,	1747,-782,-74,	0)
+//	wait_move(NORTON)
+
+//　　そ的まま暗転。
+	
+//　　诺顿的配置を直してからフェードインし、操作許可を戻す。
+//――――――――――――――――――――――――――
+//	イベント終了処理
+//――――――――――――――――――――――――――
+	fade_in(100,30,BLACK)
+	wait_fade()
+	
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//诺顿的移動を止める
+	F_set_chr(NORTON,CF_NO_MOVE)
+
+	F_set_Node(NORTON,"Bone_RightSword",NP_HIDE)	//诺顿的皿を消す
+//	chr_pos(NORTON,	1596,-455,-75,90,10)
+//	chr_equip2( NORTON,	"EQ_007",	"Bone_RightSword",100,	0,0,0,	0,0,0);	//スパナ装備
+//	EV("MOTION_NORTON_01")
+	chr_pos(NORTON,	2604,-1143,-75,160,10)
+	
+	F_reset_chr(NORTON,CF_NO_ZIMEN)
+	F_reset_chr(NORTON,CF_NO_CSP)
+	F_reset_chr(NORTON,CF_NO_HEIGHT)
+	F_set_chr(NORTON,CF_NO_MOVE)
+
+	F_set(FT_03_TalkNorton)
+	
+//	TK_end()
+	EV_end()
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	//★诺顿
+	F_set_note(NORTON,-1)
+	//★诺顿【鳩を飼っている】
+	F_set_note(NORTON,1)
+//	プレイヤー操作許可
+//――――――――――――――――――――――――――
+}
+//──────────────────────────────
+//□▽菲奥娜克劳德共通会話
+//──────────────────────────────
+//▼フラグ□（梅尔塞迪克に乗り込む）
+//　　克劳德と共に飞机场的瓦伦斯家的飛行机的前にいる。
+//　　こ的段階ではまだドレス姿的まま。
+//	name("★初回（克劳德と共通／１回的み／イベント処理）")
+//　　話しかけるとキャラ再配置してイベント発生。
+//　　拉古那が飛行机に目を見張っているような雰囲気。
+//　　克劳德と共通なため、あちらで起こしたら発生しない。
+//──────────────────────────────
+TALK_FIOKLO_12
+{
+	//暗転------------------------------
+	cross_fade(30)
+
+	EV_begin()
+	
+	//カメラセット
+//	CAM_move(-2875,143,60,0,0)
+//	CAM(-231,80,60,25,218,0,0)
+	CAM_move(-2975,143,100,0,0)
+	CAM(169,80,100,25,153,0,0)
+
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(PET, "1", "1", "1")	
+	KAO(KLODE, "1", "1", "1")	
+	KAO(FIONA, "1", "1", "1")	
+
+	//キャラ位置セット
+	chr_pos(RAGNA,-2800,65,-74,180,2)
+	chr_pos(PARTNER,-2950,45,-73,200,2)
+	chr_pos(PET,-2880,240,-74,170,2)
+	
+	chr_pos(KLODE, -2801,-302,-74,160,53)
+	chr_pos(FIONA, -2968,-288,-74,190,51)
+	chr_pos(PLANE_K,-3100,-530,-73,70,2)
+	
+	F_reset_chr(KLODE,CF_NO_MOVE)
+	F_reset_chr(FIONA,CF_NO_MOVE)
+	//フェードイン----------------------
+	fade_in(0,60,0)
+	wait_fade()
+
+	MES(RAGNA,"这，这是……",0)
+	MES(RAGNA,"这不是传说中的天才设计师\n罗德·瓦伦斯设计的幻之机体吗！？",0)
+	MES_close(RAGNA)
+	
+	rot_chr(KLODE,30,RAGNA)
+	rot_chr(FIONA,30,RAGNA)
+
+	wait(15)
+	KAO(FIONA,"12321Z4","24","1")
+	MES(FIONA,"呵呵……\n你知道得真清楚。",0)
+	KAO(FIONA,"12321Z6","21","1")
+	MES(FIONA,"说到我们一族中的怪人，\n我的大叔也当之无愧。",0)
+	KAO(FIONA,"12321Z6","1","1")
+	MES(FIONA,"由于这层缘份，\n我才得以使用这架机体。",0)
+	MES_close(FIONA)
+
+	MES(RAGNA,"这样啊……\n嗯，就算是这样也很厉害了。",0)
+	MES(RAGNA,"管家先生，\n这架飞机由你操纵吗？",0)
+	MES_close(RAGNA)
+
+	KAO(KLODE,"12321Z6","1","1")
+	MES(KLODE,"是的，在下虽然不才，\n却也担负着飞行员的工作。",0)
+	MES_close(KLODE)
+
+	KAO(FIONA,"12321Z4","1","1")
+	MES(FIONA,"克劳德的技术很不错哦。",0)
+	KAO(FIONA,"12321Z6","1","1")
+	MES(FIONA,"他曾在地方性的空中接力大赛上\n获得过优胜。",0)
+	MES_close(FIONA)
+
+//	rot_chr(KLODE,30,FIONA)
+//	look_chr( KLODE, FIONA,"Bone_Head")
+//	wait(15)
+
+	KAO(KLODE,"12321Z3","23","4")
+	MES(KLODE,"小姐……那都是过去的事了。",0)
+	MES_close(KLODE)
+
+	MES(RAGNA,"嘿嘿……\n比起舞刀弄枪，我还是\n更想和你在这上面比试一场啊。",0)
+	MES_close(RAGNA)
+//　　拉古那、飛行机をマジマジと見回すような動作。
+	wait_MES(RAGNA)
+	EMO(RAGNA,EMO_BIKKURI)
+	wait(15)
+	look_chr( RAGNA, PIPIRO,"Bone_Head")
+	KAO(KLODE,"1","21","1")
+	wait(15)
+	MES(RAGNA,"嗯……！？",0)
+	MES_close(RAGNA)
+
+	look_off( RAGNA )
+	CAM_move(-2735,283,80,60,0)
+	CAM(-71,121,80,19,142,60,0)
+	
+	rot(RAGNA,30,230)
+	move(RAGNA, 0, RUN1,-2433,-171,-75,0)
+	wait_move(RAGNA)
+	rot(RAGNA,30,150)
+	move(RAGNA, 0, RUN1,-2484,-404,-75,0)
+	wait_move(RAGNA)
+
+	rot_chr(FIONA,30,RAGNA)
+	rot_chr(KLODE,30,RAGNA)
+	rot_chr(PET,30,RAGNA)
+	rot_chr(PARTNER,30,RAGNA)
+	EMO(RAGNA,EMO_PA)
+	wait(15)
+	MES(RAGNA,"哦哦，这个涡轮的形状\n完美得称得上是艺术了！",0)
+	MES(RAGNA,"究竟是什么构造！？",0)
+	MES_close(RAGNA)
+
+	MES(KLODE,"嗯，这个嘛。\n为了确保最高速度时的稳定性……",0)
+	MES_close(KLODE)
+
+//　　艾雯と露的頭に冷や汗マーク。
+	EMO(PET,EMO_HIYAASE)
+	EMO(PARTNER,EMO_HIYAASE)
+	wait(30)
+	
+	MES(PARTNER,"（哎呀呀……\n　真是的，像个孩子一样。）",0)
+	MES_close(PARTNER)
+
+//	name2(PET)
+	MES(PET,"（果然……\n　是个飞机狂人啊。）",0)
+	MES_close(PET)
+
+
+//　　イベント終了、プレイヤー操作許可。
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+	
+	chr_pos(RAGNA,-2800,65,-74,180,2)
+	chr_pos(PARTNER,-2950,45,-73,200,2)
+	chr_pos(PET,-2880,240,-74,200,2)
+
+	rot_chr(FIONA,30,PLANE_K)
+	rot_chr(KLODE,30,PLANE_K)
+
+	F_set_chr(KLODE,CF_NO_MOVE)
+	F_set_chr(FIONA,CF_NO_MOVE)
+	
+	//★□菲奥娜克劳德初回
+	F_set(FM_12_TalkFioKlo)
+	//★克劳德【罗德·瓦伦斯号】
+	F_set_note(-18,1)
+	//★克劳德【エア·レース】
+	F_set_note(-18,2)	
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	EV_end()
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+}
+
+//──────────────────────────────
+//□▽布库尔皮皮洛共通会話
+//──────────────────────────────
+TALK_POCPIP_12
+{
+	//暗転------------------------------
+	cross_fade(30)
+	
+	EV_begin()
+	//カメラセット
+//	CAM_move(-1013,-194,81,0,0)
+//	CAM(209,82,81,25,183,0,0)
+//	CAM_move(-1013,-194,81,0,0)
+//	CAM(49,105,81,18,179,0,0)
+	CAM_move(-1013,-194,81,0,0)
+	CAM(49,89,81,22,179,0,0)
+	//キャラ位置セット
+	chr_pos(RAGNA,-840,323,-73,160,2)
+	chr_pos(PARTNER,-920,460,-74,160,2)
+	chr_pos(PET,-830,520,-74,160,2)
+
+	chr_pos(PIPIRO,-1073,54,-74,330,2)
+	chr_pos(POCKLE,-901,11,-74,350,2)
+	chr_pos(PLANE_P,-1300,-200,-75,90,2)
+
+	F_reset_chr(PIPIRO,CF_NO_MOVE)
+	F_reset_chr(POCKLE,CF_NO_MOVE)
+
+//	MOT_SET(POCKLE,150,-1,433,433,-1,-1)//ガッツ
+	MOT_SET(POCKLE,151,-1,435,435,-1,-1)//ガッツ
+
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(PIPIRO, "1", "1", "1")	
+	KAO(POCKLE, "1", "1", "1")	
+
+	//フェードイン----------------------
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　話しかけるとキャラ再配置してイベント発生。
+	KAO(POCKLE,"12321Z4","1","1")
+	MES(POCKLE,"拉古那大哥，艾雯姐姐。",0)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"说起来……\n替我们取回了《虹之宝玉》\n真是太感谢了。",0)
+	MES_close(POCKLE)
+
+	MES(RAGNA,"啊啊……别在意。",0)
+	MES(RAGNA,"我只是把留在那里的东西\n给捡了回来而已。",0)
+	MES(RAGNA,"而且，看起来\n好像已经失去魔力了吧？",0)
+	MES_close(RAGNA)
+
+	KAO(PIPIRO,"12321Z5","1","1")
+	MES(PIPIRO,"是啊。\n非常完美地消失得一干二净。",0)
+	KAO(PIPIRO,"12321Z6","1","1")
+	MES(PIPIRO,"看来是用在了各种仪式上\n把魔力都用光了啊。",0)
+	MES_close(PIPIRO)
+
+	MES(PARTNER,"唔，虽说是女神的宝玉，\n不过也不是万能的嘛。",0)
+	MES_close(PARTNER)
+
+	KAO(POCKLE,"12321Z4","1","1")
+	MES(POCKLE,"是啊……\n不过没关系的。",0)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"之前也发生过这样的事，\n不过过了一段时间就又恢复原状了。",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"12321Z6","1","1")
+	MES(PIPIRO,"嗯，记得是过了大概半年吧，\n魔力就恢复原状了。",0)
+	MES_close(PIPIRO)
+
+	MES(RAGNA,"哦，你们好像\n也经历过不少事情了嘛。",0)
+	MES(RAGNA,"嗯，这事回头再说……",0)
+	MES_close(RAGNA)
+
+//　　拉古那、布库尔たち的飛行机的方に目を向ける。
+//	CAM_move(-1013,-194,81,60,0)
+//	CAM(49,88,81,21,189,60,0)
+	CAM_move(-1053,-194,81,40,0)
+	CAM(-31,88,81,21,192,40,0)
+	look_chr( RAGNA, PLANE_P,"Bone_Head")
+	wait(40)
+	wait(15)
+
+	//──────────────────────────────
+	//	name("□诺顿·フラグ①的メッセージを見ている场合（布库尔机的解説閲覧済み）")
+	if(FT_01_TalkNorton)
+	{
+		MES(RAGNA,"艾路毕查斯社制造的\n入门用轻型飞机……",0)
+		MES(RAGNA,"这架机体，\n就是你们所有的吧。",0)
+		MES_close(RAGNA)
+	}
+	//	name("□見ていない")
+	else
+	{
+		MES(RAGNA,"这就是你们的飞机吗。",0)
+		MES(RAGNA,"是艾路毕查斯社制造的\n入门用轻型飞机啊。",0)
+		MES_close(RAGNA)
+	}
+	//──────────────────────────────
+	
+	KAO(POCKLE,"12321Z3","J","1")
+	MES(POCKLE,"嘿嘿，是啊。",0)
+	KAO(POCKLE,"12321Z5","J","1")
+	MES(POCKLE,"是从我们认识的飞行员那里\n得到的。",0)
+	KAO(POCKLE,"12321Z5","J","1")
+	MES(POCKLE,"是制造得尽可能合理，\n让初学者也能使用的机体。",0)
+	MES_close(POCKLE)
+
+	look_chr( PIPIRO, POCKLE,"Bone_Head")
+	
+	KAO(PIPIRO,"12321Z6","2","1")
+	MES(PIPIRO,"……很幸运地，只花了１０万芬尼\n就从普休凯那里买下了。",0)
+	KAO(PIPIRO,"12321Z6","2","1")
+	MES(PIPIRO,"村长和蒂阿拉他们\n也帮忙凑了些钱。",0)
+	MES_close(PIPIRO)
+
+	look_chr(  POCKLE,PIPIRO,"Bone_Head")
+
+	KAO(POCKLE,"12321","8","1")
+	MES(POCKLE,"唔……",0)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"不，不过买飞机这事，\n不是皮皮洛也赞成的吗。",0)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"说是什么已经过腻了这种\n半年才来一次的通贩生活了。",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"12321Z3","2","1")
+	MES(PIPIRO,"那是当然的。",0)
+	KAO(PIPIRO,"12321Z6","1","1")
+	MES(PIPIRO,"嗯，把布库尔到处使唤，\n命令你去买新上市的衣服，\n这种感觉也很不错呢。",0)
+	MES_close(PIPIRO)
+
+	KAO(POCKLE,"12321Z5","23","5")
+	MES(POCKLE,"可以的话，我还是希望\n摆脱这种命运……",0)
+	MES_close(POCKLE)
+
+	look_chr( PARTNER, PLANE_P,"Bone_Head")
+
+	MES(PARTNER,"唔，不过\n这个的外形有些不同呢。",0)
+	MES(PARTNER,"感觉上，\n它的外形更像鸟类。",0)
+	MES_close(PARTNER)
+
+	look_chr( PET, PLANE_P,"Bone_Head")
+	
+	KAO(POCKLE,"1","21","1")
+
+	MES(PET,"啊，确实是这样呢。",0)
+	MES(PET,"虽然在有两片机翼\n这一点上有些不同……",0)
+	MES_close(PET)
+
+	look_chr( RAGNA, PARTNER,"Bone_Head")
+	MES(RAGNA,"啊啊，这就是独到之处了。",0)
+	MES(RAGNA,"虽然不会产生速度，\n但在拐小弯时就能显出作用，\n无论怎么说稳定性都非常出色。",0)
+	MES(RAGNA,"不愧是量产型中\n最优秀的入门款式。",0)
+	MES_close(RAGNA)
+
+	look_chr( PARTNER, RAGNA,"Bone_Head")
+
+	MES(PARTNER,"哦……",0)
+	MES_close(PARTNER)
+
+	look_chr( POCKLE,RAGNA,"Bone_Head")
+	KAO(POCKLE,"12321Z4","1","1")
+	MES(POCKLE,"哈哈，\n你了解得真详细呢。",0)
+	MES_close(POCKLE)
+
+	MES(RAGNA,"哈，这是所谓『宅族』的知识啦。",0)
+	MES_close(RAGNA)
+
+//　　拉古那、布库尔たち的方に向き直る。
+	CAM_move(-1013,-194,81,40,0)
+	CAM(49,89,81,22,179,40,0)
+	look_off(RAGNA)
+	wait(15)
+	look_off(POCKLE)
+	look_off(PIPIRO)
+	wait(40)
+
+	MES(RAGNA,"布库尔，皮皮洛。",0)
+	MES(RAGNA,"这次作战\n所重视的是阵形，\n所以不必追求速度。",0)
+	MES(RAGNA,"这家伙也会跟着一起去的，\n你们就沉着切实地操纵就行了。",0)
+	MES_close(RAGNA)
+
+	MOT(POCKLE,151,10)
+	wait(15)
+	CAM_quake("46")
+	KAO(POCKLE,"1232","1","1")
+	MES(POCKLE,"是！",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"123","26","6")
+	MES(PIPIRO,"了～解。",0)
+	MES_close(PIPIRO)
+	
+	//─────────────────────
+	
+//　　イベント終了、プレイヤー操作許可。
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	chr_pos(PIPIRO,-1073,54,-74,200,150)
+	chr_pos(POCKLE,-901,11,-74,110,150)
+	KAO(POCKLE,"1","1","1")
+	KAO(PIPIRO,"1","1","1")
+//	MOT(POCKLE,2,0)
+//	MOT(PIPIRO,2,0)
+	MOT_SET(PIPIRO,150,-1,410,410,-1,-1)
+	MOT(PIPIRO,150,0)
+	MOT_SET(POCKLE,150,-1,400,400,-1,20)
+	MOT(POCKLE,150,0)
+
+	//★□皮皮洛布库尔初回
+	F_set(FM_12_TalkPocPip)
+	//★布库尔【蓝色惑星号】
+	F_set_note(-2,2)
+
+	F_set_chr(PIPIRO,CF_NO_MOVE)
+	F_set_chr(POCKLE,CF_NO_MOVE)
+	EV_end()
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼飛行机に乗り込む·飞机场
+//──────────────────────────────
+//　　ここで画面切り替えして飞机场。
+//　　整備士は滑走路的先的方でフラッグを振っている状態。
+//　　克劳德机、奥蒂莎机、布库尔机がプロペラを
+//　　回しながら加速してゆき、次々と離陸していく的を見せる。
+//　　（※克劳德机に乗っている菲奥娜は甲冑バージョン）
+//　　（※それぞれ的キャラにゴーグルを付けるかは要検討）
+EV_6_05_Plane3Go
+{
+	EV_begin()
+
+	set_namebmp(0,0)		//地名非表示
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  	2332,980,-74,0,2)
+	chr_pos(PARTNER,	2132,980,-74,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	color(PET,-1)
+	wait_color(RAGNA)
+
+	set_chr(PLANE_P,	 858,-1,-1,-50,-1020,-74,  0,	90, 0,"")	//布库尔机
+	set_chr(PLANE_K,	 859,-1,-1,-1100,-360,-74,  0,	90, 0,"")	//克劳德机
+	set_chr(PLANE_O,	 860,-1,-1, 350, 300,-74,  0,	90, 0,"")	//奥蒂莎机
+	set_chr(NORTON,		1063,-1,-1, -8000,600,-74, 2,270,0, "")
+	set_chr(KLODE,	 	1018,-1,-1, 226,-490,0, 2, 14,0, "")
+	set_chr(FIONA,		1017,-1,-1, 276,-296,0, 2, 44,0, "")
+	set_chr(ODESSA,	  	19,-1,-1, 256,  80,0, 2,180,0, "")
+	set_chr(POCKLE,	 	1012,-1,-1, 408, -66,0, 2,130,0, "")
+	set_chr(PIPIRO,	 	1013,-1,-1, 508,-228,0, 2,100,0, "")
+	set_chr(LA-RAIRA,	1023,-1,-1, -88,-318,0, 2,310,0, "")
+	F_set_chr(NORTON,CF_NO_CLIP)
+	F_set_chr(NORTON,CF_NO_CLIP2)
+	F_set_chr(NORTON,CF_NO_CSP)
+	F_set_chr(NORTON,CF_NO_HEIGHT)
+	F_set_chr(NORTON,CF_NO_ZIMEN)
+	F_set_chr(KLODE,CF_NO_CLIP)
+	F_set_chr(KLODE,CF_NO_CLIP2)
+	F_set_chr(KLODE,CF_NO_CSP)
+	F_set_chr(KLODE,CF_NO_HEIGHT)
+	F_set_chr(KLODE,CF_NO_ZIMEN)
+	F_set_chr(KLODE,CF_NO_SHADOW)
+	F_set_chr(FIONA,CF_NO_CLIP)
+	F_set_chr(FIONA,CF_NO_CLIP2)
+	F_set_chr(FIONA,CF_NO_CSP)
+	F_set_chr(FIONA,CF_NO_HEIGHT)
+	F_set_chr(FIONA,CF_NO_ZIMEN)
+	F_set_chr(FIONA,CF_NO_SHADOW)	
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_HEIGHT)
+	F_set_chr(ODESSA,CF_NO_ZIMEN)
+	F_set_chr(ODESSA,CF_NO_SHADOW)	
+	F_set_chr(POCKLE,CF_NO_CLIP)
+	F_set_chr(POCKLE,CF_NO_CLIP2)
+	F_set_chr(POCKLE,CF_NO_CSP)
+	F_set_chr(POCKLE,CF_NO_HEIGHT)
+	F_set_chr(POCKLE,CF_NO_ZIMEN)
+	F_set_chr(POCKLE,CF_NO_SHADOW)	
+	F_set_chr(PIPIRO,CF_NO_CLIP)
+	F_set_chr(PIPIRO,CF_NO_CLIP2)
+	F_set_chr(PIPIRO,CF_NO_CSP)
+	F_set_chr(PIPIRO,CF_NO_HEIGHT)
+	F_set_chr(PIPIRO,CF_NO_ZIMEN)
+	F_set_chr(PIPIRO,CF_NO_SHADOW)	
+	F_set_chr(LA-RAIRA,CF_NO_CLIP)
+	F_set_chr(LA-RAIRA,CF_NO_CLIP2)
+	F_set_chr(LA-RAIRA,CF_NO_CSP)
+	F_set_chr(LA-RAIRA,CF_NO_HEIGHT)
+	F_set_chr(LA-RAIRA,CF_NO_ZIMEN)
+	F_set_chr(LA-RAIRA,CF_NO_SHADOW)
+	
+	KAO(NORTON,			"1","1","2")
+	KAO(KLODE,			"B","1","3")
+	KAO(FIONA,			"B","1","3")
+	KAO(ODESSA,			"B","1","3")
+	KAO(POCKLE,			"B","1","3")
+	KAO(PIPIRO,			"B","1","3")
+	KAO(LA-RAIRA,		"1","-","-")
+
+	F_set_chr(PLANE_P,CF_NO_CLIP)
+	F_set_chr(PLANE_P,CF_NO_CLIP2)
+	F_set_chr(PLANE_P,CF_NO_CSP)
+	F_set_chr(PLANE_P,CF_NO_HEIGHT)
+	F_set_chr(PLANE_P,CF_NO_ZIMEN)
+	F_set_chr(PLANE_P,CF_MAXMOVE)
+	F_set_chr(PLANE_K,CF_NO_CLIP)
+	F_set_chr(PLANE_K,CF_NO_CLIP2)
+	F_set_chr(PLANE_K,CF_NO_CSP)
+	F_set_chr(PLANE_K,CF_NO_HEIGHT)
+	F_set_chr(PLANE_K,CF_NO_ZIMEN)
+	F_set_chr(PLANE_K,CF_MAXMOVE)
+	F_set_chr(PLANE_O,CF_NO_CLIP)
+	F_set_chr(PLANE_O,CF_NO_CLIP2)
+	F_set_chr(PLANE_O,CF_NO_CSP)
+	F_set_chr(PLANE_O,CF_NO_HEIGHT)
+	F_set_chr(PLANE_O,CF_NO_ZIMEN)
+	F_set_chr(PLANE_O,CF_MAXMOVE)
+	MOT_SET(PLANE_P, 150,-1, 70,70,-1,0)		//着陸状態
+	MOT_SET(PLANE_K, 150,-1, 70,70,-1,0)		//着陸状態
+	MOT_SET(PLANE_O, 150,-1, 70,70,-1,0])		//着陸状態
+	MOT_SET(PLANE_P, 151,152,100,150,-1,0)							//プロペラ回転始め
+	MOT_SET(PLANE_P, 152,152,150,189,-1,0)							//プロペラ回転中
+	MOT_SET(PLANE_P, 153,-1, 190,240,-1,0)							//プロペラ回転停止
+	MOT_SET(PLANE_K, 151,152,100,150,-1,0)							//プロペラ回転始め
+	MOT_SET(PLANE_K, 152,152,150,189,-1,0)							//プロペラ回転中
+	MOT_SET(PLANE_K, 153,-1, 190,240,-1,0)							//プロペラ回転停止
+	MOT_SET(PLANE_O, 151,152,100,150,-1,0)							//プロペラ回転始め
+	MOT_SET(PLANE_O, 152,152,150,189,-1,0)							//プロペラ回転中
+	MOT_SET(PLANE_O, 153,-1, 190,240,-1,0)							//プロペラ回転停止
+	
+	//モーション定義
+	MOT_SET(KLODE,150,-1,487,487,-1,-1)//座り操縦
+	MOT_SET(FIONA,150,-1,485,485,-1,-1)//座り
+	MOT_SET(ODESSA,150,-1,487,487,-1,-1)//座り操縦
+	MOT_SET(LA-RAIRA,150,-1,485,485,-1,-1)//座り
+	MOT_SET(POCKLE,150,-1,487,487,-1,-1)//座り操縦
+	MOT_SET(PIPIRO,150,-1,485,485,-1,-1)//座り
+	MOT_SET(NORTON,150,151,6460,6475,-1,-1)//旗振り
+	MOT_SET(NORTON,151,150,6475,6460,-1,-1)//旗振り
+	MOT(KLODE,150,0)
+	MOT(FIONA,150,0)
+	MOT(ODESSA,150,0)
+	MOT(LA-RAIRA,150,0)
+	MOT(POCKLE,150,0)
+	MOT(PIPIRO,150,0)
+	MOT(NORTON,150,0)
+
+	F_set_Node(POCKLE,"Bone_RightSword",NP_HIDE)
+	F_set_Node(PIPIRO,"Bone_RightSword",NP_HIDE)
+	F_set_Node(ODESSA,"Bone_RightSword",NP_HIDE)
+	F_set_Node(LA-RAIRA,"Bone_RightSword",NP_HIDE)
+
+	chr_equip_chr(KLODE,	PLANE_K,"isu01_Null",100,		0,0,0,	0,-40,-60);
+	chr_equip_chr(FIONA,	PLANE_K,"isu02_Null",100,		0,0,0,	0,-40,-40);
+	chr_equip_chr(ODESSA,	PLANE_O,"isu01_Null",100,		0,0,0,	0,-60,-60);
+	chr_equip_chr(LA-RAIRA,	PLANE_O,"isu02_Null",100,		0,0,0,	0,-30,-40);			
+	chr_equip_chr(POCKLE,	PLANE_P,"isu01_Null",100,		0,0,0,	0,-40,-60);
+	chr_equip_chr(PIPIRO,	PLANE_P,"isu02_Null",100,		0,0,0,	0,-40,-60);	
+
+
+
+	F_set_Node(PLANE_K, "fun01", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_O, "fun01", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_O, "fun02", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_P, "fun01", NP_HIDE)							//ペラ非表示
+
+	chr_equip(NORTON,"EQ_046R", "Bone_RightHand", 100)	//旗を装備させる的はこちら。
+	chr_equip(NORTON,"EQ_046L", "Bone_LeftHand", 100)	//旗を装備させる的はこちら。
+	MOT(PLANE_P, 152, 0)
+	MOT(PLANE_K, 152, 0)
+	MOT(PLANE_O, 152, 0)
+
+	//カメラ初期位置
+//	CAM_move(-200,320,0,0,0)
+//	CAM(570,196,0,34,136,0,0)
+//	CAM(570,166,0,34,136,120,0)
+
+	SE(51,0)//风SE
+
+	CAM_move(-7951,-641,80,0,0)
+	CAM(-31,87,80,31,245,0,0)
+	//フェードイン
+	fade_in(0,90,0)
+
+	wait(60)
+	KAO(NORTON,			"1","1233321","2")
+
+	wait_fade()
+	wait_CAM()
+
+	//旗振りカメラ
+//	cross_fade(15)
+	CAM_move(-7951,-641,80,0,0)
+	CAM(-31,87,80,31,245,0,0)
+	wait_fade()
+	wait(5)
+	
+	CAM_move(-208,204,320,150,0)
+	CAM(409,172,235,31,145,150,0)	
+	wait(10)
+	SE(1166,0)//カメラ近づきプロペラSE
+
+	wait_CAM()
+
+	EV("EV_1160")//プロペラSE処理
+	//奥蒂莎カメラ
+	cross_fade(15)
+	CAM_move(860,-300,140,0,0)
+	CAM(210,76,140,30,90,0,0)
+	CAM_move(740,-200,-60,90,0)
+	CAM(450,102,-60,30,110,90,0)	
+	wait(30)
+	KAO(ODESSA,			"B","1233321","3")
+	wait(60)
+
+	//布库尔カメラ
+	cross_fade(15)
+	CAM_move(180,840,-60,0,0)
+	CAM(370,88,-60,30,50,0,0)
+	CAM_move(260,880,40,90,0)
+	CAM(130,84,40,30,64,90,0)	
+	wait(15)
+	KAO(POCKLE,			"B","1233321","3")
+	wait(75)
+
+	//克劳德カメラ
+	cross_fade(15)
+	CAM_move(-640,420,40,0,0)
+	CAM(250,56,40,30,110,0,0)
+//	CAM_move(-354,319,319,90,0)
+//	CAM(289,172,235,31,127,90,0)
+	CAM_move(-674,179,319,120,0)
+	CAM(288,171,319,30,126,120,0)	
+	wait(30)
+	KAO(FIONA,			"B","1233321","3")
+	wait_CAM()
+	KAO(KLODE,			"B","1233321","3")
+
+//	CAM_move(-7799,92,367,270,0)
+	CAM_move(-7799,-802,367,270,0)
+//	CAM(-351,172,235,31,144,270,0)
+	CAM(-351,172,235,31,210,330,0)
+
+	EV_stop("EV_1160")//プロペラSE止め
+	EV_stop("EV_1160_2")
+
+	EV("EV_Plane_SE")//発進SE処理
+
+	EV("EV_MovePlaneK")
+	wait(30)
+	EV("EV_MovePlaneO")
+	wait(50)
+	EV("EV_MovePlaneP")
+	
+	wait(180)
+	MOT(NORTON,2,10)
+	rot(NORTON,30,90)
+	wait_EV("EV_MovePlaneK")
+	wait_EV("EV_MovePlaneP")
+	wait_EV("EV_MovePlaneO")
+	
+//	wait(300)
+
+//
+//	wait(30)
+
+	EV("EV_51_fadeout")//风SEフェードアウト
+
+	fade_in(100,30,0)
+	wait_fade()
+
+//　　布兰迪山丘（ev00701）へ。
+	workG(GW_ENTRY_EVENT,SET,2)
+	new_map(10701)
+
+//	EV_end()
+}
+
+
+EV_MovePlaneK
+{
+	move(PLANE_K,2,10,-10000,0,100,0)
+	wait(30)
+	move(PLANE_K,2,15,-10000,0,100,0)
+	wait(25)
+	move(PLANE_K,2,20,-10000,0,100,0)
+	wait(20)
+	move(PLANE_K,2,30,-10000,0,100,0)
+	wait(15)
+	move(PLANE_K,2,40,-10000,0,100,0)
+	wait(10)
+	move(PLANE_K,2,55,-10000,0,100,0)
+	wait(5)
+	move(PLANE_K,2,70,-10000,0,100,0)
+	wait(5)
+	move(PLANE_K,2,85,-10000,0,100,0)
+	wait(5)
+	move(PLANE_K,2,100,-10000,0,100,0)
+	wait(30)
+	move(PLANE_K,2,100,-10000,0,500,0)
+	wait(5)
+	move(PLANE_K,2,100,-10000,0,1000,0)
+	wait(5)
+	move(PLANE_K,2,100,-10000,0,2000,0)
+	wait(5)
+	move(PLANE_K,2,100,-10000,0,3000,0)
+	wait(5)
+//	move(PLANE_K,2,100,-10000,0,4000,0)
+//	wait(5)
+//	move(PLANE_K,2,100,-10000,0,5000,0)
+	wait_move(PLANE_K)
+}
+
+EV_MovePlaneP
+{
+	move(PLANE_P,2,10,-10000,0,100,0)
+	wait(30)
+	move(PLANE_P,2,15,-10000,0,100,0)
+	wait(25)
+	move(PLANE_P,2,20,-10000,0,100,0)
+	wait(20)
+	move(PLANE_P,2,30,-10000,0,100,0)
+	wait(15)
+	move(PLANE_P,2,40,-10000,0,100,0)
+	wait(10)
+	move(PLANE_P,2,55,-10000,0,100,0)
+	wait(5)
+	move(PLANE_P,2,70,-10000,0,100,0)
+	wait(5)
+	move(PLANE_P,2,85,-10000,0,100,0)
+	wait(5)
+	move(PLANE_P,2,100,-10000,0,100,0)
+	wait(35)
+	move(PLANE_P,2,100,-10000,0,500,0)
+	wait(5)
+	move(PLANE_P,2,100,-10000,0,1000,0)
+	wait(5)
+//	move(PLANE_P,2,100,-10000,0,2000,0)
+//	wait(5)
+//	move(PLANE_P,2,100,-10000,0,3000,0)
+//	wait(5)
+//	move(PLANE_P,2,100,-10000,0,4000,0)
+//	wait(5)
+//	move(PLANE_P,2,100,-10000,0,5000,0)
+	wait_move(PLANE_P)
+}
+EV_MovePlaneO
+{
+	move(PLANE_O,2,10,-10000,0,100,0)
+	wait(30)
+	move(PLANE_O,2,15,-10000,0,100,0)
+	wait(25)
+	move(PLANE_O,2,20,-10000,0,100,0)
+	wait(20)
+	move(PLANE_O,2,30,-10000,0,100,0)
+	wait(15)
+	move(PLANE_O,2,40,-10000,0,100,0)
+	wait(10)
+	move(PLANE_O,2,55,-10000,0,100,0)
+	wait(5)
+	move(PLANE_O,2,70,-10000,0,500,0)
+	wait(5)
+	move(PLANE_O,2,85,-10000,0,500,0)
+	wait(5)
+	move(PLANE_O,2,100,-10000,0,1000,0)
+	wait(40)
+	move(PLANE_O,2,100,-10000,0,1500,0)
+	wait(5)
+	move(PLANE_O,2,100,-10000,0,2000,0)
+	wait(5)
+	move(PLANE_O,2,100,-10000,0,3000,0)
+//	wait(5)
+//	move(PLANE_O,2,100,-10000,0,4000,0)
+//	wait(5)
+//	move(PLANE_O,2,100,-10000,0,4000,0)
+//	wait(5)
+//	move(PLANE_O,2,100,-10000,0,5000,0)
+	wait_move(PLANE_O)
+}
+
+//──────────────────────────────
+//▼エンディング～旅立ちと再会的約束
+//──────────────────────────────
+//　　飞机场的滑走路に出るとイベント発生。
+//　　そこに行くまでに親方たちとは会話できるようにする。
+//　　（梅丽安は特里斯坦号的近くでスタンバイしている）
+EV_6_16_EndEp
+{
+	EV_begin()
+
+	MES_pos(SUBARU,"W3拉古那师父，米娅！",0,1, 240,0,0)
+	wait_key(0)
+	MES_close(SUBARU)
+	wait(15)
+	
+//──────────────────────────────
+
+//　　画面スクロールして、滑走路的中ほど。
+//　　特里斯坦号が滑走路にスタンバイしており、
+//　　露、昴、奥蒂莎、拉莱拉たちを始め、
+//　　重要なサブキャラ的ほとんどに待っている的を見せる。
+//　　昴は嬉しそうに手を振っている状態。	
+	cross_fade(15)
+	CAM_move(2318,-926,100,0,0)
+	CAM(-471,34,100,36,240,0,0)
+	CAM(-31,34,100,36,240,120,0)
+	
+		set_chr(EVENT_RAGNA, 1014, -1,-1, -1666,2543,-75,2, 133,0,"")
+		set_chr(MIA,           91, -1,-1, -1666,2543,-75,2, 133,0,"") 
+		set_chr(ALWEN,       1011, -1,-1, -1666,2543,-75,2, 130,0,"")
+	//	chr_equip( ALWEN,"wp_004b", "Bone_RightSword", 100)	//杖を装備させる的はこちら。
+
+		F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+		F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+		F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+		F_set_chr(EVENT_RAGNA,      CF_NO_HEIGHT)	
+		F_set_chr(EVENT_RAGNA,      CF_NO_ZIMEN)			
+		F_set_chr(SUBARU,     CF_NO_CLIP)
+		F_set_chr(SUBARU,     CF_NO_CLIP2)
+		F_set_chr(SUBARU,     CF_NO_CSP)
+		F_set_chr(ALWEN,      CF_NO_CSP)
+		F_set_chr(ALWEN,      CF_NO_CLIP)	
+		F_set_chr(ALWEN,      CF_NO_CLIP2)	
+		F_set_chr(ALWEN,      CF_NO_HEIGHT)	
+		F_set_chr(ALWEN,      CF_NO_ZIMEN)	
+		F_set_chr(LA-RAIRA,   CF_NO_CSP)
+		F_set_chr(LA-RAIRA,   CF_NO_CLIP)	
+		F_set_chr(LA-RAIRA,   CF_NO_CLIP2)	
+		F_set_chr(LA-RAIRA,      CF_NO_HEIGHT)	
+		F_set_chr(LA-RAIRA,      CF_NO_ZIMEN)					
+		F_set_chr(MIA,       CF_NO_CSP)
+		F_set_chr(MIA,      CF_NO_HEIGHT)	
+		F_set_chr(MIA,      CF_NO_ZIMEN)		
+
+
+	KAO(SUBARU,"1","6","6")
+	KAO(LA-RAIRA,"1","-","-")
+	KAO(FIONA,"1","1","1")
+	KAO(KLODE,"1","1","1")
+	KAO(ODESSA,"1","1","6")
+	KAO(LUE,"B","1","4")
+	KAO(POCKLE,"1","1","1")
+	KAO(PIPIRO,"1","1","1")
+	KAO(MILLIAM,"1","1","6")
+	chr_rename(LA-RAIRA,"魔女拉莱拉")
+
+
+	MOT_SET(SUBARU, 150, -1, 415,415,-1,0)	//両手を軽く広げる
+	MOT_SET(SUBARU, 151, -1, 450,450,-1,0)	//両手を前であわせる
+	MOT_SET(SUBARU, 152, -1, 439,439,-1,0)	//片手胸
+	MOT_SET(ODESSA, 150, -1, 395,395,-1,0)
+	MOT_SET(MILLIAM, 150, -1, 432,432,-1,0)
+	MOT_SET(MIA, 150, -1, 448,448,-1,0)	//クスクス
+	MOT_SET(MIA, 151, -1, 450,450,-1,0)	//クスクス
+	MOT_SET(FIONA,150, -1, 450,450,-1,0)	//手前待机
+	MOT_SET(PIPIRO,150, -1, 417,417,-1,0)	//しったこっちゃない
+	MOT_SET(POCKLE, 150, -1, 471,471,-1,0)	//おどろき
+//	MOT_SET(EVENT_RAGNA, 150, -1, 397,397,-1,0)	//腰腕
+	MOT_SET(EVENT_RAGNA, 150, -1, 400,400,-1,0)	//腰腕
+
+	chr_pos(MILLIAM, 455,-418,-74,291,2 )
+	chr_pos(FIONA,   455,38,-74,261,2)
+
+	look_chr(PIPIRO, EVENT_RAGNA, "Bone_Head")
+	look_chr(POCKLE, EVENT_RAGNA, "Bone_Head")
+	look_chr(LA-RAIRA, EVENT_RAGNA, "Bone_Head")
+	look_chr(KLODE,    EVENT_RAGNA, "Bone_Head")
+	look_chr(FIONA,    EVENT_RAGNA, "Bone_Head")
+	look_chr(ODESSA,   EVENT_RAGNA, "Bone_Head")
+	look_chr(SUBARU,   EVENT_RAGNA, "Bone_Head")
+	look_chr(LUE,      EVENT_RAGNA, "Bone_Head")
+
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	color(PET,-1)
+	color(POPPO,-1)		//鸽子非表示
+
+//	chr_pos(EVENT_RAGNA,  2383,1190,-74,174,2)
+//	chr_pos(ALWEN,        2087,1201,-74,174,2)
+//	chr_pos(MIA,          2516,1213,-74,174,2)
+	
+	chr_pos(EVENT_RAGNA,  2250,894,-74, 133,2)
+	chr_pos(MIA,          2523,953,-74, 133,2) 
+	chr_pos(ALWEN,        2092,958,-74, 130,2)
+	
+	F_set_Node(ODESSA, "Bone_RightSword", NP_HIDE)
+
+	wait(1)
+	MOT(SUBARU, 218, 5)	//手を振る
+	MOT(ODESSA, 150, 1)
+	MOT(FIONA,  150, 0)
+	MOT(ALWEN,53,1)										//艾雯的右手を開かせる。
+
+	
+//	move(EVENT_RAGNA, 0, WALK1,  2250,894,-74, 0)
+//	wait(15)
+//	move(ALWEN,       0, WALK1,  2092,958,-74, 0)
+//	wait(15)
+//	move(MIA,         0, WALK1,  2523,953,-74, 0)
+
+	rot(EVENT_RAGNA, 30, 133 )
+	wait(5)
+	rot(ALWEN,       30, 133 )
+	wait(5)	
+	rot(MIA,         30, 133 )
+	
+	wait_CAM_move()
+	wait_CAM()
+	wait_fade()
+
+	KAO(LUE,"B232BZ2","1233321","4")
+	MES(LUE,"公主大人……",0)
+	MES_close(LUE)
+
+	wait(15)
+	cross_fade(15)
+	CAM_move(687,244,100,0,0)
+	CAM(89,84,15,31,206,0,0)
+
+	CAM_move(558,216,100,120,0)
+	CAM(-71,83,100,31,217,120,0)
+
+	F_reset_chr(ALWEN,      		CF_NO_HEIGHT)	
+	F_reset_chr(ALWEN,      		CF_NO_ZIMEN)	
+	F_reset_chr(MIA,      			CF_NO_HEIGHT)	
+	F_reset_chr(MIA,      		 	CF_NO_ZIMEN)	
+	F_reset_chr(EVENT_RAGNA,		CF_NO_HEIGHT)	
+	F_reset_chr(EVENT_RAGNA,		CF_NO_ZIMEN)	
+	
+	chr_pos(EVENT_RAGNA, 1363,138,-74,118,2)
+	chr_pos(ALWEN,       1531,-47,-73,113,2)
+	chr_pos(MIA,         1781,417,-73,110,2)
+	move(EVENT_RAGNA, 0, WALK1, 985,-69,-74,0)
+	move(ALWEN,       0, WALK1, 984,-256,-73,0)
+	move(MIA,         0, WALK1, 1015,82,-74,0)
+	MOT(SUBARU,2,1)
+	wait(5)
+	wait_fade()
+
+
+	wait_move(EVENT_RAGNA)
+
+//　　拉古那たち、昴たち的前まで移動。
+	KAO(EVENT_RAGNA,"12321Z3","1","1")
+	MES(EVENT_RAGNA,"大家，久等了。",0)
+	MES_close(EVENT_RAGNA)
+
+	wait_move(MIA)
+	
+	KAO(MIA,"12321Z5","1","1")
+	MES(MIA,"难得大家都来送我们……\n迟到了真是对不起。",0)
+	MES_close(MIA)
+
+	KAO(SUBARU,"12321Z4","6","6")
+	MES(SUBARU,"嘿嘿。\n别在意～。",0)
+	KAO(SUBARU,"12321Z5","321","6")	
+	MES(SUBARU,"我们也正在\n谈论师父他们呢。",0)
+	MES_close(SUBARU)
+
+	KAO(FIONA,"12321Z5","123","6")
+	MES(FIONA,"呵呵，依依惜别\n也是个不坏的时刻啊。",0)
+	MES_close(FIONA)
+
+	KAO(MIA,"12321Z2","1","1")
+	MES(MIA,"各位……",0)
+	MES_close(MIA)
+
+	KAO(EVENT_RAGNA,"12321Z4","1","1")
+	MES(EVENT_RAGNA,"哈哈……\n能这么说真是太好了。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(FIONA,"1","321","6")
+
+	MOT(MILLIAM, 150, 10)
+	
+	KAO(MILLIAM,"12321Z4","1236","6")
+	MES(MILLIAM,"拉古那。\n整备方面已经很完美了。",0)
+	KAO(MILLIAM,"12321Z6","321","6")	
+	MES(MILLIAM,"燃料也加满了，\n可以免除补给一口气飞到目的地了。",0)
+	MES_close(MILLIAM)
+	
+	MOT(MILLIAM, 2, 10)
+
+	KAO(EVENT_RAGNA,"12321Z3","1","1")
+	MES(EVENT_RAGNA,"是吗……那还真是帮大忙了。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","1")
+	MES(EVENT_RAGNA,"梅丽安，直到最后\n都受你关照了。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(MILLIAM,"12321Z5","123","6")
+	MES(MILLIAM,"哈哈，彼此彼此，\n你也让我得到了一次宝贵的工作机会。",0)
+//	KAO(MILLIAM,"12321Z4","32A","6")	
+//	MES(MILLIAM,"不过……\n似乎没有多余的座位了。",0)
+	KAO(MILLIAM,"12321Z7","32A","6")	
+	MES(MILLIAM,"说起来……\n来自博物馆的临别赠品\n已经装到飞机上了。",0)
+//	KAO(MILLIAM,"12321Z5","A233321","6")	
+//	MES(MILLIAM,"因为追加了随身的行李，\n所以就填满了货架的空间。",0)
+	KAO(MILLIAM,"12321Z5","A233321","6")	
+	MES(MILLIAM,"因为追加了随身的行李，\n所以就填满了货架的空间。",0)
+	MES_close(MILLIAM)
+
+	KAO(EVENT_RAGNA,"12321Z3","1","1")
+	MES(EVENT_RAGNA,"啊啊，麻烦你了。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　画面、ここで一旦フェードアウト。
+	fade_in(100,30,0)
+	wait_fade()
+	stop_BGM(90)
+	wait_BGM()
+
+	chr_pos(EVENT_RAGNA, -147,-119,-74,307,2)
+	chr_pos(MIA,          -34,-182,-74,324,2)
+	chr_pos(SUBARU,        89,13,-74,105,2)
+	chr_pos(ODESSA,        -117,364,-74,224,2)
+	chr_pos(ALWEN,      -0,145,-74,162,2)
+	chr_pos(LUE,        -224,47,-74,220,2)
+	chr_pos(FIONA,       170,321,-74,152,2)
+	chr_pos(KLODE,       49,403,-74,156, 2)
+	chr_pos(LA-RAIRA,  -159,166,-74,214, 2)
+	chr_pos(MILLIAM,   -339,255,-74,253, 2)
+	chr_pos(PIPIRO,   314,-20,-74,82, 2)
+	chr_pos(POCKLE,   345,-143,-74,63, 2)
+	
+
+	chr_pos(EVENT_RAGNA, -147,-019,-74,307,2)
+	chr_pos(MIA,          -34,-082,-74,324,151)
+	chr_pos(SUBARU,        82,139,-74,137,2)
+	chr_pos(ODESSA,       -52,486,-73,192,2)
+	chr_pos(ALWEN,      -0,245,-74,162,2)
+	chr_pos(LUE,        -224,147,-74,220,2)
+	chr_pos(FIONA,       195,358,-75,140,150)
+	chr_pos(KLODE,       159,505,-73,144, 2)
+	chr_pos(LA-RAIRA,  -159,266,-74,230, 2)
+	chr_pos(MILLIAM,   403,423,-74,117, 2)
+	chr_pos(PIPIRO,   248,170,-74,138, 2)
+	chr_pos(POCKLE,   256,67,-74,75, 2)	
+	chr_pos(POCKLE,   284,41,-74,75, 2)	
+
+	KAO(MIA,"9","1","7")
+	KAO(EVENT_RAGNA,"1","1","1")
+	KAO(ALWEN,"1","1","1")
+	
+
+	look_chr(MILLIAM,	EVENT_RAGNA, "Bone_Head")
+//	CAM_move(-568,119,40,0,0)
+//	CAM(-151,89,40,31,263,0,0)
+
+//CAM_move(-11,-106,75,0,0)
+//CAM(49,37,75,30,285,0,0)
+
+CAM_move(-72,20,91,0,0)
+CAM(-71,26,115,29,224,0,0)
+CAM(-351,25,91,28,223,150,0)
+color(SUBARU,-1)
+color(LUE,-1)
+
+	wait(30)
+//	BGM(60)
+	BGM(61)
+	workG(GW_DEF_BGM,SET,0)		//デフォルト曲を元に戻す
+	fade_in(0,30,0)
+	wait_fade()
+	wait(30)
+//──────────────────────────────
+//　　画面、再びフェードインして特里斯坦号的前。
+//　　拉古那と米娅的前に艾雯たちが集まっている状態。
+	KAO(EVENT_RAGNA,"12321Z3","1233321","5")
+	MES(EVENT_RAGNA,"──各位，抱歉了。",0)
+	KAO(EVENT_RAGNA,"12321Z7","1","5")	
+	MES(EVENT_RAGNA,"明明还没有\n完成善后工作，\n我就说要走了。",0)
+	MES_close(EVENT_RAGNA)
+	wait(15)
+	
+	chr_pos(PLANE,	 -450,-400,-74,	90, 0)	//特里斯坦
+
+	cross_fade(15)
+	CAM_move(9,-146,95,0,0)
+	CAM(129,53,95,28,18,0,0)
+	color(SUBARU,1)
+	color(PLANE, -1)
+	color(LUE,1)
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,10,0)
+	wait_fade()
+	
+	KAO(ALWEN,"12321Z3","123","6")
+	MES(ALWEN,"没什么，别在意。",0)
+	KAO(ALWEN,"12321Z5","321","6")	
+	MES(ALWEN,"各地的魔之眷属\n也已经恢复安定了。",0)
+	MES_close(ALWEN)
+
+	KAO(LA-RAIRA,"12321Z5","-","-")
+	MES(LA-RAIRA,"那个要塞，似乎\n也已经消散在天空的尽头了。",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")	
+	MES(LA-RAIRA,"根据我的占卜，\n已经不会再发生灾难了。",0)
+	MES_close(LA-RAIRA)
+
+	KAO(EVENT_RAGNA,"12321Z2","1233321","1")
+	MES(EVENT_RAGNA,"是吗……",0)
+	MES_close(EVENT_RAGNA)
+	
+//	wait(15)
+//	cross_fade(15)
+//	CAM_move(46,-111,61,0,0)
+//	CAM(-71,48,-25,29,347,0,0)
+//	CAM_move(6,-131,61,0,0)
+//	CAM(369,47,61,28,4,0,0)
+//	
+//	CAM_move(6,-131,61,0,0)
+////	CAM(89,46,61,28,29,0,0)
+//	CAM(89,46,61,28,11,0,0)
+//	
+//	
+//	CAM_move(-54,-71,101,0,0)
+//	CAM(49,29,101,35,25,0,0)
+//	
+//	chr_pos(LA-RAIRA, -203,298,-74,210,2)
+	color(PLANE,-1)
+//	wait_fade()
+	
+	KAO(FIONA,"12321Z4","1236","6")
+	MES(FIONA,"呵呵……\n这样就尘埃落定了。",0)
+	MES_close(FIONA)
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,0,0)
+	wait(15)
+	cross_fade(15)
+	CAM_move(-54,-91,61,0,0)
+	CAM(-231,40,61,28,297,0,0)
+	chr_pos(ALWEN,      40,284,-74,162,2)
+	chr_pos(PLANE,	 -550,-400,-74,	90, 0)	//特里斯坦
+	
+	color(POCKLE,-1)
+	color(PLANE,1)
+	look_chr(SUBARU, MIA, "Bone_Head")
+	KAO(MIA,"1","3","1")
+	wait_fade()
+	
+	KAO(MIA,"12321Z3","123","A")
+	MES(MIA,"──对不起，各位。",0)
+	KAO(MIA,"12321Z5","3","A")	
+	MES(MIA,"都是因为我，差一点\n就酿成了无法挽回的……",0)
+	MES_close(MIA)
+
+//	wait(10)
+	
+	KAO(SUBARU,"B232BZ4","1233321","2")
+	MES(SUBARU,"所～以说，不是\n米娅的错啊！",0)
+	KAO(SUBARU,"12321Z4","1","2")	
+	MES(SUBARU,"而且，直到最后\n也没有发生什么大祸嘛！",0)
+	MES_close(SUBARU)
+
+	KAO(MIA,"12321Z2","32A","A")
+	MES(MIA,"可是……",0)
+	KAO(MIA,"12321Z5","A","A")	
+	MES(MIA,"我到底该怎么\n对昴道歉才好呢……",0)
+	MES_close(MIA)
+
+	KAO(SUBARU,"B232BZ5","123","4")
+	MES(SUBARU,"啊啊，够了啦，\n你已经道歉过很多次了啊！",0)
+	KAO(SUBARU,"12321Z5","321","2")
+	MES(SUBARU,"伤已经全好了，\n你不用这么放在心上啊！",0)
+	KAO(SUBARU,"92329Z3","1233321","6")
+	MES(SUBARU,"而且，我们约好了吧！？",0)
+	KAO(SUBARU,"92329Z5","1","6")
+	MES(SUBARU,"今后，希望你能\n一直守护拉古那师父……",0)
+	MES_close(SUBARU)
+
+	KAO(MIA,"92329Z2","233321","7")
+	MES(MIA,"昴……",0)
+	MES_close(MIA)
+
+
+	MOT(EVENT_RAGNA, 150, 15)
+
+	KAO(EVENT_RAGNA,"B232BZ4","123","5")
+	MES(EVENT_RAGNA,"喂喂。\n让米娅来保护什么的……",0)
+	MES_close(EVENT_RAGNA)
+	
+	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")	
+	look_chr(ALWEN,  EVENT_RAGNA, "Bone_Head")	
+	
+	KAO(EVENT_RAGNA,"B232BZ3","32","5")	
+	MES(EVENT_RAGNA,"反过来才对吧，反过来。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"12321Z5","123332","1")
+	MES(LUE,"……你这家伙，肯定会\n马上丢下妹妹，一个人飞到哪里去吧。",0)
+	MES_close(LUE)	
+	
+	KAO(EVENT_RAGNA,"B","2321","1")	
+//	look_chr(EVENT_RAGNA, LUE, "Bone_Head")
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,20,0)
+	
+	KAO(LUE,"12321Z5","23","1")	
+	MES(LUE,"至少得让你妹妹\n紧紧地把你抓住了。",0)
+	MES_close(LUE)
+
+	KAO(EVENT_RAGNA,"C232C","123","B")
+	MES(EVENT_RAGNA,"呃……",0)
+	MES_close(EVENT_RAGNA)
+
+	//全体カメラ
+	wait(15)
+	cross_fade(15)
+	CAM_move(9,-146,95,0,0)
+	CAM(129,53,95,28,18,0,0)
+	KAO(LUE,"1","1","1")	
+	
+	F_set_chr(ALWEN,      		CF_NO_HEIGHT)	
+	F_set_chr(ALWEN,      		CF_NO_ZIMEN)	
+	
+	chr_pos(ALWEN,         -0,245,-74,162,2)
+	chr_pos(LA-RAIRA,      -188,337,-74,230,2)
+	color(POCKLE,1)	
+	color(PLANE, -1)
+//	look_chr(EVENT_RAGNA, ODESSA, "Bone_Head")
+//	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,10,0)
+	wait_fade()
+
+	KAO(ODESSA,"12321Z6","1233321","6")
+	MES(ODESSA,"哼哼，既是宝物猎人，\n又是《飞机狂人》啊。",0)
+	KAO(ODESSA,"12321Z6","1","6")
+	MES(ODESSA,"要让你过上平静的日子似乎不大容易，\n今后你有什么打算？",0)
+	MES_close(ODESSA)
+
+	look_chr(MIA, EVENT_RAGNA, "Bone_Head")
+
+	KAO(EVENT_RAGNA,"12321Z3","1","1")
+	MES(EVENT_RAGNA,"嗯，这方面再慢慢考虑吧。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","1")	
+	MES(EVENT_RAGNA,"因为考虑的时间，\n今后有得是嘛。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(MIA,"12321Z7","1","1")
+	MES(MIA,"而且，我……\n只要哥哥在我身边，\n不管是怎样的生活都没关系。",0)
+	KAO(MIA,"12321Z7","1","1")
+	MES(MIA,"根据情况……\n宝物猎人的考试\n我也可能会去参加。",0)
+	MES_close(MIA)
+
+
+//皮皮洛、布库尔カメラ
+	wait(15)
+	cross_fade(15)
+	CAM_move(299,-88,60,0,0)
+	CAM(-111,42,-5,28,70,0,0)
+	color(MIA,-1)
+	color(EVENT_RAGNA,-1)
+	color(SUBARU,-1)
+	color(POCKLE, 1)
+
+	rot(SUNARU, 0,187)
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,-20,0)
+//	look_chr(EVENT_RAGNA, POCKLE, "Bone_Head")
+	look_chr(MIA,         POCKLE, "Bone_Head")
+	look_chr(SUBARU,      POCKLE, "Bone_Head")
+	look_chr(FIONA,       POCKLE, "Bone_Head")
+	look_chr(ALWEN,       POCKLE, "Bone_Head")
+	look_chr(LUE,         POCKLE, "Bone_Head")
+	
+	MOT(POCKLE, 150, 10)
+	wait_fade()
+	
+	KAO(POCKLE,"B232B2Z2","12321D","6")
+	MES(POCKLE,"哇，是这样吗。",0)
+	MES_close(POCKLE)
+		
+	MOT(POCKLE, 2, 10)
+	
+	KAO(POCKLE,"B232BZ3","123","2")
+	MES(POCKLE,"嗯……\n那我也得努力了。",0)
+	MES_close(POCKLE)
+	
+	look_chr(PIPIRO, POCKLE, "Bone_Head")
+	
+	MOT(PIPIRO,150,10)
+	KAO(PIPIRO,"12321Z5","123","4")
+	MES(PIPIRO,"嘛，你就多少努力一下吧。\n虽然这方面我不太了解。",0)
+	MES_close(PIPIRO)
+	look_chr( POCKLE, PIPIRO,"Bone_Head")
+	KAO(POCKLE,"B232B2Z2","32A","5")
+	MES(POCKLE,"等，等一下！皮皮洛～……",0)
+	MES_close(POCKLE)
+	
+	//全体カメラ
+	wait(15)
+	cross_fade(15)	
+//	CAM_move(-85,-245,61,0,0)
+	CAM_move(-85,-245,21,0,0)
+	CAM(9,66,15,30,286,0,0)
+
+	color(MIA,1)
+	color(EVENT_RAGNA,1)
+	color(SUBARU,1)
+
+	look_chr(SUBARU,	EVENT_RAGNA, "Bone_Head")
+	look_chr(MIA,		EVENT_RAGNA, "Bone_Head")
+	look_chr(ALWEN,		EVENT_RAGNA, "Bone_Head")
+	look_chr(LUE,		EVENT_RAGNA, "Bone_Head")
+	look_chr(LA-RAIRA,	EVENT_RAGNA, "Bone_Head")
+	look_chr(FIONA,		EVENT_RAGNA, "Bone_Head")
+	look_chr(POCKLE,	EVENT_RAGNA, "Bone_Head")
+
+	MOT(PIPIRO,2,0)
+	
+	KAO(PIPIRO,"1","1","1")
+	KAO(POCKLE,"1","1","1")
+	
+	KAO(MIA,"9","1","7")
+
+	color(PLANE, 1)
+	wait_fade()
+
+	KAO(EVENT_RAGNA,"12321Z2","1236","6")
+	MES(EVENT_RAGNA,"哈哈……",0)
+	MES_close(EVENT_RAGNA)
+		
+	look_off(EVENT_RAGNA)
+	rot(SUBARU, 30,137)
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,10,0)
+			
+	KAO(EVENT_RAGNA,"12321Z5","321","6")
+	MES(EVENT_RAGNA,"说起来，你们大家\n还要继续留在伊鲁巴特吗？",0)
+	MES_close(EVENT_RAGNA)
+
+	wait(15)
+	
+	look_chr(PIPIRO, EVENT_RAGNA, "Bone_Head")
+	
+	cross_fade(15)
+	CAM_move(9,-146,95,0,0)
+	CAM(129,53,95,28,18,0,0)
+	CAM(49,52,95,28,18,900,0)	
+	color(PLANE, -1)
+	wait_fade()
+
+//	look_chr(EVENT_RAGNA, ODESSA, "Bone_Head")
+//	look_chr(PIPIRO,      ODESSA, "Bone_Head")
+//	look_chr(POCKLE,      ODESSA, "Bone_Head")
+//	look_chr(SUBARU,      ODESSA, "Bone_Head")
+//	look_chr(FIONA,       ODESSA, "Bone_Head")
+//	look_chr(KLODE,       ODESSA, "Bone_Head")
+//	look_chr(MIA,         ODESSA, "Bone_Head")
+//	look_chr(LA-RAIRA,    ODESSA, "Bone_Head")
+//	look_chr(ALWEN,       ODESSA, "Bone_Head")
+	
+	KAO(ODESSA,"12321Z5","1","6")
+	MES(ODESSA,"啊啊，我暂时会\n为了凭吊祖父而留在这里。",0)
+	KAO(ODESSA,"12321Z5","123","6")	
+	MES(ODESSA,"之后……\n就回故乡向大家报告。",0)
+	MES_close(ODESSA)
+
+	KAO(EVENT_RAGNA,"12321Z2","1","1")
+	MES(EVENT_RAGNA,"是吗……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"1","321","6")	
+//	look_chr(EVENT_RAGNA, FIONA, "Bone_Head")
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,0,0)
+	
+	KAO(FIONA,"12321Z5","123","1")
+	MES(FIONA,"我们也将暂时留在这个岛。",0)
+	KAO(FIONA,"12321Z5","3","1")	
+	MES(FIONA,"其他地方要是出什么事的话，\n我们很快就会出发……",0)
+	KAO(FIONA,"12321Z5","321","5")	
+	MES(FIONA,"不过现在，\n想要悠闲地休息几天。",0)
+	MES_close(FIONA)
+
+	look_chr(KLODE, FIONA, "Bone_Head")
+
+	KAO(KLODE,"12321Z5","1233321","6")
+	MES(KLODE,"正是如此。\n对小姐而言，休养是必要的。",0)
+	MES_close(KLODE)
+
+//	wait(15)
+//	cross_fade(15)
+//	CAM_move(1152,-621,-100,0,0)
+//	CAM(9,117,-100,31,58,0,0)
+
+//	rot(SUBARU, -1, 230)
+//	rot(SUBARU, -1, 160)
+//	look_chr(SUBARU, PIPIRO, "Bone_Head")
+//	look_chr(MIA, PIPIRO, "Bone_Head")
+//	look_chr(EVENT_RAGNA, PIPIRO, "Bone_Head")
+//	look_chr(ALWEN, EVENT_RAGNA, "Bone_Head")
+//	look_chr(LUE, PIPIRO, "Bone_Head")
+//	look_chr(LA-RAIRA, EVENT_RAGNA, "Bone_Head")
+//	look_chr(MILLIAM, PIPIRO, "Bone_Head")
+//	look_chr(FIONA, PIPIRO, "Bone_Head")
+
+
+//	wait_fade()
+//	wait(15)
+
+	KAO(FIONA,"1","12321","6")	
+
+	look_chr(POCKLE, EVENT_RAGNA, "Bone_Head")
+	look_chr(PIPIRO, EVENT_RAGNA, "Bone_Head")
+//	look_chr(LA-RAIRA, POCKLE, "Bone_Head")
+//	look_chr(ALWEN,    POCKLE, "Bone_Head")
+//	look_chr(MILLIAM,  POCKLE, "Bone_Head")
+	
+	KAO(POCKLE,"12321Z5","1233321","6")
+	MES(POCKLE,"我们打算在游览之后\n就回阿尔杰斯去。",0)
+	KAO(POCKLE,"12321Z5","1","6")
+	MES(POCKLE,"都没能好好休息休息，\n真想去泡泡山里的温泉啊。",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"12321Z5","123","6")
+	MES(PIPIRO,"嗯，虽然我很怕冷，\n不过温泉实在是太有魅力了～。",0)
+	KAO(PIPIRO,"12321Z4","6","6")
+	MES(PIPIRO,"馒头和美酒也很好吃的样子。",0)
+	MES_close(PIPIRO)
+	
+	//昴アップカメラ
+	wait(15)
+	cross_fade(15)	
+	CAM_move(23,-148,60,0,0)
+	CAM(-191,40,100,30,281,0,0)
+	CAM(-191,35,100,30,281,600,0)
+	color(PIPIRO,-1)
+	color(POCKLE,-1)
+	color(PLANE, 1)
+	KAO(MIA,"9","1","7")
+	rot(SUBARU,-1,270)
+//	look_chr(EVENT_RAGNA,	POCKLE, "Bone_Head")
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,-10,0)	
+	look_chr(PIPIRO,		POCKLE, "Bone_Head")
+	look_chr(ALWEN,			POCKLE, "Bone_Head")
+	look_chr(LUE,			POCKLE, "Bone_Head")
+	look_chr(ODESSA,		POCKLE, "Bone_Head")
+	look_chr(MIA,			POCKLE, "Bone_Head")
+	look_chr(PIPIRO,	EVENT_RAGNA, "Bone_Head")
+	look_off(SUBARU)
+
+	wait_fade()
+
+	MOT(SUBARU, 152, 10)
+	KAO(SUBARU,"12321Z5","1236","6")
+	MES(SUBARU,"哈哈……\n那就由我来当导游吧。",0)
+	KAO(SUBARU,"12321Z5","6","6")
+	MES(SUBARU,"我想村里的各位也会很高兴的。",0)
+	MES_close(SUBARU)
+
+	wait(15)
+//　　ここで昴、拉古那的方に向き直る。
+	MOT(SUBARU, 2, 10)
+	rot(SUBARU,30, 110)
+	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")
+	wait(30)
+
+	look_chr(MIA, SUBARU, "Bone_Head")
+//	look_chr(EVENT_RAGNA, SUBARU, "Bone_Head")
+//	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,-15,0)
+	look_chr(ALWEN, SUBARU, "Bone_Head")
+	look_chr(LUE, SUBARU, "Bone_Head")
+	look_chr(LA-RAIRA, SUBARU, "Bone_Head")
+	look_chr(MILLIAM, SUBARU, "Bone_Head")	
+	look_chr(FIONA, EVENT_RAGNA, "Bone_Head")
+			
+	KAO(SUBARU,"12321Z2","1","1")
+	MES(SUBARU,"拉古那师父……",0)
+	KAO(SUBARU,"12321Z7","1","1")
+	MES(SUBARU,"我还不知道\n我是不是想成为宝物猎人……",0)
+	KAO(SUBARU,"12321Z7","1","1")
+	MES(SUBARU,"不过，既然已经见识到了更加广阔的世界，\n那么我也想决定自己的志向。",0)
+	KAO(SUBARU,"12321Z3","1","1")
+	MES(SUBARU,"那个，就像拉古那师父一样……",0)
+	MES_close(SUBARU)
+	
+	look_chr(ALWEN,  EVENT_RAGNA, "Bone_Head")
+	look_chr(ODESSA, EVENT_RAGNA, "Bone_Head")
+	
+	KAO(EVENT_RAGNA,"12321Z2","123","6")
+	MES(EVENT_RAGNA,"是吗……",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","6")	
+	MES(EVENT_RAGNA,"……那就好好考虑吧。\n你的话，一定能心想事成的。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"12321Z2","1","1")
+	MES(SUBARU,"是……！",0)
+	MES_close(SUBARU)
+	
+	//全体カメラ
+	wait(15)
+	cross_fade(15)
+//	CAM_move(9,-146,95,0,0)
+	CAM_move(9,-146,75,0,0)	
+	CAM(129,53,95,28,18,0,0)
+	look_off(LA-RAIRA)
+	look_chr(LA-RAIRA,			EVENT_RAGNA, "Bone_Head")
+	look_chr(KLODE,				EVENT_RAGNA, "Bone_Head")
+	
+
+	color(POCKLE,1)	
+	color(PIPIRO,1)	
+	color(PLANE,-1)
+	color(SUBARU,1)
+	KAO(ALWEN,"1","1","1")	
+	KAO(PIPIRO,"1","1","1")	
+//	look_chr(EVENT_RAGNA, LA-RAIRA, "Bone_Head")
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,20,0)
+	wait_fade()
+	
+	KAO(LA-RAIRA,"12321Z2","-","-")
+	MES(LA-RAIRA,"呵呵……",0)
+	KAO(LA-RAIRA,"12321Z7","-","-")	
+	MES(LA-RAIRA,"我去过温泉之后\n会继续在库朗毕林\n到处旅行。",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")	
+	MES(LA-RAIRA,"看来吉斯卡鲁公大人\n似乎也要出发。",0)
+	MES_close(LA-RAIRA)
+
+//	look_chr(EVENT_RAGNA, ALWEN, "Bone_Head")
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,15,0)
+	look_chr(ALWEN,       EVENT_RAGNA, "Bone_Head")
+//────────────────────────
+
+	if(FE_13_TalkPenguin)		//『★企鹅娘▼□初回』村で嘉兰多について
+	{
+	//	name("□村で嘉兰多について的話題を聞いた")
+		KAO(EVENT_RAGNA,"12321Z3","1","1")	
+		MES(EVENT_RAGNA,"啊啊，看起来是的。",0)
+		MES(EVENT_RAGNA,"…………………………………",0)
+		MES_close(EVENT_RAGNA)
+
+	//　　拉古那、艾雯的方に向き直る。
+		KAO(EVENT_RAGNA,"12321Z3","1","1")	
+		MES(EVENT_RAGNA,"……那个，公主。",0)
+		KAO(EVENT_RAGNA,"12321Z7","1","1")	
+		MES(EVENT_RAGNA,"要是不打算找你父亲……\n你不会打算就这样\n住在那座城里吧？",0)
+		MES_close(EVENT_RAGNA)
+	}
+	else
+	{
+	//	name("□嘉兰多的話題を聞いてない")
+	//　　拉古那的頭にＰＡマーク。
+	//　　拉古那、艾雯的方に向き直る。
+		KAO(EVENT_RAGNA,"12321Z3","1","1")	
+		MES(EVENT_RAGNA,"这么说来……",0)
+		KAO(EVENT_RAGNA,"12321Z3","1","1")	
+		MES(EVENT_RAGNA,"嘉兰多那个大叔\n是你父亲这件事\n是真的吗？",0)
+		MES(EVENT_RAGNA,"昴看到了他除下面具的样子……",0)
+		MES_close(EVENT_RAGNA)
+
+
+		KAO(ALWEN,"12321Z3","123","6")	
+		MES(ALWEN,"呵呵……是啊。",0)
+		KAO(ALWEN,"12321Z4","3","6")			
+		MES(ALWEN,"也许是本人，也许是别人。",0)
+		KAO(ALWEN,"12321Z6","32A","1")			
+		MES(ALWEN,"不过，若他是本人的话……\n父亲应该自有他的想法吧。",0)
+		KAO(ALWEN,"12321Z7","A233321","1")			
+		MES(ALWEN,"能否再会，\n就交给女神指引吧，\n我并不打算去寻找。",0)
+		MES_close(ALWEN)
+
+		KAO(EVENT_RAGNA,"12321Z2","1","1")	
+		MES(EVENT_RAGNA,"是吗……",0)
+		KAO(EVENT_RAGNA,"12321Z6","1","1")	
+		MES(EVENT_RAGNA,"那么，公主……\n你打算就这样住回城里吗？",0)
+		MES_close(EVENT_RAGNA)
+	}
+//────────────────────────
+	rot(LUE,30, 300)
+	look_chr(LUE, ALWEN, "Bone_Head")
+	wait(15)
+
+	KAO(LUE,"2","1233321","4")	
+	MES(LUE,"啊……",0)
+	MES_close(LUE)
+
+//	wait(15)
+//	cross_fade(15)
+	look_chr(LA-RAIRA, ALWEN, "Bone_Head")
+	look_chr(SUBARU,   ALWEN, "Bone_Head")
+	
+	CAM(-70,31,124,28,18,300,0)
+	CAM_move(-62,-54,124,300,0)
+	look_off(ALWEN)
+//	wait_fade()
+	
+	KAO(ALWEN,"B232BZ3","123","1")	
+	MES(ALWEN,"唔，是有这个打算。",0)
+	KAO(ALWEN,"B232BZ6","3","1")		
+	MES(ALWEN,"你们与我，\n原本便毫不相干。",0)
+	KAO(ALWEN,"B232BZ6","321","1")		
+	MES(ALWEN,"我就和从前一样隐入城中，\n度过永恒的优雅的时光即可。",0)
+	MES_close(ALWEN)
+
+
+	color(LUE,  1)
+	color(LA-RAIRA,  1)
+
+	KAO(LUE,"B232BZ2","1233321","4")	
+	MES(LUE,"W6……公主大人………",0)
+	MES_close(LUE)
+
+
+	MES(EVENT_RAGNA,"…………………………………",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z4","123332A","4")	
+	MES(ALWEN,"呵呵……\n不要露出这样的表情。",0)
+	KAO(ALWEN,"B232BZ5","A23","1")		
+	MES(ALWEN,"我并非想贬低自己……\n然而我等毕竟是往昔的存在。",0)
+	KAO(ALWEN,"B232BZ4","3","1")		
+	MES(ALWEN,"以某种意义而言，\n这是必然的结局。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z1","1","1")	
+	MES(EVENT_RAGNA,"咦……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B232BZ4","321","2")	
+	MES(ALWEN,"──人类是了不起的物种啊。",0)
+	KAO(ALWEN,"B232BZ4","123","2")		
+	MES(ALWEN,"愤怒，哀伤，躇踌，欣喜……",0)
+	KAO(ALWEN,"B232BZ7","3","2")		
+	MES(ALWEN,"将这些情感融合得浑然一体，\n撼动众多事物，\n有时又会做下无理之事。",0)
+	KAO(ALWEN,"B232BZ6","321","2")	
+	MES(ALWEN,"甚至连过去父亲都未能封印的\n因缘都得到了斩断……",0)
+	KAO(ALWEN,"B232BZ5","123","4")		
+	MES(ALWEN,"特尔米多鲁的钦佩\n也不足为奇了。",0)
+	MES_close(ALWEN)
+
+	MES(MIA,"……………………………",0)
+	MES_close(MIA)
+
+	KAO(ALWEN,"B232BZ5","3","2")	
+	MES(ALWEN,"在此意义上……\n今后将是人类的时代了。",0)
+	KAO(ALWEN,"B232BZ6","3","4")		
+	MES(ALWEN,"对这个世界而言，\n或许已无我等存在的必要。",0)
+	MES_close(ALWEN)
+
+	//拉古那、艾雯、米娅カメラ
+	wait(15)
+	cross_fade(15)
+//	CAM_move(-102,-94,44,0,0)
+	CAM_move(-102,-94,64,0,0)
+	CAM(-151,37,44,28,249,0,0)
+	color(SUBARU,-1)
+	color(PIPIRO,-1)
+	color(PLANE,  1)
+	KAO(MIA,"9","1","1")
+	look_chr(MIA, ALWEN, "Bone_Head")
+	wait_fade()
+	
+	KAO(EVENT_RAGNA,"B232BZ3","123","2")	
+	MES(EVENT_RAGNA,"──你太高估我们了。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"2","321D","6")	
+	MES(ALWEN,"咦……",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z5","3","6")	
+	MES(EVENT_RAGNA,"人类……并没有强大到\n可以只凭自己而活下去。",0)
+	KAO(EVENT_RAGNA,"B232BZ8","32A","5")	
+	MES(EVENT_RAGNA,"像我这样……\n若是有一个人犯了错误，\n便无法守护重要的东西的情况也是存在的。",0)
+	KAO(EVENT_RAGNA,"12321Z7","A233321","6")	
+	MES(EVENT_RAGNA,"而且……\n不也是因为有赖了人类以外的事物的帮助，\n我才终于成为一个像样的人吗？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B232BZ2","1233321","6")	
+	MES(ALWEN,"拉古那……",0)
+	MES_close(ALWEN)
+	
+	KAO(MIA,"12321Z3","123","1")
+	MES(MIA,"……或许确实是这样。",0)
+	KAO(MIA,"12321Z5","3","A")
+	MES(MIA,"我也是一个人沉浸在苦恼中，\n自欺欺人，逼迫自己……",0)
+	KAO(MIA,"92329Z6","321","7")	
+	MES(MIA,"若是没有艾雯姐姐说的那些话，\n我想我也无法醒悟。",0)
+	MES_close(MIA)
+
+	KAO(EVENT_RAGNA,"12321Z3","123","6")
+	MES(EVENT_RAGNA,"也就是说，公主。",0)
+	KAO(EVENT_RAGNA,"12321Z6","36","6")	
+	MES(EVENT_RAGNA,"我们兄妹能有今天，\n是因为有公主你在我们身边。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z2","1233321","6")	
+	MES(ALWEN,"……你们………",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z2","3","6")	
+	MES(EVENT_RAGNA,"……所以呢。",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","6")		
+	MES(EVENT_RAGNA,"什么再次隐居到城里，\n别再说这种寂寞的话了。",0)
+	KAO(EVENT_RAGNA,"12321Z6","1233321","7")		
+	MES(EVENT_RAGNA,"等我们再回到这里的时候，\n要是少了认识的人可是很无聊的。",0)
+	MES_close(EVENT_RAGNA)
+
+
+	//全体カメラ
+	wait(15)
+	cross_fade(15)	
+	
+	CAM_move(9,-146,75,0,0)	//全体後ろカメラ
+	CAM(9,76,75,25,219,0,0)
+	CAM(9,67,75,26,219,300,0)
+	
+	color(SUBARU,1)
+	color(PIPIRO,1)
+	color(LA-RAIRA,1)
+	color(PLANE,-1)
+	color(PLANE,1)
+	look_chr(SUBARU,	EVENT_RAGNA, "Bone_Head")
+	look_chr(LA-RAIRA,	EVENT_RAGNA, "Bone_Head")
+	look_chr(LUE,		EVENT_RAGNA, "Bone_Head")
+	wait_fade()
+	
+//　　拉古那と米娅以外的頭に！マーク。
+
+
+	EMO(SUBARU, EMO_BIKKURI)
+	EMO(LUE, EMO_BIKKURI)
+	EMO(ALWEN, EMO_BIKKURI)
+	EMO(LA-RAIRA, EMO_BIKKURI)
+	EMO(MILLIAM, EMO_BIKKURI)
+	EMO(PIPIRO, EMO_BIKKURI)
+	EMO(POCKLE, EMO_BIKKURI)
+	EMO(FIONA, EMO_BIKKURI)
+	EMO(KLODE, EMO_BIKKURI)
+	
+	KAO(SUBARU,"2","12321D","6")	
+	KAO(ALWEN, "2","12321D","6")	
+	KAO(LUE,   "2","12321DE","6")	
+	KAO(POCKLE,"2","12321D","6")	
+	
+	wait(30)
+	
+	KAO(ALWEN,"B2","12321D","6")	
+	MES(ALWEN,"………咦…………",0)
+	MES_close(ALWEN)
+
+	rot(LUE, 60, 200)
+
+	
+	KAO(LUE,"23Z6","D12321DE","6")	
+	MES(LUE,"咦咦咦咦咦咦咦！？",0)
+	MES_close(LUE)
+
+	MOT(SUBARU, 150, 10)
+	
+	KAO(SUBARU,"12321Z3","12321D","6")	
+	MES(SUBARU,"师，师父……\n你还会回来吗！？",0)
+	MES_close(SUBARU)
+
+
+	KAO(ALWEN,"1","1","1")	
+	KAO(LUE,  "1","1","1")	
+	KAO(POCKLE,"1","1","1")	
+		
+//	look_chr(EVENT_RAGNA, SUBARU,"Bone_Head")
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,0,0)
+		
+	KAO(EVENT_RAGNA,"12321Z3","123","6")	
+	MES(EVENT_RAGNA,"啊啊，扫墓结束之后。",0)
+	KAO(EVENT_RAGNA,"12321Z4","3","6")	
+	MES(EVENT_RAGNA,"到库朗毕林中央的通道\n也是个不错的地方。",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","6")	
+	MES(EVENT_RAGNA,"先不管往后要去做什么，\n我打算把这里当作根据地。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(MIA,"92329Z4","1233321","6")	
+	MES(MIA,"那个……\n如果不妨碍你们的话……",0)
+	MES_close(MIA)
+
+	look_chr(SUBARU,MIA,"Bone_Head")
+
+	KAO(SUBARU,"12321Z5","2321","1")	
+	MES(SUBARU,"怎，怎么会呢……\n才不会妨碍呢！",0)
+	MES_close(SUBARU)	
+	
+	MOT(SUBARU, 151, 10)
+		
+	KAO(SUBARU,"12321Z5","26","1")	
+	MES(SUBARU,"是吗，哈哈……\n原来还能再见面啊……",0)
+	MES_close(SUBARU)
+
+	KAO(FIONA,"12321Z5","1","1")	
+	MES(FIONA,"呵呵，那么便把那幢房子\n交给你们吧？",0)
+	KAO(FIONA,"12321Z5","1","1")		
+	MES(FIONA,"我们出发之后，\n也不忍心就这样让它空下来。",0)
+	MES_close(FIONA)
+
+	look_chr(KLODE, FIONA,"Bone_Head")
+	
+	KAO(KLODE,"12321Z4","1","1")	
+	MES(KLODE,"原来如此。\n这或许是个好主意。",0)
+	MES_close(KLODE)
+
+	KAO(EVENT_RAGNA,"B232BZ5","123332","5")	
+	MES(EVENT_RAGNA,"啊，不～……\n那个大房子有点……",0)
+	MES_close(EVENT_RAGNA)
+
+	wait(15)
+	//皮皮洛、布库尔カメラ	
+	cross_fade(15)
+	rot(SUBARU, -1, 230)
+	look_chr(SUBARU,		PIPIRO, "Bone_Head")
+	look_chr(MIA,			PIPIRO, "Bone_Head")
+//	look_chr(EVENT_RAGNA,	PIPIRO, "Bone_Head")
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,-15,0)	
+	look_chr(ALWEN,			PIPIRO, "Bone_Head")
+	look_chr(LUE,			PIPIRO,	"Bone_Head")
+	look_chr(LA-RAIRA,		PIPIRO, "Bone_Head")
+	look_chr(MILLIAM,		PIPIRO, "Bone_Head")
+	look_chr(ODESSA,		PIPIRO, "Bone_Head")
+	look_chr(FIONA,			PIPIRO, "Bone_Head")
+	MOT(SUBARU, 2, 10)
+
+//	CAM_move(299,-88,80,0,0)
+	CAM_move(299,-88,60,0,0)
+	CAM(-111,42,-5,28,70,0,0)	
+	color(MIA, -1)
+	color(SUBARU,-1)
+	color(EVENT_RAGNA,-1)
+	wait_fade()
+	
+	KAO(POCKLE,"12321Z3","1236","6")	
+	MES(POCKLE,"嗯，真是好期待啊。",0)
+	KAO(POCKLE,"12321Z5","321","4")	
+	MES(POCKLE,"不过，要是我们不回去的话，\n布克村的各位就要担心了……",0)
+	MES_close(POCKLE)
+
+	look_chr(PIPIRO, POCKLE, "Bone_Head")
+
+	KAO(PIPIRO,"12321Z5","123332","1")	
+	MES(PIPIRO,"那样的话，布库尔\n你一个人回去不就好了？",0)
+	KAO(PIPIRO,"12321Z5","3","6")	
+	MES(PIPIRO,"就有时装店这点来说，\n还是这里更吸引我。",0)
+	MES_close(PIPIRO)
+	
+	look_chr(POCKLE, PIPIRO, "Bone_Head")
+	
+	KAO(POCKLE,"C232C2Z2","123332L","5")	
+	MES(POCKLE,"等，等一下！皮皮洛～！",0)
+	MES_close(POCKLE)
+
+	wait(15)
+	//全体カメラ	
+	cross_fade(15)
+	CAM_move(9,-146,95,0,0)
+	CAM(129,53,95,28,18,0,0)
+	color(MIA,1)
+	color(EVENT_RAGNA,1)
+	color(PLANE,-1)
+	color(SUBARU, 1)
+	wait_fade()
+	
+	KAO(ODESSA,"12321Z2","1236","6")	
+	MES(ODESSA,"哈哈……",0)
+	MES_close(ODESSA)
+
+	KAO(LA-RAIRA,"12321Z4","-","-")	
+	MES(LA-RAIRA,"哎呀呀……\n年轻人真有精神。",0)
+	MES_close(LA-RAIRA)
+	
+	KAO(SUBARU,"1","1233321","1")
+	rot(SUBARU,30, 110)
+	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")
+	look_chr(ODESSA, EVENT_RAGNA, "Bone_Head")	
+	KAO(ODESSA,	"1","321","6")
+	look_chr(KLODE,  EVENT_RAGNA, "Bone_Head")	
+	look_chr(MILLIAM,EVENT_RAGNA, "Bone_Head")	
+	wait(30)
+
+	cross_fade(15)
+//	CAM_move(-78,-115,101,0,0)
+//	CAM(-151,41,101,28,274,0,0)
+	CAM_move(-78,-115,81,0,0)
+	CAM(-71,40,81,28,273,0,0)
+
+	KAO(MIA,"9","1","7")	
+	KAO(EVENT_RAGNA,"1","1","6")	
+	color(PIPIRO, -1)
+	color(POCKEL, -1)
+	color(PLANE, 1)
+	color(POCKLE,-1)
+	look_chr(ALWEN,			EVENT_RAGNA, "Bone_Head")
+//	look_chr(EVENT_RAGNA,	LUE, 		"Bone_Head")
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,25,0)
+	look_chr(MIA,           LUE,			"Bone_Head")
+	rot_chr(LUE, 60, MIA)	
+	look_off(LUE)
+	KAO(LUE,"C","I","3")	
+	wait_fade()
+	
+	KAO(LUE,"C232CZ2","I","3")	
+	MES(LUE,"哼，哼……！",0)
+	KAO(LUE,"C232CZ5","H","3")	
+	MES(LUE,"既然都说了要走，\n就应该痛快一点赶紧走嘛……",0)
+	MES_close(LUE)
+
+	look_chr(FIONA,		EVENT_RAGNA, "Bone_Head")
+	look_chr(SUBARU,	LUE,		 "Bone_Head")
+
+	KAO(SUBARU,"12321Z3","1236","6")
+	MES(SUBARU,"又来了又来了，露姐～姐。",0)
+	KAO(SUBARU,"12321Z3","321","6")	
+	MES(SUBARU,"你明明就\n高兴得不得了嘛～☆",0)
+	MES_close(SUBARU)
+
+//　　露的頭に！マーク。
+//　　真っ赤な顔になりながら昴に突っかかる。
+	EMO(LUE, EMO_BIKKURI)
+	KAO(LUE,"B","HIIIHGK","3")
+	wait(30)
+
+	EMO(LUE, EMO_ASEASE)
+//	rot(LUE, 60, 260)	
+//	look_chr(LUE, SUBARU, "Bone_Head")
+	rot_chr(LUE, 60, SUBARU )
+	wait(15)
+	CAM_quake("46")
+	KAO(LUE,"C232C3Z3","GHIIIHGK","3")	
+	MES(LUE,"我，我，\n我才不像你那样呢！",0)
+	MES_close(LUE)
+
+	KAO(EVENT_RAGNA,"12321Z2","1236","6")	
+	MES(EVENT_RAGNA,"哈哈……",0)
+	MES_close(EVENT_RAGNA)
+
+//	MOT(MIA, 150, 10)
+	KAO(MIA,"92329Z2","1236","7")	
+	MES(MIA,"噗嗤噗嗤……",0)
+	MES_close(MIA)
+
+	KAO(ALWEN,"12321Z2","1236","6")	
+	MES(ALWEN,"呵呵……",0)
+	MES_close(ALWEN)	
+	
+	wait(15)	
+	
+	
+	//艾雯アップカメラ
+	cross_fade(15)
+	look_chr(ALWEN,			EVENT_RAGNA, "Bone_Head")
+	look_off(EVENT_RAGNA)
+	look_off(MIA)
+	look_chr(LA-RAIRA, EVENT_RAGNA, "Bone_Head")
+	look_chr(LUE, EVENT_RAGNA, "Bone_Head")
+	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")
+	KAO(SUBARU,			"9","G","1")
+	KAO(MIA,			"9","1","7")
+	KAO(EVENT_RAGNA,	"1","1","1")
+	KAO(ALWEN,"1","1","6")		
+	MOT(MIA, 2, 10)		
+	look(EVENT_RAGNA,"Bone_Head", 0,2,2,2,0,00,0)
+	CAM_move(25,-282,79,0,0)
+	CAM(-391,30,79,28,30,0,0)
+	wait_fade()
+	
+//	KAO(ALWEN,"12321Z5","33321","6")		
+//	KAO(ALWEN,"12321Z5","6","6")		
+	KAO(ALWEN,"12321Z5","1","6")		
+	MES(ALWEN,"──拉古那、米娅。\n一路小心走好。",0)
+//	KAO(ALWEN,"12321Z5","1","6")
+//	KAO(ALWEN,"12321Z5","621","6")
+	KAO(ALWEN,"12321Z5","126","6")
+	MES(ALWEN,"大家都会期待\n你们的回归的。",0)
+	MES_close(ALWEN)
+
+	//拉古那、米娅アップカメラ
+	wait(15)
+	cross_fade(15)
+	CAM_move(-72,20,71,0,0)
+	CAM(-231,23,71,28,226,0,0)
+
+	color(SUBARU,-1)
+	color(ALWEN,-1)
+	wait_fade()
+
+	MOT(EVENT_RAGNA,2,10)
+	KAO(EVENT_RAGNA,"12321Z2","1233321","1")	
+	MES(EVENT_RAGNA,"啊啊……！",0)
+	MES_close(EVENT_RAGNA)
+
+//	KAO(MIA,"92329Z2","1233321","7")	
+	KAO(MIA,"92329Z2","126","7")	
+	MES(MIA,"是……！",0)
+	MES_close(MIA)
+
+
+	EV("EV_6_16_EndEpw2")
+
+
+}
+
+//──────────────────────────────
+//　　画面クロスフェードして、飛行机に乗った拉古那と米娅。
+//　　そ的ままカメラワークを効かせながら、
+//　　他的人々が手を振るなりして見送っている的を見せつつ、
+//　　エンジン音を響かせながら大空へと飛び立つ特里斯坦号。
+//　　蒼穹に消える飛行机と、見送る人々を見せながら、
+//　　スタッフロール用的ムービーを開始する。
+//　　　　　　　　　　　　　　　　　　　ＺｗｅｉⅡ·ＥＮＤ　
+
+EV_6_16_EndEpw2
+{
+	fade_in(100,60,0)
+	wait_fade()
+	stop_BGM(90)
+	wait_BGM()
+
+	SE(51,0)//风SE
+
+//デバッグ
+//set_chr(EVENT_RAGNA,   1014, -1,-1, 2523,953,-74,2, 133,0,"") 
+//set_chr(ALWEN,         1011, -1,-1, 2523,953,-74,2, 133,0,"") 
+//set_chr(MIA,           91, -1,-1, 2523,953,-74,2, 133,0,"") 
+//
+
+	chr_pos(PLANE, 800,-370,-74, 90, 0)
+	chr_equip_chr(EVENT_RAGNA,		PLANE,"isu01_Null",100,		0,0,0,	0,-40,-40);
+	chr_equip_chr(MIA,				PLANE,"isu02_Null",100,		0,0,0,	0,-40,-40);		
+	
+	MOT_SET(EVENT_RAGNA, 160, -1, 487, 487, -1, 0)		//座り
+	MOT_SET(MIA,         160, -1, 485, 485, -1, 0)		//座り
+	MOT_SET(ALWEN,       160, -1, 399, 399, -1, 0)		//腰に手を
+	MOT_SET(FIONA,       160, -1, 436, 436, -1, 0)		//胸に手を
+	MOT_SET(PLANE,       160,161, 100, 150, -1, 0)		//プロペラ回転開始
+	MOT_SET(PLANE,       161,161, 150, 189, -1, 0)		//プロペラ回転開始
+	MOT(EVENT_RAGNA, 160, 0)
+	MOT(MIA,		 160, 0)
+	MOT(PLANE, 150, 0)				//着地状態
+	
+	set_chr(DUMMY, 1015,-1,-1, -4445,-899,-74,2, 0,0, "")
+	color(DUMMY,-1)
+	color(ALWEN,1)
+	color(SUBARU,1)
+		
+	F_set_chr(DUMMY, CF_NO_HEIGHT)
+	F_set_chr(DUMMY, CF_NO_ZIMEN)
+	F_set_chr(DUMMY, CF_NO_CSP)
+	F_set_chr(DUMMY, CF_NO_CLIP)
+	F_set_chr(DUMMY, CF_NO_CLIP2)
+					
+	F_set_chr(PLANE, CF_NO_HEIGHT)
+	F_set_chr(PLANE, CF_NO_ZIMEN)
+	F_set_chr(PLANE, CF_NO_CSP)
+	F_set_chr(LUE, CF_NO_HEIGHT)
+	F_set_chr(LUE, CF_NO_ZIMEN)
+	F_set_chr(LUE, CF_NO_CSP)
+	F_set_chr(ALWEN, CF_NO_HEIGHT)
+	F_set_chr(ALWEN, CF_NO_ZIMEN)
+	F_set_chr(ALWEN, CF_NO_CSP)
+	F_set_chr(LA-RAIRA, CF_NO_HEIGHT)
+	F_set_chr(LA-RAIRA, CF_NO_ZIMEN)
+	F_set_chr(LA-RAIRA, CF_NO_CSP)
+	F_set_chr(KLODE, CF_NO_HEIGHT)
+	F_set_chr(KLODE, CF_NO_ZIMEN)
+	F_set_chr(KLODE, CF_NO_CSP)		
+	F_set_chr(FIONA, CF_NO_HEIGHT)
+	F_set_chr(FIONA, CF_NO_ZIMEN)
+	F_set_chr(FIONA, CF_NO_CSP)			
+	F_set_chr(MILLIAM, CF_NO_HEIGHT)
+	F_set_chr(MILLIAM, CF_NO_ZIMEN)
+	F_set_chr(MILLIAM, CF_NO_CSP)
+	F_set_chr(SUBARU, CF_NO_HEIGHT)
+	F_set_chr(SUBARU, CF_NO_ZIMEN)
+	F_set_chr(SUBARU, CF_NO_CSP)
+	F_set_chr(PIPIRO, CF_NO_HEIGHT)
+	F_set_chr(PIPIRO, CF_NO_ZIMEN)
+	F_set_chr(PIPIRO, CF_NO_CSP)			
+	F_set_chr(POCKLE, CF_NO_HEIGHT)
+	F_set_chr(POCKLE, CF_NO_ZIMEN)
+	F_set_chr(POCKLE, CF_NO_CSP)
+	F_set_chr(ODESSA, CF_NO_HEIGHT)
+	F_set_chr(ODESSA, CF_NO_ZIMEN)
+	F_set_chr(ODESSA, CF_NO_CSP)
+	F_set_chr(MIA, CF_NO_HEIGHT)
+	F_set_chr(MIA, CF_NO_ZIMEN)
+	F_set_chr(MIA, CF_NO_CSP)
+	F_set_chr(MIA, CF_NO_CLIP)
+	F_set_chr(MIA, CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA, CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA, CF_NO_ZIMEN)
+	F_set_chr(EVENT_RAGNA, CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP2)
+
+
+
+	chr_pos(ALWEN, -325,-1272,-73,0,2)
+	chr_pos(LUE,   -280,-1513,-73,0,2)
+	chr_pos(ODESSA, 121,-1460,-73,0,2)
+	chr_pos(PIPIRO, -773,-1602,-73,0,2)
+	chr_pos(POCKLE, -568,-1648,-73,0, 2)
+	chr_pos(LA-RAIRA, 503,-1572,-73,0, 2)
+	chr_pos(FIONA,   -707,-1314,-73,0, 2)
+	chr_pos(KLODE,   -561,-1461,-73,0, 2)
+	chr_pos(MILLIAM,   845,-1446,-73,0, 2)
+	chr_pos(SUBARU,    12,-1316,-74,0 2)
+/*	wait(1)											//だめだ、これいれると···
+	rot_chr(ALWEN,-1, EVENT_RAGNA )
+	rot_chr(LUE,      -1, EVENT_RAGNA )
+	rot_chr(ODESSA,-1, EVENT_RAGNA )
+	rot_chr(PIPIRO,-1, EVENT_RAGNA )
+	rot_chr(POCKLE, -1, EVENT_RAGNA )
+	rot_chr(LA-RAIRA, -1, EVENT_RAGNA )
+	rot_chr(FIONA,  -1, EVENT_RAGNA )
+	rot_chr(KLODE, -1, EVENT_RAGNA )
+	rot_chr(MILLIAM,  -1, EVENT_RAGNA )
+	rot_chr(SUBARU, -1, EVENT_RAGNA )*/
+	
+	look_chr(ALWEN, EVENT_RAGNA, "Bone_Head" )
+	look_chr(LUE,   EVENT_RAGNA, "Bone_Head" )
+	look_chr(ODESSA,EVENT_RAGNA, "Bone_Head" )
+	look_chr(PIPIRO,EVENT_RAGNA, "Bone_Head" )
+	look_chr(POCKLE,EVENT_RAGNA, "Bone_Head")
+	look_chr(LA-RAIRA, EVENT_RAGNA, "Bone_Head" )
+	look_chr(FIONA,    EVENT_RAGNA, "Bone_Head" )
+	look_chr(KLODE,    EVENT_RAGNA, "Bone_Head" )
+	look_chr(MILLIAM,  EVENT_RAGNA, "Bone_Head" )
+	look_chr(SUBARU,   EVENT_RAGNA, "Bone_Head" )
+	
+	KAO(MIA,			"9","1","7")
+	KAO(EVENT_RAGNA,	"1","1","2")
+	KAO(ALWEN,	"1","1","1")
+	KAO(ODESSA,	"1","1","6")
+	KAO(LUE,"1","1","6")
+	KAO(MILLIAM,"1","1","6")
+	KAO(FIONA,"1","1","6")
+	KAO(KLODE,"1","1","6")
+
+//	MOT(ALWEN, 160, 1)		//首がまわらない
+	MOT(FIONA, 160, 1)
+		
+	CAM_move(1435,-314,2099,0,0)
+	CAM(-231,46,2015,28,145,0,0)
+	CAM_move(1435,-314,1979,300,0)
+	CAM(1009,104,1895,28,235,300,0)
+
+	fade_in(0,60,0)
+
+	wait_CAM()
+	wait_fade()		
+	
+	cross_fade(15)
+	CAM_move(-117,1194,221,0,0)
+	CAM(169,38,135,31,215,0,0)
+	CAM_move(462,1194,221,100,0)
+	CAM(169,72,135,31,190,100,0)
+	BGM(04)
+	wait(100)
+//	wait(40)
+//	wait(60)
+	//エンジン始動カメラ
+	cross_fade(15)
+	CAM_move(1174,315,320,0,0)
+	CAM(-311,50,320,31,203,0,0)
+	
+	CAM(-311,50,235,31,153,120,0)
+//	CAM_move(654,315,320,120,0)
+	CAM_move(654,315,240,120,0)
+
+//	wait(15)
+//	BGM(04)
+
+	wait_fade()
+	wait_CAM()
+//color(RAGNA,1)
+
+//}
+//AAAA-----------------------------------------------------------------
+//{	
+//	cross_fade(10)
+
+	//エンジン始動
+//	BGM(04)
+	MOT(PLANE, 160, 0)				//プロペラ回転開始
+	SE(1181,0)
+	wait(120)
+
+	//離陸カメラ
+//	CAM_move(399,376,240,0,0)
+//	CAM(9,68,155,41,113,0,0)
+//	CAM_move(-2480,376,240,230,0)
+//	CAM(-431,68,240,40,270,230,0)
+	
+	EV("EV_51_fadeout")//风SEフェードアウト
+
+CAM_move(-1436,366,320,0,0)
+CAM(-111,172,235,48,240,0,0)
+CAM(-271,172,235,48,240,230,0)
+
+	//キャラ、飛行机を見続ける感じ
+//	rot_chr(ALWEN,2, DUMMY )
+//	rot_chr(LUE,     2, DUMMY )
+//	rot_chr(ODESSA,2, DUMMY )
+//	rot_chr(PIPIRO,2, DUMMY )
+//	rot_chr(POCKLE, 2, DUMMY )
+//	rot_chr(LA-RAIRA, 2, DUMMY )
+//	rot_chr(FIONA, 2, DUMMY )
+//	rot_chr(KLODE, 2,  DUMMY)
+//	rot_chr(MILLIAM,2, DUMMY )
+//	rot_chr(SUBARU, 2, DUMMY )
+	rot(ALWEN,-1, 0 )
+	rot(LUE,    -1, 0 )
+	rot(ODESSA,-1, 0 )
+	rot(PIPIRO,-1, 0 )
+	rot(POCKLE, -1, 0 )
+	rot(LA-RAIRA, -1, 0)
+	rot(FIONA, -1, 0 )
+	rot(KLODE, -1,  0)
+	rot(MILLIAM,-1, 0 )
+	rot(SUBARU, -1, 0 )
+	
+//		look(PLANE,"air_ship04",0, 10,10,10, 90,90,90)
+	
+	
+	F_reset_Node(PLANE, "fun01_spin1", NP_HIDE)
+	F_reset_Node(PLANE, "fun02_spin2", NP_HIDE)
+	F_set_Node(PLANE, "fun01", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE, "fun02", NP_HIDE)							//ペラ非表示
+	
+	//地面カメラ
+	cross_fade(15)
+//	CAM_move(699,415,180,0,0)
+//	CAM(-311,170,95,18,168,0,0)
+//	CAM_move(427,468,180,150,0)
+//	CAM(-311,170,95,18,200,150,0)
+//CAM_move(227,308,180,0,0)
+//CAM(-311,170,180,18,217,0,0)	
+	
+	CAM_move(387,308,180,0,0)
+	CAM(-311,170,180,18,160,0,0)	
+	CAM_move(667,308,180,90,0)
+	
+//	wait_CAM()	
+	wait(60)
+	
+//	CAM_move(827,308,180,0,0)
+//	CAM(-311,170,180,18,160,0,0)
+	
+		
+	CAM_move(27,308,180,150,0)
+//	CAM(-311,170,180,18,214,150,0)
+	CAM(-311,170,180,18,231,150,0)
+//	CAM(-311,170,180,18,266,200,0)
+	CAM(-311,170,180,18,251,215,0)
+	CAM_move(27,-292,180,215,0)
+
+	move(PLANE,2,10,-10000,0,100,0)
+	wait(30)
+	move(PLANE,2,15,-10000,0,100,0)
+	wait(25)
+	move(PLANE,2,20,-10000,0,100,0)
+	wait(20)
+	move(PLANE,2,30,-10000,0,100,0)
+	wait(15)
+	move(PLANE,2,40,-10000,0,100,0)
+	wait(10)
+	move(PLANE,2,55,-10000,0,100,0)
+	wait(5)
+	move(PLANE,2,70,-10000,0,100,0)
+	wait(5)	
+
+	move(PLANE,2,85,-10000,0,100,0)
+	wait(5)
+
+//	CAM(-111,172,235,48,240,0,0)
+
+//	//後方カメラ
+//	cross_fade(10)
+//	CAM_move(-1436,366,320,0,0)
+//	CAM(-111,172,235,48,240,0,0)
+//	CAM(-271,172,235,48,240,230,0)	
+
+	//見送りカメラ
+//	cross_fade(15)
+//	CAM_move(-361,1272,346,0,0)
+//	CAM_move(-361,1272,246,200,0)	
+//	CAM(-870,68,260,40,279,0,0)
+//	CAM(-270,68,260,40,279,200,0)
+	
+
+	look_off(ALWEN)
+	look_off(LUE)
+	look_off(ODESSA)
+	look_off(PIPIRO)
+	look_off(POCKLE)
+	look_off(LA-RAIRA)
+	look_off(FIONA)
+	look_off(KLODE)
+	look_off(MILLIAM)
+	look_off(SUBARU)
+	
+	
+	move(PLANE,2,100,-10000,0,100,0)
+	wait(35)
+	move(PLANE,2,100,-10000,0,500,0)
+	wait(5)
+	move(PLANE,2,100,-10000,0,1000,0)
+	wait(5)
+	move(PLANE,2,100,-10000,0,2000,0)
+	wait(5)
+	move(PLANE,2,100,-10000,0,3000,0)
+	wait(5)
+	move(PLANE,2,100,-10000,0,4000,0)
+	wait(5)
+	move(PLANE,2,100,-10000,0,5000,0)		
+	wait(30)
+	move(PLANE,2,100,-10000,0,8000,0)
+	
+	rot_chr(ALWEN,-1, MIA )
+	rot_chr(LUE,      -1, MIA )
+	rot_chr(ODESSA,-1, MIA )
+	rot_chr(PIPIRO,-1, MIA )
+	rot_chr(POCKLE, -1, MIA )
+	rot_chr(LA-RAIRA, -1, MIA )
+	rot_chr(FIONA,  -1, MIA )
+	rot_chr(KLODE, -1,  MIA)
+	rot_chr(MILLIAM,  -1, MIA )
+	rot_chr(SUBARU, -1, MIA )
+	rot_chr(ALWEN,-1, MIA )
+//	rot_chr(LUE,      -1, MIA )
+	rot_chr(ODESSA,-1, MIA )
+	rot_chr(PIPIRO,-1, MIA )
+	rot_chr(POCKLE, -1, MIA )
+	rot_chr(LA-RAIRA, -1, MIA )
+	rot_chr(FIONA,  -1, MIA )
+	rot_chr(KLODE, -1,  MIA)
+	rot_chr(MILLIAM,  -1, MIA )
+//	rot_chr(SUBARU, -1, MIA )	
+	
+			
+	wait(30)
+		
+	//見送りカメラ
+	cross_fade(15)
+	CAM_move(-361,1272,346,0,0)
+	CAM_move(-361,1272,246,200,0)	
+	CAM(-870,68,260,40,279,0,0)
+	CAM(-270,68,260,40,279,200,0)
+
+
+	
+	chr_pos(SUBARU, -327,-918, -73, 100, 2)
+	chr_pos(LUE, -830,-1470,-73,100,2)		
+	move(SUBARU, 0, RUN1, -1224,-950, -73, 0)
+	move(LUE,    0, RUN1, -1183,-1365,-73, 0 )	
+
+
+
+
+	wait_fade()
+	
+	wait_move(SUBARU)
+	MOT(SUBARU, 218, 5)		//手を振る
+
+	wait(120)
+//	color(PLANE,-30)
+
+	fade_in(100,60,0)
+	wait_fade()
+//	stop_BGM(90)
+//	wait_BGM()
+
+//	//スタッフロール用的ムービーを開始する。
+
+	load_MMV("SYS\ed.mpg")
+	MMV()
+	wait_MMV()
+
+//	stop_BGM(0)
+	stop_BGM(60)
+//	wait_BGM()
+//	wait(30)
+//	wait(60)
+//	wait(120)
+//	wait(180)
+//	stop_BGM(0)
+	wait_BGM()
+	wait(60)
+
+//ＧＦ『★ＧＦ：エピローグ終了』を立てる。
+	F_set(F6_10_EndEpilogue)
+
+//ＧＦ『★ＺｗｅｉⅡをクリアした』を立てる。
+//	F_set(F6_11_GameClear)
+//
+//	EV_end()
+//
+//	fade_in(0,1,0)
+//	wait_fade()
+//
+//	title()
+
+//---------■２週目引继ぎ処理0827----------------
+
+	workG(GW_ENTRY_EVENT,SET,10)
+	new_map(10800)
+//	EV_end()
+
+//-----------------------------------------------
+
+}
+
+
+//プロペラSE処理
+EV_1160
+{
+	SE(1160,0)
+	wait(27)
+	EV("EV_1160_2")
+}
+EV_1160_2
+{
+	SE(1160,0)
+	wait(27)
+	EV("EV_1160")
+}
+
+//风SEフェードアウト
+EV_51_fadeout
+{
+	SE_vol(51,99,0)
+	wait(3)
+	SE_vol(51,99,0)
+	wait(3)
+	SE_vol(51,98,0)
+	wait(3)
+	SE_vol(51,97,0)
+	wait(3)
+	SE_vol(51,96,0)
+	wait(3)
+	SE_vol(51,95,0)
+	wait(3)
+	SE_vol(51,94,0)
+	wait(3)
+	SE_vol(51,93,0)
+	wait(3)
+	SE_vol(51,92,0)
+	wait(3)
+	SE_vol(51,91,0)
+	wait(3)
+	SE_vol(51,90,0)
+	wait(3)
+	SE_vol(51,89,0)
+	wait(3)
+	SE_vol(51,88,0)
+	wait(3)
+	SE_vol(51,87,0)
+	wait(3)
+	SE_vol(51,86,0)
+	wait(3)
+	SE_vol(51,85,0)
+	wait(3)
+	SE_vol(51,84,0)
+	wait(3)
+	SE_vol(51,83,0)
+	wait(3)
+	SE_vol(51,82,0)
+	wait(3)
+	SE_vol(51,81,0)
+	wait(3)
+	SE_vol(51,80,0)
+	wait(3)
+	SE_vol(51,79,0)
+	wait(3)
+	SE_vol(51,78,0)
+	wait(3)
+	SE_vol(51,77,0)
+	wait(3)
+	SE_vol(51,76,0)
+	wait(3)
+	SE_vol(51,75,0)
+	wait(3)
+	SE_vol(51,74,0)
+	wait(3)
+	SE_vol(51,73,0)
+	wait(3)
+	SE_vol(51,72,0)
+	wait(3)
+	SE_vol(51,71,0)
+	wait(3)
+	SE_vol(51,70,0)
+	wait(3)
+	SE_vol(51,69,0)
+	wait(3)
+	SE_vol(51,68,0)
+	wait(3)
+	SE_vol(51,67,0)
+	wait(3)
+	SE_vol(51,66,0)
+	wait(3)
+	SE_vol(51,65,0)
+	wait(3)
+	SE_vol(51,64,0)
+	wait(3)
+	SE_vol(51,63,0)
+	wait(3)
+	SE_vol(51,62,0)
+	wait(3)
+	SE_vol(51,61,0)
+	wait(3)
+	SE_vol(51,60,0)
+	wait(3)
+	SE_vol(51,59,0)
+	wait(3)
+	SE_vol(51,58,0)
+	wait(3)
+	SE_vol(51,57,0)
+	wait(3)
+	SE_vol(51,56,0)
+	wait(3)
+	SE_vol(51,55,0)
+	wait(3)
+	SE_vol(51,54,0)
+	wait(3)
+	SE_vol(51,53,0)
+	wait(3)
+	SE_vol(51,52,0)
+	wait(3)
+	SE_vol(51,51,0)
+	wait(3)
+	SE_vol(51,50,0)
+	wait(3)
+	SE_vol(51,49,0)
+	wait(3)
+	SE_vol(51,48,0)
+	wait(3)
+	SE_vol(51,47,0)
+	wait(3)
+	SE_vol(51,46,0)
+	wait(3)
+	SE_vol(51,45,0)
+	wait(3)
+	SE_vol(51,44,0)
+	wait(3)
+	SE_vol(51,43,0)
+	wait(3)
+	SE_vol(51,42,0)
+	wait(3)
+	SE_vol(51,41,0)
+	wait(3)
+	SE_vol(51,40,0)
+	wait(3)
+	SE_vol(51,39,0)
+	wait(3)
+	SE_vol(51,38,0)
+	wait(3)
+	SE_vol(51,37,0)
+	wait(3)
+	SE_vol(51,36,0)
+	wait(3)
+	SE_vol(51,35,0)
+	wait(3)
+	SE_vol(51,34,0)
+	wait(3)
+	SE_vol(51,33,0)
+	wait(3)
+	SE_vol(51,32,0)
+	wait(3)
+	SE_vol(51,31,0)
+	wait(3)
+	SE_vol(51,30,0)
+	wait(3)
+	SE_vol(51,29,0)
+	wait(3)
+	SE_vol(51,28,0)
+	wait(3)
+	SE_vol(51,27,0)
+	wait(3)
+	SE_vol(51,26,0)
+	wait(3)
+	SE_vol(51,25,0)
+	wait(3)
+	SE_vol(51,24,0)
+	wait(3)
+	SE_vol(51,23,0)
+	wait(3)
+	SE_vol(51,22,0)
+	wait(3)
+	SE_vol(51,21,0)
+	wait(3)
+	SE_vol(51,20,0)
+	wait(3)
+	SE_vol(51,19,0)
+	wait(3)
+	SE_vol(51,18,0)
+	wait(3)
+	SE_vol(51,17,0)
+	wait(3)
+	SE_vol(51,16,0)
+	wait(3)
+	SE_vol(51,15,0)
+	wait(3)
+	SE_vol(51,14,0)
+	wait(3)
+	SE_vol(51,13,0)
+	wait(3)
+	SE_vol(51,12,0)
+	wait(3)
+	SE_vol(51,11,0)
+	wait(3)
+	SE_vol(51,10,0)
+	wait(3)
+	SE_vol(51,9,0)
+	wait(3)
+	SE_vol(51,8,0)
+	wait(3)
+	SE_vol(51,7,0)
+	wait(3)
+	SE_vol(51,6,0)
+	wait(3)
+	SE_vol(51,5,0)
+	wait(3)
+	SE_vol(51,4,0)
+	wait(3)
+	SE_vol(51,3,0)
+	wait(3)
+	SE_vol(51,2,0)
+	wait(3)
+	SE_vol(51,1,0)
+	wait(3)
+	SE_vol(51,0,0)
+}
+
+//飛行机発進SE処理
+EV_Plane_SE
+{
+	SE(1167,0)
+	wait(140)
+	SE(1169,0)
+	wait(30)
+	SE(1168,0)
+}
+
+
+#EndScriptTable
+//====================================================================
+

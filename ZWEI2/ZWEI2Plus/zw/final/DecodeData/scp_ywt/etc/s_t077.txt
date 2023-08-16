@@ -1,0 +1,695 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧儖儕乮彈偺巕乯Luri")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_LURI
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(LURI, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,LURI)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,LURI)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F6_05_EndSixth)
+	{
+		look_chr( LURI, PLAYER1,"Bone_Head")
+		if(!FS_13_TalkLuri)
+		{
+		//丂丂仸傾儖僢僥偺廻庰応偱惾偵偮偄偰偄傞丅乮偐傕偟偔偼僟僀僑儘乕偺朤偵棫偮乯
+		//丂丂丂偱偒傟偽丄摢嬓傪庢偭偨忬懺丅
+		//丂丂仸弶夞僀儀儞僩丅
+
+			MES(LURI,"散步的時候\n順便就到鎮裡來了。",0)
+			MES(LURI,"肚子餓了—。\n吃什麼好呢～？",0)
+			MES_close(LURI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"喂喂，兩個小孩子\n到這種地方來沒問題嗎？",0)
+			MES(RAGNA,"跟鄉里的人\n說過了嗎？",0)
+			MES_close(RAGNA)
+
+		//	name2(LURI)
+			MES(LURI,"沒有，沒告訴他們。",0)
+			MES(LURI,"沒關係，那邊\n也有大五郎的分身呢。",0)
+			MES_close(LURI)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			MES(RAGNA,"（那確實有可能\n 沒被發現……）",0)
+			MES_close(RAGNA)
+			F_set(FS_13_TalkLuri)
+			look_off(LURI)
+		}
+		else
+		{
+			if(!F_LURI)
+			{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+				MES(LURI,"不要告訴哥哥哦～？\n要保密哦～？",0)
+				MES_close(LURI)
+
+			//丂丂儖儕丄岦偒傪栠偟側偑傜丅
+				look_off(LURI)
+				MES(LURI,"嗯，吃什麼好呢～？",0)
+				MES_close(LURI)
+
+			//丂丂儖儕偵丒丒丒僄儌乕僔儑儞丅
+				EMO(LURI,EMO_TENTEN)
+				wait(30)
+				
+				MES(LURI,"……罐…………\n……盤……？？",0)
+				MES(LURI,"不會讀啊～！",0)
+				MES_close(LURI)
+				F_set(LURI)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(LURI,"這些字不會讀……",0)
+				MES(LURI,"以前認真念書\n就好了……",0)
+				MES_close(LURI)
+				look_off(LURI)
+				//仛儖儕亂屻夨亃
+				F_set_note(LURI,2)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F6_00_GoToMeru)
+	{
+		rot_chr(LURI,30,PLAYER1)
+		EV_stop("LOOKING_LURI")
+		MOT(LURI,51,10)
+		if(!F_LURI)
+		{
+		//丂丂仸棦偺奒抜傪忋偭偨曈傝偱丄僟僀僑儘乕偺悽榖傪偟偰偄傞丅
+		//丂丂丂乮棫偭偨忬懺偱丄僼儕乕儉乕僽偡傞僟僀僑儘乕傪拲帇乯
+			MES(LURI,"野佐久請我\n幫他照顧\n大五郎。",0)
+			MES(LURI,"好啊～？\n大家好像都很忙……",0)
+			MES(LURI,"就是琉璃也能\n完成這種工作呢。",0)
+			MES_close(LURI)
+			F_set(LURI)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(LURI,"今天好像很冷呢～。",0)
+			MES(LURI,"……………………………………",0)
+			MES_close(LURI)
+
+		//丂丂儖儕丄僟僀僑儘乕偵岦偔丅
+			rot_chr(LURI,30,DAIGORO)
+			MES(LURI,"大五郎不冷嗎？\n不會感冒嗎？",0)
+			MES_close(LURI)
+		}
+		MOT(LURI,75,10)
+		EV("LOOKING_LURI")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F5_00_HearLunar )
+	{
+		if(!FS_11_TalkKai)
+		{
+			EV("TK_KAI")
+			wait_EV("TK_KAI")
+			TK_end()
+			rot(LURI,160,90)
+		}
+		else
+		{
+			rot_chr(LURI,30,PLAYER1)
+			if(!F_LURI)
+			{
+			//丂丂仸僇僀偺弶夞僀儀儞僩傪尒偨屻偺儊僢僙乕僕丅
+			//丂丂仸僇僀偺壠乮柉壠俀乯偺戜強偵偄傞丅
+				MOT(LURI,75,10)
+				MES(LURI,"哥哥說他\n必須要睡覺。",0)
+				MES(LURI,"所以今天就是\n琉璃做飯。",0)
+				MES_close(LURI)
+				rot(LURI,30,90)
+
+			//丂丂儖儕丄戜強偵岦偄偰丒丒丒僄儌乕僔儑儞丅
+				MOT(LURI,51,10)
+				EMO(LURI,EMO_TENTEN)
+				wait(30)
+				MES(LURI,"這樣就可以了吧～？",0)
+				MES_close(LURI)
+				F_set(LURI)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MOT(LURI,75,10)
+				MES(LURI,"琉璃第一次做飯呢。",0)
+				MES(LURI,"火的大小好難調啊～。",0)
+				MES_close(LURI)
+				//仛儖儕亂弶傔偰偺偍椏棟亃
+				F_set_note(LURI,1)
+				MOT(LURI,51,10)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂丂儖儕偼俁恖攝抲偟丄塀傟偨傝僼儕乕儉乕僽偟偰偄傞丅乮暘恎偺弍乯
+	//丂丂丂扤偵榖偟偐偗偰傕摨偠斀墳傪偡傞丅
+	//丂丂仸挿榁戭墶偺偍堫壸偝傫曈傝丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_05_OnVillage2 )
+	{
+		rot_chr(LURI,60,PLAYER1)
+		//丂丂仸弶夞僀儀儞僩丅
+		if(!FS_08_TalkLuri)
+		{
+			MOT_SET(LURI,160,-1,476,476,-1,-1)//報傪寢傇
+			
+			rot_chr(PARTNER,30,LURI)
+			MES(PARTNER,"咦，琉璃？",0)
+			MES(PARTNER,"在這裡做什麼呢？",0)
+			MES_close(PARTNER)
+
+		//	name2(LURI)
+			rot_chr(LURI,30,PARTNER)
+			MES(LURI,"沒事做，正在這裡玩～。",0)
+			MOT(LURI,160,10)
+			MES(LURI,"分身術～。",0)
+			MES_close(LURI)
+
+		//仛丂丂儖儕丄報傪寢傫偱俀恖偵暘恎偡傞丅
+		
+			EV("EV_BUNSHIN_LURI")
+			wait_EV("EV_BUNSHIN_LURI")
+					
+			MOT(LURI,2,10)
+			
+			EMO(RAGNA,EMO_BIKKURI)
+			rot_chr(RAGNA,30,LURI_4)
+			rot_chr(PARTNER,30,LURI_4)
+			wait(30)
+
+					
+			MES(RAGNA,"哎……",0)
+			MES(RAGNA,"這麼小的孩子\n就能使用這麼厲害的招式了啊……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"琉璃是\n凱大哥的妹妹，\n十分擅長分身忍術……",0)
+			MES(PARTNER,"說起來，她還經常惡作劇，\n惹得凱大哥生氣呢……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"嗯—，那傢伙的妹妹嗎……",0)
+			MES(RAGNA,"……一點也不像啊。",0)
+			MES_close(RAGNA)
+
+		//	name2(LURI)
+			rot_chr(LURI,30,PLAYER1)
+			MES(LURI,"啊，不要告訴\n哥哥哦—。",0)
+			MES_pos(LURI,"我可是偷偷\n溜出來的呢。",0,0,0,0,0)
+			wait(30)
+			rot_chr(LURI_4,30,PLAYER1)
+			MES_pos(LURI_4,"溜出來的呢。",0,0,0,0,0)
+			wait_key(0)
+
+		//丂丂摨帪偵丄暘恎偟偨傕偆堦曽偺儖儕偵傕億僢僾傾僢僾丅
+			
+			MES_close(LURI)
+			MES_close(LURI_4)
+
+			//仛僇僀亂儖儕偵庤傪從偔亃
+			//仛儖儕亂暘恎偺弍偑摼堄亃
+			F_set_note(-76,0)
+			F_set_note(LURI,0)
+			F_set(FS_08_TalkLuri)
+			
+
+		//柤慜晅偒僉儍儔慡堳偵榖偟偐偗傞偲業揤晽楥偑奐偔
+			EV("EV_F4_12_OkRoten")
+		}
+		else
+		{
+			if(!F_LURI)
+			{
+			//丂丂丂埲崀丄儖儕偼係恖偵側偭偰塀傟偨傝僼儕乕儉乕僽偟偰偄傞丅
+			//丂丂仛僇僀亂儖儕偵庤傪從偔亃
+			//丂丂仛儖儕亂暘恎偺弍偑摼堄亃
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+				MES(LURI,"嗒嗒嗒?",0)
+				MES(LURI,"雪花歡快地飄～\n山慢慢地變白～?",0)
+
+			//丂丂摨帪偵丄懠偺儖儕偨偪偵僆乕僩億僢僾傾僢僾丅
+				MES_pos(LURI,"唉呀☆",0,0,0,0,0)
+				MES_pos(LURI_2,"唉呀☆",0,0,0,0,0)
+				MES_pos(LURI_3,"唉呀☆",0,0,0,0,0)
+				MES_pos(LURI_4,"唉呀☆",0,0,0,0,0)
+
+				wait_key(0)
+				MES_close(LURI)
+				MES_close(LURI_2)
+				MES_close(LURI_3)
+				MES_close(LURI_4)
+
+				F_set(LURI)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(LURI,"哥哥要我\n認真用功呢。",0)
+				MES(LURI,"不要告訴哥哥哦～。",0)
+
+			//丂丂懠偺儖儕偨偪偵僆乕僩億僢僾傾僢僾丅
+				MES_pos(LURI_2,"哥哥哦～。",0,0,0,0,0)
+				MES_pos(LURI_3,"哥哥哦～。",0,0,0,0,0)
+				MES_pos(LURI_4,"哥哥哦～。",0,0,0,0,0)
+				
+				wait_key(0)				
+				MES_close(LURI)
+				MES_close(LURI_2)
+				MES_close(LURI_3)
+				MES_close(LURI_4)
+			}
+		}
+	}
+	
+	TK_end()
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//暘恎偨偪偵榖偟偐偗偨応崌偺張棟
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TK_LURI_2
+{
+	TK_begin()
+	EV_stop("HIND_LURI")
+
+	rot_chr(PLAYER1,30,LURI_2)
+	rot_chr(PLAYER2,30,LURI_2)
+	rot_chr(LURI_2,30,PLAYER1)
+
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(PLAYER2, "1", "1", "1")	
+	KAO(LURI_2, "1", "1", "1")	
+
+	//丂丂仸弶夞僀儀儞僩丅
+	if(!FS_08_TalkLuri)
+	{
+		MOT_SET(LURI_2,160,-1,476,476,-1,-1)//報傪寢傇
+		rot_chr(PARTNER,30,LURI_2)
+		MES(PARTNER,"咦，琉璃？",0)
+		MES(PARTNER,"在這裡做什麼呢？",0)
+		MES_close(PARTNER)
+
+	//	name2(LURI)
+		rot_chr(LURI_2,30,PARTNER)
+		MES(LURI_2,"沒事做，正在這裡玩～。",0)
+		MOT(LURI_2,130,10)
+		MES(LURI_2,"分身術～。",0)
+		MES_close(LURI_2)
+
+	//仛丂丂儖儕丄報傪寢傫偱俀恖偵暘恎偡傞丅
+		EV("EV_BUNSHIN_LURI")
+		wait_EV("EV_BUNSHIN_LURI")
+				
+		MOT(LURI_2,2,10)
+		EMO(RAGNA,EMO_BIKKURI)
+		rot_chr(RAGNA,30,LURI_4)
+		rot_chr(PARTNER,30,LURI_4)
+		wait(30)
+
+		MES(RAGNA,"哎……",0)
+		MES(RAGNA,"這麼小的孩子\n就能使用這麼厲害的招式了啊……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"琉璃是\n凱大哥的妹妹，\n十分擅長分身忍術……",0)
+		MES(PARTNER,"說起來，她還經常惡作劇，\n惹得凱大哥生氣呢……",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"嗯—，那傢伙的妹妹嗎……",0)
+		MES(RAGNA,"……一點也不像啊。",0)
+		MES_close(RAGNA)
+
+	//	name2(LURI)
+		rot_chr(LURI_2,30,PLAYER1)
+		MES(LURI_2,"啊，不要告訴\n哥哥哦—。",0)
+		MES_pos(LURI_2,"我可是偷偷\n溜出來的呢。",0,0,0,0,0)
+		wait(30)
+		rot_chr(LURI_4,30,PLAYER1)
+		MES_pos(LURI_4,"溜出來的呢。",0,0,0,0,0)
+		wait_key(0)
+
+	//丂丂摨帪偵丄暘恎偟偨傕偆堦曽偺儖儕偵傕億僢僾傾僢僾丅
+		
+		MES_close(LURI_2)
+		MES_close(LURI_4)
+
+		//仛僇僀亂儖儕偵庤傪從偔亃
+		//仛儖儕亂暘恎偺弍偑摼堄亃
+		F_set_note(-76,0)
+		F_set_note(LURI,0)
+
+		F_set(FS_08_TalkLuri)
+		
+
+	//柤慜晅偒僉儍儔慡堳偵榖偟偐偗傞偲業揤晽楥偑奐偔
+		EV("EV_F4_12_OkRoten")
+		
+		EV("HIND_LURI")
+	}
+	else
+	{
+		if(!F_LURI)
+		{
+		//丂丂丂埲崀丄儖儕偼係恖偵側偭偰塀傟偨傝僼儕乕儉乕僽偟偰偄傞丅
+		//丂丂仛僇僀亂儖儕偵庤傪從偔亃
+		//丂丂仛儖儕亂暘恎偺弍偑摼堄亃
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			MES(LURI_2,"嗒嗒嗒?",0)
+			MES(LURI_2,"雪花歡快地飄～\n山慢慢地變白～?",0)
+
+		//丂丂摨帪偵丄懠偺儖儕偨偪偵僆乕僩億僢僾傾僢僾丅
+			MES_pos(LURI,"唉呀☆",0,0,0,0,0)
+			MES_pos(LURI_2,"唉呀☆",0,0,0,0,0)
+			MES_pos(LURI_3,"唉呀☆",0,0,0,0,0)
+			MES_pos(LURI_4,"唉呀☆",0,0,0,0,0)
+
+			wait_key(0)
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+
+			F_set(LURI)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(LURI_2,"哥哥要我\n認真用功呢。",0)
+			MES(LURI_2,"不要告訴哥哥哦～。",0)
+
+		//丂丂懠偺儖儕偨偪偵僆乕僩億僢僾傾僢僾丅
+			MES_pos(LURI,"哥哥哦～。",0,0,0,0,0)
+			MES_pos(LURI_3,"哥哥哦～。",0,0,0,0,0)
+			MES_pos(LURI_4,"哥哥哦～。",0,0,0,0,0)
+			
+			wait_key(0)				
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+		}
+
+		EV("HIND_LURI")															//僷僢僠 2008/09/22
+	}
+	TK_end()
+}
+TK_LURI_3
+{
+	EV_stop("JUMP_LURI")
+	TK_begin()
+	rot_chr(PLAYER1,30,LURI_3)
+	rot_chr(PLAYER2,30,LURI_3)
+	rot_chr(LURI_3,30,PLAYER1)
+
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(PLAYER2, "1", "1", "1")	
+	KAO(LURI_3, "1", "1", "1")	
+
+	//丂丂仸弶夞僀儀儞僩丅
+	if(!FS_08_TalkLuri)
+	{
+		MOT_SET(LURI_3,160,-1,476,476,-1,-1)//報傪寢傇
+		rot_chr(PARTNER,30,LURI_3)
+		MES(PARTNER,"咦，琉璃？",0)
+		MES(PARTNER,"在這裡做什麼呢？",0)
+		MES_close(PARTNER)
+
+	//	name2(LURI)
+		rot_chr(LURI_3,30,PARTNER)
+		MES(LURI_3,"沒事做，正在這裡玩～。",0)
+		MOT(LURI_3,160,10)
+		MES(LURI_3,"分身術～。",0)
+		MES_close(LURI_3)
+
+	//仛丂丂儖儕丄報傪寢傫偱俀恖偵暘恎偡傞丅
+		EV("EV_BUNSHIN_LURI")
+		wait_EV("EV_BUNSHIN_LURI")
+				
+		MOT(LURI_3,2,10)
+		EMO(RAGNA,EMO_BIKKURI)
+		rot_chr(RAGNA,30,LURI_4)
+		rot_chr(PARTNER,30,LURI_4)
+		wait(30)
+		
+		MES(RAGNA,"哎……",0)
+		MES(RAGNA,"這麼小的孩子\n就能使用這麼厲害的招式了啊……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"琉璃是\n凱大哥的妹妹，\n十分擅長分身忍術……",0)
+		MES(PARTNER,"說起來，她還經常惡作劇，\n惹得凱大哥生氣呢……",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"嗯—，那傢伙的妹妹嗎……",0)
+		MES(RAGNA,"……一點也不像啊。",0)
+		MES_close(RAGNA)
+
+	//	name2(LURI)
+		rot_chr(LURI_3,30,PLAYER1)
+		MES(LURI_3,"啊，不要告訴\n哥哥哦—。",0)
+		MES_pos(LURI_3,"我可是偷偷\n溜出來的呢。",0,0,0,0,0)
+		wait(30)
+		rot_chr(LURI_4,30,PLAYER1)
+		MES_pos(LURI_4,"溜出來的呢。",0,0,0,0,0)
+		wait_key(0)
+
+	//丂丂摨帪偵丄暘恎偟偨傕偆堦曽偺儖儕偵傕億僢僾傾僢僾丅
+		
+		MES_close(LURI_3)
+		MES_close(LURI_4)
+
+		//仛僇僀亂儖儕偵庤傪從偔亃
+		//仛儖儕亂暘恎偺弍偑摼堄亃
+		F_set_note(-76,0)
+		F_set_note(LURI,0)
+
+		F_set(FS_08_TalkLuri)
+		
+
+		EV("JUMP_LURI")
+	//柤慜晅偒僉儍儔慡堳偵榖偟偐偗傞偲業揤晽楥偑奐偔
+		EV("EV_F4_12_OkRoten")
+	}
+	else
+	{
+		if(!F_LURI)
+		{
+		//丂丂丂埲崀丄儖儕偼係恖偵側偭偰塀傟偨傝僼儕乕儉乕僽偟偰偄傞丅
+		//丂丂仛僇僀亂儖儕偵庤傪從偔亃
+		//丂丂仛儖儕亂暘恎偺弍偑摼堄亃
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			MES(LURI_3,"嗒嗒嗒?",0)
+			MES(LURI_3,"雪花歡快地飄～\n山慢慢地變白～?",0)
+
+		//丂丂摨帪偵丄懠偺儖儕偨偪偵僆乕僩億僢僾傾僢僾丅
+			MES_pos(LURI,"唉呀☆",0,0,0,0,0)
+			MES_pos(LURI_2,"唉呀☆",0,0,0,0,0)
+			MES_pos(LURI_3,"唉呀☆",0,0,0,0,0)
+			MES_pos(LURI_4,"唉呀☆",0,0,0,0,0)
+
+			wait_key(0)
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+
+			F_set(LURI)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(LURI_3,"哥哥要我\n認真用功呢。",0)
+			MES(LURI_3,"不要告訴哥哥哦～。",0)
+
+		//丂丂懠偺儖儕偨偪偵僆乕僩億僢僾傾僢僾丅
+			MES_pos(LURI,"哥哥哦～。",0,0,0,0,0)
+			MES_pos(LURI_2,"哥哥哦～。",0,0,0,0,0)
+			MES_pos(LURI_4,"哥哥哦～。",0,0,0,0,0)
+			
+			wait_key(0)				
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+		}
+
+		EV("JUMP_LURI")													//僷僢僠 2008/09/22
+	}
+	TK_end()
+}
+
+TK_LURI_4
+{
+	TK_begin()
+	rot_chr(PLAYER1,30,LURI_4)
+	rot_chr(PLAYER2,30,LURI_4)
+	rot_chr(LURI_4,30,PLAYER1)
+
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(PLAYER2, "1", "1", "1")	
+	KAO(LURI_4, "1", "1", "1")	
+
+	
+	if(!F_LURI)
+	{
+	//丂丂丂埲崀丄儖儕偼係恖偵側偭偰塀傟偨傝僼儕乕儉乕僽偟偰偄傞丅
+	//丂丂仛僇僀亂儖儕偵庤傪從偔亃
+	//丂丂仛儖儕亂暘恎偺弍偑摼堄亃
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		MES(LURI_4,"嗒嗒嗒?",0)
+		MES(LURI_4,"雪花歡快地飄～\n山慢慢地變白～?",0)
+
+	//丂丂摨帪偵丄懠偺儖儕偨偪偵僆乕僩億僢僾傾僢僾丅
+		MES_pos(LURI,"唉呀☆",0,0,0,0,0)
+		MES_pos(LURI_2,"唉呀☆",0,0,0,0,0)
+		MES_pos(LURI_3,"唉呀☆",0,0,0,0,0)
+		MES_pos(LURI_4,"唉呀☆",0,0,0,0,0)
+
+		wait_key(0)
+		MES_close(LURI)
+		MES_close(LURI_2)
+		MES_close(LURI_3)
+		MES_close(LURI_4)
+
+		F_set(LURI)
+	}
+	else
+	{
+	//丂丂仛孞傝曉偟
+		MES(LURI_4,"哥哥要我\n認真用功呢。",0)
+		MES(LURI_4,"不要告訴哥哥哦～。",0)
+
+	//丂丂懠偺儖儕偨偪偵僆乕僩億僢僾傾僢僾丅
+		MES_pos(LURI,"哥哥哦～。",0,0,0,0,0)
+		MES_pos(LURI_2,"哥哥哦～。",0,0,0,0,0)
+		MES_pos(LURI_3,"哥哥哦～。",0,0,0,0,0)
+		
+		wait_key(0)				
+		MES_close(LURI)
+		MES_close(LURI_2)
+		MES_close(LURI_3)
+		MES_close(LURI_4)
+	}
+	
+	TK_end()
+}
+
+//儖儕暘恎張棟
+EV_BUNSHIN_LURI
+{
+/*
+	CAM_move(7480,9856,1655,30,0)
+	CAM(190,65,95,37,180,30,0)
+	wait_CAM_move()
+*/
+	//塀偟偰偄偨暘恎傪堏摦偝偣丄摟夁傪夝彍
+//	chr_pos(LURI_4,7495,-9945,1399,0,2)
+	chr_pos(LURI_4,6530,-10404,1660,0,2)
+
+	MOT_SET(LURI_4,150,-1,552,552,-1,-1)
+	MOT(LURI_4,150,0)
+	color(LURI_4,1)
+	EV("ROLING_LURI")
+	
+	wait(30)
+/*
+	cross_fade(20)
+	CAM_return( 0 )
+	wait_fade()
+*/
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+PSWTC

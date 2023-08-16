@@ -1,0 +1,1178 @@
+//====================================================================
+//ステージトラップスクリプト
+//[18018][要塞－特尔米多鲁]
+//====================================================================
+#ScriptTable
+
+#LUE 		1
+#TELMIDORL 	2
+#AM_TELMI 	3
+#BOSS		4
+#EVENT_RAGNA 	5
+#ALWEN			6
+#LUEDUMMY		7
+#EFFDUMMY1		8
+#EFFDUMMY2		9
+
+#LOSE_TELMI 	10
+#DUMMY1		 	11
+#DUMMY2		 	12
+#DUMMY3		 	13
+
+INIT
+{
+//環境SE
+	SE(70,0)
+
+//■イベント
+	set_chr( 80,990,	-1,-1,   0, 6950,4500,		  0,011211, 6,"#6_95;")		// 梅ン③へ之エントリを有効化
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+	map_color(90,80,100,0)
+//■階段·扉
+	set_chr( 90,990,	-1,-1,  -250,6950,210,		270,     0, 0,"0;")				//①エントリ 梅ン③から
+	set_chr( 91,990,	-1,-1,     0,-500,5350,		  0,     0, 0,"0;")				//②エントリ ボス①へ
+
+	set_chr( 92,990,	-1,-1,     0,6950,4800,		180,021211, 0,"K1_18019;")		//①エントリ 梅ン③へ
+//	set_chr( 92,990,	-1,-1,     0,6950,160,		180,021211, 0,"K1_18019;")		//①エントリ 梅ン③へ
+	set_chr( 93,990,	-1,-1,     0,-450,5350,		  0,050302, 6,"K0_18020;")		//②エントリ ボス①へ
+
+	set_chr(150,990,	-1,-1,     0,6150,5300,       0,071001, 6,"SF101 #6_95 #6_94 #6_92;")		// エレベーター下り有効化用エントリ
+	set_chr( 94,990,	-1,-1,     0,6950,5350,       0,081207, 0,"<EV_Down>;")						//①エントリ エレベーター下り開始エントリ
+
+
+
+//■スイッチ·看板
+	set_chr( 50,620,	 3, 1,     0,-300,  0,		  0,     0, 0,";")			//①セーブOBJ
+
+//■イベント
+	if(WK_ENTRY==91)//階段91 から来た時（帰り）
+	{
+		mot_obj("move_yuka","stop1")
+	}
+	else
+	{
+		mot_obj("move_yuka","anime0")
+		EV("EV_ElevatorSE")
+	}
+
+	//◆デバッグチェック用
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_6_09_KillTelm")
+	}
+	else
+	//◆デバッグチェック用
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_6_08_BossOnly")
+	}
+	else
+	//再战用
+	if(GW_ENTRY_EVENT==100)
+	{
+		//0922追加
+		//テルミドールが倒れている(会話用ダミーなので表示してはいけません
+		set_chr(LOSE_TELMI,	 	1036,-1,-1,  0,311,5351, 2,0,20, "<TK_TELMIDORL>")	//名前が出てしまうので、変なところに配置
+		color(LOSE_TELMI,-1)//透過
+		F_set_chr(LOSE_TELMI, CF_NO_MOVE)
+		F_set_chr(LOSE_TELMI, CF_NO_CSP)
+
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_6_08_BossOnly")
+	}
+	else
+	//ゲーセン用
+	if(GW_ENTRY_EVENT==101)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_6_08_BossOnly_02")
+	}
+	else	
+	if(F5_17_EndFifth && !F6_05_EndSixth)
+	{
+	//６章
+		//ＧＦ『★中ボス⑧【真特尔米多鲁】を倒した』立ってない
+		if(!F6_03_KillTelmi)
+		{
+			//▼特尔米多鲁と之決着を付ける·前
+		//	EV("EV_6_08_VSOverTelmi")
+			set_chr( 80,990,	-1,-1,   0,4700,5326,  0, 0801,6,"<EV_6_08_VSOverTelmi>;")
+			
+			
+			//特尔米多鲁が倒れている(会話用ダミーな之で表示してはいけません
+			set_chr(LOSE_TELMI,	 	1036,-1,-1,  0,311,5351, 2,0,20, "<TK_TELMIDORL>")	//名前が出てしまう之で、変なところに配置
+			color(LOSE_TELMI,-1)//透過
+			F_set_chr(LOSE_TELMI, CF_NO_MOVE)
+			F_set_chr(LOSE_TELMI, CF_NO_CSP)
+
+		}
+		else
+		{
+		
+			//特尔米多鲁が倒れている
+			set_chr(DUMMY1,	 	 749,-1,-1,  0,2419,5041, 0,0,00, "")	//頭アタリ
+			set_chr(DUMMY2,	 	 749,-1,-1,-106,2452,5041, 0,0,00, "")	//右はねアタリ
+			set_chr(DUMMY3,	 	 749,-1,-1, 115,2457,5041, 0,0,00, "")	//左はねアタリ
+			set_chr(LOSE_TELMI,	 	1036,-1,-1,  0,2284,5040, 2,0,20, "<TK_TELMIDORL>")
+	//		MOT_SET(LOSE_TELMI,150,-1,523,523,-1,-1)	//たおれ
+			MOT_SET(LOSE_TELMI,150,-1,2930,2930,-1,-1)	//たおれ
+			MOT(LOSE_TELMI,150,0)
+			F_set_chr(LOSE_TELMI, CF_NO_MOVE)
+			
+			IK(LOSE_TELMI,"Bone_RightWing1",0)		//揺れボーンOFF
+			IK(LOSE_TELMI,"Bone_LeftWing1",0)		//揺れボーンOFF
+
+		}
+		
+		
+		
+	}
+
+//■场面固有設定
+
+}
+
+//====================================================================
+EV_Down
+{
+	mot_obj("move_yuka","anime1")
+	SE(1314,0)
+}
+
+//エレベーター之ＳＥ再生（タイミング取るためスレッド化）（08.08.28ひ）
+EV_ElevatorSE
+{
+	wait(290)
+	SE(1314,0)
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼特尔米多鲁と之決着を付ける·前
+//──────────────────────────────
+//　　特尔米多鲁战之マップに入るとイベント発生。
+EV_6_08_VSOverTelmi
+{
+	EV_begin()
+
+	//暗転
+	stop_BGM(90)
+	fade_in(100,30,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,		0,300,5350,0,2)
+	chr_pos(PARTNER,	0,500,5350,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,1010,-1,-1,-100,4650,5330, 2,180,0, "")
+	set_chr(ALWEN,		1011,-1,-1,100,4650,5330, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	set_chr(LUE, 	 	1015,-1,-1,-100,3160,5040, 2,180,0, "")
+	set_chr(TELMIDORL, 	1028,-1,-1, 0,2284,5500, 2,0,0, "")
+	set_chr(AM_TELMI,	1036,-1,-1, 0,2284,5040, 2,0,0, "")
+	set_chr(LUEDUMMY,	749, -1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY1,	749, -1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EFFDUMMY2,	749, -1,-1, 0,0,0, 0,0,0, "")
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(TELMIDORL,CF_NO_HEIGHT)
+	F_set_chr(TELMIDORL,CF_NO_CLIP)
+	F_set_chr(TELMIDORL,CF_NO_CLIP2)
+	F_set_chr(TELMIDORL,CF_NO_CSP)
+	F_set_chr(AM_TELMI,CF_NO_CLIP)
+	F_set_chr(AM_TELMI,CF_NO_CLIP2)
+	F_set_chr(AM_TELMI,CF_NO_CSP)
+	color(LUE,-1)
+	color(TELMIDORL,-1)
+	color(AM_TELMI,-1)
+	wait_color(LUE)
+	MOT(TELMIDORL,54,0)
+
+	//モーション定義
+	MOT_SET(TELMIDORL,150,-1,190,210,-1,-1)//着地
+	MOT_SET(TELMIDORL,151,-1,405,405,-1,-1)	//どうな之よ
+	MOT_SET(TELMIDORL,152,-1,2000,2060,2,5)	//高笑い
+	MOT_SET(TELMIDORL,153,154,3500,3539,-1,1)	//漆黒之魔剑を掲げて呪文詠唱を開始。最終形態へ
+	MOT_SET(TELMIDORL,154,154,3540,3580,-1,1)	//漆黒之魔剑を掲げて呪文詠唱を開始。最終形態へ
+	MOT_SET(AM_TELMI,150,-1,2775,2798,-1,-1)//剑を構える
+	MOT_SET(EVENT_RAGNA, 150, -1, 3010, 3029, -1,1)		//ギア、構える
+	MOT_SET(ALWEN,       150, -1, 6130, 6145, -1,1)		//杖、構える
+
+
+	KAO(EVENT_RAGNA,"B","1","3")
+	KAO(ALWEN,      "B","1","3")
+	KAO(TELMIDORL,  "1","1","1")
+	KAO(AM_TELMI,   "1","1","1")
+	
+	chr_equip_chr(LUEDUMMY,  EVENT_RAGNA, "Bone_RightSword",100,		0,0,0,	0,0,0);		//露
+	chr_equip_chr(EFFDUMMY1, TELMIDORL,   "charbase0",100,		0,0,0,	0,0,0);		//
+	chr_equip_chr(EFFDUMMY2, TELMIDORL,   "charbase0",100,		0,0,0,	0,0,0);		//
+	wait(1)
+	chr_equip( ALWEN,"wp_004b", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる。
+
+	//カメラ初期位置
+//	CAM_move(0,-4160,5450,0,0)
+//	CAM(-410,27,5180,36,180,0,0)
+	CAM_move(-16,-2334,5296,0,0)
+	CAM(-649,40,94,36,181,0,0)
+	
+	CAM_move(-25,-3209,5536,0,0)
+	CAM(-289,141,334,34,181,0,0)
+	wait(30)
+	
+	//フェードイン
+	fade_in(0,60,0)
+	VOICE(404,0)	//★ボイス入力演出
+	wait(30)
+	wait_fade()
+
+	chr_rename(TELMIDORL,"青年之声")//
+	MES_pos(TELMIDORL,"W9──欢迎光临。\n不速之客们。",0,320,160,0,0)
+	wait_key(0)
+	MES_close(TELMIDORL)
+
+//　　拉古那たち之頭に！マーク。
+//　　画面スクロールして、特尔米多鲁（魔族ver）を映す。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(30)
+
+	BGM(55)
+//	cross_fade(15)
+//	CAM_move(0,-2280,5310,0,0)
+//	CAM(-650,47,5310,36,180,0,0)
+//	CAM_move(0,-2280,5170,60,0)
+//	CAM(-410,27,5180,36,180,60,0)
+	CAM(-649,48,94,36,181,60,0)
+	CAM_move(-16,-2334,5536,60,0)
+	wait_CAM()
+	
+//	CAM_move(-16,-2334,5296,60,0)
+	CAM_move(-16,-2334,5196,60,0)
+	CAM(-129,47,5196,35,180,60,0)
+	
+	KAO(TELMIDORL,"1","3","1")
+	jump(TELMIDORL,0,60,0,2284,5040,0)
+	EFF_chr(24580,TELMIDORL,0,100,0,"charbase0")				//エフェクト：転位
+	SE(1016,0)//ワープSE
+	SE(1090,0)//羽音
+	color(TELMIDORL,30)
+//	wait_color(TELMIDORL)
+	wait(40)
+	MOT(TELMIDORL,150,0)
+	wait_move(TELMIDORL)
+	KAO(TELMIDORL,"1","321","1")
+	MOT(TELMIDORL,2,15)
+	wait(15)
+
+	MES_pos(EVENT_RAGNA,"特尔米多鲁……！",0,220,420,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那たち、間合いを取って特尔米多鲁之前へ移動。
+	CAM(-169,100,5196,35,179,90,0)
+	CAM_move(-16,-2334,5196,90,0)
+
+	move(EVENT_RAGNA,0,20,-100,3160,5040,0)
+	wait(5)
+	move(ALWEN,0,20,100,3190,5040,0)
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+//	wait_fade()
+	
+//	wait_CAM_move()
+//	wait_CAM()
+
+	wait(30)
+
+	//特尔米多鲁アップカメラ
+	cross_fade(15)	
+	CAM(-689,30,54,36,180,0,0)
+	CAM_move(5,-2296,5204,0,0)
+	CAM(-689,25,5204,36,180,600,0)
+	wait_fade()
+	wait(15)
+
+	chr_rename(TELMIDORL,"特尔米多鲁")//
+	KAO(TELMIDORL,"92329Z6","123","6")
+	MES(TELMIDORL,"哼哼、竟然在那么万般无奈的情况下\n突破了龙卷啊。",0)
+	KAO(TELMIDORL,"12321Z5","3","2")
+	MES(TELMIDORL,"但是、那种做法\n只有这一次能凑效哦……",0)
+	MES_close(TELMIDORL)
+	MOT(TELMIDORL,151,15)
+	wait(15)
+	KAO(TELMIDORL,"92329Z7","3QP","6")
+	MES(TELMIDORL,"这个《螺旋要塞》开动起来的话\n库朗毕林全境的毁灭是不可避免的。",0)
+	KAO(TELMIDORL,"92329Z6","P","6")
+	MES(TELMIDORL,"到了这里、你打算如何阻止\n世界的毁灭呢？",0)
+	MES_close(TELMIDORL)
+	wait_MES(TELMIDORL)
+
+	cross_fade(15)
+	CAM_move(0,-2860,5190,0,0)
+	CAM(-249,85,5190,18,176,0,0)
+	CAM(-249,85,5190,18,186,600,0)
+	wait_fade()
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z5","123","6")
+	MES(EVENT_RAGNA,"唉……\n你的担心是多余的。",0)
+	KAO(EVENT_RAGNA,"12321Z6","321","2")
+	MES(EVENT_RAGNA,"事实上、我也没考虑拯救世界\n那么大的事情。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","2")
+	MES(EVENT_RAGNA,"我们只是、\n来带米娅回去的。",0)
+	KAO(EVENT_RAGNA,"12321Z6","1233321","2")
+	MES(EVENT_RAGNA,"这个要塞会怎么样，\n那之后再考虑就行了。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(TELMIDORL,2,15)
+	wait(15)
+	
+	KAO(TELMIDORL,"9","PQ3","6")
+	MES(TELMIDORL,"哼哼哼……",0)
+	MES_close(TELMIDORL)
+	wait_MES(TELMIDORL)
+	
+	cross_fade(10)
+	CAM_move(-20,-2380,5200,0,0)
+	CAM(-530,16,5200,36,158,0,0)
+	CAM(-530,10,5200,36,158,900,0)
+	wait_fade()
+	
+//　　ここで特尔米多鲁、うつむいて僅かに震える。
+//　　次之瞬間、高笑い之動作をしながら哄笑する。
+//	VOICE(405,0)	//★ボイス入力演出
+//	wait(15)
+//	CAM_quake("4646")
+//	MOT(TELMIDORL,152,10)									//高笑い
+//	KAO(TELMIDORL,"2424Z7","6","1")
+//	MES(TELMIDORL,"S5ハハハハハハハハハッ！",0)
+//	MES_close(TELMIDORL)
+//
+//	wait_MOT(TELMIDORL, 152 )
+
+//　　特尔米多鲁、哄笑をしてから以下之メッセージ。
+	wait(15)
+	CAM_quake("46")
+	KAO(TELMIDORL,"C232CZ3","32A","3")
+	MES(TELMIDORL,"S3带米娅大人回去！？",0)
+	MES_close(TELMIDORL)
+	wait(15)
+	CAM_quake("4646")
+	KAO(TELMIDORL,"C232CZ6","A","3")
+	MES(TELMIDORL,"S3事到如今，\n你还在痴人说梦吗！？",0)
+	KAO(TELMIDORL,"C232CZ6","A","3")
+	MES(TELMIDORL,"S3作为你妹妹的少女\n现在已经不存在了！",0)
+	MES_close(TELMIDORL)
+
+	MES_pos(EVENT_RAGNA,"W9…………………………",0,480,420,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(TELMIDORL,"B232BZ6","A23","3")
+	MES(TELMIDORL,"这５００年间……\n我不断地寻找ルシアン大人的灵魂。",0)
+	KAO(TELMIDORL,"B232BZ6","3","3")	
+	MES(TELMIDORL,"由于吉斯卡鲁公爵的谋反\n而消失于此世的吾之君主……",0)
+	KAO(TELMIDORL,"C232CZ5","321","3")	
+	MES(TELMIDORL,"最终、我找到了米娅大人！",0)
+	KAO(TELMIDORL,"C232CZ6","1","3")	
+	MES(TELMIDORL,"继承了ルシアン大人的灵魂、\n将全部力量运用自如的那位大人！",0)
+	KAO(TELMIDORL,"B232BZ8","123","3")	
+	MES(TELMIDORL,"然后《螺旋要塞》重新运转，\n将全世界卷入其中的大战\n终于要拉开帷幕……",0)
+	KAO(TELMIDORL,"B232BZ6","32A","3")
+	MES(TELMIDORL,"这已经不是\n凭你一人的感伤就可扭转乾坤的事态了！",0)
+	MES_close(TELMIDORL)
+
+	wait_MES(TELMIDORL)
+	cross_fade(15)
+	CAM_move(-40,-2680,5160,0,0)
+	CAM(-130,74,5160,20,344,0,0)
+//	CAM_move(-40,-2680,5160,900,0)
+//	CAM(-130,74,5160,20,334,900,0)
+	CAM_move(20,-2680,5160,900,0)
+	CAM(-210,111,5160,11,341,900,0)
+	
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z2","123","1")
+	MES(EVENT_RAGNA,"哈哈……",0)
+	KAO(EVENT_RAGNA,"12321Z5","3","1")	
+	MES(EVENT_RAGNA,"──特尔米多鲁。\n我要对你说声谢谢。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那以外之頭に！マーク。
+	EMO(ALWEN,EMO_BIKKURI)
+	KAO(ALWEN,"B","12321D","6")
+//	EMO(TELMIDORL,EMO_BIKKURI)
+	EFF_chr(25100,TELMIDORL,0,90,1,"Bone_Neck")
+	wait(15)
+	look_chr(ALWEN, EVENT_RAGNA, "Bone_Head")
+	wait(15)
+
+	KAO(TELMIDORL,"12321Z6","1","3")
+	MES(TELMIDORL,"什么……！",0)
+	MES_close(TELMIDORL)
+
+	chr_rename(LUEDUMMY,"露")//
+	MES(LUEDUMMY,"C4哈啊！？",0)
+	MES_close(LUEDUMMY)
+
+	KAO(ALWEN,"B232BZ2","12321","4")
+	MES(ALWEN,"拉、拉古那……？",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B232BZ6","3","6")
+	MES(EVENT_RAGNA,"不管怎么说在这７年里……\n你好像是一直在照顾米娅呢。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","3","6")	
+	MES(EVENT_RAGNA,"辛酸的、难过的、孤独的她，\n你一直陪在身边……",0)
+	KAO(EVENT_RAGNA,"12321Z3","321","1")	
+	MES(EVENT_RAGNA,"……是这样吧？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"F","1233321","1")
+	MES(ALWEN,"啊……",0)
+	MES_close(ALWEN)
+
+	KAO(TELMIDORL,"12321Z3","1","1")
+	MES(TELMIDORL,"……还以为你要说什么呢。",0)
+	KAO(TELMIDORL,"12321Z6","1","1")	
+	MES(TELMIDORL,"我只是对我的君主\n全心全意尽忠而已。",0)
+	KAO(TELMIDORL,"12321Z8","1","1")
+	MES(TELMIDORL,"而且７年前，\n由于我突然前去迎接，\n米娅大人失去了自我。",0)
+	KAO(TELMIDORL,"12321Z6","1","1")	
+	MES(TELMIDORL,"力量失控……\n双亲也因此丧命。",0)
+	KAO(TELMIDORL,"12321Z6","1","1")
+	MES(TELMIDORL,"你应该恨我才是，\n哪有反而感谢的道理呢。",0)
+	MES_close(TELMIDORL)
+
+	KAO(EVENT_RAGNA,"B232BZ5","123","4")
+	MES(EVENT_RAGNA,"７年前的事情……\n也不能说是谁的过错。",0)
+	KAO(EVENT_RAGNA,"12321Z6","32A","6")
+	MES(EVENT_RAGNA,"你只是尽自己的本份，\n去迎接你的主人不是吗？",0)
+	KAO(EVENT_RAGNA,"B232BZ5","A23","2")	
+	MES(EVENT_RAGNA,"自然，这也不是米娅的错。",0)
+	KAO(EVENT_RAGNA,"C232CZ6","3","1")
+	MES(EVENT_RAGNA,"而且……\n我也不知想过多少次，\n要是没到镇上去玩的话……",0)
+	KAO(EVENT_RAGNA,"B232BZ6","32A","1")
+	MES(EVENT_RAGNA,"我只是凭着自责，\n而多少获得一些解脱罢了。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(TELMIDORL,"C","1","1")
+	MES(TELMIDORL,"…………………………………",0)
+	MES_close(TELMIDORL)
+
+	KAO(EVENT_RAGNA,"B232BZ6","A233321","1")
+	MES(EVENT_RAGNA,"可以肯定，在这７年里\n你一直在照顾米娅。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","123","4")	
+	MES(EVENT_RAGNA,"其实本来，这应该是\n做哥哥的我必须要做的事……",0)
+	KAO(EVENT_RAGNA,"12321Z6","321","6")	
+	MES(EVENT_RAGNA,"所以……谢谢。\n至少让我表达谢意。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B","12321","1")
+
+	KAO(TELMIDORL,"L","1","3")
+	MES(TELMIDORL,"………呃……………",0)
+	MES_close(TELMIDORL)
+
+	KAO(EVENT_RAGNA,"B232BZ7","123332","9")
+	MES(EVENT_RAGNA,"嘛、被你这种人\n接替了我的责任，\n说实话我挺不爽的……",0)
+	KAO(EVENT_RAGNA,"12321Z5","23","9")	
+	MES(EVENT_RAGNA,"不过算了，这就是\n所谓不像样的嫉妒吧。",0)
+	KAO(EVENT_RAGNA,"12321Z3","6","6")
+	MES(EVENT_RAGNA,"你就别计较了。",0)
+	MES_close(EVENT_RAGNA)
+
+//	look(TELMIDORL,  "Bone_Head", 0,0,0,5, 0,0,-20)
+	KAO(TELMIDORL,"1","123","6")
+	MES(TELMIDORL,"呵呵呵……",0)
+	MES_close(TELMIDORL)
+
+	wait_MES(TELMIDORL)
+	CAM_move(-40,-2380,5240,0,0)
+	CAM(470,16,5240,36,158,0,0)
+	CAM(470,14,5240,36,158,15,0)
+//	cross_fade(10)
+///	CAM_move(-18,-2275,5225,0,0)
+//	CAM(-849,28,94,36,181,0,0)
+	wait_fade()
+
+//　　ここで特尔米多鲁、うつむいて僅かに震える。
+//　　次之瞬間、高笑い之動作をしながら哄笑する。
+//	look(TELMIDORL,  "Bone_Head", 0,0,0,0, 0,0,0)
+	VOICE(405,0)	//★ボイス入力演出
+	wait(15)
+	CAM_quake("4646")
+	MOT(TELMIDORL, 152, 10)
+	KAO(TELMIDORL,"A787AZ9","3QP","6")
+//	MES(TELMIDORL,"S5ハハハハハハハハハッ！",0)
+	MES_pos(TELMIDORL,"S5哈哈哈哈哈哈哈哈哈！",0,0,0,0,0)
+	wait(70)
+	MES_close(TELMIDORL)
+	wait(30)
+
+//　　特尔米多鲁、哄笑をしてから以下之メッセージ。
+	KAO(TELMIDORL,"92329Z4","PQ3","6")
+	MES(TELMIDORL,"果然不愧是\n米娅大人的兄长啊……",0)
+	KAO(TELMIDORL,"B232BZ6","3","3")	
+	MES(TELMIDORL,"但是，就如同你有你的想法，\n我也有我的立场。",0)
+	KAO(TELMIDORL,"B232BZ5","321","3")	
+	MES(TELMIDORL,"况且现在不可能让你们\n到米娅大人那里去。",0)
+	MES_close(TELMIDORL)
+	wait_MES(TELMIDORL)
+
+	stop_BGM(90)
+//　　特尔米多鲁、漆黒之魔剑を掲げて呪文詠唱を開始。
+//　　そ之まま漆黒之オーラが覆って、最終形態へと変化してゆく。
+	CAM_move(5,-2289,5255,0,0)
+	CAM(-809,42,54,30,170,0,0)
+	CAM(-809,42,54,30,185,150,0)
+
+
+	MOT(TELMIDORL, 153, 10)	//魔剑を掲げる
+	wait(15)
+	SE(1033,0)//剑構え
+	wait(15)
+	MOT(EFFDUMMY1, 39, 0)								//エフェクト：特尔米多鲁、不気味な光
+	SE(1072,0)//変身エフェクトSE
+	wait(15)
+	VOICE(396,0)	//★ボイス入力演出
+	MOT(EFFDUMMY2, 39, 0)								//エフェクト：特尔米多鲁、不気味な光
+	EFF_chr(6220, TELMIDORL, 0, 100,0, "Bone_Spine")		//エフェクト：ゆがみ
+	wait(30)
+	SE(1051,0)
+	wait(15)
+	wait(15)
+	color(TELMIDORL,-20)
+	KAO(AM_TELMI,"B","1","3")	
+	color(AM_TELMI,20)
+	SE(1066,0)
+	SE(1050,0)
+	wait(30)	
+	MOT(EFFDUMMY1,0,0)
+	MOT(EFFDUMMY2,0,0)
+	
+	look_off(ALWEN)
+	look_off(ALWEN)
+	wait(45)
+
+	BGM(41)
+	
+	CAM_move(-40,-2880,5120,60,0)
+//	CAM(230,44,5120,44,200,60,0)
+	CAM(470,43,5120,44,200,60,0)
+	wait_CAM_move()
+	wait_CAM()
+
+	//艾雯、拉古那カメラ
+//	cross_fade(10)
+
+	MES(LUEDUMMY,"C4公、公主大人……！",0)
+	MES_close(LUEDUMMY)
+
+	KAO(ALWEN,"12321Z5","1","1")
+	MES(ALWEN,"将魔力与斗气实体化的\n暗黑奥义《魔神铠》……",0)
+	KAO(ALWEN,"12321Z5","1","1")	
+	MES(ALWEN,"看来是大将军等级的\n高等魔族呢……",0)
+	MES_close(ALWEN)
+
+//　　特尔米多鲁、最終形態になった上で、
+//　　攻撃的なシルエット之翼をバサリと広げる。
+	//テル米娅ップカメラ
+	wait(15)
+	VOICE(403,0)	//★ボイス入力演出
+	cross_fade(15)
+	CAM_move(-40,-2225,5255,0,0)
+	CAM(-529,34,5255,36,198,0,0)
+	CAM_move(19,-2225,5255,600,0)
+	wait_fade()
+	KAO(AM_TELMI,"B","123","3")
+	MOT(AM_TELMI,150,0)
+	SE(466,0)//
+	SE(1033,0)//剑構えSE
+	look(AM_TELMI, "Bone_Head", 0,0,10,0, 0,20,0)
+	wait(60)
+
+	KAO(AM_TELMI,"B232BZ5","3","3")	
+	MES(AM_TELMI,"─┲不会让任何人通过此处，\n到达米娅大人那里的。",0)
+	KAO(AM_TELMI,"B232BZ5","3","3")		
+	MES(AM_TELMI,"无论如何也要硬闯的话，\n我也不会手下留情的。",0)
+	MES_close(AM_TELMI)
+		
+//	CAM(-529,30,5255,36,198,15,0)	
+	
+	blur(1,100,30)
+	CAM_move(11,-2235,5257,15,0)
+	CAM(-369,18,494,36,196,15,0)	
+	wait_CAM_move()
+	wait_CAM()
+	blur(0,0,0)
+	wait(15)
+	CAM_quake("37")
+	KAO(AM_TELMI,"C232CZ5","321","3")	
+	MES(AM_TELMI,"S3金色魔王的右手──\n《圣讨大将军》特尔米多鲁！",0)
+	MES_close(AM_TELMI)
+	
+	//艾雯、拉古那アップカメラ
+	wait(15)
+	cross_fade(10)	
+	CAM_move(8,-3179,5235,0,0)
+	CAM(-409,42,34,36,340,0,0)
+	CAM(-409,42,34,36,380,600,0)
+	KAO(EVENT_RAGNA,"B","1","3")
+	KAO(ALWEN,"B","1","3")
+	wait_fade()
+
+	KAO(EVENT_RAGNA,"12321Z2","1233321","3")	
+	MES(EVENT_RAGNA,"哼，求之不得……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那と艾雯、そ之まま武器を構えて不敵な笑み。
+	MOT(EVENT_RAGNA, 150, 10)													//拉古那：ぎあ構える
+	wait(13)
+	SE(1014,0)
+	look(EVENT_RAGNA, "Bone_Head,", 0,0,0,10, 0,0,20)
+	KAO(EVENT_RAGNA,"B232BZ3","123","3")	
+	MES(EVENT_RAGNA,"已经不需要多说了……",0)
+	KAO(EVENT_RAGNA,"B232BZ6","321","3")		
+	MES(EVENT_RAGNA,"既然各自所坚持的信念针锋相对，\n那就看看谁能贯彻到最后吧！",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B232BZ3","123","3")	
+	MES(ALWEN,"我也来助你一臂之力。",0)
+	MES_close(ALWEN)
+		
+	MOT(ALWEN, 150, 10)													//艾雯：杖構える
+	wait(7)
+	SE(1015,0)
+	wait(8)
+	SE(1033,0)
+	wait(15)
+
+	KAO(ALWEN,"B232BZ5","321","3")	
+	MES(ALWEN,"魔王身边的大将军……\n来当我的对手正合适。",0)
+	MES_close(ALWEN)
+
+	//テル米娅ップカメラ
+	wait(15)
+	cross_fade(10)
+	CAM_move(-40,-2225,5255,0,0)
+	CAM(-529,34,5255,36,198,0,0)
+	CAM_move(19,-2225,5255,600,0)
+	wait_fade()
+	
+	KAO(AM_TELMI,"C232CZ3","123","3")	
+	MES(AM_TELMI,"那就让你们知道……",0)
+	MES_close(AM_TELMI)
+	wait(15)
+	CAM_quake("37")
+	KAO(AM_TELMI,"C232CZ3","32A","3")	
+	MES(AM_TELMI,"S3P1我永志不渝的使命与忠诚！",0)
+	MES_close(AM_TELMI)
+	wait(15)
+	CAM_quake("3737")
+	KAO(AM_TELMI,"C232CZ5","233321","3")	
+	MES(AM_TELMI,"S3P1以及对在苦难的尽头终得相会的\n米娅大人的信念！",0)
+	MES_close(AM_TELMI)
+
+	//フェードアウト
+//	VOICE(403,0)	//★ボイス入力演出
+	VOICE(423,0)	//★ボイス入力演出
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(TELMIDORL)
+	delete(LUE)
+	delete(LUEDUMMY)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(EFFDUMMY1)
+	delete(EFFDUMMY2)
+	delete(ALWEN)
+	delete(AM_TELMI)
+
+
+	F_reset_chr(AM_TELMI,CF_NO_CLIP)
+	F_reset_chr(AM_TELMI,CF_NO_CLIP2)
+	F_reset_chr(AM_TELMI,CF_NO_CSP)
+
+	set_chr( BOSS,		36,-1,-1, 0,2110,5040,	0, 0,	0,"<EV_6_09_KillTelm>;")	//アーマー特尔米多鲁
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)	//BOSS＿ＨＰ表示
+
+	//アタリ
+	set_chr( 81,991,	-1,-1,	 0,1290,5040,   0,  1002,	0,";")
+	set_chr( 82,991,	-1,-1,	 0,3970,5040,   0,  1002,	0,";")
+	
+	chr_pos(RAGNA,		-100,3416,5043,180,2)
+	chr_pos(PARTNER, 	127,3378,5043,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)//ワープ封じる。
+
+	//拉古那メモ用
+	F_set(F6_08_BattleTelmi)//★中ボス⑧【真特尔米多鲁】と战闘開始
+
+	//再战用オートセーブ
+	workG(GW_ENTRY_EVENT,SET,100)
+	workG(GW_DEF_BGM,SET,99)						//デフォルト曲を変更する 無音
+	AutoSave(0)
+	workG(GW_ENTRY_EVENT,SET,0)
+	workG(GW_DEF_BGM,SET,0)							//デフォルト曲を変更する マップ曲
+
+	CAM_return(0)
+	wait(30)
+
+//	CAM(49,113,294,42,179,0,0)						//マップ之カメラ値
+	CAM(529,91,194,43,179,0,0)
+
+	fade_in(0,30,0)
+	set_namebmp(33,0)	//圣討将軍特尔米多鲁		螺旋要塞梅尔塞迪克
+	SCORE(0,0,0)//念之ためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,106);//真特尔米多鲁
+
+	EV_end()
+
+//──────────────────────────────
+//　　中ボス战【真特尔米多鲁】と之战い。
+//　　実質上、人間サイズ之ボスとしては最強之敵となる。
+//　　拉古那と艾雯之力を使い分けないと勝利は不可能。
+//──────────────────────────────
+}
+//---------------------------------------------------------------------
+// 特尔米多鲁、再战用
+//---------------------------------------------------------------------
+EV_6_08_BossOnly
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+	
+	wait(60)									//GAME OVER曲待ち
+
+	//キャラ再配置
+	chr_pos(RAGNA,		-100,3300,5020,180,2)
+	chr_pos(PARTNER,	100,3300,5040,180,2)
+
+	//アタリ
+	set_chr( 81,991,	-1,-1,	 0,1290,5040,   0,  1002,	0,";")
+	set_chr( 82,991,	-1,-1,	 0,3970,5040,   0,  1002,	0,";")
+	set_chr( BOSS,		36,-1,-1,0,1800,5040,	0, 0,	0,"<EV_6_09_KillTelm>;")	//アーマー特尔米多鲁
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)					//BOSS＿ＨＰ表示
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)					//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)						//デフォルト曲を変更する マップ曲
+
+	BGM(41)										//ボス曲 特尔米多鲁战
+
+	CAM_return(0)
+	wait(15)
+
+//	CAM(49,113,294,42,179,0,0)						//マップ之カメラ値
+	CAM(529,91,194,43,179,0,0)
+
+	fade_in(0,30,0)
+	set_namebmp(33,0)	//圣討将軍特尔米多鲁		螺旋要塞梅尔塞迪克
+	SCORE(0,0,0)//念之ためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,106);//真特尔米多鲁
+
+	EV_end()
+
+//──────────────────────────────
+//　　中ボス战【真特尔米多鲁】と之战い。
+//　　実質上、人間サイズ之ボスとしては最強之敵となる。
+//　　拉古那と艾雯之力を使い分けないと勝利は不可能。
+//──────────────────────────────
+}
+//---------------------------------------------------------------------
+//将軍特尔米多鲁、ゲーセン用
+//---------------------------------------------------------------------
+EV_6_08_BossOnly_02
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+	
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////ＨＰ0でも消えない　キャラ0は死亡時に"EV_DEAD"を再生
+
+	wait(60)									//GAME OVER曲待ち
+
+	//キャラ再配置
+	chr_pos(RAGNA,		-100,3300,5020,180,2)
+	chr_pos(PARTNER,	100,3300,5040,180,2)
+
+	//アタリ
+	set_chr( 81,991,	-1,-1,	 0,1290,5040,   0,  1002,	0,";")
+	set_chr( 82,991,	-1,-1,	 0,3970,5040,   0,  1002,	0,";")
+	set_chr( BOSS,		36,-1,-1,0,1800,5040,	0, 0,	0,"<EV_YOUWIN>;")	//アーマー特尔米多鲁
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)					//BOSS＿ＨＰ表示
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)					//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)						//デフォルト曲を変更する マップ曲
+
+	//BGM(41)										//ボス曲 特尔米多鲁战
+
+	CAM_return(0)
+	wait(15)
+
+//	CAM(49,113,294,42,179,0,0)						//マップ之カメラ値
+	CAM(529,91,194,43,179,0,0)
+	wait(20)
+
+	fade_in(0,30,0)
+	set_namebmp(33,0)	//圣討将軍特尔米多鲁		螺旋要塞梅尔塞迪克
+	SCORE(0,0,0)//念之ためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,106);//真特尔米多鲁
+
+	EV_end()
+
+}
+//敗北時---------------------
+EV_DEAD
+{
+	wait_EV("EV_YOUWIN")
+
+	EV_begin()
+	EFF(21660,320,240,0,0,100,0)//LOSE
+
+	wait(60)
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+	workG(GW_ENTRY_EVENT,SET,113)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//G斗技场に
+}
+
+//勝利時---------------------
+EV_YOUWIN
+{
+	wait_EV("EV_DEAD")
+
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+	EFF(21650,320,240,0,0,100,0)//WIN
+
+//	VOICE(412,0)	//★ボイス入力演出
+	VOICE2(412,1,100)	//★「おおおおおおおおおっ！」
+	wait(1)	//1フレーム進めないと、カメラが壊れる。（ボス之カメラ之ため）
+	EV_begin()
+
+	wait(130)
+
+	fade_in(100,100,BLACK)
+	wait_fade()
+	EV_begin()
+
+	set_hp(PLAYER1,100)//全快
+
+	//成績に応じて手办入手	//	圣討将軍特尔米多鲁战	->Figure F2887
+	if(!F2887)
+	{
+		SE(24,0)//ゲットSE
+		MES(0,"L667圣讨大将军特尔米多鲁L777之手办を手に入れた！！",2)
+		MES_close(0)
+		F_set(2887)
+	}
+
+	workG(GW_ENTRY_EVENT,SET,113)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//G斗技场に
+}
+
+
+//──────────────────────────────
+//▼特尔米多鲁と之決着を付ける·後
+//──────────────────────────────
+EV_6_09_KillTelm
+{
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+
+//	VOICE(412,0)	//★ボイス入力演出
+	VOICE2(412,1,100)	//★「おおおおおおおおおっ！」
+	wait(130)
+	EV_begin()
+
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	stop_BGM(90)
+
+	delete(81)
+	delete(82)
+	delete(BOSS)
+	
+	//キャラ再配置
+	chr_pos(RAGNA,		0,300,5350,0,2)
+	chr_pos(PARTNER,	0,500,5350,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	workG(GW_WARP_FLAG,SET,1)//ワープ解除。
+
+	set_chr(EVENT_RAGNA,1010,-1,-1,-100,3160,5040, 2,180,0, "")
+	set_chr(ALWEN,		1011,-1,-1,100,3130,5040, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	set_chr(LUE, 	 	1015,-1,-1, 0,3260,5040, 2,180,0, "")
+	set_chr(AM_TELMI,	1036,-1,-1, 0,2284,5040, 2,0,0, "")
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(AM_TELMI,CF_NO_CLIP)
+	F_set_chr(AM_TELMI,CF_NO_CLIP2)
+	F_set_chr(AM_TELMI,CF_NO_CSP)
+	color(LUE,-1)
+	wait_color(LUE)
+
+	KAO(AM_TELMI, "1","A","4")
+	KAO(LUE,      "B","1","2")
+	KAO(ALWEN,    "B","1","2")
+	KAO(EVENT_RAGNA,  "B","1","2")
+
+	rot_chr(ALWEN,       -1, AM_TELMI)
+	rot_chr(EVENT_RAGNA, -1, AM_TELMI)
+	look_chr(ALWEN,       AM_TELMI, "Bone_Head")
+	look_chr(EVENT_RAGNA, AM_TELMI, "Bone_Head")
+
+	wait(1)
+	F_set_Node(AM_TELMI, "Bone_RightSword", NP_HIDE )
+	chr_equip( ALWEN,"wp_004b", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる。
+
+	//モーション定義
+	MOT_SET(AM_TELMI,150,-1,452,452,-1,-1)//膝つき
+	MOT_SET(AM_TELMI,151,-1,523,523,-1,-1)//倒れ
+	MOT_SET(AM_TELMI,152,152,3000,3060,-1,-1)//ふらついて待机 [3000-3060] 
+//	MOT_SET(AM_TELMI,153, -1,2840,2870,-1,-1)//立ち～片ひざ
+	MOT_SET(AM_TELMI,153, -1,2850,2870,-1,-1)//立ち～片ひざ
+	MOT_SET(AM_TELMI,154, -1,2880,2930,-1,-1)// 片ひざ～倒れ
+
+	MOT(AM_TELMI, 152, 0)			//よろめき待机
+
+	//カメラ初期位置
+	CAM_reset()
+	CAM_move(-9,-2267,5179,0,0)
+	CAM(31,33,54,36,163,0,0)
+	wait_BGM()
+
+	wait(60)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	wait_CAM()
+	wait(15)
+
+//　　战闘終了後、よろめきつつ立つ特尔米多鲁。
+
+	KAO(AM_TELMI,"12321Z4","A23332A","4")
+	MES(AM_TELMI,"啊、呃啊……没想到……",0)
+	KAO(AM_TELMI,"12321Z6","A","4")
+	MES(AM_TELMI,"得到了米娅大人力量的我……\n………竟然会失败………",0)
+	MES_close(AM_TELMI)
+	wait_MES(AM_TELMI)
+
+//　　特尔米多鲁、そ之まま苦悶之笑みを浮かべ膝を付く。
+	CAM_move(-2,-2298,5155,60,0)
+	CAM(-169,29,5155,36,159,60,0)
+	
+	KAO(AM_TELMI,"C","A23","4")
+	MOT(AM_TELMI, 153, 15)		//かたひざ
+	wait(15)
+	SE(1029,0)
+	wait(30)
+	
+	KAO(AM_TELMI,"C232CZ4","3Q","4")
+	MES(AM_TELMI,"如果是你们的话……或许……",0)
+	KAO(AM_TELMI,"C232CZ4","Q","4")	
+	MES(AM_TELMI,"或许可以将米娅大人……",0)
+	KAO(AM_TELMI,"C","Q3","5")	
+	MES(AM_TELMI,"……………………………………",0)
+	MES_close(AM_TELMI)
+
+//　　特尔米多鲁、そ之まま崩れ落ちてしまう。
+//　　それを見た拉古那たち之頭に…マーク。
+	CAM_move(-15,-2411,5163,60,0)
+	CAM(-89,36,-26,36,153,60,0)
+
+
+
+	IK(AM_TELMI,"Bone_RightWing1",0)		//揺れボーンOFF
+	IK(AM_TELMI,"Bone_LeftWing1",0)		//揺れボーンOFF
+	wait(1)	
+	MOT(AM_TELMI, 154, 10)		//かたひざ　□　倒れ
+	wait(30)
+	SE(1139,0)
+	wait(90)
+
+
+
+	//拉古那、艾雯カメラ
+	cross_fade(15)
+//	CAM_move(-14,-3149,5255,0,0)
+//	CAM(-129,46,54,36,30,0,0)
+//	CAM_move(-14,-3149,5195,900,0)
+//	CAM(-289,35,5215,36,30,900,0)
+	
+	CAM_move(14,-2996,5197,0,0)
+	CAM(-329,76,-6,24,17,0,0)
+	
+	wait_fade()
+	wait(10)
+	
+	//露、出現
+	EFF_chr(6830,LUE,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	EFF_chr(6825,LUE,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	EFF_chr(6835,LUE,0,100,0,"Bone_Spine")		//エフェクト：露が剑から出てくる
+	SE(1059,0)
+	wait(15)
+	color(LUE,30)
+	wait_color(LUE)
+	wait(30)
+
+
+	EMO(EVENT_RAGNA,EMO_TENTEN)
+	EMO(ALWEN,EMO_TENTEN)
+	EMO(LUE,EMO_TENTEN)
+	wait(60)
+
+	KAO(ALWEN,"B232BZ3","1233321","2")
+	MES(ALWEN,"好像精疲力尽了呢……",0)
+	KAO(ALWEN,"B232BZ6","1","2")	
+	MES(ALWEN,"暂时好像动弹不得了，\n就这样把他留在这里吧。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B232BZ2","123","2")
+	MES(EVENT_RAGNA,"……啊啊……",0)
+	KAO(EVENT_RAGNA,"12321Z6","321","1")
+	MES(EVENT_RAGNA,"嘿……\n原以为他只是个装腔作势的混蛋，\n看来也是热血得不得了的家伙呢。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(LUE, EVENT_RAGNA, "Bone_Head")
+	wait(15)
+
+	CAM_move(-46,-2996,5197,300,0)
+	CAM(-329,44,5197,23,17,300,0)
+
+	KAO(LUE,"12321Z4","123332","6")
+	MES(LUE,"呼呼。\n实际上和你是同类呢。",0)
+	MES_close(LUE)
+
+	look_chr(EVENT_RAGNA, ALWEN,       "Bone_Head")
+	look_chr(ALWEN,       EVENT_RAGNA, "Bone_Head")
+	
+	KAO(EVENT_RAGNA,"12321Z3","123","6")
+	MES(EVENT_RAGNA,"哈哈、可能真是这样……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那、振り返って艾雯之方に向き直る。
+	BGM(33)
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+	KAO(LUE,"1","2321","2")
+	workG(GW_DEF_BGM,SET,0)		//デフォルト曲を元に戻す
+	KAO(EVENT_RAGNA,"B232BZ4","321","3")	
+//	MES(EVENT_RAGNA,"これで……\n最後之障害は無くなった。",0)
+	MES(EVENT_RAGNA,"这样的话……\n最后的障碍也排除了。",0)
+	KAO(EVENT_RAGNA,"B232BZ3","1","3")	
+	MES(EVENT_RAGNA,"之后就要与米娅见面了。",0)
+	MES_close(EVENT_RAGNA)
+
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(5)
+	look_off(LUE)
+	rot_chr(LUE,30,EVENT_RAGNA)
+	wait(10)
+	
+	KAO(ALWEN,"B232BZ4","123","3")	
+	MES(ALWEN,"嗯……\n兄妹能好好谈谈就好了。",0)
+	KAO(ALWEN,"12321Z4","321","3")	
+	MES(ALWEN,"至少让我们\n见证那一幕吧。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z3","1233321","3")	
+	MES(EVENT_RAGNA,"啊啊……拜托了。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　画面、いったんフェードアウトしてキャラ再配置。
+//　　フェードインしてイベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(LUE)
+
+	chr_pos(RAGNA,		-100,3160,5040,180,2)
+	chr_pos(PARTNER,	100,3130,5040,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+
+	//↓、Initで配置したLOSE_TELMI だと、なぜか羽が倒れない！ そ之ままイベント用キャラを表示し、ダミーに話しかける。
+//	delete(AM_TELMI)
+//	//特尔米多鲁を消してダミーを呼ぶ
+	chr_pos(LOSE_TELMI,0,2284,5040,0,2)
+//	MOT_SET(LOSE_TELMI,150,-1,523,523,-1,-1)	//たおれ
+//	MOT(LOSE_TELMI,150,0)
+//	color(LOSE_TELMI,1)//透過解除
+//	F_set_chr(LOSE_TELMI,CF_NO_MOVE)
+//	IK(LOSE_TELMI,"Bone_RightWing1",0)		//揺れボーンOFF
+//	IK(LOSE_TELMI,"Bone_LeftWing1",0)		//揺れボーンOFF
+
+	set_chr(DUMMY1,	 	 749,-1,-1,  0,2419,5041, 0,0,00, "")	//頭アタリ
+	set_chr(DUMMY2,	 	 749,-1,-1,-106,2452,5041, 0,0,00, "")	//右はねアタリ
+	set_chr(DUMMY3,	 	 749,-1,-1, 115,2457,5041, 0,0,00, "")	//左はねアタリ
+	
+	
+	F_reset_chr(AM_TELMI,CF_NO_CSP)
+	F_set_chr(AM_TELMI,CF_NO_MOVE)
+	
+	CAM_return(0)
+	wait(30)
+	CAM(49,113,294,42,179,0,0)
+
+//ＧＦ『★中ボス⑧【真特尔米多鲁】を倒した』を立てる。
+	F_set(F6_03_KillTelmi)
+	//★特尔米多鲁【圣討将軍】
+	F_set_note(-27,2)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+#EndScriptTable
+//====================================================================

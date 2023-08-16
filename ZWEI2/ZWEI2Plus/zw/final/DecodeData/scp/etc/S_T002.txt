@@ -1,0 +1,392 @@
+//──────────────────────────────
+//	name("●布库尔")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_POCKLE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(POCKLE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,POCKLE)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,POCKLE)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,POCKLE)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,POCKLE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,POCKLE)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,POCKLE)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,POCKLE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//▼フラグ□（梅尔塞迪克に乗り込む）
+	//　　皮皮洛と共に飞机场之布库尔机之前にいる。
+	//	name("★初回（皮皮洛と共通／１回之み／イベント処理）")
+	//　　話しかけるとキャラ再配置してイベント発生。
+	//　　皮皮洛と共通なため，啊ちらで起こしたら発生しない。
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{	
+		if(!FM_12_TalkPocPip)
+		{
+			//皮皮洛と共通初回イベント
+			EV("TALK_POCPIP_12")
+			wait_EV("TALK_POCPIP_12")
+		}
+		else
+		{
+		//	name("★以後，繰り返し（一直在看飞机么？）")
+			MES(POCKLE,"（驾驶这架飞机\n  能耐的住巨大的龙卷风么……）",0)
+			MES(POCKLE,"（嗯，稍微有些勉强\n……觉得兴奋起来了。）",0)
+			MES(POCKLE,"（或许与皮皮洛一起挑战《幻之大地》\n  的时代来临了……）",0)
+			MES_close(POCKLE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	if(F5_00_HearLunar)
+	{
+		//──────────────────────────────
+		//▽水晶祭坛を起動した
+		//　　水晶祭坛で皮皮洛たちを見守っている。
+		//─────────────────────
+		if( F5_06_RunCrystal )
+		{
+			rot_chr(POCKLE,30,PLAYER1)
+
+			//会話用モ～ション
+			MOT_SET(POCKLE,151,-1,434,434,-1,0)		//通常
+			MOT_SET(POCKLE,152,-1,407,407,-1,0)		//あ，奥迪莎さん！
+			
+		//	name("□帝嘉鲁德を倒した")
+		//　　皮皮洛之近くに寄っている状態。
+			if(F5_13_KillDygald)
+			{
+				MOT(POCKLE,151,10)
+				MES(POCKLE,"看样子马上皮皮洛他们也要\n不好过了……",0)
+				MES(POCKLE,"拉古那大哥～加油啊！",0)
+				MES_close(POCKLE)
+			}
+		//	name("□帝嘉鲁德を倒していない")
+			else
+			if(F5_08_JoinOdessa)
+			{
+			//	name("★１回目")
+				if(!F_POCKLE)
+				{
+					MOT(POCKLE,152,10)
+					rot_chr(POCKLE,30,PARTNER)
+					MES(POCKLE,"啊，奥迪莎姐姐！",0)
+					MES_close(POCKLE)
+
+					rot_chr(PARTNER,30,POCKLE)
+				//	name2(PARTNER)
+					MES(PARTNER,"呀，布库尔小弟弟。",0)
+					MES(PARTNER,"我要去陪拉古那了，\n这里就交给你们了哟。",0)
+					MES_close(PARTNER)
+
+				//	name2(POCKLE)
+					MES(POCKLE,"好，好的……！",0)
+					MES(POCKLE,"（呼，还是老样子\n  真是潇洒的姐姐呀噴）",0)
+					MES_close(POCKLE)
+					
+					F_set(POCKLE)
+				}
+				else
+				{
+					MOT(POCKLE,151,10)
+				//	name("★以後，繰り返し")
+					MES(POCKLE,"拉古那大哥、奥迪莎姐姐！",0)
+					MES(POCKLE,"你们俩人可都要加油哦！",0)
+					MES_close(POCKLE)
+				}
+			}
+			else
+			{
+				MOT(POCKLE,151,10)
+		//	name("□奥迪莎が仲間になっていない")
+				MES(POCKLE,"就算魔兽出现了\n我们也一定不会坐以待毙！",0)
+				MES(POCKLE,"拉古那大哥，一路小心！",0)
+				MES_close(POCKLE)
+			}
+			MOT(POCKLE,150,10)
+		}
+		//──────────────────────────────
+		//□▽布库尔たちに事情を話した
+		//　　皮皮洛と共に水晶祭坛之一角にいる。
+		//	name("★初回（皮皮洛と共通／１回之み／イベント処理）")
+		//　　話しかけるとキャラ再配置してイベント発生。
+		//　　皮皮洛と共通な之で，啊ちらで起こすと発生しない。
+		//──────────────────────────────
+		else
+		if(!F5_04_OfferPipiro)
+		{
+			//皮皮洛と之共通会話
+			EV("EV_05_04_OfferPipiro")
+			wait_EV("EV_05_04_OfferPipiro")
+		}
+		//──────────────────────────────
+		//□説得後
+		//　　皮皮洛と共に水晶祭坛之一角にいる。
+		//──────────────────────────────
+		else
+		{
+			if(!FM_11_TalkPocPip)
+			{
+				//	name("★初回（皮皮洛と共通／１回之み／イベント処理）")
+				//　　話しかけるとキャラ再配置してイベント発生。
+				//　　皮皮洛と共通な之で，啊ちらで起こすと発生しない。
+				EV("TALK_POCPIP_11")
+				wait_EV("TALK_POCPIP_11")
+				
+			}
+			else
+			{
+				MOT(POCKLE,2,10)
+				rot_chr(POCKLE,30,PLAYER1)
+			//	name("★以後，繰り返し")
+				MES(POCKLE,"嗯，这件装饰品，\n是不是赶快取下来比较好啊。",0)
+				MES(POCKLE,"但是，这个笑容君我觉得就\n像是我的标志一样……",0)
+				MES_close(POCKLE)
+				rot(POCKLE,30,0)
+				MOT(POCKLE,150,10)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた　▽昴が仲間になった
+	//──────────────────────────────
+	//　　村之宠物店に皮皮洛と共にいる。
+	//　　置くに啊る棚之前で品揃えを見ているような感じ。
+	//	name("★初回（皮皮洛と共通／一回之み／イベント処理）")
+	//　　話しかけるとキャラ再配置してイベント発生。
+	//　　皮皮洛と共通な之で，啊ちらで起こしたら発生しない。
+	//──────────────────────────────
+	if( F4_02_GoVillage2 )
+	{
+		if(!FM_07_TalkPocPip)
+		{
+			EV("TALK_POCPIP_07")
+			wait_EV("TALK_POCPIP_07")
+		}
+		else
+		{
+		//	name("★以後，繰り返し")
+			MES(POCKLE,"宠物食品么……\n哪一种好呢。",0)
+			MES(POCKLE,"肉做的吗\n鱼做的吗……",0)
+			MES(POCKLE,"哇啊！连用大豆制作的\n健康食品都有。",0)
+			MES_close(POCKLE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		//──────────────────────────────
+		//▽城之玄関広間に入った
+		//　　罗亚鲁塔村之広场にいる。
+		//　　倒れた村人を介抱しているような動作。
+		//──────────────────────────────
+		if(F3_02_InMoonCastle)
+		{
+			MES(POCKLE,"太好了……\n脸色恢复了。",0)
+			MES(POCKLE,"如果能这样好好的\n让他休息的话……",0)
+			MES_close(POCKLE)
+		}
+		else
+		//──────────────────────────────
+		//▼フラグ⑥（夜·罗亚鲁塔村襲撃直後）
+		//　　罗亚鲁塔村之広场にいる。
+		//　　倒れた村人を介抱しているような動作。
+		//──────────────────────────────
+		if(!FM_06_TalkPockle)
+		{
+		//	name("★初回（１回之み／イベント処理）")
+			MES(POCKLE,"不行……\n完全没力气了。",0)
+			MES(POCKLE,"就算这样……\n如此吸人之血，\n驱人之身也太……",0)
+			MES_close(POCKLE)
+
+		//　　布库尔，艾尔雯之方に向き直る。
+			MOT(POCKLE,2,15)
+			rot_chr(POCKLE,30,PARTNER)
+			wait(10)
+			EMO(POCKLE,EMO_TENTEN)
+			wait(30)
+			
+			rot_chr(PARTNER,30,POCKLE)
+			MES(PARTNER,"哼……我很可怕么？",0)
+			MES(PARTNER,"我的确也可以\n做到同样的事。",0)
+			MES(PARTNER,"不过因为不太优雅\n所以至今为止我还未曾试过。",0)
+			MES_close(PARTNER)
+
+		//	name2(POCKLE)
+			MES(POCKLE,"不，不是的！",0)
+			MES(POCKLE,"艾尔雯姐姐是\n绝对不会做那种事情的！\n我，我相信她！",0)
+			MES_close(POCKLE)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯……？",0)
+			MES_close(PARTNER)
+
+		//	name2(PIPIRO)
+			rot_chr(PIPIRO,30,POCKLE)
+			MES(PIPIRO,"哈！？『那啥漂亮的姐姐\n才不会做那种事情呢。』\n就因为这样的理由么？",0)
+			MES_close(PIPIRO)
+
+			rot_chr(POCKLE,30,PIPIRO)
+		//	name2(POCKLE)
+			MES(POCKLE,"嘛，虽然是那样……",0)
+			MES_close(POCKLE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"你真行嘛。",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"呵呵，我向你致以谢意。",0)
+			MES_close(PARTNER)
+			
+			rot(POCKLE,30,120)
+			rot(PIPIRO,30,220)
+			MOT(POCKLE,150,15)
+			F_set(FM_06_TalkPockle)
+		}
+	//	name("★以後，繰り返し")
+		else
+		{
+			look_chr( POCKLE, PLAYER1,"Bone_Head")
+			MES(POCKLE,"照顾村里大家的事\n就请交给我们吧。",0)
+			MES(POCKLE,"你们两人快向城里出发！",0)
+			MES_close(POCKLE)
+			look_off(POCKLE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▽大铁塔で布库尔たちと会った
+	//──────────────────────────────
+	//　　大铁塔中继，炎之扉近く皮皮洛と共にいる。
+	if( F1_22_EndFirst && !F2_17_EndSecond )
+	{
+		rot_chr(POCKLE,30,PLAYER1)
+	//	name("★左右之どちらも解除していない")
+		if(!F100 && !F101)
+		{
+			MES(POCKLE,"哎呀……\n现在打算怎么办呀？",0)
+			MES_close(POCKLE)
+		}
+	//	name("★左右之どちらかを解除した")
+		else
+		{
+			MES(POCKLE,"へっ……",0)
+			MES_close(POCKLE)
+		}
+		rot(POCKLE,30,80)//手動で入れても向きが戻らない……
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//▽神殿前で布库尔たちと会った
+	//　　皮皮洛と共に酒场之テ～ブルに座っている。
+	//　　（向かい合わせではなく，隣り合わせ之席配置で）
+	//　　皮皮洛之前にはイチゴ杏仁パフェと抹茶シフォンケ～キ，
+	//　　布库尔之前には日本茶とセンベイなどが置かれている。
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+	//	2回目之イベントまでは皮皮洛と共通イベント
+		if(!FM_02_TalkPocPip_1)
+		{
+			EV("TALK_POCPIP_02_1")
+			wait_EV("TALK_POCPIP_02_1")
+		}
+		else
+		if(!FM_02_TalkPocPip_2)
+		{
+			EV("TALK_POCPIP_02_2")
+			wait_EV("TALK_POCPIP_02_2")
+		}
+	//	name("★以後，繰り返し")
+		else
+		{
+			look_chr( POCKLE, PLAYER1,"Bone_Head")
+
+			MES(POCKLE,"嗯，好像\n有些自信了噴",0)
+			MES(POCKLE,"很好，从今天开始\n我要以一天10个冷笑话\n为目标！",0)
+			MES_close(POCKLE)
+
+			look_chr( PIPIRO, POCKLE,"Bone_Head")
+		//	name2(PIPIRO)
+			MES(PIPIRO,"喂，少得意了。",0)
+			MES_close(PIPIRO)
+			look_off(PIPIRO)
+			look_off(POCKLE)
+		}
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

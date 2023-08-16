@@ -1,0 +1,519 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10131][アルッテ・屋敷（夜）]
+//====================================================================
+
+#ScriptTable
+
+#FIONA 		1
+#KLODE		2
+#PIPIRO 	3
+#POCKLE 	4
+#LUE 		5
+
+#ANNA		7
+#HELENA		8
+#ANJE		9
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip      x    y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+	map_color(90,80,75,0);//R,G,B, time 100%
+//■エントリー
+	set_chr( 90,990,	-1,-1,	  5100,    0, 0, 	 90,0206, 6,"K9_10101;")//エントリ アルッテ屋敷・玄関→アルッテの町（夜）
+	set_chr( 91,990,	-1,-1,	  2925,    0,100, 	270,0203, 6,"K4_3")		//エントリ アルッテ屋敷・玄関→奥
+	set_chr( 92,990,	-1,-1,	  3400, -825,100,  	  0,0302, 6,"K5_3")		//エントリ アルッテ屋敷・玄関→右
+	set_chr( 93,990,	-1,-1,	  3400,  850,100, 	180,0302, 6,"K6_3")		//エントリ アルッテ屋敷・玄関→左
+	set_chr( 94,990,	-1,-1,	   100,    0, 0,  	 90,0203, 6,"K1_3")		//エントリ アルッテ屋敷・奥→玄関
+	set_chr( 95,990,	-1,-1,	  5000,-4800, 0,  	180,0302, 6,"K2_3")		//エントリ アルッテ屋敷・右→玄関
+	set_chr( 96,990,	-1,-1,	  5000, 4825, 0,	  0,0302, 6,"K3_3")		//エントリ アルッテ屋敷・左→玄関
+
+	//ＮＰＣ
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if(F3_00_GoMoonCastle && !F4_00_StartSolo)
+	{
+//		set_chr( ANJE,42,	-1,-1,	3241,583,100,	 2,350, 20,"<TK_ANJE>")		//屋敷：控え室前			エンジェ
+		set_chr( ANJE,42,	-1,-1,	5188,5003,1,	 2,356, 20,"<TK_ANJE>")		//屋敷：控え室前			エンジェ
+
+		set_chr( ANNA,40,	-1,-1,  5501,5374,0,	 2,315, 20,"<TK_ANNA>")		//屋敷：控え室　ヘレナの傍	アンナ
+		set_chr( HELENA,41,	-1,-1,  5600,5540,50,	 63,270, 20,"<TK_HELENA>")		//屋敷：控え室　うなだれ中	ヘレナ
+
+		//モーション
+		MOT_SET(HELENA,151,-1,558,558,-1,15)		//机に突っ伏す※ミアのへこむポーズで代用してます
+		MOT(HELENA,151,0)]
+		//足を消す
+		chr_scale(HELENA,	"Bone_LeftLeg",		1,1,1,	0,	1);
+		chr_scale(HELENA,	"Bone_RightLeg",	1,1,1,	0,	1);
+		F_set_chr(HELENA,CF_NO_HEIGHT)
+		F_set_chr(HELENA,CF_NO_FALL)
+
+		F_set_chr(ANNA,CF_NO_MOVE)
+		F_set_chr(HELENA,CF_NO_MOVE)
+		F_set_chr(ANJE,CF_NO_MOVE)
+	}
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼夜のフィオナ邸
+		set_namebmp(0,0)
+		EV("EV_1_16_EndFirst")
+	}
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼夜のフィオナ邸
+//──────────────────────────────
+//　　画面フェードインして、夜のフィオナ邸。
+//　　スクロールして外観の様子を見せながら画面切り替え。
+//　　屋敷のフィオナの執務室で、フィオナ、クロード、
+//　　ポックル、ピピロが話し合っているのを見せる。
+EV_1_16_EndFirst
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	wait(30)
+
+	//キャラ再配置
+	chr_pos(RAGNA,		-99,495,1,0,2)
+	chr_pos(PARTNER,	-99,295,1,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	//イベント用キャラ配置
+	set_chr( FIONA,		 1016,-1,-1, -940,  0,1, 2,	270,	0,"")	//フィオナ
+	set_chr( KLODE,		 1018,-1,-1,-1063,118,1, 2,	260,	0,"")	//執事クロード
+	set_chr( PIPIRO,	 1013,-1,-1, -635,-60,1, 2,	85,	0,"")	//ピピロ
+	set_chr( POCKLE,	 1012,-1,-1, -645, 60,1, 2,	90,	0,"")	//ポックル
+	F_set_chr(FIONA,CF_NO_CSP)
+	F_set_chr(KLODE,CF_NO_CSP)
+	F_set_chr(PIPIRO,CF_NO_CSP)
+	F_set_chr(POCKLE,CF_NO_CSP)
+
+	KAO(FIONA,"1","3","1")//
+	KAO(KLODE,"1","1","1")//
+	KAO(PIPIRO,"1","1","1")//
+	KAO(PIPIRO,"1","1","1")//
+
+	MOT_SET(FIONA,150,-1,408,408,-1,-1)	//フム
+	MOT_SET(FIONA,151,-1,443,443,-1,-1)	//上品な笑い
+	MOT_SET(FIONA,152,-1,444,444,-1,-1)	//
+	MOT_SET(FIONA,153,-1,445,445,-1,-1)	//
+	MOT_SET(FIONA,154,-1,450,450,-1,-1)	//両手前
+	MOT_SET(FIONA,155,-1,436,436,-1,-1)	//
+	MOT_SET(PIPIRO,150,-1,401,401,-1,-1)	//やれやれ
+	MOT_SET(POCKLE,150,-1,469,469,-1,-1)	//聞いてないよ
+	MOT_SET(POCKLE,151,-1,407,407,-1,-1)	//どうしたら
+	MOT_SET(KLODE,150,150,9210,9270,-1,-1)	//手を後ろに回して待機
+	MOT(FIONA,154,0)
+	MOT(KLODE,150,0)
+
+	F_set_Node(PIPIRO, "Bone_RightSword", NP_HIDE)				//武器非表示
+	F_set_Node(POCKLE, "Bone_RightSword", NP_HIDE)				//武器非表示
+
+	//カメラ初期位置
+	CAM_move(-830,0,216,0,0)
+	CAM(150,90,216,32,244,0,0)
+	wait(1)
+
+	CAM_move(-830,0,116,150,0)
+	CAM(150,74,116,32,218,150,0)
+
+	//フェードイン
+	fade_in(0,90,0)
+	wait_fade()
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(30)
+	CAM_move(-900,22,126,0,0)
+	CAM(-130,78,126,22,230,0,0)
+	CAM_move(-880,22,126,900,0)
+	CAM(-210,72,126,22,222,900,0)
+	wait(30)
+
+	chr_rename(FIONA,"可憐な娘")//
+//	name("可憐な娘")
+	KAO(FIONA,"B232BZ4","321","1")//
+	MES(FIONA,"そうですか……\n湖の前でそんな方々と。",0)
+	MES_close(FIONA)
+
+	look_chr( FIONA, KLODE ,"Bone_Head")
+	MOT(FIONA,2,15)
+	rot(FIONA,30,350)
+	wait(15)
+	KAO(FIONA,"B232BZ4","1","1")//
+	MES(FIONA,"クロード。\nその方々のこと、ご存知ですか？",0)
+	MES_close(FIONA)
+
+//	look_chr( KLODE, FIONA ,"Bone_Head")
+	rot(KLODE,30,240)
+	wait(15)
+//	name2(KLODE)
+	chr_rename(KLODE,"執事クロード")//
+	KAO(KLODE,"B232BZ3","123","1")//
+	MES(KLODE,"その青年であれば少々。",0)
+	KAO(KLODE,"B232BZ3","321","1")//
+	MES(KLODE,"ラグナ・バレンタイン。",0)
+	KAO(KLODE,"B232BZ7","1","1")//
+	MES(KLODE,"トレジャーハンター協会に所属し、\n先日、所有する飛行機で\nこのイルバードに訪れたそうです。",0)
+	KAO(KLODE,"B232BZ7","1","1")//
+	MES(KLODE,"もっとも到着する直前、\nその飛行機が墜落してしまい、\n大破してしまったそうですが。",0)
+	MES_close(KLODE)
+
+	MOT(FIONA,151,10)
+	wait(10)
+//	name("可憐な娘")
+	KAO(FIONA,"1232","12321D","6")//
+	MES(FIONA,"まあ……！",0)
+	MES_close(FIONA)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BZ3","12321D","6")//
+	MES(POCKLE,"ひ、飛行機が墜落って……！",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z4","123332A","1")//
+	MES(PIPIRO,"マイルズみたいなのが\n他にもいるのね～。",0)
+	look_chr( PIPIRO, POCKLE ,"Bone_Head")
+	wait(15)
+	KAO(PIPIRO,"12321FZ4","A","1")//
+	MES(PIPIRO,"でも、その割にはあのお兄さん、\nピンピンしてなかったっけ？",0)
+	MES_close(PIPIRO)
+
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+	wait(15)
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BZ2","1","1")//
+	MES(POCKLE,"そ、そうだね。",0)
+	KAO(POCKLE,"B232BZ6","123","1")//
+	MES(POCKLE,"マイルズさんなんか大怪我して\nしばらくベッドから\n起き上がれなかったのに……",0)
+	MES_close(POCKLE)
+
+	look_off(FIONA)
+	KAO(FIONA,"B","123","2")//
+	MOT(FIONA,150,15)
+	wait(15)
+//	name("可憐な娘")
+	MES(FIONA,"…………………………………",0)
+	MES_close(FIONA)
+
+//	name2(KLODE)
+	KAO(KLODE,"B232BZ5","1","1")//
+	MES(KLODE,"その事は、診察したテオ氏も\n不思議がっておりました。",0)
+	KAO(KLODE,"B232BZ3","123","1")//
+	MES(KLODE,"それともう一つ。",0)
+	KAO(KLODE,"B232BZ5","321","1")//
+	MES(KLODE,"アルウェンなるご令嬢ですが\n未だ身元が判明しておりません。",0)
+	MES_close(KLODE)
+
+	look_chr( FIONA, KLODE ,"Bone_Head")
+	wait(5)
+	KAO(POCKLE,"B","321","1")//
+	look_off(POCKLE)
+	KAO(PIPIRO,"1","A","1")//
+	look_off(PIPIRO)
+	wait(10)
+//	name("可憐な娘")
+	KAO(FIONA,"B232BZ3","321","2")//
+	MES(FIONA,"身元が判明しない……？",0)
+	KAO(FIONA,"B232BZ7","1","2")//
+	MES(FIONA,"つまり、外からの旅行者ではなく、\nアルッテやロアルタ村の\n住民でもないということですか？",0)
+	MES_close(FIONA)
+
+//	name2(KLODE)
+	KAO(KLODE,"B232BZ3","1233321","1")//
+	MES(KLODE,"その通りです、お嬢様。",0)
+	KAO(KLODE,"B232BZ5","1","1")//
+	MES(KLODE,"少なくとも飛行場の記録には\n載っておりませんでした。",0)
+	KAO(KLODE,"B232BZ8","1","1")//
+	MES(KLODE,"しかし、ラグナ氏が墜落した翌日、\nアルウェン嬢はいつの間にか現れ、\n彼と行動を共にし始めたようです。",0)
+	MES_close(KLODE)
+
+//	name("可憐な娘")
+	KAO(FIONA,"B","123","2")//
+	MES(FIONA,"………………………………",0)
+	MES_close(FIONA)
+	wait_MES(FIONA)
+
+	cross_fade(15)
+	CAM_move(-880,22,146,0,0)
+	CAM(-90,64,146,24,248,0,0)
+//	CAM_move(-880,22,146,900,0)
+//	CAM(-130,52,146,24,240,900,0)
+	CAM_move(-880,22,140,900,0)
+	CAM(-130,56,140,24,240,900,0)
+	wait(15)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z3","321","1")//
+	MES(POCKLE,"あの、フィオナさん……",0)
+	KAO(POCKLE,"12321Z5","1","1")//
+	MES(POCKLE,"ラグナさんたちのこと、\n犯人だと疑っているんですか？",0)
+	MES_close(POCKLE)
+
+	look_off(FIONA)
+	rot(FIONA,30,270)
+	MOT(FIONA,154,15)
+	wait(5)
+//	MOT(KLODE,2,15)
+//	look_off(KLODE)
+	rot(KLODE,30,255)
+	wait(10)
+	chr_rename(FIONA,"フィオナ")//
+//	name2(FIONA)
+	KAO(FIONA,"B232BZ3","3","1")//
+	MES(FIONA,"……いえ、まだそこまでは。",0)
+	KAO(FIONA,"B232BZ6","321","2")//
+	MES(FIONA,"ですが、彼らが現れたのと前後して\n事態は深刻化しているのも事実です。",0)
+	KAO(FIONA,"B232BZ3","1","2")//
+	MES(FIONA,"用心した方がいいかもしれません。",0)
+	MES_close(FIONA)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321FZ2","2321D","6")//
+	MES(PIPIRO,"あれ、なんかあったの？",0)
+	MES_close(PIPIRO)
+
+//	MOT(FIONA,155,15)
+//	wait(15)
+//	name2(FIONA)
+	KAO(FIONA,"B232BZ2","123","4")//
+	MES(FIONA,"ええ、実は……",0)
+	KAO(FIONA,"B232BZ5","321","4")//
+	MES(FIONA,"週に一度の連絡便が\nいまだ到着していないのです。",0)
+	KAO(FIONA,"B232BZ5","1","4")//
+	MES(FIONA,"本当なら３日前には\n到着しているはずなのですが。",0)
+	MES_close(FIONA)
+
+//　　ポックルとピピロの頭に！マーク。
+	EMO(POCKLE,EMO_BIKKURI)
+	wait(5)
+	EMO(PIPIRO,EMO_BIKKURI)
+	wait(30)
+	CAM_quake("46")
+	KAO(POCKLE,"1232132","12321DE","7")//
+	MES(POCKLE,"ええっ！？",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	wait(15)
+	CAM_quake("37")
+	KAO(PIPIRO,"123212Z2","12321D","7")//
+	MES(PIPIRO,"P1S5連絡便が週に一度も！？",0)
+	KAO(PIPIRO,"123212Z3","D","7")//
+	MES(PIPIRO,"P1アルジェスなんか\n半年に一度くらいなのに！",0)
+	MES_close(PIPIRO)
+
+//　　ポックルの頭に冷や汗マーク。
+//	MES(POCKLE,"冷や汗マーク。",0)
+	EMO(POCKLE,EMO_HIYAASE)
+	wait(15)
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+	wait(15)
+	KAO(POCKLE,"B232BZ4","D123","5")//
+	MES(POCKLE,"ピピロ……\n驚く所はそこじゃないでしょ。",0)
+	look_off( POCKLE )
+	MOT(POCKLE,151,15)
+	wait(15)
+	KAO(POCKLE,"B232BZ3","321","2")//
+	MES(POCKLE,"……でも、本当なんですか？",0)
+	MES_close(POCKLE)
+
+//	MOT(FIONA,154,15)
+//	wait(15)
+//	name2(FIONA)
+	KAO(FIONA,"B232BZ3","1233321","4")//
+	MES(FIONA,"ええ……残念ながら。",0)
+	MES_close(FIONA)
+
+//	name2(KLODE)
+	KAO(KLODE,"B232BZ6","1233321","2")//
+	MES(KLODE,"無線機で連絡しようにも\n通信が妨害されている様子……",0)
+	KAO(KLODE,"B232BZ7","1","2")//
+	MES(KLODE,"どうやら、このイルバードは\n我々が気付かぬうちに孤立状態に\n陥ってしまったようですね。",0)
+	MES_close(KLODE)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BFZ2","12321D","5")//
+	MES(POCKLE,"そ、そんな……",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z3","123332","1")//
+	MES(PIPIRO,"ふーん。\nキナ臭くなってきたわね～。",0)
+	KAO(PIPIRO,"12321Z3","2321","1")//
+	MES(PIPIRO,"連絡の手段は他にないの？",0)
+	MES_close(PIPIRO)
+
+//	name2(FIONA)
+	KAO(FIONA,"B232BZ5","1233321","2")//
+	MES(FIONA,"……遠距離の念話を\n試してみようかと思います。",0)
+	KAO(FIONA,"B232BZ5","1","2")//
+	MES(FIONA,"近くにいる一族の者ならば\n気付いてくれるかもしれません。",0)
+	MES_close(FIONA)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z3","123332A","1")//
+	MES(PIPIRO,"ふーん、遠話か。",0)
+	KAO(PIPIRO,"12321Z7","A","1")//
+	MES(PIPIRO,"攻撃魔法ならともかく、\nそういう面倒くさいのは\nちょっと苦手なのよねー。",0)
+	MES_close(PIPIRO)
+
+	MOT(POCKLE,2,15)
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+	wait(15)
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BZ5","123","5")//
+	MES(POCKLE,"ピピロは苦手なんじゃなくて\n単にやる気がないだけでしょ。",0)
+	KAO(POCKLE,"B232BZ5","32","5")//
+	MES(POCKLE,"巫女姫の再来とか言われるくらい\n魔法の天才なのに……",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z4","A23","1")//
+	MES(PIPIRO,"わたしはわたし。\nティアラはティアラだし。",0)
+	MES_close(PIPIRO)
+
+//	name2(FIONA)
+	KAO(FIONA,"12321Z5","1236","6")//
+	MES(FIONA,"ふふ、それでこそ\nピピロさんというものですわ。",0)
+	KAO(FIONA,"12321Z3","3","1")//
+	MES(FIONA,"しかし、そうですわね……",0)
+	KAO(FIONA,"B232BZ7","3","5")//
+	MES(FIONA,"こんな時に巫女姫様や、\n聖騎士殿がいらっしゃったら\nどれだけ心強いことか……",0)
+	MES_close(FIONA)
+
+	look_off( POCKLE )
+	wait(15)
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BZ2","233321","5")//
+	MES(POCKLE,"す、すみません。",0)
+	KAO(POCKLE,"B232BZ4","1","5")//
+	MES(POCKLE,"僕たちみたいな子供が\n代わりに来ちゃって……",0)
+	MES_close(POCKLE)
+
+//	name2(FIONA)
+	KAO(FIONA,"12321Z2","321","6")//
+	MES(FIONA,"いいえ、とんでもない。",0)
+	KAO(FIONA,"12321Z5","1","6")//
+	MES(FIONA,"ポックルさんたちが来てくださって\n本当に助かっていますわ。",0)
+	KAO(FIONA,"12321Z6","1233321","4")//
+	MES(FIONA,"本当だったら、ゆっくり観光でも\n楽しんでもらいたかったのですけど。",0)
+	MES_close(FIONA)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z2","321","1")//
+	MES(PIPIRO,"わたしは出来れば\nそうしたいんだけどねー。",0)
+	MES_close(PIPIRO)
+
+	wait_MES(PIPIRO)
+	cross_fade(15)
+	CAM_move(-830,22,106,0,0)
+	CAM(-90,66,106,22,228,0,0)
+	rot(FIONA,-1,280)
+	KAO(FIONA,"1","1","1")//
+	KAO(KLODE,"1","1","1")//
+
+	rot(PIPIRO,30,350)
+//	look_chr( PIPIRO, POCKLE ,"Bone_Head")
+	wait(15)
+	MOT(PIPIRO,150,15)
+	wait(15)
+	KAO(PIPIRO,"12321Z7","123332","9")//
+	MES(PIPIRO,"ま、そこの熱血小僧が\n一人で空回りしたあげく、\nのたれ死んだら寝覚め悪いし。",0)
+	KAO(PIPIRO,"12321Z6","3","9")//
+	MES(PIPIRO,"半年分の夕食当番の代わりに\n協力してあげることにしたわ。",0)
+	MES_close(PIPIRO)
+
+	MOT(POCKLE,150,10)
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+//	rot_chr(POCKLE,30,PIPIRO)
+	rot(POCKLE,60,140)
+	wait(15)
+//	name2(POCKLE)
+	KAO(POCKLE,"123212Z2","12321DE","7")//
+	MES(POCKLE,"そ、そんな約束してないよ！？",0)
+	MES_close(POCKLE)
+
+//	name2(KLODE)
+	KAO(KLODE,"12321Z2","1236","6")//
+	MES(KLODE,"はは……",0)
+	MES_close(KLODE)
+
+//	MOT(FIONA,151,15)
+//	wait(15)
+//	MOT(FIONA,152,5)
+//	wait(5)
+//	MOT(FIONA,153,5)
+//	name2(FIONA)
+	KAO(FIONA,"12321Z2","1236","6")//
+	MES(FIONA,"くすくす……",0)
+	KAO(FIONA,"12321Z5","3","6")//
+	MES(FIONA,"《宝玉》の探索を続けるなら\nどうかくれぐれもお気をつけて。",0)
+	KAO(FIONA,"12321Z5","6","6")//
+	MES(FIONA,"何かあったら無理をせず\nわたくしたちに相談してください。",0)
+	MES_close(FIONA)
+
+//　　画面、ゆっくりとフェードアウト。
+	CAM(-90,68,106,22,228,60,0)
+	fade_in(100,60,0)
+	wait_fade()
+	stop_BGM(90)
+	wait_BGM()
+
+//ＧＦ『★ＧＦ：第１章終了』を立てる。
+	F_set(F1_22_EndFirst)
+	
+//ＧＦ『★金闇の森へ向かうことにした』を立てる。
+	F_set(F2_00_GoForest)
+
+	//----------------------------------------------------
+	//Ｇ－館行ってるかどうかのチェック（③～⑪まで行う）
+	if(FV_02_VisitGyakata)
+	{
+		if(FE_FF_NotGotoG)
+			F_set(FE_FF_NotGotoG2)//長い事行ってない
+		F_set(FE_FF_NotGotoG)//しばらく行ってない
+	}
+	//----------------------------------------------------
+
+
+// ＢＧＭをデフォルトに戻す
+	workG(GW_DEF_BGM,SET,0)
+
+//──────────────────────────────
+//　　暗転状態で、休憩時のジングルを鳴らす。
+
+	wait(10)
+	SE(6,0)
+	wait(230)
+
+//──────────────────────────────
+
+	//アルッテの町（昼）マップへ(ev00100)
+	workG(GW_ENTRY_EVENT,SET,2)
+	new_map(10100)
+
+//	EV_end()
+}
+
+#EndScriptTable
+//====================================================================
+

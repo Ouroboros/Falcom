@@ -1,0 +1,1016 @@
+//====================================================================
+//ステージトラップスクリプト
+//[me0j002][水晶峡谷階段２]
+//====================================================================
+
+#ScriptTable
+
+
+#LUE 		1
+#ODESSA		2
+#EVENT_RAGNA	3
+#DORAGON		4
+#MONSTER_A1		5
+#MONSTER_A2		6
+#MONSTER_A3		7
+#MONSTER_A4		8
+#EVENT_LUE		9
+#EFFDUMMY1		10
+#EFFDUMMY2		11
+#MONSTER_C1		13
+#MONSTER_D1		14
+#MONSTER_D2		15
+#MONSTER_E1		16
+#MONSTER_F1		17
+#MONSTER_F2		18
+#ENTMONS_F		19
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//環境SE
+	SE(51,0)//风
+
+//  set_chr  no typ     tip      x    y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	set_chr( 90,990,	-1,-1,   0,19885, 833,	 180,  0, 0,";")			//水晶峡谷階段（帰り専用）
+	set_chr( 91,990,	-1,-1,   0,  -50,8592,     0,  0, 0,";")			//异世界（帰り専用）
+
+	set_chr( 95,990,	-1,-1,   0, 20225,595,	 180,901, 6,"K1_10601;")	//水晶峡谷階段（行き専用）
+	set_chr( 96,990,	-1,-1,   0,    0,8680,     0,901, 6,"K0_17010;")	//异世界へ（行き専用）
+
+	set_chr( 60,655,	-1,-1, -300,20100,600,	   2,   270, 0,";")	//⑤順路案内
+
+//■ザコ配置
+	if(GW_ENTRY_EVENT==0 && F5_08_JoinOdessa)			//ＧＦ『★空中回廊で、奥蒂莎と合流した』
+	{
+		// イベントで登场した奴ら
+		set_chr(MONSTER_A1,	  273,-1,-1,	 344,17635,1632,	 2, 120, 0,"")// いわつつき
+		set_chr(MONSTER_A2,	  273,-1,-1,	-181,17602,1644,	 2, 204, 0,"")// いわつつき
+		set_chr(MONSTER_A3,	  381,-1,-1,	 295,16503,2083,	 2,  12, 0,"")// うぃざーど
+		set_chr(MONSTER_A4,	  381,-1,-1,	-349,16179,2212,	 2, 320, 0,"")// うぃざーど
+
+		EV("EV_LocateZacos")
+	}
+
+//■イベント
+	if(F4_11_EndFourth && !F5_17_EndFifth)
+	{
+	//５章
+		//ＧＦ『★ルナ·ムンドゥスに到着した』立ってない
+		if(!F5_09_OnLunar)
+		{
+			//▼空中之大門に飛び込む
+			set_chr( 82,990,	-1,-1,   0,1428,8100,  0, 0802,6,"<EV_5_10_GoGate>;")
+		}
+		//ＧＦ『★空中回廊で、奥蒂莎と合流した』立ってない
+		if(!F5_08_JoinOdessa)
+		{
+			//▼奥蒂莎と合流する
+			set_chr( 81,990,	-1,-1,   0,17180,1810,  0, 0802,6,"<EV_5_09_JoinOdessa>;")
+		}
+	}
+}
+
+//====================================================================
+// 追加之ザコ
+EV_LocateZacos
+{
+	set_chr(MONSTER_C1,	  141,-1,-1,      0,12000,3880,		 2,   0, 0, "")	// れんごくぐるま
+
+
+	set_chr(MONSTER_D1,	  144,-1,-1,   -200,10000,4680,		 2,   0, 0, "D0_36;")	// くまこぶたー
+		set_chr( 36,		  808,-1,-1,      0, 8000,5480,		 4,   0, 0, "")	// トゲ球
+		chr_equip_chr(36,MONSTER_D1,"Bone_Hips", 125,  0, 0,0,	 0,50,25);
+
+
+	set_chr(MONSTER_D2,	  144,-1,-1,    200, 9000,5080,		 2,   0, 0, "D0_37;")	// くまこぶたー
+		set_chr( 37,		  808,-1,-1,      0, 8000,5480,		 4,   0, 0, "")	// トゲ球
+		chr_equip_chr(37,MONSTER_D2,"Bone_Hips", 125,  0, 0,0,	 0,50,25);
+
+
+	set_chr(MONSTER_E1,	  273,-1,-1,      0, 7000,5880,		 2, 180, 0, "")	// いわつつき
+
+
+	if(WK_ENTRY==91)//階段91 から来た時（帰り）
+	{
+		set_chr(ENTMONS_F,	  990,-1,-1,      0, 4000,7080,		 0,0707, 6, "SF100;")	// 
+	}
+	else
+	{
+		set_chr(ENTMONS_F,	  990,-1,-1,      0, 8000,5480,		 0,0707, 6, "SF100;")	// 
+	}
+	set_chr(MONSTER_F1,	  381,-1,-1,   -200, 6000,6280,		-1,   0, 8, "F100 V2_99;")	// うぃざーど
+	set_chr(MONSTER_F2,	  381,-1,-1,    200, 6000,6280,		-1,   0, 8, "F100 V2_99;")	// うぃざーど
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼奥蒂莎と合流する
+//──────────────────────────────
+//　　３／４まで登ったところでイベント発生。
+EV_5_09_JoinOdessa
+{
+	EV_begin()
+
+	cross_fade(30)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	81,17473,1695,179,2)
+	color(RAGNA,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1,  0,16850,1910, 2,180,0, "")
+//	set_chr(LUE,	  1015,-1,-1,  -90, 16864,1910, 2,180,0, "")
+	set_chr(EVENT_LUE, 749,-1,-1, -100,17009,1880,0,0,0, "")
+	set_chr(ODESSA,	  1019,-1,-1,  0,18360,1340, 2, 180,0, "")	
+	set_chr(DORAGON,	  464,-1,-1,  2672,18416,2500, 60,120,0, "")
+
+	set_chr(EFFDUMMY1,	  749,-1,-1,     0, 0,0, 0,0. ,0, "")
+	set_chr(EFFDUMMY2,	  749,-1,-1,     0, 0,0, 0,0. ,0, "")
+	
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+
+	F_set_chr(EFFDUMMY1,CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY1,CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY1,CF_NO_CLIP)
+	F_set_chr(EFFDUMMY1,CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY1,CF_NO_CSP)
+	F_set_chr(EFFDUMMY2,CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY2,CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY2,CF_NO_CLIP)
+	F_set_chr(EFFDUMMY2,CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY2,CF_NO_CSP)
+				
+	F_set_chr(LUE,CF_NO_ZIMEN)
+	F_set_chr(LUE,CF_NO_HEIGHT)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(DORAGON,CF_NO_ZIMEN)
+	F_set_chr(DORAGON,CF_NO_HEIGHT)
+	F_set_chr(DORAGON,CF_NO_CLIP)
+	F_set_chr(DORAGON,CF_NO_CLIP2)
+	F_set_chr(DORAGON,CF_NO_CSP)
+	
+
+	color(DORAGON,-1)
+	color(LUE,-1)
+	color(ODESSA,-1)
+	wait_color(ODESSA)
+	
+
+	//モーション定義
+	MOT_SET(ODESSA,150,-1,405,405,-1,-1)	//どうな之よ
+	MOT_SET(DORAGON, 150, 150, 765,804, -1,0) //滞空はばたきLoop
+	MOT_SET(DORAGON, 151, 150, 860,884, -1,0) //滞空左に避ける
+	MOT_SET(DORAGON, 152, 150,1105,1134, -1,0) //滞空ブレス弾
+//	MOT_SET(DORAGON, 153,  -1,1201,1196, 155,15) //ダメージ
+	MOT_SET(DORAGON, 153,  -1,1201,1196, -1,15) //ダメージ
+	MOT_SET(DORAGON, 154, 154,1410,1449, 155,5) //前方はばたき
+	MOT_SET(DORAGON, 155,  -1,0455,0514, -1,0) //墜落
+	MOT_SET(DORAGON, 156,  -1,897,897, -1,0) //
+	MOT_SET(DORAGON, 157,  -1,897,881, 150,15) //
+
+	MOT_SET(EVENT_RAGNA, 150, -1,818,800, 2,15) //くるりん
+	MOT_SET(EVENT_RAGNA, 151, -1,742,754, -1,15) //左くるりん
+	MOT_SET(EVENT_RAGNA, 152, -1,908,932, -1,15) //左くるりん
+	MOT_SET(EVENT_RAGNA, 153, -1,3054,3054, -1,15) //構え
+	MOT_SET(EVENT_RAGNA, 154, -1,2900,2950, -1,15) //攻撃
+	
+	//カメラ初期位置
+	CAM_move(0,-16800,2046,0,0)
+	CAM(70,70,2046,40,214,0,0)
+	wait_CAM()
+	wait_fade()
+
+//　　ザコ之群れを抜けたあたりで甲高い咆哮が聞こえてくる。
+//　　拉古那之頭に！マーク。
+//	MES(EVENT_RAGNA,"◆未入力項目\n甲高い咆哮が聞こえてくる。",0)
+//	MES_close(EVENT_RAGNA)
+	SE(1123,0)//ドラゴン咆哮
+	wait(30)
+
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(EVENT_RAGNA,"B","12321D","6")
+
+//	EMO(LUE,EMO_BIKKURI)
+	chr_rename(EVENT_LUE,"露")
+	chr_equip_chr(EVENT_LUE, EVENT_RAGNA,"Bone_RightSword",100,		0,0,0,	0,0,0);
+
+
+	chr_pos(RAGNA,297,16203,2203,0,2 )
+	wait(30)
+
+//	MOT(DORAGON, 60, 0)		//羽ばたき
+
+	MES(EVENT_LUE,"C4这、这究竟是！？",0)
+	MES_close(EVENT_LUE)
+
+	rot(EVENT_RAGNA,30,220)
+	rot(EVENT_LUE,   30,220)
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(-260,-16980,1986,0,0)
+	CAM(-10,58,1986,40,296,0,0)
+	wait_CAM()
+	
+	look_chr(EVENT_RAGNA, DORAGON, "Bone_Head")
+	wait_fade()
+	
+	KAO(EVENT_RAGNA,"B232B2Z2","1233321","3")
+	MES(EVENT_RAGNA,"这家伙……！",0)
+	MES_close(EVENT_RAGNA)
+
+////　　次之瞬間、茶色之翼龙が飛来して現れる。
+//　　プロローグで蒙布兰が乗っていた之と同じも之。
+
+	wait_MES(EVENT_RAGNA)
+	cross_fade(15)
+	color(DORAGON,1)
+	MOT(DORAGON, 150, 5)		//羽ばたき
+	EV("EV_1126_loop")//羽ばたきSE
+
+	CAM_move(24,-16933,2081,0,0)
+	CAM(-150,36,2081,30,90,0,0)
+//	wait_CAM()
+	
+CAM_move(24,-16773,2081,600,0)
+CAM(-250,36,2081,30,72,600,0)			
+		
+	chr_pos(DORAGON, 1200,17000,300,100,150)
+	move(DORAGON, 42, 80, 0,0,1600, 10)
+	
+	rot_chr(EVENT_RAGNA,30,DORAGON)
+	wait(30)
+
+	MES(EVENT_LUE,"C4哈！？",0)
+	MES_close(EVENT_LUE)
+	
+	wait_move(DORAGON)
+	
+//	move(RAGNA, 0, WALK1, 97,16829,1953,10 )
+	
+	
+//	EFF_chr(6380, DORAGON, 0,100,0,"BreathNull")
+	
+	MES(EVENT_RAGNA,"チッ……\n特里斯坦を落としたヤツか！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　茶色之翼龙、拉古那たちを翻弄するように飛び回り、
+//　　ファイヤーボールを吐き出してくる。
+//　　拉古那、狭い足场之上で何とかわしながら
+//　　アンカーギアで攻撃しようとするがなかなか届かない。
+//	MES(EVENT_RAGNA,"◆未入力項目\n茶色之翼龙、翻弄するように飛び回り、\nファイヤーボールを吐き出してくる。\n狭い足场之上で何とかわしながら\nアンカーギアで攻撃しようとするが届かない。",0)
+//	MES_close(EVENT_RAGNA)
+
+	EV_stop("EV_1126_loop")//羽ばたきSE止め
+	EV_stop("EV_1126_loop2")//羽ばたきSE止め
+	CAM_move(64,-17053,2081,60,0)
+	CAM(-170,90,2081,30,262,60,0)
+
+	//ドラゴン、突っ込んでくる
+	move(DORAGON, 40, 1000, -3000,17100,1900,0 )
+	MOT(DORAGON, 42, 5)
+	SE(1132,0)//滑空SE
+	wait(10)
+
+	//拉古那、飛び退る
+	VOICE(013,0)	//★ボイス入力調整
+	rot(EVENT_RAGNA, 60, 180 )
+	move(EVENT_RAGNA, 40, RUN2, 8,17178,1813,0)
+	SE(466,0)//飛び退りSE
+	MOT(EVENT_RAGNA, 150, 5)
+
+	wait(15)
+//	MOT(DORAGON, 56, 5)
+	MOT(DORAGON, 156, 5)			//斜めドラゴン
+	rot(EVETN_RAGNA, 30, 90 )	
+	wait(15)	
+	
+	rot(DORAGON, 20, 00 ) 
+	
+	wait_move(DORAGON)
+	MOT(DORAGON, 154, 15)
+	move(DORAGON, 40, 100,-3500,18000,1664,0 )
+	wait(15)
+
+	//ブレスはきを見せるカメラ
+	cross_fade(15)
+	CAM_move(-851,-17427,2300,0,0)
+	CAM(-450,50,2372,31,220,0,0)
+	CAM( 300,76,1781,40,240,150,0)
+
+	move(DORAGON, 42, 1,0,0,0,0)	//移動終了
+//	wait_move(DORAGON)				//これないとエフェクトでない
+//	chr_pos(DORAGON, -1051,17700,1900,290, 150)	//階段に当たらなぶ置に配置
+	chr_pos(DORAGON, -1300,17700,1900,290, 154)	//階段に当たらなぶ置に配置
+	move(DORAGON, 40, RUN1, -1150,17700,1900, 0)
+	rot(DORAGON, 10, 250 )
+//	wait(10)
+	MOT(DORAGON, 53, 15)
+	wait_fade()
+	
+	wait(15)
+
+	MOT(DORAGON, 125, 5)							//ブレス
+	wait(15)
+	SE(1132,0)//ブレスSE
+	SE(441,0)//ブレスSE
+	CAM_quake("463746")
+	wait(15)
+	MOT(DORAGON, 125, 5)							//ブレス
+	wait(15)
+	SE(1132,0)//ブレスSE
+	SE(441,0)//ブレスSE
+	CAM_quake("463746")
+	wait(15)
+	
+	//拉古那、ブレス避けカメラ
+	cross_fade(15)
+	CAM_move(-340,-17262,2021,0,0)
+	CAM(310,40,2021,40,61,0,0)
+	CAM_move(80,-17362,1781,120,0)
+	CAM(-250,50,1801,40,137,120,0)
+	rot_chr(EVENT_RAGNA, -1, DORAGON )
+	MOT(EVENT_RAGNA, 153, 0)
+	
+	chr_pos(DORAGON, -1051,17700,1600,240, 150)			//階段に当たる位置に配置
+	
+	MOT(DORAGON, 125, 5)								//ブレス
+	wait(15)
+	KAO(EVENT_RAGNA,"C","1233321","3")
+	VOICE(000,0)	//★ボイス入力調整
+	jump(EVENT_RAGNA,0, 20, 15, 17400,1712, 200 )
+	SE(466,0)//ジャンプSE
+	MOT(EVENT_RAGNA, 152, 5)
+	rot(DORAGON, 20, 250)
+	wait(5)
+	CAM_quake("4637283746")									//爆発振動
+	SE(1058,0)//着地
+	SE(366,0)//爆発振動
+	SE(1134,0)//爆発振動
+	wait(10)
+	
+	MOT(DORAGON, 125, 5)								//ブレス
+	wait(25)
+		
+	VOICE(011,0)	//★ボイス入力調整
+	KAO(EVENT_RAGNA,"L","1BC","3")
+	move(EVENT_RAGNA, 40, RUN2, -70,17620,1660,10)		//拉古那避ける
+	SE(466,0)
+	MOT(EVENT_RAGNA, 151, 5)
+	wait(5)
+	CAM_quake("4637283746")									//爆発振動
+	SE(1058,0)//着地
+	SE(366,0)//爆発振動
+	SE(1134,0)//爆発振動
+	wait(25)	
+
+	MOT(DORAGON, 150, 5)								//
+
+	wait(5)
+	
+	//ドラゴン、階段之右側に移動
+	MOT(DORAGON, 56, 5)
+	move(DORAGON, 40, 500, 1298,17517,1550,0)
+	SE(1132,0)//滑空SE
+	
+	wait(15)
+	CAM_quake("4637373746")
+//	MOT(EVENT_RAGNA, 154, 5)		//拉古那、攻撃
+	MOT(EVENT_RAGNA, 11, 5)			//拉古那、攻撃
+	rot(EVENT_RAGNA, 30, 220 )
+	
+	CAM_move(180,-17622,1781,30,0)
+	CAM(-169,54,1781,40,136,30,0)
+	
+	wait_move(DORAGON)
+	rot(DORAGON, 10, 90 )
+	MOT(DORAGON, 150,5 )
+	EV("EV_1126_loop")//羽ばたきSE
+	MOT(EVENT_RAGNA, 153,5)
+	
+	KAO(EVENT_RAGNA,"L232LZ4","C","3")
+	MES(EVENT_RAGNA,"可恶……\n在这种狭窄的地方……！",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(EVENT_LUE,"C4怎、怎么办啊！？",0)
+	MES_close(EVENT_LUE)
+
+	chr_rename(ODESSA,"女之声")//
+	MES_pos(ODESSA,"W4呵呵……\n遇到了棘手的事情吗。",0,640,360,0,0)
+	wait_key(0)
+	MES_close(ODESSA)
+	
+	KAO(EVENT_RAGNA,"B","CB1D","6")
+	EMO(EVENT_RAGNA,EMO_BIKKURI)	
+	wait(30)
+//	KAO(EVENT_RAGNA,"1","1","1")
+
+//　　拉古那之頭に！マーク。
+//　　次之瞬間、階段之下方から唸りを上げてブーメランが飛来。
+//　　茶色之翼龙に直撃し、悲鳴を上げて墜落してしまう翼龙。
+
+//CAM_move(216,-18018,1697,0,0)
+//CAM(350,207,1697,40,136,0,0)
+//CAM_move(515,-17557,1523,0,0)
+//CAM(510,112,1523,50,177,0,0)
+//CAM_move(245,-17405,1879,0,0)
+//CAM(-170,69,60,50,163,0,0)
+
+	wait(15)
+	VOICE(263,0)	//★ボイス入力調整
+	cross_fade(15)
+	
+//	CAM_move(280,-17622,1781,0,0)
+//	CAM(-208,54,1781,40,67,0,0)
+	CAM_move(360,-17622,1781,0,0)
+	CAM(190,71,1781,40,128,0,0)
+	CAM_move(280,-17622,1781,90,0)	
+	CAM(-290,54,1781,40,114,90,0)
+	wait_fade()
+	wait(15)
+
+	EV_stop("EV_1126_loop")//羽ばたきSE止め
+	EV_stop("EV_1126_loop2")//羽ばたきSE止め
+
+	chr_pos(EFFDUMMY1, 214,18344,1600,0,0 )
+	wait(1)
+//	EFF_chr(6360, EFFDUMMY1, 235,100, DORAGON, "Bone_Head" )
+	EFF_chr(6360, EFFDUMMY1, 210,100, 0, "Bone_Head" )					//エフェクト：ブーメラン
+	SE(425,0)//ブーメランSE
+	SE(428,0)//ブーメランSE
+	wait(10)
+	CAM_quake("4637373746")	
+	MOT(DORAGON, 153, 5)											//ドラゴン、ダメージ
+	SE(1086,0)//ヒットSE
+	SE(368,0)//ヒットSE
+	wait(10)
+	SE(1123,0)//悲鳴SE
+	MOT(DORAGON, 150, 0)		
+	MOT(DORAGON, 153, 15)
+
+//	CAM_move(1197,-17223,2043,0,0)
+//	CAM(-770,69,-320,50,118,0,0)
+	CAM_move(1237,-17363,2103,0,0)
+	CAM(-770,45,2103,50,117,0,0)
+	wait(15)
+
+	//ドラゴン落下
+	F_reset_chr(DORAGON, CF_NO_HEIGHT)
+	F_reset_chr(DORAGON, CF_NO_ZIMEN)
+	wait(15)
+	
+	cross_fade(15)
+	MOT(DORAGON, 155, 15)		
+	CAM_move(280,-17622,1781,0,0)	
+	CAM(-290,54,1781,40,85,0,0)
+	CAM_move(280,-17622,1741,120,0)
+	CAM(-10,65,1741,40,110,120,0)	
+	
+	wait(10)
+	wait_fade()
+	EMO(EVENT_RAGNA,EMO_BIKKURI)	
+	wait(60)
+
+	color(DORAGON,-1)
+
+
+	MOT(EVENT_RAGNA, 2, 10)
+	rot(EVENT_RAGNA 30, 320 )
+	look_chr(EVENT_RAGNA, ODESSA, "Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"2","D","6")
+	MES(EVENT_RAGNA,"啊……",0)
+	MES_close(EVENT_RAGNA)
+	look_chr(EVENT_RAGNA, ODESSA,"Bone_Head")
+
+
+//　　画面スクロールして、下から階段を登ってくる奥蒂莎。
+//　　戻ってきたブーメランを余裕そうにキャッチする。
+	cross_fade(15)
+	color(ODESSA,1)
+	wait_color(ODESSA)
+
+	rot_chr(EVENT_RAGNA,30,ODESSA)
+	chr_pos(EVENT_RAGNA, -40,16947,1906,0,2)	
+	look(ODESSA, "Bone_Head", 0,0,0,10, 0,0,10)
+	
+	CAM_move(80,-17820,1386,00,0)
+	CAM(-90,72,1386,34,180,00,0)
+	KAO(EVENT_RAGNA,"B","D","6")
+//	wait_CAM_move()
+//	wait_CAM()
+
+//	MES(LUE,"◆未入力項目\n下から階段を登ってくる奥蒂莎。\n戻ってきたブーメランを余裕そうにキャッチする。",0)
+//	MES_close(LUE)
+	CAM_move(80,-17820,1586,90,0)
+	CAM(-190,72,1486,34,180,90,0)
+	chr_pos(ODESSA, 80,18360,1340,180,2)
+	move(ODESSA,0,10,80,17160,1810,0)
+	wait_CAM_move()
+	wait_CAM()
+
+	cross_fade(15)
+	CAM_move(80,-17000,2016,0,0)
+	CAM(150,44,2016,25,323,0,0)
+	CAM(70,51,2016,25,283,900,0)
+	CAM_move(80,-17000,2016,900,0)
+	
+	//キャラ再配置
+	chr_pos(EVENT_RAGNA, 80,16870,1910, 0, 2)
+//	chr_pos(ODESSA,      80,17100,1810,180,2)
+	wait_move(ODESSA)
+
+	MES(EVENT_LUE,"C4狼、狼女！？",0)
+	MES_close(EVENT_LUE)
+
+	KAO(EVENT_RAGNA,"B232BZ3","12321D","6")
+	MES(EVENT_RAGNA,"奥蒂莎！\n为什么你……！",0)
+	MES_close(EVENT_RAGNA)
+
+	chr_rename(ODESSA,"奥蒂莎")//
+	KAO(ODESSA,"12321Z4","123","6")
+	MES(ODESSA,"呵呵……\n好象搭了趟顺风车的感觉。",0)
+	KAO(ODESSA,"B232BZ5","321","2")	
+	MES(ODESSA,"和你一样\n我也有需要对决的对手。",0)
+	MOT(ODESSA,150,15)
+	wait(15)
+	KAO(ODESSA,"12321Z3","1233321","1")	
+	MES(ODESSA,"在这里联手吗？",0)
+	MES_close(ODESSA)
+
+	KAO(EVENT_RAGNA,"12321Z3","1233321","2")
+	MES(EVENT_RAGNA,"明白、真是帮了大忙了！",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(EVENT_LUE,"C4喂、喂！",0)
+	MES(EVENT_LUE,"C4叙旧什么时间都行\n不过魔物可是又聚集起来了！",0)
+	MES_close(EVENT_LUE)
+	wait_MES(EVENT_LUE)
+
+//　　ここで周りに、かなり之数之空飛ぶ魔物が飛来する。
+//　　拉古那と奥蒂莎、あたりを見回しながら挑战的な笑み。
+
+	CAM_move(340,-16840,2106,90,0)
+	CAM(30,88,2106,40,220,90,0)
+	set_chr(MONSTER_A1,	  382,-1,-1,  800,17000,2500, 2,100,0, "")
+	set_chr(MONSTER_A2,	  381,-1,-1,  600,16200,2900, 2,20,0, "")
+	set_chr(MONSTER_A3,	  381,-1,-1,  -800,17000,2500, 2,280,0, "")
+	set_chr(MONSTER_A4,	  382,-1,-1,  -600,16200,2900, 2,320,0, "")	
+	
+	F_set_chr(MONSTER_A1,CF_NO_HEIGHT)
+	F_set_chr(MONSTER_A1,CF_NO_CLIP)
+	F_set_chr(MONSTER_A1,CF_NO_CLIP2)
+	F_set_chr(MONSTER_A1,CF_NO_CSP)
+	F_set_chr(MONSTER_A2,CF_NO_HEIGHT)
+	F_set_chr(MONSTER_A2,CF_NO_CLIP)
+	F_set_chr(MONSTER_A2,CF_NO_CLIP2)
+	F_set_chr(MONSTER_A2,CF_NO_CSP)
+	F_set_chr(MONSTER_A3,CF_NO_HEIGHT)
+	F_set_chr(MONSTER_A3,CF_NO_CLIP)
+	F_set_chr(MONSTER_A3,CF_NO_CLIP2)
+	F_set_chr(MONSTER_A3,CF_NO_CSP)
+	F_set_chr(MONSTER_A4,CF_NO_HEIGHT)
+	F_set_chr(MONSTER_A4,CF_NO_CLIP)
+	F_set_chr(MONSTER_A4,CF_NO_CLIP2)
+	F_set_chr(MONSTER_A4,CF_NO_CSP)
+	
+	color(MONSTER_A1,1)
+	color(MONSTER_A2,1)
+	color(MONSTER_A3,1)
+	color(MONSTER_A4,1)
+	jump(MONSTER_A1,0,90,800,17000,2000,0)
+	jump(MONSTER_A2,0,90,600,16200,2400,0)
+	jump(MONSTER_A3,0,90,-800,17000,2000,0)
+	jump(MONSTER_A4,0,90,-600,16200,2400,0)
+
+	KAO(EVENT_RAGNA,"C","1233321","3")
+	rot(EVENT_RAGNA,30,270)
+	wait(5)
+	KAO(ODESSA,"C","1233321","3")	
+	MOT(ODESSA,2,15)
+	rot(ODESSA,30,90)
+	wait(30)
+//	move(EVENT_RAGNA,0,9,80,16850,1910,0)
+//	jump(EVENT_RAGNA,0,30,80,16850,1910,0)
+	wait(5)
+	move(ODESSA,0,10,-30,17170,1810,0)
+
+	wait_CAM_move()
+	wait_CAM()
+
+	KAO(EVENT_RAGNA,"12321Z3","1233321","2")
+	MES(EVENT_RAGNA,"呵……\n那么就快走吧！",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(ODESSA,"啊啊……\n杂鱼给我滚开！",0)
+	MES_close(ODESSA)
+
+//　　ここで奥蒂莎が操作できるパートナーとなる。
+//　　操作許可になると同時に、魔物たちも攻撃を開始する。
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(ODESSA)
+//	join_party(5)//ODESSA
+	join_party(12)//ODESSA	//帽子あり
+
+	delete(LUE)
+	delete(DORAGON)
+	delete(EVENT_RAGNA)
+	delete(EFFDUMMY1)
+	delete(EFFDUMMY2)
+	chr_pos(RAGNA,	 130,16930,1912,180,2)
+	color(RAGNA,1)
+
+	chr_pos(MONSTER_A1, 344,17635,1632,120,2)
+	chr_pos(MONSTER_A2, -181,17602,1644,204,2)
+	chr_pos(MONSTER_A3, 295,16503,2083,12,2)
+	chr_pos(MONSTER_A4, -349,16179,2212,320, 2)
+
+	F_reset_chr(MONSTER_A1,CF_NO_CSP)
+	F_reset_chr(MONSTER_A2,CF_NO_CSP)
+	F_reset_chr(MONSTER_A3,CF_NO_CSP)
+	F_reset_chr(MONSTER_A4,CF_NO_CSP)
+
+	// そ之他之一般ザコ配置
+	EV("EV_LocateZacos")
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★空中回廊で、奥蒂莎と合流した』を立てる。
+	F_set(F5_08_JoinOdessa)
+
+//	VOICE(314,0)	//★ボイス入力調整
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+//──────────────────────────────
+//▼空中之大門に飛び込む
+//──────────────────────────────
+//　　終点手前、ザコ之群れを抜けたあたりでイベント発生。
+EV_5_10_GoGate
+{
+	EV_begin()
+
+	cross_fade(30)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 100,1418,8100,0,2)
+	chr_pos(PARTNER, 0,23168,-578,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+//	color(MONSTER_A1,-1)
+//	color(MONSTER_A2,-1)
+//	color(MONSTER_A3,-1)
+//	color(MONSTER_A4,-1)
+	delete(MONSTER_A1)
+	delete(MONSTER_A2)
+	delete(MONSTER_A3)
+	delete(MONSTER_A4)
+	delete(MONSTER_C1)
+	delete(MONSTER_D1)
+	delete(MONSTER_D2)
+	delete(MONSTER_E1)
+	delete(MONSTER_F1)
+	delete(MONSTER_F2)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1,  100,2170,7806, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+
+	set_chr(LUE,	  1015,-1,-1,  100, 1389,8100, 2,180,0, "")
+	set_chr(ODESSA,	  1019,-1,-1,  -100,2170,7806, 2, 180,0, "")
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	color(LUE,-1)
+
+	//カメラ初期位置
+	CAM_move(0,-1986,8442,0,0)
+	CAM(230,22,8442,44,180,0,0)
+
+	move(EVENT_RAGNA,0,20,100,1398,8100,0)
+	wait(5)
+	move(ODESSA,0,20,-100,1418,8100,0)
+
+//　　拉古那と奥蒂莎之頭に！マーク。
+	wait_move(EVENT_RAGNA)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ODESSA,EMO_BIKKURI)
+	wait(15)
+	rot_chr(EVENT_RAGNA,30,91)
+	rot_chr(ODESSA,30,91)
+	wait(15)
+	MES(EVENT_RAGNA,"这家伙……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　画面スクロールして、終点にある巨大な門を映す。
+//　　門之向こう側は异次元空間となっており、
+//　　そこに向けて階段が続いていっている之を見せる。
+//　　画面、拉古那たちに戻して以下之メッセージ。
+//	MES(LUE,"◆未入力項目\n終点にある巨大な門を映す。\n門之向こう側は异次元空間となっており、\nそこに向けて階段が続いていっている之を見せる。",0)
+//	MES_close(LUE)
+	CAM_move(0,-326,9722,90,0)
+	CAM(1070,158,9042,44,144,90,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+
+	cross_fade(30)
+	CAM_move(0,234,10482,0,0)
+	CAM(-750,170,10482,44,148,0,0)
+	CAM_move(0,234,9282,240,0)
+	CAM(-1070,134,9282,44,204,240,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+
+	cross_fade(30)
+//	CAM_move(-360,234,9162,60,0)
+//	CAM(-730,224,9162,44,204,60,0)
+	CAM_move(-520,174,8762,0,0)
+	CAM(-369,224,8762,43,207,0,0)
+	wait_fade()
+	wait_CAM_move()
+	wait_CAM()
+
+	MES(LUE,"C4厉、厉害……",0)
+	MES_close(LUE)
+
+//	name2(ODESSA)
+	MES(ODESSA,"好象终于到终点了。",0)
+	MES_close(ODESSA)
+
+//	name2(EVENT_RAGNA)
+//	MES(EVENT_RAGNA,"恩……\n就这样一口气冲进去吧！",0)
+	MES(EVENT_RAGNA,"恩……\n就这样冲进去吧！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那と奥蒂莎、そ之まま駆け上っていく。
+//　　巨大な門が近づいてきて、拉古那と奥蒂莎が
+//　　そ之中に入って行ったところで画面フェードアウト。
+	move(EVENT_RAGNA,0,20,100,-686,8946,0)
+	wait(5)
+	move(ODESSA,0,20,-100,-686,8946,0)
+	wait(60)
+
+	fade_in(100,30,0)
+	wait_fade()
+
+	EV("EV_51_fadeout")//风之音フェードアウト
+
+	stop_BGM(90)
+	wait_BGM()
+	workG(GW_DEF_BGM,SET,0)		//デフォルト曲を元に戻す
+	wait(30)
+
+//　　月·异世界－入口へ(ev70100)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(17010)
+
+//	EV_end()
+}
+
+//羽ばたきSE
+EV_1126_loop
+{
+	SE(1126,0)
+	wait(38)
+	EV("EV_1126_loop2")
+}
+
+EV_1126_loop2
+{
+	SE(1126,0)
+	wait(39)
+	EV("EV_1126_loop")
+}
+
+//风之音フェードアウト
+EV_51_fadeout
+{
+	SE_vol(51,100,0)
+	wait(1)
+	SE_vol(51,99,0)
+	wait(1)
+	SE_vol(51,98,0)
+	wait(1)
+	SE_vol(51,97,0)
+	wait(1)
+	SE_vol(51,96,0)
+	wait(1)
+	SE_vol(51,95,0)
+	wait(1)
+	SE_vol(51,94,0)
+	wait(1)
+	SE_vol(51,93,0)
+	wait(1)
+	SE_vol(51,92,0)
+	wait(1)
+	SE_vol(51,91,0)
+	wait(1)
+	SE_vol(51,90,0)
+	wait(1)
+	SE_vol(51,89,0)
+	wait(1)
+	SE_vol(51,88,0)
+	wait(1)
+	SE_vol(51,87,0)
+	wait(1)
+	SE_vol(51,86,0)
+	wait(1)
+	SE_vol(51,85,0)
+	wait(1)
+	SE_vol(51,84,0)
+	wait(1)
+	SE_vol(51,83,0)
+	wait(1)
+	SE_vol(51,82,0)
+	wait(1)
+	SE_vol(51,81,0)
+	wait(1)
+	SE_vol(51,80,0)
+	wait(1)
+	SE_vol(51,79,0)
+	wait(1)
+	SE_vol(51,78,0)
+	wait(1)
+	SE_vol(51,77,0)
+	wait(1)
+	SE_vol(51,76,0)
+	wait(1)
+	SE_vol(51,75,0)
+	wait(1)
+	SE_vol(51,74,0)
+	wait(1)
+	SE_vol(51,73,0)
+	wait(1)
+	SE_vol(51,72,0)
+	wait(1)
+	SE_vol(51,71,0)
+	wait(1)
+	SE_vol(51,70,0)
+	wait(1)
+	SE_vol(51,69,0)
+	wait(1)
+	SE_vol(51,68,0)
+	wait(1)
+	SE_vol(51,67,0)
+	wait(1)
+	SE_vol(51,66,0)
+	wait(1)
+	SE_vol(51,65,0)
+	wait(1)
+	SE_vol(51,64,0)
+	wait(1)
+	SE_vol(51,63,0)
+	wait(1)
+	SE_vol(51,62,0)
+	wait(1)
+	SE_vol(51,61,0)
+	wait(1)
+	SE_vol(51,60,0)
+	wait(1)
+	SE_vol(51,59,0)
+	wait(1)
+	SE_vol(51,58,0)
+	wait(1)
+	SE_vol(51,57,0)
+	wait(1)
+	SE_vol(51,56,0)
+	wait(1)
+	SE_vol(51,55,0)
+	wait(1)
+	SE_vol(51,54,0)
+	wait(1)
+	SE_vol(51,53,0)
+	wait(1)
+	SE_vol(51,52,0)
+	wait(1)
+	SE_vol(51,51,0)
+	wait(1)
+	SE_vol(51,50,0)
+	wait(1)
+	SE_vol(51,49,0)
+	wait(1)
+	SE_vol(51,48,0)
+	wait(1)
+	SE_vol(51,47,0)
+	wait(1)
+	SE_vol(51,46,0)
+	wait(1)
+	SE_vol(51,45,0)
+	wait(1)
+	SE_vol(51,44,0)
+	wait(1)
+	SE_vol(51,43,0)
+	wait(1)
+	SE_vol(51,42,0)
+	wait(1)
+	SE_vol(51,41,0)
+	wait(1)
+	SE_vol(51,40,0)
+	wait(1)
+	SE_vol(51,39,0)
+	wait(1)
+	SE_vol(51,38,0)
+	wait(1)
+	SE_vol(51,37,0)
+	wait(1)
+	SE_vol(51,36,0)
+	wait(1)
+	SE_vol(51,35,0)
+	wait(1)
+	SE_vol(51,34,0)
+	wait(1)
+	SE_vol(51,33,0)
+	wait(1)
+	SE_vol(51,32,0)
+	wait(1)
+	SE_vol(51,31,0)
+	wait(1)
+	SE_vol(51,30,0)
+	wait(1)
+	SE_vol(51,29,0)
+	wait(1)
+	SE_vol(51,28,0)
+	wait(1)
+	SE_vol(51,27,0)
+	wait(1)
+	SE_vol(51,26,0)
+	wait(1)
+	SE_vol(51,25,0)
+	wait(1)
+	SE_vol(51,24,0)
+	wait(1)
+	SE_vol(51,23,0)
+	wait(1)
+	SE_vol(51,22,0)
+	wait(1)
+	SE_vol(51,21,0)
+	wait(1)
+	SE_vol(51,20,0)
+	wait(1)
+	SE_vol(51,19,0)
+	wait(1)
+	SE_vol(51,18,0)
+	wait(1)
+	SE_vol(51,17,0)
+	wait(1)
+	SE_vol(51,16,0)
+	wait(1)
+	SE_vol(51,15,0)
+	wait(1)
+	SE_vol(51,14,0)
+	wait(1)
+	SE_vol(51,13,0)
+	wait(1)
+	SE_vol(51,12,0)
+	wait(1)
+	SE_vol(51,11,0)
+	wait(1)
+	SE_vol(51,10,0)
+	wait(1)
+	SE_vol(51,9,0)
+	wait(1)
+	SE_vol(51,8,0)
+	wait(1)
+	SE_vol(51,7,0)
+	wait(1)
+	SE_vol(51,6,0)
+	wait(1)
+	SE_vol(51,5,0)
+	wait(1)
+	SE_vol(51,4,0)
+	wait(1)
+	SE_vol(51,3,0)
+	wait(1)
+	SE_vol(51,2,0)
+	wait(1)
+	stop_SE(51)
+}
+
+
+#EndScriptTable
+//====================================================================
+

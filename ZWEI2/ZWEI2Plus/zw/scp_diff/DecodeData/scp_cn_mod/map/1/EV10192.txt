@@ -1,0 +1,756 @@
+//====================================================================
+//ステージトラップスクリプト
+//[11019][廃坑－中继分岐]
+//====================================================================
+
+#ScriptTable
+
+#ODESSA			1
+#EVENT_RAGNA 	2
+#ALWEN			3
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//■地形
+
+//  -------  no typ     tip      x    y   z    mot  向 状    000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+	set_chr( 90,990,	-1,-1,    0, 5400,0,   180,  0301, 6,"K1_11013;")	//①エントリ 梅ン③
+	set_chr( 91,990,	-1,-1,-2150,-1950,0,   315,  0301, 6,"K0_11021;")	//②エントリ 武器①
+	set_chr( 92,990,	-1,-1, 1950,-4900,0,    15,  0302, 6,"K0_11031;")	//③エントリ ボス①
+
+	set_chr( 95,990,	-1,-1,-2150,-1950,0,   315,  0103, 6,"K0_11021;")	//②エントリ 武器①補助
+
+//■スイッチ·看板
+	set_chr( 50,620,	-1,-1, -950, 600, 0,  	 0,   270, 0,";")		//①セーブOBJ
+
+	set_chr( 55,648,	-1,-1, -500,-325, 0,     2,   315, 0,";")	//等级之证 
+	set_chr( 56,648,	-1,-1,  585,-135, 0,     2,    15, 0,";")	//等级之证 
+	set_chr( 57,654,	-1,-1, -735, -25, 0,     4,   310, 0,";")	//順路案内（武器）
+	set_chr( 58,654,	-1,-1,  275,-275, 0,     3,     0, 0,";")	//順路案内（ボス）
+
+//■イベント
+	if(F1_02_EndPrologue && !F1_22_EndFirst)
+	{
+	//１章
+		//ＧＦ『★廃坑：奥蒂莎とすれ違った』立ってない
+		if(!F1_13_MeetOdessa)
+		{
+			//▼奥蒂莎とすれ違うイベント
+			set_chr( 80,990,-1,-1,947,-1512,-50,		0,	0401,	6,"<EV_1_03_MeetOd>;")
+		}
+		//ＧＦ『★廃坑：中继マップに到着した』立ってない
+		if(!F1_12_OnCaveHalf)
+		{
+			//▼中继マップに到着するイベント
+			EV("EV_1_02_OnCaveHalf")
+		}
+	}
+
+//■场面固有設定
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼中继マップに到着するイベント
+//──────────────────────────────
+//　　梅ンルート①をクリアした所でイベント発生。
+//　　拉古那たちが中继マップに入ってくるところを見せる。
+//　　出てすぐ之所か、中央之大きな広間でやるかは要検討。
+EV_1_02_OnCaveHalf
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,BLACK)
+	wait_fade()
+
+	F_set_chr(50,CF_NO_CLIP)
+	F_set_chr(50,CF_NO_CLIP2)
+	F_set_chr(55,CF_NO_CLIP)
+	F_set_chr(55,CF_NO_CLIP2)
+	F_set_chr(56,CF_NO_CLIP)
+	F_set_chr(56,CF_NO_CLIP2)
+	F_set_chr(57,CF_NO_CLIP)
+	F_set_chr(57,CF_NO_CLIP2)
+	F_set_chr(58,CF_NO_CLIP)
+	F_set_chr(58,CF_NO_CLIP2)
+
+	//キャラ再配置
+	chr_pos(RAGNA,-40,5158,0,180,2)
+	chr_pos(PARTNER, 52,5112,0,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(RAGNA)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, -50,5250,0, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 60,5220,0, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	KAO(ALWEN,"1","1","1")//デフォルト
+
+	//モーション定義
+	MOT_SET(ALWEN,150,-2,399,399,-1,-1)//腰に手を当てる（左）
+
+	//カメラ初期位置
+	CAM_move(202,-612,300,0,0)
+	CAM(630,108,400,40,210,0,1)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる
+
+	fade_in(0,60,BLACK)	//フェードイン
+	CAM_move(302,-662,600,180,0)
+	CAM(430,160,440,36,196,180,1)
+	wait_CAM_move()
+	wait_CAM()
+
+	cross_fade(30)
+//	CAM_move(42,-2494,160,0,0)
+//	CAM(450,94,0,38,210,0,0)
+//	CAM_move(52,-4892,160,240,0)
+//	CAM(-50,94,0,38,210,240,1)
+	CAM_move(52,-932,160,0,0)
+	CAM(410,124,160,32,224,0,0)
+	CAM_move(52,-4852,160,240,0)
+	CAM(-30,94,160,32,214,240,0)
+
+	wait(150)
+	move( EVENT_RAGNA, 0,	WALK1,-50,4645,0,0)
+	wait(30)
+	move( ALWEN, 0,	WALK1, 50,4900,0,0)
+
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(15)
+//	CAM_move(8,-4614,140,0,0)
+//	CAM(-210,38,140,24,338,0,0)
+//	CAM_move(28,-4694,140,900,0)
+//	CAM(-90,42,140,24,346,900,0)
+	CAM_move(8,-4694,140,0,0)
+	CAM(-210,56,140,22,338,0,0)
+	CAM_move(8,-4694,130,600,0)
+	CAM(-90,60,130,22,346,600,0)
+	rot(ALWEN,-1,165)
+	wait(15)
+
+	MOT(EVENT_RAGNA,53,15)	//髪をセット
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","1233321","1")//
+	MES(EVENT_RAGNA,"嗯……\n终于来到这里了吗。",0)
+	MES_close(EVENT_RAGNA)
+
+	wait_MOT(EVENT_RAGNA,53)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	rot(EVENT_RAGNA,30,310)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"虽说这样、\n真的是担心过度了啊。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"那个魔法……\n真的是很厉害呢。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,150,15)
+	wait(15)
+	KAO(ALWEN,"12321Z6","123","1")//
+	MES(ALWEN,"哼、那样\n跟我本来的魔力比起来\n还不够千分之一呢。",0)
+	KAO(ALWEN,"B232BZ6","32","2")//
+	MES(ALWEN,"不快一点\n把被夺走的力量找回来的话\n就跟没穿衣服一样静不下来。",0)
+	MES_close(ALWEN)
+
+	MES(EVENT_RAGNA,"是、是吗……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z5","33321","2")//
+	MES(ALWEN,"不过、你也有着\n很不错的本事呢。",0)
+	KAO(ALWEN,"12321Z5","1","2")//
+	MES(ALWEN,"那个奇妙的武器……\n能够完全的运用自如。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//	cross_fade(15)
+//	CAM_move(-74,-4694,80,0,0)
+//	CAM(30,60,80,22,224,0,0)
+//	CAM_move(-74,-4740,80,900,0)
+//	CAM(150,60,80,22,238,900,0)
+	CAM_move(-94,-4694,90,0,0)
+	CAM(30,64,90,22,224,0,0)
+	CAM_move(-94,-4714,70,600,0)
+	CAM(150,68,70,22,234,600,0)
+//	wait(15)
+
+	EV("_MOT_RAGNA_1")
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"《安卡基亚》吗。\n嘛、可是老相识呐。",0)
+	KAO(EVENT_RAGNA,"12321Z8","1","1")//
+	SE(1014,0)//ギア構えSE
+	MES(EVENT_RAGNA,"由于有控制时间间隔\n还能够解除陷阱\n对探索来说可是很贵重的宝物。",0)
+	KAO(EVENT_RAGNA,"12321Z8","1","1")//
+	MES(EVENT_RAGNA,"嘛、真的是很麻烦、\n而且不能缺少支持\n使用的人也不是很多。",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(ALWEN,"嗯、好象很有意思的样子。",0)
+	MES(ALWEN,"这么说起来……\n你、身体的情况怎样？",0)
+	MES(ALWEN,"在战斗最激烈的时候、\n没有出现任何不适吧？",0)
+	MES_close(ALWEN)
+
+	wait_EV("_MOT_RAGNA_1")
+	MOT(EVENT_RAGNA,51,15)	//首キョロキョロ
+	KAO(EVENT_RAGNA,"12321Z4","1232A","6")//
+	MES(EVENT_RAGNA,"感觉？\n感觉没什么异常。",0)
+	KAO(EVENT_RAGNA,"12321Z4","236","6")//
+	MES(EVENT_RAGNA,"并且相反的\n感觉身体变轻了很多。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	CAM_move(-174,-4514,130,0,0)
+	CAM(-170,68,130,12,222,0,0)
+	MOT(EVENT_RAGNA,2,0)	//
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	MOT(ALWEN,2,0)//
+
+//　　拉古那之頭に！マーク。
+	KAO(EVENT_RAGNA,"2","321DE","7")//
+//	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EFF(25100,	-50,-4645,120,	0,80,0)
+	SE(1000,0)//エモーション（！）
+	wait(30)
+
+	KAO(EVENT_RAGNA,"B232B2Z3","D12321D","2")//
+	MES(EVENT_RAGNA,"这个也是……\n《血之契约》的作用吗！？",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	CAM_move(-14,-4754,160,0,0)
+	CAM(-330,44,160,26,356,0,0)
+	CAM_move(-14,-4754,130,600,0)
+	CAM(-90,48,130,25,336,600,0)
+
+	KAO(ALWEN,"12321Z3","123332A","1")//
+	MES(ALWEN,"正是那样。",0)
+	KAO(ALWEN,"12321Z7","A","1")//
+	MES(ALWEN,"就算改变了契约\n你是《血之战士》的事实\n也不会改变。",0)
+	KAO(ALWEN,"12321Z6","A","1")//
+	MES(ALWEN,"不过、因为对等的立场\n应该更能够接近人类。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z4","1233321","1")//
+	MES(EVENT_RAGNA,"是、是吗……\n那么放心了。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z6","23","1")//
+	MES(ALWEN,"还有、因为有灵的连接\n你与我是一心同体的。",0)
+	KAO(ALWEN,"12321Z3","36","1")//
+	MES(ALWEN,"注意别受伤就行了。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z3","123","2")//
+	MES(EVENT_RAGNA,"……ＯＫ。\n记在心里了。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in( 100, 30, BLACK )	//暗転
+	wait_fade()
+
+	F_reset_chr(50,CF_NO_CLIP)
+	F_reset_chr(50,CF_NO_CLIP2)
+	F_reset_chr(55,CF_NO_CLIP)
+	F_reset_chr(55,CF_NO_CLIP2)
+	F_reset_chr(56,CF_NO_CLIP)
+	F_reset_chr(56,CF_NO_CLIP2)
+	F_reset_chr(57,CF_NO_CLIP)
+	F_reset_chr(57,CF_NO_CLIP2)
+	F_reset_chr(58,CF_NO_CLIP)
+	F_reset_chr(58,CF_NO_CLIP2)
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	//キャラ再配置
+	chr_pos(RAGNA,-50,4645,0,180,2)
+	chr_pos(PARTNER, 50,4900,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return( 0 )
+	wait(30)
+
+//ＧＦ『★廃坑：中继マップに到着した』を立てる。
+	F_set(F1_12_OnCaveHalf)
+
+	fade_in(0,30,BLACK)	//フェードイン
+
+	EV_end()
+}
+
+_MOT_RAGNA_1
+{
+	look_off(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,52,15)	//アンカーギア整備
+	wait(150)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+}
+
+//──────────────────────────────
+//▼奥蒂莎とすれ違うイベント
+//──────────────────────────────
+//　　中继マップ、ボスルートに向かう途中に来るとイベント発生。
+EV_1_03_MeetOd
+{
+	EV_begin()
+
+	fade_in(100,30,BLACK)	//
+	wait_fade()
+
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 1144,-1830,0, 2,170,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 930,-1800,0, 2, 170,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	KAO(ALWEN,"1","1","1")//デフォルト
+
+	//イベント用キャラ配置
+//	set_chr( ODESSA,1019,-1,-1,1806,-4362,0,		2,	15,	0,"")
+	set_chr( ODESSA,1019,-1,-1,1644,-3800,-100,		2,	15,	0,"")
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	KAO(ODESSA,"1","1","1")//デフォルト
+
+	//モーション定義
+	MOT_SET(EVENT_RAGNA,150,-1,428,428,-1,-1)//まて
+	MOT_SET(EVENT_RAGNA,151,-1,434,434,-1,-1)//怒り
+	MOT_SET(EVENT_RAGNA,152,-1,508,508,-1,-1)//どうよ？
+	MOT_SET(ALWEN,150,-1,399,399,-1,-1)//腰に手を当てる（左）
+	MOT_SET(ODESSA,150,-1,514,514,-1,-1)//ハイポーズ
+	MOT_SET(ODESSA,151,-1,399,399,-1,-1)//腰に手を当てる（左）
+	MOT_SET(ODESSA,152,-1,415,415,-1,-1)//やれやれ
+	MOT_SET(ODESSA,153,-1,417,417,-1,-1)//やれやれ停止
+	MOT_SET(ODESSA,154,-1,464,464,-1,-1)//バイバイ（左）
+//	MOT_SET(ODESSA,154,-1,465,465,-1,-1)//バイバイ（左）
+	MOT_SET(ODESSA,154,-1,464,464,-1,-1)//バイバイ（左）
+	MOT_SET(ODESSA,155,155,6395,6425,-1,-1)//バイバイ（左）
+	MOT_SET(ODESSA,156,-1,410,410,-1,-1)//ふーん
+	MOT_SET(ODESSA,157,-1,405,405,-1,-1)//そっち
+
+	wait(1)
+	F_set_Node(ODESSA,"Bone_RightSword",NP_HIDE)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる之はこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる
+
+	CAM_move(1000,1882,0,0,0)
+	CAM(830,66,0,42,225,0,0)
+
+	fade_in(0,30,BLACK)	//フェードイン
+	wait_fade()
+
+	chr_rename(ODESSA,"女性之声")//
+	MES_pos(ODESSA,"W9哇呀、你们是……",0,	500,120,0,0)
+	wait_key(0)
+	MES_close(ODESSA)
+
+//　　拉古那と艾雯之頭に！マーク。
+//	MES(EVENT_RAGNA,"！マーク。",300)
+//	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	look_chr( EVENT_RAGNA, ODESSA ,"Bone_Head")
+	look_chr( ALWEN, ODESSA ,"Bone_Head")
+	wait(15)
+	MES(EVENT_RAGNA,"谁……！？",0)
+	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+
+//　　画面スクロールして、向こうから奥蒂莎が来る之を見せる。
+//　　（ブーメランは持っていない状態？）
+	CAM_move(1324,2480,160,180,0)
+	CAM(470,44,160,34,180,180,1)
+	move( ODESSA, 0, 8, 1324,-2540,0,0)
+	wait_move( ODESSA )
+	MOT(ODESSA,151,15)	//腰に手を当てる（左）
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(15)
+//	CAM_move(1334,2394,160,0,0)
+//	CAM(-90,56,160,24,324,0,0)
+//	CAM_move(1374,2394,160,600,0)
+//	CAM(-90,56,160,24,308,600,0)
+	CAM_move(1314,2394,140,0,0)
+	CAM(-170,48,140,24,324,0,0)
+	CAM_move(1314,2394,140,300,0)
+	CAM(-210,46,140,24,320,300,0)
+
+	//キャラ再配置
+	chr_pos(EVENT_RAGNA,1184,-1930,0,180,2)
+	chr_pos(ALWEN, 970,-1900,0,190,2)
+	KAO(EVENT_RAGNA,"B","1","1")//
+	KAO(ALWEN,"B","1","1")//
+	wait(30)
+
+	chr_rename(ODESSA,"テンガロンハット之女性")//
+//	name("テンガロンハット之女性")
+	MES(ODESSA,"额、这样的地方\n还有其他人来。",0)
+	MES(ODESSA,"真的是、让人泄气。",0)
+	MES_close(ODESSA)
+
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","1")//
+	MES(EVENT_RAGNA,"你是……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	CAM_move(1324,2540,68,0,0)
+	CAM(-50,30,68,20,196,0,0)
+	CAM_move(1324,2540,168,130,0)
+	CAM(-210,34,168,20,166,130,0)
+	wait(100)
+
+	MOT(ODESSA,2,15)	//デフォルト
+	wait(30)
+	KAO(ODESSA,"12321Z3","1233321","1")//
+	MES(ODESSA,"我是奥蒂莎。",0)
+	KAO(ODESSA,"12321Z6","1","1")//
+	MES(ODESSA,"只是、刚刚来到伊尔巴特\n的旅人。",0)
+	KAO(ODESSA,"12321Z5","1","1")//
+	MES(ODESSA,"没见到过呢、\n你们是伊尔巴特的居民吗？",0)
+	MES_close(ODESSA)
+	wait_MES(ODESSA)
+
+	cross_fade(15)
+//	CAM_move(1234,2276,120,0,0)
+//	CAM(80,78,120,22,290,0,0)
+//	CAM_move(1234,2276,120,1200,0)
+//	CAM(-40,78,120,22,316,1200,0)
+	CAM_move(1234,2276,140,0,0)
+	CAM(-120,78,140,18,316,0,0)
+	CAM_move(1254,2276,140,600,0)
+	CAM(40,82,140,18,322,600,0)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z3","1233321","1")//
+	MES(EVENT_RAGNA,"不……我们也是旅行者。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"我是拉古那。\n拉古那·瓦伦汀。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z3","1233321","1")//
+	MES(ALWEN,"叫我艾雯就可以了。",0)
+	MES_close(ALWEN)
+
+	MOT(ODESSA,156,15)
+	wait(15)
+	chr_rename(ODESSA,"奥蒂莎")//
+	MES(ODESSA,"拉古那与艾雯吗。\n哼～……",0)
+	MES_close(ODESSA)
+	MOT(ODESSA,157,15)
+	wait(15)
+	MES(ODESSA,"能够使用安卡基亚\n也就是说哪个小子跟我是同行呢？",0)
+	MES_close(ODESSA)
+
+//　　拉古那之頭に怒りマーク。
+	KAO(EVENT_RAGNA,"C","1","3")//
+//	MES(EVENT_RAGNA,"怒了。",0)
+	EMO(EVENT_RAGNA,EMO_AOSUZI)
+	MOT(EVENT_RAGNA,151,10)	//怒り
+	wait(15)
+	CAM_quake("46")
+	KAO(EVENT_RAGNA,"C232CZ3","1233321","3")//
+	MES(EVENT_RAGNA,"P1谁是小子、谁啊！",0)
+	KAO(EVENT_RAGNA,"C232CZ5","1","3")//
+	MES(EVENT_RAGNA,"P1真是的、一看到别人就说别人很小\n真是失礼的女人～～",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那之頭に！マーク。
+	KAO(EVENT_RAGNA,"E","12321D","7")//デフォルト
+//	MES(EVENT_RAGNA,"！マーク。",300)
+//	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(30)
+
+	MOT(EVENT_RAGNA,2,15)	//デフォルト
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","D123","2")//デフォルト
+	MES(EVENT_RAGNA,"同行……\n………奥蒂莎………",0)
+	KAO(EVENT_RAGNA,"B232BZ3","321","2")//デフォルト
+	MES(EVENT_RAGNA,"《饿狼狩猎者》的奥蒂莎吗！",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ODESSA,2,15)
+	wait(15)
+	MES(ODESSA,"喔、你竟然知道呢。",0)
+	MES_close(ODESSA)
+
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","2")//
+	MES(EVENT_RAGNA,"果然。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","2")//
+	MES(EVENT_RAGNA,"在业界里、应该没有\n不知道她名字的人",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	cross_fade(15)
+	CAM_move(1098,1934,140,0,0)
+	CAM(-10,52,140,22,340,0,0)
+	wait(15)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	MOT(ALWEN,150,15)	//
+	wait(15)
+	KAO(ALWEN,"B232BZ3","1233321","6")//
+	MES(ALWEN,"怎么、认识的？",0)
+	MES_close(ALWEN)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ5","1233321","2")//
+	MES(EVENT_RAGNA,"不、没见过\n但是却是个很有名的人。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","2")//
+	MES(EVENT_RAGNA,"不但是财宝猎人\n并且作为赏金猎人也很大的名气。",0)
+	KAO(EVENT_RAGNA,"B232BZ8","123332","2")//
+	MES(EVENT_RAGNA,"那些粗暴的赏金头们\n听到她的名字\n都会心惊胆战。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,2,15)	//
+	wait(15)
+	KAO(ALWEN,"B232F","23332A","6")//
+	MES(ALWEN,"喔……",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(15)
+//	CAM_move(1194,2174,160,0,0)
+//	CAM(110,68,160,24,156,0,0)
+//	CAM_move(1194,2174,160,900,0)
+//	CAM(-50,68,160,24,156,900,0)
+	CAM_move(1210,2254,140,0,0)
+	CAM(-50,76,140,16,156,0,0)
+	CAM_move(1210,2254,150,600,0)
+	CAM(-10,88,160,16,156,600,0)
+	chr_pos(ALWEN, 970,-1900,0,230,2)
+	KAO(ALWEN,"1","1","1")//デフォルト
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	look_off(ALWEN)
+	look_off(EVENT_RAGNA)
+	wait(15)
+
+	MOT(ODESSA,153,15)	//やれやれ～やれやれ停止
+	VOICE(280,0)	//★ボイス入力演出
+	wait(15)
+	KAO(ODESSA,"12321Z3","123","5")//
+	MES(ODESSA,"哎呀哎呀、名声不怎么好呢。",0)
+	MES_close(ODESSA)
+
+	MOT(ODESSA,2,15)	//
+	wait(15)
+	KAO(ODESSA,"12321Z5","321","1")//
+	MES(ODESSA,"叫拉古那么。\n稍微听过些你的传闻呢。",0)
+	KAO(ODESSA,"12321Z6","1","1")//
+//	MES(ODESSA,"使用安卡基亚的红发少年\n年轻的飞机狂。",0)
+	MES(ODESSA,"使用安卡基亚的红发少年\n还被叫做《飞机狂》。",0)
+	MES_close(ODESSA)
+
+//	MOT(EVENT_RAGNA,53,15)	//髪をセット
+//	wait(15)
+	MES(EVENT_RAGNA,"咳……\n很讨厌被说飞机狂。",0)
+	MES(EVENT_RAGNA,"不过、像你这么有名的人\n到这里做什么？",0)
+	MES(EVENT_RAGNA,"难道有很大的赏金对象\n跑到这个岛上了？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"1","123","1")//
+	MOT(ODESSA,151,15)	//腰に手を当てる（左）
+	wait(15)
+	KAO(ODESSA,"12321Z3","3","1")//
+	MES(ODESSA,"……呵呵、差不多呢。",0)
+	KAO(ODESSA,"12321Z5","3","1")//
+	MES(ODESSA,"原本这个遗迹\n就好象被放弃了一样。",0)
+	KAO(ODESSA,"12321Z4","3","1")//
+	MES(ODESSA,"没办法、去别处看看好了。",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA,152,15)
+	wait(15)
+	MES(EVENT_RAGNA,"你……\n到过这里面吗？",0)
+	MES(EVENT_RAGNA,"所以有没有\n见过什么奇怪的东西呢？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"12321Z5","321","1")//
+	MES(ODESSA,"啊啊、其实\n我还没到最里面去。",0)
+	KAO(ODESSA,"12321Z5","1","1")//
+	MES(ODESSA,"不过、里面。\n好象没有看的上眼的东西。",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA,2,15)	//
+	wait(15)
+	MES(EVENT_RAGNA,"唉……？",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(ALWEN,"……………………………",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　奥蒂莎、そ之まま拉古那たち之脇を通り抜ける。
+	KAO(ODESSA,"1","123","1")//
+	MOT(ODESSA,2,15)
+	VOICE(310,0)	//★ボイス入力演出
+	wait(15)		//★ボイス入力演出
+	move( ODESSA, 0, 8, 1030,-1762,0,0)
+	wait(40)
+
+	cross_fade(30)
+	CAM_move(1194,2034,180,0,0)
+	CAM(190,46,180,28,320,0,0)
+	CAM_move(1134,2014,180,600,0)
+	CAM(30,46,180,28,334,600,0)
+
+	look_chr( EVENT_RAGNA, ODESSA ,"Bone_Head")
+	move( EVENT_RAGNA, 0, 4, 1242,-1944,1,0)
+	wait(10)
+	look_chr( ALWEN, ODESSA ,"Bone_Head")
+	move( ALWEN, 0, 4, 926,-1944,1,0)
+	rot(EVENT_RAGNA,10,30)
+	rot(ALWEN,10,330)
+
+	wait(60)
+//	CAM_move(1174,2114,280,600,0)
+//	CAM(350,40,280,30,336,600,0)
+
+	MOT(EVENT_RAGNA,150,15)	//待て
+	wait(15)
+	MES(EVENT_RAGNA,"喂、喂……",0)
+	MES_close(EVENT_RAGNA)
+
+	wait_move(ODESSA)
+	look_chr( ODESSA, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+	MES(ODESSA,"……不过先不提我看上眼的里面\n还感到有其他人的气息。",0)
+	MES(ODESSA,"还想往里走的话\n一定要小心些。",0)
+	MES(ODESSA,"不过、那边的哪个大小姐\n好象知道的很清楚一样。",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA,2,15)	//デフォルト
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	MES(EVENT_RAGNA,"哈……",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,150,15)	//ポーズ
+	wait(15)
+	MES(ALWEN,"呵呵、有趣。",0)
+	MES(ALWEN,"是叫奥蒂莎么。\n有机会的话再见咯。",0)
+	MES_close(ALWEN)
+
+//　　奥蒂莎、手をひらひらさせながら去っていく。
+//　　見送りながら、拉古那之頭に…マーク。
+	look_off(ODESSA)
+//	MOT(ODESSA,154,15)	//バイバイ（左）
+//	wait(30)
+	MOT(ODESSA,154,15)	//バイバイ（左）
+	wait(15)
+	look_chr( EVENT_RAGNA, ODESSA ,"Bone_Head")
+	MOT(ODESSA,155,2)	//
+	wait(2)
+	move( ODESSA, 30, 8, 592,-162,0,0)
+	wait(50)
+	MOT(ODESSA,0,10)	//バイバイ戻し　岡田記述
+	wait(100)
+
+	cross_fade(30)
+	color(ODESSA,-1)
+	move(ODESSA, 99, 0,0,0,0,0)
+	CAM_move(1084,1934,110,0,0)
+	CAM(10,48,110,28,160,0,0)
+	CAM(10,52,100,28,160,600,0)
+	chr_pos(ALWEN, 980,-1910,0,330,150)
+	chr_pos(EVENT_RAGNA, 1170,-1900,0,30,2)
+	KAO(EVENT_RAGNA,"B","1","4")//
+	wait(30)
+
+	EMO(EVENT_RAGNA,EMO_TENTEN)
+	wait(60)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ2","1233321","9")//デフォルト
+	MES(EVENT_RAGNA,"……呐。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","9")//デフォルト
+	MES(EVENT_RAGNA,"好象很微妙的交谈呢\n到底说了些什么？",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+
+	KAO(ALWEN,"12321Z2","123","1")//
+	MES(ALWEN,"就那些、而已。",0)
+	KAO(ALWEN,"12321Z8","32A","1")//
+	MES(ALWEN,"确实、在这前面\n好象有什么东西在那里、\n隐藏着我的一部分魔力。",0)
+	KAO(ALWEN,"12321Z4","A","1")//デフォルト
+	MES(ALWEN,"用心过去那里怎么样啊？",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z2","123","1")//
+	MES(EVENT_RAGNA,"……嗯。",0)
+//	MOT(EVENT_RAGNA,53,15)	//髪をセット
+//	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","321","2")//
+	MES(EVENT_RAGNA,"好吧。\n就这样去吧！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in( 100, 30, 0 )
+	wait_fade()
+
+	delete(ODESSA)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	//キャラ再配置
+	chr_pos(RAGNA,1150,-1800,0,190,2)
+	chr_pos(PARTNER,950,-1800,0,190,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return( 0 )
+	wait(30)
+
+//ＧＦ『★廃坑：奥蒂莎とすれ違った』を立てる。
+	F_set(F1_13_MeetOdessa)
+	//★拉古那【飛行机狂】
+	F_set_note(PLAYER1,1)				//パッチ修正 20081010
+	//★奥蒂莎
+	F_set_note(-19,-1)
+	//★奥蒂莎【賞金首】
+	F_set_note(-19,0)
+
+	fade_in(0,30,0)	//フェードイン
+
+	EV_end()
+}
+
+
+#EndScriptTable
+//====================================================================
+

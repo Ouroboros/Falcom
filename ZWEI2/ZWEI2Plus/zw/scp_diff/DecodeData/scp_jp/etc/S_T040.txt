@@ -1,0 +1,607 @@
+//──────────────────────────────
+//	name("◆アンナ（メイドさんＡ）Anna")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_ANNA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(ANNA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ANNA)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ANNA)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ANNA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　※屋敷控え室、奥の椅子に座っている。
+	//　　　テーブルの上にはカップが一つ。
+	if( F6_05_EndSixth )
+	{
+		look_chr(ANNA, PLAYER1,"Bone_Head")
+		if(!F_ANNA)
+		{
+			MES(ANNA,"あら……",0)
+			MES(ANNA,"お嬢様たちなら、\nとっくに出掛けたわよー。",0)
+			MES(ANNA,"今頃は飛行場で\n待ってると思うけど。",0)
+			MES_close(ANNA)
+
+		//　　アンナに少し・・・エモーション。
+			EMO(ANNA,EMO_TENTEN)
+			wait(30)
+			MES(ANNA,"言っておくけど、\nサボってるわけじゃないわよー。",0)
+			MES(ANNA,"今は休憩時間なのよー。",0)
+			MES_close(ANNA)
+
+			F_set(ANNA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(ANNA,"……やる事がないってのも、\n意外とヒマでつまんないわねー。",0)
+			MES_close(ANNA)
+
+		//　　アンナに少し・・・エモーション。
+			EMO(ANNA,EMO_TENTEN)
+			wait(30)
+
+			MES(ANNA,"コーヒーでも飲んでいく？",0)
+			MES(ANNA,"淹れてあげるけど～。",0)
+			MES_close(ANNA)
+		}
+		look_off(ANNA)
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　※屋敷横の滝前あたりを掃除している。（ホウキ持ち）
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(ANNA,30,PLAYER1)
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中・手戻し
+		EV("MOTION_TK_ANNA")
+		if(!F_ANNA)
+		{
+			MES(ANNA,"町の噂によると、\nヤバい竜巻が襲ってくるらしいわー。",0)
+			MES(ANNA,"……………………………………",0)
+			MES(ANNA,"……ヘレナ、\nまた泣いちゃうかもねー。",0)
+			MES_close(ANNA)
+
+		//　　アンナ、向きを戻す。
+			rot(ANNA,30,0)
+			look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+			MES(ANNA,"早く掃除、すませちゃお。",0)
+			MES_close(ANNA)
+
+			F_set(ANNA)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(ANNA,"屋敷の方じゃ、エンジェが\n戸締りを始めてるハズよ～。",0)
+			rot(ANNA,30,0)
+			MES(ANNA,"……早く掃除、すませちゃお。",0)
+			MES_close(ANNA)
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	//　　※屋敷・広間を掃除している。（ホウキ持ち）
+	if( F5_00_HearLunar )
+	{
+		EV("MOTION_TK_ANNA")
+		if(!FT_11_TalkAnna)
+		{
+		//	name("⇒フラグ①または②の初回イベントを見ている場合。")
+			if(FT_01_TalkAnna || FT_02_TalkAnna )
+			{
+				MES(RAGNA,"あ、あれ？\n珍しく働いているんだな……",0)
+				MES_close(RAGNA)
+
+			//	name2(ANNA)
+				rot_chr(ANNA,30,PLAYER1)
+				MES(ANNA,"う……うるさいわねー。",0)
+				MES(ANNA,"何をしようと、\nあたしの勝手じゃな～い。",0)
+				MES_close(ANNA)
+			}
+
+			EMO(ANNA,EMO_HATENA)
+			wait(30)
+			rot_chr(ANNA,30,PET)
+			look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中・手戻し
+			MES(ANNA,"ん～……",0)
+			MES_close(ANNA)
+
+//			MES(ANNA,"C4◆アンナ、少し・・・エモーションを出しながらルゥに顔を近づけてくる。",0)
+//			MES_close(ANNA)
+		//　　アンナ、少し・・・エモーションを出しながらルゥに顔を近づけてくる。"
+			EMO(ANNA,EMO_TENTEN)
+			wait(40)
+			EMO(ANNA,EMO_TENTEN)
+			wait(50)
+			//顔を近づける
+
+			MES(ANNA,"じ～………",0)
+			MES(ANNA,"その赤っぽいの、何？",0)
+			MES(ANNA,"この前から屋敷の中を\nちらちらしてる気がするけど……",0)
+			KAO(ANNA,"1","2","2")
+			MES(ANNA,"う……よく見えない……",0)
+			MES_close(ANNA)
+
+		//　　ルゥに気付きエモーション。
+			EMO(PET,EMO_PA)
+			rot_chr(PET,30,ANNA)
+			wait(30)
+			
+			MES(PET,"あ、あたしのこと？",0)
+			MES_close(PET)
+
+			EMO(PET,EMO_AOSUZI)
+			wait(30)
+
+			MES(PET,"な、なんなの\nこの無礼なメイド……",0)
+			MES(PET,"あたしはアルウェン様の家臣！\nナイスバディな闇妖精よっ！",0)
+			MES(PET,"あんたたちのお嬢様にも\n協力してやってるんじゃない！",0)
+			MES_close(PET)
+
+		//	name2(RAGNA)
+			look_chr(RAGNA,PET,"Bone_Head")
+			MES(RAGNA,"はは……",0)
+			MES_close(RAGNA)
+
+		//　　ラグナ、アンナに向く。
+			look_off(RAGNA)
+
+			//──────────────────────────────
+			//	name("⇒フラグ②の初回を見ていない場合")
+			if(!FT_02_TalkAnna)
+			{
+				MES(RAGNA,"っていうか、あんたもしかして\n視力悪いんじゃないか？",0)
+				MES(RAGNA,"眼鏡とか使えばいいのによ……",0)
+				MES_close(RAGNA)
+			}
+			//	name("⇒フラグ②の初回を見ている場合")
+			else
+			{
+				MES(RAGNA,"っていうか、\nあんたもいい加減\n眼鏡を使えばいいのによ……",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+			rot_chr(ANNA,30,RAGNA)
+		
+			KAO(ANNA,"1","1","1")
+			MES(ANNA,"うるさいわねー。\n余計なお世話よー。",0)
+			rot_chr(ANNA,30,PET)
+			MES(ANNA,"まあ別に何者でもいいけど……",0)
+			MES(ANNA,"ヘレナを驚かすような\n真似をしたら、チョップするわよ。\nいいわねー。",0)
+			MES_close(ANNA)
+
+		//	name2(PET)
+			MES(PET,"す、するわけないでしょ、\nそんなこと。",0)
+			MES(PET,"まったく、レディを捕まえて\n失礼な人間ね……",0)
+			MES_close(PET)
+
+			F_set(FT_11_TalkAnna)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中・手戻し
+			if(!F_ANNA)
+			{
+				MES(ANNA,"あら……掃除した所を\n汚さないでくれる？",0)
+				MES(ANNA,"しかもその靴、泥だらけだし。",0)
+				MES(ANNA,"折角の努力が台無しじゃなーい。",0)
+				MES_close(ANNA)
+
+			//──────────────────────────────
+			//	name("⇒フラグ①または②の初回イベントを見ており、ヘレナの繰り返しを見ている場合。")
+				if(FT_01_TalkAnna || FT_02_TalkAnna )
+				{
+					if(F_HELENA)
+					{
+						MES(RAGNA,"（どうやら真面目に仕事する\n  ようになったみたいだが……）",0)
+						MES(RAGNA,"（口の悪さは\n  相変わらずだよな……）",0)
+						MES_close(RAGNA)
+					}
+				}
+				
+				F_set(ANNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(ANNA,"コラー、そこ。\n人の折角の努力を無駄にするなー。",0)
+				MES(ANNA,"ちっとも終わらないじゃない。",0)
+				MES_close(ANNA)
+			}
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※屋敷の前で掃除している。（ホウキ持ち）
+	if( F4_00_StartSolo )
+	{
+		rot_chr(ANNA,30,PLAYER1)
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中・手戻し
+		EV("MOTION_TK_ANNA")
+
+		if(!F_ANNA)
+		{
+			MES(ANNA,"お嬢様からは、今日は一日\nお休みしていいって言われてるのよー。",0)
+			MES(ANNA,"……でも、何も\nしてないと落ち着かないし。",0)
+			MES(ANNA,"特にやる事もないんだもん。",0)
+			MES_close(ANNA)
+
+		//　　アンナに少し・・・エモーション。
+			MES(ANNA,"この辺り、\nてきとーに掃除しとこっと。",0)
+			MES_close(ANNA)
+			F_set(ANNA)
+		//　　★アンナ【根はいい奴】
+			F_set_note(ANNA,2)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(ANNA,"……お嬢様なら\n中に居るわよ～。",0)
+			MES(ANNA,"用事があるなら\nさっさと入れば～？",0)
+			MES_close(ANNA)
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった
+	//──────────────────────────────
+	//　　※屋敷・控え室、ヘレナの傍に立っている。
+	if( F3_00_GoMoonCastle )
+	{
+		EV("MOTION_TK_ANNA")
+		if(!F_ANNA)
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			MES(ANNA,"……初めに襲われたの、\nヘレナだったの。",0)
+			MES(ANNA,"魔物は裏手の崖を\n越えてきたみたいねー。",0)
+			MES(ANNA,"……………………………………",0)
+			MES(ANNA,"確かにあれはビビるかも～。",0)
+			MES_close(ANNA)
+			F_set(ANNA)
+		}
+	//　　★繰りかえし
+		else
+		{
+		//　　※振り返らない。
+			MES(ANNA,"……ヘレナ、\nもう魔物はいないわよ～。",0)
+			MES(ANNA,"……コラー、泣くなー。\nそろそろ泣き止めー。",0)
+			MES_close(ANNA)
+		}
+		rot_chr(ANNA,30,HELENA)
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※町、噴水右辺りのベンチに座っている。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_ANNA)
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			EV("MOTION_TK_ANNA")
+			MES(ANNA,"ヘレナをからかって遊んでたら、\nエンジェの奴にバレちゃったのよー。",0)
+			MES(ANNA,"罰として、買い物当番を\n言いつけられちゃったわー。",0)
+			MES(ANNA,"チッ、あのチビッ子メイド長め……\n今度仕返ししてやる。",0)
+			MES(ANNA,"帳簿に『このお子様め』って\n落書きしておいてやるわ～。",0)
+			MES_close(ANNA)
+
+		//　　２人に冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			//★アンナ【時には失敗】
+			F_set_note(ANNA,1)
+
+			F_set(ANNA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない。
+			MES(ANNA,"う……\n今日はちょっと暑い……",0)
+			MES_close(ANNA)
+
+		//　　アンナ振り返る。
+			rot_chr(ANNA,30,PLAYER1)
+			EV("MOTION_TK_ANNA")
+			//振り返る処理
+			MES(ANNA,"……あたし、太陽って嫌い。",0)
+			MES(ANNA,"何だかウザイもの。",0)
+			MES_close(ANNA)
+		}
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※屋敷の前を掃除している。（ホウキ持ち）
+	if( F2_00_GoForest )
+	{
+		rot_chr(ANNA,30,PLAYER1)
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中・手戻し
+		EV("MOTION_TK_ANNA")
+		if(!F_ANNA)
+		{
+			MES(ANNA,"今日はお嬢様たちが\n帰ってるのよー。",0)
+			MES(ANNA,"チェッ、これからサボろうと\n思ってた所なのに……",0)
+			MES(ANNA,"ついてないわー。",0)
+			MES_close(ANNA)
+			F_set(ANNA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(ANNA,"……あたし、\nあの執事さん苦手だわ～。",0)
+			MES(ANNA,"だって静かすぎて\n全然気配が読めないんだもん。",0)
+			MES(ANNA,"なんだか、じーっと見張られてる\n気がして落ち着かないのよー。",0)
+			MES_close(ANNA)
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(ANNA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※屋敷控え室に配置。
+	//　　　部屋の隅で頭を抱えている。（額に手を当てる、口に手を当てるで代用？）
+	if( F1_15_GoVillage )
+	{
+		if(!FT_02_TalkAnna)
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			MES(ANNA,"いてて……",0)
+			MES(ANNA,"そこの食器棚で、思いっきり\n頭をぶつけたのよ～。",0)
+			MES(ANNA,"……だって、よく\n見えなかったんだもん。",0)
+			MES(ANNA,"まったくどうしてあんな所に\n食器棚があるのかしらー。",0)
+			MES_close(ANNA)
+
+		//──────────────────────────────
+		//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"いや、というか……",0)
+				MES(RAGNA,"ひょっとしてあんた、\n目が悪いんじゃないか？",0)
+				MES_close(RAGNA)
+			}
+		//	name("⇒アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"ふむ、そなたその目……",0)
+				MES(PARTNER,"もしや視力が\n弱いのではないか？",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			MES(ANNA,"う……",0)
+			MES(ANNA,"うるさいわねー。",0)
+			MES(ANNA,"どうだっていいじゃない、\nそんな事～。",0)
+			MES_close(ANNA)
+			F_set(FT_02_TalkAnna)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_ANNA)
+			{
+			//　　※振り返らない。
+				MES(ANNA,"おー、いてて……",0)
+				MES(ANNA,"やれやれ、ついてないわ～。\nついでにサボっちゃおっと。",0)
+				MES_close(ANNA)
+
+			//　　アンナ振り返る。
+				rot_chr(ANNA,30,PLAYER1)
+			//	★振り返る処理
+			
+				MES(ANNA,"あ……言っとくけど。\n派手に頭をぶつけちゃったのは\nまだこの屋敷に慣れてないせいよ～。",0)
+				MES(ANNA,"本家にいた頃は、もうちょっと\nソフトにぶつけてたもの。",0)
+				MES_close(ANNA)
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"や、やっぱり目が\n悪いんじゃねえか……",0)
+					MES(RAGNA,"眼鏡とか使えばいいのによ……",0)
+					MES_close(RAGNA)
+				}
+				//	name("⇒アルウェン先頭")
+				else
+				{
+					MES(PARTNER,"む、無理せず眼鏡などを\n掛ければよいのに……",0)
+					MES_close(PARTNER)
+				}
+				F_set(ANNA)
+			}
+			//──────────────────────────────
+			//　　★繰り返し
+			else
+			{
+				rot_chr(ANNA,30,PLAYER1)
+				MES(ANNA,"フン……",0)
+				MES(ANNA,"眼鏡なんてダサいものを\n掛けるつもりはないのよー。",0)
+				MES(ANNA,"ヘレナみたいなボケ顔になるのは\n真っ平ゴメンだわ～。",0)
+				MES_close(ANNA)
+
+				//★アンナ【視力も悪い】
+				F_set_note(ANNA,0)
+			}
+		}
+		rot(ANNA,30,270)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※屋敷控え室、台所に立つ。
+	//　　※初回イベント
+	if( F1_01_GameStart )
+	{
+		if(!FT_01_TalkAnna)
+		{
+			MES(ANNA,"あーあ、やってらんないわ～。",0)
+			MES(ANNA,"後片付けなんて、ヘレナに\n押し付けちゃおうかしら～……",0)
+			MES_close(ANNA)
+
+		//　　アンナ、？エモーションで振り返る。
+			EMO(ANNA,EMO_HATENA)
+			rot_chr(ANNA,30,PLAYER1)
+			wait(30)
+
+			EV("MOTION_TK_ANNA")
+			MES(ANNA,"じ～……",0)
+			MES_close(ANNA)
+
+		//　　アンナに・・・エモーション。
+			EMO(ANNA,EMO_TENTEN)
+			wait(30)
+
+			MES(ANNA,"何よあんたたち。\n見ない顔ねー。",0)
+			MES(ANNA,"怪しいやつじゃさそうだけどー。",0)
+			MES(ANNA,"このお屋敷で\n妙な真似したらぶつわよ。\nいいわねー。",0)
+			MES_close(ANNA)
+			
+			F_set(FT_01_TalkAnna)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			EV("MOTION_TK_ANNA")
+			rot_chr(ANNA,30,PLAYER1)
+			if(!F_ANNA)
+			{
+				MES(ANNA,"今このお屋敷に\n客が２人ほど滞在してるのよー。",0)
+				MES(ANNA,"２人とも子供よー。\n１４、５歳ってトコかしらー。",0)
+				MES(ANNA,"しょっちゅう出かけてるし、\n別に手のかかる年でもないから\nいいんだけど。",0)
+				MES(ANNA,"人が多いと、なかなか\nサボる隙が見つからなくて困るわ～。",0)
+				MES_close(ANNA)
+				
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（し、仕事をしろよな。）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"（むう、不埒な召使のようだな……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				F_set(ANNA)
+			}
+			//　　★繰り返し
+			else
+			{
+				MES(ANNA,"あの子たちが来てから、\nなかなかサボる隙が見つからないの。",0)
+				MES(ANNA,"あーあ、やってらんないわ～。",0)
+				MES_close(ANNA)
+			}
+			rot(ANNA,30,90)
+		}
+		MOT(ANNA,2,15)
+	}
+	
+	TK_end()
+}
+
+//会話時のモーション
+MOTION_TK_ANNA
+{
+	MOT_SET(ANNA,150,-1,401,401,-1,-1)
+	MOT(ANNA,150,15)
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

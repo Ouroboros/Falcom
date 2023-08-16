@@ -1,0 +1,554 @@
+//■Zwei2一般メッセージ・アルッテの町（※モンドレアン夫人）
+//────────────────────────────────────────────────────────────
+//■アルッテ
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆モンドレアン夫人（上流階級女）Mondriaan")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_MONDRIAAN
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(MONDRIAAN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,MONDRIAAN)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,MONDRIAAN)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MONDRIAAN)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MONDRIAAN)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MONDRIAAN)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MONDRIAAN)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,MONDRIAAN)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　※民家１の前にいる。
+	//　　　周りに猫３匹がフリームーブしている。
+	if( F6_05_EndSixth )
+	{
+		MOT_SET(MONDRIAAN,150,-1,561,561,-1,-1)	
+		if(!F_MONDRIAAN)
+		{
+		//──────────────────────────────
+		//	name("⇒フラグ⑫の初回を見ている場合")
+		//　　夫人、ＰＡエモーションで振り返る。
+			EMO(MONDRIAAN,EMO_PA)
+			look_chr( MONDRIAAN, PLAYER1,"Bone_Head")
+			wait(30)
+
+			MOT(MONDRIAAN,150,15)
+			
+			MES(MONDRIAAN,"おや……あなたたちザマスか。",0)
+			MES_close(MONDRIAAN)
+
+		//──────────────────────────────
+			MES(MONDRIAAN,"あのときは大変だったザマス。",0)
+			MES(MONDRIAAN,"これから嵐が来るというのに\nミーちゃんが居なくなって……\n主人と散々探し回ったザマスよ。",0)
+			MES(MONDRIAAN,"でもミーちゃんを見つけてきたのは、\nあの主人の犬だったんザマス。",0)
+			MES(MONDRIAAN,"今まで落ち着きが無い犬と\n思ってたザマスけど……\n少し見直したザマスよ。",0)
+			MES_close(MONDRIAAN)
+
+			//★モンドレアン【クラークを見直した】
+			F_set_note(MONDRIAAN,2)
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			look_chr( MONDRIAAN, PLAYER1,"Bone_Head")
+			MOT(MONDRIAAN,150,15)
+			MES(MONDRIAAN,"あの主人の犬、迷子のミーちゃんを\n見つけてくれたんザマス。",0)
+			MES(MONDRIAAN,"少し見直したザマスよ。",0)
+			MES(MONDRIAAN,"それに、近頃は随分\n大人しくなったようザマスし……",0)
+			MES(MONDRIAAN,"もう主人が犬を飼うことに\nとやかく言うのは止めたザマスよ。",0)
+			MES_close(MONDRIAAN)
+		}
+		MOT(MONDRIAAN,151,15)
+		look_off(MONDRIAAN)
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　※外で町長の演説を聴いている。
+	//　　　周りにハッチーとショコラがフリームーブしている。
+	//　　　夫人にアセアセエモーション出しっぱなし。
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_TK_MONDRIAAN")
+		if(!FT_12_TalkMondriaan)
+		{
+		//　　※初回イベント
+		//　　※振り返らない
+			MES(MONDRIAAN,"竜巻……\nお、恐ろしい事になったザマス。",0)
+			MES(MONDRIAAN,"オロオロ……\n一体どこへ逃げれば……",0)
+			MES_close(MONDRIAAN)
+
+		//　　夫人、ＰＡエモーションで振り返る。
+			EMO(MONDRIAAN,EMO_PA)
+			wait(30)
+			
+			rot_chr(MONDRIAAN,30,PLAYER1)
+			
+			MES(MONDRIAAN,"あなたたち……",0)
+			MES(MONDRIAAN,"ワタクシを連れて、逃げるザマスよ！",0)
+			MES_close(MONDRIAAN)
+
+		//──────────────────────────────
+		//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"へ……？",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"む……？",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			MES(MONDRIAAN,"飛行機を持っているのでしょう。\n隠しても無駄ザマス。",0)
+			MES(MONDRIAAN,"ワタクシと子猫ちゃんたちを乗せて、\nこの大陸から逃げだすザマス！",0)
+			MES_close(MONDRIAAN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"えーっと……わ、悪いな。",0)
+			MES(RAGNA,"トリスタンには外せねえ用事があって、\nそういう事には使えねえんだ。",0)
+			MES(RAGNA,"ただ、俺たちも竜巻を\n止めるために努力してる所だ。",0)
+			MES(RAGNA,"あんたも少し、落ち着いてくれよ。",0)
+			MES_close(RAGNA)
+
+		//　　夫人に・・・エモーション。
+			EMO(MONDRIAAN,EMO_TENTEN)
+			EV_stop("ASEASE_MONDRIAAN")
+			wait(30)
+			MOT(MONDRIAAN,2,15)
+			
+			MES(MONDRIAAN,"本当ザマスか？\n信じていいのザマスね？",0)
+			MES(MONDRIAAN,"……嘘だったら、\n３億ペンネの損害賠償を\n請求するザマス。",0)
+			MES_close(MONDRIAAN)
+
+		//　　ラグナたちに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PARTNER,EMO_AOZAME)
+			wait(30)
+		
+		//──────────────────────────────
+		//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"さ、３億ペンネ……？\n（最新型の飛行機が\n  何機も買えるぜ……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"さ、３億ペンネ……？\n（人の世では相当な値であろうな……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+		//　　夫人に少し・・・エモーション。
+			EMO(MONDRIAAN,EMO_TENTEN)
+			wait(30)
+			
+			MES(MONDRIAAN,"ふう……仕方ないザマスね。\n確かに騒いで\nどうなるものでもないザマスし……",0)
+			MES(MONDRIAAN,"まずは町長から\n詳しい話を聞くことにするザマスよ。",0)
+			MES_close(MONDRIAAN)
+
+		//　　以降夫人のアセアセエモーションは出さない。
+		
+			F_set(FT_12_TalkMondriaan)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			if(!F_MONDRIAAN)
+			{
+			//　　※振り返らない。
+				MES(MONDRIAAN,"それにしても、イマイチ\n要領の得ない話し方ザマスね……",0)
+				MES(MONDRIAAN,"住民の一大事ザマスよ！？",0)
+				MES(MONDRIAAN,"もっとキッパリハッキリ、\n洗いざらい話すべきザマス！",0)
+				MES(MONDRIAAN,"本当にいつも、\nどこか頼りないんザマスから……",0)
+				MES_close(MONDRIAAN)
+				F_set(MONDRIAAN)
+			}
+		//　　★繰り返し
+			else
+			{
+			//　　※振り返らない。
+				MES(MONDRIAAN,"もっとキッパリハッキリ、\n洗いざらい話すべきザマス！",0)
+				MES(MONDRIAAN,"本当にいつも、\nどこか頼りないんザマスから……",0)
+				MES_close(MONDRIAAN)
+			}
+		}
+		MOT(MONDRIAAN,153,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	//　　※民家１の前にいる。
+	//　　　周りに猫３匹がフリームーブしている。
+	if( F5_00_HearLunar )
+	{
+		rot_chr(MONDRIAAN,30,PLAYER1)
+		EV("MOTION_TK_MONDRIAAN")
+
+		if(!F_MONDRIAAN)
+		{
+			MES(MONDRIAAN,"あの魔物の騒動以来、\n外出を控えていたザマスが……",0)
+			MES(MONDRIAAN,"ずっと家に一人でいると、\n逆に不安になるザマス。",0)
+			MES(MONDRIAAN,"はぁ……",0)
+			MES(MONDRIAAN,"こんな事なら、用心棒を雇うなり\nメイドロボを購入するなり\nしておけばよかったザマス。",0)
+			MES_close(MONDRIAAN)
+
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MONDRIAAN,"子猫ちゃんたちの散歩も\nあるザマスから、たまには\n外に出ないといけないザマスよ。",0)
+			MES(MONDRIAAN,"もうあんな騒動が\nなければいいザマスけど……",0)
+			MES_close(MONDRIAAN)
+		}
+		MOT(MONDRIAAN,153,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※教会、適当な席に座っている。
+	//　　　近くに猫３匹がフリームーブしている。
+	if( F4_00_StartSolo )
+	{
+		rot_chr(MONDRIAAN,30,PLAYER1)
+		EV("MOTION_TK_MONDRIAAN")
+
+		if(!F_MONDRIAAN)
+		{
+			MES(MONDRIAAN,"昨晩はドタバタと\n外が騒がしかったザマスの。",0)
+			MES(MONDRIAAN,"それが後から聞いた話では、\n魔物が現れたそうザマス。",0)
+			MES(MONDRIAAN,"それなのに、主人は熟睡。\n主人の犬はピクリともしないザマス。",0)
+			MES(MONDRIAAN,"本当に、いざというときは\n何の役にも立たないザマス……！",0)
+			MES_close(MONDRIAAN)
+
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MONDRIAAN,"先程、別の大陸に避難しようかと\n飛行場に行ってみたザマスけど……",0)
+			MES(MONDRIAAN,"どうしてだか連絡便が\n全てキャンセルになっていたザマス。",0)
+			MES(MONDRIAAN,"不安ザマス……\nもう教会に頼るしかないザマス。",0)
+			MES_close(MONDRIAAN)
+		}
+		MOT(MONDRIAAN,153,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//※いない
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※民家１の前付近に立っている。
+	//　　　周りに猫３匹がフリームーブしている。
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(MONDRIAAN,30,PLAYER1)
+		if(!FT_05_TalkMondriaan)
+		{
+		EV("MOTION_TK_MONDRIAAN")
+		//　　※初回イベント。
+			MES(MONDRIAAN,"主人が、\nあの落ち着きの無い犬を連れて\n帰ってきたザマス。",0)
+			MES_close(MONDRIAAN)
+
+		//　　夫人にぷんすかエモーション。
+			EMO(MONDRIAAN,EMO_DOKAN)
+			wait(30)
+
+			MES(MONDRIAAN,"まったく、犬だなんて……\nこの子達が怯えたら\nどうするつもりザマスか。",0)
+			MES(MONDRIAAN,"フン、嫌がらせに\n主人のペットフードを\n取ってきてやったザマス。",0)
+			MES_close(MONDRIAAN)
+
+		//	name("アイテム入手テキスト")
+		//	MES(this,"ペットフードをもらった。",0)
+			fade_in(30,10,BLACK)
+			get_item(218,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		//　　※ペットフードを入手。
+		//　　　正式なペットフード名がある場合は名称を差し替えます。
+			MES(MONDRIAAN,"さっさと食べさせて、\n証拠隠滅するザマスよ！？",0)
+			
+			MES_close(MONDRIAAN)
+
+		//──────────────────────────────
+		//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"は、はあ。どうも……",0)
+				MES(RAGNA,"（つい受け取っちまったぜ。\n  まあいいか……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"う、うむ。相分かった。",0)
+				MES(PARTNER,"（つい受け取ってしまったのう。\n  まあよいか……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+		//──────────────────────────────
+		//　　※ここでＬＦも立てておく。
+		//──────────────────────────────
+		
+			F_set(FT_05_TalkMondriaan)
+		}
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_MONDRIAAN)
+			{
+				MES(MONDRIAAN,"いつもなら、子猫ちゃんたちを\n膝に乗せてお昼のドラマを\n楽しむ時間ザマスのに……",0)
+				MES(MONDRIAAN,"まったくウチの主人ときたら\n無神経で自分勝手で……！",0)
+				MES(MONDRIAAN,"どうせワタクシたちのことなんて、\nこれっぽっちも考えてないザマスよ。",0)
+				MES_close(MONDRIAAN)
+				
+				//★モンドレアン【ラジオドラマ】
+				F_set_note(MONDRIAAN,1)
+				F_set(MONDRIAAN)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MONDRIAAN,"ウチの主人ときたら、\nワタクシたちのことなんて\nこれっぽっちも考えてないザマス。",0)
+				MES(MONDRIAAN,"……フン、いいザマスよ。\nこれからも時々\n嫌がらせしてやるザマスから。",0)
+				MES_close(MONDRIAAN)
+			}
+		}
+		MOT(MONDRIAAN,153,15)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※民家１にいる。
+	//　　　周りに猫３匹がフリームーブしている。
+	if( F2_00_GoForest )
+	{
+		look_chr( MONDRIAAN, PLAYER1,"Bone_Head")
+		MOT_SET(MONDRIAAN,150,-1,561,561,-1,-1)	
+		MOT(MONDRIAAN,150,15)
+
+		if(!F_MONDRIAAN)
+		{
+			MES(MONDRIAAN,"うちのお隣は\n子供が２人で住んでいるザマスが……",0)
+			MES(MONDRIAAN,"あまりいい気はしないザマスね。\n子供たちだけで生活だなんて……\nもっと世間体を考えるべきザマス。",0)
+			MES(MONDRIAAN,"おまけに、あまり\n仲がよくないザマスよ。",0)
+			MES(MONDRIAAN,"ウチの中にいても、言い争いが\n聞こえてくるんザマス。",0)
+			MES_close(MONDRIAAN)
+
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MONDRIAAN,"ともかく、騒音だけは\nやめて頂きたいザマスね。",0)
+			MES(MONDRIAAN,"ハッチーとショコラは\n寝つきが悪いんザマスの。",0)
+			MES_close(MONDRIAAN)
+
+		//　　夫人にぷんすかエモーション。
+			EMO(MONDRIAAN,EMO_AOSUZI)
+			wait(30)
+
+			MES(MONDRIAAN,"P1S3うちの子猫ちゃんたちが\nノイローゼにでもなったりしたら、\nどうしてくれるザマスか！？",0)
+			MES_close(MONDRIAAN)
+
+		//──────────────────────────────
+		//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（すげえ剣幕だな……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"（ヒステリックだのう……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		}
+		MOT(MONDRIAAN,151,15)
+		look_off(MONDRIAAN)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※噴水のベンチで座っている。
+	if( F1_15_GoVillage )
+	{
+		look_chr( MONDRIAAN, PLAYER1,"Bone_Head")
+		MOT_SET(MONDRIAAN,150,-1,561,561,-1,-1)	
+		MOT(MONDRIAAN,150,15)
+		if(!F_MONDRIAAN)
+		{
+			MES(MONDRIAAN,"言うまでもないこと\nでしょうけど……",0)
+			MES(MONDRIAAN,"この子たちは最高級の\nペットフードしか食べないザマスよ。",0)
+			MES(MONDRIAAN,"毎週、連絡便で\n特注のペットフードを\n取り寄せるザマス。",0)
+			MES(MONDRIAAN,"ロアルタ村のショップは\n在庫が少ないザマスからね。",0)
+			MES_close(MONDRIAAN)
+
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MONDRIAAN,"この子たちは最高級の\nペットフードしか食べないザマス。",0)
+			MES(MONDRIAAN,"特にミーちゃんは\nツナフードにこだわりがあるんザマスよ。",0)
+			MES_close(MONDRIAAN)
+		}
+		MOT(MONDRIAAN,151,15)
+		look_off(MONDRIAAN)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※民家１にいる。
+	//　　　周りに猫３匹がフリームーブしている。
+	if( F1_01_GameStart )
+	{
+		look_chr( MONDRIAAN, PLAYER1,"Bone_Head")
+		MOT_SET(MONDRIAAN,150,-1,561,561,-1,-1)	
+		MOT(MONDRIAAN,150,15)
+
+		if(!F_MONDRIAAN)
+		{
+			MES(MONDRIAAN,"そろそろ散歩の時間ザマスね。",0)
+			MES(MONDRIAAN,"子猫ちゃんが３匹もいると\n散歩が大変ザマス。",0)
+			MES(MONDRIAAN,"ちなみに、まつげが長い子がミーちゃん、\n毛がフサフサな子がハッチー、\n気高く歩く子がショコラザマスよ。",0)
+			MES_close(MONDRIAAN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（そ、そう言われてもな……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（うむ、どれが誰だか分からんな。）",0)
+			MES_close(PARTNER)
+
+			//★モンドレアン【猫の名前】
+			F_set_note(MONDRIAAN,0)
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MONDRIAAN,"主人ときたら、最近\n犬を飼い始めたザマス。",0)
+			MES(MONDRIAAN,"それもあんな、品の無い犬……",0)
+			MES(MONDRIAAN,"可愛いこの子たちがいるというのに、\nまったく何を考えているザマスか。",0)
+			MES_close(MONDRIAAN)
+		}
+		MOT(MONDRIAAN,151,15)
+		look_off(MONDRIAAN)
+	}
+	
+	TK_end()
+}
+//会話時のモーション
+MOTION_TK_MONDRIAAN
+{
+	MOT_SET(MONDRIAAN,150,-1,415,415,151,15)		//モンドレアン会話
+	MOT_SET(MONDRIAAN,151,-1,416,416,152,15)		//モンドレアン会話
+	MOT_SET(MONDRIAAN,152,-1,417,417,150,15)		//モンドレアン会話
+	MOT(MONDRIAAN,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

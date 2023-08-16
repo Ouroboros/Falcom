@@ -1,0 +1,496 @@
+//──────────────────────────────
+//	name("◆玛莎おば（おば）Marsa")
+//──────────────────────────────
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_MARSA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(MARSA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,MARSA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,MARSA)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MARSA)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MARSA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MARSA)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MARSA)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,MARSA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※村広场之後ろ之方に立っている。
+	//　　※初回は阿鲁贝尔と共通之イベントが起動する。
+	//　　※巴兰たち之嚯を向いて、振り返らない。
+	//──────────────────────────────
+	//　　※イベント後は、にんじん畑をフリ～ム～ブ
+	//　　※以下通常一般メッセ～ジ。
+	//	name("玛莎")
+	if( F6_05_EndSixth )
+	{
+		if(!FV_13_TalkAlbMar)
+		{
+			EV("TALK_AM")
+			wait_EV("TALK_AM")
+		}
+		else
+		{
+			EV_stop("FREEMOVE_MARSA")
+			MOT_SET(MARSA,153,-1,406,406,-1,-1)
+			MOT(MARSA,153,10)
+			rot_chr(MARSA,30,PLAYER1)
+			if(!F_MARSA)
+			{
+				MES(MARSA,"看样子巴兰的春天\n也终于到来了呢。",0)
+				MES(MARSA,"嗯，那么老实的一个人\n却一直没碰上好事尼。",0)
+				MES(MARSA,"虽说这也要看对方的心情，\n今后会如何还不清楚。",0)
+				MES(MARSA,"不过现在的气氛不是很不错吗？",0)
+				MES_close(MARSA)
+				
+				F_set(MARSA)
+			}
+			//　　★繰り返し
+			else
+			{
+			//	name("玛莎")
+				MES(MARSA,"那两人间\n的气氛很不错嘛。",0)
+				MES(MARSA,"就算是为了\n不让我家那死鬼起什么奇怪的念头，\n我也会替他们加油的",0)
+				MES_close(MARSA)
+			}
+			EV("FREEMOVE_MARSA")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※村长宅で、拉乌妮と話している。
+	//　　※初回は拉乌妮と共通之メッセ～ジ。
+	//　　※振り返らない。
+	if( F6_00_GoToMeru )
+	{
+		MOT_SET(MARSA,153,-1,406,406,-1,-1)
+		MOT(MARSA,153,10)
+		if(!FV_12_TalkLauMar)
+		{
+			EV("TALK_LM")
+			wait_EV("TALK_LM")
+		}
+		//　　★繰り返し
+		else
+		{
+		//	name("玛莎")
+			rot_chr(MARSA,30,PLAYER1)
+
+			MES(MARSA,"要是风太大的话，\n也许连家门都出不去了。",0)
+			MES(MARSA,"现在大家正在分配\n眼下必要的东西。",0)
+			MES(MARSA,"嗯，稍后\n也得去给那死鬼帮忙才行。",0)
+			MES_close(MARSA)
+		}
+		MOT(MARSA,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※にんじん畑で作業をしている。
+	if( F5_00_HearLunar )
+	{
+		EV_stop("FREEMOVE_MARSA")
+		rot_chr(MARSA,30,PLAYER1)
+
+		MOT_SET(MARSA,153,-1,406,406,-1,-1)
+		MOT(MARSA,153,10)
+
+		if(!F_MARSA)
+		{
+
+		//	name("玛莎")
+			MES(MARSA,"前阵子休息的时候，\n巴兰替我给田地浇水了。",0)
+			MES(MARSA,"呼……真是帮了大忙。\n他真的很体贴呢。",0)
+			MES(MARSA,"原本是为了管理风车\n才让他到我们家来的，\n他却也帮忙起村里的工作了。",0)
+			MES_close(MARSA)
+
+			F_set(MARSA)
+		}
+		//　　★繰り返し
+		else
+		{
+		//	name("玛莎")
+			MES(MARSA,"巴兰真的是很体贴呢。",0)
+			MES(MARSA,"他年轻力壮，\n真是工作得很勤劳呢。",0)
+			MES(MARSA,"我有腰痛的毛病，\n总是受他照顾呢。",0)
+			MES_close(MARSA)
+		}
+		EV("FREEMOVE_MARSA")
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※风車小屋民家ベッド之上に起き上がっている。
+	if( F4_00_StartSolo )
+	{
+		look_chr( MARSA, PLAYER1,"Bone_Head")
+
+		if(!F_MARSA)
+		{
+		//──────────────────────────────
+		//	name("□昴がいる")
+			if(F4_02_GoVillage2)
+			{
+			//	name("玛莎")
+				MES(MARSA,"啊，是你们啊……",0)
+				MES_close(MARSA)
+			}
+		//	name("□昴がいない")
+			else
+			{
+			//	name("玛莎")
+				MES(MARSA,"啊，是你啊……",0)
+				MES_close(MARSA)
+			}
+		//──────────────────────────────
+		
+		//	name("玛莎")
+			MES(MARSA,"村子被魔物袭击\n这是真的吗？",0)
+			MES(MARSA,"嗯，不过这是从\n村长那里听说的……",0)
+			MES(MARSA,"总觉得不大可信呢。",0)
+			MES_close(MARSA)
+
+			F_set(MARSA)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("玛莎")
+			MES(MARSA,"今天早晨村长来过，\n说什么『我把魔物赶跑了』\n然后就回去了。",0)
+			MES(MARSA,"？？？\n到底发生了什么事……",0)
+			MES(MARSA,"昨天晚上的事\n我全都想不起来了。",0)
+			MES_close(MARSA)
+		}
+		look_off(MARSA)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※风車小屋民家で克雷斯にお茶を出している。
+	if( F2_14_TalkEnemy )
+	{
+		
+		MOT_SET(MARSA,150,-1,406,406,-1,0)
+		MOT(MARSA,150,10)
+		if(!F_MARSA)
+		{
+		//　　※振り返らない。
+		//	name("玛莎")
+			MES(MARSA,"来来，把这个喝了\n压压惊吧。",0)
+			MES(MARSA,"掉进湖里这种事……",0)
+			MES(MARSA,"现在这个时节还好，\n要是冬天的话可就麻烦了。",0)
+			MES(MARSA,"我会帮你烧水的，\n一会儿去洗个澡吧。",0)
+			MES_close(MARSA)
+
+			F_set(MARSA)
+		}
+		//　　★繰り返し
+		else
+		{
+			rot_chr(MARSA,30,PLAYER1)
+			
+		//	name("玛莎")
+			MES(MARSA,"这孩子啊，\n在村里迷路了呢。",0)
+			MES(MARSA,"问了一下，他好像是\n掉进神殿前的湖里了。",0)
+			MES(MARSA,"而且好像\n连村子的出口在哪都不知道……",0)
+			MES(MARSA,"哎呀呀，真是个让人操心的孩子。\n得稍微照顾照顾他才行。",0)
+			MES_close(MARSA)
+		}
+		MOT(MARSA,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※村长宅前で、薬売りから薬を買っている。
+	if( F2_00_GoForest )
+	{
+		rot_chr(MARSA,30,PLAYER1)
+
+		MOT_SET(MARSA,151,-1,406,406,-1,-1)
+		MOT(MARSA,151,10)
+
+		if(!F_MARSA)
+		{
+		//	name("玛莎")
+			MES(MARSA,"最近，我的腰痛\n越来越严重了……",0)
+			MES(MARSA,"虽然正在\n让提欧医生检查，\n可是也不能丢下工作啊。",0)
+			MES(MARSA,"已经到了\n只能靠药商先生的药来支撑的地步了。",0)
+			MES(MARSA,"哎呀呀，\n我也老了啊。",0)
+			MES_close(MARSA)
+			//★玛莎【腰痛持ち】
+			F_set_note(MARSA,1)
+
+			F_set(MARSA)
+		}
+		//　　★繰りかえし
+		else
+		{
+			MES(MARSA,"话说回来……\n我家那死鬼\n有点神经质了。",0)
+			MES(MARSA,"唉，虽说确实是\n因为村长一天到晚\n净说些胡话。",0)
+			MES(MARSA,"……他一直都是这样。\n以后要是能让\n拉乌妮婆婆做主就好了。",0)
+			MES_close(MARSA)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（唔，村长\n  已经放弃了吗……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□艾雯先頭")
+				MES(PARTNER,"（哦，村长\n  好像已经\n  放弃了……）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			
+			//★怀森【諦められてる】
+			F_set_note(-65,1)
+		}
+		MOT(MARSA,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※にんじん畑で作業をしている。
+	if( F1_15_GoVillage )
+	{
+		EV_stop("FREEMOVE_MARSA")
+		rot_chr(MARSA,30,PLAYER1)
+
+		MOT_SET(MARSA,153,-1,406,406,-1,-1)
+		MOT(MARSA,153,10)
+		
+		if(!F_MARSA)
+		{
+		//	name("玛莎")
+			MES(MARSA,"对了，差不多得\n开始进行收获祭典的准备了。",0)
+			MES(MARSA,"这是祭拜村里的精灵大人，\n祈求来年丰收的祭典哦。",0)
+			MES(MARSA,"向精灵大人奉上\n村里出产的各种食物，\n可是很热闹的祭典呢。",0)
+			MES(MARSA,"呵呵，我也得趁现在\n抓紧准备\n酱菜什么的了。",0)
+			MES_close(MARSA)
+
+			F_set(MARSA)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("玛莎")
+			MES(MARSA,"在祭典那天，\n大家都会带上食物\n去供奉精灵大人哦。",0)
+			MES(MARSA,"当然，那一天\n我们也能大吃一顿。",0)
+			MES(MARSA,"每年，大家都\n很期待这一天哦。",0)
+			MES_close(MARSA)
+
+			//──────────────────────────────
+			//	name("□艾雯先頭")
+				if(GW_MAN==1)
+				{
+					rot_chr(PARTNER,30,MARSA)
+				//　　艾雯にしばらく···エモ～ション。
+					EMO(PARTNER,EMO_TENTEN)
+					wait(30)
+
+					rot_chr(RAGNA,30,PARTNER)
+				//　　拉古那に冷や汗エモ～ション。
+					EMO(RAGNA,EMO_HIYAASE)
+					wait(30)
+
+					MES(RAGNA,"（不要露出那种垂涎欲滴的表情啦……）",0)
+					MES_close(RAGNA)
+				}
+			//──────────────────────────────
+		}
+		EV("FREEMOVE_MARSA")
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※にんじん畑で作業をしている。
+	if( F1_01_GameStart )
+	{
+		EV_stop("FREEMOVE_MARSA")
+		MOT_SET(MARSA,153,-1,406,406,-1,-1)
+		MOT(MARSA,153,10)
+	//　　※初回メッセ～ジ。
+		if(!FV_01_TalkMarsa)
+		{
+		//	name("玛莎")
+			rot_chr(MARSA,30,PARTNER)
+			rot_chr(PARTNER,30,MARSA)
+//			F_set_chr(MARSA,CF_NO_MOVE)
+			MES(MARSA,"哎呀，小姐。\n你的脸色有点苍白呢……",0)
+			MES(MARSA,"这可不行，\n不好好吃饭怎么成呢。",0)
+			MES(MARSA,"拿着，把这个吃了吧。\n虽然是多出来的。",0)
+			MES_close(MARSA)
+
+			//	name("アイテム入手テキスト")
+			//　　※神殿梅ンル～トで手に入るレベル之フ～ド。
+			//ver.2008/8/7 穴あきチ～ズ
+			//―――――――――――――――――――――――
+			fade_in(30,10,BLACK)
+			get_item(172,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//―――――――――――――――――――――――
+
+			MES(PARTNER,"哦哦，这真是太感谢了。\n我从早上到现在都没吃什么东西呢。",0)
+			MES(PARTNER,"我就不客气地收下了。",0)
+			MES_close(PARTNER)
+
+			rot_chr(RAGNA,30,PARTNER)
+		//　　艾雯に□エモ～ション。
+			EMO(PARTNER,EMO_ONPU)
+			wait(30)
+
+		//　　拉古那に冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"（现在是在我面前\n  大吃大喝的时候吗……）",0)
+			MES_close(RAGNA)
+			//★玛莎【艾雯を心配】
+			F_set_note(MARSA,0)
+			F_set(FV_01_TalkMarsa)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			rot_chr(MARSA,30,PLAYER1)
+//			F_set_chr(MARSA,CF_NO_MOVE)
+			if(!F_MARSA)
+			{
+				rot_chr(PARTNER,30,MARSA)
+			//	name("玛莎")
+				MES(MARSA,"年轻人\n不好好吃饭可不行。",0)
+				MES(MARSA,"要多吃点，精神地过日子。\n不然可是会长不大的。",0)
+				MES_close(MARSA)
+
+			//　　艾雯に□エモ～ション。
+				EMO(PARTNER,EMO_ONPU)
+				wait(30)
+	
+				MES(PARTNER,"嗯，今后就这么做吧。",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"拜托，不要把我的财产\n挥霍一空啊……",0)
+				MES_close(RAGNA)
+
+			//	name("玛莎")
+				MES(MARSA,"啊哈哈，真是有趣的孩子们。",0)
+				MES_close(MARSA)
+				
+				F_set(MARSA)
+			}
+			else
+			{
+			//　　★繰り返し
+			//	name("玛莎")
+				MES(MARSA,"年轻人\n就该多吃点，精神地过日子。",0)
+				MES(MARSA,"这是长大的秘诀哦。",0)
+				MES_close(MARSA)
+			}
+		}
+		EV("FREEMOVE_MARSA")
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

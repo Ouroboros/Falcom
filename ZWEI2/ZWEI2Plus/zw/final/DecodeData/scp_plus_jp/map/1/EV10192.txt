@@ -1,0 +1,756 @@
+//====================================================================
+//ステージトラップスクリプト
+//[11019][廃坑－中継分岐]
+//====================================================================
+
+#ScriptTable
+
+#ODESSA			1
+#EVENT_RAGNA 	2
+#ALWEN			3
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//■地形
+
+//  -------  no typ     tip      x    y   z    mot  向 状    000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段・扉
+	set_chr( 90,990,	-1,-1,    0, 5400,0,   180,  0301, 6,"K1_11013;")	//①エントリ メイン③
+	set_chr( 91,990,	-1,-1,-2150,-1950,0,   315,  0301, 6,"K0_11021;")	//②エントリ 武器①
+	set_chr( 92,990,	-1,-1, 1950,-4900,0,    15,  0302, 6,"K0_11031;")	//③エントリ ボス①
+
+	set_chr( 95,990,	-1,-1,-2150,-1950,0,   315,  0103, 6,"K0_11021;")	//②エントリ 武器①補助
+
+//■スイッチ・看板
+	set_chr( 50,620,	-1,-1, -950, 600, 0,  	 0,   270, 0,";")		//①セーブOBJ
+
+	set_chr( 55,648,	-1,-1, -500,-325, 0,     2,   315, 0,";")	//レベルプレート
+	set_chr( 56,648,	-1,-1,  585,-135, 0,     2,    15, 0,";")	//レベルプレート
+	set_chr( 57,654,	-1,-1, -735, -25, 0,     4,   310, 0,";")	//順路案内（武器）
+	set_chr( 58,654,	-1,-1,  275,-275, 0,     3,     0, 0,";")	//順路案内（ボス）
+
+//■イベント
+	if(F1_02_EndPrologue && !F1_22_EndFirst)
+	{
+	//１章
+		//ＧＦ『★廃坑：オデッサとすれ違った』立ってない
+		if(!F1_13_MeetOdessa)
+		{
+			//▼オデッサとすれ違うイベント
+			set_chr( 80,990,-1,-1,947,-1512,-50,		0,	0401,	6,"<EV_1_03_MeetOd>;")
+		}
+		//ＧＦ『★廃坑：中継マップに到着した』立ってない
+		if(!F1_12_OnCaveHalf)
+		{
+			//▼中継マップに到着するイベント
+			EV("EV_1_02_OnCaveHalf")
+		}
+	}
+
+//■場面固有設定
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼中継マップに到着するイベント
+//──────────────────────────────
+//　　メインルート①をクリアした所でイベント発生。
+//　　ラグナたちが中継マップに入ってくるところを見せる。
+//　　出てすぐの所か、中央の大きな広間でやるかは要検討。
+EV_1_02_OnCaveHalf
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,BLACK)
+	wait_fade()
+
+	F_set_chr(50,CF_NO_CLIP)
+	F_set_chr(50,CF_NO_CLIP2)
+	F_set_chr(55,CF_NO_CLIP)
+	F_set_chr(55,CF_NO_CLIP2)
+	F_set_chr(56,CF_NO_CLIP)
+	F_set_chr(56,CF_NO_CLIP2)
+	F_set_chr(57,CF_NO_CLIP)
+	F_set_chr(57,CF_NO_CLIP2)
+	F_set_chr(58,CF_NO_CLIP)
+	F_set_chr(58,CF_NO_CLIP2)
+
+	//キャラ再配置
+	chr_pos(RAGNA,-40,5158,0,180,2)
+	chr_pos(PARTNER, 52,5112,0,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(RAGNA)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, -50,5250,0, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 60,5220,0, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	KAO(ALWEN,"1","1","1")//デフォルト
+
+	//モーション定義
+	MOT_SET(ALWEN,150,-2,399,399,-1,-1)//腰に手を当てる（左）
+
+	//カメラ初期位置
+	CAM_move(202,-612,300,0,0)
+	CAM(630,108,400,40,210,0,1)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+
+	fade_in(0,60,BLACK)	//フェードイン
+	CAM_move(302,-662,600,180,0)
+	CAM(430,160,440,36,196,180,1)
+	wait_CAM_move()
+	wait_CAM()
+
+	cross_fade(30)
+//	CAM_move(42,-2494,160,0,0)
+//	CAM(450,94,0,38,210,0,0)
+//	CAM_move(52,-4892,160,240,0)
+//	CAM(-50,94,0,38,210,240,1)
+	CAM_move(52,-932,160,0,0)
+	CAM(410,124,160,32,224,0,0)
+	CAM_move(52,-4852,160,240,0)
+	CAM(-30,94,160,32,214,240,0)
+
+	wait(150)
+	move( EVENT_RAGNA, 0,	WALK1,-50,4645,0,0)
+	wait(30)
+	move( ALWEN, 0,	WALK1, 50,4900,0,0)
+
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(15)
+//	CAM_move(8,-4614,140,0,0)
+//	CAM(-210,38,140,24,338,0,0)
+//	CAM_move(28,-4694,140,900,0)
+//	CAM(-90,42,140,24,346,900,0)
+	CAM_move(8,-4694,140,0,0)
+	CAM(-210,56,140,22,338,0,0)
+	CAM_move(8,-4694,130,600,0)
+	CAM(-90,60,130,22,346,600,0)
+	rot(ALWEN,-1,165)
+	wait(15)
+
+	MOT(EVENT_RAGNA,53,15)	//髪をセット
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","1233321","1")//
+	MES(EVENT_RAGNA,"ふう……\n何とか一区切りまで来たか。",0)
+	MES_close(EVENT_RAGNA)
+
+	wait_MOT(EVENT_RAGNA,53)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	rot(EVENT_RAGNA,30,310)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"それにしても、確かに\n余計な心配だったみてぇだな。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"あの魔法……\nなかなか凄いじゃねえか。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,150,15)
+	wait(15)
+	KAO(ALWEN,"12321Z6","123","1")//
+	MES(ALWEN,"フッ、あんなもの\n私の本来の魔力と比べたら\n千分の一にも満たぬ代物だ。",0)
+	KAO(ALWEN,"B232BZ6","32","2")//
+	MES(ALWEN,"早いところ\n奪われた力を取り戻さなくては\n裸でいるようで落ち着かぬ。",0)
+	MES_close(ALWEN)
+
+	MES(EVENT_RAGNA,"そ、そうか……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z5","33321","2")//
+	MES(ALWEN,"しかし、そなたの方も\nなかなかの腕前のようだな。",0)
+	KAO(ALWEN,"12321Z5","1","2")//
+	MES(ALWEN,"その奇妙な武具……\n完全に使いこなしていると見た。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//	cross_fade(15)
+//	CAM_move(-74,-4694,80,0,0)
+//	CAM(30,60,80,22,224,0,0)
+//	CAM_move(-74,-4740,80,900,0)
+//	CAM(150,60,80,22,238,900,0)
+	CAM_move(-94,-4694,90,0,0)
+	CAM(30,64,90,22,224,0,0)
+	CAM_move(-94,-4714,70,600,0)
+	CAM(150,68,70,22,234,600,0)
+//	wait(15)
+
+	EV("_MOT_RAGNA_1")
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"《アンカーギア》か。\nまあ、付き合いは長いからな。",0)
+	KAO(EVENT_RAGNA,"12321Z8","1","1")//
+	SE(1014,0)//ギア構えSE
+	MES(EVENT_RAGNA,"間合いをコントロールできるし\nトラップの解除にも使えるから\n探索には重宝してるんだ。",0)
+	KAO(EVENT_RAGNA,"12321Z8","1","1")//
+	MES(EVENT_RAGNA,"ま、かなりクセがあるし、\nメンテナンスも欠かせないから\n使ってる同業者は少ないけどな。",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(ALWEN,"ふむ、なかなか興味深い。",0)
+	MES(ALWEN,"そういえば……\nそなた、身体の調子はどうだ？",0)
+	MES(ALWEN,"戦っている最中、\n不調のたぐいなどはなかったか？",0)
+	MES_close(ALWEN)
+
+	wait_EV("_MOT_RAGNA_1")
+	MOT(EVENT_RAGNA,51,15)	//首キョロキョロ
+	KAO(EVENT_RAGNA,"12321Z4","1232A","6")//
+	MES(EVENT_RAGNA,"調子？\nなんかやたらと良かったぜ。",0)
+	KAO(EVENT_RAGNA,"12321Z4","236","6")//
+	MES(EVENT_RAGNA,"逆にいつもよりも\n身体が軽かったくらいだ。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	CAM_move(-174,-4514,130,0,0)
+	CAM(-170,68,130,12,222,0,0)
+	MOT(EVENT_RAGNA,2,0)	//
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	MOT(ALWEN,2,0)//
+
+//　　ラグナの頭に！マーク。
+	KAO(EVENT_RAGNA,"2","321DE","7")//
+//	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EFF(25100,	-50,-4645,120,	0,80,0)
+	SE(1000,0)//エモーション（！）
+	wait(30)
+
+	KAO(EVENT_RAGNA,"B232B2Z3","D12321D","2")//
+	MES(EVENT_RAGNA,"ひょっとして……\n《血の契約》とやらのせいか！？",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	CAM_move(-14,-4754,160,0,0)
+	CAM(-330,44,160,26,356,0,0)
+	CAM_move(-14,-4754,130,600,0)
+	CAM(-90,48,130,25,336,600,0)
+
+	KAO(ALWEN,"12321Z3","123332A","1")//
+	MES(ALWEN,"その通りだ。",0)
+	KAO(ALWEN,"12321Z7","A","1")//
+	MES(ALWEN,"契約を変更したからといって\nそなたが《血の戦士》であるのは\nなんら変わりはない。",0)
+	KAO(ALWEN,"12321Z6","A","1")//
+	MES(ALWEN,"ただ、立場を対等にしたことで\nより人には近くなったはずだがな。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z4","1233321","1")//
+	MES(EVENT_RAGNA,"そ、そうか……\nちょっとだけ安心したぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z6","23","1")//
+	MES(ALWEN,"それでも、霊的な結びつきにより\nそなたと私は一心同体の関係にある。",0)
+	KAO(ALWEN,"12321Z3","36","1")//
+	MES(ALWEN,"ケガには気をつけるがよい。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z3","123","2")//
+	MES(EVENT_RAGNA,"……ＯＫ。\n肝に銘じておくぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in( 100, 30, BLACK )	//暗転
+	wait_fade()
+
+	F_reset_chr(50,CF_NO_CLIP)
+	F_reset_chr(50,CF_NO_CLIP2)
+	F_reset_chr(55,CF_NO_CLIP)
+	F_reset_chr(55,CF_NO_CLIP2)
+	F_reset_chr(56,CF_NO_CLIP)
+	F_reset_chr(56,CF_NO_CLIP2)
+	F_reset_chr(57,CF_NO_CLIP)
+	F_reset_chr(57,CF_NO_CLIP2)
+	F_reset_chr(58,CF_NO_CLIP)
+	F_reset_chr(58,CF_NO_CLIP2)
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	//キャラ再配置
+	chr_pos(RAGNA,-50,4645,0,180,2)
+	chr_pos(PARTNER, 50,4900,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return( 0 )
+	wait(30)
+
+//ＧＦ『★廃坑：中継マップに到着した』を立てる。
+	F_set(F1_12_OnCaveHalf)
+
+	fade_in(0,30,BLACK)	//フェードイン
+
+	EV_end()
+}
+
+_MOT_RAGNA_1
+{
+	look_off(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,52,15)	//アンカーギア整備
+	wait(150)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+}
+
+//──────────────────────────────
+//▼オデッサとすれ違うイベント
+//──────────────────────────────
+//　　中継マップ、ボスルートに向かう途中に来るとイベント発生。
+EV_1_03_MeetOd
+{
+	EV_begin()
+
+	fade_in(100,30,BLACK)	//
+	wait_fade()
+
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 1144,-1830,0, 2,170,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 930,-1800,0, 2, 170,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	KAO(ALWEN,"1","1","1")//デフォルト
+
+	//イベント用キャラ配置
+//	set_chr( ODESSA,1019,-1,-1,1806,-4362,0,		2,	15,	0,"")
+	set_chr( ODESSA,1019,-1,-1,1644,-3800,-100,		2,	15,	0,"")
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	KAO(ODESSA,"1","1","1")//デフォルト
+
+	//モーション定義
+	MOT_SET(EVENT_RAGNA,150,-1,428,428,-1,-1)//まて
+	MOT_SET(EVENT_RAGNA,151,-1,434,434,-1,-1)//怒り
+	MOT_SET(EVENT_RAGNA,152,-1,508,508,-1,-1)//どうよ？
+	MOT_SET(ALWEN,150,-1,399,399,-1,-1)//腰に手を当てる（左）
+	MOT_SET(ODESSA,150,-1,514,514,-1,-1)//ハイポーズ
+	MOT_SET(ODESSA,151,-1,399,399,-1,-1)//腰に手を当てる（左）
+	MOT_SET(ODESSA,152,-1,415,415,-1,-1)//やれやれ
+	MOT_SET(ODESSA,153,-1,417,417,-1,-1)//やれやれ停止
+	MOT_SET(ODESSA,154,-1,464,464,-1,-1)//バイバイ（左）
+//	MOT_SET(ODESSA,154,-1,465,465,-1,-1)//バイバイ（左）
+	MOT_SET(ODESSA,154,-1,464,464,-1,-1)//バイバイ（左）
+	MOT_SET(ODESSA,155,155,6395,6425,-1,-1)//バイバイ（左）
+	MOT_SET(ODESSA,156,-1,410,410,-1,-1)//ふーん
+	MOT_SET(ODESSA,157,-1,405,405,-1,-1)//そっち
+
+	wait(1)
+	F_set_Node(ODESSA,"Bone_RightSword",NP_HIDE)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+
+	CAM_move(1000,1882,0,0,0)
+	CAM(830,66,0,42,225,0,0)
+
+	fade_in(0,30,BLACK)	//フェードイン
+	wait_fade()
+
+	chr_rename(ODESSA,"女性の声")//
+	MES_pos(ODESSA,"W9おや、あんたたちは……",0,	500,120,0,0)
+	wait_key(0)
+	MES_close(ODESSA)
+
+//　　ラグナとアルウェンの頭に！マーク。
+//	MES(EVENT_RAGNA,"！マーク。",300)
+//	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	look_chr( EVENT_RAGNA, ODESSA ,"Bone_Head")
+	look_chr( ALWEN, ODESSA ,"Bone_Head")
+	wait(15)
+	MES(EVENT_RAGNA,"誰だ……！？",0)
+	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+
+//　　画面スクロールして、向こうからオデッサが来るのを見せる。
+//　　（ブーメランは持っていない状態？）
+	CAM_move(1324,2480,160,180,0)
+	CAM(470,44,160,34,180,180,1)
+	move( ODESSA, 0, 8, 1324,-2540,0,0)
+	wait_move( ODESSA )
+	MOT(ODESSA,151,15)	//腰に手を当てる（左）
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(15)
+//	CAM_move(1334,2394,160,0,0)
+//	CAM(-90,56,160,24,324,0,0)
+//	CAM_move(1374,2394,160,600,0)
+//	CAM(-90,56,160,24,308,600,0)
+	CAM_move(1314,2394,140,0,0)
+	CAM(-170,48,140,24,324,0,0)
+	CAM_move(1314,2394,140,300,0)
+	CAM(-210,46,140,24,320,300,0)
+
+	//キャラ再配置
+	chr_pos(EVENT_RAGNA,1184,-1930,0,180,2)
+	chr_pos(ALWEN, 970,-1900,0,190,2)
+	KAO(EVENT_RAGNA,"B","1","1")//
+	KAO(ALWEN,"B","1","1")//
+	wait(30)
+
+	chr_rename(ODESSA,"テンガロンハットの女性")//
+//	name("テンガロンハットの女性")
+	MES(ODESSA,"へえ、こんな所にまで\n他の連中が入ってくるとはね。",0)
+	MES(ODESSA,"なかなか気合、入ってるじゃないか。",0)
+	MES_close(ODESSA)
+
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","1")//
+	MES(EVENT_RAGNA,"あんたは……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	CAM_move(1324,2540,68,0,0)
+	CAM(-50,30,68,20,196,0,0)
+	CAM_move(1324,2540,168,130,0)
+	CAM(-210,34,168,20,166,130,0)
+	wait(100)
+
+	MOT(ODESSA,2,15)	//デフォルト
+	wait(30)
+	KAO(ODESSA,"12321Z3","1233321","1")//
+	MES(ODESSA,"私はオデッサ。",0)
+	KAO(ODESSA,"12321Z6","1","1")//
+	MES(ODESSA,"こないだ、イルバードに\nやって来たばかりの旅行者さ。",0)
+	KAO(ODESSA,"12321Z5","1","1")//
+	MES(ODESSA,"見ない顔だけど、\nイルバードの住人かい？",0)
+	MES_close(ODESSA)
+	wait_MES(ODESSA)
+
+	cross_fade(15)
+//	CAM_move(1234,2276,120,0,0)
+//	CAM(80,78,120,22,290,0,0)
+//	CAM_move(1234,2276,120,1200,0)
+//	CAM(-40,78,120,22,316,1200,0)
+	CAM_move(1234,2276,140,0,0)
+	CAM(-120,78,140,18,316,0,0)
+	CAM_move(1254,2276,140,600,0)
+	CAM(40,82,140,18,322,600,0)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z3","1233321","1")//
+	MES(EVENT_RAGNA,"いや……俺も旅行者でね。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"俺はラグナ。\nラグナ・バレンタインだ。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z3","1233321","1")//
+	MES(ALWEN,"アルウェンと呼ぶがよい。",0)
+	MES_close(ALWEN)
+
+	MOT(ODESSA,156,15)
+	wait(15)
+	chr_rename(ODESSA,"オデッサ")//
+	MES(ODESSA,"ラグナとアルウェンか。\nふーん……",0)
+	MES_close(ODESSA)
+	MOT(ODESSA,157,15)
+	wait(15)
+	MES(ODESSA,"アンカーギア使いってことは\nそっちの坊やは同業者みたいだね？",0)
+	MES_close(ODESSA)
+
+//　　ラグナの頭に怒りマーク。
+	KAO(EVENT_RAGNA,"C","1","3")//
+//	MES(EVENT_RAGNA,"怒りマーク。",0)
+	EMO(EVENT_RAGNA,EMO_AOSUZI)
+	MOT(EVENT_RAGNA,151,10)	//怒り
+	wait(15)
+	CAM_quake("46")
+	KAO(EVENT_RAGNA,"C232CZ3","1233321","3")//
+	MES(EVENT_RAGNA,"P1誰が坊やだ、誰が！",0)
+	KAO(EVENT_RAGNA,"C232CZ5","1","3")//
+	MES(EVENT_RAGNA,"P1そりゃ、若造なのは認めるが\nいきなり失礼な女だな──",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナの頭に！マーク。
+	KAO(EVENT_RAGNA,"E","12321D","7")//デフォルト
+//	MES(EVENT_RAGNA,"！マーク。",300)
+//	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(30)
+
+	MOT(EVENT_RAGNA,2,15)	//デフォルト
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","D123","2")//デフォルト
+	MES(EVENT_RAGNA,"同業者……\n………オデッサ………",0)
+	KAO(EVENT_RAGNA,"B232BZ3","321","2")//デフォルト
+	MES(EVENT_RAGNA,"《餓狼狩り》のオデッサか！",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ODESSA,2,15)
+	wait(15)
+	MES(ODESSA,"おっと、知ってたかい。",0)
+	MES_close(ODESSA)
+
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","2")//
+	MES(EVENT_RAGNA,"当たり前だ。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","2")//
+	MES(EVENT_RAGNA,"この業界で、あんたの名前を\n知らないのはモグリだろ。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	cross_fade(15)
+	CAM_move(1098,1934,140,0,0)
+	CAM(-10,52,140,22,340,0,0)
+	wait(15)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	MOT(ALWEN,150,15)	//
+	wait(15)
+	KAO(ALWEN,"B232BZ3","1233321","6")//
+	MES(ALWEN,"なんだ、知り合いか？",0)
+	MES_close(ALWEN)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ5","1233321","2")//
+	MES(EVENT_RAGNA,"いや、面識はないが\nその筋じゃ結構な有名人さ。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","2")//
+	MES(EVENT_RAGNA,"一応トレジャーハンターだが\n賞金稼ぎの方がむしろ有名でね。",0)
+	KAO(EVENT_RAGNA,"B232BZ8","123332","2")//
+	MES(EVENT_RAGNA,"荒くれぞろいの賞金首どもが\nその名前を聞いただけで\n震え上がってチビるくらいだ。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,2,15)	//
+	wait(15)
+	KAO(ALWEN,"B232F","23332A","6")//
+	MES(ALWEN,"ほう……",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(15)
+//	CAM_move(1194,2174,160,0,0)
+//	CAM(110,68,160,24,156,0,0)
+//	CAM_move(1194,2174,160,900,0)
+//	CAM(-50,68,160,24,156,900,0)
+	CAM_move(1210,2254,140,0,0)
+	CAM(-50,76,140,16,156,0,0)
+	CAM_move(1210,2254,150,600,0)
+	CAM(-10,88,160,16,156,600,0)
+	chr_pos(ALWEN, 970,-1900,0,230,2)
+	KAO(ALWEN,"1","1","1")//デフォルト
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	look_off(ALWEN)
+	look_off(EVENT_RAGNA)
+	wait(15)
+
+	MOT(ODESSA,153,15)	//やれやれ～やれやれ停止
+	VOICE(280,0)	//★ボイス入力演出
+	wait(15)
+	KAO(ODESSA,"12321Z3","123","5")//
+	MES(ODESSA,"やれやれ、人聞きが悪いねぇ。",0)
+	MES_close(ODESSA)
+
+	MOT(ODESSA,2,15)	//
+	wait(15)
+	KAO(ODESSA,"12321Z5","321","1")//
+	MES(ODESSA,"ラグナといったか。\nあんたの噂も聞いたことがあるよ。",0)
+	KAO(ODESSA,"12321Z6","1","1")//
+//	MES(ODESSA,"赤毛のアンカーギア使いで\n飛行機狂の若いのがいるってね。",0)
+	MES(ODESSA,"赤毛のアンカーギア使いで\n《飛行機狂》の若いのがいるってね。",0)
+	MES_close(ODESSA)
+
+//	MOT(EVENT_RAGNA,53,15)	//髪をセット
+//	wait(15)
+	MES(EVENT_RAGNA,"ヘッ……\n飛行機狂いで悪かったな。",0)
+	MES(EVENT_RAGNA,"しかし、あんたみたいな\n有名どころがどうしたんだ？",0)
+	MES(EVENT_RAGNA,"大物の賞金首でも\nこの島に逃げてきたのかよ？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"1","123","1")//
+	MOT(ODESSA,151,15)	//腰に手を当てる（左）
+	wait(15)
+	KAO(ODESSA,"12321Z3","3","1")//
+	MES(ODESSA,"……ま、似たようなもんさ。",0)
+	KAO(ODESSA,"12321Z5","3","1")//
+	MES(ODESSA,"もっともこの遺跡は\nハズレだったみたいだけどね。",0)
+	KAO(ODESSA,"12321Z4","3","1")//
+	MES(ODESSA,"仕方ない、他を当たるとするか。",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA,152,15)
+	wait(15)
+	MES(EVENT_RAGNA,"あんた……\nこの奥まで行ったのか？",0)
+	MES(EVENT_RAGNA,"だったら何か\n妙な物を見付けなかったか？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"12321Z5","321","1")//
+	MES(ODESSA,"ああ、別に私は\n奥までは行っちゃいないさ。",0)
+	KAO(ODESSA,"12321Z5","1","1")//
+	MES(ODESSA,"ただ、分かるのさ。\n目当ての相手はいないってね。",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA,2,15)	//
+	wait(15)
+	MES(EVENT_RAGNA,"へ……？",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(ALWEN,"……………………………",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　オデッサ、そのままラグナたちの脇を通り抜ける。
+	KAO(ODESSA,"1","123","1")//
+	MOT(ODESSA,2,15)
+	VOICE(310,0)	//★ボイス入力演出
+	wait(15)		//★ボイス入力演出
+	move( ODESSA, 0, 8, 1030,-1762,0,0)
+	wait(40)
+
+	cross_fade(30)
+	CAM_move(1194,2034,180,0,0)
+	CAM(190,46,180,28,320,0,0)
+	CAM_move(1134,2014,180,600,0)
+	CAM(30,46,180,28,334,600,0)
+
+	look_chr( EVENT_RAGNA, ODESSA ,"Bone_Head")
+	move( EVENT_RAGNA, 0, 4, 1242,-1944,1,0)
+	wait(10)
+	look_chr( ALWEN, ODESSA ,"Bone_Head")
+	move( ALWEN, 0, 4, 926,-1944,1,0)
+	rot(EVENT_RAGNA,10,30)
+	rot(ALWEN,10,330)
+
+	wait(60)
+//	CAM_move(1174,2114,280,600,0)
+//	CAM(350,40,280,30,336,600,0)
+
+	MOT(EVENT_RAGNA,150,15)	//待て
+	wait(15)
+	MES(EVENT_RAGNA,"お、おい……",0)
+	MES_close(EVENT_RAGNA)
+
+	wait_move(ODESSA)
+	look_chr( ODESSA, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+	MES(ODESSA,"……私の目当てはともかく\n他の連中の気配はあった。",0)
+	MES(ODESSA,"先に進むつもりなら\nせいぜい気をつけるんだね。",0)
+	MES(ODESSA,"もっとも、そっちのお姫様は\nとっくに分かってるみたいだけど。",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA,2,15)	//デフォルト
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	MES(EVENT_RAGNA,"え……",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,150,15)	//ポーズ
+	wait(15)
+	MES(ALWEN,"フフ、面白い。",0)
+	MES(ALWEN,"オデッサといったか。\n機会があればまた会おうぞ。",0)
+	MES_close(ALWEN)
+
+//　　オデッサ、手をひらひらさせながら去っていく。
+//　　見送りながら、ラグナの頭に…マーク。
+	look_off(ODESSA)
+//	MOT(ODESSA,154,15)	//バイバイ（左）
+//	wait(30)
+	MOT(ODESSA,154,15)	//バイバイ（左）
+	wait(15)
+	look_chr( EVENT_RAGNA, ODESSA ,"Bone_Head")
+	MOT(ODESSA,155,2)	//
+	wait(2)
+	move( ODESSA, 30, 8, 592,-162,0,0)
+	wait(50)
+	MOT(ODESSA,0,10)	//バイバイ戻し　岡田記述
+	wait(100)
+
+	cross_fade(30)
+	color(ODESSA,-1)
+	move(ODESSA, 99, 0,0,0,0,0)
+	CAM_move(1084,1934,110,0,0)
+	CAM(10,48,110,28,160,0,0)
+	CAM(10,52,100,28,160,600,0)
+	chr_pos(ALWEN, 980,-1910,0,330,150)
+	chr_pos(EVENT_RAGNA, 1170,-1900,0,30,2)
+	KAO(EVENT_RAGNA,"B","1","4")//
+	wait(30)
+
+	EMO(EVENT_RAGNA,EMO_TENTEN)
+	wait(60)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ2","1233321","9")//デフォルト
+	MES(EVENT_RAGNA,"……なあ。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","9")//デフォルト
+	MES(EVENT_RAGNA,"微妙に通じ合ってたみたいだけど\nいったい何の話をしてたんだ？",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+
+	KAO(ALWEN,"12321Z2","123","1")//
+	MES(ALWEN,"さて、な。",0)
+	KAO(ALWEN,"12321Z8","32A","1")//
+	MES(ALWEN,"確かなのは、この先に\n私の魔力の一部が隠されており、\n何者かがいるということだ。",0)
+	KAO(ALWEN,"12321Z4","A","1")//デフォルト
+	MES(ALWEN,"用心に越したことはあるまい？",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z2","123","1")//
+	MES(EVENT_RAGNA,"……まあな。",0)
+//	MOT(EVENT_RAGNA,53,15)	//髪をセット
+//	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","321","2")//
+	MES(EVENT_RAGNA,"まあいい。\n気合を入れていくか！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in( 100, 30, 0 )
+	wait_fade()
+
+	delete(ODESSA)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	//キャラ再配置
+	chr_pos(RAGNA,1150,-1800,0,190,2)
+	chr_pos(PARTNER,950,-1800,0,190,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return( 0 )
+	wait(30)
+
+//ＧＦ『★廃坑：オデッサとすれ違った』を立てる。
+	F_set(F1_13_MeetOdessa)
+	//★ラグナ【飛行機狂】
+	F_set_note(PLAYER1,1)				//パッチ修正 20081010
+	//★オデッサ
+	F_set_note(-19,-1)
+	//★オデッサ【賞金首】
+	F_set_note(-19,0)
+
+	fade_in(0,30,0)	//フェードイン
+
+	EV_end()
+}
+
+
+#EndScriptTable
+//====================================================================
+

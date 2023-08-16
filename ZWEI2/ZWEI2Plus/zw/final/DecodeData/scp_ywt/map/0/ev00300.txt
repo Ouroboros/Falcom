@@ -1,0 +1,1535 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[10300][儘傾儖僞懞乮拫乯]
+//====================================================================
+
+#ScriptTable
+
+#LUE		1
+#MIA		2
+#EVENT_RAGNA	3
+#ALWEN			4
+
+#WIDEZEN	10
+#BAROM		11
+#CEPHEILA	12
+#KARASU		13
+#ALBERS		14
+#MARSA		15
+#FEDERICA	16
+#WADE		17
+
+#HIYOKO_A	18
+#HIYOKO_B	19
+#HIYOKO_C	20
+#HIYOKO_D	21
+
+#USI_A		22
+#USI_B		23
+
+#CHICKIN_A	24
+#CHICKIN_B	25
+#CHICKIN_C	26
+
+#HIYOKO_WADE_A	27
+#HIYOKO_WADE_B	28
+
+#CLEESE			29
+
+#EVENT_MARSA	30
+#EVENT_ALBERS	31
+
+#DOG_A		32
+#CAT_A		33
+
+//--------------------------------------------------------------------
+//儘乕僇儖儚乕僋
+// 000 棎悢
+
+
+//=====================================================================
+//=== 弶婜壔張棟 ======================================================
+//=====================================================================
+INIT
+{
+//娐嫬SE
+	SE_distance(56,-2510,-3245,-31)//晽幵
+
+//  set_chr  no typ     tip        x     y    z     mot  岦 忬  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭僄儞僩儕乕
+	set_chr( 90,990,	-1,-1,  3400, 9150,-300,   160,  3002,  6,"K4_10000;")	//僼傿乕儖僪儅僢僾-搶
+	set_chr( 91,990,	-1,-1,  5000,-4600, 300,    35,   802,  6,"Ka_10000;")	//僼傿乕儖僪儅僢僾-杒
+	set_chr( 92,990,	-1,-1, -4650,-5100, 300,   315,  0202,  6,"Kb_10000;")	//僼傿乕儖僪儅僢僾-惣
+	set_chr( 93,990,	-1,-1,  -150,-3000, 300,     0,050303, 11,"K0_10310;")	//儘傾儖僞懞丒懞挿戭
+	set_chr( 94,990,	-1,-1,  1000, 2900,   0,    30,050303, 11,"K0_10320;")	//儘傾儖僞懞丒儁僢僩
+	set_chr( 95,990,	-1,-1, -1850, 3150,-300,   315,050303, 11,"K0_10330;")	//儘傾儖僞懞丒晽幵彫壆
+	set_chr( 96,990,	-1,-1,  4325,  725,   0,   315,050303, 11,"K0_10340;")	//儘傾儖僞懞丒媿幧
+
+	set_chr(100,990,	-1,-1,  4450, 8750,-300,   160,   806,  6,"K4_10000;")	//僼傿乕儖僪儅僢僾-搶 乮峴偒愱梡乯
+
+	set_chr(102,990,	-1,-1,  4300,-4800, 300,    35,  1002,  6,"Ka_10000;")	//僼傿乕儖僪儅僢僾-杒 乮峴偒愱梡乯
+	set_chr(103,990,	-1,-1,  5700,-4400, 300,    35,   802,  6,"Ka_10000;")	//僼傿乕儖僪儅僢僾-杒 乮峴偒愱梡乯
+
+	set_chr(105,990,	-1,-1, -4850,-4600, 300,   315,  0209,  6,"Kb_10000;")	//僼傿乕儖僪儅僢僾-惣 乮峴偒愱梡乯
+	set_chr(106,990,	-1,-1, -4150,-5300, 300,   315,   902,  6,"Kb_10000;")	//僼傿乕儖僪儅僢僾-惣 乮峴偒愱梡乯
+
+	set_chr( 50,620,	-1,-1, 	  350,-2941,301,   0,      0,   0,";")			//嘆僙乕僽OBJ
+
+	//仴嘔偱偼丄埲壓偺寶暔偼晻嵔丅
+	if( F4_06_StopAttack && !F4_11_EndFourth)
+	{
+	//丂丂懞挿戭乛晽幵柉壠
+		delete(93)
+		delete(95)
+	}
+
+//僲乕僪惂屼
+	F_set_obj("roal_oke", NP_HIDE)
+	F_reset_obj("CA_teoke", NP_GROUND)
+
+	//NPC
+	//偟傖傋傞僯儚僩儕丄傂傛偙
+	//嘔
+	if(F4_09_GoShrineMia && !F5_00_HearLunar)
+	{
+		set_chr( CHICKIN_A,467,	-1,-1,4099,1656,1,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_A>")//曻杚抧丂僯儚僩儕A
+		set_chr( CHICKIN_B,468,	-1,-1,4574,3101,1,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_B>")//曻杚抧丂僯儚僩儕B
+		set_chr( CHICKIN_C,469,	-1,-1,5174,2555,1,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_C>")//曻杚抧丂僯儚僩儕C		
+		set_chr( HIYOKO_A,470,	-1,-1,4045,1688,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_A>")//曻杚抧丂僸儓僐A
+		set_chr( HIYOKO_B,471,	-1,-1,4704,932,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_B>")//曻杚抧丂僸儓僐B
+		set_chr( HIYOKO_C,472,	-1,-1,5859,2139,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_C>")//曻杚抧丂僸儓僐C
+		set_chr( HIYOKO_D,473,	-1,-1,4928,3205,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_D>")//曻杚抧丂僸儓僐C
+
+	}
+	//嘊偺偲偒偼峀応
+	else
+	if(F2_00_GoForest && !F2_14_TalkEnemy)
+	{
+		set_chr( CHICKIN_A,467,	-1,-1,571,4455,0,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_A>")//曻杚抧丂僯儚僩儕A
+		set_chr( CHICKIN_B,468,	-1,-1,-142,4298,0,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_B>")//曻杚抧丂僯儚僩儕B
+		set_chr( CHICKIN_C,469,	-1,-1,-650,5231,0,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_C>")//曻杚抧丂僯儚僩儕C
+		set_chr( HIYOKO_A,470,	-1,-1,-1,4414,0,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_A>")//曻杚抧丂僸儓僐A
+		set_chr( HIYOKO_B,471,	-1,-1,-324,5014,0,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_B>")//曻杚抧丂僸儓僐B
+		set_chr( HIYOKO_C,472,	-1,-1,515,5067,0,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_C>")//曻杚抧丂僸儓僐C
+		set_chr( HIYOKO_D,473,	-1,-1,486,3975,0,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_D>")//曻杚抧丂僸儓僐C
+	}
+	//丂偦傟埲奜偼曻杚抧傊
+	else
+	{
+		set_chr( CHICKIN_A,467,	-1,-1,4099,1656,1,	1,0,	9,"L2?9900 <RUNAWAY_CHICKIN_A>")//曻杚抧丂僯儚僩儕A
+		set_chr( CHICKIN_B,468,	-1,-1,4574,3101,1,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_B>")//曻杚抧丂僯儚僩儕B
+		set_chr( CHICKIN_C,469,	-1,-1,5174,2555,1,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_C>")//曻杚抧丂僯儚僩儕C		
+		set_chr( HIYOKO_A,470,	-1,-1,4045,1688,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_A>")//曻杚抧丂僸儓僐A
+		set_chr( HIYOKO_B,471,	-1,-1,4704,932,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_B>")//曻杚抧丂僸儓僐B
+		set_chr( HIYOKO_C,472,	-1,-1,5859,2139,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_C>")//曻杚抧丂僸儓僐C
+		set_chr( HIYOKO_D,473,	-1,-1,4928,3205,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_D>")//曻杚抧丂僸儓僐C
+	}
+	EV("FREEMOVE_CHICKIN_A")
+	EV("FREEMOVE_CHICKIN_B")
+	EV("FREEMOVE_CHICKIN_C")
+	EV("FREEMOVE_HIYOKO_A")
+	EV("FREEMOVE_HIYOKO_B")
+	EV("FREEMOVE_HIYOKO_C")
+	EV("FREEMOVE_HIYOKO_D")
+	//Name惂屼劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僯儚僩儕俙	僯儚僑儞
+	//僯儚僩儕俛	僯儚僐
+	//僯儚僩儕俠	僯儚乕僩
+	//僸儓僐俙	僸儓僢僐
+	//僸儓僐俛	僸儓僸儓
+	//僸儓僐俠	僸儓僐僂
+	//僸儓僐俢	僸儓僐
+		if(FV_FF_NameNiwa_A)
+			chr_rename(CHICKIN_A,"ニワゴン")
+		if(FV_FF_NameNiwa_B)
+			chr_rename(CHICKIN_B,"ニワコ")
+		if(FV_FF_NameNiwa_C)
+			chr_rename(CHICKIN_C,"ニワート")
+
+		if(FV_FF_NameHiyo_A)
+			chr_rename(HIYOKO_A,"ヒヨッコ")
+		if(FV_FF_NameHiyo_B)
+			chr_rename(HIYOKO_B,"ヒヨヒヨ")
+		if(FV_FF_NameHiyo_C)
+			chr_rename(HIYOKO_C,"ヒヨコウ")
+		if(FV_FF_NameHiyo_D)
+			chr_rename(HIYOKO_D,"ヒヨコ")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+	if(F6_00_GoToMeru && !F6_05_EndSixth)//僼儔僌侾俀
+	{
+	}
+	else
+	{
+		set_chr( DOG_A,446,-1,-1,	1676,3042,-21,		10,0,	20,"<TK_DOG_A>")	//偄偸
+		chr_scale(DOG_A,	"charbase0",	110,110,110,	0,	1)
+
+		set_chr( CAT_A,449,-1,-1,	1794,2890,-23,		25,0,	20,"<TK_CAT_A>")	//偹偙
+	}
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_05_EndSixth )
+	{
+		set_chr( WADE,71,	-1,-1,	-1666,-320,283,		2,0,	20,"<TK_WADE>")		//偵傫偠傫偺寠丂僠僃僗僋
+		EV("SLEEP_WADE")
+		
+		set_chr( HIYOKO_WADE_A,474,	-1,-1,	-1775,334,339,		2,0, 20,"<TK_HIYOKO_WADE_A>")	//偵傫偠傫偺壠丂僸儓僐A
+		set_chr( HIYOKO_WADE_B,475,	-1,-1,	-1587,150,291,		2,0, 20,"<TK_HIYOKO_WADE_B>")	//偵傫偠傫偺壠丂僸儓僐B
+		EV("FREEMOVE_HIYOKO_WADE_A")
+		EV("FREEMOVE_HIYOKO_WADE_B")
+		//Name惂屼劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//僠僃僗僋偺僸儓僐俙	傾儖僉儊僨僗
+		//僠僃僗僋偺僸儓僐俛  僲僩儖僼傽僗
+			if(FV_FF_NameTHiyo_A)
+				chr_rename(HIYOKO_WADE_A,"安迪爾森")
+			if(FV_FF_NameTHiyo_B)
+				chr_rename(HIYOKO_WADE_B,"諾德爾法斯")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		set_chr( FEDERICA,70,	-1,-1,	4792,2405,0,		2,0,	20,"<TK_FEDERICA>")	//曻杚抧丂僼僃僨儕僇
+		EV("FREEMOVE_FEDERICA")
+		set_chr( CEPHEILA,50,	-1,-1,	522,4962,0,		75,56,	20,"<TK_CEPHEILA>")	//擖傝岥丂僶儔儞偲夛榖丂僙僼傿乕儔
+		set_chr( BAROM,67,	-1,-1,		311,5105,-22,	2,234,	20,"<TK_BAROM>"	)		//擖傝岥丂僶儔儞
+//		set_chr( WIDEZEN,65,	-1,-1,	-1227,-35,284,	2,90,	20,"<TK_WIDEZEN>")	//懞挿戭慜偵傫偠傫尒偰傞丂儚僀僛儞懞挿
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//懞挿戭慜丂儚僀僛儞懞挿
+
+		//弶夞慜丒僶儔儞偲僙僼傿乕儔傪尒偰偄傞
+		if(!FV_13_TalkAlbMar)
+		{
+			//弶夞僀儀儞僩梡
+			set_chr( EVENT_ALBERS,68,	-1,-1,	-467,2047,-23,	2,340,	20,"<TK_ALBERS>")	//峀応丂傾儖儀乕儖
+			set_chr( EVENT_MARSA,69,	-1,-1,	-658,2225,-23,	2,330,	20,"<TK_MARSA>")	//峀応丂儅乕僒
+			
+			//弶夞僀儀儞僩屻梡
+			set_chr( MARSA,69,	-1,-1,	-1755,849,327,		2,0,	20,"<TK_MARSA>")	//偵傫偠傫敤丂儅乕僒
+			set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//偐傏偪傖敤丂傾儖儀乕儖
+			color(MARSA,-1)//摟夁
+			color(ALBERS,-1)//摟夁
+			
+			//夛榖偑弌棃側偄埵抲偵堏摦偟偰偍偔
+			chr_pos(MARSA,-1755,849,1500,0,2)
+			chr_pos(ALBERS,1157,753,1500,0,2)
+			
+			F_set_chr(MARSA,CF_NO_ZIMEN)
+			F_set_chr(MARSA,CF_NO_CSP)
+			F_set_chr(MARSA,CF_NO_HEIGHT)
+			F_set_chr(ALBERS,CF_NO_ZIMEN)
+			F_set_chr(ALBERS,CF_NO_CSP)
+			F_set_chr(ALBERS,CF_NO_HEIGHT)
+
+			F_set_chr(EVENT_ALBERS,CF_NO_MOVE)
+			F_set_chr(EVENT_MARSA,CF_NO_MOVE)
+		}
+		else
+		{
+			set_chr( MARSA,69,	-1,-1,	-1755,849,327,		2,0,	20,"<TK_MARSA>")	//偵傫偠傫敤丂儅乕僒
+			set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//偐傏偪傖敤丂傾儖儀乕儖
+			EV("FREEMOVE_MARSA")
+			EV("FREEMOVE_ALBERS")
+		}
+		set_chr( USI_A,465,	-1,-1,	5533,1936,-4,		2,194,	20,"<TK_USI_A>")	//曻杚抧丂媿A
+		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//曻杚抧丂媿B
+		EV("FREEMOVE_USI_B")
+		//Name惂屼劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//媿俙		偝偪偙
+		//媿俛		傛偟偊
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"幸子")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"美惠")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		//儌乕僔儑儞
+		MOT_SET(WADE,150,-1,521,521,-1,0)	//僠僃僗僋丂偵傫偠傫偺壠偵嵗偭偰偄傞
+		MOT(WADE,150,0)
+		MOT_SET(BAROM,150,-1,541,541,151,40)	//僶儔儞
+		MOT_SET(BAROM,151,-1,543,543,150,40)
+		MOT(BAROM,150,0)
+
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(CEPHEILA,CF_NO_MOVE)
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_00_GoToMeru )
+	{
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//懞挿戭慜丂儚僀僛儞懞挿
+		set_chr( BAROM,67,	-1,-1,	-2365,3606,-304,		2,30,	20,"<TK_BAROM>")	//晽幵彫壆慜丂僶儔儞
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//偐傏偪傖敤丂傾儖儀乕儖
+		EV("FREEMOVE_ALBERS")
+//		set_chr( FEDERICA,70,	-1,-1,	2390,7427,-45,		2,10,	20,"<TK_FEDERICA>")	//擖傝岥丂僼僃僨儕僇
+		set_chr( FEDERICA,70,	-1,-1,	1192,4091,-23,		2,57,	20,"<TK_FEDERICA>")	//擖傝岥丂僼僃僨儕僇
+		F_reset_obj("roal_oke", NP_HIDE)
+		F_set_obj("CA_teoke", NP_GROUND)
+
+		F_set(200)		//僠僃僗僋偵僸儓僐傪忔偣傞俴僼儔僌丅儌乕僔儑儞掕媊僗僋儕僾僩偱敾掕偡傞丅
+		set_chr( WADE,71,	-1,-1,	-1680,-3603,300,		2,0,	20,"<TK_WADE>")	//懞挿戭墶丂僠僃僗僋
+		EV("FREEMOVE_WADE")
+		set_chr( USI_A,465,	-1,-1,	5533,1936,-4,		2,194,	20,"<TK_USI_A>")	//曻杚抧丂媿A
+		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//曻杚抧丂媿B
+		EV("FREEMOVE_USI_B")
+		//Name惂屼劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//媿俙		偝偪偙
+		//媿俛		傛偟偊
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"幸子")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"美惠")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		//儌乕僔儑儞
+		MOT_SET(BAROM,150,-1,452,452,151,40)	//僶儔儞
+		MOT_SET(BAROM,151,-1,453,453,150,40)	//僶儔儞
+		MOT(BAROM,150,0)
+		MOT_SET(FEDERICA,150,-1,445,445,-1,-1)	//僼僃僨儕僇
+		MOT(FEDERICA,150,0)
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(FEDERICA,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F5_00_HearLunar )
+	{
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//懞挿戭慜丂儚僀僛儞懞挿
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//偐傏偪傖敤丂傾儖儀乕儖
+		EV("FREEMOVE_ALBERS")
+		set_chr( MARSA,69,	-1,-1,	-1755,849,327,		2,0,	20,"<TK_MARSA>")	//偵傫偠傫敤丂儅乕僒
+		EV("FREEMOVE_MARSA")
+		set_chr( FEDERICA,70,	-1,-1,	4792,2405,0,		2,0,	20,"<TK_FEDERICA>")	//曻杚抧丂僼僃僨儕僇
+		EV("FREEMOVE_FEDERICA")
+		F_set(200)		//僠僃僗僋偵僸儓僐傪忔偣傞俴僼儔僌丅儌乕僔儑儞掕媊僗僋儕僾僩偱敾掕偡傞丅
+		set_chr( WADE,71,	-1,-1,	-2272,217,301,		2,25,	20,"<TK_WADE>")	//偵傫偠傫敤丂僠僃僗僋
+		EV("FREEMOVE_WADE_11")
+//		set_chr( USI_A,465,	-1,-1,	4698,3244,0,		2,0,	20,"<TK_USI_A>")	//曻杚抧丂媿A
+//		set_chr( USI_B,466,	-1,-1,	4968,2116,1,		2,0,	20,"<TK_USI_B>")	//曻杚抧丂媿B0
+		set_chr( USI_A,465,	-1,-1,	4915,3003,0,		2,171,	20,"<TK_USI_A>")	//曻杚抧丂媿A
+		set_chr( USI_B,466,	-1,-1,	4830,1653,0,		2,49,	20,"<TK_USI_B>")	//曻杚抧丂媿B
+		EV("FREEMOVE_USI_B")
+		//Name惂屼劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//媿俙		偝偪偙
+		//媿俛		傛偟偊
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"幸子")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"美惠")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_09_GoShrineMia)
+	{
+		SE(36,0)//挬偺SE
+		SE(61,0)//捁偺SE
+
+		set_chr( BAROM,67,	-1,-1,	-2365,3606,-304,		2,30,	20,"<TK_BAROM>")	//晽幵彫壆慜丂僶儔儞
+		F_set(200)		//僠僃僗僋偵僸儓僐傪忔偣傞俴僼儔僌丅儌乕僔儑儞掕媊僗僋儕僾僩偱敾掕偡傞丅
+		set_chr( WADE,71,	-1,-1,	4842,-3224,307,		54,160,	20,"<TK_WADE>")		//弌岥丂僠僃僗僋
+		//儌乕僔儑儞
+		MOT_SET(WADE,150,-1,397,397,-1,0)	//僠僃僗僋丂偵傫偠傫偺壠偵嵗偭偰偄傞
+		MOT(WADE,150,0)
+		MOT_SET(BAROM,150,-1,452,452,151,40)	//僶儔儞
+		MOT_SET(BAROM,151,-1,453,453,150,40)	//僶儔儞
+		MOT(BAROM,150,0)
+
+		set_chr( USI_A,465,	-1,-1,	4612,94,-13,		2,0,	20,"<TK_USI_A>")	//媿幧丂媿A
+//		set_chr( USI_B,466,	-1,-1,	4372,-37,-13,		2,0,	20,"<TK_USI_B>")	//媿幧丂媿B
+		set_chr( USI_B,466,	-1,-1,	4500,-40,-14,		2,250,	20,"<TK_USI_B>")	//媿幧丂媿B
+		//Name惂屼劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//媿俙		偝偪偙
+		//媿俛		傛偟偊
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"幸子")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"美惠")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_00_StartSolo )
+	{
+		F_set(200)		//僠僃僗僋偵僸儓僐傪忔偣傞俴僼儔僌丅儌乕僔儑儞掕媊僗僋儕僾僩偱敾掕偡傞丅
+		set_chr( WADE,71,	-1,-1,	-1666,-320,283,		2,0,	20,"<TK_WADE>")		//偵傫偠傫偺寠丂僠僃僗僋
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//懞挿戭慜丂儚僀僛儞懞挿
+		set_chr( BAROM,67,	-1,-1,	-1804,811,353,		2,0,	20,"<TK_BAROM>")	//偵傫偠傫敤丂僶儔儞
+		EV("FREEMOVE_BAROM")
+		set_chr( USI_A,465,	-1,-1,	5533,1936,-4,		2,194,	20,"<TK_USI_A>")	//曻杚抧丂媿A
+//		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//曻杚抧丂媿B
+		set_chr( USI_B,466,	-1,-1,	5505,653,1,			2,0,	20,"<TK_USI_B>")	//曻杚抧丂媿
+		EV("FREEMOVE_USI_B")
+		//Name惂屼劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//媿俙		偝偪偙
+		//媿俛		傛偟偊
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"幸子")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"美惠")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		//儌乕僔儑儞
+		MOT_SET(WADE,150,-1,521,521,-1,0)	//僠僃僗僋丂偵傫偠傫偺壠偵嵗偭偰偄傞
+		MOT(WADE,150,0)
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F3_00_GoMoonCastle )
+	{
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F2_14_TalkEnemy )
+	{
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//懞挿戭慜丂儚僀僛儞懞挿
+		set_chr( BAROM,67,	-1,-1,	-2365,3606,-304,		2,30,	20,"<TK_BAROM>")	//晽幵彫壆慜丂僶儔儞
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//偐傏偪傖敤丂傾儖儀乕儖
+		EV("FREEMOVE_ALBERS")
+		set_chr( FEDERICA,70,	-1,-1,	4283,1368,-5,		50,74,	20,"<TK_FEDERICA>")	//曻杚抧丂僼僃僨儕僇
+
+		F_set(200)		//僠僃僗僋偵僸儓僐傪忔偣傞俴僼儔僌丅儌乕僔儑儞掕媊僗僋儕僾僩偱敾掕偡傞丅
+		set_chr( WADE,71,	-1,-1,	2143,1887,300,		2,330,	20,"<TK_WADE>")	//儁僢僩僔儑僢僾慜栘敔偺忋丂僠僃僗僋
+		F_set_chr(WADE,CF_NO_FALL)
+		F_set_chr(WADE,CF_NO_HEIGHT)
+		set_chr( USI_A,465,	-1,-1,	4910,2598,-4,		2,130,	20,"<TK_USI_A>")	//曻杚抧丂媿A
+		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//曻杚抧丂媿B
+		EV("FREEMOVE_USI_A")
+		EV("FREEMOVE_USI_B")
+		//Name惂屼劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//媿俙		偝偪偙
+		//媿俛		傛偟偊
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"幸子")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"美惠")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		//儌乕僔儑儞
+		MOT_SET(WADE,150,-1,473,473,151,5)	//僠僃僗僋
+		MOT_SET(WADE,151,-1,475,475,150,5)	//僠僃僗僋
+		MOT(WADE,150,0)
+		MOT_SET(BAROM,150,-1,452,452,151,40)	//僶儔儞
+		MOT_SET(BAROM,151,-1,453,453,150,40)	//僶儔儞
+		MOT(BAROM,150,0)
+		MOT_SET(FEDERICA,150,-1,410,410,-1,0)	//僼僃僨儕僇丂鎎偟偘偵栘敔傪尒偰偄傞
+		MOT(FEDERICA,150,0)
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(FEDERICA,CF_NO_MOVE)
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F2_00_GoForest )
+	{
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//懞挿戭慜丂儚僀僛儞懞挿
+
+		//偙偺帪揰偱偼栻攧傝
+		set_chr( KARASU,60,	-1,-1,	214,-1707,300,		2,46,	20,"<SHOP_KARASU>")	//懞挿戭慜丂僇儔僗
+		chr_rename(KARASU,"賣藥人")
+		set_chr( MARSA,69,	-1,-1,	106,-1521,300,		2,210,	20,"<TK_MARSA>")	//懞挿戭慜丂儅乕僒
+		set_chr( BAROM,67,	-1,-1,	-468,4831,0,		2,242,	20,"<TK_BAROM>")	//峀応丂僶儔儞
+		EV("FREEMOVE_BAROM")
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//偐傏偪傖敤丂傾儖儀乕儖
+		EV("FREEMOVE_ALBERS")
+
+		F_set(200)		//僠僃僗僋偵僸儓僐傪忔偣傞俴僼儔僌丅儌乕僔儑儞掕媊僗僋儕僾僩偱敾掕偡傞丅
+		set_chr( WADE,71,	-1,-1,	12,7300,-40,		2,0,	20,"<TK_WADE>")	//擖岥丂僠僃僗僋
+		set_chr( USI_B,466,	-1,-1,	5261,1251,-14,		2,285,	20,"<TK_USI_B>")	//曻杚抧丂媿B
+
+		//Name惂屼劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//媿俛		傛偟偊
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"美惠")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		//儌乕僔儑儞
+		MOT_SET(WADE,150,-1,560,560,-1,0)	//僠僃僗僋
+		MOT(WADE,150,0)
+		MOT_SET(MARSA,150,-1,414,414,-1,-1)
+		MOT(MARSA,150,0)
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(MARSA,CF_NO_MOVE)
+		F_set_chr(KARASU,CF_NO_MOVE)
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F1_15_GoVillage )
+	{
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//懞挿戭慜丂儚僀僛儞懞挿
+		set_chr( CLEESE,83,-1,-1,	3971,-3518,301,	2,0,	20,"<TK_CLEESE>")	//恄揳傊偺弌岥慜丂僋儗乕僗
+		EV("FREEMOVE_CLEESE")
+
+		set_chr( BAROM,67,	-1,-1,	-2365,3606,-304,		2,30,	20,"<TK_BAROM>")	//晽幵彫壆慜丂僶儔儞
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//偐傏偪傖敤丂傾儖儀乕儖
+		EV("FREEMOVE_ALBERS")
+		set_chr( MARSA,69,	-1,-1,	-1755,849,327,		2,0,	20,"<TK_MARSA>")	//偵傫偠傫敤丂儅乕僒
+		EV("FREEMOVE_MARSA")
+
+		F_set(200)		//僠僃僗僋偵僸儓僐傪忔偣傞俴僼儔僌丅儌乕僔儑儞掕媊僗僋儕僾僩偱敾掕偡傞丅
+		set_chr( WADE,71,	-1,-1,	784,3615,0,		2,25,	20,"<TK_WADE>")	//儁僢僩僔儑僢僾慜丂僠僃僗僋
+		EV("FREEMOVE_WADE")
+
+		set_chr( USI_A,465,	-1,-1,	5533,1936,-4,		2,194,	20,"<TK_USI_A>")	//曻杚抧丂媿A
+		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//曻杚抧丂媿B
+		EV("FREEMOVE_USI_B")
+
+		//Name惂屼劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//媿俙		偝偪偙
+		//媿俛		傛偟偊
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"幸子")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"美惠")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		//儌乕僔儑儞
+		MOT_SET(BAROM,150,-1,452,452,151,40)	//僶儔儞
+		MOT_SET(BAROM,151,-1,453,453,150,40)	//僶儔儞
+		MOT(BAROM,150,0)
+
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F1_01_GameStart )
+	{
+		set_chr( WIDEZEN,65,-1,-1,	-516,-2505,300,	2,90,	20,"<TK_WIDEZEN>")	//懞挿戭慜丂儚僀僛儞懞挿
+		set_chr( CLEESE,83,-1,-1,	-720,-2452,291,	50,270,	20,"<TK_CLEESE>")	//懞挿戭慜丂僋儗乕僗
+		
+		set_chr( BAROM,67,	-1,-1,	-939,2987,-22,		2,20,	20,"<TK_BAROM>")	//晽幵彫壆慜丂僶儔儞
+		chr_equip( BAROM,	"eq_052",	"Bone_RightSword",100);	//僩儞僇僠
+
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//偐傏偪傖敤丂傾儖儀乕儖
+		EV("FREEMOVE_ALBERS")
+		set_chr( MARSA,69,	-1,-1,	-1755,849,327,		2,0,	20,"<TK_MARSA>")	//偵傫偠傫敤丂儅乕僒
+		EV("FREEMOVE_MARSA")
+		set_chr( FEDERICA,70,	-1,-1,	4792,2405,0,	2,0,	20,"<TK_FEDERICA>")	//曻杚抧丂僼僃僨儕僇
+		EV("FREEMOVE_FEDERICA")
+
+		F_set(200)		//僠僃僗僋偵僸儓僐傪忔偣傞俴僼儔僌丅儌乕僔儑儞掕媊僗僋儕僾僩偱敾掕偡傞丅
+		set_chr( WADE,71,	-1,-1,	5217,-3538,296,		2,36,	20,"<TK_WADE>")	//弌岥丂僠僃僗僋
+//		set_chr( USI_A,465,	-1,-1,	5428,2065,0,		2,0,	20,"<TK_USI_A>")	//曻杚抧丂媿A
+//		set_chr( USI_B,466,	-1,-1,	5505,653,1,			2,0,	20,"<TK_USI_B>")	//曻杚抧丂媿B
+		set_chr( USI_A,465,	-1,-1,	5533,1936,-4,		2,194,	20,"<TK_USI_A>")	//曻杚抧丂媿A
+		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//曻杚抧丂媿B
+		EV("FREEMOVE_USI_B")
+
+		//儌乕僔儑儞
+		MOT_SET(WADE,150,-1,521,521,-1,0)		//僠僃僗僋丂愇旇偵傕偨傟偐偐偭偰偄傞
+		MOT(WADE,150,0)
+		MOT_SET(BAROM,150,-1,572,572,151,40)	//僶儔儞丂嶒傪捈偟偰偄傞
+		MOT_SET(BAROM,151,-1,574,574,150,40)
+		MOT(BAROM,150,0)
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(CLEESE,CF_NO_MOVE)
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+//		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+
+
+//仭僀儀儞僩
+	if(F1_02_EndPrologue && !F1_22_EndFirst)
+	{
+	//侾復
+		if(!F1_15_GoVillage)
+		{
+			//俧俥亀仛偡偱偵儘傾儖僞懞偵峴偭偰偄偨亁棫偰傞
+			F_set(F1_34_GoneVillage)
+		}
+
+		//俧俥亀仛儘傾儖僞懞偵摓拝偟偨亁棫偭偰側偄
+		if(F1_15_GoVillage && !F1_16_OnVillage)
+		{
+			//仴儘傾儖僞懞偵摓拝偡傞僀儀儞僩
+			set_namebmp(0,0)
+			EV("EV_1_07_OnVillage")
+		}
+	}
+}
+
+//====================================================================
+//=== NPC張棟 ===================================================
+//====================================================================
+
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴媿僼儕乕儉乕僽
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/*
+FREEMOVE_USI_A
+{
+	workL(011,RAND,360)
+	rot(USI_A,10,WK011)
+	wait(40)
+	workL(011,RAND,300)
+	workL(012,RAND,300)
+	move( USI_A, 2,	WALK1,	WK011,WK012,0,	10)
+	wait(150)
+	loop
+}
+*/
+FREEMOVE_USI_A
+{
+	MOT(USI_A,0,15)
+	move( USI_A, 25,	5,	1500,1500,0,	100)
+	wait(210)
+	workL(011,RAND,3)
+	if(WK011==0)
+		wait(60)
+	loop
+}
+
+FREEMOVE_USI_B
+{
+	MOT(USI_B,0,15)
+	move( USI_B, 25,	5,	1500,1500,0,	100)
+	wait(210)
+	workL(012,RAND,3)
+	if(WK012==0)
+		wait(60)
+	loop
+}
+
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴摦暔僼儕乕儉乕僽
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+FREEMOVE_CHICKIN_A
+{
+	move( CHICKIN_A, 25,	WALK1,	800,800,0,	50)
+	wait(50)
+	loop
+}
+FREEMOVE_CHICKIN_B
+{
+	move( CHICKIN_B, 25,	WALK1,	800,800,0,	50)
+	wait(50)
+	loop
+}
+FREEMOVE_CHICKIN_C
+{
+	move( CHICKIN_C, 25,	WALK1,	800,800,0,	50)
+	wait(50)
+	loop
+}
+
+FREEMOVE_HIYOKO_A
+{
+	move( HIYOKO_A, 25,	5,	800,800,0,	30)
+	wait(80)
+	loop
+}
+FREEMOVE_HIYOKO_B
+{
+	move( HIYOKO_B, 25,	5,	800,800,0,	30)
+	wait(80)
+	loop
+}
+FREEMOVE_HIYOKO_C
+{
+	move( HIYOKO_C, 25,	5,	800,800,0,	30)
+	wait(80)
+	loop
+}
+FREEMOVE_HIYOKO_D
+{
+	move( HIYOKO_D, 25,	5,	800,800,0,	30)
+	wait(80)
+	loop
+}
+
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僯儚僩儕乮仸傾儖僂僃儞偑偍傝丄巜椫傪憰拝偟偰偄傞応崌偺傒僙儕僼偑尒傟傞乯")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸僼僃僨儕僇偑帞偭偰偄傞僯儚僩儕偱偡丅
+//丂丂仸僜儘儌儞儕儞僌憰旛帪偺傒儊僢僙乕僕傪昞帵丅
+//丂丂丂偦傟埲奜偼柭偒惡俽俤傪柭傜偡偩偗丅
+//丂丂仸儊僢僙乕僕偼慡偰怓姺偊乮愒乯偲偟傑偡丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸僯儚僩儕偼僼儔僌偵娭學側偔丄摨堦偺儊僢僙乕僕偱偡丅
+//丂丂丂傑偨僜儘儌儞儕儞僌偺桳柍偵娭傢傜偢丄嬤偯偔偲摝偘偰偄偒傑偡丅
+//丂丂仸張棟偺娭學忋丄怗傟偨嵺偵乽帺摦偱暵偠傞僂傿儞僪僂乿傪弌偟傑偡丅
+//丂丂仸屄懱偼堦懱堦懱嬫暿偟偰偔偩偝偄丅
+//丂丂丂乮昁梫悢暘丄検嶻偺梊掕乯
+//丂丂仸晛抜偼曻杚抧丄僼儔僌嘊偱偼懞峀応傪僼儕乕儉乕僽丅
+RUNAWAY_CHICKIN_A
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌憰旛帪
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(EQ092)
+	{
+		SE(32,CHICKIN_A)
+		chr_rename(CHICKIN_A,"公雞")
+		F_set(FV_FF_NameNiwa_A)
+		MES_pos(CHICKIN_A,"C4喲吼吼！",0,0,0,0,0)
+		wait(30)		
+		MES_close(CHICKIN_A)
+	}
+	else
+	{
+		//僯儚僩儕偺柭偒惡
+		SE(32,CHICKIN_A)
+
+		//媰偒惡偺屻偺wait傪儔儞僟儉偱曄偊傞
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+RUNAWAY_CHICKIN_B
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌憰旛帪
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(EQ092)
+	{
+		SE(32,CHICKIN_B)
+		chr_rename(CHICKIN_B,"公雞")
+		F_set(FV_FF_NameNiwa_B)
+		MES_pos(CHICKIN_B,"C4微笑微笑！\n正是這時候才要微笑！",0,0,0,0,0)
+		wait(30)		
+		MES_close(CHICKIN_B)
+	}
+	else
+	{
+		//僯儚僩儕偺柭偒惡
+		SE(32,CHICKIN_B)
+
+		//媰偒惡偺屻偺wait傪儔儞僟儉偱曄偊傞
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+RUNAWAY_CHICKIN_C
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌憰旛帪
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(EQ092)
+	{
+		SE(39,CHICKIN_C)
+		chr_rename(CHICKIN_C,"公雞")
+		F_set(FV_FF_NameNiwa_C)
+		MES_pos(CHICKIN_C,"C4親愛的，我們走。\n直到雲之彼端！",0,0,0,0,0)
+		wait(30)		
+		MES_close(CHICKIN_C)
+	}
+	else
+	{
+		//僯儚僩儕偺柭偒惡
+		SE(39,CHICKIN_C)
+
+		//媰偒惡偺屻偺wait傪儔儞僟儉偱曄偊傞
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僸儓僐乮仸傾儖僂僃儞偑偍傝丄巜椫傪憰拝偟偰偄傞応崌偺傒僙儕僼偑尒傟傞乯")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸僼僃僨儕僇偑帞偭偰偄傞僸儓僐偱偡丅
+//丂丂仸僜儘儌儞儕儞僌憰旛帪偺傒儊僢僙乕僕傪昞帵丅
+//丂丂丂偦傟埲奜偼柭偒惡俽俤傪柭傜偡偩偗丅
+//丂丂仸儊僢僙乕僕偼慡偰怓姺偊乮椢乯偲偟傑偡丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸僸儓僐偼僼儔僌偵娭學側偔丄摨堦偺儊僢僙乕僕偱偡丅
+//丂丂丂傑偨僜儘儌儞儕儞僌偺桳柍偵娭傢傜偢丄嬤偯偔偲摝偘偰偄偒傑偡丅
+//丂丂仸張棟偺娭學忋丄怗傟偨嵺偵乽帺摦偱暵偠傞僂傿儞僪僂乿傪弌偟傑偡丅
+//丂丂仸屄懱偼堦懱堦懱嬫暿偟偰偔偩偝偄丅
+//丂丂丂乮昁梫悢暘丄検嶻偺梊掕乯
+//丂丂仸晛抜偼曻杚抧丄僼儔僌嘊偱偼懞峀応傪僼儕乕儉乕僽丅
+
+RUNAWAY_HIYOKO_A
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌憰旛帪
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(EQ092)
+	{
+		SE(33,HIYOKO_A)
+		chr_rename(HIYOKO_A,"小雞")
+		F_set(FV_FF_NameHiyo_A)
+		MES_pos(HIYOKO_A,"C3呀，不要～！",0,0,0,0,0)
+		wait(30)		
+		MES_close(HIYOKO_A)
+	}
+	else
+	{
+		SE(33,HIYOKO_A)
+
+		//媰偒惡偺屻偺wait傪儔儞僟儉偱曄偊傞
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+RUNAWAY_HIYOKO_B
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌憰旛帪
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(EQ092)
+	{
+		SE(33,HIYOKO_B)
+		chr_rename(HIYOKO_B,"小雞")
+		F_set(FV_FF_NameHiyo_B)
+		MES_pos(HIYOKO_B,"C3ＯＨ！",0,0,0,0,0)
+		wait(30)		
+		MES_close(HIYOKO_B)
+	}
+	else
+	{
+		SE(33,HIYOKO_B)
+
+		//媰偒惡偺屻偺wait傪儔儞僟儉偱曄偊傞
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+RUNAWAY_HIYOKO_C
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌憰旛帪
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(EQ092)
+	{
+		SE(33,HIYOKO_C)
+		chr_rename(HIYOKO_C,"小雞")
+		F_set(FV_FF_NameHiyo_C)
+		MES_pos(HIYOKO_C,"C3不要過來～！",0,0,0,0,0)
+		wait(30)		
+		MES_close(HIYOKO_C)
+	}
+	else
+	{
+		SE(33,HIYOKO_C)
+
+		//媰偒惡偺屻偺wait傪儔儞僟儉偱曄偊傞
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+RUNAWAY_HIYOKO_D
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌憰旛帪
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(EQ092)
+	{
+		SE(33,HIYOKO_D)
+		chr_rename(HIYOKO_D,"小雞")
+		F_set(FV_FF_NameHiyo_D)
+		MES_pos(HIYOKO_D,"C3飛呀……！",0,0,0,0,0)
+		wait(30)		
+		MES_close(HIYOKO_D)
+	}
+	else
+	{
+		SE(33,HIYOKO_D)
+
+		//媰偒惡偺屻偺wait傪儔儞僟儉偱曄偊傞
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴僠僃僗僋僼儕乕儉乕僽
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+FREEMOVE_WADE
+{
+	move( WADE, 25,	WALK1,	500,500,0,	150)
+	wait_move( WADE )
+	wait(50)
+	loop
+}
+//戝偒偔側傟乕両偺僼儕乕儉乕僽
+FREEMOVE_WADE_11
+{
+	//儌乕僔儑儞
+	MOT_SET(WADE,150,-1,473,473,151,5)	//僠僃僗僋
+	MOT_SET(WADE,151,-1,475,475,150,5)
+	
+	move( WADE, 25,	WALK1,	500,500,0,	120)
+	wait_move( WADE )
+	MOT(WADE,150,15)
+	wait(50)
+	MOT(WADE,2,10)
+	loop
+}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴僠僃僗僋柊傝僄儌乕僔儑儞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+SLEEP_WADE
+{
+	EMO(WADE,EMO_ZZZ)
+	wait(50)
+	loop
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸偵傫偠傫偺壠嬤偔偵丄僸儓僐俀懱傪僼儕乕儉乕僽丅
+//丂丂仸僜儘儌儞儕儞僌傪憰旛偟偰偄傞応崌偺傒儊僢僙乕僕偑尒傟傞丅
+TK_HIYOKO_WADE_A
+{
+	if(EQ092)
+	{
+	//丂丂仛僸儓僐俙
+	//	name("僸儓僐")
+		TK_begin()
+		chr_rename(HIYOKO_WADE_A,"安迪爾森")
+		F_set(FV_FF_NameTHiyo_A)
+
+		rot_chr(HIYOKO_WADE_A,10,PLAYER1)
+		KAO(PLAYER1, "1", "1", "1")
+		KAO(PLAYER2, "1", "1", "1")
+		KAO(PET, "1", "1", "1")
+		rot_chr(PLAYER1,30,HIYOKO_WADE_A)
+		rot_chr(PLAYER2,30,HIYOKO_WADE_A)
+		rot_chr(PET,30,HIYOKO_WADE_A)
+
+		MES(HIYOKO_WADE_A,"C4切斯克大人，有點累了。\n正在休息。正在休息。",0)
+		MES_close(HIYOKO_WADE_A)
+		TK_end()
+	}
+	else
+	{
+		SE(33,HIYOKO_WADE_A)
+
+		//媰偒惡偺屻偺wait傪儔儞僟儉偱曄偊傞
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+TK_HIYOKO_WADE_B
+{
+	if(EQ092)
+	{
+	//丂丂仛僸儓僐俛
+	//	name("僸儓僐")
+		TK_begin()
+		chr_rename(HIYOKO_WADE_B,"諾託爾法斯")
+		F_set(FV_FF_NameTHiyo_B)
+
+		rot_chr(HIYOKO_WADE_B,10,PLAYER1)
+		KAO(PLAYER1, "1", "1", "1")
+		KAO(PLAYER2, "1", "1", "1")
+		KAO(PET, "1", "1", "1")
+		rot_chr(PLAYER1,30,HIYOKO_WADE_B)
+		rot_chr(PLAYER2,30,HIYOKO_WADE_B)
+		rot_chr(PET,30,HIYOKO_WADE_B)
+
+		MES(HIYOKO_WADE_B,"C4切斯克大人，已經吃飽。\n吃太多了。吃太多了。",0)
+		MES_close(HIYOKO_WADE_B)
+		TK_end()
+	}
+	else
+	{
+		SE(33,HIYOKO_WADE_B)
+
+		//媰偒惡偺屻偺wait傪儔儞僟儉偱曄偊傞
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+FREEMOVE_HIYOKO_WADE_A
+{
+	move( HIYOKO_WADE_A, 25,	5,	300,300,0,	50)
+	wait(50)
+	loop
+}
+
+FREEMOVE_HIYOKO_WADE_B
+{
+	move( HIYOKO_WADE_B, 25,	5,	300,300,0,	50)
+	wait(50)
+	loop
+}
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴僋儗乕僗僼儕乕儉乕僽
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+FREEMOVE_CLEESE
+{
+	move( CLEESE, 25,	WALK1,	500,500,0,	50)
+	wait_move( CLEESE )
+	wait(50)
+	loop
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴僼僃僨儕僇僼儕乕儉乕僽
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+FREEMOVE_FEDERICA
+{
+	move( FEDERICA, 25,	WALK1,	500,500,0,	50)
+	wait_move( FEDERICA )
+	wait(50)
+	loop
+}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴傾儖儀乕儖僼儕乕儉乕僽
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+FREEMOVE_ALBERS
+{
+	MOT_SET(ALBERS,150,-1,453,453,151,10)
+	MOT_SET(ALBERS,151,-1,454,454,150,10)
+	move( ALBERS, 25,	WALK1,	500,500,0,	100)
+	wait_move( ALBERS )
+	MOT(ALBERS,150,10)
+	wait(50)
+	MOT(ALBERS,2,10)
+	loop
+}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴僶儔儞僼儕乕儉乕僽
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+FREEMOVE_BAROM
+{
+	move( BAROM, 25,	WALK1,	500,500,0,	50)
+	wait_move( BAROM )
+	wait(50)
+	loop
+}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴儅乕僒僼儕乕儉乕僽
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+FREEMOVE_MARSA
+{
+	MOT_SET(MARSA,150,-1,453,453,151,10)
+	MOT_SET(MARSA,151,-1,454,454,150,10)
+	
+	move( MARSA, 25,	WALK1,	500,500,0,	100)
+	wait_move( MARSA )
+	MOT(MARSA,150,10)
+	wait(50)
+	MOT(MARSA,2,10)
+	loop
+}
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嘗傾儖儀乕儖偲儅乕僒偺夛榖
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TALK_AM
+{
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+//	弶婜壔張棟
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	cross_fade(30)			//僋儘僗僼僃乕僪
+	EV_begin()
+	
+	//僇儊儔僙僢僩
+	CAM_move(-731,-2292,156,0,0)
+	CAM(-210,94,156,25,205,0,0)
+	
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,-871,2372,-22,250,2)
+	chr_pos(PARTNER,-909,2568,-23,250,2)
+	chr_pos(PET,-1005,2324,-4,250,2)
+	chr_pos(EVENT_ALBERS,-467,2047,-23,340,2)
+	chr_pos(EVENT_MARSA,-658,2225,-23,330,2)
+		
+	//婄弶婜壔
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(PET, "1", "1", "1")	
+	KAO(EVENT_ALBERS, "1", "1", "1")	
+	KAO(EVENT_MARSA,"1", "1", "1")	
+	
+	F_reset_chr(EVENT_ALBERS,CF_NO_MOVE)
+	F_reset_chr(EVENT_MARSA,CF_NO_MOVE)
+	//儌乕僔儑儞
+	MOT_SET(EVENT_ALBERS,150,-1,410,410,-1,0)	//偛傎傫
+	MOT_SET(EVENT_MARSA,150,-1,395,395,-1,0)	//偍傗丒丒丒偳偆偟偰偁傫偨偑
+	MOT_SET(EVENT_MARSA,151,-1,434,434,-1,0)	//傇偭旘偽偟偲偔
+	wait_fade()
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+//	僀儀儞僩奐巒
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	
+	//	name("傾儖儀乕儖")
+	KAO(EVENT_ALBERS,"12321Z4","1","1")
+	MES(EVENT_ALBERS,"怎麼可能，雪菲拉她……",0)
+	KAO(EVENT_ALBERS,"12321Z2","1","1")
+	MES(EVENT_ALBERS,"受打擊……",0)
+	MES_close(EVENT_ALBERS)
+
+	look_chr( EVENT_MARSA, EVENT_ALBERS,"Bone_Head")
+
+
+//	name("儅乕僒")
+	MOT(EVENT_MARSA,150,15)
+	KAO(EVENT_MARSA,"12321Z4","2","1")
+	MES(EVENT_MARSA,"哦……",0)
+	KAO(EVENT_MARSA,"12321Z6","2","1")
+	MES(EVENT_MARSA,"你為什麼\n會覺得受打擊？",0)
+	MES_close(EVENT_MARSA)
+
+//丂丂傾儖儀乕儖偵婥晅偒僄儌乕僔儑儞丅
+//丂丂儅乕僒偵怳傝曉傞丅
+	EMO(EVENT_ALBERS,EMO_PA)
+	wait(30)
+	look_chr(  EVENT_ALBERS, EVENT_MARSA,"Bone_Head")
+	
+//	name("傾儖儀乕儖")
+	KAO(EVENT_ALBERS,"12321Z6","1","1")
+	MES(EVENT_ALBERS,"沒，沒有。\n我絕不是心裡有鬼？",0)
+	KAO(EVENT_ALBERS,"12321Z4","1","1")
+	MES(EVENT_ALBERS,"那個，是以一個支持者的身分！",0)
+	MES_close(EVENT_ALBERS)
+
+//	name("儅乕僒")
+	KAO(EVENT_MARSA,"12321Z3","2","1")
+	MES(EVENT_MARSA,"真的嗎？",0)
+	MES_close(EVENT_MARSA)
+
+//	name("傾儖儀乕儖")
+	KAO(EVENT_ALBERS,"12321Z3","1","1")
+	MES(EVENT_ALBERS,"啊啊，當然是真的。",0)
+	MES_close(EVENT_ALBERS)
+
+//丂丂傾儖儀乕儖偵彮偟丒丒丒僄儌乕僔儑儞丅
+	EMO(EVENT_ALBERS,EMO_TENTEN)
+	wait(30)
+
+	look_off(EVENT_ALBERS)
+//	name("傾儖儀乕儖")
+	MOT(EVENT_ALBERS,150,15)
+	KAO(EVENT_ALBERS,"12321Z6","1","1")
+	MES(EVENT_ALBERS,"嗯哼……差不多\n要開始播種明年的種子了。",0)
+	MES_close(EVENT_ALBERS)
+	
+
+//丂丂傾儖儀乕儖丄偐傏偪傖敤偺曽偵嫀偭偰偄偔丅
+//丂丂儅乕僒偨偪丄尒憲傞丅
+	EV("MV_EVENT_ALBERS_13")
+	wait(40)
+
+//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+	EMO(RAGNA,EMO_HIYAASE)
+	EMO(PET,EMO_HIYAASE)
+	EMO(PARTNER,EMO_HIYAASE)
+	wait(30)
+	
+	
+	KAO(PET,"12321Z3","1","1")
+	MES(PET,"呼，還以為他跑掉了……",0)
+	MES_close(PET)
+	
+	look_off(EVENT_MARSA)
+	look_off(RAGNA)
+	look_off(PET)
+	look_off(PARTNER)
+
+
+	rot_chr(EVENT_MARSA,60,PARTNER)
+	
+//	name("儅乕僒")
+	KAO(EVENT_MARSA,"12321Z6","1","1")
+	MES(EVENT_MARSA,"啊哈哈，放心好了。\n他是個很認真的人，\n我相當瞭解他。",0)
+	KAO(EVENT_MARSA,"12321Z6","1","1")
+	MOT(EVENT_MARSA,151,15)
+	MES(EVENT_MARSA,"總之，他敢有花心傾向的話，\n我會把一腳他踹飛，你就別擔心啦。",0)
+	MES_close(EVENT_MARSA)
+
+//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+	EMO(RAGNA,EMO_HIYAASE)
+	EMO(PET,EMO_HIYAASE)
+	EMO(PARTNER,EMO_HIYAASE)
+	wait(30)
+	MOT(EVENT_MARSA,2,15)
+
+//	name("儅乕僒")
+	KAO(EVENT_MARSA,"12321Z6","1","1")
+	MES(EVENT_MARSA,"那麼，我也該差不多\n開始耕作了。",0)
+	KAO(EVENT_MARSA,"12321Z5","1","1")
+	MES(EVENT_MARSA,"你們也不要著急，\n慢慢來吧。",0)
+	MES_close(EVENT_MARSA)
+	
+	
+//丂丂儅乕僒丄偵傫偠傫敤偺曽偵嫀偭偰偄偔丅
+	EV("MV_EVENT_MARSA_13")
+	wait(40)
+
+//丂丂埲崀丄傾儖儀乕儖偲儅乕僒偼偦傟偧傟
+//丂丂偐傏偪傖敤丒偵傫偠傫敤傪僼儕乕儉乕僽偡傞丅
+	
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+//	僀儀儞僩廔椆張棟
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//僇儊儔傪弶婜愝掕偵
+	CAM_return( 0 )
+	wait(30)
+	
+	F_set(FV_13_TalkAlbMar)
+	
+	delete(EVENT_MARSA)
+	delete(EVENT_ALBERS)
+
+	//儅乕僒丒傾儖儀乕儖傪捠忢埵抲偵
+	chr_pos(MARSA,-1755,849,327,0,2)
+	chr_pos(ALBERS,1157,753,295,0,2)
+	
+	color(MARSA,1)	//摟夁夝彍
+	color(ALBERS,1)//摟夁夝彍
+	EV("FREEMOVE_MARSA")
+	EV("FREEMOVE_ALBERS")
+	
+	F_reset_chr(MARSA,CF_NO_ZIMEN)
+	F_reset_chr(MARSA,CF_NO_CSP)
+	F_reset_chr(MARSA,CF_NO_HEIGHT)
+	F_reset_chr(ALBERS,CF_NO_ZIMEN)
+	F_reset_chr(ALBERS,CF_NO_CSP)
+	F_reset_chr(ALBERS,CF_NO_HEIGHT)
+
+	
+	EV_end()
+	
+	//僼僃乕僪僀儞----------------------
+	fade_in(0,30,BLACK)
+	
+	//仛傾儖儀乕儖
+	F_set_note(ALBERS,-1)
+	//仛儅乕僒
+	F_set_note(MARSA,-1)
+	
+	//仛儅乕僒亂掄庡傛傝嫮偄亃
+	F_set_note(EVENT_MARSA,2)
+//	僾儗僀儎乕憖嶌嫋壜
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+}
+
+//偐傏偪傖敤偵峴偔傾儖儀乕儖
+MV_EVENT_ALBERS_13
+{
+	rot( EVENT_ALBERS,60,226)
+	move( EVENT_ALBERS, 0, WALK1, -103,1573,-21, 0)
+	wait_move(EVENT_ALBERS)
+}
+
+//偵傫偠傫敤偵峴偔儅乕僒
+MV_EVENT_MARSA_13
+{
+	rot(EVENT_MARSA,60,230)
+	move( EVENT_MARSA, 0, WALK1,-103,1573,-21, 0)
+	wait_move(EVENT_MARSA)
+}
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嘗僶儔儞偲僙僼傿乕儔偺夛榖
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TALK_BC
+{
+	MES(CEPHEILA,"對不起，\n在下冒昧前來……",0)
+	MES(CEPHEILA,"但是，巴朗先生救了我，\n我還沒有向您道謝。",0)
+	MES_close(CEPHEILA)
+
+//	name2(BAROM)
+	MES(BAROM,"不，您太客氣了……",0)
+	MES(BAROM,"我只是做了\n理所當然的事情……",0)
+	MES_close(BAROM)
+
+//	name2(CEPHEILA)
+	MES(CEPHEILA,"呵呵，\n也許吧……",0)
+	MES(CEPHEILA,"從那以後，我漸漸找回了真實的自己，\n能夠放聲歌唱……",0)
+	MES(CEPHEILA,"多虧了巴朗先生。",0)
+	MES_close(CEPHEILA)
+
+//丂丂僶儔儞丄栚傪傁偪傁偪丅
+	MES(BAROM,"？？？\n那，那個……？",0)
+	MES_close(BAROM)
+
+//	name2(CEPHEILA)
+	MES(CEPHEILA,"呵呵，沒什麼。\n是我自言自語。",0)
+	MES_close(CEPHEILA)
+	
+	//仛僶儔儞
+	F_set_note(BAROM,-1)
+	//仛僙僼傿乕儔
+	F_set_note(CEPHEILA,-1)
+
+	//仛僙僼傿乕儔亂僶儔儞偵楃亃
+	F_set_note(CEPHEILA,2)
+	F_set(FV_13_TalkBaromCeph)
+}
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴儘傾儖僞懞偵摓拝偡傞僀儀儞僩
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂儘傾儖僞懞偵擖偭偨偲偙傠偱僀儀儞僩敪惗丅
+//丂丂僼僃乕僪傾僂僩敳偗偱丄儘傾儖僞懞偺慡宨傪尒偣傞僇儊儔丅
+//丂丂堦捠傝尒偣偰偐傜擖岥偵偄傞儔僌僫偨偪傪尒偣傞丅
+EV_1_07_OnVillage
+{
+	EV_begin()
+
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,	 -332,5858,-23,180,2)
+	chr_pos(PARTNER, -92,5946,-23,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, -332,5858,-23, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, -92,5946,-23, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//僨僼僅儖僩
+	KAO(ALWEN,"1","1","1")//僨僼僅儖僩
+
+	MOT_SET(EVENT_RAGNA,150,-2,405,405,-1,-1)//採埬
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//忨傪憰旛偝偣傞偺偼偙偪傜丅
+//	MOT(ALWEN,53,1)										//傾儖僂僃儞偺塃庤傪奐偐偣傞
+
+	//僇儊儔弶婜埵抲
+	CAM_move(-1656,364,320,0,0)
+	CAM(70,140,320,24,180,0,0)
+
+	CAM_move(-1456,284,660,200,0)
+	CAM(270,210,660,24,144,200,0)
+
+	//僼僃乕僪僀儞
+	fade_in(0,60,0)
+	wait_fade()
+
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(30)
+	CAM_move(1790,32,-298,0,0)
+	CAM(590,456,-298,36,220,0,0)
+//	CAM_move(410,-1868,-298,300,0)
+//	CAM(470,404,-298,36,200,300,0)
+	CAM_move(190,-1788,-318,360,0)
+	CAM(390,404,-318,36,190,360,0)
+	wait(90)
+	set_namebmp(5,0)
+	move( EVENT_RAGNA, 0, WALK1,-282,4358,-23,0)
+	wait(10)
+	move( ALWEN, 0, WALK1,-42,4446,-23,0)
+
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+	wait_CAM_move()
+	wait_CAM()
+
+	cross_fade(30)
+	chr_pos(EVENT_RAGNA,	 -162,4858,-23,180,2)
+	chr_pos(ALWEN, 78,4946,-23,180,2)
+	CAM_move(-140,-4440,40,0,0)
+	CAM(-50,110,40,24,204,0,0)
+	CAM_move(-260,-4480,20,600,0)
+	CAM(-90,94,20,24,214,600,0)
+	wait(30)
+
+	wait_move(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,51,0)//僉儑儘僉儑儘
+	wait(15)
+
+	if(F1_34_GoneVillage)
+	{	//婛偵儘傾儖僞懞傪朘傟偰偄傞
+		KAO(EVENT_RAGNA,"12321Z4","1233321","1")//
+		MES(EVENT_RAGNA,"呼……\n這村子還是給人一種悠閒的感覺啊。",0)
+	}
+	else
+	{
+		KAO(EVENT_RAGNA,"12321Z4","1233321","1")//
+		MES(EVENT_RAGNA,"唉……\n還真是座和平的村落。",0)
+	}
+	KAO(EVENT_RAGNA,"12321Z6","1","1")//
+	MES(EVENT_RAGNA,"你是說，這地方\n隱藏著你的魔力？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B232B","123","2")//
+	MES(ALWEN,"不……",0)
+	KAO(ALWEN,"B232BZ5","3","2")//
+	MES(ALWEN,"不是的，雖然感受到氣息，\n但好像不是在這座村子裡。",0)
+	KAO(ALWEN,"B232BZ5","321","2")//
+	MES(ALWEN,"我想應該是\n在這附近沒錯……",0)
+	MES_close(ALWEN)
+
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+	MOT(EVENT_RAGNA,150,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"那麼，我們一邊逛這座村子，\n一邊去收集情報吧。",0)
+	KAO(EVENT_RAGNA,"12321Z7","1","1")//
+	MES(EVENT_RAGNA,"獵取珍寶，\n也是得先從村民那裡\n收集情報開始。",0)
+	MES_close(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,2,15)
+
+	look_chr(ALWEN,EVENT_RAGNA,"Bone_Head")
+	wait(15)
+	KAO(ALWEN,"12321Z5","1233321","1")//
+	MES(ALWEN,"雖然不太明白……\n但收集情報這提議我贊成。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	look_off(ALWEN)
+	rot(ALWEN,30,260)
+	wait(15)
+	KAO(ALWEN,"12321Z5","123332A","1")//
+	MES(ALWEN,"呼，那是\n叫做田地和牧場吧。",0)
+	KAO(ALWEN,"12321Z5","236","6")//
+	MES(ALWEN,"想必那裡便是精心培育出\n好吃食材的地方。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,53,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"C","123332","9")//
+	MES(EVENT_RAGNA,"（明明不吃飯也無所謂\n 卻對食物有種微妙的執著……）",0)
+	MES_close(EVENT_RAGNA)
+
+//	MES(RAGNA,"仧懞偵偼俁偮偺弌擖傝岥偑偁傝丄\n杒岥偐傜偼悈拞恄揳偵峴偗傞丅",0)
+//	MES_close(RAGNA)
+
+//丂丂僀儀儞僩廔椆丄僾儗僀儎乕憖嶌嫋壜丅
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	chr_pos(RAGNA,	 -162,4858,-23,180,2)
+	chr_pos(PARTNER, 78,4946,-23,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+//俧俥亀仛儘傾儖僞懞偵摓拝偟偨亁棫偰傞
+	F_set(F1_16_OnVillage)
+
+	//僼僃乕僪僀儞
+	fade_in(0,30,BLACK)
+
+	EV_end()
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂懞偱偼屛偵悈杤偟偨僆儖僨傿僂儉恄揳偲丄
+	//丂丂尒抦傜偸奿岲傪偟偨彮擭彮彈偺塡偑暦偗傞偲偄偆棳傟丅
+	//丂丂俶俹俠愝掕偲崌傢偣偰丄堦斒儊僢僙乕僕曽柺偵埶棅梊掕丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+}
+
+#EndScriptTable
+//====================================================================
+

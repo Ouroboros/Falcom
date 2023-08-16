@@ -1,0 +1,342 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[10480][惎崀傝偺棦暘婒乮拫乯]
+//====================================================================
+
+#ScriptTable
+
+#KAI		2
+#TENZAN		3
+#SINOBI_A	4
+#SINOBI_B	5
+#SINOBI_C	6
+#LUE		7
+
+//=====================================================================
+//=== 弶婜壔張棟 ======================================================
+//=====================================================================
+INIT
+{	
+//梉曽
+	if(F4_17_InTheEvening && !F4_09_GoShrineMia) //仛幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨
+	{
+		map_color(100,80,60,0)//R,G,B, time 100%	//梉曽
+	}
+//  set_chr  no typ     tip          x      y     z 	 mot     岦 忬  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭僄儞僩儕乕
+	set_chr( 90,990,	-1,-1,       0,  -600,-1600,  	   0,070402, 6,"K5_3")		//僄儞僩儕 捠楬1-c
+
+	set_chr( 91,990,	-1,-1,    5650,-10450,-1600,       7,080301, 6,"K0_16021;")	//僄儞僩儕 嶳亅晲婍嘆
+	set_obj("@ob61031a",-1,-1,    7000,-9100,-1600,		    10)					//嘆傾乕僠乮嶳乯
+
+	set_chr( 92,990,	-1,-1,    1750,-15150,-1600,       0,080301, 6,"K0_16031;")	//僄儞僩儕 嶳亅儃僗嘆
+	set_obj("@ob62031a",-1,-1,    3100,-13800,-1600,	   350)					//嘆傾乕僠乮嶳乯
+
+	set_chr( 95,990,	-1,-1,  -20300, -7850,-1275,	 155,     0, 0,";")			//僄儞僩儕 捠楬1-b 婣傝愱梡
+	set_chr(106,990,	-1,-1,  -20250, -7700,-1400,	 180,050401, 6,"K0_3")		//僄儞僩儕 捠楬1-b2 峴偒愱梡
+	set_chr(107,990,	-1,-1,  -20100, -7800,-1400,	 180,050201, 6,"K0_3")		//僄儞僩儕 捠楬1-b2 峴偒愱梡
+
+	set_chr( 96,990,	-1,-1,  -22500, -8775, -233,  	 245,     0, 0,";")			//僄儞僩儕 捠楬1-d 婣傝愱梡
+	set_chr(104,990,	-1,-1,  -22450, -8925, -150,  	 270,050102, 6,"K1_10400")	//僄儞僩儕 捠楬1-d 峴偒愱梡
+	set_chr(105,990,	-1,-1,  -22400, -8750, -150,  	 270,050102, 6,"K1_10400")	//僄儞僩儕 捠楬1-d 峴偒愱梡
+
+
+
+	set_chr( 50,620,	-1,-1,  3400, -6300, -1600,    0,270,	0,";")	//嘆僙乕僽OBJ
+
+	set_chr( 55,648,	-1,-1,  5560,-9955,-1600,    18,   10,	0,";")	//儗儀儖僾儗乕僩
+	color2( 55, 68,75,86, 0,0,0)
+	set_chr( 57,654,	-1,-1,  5810,-9955,-1600,     4,    7,	0,";")	//弴楬埬撪乮晲婍乯
+
+	set_chr( 56,648,	-1,-1,  1850,-14625,-1600,    18,  350,	0,";")	//儗儀儖僾儗乕僩
+	color2( 56, 68,75,86, 0,0,0)
+	set_chr( 58,654,	-1,-1,  1600,-14625,-1600,     3,    0,	0,";")	//弴楬埬撪乮儃僗乯
+
+	//仛幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨傑偱偼丄栧偼暵偠偰捠傟側偄丅
+	if( !F4_06_StopAttack )
+	{
+		set_chr( 97,991,	-1,-1,  3124,-2337,-1600,  	  450, 050401, 2,"<LP_MON>")			//栧僗僩僢僷乕丂佀儅僢僾偱偁偨傝傪擖傟偰傕傜偭偰丄僄儕傾偺摉偨傝偼敳偒傑偡丅
+	}
+	//戞屲復拞偼丄傾儖僂僃儞晄嵼偺偨傔僟儞僕儑儞偵擖傟側偄
+	if( F4_11_EndFourth && !F5_17_EndFifth )
+	{
+		set_chr( 97,991,	-1,-1,  3124,-2337,-1600,  	  450, 060601, 6,"<EV_STOP_01>")			//栧僗僩僢僷乕
+	}
+	
+	set_chr( 80,990,	-1,-1,	 3069,-2376,-1598, 0,030606, 6,"<EV_4_13_Camera>")
+	
+
+//仭僀儀儞僩
+	if(GW_ENTRY_EVENT==1)
+	{
+		//仴彎偮偄偨僗僶儖傪尒偮偗傞偺懕偒
+		workG(GW_ENTRY_EVENT,SET,0)	
+		EV("EV_4_13_GoShrineMia2")
+	}
+
+//仭応柺屌桳愝掕
+	F_set_chr(55, CF_NO_CLIP)
+	F_set_chr(56, CF_NO_CLIP)
+	F_set_chr(57, CF_NO_CLIP)
+	F_set_chr(58, CF_NO_CLIP)
+
+	//廝寕
+	if( F4_07_JoinAlwen || F4_09_GoShrineMia)		//俧俥亀仛傾儖僂僃儞偲崌棳偟偨亁 俧俥亀仛幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨亁棫偭偰側偄
+	{
+		F_set_obj("Layer10",NP_HIDE)
+		F_reset_obj("CA3",	NP_GROUND)
+		mot_obj("Layer10","OFF")		//暵傑偭偰傞斷徚偡	
+	}
+	else
+	{
+		F_set_obj("Layer13",NP_HIDE)
+		F_set_obj("Layer14",NP_HIDE)
+		F_set_obj("Layer11",NP_HIDE)
+	}
+
+
+	
+}
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+
+EV_4_13_Camera
+{
+}
+
+//---------------------------------------------------------------------------------
+//仱棤嶳曽柺偺僗僩僢僷乕乮彑庤偵擖偭偪傖偄偗側偄偙偲偵側偭偰傞傫偱偡乯
+//丂丂弶夞偺傒埲壓偺儊僢僙乕僕傪憓擖丅
+//---------------------------------------------------------------------------------
+LP_MON
+{
+	TK_begin()
+	if( !F4_14_SeenMon )
+	{
+
+	//丂丂儔僌僫偵丠僄儌乕僔儑儞丅
+		MES(RAGNA,"哎，這地方居然有一扇\n那麼氣派的門。",0)
+		rot_chr(RAGNA,60,PARTNER)
+		MES(RAGNA,"通向哪裡呢……？",0)
+		MES_close(RAGNA)
+		
+		rot_chr(PARTNER,60,RAGNA)
+		MES(PARTNER,"啊，是。\n這邊是通向後山的山道。",0)
+		MES(PARTNER,"沿著這裡一直登上去的話有個大神社，\n那裡侍奉著山神。",0)
+		MES(PARTNER,"那個，但是平時那裡\n是謝絕入內的……",0)
+		MES_close(PARTNER)
+
+		if( !F4_12_OkRoten )
+		{
+			MES(RAGNA,"哈哈，這也是祖訓嗎？",0)
+			MES(RAGNA,"不用在意，昴。\n我並不是來參拜的。",0)
+			MES(RAGNA,"接下來，拜託你來帶路了。",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"啊，是。",0)
+			MES(PARTNER,"那麼，\n我們稍微去四週逛逛吧。",0)
+			MES_close(PARTNER)
+			wait_MES(PARTNER)
+		}
+		else
+		{
+			MES(RAGNA,"哈哈，這也是祖訓嗎？",0)
+			MES(RAGNA,"不用在意，昴。\n我並不是來參拜的。",0)
+			MES(RAGNA,"我們也差不多該\n去泡澡了。",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"啊，是。",0)
+			MES(PARTNER,"那麼，我這就帶您去\n溫泉。",0)
+			MES_close(PARTNER)
+			wait_MES(PARTNER)
+		}
+
+		//chr_pos(PLAYER,2875,-1932,-1569,8,2)
+		chr_pos(PLAYER1,2875,-1932,-1600,8,2)
+		chr_pos(PLAYER2,3017,-2048,-1570,22,2)
+
+		CAM_return(0)
+		cross_fade( 30 )
+		wait_fade()	
+		F_set(F4_14_SeenMon)
+	}
+	else
+	{
+	//丂丂俀夞栚埲崀偼埲壓偺儊僢僙乕僕丅
+
+		if(GW_MAN==1)
+		{
+		//丂丂仸儔僌僫愭摢
+			MES(RAGNA,"這裡好像禁止入內。\n我也不想引起不必要的麻煩。",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//丂丂仸僗僶儖愭摢
+			MES(PARTNER,"後山的神社開放之日，\n只有元旦和祭日兩天……",0)
+			MES(PARTNER,"（到，到時候再\n 邀請師父同去吧……）",0)
+			MES_close(PARTNER)
+		}
+	}
+	TK_end()
+
+}
+
+
+//---------------------------------------------------------------------------------------------------
+//仱奺抧偺僟儞僕儑儞偺僗僩僢僷乕乮摿偵梡帠偼側偄乯
+//---------------------------------------------------------------------------------------------------
+EV_STOP_01
+{
+	TK_begin()
+	if( F4_11_EndFourth && !F5_06_RunCrystal )
+	{
+//	name("丒夦変傪偟偨僗僶儖偲榖偟偨屻")
+//丂丂乮俁恖慡堳偵榖傪偮偗傞慜偺傒敪惗乯
+
+		if( F5_03_OfferLaraira && F5_04_OfferPipiro && F5_05_OfferFiona )
+		{
+		//丂丂仸慡堳偵惡傪妡偗偰偐傜偼埲壓偺僗僩僢僷乕
+			MES(RAGNA,"哎呀……",0)
+			MES(RAGNA,"現在要趕到\n水晶谷去……！",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+		else
+		if( !F_RAGNA )
+		{
+			MES(PET,"……等一下拉格那！？\n你要去哪！",0)
+			MES(PET,"我們沒時間繞圈子！",0)
+			MES_close(PET)
+
+			MES(RAGNA,"啊啊，不好意思。\n我有點搞錯了。",0)
+
+			if( !F5_03_OfferLaraira && !F5_04_OfferPipiro && !F5_05_OfferFiona )
+				MES(RAGNA,"要儘快\n聯絡大家。",0)
+			else
+				MES(RAGNA,"要儘快聯絡\n剩下的人。",0)
+			MES_close(RAGNA)
+
+			F_set(RAGNA)
+		}
+		else
+		{
+			MES(RAGNA,"啊……\n沒時間繞遠路了。",0)
+			MES_close(RAGNA)
+
+			if( !F5_05_OfferFiona )
+			{
+			//	name("佀僼傿僆僫偵榖傪偟偰偄側偄")
+				MES(RAGNA,"總之先回鎮上吧……",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+			else
+			if( !F5_03_OfferLaraira )
+			{
+				MES(RAGNA,"去魔女的家\n看看吧……",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+			else
+			{
+				MES(RAGNA,"首先在街上\n找一找吧……",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		}
+	}
+	else
+	if( !F5_17_EndFifth )
+	{
+//	name("丒僋儕僗僞儖僶儗乕婲摦屻")
+
+		if( GW_MAN==1)
+		{
+		//丂丂仸儔僌僫愭摢
+			if( !F_RAGNA )
+			{
+				MES(PET,"拉格那，你要去哪！",0)
+				MES(PET,"我們要趕快去營救公主！",0)
+				MES_close(PET)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"啊啊，是啊。",0)
+				MES(RAGNA,"快整理好裝備，\n前往水晶谷吧。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(RAGNA,"快整理好裝備，\n去迎接公主吧！",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		}
+		else
+		{
+		//丂丂仸僆僨僢僒愭摢
+			if( !F_RAGNA )
+			{
+				MES(PET,"等一下狼女，你要去哪！",0)
+				MES(PET,"我們要趕快去營救公主！",0)
+				MES_close(PET)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"啊啊，我知道了。",0)
+				MES(PARTNER,"那就快整理好裝備，\n衝進他們的老潮吧。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(PARTNER,"沒工夫去繞遠……",0)
+				MES(PARTNER,"快整理裝備，\n潛入他們的大本營吧。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+			}
+		}
+	}
+	//chr_pos(RAGNA,2616,-1476,-1599,30,2)
+	//chr_pos(RAGNA,2882,-1933,-1598,30,2)
+	chr_pos(PLAYER1,2875,-1932,-1600,8,2)
+	chr_pos(PLAYER2,3017,-2048,-1570,22,2)
+	gather_party(RAGNA)
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()	
+
+	TK_end()
+
+}
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴彎偮偄偨僗僶儖偨偪傪敪尒偡傞 偺嵟屻
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+EV_4_13_GoShrineMia2
+{
+	EV_begin()
+	
+	fade_in(100,60,0)
+	wait_fade()
+	
+	chr_pos(RAGNA,   3398,-3145,-1569,184,2)
+	chr_pos(PARTNER, 3551,-3012,-1569,184,2)
+	wait(30)
+	
+	fade_in(0,60,0)
+	wait_fade()
+	
+	EV_end()
+}
+
+#EndScriptTable
+//====================================================================
+

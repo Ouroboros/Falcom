@@ -1,0 +1,1350 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10530][Ｇ-ミュージアムＡ館元]
+//====================================================================
+
+#ScriptTable
+
+#GATEROPE	1
+
+INIT
+{
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段・扉
+	set_chr( 90,990,	 4, 7,     0,   0,  0,		 90,070102, 6,"K2_10510;")	//①受付から
+	set_obj("@ob00072a", 4, 7,     0,   0,  0,		 90)						//①階段（墓場）
+	set_chr(190,1300,	 4, 7,     0,   0,  0,		  0,    90, 0,";")			//階段下（ダミー）
+
+
+	set_chr( 91,990,	 2, 6,     0,   0,  0,		270,070102, 6,"K0_10531;")	//②フィギュア館順
+	set_obj("@ob00072a", 2, 6,     0,   0,  0,		270)						//②階段（墓場）
+	set_chr(191,1301,	 2, 6,     0,   0,  0,		  0,   270, 0,";")			//階段上（ダミー）
+
+
+	if(!F6_02_OnMeru && !F6_11_GameClear)//要塞に到着
+		set_chr(GATEROPE, 716, 	6,6,	1620,0,  0,		  0,    90, 0,";")	//ロープ		obx0500
+	else
+		set_chr( 92,990,	 6, 6,   1800,   0,  0,		90,070102, 6,"K1_10538;")	//③フィギュア館バック	
+
+	set_obj("@obx0082a", 6, 6,   1800,   0,  0,		90)							//③階段（墓場）
+	set_chr(192,1301,	 6, 6,   1800,   0,  0,		  0,    90, 0,";")			//階段上（ダミー）
+
+
+	set_chr(98, 804,		3,7,	-200,-400,0,	0,	0,	8,"(L2?99 [9991【Ｇ-ミュージアム・エントランス】\nめくるめく世界へようこそ！] WT?30 L2!99 [9903]);")	//案内
+
+	set_chr(99, 655,	-1,-1,5465,11088,0,	4,	0,	8,"(L2?99 [9991←魔物フィギュア館こちら] WT?30 L2!99 [9903]);")	//案内
+
+	set_chr(30, 445,	-1,-1,6208,12678,100,		2,0,3,";")//ギャランドゥ黄金像
+	set_chr(99, 991,	-1,-1,6208,12678,0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+
+
+//――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
+//	■ボス再戦。
+//	勝利時に立てるフラグは以下のとおり。
+//	２つ立てるものもあります。
+//	
+//	地蟲アークシェロブ戦	->Figure F2836
+//	水魔エフェメルガ戦		->Figure F2835
+//	妖花アビスフラワー戦	->Figure F2834
+//	火竜ファブニール戦		->Figure F2838	->Figure F2880
+//	猫魔人モンブラン戦		->Figure F2881
+//	人狼戦士ダイガルド戦	->Figure F2882
+//	魔剣使いテルミドール戦	->Figure F2883
+//	大岩龍ガルガリオン戦	->Figure F2837
+//	ダークアルウェン戦		->Figure F2884
+//	月の戦鬼ダイガルド戦	->Figure F2885
+//	吸血侯爵ザハール戦		->Figure F2840	->Figure F2886
+//	聖討将軍テルミドール戦	->Figure F2887
+//	金色の魔王ミア戦		->Figure F2839	->Figure F2888
+//	
+
+	workG(GW_SKI_MODE,SET,0)	//ギブアップメニューをクリア
+	set_namebmp(0,0)			//地名非表示
+
+//	F_set(F6_11_GameClear)
+
+	//地蟲アークシェロブ戦	->FigureF2836
+//	if(F1_14_KillBoss1 || F6_11_GameClear)			//←orの判定が効いていないので、逆転させます。
+	if(!F1_14_KillBoss1 && !F6_11_GameClear)
+	{
+	}
+	else
+	{
+		set_chr(11, 760,  3,5,	-100,  -350,	000,	0,0,2,"<EV_BOSS_GAME_01>")//760	ボスゲーム筐体
+	}
+
+	//水魔エフェメルガ戦	->Figure F2835
+	if(!F1_21_KillBoss2 && !F6_11_GameClear)
+	{
+	//	set_chr(50, 445,  3,5,	 300,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+	//	set_chr(99, 991,  3,5,	 300,  -350,	0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+	}
+	else
+	{
+		set_chr(12, 760,  3,5,	 300,  -350,	000,	0,0,2,"<EV_BOSS_GAME_02>")//760	ボスゲーム筐体
+	}
+	
+	//妖花アビスフラワー戦	->Figure F2834
+	if(!F2_13_KillBoss3 && !F6_11_GameClear)
+	{
+	//	set_chr(50, 445,  3,5,	 700,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+	//	set_chr(99, 991,  3,5,	 700,  -350,	0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+	}
+	else
+	{
+		set_chr(13, 760,  3,5,	 700,  -350,	000,	0,0,2,"<EV_BOSS_GAME_03>")//760	ボスゲーム筐体
+	}
+	
+	//火竜ファブニール戦	->Figure F2838	->Figure F2880
+	if(!F2_16_KillBoss4 && !F6_11_GameClear)
+	{
+	//	set_chr(50, 445,  3,5,	 1100,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+	//	set_chr(99, 991,  3,5,	 1100,  -350,	0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+
+	//	set_chr(50, 445,  3,5,	 1500,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+	//	set_chr(99, 991,  3,5,	 1500,  -350,	0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+	}
+	else
+	{
+		set_chr(14, 760,  3,5,	1125,  -350,	000,	0,0,2,"<EV_BOSS_GAME_04>")//760	ボスゲーム筐体
+
+		//------FIGURE------------
+		if(F2880)
+		{
+			set_chr(41, 759,  3,5,  1425,  -320,      0,	0,0,20,"<EV_FIGURE_01>")//フィギュア台
+			set_chr(31, 1027,  3,5, 1425,  -320,    140,	-100,0,3,";")//詩人テルミドール
+			F_set_chr(31,CF_NO_MINIMAP)	// ミニマップ非表示
+		}
+		else
+			set_chr(41, 759,  3,5,  1425,  -320,      0,	0,0,0,";")//フィギュア台
+		//------------------------
+	}
+
+	//猫魔人モンブラン戦	->Figure F2881
+	if(!F3_03_KillBoss3_1 && !F6_11_GameClear)
+	{
+	//	set_chr(50, 445,  3,5,	 1900,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+	//	set_chr(99, 991,  3,5,	 1900,  -350,	0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+
+		//ダイガルド機にめり込んでしまうので調整。
+	//	if(!F3_06_KillBoss3_2 && !F6_11_GameClear)
+	//	{
+	//		set_chr(50, 445,  3,5,	 2300,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+	//		set_chr(99, 991,  3,5,	 2300,  -350,	0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+	//	}
+	}
+	else
+	{
+		set_chr(16, 765,  3,5,	1800,  -350,	000,	0,0,2,"<EV_BOSS_GAME_06>")//760	ボスゲーム筐体
+
+		//------FIGURE------------
+		if(F2881)
+		{
+			set_chr(42, 759,  3,5,  2100,  -320,      0,	0,0,20,"<EV_FIGURE_02>")//フィギュア台
+			set_chr(32, 1025,  3,5, 2100,  -320,    140,	-100,0,3,";")//モンブラン
+			F_set_chr(32,CF_NO_MINIMAP)	// ミニマップ非表示
+		}
+		else
+			set_chr(42, 759,  3,5,  2100,  -320,      0,	0,0,0,"")//フィギュア台
+		//------------------------
+	}
+
+	//人狼戦士ダイガルド戦	->Figure F2882
+	if(!F3_06_KillBoss3_2 && !F6_11_GameClear)
+	{
+	//	set_chr(50, 445,  3,5,	 2700,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+	//	set_chr(99, 991,  3,5,	 2700,  -350,	0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+	}
+	else
+	{
+		set_chr(17, 765,  3,5,	2450,  -350,	000,	0,0,2,"<EV_BOSS_GAME_07>")//760	ボスゲーム筐体
+		//------FIGURE------------
+		if(F2882)
+		{
+			set_chr(43, 759,  3,5,  2750,  -320,      0,	0,0,20,"<EV_FIGURE_03>")//フィギュア台
+			set_chr(33, 1022,  3,5, 2750,  -320,    140,	-100,0,3,";")//ダイガルド
+			F_set_chr(33,CF_NO_MINIMAP)	// ミニマップ非表示
+		}
+		else
+			set_chr(43, 759,  3,5,  2750,  -320,      0,	0,0,0,"")//フィギュア台
+		//------------------------
+	}
+
+	//魔剣使いテルミドール戦	->Figure F2883
+	if(!F3_08_KillBoss3_3 && !F6_11_GameClear)
+	{
+	//	set_chr(50, 445,  3,5,	 3100,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+	//	set_chr(99, 991,  3,5,	 3100,  -350,	0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+
+	//	set_chr(50, 445,  3,5,	 3500,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+	//	set_chr(99, 991,  3,5,	 3500,  -350,	0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+	}
+	else
+	{
+		set_chr(18, 765,  3,5,	3100,  -350,	000,	0,0,2,"<EV_BOSS_GAME_08>")//760	ボスゲーム筐体
+		//------FIGURE------------
+		if(F2883)
+		{
+			set_chr(44, 759,  3,5,  3400,  -320,      0,	0,0,20,"<EV_FIGURE_04>")//フィギュア台
+			set_chr(34, 1028,  3,5, 3400,  -320,    140,	-100,0,3,";")//魔人テルミドール
+			F_set_chr(34,CF_NO_MINIMAP)	// ミニマップ非表示
+		}
+		else
+			set_chr(44, 759,  3,5,  3400,  -320,      0,	0,0,0,"")//フィギュア台
+		//------------------------
+	}
+
+	//大岩龍ガルガリオン戦	->Figure F2837
+	if(!F4_10_KillBoss5 && !F6_11_GameClear)
+	{
+	//	set_chr(50, 445,  3,5,	 3900,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+	//	set_chr(99, 991,  3,5,	 3900,  -350,	0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+	}
+	else
+	{
+		set_chr(15, 760,  3,5,	3750,  -350,	000,	0,0,2,"<EV_BOSS_GAME_05>")//760	ボスゲーム筐体
+	}
+
+	//ダークアルウェン戦	->Figure F2884
+	if(!F5_11_FakeAlwen && !F6_11_GameClear)
+	{
+		set_chr(50, 445,  3,6,	 400,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+		set_chr(99, 991,  3,6,	 400,  -350,	0,		0,0202,0,";")//ギャランドゥ黄金像当たり
+
+		set_chr(51, 445,  3,6,	 800,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+		set_chr(99, 991,  3,6,	 800,  -350,	100,	0,0202,0,";")//ギャランドゥ黄金像当たり
+	}
+	else
+	{
+		set_chr(19, 765,  3,6,	 550,  -350,	000,	0,0,2,"<EV_BOSS_GAME_09>")//760	ボスゲーム筐体
+		//------FIGURE------------
+		if(F2884)
+		{
+			set_chr(45, 759,   3,6,  850,  -320,      0,	0,0,20,"<EV_FIGURE_05>")//フィギュア台
+			set_chr(35, 1011,  3,6,  850,  -320,    140,	-100,0,3,";")//アルウェン
+			chr_equip(35,"eq_048", "Bone_Spine_Dummy", 100)	//尻尾を装備させるのはこちら。
+			chr_equip(35,"eq_049", "Bone_Head", 100)			//耳を装備させるのはこちら。
+			F_set_chr(35,CF_NO_MINIMAP)	// ミニマップ非表示
+		}
+		else
+			set_chr(45, 759,   3,6,  850,  -320,      0,	0,0,0,"")//フィギュア台
+		//------------------------
+	}
+
+	//月の戦鬼ダイガルド戦	->Figure F2885
+	if(!F5_13_KillDygald && !F6_11_GameClear)
+	{
+		set_chr(52, 445,  3,6,	 1200,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+		set_chr(99, 991,  3,6,	 1200,  -350,	000,	0,0202,0,";")//ギャランドゥ黄金像当たり
+		
+		set_chr(53, 445,  3,6,	 1600,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+		set_chr(99, 991,  3,6,	 1600,  -350,	000,	0,0202,0,";")//ギャランドゥ黄金像当たり
+	}
+	else
+	{
+		set_chr(20, 760,  3,6,	1250,  -350,	000,	0,0,2,"<EV_BOSS_GAME_10>")//760	ボスゲーム筐体
+		//------FIGURE------------
+		if(F2885)
+		{
+			set_chr(46, 759,  3,6,  1600,  -320,      0,	0,0,20,"<EV_FIGURE_06>")//フィギュア台
+			set_chr(36, 1067,  3,6, 1600,  -320,    140,	-100,0,3,";")//ハイパーダイガルド
+			F_set_chr(36,CF_NO_MINIMAP)	// ミニマップ非表示
+		}
+		else
+			set_chr(46, 759,  3,6,  1600,  -320,      0,	0,0,0,"")//フィギュア台
+		//------------------------
+	}
+
+	//吸血侯爵ザハール戦	->Figure F2839	->Figure F2886
+	if(!F5_15_KillZaharl2 && !F6_11_GameClear)
+	{
+		set_chr(54, 445,  3,6,	2000,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+		set_chr(99, 991,  3,6,	2000,  -350,	000,	0,0202,0,";")//ギャランドゥ黄金像当たり
+
+		set_chr(54, 445,  3,6,	2400,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+		set_chr(99, 991,  3,6,	2400,  -350,	000,	0,0202,0,";")//ギャランドゥ黄金像当たり
+	}
+	else
+	{
+		set_chr(21, 760,  3,6,	1950,  -350,	000,	0,0,2,"<EV_BOSS_GAME_11_01>")//760	ボスゲーム筐体
+		set_chr(21, 760,  3,6,	2450,  -350,	000,	0,0,2,"<EV_BOSS_GAME_11_02>")//760	ボスゲーム筐体
+		//------FIGURE------------
+		if(F2886)
+		{
+			set_chr(47, 759,  3,6,  2200,  -320,      0,	0,0,20,"<EV_FIGURE_07>")//フィギュア台
+			set_chr(37, 1026,  3,6, 2200,  -320,    140,	-100,0,3,";")//ザハール
+			F_set_chr(37,CF_NO_MINIMAP)	// ミニマップ非表示
+		}
+		else
+			set_chr(47, 759,  3,6,  2200,  -320,      0,	0,0,0,"")//フィギュア台
+		//------------------------
+	}
+
+	//聖討将軍テルミドール戦	->Figure F2887
+	if(!F6_03_KillTelmi && !F6_11_GameClear)
+	{
+		set_chr(53, 445,  3,6,	2800,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+		set_chr(99, 991,  3,6,	2800,  -350,	000,	0,0202,0,";")//ギャランドゥ黄金像当たり
+
+		set_chr(53, 445,  3,6,	3200,  -350,	100,	2,0,3,";")//ギャランドゥ黄金像
+		set_chr(99, 991,  3,6,	3200,  -350,	000,	0,0202,0,";")//ギャランドゥ黄金像当たり
+	}
+	else
+	{
+		set_chr(22, 760,  3,6,	2800,  -350,	000,	0,0,2,"<EV_BOSS_GAME_12>")//760	ボスゲーム筐体
+		//------FIGURE------------
+		if(F2887)
+		{
+			set_chr(48, 759,  3,6,  3150,  -320,      0,	0,0,20,"<EV_FIGURE_08>")//フィギュア台
+			set_chr(38, 1036,  3,6, 3150,  -320,    140,	-100,0,3,";")//魔人アーマーテルミドール
+			F_set_chr(38,CF_NO_MINIMAP)	// ミニマップ非表示
+		}
+		else
+			set_chr(48, 759,  3,6,  3150,  -320,      0,	0,0,0,"")//フィギュア台
+		//------------------------
+	}
+
+	//金色の魔王ミア戦（配置は２周目以降に確認）	->Figure F2839	->Figure F2888
+	if(!F6_04_KillGoldMia && !F6_11_GameClear)
+	{
+	}
+	else
+	{
+		set_chr(23, 760,  3,6,	5150,  -350,	000,	0,0,2,"<EV_BOSS_GAME_13_01>")//760	ボスゲーム筐体
+		set_chr(23, 760,  3,6,	5650,  -350,	000,	0,0,2,"<EV_BOSS_GAME_13_02>")//760	ボスゲーム筐体
+		//------FIGURE------------
+		if(F2888)
+		{
+			set_chr(49, 759,  3,6,  5400,  -320,      0,	0,0,20,"<EV_FIGURE_09>")//フィギュア台
+			set_chr(39, 1030,  3,6, 5400,  -320,    140,	-100,0,3,";")//エクスマキナ
+			F_set_chr(39,CF_NO_MINIMAP)	// ミニマップ非表示
+		}
+		else
+			set_chr(49, 759,  3,6,  5400,  -320,      0,	0,0,0,"")//フィギュア台
+		//------------------------
+	}
+
+	//ゲーセン用
+	if(GW_ENTRY_EVENT==101)//地蟲アークシェロブ戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_01B")
+	}
+	else
+	if(GW_ENTRY_EVENT==102)//水魔エフェメルガ戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_02B")
+	}
+	else
+	if(GW_ENTRY_EVENT==103)//妖花アビスフラワー戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_03B")
+	}
+	else
+	if(GW_ENTRY_EVENT==104)//火竜ファブニール戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_04B")
+	}
+	else
+	if(GW_ENTRY_EVENT==105)//大岩龍ガルガリオン戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_05B")
+	}
+	else
+	if(GW_ENTRY_EVENT==106)//猫魔人モンブラン戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_06B")
+	}
+	else
+	if(GW_ENTRY_EVENT==107)//人狼戦士ダイガルド戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_07B")
+	}
+	else
+	if(GW_ENTRY_EVENT==108)//魔剣使いテルミドール戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_08B")
+	}
+	else
+	if(GW_ENTRY_EVENT==109)//ダークアルウェン戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_09B")
+	}
+	else
+	if(GW_ENTRY_EVENT==110)//月の戦鬼ダイガルド戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_10B")
+	}
+	else
+	if(GW_ENTRY_EVENT==111)//吸血侯爵ザハール戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_11_01B")
+	}
+	else
+	if(GW_ENTRY_EVENT==112)//真祖ザハール戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_11_02B")
+	}
+	else
+	if(GW_ENTRY_EVENT==113)//聖討将軍テルミドール戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_12B")
+	}
+	else
+	if(GW_ENTRY_EVENT==114)//メルセデク・コア戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_13_01B")
+	}
+	else
+	if(GW_ENTRY_EVENT==115)//魔王ルシアン戦帰り
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_BOSS_GAME_13_02B")
+	}
+
+}
+
+
+//-----ボス再戦帰還処理--------------------------------------
+//地蟲アークシェロブ
+EV_BOSS_GAME_01B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		5650,9350,0,210,	2)
+	chr_pos(PARTNER, 	5850,9350,0,120,	2)
+	chr_pos(PET,	 	5750,9500,0,180,	2)
+
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//水魔エフェメルガ
+EV_BOSS_GAME_02B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		6050,9350,0,210,	2)
+	chr_pos(PARTNER, 	6250,9350,0,120,	2)
+	chr_pos(PET,	 	6150,9500,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//妖花アビスフラワー
+EV_BOSS_GAME_03B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		6450,9350,0,210,	2)
+	chr_pos(PARTNER, 	6650,9350,0,120,	2)
+	chr_pos(PET,	 	6550,9500,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//火竜ファブニール
+EV_BOSS_GAME_04B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		6875,9350,0,210,	2)
+	chr_pos(PARTNER, 	7075,9350,0,120,	2)
+	chr_pos(PET,	 	6975,9500,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//大岩龍ガルガリオン
+EV_BOSS_GAME_05B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		9500,9350,0,210,	2)
+	chr_pos(PARTNER, 	9700,9350,0,120,	2)
+	chr_pos(PET,	 	9600,9500,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//猫魔人モンブラン
+EV_BOSS_GAME_06B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		7550,9350,0,210,	2)
+	chr_pos(PARTNER, 	7750,9350,0,120,	2)
+	chr_pos(PET,	 	7650,9500,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//人狼戦士ダイガルド
+EV_BOSS_GAME_07B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		8200,9350,0,210,	2)
+	chr_pos(PARTNER, 	8400,9350,0,120,	2)
+	chr_pos(PET,	 	8300,9500,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//魔剣使いテルミドール
+EV_BOSS_GAME_08B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		8850,9350,0,210,	2)
+	chr_pos(PARTNER, 	9050,9350,0,120,	2)
+	chr_pos(PET,	 	8950,9500,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//ダークアルウェン
+EV_BOSS_GAME_09B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		6300,11150,0,210,	2)
+	chr_pos(PARTNER, 	6500,11150,0,120,	2)
+	chr_pos(PET,	 	6400,11300,0,180,	2)
+
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//月の戦鬼ダイガルド
+EV_BOSS_GAME_10B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		7000,11150,0,210,	2)
+	chr_pos(PARTNER, 	7200,11150,0,120,	2)
+	chr_pos(PET,	 	7100,11300,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//吸血侯爵ザハール
+EV_BOSS_GAME_11_01B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		7700,11150,0,210,	2)
+	chr_pos(PARTNER, 	7900,11150,0,120,	2)
+	chr_pos(PET,	 	7800,11300,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//真祖ザハール
+EV_BOSS_GAME_11_02B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		8200,11150,0,210,	2)
+	chr_pos(PARTNER, 	8400,11150,0,120,	2)
+	chr_pos(PET,	 	8300,11300,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//聖討将軍テルミドール
+EV_BOSS_GAME_12B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,		8550,11150,0,210,	2)
+	chr_pos(PARTNER, 	8750,11150,0,120,	2)
+	chr_pos(PET,	 	8650,11300,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//メルセデク・コア
+EV_BOSS_GAME_13_01B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,	   10900,11150,0,210,	2)
+	chr_pos(PARTNER,   11100,11150,0,120,	2)
+	chr_pos(PET,	   11000,11300,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+//魔王ルシアン
+EV_BOSS_GAME_13_02B
+{
+	TK_begin()
+	fade_in(0,30,BLACK)
+	//キャラ再配置
+	chr_pos(RAGNA,	   11400,11150,0,210,	2)
+	chr_pos(PARTNER,   11600,11150,0,120,	2)
+	chr_pos(PET,	   11500,11300,0,180,	2)
+	EV("SET_WARP_FLAG")
+	wait_EV("SET_WARP_FLAG")
+	wait_fade()
+	TK_end()
+}
+
+
+
+
+//-----ワープ制御--------------------------------------
+//使わないタイミングもあるけど一括入力。
+SET_WARP_FLAG
+{
+	//▼⑫
+	if(F6_00_GoToMeru)
+		workG(GW_WARP_FLAG,SET,1)//ワープ許可
+	else
+	//▼⑪
+	if(F5_00_HearLunar)
+		workG(GW_WARP_FLAG,SET,2)//ワープ許可・ルゥ
+	else
+	//▼⑩
+	if(F4_09_GoShrineMia)
+		workG(GW_WARP_FLAG,SET,1)//ワープ許可
+	else
+	//▼⑦～⑨
+	if(F4_00_StartSolo)
+		workG(GW_WARP_FLAG,SET,0)//ワープ許可しない
+	else
+	//▼⑥
+	if(F3_00_GoMoonCastle)
+		workG(GW_WARP_FLAG,SET,3)//ワープ許可・夜
+	//▼①～⑤
+	else
+		workG(GW_WARP_FLAG,SET,1)//ワープ許可
+
+}
+
+EV_BOSS_GAME_01
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 地蟲アークシェロブ』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,36)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(11099)
+	}
+	else
+	{
+	}
+	TK_end()
+}
+
+EV_BOSS_GAME_02
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 水魔エフェメルガ』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,36)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(12098)
+
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_03
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 妖花アビスフラワー』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,36)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(13099)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_04
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 火竜ファブニール』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,49)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(14099)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_05
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 大岩龍ガルガリオン』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,49)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(16099)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_06
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 猫魔人モンブラン』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,36)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(15018)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_07
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 人狼戦士ダイガルド』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,49)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(15028)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_08
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 魔剣使いテルミドール』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,49)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(15038)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_09
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ ダークアルウェン』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,49)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(17019)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_10
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 月の戦鬼ダイガルド』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,41)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(17029)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_11_01
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 吸血侯爵ザハール』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,40)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,102)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(17039)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_11_02
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 闇の真祖ザハール』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,39)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,103)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(17039)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_12
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 聖討大将軍テルミドール』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,41)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(18018)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_BOSS_GAME_13_01
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ メルセデク・コア』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,43)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(18030)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+EV_BOSS_GAME_13_02
+{
+	TK_begin()
+
+//	fade_in(30,10,BLACK)
+	MES(0,"C3S2エキサイティングバトルシミュレーター\nS5『ＶＳ 金色の魔王ルシアン』",2)
+	MES_close(0)
+//	fade_in(0,10,BLACK)
+//	wait_fade()
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【戦う】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	if(WK_YESNO==1)
+	{
+		fade_in(100,30,BLACK)
+		wait_fade()
+
+		workG(GW_DEF_BGM,SET,42)//ボス戦
+		workG(GW_ENTRY_EVENT,SET,101)
+		workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+		new_map(18028)
+	}
+	else
+	{
+
+	}
+	TK_end()
+
+}
+
+EV_FIGURE_01
+{
+	TK_begin()
+
+	workL(0,RAND,2)		//ランダム
+
+	if(WK000==0)
+		VOICE(778,0)	// テルミドール詩人	「今はイルバード各地に～」
+	else if(WK000==1)
+		VOICE(779,0)	// テルミドール詩人	「いや、フッ、恋をして～」
+	else
+		VOICE(779,0)	// テルミドール詩人	「いや、フッ、恋をして～」
+
+	TK_end()
+}
+
+EV_FIGURE_02
+{
+	TK_begin()
+	
+	workL(0,RAND,4)		//ランダム
+
+	if(WK000==0)
+		VOICE(790,0)	// モンブラン	「ニャはは、まさかえさを仕掛ける～」
+	else if(WK000==1)
+		VOICE(791,0)	// モンブラン	「飛んで火にいる～」
+	else if(WK000==2)
+		VOICE(342,0)	//「ファルコムにゃ」
+	else if(WK000==3)
+		VOICE(343,0)	//「ツヴァイⅡにゃ」
+	else	//保険
+		VOICE(343,0)	//「ツヴァイⅡにゃ」
+
+	TK_end()
+}
+
+EV_FIGURE_03
+{
+	TK_begin()
+	
+	workL(0,RAND,4)		//ランダム
+
+	if(WK000==0)
+		VOICE(776,0)	// ダイガルド	「ふふふ、格上の相手に挑まんと～」
+	else if(WK000==1)
+		VOICE(777,0)	// ダイガルド	「だが、それだけでは高みを～」
+	else if(WK000==2)
+		VOICE(458,0)	//「ファルコム」
+	else if(WK000==3)
+		VOICE(459,0)	//「ツヴァイⅡ」
+	else	//保険
+		VOICE(459,0)	//「ツヴァイⅡ」
+
+	TK_end()
+}
+
+EV_FIGURE_04
+{
+	TK_begin()
+	
+	workL(0,RAND,4)		//ランダム
+
+	if(WK000==0)
+		VOICE(780,0)	// テルミドール魔人	「ふふふ、あの子は私のかわいい人形さ」
+	else if(WK000==1)
+		VOICE(781,0)	// テルミドール魔人	「機械仕掛けのおもちゃ、人にして～」
+	else if(WK000==2)
+		VOICE(418,0)	//「ファルコム」
+	else if(WK000==3)
+		VOICE(419,0)	//「ツヴァイⅡ」
+	else	//保険
+		VOICE(419,0)	//「ツヴァイⅡ」
+
+	TK_end()
+}
+
+EV_FIGURE_05
+{
+	TK_begin()
+	
+	workL(0,RAND,4)		//ランダム
+
+	if(WK000==0)
+		VOICE(148,0)	//ダークアルウェン用　　「フフ、絶望の内に果てるがよい」（戦闘開始時）
+	else if(WK000==1)
+		VOICE(151,0)	//「あははははははっ！」
+	else if(WK000==2)
+		VOICE(153,0)	//「その血、吸い尽くしてくれる…！」
+	else if(WK000==3)
+		VOICE(159,0)	//「ニャハハ、ザマぁ見るニャ！」
+	else	//保険
+		VOICE(159,0)	//「ニャハハ、ザマぁ見るニャ！」
+
+	TK_end()
+}
+
+EV_FIGURE_06
+{
+	TK_begin()
+	
+	workL(0,RAND,3)		//ランダム
+
+	if(WK000==0)
+		VOICE(380,0)	//「感じるぞ…月の力を！」
+	else if(WK000==1)
+		VOICE(381,0)	//「月の戦鬼ダイガルド、参る！」
+	else if(WK000==2)
+		VOICE(384,0)	//「笑わせるな、小僧！」
+	else	//保険
+		VOICE(384,0)	//「笑わせるな、小僧！」
+
+	TK_end()
+}
+
+EV_FIGURE_07
+{
+	TK_begin()
+	
+	workL(0,RAND,4)		//ランダム
+
+	if(WK000==0)
+		VOICE(772,0)	// ザハール	「ふふふ、ならば見せてやろう」
+	else if(WK000==1)
+		VOICE(773,0)	// ザハール	「踏みにじるものと踏みにじられるものとの～」
+	else if(WK000==2)
+		VOICE(458,0)	//「ファルコム」
+	else if(WK000==3)
+		VOICE(459,0)	//「ツヴァイⅡ」
+	else	//保険
+		VOICE(459,0)	//「ツヴァイⅡ」
+
+	TK_end()
+}
+
+EV_FIGURE_08
+{
+	TK_begin()
+	
+	workL(0,RAND,3)		//ランダム
+
+	if(WK000==0)
+		VOICE(420,0)	//「フフ、本当にいいのかい？」
+	else if(WK000==1)
+		VOICE(421,0)	//「甘美な夢を見せてあげよう」
+	else if(WK000==2)
+		VOICE(422,0)	//「さあ、どこまでも堕ちるがいい！」
+	else	//保険
+		VOICE(422,0)	//「さあ、どこまでも堕ちるがいい！」
+
+	TK_end()
+}
+
+EV_FIGURE_09
+{
+	TK_begin()
+	
+	workL(0,RAND,4)		//ランダム
+
+	if(WK000==0)
+		VOICE(765,0)	// エクスマキナ	「私の名はエクスマキナ人にして～」
+	else if(WK000==1)
+		VOICE(766,0)	// エクスマキナ	「自分の意志は持たず～」
+	else if(WK000==2)
+		VOICE(705,0)	//「ファルコム」
+	else if(WK000==3)
+		VOICE(706,0)	//「ツヴァイⅡ」
+	else	//保険
+		VOICE(706,0)	//「ツヴァイⅡ」
+
+	TK_end()
+}
+
+
+#EndScriptTable
+//====================================================================
+

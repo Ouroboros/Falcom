@@ -1,0 +1,2445 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭傾儖僢僥
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僈僔儏儗乕恊曽乮岺朳挿乯Gashrea")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_GASHREA
+{
+//F_set(F3_00_GoMoonCastle)
+
+	TK_begin()
+	F_set(202)
+
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(GASHREA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,GASHREA)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,GASHREA)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GASHREA)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GASHREA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GASHREA)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GASHREA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,GASHREA)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_05_EndSixth )
+	{
+		look_chr(GASHREA,PLAYER1,"Bone_Head")
+		//僷乕僣偑夛偭偰傕張棟偵擖傜側偄
+		EV("TK_GASHREA")	
+		wait_EV("TK_GASHREA")
+		look_off(GASHREA)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_00_GoToMeru )
+	{
+		//儊儖僙僨僋偵忔傝崬傓慜 僽儔儞僨乕儢媢偱僔儑僢僾學
+		if(!F6_02_OnMeru)
+		{
+			look_chr(GASHREA,PLAYER1,"Bone_Head")
+			
+			VOICE(758,0)											//乽傛偋丄偳偆偟偨丠乿
+			MES(GASHREA,"喲，有事嗎？",0)
+//			MES(GASHREA,"儞乧乧壗偩丅\n壗偐擖梡側傕偺偱傕偁傫偺偐丠",0)
+			MES_close(GASHREA)
+			
+			//僔儑僢僾張棟
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+			look_off(GASHREA)
+		}
+		//忔傝崬傫偩屻偼岺朳偵嫃傞
+		else
+		{
+			MOT(GASHREA,52,15)
+			//弶夞
+			if(!FT_12_TalkGashrea)
+			{
+				EV("TK_GASHREA")	
+				wait_EV("TK_GASHREA")
+			}
+			else
+			{
+				look_chr(GASHREA,PLAYER1,"Bone_Head")
+				VOICE(758,0)											//乽傛偋丄偳偆偟偨丠乿
+				MES(GASHREA,"喲，有事嗎？",0)				
+//				MES(GASHREA,"儞乧乧壗偩丅\n壗偐擖梡側傕偺偱傕偁傫偺偐丠",0)
+				MES_close(GASHREA)
+				EV("SHOP_GASHREA_LOOP")	
+				wait_EV("SHOP_GASHREA_LOOP")
+				look_off(GASHREA)
+			}
+			MOT(GASHREA,150,15)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F5_00_HearLunar )
+	{
+		//弶夞
+		if(!FT_11_TalkTeoGash)
+		{
+			EV("TK_GASHREA")	
+			wait_EV("TK_GASHREA")
+		}
+		else
+		//埲崀
+		{
+//			VOICE(758,0)											//乽傛偋丄偳偆偟偨丠乿
+//			MES(GASHREA,"傛偋丄偳偆偟偨丠",0)		
+		
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_05_OnVillage2)
+	{
+		//弶夞
+		if(!F_GASHREA)
+		{
+			look_chr(GASHREA,PLAYER1,"Bone_Head")
+			MES(GASHREA,"嗯，你們怎麼了。\n是來看我工作的嗎？",0)
+			MES(GASHREA,"哼，我這邊可是\n通宵工作以後正興奮著呢。\n有事就趕緊說！",0)
+			MES_close(GASHREA)
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+			look_off(GASHREA)
+		}
+		else
+		//埲崀
+		{
+			look_chr(GASHREA,PLAYER1,"Bone_Head")
+			MES(GASHREA,"我這邊可是\n通宵工作以後正興奮著呢。",0)
+			MES(GASHREA,"有事就趕緊說！",0)
+			MES_close(GASHREA)
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+			look_off(GASHREA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_00_StartSolo )
+	{
+		MOT(GASHREA,52,15)
+		//弶夞
+		if(!FT_07_TalkGashrea)
+		{
+			EV("TK_GASHREA")	
+			wait_EV("TK_GASHREA")
+		}
+		else
+		//埲崀
+		{
+//			VOICE(758,0)											//乽傛偋丄偳偆偟偨丠乿
+//			MES(GASHREA,"傛偋丄偳偆偟偨丠",0)
+					
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+		}
+		MOT(GASHREA,150,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F2_14_TalkEnemy )
+	{
+		MOT(GASHREA,52,15)
+
+		if(!F3_00_GoMoonCastle)
+			EV_stop("TENTEN_GASHREA")
+
+		EV("SHOP_GASHREA_LOOP")	
+		wait_EV("SHOP_GASHREA_LOOP")
+		MOT(GASHREA,150,15)
+
+		if(!F3_00_GoMoonCastle)
+			EV("TENTEN_GASHREA")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F2_00_GoForest )
+	{
+		MOT(GASHREA,52,15)
+		//僈僔儏儗乕偵僷乕僣傪尒偣偨偙偲偑柍偄応崌
+		if(!FT_01_GashreaTp)
+		{
+			EV("LOOK_PART_GASHREA")	
+			wait_EV("LOOK_PART_GASHREA")
+		}
+		//埲崀
+		else
+		{
+//			VOICE(758,0)											//乽傛偋丄偳偆偟偨丠乿
+//			MES(GASHREA,"傛偋丄偳偆偟偨丠",0)		
+		
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+		}
+		MOT(GASHREA,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F1_15_GoVillage )
+	{
+		//僈僔儏儗乕偵僷乕僣傪尒偣偨偙偲偑柍偄応崌
+		if(!FT_01_GashreaTp)
+		{
+			EV("LOOK_PART_GASHREA")	
+			wait_EV("LOOK_PART_GASHREA")
+		}
+		//埲崀
+		else
+		{
+//			VOICE(758,0)											//乽傛偋丄偳偆偟偨丠乿
+//			MES(GASHREA,"傛偋丄偳偆偟偨丠",0)		
+		
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F1_01_GameStart )
+	{
+		MOT(GASHREA,52,15)
+
+		//弶夞
+		if(!FT_01_TalkGashrea)
+		{
+			EV("TK_GASHREA")	
+			wait_EV("TK_GASHREA")
+		}
+		else
+		//僈僔儏儗乕偵僷乕僣傪尒偣偨偙偲偑柍偄応崌
+		if(!FT_01_GashreaTp)
+		{
+			EV("LOOK_PART_GASHREA")	
+			wait_EV("LOOK_PART_GASHREA")
+		}
+		//埲崀
+		else
+		{
+//			VOICE(758,0)											//乽傛偋丄偳偆偟偨丠乿
+//			MES(GASHREA,"傛偋丄偳偆偟偨丠",0)		
+		
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+		}
+		MOT(GASHREA,2,15)
+	}
+	TK_end()
+	F_reset(202)
+}
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//僔儑僢僾張棟
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸弶傔偰愇斉傪尒偣傞張棟傪峴偭偨屻偱丄
+//丂丂丂枹夵憿偺愇斉傪帩偭偰偄傞応崌丄傑偢慖戰巿傪昞帵偡傞丅
+//丂丂仸僼儔僌嘖偺応崌偼愱梡張棟乮僼儔僌嘖傪嶲徠乯
+//丂丂仸恊曽偑怳傝岦偔慜偵慖戰巿傪弌偡丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+SHOP_GASHREA_LOOP
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖儊儖僙僨僋撍擖傑偱偼傾僀僥儉斕攧學傪寭擟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_00_GoToMeru )
+	{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸僷乕僣傪帩偭偰偄傞応崌
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0 || IT133>0)
+		{
+		//	name("慖戰僥僉僗僩")
+			workL(WK_CANCEL,SET,4)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【對話】\n【購物】\n【改造武器】\n【離開】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀榖偡")
+			if(WK_YESNO==1)
+			{
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+				
+				//儊儖僙僨僋撍擖屻
+				if(F6_02_OnMeru)
+				{
+					//恊曽傪榖偟偐偗傞慜偺岦偒偵栠偡偨傔堦扷張棟傪廔椆
+					TK_end()
+					//偡偖偵嵞奐
+					TK_begin()
+				}
+				
+				loop
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀攦偄暔傪偡傞")
+			else
+			if(WK_YESNO==2)
+			{
+		//丂丂岺朳僔儑僢僾張棟傪峴偆
+				shop_open(11)
+				wait_W(WK_YESNO)
+				
+				if(IT108>0 && IT105>0 && IT106>0 && IT107>0)//岺朳僈僕僃僢僩攧傝愗傟敾掕丅
+					F_set(FT_FF_GadjetSoldout)
+
+				loop
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傾儞僇乕僊傾夵憿傪棅傓")
+		//丂丂僊傾夵憿張棟偵旘傇
+			else
+			if(WK_YESNO==3)
+			{
+				//儊儖僙僨僋撍擖屻
+				if(F6_02_OnMeru)
+				{
+					rot_chr(GASHREA,30,PLAYER1)
+				}
+
+				EV("DATA_PARTS")
+				wait_EV("DATA_PARTS")
+				
+				EV("TUNE_PARTS_LOOP")
+				wait_EV("TUNE_PARTS_LOOP")
+				
+				//儊儖僙僨僋撍擖屻
+				if(F6_02_OnMeru)
+				{
+					//恊曽傪榖偟偐偗傞慜偺岦偒偵栠偡偨傔堦扷張棟傪廔椆
+					TK_end()
+					//偡偖偵嵞奐
+					TK_begin()
+				}
+
+				//仸夵憿傪偟側偐偭偨傜儖乕僾偡傞
+				if(F_RAGNA)
+				{
+					loop
+				}
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傗傔傞")
+		//丂丂夛榖張棟廔椆
+			else
+			{
+				VOICE(762,0)												//乽傊偭丄傑偨棃傗偑傟乿
+				MES(GASHREA,"哦，以後再來。",0)
+//				MES(GASHREA,"傊偭丄偦偆偐偄丅\n傑偨棃傗偑傟傛両",0)
+				MES_close(GASHREA)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+	//丂丂仸僷乕僣傪帩偭偰側偄応崌
+		else
+		{
+		//	name("慖戰僥僉僗僩")
+			workL(WK_CANCEL,SET,3)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【對話】\n【購物】\n【離開】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀榖偡")
+			if(WK_YESNO==1)
+			{
+			//丂丂捠忢夛榖張棟偵旘傇
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+				loop
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀攦偄暔傪偡傞")
+			else
+			if(WK_YESNO==2)
+			{
+		//丂丂岺朳僔儑僢僾張棟傪峴偆
+				shop_open(11)
+				wait_W(WK_YESNO)
+
+				if(IT108>0 && IT105>0 && IT106>0 && IT107>0)
+					F_set(FT_FF_GadjetSoldout)
+
+				loop
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傗傔傞")
+		//丂丂夛榖張棟廔椆
+			else
+			{
+				VOICE(762,0)												//乽傊偭丄傑偨棃傗偑傟乿
+				MES(GASHREA,"哦，以後再來。",0)
+//				MES(GASHREA,"傊偭丄偦偆偐偄丅\n傑偨棃傗偑傟傛両",0)
+				MES_close(GASHREA)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔偱偼傾僀僥儉斕攧學傪寭擟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_09_GoShrineMia && !F5_00_HearLunar  )
+	{
+		//丂丂仸僷乕僣傪帩偭偰偄傞応崌
+		if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0 || IT133>0)
+		{
+		//	name("慖戰僥僉僗僩")
+			workL(WK_CANCEL,SET,4)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【對話】\n【購物】\n【改造武器】\n【離開】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀榖偡")
+			if(WK_YESNO==1)
+			{
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+				
+				//恊曽傪榖偟偐偗傞慜偺岦偒偵栠偡偨傔堦扷張棟傪廔椆
+				TK_end()
+				//偡偖偵嵞奐
+				TK_begin()
+				loop
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀攦偄暔傪偡傞")
+			else
+			if(WK_YESNO==2)
+			{
+		//丂丂岺朳僔儑僢僾張棟傪峴偆
+				shop_open(11)
+				wait_W(WK_YESNO)
+
+				if(IT108>0 && IT105>0 && IT106>0 && IT107>0)
+					F_set(FT_FF_GadjetSoldout)
+
+				loop
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傾儞僇乕僊傾夵憿傪棅傓")
+		//丂丂僊傾夵憿張棟偵旘傇
+			else
+			if(WK_YESNO==3)
+			{
+				rot_chr(GASHREA,30,PLAYER1)
+
+				EV("DATA_PARTS")
+				wait_EV("DATA_PARTS")
+				
+				EV("TUNE_PARTS_LOOP")
+				wait_EV("TUNE_PARTS_LOOP")
+				
+				//恊曽傪榖偟偐偗傞慜偺岦偒偵栠偡偨傔堦扷張棟傪廔椆
+				TK_end()
+				//偡偖偵嵞奐
+				TK_begin()
+
+				//仸夵憿傪偟側偐偭偨傜儖乕僾偡傞
+				if(F_RAGNA)
+				{
+					loop
+				}
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傗傔傞")
+		//丂丂夛榖張棟廔椆
+			else
+			{
+				VOICE(762,0)												//乽傊偭丄傑偨棃傗偑傟乿
+				MES(GASHREA,"哦，以後再來。",0)
+//				MES(GASHREA,"傊偭丄偦偆偐偄丅\n傑偨棃傗偑傟傛両",0)
+				MES_close(GASHREA)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+	//丂丂仸僷乕僣傪帩偭偰側偄応崌
+		else
+		{
+		//	name("慖戰僥僉僗僩")
+			workL(WK_CANCEL,SET,3)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【對話】\n【購物】\n【離開】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀榖偡")
+			if(WK_YESNO==1)
+			{
+			//丂丂捠忢夛榖張棟偵旘傇
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+				loop
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀攦偄暔傪偡傞")
+			else
+			if(WK_YESNO==2)
+			{
+		//丂丂岺朳僔儑僢僾張棟傪峴偆
+				shop_open(11)
+				wait_W(WK_YESNO)
+
+				if(IT108>0 && IT105>0 && IT106>0 && IT107>0)
+					F_set(FT_FF_GadjetSoldout)
+
+				loop
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傗傔傞")
+		//丂丂夛榖張棟廔椆
+			else
+			{
+				VOICE(762,0)												//乽傊偭丄傑偨棃傗偑傟乿
+				MES(GASHREA,"哦，以後再來。",0)
+							
+//				MES(GASHREA,"傊偭丄偦偆偐偄丅\n傑偨棃傗偑傟傛両",0)
+				MES_close(GASHREA)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸挰偺棤栧曈傝偵偄傞丅
+	if( F3_00_GoMoonCastle && !F4_00_StartSolo )
+	{
+		if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0 || IT133>0)
+		{
+		//	name("慖戰僥僉僗僩")
+			workL(WK_CANCEL,SET,3)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【對話】\n【改造武器】\n【離開】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+			
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀榖偟偐偗傞")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(WK_YESNO==1)
+			{
+			//丂丂捠忢夛榖張棟偵旘傇
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+
+				//恊曽傪榖偟偐偗傞慜偺岦偒偵栠偡偨傔堦扷張棟傪廔椆
+				TK_end()
+				//偡偖偵嵞奐
+				TK_begin()
+				
+				loop
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傾儞僇乕僊傾夵憿傪棅傓")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			if(WK_YESNO==2)
+			{
+				rot_chr(GASHREA,30,PLAYER1)
+				MES(GASHREA,"對了……",0)
+				MES(GASHREA,"你身上好像有一個\n魔石零件呢。",0)
+				MES(GASHREA,"正好我也有工具。",0)
+				MES(GASHREA,"可以把它合成\n到你的武器中去……\n怎麼樣，要試試看嗎？",0)
+				MES_close(GASHREA)
+
+			//丂丂佀捠忢偺僷乕僣張棟偺慖戰巿傊丅
+				EV("TUNE_PARTS_LOOP")
+				wait_EV("TUNE_PARTS_LOOP")
+				
+				//恊曽傪榖偟偐偗傞慜偺岦偒偵栠偡偨傔堦扷張棟傪廔椆
+				TK_end()
+				//偡偖偵嵞奐
+				TK_begin()
+
+				//仸夵憿傪偟側偐偭偨傜儖乕僾偡傞
+				if(F_RAGNA)
+				{
+					loop
+				}
+			}
+		//	name("佀傗傔傞")
+			else
+			{
+				VOICE(762,0)											//乽傊偭丄傑偨棃傗偑傟乿
+			
+				//丂丂夛榖張棟廔椆
+			}
+		}
+		else
+		{
+		//丂丂捠忢夛榖張棟偵旘傇
+			EV("TK_GASHREA")
+			wait_EV("TK_GASHREA")
+		}
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//偦傟埲奜丅乮婛偵堦搙僷乕僣傕尒偣偰偄傞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	{
+		//丂丂仸僷乕僣傪帩偭偰偄傞応崌
+		//怳傝岦偐側偄
+		if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0 || IT133>0)
+		{
+		//	name("慖戰僥僉僗僩")
+			workL(WK_CANCEL,SET,3)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【對話】\n【改造武器】\n【離開】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀榖偟偐偗傞")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(WK_YESNO==1)
+			{
+			//丂丂捠忢夛榖張棟偵旘傇
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+
+				//恊曽傪榖偟偐偗傞慜偺岦偒偵栠偡偨傔堦扷張棟傪廔椆
+				TK_end()
+				//偡偖偵嵞奐
+				TK_begin()
+				loop
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傾儞僇乕僊傾夵憿傪棅傓")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			if(WK_YESNO==2)
+			{
+				//嘇偲嘕偼庱偩偗怳傝岦偔
+				if( F1_15_GoVillage && !F2_00_GoForest)
+					look_chr(GASHREA,PLAYER1,"Bone_Head")
+				else
+				if( F5_00_HearLunar && !F6_00_GoToMeru)
+					look_chr(GASHREA,PLAYER1,"Bone_Head")
+				else
+					rot_chr(GASHREA,30,PLAYER1)
+				
+				//嘍偼丒丒丒傪夝彍
+				if( F2_14_TalkEnemy && !F3_00_GoMoonCastle)
+					EV_stop("TENTEN_GASHREA")
+				
+				EV("DATA_PARTS")
+				wait_EV("DATA_PARTS")
+				
+			//丂丂捠忢夵憿張棟偵旘傇
+				EV("TUNE_PARTS_LOOP")
+				wait_EV("TUNE_PARTS_LOOP")
+				
+				
+				//嘇偲嘕偼庱傪栠偡
+				if( F1_15_GoVillage && !F2_00_GoForest)
+					look_off(GASHREA)
+				else
+				if( F5_00_HearLunar && !F6_00_GoToMeru)
+					look_chr(GASHREA,TEO,"Bone_Head")
+
+				//嘍偼丒丒丒傪嵞奐
+				if( F2_14_TalkEnemy && !F3_00_GoMoonCastle)
+					EV("TENTEN_GASHREA")
+
+				//恊曽傪榖偟偐偗傞慜偺岦偒偵栠偡偨傔堦扷張棟傪廔椆
+				TK_end()
+				//偡偖偵嵞奐
+				TK_begin()
+
+				//仸夵憿傪偟側偐偭偨傜儖乕僾偡傞
+				if(F_RAGNA)
+				{
+					loop
+				}
+			}
+		//	name("佀傗傔傞")
+			else
+			{
+				VOICE(762,0)											//乽傊偭丄傑偨棃傗偑傟乿
+			
+				//丂丂夛榖張棟廔椆
+			}
+		}
+		//僷乕僣偑柍偄応崌偼捠忢偺夛榖張棟
+		else
+		{
+			EV("TK_GASHREA")
+			wait_EV("TK_GASHREA")
+		}
+	}
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴恊曽丄夛榖張棟
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TK_GASHREA
+{
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸廻庰応丄僇僂儞僞乕惾偵偄傞丅
+	if( F6_05_EndSixth )
+	{
+		if(!FT_13_TalkGashrea)
+		{
+		//丂丂仸弶夞僀儀儞僩丅
+			MES(GASHREA,"喲，是你們啊。",0)
+			MES_close(GASHREA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"師傅……\n多謝你了。",0)
+			MES(RAGNA,"又是改造武器，\n又是修理特里斯坦號……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"那個，我也要\n向您道謝。",0)
+			MES(PARTNER,"真的是非常感謝。",0)
+			MES_close(PARTNER)
+
+		//	name2(GASHREA)
+			MES(GASHREA,"……哼…………",0)
+			MES(GASHREA,"保重吧，我能說的就這麼多了。",0)
+			MES(GASHREA,"你們年輕人要怎麼做與我無關。\n……你們隨便吧。",0)
+			MES(GASHREA,"可是，不要忘了\n我教給你的東西哦？",0)
+			MES_close(GASHREA)
+
+		//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			EMO(PET,EMO_HATENA)
+			wait(30)
+		
+			MES(GASHREA,"哼，我對你\n說過不少吧。",0)
+			MES(GASHREA,"不要鬆懈精神，\n不要找藉口。",0)
+			MES_close(GASHREA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，說起來\n我好像經常被罵……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PET,"呵呵，確實是呢。",0)
+			MES_close(PET)
+
+		//	name2(GASHREA)
+			MES(GASHREA,"……記得的話\n就趕快去機場吧。",0)
+			MES(GASHREA,"米莉安在等你們呢。",0)
+			MES_close(GASHREA)
+			
+			F_set(FT_13_TalkGashrea)
+		}
+		else
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			MES(GASHREA,"保重吧，我能說的就這麼多了。",0)
+			MES(GASHREA,"你們要怎麼生活\n是你們的事。",0)
+			MES(GASHREA,"好了，\n趕緊走吧。",0)
+			MES_close(GASHREA)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僽儔儞僨乕儢媢偱嶌嬈偟偰偄傞丅
+	//丂丂仸儊僀儞偱堦搙抐偭偨屻偺儊僢僙乕僕丅
+	//丂丂仸偙偺僞僀儈儞僌偱偼僔儑僢僾學偱偡丅
+	if( F6_00_GoToMeru )
+	{
+		if(F6_01_RepairPlane && !F6_02_OnMeru)
+		{
+			MES(GASHREA,"做好準備\n就告訴米莉安。",0)
+			MES(GASHREA,"她一直在等你們。",0)
+			MES_close(GASHREA)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儊儖僙僨僋撍擖屻偼岺朳偵攝抲偝傟傞丅
+	//丂丂丂岺朳婘慜偵棫偭偰丄嬻堟抧恾偺傛偆側傕偺傪峀偘偰偄傞丅
+	//丂丂丂乮柍偗傟偽僲乕僩偱戙梡乯
+		else
+		{
+			if(!FT_12_TalkGashrea)
+			{
+				look_chr(GASHREA,COLIN,"Bone_Head")
+				MES(GASHREA,"P1S4嗯？什麼？８２、４５、４５？",0)
+				MES_close(GASHREA)
+
+			//	name2(COLIN)
+				MES(COLIN,"P1S4是８２、４５、４７！",0)
+				MES_close(COLIN)
+
+			//	name2(GASHREA)
+				MES(GASHREA,"P1S4８２、４５、４７！",0)
+				look_off(GASHREA)
+				MES(GASHREA,"P1S4孩子，報告的時候\n聲音再大一點。",0)
+				MES_close(GASHREA)
+				
+				//仛僐儕儞
+				F_set_note(COLIN,-1)
+				F_set(FT_12_TalkGashrea)
+			}
+			else
+			{
+				if(!F_GASHREA)
+				{
+				//丂丂仸怳傝曉傜側偄丅
+					MES(GASHREA,"現在距離只能目測，\n不過縮小範圍的話\n也能計算出速度。",0)
+					MES(GASHREA,"只是它周圍的氣流\n大小不太尋常。",0)
+					MES(GASHREA,"風速似乎也在\n逐漸提升……",0)
+					MES_close(GASHREA)
+					
+					F_set(GASHREA)
+				}
+			//丂丂仛孞傝曉偟
+				else
+				{
+					rot_chr(GASHREA,30,PLAYER1)
+					MES(GASHREA,"……話說在前，\n你出什麼事\n我可不饒你。",0)
+					MES(GASHREA,"帶著你的妹妹\n再回來。",0)
+					MES(GASHREA,"我會在這裡等你的。",0)
+					MES_close(GASHREA)
+				}
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸廻庰応僇僂儞僞乕惾偱僥僆偲堸傫偱偄傞丅
+	//丂丂仸怳傝偐偊傜側偄丅
+	//丂丂仸弶夞偼僥僆偺儊僢僙乕僕偑婲摦偡傞丅
+	if( F5_00_HearLunar )
+	{
+		if(!FT_11_TalkTeoGash)
+		{
+			EV("EV_TALK_TG")
+			wait_EV("EV_TALK_TG")
+			
+			F_set(FT_11_TalkTeoGash)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+		//丂丂仸怳傝偐偊傜側偄丅			
+//			look_chr(GASHREA,TEO,"Bone_Head")
+			MES(GASHREA,"我也差不多該退休，\n讓年輕人接班了呢。",0)
+			MES(GASHREA,"哼，可是總讓人覺得靠不住，\n所以我也放不下心來。",0)
+			MES(GASHREA,"嘿嘿，你離退休\n就更遠了。",0)
+			MES_close(GASHREA)
+//			look_off(GASHREA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸岺朳墱偺僄儞僕儞偺傎偆偵岦偄偰偄傞丅
+	if( F4_09_GoShrineMia )
+	{
+		if(!F_GASHREA)
+		{
+			MES(GASHREA,"我現在剛剛\n通宵工作正興奮著呢。",0)
+			MES(GASHREA,"嗯？　你問為什麼通宵？",0)
+			MES(GASHREA,"混蛋……\n我有必要把什麼\n都告訴你嗎！",0)
+			MES_close(GASHREA)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（好…好像真的\n 正興奮著呢啊……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("佀傾儖僂僃儞愭摢")
+				MES(PARTNER,"（唔，這就是所謂的\n 正興奮著嗎……）",0)
+				MES_close(PARTNER)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(GASHREA)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(GASHREA,"哼，我現在剛剛\n通宵工作正興奮著呢。",0)
+			MES(GASHREA,"嗯？　你問為什麼通宵？",0)
+			MES(GASHREA,"混蛋……\n我有必要把什麼\n都告訴你嗎！",0)
+			MES_close(GASHREA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸岺朳丄僄儞僕儞偺慜偵棫偭偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩
+	if( F4_00_StartSolo )
+	{
+		rot_chr(GASHREA,30,RAGNA)
+		if(!FT_07_TalkGashrea)
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僗僶儖偑嫃側偄応崌")
+			if(!F4_02_GoVillage2)
+			{
+				MES(GASHREA,"……不要這麼無精打采的。",0)
+		//		MES(GASHREA,"P1S4僶乕儘乕丄婋偹偊偩傠偆偑丅\n偪傖傫偲慜傪尒偰曕偒傗偑傟両",0)
+				MES(GASHREA,"真是的，我不知道究竟發生了什麼，\n可是你給我好好向前看！",0)
+				MES_close(GASHREA)
+				rot(GASHREA,30,15)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			{
+				MES(GASHREA,"我從菲歐娜小姐\n那裡聽說了。",0)
+				MES(GASHREA,"你也遇到了不少麻煩呢。",0)
+				MES_close(GASHREA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哈哈……沒什麼大不了的。",0)
+				MES(RAGNA,"只是有些擦傷。",0)
+				MES_close(RAGNA)
+
+			//	name2(GASHREA)
+				MES(GASHREA,"……哼，這樣啊。",0)
+				MES_close(GASHREA)
+
+			//丂丂恊曽丄岦偒傪栠偡丅
+				rot(GASHREA,30,270)
+				MES(GASHREA,"算了，我還是\n做我的本職工作吧。",0)
+				MES(GASHREA,"對付怪物和吸血鬼\n可不是我的專長。",0)
+				MES_close(GASHREA)
+				
+				F_set(FT_07_TalkGashrea)
+			}
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			MES(GASHREA,"哼，對付怪物和吸血鬼\n可不是我的專長。",0)
+			MES(GASHREA,"我能做到的\n也就是調整機器了。\n我還是繼續做本職工作吧。",0)
+			MES_close(GASHREA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸挰偺棤栧曈傝偵偄傞丅
+	if( F3_00_GoMoonCastle )
+	{
+		rot_chr(GASHREA,30,PLAYER1)
+		MES(GASHREA,"我覺得鎮上很奇怪\n就決定過來看看……",0)
+		MES(GASHREA,"到底怎麼了……",0)
+		MES_close(GASHREA)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸岺朳丄婘偺慜偵棫偭偰偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(GASHREA,30,PLAYER1)
+		EV_stop("TENTEN_GASHREA")
+		if(!F_GASHREA)
+		{
+			MES(GASHREA,"哼，那個年輕管家。\n就知道說些\n討厭的話。",0)
+			MES(GASHREA,"現在航班被取消\n確實很奇怪……",0)
+			MES_close(GASHREA)
+
+		//丂丂恊曽偵俹俙丅
+			EMO(GASHREA,EMO_PA)
+			wait(30)
+		//丂丂婄傪攚偗傞丅
+			look(GASHREA,"Bone_Head",0,		0,2,0,			0,30,0)
+
+			MES(GASHREA,"……不，沒什麼。",0)
+			look(GASHREA,"Bone_Head",0,		0,2,0,			0,0,0)
+			MES(GASHREA,"我是說那個年輕人\n太裝腔作勢了。",0)
+			MES_close(GASHREA)
+			F_set(GASHREA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(GASHREA,"哼……\n最近總是聽到\n一些煩人的話題啊。",0)
+			MES(GASHREA,"真是的……\n不要打擾我工作。",0)
+			MES_close(GASHREA)
+		}
+		EV("TENTEN_GASHREA")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸岺朳撪偱巇帠傪偟偰傞丅乮偁偪偙偪峴偭偨傝棃偨傝乯
+	if( F2_00_GoForest )
+	{
+		if(!F_GASHREA)
+		{
+			rot_chr(GASHREA,30,RAGNA)
+			MES(GASHREA,"說起來，\n據米莉安說……",0)
+			MES(GASHREA,"墜毀的飛機上\n好像裝有艾羅蒂克的新型\n螺旋槳吧？",0)
+			MES_close(GASHREA)
+
+			MES(RAGNA,"嘿嘿，是啊。",0)
+			MES(RAGNA,"還好螺旋槳沒有損壞，\n真是不幸中的萬幸。",0)
+			MES_close(RAGNA)
+
+			MES(GASHREA,"這個先不管，\n不過你可別過分追求名牌哦。",0)
+			MES(GASHREA,"駕駛飛機不要關心這種小事，\n要從整體看問題。",0)
+			MES(GASHREA,"機體性能的關鍵\n在於各個零件的平衡。",0)
+			MES_close(GASHREA)
+
+			MES(RAGNA,"嗯，我也不是\n追求艾羅蒂克的名牌。",0)
+			MES(RAGNA,"我只考慮對於\n特里斯坦號而言，最合適\n的配件是什麼。",0)
+			MES(RAGNA,"而螺旋槳中\n最能符合要求的就是\n艾羅蒂克的新型產品了。",0)
+			MES(RAGNA,"這樣的話，就算有些貴，\n也該選擇這個零件吧？",0)
+			MES_close(RAGNA)
+
+			MES(GASHREA,"哼……原來如此。",0)
+			MES(GASHREA,"呵呵……\n我還以為你也和那些年輕人\n一樣追求名牌。",0)
+			MES(GASHREA,"沒想到你竟然是個\n熱衷於飛機的笨蛋呢。",0)
+			MES_close(GASHREA)
+
+			MES(RAGNA,"不好意思啊。",0)
+			MES_close(RAGNA)
+
+			F_set(GASHREA)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			rot_chr(GASHREA,30,RAGNA)
+			MES(GASHREA,"呵呵……\n我還以為你也和那些年輕人\n一樣追求名牌。",0)
+			MES(GASHREA,"沒想到你竟然是個\n熱衷於飛機的笨蛋呢。",0)
+			MES_close(GASHREA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸岺朳丄僄儞僕儞偺慜偵棫偭偰偄傞丅
+	if( F1_15_GoVillage )
+	{
+		look_chr(GASHREA,PLAYER1,"Bone_Head")
+		if(!F_GASHREA)
+		{
+			MES(GASHREA,"嗯……你們怎麼回事。\n擅自闖進這裡來……",0)
+			MES(GASHREA,"這發動機還在進行調整。\n……不要亂碰。",0)
+			MES(GASHREA,"你要是敢動，\n小心我用扳手打你。",0)
+			MES_close(GASHREA)
+
+			F_set(GASHREA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(GASHREA,"有什麼需要\n就去找米莉安。",0)
+			MES(GASHREA,"不要打擾我工作！",0)
+			MES_close(GASHREA)
+		}
+		look_off(GASHREA)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸岺朳撪偱巇帠傪偟偰傞丅乮偁偪偙偪峴偭偨傝棃偨傝乯
+	if( F1_01_GameStart )
+	{
+	//丂丂仸弶夞僀儀儞僩丅
+	//丂丂丂偙偺僞僀儈儞僌側傜丄偙偺僀儀儞僩偑嵟桪愭偱偡丅
+	//丂丂恊曽丄儔僌僫偵岦偔丅
+		if(!FT_01_TalkGashrea)
+		{
+			MOT(GASHREA,52,15)
+			rot_chr(GASHREA,30,RAGNA)
+			MES(GASHREA,"嗯，是你嗎？\n米莉安說的\n那個飛機駕駛員……",0)
+			MES(GASHREA,"P1S4——混蛋！",0)
+			MES(GASHREA,"這麼好的天氣居然會墜機，\n這代表你的精神過於鬆懈。",0)
+			MES(GASHREA,"肯定是開得很爽\n就開始東張西望了吧。",0)
+			MES_close(GASHREA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"不…不是這樣的。\n那個，是有原因的。",0)
+			MES(RAGNA,"……不過說我注意力不夠集中，\n疏忽大意也沒錯……",0)
+			MES_close(RAGNA)
+
+		//	name2(GASHREA)
+			MES(GASHREA,"哼，果然是這樣。",0)
+			MES(GASHREA,"真是的，最近的年輕人\n就知道找一些無聊的藉口……",0)
+			MES(GASHREA,"如果以後你敢\n在我面前找藉口，\n我可是會狠狠揍你一頓的。",0)
+			MES(GASHREA,"給我記住了。",0)
+			MES_close(GASHREA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，嗯……我會注意的。\n（真是一位嚴厲的師傅啊……）",0)
+			MES_close(RAGNA)
+			//仛恊曽亂旘峴応偺庡亃
+			F_set_note(GASHREA,0)
+			
+			F_set(FT_01_TalkGashrea)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			rot_chr(GASHREA,30,PLAYER1)
+			if(!F_GASHREA)
+			{
+				MES(GASHREA,"以前人們駕駛飛機\n都是賭上自己的性命。",0)
+				MES(GASHREA,"現在雖然連航班\n都已經遍佈各地了……",0)
+				MES(GASHREA,"但是駕駛飛機絕不能\n抱著隨便的心情。",0)
+				MES(GASHREA,"最近的年輕人真是……",0)
+				MES_close(GASHREA)
+
+				F_set(GASHREA)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(GASHREA,"這裡是我的機場。",0)
+				MES(GASHREA,"要是你敢\n在我面前找藉口，\n我可是會狠狠揍你一頓的。",0)
+				MES_close(GASHREA)
+			}
+		}
+	}
+	
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//夵憿僷乕僣傪尒偣偰側偄帪偼丄弶傔偰夵憿僷乕僣傪尒偣傞張棟
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+LOOK_PART_GASHREA
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴恊曽偵弶傔偰愇斉傪尒偣傞張棟
+	//丂丂仸愇斉傪帩偭偰偄傞忬懺偱恊曽偵榖偟偐偗傞偲丄
+	//丂丂丂侾夞偩偗偙偺張棟傪嫴傓丅
+	//		堦斣抶偄僞僀儈儞僌偱墛僷乕僣擖庤帪丠
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0 || IT133>0)
+	{
+		rot_chr(GASHREA,30,PLAYER1)
+		
+		MES(GASHREA,"哦……\n你帶著件很有趣的東西呢。",0)
+		MES(GASHREA,"這不是魔石製的\n零件嗎？",0)
+		MES_close(GASHREA)
+
+	//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+		EMO(RAGNA,EMO_HATENA)
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+		
+		if(IT128>0 )
+		{
+			MES(RAGNA,"是說這個「Ａ零件」嗎？",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(IT129>0 )
+		{
+			MES(RAGNA,"是說這個「Ｂ零件」嗎？",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(IT130>0 )
+		{
+			MES(RAGNA,"是說這個「Ｃ零件」嗎？",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(IT131>0 )
+		{
+			MES(RAGNA,"是說這個「Ｄ零件」嗎？",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(IT132>0 )
+		{
+			MES(RAGNA,"是說這個「Ｅ零件」嗎？",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(IT133>0 )
+		{
+			MES(RAGNA,"是說這個「Ｆ零件」嗎？",0)
+			MES_close(RAGNA)
+		}
+	//	name2(GASHREA)
+		MES(GASHREA,"嗯，聽說這附近\n可以開採出強力的魔石。",0)
+		MES(GASHREA,"用它製作的零件\n就叫做「魔石零件」。",0)
+		MES_close(GASHREA)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//枹夵憿偺嵟庛僷乕僣偺愢柧
+		EV("DATA_PARTS")
+		wait_EV("DATA_PARTS")
+		//夵憿偺幚峴張棟
+		EV("TUNE_PARTS_LOOP")
+		wait_EV("TUNE_PARTS_LOOP")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	僈僔儏儗乕偵夵憿僷乕僣傪尒偣偨
+		F_set(FT_01_GashreaTp)
+		
+	//	儈儕傾儉偵夵憿僷乕僣傪尒偣偨弶夞丂傕僙僢僩
+		F_set(FT_01_MilliamTp)
+	}
+	//夵憿傾僀僥儉偑側偄帪偼捠忢夛榖傊旘傇
+	else
+	{
+		EV("TK_GASHREA")	
+		wait_EV("TK_GASHREA")	
+	}
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴恊曽丄強帩偟偰偄傞嵟庛僷乕僣偺夝愢
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+DATA_PARTS
+{
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("佀枹夵憿偺嵟庛僷乕僣偵偮偄偰丄夝愢傪暦偄偨偙偲偑側偄応崌")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(!FT_01_GashreaData)//FT_01_GashreaData偼丄僷乕僣擖庤帪偵弶婜壔偡傞偙偲両
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//弶傔偰夵憿僷乕僣傪尒偣偨帪
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(!FT_01_GashreaTp)
+		{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑嫮壔僷乕僣侾")
+			if(IT128>0)
+			{
+				MES(GASHREA,"這好像是\n某種魔法裝置的零件啊……",0)
+				MES(GASHREA,"嗯，調整一下\n應該還可以用。",0)
+				MES_close(GASHREA)
+			}
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑僼僢僋僷乕僣")
+			else
+			if(IT129>0)
+			{
+				MES(GASHREA,"這好像是\n工具的零件啊……",0)
+				MES(GASHREA,"應該是魔法工房之類的地方用的。",0)
+				MES(GASHREA,"嗯，調整一下\n應該還可以用。",0)
+				MES_close(GASHREA)
+			}
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑嫮壔僷乕僣俀")
+			else
+			if(IT130>0)
+			{
+				MES(GASHREA,"這好像是\n某種輔助設備啊……",0)
+				MES(GASHREA,"應該是和其他東西組合起來使用的。",0)
+				MES(GASHREA,"嗯，調整一下\n應該還可以用。",0)
+				MES_close(GASHREA)
+			}
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑僶乕僯儞僌僷乕僣")
+			else
+			if(IT131>0)
+			{
+				MES(GASHREA,"這好像是……\n燃燒裝置？",0)
+				MES(GASHREA,"我也聽說有使用\n魔法的發動機……",0)
+				MES(GASHREA,"嗯，調整一下\n應該還可以用。",0)
+				MES_close(GASHREA)
+			}
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑僌儔僀僪僷乕僣乮仸懡暘枹巊梡偵側傞慖戰巿乯")
+			else
+			if(IT132>0)
+			{
+				MES(GASHREA,"這…這不是……\n噴氣推進裝置嗎？",0)
+				MES_close(GASHREA)
+
+			//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HATENA)
+
+				//儖僁偑偄傞
+				if(F5_00_HearLunar)
+					EMO(PET,EMO_HATENA)
+				
+				//傾儖僂僃儞偑嫃傞
+				if(F6_00_GoToMeru)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//僆僨僢僒偑嫃傞
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//傾儖僂僃儞偑嫃傞
+				if(F4_09_GoShrineMia && !F5_00_HearLunar)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//僗僶儖偑嫃傞
+				if(F4_02_GoVillage2 && !F4_06_StopAttack)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//傾儖僂僃儞偑嫃傞
+				if(!F4_00_StartSolo)
+					EMO(PARTNER,EMO_HATENA)
+				wait(30)
+
+				MES(RAGNA,"噴氣推進裝置嗎？",0)
+				MES_close(RAGNA)
+
+			//	name2(GASHREA)
+//				MES(GASHREA,"愄偺杺朄巊偄傗傜偑巊偭偰偨\n摿暿側椡応傛丅",0)
+//				MES(GASHREA,"戝棨摨巑傪宷偖僎乕僩側傫偐偵傕\n巊傢傟偰偨偭偰榖偩偤丅",0)
+//				MES(GASHREA,"偦偄偮傕丄偄偠偭偰傗傟偽\n傑偩巊偊偦偆偠傖偹偊偐丅",0)
+//				MES_close(GASHREA)
+
+				MES(GASHREA,"你不知道嗎？\n就是最近正在研究的\n新型發動機。",0)
+				MES(GASHREA,"不過它似乎是利用\n魔石取得了\n類似的效果……",0)
+				MES(GASHREA,"嗯，這個調整一下\n應該還可以合成到武器中去。",0)
+				MES_close(GASHREA)
+			}
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑嵟嫮僷乕僣乮仸懡暘枹巊梡偵側傞慖戰巿乯")
+			else
+			if(IT133>0)
+			{
+				MES(GASHREA,"這好像是\n某種魔法裝置的零件啊……",0)
+				MES(GASHREA,"可是…什麼啊……\n這不是武器的零件嗎！？",0)
+				MES_close(GASHREA)
+
+			//丂丂儔僌僫偨偪偵両僄儌乕僔儑儞丅
+				MES(RAGNA,"武…武器……？",0)
+				MES_close(RAGNA)
+
+			//	name2(GASHREA)
+				MES(GASHREA,"應該是\n魔法大戰時代的遺物。",0)
+				MES(GASHREA,"實際情況我也不清楚……\n聽說當時也有人\n據守在伊魯巴特進行戰鬥呢。",0)
+				MES(GASHREA,"這個……調整一下\n應該也可以用。",0)
+				MES_close(GASHREA)
+			}
+			
+			MES(RAGNA,"可…可以用……",0)
+			MES(RAGNA,"這可是從迷宮中發掘出來的啊？\n這也能用嗎？",0)
+			MES_close(RAGNA)
+
+		//	name2(GASHREA)
+			MES(GASHREA,"哼，你以為我是誰？",0)
+			MES(GASHREA,"比如說，對了……",0)
+			MES_close(GASHREA)
+
+		//丂丂恊曽丄儔僌僫傪巜偡丅
+			MES(GASHREA,"拉格那，說不定\n它可以合成\n到你的武器中呢。",0)
+			MES(GASHREA,"怎麼樣，要試試看嗎？",0)
+			MES_close(GASHREA)
+
+			F_set(FT_01_GashreaTp)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//夵憿張棟俀夞栚埲崀偺愢柧丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		{
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑嫮壔僷乕僣侾")
+			if(IT128>0)
+			{
+				MES(GASHREA,"嗯，你帶\n魔石零件過來了啊。",0)
+				MES_close(GASHREA)
+				MES(GASHREA,"這好像是\n某種魔法裝置的零件啊……",0)
+				MES(GASHREA,"應該也能\n合成到你的武器中去。",0)
+				MES_close(GASHREA)
+			}
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑僼僢僋僷乕僣")
+			else
+			if(IT129>0)
+			{
+				MES(GASHREA,"嗯，你帶\n魔石零件過來了啊。",0)
+				MES_close(GASHREA)
+				MES(GASHREA,"這好像是\n工具的零件啊……",0)
+				MES(GASHREA,"應該是魔法工房之類的地方用的。",0)
+				MES(GASHREA,"應該也能\n合成到你的武器中去。",0)
+				MES_close(GASHREA)
+			}
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑嫮壔僷乕僣俀")
+			else
+			if(IT130>0)
+			{
+				MES(GASHREA,"嗯，你帶\n魔石零件過來了啊。",0)
+				MES_close(GASHREA)
+				MES(GASHREA,"這好像是\n某種輔助設備啊……",0)
+				MES(GASHREA,"應該是和其他東西組合起來使用的。",0)
+				MES(GASHREA,"應該也能\n合成到你的武器中去。",0)
+				MES_close(GASHREA)
+			}
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑僶乕僯儞僌僷乕僣")
+			else
+			if(IT131>0)
+			{
+				MES(GASHREA,"嗯，你帶\n魔石零件過來了啊。",0)
+				MES_close(GASHREA)
+				MES(GASHREA,"這好像是……\n燃燒裝置？",0)
+				MES(GASHREA,"我也聽說有使用\n魔法的發動機……",0)
+				MES(GASHREA,"嗯，應該也能\n合成到你的武器中去。",0)
+				MES_close(GASHREA)
+			}
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑僌儔僀僪僷乕僣")
+			else
+			if(IT132>0)
+			{
+				MES(GASHREA,"嗯，你好像又帶來了\n魔石零件呢。",0)
+				MES_close(GASHREA)
+
+				EMO(GASHREA,EMO_TENTEN)
+				wait(30)
+
+				MES(GASHREA,"這…這不是……\n噴氣推進裝置嗎？",0)
+				MES_close(GASHREA)
+
+			//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HATENA)
+
+				//儖僁偑偄傞
+				if(F5_00_HearLunar)
+					EMO(PET,EMO_HATENA)
+				
+				//傾儖僂僃儞偑嫃傞
+				if(F6_00_GoToMeru)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//僆僨僢僒偑嫃傞
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//傾儖僂僃儞偑嫃傞
+				if(F4_09_GoShrineMia && !F5_00_HearLunar)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//僗僶儖偑嫃傞
+				if(F4_02_GoVillage2 && !F4_06_StopAttack)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//傾儖僂僃儞偑嫃傞
+				if(!F4_00_StartSolo)
+					EMO(PARTNER,EMO_HATENA)
+				wait(30)
+
+				MES(RAGNA,"噴氣推進裝置？",0)
+				MES_close(RAGNA)
+
+			//	name2(GASHREA)
+//				MES(GASHREA,"愄偺杺朄巊偄傗傜偑巊偭偰偨\n摿暿側椡応傛丅",0)
+//				MES(GASHREA,"戝棨摨巑傪宷偖僎乕僩側傫偐偵傕\n巊傢傟偰偨偭偰榖偩偤丅",0)
+//				MES(GASHREA,"偦偄偮傕丄偄偠偭偰傗傟偽\n傑偩巊偊偦偆偠傖偹偊偐丅",0)
+//				MES_close(GASHREA)
+
+				MES(GASHREA,"你不知道嗎？\n就是最近正在研究的\n新型發動機。",0)
+				MES(GASHREA,"不過它似乎是利用\n魔石取得了\n類似的效果……",0)
+				MES(GASHREA,"嗯，說不定也能\n合成到你的武器中去。",0)
+				MES_close(GASHREA)
+
+			}
+		//	name("佀枹夵憿偺嵟庛僷乕僣偑嵟嫮僷乕僣")
+			else
+			if(IT133>0)
+			{
+				MES(GASHREA,"嗯，什麼嘛？\n你又帶魔石零件\n來了嗎？",0)
+				MES(GASHREA,"這好像是\n某種魔法裝置的零件啊……",0)
+				MES_close(GASHREA)
+
+				EMO(GASHREA,EMO_BIKKURI)
+				wait(30)
+
+				MES(GASHREA,"這…這……\n這不是武器的零件嗎！？",0)
+				MES_close(GASHREA)
+
+			//丂丂儔僌僫偨偪偵両僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_BIKKURI)
+
+				//儖僁偑偄傞
+				if(F5_00_HearLunar)
+				{
+					EMO(PET,EMO_BIKKURI)
+				}
+				
+				//傾儖僂僃儞偑嫃傞
+				if(F6_00_GoToMeru)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				else
+				//僆僨僢僒偑嫃傞
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				
+				wait(30)
+				MES(RAGNA,"武…武器……？",0)
+				MES_close(RAGNA)
+
+			//	name2(GASHREA)
+				MES(GASHREA,"應該是\n魔法大戰時代的遺物。",0)
+				MES(GASHREA,"具體情況我也不清楚……\n聽說當時也有人\n據守在伊魯巴特進行戰鬥呢。",0)
+				MES(GASHREA,"這個……調整一下\n應該也能合成到你的武器中去。",0)
+				MES_close(GASHREA)
+			}
+		}
+		
+		F_set(FT_01_GashreaData)
+	}
+	
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("佀枹夵憿偺嵟庛僷乕僣偵偮偄偰丄夝愢傪暦偄偨偙偲偑偁傞応崌")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	{
+		//忋埵俀僷乕僣
+		if(IT132>0 || IT133>0)
+		{
+			MES(GASHREA,"嗯，你帶\n魔石零件過來了啊。",0)
+			MES(GASHREA,"這個調整一下\n說不定也能合成到\n你的武器中去。",0)
+			MES_close(GASHREA)
+		}
+		else
+		{
+			MES(GASHREA,"嗯，你帶\n魔石零件過來了啊。",0)
+			MES(GASHREA,"這個調整一下\n應該也能合成到\n你的武器中去。",0)
+			MES_close(GASHREA)
+		}
+		MES(GASHREA,"如何，要試試看嗎？",0)
+		MES_close(GASHREA)
+	}
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	僷乕僣夵憿張棟丒慖戰巿晹暘
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TUNE_PARTS_LOOP
+{
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("慖戰僥僉僗僩")
+	fade_in(30,10,BLACK)
+	MES(0,"C3S2要對武器進行改造嗎？",2)
+	MES_close(0)
+	fade_in(0,10,BLACK)
+	wait_fade()
+	
+//	name("慖戰僥僉僗僩")
+	workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+	MES_pos(PLAYER1,"??W9【改造】\n【放棄】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("佀乽夵憿偡傞乿")
+	if(WK_YESNO==1)
+	{
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂夵憿僀儀儞僩弶婜壔張棟
+		//丂F_RAGNA丗僙僢僩偝傟偰偄傟偽僔儑僢僾儖乕僠儞傊栠傞丅
+		//丂WK000丂丗夵憿嵪傒夞悢丅
+		//丂WK001丂丗僠儏乕僩儕傾儖俛俵俹僞僀僾丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		//夵憿傪峴偭偨僼儔僌丂仸RAGNA傪儕僙僢僩偟偰儖乕僾傪敳偗傞
+		F_reset(RAGNA)
+		
+		//崱傑偱夵憿偟偨屄悢傪寁嶼丅
+		workL(0,SET,0)
+		if(IT001>0)//僼僢僋僊傾
+		{
+			workL(0,ADD,1)
+		}
+		if(IT002>0)//僶乕僯儞僌僊傾
+		{
+			workL(0,ADD,1)
+		}
+		if(IT003>0)//僌儔僀僪僊傾
+		{
+			workL(0,ADD,1)
+		}
+		if(IT004>0)//僜乕僪僊傾
+		{
+			workL(0,ADD,1)
+		}
+		if(GW_WEAPON_RANGE>=1)//嫮壔僷乕僣暘
+		{
+			workL(0,ADD,1)
+		}
+		if(GW_WEAPON_RANGE>=2)//嫮壔僷乕僣暘
+		{
+			workL(0,ADD,1)
+		}
+		
+		//WK001傪儕僙僢僩丅夵憿僠儏乕僩儕傾儖梡偵巊梡偟傑偡丅
+		workL(001,SET,0)
+
+		MES(GASHREA,"好，稍等一下。\n我馬上就能完成。",0)
+		MES_close(GASHREA)
+
+	//丂丂僼僃乕僪傾僂僩丅
+		fade_in( 100, 30, BLACK)	//僼僃乕僪傾僂僩
+		wait_fade()
+
+		//價僗僞壔偡傞丅
+		TK_end()
+		EV_begin()
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	僉儍儔堏摦仌攝抲
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘖僽儔儞僨乕儢媢偱偺夵憿偼偦偺応偺僼僃乕僪僀儞傾僂僩偱峴偆丅
+		if(F6_00_GoToMeru && !F6_02_OnMeru)
+		{
+			EV("TUNE_PARTS_ChrSet_F12")
+			wait_EV("TUNE_PARTS_ChrSet_F12")
+		}
+		else
+		//仴嘕庰応偐傜岺朳傊堏摦偡傞
+		if( F5_00_HearLunar && !F6_00_GoToMeru )
+		{
+			workG(GW_ENTRY_EVENT,SET,1)
+			new_map(10210)
+		}
+		else
+		//仴嘐傾儖僢僥栭偱偺夵憿偼偦偺応偺僼僃乕僪僀儞傾僂僩偱峴偆丅
+		if(F3_00_GoMoonCastle && !F4_00_StartSolo)
+		{
+			EV("TUNE_PARTS_ChrSet_F6")
+			wait_EV("TUNE_PARTS_ChrSet_F6")
+		}
+		//偦傟埲奜偼岺朳偱僇儊儔傪僙僢僩偡傞丅
+		else
+		{
+			EV("TUNE_PARTS_ChrSet")
+			wait_EV("TUNE_PARTS_ChrSet")
+		}
+
+		//夵憿張棟杮懱傪屇傇丅嵗昗巜掕偼巊傢側偄丅
+		EV("TUNE_PARTS")
+		wait_EV("TUNE_PARTS")
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	僉儍儔栠偟
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		EV("TUNE_PARTS_ChrReturn")
+		wait_EV("TUNE_PARTS_ChrReturn")
+
+		fade_in( 0, 30, BLACK)	//僼僃乕僪傾僂僩
+		wait_fade()
+		EV_end()
+
+
+	}
+//	name("佀乽傗傔傞乿")
+	else
+	if(WK_YESNO==2)
+	{
+		//夵憿傪峴傢側偐偭偨丂仸RAGNA偑僙僢僩偝傟偰偄傞帪偩偗儖乕僾偡傞
+		F_set(RAGNA)
+		
+		MES(GASHREA,"這樣啊。",0)
+		MES(GASHREA,"想要改造的時候就過來。\n我隨時都可以幫你哦。",0)
+		MES_close(GASHREA)
+	}
+
+}
+
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	僷乕僣夵憿張棟杮懱
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TUNE_PARTS
+{
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//佀僷乕僣偑捠忢夵憿偺張棟
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0)
+		{
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	僀儀儞僩奐巒
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//丂丂俽俤偑柭偭偰丄僊傾偑嫮壔偝傟傞丅
+		//	MES(GASHREA,"C4仧俽俤偑柭偭偰丄僊傾偑嫮壔偝傟傞丅",0)
+		//	MES_close(GASHREA)
+
+			SE(23,0)//夵憿SE
+			wait(90)
+
+			//崱夞偑嵟屻偺応崌丅
+			if(WK000>=5)
+			{
+				rot(EVENT_GASHREA,30,180)
+
+			//丂丂備偭偔傝僼僃乕僪僀儞丅
+			//丂丂恊曽偼岺朳憰抲偺曽傪岦偄偰偄傞丅
+				fade_in( 0, 90, BLACK)	//僼僃乕僪僀儞
+				wait_fade()
+
+				VOICE(759,0)						//乽傛乣偟丄偙傫側強偐乿乮傾儞僇乕僊傾傪夵憿偟偨帪乯
+				MES(EVENT_GASHREA,"好了，就這樣吧。",0)		
+//				MES(EVENT_GASHREA,"傛偟乧乧\n偙傫側僩僐偩傠丅",0)
+				MES_close(EVENT_GASHREA)
+
+				rot_chr(EVENT_GASHREA,30,RAGNA)
+			//丂丂恊曽丄傗偭偰棃傞丅
+				MES(EVENT_GASHREA,"拿著，已經改造完成了。",0)
+				MES_close(EVENT_GASHREA)
+
+			//丂丂傾僀僥儉擖庤僂傿儞僪僂昞帵丅
+			//丂丂嫟捠張棟偲偡傞丅
+				fade_in(30,10,BLACK)
+			}
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀嫮壔僷乕僣偺応崌")
+			if(IT128>0)
+			{
+			//	name("僫儗乕僔儑儞")
+				SE(24,0)//僊傾偺儗儀儖傾僢僾
+			//	MES(0,"C3S2傾儞僇乕僊傾偺儕乕僠偑怢傃偨丅",2)
+				MES(0,"C3S2錨劍的會心一擊機率提高了。",2)
+				MES_close(0)
+				
+				//仧晲婍偺挿偝傾僢僾
+				workG(GW_WEAPON_RANGE,ADD,1)
+
+			//	愝寁恾傪徚偡
+				get_item(128,-1,1)
+				
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僼僢僋僷乕僣偺応崌")
+			else
+			if(IT129>0)
+			{
+			//	name("僫儗乕僔儑儞")
+				SE(24,0)//僊傾偺儗儀儖傾僢僾
+				MES(0,"C3S2錨劍\n獲得了「抓取」能力。",2)
+				MES_close(0)
+
+			//	愝寁恾傪徚偡
+				get_item(129,-1,1)
+			
+			//	傾僀僥儉擖庤
+				get_item(001,1,0)
+				wait_key(0)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				
+				//憰旛
+				set_equip(2,001)
+
+				Load_BMP(20,"sys\\tuto11.itm","0")//僠儏乕僩儕傾儖夋憸儘乕僪
+				menuBMP(3,	20,	0,0,288,384)
+				workL(001,SET,1)
+
+				F_set(F0_11_TutoGia_Hook)
+
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀嫮壔僷乕僣偺応崌")
+			else
+			if(IT130>0)
+			{
+			//	name("僫儗乕僔儑儞")
+				SE(24,0)//僊傾偺儗儀儖傾僢僾
+			//	MES(0,"C3S2傾儞僇乕僊傾偺儕乕僠偑怢傃偨丅",2)
+				MES(0,"C3S2錨劍的攻擊間隙縮短了。",2)
+				MES_close(0)
+				
+				//仧晲婍偺挿偝傾僢僾
+				workG(GW_WEAPON_RANGE,ADD,1)
+
+			//	愝寁恾傪徚偡
+				get_item(130,-1,1)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僶乕僯儞僌僷乕僣偺応崌")
+			else
+			if(IT131>0)
+			{
+			//	name("僫儗乕僔儑儞")
+				SE(24,0)//僊傾偺儗儀儖傾僢僾
+				MES(0,"C3S2錨劍\n獲得了「燃燒」能力。",2)
+				MES_close(0)
+				
+			//	愝寁恾傪徚偡
+				get_item(131,-1,1)
+
+			//	傾僀僥儉擖庤
+				get_item(002,1,0)
+				wait_key(0)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+				//憰旛
+				set_equip(2,002)
+
+				Load_BMP(20,"sys\\tuto12.itm","0")//僠儏乕僩儕傾儖夋憸儘乕僪
+				menuBMP(3,	20,	0,0,288,384)
+				workL(001,SET,2)
+
+				F_set(F0_12_TutoGia_Barn)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僌儔僀僪僷乕僣偺応崌")
+			else
+			if(IT132>0)
+			{
+			//	name("僫儗乕僔儑儞")
+				SE(24,0)//僊傾偺儗儀儖傾僢僾
+				MES(0,"C3S2錨劍\n獲得了「滑翔」能力。",2)
+				MES_close(0)
+				
+			//	愝寁恾傪徚偡
+				get_item(132,-1,1)
+
+			//	傾僀僥儉擖庤
+				get_item(003,1,0)
+				wait_key(0)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				
+				//憰旛
+				set_equip(2,003)
+
+				Load_BMP(20,"sys\\tuto13.itm","0")//僠儏乕僩儕傾儖夋憸儘乕僪
+				menuBMP(3,	20,	0,0,288,384)
+				workL(001,SET,3)
+
+				F_set(F0_13_TutoGia_Grid)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//夵憿屻偺僀儀儞僩
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂岺朳偵僼僃乕僪僀儞丅
+
+			//崱夞偑嵟屻偺応崌丅
+			if(WK000>=5)
+			{
+				//傾僀僥儉擖庤梡偺崟棊偪夋柺傪夝彍
+				fade_in( 0, 10, BLACK)	//僼僃乕僪僀儞
+				wait_fade()
+			}
+			else
+			{
+				fade_in( 0, 30, BLACK)	//僼僃乕僪僀儞
+				wait_fade()
+			}
+
+			//僠儏乕僩儕傾儖偺応崌偼俛俵俹昞帵
+			if(WK001>0)
+			{
+				//仠僠儏乕僩儕傾儖丗僼僢僋僊傾偺夵憿屻巊梡曽朄
+				//仠僠儏乕僩儕傾儖丗僶乕僯儞僌僊傾偺夵憿屻巊梡曽朄
+				//仠僠儏乕僩儕傾儖丗僌儔僀僪僊傾偺夵憿屻巊梡曽朄
+				menu(3,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+				menu(3,	0,	176, 48,  0,	288, 384,	40,100,0)
+				SE(043,PLAYER1)
+				wait(40)
+				wait_key(0)
+				menu(3,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+				wait(30)
+			}
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//崱夞偑嵟屻偺応崌丅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(WK000>=5)
+			{
+				MOT(RAGNA,52,15)
+
+				MES(EVENT_GASHREA,"這次改造有些勉強……\n不過既然已經強化到這種程度，\n應該就沒什麼對手了吧。",0)
+				MES(EVENT_GASHREA,"好好幹哦！",0)
+				MES_close(EVENT_GASHREA)
+
+				MES(RAGNA,"嗯。\n這一段時間多謝了。",0)
+				MES(RAGNA,"謝謝你，師傅！",0)
+				MES_close(RAGNA)
+
+			}
+			else
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//佀夵憿偟偨偺偑弶傔偰偺応崌
+			//偪側傒偵偙偺僀儀儞僩偼愨懳慜敿丒岺朳偱峴偭偰偄傞偼偢丅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(!FT_01_GashreaTune)
+			{
+			//丂丂儔僌僫偨偪偼嵞攝抲偟偰偍偔丅
+			//丂丂儔僌僫偼傾儞僇乕僊傾帩偪偱丄偄偠偭偰偄傞傛偆側儌乕僔儑儞丅乮夵憿偟偨儗儀儖偺僊傾儌乕僪偵愗傝懼傢偭偰偄傞乯
+				MOT(RAGNA,52,15)
+				
+				VOICE(759,0)						//乽傛乣偟丄偙傫側強偐乿乮傾儞僇乕僊傾傪夵憿偟偨帪乯
+				MES(EVENT_GASHREA,"好了，就這樣吧。",0)
+//				MES(EVENT_GASHREA,"傊偭丄偙傫側僩僐偐乧乧",0)
+				MES_close(EVENT_GASHREA)
+
+				MES(RAGNA,"真…真厲害……\n居然合成起來了……",0)
+				MES_close(RAGNA)
+				
+				rot_chr(EVENT_PARTNER,30,RAGNA)
+				rot(RAGNA,30,315)
+
+			//丂丂儔僌僫丄寉偔傾儞僇乕僊傾傪怳傝夞偟偰傒偣傞丅
+				MOT(RAGNA,10,15)
+				wait(12)
+				SE(143,0)
+				wait_MOT(RAGNA,10)
+				MOT(RAGNA,11,15)
+				wait(11)
+				SE(145,0)
+				wait_MOT(RAGNA,11)
+			
+				MES(RAGNA,"（這東西說不定\n 相當有用呢……）",0)
+				MES_close(RAGNA)
+
+				MES(EVENT_GASHREA,"狀態也不錯啊。",0)
+				MES(EVENT_GASHREA,"找到零件以後，\n就帶來我這裡！",0)
+				MES(EVENT_GASHREA,"我會幫你改造的。",0)
+				MES_close(EVENT_GASHREA)
+
+			//丂丂儔僌僫丄恊曽偵岦偒捈傞丅
+				rot_chr(RAGNA,30,EVENT_GASHREA)
+				rot_chr(EVENT_PARTNER,30,EVENT_GASHREA)
+				
+				MES(RAGNA,"嗯。\n拜託你了，師傅！",0)
+				MES_close(RAGNA)
+				
+				F_set(FT_01_GashreaTune)
+
+				//	儈儕傾儉偵弶夞夵憿僷乕僣傪尒偣傞僀儀儞僩偑側偔側傞
+				F_set(FT_01_MilliamTp)
+			}
+			else
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//佀偦傟埲奜偼娙棯壔
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			{
+				MOT(RAGNA,52,15)
+
+				MES(EVENT_GASHREA,"找到零件以後，\n就帶來我這裡！",0)
+				MES(EVENT_GASHREA,"我會幫你改造的。",0)
+				MES_close(EVENT_GASHREA)
+
+				MES(RAGNA,"嗯。\n拜託你了，師傅！",0)
+				MES_close(RAGNA)
+
+			}
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂張棟廔椆丅
+			//丂丂埫揮偵側偭偰丄岺朳拞墰曈傝偐傜憖嶌嫋壜偲偡傞丅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			fade_in( 100, 30, BLACK)	//僼僃乕僪傾僂僩
+			wait_fade()
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//佀嵟嫮僷乕僣偺夵憿丅
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		}
+		else
+		{
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	僀儀儞僩奐巒
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//丂丂俽俤偑柭傞丅
+		//丂丂備偭偔傝僼僃乕僪僀儞丅
+		//丂丂恊曽偼岺朳憰抲偺曽傪岦偄偰偄傞丅
+
+			SE(23,0)//夵憿SE
+			rot(EVENT_GASHREA,30,180)
+			wait(75)
+
+
+			fade_in( 0, 60, BLACK)	//僼僃乕僪僀儞
+			wait_fade()
+
+			MES(EVENT_GASHREA,"呼，哎呀……\n這次花了不少時間啊。",0)
+			MES_close(EVENT_GASHREA)
+
+			MES(RAGNA,"師傅……\n完成了嗎？",0)
+			MES_close(RAGNA)
+
+		//丂丂恊曽丄儔僌僫偺尦偵傗偭偰偔傞丅
+			rot(EVENT_GASHREA,30,RAGNA)
+
+			MES(EVENT_GASHREA,"嗯，非常完美。",0)
+			MES(EVENT_GASHREA,"我從來沒見過\n這樣的錨劍。",0)
+			MES(EVENT_GASHREA,"不會有能超越\n它的錨劍了。",0)
+			MES_close(EVENT_GASHREA)
+
+		//丂丂恊曽丄壗偐傪嵎偟弌偡巇憪丅
+		//	name("僫儗乕僔儑儞")
+			SE(24,0)//僊傾偺儗儀儖傾僢僾
+			MES(0,"C3S2錨劍\n獲得了最強能力「鋒銳」。",2)
+			MES_close(0)
+
+		//	愝寁恾傪徚偡
+			get_item(133,-1,1)
+
+			fade_in(30,10,BLACK)
+		//	傾僀僥儉擖庤
+			get_item(004,1,0)
+			wait_key(0)
+
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		//丂丂儔僌僫丄僊傾傪憰旛偟偰挱傔傞丅
+			//憰旛
+			cross_fade(20)
+			set_equip(2,004)
+			SE(1014,0)//僊傾峔偊SE
+			wait_fade()
+			wait(20)
+
+			look(RAGNA,"Bone_Head",0,		0,2,1,			0,30,-10)
+			wait(10)
+			MOT(RAGNA,52,15)
+
+			MES(RAGNA,"這…這就是\n最強的錨劍……",0)
+			MES(RAGNA,"嘿嘿，居然變得\n這麼漂亮……",0)
+			look(RAGNA,"Bone_Head",0,		0,2,1,			0,0,0)
+			MES(RAGNA,"多謝師傅了。\n居然幫我做到這種程度。",0)
+			MES_close(恊曽)
+
+			MES(EVENT_GASHREA,"哼，我只是\n幫你一個小忙而已。",0)
+			MES(EVENT_GASHREA,"能夠改造成這樣，\n說明這東西本身材質就很好。",0)
+			MES(EVENT_GASHREA,"拉格那，這東西\n要怎麼使用就看你了。",0)
+			MES(EVENT_GASHREA,"……一定要愛護它哦。",0)
+			MES_close(EVENT_GASHREA)
+
+			MES(RAGNA,"嗯，當然了……！",0)
+			MES(RAGNA,"師傅，\n這一段時間多謝了。\n真是感激不盡！",0)
+			MES_close(RAGNA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂張棟廔椆丅
+			//丂丂埫揮偵側偭偰丄岺朳拞墰曈傝偐傜憖嶌嫋壜偲偡傞丅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			fade_in( 100, 30, BLACK)	//僼僃乕僪傾僂僩
+			wait_fade()
+
+		}
+
+}
+
+
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	僉儍儔堏摦仌攝抲
+//	岺朳愱梡偱偡丅栭偺傾儖僢僥偲僽儔儞僨乕儢媢偱偼丄
+//	偙偺儖乕僠儞傪捠傜偢偦偺応俥俷仌張棟屻俥俬偟傑偡丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TUNE_PARTS_ChrSet
+{
+
+		//	岺朳梡僇儊儔僙僢僩
+			//CAM_move(434,96,124,0,0)
+			//CAM(50,50,124,34,207,0,0)
+			CAM_move(514,36,124,0,0)
+			CAM(50,53,124,28,199,0,0)
+			
+		//	僉儍儔僋僞乕嵞攝抲
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//僷乕僩僫乕嶍彍丅
+		clear_party(PARTNER)
+		color(GASHREA,-1)
+		#EVENT_PARTNER	40//懠偺俬俢偲旐偭偰偼偄偗側偄丅
+		#EVENT_GASHREA	41//懠偺俬俢偲旐偭偰偼偄偗側偄丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			chr_pos(RAGNA,414,24,0,213,2)
+//			chr_pos(GASHREA,588,-235,0,40,2)
+			set_chr( EVENT_GASHREA,1050,	-1,-1,  588,-235,0,2,40, 0,";")//恊曽
+
+			//儖僁偑偄傞
+			if(F5_00_HearLunar)
+			{
+				chr_pos(PET,314,140,1,2010,2)
+			}
+			
+			//傾儖僂僃儞偑嫃傞
+			if(F6_00_GoToMeru)
+			{
+//				chr_pos(PARTNER,257,-23,1,260,2)
+				set_chr( EVENT_PARTNER,1011,	-1,-1,  257,-23,1,2,260, 0,";")//傾儖僂僃儞
+				chr_equip( EVENT_PARTNER,"wp_004b", "Bone_RightSword", 100)
+			}
+			else
+			//傾儖僂僃儞偑嫃傞
+			if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			{
+//				chr_pos(PARTNER,257,-23,1,260,2)
+				set_chr( EVENT_PARTNER,1011,	-1,-1,  257,-23,1,2,260, 0,";")//傾儖僂僃儞
+				chr_equip( EVENT_PARTNER,"wp_004b", "Bone_RightSword", 100)
+			}
+			else
+			//僆僨僢僒偑嫃傞
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+//				chr_pos(PARTNER,257,-23,1,260,2)
+				set_chr( EVENT_PARTNER,1019,	-1,-1,  257,-23,1,2,260, 0,";")//僆僨僢僒
+			}
+			else
+			//僗僶儖偑嫃傞
+			if(F4_02_GoVillage2 && !F4_06_StopAttack)
+			{
+//				chr_pos(PARTNER,257,-23,1,260,2)
+				set_chr( EVENT_PARTNER,1020,	-1,-1,  257,-23,1,2,260, 0,";")//僗僶儖
+			}
+			else
+			//傾儖僂僃儞偑嫃傞
+			if(!F4_00_StartSolo)
+			{
+//				chr_pos(PARTNER,257,-23,1,260,2)
+				set_chr( EVENT_PARTNER,1011,	-1,-1,  257,-23,1,2,260, 0,";")//傾儖僂僃儞
+				chr_equip( EVENT_PARTNER,"wp_004", "Bone_RightSword", 100)
+			}
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(EVENT_PARTNER,"1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	僉儍儔堏摦仌攝抲
+//	栭偺傾儖僢僥梡偺嵗昗僙僢僩偱偡丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TUNE_PARTS_ChrSet_F6
+{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//僷乕僩僫乕嶍彍丅
+			clear_party(PARTNER)
+			color(GASHREA,-1)
+			#EVENT_PARTNER	40//懠偺俬俢偲旐偭偰偼偄偗側偄丅
+			#EVENT_GASHREA	41//懠偺俬俢偲旐偭偰偼偄偗側偄丅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			chr_pos(RAGNA,2225,640,0,191,2)
+			set_chr(EVENT_PARTNER,	1011,-1,-1, 2074,825,0,2,219,0, ";")//傾儖僂僃儞
+			chr_equip( EVENT_PARTNER,"wp_004", "Bone_RightSword", 100)
+			set_chr( EVENT_GASHREA,1050, -1,-1,   2295,392,1,	 52,270, 0,";")		//棤栧丂僈僔儏儗乕
+			rot_chr(EVENT_GASHREA,100,RAGNA)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+
+}
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	僉儍儔堏摦仌攝抲
+//	僽儔儞僨乕儢媢梡偺嵗昗僙僢僩偱偡丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TUNE_PARTS_ChrSet_F12
+{
+	CAM_move(1209,7758,4749,0,0)
+	CAM(200,60,0,31,235,0,0)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//僷乕僩僫乕嶍彍丅
+			clear_party(PARTNER)
+			color(GASHREA,-1)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			chr_pos(RAGNA,1224,-7740,4589,162,2)
+			set_chr(EVENT_PARTNER,	1011,-1,-1, 993,-7718,4590,2,201,0, ";")//傾儖僂僃儞
+			chr_equip( EVENT_PARTNER,"wp_004b", "Bone_RightSword", 100)
+			set_chr(EVENT_GASHREA,	1050,-1,-1, 1184,-8097,4585,2,334,0, ";")//懌惍旛拞旘峴婡偺応崌
+			rot_chr(EVENT_GASHREA,100,RAGNA)
+			chr_pos(PET,933,-7535,4593,209,2)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(EVENT_PARTNER,"1", "1", "1")	
+
+}
+
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	僀儀儞僩廔椆張棟丒僉儍儔栠偟
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TUNE_PARTS_ChrReturn
+{
+		color(EVENT_GASHREA,-1)
+		color(GASHREA,1)
+
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//庡恖岞僉儍儔丒僈僔儏儗乕嵞攝抲
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//仴嘖儊儖僙僨僋摓拝屻
+		if( F6_02_OnMeru)
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//岺朳攝抲丅
+			chr_pos(GASHREA,498,-231,1,180,150)
+			MOT(GASHREA,150,0)
+			F_set_Node(GASHREA,"Bone_RightSword",NP_HIDE)	//僈僔儏儗乕偺僗僷僫傪徚偡
+//			chr_pos(RAGNA,-193,156,1,46,2)
+//			chr_pos(PARTNER,-205,-21,0,22,2)
+			chr_pos(RAGNA,414,24,1,53,2)
+			chr_pos(PARTNER,564,17,1,87,2)
+			chr_pos(PET,592,118,1,145,2)
+
+		}
+		else
+		//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+		if( F6_00_GoToMeru )
+		{
+			//僽儔儞僨乕儢媢
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			chr_pos(GASHREA,1120,-8066,4586,215,150)
+//			chr_pos(RAGNA,-193,156,1,46,2)
+//			chr_pos(PARTNER,-205,-21,0,22,2)
+//			chr_pos(PET,-53,223,0,58,2)
+			chr_pos(RAGNA,1224,-7740,4590,347,2)
+			chr_pos(PARTNER,1346,-7868,4588,22,2)
+			chr_pos(PET,1130,-7825,4589,242,2)
+		}
+		else
+		//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+		if( F5_00_HearLunar )
+		{
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				join_party(5)
+
+			//庰応傊堏摦偡傞
+			workG(GW_ENTRY_EVENT,SET,2)
+			new_map(10120)
+//			TK_end()
+//			chr_pos(RAGNA,-193,156,1,46,2)
+//			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+//				chr_pos(PARTNER,-205,-21,0,22,2)
+//			chr_pos(PET,-53,223,0,58,2)
+
+		}
+		else
+		//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+		if( F4_09_GoShrineMia)
+		{
+			//岺朳儖乕僩儉乕僽
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			chr_pos(GASHREA,-41,-269,1,180,2)
+			EV("MOVE_GASHREA")
+			chr_pos(RAGNA,-193,156,1,46,2)
+			chr_pos(PARTNER,-205,-21,0,22,2)
+		}
+		else
+		//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+		if( F4_00_StartSolo )
+		{
+			if(F4_02_GoVillage2)
+			{
+				join_party(6)
+				chr_pos(PARTNER,-205,-21,0,22,2)
+				color(EVENT_PARTNER,-1)
+			}
+			//岺朳攝抲丅
+			chr_pos(GASHREA,600,0,0,270,150)
+			chr_pos(RAGNA,-193,156,1,46,2)
+		}
+		else
+		//仴嘐栭丒忛傊岦偐偆
+		if( F3_00_GoMoonCastle)
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//栭偺傾儖僢僥偵攝抲丅
+			rot(GASHREA,100,270)
+//			chr_pos(GASHREA, 2295,392,1,270,2)
+			chr_pos(PLAYER1,2157,805,50,213,2)
+			chr_pos(PLAYER2,2013,758,50,238,2)
+
+		}
+		else
+		//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+		if( F2_14_TalkEnemy)
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//岺朳攝抲丅
+			chr_pos(GASHREA, 498,-231,1,180,150)
+			chr_pos(RAGNA,-193,156,1,46,2)
+			chr_pos(PARTNER,-205,-21,0,22,2)
+		}
+		else
+		//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+		if( F2_00_GoForest)
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//岺朳儖乕僩儉乕僽
+			chr_pos(GASHREA,-41,-269,1,180,2)
+			EV("MOVE_GASHREA")
+			chr_pos(RAGNA,-193,156,1,46,2)
+			chr_pos(PARTNER,-205,-21,0,22,2)
+		}
+		else
+		//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+		if( F1_15_GoVillage )
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//岺朳攝抲丅
+			chr_pos(GASHREA, 600,0,0,270,150)
+			chr_pos(RAGNA,-193,156,1,46,2)
+			chr_pos(PARTNER,-205,-21,0,22,2)
+		}
+		else
+		//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+		if( F1_01_GameStart )
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//岺朳儖乕僩儉乕僽
+			chr_pos(GASHREA,-41,-269,1,180,2)
+			EV("MOVE_GASHREA")
+			chr_pos(RAGNA,-193,156,1,46,2)
+			chr_pos(PARTNER,-205,-21,0,22,2)
+		}
+
+		wait(1)
+
+	//	傾僀僥儉夝愢僼儔僌傪儕僙僢僩
+		F_reset(FT_01_GashreaData)
+		
+		//僇儊儔傪尦偵栠偡
+		CAM_return( 0 )
+		wait(30)
+
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

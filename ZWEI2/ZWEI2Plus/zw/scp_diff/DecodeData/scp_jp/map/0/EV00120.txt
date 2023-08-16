@@ -1,0 +1,2029 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10120][アルッテ・宿酒（昼）]
+//====================================================================
+
+#ScriptTable
+
+#TEO 		1
+#MILLIAM	2
+#ODESSA		3
+#POCKLE		4
+#PIPIRO		5
+#SHESTOR	6
+#LUE		7
+#EVENT_RAGNA	8
+#ALWEN		9
+#EVENT_RAGNA2	16
+
+#HOAN		10	//テスト
+#HELENA		11
+#MEI		12
+#CARDINA	13
+#CEPHEILA	14
+#NIPPLE		15
+
+#GASHREA	21
+#MIA		22	
+#BAROM		23
+#PENGUIN	24
+
+//星降りの里キャラ
+#DAIGORO	101
+#LURI		102
+
+#TELMIDORL	103
+
+//---------------------------------------------------------------------
+//ローカルワーク
+//WK000  配置換えに使用(実体は ev00120にあり）
+//WK001  ﾒｯｾｰｼﾞ内RAND値格納(キャラファイルないなど）
+
+// ＬＦ202を、メイ会話中（ルートムーブ半停止）
+// に使っています。
+//
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip         x    y   z    mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	set_chr( 90,990,	-1,-1,      0, 225,  0,   180,  0401,	6,"K6_10100;")	//１Ｆ入口→アルッテの街
+	set_chr( 91,990,	-1,-1,  -1100,-450,330,     0,  0301,	6,"K2_3")		//１Ｆ階段→２Ｆ廊下
+	set_chr( 92,990,	-1,-1,   6850,-375,  0,   180,  0301,	6,"K7_3")		//２Ｆ廊下→１Ｆ階段
+
+	if( F4_09_GoShrineMia && !F5_00_HearLunar )
+	{
+		set_chr( 93,990,	-1,-1,   7700,-935,  100,     0,  0101,	2,"<EV_STOP_01>")		//２Ｆ廊下→２人部屋
+		set_chr( 95,990,	-1,-1,   9000,-935,  100,     0,  0101,	2,"<EV_STOP_01>")		//２Ｆ廊下→１人部屋
+
+	}
+	else
+	{
+		set_chr( 93,990,	-1,-1,   7725,-935,  0,     0,  0201,	6,"K4_3")		//２Ｆ廊下→２人部屋
+		set_chr( 95,990,	-1,-1,   9025,-935,  0,     0,  0201,	6,"K6_3")		//２Ｆ廊下→１人部屋
+	}
+
+	set_chr( 94,990,	-1,-1,  17600, 100,  0,   180,  0201,	6,"K3_3")		//２人部屋→廊下
+	set_chr( 96,990,	-1,-1,  23025, 100,  0,   180,  0201,	6,"K5_3")		//１人部屋→２Ｆ廊下
+	set_chr( 97,990,	-1,-1,  -1400,-150,330,   270,    0,	0,";")			//１Ｆ階段（帰路用）
+	
+//■テスト(マップスケールチェック用)
+	/*
+		set_chr(MILLIAM,29,-1,-1, 148,-1000,56,0,	0,	0,"")	//ミリアム
+		rot(MILLIAM,300,0)
+		MOT_SET(MILLIAM,150,-2,485,485,-1,-1)
+		MOT(MILLIAM,150,0)
+
+		set_chr(ODESSA,29,-1,-1, -1130,-1930,136,180,	0,	0,"")	//ミリアムの皮をかぶったオデッサ
+		rot(ODESSA,300,220)
+		MOT_SET(ODESSA,150,-2,485,485,-1,-1)
+		MOT(ODESSA,150,0)
+
+		set_chr(TELMIDORL,29,-1,-1, 736,-1008,0,112,	0,	0,"")	//ミリアムの皮をかぶったテルミドール普通
+		rot(ODESSA,300,112)
+
+		set_chr(PIPIRO,3,-1,-1, 16870,-703,82,308,	0,	0,"")	//ピピロ
+		rot(PIPIRO,300,270)
+		MOT_SET(PIPIRO,150,-2,519,519,-1,-1)
+		MOT(PIPIRO,150,0)
+
+		set_chr(POCKLE,2,-1,-1, 16861,-500,0,180,	0,	0,"")	//ポックル
+		rot(POCKLE,300,240)
+		MOT_SET(POCKLE,150,-2,525,525,-1,-1)
+		MOT(POCKLE,150,0)
+
+	set_chr( SHESTOR,51,		-1,-1,   -1102,-1912,91,  	54,235,	20,"<TK_HOAN>")
+	F_set_chr(SHESTOR,CF_NO_ZIMEN)
+	F_set_chr(SHESTOR,CF_NO_CSP)
+	F_set_chr(SHESTOR,CF_NO_HEIGHT)
+	*/
+
+//ノード制御
+	F_set_obj("Layer9",NP_HIDE)//ピピロたちの食器
+	F_set_obj("Layer10",NP_HIDE)//ラグナたちの食器（イベント用）
+	F_set_obj("sinbun",NP_HIDE)//新聞
+
+	//ＮＰＣ
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		set_chr( GASHREA,61,	-1,-1,	500,-1070,0,	63,270, 20,"<SHOP_GASHREA>")//カウンター席　ガシュレー
+		F_set_Node(GASHREA,"Bone_RightSword",NP_HIDE)	//ガシュレーのスパナを消す
+		set_chr( HOAN,48,		-1,-1,   760,-1142,0,  		53,90,	20,"<TK_HOAN>")		//カウンター、ホアン
+		set_chr( SHESTOR,51,	-1,-1,  -1030,-1120,0,  10,228,20,"<TK_SHESTOR>")	//テーブル　シェスター
+		F_reset_obj("sinbun",NP_HIDE)//新聞
+
+		set_chr( MEI,49,	-1,-1,   298,-1505,1,	 2,351, 20,"<TK_MEI>")		//宿酒場　店内をルートムーブ　メイ		
+		EV("ROOT_MOVE_MEI")
+		
+		set_chr( DAIGORO,74,-1,-1,  -570,-820,20,	63,300,	 20,"<TK_DAIGORO>")		//宿酒場　ルリと一緒　ダイゴロー
+		set_chr( LURI,77,	-1,-1,  -370,-820,20,	63,48,	 20,"<TK_LURI>")			//宿酒場　ダイゴローと一緒　ルリ
+		chr_equip2(LURI,	"obj_book",	"Bone_RightSword",	100,		20,210,90,	0,-2,10);		//本を持たせる。
+
+		//モーション
+		MOT_SET(SHESTOR,150,-1,485,485,-1,0)	//シェスター　座っている
+		MOT(SHESTOR,150,0)
+		MOT_SET(GASHREA,150,-1,564,564,-1,0)	//ガシュレー　座る
+		MOT(GASHREA,150,0)
+		MOT_SET(LURI,150,-1,487,487,-1,0)	//ルリ　座る
+		MOT(LURI,150,0)
+		MOT_SET(DAIGORO,150,-1,485,485,-1,0)	//ダイゴロー　座る
+		MOT(DAIGORO,150,0)
+//		EV("EV_InShop_MEI")
+
+
+			set_chr( 100,763,	-1,-1,  600,-1090,100,  	0,180, 0,";")			//皿
+			set_chr( 100,763,	-1,-1,  -913,-1156,100,  	0,180, 0,";")			//皿
+			set_chr( 100,761,	-1,-1,  584,-1462,100,  	0,0, 0,";")			//ボトル
+
+		F_set_chr(GASHREA,CF_NO_MOVE)
+		F_set_chr(SHESTOR,CF_NO_MOVE)
+		F_set_chr(LURI,CF_NO_MOVE)
+		F_set_chr(DAIGORO,CF_NO_MOVE)
+		F_set_chr(HOAN,CF_NO_MOVE)
+		F_set_chr(MEI,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		set_chr( SHESTOR,51,	-1,-1,   -1102,-1912,91, 	54,235,	20,"<TK_SHESTOR>")	//ステージ　シェスター
+
+		set_chr( 200,763,	-1,-1,   -880,-1167,95,	0,0, 0,"")//皿
+		set_chr( NIPPLE,56,		-1,-1,	 -756,-1176,0,	 	2,191, 20,"<TK_NIPPLE>")		//セフィーラを見ている　ニップル
+		chr_equip2( NIPPLE,	"EQ_103",	"Bone_Head",100,	90,0,0,	0,20,0);	//ニップルのヘルメット
+
+		set_chr( CEPHEILA,50,	-1,-1,   -400,-2000,91, 	2,0,20,"<TK_CEPHEILA>")		//ステージ　セフィーラ
+		EV("MOTION_CEPHEILA_01")
+		
+		//ランダムで配置を変更
+		
+		workL(0,RAND,2)
+		if(WK000==0)
+		{
+			set_chr( MEI,49,	-1,-1,   112,-1501,0,	 75,126, 20,"<TK_MEI>")		//宿酒場　セフィーラを見る　メイ		
+			look_chr(MEI,CEPHEILA,"Bone_Head")
+
+			set_chr( HOAN,48,		-1,-1,   800,-850,1,  		53,30,	20,"<TK_HOAN>")		//カウンター、ホアン
+//			EV("EV_InShop_HOAN")
+		}
+		else
+		{
+			set_chr( MEI,49,	-1,-1,  800,-850,1,  	50,30, 20,"<TK_MEI>")			//宿酒場　カウンター　メイ
+			set_chr( HOAN,48,	-1,-1,  980,-1402,0,  	52,270,20,"<TK_HOAN>")	//調理場　ホアン
+//			EV("EV_InShop_MEI")
+		}
+		
+		//モーション
+		MOT_SET(NIPPLE,150,-1,441,441,151,0)	//アップル
+		MOT(NIPPLE,150,0)
+
+		F_set_chr(SHESTOR,CF_NO_MOVE)
+		F_set_chr(CEPHEILA,CF_NO_MOVE)
+		F_set_chr(HOAN,CF_NO_MOVE)
+		F_set_chr(MEI,CF_NO_MOVE)
+		F_set_chr(NIPPLE,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		set_chr( TEO,44,		-1,-1,	500,-1370,0,	63,270, 20,"<TK_TEO>")		//カウンター席　テオ
+		set_chr( GASHREA,61,	-1,-1,	500,-1070,0,	63,270, 20,"<SHOP_GASHREA>")//カウンター席　ガシュレー
+		F_set_Node(GASHREA,"Bone_RightSword",NP_HIDE)	//ガシュレーのスパナを消す
+		look_chr(GASHREA,TEO,"Bone_Head")
+		look_chr(TEO,GASHREA,"Bone_Head")
+		
+		set_chr( SHESTOR,51,	-1,-1,	-540,-350,1, 	2,270,20,"<TK_SHESTOR>")	//階段下　シェスター
+		set_chr( BAROM,67,		-1,-1,	-340,-350,0,	50,90,20,"<TK_BAROM>")		//階段下　バラン
+
+		set_chr( CEPHEILA,50,	-1,-1,	23200,-750,60,	2,86,20,"<TK_CEPHEILA>")	//2階奥の部屋　　セフィーラ
+		EV("MOTION_CEPHEILA_11")
+
+		set_chr( HOAN,48,		-1,-1,	1153,-2001,0,	52,180, 20,"<TK_HOAN>")		//冷蔵庫前　ホアン
+		//──────────────────────────────
+		//	name("⇒Ｇ－コロッセオへ行ったことがある場合（ペンギンがいる）")
+		if(FV_02_VisitGyakata)
+		{
+		//	set_chr( MEI,49,		-1,-1,	763,-290,0,		52,90,20,"<TK_MEI>")		//宿酒場　ペンギンの前　メイ
+			set_chr( MEI,49,	-1,-1,  800,-850,1,  	50,30, 20,"<TK_MEI>")			//宿酒場　カウンター　メイ
+			set_chr( PENGUIN,81,	-1,-1,	734,-542,0,		2,190,20,"<TK_PENGUIN>")	//呼び込みペンギン
+			
+			//モーション
+			MOT_SET(MEI,150,-1,476,476,-1,15)		//メイ
+			MOT(MEI,150,0)
+			F_set_chr(PENGUIN,CF_NO_MOVE)
+		}
+		//──────────────────────────────
+		//	name("⇒行ったことがない場合（ペンギンが居ない）")
+		else
+		{
+			set_chr( MEI,49,	-1,-1,  800,-850,1,  	50,30, 20,"<TK_MEI>")			//宿酒場　カウンター　メイ
+			
+			//モーション
+			MOT_SET(MEI,150,-1,410,410,-1,15)		//メイ
+			MOT(MEI,150,0)
+		}
+		
+		//モーション
+		MOT_SET(SHESTOR,150,-1,260,319,-1,0)	//シェスター　腕組
+		MOT(SHESTOR,150,0)
+		MOT_SET(CEPHEILA,150,-1,560,560,-1,0)	//セフィーラ　ベッドに腰掛
+		MOT(CEPHEILA,150,0)
+		MOT_SET(TEO,150,-1,577,577,-1,0)		//テオ　座る
+		MOT(TEO,150,0)
+		MOT_SET(GASHREA,150,-1,564,564,-1,0)	//ガシュレー　座る
+		MOT(GASHREA,150,0)
+
+			set_chr( 100,761,	-1,-1,  616,-1082,100,  	0,0, 0,";")			//ボトル
+			set_chr( 100,762,	-1,-1,  570,-1410,100,  	0,150, 0,";")			//カップ
+
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(SHESTOR,CF_NO_MOVE)
+		F_set_chr(CEPHEILA,CF_NO_MOVE)
+		F_set_chr(HOAN,CF_NO_MOVE)
+		F_set_chr(MEI,CF_NO_MOVE)
+		F_set_chr(CEPHEILA,CF_NO_MOVE)
+		F_set_chr(TEO,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+		set_chr( HOAN,48,		-1,-1,   800,-850,1,  		53,30,	20,"<TK_HOAN>")		//カウンター、ホアン
+		
+//		set_chr( MEI,49,		-1,-1,	7346,-462,0,	75,240,20,"<TK_MEI>")		//2階　メイ
+		set_chr( MEI,49,		-1,-1,	7926,-476,0,	75,240,20,"<TK_MEI>")		//2階　メイ
+		chr_equip2(MEI,	"wp_041",	"Bone_RightSword",	100,		0,0,0,	0,-20,0);		//メイのホウキ
+		look(MEI,"Bone_RightForeArm",0,	2,0,2,	90,0,40)
+		EV("MOTION_MEI_10")
+//		EV("EV_InShop_NoVoice")
+		F_set_chr(HOAN,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+//		set_chr( MEI,49,		-1,-1,	23128,-799,0, 	2,257,20,"<TK_MEI>")		//宿酒場　2階奥の部屋　メイ
+		set_chr( HOAN,48,		-1,-1,   800,-850,1,  		53,30,	20,"<TK_HOAN>")		//カウンター、ホアン
+		set_chr( CEPHEILA,50,	-1,-1,	871,-1976,0,	0,176,20,"<TK_CEPHEILA>")	//食器棚前　セフィーラ
+		
+		//モーション
+//		MOT_SET(MEI,150,-1,455,455,-1,15)		//メイ
+//		MOT(MEI,150,0)
+		
+		MOT_SET(CEPHEILA,150,-1,402,402,151,30)	//セフィーラ
+		MOT_SET(CEPHEILA,151,-1,404,404,150,30)
+		MOT(CEPHEILA,150,0)
+
+//		EV("EV_InShop_HOAN")
+
+		F_set_chr(HOAN,CF_NO_MOVE)
+		F_set_chr(CEPHEILA,CF_NO_MOVE)
+//		F_set_chr(MEI,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		set_chr( TEO,44,		-1,-1,  500,-1370,0,	63,270, 20,"<TK_TEO>")		//カウンター席　テオ
+		chr_equip2(TEO,	"eq_050",	"Bone_RightSword",	100,		0,0,0,	0,0,0);		//フォーク
+		set_chr( SHESTOR,51,	-1,-1,  466,-1524,1,	52,340,20,"<TK_SHESTOR>")	//カウンター　シェスター
+		look_chr(TEO,SHESTOR,"Bone_Head")
+
+		set_chr( ODESSA,19,		-1,-1,  110,-1095,5,	61,135, 20,"<TK_ODESSA>")		//オデッサ
+		MOT_SET(ODESSA,150, -2,485,485,-1,0)
+		MOT(ODESSA,150,0)
+		F_set_chr(ODESSA,CF_NO_MOVE)
+
+		//ランダムで配置を変更
+		
+		workL(0,RAND,2)
+		if(WK000==0)
+		{
+			set_chr( MEI,49,	-1,-1,  298,-1505,1,	 2,351, 20,"<TK_MEI>")		//宿酒場　店内をルートムーブ　メイ		
+			EV("ROOT_MOVE_MEI")
+			set_chr( HOAN,48,		-1,-1,   800,-850,1,  		53,30,	20,"<TK_HOAN>")		//カウンター、ホアン
+
+//			EV("EV_InShop_HOAN")
+		}
+		else
+		{
+			set_chr( MEI,49,	-1,-1,  800,-850,1,  	50,30, 20,"<TK_MEI>")			//宿酒場　カウンター　メイ
+			set_chr( HOAN,48,	-1,-1,  976,-1402,0,	52,270,20,"<TK_HOAN>")	//調理場　ホアン
+//			EV("EV_InShop_MEI")
+			F_set_chr(MEI,CF_NO_MOVE)
+		}
+		
+		//モーション
+		MOT_SET(ODESSA,150, -2,485,485,-1,0)
+		MOT(ODESSA,150,0)
+
+		//止まっているキャラを押せないようにする
+		F_set_chr(SHESTOR,CF_NO_MOVE)
+		F_set_chr(TEO,CF_NO_MOVE)
+		F_set_chr(HOAN,CF_NO_MOVE)
+		F_set_chr(ODESSA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		set_chr( CARDINA,46,	-1,-1,	-590,-820,0, 	63,320,	20,"<TK_CARDINA>")	//　雑談中　カルディナ
+		chr_equip2(CARDINA,	"eq_051",	"Bone_RightSword",	100,		0,0,0,	0,0,0);	//カップ
+		
+		set_chr( MEI,49,		-1,-1,	-370,-820,1,	63,48,	20,"<TK_MEI>")					//　雑談中　メイ
+		set_chr( CEPHEILA,50,	-1,-1, 	-570,-600,1,	63,230,20,"<TK_CEPHEILA>")	//雑談中　セフィーラ
+		set_chr( 200,762,	-1,-1,   -540,-630,90,		0,100, 0,"")//カップ
+
+		set_chr( 201,761,	-1,-1,   -380,-750,90,		0,0, 0,"")//ワインボトル
+
+		set_chr( SHESTOR,51,	-1,-1,  -1030,-1120,0,  10,228,20,"<TK_SHESTOR>")	//テーブル　シェスター
+		EV("TENTEN_SHESTOR")
+		chr_equip2(SHESTOR,	"obj_book",	"Bone_RightSword",	100,		20,210,90,	0,0,0);		//本を持たせる。
+
+		set_chr( HOAN,48,		-1,-1,   800,-850,1,  		53,30,	20,"<TK_HOAN>")		//カウンター、ホアン
+		set_chr( HELENA,41,		-1,-1,  980,-570,20,	63,180, 20,"<TK_HELENA>")		//宿酒場　ホアンと雑談中	ヘレナ
+		
+		//モーション
+		MOT_SET(CEPHEILA,150,-1,554,554,-1,0)	//セフィーラ　足組んで座っている
+		MOT(CEPHEILA,150,0)
+		MOT_SET(MEI,150,-1,554,554,-1,0)		//メイ　足組んで座っている
+		MOT(MEI,150,0)
+		MOT_SET(CARDINA,150,-1,577,577,-1,0)	//カルディナ　普通に座っている
+		MOT(CARDINA,150,0)
+		MOT_SET(SHESTOR,150,-1,487,487,-1,0)	//シェスター　座って本を読んでいる
+		MOT(SHESTOR,150,0)
+
+//		EV("EV_InShop_HOAN")
+		//止まっているキャラを押せないようにする
+		F_set_chr(SHESTOR,CF_NO_MOVE)
+		F_set_chr(CEPHEILA,CF_NO_MOVE)
+		F_set_chr(HOAN,CF_NO_MOVE)
+		F_set_chr(MEI,CF_NO_MOVE)
+		F_set_chr(HELENA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		//神殿でポックル、ピピロに出会った後
+		if(F1_17_MeetPipiPoc)
+		{
+			set_chr( PIPIRO,3,	-1,-1,  -570,-620,20,	2,230,20,"<TK_PIPIRO>")				//ピピロ　座ってる
+			set_chr( POCKLE,2,	-1,-1,  -570,-820,20,	2,320,20,"<TK_POCKLE>")	//ポックル　座ってる
+			
+			//モーション
+			MOT_SET(PIPIRO,150,-1,485,485,-1,0)
+			MOT(PIPIRO,150,0)
+			MOT_SET(POCKLE,150,-1,485,485,-1,0)
+			MOT(POCKLE,150,0)
+			F_reset_obj("Layer9",NP_HIDE)//ピピロたちの食器を放置。
+
+			F_set_chr(PIPIRO,CF_NO_MOVE)
+			F_set_chr(POCKLE,CF_NO_MOVE)
+		}
+
+		set_chr( CEPHEILA,50,	-1,-1, -1030,-1120,0,	63,220,	20,"<TK_CEPHEILA>")	//テーブル　セフィーラ
+		set_chr( 200,762,	-1,-1,   -1000,-1150,90,		0,180, 0,"")//カップ
+		set_chr( SHESTOR,51,	-1,-1,  -1020,-1350,0,	63,310,20,"<TK_SHESTOR>")	//テーブル　シェスター
+
+		set_chr( HOAN,48,		-1,-1,   800,-850,1,  		53,30,	20,"<TK_HOAN>")		//カウンター、ホアン
+		set_chr( MEI,49,		-1,-1,  298,-1505,1,	2,351, 20,"<TK_MEI>")		//宿酒場　店内をルートムーブ　メイ
+		EV("ROOT_MOVE_MEI")
+		
+		//モーション
+		MOT_SET(SHESTOR,150,-1,485,485,-1,0)	//シェスター　座っている
+		MOT(SHESTOR,150,0)
+		MOT_SET(CEPHEILA,150, -2,567,567,-1,0)	//セフィーラ　座っている
+		MOT(CEPHEILA,150,0)
+
+//		EV("EV_InShop_MEI")
+
+		//止まっているキャラを押せないようにする
+		F_set_chr(SHESTOR,CF_NO_MOVE)
+		F_set_chr(CEPHEILA,CF_NO_MOVE)
+		F_set_chr(HOAN,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		set_chr( TELMIDORL,27,	-1,-1,   -1030,-1120,0,		63,240, 20,"<TK_TELMIDORL>")//テルミドール
+		set_chr( 200,761,	-1,-1,   -939,-1191,90,		0,0, 0,"")//ワインボトル
+
+		set_chr( SHESTOR,51,	-1,-1,   -1102,-1912,91,  	54,235,	20,"<TK_SHESTOR>")	//ステージ　シェスター
+		set_chr( CEPHEILA,50,	-1,-1,   -400,-2000,91, 	2,0,20,"<TK_CEPHEILA>")		//ステージ　セフィーラ
+		EV("MOTION_CEPHEILA_01")
+
+		set_chr( HOAN,48,		-1,-1,   800,-850,1,  		53,30,	20,"<TK_HOAN>")		//カウンター、ホアン
+
+/*		//ホアンの初回を聞いた後はルートムーブ
+		if(FT_01_TalkHoan)
+		{
+			set_chr( MEI,49,	-1,-1,   298,-1505,1,		2,351, 20,"<TK_MEI>")		//宿酒場　店内をルートムーブ　メイ
+			EV("ROOT_MOVE_MEI")
+			chr_equip2( MEI,	"wp_040",	"Bone_RightSword",100,	0,0,0,	0,0,0);	//皿装備
+		}
+		else
+		{
+			set_chr( MEI,49,	-1,-1,   740,-1080,0,		52,90, 20,"<TK_MEI>")		//宿酒場　食器棚の前　メイ
+		}
+*/
+		//初めからルートムーブとしました。
+		set_chr( MEI,49,	-1,-1,   298,-1505,1,		2,351, 20,"<TK_MEI>")		//宿酒場　店内をルートムーブ　メイ
+		EV("ROOT_MOVE_MEI")
+		chr_equip2( MEI,	"wp_040",	"Bone_RightSword",100,	0,0,0,	0,0,0);	//皿装備
+
+		//廃坑でオデッサに会ったあとはオデッサ配置
+		if(F1_13_MeetOdessa)
+		{
+			set_chr( ODESSA,19,		-1,-1,  110,-1095,5,	61,135, 20,"<TK_ODESSA>")		//オデッサ
+			MOT_SET(ODESSA,150, -2,485,485,-1,0)
+			MOT(ODESSA,150,0)
+			F_set_chr(ODESSA,CF_NO_MOVE)
+		}
+		
+		//モーション
+		MOT_SET(TELMIDORL,150, -2,567,567,-1,0)		//テルミドール　待機モーション
+		MOT(TELMIDORL,150,0)
+		
+//		EV("EV_InShop_MEI")
+		
+		//止まっているキャラを押せないようにする
+		F_set_chr(TELMIDORL,CF_NO_MOVE)
+		F_set_chr(SHESTOR,CF_NO_MOVE)
+		F_set_chr(CEPHEILA,CF_NO_MOVE)
+		F_set_chr(HOAN,CF_NO_MOVE)
+	}
+
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		stop_BGM(0)
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼目を覚ますラグナ
+		set_namebmp(0,0)
+		EV("EV_0_02_WakeUpRagna")
+	}
+	else
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼ガシュレーにパーツ改造を頼み、戻ってきたときの再配置イベント
+		set_namebmp(0,0)
+		EV("RETURN_TUNE_PART")
+	}
+}
+//====================================================================
+//=== モーション処理 =================================================
+//====================================================================
+//──────────────────────────────
+//セフィーラ(歌っている)
+//──────────────────────────────
+//①歌っている
+MOTION_CEPHEILA_01
+{
+	MOT_SET(CEPHEILA,150,-1,437,437,-1,0)
+	MOT_SET(CEPHEILA,151,-1,406,406,-1,0)
+	
+	MOT(CEPHEILA,150,0)
+	EV("SING_CEPHEILA")	//歌うエモーション
+}
+//───────────────────────────────
+//⑩メイ(掃除)
+//──────────────────────────────
+MOTION_MEI_10
+{
+	move( MEI, 25,	WALK1,	1200,600,0,	200)
+	wait(70)
+	loop
+}
+//──────────────────────────────
+//⑪セフィーラ
+//──────────────────────────────
+MOTION_CEPHEILA_11
+{
+}
+
+//───────────────────────────
+//▼エモーション　歌うセフィーラ
+//──────────────────────────────
+SING_CEPHEILA
+{
+	EMO(CEPHEILA,EMO_ONPU)
+	wait(30)
+	loop
+}
+
+//──────────────────────────────
+//▼…エモーション　シェスター
+//──────────────────────────────
+TENTEN_SHESTOR
+{
+	EMO(SHESTOR,EMO_TENTEN)
+	wait(60)
+	loop
+}
+
+
+//====================================================================
+//=== ショップボイス処理 =============================================
+//====================================================================
+
+EV_InShop_MEI
+{
+	wait(5)//これ入れないと鳴らないことがある。
+	SE(26,90)
+	wait(30)
+	VOICE( 721,MEI ) 
+	F_set(FS_SP_ShopCH2)
+
+}
+
+
+EV_InShop_HOAN
+{
+	wait(5)//これ入れないと鳴らないことがある。
+	SE(26,90)
+	wait(30)
+	VOICE( 742,HOAN ) 
+	F_set(FS_SP_ShopCH3)
+
+}
+
+EV_InShop_NoVoice
+{
+	wait(5)//これ入れないと鳴らないことがある。
+	SE(26,90)
+	F_set(FS_SP_ShopCH3)
+
+}
+
+//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼メイのルートムーブ（テスト）
+//──────────────────────────────
+ROOT_MOVE_MEI
+{
+	chr_equip2( MEI,	"wp_040",	"Bone_RightSword",100,	0,0,0,	0,0,0);	//皿装備
+	EV("MOVE_MEI")
+}
+
+MOVE_MEI
+{
+//	一つ目のテーブルへ
+	if(!F202)
+	move( MEI, 20,	WALK1,	257,-1152,0, 0)
+	wait_move( MEI )
+//	rot(MEI,60,72)
+
+	wait(50)
+	
+//	rot(MEI,60,351)
+
+	if(!F202)
+	move( MEI, 20,	WALK1, 327,-1012,1,	0)
+	wait_move( MEI )
+	
+	if(!F202)
+	move( MEI, 20,	WALK1, 271,-948,0,	0)
+	wait_move( MEI )
+//	rot(MEI,60,90)
+	
+//	2つ目のテーブルへ
+	if(!F202)
+	move( MEI, 20,	WALK1, -398,-1015,0,	0)
+	wait_move( MEI )
+//	rot(MEI,60,353)
+	if(!F202)
+	move( MEI, 20,	WALK1, -492,-941,1,	0)
+	wait_move( MEI )
+
+	wait(50)
+
+//	3つ目のテーブルへ
+//	rot(MEI,60,146)
+	if(!F202)
+	move( MEI, 20,	WALK1, -598,-1180,1,	0)	
+	wait_move( MEI )
+//	rot(MEI,60,97)
+	if(!F202)
+	move( MEI, 20,	WALK1, -756,-1175,0,	0)
+	wait_move( MEI )
+
+	wait(50)
+
+//	初期位置へ
+//	rot(MEI,60,247)							
+	if(!F202)
+	move( MEI, 20,	WALK1, -405,-1209,1,	0)
+	wait_move( MEI )
+//	rot(MEI,60,239)							
+	if(!F202)
+	move( MEI, 20,	WALK1, -181,-1431,1,	0)
+	wait_move( MEI )
+	if(!F202)
+	move( MEI, 20,	WALK1, 298,-1505,1,		0)
+	wait_move( MEI )
+//	rot(MEI,60,351)
+
+	wait(50)
+
+	loop
+}
+
+//──────────────────────────────
+//▼ガシュレーにパーツ改造を頼み、戻ってきたときの再配置イベント
+//──────────────────────────────
+RETURN_TUNE_PART
+{
+	TK_begin()
+	fade_in( 100, 1, BLACK)	//フェードアウト
+	wait_fade()
+
+	//再配置
+	chr_pos(PLAYER1,461,-780,1,180,2)
+	
+	//オデッサが居る
+	if(F5_08_JoinOdessa && !F5_13_KillDygald)
+	{
+		chr_pos(PLAYER2,408,-608,1,200,2)
+	}
+	
+	chr_pos(PET,	607,-602,0,150,2)
+	//カメラを元に戻す
+	CAM_return( 0 )
+
+	fade_in( 0, 30, BLACK)	//フェードイン
+	wait_fade()
+	TK_end()
+}
+//──────────────────────────────
+//▼⑪テオ・ガシュレ－　共通イベント
+//──────────────────────────────
+
+EV_TALK_TG
+{
+	look_chr(TEO,GASHREA,"Bone_Head")
+	
+	MES(TEO,"ガシュレーさんはいいですよね。\n優秀な後進たちに恵まれて……",0)
+	MES_close(TEO)
+
+	look_chr(GASHREA,TEO,"Bone_Head")
+	
+//	name2(GASHREA)
+	MES(GASHREA,"へっ、何言ってやがる。",0)
+	MES(GASHREA,"お前んとこだって、中々\n骨のある連中がいるじゃねえか。",0)
+	MES_close(GASHREA)
+
+//	name2(TEO)
+	MES(TEO,"ええ、まあ。",0)
+	MES(TEO,"２人とも大人ですし、\nもう博物館を任せてしまっても\nいいくらいなんですが……",0)
+	MES(TEO,"そうなると、僕はますます\n趣味から遠ざかってしまいます。",0)
+	MES(TEO,"はあ、道楽三昧しようと思って\n博物館を開いたというのに……",0)
+	MES_close(TEO)
+
+//	name2(GASHREA)
+	MES(GASHREA,"なんでえ、そりゃあ……",0)
+	MES(GASHREA,"お前が遊ぶために、\n弟子が欲しいっつーワケか？",0)
+	MES_close(GASHREA)
+
+	F_set_note(GASHREA,-1)
+	F_set_note(TEO,-1)
+	
+//	look_off(TEO)
+//	look_off(GASHREA)
+}
+//──────────────────────────────
+//▼③メイ、セフィーラ、カルディナ　共通イベント
+//──────────────────────────────
+EV_TALK_MSC
+{
+	MES(CEPHEILA,"そういえば……",0)
+	MES(CEPHEILA,"テルミドールさん、\n最近どうしたのかしら。",0)
+	MES(CEPHEILA,"今日のステージにも来なかったし……\n近頃見かけないわよねぇ。",0)
+	MES_close(CEPHEILA)
+
+	look_chr(CARDINA,CEPHEILA,"Bone_Head")
+	
+//	name2(CARDINA)
+	MES(CARDINA,"ふふ、一時期セフィーラさんに\nべったりだった方ですよね。",0)
+	MES(CARDINA,"バラの花束と一緒に\n詩集を贈ったりして……",0)
+	MES_close(CARDINA)
+
+	look_chr(CEPHEILA,CARDINA,"Bone_Head")
+
+//	name2(CEPHEILA)
+	MES(CEPHEILA,"うっ……あれは\n流石に恥ずかしかったわ。",0)
+	MES(CEPHEILA,"まだ公演の最中だったのに……",0)
+	MES_close(CEPHEILA)
+
+//	name2(MEI)
+	MES(MEI,"……ワタシの予想では……",0)
+	look_chr(MEI,CARDINA,"Bone_Head")
+	MES(MEI,"次はカルちゃんが危ないアル。",0)
+	MES_close(MEI)
+
+//　　カルディナとセフィーラにＰＡエモーション。
+	EMO(CARDINA,EMO_PA)
+	EMO(CEPHEILA,EMO_PA)
+	wait(30)
+
+//　　メイの方を向く。
+	look_chr(CARDINA,MEI,"Bone_Head")
+	look_chr(CEPHEILA,MEI,"Bone_Head")
+	
+	MES(CARDINA,"えっ……？",0)
+	MES_close(CARDINA)
+
+//	name2(MEI)
+	MES(MEI,"あれは女ったらしアルよ。\nこのくらいで諦めるはずがないアル。",0)
+	MES(MEI,"今やアルッテ２大美人といえば\nカルちゃんとセフィちゃんアルし……",0)
+	MES(MEI,"この前、カルちゃんは\n美人アルよと宣伝しておいたネ㈱",0)
+	MES_close(MEI)
+
+//　　カルディナ・セフィーラに冷や汗エモーション。
+	EMO(CARDINA,EMO_HIYAASE)
+	EMO(CEPHEILA,EMO_HIYAASE)
+	wait(30)
+	
+	MES(CARDINA,"……メ、メイさん？\n何か遊んでません？",0)
+	MES_close(CARDINA)
+
+//	name2(MEI)
+	MES(MEI,"そんなことないアルよ～？",0)
+	MES(MEI,"メイは本気で\n友人の心配をしてるアル。",0)
+	MES_close(MEI)
+	
+	look_off(MEI)
+	look_off(CEPHEILA)
+	look_off(CARDINA)
+
+	F_set_note(MEI,-1)
+	F_set_note(CEPHEILA,-1)
+	F_set_note(CARDINA,-1)
+	
+	//★セフィーラ【テルミドール】
+	F_set_note(CEPHEILA,0)
+}
+
+/*
+EV_BIKKURI
+{
+	EFF(25100,	0,0,0,	0,100,0)
+	EFF(25100,	0,100,0,	180,100,0)
+	EFF(25100,	0,0,100,	90,100,0)
+	EFF(25100,	100,0,0,	270,100,0)
+	EFF_chr(25100,RAGNA,0,100,1,"Bone_Head")
+//	EMO(RAGNA,EMO_BIKKURI)
+}
+*/
+//──────────────────────────────
+//▼ピピロとポックル共通会話　１回目
+//──────────────────────────────
+TALK_POCPIP_02_1
+{
+//	name("★初回（ピピロと共通／１回のみ／イベント処理）")
+//　　話しかけるとキャラ再配置してイベント発生。
+//　　ピピロと共通なので、あちらで起こしたら発生しない。
+
+	//暗転------------------------------
+	fade_in(100,30,0)
+	wait_fade()
+	EV_begin()
+	
+	//カメラセット
+	CAM_move(-440,717,96,0,0)
+	CAM(150,75,96,21,239,0,0)	
+	
+	//ルートムーブ中のメイとぶつからないように消す
+	move(MEI, 99, 0,0,0,0,0)//0905追加
+	EV_stop("MOVE_MEI")
+	color(MEI,-1)//透過
+	
+	 F_set_chr(RAGNA,CF_NO_ZIMEN)
+	 F_set_chr(RAGNA,CF_NO_CSP)
+	 F_set_chr(RAGNA,CF_NO_HEIGHT)
+	 F_set_chr(PARTNER,CF_NO_ZIMEN)
+	 F_set_chr(PARTNER,CF_NO_CSP)
+	 F_set_chr(PARTNER,CF_NO_HEIGHT)
+
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(PIPIRO, "1", "1", "1")	
+	KAO(POCKLE, "1", "1", "1")	
+
+	//キャラ再配置
+	chr_pos(RAGNA,-345,-249,1,0,2)
+	chr_pos(PARTNER,-381,-68,0,0,2)
+	color(RAGNA,-1)//透過
+	color(PARTNER,-1)//透過
+
+	//ハイポリキャラセット
+	set_chr(EVENT_RAGNA,1010,-1,-1, -376,-973,0,	2,34,0, "")
+	set_chr(ALWEN,   	1011,-1,-1, -220,-737,0,	2,68,0, "")
+
+
+	chr_pos(POCKLE,-570,-820,20,320,150)
+	chr_pos(PIPIRO,-570,-620,20,230,150)
+
+	//モーション
+	MOT_SET(EVENT_RAGNA,150,-1,485,485,-1,0)
+	MOT_SET(ALWEN,150,-1,485,485,-1,0)
+
+	fade_in(0,30,0)
+	wait_fade()
+	//イベント開始
+	
+	//ポックル、ラグナを見る
+	look_chr( POCKLE, EVENT_RAGNA,"Bone_Head")
+
+	KAO(POCKLE,"12321Z4","1","1")
+	MES(POCKLE,"あ、ラグナさんに\nアルウェンさん。",0)
+	MES_close(POCKLE)
+
+	look_chr( PIPIRO, EVENT_RAGNA,"Bone_Head")
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z2","1","1")
+	MES(PIPIRO,"よーっす。",0)
+	MES_close(PIPIRO)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","1","1")
+	MES(EVENT_RAGNA,"よ、また会ったな。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(PARTNER)
+	MES(ALWEN,"ふむ、休憩中か。",0)
+	MES_close(ALWEN)
+
+	look_chr( PIPIRO, ALWEN,"Bone_Head")
+	
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z2","1","1")
+	MES(PIPIRO,"そ、甘いもの補給中～。",0)
+	KAO(PIPIRO,"12321Z3","1","1")
+	MES(PIPIRO,"もちろん全部\nポックルのオゴリでね。",0)
+	MES_close(PIPIRO)
+
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z2","8","8")
+	MES(POCKLE,"ええっ、そうなの！？",0)
+	MES_close(POCKLE)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","1","1")
+	MES(EVENT_RAGNA,"はは……\n仲良さそうで何よりだ。",0)
+
+	look_chr( EVENT_RAGNA, ALWEN,"Bone_Head")
+	
+	KAO(EVENT_RAGNA,"12321Z5","1","1")
+	MES(EVENT_RAGNA,"どうする、姫さん。\n俺たちも休憩していくか？",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA,"Bone_Head")
+
+//	name2(ALWEN)
+	MES(ALWEN,"うむ、賛成だ。",0)
+	MES(ALWEN,"私も無性に甘味を\n食したくなってきたぞ。",0)
+	MES_close(ALWEN)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z4","26","1")
+	MES(PIPIRO,"うんうん、疲れたときは\nスイーツが一番でしょ㈱",0)
+	MES_close(PIPIRO)
+
+	look_chr( POCKLE, EVENT_RAGNA,"Bone_Head")
+
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"あ、せっかくだから\n席をご一緒しませんか？",0)
+	KAO(POCKLE,"12321Z4","1","1")
+	MES(POCKLE,"色々話も聞きたいですし。",0)
+	MES_close(POCKLE)
+
+	look_chr( EVENT_RAGNA, POCKLE,"Bone_Head")
+	
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z5","1","1")
+	MES(EVENT_RAGNA,"ああ、だったら\nそうさせてもらうか。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ここで画面、一旦フェードアウト。
+
+	//暗転------------------------------
+	fade_in(100,30,0)
+	wait_fade()
+	
+	look_off(PARTNER)
+	look_off(PIPIRO)
+
+	CAM_move(-260,757,176,0,0)
+	CAM(270,72,176,15,280,0,0)
+	
+	//キャラ位置セット
+	chr_pos(EVENT_RAGNA,-370,-820,1,49,150)
+	chr_pos(ALWEN,-370,-620,0,123,150)
+	F_reset_obj("Layer10",NP_HIDE)//ラグナたちの食器（イベント用）　⇒消すのはマップ切り替えとしておきます。
+
+	KAO(EVENT_RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(PIPIRO, "1", "1", "1")	
+	KAO(POCKLE, "1", "1", "1")	
+	//フェードイン----------------------
+	fade_in(0,60,0)
+	wait_fade()
+	
+
+//　　フェードインして４人がテーブルに付いている。
+//　　ラグナの前にはジンジャーエールが、
+//　　アルウェンの前にはピピロと異なる色合いの
+//　　パフェとケーキ類が追加で配置されている。
+
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"そういえば、ラグナさんの武器って\n『アンカーギア』って言うんですよね。",0)
+	KAO(POCKLE,"12321Z5","1","1")
+	MES(POCKLE,"聞いたことはあったんですけど\n僕、初めて見ました。",0)
+	MES_close(POCKLE)
+
+	look_chr( EVENT_RAGNA, POCKLE,"Bone_Head")
+
+	MES(EVENT_RAGNA,"ま、トレジャーハンターでも\n使っているヤツは珍しいからな。",0)
+	MES(EVENT_RAGNA,"だが、それを言うんだったら\nお前が持っている大型カタールも\nけっこう珍しい代物だぜ。",0)
+	MES(EVENT_RAGNA,"確か、モンスターの放つ魔法を\n受け止められるタイプだったか？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(POCKLE,"1232Z4","D","6")
+	MES(POCKLE,"わ、よく知ってますね！？",0)
+	KAO(POCKLE,"12321Z7","26","6")
+	MES(POCKLE,"アルジェスに住んでいる\n元トレジャーハンターの人に\n教えてもらったんですけど……",0)
+	MES_close(POCKLE)
+
+	MES(EVENT_RAGNA,"アルジェス出身の\n元トレジャーハンター……",0)
+	MES_close(EVENT_RAGNA)
+
+	EMO(EVENT_RAGNA,EMO_PA)
+	wait(20)
+
+	MES(EVENT_RAGNA,"ひょっとして\n『疾風のカイト』のことか？",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ポックルたちの頭に！マーク。
+	EMO(POCKLE,EMO_BIKKURI)
+	EMO(PIPIRO,EMO_BIKKURI)
+
+	look_chr( PIPIRO, EVENT_RAGNA,"Bone_Head")
+	
+	KAO(POCKLE,"3","D","6")
+	KAO(PIPIRO,"3","D","6")
+	wait(30)
+	KAO(POCKLE,"1232123","D","6")
+	MES(POCKLE,"ええっ！？",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"12321Z4","1","6")
+	MES(PIPIRO,"なによお兄さん。\nカイトさんの知り合いなの？",0)
+	MES_close(PIPIRO)
+
+	look_chr( EVENT_RAGNA, PIPIRO,"Bone_Head")
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"ああ、見習いだった頃、\n少しばかり世話になった事がある。",0)
+	MES(EVENT_RAGNA,"凄腕で鳴らしてた人だったけど\n所帯を持って引退したんだよな。",0)
+	MES(EVENT_RAGNA,"元気にしてるのか？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(POCKLE,"12321Z2","26","1")
+	MES(POCKLE,"あ、はい、もちろん。",0)
+	KAO(POCKLE,"12321Z6","21","1")
+	MES(POCKLE,"奥さんと双子の娘さんと一緒に\nとっても仲良く暮らしてますよ。",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"12321Z6","23","5")
+	MES(PIPIRO,"奥さんの方は\nカイトさんにゾッコンでさ～。",0)
+	KAO(PIPIRO,"12321Z6","3","5")
+	MES(PIPIRO,"いまだに新婚気分で\nノロケまくってくるのよね～。",0)
+	KAO(PIPIRO,"12321Z6","2","1")
+	MES(PIPIRO,"見てるこっちが\n胸焼けしてくるくらいだわ。",0)
+	MES_close(PIPIRO)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"そ、そうか……\nあのカイトの旦那がねぇ。",0)
+	MES(EVENT_RAGNA,"ま、トレジャーハンターも\nヤクザな商売ではあるからな。",0)
+	MES(EVENT_RAGNA,"のんびり落ち着いて\n暮らせてるんなら何よりだぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(PIPIRO,"12321Z6","A","6")
+	MES(PIPIRO,"たしかにプック村は\n落ち着けるのは間違いないわね～。",0)
+	KAO(PIPIRO,"12321Z4","A","6")
+	MES(PIPIRO,"あり得ないほどド田舎だけど。",0)
+	MES_close(PIPIRO)
+
+	look_chr( POCKLE, PIPIRO,"Bone_Head")
+
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z4","1","1")
+	MES(POCKLE,"うーん、そこが良いと\n思うんだけどなぁ……",0)
+	MES_close(POCKLE)
+
+//　　画面フェードアウト抜けでイベント終了。
+//　　ラグナたちの料理オブジェは全て消しておく。
+
+	
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+	
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	color(RAGNA,1)	//透過解除
+	color(PARTNER,1)//透過解除
+	chr_pos(RAGNA,-231,-577,1,121,2)
+	chr_pos(PARTNER,-238,-777,1,63,2)
+
+	//メイをセット
+	chr_pos(MEI,298,-1505,1,351,2)
+	color(MEI,1)//透過
+	EV("MOVE_MEI")
+
+	look_off(RAGNA)
+	look_off(PARTNER)
+	look_off(PIPIRO)
+	look_off(POCKLE)
+	
+	KAO(PIPIRO, "1", "1", "1")	
+	KAO(POCKLE, "1", "1", "1")	
+
+	 F_reset_chr(RAGNA,CF_NO_ZIMEN)
+	 F_reset_chr(RAGNA,CF_NO_CSP)
+	 F_reset_chr(RAGNA,CF_NO_HEIGHT)
+	 F_reset_chr(PARTNER,CF_NO_ZIMEN)
+	 F_reset_chr(PARTNER,CF_NO_CSP)
+	 F_reset_chr(PARTNER,CF_NO_HEIGHT)
+
+
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//★②初回
+	F_set(FM_02_TalkPocPip_1)
+
+	EV_end()
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+}
+
+//──────────────────────────────
+//▼ピピロとポックル共通会話　２回目
+//──────────────────────────────
+TALK_POCPIP_02_2
+{
+	//暗転------------------------------
+	fade_in(100,30,0)
+	wait_fade()
+	EV_begin()
+	
+	//カメラセット
+	CAM_move(-500,817,96,0,0)
+	CAM(110,75,96,20,202,0,0)
+	//ルートムーブ中のメイとぶつからないように消す
+	move(MEI, 99, 0,0,0,0,0)//0905追加
+	EV_stop("MOVE_MEI")
+	color(MEI,-1)//透過
+	
+
+	//キャラ位置セット
+	chr_pos(RAGNA,-345,-249,1,0,2)
+	chr_pos(PARTNER,-381,-68,0,0,2)
+	color(RAGNA,-1)//透過
+	color(PARTNER,-1)//透過
+	
+	//ハイポリキャラセット
+	set_chr(EVENT_RAGNA,1010,-1,-1, -283,-734,0,	2,85,0, "")
+	set_chr(ALWEN,   	1011,-1,-1, -413,-935,1,	2,22,0, "")
+
+	chr_pos(POCKLE,-570,-820,20,320,150)
+	chr_pos(PIPIRO,-570,-620,20,230,150)
+	
+	KAO(EVENT_RAGNA, "1", "1", "1")
+	KAO(ALWEN,"1", "1", "1")
+	KAO(PIPIRO, "1", "1", "1")
+	KAO(POCKLE, "1", "1", "1")
+
+	 F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	 F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	 F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	 F_set_chr(ALWEN,CF_NO_ZIMEN)
+	 F_set_chr(ALWEN,CF_NO_CSP)
+	 F_set_chr(ALWEN,CF_NO_HEIGHT)
+	
+	//モーション
+	MOT_SET(ALWEN,150,-1,421,421,151,10)	//手をポン
+	MOT_SET(ALWEN,151,-1,422,422,152,10)	//手をポン
+	MOT_SET(ALWEN,152,-1,423,423,-1,10)	//手をポン
+
+	MOT_SET(ALWEN,154,-1,395,395,-1,10)	//腕組
+
+
+
+	//フェードイン----------------------
+	fade_in(0,60,0)
+	wait_fade()
+
+
+//	name("★２回目（１回のみ／イベント処理）")
+//　　話しかけるとキャラ再配置してイベント発生。
+//　　ただし上記と違って、ラグナたちは立ったままにする。
+//　　以下の会話が成立するよう、自然なキャラ配置を行う。
+	look_chr( POCKLE, EVENT_RAGNA,"Bone_Head")
+
+	KAO(POCKLE,"12321Z4","1","1")
+	MES(POCKLE,"うーん、それにしても\n『アンカーギア』か……",0)
+	KAO(POCKLE,"12321Z6","1","1")
+	MES(POCKLE,"機械仕掛けだし、\n造りもすごく凝っているのに\nお買い得なんて凄いですよね。",0)
+	MES_close(POCKLE)
+
+//　　ラグナの頭に？マーク。
+	EMO(EVENT_RAGNA,EMO_HATENA)
+	look_chr( EVENT_RAGNA, POCKLE,"Bone_Head")
+	look_chr( ALWEN, POCKLE,"Bone_Head")
+	wait(30)
+	
+	KAO(EVENT_RAGNA,"12321Z5","1","1")
+	MES(EVENT_RAGNA,"いや、特注品だし\n正直安くはない代物だが……",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")
+	MES(EVENT_RAGNA,"なんでお買い得になるんだ？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z4","26","1")
+	MES(POCKLE,"だってほら\n『安価（アンカー）ギア』って\n言うくらいですし♪",0)
+	MES_close(POCKLE)
+
+
+	look_chr( PIPIRO, POCKLE,"Bone_Head")
+
+	KAO(ALWEN,"1","3","B")
+	MOT(ALWEN,154,15)
+
+//　　ラグナの頭に冷や汗マーク。
+	
+	KAO(EVENT_RAGNA,"9","9","9")
+	EMO(EVENT_RAGNA,EMO_AOZAME)
+	EMO(PIPIRO,EMO_AOZAME)
+//　　ピピロの頭にはモヤモヤマークを出す。
+	wait(30)
+
+	look_chr( EVENT_RAGNA, PIPIRO,"Bone_Head")
+
+	KAO(EVENT_RAGNA,"12321Z3","2","5")
+	MES(EVENT_RAGNA,"え、えーと……",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( PIPIRO, EVENT_RAGNA,"Bone_Head")
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z2","2","1")
+	MES(PIPIRO,"あー、気にしないで。",0)
+	KAO(PIPIRO,"12321Z5","2","1")
+	MES(PIPIRO,"その寒いオヤジギャグは\nもう病気みたいなモンだから。",0)
+	MES_close(PIPIRO)
+
+//　　ここでアルウェンの頭に…マーク。
+	EMO(ALWEN,EMO_TENTEN)
+	wait(30)
+
+//　　続けて！マークか、電球閃きマークを出す。
+	EMO(ALWEN,EMO_BIKKURI)
+	KAO(ALWEN,"E","2E","E")
+	wait(30)
+
+//　　そのまま手をポンと打つような動作。
+	MOT(ALWEN,150,15)
+	look_chr( POCKLE,ALWEN,"Bone_Head")
+	look_chr( PIPIRO,ALWEN,"Bone_Head")
+	look_chr( EVENT_RAGNA,ALWEN,"Bone_Head")
+
+	KAO(ALWEN,"12321Z2","26","1")
+	MES(ALWEN,"おお、なるほど！",0)
+	KAO(ALWEN,"12321Z5","6","1")
+	MES(ALWEN,"『アンカー』に『安価』を\n掛けているというわけか！",0)
+	KAO(ALWEN,"12321Z3","6","1")
+	MES(ALWEN,"うーむ、これは傑作だな！",0)
+	MES_close(ALWEN)
+
+//　　ここでポックルの頭に！マーク。
+	EMO(POCKLE,EMO_BIKKURI)
+	KAO(POCKLE,"K","2K","1")
+	wait(30)
+	
+	KAO(POCKLE,"12321Z3","K","1")
+	MES(POCKLE,"ア、アルウェンさん……（じーん）",0)
+	KAO(POCKLE,"12321Z3","2J","1")
+	MES(POCKLE,"えへへ、そうですよね！",0)
+	KAO(POCKLE,"12321Z3","J","1")
+	MES(POCKLE,"うーん、やっぱり\n判る人は判ってくれるんだなぁ。",0)
+	MES_close(POCKLE)
+	
+	MOT(ALWEN,2,10)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z6","6","1")
+	MES(ALWEN,"うむ、そなたには\n『ぎゃぐ』の才能がありそうだ。",0)
+	KAO(ALWEN,"12321Z4","6","1")
+	MES(ALWEN,"今後も精進するとよかろう。",0)
+	MES_close(ALWEN)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z3","6","1")
+	MES(POCKLE,"はいっ！",0)
+	MES_close(POCKLE)
+
+//　　ラグナとピピロの頭に冷や汗マーク。
+	EMO(EVENT_RAGNA,EMO_HIYAASE)
+	EMO(PIPIRO,EMO_HIYAASE)
+	wait(30)
+	
+	look_chr( PIPIRO,EVENT_RAGNA,"Bone_Head")
+	look_chr( EVENT_RAGNA,PIPIRO,"Bone_Head")
+	KAO(PIPIRO,"12321Z2","2","1")
+	MES(PIPIRO,"（……ねえ、お兄さん。）",0)
+	KAO(PIPIRO,"12321Z4","2","1")
+	MES(PIPIRO,"（あのゴスお姉さん、\n  ものすごい天然だったり？）",0)
+	MES_close(PIPIRO)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z4","3","9")
+	MES(EVENT_RAGNA,"（……ま、見ての通りだぜ。）",0)
+	MES_close(EVENT_RAGNA)
+	
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+	
+
+	//メイをセット
+	chr_pos(MEI,298,-1505,1,351,2)
+	color(MEI,1)//透過
+	EV("MOVE_MEI")
+
+	look_off(EVENT_RAGNA)
+	look_off(ALWEN)
+	look_off(PIPIRO)
+	look_off(POCKLE)
+
+	F_reset_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_reset_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_reset_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_reset_chr(ALWEN,CF_NO_ZIMEN)
+	F_reset_chr(ALWEN,CF_NO_CSP)
+	F_reset_chr(ALWEN,CF_NO_HEIGHT
+	
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	
+	
+	color(RAGNA,1)	//透過解除
+	color(PARTNER,1)//透過解除
+	chr_pos(RAGNA,-283,-734,0,85,2)
+	chr_pos(PARTNER,-413,-935,1,22,2)
+
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(PIPIRO, "1", "1", "1")	
+	KAO(POCKLE, "1", "1", "1")	
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//★②２回目
+	F_set(FM_02_TalkPocPip_2)
+	//★ポックル【ダジャレ】
+	F_set_note(POCKLE,1)
+
+	EV_end()
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+}
+
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼目を覚ますラグナ
+//──────────────────────────────
+EV_0_02_WakeUpRagna
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,BLACK)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  23312,-810,90,0,2)
+	F_set_chr(RAGNA,CF_NO_CSP)
+	F_set_chr(RAGNA,CF_NO_HEIGHT)
+	F_set_Node(RAGNA,"wepon",NP_HIDE)
+	color(RAGNA,-1)
+
+	set_chr(EVENT_RAGNA,	1052,-1,-1,23312,-810,90,		2,	0,	0,"")	//
+	set_chr(EVENT_RAGNA2,	1065,-1,-1,23312,-810,90,		2,	0,	0,"")	//
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA2,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA2,CF_NO_HEIGHT)
+	F_set_Node(EVENT_RAGNA2,"wepon",NP_HIDE)
+	chr_scale( EVENT_RAGNA2,	"Bone_Bag",		0,0,0,	0,0);
+	chr_scale( EVENT_RAGNA,	"Bone_Bag",		0,0,0,	0,0);
+	color(EVENT_RAGNA2,-1)
+
+	//イベント用キャラ配置
+	set_chr(TEO,	44,-1,-1,23100,-880,0,		2,	280,	0,"")	//テオ
+	set_chr(MILLIAM,1029,-1,-1,23112,-730,0,		2,	250,	0,"")	//ミリアム
+	F_set_chr(TEO,CF_NO_CSP)
+	F_set_chr(MILLIAM,CF_NO_CSP)
+	chr_rename(TEO,"男性の声")//キャラの名前を変更
+//	chr_rename(MILLIAM,"技師風の女性")//キャラの名前を変更
+	chr_rename(MILLIAM,"女性の声")//キャラの名前を変更
+
+	//モーション定義
+	MOT_SET(TEO,150,-1,436,436,-1,-1)//自己紹介
+	MOT_SET(TEO,151,-1,402,402,-1,-1)//ミリアム紹介
+	MOT_SET(TEO,152,-1,410,410,-1,-1)//
+	MOT_SET(MILLIAM,150,-1,398,398,-1,-1)//ミリアム紹介
+	MOT_SET(MILLIAM,151,-1,415,415,-1,-1)//
+	MOT_SET(EVENT_RAGNA,150,-1,519,519,-1,-1)//寝る仰向け
+	MOT_SET(EVENT_RAGNA,151,-1,521,521,-1,-1)//
+	MOT_SET(EVENT_RAGNA,152,-1,1960,1978,-1,-1)//
+	MOT_SET(RAGNA,150,-1,521,521,-1,-1)//
+	MOT_SET(EVENT_RAGNA2,150,-1,521,521,-1,-1)//
+	MOT(EVENT_RAGNA,150,0)
+	MOT(EVENT_RAGNA2,150,0)
+	KAO(EVENT_RAGNA,"B","3","4")//
+
+	//カメラ初期位置
+	CAM_move(23320,848,135,0,0)
+	CAM(1150,14,135,26,204,0,0)
+
+//◆ＢＧＭ仮制御
+	stop_BGM(30)
+
+//	name("男性の声")
+	MES_pos(TEO,"W9……キミ………",0,200,120,0,0)
+	wait_key(0)
+	MES_close(TEO)
+
+//	name("男性の声")
+	MES_pos(TEO,"W9大丈夫かね……キミ……",0,200,120,0,0)
+	wait_key(0)
+	MES_close(TEO)
+
+//	name2(EVENT_RAGNA)
+	MES_pos(EVENT_RAGNA,"W9あ……",0,320,200,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　画面フェードインして、昼間の宿屋の２階を映す。
+//　　肩のあたりに包帯を巻いたラグナが横たわっており、
+//　　医師のテオと女技師のミリアムが立っているんのを見せる。
+
+	//フェードイン
+//	CAM(1150,18,135,26,204,180,0)
+	CAM(1150,18,135,26,204,120,0)
+
+	fade_in(0,90,BLACK)
+//	wait_fade()
+	wait(45)
+
+//	KAO(EVENT_RAGNA,"B","33332111233321","4")
+	KAO(EVENT_RAGNA,"B","3333211123332A","4")
+	wait(30)
+
+	wait_CAM()
+
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n肩のあたりに包帯を巻いたラグナが横たわっている。",0)
+//	MES_close(EVENT_RAGNA)
+
+	BGM(11)
+//	name("技師風の女性")
+	MES_pos(MILLIAM,"W9よかった！\n目を覚ましたんだね。",0,150,350,0,0)
+	wait_key(0)
+	MES_pos(MILLIAM,"W9まったく、あんまり\n心配させるんじゃないよ。",0,150,350,0,0)
+	wait_key(0)
+	MES_close(MILLIAM)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232B","A23332A","4")//
+	MES(EVENT_RAGNA,"ここは……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name("技師風の女性")
+	MES_pos(MILLIAM,"W9ここはアルッテの町の\n宿酒場の２階さ。",0,150,350,0,0)
+	wait_key(0)
+	MES_pos(MILLIAM,"W9あんた、あの紅い飛行機の\nパイロットなんだろう？",0,150,350,0,0)
+	wait_key(0)
+	MES_close(MILLIAM)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ2","A23","4")//
+	MES(EVENT_RAGNA,"ああ、そうだが……",0)
+
+	KAO(EVENT_RAGNA,"B232B","321D","6")//
+	MES(EVENT_RAGNA,"──って、おい！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ、ガバッとベッドから半身を起こして辺りを見回す。
+	wait_MES(EVENT_RAGNA)
+	cross_fade(10)
+	MOT(EVENT_RAGNA,151,10)
+	SE(1029,0)//起き上がるＳＥ
+	CAM_move(23200,808,165,0,0)
+	CAM(-90,54,165,25,218,0,0)
+	CAM_move(23200,808,165,900,0)
+	CAM(190,52,165,25,246,900,0)
+
+//	◆未入力項目
+//	MES(EVENT_RAGNA,"◆未入力項目\nラグナ、ガバッとベッドから半身を起こして辺りを見回す。",0)
+//	MES_close(EVENT_RAGNA)
+
+	KAO(EVENT_RAGNA,"12321Z2","D","6")//
+	MES(EVENT_RAGNA,"トリスタン──！",0)
+
+	KAO(EVENT_RAGNA,"123212Z2","12321D","6")//
+	MES(EVENT_RAGNA,"俺のトリスタン号はどこだ！？",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(MILLIAM,151,12)
+	wait(15)
+//	name("技師風の女性")
+	chr_rename(MILLIAM,"技師風の女性")//キャラの名前を変更
+	KAO(MILLIAM,"12321Z4","1233321","4")//
+	MES(MILLIAM,"ああ、落ち着きなって。\nここにあるわけないだろ。",0)
+	MES_close(MILLIAM)
+
+	MOT(TEO,152,15)
+	wait(15)
+	chr_rename(TEO,"医師風の男性")//キャラの名前を変更
+//	name("医師風の男性")
+	KAO(TEO,"12321Z4","1233321","2")//
+	MES(TEO,"フム、どうやら\n混乱してるみたいだね。",0)
+	KAO(TEO,"12321Z4","1","2")//
+	MES(TEO,"ここは僕の方から\n事情を説明させてもらおう。",0)
+	MES_close(TEO)
+
+//　　ラグナ、テオに視線を向ける。
+	look_chr( EVENT_RAGNA, TEO ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ2","1233321","1")//
+	MES(EVENT_RAGNA,"……あんたは………",0)
+	MES_close(EVENT_RAGNA)
+
+//自己紹介用にカメラ寄せてみた
+	wait_MES(EVENT_RAGNA)
+	cross_fade(15)
+	CAM_move(23080,848,185,0,0)
+	CAM(-370,56,185,16,214,0,0)
+	CAM_move(23060,848,185,300,0)
+	CAM(-370,58,185,16,222,300,0)
+	rot(MILLIAM,-1,280)
+	KAO(MILLIAM,"1","1","6")//
+	MOT(MILLIAM,2,0)
+	wait(1)
+	ResetIK(MILLIAM)
+	color(EVENT_RAGNA,-1)
+	wait(15)
+
+	MOT(TEO,150,15)
+	wait(15)
+//	name("医師風の男性")
+	KAO(TEO,"12321Z5","1","1")//
+	MES(TEO,"僕の名前はテオ。\nこの町で医者のような事を\nやらせてもらっている。",0)
+	MES_close(TEO)
+	MOT(TEO,151,15)
+	wait(15)
+	chr_rename(TEO,"テオ")//キャラの名前を変更
+	KAO(TEO,"12321Z5","1","1")//
+	MES(TEO,"こちらの女性はミリアム君。\n飛行場に勤める優秀な技師さ。",0)
+	MES_close(TEO)
+
+	MOT(MILLIAM,150,15)
+	wait(15)
+	chr_rename(MILLIAM,"ミリアム")//キャラの名前を変更
+//	name("ミリアム")
+	KAO(MILLIAM,"12321Z4","1236","6")//
+	MES(MILLIAM,"あはは。\nまだまだ未熟だけどね。",0)
+	KAO(MILLIAM,"12321Z6","321","6")//
+	MES(MILLIAM,"で、墜落したあんたの飛行機を\n最初に発見した人物ってわけさ。",0)
+	MES_close(MILLIAM)
+	wait_MES(MILLIAM)
+
+	cross_fade(15)
+	MOT(TEO),2,0)
+	CAM_move(23200,808,165,0,0)
+	CAM(-90,54,165,25,218,0,0)
+	CAM_move(23200,808,165,1200,0)
+	CAM(190,52,165,25,246,1200,0)
+	color(EVENT_RAGNA,1)
+	rot(MILLIAM,-1,250)
+	wait(1)
+	ResetIK(MILLIAM)
+
+	look_chr( EVENT_RAGNA, MILLIAM ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","12321D","1")//
+	MES(EVENT_RAGNA,"……墜落した……だって……？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name("テオ")
+	KAO(TEO,"12321Z5","1233321","1")//
+	MES(TEO,"君の飛行機は、町外れにある\n丘の上に墜落してしまったんだ。",0)
+	KAO(TEO,"12321Z5","1","1")//
+	MES(TEO,"それを飛行場にいた彼女が\n目撃して町に報せてくれた。",0)
+	KAO(TEO,"12321Z5","1","1")//
+	MES(TEO,"で、君はここまで運ばれ、\nたった今目覚めたというわけだ。",0)
+	MES_close(TEO)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","123","5")//
+	MES(EVENT_RAGNA,"……そうだった、のか。",0)
+	KAO(EVENT_RAGNA,"12321Z4","321","1")//
+	MES(EVENT_RAGNA,"すまない、随分と世話に\nなっちまったみたいだな。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"──俺は、ラグナ。\nラグナ・バレンタインだ。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"トレジャーハンター兼、\n運び屋なんかもしている。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name("ミリアム")
+	KAO(MILLIAM,"12321FZ4","1233321","6")//
+	MES(MILLIAM,"へえ、道理でその若さで\n飛行機なんか持ってるわけだ。",0)
+	KAO(MILLIAM,"12321Z6","1","6")//
+	MES(MILLIAM,"しかしトレジャーハンターとはいえ\nずいぶん頑丈な身体してるじゃない。",0)
+	MOT(MILLIAM,52,15)
+	wait(15)
+	KAO(MILLIAM,"12321Z7","123","6")//
+	MES(MILLIAM,"あれだけの事故で\nその程度の怪我で済んだなんて\nホント奇跡としか思えないよ。",0)
+	MES_close(MILLIAM)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"F","D","6")//
+	MES(EVENT_RAGNA,"え……",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(TEO,152,15)
+	wait(15)
+//	name("テオ")
+	KAO(TEO,"B232BZ4","123","2")//
+	MES(TEO,"ああ、何しろ機体が\n真っ二つに折れてたからねぇ。",0)
+	KAO(TEO,"B232BZ7","321","2")//
+	MES(TEO,"普通なら骨折どころじゃ\n済まないはずなんだけど……\nどうやら軽い裂傷だけときている。",0)
+	KAO(TEO,"B232BZ4","1","2")//
+	MES(TEO,"君、本当に痛いところはないのかい？",0)
+	MES_close(TEO)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","D12321D","7")//
+	MES(EVENT_RAGNA,"ちょ、ちょっと待ってくれ！",0)
+	KAO(EVENT_RAGNA,"B232BZ4","D","7")//
+	MES(EVENT_RAGNA,"機体が真っ二つって……\nマジかよ！？",0)
+	KAO(EVENT_RAGNA,"B232BZ6","D123","5")//
+	MES(EVENT_RAGNA,"あいつを手に入れて\nあそこまでカスタムするまで\nどれだけペンネをつぎ込んだか……！",0)
+	KAO(EVENT_RAGNA,"B232BZ6","3","5")//
+	MES(EVENT_RAGNA,"せ、せっかく念願の\nエアロテックのプロペラに\n替えたばかりだってのに……",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(MILLIAM,2,15)
+//	name("ミリアム")
+	KAO(MILLIAM,"12321FZ3","321","1")//
+	MES(MILLIAM,"あ、やっぱりアレ、\nエアロテックの新型だったんだ。",0)
+	KAO(MILLIAM,"12321Z4","1236","5")//
+	MES(MILLIAM,"はは、まあ命があっただけ\n物種だったと思いなよ。",0)
+	KAO(MILLIAM,"12321Z4","321","1")//
+	MES(MILLIAM,"見たところ、プロペラの損傷は\nそれ程でもなさそうだったしさ。",0)
+	MES_close(MILLIAM)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ2","321L","5")//
+	MES(EVENT_RAGNA,"だ、だからって\n機体が真っ二つって……うぅ。",0)
+	KAO(EVENT_RAGNA,"B232BZ2","L","5")//
+	MES(EVENT_RAGNA,"あんな高さから墜落したら\n当然なのは分かるけどよ～……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナの頭にＰＡマーク。
+//	MES(EVENT_RAGNA,"◆ＰＡマーク。",0)
+	EMO(EVENT_RAGNA,EMO_PA)
+	wait(15)
+	KAO(EVENT_RAGNA,"1232F","L233321D","6")//
+	MES(EVENT_RAGNA,"……ちょっと待て。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//	BGM_vol(75,15)
+
+//　　ここで一拍の間、墜落時のセピアビジュアルを表示する。
+	fade_in(100,30,0)
+	
+	if(SP005>15)
+	{	//ワイド
+		Load_BMP(14,"sys\\portray00w.itm","0")			//portray00 翼竜の背のモンブラン
+		menuBMP(1,	14,	0,0,768,480)
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(40)
+//		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		wait(5)
+		
+		Load_BMP(15,"sys\\portray01w.itm","0")			//portray01 撃墜されるトリスタン号
+		menuBMP(0,	15,	0,0,768,480)
+		menu(0,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(0,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(40)
+//		wait_key(0)
+		menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		wait(5)
+						
+		Load_BMP(14,"sys\\portray02w.itm","0")			//portray02 トリスタン号に乗るラグナ
+		menuBMP(1,	14,	0,0,768,480)
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(40)
+//		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		wait(5)
+						
+		Load_BMP(15,"sys\\portray03w.itm","0")			//portray03 墜落していくトリスタン号	
+		menuBMP(0,	15,	0,0,768,480)
+		menu(0,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(0,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(40)
+//		wait_key(0)
+		menu(0,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+	}
+	else
+	{	//４：３
+		Load_BMP(14,"sys\\portray00n.itm","0")			//portray00 翼竜の背のモンブラン
+		menuBMP(1,	14,	0,0,640, 480)
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(40)
+//		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		wait(5)
+						
+		Load_BMP(15,"sys\\portray01n.itm","0")			//portray01 撃墜されるトリスタン号
+		menuBMP(0,	15,	0,0,640, 480)
+		menu(0,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(0,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(40)
+//		wait_key(0)
+		menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		wait(5)
+						
+		Load_BMP(14,"sys\\portray02n.itm","0")			//portray02 トリスタン号に乗るラグナ
+		menuBMP(1,	14,	0,0,640, 480)	
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(40)
+//		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		wait(5)
+					
+		Load_BMP(15,"sys\\portray03n.itm","0")			//portray03 墜落していくトリスタン号
+		menuBMP(0,	15,	0,0,640, 480)
+		menu(0,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(0,	0,	0, 0,  0,	640, 480,	60,100,0)
+//		wait(40)
+		wait_key(0)
+		menu(0,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+	}
+	
+//	BGM_vol(100,30)
+	
+	MOT(TEO,2,0)
+	look_off(EVENT_RAGNA)
+	look_del(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B","3","2")//
+	CAM_move(23280,868,135,0,0)
+	CAM(-10,38,135,25,206,0,0)
+	CAM(-10,35,135,25,206,300,0)
+	look(MILLIAM,"Bone_Head",0,0,10,0,0,-10,0)
+
+	fade_in(0,20,0)
+	wait_fade()
+	
+	wait_menu(0)	
+	wait_menu(1)	
+
+	MES(EVENT_RAGNA,"（あの高さから落ちて\n  カスリ傷程度だと……？）",0)
+	MES(EVENT_RAGNA,"（そもそもあいつら、\n  いったい何のつもりで……）",0)
+	MES(EVENT_RAGNA,"（そ、それに……）",0)
+	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+
+//　　ここで画面が次々とフラッシュバックする。
+//　　翼竜の背にいた娘、夕日を背に翼を広げた娘のシルエット、
+//　　真紅の瞳と白い牙などの映像が立て続けに再生される。
+//　　最後に黒バックに以下のメッセージが血の色で表示される。
+
+//	◆未入力項目
+//	MES(EVENT_RAGNA,"◆未入力項目\nここで画面が次々とフラッシュバックする。\n翼竜の背にいた娘、夕日を背に翼を広げた娘のシルエット、\n真紅の瞳と白い牙などの映像が立て続けに再生される。",0)
+
+	BGM_vol(75,15)
+	fade_in(100,30,0)
+	
+	if(SP005>15)
+	{	//ワイド
+		Load_BMP(14,"sys\\portray04w.itm","0")			//portray04 翠竜の背のエクスマキナ
+		menuBMP(1,	14,	0,0,768,480)
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(30)
+//		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		wait(5)
+				
+		Load_BMP(15,"sys\\portray05w.itm","0")			//portray05 夕陽を背にしたアルウェン１
+		menuBMP(0,	15,	0,0,768,480)
+		menu(0,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(0,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(30)
+//		wait_key(0)
+		menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		wait(5)
+				
+		Load_BMP(14,"sys\\portray06w.itm","0")			//portray06 夕陽を背にしたアルウェン２
+		menuBMP(1,	14,	0,0,768,480)
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(30)
+//		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+
+	}
+	else
+	{	//４：３
+		Load_BMP(14,"sys\\portray04n.itm","0")			//portray04 翠竜の背のエクスマキナ
+		menuBMP(1,	14,	0,0,640, 480)
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(30)
+//		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		wait(5)
+		
+		Load_BMP(15,"sys\\portray05n.itm","0")			//portray05 夕陽を背にしたアルウェン１
+		menuBMP(0,	15,	0,0,640, 480)
+		menu(0,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(0,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(30)
+//		wait_key(0)
+		menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+		wait(5)
+				
+		Load_BMP(14,"sys\\portray06n.itm","0")			//portray06 夕陽を背にしたアルウェン２
+		menuBMP(1,	14,	0,0,640, 480)	
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(30)
+//		wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+
+	}
+	
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n最後に黒バックに以下のメッセージが血の色で表示される。",0)
+
+	BGM_vol(50,15)
+	SE(1057,0)//ドクンSE
+//	SE(1105,0)//ドクンSE(大)
+
+	wait_menu(0)	
+	wait_menu(1)	
+
+//	ビジュアルテキスト
+
+/*	wait(15)
+	VOICE(170,0)	//★ボイス演出追加
+	MES_pos(EVENT_RAGNA,"S4C2これがそなたの運命だ。",1,320,240,0,0)
+	wait(80)
+	MES_close(EVENT_RAGNA)
+	wait(30)
+	VOICE(171,0)	//★ボイス演出追加
+	MES_pos(EVENT_RAGNA,"S4C2さあ、受け入れるがよい。",1,320,240,0,0)
+	wait(100)
+	MES_close(EVENT_RAGNA)
+	wait(15)
+*/
+	Load_BMP(14,"sys\\text01.itm","sys\\text01a.itm")
+//	MES_pos(EVENT_RAGNA,"S4C2これがそなたの運命だ。",1,320,240,0,0)
+	menuBMP(0,	14,	408,60,408,36)
+	menu(0,	0,	120,220,  0,	408, 36,	 0,  0,0)
+	menu(0,	0,	120,220,  0,	408, 36,	60,100,0)
+	wait(15)
+	VOICE(170,0)	//★ボイス演出追加
+	wait(65)
+//	wait_key(0)	
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	wait(15)
+	SE(1057,0)//ドクンSE
+//	SE(1105,0)//ドクンSE(大)
+
+//	MES_pos(EVENT_RAGNA,"S4C2さあ、受け入れるがよい。",1,320,240,0,0)
+	menuBMP(0,	14,	408,100,408,36)
+	menu(0,	0,	120,220,  0,	408, 36,	 0,  0,0)
+	menu(0,	0,	120,220,  0,	408, 36,	60,100,0)
+	wait(15)
+	VOICE(171,0)	//★ボイス演出追加
+	wait(65)
+//	wait_key(0)
+	menu(0,	-1,	-1, -1, -1,	-1, -1,	60,0,0)
+	stop_SE(583)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"L","3","5")
+	CAM_move(23200,868,155,0,0)
+	CAM(-10,52,155,25,206,0,0)
+
+	BGM_vol(100,30)
+	fade_in(0,30,0)	//フェードイン
+	wait_fade()
+
+//　　画面戻ってから、ラグナの頭に！マーク。
+	CAM_quake("3737")
+
+//	MES(EVENT_RAGNA,"！マーク。",0)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	MOT(EVENT_RAGNA,152,0)
+	wait(30)
+	MES(EVENT_RAGNA,"くっ……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ、ベッドの上で頭を抱えるような動作。
+//	MES(EVENT_RAGNA,"◆未入力項目\nラグナ、ベッドの上で頭を抱えるような動作。",0)
+//	MES_close(EVENT_RAGNA)
+
+//　　テオとミリアムの頭に！マーク。
+//	MES(MILLIAM,"！マーク。",0)
+//	MES(TEO,"！マーク。",0)
+//	MES_close(MILLIAM)
+//	MES_close(TEO)
+
+	KAO(MILLIAM,"B","12321D","6")//
+	EMO(MILLIAM,EMO_BIKKURI)
+//	wait(5)
+	KAO(TEO,"B","12321D","6")//
+	EMO(TEO,EMO_BIKKURI)
+	wait(25)
+
+//	name("ミリアム")
+	KAO(MILLIAM,"B232BZ2","12321D","2")//
+	MES(MILLIAM,"ちょ、大丈夫！？",0)
+	MES_close(MILLIAM)
+
+//	name("テオ")
+	KAO(TEO,"B232BZ3","12321","2")//
+	MES(TEO,"やっぱり頭でも\n打っていたのかい！？",0)
+	MES_close(TEO)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ4","3","1")//
+	MES(EVENT_RAGNA,"……いや……\n………そうじゃない…………",0)
+
+	KAO(EVENT_RAGNA,"B232BZ5","32A","1")//
+	MES(EVENT_RAGNA,"ちょっくら色々と……\n思い出したことがあっただけだ。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　ラグナ、ベッドから飛び降りる動作。
+//　　そのままミリアムに向かって語りかける。
+//	MES(RAGNA,"◆未入力項目\nラグナ、ベッドから飛び降りる動作。\nそのままミリアムに向かって語りかける。",0)
+//	MES_close(RAGNA)
+
+	KAO(EVENT_RAGNA,"B","A23","1")//
+	MOT(EVENT_RAGNA,151,15)
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(23050,888,115,0,0)
+	CAM(-50,66,115,24,194,0,0)
+	chr_pos(TEO,	  23000,-880,0,310,2)
+	chr_pos(MILLIAM,  23012,-710,0,230,2)
+	look(MILLIAM,"Bone_Head",0,0,10,0,0,0,0)
+	KAO(MILLIAM,"B","D","6")//
+	KAO(TEO,"B","1","6")//
+
+	color(EVENT_RAGNA,-1)
+	color(EVENT_RAGNA2,1)
+	KAO(EVENT_RAGNA2,"B","3","1")//
+	F_reset_chr(EVENT_RAGNA2,CF_NO_HEIGHT)
+	jump(EVENT_RAGNA2,0,15,23134,-800,0,30)
+	SE(466,0)//ジャンプ
+	rot(EVENT_RAGNA2,30,50)
+	MOT(EVENT_RAGNA2,3,10)
+	wait(10)
+	MOT(EVENT_RAGNA2,6,5)
+	SE(1058,0)//着地
+	wait_move(EVENT_RAGNA2)
+	wait(30)
+
+	KAO(EVENT_RAGNA2,"B232BZ3","321","2")//
+	MES(EVENT_RAGNA2,"──なあ、教えてくれないか？",0)
+
+	KAO(EVENT_RAGNA2,"B232BZ5","1","2")//
+	MES(EVENT_RAGNA2,"俺とトリスタン号が\n落ちた丘ってのはどこにあるんだ？",0)
+	MES_close(EVENT_RAGNA2)
+
+//　　画面、ゆっくりとフェードアウト。
+//	CAM(-50,72,115,24,180,60,0)
+	CAM(-50,68,115,24,194,60,0)
+	fade_in(100,60,0)
+	wait_fade()
+
+	stop_BGM(120)
+	wait_BGM()
+	wait(30)
+	
+	//ラグナメモ用★ラグナが目覚めた
+	F_set(F1_03_WakeUpRagna)
+
+	//★テオ
+	F_set_note(-44,-1)
+	//★ミリアム
+	F_set_note(-29,-1)
+
+	//ブランデーヶ丘マップへ(ev00701)
+	workG(GW_DEF_BGM,SET,99)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(10701)
+
+//	EV_end()
+}
+
+
+EV_STOP_01
+{
+	TK_begin()
+	MES(0,"C3S2鍵がかかっているようだ……",2)
+	MES_close(0)
+	TK_end()
+
+}
+
+
+#EndScriptTable
+//====================================================================
+

@@ -1,0 +1,693 @@
+//──────────────────────────────
+//	name("◆琉璃（女之子）Luri")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_LURI
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(LURI, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,LURI)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,LURI)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if(F6_05_EndSixth)
+	{
+		look_chr( LURI, PLAYER1,"Bone_Head")
+		if(!FS_13_TalkLuri)
+		{
+		//　　※亚尔迪之熊猫楼で席についている。（かもしくは大五郎之傍に立つ）
+		//　　　できれば，頭巾を取った状態。
+		//　　※初回イベント。
+
+			MES(LURI,"散步的最后\n来到了镇里。",0)
+			MES(LURI,"饿了啊。\n吃什么好呢～？",0)
+			MES_close(LURI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"喂喂，这种地方\n只有小孩子来不好吧。",0)
+			MES(RAGNA,"不和村子里的人说一声\n就来这里吗？",0)
+			MES_close(RAGNA)
+
+		//	name2(LURI)
+			MES(LURI,"嗯嗯，保密哦。",0)
+			MES(LURI,"没关系，大五郎的分身\n还在村子里。",0)
+			MES_close(LURI)
+
+		//　　拉古那たちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			MES(RAGNA,"（那个可能会被\n识破的……）",0)
+			MES_close(RAGNA)
+			F_set(FS_13_TalkLuri)
+			look_off(LURI)
+		}
+		else
+		{
+			if(!F_LURI)
+			{
+			//──────────────────────────────
+			//　　※以下通常一般メッセージ。
+				MES(LURI,"不能跟哥哥说哦～？\n因为是秘密～？",0)
+				MES_close(LURI)
+
+			//　　琉璃，向きを戻しながら。
+				look_off(LURI)
+				MES(LURI,"那么，吃什么好呢～？",0)
+				MES_close(LURI)
+
+			//　　琉璃に···エモーション。
+				EMO(LURI,EMO_TENTEN)
+				wait(30)
+				
+				MES(LURI,"……盘…………\n盘……盘，盘子……？？",0)
+				MES(LURI,"我不会读汉字哦～！",0)
+				MES_close(LURI)
+				F_set(LURI)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(LURI,"不会读汉字……",0)
+				MES(LURI,"好好学习的话，\n就好了……",0)
+				MES_close(LURI)
+				look_off(LURI)
+				//★琉璃【後悔】
+				F_set_note(LURI,2)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	if(F6_00_GoToMeru)
+	{
+		rot_chr(LURI,30,PLAYER1)
+		EV_stop("LOOKING_LURI")
+		MOT(LURI,51,10)
+		if(!F_LURI)
+		{
+		//　　※里之階段を上った辺りで，大五郎之世話をしている。
+		//　　　（站立状态，注视自由活动的大五郎）
+			MES(LURI,"失作叔叔\n说他见过\n大五郎。",0)
+			MES(LURI,"好吧～？\n大家好像都很忙……",0)
+			MES(LURI,"琉璃，这种事\n还是可以做到的。",0)
+			MES_close(LURI)
+			F_set(LURI)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(LURI,"今天怎么这么冷啊～。",0)
+			MES(LURI,"……………………………………",0)
+			MES_close(LURI)
+
+		//　　琉璃，大五郎に向く。
+			rot_chr(LURI,30,DAIGORO)
+			MES(LURI,"大五郎，不冷啊？\n感冒了吗？",0)
+			MES_close(LURI)
+		}
+		MOT(LURI,75,10)
+		EV("LOOKING_LURI")
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		if(!FS_11_TalkKai)
+		{
+			EV("TK_KAI")
+			wait_EV("TK_KAI")
+			TK_end()
+			rot(LURI,160,90)
+		}
+		else
+		{
+			rot_chr(LURI,30,PLAYER1)
+			if(!F_LURI)
+			{
+			//　　※看见凯初次事件后的消息。
+			//　　※凯（民家２）的厨房。
+				MOT(LURI,75,10)
+				MES(LURI,"哥哥，你不可以\n不去睡觉哦。",0)
+				MES(LURI,"所以今天\n就由琉璃来掌厨。",0)
+				MES_close(LURI)
+				rot(LURI,30,90)
+
+			//　　琉璃，台所に向いて···エモーション。
+				MOT(LURI,51,10)
+				EMO(LURI,EMO_TENTEN)
+				wait(30)
+				MES(LURI,"这样可以吗～？",0)
+				MES_close(LURI)
+				F_set(LURI)
+			}
+			else
+			{
+			//　　★繰り返し
+				MOT(LURI,75,10)
+				MES(LURI,"这是琉璃我第一次做饭哦。",0)
+				MES(LURI,"这个火什么的怎么用啊～。",0)
+				MES_close(LURI)
+				//★琉璃【初めて之お料理】
+				F_set_note(LURI,1)
+				MOT(LURI,51,10)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//　　　琉璃は３人配置し，隠れたりフリームーブしている。（分身之術）
+	//　　　和谁说话也是相同的反映。
+	//　　※长老宅横之お稲荷さん辺り。
+	//──────────────────────────────
+	if( F4_05_OnVillage2 )
+	{
+		rot_chr(LURI,60,PLAYER1)
+		//　　※初回イベント。
+		if(!FS_08_TalkLuri)
+		{
+			MOT_SET(LURI,160,-1,476,476,-1,-1)//印を結ぶ
+			
+			rot_chr(PARTNER,30,LURI)
+			MES(PARTNER,"那个，小琉璃？",0)
+			MES(PARTNER,"到这来干什么？",0)
+			MES_close(PARTNER)
+
+		//	name2(LURI)
+			rot_chr(LURI,30,PARTNER)
+			MES(LURI,"来这里玩玩喽～。",0)
+			MOT(LURI,160,10)
+			MES(LURI,"分身术～。",0)
+			MES_close(LURI)
+
+		//★　　琉璃，印を結んで２人に分身する。
+		
+			EV("EV_BUNSHIN_LURI")
+			wait_EV("EV_BUNSHIN_LURI")
+					
+			MOT(LURI,2,10)
+			
+			EMO(RAGNA,EMO_BIKKURI)
+			rot_chr(RAGNA,30,LURI_4)
+			rot_chr(PARTNER,30,LURI_4)
+			wait(30)
+
+					
+			MES(RAGNA,"唉，唉……",0)
+			MES(RAGNA,"这么小的孩子\n竟然能使这么厉害的分身术……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"小琉璃说是是\n凯的妹妹，\n隐身术很厉害的……",0)
+			MES(PARTNER,"虽这么说，但她经常恶作剧\n惹凯生气……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"嗯，那家伙的妹妹啊……",0)
+			MES(RAGNA,"……一点也不像啊。",0)
+			MES_close(RAGNA)
+
+		//	name2(LURI)
+			rot_chr(LURI,30,PLAYER1)
+			MES(LURI,"啊，对哥哥\n要保密哦。",0)
+			MES_pos(LURI,"因为是悄悄的\n溜出来的哦。",0,0,0,0,0)
+			wait(30)
+			rot_chr(LURI_4,30,PLAYER1)
+			MES_pos(LURI_4,"溜出来的哦。",0,0,0,0,0)
+			wait_key(0)
+
+		//　　同時に，分身したもう一方之琉璃にもポップアップ。
+			
+			MES_close(LURI)
+			MES_close(LURI_4)
+
+			//★凯【琉璃に手を焼く】
+			//★琉璃【分身之術が得意】
+			F_set_note(-76,0)
+			F_set_note(LURI,0)
+			F_set(FS_08_TalkLuri)
+			
+
+		//和带有名字的全员说话，浴场就回开放
+			EV("EV_F4_12_OkRoten")
+		}
+		else
+		{
+			if(!F_LURI)
+			{
+			//　　　以后，琉璃分身为4人自由行动。
+			//　　★凯【琉璃に手を焼く】
+			//　　★琉璃【分身之術が得意】
+			//──────────────────────────────
+			//　　※以下通常一般メッセージ。
+				MES(LURI,"吹啊吹～飞啊飞～□",0)
+				MES(LURI,"雪隆隆，飘下来～\n山咚咚，变雪白～□",0)
+
+			//　　同時に，他之琉璃たちにオートポップアップ。
+				MES_pos(LURI,"好冷呀～☆",0,0,0,0,0)
+				MES_pos(LURI_2,"好冷呀～☆",0,0,0,0,0)
+				MES_pos(LURI_3,"好冷呀～☆",0,0,0,0,0)
+				MES_pos(LURI_4,"好冷呀～☆",0,0,0,0,0)
+
+				wait_key(0)
+				MES_close(LURI)
+				MES_close(LURI_2)
+				MES_close(LURI_3)
+				MES_close(LURI_4)
+
+				F_set(LURI)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(LURI,"哥哥让我\n好好学习。",0)
+				MES(LURI,"不要对哥哥说哦～。",0)
+
+			//　　他之琉璃たちにオートポップアップ。
+				MES_pos(LURI_2,"不要说哦～。",0,0,0,0,0)
+				MES_pos(LURI_3,"不要说哦～。",0,0,0,0,0)
+				MES_pos(LURI_4,"不要说哦～。",0,0,0,0,0)
+				
+				wait_key(0)				
+				MES_close(LURI)
+				MES_close(LURI_2)
+				MES_close(LURI_3)
+				MES_close(LURI_4)
+			}
+		}
+	}
+	
+	TK_end()
+}
+
+//──────────────────────────────
+//分身たちに話しかけた场合之処理
+//──────────────────────────────
+TK_LURI_2
+{
+	TK_begin()
+	EV_stop("HIND_LURI")
+
+	rot_chr(PLAYER1,30,LURI_2)
+	rot_chr(PLAYER2,30,LURI_2)
+	rot_chr(LURI_2,30,PLAYER1)
+
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(PLAYER2, "1", "1", "1")	
+	KAO(LURI_2, "1", "1", "1")	
+
+	//　　※初回イベント。
+	if(!FS_08_TalkLuri)
+	{
+		MOT_SET(LURI_2,160,-1,476,476,-1,-1)//印を結ぶ
+		rot_chr(PARTNER,30,LURI_2)
+		MES(PARTNER,"那个，小琉璃？",0)
+		MES(PARTNER,"来这里干什么？",0)
+		MES_close(PARTNER)
+
+	//	name2(LURI)
+		rot_chr(LURI_2,30,PARTNER)
+		MES(LURI_2,"来这里玩玩喽～。",0)
+		MOT(LURI_2,130,10)
+		MES(LURI_2,"分身术～。",0)
+		MES_close(LURI_2)
+
+	//★　　琉璃，印を結んで２人に分身する。
+		EV("EV_BUNSHIN_LURI")
+		wait_EV("EV_BUNSHIN_LURI")
+				
+		MOT(LURI_2,2,10)
+		EMO(RAGNA,EMO_BIKKURI)
+		rot_chr(RAGNA,30,LURI_4)
+		rot_chr(PARTNER,30,LURI_4)
+		wait(30)
+
+		MES(RAGNA,"唉，唉……",0)
+		MES(RAGNA,"这么小的孩子\n竟然能使这么厉害的分身术……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"小琉璃说是是\n凯的妹妹，\n隐身术很厉害的……",0)
+		MES(PARTNER,"虽这么说，但她经常恶作剧\n惹凯生气……",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"嗯，那家伙的妹妹……",0)
+		MES(RAGNA,"……一点也不像呢。",0)
+		MES_close(RAGNA)
+
+	//	name2(LURI)
+		rot_chr(LURI_2,30,PLAYER1)
+		MES(LURI_2,"啊，对哥哥\n要保密哦。",0)
+		MES_pos(LURI_2,"因为是悄悄的\n溜出来的哦。",0,0,0,0,0)
+		wait(30)
+		rot_chr(LURI_4,30,PLAYER1)
+		MES_pos(LURI_4,"溜出来的哦。",0,0,0,0,0)
+		wait_key(0)
+
+	//　　同時に，分身したもう一方之琉璃にもポップアップ。
+		
+		MES_close(LURI_2)
+		MES_close(LURI_4)
+
+		//★凯【琉璃に手を焼く】
+		//★琉璃【分身之術が得意】
+		F_set_note(-76,0)
+		F_set_note(LURI,0)
+
+		F_set(FS_08_TalkLuri)
+		
+
+	//和带有名字的全员说话，浴场就回开放
+		EV("EV_F4_12_OkRoten")
+		
+		EV("HIND_LURI")
+	}
+	else
+	{
+		if(!F_LURI)
+		{
+		//　　　以后，琉璃分身为4人自由行动。
+		//　　★凯【琉璃に手を焼く】
+		//　　★琉璃【分身之術が得意】
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			MES(LURI_2,"吹啊吹～飞啊飞～□",0)
+			MES(LURI_2,"雪隆隆，飘下来～\n山咚咚，变雪白～～□",0)
+
+		//　　同時に，他之琉璃たちにオートポップアップ。
+			MES_pos(LURI,"好冷呀～☆",0,0,0,0,0)
+			MES_pos(LURI_2,"好冷呀～☆",0,0,0,0,0)
+			MES_pos(LURI_3,"好冷呀～☆",0,0,0,0,0)
+			MES_pos(LURI_4,"好冷呀～☆",0,0,0,0,0)
+
+			wait_key(0)
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+
+			F_set(LURI)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(LURI_2,"哥哥让我\n好好学习。",0)
+			MES(LURI_2,"不要对哥哥说哦～。",0)
+
+		//　　他之琉璃たちにオートポップアップ。
+			MES_pos(LURI,"不要说哦～。",0,0,0,0,0)
+			MES_pos(LURI_3,"不要说哦～。",0,0,0,0,0)
+			MES_pos(LURI_4,"不要说哦～。",0,0,0,0,0)
+			
+			wait_key(0)				
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+		}
+		EV("HIND_LURI")															//パッチ 2008/09/22
+	}
+	TK_end()
+}
+TK_LURI_3
+{
+	EV_stop("JUMP_LURI")
+	TK_begin()
+	rot_chr(PLAYER1,30,LURI_3)
+	rot_chr(PLAYER2,30,LURI_3)
+	rot_chr(LURI_3,30,PLAYER1)
+
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(PLAYER2, "1", "1", "1")	
+	KAO(LURI_3, "1", "1", "1")	
+
+	//　　※初回イベント。
+	if(!FS_08_TalkLuri)
+	{
+		MOT_SET(LURI_3,160,-1,476,476,-1,-1)//印を結ぶ
+		rot_chr(PARTNER,30,LURI_3)
+		MES(PARTNER,"那个，小琉璃？",0)
+		MES(PARTNER,"到这里来干什么？",0)
+		MES_close(PARTNER)
+
+	//	name2(LURI)
+		rot_chr(LURI_3,30,PARTNER)
+		MES(LURI_3,"来这里玩玩喽～。",0)
+		MOT(LURI_3,160,10)
+		MES(LURI_3,"分身术～。",0)
+		MES_close(LURI_3)
+
+	//★　　琉璃，印を結んで２人に分身する。
+		EV("EV_BUNSHIN_LURI")
+		wait_EV("EV_BUNSHIN_LURI")
+				
+		MOT(LURI_3,2,10)
+		EMO(RAGNA,EMO_BIKKURI)
+		rot_chr(RAGNA,30,LURI_4)
+		rot_chr(PARTNER,30,LURI_4)
+		wait(30)
+		
+		MES(RAGNA,"唉，唉……",0)
+		MES(RAGNA,"这么小的孩子\n竟然能使这么厉害的分身术……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"小琉璃说是是\n凯的妹妹，\n隐身术很厉害的……",0)
+		MES(PARTNER,"虽这么说，但她经常恶作剧\n惹凯生气……",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"嗯，那家伙的妹妹……",0)
+		MES(RAGNA,"……一点也不像呢。",0)
+		MES_close(RAGNA)
+
+	//	name2(LURI)
+		rot_chr(LURI_3,30,PLAYER1)
+		MES(LURI_3,"啊，对哥哥\n要保密哦。",0)
+		MES_pos(LURI_3,"因为是悄悄的\n溜出来的哦。",0,0,0,0,0)
+		wait(30)
+		rot_chr(LURI_4,30,PLAYER1)
+		MES_pos(LURI_4,"溜出来的哦。",0,0,0,0,0)
+		wait_key(0)
+
+	//　　同時に，分身したもう一方之琉璃にもポップアップ。
+		
+		MES_close(LURI_3)
+		MES_close(LURI_4)
+
+		//★凯【琉璃に手を焼く】
+		//★琉璃【分身之術が得意】
+		F_set_note(-76,0)
+		F_set_note(LURI,0)
+
+		F_set(FS_08_TalkLuri)
+		
+
+		EV("JUMP_LURI")
+	//和带有名字的全员说话，浴场就回开放
+		EV("EV_F4_12_OkRoten")
+	}
+	else
+	{
+		if(!F_LURI)
+		{
+		//　　　以后，以后，琉璃分身为4人自由行动。
+		//　　★凯【琉璃に手を焼く】
+		//　　★琉璃【分身之術が得意】
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			MES(LURI_3,"吹啊吹～飞啊飞～□",0)
+			MES(LURI_3,"雪隆隆，飘下来～～\n山咚咚，变雪白～□",0)
+
+		//　　同時に，他之琉璃たちにオートポップアップ。
+			MES_pos(LURI,"好冷呀～☆",0,0,0,0,0)
+			MES_pos(LURI_2,"好冷呀～☆",0,0,0,0,0)
+			MES_pos(LURI_3,"好冷呀～☆",0,0,0,0,0)
+			MES_pos(LURI_4,"好冷呀～☆",0,0,0,0,0)
+
+			wait_key(0)
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+
+			F_set(LURI)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(LURI_3,"哥哥让我\n好好学习。",0)
+			MES(LURI_3,"不要对哥哥说哦～。",0)
+
+		//　　他之琉璃たちにオートポップアップ。
+			MES_pos(LURI,"不要说哦～。",0,0,0,0,0)
+			MES_pos(LURI_2,"不要说哦～。",0,0,0,0,0)
+			MES_pos(LURI_4,"不要说哦～。",0,0,0,0,0)
+			
+			wait_key(0)				
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+		}
+		EV("JUMP_LURI")													//パッチ 2008/09/22
+ 	}
+	TK_end()
+}
+
+TK_LURI_4
+{
+	TK_begin()
+	rot_chr(PLAYER1,30,LURI_4)
+	rot_chr(PLAYER2,30,LURI_4)
+	rot_chr(LURI_4,30,PLAYER1)
+
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(PLAYER2, "1", "1", "1")	
+	KAO(LURI_4, "1", "1", "1")	
+
+	
+	if(!F_LURI)
+	{
+	//　　　以后，琉璃分身为4人自由行动。
+	//　　★凯【琉璃に手を焼く】
+	//　　★琉璃【厉害的分身术】
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		MES(LURI_4,"吹啊吹～飞啊飞～□",0)
+		MES(LURI_4,"雪隆隆，飘下来～\n山咚咚，变雪白～□",0)
+
+	//　　同時に，他之琉璃たちにオートポップアップ。
+		MES_pos(LURI,"好冷呀～☆",0,0,0,0,0)
+		MES_pos(LURI_2,"好冷呀～☆",0,0,0,0,0)
+		MES_pos(LURI_3,"好冷呀～☆",0,0,0,0,0)
+		MES_pos(LURI_4,"好冷呀～☆",0,0,0,0,0)
+
+		wait_key(0)
+		MES_close(LURI)
+		MES_close(LURI_2)
+		MES_close(LURI_3)
+		MES_close(LURI_4)
+
+		F_set(LURI)
+	}
+	else
+	{
+	//　　★繰り返し
+		MES(LURI_4,"哥哥让我\n好好学习。",0)
+		MES(LURI_4,"不要对哥哥说哦～。",0)
+
+	//　　他之琉璃たちにオートポップアップ。
+		MES_pos(LURI,"不要说哦～。",0,0,0,0,0)
+		MES_pos(LURI_2,"不要说哦～。",0,0,0,0,0)
+		MES_pos(LURI_3,"不要说哦～。",0,0,0,0,0)
+		
+		wait_key(0)				
+		MES_close(LURI)
+		MES_close(LURI_2)
+		MES_close(LURI_3)
+		MES_close(LURI_4)
+	}
+	
+	TK_end()
+}
+
+//琉璃分身処理
+EV_BUNSHIN_LURI
+{
+/*
+	CAM_move(7480,9856,1655,30,0)
+	CAM(190,65,95,37,180,30,0)
+	wait_CAM_move()
+*/
+	//隠していた分身を移動させ，透過を解除
+//	chr_pos(LURI_4,7495,-9945,1399,0,2)
+	chr_pos(LURI_4,6530,-10404,1660,0,2)
+
+	MOT_SET(LURI_4,150,-1,552,552,-1,-1)
+	MOT(LURI_4,150,0)
+	color(LURI_4,1)
+	EV("ROLING_LURI")
+	
+	wait(30)
+/*
+	cross_fade(20)
+	CAM_return( 0 )
+	wait_fade()
+*/
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+PSWTC

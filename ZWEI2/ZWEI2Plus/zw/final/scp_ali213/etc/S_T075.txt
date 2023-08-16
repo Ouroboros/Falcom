@@ -1,0 +1,333 @@
+//Zwei2一般メッセ～ジ·星降之里 TEST
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆矢作（きこり）Yasaku")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_YASAKU
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(YASAKU, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,YASAKU)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,YASAKU)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□□　わらしべイベント
+	//	name("１·矢作（星降之里）		□『鷹之彫り物』")143
+	//──────────────────────────────
+	if(F5_00_HearLunar && !FV_11_Warasi_1_Ysk)
+	{
+	//　　矢作、拉古那に向く。
+		//□では首だけ動かす
+		if(!F6_00_GoToMeru)
+		{
+			look_chr(YASAKU, RAGNA, "Bone_Head")
+		}
+		//□では体ごと動かす
+		else
+		{
+			MOT(YASAKU,52,10)
+			rot_chr(YASAKU,30,PLAYER1)
+		}
+
+		MES(YASAKU,"是你们吗……",0)
+		MES(YASAKU,"昨天受你们照顾了。\n这个给你们吧。",0)
+		MES_close(YASAKU)
+
+	//	name("アイテム入手テキスト")
+	//	MES(this,"『鷹之彫り物』を手に入れた。",0)
+		//―――――――――――――――――――――――
+		fade_in(30,10,BLACK)
+
+		get_item(143,1,0)
+		wait(10)
+		wait_key(0)
+		
+		fade_in(0,10,BLACK)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		//―――――――――――――――――――――――
+
+		MES(RAGNA,"哦，啊啊。谢谢。",0)
+		MES_close(RAGNA)
+
+	//	name2(PET)
+		MES(PET,"嘿……\n很逼真的雕刻嘛。",0)
+		MES_close(PET)
+
+		//──────────────────────────────
+		//	name("□艾雯先頭")
+		if(GW_MAN==0 && F6_00_GoToMeru)
+		{
+			MES(PARTNER,"唔，似乎是\n制作得很认真的作品啊。",0)
+			MES_close(PARTNER)
+		}
+		//	name("□拉古那先頭")
+//		else
+//		{
+//			MES(RAGNA,"啊啊，似乎是\n制作得很认真的作品啊。",0)
+//			MES_close(RAGNA)			
+//		}
+		//──────────────────────────────
+
+		MES(YASAKU,"这可是花了３年雕刻出来的杰作啊。\n请好好珍惜。",0)
+		MES_close(YASAKU)
+
+	//　　拉古那たちに冷や汗エモ～ション。
+		EMO(RAGNA,EMO_HIYAASE)
+		EMO(PET,EMO_HIYAASE)
+		
+		//艾雯が居る
+		if(F6_00_GoToMeru)
+		{
+			EMO(PARTNER,EMO_HIYAASE)
+		}
+		else
+		//奥蒂莎が居る
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			EMO(PARTNER,EMO_HIYAASE)
+		}
+		wait(30)
+		
+		MES(RAGNA,"（突然就被\n  交托了贵重的东西啊。）",0)
+		MES(RAGNA,"（怎，怎么办才好……）",0)
+		MES_close(RAGNA)
+		
+		//★矢作【彫り物をする】
+		F_set_note(YASAKU,1)
+		F_set(FV_11_Warasi_1_Ysk)
+		
+		if(!F6_00_GoToMeru)
+		{
+			look_off(YASAKU)
+		}
+		else
+		{
+			MOT(YASAKU,2,10)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※民家１之前啊たりで、仕事している。
+	if(F6_00_GoToMeru)
+	{
+		MOT(YASAKU,52,10)
+		rot_chr(YASAKU,30,PLAYER1)
+		if(!F_YASAKU)
+		{
+//			MES(YASAKU,"……外面的人\n迷路来到这里还真是少见啊。",0)
+//			MES(YASAKU,"嗯，最近里中的人\n也没那么严厉了。",0)
+//			MES(YASAKU,"那个男人看起来也挺老实，\n应该不会出什么严重的事吧。",0)
+//			MES_close(YASAKU)
+
+			look_chr(YASAKU,CLEESE,"Bone_Head")
+			MES(YASAKU,"唔，那个年轻人……\n看起来似乎是个\n迷路的旅行者。",0)
+			look_off(YASAKU)
+			MES(YASAKU,"在这种时候，\n也会有些少见的事呢。",0)
+			MES(YASAKU,"嗯，最近里中的人\n也没那么严厉了。",0)
+			MES(YASAKU,"那个男人看起来也挺老实，\n应该不会出什么严重的事吧。",0)
+			MES_close(YASAKU)
+
+/*			//	name("□まだ『鷹之彫り物』を貰ってない场合")
+			if( !FV_00_Warasi_1_Ysk )
+			{
+				MES(YASAKU,"话说回来……",0)
+				MES(YASAKU,"前些日子\n也受你们照顾了。",0)
+				MES(YASAKU,"这个你们带走吧。",0)
+				MES_close(YASAKU)
+
+			//	name("アイテム入手テキスト")
+				fade_in(30,10,BLACK)
+
+				get_item(143,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			//　　※わらしべイベント用之アイテムです。
+
+				MES(YASAKU,"这是我做的东西。",0)
+				MES(YASAKU,"虽然不是什么了不起的东西，\n还请你们收下。",0)
+				MES_close(YASAKU)
+				
+				F_set(FV_00_Warasi_1_Ysk)
+			}
+*/			
+			F_set(YASAKU)
+		}
+		//★繰り返し
+		else
+		{
+			MES(YASAKU,"最近里中的人\n也没那么严厉了。",0)
+			MES(YASAKU,"……或许这是个不错的趋势。",0)
+			MES_close(YASAKU)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//　　※民家１、縁側に座っている。
+		//　　※初回イベント。
+		look_chr(YASAKU, RAGNA, "Bone_Head")
+		if(!F_YASAKU)
+		{
+			//　　※以下通常一般メッセ～ジ。
+			MES(YASAKU,"不管怎么说，幸好\n大五郎没出事。",0)
+			MES(YASAKU,"那次袭击里，\n我也在中途失去了保护他的余力。\n虽然托付给了鸦大人……",0)
+			MES(YASAKU,"那孩子好像一点也没哭，\n很老实的样子。",0)
+			MES(YASAKU,"唔……\n这也是因为我的挺身而出\n对他产生了积极的影响吧。",0)
+			MES_close(YASAKU)
+			
+			//★大五郎【泣かない】
+			F_set_note(-74,1)
+			F_set(YASAKU)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　★繰り返し
+			MES(YASAKU,"那么，我也\n必须去工作了。",0)
+			MES(YASAKU,"在这种时候，应该有必要\n从山上砍伐些木材。",0)
+			MES(YASAKU,"虽然伤口还会痛……\n不过这种时候能进入雪山深处的\n也只有我了。",0)
+			MES_close(YASAKU)
+		}
+		look_off(YASAKU)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//　　※里入り口付近で倒れている。
+	if( F4_09_GoShrineMia )
+	{
+		MES(YASAKU,"………………………………",0)
+		MES_close(YASAKU)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//　　※里入り口付近で倒れている。
+	if( F4_06_StopAttack )
+	{
+		MES(YASAKU,"………………………………",0)
+		MES_close(YASAKU)
+	}
+	else
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//　　※民家１之前啊たりで、仕事している。
+	if( F4_05_OnVillage2 )
+	{
+		MOT(YASAKU,52,10)
+		rot_chr(YASAKU,30,PLAYER1)
+		//　　※初回メッセ～ジ
+		if( !FS_08_TalkYasaku )
+		{
+			MES(YASAKU,"唔，你们通过修行场了吗。",0)
+			MES(YASAKU,"那附近的魔物\n还算是比较老实的。",0)
+			MES(YASAKU,"后面的山上……尤其是神社附近\n可是徘徊着凶暴的魔物啊。",0)
+			MES(YASAKU,"太阳下山以后\n可别出去哦。",0)
+			MES_close(YASAKU)
+			F_set(FS_08_TalkYasaku)
+			
+		//名前付きキャラ全員に話しかけると露天温泉が開く
+			EV("EV_F4_12_OkRoten")
+		}
+		//※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_YASAKU)
+			{
+				MES(YASAKU,"后面的山上，\n有一座作为里的象征的神社。",0)
+				MES(YASAKU,"不过，那附近\n有很多凶暴的魔物。",0)
+				MES(YASAKU,"日落以后尤其危险。",0)
+				MES(YASAKU,"从现在开始，\n可别随便出去哦。",0)
+				MES_close(YASAKU)
+				F_set(YASAKU)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(YASAKU,"话说回来，\n你们见到过大五郎吗？",0)
+				MES(YASAKU,"刚才还一直\n在杂货店门口玩呢……",0)
+				MES(YASAKU,"唔，说起那孩子，\n马上就晃晃荡荡地到处乱转了。",0)
+//				MES(YASAKU,"要不要从下次开始，\n拜托什么人看着他呢……",0)
+				MES(YASAKU,"真是的，这习惯到底是像谁呢……",0)
+				MES_close(YASAKU)
+				
+				//★矢作【大五郎は息子】
+				//★大五郎【フラフラ出かける】
+				F_set_note(YASAKU,0)
+				F_set_note(-74,0)
+			}
+		}
+		MOT(YASAKU,2,10)
+	}
+	TK_end()
+}
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

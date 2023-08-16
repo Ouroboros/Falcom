@@ -1,0 +1,718 @@
+//====================================================================
+//ステージトラップスクリプト
+//[???????][ラグナの家（外）]
+//====================================================================
+
+#ScriptTable
+
+
+#EVENT_RAGNA 	1
+#DRAGON	 		2
+#MIA 			3
+#TELMIDORL	 	4
+#EFFDUMMY1	 	5
+#EFFDUMMY2	 	6
+#EFFDUMMY3	 	7
+#EFFDUMMY4	 	8
+#EFFDUMMY5	 	9
+
+
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip      x    y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+
+//■イベント
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼ミア覚醒．回想
+		EV("EV_5_21_GoldMia2")
+	}
+	else
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼休憩所．回想
+		EV("EV_4_10_Kaisou")
+	}
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+
+//露天風呂～休憩所～回想イベント
+EV_4_10_Kaisou
+{
+	EV_begin()
+	
+	filter(1,50,0)
+//──────────────────────────────
+//　　画面暗転した状態で、パチパチと炎のＳＥ。
+//　　遠くから聞こえてくるようなボイスと会わせて
+//　　以下のメッセージとビジュアルを展開していく。
+//　　少年の視点で、目の前の家が炎に包まれているのを見せる。
+	//キャラ配置
+//	set_chr(EVENT_RAGNA,  11, -1,-1, 4762,-109,-19,2, 224, 0, "")
+	set_chr(EVENT_RAGNA,  11, -1,-1, 4556,106,-20,100,220, 2, "")
+//	set_chr(DRAGON,      407, -1,-1, 3953,590,3858,53, 300, 0, "")
+//	set_chr(DRAGON,      407, -1,-1, 7131,-386,3656,53, 44, 0, "")
+//	set_chr(DRAGON,      407, -1,-1, 6251,-1763,2986,53, 44, 0, "")
+	set_chr(DRAGON,      407, -1,-1, 6818,-2414,3068,53, 44, 0, "")
+	set_chr(EFFDUMMY1,   749, -1,-1, 5653,-200, 100,35, 0, 0, "")	//右窓
+	set_chr(EFFDUMMY2,   749, -1,-1, 4834,-1071,200,35, 0, 0, "")	//左窓
+	set_chr(EFFDUMMY3,   749, -1,-1, 5761,-601, 500,36, 0, 0, "")
+	set_chr(EFFDUMMY4,   749, -1,-1, 5317,-651,  20,35, 0, 0, "")	//扉
+	set_chr(EFFDUMMY5,   749, -1,-1, 4652,-1522,136,36, 0, 0, "")	//
+
+	F_set_chr(EFFDUMMY1,  CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY1,  CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY1,  CF_NO_CSP)
+	F_set_chr(EFFDUMMY2,  CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY2,  CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY2,  CF_NO_CSP)
+	F_set_chr(EFFDUMMY3,  CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY3,  CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY3,  CF_NO_CSP)
+	F_set_chr(EFFDUMMY4,  CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY4,  CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY4,  CF_NO_CSP)
+	F_set_chr(EFFDUMMY5,  CF_NO_HEIGHT)
+	F_set_chr(EFFDUMMY5,  CF_NO_ZIMEN)
+	F_set_chr(EFFDUMMY5,  CF_NO_CSP)
+					
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(DRAGON,     CF_NO_CLIP)
+	F_set_chr(DRAGON,     CF_NO_CLIP2)
+	F_set_chr(DRAGON,     CF_NO_CSP)
+	F_set_chr(DRAGON,     CF_NO_HEIGHT)
+
+	//--- モーション設定 --------------------------------------------------
+	MOT_SET(EVENT_RAGNA,150,-2,468,468,-1,-1)		//
+	MOT_SET(EVENT_RAGNA,151,-2,482,482,-1,-1)		//このやろー
+	MOT_SET(DRAGON,152,152,765, 804,-1,-1)		//滞空はばたきLoop
+	MOT_SET(DRAGON,153,154,670, 689,-1,-1)		//飛行始め	
+	MOT_SET(DRAGON,154,154,690, 719,-1,-1)		//飛行	
+	MOT(DRAGON, 152, 1)
+	MOT(EVENT_RAGNA, 150,1)	
+	color(DRAGON,-1)
+
+	CAM_move(4560,96,188,0,0)
+	CAM(-570,41,188,35,126,0,0)
+//	CAM(-570,41,188,35,150,900,0)
+	CAM(-570,40,188,34,135,900,0)
+	chr_pos(RAGNA, 5155,437,-20,342,2)
+	
+	wait(30)
+	
+	SE(1028,0)//火事
+	
+//　　画面、再びフェードイン。
+	fade_in(0,60,0)
+	wait_fade()
+	wait(15)
+	
+	chr_rename(EVENT_RAGNA, "ラグナ")
+	MES(EVENT_RAGNA,"なんだ……これ……",0)
+	MES_close(EVENT_RAGNA)
+	
+	wait(30)
+
+	cross_fade(15)
+//	CAM_move(4780,116,128,0,0)	
+//	CAM(-210,21,128,31,11,0,0)
+	CAM_move(4576,-46,134,0,0)
+	CAM(-290,60,15,13,16,0,0)
+	CAM(-290,60,115,12,-10,900,0)	
+	MOT(EVENT_RAGNA, 150,1)
+
+	KAO(EVENT_RAGNA,"C","D","5")
+	wait(30)
+
+	CAM_quake("37")
+//	KAO(EVENT_RAGNA,"C232C2Z2","1233321D","5")
+	KAO(EVENT_RAGNA,"C232C23Z2","1233321D","5")
+	MES(EVENT_RAGNA,"P1S4なんなんだよ、これはあああっ！",0)
+//	KAO(EVENT_RAGNA,"C232CZ3","D12333Q","B")	
+	KAO(EVENT_RAGNA,"C232C23Z2","E","5")
+	MES(EVENT_RAGNA,"S3父さん！　母さん！",0)
+	MES_close(EVENT_RAGNA)
+	wait(15)
+	CAM_quake("373737")
+//	KAO(EVENT_RAGNA,"C232C2Z2","Q33321DE","5")	
+	KAO(EVENT_RAGNA,"C232C23Z3","D12333Q","B")	
+	MES(EVENT_RAGNA,"P1S5ミアああああああああっ！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　画面切り替えして、炎に包まれた翼竜がホバリングし、
+//　　今にも飛び去って行きそうなのを下から見上げるビジュアル。
+
+	wait(15)
+	EV("EV_1111_loop")//ドラゴン羽ばたきSE
+	cross_fade(15)
+	CAM_move(4790,88,334,0,0)
+	CAM(-1170,41,334,31,145,0,0)
+
+	color(DRAGON,1)
+	wait_fade()
+	wait(15)
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n炎に包まれた翼竜がホバリングし、\n今にも飛び去って行きそうなのを下から見上げるビジュアル。",0)
+	MES(EVENT_RAGNA,"化け物め……\nよくも、よくもおおおおっ！",0)
+	MES(EVENT_RAGNA,"ゆるさない……\n絶対にゆるさないからな！",0)
+	MES_close(EVENT_RAGNA)
+	CAM(-1170,36,334,31,145,300,0)
+	rot(DRAGON, 8, 224 )
+	wait(15)
+	move(DRAGON, 42, 100, 500,100,700,10)	
+	wait(50)
+	fade_in(100,100,0)
+	CAM_quake("464646464646464646")
+	MES_pos(EVENT_RAGNA,"P1S5うわああああああああああっ！",0,0,0,0,0)
+	wait(10)
+	move(DRAGON, 40, 100, 45000,-40000,15000,10)	
+//	wait(100)
+	wait(50)
+	MES_close(EVENT_RAGNA)
+	wait(60)
+	EV("EV_1111_fadeout")//羽ばたきSEフェードアウト
+//	wait(50)
+
+//　　徐々に遠ざかっていく翼竜の羽ばたき。
+//　　炎のＳＥも徐々に小さくなっていき、
+//　　ビジュアルも紅く歪んでいってフェードアウト。
+
+//　　画面、ゆっくりとフェードアウト。
+	EV("EV_1028_fadeout")//火事SEフェードアウト
+	wait_fade()
+
+	filter(0,0,0)
+
+	delete(EVENT_RAGNA)
+	delete(DRAGON)
+	wait(30)
+	
+	workG(GW_ENTRY_EVENT,SET,2)
+	new_map(10401)
+
+
+//──────────────────────────────
+}
+
+//──────────────────────────────
+//▼ミア覚醒．回想
+//──────────────────────────────
+EV_5_21_GoldMia2
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+	
+	wait(30)												//カメラがくつき抑制
+
+	//キャラ再配置
+	chr_pos(RAGNA, 2090,-600,-20,0,2)
+	chr_pos(PARTNER, 2290,-600,-20,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+//	set_chr(TELMIDORL, 	1028,-1,-1, 4970,-440,-20, 2,230,0, "")
+//	set_chr(TELMIDORL, 	1028,-1,-1, 4612,-107,-21, 2,230,0, "")
+	set_chr(TELMIDORL, 	1064,-1,-1, 4385,82,-21,   2,230,0, "")
+	
+	set_chr(MIA,	 	87,-1,-1, 5180,-620,-20, 2,50,0, "")
+	KAO(MIA,"B","D","1")
+
+	F_set_chr(TELMIDORL, CF_NO_CSP)
+	F_set_chr(TELMIDORL, CF_NO_CLIP)
+	F_set_chr(TELMIDORL, CF_NO_CLIP2)
+	wait(1)
+	F_set_Node(TELMIDORL,"Bone_RightSword",NP_HIDE)
+
+	KAO(TELMIDORL,"1","1","2")
+
+	//モーション定義
+	MOT_SET(TELMIDORL,150,-1,454,454,-1,-1)	//膝つき
+//	MOT_SET(TELMIDORL,151,-1,3601,3690,-1,-1)	//膝つき
+	MOT_SET(TELMIDORL,151,-1,3601,3655,-1,-1)	//膝つき
+
+	filter(1,50,0)
+
+	//カメラ初期位置
+	CAM_move(4917,453,366,0,0)
+	CAM(429,75,366,37,119,0,0)
+	CAM_move(5077,573,146,200,0)
+	CAM(-690,31,146,37,37,200,0)
+	
+	move(TELMIDORL, 0, 8, 4970,-440,-20, 0 )
+	
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+//	MES(MIA,"◆未入力項目\n回想ビジュアル（形式は要相談）。\n幼いミアを、魔族のテルミドールが膝を付いて出迎えている。",0)
+//	MES_close(MIA)
+
+	KAO(MIA,"B","1233321D","4")
+
+	wait_move(TELMIDORL)
+	wait(25)
+	KAO(TELMIDORL,"1","123","2")
+//	MOT(TELMIDORL,150,10)
+	MOT(TELMIDORL,151,10)
+	KAO(MIA,"5","12333221D","5")
+	wait(60)
+
+	fade_in(100,60,0)
+	wait_fade()
+
+	filter(0,0,0)
+
+	delete(TELMIDORL)
+	delete(MIA)
+
+//　異－ボス２終へ(ev70392)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(17039)
+}
+
+//火事SEフェードアウト
+EV_1028_fadeout
+{
+	SE_vol(1028,100,0)
+	wait(1)
+	SE_vol(1028,99,0)
+	wait(1)
+	SE_vol(1028,98,0)
+	wait(1)
+	SE_vol(1028,97,0)
+	wait(1)
+	SE_vol(1028,96,0)
+	wait(1)
+	SE_vol(1028,95,0)
+	wait(1)
+	SE_vol(1028,94,0)
+	wait(1)
+	SE_vol(1028,93,0)
+	wait(1)
+	SE_vol(1028,92,0)
+	wait(1)
+	SE_vol(1028,91,0)
+	wait(1)
+	SE_vol(1028,90,0)
+	wait(1)
+	SE_vol(1028,89,0)
+	wait(1)
+	SE_vol(1028,88,0)
+	wait(1)
+	SE_vol(1028,87,0)
+	wait(1)
+	SE_vol(1028,86,0)
+	wait(1)
+	SE_vol(1028,85,0)
+	wait(1)
+	SE_vol(1028,84,0)
+	wait(1)
+	SE_vol(1028,83,0)
+	wait(1)
+	SE_vol(1028,82,0)
+	wait(1)
+	SE_vol(1028,81,0)
+	wait(1)
+	SE_vol(1028,80,0)
+	wait(1)
+	SE_vol(1028,79,0)
+	wait(1)
+	SE_vol(1028,78,0)
+	wait(1)
+	SE_vol(1028,77,0)
+	wait(1)
+	SE_vol(1028,76,0)
+	wait(1)
+	SE_vol(1028,75,0)
+	wait(1)
+	SE_vol(1028,74,0)
+	wait(1)
+	SE_vol(1028,73,0)
+	wait(1)
+	SE_vol(1028,72,0)
+	wait(1)
+	SE_vol(1028,71,0)
+	wait(1)
+	SE_vol(1028,70,0)
+	wait(1)
+	SE_vol(1028,69,0)
+	wait(1)
+	SE_vol(1028,68,0)
+	wait(1)
+	SE_vol(1028,67,0)
+	wait(1)
+	SE_vol(1028,66,0)
+	wait(1)
+	SE_vol(1028,65,0)
+	wait(1)
+	SE_vol(1028,64,0)
+	wait(1)
+	SE_vol(1028,63,0)
+	wait(1)
+	SE_vol(1028,62,0)
+	wait(1)
+	SE_vol(1028,61,0)
+	wait(1)
+	SE_vol(1028,60,0)
+	wait(1)
+	SE_vol(1028,59,0)
+	wait(1)
+	SE_vol(1028,58,0)
+	wait(1)
+	SE_vol(1028,57,0)
+	wait(1)
+	SE_vol(1028,56,0)
+	wait(1)
+	SE_vol(1028,55,0)
+	wait(1)
+	SE_vol(1028,54,0)
+	wait(1)
+	SE_vol(1028,53,0)
+	wait(1)
+	SE_vol(1028,52,0)
+	wait(1)
+	SE_vol(1028,51,0)
+	wait(1)
+	SE_vol(1028,50,0)
+	wait(1)
+	SE_vol(1028,49,0)
+	wait(1)
+	SE_vol(1028,48,0)
+	wait(1)
+	SE_vol(1028,47,0)
+	wait(1)
+	SE_vol(1028,46,0)
+	wait(1)
+	SE_vol(1028,45,0)
+	wait(1)
+	SE_vol(1028,44,0)
+	wait(1)
+	SE_vol(1028,43,0)
+	wait(1)
+	SE_vol(1028,42,0)
+	wait(1)
+	SE_vol(1028,41,0)
+	wait(1)
+	SE_vol(1028,40,0)
+	wait(1)
+	SE_vol(1028,39,0)
+	wait(1)
+	SE_vol(1028,38,0)
+	wait(1)
+	SE_vol(1028,37,0)
+	wait(1)
+	SE_vol(1028,36,0)
+	wait(1)
+	SE_vol(1028,35,0)
+	wait(1)
+	SE_vol(1028,34,0)
+	wait(1)
+	SE_vol(1028,33,0)
+	wait(1)
+	SE_vol(1028,32,0)
+	wait(1)
+	SE_vol(1028,31,0)
+	wait(1)
+	SE_vol(1028,30,0)
+	wait(1)
+	SE_vol(1028,29,0)
+	wait(1)
+	SE_vol(1028,28,0)
+	wait(1)
+	SE_vol(1028,27,0)
+	wait(1)
+	SE_vol(1028,26,0)
+	wait(1)
+	SE_vol(1028,25,0)
+	wait(1)
+	SE_vol(1028,24,0)
+	wait(1)
+	SE_vol(1028,23,0)
+	wait(1)
+	SE_vol(1028,22,0)
+	wait(1)
+	SE_vol(1028,21,0)
+	wait(1)
+	SE_vol(1028,20,0)
+	wait(1)
+	SE_vol(1028,19,0)
+	wait(1)
+	SE_vol(1028,18,0)
+	wait(1)
+	SE_vol(1028,17,0)
+	wait(1)
+	SE_vol(1028,16,0)
+	wait(1)
+	SE_vol(1028,15,0)
+	wait(1)
+	SE_vol(1028,14,0)
+	wait(1)
+	SE_vol(1028,13,0)
+	wait(1)
+	SE_vol(1028,12,0)
+	wait(1)
+	SE_vol(1028,11,0)
+	wait(1)
+	SE_vol(1028,10,0)
+	wait(1)
+	SE_vol(1028,9,0)
+	wait(1)
+	SE_vol(1028,8,0)
+	wait(1)
+	SE_vol(1028,7,0)
+	wait(1)
+	SE_vol(1028,6,0)
+	wait(1)
+	SE_vol(1028,5,0)
+	wait(1)
+	SE_vol(1028,4,0)
+	wait(1)
+	SE_vol(1028,3,0)
+	wait(1)
+	SE_vol(1028,2,0)
+	wait(1)
+	stop_SE(1028)
+}
+
+//ドラゴン羽ばたき
+EV_1111_loop
+{
+	wait(5)
+	SE(1111,0)
+	wait(35)
+	EV("EV_1111_loop2")
+}
+
+EV_1111_loop2
+{
+	wait(5)
+	SE(1111,0)
+	wait(35)
+	EV("EV_1111_loop")
+}
+
+//羽ばたきSE
+EV_1111_fadeout
+{
+	SE_vol(1111,100,0)
+	wait(1)
+	SE_vol(1111,99,0)
+	wait(1)
+	SE_vol(1111,98,0)
+	wait(1)
+	SE_vol(1111,97,0)
+	wait(1)
+	SE_vol(1111,96,0)
+	wait(1)
+	SE_vol(1111,95,0)
+	wait(1)
+	SE_vol(1111,94,0)
+	wait(1)
+	SE_vol(1111,93,0)
+	wait(1)
+	SE_vol(1111,92,0)
+	wait(1)
+	SE_vol(1111,91,0)
+	wait(1)
+	SE_vol(1111,90,0)
+	wait(1)
+	SE_vol(1111,89,0)
+	wait(1)
+	SE_vol(1111,88,0)
+	wait(1)
+	SE_vol(1111,87,0)
+	wait(1)
+	SE_vol(1111,86,0)
+	wait(1)
+	SE_vol(1111,85,0)
+	wait(1)
+	SE_vol(1111,84,0)
+	wait(1)
+	SE_vol(1111,83,0)
+	wait(1)
+	SE_vol(1111,82,0)
+	wait(1)
+	SE_vol(1111,81,0)
+	wait(1)
+	SE_vol(1111,80,0)
+	wait(1)
+	SE_vol(1111,79,0)
+	wait(1)
+	SE_vol(1111,78,0)
+	wait(1)
+	SE_vol(1111,77,0)
+	wait(1)
+	SE_vol(1111,76,0)
+	wait(1)
+	SE_vol(1111,75,0)
+	wait(1)
+	SE_vol(1111,74,0)
+	wait(1)
+	SE_vol(1111,73,0)
+	wait(1)
+	SE_vol(1111,72,0)
+	wait(1)
+	SE_vol(1111,71,0)
+	wait(1)
+	SE_vol(1111,70,0)
+	wait(1)
+	SE_vol(1111,69,0)
+	wait(1)
+	SE_vol(1111,68,0)
+	wait(1)
+	SE_vol(1111,67,0)
+	wait(1)
+	SE_vol(1111,66,0)
+	wait(1)
+	SE_vol(1111,65,0)
+	wait(1)
+	SE_vol(1111,64,0)
+	wait(1)
+	SE_vol(1111,63,0)
+	wait(1)
+	SE_vol(1111,62,0)
+	wait(1)
+	SE_vol(1111,61,0)
+	wait(1)
+	SE_vol(1111,60,0)
+	wait(1)
+	SE_vol(1111,59,0)
+	wait(1)
+	SE_vol(1111,58,0)
+	wait(1)
+	SE_vol(1111,57,0)
+	wait(1)
+	SE_vol(1111,56,0)
+	wait(1)
+	SE_vol(1111,55,0)
+	wait(1)
+	SE_vol(1111,54,0)
+	wait(1)
+	SE_vol(1111,53,0)
+	wait(1)
+	SE_vol(1111,52,0)
+	wait(1)
+	SE_vol(1111,51,0)
+	wait(1)
+	SE_vol(1111,50,0)
+	wait(1)
+	SE_vol(1111,49,0)
+	wait(1)
+	SE_vol(1111,48,0)
+	wait(1)
+	SE_vol(1111,47,0)
+	wait(1)
+	SE_vol(1111,46,0)
+	wait(1)
+	SE_vol(1111,45,0)
+	wait(1)
+	SE_vol(1111,44,0)
+	wait(1)
+	SE_vol(1111,43,0)
+	wait(1)
+	SE_vol(1111,42,0)
+	wait(1)
+	SE_vol(1111,41,0)
+	wait(1)
+	SE_vol(1111,40,0)
+	wait(1)
+	SE_vol(1111,39,0)
+	wait(1)
+	SE_vol(1111,38,0)
+	wait(1)
+	SE_vol(1111,37,0)
+	wait(1)
+	SE_vol(1111,36,0)
+	wait(1)
+	SE_vol(1111,35,0)
+	wait(1)
+	SE_vol(1111,34,0)
+	wait(1)
+	SE_vol(1111,33,0)
+	wait(1)
+	SE_vol(1111,32,0)
+	wait(1)
+	SE_vol(1111,31,0)
+	wait(1)
+	SE_vol(1111,30,0)
+	wait(1)
+	SE_vol(1111,29,0)
+	wait(1)
+	SE_vol(1111,28,0)
+	wait(1)
+	SE_vol(1111,27,0)
+	wait(1)
+	SE_vol(1111,26,0)
+	wait(1)
+	SE_vol(1111,25,0)
+	wait(1)
+	SE_vol(1111,24,0)
+	wait(1)
+	SE_vol(1111,23,0)
+	wait(1)
+	SE_vol(1111,22,0)
+	wait(1)
+	SE_vol(1111,21,0)
+	wait(1)
+	SE_vol(1111,20,0)
+	wait(1)
+	SE_vol(1111,19,0)
+	wait(1)
+	SE_vol(1111,18,0)
+	wait(1)
+	SE_vol(1111,17,0)
+	wait(1)
+	SE_vol(1111,16,0)
+	wait(1)
+	SE_vol(1111,15,0)
+	wait(1)
+	SE_vol(1111,14,0)
+	wait(1)
+	SE_vol(1111,13,0)
+	wait(1)
+	SE_vol(1111,12,0)
+	wait(1)
+	SE_vol(1111,11,0)
+	wait(1)
+	SE_vol(1111,10,0)
+	wait(1)
+	SE_vol(1111,9,0)
+	wait(1)
+	SE_vol(1111,8,0)
+	wait(1)
+	SE_vol(1111,7,0)
+	wait(1)
+	SE_vol(1111,6,0)
+	wait(1)
+	SE_vol(1111,5,0)
+	wait(1)
+	SE_vol(1111,4,0)
+	wait(1)
+	SE_vol(1111,3,0)
+	wait(1)
+	SE_vol(1111,2,0)
+	wait(1)
+
+	EV_stop("EV_1111_loop")
+	EV_stop("EV_1111_loop2")
+
+}
+
+#EndScriptTable
+//====================================================================
+

@@ -1,0 +1,988 @@
+//──────────────────────────────
+//	name("●魔女拉莱拉")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_LA-RAIRA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(LA-RAIRA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,LA-RAIRA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,LA-RAIRA)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LA-RAIRA)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LA-RAIRA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LA-RAIRA)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LA-RAIRA)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,LA-RAIRA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　飞机场之工房之中、もしくはどこか適当な场所にいる。
+	//　　（奥蒂莎と離しておく必要が啊るため、滑走路以外？）
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(LA-RAIRA,30,PLAYER1)
+	//	name("★１回目")
+	//	if(!F_LA-RAIRA)
+		if(!FM_12_TkLa-raira_1)
+		{
+			cross_fade(30)			//クロスフェ～ド
+			
+			EV_begin()
+			//カメラセット
+//			CAM_move(-8571,787,320,0,0)			
+//			CAM(129,66,235,28,136,0,0)
+			CAM_move(-8671,527,320,0,0)
+			CAM(89,14,320,28,143,0,0)
+			//キャラ再配置
+//			chr_pos(PARTNER,690,356,1,200,2)
+			chr_pos(RAGNA,-8156,-993,-75,160,2)
+			chr_pos(PARTNER,-8335,-930,-75,200,2)
+			chr_pos(PET,-8238,-794,-75,180,2)
+			rot_chr(LA-RAIRA,30,RAGNA)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　話しかけるとキャラ再配置してイベント発生。
+		
+			wait(15)
+			KAO(LA-RAIRA,"12321Z8","1","1")
+			MES(LA-RAIRA,"如果集中我们的魔力的话\n一定能在龙卷风上打开一道口子吧。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"只是、如果错过了那个时机的话\n再寻找机会就很难了。",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"不管那么多了、\n首先得做好万全的准备。",0)
+			MES_close(LA-RAIRA)
+
+			MES(RAGNA,"啊啊、当然。",0)
+			MES(RAGNA,"不过……\n就算在这里也能够清楚地看见龙卷呢。",0)
+			MES_close(RAGNA)
+
+			MES(PET,"嗯、是呀……\n也许已经很近了。",0)
+			MES_close(PET)
+
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"《螺旋要塞》梅尔塞迪克……",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"吞噬了许多岛屿与大陆\n无限释放破坏力的空中要塞。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"……虽然听过它的传说\n不会就是那个家伙吧。",0)
+			MES(LA-RAIRA,"的确是连我都吓了一跳呢。",0)
+			MES_close(LA-RAIRA)
+
+			MES(PARTNER,"嗯……\n不愧是魔王的城堡呀。",0)
+			MES(PARTNER,"真遗憾、我的城堡\n可没那么有气魄。",0)
+			MES_close(PARTNER)
+
+			EMO(PARTNER,EMO_TENTEN)
+			wait(50)
+
+			MES(PARTNER,"呜、好像\n敌不过它呢，真没劲。",0)
+			MES_close(PARTNER)
+
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			EMO(LA-RAIRA,EMO_HIYAASE)
+			wait(30)
+			KAO(RAGNA,"B","2","1")
+			look_chr( RAGNA, PARTNER,"Bone_Head")
+			look_chr( PET, PARTNER,"Bone_Head")
+			look_chr( LA-RAIRA, PARTNER,"Bone_Head")
+			wait(15)
+
+			MES(PET,"公、公主殿下……",0)
+			MES_close(PET)
+
+			KAO(RAGNA,"B232BZ4","2","1")
+			MES(RAGNA,"啊、在气势上输一点也没什么关系吧。",0)
+			MES_close(RAGNA)
+
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			look_off( LA-RAIRA )
+			rot(LA-RAIRA,60,180)
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			KAO(RAGNA, "1", "1", "1")
+			KAO(PARTNER,"1", "1", "1")
+			KAO(PET,"1", "1", "1")
+			KAO(LA-RAIRA,"1", "1", "1")
+
+			EV_end()
+		//	F_set(LA-RAIRA)
+			F_set(FM_12_TkLa-raira_1)
+
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+
+		}
+	//	name("★以後、繰り返し")
+		else
+		{
+			MES(LA-RAIRA,"如果集中我们的魔力的话\n一定能在龙卷风上打开一道口子吧。",0)
+			MES(LA-RAIRA,"只是、如果错过了那个时机的话\n再寻找机会就很难了。",0)
+			MES(LA-RAIRA,"不管那么多了、\n首先得把准备做足嘛。",0)
+			MES_close(LA-RAIRA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//──────────────────────────────
+		//▼フラグ□（水晶峡谷へ向かう）
+		//──────────────────────────────
+		//　　魔女之家之右上之おく、調合台之前にいる。
+		//	name("★初回（一回之み／イベント処理）")
+		if(!F5_03_OfferLaraira)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,0)
+			wait_fade()
+			
+			TK_end()
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(123,-49,135,0,0)
+			CAM(-100,56,135,27,146,0,0)
+			
+			//キャラセット
+			chr_pos(LA-RAIRA, 317,34,0,270,2)
+			
+			chr_pos(RAGNA,-372,-337,0,4,2)
+			chr_pos(PET,-125,-373,0,355,2)
+			color(RAGNA,-1)//透過
+			color(PET,-1)//透過
+			
+			//ハイポリキャラセット
+			set_chr(EVENT_RAGNA,1010,-1,-1, 26,164,0,	2,250,0, "")
+			set_chr(LUE,  	 	1015,-1,-1, -88,38,1,	2,264,0, "")
+
+			KAO(EVENT_RAGNA, "1", "1", "1")	
+			KAO(LUE,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+			//フェ～ドイン----------------------
+			fade_in(0,30,0)
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　話しかけるとキャラ再配置してイベント発生。
+			MES(LA-RAIRA,"来了呀。\n拉古那、还有露。",0)
+			MES_close(LA-RAIRA)
+			rot_chr(LA-RAIRA,30,EVENT_RAGNA)
+			wait(15)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"事情我已经知道了。\n是艾雯公主被抓走了吧？",0)
+			MES_close(LA-RAIRA)
+
+		//　　拉古那たち之頭に！マ～ク。
+			EMO(EVENT_RAGNA,EMO_BIKKURI)
+			EMO(LUE,EMO_BIKKURI)
+			KAO(EVENT_RAGNA, "E", "D", "1")	
+			KAO(LUE,"2", "D", "6")	
+			wait(30)
+
+			MES(EVENT_RAGNA,"啥……",0)
+			MES_close(EVENT_RAGNA)
+
+		//	name2(LUE)
+			MES(LUE,"为、为什么！？",0)
+			MES_close(LUE)
+
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"啊呀呀、\n你忘记了我的拿手绝技了么？",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"被封印入异世界的魔王的力量中\n有打开《门》的《钥匙》……",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"以及穿过那里的水晶玉等等，\n这些事情大概上我都了解了哦。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(LUE)
+			MES(LUE,"就、就是那样。",0)
+			MES_close(LUE)
+
+		//	name2(EVENT_RAGNA)
+			MES(EVENT_RAGNA,"话待会再说，赶快来帮忙吧。",0)
+			MES(EVENT_RAGNA,"老婆婆。\n你也来帮忙吧？",0)
+			MES_close(EVENT_RAGNA)
+
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"哦哦、现在正好、\n准备工作刚结束。",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"我就先\n前往水晶峡谷了。",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"你们要是准备完毕了\n也马上过来吧。",0)
+			MES_close(LA-RAIRA)
+			wait_MES(LA-RAIRA)
+
+		//　　ラ～ライラ、そ之まま拉古那之脇を通って
+		//　　すたすたと家から出て行ってしまう。
+		
+			CAM_move(-117,-289,175,120,0)
+			CAM(-30,56,175,24,164,120,0)
+			EV("MOVE_LA-RAIRA")
+			
+			wait(20)
+			rot_chr(EVENT_RAGNA,30,LA-RAIRA)
+			rot_chr(LUE,30,LA-RAIRA)
+		
+		//　　それを見ながら拉古那たち之頭に…マ～ク。
+			
+			wait(20)
+			rot_chr(EVENT_RAGNA,10,LA-RAIRA)
+			rot_chr(LUE,30,LA-RAIRA)
+
+			wait(20)
+			rot_chr(EVENT_RAGNA,10,LA-RAIRA)
+			rot_chr(LUE,30,LA-RAIRA)
+
+			wait(20)
+			rot_chr(EVENT_RAGNA,10,LA-RAIRA)
+			rot_chr(LUE,30,LA-RAIRA)
+
+			EMO(EVENT_RAGNA,EMO_TENTEN)
+			EMO(LUE,EMO_TENTEN)
+			wait(20)
+			rot_chr(EVENT_RAGNA,10,LA-RAIRA)
+			rot_chr(LUE,30,LA-RAIRA)
+			wait(90)
+
+			KAO(EVENT_RAGNA,"12321Z3","23","1")
+			MES(EVENT_RAGNA,"走掉了……",0)
+			KAO(EVENT_RAGNA,"112321Z5","21","1")
+			MES(EVENT_RAGNA,"虽说的确是让她快点来帮忙\n但老婆婆的这个反应实在是神速啊。",0)
+			MES_close(EVENT_RAGNA)
+
+			KAO(LUE,"12321Z4","23","1")
+			MES(LUE,"她好像总在库朗毕林中\n飞来飞去呢。",0)
+			rot_chr(LUE,30,EVENT_RAGNA)
+			KAO(LUE,"12321Z4","1","1")
+			MES(LUE,"好吧。\n我们也去吧。",0)
+			MES_close(LUE)
+
+//			CAM_move(-37,-129,175,50,0)
+//			CAM(-100,50,175,25,147,50,0)
+//			wait(50)
+			
+			rot_chr(EVENT_RAGNA,30,LUE)
+			//─────────────────────
+			//	name("□菲奥娜と布库尔たちに事情を説明した")
+			if(F5_04_OfferPipiro && F5_05_OfferFiona)
+			{
+				KAO(EVENT_RAGNA,"12321Z4","1","1")
+				MES(EVENT_RAGNA,"啊啊。\n那么已经和所有人都关照好了吧。",0)
+				KAO(EVENT_RAGNA,"12321Z5","1","1")
+				MES(EVENT_RAGNA,"我们准备完了也赶往\n水晶峡谷吧。",0)
+				MES_close(EVENT_RAGNA)
+				
+				KAO(LUE,"12321","1","1")
+				MES(LUE,"嗯……！",0)
+				MES_close(LUE)
+				
+				//★手帳用フラグ：全員に交渉後
+				F_set(F5_33_OfferEnd)
+
+			}
+			else
+			if(F5_05_OfferFiona)
+			{
+			//	name("□菲奥娜に事情を説明した")
+				KAO(EVENT_RAGNA,"12321Z4","1","1")
+				MES(EVENT_RAGNA,"啊啊、只剩下皮皮洛了吗。",0)
+				KAO(EVENT_RAGNA,"12321Z5","1","1")
+				MES(EVENT_RAGNA,"呼、在哪里呀\n有点迷糊了啊。",0)
+				MES_close(EVENT_RAGNA)
+
+				KAO(LUE,"12321Z5","1","1")
+				MES(LUE,"啊、一般的情况下\n在村里的可能性比较高呢。",0)
+				KAO(LUE,"12321Z4","1","1")
+				MES(LUE,"先去找找看吧。",0)
+				MES_close(LUE)
+
+				KAO(EVENT_RAGNA,"12321","1","1")
+				MES(EVENT_RAGNA,"好！",0)
+				MES_close(EVENT_RAGNA)
+
+				//★手帳用フラグ：ラ～ライラに協力を申し込んだ（こ之キャラが２人目·残りが皮皮洛）
+				F_set(F5_27_OfferLarFio)
+
+			}
+			else
+			if(F5_04_OfferPipiro)
+			{
+			//	name("□布库尔たちに事情を説明した")
+				KAO(EVENT_RAGNA,"12321Z4","1","1")
+				MES(EVENT_RAGNA,"啊。\n只剩下菲奥娜小姐了吗。",0)
+				KAO(EVENT_RAGNA,"12321Z5","1","1")
+				MES(EVENT_RAGNA,"应该在别墅那里吧\n赶快去找她。",0)
+				MES_close(EVENT_RAGNA)
+
+				KAO(LUE,"12321","1","1")
+				MES(LUE,"恩！",0)
+				MES_close(LUE)
+
+				//★★手帳用フラグ：ラ～ライラに協力を申し込んだ（こ之キャラが２人目·残りが菲奥娜）
+				F_set(F5_28_OfferLarPip)
+
+			}
+			else
+			{
+			//	name("□菲奥娜と布库尔たちに事情を説明していない")
+				KAO(EVENT_RAGNA,"12321Z2","1","1")
+				MES(EVENT_RAGNA,"啊，对了。",0)
+				KAO(EVENT_RAGNA,"12321Z4","1","1")
+				MES(EVENT_RAGNA,"然后还有菲奥娜小姐和\n皮皮洛他们……",0)
+				MES_close(EVENT_RAGNA)
+
+				KAO(LUE,"12321Z4","1","1")
+				MES(LUE,"菲奥娜小姐的话\n应该在别墅那里吧。",0)
+				KAO(LUE,"12321Z5","1","1")
+				MES(LUE,"皮皮洛这孩子……\n只能到处找找了。",0)
+				MES_close(LUE)
+
+				KAO(EVENT_RAGNA,"12321Z3","1","1")
+				MES(EVENT_RAGNA,"嘛、先去找找看吧。",0)
+				MES_close(EVENT_RAGNA)
+			}
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			
+			delete(LA-RAIRA)
+			delete(EVENT_RAGNA)
+			delete(LUE)
+			color(RAGNA,1)	//透過解除
+			color(PET,1)//透過解除
+
+			chr_pos(RAGNA,26,164,0,250,2)
+			chr_pos(PET,-88,38,1,264,2)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+
+			F_set(F5_03_OfferLaraira)
+			//★ラ～ライラ【旅をしていた】
+			F_set_note(-23,1)
+			
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+			EV_end()
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+		//──────────────────────────────
+		//▽ラ～ライラに事情を話した
+		//──────────────────────────────
+		//　　水晶峡谷之一角にいる。
+		else
+		if(!F5_06_RunCrystal)
+		{
+			if(!F5_06_WaitCrystal)
+			{
+				rot_chr(LA-RAIRA,30,PLAYER1)
+			//	name("★１回目")
+				if(!F_LA-RAIRA)
+				{
+					MES(LA-RAIRA,"这个遗迹、很久以前\n我就一直很在意了。",0)
+					MES(LA-RAIRA,"没想到是通向\n封印有魔王魔力的异世界之门呢。",0)
+					MES(LA-RAIRA,"这个连吉斯卡鲁公\n都没告诉过我。",0)
+					MES_close(LA-RAIRA)
+					F_set(LA-RAIRA)
+				}
+			//	name("★以後、繰り返し")
+				else
+				{
+					MES(LA-RAIRA,"集中我、菲奥娜小姐\n和皮皮洛那孩子的魔力的话\n应该是能够启动《门》的。",0)
+					MES(LA-RAIRA,"快点集合吧。",0)
+					MES_close(LA-RAIRA)
+				}
+			}
+			//──────────────────────────────
+			//▽水晶峡谷に全員が集まった直後
+			//──────────────────────────────
+			//　　梅ン之選択肢で「まだ開かない」を選んだ後。
+			else
+			{
+				rot_chr(LA-RAIRA,30,PLAYER1)
+				
+				MES(LA-RAIRA,"怎么样、拉古那。\n要马上就打开《门》吗？",0)
+				MES_close(LA-RAIRA)
+
+			//	name("選択テキスト")
+				workL(WK_CANCEL,SET,2)//【取消】
+			//	workL(WK_CANCEL,SET,0)//【取消】
+				MES_pos(PLAYER1,"??W9【开门】\n【先不开】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//閉じきるまで待つ
+
+
+			//	name("□扉を開く")
+			//　　梅ン之イベントに接続。
+				if(WK_YESNO==1)
+				{
+					//フェ～ドアウト
+					fade_in(100,30,0)
+					wait_fade()
+
+					workL(1,SET,1)		//扉イベントへ接続
+
+					//　　以下之イベントに接続。
+					EV("EV_5_07_OpenCrystal")
+				}
+			//─────────────────────
+			//	name("□まだ開かない")
+				else
+				{
+				//	name("□まだ開かない")
+					MES(LA-RAIRA,"啊、还是先做好万全的准备\n比较好吧。",0)
+					MES(LA-RAIRA,"我们在这里等\n准备好了过来说一声。",0)
+					MES_close(LA-RAIRA)
+
+					MES(RAGNA,"嗯、知道了。",0)
+					MES_close(RAGNA)	
+				}
+			//─────────────────────
+			}
+		}
+		//──────────────────────────────
+		//▽水晶峡谷を起動した
+		//　　水晶峡谷之扉之前にいる。
+		//　　杖を構えて、呪文詠唱をしているような雰囲気。
+		//─────────────────────
+		else
+		{
+			look_chr( LA-RAIRA, PLAYER1,"Bone_Head")
+
+		//	name("□奥蒂莎が仲間になっていない")
+			if(!F5_08_JoinOdessa)
+			{
+			//	name("★１回目")
+				if(!F_LA-RAIRA)
+				{
+					MES(LA-RAIRA,"用魔力做出的空中台阶……\n必须要花费大量的魔力吧。",0)
+					MES(LA-RAIRA,"啊呀呀、吉斯卡鲁公\n也留下了个难对付的东西呢。",0)
+					MES_close(LA-RAIRA)
+					F_set(LA-RAIRA)
+				}
+			//	name("★以後、繰り返し")
+				else
+				{
+					MES(LA-RAIRA,"喂、不要发呆\n快点走。",0)
+					MES(LA-RAIRA,"我们可坚持不了很长时间哦。",0)
+					MES_close(LA-RAIRA)
+				}
+			}
+		//	name("□帝嘉鲁德を倒していない")]
+			else
+			if(!F5_13_KillDygald)
+			{
+				if(!F_LA-RAIRA)
+				{
+				//	name("★１回目")
+					look_chr( LA-RAIRA, PARTNER,"Bone_Head")
+					MES(LA-RAIRA,"啊呀呀。\n援军终于来了么。",0)
+					MES(LA-RAIRA,"不觉得晚了点么、小姐。",0)
+					MES_close(LA-RAIRA)
+
+				//	name2(ODESSA)
+					rot_chr(PARTNER,30,LA-RAIRA)
+					MES(PARTNER,"就不要称呼我小姐啦。",0)
+					MES(PARTNER,"啊、就让我好好补偿一下\n来晚的过失吧。",0)
+					MES_close(PARTNER)
+
+					F_set(LA-RAIRA)
+				}
+			//	name("★以後、繰り返し")
+				else
+				{
+					MES(LA-RAIRA,"那么、快去吧。",0)
+					MES(LA-RAIRA,"现在这个节骨眼上\n指不准扎哈鲁侯爵\n会干些什么呢。",0)
+					MES_close(LA-RAIRA)
+
+				}
+			}
+			else
+			{
+			//	name("□帝嘉鲁德を倒した")
+				MES(LA-RAIRA,"嗯……\n相当严峻呢。",0)
+				MES(LA-RAIRA,"请尽早\n救回\艾雯公主n。",0)
+				MES_close(LA-RAIRA)
+			}
+			
+			look_off(LA-RAIRA)
+		//─────────────────────
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//　　魔女之家之大釜之前で薬を煎じている。
+	if( F4_09_GoShrineMia)
+	{
+	//	name("★初回（一回之み／イベント処理）")
+		if(!FM_10_TkLa-raira_1)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(735,-331,240,0,0)
+			CAM(100,56,80,27,137,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,856,391,1,170,2)
+			chr_pos(PARTNER,690,356,1,200,2)
+			
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　話しかけるとキャラ再配置してイベント発生。
+		
+			rot_chr(LA-RAIRA,30,PARTNER)
+
+			MOT(LA-RAIRA,2,15)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"艾雯公主……\n还有那个红毛小子么。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"嗯、好像到了\n无法后退\n的地步了呢。",0)
+			MES_close(LA-RAIRA)
+
+			MES(PARTNER,"明白么、魔女殿下。",0)
+			MES(PARTNER,"虽然已经找到了《护人之里》\n但那里已经遭到了袭击。",0)
+			MES(PARTNER,"看样子\n让叔父抢先了一部呢。",0)
+			MES_close(PARTNER)
+
+//			rot_chr(LA-RAIRA,30,PARTNER)
+			
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"嗯、不愧是\n吉斯卡鲁公的弟弟呢。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"但是依这种情形看\n还远远没结束。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯、现在准备去山顶\n。去追那个带着宝玉的女孩",0)
+			MES(PARTNER,"我与《血之战士》将一同前往。",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊啊……！",0)
+			MES_close(RAGNA)
+
+//			rot_chr(LA-RAIRA,30,RAGNA)
+			look_chr( LA-RAIRA, RAGNA,"Bone_Head")
+			wait(15)
+
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"嗯、好像\n心结已经解开了嘛。",0)
+//			MES_close(LA-RAIRA)
+//			look_chr( LA-RAIRA, PARTNER,"Bone_Head")
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"……传说中巫女公主使用的\n《虹之宝玉》的魔力\n老实说、是非常之强大呢。",0)
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"还是小心为妙。",0)
+			MES_close(LA-RAIRA)
+
+			MES(PARTNER,"嗯……！",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"我会铭记在心。",0)
+			MES_close(RAGNA)
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			look_off( LA-RAIRA )
+			MOT(LA-RAIRA,150,0)
+			rot(LA-RAIRA,30,70)
+			
+			F_set(FM_10_TkLa-raira_1)
+			
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+			EV_end()
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+			MOT(LA-RAIRA,2,15)
+		//	name("★２回目（一回之み／イベント処理？）")
+			if(!FM_10_TkLa-raira_2)
+			{
+				rot_chr(LA-RAIRA,30,PARTNER)
+
+				MES(LA-RAIRA,"话说回来、艾雯公主。",0)
+				MES(LA-RAIRA,"新手杖情况怎么样了？",0)
+				MES_close(LA-RAIRA)
+
+				rot_chr(PARTNER,30,LA-RAIRA)
+			//	name2(PARTNER)
+				MES(PARTNER,"嗯、特别的好用。",0)
+				MES(PARTNER,"说真的、身为暗之种族\n却是把光之魔法使用自如\n实在出乎意料。",0)
+				MES_close(PARTNER)
+
+			//	name2(LA-RAIRA)
+				MES(LA-RAIRA,"因为那个手杖是、你母亲大人\n爱用的手杖。",0)
+				MES(LA-RAIRA,"会对你如此服帖\n也是当然的咯。",0)
+				MES_close(LA-RAIRA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"这样呀……",0)
+				MES(PARTNER,"（母亲大人……虽在我刚懂事的时候\n  就已经去世了……）",0)
+				MES(PARTNER,"（但只要像这样握着手杖\n  我依旧能感到一股温暖……）",0)
+				MES_close(PARTNER)
+
+				rot_chr(RAGNA,30,PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"公主……",0)
+				MES_close(RAGNA)
+
+			//	name2(LA-RAIRA)
+				MES(LA-RAIRA,"呵呵、母亲大人\n也一定会很高兴吧。",0)
+				MES(LA-RAIRA,"与到此为止获得的魔法\n一起灵活使用吧。",0)
+				MES_close(LA-RAIRA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"嗯……知道了。",0)
+				MES_close(PARTNER)
+				
+				F_set(FM_10_TkLa-raira_2)
+			}
+		//	name("★以後、繰り返し")
+			else
+			{
+				rot_chr(LA-RAIRA,30,PLAYER1)
+				MES(LA-RAIRA,"《星降之里的护人》……",0)
+				MES(LA-RAIRA,"到底、守护着什么呢\n貌似很快就要真相大白了。",0)
+				MES_close(LA-RAIRA)
+			}
+			MOT(LA-RAIRA,150,15)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//▽昴が仲間になった
+	//──────────────────────────────
+	//　　镇之布迪克にいる。
+	if( F4_00_StartSolo )
+	{
+	//──────────────────────────────
+	//	name("★初回（一回之み／イベント処理）")
+	//　　話しかけるとキャラ再配置してイベント発生。
+		if(!FM_07_TalkLa-raira)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(-1130,89,135,0,0)
+			CAM(310,104,135,15,252,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,-1105,-161,0,51,2)
+			chr_pos(PARTNER,-956,20,0,100,2)
+			
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+					
+			rot_chr(LA-RAIRA,30,RAGNA)
+			KAO(LA-RAIRA,"12321Z3","1","1")
+			MES(LA-RAIRA,"喔……\n这不是红毛小子吗。",0)
+//			rot_chr(LA-RAIRA,30,PARTNER)
+			look_chr( LA-RAIRA, PARTNER,"Bone_Head")
+			KAO(LA-RAIRA,"12321Z3","1","1")
+			MES(LA-RAIRA,"还有昴也一起吗。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"拉莱拉婆婆！",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"婆婆……\n你在这里、干什么呀。",0)
+			MES_close(RAGNA)
+
+		//	name2(LA-RAIRA)
+//			rot_chr(LA-RAIRA,30,RAGNA)
+			look_chr( LA-RAIRA, RAGNA,"Bone_Head")
+			KAO(LA-RAIRA,"12321Z3","1","1")
+			MES(LA-RAIRA,"不是看到了嘛、在购物呀。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"这间店真不错呀。\n不盲目追求风潮\n保持着自己独特的风味呢。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"已经十多年\n没回伊尔巴特了呢\n没想到开起了这样的店呢。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"是、是吗……",0)
+			MES(RAGNA,"那个……公主的\n忙不帮了吗？",0)
+			MES_close(RAGNA)
+
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"艾雯公主那儿\n我打算今晚就去。",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"吉斯卡鲁公遗留下的书库\n我也打算一起调查了。",0)
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"你也一起吗？",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"不、不、我就……",0)
+			MES_close(RAGNA)
+
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"开玩笑啦。\n你还当真啊。",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"与艾雯公主的\n契约结束了吧？",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"已经没有再在一起的义务了\n你不是这样说了吗。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"………………………………",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"拉古那师傅……",0)
+			MES_close(PARTNER)
+
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"啊、趁还年轻\n有点烦恼也好嘛。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"就是因为有烦恼\n才会去孜孜不倦地去寻找答案\n这就是所谓的人生了。",0)
+			MES_close(LA-RAIRA)
+			
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			look_off( LA-RAIRA )
+			rot(LA-RAIRA,30,100)
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+
+			EV_end()
+			F_set(FM_07_TalkLa-raira)
+			
+			//フェ～ドイン----------------------
+			fade_in(0,60,BLACK)
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+		//	name("★２回目")
+			if(!F_LA-RAIRA)
+			{
+				MES(LA-RAIRA,"嗯……\n这个色彩搭配\n感觉非常活泼呢。",0)
+				MES(LA-RAIRA,"啊、我穿的话\n好像年轻过分了点呢……",0)
+//				rot_chr(LA-RAIRA,30,PARTNER)
+				look_chr( LA-RAIRA, PARTNER,"Bone_Head")
+//				wait(15)
+				MES(LA-RAIRA,"昴、你穿怎么样？",0)
+				MES_close(LA-RAIRA)
+
+				MES(PARTNER,"呃、我还是算了～。",0)
+				MES_close(PARTNER)
+
+				look_off( LA-RAIRA )
+				F_set(LA-RAIRA)
+			}
+		//	name("★以後、繰り返し")
+			else
+			{
+				MES(LA-RAIRA,"嗯、如果是皮皮洛那孩子的话\n也许会很合适呢……",0)
+				MES(LA-RAIRA,"下次见到了就向她推荐吧。",0)
+				MES_close(LA-RAIRA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　魔女之家で水晶玉に手を当てながら占いをしている。
+	//　　露と昴からは多少離しておく。
+	if( F2_14_TalkEnemy )
+	{
+		look_chr( LA-RAIRA, PLAYER,"Bone_Head")
+
+		if(!F_LA-RAIRA)
+		{
+			MES(LA-RAIRA,"《奥伦大铁塔》吗……",0)
+			MES(LA-RAIRA,"好像是很久以前、魔王为了制造大量的铁\n而建造的……",0)
+			MES(LA-RAIRA,"还不清楚发生了什么事。\n去那里要小心哦。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯、我也那样认为。",0)
+			MES_close(PARTNER)
+
+			F_set(LA-RAIRA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(LA-RAIRA,"扎哈鲁候爵的企图\n无论如何都要阻止它。",0)
+			MES(LA-RAIRA,"艾雯公主。\n小心前行吧。",0)
+			MES_close(LA-RAIRA)
+		}
+
+		look_off(LA-RAIRA)
+	}
+	
+	TK_end()
+}
+
+//□で協力を頼んだ後家から出るラ～ライラ
+MOVE_LA-RAIRA
+{
+	rot(LA-RAIRA,30,42)
+	move(LA-RAIRA, 0, WALK1,121,389,0,0)
+	wait_move(LA-RAIRA)
+	rot(LA-RAIRA,30,80)
+	move(LA-RAIRA, 0, WALK1,-750,369,0,,0)
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

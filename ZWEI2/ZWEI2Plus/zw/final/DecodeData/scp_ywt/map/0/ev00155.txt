@@ -1,0 +1,187 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[10155][傾儖僢僥丒滒夨晹壆]
+//====================================================================
+
+#ScriptTable
+
+#ISABELLA	2
+#MAURICE	3
+#PENGUIN	10
+
+#TARAI		11	//僀儀儞僩偱儌乕儕僗偵棊偪傞僞儔僀
+#DUMMY		12
+
+//=====================================================================
+//=== 弶婜壔張棟 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip         x     y   z   	 mot     岦 忬  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭僄儞僩儕乕
+	set_chr( 90,990,	-1,-1,  -6600, -450,  0,  	 90,      0, 0,";")	//嫵夛壖傾儖僢僥偺奨
+	set_chr( 91,990,	-1,-1,  -6625, -450,  0,  	 90, 070202, 6,"K1_10150;")	//嫵夛 峴偒
+	
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_05_EndSixth )
+	{
+		set_chr( PENGUIN,81,	-1,-1, -7130,-580,0,	2,0,	20,"<TK_PENGUIN>")	//丂屇傃崬傒儁儞僊儞
+		F_set_chr(PENGUIN,CF_NO_MOVE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F5_00_HearLunar && !F6_00_GoToMeru)
+	{
+		set_chr( ISABELLA,47,-1,-1, -7000,-800,0,	 52,0,	20,"<TK_ISABELLA>")	//滒夨幒乮尰嵼壖乯丂僀僓儀儔
+		F_set_chr(ISABELLA,CF_NO_HEIGHT)
+		F_set_chr(ISABELLA,CF_NO_FALL)
+		set_chr( MAURICE,54,-1,-1,	 -7000,-530,0,	 63,180, 20,"<TK_MAURICE>")	//滒夨幒乮尰嵼壖丂儌乕儕僗
+		set_chr( DUMMY,749,-1,-1,	 -7000,-490,-40,	  0,  0,  0,";")	//滒夨幒乮尰嵼壖丂儌乕儕僗
+		look(MAURICE,"Bone_Head",0,		0,0,20,			0,0,-20)
+
+		F_set_chr(DUMMY,CF_NO_ZIMEN)
+		F_set_chr(DUMMY,CF_NO_HEIGHT)
+//		F_set_chr(DUMMY,CF_NO_CLIP)
+//		F_set_chr(DUMMY,CF_NO_CLIP2)
+		F_set_chr(DUMMY,CF_NO_CSP)
+
+		//儌乕僔儑儞
+		MOT_SET(MAURICE,150,-1,577,577,-1,-1)		//儌乕儕僗偑嵗偭偰傞
+		MOT(MAURICE,150,5)
+		
+		//滒夨幒偵擖傞偲儌乕儕僗偲僀僓儀儔偺嫟捠夛榖偑帺摦婲摦
+		if(!FT_11_TalkIsabella)
+		{
+			EV("EV_TalkIsaMau")
+		}
+		F_set_chr(MAURICE,CF_NO_MOVE)
+		F_set_chr(ISABELLA,CF_NO_MOVE)
+	}
+}
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嘕僀僓儀儔偲儌乕儕僗偺夛榖
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸弶夞僀儀儞僩丅
+//丂丂丂滒夨幒偵擖傞偲帺摦婲摦偡傞丅
+//丂丂僇儊儔僗僋儘乕儖偱滒夨幒傪塮偟丄儔僌僫偨偪偼昞帵偟側偄丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+EV_TalkIsaMau
+{
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+//	弶婜壔張棟
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	fade_in(100,0,0)
+	TK_begin()
+	wait_fade()
+	
+	//僇儊儔僙僢僩
+	CAM_move(-6871,562,134,0,0)
+	CAM(1110,105,-25,25,138,0,0)
+	
+	chr_pos(MAURICE, -7000,-530,0,	180,150)
+	chr_pos(ISABELLA,-7000,-800,0,0,52)
+	
+	KAO(ISABELLA, "1", "1", "1")	
+	KAO(MAURICE,"1", "1", "1")	
+
+	//儔僌僫偨偪傪旕昞帵偵
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	color(PET,-1)
+
+	//僼僃乕僪僀儞----------------------
+	fade_in(0,30,0)
+	wait_fade()
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+//	僀儀儞僩奐巒
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+	CAM_move(-6790,850,134,100,0)
+	CAM(-290,76,-25,25,143,100,0)
+	
+	wait_CAM_move()
+
+	
+	MES(MAURICE,"我，我不清楚\n怎樣面對我的女兒。",0)
+	MES(MAURICE,"是在反抗期嗎？\n最近吃飯的時候我試圖去和她攀談，\n但她完全不和我講話。",0)
+	MES(MAURICE,"也想著\n應該多花點時間陪陪她，\n但不知為什麼就是沒有共同話題……",0)
+	MES(MAURICE,"哈哈，那個……\n我是有工作的啊。",0)
+	MES_close(MAURICE)
+
+//丂丂僔僗僞乕丄憢偺岦偙偆偱僞僶僐傪傆偐偡丅
+	MOT(ISABELLA,68,15)
+	wait(60)
+	MOT(ISABELLA,52,15)
+
+//	name("僀僓儀儔")
+	MES(ISABELLA,"……然後呢？",0)
+	MES_close(ISABELLA)
+
+//	name2(MAURICE)
+	look(MAURICE,"Bone_Head",0,		0,2,3,			0,0,0)
+	MES(MAURICE,"這年紀的女孩真難懂，\n啊哈哈……",0)
+	MES_close(MAURICE)
+
+
+//丂丂忋偐傜偨傜偄偑棊偪偰偒偰儌乕儕僗偵摉偨傝丄攈庤側壒傪棫偰傞丅
+//	MES(MAURICE,"C4仧忋偐傜偨傜偄偑棊偪偰偒偰儌乕儕僗偵摉偨傝丄\n攈庤側壒傪棫偰傞",0)
+//	MES_close(MAURICE)
+	EFF_chr(06900,DUMMY,0,100,0,"Bone_Head")
+	wait(5)
+	SE(1183,MAURICE)
+	look(MAURICE,"Bone_Head",0,		0,2,10,			0,0,-60)
+	wait(50)
+	SE(1184,MAURICE)
+	wait(70)
+
+//	name("僀僓儀儔")
+	MES(ISABELLA,"唔……\n首先要糾正那消極的態度。",0)
+	MES(ISABELLA,"不及格。\n下次再來吧。",0)
+	MES_close(ISABELLA)
+
+//	name2(MAURICE)
+	look(MAURICE,"Bone_Head",0,		0,2,2,			0,0,-40)
+	MES(MAURICE,"是，是……",0)
+	MES_close(MAURICE)
+	wait_MES(MAURICE)
+	
+//丂丂僋儘僗僼僃乕僪偱丄滒夨幒偵擖偭偨偲偙傠偐傜儔僌僫偨偪偵憖嶌嫋壜丅
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+//	僀儀儞僩廔椆張棟
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	cross_fade(30)
+	
+	//仛嘕僀僓儀儔丒儌乕儕僗嫟捠夛榖
+	F_set(FT_11_TalkIsabella)
+	//仛僀僓儀儔
+	F_set_note(ISABELLA,-1)
+	//仛儌乕儕僗
+	F_set_note(MAURICE,-1)
+
+	//儔僌僫偨偪傪昞帵偡傞
+	color(RAGNA,1)
+	color(PARTNER,1)
+	color(PET,1)
+	look(MAURICE,"Bone_Head",0,		0,0,20,			0,0,-20)
+	
+	TK_end()
+	//僇儊儔傪弶婜愝掕偵
+	CAM_return( 0 )
+	
+//	僾儗僀儎乕憖嶌嫋壜
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+}
+
+#EndScriptTable
+//====================================================================
+

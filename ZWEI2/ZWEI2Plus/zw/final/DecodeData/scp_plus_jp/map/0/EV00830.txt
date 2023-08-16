@@ -1,0 +1,475 @@
+//====================================================================
+//ステージトラップスクリプト
+//[???????][スカイマップ（要塞突入用）]
+//====================================================================
+
+#ScriptTable
+
+#PLANE_R		1
+#MONTBLANC 		2
+#EXE-MAXINA		3
+#DRAGON-W		4
+#DRAGON-B		5
+#RAGNA2 		6
+
+#ALWEN			8
+#FIONA 			9
+#KLODE			10
+#PIPIRO 		11
+#POCKLE 		12
+#LA-RAIRA		13
+#ODESSA			14
+
+#PLANE_K 		15
+#PLANE_P 		16
+#PLANE_O 		17
+#PLANEALL 		18
+#EVENT_RAGNA 	19
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip      x    y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+
+//■エントリー
+
+//■イベント
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼イルバード上空で合流する
+		EV("EV_6_05_Plane4Join")
+	}
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+
+
+//──────────────────────────────
+//▼イルバード上空で合流する
+//──────────────────────────────
+//　　画面フェードアウト抜けで、イルバード上空。（ムービー？）
+//　　ムーンブリア城の威容を見下ろしながらトリスタンが旋回。
+//　　それと同時に、別の方向から他の３機が現れ、
+//　　トリスタンを援護するようなフォーメーションを組む。
+//　　そのまま巨大竜巻へ針路を変え、飛び去っていく飛行機たち。
+EV_6_05_Plane4Join
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+
+	//	map_color(75,75,80,0);//R,G,B, time 100%
+		
+	chr_pos(RAGNA,	  	0,350,0,0,2)
+	chr_pos(PARTNER,	0,0,0,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(RAGNA)
+	
+	
+	set_chr(PLANE_R,	 		857,-1,-1,0,0,0,  0,	0, 0,"")	//トリスタン号
+	set_chr(PLANE_K,	 		859,-1,-1,0,0,0,  0,	0, 0,"")	//クロード号
+	set_chr(PLANE_P,	 		858,-1,-1,0,0,0,  0,	0, 0,"")	//ポックル号
+	set_chr(PLANE_O,	 		860,-1,-1,0,0,0,  0,	0, 0,"")	//オデッサ号
+	set_chr(KLODE,	 			1018,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(FIONA,				1017,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(ODESSA,	  			1019,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(POCKLE,	 			1012,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(PIPIRO,	 			1013,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(LA-RAIRA,			1023,-1,-1, 0,0,0, 2, 0,0, "")
+	set_chr(EVENT_RAGNA,		1014,-1,-1,0,-0,0, 2,0,0, "")
+	set_chr(ALWEN,				1011,-1,-1,0,-0,0, 2,0,0, "")
+	
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+//	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+//	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+//	F_set_chr(ALWEN,CF_NO_HEIGHT)
+//	F_set_chr(ALWEN,CF_NO_ZIMEN)
+	chr_scale( EVENT_RAGNA,	"Bone_Bag",		0,0,0,	0,0);
+
+	
+	F_set_chr(KLODE,CF_NO_CLIP)
+	F_set_chr(KLODE,CF_NO_CLIP2)
+//	F_set_chr(KLODE,CF_NO_CSP)
+//	F_set_chr(KLODE,CF_NO_HEIGHT)
+//	F_set_chr(KLODE,CF_NO_ZIMEN)
+//	F_set_chr(KLODE,CF_MAXMOVE)	
+	F_set_chr(FIONA,CF_NO_CLIP)
+	F_set_chr(FIONA,CF_NO_CLIP2)
+//	F_set_chr(FIONA,CF_NO_CSP)
+//	F_set_chr(FIONA,CF_NO_HEIGHT)
+//	F_set_chr(FIONA,CF_NO_ZIMEN)
+//	F_set_chr(FIONA,CF_MAXMOVE)	
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_HEIGHT)
+	F_set_chr(ODESSA,CF_NO_ZIMEN)
+	F_set_chr(POCKLE,CF_NO_CLIP)
+	F_set_chr(POCKLE,CF_NO_CLIP2)
+	F_set_chr(POCKLE,CF_NO_CSP)
+	F_set_chr(POCKLE,CF_NO_HEIGHT)
+	F_set_chr(POCKLE,CF_NO_ZIMEN)
+	F_set_chr(PIPIRO,CF_NO_CLIP)
+	F_set_chr(PIPIRO,CF_NO_CLIP2)
+	F_set_chr(PIPIRO,CF_NO_CSP)
+	F_set_chr(PIPIRO,CF_NO_HEIGHT)
+	F_set_chr(PIPIRO,CF_NO_ZIMEN)
+	F_set_chr(LA-RAIRA,CF_NO_CLIP)
+	F_set_chr(LA-RAIRA,CF_NO_CLIP2)
+	F_set_chr(LA-RAIRA,CF_NO_CSP)
+	F_set_chr(LA-RAIRA,CF_NO_HEIGHT)
+	F_set_chr(LA-RAIRA,CF_NO_ZIMEN)
+	F_set_chr(PLANE_R,CF_NO_CLIP)
+	F_set_chr(PLANE_R,CF_NO_CLIP2)
+	F_set_chr(PLANE_R,CF_NO_CSP)
+	F_set_chr(PLANE_R,CF_NO_HEIGHT)
+	F_set_chr(PLANE_R,CF_NO_ZIMEN)	
+	F_set_chr(PLANE_R,CF_NO_FALL)	
+	F_set_chr(PLANE_R,CF_MAXMOVE)	
+	F_set_chr(PLANE_K,CF_NO_CLIP)
+	F_set_chr(PLANE_K,CF_NO_CLIP2)
+	F_set_chr(PLANE_K,CF_NO_CSP)
+	F_set_chr(PLANE_K,CF_NO_HEIGHT)
+	F_set_chr(PLANE_K,CF_NO_ZIMEN)	
+	F_set_chr(PLANE_R,CF_NO_FALL)
+	F_set_chr(PLANE_K,CF_MAXMOVE)		
+	F_set_chr(PLANE_P,CF_NO_CLIP)
+	F_set_chr(PLANE_P,CF_NO_CLIP2)
+	F_set_chr(PLANE_P,CF_NO_CSP)
+	F_set_chr(PLANE_P,CF_NO_HEIGHT)
+	F_set_chr(PLANE_P,CF_NO_ZIMEN)
+	F_set_chr(PLANE_P,CF_MAXMOVE)		
+	F_set_chr(PLANE_O,CF_NO_CLIP)
+	F_set_chr(PLANE_O,CF_NO_CLIP2)
+	F_set_chr(PLANE_O,CF_NO_CSP)
+	F_set_chr(PLANE_O,CF_NO_HEIGHT)
+	F_set_chr(PLANE_O,CF_NO_ZIMEN)	
+	F_set_chr(PLANE_O,CF_MAXMOVE)
+
+	F_set_Node(PLANE_R, "fun01", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_R, "fun02", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_K, "fun01", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_O, "fun01", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_O, "fun02", NP_HIDE)							//ペラ非表示
+	F_set_Node(PLANE_P, "fun01", NP_HIDE)							//ペラ非表示
+
+
+
+	MOT_SET(PLANE_R, 150,150, 0, 59, -1, 0)					//飛行
+	MOT_SET(PLANE_K, 150,150, 0, 59, -1, 0)					//飛行
+	MOT_SET(PLANE_O, 150,150, 0, 59, -1, 0)					//飛行
+	MOT_SET(PLANE_P, 150,150, 0, 59, -1, 0)					//飛行
+//	MOT_SET(PLANE_K, 151,152,320,349, -1, 10)				//右バンク
+//	MOT_SET(PLANE_K, 152,153,380,389, -1, 0)				//右→平常
+//	MOT_SET(PLANE_K, 153,154,250,279, -1, 0)				//平常→左バンク
+//	MOT_SET(PLANE_K, 154,150,400,439, -1, 0)				//左バンク→平常
+	MOT_SET(PLANE_K, 151,150,500,529, -1, 0)				//左右バンク
+	
+	MOT_SET(PLANE_K, 156,157,320,349, -1, 10)				//右バンク開始
+	MOT_SET(PLANE_K, 157,157,350,379, -1, 10)				//右バンク	
+
+	MOT_SET(PLANE_P, 156,157,320,349, -1, 10)				//右バンク開始
+	MOT_SET(PLANE_P, 157,157,350,379, -1, 10)				//右バンク	
+	MOT_SET(PLANE_O, 156,157,320,349, -1, 10)				//右バンク開始
+	MOT_SET(PLANE_O, 157,157,350,379, -1, 10)				//右バンク	
+	MOT_SET(PLANE_R, 156,157,320,349, -1, 10)				//右バンク開始
+	MOT_SET(PLANE_R, 157,157,350,379, -1, 10)				//右バンク	
+
+
+	MOT_SET(KLODE,			150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(FIONA,			150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(EVENT_RAGNA,	150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(ALWEN,			150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(ODESSA,			150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(LA-RAIRA,		150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(POCKLE,			150, -1, 485, 485, -1, 0)				//座り
+	MOT_SET(PIPIRO,			150, -1, 485, 485, -1, 0)				//座り
+
+	F_set_Node(PIPIRO,   "Bone_RightSword", NP_HIDE)
+	F_set_Node(LA-RAIRA, "Bone_RightSword", NP_HIDE)
+
+	chr_equip_chr(KLODE,			PLANE_K,"isu01_Null",100,		0,0,0,	0,-40,-60);
+	chr_equip_chr(FIONA,			PLANE_K,"isu02_Null",100,		0,0,0,	0,-40,-40);
+	chr_equip_chr(EVENT_RAGNA,		PLANE_R,"isu01_Null",100,		0,0,0,	0,-40,-40);
+	chr_equip_chr(ALWEN,			PLANE_R,"isu02_Null",100,		0,0,0,	0,-40,-40);	
+	chr_equip_chr(ODESSA,			PLANE_O,"isu01_Null",100,		0,0,0,	0,-60,-60);
+	chr_equip_chr(LA-RAIRA,			PLANE_O,"isu02_Null",100,		0,0,0,	0,-30,-40);			
+	chr_equip_chr(POCKLE,			PLANE_P,"isu01_Null",100,		0,0,0,	0,-40,-60);
+	chr_equip_chr(PIPIRO,			PLANE_P,"isu02_Null",100,		0,0,0,	0,-40,-60);			
+
+	MOT(PLANE_R, 		150, 0)
+	MOT(KLODE,			150, 0)	
+	MOT(FIONA,			150, 0)	
+	MOT(EVENT_RAGNA,	150, 0)	
+	MOT(ALWEN, 			150, 0)	
+	MOT(ODESSA,			150, 0)	
+	MOT(LA-RAIRA,		150, 0)	
+	MOT(PIPIRO,			150, 0)	
+	MOT(POCKLE,			150, 0)	
+	wait(15)
+	wait(3)		//同期ずらし		
+	chr_pos(PLANE_K,    0, -2000,  1000, 0, 150)
+	wait(3)		//同期ずらし
+	chr_pos(PLANE_O, 1500, -2000,   500, 0, 150)
+	wait(3)		//同期ずらし
+	chr_pos(PLANE_P,-1500, -4000, -1000, 0, 150)
+	
+	color(PLANE_K, -1)
+	color(PLANE_P, -1)
+	color(PLANE_O, -1)
+	color(LA-RAIRA, -1)
+	color(ODESSA, -1)
+	color(PIPIRO, -1)
+	color(POCKLE, -1)
+	color(KLODE, -1)
+	color(FIONA, -1)
+	
+	BGM(57)
+//	BGM(08)
+//	CAM_move(160,-1330,-34,0,0)
+//	CAM(2330,257,-34,34,123,0,0)
+	CAM_move(180,-1370,726,0,0)
+	CAM(290,615,726,18,198,0,0)
+	CAM_move(160,70,306,200,0)
+	CAM(-30,64,306,34,271,200,0)
+	fade_in(0,90,0)
+	wait_fade()	
+
+
+	wait_CAM()
+	
+	color(PLANE_K,1)
+	color(PLANE_O,1)
+	color(PLANE_P,1)
+	color(LA-RAIRA, 1)
+	color(ODESSA, 1)
+	color(PIPIRO, 1)
+	color(POCKLE, 1)
+	color(KLODE, 1)
+	color(FIONA, 1)		
+
+	EV("EV_MovePlaneP")	
+	wait(40)	
+
+
+
+//	CAM_move(60,-300,-114,120,0)
+	CAM_move(60,-300, 200,120,0)
+	CAM(48,287,-114,34,255,120,0)			
+	wait(30)
+
+	EV("EV_MovePlaneO")
+	wait(40)
+
+	EV("EV_MovePlaneK")
+	wait(30)
+	CAM_move(140,-1490,-34,150,0)
+	CAM(-32,401,-34,25,195,150,0)	
+	wait(180)
+
+
+	//正面カメラ
+	cross_fade(15)
+	CAM_move(240,-1370,66,0,0)
+	CAM(-150,220,66,18,176,0,0)
+
+	chr_pos(PLANE_K, 200, 3000, 0000, 0, 150 ) 
+	move(PLANE_K, 42, 0, 0,0,0, 0)
+
+
+	//左右にバンクを振る
+//	look_chr(KLODE, POCKLE, "Bone_Head")
+	wait(30)
+	
+	MOT(PLANE_K, 151, 0)
+	wait(40)
+//	look_off(KLODE)
+
+//}
+//EV_
+//{
+
+	CAM_move(-1000,-1450,66,120,0)
+	CAM(-72,426,66,28,170,90,0)
+
+	wait(15)
+	EV("EV_MovePlaneK2")	
+	wait(30)
+	EV("EV_MovePlaneO2")	
+	wait(20)
+	EV("EV_MovePlaneP2")
+
+	CAM(-72,425,66,27,299,120,0)		
+	wait(15)	
+	wait(20)
+	
+	EV("EV_MovePlaneR2")	
+	
+	wait(80)
+	fade_in(100,60,0)
+	wait_fade()
+
+
+//　　ブランデーヶ丘（ev00701）へ。
+//	workG(GW_ENTRY_EVENT,SET,4)
+//	new_map(10701)
+
+//──────────────────────────────
+//　　以下のシーンはムービーでの想定で。
+//　　クロード機、オデッサ機、ポックル機を従えるトリスタン号。
+//　　巨大竜巻が次第に近付いて来て、いよいよ作戦がスタート。
+//　　トリスタン号の道を切り開くため
+//　　他の３機がエンジンを震わせて先行してゆく。
+//　　乗っていたラーライラ、フィオナ、ピピロが魔法を発動させ、
+//　　それぞれの魔力が膨れ上がった上で、巨大な魔法弾と化す。
+//　　３つの魔法弾、回転方向とは反対のベクトルから、
+//　　竜巻の一点に向けてそれぞれぶち当たり、綻びを生み出す。
+//　　それに目掛けて、一気に突っ込んでいくトリスタン号。
+//　　しかし綻びはすぐに戻り、翻弄されそうになるトリスタン。
+//　　ここでアルウェンの光・闇・地・水・火・風の魔法が発動。
+//　　七色の結界となってトリスタン号を包み込む。
+//　　そのまま一気に竜巻の中を突き抜けてゆくトリスタン号。
+//　　そして竜巻を抜けた所で、螺旋要塞メルセデクが現れる。
+//　　トリスタン号、竜巻の内壁と螺旋要塞の間を旋回しながら、
+//　　そのままゆっくりと画面フェードアウト。
+//──────────────────────────────
+
+	load_MMV("SYS\ins_02.mpg")
+	MMV()
+	wait_MMV()
+
+	stop_BGM(120)
+	wait_BGM()
+	wait(60)
+
+	delete(PLANE_K)
+	delete(PLANE_P)
+	delete(PLANE_R)
+	delete(PLANE_O)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(ODESSA)
+	delete(LA-RAIRA)
+	delete(PIPIRO)
+	delete(POCKLE)
+	
+//　　要塞－入口（ev80100）へ。
+//	workG(GW_DEF_BGM,SET,99)		//デフォルト曲を無音
+	workG(GW_DEF_BGM,SET,51)		//デフォルト曲を変更
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(18010)
+
+
+}
+
+
+//クロード機
+EV_MovePlaneK
+{
+	move(PLANE_K, 40, 80, 200, 2500,  600, 00)
+	wait(50)
+	move(PLANE_K, 40, 40, 200, 2700,  200, 00)
+	wait(30)
+	move(PLANE_K, 40, 20, 200, 3000, 0000, 00)
+	wait_move(PLANE_K)	
+}
+
+//ポックル機
+EV_MovePlaneP
+{
+	move(PLANE_P, 40, 80,-1500, 1300,  700, 00)
+	wait(40)
+	move(PLANE_P, 40, 40,-1500, 1600,  500, 00)
+	wait(20)
+	move(PLANE_P, 40, 20,-1500, 1800, 0250, 00)
+	wait_move(PLANE_P)	
+}
+
+//オデッサ機
+EV_MovePlaneO
+{
+	move(PLANE_O, 40, 80, 1500, 0800,  000, 0)
+	wait(35)
+	move(PLANE_O, 40, 40, 1500, 1100,  000, 0)
+	wait(20)
+	move(PLANE_O, 40, 20, 1500, 1300, 0000, 0)
+	wait_move(PLANE_O)	
+}
+
+//クロード機
+EV_MovePlaneK2
+{
+	MOT(PLANE_K, 156, 0)
+	move(PLANE_K, 42, 20, -9000, -4000, 4000, 0 )	
+	wait(10)
+	move(PLANE_K, 42, 50, -9000, -5000, 4000, 0 )	
+	wait(10)
+	move(PLANE_K, 42,100, -9000, -6000, 4000, 0 )	
+	wait(10)
+	move(PLANE_K, 42,150, -9000, -8000, 4000, 0 )	
+	wait_move(PLANE_K)			
+}
+
+//ポックル機
+EV_MovePlaneP2
+{
+	MOT(PLANE_P, 156, 0)
+	move(PLANE_P, 42, 20, -9000, -4000, 4000, 0 )	
+	wait(10)
+	move(PLANE_P, 42, 50, -9000, -5000, 4000, 0 )	
+	wait(10)
+	move(PLANE_P, 42,100, -9000, -8000, 4000, 0 )
+	wait(10)
+	move(PLANE_P, 42,150, -9000,-10000, 4000, 0 )	
+	wait_move(PLANE_P)				
+}
+
+//オデッサ機
+EV_MovePlaneO2
+{
+	rot(PLANE_O, 10, 20)
+	MOT(PLANE_O, 156, 0)
+	move(PLANE_O, 42, 20, -9000, -4000, 4000, 0 )	
+	wait(10)
+	move(PLANE_O, 42, 50, -9000, -5000, 4000, 0 )	
+	wait(10)
+	move(PLANE_O, 42,100, -9000, -6000, 4000, 0 )
+	wait(10)
+	move(PLANE_O, 42,150, -9000,-10000, 4000, 0 )	
+	wait_move(PLANE_O)				
+}
+
+//ラグナ機
+EV_MovePlaneR2
+{
+	rot(PLANE_R, 10, 20)
+	MOT(PLANE_R, 156, 0)
+	move(PLANE_R, 42, 20, -9000, -4000, 4000, 0 )	
+	wait(10)
+	move(PLANE_R, 42, 50, -9000, -8000, 4000, 0 )	
+	wait(10)
+	move(PLANE_R, 42,100, -9000,-10000, 4000, 0 )
+	wait(10)
+	move(PLANE_R, 42,150, -9000,-10000, 4000, 0 )	
+	wait_move(PLANE_R)				
+}
+
+
+
+#EndScriptTable
+//====================================================================
+

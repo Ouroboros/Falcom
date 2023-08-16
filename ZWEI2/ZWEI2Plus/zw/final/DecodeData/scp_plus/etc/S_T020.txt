@@ -1,0 +1,306 @@
+//──────────────────────────────
+//	name("●スバル")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_SUBARU
+{
+	TK_begin()
+
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		//▽螺旋要塞に到着した
+		//　　ミリアム、テオと共に竜巻の方向を眺めている。
+		//　　額の上に手を横に当てて遠くを眺めているような感じ。
+		//	name("★初回（一回のみ／イベント処理）")
+		if(!FM_12_TalkSubaru)
+		{
+		//　　話しかけるとキャラ再配置してイベント発生。
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)
+			EV_begin()
+			
+			//カメラセット
+//			CAM_move(677,9861,4721,0,0)
+//			CAM(199,34,4721,40,234,0,0)
+//			CAM_move(677,9861,4721,0,0)
+//			CAM(199,69,4721,20,212,0,0)
+			CAM_move(637,9821,4721,0,0)
+			CAM(199,68,4721,20,215,0,0)	
+
+			//キャラセット
+			chr_pos(RAGNA,598,-9855,4561,170,2)
+			chr_pos(PARTNER,466,-9780,4563,185,2)
+			chr_pos(PET,676,-9661,4565,165,2)
+			chr_pos(SUBARU,645,-10189,4557,210,2)
+			
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			KAO(SUBARU,"1", "1", "1")	
+
+			//会話時のモーション：
+			MOT_SET(SUBARU,150, -2,445,445,-1,15)//手の甲で目を擦る
+			MOT_SET(SUBARU,151, -2,544,544,153,15)//なんでもないんです
+			MOT_SET(SUBARU,153, -2,546,546,151,15)//なんでもないんです2
+			MOT_SET(SUBARU,152, -2,431,431,-1,15)//右手を握る
+
+			//フェードイン
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　スバルの頭に！マーク。
+			EMO(SUBARU,EMO_BIKKURI)
+			rot_chr(SUBARU,30,RAGNA)
+			wait(30)
+		
+			KAO(SUBARU,"1232123Z2","DE","6")
+			MES(SUBARU,"あ……ラグナ師匠！",0)
+			MES_close(SUBARU)
+
+//			move( SUBARU, 0, 20,645,-10189,4557,0)
+			move( SUBARU, 0, 15,621,-10053,4559,0)
+			wait(30)
+			KAO(SUBARU,"12321Z6","D1","3")
+			MES(SUBARU,"ど、どうでした！？\n作戦、成功しましたか！？",0)
+			MES_close(SUBARU)
+
+			MES(RAGNA,"ああ、おかげさまでな。",0)
+			MES(RAGNA,"今はちょいと\n姫さんの転位魔法で\n戻ってきているところさ。",0)
+			MES_close(RAGNA)
+
+			KAO(SUBARU,"12321Z3","23","5")
+			MES(SUBARU,"そ、そうなんですか……\nよかったぁ。",0)
+			KAO(SUBARU,"12321Z6","3","5")
+			MES(SUBARU,"中の様子が分からないから\nボク、心配でたまらなくて……",0)
+			MOT(SUBARU,150,10)
+			KAO(SUBARU,"12321Z6","L","B")
+			MES(SUBARU,"うううっ……ぐすっ……",0)
+			MES_close(SUBARU)
+
+		//　　◆スバルが少し涙ぐんで手の甲で目をこする。
+			MES(RAGNA,"スバル……",0)
+			MES_close(RAGNA)
+
+		//	name2(PET)
+			MES(PET,"ちょ、ちょっと……\n泣くんじゃないわよっ！",0)
+			MES(PET,"泣いたらナイスバディな\n大人の女になれないわよっ？",0)
+			MES_close(PET)
+
+		//	name2(SUBARU)
+			MOT(SUBARU,2,10)
+//			rot_chr(SUBARU,30,PET)
+			look_chr( SUBARU, PET,"Bone_Head")
+			wait(15)
+			KAO(SUBARU,"12321Z6","J","B")
+//			KAO(SUBARU,"12321Z3","1","1")
+			MES(SUBARU,"え、えへへ、そうですよね。",0)
+			KAO(SUBARU,"12321Z4","J","B")
+			MES(SUBARU,"安心したら\n少し気が抜けちゃって……",0)
+			MES_close(SUBARU)
+
+		//　　◆スバル、涙をぬぐって微笑んでから！マーク。
+			EMO(SUBARU,EMO_BIKKURI)
+			KAO(SUBARU,"1","2DE","6")
+			wait(30)
+//			rot_chr(SUBARU,30,PARTNER)
+			look_chr( SUBARU, PARTNER,"Bone_Head")
+
+			KAO(SUBARU,"12321Z3","E","1")
+			MES(SUBARU,"あ、そういえば……\n……………………………",0)
+			MES_close(SUBARU)
+
+		//　　スバル、アルウェンの方に向き直る。
+			MES(PARTNER,"ん、どうしたスバル？",0)
+			MES(PARTNER,"私の顔に\n何か付いているのか？",0)
+			MES_close(PARTNER)
+
+			KAO(SUBARU,"12321Z4","1","4")
+			MES(SUBARU,"い、いえ……\nそういう訳じゃないですけど。",0)
+			KAO(SUBARU,"12321Z3","1","4")
+			MES(SUBARU,"その、ギャランドゥさんが……",0)
+			MES_close(SUBARU)
+
+			MES(RAGNA,"ギャランドゥのオッサン？",0)
+			MES(RAGNA,"そういや姿を見かけないな？",0)
+			MES_close(RAGNA)
+
+			KAO(SUBARU,"12321Z4","1","4")
+			MES(SUBARU,"あ、はい。\n何だか用事があるらしくて……",0)
+			MES_close(SUBARU)
+
+		//　　スバルの頭に…マーク。
+			EMO(SUBARU,EMO_TENTEN)
+			wait(50)
+
+			look_chr( SUBARU, RAGNA,"Bone_Head")
+//			MOT(SUBARU,151,10)
+			KAO(SUBARU,"12321Z6","23","5")
+			MES(SUBARU,"……えっと、すみません。\n大した話じゃないんです。",0)
+//			MOT(SUBARU,2,5)
+			KAO(SUBARU,"12321Z3","21","1")
+			MES(SUBARU,"師匠たちが戻ったら話します。",0)
+			MES_close(SUBARU)
+
+			MES(RAGNA,"そ、そうか？",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"ふむ、ならば尚更、\n無事に戻ってこないとな。",0)
+			MES_close(PARTNER)
+
+			KAO(SUBARU,"B232B23Z3","1","3")
+			MES(SUBARU,"あ、当たり前ですよ～！",0)
+			MES_close(SUBARU)
+//			rot_chr(SUBARU,30,RAGNA)
+			MOT(SUBARU,152,10)
+			wait(15)
+			CAM_quake("46")
+			KAO(SUBARU,"B232BZ6","1","3")
+			MES(SUBARU,"あのあの、お２人とも\n無理はしないでくださいね！",0)
+			KAO(SUBARU,"B232BZ6","1","3")
+			MES(SUBARU,"それにルゥさんも……\n絶対に無事に\n戻ってきてくださいっ！",0)
+			MES_close(SUBARU)
+
+		//	name2(PET)
+			MES(PET,"ふ、ふん……\n当たり前だってーの！",0)
+			MES_close(PET)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ああ、任せとけ。",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"ふふ、そなたに感謝を。",0)
+			MES_close(PARTNER)
+
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+//			wait_MES(PARTNER)
+			F_set(FM_12_TalkSubaru)
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			
+			chr_pos(SUBARU,645,-10189,4557,210,2)
+			KAO(SUBARU,"1","1","1")
+			MOT(SUBARU,2,0)
+			look_off( SUBARU )
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			
+			EV_end()
+			fade_in(0,30,BLACK)
+
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+			KAO(PLAYER1, "1", "1", "1")	
+			KAO(PLAYER2, "1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			KAO(SUBARU, "1", "1", "1")	
+			rot_chr(PLAYER1,30,SUBARU)
+			rot_chr(PLAYER2,30,SUBARU)
+			rot_chr(PET,30,SUBARU)
+
+		//	name("★以後、繰り返し")
+			rot_chr(SUBARU,30,PLAYER1)
+			//会話時のモーション：右手を握る
+			MOT_SET(SUBARU,150, -2,431,431,-1,15)
+			MOT(SUBARU,150,10)
+
+
+			MES(SUBARU,"師匠たちが戻ってくるまで\nボク、ここで観測の\nお手伝いをしています。",0)
+			MES(SUBARU,"どうかご無事で……！",0)
+			MES_close(SUBARU)
+			
+			//待機モーションヘ
+			MOT(SUBARU,2,5)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　テンザン邸の自室で寝ている状態。
+	//　　ルナ＝ムンドゥス攻略終了までこのまま置き続ける。
+	if( F5_00_HearLunar )
+	{
+		KAO(PLAYER1, "1", "1", "1")	
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PLAYER1,30,SUBARU)
+		rot_chr(PET,30,SUBARU)
+		
+		MES(SUBARU,"……………………………",0)
+		MES_close(SUBARU)
+
+	//	name("テキスト（色換え．表示しない）")
+		MES(0,"C3S2スバルは疲れて眠っているようだ。",2)
+		MES_close(0)
+	}
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　魔女の家にルゥと一緒にいる。
+	//　　ラーライラの占術を邪魔しないよう多少離しておく。
+	else
+	if( F2_14_TalkEnemy )
+	{
+		KAO(PLAYER1, "1", "1", "1")	
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER1,30,SUBARU)
+		rot_chr(PLAYER2,30,SUBARU)
+
+		//	name("★初回（ルゥと共通／一回のみ／イベント処理）")
+		//　　話しかけるとキャラ再配置してイベント発生。
+		//　　ルゥと共通なため、あちらで起こしたら発生しない。
+		//　　イベントメッセージは、ルゥの同フラグのものを参照。
+		//⑤ルゥ．スバル共通初回
+		if(!FM_05_TalkLueSubaru)
+		{
+			EV("TALK_LUESUBARU_05")
+			wait_EV("TALK_LUESUBARU_05")
+		}
+		//	name("★以後、繰り返し")
+		else
+		{
+			KAO(SUBARU, "1", "1", "1")	
+			//会話時のモーション：右手を握る
+			MOT_SET(SUBARU,150, -2,431,431,-1,15)
+			MOT(SUBARU,150,10)
+
+			rot_chr(SUBARU,30,PLAYER1)
+			
+			MES(SUBARU,"ラーライラお婆ちゃんのことは\nボクとルゥさんで守ります！",0)
+			MES(SUBARU,"お２人とも、どうか気をつけて！",0)
+			MES_close(SUBARU)
+			
+			//待機モーションヘ
+			MOT(SUBARU,2,5)
+		}
+	}
+	
+	TK_end()
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//▼フラグ⑤（魔女に会ったあと、大鉄塔奥へ向かう）
+
+//──────────────────────────────
+//▼フラグ□（クリスタルバレーへ向かう）
+
+//──────────────────────────────
+//──────────────────────────────

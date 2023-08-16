@@ -1,0 +1,594 @@
+//仭Zwei2堦斒儊僢僙乕僕丒傾儖僢僥偺挰乮仸僔僃僗僞乕乯
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭傾儖僢僥
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僔僃僗僞乕乮僺傾僯僗僩乯Shestor")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_SHESTOR
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(SHESTOR, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,SHESTOR)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,SHESTOR)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,SHESTOR)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸廻庰応丒恀傫拞偺墌戩偵嵗傞丅
+	//丂丂丂僔僃僗僞乕偺慜偵偼僌儔僗偑抲偐傟偰偄傞丅
+	//丂丂丂僔僃僗僞乕偼怴暦傪撉傫偱偄傞丅
+	//丂丂丂僔僃僗僞乕偵丒丒丒僄儌乕僔儑儞弌偟偭傁側偟丅
+	if( F6_05_EndSixth )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		if(!F_SHESTOR)
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			MES(SHESTOR,"哼……看來\n情報雜誌上\n也沒有什麼像樣的消息。",0)
+			MES(SHESTOR,"伊魯巴特附近氣候發生異常……\n班機停航——",0)
+			MES(SHESTOR,"旋風和金色粒子都\n完全沒有提到……",0)
+			MES(SHESTOR,"……呵呵，也好。\n就讓已經過去的這場騷動\n留存在我們心中吧。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(SHESTOR,"雪菲拉那傢伙\n剛好去了洛塔村。",0)
+			MES(SHESTOR,"好像是有些非常重要的事。",0)
+			MES(SHESTOR,"具體我就不清楚了……\n不過，偶爾休息一下也不錯吧。",0)
+			MES_close(SHESTOR)
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸庰応僗僥乕僕偱僺傾僲傪抏偄偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩
+	if( F6_00_GoToMeru )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+
+		if(!FT_12_TalkShestor)
+		{
+		//丂丂仸弶夞僀儀儞僩
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僔僃僗僞乕偲榖偟偨帠偑偁傞応崌")
+			MES(SHESTOR,"……是你們啊。",0)
+			MES_close(SHESTOR)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			MES(SHESTOR,"我已經聽說了。\n事態好像已經\n相當糟糕了。",0)
+			MES(SHESTOR,"嗯，這種時候\n安撫民心\n就是音樂家的使命了。",0)
+			MES(SHESTOR,"在狂風中\n演奏優美的旋律，\n這聽起來也不錯……",0)
+			MES_close(SHESTOR)
+
+//			MES(RAGNA,"偦丄偦偄偮偼偪傚偭偲乧乧",0)
+			MES(RAGNA,"這樣啊……",0)
+			MES_close(RAGNA)
+
+//			MES(PARTNER,"偆傓丄偁傑傝姶怱偱偒偸榖偩側丅",0)
+			MES(PARTNER,"唔，你倒是很勇敢呢。",0)
+			MES_close(PARTNER)
+
+//			MES(SHESTOR,"僼僼丄偩偑崱偺僀儖僶乕僪偵\n愨懳埨慡側応強側傫偰側偄傫偩傠偆丠",0)
+//			MES(SHESTOR,"側傜摨偠帠偝丅",0)
+			MES(SHESTOR,"呵呵，事到如今即使驚慌，\n也已經無處可逃了。",0)
+			MES(SHESTOR,"可以的話，\n你們也聽一下吧。\n雪菲拉也一定會高興的。",0)
+			MES_close(SHESTOR)
+			F_set(FT_12_TalkShestor)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		}
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"嗯……\n是說雪菲拉的歌聲\n與平時有所不同嗎？",0)
+				MES(SHESTOR,"呵呵，不僅僅是歌聲。\n不知怎的，\n她的勁頭也已經回來了。",0)
+				MES(SHESTOR,"歌聲比以前動聽了許多……\n今天的演出可是大不一樣哦。",0)
+				MES(SHESTOR,"可以的話，你們也聽一下吧。",0)
+				MES_close(SHESTOR)
+				F_set(SHESTOR)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(SHESTOR,"那傢伙的腳\n還沒有完全恢復……",0)
+				MES(SHESTOR,"呵呵，這回就尊重\n一次她本人的意見吧。",0)
+				MES(SHESTOR,"……不用擔心。\n我會讓她好好休息的，\n不能讓我們的歌姬勉強自己啊。",0)
+				MES_close(SHESTOR)
+			}
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F5_00_HearLunar )
+	{
+	//丂丂仸庰応侾奒奒抜壓偱丄僶儔儞偲榖偟偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩丅
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		if(!FT_11_TalkShestor)
+		{
+			MES(SHESTOR,"雪菲拉那傢伙……\n我還在納悶為什麼還不回來，\n原來她在半路上扭到了腳。",0)
+			MES(SHESTOR,"是這位先生\n把她背回來的。",0)
+			MES_close(SHESTOR)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僙僼傿乕儔偲夛偭偨帠偑偁傞")
+			if(FT_05_TalkCepheila || FT_01_TalkCepheila )
+			{
+				MES(RAGNA,"哎，是這樣啊。",0)
+				MES(RAGNA,"然後呢，她不要緊吧？\n如果比較嚴重的話\n恢復起來也是很慢的……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("佀側偄")
+				MES(RAGNA,"哎，這聽起來很糟糕啊。",0)
+				MES(RAGNA,"那個……她不要緊吧？",0)
+				MES(RAGNA,"如果比較嚴重的話\n恢復起來也是很慢的……",0)
+				MES_close(RAGNA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			MES(SHESTOR,"嗯，現在正在二樓休息。",0)
+			MES(SHESTOR,"她自己堅持說不要緊，\n實際上連站都站不起來呢。",0)
+			MES_close(SHESTOR)
+			F_set(FT_11_TalkShestor)
+
+			//仛僶儔儞亂僙僼傿乕儔亃
+			F_set_note(BAROM,2)
+		}
+		else
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"雪菲拉那傢伙\n去布蘭迪丘陵練習唱歌，\n結果好像在回來的路上摔倒了。",0)
+				MES(SHESTOR,"這也太疏忽大意了。\n唉，總是這麼讓人操心。",0)
+				MES(SHESTOR,"嗯，演出也只好\n中止一段時間了。",0)
+				MES(SHESTOR,"畢竟現在她還站不起來呢。",0)
+				MES_close(SHESTOR)
+
+			//	MES(RAGNA,"乮偆乕傫丄偟偽傜偔挰偵\n  婣偭偰側偄娫偵偦傫側帠偑側偁乧乧乯",0)
+			//	MES_close(RAGNA)
+			//
+			//	MES(PET,"乮偟偽傜偔偭偰尵偭偰傕丄\n  傎傫偺堦擔擇擔偩偗偳偹丅乯",0)
+			//	MES_close(PET)
+			//
+			//	MES(RAGNA,"乮偆偭乧乧偦傝傖偦偆偩偑丅\n  偦偺丄婥暘揑偵側丅乯",0)
+			//	MES_close(RAGNA)
+				F_set(SHESTOR)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(SHESTOR,"雪菲拉那傢伙\n就在二樓休息呢。",0)
+				MES(SHESTOR,"嗯，演出也只好\n中止一段時間了。",0)
+				MES(SHESTOR,"畢竟現在她還站不起來呢。",0)
+				MES_close(SHESTOR)
+			}
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//7/24僀儀儞僩捛壛偟傑偟偨丅
+
+	//丂丂仸僼儔僌嘍偱僙僼傿乕儔偑僽儔儞僨乕儢媢偵攝抲偝傟偰偄傞応崌偺傒弌尰丅
+	//丂丂仸僽儔儞僨乕儢媢偵棃偰偄傞丅
+	//丂丂丂嵍懁偐傜丄嬻傗宨怓傪挱傔偰偄傞傛偆側暤埻婥丅
+	if( F4_09_GoShrineMia && FT_05_CepheilaSt)
+	{
+		//丂丂仸弶夞僀儀儞僩
+		if(!FT_10_TalkShestor)
+		{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"咦……？",0)
+				MES(RAGNA,"這不是那位鋼琴師嗎？\n一大清早有什麼事嗎……？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("佀傾儖僂僃儞愭摢")
+				MES(PARTNER,"唔……？",0)
+				MES(PARTNER,"你不是那位\n在鎮上遇到的鋼琴師嗎？",0)
+				MES_close(PARTNER)
+
+				MES(RAGNA,"一大清早\n有什麼事嗎……？",0)
+				MES_close(RAGNA)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+
+			rot_chr(SHESTOR,30,PLAYER1)
+			wait(30)
+			MES(SHESTOR,"啊，是你們呀。",0)
+			MES(SHESTOR,"沒什麼，\n就是早上出來散散步。",0)
+			MES(SHESTOR,"我很喜歡這裡呢。",0)
+			MES_close(SHESTOR)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀傾儖僂僃儞愭摢")
+			if(GW_MAN==0)
+			{
+				MES(RAGNA,"也對……\n這裡空氣也十分清新，\n確實很適合散步呢。",0)
+				MES(RAGNA,"那位歌手好像\n也經常來這裡練習……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("佀儔僌僫愭摢")
+				MES(PARTNER,"唔，確實丘陵這裡\n空氣也十分清新，\n可能很適合散步吧。",0)
+				MES(PARTNER,"那位歌手似乎\n也時常到這裡來練習……",0)
+				MES_close(PARTNER)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		//丂丂僔僃僗僞乕偵俹俙僄儌乕僔儑儞丅
+			EMO(SHESTOR,EMO_PA)
+			wait(30)
+			MES(SHESTOR,"嗯，原來如此。\n當時和雪菲拉\n對話的就是你們啊。",0)
+			MES_close(SHESTOR)
+
+		//丂丂僔僃僗僞乕丄曈傝傪尒搉偡丅
+			MES(SHESTOR,"是我把這個地方\n推薦給她的。",0)
+			MES(SHESTOR,"因為最近她的狀態並不好，\n所以我想嘗試改變一下環境。",0)
+			MES(SHESTOR,"雖說歌手狀態不好\n的時候，別人也\n很難給什麼意見……",0)
+			MES(SHESTOR,"可是我還是\n有些擔心。",0)
+			MES_close(SHESTOR)
+
+		//丂丂仛僔僃僗僞乕亂嶶曕傪恑尵亃
+			F_set_note(SHESTOR,2)
+			F_set(FT_10_TalkShestor)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+		//丂丂仸怳傝岦偐側偄丅
+			MES(SHESTOR,"呼，不過早晨\n的空氣就是好啊。",0)
+			MES_close(SHESTOR)
+
+		//丂丂僔僃僗僞乕丄寉偔怳傝岦偔丅
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"……你們也是，\n有什麼要緊事嗎？",0)
+			MES(SHESTOR,"看起來\n像是在趕路的樣子。",0)
+			MES_close(SHESTOR)
+			look_off(SHESTOR)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸廻庰応慜偺夡偝傟偨栘敔丄偁傞偄偼峳傜偝傟偨晅嬤偱曅晅偗偰偄傞丅
+	if( F4_00_StartSolo )
+	{
+		rot_chr(SHESTOR,30,PLAYER1)
+		if(!F_SHESTOR)
+		{
+			MES(SHESTOR,"今天我也在幫店裡整理。\n收拾一下殘局。",0)
+			MES(SHESTOR,"嗯，這樣的話\n客人看來也會少很多。",0)
+			MES(SHESTOR,"說起來，一直在\n這裡白吃白住也有些不好意思……",0)
+			MES(SHESTOR,"還是要幫一下忙呢。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(SHESTOR,"不過……\n怪物居然會出現在鎮裡。",0)
+			MES(SHESTOR,"我一直覺得自己\n對這些麻煩事已經習以為常了，\n可是因怪物而中止演出這還是第一次。",0)
+			MES(SHESTOR,"唔……\n有哪裡不對勁，\n其他人難道沒有察覺嗎？",0)
+			MES_close(SHESTOR)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸廻庰応俀奒丄堦斣塃偺晹壆偱憢偐傜奜傪尒偰偄傞丅
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_SHESTOR)
+		{
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"今晚的演出臨時取消了——\n我們正在這裡等著。",0)
+			MES(SHESTOR,"……這是老闆的通知。",0)
+			MES(SHESTOR,"具體情況我也不太清楚，\n好像他也是迫不得已呢。",0)
+			MES_close(SHESTOR)
+
+			F_set(SHESTOR)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(SHESTOR,"不過……",0)
+			MES_close(SHESTOR)
+
+		//丂丂僔僃僗僞乕丄僙僼傿乕儔偺傎偆傪岦偔丅
+			look_chr(SHESTOR,CEPHEILA,"Bone_Head")
+			MES(SHESTOR,"雪菲拉已經睡著了嗎……\n平時她睡得\n可沒有這麼香。",0)
+			MES(SHESTOR,"最近狀態也不太好，\n是因為最近太累了嗎……？",0)
+			MES_close(SHESTOR)
+		}
+//		look_off(SHESTOR)
+		look_chr(SHESTOR,94,"Bone_Head")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僇僂儞僞乕嬤偔丄僥僆偺朤偵棫偭偰榖偟偰偄傞
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_SHESTOR)
+		{
+			look_chr(TEO,SHESTOR,"Bone_Head")
+		//丂丂仸怳傝曉傜側偄丅
+			MES(SHESTOR,"嗯，借來的雜誌\n我已經讀完了。",0)
+			MES(SHESTOR,"呵呵，上面歷史考察\n那一段很不錯。",0)
+			MES(SHESTOR,"我雖然不怎麼瞭解古董，\n但還是能和文物中\n蘊含的古老故事產生共鳴。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+			look_off(TEO)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"啊……是你們呀。\n看到雪菲拉那傢伙了嗎？",0)
+			MES(SHESTOR,"她應該是出去練習了，\n可是直到現在都沒有回來。",0)
+			MES(SHESTOR,"……唔，算了吧。\n反正今天也沒有公演。",0)
+			MES_close(SHESTOR)
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸廻庰応丒恀傫拞偺墌戩偵嵗傞丅
+	//丂丂丂杮傪撉傫偱偄傞丅
+	//丂丂丂丒丒丒僄儌乕僔儑儞弌偟偭傁側偟丅
+	if( F2_00_GoForest )
+	{
+		EV_stop("TENTEN_SHESTOR")
+		if(!F_SHESTOR)
+		{
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"嗯……是這本書嗎？",0)
+			MES(SHESTOR,"題名是「蘑菇輓歌」——\n是一個喜歡蘑菇的人\n所寫的文集。",0)
+			MES_close(SHESTOR)
+
+			MES(PLAYER1,"蘑…蘑菇……？",0)
+			MES_close(PLAYER1)
+
+			MES(SHESTOR,"嗯，我本身就很喜歡讀書，\n不過這本書相當獨特，而且十分有趣。",0)
+			MES(SHESTOR,"一定要向你推薦一下。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			look_chr(SHESTOR,CEPHEILA,"Bone_Head")
+			MES(SHESTOR,"話雖如此……\n雪菲拉又在聊天了啊。",0)
+			MES(SHESTOR,"倒也不要緊，只要\n沒有妨礙到其他客人就好。",0)
+			MES_close(SHESTOR)
+		}
+		look_off(SHESTOR)
+		EV("TENTEN_SHESTOR")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸廻庰応丒恀傫拞偺墌戩偵嵗傞丅
+	//丂丂丂僔僃僗僞乕偺慜偵偼怘帠嶮偑抲偐傟偰偄傞丅
+	if( F1_15_GoVillage )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		
+	//丂丂仸弶夞僀儀儞僩乮僙僼傿乕儔偲嫟捠偺俧俥乯
+		if(!FT_02_TalkCepShes)
+		{
+			MES(SHESTOR,"哦，抱歉。\n今天白天我們沒有演出。",0)
+			MES(SHESTOR,"休息也是必要的嘛。",0)
+			MES(SHESTOR,"不過我們夜裡還有一場公演。\n你們可以那時再過來。",0)
+			MES_close(SHESTOR)
+			F_set(FT_02_TalkCepShes)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"我們正在進行演奏旅行，\n目前為止已經在很多地方\n舉辦過了演出……",0)
+				MES(SHESTOR,"這裡的舞臺也不錯。",0)
+				MES(SHESTOR,"加入了異國風情，\n渲染出了一種\n穩重的氣氛。",0)
+				MES(SHESTOR,"看來這也是老闆的興趣呢。\n確實很有感覺。",0)
+				MES_close(SHESTOR)
+				//丂丂仛僔僃僗僞乕亂墘憈椃峴拞亃
+				F_set_note(SHESTOR,0)
+				F_set(SHESTOR)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(SHESTOR,"我們也差不多\n要出發去下一塊大陸了……",0)
+				MES(SHESTOR,"可是這裡的氣氛\n讓人流連忘返。",0)
+				MES(SHESTOR,"呵呵，再加上料理也很好吃，\n讓人不知不覺地就在這裡長住下去了。",0)
+				MES_close(SHESTOR)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀傾儖僂僃儞愭摢")
+				if( GW_MAN==0)
+				{
+					MES(PARTNER,"唔，這點我也同意。",0)
+					MES_close(PARTNER)
+
+				//丂丂儔僌僫偵椻傗娋僄儌乕僔儑儞丅
+					EMO(RAGNA,EMO_HIYAASE)
+					wait(30)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸庰応僗僥乕僕偱僺傾僲傪抏偄偰偄傞丅
+	if( F1_01_GameStart )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		if(!FT_01_TalkShestor)
+		{
+		//丂丂仸弶夞僀儀儞僩丅
+			MES(SHESTOR,"喂喂……\n怎麼會有人在演出中跑到舞臺上來。",0)
+			MES(SHESTOR,"演出可是必須要\n安靜下來仔細傾聽的哦。",0)
+			MES_close(SHESTOR)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"……哦，抱歉。",0)
+				MES(RAGNA,"那個，就是一不留意……",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"唔，這真是不好意思。",0)
+				MES(PARTNER,"一直想要\n到舞臺上看一看呢。",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			MES(SHESTOR,"呵呵，算了。",0)
+			MES(SHESTOR,"……你們也坐下吧。\n我會讓你們得到滿足的。",0)
+			MES_close(SHESTOR)
+
+			F_set(FT_01_TalkShestor)
+		}
+		else
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"雪菲拉的歌聲很美妙吧。\n聲線纖細而通透。",0)
+				MES(SHESTOR,"當然身為歌手，\n她還不夠成熟。",0)
+				MES(SHESTOR,"不過只有歌聲確實是一流的。\n你們也仔細聽聽看吧。",0)
+				MES_close(SHESTOR)
+				F_set(SHESTOR)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(SHESTOR,"你們是\n觀光客人嗎？",0)
+				MES(SHESTOR,"今後也請多指教。",0)
+				MES_close(SHESTOR)
+			}
+
+		}
+		look_off(SHESTOR)
+	}
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

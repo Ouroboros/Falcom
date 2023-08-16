@@ -1,0 +1,1231 @@
+//====================================================================
+//ステージトラップスクリプト
+//[12049][水没神殿－サブ終]
+//====================================================================
+
+#ScriptTable
+
+#GYARANDOW		10
+#EVENT_RAGNA	11
+#ALWEN			12
+#EVENT_RAGNA2	13
+#EVENT_LUE		14
+#EVENT_LUE2		15
+
+#TAKARA_CH		48
+
+//--------------------------------------------------------------------
+//■グローバルフラグ
+
+//--------------------------------------------------------------------
+INIT
+{
+//■地形
+	//天井から光
+    set_obj("mo20031a",	 5, 5,     0,   0,  0,    0)
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+	set_chr( 90,990,	 7, 4,   100,   0,  0,		  0,  0201, 6,"K1_12043;")	//①エントリ サブ③
+	set_obj("@ob20131a", 7, 4,   100,   0,  0,		  0)						//①アーチ（神殿）
+	set_chr(190,1400,	 7, 4,   100,   0,  0,		  0,     0, 0,";")			//アーチ（ダミー）
+
+//■スイッチ·看板
+	set_chr( 50,620,	 5, 5,     0,-350,  0,		  0,     0, 0,";")			//①セーブOBJ
+
+	set_chr(GYARANDOW,1021, -1,-1, 6579,3198,0,	5,	0,	20,";")	//嘉兰多
+	F_set_chr(GYARANDOW,CF_NO_CLIP)
+	F_set_chr(GYARANDOW,CF_NO_CLIP2)
+	F_set_chr(GYARANDOW,CF_NO_CSP)
+	F_set_chr(GYARANDOW,CF_NO_HEIGHT)
+	F_set_chr(GYARANDOW,CF_NO_ZIMEN)
+	color(GYARANDOW,-1)
+	workL(10,SET,2)//水之ダンジョン
+
+	//嘉兰多必殺技修得イベント
+	//すでにそ之属性之必殺技があると発生しない
+	//□では嘉兰多之宝箱を置く
+	if(!FE_FF_Skil_MIZU)
+	{
+
+		//そ之４
+		if(FE_FF_GetSkil_3 && !FE_FF_GetSkil_4)
+		{
+			if( F6_00_GoToMeru )
+				set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			6,	0,	2,"<EV_GetSkil_BOX>;")//宝箱
+			else
+				set_chr( 94,990,	-1,-1,  8115,9475,0,	 0,0106,6,"<EV_GetSkil_4>;")
+		}
+		//そ之３
+		else
+		if(FE_FF_GetSkil_2)
+		{
+			if( F6_00_GoToMeru )
+				set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			6,	0,	2,"<EV_GetSkil_BOX>;")//宝箱
+			else
+				set_chr( 94,990,	-1,-1,  8115,9475,0,	 0,0106,6,"<EV_GetSkil_3>;")
+		}
+		//そ之２
+		else
+		if(FE_FF_GetSkil_1)
+		{
+			if( F6_00_GoToMeru )
+				set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			6,	0,	2,"<EV_GetSkil_BOX>;")//宝箱
+			else
+				set_chr( 94,990,	-1,-1,  8115,9475,0,	 0,0106,6,"<EV_GetSkil_2>;")
+		}
+		//そ之１
+		else
+		{
+			if( F6_00_GoToMeru )
+				set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			6,	0,	2,"<EV_GetSkil_BOX>")//宝箱
+			else
+				set_chr( 94,990,	-1,-1,  8115,9475,0,	 0,0106,6,"<EV_GetSkil_1>;")
+		}
+	}
+
+	//宝箱から入手した场合、空宝箱を放置。
+	if(FE_FF_TakaraSkil2)
+		set_chr( TAKARA_CH,561,	-1,-1,	6750,8000,0,			7,	0,	0,";")//宝箱
+
+//■场面固有設定
+	map_color(100,100,100,0);//R,G,B, time 100%
+	map_spotbmp(25);//100%
+}
+
+
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+
+/*
+//──────────────────────────────
+//	name("◆必殺技伝授イベント·そ之一")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ルート之属性に応じた奥義を習得する。
+//　　※嘉兰多は各サブルート最奥にいる。
+//　　　初め姿が見えなぶ置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_1
+{
+	EV_begin()
+
+	fade_in(100,1,BLACK)	//暗転
+	wait_fade()	
+
+	//初期化------------------------------------------------
+	//キャラ再配置
+	chr_pos(RAGNA,	 7008,7915,1,150,	2)
+	chr_pos(PARTNER, 6654,7883,0,180,	2)
+
+	//イベント用キャラ配置
+	set_chr(GYARANDOW,21, -1,-1, 6785,7565,1,	5,	0,	0,"")	//嘉兰多
+
+	//カメラ初期位置
+	CAM_move(6985,-7905,241,0,0)	
+	CAM(350,92,80,18,225,0,0)
+
+	fade_in(0,60,BLACK)	//フェードイン
+	wait_fade()	
+	
+	//イベント------------------------------------------------
+//	name("渋い男之声")	
+	MES(GYARANDOW,"……终于来了嘛。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那·艾雯に？エモーション。
+	EMO(RAGNA,EMO_HATENA)
+	EMO(PARTNER,EMO_HATENA)
+	wait(30)
+	
+//　　前進すると共に、カメラスクロールして嘉兰多を映す。
+//　　嘉兰多、丁度振り返るところ。
+//	name("謎之覆面")
+	MES(GYARANDOW,"我可正等着你们啊。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那と艾雯、唖然とするフェイス。
+	MES(RAGNA,"什……！？",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"（谁啊、这男人……）",0)
+	MES_close(PARTNER)
+
+//	name("謎之覆面")
+	MES(GYARANDOW,"游历地下城、好像很卖力呢。",0)
+	MES(GYARANDOW,"今天我要将特意准备的必殺技、\n传授给你们这样的人。",0)
+	MES(GYARANDOW,"我正是为此而等在这里的。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"看、看着就觉得奇怪的家伙……",0)
+	MES(RAGNA,"好像也不是敌人啊、\n……但突然说要传授必殺技什么的……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"恩、没必要学那种东西。\n如果我用真祖的力量的话……",0)
+	MES_close(PARTNER)
+
+//	name("謎之覆面")
+	MES(GYARANDOW,"我的名字是嘉兰多――\n高尚且高级的男人。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"我可没问你……",0)
+	MES_close(RAGNA)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"哼哼、没啥好怕的。\n只要当作命运去接受就好了。",0)
+	MES(GYARANDOW,"那么、let's exercise……！",0)
+	MES_close(GYARANDOW)
+
+//　　エクササイズ用之ＢＧＭが鳴り始める。
+//　　嘉兰多、エクササイズを踊りだす。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"你们两个都、\跟着我做！",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"诶、诶诶……！？",0)
+	MES_close(RAGNA)
+
+//　　嘉兰多、激しく踊りだす。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"还没完！\n远远不止这些！",0)
+	MES_close(GYARANDOW)
+//　　拉古那と艾雯も慌てて踊りだす。
+//　　（※踊りだす前に、武器を外す）
+//　　３人が踊りながら、画面フェードアウト。
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()	
+	
+//　　しばらくしてフェードイン。
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　同じ構図で、拉古那·艾雯がバテている。
+	MES(RAGNA,"不、不行了……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"唉、搞什么啊。",0)
+	MES(PARTNER,"居然让我干\n这种事……",0)
+	MES_close(PARTNER)
+
+//　　拉古那たち、ふら付きながら立ち上がる。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"哼哼、还不错嘛。",0)
+	MES(GYARANDOW,"肌肉组织有\n很舒服的被刺激感吧。",0)
+	MES(GYARANDOW,"那么请稍微、闭一会眼睛。",0)
+	MES_close(GYARANDOW)
+
+//　　２人に？エモーション。
+	EMO(RAGNA,EMO_HATENA)
+	EMO(PARTNER,EMO_HATENA)
+	wait(30)
+	
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"你干撒子。\n快点闭眼睛。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"啊、啊啊……",0)
+	MES_close(RAGNA)
+
+//　　拉古那と艾雯、目を閉じる。
+//　　嘉兰多、２人に向かって手を突き出す。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"喝～～～……",0)
+	MES(GYARANDOW,"哈——……！！",0)
+	MES_close(GYARANDOW)
+
+//　　必殺技習得之ＳＥが鳴る。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"好了、已经行了。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那と艾雯、目を開ける。
+	MES(RAGNA,"这、这是……？",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"好像有种不可思议的力量\n在涌出……",0)
+	MES_close(PARTNER)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"名字叫『奥義·氷氣乱結旋』。\n你们两个人合力的话\n就能发动的攻击招式。",0)
+	MES_close(GYARANDOW)
+
+//　　※『○○○○○』之内容は、ダンジョン之属性に合わせて以下之ようにする。
+//　　　地：烈獄震激破
+//　　　水：氷氣乱結旋
+//　　　风：清華瞬刹天
+//　　　火：炎瘴印闘牙
+	MES(RAGNA,"嘿、嘿嘿……\n名字听起来听强呢。",0)
+	MES(RAGNA,"啊、探索地下迷宫的时候\n也许能经常用到吧。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"恩、但是……",0)
+	MES(PARTNER,"蒙面啊、这和之前的\n exercise \n完全没有关系吗？",0)
+	MES_close(PARTNER)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"哈哈哈。\n这个给你们。",0)
+	MES_close(GYARANDOW)
+
+//　　嘉兰多、拉古那之隣まで来て肩を叩く。
+//　　パン、とＳＥがする。
+//	name("アイテム入手テキスト")
+	MES(0,"W9将『粉红色门票』交给了嘉兰多。",0)
+	MES_close(0)
+	
+	get_item(137,1,0)
+	wait_key(0)
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"两位要好好钻研哦。",0)
+	MES_close(GYARANDOW)
+
+//　　嘉兰多、入り口之方に去っていく。
+	rot(GYARANDOW,60,270)
+	move(GYARANDOW, 0,	WALK1,7734,7655,0,	0)
+	wait(80)
+	
+//　　２人は···エモーションで見送る。
+	rot_chr(RAGNA,60,GYARANDOW)
+	rot_chr(PARTNER,60,GYARANDOW)
+	EMO(RAGNA,EMO_TENTEN)
+	EMO(PARTNER,EMO_TENTEN)
+	wait(50)
+	delete(GYARANDOW)
+	
+//　　そ之後、顔を見合わせる。
+	rot_chr(RAGNA,60,PARTNER)
+	rot_chr(PARTNER,60,RAGNA)
+	
+	MES(RAGNA,"暂、暂且……",0)
+	MES(RAGNA,"忘记那个嘉兰多的事吧。\n只要记得这个技能、\n用心的去使用它就是了。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"恩、虽然还有许多\n让我好奇的地方……",0)
+	MES(PARTNER,"但一直去想也太傻了。\n姑且忘了他吧。",0)
+	MES_close(PARTNER)
+
+//　　イベント終了、操作許可を戻す。
+	
+	//イベント終了--------------------------------------------
+
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+	
+	//１つ目之必殺技を修得した
+	F_set(FE_FF_GetSkil_1)
+
+	//★水之必殺技を修得
+	F_set(FE_FF_Skil_MIZU)
+}
+
+//──────────────────────────────
+//	name("◆必殺技伝授イベント·そ之二")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ルート之属性に応じた奥義を習得する。
+//　　※嘉兰多は各サブルート最奥にいる。
+//　　　初め姿が見えなぶ置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_2
+{
+	EV_begin()
+
+	fade_in(100,1,BLACK)	//暗転
+	wait_fade()	
+
+	//初期化------------------------------------------------
+	//キャラ再配置
+	chr_pos(RAGNA,	 7008,7915,1,150,	2)
+	chr_pos(PARTNER, 6654,7883,0,180,	2)
+
+	//イベント用キャラ配置
+	set_chr(GYARANDOW,21, -1,-1, 6785,7565,1,	5,	0,	0,"")	//嘉兰多
+
+	//カメラ初期位置
+	CAM_move(6985,-7905,241,0,0)	
+	CAM(350,92,80,18,225,0,0)
+
+	fade_in(0,60,BLACK)	//フェードイン
+	wait_fade()	
+	
+	
+	//イベント------------------------------------------------
+
+//	name("渋い男之声")
+	MES(GYARANDOW,"……好久不见啊、两位。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"唔……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"这个声音……",0)
+	MES_close(PARTNER)
+
+//　　拉古那と艾雯、嘉兰多之前へ向かう
+	MES(RAGNA,"果、果然是你吗\n肌肉男……",0)
+	MES_close(RAGNA)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"游历地下迷宫、\n貌似进行的很顺利啊。",0)
+	MES(GYARANDOW,"佩服佩服。",0)
+	MES_pos(GYARANDOW,"那么还是和上次一样、\n教你们必杀技吧――",0,0,0,0,0)
+//　　嘉兰多之セリフ後半に重ねて、艾雯之ポップアップを出す。
+	wait(15)
+	MES_pos(PARTNER,"――不要啊。",0,0,0,0,0)
+
+	wait_key(0)
+	MES_close(PARTNER)
+	MES_close(GYARANDOW)
+
+//	name("怪人嘉兰多")
+	rot_chr(GYARANDOW,60,PARTNER)
+	MES(GYARANDOW,"恩……？",0)
+	MES_close(GYARANDOW)
+
+//	name2(PARTNER)
+	MES(PARTNER,"又要让我们\n跳那种怪舞吧。",0)
+	MES(PARTNER,"坚决拒绝。",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	rot_chr(RAGNA,60,PARTNER)
+	MES(RAGNA,"（哦……\n  公主说的很直白呢。）",0)
+	MES_close(RAGNA)
+
+//　　嘉兰多に···エモーション。
+	EMO(GYARANDOW,EMO_TENTEN)
+	wait(30)
+	
+//　　顔を背ける。
+	look_chr( GYARANDOW, RAGNA ,"Bone_Head")
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"但是、呢……　那个……\n我觉得会了必杀技的话、\n会有许多方便的地方哦？",0)
+	MES(GYARANDOW,"比如必杀技可是为了守护爱与和平\n的最终法宝啊……",0)
+	MES(GYARANDOW,"还有在学校、也能在朋友面前感到自豪的、对吧。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那に冷や汗エモーション。
+	EMO(RAGNA,EMO_HIYAASE)
+	wait(30)
+
+	rot_chr(RAGNA,60,GYARANDOW)
+	MES(RAGNA,"（用必杀技进行勾引……）",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"在、在说什么啊\n完全搞不明白……",0)
+	MES(PARTNER,"哼、不管怎么说我可是\n吸血鬼的真祖。\n像那样的三角猫功夫……",0)
+	MES_close(PARTNER)
+
+//　　艾雯に···エモーション。
+	EMO(PARTNER,EMO_TENTEN)
+	wait(30)
+
+	MES(PARTNER,"那、那个\n会的话还是比较方便的……",0)
+	MES_close(PARTNER)
+
+//嘉兰多顔背け解除
+	look_off(GYARANDOW)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"哼哼、艾雯哟。\n我就知道你会这么说。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那と艾雯にＰＡエモーション。
+	EMO(RAGNA,EMO_PA)
+	EMO(PARTNER,EMO_PA)
+	wait(30)
+
+	MES(PARTNER,"诶？……？",0)
+	MES_close(PARTNER)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"那么、\n Let's exercise……！",0)
+	MES_close(GYARANDOW)
+
+//　　エクササイズ用之ＢＧＭが流れ始める。
+	MES(RAGNA,"诶、啊啊～……！？",0)
+	MES_close(RAGNA)
+
+//　　嘉兰多に続き、拉古那·艾雯が踊りながらフェードアウト。
+//　　（※踊りだす前に、武器を外す）
+
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()	
+	
+//　　しばらくしてフェードイン。
+	fade_in(0,60,0)
+	wait_fade()
+	
+//　　同じ構図で、拉古那·艾雯がバテている。
+	MES(PARTNER,"哈、哈……\n不、不行了……",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	MES(RAGNA,"总是强迫人的家伙……",0)
+	MES_close(RAGNA)
+
+//　　２人が立ち直ると、嘉兰多が一步前に出てくる。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"那么、两位。\n请闭上眼睛吧。",0)
+	MES_close(GYARANDOW)
+
+//	name2(PARTNER)
+	MES(PARTNER,"唉……\n既然都这样了也没办法了吧……",0)
+	MES_close(PARTNER)
+
+//　　拉古那と艾雯、目を閉じる。
+//　　嘉兰多、２人に向かって手を突き出す。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"喝～～～……",0)
+	MES(GYARANDOW,"哈--~……！！",0)
+	MES_close(GYARANDOW)
+
+//　　必殺技習得之ＳＥが鳴る。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"很好、已经可以了。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那と艾雯、目を開ける。
+//──────────────────────────────
+//	name("□ダンジョンが水属性")
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"这次教给你们的是\n『奥義·氷氣乱結旋』。",0)
+	MES(GYARANDOW,"用冰的斗气划出螺旋\n可以将敌人长时间固定的必殺技。",0)
+	MES_close(GYARANDOW)
+
+//──────────────────────────────
+	MES(RAGNA,"嘿、呵呵……\n这次好像是水属性技能呢。",0)
+	MES(RAGNA,"对于强敌林立的地下迷宫来说\n感觉会有些用呢。",0)
+	MES_close(RAGNA)
+
+//　　※○之中身は、入手した必殺技之属性。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"恩恩、\n以后也要继续努力啊。",0)
+	MES_close(GYARANDOW)
+
+//　　嘉兰多、去っていく。
+//　　２人はそれを見送る。
+	rot(GYARANDOW,60,270)
+	move(GYARANDOW, 0,	WALK1,7734,7655,0,	0)
+	wait(80)
+
+	rot_chr(RAGNA,60,GYARANDOW)
+	rot_chr(PARTNER,60,GYARANDOW)
+	wait(50)
+	delete(GYARANDOW)
+	
+	MES(PARTNER,"………………………………",0)
+	MES_close(PARTNER)
+
+//　　拉古那に？エモーション。
+	EMO(RAGNA,EMO_HATENA)
+	rot_chr(RAGNA,60,PARTNER)
+	wait(30)
+	
+
+	MES(RAGNA,"公主……？\n怎么啦？",0)
+	MES_close(RAGNA)
+
+	rot_chr(PARTNER,60,RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"没什么……",0)
+	MES(PARTNER,"总觉得\n那个家伙很喜欢强迫人呢。",0)
+	MES(PARTNER,"算了、\n小事就忘掉吧\n还是让我们前进吧。",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	MES(RAGNA,"啊、也是。",0)
+	MES_close(RAGNA)
+	
+	//イベント終了--------------------------------------------
+
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+	
+	//2つ目之必殺技を修得した
+	F_set(FE_FF_GetSkil_2)
+
+	//★水之必殺技を修得
+	F_set(FE_FF_Skil_MIZU)
+}
+
+//──────────────────────────────
+//	name("◆必殺技伝授イベント·そ之三")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ルート之属性に応じた奥義を習得する。
+//　　※嘉兰多は各サブルート最奥にいる。
+//　　　初め姿が見えなぶ置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_3
+{
+	EV_begin()
+
+	fade_in(100,1,BLACK)	//暗転
+	wait_fade()	
+
+	//初期化------------------------------------------------
+	//キャラ再配置
+	chr_pos(RAGNA,	 7008,7915,1,150,	2)
+	chr_pos(PARTNER, 6654,7883,0,180,	2)
+
+	//イベント用キャラ配置
+	set_chr(GYARANDOW,21, -1,-1, 6785,7565,1,	5,	0,	0,"")	//嘉兰多
+
+	//カメラ初期位置
+	CAM_move(6985,-7905,241,0,0)	
+	CAM(350,92,80,18,225,0,0)
+
+	fade_in(0,60,BLACK)	//フェードイン
+	wait_fade()	
+	
+	
+	//イベント------------------------------------------------
+//	name("渋い男之声")
+	MES(GYARANDOW,"我、这次\n做了一些改动。",0)
+	MES(GYARANDOW,"将会是比以前更华丽的\n exercise。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那と艾雯に冷や汗エモーション。
+	EMO(RAGNA,EMO_HIYAASE)
+	EMO(PARTNER,EMO_HIYAASE)
+	wait(30)
+	
+	MES(RAGNA,"第一句话你就说那个啊……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"已经不用再打什么招呼了\n我们已经约定了吧……",0)
+	MES_close(PARTNER)
+
+//　　拉古那と艾雯が進むと、奥に立っていた嘉兰多が振り向く。
+	MES(PARTNER,"蒙面男啊、你的必杀技\n我承认是很好用。",0)
+	MES(PARTNER,"但是、那个舞可就……",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	MES(RAGNA,"啊、那其实\n和技能的传授没关系的吧？",0)
+	MES(RAGNA,"exercise先不管、\n就只教必杀技\n不可以吗？",0)
+	MES_close(RAGNA)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"喔……",0)
+	MES(GYARANDOW,"那么、先教的话就教\n exercise对吧？",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"我、我可\n没那么说吧！？",0)
+	MES(RAGNA,"话说果然是、\n没有关系的东西吧！！",0)
+	MES_close(RAGNA)
+
+//　　艾雯に···エモーション。
+	EMO(PARTNER,EMO_TENTEN)
+	wait(30)
+	
+	MES(PARTNER,"是该称呼嘉兰多对吧……",0)
+	MES(PARTNER,"阁下、为什么\n一直想要教我们必杀技？",0)
+	MES_close(PARTNER)
+
+	rot_chr(GYARANDOW,60,PARTNER)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"恩……？",0)
+	MES_close(GYARANDOW)
+
+//	name2(PARTNER)
+	MES(PARTNER,"……每次都比我们早一点\n来到这里埋伏、\n不是精心策划的么。",0)
+	MES_close(PARTNER)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"哼哼、想知道的话\n就告诉你们吧――",0)
+	MES(GYARANDOW,"那是应为、你们两个都有\n exercise的才能。",0)
+	MES_close(GYARANDOW)
+
+//　　ち～んというＳＥが鳴って、２人に冷や汗エモーション。
+	EMO(RAGNA,EMO_HIYAASE)
+	EMO(PARTNER,EMO_HIYAASE)
+	wait(30)
+	
+	MES(RAGNA,"（才、才能……）",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"（听了没觉得高兴……）",0)
+	MES_close(PARTNER)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"你们只要有那种才能、\n也许能成为超越我的\n exercise大师。",0)
+	MES(GYARANDOW,"――也就是说、你们\n背负着这个世界的命运……",0)
+	MES(GYARANDOW,"多多关心这样的年轻人\n也是我该做的。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那たち、目をパチパチして少し驚く表情。
+	MES(RAGNA,"诶……？",0)
+	MES_close(RAGNA)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"哼哼……\n马上开始吧。",0)
+	MES(GYARANDOW,"Let's exercise……！",0)
+	MES_close(GYARANDOW)
+
+//　　エクササイズ用之ＢＧＭが流れ始める。
+//　　嘉兰多にエクササイズを踊りだす。
+//　　※嘉兰多之踊りは、
+//　　　速度を上げる＆同じモーション部分を２回再生する、などで
+//　　　アレンジ化したも之にする。
+//　　続いて２人も踊り始めるが、速度が合っていない。
+//　　（もしくは従来之エクササイズモーションを再生）
+//　　（※踊りだす前に、武器を外す）
+	MES(RAGNA,"啊、喂喂……\n好像和平时的动作不一样……",0)
+	MES_close(RAGNA)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"――我说了吧。\n这是全新的exercise！",0)
+	MES_close(GYARANDOW)
+
+//　　２人にアセアセエモーション。
+	EMO(RAGNA,EMO_ASEASE)
+	EMO(PARTNER,EMO_ASEASE)
+	wait(30)
+	
+//　　２人が嘉兰多に合わせようとしながら、フェードアウト。
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()	
+	
+//　　しばらくしてフェードイン。
+	fade_in(0,60,0)
+	wait_fade()
+	
+//　　同じ構図で、拉古那·艾雯がバテている。
+	MES(PARTNER,"哈、哈……",0)
+	MES_close(PARTNER)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"哼哼、前所未有的刺激吧。",0)
+	MES(GYARANDOW,"那么、闭上眼睛吧。",0)
+	MES_close(GYARANDOW)
+
+	MES(RAGNA,"哈哈哈……算了\n居然都如此了。",0)
+	MES_close(RAGNA)
+
+//　　拉古那と艾雯、立ち上がって目を閉じる。
+//　　嘉兰多、２人に向かって手を突き出す。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"喝～～～……",0)
+	MES_close(GYARANDOW)
+
+//	name2(GYARANDOW)
+	MES(GYARANDOW,"哈-……！！",0)
+	MES_close(GYARANDOW)
+
+//　　必殺技習得之ＳＥが鳴る。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"很好、已经可以了。",0)
+	MES_close(GYARANDOW)
+
+//　　拉古那と艾雯、目を開ける。
+	MES(RAGNA,"这好像是……\n水属性的必殺技。",0)
+	MES_close(怪人嘉兰多)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"发现了么。",0)
+	MES_close(GYARANDOW)
+
+//──────────────────────────────
+
+//	name("□ダンジョンが水属性")
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"是的、『奥義·氷氣乱結旋』是用\n冰的斗气来划出螺旋\n可以将敌人长时间固定的必殺技。",0)
+	MES(GYARANDOW,"被强敌包围的时候\n可以产生特别的威力。",0)
+	MES_close(GYARANDOW)
+//──────────────────────────────
+	MES(PARTNER,"原来如此……将属性的性質\n最大限度的活用了呢。",0)
+	MES_close(PARTNER)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"哼哼哼、对你们两个的\n冒険有用的话就行。",0)
+	MES(GYARANDOW,"那么再会了、两位。",0)
+	MES_close(GYARANDOW)
+
+//　　嘉兰多、去っていく。
+//　　２人は···エモーションでそれを見送る。
+	rot(GYARANDOW,60,270)
+	move(GYARANDOW, 0,	WALK1,7734,7655,0,	0)
+	wait(80)
+	
+//　　２人は···エモーションで見送る。
+	rot_chr(RAGNA,60,GYARANDOW)
+	rot_chr(PARTNER,60,GYARANDOW)
+	EMO(RAGNA,EMO_TENTEN)
+	EMO(PARTNER,EMO_TENTEN)
+	wait(50)
+	delete(GYARANDOW)
+	
+	rot_chr(RAGNA,60,PARTNER)
+	rot_chr(PARTNER,60,RAGNA)
+
+	MES(RAGNA,"虽然搞不明白……\n但还真是个认真的家伙呢。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"恩……\n那副打扮还真是合适呢。",0)
+	MES(PARTNER,"到底\n真正面目是个什么样子的呢……",0)
+	MES_close(PARTNER)
+
+	//イベント終了--------------------------------------------
+
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+	
+	//３つ目之必殺技を修得した
+	F_set(FE_FF_GetSkil_3)
+
+	//★水之必殺技を修得
+	F_set(FE_FF_Skil_MIZU)
+}
+
+//──────────────────────────────
+//	name("◆必殺技伝授イベント·そ之四")
+//──────────────────────────────
+//　　※魔法奥義を習得するイベント。
+//　　　各ルート之属性に応じた奥義を習得する。
+//　　※嘉兰多は各サブルート最奥にいる。
+//　　　初め姿が見えなぶ置でイベント開始。
+//　　※フラグ□では、イベントが発生しない。
+//　　　宝箱を置いておき、そこから奥義入手とする。（後述）
+EV_GetSkil_4
+{
+	EV_begin()
+
+	fade_in(100,1,BLACK)	//暗転
+	wait_fade()	
+
+	//初期化------------------------------------------------
+	//キャラ再配置
+	chr_pos(RAGNA,	 7008,7915,1,150,	2)
+	chr_pos(PARTNER, 6654,7883,0,180,	2)
+
+	//イベント用キャラ配置
+	set_chr(GYARANDOW,21, -1,-1, 6785,7565,1,	5,	0,	0,"")	//嘉兰多
+
+	//カメラ初期位置
+	CAM_move(6985,-7905,241,0,0)	
+	CAM(350,92,80,18,225,0,0)
+
+	fade_in(0,60,BLACK)	//フェードイン
+	wait_fade()	
+	
+	
+	//イベント------------------------------------------------
+//　　２人に！エモーション。
+	EMO(RAGNA,EMO_BIKKURI)
+	EMO(PARTNER,EMO_BIKKURI)
+	wait(30)
+	
+	MES(PARTNER,"等等、拉古那。",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	MES(RAGNA,"啊、我也清楚。",0)
+	MES(RAGNA,"这个地方的气氛、\n还有一点微妙的发热感……",0)
+	MES_close(RAGNA)
+
+//	name("渋い男之声")
+	MES(GYARANDOW,"哼哼、很有洞察力啊。",0)
+	MES_close(GYARANDOW)
+
+//　　カメラスクロールすると、奥に立っていた嘉兰多が振り向く。
+//　　拉古那と艾雯もやって来る。
+	MES(RAGNA,"果然是你吗、\n嘉兰多……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"不、不用问都知道。",0)
+	MES(PARTNER,"今天又要教必杀技、\n而且在那之前\n不跳舞是不行的吧。",0)
+	MES_close(PARTNER)
+
+	MES(GYARANDOW,"哼哼、对滴――",0)
+	MES(GYARANDOW,"你们的回答呢、\n拉古那、艾雯。",0)
+	MES_close(GYARANDOW)
+
+//　　２人に···エモーション。
+	EMO(RAGNA,EMO_TENTEN)
+	EMO(PARTNER,EMO_TENTEN)
+	wait(30)
+	
+//　　そ之後顔を見合わせる。
+	MES(RAGNA,"唉、没办法。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"……恩。",0)
+	MES(PARTNER,"这个时候、多少忍着吧。",0)
+	MES_close(PARTNER)
+
+//　　拉古那と艾雯、ＳＥつきで武器を外す。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"顺便说一下这个exercise、\n到第７段为止是有歌詞的哦。",0)
+	MES(GYARANDOW,"７段以后的歌词现在正公开征集中。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"谁、谁问你\n那些东西啦……！",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"别说无聊的事了\n快点开始吧！",0)
+	MES_close(PARTNER)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"呵……好像前所未有\n充满了干劲呢。",0)
+	MES(GYARANDOW,"今天就做到第７段吧……（准备）",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"一、１段就够了！！",0)
+	MES_close(RAGNA)
+
+//　　エクササイズ用之ＢＧＭが流れ始める。
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"我忘说了……",0)
+	MES(GYARANDOW,"能够教你们\n exercise、\n今天也是最后一回了。",0)
+	MES(GYARANDOW,"两位、\n全力跟我来吧！",0)
+	MES_close(GYARANDOW)
+
+//　　嘉兰多に続いて、２人もエクササイズを踊りだす。
+//　　（伝授三で行った之と同じ、激しいバージョン）
+//　　できればここで、３人があわせて踊っている様子をきちんと映す。
+//　　３人が踊りながら、フェードアウト。
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()	
+	
+
+//　　暗転状態で、必殺技習得ＳＥが鳴る。
+//	name("システムメッセージ")
+	MES(0,"『奥義·氷氣乱結旋』を習得した！",2)
+	MES(0,"水属性之必殺技が使えるようになった！",2)
+	MES_close(0)
+
+//　　※『○○○○○』之内容は、ダンジョン之属性に合わせて以下之ようにする。
+//　　　地：烈獄震激破
+//　　　水：氷氣乱結旋
+//　　　风：清華瞬刹天
+//　　　火：炎瘴印闘牙
+//　　※○属性は、ダンジョン之属性。
+//　　ゆっくりフェードインして、同じ構図之３人。
+
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　嘉兰多は２人に手を突き出している状態。
+//　　嘉兰多、手を下ろす。
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"干的不错啊。",0)
+	MES(GYARANDOW,"我能教的\n也就这么多了。",0)
+	MES(GYARANDOW,"之后要靠自己\n去弘扬了。",0)
+	MES_close(GYARANDOW)
+
+//	name2(RAGNA)
+	MES(RAGNA,"……啊。",0)
+	MES(RAGNA,"嘉兰多、\n你教的技能\n一直都很有用。",0)
+	MES(RAGNA,"暂且对你道个谢吧。\n Thank you 。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"恩、今天虽说\n是最后一次……",0)
+	MES(PARTNER,"一直都承蒙照顾。",0)
+	MES_close(PARTNER)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"哼哼、没必要突然变的这么暧昧嘛。",0)
+	MES(GYARANDOW,"如今你们的肉体里\n已经刻入exercise、\n其实就已经和我是同一种性质了……",0)
+	MES(GYARANDOW,"我就像经常在你们身边一样。\n不用觉得寂寞。",0)
+	MES_close(GYARANDOW)
+
+//　　２人に青ざめエモーション。
+	EMO(RAGNA,EMO_AOZAME)
+	EMO(PARTNER,EMO_AOZAME)
+	wait(30)
+	
+	MES(PARTNER,"我、我可不想\n让你觉得有什么暧昧的感觉……",0)
+	MES_close(PARTNER)
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"那么、两位。",0)
+	MES(GYARANDOW,"我会一直关注着你们的……\n继续努力吧。",0)
+	MES_close(GYARANDOW)
+
+//　　嘉兰多、去っていく。
+//　　２人はそれを見送る。
+	rot(GYARANDOW,60,270)
+	move(GYARANDOW, 0,	WALK1,7734,7655,0,	0)
+	wait(80)
+
+	rot_chr(RAGNA,60,GYARANDOW)
+	rot_chr(PARTNER,60,GYARANDOW)
+	wait(50)
+	delete(GYARANDOW)
+
+	rot_chr(RAGNA,60,PARTNER)
+	rot_chr(PARTNER,60,RAGNA)
+
+	MES(RAGNA,"恩、虽然发生了这么多事\n让我感到很疲惫……",0)
+	MES(RAGNA,"但还是赶快前进吧。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"恩。\n虽然是个怪男人……",0)
+	MES(PARTNER,"……………………………………",0)
+	MES(PARTNER,"……可能还会碰到吧。\n我们还是去做我们的事吧。",0)
+	MES_close(PARTNER)
+
+	//イベント終了--------------------------------------------
+
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+	
+	//４つ目之必殺技を修得した
+	F_set(FE_FF_GetSkil_1)
+
+	//★水之必殺技を修得
+	F_set(FE_FF_Skil_MIZU)
+}
+
+//──────────────────────────────
+//	name("◆必殺技伝授イベント·宝箱版")
+//──────────────────────────────
+//　　※フラグ□で各サブルートに初めて来た场合、
+//　　　宝箱が配置されている。
+//　　　調べると、各必殺技を入手できる。
+//　　クロスフェードで拉古那たちを再配置しておく。
+EV_GetSkil_BOX
+{
+	EV_begin()
+
+	fade_in(100,1,BLACK)	//暗転
+	wait_fade()	
+
+	//初期化------------------------------------------------
+	//キャラ再配置
+	chr_pos(RAGNA,	 7008,7915,1,150,	2)
+	chr_pos(PARTNER, 6654,7883,0,180,	2)
+
+
+	//カメラ初期位置
+	CAM_move(6985,-7905,241,0,0)	
+	CAM(350,92,80,18,225,0,0)
+
+	fade_in(0,60,BLACK)	//フェードイン
+	wait_fade()	
+	
+	
+	//イベント------------------------------------------------
+//	name("システムメッセージ")
+	MES(0,"W9获得粉红色的小纸片。",0)
+	MES_close(0)
+
+//	name("ナレーション")
+	MES(0,"W9来的正好。",0)
+	MES(0,"W9从今往后\n请好好记得我教的东西哦。",0)
+	MES_close(0)
+
+//　　拉古那に？エモーション。
+	EMO(RAGNA,EMO_HATENA)
+	wait(30)
+//　　手を伸ばすような仕草。
+	MES(RAGNA,"啥呀……",0)
+	MES_close(RAGNA)
+
+	rot_chr(PARTNER,60,RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"等、等等拉古那。\n不要乱摸。",0)
+	MES(PARTNER,"那个纸片\n好像被附上了什么法术！",0)
+	MES_close(PARTNER)
+
+//　　拉古那に？エモーション。
+	EMO(RAGNA,EMO_HATENA)
+	wait(30)
+//　　艾雯に向く。
+	rot_chr(RAGNA,60,PARTNER)
+	MES(RAGNA,"诶……？",0)
+	MES_close(RAGNA)
+
+//　　エクササイズ之ＢＧＭが鳴り出す。
+//　　拉古那たち、アセアセできょろきょろする。
+	EMO(RAGNA,EMO_ASEASE)
+	EMO(PARTNER,EMO_ASEASE)
+	wait(30)
+
+//　　以下之メッセージはオートで閉じるポップアップ。
+
+	MES_pos(RAGNA,"怎、怎么了……？",0,0,0,0,0)
+	wait(40)
+	MES_close(RAGNA)
+	
+//	name2(PARTNER)
+	MES_pos(PARTNER,"这音乐……！？",0,0,0,0,0)
+	wait(40)
+	MES_close(PARTNER)
+
+//　　ＢＧＭ之イントロが終わると、拉古那たちはエクササイズを踊りだす。
+//　　以下之メッセージはオートで閉じるポップアップ。
+	MES_pos(RAGNA,"搞、搞什么飞机啊！？",0,0,0,0,0)
+	wait(40)
+	MES_close(RAGNA)
+	
+//	name2(PARTNER)
+	MES_pos(PARTNER,"身体……身体不由自主地……",0,0,0,0,0)
+	wait(40)
+	MES_close(PARTNER)
+
+
+//　　拉古那たちがアセアセで踊りながら、フェードアウト。
+//　　暗転状態で、必殺技習得ＳＥが鳴る。
+/
+	fade_in(100,60,BLACK)	//暗転
+	wait_fade()	
+	
+/	name("システムメッセージ")
+	MES(0,"W9学会『奥義·氷氣乱結旋』！",2)
+	MES_close(0)
+
+//	name2(GYARANDOW)
+	MES(0,"W9可以使用水属性的必殺技了！",2)
+	MES_close(0)
+	
+//　　フェードイン。
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　※『○○○○○』之内容は、ダンジョン之属性に合わせて以下之ようにする。
+//　　　地：烈獄震激破
+//　　　水：氷氣乱結旋
+//　　　风：清華瞬刹天
+//　　　火：炎瘴印闘牙
+//　　※○属性は、ダンジョン之属性。
+//　　フェードインで、宝箱之前でばてている２人。
+//──────────────────────────────
+//	name("□嘉兰多に必殺技を教わった事が無い。")
+	if(!FE_FF_GetSkil_1)
+	{
+		MES(RAGNA,"怎、怎么回事、刚才的是……\n新型陷阱么……？",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"不、不晓得……",0)
+		MES(PARTNER,"唔、总觉得好像被强迫跳了\n个恶心的舞……",0)
+		MES_close(PARTNER)
+	}
+	else
+	{
+	//	name("□嘉兰多に必殺技を教わった事がある。")
+		MES(RAGNA,"刚、刚才难道是……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"那个蒙面怪人干的么……",0)
+		MES_close(PARTNER)
+	}
+
+//──────────────────────────────
+//　　拉古那たち、立ち上がる。
+	MES(RAGNA,"身体好像没什么异常……",0)
+	MES(RAGNA,"公主、暂且\n忘记这件事吧。",0)
+	MES(RAGNA,"我们还有、必须要\n做的事呢。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"恩……这种事\n就算记住也没用吧。",0)
+	MES_close(PARTNER)
+
+//　　艾雯にムカエモーション。
+	MES(PARTNER,"快点忘记吧。",0)
+	MES_close(PARTNER)
+	//イベント終了--------------------------------------------
+
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	EV_end()
+
+	//★水之必殺技を修得
+	F_set(FE_FF_Skil_MIZU)
+}
+*/
+
+#EndScriptTable
+//====================================================================
+

@@ -1,0 +1,607 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧傾儞僫乮儊僀僪偝傫俙乯Anna")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_ANNA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(ANNA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ANNA)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ANNA)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ANNA)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘峊偊幒丄墱偺堉巕偵嵗偭偰偄傞丅
+	//丂丂丂僥乕僽儖偺忋偵偼僇僢僾偑堦偮丅
+	if( F6_05_EndSixth )
+	{
+		look_chr(ANNA, PLAYER1,"Bone_Head")
+		if(!F_ANNA)
+		{
+			MES(ANNA,"哎呀……",0)
+			MES(ANNA,"小姐她們\n早就出去了呀。",0)
+			MES(ANNA,"現在應該在\n飛機場吧。",0)
+			MES_close(ANNA)
+
+		//丂丂傾儞僫偵彮偟丒丒丒僄儌乕僔儑儞丅
+			EMO(ANNA,EMO_TENTEN)
+			wait(30)
+			MES(ANNA,"話說在前面，\n我這可不是在偷懶哦。",0)
+			MES(ANNA,"現在是休息時間。",0)
+			MES_close(ANNA)
+
+			F_set(ANNA)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			MES(ANNA,"……沒有事做\n確實是有些無聊。",0)
+			MES_close(ANNA)
+
+		//丂丂傾儞僫偵彮偟丒丒丒僄儌乕僔儑儞丅
+			EMO(ANNA,EMO_TENTEN)
+			wait(30)
+
+			MES(ANNA,"要喝咖啡嗎？",0)
+			MES(ANNA,"我馬上就去泡～。",0)
+			MES_close(ANNA)
+		}
+		look_off(ANNA)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘墶偺戧慜偁偨傝傪憒彍偟偰偄傞丅乮儂僂僉帩偪乯
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(ANNA,30,PLAYER1)
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+		EV("MOTION_TK_ANNA")
+		if(!F_ANNA)
+		{
+			MES(ANNA,"鎮上的傳言說\n可怕的旋風就要來了。",0)
+			MES(ANNA,"……………………………………",0)
+			MES(ANNA,"……海蓮娜\n可能又要哭出來了。",0)
+			MES_close(ANNA)
+
+		//丂丂傾儞僫丄岦偒傪栠偡丅
+			rot(ANNA,30,0)
+			look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//憒彍拞
+			MES(ANNA,"我得趕緊把這裡掃乾淨。",0)
+			MES_close(ANNA)
+
+			F_set(ANNA)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(ANNA,"宅邸那邊安傑\n應該已經在關窗鎖門了。",0)
+			rot(ANNA,30,0)
+			MES(ANNA,"……我得趕緊完成掃除。",0)
+			MES_close(ANNA)
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//憒彍拞
+		MOT(ANNA,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘丒峀娫傪憒彍偟偰偄傞丅乮儂僂僉帩偪乯
+	if( F5_00_HearLunar )
+	{
+		EV("MOTION_TK_ANNA")
+		if(!FT_11_TalkAnna)
+		{
+		//	name("佀僼儔僌嘆傑偨偼嘇偺弶夞僀儀儞僩傪尒偰偄傞応崌丅")
+			if(FT_01_TalkAnna || FT_02_TalkAnna )
+			{
+				MES(RAGNA,"咦？\n你在工作啊，難得……",0)
+				MES_close(RAGNA)
+
+			//	name2(ANNA)
+				rot_chr(ANNA,30,PLAYER1)
+				MES(ANNA,"真……真是煩人。",0)
+				MES(ANNA,"我要幹什麼\n又不用你管。",0)
+				MES_close(ANNA)
+			}
+
+			EMO(ANNA,EMO_HATENA)
+			wait(30)
+			rot_chr(ANNA,30,PET)
+			look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+			MES(ANNA,"嗯～……",0)
+			MES_close(ANNA)
+
+//			MES(ANNA,"C4仧傾儞僫丄彮偟丒丒丒僄儌乕僔儑儞傪弌偟側偑傜儖僁偵婄傪嬤偯偗偰偔傞丅",0)
+//			MES_close(ANNA)
+		//丂丂傾儞僫丄彮偟丒丒丒僄儌乕僔儑儞傪弌偟側偑傜儖僁偵婄傪嬤偯偗偰偔傞丅"
+			EMO(ANNA,EMO_TENTEN)
+			wait(40)
+			EMO(ANNA,EMO_TENTEN)
+			wait(50)
+			//婄傪嬤偯偗傞
+
+			MES(ANNA,"唔～………",0)
+			MES(ANNA,"那個紅色的東西是什麼？",0)
+			MES(ANNA,"最近似乎一直在房子裡\n四處亂晃……",0)
+			KAO(ANNA,"1","2","2")
+			MES(ANNA,"嗚……還是看不太清楚……",0)
+			MES_close(ANNA)
+
+		//丂丂儖僁偵婥晅偒僄儌乕僔儑儞丅
+			EMO(PET,EMO_PA)
+			rot_chr(PET,30,ANNA)
+			wait(30)
+			
+			MES(PET,"是…是說我嗎？",0)
+			MES_close(PET)
+
+			EMO(PET,EMO_AOSUZI)
+			wait(30)
+
+			MES(PET,"什…什麼呀，\n真是個沒有禮貌的女傭……",0)
+			MES(PET,"我是艾爾文大人的家臣！\n身材出眾的闇之妖精！",0)
+			MES(PET,"你們家裡的大小姐\n也在協助我們啊！",0)
+			MES_close(PET)
+
+		//	name2(RAGNA)
+			look_chr(RAGNA,PET,"Bone_Head")
+			MES(RAGNA,"哈哈……",0)
+			MES_close(RAGNA)
+
+		//丂丂儔僌僫丄傾儞僫偵岦偔丅
+			look_off(RAGNA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僼儔僌嘇偺弶夞傪尒偰偄側偄応崌")
+			if(!FT_02_TalkAnna)
+			{
+				MES(RAGNA,"話說回來，難道\n你視力不好？",0)
+				MES(RAGNA,"為什麼不戴眼鏡……",0)
+				MES_close(RAGNA)
+			}
+			//	name("佀僼儔僌嘇偺弶夞傪尒偰偄傞応崌")
+			else
+			{
+				MES(RAGNA,"話說回來，\n你也差不多該\n戴個眼鏡了吧……",0)
+				MES_close(RAGNA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			rot_chr(ANNA,30,RAGNA)
+		
+			KAO(ANNA,"1","1","1")
+			MES(ANNA,"真煩人。\n多管閒事。",0)
+			rot_chr(ANNA,30,PET)
+			MES(ANNA,"好吧，不管你們是誰……",0)
+			MES(ANNA,"如果嚇到海蓮娜\n的話，小心我揍你們。\n聽到了沒—。",0)
+			MES_close(ANNA)
+
+		//	name2(PET)
+			MES(PET,"誰會做\n那種事啊？",0)
+			MES(PET,"真是沒禮貌的人類，\n竟然對本小姐說這種話……",0)
+			MES_close(PET)
+
+			F_set(FT_11_TalkAnna)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+			if(!F_ANNA)
+			{
+				MES(ANNA,"哎呀……你們能不要把\n我剛剛清掃過的地方弄髒嗎？",0)
+				MES(ANNA,"瞧瞧那鞋子，都沾滿了泥。",0)
+				MES(ANNA,"讓我白白努力那麼久。",0)
+				MES_close(ANNA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僼儔僌嘆傑偨偼嘇偺弶夞僀儀儞僩傪尒偰偍傝丄僿儗僫偺孞傝曉偟傪尒偰偄傞応崌丅")
+				if(FT_01_TalkAnna || FT_02_TalkAnna )
+				{
+					if(F_HELENA)
+					{
+						MES(RAGNA,"（好像工作上是\n 認真了一些……）",0)
+						MES(RAGNA,"（可是嘴上\n 還是很兇悍啊……）",0)
+						MES_close(RAGNA)
+					}
+				}
+				
+				F_set(ANNA)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(ANNA,"喂，你們那邊。\n不要讓別人的努力白費啊。",0)
+				MES(ANNA,"這樣就掃不完了呀。",0)
+				MES_close(ANNA)
+			}
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//憒彍拞
+		MOT(ANNA,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘偺慜偱憒彍偟偰偄傞丅乮儂僂僉帩偪乯
+	if( F4_00_StartSolo )
+	{
+		rot_chr(ANNA,30,PLAYER1)
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+		EV("MOTION_TK_ANNA")
+
+		if(!F_ANNA)
+		{
+			MES(ANNA,"大小姐告訴我今天\n可以休息一天。",0)
+			MES(ANNA,"……但是什麼都不做\n卻靜不下心來。",0)
+			MES(ANNA,"也沒有什麼特定的目標。",0)
+			MES_close(ANNA)
+
+		//丂丂傾儞僫偵彮偟丒丒丒僄儌乕僔儑儞丅
+			MES(ANNA,"就把這附近\n隨便打掃一下吧。",0)
+			MES_close(ANNA)
+			F_set(ANNA)
+		//丂丂仛傾儞僫亂崻偼偄偄搝亃
+			F_set_note(ANNA,2)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			MES(ANNA,"……小姐就在\n裡面。",0)
+			MES(ANNA,"你們找她有事的話\n就請進吧？",0)
+			MES_close(ANNA)
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//憒彍拞
+		MOT(ANNA,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘丒峊偊幒丄僿儗僫偺朤偵棫偭偰偄傞丅
+	if( F3_00_GoMoonCastle )
+	{
+		EV("MOTION_TK_ANNA")
+		if(!F_ANNA)
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			MES(ANNA,"……第一個被襲擊的人\n是海蓮娜。",0)
+			MES(ANNA,"怪物似乎是\n越過後面的山崖進來的。",0)
+			MES(ANNA,"……………………………………",0)
+			MES(ANNA,"那確實能把人嚇一跳呢。",0)
+			MES_close(ANNA)
+			F_set(ANNA)
+		}
+	//丂丂仛孞傝偐偊偟
+		else
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			MES(ANNA,"……海蓮娜，\n怪物已經走了哦。",0)
+			MES(ANNA,"……好了，不要哭。\n差不多停下來吧。",0)
+			MES_close(ANNA)
+		}
+		rot_chr(ANNA,30,HELENA)
+		MOT(ANNA,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸挰丄暚悈塃曈傝偺儀儞僠偵嵗偭偰偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_ANNA)
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			EV("MOTION_TK_ANNA")
+			MES(ANNA,"在逗海蓮娜玩的時候\n被安傑發現了。",0)
+			MES(ANNA,"結果\n被罰去買東西。",0)
+			MES(ANNA,"嘖，那個該死的小鬼女傭長……\n看我怎麼報復你。",0)
+			MES(ANNA,"就在帳簿上寫\n「這個死小鬼」吧。",0)
+			MES_close(ANNA)
+
+		//丂丂俀恖偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			//仛傾儞僫亂帪偵偼幐攕亃
+			F_set_note(ANNA,1)
+
+			F_set(ANNA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			MES(ANNA,"嗚……\n今天有點熱……",0)
+			MES_close(ANNA)
+
+		//丂丂傾儞僫怳傝曉傞丅
+			rot_chr(ANNA,30,PLAYER1)
+			EV("MOTION_TK_ANNA")
+			//怳傝曉傞張棟
+			MES(ANNA,"……我討厭太陽。",0)
+			MES(ANNA,"總覺得它很煩。",0)
+			MES_close(ANNA)
+		}
+		MOT(ANNA,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘偺慜傪憒彍偟偰偄傞丅乮儂僂僉帩偪乯
+	if( F2_00_GoForest )
+	{
+		rot_chr(ANNA,30,PLAYER1)
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+		EV("MOTION_TK_ANNA")
+		if(!F_ANNA)
+		{
+			MES(ANNA,"今天大小姐她們\n也回來了。",0)
+			MES(ANNA,"嘖，我剛想\n偷個懶……",0)
+			MES(ANNA,"真是倒楣。",0)
+			MES_close(ANNA)
+			F_set(ANNA)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			MES(ANNA,"……我最怕\n那個管家了。",0)
+			MES(ANNA,"他實在是太沈靜了，\n我完全看不出他在想什麼。",0)
+			MES(ANNA,"總覺得像是被他監視著一樣，\n放不下心來。",0)
+			MES_close(ANNA)
+		}
+		look(ANNA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//憒彍拞
+		MOT(ANNA,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘峊偊幒偵攝抲丅
+	//丂丂丂晹壆偺嬿偱摢傪書偊偰偄傞丅乮妟偵庤傪摉偰傞丄岥偵庤傪摉偰傞偱戙梡丠乯
+	if( F1_15_GoVillage )
+	{
+		if(!FT_02_TalkAnna)
+		{
+			rot_chr(ANNA,30,PLAYER1)
+			MES(ANNA,"好疼……",0)
+			MES(ANNA,"腦袋狠狠地撞上了\n那裡的碗櫥。",0)
+			MES(ANNA,"……因為根本\n就看不清楚嘛。",0)
+			MES(ANNA,"真是的，為什麼那種地方\n會有碗櫥呢。",0)
+			MES_close(ANNA)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"不是，話說回來……",0)
+				MES(RAGNA,"難道，\n你視力不好？",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"唔，你的眼睛……",0)
+				MES(PARTNER,"莫非是\n視力不好？",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			MES(ANNA,"嗚……",0)
+			MES(ANNA,"真煩人啊。",0)
+			MES(ANNA,"那種事根本就\n無所謂嘛。",0)
+			MES_close(ANNA)
+			F_set(FT_02_TalkAnna)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_ANNA)
+			{
+			//丂丂仸怳傝曉傜側偄丅
+				MES(ANNA,"哦，好疼……",0)
+				MES(ANNA,"哎呀，真是倒楣。\n順便休息一下吧。",0)
+				MES_close(ANNA)
+
+			//丂丂傾儞僫怳傝曉傞丅
+				rot_chr(ANNA,30,PLAYER1)
+			//	仛怳傝曉傞張棟
+			
+				MES(ANNA,"啊……我話說在前面。\n撞得這麼重是因為\n還沒有熟悉這裡的位置。",0)
+				MES(ANNA,"在本家的時候，\n一直都撞得很輕的。",0)
+				MES_close(ANNA)
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"這…你這視力\n未免太差了點……",0)
+					MES(RAGNA,"明明戴上眼鏡就行了……",0)
+					MES_close(RAGNA)
+				}
+				//	name("佀傾儖僂僃儞愭摢")
+				else
+				{
+					MES(PARTNER,"不…不要勉強自己，\n戴上眼鏡不就好了……",0)
+					MES_close(PARTNER)
+				}
+				F_set(ANNA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂仛孞傝曉偟
+			else
+			{
+				rot_chr(ANNA,30,PLAYER1)
+				MES(ANNA,"哼……",0)
+				MES(ANNA,"眼鏡那種沒品的東西\n我可不打算戴。",0)
+				MES(ANNA,"我絕對不要變成\n海蓮娜那樣一張傻瓜臉。",0)
+				MES_close(ANNA)
+
+				//仛傾儞僫亂帇椡傕埆偄亃
+				F_set_note(ANNA,0)
+			}
+		}
+		rot(ANNA,30,270)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘峊偊幒丄戜強偵棫偮丅
+	//丂丂仸弶夞僀儀儞僩
+	if( F1_01_GameStart )
+	{
+		if(!FT_01_TalkAnna)
+		{
+			MES(ANNA,"啊—，真討厭。",0)
+			MES(ANNA,"接下來的收拾就推給\n海蓮娜吧～……",0)
+			MES_close(ANNA)
+
+		//丂丂傾儞僫丄丠僄儌乕僔儑儞偱怳傝曉傞丅
+			EMO(ANNA,EMO_HATENA)
+			rot_chr(ANNA,30,PLAYER1)
+			wait(30)
+
+			EV("MOTION_TK_ANNA")
+			MES(ANNA,"唔～……",0)
+			MES_close(ANNA)
+
+		//丂丂傾儞僫偵丒丒丒僄儌乕僔儑儞丅
+			EMO(ANNA,EMO_TENTEN)
+			wait(30)
+
+			MES(ANNA,"你們是誰呀。\n都是生面孔呢。",0)
+			MES(ANNA,"看起來倒還不算可疑。",0)
+			MES(ANNA,"要是敢在這裡做出什麼奇怪舉動\n的話，小心我揍你們。\n聽到了沒—。",0)
+			MES_close(ANNA)
+			
+			F_set(FT_01_TalkAnna)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			EV("MOTION_TK_ANNA")
+			rot_chr(ANNA,30,PLAYER1)
+			if(!F_ANNA)
+			{
+				MES(ANNA,"現在這間房子裡\n住著兩位客人。",0)
+				MES(ANNA,"都還是小孩。\n大概１４、５歲上下吧。",0)
+				MES(ANNA,"他們經常出門，\n而且這個年紀\n也不用別人操心了。",0)
+				MES(ANNA,"可是人多起來的話，我總\n找不到偷懶的時機，真是為難啊～。",0)
+				MES_close(ANNA)
+				
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（拜託好好工作吧。）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"（唔，看來是個蠻不講理的傭人……）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+				F_set(ANNA)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+				MES(ANNA,"那兩個孩子來了以後，\n就很難找到偷懶的機會了。",0)
+				MES(ANNA,"啊—，真討厭～。",0)
+				MES_close(ANNA)
+			}
+			rot(ANNA,30,90)
+		}
+		MOT(ANNA,2,15)
+	}
+	
+	TK_end()
+}
+
+//夛榖帪偺儌乕僔儑儞
+MOTION_TK_ANNA
+{
+	MOT_SET(ANNA,150,-1,401,401,-1,-1)
+	MOT(ANNA,150,15)
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

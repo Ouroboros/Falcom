@@ -1,0 +1,619 @@
+//──────────────────────────────
+//	name("◆妖精３姉妹　Spiritシリーズ")
+//──────────────────────────────
+//リッキー（妖精C）
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_SPIRIT_C
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(SPIRIT_C, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,SPIRIT_C)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,SPIRIT_C)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_C)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_C)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_C)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SPIRIT_C)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,SPIRIT_C)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※フラグ①または□で妖精たちに会っていない場合、
+	//　　　妖精たちは配置しない。
+	//　　　森入り口に店だけ置いて、誰も居ない状態。
+	//　　　カウンター（もしくは看板）ＬＰを調べると、以下のメッセージ。
+	//	name("テキスト")
+	//	MES(SPIRIT_B,"本日臨時休業。\n材料探しに行ってます……㈱",0)
+	//	MES_close(SPIRIT_B)
+	if( F6_05_EndSixth )
+	{
+		//　　※初回イベント
+		if(!FE_13_TalkSpirit_C)
+		{
+			rot_chr(SPIRIT_C,30,PARTNER)
+			rot_chr(PARTNER,30,SPIRIT_B)
+		//	name("ジョー")
+			MES(SPIRIT_C,"そんなぁ……",0)
+			MES(SPIRIT_C,"ようやくお目にかかれたのに\nもうお別れだなんて……",0)
+			MES(SPIRIT_C,"ミアさぁん……\nオレはどぉしたらいいんスか～？",0)
+			MES_close(SPIRIT_C)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"あはは……",0)
+			MES(PARTNER,"あの、ごめんなさいね。\n突然の話で……",0)
+			MES_close(PARTNER)
+
+			rot_chr(RAGNA,30,SPIRIT_C)
+		//	name2(RAGNA)
+			MES(RAGNA,"そういや、お前って……\n一度ミアに助けられたことが\nあったんだったか。",0)
+			MES(RAGNA,"前にもそんな話をしてたよな。",0)
+			MES_close(RAGNA)
+
+			rot_chr(SPIRIT_C,30,RAGNA)
+		//	name("ジョー")
+			MES(SPIRIT_C,"ええ、そうなんスよ、お兄さん。\nオレのハートはあの日から\nミアさんのものッス㈱",0)
+			MES_close(SPIRIT_C)
+
+		//　　ラグナに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+			wait(30)
+
+			MES(RAGNA,"だ、誰がお兄さんだ……",0)
+			MES_close(RAGNA)
+			
+			//★ジョー【ミアに振られた】
+			F_set_note(SPIRIT_C,2)
+			F_set(FE_13_TalkSpirit_C)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_SPIRIT_C)
+			{
+				rot_chr(SPIRIT_C,30,PARTNER)
+			//	name("ジョー")
+				MES(SPIRIT_C,"ああ、ミアさんに\n魔力が残っていれば\n使い魔にしてもらう所なのに……",0)
+				MES(SPIRIT_C,"残念ッス。\n残念ッスよミアさ～ん……！",0)
+				MES_close(SPIRIT_C)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（いや……\n  たとえ魔力が残ってても、\n  そいつは阻止させてもらうぜ。）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（あはははは……）",0)
+				MES_close(PARTNER)
+
+				F_set(SPIRIT_C)
+			}
+		//　　★繰り返し
+			else
+			{
+				rot_chr(SPIRIT_C,30,PARTNER)
+			//	name("ジョー")
+				MES(SPIRIT_C,"ああ、ミアさんの使い魔になれば\nどこへだってお供するのに……",0)
+				MES(SPIRIT_C,"残念ッス。\n残念ッスよミアさ～ん……！",0)
+				MES_close(SPIRIT_C)
+			}
+		}
+	//──────────────────────────────
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※森入り口で開店している。
+	//　　　マリンがカウンターに入り、リッキーがその傍。
+	//　　　少し離れてジョーが浮遊している。
+	//　　※初回は、ルゥとの絡みイベントがあります。
+	if( F6_00_GoToMeru )
+	{
+		//＞フェアリー買い直後の一般。①で会ってる場合のみメッセージが変わる。
+		if(F_LUE && FE_01_TalkSpirit)
+		{
+			if(!F_SPIRIT_C)
+			{
+				EMO(SPIRIT_C,EMO_PA)
+				wait(30)
+				rot_chr(SPIRIT_C,30,PLAYER1)
+				MES(SPIRIT_C,"あ、やっぱ\n『フェアリー』買ったワケ？",0)
+				MES(SPIRIT_C,"チェッ、マリン姉だけ\nずるいよな～。",0)
+				MES(SPIRIT_C,"オレたちに留守番を押し付けて\n出かけるなんてよぉ。",0)
+				MES(SPIRIT_C,"まー、回復魔法が使えんのは\nマリン姉だけだし、\n仕方ねえけどさぁ～……",0)
+				MES_close(SPIRIT_C)
+
+				MES(PET,"何よ、ジョーも\nあたしたちに\n付いてきたかったの？",0)
+				MES_close(PET)
+
+			//　　ジョーにアセアセエモーション。
+				EMO(SPIRIT_C,EMO_ASEASE)
+				rot_chr(SPIRIT_C,30,PET)
+				wait(30)
+
+				MES(SPIRIT_C,"べ、べつにそーいう\n意味じゃねえけどよ～。",0)
+				MES_close(SPIRIT_C)
+				F_set(SPIRIT_C)
+			}
+			//　　★繰り返し
+			else
+			{
+				rot_chr(SPIRIT_C,30,PET)
+				MES(SPIRIT_C,"てか、一番ずるいのはルゥじゃね？",0)
+				MES(SPIRIT_C,"ご主人にくっついて\nあちこち出かけるなんて\nいいよな～……",0)
+				MES(SPIRIT_C,"やっぱ留守番はリッキーに任せて\nオレもどっか出かけちまうかな～。",0)
+				MES_close(SPIRIT_C)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+
+				MES(PET,"アンタも本当に変わんないわね……\n少しは仕事しなさいよ。",0)
+				MES_close(PET)
+			}
+		}
+		else
+		{
+			if(!FE_12_TalkSpirit_C)
+			{
+				rot_chr(SPIRIT_C,30,PET)
+				rot_chr(PET,30,SPIRIT_C)
+			//	name("ジョー")
+				MES(SPIRIT_C,"そういやルゥ、\nこの辺りで美人の娘さんを\n見かけなかったか？",0)
+				MES(SPIRIT_C,"こう、ちょっと小柄で\n可愛らしい顔つきの……",0)
+				MES_close(SPIRIT_C)
+
+			//	name2(PET)
+				MES(PET,"うっ……\nホントにアンタのナンパ癖は\n変わんないわよね。",0)
+				MES(PET,"どーせまたどっかで\n見かけた子に一目ボレしたんでしょ。",0)
+				MES_close(PET)
+
+			//	name("ジョー")
+				MES(SPIRIT_C,"いや、へへへ……",0)
+				MES(SPIRIT_C,"この前、その人に\n危ねえ所を助けられちまってよ～。",0)
+				MES(SPIRIT_C,"今回はマジ。\nマジで胸キュン来ちまったぜ。",0)
+				MES(SPIRIT_C,"でもあれ以来、\n一度も出会わないんだよな～。",0)
+				MES(SPIRIT_C,"ハア、やれやれ……\nオレの切ない恋心は高まる一方だぜ……",0)
+				MES_close(SPIRIT_C)
+				
+				F_set(FE_12_TalkSpirit_C)
+			}
+			else
+			{
+				if(!F_SPIRIT_C)
+				{
+					rot_chr(SPIRIT_C,30,PET)
+					rot_chr(PET,30,SPIRIT_C)
+					MES(SPIRIT_C,"ハア、やっぱルゥも\n見かけたこと無かったか……",0)
+					MES(SPIRIT_C,"あれ以来探してるんだが、\n中々見つからないんだよな～。",0)
+					MES(SPIRIT_C,"オレの切ない恋心は\n高まる一方だぜ……",0)
+					MES_close(SPIRIT_C)
+
+				//	name2(PET)
+					MES(PET,"うーん、これは本気みたいね……",0)
+					MES(PET,"何だったら、ブン殴って\n正気に戻してあげるけど。",0)
+					MES_close(PET)
+
+				//　　ジョーに冷や汗エモーション。
+					EMO(SPIRIT_C,EMO_HIYAASE)
+					wait(30)
+					
+				//	name("ジョー")
+					MES(SPIRIT_C,"おーい、ルゥ……\nどうしてそうなるんだ？",0)
+					MES_close(SPIRIT_C)
+					
+					F_set(SPIRIT_C)
+				}
+				else
+				{
+					rot_chr(SPIRIT_C,30,PLAYER1)
+					MES(SPIRIT_C,"ハア、やっぱ\n見つからねえなぁ～……",0)
+					MES(SPIRIT_C,"オレの切ない恋心は\n高まる一方だぜ……",0)
+					MES_close(SPIRIT_C)
+				}
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※森入り口に店だけ置いて、誰も居ない。
+	//　　　カウンター（もしくは看板）ＬＰを調べると、以下のメッセージ。
+	//	name("テキスト")
+	//	MES(SPIRIT_B,"近々開店予定。\nお楽しみに……㈱",0)
+	//	MES_close(SPIRIT_B)
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+	//　　※振り返らない。
+	//	name("ジョー")
+		MES(SPIRIT_C,"ま、店を出すには\n程よい気候だしな。",0)
+		MES(SPIRIT_C,"ここなら、あのフードのネーちゃんも\n通り掛かってくれるかもしれねえ……㈱",0)
+		MES(SPIRIT_C,"へっ、珍しく意見が一致したぜ。",0)
+		MES_close(SPIRIT_C)
+
+	//　　□マリンの分岐処理を呼び出す。
+		if(!FE_10_TalkSpirit)
+		{
+			EV("Talk_Spirit_10")
+			wait_EV("Talk_Spirit_10")
+		}
+		F_set(SPIRIT_C)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※端のほうをフラフラしている。
+	if( F4_00_StartSolo )
+	{
+		rot_chr(SPIRIT_C,30,PLAYER1)
+		if(!F_SPIRIT_C)
+		{
+		//	name("ジョー")
+			MES(SPIRIT_C,"へへ、ここって実は\nデートスポットじゃね？",0)
+			MES(SPIRIT_C,"うーん、こんな場所で\nあの娘さんと再会できたら……",0)
+			MES_close(SPIRIT_C)
+
+		//　　ジョーにハートエモーション。
+			EMO(SPIRIT_C,EMO_HATO)
+			wait(30)
+
+		//	name("ジョー")
+			MES(SPIRIT_C,"ああ、アナタに今すぐ\nオレの胸キュントークを届けたいっ……！",0)
+			MES_close(SPIRIT_C)
+
+			F_set(SPIRIT_C)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("ジョー")
+			MES(SPIRIT_C,"実はオレ、危ねえ所を\nフードを被った娘さんに\n助けてもらったことがあるんだ。",0)
+			MES_close(SPIRIT_C)
+
+		//　　ジョーにハートエモーション。
+			EMO(SPIRIT_C,EMO_HATO)
+			wait(30)
+
+		//	name("ジョー")
+			MES(SPIRIT_C,"ああ、あの方の涼しげな瞳……\nカッコ良かったなぁ㈱",0)
+			MES(SPIRIT_C,"こんな場所で出会えたら、\n正に運命の再会なんだが……",0)
+			MES_close(SPIRIT_C)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※神殿中継にいる。マリンを一番手前に配置しておきます。
+	//　　　近づくと、マリンの初回イベントが起動。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_SPIRIT_C)
+		{
+		//	name("ジョー")
+			MES(SPIRIT_C,"がくがく、ぶるぶる……",0)
+			MES(SPIRIT_C,"べ、別にオレは\nビビッてなんか無いぜ？",0)
+			MES(SPIRIT_C,"だた２人が\nスゲエ勢いで逃げてくから、\nくっついてきただけでよ～……",0)
+			MES_close(SPIRIT_C)
+
+		//　　ジョーに．．．エモーション。
+			EMO(SPIRIT_C,EMO_TENTEN)
+			wait(30)
+
+		//	name("ジョー")
+			MES(SPIRIT_C,"つーかここドコだ？？\nなあマリン姉、ここドコだよ。",0)
+			MES_close(SPIRIT_C)
+
+			F_set(SPIRIT_C)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("ジョー")
+			MES(SPIRIT_C,"なあマリン姉、\nここってドコなんだ？",0)
+			MES(SPIRIT_C,"ちゃんと分かって\n逃げてきたんだよな～？",0)
+			MES_close(SPIRIT_C)
+		}
+		rot(SPIRIT_C,30,50)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※大鉄塔入り口、跳ね橋の前で背を向けている。
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(SPIRIT_C,30,PLAYER1)
+		if(!F_SPIRIT_C)
+		{
+
+			MES(SPIRIT_C,"ふう、危なかったぜ……",0)
+			MES(SPIRIT_C,"ちょいと姉貴たちとはぐれてる間に、\n斧を持ったこぼるとが追っかけて来てよー。",0)
+			MES(SPIRIT_C,"ダンジョン中逃げ回ってて……\nマジ殺されちまうかと思ったぜ。",0)
+			MES(SPIRIT_C,"でも、あの時助けてくれた\nフードの娘さん……",0)
+			MES_close(SPIRIT_C)
+
+		//　　ジョーにハートエモーション。
+			EMO(SPIRIT_C,EMO_HATO)
+			wait(30)
+			
+		//	name("ジョー")
+			MES(SPIRIT_C,"へへ、美人だったなぁ～……\nまた会えねえかな……㈱",0)
+			MES_close(SPIRIT_C)
+
+		//　　□マリンの挿入部分を呼び出す。（３人の共通処理）
+			if(!FE_02_SpiritOfDark)
+			{
+				EV("Talk_Spirit_05")
+				wait_EV("Talk_Spirit_05")
+			}
+			F_set(SPIRIT_C)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(SPIRIT_C,"へへ、あの娘さん……\nフードを取ったらチョー美人だったんだよな～。",0)
+			MES(SPIRIT_C,"またどこかで会えねえかな～。\n是非お近づきになりたいぜ……㈱",0)
+			MES_close(SPIRIT_C)
+		}
+		
+		rot(SPIRIT_C,30,160)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※廃坑入り口
+	if( F2_00_GoForest )
+	{
+		rot_chr(SPIRIT_C,30,PLAYER1)
+		if(!F_SPIRIT_C)
+		{
+		//	name("ジョー")
+			MES(SPIRIT_C,"ハア……昔ダチが目の前で\n人間に連れ去られたことがあってよ。",0)
+			MES(SPIRIT_C,"マリン姉もリッキーも、\n神経質なんだよな。",0)
+			MES(SPIRIT_C,"まー、確かにアレは\nショックだったけどよー……",0)
+			MES_close(SPIRIT_C)
+
+			//──────────────────────────────
+			//　　□『★３人は闇妖精』のフラグが立っていない場合
+			if(!FE_02_SpiritOfDark)
+			{
+				MES(RAGNA,"そ、そうか……\n（何故だか責任を感じる話だな……）",0)
+				MES_close(RAGNA)
+
+				rot(SPIRIT_C,30,151)
+			//　　ラグナ、アルウェンに向く。
+				rot_chr(RAGNA,30,PARTNER)
+
+				MES(RAGNA,"（こいつら……\n  姫さんの知り合いか？）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（いや……\n  ルゥと同じ闇妖精のようだが、\n  初めてみる顔だな。）",0)
+				MES(PARTNER,"（ふむ……闇妖精の長老は、\n  何百年も前に行方不明になって\n  しまったという。）",0)
+				MES(PARTNER,"（一族を束ねる者も無く\n  世界中に散らばってしまったとなれば、\n  そういった事もあるのかもしれんな……）",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（そうか……）",0)
+				MES_close(RAGNA)
+
+			//　　『★３人は闇妖精』のフラグを立てる。
+				F_set(FE_02_SpiritOfDark)
+			}
+			else
+			{
+				//──────────────────────────────
+				//	name("□ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"そ、そうか……",0)
+					rot(SPIRIT_C,30,151)
+					MES(RAGNA,"（別に俺のせいじゃないはずだが……）",0)
+					MES(RAGNA,"（何故だか責任を感じるな……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□アルウェン先頭")
+				{
+					MES(PARTNER,"ふむ、そうか……",0)
+					rot(SPIRIT_C,30,151)
+					MES(PARTNER,"（闇妖精の長老は、何百年も前に\n  行方不明になってしまったというしな。）",0)
+					MES(PARTNER,"（一族を束ねる者も無く\n  世界中に散らばってしまったとなれば、\n  そういった事もあるのかもしれんな……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+			}
+			F_set(SPIRIT_C)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("ジョー")
+			MES(SPIRIT_C,"他の妖精連中のことは\nよく知らねーんだけどよ。",0)
+			MES(SPIRIT_C,"ウワサじゃ、人間と\n仲いい奴もいるらしいよなー。",0)
+			MES_close(SPIRIT_C)
+
+		//　　ジョーに．．．エモーション。
+			EMO(SPIRIT_C,EMO_TENTEN)
+			wait(30)
+		//	name("ジョー")
+			MES(SPIRIT_C,"……ちょっと羨ましいぜ。\nマリン姉もリッキーも神経質だから、\nこっちまで気を遣っちまうんだよなー。",0)
+			MES_close(SPIRIT_C)
+			rot(SPIRIT_C,30,151)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※山入り口マップにいる。
+	if( F1_15_GoVillage )
+	{
+		rot_chr(SPIRIT_C,30,PLAYER1)
+		if(!F_SPIRIT_C)
+		{
+		//	name("ジョー")
+			MES(SPIRIT_C,"へへ、オレたちが暮らしてたのは\nもっと暖かい小島だったからな～。",0)
+			MES(SPIRIT_C,"マリン姉もリッキーも、\n寒いトコは苦手なんだよな。",0)
+			MES(SPIRIT_C,"……オレ？　オレも\nここに店を出すのは反対だな。",0)
+			MES(SPIRIT_C,"美人なネーちゃんが通りがかっても、\n露出が少なそうだしなー。",0)
+			MES_close(SPIRIT_C)
+
+			//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			//──────────────────────────────
+			//　　□『★３人は闇妖精』のフラグが立っていない場合
+			if(!FE_02_SpiritOfDark)
+			{
+			//　　ラグナ、アルウェンに向く。
+				rot_chr(RAGNA,30,PARTNER)
+
+				MES(RAGNA,"（こいつら……\n  姫さんの知り合いか？）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（いや……\n  ルゥと同じ闇妖精のようだが、\n  初めてみる顔だな。）",0)
+				MES(PARTNER,"（ふむ、何をしておるのだ……？）",0)
+				MES_close(PARTNER)
+
+			//　　『★３人は闇妖精』のフラグを立てる。
+				F_set(FE_02_SpiritOfDark)
+			}
+			//──────────────────────────────
+			//★ジョー【ナンパな性格】
+			F_set_note(SPIRIT_C,0)
+			F_set(SPIRIT_C)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("ジョー")
+			MES(SPIRIT_C,"まー、あのちっぽけな島は\n暖かくて過ごしやすかったけどな。",0)
+			MES(SPIRIT_C,"お客が１人も来ねえんだもん。",0)
+			MES(SPIRIT_C,"あんなトコで店を開いても、\n意味ねえよなー。",0)
+			MES_close(SPIRIT_C)
+		}
+		rot(SPIRIT_C,30,112)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※大鉄塔（沈黙時）入り口。
+	//　　　３人で、背中を向けて話し込んでいる。
+	//　　　話しかけるとイベント開始。
+	//　　　クロスフェードでラグナたちの位置を再配置する。
+	if( F1_01_GameStart )
+	{
+		rot_chr(SPIRIT_C,30,PLAYER1)
+		if(!FE_01_TalkSpirit)
+		{
+			EV("Talk_Spirit_01")
+		}
+		else
+		{
+			if(!F_SPIRIT_C)
+			{
+			//	name("ジョー")
+				MES(SPIRIT_C,"オレは別に\n人間が通っても構わねえぜ。",0)
+				MES(SPIRIT_C,"ただし、美人なネーちゃん限定な。",0)
+				MES(SPIRIT_C,"へへへ……どうせなら\nネーちゃんがたくさん通る\n場所にしたいんだがなー。",0)
+				MES_close(SPIRIT_C)
+
+				F_set(SPIRIT_C)
+			}
+		//　　★繰り返し
+			else
+			{
+			//	name("ジョー")
+				MES(SPIRIT_C,"つーか、もう店は\nここでいいんじゃね？",0)
+				MES(SPIRIT_C,"ちょっと観光地っぽいじゃん。",0)
+				MES(SPIRIT_C,"へへへ……美人なネーちゃんが\n通りがかるかもしれねえしな！",0)
+				MES_close(SPIRIT_C)
+			}
+		}
+		rot(SPIRIT_C,30,160)
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

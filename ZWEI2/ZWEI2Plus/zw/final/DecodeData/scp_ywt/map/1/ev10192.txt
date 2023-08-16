@@ -1,0 +1,756 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[11019][攑岯亅拞宲暘婒]
+//====================================================================
+
+#ScriptTable
+
+#ODESSA			1
+#EVENT_RAGNA 	2
+#ALWEN			3
+
+//=====================================================================
+//=== 弶婜壔張棟 ======================================================
+//=====================================================================
+INIT
+{
+//仭抧宍
+
+//  -------  no typ     tip      x    y   z    mot  岦 忬    000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭奒抜丒斷
+	set_chr( 90,990,	-1,-1,    0, 5400,0,   180,  0301, 6,"K1_11013;")	//嘆僄儞僩儕 儊僀儞嘊
+	set_chr( 91,990,	-1,-1,-2150,-1950,0,   315,  0301, 6,"K0_11021;")	//嘇僄儞僩儕 晲婍嘆
+	set_chr( 92,990,	-1,-1, 1950,-4900,0,    15,  0302, 6,"K0_11031;")	//嘊僄儞僩儕 儃僗嘆
+
+	set_chr( 95,990,	-1,-1,-2150,-1950,0,   315,  0103, 6,"K0_11021;")	//嘇僄儞僩儕 晲婍嘆曗彆
+
+//仭僗僀僢僠丒娕斅
+	set_chr( 50,620,	-1,-1, -950, 600, 0,  	 0,   270, 0,";")		//嘆僙乕僽OBJ
+
+	set_chr( 55,648,	-1,-1, -500,-325, 0,     2,   315, 0,";")	//儗儀儖僾儗乕僩
+	set_chr( 56,648,	-1,-1,  585,-135, 0,     2,    15, 0,";")	//儗儀儖僾儗乕僩
+	set_chr( 57,654,	-1,-1, -735, -25, 0,     4,   310, 0,";")	//弴楬埬撪乮晲婍乯
+	set_chr( 58,654,	-1,-1,  275,-275, 0,     3,     0, 0,";")	//弴楬埬撪乮儃僗乯
+
+//仭僀儀儞僩
+	if(F1_02_EndPrologue && !F1_22_EndFirst)
+	{
+	//侾復
+		//俧俥亀仛攑岯丗僆僨僢僒偲偡傟堘偭偨亁棫偭偰側偄
+		if(!F1_13_MeetOdessa)
+		{
+			//仴僆僨僢僒偲偡傟堘偆僀儀儞僩
+			set_chr( 80,990,-1,-1,947,-1512,-50,		0,	0401,	6,"<EV_1_03_MeetOd>;")
+		}
+		//俧俥亀仛攑岯丗拞宲儅僢僾偵摓拝偟偨亁棫偭偰側偄
+		if(!F1_12_OnCaveHalf)
+		{
+			//仴拞宲儅僢僾偵摓拝偡傞僀儀儞僩
+			EV("EV_1_02_OnCaveHalf")
+		}
+	}
+
+//仭応柺屌桳愝掕
+
+}
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴拞宲儅僢僾偵摓拝偡傞僀儀儞僩
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂儊僀儞儖乕僩嘆傪僋儕傾偟偨強偱僀儀儞僩敪惗丅
+//丂丂儔僌僫偨偪偑拞宲儅僢僾偵擖偭偰偔傞偲偙傠傪尒偣傞丅
+//丂丂弌偰偡偖偺強偐丄拞墰偺戝偒側峀娫偱傗傞偐偼梫専摙丅
+EV_1_02_OnCaveHalf
+{
+	EV_begin()
+
+	//埫揮
+	fade_in(100,1,BLACK)
+	wait_fade()
+
+	F_set_chr(50,CF_NO_CLIP)
+	F_set_chr(50,CF_NO_CLIP2)
+	F_set_chr(55,CF_NO_CLIP)
+	F_set_chr(55,CF_NO_CLIP2)
+	F_set_chr(56,CF_NO_CLIP)
+	F_set_chr(56,CF_NO_CLIP2)
+	F_set_chr(57,CF_NO_CLIP)
+	F_set_chr(57,CF_NO_CLIP2)
+	F_set_chr(58,CF_NO_CLIP)
+	F_set_chr(58,CF_NO_CLIP2)
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,-40,5158,0,180,2)
+	chr_pos(PARTNER, 52,5112,0,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(RAGNA)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, -50,5250,0, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 60,5220,0, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//僨僼僅儖僩
+	KAO(ALWEN,"1","1","1")//僨僼僅儖僩
+
+	//儌乕僔儑儞掕媊
+	MOT_SET(ALWEN,150,-2,399,399,-1,-1)//崢偵庤傪摉偰傞乮嵍乯
+
+	//僇儊儔弶婜埵抲
+	CAM_move(202,-612,300,0,0)
+	CAM(630,108,400,40,210,0,1)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//忨傪憰旛偝偣傞偺偼偙偪傜丅
+//	MOT(ALWEN,53,1)										//傾儖僂僃儞偺塃庤傪奐偐偣傞
+
+	fade_in(0,60,BLACK)	//僼僃乕僪僀儞
+	CAM_move(302,-662,600,180,0)
+	CAM(430,160,440,36,196,180,1)
+	wait_CAM_move()
+	wait_CAM()
+
+	cross_fade(30)
+//	CAM_move(42,-2494,160,0,0)
+//	CAM(450,94,0,38,210,0,0)
+//	CAM_move(52,-4892,160,240,0)
+//	CAM(-50,94,0,38,210,240,1)
+	CAM_move(52,-932,160,0,0)
+	CAM(410,124,160,32,224,0,0)
+	CAM_move(52,-4852,160,240,0)
+	CAM(-30,94,160,32,214,240,0)
+
+	wait(150)
+	move( EVENT_RAGNA, 0,	WALK1,-50,4645,0,0)
+	wait(30)
+	move( ALWEN, 0,	WALK1, 50,4900,0,0)
+
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(15)
+//	CAM_move(8,-4614,140,0,0)
+//	CAM(-210,38,140,24,338,0,0)
+//	CAM_move(28,-4694,140,900,0)
+//	CAM(-90,42,140,24,346,900,0)
+	CAM_move(8,-4694,140,0,0)
+	CAM(-210,56,140,22,338,0,0)
+	CAM_move(8,-4694,130,600,0)
+	CAM(-90,60,130,22,346,600,0)
+	rot(ALWEN,-1,165)
+	wait(15)
+
+	MOT(EVENT_RAGNA,53,15)	//敮傪僙僢僩
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","1233321","1")//
+	MES(EVENT_RAGNA,"呼……\n總算走到一個段落。",0)
+	MES_close(EVENT_RAGNA)
+
+	wait_MOT(EVENT_RAGNA,53)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	rot(EVENT_RAGNA,30,310)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"話雖如此，我的擔心看樣子\n確實是多餘的。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"你使用的魔法……\n還真厲害。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,150,15)
+	wait(15)
+	KAO(ALWEN,"12321Z6","123","1")//
+	MES(ALWEN,"哼，那東西\n還不及我原本魔力千分之一。",0)
+	KAO(ALWEN,"B232BZ6","32","2")//
+	MES(ALWEN,"不儘早把失去的魔力奪回來，\n我就只能發揮這樣的實力。",0)
+	MES_close(ALWEN)
+
+	MES(EVENT_RAGNA,"是，是嗎……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z5","33321","2")//
+	MES(ALWEN,"但是，看起來你\n的身手也不錯。",0)
+	KAO(ALWEN,"12321Z5","1","2")//
+	MES(ALWEN,"那奇妙的武器……\n使用得得心應手。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//	cross_fade(15)
+//	CAM_move(-74,-4694,80,0,0)
+//	CAM(30,60,80,22,224,0,0)
+//	CAM_move(-74,-4740,80,900,0)
+//	CAM(150,60,80,22,238,900,0)
+	CAM_move(-94,-4694,90,0,0)
+	CAM(30,64,90,22,224,0,0)
+	CAM_move(-94,-4714,70,600,0)
+	CAM(150,68,70,22,234,600,0)
+//	wait(15)
+
+	EV("_MOT_RAGNA_1")
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"你是說「錨劍」嗎？\n嗯，它是我的老搭檔了。",0)
+	KAO(EVENT_RAGNA,"12321Z8","1","1")//
+	SE(1014,0)//僊傾峔偊SE
+	MES(EVENT_RAGNA,"可以自由控制距離，\n也可以用來解除陷阱，\n是探索時候不可缺少的工具。",0)
+	KAO(EVENT_RAGNA,"12321Z8","1","1")//
+	MES(EVENT_RAGNA,"總之，它還有更多的特點，\n因為需要時常保養，\n所以能使用它的同行並不多。",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(ALWEN,"嗯，真有意思。",0)
+	MES(ALWEN,"不過……\n你身體的狀態怎樣？",0)
+	MES(ALWEN,"在戰鬥中，\n有沒有感到不適？",0)
+	MES_close(ALWEN)
+
+	wait_EV("_MOT_RAGNA_1")
+	MOT(EVENT_RAGNA,51,15)	//庱僉儑儘僉儑儘
+	KAO(EVENT_RAGNA,"12321Z4","1232A","6")//
+	MES(EVENT_RAGNA,"狀態？\n感覺非常好。",0)
+	KAO(EVENT_RAGNA,"12321Z4","236","6")//
+	MES(EVENT_RAGNA,"反而身體比平時\n輕巧很多。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	CAM_move(-174,-4514,130,0,0)
+	CAM(-170,68,130,12,222,0,0)
+	MOT(EVENT_RAGNA,2,0)	//
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	MOT(ALWEN,2,0)//
+
+//丂丂儔僌僫偺摢偵両儅乕僋丅
+	KAO(EVENT_RAGNA,"2","321DE","7")//
+//	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EFF(25100,	-50,-4645,120,	0,80,0)
+	SE(1000,0)//僄儌乕僔儑儞乮両乯
+	wait(30)
+
+	KAO(EVENT_RAGNA,"B232B2Z3","D12321D","2")//
+	MES(EVENT_RAGNA,"難道……\n是因為「血之契約」！？",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	CAM_move(-14,-4754,160,0,0)
+	CAM(-330,44,160,26,356,0,0)
+	CAM_move(-14,-4754,130,600,0)
+	CAM(-90,48,130,25,336,600,0)
+
+	KAO(ALWEN,"12321Z3","123332A","1")//
+	MES(ALWEN,"正是。",0)
+	KAO(ALWEN,"12321Z7","A","1")//
+	MES(ALWEN,"雖說契約已改寫，\n但你「血之戰士」\n的身份並沒有改變。",0)
+	KAO(ALWEN,"12321Z6","A","1")//
+	MES(ALWEN,"但是，因為立場是對等的，\n所以應該更接近人類。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z4","1233321","1")//
+	MES(EVENT_RAGNA,"是，是嗎……\n那我就稍微安心了。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z6","23","1")//
+	MES(ALWEN,"儘管如此，因為以靈魂為媒介，\n你和我可以說是一體的。",0)
+	KAO(ALWEN,"12321Z3","36","1")//
+	MES(ALWEN,"小心不要讓身體受傷。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z3","123","2")//
+	MES(EVENT_RAGNA,"……ＯＫ。\n我會小心的。",0)
+	MES_close(EVENT_RAGNA)
+
+//丂丂僀儀儞僩廔椆丄僾儗僀儎乕憖嶌嫋壜丅
+	fade_in( 100, 30, BLACK )	//埫揮
+	wait_fade()
+
+	F_reset_chr(50,CF_NO_CLIP)
+	F_reset_chr(50,CF_NO_CLIP2)
+	F_reset_chr(55,CF_NO_CLIP)
+	F_reset_chr(55,CF_NO_CLIP2)
+	F_reset_chr(56,CF_NO_CLIP)
+	F_reset_chr(56,CF_NO_CLIP2)
+	F_reset_chr(57,CF_NO_CLIP)
+	F_reset_chr(57,CF_NO_CLIP2)
+	F_reset_chr(58,CF_NO_CLIP)
+	F_reset_chr(58,CF_NO_CLIP2)
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,-50,4645,0,180,2)
+	chr_pos(PARTNER, 50,4900,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return( 0 )
+	wait(30)
+
+//俧俥亀仛攑岯丗拞宲儅僢僾偵摓拝偟偨亁傪棫偰傞丅
+	F_set(F1_12_OnCaveHalf)
+
+	fade_in(0,30,BLACK)	//僼僃乕僪僀儞
+
+	EV_end()
+}
+
+_MOT_RAGNA_1
+{
+	look_off(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,52,15)	//傾儞僇乕僊傾惍旛
+	wait(150)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴僆僨僢僒偲偡傟堘偆僀儀儞僩
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂拞宲儅僢僾丄儃僗儖乕僩偵岦偐偆搑拞偵棃傞偲僀儀儞僩敪惗丅
+EV_1_03_MeetOd
+{
+	EV_begin()
+
+	fade_in(100,30,BLACK)	//
+	wait_fade()
+
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 1144,-1830,0, 2,170,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 930,-1800,0, 2, 170,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//僨僼僅儖僩
+	KAO(ALWEN,"1","1","1")//僨僼僅儖僩
+
+	//僀儀儞僩梡僉儍儔攝抲
+//	set_chr( ODESSA,1019,-1,-1,1806,-4362,0,		2,	15,	0,"")
+	set_chr( ODESSA,1019,-1,-1,1644,-3800,-100,		2,	15,	0,"")
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	KAO(ODESSA,"1","1","1")//僨僼僅儖僩
+
+	//儌乕僔儑儞掕媊
+	MOT_SET(EVENT_RAGNA,150,-1,428,428,-1,-1)//傑偰
+	MOT_SET(EVENT_RAGNA,151,-1,434,434,-1,-1)//搟傝
+	MOT_SET(EVENT_RAGNA,152,-1,508,508,-1,-1)//偳偆傛丠
+	MOT_SET(ALWEN,150,-1,399,399,-1,-1)//崢偵庤傪摉偰傞乮嵍乯
+	MOT_SET(ODESSA,150,-1,514,514,-1,-1)//僴僀億乕僘
+	MOT_SET(ODESSA,151,-1,399,399,-1,-1)//崢偵庤傪摉偰傞乮嵍乯
+	MOT_SET(ODESSA,152,-1,415,415,-1,-1)//傗傟傗傟
+	MOT_SET(ODESSA,153,-1,417,417,-1,-1)//傗傟傗傟掆巭
+	MOT_SET(ODESSA,154,-1,464,464,-1,-1)//僶僀僶僀乮嵍乯
+//	MOT_SET(ODESSA,154,-1,465,465,-1,-1)//僶僀僶僀乮嵍乯
+	MOT_SET(ODESSA,154,-1,464,464,-1,-1)//僶僀僶僀乮嵍乯
+	MOT_SET(ODESSA,155,155,6395,6425,-1,-1)//僶僀僶僀乮嵍乯
+	MOT_SET(ODESSA,156,-1,410,410,-1,-1)//傆乕傫
+	MOT_SET(ODESSA,157,-1,405,405,-1,-1)//偦偭偪
+
+	wait(1)
+	F_set_Node(ODESSA,"Bone_RightSword",NP_HIDE)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//忨傪憰旛偝偣傞偺偼偙偪傜丅
+//	MOT(ALWEN,53,1)										//傾儖僂僃儞偺塃庤傪奐偐偣傞
+
+	CAM_move(1000,1882,0,0,0)
+	CAM(830,66,0,42,225,0,0)
+
+	fade_in(0,30,BLACK)	//僼僃乕僪僀儞
+	wait_fade()
+
+	chr_rename(ODESSA,"女性的聲音")//
+	MES_pos(ODESSA,"W9哎呀，你們是……",0,	500,120,0,0)
+	wait_key(0)
+	MES_close(ODESSA)
+
+//丂丂儔僌僫偲傾儖僂僃儞偺摢偵両儅乕僋丅
+//	MES(EVENT_RAGNA,"両儅乕僋丅",300)
+//	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	look_chr( EVENT_RAGNA, ODESSA ,"Bone_Head")
+	look_chr( ALWEN, ODESSA ,"Bone_Head")
+	wait(15)
+	MES(EVENT_RAGNA,"是誰……！？",0)
+	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+
+//丂丂夋柺僗僋儘乕儖偟偰丄岦偙偆偐傜僆僨僢僒偑棃傞偺傪尒偣傞丅
+//丂丂乮僽乕儊儔儞偼帩偭偰偄側偄忬懺丠乯
+	CAM_move(1324,2480,160,180,0)
+	CAM(470,44,160,34,180,180,1)
+	move( ODESSA, 0, 8, 1324,-2540,0,0)
+	wait_move( ODESSA )
+	MOT(ODESSA,151,15)	//崢偵庤傪摉偰傞乮嵍乯
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(15)
+//	CAM_move(1334,2394,160,0,0)
+//	CAM(-90,56,160,24,324,0,0)
+//	CAM_move(1374,2394,160,600,0)
+//	CAM(-90,56,160,24,308,600,0)
+	CAM_move(1314,2394,140,0,0)
+	CAM(-170,48,140,24,324,0,0)
+	CAM_move(1314,2394,140,300,0)
+	CAM(-210,46,140,24,320,300,0)
+
+	//僉儍儔嵞攝抲
+	chr_pos(EVENT_RAGNA,1184,-1930,0,180,2)
+	chr_pos(ALWEN, 970,-1900,0,190,2)
+	KAO(EVENT_RAGNA,"B","1","1")//
+	KAO(ALWEN,"B","1","1")//
+	wait(30)
+
+	chr_rename(ODESSA,"戴牛仔帽的女性")//
+//	name("僥儞僈儘儞僴僢僩偺彈惈")
+	MES(ODESSA,"咦，竟然還有其他人\n來到這裡。",0)
+	MES(ODESSA,"挺不錯的嘛。",0)
+	MES_close(ODESSA)
+
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","1")//
+	MES(EVENT_RAGNA,"你是……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	CAM_move(1324,2540,68,0,0)
+	CAM(-50,30,68,20,196,0,0)
+	CAM_move(1324,2540,168,130,0)
+	CAM(-210,34,168,20,166,130,0)
+	wait(100)
+
+	MOT(ODESSA,2,15)	//僨僼僅儖僩
+	wait(30)
+	KAO(ODESSA,"12321Z3","1233321","1")//
+	MES(ODESSA,"我叫奧迪莎。",0)
+	KAO(ODESSA,"12321Z6","1","1")//
+	MES(ODESSA,"是最近剛剛來到伊魯巴特的\n旅客。",0)
+	KAO(ODESSA,"12321Z5","1","1")//
+	MES(ODESSA,"你們是生面孔，\n你是伊魯巴特的人嗎？",0)
+	MES_close(ODESSA)
+	wait_MES(ODESSA)
+
+	cross_fade(15)
+//	CAM_move(1234,2276,120,0,0)
+//	CAM(80,78,120,22,290,0,0)
+//	CAM_move(1234,2276,120,1200,0)
+//	CAM(-40,78,120,22,316,1200,0)
+	CAM_move(1234,2276,140,0,0)
+	CAM(-120,78,140,18,316,0,0)
+	CAM_move(1254,2276,140,600,0)
+	CAM(40,82,140,18,322,600,0)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321Z3","1233321","1")//
+	MES(EVENT_RAGNA,"不……我也是旅客。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"我叫拉格那。\n拉格那·瓦倫丁。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z3","1233321","1")//
+	MES(ALWEN,"叫我艾爾文就好。",0)
+	MES_close(ALWEN)
+
+	MOT(ODESSA,156,15)
+	wait(15)
+	chr_rename(ODESSA,"奧迪莎")//
+	MES(ODESSA,"拉格那和艾爾文嗎？\n嗯……",0)
+	MES_close(ODESSA)
+	MOT(ODESSA,157,15)
+	wait(15)
+	MES(ODESSA,"使用錨劍，\n看來這毛頭小子和我是同行？",0)
+	MES_close(ODESSA)
+
+//丂丂儔僌僫偺摢偵搟傝儅乕僋丅
+	KAO(EVENT_RAGNA,"C","1","3")//
+//	MES(EVENT_RAGNA,"搟傝儅乕僋丅",0)
+	EMO(EVENT_RAGNA,EMO_AOSUZI)
+	MOT(EVENT_RAGNA,151,10)	//搟傝
+	wait(15)
+	CAM_quake("46")
+	KAO(EVENT_RAGNA,"C232CZ3","1233321","3")//
+	MES(EVENT_RAGNA,"P1你說誰是毛頭小子！",0)
+	KAO(EVENT_RAGNA,"C232CZ5","1","3")//
+	MES(EVENT_RAGNA,"P1雖然我承認自己比較年輕，\n但你也真是個失禮的女人──",0)
+	MES_close(EVENT_RAGNA)
+
+//丂丂儔僌僫偺摢偵両儅乕僋丅
+	KAO(EVENT_RAGNA,"E","12321D","7")//僨僼僅儖僩
+//	MES(EVENT_RAGNA,"両儅乕僋丅",300)
+//	MES_close(EVENT_RAGNA)
+//	wait_MES(EVENT_RAGNA)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(30)
+
+	MOT(EVENT_RAGNA,2,15)	//僨僼僅儖僩
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","D123","2")//僨僼僅儖僩
+	MES(EVENT_RAGNA,"同行……\n………奧迪莎………",0)
+	KAO(EVENT_RAGNA,"B232BZ3","321","2")//僨僼僅儖僩
+	MES(EVENT_RAGNA,"「餓狼獵手」奧迪莎！",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ODESSA,2,15)
+	wait(15)
+	MES(ODESSA,"哎呀，你知道我啊？",0)
+	MES_close(ODESSA)
+
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","2")//
+	MES(EVENT_RAGNA,"當然。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","2")//
+	MES(EVENT_RAGNA,"在這圈子裡，你早已\n遠近馳名了。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	cross_fade(15)
+	CAM_move(1098,1934,140,0,0)
+	CAM(-10,52,140,22,340,0,0)
+	wait(15)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	MOT(ALWEN,150,15)	//
+	wait(15)
+	KAO(ALWEN,"B232BZ3","1233321","6")//
+	MES(ALWEN,"什麼，你們認識嗎？",0)
+	MES_close(ALWEN)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ5","1233321","2")//
+	MES(EVENT_RAGNA,"不，雖然沒見過面，\n但她是個實力高強的名人。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","2")//
+	MES(EVENT_RAGNA,"雖說是個尋寶獵人，但其實\n她賞金獵人的身分更出名。",0)
+	KAO(EVENT_RAGNA,"B232BZ8","123332","2")//
+	MES(EVENT_RAGNA,"那些蠻橫的通緝犯，\n只要聽到她的名字\n就嚇得尿褲子了。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,2,15)	//
+	wait(15)
+	KAO(ALWEN,"B232F","23332A","6")//
+	MES(ALWEN,"哦……",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(15)
+//	CAM_move(1194,2174,160,0,0)
+//	CAM(110,68,160,24,156,0,0)
+//	CAM_move(1194,2174,160,900,0)
+//	CAM(-50,68,160,24,156,900,0)
+	CAM_move(1210,2254,140,0,0)
+	CAM(-50,76,140,16,156,0,0)
+	CAM_move(1210,2254,150,600,0)
+	CAM(-10,88,160,16,156,600,0)
+	chr_pos(ALWEN, 970,-1900,0,230,2)
+	KAO(ALWEN,"1","1","1")//僨僼僅儖僩
+	KAO(EVENT_RAGNA,"1","1","1")//僨僼僅儖僩
+	look_off(ALWEN)
+	look_off(EVENT_RAGNA)
+	wait(15)
+
+	MOT(ODESSA,153,15)	//傗傟傗傟乣傗傟傗傟掆巭
+	VOICE(280,0)	//仛儃僀僗擖椡墘弌
+	wait(15)
+	KAO(ODESSA,"12321Z3","123","5")//
+	MES(ODESSA,"真是的，說得那麼難聽。",0)
+	MES_close(ODESSA)
+
+	MOT(ODESSA,2,15)	//
+	wait(15)
+	KAO(ODESSA,"12321Z5","321","1")//
+	MES(ODESSA,"你是叫拉格那吧？\n我也聽過關於你的傳聞哦。",0)
+	KAO(ODESSA,"12321Z6","1","1")//
+//	MES(ODESSA,"愒栄偺傾儞僇乕僊傾巊偄偱\n旘峴婡嫸偺庒偄偺偑偄傞偭偰偹丅",0)
+	MES(ODESSA,"有個紅髮的錨劍士，\n同時也是個年輕的飛機狂。",0)
+	MES_close(ODESSA)
+
+//	MOT(EVENT_RAGNA,53,15)	//敮傪僙僢僩
+//	wait(15)
+	MES(EVENT_RAGNA,"哼……\n我是飛機狂還真對不起大家啊。",0)
+	MES(EVENT_RAGNA,"但是，像你這麼有名的人\n到底是怎麼了？",0)
+	MES(EVENT_RAGNA,"難道有什麼懸賞大盜\n逃到這座島上來了？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"1","123","1")//
+	MOT(ODESSA,151,15)	//崢偵庤傪摉偰傞乮嵍乯
+	wait(15)
+	KAO(ODESSA,"12321Z3","3","1")//
+	MES(ODESSA,"……嗯，差不多吧。",0)
+	KAO(ODESSA,"12321Z5","3","1")//
+	MES(ODESSA,"不過看來並不在\n這個遺跡裡面。",0)
+	KAO(ODESSA,"12321Z4","3","1")//
+	MES(ODESSA,"沒辦法，去別的地方找找吧。",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA,152,15)
+	wait(15)
+	MES(EVENT_RAGNA,"……\n你到過這裡的深處了嗎？",0)
+	MES(EVENT_RAGNA,"有沒有發現一些\n奇怪的東西？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"12321Z5","321","1")//
+	MES(ODESSA,"嗯，我還沒到最深處去。",0)
+	KAO(ODESSA,"12321Z5","1","1")//
+	MES(ODESSA,"但是，我知道。\n我要找的目標不在裡面。",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA,2,15)	//
+	wait(15)
+	MES(EVENT_RAGNA,"咦……？",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(ALWEN,"……………………………",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//丂丂僆僨僢僒丄偦偺傑傑儔僌僫偨偪偺榚傪捠傝敳偗傞丅
+	KAO(ODESSA,"1","123","1")//
+	MOT(ODESSA,2,15)
+	VOICE(310,0)	//仛儃僀僗擖椡墘弌
+	wait(15)		//仛儃僀僗擖椡墘弌
+	move( ODESSA, 0, 8, 1030,-1762,0,0)
+	wait(40)
+
+	cross_fade(30)
+	CAM_move(1194,2034,180,0,0)
+	CAM(190,46,180,28,320,0,0)
+	CAM_move(1134,2014,180,600,0)
+	CAM(30,46,180,28,334,600,0)
+
+	look_chr( EVENT_RAGNA, ODESSA ,"Bone_Head")
+	move( EVENT_RAGNA, 0, 4, 1242,-1944,1,0)
+	wait(10)
+	look_chr( ALWEN, ODESSA ,"Bone_Head")
+	move( ALWEN, 0, 4, 926,-1944,1,0)
+	rot(EVENT_RAGNA,10,30)
+	rot(ALWEN,10,330)
+
+	wait(60)
+//	CAM_move(1174,2114,280,600,0)
+//	CAM(350,40,280,30,336,600,0)
+
+	MOT(EVENT_RAGNA,150,15)	//懸偰
+	wait(15)
+	MES(EVENT_RAGNA,"喂，喂……",0)
+	MES_close(EVENT_RAGNA)
+
+	wait_move(ODESSA)
+	look_chr( ODESSA, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+	MES(ODESSA,"……雖然我的目標不在，\n不過裡面有其他人的氣息。",0)
+	MES(ODESSA,"如果你打算繼續前進的話，\n我看還是最好小心一點。",0)
+	MES(ODESSA,"不過，旁邊這位大小姐\n看起來已經察覺了。",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA,2,15)	//僨僼僅儖僩
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	MES(EVENT_RAGNA,"嗯……",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,150,15)	//億乕僘
+	wait(15)
+	MES(ALWEN,"呵呵，有意思。",0)
+	MES(ALWEN,"你叫奧迪莎是嗎？\n我們有緣再見。",0)
+	MES_close(ALWEN)
+
+//丂丂僆僨僢僒丄庤傪傂傜傂傜偝偣側偑傜嫀偭偰偄偔丅
+//丂丂尒憲傝側偑傜丄儔僌僫偺摢偵乧儅乕僋丅
+	look_off(ODESSA)
+//	MOT(ODESSA,154,15)	//僶僀僶僀乮嵍乯
+//	wait(30)
+	MOT(ODESSA,154,15)	//僶僀僶僀乮嵍乯
+	wait(15)
+	look_chr( EVENT_RAGNA, ODESSA ,"Bone_Head")
+	MOT(ODESSA,155,2)	//
+	wait(2)
+	move( ODESSA, 30, 8, 592,-162,0,0)
+	wait(50)
+	MOT(ODESSA,0,10)	//僶僀僶僀栠偟丂壀揷婰弎
+	wait(100)
+
+	cross_fade(30)
+	color(ODESSA,-1)
+	move(ODESSA, 99, 0,0,0,0,0)
+	CAM_move(1084,1934,110,0,0)
+	CAM(10,48,110,28,160,0,0)
+	CAM(10,52,100,28,160,600,0)
+	chr_pos(ALWEN, 980,-1910,0,330,150)
+	chr_pos(EVENT_RAGNA, 1170,-1900,0,30,2)
+	KAO(EVENT_RAGNA,"B","1","4")//
+	wait(30)
+
+	EMO(EVENT_RAGNA,EMO_TENTEN)
+	wait(60)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ2","1233321","9")//僨僼僅儖僩
+	MES(EVENT_RAGNA,"……喂。",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","9")//僨僼僅儖僩
+	MES(EVENT_RAGNA,"你們好像認識很久的感覺，\n到底是怎麼回事？",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+
+	KAO(ALWEN,"12321Z2","123","1")//
+	MES(ALWEN,"誰知道呢？",0)
+	KAO(ALWEN,"12321Z8","32A","1")//
+	MES(ALWEN,"可以確定的是，前方隱藏著我的部分魔力，\n而且還有人等著我們。",0)
+	KAO(ALWEN,"12321Z4","A","1")//僨僼僅儖僩
+	MES(ALWEN,"小心一點不為過吧？",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"12321Z2","123","1")//
+	MES(EVENT_RAGNA,"……嗯。",0)
+//	MOT(EVENT_RAGNA,53,15)	//敮傪僙僢僩
+//	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","321","2")//
+	MES(EVENT_RAGNA,"好了。\n打起精神前進吧！",0)
+	MES_close(EVENT_RAGNA)
+
+//丂丂僀儀儞僩廔椆丄僾儗僀儎乕憖嶌嫋壜丅
+	fade_in( 100, 30, 0 )
+	wait_fade()
+
+	delete(ODESSA)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,1150,-1800,0,190,2)
+	chr_pos(PARTNER,950,-1800,0,190,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return( 0 )
+	wait(30)
+
+//俧俥亀仛攑岯丗僆僨僢僒偲偡傟堘偭偨亁傪棫偰傞丅
+	F_set(F1_13_MeetOdessa)
+	//仛儔僌僫亂旘峴婡嫸亃
+	F_set_note(PLAYER1,1)				//僷僢僠廋惓 20081010
+	//仛僆僨僢僒
+	F_set_note(-19,-1)
+	//仛僆僨僢僒亂徿嬥庱亃
+	F_set_note(-19,0)
+
+	fade_in(0,30,0)	//僼僃乕僪僀儞
+
+	EV_end()
+}
+
+
+#EndScriptTable
+//====================================================================
+

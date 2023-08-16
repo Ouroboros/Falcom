@@ -1,0 +1,146 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[15029][忛亅忛撪廔]
+//====================================================================
+
+#ScriptTable
+
+#PARTNER 		255
+#PET 		254
+#RAGNA 		0
+#PLAYER		252	//憖嶌僉儍儔僋僞乕
+#PLAYER2 	253	//旕憖嶌僉儍儔僋僞乕
+
+//--------------------------------------------------------------------
+INIT
+{
+//  -------  no typ   	  tip      x    y   z       mot     岦 忬  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭奒抜丒斷
+
+	set_chr( 90,990,	 5, 8,     0,-100,  0,		180,  0201, 6,"K1_15023;")	//嘆僄儞僩儕 忛撪嘊
+	set_obj("@ob50523a", 5, 8,     0,   0,  0,		180)						//嘆奒抜壓乮忛撪乯
+	set_chr(190,1400,	 5, 8,	   0,   0,  0,		  0,   180, 0,";")			//傾乕僠乮僟儈乕乯
+
+	if( F3_07_FlickSwitch2 && !F3_13_EndThird )
+	{
+		set_chr( 91,991, 4, 4,     0,   0,  0,		  0,   0201, 6,"<EV_STOP_01>")	//僗僩僢僷乕丗嘇僄儞僩儕 忛亅僟僀僈儖僪
+	}
+	else
+	{
+		set_chr( 91,990, 4, 4,     0,   0,  0,		  0,  0201, 6,"K0_15028;")	//嘇僄儞僩儕 忛亅僟僀僈儖僪
+	}
+	set_obj("@ob50513a", 4, 4,     0,   0,  0,		  0)						//嘇奒抜忋乮忛撪乯
+	set_chr(191,1400,	 4, 4,	   0,   0,  0,		  0,     0, 0,";")			//傾乕僠乮僟儈乕乯
+
+//仭僗僀僢僠丒娕斅
+	set_chr( 50,620,	 4, 6,  -350,   0,  0,		  0,   270, 0,";")			//嘆僙乕僽OBJ
+
+
+	set_chr( 56,772,	 4, 5,     0, 300,  0,		 14,     0, 0,";")	//儗儀儖僾儗乕僩
+	color2( 56,  85,81, 90, 0,0,0)
+
+	set_chr( 60,658,	 4, 5,  -175,  75,  0,		  0,     0, 0,";")	//嘊拞儃僗娕斅
+	if( !F3_06_KillBoss3_2 )
+	{
+		set_chr( 81,990,	 4, 5,     0, -50,  0,		  0,070501, 6,"#8_99 S0_1 WT?120;")//寈曬弌尰
+	}
+
+
+//仭僀儀儞僩
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//仴忛妔僥儔僗偺僗僀僢僠傪擖傟傞乣僆僨僢僒搊応丒懕偒
+		EV("EV_3_13_FlickSwitch22")
+	}
+
+//仭応柺屌桳愝掕
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴忛妔僥儔僗偺僗僀僢僠傪擖傟傞乣僆僨僢僒搊応丒懕偒
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂夋柺僼僃乕僪僀儞偟偰丄忛撪偵栠偭偨儔僌僫偨偪丅
+//丂丂儊僢僙乕僕柍偟偱僀儀儞僩廔椆丄僾儗僀儎乕憖嶌嫋壜丅
+//丂丂埲屻丄僥儔僗偵弌傛偆偲偟偰傕俽俤晅偒偺僗僩僢僷乕丅
+EV_3_13_FlickSwitch22
+{
+	EV_begin()
+
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+
+	chr_pos(RAGNA,7650,8000,0,0,2)
+	chr_pos(PARTNER,7494,7956,0,0,2)
+//	chr_pos(RAGNA,2250,2600,0,0,2)
+//	chr_pos(PARTNER,2094,2556,0,0,2)
+
+	CAM_return(0)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+//丂丂忛妔僄儕傾偵弌傞捈慜偱僗僩僢僷乕僀儀儞僩丅
+//丂丂僆僨僢僒偲僟僀僈儖僪偺愴偄偺壒偑暦偙偊偰偔傞丅
+//丂丂俽俤偺懠丄愴摤僀儀儞僩梡偺儃僀僗側偳傪柭傜偟偰偍偔丅
+//丂丂忋庤偔偄偗偽儕僓乕僽偵偁傞埲壓偺儃僀僗傕帋偟偰傒傞丅
+//丂丂乽偁傫偨偺栭偼傕偆廔傢傝偩両乿乮僆僨僢僒乯
+//丂丂乽夓楾庪傝偺椡丄尒偣偰傗傞傛両乿乮僆僨僢僒乯
+//丂丂乽偼偼偼丄偦偺挷巕偩両乿乮僟僀僈儖僪乯
+//丂丂乽尒偣偰傒傠丄愴巑偺椡傪両乿乮僟僀僈儖僪乯
+EV_STOP_01
+{
+	EV_begin()
+
+//	MES(PLAYER,"仧枹擖椡崁栚丗\n僆僨僢僒偲僟僀僈儖僪偺愴偄偺俽俤偑暦偙偊偰偔傞丅",0)
+//	MES_close(PLAYER)
+
+	if( !F_RAGNA )
+	{
+
+	//丂丂俽俤偺懠丄愴摤僀儀儞僩梡偺儃僀僗側偳傪柭傜偟偰偍偔丅
+		SE(1085,0)//奿摤SE
+		wait(30)
+
+		MES(RAGNA,"沒有辦法插手呢……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"唔……\n這裡就交給她吧。",0)
+		MES_close(PARTNER)
+		F_set(RAGNA)
+
+	}
+	else
+	{
+	//	name("仛俀夞栚")
+	//丂丂僆僨僢僒偲僟僀僈儖僪偺愴偄偺壒偑暦偙偊偰偔傞丅
+	//丂丂俽俤偺懠丄愴摤僀儀儞僩梡偺儃僀僗側偳傪柭傜偟偰偍偔丅
+		SE(1085,0)//奿摤SE
+		wait(30)
+
+	//	name("僥僉僗僩乮怓姺偊丒昞帵偟側偄乯")
+		fade_in(30,10,BLACK)
+		MES(0,"C3S2可以聽到外面\n激烈的戰鬥聲。",2)
+		MES(0,"C3S2這裡也只能\n交給奧迪莎了。",2)
+		MES_close(0)
+		fade_in(0,10,BLACK)
+	}
+
+	cross_fade( 30 )
+	chr_pos(PLAYER,7650,8200,0,0,2)
+	chr_pos(PLAYER2,7650,8000,0,0,2)
+	EV_end()
+	CAM_return(0)
+	wait_fade()	
+
+}
+
+
+#EndScriptTable
+//====================================================================
+

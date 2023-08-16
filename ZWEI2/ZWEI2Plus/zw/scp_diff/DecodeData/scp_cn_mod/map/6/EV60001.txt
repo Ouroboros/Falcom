@@ -1,0 +1,1917 @@
+//====================================================================
+//ステージトラップスクリプト
+//[16000][山－入口]
+//====================================================================
+
+#ScriptTable
+
+#MONTBLANC	2
+#EVENT_RAGNA	3
+#SUBARU			4
+#DUMMY			5
+#ALWEN			6
+#POCKLE			7
+#PIPIRO			8
+
+#SPIRIT_A	10
+#SPIRIT_B	11
+#SPIRIT_C	12
+
+#KAPPA		15
+
+#ZIZOU_1	20
+#ZIZOU_2	21
+#ZIZOU_3	22
+#ZIZOU_4	23
+
+#TAKARA_CH	49
+//#IT_TAKARA	121		//◇121壁紙②
+#IT_TAKARA	101		//101	極光之魔法			//←実際には使ってません。
+
+//--------------------------------------------------------------------
+
+// GW_ENTRY_EVENT 1=スキーLV1クリア(銅)
+//                2=スキーLV2クリア(銀)
+//                3=スキーLV3クリア(金)
+//                4=スキーLV4クリア(プラチナ)
+//                5=スキークリア済みメダル
+//                6=スキー失敗(奈落)
+//                7=スキー失敗(死亡)
+//                8=スキー失敗(ツボ、おしい)
+//                9=スキー失敗(ダメージ)
+//               10=スキー失敗(タイム)
+//               11=スキー失敗(ツボ、足りない)
+//               12=スキー失敗(ツボ、ゼロ)
+//               13=スキー失敗(河童に負けた)
+
+//ローカルワーク
+//
+// 00 結果之コピー
+// 01 リトライ用コース
+// 02 クリア済み判定用
+// 05 河童リトライ処理を飛ばす。
+// 06 リトライ用ワーク
+// 07 リトライ用ワーク
+// 10 河童一般会話用之ランダムナンバー
+//
+//ローカルフラグ
+//
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境SE
+	SE(51,0)
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+
+	//★星降之里に到着した～艾雯合流するまでは、フィールドに出れない。
+	if( F4_05_OnVillage2 && !F4_09_GoShrineMia)
+	{
+		set_chr( 90,991,	-1,-1,   -450,3000,-300,   	180,  1201,	6,"<EV_STOP_02>")	//フィールドに出れないストッパー
+	}
+	else
+	{
+		set_chr( 90,990,	-1,-1,   -450,3000,-300,   	180,  1201,	6,"K9_10000;")	//①エントリ フィールド
+	}
+
+	set_chr( 91,990,	-1,-1,   -237,-1513,0,  	330,050202,	6,"K0_16010;")	//①エントリ 入口分岐
+
+	set_chr( 92,991,	-1,-1,   3344,-3040,337, 	38,  1001,	6,"<EV_STOP_01>")	//①エントリ 坂上適当
+
+	//第五章中は、艾雯不在之ためダンジョンに入れない
+	if( (F4_11_EndFourth && !F5_17_EndFifth)
+	{
+		set_chr( 93,991,	-1,-1,  -100,-1330,0,  45,0404,	6,"<EV_STOP_03>")	//ダンジョンに入れないストッパー
+	}
+
+	// ミッション達成で河童から貰えるアイテム
+	// 艾雯がいる時でないと出現しない
+//	if(F4_09_GoShrineMia)//河童スキーが出来るタイミング以降。
+	// 奥義入手済み
+	if(IT_TAKARA>0)
+	{
+		set_chr( TAKARA_CH,560,    -1,-1,296,-6783,1,  	   7,     0, 0,";")		//②宝箱（並）画面外
+		chr_pos(TAKARA_CH,1212,-1386,1,0,7)	//河童之横
+		F_set_chr(TAKARA_CH,CF_NO_ZIMEN)
+		F_set_chr(TAKARA_CH,CF_NO_HEIGHT)
+	}
+	else
+	if(GW_ENTRY_EVENT>=1 && GW_ENTRY_EVENT<=13)		//スキーしてきた
+	{
+		if(GW_SKI_PARTNER==1)//艾雯がいる
+		{
+			if(FV_FF_KappaSki_03 || GW_ENTRY_EVENT==3)	//河童スキーLV3クリア会話した or LV3クリアしてきた
+			{
+				set_chr( TAKARA_CH,560,	   -1,-1,296,-6783,1,  	   6,     0,20,"<TK_OUGI_1>;")		//②宝箱（並）	//画面外(河童が呼び出す)
+				F_set_chr(TAKARA_CH,CF_NO_ZIMEN)
+				F_set_chr(TAKARA_CH,CF_NO_HEIGHT)
+				if(FV_FF_KappaSki_03)	//話しかけた
+				{
+					chr_pos(TAKARA_CH,1212,-1386,1,0,6)	//河童之横
+				}
+			}
+		}
+	}
+
+	//NPC
+	if(GW_ENTRY_EVENT>=1 && GW_ENTRY_EVENT<=13)
+	{
+	//河童ゲーム直後之み配置。
+		set_chr( KAPPA, 80,	   -1,-1,1395,-1371,1,  340, 15,20,"<TK_KAPPA2>")
+		F_set_chr(KAPPA,CF_NO_ZIMEN)
+		F_set_chr(KAPPA,CF_NO_HEIGHT)
+		F_set_chr(KAPPA,CF_NO_MOVE)
+
+		//結果之コピー(グローバルを消さないといけないため)
+		if(GW_ENTRY_EVENT==1)
+			workL(00,SET,1)
+		else if(GW_ENTRY_EVENT==2)
+			workL(00,SET,2)
+		else if(GW_ENTRY_EVENT==3)
+			workL(00,SET,3)
+		else if(GW_ENTRY_EVENT==4)
+			workL(00,SET,4)
+		else if(GW_ENTRY_EVENT==5)
+			workL(00,SET,5)
+		else if(GW_ENTRY_EVENT==6)
+			workL(00,SET,6)
+		else if(GW_ENTRY_EVENT==7)
+			workL(00,SET,7)
+		else if(GW_ENTRY_EVENT==8)
+			workL(00,SET,8)
+		else if(GW_ENTRY_EVENT==9)
+			workL(00,SET,9)
+		else if(GW_ENTRY_EVENT==10)
+			workL(00,SET,10)
+		else if(GW_ENTRY_EVENT==11)
+			workL(00,SET,11)
+		else if(GW_ENTRY_EVENT==12)
+			workL(00,SET,12)
+		else if(GW_ENTRY_EVENT==13)
+			workL(00,SET,13)
+
++		if(GW_ENTRY_EVENT>4)	//クリアできなかった
++		{
++			if(GW_SKI_MISS<5)
++				workG(GW_SKI_MISS,ADD,1)	//ミスを加算
++		}
++
+		//今クリアしてきたコース番号
+		if(GW_SKI_MODE==1)
+			workL(01,SET,1)
+		else if(GW_SKI_MODE==2)
+			workL(01,SET,2)
+		else if(GW_SKI_MODE==3)
+			workL(01,SET,3)
+		else if(GW_SKI_MODE==4)
+			workL(01,SET,4)
+
+		//すでにクリアしたこと之あるコースだったかどうか
+		if(WK000==1 && FV_FF_KappaSki_01)
+			workL(02,SET,1)
+		if(WK000==2 && FV_FF_KappaSki_02)
+			workL(02,SET,2)
+		if(WK000==3 && FV_FF_KappaSki_03)
+			workL(02,SET,3)
+		if(WK000==4 && FV_FF_KappaSki_04)
+			workL(02,SET,4)
+
+		workG(GW_ENTRY_EVENT,SET,0)	// クリア
+		workG(GW_SKI_MODE,SET,0)	// クリア
+		workG(GW_NOW_ROUTE,SET,0)	//攻略中ルートクリア
+
+		if(F4_09_GoShrineMia && !F5_00_HearLunar)//艾雯がいる
+			workG(GW_WARP_FLAG,SET,1)//ワープ解除。
+		else
+		if(F6_00_GoToMeru)//艾雯がいる
+			workG(GW_WARP_FLAG,SET,1)//ワープ解除。
+		else
+			workG(GW_WARP_FLAG,SET,2)//ワープ解除。（露）
+
+		//河童·魔法を貰った際之リトライ抜け用Ｌワーク
+		workL(05,SET,0)
+
+		//河童ゲーム、終わりだよ
+		EV("EV_KappaEnd")
+	}
+
+	//②３妖精
+	if( F1_15_GoVillage && !F2_00_GoForest)
+	{
+		set_chr( SPIRIT_A,84,	-1,-1,	368,431,0,	 15,270, 20,"<TK_SPIRIT_A>")	//玛琳
+		set_chr( SPIRIT_B,85,	-1,-1,	557,308,0,	 15,44, 20,"<TK_SPIRIT_B>")	//莉琪
+		set_chr( SPIRIT_C,86,	-1,-1,	596,498,0,	 15,112, 20,"<TK_SPIRIT_C>")	//修
+		F_set_chr(SPIRIT_A,CF_NO_MOVE)
+		F_set_chr(SPIRIT_B,CF_NO_MOVE)
+		F_set_chr(SPIRIT_C,CF_NO_MOVE)
+	}
+
+	//地蔵
+	if( F4_04_OpenRoad )	//開いた後	//ＧＦ『★隠れ里へ之道を開いた』
+	{
+		set_chr(ZIZOU_1, 651, -1,-1, -286,-796,1,  0, 0,    3,"") 
+		set_chr(ZIZOU_2, 651, -1,-1, -115,-911,1,  0,  0,    3,"") 
+		set_chr(ZIZOU_3, 651, -1,-1,  224,-1139,1,  0,0,    3,"") 
+		set_chr(ZIZOU_4, 651, -1,-1,  412,-1247,1,  0, 0,    3,"") 
+	}
+	else
+//	if( F4_03_OnRoots  )	//昴と一緒にやってきた後
+	if( F4_02_GoVillage2 )	//昴と一緒にやってきた	
+	{
+	//	 	管理no/typ		tip座標	 +座標		  mot 向き 状態  EasyScript
+		set_chr(ZIZOU_1, 651, -1,-1, -286,-796,1,  0, 90,    2,"<EV_ZIZOU_1>") 
+		set_chr(ZIZOU_2, 651, -1,-1, -115,-911,1,  0,  0,    2,"<EV_ZIZOU_2>") 
+		set_chr(ZIZOU_3, 651, -1,-1,  224,-1139,1,  0,270,    2,"<EV_ZIZOU_3>") 
+		set_chr(ZIZOU_4, 651, -1,-1,  412,-1247,1,  0, 90,    2,"<EV_ZIZOU_4>") 
+		workL(1,SET, 9)
+		workL(2,SET, 0)
+		workL(3,SET,27)
+		workL(4,SET, 9)	
+	}
+	else 						//昴と来る前
+	{	//地蔵
+		set_chr(ZIZOU_1, 651, -1,-1, -286,-796,1,  0, 90,    3,"") 
+		set_chr(ZIZOU_2, 651, -1,-1, -115,-911,1,  0,  0,    3,"") 
+		set_chr(ZIZOU_3, 651, -1,-1,  224,-1139,1,  0,270,    3,"") 
+		set_chr(ZIZOU_4, 651, -1,-1,  412,-1247,1,  0, 90,    3,"") 
+	}
+	F_set_chr(ZIZOU_1, CF_NO_CLIP)
+	F_set_chr(ZIZOU_2, CF_NO_CLIP)
+	F_set_chr(ZIZOU_3, CF_NO_CLIP)
+	F_set_chr(ZIZOU_4, CF_NO_CLIP)
+	F_set_chr(ZIZOU_1, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_2, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_3, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_4, CF_NO_CLIP2)
+			
+//■イベント
+	if(F3_13_EndThird && !F4_11_EndFourth)
+	{
+	//４章
+		//ＧＦ『★星降之里へ向かうことにした』立っている
+		//ＧＦ『★隠れ里へ之道を開いた』立ってない
+		if(F4_02_GoVillage2 && !F4_04_OpenRoad)
+		{
+			//▼隠れ里へ之道を開く
+//			set_chr( 80,990,	-1,-1,   000,-1330,0, 0, 051616,6,"<EV_4_06_OpenRoad>;")
+		}
+		//ＧＦ『★星降之里へ向かうことにした』立っている
+		//ＧＦ『★星之峰之ふもとにやってきた』立ってない
+		if(F4_02_GoVillage2 && !F4_03_OnRoots)
+		{
+			//▼星之峰之ふもとに来る
+			EV("EV_4_05_OnRoots")
+		}
+	}
+	else 
+	if(F2_00_GoForest && !F2_04_IntoTower)		//★金暗之森へ向かうことにした ★大铁塔に入れるようになった
+	{
+		if(!F2_18_P&PinMnt)	//★布库尔＆皮皮洛に出会う（山入口）
+		{
+			EV("EV_2_18_PipiroPockle")
+		}
+	
+	}
+
+//■场面固有設定
+	if( F4_04_OpenRoad )
+	{
+		mot_obj("rockgate", "open0")		//扉開く
+	}
+
+	EV("EV_SnowFall")
+}
+
+//-------------------------------------------------------------------
+EV_SnowFall
+{
+	EFF_chr(4292, 0, 0,100, -1, "charbase0" )
+	wait( 50 )
+	loop
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼星之峰之ふもとに来る
+//──────────────────────────────
+//　　昴を連れて星之峰之ふもとに入るとイベント発生。
+//　　吹雪いた状態之マップを遠景で見せながら、
+//　　入口方面から拉古那たちが入ってくる之を見せる。
+//　　以下は、すでに奥之坂道登りにトライして失敗した场合。
+EV_4_05_OnRoots
+{
+	set_namebmp(0,0)		//地名非表示
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+
+	//      no          typ tip           x   y   z   mot deg state sc
+	set_chr(EVENT_RAGNA, 1010, -1, -1, -616,2782,-299, 2, 190, 0,  "")
+	set_chr(SUBARU,      1020, -1, -1, -485,2819,-303, 2, 190, 0,  "")
+
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(SUBARU,     CF_NO_CLIP)
+	F_set_chr(SUBARU,     CF_NO_CLIP2)
+	F_set_chr(SUBARU,     CF_NO_CSP)
+	
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	
+	//カメラ初期位置
+	CAM_move(-167,640,259,0,0)
+	CAM(-480,75,100,25,145,0,0)
+	CAM_move(-65,-715,261, 150,0)
+	CAM(599,174,261,31,163,150,0)
+
+	//モーション設定
+	MOT_SET(SUBARU, 150,-2,541,541,-1,-1)	//えへへ
+	MOT_SET(SUBARU, 151,-2,443,443,-1,-1)	//びっくり
+
+//--- 表情初期 --------------------------------------------------------
+	KAO(RAGNA,   "1","1","1")
+	KAO(PARTNER, "1","1","1")
+	
+	//山カメラ
+	CAM_move(-390,-1469,1181,0,0)
+	CAM(-720,155,1020,29,199,0,0)
+	//フェードイン
+	fade_in(0,60,0)	
+	wait_fade()
+	CAM_move(-390,-1469,1181,120,0)
+	CAM(240,155,1020,29,171,120,0)
+
+
+	wait_CAM()
+	//坂カメラ		
+	cross_fade(15)
+	CAM_move(3067,2134,241,0,0)
+	CAM(-440,206,80,25,174,0,0)
+	CAM_move(3067,2134,901,90,0)
+	CAM(-440,206,740,25,174,90,0)
+	wait_CAM()
+
+	//地蔵カメラ
+	cross_fade(15)
+	CAM_move(-54,1022,181,0,0)
+	CAM(-360,85,20,25,275,0,0)
+	CAM(-360,90,20,25,275,30,0)
+	wait_fade()
+	wait(30)
+	set_namebmp(14,0)		//地名表示
+	CAM_move(513,-955,761,150,0)
+	CAM(-200,222,600,34,185,150,0)
+
+	move( EVENT_RAGNA,   0, WALK1, -233,707,0,0)
+	wait(30)
+	move( SUBARU, 0, WALK1, -120,897,-17,0)
+	wait(150)
+
+	cross_fade(15)
+	CAM_move(20,-782,157,0,0)
+	CAM(-310,26,109,31,261,0,0)
+
+	wait_move(EVENT_RAGNA)
+	wait(15)
+	wait_fade()
+	
+	KAO(EVENT_RAGNA,"B232BZ4","1232A","5")
+	MES(EVENT_RAGNA,"唉……\n这里的风雪还是这样大。",0)
+//	rot_chr(EVENT_RAGNA,30,SUBARU)
+	rot(EVENT_RAGNA,30,240)
+
+	look_chr(EVENT_RAGNA, SUBARU, "Bone_Head")
+	KAO(EVENT_RAGNA,"B232BZ3","A233321","1")
+	MES(EVENT_RAGNA,"而且、这里要怎么走？",0)
+	KAO(EVENT_RAGNA,"B232BZ4","1","1")
+	MES(EVENT_RAGNA,"这座山好陡，\n看样子登不上去。",0)
+	MES_close(EVENT_RAGNA)
+	
+	look_chr(SUBARU, EVENT_RAGNA,"Bone_Head" );
+	MOT(SUBARU, 150, 10)
+	
+	KAO(SUBARU,"12321Z4","1236","6")
+	MES(SUBARU,"嘿嘿……\n其实这里有一条秘密通道。",0)
+	KAO(SUBARU,"12321Z4","321","1")
+	MES(SUBARU,"不打开这条通道的话，\n是找不到里的。",0)
+	MES_close(SUBARU)
+	
+	MOT(SUBARU,2,10)
+	KAO(EVENT_RAGNA,"B232BZ3","12321D","6")
+	MES(EVENT_RAGNA,"嘿……是这样啊。",0)
+	
+	look_off(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","1232A","1")	
+	MES(EVENT_RAGNA,"唔，这样的话……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那、吹雪之中であちこちを見回す。
+
+//	CAM_move(-80,-802,157,60,0)
+//	CAM(-110,27,157,31,174,60,0)
+	CAM_move(-120,-802,157,60,0)
+	CAM(-110,27,157,31,184,60,0)
+	wait(45)
+
+//　　ＰＡマーク之後、画面スクロールして地蔵之あるあたり。
+	KAO(EVENT_RAGNA,"1","A2321","1")
+	EMO(EVENT_RAGNA,EMO_PA)
+	wait(15)
+	
+	KAO(EVENT_RAGNA,"12321Z3","123332A","1")
+	MES(EVENT_RAGNA,"……那里有地藏。",0)
+	KAO(EVENT_RAGNA,"12321Z4","A","1")	
+	MES(EVENT_RAGNA,"如果把那些地藏排列成一致的方向\n暗门就会打开了吧？",0)
+	MES_close(EVENT_RAGNA)
+
+//　　昴之頭に！マーク
+	EMO(SUBARU,EMO_BIKKURI)
+	wait(30)
+
+	look_chr(SUBARU,EVENT_RAGNA,"Bone_Head")
+//	MOT(SUBARU,151,5)
+	KAO(SUBARU,"12321Z4","1236","6")	
+	MES(SUBARU,"好厉害！\n您怎么会知道的这么清楚！？",0)
+	MES_close(SUBARU)
+	
+	KAO(EVENT_RAGNA,"12321Z4","A23","1")
+	MES(EVENT_RAGNA,"因为宝物猎人这一行当\n会经常和机关陷阱打交道。",0)
+
+	look_chr(EVENT_RAGNA,SUBARU,"Bone_Head")	
+	KAO(EVENT_RAGNA,"12321Z6","36","5")	
+	MES(EVENT_RAGNA,"不过、如果你不告诉我这里有秘密通道，\n我也不会注意到这些地藏。\n看来我的修行还不到家。",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(SUBARU,"嗯……\n这里面很深。",0)
+//	KAO(SUBARU,"12321Z5","1","1")
+//	MES(SUBARU,"那个、我们\n马上打开它\n向里出发吧。",0)
+	MES(SUBARU,"嗯、解开机关需要把\n所有的地藏全部\n朝向正面。",0)
+	MES(SUBARU,"但是、有几个是连着一起动的，\n这点需要注意……",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"12321Z3","32TU","1")	
+	MES(EVENT_RAGNA,"原来如此……\n也就是说需要花点心思。",0)
+	KAO(EVENT_RAGNA,"12321Z3","U","1")	
+	MES(EVENT_RAGNA,"总之、姑且尝试一下吧。",0)
+	MES_close(EVENT_RAGNA)
+
+//	KAO(EVENT_RAGNA,"12321Z6","1","1")	
+//	MES(EVENT_RAGNA,"那个、昴。\n解除机关的工作\n能让我来做吗？",0)
+//	KAO(EVENT_RAGNA,"12321Z6","1","1")	
+//	MES(EVENT_RAGNA,"我想稍微锻炼一下自己的本领。\n",0)
+//	MES_close(EVENT_RAGNA)
+//
+//	KAO(SUBARU,"12321Z3","1","1")
+//	MES(SUBARU,"啊、当然可以。\n正好让弟子见识一下。",0)
+//	MES_close(SUBARU)
+//	wait(15)
+
+	fade_in(100,30,0)
+	wait_fade()
+
+	wait(15)
+
+	SE(043,PLAYER1)
+	MES(EVENT_RAGNA,"C3S2请转动地藏的方向。\n全部的地藏都朝向正面的话\n机关就解除了。",2)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　イベント終了、プレイヤー操作許可。
+//	cross_fade(15)
+	CAM_return(0)
+	delete(EVENT_RAGNA)
+	delete(SUBARU)
+	chr_pos(RAGNA, -233,707,0,180,0)
+	chr_pos(PARTNER, -120,897,-17,180,0)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	wait(15)
+	fade_in(0,30,0)
+
+//ＧＦ『★星之峰之ふもとにやってきた』を立てる。
+	F_set(F4_03_OnRoots)
+
+	EV_end()
+}
+
+
+//──────────────────────────────
+//▼隠れ里へ之道を開く
+//──────────────────────────────
+//　　左奥にある地蔵たち之近くまで来るとイベント開始。
+//　　昴がたたっと走って、地蔵之一つ一つを動かしていく。
+EV_4_06_OpenRoad
+{
+	EV_begin()
+
+	fade_in(100,30,0)
+	wait_fade()
+	
+	
+	
+//	cross_fade(15)
+	//カメラ初期位置
+//	CAM_move(250,747,274,0,0)
+//	CAM(-220,12,174,37,195,0,0)
+//	CAM_move(250,747,174,  120,0)	
+//	CAM(-220,12,174,37,239,120,0)
+		
+	//キャラ再配置	
+	//      no          typ tip           x   y   z   mot deg state sc
+	set_chr(EVENT_RAGNA, 1010, -1, -1, 502,227,    0, 2, 119, 0,  "")			//拉古那
+//	set_chr(SUBARU,      1020, -1, -1, 25,-830,  0, 2, 190, 0,  "")				//昴
+	set_chr(SUBARU,      1020, -1, -1,-23,-410,  0, 2, 158, 0,  "")				//昴
+	set_chr(DUMMY,       1015, -1, -1, 25,-830,  0, 2, 190, 0,  "")
+	set_chr(MONTBLANC,   1025,-1,-1, -929,-164,0, 2,240,0, "")					//蒙布兰
+	color(MONTBLANC,-1)
+	wait_color(MONTBLANC)
+
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(SUBARU,     CF_NO_CLIP)
+	F_set_chr(SUBARU,     CF_NO_CLIP2)
+	F_set_chr(SUBARU,     CF_NO_CSP)
+	F_set_chr(DUMMY,     CF_NO_CLIP)
+	F_set_chr(DUMMY,     CF_NO_CLIP2)
+	F_set_chr(DUMMY,     CF_NO_CSP)
+	F_set_chr(DUMMY,     CF_NO_HEIGHT)
+	F_set_chr(DUMMY,     CF_NO_ZIMEN)
+
+	//--- モーション設定 -------------------------------------------------- 
+	MOT_SET(SUBARU, 150,-2,512,512,-1,-1)	//
+//	MOT_SET(SUBARU, 150,-2,458,458,-1,-1)	//
+	MOT_SET(SUBARU, 151,-2,459,459,-1,-1)	//
+	MOT_SET(MONTBLANC,152,-1,200,209,-1,-1)	//
+	
+	//表情初期
+	KAO(EVENT_RAGNA, "1","1","1");
+	KAO(SUBARU,      "1","1","1")
+	KAO(MONTBLANC,   "1","1","1")
+
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	color(MONTBLANC,-1)
+	color(DUMMY,-1)
+	color(EVENT_RAGNA,-1)
+	color(SUBARU,-1)
+//	wait(60)
+		
+	chr_pos(DUMMY, -213,-866,0,0,0)
+
+//	move(SUBARU, 0, WALK1, -102,-825,0,0 )
+//
+//	wait_move(SUBARU)
+////	wait(30)
+////	chr_pos(SUBARU,-102,-825,0,0,0)
+////	rot(SUBARU, 100, 110)
+////	rot_chr(SUBARU, 60, DUMMY)
+//
+////	wait(15)
+//
+////	MES(SUBARU,"◆未入力項目\n地蔵を動かし、\n隠し扉がある方向を全て向かせていく。",0)
+////	MES(SUBARU,"◆未入力項目\n隠し扉が開いていくシーン。",0)
+////	MES_close(SUBARU)
+//	
+////	MOT(SUBARU, 150, 5)
+////	wait(10)
+//
+////	MES(SUBARU,"恩恩……\n这个、这样转。",0)
+////	MES_close(SUBARU)
+//	
+//	MOT(SUBARU, 2,5)
+//	wait(30)	
+//	
+//	chr_pos(DUMMY, -183,-1030,0,0,0)	
+//	rot_chr(SUBARU,60,DUMMY)
+//	move(SUBARU, 0, RUN1, -76,-949,0,0)
+//	wait_move(SUBARU)
+//	rot_chr(SUBARU,60,DUMMY)
+//	wait(30)
+//	
+//	MOT(SUBARU, 150, 5)
+//	wait(10)
+//
+////	MES(SUBARU,"这个往这边……",0)
+////	MES_close(SUBARU)	
+//	
+//	MOT(SUBARU, 2,5)
+//	wait(30)	
+//	
+//	CAM(-320,11,174,37,177,30,0)
+//	
+//	chr_pos(DUMMY,278,-1252,0,0,0)
+//	rot_chr(SUBARU,60,DUMMY)	
+//	move(SUBARU, 0, RUN1, 214,-1190,0,0);
+//	wait_move(SUBARU)
+//	rot_chr(SUBARU,60,DUMMY)
+//	wait(10)
+//	
+//	MOT(SUBARU, 150, 5)
+//	wait(30)
+//	MOT(SUBARU, 2,5)
+//	wait(30)
+//
+//
+//	move(SUBARU, 0, RUN1, 352,-1118,0,0)
+//	wait_move(SUBARU)	
+//
+//	chr_pos(DUMMY,405,-1361,0,0,0)
+//	rot_chr(SUBARU,60,DUMMY)
+//	
+//	move(SUBARU, 0, RUN1, 426,-1271,0,0)
+//	wait_move(SUBARU)
+//	rot_chr(SUBARU,60,DUMMY)
+//	wait(10)	
+//	
+//	MOT(SUBARU, 150, 5)
+//	wait(30)
+//	MOT(SUBARU, 2,5)
+//	wait(30)
+//
+//	chr_pos(DUMMY,	590,-1232,0,0,0)
+//	rot_chr(SUBARU,60,DUMMY)	
+////	move(SUBARU, 0, RUN1, 535,-1227,0,0)
+//	move(SUBARU, 0, RUN1, 538,-1194,0,0)
+//	wait_move(SUBARU)
+//	rot_chr(SUBARU,60,DUMMY)
+//	wait(10)
+//		
+//	MOT(SUBARU, 150, 5)
+//	wait(30)
+//	
+////	MES(SUBARU,"还有、这个这样……",0)
+////	MES_close(SUBARU)
+//	MOT(SUBARU, 2,5)
+//	wait(5)	
+//	
+//	rot(SUBARU, 30, 140)
+	
+//　　上記之台詞にあわせて地蔵を動かし、
+//　　隠し扉がある方向を全て向かせていくとギミック解除音。
+//　　ゴゴゴという音と共に、隠されていた岩之扉が開いていく。
+
+
+	CAM_move(43,1062,240,0,0)
+	CAM(40,107,80,25,210,0,0)
+	fade_in(0,30,0)	
+	wait_fade()		
+	
+	CAM_move(23,1062,240,90,0)
+	CAM(-240,95,80,25,210,90,0)
+
+
+	CAM_quake("4646L")		//画面振動 "5"を中心に上下之強弱を設定。"L"で始めに戻ってループ
+//	CAM(-320,11,174,37,213,150,0)
+
+	SE(1024,0)//扉が開く地鳴りSE
+
+	wait(14)
+	mot_obj("rockgate", "open")		//扉開く
+//	wait(100)
+	wait(70)			//★ボイス入力演出
+	if( GW_MAN==1 )
+	{
+		//　　※拉古那先頭
+		VOICE(253,0)		//★ボイス入力演出
+	}
+	else
+	{
+		//　　※昴先頭
+		VOICE(241,0)		//★ボイス入力演出
+	}
+	wait(70)			//★ボイス入力演出
+	CAM_quake("")
+
+	cross_fade(15)
+	CAM_move(90,1007,174,0,0)
+	CAM(-160,66,174,26,162,0,0)	
+	chr_pos(SUBARU,      170,-1026,0,35, 0)
+	chr_pos(EVENT_RAGNA, 191,-774,0,131, 0)
+	color(SUBARU,1)
+	color(EVENT_RAGNA,1)
+	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")
+	wait_fade()
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321FZ2","12321D","6");
+	MES(EVENT_RAGNA,"原来如此……",0)
+	KAO(EVENT_RAGNA,"12321Z4","1232A","1");	
+//	MES(EVENT_RAGNA,"需要把全部地藏的视线\n集中在一点。",0)
+	MES(EVENT_RAGNA,"这个东西也许真是个让人意外的\n难解机关。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(EVENT_RAGNA, SUBARU,  "Bone_Head")
+
+	KAO(SUBARU,"12321Z4","1236","5");
+//	MES(SUBARU,"嘿嘿……\n没想到您也没有发现。",0)
+	MES(SUBARU,"嘿嘿……\n即使知道要解除\n也得花一番工夫。",0)
+	KAO(SUBARU,"12321Z4","321","1");	
+	MES(SUBARU,"通过这里的话\n会出现一条通往里的山路。",0)
+	KAO(SUBARU,"123212Z3","1111111112321D","1");	
+	MES(SUBARU,"只需要一小时左右\n就会到达里了……啊！",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"12321Z3","12321D","1");
+	MES(EVENT_RAGNA,"怎么了？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"B232BZ6","1232A","4");
+	MES(SUBARU,"那个、我从山道下来的时候、\n发现有很多的魔物在那里徘徊。",0)
+	KAO(SUBARU,"B232BZ5","A","4");
+	MES(SUBARU,"我一个人的时候、都是用忍术一边隐蔽踪迹\n一边往来的……",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"B232BZ4","123","4");
+	MES(EVENT_RAGNA,"忍术\n我可是门外汉……",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","2");	
+	MES(EVENT_RAGNA,"不过、区区魔物\n我用这个家伙就能应付。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_off(EVENT_RAGNA)
+//　　拉古那、アンカーギアを構えてふっと眺める動作。
+	MOT(EVENT_RAGNA,52,7)
+	SE(1025,0)//ギア構えSE
+	wait_MOT(EVENT_RAGNA,52)
+
+	KAO(EVENT_RAGNA,"12321Z5","123332A","4");	
+	MES(EVENT_RAGNA,"……也多亏了陪公主冒险\n在这过程中我受到了很大的锻炼。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU, "12321Z2", "A23332A", "4")
+	MES(SUBARU,"师父……",0)
+	MES_close(SUBARU)
+
+	look_chr(EVENT_RAGNA, SUBARU,  "Bone_Head")
+	KAO(EVENT_RAGNA, "12321Z3", "A23", "6")
+	MES(EVENT_RAGNA,"哈哈、不好意思。\n我们快出发吧。",0)
+	KAO(EVENT_RAGNA, "12321Z5", "321", "1")
+	MES(EVENT_RAGNA,"再在这里呆下去的话\n非冻感冒了不可。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU, "12321Z3", "2IJ", "4")
+	MES(SUBARU,"说、说的也是。",0)
+	MES_close(SUBARU)
+	KAO(SUBARU, "1", "33321", "1")
+	wait(15)
+
+//　　拉古那と昴、そ之まま扉之中に入っていく。
+
+	F_set_chr(SUBARU,     CF_NO_HEIGHT)
+	F_set_chr(SUBARU,     CF_NO_ZIMEN)
+
+	F_set_chr(EVENT_RAGNA,     CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA,     CF_NO_ZIMEN)
+
+	look_off(SUBARU)
+	look_off(EVENT_RAGNA)
+	rot(SUBARU, 30, 136)
+	move( SUBARU,0, WALK1,-462,-1775,0,0)
+	wait(10)
+	rot(EVENT_RAGNA, 30, 136)	
+	move( EVENT_RAGNA, 0,	WALK1, -462,-1775,0,0)
+
+	wait_move( SUBARU )
+	wait_move( EVENT_RAGNA )
+
+	color(EVENT_RAGNA,-1)
+	color(SUBARU,-1)
+	
+	//---------------------------------------------------------------------
+//　　完全に入ってから、画面スクロールして入口方面。
+//　　羽ばたく音と共に、蒙布兰が物陰などから現れる。
+	color(MONTBLANC,1)
+	wait_color(MONTBLANC)
+
+	CAM_move(-539,271,141,150,0)
+//	CAM(-400,19,220,28,289,150,0)
+	CAM(-399,19,101,28,288,150,0)	
+	wait(150)
+	CAM(-399,11,141,27,288,1200,0)
+
+	VOICE(336,0)		//★ボイス入力演出
+	move(MONTBLANC, 0, WALK1, -859,-111,0,0 )
+//	set_chr(MONTBLANC,   1025,-1,-1, -929,-164,0, 2,240,0, "")
+
+	KAO(MONTBLANC, "12321Z3", "1233321", "-")
+	MES(MONTBLANC,"喵哈哈哈……\n那里居然有通道。",0)
+	KAO(MONTBLANC, "12321Z3", "1236", "-")
+	MES(MONTBLANC,"守护人之里……\n终于让我发现了喵！",0)
+	MES_close(MONTBLANC)
+
+//　　ここで蒙布兰、不意に顔をしかめる。
+	KAO(MONTBLANC, "12333Z3", "4", "-")
+	MES(MONTBLANC,"啊、啊、啊……",0)
+	
+	MOT(MONTBLANC, 93, 3)	
+	KAO(MONTBLANC, "4444444445", "5", "-")
+	MES(MONTBLANC,"阿嚏！！",0)
+	MES_close(MONTBLANC)
+
+//　　蒙布兰、ぶるると身体を震わせる。
+	KAO(MONTBLANC, "C232CZ3", "I", "-")
+	MES(MONTBLANC,"不、不行……\n这里太冷了喵！",0)
+	KAO(MONTBLANC, "C232CZ4", "IHG", "-")
+	MES(MONTBLANC,"要快点回到扎哈鲁大人那里\n取暖喵！",0)
+	MES_close(MONTBLANC)
+
+//　　蒙布兰、杖を掲げて詠唱モーション。
+//　　そ之まま転位エフェクトと共に蒙布兰が消えて、
+	KAO(MONTBLANC, "C", "GHI", "-")
+	MOT(MONTBLANC,50,10)
+	wait(30)
+	
+	EFF_chr(24580,MONTBLANC,0,100,0,"charbase0")
+	SE(1016,0)//ワープSE
+
+	color(MONTBLANC,-30)
+	wait_color(MONTBLANC)
+	
+//　　画面ゆっくりとフェードアウト。
+	fade_in(100,60,0)
+	wait_fade()
+
+	CAM_return(0)
+	wait(30)
+	
+	delete(DUMMY)
+	delete(EVENT_RAGNA)
+	delete(SUBARU)
+	delete(MONTBLANC)
+
+//ＧＦ『★隠れ里へ之道を開いた』を立てる。
+	F_set(F4_04_OpenRoad)
+
+//　　山－入口分岐マップへ(ev60100)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(16010)
+
+//	EV_end()
+}
+
+//──────────────────────────────
+//▼星之峰之ふもとで皮皮洛、布库尔に出会う　サブイベント
+//──────────────────────────────
+EV_2_18_PipiroPockle
+{
+	EV_begin()
+//	color(SPIRIT_A,-1)
+//	color(SPIRIT_B,-1)
+//	color(SPIRIT_C,-1)
+
+	fade_in(100,1,0)
+	wait_fade()
+
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	set_chr(PIPIRO, 3,-1,-1, 1754,-1086,0,,2,230,0,"")	//皮皮洛
+	set_chr(POCKLE, 2,-1,-1, 1866, -922,0,2,220,0,"")	//布库尔
+
+
+	set_chr(EVENT_RAGNA,   1010,-1,-1, -477,2648,-278,2,190,0, "")
+//	set_chr(EVENT_RAGNA,   1010,-1,-1, -376,2265,-221,2,190,0, "")
+	set_chr(ALWEN,         1011,-1,-1, -661,2685,-284,2,190,0, "")
+//	set_chr(ALWEN,         1011,-1,-1, -551,2216,-216,2,190,0, "")
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//艾雯之右手を開かせる。
+
+	F_set_chr(PIPIRO, CF_NO_CLIP)
+	F_set_chr(PIPIRO, CF_NO_CLIP2)
+	F_set_chr(PIPIRO, CF_NO_SCP)
+	F_set_chr(POCKLE, CF_NO_CLIP)
+	F_set_chr(POCKLE, CF_NO_CLIP2)
+	F_set_chr(POCKLE, CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA, CF_NO_CSP)
+	
+	MOT_SET(POCKLE, 150, -1, 472, 472, -1,0)	//ええ！
+	MOT_SET(PIPIRO, 150, -1, 514, 514, -1,0)	//
+	
+	
+//	MOT_SET(PIPIRO, 151, -1, 515, 515, -1,0)	//
+	MOT_SET(PIPIRO, 151, -1, 475, 475, -1,0)	//
+	MOT_SET(PIPIRO, 152, -1, 460, 460, -1,0)	//あーもー
+	MOT(PIPIRO, 150, 1)
+	
+	
+	KAO(PIPIRO, "1","1","1")
+	KAO(POCKLE, "1","1","1")
+	KAO(EVENT_RAGNA, "1","1","1")
+	KAO(ALEWN, "1","1","1")
+	
+//	CAM_move(-311,-2209,47,0,0)
+//	CAM(800,175,100,25,196,0,0)
+	CAM_move(-150,-1750,405,0,0)
+	CAM(1160,175,540,25,210,0,0)
+	
+	color(KAPPA, -1)
+	
+	move(EVENT_RAGNA, 0,WALK1, -376,2265,-221,10)
+	move(ALWEN,       0,WALK1, -551,2216,-216,10)
+
+	fade_in(0,60,0)
+	wait(60)
+//	CAM_move(1164,798,720,150,0)
+//	CAM(-160,175,560,25,167,150,0)
+	CAM_move(1964,-262,880,150,0)
+	CAM(-158,159,880,25,177,150,0)
+	wait_CAM()
+	
+	cross_fade(15)
+	CAM_move(1804,1034,639,0,0)
+	CAM(-160,65,480,25,145,0,0)
+	CAM_move(1804,1034,199,150,0)
+	CAM(-520,64,199,25,144,150,0)
+	wait_CAM()
+	wait_fade()
+
+//	EV("MV_TremblePipiro")
+	KAO(PIPIRO,"G", "5", "5")
+	MES(PIPIRO,"好冷好冷、好冷好冷……",0)
+	MES_close(PIPIRO)
+	
+	look_chr(PIPIRO, POCKLE, "Bone_Head")
+	wait(10)
+		
+	KAO(PIPIRO,"C232CZ3", "32", "5")		
+	MES(PIPIRO,"……等一下布库尔……",0)
+	KAO(PIPIRO,"C232CZ5", "2", "5")		
+	MES(PIPIRO,"为什么我们\n会在这种地方……？",0)
+	MES_close(PIPIRO)
+
+	look_chr(POCKLE, PIPIRO, "Bone_Head")
+	wait(10)
+	
+	KAO(POCKLE,"12321Z5", "1233321", "5")	
+	MES(POCKLE,"哈哈哈……我们\n好像迷路了。",0)
+	KAO(POCKLE,"B232BZ7", "123", "2")		
+	MES(POCKLE,"但是、也许\n这里有关于那座《城》的线索\n也说不定……",0)
+	KAO(POCKLE,"B232BZ4", "321", "2")		
+	MES(POCKLE,"那个犯人也有可能\n逃到这里……",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"C232CZ3", "2", "3")		
+	MES(PIPIRO,"根本不可能……！",0)
+	KAO(PIPIRO,"C232CZ5", "23", "3")			
+	MES(PIPIRO,"首先、那个又陡又滑的坡道、\n就不可能登上来的！",0)
+	KAO(PIPIRO,"C232CZ7", "32", "3")		
+	MES(PIPIRO,"真是的、只听听布库尔的笑话\n就能\n寒死人……",0)
+	MES_close(PIPIRO)
+
+	KAO(POCKLE,"B232BZ3", "1233321", "6")		
+	MES(POCKLE,"有、有那么冷吗？",0)
+	MES_close(POCKLE)
+
+	MES_pos(EVENT_RAGNA,"W3呦、你们在做什么？",0,50,240,0,0)
+	wait_key(0)	
+	MES_close(EVENT_RAGNA)
+
+//　　布库尔たち之頭に！マーク。
+	EMO(PIPIRO, EMO_PA)
+	KAO(PIPIRO,"C", "2321D", "5")
+	EMO(POCKLE, EMO_PA)
+	KAO(POCKLE,"E", "12321D", "6")
+	wait(30)
+
+//　　画面下方から拉古那と艾雯が現れる。
+
+	cross_fade(15)
+	CAM_move(1684,894,159,0,0)
+	CAM(-359,64,159,25,212,0,0)
+	look_chr(PIPIRO, EVENT_RAGNA, "Bone_Head")
+	look_chr(POCKLE, EVENT_RAGNA, "Bone_Head")
+	look_chr(ALWEN,  POCKLE, "Bone_Head")
+	
+	chr_pos(PIPIRO,      1754,-1070,0,226,2)	
+	chr_pos(EVENT_RAGNA, 1090,-330,0,226,2)
+	chr_pos(ALWEN,       938,-438,0,232,2)	
+	move(EVENT_RAGNA, 0, WALK1, 1595,-749,0,0)
+	move(ALWEN,       0, WALK1, 1517,-929,0,0)
+
+	rot(PIPIRO, 30, 40)
+	rot(POCKLE, 30, 40)
+	wait_fade()
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+
+	KAO(POCKLE,"12321Z3", "1233321", "6")
+	MES(POCKLE,"啊、拉古那大哥。",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"B232BZ4", "D123", "5")
+//	MES(PIPIRO,"什、什么吗……\n是那个穿着拉风的姐姐……",0)
+	MES(PIPIRO,"什、什么吗……\n是姐姐你们啊……",0)
+	MES_close(PIPIRO)
+
+	KAO(EVENT_RAGNA, "B232BZ4", "1233321", "6")
+	MES(EVENT_RAGNA,"不过、你们\n还真是有闲情逸致啊。",0)
+	KAO(EVENT_RAGNA, "C232CZ4", "123", "5")
+	MES(EVENT_RAGNA,"在这种冷得要命的地方\n在玩什么……",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(ALWEN, EVENT_RAGNA, "Bone_Head")
+	rot(ALWEN, 30, 300)
+	KAO(ALWEN, "92329Z4", "123", "6")
+	MES(ALWEN,"哼哼。\n愚蠢的问题、拉古那。",0)
+	KAO(ALWEN, "92329Z7", "3QP", "6")	
+	MES(ALWEN,"少年少女二人\n来到这样的场所，\n要做什么事不是明摆着吗。",0)
+	MES_close(ALWEN)
+	
+	look_chr(EVENT_RAGNA, ALWEN, "Bone_Head")
+
+	EMO(EVENT_RAGNA, EMO_HATENA)
+	KAO(EVENT_RAGNA, "B", "321D", "6")
+	wait(30)
+	KAO(EVENT_RAGNA, "2", "D", "6")	
+	MES(EVENT_RAGNA,"诶……",0)
+	MES_close(EVENT_RAGNA)
+
+	EMO(POCKLE, EMO_TOGEBIKKURI)
+	KAO(POCKLE, "B", "123IIHGK", "7")
+	wait(30)	
+	KAO(PIPIRO,"B", "3IH", "5")
+	MOT(POCKLE, 150, 10)
+	KAO(POCKLE, "B232B2Z2", "K", "7")	
+	MES(POCKLE,"诶诶诶！？",0)
+	MES_close(POCKLE)
+
+
+	rot(ALWEN, 30, 226 )
+	look_chr(ALWEN, POCKLE, "Bone_Head")
+	KAO(ALWEN, "12321Z7", "PQ36", "6")	
+	MES(ALWEN,"嗬嗬嗬……\n一定是来『堆雪人』或『搭雪窝』\n的吧？",0)
+	KAO(ALWEN, "12321Z6", "3", "6")	
+	MES(ALWEN,"我从书上读到过，人类的小孩非常喜欢\n在雪天玩这种游戏。",0)
+	MES_close(ALWEN)
+
+//　　拉古那たち之頭に冷や汗マーク。
+	EMO(EVENT_RAGNA, EMO_HIYAASE)
+	EMO(PIPIRO, EMO_HIYAASE)
+	KAO(PIPIRO,"B", "2", "5")
+	EMO(POCKLE, EMO_HIYAASE)
+	KAO(POCKLE, "B", "D", "6")	
+	look_chr(EVENT_RAGNA, POCKLE, "Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA, "B232BZ2", "123332", "5")		
+	MES(EVENT_RAGNA,"……是吗？",0)
+	MES_close(EVENT_RAGNA)
+	
+	MOT(POCKLE, 2, 10)
+	KAO(POCKLE, "12321Z4", "123", "4")	
+	MES(POCKLE,"嗯、嗯ー嗯……\n的确很好玩的。",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"C232CZ4", "3", "5")
+	MES(PIPIRO,"要、要玩的话你自己一个人\n爱怎么玩怎么玩……",0)
+	MES_close(PIPIRO)	
+	
+	MOT(PIPIRO, 152, 10)
+	KAO(PIPIRO, "C252CZ3", "5", "5")
+	MES(PIPIRO,"啊ー不行了！\n我受不了了！",0)
+	rot(PIPIRO, 30, 360 )
+	look_chr(PIPIRO, POCKLE, "Bone_Head")
+	MOT(PIPIRO, 2, 10)
+	wait(15)
+
+	KAO(EVENT_RAGNA, "B", "2321", "1")	
+	KAO(ALWEN, "1", "321", "6")	
+	
+	KAO(PIPIRO, "C232CZ4", "321", "3")	
+	MES(PIPIRO,"我说布库尔！\n快点离开这！",0)
+	MES_close(PIPIRO)
+
+	rot(POCKLE, 30, 90 )
+	look_chr(POCKLE, PIPIRO, "Bone_Head")
+	KAO(POCKLE, "B232BZ2", "321", "1")
+	MES(POCKLE,"诶、但是……",0)
+	MES_close(POCKLE)
+	
+	MOT(PIPIRO, 151, 10)	
+	KAO(PIPIRO, "C232CZ5", "123332", "3")
+	MES(PIPIRO,"快点、你再磨蹭\n我把你尾巴点着！",0)
+	KAO(PIPIRO, "C232CZ5", "234", "3")	
+	MES(PIPIRO,"这里我一秒也不想待了，\n快点到暖和的地方去～！",0)
+	MES_close(PIPIRO)
+	
+	MOT(POCKLE, 150, 100)
+	EMO(POCKLE, EMO_HIYAASE)
+	KAO(POCKLE, "B232BZ3", "12321D", "5")
+	MES(POCKLE,"知、知道了。",0)
+	MES_close(POCKLE)
+		
+	KAO(PIPIRO, "C", "32", "5")
+	look_chr(POCKLE, EVENT_RAGNA, "Bone_Head")
+	look_chr(PIPIRO, EVENT_RAGNA, "Bone_Head")
+	rot(POCKLE, 30, 30 )
+	MOT(PIPIRO, 2, 10)
+	MOT(POCKLE, 2, 10)
+	wait(15)
+	KAO(POCKLE, "12321Z4", "321", "1")
+	MES(POCKLE,"拉古那大哥，艾雯姐姐。\n我们先告辞了……",0)
+	MES_close(POCKLE)
+	
+	MOT(PIPIRO, 2, 0)
+
+	KAO(EVENT_RAGNA, "B232BZ2","1233321D","6")
+	MES(EVENT_RAGNA,"哦、哦。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN, "12321Z3", "1233321", "6")	
+	MES(ALWEN,"一路小心。",0)
+	MES_close(ALWEN)
+
+	look_off(PIPIRO)
+	look_off(POCKLE)
+	EV("MV_MovePipiro")
+	wait(5)
+	EV("MV_MovePockle")
+
+	wait(60)
+	CAM_move(1015,538,260,0,0)
+	CAM(320,175,100,25,282,0,0)
+	rot(EVENT_RAGNA, -1, 30)
+	rot(ALWEN, -1, 30)
+
+	wait(30)
+//	EV("MV_MesPockle")
+
+	wait(60)
+	
+	//暗転
+	fade_in(100,60,0)
+	wait_fade()
+	
+	wait_EV("MV_MovePipiro")
+	wait_EV("MV_MovePockle")
+	
+	EV_stop("MV_MovePipiro")
+	EV_stop("MV_MovePockle")
+	EV_stop("MV_MesPockle")
+	
+	CAM_return(0)
+	
+	chr_pos(RAGNA, 1579,-730,1,54,2 )
+	chr_pos(PARTNER, 1527,-945,1,40,2 )
+	color(RAGNA,1)
+	color(PARTNER,1)
+	color(KAPPA, 1)	
+	delete(PIPIRO)
+	delete(POCKLE)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	//フェードイン
+	fade_in(0,30,0)
+	wait_fade()	
+	
+	
+	
+	F_set(F2_18_P&PinMnt)	//★布库尔＆皮皮洛に出会う（山入口）
+	EV_end()
+}	
+
+MV_MovePipiro
+{
+	KAO(PIPIRO, "C", "234", "5")
+	rot(PIPIRO, 60, 60 )
+	move(PIPIRO, 0, RUN1, 1481,-1062,0,10)
+	wait_move(PIPIRO)
+	
+	rot(PIPIRO, 60, 51)
+	move(PIPIRO,  0, RUN1,781,-693,0, 20)
+	wait_move(PIPIRO)
+	
+	rot(PIPIRO, 60, 20)	
+	move(PIPIRO,  0, RUN1,	12,509,0, 20)
+	wait_move(PIPIRO)
+	
+	rot(PIPIRO, 60, 20)		
+	move(PIPIRO,  0, RUN1,	-299,1850,-160, 20)
+	wait_move(PIPIRO)
+}
+
+MV_MovePockle
+{
+	rot(POCKLE, 60, 80 )
+	move(POCKLE, 0, WALK1, 1473,-1106,0,20)
+	wait_move(POCKLE)
+
+	rot(POCKLE, 60, 51)
+	move(POCKLE,  0, WALK2,781,-693,0,20)
+	wait_move(POCKLE)	
+
+
+	
+	rot(POCKLE, 60, 20)	
+	move(POCKLE,  0, RUN1,	12,509,0, 20)
+	wait_move(POCKLE)
+	
+	rot(POCKLE, 60, 20)		
+	move(POCKLE,  0, RUN1,	-299,1850,-160, 20)
+	wait_move(POCKLE)
+}
+
+MV_MesPockle
+{
+	MES_popup(POCKLE, "等、等一下～",60)	
+//	MES(POCKLE, "等、等一下～",0)	
+//	MES_close(POCKLE)
+}
+
+//がくぶる
+MV_TremblePipiro
+{
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)	
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)		
+	
+	
+	MOT(PIPIRO, 150, 2)	//
+	wait(1)	
+}
+
+
+//　　山道を登ろうとすると滑って落ちてしまう。
+EV_STOP_01
+{
+
+	TK_begin()
+
+//	move(RAGNA,2,RUN2,-300,200,-100,50)
+
+	if( F4_09_GoShrineMia )
+	{
+	//	name("·社へ向かった米娅を追うことにした场面から")
+		move(PLAYER1,0,RUN2,2644,-1934,0,200)
+		//move(PLAYER2,0,RUN2,2644,-1934,0,50)
+		move(PLAYER2,0,RUN2,2632,-1874,0,50)
+		wait_move(PLAYER1)
+		//wait_move(PLAYER2)
+
+		if( F5_08_JoinOdessa && !F5_13_KillDygald )//奥蒂莎がいる场合
+			wait_move(PLAYER2)
+		else
+		if( F6_00_GoToMeru )//艾雯がいる场合
+			wait_move(PLAYER2)
+
+		if( !F_PET )
+		{
+			if(GW_MAN==1)
+			{
+			//　　※拉古那先頭之场合
+				MES(RAGNA,"哦……",0)
+				MES(RAGNA,"这里看来登不上去……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+				if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				{
+				//　　※奥蒂莎先頭之场合
+					MES(PARTNER,"哦呦、好滑……",0)
+					MES(PARTNER,"没时间了、\n不要上这里了。",0)
+					MES_close(PARTNER)
+				}
+				else
+				{				
+				//　　※艾雯先頭之场合
+					MES(PARTNER,"唔唔……好滑……",0)
+					MES(PARTNER,"这里看来登不上去……",0)
+					MES_close(PARTNER)
+				}
+			}
+			F_set(PET)
+		}
+	}
+	else
+	if( F4_02_GoVillage2 )
+	{
+	//	name("·昴と合流後")
+
+		move(PLAYER1,0,RUN2,2644,-1934,0,200)
+		//move(PLAYER2,0,RUN2,2644,-1934,0,50)
+		move(PLAYER2,0,RUN2,2632,-1874,0,50)
+		wait_move(PLAYER1)
+		wait_move(PLAYER2)
+		
+		if( !F_PET )
+		{
+			if( GW_MAN==1 )
+			{
+			//□拉古那先頭
+
+				if( !F4_04_OpenRoad )
+				{
+					MES(RAGNA,"太滑了登不上去……",0)
+					MES_close(RAGNA)
+
+					//name2(PARTNER)
+					MES(PARTNER,"这条路、\n是不能通过的。",0)
+					MES(PARTNER,"师父、转动地藏\n走密道吧！",0)
+					MES_close(PARTNER)
+
+				}
+				else
+				{
+					MES(RAGNA,"太滑了登不上去……",0)
+					MES_close(RAGNA)
+
+					//name2(PARTNER)
+					MES(PARTNER,"师父、去里要走\n刚才的密道！",0)
+					MES_close(PARTNER)
+				}
+			}
+			else
+			{
+			//□昴先頭
+				MES(PARTNER,"唔唔唔、好滑……",0)
+				MES(PARTNER,"这条路、\n是不能通过的……",0)
+				MES_close(PARTNER)
+			}
+			F_set(PET)
+		}
+	}
+	else
+	if( F4_00_StartSolo )
+	{
+		move(PLAYER1,0,RUN2,2644,-1934,0,200)
+		wait_move(PLAYER1)
+		
+		if( !F_PET )
+		{
+		//	name("·拉古那単独行動になって")
+			MES(RAGNA,"上不去……",0)
+			MES(RAGNA,"啊、没工夫在这里玩了。",0)
+			MES(RAGNA,"快去看看特里斯坦的\n状况吧。",0)
+			MES_close(RAGNA)
+			F_set(PET)
+		}
+	}
+	else
+	if( !F2_17_EndSecond )
+	{
+		move(PLAYER1,0,RUN2,2644,-1934,0,200)
+		//move(PLAYER2,0,RUN2,2553,-1974,0,50)
+		move(PLAYER2,0,RUN2,2632,-1874,0,50)
+		wait_move(PLAYER1)
+		wait_move(PLAYER2)
+		if( !F1_29_MountSuberu)
+		{
+//　　山道を登ろうとすると滑って落ちてしまう。
+		
+//　　初回之み、以下之メッセージを挿入。
+//　　（第２章中なら起動可能）
+			//　　※拉古那先頭之场合
+			if( GW_MAN==1 )
+			{
+				MES(RAGNA,"可恶……好滑……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"唔、上方的风雪\n似乎更大……",0)
+				MES(PARTNER,"拉古那啊、在说也感觉不到魔力迹象、\n如果要来这里的话最好做好准备\n之后再来比较好。",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//　　※艾雯先頭之场合
+				MES(PARTNER,"唔唔……好滑哦……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"上方的风雪、似乎\n非常强劲……",0)
+				MES(RAGNA,"公主、没事的话\n这里最好以后再来吧。",0)
+				MES_close(RAGNA)
+			}
+			F_set(F1_29_MountSuberu)
+		}
+		else
+		{
+			if( !F_PET )
+			{
+				//　　※拉古那先頭之场合
+				if( GW_MAN==1 )
+				{
+					MES(RAGNA,"可恶……真滑……\n这里以后再来吧……",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//　　※艾雯先頭之场合
+					MES(PARTNER,"唔唔……好滑哦……",0)
+					MES(PARTNER,"这里没有魔力的迹象、\n以后再来吧……",0)
+					MES_close(PARTNER)
+				}
+				F_set(PET)
+			}
+		}
+	}
+
+	TK_end()
+}
+
+//▽山ふもとから出れないストッパー（あまり遠くへ行く之はやめておこう）
+EV_STOP_02
+{
+
+	TK_begin()
+	if( GW_MAN==1 )
+	{
+	//　　※拉古那先頭之场合
+//		MES(RAGNA,"天就快黑了。",0)
+//		MES(RAGNA,"还是不要到远处去吧。",0)
+		MES(RAGNA,"（太阳马上就要下山了……）",0)
+		MES(RAGNA,"（还是不要到远处去吧。）",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	{
+	//　　□昴先頭
+		MES(PARTNER,"（啊……\n  这里是城镇的方向。）",0)
+		MES(PARTNER,"（要请拉古那师父\n  洗温泉、\n  不要到远方去了。）",0)
+		MES_close(PARTNER)
+		wait_MES(PARTNER)
+	}
+
+	cross_fade( 30 )
+	chr_pos(PLAYER1,-327,1857,-161,186,2)
+	chr_pos(PLAYER2,-429,2004,-183,180,2)
+	CAM_return(0)
+	wait_fade()	
+	TK_end()
+
+}
+
+//---------------------------------------------------------------------------------------------------
+//▽各地之ダンジョン之ストッパー（特に用事はない）
+//---------------------------------------------------------------------------------------------------
+EV_STOP_03
+{
+	TK_begin()
+	if( F4_11_EndFourth && !F5_06_RunCrystal )
+	{
+//	name("·怪我をした昴と話した後")
+//　　（３人全員に話をつける前之み発生）
+
+		if( F5_03_OfferLaraira && F5_04_OfferPipiro && F5_05_OfferFiona )
+		{
+		//　　※全員に声を掛けてからは以下之ストッパー
+			MES(RAGNA,"哦……",0)
+			MES(RAGNA,"现在要赶紧向水晶峡谷\n进发……！",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+		else
+		if( !F5_24_NotDanjion )
+		{
+		//　　初回之み、以下之メッセージを挿入。
+			rot_chr(PET,30,PLAYER1)
+			MES(PET,"……我说拉古那！？\n你要去哪里！",0)
+		//	MES(PET,"进入洞窟之前、\n我觉得最好先和知道地点的人\n说话比较妥当。",0)
+			MES(PET,"搜索这地方之前\n有应该调查的地方吧！",0)
+			MES_close(PET)
+
+			rot_chr(PLAYER1,30,PET)
+		//	name2(RAGNA)
+		//	MES(RAGNA,"啊啊……\n确实进入魔窟搜索\n会花很多时间。",0)
+			MES(RAGNA,"啊啊……\n确实会花很多时间。",0)
+			MES_close(RAGNA)
+
+			if( !F5_05_OfferFiona )
+			{
+			//	name("□菲奥娜に話をしていない")
+			//	MES(RAGNA,"先和菲奥娜大小姐她们\n说一声吧……",0)
+				MES(RAGNA,"首先要和菲奥娜大小姐她们\n说一声吧……",0)
+				MES_close(RAGNA)
+
+				MES(PET,"那个女孩应该在镇里的宅邸里面。\n先去见一面吧。",0)
+				MES_close(PET)
+				wait_MES(PET)
+			}
+			else
+			if( !F5_03_OfferLaraira )
+			{
+			//	MES(RAGNA,"先和剩下的人\n说话吧……",0)
+				MES(RAGNA,"下一步去拉莱拉婆婆\n那里吧……",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+			else
+			{
+			//	MES(RAGNA,"先搜索城镇\n比较好……",0)
+				MES(RAGNA,"首先从、\n城镇的各个角落搜起吧……",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+			F_set(F5_24_NotDanjion)
+		}
+		else
+		{
+		//　　※２回目以降は以下之メッセージ。
+		//	MES(RAGNA,"进入魔窟搜索的话\n太费时间……",0)
+			MES(RAGNA,"不能漫无目的\n地搜索……",0)
+			MES(RAGNA,"首先从那些已经获得提示的场所\n搜起吧。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+	}
+	else
+	if( !F5_17_EndFifth )
+	{
+//	name("·水晶峡谷起動後")
+
+		if( GW_MAN==1 )
+		{
+		//　　※拉古那先頭
+			if( !F_RAGNA )
+			{
+				rot_chr(PET,30,PLAYER1)
+				MES(PET,"拉古那、你要去哪里！",0)
+				MES(PET,"要快点去救公主陛下！",0)
+				MES_close(PET)
+
+				rot_chr(PLAYER1,30,PET)
+			//	name2(RAGNA)
+				MES(RAGNA,"啊啊、说的对。",0)
+				MES(RAGNA,"要快点做好准备、\n然后向水晶峡谷出发。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(RAGNA,"要快点做好准备、\n然后去迎回公主！",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		chr_pos(PET,-143,-680,1,0,2)
+		}
+		else
+		{
+		//　　※奥蒂莎先頭
+			if( !F_RAGNA )
+			{
+				rot_chr(PET,30,PLAYER1)
+				MES(PET,"我说狼女、你要去哪里！",0)
+				MES(PET,"要快点去救公主陛下！",0)
+				MES_close(PET)
+
+				rot_chr(PLAYER1,30,PET)
+			//	name2(PARTNER)
+				MES(PARTNER,"哈哈、我知道。",0)
+				MES(PARTNER,"快点做好准备、\n向敌人的所在地出发吧。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(PARTNER,"没工夫闲绕了……",0)
+				MES(PARTNER,"快点做好准备、\n向敌人的所在地出发吧。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+			}
+		}
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			chr_pos(PLAYER2,126,-717,1,0,2)
+		}
+		chr_pos(PET,-143,-680,1,0,2)
+	}
+	chr_pos(PLAYER1,37,-791,0,0,2)
+	
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()	
+
+	TK_end()
+
+}
+
+
+//---------------------------------------------------------------------
+//地蔵スイッチ
+//全て之地蔵之頭を元之角度（正面）にすれば、扉が開く
+//攻略法
+// 旧Ver(初期角度 0,270,270,180之状態から①を１回、②を２回、４を１回　でＯＫ。ただ之加算な之で回す順番は関係なし)
+//全て之地蔵１回ずつ回すだけ。
+EV_ZIZOU_CHECK
+{
+	if(WK001==0 && WK002==0 && WK003==0 && WK004==0)
+	{
+		EV("EV_4_06_OpenRoad")	//扉開くイベント開始
+		wait_EV("EV_4_06_OpenRoad")
+	}
+}
+//---------------------------------------------------------------------
+//--- 地蔵1 -----------------------------------------------------------
+//地蔵1を回すと、地蔵2、地蔵3も回る
+EV_ZIZOU_1
+{
+	TK_begin()
+	
+	SE(1110,0)//地蔵回転SE
+	EV("EV_ZIZOU_1b")
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_3b")	
+	wait_EV("EV_ZIZOU_1b")
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_3b")
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end2(0)
+}
+//---------------------------------------------------------------------
+//--- 地蔵2 -----------------------------------------------------------
+//地蔵2を回す
+EV_ZIZOU_2
+{
+	TK_begin()
+	SE(1110,0)//地蔵回転SE
+	EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_2b")
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+	TK_end2(0)
+}
+//---------------------------------------------------------------------
+//--- 地蔵3 -----------------------------------------------------------
+//地蔵3を回すと、地蔵2、も回る
+EV_ZIZOU_3
+{
+	TK_begin()
+	SE(1110,0)//地蔵回転SE
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_3b")
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_3b")
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end2(0)
+}
+//---------------------------------------------------------------------
+//--- 地蔵4 -----------------------------------------------------------
+//地蔵4を回すと、地蔵2、地蔵3も回る
+EV_ZIZOU_4
+{
+	TK_begin()
+	SE(1110,0)//地蔵回転SE
+	EV("EV_ZIZOU_4b")
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_3b")	
+	wait_EV("EV_ZIZOU_4b")
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_3b")	
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end2(0)
+}
+
+//地蔵１回転
+EV_ZIZOU_1b
+{
+	EMO(ZIZOU_1, EMO_BIKKURI)
+	if(WK001==0)
+	{
+		rot(ZIZOU_1, 30, 270)
+		workL(1,SET,27)		
+	
+//		MES(ZIZOU_1,"角度270",0)
+	}
+	else
+	if(WK001==9)
+	{
+		rot(ZIZOU_1, 30, 0)
+		workL(1,SET,0)
+			
+//		MES(ZIZOU_1,"角度000",0)
+	}
+	else
+	if(WK001==18)
+	{
+		rot(ZIZOU_1, 30, 90)
+		workL(1,SET,9)	
+		
+//		MES(ZIZOU_1,"角度090",0)
+	}
+	else
+	if(WK001==27)
+	{
+		rot(ZIZOU_1, 30, 180)
+		workL(1,SET,18)
+//		MES(ZIZOU_1,"角度180",0)
+
+	}
+	else
+	{
+//		MES(ZIZOU_1,"角度？",0)
+	}
+	MES_close(ZIZOU_1)	
+	
+	wait(30)
+}
+
+//地蔵２回転
+EV_ZIZOU_2b
+{
+	EMO(ZIZOU_2, EMO_BIKKURI)
+	if(WK002==0)
+	{
+		rot(ZIZOU_2, 30, 270)
+		workL(2,SET,27)	
+	}
+	else
+	if(WK002==9)
+	{
+		rot(ZIZOU_2, 30, 360)
+		workL(2,SET,0)
+	}
+	else
+	if(WK002==18)
+	{
+		rot(ZIZOU_2, 30, 90)
+		workL(2,SET,9)
+	}
+	else
+	if(WK002==27)
+	{
+		rot(ZIZOU_2, 30, 180)
+		workL(2,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_2,"角度？",0)
+
+	}
+	MES_close(ZIZOU_2)		
+	wait(30)
+}
+
+//地蔵３回転
+EV_ZIZOU_3b
+{
+	EMO(ZIZOU_3, EMO_BIKKURI)
+	if(WK003==0)
+	{
+		rot(ZIZOU_3, 30, 270)
+		workL(3,SET,27)	
+	}
+	else
+	if(WK003==9)
+	{
+		rot(ZIZOU_3, 30, 0)
+		workL(3,SET,0)
+	}
+	else
+	if(WK003==18)
+	{
+		rot(ZIZOU_3, 30, 90)
+		workL(3,SET,9)	
+	}
+	else
+	if(WK003==27)
+	{
+		rot(ZIZOU_3, 30, 180)
+		workL(3,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_3,"角度？",0)
+		MES_close(ZIZOU_3)	
+	}
+	wait(30)
+}
+
+//地蔵４回転
+EV_ZIZOU_4b
+{
+	EMO(ZIZOU_4, EMO_BIKKURI)
+	if(WK004==0)
+	{
+		rot(ZIZOU_4, 30, 270)
+		workL(4,SET,27)	
+	}
+	else
+	if(WK004==9)
+	{
+		rot(ZIZOU_4, 30, 0)
+		workL(4,SET,0)
+	}
+	else
+	if(WK004==18)
+	{
+		rot(ZIZOU_4, 30, 90)
+		workL(4,SET,9)	
+	}
+	else
+	if(WK004==27)
+	{
+		rot(ZIZOU_4, 30, 180)
+		workL(4,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_4,"角度？",0)
+		MES_close(ZIZOU_4)	
+	}
+	wait(30)
+}
+
+//--------------------------------------------------------------------
+//-- 河童ゲーム終了 ------------------------------------------------
+//--------------------------------------------------------------------
+
+EV_KappaEnd
+{
+
+//	EV_begin()
+	TK_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	chr_pos(RAGNA, 1930,-1332,1,49,2 )
+	chr_pos(PARTNER, 2160,-1366,1,60,2 )
+	chr_pos(PET, 2371,-1599,0,10,2 )
+//	set_chr( KAPPA,80,	-1,-1,1395,-1371,1,		15,340, 20,"<TK_KAPPA2>")	//チェックしやすいようこっちに移植
+//	set_chr( KAPPA, 80,	   -1,-1,296,-6783,1,  	   6,     0,20,"<TK_KAPPA2>")
+//	chr_pos(KAPPA,1395,-1371,1,340,15)
+
+	F_reset_chr(KAPPA,CF_NO_ZIMEN)
+	F_reset_chr(KAPPA,CF_NO_HEIGHT)
+
+	//河童一般会話用之WK
+	if( GW_HUNTER_RANK>=16 )
+		workL(010,RAND,5)
+	else
+		workL(010,RAND,4)
+
+	wait(1)
+
+	//明るく
+	fade_in(0,60,0)
+	wait_fade()
+
+//	EV_end()
+	TK_end()
+}
+
+
+#EndScriptTable
+//====================================================================
+

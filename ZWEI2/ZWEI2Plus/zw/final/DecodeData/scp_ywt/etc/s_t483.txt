@@ -1,0 +1,665 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧儈乕偪傖傫乮擫乯")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸儌儞僪儗傾儞晇恖偑帞偭偰偄傞擫偱偡丅
+//丂丂仸僜儘儌儞儕儞僌憰旛帪偺傒儊僢僙乕僕傪昞帵丅
+//丂丂丂偦傟埲奜偼怳傝岦偄偰媰偒惡俽俤傪柭傜偡偩偗丅
+//丂丂仸儊僢僙乕僕偼慡偰怓姺偊乮僺儞僋乯偲偟傑偡丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_CAT_A
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(CAT_A, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,CAT_A)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,CAT_A)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CAT_A)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CAT_A)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CAT_A)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CAT_A)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,CAT_A)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌憰旛帪偼堦斒儊僢僙乕僕
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(EQ092)
+	{
+		chr_rename(CAT_A,"小咪")
+		F_set(FV_FF_NameMe)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘗僄儞僨傿儞僌捈慜偱僜儘儌儞儕儞僌強帩
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸柉壠侾丄儌儞僪儗傾儞偺嬤偔偱僼儕乕儉乕僽
+		//丂丂仸僼儔僌嘗偱偼丄憰旛偺桳柍偱偼側偔丄
+		//丂丂丂僜儘儌儞儕儞僌傪強桳偟偰偄傞偐偱敾掕丅
+		if( F6_05_EndSixth )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+			if(!F_CAT_A)
+			{
+			//	name("儈乕")
+				MES(CAT_A,"C4那個，那個？",0)
+				MES(CAT_A,"C4前兩天\n小咪見到了一個溫柔的大姐姐。",0)
+				MES(CAT_A,"C4身體也很暖和，\n而且她還這樣輕輕撫摸小咪呢！",0)
+				MES(CAT_A,"C4最喜歡大姐姐了……\n還想再見她啊～㈱",0)
+				MES_close(CAT_A)
+
+				F_set(CAT_A)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//丂丂仛孞傝曉偟
+			//	name("儈乕")
+				MES(CAT_A,"C4大姐姐的\n腿很暖和～……",0)
+				MES(CAT_A,"C4她撫摸小咪的時候\n也特別舒服。",0)
+				MES(CAT_A,"C4小咪不由得\n陶醉了呢☆",0)
+				MES(CAT_A,"C4最喜歡大姐姐了……\n還想再見她啊～㈱",0)
+				MES_close(CAT_A)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+		else
+	//丂丂仸僜儘儌儞儕儞僌憰旛偱擫偠傖傜偟傪帩偭偰偄傞偲丄柍忦審偱埲壓偺儊僢僙乕僕偑敪摦丅
+		if(F5_00_HearLunar && FV_11_Warasi_7_brm && !FV_11_Warasi_8_Lot)
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			if(!F_RAGNA)
+			{
+			//丂丂儈乕偵傾僙傾僙僄儌乕僔儑儞丅
+
+				EMO(CAT_A,EMO_ASEASE)
+				wait(30)
+				
+				MES(CAT_A,"C4……啊………\n逗貓草……？",0)
+				MES(CAT_A,"C4嗚喵，咕嚕咕嚕……\n喵喵～㈱",0)
+				MES_close(CAT_A)
+				
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				if(GW_MAN==0 && F6_00_GoToMeru)
+				{
+				//	name("佀傾儖僂僃儞愭摢")
+					MES(PARTNER,"哦，真的管用……",0)
+					MES(PARTNER,"嘿—。來抓它呀！",0)
+					MES_close(PARTNER)
+
+				//	name("儈乕")
+					MES(CAT_A,"C4哇，不要～！\n咕嚕咕嚕，喵喵～㈱",0)
+					MES_close(CAT_A)
+					
+				//	name2(RAGNA)
+					MES(RAGNA,"（真的在玩啊……）",0)
+					MES_close(RAGNA)
+
+				//	name2(PET)
+					MES(PET,"（公主殿下……）",0)
+					MES_close(PET)
+				}
+				else
+				{
+				//	name("佀儔僌僫愭摢")
+					MES(RAGNA,"太投入了……",0)
+					MES_close(RAGNA)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				
+			//丂丂仸偙偙偺俴俥偼擫俁旵嫟捠丅
+				F_set(RAGNA)
+			}
+			else
+			{
+			//丂丂儈乕偵傾僙傾僙僄儌乕僔儑儞丅
+				EMO(CAT_A,EMO_ASEASE)
+				wait(30)
+							
+			//	name("儈乕")
+				MES(CAT_A,"C4……啊………\n逗貓草……？",0)
+				MES(CAT_A,"C4嗚喵，咕嚕咕嚕……\n喵喵～㈱",0)
+				MES_close(CAT_A)
+				
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				if(GW_MAN==0 && F6_00_GoToMeru)
+				{
+				//	name("佀傾儖僂僃儞愭摢")
+				//丂丂傾儖僂僃儞偵侓僄儌乕僔儑儞丅
+					EMO(PARTNER,EMO_ONPU)
+					wait(30)
+					MES(PARTNER,"嘿—嘿嘿。\n真開心啊！",0)
+					MES_close(PARTNER)
+
+				//丂丂儔僌僫偲儖僁偵椻傗娋僄儌乕僔儑儞丅
+					EMO(RAGNA,EMO_HIYAASE)
+					EMO(PET,EMO_HIYAASE)
+					wait(30)
+				}
+			}
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘕嘖丂傢傜偟傋僀儀儞僩
+		//	name("仠僩儔僢僾丗傾儖僢僥偺將擫偨偪	亀撲偺儁僢僩僼乕僪亁佀儁儞僱")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F5_00_HearLunar && FV_11_Warasi_4_Bns && !FV_11_Warasi_5_Han && !FV_11_Warasi_Fake)
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			if(!F_CAT_A)
+			{
+			//	name("佀弶夞偺応崌丅")
+			//	name("儈乕")
+				MES(CAT_A,"C4嗅嗅……",0)
+				MES(CAT_A,"C4那個，那個～？",0)
+				MES(CAT_A,"C4好像有一股\n非常好聞的氣味。",0)
+				MES_close(CAT_A)
+
+			//丂丂儈乕偵両僄儌乕僔儑儞丅
+				EMO(CAT_A,EMO_BIKKURI)
+				wait(30)
+		
+			//	name("儈乕")
+				MES(CAT_A,"C4咦，那不是\n「謎之寵物罐頭」嗎？",0)
+				MES(CAT_A,"C4喵喵㈱\n把它送給小咪吧？",0)
+			 	MES_close(CAT_A)
+			}
+			else
+			{
+			//	name("佀俀夞栚埲崀丅")
+			//	name("儈乕")
+				MES(CAT_A,"C4那個寵物罐頭\n聞起來很好吃呢。",0)
+				MES(CAT_A,"C4那個，那個～？\n小咪想要啊～㈱",0)
+				MES_close(CAT_A)
+			}
+			
+		//	name("慖戰僥僉僗僩")
+			workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【請用㈱】\n【不好意思】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀亂偳偆偧噴亃")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(WK_YESNO==1)
+			{
+				MES(CAT_A,"C4真的～？",0)
+				MES(CAT_A,"C4小咪真的可以\n吃嗎～？",0)
+			 	MES_close(CAT_A)
+				
+			//	name("慖戰僥僉僗僩")
+				workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+				MES_pos(PLAYER1,"??W9【當然㈱】\n【還是算了】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀亂儌僠儘儞噴亃")
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				if(WK_YESNO==1)
+				{
+					MES(CAT_A,"C4哇～，小咪好高興！",0)
+					MES_close(CAT_A)
+
+				//丂丂儈乕偵傾僙傾僙僄儌乕僔儑儞丅
+					EMO(CAT_A,EMO_ASEASE)
+					wait(30)
+				//	name("儈乕")
+					MES(CAT_A,"C4嚼嚼…嚼嚼……",0)
+					MES(CAT_A,"C4……咕嘟。",0)
+					MES(CAT_A,"C4啊，好吃……\n非常好吃呢～。",0)
+					MES_close(CAT_A)
+
+					//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+					if(GW_MAN==0)
+					{
+						if(F5_08_JoinOdessa && !F5_13_KillDygald)
+						{
+						//	name("佀僆僨僢僒愭摢")
+							MES(PARTNER,"哎，有那麼好吃嗎？",0)
+							MES(PARTNER,"那麼……到底是\n什麼寵物罐頭？",0)
+							MES_close(PARTNER)
+						}
+						else
+						if(F6_00_GoToMeru)
+						{
+						//	name("佀傾儖僂僃儞愭摢")
+							MES(PARTNER,"哦，原來如此好吃啊。",0)
+							MES(PARTNER,"那麼……到底是\n什麼寵物罐頭呢？",0)
+							MES_close(PARTNER)
+						}
+					}
+					else
+					{
+					//	name("佀偦傟埲奜")
+						MES(RAGNA,"哎，有那麼好吃嗎？",0)
+						MES(RAGNA,"那麼……到底是\n什麼寵物罐頭啊？",0)
+						MES_close(RAGNA)
+					}
+					//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+					
+				//	name("儈乕")
+					MES(CAT_A,"C4唔—，不知道……\n小咪從來沒有吃到過\n這種味道。",0)
+					MES_close(CAT_A)
+
+				//丂丂儈乕偵俹俙僄儌乕僔儑儞丅
+					EMO(CAT_A,EMO_PA)
+					wait(30)
+					
+				//	name("儈乕")
+					MES(CAT_A,"C4啊，對了。\n這個是小咪給你們的禮物？",0)
+					MES(CAT_A,"C4從以前撿到的錢包裡\n發現的。",0)
+					MES(CAT_A,"C4好好用吧。",0)
+				 	MES_close(CAT_A)
+
+
+				//	name("傾僀僥儉擖庤僥僉僗僩")
+					fade_in(30,10,BLACK)
+					SE(24,0)	//偍嬥偺壒偩偲枴婥側偄偺偱偙傟偱乮抾乯
+					MES(0,"C3S2得到了３０００芬尼。",2)
+					MES_close(0)
+					fade_in(0,10,BLACK)
+					wait_fade()
+
+					//3000儁儞僱擖庤
+					get_gold(3000,PLAYER1)
+					
+					//撲偺儁僢僩僼乕僪徚柵
+					get_item(146,-1,1)
+
+
+				//	name("儈乕")
+					MES(CAT_A,"C4嗚喵，咕嚕咕嚕……",0)
+					MES(CAT_A,"C4不知為什麼，\n小咪有些睏了……",0)
+				 	MES_close(CAT_A)
+				 	
+					F_set(FV_11_Warasi_Fake)
+					F_reset(CAT_A)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀亂傗偭傁僟儊亃")
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				else
+				{
+					MES(CAT_A,"C4嗚嗚……\n不要欺負小咪……",0)
+				 	MES_close(CAT_A)
+				 	
+				 	//2008.08.12.崻揷堏摦
+					F_set(CAT_A)
+
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀亂僟儊亃")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			{
+				if(!F_CAT_A)
+				{
+				//	name("佀弶夞偺応崌丅")
+				//	name("儈乕")
+					MES(CAT_A,"C4啊！",0)
+					MES(CAT_A,"C4嗚嗚……\n小咪很傷心……",0)
+				 	MES_close(CAT_A)
+				 	
+					//2008.08.12.崻揷堏摦
+					F_set(CAT_A)
+				}
+				else
+				{
+				//	name("佀俀夞栚埲崀丅")
+				//	name("儈乕")
+					MES(CAT_A,"C4嗚嗚……\n小咪很傷心……",0)
+					MES_close(CAT_A)
+				}
+
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+			//2008.08.12.崻揷堏摦
+			//F_set(CAT_A)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸傾儖僢僥惓栧晅嬤偱僼儕乕儉乕僽
+		if( F6_00_GoToMeru )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+			
+			if(!F_CAT_A)
+			{
+			//	name("儈乕")
+				MES(CAT_A,"C4最近主人\n總是很生氣～。",0)
+				MES(CAT_A,"C4有點可怕啊……",0)
+				MES(CAT_A,"C4主人到底\n怎麼了呢～……",0)
+				MES_close(CAT_A)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"不過……",0)
+					MES(RAGNA,"你好像和主人走散了，\n不要緊嗎……？",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"唔，你……",0)
+					MES(PARTNER,"好像不在主人身邊，\n沒事嗎？",0)
+					MES_close(PARTNER)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂儈乕偵丠僄儌乕僔儑儞丅
+				EMO(CAT_A,EMO_HATENA)
+				wait(30)
+				
+				F_set(CAT_A)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("儈乕")
+				MES(CAT_A,"C4主人為什麼\n會生氣呢……",0)
+				MES(CAT_A,"C4嗚嗚，\n小咪完全不明白啊……",0)
+				MES_close(CAT_A)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸柉壠侾慜丄儌儞僪儗傾儞偺嬤偔偱僼儕乕儉乕僽丅
+		if( F5_00_HearLunar )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+			if(!F_CAT_A)
+			{
+			//	name("儈乕")
+				MES(CAT_A,"C4那個，那個～？",0)
+				MES(CAT_A,"C4小咪經常\n看不到大人們。",0)
+				MES(CAT_A,"C4因為小咪\n太小了……",0)
+				MES(CAT_A,"C4看不清他們的臉。",0)
+				MES_close(CAT_A)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（不…不過……\n 仔細想來的確如此啊……）",0)
+				MES_close(RAGNA)
+				
+				F_set(CAT_A)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				//	name("儈乕")
+				MES(CAT_A,"C4小咪除了主人以外\n都不熟悉。",0)
+				MES(CAT_A,"C4因為小咪\n太小了……\n看不清人們的臉。",0)
+				MES(CAT_A,"C4小咪長大以後\n能看到大家的臉嗎？",0)
+				MES_close(CAT_A)
+
+			//	name2(PET)
+				MES(PET,"這個……\n不長到妖怪貓那樣恐怕很難吧。",0)
+				MES_close(PET)
+
+			//丂丂儔僌僫丄椻傗娋僄儌乕僔儑儞偱儖僁偵岦偔丅
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+				rot_chr(RAGNA,30,PET)
+
+				MES(RAGNA,"妖怪貓……",0)
+				MES_close(RAGNA)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仸柍偟
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仸柍偟
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仸柍偟
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸嫵夛丄儌儞僪儗傾儞偺嬤偔偱僼儕乕儉乕僽
+		if( F4_00_StartSolo )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+			if(!F_CAT_A)
+			{
+			//	name("儈乕")
+				MES(CAT_A,"C4那個，那個～？",0)
+				MES(CAT_A,"C4剛才外面\n有一隻蝴蝶。",0)
+				MES(CAT_A,"C4黃色的，在那裡飛來飛去……",0)
+				MES(CAT_A,"C4小咪還想多看一會兒啊～……",0)
+				MES_close(CAT_A)
+
+				F_set(CAT_A)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("儈乕")
+				MES(CAT_A,"C4小咪正想\n追著蝴蝶出去……",0)
+				MES(CAT_A,"C4可是被主人攔住了。",0)
+				MES(CAT_A,"C4主人有些可怕……\n為什麼呢……",0)
+				MES_close(CAT_A)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸偄側偄丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸柉壠侾慜丄儌儞僪儗傾儞偺嬤偔偱備偭偔傝僼儕乕儉乕僽丅
+		if( F2_14_TalkEnemy )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+			if(!F_CAT_A)
+			{
+			//	name("儈乕")
+				MES(CAT_A,"C4那個，那個～？",0)
+				MES(CAT_A,"C4差不多到午睡時間了……",0)
+				MES(CAT_A,"C4可是主人\n卻要小咪出去……",0)
+				MES(CAT_A,"C4小咪\n已經睏了啊……",0)
+				MES_close(CAT_A)
+
+				F_set(CAT_A)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("儈乕")
+				MES(CAT_A,"C4小咪\n已經睏了……",0)
+				MES_close(CAT_A)
+
+			//丂丂儈乕丄寉偔怳摦丅
+			//	name("儈乕")
+				MES(CAT_A,"C4嗯～嗯……",0)
+				MES(CAT_A,"C4小咪很睏。\n讓小咪睡覺吧……？",0)
+				MES_close(CAT_A)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘋墛偺僷乕僣傪擖庤偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仸柍偟
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸柉壠侾丄儌儞僪儗傾儞偵岦偄偰偠傖傟偮偔儉乕僽丅
+		//丂丂仸怳傝曉傜側偄
+		if( F2_00_GoForest )
+		{
+			if(!F_CAT_A)
+			{
+			//	name("儈乕")
+				MES(CAT_A,"C4喂…喂……",0)
+				MES(CAT_A,"C4主人，一起玩吧？",0)
+				MES(CAT_A,"C4喵喵☆",0)
+				MES_close(CAT_A)
+
+				F_set(CAT_A)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//丂丂儈乕偵丠僄儌乕僔儑儞丄怳傝岦偔丅
+				EMO(CAT_A,EMO_HATENA)
+				MOT(CAT_A,2,10)
+				wait(30)
+				rot_chr(CAT_A,10,PLAYER1)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+				//	name("儈乕")
+					MES(CAT_A,"C4大哥哥們，有事嗎……？",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("佀傾儖僂僃儞愭摢")
+				{
+				//	name("儈乕")
+					MES(CAT_A,"C4大姐姐們，有事嗎……？",0)
+					MES_close(CAT_A)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("儈乕")
+				MES(CAT_A,"C4和小咪一起玩？",0)
+				MES_close(CAT_A)
+
+			//丂丂偠傖傟晅偔儉乕僽傪嵞惗丅
+				MOT(CAT_A,11,10)
+			
+			//	name("儈乕")
+				MES(CAT_A,"C4喵喵☆",0)
+				MES_close(CAT_A)
+			}
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸暚悈塃曈傝丅儌儞僪儗傾儞偺嬤偔偱僼儕乕儉乕僽
+		if( F1_15_GoVillage )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+
+			if(!F_CAT_A)
+			{
+				//	name("儈乕")
+				MES(CAT_A,"C4那個，那個～？",0)
+				MES(CAT_A,"C4小咪最喜歡\n金槍魚罐頭了。",0)
+				MES(CAT_A,"C4因為這樣\n一口吃下去……",0)
+				MES(CAT_A,"C4又有甜味，\n非常好吃哦～㈱",0)
+				MES_close(CAT_A)
+				
+				F_set(CAT_A)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("儈乕")
+				MES(CAT_A,"C4主人會給小咪\n金槍魚罐頭呢。",0)
+				MES(CAT_A,"C4嘿嘿，最喜歡主人了㈱",0)
+				MES_close(CAT_A)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌旕憰旛帪偼怳傝岦偒偲俽俤
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	{
+		//柭偒惡
+		SE(31,CAT_A)
+	}
+	
+	
+	TK_end()
+	
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

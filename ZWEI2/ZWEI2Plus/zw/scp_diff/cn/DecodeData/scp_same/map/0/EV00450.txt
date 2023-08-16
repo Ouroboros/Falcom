@@ -1,0 +1,379 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10450][露天温泉（昼）]
+//====================================================================
+
+#ScriptTable
+
+#EVENT_RAGNA 		1
+#ALWEN 				2
+#LUE 				3
+#ODESSA				4
+#DUMMY	 			10
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//環境SE
+	SE(64,0)//水音
+
+//  set_chr  no typ     tip     	x     y   z    mot  向  状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+
+
+
+
+//■エントリー
+
+
+//■イベント
+	if(F5_00_HearLunar)
+	{
+		if(GW_ENTRY_EVENT==1)
+		{
+			//▼入浴(艾雯)
+			workG(GW_ENTRY_EVENT,SET,0)
+			EV("EV_Onsen_Alwen")
+		}
+		else
+		if(GW_ENTRY_EVENT==2)
+		{
+			//▼入浴(奥蒂莎)
+			workG(GW_ENTRY_EVENT,SET,0)
+			EV("EV_Onsen_Odessa")
+		}
+		else
+		if(GW_ENTRY_EVENT==3)
+		{
+			//▼入浴(拉古那)
+			workG(GW_ENTRY_EVENT,SET,0)
+			EV("EV_Onsen_Ragna")
+		}
+
+	}
+
+//	map_color(70,70,90,0);//R,G,B, time 100%
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+EV_Onsen_Alwen
+{
+	//――――――――――――――――――――――――――
+	//	初期化処理
+	//――――――――――――――――――――――――――
+	fade_in(100,1,0)
+	EV_begin()
+	wait_fade()
+	
+	//カメラセット
+
+	CAM_move(-319,-1255,-34,0,0)
+	CAM(-210,83,-34,40,336,0,0)
+	CAM(-50,83,-34,40,336,150,0)
+	
+	//キャラセット
+	set_chr( ALWEN,1059,	-1,-1,      -42,449,-48,  	 2,0, 0,";")	//艾雯
+	
+	//プレイヤーは消す
+	chr_pos(RAGNA,-839,790,-48,0,2)
+	chr_pos(PARTNER,-735,678,-50,0,2)
+	chr_pos(PET,-575,627,-50,0,2)
+
+	
+	color(RAGNA,-1)//透過
+	color(PARTNER,-1)//透過
+	color(PET,-1)//透過
+
+	EV("Lue_Set")
+
+	//フェードイン----------------------
+	fade_in(0,60,0)
+	wait_fade()
+	//――――――――――――――――――――――――――
+	//	イベント開始
+	//――――――――――――――――――――――――――
+	//キャラ步き
+
+
+	rot(ALWEN,60,30)
+	MOT(ALWEN,133,15)
+	move(ALWEN,30,5,-465,1254,-50,0)
+	wait(90)
+
+	cross_fade(30)
+	CAM_move(-632,-1401,-46,0,0)
+	CAM(70,68,-46,27,193,0,0)
+	EV("Lue_Lotation")
+
+	wait_move(ALWEN)
+	MOT(ALWEN,134,15)
+	wait(200)
+	KAO(ALWEN,"6","I","B")
+	wait(120)
+	
+	//――――――――――――――――――――――――――
+	//	イベント終了
+	//――――――――――――――――――――――――――
+	fade_in(100,30,0)
+	wait_fade()
+	
+	//更衣室マップへ
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(10440)
+}
+
+EV_Onsen_Odessa
+{
+	//――――――――――――――――――――――――――
+	//	初期化処理
+	//――――――――――――――――――――――――――
+	fade_in(100,1,0)
+	EV_begin()
+	wait_fade()
+	
+	//カメラセット
+
+	CAM_move(-319,-1255,-34,0,0)
+	CAM(-210,83,-34,40,336,0,0)
+	CAM(-50,83,-34,40,336,150,0)
+	
+	//キャラセット
+	set_chr( ODESSA,1060,	-1,-1,      -42,449,-48,  	 2,0, 0,";")	//奥蒂莎
+	
+	//プレイヤーは消す
+	chr_pos(RAGNA,-839,790,-48,0,2)
+	chr_pos(PARTNER,-735,678,-50,0,2)
+	chr_pos(PET,-575,627,-50,0,2)
+
+	color(RAGNA,-1)//透過
+	color(PARTNER,-1)//透過
+	color(PET,-1)//透過
+
+
+	//フェードイン----------------------
+	fade_in(0,60,0)
+	wait_fade()
+	//――――――――――――――――――――――――――
+	//	イベント開始
+	//――――――――――――――――――――――――――
+	//キャラ步き
+
+	rot(ODESSA,60,30)
+	MOT(ODESSA,133,15)
+	move(ODESSA,30,5,-465,1254,-50,0)
+	wait(90)
+
+	cross_fade(30)
+	CAM_move(-632,-1401,-46,0,0)
+	CAM(70,68,-46,27,193,0,0)
+
+	wait_move(ODESSA)
+	MOT(ODESSA,134,15)
+	wait(200)
+	KAO(ODESSA,"6","I","B")
+	wait(120)
+	
+	//――――――――――――――――――――――――――
+	//	イベント終了
+	//――――――――――――――――――――――――――
+	fade_in(100,30,0)
+	wait_fade()
+	
+	//更衣室マップへ
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(10440)
+}
+
+EV_Onsen_Ragna
+{
+	//――――――――――――――――――――――――――
+	//	初期化処理
+	//――――――――――――――――――――――――――
+	fade_in(100,1,0)
+	EV_begin()
+	wait_fade()
+	
+	//カメラセット
+
+	CAM_move(-632,-1401,-46,0,0)
+	CAM(70,68,-46,27,193,0,0)
+	
+	//キャラセット
+	set_chr( EVENT_RAGNA,1044,	-1,-1,      -550,1456,-119, 	 2,0, 0,";")	//拉古那
+	
+	//プレイヤーは消す
+	//艾雯がいる
+	if(F6_00_GoToMeru)
+	{
+		chr_pos(RAGNA,-839,790,-48,0,2)
+		chr_pos(PARTNER,-735,678,-50,0,2)
+		chr_pos(PET,-575,627,-50,0,2)
+		color(RAGNA,-1)//透過
+		color(PARTNER,-1)//透過
+		color(PET,-1)//透過
+	}
+	else
+	//奥蒂莎がいる
+	if(F5_08_JoinOdessa && !F5_13_KillDygald)
+	{
+		chr_pos(RAGNA,-839,790,-48,0,2)
+		chr_pos(PARTNER,-735,678,-50,0,2)
+		chr_pos(PET,-575,627,-50,0,2)
+		color(RAGNA,-1)//透過
+		color(PARTNER,-1)//透過
+		color(PET,-1)//透過
+	}
+	else
+	{
+		chr_pos(RAGNA,-839,790,-48,0,2)
+		chr_pos(PET,-575,627,-50,0,2)
+		color(RAGNA,-1)//透過
+		color(PET,-1)//透過
+	}
+	
+	//モーション
+	MOT_SET(EVENT_RAGNA,150,-2,521,521,-1,-1)		//座り
+
+	MOT(EVENT_RAGNA, 150, 0 )
+
+	//フェードイン----------------------
+	fade_in(0,60,0)
+	wait_fade()
+	//――――――――――――――――――――――――――
+	//	イベント開始
+	//――――――――――――――――――――――――――
+	KAO(EVENT_RAGNA,"1","I","B")
+	look(EVENT_RAGNA,"Bone_Head",0,		0,2,2,			0,0,45)
+	wait(50)
+	KAO(EVENT_RAGNA,"1","J","1")
+	wait(60)
+
+	workL(0,RAND,5)
+	if(WK000==0)
+	{
+		//艾雯がいる
+		if(F6_00_GoToMeru)
+		{
+			EV("Alwen_Set")
+			wait_EV("Alwen_Set")
+		}
+		else
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			EV("Odessa_Set")
+			wait_EV("Odessa_Set")
+		}
+	}
+
+	wait(120)
+	
+	//――――――――――――――――――――――――――
+	//	イベント終了
+	//――――――――――――――――――――――――――
+	fade_in(100,30,0)
+	wait_fade()
+	
+	//更衣室マップへ
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(10440)
+}
+
+
+Lue_Set
+{
+
+	set_chr( DUMMY,1000,	-1,-1,  -699,1600,-119,  	 2,0, 0,";")	//DUMMY
+	color(DUMMY,-1)
+
+	set_chr( LUE,1061,	-1,-1,      -699,1600,-119, 	 2,0, 0,";")	//露
+	MOT_SET(LUE,150,-1,14,22,150,15)
+	MOT(LUE,150,0)
+	look(LUE,"Bone_Spine1",0,	0,0,20,	0,0,20)
+
+	chr_equip2(  LUE,	"eq_163",	"Bone_Spine",	100,		90, 0, 0,	0,-40,0);	// 桶を接続
+	chr_equip_chr(LUE, DUMMY, "Bone_Spine",100,	30,0,0,	0,0,-92)	//ダ小咪に接続
+}
+
+Lue_Lotation
+{
+	rot(DUMMY,3,225)
+	wait(40)
+	rot(DUMMY,3,135)
+}
+
+Alwen_Set
+{
+	cross_fade(30)
+	CAM_move(-319,-1255,-34,0,0)
+	CAM(-210,83,-34,40,336,0,0)
+	CAM(-50,83,-34,40,336,150,0)
+	
+	//キャラセット
+	set_chr( ALWEN,1059,	-1,-1,      -42,449,-48,  	 2,10, 0,";")	//艾雯
+
+	MOT(ALWEN,133,15)
+	move(ALWEN,30,5,-202,1323,-46,0)
+	wait(90)
+
+	cross_fade(30)
+	CAM_move(-476,-1378,-114,0,0)
+	CAM(350,77,-114,27,206,0,0)
+
+	wait_move(ALWEN)
+	rot(ALWEN,60,20)
+	MOT(ALWEN,134,15)
+	wait(30)
+	look(EVENT_RAGNA,"Bone_Head",0,	0,10,0,	0,-40,0)
+	EMO(EVENT_RAGNA,EMO_TOGEBIKKURI)
+	KAO(EVENT_RAGNA,"K","9","8")
+	wait(30)
+	look(EVENT_RAGNA,"Bone_Head",0,	0,10,0,	0,0,0)
+	KAO(EVENT_RAGNA,"N","9","B")
+
+
+	wait(200)
+	KAO(ALWEN,"8","I","B")
+}
+
+Odessa_Set
+{
+	cross_fade(30)
+	CAM_move(-319,-1255,-34,0,0)
+	CAM(-210,83,-34,40,336,0,0)
+	CAM(-50,83,-34,40,336,150,0)
+	
+	//キャラセット
+	set_chr( ODESSA,1060,	-1,-1,      -42,449,-48,  	 2,10, 0,";")	//奥蒂莎
+
+	MOT(ODESSA,133,15)
+	move(ODESSA,30,5,-202,1323,-46,0)
+	wait(90)
+
+	cross_fade(30)
+	CAM_move(-476,-1378,-114,0,0)
+	CAM(350,77,-114,27,206,0,0)
+
+	wait_move(ODESSA)
+	rot(ODESSA,60,20)
+	MOT(ODESSA,134,15)
+	wait(30)
+	look(EVENT_RAGNA,"Bone_Head",0,	0,10,0,	0,-40,0)
+	EMO(EVENT_RAGNA,EMO_TOGEBIKKURI)
+	KAO(EVENT_RAGNA,"K","9","8")
+	wait(30)
+	look(EVENT_RAGNA,"Bone_Head",0,	0,10,0,	0,0,0)
+	KAO(EVENT_RAGNA,"N","9","B")
+
+
+	wait(200)
+	KAO(ODESSA,"8","I","B")
+}
+
+#EndScriptTable
+//====================================================================
+

@@ -1,0 +1,1814 @@
+//====================================================================
+//ステージトラップスクリプト
+//[13097][森－魔女の家・内]
+//====================================================================
+
+#ScriptTable
+
+#LA-RAIRA	1
+#EXE-MAXINA	2
+#LUE 		3
+#SUBARU		4
+#ISU1		5
+#ISU2		6
+#ISU3		7
+#ISU4		8
+#CUP1		9
+#CUP2		10
+#CUP3		11
+#CUP4		12
+#POT		13
+#EVENT_RAGNA	14
+#ALWEN			15
+
+#EV_LA-RAIRA	16
+#EV_LUE 		17
+#EV_SUBARU		18
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境SE
+	SE_distance(57,788,212,321)//ツボ
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段
+	set_chr( 90,990,	-1,-1, -750,  675,  0,		180,050302, 6,"K1_13098;")	//戻り-魔女の家・外
+
+//■宝箱
+//	set_chr( 55,561,	2,2,  -450,   0,  0,  	 2,270,	5,"I_MG03;")	//①宝箱（上）
+
+	//NPC
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	if( F5_00_HearLunar && !F6_00_GoToMeru	&& !F5_03_OfferLaraira)
+	{
+		set_chr( LA-RAIRA,23,	-1,-1,  317,34,0,		2,270,	20,"<TK_LA-RAIRA>")	//ラーライラ
+		F_set_chr(LA-RAIRA,CF_NO_MOVE)
+	}
+	
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	if( F4_09_GoShrineMia && !F5_00_HearLunar)
+	{
+		set_chr( LA-RAIRA,23,	-1,-1,  850,12,120,		2,90,	20,"<TK_LA-RAIRA>")	//ラーライラ
+		F_set_chr(LA-RAIRA,CF_NO_HEIGHT)
+		F_set_chr(LA-RAIRA,CF_NO_FALL)
+		
+		//モーション
+		MOT_SET(LA-RAIRA,150,-1,427,427,151,60)
+		MOT_SET(LA-RAIRA,151,-1,429,429,150,60)
+		MOT(LA-RAIRA,150,0)
+		F_set_chr(LA-RAIRA,CF_NO_MOVE)
+	}
+	
+	//▼魔女ラーライラと会う ～ 3章開始まで
+	if(F2_14_TalkEnemy && !F3_00_GoMoonCastle)
+	{
+		set_chr( LA-RAIRA,23,	-1,-1,	-600,-300,25,	2,50,	20,"<TK_LA-RAIRA>")		//ラーライラ
+//		set_chr( LUE,15,		-1,-1,	-176,-165,0,	2,0,	20,"<TK_LUE>")		//ルゥ
+//		set_chr( SUBARU,20,		-1,-1,	-176,35,0,		2,180,	20,"<TK_SUBARU>")	//スバル
+		set_chr( LUE,15,		-1,-1,	-120,-165,0,	2,0,	20,"<TK_LUE>")		//ルゥ
+		set_chr( SUBARU,20,		-1,-1,	-120,35,0,		2,180,	20,"<TK_SUBARU>")	//スバル
+		
+		//モーション
+		MOT_SET(LA-RAIRA,150,-1,485,485,-1,-1)		//イスに座っている
+		MOT(LA-RAIRA,150,0)
+		F_set_chr(LA-RAIRA,CF_NO_CSP)
+		F_set_chr(LA-RAIRA,CF_NO_ZIMEN)
+		F_set_chr(LA-RAIRA,CF_NO_HEIGHT)
+		F_set_chr(LA-RAIRA,CF_NO_MOVE)
+		F_set_chr(LUE,CF_NO_MOVE)
+		F_set_chr(SUBARU,CF_NO_MOVE)
+	}
+
+//■イベント
+	if(GW_ENTRY_EVENT==3)
+	{
+		//イベント後用に一般会話用キャラを出しておく
+		//////////////////////////////////////////////////////
+		set_chr( LA-RAIRA,23,		-1,-1,	707,-465,0,		2,50,	20,"<TK_LA-RAIRA>")		//ラーライラ
+		set_chr( LUE,15,			-1,-1,	558,-482,1,		2,0,	20,"<TK_LUE>")		//ルゥ
+		set_chr( SUBARU,20,		-1,-1,		1058,-327,0,	2,180,	20,"<TK_SUBARU>")	//スバル
+		color(LA-RAIRA,-1)//透過
+		color(LUE,-1)//透過
+		color(SUBARU,-1)//透過
+		MOT_SET(LA-RAIRA,150,-1,485,485,-1,-1)		//イスに座っている
+		MOT(LA-RAIRA,150,0)
+		MOT(LA-RAIRA,150,0)
+		F_set_chr(LA-RAIRA,CF_NO_MOVE)
+		F_set_chr(LA-RAIRA,CF_NO_CSP)
+		F_set_chr(LA-RAIRA,CF_NO_ZIMEN)
+		F_set_chr(LA-RAIRA,CF_NO_HEIGHT)
+		F_set_chr(LA-RAIRA,CF_NO_MOVE)
+		F_set_chr(LUE,CF_NO_MOVE)
+		F_set_chr(SUBARU,CF_NO_MOVE)
+		//////////////////////////////////////////////////////
+		
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼魔女ラーライラから、敵の正体が明かされる
+		set_namebmp(0,0)
+		EV("EV_2_19_TalkEnemy")
+	}
+	else
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼魔女の家の中に入る・続き
+		EV("EV_2_15_InWitchHouse")
+	}
+
+
+//■場面固有設定
+	EV("EV_CalcEffect");
+}
+
+//エフェクトの出だしを見えないようにする
+EV_CalcEffect
+{
+	wait(5)
+	CalcEff20()
+	CalcEff20()
+}
+
+
+
+//====================================================================
+//=== モーション処理 =================================================
+//====================================================================
+
+//=======================================
+//汎用モーション
+//=======================================
+MOTION_LA-RAIRA
+{
+	MOT_SET(LA-RAIRA,150, -2,485,485,-1,15)
+	MOT(LA-RAIRA,50,15)
+}
+
+//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼⑤ルゥ・スバル共通初回会話
+//──────────────────────────────
+//　　魔女の家にスバルと一緒にいる。
+//　　ラーライラの占術を邪魔しないよう多少離しておく。
+TALK_LUESUBARU_05
+{
+
+//	name("★初回（スバルと共通／一回のみ／イベント処理）")
+//　　話しかけるとキャラ再配置してイベント発生。
+//　　スバルと共通なため、あちらで起こしたら発生しない。
+
+	cross_fade(30)
+	EV_begin()
+
+//	CAM_move(-339,-68,201,0,0)	
+//	CAM(20,56,201,27,117,0,0)
+//	CAM_move(-339,-68,201,0,0)
+//	CAM(20,75,201,18,116,0,0)
+	CAM_move(-279,-88,201,0,0)
+	CAM(20,75,201,18,134,0,0)
+
+//キャラ再配置
+	chr_pos(RAGNA,	   -436,229,1,218,2)
+	chr_pos(PARTNER,	-314,305,1,189,2)
+	
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(LUE, "B", "2", "1")	
+	KAO(SUBARU,"1", "1", "1")	
+
+	wait_fade()
+	wait(15)
+
+	KAO(LUE,"B232BZ4","2","1")//
+	MES(LUE,"まったく、このチビっ子は\n油断も隙もないんだから……",0)
+	KAO(LUE,"B232BZ4","2","1")//
+	MES(LUE,"抜け駆けしようったって\nそうはいかないんだからね？",0)
+	MES_close(LUE)
+
+	EMO(SUBARU,EMO_ASEASE)
+	wait(15)
+
+	MES(SUBARU,"だ、だからそんなつもりは\nありませんってば～。",0)
+	MES(SUBARU,"それにチビっ子って言ったら\nルゥさんの方がよっぽど……",0)
+	MES_close(SUBARU)
+
+	KAO(LUE,"B232BZ2","G","1")//
+	MES(LUE,"え、ええい、おだまりっ！",0)
+	KAO(LUE,"G232GZ5","HI","3")//
+	MES(LUE,"これでも妖精の中では\n背が高くてナイスバディなの！",0)
+	KAO(LUE,"G232GZ7","I","3")//
+	MES(LUE,"ミス妖精・全グランヴァレン杯で\n準優勝を飾った事もあるんだから！",0)
+	MES_close(LUE)
+
+	EMO(SUBARU,EMO_TOGEBIKKURI)
+	wait(15)
+	MOT_SET(SUBARU,150, -2,472,472,-1,10)
+	MOT(SUBARU,150,5)
+
+	MES(SUBARU,"そ、そうなんですかっ！？",0)
+	
+	MOT(SUBARU,2,10)
+	wait(15)
+	
+	MES(SUBARU,"それじゃあ、どうしたら\n背が伸びるんでしょうか！？",0)
+	MES(SUBARU,"ボク、それが悩みの一つで……",0)
+	MES_close(SUBARU)
+
+	KAO(LUE,"9","9","6")//
+	EMO(LUE,EMO_HIYAASE)
+	wait(15)
+
+	KAO(LUE,"92329","9","6")//
+	MES(LUE,"うっ……\n（まさか素直に信じるとは。）",0)
+	MES_close(LUE)
+
+	EMO(SUBARU,EMO_ONPU)
+//	EMO(SUBARU,EMO_HATO)
+	wait(30)
+	MES(SUBARU,"ルゥさぁん……（キラキラ）",0)
+	MES_close(SUBARU)
+
+	KAO(LUE,"G232GZ3","I","3")//
+	MES(LUE,"え、え～い！",0)
+	KAO(LUE,"G232GZ5","H","1")//
+	MES(LUE,"仔犬のような目で\nあたしを見るなー！",0)
+	MES_close(LUE)
+
+	MES(PARTNER,"（うむうむ。\n  仲が良さそうで何よりだ。）",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	MES(RAGNA,"（そ、そうか……？）",0)
+	MES_close(RAGNA)
+
+
+	//暗転------------------------------
+	fade_in(100,30,BLACK)
+	wait_fade()
+	cross_fade(30)
+//	EV_end()
+	CAM_return(0)
+	wait(30)
+	//⑤初回
+	F_set(FM_05_TalkLueSubaru)
+	wait_fade()
+	fade_in(0,30,BLACK)
+
+	EV_end()
+}
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼魔女の家の中に入る・続き
+//──────────────────────────────
+//　　画面切り替えして、家の中に入っていったラグナたち。
+//　　部屋の奥には、紫のローブに身を包んだ老婆が座っている。
+//　　ラーライラと同じモデルだがサングラスは掛けておらず、
+//　　妖しいが地味で落ち着いた「普通の魔女」っぽい格好。
+EV_2_15_InWitchHouse
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	F_set_obj("obj\01",NP_HIDE)//椅子消し
+	F_set_obj("obj\02",NP_HIDE)//水晶玉
+	F_set_obj("obj\03",NP_HIDE)//ざぶとん
+	F_set_obj("S_ball",NP_HIDE)//水晶玉
+
+	//キャラ再配置
+	chr_pos(PARTNER,-794,328,1,205,2)
+	chr_pos(RAGNA,	-616,348,1,180,2)
+	color(PARTNER,-1)
+	color(RAGNA,-1)
+
+	set_chr(EVENT_RAGNA,	  1014,-1,-1, -616,348,1, 2,190,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, -794,308,1, 2, 220,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_ZIMEN)
+	F_set_chr(ALWEN,CF_NO_HEIGHT)
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	KAO(ALWEN,"1","1","1")//デフォルト
+
+	set_chr(LA-RAIRA,	  1057,-1,-1, -480,-130,20, 2,50,0, "")
+	set_chr(EXE-MAXINA,	  1031,-1,-1, -582,-272,15, 2,60,0, "")
+	color(EXE-MAXINA,-1)
+	wait_color(EXE-MAXINA)
+	F_set_chr(LA-RAIRA,CF_NO_CSP)
+	F_set_chr(LA-RAIRA,CF_NO_ZIMEN)
+	F_set_chr(LA-RAIRA,CF_NO_HEIGHT)
+	F_set_chr(EXE-MAXINA,CF_NO_CSP)
+	F_set_chr(EXE-MAXINA,CF_NO_ZIMEN)
+	F_set_chr(EXE-MAXINA,CF_NO_HEIGHT)
+
+	MOT_SET(ALWEN,150,-1,485,485,-1,-1)//座り
+	MOT_SET(ALWEN,151,-1,4620,4635,-1,-1)//机を叩く
+	MOT_SET(ALWEN,152,-1,4640,4700,-1,-1)//机に倒れる
+	MOT_SET(ALWEN,153,-1,404,404,-1,-1)//
+	MOT_SET(ALWEN,154,-1,410,410,-1,-1)//
+	MOT_SET(EVENT_RAGNA,150,-1,486,486,-1,-1)//座り
+	MOT_SET(EVENT_RAGNA,151,-1,6280,6340,-1,-1)//机に倒れる
+	MOT_SET(EVENT_RAGNA,152,-1,405,405,-1,-1)	//どうなのよ
+	MOT_SET(EVENT_RAGNA,153,-1,416,416,-1,-1)	//やれやれ
+	MOT_SET(LA-RAIRA,150,-1,485,485,-1,-1)//座り
+	MOT_SET(LA-RAIRA,151,-1,582,582,-1,-1)//座りフム
+	MOT_SET(EXE-MAXINA,150,-1,485,485,-1,-1)//座り
+	MOT(LA-RAIRA,150,0)
+	MOT(EXE-MAXINA,150,0)
+//	look_chr( LA-RAIRA, ALWEN ,"Bone_Head")
+	look(LA-RAIRA,"Bone_Head",0,0,14,0,0,-14,0)
+
+	wait(1)
+//	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+	F_set_Node(LA-RAIRA,"Bone_RightSword",NP_HIDE)
+	F_set_Node(EXE-MAXINA,"Bone_RightSword",NP_HIDE)
+
+	set_chr(ISU1,	  741,-1,-1, -440,-180,0, 0,30,0, "")
+	set_chr(ISU2,	  741,-1,-1, -872,-370,0, 0,335,0, "")
+	set_chr(ISU3,	  741,-1,-1, -912,  36,0, 0,220,0, "")
+	set_chr(CUP1,	  742,-1,-1, -620,-170,90, 0,270,0, "")
+	set_chr(CUP2,	  742,-1,-1, -850,-210,90, 0,270,0, "")
+	set_chr(CUP3,	  742,-1,-1, -790, -20,90, 0,270,0, "")
+	set_chr(POT,	  743,-1,-1, -650,-210,90, 0, 20,0, "")
+	F_set_chr(ISU1,CF_NO_CSP)
+	F_set_chr(ISU1,CF_NO_ZIMEN)
+	F_set_chr(ISU1,CF_NO_HEIGHT)
+	F_set_chr(ISU2,CF_NO_CSP)
+	F_set_chr(ISU2,CF_NO_ZIMEN)
+	F_set_chr(ISU2,CF_NO_HEIGHT)
+	F_set_chr(ISU3,CF_NO_CSP)
+	F_set_chr(ISU3,CF_NO_ZIMEN)
+	F_set_chr(ISU3,CF_NO_HEIGHT)
+	F_set_chr(CUP1,CF_NO_CSP)
+	F_set_chr(CUP1,CF_NO_ZIMEN)
+	F_set_chr(CUP1,CF_NO_HEIGHT)
+	F_set_chr(CUP2,CF_NO_CSP)
+	F_set_chr(CUP2,CF_NO_ZIMEN)
+	F_set_chr(CUP2,CF_NO_HEIGHT)
+	F_set_chr(CUP3,CF_NO_CSP)
+	F_set_chr(CUP3,CF_NO_ZIMEN)
+	F_set_chr(CUP3,CF_NO_HEIGHT)
+	color(CUP1,-1)
+	color(CUP2,-1)
+	color(CUP3,-1)
+	F_set_chr(POT,CF_NO_HEIGHT)
+
+	//カメラ初期位置
+	CAM_move(610,0,170,0,0)
+	CAM(420,86,170,24,112,0,0)
+	CAM_move(-590,-110,110,240,0)
+	CAM(180,122,110,24,150,240,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(-550,50,130,0,0)
+	CAM(-140,84,130,16,156,0,0)
+	wait(30)
+	CAM_move(-550,50,110,1200,0)
+	CAM(-60,94,110,15,156,1200,0)
+
+	KAO(ALWEN,"12321Z5","1233321","1")//
+	MES(ALWEN,"久しぶりだな。\n魔女、ラーライラどの。",0)
+	MES_close(ALWEN)
+
+	chr_rename(LA-RAIRA,"老魔女")//
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z8","-","-")//
+	MES(LA-RAIRA,"ふぇっ、ふぇっ。\nアルウェン様におかれては\nご機嫌うるわしゅう。",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")//
+	MES(LA-RAIRA,"このババのことを\n覚えておいでだったかね？",0)
+	MES_close(LA-RAIRA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z4","123","1")//
+	MES(ALWEN,"うむ……\n１００年ぶりくらいか。",0)
+	KAO(ALWEN,"12321Z6","3","1")//
+	MES(ALWEN,"幼かったゆえ、面影くらいしか\n覚えておらぬのだが……",0)
+	KAO(ALWEN,"12321Z4","321","1")//
+	MES(ALWEN,"さすがに老けたようだな。",0)
+	MES_close(ALWEN)
+
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z8","-","-")//
+	MES(LA-RAIRA,"ふえっふえっ。\nこれでも人の身としては\n長生きさせてもらっておるよ。",0)
+	MES_close(LA-RAIRA)
+//	look_chr( LA-RAIRA, EVENT_RAGNA ,"Bone_Head")
+	look(LA-RAIRA,"Bone_Head",0,0,1,0,0,-32,0)
+	wait(15)
+	KAO(LA-RAIRA,"12321Z6","-","-")//
+	MES(LA-RAIRA,"して、そこにいる人間が\n姫様の《血の戦士》というわけか。",0)
+	KAO(LA-RAIRA,"1","-","-")//
+	MES(LA-RAIRA,"…………………………………",0)
+	MES_close(LA-RAIRA)
+
+//　　老魔女、わずかに目を見開いたような動作。
+
+	MOT(EVENT_RAGNA,152,12)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","123321","1")//
+	MES(EVENT_RAGNA,"ん？\nなんだよ、バアさん。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"俺の顔に何か付いてるかい？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z6","-","-")//
+	MES(LA-RAIRA,"いや……人間にしては\n良い目をしておると思ってな。",0)
+	KAO(LA-RAIRA,"12321Z3","-","-")//
+	MES(LA-RAIRA,"お若いの、名を何という？",0)
+	MES_close(LA-RAIRA)
+
+	MOT(EVENT_RAGNA,2,12)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z4","123321","2")//
+	MES(EVENT_RAGNA,"ラグナだ。\nラグナ・バレンタイン。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","2")//
+	MES(EVENT_RAGNA,"トレジャーハンターと、\n飛行機乗りをやっている。",0)
+	MOT(EVENT_RAGNA,153,12)
+	KAO(EVENT_RAGNA,"12321Z5","123","5")//
+	MES(EVENT_RAGNA,"もっとも飛行機乗りの方は\nしばらく休業だけどな。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321","-","-")//
+	MES(LA-RAIRA,"……ふむ。",0)
+	MES_close(LA-RAIRA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z4","1233321","1")//
+	MES(ALWEN,"魔女どの。\n事情に詳しいようだが……",0)
+	KAO(ALWEN,"12321Z5","1","1")//
+	MES(ALWEN,"もしや我が使い魔が\nこちらを訪ねなかったか？",0)
+	MES_close(ALWEN)
+
+//	look_chr( LA-RAIRA, ALWEN ,"Bone_Head")
+	look(LA-RAIRA,"Bone_Head",0,0,1,0,0,-14,0)
+	wait(5)
+	KAO(EVENT_RAGNA,"1","321","1")//
+	MOT(EVENT_RAGNA,2,15)
+	wait(10)
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z3","-","-")//
+	MES(LA-RAIRA,"ああ、ルゥといったね。",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")//
+	MES(LA-RAIRA,"一通りの事情は\nあの子から聞いておるよ。",0)
+	KAO(LA-RAIRA,"12321Z6","-","-")//
+	MES(LA-RAIRA,"つい先ほど、姫様を捜しに\n出て行ったばかりじゃが……",0)
+	KAO(LA-RAIRA,"12321Z4","-","-")//
+	MES(LA-RAIRA,"行き違いになったようだね？",0)
+	MES_close(LA-RAIRA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","123","1")//
+	MES(ALWEN,"うむ、そのようだ。",0)
+	MOT(ALWEN,153,12)
+	wait(15)
+	KAO(ALWEN,"B232BZ3","321","2")//
+	MES(ALWEN,"それで、魔女どの。",0)
+	KAO(ALWEN,"B232BZ6","1","2")//
+	MES(ALWEN,"城を奪った者たちについて\n何か存じてはおらぬだろうか？",0)
+	KAO(ALWEN,"B232BZ5","1","2")//
+	MES(ALWEN,"私と同じ真祖だということは\n分かっているのだが……",0)
+	MES_close(ALWEN)
+
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z4","-","-")//
+	MES(LA-RAIRA,"ふむ……\nそこまで分かっておいでか。",0)
+	KAO(LA-RAIRA,"12321Z4","-","-")//
+	MES(LA-RAIRA,"まあいい、立ち話もなんじゃ。",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")//
+	MES(LA-RAIRA,"まずはババの薬草茶で\n一息つかれるがええ。",0)
+	MES_close(LA-RAIRA)
+
+//　　画面、ゆっくりとフェードアウト。
+	fade_in(100,60,0)
+	wait_fade()
+
+//──────────────────────────────
+//　　フェードアウト抜けで、テーブルに座るラグナたち。
+//　　アルウェンとラグナの前には、お茶のカップが置かれている。
+	chr_pos(LA-RAIRA,-566,-280,25,60,2)
+	chr_pos(EVENT_RAGNA,	-876,-12,15,220,2)
+	chr_pos(ALWEN,-848,-306,15,340,2)
+
+	chr_pos(ISU1,-530,-304,1,60,2)
+	chr_pos(POT,-666,-60,90,60,2)
+	color(POT,-1)
+	MOT(EVENT_RAGNA,150,0)
+	MOT(ALWEN,150,0)
+	MOT(LA-RAIRA,150,0)
+	chr_scale( EVENT_RAGNA,	"Bone_Bag",		0,0,0,	0,0);
+	look_chr( ALWEN, LA-RAIRA ,"Bone_Head")
+	look(LA-RAIRA,"Bone_Head",0,0,18,0,0,0,0)
+	look_chr( LA-RAIRA, ALWEN ,"Bone_Head")
+
+	KAO(ALWEN,"B","1","2")//
+	KAO(EVENT_RAGNA,"B","1","1")//
+
+	color(CUP1,1)
+	color(CUP2,1)
+	color(CUP3,1)
+
+	wait(60)
+
+	CAM_move(-510,370,60,0,0)
+	CAM(-60,106,60,22,122,0,0)
+
+	CAM_move(-470,310,60,600,0)
+	CAM(-60,92,60,22,112,600,0)
+
+	fade_in(0,90,0)
+	wait_fade()
+//	wait_CAM_move()
+//	wait_CAM()
+
+//	MES(LA-RAIRA,"◆未入力項目\nテーブルに座るラグナたち。\nお茶のカップが置かれている。",0)
+//	MES_close(LA-RAIRA)
+
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z4","-","-")//
+	MES(LA-RAIRA,"城を奪った者についてじゃが……",0)
+	KAO(LA-RAIRA,"12321Z6","-","-")//
+	MES(LA-RAIRA,"このババの占術でも\n未だ突き止められてはおらぬ。",0)
+	KAO(LA-RAIRA,"12321Z6","-","-")//
+	MES(LA-RAIRA,"じゃが、並外れた力を\n持った存在ではあるはずじゃ。",0)
+	MES_close(LA-RAIRA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","123","2")//
+	MES(ALWEN,"……それは分かっている。",0)
+	KAO(ALWEN,"B232BZ6","3","2")//
+	MES(ALWEN,"でなければ、私から城と魔力を\n奪うような真似ができるものか。",0)
+	MES_close(ALWEN)
+
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z3","-","-")//
+	MES(LA-RAIRA,"──そしてもう一つ。",0)
+	KAO(LA-RAIRA,"12321Z7","-","-")//
+	MES(LA-RAIRA,"その者はあまりに強大すぎて\n姫様の敵う相手ではないじゃろう。",0)
+	MES_close(LA-RAIRA)
+
+//　　アルウェンの頭に！マーク。
+	KAO(ALWEN,"B","321DE","7")//
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(30)
+	KAO(ALWEN,"2","E","7")//
+	MES(ALWEN,"な……",0)
+	MES_close(ALWEN)
+
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z4","-","-")//
+	MES(LA-RAIRA,"ババはな、見たくないのじゃ。",0)
+	KAO(LA-RAIRA,"12321Z6","-","-")//
+	MES(LA-RAIRA,"お父上が大切にされていた\n姫様の身に危険が及ぶのが……",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")//
+	MES(LA-RAIRA,"だから、これ以上、\n抗うのは止めておきなされ。",0)
+	KAO(LA-RAIRA,"12321Z6","-","-")//
+	MES(LA-RAIRA,"今は嵐が通り過ぎるのを\nじっと待っているべきじゃろう。",0)
+	MES_close(LA-RAIRA)
+	wait_MES(LA-RAIRA)
+
+//　　アルウェン、憤慨したかのようにテーブルを叩く。
+//	cross_fade(15)
+	CAM_move(-720,310,140,0,0)
+	CAM(-140,56,140,16,224,0,0)
+//	wait(15)
+
+//	MES(ALWEN,"◆未入力項目\n憤慨したかのようにテーブルを叩く。",0)
+//	MES_close(ALWEN)
+
+	KAO(ALWEN,"B","D123","2")//
+	rot(ALWEN,30,320)
+	MOT(ALWEN,151,0)
+//	wait(15)
+	wait(10)//サウンド微調整
+	SE(1049,0)//テーブルを叩くSE
+	CAM_quake("46")
+	KAO(ALWEN,"C232CZ2","321","3")//
+	MES(ALWEN,"P1冗談ではない！",0)
+	KAO(ALWEN,"C232CZ8","1","3")//
+	MES(ALWEN,"父上から受け継いだ城と魔力、\nこのまま奪われたままとあっては\nムーンブリア家当主の名折れ！",0)
+	KAO(ALWEN,"C232CZ5","1233321","3")//
+	MES(ALWEN,"そのような戯言を\n聞くために参ったのではない！",0)
+	MES_close(ALWEN)
+
+//	MOT(LA-RAIRA,151,15)
+//	wait(15)
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z3","-","-")//
+	MES(LA-RAIRA,"ふむ、困った姫様じゃ。",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")//
+	MES(LA-RAIRA,"年寄りの言うことは\n素直に聞いておくものじゃぞ。",0)
+	MES_close(LA-RAIRA)
+	wait_MES(LA-RAIRA)
+
+//　　ラグナの頭に…マーク。
+	cross_fade(15)
+	CAM_move(-750,210,120,0,0)
+	CAM(-20,64,120,22,148,0,0)
+	wait(15)
+	CAM_move(-750,210,130,900,0)
+	CAM(-60,58,130,22,156,900,0)
+
+	KAO(EVENT_RAGNA,"B","123","2")//
+	EMO(EVENT_RAGNA,EMO_TENTEN)
+	wait(60)
+	KAO(EVENT_RAGNA,"B232BZ2","321","2")//
+	MES(EVENT_RAGNA,"……なあ、バアさん。",0)
+	KAO(EVENT_RAGNA,"B232BZ3","1","2")//
+	MES(EVENT_RAGNA,"そいつは本気で言ってんのか？",0)
+	MES_close(EVENT_RAGNA)
+
+//	MOT(LA-RAIRA,150,15)
+	look_chr( LA-RAIRA, EVENT_RAGNA ,"Bone_Head")
+	wait(10)
+	KAO(ALWEN,"B","12321D","1")//
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	rot(ALWEN,30,340)
+	wait(5)
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z2","-","-")//
+	MES(LA-RAIRA,"なに……？",0)
+	MES_close(LA-RAIRA)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","123","2")//
+	MES(EVENT_RAGNA,"俺もな。\n無謀と勇気は違うとは思う。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","3","2")//
+	MES(EVENT_RAGNA,"飛行機に乗ってる時に\n嵐に遭った時なんかそうだ。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","3","2")//
+	MES(EVENT_RAGNA,"なるべく迂回して、\n時には引き返したりもする。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B","123","5")//
+//	name2(ALWEN)
+	MES(ALWEN,"………………………………",0)
+	MES_close(ALWEN)
+
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z3","-","-")//
+	MES(LA-RAIRA,"うむうむ、そうじゃろうて。",0)
+	MES_close(LA-RAIRA)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","321","3")//
+	MES(EVENT_RAGNA,"……だがな、それでもだ。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1","3")//
+	MES(EVENT_RAGNA,"それでもあえて\n突っ込まなきゃならない時もある。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"F","321D","6")//
+	MES(ALWEN,"え……",0)
+	MES_close(ALWEN)
+
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z2","-","-")//
+	MES(LA-RAIRA,"なに……？",0)
+	MES_close(LA-RAIRA)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ9","1233321","3")//
+	MES(EVENT_RAGNA,"すぐに手術が必要なケガ人を\nちゃんとした病院がある島まで\n運ばなくちゃならない時……",0)
+	KAO(EVENT_RAGNA,"B232BZ9","1","3")//
+	MES(EVENT_RAGNA,"大好きだった祖父さんの死に目に\n何としても立ち会いたいっていう\nお嬢さんを運んでいる時……",0)
+	KAO(EVENT_RAGNA,"B232BZ6","1","3")//
+	MES(EVENT_RAGNA,"そんな時、俺たち飛行機乗りは\n嵐を避けてばかりはいられない。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321","-","-")//
+	MES(LA-RAIRA,"む……",0)
+	MES_close(LA-RAIRA)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z5","123","1")//
+	MES(EVENT_RAGNA,"……少なくとも俺は\n一緒に嵐に飛び込むって決めた。",0)
+	KAO(EVENT_RAGNA,"12321Z5","3","1")//
+	MES(EVENT_RAGNA,"あんたが何も知らないってんなら\nそれはそれでいい。",0)
+	KAO(EVENT_RAGNA,"12321Z8","321","1")//
+	MES(EVENT_RAGNA,"ただ、もし知ってるのに\n姫さんが心配で隠してるんだったら、\nそいつはお門違いってもんだぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z2","1232A","6")//
+	MES(ALWEN,"ラグナ……",0)
+	MES_close(ALWEN)
+
+	look_off( LA-RAIRA )
+	wait(15)
+//	name("老魔女")
+	stop_BGM(90)
+	KAO(LA-RAIRA,"1","-","-")//
+	MES(LA-RAIRA,"…………………………………",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")//
+	MES(LA-RAIRA,"C4……予想外ですね。\nここまで食い下がられるとは。",0)
+	MES_close(LA-RAIRA)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"F","12321D","6")//
+	MES(EVENT_RAGNA,"へ……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B","2321D","6")//
+	look_chr( ALWEN, LA-RAIRA ,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"2","D","6")//
+	MES(ALWEN,"な……",0)
+	MES_close(ALWEN)
+
+	wait_BGM()
+//	BGM(46)
+	BGM(55)
+
+//	name("老魔女")
+	KAO(LA-RAIRA,"12321Z3","-","-")//
+	MES(LA-RAIRA,"C4潮時ですか……",0)
+	KAO(LA-RAIRA,"12321Z5","-","-")//
+	MES(LA-RAIRA,"C4これ以上の受け答えは\nさすがにボロが出そうです。",0)
+	MES_close(LA-RAIRA)
+
+	wait(15)
+	CAM_quake("46")
+	KAO(ALWEN,"B232B2Z2","12321","3")//
+	MES(ALWEN,"そなた……！？",0)
+	MES_close(ALWEN)
+	
+//　　ここで画面が一瞬、グニャリと曲がる。
+//　　ラグナとアルウェン、同時に崩れ落ちて痺れる動作。
+//	MES(EVENT_RAGNA,"◆未入力項目\n画面が一瞬、グニャリと曲がる。\nラグナとアルウェン、同時に崩れ落ちて痺れる動作。",0)
+//	MES_close(EVENT_RAGNA)
+
+	cross_fade(5)
+	blur(4,100,0)
+	wait(60)
+	KAO(ALWEN,"C","123Q","B")//
+	MOT(EVENT_RAGNA,151,15)
+	wait(15)
+	look_off(ALWEN)
+	KAO(ALWEN,"C","123Q","B")//
+	MOT(ALWEN,152,15)
+	wait(30)
+	blur(0,0,0)
+
+	VOICE(072,0)	//★ボイス入力演出
+	KAO(EVENT_RAGNA,"L","Q","B")//
+//	MES(EVENT_RAGNA,"なっ……",0)
+	MES_pos(EVENT_RAGNA,"なっ……",0,0,0,0,0)
+	wait(40)
+	MES_close(EVENT_RAGNA)
+	wait(10)
+
+	VOICE(095,0)	//★ボイス入力演出
+	KAO(ALWEN,"B232BZ2","Q","B")//
+//	MES(ALWEN,"こ、これは……",0)
+	MES_pos(ALWEN,"こ、これは……",0,0,0,0,0)
+	wait(50)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　老魔女の輪郭が揺れ、徐々に別の姿をとる。
+//　　最後にフードをつけたエクスマキナに変わっていく。
+	cross_fade(15)
+	CAM_move(-560,286,140,0,0)
+	CAM(-100,42,140,16,106,0,0)
+	look_del(ALWEN)
+	look(ALWEN,"Bone_Head",0,0,30,30,0,-30,30)
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,40,0,0,40)
+	VOICE(707,0)	//★「宝玉よ、力を」
+	wait(15)		//★ボイス入力演出
+	wait(30)		//★ボイス入力演出
+
+	EFF_chr(6220,EXE-MAXINA,60,80,-1,"Bone_Neck")
+	wait(5)
+	SE(1051,0)//変身SE
+//	SE_vol(1051,80,0)
+	wait(25)
+	cross_fade(15)
+	color(LA-RAIRA,-1)
+	color(EXE-MAXINA,1)
+	wait(15)
+	wait_color(EXE-MAXINA)
+	wait_color(LA-RAIRA)
+	chr_rename(LA-RAIRA,"魔女ラーライラ")//
+	delete(LA-RAIRA)
+	wait(60)
+
+	CAM_move(-560,244,100,45,0)
+	CAM(-100,88,100,20,106,45,0)
+	wait_CAM_move()
+	wait_CAM()
+
+	KAO(EVENT_RAGNA,"B","321DE","7")//
+	MES(EVENT_RAGNA," ！ ！ ",0)
+	KAO(EVENT_RAGNA,"B232BZ2","D12321D","6")//
+	MES(EVENT_RAGNA,"あ、あの時の……！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ2","Q333Q","B")//
+	MES(ALWEN,"く……幻術とは……！",0)
+	KAO(ALWEN,"B232BZ3","Q","B")//
+	MES(ALWEN,"それに……\n薬などでこの私を……",0)
+	MES_close(ALWEN)
+
+	chr_rename(EXE-MAXINA,"フードの娘")//
+//	name("フードの娘")
+	KAO(EXE-MAXINA,"12321Z6","-","-")//
+	MES(EXE-MAXINA,"……真祖すら眠りに誘う、\nパンデモニウム草の粉末です。",0)
+	KAO(EXE-MAXINA,"12321Z3","-","-")//
+	MES(EXE-MAXINA,"ゆっくりとお眠りください。",0)
+	MES_close(EXE-MAXINA)
+
+//　　画面、ゆらめきながら次第にフェードアウト。
+	KAO(ALWEN,"B","3","B")//
+	KAO(EVENT_RAGNA,"B","123","B")//
+
+	cross_fade(5)
+	blur(4,100,0)
+	VOICE(110,0)	//★ボイス入力演出
+	wait(30)
+
+	fade_in(100,60,0)
+	wait(30)		//★ボイス入力演出
+	VOICE(026,0)	//★ボイス入力演出
+	wait_fade()
+	blur(0,0,0)
+
+	stop_BGM(120)
+	wait_BGM()
+	wait(30)
+
+	chr_rename(EXE-MAXINA,"エクスマキナ")//
+	delete(EXE-MAXINA)
+
+//　　ラグナの家・室内マップへ(ev00820)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(10820)
+
+//	EV_end()
+}
+
+
+//──────────────────────────────
+//▼魔女ラーライラから、敵の正体が明かされる
+//──────────────────────────────
+//　　フェードアウト抜けで、魔女の家の居間。
+//　　ラーライラの前に、アルウェンたちがいる状態。
+//　　あらためて紅茶のカップが人数分置かれている。
+EV_2_19_TalkEnemy
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	F_set_obj("obj\01",NP_HIDE)//椅子消し
+	F_set_obj("obj\02",NP_HIDE)//水晶玉
+	F_set_obj("obj\03",NP_HIDE)//ざぶとん
+	F_set_obj("S_ball",NP_HIDE)//水晶玉
+
+	//キャラ再配置
+	chr_pos(PARTNER,-826,-366,20,320,2)
+	chr_pos(RAGNA,	-940,-50,20,245,2)
+	color(PARTNER,-1)
+	color(RAGNA,-1)
+
+	set_chr(EVENT_RAGNA,	  1014,-1,-1, -930,-50,15, 2,245,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, -824,-332,15, 2, 320,0, "")
+	chr_scale( EVENT_RAGNA,	"Bone_Bag",		0,0,0,	0,0);
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_ZIMEN)
+	F_set_chr(ALWEN,CF_NO_HEIGHT)
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	KAO(ALWEN,"1","1","1")//デフォルト
+
+	set_chr(EV_LA-RAIRA,	1023,-1,-1, -530,-166,20, 2,90,0, "")
+	set_chr(EV_SUBARU,	  	1020,-1,-1, -740,60,15, 2,220,0, "")
+	set_chr(EV_LUE,	  	1015,-1,-1, -980,-270,1, 2,310,0, "")
+
+	F_set_chr(EV_LA-RAIRA,CF_NO_CSP)
+	F_set_chr(EV_LA-RAIRA,CF_NO_ZIMEN)
+	F_set_chr(EV_LA-RAIRA,CF_NO_HEIGHT)
+	F_set_chr(EV_SUBARU,CF_NO_CSP)
+	F_set_chr(EV_SUBARU,CF_NO_ZIMEN)
+	F_set_chr(EV_SUBARU,CF_NO_HEIGHT)
+	F_set_chr(EV_LUE,CF_NO_CSP)
+	F_set_chr(EV_LUE,CF_NO_ZIMEN)
+	F_set_chr(EV_LUE,CF_NO_HEIGHT)
+	KAO(EV_LA-RAIRA,"1","1","1")//デフォルト
+	KAO(EV_SUBARU,"1","1","1")//デフォルト
+	KAO(EV_LUE,"1","1","1")//デフォルト
+
+	set_chr(ISU1,	  741,-1,-1, -480,-172,0, 0,90,0, "")
+	set_chr(ISU2,	  741,-1,-1, -860,-390,0, 0,320,0, "")
+	set_chr(ISU3,	  741,-1,-1, -980,-20,0, 0,260,0, "")
+	set_chr(ISU4,	  741,-1,-1, -780,100,0, 0,220,0, "")
+	set_chr(CUP1,	  742,-1,-1, -620,-190,90, 0,270,0, "")
+	set_chr(CUP2,	  742,-1,-1, -750,-280,90, 0,270,0, "")
+	set_chr(CUP3,	  742,-1,-1, -880,-130,90, 0,90,0, "")
+	set_chr(CUP4,	  742,-1,-1, -780,-20,90, 0,0,0, "")
+	set_chr(POT,	  743,-1,-1, -750,-140,90, 0,45,0, "")
+	F_set_chr(ISU1,CF_NO_CSP)
+	F_set_chr(ISU1,CF_NO_ZIMEN)
+	F_set_chr(ISU1,CF_NO_HEIGHT)
+	F_set_chr(ISU2,CF_NO_CSP)
+	F_set_chr(ISU2,CF_NO_ZIMEN)
+	F_set_chr(ISU2,CF_NO_HEIGHT)
+	F_set_chr(ISU3,CF_NO_CSP)
+	F_set_chr(ISU3,CF_NO_ZIMEN)
+	F_set_chr(ISU3,CF_NO_HEIGHT)
+	F_set_chr(ISU4,CF_NO_CSP)
+	F_set_chr(ISU4,CF_NO_ZIMEN)
+	F_set_chr(ISU4,CF_NO_HEIGHT)
+	F_set_chr(CUP1,CF_NO_CSP)
+	F_set_chr(CUP1,CF_NO_ZIMEN)
+	F_set_chr(CUP1,CF_NO_HEIGHT)
+	F_set_chr(CUP2,CF_NO_CSP)
+	F_set_chr(CUP2,CF_NO_ZIMEN)
+	F_set_chr(CUP2,CF_NO_HEIGHT)
+	F_set_chr(CUP3,CF_NO_CSP)
+	F_set_chr(CUP3,CF_NO_ZIMEN)
+	F_set_chr(CUP3,CF_NO_HEIGHT)
+	F_set_chr(CUP4,CF_NO_CSP)
+	F_set_chr(CUP4,CF_NO_ZIMEN)
+	F_set_chr(CUP4,CF_NO_HEIGHT)
+	F_set_chr(POT,CF_NO_HEIGHT)
+	color(POT,-1)
+
+	MOT_SET(ALWEN,150,-1,485,485,-1,-1)//座り
+	MOT_SET(ALWEN,151,-1,4620,4635,-1,-1)//机を叩く
+	MOT_SET(EVENT_RAGNA,150,-1,485,485,-1,-1)//座り
+	MOT_SET(EV_LA-RAIRA,150,-1,485,485,-1,-1)//座り
+	MOT_SET(EV_SUBARU,150,-1,485,485,-1,-1)//座り
+
+	look_chr( EVENT_RAGNA, EV_LA-RAIRA ,"Bone_Head")
+	look_chr( ALWEN, EV_LA-RAIRA ,"Bone_Head")
+	look_chr( EV_SUBARU, EV_LA-RAIRA ,"Bone_Head")
+	look_chr( EV_LUE, EV_LA-RAIRA ,"Bone_Head")
+
+	wait(1)
+//	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+	F_set_Node(LA-RAIRA,"Bone_RightSword",NP_HIDE)
+
+	wait(1)
+	MOT(EVENT_RAGNA,150,0)
+	MOT(ALWEN,150,0)
+	MOT(EV_LA-RAIRA,150,0)
+	MOT(EV_SUBARU,150,0)
+
+	//カメラ初期位置
+	CAM_move(-770,40,270,0,0)
+	CAM(380,86,270,26,166,0,0)
+	CAM_move(-770,40,170,120,0)
+	CAM(380,76,170,26,166,120,0)
+
+	//フェードイン
+	fade_in(0,90,0)
+	wait_fade()
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(-690,160,110,0,0)
+	CAM(-20,106,110,18,104,0,0)
+	wait(30)
+	CAM_move(-690,160,110,1200,0)
+	CAM(-60,92,110,18,100,1200,0)
+
+	chr_rename(EV_LA-RAIRA,"魔女ラーライラ")
+	KAO(EV_LA-RAIRA,"12321Z4","-","-")//
+	MES(EV_LA-RAIRA,"やれやれ。\nアタシを間違えるとは……",0)
+	KAO(EV_LA-RAIRA,"12321Z4","-","-")//
+	MES(EV_LA-RAIRA,"アルウェン姫。\nまだまだ修行不足のようだね。",0)
+	MES_close(EV_LA-RAIRA)
+
+//	name2(EV_LUE)
+	MES(EV_LUE,"ちょっとアンタ！\n姫さまに失礼じゃないの！",0)
+	MES_close(EV_LUE)
+
+//	name2(ALWEN)
+	MES(ALWEN,"よい、修行不足は確かだ。",0)
+	MES(ALWEN,"しかし、そなたに会ったのは\n１００年も昔のことだが……",0)
+	MES(ALWEN,"その時の装いとは\nあまりに違ってはおらぬか？",0)
+	MES_close(ALWEN)
+
+//	name2(EV_LA-RAIRA)
+	KAO(EV_LA-RAIRA,"12321Z9","-","-")//
+	MES(EV_LA-RAIRA,"ああ、グランヴァレンの\nあちこちを旅しているうちに\nファッションに目覚めてねぇ。",0)
+	KAO(EV_LA-RAIRA,"12321Z6","-","-")//
+	MES(EV_LA-RAIRA,"これでも最新のモードを\n大胆に取り入れた装いなんだよ。",0)
+	KAO(EV_LA-RAIRA,"12321Z5","-","-")//
+	MES(EV_LA-RAIRA,"ふぇっふぇっふぇっ。\nなかなかイカスだろう？",0)
+	MES_close(EV_LA-RAIRA)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"何なんだ……\nこのファンキーなバアさんは。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(EV_SUBARU)
+	MES(EV_SUBARU,"あはは……\n元気なお婆ちゃんですよね。",0)
+	MES_close(EV_SUBARU)
+
+//	name2(EV_LA-RAIRA)
+	KAO(EV_LA-RAIRA,"12321Z6","-","-")//
+//	MES(EV_LA-RAIRA,"しかし、アタシを騙っていた娘も\nなかなか見事な手並みだったが……",0)
+	MES(EV_LA-RAIRA,"しかし、アタシの振りをしていた娘も\nなかなか見事な手並みだったが……",0)
+	KAO(EV_LA-RAIRA,"12321Z6","-","-")//
+	MES(EV_LA-RAIRA,"さすがに、このファッションまでは\n真似できなかったようだねぇ。",0)
+	KAO(EV_LA-RAIRA,"12321Z4","-","-")//
+	MES(EV_LA-RAIRA,"ふぇふぇ。\n詰めが甘いとはこの事だよ。",0)
+	MES_close(EV_LA-RAIRA)
+
+//　　ラグナたちの頭に冷や汗マーク。
+	EMO(EVENT_RAGNA,EMO_HIYAASE)
+	EMO(ALWEN,EMO_HIYAASE)
+	EMO(EV_LUE,EMO_HIYAASE)
+	EMO(EV_SUBARU,EMO_HIYAASE)
+	wait(30)
+	MES(EVENT_RAGNA,"（いや……\n  マネしなくて正解だろ。）",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+//	MES(ALWEN,"（うむ、あの格好で現れていたら\n  まず最初に疑ったであろうな。）",0)
+//	MES_close(ALWEN)
+
+	MES(EV_SUBARU,"（確かに、あの格好で現れたら\n  最初に疑っちゃいそうですね。）",0)
+	MES_close(EV_SUBARU)
+
+	stop_BGM(90)
+	workG(GW_DEF_BGM,SET,0)		//デフォルト変更を解除
+
+//	name2(EV_LA-RAIRA)
+	KAO(EV_LA-RAIRA,"12321Z4","-","-")//
+	MES(EV_LA-RAIRA,"──さて。\nそれはそうと本題だ。",0)
+	KAO(EV_LA-RAIRA,"12321Z5","-","-")//
+	MES(EV_LA-RAIRA,"実は、お前さんたちと\nあの偽者の会話は聞いていた。",0)
+	KAO(EV_LA-RAIRA,"12321Z4","-","-")//
+	MES(EV_LA-RAIRA,"千里眼の魔法によってね。",0)
+	MES_close(EV_LA-RAIRA)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"へ……",0)
+	MES_close(EVENT_RAGNA)
+
+//	BGM(55)
+	BGM(53)
+
+	MES(ALWEN,"ふむ、そうであったか。",0)
+	MES(ALWEN,"ならば、私が知りたいことに\n改めて答えてもらえるのか？",0)
+	MES_close(ALWEN)
+
+//	name2(EV_LA-RAIRA)
+	KAO(EV_LA-RAIRA,"12321Z4","-","-")//
+	MES(EV_LA-RAIRA,"城を奪った黒幕だね。",0)
+	KAO(EV_LA-RAIRA,"12321Z6","-","-")//
+	MES(EV_LA-RAIRA,"実は、その正体については\nとっくに占術で判っている。",0)
+	MES_close(EV_LA-RAIRA)
+
+//　　ラグナたちの頭に！マーク。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(30)
+	MES(ALWEN,"まことか！？",0)
+	MES_close(ALWEN)
+
+//	name2(EV_LA-RAIRA)
+	KAO(EV_LA-RAIRA,"12321Z2","-","-")//
+	MES(EV_LA-RAIRA,"ああ、だけどね。",0)
+	KAO(EV_LA-RAIRA,"12321Z7","-","-")//
+	MES(EV_LA-RAIRA,"あの娘と同じように\nアタシも、お前さんにその名を\n教えるつもりはなかった。",0)
+	KAO(EV_LA-RAIRA,"12321Z4","-","-")//
+	MES(EV_LA-RAIRA,"教えたところで\n勝ち目はなかったからね。",0)
+	MES_close(EV_LA-RAIRA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"なっ……！",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"おい、バアさん……！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(EV_LA-RAIRA)
+	KAO(EV_LA-RAIRA,"12321Z3","-","-")//
+	MES(EV_LA-RAIRA,"最後までお聞き。",0)
+	KAO(EV_LA-RAIRA,"12321Z7","-","-")//
+	MES(EV_LA-RAIRA,"ラグナと言ったか。\nお前さんの言葉を聞いて\nアタシにも迷いが生じてきた。",0)
+	KAO(EV_LA-RAIRA,"12321Z4","-","-")//
+	MES(EV_LA-RAIRA,"そして、先ほどの\n２人の戦いぶり……",0)
+	KAO(EV_LA-RAIRA,"12321Z4","-","-")//
+	MES(EV_LA-RAIRA,"あれを見て考えを改めたよ。",0)
+	MES_close(EV_LA-RAIRA)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"あ……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"では……！",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(15)
+	CAM_move(-530,160,130,0,0)
+	CAM(-540,40,130,18,158,0,0)
+	CAM_move(-530,160,130,300,0)
+	CAM(-620,36,130,18,154,300,0)
+	wait(15)
+	look( EV_LA-RAIRA,"Bone_Head",0,0,0,1,0,0,-15)
+	wait(15)
+//	name2(EV_LA-RAIRA)
+	KAO(EV_LA-RAIRA,"12321Z4","-","-")//
+	MES(EV_LA-RAIRA,"うむ、今ここに、\nその名前を告げるとしよう。",0)
+	MES_close(EV_LA-RAIRA)
+//	wait_MES(EV_LA-RAIRA)
+//	wait(25)
+//	wait(10)
+	look( EV_LA-RAIRA,"Bone_Head",0,0,0,1,0,0,0)
+	wait(30)
+	KAO(EV_LA-RAIRA,"12321Z3","-","-")//
+	MES(EV_LA-RAIRA,"──かの者の名は《ザハール》。",0)
+	KAO(EV_LA-RAIRA,"12321Z3","-","-")//
+	MES(EV_LA-RAIRA,"ザハール・ド・ムーンブリアだ。",0)
+	MES_close(EV_LA-RAIRA)
+	wait_MES(EV_LA-RAIRA)
+
+	CAM_move(-860,380,130,0,0)
+	CAM(-60,46,130,16,220,0,0)
+	look_off(ALWEN)
+	look_del(ALWEN)
+	look(ALWEN,"Bone_Head",0,0,36,0,0,-36,0)
+
+//　　アルウェンの頭に激しい！マーク。
+	KAO(ALWEN,"E","12321DE","7")//
+	EMO(ALWEN,EMO_TOGEBIKKURI)
+	wait(30)
+	CAM_quake("46")
+	KAO(ALWEN,"2","D12321DE","7")//
+	MES(ALWEN,"P1S5なっ……！？",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	CAM_move(-810,300,90,45,0)
+	CAM(-20,90,90,20,200,45,0)
+	wait(45)
+	CAM_move(-770,300,90,900,0)
+	CAM(-20,100,90,20,190,900,0)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ5","123332A","9")//
+	MES(EVENT_RAGNA,"誰だそりゃ……\nって、確かムーンブリアって。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( EV_LUE, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+//	name2(EV_LUE)
+	KAO(EV_LUE,"B232BZ3","123332","2")//
+	MES(EV_LUE,"バカ、姫さまのご家名よ！",0)
+	MES_close(EV_LUE)
+
+	look_chr( EV_LUE, ALWEN,"Bone_Head")
+	wait(5)
+	look_chr( EV_SUBARU, ALWEN,"Bone_Head")
+	look_chr( EVENT_RAGNA, ALWEN,"Bone_Head")
+	look_chr( EV_LA-RAIRA, ALWEN,"Bone_Head")
+	wait(10)
+	KAO(EV_LUE,"B232BZ4","233321","4")//
+	MES(EV_LUE,"姫さま……\n心当たりがあるんですか？",0)
+	MES_close(EV_LUE)
+
+//　　アルウェン、立ち上がってテーブルを叩く。
+	KAO(ALWEN,"B","D123","3")//
+	MOT(ALWEN,151,4)
+	wait(15)
+	SE(1049,0)//テーブルを叩くSE
+	CAM_quake("46")
+	KAO(ALWEN,"B232BZ3","321","3")//
+	MES(ALWEN,"馬鹿な……！\nそれこそありえない！",0)
+	KAO(ALWEN,"B232BZ4","1","3")//
+	MES(ALWEN,"あの者が\n生きているはずがなかろう！",0)
+	MES_close(ALWEN)
+
+//	name2(EV_LA-RAIRA)
+	MES(EV_LA-RAIRA,"ところが生きていた。\nつまり、そういう事だろう。",0)
+	MES(EV_LA-RAIRA,"アタシ自身、信じられないがね。",0)
+	MES_close(EV_LA-RAIRA)
+
+//　　アルウェン、唇をかんでうつむく動作。
+	KAO(ALWEN,"L","123","5")//
+	look(ALWEN,"Bone_Head",0,0,3,2,0,0,-24)
+	wait(15)
+//	name2(ALWEN)
+	MES(ALWEN,"くっ……",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B232BZ5","233321","2")//
+	MES(EVENT_RAGNA,"おい姫さん……\nそのザハールってのは何者だ？",0)
+	KAO(EVENT_RAGNA,"B232BZ4","1","2")//
+	MES(EVENT_RAGNA,"あんたの親戚かなんかかよ？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","32A","4")//
+	MES(ALWEN,"……私の叔父上だ。",0)
+	KAO(ALWEN,"B232BZ4","A","4")//
+	MES(ALWEN,"１００年ほど前、\n父に討たれたはずのな。",0)
+	MES_close(ALWEN)
+
+//　　ラグナたちの頭に！マーク。
+	KAO(EVENT_RAGNA,"E","12321D","6")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(EV_LUE,"E","12321D","6")//
+	EMO(EV_LUE,EMO_BIKKURI)
+	EMO(EV_SUBARU,EMO_BIKKURI)
+	wait(30)
+
+	KAO(EV_LUE,"F","D","6")//
+	MES(EV_LUE,"えっ……！？",0)
+	MES_close(EV_LUE)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232B2Z3","12321D","6")//
+	MES(EVENT_RAGNA,"どういうことだ！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(EV_LA-RAIRA)
+	MES(EV_LA-RAIRA,"ザハール候は、\n先代ギスカール公の\n実の弟君だった。",0)
+	MES(EV_LA-RAIRA,"イルバードを出奔した後、\nグランヴァレンの各地を荒らし、\n人々を恐怖に陥れたという。",0)
+	MES(EV_LA-RAIRA,"最後は、魔物の軍勢を率いて\n戦争すら起こそうとしたらしい。",0)
+	MES_close(EV_LA-RAIRA)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","12321","2")//
+	MES(EVENT_RAGNA,"そんなヤツが……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(EV_SUBARU)
+	MES(EV_SUBARU,"と、とんでもない\n人だったんですね……",0)
+	MES_close(EV_SUBARU)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B","A23332A","4")//
+	MES(ALWEN,"うむ……",0)
+	KAO(ALWEN,"B232BZ8","A","4")//
+	MES(ALWEN,"そして父は……\n災厄を巻き起こした叔父上を\n自らの手で処断しようとした。",0)
+	KAO(ALWEN,"B232BZ5","A","4")//
+	MES(ALWEN,"そして叔父上は滅び……\n父もまたその命を落とした。",0)
+	KAO(ALWEN,"B232BZ5","A","4")//
+	MES(ALWEN,"それが……\n１００年前にあった出来事だ。",0)
+	MES_close(ALWEN)
+
+//	name2(EV_LUE)
+	KAO(EV_LUE,"B232BZ2","1233321","4")//
+	MES(EV_LUE,"そんな事が……",0)
+	MES_close(EV_LUE)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B","123","2")//
+	MES(EVENT_RAGNA,"……………………………",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(EV_LA-RAIRA)
+	MES(EV_LA-RAIRA,"……アタシの占術でも　\n２人がその時の戦いで\n命を落としたのは確かだった。",0)
+	MES(EV_LA-RAIRA,"そのザハール候が\nいかなる理由でイルバードに\n生きて舞い戻って来たのか……",0)
+	MES(EV_LA-RAIRA,"何とかそれを占術で\n突き止めようとしてるんだが\nなかなか上手くいかなくてねぇ。",0)
+	MES_close(EV_LA-RAIRA)
+
+	KAO(ALWEN,"B","A23","5")//
+	MOT(ALWEN,150,15)
+	wait(15)
+//	name2(ALWEN)
+	MES(ALWEN,"……………………………",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(15)
+	CAM_move(-910,220,150,0,0)
+	CAM(-60,56,150,16,148,0,0)
+	look(ALWEN,"Bone_Head",0,0,0,4,0,0,-20)
+	wait(30)
+	CAM_move(-910,220,150,900,0)
+	CAM(-100,52,150,16,144,900,0)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"なあ、姫さん。",0)
+	MES(EVENT_RAGNA,"そのザハールってのが\n本当に生きていたとして……",0)
+	MES(EVENT_RAGNA,"勝ち目はどのくらいある？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","32A","4")//
+	MES(ALWEN,"……正直、厳しいであろ。",0)
+	KAO(ALWEN,"B232BZ3","A","4")//
+	MES(ALWEN,"真祖としては私も未熟……",0)
+	KAO(ALWEN,"B232BZ6","A","4")//
+	MES(ALWEN,"だが叔父上は、かの魔法大戦で\n父と共に戦った歴戦の猛者だ。",0)
+	KAO(ALWEN,"B232BZ4","A","4")//
+	MES(ALWEN,"真祖の中の真祖と言ってもよい。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"そうか……",0)
+	MES(EVENT_RAGNA,"そんじゃあ、諦めるか？",0)
+	MES_close(EVENT_RAGNA)
+
+//　　アルウェン、ラグナの方に向き直る。
+	KAO(ALWEN,"B","A2321","3")//
+//	look_chr( ALWEN, EVENT_RAGNA,"Bone_Head")
+	look(ALWEN,"Bone_Head",0,0,4,2,0,40,0)
+	wait(12)
+//	name2(ALWEN)
+	CAM_quake("46")
+	KAO(ALWEN,"C232C2","1","3")//
+	MES(ALWEN,"──まさか！",0)
+	KAO(ALWEN,"C232CZ4","1","3")//
+	MES(ALWEN,"ムーンブリア城は\n私が父から受け継いだもの！",0)
+	KAO(ALWEN,"C232CZ5","1","3")//
+	MES(ALWEN,"いかなる相手であっても\nこの戦い、退くことなどできぬ！",0)
+	KAO(ALWEN,"C232CZ4","1233321","3")//
+	MES(ALWEN,"たとえ魔王が相手だとしてもな！",0)
+	MES_close(ALWEN)
+
+//	name2(EV_LUE)
+	KAO(EV_LUE,"B232BZ2","123332A","4")//
+	MES(EV_LUE,"姫さま……",0)
+	MES_close(EV_LUE)
+
+//	name2(EV_SUBARU)
+	MES(EV_SUBARU,"W9アルウェンさん……",0)
+	MES_close(EV_SUBARU)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"だったらやるべき事は\n何も変わっちゃいないわけだ。",0)
+	MES(EVENT_RAGNA,"力も取り戻せたし、話も聞けた。",0)
+	MES(EVENT_RAGNA,"とっとと出発するとしようぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　アルウェンの頭に！マーク。
+	KAO(ALWEN,"E","12321D","6")//
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	KAO(EV_LUE,"E","2321D","6")//
+	rot(EV_LUE,30,320)
+	look_chr( EV_LUE, EVENT_RAGNA,"Bone_Head")
+	look_chr( EV_SUBARU, EVENT_RAGNA,"Bone_Head")
+	look_chr( EV_LA-RAIRA, EVENT_RAGNA,"Bone_Head")
+	wait(15)
+	KAO(ALWEN,"B232B","D","6")//
+	MES(ALWEN,"そなた……",0)
+	KAO(ALWEN,"B232BZ2","1232A","4")//
+	MES(ALWEN,"その、いいのか……？",0)
+	KAO(ALWEN,"B232BZ4","A","4")//
+	MES(ALWEN,"いくら契約とはいえ、\nあまりにも相手が……",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"言っただろ？\n嵐に飛び込まなくちゃ\nならねぇ時もあるって。",0)
+	MES(EVENT_RAGNA,"姫さんにとっては\n今がその時なんだろう？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B","A23","3")//
+	MES(ALWEN,"…………ああ。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"だったら俺も\nそれに付き合うだけだ。",0)
+	MES(EVENT_RAGNA,"余計な遠慮はナシだぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","321","6")//
+	MES(ALWEN,"分かった。\n……そなたに感謝を。",0)
+	MES_close(ALWEN)
+
+//	name2(EV_LUE)
+	KAO(EV_LUE,"C","123332","2")//
+	MES(EV_LUE,"む～っ……",0)
+	MES_close(EV_LUE)
+	wait_MES(EV_LUE)
+
+	cross_fade(15)
+	CAM_move(-790,80,150,0,0)
+	CAM(20,62,150,24,156,0,0)
+	wait(30)
+	CAM_move(-750,80,140,1200,0)
+	CAM(60,70,140,24,180,1200,0)
+
+//	name2(EV_SUBARU)
+	MES(EV_SUBARU,"ラグナ師匠……\nカッコいいです！",0)
+	MES_close(EV_SUBARU)
+
+//	name2(EV_LA-RAIRA)
+	KAO(EV_LA-RAIRA,"12321Z5","-","-")//
+	MES(EV_LA-RAIRA,"やれやれ、面白い小僧と\n契約を結んだもんだねぇ。",0)
+	MES_close(EV_LA-RAIRA)
+	look_chr( EV_LA-RAIRA, ALWEN,"Bone_Head")
+	wait(15)
+	KAO(EV_LA-RAIRA,"12321Z6","-","-")//
+	MES(EV_LA-RAIRA,"アルウェン姫。\nアタシは何とか占術で\n城の中を見通してみよう。",0)
+	KAO(EV_LA-RAIRA,"12321Z5","-","-")//
+	MES(EV_LA-RAIRA,"上手くいけばザハール候の\n動きや狙いも判るはずだ。",0)
+	MES_close(EV_LA-RAIRA)
+
+	look_chr( ALWEN, EV_LA-RAIRA,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","1","1")//
+	MES(ALWEN,"うむ、よろしくお願いする。",0)
+	MES_close(ALWEN)
+	look_chr( ALWEN, EV_LUE,"Bone_Head")
+	wait(15)
+	KAO(ALWEN,"12321Z5","123332T","1")//
+	MES(ALWEN,"ルゥ、そなたはしばらく、\n魔女どのの調査に協力してくれ。",0)
+	KAO(ALWEN,"12321Z3","T","1")//
+	MES(ALWEN,"そなたなら力になれるはずだ。",0)
+	MES_close(ALWEN)
+
+	rot(EV_LUE,30,310)
+	look_chr( EV_LUE, ALWEN,"Bone_Head")
+	wait(15)
+//	name2(EV_LUE)
+	KAO(EV_LUE,"B232BZ4","233321","2")//
+	MES(EV_LUE,"……分かりました。\n姫さま、どうかお気をつけて。",0)
+	MES_close(EV_LUE)
+
+//	name2(EV_SUBARU)
+	MES(EV_SUBARU,"えっと師匠……\nボクはどうすればいいんですか？",0)
+	MES(EV_SUBARU,"お祖父ちゃんの許可も貰えたし、\nできればボクも師匠たちに\n付いて行きたいんですけど……",0)
+	MES_close(EV_SUBARU)
+
+	look_off(EV_LUE)
+	rot_chr(EV_LUE,30,EV_SUBARU)
+	wait(10)
+	look_chr( EVENT_RAGNA, EV_SUBARU,"Bone_Head")
+	KAO(EVENT_RAGNA,"1","1","1")//
+	KAO(ALWEN,"1","T233321","1")//
+	look_chr( ALWEN, EV_SUBARU,"Bone_Head")
+	wait(5)
+//	name2(EV_LUE)
+	KAO(EV_LUE,"B232BZ3","123332","2")//
+	MES(EV_LUE,"ちょっとアンタ！",0)
+	KAO(EV_LUE,"B232BZ6","2","2")//
+	MES(EV_LUE,"あたしだって我慢してるのに\nなに抜け駆けしようとしてんのよー！？",0)
+	MES_close(EV_LUE)
+
+	look_chr( EV_SUBARU, EV_LUE,"Bone_Head")
+	wait(15)
+//	name2(EV_SUBARU)
+	MES(EV_SUBARU,"ええっ！？\nボク、そんなつもりじゃ……",0)
+	MES_close(EV_SUBARU)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"悪い、スバル。\nできればここで待っててくれ。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","1")//
+	MES(EVENT_RAGNA,"それに、またあの連中が\nここに来ないとも限らねぇからな。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")//
+	MES(EVENT_RAGNA,"俺の代わりに守って欲しいんだ。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( EV_SUBARU, EVENT_RAGNA,"Bone_Head")
+	wait(15)
+//	name2(EV_SUBARU)
+	MES(EV_SUBARU,"あ……はい！",0)
+	MES(EV_SUBARU,"師匠の代わりということなら\n精いっぱい頑張らせてもらいます！",0)
+	MES_close(EV_SUBARU)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","1236","2")//
+	MES(EVENT_RAGNA,"おう、頼んだぜ！",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321","123","6")//
+	MES(ALWEN,"フフ……",0)
+	KAO(ALWEN,"12321Z4","321","6")//
+	MES(ALWEN,"これでようやく\n《風の魔力》も取り戻した。",0)
+	KAO(ALWEN,"12321Z3","1","6")//
+	MES(ALWEN,"残るは《火の魔力》だけだ。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"1","321","2")//
+	look_chr( EVENT_RAGNA, ALWEN,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z4","1","2")//
+	MES(EVENT_RAGNA,"ヘッ……\nそんじゃあ戻るとするか。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","2")//
+	MES(EVENT_RAGNA,"あのクソ暑い大鉄塔に！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321","1","2")//
+	MES(ALWEN,"うむ！",0)
+	MES_close(ALWEN)
+
+//　　画面、いったんフェードアウト。
+	fade_in(100,30,0)
+	wait_fade()
+	EV("EV_0057_fadeout")//ツボSEフェードアウト
+	stop_BGM(90)
+	wait_BGM()
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(EV_LA-RAIRA)
+	delete(EV_SUBARU)
+	delete(EV_LUE)
+	delete(ISU1)
+	delete(ISU2)
+	delete(ISU3)
+	delete(ISU4)
+	delete(CUP1)
+	delete(CUP2)
+	delete(CUP3)
+	delete(CUP4)
+	delete(POT)
+
+	chr_pos(RAGNA,	  -650,400,20,0,2)
+	chr_pos(PARTNER,	-850,400,20,0,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	F_reset_obj("obj\01",NP_HIDE)//椅子消し
+	F_reset_obj("obj\02",NP_HIDE)//水晶玉
+	F_reset_obj("obj\03",NP_HIDE)//ざぶとん
+	F_reset_obj("S_ball",NP_HIDE)//水晶玉
+
+	//一般会話用キャラを再配置
+	chr_pos(LA-RAIRA,	-600,-300,25,50,150)
+//	chr_pos(LUE,		-176,-165,0,0,2)
+//	chr_pos(SUBARU,		-176,35,0,180,2)
+	chr_pos(LUE,		-120,-165,0,0,2)
+	chr_pos(SUBARU,		-120,35,0,180,2)
+	color(LA-RAIRA,1)
+	color(LUE,1)
+	color(SUBARU,1)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★魔女ラーライラから、敵の正体が明かされた』を立てる。
+	F_set(F2_14_TalkEnemy)
+	//★ラーライラ
+	F_set_note(-23,-1)
+	//★ラーライラ【ファッション】
+	F_set_note(-23,0)
+
+	//----------------------------------------------------
+	//Ｇ－館行ってるかどうかのチェック（③～⑪まで行う）
+	if(FV_02_VisitGyakata)
+	{
+		if(FE_FF_NotGotoG)
+			F_set(FE_FF_NotGotoG2)//長い事行ってない
+		F_set(FE_FF_NotGotoG)//しばらく行ってない
+	}
+	//----------------------------------------------------
+
+
+
+//　　キャラ再配置してから再びフェードインして、
+//　　台詞無しでイベント終了、プレイヤー操作許可。
+
+	SE_vol(57,100,0)
+	BGM(18)
+	fade_in(0,30,0)
+	SE_distance(57,788,212,321)//ツボ
+
+	EV_end()
+}
+
+//ツボSEフェードアウト─────────────────────
+EV_0057_fadeout
+{
+	SE_vol(57,100,0)
+	wait(1)
+	SE_vol(57,99,0)
+	wait(1)
+	SE_vol(57,98,0)
+	wait(1)
+	SE_vol(57,97,0)
+	wait(1)
+	SE_vol(57,96,0)
+	wait(1)
+	SE_vol(57,95,0)
+	wait(1)
+	SE_vol(57,94,0)
+	wait(1)
+	SE_vol(57,93,0)
+	wait(1)
+	SE_vol(57,92,0)
+	wait(1)
+	SE_vol(57,91,0)
+	wait(1)
+	SE_vol(57,90,0)
+	wait(1)
+	SE_vol(57,89,0)
+	wait(1)
+	SE_vol(57,88,0)
+	wait(1)
+	SE_vol(57,87,0)
+	wait(1)
+	SE_vol(57,86,0)
+	wait(1)
+	SE_vol(57,85,0)
+	wait(1)
+	SE_vol(57,84,0)
+	wait(1)
+	SE_vol(57,83,0)
+	wait(1)
+	SE_vol(57,82,0)
+	wait(1)
+	SE_vol(57,81,0)
+	wait(1)
+	SE_vol(57,80,0)
+	wait(1)
+	SE_vol(57,79,0)
+	wait(1)
+	SE_vol(57,78,0)
+	wait(1)
+	SE_vol(57,77,0)
+	wait(1)
+	SE_vol(57,76,0)
+	wait(1)
+	SE_vol(57,75,0)
+	wait(1)
+	SE_vol(57,74,0)
+	wait(1)
+	SE_vol(57,73,0)
+	wait(1)
+	SE_vol(57,72,0)
+	wait(1)
+	SE_vol(57,71,0)
+	wait(1)
+	SE_vol(57,70,0)
+	wait(1)
+	SE_vol(57,69,0)
+	wait(1)
+	SE_vol(57,68,0)
+	wait(1)
+	SE_vol(57,67,0)
+	wait(1)
+	SE_vol(57,66,0)
+	wait(1)
+	SE_vol(57,65,0)
+	wait(1)
+	SE_vol(57,64,0)
+	wait(1)
+	SE_vol(57,63,0)
+	wait(1)
+	SE_vol(57,62,0)
+	wait(1)
+	SE_vol(57,61,0)
+	wait(1)
+	SE_vol(57,60,0)
+	wait(1)
+	SE_vol(57,59,0)
+	wait(1)
+	SE_vol(57,58,0)
+	wait(1)
+	SE_vol(57,57,0)
+	wait(1)
+	SE_vol(57,56,0)
+	wait(1)
+	SE_vol(57,55,0)
+	wait(1)
+	SE_vol(57,54,0)
+	wait(1)
+	SE_vol(57,53,0)
+	wait(1)
+	SE_vol(57,52,0)
+	wait(1)
+	SE_vol(57,51,0)
+	wait(1)
+	SE_vol(57,50,0)
+	wait(1)
+	SE_vol(57,49,0)
+	wait(1)
+	SE_vol(57,48,0)
+	wait(1)
+	SE_vol(57,47,0)
+	wait(1)
+	SE_vol(57,46,0)
+	wait(1)
+	SE_vol(57,45,0)
+	wait(1)
+	SE_vol(57,44,0)
+	wait(1)
+	SE_vol(57,43,0)
+	wait(1)
+	SE_vol(57,42,0)
+	wait(1)
+	SE_vol(57,41,0)
+	wait(1)
+	SE_vol(57,40,0)
+	wait(1)
+	SE_vol(57,39,0)
+	wait(1)
+	SE_vol(57,38,0)
+	wait(1)
+	SE_vol(57,37,0)
+	wait(1)
+	SE_vol(57,36,0)
+	wait(1)
+	SE_vol(57,35,0)
+	wait(1)
+	SE_vol(57,34,0)
+	wait(1)
+	SE_vol(57,33,0)
+	wait(1)
+	SE_vol(57,32,0)
+	wait(1)
+	SE_vol(57,31,0)
+	wait(1)
+	SE_vol(57,30,0)
+	wait(1)
+	SE_vol(57,29,0)
+	wait(1)
+	SE_vol(57,28,0)
+	wait(1)
+	SE_vol(57,27,0)
+	wait(1)
+	SE_vol(57,26,0)
+	wait(1)
+	SE_vol(57,25,0)
+	wait(1)
+	SE_vol(57,24,0)
+	wait(1)
+	SE_vol(57,23,0)
+	wait(1)
+	SE_vol(57,22,0)
+	wait(1)
+	SE_vol(57,21,0)
+	wait(1)
+	SE_vol(57,20,0)
+	wait(1)
+	SE_vol(57,19,0)
+	wait(1)
+	SE_vol(57,18,0)
+	wait(1)
+	SE_vol(57,17,0)
+	wait(1)
+	SE_vol(57,16,0)
+	wait(1)
+	SE_vol(57,15,0)
+	wait(1)
+	SE_vol(57,14,0)
+	wait(1)
+	SE_vol(57,13,0)
+	wait(1)
+	SE_vol(57,12,0)
+	wait(1)
+	SE_vol(57,11,0)
+	wait(1)
+	SE_vol(57,10,0)
+	wait(1)
+	SE_vol(57,9,0)
+	wait(1)
+	SE_vol(57,8,0)
+	wait(1)
+	SE_vol(57,7,0)
+	wait(1)
+	SE_vol(57,6,0)
+	wait(1)
+	SE_vol(57,5,0)
+	wait(1)
+	SE_vol(57,4,0)
+	wait(1)
+	SE_vol(57,3,0)
+	wait(1)
+	SE_vol(57,2,0)
+	wait(1)
+}
+//──────────────────────────────
+
+#EndScriptTable
+//====================================================================
+

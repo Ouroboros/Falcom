@@ -1,0 +1,220 @@
+//──────────────────────────────
+//	name("◆天山（★梅ンキャラ）Tenzan")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_TENZAN
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(TENZAN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,TENZAN)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,TENZAN)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TENZAN)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TENZAN)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TENZAN)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TENZAN)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,TENZAN)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//　　※山ボスル～ト·ラストに配置。
+	//　　　包帯姿だれた社之前に立っている。
+	//
+	//	★話しかけた時点で振り向かない
+	if(F6_00_GoToMeru)
+	{
+		rot_chr(PLAYER1,30,TENZAN)
+		rot_chr(PLAYER2,30,TENZAN)
+		rot_chr(PET,30,TENZAN)
+		KAO(PLAYER1, "1", "1", "1")	
+		KAO(PLAYER2, "1", "1", "1")	
+		KAO(PET, "1", "1", "1")	
+		KAO(TENZAN, "1", "1", "1")	
+
+		if(!FS_12_TalkTenzan)
+		{
+			MES(RAGNA,"爷爷……",0)
+			MES(RAGNA,"居然跑到这里来了、\n伤势不要紧吧？",0)
+			MES_close(RAGNA)
+
+			//　　★天山振り返る。
+			rot_chr(TENZAN,30,PLAYER1)
+
+			MES(TENZAN,"喔、你们两个吗。",0)
+			MES(TENZAN,"不用担心。\n回复的慢点是因为上了年纪了。",0)
+			MES(TENZAN,"现在……好像情况\n变的糟糕了呀。",0)
+			MES(TENZAN,"这个就是、吉斯卡尔侯爵所害怕的\n事态绝对没的错。",0)
+			MES_close(TENZAN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"《螺旋要塞》梅尔塞迪克吗……",0)
+			MES_close(RAGNA)
+
+		//	name2(TENZAN)
+			MES(TENZAN,"嗯……\n那家伙一但出动、\n就会毁灭一切的吧。",0)
+			MES(TENZAN,"但是我们也还没、从前几天的袭击当中\n完全恢复。",0)
+			MES(TENZAN,"……这种情况不找人帮忙。\n是不行的吧、拉古那殿下、艾雯公主。",0)
+			MES_close(TENZAN)
+			
+			
+		//	name2(PARTNER)
+			MES(PARTNER,"什么、别在意。",0)
+			MES(PARTNER,"作为我来说、还是要感谢父亲大人\n直到现在为止都一直\n遵守着我们的约定。",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊、后面的事\n就请交给我们吧。",0)
+			MES(RAGNA,"虽然没有特别高的把握、\n但有这么多伙伴帮忙\n因该可以做的到。",0)
+			MES(RAGNA,"爷爷们\n请好好休息吧。",0)
+			MES_close(RAGNA)
+
+		//	name2(TENZAN)
+			MES(TENZAN,"呵呵、那样吗……",0)
+			MES(TENZAN,"如此的话\n就交给你们两人吧。",0)
+			MES(TENZAN,"郑重的、\n拜托你们了。",0)
+			MES_close(TENZAN)
+			
+			F_set(FS_12_TalkTenzan)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			rot_chr(TENZAN,30,PLAYER1)
+			if(!F_TENZAN)
+			{
+				MES(TENZAN,"梅尔塞迪克的出现与\n魔王路西昂的复活……",0)
+				MES(TENZAN,"这才是、吉斯卡尔侯爵所害怕的\n事态绝对没错。",0)
+				MES(TENZAN,"但是无论发生什么事、\n千万不要迷惘了那些\n应该去相信的事情。",0)
+				MES(TENZAN,"那样的话一定、\n要开拓一条道路。",0)
+				MES_close(TENZAN)
+				F_set(TENZAN)
+			}
+			//　　★繰り返し
+			else
+			{
+				MES(TENZAN,"无论发生什么事、\n千万不要迷惘了那些\n应该去相信的事情。",0)
+				MES(TENZAN,"一定、要开拓出一跳道路哦。",0)
+				MES(TENZAN,"……你们两个都、\n请平安归来。",0)
+				MES_close(TENZAN)
+			}
+		}
+	}
+	else
+	
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※屋敷之一室に配置。
+	//　　　天山は包帯卷き。
+	if( F5_00_HearLunar )
+	{
+		rot_chr(PLAYER1,30,TENZAN)
+		rot_chr(PET,30,TENZAN)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			rot_chr(PLAYER2,30,TENZAN)
+			KAO(PLAYER2, "1", "1", "1")	
+		}
+		KAO(PLAYER1, "1", "1", "1")	
+		KAO(PET, "1", "1", "1")	
+		KAO(TENZAN, "1", "1", "1")	
+
+		look_chr( TENZAN, PLAYER1,"Bone_Head")
+
+		if(!F_TENZAN)
+		{
+			MES(TENZAN,"月·异世界──\n《月之世界》之中、遗留着魔王路西昂的\n强大魔力。",0)
+			MES(TENZAN,"虽然还不清楚扎哈鲁侯爵的\n企图……",0)
+			MES(TENZAN,"拉古那殿下、\n还是快赶往水晶峡谷吧。",0)
+			MES(TENZAN,"只要能够启动门、\n使用月支之剑就应该能打开通往月·异世界\n的道路。",0)
+			MES_close(TENZAN)
+			F_set(TENZAN)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(TENZAN,"只要能够启动门、\n通往月·异世界的门就会被打开。",0)
+			MES(TENZAN,"嗯……",0)
+			MES(TENZAN,"既然已经把钥匙交给你们、告诉你们这些事情、\n我们守护者的使命也就完成了。",0)
+			MES(TENZAN,"拉古那殿下。\n之后就多加拜托了。",0)
+			MES_close(TENZAN)
+		}
+		
+		look_off(TENZAN)
+	}
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+		//　　※いない。
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//　　※ボスル～ト前で倒れている。
+	//　　　梅ンイベントが起動する。
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//　　※いない。
+	//──────────────────────────────
+		
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

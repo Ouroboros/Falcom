@@ -1,0 +1,242 @@
+//──────────────────────────────
+//	name("◆忍者Ｃ（色換え：女忍）　Ninjya_C")
+//	レイカ
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_NINJYA_C
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(NINJYA_C, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,NINJYA_C)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,NINJYA_C)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_C)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_C)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_C)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NINJYA_C)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,NINJYA_C)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//いない
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if(F6_00_GoToMeru)
+	{
+	//　　※天山邸、廊下隅に配置。
+		MOT(NINJYA_C,2,10)
+		rot_chr(NINJYA_C,30,PLAYER1)
+		if(!F_NINJYA_C)
+		{
+		//	name("レイカ")
+			MES(NINJYA_C,"昴大人的话\n回村子里去了。",0)
+			MES(NINJYA_C,"不知道是什么事……\n好像有些慌张。",0)
+			MES(NINJYA_C,"……对了、昴大人好像\n也改变了许多。",0)
+			MES(NINJYA_C,"感觉比以前开朗多了。",0)
+			MES_close(NINJYA_C)
+			
+			F_set(NINJYA_C)
+		}
+		//　　★繰り返し
+		else
+		{
+		//	name("レイカ")
+			MES(NINJYA_C,"昴大人虽然\n说到做到、\n但有时也很消极……",0)
+			MES(NINJYA_C,"但是最近呢、\n比以前活跃多了。",0)
+			MES(NINJYA_C,"是不是找到了\n什么新目标的缘故呢。",0)
+			MES_close(NINJYA_C)
+		}
+		MOT(NINJYA_C,52,10)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※屋敷別室、布団之上に起き上がっている。
+	if( F5_00_HearLunar )
+	{
+		look_chr(NINJYA_C, PLAYER1, "Bone_Head")
+		if(!F_NINJYA_C)
+		{
+		//	name("レイカ")
+			MES(NINJYA_C,"听到了谈话。\n昴大人好像没有生命\n危险。",0)
+			MES(NINJYA_C,"太好了……",0)
+			MES(NINJYA_C,"昴大人的双亲\n对我很好的。",0)
+			MES(NINJYA_C,"昴大人要是有什么意外的话、\n该怎么办好啊……",0)
+			MES_close(NINJYA_C)
+			
+			F_set(NINJYA_C)
+		}
+		//　　★繰り返し
+		else
+		{
+		//	name("レイカ")
+			MES(NINJYA_C,"村子里也被\n破坏的一塌糊涂、\n我们能够做些什么。",0)
+			MES(NINJYA_C,"您不要担心、\n如果您有什么事就请放心去做。",0)
+			MES_close(NINJYA_C)
+		}
+		look_off(NINJYA_C)
+		TK_end()
+//		KAO(NINJYA_C,"1","3","3")
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia )
+	{
+	//　　※天山邸·廊下左隅で倒れている。
+	//	name("レイカ")
+		MES(NINJYA_C,"…………………………",0)
+		MES_close(NINJYA_C)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//　　※天山邸·廊下左隅で倒れている。
+	//	name("レイカ")
+	if( F4_06_StopAttack )
+	{
+		MES(NINJYA_C,"…………………………",0)
+		MES_close(NINJYA_C)
+	}
+	else
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//　　※天山邸、廊下隅に配置。
+	if( F4_05_OnVillage2 )
+	{
+		MOT(NINJYA_C,2,10)
+		if(!FS_08_TalkNinjya_C)
+		{
+		//　　昴に向く。
+			rot_chr(NINJYA_C,30,PARTNER)
+		//	name("忍者")
+			MES(NINJYA_C,"你们的谈话、结束了吗。",0)
+			MES_close(NINJYA_C)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"啊、丽香……",0)
+			MES(PARTNER,"对不起、\n好像很担心……",0)
+			MES(PARTNER,"那个、从那以后发生了很多事、\n总是不能回来……",0)
+			MES_close(PARTNER)
+
+		//	name("レイカ")
+			MES(NINJYA_C,"……不。",0)
+			MES(NINJYA_C,"没关系。\n昴大人平安无事的话、\n比什么都好。",0)
+			MES_close(NINJYA_C)
+
+		//　　忍者、拉古那に向く。
+			rot_chr(NINJYA_C,30,RAGNA)
+			
+		//	name("レイカ")
+			MES(NINJYA_C,"…………………………",0)
+			MES_close(NINJYA_C)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"嗯？　我……？",0)
+			MES_close(RAGNA)
+
+		//	name("レイカ")
+			MES(NINJYA_C,"不、没什么。",0)
+			MES(NINJYA_C,"天山大人恐怕暂时\n回不来。",0)
+			MES(NINJYA_C,"所以就请先在村子里\n随便逛逛。",0)
+			MES_close(NINJYA_C)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊、啊啊。\n没问题。",0)
+			MES_close(RAGNA)
+			
+			//★忍者【昴付き之女忍】
+//			F_set_note(-79,0)
+			F_set(FS_08_TalkNinjya_C)
+		}
+		else
+		{
+		//　　★忍者【昴付き之女忍】
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		//　　昴に向く。
+			rot_chr(NINJYA_C,30,PARTNER)
+			
+		//	name("レイカ")
+			MES(NINJYA_C,"昴大人、我们担心\n是没什么的……",0)
+			MES(NINJYA_C,"但一定请要\n平安归来。",0)
+			MES(NINJYA_C,"不要做让天山大人和\n逝去的双亲难过\n的事啊。",0)
+			MES_close(NINJYA_C)
+		}
+		MOT(NINJYA_C,52,10)
+	}
+	
+	TK_end()
+}
+
+MOTION_NinC_EyeOpen
+{
+		KAO(NINJYA_C,"1","1","1")
+}
+
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

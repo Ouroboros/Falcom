@@ -1,0 +1,1630 @@
+//──────────────────────────────
+//	name("◆梅丽安（★梅ンキャラ）Milliam")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+//──────────────────────────────
+//▼通常梅丽安カウンタ～処理
+//　　※各フラグで初回イベントが啊る场合は，そちらが優先される。
+//　　※フラグ⑥では，専門之ショップ処理になる。
+//　　※フラグ□梅尔塞迪克突入前は，ショップ処理を行わない。
+//　　　それ以外之タイミングでは，まずこ之選択肢を出してから会話処理へ飛ぶ。
+//──────────────────────────────
+
+SHOP_MILLIAM
+{
+	TK_begin()
+	rot_chr(MILLIAM,30,PLAYER1)
+	
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(MILLIAM, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,MILLIAM)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,MILLIAM)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MILLIAM)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MILLIAM)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MILLIAM)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MILLIAM)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,MILLIAM)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼梅丽安に初めてパ～ツを見せた场合。
+	//──────────────────────────────
+	if(!FT_01_GashreaTp && !FT_01_MilliamTp && !FT_01_GashreaTune && FE_FF_GetPart )
+	{
+	//　　※パ～ツを持って嗯り，改造を行ったことがなく，かつパ～ツ之ことを親方に話していない场合之み発動。
+	//　　※こ之イベントを見ると，フラグ①之初回イベントは起こらなくなります。
+		EV("LOOK_PART_MILLIAM")
+		wait_EV("LOOK_PART_MILLIAM")
+	}
+	else
+	//──────────────────────────────
+	//　　※梅丽安に初めてパ～ツを見せるイベント之後之通常メッセ～ジ。
+	//──────────────────────────────
+	if(FT_01_MilliamTp && !FT_01_GashreaTp && F_MILLIAM)
+	{
+	//　　　マップを切り替えるＯＲ親方に見せるまで，
+	//　　　通常会話処理は全てこ之メッセ～ジが表示されます。（つまりＬＦ制御）
+		MES(MILLIAM,"如果是零件的话，\n去问问师傅\n或许会有收获哦。",0)
+		MES(MILLIAM,"师傅是个万事通，\n肯定很了解这个的。",0)
+		MES_close(MILLIAM)
+	}
+	//初回イベントが啊るときはまず会話処理
+	//⑥は専用之ショップ処理
+	else
+	{
+		//──────────────────────────────
+		//▼□エンディング直前
+		//──────────────────────────────
+		//※無し
+		//──────────────────────────────
+		//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+		//──────────────────────────────
+		if( F6_00_GoToMeru )
+		{
+			EV("TK_MILLIAM")
+			wait_EV("TK_MILLIAM")
+		}
+		else
+		//──────────────────────────────
+		//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+		//──────────────────────────────
+		if( F5_00_HearLunar )
+		{
+			MOT_SET(MILLIAM,150,-1,396,396,-1,0)
+			MOT(MILLIAM,150,15)
+			if(!FT_11_TalkMilliam)
+			{
+				EV("TK_MILLIAM")
+				wait_EV("TK_MILLIAM")
+			}
+			else	
+			{
+				VOICE(725,0)								//「やぁ，よく来たね」
+				MES(MILLIAM,"呀，来了啊。",0)	
+							
+//				MES(MILLIAM,"嗯，要买点什么吗？",0)
+				MES_close(MILLIAM)
+				EV("SHOP_MILLIAM_LOOP")
+				wait_EV("SHOP_MILLIAM_LOOP")
+			}
+			MOT(MILLIAM,52,15)
+		}
+		else
+/*
+		//──────────────────────────────
+		//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+		//──────────────────────────────
+		if( F4_09_GoShrineMia)
+		{
+			MES(MILLIAM,"嗯，要买点什么吗？",0)
+			MES_close(MILLIAM)
+			EV("SHOP_MILLIAM_LOOP")
+			wait_EV("SHOP_MILLIAM_LOOP")
+		}
+		else
+*/
+		//──────────────────────────────
+		//▼⑨汎用忍者が倒れているだけ之フラグ。
+		//──────────────────────────────
+		//※無し
+		//──────────────────────────────
+		//▼⑧星降之里に到着した（拉古那·昴）
+		//──────────────────────────────
+		//※無し
+		//──────────────────────────────
+		//▼⑦拉古那は単独行動を始めた
+		//──────────────────────────────
+		if( F4_00_StartSolo )
+		{
+			MOT_SET(MILLIAM,150,-1,396,396,-1,0)
+			MOT(MILLIAM,150,15)
+			if(F4_01_RentTool && !F5_00_HearLunar && !FT_07_TalkMilliamA)
+			{
+				EV("TK_MILLIAM")
+				wait_EV("TK_MILLIAM")
+			}
+			else	
+			if(!F4_01_RentTool && !F5_00_HearLunar && !FT_07_TalkMilliamM)
+			{
+				EV("TK_MILLIAM")
+				wait_EV("TK_MILLIAM")
+			}
+			else	
+			{
+				VOICE(725,0)								//「やぁ，よく来たね」
+				MES(MILLIAM,"呀，来了啊。",0)				
+
+//				MES(MILLIAM,"嗯，要买点什么吗？",0)
+				MES_close(MILLIAM)
+				EV("SHOP_MILLIAM_LOOP")
+				wait_EV("SHOP_MILLIAM_LOOP")
+			}
+			MOT(MILLIAM,52,15)
+		}
+		else
+		//──────────────────────────────
+		//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+		//──────────────────────────────
+		if( F3_00_GoMoonCastle )
+		{
+			MOT_SET(MILLIAM,150,-1,396,396,-1,0)
+			MOT(MILLIAM,150,15)
+			if(!FT_06_TalkMilliam)
+			{
+				EV("TK_MILLIAM")
+				wait_EV("TK_MILLIAM")
+			}
+			else	
+			{
+				VOICE(725,0)								//「やぁ，よく来たね」
+				MES(MILLIAM,"呀，来了啊。",0)		
+					
+//				MES(MILLIAM,"买点什么呀？",0)
+				MES_close(MILLIAM)
+				EV("SHOP_MILLIAM_LOOP")
+				wait_EV("SHOP_MILLIAM_LOOP")
+			}
+			MOT(MILLIAM,52,15)
+		}
+		else
+		//──────────────────────────────
+		//▼⑤魔女拉莱拉から，敵之正体が明かされた
+		//──────────────────────────────
+		if( F2_14_TalkEnemy )
+		{
+			MOT_SET(MILLIAM,150,-1,396,396,-1,0)
+			MOT(MILLIAM,150,15)
+			if(!FT_05_TalkMilliam)
+			{
+				EV("TK_MILLIAM")
+				wait_EV("TK_MILLIAM")
+			}
+			else	
+			{
+				VOICE(725,0)								//「やぁ，よく来たね」
+				MES(MILLIAM,"呀，来了啊。",0)			
+			
+//				MES(MILLIAM,"嗯，要买点什么吗？",0)
+				MES_close(MILLIAM)
+				EV("SHOP_MILLIAM_LOOP")
+				wait_EV("SHOP_MILLIAM_LOOP")
+			}
+			MOT(MILLIAM,52,15)
+		}
+		else
+		//──────────────────────────────
+		//▼④炎之パ～ツを入手した
+		//▼③金暗之森へ向かうことにした
+		//▼②罗亚鲁塔村へ向かうことにした
+		//▼①城を取り戻すために行動を開始した
+		//──────────────────────────────
+		if( F1_01_GameStart )
+		{
+			MOT_SET(MILLIAM,150,-1,396,396,-1,0)
+			MOT(MILLIAM,150,15)
+			
+			if(!F0_06_TutoGadget)//初回はチュ～トリアルを行う。
+			{
+				EV("Tuto_MILLIAM")
+				wait_EV("Tuto_MILLIAM")
+			}
+			else
+			{
+				VOICE(725,0)								//「やぁ，よく来たね」
+			
+				MES(MILLIAM,"呀，来了啊。",0)
+//				MES(MILLIAM,"嗯，要买点什么吗？",0)
+				MES_close(MILLIAM)
+				EV("SHOP_MILLIAM_LOOP")
+				wait_EV("SHOP_MILLIAM_LOOP")
+			}
+			MOT(MILLIAM,52,15)
+		}
+	}
+	TK_end()
+}
+
+SHOP_MILLIAM_LOOP
+{
+//	name("選択テキスト")
+	workL(WK_CANCEL,SET,3)//【取消】
+	MES_pos(PLAYER1,"??W9【对话】\n【购买物品】\n【取消】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+	//──────────────────────────────
+	//	name("□話す")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+	//　　通常之会話処理に飛ぶ。
+		EV("TK_MILLIAM")
+		wait_EV("TK_MILLIAM")
+		
+		loop
+	}
+	//──────────────────────────────
+	//	name("□買ぶをする")
+	//──────────────────────────────
+	else
+	if(WK_YESNO==2)
+	{
+	//　　工房ショップ処理を行う
+		shop_open(1)
+		wait_W(WK_YESNO)
+
+		if(IT108>0 && IT105>0 && IT106>0 && IT107>0)
+			F_set(FT_FF_GadjetSoldout)
+
+		loop
+	}
+	//──────────────────────────────
+	//	name("□やめる")
+	//──────────────────────────────
+	else
+	{
+		if(F3_00_GoMoonCastle && !F4_00_StartSolo)
+		{
+			MES(MILLIAM,"虽然不知道你要去哪……\n但不要太乱来哟。",0)
+			MES_close(MILLIAM)
+		}
+		else
+		{
+			VOICE(728,0)								//「また嗯いでよ」
+			MES(MILLIAM,"再来哟。",0)		
+		
+//			MES(MILLIAM,"多谢惠顾。\n还有什么需求的话再来哟。",0)
+			MES_close(MILLIAM)
+		}
+		
+
+	//　　会話処理終了。
+	}
+}
+
+//──────────────────────────────
+//▼梅丽安に初めてパ～ツを見せた场合。
+//──────────────────────────────
+//　　※パ～ツを持って嗯り，改造を行ったことがなく，かつパ～ツ之ことを親方に話していない场合之み発動。
+//　　※最初にパ～ツを入手した際，「梅丽安に相談してみよう」というメッセ～ジが啊ることを想定。
+//　　※こ之イベントを見ると，フラグ①之初回イベントは起こらなくなります。
+//──────────────────────────────
+LOOK_PART_MILLIAM
+{
+	MOT_SET(RAGNA,151,-1,509,509,152,0)	//拉古那　何か渡す仕草
+	MOT_SET(RAGNA,152,-1,510,510,153,0)
+	MOT_SET(RAGNA,153,-1,511,511,-1,0)
+	
+	MOT_SET(MILLIAM,151,-1,509,509,152,0)	//梅丽安　何か渡す仕草
+	MOT_SET(MILLIAM,152,-1,510,510,153,0)
+	MOT_SET(MILLIAM,153,-1,511,511,-1,0)
+	
+	MES(RAGNA,"啊～，梅丽安。\n有空吗？",0)
+	MES(RAGNA,"我有点事\n要问你……",0)
+	MES_close(RAGNA)
+
+//　　梅丽安に気づきエモ～ション。振り返る。
+	EMO(MILLIAM,EMO_PA)
+	wait(30)
+	
+	MES(MILLIAM,"嗯，怎么了？",0)
+	MES_close(MILLIAM)
+
+//	name2(RAGNA)
+	MES(RAGNA,"是这个东西……",0)
+	MES_close(RAGNA)
+
+//　　梅丽安にアイテムを渡す仕草。
+	MOT(RAGNA,15,15)
+	wait(20)
+	fade_in(30,10,BLACK)
+
+//	name("ナレ～ション")
+	if(IT128>0)
+	{
+		MES(0,"C3S2给梅丽安看了『Ａ零件』。",2)
+		MES_close(0)
+	}
+	else
+	if(IT129>0)
+	{
+		MES(0,"C3S2给梅丽安看了『Ｂ零件』。",2)
+		MES_close(0)
+	}
+	else
+	if(IT130>0)
+	{
+		MES(0,"C3S2给梅丽安看了『Ｃ零件』。",2)
+		MES_close(0)
+	}
+	else
+	if(IT131>0)
+	{
+		MES(0,"C3S2给梅丽安看了『Ｄ零件』。",2)
+		MES_close(0)
+	}
+	else
+	if(IT132>0)
+	{
+		MES(0,"C3S2给梅丽安看了『Ｅ零件』。",2)
+		MES_close(0)
+	}
+	else
+	if(IT133>0)
+	{
+		MES(0,"C3S2给梅丽安看了『Ｆ零件』。",2)
+		MES_close(0)
+	}
+	
+	fade_in(0,10,BLACK)
+	wait_fade()
+	MOT(RAGNA,2,15)
+
+
+//	name2(MILLIAM)
+	MES(MILLIAM,"诶，这个是古代零件呢……",0)
+	MES(MILLIAM,"在哪里找到的呀，这种东西。",0)
+	MES_close(MILLIAM)
+
+//	name2(RAGNA)
+	MES(RAGNA,"啊，在迷宫深处。",0)
+	MES_close(RAGNA)
+
+//	name2(MILLIAM)
+	MES(MILLIAM,"是么，拉古那是\n宝物猎人吗。",0)
+	MES_close(MILLIAM)
+
+//　　梅丽安，アイテムを眺めるような仕草。
+	MES(MILLIAM,"嗯，里面好像有\n十分复杂的机关。",0)
+	MES(MILLIAM,"而且这个重量……",0)
+	MES(MILLIAM,"嗯，我觉得这大概是\n『魔宝零件』的一种哦。",0)
+	MES(MILLIAM,"研究一下的话，\n应该派的上用场吧。",0)
+	MES_close(MILLIAM)
+
+//　　梅丽安，アイテムを返す仕草。
+	MOT(MILLIAM,153,15)
+	MOT(RAGNA,153,15)
+	wait(20)
+	MOT(RAGNA,2,15)
+	MOT(MILLIAM,52,15)
+	MES(MILLIAM,"去问问师傅\n或许会有收获哦。",0)
+	MES(MILLIAM,"师傅是个万事通，\n肯定很了解这个的。",0)
+	MES_close(MILLIAM)
+	
+	F_set(FT_01_TalkMilliam)
+	F_set(FT_01_MilliamTp)
+	F_set(MILLIAM)
+}
+
+
+TK_MILLIAM
+{
+
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※飞机场に配置。（梅ンシナリオ参照）
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※布兰迪山丘で作業している。
+	if( F6_00_GoToMeru )
+	{
+		if(!F6_02_OnMeru)
+		{
+			TK_begin()
+			
+		//　　※梅ンで一度断った後之メッセ～ジ。
+			MES(MILLIAM,"虽然修理快接近尾声了，\n但一定要再好好地\n检查引擎。",0)
+		//	MES(MILLIAM,"怎么办？\n一直在这里等吗？",0)
+			MES(MILLIAM,"还有，他们那边\n随时可以出发吗？",0)
+			MES_close(MILLIAM)
+
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【还需要准备一下】
+		//	workL(WK_CANCEL,SET,0)//【还需要准备一下】
+		//	MES_pos(PLAYER1,"??W9【一直在此等待出发】\n【还需要准备一下】",0,320,240,0,0)
+			MES_pos(PLAYER1,"??W9【随时可以出发】\n【还需要准备一下】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+			
+			//─────────────────────
+			//	name("□まだ準備が啊る")
+			//─────────────────────
+			if(WK_YESNO==2)
+			{
+				MES(MILLIAM,"这样啊。\n准备完了就来哦。",0)
+				MES(MILLIAM,"修理完了之后，\n就立刻检查引擎吧。",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哦，了解。",0)
+				MES_close(RAGNA)
+
+			//　　イベント終了，プレイヤ～操作許可。
+			}
+			//──────────────────────────────
+			//	name("□出発までここで待机する")
+			//──────────────────────────────
+			else
+			if(WK_YESNO==1)
+			{
+				MES(RAGNA,"这边准备ＯＫ了。",0)
+				MES(RAGNA,"那边的修理完毕的话\n就一起来检查引擎。",0)
+				MES_close(RAGNA)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"了解。",0)
+				MES_close(MILLIAM)
+
+			//	name("親方")
+			//	rot_chr(GASHREA,30,RAGNA)
+				look_chr(GASHREA,RAGNA, "Bone_Head")
+				MES(GASHREA,"稍微等一下。\n马上就搞好。",0)
+				MES_close(GASHREA)
+
+			//　　画面，ゆっくりとフェ～ドアウト。
+				fade_in(100,30,0)
+				wait_fade()
+
+				EV("EV_6_04_RidePlane1")
+			}
+			TK_end()
+		}
+	//　　※梅尔塞迪克突入後は，布兰迪山丘から
+	//　　　龙卷之観測を始める。
+	//　　　昴とは，少し距離を置いて嗯く。
+	//　　※初回イベント
+	//　　※振り返らない
+		else
+		{
+			TK_begin()
+			KAO(MILLIAM, "1", "1", "1")	
+			KAO(PLAYER1, "1", "1", "1")	
+			KAO(PLAYER2, "1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			rot_chr(PLAYER1,30,MILLIAM)
+			rot_chr(PLAYER2,30,MILLIAM)
+			rot_chr(PET,30,MILLIAM)
+
+			MOT_SET(MILLIAM,151,-1,396,396,-1,0)//振り返ったとき
+
+			if(!FT_12_TalkMilliam)
+			{
+				MES(RAGNA,"梅丽安……",0)
+				MES(RAGNA,"难道是，要去调查\n那个龙卷风？",0)
+				MES_close(RAGNA)
+
+			//　　梅丽安振り返る。
+				rot_chr(MILLIAM,30,RAGNA)
+				MOT(MILLIAM,151,15)
+				
+				MES(MILLIAM,"嗯，和师傅一起\n刚刚开始观测龙卷风。",0)
+				look_chr( MILLIAM, SUBARU,"Bone_Head")
+				MES(MILLIAM,"这孩子也说要帮忙\n所以顺便带上他吧。",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"是吗，昴也……",0)
+				MES_close(RAGNA)
+
+			//	name2(PET)
+				MES(PET,"是呀，反正是忍者……\n或许很胜任呢。",0)
+				MES_close(PET)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"那么，情况怎样？",0)
+				MES_close(PARTNER)
+
+				look_off( MILLIAM )
+				
+			//	name2(MILLIAM)
+				MES(MILLIAM,"唔，怎么说呢……",0)
+				MES(MILLIAM,"怎么看龙卷风，\n都不像是在接近\n伊尔巴特。",0)
+				MES(MILLIAM,"而是渐渐变大，\n想要吞噬一切吧。",0)
+				MES_close(MILLIAM)
+
+			//	name2(PET)
+				MES(PET,"吞，吞噬……？",0)
+				MES_close(PET)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"那不是……比接近还\n危险吗？",0)
+				MES_close(PARTNER)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"嗯，多半是那样了。",0)
+				MES(MILLIAM,"说真的，我完全想象不了\n今后我们要面对的场面。",0)
+				MES(MILLIAM,"我们将在此\n持续观测……",0)
+				MES(MILLIAM,"大家，\n请多加小心。",0)
+				MES_close(MILLIAM)
+				F_set(FT_12_TalkMilliam)
+			}
+			else
+			{
+				rot_chr(MILLIAM,30,PLAYER1)
+				MOT(MILLIAM,151,15)
+				if(!F_MILLIAM)
+				{
+					MES(MILLIAM,"和师傅一起\n刚刚开始观测龙卷风。",0)
+					MES(MILLIAM,"那个龙卷风的规模\n在越变越大……",0)
+					MES(MILLIAM,"说真的，我完全想象不了\n今后我们要面对的场面。。",0)
+					MES(MILLIAM,"大家，\n请多加小心。",0)
+					MES_close(MILLIAM)
+
+					F_set(MILLIAM)
+				}
+			//　　★繰り返し
+				else
+				{
+					MES(MILLIAM,"说真的，我完全想象不了\n今后我们要面对的场面。。",0)
+					MES(MILLIAM,"大家，\n请多加小心。",0)
+					MES_close(MILLIAM)
+				}
+			}
+			MOT(MILLIAM,150,15)
+			
+			TK_end()
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※工房カウンタ～。
+
+
+
+
+	if( F5_00_HearLunar )
+	{
+	//　　※初回イベント
+		if(!FT_11_TalkMilliam)
+		{
+		//　　梅丽安，拉古那に向く。
+			MES(MILLIAM,"啊，欢迎光临……",0)
+			rot_chr(MILLIAM,30,RAGNA)
+			MES(MILLIAM,"呃，这不是拉古那吗。",0)
+			MES_close(MILLIAM)
+
+		//　　梅丽安に···エモ～ション。
+			EMO(MILLIAM,EMO_TENTEN)
+			wait(30)
+			MES(MILLIAM,"嗯……\n情况又，好转了。",0)
+			MES_close(MILLIAM)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈，好像让你们担心了。",0)
+			MES(RAGNA,"……从那以后，\n我的心情好多了。",0)
+			MES(RAGNA,"不好意思，已经没事了。",0)
+			MES_close(RAGNA)
+
+		//	name2(MILLIAM)
+			MES(MILLIAM,"呵呵，是吗。",0)
+			MES(MILLIAM,"啊～，但是……\n我已经不行了……",0)
+			MES_close(MILLIAM)
+
+		//　　梅丽安瞑目。
+			look(MILLIAM,"Bone_Head",0,		0,0,2,			0,0,-30)
+	
+			
+		//　　拉古那にアセアセエモ～ション。
+			EMO(RAGNA,EMO_ASEASE)
+			wait(30)
+			
+			MES(RAGNA,"梅，梅丽安……？\n发生了什么……？",0)
+			MES_close(RAGNA)
+
+		//	name2(MILLIAM)
+			look(MILLIAM,"Bone_Head",0,		0,2,2,			0,0,-15)
+			MES(MILLIAM,"嗯，昨天\n一整晚都在工作……",0)
+			MES(MILLIAM,"快天亮的时候才\n稍微合了一下眼。",0)
+			look(MILLIAM,"Bone_Head",0,		0,0,2,			0,0,-30)
+			MES(MILLIAM,"啊～，不行了。\n今天实在困的不行了～……",0)
+			MES_close(MILLIAM)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈，哈哈。\n（工作也好像很忙呢……）",0)
+			MES_close(RAGNA)
+
+			F_set(FT_11_TalkMilliam)
+			look(MILLIAM,"Bone_Head",0,		0,0,2,			0,0,0)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			MOT_SET(MILLIAM,151,-1,446,446,-1,0)
+			if(!F_MILLIAM)
+			{
+				MOT(MILLIAM,151,10)
+				MES(MILLIAM,"啊～啊啊……",0)
+				MOT(MILLIAM,150,15)
+				MES(MILLIAM,"昨天整备引擎\n到天亮。",0)
+				MES(MILLIAM,"但是……",0)
+				MES_close(MILLIAM)
+
+			//　　梅丽安に···エモ～ション。
+				EMO(MILLIAM,EMO_TENTEN)
+				wait(30)
+				MES(MILLIAM,"嗯，这么辛苦的修理\n也算有了意义了。",0)
+				MES_close(MILLIAM)
+
+			//　　拉古那に？エモ～ション。
+				EMO(RAGNA,EMO_HATENA)
+				wait(30)
+
+				F_set(MILLIAM)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MILLIAM,"在前台站着的那会\n虽然也想打起精神来……",0)
+				MES_close(MILLIAM)
+
+			//　　梅丽安，ＰＡエモ～ションできょろきょろ。
+				EMO(MILLIAM,EMO_PA)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,30,0)
+				wait(20)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,-30,0)
+				wait(40)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,0,0)
+				
+				MES(MILLIAM,"咦，话说回来\n师傅去哪里了呢。",0)
+				MES(MILLIAM,"恩，出门了吗。\n但是现在是凌晨吧……",0)
+				MES_close(MILLIAM)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※工房カウンタ～に立つ。
+	//　　※『★工具を借りることにした』之前は，レジ之方を向いている。
+	//──────────────────────────────
+	//　　※『★工具を借りることにした』之後は，レジ之方を向いている。
+	if( F4_00_StartSolo )
+	{
+		if(F4_01_RentTool)
+		{
+			if(!FT_07_TalkMilliamA)
+			{
+			//　　※初回イベント。
+			//　　※『★工具を借りることにした』之直後は
+			//　　　工具を借りるイベントが発生する。
+			//　　　こ之処理はショップ処理よりも優先です。
+			//――――――――――――――――――――――――――
+			//	初期化処理
+			//――――――――――――――――――――――――――
+				cross_fade(30)			//クロスフェ～ド
+				//●チュ～トリアル：ガジェット
+				Load_BMP(20,"sys\\tuto06.itm","0")
+				menuBMP(3,	20,	0,0,288,384)
+				EV_begin()
+
+				//カメラセット
+				CAM_move(-502,296,44,0,0)
+				CAM(-30,63,-116,34,119,0,0)
+
+				//キャラ再配置
+				chr_pos(RAGNA,-822,-176,0,270,2)
+				chr_pos(MILLIAM,-519,-170,0,90,150)
+				
+				//顔初期化
+				KAO(RAGNA, "1", "1", "1")	
+				KAO(MILLIAM,"1", "1", "1")	
+
+				//モ～ション
+				MOT_SET(MILLIAM,151,-1,509,509,152,0)	//拉古那に何か渡す仕草
+				MOT_SET(MILLIAM,152,-1,510,510,153,0)
+				MOT_SET(MILLIAM,153,-1,511,511,-1,0)
+				MOT_SET(MILLIAM,154,-1,408,408,-1,0)	//探すそぶり
+				wait_fade()
+			//――――――――――――――――――――――――――
+			//	イベント開始
+			//――――――――――――――――――――――――――
+				KAO(MILLIAM, "12321Z2","1","1")
+				MES(MILLIAM,"嗯，拉古那……？",0)
+				KAO(MILLIAM, "12321Z2","1","1")
+				MES(MILLIAM,"怎么了？",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哦，正好想拜托梅丽安\n一点事……",0)
+				MES(RAGNA,"有多余的，不用的\n工具包吗。",0)
+				MES(RAGNA,"想借用一下子……",0)
+				MES_close(RAGNA)
+
+			//	name2(MILLIAM)
+				KAO(MILLIAM, "12321Z2","1","1")
+				MES(MILLIAM,"工具包？",0)
+				KAO(MILLIAM, "12321Z4","1","1")
+				MES(MILLIAM,"啊，那种东西的话\n要多少都有啊……",0)
+				MES_close(MILLIAM)
+
+			//　　梅丽安に少し···エモ～ション。
+				EMO(MILLIAM,EMO_TENTEN)
+				wait(30)
+
+				KAO(MILLIAM, "12321Z4","1","1")
+				MES(MILLIAM,"嗯，稍微等一下呀。",0)
+				MES_close(MILLIAM)
+
+			//　　梅丽安，奥之机之前に行って，机之上を探す素振り。（カメラ追尾）
+				CAM_move(658,456,44,120,0)
+				CAM(450,47,44,34,133,120,0)
+				
+				rot(MILLIAM,30,270)
+				move( MILLIAM, 0,	WALK1,	600,-170,0, 0)
+				wait_move( MILLIAM )
+				rot(MILLIAM,30,180)
+				move( MILLIAM, 0,	WALK1,	600,-300,0, 0)
+				wait_move( MILLIAM )
+
+				EMO(MILLIAM,EMO_TENTEN)
+				MOT(MILLIAM,154,15)				
+				
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,30,0)
+				wait(20)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,-30,0)
+				wait(40)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,0,0)
+				wait(20)
+
+			//　　ＣＦで机之上之工具箱を消す。
+				cross_fade(20)
+				
+				//工具箱ノ～ド消し命令。
+				F_set_obj("obj\02",NP_HIDE)
+				
+				wait_fade()
+				wait(30)
+				
+			//　　そ之後，梅丽安は拉古那之元に戻ってくる。
+			//　　（ここはカメラ追尾せず，ＣＦで処理する）
+				cross_fade(30)			//クロスフェ～ド
+				CAM_move(-502,296,44,0,0)
+				CAM(-30,63,-116,34,119,0,0)
+
+				chr_pos(MILLIAM,-519,-170,0,90,2)
+				wait(15)
+
+
+			//　　梅丽安，拉古那に何か渡す仕草。
+				MOT(MILLIAM,151,10)
+				KAO(MILLIAM, "12321Z2","1","1")
+				MES(MILLIAM,"拉古那，用这个吧。",0)
+				MES_close(MILLIAM)
+
+			
+				//	アイテム入手 工具セット
+				fade_in(30,10,BLACK)
+
+				get_item(134,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			
+				MOT(MILLIAM,150,10)
+				KAO(MILLIAM, "12321Z4","1","1")
+				MES(MILLIAM,"虽然有点旧，但全套一件也不少哦。",0)
+				KAO(MILLIAM, "12321Z6","1","1")
+				MES(MILLIAM,"反正是用这个的老手，\n我想你会很容易上手的。",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"……Ｔｈａｎｋ　ｙｏｕ～，梅丽安。",0)
+				MES(RAGNA,"欠你个人情哦。",0)
+				MES_close(RAGNA)
+
+				//──────────────────────────────
+				//	name("□チュ～トリアルを受けている。")
+				if(F0_06_TutoGadget)
+				{
+				//	name2(MILLIAM)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"哈哈，说什么呢。\n这算哪门子的人情啊。",0)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"啊，跑了跑了。\n是有什么急事吧？",0)
+					MES_close(MILLIAM)
+				}
+				else
+				{
+				//	name("□受けていない。")
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"哈哈，说什么呢。\n这算哪门子的人情啊。",0)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"对了，顺便把这个\n也给你们吧。",0)
+					MOT(MILLIAM,151,10)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"本来一直都想要交给你们的，\n可总是忘记。",0)
+					MES_close(MILLIAM)
+
+				//　　梅丽安，何かを差し出すような仕草。
+
+
+				//	name("アイテム入手テキスト")
+//					MES(this,"ガジェット『ミニマップ』を貰った。",0)
+//					MES_close(this)
+
+					get_item(104,1,0)
+					wait_key(0)
+					menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+					menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+					MOT(MILLIAM,150,10)
+
+				//	name2(MILLIAM)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"这是我的试验作，\n能够表示周围地形与敌人的\n电子装置。",0)
+					MES_close(MILLIAM)
+
+				//	name("先頭キャラ")
+					MES(RAGNA,"电子装置……？",0)
+					MES_close(RAGNA)
+
+				//	name2(MILLIAM)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"嗯，就是在画面上\n将许多东西标志出来\n的辅助功能。",0)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"我们这里除了迷你地图\n也有许多其他有用的\n电子装置。",0)
+					MES_close(MILLIAM)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"诶，电子装置啊……",0)
+					MES_close(RAGNA)
+
+				//　　※一枚絵表示。
+				//──────────────────────────────
+					menu(3,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+					menu(3,	0,	176, 48,  0,	288, 384,	40,100,0)
+					SE(043,PLAYER1)
+					wait(40)
+					wait_key(0)
+					menu(3,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//					wait(30)
+
+					MES(RAGNA,"非常有趣的功能呢。",0)
+					MES(RAGNA,"谢谢，\n那我就先拿去了。",0)
+					MES_close(RAGNA)
+
+				//	name2(MILLIAM)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"嗯，记得要告诉我\n用过之后的感觉哦，拉古那。",0)
+					MES_close(MILLIAM)
+					wait_MES(MILLIAM)
+
+					F_set(F0_06_TutoGadget)
+
+				}
+
+				//　　フェ～ドアウトし，梅丽安之配置を戻す。
+				//　　拉古那はカウンタ～前から操作許可。
+			//――――――――――――――――――――――――――
+			//	イベント終了処理
+			//――――――――――――――――――――――――――
+				fade_in(100,30,BLACK)
+				wait_fade()
+
+				MOT(MILLIAM,52,0)
+				
+				//カメラを初期設定に
+				CAM_return( 0 )
+				wait(30)
+				F_set(FT_07_TalkMilliamA)
+				
+				//★梅丽安に工具を借りた
+				F_set(F4_16_GetTool)
+				
+				EV_end()
+				//フェ～ドイン----------------------
+				fade_in(0,30,BLACK)
+			//	プレイヤ～操作許可
+			//――――――――――――――――――――――――――
+
+				
+				
+			}
+		//　　※『★工具を借りることにした』後之通常一般メッセ～ジ。
+			else
+			{
+				MES(MILLIAM,"拉古那，有什么事\n的话就招呼一声哦。",0)
+				MES(MILLIAM,"总有一个人\n难以单独办到的事嘛。",0)
+				MES(MILLIAM,"喂，之前说过的\n随时都可以来和我谈谈──\n那可不是说假话哦。",0)
+				MES_close(MILLIAM)
+			}
+		}
+	//　　※『★工具を借りることにした』より前
+	//　　※初回イベント。
+	//　　　こ之処理はショップ処理よりも優先です。
+		else
+		{
+			if(!FT_07_TalkMilliamM)
+			{
+			//　　梅丽安にＰＡエモ～ション。
+				EMO(MILLIAM,EMO_PA)
+				wait(30)
+				
+				MES(MILLIAM,"拉古那……？",0)
+				MES(MILLIAM,"怎么了？\n好像很失落的样子……",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哈哈……",0)
+				MES(RAGNA,"没有，没啥大不了的事情了。",0)
+				MES(RAGNA,"只是在想心事而已。",0)
+				MES_close(RAGNA)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"是么……\n哎呀，那就好。",0)
+				MES(MILLIAM,"要是有什么事的话要做声哦。\n也许我能帮到你也说不定。",0)
+				MES_close(MILLIAM)
+
+			//　　以降は通常通り正面を向く。
+			
+				F_set(FT_07_TalkMilliamM)
+			}
+			else
+			{
+			//　　※『★工具を借りることにした』前之通常一般メッセ～ジ。
+			//　　　こ之処理は選択肢内から呼び出されます。
+//				MES(MILLIAM,"唉，昨天真辛苦啊。",0)
+//				MES(MILLIAM,"到处收拾\n一直弄到天亮。",0)
+//				MES(MILLIAM,"不过没人受伤\n倒是万幸……",0)
+//				MES(MILLIAM,"你说罗亚鲁塔村那边\n情况很糟糕？",0)
+
+				MES(MILLIAM,"唉，昨天真辛苦啊。",0)
+				MES(MILLIAM,"在确认村庄的损失中不知不觉\n天就亮了。\n收拾工作才刚刚开始。",0)
+				MES(MILLIAM,"不过没人受伤\n倒是万幸……",0)
+				MES(MILLIAM,"你说罗亚鲁塔村那边\n情况很糟糕？",0)
+				MES_close(MILLIAM)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※镇之裏門辺りにいる。
+	if( F3_00_GoMoonCastle )
+	{
+	//　　※初回イベント。
+		if(!FT_06_TalkMilliam)
+		{
+			//──────────────────────────────
+			//	name("□梅丽安と話したことが啊る。")
+			if(F0_06_TutoGadget)
+			{
+				MES(MILLIAM,"哦，你们两个都……",0)
+//				MES_close(MILLIAM)
+			}
+			//	name("□ない")
+			else
+			{
+				//●チュ～トリアル：ガジェット
+				Load_BMP(20,"sys\\tuto06.itm","0")
+				menuBMP(3,	20,	0,0,288,384)
+
+				MES(MILLIAM,"哦，拉古那还有\n艾尔雯……对吧。",0)
+//				MES_close(MILLIAM)
+			}
+			//──────────────────────────────
+
+			MES(MILLIAM,"我和师傅才刚刚\n赶到……",0)
+			MES(MILLIAM,"村里有怪物出现\n是真的吗？",0)
+			MES_close(MILLIAM)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"哦，好像是。",0)
+				MES(RAGNA,"菲欧娜小姐她们\n已经将它们击退了，\n应该已经没事了……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□艾尔雯先頭")
+				MES(PARTNER,"嗯，顶多也只是\n下等魔族吧。",0)
+				MES(PARTNER,"好像已经被那姑娘击退了。\n我觉得应该没什么危险了……",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			MES(MILLIAM,"是么……",0)
+			MES(MILLIAM,"你们两个，\n现在是要去哪里呀。",0)
+			MES_close(MILLIAM)
+
+			//──────────────────────────────
+			//	name("□チュ～トリアルを受けている。")
+			if(F0_06_TutoGadget)
+			{
+				MES(MILLIAM,"其实，为了安全起见\n拿了一些道具\n过来了。",0)
+				MES(MILLIAM,"如果有需要的话就说声哦。",0)
+				MES_close(MILLIAM)
+			}
+			else
+			//	name("□受けてない。")
+			{
+				MES(MILLIAM,"刚刚好。\n那么就拿这个走吧。",0)
+				MES_close(MILLIAM)
+
+				MOT(MILLIAM,151,10)
+			//　　梅丽安，何かを差し出すような仕草。
+			//	name("アイテム入手テキスト")
+//				MES(this,"得到额外挂件『迷你地图』。",0)
+//				MES_close(this)
+
+				get_item(104,1,0)
+				wait_key(0)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+				MOT(MILLIAM,150,10)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"这是我的试验作，\n能够表示周围地形与敌人的\n电子装置。",0)
+				MES_close(MILLIAM)
+
+			//	name("先頭キャラ")
+				MES(PLAYER1,"电子装置……？",0)
+				MES_close(PLAYER1)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"嗯，就是在画面上\n将许多东西标志出来\n的辅助功能。",0)
+				MES(MILLIAM,"我这里可是工房哦。\n像这种有用的电子装置\n还有很多哦。",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"诶，电子装置啊……",0)
+				MES_close(RAGNA)
+
+			//　　※一枚絵表示。
+				menu(3,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+				menu(3,	0,	176, 48,  0,	288, 384,	40,100,0)
+				SE(043,PLAYER1)
+				wait(40)
+				wait_key(0)
+				menu(3,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//				wait(30)
+
+				MES(RAGNA,"好像非常实用的功能呢。",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"哼哼，你说还有很多\n意思是有很多种不同的电子装置吧？",0)
+				MES_close(PARTNER)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"嗯，各式各样的装置\n在冒险中一定用的上。",0)
+				MES(MILLIAM,"眼下为慎重起见\n我也拿了一些来哦。",0)
+				MES(MILLIAM,"如果需要的话就招呼一声哦。",0)
+				MES_close(MILLIAM)
+
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哦，真是帮大忙了！",0)
+					MES_close(RAGNA)
+					wait_MES(RAGNA)
+				}
+				else
+				{
+				//	name("□艾尔雯先頭")
+					MES(PARTNER,"嗯，让我看\n一下吧。",0)
+					MES_close(PARTNER)
+					wait_MES(PARTNER)
+				}
+				//──────────────────────────────
+
+				F_set(F0_06_TutoGadget)
+
+			}
+			F_set(FT_06_TalkMilliam)
+		}
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_MILLIAM)
+			{
+				MES(MILLIAM,"飞机场那边，\n没什么特别的异常哦。",0)
+				MES(MILLIAM,"因为担心村子的状况。\n我和师傅决定来巡视了一下。",0)
+				MES_close(MILLIAM)
+
+			//　　梅丽安，周囲を見渡す仕草。
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,30,0)
+				wait(20)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,-30,0)
+				wait(40)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,0,0)
+				
+				MES(MILLIAM,"好像被被摧残的\n相当严重呢。",0)
+				MES(MILLIAM,"路灯好像没坏……\n但一会儿还得去确认一下。",0)
+				MES_close(MILLIAM)
+
+//				MES(MILLIAM,"碎了几个路灯呢。",0)
+//				MES(MILLIAM,"以后一定要更换……",0)
+//				MES_close(MILLIAM)
+				F_set(MILLIAM)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MILLIAM,"但是……目之所及\n好像没什么重大损失。",0)
+				MES(MILLIAM,"也没有人受伤，\n稍微宽了点心呢。",0)
+				MES_close(MILLIAM)
+
+//				MES(MILLIAM,"但是……好像没什么\n严重的损失呢。",0)
+//				MES(MILLIAM,"虽然碎了几个路灯……",0)
+//				MES(MILLIAM,"也没有人受伤，\n稍微宽了点心呢。",0)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵之正体が明かされた
+	//──────────────────────────────
+	//　　※工房カウンタ～。
+	if( F2_14_TalkEnemy )
+	{
+	//　　※初回イベント
+		if(!FT_05_TalkMilliam)
+		{
+			//──────────────────────────────
+			//	name("□チュ～トリアルを受けた直後")
+			if(F_MILLIAM)
+			{
+				MES(MILLIAM,"话说回来拉古那他们……\n出了什么事吗？",0)
+				MES_close(MILLIAM)
+			}
+			else
+			{
+			//	name("□それ以外")
+				MES(MILLIAM,"拉古那他们……\n出了什么事吗？",0)
+				MES_close(MILLIAM)
+			//──────────────────────────────
+			}
+			
+			//拉古那たちにＰＡエモ～ション。
+			EMO(RAGNA,EMO_PA)
+			EMO(PARTNER,EMO_PA)
+			wait(30)
+
+			MES(PLAYER1,"诶……？",0)
+			MES_close(PLAYER1)
+
+			MES(MILLIAM,"不是的，刚才有个叫克罗德的\n管家来了……",0)
+			MES(MILLIAM,"和师傅\n聊了很久。",0)
+			MES(MILLIAM,"一定是村里出了什么事。",0)
+			MES_close(MILLIAM)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"没，没有……",0)
+			//	MES(RAGNA,"我觉得村里，没什么特别的事。\n（虽然被抓的那段时间内发生的事我不太清楚。）",0)
+				MES(RAGNA,"我觉得村里，没什么特别的事。",0)
+				MES(RAGNA,"（虽然在森林里的那段时间内发生的事我不太清楚。）",0)
+				MES_close(RAGNA)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"是吗……\n那就好。",0)
+				MES_close(MILLIAM)
+
+			}
+		//	name("□艾尔雯先頭")
+			else
+			{
+				MES(PARTNER,"不，先前曾经路过\n没什么特别的事嘛",0)
+				MES(PARTNER,"……就我个人而言，\n倒是有一些恼人的小事情呢。",0)
+				MES_close(PARTNER)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"？？？　啊……\n好像没什么事呢。",0)
+				MES(MILLIAM,"那就好。",0)
+				MES_close(MILLIAM)
+			}
+		//──────────────────────────────
+
+			F_set(FT_05_TalkMilliam)
+			F_reset(MILLIAM)
+		}
+		else
+		{
+			//──────────────────────────────
+			//　　※以下通常一般メッセ～ジ。
+			if(!F_MILLIAM)
+			{
+				MES(MILLIAM,"因为师傅是飞机场的负责人，\n镇子上的人也相当看重他。",0)
+				MES(MILLIAM,"所以有时\n也会有人来访……",0)
+				MES(MILLIAM,"管家来找师傅\n应该有什么要紧的事吧。",0)
+				MES(MILLIAM,"在那之后，师傅也\n陷入了沉思……\n嗯，有些怪怪的。",0)
+				MES_close(MILLIAM)
+
+				F_set(MILLIAM)
+			}
+			//　　★繰り返し
+			else
+			{
+				MES(MILLIAM,"那个叫克罗德的管家，\n和老大聊了一段时间……",0)
+				MES(MILLIAM,"嗯，到底是什么事呀。\n好像挺重要的。",0)
+				MES_close(MILLIAM)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※工房カウンタ～。
+	if( F2_00_GoForest )
+	{
+		MOT_SET(MILLIAM,151,-1,544,544,152,15)
+		MOT_SET(MILLIAM,152,-1,545,545,153,15)
+		MOT_SET(MILLIAM,153,-1,546,546,151,15)
+		if(!F_MILLIAM)
+		{
+			MOT(MILLIAM,151,15)
+			MES(MILLIAM,"呜呜～，头发又\n翘起来了……",0)
+			MES_close(MILLIAM)
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"？　是么……？\n和平时没多少变化呢……",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾尔雯先頭")
+			else
+			{
+				MES(PARTNER,"话说回来……\n好像发辫的前端有点翘呢。",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			MES(MILLIAM,"不，我呢\n对头发有洁癖。",0)
+			MES(MILLIAM,"总是精心梳理，\n但今早睡过头了，所以没时间……。",0)
+			MES(MILLIAM,"师傅是\n绝对不允许我迟到的……\n……唉，好烦好烦。",0)
+			MES_close(MILLIAM)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"哈哈，果然是师傅呢……",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾尔雯先頭")
+			else
+			{
+				MES(PARTNER,"（嗯，我们也是\n  早上起床很痛苦呢……）",0)
+				MES_close(PARTNER)
+			}
+			//★梅丽安【くせっ毛】
+			F_set_note(MILLIAM,1)
+			F_set(MILLIAM)
+			MOT(MILLIAM,150,15)
+		}
+	//　　★繰り返し
+		else
+		{
+			look_chr( MILLIAM, GASHREA,"Bone_Head")
+			MES(MILLIAM,"师傅……\n正在改造那个引擎呢。",0)
+			MES(MILLIAM,"好像是在精心的调试。",0)
+			look_off(MILLIAM)
+			MES(MILLIAM,"师傅，最擅长\n搞那个～……",0)
+			MES(MILLIAM,"但一旦聊到过去的事他就会喋喋不休，\n你和他说话的时候要注意点哦。",0)
+			MES_close(MILLIAM)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※工房カウンタ～にいる。
+	if( F1_15_GoVillage )
+	{
+		if(!F_MILLIAM)
+		{
+			MES(MILLIAM,"现在正在接受\n联络信件中。",0)
+			MES(MILLIAM,"其实应该在两三天前\n就应该到了……\n不知怎么迟来了。",0)
+			MES(MILLIAM,"嗯，不管怎么说\n今天到了就好了。",0)
+			MES(MILLIAM,"要是和之后的贸易单撞车了\n就麻烦了。",0)
+			MES_close(MILLIAM)
+
+//			MES(MILLIAM,"今天正好是\n有飞机要着陆。",0)
+//			MES(MILLIAM,"今日有一架联络机\n和一架商贸机要着陆。",0)
+//			MES(MILLIAM,"但是……比起预定的时间\n来的迟了点。",0)
+//			MES(MILLIAM,"其实，联络机\n应该已经来了。",0)
+//			MES_close(MILLIAM)
+
+			F_set(MILLIAM)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MILLIAM,"哦，顺便一提\n师傅正在工作，所以心情不太好。",0)
+			MES(MILLIAM,"不过，都是些平常事。\n如果他发火了请别在意哦。",0)
+			MES_close(MILLIAM)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※工房カウンタ～にいる。
+	if( F1_01_GameStart )
+	{
+		if(!F_MILLIAM)
+		{
+			MES(MILLIAM,"顺便一提，这里的\n电子装置大部分都是\n师傅无聊打发时间做的。",0)
+			MES(MILLIAM,"这种小玩意\n一下子就能做好的。",0)
+			MES(MILLIAM,"啊，找师傅的话在里面哦。",0)
+			MES(MILLIAM,"呵呵，虽然是个嗓门很大\n有点可怕的人。",0)
+			MES_close(MILLIAM)
+			F_set(MILLIAM)
+		}
+		else
+		//　　☆繰り返し
+		{
+			MES(MILLIAM,"里面的就是我的师傅哦。",0)
+			MES(MILLIAM,"这个工房的老大兼，\n飞机场的负责人。",0)
+			MES(MILLIAM,"呵呵，虽然是个大嗓门\n且分外严厉的人。",0)
+			MES(MILLIAM,"但其实为人，\n还是相当温和的。",0)
+			MES_close(MILLIAM)
+		}
+	}
+}
+
+
+
+Tuto_MILLIAM
+{
+	//●チュ～トリアル：ガジェット
+	Load_BMP(20,"sys\\tuto06.itm","0")
+	menuBMP(3,	20,	0,0,288,384)
+
+	//──────────────────────────────
+	//▼③⑤初回
+	if(F2_00_GoForest && !F3_00_GoMoonCastle)
+	{
+		MES(MILLIAM,"嘿，是拉古那还有\n艾尔雯……对吧。",0)
+		MES(MILLIAM,"好像是在冒险呢。\n经常听到你们的传言呢。",0)
+		MES_close(MILLIAM)
+
+		MES(RAGNA,"哈哈哈，是吗？",0)
+		MES(RAGNA,"本来没打算\n那么惹人……注目的。",0)
+		MES_close(RAGNA)
+
+		MES(PARTNER,"呵，果然高贵的气质\n还是藏不住\n一不小心就会流露出来呢……",0)
+		MES_close(PARTNER)
+
+	//　　拉古那に冷や汗エモ～ション。
+		look_chr(RAGNA,PARTNER,"Bone_Head")
+		EMO(RAGNA,EMO_HIYAASE)
+		wait(30)
+
+		MES(RAGNA,"（不，公主的话\n我觉得不食人间烟火这点\n比较惹人注目……）",0)
+		MES_close(RAGNA)
+
+	//	name2(MILLIAM)
+		MES(MILLIAM,"呵呵，好像发生了许多事呢。",0)
+		look_off(RAGNA)
+		MES(MILLIAM,"就把这个\n交给你们俩吧。",0)
+		MES_close(MILLIAM)
+
+	}
+	else
+	//──────────────────────────────
+	//▼①②初回
+	//if(F1_01_GameStart && !F2_00_GoForest)
+	{
+
+		MES(MILLIAM,"嘿，拉古那……",0)
+		rot_chr(MILLIAM,30,PARTNER)
+		MES(MILLIAM,"哦……？\n诶，这么快就带了个女孩子啊。",0)
+		MES(MILLIAM,"呵呵，真能干啊。",0)
+		MES_close(MILLIAM)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"啊～，不是的\n不是那样子的……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		rot_chr(PARTNER,30,MILLIAM)
+		MES(PARTNER,"唔，完全搞错了。",0)
+		MES(PARTNER,"这家伙是我带来的。",0)
+		MES_close(PARTNER)
+
+	//	name2(MILLIAM)
+		rot_chr(MILLIAM,30,PARTNER)
+		MES(MILLIAM,"噗……",0)
+		MES(MILLIAM,"啊哈哈哈……！",0)
+		MES(MILLIAM,"是，是么是么。\n是你把拉古那带来了呀。",0)
+		MES_close(MILLIAM)
+
+	//　　艾尔雯に？エモ～ション。
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+		
+		MES(RAGNA,"（哈，真是的\n是不是被误解了呀……）",0)
+		MES_close(RAGNA)
+
+		MES(MILLIAM,"哦呀，真是有趣啊……",0)
+		MES_close(MILLIAM)
+
+	//　　梅丽安にＰＡエモ～ション。
+		EMO(MILLIAM,EMO_PA)
+		wait(30)
+
+		rot_chr(MILLIAM,30,RAGNA)
+		MES(MILLIAM,"啊，对了对了，差点忘记了\n重要的事情。",0)
+		MES(MILLIAM,"这个交给拉古那你们吧。",0)
+		MES_close(MILLIAM)
+
+	}
+
+//　　梅丽安，何かを差し出すような仕草。
+	MOT(MILLIAM,151,10)
+
+
+//	name("アイテム入手テキスト")
+//	MES(this,"得到额外挂件『迷你地图』。",0)
+//	MES_close(this)
+
+	get_item(104,1,0)
+	wait_key(0)
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+	MOT(MILLIAM,150,10)
+
+//	name2(MILLIAM)
+	MES(MILLIAM,"这是我的试验作，\n能够表示周围地形与敌人的\n电子装置。",0)
+	MES_close(MILLIAM)
+
+//	name("先頭キャラ")
+	MES(PLAYER1,"电子装置……？",0)
+	MES_close(PLAYER1)
+
+//	name2(MILLIAM)
+	MES(MILLIAM,"嗯，就是拥有在画面上\n将许多东西标志出来\n的辅助功能的装置。",0)
+	MES(MILLIAM,"我们这里除了迷你地图\n也有许多其他有用的\n电子装置。",0)
+	MES_close(MILLIAM)
+
+//	name2(RAGNA)
+	MES(RAGNA,"诶，电子装置啊……",0)
+	MES_close(RAGNA)
+
+//　　※一枚絵表示。
+
+	menu(3,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+	menu(3,	0,	176, 48,  0,	288, 384,	40,100,0)
+	SE(043,PLAYER1)
+	wait(40)
+	wait_key(0)
+	menu(3,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//	wait(30)
+
+	MES(RAGNA,"非常有趣的功能呢。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"哼哼，你说还有很多\n意思是有很多种不同的装置吧？",0)
+	MES_close(PARTNER)
+
+//	name2(MILLIAM)
+	MES(MILLIAM,"呵呵，有很多不同的种类\n在冒险中一定用的上。",0)
+	MES(MILLIAM,"想买什么的时候，\n请到这个收款处说一声。",0)
+	MES_close(MILLIAM)
+
+	//──────────────────────────────
+	//	name("□拉古那先頭")
+	if(GW_MAN==1)
+	{
+		MES(RAGNA,"哦，多谢照顾！",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	{
+	//	name("□艾尔雯先頭")
+		MES(PARTNER,"嗯，让我\n看看吧。",0)
+		MES_close(PARTNER)
+		wait_MES(PARTNER)
+	}
+	//──────────────────────────────
+
+
+	F_set(F0_06_TutoGadget)
+	//★梅丽安【技師兼販売係】
+	F_set_note(MILLIAM,0)
+
+	if( F2_14_TalkEnemy && !F3_00_GoMoonCastle)//フラグ⑤之みＬＦをたて，チュ～トリアル直後かどうかを判定。
+		F_set(MILLIAM)
+
+}
+
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+

@@ -1,0 +1,1589 @@
+//──────────────────────────────
+//	name("◆クレース（旅行者）Cleese")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_CLEESE
+{
+	TK_begin()
+
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(CLEESE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,CLEESE)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,CLEESE)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CLEESE)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CLEESE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CLEESE)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CLEESE)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,CLEESE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　※モンブランを使い魔にするイベント後、クレースの通常一般メッセージ。
+	if( F6_05_EndSixth )
+	{
+		rot_chr(CLEESE,30,PLAYER1)
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//クレース
+		MOT(CLEESE,150,15)
+		if(!F_CLEESE)
+		{
+			MES(CLEESE,"僕ねー、次はもっと南の方を\n旅しようと思ってるんですよー。",0)
+			MES(CLEESE,"ふふ、かわいい\nお供も出来たことだし……",0)
+			MES(CLEESE,"これからが楽しみだなー㈱",0)
+			MES_close(CLEESE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（コイツ……\n  実は最強なのか……？）",0)
+			MES_close(RAGNA)
+			
+			F_set(CLEESE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CLEESE,"僕ねー、次はもっと南の方を\n旅しようと思ってるんですよー。",0)
+			MES(CLEESE,"ふふ、かわいい\nお供も出来たことだし……",0)
+			MES(CLEESE,"これからが楽しみだなー㈱",0)
+			MES_close(CLEESE)
+		}
+		rot_chr(CLEESE,30,MONTBLANC)
+		MOT(CLEESE,153,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　※星降りの里、入り口付近にいる。
+	if( F6_00_GoToMeru )
+	{
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//クレース
+		MOT(CLEESE,150,10)
+	//　　※初回イベント
+		rot_chr(CLEESE,30,PLAYER1)
+		if(!FE_12_TalkCleese)
+		{
+			rot_chr(RAGNA,30,CLEESE)
+			rot_chr(PARTNER,30,CLEESE)
+			rot_chr(PET,30,CLEESE)
+		//──────────────────────────────
+		//	name("⇒クレースと会った事がある場合")
+		//──────────────────────────────
+			if(FE_FF_MeetCleese)
+			{
+			//　　ラグナ・アルウェンに！エモーション。
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PARTNER,EMO_BIKKURI)
+				
+				//──────────────────────────────
+				//　　（フラグ⑪であった事がある場合はルゥにも！エモーション）
+				if(FE_11_TalkCleese)
+				{
+					EMO(PET,EMO_BIKKURI)
+					wait(30)
+				//	name("⇒フラグ⑪で会っている場合")
+					MES(PET,"あ、あんたは……",0)
+					MES_close(PET)
+
+					if(FE_01_MeetCleese)
+					{
+						MES(PARTNER,"以前道に迷っておった\n旅行者ではないか。",0)
+						MES_close(PARTNER)
+					}
+					else
+					{
+						MES(RAGNA,"前に道に迷ってた\n旅行者じゃねえか。",0)
+						MES_close(RAGNA)
+					}
+				}
+				//	name("⇒フラグ①②③⑤⑩のいずれかで会っており、アルウェン先頭の場合")
+				else
+				if(FE_01_MeetCleese && GW_MEN==0)
+				{
+					wait(30)
+					MES(PARTNER,"そ、そなたは……",0)
+					MES(PARTNER,"以前道に迷っておった\n旅行者ではないか。",0)
+					MES_close(PARTNER)
+				}
+				//	name("⇒それ以外")
+				else
+				{
+					wait(30)
+					MES(RAGNA,"あ、あんたは……",0)
+					MES(RAGNA,"前に道に迷ってた\n旅行者じゃねえか。",0)
+					MES_close(RAGNA)
+				}
+				//──────────────────────────────
+				MES(CLEESE,"ガチガチ……\nお、お久しぶりですね～。",0)
+				MES_close(CLEESE)
+				
+			//	name2(RAGNA)
+				MES(RAGNA,"久しぶりっていうか、\nどうやってこんな所に……",0)
+				MES_close(RAGNA)
+			}
+		//	name("⇒クレースと会った事がない場合")
+			else
+			{
+				MES(CLEESE,"ガチガチ……\nあ、こんにちは……",0)
+				MES_close(CLEESE)
+
+				//　　ラグナたちに？エモーション。
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PARTNER,EMO_HATENA)
+				EMO(PET,EMO_HATENA)
+				wait(30)
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"あ、あんたは……？",0)
+					MES(RAGNA,"この里の人間じゃねえよな……？",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"そなたは……？",0)
+					MES(PARTNER,"この里の者ではないようだが……",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+			}
+			
+			MES(CLEESE,"いやー、それが……",0)
+			MES(CLEESE,"イルバードのあちこちを\n歩いているうちに、ふと気がついたら\n雪が降ってきたんですよ。",0)
+			MES(CLEESE,"それがすごい吹雪になって……\nもうずーっと歩き続けて\nようやく人里に着いたんです。",0)
+			MES(CLEESE,"……っていうか、\nここはどこですか？",0)
+			MES_close(CLEESE)
+
+		//　　ラグナたちに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PARTNER,EMO_AOZAME)
+			EMO(PET,EMO_AOZAME)
+			wait(30)
+
+/*			MES(PET,"い、一体どういう\n方向感覚してるのよ……",0)
+			MES_close(PET)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"私はもはや言葉も無いぞ……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"と、とりあえず、だ……",0)
+			MES(RAGNA,"山の中で\n遭難しなくて良かったな……",0)
+			MES_close(RAGNA)
+*/
+
+			MES(PARTNER,"そ、それは……",0)
+			MES(PARTNER,"歩いているうちに\n星ヶ峰に踏み込んだのではないか？",0)
+			MES_close(PARTNER)
+
+			MES(PET,"それでこんなトコまで\n来ちゃうなんて……",0)
+			MES(PET,"一体どういう\n方向感覚してるのよ……",0)
+			MES_close(PET)
+
+			MES(RAGNA,"と、とりあえず、だ……",0)
+			MES(RAGNA,"山の中で\n遭難しなくて良かったな……",0)
+			MES_close(RAGNA)
+
+			F_set(FE_12_TalkCleese)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+	//──────────────────────────────
+		//──────────────────
+		//金貨を返すイベント
+		//──────────────────
+		else
+		if(IT139>0)
+		{
+		//　　クレースにＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+
+			rot(CLEESE,100,160)
+			MOT(CLEESE,2,0)
+			fade_in(0,60,BLACK)
+			wait_fade()
+		}
+		//──────────────────────────────
+		//▼　わらしべイベント
+		//	name("12．クレース（星降りの里）		『ばんそうこう』⇒『アルジェスの地図』")154
+		//──────────────────────────────
+		else
+		if(FV_11_Warasi11_Vml && !FV_11_Warasi13_Cls)
+		{
+			//──────────────────────────────
+			if(!F_CLEESE)
+			{
+			//	name("⇒初回")
+				MES(CLEESE,"ふう、やれやれ。\n霜焼けをたくさん\n作っちゃったなぁ……",0)
+				MES_close(CLEESE)
+
+			//　　クレースにＰＡエモーション。
+				EMO(CLEESE,EMO_PA)
+				wait(30)
+				
+				MES(CLEESE,"あ、もしかして……\n『ばんそうこう』を持ってますか～？",0)
+				MES(CLEESE,"わーい、助かったぁ！\nそれ、是非譲ってください～。",0)
+				MES_close(CLEESE)
+
+				F_set(CLEESE)
+			}
+			else
+			{
+			//	name("⇒２回目以降")
+				MES(CLEESE,"その『ばんそうこう』\n譲ってくれませんか～？",0)
+				MES(CLEESE,"実は、霜焼けをたくさん\n作っちゃったんですよ～。",0)
+				MES_close(CLEESE)
+			}
+			//──────────────────────────────
+			
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【やめる】
+			MES_pos(PLAYER1,"??W9【どうぞ】\n【ダメ、譲れない】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			//──────────────────────────────
+			//	name("⇒【どうぞ】")
+			//──────────────────────────────
+			if(WK_YESNO==1)
+			{
+				MES(CLEESE,"わーい、\nありがとうございます～。",0)
+				MES(CLEESE,"ふふ、実は僕って\nよく怪我しちゃうんですよね～。",0)
+				MES(CLEESE,"一度なんて、歩いていた崖が崩れて\n山肌から転落したことがあって……",0)
+				MES(CLEESE,"あのときは擦り傷を\nたくさん作っちゃったなー。",0)
+				MES_close(CLEESE)
+
+			//　　ラグナたちに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				EMO(PET,EMO_AOZAME)
+				wait(30)
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+				//	name("⇒ラグナ先頭")
+					MES(RAGNA,"よ、よく無事だったな。（命が）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("⇒アルウェン先頭")
+					MES(PARTNER,"す、擦り傷で\n済むものなのか……？",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				MES(PET,"ホント、ドジなのか\n強運なのか分からない人間ねぇ……",0)
+				MES_close(PET)
+
+			//　　クレースにＰＡエモーション。
+//				EMO(CLEESE,EMO_PA)
+//				wait(30)
+				
+				MES(CLEESE,"あ、そうだ。\n何かお返しをしないと\nいけませんね～。",0)
+				MES(CLEESE,"そうだ、皆さんには\n僕の地図を差し上げます～。",0)
+				MES(CLEESE,"かなり正確な地図だから、\nきっと何かのお役に立ちますよ～。",0)
+				MES_close(CLEESE)
+
+			//	name("アイテム入手テキスト")
+			//	MES(this,"『アルジェスの地図』を手に入れた。",0)
+				//―――――――――――――――――――――――
+				fade_in(30,10,BLACK)
+
+				get_item(153,-1,1)
+				get_item(154,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//―――――――――――――――――――――――
+
+			//　　ラグナたちにしばらく・・・エモーション。
+				wait(20)
+				EFF_chr(25124,PLAYER1,0,100,0,"Bone_Head")
+				EFF_chr(25124,PLAYER2,0,100,0,"Bone_Head")
+				EFF_chr(25124,PET,0,100,0,"Bone_Head")
+				wait(80)
+
+				MES(PET,"あ……あるじぇす？",0)
+				MES_close(PET)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"ああ、グランヴァレン南西の\n辺境大陸だな……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"そなた……\nもしやとは思うが……",0)
+				MES(PARTNER,"この地図を頼りに\nイルバードを歩いておったのか……？",0)
+				MES_close(PARTNER)
+
+			//　　クレースに？エモーション。
+				EMO(CLEESE,EMO_HATENA)
+				wait(30)
+				rot_chr(CLEESE,30,PARTNER)
+				MES(CLEESE,"ええ、そうですけど～？",0)
+				MES(CLEESE,"あ、所々についてるマークが\n僕の野宿したポイントですよ～。",0)
+				MES(CLEESE,"ふふ、今は右下の\n廃墟の辺りですかね～。",0)
+				MES_close(CLEESE)
+
+			//　　チーンというＳＥ。
+//				MES(RAGNA,"C4◆チーンというＳＥ。",0)
+//				MES_close(RAGNA)
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				EMO(PET,EMO_AOZAME)
+				wait(30)
+
+				rot_chr(RAGNA,30,PARTNER)
+				rot_chr(PARTNER,30,RAGNA)
+				rot_chr(PET,30,PARTNER)
+				wait(20)
+				MES(RAGNA,"無理だ……\nこの男は何か無理だぜ……",0)
+				MES_close(RAGNA)
+
+			//	name2(PET)
+				MES(PET,"ひ、姫さま……\nあたしまで何だか眩暈が……",0)
+				MES_close(PET)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"うむ……この男の方向音痴は\nこの先も絶対に直らぬであろうな……",0)
+				MES_close(PARTNER)
+
+				wait(10)
+				EMO(CLEESE,EMO_HATENA)
+				wait(30)
+
+			//　　一旦暗転し、操作許可を戻す。
+				fade_in( 100, 60, BLACK)	//フェードアウト
+				wait_fade()
+
+				rot_chr(RAGNA,120,CLEESE)
+				rot_chr(PARTNER,120,CLEESE)
+				rot_chr(PET,120,CLEESE)
+				//手動向き戻し
+				rot(CLEESE,120,160)
+				MOT(CLEESE,2,0)
+
+				fade_in( 0, 30, BLACK)	//フェードイン
+				wait_fade()
+				
+				F_reset(CLEESE)
+				F_set(FV_11_Warasi13_Cls)
+			}
+			//──────────────────────────────
+			//	name("⇒【ダメ、譲れない】")
+			//──────────────────────────────
+			else
+			{
+				MES(CLEESE,"そ、そうですか……\nがっかり。",0)
+				MES_close(CLEESE)
+			}
+		}
+		else
+		{
+			
+ 			if(!F_CLEESE)
+			{
+				MES(CLEESE,"ガチガチ、さ、さむい……",0)
+				MES(CLEESE,"突然雪が降ってくるなんて、\nイルバードは\n天候が不安定みたいですね。",0)
+				MES(CLEESE,"さっきも突風が吹いていたし……",0)
+				MES_close(CLEESE)
+				F_set(CLEESE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(CLEESE,"やっぱりイルバードは\n天候が不安定みたいですねー……",0)
+				MES_close(CLEESE)
+			}
+			
+		//──────────────────────────────
+		//	name("⇒幸運の金貨を返却している場合")
+			if(FE_03_KinkaCleese)
+			{
+				MES(CLEESE,"今度旅をするときは\nもっと南の方にしようかなぁ……",0)
+				MES_close(CLEESE)
+				F_set(CLEESE)
+			}
+			else
+			{
+			//	name("⇒それ以外")
+				MES(CLEESE,"もう幸運の金貨のことは諦めて、\n今度旅をするときは\nもっと南の方にしようかなぁ……",0)
+				MES_close(CLEESE)
+			}
+		}
+		MOT(CLEESE,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	//　　※森入り口マップでフリームーブしている。
+	if( F5_00_HearLunar )
+	{
+		rot_chr(CLEESE,30,PLAYER1)
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//クレース
+		MOT(CLEESE,150,10)
+		if(!FE_11_TalkCleese)
+		{
+			EV("EV_11_TalkCleese")
+		}
+	//──────────────────────────────
+	//　　※クレースは、１/４の確立で配置される。
+		//	金貨を持っていたら金貨を返すイベント
+		else
+		if(IT139>0)
+		{
+		//　　クレースにＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+
+			MOT(CLEESE,2,0)
+			fade_in(0,60,BLACK)
+			wait_fade()
+		}
+		else
+		{
+			//　　※以下通常一般メッセージ。
+			if(!F_CLEESE)
+			{
+				MES(CLEESE,"あれ、また会いましたね～。",0)
+				MES(CLEESE,"実はまだ森から\n出られない気がするんですけど……",0)
+				MES(CLEESE,"きっと勘違いってやつですね～。\nあは☆",0)
+				MES(CLEESE,"ここはきっと、\nもう森の外なんですから～。",0)
+				MES_close(CLEESE)
+
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（もう、どうやって\n  声を掛けりゃいいんだか……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("⇒オデッサ先頭")
+				{
+					MES(PARTNER,"（うーん、下手に道案内しても\n  逆方向に行っちまうんだろうねえ……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				F_set(CLEESE)
+			}
+		//　　★繰り返し
+			else
+			{
+				if(FE_03_KinkaCleese)
+				{
+				//	name("⇒幸運の金貨を返却している場合")
+					MES(CLEESE,"あ、そういえば……",0)
+					MES(CLEESE,"さっき、変わった虫みたいなのを\n見かけましたよ～？",0)
+					MES(CLEESE,"３匹で、笑ったり喧嘩しながら\nフワフワ飛んで行っちゃったんです。",0)
+					MES(CLEESE,"うーん、あれは一体\n何だったのかな～？",0)
+					MES_close(CLEESE)
+				}
+				else
+				{
+				//	name("⇒それ以外")
+					MES(CLEESE,"それにしても……",0)
+					MES(CLEESE,"僕の『幸運の金貨』は\nどこに行っちゃったのかなぁ～……",0)
+					MES(CLEESE,"湖で溺れたときに無くして、\n結局見つからなかったんですよね。",0)
+					MES(CLEESE,"はあ、家に帰ったら\nジイちゃんにうんと\n叱られちゃうなぁ……",0)
+					MES_close(CLEESE)
+				}
+			}
+		}
+		MOT(CLEESE,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	//　　※大道芸人ステージで布団を敷いて寝ている。（掛け布団だけで可）
+	//　　　クレースにＺＺＺエモーション出しっぱなし。
+	if( F4_09_GoShrineMia)
+	{
+	//★クレースに会った
+		F_set(FE_01_MeetCleese)
+		if(!F_CLEESE)
+		{
+			MES(CLEESE,"うーん、むにゃむにゃ……",0)
+			MES(CLEESE,"あはは、ここが天国ですか～？",0)
+			MES_close(CLEESE)
+
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"そ、そろそろ目を覚ました方が\nいいんじゃないか……？",0)
+				MES_close(RAGNA)
+			}
+			//	name("⇒アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"（一体どこまで\n  トリップしておるのだ……）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			F_set(CLEESE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CLEESE,"うーん、むにゃむにゃ……",0)
+			MES(CLEESE,"あはは、ここが天国ですか～？",0)
+			MES_close(CLEESE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※アルッテ、噴水右辺りで噴水を見ている。
+	if( F4_00_StartSolo )
+	{
+		rot_chr(CLEESE,30,PLAYER1)
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//クレース
+		MOT(CLEESE,150,10)
+
+		//	金貨を持っていたら金貨を返すイベント
+		if(IT139>0)
+		{
+		//　　クレースにＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+
+			rot(CLEESE,100,120)
+			MOT(CLEESE,2,0)
+			fade_in(0,60,BLACK)
+			wait_fade()
+		}
+		else
+		if(!F_CLEESE)
+		{
+			MES(CLEESE,"やっとアルッテに到着しましたよ。\nいや～、長かったなぁ～。",0)
+			MES(CLEESE,"それにしても、町に入るのに\n崖をよじ登らなくちゃいけないなんて……",0)
+			MES(CLEESE,"ふう、意外と大変だったな～。",0)
+			MES_close(CLEESE)
+
+			//──────────────────────────────
+			//	name("⇒スバルがいて、ラグナ先頭")
+			if(F4_02_GoVillage2)
+			{
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"また滅茶苦茶な道から……",0)
+					MES_close(RAGNA)
+				}
+				//	name("⇒スバル先頭")
+				else
+				{
+					MES(PARTNER,"あ、ボクと同じルートだ……",0)
+					MES_close(PARTNER)
+
+				//　　ラグナに冷や汗エモーション。
+					EMO(RAGNA,EMO_HIYAASE)
+					wait(30)
+				
+					MES(RAGNA,"２人とも……これからは\n普通に門を使えよな。",0)
+					MES_close(RAGNA)
+				}
+			}
+			//──────────────────────────────
+
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+			look(CLEESE,"Bone_Head",0,		0,2,0,			0,30,0)
+			MES(CLEESE,"でも、なんだか\n町の中が散らかっている\nみたいですけど……",0)
+			look(CLEESE,"Bone_Head",0,		0,2,0,			0,0,0)
+			MES(CLEESE,"うーん、どうしたんだろう。\n僕の気のせいかなぁ……？",0)
+			MES_close(CLEESE)
+
+			F_set(CLEESE)
+		}
+	//　　★繰り返し
+	//──────────────────────────────
+		else
+		{
+		//	name("⇒幸運の金貨を返却している場合")
+			if(FE_03_KinkaCleese)
+			{
+				MES(CLEESE,"いや～、でも\nようやくアルッテに到着しました。",0)
+				MES(CLEESE,"ふう、本当に長かったなぁ～。",0)
+				MES(CLEESE,"なんだか散らかっているような\n気がしますけど……",0)
+				MES(CLEESE,"うーん、きっと\n僕の気のせいですよねー。",0)
+				MES_close(CLEESE)
+			}
+		//	name("⇒それ以外")
+			else
+			{
+				MES(CLEESE,"実は、湖で溺れたときに\n『幸運の金貨』を\n無くしちゃったんですけど……",0)
+				MES(CLEESE,"あれだけ探しても見つからないんだし、\nもう仕方ないですよねー。",0)
+				MES(CLEESE,"そろそろ諦めて、\n家に帰ろうかな～……",0)
+				MES_close(CLEESE)
+			}
+		}
+		MOT(CLEESE,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※廃坑入り口にいる。
+	if( F3_00_GoMoonCastle )
+	{
+	//★クレースに会った
+		F_set(FE_01_MeetCleese)
+		rot_chr(CLEESE,30,PLAYER1)
+		MOT(CLEESE,2,10)
+		//	金貨を持っていたら金貨を返すイベント
+		if(IT139>0)
+		{
+
+		//　　クレースにＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+
+			rot(CLEESE,100,37)
+			fade_in(0,60,BLACK)
+			wait_fade()
+
+		}
+		else
+		if(!F_CLEESE)
+		{
+			MES(CLEESE,"ふう、今晩は\nこのあたりで野宿しようかな。",0)
+			MES(CLEESE,"今日も歩き回って\n疲れちゃったしなぁ～。",0)
+			MES_close(CLEESE)
+			
+			//──────────────────────────────
+			//	name("⇒幸運の金貨を返却していない場合")
+			if(!FE_03_KinkaCleese)
+			{
+				MES(CLEESE,"結局『幸運の金貨』も\n見つからなかったし……",0)
+				MES_close(CLEESE)
+			}
+
+			//──────────────────────────────
+			
+		//　　クレースにＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+			
+			MES(CLEESE,"あ、大丈夫ですよ。\n僕はちゃんと寝袋を持ってますから。",0)
+			MES_close(CLEESE)
+
+			MES(PARTNER,"（ね、寝袋……？）",0)
+			MES_close(PARTNER)
+
+		//──────────────────────────────
+		//	name("⇒クレースに会ったことがない")
+			if(!FE_FF_MeetCleese)
+			{
+				MES(RAGNA,"（こんな時に\n  随分とユルい奴だな……）",0)
+				MES_close(⇒あった事がある。)
+			}
+			else
+			{
+			//	name("⇒あった事がある。")
+				MES(RAGNA,"（相変わらず\n  ユルい奴だよな……）",0)
+				MES_close(RAGNA)
+			}
+		//──────────────────────────────
+
+			F_set(CLEESE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CLEESE,"ふふ、僕はこう見えても\n旅のプロですからね。\n野宿なんてお手の物ですよー。",0)
+			MES(CLEESE,"ちなみに、僕の特技は\n死んだフリなんです。",0)
+			MES(CLEESE,"寝袋に入って丸くなってれば、\n大抵の魔物は襲ってこないんですよね～。",0)
+			MES_close(CLEESE)
+			
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			//★クレース【死んだフリ】
+			F_set_note(CLEESE,1)
+		}
+		MOT(CLEESE,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※ロアルタ村・風車小屋つき民家で、お茶をご馳走になっている。
+	if( F2_14_TalkEnemy )
+	{
+		//★クレースに会った
+		F_set(FE_01_MeetCleese)
+
+		//	金貨を持っていたら金貨を返すイベント
+		if(IT139>0)
+		{
+			look_chr( CLEESE, PLAYER1,"Bone_Head")
+
+		//　　クレースにＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+//			rot(CLEESE,30,350)
+			look_off(CLEESE)
+
+			fade_in(0,60,BLACK)
+			wait_fade()
+
+		}
+		else
+		if(!FE_03_KinkaCleese)
+		{
+			if(!F_CLEESE)
+			{
+			//　　※振り返らない。
+				MES(CLEESE,"ふう、あったまる～。",0)
+				MES(CLEESE,"いやあ、親切な人ばかりで\n助かっちゃったなぁ～。",0)
+				MES(CLEESE,"でも、これからどうしよう。\n『幸運の金貨』は\n湖に沈んじゃったみたいだし……",0)
+				MES(CLEESE,"もう諦めて、家に帰ろうかな～。",0)
+				MES_close(CLEESE)
+
+			//──────────────────────────────
+			//	name("⇒フラグ①②で話をした事がある場合")
+			//──────────────────────────────
+				if(FE_01_MeetCleese)
+				{
+					//──────────────────────────────
+					//	name("⇒ラグナ先頭")
+					if(GW_MAN==1)
+					{
+						MES(RAGNA,"（いや……\n  そもそも家に帰り着けるかが\n  問題だろ……）",0)
+						MES_close(RAGNA)
+					}
+					else
+					//	name("⇒アルウェン先頭")
+					{
+						MES(PARTNER,"（そもそも家まで\n  帰り着けるのかのう……？）",0)
+						MES_close(PARTNER)
+					}
+					//──────────────────────────────
+				}
+
+				F_set(CLEESE)
+			}
+		//　　★繰りかえし
+		//──────────────────────────────
+			else
+			{
+				MES(CLEESE,"あーでも、幸運の金貨を\n無くしちゃったし……",0)
+				MES(CLEESE,"これから運勢が\n下がらないか、心配だなぁ～。",0)
+				MES_close(CLEESE)
+
+				//──────────────────────────────
+				//	name("⇒フラグ①②で話をした事がある場合")
+				if(FE_01_MeetCleese)
+				{
+				//　　ラグナたちに冷や汗エモーション。
+					EMO(RAGNA,EMO_HIYAASE)
+					EMO(PARTNER,EMO_HIYAASE)
+					wait(30)
+					MES(RAGNA,"（金貨持ってても迷ってただろ……）",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"（うむ、明らかに運勢は関係ない……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+			}
+		}
+	//──────────────────────────────
+	//　　※幸運の金貨返却後の通常一般メッセージ。
+		else
+		{
+			if(!F_CLEESE)
+			{
+				MES(CLEESE,"ふう、あったまる～。",0)
+				look_chr( CLEESE, PLAYER1,"Bone_Head")
+				MES(CLEESE,"いやあ、親切な人ばかりで\n助かっちゃったなぁ～。",0)
+				MES(CLEESE,"よーし、幸運の金貨も\n返ってきたし……",0)
+				MES(CLEESE,"後は、家に帰る方法を\n探すだけですね～。",0)
+				MES_close(CLEESE)
+
+				//　　ラグナたちに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				wait(30)
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（家の住所、覚えてないのか……？）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"（もしや……家がどこにあるのか\n  忘れてしまったのかのう……？）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				F_set(CLEESE)
+			}
+			else
+			{
+				look_chr( CLEESE, PLAYER1,"Bone_Head")
+			//　　★繰りかえし
+				MES(CLEESE,"いやー、でも幸運の金貨も\n返ってきたし……",0)
+				MES(CLEESE,"これで運勢もバッチリですよー。",0)
+				MES_close(CLEESE)
+				look_off(CLEESE)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※神殿入り口マップで、座り込んでいる。
+	if( F2_00_GoForest )
+	{
+		MOT_SET(CLEESE,151,-1,403,403,-1,0)		//クレース
+//		MOT(CLEESE,151,10)
+//		rot_chr(CLEESE,30,PLAYER1)
+	//★クレースに会った
+		F_set(FE_01_MeetCleese)
+		
+	//　　※初回イベント
+		if(!FE_03_TalkCleese)
+		{
+			look_chr(CLEESE,PLAYER1,"Bone_Head")
+			MES(CLEESE,"はあ、ひどい目に遭っちゃいました。",0)
+			MES(CLEESE,"この辺りを歩いていたら、突然\n誰かに突き落とされちゃったんですよー。",0)
+			MES(CLEESE,"後ろから、『邪魔ニャ人間』\nとか聞こえたんですけど……",0)
+			MES(CLEESE,"あれは一体なんだったのかなぁ～……",0)
+			MES_close(CLEESE)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"（それはあのネコ野郎だろ……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（うむ、どうやらイルバード中を\n  ウロついておるようだな。）",0)
+			MES_close(PARTNER)
+
+		//　　クレースにＰＡエモーション。
+			look_off(CLEESE)
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+			
+		//　　きょろきょろする。
+			look(CLEESE,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(20)
+			look(CLEESE,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(40)
+			look(CLEESE,"Bone_Head",0,		0,2,0,			0,0,0)
+			
+			MES(CLEESE,"あれ、そういえば\nL337『幸運の金貨』L400のペンダントが\n見当たらないような……",0)
+			MES(CLEESE,"湖でおぼれたときに\n無くしちゃったのかなぁ……",0)
+			MES_close(CLEESE)
+
+		//　　ここでＬＦも立てておく。
+			F_set(FE_03_TalkCleese)
+
+			F_set(CLEESE)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		//	金貨を持っていたら金貨を返すイベント
+		if(IT139>0)
+		{
+		//　　クレースにＰＡエモーション。
+			EMO(CLEESE,EMO_PA)
+			wait(30)
+
+			MOT(CLEESE,151,15)
+			rot_chr(CLEESE,30,PLAYER1)
+			wait(10)
+
+			EV("COMEBACK_KINKA")
+			wait_EV("COMEBACK_KINKA")
+
+			MOT(CLEESE,150,0)
+			rot(CLEESE,100,324)
+
+			fade_in(0,60,BLACK)
+			wait_fade()
+
+		}
+		else
+		{
+			look_chr(CLEESE,PLAYER1,"Bone_Head")
+			if(!FE_03_KinkaCleese)
+			{
+				if(!F_CLEESE)
+				{
+					MES(CLEESE,"ふう、とんだ災難だったなぁ～。\n湖に突き落とされちゃうなんて……",0)
+					MES(CLEESE,"それに僕、\n実は泳げないんですよね～。",0)
+					MES(CLEESE,"溺れたときに、幸運の金貨も\n無くしちゃったみたいだし……",0)
+					MES(CLEESE,"はあ、あの金貨は\n大事なお守りだったのになぁ～。",0)
+					MES_close(CLEESE)
+
+					F_set(CLEESE)
+				}
+			//　　★繰り返し
+				else
+				{
+					MES(CLEESE,"あの幸運の金貨は、\n家に代々伝わるお守りなんですよ～。",0)
+					MES(CLEESE,"ジイちゃんから預かってたのに……\nはあ、無くしたら怒られるだろうなぁ……",0)
+					MES_close(CLEESE)
+				}
+			}
+			//──────────────────────────────
+			//　　※幸運の金貨返却後の通常一般メッセージ。
+			else
+			{
+				if(!F_CLEESE)
+				{
+					MES(CLEESE,"いやー、どうも\nありがとうございましたー。",0)
+					MES(CLEESE,"僕も少し休んだら、\n今度こそ家に帰ることにしますよ～。",0)
+					MES_close(CLEESE)
+
+				//──────────────────────────────
+				//	name("⇒フラグ①②で話をした事がある場合")
+				//──────────────────────────────
+					if(FE_01_MeetCleese)
+					{
+						//──────────────────────────────
+						//	name("⇒ラグナ先頭")
+						if(GW_MAN==1)
+						{
+							MES(RAGNA,"ああ、無事に帰れるといいな……",0)
+							MES_close(RAGNA)
+						}
+						else
+						//	name("⇒アルウェン先頭")
+						{
+							MES(PARTNER,"うむ、迷わず帰るのだぞ。",0)
+							MES_close(PARTNER)
+						}
+						//──────────────────────────────
+					}
+					
+					F_set(CLEESE)
+				}
+			//　　★繰り返し
+				else
+				{
+					MES(CLEESE,"いやー、どうも\nありがとうございましたー。",0)
+					MES(CLEESE,"僕も少し休んだら、\n今度こそ家に帰ることにしますよ～。",0)
+					MES_close(CLEESE)
+				}
+			}
+			look_off(CLEESE)
+		}
+//		MOT(CLEESE,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※ロアルタ村、神殿出口あたりをフリームーブ。
+	if( F1_15_GoVillage )
+	{
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//クレース
+		MOT(CLEESE,150,10)
+		rot_chr(CLEESE,30,PLAYER1)
+	//★クレースに会った
+		F_set(FE_01_MeetCleese)
+		if(!F_CLEESE)
+		{
+			MES(CLEESE,"あ、どうやら\n道に迷っちゃったみたいで……",0)
+			MES(CLEESE,"この村から出られないんですよ～。",0)
+			MES(CLEESE,"一体どうなってるのかなー？",0)
+			MES_close(CLEESE)
+
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"どうなってるも何も、\n出口はすぐそこだぞ……",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"いや、そなた。\n出口はすぐそこだぞ？",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+		//　　クレースに？エモーション。
+			EMO(CLEESE,EMO_HATENA)
+			wait(30)
+
+			F_set(CLEESE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CLEESE,"不思議なところですよね。\n村から出られないなんて……",0)
+			MES(CLEESE,"きっとイタズラ好きの\n精霊か何かが、\n僕の邪魔をしてるんですね～。",0)
+			MES_close(CLEESE)
+		}
+		MOT(CLEESE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※ロアルタ村で、村長と話している。
+	//　　※初回イベント。
+	if( F1_01_GameStart )
+	{
+		MOT_SET(CLEESE,150,-1,403,403,-1,0)		//クレース
+		MOT(CLEESE,150,10)
+	//★クレースに会った
+		F_set(FE_01_MeetCleese)
+		if(!FE_01_TalkCleese)
+		{
+		//　　クレース、ＰＡエモーションで振り返る。
+			EMO(CLEESE,EMO_PA)
+			rot_chr(CLEESE,30,PLAYER1)
+			wait(30)
+			MES(CLEESE,"あ、こんにちは～。",0)
+			MES(CLEESE,"いやあ、流石にイルバードは\n大きな大陸だなぁ。",0)
+			MES(CLEESE,"アルッテの町なんて、\n大きすぎて迷っちゃいますよね。",0)
+			MES_close(CLEESE)
+
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"あ、ああ……\n（迷いはしないと思うが……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"ふむ……？\n（迷うほどではないと思うが。）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			MES(CLEESE,"実は僕も、アルッテには\nいい宿があると聞いて\n探していたんですけど……",0)
+			MES(CLEESE,"この方が、ここは\nロアルタ村だって言うんですよ。",0)
+			MES(CLEESE,"おっかしいな～……",0)
+			MES_close(CLEESE)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（方向音痴……？）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（方向音痴だな……）",0)
+				MES_close(PARTNER)
+			}
+			else
+			//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"（方向音痴……？）",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（方向音痴だな……）",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+
+			F_set(FE_01_TalkCleese)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			rot_chr(CLEESE,30,PLAYER1)
+			if(!F_CLEESE)
+			{
+				MES(CLEESE,"ところでここって、\n《イルバード》ですよね～。",0)
+				MES(CLEESE,"はあ、やっぱり\n乗る飛行機を間違えたのかな～。",0)
+				MES_close(CLEESE)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"根本的にそこからかよ……",0)
+					MES_close(RAGNA)
+
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"根本的に間違っておるな……",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				MES(CLEESE,"いやあ、旅を始めてかれこれ８年。\n僕もそろそろ故郷に帰ろうかと\n思ってるんですけどねー。",0)
+				MES_close(CLEESE)
+
+			//　　クレースに・・・エモーション。
+				EMO(CLEESE,EMO_TENTEN)
+				wait(30)
+				MES(CLEESE,"どうすれば帰れるのか\n忘れちゃったんですよー。\nあははははー……",0)
+				MES_close(CLEESE)
+			//　　ラグナたちに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				wait(30)
+
+				//★クレース【方向音痴】
+				F_set_note(CLEESE,0)
+				F_set(CLEESE)
+			}
+			else
+			//　　★繰り返し
+			{
+				MES(CLEESE,"でも村長さんによると、\nこの近くに古い神殿があるそうですね～。",0)
+				MES(CLEESE,"うーん、ついでだから\n観光して行こうかな～。",0)
+				MES_close(CLEESE)
+			}
+		}
+		MOT(CLEESE,50,10)
+	}
+	
+	F_set(FE_FF_MeetCleese)
+	TK_end()
+}
+
+
+
+//──────────────────────────────
+//▼幸運の金貨を返すイベント
+//　　※フラグ③～⑫で起こるイベント。
+//　　※幸運の金貨を持っている状態だと、このイベントが優先されます。
+//　　　各フラグで初回イベントがある場合は、そっちが優先されます。
+//　　　フラグ⑩では、クレースが寝ているため発生しません。
+//──────────────────────────────
+COMEBACK_KINKA
+{
+	MES(CLEESE,"あれ～、\nそのL337『幸運の金貨』L400は……",0)
+	MES_close(CLEESE)
+
+//	name2(RAGNA)
+	MES(RAGNA,"ああ、ダンジョンの中で\n拾ったんだが……",0)
+	MES(RAGNA,"あんたの持ち物だったのか。",0)
+	MES_close(RAGNA)
+
+//	name2(CLEESE)
+	MES(CLEESE,"ええ、多分そうだと思います～。",0)
+	MES_close(CLEESE)
+
+	//────────────────────
+	//	name("⇒フラグ③の場合")
+	if(F2_00_GoForest && !F2_14_TalkEnemy)
+	{
+		MES(CLEESE,"さっき誰かに\n突き落とされちゃった拍子に\n無くしちゃったんですよねー。",0)
+		MES_close(CLEESE)
+	}
+//	name("⇒それ以外")
+	else
+	{
+		MES(CLEESE,"前に神殿の前の湖で、誰かに\n突き落とされちゃったことがあって。",0)
+		MES(CLEESE,"そのときに無くしちゃった\nみたいなんですよねー。",0)
+		MES_close(CLEESE)
+	}
+	//────────────────────
+	MES(CLEESE,"そういえば、『邪魔ニャ人間』\nとか聞こえた気がするんですけど……",0)
+	MES(CLEESE,"うーん、あれは\n一体何だったのかな～？",0)
+	MES_close(CLEESE)
+	
+	//────────────────────
+	//	name("⇒フラグ③で、フラグ③初回を見ている場合")
+	if(F2_00_GoForest && !F2_14_TalkEnemy && FE_03_TalkCleese)
+	{
+		MES(PARTNER,"うむ、それは災難だったのう……",0)
+		MES_close(PARTNER)
+	}
+	//────────────────────
+	//それ以外
+	else
+	{
+	//　　ラグナたちに冷や汗エモーション。
+		EMO(RAGNA,EMO_HIYAASE)
+		if( !F4_00_StartSolo )//パートナーがいる
+			EMO(PARTNER,EMO_HIYAASE)
+		else
+		if( F4_02_GoVillage2 && !F5_00_HearLunar )
+			EMO(PARTNER,EMO_HIYAASE)
+		else
+		if( F5_08_JoinOdessa && !F5_13_KillDygald )
+			EMO(PARTNER,EMO_HIYAASE)
+		else
+		if( F6_00_GoToMeru )
+			EMO(PARTNER,EMO_HIYAASE)
+
+		if( F5_00_HearLunar )//ルゥがいる
+			EMO(PET,EMO_HIYAASE)
+		wait(40)
+		
+		//	name("⇒アルウェンがいる場合")
+		if(!F4_00_StartSolo || F6_00_GoToMeru)
+		{
+			MES(PARTNER,"（……それはあの\n  モンブランの仕業であろ……）",0)
+			MES_close(PARTNER)
+		}
+		//	name("⇒ルゥがいる場合")
+		else
+		if(F5_00_HearLunar)
+		{
+			MES(PET,"（あ、あのバカネコ……\n  そんなことしてたのね……）",0)
+			MES_close(PET)
+		}
+		//	name("⇒スバルがいる場合")
+		else
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			MES(PARTNER,"（えっと、それって\n  もしかして……）",0)
+			MES_close(PARTNER)
+			
+		//	name2(RAGNA)
+			MES(RAGNA,"（モンブランの奴の仕業だな……）",0)
+			MES_close(RAGNA)
+		}
+		//	name("⇒その他")
+		else
+		{
+			MES(RAGNA,"（モンブランの奴の仕業だな……）",0)
+			MES_close(RAGNA)
+		}
+	}
+	//────────────────────
+
+	MES(RAGNA,"と、とりあえず\nこいつは返しておくぜ。",0)
+	MES_close(RAGNA)
+
+//　　ラグナ、クレースにアイテムを渡す。
+//　　アイテム欄から幸運の金貨を削除。
+
+
+	MES(CLEESE,"わーい、本当ですか？\nありがとうございますー。",0)
+	MES(CLEESE,"これって、家に代々伝わる\nお守りなんですよね～。",0)
+	MES(CLEESE,"ジイちゃんから預かってたのに\n無くしちゃったから、\n困ってた所だったんですよ～。",0)
+	MES_close(CLEESE)
+
+//	name2(RAGNA)
+	MES(RAGNA,"そ、そうか。",0)
+	MES_close(RAGNA)
+	//────────────────────
+	//	name("⇒フラグ⑦⑪の場合")
+	//⑦
+	if(F4_00_StartSolo && !F4_05_OnVillage2)
+	{
+		MES(RAGNA,"そういや聞いた話だが……",0)
+		MES(RAGNA,"その金貨って、魔力を秘めた\n魔法の品らしいぜ。",0)
+		MES(RAGNA,"中々いい品だって話だったし……",0)
+		MES(RAGNA,"あんたに素質があれば、\nちょっとした魔法を使えたり\nするかもしれねえよな。",0)
+		MES_close(RAGNA)
+	}
+	//⑪
+	else
+	if(F5_00_HearLunar && !F6_00_GoToMeru)
+	{
+		MES(RAGNA,"そういや聞いた話だが……",0)
+		MES(RAGNA,"その金貨って、魔力を秘めた\n魔法の品らしいぜ。",0)
+		MES(RAGNA,"中々いい品だって話だったし……",0)
+		MES(RAGNA,"あんたに素質があれば、\nちょっとした魔法を使えたり\nするかもしれねえよな。",0)
+		MES_close(RAGNA)
+	}
+	//	name("⇒それ以外")
+	else
+	{
+		MES(RAGNA,"そういや、その金貨って\n魔力を秘めた\n中々いい品らしいぜ。",0)
+		MES_close(RAGNA)
+
+		MES(PARTNER,"うむ、ただ持っているだけでは\nたまに幸運を呼ぶ程度であろうが……",0)
+		MES(PARTNER,"そなたに素質さえあれば、\n多少の魔法を使えるように\nなるかも知れぬぞ。",0)
+		MES_close(PARTNER)
+	}
+	//────────────────────
+
+//　　クレースに？エモーション。
+
+	EMO(CLEESE,EMO_HATENA)
+	wait(30)
+
+//	name2(CLEESE)
+	MES(CLEESE,"へ、へええ。\nそうなんですか～。",0)
+	MES(CLEESE,"そういえばジイちゃんも\nそんな事を言ってた\n気がしますけど……",0)
+	MES(CLEESE,"うーん、故郷には\nもう８年も帰ってないし、\nすっかり忘れてましたよ～。",0)
+	MES_close(CLEESE)
+
+//　　ラグナたちに冷や汗エモーション。
+	EMO(RAGNA,EMO_HIYAASE)
+	if( !F4_00_StartSolo )//パートナーがいる
+		EMO(PARTNER,EMO_HIYAASE)
+	else
+	if( F4_02_GoVillage2 && !F5_00_HearLunar )
+		EMO(PARTNER,EMO_HIYAASE)
+	else
+	if( F5_08_JoinOdessa && !F5_13_KillDygald )
+		EMO(PARTNER,EMO_HIYAASE)
+	else
+	if( F6_00_GoToMeru )
+		EMO(PARTNER,EMO_HIYAASE)
+
+	if( F5_00_HearLunar )//ルゥがいる
+		EMO(PET,EMO_HIYAASE)
+	wait(40)
+
+	MES(RAGNA,"（う～ん、やっぱ\n  素質とかはなさそうだな……）",0)
+	MES_close(RAGNA)
+
+	//────────────────────
+	//	name("⇒フラグ⑫の場合")
+	if(F6_00_GoToMeru)
+	{
+		MES(PARTNER,"（うむ、惜しいのう。\n  何かに使えそうな気も\n  するのだが……）",0)
+		MES_close(PARTNER)
+
+		MES(PET,"何だか知らないけど、\nホントにトロそうな人間ですよねぇ。",0)
+		MES_close(PET)
+
+	//　　ルゥ、クレースに向く。
+		MES(PET,"まあともかく、\n折角戻ってきた物なんだから。\nもう無くすんじゃないわよ？",0)
+		MES_close(PET)
+	}
+	else
+	//	name("⇒オデッサがいる場合")
+	if( F5_08_JoinOdessa && !F5_13_KillDygald )
+	{
+		MES(PARTNER,"フフ、事情は知らないが\nそっちの方は\n諦めた方がよさそうだね。",0)
+		MES(PARTNER,"それより坊や、\nそのアイテムは大切にするんだよ。",0)
+		MES(PARTNER,"年代物の金貨としても、\n十分価値があるようだしね。",0)
+		MES_close(PARTNER)
+	}
+	else
+	//	name("⇒ルゥがいる場合")
+	if( F5_00_HearLunar )
+	{
+		MES(PET,"何だか知らないけど、\nホントにトロそうな人間ねぇ……",0)
+		MES(PET,"まあともかく、\n折角戻ってきた物なんだから\nもう無くすんじゃないわよ？",0)
+		MES_close(PET)
+	}
+	else
+	//	name("⇒アルウェンがいる場合")
+	if( !F4_00_StartSolo )
+	{
+		MES(PARTNER,"（うむ、惜しいのう。\n  何かに使えそうな気も\n  するのだが……）",0)
+		MES(PARTNER,"ともあれ、故郷を思い出せた\nだけでも良かったではないか。",0)
+		MES(PARTNER,"その品、大切にするのだぞ。",0)
+		MES_close(PARTNER)
+	}
+	else
+	//	name("⇒それ以外")
+	{
+		MES(RAGNA,"まあ、ともあれ\n折角手元に戻ってきたんだ。",0)
+		MES(RAGNA,"もう無くさないようにな。",0)
+		MES_close(RAGNA)
+	}
+	//────────────────────
+	MES(CLEESE,"はい、これからは気をつけます～。",0)
+	MES(CLEESE,"……あ、そうだ。\nお礼にこれを差し上げますね～。",0)
+	MES_close(CLEESE)
+
+//	name("アイテム入手テキスト")
+	//幸運の金貨を消す
+	get_item(139,-1,1)
+
+	//―――――――――――――――――――――――
+	fade_in(30,10,BLACK)
+	
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼⑫すきやき
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		get_item(167,1,0)
+	}
+	else
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼⑪海鮮丼
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		get_item(163,1,0)
+	}
+	else
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼⑦ワンタンメン
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		get_item(186,1,0)
+	}
+	else
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼⑥カルボナーラ
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		get_item(174,1,0)
+	}
+	else
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼⑤ハンバーグ
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		get_item(166,1,0)
+	}
+	else
+	//──────────────────────────────
+	//ver.2008/8/7
+	//▼③④七草かゆ
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		get_item(161,1,0)
+	}
+	
+	wait(10)
+	wait_key(0)
+	
+	fade_in(0,10,BLACK)
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	//―――――――――――――――――――――――
+
+
+//　　※各フラグに応じて、結構良いフードが貰える予定。
+	MES(CLEESE,"いやー、どうも\nありがとうございましたー。",0)
+	MES_close(CLEESE)
+
+	MES(RAGNA,"ああ、あんたも気をつけてな。",0)
+	MES_close(RAGNA)
+
+//　　軽く暗転してから、操作許可を戻す。
+	fade_in(100,40,BLACK)
+	wait_fade()
+	//★クレースに金貨を返した
+	F_set(FE_03_KinkaCleese)
+	wait(20)
+	
+	//本当は暗転中に向きを戻したい。
+	
+
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,321 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[10000][僼傿乕儖僪儅僢僾乮拫乯]
+//====================================================================
+
+#ScriptTable
+
+//=====================================================================
+//=== 弶婜壔張棟 ======================================================
+//=====================================================================
+INIT
+{
+//娐嫬SE
+	SE(51,0)//晽
+
+//  set_chr  no typ     tip        x     y     z 	 mot   岦  忬      000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭僄儞僩儕乕
+	set_chr( 90,990,	-1,-1,   960, 3800, -770,      0, 070301,	0,";")	//傾儖僢僥偺奨
+
+	if(F4_01_RentTool && !FT_07_TalkMilliamA )
+	{
+		set_chr( 91,990,-1,-1,   320, 2350, -410,      0, 070202,  11,"<EV_STOP_02>")	//僽儔儞僨乕儢媢
+	}
+	else
+	{
+		set_chr( 91,990,-1,-1,   320, 2350, -410,      0, 070202,  11,"K0_10701;")	//僽儔儞僨乕儢媢
+	}
+
+	set_chr( 92,990,	-1,-1,  -820, 2900, -480,    300, 070202,  11,"K0_10200;")	//旘峴応乮拫乯
+	set_chr( 93,990,	-1,-1,  1800, 5700,-1700,      0, 070402,  11,"K0_11000;")	//攑岯亅擖岥
+	set_chr( 94,990,	-1,-1,  2550,    0,  170,    305, 070202,   0,";")	//儘傾儖僞懞丒搶乮拫乯
+	set_chr( 95,990,	-1,-1, -3450,-1540,  640,    270, 070303,  11,"K0_13000;")	//怷亅擖岥
+	//俧俥亀仛戝揝搩偵擖傟傞傛偆偵側偭偨亁棫偭偰側偄 ||俧俥亀仛俧俥丗僄僺儘乕僌僗僞乕僩亁棫偭偰偄傞
+	if(F6_12_EpStart || !F2_04_IntoTower)
+	{
+		F_set_obj("fire00",NP_HIDE)
+		F_set_obj("fire01_add",NP_HIDE)
+		F_set_obj("maguma01",NP_HIDE)
+		F_set_obj("maguma00",NP_HIDE)
+		F_set_obj("kemuri",NP_HIDE)
+		set_chr( 96,990,-1,-1,   -80,-3940,  420,      0, 070403,  11,"K0_14000;")	//戝揝搩亅擖岥捑栙
+	}
+	else
+	{
+		F_reset_obj("fire00",NP_HIDE)
+		F_reset_obj("fire01_add",NP_HIDE)
+		F_reset_obj("maguma01",NP_HIDE)
+		F_reset_obj("maguma00",NP_HIDE)
+		F_reset_obj("kemuri",NP_HIDE)
+		set_chr( 96,990,-1,-1,   -80,-3940,  420,      0, 070403,  11,"K0_14001;")	//戝揝搩亅擖岥婲摦
+	}
+	//俧俥亀仛僋儕僗僞儖僶儗乕傪婲摦偟偨亁棫偭偰偄傞&&俧俥亀仛俧俥丗戞俆復廔椆亁棫偭偰側偄
+	if(F5_06_RunCrystal && !F5_17_EndFifth)
+	{
+		F_reset_obj("isi_light_add",NP_HIDE)
+		F_reset_obj("kaidan",NP_HIDE)
+	}
+	else
+	{
+		F_set_obj("isi_light_add",NP_HIDE)
+		F_set_obj("kaidan",NP_HIDE)
+	}
+	set_chr( 97,990,	-1,-1, -2300,-1200,   20,      0, 070502,  11,"K0_10600;")	//僋儕僗僞儖僶儗乕嵳抎
+	//俧俥亀仛儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨亁棫偭偰側偄
+	if(!F3_00_GoMoonCastle)
+	{
+		//鍑婥極
+		F_set_obj("castle01_walk",NP_HIDE)
+		F_set_obj("castle01",NP_HIDE)
+		F_reset_obj("eff_castle01_add",NP_HIDE)
+		F_reset_obj("eff_castle02_add",NP_HIDE)
+
+		set_chr( 98,991,-1,-1,  -1325,    0, 386,      0, 071003,   0,"")	//忛僗僩僢僷乕
+		set_chr(150,990,-1,-1,   -551,    0, 550,      0, 073305,  11,"<LP_Castle>")	//忛俴俹
+	}
+	else
+	{
+		//幚懱
+		F_reset_obj("castle01_walk",NP_HIDE)
+		F_reset_obj("castle01",NP_HIDE)
+		F_set_obj("eff_castle01_add",NP_HIDE)
+		F_set_obj("eff_castle02_add",NP_HIDE)
+		if( !F4_00_StartSolo )
+		{
+			set_chr( 98,990,-1,-1,  -970,  -10,  380,     90, 070202,  11,"K0_15000;")	//忛亅擖岥
+		}
+		else
+		{
+			set_chr( 98,990,-1,-1,  -970,  -10,  380,     90, 070202,  11,"K0_15060;")	//忛亅擖岥拫
+		}
+	}
+	set_chr( 99,990,	-1,-1,  3750,-4850, 1050,     45, 070707,  11,"K0_16000;")	//嶳亅擖岥
+	set_chr(100,990,	-1,-1,  2750, -630,  270,    250, 070202,   0,";")	//儘傾儖僞懞丒杒乮拫乯
+	set_chr(101,990,	-1,-1,  2030, -680,  270,    125, 070202,   0,";")	//儘傾儖僞懞丒惣乮拫乯
+	set_chr(102,990,	-1,-1,  3980,-1180,  180,     60, 070202,  11,"K0_12000;")	//悈拞恄揳
+	set_chr(103,990,	-1,-1,   460, 3150, -470,     90, 070102,   0,";")	//傾儖僢僥偺奨惣
+
+	set_chr( 104,990,	-1,-1,   960, 3190, -470,      0, 070707,  11,"K0_10100;")	//傾儖僢僥偺奨拞墰
+	set_chr( 105,990,	-1,-1,   2300,-310,  230,      0, 070810,  11,"K0_10300;")	//儘傾儖僞懞拞墰
+
+	//俧俥亀仛俧俥丗僄僺儘乕僌僗僞乕僩亁棫偭偰偄傞
+	if(F6_12_EpStart)
+	{
+		//奺庬僟儞僕儑儞恑擖嬛巭
+		delete(93)//攑岯亅擖岥
+		delete(96)//戝揝搩亅擖岥婲摦
+		delete(98)//忛亅擖岥
+		delete(99)//嶳亅擖岥
+		delete(102)//悈拞恄揳
+	}
+
+	//俧俥亀仛梿慁梫嵡儊儖僙僨僋偑弌尰偟偨亁棫偭偰偄傞&&俧俥亀仛俧俥丗戞俇復廔椆亁棫偭偰側偄
+	if(F5_16_AppearMeru && !F6_05_EndSixth)
+	{
+		F_reset_obj("last_back",NP_HIDE)
+		F_reset_obj("tatumaki00",NP_HIDE)
+		F_reset_obj("tatumaki01",NP_HIDE)
+		F_reset_obj("tatumaki02",NP_HIDE)
+		F_reset_obj("tatumaki03",NP_HIDE)
+		F_reset_obj("tatumaki_add",NP_HIDE)
+		F_reset_obj("kaminari01",NP_HIDE)
+		F_reset_obj("kaminari02",NP_HIDE)
+		F_reset_obj("kaminari03",NP_HIDE)
+		F_reset_obj("kaminari04",NP_HIDE)
+		F_reset_obj("kumo05",NP_HIDE)
+	}
+	else
+	{
+		F_set_obj("last_back",NP_HIDE)
+		F_set_obj("tatumaki00",NP_HIDE)
+		F_set_obj("tatumaki01",NP_HIDE)
+		F_set_obj("tatumaki02",NP_HIDE)
+		F_set_obj("tatumaki03",NP_HIDE)
+		F_set_obj("tatumaki_add",NP_HIDE)
+		F_set_obj("kaminari01",NP_HIDE)
+		F_set_obj("kaminari02",NP_HIDE)
+		F_set_obj("kaminari03",NP_HIDE)
+		F_set_obj("kaminari04",NP_HIDE)
+		F_set_obj("kumo05",NP_HIDE)
+	}
+
+//仭僀儀儞僩
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//仴岺嬶傪庁傝傞偙偲偵偡傞丒懕偒
+		EV("EV_4_03_RentTool2")
+	}
+}
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴岺嬶傪庁傝傞偙偲偵偡傞丒懕偒
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+EV_4_03_RentTool2
+{
+	EV_begin()
+
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+
+	chr_pos(RAGNA,248,2650,-408,360,2)
+
+	CAM_return(0)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+/*
+//-------------------------------------------------------------------------------------
+//仱忛偺僗僩僢僷乕乮乧乧摿偵梡帠偼側偄乯	佀擖傝岥儅僢僾偵擖偭偰偐傜偲偟傑偟偨丅
+//-------------------------------------------------------------------------------------
+EV_STOP_01
+{
+	TK_begin()
+
+	if( !F4_02_GoVillage2 )
+	{
+		if( !F_RAGNA )
+		{
+			MES(RAGNA,"昉偝傫偺忛偐乧乧",0)
+			MES(RAGNA,"乧乧摿偵梡帠偼側偄側丅",0)
+			MES_close(RAGNA)
+			F_set(RAGNA)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(RAGNA,"乧乧摿偵梡帠偼側偄側丅",0)
+			MES_close(RAGNA)
+		}
+	}
+	else
+	{
+//	name("丒僗僶儖偲崌棳屻")
+		if( !F_RAGNA )
+		{
+			if( GW_MAN==0 )
+			{
+
+			//丂丂仸儔僌僫愭摢
+				MES(RAGNA,"摿偵梡帠傕偹偊側丅",0)
+				MES(RAGNA,"乧乧崱偼愥嶳偵岦偐偆偐丅",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//丂丂仸僗僶儖愭摢
+				MES(RAGNA,"僗僶儖丄偍慜偺廧傫偱傞棦偭偰\n愥嶳偺拞偵偁傞傫偩傛側丅",0)
+				MES(RAGNA,"崱偼偦偭偪傊岦偐偍偆偤丅",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"偁丄偼偄丅",0)
+				MES_close(PARTNER)
+			}
+			F_set(RAGNA)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(RAGNA,"偝偭偝偲愥嶳偺曽偵\n岦偐偍偆偤丅",0)
+			MES_close(RAGNA)
+		}
+	}
+	TK_end()
+}
+*/
+
+//-------------------------------------------------------------------------------------
+//仱忛偵棃偨姶憐乮仸俴俹偱懳墳乯
+//丂丂僼傿乕儖僪儅僢僾偱俴俹傪挷傋傞偲丄弶夞偺傒埲壓偺儊僢僙乕僕傪憓擖丅
+//丂丂乮亀仛杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨亁埲崀偼敪惗偟側偄乯
+//-------------------------------------------------------------------------------------
+LP_Castle
+{
+
+	TK_begin()
+	
+	rot_pos(RAGNA,30,0,0,0)
+	rot_pos(PARTNER,30,0,0,0)
+	
+	
+	if( !F1_31_LP_Castle )
+	{
+		MES(RAGNA,"這就是公主殿下的城堡嗎？\n走近看真是好壯觀啊……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"周圍布有強大的結界。\n以我現在的力量，\n是不能進入城堡的。",0)
+		MES(PARTNER,"為了讓那些邪惡的傢伙\n接受制裁，\n必須儘快找回魔力……！",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"哦哦。",0)
+		MES_close(RAGNA)
+
+		F_set(F1_31_LP_Castle)
+	}
+	else
+	{
+	//丂丂仸埲崀偺忛俴俹偼埲壓偺傛偆偵偡傞丅乮亀仛杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨亁傑偱乯
+		if( !F2_14_TalkEnemy )
+		{
+			if( GW_MAN==1 )
+			{
+				MES(RAGNA,"是公主殿下的城堡。\n好大啊……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+				MES(PARTNER,"嗯，必須儘快找回魔力……！",0)
+				MES_close(PARTNER)
+			}
+		}
+		else
+		{
+	//丂丂仸埲崀偺忛俴俹偼埲壓偺傛偆偵偡傞丅乮亀仛儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨亁傑偱乯
+			if( GW_MAN==1 )
+			{
+				MES(RAGNA,"還剩一道魔力……\n哼！洗淨脖子等我們來吧！",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name2(PARTNER)
+				MES(PARTNER,"叔父大人……稍後我會聽你將理由詳細道來。",0)
+				MES_close(PARTNER)
+			}
+		}
+	}
+	TK_end()
+
+}
+
+
+//-------------------------------------------------------------------------------------
+//仱岺嬶傪庁傝傞傑偱丄僽儔儞僨乕儢媢偵擖傟側偄僗僩僢僷乕乮岺嬶傪庁傝偰偙側偄偲乯
+//丂丂僼傿乕儖僪儅僢僾偐傜僽儔儞僨乕儢媢偵擖傠偆偲偡傞偲僗僩僢僷乕丅
+//-------------------------------------------------------------------------------------
+EV_STOP_02
+{
+	TK_begin()
+
+	MES(RAGNA,"……首先在飛機場準備一些工具吧。",0)
+	MES(RAGNA,"接下來進行修理。",0)
+	MES_close(RAGNA)
+
+	TK_end()
+}
+
+
+#EndScriptTable
+//====================================================================
+

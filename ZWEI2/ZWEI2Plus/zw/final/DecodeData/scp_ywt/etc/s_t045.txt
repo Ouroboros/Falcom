@@ -1,0 +1,1671 @@
+//仭Zwei2堦斒儊僢僙乕僕丒傾儖僢僥偺挰乮仸僌儗僀儞乯
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭傾儖僢僥
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僌儗僀儞乮攷暔娰廬嬈堳乯Grein")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_GREIN
+{
+
+	TK_begin()
+	rot_chr(GREIN,30,PLAYER1)
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(GREIN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,GREIN)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,GREIN)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GREIN)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GREIN)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GREIN)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GREIN)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,GREIN)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+
+	//丂丂仸僼儔僌嘊嘋偱丄僌儗僀儞偑庴晅偵棫偭偰偄傑偡丅
+	if( F2_00_GoForest && !F2_14_TalkEnemy )
+	{
+		//丂丂丂偙偺僞僀儈儞僌偱僊儖僪庴晅夛榖偑弶傔偰側傜丄偙偺僀儀儞僩偑嵟桪愭偝傟傑偡丅
+		if(!FT_01_Guildbigin)
+		{
+			EV("TK_GREIN")
+			wait_EV("TK_GREIN")
+		}
+		else
+		{
+			MES(GREIN,"啊，是你們嗎……",0)
+
+			VOICE(746,0)				//乽傛偆偙偦丄僊儖僪傊乧乿
+			MES(GREIN,"歡迎來到獵人工會…",0)
+
+			MES_close(GREIN)
+
+			EV("SHOP_GREIN_LOOP")
+			wait_EV("SHOP_GREIN_LOOP")
+		}
+	
+	}
+	else
+	{
+		EV("TK_GREIN")
+		wait_EV("TK_GREIN")
+	}
+	TK_end()
+}
+
+SHOP_GREIN_LOOP
+{
+		workL(WK_CANCEL,SET,4)//亂傗傔傞亃
+		MES_pos(PLAYER1,"??W9【對話】\n【查看獵人等級】\n【捐贈寶藏】\n【離開】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀榖傪偡傞")
+	//丂丂捠忢夛榖張棟傊旘傇丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(WK_YESNO==1)
+	{
+		EV("TK_GREIN")
+		wait_EV("TK_GREIN")
+		loop
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀僴儞僞乕儔儞僋傪妋擣偡傞")
+	//丂丂僴儞僞乕儔儞僋妋擣張棟傊旘傇丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(WK_YESNO==2)
+	{
+		EV("CHECK_RANK_GREIN")
+		wait_EV("CHECK_RANK_GREIN")
+		loop
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀僩儗僕儍乕傪婑憽偡傞")
+	//丂丂僩儗僕儍乕婑憽張棟傊旘傇丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(WK_YESNO==3)
+	{
+		EV("PRESENT_TREASURE_GREIN")
+		wait_EV("PRESENT_TREASURE_GREIN")
+
+		//婑憽偟側偐偭偨応崌偺傒丄loop
+		if(F_PARTNER)
+			loop
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀傗傔傞")
+	//丂丂夛榖張棟廔椆丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	{
+//		MES(GREIN,"傑偨側乧乧",0)
+//		MES_close(GREIN)
+		
+		VOICE(749,0)			//乽傑偨棃傞偲偄偄乧乿
+		MES(GREIN,"請以後再來…",0)		
+		MES_close(GREIN)		
+	}
+}
+
+
+//尰嵼僨僢僪儊僢僙乕僕丅懳墳枹掕丄偦傕偦傕昁梫丠
+/*
+		//僩儗僕儍乕傪尒偣偨屻儅僢僾傪愗傝懼偊傞傑偱偙偪傜偺儊僢僙乕僕
+			else
+			{
+				MES(GREIN,"傑偨偳偙偐偱僩儗僕儍乕傪尒偮偗偨傜\n偙偙傊帩偭偰偒偰傎偟偄丅",0)
+				MES(GREIN,"抣懪偪傕偺側傜攦偄庢傠偆丅\n乧乧棅傫偩偧丅",0)
+				MES_close(GREIN)
+			}
+		}
+*/
+
+
+TK_GREIN
+{
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸攷暔娰丄俀偮栚偺揥帵儖乕儉偱榬傪慻傫偱棫偭偰偄傞丅
+	if( F6_05_EndSixth )
+	{
+		rot_chr(GREIN,30,PLAYER1)
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+
+		if(!FT_13_TalkGrein)
+		{
+			MES(GREIN,"是你們啊……",0)
+			MES(GREIN,"過陣子我也打算\n離開伊魯巴特了。",0)
+			MES(GREIN,"回到我的初衷上，\n再當一次尋寶獵人。",0)
+			MES_close(GREIN)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀嘕偺儊僢僙乕僕傪尒偰偄側偄応崌")
+			if(!FT_11_TalkGrein)
+			{
+				MES(RAGNA,"咦？　是嗎？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+				MES(RAGNA,"這樣啊……",0)
+				MES(RAGNA,"看來也跟\n卡蒂娜談過了呢。",0)
+				MES_close(RAGNA)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			MES(GREIN,"嗯，我也曾經十分迷惘……",0)
+			MES(GREIN,"和卡蒂娜溝通了一下，\n她告訴我\n不用在意她。",0)
+			MES(GREIN,"而且那傢伙好像很喜歡\n現在這個接待的工作。\n她應該會繼續在工會裡待下去吧。",0)
+			MES(GREIN,"……她還開玩笑說\n下次見面時她會以工會管理人身分\n支援我呢。",0)
+			MES_close(GREIN)
+
+			MES(RAGNA,"哈哈哈，原來是這樣。",0)
+			MES_close(RAGNA)
+
+			MES(PET,"呵呵……也就是說\n要分別走上自己的道路了吧？",0)
+			MES_close(PET)
+
+			MES(GREIN,"……嗯。",0)
+			MES(GREIN,"從今以後……\n為了不讓以前的搭檔難過，\n我也必須要努力啊。",0)
+			MES_close(GREIN)
+
+		//丂丂仛僌儗僀儞亂僴儞僞乕偵暅婣亃
+			F_set_note(GREIN,2)
+			F_set(FT_13_TalkGrein)
+		}
+		else
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		{
+			MES(GREIN,"我已經決定\n重新擔任尋寶獵人了。",0)
+			MES(GREIN,"我打算過幾天就離開伊魯巴特，\n重新在維蘭世界中遊歷。",0)
+			MES(GREIN,"呼……說不定\n還能在其他地方\n再次見到你們呢……",0)
+			MES_close(GREIN)
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僩儗僕儍乕僐儞僾梡丒捠忢堦斒攝抲傛傝桪愭偟傑偡
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F2408)
+	{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸撲偺旘峴婡婑憽屻
+
+		//丂丂仛孞傝曉偟俀乮僐儞僾儕乕僩偟偰偄傞応崌偺傒乯
+		if(FT_FF_TreasureComp && F_GREIN)
+		{
+			MES(GREIN,"不過，這個展示廳\n也終於被填滿了呢……",0)
+			MES_close(GREIN)
+
+		//丂丂僌儗僀儞偵僉儔僉儔僄儌乕僔儑儞丅
+			EMO(GREIN,EMO_KIRAKIRA)
+			wait(30)
+
+			MES(GREIN,"還是寶藏好啊……",0)
+			MES(GREIN,"只是經過修繕與展示\n就能令人\n如此感動……",0)
+			MES_close(GREIN)
+
+		//丂丂僌儗僀儞怳傝曉傞丅
+			rot_chr(GREIN,30,PLAYER1)
+			MES(GREIN,"我真心感謝你們……",0)
+			MES(GREIN,"以後有機會的話\n一定要再到博物館來看看。",0)
+			MES_close(GREIN)
+		}
+		else
+		//丂丂仸撲偺旘峴婡婑憽屻
+		{
+			rot_chr(GREIN,30,PLAYER1)
+			MES(GREIN,"啊，是你們啊……",0)
+			MES(GREIN,"那件展示品已經展示出來了。",0)
+			MES_close(GREIN)
+			rot_chr(GREIN,30,NAZO)
+			EMO(GREIN,EMO_TENTEN)
+			wait(30)
+			MES(GREIN,"不過它\n到底是……",0)
+			MES(GREIN,"從形狀上看，這東西能飛……？",0)
+			MES(GREIN,"還好中樞裝置\n已經被拆掉了……",0)
+			MES(GREIN,"你們收集的\n古董還真是\n每次都能讓人吃一驚呢……",0)
+			MES_close(GREIN)
+			F_set(GREIN)
+		}
+//		else
+//		if(!F_RAGNA)
+//		{
+//		//丂丂仛孞傝曉偟
+//			look_chr(GREIN,PLAYER1,"Bone_Head")
+//			MES(GREIN,"偙偄偮偺拞怱晹偵偼丄\n婡擻拞悤偲偟偰悈徎偺傛偆側傕偺偑\n杽傔崬傑傟偰偄偨傛偆偩丅",0)
+//			MES(GREIN,"乧乧杺懓偺帩偮\n媄弍偼惁傑偠偄側乧乧",0)
+//			MES(GREIN,"婡夿暥柧偼尦乆杺懓偺傕偺偩偭偨\n偲偄偆尋媶幰傕偄傞偦偆偩偑乧乧",0)
+//			MES(GREIN,"偁側偑偪奜傟偰偼\n偄側偄偺偐傕偟傟側偄側乧乧",0)
+//			MES_close(GREIN)
+//			look_off(GREIN)
+//			
+//			if(FT_FF_TreasureComp)
+//				F_set(RAGNA)
+//		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥丒揥朷戜偱儊儖僙僨僋傪尒忋偘偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩丅
+	if( F6_00_GoToMeru )
+	{
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		if(!FT_12_TalkGrein)
+		{
+			rot_chr(GREIN,30,PLAYER1)
+			MOT(GREIN,150,15)
+			MES(GREIN,"那氣流……難道\n那就是梅爾賽迪克嗎……？",0)
+			MES(GREIN,"魔法大戰中威震維蘭世界西北的\n魔族攻擊要塞。",0)
+			MES(GREIN,"據說伊魯巴特\n以前也是一片\n龐大而繁榮的大陸……",0)
+			MES(GREIN,"但在大戰中受到那座要塞\n的攻擊，使得大半土地\n崩塌墜落。",0)
+			MES(GREIN,"伊魯巴特也是在大戰結束之後\n才變成現在這樣的……",0)
+			MES_close(GREIN)
+			
+			F_set(FT_12_TalkGrein)
+			MOT(GREIN,52,15)
+		}
+		else
+		if(!FT_12_TalkGrein2)
+		{
+			rot_chr(GREIN,30,PLAYER1)
+			MOT(GREIN,150,15)
+			MES(GREIN,"另外……\n前幾天我去了\n一次廢坑……",0)
+			MES(GREIN,"發現入口那扇被封印\n的門已經\n打開了……",0)
+			MES(GREIN,"而且可以感覺到\n從中傳出\n恐怖的邪惡氣息……",0)
+			MES_close(GREIN)
+
+		//丂丂僌儗僀儞偵丒丒丒僄儌乕僔儑儞丅
+			EMO(GREIN,EMO_TENTEN)
+			wait(30)
+			EMO(GREIN,EMO_TENTEN)
+			wait(40)
+
+			MES(GREIN,"那究竟是什麼……",0)
+			MES(GREIN,"再加上梅爾賽迪克的出現……\n情況有些不尋常啊……",0)
+			MES_close(GREIN)
+
+			F_set(FT_12_TalkGrein2)
+			MOT(GREIN,52,15)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+	//丂丂仸怳傝曉傜側偄
+		else
+		{
+			if(!F_GREIN)
+			{
+				MES(GREIN,"螺旋要塞梅爾賽迪克……\n以前在伊魯巴特\n帶來巨大災害的攻擊要塞……",0)
+				MES_close(GREIN)
+
+			//丂丂僌儗僀儞丄怳傝曉傞丅
+				MOT(GREIN,150,15)
+				rot_chr(GREIN,30,PLAYER1)
+				MES(GREIN,"伊魯巴特周圍\n有很多不自然的障壁對吧？",0)
+				MES(GREIN,"據說那就是當時大戰\n留下的痕跡……",0)
+				MES(GREIN,"毀滅大陸的要塞……\n沒想到這種東西竟然殘留了下來……",0)
+				MES_close(GREIN)
+				
+				F_set(GREIN)
+				MOT(GREIN,52,15)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//丂丂仸怳傝曉傜側偄
+				MES(GREIN,"螺旋要塞梅爾賽迪克……",0)
+				MES(GREIN,"那旋風之中有一個\n未曾有人涉足的遺跡嗎……",0)
+				MES(GREIN,"……雖說有些輕率，\n但我那遺跡獵人的血液又沸騰起來了……",0)
+				MES_close(GREIN)
+			}
+		}
+		rot(GREIN,30,141)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸攷暔娰丄俀偮栚偺揥帵儖乕儉偵棫偭偰偄傞丅
+	//丂丂丂仛僌儗僀儞偵丒丒丒僄儌乕僔儑儞弌偟偭傁側偟丅
+	if( F5_00_HearLunar )
+	{
+		EV_stop("TENTEN_GREIN")
+		rot_chr(GREIN,30,PLAYER1)
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+		if(!F_GREIN)
+		{
+			MES(GREIN,"事實上……我在考慮\n要不要重新擔任尋寶獵人。",0)
+			MES(GREIN,"當時我因為傷勢決定退役，\n可是我卻怎麼也割捨不下……",0)
+			MES_close(GREIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哎，是這樣嗎？",0)
+			MES(RAGNA,"割捨不下的話\n確實是沒辦法呢……",0)
+			MES(RAGNA,"重新開始\n不是很好嗎？",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"嗯……不過\n我很在意卡蒂娜那傢伙。",0)
+			MES(GREIN,"她當時是我的搭檔，\n也和我一起退役了。",0)
+			MES(GREIN,"……給她添了這麼大麻煩，\n現在我又一個人回去當獵人……",0)
+			MES_close(GREIN)
+
+			F_set(FT_11_TalkGrein)
+			F_set(GREIN)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(GREIN,"卡蒂娜是\n我獵人時期的搭檔。",0)
+			MES(GREIN,"和我一起退役，\n如今正在工會當招待。",0)
+//			MES(GREIN,"乧乧崱峏偁偄偮傪姫偒崬傓偺傕\n帺暘彑庤側榖偩偟側乧乧",0)
+			MES(GREIN,"……我一個人回歸是不合適，\n可是因為自己想要重新當獵人\n就把她也帶走更是任性……",0)
+			MES(GREIN,"到底怎麼辦好呢……",0)
+			MES_close(GREIN)
+		}
+		MOT(GREIN,52,15)
+		EV("TENTEN_GREIN")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_09_GoShrineMia)
+	{
+		//丂丂仸僊儖僪揥帵幒偵棫偭偰偄傞丅
+	//丂丂丂婑憽昳偑柍偄応崌丄攝抲偟側偄丅
+	//丂丂仸怳傝曉傜側偄
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+		if(!F_GREIN)
+		{
+			MES(GREIN,"早上起來\n整理內部果然是心情舒暢呢……",0)
+			MES(GREIN,"今天把保管庫也整理一下吧。",0)
+			MES(GREIN,"呵呵，真令人興奮……",0)
+			MES_close(GREIN)
+			
+			F_set(GREIN)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			rot_chr(GREIN,30,PLAYER1)
+			MES(GREIN,"唔……\n有什麼事嗎？",0)
+			MES(GREIN,"這些都是你們捐贈的展示品。\n隨時都可以\n過來看哦……",0)
+			MES_close(GREIN)
+			rot(GREIN,30,190)
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僊儖僪偺奜偵棫偭偰偄傞丅
+	if( F4_00_StartSolo )
+	{
+		if(!F_GREIN)
+		{
+			MOT_SET(GREIN,150, -2,400,400,-1,15)
+			MOT(GREIN,150,15)
+			rot_chr(GREIN,30,PLAYER1)
+			MES(GREIN,"那座突然出現的城堡……\n好像是魔法大戰時代的遺跡呢。",0)
+			MES(GREIN,"應該是一直被\n封印到現在吧。\n這在遺跡中倒也算是常見……",0)
+			MES(GREIN,"可是沒想到它居然\n就藏在這麼近的地方……",0)
+			MES_close(GREIN)
+			
+			F_set(GREIN)
+			MOT(GREIN,52,15)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			MES(GREIN,"………………………………",0)
+			MES(GREIN,"……那個遺跡確實很吸引人啊……",0)
+			MES(GREIN,"可是我現在已經退役了……",0)
+			MES_close(GREIN)
+		}
+		rot(GREIN,30,0)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僊儖僪寶暔偺慜偱榬慻傒丅
+	if( F3_00_GoMoonCastle )
+	{
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+		rot_chr(GREIN,30,PLAYER1)
+		if(!F_GREIN)
+		{
+			MES(GREIN,"今天這種怪物的話，\n現在的我也能把它們趕走。",0)
+			MES(GREIN,"那位大小姐和管家\n看來也是高手。",0)
+			MES(GREIN,"不要擔心這裡……\n你們趕快去吧。",0)
+			MES_close(GREIN)
+
+			F_set(GREIN)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(GREIN,"只是趕走怪物的話，\n現在的我也能做到……",0)
+			MES(GREIN,"不要擔心這裡。\n你們趕快去吧。",0)
+			MES_close(GREIN)
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸攷暔娰丄俀偮栚偺揥帵儖乕儉偵棫偭偰偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(GREIN,30,PLAYER1)
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+
+		//丂丂仸僔僗僞乕偲榖偟偨屻偼丄侾夞偩偗憓擖丅
+		if( FT_05_TalkIsabella && !FT_05_AboutIsabella )
+		{
+
+			MES(GREIN,"說起來，我剛剛在鎮上\n和修女擦身而過……",0)
+			MES(GREIN,"動作完全沒有空隙。\n她到底是何方神聖……？",0)
+			MES_close(GREIN)
+
+			MES(PARTNER,"唔，這應該是\n我們想問的才對。",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"哈哈……",0)
+			MES(RAGNA,"你們都住在阿魯特\n平常沒說話嗎？",0)
+			MES_close(RAGNA)
+
+			MES(GREIN,"嗯，畢竟沒見過幾次面。",0)
+			MES(GREIN,"可是她的舉止……\n還有沈重的腳步聲……",0)
+			MES(GREIN,"難道在鞋底\n鑲了鐵板嗎？\n總覺得不像普通人……",0)
+			MES_close(GREIN)
+
+		//丂丂儔僌僫偨偪偵惵偞傔僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PARTNER,EMO_AOZAME)
+			wait(30)
+
+			MES(RAGNA,"不像普通人嗎……",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"唔，我也有同感……",0)
+			MES_close(PARTNER)
+			
+			//仛僀僓儀儔亂孋掙偵揝斅亃
+			F_set_note(-47,1)
+			
+			F_set(FT_05_AboutIsabella)
+		}
+		else
+		{
+			if(!F_GREIN)
+			{
+	//			MES(GREIN,"偝偭偒丄僆僨僢僒偺傗偮偑\n婄傪弌偟偰偄偭偨偧丅",0)
+				MES(GREIN,"奧迪莎那傢伙……\n到伊魯巴特來了呢。",0)
+				MES(GREIN,"以前在探索遺跡的\n時候，和她見過\n兩三次面……",0)
+				MES(GREIN,"她好像還是\n在追捕目標，\n但是這次似乎十分棘手啊。",0)
+				MES(GREIN,"連鼻子那麼靈的那傢伙都覺得棘手，\n對方一定也很了不得……",0)
+				MES_close(GREIN)
+
+				F_set(GREIN)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(GREIN,"奧迪莎感覺敏銳\n可是出了名的。",0)
+				MES(GREIN,"連她都找不出\n行蹤的話，就是說\n對方應該也很厲害了。",0)
+				MES(GREIN,"……你們最好也小心一點。\n畢竟不知道你們會\n在哪裡遇到那傢伙……",0)
+				MES_close(GREIN)
+			}
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嘋
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸僌儗僀儞偺傒丄摿暿偵暘婒丅
+	//丂攝抲偼僊儖僪庴晅丅
+	if( F2_00_GoForest )
+	{
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+
+		//仴嘊嘋僊儖僪庴晅丄弶夞僀儀儞僩
+		//丂丂丂偙偺僞僀儈儞僌偱僊儖僪庴晅夛榖偑弶傔偰側傜丄偙偺僀儀儞僩偑嵟桪愭偝傟傑偡丅
+		if(!FT_01_Guildbigin)
+		{
+			//仠僠儏乕僩儕傾儖丗僊儖僪僔僗僥儉
+			Load_BMP(20,"sys\\tuto08.itm","0")
+			Load_BMP(21,"sys\\tuto09.itm","0")
+			menuBMP(1,	20,	0,0,288,384)
+			menuBMP(2,	21,	0,0,288,384)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僼儔僌嘆嘇偱僌儗僀儞偲夛偭偰偄側偄応崌丅")
+			if(!FT_01_TalkGrein && !FT_02_TalkGrein)
+			{
+				MES(GREIN,"嗯，怎麼了。\n沒見過你們呢……",0)
+				MES_close(GREIN)
+			}
+		//	name("佀偦傟埲奜偺応崌")
+			else
+			{
+				MES(GREIN,"啊，是你們嗎……",0)
+				
+				VOICE(746,0)				//乽傛偆偙偦丄僊儖僪傊乧乿
+				MES(GREIN,"歡迎來到獵人工會…",0)
+								
+				MES_close(GREIN)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			MES(GREIN,"來工會有事嗎？\n還是來參觀博物館……？",0)
+			MES_close(GREIN)
+
+		//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+
+			MES(RAGNA,"那個……",0)
+			MES(RAGNA,"獵人工會和博物館\n合併了嗎……？",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"嗯……\n這裡是兩邊共用的接待處。",0)
+			MES(GREIN,"獵人工會是我開的，\n但是我也喜歡玩古董呢……",0)
+			MES(GREIN,"所以我順便就把工會\n和博物館開在一起了。\n……很方便吧？",0)
+			MES_close(GREIN)
+
+		//丂丂俀恖偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			MES(PARTNER,"唔，真是奇怪的地方……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"嗯，獵人工會本身\n就是很奇妙的地方。",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"不要想得那麼死板……",0)
+			MES(GREIN,"獵人工會本身就是為了幫助\n現役獵人而設立的組織。",0)
+			MES(GREIN,"只是由管理人\n按照自己的意願開設……",0)
+			MES_close(GREIN)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"原來如此，就是說隨便哪個人\n都可以按照自己的意願開設工會對吧？",0)
+			MES_close(PARTNER)
+
+		//儔僌僫丄傾儖僂僃儞偵岦偔
+			rot_chr(RAGNA,30,PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"不…不過\n當獵人可是很嚴酷的。",0)
+			MES(RAGNA,"表面上顯得自由\n是因為背負的責任更為巨大。",0)
+			MES_close(RAGNA)
+
+		//儔僌僫丄傾儖僂僃儞偵岦偔
+			rot_chr(RAGNA,30,GREIN)
+
+		//丂丂儔僌僫丄僌儗僀儞偵岦偔丅
+			MES(RAGNA,"那個，對了。\n我叫做\n拉格那·瓦倫丁……",0)
+		//	MES(RAGNA,"幚偼崱擔偼榣傃偲偐偹偊偲\n偄偗側偄偙偲偑偁傞傫偩丅",0)
+			MES(RAGNA,"如果這裡是博物館的話，\n我有件事情\n必須要道歉。",0)
+			MES(RAGNA,"本來有件貨物是由\n我負責運送到這裡的，\n結果飛機墜毀在半路上。",0)
+			MES(RAGNA,"……不好意思，\n貨物好像也在那時弄丟了。",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"嗯，我也對墜毀事件有所耳聞，\n原來就是你啊……",0)
+			MES(GREIN,"聽說是奇跡般地\n毫髮無傷呢……",0)
+			MES_close(GREIN)
+
+		//丂丂儔僌僫偲傾儖僂僃儞丄婄傪尒崌傢偣傞丅
+			rot_chr(RAGNA,30,PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			EMO(RAGNA,EMO_TENTEN)
+			EMO(PARTNER,EMO_TENTEN)
+			wait(30)
+			
+			rot_chr(RAGNA,30,GREIN)
+			rot_chr(PARTNER,30,GREIN)
+			
+			MES(RAGNA,"哈…哈哈。差不多吧……",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"唔，對了……\n你負責運送的貨物\n多半是館長訂購的物品。",0)
+			MES(GREIN,"這件事還是\n向館長報告比較好。",0)
+			MES(GREIN,"他應該在裡面，\n博物館的展示廳裡。",0)
+			MES_close(GREIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"這樣啊……",0)
+			MES(RAGNA,"明白了。\n我這就去向他說明。",0)
+			MES_close(RAGNA)
+
+
+		//	name2(GREIN)
+			MES(GREIN,"啊，還有……",0)
+			MES_close(GREIN)
+
+		//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+
+			MES(GREIN,"在伊魯巴特\n進行獵人活動的話，\n可以利用這裡的工會。",0)
+			MES(GREIN,"工會會根據L337「獵人等級」L400\n對獵人提供支援……",0)
+			MES_close(GREIN)
+
+		//丂丂儔僌僫偵俹俙僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_PA)
+			wait(30)
+
+			MES(RAGNA,"哎呀，我都忘了。\n獵人等級的評定……",0)
+			MES_close(RAGNA)
+
+		//丂丂仸僴儞僞乕儔儞僋俛俵俹昞帵丅
+			menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+			menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+			SE(043,PLAYER1)
+			wait(40)
+			wait_key(0)
+			menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+
+			MES(PARTNER,"唔，似乎是根據等級\n獲得不同的物品吧。",0)
+			MES_close(PARTNER)
+
+			look_chr(RAGNA,PARTNER,"Bone_Head")
+			MES(RAGNA,"嗯，很多物品都是\n非常實用的。",0)
+			MES(RAGNA,"迷宮探索也會因此輕鬆不少，\n請隨時留意一下這裡吧。",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"還有……這裡\n也負責收購\nL337「寶藏」L400……",0)
+			MES_close(GREIN)
+
+			look_off(RAGNA)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僌儗僀儞偲榖偟偨偙偲偑側偄乮僩儗僕儍乕偺榖傪暦偄偨偙偲偑側偄乯")
+			if(!FT_01_TalkGrein && !FT_02_TalkGrein)
+			{
+			//丂丂儔僌僫偲傾儖僂僃儞偵丠僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PARTNER,EMO_HATENA)
+				wait(30)
+
+				MES(PLAYER1,"寶藏……？",0)
+				MES_close(PLAYER1)
+			}
+			else
+			{
+			//	name("佀榖偟偨偙偲偑偁傞丅")
+				MES(RAGNA,"嗯，寶藏就是那些……",0)
+				MES_close(RAGNA)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸僩儗僕儍乕攦庢俛俵俹昞帵丅
+
+			menu(2,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+			menu(2,	0,	176, 48,  0,	288, 384,	40,100,0)
+			wait(40)
+			wait_key(0)
+			menu(2,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//			wait(30)
+
+			MES(GREIN,"如果找到寶藏的話，\n希望你能夠把它帶到這裡。",0)
+			MES(GREIN,"當然這邊也會準備相應的報酬。\n你可以把這作為\n獵人活動的資金……",0)
+			MES_close(GREIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈，多謝。",0)
+			MES(RAGNA,"那我也就時常過來\n露個面吧。",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"嗯，這樣就好……",0)
+			MES_close(GREIN)
+//			wait_MES(GREIN)
+
+			F_set(F0_08_TutoHunter)
+
+			//弶夞儊僢僙乕僕傪傒偨僼儔僌
+			F_set(FT_01_Guildbigin)
+		}
+		else
+		{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//仴嘋墛偺僷乕僣傪擖庤偟偨
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if( F2_08_CancelBurn )
+			{
+				if( !GREIN )
+				{
+					MES(GREIN,"剛才我看到，\n北方昇起了一片濃煙啊……",0)
+					MES(GREIN,"難道那座「奧龍大鐵塔」\n開始噴火了嗎……？",0)
+					MES_close(GREIN)
+
+						//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+						//	name("佀儔僌僫愭摢")
+						if( GW_MAN==1 )
+						{
+							MES(RAGNA,"啊，嗯。",0)
+							MES(RAGNA,"我們也去看了一下，\n還在轟隆作響呢。",0)
+							MES_close(RAGNA)
+						}
+						else
+						{
+						//	name("佀傾儖僂僃儞愭摢")
+							MES(PARTNER,"唔，詳細情況暫且按下不表，\n總之是不容樂觀。",0)
+							MES_close(PARTNER)
+						}
+						//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+					MES(GREIN,"是嗎……",0)
+					MES(GREIN,"不過很奇怪啊，那個遺跡\n應該已經上百年沒有活動了……",0)
+					MES_close(GREIN)
+
+				//丂丂僌儗僀儞偵丒丒丒僄儌乕僔儑儞丅
+					EMO(GREIN,EMO_TENTEN)
+					wait(30)
+
+				//丂丂岦偒傪栠偡丅
+					MES(GREIN,"……如果我沒有受過那次傷……",0)
+					MES_close(GREIN)
+
+					F_set(GREIN)
+				}
+		//丂丂丂仛孞傝偐偊偟
+				else
+				{
+					MES(GREIN,"那座大鐵塔\n是我在退役之前\n還在調查的遺跡……",0)
+					MES(GREIN,"確實有很多謎團，\n塔內部直到現在還沒有人調查過。",0)
+					MES_close(GREIN)
+
+				//丂丂僌儗僀儞偵丒丒丒僄儌乕僔儑儞丅
+					EMO(GREIN,EMO_TENTEN)
+					wait(30)
+				//丂丂岦偒傪栠偡丅
+					MES(GREIN,"……如果我沒有受過那次傷……",0)
+					MES_close(GREIN)
+				}
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			{
+				rot_chr(GREIN,30,PLAYER1)
+				if(!F_GREIN)
+				{
+	/*				MES(GREIN,"娰挿偵偼杮摉偵姶幱偟偰偄傞乧乧",0)
+					MES(GREIN,"壌傕埲慜偼\n堚愓僴儞僞乕傪偟偰偄偨傫偩丅",0)
+					MES(GREIN,"偩偑丄堚愓偺挷嵏拞偵帠屘偵偁偭偰\n昺巰偺廳彎傪晧偭偰偟傑偭偨乧乧\n偦傟傪彆偗偰偔傟偨偺偑娰挿偩丅",0)
+					MES(GREIN,"偦傟埲棃丄壗偐偲悽榖偵側偭偰偄傞丅\n乧乧庯枴傕嬤偄偟側丅",0)
+					MES_close(GREIN)
+	*/				
+
+					MES(GREIN,"我真心地感謝館長……",0)
+					MES(GREIN,"我以前也當過\n獵人，可是在調查過程中\n遭遇了事故。",0)
+					MES(GREIN,"我受了重傷，一度瀕臨死亡……",0)
+					MES(GREIN,"是館長救了我。",0)
+					MES(GREIN,"自那以來，我也一直承蒙他照顧。\n……當然我們也是趣味相投呢。",0)
+					MES_close(GREIN)
+
+					F_set(GREIN)
+				}
+			//丂丂丂仛孞傝偐偊偟
+				else
+				{
+					MES(GREIN,"我已經不能再\n回去當尋寶獵人了……",0)
+					MES(GREIN,"不過，如果你們在哪裡發現了寶藏的話，\n可以把它帶到這裡來嗎？",0)
+					MES(GREIN,"我們會買下有價值的寶藏的……",0)
+					MES_close(GREIN)
+				}
+			}
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸攷暔娰丄侾俥揥帵儖乕儉偵棫偭偰偄傞丅
+	if( F1_15_GoVillage )
+	{
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+		if(!FT_02_TalkGrein)
+		{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僼儔僌嘆弶夞傪尒偰偄傞応崌")
+			if(FT_01_TalkGrein)
+			{
+				MES(GREIN,"怎麼樣……\n找到寶藏了嗎？",0)
+				MES(GREIN,"想要得到寶藏，\n大多數情況下都需要\n越過高難度的陷阱……",0)
+				MES(GREIN,"雖然會很艱難，\n但也希望你們去挑戰一下……",0)
+				MES_close(GREIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哈哈，交給我吧。\n這聽起來很有趣呢。",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("佀僼儔僌嘆弶夞傪尒偰側偄応崌")
+				MES(GREIN,"……你是………\n現役的尋寶獵人嗎？",0)
+				MES_close(GREIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"啊，嗯。沒錯……",0)
+				MES_close(RAGNA)
+
+			//	name2(GREIN)
+				MES(GREIN,"那就\n太好了……",0)
+				MES_close(GREIN)
+
+			//丂丂僌儗僀儞丄岦偒傪栠偡丅
+				rot(GREIN,30,190)
+				MES(GREIN,"如果在迷宮中發現了\n「寶藏」，\n可以把它帶到這裡來嗎？",0)
+				MES(GREIN,"雖說想要得到寶藏，\n大多數情況下都需要\n越過高難度的陷阱……",0)
+				MES_close(GREIN)
+
+			//丂丂僌儗僀儞丄嵞傃儔僌僫偵岦偔丅
+				rot_chr(GREIN,30,RAGNA)
+				MES(GREIN,"可是這件展示廳\n正在收集展示品……\n我也希望能展示那些寶藏……",0)
+				MES_close(GREIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"是…是這樣嗎？",0)
+				MES(RAGNA,"嗯，雖然不太清楚原因，\n不過我會嘗試一下的。\n這聽起來很有趣呢。",0)
+				MES_close(RAGNA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+			MES(RAGNA,"不過你對這方面\n好像也相當熟悉呢。",0)
+			MES(RAGNA,"那個……\n莫非也有這方面的經驗？",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"嗯……我以前也當過\n尋寶獵人。",0)
+			MES(GREIN,"不過已經退役，\n現在在這間博物館工作。",0)
+			MES_close(GREIN)
+
+		//丂丂僌儗僀儞丄岦偒傪栠偡丅
+			MOT(GREIN,52,15)
+			rot(GREIN,30,190)
+			MES(GREIN,"可是，寶藏\n果然還是吸引人啊……",0)
+			MES(GREIN,"即便是現在，也只有整理寶藏\n或者考慮展示方法的時候\n才最能讓我靜下心來……",0)
+			MES_close(GREIN)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"是…是這樣嗎……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（看來他是個「寶藏」\n 愛好者呢……）",0)
+			MES_close(PARTNER)
+			
+			F_set(FT_02_TalkGrein)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_GREIN)
+			{
+				MES(GREIN,"每個迷宮都有\n一個推薦等級。",0)
+				MES(GREIN,"入口處都有一塊\n等級石板吧。\n把它當成標準就好了……",0)
+				MES(GREIN,"遇到高等級迷宮的時候，\n不要勉強，還是留到以後再去吧。",0)
+				MES(GREIN,"不過，迷宮等級越高，\n裡面能找到的寶藏價值也越高……\n……真是傷腦筋………",0)
+				MES_close(GREIN)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"總之，我就\n慢慢嘗試吧。",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"（唔，那麼喜歡\n 「寶藏」的話，\n 自己去找不就好了……）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				
+		//		F_set(FT_01_TalkGrein)
+				F_set(GREIN)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(GREIN,"也對……",0)
+				MES(GREIN,"今天早上有兩個小孩來過，\n問了我一些關於伊魯巴特的\n迷宮的問題。",0)
+				MES(GREIN,"看起來只有十四五歲，\n不過似乎很厲害的樣子……",0)
+				MES(GREIN,"從來沒在阿魯特見過他們呢。\n是旅客嗎……？",0)
+				MES_close(GREIN)
+
+				//仛僌儗僀儞亂塻偄娽椡亃
+				F_set_note(GREIN,0)
+
+			}
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸攷暔娰丄俀偮栚偺揥帵儖乕儉偵棫偭偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩丅
+	if( F1_01_GameStart )
+	{
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		rot_chr(GREIN,30,PLAYER1)
+		if(!FT_01_TalkGrein)
+		{
+			MOT(GREIN,150,15)
+			MES(GREIN,"……你是………\n現役的尋寶獵人嗎？",0)
+			MES_close(GREIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，嗯。沒錯……",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"那就\n太好了……",0)
+			MES_close(GREIN)
+
+		//丂丂僌儗僀儞丄岦偒傪栠偡丅
+			rot(GREIN,30,190)
+			MOT(GREIN,52,15)
+			
+			MES(GREIN,"實際上，現在這件展示廳\n正在收集展示品……",0)
+			MES(GREIN,"館長在這方面沒有什麼特別的要求，\n但我還是希望儘可能\n展示一些在伊魯巴特出土的東西……",0)
+			MES_close(GREIN)
+
+		//丂丂僌儗僀儞丄婄偩偗偱怳傝岦偔丅
+			look_chr( GREIN, RAGNA,"Bone_Head")
+			
+			MES(GREIN,"……如果在迷宮中發現了\n「寶藏」，\n可以把它帶到這裡來嗎？",0)
+			MES(GREIN,"對了，到時候去找\n接待卡蒂娜說一聲就行了……",0)
+			MES(GREIN,"我們會買下有價值的寶藏的。\n拜託了……",0)
+			MES_close(GREIN)
+			
+			F_set(FT_01_TalkGrein)
+
+		//夝彍
+			look_off(RAGNA)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			MOT(GREIN,150,15)
+			if(F_GREIN)
+			{
+				MES(GREIN,"伊魯巴特上\n有不少複雜的遺跡。",0)
+				MES(GREIN,"雖然獵人經常進出，\n可是應該仍有不少「寶藏」\n長眠於地下……",0)
+				MES(GREIN,"……如果在迷宮中發現了\n「寶藏」，\n可以把它帶到這裡來嗎？",0)
+				MES(GREIN,"我們會買下\n有價值的寶藏的……",0)
+				MES_close(GREIN)
+				
+				F_set(GREIN)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(GREIN,"如果在迷宮中發現了\n「寶藏」，\n希望你能把它帶到這裡來。",0)
+				MES(GREIN,"到時候去找\n接待卡蒂娜說一聲就行了……",0)
+				MES(GREIN,"我們會買下有價值的寶藏的。\n拜託了……",0)
+				MES_close(GREIN)
+			}
+			MOT(GREIN,52,15)
+		}
+	}
+}
+
+
+
+
+//=================================================================================================
+//仴僩儗僕儍乕婑憽丒奐巒張棟乮僌儗僀儞斉乯
+//=================================================================================================
+PRESENT_TREASURE_GREIN
+{
+
+	EV("Cal_TREASURENum")
+	wait_EV("Cal_TREASURENum")
+
+	//	name("佀桳岠側僩儗僕儍乕傪帩偭偰偄側偄応崌丅")
+	if(WK003==0)
+	{
+		//丂丂仸儊僢僙乕僕傪昞帵屻丄僀儀儞僩張棟傪廔椆偡傞丅
+		if(!F_RAGNA)
+		{
+			MES(GREIN,"你身上似乎\n沒有帶著寶藏呢……",0)
+			MES(GREIN,"寶藏就是指\n在迷宮中找到的\n古董與發掘物。",0)
+			MES(GREIN,"如果找到類似的東西，\n希望你能把它帶到這裡來。",0)
+			MES(GREIN,"我們會買下\n有價值的寶藏的……",0)
+			MES_close(GREIN)
+			F_set(RAGNA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(GREIN,"寶藏就是指\n在迷宮中找到的\n古董與發掘物。",0)
+			MES(GREIN,"如果找到類似的東西，\n希望你能把它帶到這裡來。",0)
+			MES(GREIN,"我們會買下\n有價值的寶藏的……",0)
+			MES_close(GREIN)
+		}
+		
+		//儖乕僾梡LF
+		F_set(PARTNER)
+
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸埲壓偼桳岠側僩儗僕儍乕傪帩偭偰偄傞偙偲偑慜採丅
+	else
+	{
+		MES(GREIN,"這件寶藏是……",0)
+		//MES(GREIN,"彮偟懸偭偰偔傟丅\n徻偟偔挷傋偰傒偨偄乧乧",0)
+		MES(GREIN,"請稍候。\n我還需要仔細研究一下……",0)
+		
+		VOICE(748,0)			//乽偱偼丄梐偐偭偰偍偙偆乿乮僩儗僕儍乕傪梐偗傞帪乯
+		MES(GREIN,"那麼，這個我們就收下了。",0)
+				
+		MES_close(GREIN)
+
+	//丂丂堦扷僼僃乕僪傾僂僩偟丄僊儖僪庴偗晅偗慜丅
+
+		fade_in( 100, 60, BLACK)	//僼僃乕僪傾僂僩
+		wait_fade()
+
+		workL(10,SET,0)//WK010= 0:僇儖僨傿僫偄側偄乛1:僇儖僨傿僫偄傞
+		EV("PRESENT_TREASURE")
+		wait_EV("PRESENT_TREASURE")
+		
+	}
+}
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴僴儞僞乕儔儞僋妋擣張棟
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸僴儞僞乕儔儞僋偼埲壓偺捠傝丅
+
+//		Rank	Name							point		佀曉偡抣偼1/10両
+//		侽丗僲乕儅儖僴儞僞乕乮弶婜忬懺乯		  0- 29			 0-2
+//		侾丗僟儞僕儑儞僴儞僞乕曗嵅				 30- 59			 3-5
+//		俀丗僟儞僕儑儞僴儞僞乕					 60-			 6
+//		俁丗儚僀儖僪僴儞僞乕曗嵅				 90-			 9
+//		係丗儚僀儖僪僴儞僞乕					120-			12
+//		俆丗儀僥儔儞僴儞僞乕曗嵅				150-			15
+//		俇丗儀僥儔儞僴儞僞乕					180-			18
+//		俈丗僑乕僕儍僗僴儞僞乕曗嵅				210-			21
+//		俉丗僑乕僕儍僗僴儞僞乕					240-			24
+//		俋丗僗儁僔儍儖僴儞僞乕曗嵅				270-			27
+//		10丗僗儁僔儍儖僴儞僞乕					300-			30
+//		11丗價儏乕僥傿僴儞僞乕曗嵅				330-			33
+//		12丗價儏乕僥傿僴儞僞乕					360-			36
+//		13丗儅乕儀儔僗僴儞僞乕曗嵅				390-			39
+//		14丗儅乕儀儔僗僴儞僞乕					420-			42
+//		15丗傾儖僥傿儊僢僩僴儞僞乕				450-			45
+//		16丗揱愢偺愒栄乮僐儞僾儕乕僩乯			480				48
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+CHECK_RANK_GREIN
+{
+	//僴儞僞乕儔儞僋嵏掕
+	system_chack(3)
+
+	if( GW_HUNTER_POINT>=45 && GW_HUNTER_RANK<15)
+	{
+	
+		MES(GREIN,"這……\n你的表現令人眼前一亮……",0)
+		
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是正式的L337究極獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"究極獵人是\n賦予已經達成數件至高成就的獵人\n的稱號。",0)
+		MES(GREIN,"這麼年輕就已經達到這種等級……",0)
+		MES(GREIN,"……我很期待你的表現。\n希望你能繼續努力……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,15)
+	}
+/*
+//	傾儖僥傿儊僢僩僴儞僞乕曗嵅傊徃奿
+	else
+	if( GW_HUNTER_POINT>=65 && GW_HUNTER_RANK<15)
+	{
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+	
+		MES(GREIN,"偙傟偼乧乧\n拞乆栚妎偟偄妶桇偩乧乧",0)
+		MES(GREIN,"傛偔婃挘偭偨側丅\n孨傪傾儖僥傿儊僢僩僴儞僞乕曗嵅偲擣掕偟傛偆丅",0)
+		MES(GREIN,"偙傟偼僊儖僪偐傜偺朖徿偩丅\n庴偗庢偭偰偍偔偲偄偄乧乧",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤乮壖乯
+		get_item(001,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		MES(GREIN,"傾儖僥傿儊僢僩僴儞僞乕偼丄\n柍擇偺岟愌傪悢懡惉偟悑偘偨僴儞僞乕偵\n憽傜傟傞丄媶嬌偺儔儞僋偩丅",0)
+		MES(GREIN,"偦偺擭偱偙偙傑偱\n搊傝偮傔傞偲偼側乧乧",0)
+		MES(GREIN,"乧乧孨偵偼婜懸偟偰偄傞丅\n偙傟偐傜傕婃挘傞偲偄偄乧乧",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,15)
+	}
+*/
+
+	//	儅乕儀儔僗僴儞僞乕傊徃奿
+	else
+	if( GW_HUNTER_POINT>=42 && GW_HUNTER_RANK<14)
+	{
+	
+		MES(GREIN,"……看來\n你已經頗有成就了呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是正式的L337奇跡獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"奇跡獵人是\n賦予那些精通所有相關領域的獵人\n的稱號。",0)
+		MES(GREIN,"這麼年輕就已經達到這種等級……",0)
+		MES(GREIN,"……我很期待你的表現。\n希望你能繼續努力……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,14)
+	}
+//	儅乕儀儔僗僴儞僞乕曗嵅傊徃奿
+	else
+	if( GW_HUNTER_POINT>=39 && GW_HUNTER_RANK<13)
+	{
+
+	
+		MES(GREIN,"……看來\n你已經頗有成就了呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是L337見習奇跡獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"奇跡獵人是\n賦予那些精通所有相關領域的獵人\n的稱號。",0)
+		MES(GREIN,"這麼年輕就已經達到這種等級……",0)
+		MES(GREIN,"……我很期待你的表現。\n希望你能繼續努力……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,13)
+	}
+//	價儏乕僥傿僴儞僞乕傊徃奿
+	else
+	if( GW_HUNTER_POINT>=36 && GW_HUNTER_RANK<12)
+	{
+	
+		MES(GREIN,"……看來\n你已經頗有成就了呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是正式的L337華美獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"華美獵人是\n賦予那些得到偉大光榮的獵人\n的稱號。",0)
+		MES(GREIN,"……你的表情也很不錯嘛。\n希望你能繼續努力……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,12)
+	}
+//	價儏乕僥傿僴儞僞乕曗嵅傊徃奿
+	else
+	if( GW_HUNTER_POINT>=33 && GW_HUNTER_RANK<11)
+	{
+	
+		MES(GREIN,"……看來\n你已經頗有成就了呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"現在開始，你就是L337見習華美獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"華美獵人是\n賦予那些得到偉大光榮的獵人\n的稱號。",0)
+		MES(GREIN,"……你的表情也很不錯嘛。\n希望你能繼續努力……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,11)
+	}
+//	僗儁僔儍儖僴儞僞乕傊徃奿
+	else
+	if( GW_HUNTER_POINT>=30 && GW_HUNTER_RANK<10)
+	{
+	
+		MES(GREIN,"唔……\n你已經很活躍了呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是正式的L337特殊獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"特殊獵人是\n賦予那些留下優秀功勳的獵人\n的稱號。",0)
+		MES(GREIN,"……你的表情也很不錯嘛。\n希望你能繼續努力……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,10)
+	}
+//	僗儁僔儍儖僴儞僞乕曗嵅傊徃奿
+	else
+	if( GW_HUNTER_POINT>=27 && GW_HUNTER_RANK<9)
+	{
+	
+		MES(GREIN,"唔……\n你已經很活躍了呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是L337見習特殊獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"特殊獵人是\n賦予那些留下優秀功勳的獵人\n的稱號。",0)
+		MES(GREIN,"……你的表情也很不錯嘛。\n希望你能繼續努力……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,9)
+	}
+//	僑乕僕儍僗僴儞僞乕傊徃奿
+	else
+	if( GW_HUNTER_POINT>=24 && GW_HUNTER_RANK<8)
+	{
+	
+		MES(GREIN,"唔……\n你已經很活躍了呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是正式的L337明星獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"明星獵人是\n賦予那些受眾人艷羨的獵人\n的稱號。",0)
+		MES(GREIN,"……你的表情也很不錯嘛。\n希望你能繼續努力……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,8)
+	}
+//	僑乕僕儍僗僴儞僞乕曗嵅傊徃奿
+	else
+	if( GW_HUNTER_POINT>=21 && GW_HUNTER_RANK<7)
+	{
+	
+		MES(GREIN,"唔……\n你已經很活躍了呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是L337見習明星獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"明星獵人是\n賦予那些受眾人艷羨的獵人\n的稱號。",0)
+		MES(GREIN,"……你的表情也很不錯嘛。\n希望你能繼續努力……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,7)
+	}
+//	儀僥儔儞僴儞僞乕傊徃奿
+	else
+	if( GW_HUNTER_POINT>=18 && GW_HUNTER_RANK<6)
+	{
+	
+		MES(GREIN,"……你也相當活躍呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是正式的L337老練獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"老練獵人是\n賦予那些取得大量成果的獵人\n的稱號。",0)
+		MES(GREIN,"希望你能繼續努力。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,6)
+	}
+//	儀僥儔儞僴儞僞乕曗嵅傊徃奿
+	else
+	if( GW_HUNTER_POINT>=15 && GW_HUNTER_RANK<5)
+	{
+	
+		MES(GREIN,"……你也相當活躍呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是L337見習老練獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"老練獵人是\n賦予那些取得大量成果的獵人\n的稱號。",0)
+		MES(GREIN,"希望你能繼續努力。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,5)
+	}
+//	儚僀儖僪僴儞僞乕傊徃奿
+	else
+	if( GW_HUNTER_POINT>=12 && GW_HUNTER_RANK<4)
+	{
+	
+		MES(GREIN,"……你也相當活躍呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是正式的L337狂野獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"狂野獵人是\n賦予那些行動中充斥著野心的獵人\n的稱號。",0)
+		MES(GREIN,"希望你能繼續努力。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,4)
+	}
+//	儚僀儖僪僴儞僞乕曗嵅傊徃奿
+	else
+	if( GW_HUNTER_POINT>=9 && GW_HUNTER_RANK<3)
+	{
+	
+		MES(GREIN,"……你也相當活躍呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是L337見習狂野獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"狂野獵人是\n賦予那些行動中充斥著野心的獵人\n的稱號。",0)
+		MES(GREIN,"希望你能繼續努力。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,3)
+	}
+//	僟儞僕儑儞僴儞僞乕傊徃奿
+	else
+	if( GW_HUNTER_POINT>=6 && GW_HUNTER_RANK<2)
+	{
+	
+		MES(GREIN,"……你也相當活躍呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是正式的L337迷宮獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"迷宮獵人是\n賦予善於探索迷宮的獵人\n的稱號。",0)
+		MES(GREIN,"希望你能繼續努力。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,2)
+	}
+//	僟儞僕儑儞僴儞僞乕曗嵅傊徃奿
+	else
+	if( GW_HUNTER_POINT>=3 && GW_HUNTER_RANK<1)
+	{
+	
+		MES(GREIN,"……你也相當活躍呢。",0)
+
+		VOICE(747,0)				//乽傛偔婃挘偭偨側乧乿丂丂乮僴儞僞乕儔儞僋偑忋偑偭偨帪乯
+		MES(GREIN,"你相當努力啊。\n從現在開始，你就是L337見習迷宮獵人L400了。",0)
+		MES(GREIN,"這是獵人工會的獎賞。\n請你收下……",0)
+		MES_close(GREIN)
+		
+		//傾僀僥儉擖庤
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"迷宮獵人是\n賦予善於探索迷宮的獵人\n的稱號。",0)
+		MES(GREIN,"希望你能繼續努力。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,1)
+	}
+//	name("佀徃奿偑側偄応崌")
+	else
+	{
+		if(GW_HUNTER_RANK==0)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337普通獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==1)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337見習迷宮獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==2)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337迷宮獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==3)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337見習狂野獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==4)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337狂野獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==5)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337見習老練獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==6)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337老練獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==7)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337見習明星獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==8)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337明星獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==9)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337見習特殊獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==10)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337特殊獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==11)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337見習華美獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==12)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337華美獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==13)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337見習奇跡獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==14)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337奇跡獵人L400。",0)
+		}
+		else
+/*		if(GW_HUNTER_RANK==15)
+		{
+			MES(GREIN,"孨偺尰嵼偺僴儞僞乕儔儞僋偼\nL337傾儖僥傿儊僢僩僴儞僞乕曗嵅偩側丅",0)
+		}
+		else
+*/		if(GW_HUNTER_RANK==15)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL337究極獵人L400。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==16)
+		{
+			MES(GREIN,"你現在的獵人等級是\nL700紅髮勇者L400。",0)
+		}
+	
+		MES(GREIN,"累積一些探索迷宮的經歷\n再過來吧……",0)
+		MES(GREIN,"獵人工會對優秀的獵人\n也會多少提供一些援助……",0)
+		MES_close(GREIN)
+	}
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

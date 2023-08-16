@@ -1,0 +1,2849 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10301][罗亚鲁塔村（夜）]
+//====================================================================
+
+#ScriptTable
+
+#LUE 		1
+#PIPIRO 	2
+#POCKLE 	3
+#FIONA 		4
+#KLODE 		5
+#ZONBI_A 	6
+#ZONBI_B 	7
+#ZONBI_C 	8
+#ZONBI_D 	9
+#ZONBI_E 	10
+#ZONBI_F 	11
+#ALWEN	 	12
+#EVENT_RAGNA 	13
+#ENEMY		14
+#GYARANDOW	15
+#EFFECT		16
+#EFFECT2	17
+#EFFECT_A	18
+#EFFECT_B	19
+#EFFECT_C	20
+#EFFECT_D	21
+#EFFECT_E	22
+#EFFECT_F	23
+#EFFECT3	24
+
+#EVENT_PIPIRO 	30
+#EVENT_POCKLE 	31
+#EVENT_FIONA 	32
+#EVENT_KLODE 	33
+
+//■ローカルフラグ
+// flag 200-205 ゾンビつかまりフラグ
+// flag 210-215 ゾンビ浄化フラグ
+
+//■ローカルワーク
+// 0 乱数
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip        x     y    z     mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+	map_color(68,68,98,0);//R,G,B, time 100%
+//■エントリー
+//	set_chr( 90,990,	-1,-1,  3414,9243,-300,    180,  3004,  6,"K4_10001;")	//東
+//	set_chr( 91,990,	-1,-1,  4764,-4606,300,      0,  2702,  6,"Ka_10001;")	//北
+//	set_chr( 92,990,	-1,-1, -5146,-5493,300,    270,  0230,  6,"Kb_10001;")	//西
+//	set_chr( 93,990,	-1,-1, -2022,2938,-300,      0,  0303,  6,"K0_10310;")	//民家へ
+
+	set_chr( 90,990,	-1,-1,  3400, 9150,-300,   160,  3002,  6,"K4_10001;")	//フィールドマップ-東
+	set_chr( 91,990,	-1,-1,  5000,-4600, 300,    35,   802,  6,"Ka_10001;")	//フィールドマップ-北
+	set_chr( 92,990,	-1,-1, -4650,-5100, 300,   315,  0202,  6,"Kb_10001;")	//フィールドマップ-西
+//	set_chr( 93,990,	-1,-1,  -150,-3000, 300,     0,050303, 11,"K0_10310;")	//罗亚鲁塔村·村长宅
+	set_chr( 94,990,	-1,-1,  1000, 2900,   0,    30,050303, 11,"K0_10321;")	//罗亚鲁塔村·ペット
+//	set_chr( 95,990,	-1,-1, -1850, 3150,-300,   315,050303, 11,"K0_10330;")	//罗亚鲁塔村·风車小屋
+//	set_chr( 96,990,	-1,-1,  4325,  725,   0,   315,050303, 11,"K0_10340;")	//罗亚鲁塔村·牛舎
+
+	set_chr(100,990,	-1,-1,  4450, 8750,-300,   160,   806,  6,"K4_10001;")	//フィールドマップ-東 （行き専用）
+
+	set_chr(102,990,	-1,-1,  4300,-4800, 300,    35,  1002,  6,"Ka_10001;")	//フィールドマップ-北 （行き専用）
+	set_chr(103,990,	-1,-1,  5700,-4400, 300,    35,   802,  6,"Ka_10001;")	//フィールドマップ-北 （行き専用）
+
+	set_chr(105,990,	-1,-1, -4850,-4600, 300,   315,  0209,  6,"Kb_10001;")	//フィールドマップ-西 （行き専用）
+	set_chr(106,990,	-1,-1, -4150,-5300, 300,   315,   902,  6,"Kb_10001;")	//フィールドマップ-西 （行き専用）
+
+	set_chr( 50,620,	-1,-1,   350,-2941, 301,     0,     0,  0,";")			//①セーブOBJ
+
+	//NPC
+ 	if( F3_00_GoMoonCastle) 
+	{
+		//礼拜堂へ的扉が開くと消え、嘉兰多が現れる
+		//□礼拜堂へ的扉が開き、かつ嘉兰多に技を教わっている场合に嘉兰多が現れる。
+		if(F3_10_OpenChapel && FE_FF_GetSkil_1)
+		{
+			set_chr( GYARANDOW,21,	-1,-1,  413,3793,-21,	51,0,20,"<TK_GYARANDOW>")	//嘉兰多
+			F_set_chr(GYARANDOW,CF_NO_MOVE)
+		}
+		else
+		{
+			set_chr( PIPIRO,3,	-1,-1,  199,3225,-22,		2,220,20,"<TK_PIPIRO>")	//皮皮洛
+			set_chr( POCKLE,2,	-1,-1,  427,3200,-21,		2,120,20,"<TK_POCKLE>")	//布库尔
+			set_chr( FIONA,17,	-1,-1, -30,3780,-22,		2,60, 20,"<TK_FIONA>")		//菲奥娜
+			set_chr( KLODE,18,	-1,-1, 1050,3307,-22,		2,0, 20,"<TK_KLODE>")		//克劳德
+
+			//モーション
+			MOT_SET(POCKLE,150,-1,455,455,-1,-1)		//介抱
+			MOT(POCKLE,150,0)
+			MOT_SET(PIPIRO,150,-1,455,455,-1,-1)		//介抱
+			MOT(PIPIRO,150,0)
+			MOT_SET(FIONA,150,-1,455,455,-1,-1)		//介抱
+			MOT(FIONA,150,0)
+			MOT_SET(KLODE,150,-1,455,455,-1,-1)		//介抱
+			MOT(KLODE,150,0)
+
+			F_set_chr(PIPIRO,CF_NO_MOVE)
+			F_set_chr(POCKLE,CF_NO_MOVE)
+			F_set_chr(FIONA,CF_NO_MOVE)
+			F_set_chr(KLODE,CF_NO_MOVE)
+		}
+		//倒れている村人たち
+	//	set_chr(ZONBI_A,	 384,-1,-1, 28,3034,-21,  2,330,20, "")	// 06
+	//	set_chr(ZONBI_B,	 385,-1,-1, 414,3096,-21, 2,350,8, "")	// 07
+	//	set_chr(ZONBI_C,	 386,-1,-1, -154,3678,-21, 2,280,8, "")	// 08
+	//	set_chr(ZONBI_D,	 387,-1,-1, -6,4272,-21, 2,230,8, "")	// 09
+	//	set_chr(ZONBI_E,	 388,-1,-1, 1090,3450,-21, 2, 55,8, "")	// 10
+	//	set_chr(ZONBI_F,	 389,-1,-1, 1260,3812,-21, 2, 90,8, "")	// 11
+		set_chr(ZONBI_A,	 384,-1,-1, 28,3034,-21,  2,330,20,  "<TK_ZONBI_A>")	// 06
+		set_chr(ZONBI_B,	 385,-1,-1, 414,3096,-21, 2,350,20,  "<TK_ZONBI_B>")	// 07
+		set_chr(ZONBI_C,	 386,-1,-1, -154,3678,-21, 2,280,20, "<TK_ZONBI_C>")	// 08
+		set_chr(ZONBI_D,	 387,-1,-1, -6,4272,-21, 2,230,20,   "<TK_ZONBI_D>")	// 09
+		set_chr(ZONBI_E,	 388,-1,-1, 1090,3450,-21, 2, 55,20, "<TK_ZONBI_E>")	// 10
+		set_chr(ZONBI_F,	 389,-1,-1, 1260,3812,-21, 2, 90,20, "<TK_ZONBI_F>")	// 11
+		MOT_SET(ZONBI_A,150,-1,554,554,-1,-1)//寝る仰向け             
+		MOT_SET(ZONBI_B,150,-1,554,554,-1,-1)//寝る仰向け
+		MOT_SET(ZONBI_C,150,-1,554,554,-1,-1)//寝る仰向け
+		MOT_SET(ZONBI_D,150,-1,554,554,-1,-1)//寝る仰向け
+		MOT_SET(ZONBI_E,150,-1,554,554,-1,-1)//寝る仰向け
+		MOT_SET(ZONBI_F,150,-1,554,554,-1,-1)//寝る仰向け
+		MOT(ZONBI_A,150,0)
+		MOT(ZONBI_B,150,0)
+		MOT(ZONBI_C,150,0)
+		MOT(ZONBI_D,150,0)
+		MOT(ZONBI_E,150,0)
+		MOT(ZONBI_F,150,0)
+		KAO(ZONBI_A,"1","3","1")//
+		KAO(ZONBI_B,"1","3","1")//
+		KAO(ZONBI_C,"1","3","1")//
+		KAO(ZONBI_D,"1","3","1")//
+		KAO(ZONBI_E,"1","3","1")//
+		KAO(ZONBI_F,"1","3","1")//
+		chr_rename(ZONBI_A,"怀森村长")
+		chr_rename(ZONBI_B,"拉乌妮")
+		chr_rename(ZONBI_C,"巴兰")
+		chr_rename(ZONBI_D,"阿鲁贝尔")
+		chr_rename(ZONBI_E,"玛莎")
+		chr_rename(ZONBI_F,"菲缇莉卡")
+		
+		F_set_chr(ZONBI_A,CF_NO_MOVE)
+		F_set_chr(ZONBI_B,CF_NO_MOVE)
+		F_set_chr(ZONBI_C,CF_NO_MOVE)
+		F_set_chr(ZONBI_D,CF_NO_MOVE)
+		F_set_chr(ZONBI_E,CF_NO_MOVE)
+		F_set_chr(ZONBI_F,CF_NO_MOVE)
+		
+		
+	}
+
+//■イベント
+	//再战用
+	if(GW_ENTRY_EVENT==100)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_3_01_MonsterOnly")
+	}
+	else
+	if(GW_ENTRY_EVENT==2)
+	{
+		//イベント後会話可能にするために、こ的タイミングでセットしておく////////////////////////////////////
+		set_chr( PIPIRO,3,	-1,-1,  2395,2037,-5,	2,220,20,"<TK_PIPIRO>")	//皮皮洛
+		set_chr( POCKLE,2,	-1,-1,  2134,2342,-18,	2,120,20,"<TK_POCKLE>")	//布库尔
+		set_chr( FIONA,17,	-1,-1, 2450,2252,-3,	2,60, 20,"<TK_FIONA>")		//菲奥娜
+		set_chr( KLODE,18,	-1,-1, 2306,2532,-23,	2,0, 20,"<TK_KLODE>")		//克劳德
+
+		//モーション
+		MOT_SET(POCKLE,150,-1,455,455,-1,-1)	//介抱
+		MOT_SET(PIPIRO,150,-1,455,455,-1,-1)	//介抱
+		MOT_SET(FIONA,150,-1,455,455,-1,-1)		//介抱
+		MOT_SET(KLODE,150,-1,455,455,-1,-1)		//介抱
+
+		F_set_chr(PIPIRO,CF_NO_MOVE)
+		F_set_chr(POCKLE,CF_NO_MOVE)
+		F_set_chr(FIONA,CF_NO_MOVE)
+		F_set_chr(KLODE,CF_NO_MOVE)
+
+		color(PIPIRO,-1)//透過
+		color(POCKLE,-1)//透過
+		color(FIONA,-1)//透過
+		color(KLODE,-1)//透過
+		
+		///////////////////////////////////////////////////////////////////////////////////////////////////
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼城へ向かう（ムービー無しで追加）
+		set_namebmp(0,0)
+		EV("EV_3_02_CastleDisp2")
+	}
+	else
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼罗亚鲁塔村的异変
+		set_namebmp(0,0)
+		EV("EV_3_01_MonsterVillage")
+	}
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼罗亚鲁塔村的异変
+//──────────────────────────────
+//　　画面、フェードインして夜的罗亚鲁塔村。
+//　　禍々しい瘴気があたりに漂っている的を見せながら、
+//　　拉古那を運んだ艾雯が飛来し、
+//　　村的広场あたりにふわりと着地する的を見せる。
+EV_3_01_MonsterVillage
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	   0,6600,0,0,2)
+	chr_pos(PARTNER,	 0,6400,0,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,1010,-1,-1,  550,3760,78, 2, 25,0, "")
+	set_chr(ALWEN,		1011,-1,-1,  440,3980,78, 2,205,8, "<EV_JYOUKA>")		// 12
+//	set_chr(LUE,		1015,-1,-1,  590,4020, 58, 2,120,0, "")
+	set_chr(LUE,		1015,-1,-1,  610,3960, 58, 2,70,0, "")
+	set_chr(ZONBI_A,	 384,-1,-1, -170,2060,-22, 2,330,9, "RF200 Z1?06 L4?12 SF200")	// 06
+	set_chr(ZONBI_B,	 385,-1,-1,  190,2206,-22, 2,350,9, "RF201 Z1?07 L4?12 SF201")	// 07
+	set_chr(ZONBI_C,	 386,-1,-1, -520,3578,-22, 2,280,9, "RF202 Z1?08 L4?12 SF202")	// 08
+	set_chr(ZONBI_D,	 387,-1,-1, -468,4586,-22, 2,230,9, "RF203 Z1?09 L4?12 SF203")	// 09
+	set_chr(ZONBI_E,	 388,-1,-1, 1794,3032,-22, 2, 55,9, "RF204 Z1?10 L4?12 SF204")	// 10
+	set_chr(ZONBI_F,	 389,-1,-1, 2186,3698,-22, 2, 90,9, "RF205 Z1?11 L4?12 SF205")	// 11
+	KAO(EVENT_RAGNA,"B","1","2")//
+	KAO(ALWEN,"B","1","2")//
+	KAO(LUE,"B","1","2")//
+
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_ZIMEN)
+	F_set_chr(ALWEN,CF_NO_HEIGHT)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_ZIMEN)
+	F_set_chr(LUE,CF_NO_HEIGHT)
+	F_set_chr(ZONBI_A,CF_NO_CLIP)
+	F_set_chr(ZONBI_A,CF_NO_CLIP2)
+	F_set_chr(ZONBI_B,CF_NO_CLIP)
+	F_set_chr(ZONBI_B,CF_NO_CLIP2)
+	F_set_chr(ZONBI_C,CF_NO_CLIP)
+	F_set_chr(ZONBI_C,CF_NO_CLIP2)
+	F_set_chr(ZONBI_D,CF_NO_CLIP)
+	F_set_chr(ZONBI_D,CF_NO_CLIP2)
+	F_set_chr(ZONBI_E,CF_NO_CLIP)
+	F_set_chr(ZONBI_E,CF_NO_CLIP2)
+	F_set_chr(ZONBI_F,CF_NO_CLIP)
+	F_set_chr(ZONBI_F,CF_NO_CLIP2)
+	color(EVENT_RAGNA,-1)
+	color(ALWEN,-1)
+	color(LUE,-1)
+	color(ZONBI_A,-1)
+	color(ZONBI_B,-1)
+	color(ZONBI_C,-1)
+	color(ZONBI_D,-1)
+	color(ZONBI_E,-1)
+	color(ZONBI_F,-1)
+	wait_color(ZONBI_A)
+
+	IK(ALWEN,"Bone_LeftWing1",0)
+	IK(ALWEN,"Bone_RightWing1",0)
+/*
+	chr_scale( ALWEN,	"Bone_LeftWing1",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWing2",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWingEnd",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing1",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing2",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWingEnd",	120,120,120,	0,	1);
+*/
+	//モーション定義
+	MOT_SET(ALWEN,150,150,4590,4615,-1,-1)//詠唱
+	MOT_SET(ALWEN,151,151,4905,4945,-1,-1)//浮遊着地
+	MOT_SET(ALWEN,152,-1,4560,4585,-1,-1)//構え
+	MOT_SET(EVENT_RAGNA,150,-1,3010,3029,-1,-1)//構え
+	MOT_SET(EVENT_RAGNA,151,-1,469,469,-1,-1)//げげ
+	MOT_SET(EVENT_RAGNA,152,-1,3029,3029,-1,-1)//構え
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる的はこちら。
+//	MOT(ALWEN,53,1)										//艾雯的右手を開かせる
+	F_set_Node(ZONBI_A,"Bone_RightSword",NP_HIDE)
+	F_set_Node(ZONBI_B,"Bone_RightSword",NP_HIDE)
+
+	wait(1)
+	set_chr( EFFECT,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT3,749,	-1,-1,  0,0,0,     61, 0, 0,"")
+	F_set_chr(EFFECT,CF_NO_CLIP)
+	F_set_chr(EFFECT,CF_NO_CLIP2)
+	F_set_chr(EFFECT,CF_NO_CSP)
+	F_set_chr(EFFECT,CF_NO_ZIMEN)
+	F_set_chr(EFFECT,CF_NO_HEIGHT)
+	F_set_chr(EFFECT3,CF_NO_CLIP)
+	F_set_chr(EFFECT3,CF_NO_CLIP2)
+	F_set_chr(EFFECT3,CF_NO_CSP)
+	F_set_chr(EFFECT3,CF_NO_ZIMEN)
+	F_set_chr(EFFECT3,CF_NO_HEIGHT)
+	color(EFFECT,-1)
+	color(EFFECT3,-1)
+	chr_equip_chr(EFFECT,ALWEN,"wtop",100,		0,0,0,	0,0,0);
+	MOT(ALWEN,151,0)
+
+	set_chr( EFFECT_A,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT_B,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT_C,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT_D,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT_E,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT_F,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	F_set_chr(EFFECT_A,CF_NO_CLIP)
+	F_set_chr(EFFECT_A,CF_NO_CLIP2)
+	F_set_chr(EFFECT_A,CF_NO_CSP)
+	F_set_chr(EFFECT_A,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_A,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_B,CF_NO_CLIP)
+	F_set_chr(EFFECT_B,CF_NO_CLIP2)
+	F_set_chr(EFFECT_B,CF_NO_CSP)
+	F_set_chr(EFFECT_B,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_B,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_C,CF_NO_CLIP)
+	F_set_chr(EFFECT_C,CF_NO_CLIP2)
+	F_set_chr(EFFECT_C,CF_NO_CSP)
+	F_set_chr(EFFECT_C,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_C,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_D,CF_NO_CLIP)
+	F_set_chr(EFFECT_D,CF_NO_CLIP2)
+	F_set_chr(EFFECT_D,CF_NO_CSP)
+	F_set_chr(EFFECT_D,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_D,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_E,CF_NO_CLIP)
+	F_set_chr(EFFECT_E,CF_NO_CLIP2)
+	F_set_chr(EFFECT_E,CF_NO_CSP)
+	F_set_chr(EFFECT_E,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_E,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_F,CF_NO_CLIP)
+	F_set_chr(EFFECT_F,CF_NO_CLIP2)
+	F_set_chr(EFFECT_F,CF_NO_CSP)
+	F_set_chr(EFFECT_F,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_F,CF_NO_HEIGHT)
+	color(EFFECT_A,-1)
+	color(EFFECT_B,-1)
+	color(EFFECT_C,-1)
+	color(EFFECT_D,-1)
+	color(EFFECT_E,-1)
+	color(EFFECT_F,-1)
+	chr_equip_chr(EFFECT_A,ZONBI_A,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_B,ZONBI_B,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_C,ZONBI_C,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_D,ZONBI_D,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_E,ZONBI_E,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_F,ZONBI_F,"charbase0",100,		0,0,0,	0,0,0);
+
+	//カメラ初期位置
+	CAM_move(370,100,1060,0,0)
+	CAM(490,204,1060,36,200,0,0)
+
+	CAM_move(530,-4500,1060,300,0)
+	CAM(490,204,1060,36,200,300,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+	wait_CAM_move()
+	wait_CAM()
+
+	cross_fade(30)
+	CAM_move(510,-4000,240,0,0)
+	CAM(330,64,240,30,172,0,0)
+	CAM_move(510,-4000,140,90,0)
+	CAM(330,44,140,30,172,90,0)
+
+	wait(50)
+	MOT(ALWEN,134,0)
+	wait(10)
+	jump(ALWEN,2,30,0,0,-100,0)
+//	EFF_chr(4040,ALWEN,0,100,0,"Bone_Hips")
+	EFF_chr(24580,ALWEN,0,70,0,"charbase0")
+	SE(1016,0)
+	wait(5)
+	color(ALWEN,15)
+	MOT(EVENT_RAGNA,3,0)
+	jump(EVENT_RAGNA,2,30,0,0,-100,0)
+	EFF_chr(24580,EVENT_RAGNA,0,70,0,"charbase0")
+	wait(5)
+	color(EVENT_RAGNA,15)
+	MOT(LUE,0,0)
+	jump(LUE,2,30,0,0,-100,0)
+	EFF_chr(24580,LUE,0,70,0,"charbase0")
+	wait(5)
+	color(LUE,15)
+	wait(15)
+	MOT(EVENT_RAGNA,6,5)
+	wait_move(ALWEN)
+	F_reset_chr(ALWEN,CF_NO_ZIMEN)
+	F_reset_chr(ALWEN,CF_NO_HEIGHT)
+	wait_move(EVENT_RAGNA)
+	F_reset_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_reset_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	wait_move(LUE)
+	MOT(LUE,2,15)
+/*
+	chr_scale( ALWEN,	"Bone_LeftWing1",		83,83,83,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWing2",		83,83,83,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWingEnd",		83,83,83,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing1",		83,83,83,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing2",		83,83,83,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWingEnd",	83,83,83,	0,	1);
+*/
+	IK(ALWEN,"Bone_LeftWing1",1)
+	IK(ALWEN,"Bone_RightWing1",1)
+	wait_CAM_move()
+	wait_CAM()
+	CAM_move(510,-4000,140,600,0)
+	CAM(250,42,140,30,180,600,0)
+
+	MOT(EVENT_RAGNA,51,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"C232CZ2","123332A","5")//
+	MES(EVENT_RAGNA,"这，这是……",0)
+	KAO(EVENT_RAGNA,"C232CZ4","A","5")//
+	MES(EVENT_RAGNA,"就算是我，\n看到这样也知道大事不好了。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"唔，过于强烈的妖气\n实体化成为瘴气了吗。",0)
+	MES(ALWEN,"不会错的，叔叔来过这里。",0)
+	MES_close(ALWEN)
+
+//	look_chr( LUE, ALWEN ,"Bone_Head")
+//	wait(15)
+//	name2(LUE)
+	KAO(LUE,"B232BZ2","123332A","5")//
+	MES(LUE,"啊呜呜……",0)
+	KAO(LUE,"B232BZ5","A","5")//
+	MES(LUE,"公主大人，扎哈鲁大人\n现在还在这里吗？",0)
+	MES_close(LUE)
+
+	look_chr( ALWEN, LUE ,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	MES(ALWEN,"不……已经没有他的气息了。",0)
+	MES(ALWEN,"恐怕是达成了目的\n而离开了吧。",0)
+	MES(ALWEN,"也就是说，这股瘴气\n是所谓的“余香”吗。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"C232CZ4","233321","3")//
+	MES(EVENT_RAGNA,"可恶……\n那是什么怪物啊！",0)
+	KAO(EVENT_RAGNA,"C232CZ6","1","3")//
+	MES(EVENT_RAGNA,"待在这种不祥的空气中，\n村里的人们会怎么样……",0)
+	MES_close(EVENT_RAGNA)
+
+	chr_rename(ZONBI_A,"声")//
+//	name("声")
+	SE(1127,0)//オォオオォォSE
+	MES_pos(ZONBI_A,"C2W9ＧＲＲＲＲ……",0,160,80,0,0)
+	wait_key(0)
+	MES_close(ZONBI_A)
+
+	chr_rename(ZONBI_D,"声")//
+//	name("声")
+	SE(1185,0)//オォオオォォSE
+	MES_pos(ZONBI_D,"C2W9ＡＡＡＡＡ……",0,500,120,0,0)
+	wait_key(0)
+	MES_close(ZONBI_D)
+
+//　　拉古那たち的頭に！マーク。
+	KAO(EVENT_RAGNA,"E","12321DE","7")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(ALWEN,"E","12321DE","7")//
+	EMO(ALWEN,EMO_BIKKURI)
+	KAO(LUE,"E","2321DE","7")//
+	EMO(LUE,EMO_BIKKURI)
+	wait(15)
+	rot(EVENT_RAGNA,30,160)
+	look_off(ALWEN)
+	rot(ALWEN,30,40)
+	look_off(LUE)
+	rot(LUE,30,290)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"2","D12321D","6")//
+	MES(EVENT_RAGNA,"什……！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ2","D12321","3")//
+	MES(ALWEN,"果然吗……",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　画面スクロールして、村的あちこちから
+//　　操られた村人たちがノロノロ步いてくる的を見せる。
+	MOT(EFFECT_A,30,0)
+	MOT(EFFECT_B,30,0)
+	MOT(EFFECT_C,30,0)
+	MOT(EFFECT_D,30,0)
+	MOT(EFFECT_E,30,0)
+	MOT(EFFECT_F,30,0)
+
+	cross_fade(30)
+//	SE(1066,0)//邪悪なオーラSE
+//	CAM_move(-20,-2280,260,0,0)
+//	CAM(170,22,260,30,172,0,0)
+	CAM_move(-40,-1980,320,0,0)
+	CAM(450,20,320,30,172,0,0)
+	CAM_move(-20,-2280,220,150,0)
+	CAM(140,24,220,30,172,150,0)
+	KAO(ZONBI_A,"O","O","1")//
+	KAO(ZONBI_B,"O","O","1")//
+	color2(ZONBI_A,  64, 64,128, 0,0,0)
+	color2(ZONBI_B,  64, 64,128, 0,0,0)
+	color(ZONBI_A,1)
+	color(ZONBI_B,1)
+	chr_pos(ZONBI_A,	-120,1260,-22,0,2)
+	chr_pos(ZONBI_B,	 140,1406,-22,0,2)
+	MOT(ZONBI_A,0,0)
+	MOT(ZONBI_B,0,0)
+	move( ZONBI_A, 30, 6,-150,2060,-22,0)
+	move( ZONBI_B, 30, 6,170,2206,-22,0)
+	wait(20)
+	SE(1127,0)//オォオオォォSE
+	wait(130)
+
+	cross_fade(15)
+//	SE(1066,0)//邪悪なオーラSE
+//	CAM_move(-480,-4020,320,0,0)
+//	CAM(490,22,320,32,214,0,0)
+	CAM_move(-1020,-3480,0,0,0)
+	CAM(290,48,0,32,242,0,0)
+	CAM_move(-780,-3620,100,150,0)
+	CAM(490,68,100,32,214,150,0)
+	KAO(ZONBI_C,"O","O","1")//
+	KAO(ZONBI_D,"O","O","1")//
+	color2(ZONBI_C,  64, 64,128, 0,0,0)
+	color2(ZONBI_D,  64, 64,128, 0,0,0)
+	color(ZONBI_C,1)
+	color(ZONBI_D,1)
+	chr_pos(ZONBI_C,	 -1210,3500,-285,270,2)
+	chr_pos(ZONBI_D,	 -1472,3582,-310,270,2)
+	MOT(ZONBI_C,0,0)
+	MOT(ZONBI_D,0,0)
+	move( ZONBI_C, 30, 6,-420,3380,-22,0)
+	move( ZONBI_D, 30, 6,-560,3752,-22,0)
+	wait(20)
+	SE(1127,0)//オォオオォォSE
+	wait(130)
+
+	cross_fade(15)
+//	SE(1066,0)//邪悪なオーラSE
+//	CAM_move(2000,-3060,160,0,0)
+//	CAM(210,34,160,32,148,0,0)
+	CAM_move(2260,-3060,240,0,0)
+	CAM(210,30,240,32,162,0,0)
+	CAM_move(2000,-3060,160,120,0)
+	CAM(210,34,160,32,148,120,0)
+	KAO(ZONBI_E,"O","O","1")//
+	KAO(ZONBI_F,"O","O","1")//
+	color2(ZONBI_E,  64, 64,128, 0,0,0)
+	color2(ZONBI_F,  64, 64,128, 0,0,0)
+	color(ZONBI_E,1)
+	color(ZONBI_F,1)
+	chr_pos(ZONBI_E,	 2220,2418,-22,20,2)
+	chr_pos(ZONBI_F,	 3174,2188,14,75,2)
+	MOT(ZONBI_E,0,0)
+	MOT(ZONBI_F,0,0)
+	move( ZONBI_F, 30, 6,2450,2554,-22,0)
+//	move( ZONBI_E, 0, 6,1886,3188,1,0)
+//	move( ZONBI_E, 0, 6,2020,2886,1,0)
+	move( ZONBI_E, 30, 6,2129,2937,-22,0)
+	wait(14)
+	SE(1185,0)//オォオオォォSE
+	wait_move(ZONBI_E)
+	rot(ZONBI_E,30,50)
+	wait(5)
+//	move( ZONBI_E, 0, 6,1526,3268,1,0)
+	move( ZONBI_E, 0, 6,1828,3348,-22,0)
+//	wait(150)
+	wait(30)
+
+	cross_fade(15)
+	CAM_move(520,-3940,120,0,0)
+	CAM(450,60,120,26,172,0,0)
+	MOT(EVENT_RAGNA,151,0)
+	chr_pos(LUE,590,4020,-42,290,2)
+	wait(30)
+
+	KAO(EVENT_RAGNA,"B232B2Z2","D","6")//
+	MES(EVENT_RAGNA,"这，这是什么……",0)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232B2Z3","1233321","2")//
+	MES(EVENT_RAGNA,"喂，公主！\n这到底是怎么回事！？",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"C232CZ3","1233321","3")//
+	MES(ALWEN,"……这是叔叔干的。",0)
+	KAO(ALWEN,"C232CZ4","1","3")//
+	MES(ALWEN,"似乎是经由“进食”\n将他们作为了傀儡。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232B2","12321D","6")//
+	MES(EVENT_RAGNA,"什么……！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　村人たち、広场にいる拉古那たちを包囲する動き。
+//　　目は空ろ（or白目）で、身体は紫的瘴気に包まれている。
+
+//typ=99で移動を強制停止
+	move(ZONBI_A, 99, 0,0,0,0,0)
+	move(ZONBI_B, 99, 0,0,0,0,0)
+	move(ZONBI_C, 99, 0,0,0,0,0)
+	move(ZONBI_D, 99, 0,0,0,0,0)
+	move(ZONBI_E, 99, 0,0,0,0,0)
+	move(ZONBI_F, 99, 0,0,0,0,0)
+
+	color(ZONBI_A,1)
+	color(ZONBI_B,1)
+	color(ZONBI_C,1)
+	color(ZONBI_D,1)
+	color(ZONBI_E,1)
+	color(ZONBI_F,1)
+	chr_pos(ZONBI_A,	 -240,2060,-22,330,2)
+	chr_pos(ZONBI_B,	 190,2206,-22,350,2)
+	chr_pos(ZONBI_C,	 -520,3578,-22,280,2)
+	chr_pos(ZONBI_D,	 -468,4586,-22,230,2)
+	chr_pos(ZONBI_E,	 1794,3032,-22,55,2)
+	chr_pos(ZONBI_F,	 2186,3698,-22,90,2)
+
+//	CAM_move(520,-3860,160,120,0)
+//	CAM(330,100,160,32,180,120,0)
+	CAM_move(520,-3860,100,150,0)
+	CAM(490,100,100,34,180,150,0)
+
+	move( ZONBI_A, 0, 6,28,3034,-22,0)
+	move( ZONBI_B, 0, 6,414,3096,-22,0)
+	move( ZONBI_F, 0, 6,1260,3812,-22,0)
+	wait(15)
+	move( ZONBI_E, 0, 6,1090,3450,-22,0)
+	wait(60)
+	move( ZONBI_C, 0, 6,-154,3678,-22,0)
+	move( ZONBI_D, 0, 6,-6,4272,-22,0)
+
+	wait(15)
+	look_off( ALWEN )
+	MOT(ALWEN,152,15)
+	wait(15)
+	SE(1015,0)//杖構えSE
+	look_off( EVENT_RAGNA )
+	MOT(EVENT_RAGNA,150,15)
+	wait(20)
+	SE(1033,0)//杖構えSE
+	wait(10)
+//	rot(LUE,30,290)
+	look_chr( LUE, ALWEN ,"Bone_Head")
+	wait(15)
+
+	KAO(LUE,"B232B2Z2","12321D","5")//
+	MES(LUE,"公，公主大人！",0)
+	MES_close(LUE)
+
+	wait_move(ZONBI_A)
+	wait_move(ZONBI_B)
+	wait_move(ZONBI_C)
+	wait_move(ZONBI_D)
+	wait_move(ZONBI_E)
+	wait_move(ZONBI_F)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232GZ3","1233321","3")//
+	MES(EVENT_RAGNA,"可恶……\n怎么办才好！",0)
+	KAO(EVENT_RAGNA,"B232GZ4","1","3")//
+	MES(EVENT_RAGNA,"是被操纵的，\n到底是下不了手啊！",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	cross_fade(15)
+//	CAM_move(520,-3920,140,0,0)
+//	CAM(-430,46,140,34,168,0,0)
+//	chr_pos(ZONBI_A,	  156,3414,-22,320,2)
+	CAM_move(520,-3920,160,0,0)
+	CAM(-430,66,160,20,110,0,0)
+	CAM_move(520,-3920,160,600,0)
+	CAM(-430,86,160,20,110,600,0)
+	chr_pos(ZONBI_C,	 10,3878,-22,280,2)
+	chr_pos(EVENT_RAGNA,	  556,3840,-22,160,152)
+	wait(30)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B","23","2")//
+	MES(ALWEN,"…………………………………",0)
+	MES_close(ALWEN)
+
+//　　艾雯、おもむろに地面に杖を突き立てる。
+//	MES(ALWEN,"拉古那。\n彼らを地面に倒せるか？",0)
+	KAO(ALWEN,"B232BZ3","321","2")//
+	MES(ALWEN,"拉古那。\n能制止他们的行动吗？",0)
+	MES_close(ALWEN)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232B","12321D","6")//
+	MES(EVENT_RAGNA,"什么……！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+//	MES(ALWEN,"全員、地面に転がせば\n私が何とかしてみせよう。",0)
+	KAO(ALWEN,"B232BZ5","1233321","2")//
+	MES(ALWEN,"如果他们都停止动作的话，\n我就能多少做点什么。",0)
+	KAO(ALWEN,"B232BZ2","1","2")//
+	MES(ALWEN,"办得到吗？",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232B","1232V","6")//
+	MES(EVENT_RAGNA,"嗯，唔……",0)
+	KAO(EVENT_RAGNA,"B232BZ4","V","6")//
+	MES(EVENT_RAGNA,"把安卡基亚的模式\n切换一下的话应该能做到！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ2","123","2")//
+	MES(ALWEN,"那么就拜托你了。",0)
+//	MES(ALWEN,"私はここで準備をする。",0)
+	KAO(ALWEN,"B232BZ3","321","2")//
+	MES(ALWEN,"我就在那里做准备。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z2","V23332V","2")//
+	MES(EVENT_RAGNA,"……明白了！",0)
+	KAO(EVENT_RAGNA,"12321Z3","V","2")//
+	MES(EVENT_RAGNA,"小鬼头，公主交给你了！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(LUE)
+	KAO(LUE,"B232BZ2","12321D","2")//
+	MES(LUE,"啊，嗯！",0)
+	MES_close(LUE)
+
+//　　艾雯、オーラをまとって呪文詠唱を開始。
+//　　拉古那、一人的状態になって、プレイヤー操作許可。
+//　　安卡基亚的モードを「キャッチ」に固定した上で、
+//　　村人たちを一人残らず地面に転がすイベント战闘を開始。
+	fade_in(100,30,0)
+	wait_fade()
+
+	F_reset_chr(ZONBI_A,CF_NO_CLIP)
+	F_reset_chr(ZONBI_A,CF_NO_CLIP2)
+	F_reset_chr(ZONBI_B,CF_NO_CLIP)
+	F_reset_chr(ZONBI_B,CF_NO_CLIP2)
+	F_reset_chr(ZONBI_C,CF_NO_CLIP)
+	F_reset_chr(ZONBI_C,CF_NO_CLIP2)
+	F_reset_chr(ZONBI_D,CF_NO_CLIP)
+	F_reset_chr(ZONBI_D,CF_NO_CLIP2)
+	F_reset_chr(ZONBI_E,CF_NO_CLIP)
+	F_reset_chr(ZONBI_E,CF_NO_CLIP2)
+	F_reset_chr(ZONBI_F,CF_NO_CLIP)
+	F_reset_chr(ZONBI_F,CF_NO_CLIP2)
+
+	look_off(LUE)
+	look_del(LUE)
+	F_reset_chr(LUE,CF_NO_CLIP)
+	F_reset_chr(LUE,CF_NO_CLIP2)
+	F_reset_chr(LUE,CF_NO_CSP)
+	F_reset_chr(LUE,CF_NO_ZIMEN)
+	F_reset_chr(LUE,CF_NO_HEIGHT)
+
+	look_off(ALWEN)
+	look_del(ALWEN)
+	F_reset_chr(ALWEN,CF_NO_CLIP)
+	F_reset_chr(ALWEN,CF_NO_CLIP2)
+	F_reset_chr(ALWEN,CF_NO_CSP)
+	F_reset_chr(ALWEN,CF_NO_ZIMEN)
+	F_reset_chr(ALWEN,CF_NO_HEIGHT)
+
+	delete(EVENT_RAGNA)
+	clear_party(PARTNER)
+	color(RAGNA,1)
+	chr_pos(RAGNA,	   550,3760,0,180,2)
+
+	// フックギアを装備して、それ以外を消しておく（変更不可に）
+	if(IT001<0)					// 持っていないはずは無い的で、デバッグ用
+		get_item(001,1,1)		// 入手(フックギア)
+	set_equip(2,001)			// 装備する(パーツ、フックギア)
+
+	if(IT000>0)					// 持っていたら
+		get_item(000,-1,1)		// 消す(安卡基亚)
+	if(IT002>0)					// 持っていたら
+		get_item(002,-1,1)		// 消す(バーニングギア)
+	if(IT003>0)					// 持っていたら
+		get_item(003,-1,1)		// 消す(グライドギア)
+	if(IT004>0)					// 持っていたら
+		get_item(004,-1,1)		// 消す(ブレードギア)
+	if(IT005>0)					// 持っていたら
+		get_item(005,-1,1)		// 消す(マッスルギア)
+
+	wait(10)
+	SE(043,PLAYER1)
+//	MES(RAGNA,"C3S2フックギアを装備しました。\n村人たちを背後からフックギアで捕まえて\n艾雯的元へ運んでください。",2)
+	MES(RAGNA,"C3S2装备好フックギア。",2)
+	MES(RAGNA,"C3S2用フックギア从后方抓住村民，\n把他们带到艾雯身边。",2)
+	MES_close(RAGNA)
+	wait_MES(RAGNA)
+
+//	set_chr(ENEMY,	208,-1,-1, 56,3214,1, 2,320,0, "<EV_3_02_GoMoonCastle>;")
+
+	// 艾雯を入り口的ほうに移動した。
+	chr_pos(ALWEN,	 140,5390,-22,180,150)
+	F_set_chr(ALWEN,CF_NO_MOVE)
+	chr_pos(LUE,	 -30,5242,-22,300,2)
+	F_set_chr(LUE,CF_NO_MOVE)
+	MOT(EFFECT,18,0)
+	SE(1061,ALWEN)//詠唱中SE
+
+	delete(94)//ペットエントリ
+
+	//アタリ
+	set_chr( 81,991,	-1,-1,	 2760,2360,0,    0,  0204,	0,";")
+	set_chr( 82,991,	-1,-1,	 -660,3600,-150,  0,  0208,	0,";")
+	set_chr( 83,991,	-1,-1,	 0,1230,-30,     0,  1402,	0,";")
+	set_chr( 84,991,	-1,-1,	 0,5580,-30,     0,  2202,	0,";")
+//	set_chr( 81,991,	-1,-1,	 2760,2360,0,    0,  0804,	0,";")
+//	set_chr( 82,991,	-1,-1,	 -660,3600,-50,  0,  0807,	0,";")
+//	set_chr( 83,991,	-1,-1,	 0,1230,-30,     0,  1408,	0,";")
+//	set_chr( 84,991,	-1,-1,	 0,5580,-30,     0,  2208,	0,";")
+
+
+
+	//再战用オートセーブ
+	F_set(F2_99_BattleRetry)				//★ボス战リトライ用（立っているときはリトライメニューがでる）
+	workG(GW_ENTRY_EVENT,SET,100)
+//	workG(GW_DEF_BGM,SET,99)				//デフォルト曲を変更する  無音
+	AutoSave(0)
+	workG(GW_ENTRY_EVENT,SET,0)
+//	workG(GW_DEF_BGM,SET,0)					//デフォルト曲を変更する マップ曲
+	
+
+
+	CAM_return(0)
+	wait(30)
+
+	fade_in(0,30,0)
+
+	workG(GW_ACTIONTYPE,SET,1)	// 战闘許可
+	workG(GW_WARP_FLAG,SET,0)//ワープ封じる。
+	F_set(F3_29_BattleZonbi)//★手帳用フラグ：ゾンビ战闘中
+
+	EV_end()
+
+}
+
+//再战用
+EV_3_01_MonsterOnly
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,BLACK)
+	wait_fade()
+
+	wait(30)									//GAME OVER曲待ち
+
+	// フックギアを装備して、それ以外を消しておく（変更不可に）
+	if(IT001<0)					// 持っていないはずは無い的で、デバッグ用
+		get_item(001,1,1)		// 入手(フックギア)
+	set_equip(2,001)			// 装備する(パーツ、フックギア)
+
+	if(IT000>0)					// 持っていたら
+		get_item(000,-1,1)		// 消す(安卡基亚)
+	if(IT002>0)					// 持っていたら
+		get_item(002,-1,1)		// 消す(バーニングギア)
+	if(IT003>0)					// 持っていたら
+		get_item(003,-1,1)		// 消す(グライドギア)
+	if(IT004>0)					// 持っていたら
+		get_item(004,-1,1)		// 消す(ブレードギア)
+	if(IT005>0)					// 持っていたら
+		get_item(005,-1,1)		// 消す(マッスルギア)
+
+	set_chr(ALWEN,	1011,-1,-1, 1,1,1, 2,0,8, "<EV_JYOUKA>")
+	set_chr(LUE,	 1015,-1,-1, 1,1,1, 2,0,0, "")
+	set_chr(ZONBI_A,	384,-1,-1, 1,1,1, 2,0,9, "RF200 Z1?06 L4?12 SF200")
+	set_chr(ZONBI_B,	385,-1,-1, 1,1,1, 2,0,9, "RF201 Z1?07 L4?12 SF201")
+	set_chr(ZONBI_C,	386,-1,-1, 1,1,1, 2,0,9, "RF202 Z1?08 L4?12 SF202")
+	set_chr(ZONBI_D,	387,-1,-1, 1,1,1, 2,0,9, "RF203 Z1?09 L4?12 SF203")
+	set_chr(ZONBI_E,	388,-1,-1, 1,1,1, 2,0,9, "RF204 Z1?10 L4?12 SF204")
+	set_chr(ZONBI_F,	389,-1,-1, 1,1,1, 2,0,9, "RF205 Z1?11 L4?12 SF205")
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる的はこちら。
+//	MOT(ALWEN,53,1)										//艾雯的右手を開かせる
+	wait(1)
+	set_chr( EFFECT,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT3,749,	-1,-1,  0,0,0,     61, 0, 0,"")
+	F_set_chr(EFFECT,CF_NO_CLIP)
+	F_set_chr(EFFECT,CF_NO_CLIP2)
+	F_set_chr(EFFECT,CF_NO_CSP)
+	F_set_chr(EFFECT,CF_NO_ZIMEN)
+	F_set_chr(EFFECT,CF_NO_HEIGHT)
+	F_set_chr(EFFECT3,CF_NO_CLIP)
+	F_set_chr(EFFECT3,CF_NO_CLIP2)
+	F_set_chr(EFFECT3,CF_NO_CSP)
+	F_set_chr(EFFECT3,CF_NO_ZIMEN)
+	F_set_chr(EFFECT3,CF_NO_HEIGHT)
+	color(EFFECT,-1)
+	color(EFFECT3,-1)
+	chr_equip_chr(EFFECT,ALWEN,"wtop",100,		0,0,0,	0,0,0);
+
+	//モーション定義
+	MOT_SET(ALWEN,150,150,4590,4615,-1,-1)//詠唱
+	MOT_SET(ALWEN,151,151,4905,4945,-1,-1)//浮遊着地
+	MOT_SET(ALWEN,152,-1,4560,4585,-1,-1)//構え
+	MOT_SET(EVENT_RAGNA,150,-1,3010,3029,-1,-1)//構え
+	MOT_SET(EVENT_RAGNA,151,-1,469,469,-1,-1)//げげ
+	MOT_SET(EVENT_RAGNA,152,-1,3029,3029,-1,-1)//構え
+
+	chr_pos(RAGNA,	   550,3760,0,180,2)
+	chr_pos(ALWEN,	 140,5390,-22,180,150)
+	F_set_chr(ALWEN,CF_NO_MOVE)
+	chr_pos(LUE,	 -30,5242,-22,300,2)
+	F_set_chr(LUE,CF_NO_MOVE)
+	MOT(EFFECT,18,0)
+	SE(1061,ALWEN)//詠唱中SE
+	chr_pos(ZONBI_A,	 28,3034,-22,330,2)
+	chr_pos(ZONBI_B,	 414,3096,-22,350,2)
+	chr_pos(ZONBI_C,	 10,3878,-22,280,2)
+	chr_pos(ZONBI_D,	 -6,4272,-22,230,2)
+	chr_pos(ZONBI_E,	 1090,3450,-22,55,2)
+	chr_pos(ZONBI_F,	 1260,3812,-22,90,2)
+	F_set_Node(ZONBI_A,"Bone_RightSword",NP_HIDE)
+	F_set_Node(ZONBI_B,"Bone_RightSword",NP_HIDE)
+
+	KAO(ZONBI_A,"O","O","1")//
+	KAO(ZONBI_B,"O","O","1")//
+	KAO(ZONBI_C,"O","O","1")//
+	KAO(ZONBI_D,"O","O","1")//
+	KAO(ZONBI_E,"O","O","1")//
+	KAO(ZONBI_F,"O","O","1")//
+
+	delete(94)//ペットエントリ
+
+	set_chr( EFFECT_A,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	set_chr( EFFECT_B,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	set_chr( EFFECT_C,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	set_chr( EFFECT_D,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	set_chr( EFFECT_E,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	set_chr( EFFECT_F,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	F_set_chr(EFFECT_A,CF_NO_CLIP)
+	F_set_chr(EFFECT_A,CF_NO_CLIP2)
+	F_set_chr(EFFECT_A,CF_NO_CSP)
+	F_set_chr(EFFECT_A,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_A,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_B,CF_NO_CLIP)
+	F_set_chr(EFFECT_B,CF_NO_CLIP2)
+	F_set_chr(EFFECT_B,CF_NO_CSP)
+	F_set_chr(EFFECT_B,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_B,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_C,CF_NO_CLIP)
+	F_set_chr(EFFECT_C,CF_NO_CLIP2)
+	F_set_chr(EFFECT_C,CF_NO_CSP)
+	F_set_chr(EFFECT_C,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_C,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_D,CF_NO_CLIP)
+	F_set_chr(EFFECT_D,CF_NO_CLIP2)
+	F_set_chr(EFFECT_D,CF_NO_CSP)
+	F_set_chr(EFFECT_D,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_D,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_E,CF_NO_CLIP)
+	F_set_chr(EFFECT_E,CF_NO_CLIP2)
+	F_set_chr(EFFECT_E,CF_NO_CSP)
+	F_set_chr(EFFECT_E,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_E,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_F,CF_NO_CLIP)
+	F_set_chr(EFFECT_F,CF_NO_CLIP2)
+	F_set_chr(EFFECT_F,CF_NO_CSP)
+	F_set_chr(EFFECT_F,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_F,CF_NO_HEIGHT)
+	color(EFFECT_A,-1)
+	color(EFFECT_B,-1)
+	color(EFFECT_C,-1)
+	color(EFFECT_D,-1)
+	color(EFFECT_E,-1)
+	color(EFFECT_F,-1)
+	chr_equip_chr(EFFECT_A,ZONBI_A,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_B,ZONBI_B,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_C,ZONBI_C,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_D,ZONBI_D,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_E,ZONBI_E,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_F,ZONBI_F,"charbase0",100,		0,0,0,	0,0,0);
+
+	//アタリ
+	set_chr( 81,991,	-1,-1,	 2760,2360,0,    0,  0204,	0,";")
+	set_chr( 82,991,	-1,-1,	 -660,3600,-150,  0,  0208,	0,";")
+	set_chr( 83,991,	-1,-1,	 0,1230,-30,     0,  1402,	0,";")
+	set_chr( 84,991,	-1,-1,	 0,5580,-30,     0,  2202,	0,";")
+//	set_chr( 81,991,	-1,-1,	 2760,2360,0,    0,  0804,	0,";")
+//	set_chr( 82,991,	-1,-1,	 -660,3600,-50,  0,  0807,	0,";")
+//	set_chr( 83,991,	-1,-1,	 0,1230,-30,     0,  1408,	0,";")
+//	set_chr( 84,991,	-1,-1,	 0,5580,-30,     0,  2208,	0,";")
+
+	F_reset(200)
+	F_reset(201)
+	F_reset(202)
+	F_reset(203)
+	F_reset(204)
+	F_reset(205)
+
+	F_reset(210)
+	F_reset(211)
+	F_reset(212)
+	F_reset(213)
+	F_reset(214)
+	F_reset(215)
+
+	CAM_return(0)
+	wait(30)
+
+	SE(043,PLAYER1)
+//	MES(RAGNA,"C3S2フックギアを装備しました。\n村人たちを背後からフックギアで捕まえて\n艾雯的元へ運んでください。",2)
+	MES(RAGNA,"C3S2装备好フックギア。",2)
+	MES(RAGNA,"C3S2用フックギア从后方抓住村民，\n把他们带到艾雯身边。",2)
+	MES_close(RAGNA)
+	wait_MES(RAGNA)
+
+	fade_in(0,30,0)
+
+	workG(GW_ACTIONTYPE,SET,1)	// 战闘許可
+	workG(GW_WARP_FLAG,SET,0)//ワープ封じる。
+	F_set(F3_29_BattleZonbi)//★手帳用フラグ：ゾンビ战闘中
+
+	EV_end()
+}
+
+//◆イベントチェック用イベント
+EV_3_02_DEBUG
+{
+//----------------------------------------------------------
+	clear_party(PARTNER)
+
+	// フックギアを装備して、それ以外を消しておく（変更不可に）
+	if(IT001<0)					// 持っていないはずは無い的で、デバッグ用
+		get_item(001,1,1)		// 入手(フックギア)
+	set_equip(2,001)			// 装備する(パーツ、フックギア)
+
+	if(IT000>0)					// 持っていたら
+		get_item(000,-1,1)		// 消す(安卡基亚)
+	if(IT002>0)					// 持っていたら
+		get_item(002,-1,1)		// 消す(バーニングギア)
+	if(IT003>0)					// 持っていたら
+		get_item(003,-1,1)		// 消す(グライドギア)
+	if(IT004>0)					// 持っていたら
+		get_item(004,-1,1)		// 消す(ブレードギア)
+	if(IT005>0)					// 持っていたら
+		get_item(005,-1,1)		// 消す(マッスルギア)
+
+	set_chr(ALWEN,	1011,-1,-1, 1,1,1, 2,0,0, "")
+	set_chr(LUE,	 1015,-1,-1, 1,1,1, 2,0,0, "")
+	set_chr(ZONBI_A,	384,-1,-1, 1,1,1, 2,0,0, "")
+	set_chr(ZONBI_B,	385,-1,-1, 1,1,1, 2,0,0, "")
+	set_chr(ZONBI_C,	386,-1,-1, 1,1,1, 2,0,0, "")
+	set_chr(ZONBI_D,	387,-1,-1, 1,1,1, 2,0,0, "")
+	set_chr(ZONBI_E,	388,-1,-1, 1,1,1, 2,0,0, "")
+	set_chr(ZONBI_F,	389,-1,-1, 1,1,1, 2,0,0, "")
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる的はこちら。
+//	MOT(ALWEN,53,1)										//艾雯的右手を開かせる
+	wait(1)
+	set_chr( EFFECT,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT3,749,	-1,-1,  0,0,0,     61, 0, 0,"")
+	F_set_chr(EFFECT,CF_NO_CLIP)
+	F_set_chr(EFFECT,CF_NO_CLIP2)
+	F_set_chr(EFFECT,CF_NO_CSP)
+	F_set_chr(EFFECT,CF_NO_ZIMEN)
+	F_set_chr(EFFECT,CF_NO_HEIGHT)
+	F_set_chr(EFFECT3,CF_NO_CLIP)
+	F_set_chr(EFFECT3,CF_NO_CLIP2)
+	F_set_chr(EFFECT3,CF_NO_CSP)
+	F_set_chr(EFFECT3,CF_NO_ZIMEN)
+	F_set_chr(EFFECT3,CF_NO_HEIGHT)
+	color(EFFECT,-1)
+	color(EFFECT3,-1)
+	chr_equip_chr(EFFECT,ALWEN,"wtop",100,		0,0,0,	0,0,0);
+	chr_pos(ALWEN,	 140,5390,-22,180,150)
+	F_set_chr(ALWEN,CF_NO_MOVE)
+	chr_pos(LUE,	 -30,5242,-22,300,2)
+	F_set_chr(LUE,CF_NO_MOVE)
+	MOT(EFFECT,18,0)
+
+	set_chr( EFFECT_A,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	set_chr( EFFECT_B,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	set_chr( EFFECT_C,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	set_chr( EFFECT_D,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	set_chr( EFFECT_E,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	set_chr( EFFECT_F,749,	-1,-1,  0,0,0,     30, 0, 0,"")
+	F_set_chr(EFFECT_A,CF_NO_CLIP)
+	F_set_chr(EFFECT_A,CF_NO_CLIP2)
+	F_set_chr(EFFECT_A,CF_NO_CSP)
+	F_set_chr(EFFECT_A,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_A,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_B,CF_NO_CLIP)
+	F_set_chr(EFFECT_B,CF_NO_CLIP2)
+	F_set_chr(EFFECT_B,CF_NO_CSP)
+	F_set_chr(EFFECT_B,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_B,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_C,CF_NO_CLIP)
+	F_set_chr(EFFECT_C,CF_NO_CLIP2)
+	F_set_chr(EFFECT_C,CF_NO_CSP)
+	F_set_chr(EFFECT_C,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_C,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_D,CF_NO_CLIP)
+	F_set_chr(EFFECT_D,CF_NO_CLIP2)
+	F_set_chr(EFFECT_D,CF_NO_CSP)
+	F_set_chr(EFFECT_D,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_D,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_E,CF_NO_CLIP)
+	F_set_chr(EFFECT_E,CF_NO_CLIP2)
+	F_set_chr(EFFECT_E,CF_NO_CSP)
+	F_set_chr(EFFECT_E,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_E,CF_NO_HEIGHT)
+	F_set_chr(EFFECT_F,CF_NO_CLIP)
+	F_set_chr(EFFECT_F,CF_NO_CLIP2)
+	F_set_chr(EFFECT_F,CF_NO_CSP)
+	F_set_chr(EFFECT_F,CF_NO_ZIMEN)
+	F_set_chr(EFFECT_F,CF_NO_HEIGHT)
+	color(EFFECT_A,-1)
+	color(EFFECT_B,-1)
+	color(EFFECT_C,-1)
+	color(EFFECT_D,-1)
+	color(EFFECT_E,-1)
+	color(EFFECT_F,-1)
+	chr_equip_chr(EFFECT_A,ZONBI_A,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_B,ZONBI_B,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_C,ZONBI_C,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_D,ZONBI_D,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_E,ZONBI_E,"charbase0",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT_F,ZONBI_F,"charbase0",100,		0,0,0,	0,0,0);
+
+	F_set(210)
+	F_set(211)
+	F_set(212)
+	F_set(213)
+	F_set(214)
+	F_set(215)
+//----------------------------------------------------------
+}
+
+//──────────────────────────────
+//▼村人たち的干渉を断ち切る
+//──────────────────────────────
+//　　战闘で村人全員を地面に転がしたらイベント開始。
+//　　画面切り替えて、拉古那が艾雯に向かって叫ぶ。
+EV_3_02_GoMoonCastle
+{
+	if(!F210 || !F211 || !F212 || !F213 || !F214 || !F215)
+	{
+		//まだ全員終わっていない
+
+		// TK_begin()状態で呼び出される的で、解除する。
+		TK_end()
+	}
+	else
+	{
+
+	F_reset(F2_99_BattleRetry)				//★ボス战リトライ用（立っているときはリトライメニューがでる）
+
+//	wait(10)
+	//先に艾雯
+	VOICE(166,0)	//「見事だ、拉古那！」
+
+	wait(40)
+
+	//フェードさせながら、露にしゃべらせてみる。
+	VOICE2(186,0,98)		//「や、やるじゃない」
+
+	wait(30)
+	stop_SE(1061)
+
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	EV_begin()	//イベント用 黒帯出す
+
+	delete(81)
+	delete(82)
+	delete(83)
+	delete(84)
+
+	join_party(1)//ALWEN
+
+	//キャラ再配置
+	chr_pos(RAGNA,	   0,6600,0,0,2)
+	chr_pos(PARTNER,	 0,6400,0,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	// 消していた装備品を戻す
+	if(IT000==0)
+		get_item(000,1,1)		// １個入手(安卡基亚)
+	if(IT002==0)
+		get_item(002,1,1)		// １個入手(バーニングギア)
+	if(IT003==0)
+		get_item(003,1,1)		// １個入手(グライドギア)
+	if(IT004==0)
+		get_item(004,1,1)		// １個入手(ブレードギア)
+	if(IT005==0)
+		get_item(005,1,1)		// １個入手(マッスルギア)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 180,3560,-22, 2,195,0, "")
+	chr_pos(ALWEN,	530,3920,-22,10,2)
+	chr_pos(LUE, 	690,3850,-22,70,2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_reset_chr(ALWEN,CF_NO_MOVE)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"B","1","2")//
+	KAO(ALWEN,"B","3","2")//
+	KAO(LUE,"B","1","2")//
+
+//	chr_pos(ZONBI_A,	 28,3034,1,330,2)
+//	chr_pos(ZONBI_B,	 414,3096,1,350,2)
+//	chr_pos(ZONBI_C,	 -54,3578,1,280,2)
+//	chr_pos(ZONBI_D,	 -6,4272,1,230,2)
+//	chr_pos(ZONBI_E,	 1090,3450,1,55,2)
+//	chr_pos(ZONBI_F,	 1260,3812,1,90,2)
+	chr_pos(ZONBI_A,	 308,3134,-22,320,2)
+	chr_pos(ZONBI_B,	 734,3446,-22,250,2)
+	chr_pos(ZONBI_C,	-140,3768,-22,90,2)
+	chr_pos(ZONBI_D,	 240,4312,-22,220,2)
+	chr_pos(ZONBI_E,	 1270,3550,-22,55,2)
+	chr_pos(ZONBI_F,	 900,4122,-22,180,2)
+	MOT_SET(ZONBI_A,150,-1,518,518,-1,-1)//
+	MOT_SET(ZONBI_B,150,-1,518,518,-1,-1)//
+	MOT_SET(ZONBI_C,150,-1,518,518,-1,-1)//
+	MOT_SET(ZONBI_D,150,-1,518,518,-1,-1)//
+	MOT_SET(ZONBI_E,150,-1,518,518,-1,-1)//
+	MOT_SET(ZONBI_F,150,-1,518,518,-1,-1)//
+	MOT_SET(ZONBI_A,151,-1,554,554,-1,-1)//
+	MOT_SET(ZONBI_B,151,-1,554,554,-1,-1)//
+	MOT_SET(ZONBI_C,151,-1,554,554,-1,-1)//
+	MOT_SET(ZONBI_D,151,-1,554,554,-1,-1)//
+	MOT_SET(ZONBI_E,151,-1,554,554,-1,-1)//
+	MOT_SET(ZONBI_F,151,-1,554,554,-1,-1)//
+	MOT_SET(ZONBI_A,152,-1,518,554,-1,-1)//
+	MOT(ZONBI_A,150,0)
+	MOT(ZONBI_B,151,0)
+	MOT(ZONBI_C,151,0)
+	MOT(ZONBI_D,151,0)
+	MOT(ZONBI_E,151,0)
+	MOT(ZONBI_F,151,0)
+	KAO(ZONBI_A,"1","3","2")//
+	KAO(ZONBI_B,"1","3","2")//
+	KAO(ZONBI_C,"1","3","2")//
+	KAO(ZONBI_D,"1","3","2")//
+	KAO(ZONBI_E,"1","3","2")//
+	KAO(ZONBI_F,"1","3","2")//
+	F_set_chr(ZONBI_A,CF_NO_CLIP)
+	F_set_chr(ZONBI_A,CF_NO_CLIP2)
+	F_set_chr(ZONBI_B,CF_NO_CLIP)
+	F_set_chr(ZONBI_B,CF_NO_CLIP2)
+	F_set_chr(ZONBI_C,CF_NO_CLIP)
+	F_set_chr(ZONBI_C,CF_NO_CLIP2)
+	F_set_chr(ZONBI_D,CF_NO_CLIP)
+	F_set_chr(ZONBI_D,CF_NO_CLIP2)
+	F_set_chr(ZONBI_E,CF_NO_CLIP)
+	F_set_chr(ZONBI_E,CF_NO_CLIP2)
+	F_set_chr(ZONBI_F,CF_NO_CLIP)
+	F_set_chr(ZONBI_F,CF_NO_CLIP2)
+	F_set_chr(ZONBI_A,CF_NO_CSP)
+	F_set_chr(ZONBI_B,CF_NO_CSP)
+	F_set_chr(ZONBI_C,CF_NO_CSP)
+	F_set_chr(ZONBI_D,CF_NO_CSP)
+	F_set_chr(ZONBI_E,CF_NO_CSP)
+	F_set_chr(ZONBI_F,CF_NO_CSP)
+	color(ZONBI_A,1)
+	color(ZONBI_B,1)
+	color(ZONBI_C,1)
+	color(ZONBI_D,1)
+	color(ZONBI_E,1)
+	color(ZONBI_F,1)
+
+	set_chr(POCKLE,	  1012,-1,-1, -40,5610,-22, 2,210,0, "")
+	set_chr(PIPIRO,	  1013,-1,-1, 90,5680,-22, 2,210,0, "")
+	set_chr(FIONA,	 1017,-1,-1, 0,5380,-22, 2, 210,0, "")
+	set_chr(KLODE,	 1018,-1,-1, -150,5454,-22, 2, 210,0, "")
+	F_set_chr(POCKLE,CF_NO_CLIP)
+	F_set_chr(POCKLE,CF_NO_CLIP2)
+	F_set_chr(POCKLE,CF_NO_CSP)
+	F_set_chr(PIPIRO,CF_NO_CLIP)
+	F_set_chr(PIPIRO,CF_NO_CLIP2)
+	F_set_chr(PIPIRO,CF_NO_CSP)
+	F_set_chr(FIONA,CF_NO_CLIP)
+	F_set_chr(FIONA,CF_NO_CLIP2)
+	F_set_chr(FIONA,CF_NO_CSP)
+	F_set_chr(KLODE,CF_NO_CLIP)
+	F_set_chr(KLODE,CF_NO_CLIP2)
+	F_set_chr(KLODE,CF_NO_CSP)
+	color(PIPIRO,-1)
+	color(POCKLE,-1)
+	color(FIONA,-1)
+	color(KLODE,-1)
+	wait_color(PIPIRO)
+
+	set_chr( EFFECT2,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	F_set_chr(EFFECT2,CF_NO_CLIP)
+	F_set_chr(EFFECT2,CF_NO_CLIP2)
+	F_set_chr(EFFECT2,CF_NO_CSP)
+	F_set_chr(EFFECT2,CF_NO_ZIMEN)
+	F_set_chr(EFFECT2,CF_NO_HEIGHT)
+	color(EFFECT2,-1)
+
+	MOT(EFFECT_A,30,0)
+	MOT(EFFECT_B,30,0)
+	MOT(EFFECT_C,30,0)
+	MOT(EFFECT_D,30,0)
+	MOT(EFFECT_E,30,0)
+	MOT(EFFECT_F,30,0)
+
+	MOT_SET(EVENT_RAGNA,150,-2,405,405,-1,-1)	//どうな的よ
+	MOT_SET(ALWEN,150,-2,399,399,-1,-1)//腰に手を当てる（左）
+	MOT_SET(ALWEN,151,151,4590,4615,-1,-1)//詠唱
+	MOT_SET(FIONA,150,-1,438,438,-1,-1)//どうか
+
+	//カメラ初期位置
+//	CAM_move(160,-3600,160,0,0)
+//	CAM(130,46,160,34,180,0,0)
+	CAM_move(180,-3060,40,0,0)
+	CAM(-100,98,40,22,188,0,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+	workG(GW_WARP_FLAG,SET,3)//ワープ解除。（夜）
+
+	MOT(ZONBI_A,152,0)
+	SE(1070,0)//倒れSE
+	wait(36)
+
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","2")//
+	MES(EVENT_RAGNA,"公主！\n这样可以吗！？",0)
+	MES_close(EVENT_RAGNA)
+
+	SE(1061,ALWEN)//詠唱中SE
+
+//	CAM_move(540,-3920,120,30,0)
+//	CAM(90,32,120,36,180,30,0)
+	CAM_move(520,-3980,120,30,0)
+	CAM(-70,48,120,24,208,30,0)
+	SE_update()
+	wait_CAM_move()
+	wait_CAM()
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ2","321","2")//
+	MES(ALWEN,"C2──可以！",0)
+	MES_close(ALWEN)
+
+//　　艾雯、詠唱を終えてオーラが膨れ上がる。
+//　　地面に突き立てた杖を中心に、真紅的流れ的ような
+//　　エフェクトが、無数的地脈的ように当たりに広がっていく。
+//	MES(ALWEN,"◆未入力項目\n地面に突き立てた杖を中心に、\n真紅的流れ的ようなエフェクトが、\n無数的地脈的ように当たりに広がっていく。",0)
+//	MES_close(ALWEN)
+
+	chr_pos(EFFECT2,530,3920,1,0,29)
+	MOT(ALWEN,151,15)
+	SE(1037,0)
+	SE(1065,0)
+	wait(60)
+	VOICE(172,0)		//「闇と月的埃斯比纳よ…我に力を！」
+
+	CAM_move(530,-3920,100,60,0)
+	CAM(210,146,100,30,180,60,0)
+	stop_SE(1061)
+	wait(30)
+	SE(1050,0)
+	SE(1067,0)
+	EFF(6510,530,-3920,-12,0,150,-1)
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+
+//　　紅いエフェクト、それぞれ地面に倒れた村人に絡みつく。
+//　　村人たち、苦しがりながらも徐々に瘴気が抜けていき、
+//　　最後にはいっせいに気を失い、眠りについた状態になる。
+//	MES(ALWEN,"◆未入力項目\n紅いエフェクト、それぞれ地面に倒れた村人に絡みつく。\n村人たち、苦しがりながらも徐々に瘴気が抜けていく。",0)
+//	MES_close(ALWEN)
+
+	MOT(EFFECT3,0,0)
+	MOT(EFFECT_A,0,0)
+	MOT(EFFECT_B,0,0)
+	MOT(EFFECT_C,0,0)
+	MOT(EFFECT_D,0,0)
+	MOT(EFFECT_E,0,0)
+	MOT(EFFECT_F,0,0)
+	MOT(EFFECT,0,0)
+	MOT(EFFECT2,0,0)
+	wait(60)
+	EV("EV_1065_fadeout")//詠唱SEフェードアウト
+	SE(1069,0)//村人浄化SE
+	EFF_chr(4040,ZONBI_A,0,100,0,"charbase0")
+	EFF_chr(4040,ZONBI_B,0,100,0,"charbase0")
+	EFF_chr(4040,ZONBI_C,0,100,0,"charbase0")
+	EFF_chr(4040,ZONBI_D,0,100,0,"charbase0")
+	EFF_chr(4040,ZONBI_E,0,100,0,"charbase0")
+	EFF_chr(4040,ZONBI_F,0,100,0,"charbase0")
+//	MOT(ZONBI_A,151,0)
+//	wait(2)
+//	MOT(ZONBI_C,151,0)
+//	wait(2)
+//	MOT(ZONBI_E,151,0)
+//	wait(2)
+//	MOT(ZONBI_B,151,0)
+//	wait(2)
+//	MOT(ZONBI_D,151,0)
+//	wait(2)
+//	MOT(ZONBI_F,151,0)
+	wait(30)
+
+	KAO(EVENT_RAGNA,"B","12321D","6")//
+	rot_chr(EVENT_RAGNA,30,ZONBI_C)
+	wait(5)
+	KAO(LUE,"B","12321D","6")//
+	rot_chr(LUE,30,ZONBI_F)
+	wait(10)
+	KAO(EVENT_RAGNA,"B232B2","D","6")//
+	MES(EVENT_RAGNA,"哦哦……！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(LUE)
+	KAO(LUE,"B232BZ2","D","6")//
+	MES(LUE,"这是……！",0)
+	MES_close(LUE)
+	wait_MES(LUE)
+
+	cross_fade(15)
+	CAM_move(520,-3980,120,0,0)
+	CAM(-70,48,120,24,208,0,0)
+	wait(30)
+
+	MOT(ALWEN,2,15)
+	wait(15)
+	KAO(ALWEN,"12321Z4","123","6")//
+	MES(ALWEN,"……唔。\n似乎很顺利。",0)
+	MES_close(ALWEN)
+
+	rot_chr(LUE,30,ALWEN)
+	wait(15)
+//	name2(LUE)
+	KAO(LUE,"12321Z2","1233321","6")//
+	MES(LUE,"公主大人……",0)
+	MES_close(LUE)
+
+//　　拉古那、艾雯的前に戻ってくる。
+	CAM(-70,48,120,24,194,60,0)
+	KAO(EVENT_RAGNA,"B","123","5")//
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+//	move( EVENT_RAGNA, 0, 8,420,3790,-22,0)
+	move( EVENT_RAGNA, 0, 8,350,3750,-22,0)
+	KAO(EVENT_RAGNA,"B232BZ3","3","5")//
+	MES(EVENT_RAGNA,"哎……\n还以为会出什么事呢。",0)
+	MES_close(EVENT_RAGNA)
+	wait_move(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,150,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","321","1")//
+	MES(EVENT_RAGNA,"刚才你做了什么？",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,2,15)
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(10)
+	look_chr( LUE, EVENT_RAGNA ,"Bone_Head")
+	wait(5)
+//	name2(ALWEN)
+	MES(ALWEN,"用我的血之灵脉\n切断叔叔的干涉。",0)
+	MES(ALWEN,"他们暂时\n应该不会再被操纵了。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z2","1","1")//
+	MES(EVENT_RAGNA,"是吗……",0)
+	KAO(EVENT_RAGNA,"B232BZ4","1233321","2")//
+	MES(EVENT_RAGNA,"不过，你说暂时，\n这只能维持一段时间吗？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"……唔。",0)
+	MES(ALWEN,"与真祖的口吻相当的\n强烈的诅咒，除此之外并无其他。",0)
+//	MES(ALWEN,"只要叔叔不解除，\n应该没有能根本解决的办法。",0)
+	MES(ALWEN,"叔叔若是愿意，\n随时都能操纵他们。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z2","123","3")//
+	MES(EVENT_RAGNA,"哼……\n就是说一定得打倒他了。",0)
+	MES_close(EVENT_RAGNA)
+
+	chr_rename(PIPIRO,"少女的声")//
+//	name("少女的声")
+	MES_pos(PIPIRO,"唔，你们\n果然不是犯人吧。",0,140,390,0,0)
+	wait_key(0)
+	MES_close(PIPIRO)
+	wait_MES(PIPIRO)
+	chr_rename(PIPIRO,"皮皮洛")//
+
+//　　艾雯たち的頭に！マーク。
+	KAO(EVENT_RAGNA,"E","321D","6")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(ALWEN,"E","12321D","6")//
+	EMO(ALWEN,EMO_BIKKURI)
+	KAO(LUE,"E","12321D","6")//
+	EMO(LUE,EMO_BIKKURI)
+	wait(15)
+	rot_chr(EVENT_RAGNA,30,FIONA)
+	rot_chr(ALWEN,30,FIONA)
+	look_off(LUE)
+	rot_chr(LUE,30,FIONA)
+	wait(30)
+
+//　　画面スクロールして、村的入口方面にカメラを移動。
+//　　菲奥娜、克劳德、布库尔、皮皮洛がいる。
+	cross_fade(15)
+	color(PIPIRO,1)
+	color(POCKLE,1)
+	color(FIONA,1)
+	color(KLODE,1)
+	KAO(PIPIRO,"1","1","1")//
+	KAO(POCKLE,"1","1","1")//
+	KAO(FIONA,"B","1","2")//
+	KAO(KLODE,"B","1","2")//
+
+	chr_pos(EVENT_RAGNA,	404,3798,-22,20,2)
+	chr_pos(ALWEN,	510,3960,-22,20,2)
+	chr_pos(LUE, 	670,3890,-22,20,2)
+	chr_pos(ZONBI_C,	-240,3768,-22,90,151)
+	chr_pos(ZONBI_D, 	722,4390,-22,20,151)
+
+//	CAM_move(-280,-4680,-180,0,0)
+//	CAM(130,164,-180,18,208,0,0)
+	CAM_move(-280,-5520,0,0,0)
+	CAM(50,98,0,22,270,0,0)
+	KAO(EVENT_RAGNA,"B","1","2")//
+	KAO(ALWEN,"B","1","2")//
+	KAO(LUE,"B","1","2")//
+	wait(30)
+//	CAM_move(382,-3920,50,150,0)
+//	CAM(10,140,50,16,170,150,0)
+	CAM_move(282,-4200,80,150,0)
+	CAM(10,90,80,24,180,150,0)
+	move( FIONA, 0, 10,180,4380,1,0)
+	wait(5)
+	move( KLODE, 0, 10,30,4454,1,0)
+	wait(4)
+	move( POCKLE, 0, 10,140,4610,0,0)
+	wait(3)
+	move( PIPIRO, 0, 10,270,4680,0,0)
+	wait_move(FIONA)
+	rot_chr(EVENT_RAGNA,30,FIONA)
+	rot_chr(ALWEN,30,FIONA)
+	rot_chr(LUE,30,FIONA)
+	wait_move(KLODE)
+	wait_move(POCKLE)
+	wait_move(PIPIRO)
+
+	wait_CAM_move()
+	wait_CAM()
+	CAM_move(302,-4200,100,900,0)
+	CAM(-70,80,100,24,172,900,0)
+
+	KAO(EVENT_RAGNA,"B232BZ2","1","2")//
+	MES(EVENT_RAGNA,"来了吗……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","1232A","1")//
+	MES(ALWEN,"哎呀呀，来得真慢啊。",0)
+	MES_close(ALWEN)
+
+//	name2(FIONA)
+	MES(FIONA,"那是因为你们\n擅自先走了吧。",0)
+	MES(FIONA,"话说回来……\n刚才你们的交谈我都听见了。",0)
+	MES(FIONA,"看来，\n还有别的吸血鬼吧？",0)
+	MES_close(FIONA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BFZ2","A","1")//
+	MES(ALWEN,"哦，相信我了吗。",0)
+	KAO(ALWEN,"12321Z5","A23332","1")//
+	MES(ALWEN,"相信我这不知廉耻的窃贼，\n到底是吹的什么风呢？",0)
+	MES_close(ALWEN)
+
+//	name2(FIONA)
+	MES(FIONA,"……我并没有\n完全相信你。",0)
+	MES(FIONA,"然而，看到现在的状况，\n就能明白我认错了犯人。",0)
+	MES_close(FIONA)
+
+	look_chr( POCKLE, FIONA ,"Bone_Head")
+	wait(15)
+//	name2(POCKLE)
+	MES(POCKLE,"菲奥娜小姐……",0)
+	MES_close(POCKLE)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z2","123","1")//
+	MES(EVENT_RAGNA,"哎呀呀……\n你能相信我们的话倒是比什么都好。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"1","2321","1")//
+
+	MOT(FIONA,150,15)
+	wait(15)
+//	name2(FIONA)
+	MES(FIONA,"艾雯小姐。\n请告诉我。",0)
+	MES(FIONA,"我们所追查的\n那个吸血鬼，究竟是什么人。",0)
+	MES(FIONA,"以及，\n他如今藏身何处。",0)
+	MES_close(FIONA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ2","123332A","4")//
+	MES(ALWEN,"那是──",0)
+	MES_close(ALWEN)
+
+	stop_BGM(90)
+
+//　　ここでカーンカーンと、鐘的音が鳴り響く。
+//	MES(ALWEN,"◆未入力項目\nここでカーンカーンと、鐘的音が鳴り響く。",0)
+//	MES_close(ALWEN)
+	EV("EV_1068")//鐘的音
+	wait(20)
+
+//　　拉古那たち全員的頭に！マーク。
+	look_off( POCKLE )
+	KAO(EVENT_RAGNA,"E","12321D","6")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(ALWEN,"E","2321D","6")//
+	EMO(ALWEN,EMO_BIKKURI)
+	KAO(LUE,"E","12321D","6")//
+	EMO(LUE,EMO_BIKKURI)
+	KAO(POCKLE,"E","12321D","6")//
+	EMO(POCKLE,EMO_BIKKURI)
+	EMO(PIPIRO,EMO_BIKKURI)
+	EMO(KLODE,EMO_BIKKURI)
+	EMO(FIONA,EMO_BIKKURI)
+	MOT(FIONA,2,15)
+	wait(15)
+	rot(KLODE,30,170)
+	wait(2)
+	rot(POCKLE,30,260)
+	wait(2)
+	rot(EVENT_RAGNA,30,80)
+	wait(10)
+
+	KAO(POCKLE,"B232BZ2","D","6")//
+	MES(POCKLE,"这，这是……",0)
+	MES_close(POCKLE)
+
+//	name("管家克劳德")
+	MES(KLODE,"钟声……？",0)
+	MES_close(KLODE)
+	wait_MES(KLODE)
+
+	cross_fade(15)
+	CAM_move(500,-3900,140,0,0)
+	CAM(-430,36,140,30,170,0,0)
+	CAM_move(500,-3900,140,600,0)
+	CAM(-470,32,140,30,162,600,0)
+	wait(15)
+
+	rot(LUE,30,60)
+	look_chr( LUE, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(LUE)
+	KAO(LUE,"B232B2Z2","12321D","5")//
+	MES(LUE,"公，公主大人……这是！",0)
+	MES_close(LUE)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","123","3")//
+	MES(ALWEN,"唔……不会有错的。",0)
+	MES_close(ALWEN)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","1232W","1")//
+	MES(EVENT_RAGNA,"怎么了……\n你知道什么吗？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B","3","3")//
+	MES(ALWEN,"啊啊……",0)
+	KAO(ALWEN,"B232BZ3","321","3")//
+	MES(ALWEN,"这是蒙布利亚城的钟声。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"C232C","W23332W","3")//
+	MES(EVENT_RAGNA,"什么……！？",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGANA)
+
+//　　次的瞬間、南西方向から不思議な紫的光が差してくる。
+//	MES(EVENT_RAGNA,"◆未入力項目\n南西方向から不思議な紫的光が差してくる。",0)
+//	MES_close(EVENT_RAGNA)
+
+	CAM_move(282,-4200,80,0,0)
+	CAM(10,90,80,24,180,0,0)
+	chr_pos(EFFECT2,-1800,5000,0,0,0)
+	MOT(EFFECT2,31,0)
+	wait(60)
+
+//　　拉古那たち全員的頭に！マーク。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(EVENT_RAGNA,"E","2321D","6")//
+	EMO(ALWEN,EMO_BIKKURI)
+	KAO(ALWEN,"E","12321D","6")//
+	EMO(LUE,EMO_BIKKURI)
+	KAO(LUE,"E","12321D","6")//
+	EMO(POCKLE,EMO_BIKKURI)
+	KAO(POCKLE,"E","12321D","6")//
+	EMO(PIPIRO,EMO_BIKKURI)
+	KAO(PIPIRO,"E","12321D","6")//
+	EMO(KLODE,EMO_BIKKURI)
+	KAO(KLODE,"E","12321D","6")//
+	EMO(FIONA,EMO_BIKKURI)
+	KAO(FIONA,"E","12321D","6")//
+	wait(15)
+
+	wait_BGM()
+	BGM(50)
+
+//　　南西方向を向きながら、画面そちらへスクロールする。
+	rot(ALWEN,30,45)
+	look_off(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,45)
+	look_off(LUE)
+	rot(LUE,30,45)
+	rot(PIPIRO,30,45)
+	rot(POCKLE,30,45)
+	rot(FIONA,30,45)
+	rot(KLODE,30,45)
+	wait(15)
+
+	CAM_move(-718,-5860,250,90,0)
+	CAM(10,170,250,16,170,90,0)
+	wait(30)
+
+//──────────────────────────────
+//　　ここで挿入ムービー①を再生。
+//　　鐘的音と共に、伊鲁巴特的中央的何ぬ鷒かった空間に、
+//　　陽炎的ように巨大な城が表れ、実体化していく的を見せる。
+//　　ただし紫的結界に包まれ、シールドされてしまっている感じ。
+//──────────────────────────────
+//	MES(RAGNA,"ここで挿入ムービー①を再生。",0)
+//	MES_close(RAGNA)
+
+	fade_in(100,60,0)
+	wait_fade()
+
+//　　城入口マップへ(ev50000)
+	workG(GW_DEF_BGM,SET,50)	//デフォルト曲を変更
+//	workG(GW_ENTRY_EVENT,SET,2)
+//	new_map(15000)
+//　　フィールド夜マップへ(ev00001)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(10001)
+
+//	EV_end()
+}
+}
+
+
+//──────────────────────────────
+//▼城へ向かう（ムービー無しで追加）
+//──────────────────────────────
+EV_3_02_CastleDisp2
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	   0,6600,0,0,2)
+	chr_pos(PARTNER,	 0,6400,0,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, -786,5440,0, 2,45,0, "")
+	set_chr(ALWEN,	1011,-1,-1, -884,5290,1, 2,45,0, "")
+	set_chr(LUE,	 1015,-1,-1, -770,5346,30, 2, 45,0, "")
+	set_chr(EVENT_POCKLE,	  1012,-1,-1, -1188,4980,0, 2,45,0, "")
+	set_chr(EVENT_PIPIRO,	  1013,-1,-1, -1148,4820,0, 2,45,0, "")
+	set_chr(EVENT_FIONA,	 1017,-1,-1, -1076,5166,0, 2, 45,0, "")
+	set_chr(EVENT_KLODE,	 1018,-1,-1, -1002,4956,0, 2, 45,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_ZIMEN)
+	F_set_chr(LUE,CF_NO_HEIGHT)
+	F_set_chr(EVENT_POCKLE,CF_NO_CLIP)
+	F_set_chr(EVENT_POCKLE,CF_NO_CLIP2)
+	F_set_chr(EVENT_POCKLE,CF_NO_CSP)
+	F_set_chr(EVENT_PIPIRO,CF_NO_CLIP)
+	F_set_chr(EVENT_PIPIRO,CF_NO_CLIP2)
+	F_set_chr(EVENT_PIPIRO,CF_NO_CSP)
+	F_set_chr(EVENT_FIONA,CF_NO_CLIP)
+	F_set_chr(EVENT_FIONA,CF_NO_CLIP2)
+	F_set_chr(EVENT_FIONA,CF_NO_CSP)
+	F_set_chr(EVENT_KLODE,CF_NO_CLIP)
+	F_set_chr(EVENT_KLODE,CF_NO_CLIP2)
+	F_set_chr(EVENT_KLODE,CF_NO_CSP)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させる的はこちら。
+//	MOT(ALWEN,53,1)										//艾雯的右手を開かせる
+
+	KAO(EVENT_RAGNA,"B","D","6")//
+	KAO(ALWEN,"B","1","2")//
+	KAO(LUE,"B","D","5")//
+	KAO(EVENT_POCKLE,"B","D","7")//
+	KAO(EVENT_PIPIRO,"B","D","6")//
+	KAO(EVENT_FIONA,"B","D","6")//
+	KAO(EVENT_KLODE,"B","D","6")//
+
+//	set_chr(ZONBI_A,	384,-1,-1, 28,3034,1, 2,330,0, "")
+//	set_chr(ZONBI_B,	385,-1,-1, 414,3096,1, 2,350,0, "")
+//	set_chr(ZONBI_C,	386,-1,-1, -154,3678,1, 2,280,0, "")
+//	set_chr(ZONBI_D,	387,-1,-1, -6,4272,1,2,230,0, "")
+//	set_chr(ZONBI_E,	388,-1,-1, 1090,3450,1, 2,55,0, "")
+//	set_chr(ZONBI_F,	389,-1,-1, 1260,3812,1, 2,90,0, "")
+
+	set_chr(ZONBI_A,	 384,-1,-1, 28,3034,-21,  2,330,2,  "<TK_ZONBI_A>")	// 06
+	set_chr(ZONBI_B,	 385,-1,-1, 414,3096,-21, 2,350,2,  "<TK_ZONBI_B>")	// 07
+	set_chr(ZONBI_C,	 386,-1,-1, -154,3678,-21, 2,280,2, "<TK_ZONBI_C>")	// 08
+	set_chr(ZONBI_D,	 387,-1,-1, -6,4272,-21, 2,230,2,   "<TK_ZONBI_D>")	// 09
+	set_chr(ZONBI_E,	 388,-1,-1, 1090,3450,-21, 2, 55,2, "<TK_ZONBI_E>")	// 10
+	set_chr(ZONBI_F,	 389,-1,-1, 1260,3812,-21, 2, 90,2, "<TK_ZONBI_F>")	// 11
+
+	chr_pos(ZONBI_A,	 378,3134,-22,320,2)
+	chr_pos(ZONBI_B,	 734,3446,-22,250,2)
+	chr_pos(ZONBI_C,	-40,3728,-22,90,2)
+	chr_pos(ZONBI_D,	 200,4202,-22,220,2)
+	chr_pos(ZONBI_E,	 1270,3550,-22,55,2)
+	chr_pos(ZONBI_F,	 900,4122,-22,180,2)
+	F_set_chr(ZONBI_A,CF_NO_CLIP)
+	F_set_chr(ZONBI_A,CF_NO_CLIP2)
+	F_set_chr(ZONBI_B,CF_NO_CLIP)
+	F_set_chr(ZONBI_B,CF_NO_CLIP2)
+	F_set_chr(ZONBI_C,CF_NO_CLIP)
+	F_set_chr(ZONBI_C,CF_NO_CLIP2)
+	F_set_chr(ZONBI_D,CF_NO_CLIP)
+	F_set_chr(ZONBI_D,CF_NO_CLIP2)
+	F_set_chr(ZONBI_E,CF_NO_CLIP)
+	F_set_chr(ZONBI_E,CF_NO_CLIP2)
+	F_set_chr(ZONBI_F,CF_NO_CLIP)
+	F_set_chr(ZONBI_F,CF_NO_CLIP2)
+
+	MOT_SET(ZONBI_A,150,-1,554,554,-1,-1)//仰向け
+	MOT_SET(ZONBI_B,150,-1,554,554,-1,-1)//
+	MOT_SET(ZONBI_C,150,-1,554,554,-1,-1)//
+	MOT_SET(ZONBI_D,150,-1,554,554,-1,-1)//
+	MOT_SET(ZONBI_E,150,-1,554,554,-1,-1)//
+	MOT_SET(ZONBI_F,150,-1,554,554,-1,-1)//
+	MOT(ZONBI_A,150,0)
+	MOT(ZONBI_B,150,0)
+	MOT(ZONBI_C,150,0)
+	MOT(ZONBI_D,150,0)
+	MOT(ZONBI_E,150,0)
+	MOT(ZONBI_F,150,0)
+	KAO(ZONBI_A,"1","3","1")//
+	KAO(ZONBI_B,"1","3","1")//
+	KAO(ZONBI_C,"1","3","1")//
+	KAO(ZONBI_D,"1","3","1")//
+	KAO(ZONBI_E,"1","3","1")//
+	KAO(ZONBI_F,"1","3","1")//
+
+	set_chr( EFFECT,749,	-1,-1,  -2800,6500,0,     31, 0, 0,"")
+	F_set_chr(EFFECT,CF_NO_CLIP)
+	F_set_chr(EFFECT,CF_NO_CLIP2)
+	F_set_chr(EFFECT,CF_NO_CSP)
+	F_set_chr(EFFECT,CF_NO_ZIMEN)
+	F_set_chr(EFFECT,CF_NO_HEIGHT)
+	color(EFFECT,-1)
+
+	//カメラ初期位置
+	CAM_move(-1460,-6000,180,0,0)
+//	CAM(330,140,180,28,184,0,0)		//エフェクト割れ発生
+	CAM(330,170,180,20,184,0,0)
+
+	wait(30)
+
+	MOT_SET(EVENT_RAGNA,150,-1,405,405,-1,-1)	//どうな的よ
+	MOT_SET(EVENT_FIONA,150,-1,441,441,-1,-1)//行きます
+
+	CAM_move(-1020,-5460,180,150,0)
+//	CAM(90,75,180,28,184,150,0)
+	CAM(90,120,180,20,184,150,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+	wait_CAM_move()
+	wait_CAM()
+	CAM_move(-1020,-5460,160,600,0)
+//	CAM(-70,66,160,24,176,600,0)		//エフェクト割れ発生
+	CAM(-70,100,160,20,176,600,0)
+
+//　　拉古那たち、场所を少し変えて南西的崖に近さ幕置。
+//　　紫的光が淡く照らしている中、城を眺めているような構図。
+	KAO(EVENT_POCKLE,"B232BZ2","12321D","6")//
+	MES(EVENT_POCKLE,"城，城……！？",0)
+	KAO(EVENT_POCKLE,"B232BZ3","D","6")//
+	MES(EVENT_POCKLE,"喂，皮皮洛，是城耶！？",0)
+	MES_close(EVENT_POCKLE)
+
+//	name2(EVENT_PIPIRO)
+	KAO(EVENT_PIPIRO,"B232BZ3","D123","5")//
+	MES(EVENT_PIPIRO,"……看一眼就知道了吧。",0)
+	KAO(EVENT_PIPIRO,"12321Z4","32A","1")//
+	MES(EVENT_PIPIRO,"唔，那就是传说中的\n吸血鬼之城吗。",0)
+	MES_close(EVENT_PIPIRO)
+
+//	name2(EVENT_FIONA)
+	KAO(EVENT_FIONA,"B232BZ2","12321D","5")//
+	MES(EVENT_FIONA,"这是什么……",0)
+	KAO(EVENT_FIONA,"B232BZ5","D","5")//
+	MES(EVENT_FIONA,"此前一直就在那里，\n却没有一个人察觉到，实在是……",0)
+	MES_close(EVENT_FIONA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ5","123","2")//
+	MES(ALWEN,"那就是蒙布利亚城。\n我从父亲那里继承而来的城。",0)
+	KAO(ALWEN,"B232BZ5","3","2")//
+	MES(ALWEN,"不过，如今被\n我的叔叔夺走了。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	CAM_move(-900,-5300,120,0,0)
+//	CAM(-110,56,120,24,194,0,0)			//エフェクト割れ発生
+	CAM(-110,77,120,20,194,0,0)
+	chr_pos(EVENT_POCKLE,-1238,4990,-3,45,2)
+	chr_pos(EVENT_PIPIRO,-1158,4820,-3,45,2)
+
+//　　菲奥娜的頭に！マーク。
+	KAO(EVENT_FIONA,"E","D","6")//
+	EMO(EVENT_FIONA,EMO_BIKKURI)
+	wait(15)
+	rot_chr(EVENT_FIONA,30,ALWEN)
+	wait(5)
+	KAO(EVENT_KLODE,"B","12321","2")//
+	rot_chr(EVENT_KLODE,30,ALWEN)
+	wait(4)
+	KAO(EVENT_RAGNA,"B","12321","1")//
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	look(LUE,"Bone_Head",0,0,0,2,0,0,-20)
+	rot_chr(LUE,30,ALWEN)
+	wait(3)
+	KAO(EVENT_POCKLE,"B","12321","2")//
+	rot_chr(EVENT_POCKLE,30,ALWEN)
+	KAO(EVENT_PIPIRO,"E","2321","1")//
+	rot_chr(EVENT_PIPIRO,30,ALWEN)
+	KAO(EVENT_FIONA,"B232BZ3","1233321","2")//
+	MES(EVENT_FIONA,"那么，那个人是……！",0)
+	MES_close(EVENT_FIONA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","321","2")//
+	MES(ALWEN,"扎哈鲁·德·蒙布利亚。",0)
+	KAO(ALWEN,"B232BZ4","1","2")//
+	MES(ALWEN,"一切的元凶，\n引发灾难者的名字。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　艾雯、拉古那的方に振り返る。
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(15)
+	KAO(ALWEN,"B232BZ2","1233321","2")//
+	MES(ALWEN,"──拉古那。",0)
+	MES_close(ALWEN)
+
+	MOT(EVETN_RAGNA,150,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"啊啊，要去了吧？",0)
+	MOT(EVETN_RAGNA,2,15)
+	wait(15)
+	MES(EVENT_RAGNA,"我已经做好心理准备了。\n我们快点去吧。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"1","123","1")//
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,-10)
+	wait(10)
+	KAO(ALWEN,"12321Z3","3","1")//
+	MES(ALWEN,"……谢谢你。",0)
+//	look_chr( ALWEN, LUE ,"Bone_Head")
+	CAM_move(-800,-5340,120,0,0)
+	CAM(290,70,120,22,264,0,0)
+	KAO(ALWEN,"B","321","2")//
+	look(ALWEN,"Bone_Head",0,0,2,3,0,-20,20)
+	wait(15)
+	KAO(ALWEN,"B232BZ5","321","2")//
+	MES(ALWEN,"露、你暂且留下，\n去与魔女大人取得联系。",0)
+	KAO(ALWEN,"B232BZ3","1","2")//
+	MES(ALWEN,"探知叔父的动静。",0)
+	MES_close(ALWEN)
+
+//	name2(LUE)
+	KAO(LUE,"B232BZ3","12321","2")//
+	MES(LUE,"是，我知道了！",0)
+	KAO(LUE,"B232BZ5","1","2")//
+	MES(LUE,"我会马上追上去的，\n公主大人你们也要小心！",0)
+	MES_close(LUE)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"12321","1","2")//
+	MES(ALWEN,"嗯！",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　露、そ的まま夜空に飛び去っていく。
+	rot(LUE,30,300)
+	wait(15)
+	CAM_move(-800,-5340,120,90,0)
+	CAM(290,110,120,22,250,90,0)
+	look(LUE,"Bone_Head",0,0,0,2,0,0,10)
+	look(LUE,"Bone_Hips",0,0,0,1,0,0,20)
+	MOT(LUE,1,5)
+	jump( LUE, 0, 90,500,6000,600,0)
+	wait_move(LUE)
+	color(LUE,-1)
+
+	cross_fade(15)
+	CAM_move(-940,-5220,120,0,0)
+	CAM(50,68,120,24,256,0,0)
+	wait(15)
+
+	MOT(EVENT_FIONA,150,15)
+	wait(15)
+	KAO(EVENT_FIONA,"B232BZ5","1233321","2")//
+	MES(EVENT_FIONA,"我，我们\n也和你一起去！",0)
+	KAO(EVENT_FIONA,"B232BZ7","1","2")//
+	MES(EVENT_FIONA,"这样的事态──\n身为瓦伦斯家的成员，\n我不能坐视！",0)
+	MES_close(EVENT_FIONA)
+
+//	look_off(ALWEN)
+	look(ALWEN,"Bone_Head",0,0,2,2,0,0,0)
+	rot_chr(ALWEN,30,EVENT_FIONA)
+	wait(15)
+//	name2(ALWEN)
+	MES(ALWEN,"这是你的自由，不过……",0)
+	look_chr( ALWEN, ZONBI_D ,"Bone_Head")
+	wait(15)
+	MES(ALWEN,"把他们丢下不管好吗？",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_FIONA,2,15)
+	rot_chr(EVENT_FIONA,30,ZONBI_C)
+	wait(15)
+//	name2(EVENT_FIONA)
+	KAO(EVENT_FIONA,"F","12321","6")//
+	MES(EVENT_FIONA,"啊……",0)
+	MES_close(EVENT_FIONA)
+
+//　　カメラ切り替えして、昏睡状態的村人を映す。
+	CAM_move(120,-4220,200,60,0)
+	CAM(450,62,200,34,150,60,0)
+	MOT(EFFECT,0,0)												//城的光エフェクト終了
+	
+	rot_chr(EVENT_KLODE,60,ZONBI_C)
+	wait(2)
+	rot_chr(EVENT_RAGNA,60,ZONBI_D)
+	wait(2)
+	rot_chr(EVENT_POCKLE,60,ZONBI_C)
+	wait(2)
+	rot_chr(EVENT_PIPIRO,60,ZONBI_C)
+
+	wait_CAM_move()
+	wait_CAM()
+	chr_pos(ALWEN,	   -824,5290,-22,135,2)
+	chr_pos(EVENT_RAGNA,	   -866,5490,-3,215,2)
+
+	MES_pos(EVENT_POCKLE,"W9的，的确……",0,170,320,0,0)
+	wait_key(0)
+	MES_close(EVENT_POCKLE)
+
+//	name2(EVENT_PIPIRO)
+	MES_pos(EVENT_PIPIRO,"W9一，二，三……\n可以了。",0,140,290,0,0)
+	wait_key(0)
+	MES_close(EVENT_PIPIRO)
+
+//	name("管家克劳德")
+	MES_pos(EVENT_KLODE,"W9而且他们似乎很虚弱。\n放任不管的话很危险。",0,200,350,0,0)
+	wait_key(0)
+	MES_close(EVENT_KLODE)
+
+//	name2(EVENT_FIONA)
+	MES_pos(EVENT_FIONA,"W9唔……",0,140,380,0,0)
+	wait_key(0)
+	MES_close(EVENT_FIONA)
+	wait_MES(EVENT_FIONA)
+
+	cross_fade(15)
+	CAM_move(-980,-5200,120,0,0)
+//	CAM(10,82,120,26,194,0,0)
+	CAM(10,110,120,20,194,0,0)
+	MOT(EFFECT,31,0)												//城的光エフェクト
+	wait(30)
+
+	rot(EVENT_RAGNA,30,135)
+	wait(5)
+	look_off(ALWEN)
+	wait(10)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"没时间讨论了。",0)
+	MES(EVENT_RAGNA,"可以的话，我们分头行动，\n你们就负责照看村里的人。",0)
+	MES(EVENT_RAGNA,"同时，我和公主\n进城去教训那个元凶。",0)
+	MES_close(EVENT_RAGNA)
+
+//	rot_chr(EVENT_FIONA,30,ALWEN)
+	KAO(EVENT_FIONA,"B","123","4")//
+	rot(EVENT_FIONA,30,310)
+	wait(5)
+	rot_chr(EVENT_KLODE,30,ALWEN)
+	wait(4)
+	rot_chr(EVENT_POCKLE,30,RAGNA)
+	wait(3)
+	rot_chr(EVENT_PIPIRO,30,ALWEN)
+	wait(2)
+//	name2(EVENT_FIONA)
+	KAO(EVENT_FIONA,"B232BZ3","3","4")//
+	MES(EVENT_FIONA,"……我明白了。",0)
+	KAO(EVENT_FIONA,"B232BZ6","321","2")//
+	MES(EVENT_FIONA,"不过，处理完成之后，\n我们也会追过去。",0)
+	KAO(EVENT_FIONA,"B232BZ4","321","2")//
+	MES(EVENT_FIONA,"请一定小心！",0)
+	MES_close(EVENT_FIONA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"嗯……！",0)
+	MES_close(ALWEN)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"好，那么就出发吧！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　画面、ゆっくりとフェードアウト。
+//	CAM(10,86,120,26,194,60,0)
+	CAM(10,110,120,20,194,60,0)
+	fade_in(100,60,0)
+	wait_fade()
+
+	stop_BGM(90)
+	wait_BGM()
+
+	delete(LUE)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	chr_pos(RAGNA,	-570,5600,-22,180,2)
+	chr_pos(PARTNER,-300,5600,-22,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+//	chr_pos(EVENT_FIONA,	0,4900,1,180,2)
+//	chr_pos(EVENT_KLODE,	150,4900,1,180,2)
+//	chr_pos(EVENT_PIPIRO,	300,4900,1,180,2)
+//	chr_pos(EVENT_POCKLE,	450,4900,1,180,2)
+	F_reset_chr(ZONBI_A,CF_NO_CLIP)
+	F_reset_chr(ZONBI_A,CF_NO_CLIP2)
+	F_reset_chr(ZONBI_B,CF_NO_CLIP)
+	F_reset_chr(ZONBI_B,CF_NO_CLIP2)
+	F_reset_chr(ZONBI_C,CF_NO_CLIP)
+	F_reset_chr(ZONBI_C,CF_NO_CLIP2)
+	F_reset_chr(ZONBI_D,CF_NO_CLIP)
+	F_reset_chr(ZONBI_D,CF_NO_CLIP2)
+	F_reset_chr(ZONBI_E,CF_NO_CLIP)
+	F_reset_chr(ZONBI_E,CF_NO_CLIP2)
+	F_reset_chr(ZONBI_F,CF_NO_CLIP)
+	F_reset_chr(ZONBI_F,CF_NO_CLIP2)
+
+	delete(EFFECT)
+	delete(EFFECT2)
+
+	delete(EFFECT_A)
+	delete(EFFECT_B)
+	delete(EFFECT_C)
+	delete(EFFECT_D)
+	delete(EFFECT_E)
+	delete(EFFECT_F)
+
+	delete(EVENT_FIONA)
+	delete(EVENT_KLODE)
+	delete(EVENT_PIPIRO)
+	delete(EVENT_POCKLE)
+	
+/*	
+	delete(ZONBI_A)
+	delete(ZONBI_B)
+	delete(ZONBI_C)
+	delete(ZONBI_D)
+	delete(ZONBI_E)
+	delete(ZONBI_F)
+*/
+
+
+//ＧＦ『★罗亚鲁塔村的人々を救出し、蒙布利亚城へ向かった』を立てる。
+	F_set(F3_00_GoMoonCastle)
+	F_reset(F3_29_BattleZonbi)//★手帳用フラグ：ゾンビ战闘中を解除
+
+	//★菲奥娜
+	F_set_note(-16,-1)
+	//★克劳德
+	F_set_note(-18,-1)
+	
+	//★菲奥娜【瓦伦斯家的末裔】
+	F_set_note(-16,0)
+	//★菲奥娜【吸血鬼退治】
+	F_set_note(-16,1)
+	
+	//★克劳德【武術的達人
+	F_set_note(-18,0)
+
+	//----------------------------------------------------
+	//Ｇ－馆行ってるかどうか的チェック（③～□まで行う）
+	if(FV_02_VisitGyakata)
+	{
+		if(FE_FF_NotGotoG)
+			F_set(FE_FF_NotGotoG2)//长い事行ってない
+		F_set(FE_FF_NotGotoG)//しばらく行ってない
+	}
+	//----------------------------------------------------
+
+	chr_pos(ZONBI_A,	  28,3034,-21,  330,150)
+	chr_pos(ZONBI_B,	  414,3096,-21, 350,150)
+	chr_pos(ZONBI_C,	  -154,3678,-21, 280,150)
+	chr_pos(ZONBI_D,	  -6,4272,-21, 230,150)
+	chr_pos(ZONBI_E,	  1090,3450,-21, 55,150)
+	chr_pos(ZONBI_F,	  1260,3812,-21, 90,150)
+
+	chr_rename(ZONBI_A,"怀森村长")//
+	chr_rename(ZONBI_B,"拉乌妮")//
+	chr_rename(ZONBI_C,"巴兰")//
+	chr_rename(ZONBI_D,"阿鲁贝尔")//
+	chr_rename(ZONBI_E,"玛莎")//
+	chr_rename(ZONBI_F,"菲缇莉卡")//
+
+//会話用キャラを再配置
+	chr_pos(PIPIRO,	199,3225,-22,220,150)
+	chr_pos(POCKLE,	 427,3200,-21,120,150)
+	chr_pos(FIONA,	-30,3780,-22,60,150)
+	chr_pos(KLODE,	1050,3307,-22,0,150)
+	color(PIPIRO,1)//透過解除
+	color(POCKLE,1)//透過解除
+	color(FIONA,1)//透過解除
+	color(KLODE,1)//透過解除
+	
+	F_set_chr(ZONBI_A,CF_NO_MOVE)
+	F_set_chr(ZONBI_B,CF_NO_MOVE)
+	F_set_chr(ZONBI_C,CF_NO_MOVE)
+	F_set_chr(ZONBI_D,CF_NO_MOVE)
+	F_set_chr(ZONBI_E,CF_NO_MOVE)
+	F_set_chr(ZONBI_F,CF_NO_MOVE)
+
+	CAM_return(0)
+	wait(30)
+
+//　　村的中的キャラクターを再配置した上で、
+//　　フェードインしてイベント終了、プレイヤー操作許可。
+//　　以後、伊鲁巴特的夜的マップを步けるようになる。
+//　　ただし制御が難しければ、全体マップ上で
+//　　必要な场所以外は入れないようにするなど的対応をする。
+
+	workG(GW_DEF_BGM,SET,0)	//デフォルト曲を戻す
+	BGM(18)
+	fade_in(0,30,0)
+	EV_end()
+}
+
+//////////////////////////////////////////////////////////////////////
+// 艾雯による浄化判定
+
+EV_JYOUKA
+{
+ 	if( F200 && !F210) 
+	{
+		EV("EV_JYOUKA200")
+	}
+
+ 	if( F201 && !F211) 
+	{
+		EV("EV_JYOUKA201")
+	}
+
+ 	if( F202 && !F212) 
+	{
+		EV("EV_JYOUKA202")
+	}
+
+ 	if( F203 && !F213) 
+	{
+		EV("EV_JYOUKA203")
+	}
+
+ 	if( F204 && !F214) 
+	{
+		EV("EV_JYOUKA204")
+	}
+
+ 	if( F205 && !F215) 
+	{
+		EV("EV_JYOUKA205")
+	}
+}
+
+//-- 各ＮＰＣごと的浄化イベント --------------------------------------
+
+
+EV_JYOUKA200
+{
+	TK_begin()
+
+	EFF_chr(4040,ZONBI_A,0,100,0,"charbase0")
+	SE(1069,0)//村人浄化SE
+
+	EV("EV_AlwenVoice")
+
+	color(ZONBI_A,1)
+	MOT(ZONBI_A,32,0)//
+	wait(15)
+	MOT(ZONBI_A,33,0)//
+	wait(81)
+	MOT(EFFECT_A,0,0)
+	MOT(ZONBI_A,34,0)//
+	wait(61)
+	MOT(ZONBI_A,35,0)//気絶倒れ
+	SE(1070,0)//倒れSE
+
+	F_set(210)
+	F_set_chr(ZONBI_A,CF_NO_CSP)
+
+	EV("EV_3_02_GoMoonCastle")
+
+}
+
+EV_JYOUKA201
+{
+	TK_begin()
+
+	EFF_chr(4040,ZONBI_B,0,100,0,"charbase0")
+	SE(1069,0)//村人浄化SE
+
+	EV("EV_AlwenVoice")
+
+	color(ZONBI_B,1)
+	MOT(ZONBI_B,32,0)//
+	wait(15)
+	MOT(ZONBI_B,33,0)//
+	wait(81)
+	MOT(EFFECT_B,0,0)
+	MOT(ZONBI_B,34,0)//
+	wait(61)
+	MOT(ZONBI_B,35,0)//気絶倒れ
+	SE(1070,0)//倒れSE
+
+	F_set(211)
+	F_set_chr(ZONBI_B,CF_NO_CSP)
+
+	EV("EV_3_02_GoMoonCastle")
+}
+
+EV_JYOUKA202
+{
+	TK_begin()
+
+	EFF_chr(4040,ZONBI_C,0,100,0,"charbase0")
+	SE(1069,0)//村人浄化SE
+
+	EV("EV_AlwenVoice")
+
+	color(ZONBI_C,1)
+	MOT(ZONBI_C,32,0)//
+	wait(15)
+	MOT(ZONBI_C,33,0)//
+	wait(81)
+	MOT(EFFECT_C,0,0)
+	MOT(ZONBI_C,34,0)//
+	wait(61)
+	MOT(ZONBI_C,35,0)//気絶倒れ
+	SE(1070,0)//倒れSE
+
+	F_set(212)
+	F_set_chr(ZONBI_C,CF_NO_CSP)
+
+	EV("EV_3_02_GoMoonCastle")
+}
+
+EV_JYOUKA203
+{
+	TK_begin()
+
+	EFF_chr(4040,ZONBI_D,0,100,0,"charbase0")
+	SE(1069,0)//村人浄化SE
+
+	EV("EV_AlwenVoice")
+
+	color(ZONBI_D,1)
+	MOT(ZONBI_D,32,0)//
+	wait(15)
+	MOT(ZONBI_D,33,0)//
+	wait(81)
+	MOT(EFFECT_D,0,0)
+	MOT(ZONBI_D,34,0)//
+	wait(61)
+	MOT(ZONBI_D,35,0)//気絶倒れ
+	SE(1070,0)//倒れSE
+
+	F_set(213)
+	F_set_chr(ZONBI_D,CF_NO_CSP)
+
+	EV("EV_3_02_GoMoonCastle")
+}
+
+EV_JYOUKA204
+{
+	TK_begin()
+
+	EFF_chr(4040,ZONBI_E,0,100,0,"charbase0")
+	SE(1069,0)//村人浄化SE
+
+	EV("EV_AlwenVoice")
+
+	color(ZONBI_E,1)
+	MOT(ZONBI_E,32,0)//
+	wait(15)
+	MOT(ZONBI_E,33,0)//
+	wait(81)
+	MOT(EFFECT_E,0,0)
+	MOT(ZONBI_E,34,0)//
+	wait(61)
+	MOT(ZONBI_E,35,0)//気絶倒れ
+	SE(1070,0)//倒れSE
+
+	F_set(214)
+	F_set_chr(ZONBI_E,CF_NO_CSP)
+
+	EV("EV_3_02_GoMoonCastle")
+}
+
+EV_JYOUKA205
+{
+	TK_begin()
+
+	EFF_chr(4040,ZONBI_F,0,100,0,"charbase0")
+	SE(1069,0)//村人浄化SE
+
+	EV("EV_AlwenVoice")
+
+	color(ZONBI_F,1)
+	MOT(ZONBI_F,32,0)//
+	wait(15)
+	MOT(ZONBI_F,33,0)//
+	wait(81)
+	MOT(EFFECT_F,0,0)
+	MOT(ZONBI_F,34,0)//
+	wait(61)
+	MOT(ZONBI_F,35,0)//気絶倒れ
+	SE(1070,0)//倒れSE
+
+	F_set(215)
+	F_set_chr(ZONBI_F,CF_NO_CSP)
+
+	EV("EV_3_02_GoMoonCastle")
+}
+
+//浄化時的艾雯的ボイス
+EV_AlwenVoice
+{
+
+//ランダム版 ここから
+
+	workL(0,RAND,5)		//ランダム
+
+	if(WK000==0)
+		VOICE(102,0)	//「うむ！」
+	else if(WK000==1)
+		VOICE(103,0)	//「よかろう！」
+	else if(WK000==2)
+		VOICE(104,0)	//「私的出番だな！」
+	else if(WK000==3)
+		VOICE(105,0)	//「苦しゅうない！」
+	else if(WK000==4)
+		VOICE(106,0)	//「任せるがよい！」
+	else	//保険
+		VOICE(106,0)	//「任せるがよい！」
+
+//ランダム版 ここまで
+
+//順番版 ここから
+//
+//	//６人いる的で、６回
+//	if(WK000==0)
+//		VOICE(102,ALWEN)	//「うむ！」
+//	else if(WK000==1)
+//		VOICE(103,ALWEN)	//「よかろう！」
+//	else if(WK000==2)
+//		VOICE(104,ALWEN)	//「私的出番だな！」
+//	else if(WK000==3)
+//		VOICE(105,ALWEN)	//「苦しゅうない！」
+//	else if(WK000==4)
+//		VOICE(106,ALWEN)	//「任せるがよい！」
+//	else if(WK000==5)
+//		VOICE(106,ALWEN)	//「任せるがよい！」
+//	else	//保険
+//		VOICE(106,ALWEN)	//「任せるがよい！」
+//
+//	workL(0,ADD,1)		//次へ
+//
+//順番版 ここまで
+
+}
+
+TK_ZONBI_A
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,ZONBI_A)
+	rot_chr(PLAYER2,60,ZONBI_A)
+		MES(ZONBI_A,"…………………………",0)
+		MES_close(ZONBI_A)
+		wait_MES(ZONBI_A)
+	TK_end()
+	
+}
+TK_ZONBI_B
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,ZONBI_B)
+	rot_chr(PLAYER2,60,ZONBI_B)
+		MES(ZONBI_B,"…………………………",0)
+		MES_close(ZONBI_B)
+	TK_end()
+	
+}
+TK_ZONBI_C
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,ZONBI_C)
+	rot_chr(PLAYER2,60,ZONBI_C)
+		MES(ZONBI_C,"…………………………",0)
+		MES_close(ZONBI_C)
+	TK_end()
+	
+}
+TK_ZONBI_D
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,ZONBI_D)
+	rot_chr(PLAYER2,60,ZONBI_D)
+		MES(ZONBI_D,"…………………………",0)
+		MES_close(ZONBI_D)
+	TK_end()
+	
+}
+TK_ZONBI_E
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,ZONBI_E)
+	rot_chr(PLAYER2,60,ZONBI_E)
+		MES(ZONBI_E,"…………………………",0)
+		MES_close(ZONBI_E)
+	TK_end()
+	
+}
+TK_ZONBI_F
+{
+	TK_begin()
+	rot_chr(PLAYER1,60,ZONBI_F)
+	rot_chr(PLAYER2,60,ZONBI_F)
+		MES(ZONBI_F,"…………………………",0)
+		MES_close(ZONBI_F)
+
+	TK_end()
+	
+}
+
+//鐘的音
+EV_1068
+{
+	SE(1068,0)
+	wait(230)
+	SE(1068,0)
+}
+
+
+//詠唱SEフェードアウト
+EV_1065_fadeout
+{
+	SE_vol(1065,100,0)
+	wait(1)
+	SE_vol(1065,99,0)
+	wait(1)
+	SE_vol(1065,98,0)
+	wait(1)
+	SE_vol(1065,97,0)
+	wait(1)
+	SE_vol(1065,96,0)
+	wait(1)
+	SE_vol(1065,95,0)
+	wait(1)
+	SE_vol(1065,94,0)
+	wait(1)
+	SE_vol(1065,93,0)
+	wait(1)
+	SE_vol(1065,92,0)
+	wait(1)
+	SE_vol(1065,91,0)
+	wait(1)
+	SE_vol(1065,90,0)
+	wait(1)
+	SE_vol(1065,89,0)
+	wait(1)
+	SE_vol(1065,88,0)
+	wait(1)
+	SE_vol(1065,87,0)
+	wait(1)
+	SE_vol(1065,86,0)
+	wait(1)
+	SE_vol(1065,85,0)
+	wait(1)
+	SE_vol(1065,84,0)
+	wait(1)
+	SE_vol(1065,83,0)
+	wait(1)
+	SE_vol(1065,82,0)
+	wait(1)
+	SE_vol(1065,81,0)
+	wait(1)
+	SE_vol(1065,80,0)
+	wait(1)
+	SE_vol(1065,79,0)
+	wait(1)
+	SE_vol(1065,78,0)
+	wait(1)
+	SE_vol(1065,77,0)
+	wait(1)
+	SE_vol(1065,76,0)
+	wait(1)
+	SE_vol(1065,75,0)
+	wait(1)
+	SE_vol(1065,74,0)
+	wait(1)
+	SE_vol(1065,73,0)
+	wait(1)
+	SE_vol(1065,72,0)
+	wait(1)
+	SE_vol(1065,71,0)
+	wait(1)
+	SE_vol(1065,70,0)
+	wait(1)
+	SE_vol(1065,69,0)
+	wait(1)
+	SE_vol(1065,68,0)
+	wait(1)
+	SE_vol(1065,67,0)
+	wait(1)
+	SE_vol(1065,66,0)
+	wait(1)
+	SE_vol(1065,65,0)
+	wait(1)
+	SE_vol(1065,64,0)
+	wait(1)
+	SE_vol(1065,63,0)
+	wait(1)
+	SE_vol(1065,62,0)
+	wait(1)
+	SE_vol(1065,61,0)
+	wait(1)
+	SE_vol(1065,60,0)
+	wait(1)
+	SE_vol(1065,59,0)
+	wait(1)
+	SE_vol(1065,58,0)
+	wait(1)
+	SE_vol(1065,57,0)
+	wait(1)
+	SE_vol(1065,56,0)
+	wait(1)
+	SE_vol(1065,55,0)
+	wait(1)
+	SE_vol(1065,54,0)
+	wait(1)
+	SE_vol(1065,53,0)
+	wait(1)
+	SE_vol(1065,52,0)
+	wait(1)
+	SE_vol(1065,51,0)
+	wait(1)
+	SE_vol(1065,50,0)
+	wait(1)
+	SE_vol(1065,49,0)
+	wait(1)
+	SE_vol(1065,48,0)
+	wait(1)
+	SE_vol(1065,47,0)
+	wait(1)
+	SE_vol(1065,46,0)
+	wait(1)
+	SE_vol(1065,45,0)
+	wait(1)
+	SE_vol(1065,44,0)
+	wait(1)
+	SE_vol(1065,43,0)
+	wait(1)
+	SE_vol(1065,42,0)
+	wait(1)
+	SE_vol(1065,41,0)
+	wait(1)
+	SE_vol(1065,40,0)
+	wait(1)
+	SE_vol(1065,39,0)
+	wait(1)
+	SE_vol(1065,38,0)
+	wait(1)
+	SE_vol(1065,37,0)
+	wait(1)
+	SE_vol(1065,36,0)
+	wait(1)
+	SE_vol(1065,35,0)
+	wait(1)
+	SE_vol(1065,34,0)
+	wait(1)
+	SE_vol(1065,33,0)
+	wait(1)
+	SE_vol(1065,32,0)
+	wait(1)
+	SE_vol(1065,31,0)
+	wait(1)
+	SE_vol(1065,30,0)
+	wait(1)
+	SE_vol(1065,29,0)
+	wait(1)
+	SE_vol(1065,28,0)
+	wait(1)
+	SE_vol(1065,27,0)
+	wait(1)
+	SE_vol(1065,26,0)
+	wait(1)
+	SE_vol(1065,25,0)
+	wait(1)
+	SE_vol(1065,24,0)
+	wait(1)
+	SE_vol(1065,23,0)
+	wait(1)
+	SE_vol(1065,22,0)
+	wait(1)
+	SE_vol(1065,21,0)
+	wait(1)
+	SE_vol(1065,20,0)
+	wait(1)
+	SE_vol(1065,19,0)
+	wait(1)
+	SE_vol(1065,18,0)
+	wait(1)
+	SE_vol(1065,17,0)
+	wait(1)
+	SE_vol(1065,16,0)
+	wait(1)
+	SE_vol(1065,15,0)
+	wait(1)
+	SE_vol(1065,14,0)
+	wait(1)
+	SE_vol(1065,13,0)
+	wait(1)
+	SE_vol(1065,12,0)
+	wait(1)
+	SE_vol(1065,11,0)
+	wait(1)
+	SE_vol(1065,10,0)
+	wait(1)
+	SE_vol(1065,9,0)
+	wait(1)
+	SE_vol(1065,8,0)
+	wait(1)
+	SE_vol(1065,7,0)
+	wait(1)
+	SE_vol(1065,6,0)
+	wait(1)
+	SE_vol(1065,5,0)
+	wait(1)
+	SE_vol(1065,4,0)
+	wait(1)
+	SE_vol(1065,3,0)
+	wait(1)
+	SE_vol(1065,2,0)
+	wait(1)
+	stop_SE(1065)
+}
+
+#EndScriptTable
+//====================================================================
+

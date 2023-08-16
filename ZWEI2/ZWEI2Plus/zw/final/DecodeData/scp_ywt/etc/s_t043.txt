@@ -1,0 +1,1324 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧傾僱僢僩乮嶨壿壆揦堳乯Annette")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_ANNETTE
+{
+	TK_begin()
+
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(ANNETTE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ANNETTE)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ANNETTE)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ANNETTE)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_00_GoToMeru )
+	{
+		//儌乕僔儑儞弶婜壔
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+//		MOT(ANNETTE,2,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		if(!FT_12_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			VOICE(709,0)									//乽僴傽僀丄偄傜偭偟傖偄乿			
+			MES(ANNETTE,"嗨，歡迎光臨。",0)		
+//			MES(ANNETTE,"僴傽僀丄偄傜偭偟傖偄丅\n壗偐尒偰偄偔丠",0)
+			MES_close(ANNETTE)
+			EV("SHOP_ANNETE_LOOP")
+			wait_EV("SHOP_ANNETE_LOOP")
+		}
+		//儌乕僔儑儞暅婣
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F5_00_HearLunar )
+	{
+		//儌乕僔儑儞弶婜壔
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+//		MOT(ANNETTE,2,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		if(!FT_11_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			VOICE(709,0)									//乽僴傽僀丄偄傜偭偟傖偄乿			
+			MES(ANNETTE,"嗨，歡迎光臨。",0)
+//			MES(ANNETTE,"僴傽僀丄偄傜偭偟傖偄丅\n壗偐尒偰偄偔丠",0)
+			MES_close(ANNETTE)
+		}
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//儌乕僔儑儞暅婣
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_09_GoShrineMia)
+	{
+		if(!FT_10_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			//儌乕僔儑儞弶婜壔
+			//EV_stop("MOTION_ANETTE")
+			//EV_stop("LOOKING_ANETTE")
+			MOT(ANNETTE,50,15)
+//			MOT(ANNETTE,2,15)
+			rot_chr(ANNETTE,30,PLAYER1)
+
+			VOICE(709,0)									//乽僴傽僀丄偄傜偭偟傖偄乿
+
+//			MES(ANNETTE,"偄傜偭偟傖偄丅\n壗偐尒偰偄偔丠",0)
+			MES(ANNETTE,"嗨，歡迎光臨。",0)
+			MES_close(ANNETTE)
+		}
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//儌乕僔儑儞暅婣
+		MOT(ANNETTE,51,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑亅俛惎崀傝偺傊岦偐偆帠偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_02_GoVillage2 )
+	{
+		//儌乕僔儑儞弶婜壔
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//乽僴傽僀丄偄傜偭偟傖偄乿
+
+//		MES(ANNETTE,"偄傜偭偟傖偄丅\n壗偐尒偰偄偔丠",0)
+		MES(ANNETTE,"嗨，歡迎光臨。",0)	
+		MES_close(ANNETTE)
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//儌乕僔儑儞暅婣
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑亅俙儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_00_StartSolo )
+	{
+		EV("TK_ANNETTE")
+		wait_EV("TK_ANNETTE")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F3_00_GoMoonCastle )
+	{
+		//儌乕僔儑儞弶婜壔
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//乽僴傽僀丄偄傜偭偟傖偄乿
+
+		if(!F_ANNETTE)
+		{
+//			MES(ANNETTE,"偁丄偄傜偭偟傖偄丅\n壗偐尒偰偄偔丠",0)
+			MES(ANNETTE,"嗨，歡迎光臨。",0)
+			MES_close(ANNETTE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+//			MES(ANNETTE,"偄傜偭偟傖偄丅\n壗偐尒偰偄偔丠",0)
+			MES(ANNETTE,"嗨，歡迎光臨。",0)
+			
+			MES_close(ANNETTE)
+		}
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		MOT(ANNETTE,75,15)
+		//儌乕僔儑儞暅婣
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F2_14_TalkEnemy )
+	{
+		//儌乕僔儑儞弶婜壔
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//乽僴傽僀丄偄傜偭偟傖偄乿
+
+//		MES(ANNETTE,"僴傽僀丄偄傜偭偟傖偄丅\n僽僥傿僢僋乻傾僱僢僩乼傊傛偆偙偦両",0)
+		MES(ANNETTE,"嗨，歡迎光臨。",0)
+		MES_close(ANNETTE)
+		
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//儌乕僔儑儞暅婣
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F2_00_GoForest )
+	{
+		if(!FT_03_TalkAneFede)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			MOT_SET(ANNETTE,150,-1,406,406,-1,0)
+			if(!F_ANNETTE)
+			{
+			//丂丂傾僱僢僩丄俹俙僄儌乕僔儑儞偱怳傝曉傞丅
+				EMO(ANNETTE,EMO_PA)
+				wait(30)
+				rot_chr(ANNETTE,30,PLAYER1)
+
+				//儌乕僔儑儞弶婜壔
+//				EV_stop("MOTION_ANETTE_03")
+//				MOT(ANNETTE,2,15)
+				MOT(ANNETTE,150,10)
+
+				MES(ANNETTE,"啊，抱歉抱歉。\n姐姐剛好過來。",0)
+				MES(ANNETTE,"……要看些什麼？",0)
+				MES_close(ANNETTE)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MOT(SHESTOR,150,10)
+				//儌乕僔儑儞弶婜壔
+//				EV_stop("MOTION_ANETTE_03")
+//				MOT(ANNETTE,2,15)
+				MOT(ANNETTE,50,15)
+				rot_chr(ANNETTE,30,PLAYER1)
+
+				VOICE(709,0)									//乽僴傽僀丄偄傜偭偟傖偄乿
+		
+//				MES(ANNETTE,"偄傜偭偟傖偄丅\n壗偐尒偰偄偔丠",0)
+				MES(ANNETTE,"嗨，歡迎光臨。",0)
+				MES_close(ANNETTE)
+			}
+			EV("SHOP_ANNETE_LOOP")
+			wait_EV("SHOP_ANNETE_LOOP")
+
+			
+			//儌乕僔儑儞暅婣
+//			EV("MOTION_ANETTE_03")
+
+			MOT(ANNETTE,50,15)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F1_15_GoVillage )
+	{
+		//儌乕僔儑儞弶婜壔
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		//MOT(ANNETTE,2,15)
+		MOT(ANNETTE,52,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//乽僴傽僀丄偄傜偭偟傖偄乿
+
+		if(!F_ANNETTE)
+		{
+//			MES(ANNETTE,"偁丄偄傜偭偟傖偄丅",0)
+			MES(ANNETTE,"嗨，歡迎光臨。",0)
+			MES(ANNETTE,"剛才我正在更新商品……\n要看些什麼？",0)
+			MES_close(ANNETTE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+//			MES(ANNETTE,"偄傜偭偟傖偄丅\n壗偐尒偰偄偔丠",0)
+			MES(ANNETTE,"嗨，歡迎光臨。",0)
+			MES_close(ANNETTE)
+		}
+		
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//儌乕僔儑儞暅婣
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+		MOT(ANNETTE,75,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F1_01_GameStart )
+	{
+		//儌乕僔儑儞弶婜壔
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,52,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		if(!FT_01_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			VOICE(709,0)									//乽僴傽僀丄偄傜偭偟傖偄乿
+		
+//			MES(ANNETTE,"僴傽僀丄偄傜偭偟傖偄丅\n僽僥傿僢僋乻傾僱僢僩乼傊傛偆偙偦両",0)
+			MES(ANNETTE,"嗨，歡迎光臨。",0)
+			MES_close(ANNETTE)
+			EV("SHOP_ANNETE_LOOP")
+			wait_EV("SHOP_ANNETE_LOOP")
+		}
+		//儌乕僔儑儞暅婣
+		//EV("MOTION_ANETTE")
+//		//EV("LOOKING_ANETTE")
+		MOT(ANNETTE,75,15)
+	}
+	
+	TK_end()
+}
+
+SHOP_ANNETE_LOOP
+{
+	workL(WK_CANCEL,SET,3)//亂傗傔傞亃
+	MES_pos(PLAYER1,"??W9【對話】\n【購物】\n【離開】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀榖傪偡傞")
+	//丂丂捠忢夛榖張棟傊旘傇丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(WK_YESNO==1)
+	{
+		EV("TK_ANNETTE")
+		wait_EV("TK_ANNETTE")
+		loop
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀攦偄暔傪偡傞")
+	//丂丂僔儑僢僾張棟傪嫴傓丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(WK_YESNO==2)
+	{
+
+		MES(ANNETTE,"請慢慢挑選☆",0)
+		MES_close(ANNETTE)
+
+		//昳懙偊曄偊傞仌埨攧傝
+		if( F5_00_HearLunar )
+		{
+			shop_open(10)
+		}
+		else
+		{
+			shop_open(0)
+		}
+		wait_W(WK_YESNO)
+		
+//		if(WK_ITEMBOX1==1)			//壗偐攦偭偨
+//		{	
+//			workL(0,RAND,2)	
+//			if(WK000==0)
+//			{
+//				VOICE(710,0)				//乽偁傝偑偲偹乕乿丂丂丂丂乮暈傪攦偭偨捈屻乯
+//			}
+//			else
+//			{
+//				VOICE(711,0)				//乽偆傫丄帡崌偭偰傞傢傛乿乮暈傪攦偭偨捈屻乯
+//			}
+//		}
+//		workL(WK_ITEMBOX1,SET,0)
+		
+		loop
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀傗傔傞")
+	//丂丂夛榖張棟廔椆丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	{
+		VOICE(712,0)													//乽傑偨偳偆偧乣乿
+	
+		MES(ANNETTE,"歡迎下次再來～！",0)
+		MES_close(ANNETTE)
+	}
+}
+
+TK_ANNETTE
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儊僀儞僉儍儔偺堦斒儊僢僙乕僕傪嶲徠
+	//丂丂仸嶨壿壆丒墱偺扞偺慜偵攝抲丅
+	//丂丂仸弶夞僀儀儞僩丅
+	//丂丂丂榖偟偐偗傞偲僋儘僗僼僃乕僪偱儔僌僫偨偪傪嵞攝抲偡傞丅
+	if( F6_05_EndSixth )
+	{
+		if(!FT_13_TalkAnnette)
+		{
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	弶婜壔張棟
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			cross_fade(30)			//僋儘僗僼僃乕僪
+			EV_begin()
+			
+			//僇儊儔僙僢僩
+			CAM_move(-1097,-224,135,0,0)
+			CAM(270,64,-25,27,239,0,0)
+			
+			//僉儍儔嵞攝抲
+			chr_pos(RAGNA,-1097,44,1,38,2)
+			chr_pos(PET,-973,415,1,110,2)
+			
+			
+			chr_pos(PARTNER,-1323,-362,1,349,2)
+			color(PARTNER,-1)//摟夁		
+			
+			//僴僀億儕僉儍儔僙僢僩
+			set_chr(MIA,1091,-1,-1, -932,240,0,	2,70,0, "")
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(MIA,"1", "1", "1")	
+			KAO(ANETTE,"1", "1", "1")	
+			
+			MOT_SET(MIA,150,-1,579,579,-1,0)
+			wait_fade()
+
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	僀儀儞僩奐巒
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			rot_chr(ANNETTE,30,MIA)
+
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"啊，歡迎光臨。\n這裡是「亞涅特」服裝店！",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"咦，這不是米婭嗎？",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"嗯嗯，果然這件衣服\n是最合適的呢?",0)
+			MES_close(ANNETTE)
+
+		//	name2(MIA)
+			MES(MIA,"啊哈哈，多謝誇獎。",0)
+			MES_close(MIA)
+
+		//	name2(RAGNA)
+			look_chr(RAGNA,MIA,"Bone_Head")
+			MES(RAGNA,"哎，是嗎……\n那件衣服是在這裡\n買的啊。",0)
+			MES_close(RAGNA)
+
+			rot_chr(ANNETTE,30,RAGNA)
+		//	name2(ANNETTE)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"呵呵，是皮皮洛\n帶她來的。",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"拉格那也真是不夠意思。\n有個這麼可愛的妹妹\n還不向我介紹一下☆",0)
+			MES_close(ANNETTE)
+			look_off(RAGNA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈，這真是抱歉……\n（話說回來，\n 我應該要道歉嗎……？）",0)
+			MES_close(RAGNA)
+			rot_chr(ANNETTE,30,MIA)
+			
+		//丂丂傾僱僢僩丄俁恖傪尒搉偡丅
+			look(ANNETTE,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(ANNETTE,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(ANNETTE,"Bone_Head",0,		0,2,0,			0,0,0)
+			
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"不過……\n今天是怎麼了？",0)
+			KAO(ANNETTE,"12321Z5","1","1")
+			MES(ANNETTE,"看起來也不像是\n大家一起來買東西……",0)
+			MES_close(ANNETTE)
+
+		//	name2(PET)
+			MES(PET,"唔，是這樣……",0)
+			MES(PET,"其實這兩個人\n今天就要啟程出發了。",0)
+			MES(PET,"所以才過來道別。",0)
+			MES_close(PET)
+
+		//丂丂傾僱僢僩偵両僄儌乕僔儑儞丅
+			EMO(ANNETTE,EMO_BIKKURI)
+			look_chr(ANNETTE,PET,"Bone_Head")
+			wait(30)
+
+			KAO(ANNETTE,"12321Z3","1","1")
+			MES(ANNETTE,"哎～……！？",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"兩位就要走了嗎？",0)
+			MES_close(ANNETTE)
+			
+			look_off(ANNETTE)
+
+		//	name2(MIA)
+			MES(MIA,"亞涅特小姐，\n這件衣服真是多謝了。",0)
+			MES(MIA,"還幫我試穿……",0)
+			MES_close(MIA)
+
+		//	name2(ANNETTE)
+			rot_chr(ANNETTE,30,MIA)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"啊，不用謝。\n我也是喜歡才這麼做的。",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"唉，可是這樣就寂寞了不少啊～。",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"本來還打算\n今後讓米婭\n試穿更多的衣服呢～……",0)
+			MES_close(ANNETTE)
+
+		//	name2(MIA)
+			MES(MIA,"啊哈哈……\n那個，真是對不起……",0)
+			MES_close(MIA)
+
+		//	name2(ANNETTE)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"不，\n米婭就不要道歉了。",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"雖然少了一個可愛的客人\n是很可惜……\n不過這也是沒辦法。",0)
+			MES_close(ANNETTE)
+
+		//丂丂傾僱僢僩丄儔僌僫偵岦偔丅
+			rot_chr(ANNETTE,30,RAGNA)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"拉格那，我本來想\n送你圍巾當禮物的。",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"可是冬天的衣物比較厚重\n會不會太佔地方呢？",0)
+			MES_close(ANNETTE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，這就不必在意了。",0)
+			MES(RAGNA,"旅途上需要的東西\n我們都已經準備好了。",0)
+			MES_close(RAGNA)
+
+		//	name2(ANNETTE)
+			KAO(ANNETTE,"12321Z2","1","1")
+			MES(ANNETTE,"這樣啊……",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"嗯，那也好。",0)
+			rot_chr(ANNETTE,30,MIA)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"兩位都要保重哦！\n回到故鄉以後也要加油！",0)
+			MES_close(ANNETTE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈，知道了。",0)
+			MES_close(RAGNA)
+
+		//丂丂仧儈傾丄寉偔偍帿媀傪偡傞丅
+			MOT(MIA,150,15)
+
+			MES(MIA,"這段時間多謝你照顧了。",0)
+			MES_close(MIA)
+
+		//丂丂寉偔埫揮偟偰偐傜憖嶌嫋壜傪栠偡丅
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	僀儀儞僩廔椆張棟
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			fade_in(100,30,BLACK)
+			wait_fade()
+			
+			rot(ANNETTE,30,100)
+			//僇儊儔傪弶婜愝掕偵
+			CAM_return( 0 )
+			wait(30)
+			delete(MIA)
+			color(PARTNER,1)//摟夁夝彍
+			chr_pos(PARTNER,-932,240,0,70,2)
+			MOT(MIA,2,0)
+			
+			
+			F_set(FT_13_TalkAnnette)
+			EV_end()
+			
+			//僼僃乕僪僀儞----------------------
+			fade_in(0,30,BLACK)
+		//	僾儗僀儎乕憖嶌嫋壜
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			TK_begin()
+			rot_chr(ANNETTE,30,PLAYER1)
+			MES(ANNETTE,"雖然少了一個可愛的客人\n是很可惜……",0)
+			MES(ANNETTE,"不過有相逢便有離別。\n這也是沒辦法。",0)
+			MES(ANNETTE,"兩位都要保重哦！\n回到故鄉以後也要加油！",0)
+			MES_close(ANNETTE)
+			TK_end()
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嶨壿壆丒僇僂儞僞乕偵攝抲丅
+	if( F6_00_GoToMeru )
+	{
+//丂丂乮仸弶夞僀儀儞僩偵暘棧偟傑偡乯
+//丂丂仸嶨壿壆丒僇僂儞僞乕偵攝抲丅
+//丂丂仸弶夞僀儀儞僩
+		rot_chr(ANNETTE,30,PLAYER1)
+		if(!FT_12_TalkAnnette)
+		{
+			MES(ANNETTE,"旋風就要襲擊過來了，\n大家也都亂成一團。",0)
+			MES(ANNETTE,"我是不是也該\n停業了呢……",0)
+			MES_close(ANNETTE)
+
+		//丂丂傾僱僢僩偵俹俙僄儌乕僔儑儞丅
+			EMO(ANNETTE,EMO_PA)
+			wait(30)
+			
+			MES(ANNETTE,"啊，也對……",0)
+			MES(ANNETTE,"剛才皮皮洛來過，\n預訂了很多可愛的\n服裝之後……",0)
+			MES(ANNETTE,"還這樣對我說道\n「我會解決這個問題的。\n 就交給我吧☆」",0)
+			MES_close(ANNETTE)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(ANNETTE,"這是怎麼回事呢……\n拉格那，你明白嗎？",0)
+				MES_close(ANNETTE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哈哈，大概吧……\n（想不到皮皮洛那傢伙\n 還會如此熱心……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(ANNETTE,"這是怎麼回事呢……\n艾爾文，你明白嗎？",0)
+				MES_close(ANNETTE)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"唔，大概能想像得到。",0)
+				MES(PARTNER,"（大約是因為\n 擔心服裝店會關門吧。）",0)
+				MES_close(PARTNER)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+			F_set(FT_12_TalkAnnette)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(ANNETTE,"皮皮洛……\n到底要幹什麼呢。",0)
+			MES(ANNETTE,"難道是\n跟那道旋風有關嗎？",0)
+			MES(ANNETTE,"唔～～～～………\n究竟有什麼關係呢……",0)
+			MES_close(ANNETTE)
+
+		//丂丂傾僱僢僩偵彮偟丒丒丒僄儌乕僔儑儞丅
+			EMO(ANNETTE,EMO_TENTEN)
+			wait(30)
+			
+			MES(ANNETTE,"雖然還不太明白……\n不過一切就拜託你了，皮皮洛！",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嶨壿壆丒僇僂儞僞乕偵攝抲丅
+	if( F5_00_HearLunar )
+	{
+		//丂丂仸弶夞僀儀儞僩
+		if(!FT_11_TalkAnnette)
+		{
+			VOICE(709,0)									//乽僴傽僀丄偄傜偭偟傖偄乿			
+			MES(ANNETTE,"嗨，歡迎光臨。",0)		
+//			MES(ANNETTE,"僴傽僀丄偄傜偭偟傖偄丅\n僽僥傿僢僋乻傾僱僢僩乼傊傛偆偙偦両",0)
+			MES(ANNETTE,"注意到了嗎？\n我店裡的商品更新過囉。",0)
+			MES(ANNETTE,"另外，以前的很多商品\n也都降價了，\n應該更平價了吧。",0)
+			MES(ANNETTE,"呵呵，請務必來看一下☆",0)
+			MES_close(ANNETTE)
+			
+			//仛傾僱僢僩亂寢峔彜攧忋庤亃
+			F_set_note(ANNETTE,2)
+			F_set(FT_11_TalkAnnette)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			MES(ANNETTE,"春季的新品還沒有進貨，\n不過裡面新增了一些飾品。",0)
+			MES(ANNETTE,"那些也是剛剛發表的\n名牌和著名設計師的作品哦。",0)
+			MES(ANNETTE,"價格是有些貴……\n這點還請原諒☆",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘慜傪憒彍乮儂僂僉帩偪乯丅
+	//丂丂仸嶨壿壆丄彜昳偺庤擖傟傪偟偰偄傞丅
+	if( F4_09_GoShrineMia)
+	{
+	//丂丂仸弶夞僀儀儞僩丅
+		if(!FT_10_TalkAnnette)
+		{
+			MES(ANNETTE,"啪噠啪噠，啪噠啪噠……",0)
+			MES_close(ANNETTE)
+
+		//丂丂傾僱僢僩丄俹俙僄儌乕僔儑儞偱怳傝曉傞丅
+			EMO(ANNETTE,EMO_PA)
+			rot_chr(ANNETTE,30,PLAYER1)
+			wait(30)
+			MOT(ANNETTE,50,15)
+			MES(ANNETTE,"咦？\n兩位好早啊。",0)
+			MES(ANNETTE,"雖然我還在做準備……\n有空的話就看一下吧？",0)
+			MES_close(ANNETTE)
+			
+			F_set(FT_10_TalkAnnette)
+
+		//丂丂佀僔儑僢僾慖戰巿偵旘傇丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			MES(ANNETTE,"今天早晨不知怎麼\n很早就醒了。",0)
+			MES(ANNETTE,"唉，已經很久沒有\n這麼早起了～……",0)
+			MES(ANNETTE,"閒著也是浪費時間，不如趁著\n還沒開始營業拍拍灰塵。",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸亀仛惎崀傝偺棦傊岦偐偆偙偲偵偟偨亁偺慜偼丄
+	//丂丂丂儘傾儖僞懞偵棃偰偄傞丅
+	//丂丂仸儘傾儖僞懞丒媿幧偮偒柉壠偱丄儀僢僪偺偦偽偵偄傞丅
+	//丂丂仸弶夞偼丄僼僃僨儕僇偺僀儀儞僩偑婲摦偡傞丅
+	if( F4_00_StartSolo )
+	{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓亀仛惎崀傝偺棦傊岦偐偆偙偲偵偟偨亁慜偺捠忢堦斒儊僢僙乕僕丅
+		//丂丂仸怳傝曉傜側偄丅
+		if(!F4_02_GoVillage2)
+		{
+		//丂丂仸傾僱僢僩偲嫟捠偺弶夞僀儀儞僩丅
+		//丂丂仸怳傝曉傜側偄丅
+			TK_begin()
+			
+			MOT_SET(ANNETTE,151,-1,458,458,152,3)
+			MOT_SET(ANNETTE,152,-1,459,459,153,3)
+			MOT_SET(ANNETTE,153,-1,458,458,154,3)
+			MOT_SET(ANNETTE,154,-1,459,459,150,10)
+			if(!FT_07_TalkAneFede)
+			{
+				EV("TALK_FA")
+				wait_EV("TALK_FA")
+			}
+			else
+			{
+				MES(ANNETTE,"本來……",0)
+				MES(ANNETTE,"嗚，如果知道會有這種事，\n我絕對不會離開\n姐姐的……",0)
+				MOT(ANNETTE,151,5)
+				MES(ANNETTE,"真是的，為什麼還在笑啊！？",0)
+				MES_close(ANNETTE)
+				MOT(ANNETTE,150,10)
+			}
+			TK_end()
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸亀仛惎崀傝偺棦傊岦偐偆偙偲偵偟偨亁偺屻偼丄傾儖僢僥偵栠偭偰偄傑偡丅
+		//丂丂仸嶨壿壆丒僇僂儞僞乕偵攝抲丅
+		else
+		{
+			if(!F_ANNETTE)
+			{
+				MES(ANNETTE,"剛才呢，我去\n探望了姐姐。",0)
+				MES(ANNETTE,"呼……她比我想像中的還要有精神，\n我也就安下心來了。",0)
+				MES(ANNETTE,"本來我打算無論如何\n都要把她帶回去的……\n可是鎮上最近也剛剛出現過怪物。",0)
+				MES(ANNETTE,"她在這裡的生活也很開心……\n我還是沒有辦法強迫她離開啊～。",0)
+				MES_close(ANNETTE)
+				
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀偙偺僼儔僌偱儔乕儔僀儔偲榖偟偰偄傞応崌丄侾夞偩偗憓擖丅")
+				if(!FT_07_TalkAnnette)
+				{
+					MES(ANNETTE,"另外……",0)
+					MES_close(ANNETTE)
+
+				//丂丂傾僱僢僩丄儔乕儔僀儔傪尒偰偐傜丄岦偒傪栠偡丅
+					rot_chr(ANNETTE,30,LA-RAIRA)
+					CAM_move(-1071,173,134,90,0)
+					wait_CAM_move()
+					
+					wait(30)
+					cross_fade(30)
+					CAM_return(0)
+					CAM(230,80,-25,25,225,0,0)
+					wait_fade()
+					
+					rot_chr(ANNETTE,30,PLAYER1)
+					MES(ANNETTE,"（那個老婆婆是誰？）",0)
+					MES(ANNETTE,"（我從來沒有見過……\n 剛才回來的時候，\n 她就在那裡挑選商品了。）",0)
+					MES(ANNETTE,"（不是什麼奇怪的人吧？？）",0)
+					MES_close(ANNETTE)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（啊，嗯。）",0)
+					MES(RAGNA,"（雖然看起來就是個可疑人物，\n 但她確實不是壞人……）",0)
+					MES_close(RAGNA)
+
+				//	name2(SUBARU)
+					MES(PARTNER,"（嗯，婆婆只不過是\n 很華麗而已吧！）",0)
+					MES_close(PARTNER)
+
+				//	name2(ANNETTE)
+					MES(ANNETTE,"（是…是這樣啊……）",0)
+					MES(ANNETTE,"（知道了，雖然還不是太明白。\n 多謝兩位！）",0)
+					MES_close(ANNETTE)
+					F_set(FT_07_TalkAnnette)
+				}
+				
+				F_set(ANNETTE)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(ANNETTE,"我打算下回\n再去探望一次。",0)
+				MES(ANNETTE,"緹奧醫生說是沒有問題，\n但我還是擔心……",0)
+				MES(ANNETTE,"搬出來後我\n一直沒回去見過她呢。",0)
+				MES(ANNETTE,"嗯，偶爾休息一下\n過去見個面吧。",0)
+				MES_close(ANNETTE)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嶨壿壆丒僇僂儞僞乕偵攝抲丅
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_ANNETTE)
+		{
+			MES(ANNETTE,"哎呀，不好。\n已經這麼晚了……",0)
+			MES(ANNETTE,"剛才大概\n不小心睡著了吧。",0)
+			MES_close(ANNETTE)
+
+		//丂丂傾僱僢僩偵俹俙僄儌乕僔儑儞丅
+			EMO(ANNETTE,EMO_PA)
+			wait(30)
+			
+			MES(ANNETTE,"話說回來，外面\n剛才好像非常混亂……\n……發生什麼事了嗎？",0)
+			MES_close(ANNETTE)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"嗯……",0)
+				MES(RAGNA,"總之，不要\n出去就好了。",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"唔，是有些問題。",0)
+				MES(PARTNER,"不要離開這裡比較好。",0)
+				MES_close(PARTNER)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+			F_set(ANNETTE)
+		}
+		else
+		{
+	//丂丂仛孞傝曉偟
+			MES(ANNETTE,"剛才在考慮店面佈局的時候\n好像打了瞌睡。",0)
+			MES(ANNETTE,"已經這麼晚了。\n差不多該打烊了……",0)
+			MES_close(ANNETTE)
+
+		//丂丂傾僱僢僩偵俹俙僄儌乕僔儑儞丅
+			EMO(ANNETTE,EMO_PA)
+			wait(30)
+			
+			MES(ANNETTE,"啊，不用擔心。\n我會等到\n二位買完東西的。",0)
+			MES(ANNETTE,"有事的話兩位隨時都可以過來。",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嶨壿壆丒僇僂儞僞乕偵攝抲丅
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_ANNETTE)
+		{
+			MES(ANNETTE,"呼，飛機延後了呢～……",0)
+			MES(ANNETTE,"這次送來的郵件裡面\n應該有春天的新作了啊……",0)
+			MES(ANNETTE,"沒辦法，\n先改變一下\n商店的陳列佈局吧。",0)
+			MES(ANNETTE,"如果沒有創新的話，\n也就吸引不到顧客了。",0)
+			MES_close(ANNETTE)
+			
+			F_set(ANNETTE)
+		}
+	//丂丂仛孞傝偐偊偟
+		else
+		{
+			MES(ANNETTE,"我覺得好像\n緊身褲和褲裙類\n快流行起來了。",0)
+			MES(ANNETTE,"最近花紋種類很多，\n改起來也就容易。",0)
+			MES(ANNETTE,"唔—，考慮一下\n推銷這兩種衣服看看吧～。",0)
+			MES_close(ANNETTE)
+		}
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嶨壿壆丒僇僂儞僞乕偱僼僃僨儕僇偲榖偟偰偄傞丅
+	//丂丂仸俀恖嫟捠偺弶夞僀儀儞僩
+	//丂丂仸俀恖偲傕怳傝曉傜側偄丅
+	else
+	if( F2_00_GoForest )
+	{
+		if(!FT_03_TalkAneFede)
+		{
+			//嫟捠夛榖丅
+			EV("TK_FEDERICA")
+			wait_EV("TK_FEDERICA")
+		}
+		else
+		{
+			if(!F_ANNETTE)
+			{
+				MES(ANNETTE,"我的姐姐\n住在洛塔村。",0)
+				MES(ANNETTE,"因為離得很近，\n我也一直勸她過來一起住……",0)
+				MES(ANNETTE,"哼，不知為什麼\n她就是不願意離開村子。",0)
+				MES(ANNETTE,"相當頑固呢～。",0)
+				MES_close(ANNETTE)
+				
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哈哈，倒也不是頑固……\n這應該說是堅持吧。",0)
+					MES_close(RAGNA)
+
+				//	name2(ANNETTE)
+					MES(ANNETTE,"啊，拉格那。\n你在幫我姐姐說話啊。",0)
+					MES(ANNETTE,"唔—，不可饒恕。\n要不要把商品價格提高一點呢～？",0)
+					MES_close(ANNETTE)
+
+				//丂丂儔僌僫偵惵偞傔僄儌乕僔儑儞丅
+					EMO(RAGNA,EMO_AOZAME)
+					wait(30)
+					
+					MES(RAGNA,"對不起，放過我吧。",0)
+					MES_close(RAGNA)
+				}
+			//	name("佀傾儖僂僃儞愭摢")
+				else
+				{
+					MES(PARTNER,"雖然你說吵架了，\n但看起來還是很開心呢……",0)
+					MES_close(PARTNER)
+
+				//	name2(ANNETTE)
+					MES(ANNETTE,"唔～，我明明是認真的……",0)
+					MES(ANNETTE,"艾爾文？\n說這種話的人\n在我這裡買東西可要多花些錢哦～？",0)
+					MES_close(ANNETTE)
+
+				//丂丂傾儖僂僃儞偵椻傗娋僄儌乕僔儑儞丅
+					EMO(PARTNER,EMO_HIYAASE)
+					wait(30)
+					
+					MES(PARTNER,"失禮了，請容許我道歉。",0)
+					MES_close(PARTNER)
+				}
+
+				F_set(ANNETTE)
+			}
+			else
+			{
+				MES(ANNETTE,"我們本來就是雙胞胎，\n住在一起才顯得正常吧。",0)
+				MES(ANNETTE,"而且我開這家店\n本來也是為了\n要和姐姐一同經營……",0)
+				MES(ANNETTE,"呼，她真是頑固啊……",0)
+				MES_close(ANNETTE)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嶨壿壆丒僼儘傾偱彜昳偺庤擖傟傪偟偰偄傞丅
+	if( F1_15_GoVillage )
+	{
+		if(!F_ANNETTE)
+		{
+			MES(ANNETTE,"有一個女孩子\n是這裡的常客。",0)
+			MES(ANNETTE,"每天都很高興的過來店裡……\n可是她想要的新作\n還沒有到呢～。",0)
+			MES(ANNETTE,"似乎是飛機耽擱了。",0)
+			MES(ANNETTE,"也只好忍耐一下了。\n我覺得下週應該就到了。",0)
+			MES_close(ANNETTE)
+			
+			F_set(ANNETTE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			look(ANNETTE,"Bone_Head",0,		0,1,0,			0,-30,0)
+			MES(ANNETTE,"唔—\n今天真是有點慌張呢……",0)
+			look(ANNETTE,"Bone_Head",0,		0,1,0,			0,0,0)
+			MES(ANNETTE,"其實我姐姐\n應該馬上就要來了。",0)
+			MES(ANNETTE,"雖然不是什麼大事，\n但是很令人期待呢……",0)
+			MES_close(ANNETTE)
+
+		//丂丂傾僱僢僩丄墶傪岦偄偰丒丒丒僄儌乕僔儑儞丅
+			EMO(ANNETTE,EMO_TENTEN)
+			wait(30)
+//			look(ANNETTE,"Bone_Head",0,		0,1,1,			0,20,-10)
+			
+			MES(ANNETTE,"啊—，總覺得靜不下心來。\n早些過來就好了……",0)
+			MES_close(ANNETTE)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（看來十分期待呢……？）",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"（唔，看起來\n 相當期待對方來訪呢……）",0)
+				MES_close(PARTNER)
+			}
+//			look(ANNETTE,"Bone_Head",0,		0,1,1,			0,0,0)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嶨壿壆丒僇僂儞僞乕偵攝抲丅
+	if( F1_01_GameStart )
+	{
+	//丂丂仸弶夞僀儀儞僩丅
+		if(!FT_01_TalkAnnette)
+		{
+			MES(ANNETTE,"嗨，歡迎光臨。\n這裡是「亞涅特」服裝店！",0)
+			MES(ANNETTE,"咦，那孩子……",0)
+			MES_close(ANNETTE)
+
+		//丂丂傾僱僢僩丄傾儖僂僃儞傪尒傞丅
+			rot_chr(ANNETTE,30,PARTNER)
+			
+			MES(ANNETTE,"哎，這翅膀很可愛呀～……",0)
+			MES(ANNETTE,"喂、喂，這是在哪裡買的？",0)
+			MES_close(ANNETTE)
+
+		//	name2(PARTNER)
+			rot_chr(PARTNER,30,ANNETTE)
+			
+			MES(PARTNER,"唔，這羽翼屬於\n我偉大的穆普利亞家族……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			rot_chr(RAGNA,30,PARTNER)
+			MES(RAGNA,"公…公主殿下……",0)
+			MES_close(RAGNA)
+
+		//丂丂儔僌僫丄峇偰偰傾儖僂僃儞偵岦偔丅
+			MES(RAGNA,"（你在說什麼呢。\n 怎麼能自己把真實身份暴露出去。）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			MES(PARTNER,"（只是說出家族名\n 應該沒有關係吧。）",0)
+			MES(PARTNER,"（而且既然她稱讚了我的羽翼，\n 她想必是一個有眼光的人……）",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（不對，這不是問題所在吧。）",0)
+			MES_close(RAGNA)
+
+		//	name2(ANNETTE)
+			MES(ANNETTE,"？？？\n我聽不太懂……",0)
+			MES_close(ANNETTE)
+
+		//丂丂儔僌僫偲傾儖僂僃儞丄岦偒傪栠偡丅
+			rot_chr(RAGNA,30,ANNETTE)
+			rot_chr(PARTNER,30,ANNETTE)
+			
+			MES(ANNETTE,"算了。\n我也不多問了。",0)
+			MES(ANNETTE,"你們也在這裡好好看一看吧。\n我這裡也賣一些\n裝飾用的小物件。",0)
+			MES_close(ANNETTE)
+
+			F_set(FT_01_TalkAnnette)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!FT_01_TalkAnnette2)
+			{
+			//丂丂仸弶夞僀儀儞僩俀傪捛壛丅
+			//丂丂丂偙偺僀儀儞僩偼晛捠偺弶夞偲偼堘偄丄乽榖傪偡傞乿傪慖傫偩屻偺
+			//丂丂丂TK_ANETTE儖乕僠儞撪偱敾掕偟偰偔偩偝偄丅
+				MES(ANNETTE,"對了……",0)
+				MES(ANNETTE,"難道你們二位就是\n傳說中的拉格那先生和艾爾文小姐？",0)
+				MES_close(ANNETTE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"啊，是沒錯……",0)
+				MES(RAGNA,"……已經有傳說了嗎？\n（難道公主又做了什麼\n 惹人注目的事……）",0)
+				MES_close(RAGNA)
+
+				rot_chr(ANNETTE,30,RAGNA)
+			//	name2(ANNETTE)
+				MES(ANNETTE,"聽說拉格那你的\n飛機在伊魯巴特墜毀。",0)
+				MES(ANNETTE,"但卻因此邂逅了\n艾爾文小姐，並對她一見鍾情，\n當天就向她求婚。",0)
+				MES(ANNETTE,"我記得昨天梅伊\n是這麼說的。",0)
+				MES_close(ANNETTE)
+
+				
+			//丂丂儔僌僫偵惵偞傔僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_AOZAME)
+				wait(30)
+				
+			//丂丂僠乕儞偲偄偆俽俤丅				
+//				MES(RAGNA,"C4仧僠乕儞偲偄偆俽俤丅",0)
+//				MES_close(RAGNA)
+				
+			//丂丂婄傪棊偡丅乮傕偟偔偼偨傔懅乯
+				look(RAGNA,"Bone_Head",0,		0,28,2,			0,0,-30)
+				MES_close(RAGNA)
+				
+				MES(RAGNA,"是…是這種故事啊……",0)
+				MES(RAGNA,"而且好像還是\n個相當不光榮的故事……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"哼，這都是因為\n你不肯信任我。",0)
+				MES_close(PARTNER)
+
+				look(RAGNA,"Bone_Head",0,		0,0,1,			0,0,0)
+				rot_chr(PARTNER,30,ANNETTE)
+			//丂丂傾儖僂僃儞丄僉儑儘僉儑儘丅
+				look(PARTNER,"Bone_Head",0,		0,2,0,			0,30,0)
+				wait(20)
+				look(PARTNER,"Bone_Head",0,		0,2,0,			0,-30,0)
+				wait(40)
+				look(PARTNER,"Bone_Head",0,		0,2,0,			0,0,0)
+				
+				MES(PARTNER,"不過……\n這家店倒是很有趣。",0)
+				MES(PARTNER,"這裡是\n你一個人經營的嗎？",0)
+				MES_close(PARTNER)
+
+				rot_chr(ANNETTE,30,PARTNER)
+			//	name2(ANNETTE)
+				MES(ANNETTE,"啊，艾爾文你對\n這裡感興趣嗎？",0)
+				MES(ANNETTE,"呵呵，其實這家店\n剛剛開了一年。",0)
+				MES_close(ANNETTE)
+
+			//丂丂傾僱僢僩丄寉偔彜昳偺傎偆傪岦偔丅
+				rot(ANNETTE,30,45)			
+				MES(ANNETTE,"一開始只是因為興趣，\n不過現在生意也很興隆呢。",0)
+				
+				rot_chr(ANNETTE,30,PLAYER1)
+				MES(ANNETTE,"二位慢慢看吧。\n這裡擺放的都是我精心挑選的\n最高級服飾☆",0)
+				MES_close(ANNETTE)
+				
+				//仛傾僱僢僩亂庯枴偺揦亃
+				F_set_note(ANNETTE,0)
+
+			//丂丂乮仸捠忢堦斒儊僢僙乕僕偼丄婛懚偺暔傪巊梡乯
+				F_set(FT_01_TalkAnnette2)
+			}
+			else
+			{
+				if(!F_ANNETTE)
+				{
+					rot_chr(ANNETTE,30,PARTNER)
+					MES(ANNETTE,"對了—……\n艾爾文小姐的衣服\n和稍大一些的飾品比較相配。",0)
+					MES(ANNETTE,"我這裡也賣一些\n裝飾用的小物件。",0)
+					MES(ANNETTE,"請慢慢挑選☆",0)
+					MES_close(ANNETTE)
+
+				//丂丂傾儖僂僃儞偵侓僄儌乕僔儑儞丅
+					EMO(PARTNER,EMO_ONPU)
+					wait(30)
+					MES(PARTNER,"唔，好的。",0)
+					MES_close(PARTNER)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（不要突然說出一些\n 奇怪的話就好……）",0)
+					MES_close(RAGNA)
+
+					F_set(ANNETTE)
+				}
+			//丂丂仛孞傝曉偟
+				else
+				{
+				//丂丂傾僱僢僩偵俹俙僄儌乕僔儑儞丅
+					EMO(ANNETTE,EMO_PA)
+					wait(30)
+					MES(ANNETTE,"啊，難道在猶豫\n該挑選哪一件嗎？",0)
+					MES(ANNETTE,"那邊的玻璃櫃裡\n都是我推薦的飾品。",0)
+					MES(ANNETTE,"喜歡的話就試試吧☆",0)
+					MES_close(ANNETTE)
+				}
+			}
+		}
+	}
+}
+
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

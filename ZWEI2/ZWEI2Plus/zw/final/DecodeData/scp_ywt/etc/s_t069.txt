@@ -1,0 +1,496 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧儅乕僒偍偽偝傫乮偍偽偝傫乯Marsa")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_MARSA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(MARSA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,MARSA)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,MARSA)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MARSA)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MARSA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MARSA)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MARSA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,MARSA)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸懞峀応偺屻傠偺曽偵棫偭偰偄傞丅
+	//丂丂仸弶夞偼傾儖儀乕儖偲嫟捠偺僀儀儞僩偑婲摦偡傞丅
+	//丂丂仸僶儔儞偨偪偺傎偆傪岦偄偰丄怳傝曉傜側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僀儀儞僩屻偼丄偵傫偠傫敤傪僼儕乕儉乕僽
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+	//	name("儅乕僒")
+	if( F6_05_EndSixth )
+	{
+		if(!FV_13_TalkAlbMar)
+		{
+			EV("TALK_AM")
+			wait_EV("TALK_AM")
+		}
+		else
+		{
+			EV_stop("FREEMOVE_MARSA")
+			MOT_SET(MARSA,153,-1,406,406,-1,-1)
+			MOT(MARSA,153,10)
+			rot_chr(MARSA,30,PLAYER1)
+			if(!F_MARSA)
+			{
+				MES(MARSA,"巴朗也終於\n迎接人生中的春天啊。",0)
+				MES(MARSA,"嗯，他人那麼老實，\n這麼長時間卻沒遇到過什麼好事。",0)
+				MES(MARSA,"雖然我也不知道\n對方是怎麼想的。",0)
+				MES(MARSA,"不過看起來感覺還不錯吧？",0)
+				MES_close(MARSA)
+				
+				F_set(MARSA)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("儅乕僒")
+				MES(MARSA,"那兩個人\n感覺還不錯嘛。",0)
+				MES(MARSA,"就算是為了不讓\n我老公胡思亂想，\n我也要為他們加油呢？",0)
+				MES_close(MARSA)
+			}
+			EV("FREEMOVE_MARSA")
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸懞挿戭偱丄儔僂僯偲榖偟偰偄傞丅
+	//丂丂仸弶夞偼儔僂僯偲嫟捠偺儊僢僙乕僕丅
+	//丂丂仸怳傝曉傜側偄丅
+	if( F6_00_GoToMeru )
+	{
+		MOT_SET(MARSA,153,-1,406,406,-1,-1)
+		MOT(MARSA,153,10)
+		if(!FV_12_TalkLauMar)
+		{
+			EV("TALK_LM")
+			wait_EV("TALK_LM")
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("儅乕僒")
+			rot_chr(MARSA,30,PLAYER1)
+
+			MES(MARSA,"如果風變得更大，\n可能就沒有辦法出門了。",0)
+			MES(MARSA,"現在我們正要把\n日用品分配給大家。",0)
+			MES(MARSA,"呼，過後還要\n去幫丈夫的忙呢。",0)
+			MES_close(MARSA)
+		}
+		MOT(MARSA,2,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偵傫偠傫敤偱嶌嬈傪偟偰偄傞丅
+	if( F5_00_HearLunar )
+	{
+		EV_stop("FREEMOVE_MARSA")
+		rot_chr(MARSA,30,PLAYER1)
+
+		MOT_SET(MARSA,153,-1,406,406,-1,-1)
+		MOT(MARSA,153,10)
+
+		if(!F_MARSA)
+		{
+
+		//	name("儅乕僒")
+			MES(MARSA,"在我休息的時候，\n好像是巴朗一直在幫我澆水。",0)
+			MES(MARSA,"呼……真是多謝了。\n那個人還真是細心。",0)
+			MES(MARSA,"本來我只是請他\n幫我照顧一下風車，\n結果現在他已經在幫整個村子幹活了。",0)
+			MES_close(MARSA)
+
+			F_set(MARSA)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("儅乕僒")
+			MES(MARSA,"巴朗真是細心。",0)
+			MES(MARSA,"又有力氣，\n還非常能幹。",0)
+			MES(MARSA,"因為我總是腰痛，\n他就一直給我幫忙。",0)
+			MES_close(MARSA)
+		}
+		EV("FREEMOVE_MARSA")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸晽幵彫壆柉壠儀僢僪偺忋偵婲偒忋偑偭偰偄傞丅
+	if( F4_00_StartSolo )
+	{
+		look_chr( MARSA, PLAYER1,"Bone_Head")
+
+		if(!F_MARSA)
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僗僶儖偑偄傞")
+			if(F4_02_GoVillage2)
+			{
+			//	name("儅乕僒")
+				MES(MARSA,"哦，是你們啊……",0)
+				MES_close(MARSA)
+			}
+		//	name("佀僗僶儖偑偄側偄")
+			else
+			{
+			//	name("儅乕僒")
+				MES(MARSA,"哦，是你啊……",0)
+				MES_close(MARSA)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		
+		//	name("儅乕僒")
+			MES(MARSA,"聽說這裡被怪物襲擊了，\n是真的嗎？",0)
+			MES(MARSA,"嗯—，畢竟是從\n村長那裡聽來的……",0)
+			MES(MARSA,"還是不太可信呢。",0)
+			MES_close(MARSA)
+
+			F_set(MARSA)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("儅乕僒")
+			MES(MARSA,"今天早上遇見了村長，\n說什麼「怪物已經被我趕走了」，\n然後他就回去了。",0)
+			MES(MARSA,"？？？\n到底發生了什麼呢……",0)
+			MES(MARSA,"昨晚的事\n我也完全不記得了。",0)
+			MES_close(MARSA)
+		}
+		look_off(MARSA)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F3_00_GoMoonCastle )
+	{
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸晽幵彫壆柉壠偱僋儗乕僗偵偍拑傪弌偟偰偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		
+		MOT_SET(MARSA,150,-1,406,406,-1,0)
+		MOT(MARSA,150,10)
+		if(!F_MARSA)
+		{
+		//丂丂仸怳傝曉傜側偄丅
+		//	name("儅乕僒")
+			MES(MARSA,"過來，喝點這個\n冷靜一下。",0)
+			MES(MARSA,"居然掉進湖裡……",0)
+			MES(MARSA,"現在這個季節還好，\n要是在冬天就麻煩了。",0)
+			MES(MARSA,"我已經燒好水了，\n你也順便泡個澡吧。",0)
+			MES_close(MARSA)
+
+			F_set(MARSA)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			rot_chr(MARSA,30,PLAYER1)
+			
+		//	name("儅乕僒")
+			MES(MARSA,"這孩子真是的，\n居然在村裡迷路了。",0)
+			MES(MARSA,"據他說，他之前好像\n掉到了神殿門口的湖裡。",0)
+			MES(MARSA,"而且還找不到\n村子的出口……",0)
+			MES(MARSA,"唉，這孩子真讓人擔心。\n怎麼也要照顧一下才行。",0)
+			MES_close(MARSA)
+		}
+		MOT(MARSA,2,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸懞挿戭慜偱丄栻攧傝偐傜栻傪攦偭偰偄傞丅
+	if( F2_00_GoForest )
+	{
+		rot_chr(MARSA,30,PLAYER1)
+
+		MOT_SET(MARSA,151,-1,406,406,-1,-1)
+		MOT(MARSA,151,10)
+
+		if(!F_MARSA)
+		{
+		//	name("儅乕僒")
+			MES(MARSA,"我最近\n腰痛又嚴重了……",0)
+			MES(MARSA,"讓緹奧醫生\n看了一下，\n可是我又必須要堅持工作。",0)
+			MES(MARSA,"現在沒有藥\n都堅持不下去了。",0)
+			MES(MARSA,"哎呀，真是\n歲月不饒人啊。",0)
+			MES_close(MARSA)
+			//仛儅乕僒亂崢捝帩偪亃
+			F_set_note(MARSA,1)
+
+			F_set(MARSA)
+		}
+		//丂丂仛孞傝偐偊偟
+		else
+		{
+			MES(MARSA,"話雖如此……\n我丈夫也有些\n過於急躁了。",0)
+			MES(MARSA,"雖說村長\n總是說些\n莫名其妙的話。",0)
+			MES(MARSA,"……可這不是常有的事嗎？\n這些交給勞尼婆婆\n就好了。",0)
+			MES_close(MARSA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（嗯—，村長\n 已經被人放棄了嗎……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("佀傾儖僂僃儞愭摢")
+				MES(PARTNER,"（唔，看來\n 村長也已經\n 被人放棄了啊……）",0)
+				MES_close(PARTNER)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+			//仛儚僀僛儞亂掹傔傜傟偰傞亃
+			F_set_note(-65,1)
+		}
+		MOT(MARSA,150,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偵傫偠傫敤偱嶌嬈傪偟偰偄傞丅
+	if( F1_15_GoVillage )
+	{
+		EV_stop("FREEMOVE_MARSA")
+		rot_chr(MARSA,30,PLAYER1)
+
+		MOT_SET(MARSA,153,-1,406,406,-1,-1)
+		MOT(MARSA,153,10)
+		
+		if(!F_MARSA)
+		{
+		//	name("儅乕僒")
+			MES(MARSA,"對了，是時候開始為\n收穫祭做準備了。",0)
+			MES(MARSA,"那是我們祭奉精靈，\n祈求來年豐收的祭典。",0)
+			MES(MARSA,"把村中生產的食物\n獻供給精靈，\n相當熱鬧呢。",0)
+			MES(MARSA,"呵呵，我現在也要\n去準備一些\n醬菜之類的東西了。",0)
+			MES_close(MARSA)
+
+			F_set(MARSA)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//	name("儅乕僒")
+			MES(MARSA,"收穫祭當天\n大家會帶來各式各樣的食物\n獻供給精靈。",0)
+			MES(MARSA,"當然我們也都可以\n大吃大喝了。",0)
+			MES(MARSA,"大家每年\n都很期待這一天呢。",0)
+			MES_close(MARSA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀傾儖僂僃儞愭摢")
+				if(GW_MAN==1)
+				{
+					rot_chr(PARTNER,30,MARSA)
+				//丂丂傾儖僂僃儞偵偟偽傜偔丒丒丒僄儌乕僔儑儞丅
+					EMO(PARTNER,EMO_TENTEN)
+					wait(30)
+
+					rot_chr(RAGNA,30,PARTNER)
+				//丂丂儔僌僫偵椻傗娋僄儌乕僔儑儞丅
+					EMO(RAGNA,EMO_HIYAASE)
+					wait(30)
+
+					MES(RAGNA,"（不要擺出一幅垂涎欲滴的表情……）",0)
+					MES_close(RAGNA)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+		EV("FREEMOVE_MARSA")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偵傫偠傫敤偱嶌嬈傪偟偰偄傞丅
+	if( F1_01_GameStart )
+	{
+		EV_stop("FREEMOVE_MARSA")
+		MOT_SET(MARSA,153,-1,406,406,-1,-1)
+		MOT(MARSA,153,10)
+	//丂丂仸弶夞儊僢僙乕僕丅
+		if(!FV_01_TalkMarsa)
+		{
+		//	name("儅乕僒")
+			rot_chr(MARSA,30,PARTNER)
+			rot_chr(PARTNER,30,MARSA)
+//			F_set_chr(MARSA,CF_NO_MOVE)
+			MES(MARSA,"哎呀，這位小姐。\n皮膚很蒼白啊……",0)
+			MES(MARSA,"這可不行呀，\n一定要好好吃飯。",0)
+			MES(MARSA,"來吃點這個，\n雖然是家裡多的。",0)
+			MES_close(MARSA)
+
+			//	name("傾僀僥儉擖庤僥僉僗僩")
+			//丂丂仸恄揳儊僀儞儖乕僩偱庤偵擖傞儗儀儖偺僼乕僪丅
+			//ver.2008/8/7 寠偁偒僠乕僘
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			fade_in(30,10,BLACK)
+			get_item(172,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+			MES(PARTNER,"哦，感激不盡。\n今天一早到現在還沒有吃過東西。",0)
+			MES(PARTNER,"我就不客氣了。",0)
+			MES_close(PARTNER)
+
+			rot_chr(RAGNA,30,PARTNER)
+		//丂丂傾儖僂僃儞偵侓僄儌乕僔儑儞丅
+			EMO(PARTNER,EMO_ONPU)
+			wait(30)
+
+		//丂丂儔僌僫偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"（今天早上就在\n 我面前大吃特吃呢……）",0)
+			MES_close(RAGNA)
+			//仛儅乕僒亂傾儖僂僃儞傪怱攝亃
+			F_set_note(MARSA,0)
+			F_set(FV_01_TalkMarsa)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			rot_chr(MARSA,30,PLAYER1)
+//			F_set_chr(MARSA,CF_NO_MOVE)
+			if(!F_MARSA)
+			{
+				rot_chr(PARTNER,30,MARSA)
+			//	name("儅乕僒")
+				MES(MARSA,"年輕人不好好吃飯\n可不行喔。",0)
+				MES(MARSA,"多吃東西才健康。\n不然可長不大哦。",0)
+				MES_close(MARSA)
+
+			//丂丂傾儖僂僃儞偵侓僄儌乕僔儑儞丅
+				EMO(PARTNER,EMO_ONPU)
+				wait(30)
+	
+				MES(PARTNER,"唔，從今以後我會注意的。",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"至少不要把我\n的錢包吃垮了……",0)
+				MES_close(RAGNA)
+
+			//	name("儅乕僒")
+				MES(MARSA,"哈哈，真是個有趣的孩子。",0)
+				MES_close(MARSA)
+				
+				F_set(MARSA)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+			//	name("儅乕僒")
+				MES(MARSA,"年輕人就要\n多吃東西才健康。",0)
+				MES(MARSA,"這樣才能長大哦。",0)
+				MES_close(MARSA)
+			}
+		}
+		EV("FREEMOVE_MARSA")
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

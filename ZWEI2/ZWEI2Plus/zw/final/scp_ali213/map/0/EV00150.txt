@@ -1,0 +1,505 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10150][阿鲁迪亚·教会]
+//====================================================================
+
+#ScriptTable
+
+#CEPHEILA	1
+#ISABELLA	2
+#MONDRIAAN	5
+#CAT_A		6
+#CAT_B		7
+#CAT_C		8
+#LAUNEE		9
+#PENGUIN	10
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//  set_chr  no typ     tip         x    y   z   	 mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	//⑥的間は夜マップへ
+	if(F3_00_GoMoonCastle && !F4_00_StartSolo)
+	{
+		set_chr( 90,990,	-1,-1,      0, 1275, 0,  	180, 070302, 6,"K7_10101;")	//教会仮阿鲁迪亚的街
+	}
+	else
+	{	
+		set_chr( 90,990,	-1,-1,      0, 1275, 0,  	180, 070302, 6,"K7_10100;")	//教会仮阿鲁迪亚的街
+	}
+		
+	set_chr( 91,990,	-1,-1,   -850, -475, 0,  	270, 070203, 6,"K0_10155;")	//懺悔部屋
+
+
+	//ＮＰＣ
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		set_chr(  ISABELLA,47,	-1,-1, 328,885,1,	 52,90,	20,"<TK_ISABELLA>")	//　伊萨贝拉
+		F_set_chr(ISABELLA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		set_chr(  ISABELLA,47,	-1,-1, 8,-877,51,	 52,0,	20,"<TK_ISABELLA>")	//　伊萨贝拉
+		F_set_chr(ISABELLA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		set_chr( LAUNEE,66,	-1,-1,	 0,-368,0,		2,180,	20,"<TK_LAUNEE>")	//拉乌妮婆さん
+		F_set_chr(LAUNEE,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ的フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		set_chr( ISABELLA,47,	-1,-1, 308,-31,0,	52,182,	20,"<TK_ISABELLA>")	//　伊萨贝拉
+		set_chr( MONDRIAAN,53,	-1,-1, 0,-368,0,	2,180, 20,"<TK_MONDRIAAN>")	//　蒙德兰夫人
+		
+		set_chr( CAT_A,483,	-1,-1,	 -385,-582,0,	2,163, 20,"<TK_CAT_A>")		//　小咪(CAT_A)
+		EV("FREEMOVE_CAT_A")
+		set_chr( CAT_B,484,	-1,-1,	328,-663,24,		2,46, 20,"<TK_CAT_B>")			//夫人傍　哈其(CAT_B)
+		EV("FREEMOVE_CAT_B")
+		set_chr( CAT_C,485,	-1,-1,	-27,279,0,	2,300, 20,"<TK_CAT_C>")			//夫人傍　修克拉(CAT_C)
+		EV("FREEMOVE_CAT_C")
+
+		//Name制御──────────────
+		//小咪（猫）
+		//哈其（猫）	
+		//修克拉（猫）	
+			if(FV_FF_NameMe)
+				chr_rename(CAT_A,"小咪")
+			if(FV_FF_NameHatti)
+				chr_rename(CAT_B,"哈其")
+			if(FV_FF_NameShocora)
+				chr_rename(CAT_C,"修克拉")
+		//──────────────────
+
+		//モーション
+		MOT_SET(MONDRIAAN,153, -2,476,476,-1,0)		//モンドレアン
+		MOT(MONDRIAAN,153,0)
+		
+		F_set_chr(ISABELLA,CF_NO_MOVE)
+		F_set_chr(MONDRIAAN,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村的人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵的正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		if(!FT_05_CepheilaSt)
+		{
+			set_chr( CEPHEILA,50,	-1,-1, 0,80,0,	 51,180,	20,"<TK_CEPHEILA>")	//祈りに来た　瑟菲拉
+			
+			//モーション
+			MOT_SET(CEPHEILA,150, -2,476,476,-1,0)	//瑟菲拉
+			MOT(CEPHEILA,150,0)
+
+			F_set_chr(CEPHEILA,CF_NO_MOVE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎的パーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇的森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		set_chr(  ISABELLA,47,	-1,-1, 0,-368,0,	 52,180,	20,"<TK_ISABELLA>")	//　伊萨贝拉				←阿鲁迪亚村より配置変更。
+		F_set_chr(ISABELLA,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		set_chr(  ISABELLA,47,	-1,-1, 0,-368,0,	 52,180,	20,"<TK_ISABELLA>")	//　伊萨贝拉
+		
+		//伊萨贝拉初回イベント用エントリ
+		if(!FT_01_IsabellaEnc)
+		{
+			//◆初回前はタバコを消す
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			set_chr( 92,990,	-1,-1, 0,-368,0,  	0, 0414, 6,"<EV_IsabellaEnc>;")
+		}
+		F_set_chr(ISABELLA,CF_NO_MOVE)
+	}
+
+}
+
+//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼①②、シスター伊萨贝拉初回イベント。
+//──────────────────────────────
+//　　※教会的中で、背を向けて立っている。
+//　　※初回イベント。
+//　　　シスターに近づくとイベント開始する。
+//──────────────────────────────
+EV_IsabellaEnc
+{
+//――――――――――――――――――――――――――
+//	初期化処理
+//――――――――――――――――――――――――――
+	cross_fade(30)			//クロスフェード
+	EV_begin()
+	
+	//カメラセット
+	CAM_move(131,-504,55,0,0)
+	CAM(150,59,-105,30,109,0,0)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	76,954,1,180,2)
+	chr_pos(PARTNER,-86,1066,0,180,2)
+	chr_pos(ISABELLA,0,-368,0,180,52)
+
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(ISABELLA, "1", "1", "1")	
+	
+	F_reset_chr(ISABELLA,CF_NO_MOVE)
+	
+	//モーション
+	MOT_SET(PARTNER,150,-1,447,447,-1,0)	//咳き込む
+	MOT_SET(RAGNA,150,-1,447,447,-1,0)	//咳き込む
+//――――――――――――――――――――――――――
+//	イベント開始
+//――――――――――――――――――――――――――
+	
+	move( RAGNA, 0,		WALK1,31,384,0,	0)
+	move( PARTNER, 0,	WALK1,-84,670,0,0)
+	
+	wait_move(PARTNER)
+
+
+//　　艾雯にＰＡエモーション。
+//　　立ち止まる。
+
+	EMO(PARTNER,EMO_PA)
+	wait(30)
+	KAO(PARTNER,"2","B","B")
+	MES(PARTNER,"唔……",0)
+	MES_close(PARTNER)
+
+//　　やや苦しそうに瞑目し、胸を押さえるような素振り。
+	MOT(PARTNER,150,15)
+	KAO(PARTNER,"2","3","B")
+	MES(PARTNER,"咳……咳咳……",0)
+	MES_close(PARTNER)
+
+//　　拉古那、？エモーションで振り返る。
+	EMO(RAGNA,EMO_HATENA)
+	rot_chr(RAGNA,60,PARTNER)
+	wait(30)
+	
+	
+	KAO(RAGNA,"12321Z4","1","1")
+	MES(RAGNA,"公主？　怎么了……？",0)
+	KAO(RAGNA,"12321Z4","1","1")
+	MES(RAGNA,"难道是\n哪里不舒服吗？",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MOT(PARTNER,2,15)
+	rot_chr(PARTNER,60,RAGNA)
+	KAO(PARTNER,"12321","B","B")
+	MES(PARTNER,"不，不是……",0)
+	KAO(PARTNER,"12321Z6","B","B")
+	MES(PARTNER,"果然我跟教会之类的地方\n合不来啊。",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	KAO(RAGNA,"12321Z3","1","1")
+	MES(RAGNA,"啊，是这样吗……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	KAO(PARTNER,"12321Z3","B","B")
+	MES(PARTNER,"唔，虽然我是第一次来……",0)
+	MOT(PARTNER,150,15)
+	KAO(PARTNER,"12321Z6","B","B")
+	MES(PARTNER,"咳咳……\n我等暗之女神埃斯比纳的眷属，\n与光之女神阿普利埃斯八字相克。",0)
+	MES_close(PARTNER)
+
+//　　艾雯、きょろきょろ。
+	look(PARTNER,"Bone_Head",0,		0,1,0,			0,30,0)
+	wait(20)
+	look(PARTNER,"Bone_Head",0,		0,1,0,			0,-30,0)
+	wait(40)
+	look(PARTNER,"Bone_Head",0,		0,1,0,			0,0,0)
+	KAO(PARTNER,"12321Z6","B","B")
+	MES(PARTNER,"这个教会是供奉\n阿普利埃斯的吧。\n……怎么也止不住咳嗽……",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	KAO(RAGNA,"12321Z2","1","1")
+	MES(RAGNA,"是，是吗……",0)
+	MES_close(RAGNA)
+
+//　　拉古那にＰＡエモーション。脇を見る。
+	EMO(RAGNA,EMO_PA)
+	KAO(RAGNA,"B","B","B")
+	MOT(RAGNA,51,15)
+	wait(30)
+	
+	KAO(RAGNA,"12321Z3","B","B")
+	MES(RAGNA,"不对，这个味道是……",0)
+	MES_close(RAGNA)
+	
+	chr_rename(ISABELLA,"声")
+
+//	name("声")
+	MES_pos(ISABELLA,"W9呼……",0,120,100,0,0)
+	wait_key(0)
+	MES_pos(ISABELLA,"W9哦呀呀，有可疑的人\n闯进来了的样子呢。",0,120,100,0,0)
+	wait_key(0)
+	MES_close(ISABELLA)
+	wait_MES(ISABELLA)
+
+	MOT(PARTNER,2,15)
+	KAO(RAGNA,"1","1","1")
+	KAO(PARTNER,"1","1","1")
+
+//　　カメラをシスター的方へ向ける。
+	CAM_move(-9,316,135,40,0)
+	CAM(-250,40,135,30,166,40,0)
+	wait_CAM_move()
+	
+//　　拉古那たち、シスターに向く。
+	rot_chr(RAGNA,60,ISABELLA)
+	rot_chr(PARTNER,60,ISABELLA)
+	
+//　　シスター、おもむろに振り返る。
+//　　（タバコをくわえていない版）
+	wait(15)
+	rot(ISABELLA,30,0)
+	wait(15)
+
+	
+	chr_rename(ISABELLA,"伊萨贝拉")
+
+//	name("伊萨贝拉")
+	KAO(ISABELLA,"12321Z6","1","1")
+	MES(ISABELLA,"只是走进教会就身体不舒服了？\n看起来，你相当的不虔诚嘛。",0)
+	KAO(ISABELLA,"12321Z6","1","1")
+	MES(ISABELLA,"虽然不知道你是来干什么的，\n不过忏悔我还是会听听的。",0)
+	KAO(ISABELLA,"12321Z2","1","1")
+	MES(ISABELLA,"１次５００芬尼。",0)
+	MES_close(ISABELLA)
+	wait_MES(ISABELLA)
+
+	cross_fade(30)
+
+	CAM_move(-29,-404,155,0,0)
+	CAM(-90,52,155,28,121,0,0)
+	wait_CAM_move()
+	wait_fade()
+
+	move( PARTNER, 0,	WALK1,-76,550,0,0)
+	move( ISABELLA, 0,	WALK1,4,169,1,0)
+	wait(15)
+
+//	name2(RAGNA)
+	KAO(RAGNA,"12321Z6","1","1")
+//	MES(RAGNA,"不，不是……我们\n没什么事……",0)
+//	MES(RAGNA,"（突，突然就说什么忏悔……\n  奇妙地有迫力的修女啊……）",0)
+	MES(RAGNA,"不，不是……\n我们不是来忏悔的。",0)
+	MES(RAGNA,"（话说，忏悔\n  是不用收钱的吧……）",0)
+	MES_close(RAGNA)
+	
+	MOT(ISABELLA,52,15)
+
+	KAO(PARTNER,"12321Z5","1","1")
+//	MES(PARTNER,"うむ、悪いが人的子に\n話すような悔恨もない的でな。",0)
+	MES(PARTNER,"呵，真不凑巧，我没有\n能和人类诉说的悔恨。",0)
+	MES_close(PARTNER)
+
+//	name("伊萨贝拉")
+	KAO(ISABELLA,"12321Z2","1","1")
+	MES(ISABELLA,"哦，是吗。",0)
+	MES_close(ISABELLA)
+	
+//	MES(ISABELLA,"C4◆タバコ出現",0)
+//　　シスター、右手を口に持っていき、タバコを吸う。
+//　　２人的顔にけむりを吐きかける。
+
+//	name("伊萨贝拉")
+	F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+	MOT(ISABELLA,68,15)
+	wait(60)
+	MOT(ISABELLA,52,15)
+
+//　　拉古那たちに激しい！エモーション。
+	EMO(RAGNA,EMO_TOGEBIKKURI)
+	EMO(PARTNER,EMO_TOGEBIKKURI)
+	wait(15)
+	F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+	wait(15)
+	
+//　　２人して苦しむモーションをし、横を向く。
+//　　以下的ポップアップは同時にオート表示＆消去。
+
+	rot(RAGNA,60,230)
+	rot(PARTNER,60,100)
+	
+	MOT(RAGNA,150,15)
+	MOT(PARTNER,150,15)
+	MES_pos(RAGNA,"咳，咳咳……",0,0,0,0,0)
+	KAO(PARTNER,"2","5","B")
+	MES_pos(PARTNER,"W5咳咳，咳咳……",0,0,0,0,0)
+
+	wait(50)
+	MES_close(PARTNER)
+	MES_close(RAGNA)
+
+//　　以下はまだ咳き込みながら。
+	look_chr( PARTNER, ISABELLA,"Bone_Head")
+	KAO(PARTNER,"12321Z2","B","B")
+	MES(PARTNER,"你，你干什么啊……",0)
+	MES_close(PARTNER)
+
+	look_chr( RAGNA, ISABELLA,"Bone_Head")
+//	name2(RAGNA)
+	MES(RAGNA,"（话说……\n  修，修女吸烟……？）",0)
+	MES(RAGNA,"（原来刚才公主的咳嗽，\n  这家伙就是元凶吗？）",0)
+	MES_close(RAGNA)
+
+	KAO(PARTNER,"12321Z7","B","B")
+	MES(PARTNER,"（唔、嗯……阿普利埃斯吗\n  原因ではなかったようだな……）",0)
+	MES_close(PARTNER)
+
+//	name("伊萨贝拉")
+	KAO(ISABELLA,"12321Z6","1","1")
+	MES(ISABELLA,"没事的话\n就赶紧走吧。",0)
+	KAO(ISABELLA,"12321Z2","1","1")
+	MES(ISABELLA,"真碍眼。",0)
+	MES_close(ISABELLA)
+
+//　　艾雯にムキエモーション。
+	EMO(PARTNER,EMO_AOSUZI)
+	wait(30)
+	
+	look_off(RAGNA)
+	look_off(PARTNER)
+
+	rot_chr(RAGNA,30,ISABELLA)
+	rot_chr(PARTNER,30,ISABELLA)
+	MOT(RAGNA,2,15)
+	MOT(PARTNER,2,15)
+
+	KAO(PARTNER,"12321Z4","1","1")
+//	MES(PARTNER,"い、言われずともそ的つもりだ。",0)
+	MES(PARTNER,"不，不用你说！",0)
+	KAO(PARTNER,"12321Z5","1","1")
+//	MES(PARTNER,"全く、シスターとは酷い連中だな……",0)
+	MES(PARTNER,"真是的，怎么会有\n这么无礼的修女……",0)
+	MES_close(PARTNER)
+
+//　　イベント終了。
+//　　以後、シスター的通常モーションは堂々とタバコを吸うも的になる。
+
+//――――――――――――――――――――――――――
+//	イベント終了処理
+//――――――――――――――――――――――――――
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	chr_pos(RAGNA,	76,954,1,180,2)
+	chr_pos(PARTNER,-86,1066,0,180,2)
+	chr_pos(ISABELLA,0,-368,0,180,52)
+	
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(ISABELLA, "1", "1", "1")	
+
+	F_set_chr(ISABELLA,CF_NO_MOVE)
+	
+	//★伊萨贝拉に会ったことがある
+	F_set(FT_01_IsabellaEnc)
+	
+	//★伊萨贝拉
+	F_set_note(ISABELLA,-1)
+	
+	EV_end()
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+//	プレイヤー操作許可
+//――――――――――――――――――――――――――
+
+
+}
+
+//──────────────────────────────
+//▼小咪·哈其·修克拉	フリームーブ
+//──────────────────────────────
+FREEMOVE_CAT_A
+{
+	move( CAT_A, 25,	WALK1,	500,500,0,	200)
+	wait_move( CAT_A )
+	wait(50)
+	loop
+}
+FREEMOVE_CAT_B
+{
+	move( CAT_B, 25,	WALK1,	500,500,0,	200)
+	wait_move( CAT_B )
+	wait(50)
+	loop
+}
+FREEMOVE_CAT_C
+{
+	move( CAT_C, 25,	WALK1,	500,500,0,	200)
+	wait_move( CAT_C )
+	wait(50)
+	loop
+}
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+
+#EndScriptTable
+//====================================================================
+

@@ -1,0 +1,1434 @@
+//====================================================================
+//ステージトラップスクリプト
+//[12099][神殿－ボスイベント]
+//====================================================================
+
+#ScriptTable
+
+#DYGALD 	1
+#BOSS 		2
+#EVENT_RAGNA 	3
+#ALWEN	 		4
+#EFFECT			5
+#EFFECT2		6
+#EFFECT3		7
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//環境SE
+	SE(59,0)//湖
+
+//■地形
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段．扉
+	set_chr( 90,990,	-1,-1,	   0, 650,170,		180,  0201, 6,"K1_12039;")	//①エントリ ボス終
+
+//■スイッチ．看板
+
+//■宝箱
+//	set_chr( 55,561,	 2, 2,  -450,   0,  0,		  2,   270, 5,"I_MG02;")	//①宝箱（上）
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_1_13_Kill")
+	}
+	else
+	if(F1_02_EndPrologue && !F1_22_EndFirst)
+	{
+	//１章
+		//ＧＦ『★大ボス②【エフェメルガ】を倒し、水魔法を入手した』立ってない
+		if(!F1_21_KillBoss2)
+		{
+			//▼ダンジョン最奧～大ボスとの戦い
+			EV("EV_1_12_Battle")
+		}
+	}
+
+//■場面固有設定
+//	map_color(100,100,100,0);//R,G,B, time 100%
+//	map_spotbmp(25);//100%
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼ダンジョン最奧～大ボスとの戦い
+//──────────────────────────────
+//　　ボスマップに入ったところで以下のイベント。
+//　　遠景でスクロールしながら見晴らしの良さなどをアピール。
+//　　最後に神殿内部からラグナたちが出てくるのを見せる。
+EV_1_12_Battle
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,BLACK)
+	wait_fade()
+
+	//イベント用キャラ配置
+	set_chr( DYGALD,	1022,-1,-1,0,-9300,1400,	2,	0,	0,"")	//ダイガルド
+	set_chr( BOSS,		402,-1,-1,0,-7622,330,	2,	0,	0,"")	//水ありじごくボス
+	F_set_chr(DYGALD,CF_NO_HEIGHT)
+	F_set_chr(DYGALD,CF_NO_ZIMEN)
+	F_set_chr(BOSS,CF_NO_HEIGHT)
+	F_set_chr(BOSS,CF_NO_ZIMEN)
+	color(DYGALD,-1)
+	color(BOSS,-1)
+
+	//キャラ再配置
+	chr_pos(RAGNA,		-90,330,170,130,2)
+	chr_pos(PARTNER, 	 90,280,170,210,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, -90,330,170, 2,130,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 90,280,170, 2,210,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"B","1","2")//
+	KAO(ALWEN,"B","1","2")//
+
+	//モーション定義
+	MOT_SET(ALWEN,150,-1,4560,4585,-1,-1)//構え
+	MOT_SET(EVENT_RAGNA,150,-1,3010,3029,-1,-1)	//構え
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+
+	//カメラ初期位置
+	CAM_move(-100,-600,170,0,0)
+	CAM(190,100,170,34,340,0,0)
+
+	//フェードイン
+	MOT(EVENT_RAGNA,51,0)//キョロキョロ
+	fade_in(0,60,BLACK)
+	wait_fade()
+
+	CAM_move(0,5680,470,360,0)
+	CAM(430,240,470,48,216,360,0)
+
+	wait(30)
+	rot(EVENT_RAGNA,30,180)
+	wait(15)
+	move( EVENT_RAGNA, 0, 9,-90,-2000,170,0)
+
+	rot(ALWEN,30,180)
+	wait(15)
+	move( ALWEN, 0, 9,90,-2000,170,0)
+
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+
+	cross_fade(30)
+	CAM_move(0,4590,490,0,0)
+	CAM(70,110,490,36,180,0,0)
+	chr_pos(EVENT_RAGNA,		-90,-3760,170,180,2)
+	chr_pos(ALWEN, 	90,-3760,170,180,2)
+	move( EVENT_RAGNA, 0, 9,-110,-6540,330,0)
+	wait(20)
+	move( ALWEN, 0, 9,110,-6500,330,0)
+	wait(40)
+	CAM_move(0,6650,490,360,0)
+	CAM(70,70,0,36,212,360,0)
+
+	wait_move(EVENT_RAGNA)
+	wait(15)
+	rot(EVENT_RAGNA,30,140)
+	MOT(EVENT_RAGNA,51,0)//キョロキョロ
+
+	wait_move(ALWEN)
+	wait(15)
+	rot(ALWEN,30,220)
+
+	MES(EVENT_RAGNA,"ふう……ここが終点かよ。",0)
+	MES(EVENT_RAGNA,"綺麗な場所だが\n特に何にもなさそうだな？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","123","2")//
+	MES(ALWEN,"いや……間違いない。",0)
+	KAO(ALWEN,"B232BZ5","3","2")//
+	MES(ALWEN,"ここに来て、私の魔力の気配が\n途端に強くなった。",0)
+	MES_close(ALWEN)
+
+	wait_MOT(EVENT_RAGNA,51)
+//	rot_chr(EVENT_RAGNA,30,ALWEN)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"……そうなのか？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","321","2")//
+	MES(ALWEN,"うむ……しかし解せぬ。",0)
+	KAO(ALWEN,"B232BZ5","1","2")//
+	MES(ALWEN,"どうしてこのように微妙な\n気配の感じ方をするのか……",0)
+	MES_close(ALWEN)
+
+//　　アルウェンの頭に！マーク。
+//　　カメラを水面の方に切り替える動き。
+	stop_BGM(90)
+	EMO(ALWEN,EMO_BIKKURI)
+	KAO(ALWEN,"B","12321D","6")//
+	wait(30)
+
+	CAM_move(0,6980,570,30,0)
+	CAM(790,86,570,46,212,30,0)
+	rot(ALWEN,30,180)
+	wait_CAM_move()
+	wait_CAM()
+
+	KAO(ALWEN,"B232B2Z2","12321D","2")//
+	MES(ALWEN,"まさか、水の下か！？",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	chr_rename(DYGALD,"男の声")//
+//	name("男の声（色換え）")
+	MES_pos(DYGALD,"C4W9……フフ。\nようやく気付いたか。",0,380,140,0,0)
+	wait_key(0)
+	MES_close(DYGALD)
+	wait_MES(DYGALD)
+
+//　　ラグナとアルウェンの頭に！マーク。
+//　　そのまま武器を構えて臨戦態勢となる。
+	KAO(EVENT_RAGNA,"B","12321D","2")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(ALWEN,"B","12321D","2")//
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(30)
+
+	EV("EV_move01")
+	EV("EV_move02")
+
+	cross_fade(30)
+	CAM_move(0,6510,460,0,0)
+	CAM(-210,50,460,24,114,0,0)
+	CAM(-210,44,460,24,114,300,0)
+	look_del(EVENT_RAGNA)
+//	look(EVENT_RAGNA,"Bone_Head",0,0,0,8,0,0,8)
+	wait(30)
+
+//	MOT(EVENT_RAGNA,51,0)//キョロキョロ
+	look(EVENT_RAGNA,"Bone_Head",0,0,2,1,0,-26,8)
+	wait(20)
+	look(EVENT_RAGNA,"Bone_Head",0,0,2,1,0,26,8)
+	wait(35)
+	KAO(EVENT_RAGNA,"C232CZ2","1233321","3")//
+	MES(EVENT_RAGNA,"どこだ……！？",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	wait(30)
+	cross_fade(15)
+	CAM_move(0,6510,470,0,0)
+	CAM(-410,50,470,24,242,0,0)
+	CAM(-410,44,470,24,242,300,0)
+	wait(30)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"C232CZ4","23332","3")//
+	MES(ALWEN,"……小賢しい。\n待ち伏せというわけか。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+	wait(30)
+
+//	name("男の声（色換え）")
+	MES_pos(DYGALD,"C4W9ハハ……\n罠にかけたつもりはない。",0,440,100,0,0)
+	wait_key(0)
+	MES_close(DYGALD)
+	wait_MES(DYGALD)
+
+	MES_pos(DYGALD,"C4W9ただ、貴女がたの腕前が\nどの程度か見たかったまで。",0,160,120,0,0)
+	wait_key(0)
+	MES_close(DYGALD)
+	wait_MES(DYGALD)
+
+//　　ここでゴポゴポという音と共に水面があわ立つ。
+	CAM_move(0,7622,450,60,0)
+	CAM(1030,62,450,40,204,60,0)
+	wait_CAM_move()
+	wait_CAM()
+	look(EVENT_RAGNA,"Bone_Head",0,0,26,8,0,0,0)
+	wait(30)
+
+	SE(1047,0)//水面ゴポゴポSE
+	EFF(6460,	0,7622,330,	0,100,-1)
+	MOT(EVENT_RAGNA,2,15)
+	rot_chr(EVENT_RAGNA,30,BOSS)
+	MOT(ALWEN,2,15)
+	rot_chr(ALWEN,30,BOSS)
+	wait(30)
+
+//	name2(EVENT_RAGNA)
+	MES_pos(EVENT_RAGNA,"P1W9なにッ！？",0,120,340,0,0)
+//	wait_key(0)
+	wait(40)
+	MES_close(EVENT_RAGNA)
+	wait(15)
+
+//	name2(ALWEN)
+	MES_pos(ALWEN,"W9やはりか……！",0,160,380,0,0)
+//	wait_key(0)
+	wait(40)
+	MES_close(ALWEN)
+	wait(30)
+
+	BGM(36)
+//　　次の瞬間、巨大な蒼いアリジゴクが水面に出現する。
+//　　その様子を見て思わず後ずさるラグナたち。
+	CAM_quake("2837L")
+	SE(1039,0)
+	CAM_move(0,7622,560,20,0)
+	CAM(1430,82,560,40,196,20,0)
+	chr_pos(ALWEN, 110,-6200,330,175,2)
+	chr_pos(EVENT_RAGNA, -110,-6340,330,180,2)
+
+	color(BOSS,5)
+	MOT(BOSS,65,0)
+	wait(45)
+	CAM_quake("")
+	CAM_move(0,7622,780,120,0)
+	CAM(-530,106,780,40,180,120,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(30)
+	CAM_move(0,6770,550,0,0)
+	CAM(-210,92,550,40,208,0,0)
+	CAM_move(0,6770,550,600,0)
+	CAM(-250,86,550,40,204,600,0)
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,1,0,0,10)
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,10)
+	move( EVENT_RAGNA, 0, 6,-110,-6240,330,0)
+
+	wait_move(EVENT_RAGNA)
+	EV("EV_BUKI_SE")//構えSE処理
+	MOT(EVENT_RAGNA,150,15)
+	wait(10)
+	MOT(ALWEN,150,0)
+	wait(5)
+	MES(EVENT_RAGNA,"こいつは……！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"湖の主《エフェメルガ》！",0)
+	MES(ALWEN,"おのれ、またしても\n私の魔力を与えおったか！",0)
+	MES_close(ALWEN)
+
+//	name("男の声（色換え）")
+//	MES_pos(DYGALD,"C4W9フフフ……\nそれでは見せてもらうぞ。",0,320,240,0,0)
+	MES_pos(DYGALD,"C4W9フフフ……\nそれでは見せてもらうぞ。",0,480,300,0,0)
+	wait_key(0)
+	MES_close(DYGALD)
+	wait(30)
+	CAM_quake("37")
+//	MES_pos(DYGALD,"C4W9P1偉大なる真祖の姫と\nその契約の戦士の実力をな！",0,320,240,0,0)
+	MES_pos(DYGALD,"C4W9P1偉大なる真祖の姫と\nその契約の戦士の実力をな！",0,480,300,0,0)
+	wait_key(0)
+	MES_close(DYGALD)
+
+//　　アリジゴク、雄たけびを上げて威嚇する動作。
+//　　そのまま戦闘時のカメラに移行して、ボス戦開始。
+	MOT(BOSS,42,0)
+	wait(20)
+	SE(1046,0)
+	wait(90)
+//	wait(110)
+	CAM_quake("2828")
+	SE(421,0)//叩きつけSE
+	SE(1039,0)//叩きつけSE
+	wait(10)
+	fade_in(100,30,0)
+	wait(5)
+	CAM_quake("2828")
+	SE(421,0)//叩きつけSE
+	wait_fade()
+
+	wait_MES(DYGALD)
+	chr_rename(DYGALD,"ダイガルド")//
+	delete(DYGALD)
+	delete(BOSS)
+	
+	//★大ボス②エフェメルガとの戦闘開始：ラグナメモ用
+	F_set(F1_37_BattleBoss2)
+
+	CAM_return( 0 )
+//	wait(30)
+
+//ボス戦闘マップへ
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(12098)
+
+//	EV_end()
+}
+
+EV_move01
+{
+	KAO(EVENT_RAGNA,"B","12321","3")//
+	look_off(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,90)
+	move( EVENT_RAGNA, 0, 10,-50,-6500,330,0)
+	wait_move(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,150,15)
+	wait(15)
+	SE(1014,0)
+}
+
+EV_move02
+{
+	KAO(ALWEN,"B","1232","3")//
+	rot(ALWEN,30,270)
+	move( ALWEN, 0, 10,50,-6500,330,0)
+	wait_move(ALWEN)
+	MOT(ALWEN,150,15)
+	wait(15)
+	SE(1015,0)
+	wait(17)
+	SE(1033,0)
+}
+
+EV_BUKI_SE
+{
+	wait(13)
+	SE(1014,0)
+	wait(7)
+	SE(1015,0)
+	wait(17)
+	SE(1033,0)
+}
+
+//──────────────────────────────
+//▼大ボス戦②【エフェメルガ】戦後～
+//──────────────────────────────
+//　　戦闘終了後、キャラ再配置してイベント再開。
+//　　水の魔力のエフェクトがアルウェンに吸い込まれてゆく。
+EV_1_13_Kill
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,BLACK)
+	wait_fade()
+	wait(1)
+	set_hp(PLAYER1,100)//全快
+
+	//キャラ再配置
+	chr_pos(RAGNA,		-170,-5700,330,180,2)
+	chr_pos(PARTNER, 	0,-5840,330,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, -170,-5700,330, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 0,-5840,330, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"B","1","2")//
+	KAO(ALWEN,"B","1","2")//
+
+	//イベント用キャラ配置
+	set_chr( DYGALD,	 1022,-1,-1,0,-9300,1400,	2,	0,	0,"")	//ダイガルド
+	color(DYGALD,-1)
+	F_set_chr(DYGALD,CF_NO_HEIGHT)
+	F_set_chr(DYGALD,CF_NO_ZIMEN)
+	F_set_chr(DYGALD,CF_NO_CLIP)
+	F_set_chr(DYGALD,CF_NO_CLIP2)
+	F_set_chr(DYGALD,CF_NO_CSP)
+
+	set_chr( EFFECT,	749,-1,-1,0,-6240,480,	44,0,0,"")
+	set_chr( EFFECT2,	749,-1,-1,-170,-6000,930,	0, 0,	0,"")
+	set_chr( EFFECT3,	749,-1,-1,0,-5790,430,	0, 0,	0,"")
+	F_set_chr(EFFECT,CF_NO_HEIGHT)
+	F_set_chr(EFFECT,CF_NO_ZIMEN)
+	F_set_chr(EFFECT,CF_NO_CLIP)
+	F_set_chr(EFFECT,CF_NO_CLIP2)
+	F_set_chr(EFFECT,CF_NO_CSP)
+	F_set_chr(EFFECT2,CF_NO_HEIGHT)
+	F_set_chr(EFFECT2,CF_NO_ZIMEN)
+	F_set_chr(EFFECT2,CF_NO_CLIP)
+	F_set_chr(EFFECT2,CF_NO_CLIP2)
+	F_set_chr(EFFECT2,CF_NO_CSP)
+	F_set_chr(EFFECT3,CF_NO_HEIGHT)
+	F_set_chr(EFFECT3,CF_NO_ZIMEN)
+	F_set_chr(EFFECT3,CF_NO_CLIP)
+	F_set_chr(EFFECT3,CF_NO_CLIP2)
+	F_set_chr(EFFECT3,CF_NO_CSP)
+	color(EFFECT,-1)
+	color(EFFECT2,-1)
+	color(EFFECT3,-1)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+
+	//モーション定義
+	MOT_SET(EVENT_RAGNA,150,-1,521,521,-1,-1)//
+	MOT_SET(EVENT_RAGNA,151,-1,3010,3029,-1,-1)	//構え
+	MOT_SET(ALWEN,150,-1,454,454,-1,-1)//
+	MOT_SET(ALWEN,151,-1,4560,4585,-1,-1)//構え
+	MOT_SET(ALWEN,152,-1,4585,4560,-1,-1)//構え
+	MOT_SET(DYGALD,150,-1,837,837,-1,-1)	//しゃがみ
+	MOT_SET(DYGALD,151,-1,1195,1202,-1,-1)//力を溜め
+	MOT_SET(DYGALD,152,-1,965,965,-1,-1)//
+	MOT_SET(DYGALD,153,-1,965,974,-1,-1)//
+	MOT_SET(DYGALD,154,-1,974,984,2,15)//
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	look( DYGALD,"Bone_Head",0,0,0,30,0,0,-30 )
+
+	//カメラ初期位置
+	CAM_reset()
+	CAM_move(0,5970,440,0,0)
+	CAM(90,66,440,25,24,0,0)
+	wait(30)
+
+	//フェードイン
+	SE(1041,0)//アルウェンの魔力
+	fade_in(0,30,BLACK)
+	wait_fade()
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n水の魔力のエフェクトが\nアルウェンに吸い込まれてゆく。",0)
+//	MES_close(EVENT_RAGNA)
+
+	wait(90)
+	CAM_move(0,5840,480,60,0)
+	CAM(530,66,480,25,24,60,0)
+
+	IK(ALWEN,"Bone_LeftWing1",0)
+	IK(ALWEN,"Bone_RightWing1",0)
+	KAO(ALWEN,"1","123","2")//
+	MOT(ALWEN,59,15)
+	MOT(EFFECT,0,0)
+	F_reset_chr(EFFECT3,CF_NO_CSP)
+	SE(1042,0)//魔力が飛んでいくSE
+	EFF_chr(6645, EFFECT, 0,100, EFFECT3, "Bone_Head" )
+	EV("EV_1041_fadeout")//魔力SEフェードアウト
+	wait_CAM_move()
+	wait_CAM()
+	CAM(530,46,480,25,44,180,0)
+	wait(120)
+	SE(1043,0)//リフレーッシュ！
+	EFF_chr(6630,ALWEN,0,100,-1,"charbase0")
+	wait(60)
+
+//　　ジングルを流しながら以下のシステムメッセージ。
+//	name("システムメッセージ（色換え．表示しない）")
+//	MES(EVENT_RAGNA,"C3アルウェンに水の魔力が戻った。",0)
+//	MES(EVENT_RAGNA,"C3アルウェンは\n水の魔法が使えるようになった。",0)
+//	MES_close(EVENT_RAGNA)
+
+//水の魔法取得
+	fade_in(30,10,BLACK)		//少し暗転
+	get_item(10,1,0)
+	wait(70)
+	wait_key(0)
+	fade_in(0,10,BLACK)			//暗転解除
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+	IK(ALWEN,"Bone_LeftWing1",1)
+	IK(ALWEN,"Bone_RightWing1",1)
+	F_set_chr(EFFECT3,CF_NO_CSP)
+	MOT(ALWEN,2,15)
+	look( ALWEN,"Bone_Head",0,0,0,1,0,0,-10 )
+//	wait(15)
+
+	cross_fade(15)
+	CAM_move(-100,5750,480,0,0)
+	CAM(-110,64,480,22,104,0,0)
+	wait(30)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"C","3","5")//
+	MES(ALWEN,"くっ……",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","12321D","4")//
+	MES(EVENT_RAGNA,"大丈夫か、姫さん！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ2","32A","4")//
+	MES(ALWEN,"ああ……平気だ。",0)
+	KAO(ALWEN,"B232BZ3","A23","4")//
+	MES(ALWEN,"しかし……\nさすがに少し堪えたな……",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"L","1233321","2")//
+	MES(EVENT_RAGNA,"クッ……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ、アンカーギアを構えて辺りを見回す。
+//	move( EVENT_RAGNA, 0, WALK1,-170,-5820,330,0)
+//	wait_move(EVENT_RAGNA)
+	look_off(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,151,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ4","1233321","2")//
+	MES(EVENT_RAGNA,"さっきの野郎！\n高みの見物は終わりだ！",0)
+	KAO(EVENT_RAGNA,"B232BGZ2","1","2")//
+	MES(EVENT_RAGNA,"とっとと出てきやがれ！",0)
+	MES_close(EVENT_RAGNA)
+
+	chr_rename(DYGALD,"男の声")//
+//	name("男の声")
+	KAO(DYGALD,"-","1","1")//
+	MES_pos(DYGALD,"W9C4フッ……\nそう吠えるな。",0,120,120,0,0)
+	wait_key(0)
+	MES_close(DYGALD)
+
+//　　ラグナの頭に！マーク。
+//　　カメラ、斜め上の方にスクロールして、
+//　　石柱の一つの上に乗ったダイガルドを見せる。
+	color(DYGALD,1)
+
+//	MES(EVENT_RAGNA,"！マーク。",0)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(EVENT_RAGNA,"B","12321D","2")//
+	wait(30)
+
+	BGM(49)
+	CAM_move(0,9060,1460,90,0)
+	CAM(-850,60,1460,34,154,90,0)
+	wait_CAM_move()
+	wait_CAM()
+	look_off(EVENT_RAGNA)
+	look_del(EVENT_RAGNA)
+	chr_pos(EVENT_RAGNA,-170,-5820,330,190,151)
+	MOT(ALWEN,151,0)
+	look( ALWEN,"Bone_Head",0,0,0,10,0,0,0 )
+
+	MES_pos(EVENT_RAGNA,"W9なに……！？",0,420,380,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES_pos(ALWEN,"W9人狼（ヴェアウルフ）か……",0,460,340,0,0)
+	wait_key(0)
+	MES_close(ALWEN)
+
+	chr_rename(DYGALD,"人狼")//
+//	name("人狼")
+	KAO(DYGALD,"-","123","1")//
+	MES(DYGALD,"フフ……",0)
+	MES_close(DYGALD)
+	wait_MES(DYGALD)
+
+//　　ダイガルド、そのまま素早く跳躍して
+//　　アルウェンたちの数メートル先にズシンと着地する。
+	MOT(DYGALD,150,12)
+	wait(15)
+	CAM_move(0,6660,510,60,0)
+	CAM(390,52,510,34,154,60,0)
+	EFF(23215,	0,9300,1420,	0,100,0)
+	EFF(23215,	0,9300,1420,	0,100,0)
+	EFF(24470,	0,9300,1420,	0,100,0)
+	EFF(24470,	0,9300,1420,	0,100,0)
+	look( DYGALD,"Bone_Head",0,0,0,2,0,0,-20 )
+	MOT(DYGALD,98,2)
+	jump(DYGALD,0,60,0,-6700,330,1000)
+	SE(1017,DYGALD)
+	SE(1048,DYGALD)
+	wait(50)
+	MOT(DYGALD,6,10)
+	wait_move(DYGALD)
+	EFF(23215,	0,6700,350,	0,100,0)
+	EFF(23215,	0,6700,350,	0,100,0)
+	EFF(24470,	0,6700,350,	0,100,0)
+	EFF(24470,	0,6700,350,	0,100,0)
+	F_reset_chr(DYGALD,CF_NO_HEIGHT)
+	F_reset_chr(DYGALD,CF_NO_ZIMEN)
+	CAM_quake("282828")
+	SE(421,0)
+	wait(30)
+	MOT(DYGALD,2,15)
+	wait(15)
+
+	cross_fade(30)
+	CAM_move(40,6760,530,0,0)
+	CAM(-610,46,530,40,158,0,0)
+	CAM_move(-40,6760,510,300,0)
+	CAM(-410,44,510,40,202,300,0)
+	wait(60)
+
+//	name("人狼")
+	KAO(DYGALD,"-","321","2")//
+//	MES(DYGALD,"W1──我が名はダイガルド。",0)
+	MES_pos(DYGALD,"W1──我が名はダイガルド",0,320,220,0,0)
+//	wait(60)
+	wait_key(0)
+	MES_close(DYGALD)
+	wait_MES(DYGALD)
+	wait(15)
+	chr_rename(DYGALD,"ダイガルド")//
+//	MES(DYGALD,"W1大いなるゼオンの息子にして\n猛き人狼族の戦士だ。",0)
+	MES_pos(DYGALD,"W1大いなるゼオンの息子にして\n猛き人狼族の戦士だ。",0,320,220,0,0)
+//	wait(80)
+	wait_key(0)
+	MES_close(DYGALD)
+	wait_MES(DYGALD)
+	wait(15)
+//	MES(DYGALD,"W1アルウェン姫におかれては\nご機嫌麗しゅう。",0)
+	MES_pos(DYGALD,"W1アルウェン姫におかれては\nご機嫌麗しゅう。",0,320,220,0,0)
+//	wait(80)
+	wait_key(0)
+	MES_close(DYGALD)
+	wait_MES(DYGALD)
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(0,6020,530,0,0)
+	CAM(-170,54,530,32,202,0,0)
+	CAM_move(0,6020,530,600,0)
+	CAM(-370,58,530,32,212,600,0)
+	KAO(EVENT_RAGNA,"B","1","2")//
+	KAO(ALWEN,"B","1","2")//
+	wait(30)
+
+//	name2(ALWEN)
+	MES(ALWEN,"フン……\n城を奪った者の一人か。",0)
+	MES(ALWEN,"古の盟約も地に堕ちたものだ。",0)
+	MES(ALWEN,"まさかこの身が\n狼の戦士に狙われるとはな。",0)
+	MES_close(ALWEN)
+
+//	name2(DYGALD)
+	KAO(DYGALD,"-","123","2")//
+	MES(DYGALD,"確かに、我ら人狼族は\n古の大戦で真祖の方々に協力した。",0)
+	KAO(DYGALD,"-","3","2")//
+	MES(DYGALD,"だが、それも過去の話だ。",0)
+	KAO(DYGALD,"-","32","2")//
+	MES(DYGALD,"かの金色の魔王に反旗を翻した\n貴女のお父上が、今は亡きようにな。",0)
+	MES_close(DYGALD)
+
+//　　アルウェンの頭に！マーク。
+//	MES(ALWEN,"！マーク。",0)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(30)
+	MES(ALWEN,"………貴様…………",0)
+	MES_close(ALWEN)
+
+//	name2(DYGALD)
+	KAO(DYGALD,"-","23","5")//
+	MES(DYGALD,"しかし、名高きギスカール公の\n跡継ぎというから期待したが……",0)
+	KAO(DYGALD,"-","3","5")//
+	MES(DYGALD,"力を奪われたとはいえ\nあまりに不甲斐なき戦いぶりだ。",0)
+	KAO(DYGALD,"-","3QP","1")//
+	MES(DYGALD,"ふむ、まだほんの幼子であったか。",0)
+	MES_close(DYGALD)
+
+//	name2(ALWEN)
+	MES(ALWEN,"なっ……！？",0)
+	MES_close(ALWEN)
+
+//	name2(DYGALD)
+	KAO(DYGALD,"-","P","1")//
+	MES(DYGALD,"クク、これでは俺が\n手を下すまでもなさそうだ。",0)
+	KAO(DYGALD,"-","P","1")//
+	MES(DYGALD,"水の魔力はそのままお返しするから\nせいぜい精進するがよかろう。",0)
+	MES_close(DYGALD)
+
+	KAO(ALWEN,"C","123","5")//
+	look( ALWEN,"Bone_Head",0,0,1,1,0,-20,-20 )
+	wait(15)
+//	name2(ALWEN)
+	MES(ALWEN,"……くっ…………",0)
+	MES_close(ALWEN)
+
+//　　アルウェン、悔しそうな表情で俯いてしまう。
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ2","1232A","4")//
+	MES(EVENT_RAGNA,"姫さん……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　ラグナ、キッとした目でダイガルドに対峙する。
+	cross_fade(15)
+	CAM_move(0,6540,510,0,0)
+	CAM(-50,44,510,32,328,0,0)
+	chr_pos(DYGALD,0,-6800,330,0,2)
+	look_off(EVENT_RAGNA)
+	look_del(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B","3","2")//
+	wait(1)
+	ResetIK(DYGALD)
+	wait(15)
+
+	move( EVENT_RAGNA, 0, WALK1,-80,-6000,330,0)
+	wait_move(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,180)
+	MOT(EVENT_RAGNA,151,15)
+	wait(10)
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,2,0,0,12)
+	wait(5)
+	KAO(EVENT_RAGNA,"B232BZ5","321","3")//
+	MES(EVENT_RAGNA,"てめぇ、さっきから聞いてりゃ、\n上から目線で偉そうに……",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1","3")//
+	MES(EVENT_RAGNA,"そんなに戦いたけりゃあ、\nこの俺が相手になってやる……",0)
+	KAO(EVENT_RAGNA,"B232BZ3","1","3")//
+	MES(EVENT_RAGNA,"とっとと構えやがれッ！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(DYGALD)
+	KAO(DYGALD,"-","PQ3","1")//
+	MES_pos(DYGALD,"W1フッ……\n主も未熟なら、戦士も未熟か。",0,460,200,0,0)
+	wait_key(0)
+	MES_close(DYGALD)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BG","1233321","3")//
+	MES(EVENT_RAGNA,"なに……！？",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　次の瞬間、ダイガルドが残像を残しながら高速移動。
+//　　まったく違う角度からラグナを一薙ぎで吹き飛ばす。
+//	move( DYGALD, 0, 30,-120,-5740,330,0)
+//	wait_move(DYGALD)
+
+	cross_fade(15)
+	CAM_move(0,6640,500,0,0)
+	CAM(-50,50,500,30,180,0,0)
+	CAM(-50,44,500,30,180,30,0)
+	KAO(ALWEN,"B","321","2")//
+	look( ALWEN,"Bone_Head",0,0,2,2,0,0,0 )
+	MOT(ALWEN,2,0)
+	MOT(DYGALD,151,10)
+//	wait(45)
+	wait(30)	//★竹微調整
+
+	EFF(6300,	0,6700,350,	0,100,0)
+	color(DYGALD,-10)
+	SE(1017,0)
+	SE(440,0)
+	wait(15)
+
+	KAO(DYGALD,"-","321","3")//
+	chr_pos(DYGALD, 	-570,-5800,330,250,2)
+//	jump(DYGALD,0,15,-570,-5800,330,0)
+	CAM_move(-220,5960,480,15,0)
+	CAM(30,64,480,30,248,15,0)
+	KAO(EVENT_RAGNA,"2","12321D","6")//
+	wait_CAM_move()
+	wait_CAM()
+
+	VOICE(354,0)	//★ボイス入力演出
+	SE(792,0)
+	SE(353,0)
+	SE(1044,0)
+	EFF(6300,	-570,5800,350,	0,100,0)
+	MOT(DYGALD,152,0)
+	color(DYGALD,2)
+	jump( DYGALD, 0, 6,-360,-5900,330,0)
+	wait(2)
+	MOT(DYGALD,153,0)
+	wait_move(DYGALD)
+
+	CAM_move(200,6160,480,15,0)
+	CAM(-250,60,480,36,266,15,0)
+	rot_chr(EVENT_RAGNA,30,DYGALD)
+
+	SE(1045,0)
+	CAM_quake("2828")
+	EFF(24410,	-40,6000,530,	0,150,0)
+	MOT(EVENT_RAGNA,101,15)
+	KAO(EVENT_RAGNA,"L","1234","5")//
+	jump( EVENT_RAGNA, 0, 10,480,-6260,330,150)
+	wait_move(EVENT_RAGNA)
+	EFF(23215,	480,6260,350,	0,100,0)
+	EFF(23215,	480,6260,350,	0,100,0)
+	EFF(24470,	480,6260,350,	0,100,0)
+	EFF(24470,	480,6260,350,	0,100,0)
+	CAM_quake("3737")
+
+	KAO(ALWEN,"2","12321DE","7")//
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+
+//	VOICE(009,0)	//★ボイス入力演出
+	VOICE(023,0)	//★ボイス入力演出
+	KAO(EVENT_RAGNA,"L232","4","5")//
+	MES(EVENT_RAGNA,"P1ガハッ……！？",0)
+	MES_close(EVENT_RAGNA)
+
+	wait_CAM_move()
+	wait_CAM()
+	CAM_move(200,6160,480,600,0)
+	CAM(-170,70,480,36,258,600,0)
+
+//　　仰向けに転がったラグナ、
+//　　何とか上半身までは起こすが起き上がれない。
+	MOT(DYGALD,154,0)
+	wait(5)
+	MOT(EVENT_RAGNA,150,15)
+	wait(10)
+
+	KAO(EVENT_RAGNA,"C232CZ3","32Q","5")//
+	MES(EVENT_RAGNA,"くっ……\n見えなかっただと……！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B2","D1233321D","5")//
+	MES(ALWEN,"ラグナ！",0)
+	MES_close(ALWEN)
+
+//　　アルウェン、ラグナの元に駆け寄ってくる。
+	move( ALWEN, 0, 20,520,-6140,330,0)
+	wait_move(ALWEN)
+	rot(ALWEN,30,150)
+	MOT(ALWEN,150,15)
+	wait(15)
+
+	KAO(ALWEN,"B232BZ3","1232A","4")//
+	MES(ALWEN,"大丈夫か！？\n無理をするでない……！",0)
+	look_chr( ALWEN, DYGALD ,"Bone_Head")
+	wait(15)
+	KAO(ALWEN,"B232BZ5","A","4")//
+	MES(ALWEN,"悔しいが、今の我らでは\nいささか荷が重い相手だ……！",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"C232CGZ2","Q333Q","2")//
+	MES(EVENT_RAGNA,"だ、だがよ……！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(DYGALD)
+	KAO(DYGALD,"-","123332A","1")//
+	MES(DYGALD,"フフ、格上の相手に\n挑まんとする気概は悪くない。",0)
+	KAO(DYGALD,"-","A","1")//
+	MES(DYGALD,"だが、それだけでは\n高みを目指すのは叶わぬぞ？",0)
+	MES_close(DYGALD)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"C","3","B")//
+	MES(EVENT_RAGNA,"クッ……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(DYGALD)
+	KAO(DYGALD,"-","A23","2")//
+	MES(DYGALD,"アルウェン姫。\n一つ伝言を伝えておこう。",0)
+	MES_close(DYGALD)
+	wait(15)
+	MES(DYGALD,"C2『幼子よ、そなたの抵抗は\n  あまりに儚く甲斐がない。』",0)
+	MES(DYGALD,"C2『己の無力を悟り、大人しく\n  我が大業を見届けるがいい。』",0)
+	MES_close(DYGALD)
+	wait(15)
+	KAO(DYGALD,"-","321","2")//
+	MES(DYGALD,"我が《血の主》からの伝言だ。",0)
+	MES_close(DYGALD)
+
+//　　アルウェンの頭に！マーク。
+//	MES(ALWEN,"！マーク。",0)
+	KAO(ALWEN,"B","A2321DE","7")//
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(30)
+	KAO(ALWEN,"2","E","7")//
+	MES(ALWEN,"なっ……！？",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　ダイガルド、くるりと背を向けて語りかける。
+	cross_fade(15)
+	CAM_move(-280,5940,540,0,0)
+	CAM(-250,68,540,30,92,0,0)
+	CAM(-250,78,540,30,92,600,0)
+
+//	rot(DYGALD,30,320)
+	rot(DYGALD,30,66)
+	wait(30)
+
+	KAO(DYGALD,"-","123","1")//
+	MES(DYGALD,"フフ……\nせいぜい人間どもの町で\n大人しくしているがよかろう。",0)
+	KAO(DYGALD,"-","3","1")//
+	MES(DYGALD,"それではさらばだ。",0)
+	MES_close(DYGALD)
+
+//　　ダイガルド、そのまま神殿方面へと去っていく。
+//　ジャンプで帰る
+	stop_BGM(120)
+	F_set_chr(DYGALD,CF_NO_HEIGHT)
+	F_set_chr(DYGALD,CF_NO_ZIMEN)
+	MOT(DYGALD,150,12)
+	wait(15)
+	EFF(6305,	-360,5900,430,	0,100,0)
+	EFF(23215,	-360,5900,350,	0,100,0)
+	EFF(23215,	-360,5900,350,	0,100,0)
+	EFF(24470,	-360,5900,350,	0,100,0)
+	EFF(24470,	-360,5900,350,	0,100,0)
+	MOT(DYGALD,98,2)
+	jump(DYGALD,0,90,-990,-5600,1330,1000)
+	SE(1017,0)
+	SE(1048,0)
+	color(DYGALD,-15)
+	wait(30)
+/*
+//　步きで帰る
+	look_chr( EVENT_RAGNA, DYGALD ,"Bone_Head")
+	move( DYGALD, 0, WALK1,-20,-5300,330,0)
+	wait_move(DYGALD)
+	rot(DYGALD,30,360)
+	stop_BGM(120)
+	move( DYGALD, 0, WALK1,-20,-4100,170,0)
+*/
+
+//　　それを見せながら、画面ゆっくりとフェードアウト。
+	fade_in(100,90,0)
+	EV("EV_fadeout")//環境SEフェードアウト
+	wait_fade()
+	wait_BGM()
+	wait(90)
+
+//	wait_move(DYGALD)
+
+//ＧＦ『★大ボス②【エフェメルガ】を倒し、水魔法を入手した』を立てる。
+	F_set(F1_21_KillBoss2)
+	//★アルウェン【一人暮らし】
+	F_set_note(-1,1)
+	//★ダイガルド
+	F_set_note(-22,-1)
+
+// ＢＧＭのデフォルトを変更する
+	workG(GW_DEF_BGM,SET,62)
+
+	//アルッテの町（夜)マップへ(ev00101)
+	workG(GW_ENTRY_EVENT,SET,2)
+	new_map(10101)
+
+//	EV_end()
+}
+
+//環境SEフェードアウト───────────────
+EV_fadeout
+{
+	SE_vol(59,100,0)
+	wait(1)
+	SE_vol(59,99,0)
+	wait(1)
+	SE_vol(59,98,0)
+	wait(1)
+	SE_vol(59,97,0)
+	wait(1)
+	SE_vol(59,96,0)
+	wait(1)
+	SE_vol(59,95,0)
+	wait(1)
+	SE_vol(59,94,0)
+	wait(1)
+	SE_vol(59,93,0)
+	wait(1)
+	SE_vol(59,92,0)
+	wait(1)
+	SE_vol(59,91,0)
+	wait(1)
+	SE_vol(59,90,0)
+	wait(1)
+	SE_vol(59,89,0)
+	wait(1)
+	SE_vol(59,88,0)
+	wait(1)
+	SE_vol(59,87,0)
+	wait(1)
+	SE_vol(59,86,0)
+	wait(1)
+	SE_vol(59,85,0)
+	wait(1)
+	SE_vol(59,84,0)
+	wait(1)
+	SE_vol(59,83,0)
+	wait(1)
+	SE_vol(59,82,0)
+	wait(1)
+	SE_vol(59,81,0)
+	wait(1)
+	SE_vol(59,80,0)
+	wait(1)
+	SE_vol(59,79,0)
+	wait(1)
+	SE_vol(59,78,0)
+	wait(1)
+	SE_vol(59,77,0)
+	wait(1)
+	SE_vol(59,76,0)
+	wait(1)
+	SE_vol(59,75,0)
+	wait(1)
+	SE_vol(59,74,0)
+	wait(1)
+	SE_vol(59,73,0)
+	wait(1)
+	SE_vol(59,72,0)
+	wait(1)
+	SE_vol(59,71,0)
+	wait(1)
+	SE_vol(59,70,0)
+	wait(1)
+	SE_vol(59,69,0)
+	wait(1)
+	SE_vol(59,68,0)
+	wait(1)
+	SE_vol(59,67,0)
+	wait(1)
+	SE_vol(59,66,0)
+	wait(1)
+	SE_vol(59,65,0)
+	wait(1)
+	SE_vol(59,64,0)
+	wait(1)
+	SE_vol(59,63,0)
+	wait(1)
+	SE_vol(59,62,0)
+	wait(1)
+	SE_vol(59,61,0)
+	wait(1)
+	SE_vol(59,60,0)
+	wait(1)
+	SE_vol(59,59,0)
+	wait(1)
+	SE_vol(59,58,0)
+	wait(1)
+	SE_vol(59,57,0)
+	wait(1)
+	SE_vol(59,56,0)
+	wait(1)
+	SE_vol(59,55,0)
+	wait(1)
+	SE_vol(59,54,0)
+	wait(1)
+	SE_vol(59,53,0)
+	wait(1)
+	SE_vol(59,52,0)
+	wait(1)
+	SE_vol(59,51,0)
+	wait(1)
+	SE_vol(59,50,0)
+	wait(1)
+	SE_vol(59,49,0)
+	wait(1)
+	SE_vol(59,48,0)
+	wait(1)
+	SE_vol(59,47,0)
+	wait(1)
+	SE_vol(59,46,0)
+	wait(1)
+	SE_vol(59,45,0)
+	wait(1)
+	SE_vol(59,44,0)
+	wait(1)
+	SE_vol(59,43,0)
+	wait(1)
+	SE_vol(59,42,0)
+	wait(1)
+	SE_vol(59,41,0)
+	wait(1)
+	SE_vol(59,40,0)
+	wait(1)
+	SE_vol(59,39,0)
+	wait(1)
+	SE_vol(59,38,0)
+	wait(1)
+	SE_vol(59,37,0)
+	wait(1)
+	SE_vol(59,36,0)
+	wait(1)
+	SE_vol(59,35,0)
+	wait(1)
+	SE_vol(59,34,0)
+	wait(1)
+	SE_vol(59,33,0)
+	wait(1)
+	SE_vol(59,32,0)
+	wait(1)
+	SE_vol(59,31,0)
+	wait(1)
+	SE_vol(59,30,0)
+	wait(1)
+	SE_vol(59,29,0)
+	wait(1)
+	SE_vol(59,28,0)
+	wait(1)
+	SE_vol(59,27,0)
+	wait(1)
+	SE_vol(59,26,0)
+	wait(1)
+	SE_vol(59,25,0)
+	wait(1)
+	SE_vol(59,24,0)
+	wait(1)
+	SE_vol(59,23,0)
+	wait(1)
+	SE_vol(59,22,0)
+	wait(1)
+	SE_vol(59,21,0)
+	wait(1)
+	SE_vol(59,20,0)
+	wait(1)
+	SE_vol(59,19,0)
+	wait(1)
+	SE_vol(59,18,0)
+	wait(1)
+	SE_vol(59,17,0)
+	wait(1)
+	SE_vol(59,16,0)
+	wait(1)
+	SE_vol(59,15,0)
+	wait(1)
+	SE_vol(59,14,0)
+	wait(1)
+	SE_vol(59,13,0)
+	wait(1)
+	SE_vol(59,12,0)
+	wait(1)
+	SE_vol(59,11,0)
+	wait(1)
+	SE_vol(59,10,0)
+	wait(1)
+	SE_vol(59,9,0)
+	wait(1)
+	SE_vol(59,8,0)
+	wait(1)
+	SE_vol(59,7,0)
+	wait(1)
+	SE_vol(59,6,0)
+	wait(1)
+	SE_vol(59,5,0)
+	wait(1)
+	SE_vol(59,4,0)
+	wait(1)
+	SE_vol(59,3,0)
+	wait(1)
+	SE_vol(59,2,0)
+	wait(1)
+	stop_SE(59)
+}
+//──────────────────────────────
+
+//アルウェン魔力SEフェードアウト───────────────
+EV_1041_fadeout
+{
+	SE_vol(1041,100,0)
+	wait(1)
+	SE_vol(1041,99,0)
+	wait(1)
+	SE_vol(1041,98,0)
+	wait(1)
+	SE_vol(1041,97,0)
+	wait(1)
+	SE_vol(1041,96,0)
+	wait(1)
+	SE_vol(1041,95,0)
+	wait(1)
+	SE_vol(1041,94,0)
+	wait(1)
+	SE_vol(1041,93,0)
+	wait(1)
+	SE_vol(1041,92,0)
+	wait(1)
+	SE_vol(1041,91,0)
+	wait(1)
+	SE_vol(1041,90,0)
+	wait(1)
+	SE_vol(1041,89,0)
+	wait(1)
+	SE_vol(1041,88,0)
+	wait(1)
+	SE_vol(1041,87,0)
+	wait(1)
+	SE_vol(1041,86,0)
+	wait(1)
+	SE_vol(1041,85,0)
+	wait(1)
+	SE_vol(1041,84,0)
+	wait(1)
+	SE_vol(1041,83,0)
+	wait(1)
+	SE_vol(1041,82,0)
+	wait(1)
+	SE_vol(1041,81,0)
+	wait(1)
+	SE_vol(1041,80,0)
+	wait(1)
+	SE_vol(1041,79,0)
+	wait(1)
+	SE_vol(1041,78,0)
+	wait(1)
+	SE_vol(1041,77,0)
+	wait(1)
+	SE_vol(1041,76,0)
+	wait(1)
+	SE_vol(1041,75,0)
+	wait(1)
+	SE_vol(1041,74,0)
+	wait(1)
+	SE_vol(1041,73,0)
+	wait(1)
+	SE_vol(1041,72,0)
+	wait(1)
+	SE_vol(1041,71,0)
+	wait(1)
+	SE_vol(1041,70,0)
+	wait(1)
+	SE_vol(1041,69,0)
+	wait(1)
+	SE_vol(1041,68,0)
+	wait(1)
+	SE_vol(1041,67,0)
+	wait(1)
+	SE_vol(1041,66,0)
+	wait(1)
+	SE_vol(1041,65,0)
+	wait(1)
+	SE_vol(1041,64,0)
+	wait(1)
+	SE_vol(1041,63,0)
+	wait(1)
+	SE_vol(1041,62,0)
+	wait(1)
+	SE_vol(1041,61,0)
+	wait(1)
+	SE_vol(1041,60,0)
+	wait(1)
+	SE_vol(1041,59,0)
+	wait(1)
+	SE_vol(1041,58,0)
+	wait(1)
+	SE_vol(1041,57,0)
+	wait(1)
+	SE_vol(1041,56,0)
+	wait(1)
+	SE_vol(1041,55,0)
+	wait(1)
+	SE_vol(1041,54,0)
+	wait(1)
+	SE_vol(1041,53,0)
+	wait(1)
+	SE_vol(1041,52,0)
+	wait(1)
+	SE_vol(1041,51,0)
+	wait(1)
+	SE_vol(1041,50,0)
+	wait(1)
+	SE_vol(1041,49,0)
+	wait(1)
+	SE_vol(1041,48,0)
+	wait(1)
+	SE_vol(1041,47,0)
+	wait(1)
+	SE_vol(1041,46,0)
+	wait(1)
+	SE_vol(1041,45,0)
+	wait(1)
+	SE_vol(1041,44,0)
+	wait(1)
+	SE_vol(1041,43,0)
+	wait(1)
+	SE_vol(1041,42,0)
+	wait(1)
+	SE_vol(1041,41,0)
+	wait(1)
+	SE_vol(1041,40,0)
+	wait(1)
+	SE_vol(1041,39,0)
+	wait(1)
+	SE_vol(1041,38,0)
+	wait(1)
+	SE_vol(1041,37,0)
+	wait(1)
+	SE_vol(1041,36,0)
+	wait(1)
+	SE_vol(1041,35,0)
+	wait(1)
+	SE_vol(1041,34,0)
+	wait(1)
+	SE_vol(1041,33,0)
+	wait(1)
+	SE_vol(1041,32,0)
+	wait(1)
+	SE_vol(1041,31,0)
+	wait(1)
+	SE_vol(1041,30,0)
+	wait(1)
+	SE_vol(1041,29,0)
+	wait(1)
+	SE_vol(1041,28,0)
+	wait(1)
+	SE_vol(1041,27,0)
+	wait(1)
+	SE_vol(1041,26,0)
+	wait(1)
+	SE_vol(1041,25,0)
+	wait(1)
+	SE_vol(1041,24,0)
+	wait(1)
+	SE_vol(1041,23,0)
+	wait(1)
+	SE_vol(1041,22,0)
+	wait(1)
+	SE_vol(1041,21,0)
+	wait(1)
+	SE_vol(1041,20,0)
+	wait(1)
+	SE_vol(1041,19,0)
+	wait(1)
+	SE_vol(1041,18,0)
+	wait(1)
+	SE_vol(1041,17,0)
+	wait(1)
+	SE_vol(1041,16,0)
+	wait(1)
+	SE_vol(1041,15,0)
+	wait(1)
+	SE_vol(1041,14,0)
+	wait(1)
+	SE_vol(1041,13,0)
+	wait(1)
+	SE_vol(1041,12,0)
+	wait(1)
+	SE_vol(1041,11,0)
+	wait(1)
+	SE_vol(1041,10,0)
+	wait(1)
+	SE_vol(1041,9,0)
+	wait(1)
+	SE_vol(1041,8,0)
+	wait(1)
+	SE_vol(1041,7,0)
+	wait(1)
+	SE_vol(1041,6,0)
+	wait(1)
+	SE_vol(1041,5,0)
+	wait(1)
+	SE_vol(1041,4,0)
+	wait(1)
+	SE_vol(1041,3,0)
+	wait(1)
+	SE_vol(1041,2,0)
+	wait(1)
+	stop_SE(1041)
+}
+//──────────────────────────────
+
+
+#EndScriptTable
+//====================================================================
+

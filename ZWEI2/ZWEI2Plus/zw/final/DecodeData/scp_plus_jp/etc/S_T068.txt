@@ -1,0 +1,450 @@
+//──────────────────────────────
+//	name("◆アルベールおじさん（おじさん）Albers")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_ALBERS
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(ALBERS, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ALBERS)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ALBERS)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ALBERS)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ALBERS)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　※村広場の後ろの方に立っている。
+	//　　※初回はマーサと共通のイベント。
+	//　　※バランたちのほうを向いて、振り返らない。
+	if( F6_05_EndSixth )
+	{
+		if(!FV_13_TalkAlbMar)
+		{
+			EV("TALK_AM")
+			wait_EV("TALK_AM")
+		}
+		else
+		{
+			EV_stop("FREEMOVE_ALBERS")
+			rot_chr(ALBERS,30,PLAYER1)
+			MOT_SET(ALBERS,153,-1,414,414,-1,40)
+			MOT(ALBERS,153,10)
+			if(!F_ALBERS)
+			{
+			//──────────────────────────────
+			//　　※以下通常一般メッセージ。
+			//	name("アルベール")
+				MES(ALBERS,"ま、まあともあれ……\n今年も何とか無事に\n収穫祭を終えることができた。",0)
+				MES(ALBERS,"ごほん……俺が取り仕切った\nのだから当然の事だがな。",0)
+				MES(ALBERS,"さて、そろそろ来年の種まきを\n始めるとするか……",0)
+				MES_close(ALBERS)
+				//★アルベール【収穫祭】
+				F_set_note(ALBERS,2)
+
+				F_set(ALBERS)
+			}
+			else
+			{
+			//　　★繰り返し
+			//	name("アルベール")
+				MES(ALBERS,"しかし、まさか\nセフィーラさんがな……",0)
+				MES(ALBERS,"いや、何でもないぞ。\n早く作業を済ませてしまわないとな。",0)
+				MES_close(ALBERS)
+			}
+			MOT(ALBERS,2,10)
+			EV("FREEMOVE_ALBERS")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリームーブ）
+	if( F6_00_GoToMeru )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("アルベール")
+			MES(ALBERS,"何でも、イルバードに\n大嵐が近づいているらしくてな。",0)
+			MES(ALBERS,"村長と話し合って、しばらく\n畑仕事はやめることにしたんだ。\nその準備をしている所だ。",0)
+			MES(ALBERS,"……あの人も、たまには\n頼りになるようだな。",0)
+			MES(ALBERS,"相変わらず仕事はしないが……\nきちんと村の事を考えて\n決断したようだからな。",0)
+			MES_close(ALBERS)
+
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("アルベール")
+		//	MES(ALBERS,"村長が大丈夫だというんだ、\n多分大丈夫なんだろう。",0)
+		//	MES(ALBERS,"あの人は、あの通りの人だが……\n村のためを考えているというのは\n嘘ではないからな。",0)
+		//	MES(ALBERS,"今は信じて、畑の対策を急ぐさ。",0)
+			MES(ALBERS,"そういえば午前中、野菜を届けに\n町の酒場に行ってきたんだが……",0)
+			MES(ALBERS,"あの歌手の人が\n今まで以上に素晴らしい歌声を\n披露していてな。",0)
+			MES_close(ALBERS)
+			wait_MES(ALBERS)
+
+			EMO(ALBERS,EMO_TENTEN)
+			wait(30)
+
+			MES(ALBERS,"セフィーラさんか……\nますますファンになりそうだ。",0)
+			MES_close(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリームーブ）
+	if( F5_00_HearLunar )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("アルベール")
+			MES(ALBERS,"目が覚めて来てみたら、\n畑がメチャクチャになっていてな。",0)
+			MES(ALBERS,"……誰だ、こんなに\n荒らしやがったのは……！",0)
+			MES(ALBERS,"魔物か？\n村に入ってきたとかいう\n魔物の仕業なのか？",0)
+			MES_close(ALBERS)
+
+			MES(RAGNA,"（畑が荒らされてたって……）",0)
+			MES_close(RAGNA)
+
+			MES(PET,"（それって、\n  操られてたコイツらの\n  せいなんじゃないの……？）",0)
+			MES_close(PET)
+
+		//　　？エモーション。
+			EMO(ALBERS,EMO_HATENA)
+			wait(30)
+			look_chr(ALBERS,PET,"Bone_Head")
+
+		//	name("アルベール")
+			MES(ALBERS,"なんだ、俺の顔に\n何か付いているか！？",0)
+			look_chr(ALBERS,RAGNA,"Bone_Head")
+			MES_close(ALBERS)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"い、いや。ははは……\n何でもねえんだが。",0)
+			MES_close(RAGNA)
+
+		//　　オデッサがいる場合、オデッサに？エモーション。
+
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_HATENA)
+				wait(30)
+			}
+			look_off(ALBERS)
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("アルベール")
+			MES(ALBERS,"まったく、育っていた\n作物もメチャクチャだ。",0)
+			MES(ALBERS,"全て耕し直さなきゃならん。",0)
+			MES_close(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※風車小屋民家で寝込んでいる。
+	if( F4_00_StartSolo )
+	{
+	//	name("アルベール")
+		MES(ALBERS,"……う、うーん…………",0)
+		MES_close(ALBERS)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※倒れている。メッセージなし。（メイン参照）
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリームーブ）
+	if( F2_14_TalkEnemy )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("アルベール")
+			MES(ALBERS,"いまアルッテに\n歌手の人が来ているだろう。",0)
+			MES(ALBERS,"……いい歌声だ………",0)
+			MES(ALBERS,"俺は昔からレコードを\n聴き齧っているからな、間違いはない。",0)
+			MES(ALBERS,"彼女は最高の歌手だ。\n今にグランヴァレン中で話題になるぞ。",0)
+			MES_close(ALBERS)
+
+		//──────────────────────────────
+		//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（へえ、レコードが趣味か。\n  結構渋いな……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"（ほう、意外な所に\n  ファンがいるものだな……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("アルベール")
+			MES(ALBERS,"時々暇を見ては、彼女の歌を\n聴きに行っているんだがな……",0)
+			MES(ALBERS,"収穫祭も近いし、\n最近は何かと忙しいんだ。",0)
+			MES_close(ALBERS)
+
+		//　　アルベールに・・・エモーション。
+			EMO(ALBERS,EMO_TENTEN)
+			wait(30)
+			
+		//	name("アルベール")
+			MES(ALBERS,"村長さえ真面目に仕事してくれれば、\n何の問題も無いんだがな……",0)
+			MES_close(ALBERS)
+			//★アルベール【セフィーラのファン】
+			F_set_note(ALBERS,1)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリームーブ）
+	if( F2_00_GoForest )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("アルベール")
+			MES(ALBERS,"そろそろ収穫祭も近いな。",0)
+			MES(ALBERS,"村の精霊に収穫物を捧げる\n大切な行事でな、毎年俺が\n取り仕切ることになっている。",0)
+			MES(ALBERS,"仕事の合間をぬって、\n皆で準備を進めている所なんだ。",0)
+			MES(ALBERS,"俺がやるからには、\nしっかり成功させるぞ。",0)
+			MES_close(ALBERS)
+
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("アルベール")
+			MES(ALBERS,"村長も……\n少しは手伝って欲しいものだな。",0)
+			MES(ALBERS,"いや、そもそも村の祭を\n取り仕切るのは村長の仕事のはずだぞ。",0)
+			MES(ALBERS,"おかしなことを口走ってないで、\n少しは仕事をしたらどうなんだ……！",0)
+			MES_close(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリームーブ）
+	if( F1_15_GoVillage )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("アルベール")
+			MES(ALBERS,"先日町に行ったんだが、\n酒場を出たところで\n遊び人らしい男とぶつかってな。",0)
+			MES_close(ALBERS)
+
+		//　　アルベールにムカエモーション。
+			EMO(ALBERS,EMO_AOSUZI)
+			wait(30)
+			
+		//	name("アルベール")
+			MES(ALBERS,"なんだ、あの\nチャラチャラした格好は……",0)
+			MES(ALBERS,"ああいうフラフラした男に\nろくな奴はいない。",0)
+			MES(ALBERS,"男は誠実に働いてこそだ。\nお前たちもよく覚えておけよ。",0)
+			MES_close(ALBERS)
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//	name("アルベール")
+			MES(ALBERS,"遊び人なんかにろくな奴はいない。",0)
+			MES(ALBERS,"男は日々誠実に働いてこそだ。",0)
+			MES(ALBERS,"まったく……\n少しはバラン君を見習え。\n男はああでなきゃいかん。",0)
+			MES_close(ALBERS)
+			//★アルベール【バランを買っている】
+			F_set_note(ALBERS,0)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※かぼちゃ畑で農作業をしている。（フリームーブ）
+	if( F1_01_GameStart )
+	{
+		EV_stop("FREEMOVE_ALBERS")
+		MOT_SET(ALBERS,153,-1,414,414,-1,40)
+		MOT(ALBERS,153,10)
+		rot_chr(ALBERS,30,PLAYER1)
+		if(!F_ALBERS)
+		{
+		//	name("アルベール")
+			MES(ALBERS,"こらこら、\nあまり畑を荒さんでくれよ。",0)
+			MES(ALBERS,"この辺りにはまだ\n収穫前のものが残ってるんだ。",0)
+			MES(ALBERS,"何か聞きたいことがあれば、\n村長の家にいる\nラウニという人を訪ねなさい。",0)
+			MES(ALBERS,"物知りだし、村長よりは\n頼りになる人だからな。",0)
+			MES_close(ALBERS)
+
+			F_set(ALBERS)
+		}
+		else
+		{
+		//　　★繰り返し
+		//　　アルベール、軽く村長宅の方を向く。
+			look_chr(ALBERS, WIDEZEN ,"Bone_Head")
+			
+		//	name("アルベール")
+			MES(ALBERS,"あそこに立っているのが\nこの村の村長だが……",0)
+			MES(ALBERS,"あまり信用するなよ。",0)
+		//	MES(ALBERS,"ちょっとおかしな上、口先だけで\n自分では何もしない人だからな。",0)
+			MES(ALBERS,"夢みたいなことばかり\n言っている上に、口先だけで\n何もしない人だからな。",0)
+			MES_close(ALBERS)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+		//──────────────────────────────
+		//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（酷い言われようだな……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"（またハッキリと断言するのう……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		//解除
+			look_off(ALBERS)
+		}
+		MOT(ALBERS,2,10)
+		EV("FREEMOVE_ALBERS")
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

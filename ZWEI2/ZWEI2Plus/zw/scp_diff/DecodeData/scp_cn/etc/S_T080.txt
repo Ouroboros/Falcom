@@ -1,0 +1,1250 @@
+//──────────────────────────────
+//	name("◆河童（ミニゲーム）")
+//──────────────────────────────
+//────────────────────────────────────────────────────────────
+//　　※星降り的村子的水井、河童住在这里。
+//　　　和他说话就能触发MINI小游戏。
+//　　※発動範囲に、特に制限はありません。
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_KAPPA
+{
+	TK_begin()
+	rot_chr(KAPPA,30,PLAYER1)
+
+	rot_chr(PLAYER1,60,KAPPA)
+	rot_chr(PLAYER2,60,KAPPA)
+	rot_chr(PET,60,KAPPA)
+	
+	KAO(PLAYER1,"1","1","1")//デフォルト
+	KAO(PLAYER2,"1","1","1")//デフォルト
+	KAO(PET,"1","1","1")//デフォルト
+
+	if( !FV_FF_TalkKappa )
+	{
+	//▼初次见河童
+	//　　※井戸之ＬＰを調べると、選択肢が出ます。
+	//	name("選択テキスト")
+
+		workL(WK_CANCEL,SET,2)//【算了】
+		MES_pos(PLAYER1,"??W9【扔进去100芬尼】\n【一分钱都不放】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//等到关闭
+
+		if(WK_YESNO==1)
+		{
+		//	name("□「１００芬尼入れる」でお金が足りない")
+			if(SP002<100)												//何故か判定できない···
+			{
+				MES(0,"C3S2没钱了……",2)
+				MES_close(0)
+			}
+			else
+			{
+			//	name("□「１００芬尼入れる」でお金がある")
+				//　　※减少100块。
+				SE(008,PLAYER1)
+				get_gold(-100,RAGNA)
+				wait(30)
+
+				EMO(KAPPA,EMO_TENTEN)
+				wait(30)
+
+				//　　河童从水井里露头儿。
+				rot_chr(KAPPA,30,PLAYER1)
+				move(KAPPA,2,RUN1,0,0,220,0)
+				wait_move(KAPPA)
+				wait(20)
+
+				MES(KAPPA,"你们啊。\n刚才干了什么？",0)
+				MES(KAPPA,"一定干了什么是吧。\n扔东西砸我……",0)
+				MES_close(KAPPA)
+				wait_MES(KAPPA)
+
+			//　　河童に···エモーション。
+				EMO(KAPPA,EMO_TENTEN)
+				wait(30)
+
+				MES(KAPPA,"算了算了。\n正好闲下来。",0)
+				MES(KAPPA,"……玩个游戏？",0)
+				MES_close(KAPPA)
+				F_set(FV_FF_TalkKappa)
+
+				workL(WK_CANCEL,SET,2)//【算了】
+				MES_pos(PLAYER1,"??W9【挑战】\n【算了】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//等到关闭
+
+				if(WK_YESNO==1)
+				{
+				//	name("□「Ｌｖ１挑战」")
+
+					if(IT003>0)
+					{
+					//	name("□グライドギアに改造済み之场合")
+						MES(KAPPA,"嗯、明白了。",0)
+						MES_close(KAPPA)
+
+						move(KAPPA,2,RUN1,0,0,-220,0)
+						F_set_note(-80,-1)
+						fade_in( 100, 60, BLACK)	//暗転
+						wait_fade()
+
+						if(SP004==5)
+						{
+							workG(GW_SKI_PARTNER,SET,5)	//奥蒂莎
+						}
+						else if(SP004==12)
+						{
+							workG(GW_SKI_PARTNER,SET,12)	//奥蒂莎
+						}
+						else if(SP004==13)
+						{
+							workG(GW_SKI_PARTNER,SET,13)	//奥蒂莎
+						}
+						else if(SP004==6)
+						{
+							workG(GW_SKI_PARTNER,SET,6)	//昴
+						}
+						else if(SP004==1)
+						{
+							workG(GW_SKI_PARTNER,SET,1)	//艾雯
+						}
+
+						clear_party(PARTNER)	//パートナー消去
+
+						workG(GW_ENTRY_EVENT,SET,1)
+						new_map(10490)
+					}
+					else
+					{
+					//	name("□まだグライドギアに改造していない")
+						EV("KAPPA_Gia_Check")
+						wait_EV("KAPPA_Gia_Check")
+					}
+				}
+				else
+				if(WK_YESNO==2)//□「算了」
+				{
+					MES(KAPPA,"啊、算了。",0)
+					MES(KAPPA,"再邀请别人好了。",0)
+					MES_close(KAPPA)
+
+				//　　河童、跑回井里去了。
+					move(KAPPA,2,RUN1,0,0,-220,0)
+					F_set_note(-80,-1)
+					wait_move(KAPPA)
+					wait(20)
+
+				}
+			}
+		}
+		else
+		if(WK_YESNO==2)//□「入れない」
+		{
+		}
+	}
+	else	//▼第2回以后-----------------------------------------------------------------------------------------------------------------------------
+	{
+	//　　※井戸之ＬＰを調べると、選択肢が出ます。
+		workL(WK_CANCEL,SET,2)//【算了】
+		MES_pos(PLAYER1,"??W9【放入100芬尼】\n【一分钱都不放】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//等到关闭
+
+		if(WK_YESNO==1)
+		{
+		//	name("□「１００芬尼入れる」でお金が足りない")
+			if(SP002<100)												//为什么没反映···
+			{
+				MES(0,"C3S2钱不够啊……",2)
+				MES_close(0)
+			}
+			else
+			{
+			//	name("□「１００芬尼入れる」でお金がある")
+				//　　※减少100块。
+				SE(008,PLAYER1)
+				get_gold(-100,RAGNA)
+				wait(30)
+
+				//　　河童出来了。
+				rot_chr(KAPPA,30,PLAYER1)
+				move(KAPPA,2,RUN1,0,0,220,0)
+				wait_move(KAPPA)
+				wait(20)
+
+				if(IT003<=0)
+				{
+				//	name("□まだグライドギアに改造していない")
+					EV("KAPPA_Gia_Check")
+					wait_EV("KAPPA_Gia_Check")
+				}
+				else
+				{
+					if(!F_KAPPA)
+					{
+					//　　□ＬＦが立ってない（１回目）
+						MES(KAPPA,"你们……\n不忙吗？",0)
+						MES(KAPPA,"其实我也不咋忙。",0)
+						MES(KAPPA,"以前我看守神殿。",0)
+						MES(KAPPA,"现在是人们在看守\n我就没什么事了。",0)
+						MES(KAPPA,"……玩个游戏不？",0)
+						MES_close(KAPPA)
+						//★河童【神殿看守】
+						F_set_note(-80,0)
+						F_set(KAPPA)
+					}
+					else
+					{
+					//	name("□ＬＦが立っている（繰り返し）")
+						MES(KAPPA,"……我又不忙啦、彼此彼此。",0)
+						MES(KAPPA,"玩吗？",0)
+						MES_close(KAPPA)
+					}
+
+				//──────────────────────────────
+				//　　※以下是、能够挑战的路线表示。
+				//　　　记住上回挑战时的路线。
+
+//					F_set(FV_FF_KappaSki_04)	// デバッグ
+
+					if( FV_FF_KappaSki_03 || FV_FF_KappaSki_04 )
+					{
+						// 通关LV3
+						workL(WK_CANCEL,SET,5)//【算了】
+						MES_pos(PLAYER1,"??W9【挑战Ｌｖ１】\n【挑战Ｌｖ２】\n【挑战Ｌｖ３】\n【挑战Ｌｖ４】\n【算了】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//等到关闭
+					}
+					else if( FV_FF_KappaSki_02)
+					{
+						// 通关LV2
+						workL(WK_CANCEL,SET,4)//【算了】
+						MES_pos(PLAYER1,"??W9【挑战Ｌｖ１】\n【挑战Ｌｖ２】\n【挑战Ｌｖ３】\n【算了】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//等到关闭
+						if(WK_YESNO==4)
+							workL(WK_YESNO,SET,5)	//「算了」を５に強制変更
+					}
+					else if( FV_FF_KappaSki_01)
+					{
+						// 通关LV1
+						workL(WK_CANCEL,SET,3)//【算了】
+						MES_pos(PLAYER1,"??W9【挑战Ｌｖ１】\n【挑战Ｌｖ２】\n【算了】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//等到关闭
+						if(WK_YESNO==3)
+							workL(WK_YESNO,SET,5)	//「算了」を５に強制変更
+					}
+					else
+					{
+						// 还没有通掉
+						workL(WK_CANCEL,SET,2)//【算了】
+						MES_pos(PLAYER1,"??W9【挑战】\n【算了】",0,320,240,0,0)
+						wait_W(WK_YESNO)
+						MES_close(PLAYER1)
+						wait_MES(PLAYER1)//等到关闭
+						if(WK_YESNO==2)
+							workL(WK_YESNO,SET,5)	//「算了」を５に強制変更
+					}
+
+					if(WK_YESNO<5)
+					{
+					//	name("□Ｌｖ１～Ｌｖ４")
+						MES(KAPPA,"嗯、明白了。",PAUSE,CLR)
+						MES_close(KAPPA)
+					//	name("該当レベル之スキーマップ之イベントに繋げる。")
+						move(KAPPA,2,RUN1,0,0,-220,0)
+						fade_in( 100, 60, BLACK)	//转换
+						wait_fade()
+
+						workG(GW_ENTRY_EVENT,SET,1)	//開始
+
+						workG(GW_SKI_PARTNER,SET,0)	//拉古那だけ
+						if(SP004==5)
+						{
+							workG(GW_SKI_PARTNER,SET,5)	//奥蒂莎
+						}
+						else if(SP004==12)
+						{
+							workG(GW_SKI_PARTNER,SET,12)	//奥蒂莎
+						}
+						else if(SP004==13)
+						{
+							workG(GW_SKI_PARTNER,SET,13)	//奥蒂莎
+						}
+						else if(SP004==6)
+						{
+							workG(GW_SKI_PARTNER,SET,6)	//昴
+						}
+						else if(SP004==1)
+						{
+							workG(GW_SKI_PARTNER,SET,1)	//艾雯
+						}
+
+						clear_party(PARTNER)	//パートナー消去
+
+						if(WK_YESNO==4)
+							new_map(10493)
+						else if(WK_YESNO==3)
+							new_map(10492)
+						else if(WK_YESNO==2)
+							new_map(10491)
+						else
+							new_map(10490)
+					}
+					else
+					{
+					//	name("□「算了」")
+
+						MES(KAPPA,"算了。",0)
+						MES(KAPPA,"再邀请别人吧。",0)
+						MES_close(KAPPA)
+
+					//　　河童跑回井里。
+						move(KAPPA,2,RUN1,0,0,-220,0)
+						wait_move(KAPPA)
+						wait(20)
+					}
+				}
+			}
+		}
+		else
+		{
+		//	name("□「入れない」")
+		}
+	}
+
+	TK_end()
+}
+
+//	name("□まだグライドギアに改造していない")
+KAPPA_Gia_Check
+{
+
+	//	name("こ之話を聞く之が初回")
+	if(!FV_FF_Kappa_TkGia)
+	{
+		MES(KAPPA,"明白了。",0)
+		MES_close(KAPPA)
+	//　　河童、跑回去了、但又回来了。
+		move(KAPPA,2,RUN1,0,0,-150,0)
+		wait_move(KAPPA)
+		move(KAPPA,2,RUN2,0,0, 150,0)
+		wait_move(KAPPA)
+
+		MES(KAPPA,"那个、你们\n还没有滑吗。",0)
+		MES(KAPPA,"不行不行。\n怎么能不突破星之峰的冰原呢。",0)
+		MES(KAPPA,"那、能滑的时候再来呦。\n也可能是勉强你们。",0)
+		MES_close(KAPPA)
+		F_set(FV_FF_Kappa_TkGia)
+	}
+	else
+	{
+		MES(KAPPA,"所以、你们\n还不能滑吗？",0)
+		MES(KAPPA,"那就不能玩\n星之峰的冰原了。",0)
+		MES(KAPPA,"啊、去哪里能找到\n能滑的工具呢……",0)
+		MES(KAPPA,"能滑的时候\n再来哦。",0)
+		MES_close(KAPPA)
+	}
+
+	//　　河童、跑回井里。
+	move(KAPPA,2,RUN1,0,0,-220,0)
+	F_set_note(-80,-1)
+	wait_move(KAPPA)
+	wait(20)
+
+}
+
+
+
+
+//──────────────────────────────
+//▼ゲーム结束后的事件
+//　　ゲーム終了后、淡出
+//　　拉古那们站在星之峰入口。
+//　　河童也站在附近。
+//──────────────────────────────
+
+/*
+	//　　※只有在第一次收到金纪念章的时候、
+	//　　　河童走了过来。（事件自動起動）
+		MES(KAPPA,"……拿到了奖牌！\n祝贺祝贺。",0)
+		MES(KAPPA,"嗯、干的不错啊。\n我也很高兴。",0)
+		MES(KAPPA,"把我的收藏品\n给你们。",0)
+		MES_close(KAPPA)
+
+	//　　河童、頭をかく。
+	//　　そ之まま手を差し出す。
+		MES(KAPPA,"这个。",0)
+		MES_close(事件得到消息提示)
+
+	//	name("アイテム入手メッセージ")
+		MES(this,"『○○』得到。",0)
+		MES_close(this)
+
+	//　　※得到トレジャー。
+		MES(KAPPA,"有机会再来挑战\n一次哦。",0)
+		MES(KAPPA,"我还会准备\n游戏的路线的。",0)
+		MES(KAPPA,"如果有兴趣的话\n再来玩哦。",0)
+		MES_close(KAPPA)
+
+	//　　河童、定位置に戻っていく。
+
+*/
+
+//──────────────────────────────
+//　　※通常は、話しかけると成績に応じてメッセージを表示する。
+//──────────────────────────────
+//  1=スキーLV1クリア(銅)
+//  2=スキーLV2クリア(銀)
+//  3=スキーLV3クリア(金)
+//  4=スキーLV4クリア(プラチナ)
+//  5=スキークリア済みメダル
+//  6=スキー失敗(掉落)
+//  7=スキー失敗(死亡)
+//  8=スキー失敗(ツボ、おしい)
+//  9=スキー失敗(ダメージ)
+// 10=スキー失敗(タイム)
+// 11=スキー失敗(ツボ、足りない)
+// 12=スキー失敗(ツボ、ゼロ)
+// 13=スキー失敗(河童に負けた)
+//
+// スキー之クリア判定は、河童が行っています。
+// 即使按规则成功挑战、但不与河童说话就不会、通关刚才打通的路线。
+//
+
+TK_KAPPA2
+{
+	TK_begin()
+	rot_chr(KAPPA,30,PLAYER1)
+
+	rot_chr(PLAYER1,60,KAPPA)
+	rot_chr(PLAYER2,60,KAPPA)
+	rot_chr(PET,60,KAPPA)
+
+	KAO(PLAYER1,"1","1","1")//デフォルト
+	KAO(PLAYER2,"1","1","1")//デフォルト
+	KAO(PET,"1","1","1")//デフォルト
+
+// チェック用
+//	workL(00,SET,4)
+//	F_reset(F_KAPPA)
+//	F_set(FV_FF_KappaSki_04)
+//	workL(02,SET,4)
+//	F_reset(1975)
+
+	//初コースクリアは最優先
+	if(WK000==4 && !FV_FF_KappaSki_04)	// 初次通关LV4
+	{
+	//　　□新しくプラチナメダルをゲットした。
+		F_set(FV_FF_KappaSki_04)	//白金
+		if(!F200 && !F2859)		//２週目之场合、すでに持っている可能性がある
+		{
+			EV("TK_FIGURE")
+			wait_EV("TK_FIGURE")
+			F_set(200)
+		}
+		else
+		{
+			if(!F200)
+			{
+				MES(KAPPA,"……白金奖牌！\nＷｏｎｄｅｒｆｕｌ。",0)
+				F_set(200)
+			}
+
+			MES(KAPPA,"顺便说一下这个白金、\n从哪里弄的知道吗？",0)
+			MES(KAPPA,"以前魔法师中\n有一个炼金师、\n这家伙做了各种各样的这玩意儿。",0)
+			MES(KAPPA,"漂亮的镯子啦\n工艺品啦、露天贩卖。",0)
+			MES(KAPPA,"但是呢、这个有点不同。\n这是在旮蓝那儿最不起眼的便宜货。",0)
+			MES(KAPPA,"可能是诺姆或者是谁\n在发现后通过黑市倒卖而大涨了价格。",0)
+			MES(KAPPA,"……再来一次么？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	//魔法入手後１回だけ聞けるメッセージ。（艾雯いるとき限定）（ＧＦ制御で１回之み）
+	if(IT101>0 && !FV_FF_Kappa_TkMaho && GW_SKI_PARTNER==1 )
+	{
+		MES(KAPPA,"啊啊、这个啊。\n这是替别人保管的。",0)
+		MES_close(KAPPA)
+
+	//　　河童、艾雯之方に向く。
+		look_chr(KAPPA,PARTNER,"Bone_Head")
+
+		MES(KAPPA,"对对、确实\n你就是持有\n给人特别感觉的魔杖的人。",0)
+		look_off(KAPPA)
+		MES(KAPPA,"但是、一直在我这里\n却寻常般的给你们而因此发火？\n你们这样想吗？",0)
+		MES(KAPPA,"我决定\n这只是作为奖赏而已。",0)
+		MES(KAPPA,"那个……其实\n直到昨天为止\n还只是被我忘在壁橱里面呢。",0)
+		MES(KAPPA,"……再来一次？",0)
+		MES_close(KAPPA)
+		//★河童【光之奥義】
+		F_set_note(-80,2)
+		F_set(FV_FF_Kappa_TkMaho)
+	}
+	else
+	//未入手で、既にＬｖ３クリア済みだが、艾雯がいないため入手できない。（ＬＦ制御で１回目之み）
+	if(IT101<0 && WK000!=3 && FV_FF_KappaSki_03 && GW_SKI_PARTNER!=1 && !F_KAPPA)
+	{
+		MES(KAPPA,"其实呢、\n今天是打算\n奖赏你们的。",0)
+		MES(KAPPA,"好像相当努力啊、\n偶尔呢也会给你们一些赠品\n不错吧？　是吧？",0)
+		MES(KAPPA,"……但是、\n忘了带来了。",0)
+		MES(KAPPA,"等我再找找、\n以后L337和会使用魔法的人\n一起来吧。",0)
+		MES(KAPPA,"……再来一回？",0)
+		MES_close(KAPPA)
+		F_set(KAPPA)
+	}
+	else
+	if(WK002>0)	//通关了同样的级别、闲聊
+	{
+	//　　□虽然通关、但奖励已入手。
+	//　　※ランダムでコネタを話します。
+
+		//ランダム設定はマップＩＮＩＴに埋め込む。
+		if(!F1975)//矢作之情報③を持っていない
+		{
+			workL(010,SET,2)//強制的に２にセット。
+		}
+
+		if(WK010==0)
+		{
+		//　　※パターン１
+			MES(KAPPA,"星之峰、路很窄啊。",0)
+			MES(KAPPA,"一片无垠的雪。\n路上的雪也很多。",0)
+			MES(KAPPA,"……我说的意思、明白吗？",0)
+			MES_close(KAPPA)
+
+			workL(WK_CANCEL,SET,2)//【取消】
+			MES_pos(PLAYER1,"??W9【是】\n【否】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			if(WK_YESNO==1)
+			{
+				MES(KAPPA,"嗯、再一次？",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				MES(KAPPA,"哦、再一次？",0)
+				MES_close(KAPPA)
+			}
+		}
+		else
+		if(WK010==1)
+		{
+		//　　※パターン２
+		//　　河童に···エモーション。
+			EFF_chr(25124,KAPPA,0,100,0,"Bone_Head")
+			wait(80)
+			
+			MES(KAPPA,"昨天发烧了……",0)
+			MES_close(KAPPA)
+
+		//　　河童、手を振って誤魔化す。
+			EV("MOTION_KAPPA")
+			wait_EV("MOTION_KAPPA")
+			
+			MES(KAPPA,"……还是不行啊。\n根本不行嘛、根本不行嘛。",0)
+			MES(KAPPA,"……再一次？",0)
+			MES_close(KAPPA)
+		}
+		else
+		if(WK010==2)
+		{
+		//　　※パターン４
+			MES(KAPPA,"……在村子里、\n有个叫矢作的人。",0)
+			MES(KAPPA,"在此之前刚刚遇到的、\n我真的吓了一跳。",0)
+			MES(KAPPA,"为什么\n披着熊皮呢？",0)
+			MES(KAPPA,"我也不知道怎么回事。\n什么都没想就逃跑了。",0)
+			MES(KAPPA,"啊、这怎么能笑我呢。\n冷不丁的遇到这种情形\n谁都会感到恐怖。",0)
+			MES(KAPPA,"……再一次挑战？",0)
+			MES_close(KAPPA)
+			//★河童【矢作】
+			F_set_note(-80,1)
+			//★矢作【河童と知り合い】
+			F_set_note(-75,2)
+		}
+		else
+		if(WK010==3)
+		{
+		//　　※パターン５
+			MES(KAPPA,"昨天我抽签来着、\n是小吉呢。",0)
+			MES(KAPPA,"上面写着\n不小心的话\n可能会被绊倒呢。",0)
+			MES(KAPPA,"…………………………",0)
+			MES_close(KAPPA)
+
+		//　　河童、手をバタバタ。
+			EV("MOTION_KAPPA")
+			wait_EV("MOTION_KAPPA")
+
+			MES(KAPPA,"……看见了什么？\n我才没有出洋相呢。",0)
+			MES(KAPPA,"再试一次？",0)
+			MES_close(KAPPA)
+		}
+		else
+		if(WK010==4)
+		{
+		//　　※パターン３·伝説之之勇者限定。
+			MES(KAPPA,"啊、你。\n你现在已经是\n传说中的红毛了？",0)
+			MES(KAPPA,"别臭美好么？\n全部完成之后、\n再狂妄也不迟。",0)
+			MES(KAPPA,"那个、话说在前面\n别看我这样\n实际上是很强的。",0)
+			MES(KAPPA,"以前在镇子里\n我可曾经是冠军。",0)
+			MES(KAPPA,"……现在\n把以前的话搬出来\n是不是觉得很烦啊。",0)
+			MES_close(KAPPA)
+
+			workL(WK_CANCEL,SET,2)//【取消】
+			MES_pos(PLAYER1,"??W9【是】\n【否】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			if(WK_YESNO==1)
+			{
+				MES(KAPPA,"啊、是这样啊、\n那么再试一次？",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				MES(KAPPA,"那么、再试一次？",0)
+				MES_close(KAPPA)
+			}
+		}
+	}
+	else
+	if(WK000==4)	// 今LV4をクリアしてきた
+	{
+	//　　□新しくプラチナメダルをゲットした。
+		F_set(FV_FF_KappaSki_04)	//プラチナ
+		if(!F200 && !F2859)
+		{
+			EV("TK_FIGURE")
+			wait_EV("TK_FIGURE")
+			F_set(200)
+		}
+		else
+		{
+			if(!F200)
+			{
+				MES(KAPPA,"……白银奖牌！\nＷｏｎｄｅｒｆｕｌ。",0)
+				F_set(200)
+			}
+
+			MES(KAPPA,"顺便说一下这个白金、\n从哪里弄的知道吗？",0)
+			MES(KAPPA,"以前魔法师中\n有一个炼金师、\n这家伙做了各种各样的这玩意儿。",0)
+			MES(KAPPA,"漂亮的镯子啦\n工艺品啦、露天贩卖。",0)
+			MES(KAPPA,"但是呢、这个有点不同。\n这是在旮蓝那儿最不起眼的便宜货。",0)
+			MES(KAPPA,"可能是诺姆或者是谁\n在发现后到黑市倒卖而大涨了价格。",0)
+			MES(KAPPA,"……再试一次？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	if(WK000==3)	// 今LV3をクリアしてきた
+	{
+	//　　□新しく金メダルをゲットした。
+		F_set(FV_FF_KappaSki_03)	//ゴールド
+		if(!F_KAPPA)
+		{
+			//	name("□艾雯がいる")
+			if(GW_SKI_PARTNER==1)
+			{
+				MES(KAPPA,"……拿到黄金奖牌了！\n祝贺一下。",0)
+				MES(KAPPA,"干得不错啊。\n我也很欣慰。",0)
+				MES(KAPPA,"把这个我收藏多年的东西\n给你们吧。",0)
+				MES_close(KAPPA)
+
+			//　　※宝箱出现。
+
+				MOT_SET(KAPPA,150,-1,463,463,-1,-1)//
+				MOT(KAPPA,150,10)
+				wait(10)
+
+				cross_fade(30)
+				chr_pos(TAKARA_CH,1212,-1386,1,0,6)
+				wait(1)
+				SE(PLAYER1,019)//適当なＳＥ
+				wait_fade()
+				F_set(FV_FF_Kappa_Maho)
+
+				MOT(KAPPA,2,10)
+				MES(KAPPA,"有机会\n再来一次哦。",0)
+				MES(KAPPA,"我还会准备\n游戏的路线的。",0)
+				MES(KAPPA,"还想玩的话\n再来哦。",0)
+				MES_close(KAPPA)
+				workL(005,SET,1)//リトライ処理を飛ばす。
+			}
+			else
+			{
+			//	name("□艾雯いない")
+				MES(KAPPA,"……拿到黄金奖牌了！\n祝贺一下。",0)
+				MES(KAPPA,"干得不错啊。\n我也很欣慰。",0)
+				MES_close(KAPPA)
+
+			//　　河童に···エモーション。
+				EMO(KAPPA,EMO_TENTEN)
+				wait(30)
+
+				MES(KAPPA,"其实呢、今天是\n打算奖赏你们的。",0)
+				MES(KAPPA,"好像相当努力啊、\n偶尔呢也会给你们一些赠品\n不错吧？　是吧？？",0)
+				MES(KAPPA,"……但是、\n忘了带来了。",0)
+				MES(KAPPA,"等我再找找、\n以后L337和会使用魔法的人\n一起来吧。",0)
+				MES(KAPPA,"……再试一次？",0)
+				MES_close(KAPPA)
+			}
+			F_set(KAPPA)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(KAPPA,"顺便说说这个黄金奖牌、\n知道从哪里得到的吗？",0)
+			MES(KAPPA,"以前在伊鲁巴特\n有条遍布黄金的河流。",0)
+			MES(KAPPA,"在这里住的泥鳅、\n是个收集沙金的家伙。",0)
+			MES(KAPPA,"我用东西和他交换的。",0)
+			MES(KAPPA,"这个奖牌呢、\n多少有些土味儿\n别介意啦。",0)
+			MES(KAPPA,"……再试一次？",0)
+			MES_close(KAPPA)
+		}
+
+	}
+	else
+	if(WK000==2)	// 今LV2をクリアしてきた
+	{
+	//　　□新しく銀メダルをゲットした。
+		F_set(FV_FF_KappaSki_02)	//シルバー
+		MES(KAPPA,"白银奖牌得到。\n祝贺喽。",0)
+		MES(KAPPA,"话说这个白银奖牌、\n知道是哪儿的吗？",0)
+		MES(KAPPA,"以前、有个有钱人\n来星之峰登山。",0)
+		MES(KAPPA,"才３０分钟就迷路了\n给吓跑了。",0)
+		MES(KAPPA,"跑的时候掉了个银表。\n我把他融化了作的。",0)
+		MES(KAPPA,"相当不错吧？",0)
+		MES_close(KAPPA)
+
+		workL(WK_CANCEL,SET,2)//【取消】
+		MES_pos(PLAYER1,"??W9【是】\n【否】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		if(WK_YESNO==1)
+		{
+			MES(KAPPA,"嗯、那么再来一次？",0)
+			MES_close(KAPPA)
+		}
+		else
+		{
+			MES(KAPPA,"哦、那么再来一次？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	if(WK000==1)	// 今LV1をクリアしてきた
+	{
+	//　　□新しく銅メダルをゲットした。
+		F_set(FV_FF_KappaSki_01)	//ブロンズ
+		MES(KAPPA,"青铜奖章入手。\n恭喜。",0)
+		MES(KAPPA,"…………………………",0)
+		MES(KAPPA,"但是、也就是个铜的嘛。\n不用这么兴奋。",0)
+		MES(KAPPA,"咱再来说说这个铜的、\n这个是在滑雪场里\n捡到的东西。",0)
+		MES(KAPPA,"可能是飞机的零件。\n有时在这里就能找到这种东西。",0)
+		MES(KAPPA,"……再试一次？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==10)
+	{
+	//　　□タイムが非常に遅かった。
+		MES(KAPPA,"……迟到了。\n路上干什么去了？",0)
+		MES(KAPPA,"你干什么去了吧。\n肯定是干什么去了。",0)
+		MES(KAPPA,"搞副业？　补妆？\n打盹？　小便？",0)
+		MES(KAPPA,"干什么都无所谓啦、\n不好好干不行啊。",0)
+		MES(KAPPA,"……再试一次？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==7)
+	{
+	//　　□死亡＆ギブアップ
+		MES(KAPPA,"哎呀、结束了？",0)
+		MES(KAPPA,"太快了。\n真失望。",0)
+		MES(KAPPA,"今天这么急？\n是不是有什么事情。",0)
+		MES(KAPPA,"无所谓了。",0)
+		MES(KAPPA,"……还来不？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==6 || WK000==9)
+	{
+	//　　□(奈落)(ダメージ)
+		if(WK001==4)
+		{
+		//	name("□河童と競争中だった。（Ｌｖ４）")
+			MES(KAPPA,"哎呀、干嘛呢？",0)
+			MES(KAPPA,"今天迟到了吧？\n嗯、绝对迟到了。",0)
+			MES(KAPPA,"可能是那个吧、看着别处的\n什么东西。",0)
+			MES(KAPPA,"粗心大意害死人那。\n……你们真的知道吗？",0)
+			MES_close(KAPPA)
+
+			workL(WK_CANCEL,SET,2)//【取消】
+			MES_pos(PLAYER1,"??W9【是】\n【否】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			if(WK_YESNO==1)
+			{
+				MES(KAPPA,"啊这样啊、那么\n再来一次？",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				MES(KAPPA,"哦、那么再来一次？",0)
+				MES_close(KAPPA)
+			}
+		}
+		else
+		{
+		//	name("□それ以外")
+			MES(KAPPA,"……疼啊。\n好好看着前面了吗？",0)
+			MES(KAPPA,"别左顾右盼的。\n旁边什么也没有。",0)
+			MES(KAPPA,"难道还不习惯吗？\n背后有树叶的标志吗？",0)
+			MES(KAPPA,"什么都好啦、\n下面要注意哦。",0)
+			MES(KAPPA,"……再来一次？",0)
+			MES_close(KAPPA)
+		}
+	}
+	else
+	if(WK000==12)
+	{
+	//　　□壷を一個も割れなかった。
+		MES(RAGNA,"……喂位你们、\n是在认真通关吗？",0)
+		MES(RAGNA,"途中的壶\n一个也没碰到啊。",0)
+		MES(RAGNA,"再滑的时候\n碰碰罐子也可以吧？\n是不是？",0)
+		MES(RAGNA,"……再试一次？",0)
+		MES_close(RAGNA)
+	}
+	else
+	if(WK000==11)
+	{
+	//　　□壷をあまり割れなかった。
+		MES(KAPPA,"壶的位置什么的、\n要玩命记住啊。",0)
+		MES(KAPPA,"恩一定能记住。\n现在记住了吧。",0)
+		MES(KAPPA,"下面要努力啊。",0)
+		MES(KAPPA,"……再来一次？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==8)
+	{
+	//　　□壷をたくさん割ったがメダルに届かなかった。
+		MES(KAPPA,"要选择好路线、\n对于河童来说。",0)
+		MES(KAPPA,"但是。\n还是感觉\n好像有些什么不足似的。",0)
+		MES(KAPPA,"……带维他命Ｃ了吗？",0)
+		MES(KAPPA,"你们好像补的不够啊。",0)
+		MES(KAPPA,"……再试一次？",0)
+		MES_close(KAPPA)
+	}
+	else
+	if(WK000==13)
+	{
+	//	name("□河童之方が早かった")
+		MES(KAPPA,"……我赢了。\n生气不？",0)
+		MES(KAPPA,"那个嘛。\n你们怎么看也是\n河童我本人。",0)
+//		MES(KAPPA,"可能比你们的运动神经\n发达吧。",0)
+		MES(KAPPA,"看啊、比你们\n运动神经发达吧？",0)
+		MES(KAPPA,"分身什么的、对河童来说\n也是雕虫小技。",0)
+		MES(KAPPA,"……再试一次？",0)
+		MES_close(KAPPA)
+	}
+
+	if(WK005!=1)
+	{
+		//──────────────────────────────
+		workL(WK_CANCEL,SET,3)//【取消】
+		MES_pos(PLAYER1,"??W9【再来一次】\n【回去忍者之里】\n【取消】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		if(WK_YESNO==1)	//	name("□「再来一次」")
+		{
+			if(SP002<100)												//何故か判定できない···
+			{
+			//	name("□１００芬尼持ってない场合。")
+				MES(KAPPA,"……你们太穷啦。",0)
+				MES(KAPPA,"连１００块都没有。",0)
+				MES_close(KAPPA)
+			}
+			else
+			{
+				if( FV_FF_KappaSki_03 || FV_FF_KappaSki_04 )
+				{
+					// LV3以上をクリアしている
+					workL(WK_CANCEL,SET,5)//【取消】
+					MES_pos(PLAYER1,"??W9【挑战Ｌｖ１】\n【挑战Ｌｖ２】\n【挑战Ｌｖ３】\n【挑战Ｌｖ４】\n【算了】",0,320,240,0,0)
+					wait_W(WK_YESNO)
+					MES_close(PLAYER1)
+					wait_MES(PLAYER1)//閉じきるまで待つ
+				}
+				else if( FV_FF_KappaSki_02)
+				{
+					// LV2をクリアしている
+					workL(WK_CANCEL,SET,4)//【取消】
+					MES_pos(PLAYER1,"??W9【挑战Ｌｖ１】\n【挑战Ｌｖ２】\n【挑战Ｌｖ３】\n【算了】",0,320,240,0,0)
+					wait_W(WK_YESNO)
+					MES_close(PLAYER1)
+					wait_MES(PLAYER1)//閉じきるまで待つ
+					if(WK_YESNO==4)
+						workL(WK_YESNO,SET,5)	//「算了」を５に強制変更
+				}
+				else if( FV_FF_KappaSki_01)
+				{
+					// LV1をクリアしている
+					workL(WK_CANCEL,SET,3)//【取消】
+					MES_pos(PLAYER1,"??W9【挑战Ｌｖ１】\n【挑战Ｌｖ２】\n【算了】",0,320,240,0,0)
+					wait_W(WK_YESNO)
+					MES_close(PLAYER1)
+					wait_MES(PLAYER1)//閉じきるまで待つ
+					if(WK_YESNO==3)
+						workL(WK_YESNO,SET,5)	//「算了」を５に強制変更
+				}
+				else
+				{
+					// まだクリアしていない
+					// □まだクリアしていない场合は、問答無用でＬｖ１を開始。
+//					workL(WK_CANCEL,SET,2)//【取消】
+//					MES_pos(PLAYER1,"??W9【挑战】\n【算了】",0,320,240,0,0)
+//					wait_W(WK_YESNO)
+//					MES_close(PLAYER1)
+//					wait_MES(PLAYER1)//閉じきるまで待つ
+//					if(WK_YESNO==2)
+//						workL(WK_YESNO,SET,5)	//「算了」を５に強制変更
+					workL(WK_YESNO,SET,1)
+				}
+
+				if(WK_YESNO<5)
+				{
+				//	name("□Ｌｖ１～Ｌｖ４")
+					MES(KAPPA,"那么我收下１００芬尼了。",0)
+					SE(008,PLAYER1)
+					MES(KAPPA,"我这就带你们上去。",0)
+					MES_close(KAPPA)
+
+					fade_in( 100, 60, BLACK)	//暗転
+					wait_fade()
+
+				//　　所持金を１００芬尼減らす。
+					get_gold(-100,RAGNA)
+				//　　フェードアウトし、もう一度スキーマップ之イベントから開始する。
+
+					workG(GW_SKI_PARTNER,SET,0)	//拉古那だけ
+					if(SP004==5)
+					{
+						workG(GW_SKI_PARTNER,SET,5)	//奥蒂莎
+					}
+					else if(SP004==12)
+					{
+						workG(GW_SKI_PARTNER,SET,12)	//奥蒂莎
+					}
+					else if(SP004==13)
+					{
+						workG(GW_SKI_PARTNER,SET,13)	//奥蒂莎
+					}
+					else if(SP004==6)
+					{
+						workG(GW_SKI_PARTNER,SET,6)	//昴
+					}
+					else if(SP004==1)
+					{
+						workG(GW_SKI_PARTNER,SET,1)	//艾雯
+					}
+
+					clear_party(PARTNER)	//パートナー消去
+
+					workG(GW_ENTRY_EVENT,SET,1)	//スキー開始
+					if(WK_YESNO==1)
+						new_map(10490)
+					else if(WK_YESNO==2)
+						new_map(10491)
+					else if(WK_YESNO==3)
+						new_map(10492)
+					else if(WK_YESNO==4)
+						new_map(10493)
+				}
+				else	//	name("□「やめる」")
+				{
+					MES(KAPPA,"啊、这样啊。",0)
+					MES_close(KAPPA)
+				}
+			}
+		}
+		else
+		if(WK_YESNO==2)	//回去忍者之里
+		{
+			MES(KAPPA,"嗯、明白了。",0)
+			MES(KAPPA,"继续啊。",0)
+			MES_close(KAPPA)
+
+		//　　フェードアウト＆ゆっくりフェードインして、星降之里·井戸之前に出る。
+			fade_in( 100, 60, BLACK)	//暗転
+			wait_fade()
+
+			workG(GW_ENTRY_EVENT,SET,3)	//スキーから戻り
+			new_map(10400)
+
+		//　　イベント終了、操作許可。
+		}
+		else	//	name("□「やめる」")
+		{
+			MES(KAPPA,"啊、这样啊。",0)
+			MES_close(KAPPA)
+		}
+	}
+	workL(005,SET,0)
+
+	TK_end()
+}
+
+
+TK_FIGURE
+{
+
+			if(WK000==4)
+				MES(KAPPA,"……白金奖牌！\nＷｏｎｄｅｒｆｕｌ。",0)
+			else
+				MES(KAPPA,"……话说回来你们、\n得到了白金奖牌了呢。",0)
+
+			MES(KAPPA,"可以啊你们。",0)
+			MES(KAPPA,"在星之峰赢我\n也不是那么简单的。",0)
+			MES_close(KAPPA)
+			wait_MES(KAPPA)
+
+		//　　河童に···エモーション。
+			EFF_chr(25124,KAPPA,0,100,0,"Bone_Head")
+			wait(80)
+
+			MES(KAPPA,"这时候还是要、\n奖赏奖赏你们的。",0)
+			MES(KAPPA,"……没办法。\n给你们\n１个我的收藏品。",0)
+			MES(KAPPA,"有点\n吃惊吧……",0)
+			EV("MOTION_KAPPA2")
+			wait_EV("MOTION_KAPPA2")
+			MES(KAPPA,"这个。",0)
+			MES_close(KAPPA)
+
+		//　　＞露之手办ゲット。
+
+			fade_in(30,10,BLACK)
+
+			Load_BMP(14,"sys\\icon00.itm","sys\\icon00a.itm")
+			menuBMP(3,	14,	0,40,20,20)
+
+			F_set(2859)//露
+			SE(019,PLAYER1)
+
+			menu(3,	0,	230, 225,  0,	32, 32,	 0,  0,0)
+			menu(3,	0,	230, 225,  0,	32, 32,	10,100,0)
+
+			menu(0,	3,	200,210,0,	280,60,	-20,0,0)
+			menuTXT(0,	"L446露的手办L777入手。",	20,WHITE)
+			menuTextPos(0,70,23)
+			menuEVENT(0,"0","0","0")
+			wait_key(0)
+			menu(3,	-1,	-1, -1, -1,	-1, -1,	0,0,0)
+			menu(0,	-1,	-1, -1, -1,	-1, -1,	0,0,0)
+			menuTextPos(0,0,0)
+
+			fade_in(0,10,BLACK)
+			wait_fade()
+			MOT(KAPPA,2,15)
+
+		//　　拉古那たちに気付きエモーション。
+			EMO(RAGNA,EMO_TOGEBIKKURI)
+
+			//誰だか知らないけどパートナーがいる
+			if( !F4_00_StartSolo )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+			else
+			if( F4_02_GoVillage2 && !F5_00_HearLunar )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+			else
+			if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+			else
+			if( F6_00_GoToMeru )
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+
+			if( F5_00_HearLunar )
+				EMO(PET,EMO_TOGEBIKKURI)
+			wait(30)
+
+		//	name("先頭キャラ·または露")
+			if( F5_00_HearLunar )
+			{
+				MES(PET,"唉……！？",0)
+				MES_close(PET)
+			}
+			else
+			{
+				MES(PLAYER1,"えっ……！？",0)
+				MES_close(PLAYER1)
+			}
+
+			MES(KAPPA,"看、吓一跳吧？\n还真是这样吧？",0)
+			MES(KAPPA,"所谓的秘密\n手办就是这个了。",0)
+			MES(KAPPA,"因为是相当珍贵的东西、\n所以我带着\n大家都很惊讶吧。",0)
+			MES(KAPPA,"啊……那个、\n一定要好好保管哦。",0)
+			MES(KAPPA,"也许在也得不到了呢。",0)
+			MES_close(KAPPA)
+			workL(005,SET,1)//リトライ処理を飛ばす。
+
+
+}
+
+
+
+
+MOTION_KAPPA
+{
+
+	MOT_SET(KAPPA,151,151,461,461,-1,-1)	//
+	MOT_SET(KAPPA,152,152,463,463,-1,-1)	//
+	MOT(KAPPA,152,10)
+	wait(10)
+	MOT(KAPPA,151,6)
+	wait(6)
+	MOT(KAPPA,152,6)
+	wait(6)
+
+	MOT(KAPPA,151,6)
+	wait(6)
+	MOT(KAPPA,152,6)
+	wait(6)
+	MOT(KAPPA,151,6)
+	wait(6)
+	MOT(KAPPA,152,6)
+	wait(6)
+
+	MOT(KAPPA,2,10)
+
+}
+
+MOTION_KAPPA2
+{
+
+	MOT_SET(KAPPA,153,-1,509,509,154,0)	//何か渡す仕草
+	MOT_SET(KAPPA,154,-1,510,510,155,0)
+	MOT_SET(KAPPA,155,-1,511,511,-1,0)
+	MOT(KAPPA,153,15)
+
+}
+
+
+//  1=スキーLV1クリア(銅)
+//  2=スキーLV2クリア(銀)
+//  3=スキーLV3クリア(金)
+//  4=スキーLV4クリア(プラチナ)
+//  5=スキークリア済みメダル
+//  6=スキー失敗(奈落)
+//  7=スキー失敗(死亡)
+//  8=スキー失敗(ツボ、おしい)
+//  9=スキー失敗(ダメージ)
+// 10=スキー失敗(タイム)
+// 11=スキー失敗(ツボ、足りない)
+// 12=スキー失敗(ツボ、ゼロ)
+// 13=スキー失敗(河童に負けた)
+
+//DB_CLEAR_2：クリア済み成績（ランダムでコネタ）
+
+DB_SKY_1
+{
+	workL(000,SET,1)// 00 結果之コピー
+}
+DB_SKY_2
+{
+	workL(000,SET,2)// 00 結果之コピー
+}
+DB_SKY_3
+{
+	workL(000,SET,3)// 00 結果之コピー
+}
+DB_SKY_4
+{
+	workL(000,SET,4)// 00 結果之コピー
+}
+DB_SKY_5
+{
+	workL(000,SET,5)// 00 結果之コピー
+}
+DB_SKY_6
+{
+	workL(000,SET,6)// 00 結果之コピー
+}
+DB_SKY_7
+{
+	workL(000,SET,7)// 00 結果之コピー
+}
+DB_SKY_8
+{
+	workL(000,SET,8)// 00 結果之コピー
+}
+DB_SKY_9
+{
+	workL(000,SET,9)// 00 結果之コピー
+}
+DB_SKY_10
+{
+	workL(000,SET,10)// 00 結果之コピー
+}
+DB_SKY_11
+{
+	workL(000,SET,11)// 00 結果之コピー
+}
+DB_SKY_12
+{
+	workL(000,SET,12)// 00 結果之コピー
+}
+DB_SKY_13
+{
+	workL(000,SET,13)// 00 結果之コピー
+}
+
+
+DB_CLEAR_2
+{
+	workL(002,SET,2)// 02 クリア済み判定用
+}
+
+LUE_FIGURE_CLR
+{
+	F_reset(2859)
+}
+
+Yasaku_Memo_CLR
+{
+	F_reset(1980)
+	F_reset(1975)
+}
+
+WK010_RAND
+{
+	//河童一般会話用之WK
+	if( GW_HUNTER_RANK>=16 )
+		workL(010,RAND,5)
+	else
+		workL(010,RAND,4)
+
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

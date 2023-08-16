@@ -1,0 +1,4597 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[mc52022][俧-摤媄応]
+//====================================================================
+
+#ScriptTable
+
+//懳愴憡庤偺儔儀儖傪 ENEMY_CHARA偵摑堦偟傑偟偨
+#ENEMY_CHARA	9
+
+#LOTTE		10
+
+//30乣34偼暘恎丠
+
+/*
+#MAURICE	11
+#ODESSA		12
+#PIPIRO		13
+#POCKLE		14
+#SUBARU		15
+#FIONA		16
+#KLODE		17
+*/
+#GYARANDOW	18
+//#GYARANDOW_2 19	//僊儍儔儞僪僁佀儁儞僊儞偺楢愴偵彑棙偟偨応崌梡
+
+//侾夞愴
+/*
+#ZAKO_1		20
+#ZAKO_2		21
+#ZAKO_3		22
+#ZAKO_4		23
+#ZAKO_5		24
+#ZAKO_6		25
+#ZAKO_7		26
+#ZAKO_8		27
+*/
+#ZAKO_19		28	// 敾掕梡
+
+#EV_PENGUIN	29
+
+//俀夞愴
+/*
+#ZAKO_11	30
+#ZAKO_12	31
+#ZAKO_13	32
+#ZAKO_14	33
+#ZAKO_15	34
+#ZAKO_16	35
+#ZAKO_17	36
+#ZAKO_18	37
+
+#ZAKO_19	38	// 敾掕梡
+*/
+
+
+//仭儘乕僇儖儚乕僋
+// 001:搢偟偨僓僐偺悢
+// 002:僒僶僀僶儖儌乕僪偺偲偒1
+
+INIT
+{
+//  -------  no typ   	  tip      x    y   z       mot     岦 忬  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭奒抜丒斷
+
+	//僠僃僢僋梡偵僄儞僩儕傎偟偄偺偱丄暅妶偝偣傑偡丅僠僃僢僋廔椆屻僐儊儞僩傾僂僩偟傑偡丅2008.08.06
+	set_chr( 90,990,	 6, 7,     0,   0,  0,		180,070201, 6,"K1_10510;")	//嘆僄儞僩儕
+
+	set_obj("@obx0082a", 6, 7,     0,   0,  0,		180)						//傾乕僠
+	set_obj("@obx0082a", 5, 4,     0,   0,  0,		0)						//傾乕僠(揋懁)
+	set_chr(191,1301,	 6, 7,     0,   0,  0,		  0,   180, 0,";")			//奒抜壓乮僟儈乕乯
+	set_chr(192,1301,	 5, 4,     0,   0,  0,		  0,   0, 0,";")			//奒抜忋乮僟儈乕乯
+
+
+	//娰撪偵偄傞傛俴俥丅
+	F_set(90)
+
+	//仴僇僢僷儌乕僪
+/*	if(GW_ENTRY_EVENT==3)
+	{
+		set_chr( 1,311,		0,0,10280,10210,0,	0,	0,		0,";")//晛捠僗儔僀儉
+		set_chr( 2,311,		0,0,10280,10210,0,	0,	0,		0,";")//晛捠僗儔僀儉
+		set_chr( 3,311,		0,0,10280,10210,0,	0,	0,		0,";")//晛捠僗儔僀儉
+		set_chr( 4,311,		0,0,10280,10210,0,	0,	0,		0,";")//晛捠僗儔僀儉
+		set_chr( 5,311,		0,0,10280,10210,0,	0,	0,		0,";")//晛捠僗儔僀儉
+		set_chr( 6,311,		0,0,10280,10210,0,	0,	0,		0,";")//晛捠僗儔僀儉
+		set_chr( 7,311,		0,0,10280,10210,0,	0,	0,		0,";")//晛捠僗儔僀儉
+		set_chr( 8,311,		0,0,10280,10210,0,	0,	0,		0,";")//晛捠僗儔僀儉
+		set_chr( 9,311,		0,0,10280,10210,0,	0,	0,		0,";")//晛捠僗儔僀儉
+//		set_chr( 10,350,	0,0,10280,10210,800,-1,	0,		8,"!F10 F1 F2 F3 F4 F5 F6 F7 F8 F9 S0_1 WT?120 V0_99;")//戝僗儔僀儉
+	
+	
+		EV("PRE_KAPPA_BATTLE")										//僇僢僷
+	}
+	else*/
+	
+	//仴僒僶僀僶儖乮僇僢僷屻乯
+	if(GW_ENTRY_EVENT==3)
+	{
+		workG(GW_ENTRY_EVENT,SET,3)							//廔椆屻偺暘婒偵巊梡
+		EV("PRE_SURVIVAL_LOOP")
+		wait_EV("PRE_SURVIVAL_LOOP")
+		
+		
+	}
+	else
+	//仴僒僶僀僶儖	
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,3)							//廔椆屻偺暘婒偵巊梡
+		EV("PRE_SURVIVAL")									//僒僶僀僶儖
+	}
+	//仴摤媄応
+	else
+	{
+	
+		if(GW_ENTRY_EVENT==1)
+		{
+	//昁偢杮愴偐傜巒傑傞傛偆偵廋惓 2008.07.29. 18:40
+			workG(GW_SKI_MODE,SET,5)	//僊僽傾僢僾儊僯儏乕傪僙僢僩
+
+			set_chr( LOTTE,1068,	-1,-1,  10388,10356,1,	0,0,0,"")	//丂儘僢僥
+			MOT_SET( LOTTE,159,159,3001,3061,-1,-1 )
+			MOT(LOTTE,159,0)
+
+			//僶僩儖偵挧愴偡傞偺偑弶夞偺応崌丄墘弌傪尒偣傞弶婜埵抲偵
+			if(GW_TRY_CUP==1)
+			{
+				if(!FV_FF_BAMaurice)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAMaurice)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+			}
+			else
+			if(GW_TRY_CUP==2)
+			{
+				if(!FV_FF_BAOdessa)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAOdessa)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+			}
+			else
+			if(GW_TRY_CUP==3)
+			{
+				if(!FV_FF_BAPockle)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAPockle)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+			}
+			else
+			if(GW_TRY_CUP==4)
+			{
+				if(!FV_FF_BAPipiro)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAPipiro)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+			}
+			else
+			if(GW_TRY_CUP==5)
+			{
+				if(!FV_FF_BASubaru)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BASubaru)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+			}
+			else
+			if(GW_TRY_CUP==6)
+			{
+				if(!FV_FF_BAFiona)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAFiona)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+			}
+			else
+			if(GW_TRY_CUP==7)
+			{
+				if(!FV_FF_BAKlode)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAKlode)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+			}
+			else
+			if(GW_TRY_CUP==8)
+			{
+				if(!FV_FF_BAGyarandow)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAGyarandow)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+			}
+			else
+			if(GW_TRY_CUP==9)
+			{
+				if(!FV_FF_BAPenguin)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAPenguin)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+			}
+		}
+
+		if(FV_FF_FarstBattle)
+		{
+			//弶夞偺張棟
+			EV("PRE_BATTLE")
+		}
+		//偦偆偱側偄応崌偼嵟弶偐傜揋偲岦偒崌偭偰偄傞
+		else
+		{
+		//2夞栚埲崀偺張棟
+			EV("PRE_BATTLE_2")
+		}
+
+	}
+	map_color(85,80,80,0);//R,G,B, time 100%
+}
+
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧摤媄応張棟")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/*
+Test
+{
+	set_chr( LOTTE,82,	-1,-1,  10388,10356,1,	51,0,0,"")	//丂儘僢僥
+	set_chr( ENEMY_CHARA,081,	-1,-1,  9450,9192,1,	2,0,0,"")	//丂儁儞僊儞
+	set_chr( GYARANDOW,21,	-1,-1,  10120,10772,0	51,270,0,"")	//丂僊儍儔儞僪僁
+
+	set_chr( 11,1010,	-1,-1,  10150,10772,0	2,90,0,"")	//丂僊儍儔儞僪僁
+
+	set_chr(12,081,-1,-1, 9480,10275,0,2,310,0,"")
+	set_chr(13,081,-1,-1, 9649,10439,0,2,310,0,"")
+	set_chr(14,081,-1,-1,10150,10772,0,2,310,0,"")
+
+	set_chr(15,21,-1,-1,10019,10977,0,51,270,0,"")
+}
+*/
+/*
+Monster_test
+{
+	set_chr( 50,129,	 -1, -1,    11232,7754,-500,		50,0, 0,";")	//
+	color2(50,0,0,0, 50,50,50)
+	chr_scale(50,	"charbase0",	200,200,200,	0,	1)
+	F_set_chr(50,CF_NO_CSP)
+	F_set_chr(50,CF_NO_ZIMEN)
+	F_set_chr(50,CF_NO_HEIGHT)
+	F_set_chr(50,CF_NO_CLIP)
+
+	set_chr( 51,129,	 -1, -1,    12313,8504,-631,		50,250, 0,";")	//
+	color2(51,0,0,0, 50,50,50)
+	chr_scale(51,	"charbase0",	200,200,200,	0,	1)
+	F_set_chr(51,CF_NO_CSP)
+	F_set_chr(51,CF_NO_ZIMEN)
+	F_set_chr(51,CF_NO_HEIGHT)
+	F_set_chr(51,CF_NO_CLIP)
+
+	set_chr( 52,129,	 -1, -1,    12864,9556,-450,		50,90, 0,";")	//
+	color2(52,0,0,0, 50,50,50)
+	chr_scale(52,	"charbase0",	200,200,200,	0,	1)
+	F_set_chr(52,CF_NO_CSP)
+	F_set_chr(52,CF_NO_ZIMEN)
+	F_set_chr(52,CF_NO_HEIGHT)
+	F_set_chr(52,CF_NO_CLIP)
+}
+*/
+
+//PRE_BATTLE梡奺庬儚乕僋弶婜壔張棟
+PRE_BATTLE_SET
+{
+	//弶婜埵抲僙僢僩
+	if(GW_TRY_CHARA==0)
+	{
+		// 儔僌僫偱挧愴
+		chr_pos(RAGNA,		11250,11600,1,180,2)
+		clear_party(PARTNER)	//傾儖僂僃儞徚嫀
+	//	delete(PARTNER)
+	}
+	else
+	{
+		// 傾儖僂僃儞偱挧愴
+		chr_pos(RAGNA,		11156,11809,1,180,2)
+		chr_pos(PARTNER,	11250,11600,1,180,2)
+		clear_party(99)		//傾儖僂僃儞偺傒偺憖嶌儌乕僪傊
+	//	delete(RAGNA)
+
+	}
+
+	set_hp(PLAYER1,100)//慡夣
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////俫俹0偱傕徚偊側偄丂僉儍儔0偼巰朣帪偵"EV_DEAD"傪嵞惗
+	KAO(PLAYER1, "1", "1", "1")
+
+	chr_equip2( LOTTE,"eq_062", "Bone_LeftHand", 100,	90,0,0,	-7,0,2);
+	KAO(LOTTE, "1", "1", "1")
+
+	//儌乕僔儑儞
+	MOT_SET(LOTTE,150,-1,461,461,151,15)	//惡墖偵摎偊傞
+	MOT_SET(LOTTE,151,-1,462,462,152,15)
+	MOT_SET(LOTTE,152,-1,463,463,150,15)
+	MOT_SET(LOTTE,153,-1,497,497,154,15)	//僕儍儞僾
+	MOT_SET(LOTTE,154,-1,499,499,2,5)
+
+	F_reset(FV_FF_FarstBattle)
+
+	//懳愴憡庤傪僙僢僩
+	if(GW_TRY_CUP==1)
+	{
+		set_chr( ENEMY_CHARA,390,	-1,-1,  9501,8247,1,	2,0,0,"")	//丂儌乕儕僗
+		if(GW_TRYNum_Maurice<99)
+			workG(GW_TRYNum_Maurice,ADD,1)
+
+		if(GW_TRYNum_Maurice==1)//弶夞挧愴
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		set_chr( ENEMY_CHARA,392,	-1,-1,  9501,8247,1,	2,0,0,"")	//丂僆僨僢僒
+		if(GW_TRYNum_Odessa<99)
+			workG(GW_TRYNum_Odessa,ADD,1)
+
+		if(GW_TRYNum_Odessa==1)//弶夞挧愴
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		set_chr( ENEMY_CHARA,396,	-1,-1,  9501,8247,1,	2,0,0,"")	//丂億僢僋儖
+		if(GW_TRYNum_Pockle<99)
+			workG(GW_TRYNum_Pockle,ADD,1)
+
+		if(GW_TRYNum_Pockle==1)//弶夞挧愴
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		set_chr( ENEMY_CHARA,397,	-1,-1,  9501,8247,1,	2,0,0,"")	//丂僺僺儘
+		if(GW_TRYNum_Pipiro<99)
+			workG(GW_TRYNum_Pipiro,ADD,1)
+
+		if(GW_TRYNum_Pipiro==1)//弶夞挧愴
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		set_chr( ENEMY_CHARA,391,	-1,-1,  9501,8247,1,	2,0,0,"")	//丂僗僶儖
+		if(GW_TRYNum_Subaru<99)
+			workG(GW_TRYNum_Subaru,ADD,1)
+
+		if(GW_TRYNum_Subaru==1)//弶夞挧愴
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==6)
+	{
+		set_chr( ENEMY_CHARA,393,		-1,-1,  9501,8247,1,	2,0,0,"")	//丂僼傿僆僫
+		if(GW_TRYNum_Fiona<99)
+			workG(GW_TRYNum_Fiona,ADD,1)
+
+		if(GW_TRYNum_Fiona==1)//弶夞挧愴
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		set_chr( ENEMY_CHARA,394,		-1,-1,  9501,8247,1,	2,0,0,"")	//丂僋儘乕僪
+		if(GW_TRYNum_Klode<99)
+			workG(GW_TRYNum_Klode,ADD,1)
+
+		if(GW_TRYNum_Klode==1)//弶夞挧愴
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		set_chr( ENEMY_CHARA,398,	-1,-1,  9448,8507,0,	2,0,0,"")	//丂僊儍儔儞僪僁
+		if(GW_TRYNum_Gyarand<99)
+			workG(GW_TRYNum_Gyarand,ADD,1)
+
+		if(GW_TRYNum_Gyarand==1)//弶夞挧愴
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		set_chr( ENEMY_CHARA,399,	-1,-1,  9370,8349,1,	2,0,0,"")	//丂儁儞僊儞
+		if(GW_TRYNum_Penguin<99)
+			workG(GW_TRYNum_Penguin,ADD,1)
+
+		if(GW_TRYNum_Penguin==1)//弶夞挧愴
+			F_set(FV_FF_FarstBattle)
+	}
+	set_chr( ZAKO_19,990,	-1,-1,  11388,9309,1,	10,0,8,"(F9 <EV_WIN> RF9)")
+	F_set_chr(ENEMY_CHARA,CF_NO_DEAD)
+	F_set_chr(ENEMY_CHARA,CF_NO_DROPITEM)
+
+
+	//儁儞僊儞攖偠傖側偗傟偽丄懳愴憡庤傪楢傟偰偔傞僀儀儞僩梡儁儞僊儞攝抲
+	if(GW_TRY_CUP!=9 && GW_TRY_CUP!=8)
+	{
+//		set_chr( EV_PENGUIN,81,	-1,-1,  9526,9192,1,	2,0,0,"")	//丂儁儞僊儞
+		set_chr( EV_PENGUIN,81,	-1,-1,  9370,8349,0,	2,0,0,"")	//丂儁儞僊儞
+		color(EV_PENGUIN,-1)//摟夁
+	}
+
+
+}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴愴摤奐巒慜偺張棟乮侾夞栚斉乯
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂摤媄応偱侾夞栚偵愴摤偡傞応崌偼墘弌傪挿傔偵庢傞丅
+//丂丂俀夞栚埲崀偼墘弌傪娙棯壔偡傞丅
+//丂丂堦搙娰傪偱偰偐傜傕偆堦搙傗偭偰偔傞偲丄侾夞栚斉偺張棟偵側傞丅
+//丂丂仸摿偵丄弶傔偰摤媄応偱愴偆応崌偼僇儊儔墘弌傪嫮壔偡傞丅
+//丂丂僱僆儞僒僀儞傪愽傝側偑傜丄梙傟傞傛偆側僇儊儔偱
+//丂丂侾恖晳戜拞墰偵棫偮儘僢僥偵嬤偯偄偰偄偔丅
+//丂丂娊惡偑柭傞拞丄攈庤側僇儊儔墘弌傪偟側偑傜儘僢僥偺僀儞僩儘丅
+//丂丂仸摤媄応偱愴偭偨偙偲偑偁傞応崌偼丄僇儊儔墘弌偼娙棯壔偡傞丅
+//丂丂晳戜偵儘僢僥偲儔僌僫乛傾儖僂僃儞偑棫偭偰偄傞宍丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+PRE_BATTLE
+{
+	EV_begin()
+
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	//	弶婜壔張棟
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+	wait(1)
+
+	//僇儊儔僙僢僩
+	CAM_move(10388,-10456,162,0,0)
+	CAM(-50,118,162,20,180,0,0)
+	wait_CAM_move()
+
+	EV("PRE_BATTLE_SET")
+	wait_EV("PRE_BATTLE_SET")
+
+	//弶婜埵抲僙僢僩 弶夞
+	if(FV_FF_FarstBattle)
+	{
+		chr_pos(PLAYER1,	11250,11600,1,180,2)
+		color(PLAYER1,-1)
+	}
+	else
+	{
+		chr_pos(PLAYER1,	10651,10772,1,90,2)
+	}
+	color(ENEMY_CHARA,-1)//摟夁
+
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	//仭僀儀儞僩奐巒
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	wait(10)
+//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+//	name("仸摤媄応偱愴偆偺偑弶傔偰偺応崌丅")
+//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+	if(FV_FF_FarstBattle)
+	{
+		CAM_move(10338,-10552,119,0,0)
+		CAM(8000,46,-40,50,226,0,0)
+		CAM_move(10325,-10215,119,180,0)
+		CAM(8000,30,-40,42,143,180,0)
+
+		fade_in( 0, 80, BLACK)	//僼僃乕僪僀儞
+		wait(150)
+
+		fade_in(100, 20, BLACK)	//僼僃乕僪僀儞
+		wait_fade()
+
+		CAM_move(10392,-10300,160,0,0)
+		CAM(-170,112,0,46,282,0,0)
+		CAM(-170,112,0,46,250,240,0)
+		fade_in(  0, 40, BLACK)	//僼僃乕僪僀儞
+		wait(50)
+
+		KAO(LOTTE,"52625Z4","5","6")
+		MES_pos(LOTTE,"P1S4各位女士們＆先生們！",0,0,0,0,0)
+		wait(80)
+		MES_close(LOTTE)
+		wait_MES(LOTTE)
+
+		cross_fade(30)
+		CAM_move(10372,-10440,160,0,0)
+		CAM(-170,62,160,18,215,0,0)
+		wait_fade()
+	}
+	else
+	{
+//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+//	name("仸摤媄応偱愴偆偺偑弶傔偰偱側偄丅")
+//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+		CAM_move(10388,-10456,162,100,0)
+		CAM(-50,50,162,21,180,100,0)
+
+		if(GW_TRY_CHARA==0)
+			MOT(RAGNA,50,15)
+		else
+			MOT(PARTNER,51,15)
+		wait(5)
+		fade_in( 0, 60, BLACK)	//僼僃乕僪僀儞
+		wait_fade()
+
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","5","6")
+		MES(LOTTE,"P1S4各位女士們＆先生們！",0)
+	}
+
+	KAO(LOTTE,"52625Z3","321","6")
+	MES(LOTTE,"P1S4讓你們久等了～。",0)
+	MES_close(LOTTE)
+
+	if(GW_TRY_CUP==1)
+	{
+		KAO(LOTTE,"52625Z6","1236","6")
+		MES(LOTTE,"P1S4今晚將有人向\n莫里斯杯挑戰～！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		KAO(LOTTE,"52625Z6","1236","6")
+		MES(LOTTE,"P1S4今晚是西部之夜！\n將有人向西部杯挑戰～！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		KAO(LOTTE,"52625Z6","1236","6")
+		MES(LOTTE,"P1S4讓大家久等了！\n今晚將有人向\n純情少年杯挑戰！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		KAO(LOTTE,"52625Z5","123","6")
+		MES(LOTTE,"P1S4今晚登場的\n是那位嘴巴毒辣的少女！",0)
+		KAO(LOTTE,"52625Z5","36","6")
+		MES(LOTTE,"P1S4向魔法少女杯\n～挑戰！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		KAO(LOTTE,"52625Z6","1236","6")
+		MES(LOTTE,"P1S4今晚將進行\n小忍者杯挑戰賽～！",0)
+		KAO(LOTTE,"52625Z6","5","6")
+		MES(LOTTE,"P1S4到底誰才有資格\n擔當起這個稱號呢～！？",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==6)
+	{
+		KAO(LOTTE,"52625Z5","123","6")
+		MES(LOTTE,"P1S4今晚我們邀請來了\n特殊嘉賓……",0)
+		KAO(LOTTE,"52625Z6","36","6")
+		MES(LOTTE,"P1S4向武裝小姐杯\n挑戰！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		KAO(LOTTE,"52625Z5","123","6")
+		MES(LOTTE,"P1S4接下來，今晚\n傳說中的那個人……",0)
+		KAO(LOTTE,"52625Z6","36","6")
+		MES(LOTTE,"P1S4將向萬能管家杯\n挑戰～！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		KAO(LOTTE,"52625Z6","1236","6")
+		MES(LOTTE,"P1S4今晚竟然有位勇士\n向最強男子杯挑戰～！",0)
+		KAO(LOTTE,"52625Z6","5","6")
+		MES(LOTTE,"P1S4他最後能否登上\n冠軍的寶座呢～！？",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		KAO(LOTTE,"52625Z5","123","6")
+		MES(LOTTE,"P1S4這激動人心的時刻\n馬上就要到來了～。",0)
+		KAO(LOTTE,"52625Z6","36","6")
+		MES(LOTTE,"P1S4今晚終於有人\n向企鵝杯挑戰了！！",0)
+		MES_close(LOTTE)
+	}
+	wait_MES(LOTTE)
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂攈庤偵娊惡俽俤偑柭傝丄儘僢僥偼庤傪怳偭偰偦傟偵墳偊傞丅
+//	MES(LOTTE,"C4仧攈庤偵娊惡俽俤偑柭傝丄儘僢僥偼庤傪怳偭偰偦傟偵墳偊傞丅",0)
+//	MES_close(LOTTE)
+
+	SE(591,0)//娊惡
+
+	cross_fade(30)
+	color(PLAYER1,-1)
+	CAM_move(10374,-10469,119,0,0)
+	CAM(-330,90,-40,9,-30,0,0)
+	CAM_move(10414,-10469,119,250,0)
+	CAM(-50,90,-40,9,37,250,0)
+
+	KAO(LOTTE,"5","321","6")
+	MOT(LOTTE,150,15)
+	rot(LOTTE,30,330)
+	wait(60)
+	rot(LOTTE,30,30)
+	wait(60)
+	rot(LOTTE,30,0)
+	MOT(LOTTE,159,15)
+//	wait(30)
+
+//丂丂儘僢僥丄惵僐乕僫乕傪巜偡丅
+	rot(LOTTE,30,330)
+	look(LOTTE,"Bone_RightShoulder",0,		5,5,5,			10,-20,100)
+
+//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+//	name("仸摤媄応偱愴偆偺偑弶傔偰偺応崌丅")
+//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+	if(FV_FF_FarstBattle)
+	{
+
+		cross_fade(20)
+		CAM_move(10388,-10456,162,0,0)
+		CAM(-208,32,162,26,178,0,0)
+		CAM(-208,32,162,19,178,20,0)
+		wait(50)
+//		CAM_move(10348,-10456,202,40,0)
+//		CAM(-50,56,202,20,54,40,0)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀挧愴幰偑儔僌僫偺応崌")
+		if(GW_TRY_CHARA==0)
+		{
+			CAM_quake("463746")
+			KAO(LOTTE,"52625Z4","1236","6")
+			MES(LOTTE,"P1S4本次的挑戰者是\n「飛機狂」拉格那～！",0)
+			MES_close(LOTTE)
+
+			KAO(RAGNA,"1","3","1")
+			MOT(RAGNA,50,15)
+			
+		}
+		//	name("佀挧愴幰偑傾儖僂僃儞偺応崌")
+		else
+		{
+			CAM_quake("463746")
+			KAO(LOTTE,"52625Z4","1236","6")
+			MES(LOTTE,"P1S4本次的挑戰者是\n「真祖公主」艾爾文～！",0)
+			MES_close(LOTTE)
+
+			KAO(PARTNER,"1","3","1")
+			MOT(PARTNER,51,15)
+		}
+		wait_MES(LOTTE)
+		color(PLAYER1,1)
+
+		//丂丂惵僐乕僫乕偐傜儔僌僫/傾儖僂僃儞偑傗偭偰棃傞丅
+		SE(593,0)//彫娊惡
+ 		EV("Move_Player")
+// 		wait_EV("Move_Player")
+		wait(120)
+
+		cross_fade(10)
+		EV_stop("Move_Player")
+		chr_pos(PLAYER1,10933,10946,0,90,2)
+		move( PLAYER1, 0, 008,10651,10772,1,0)
+
+//		CAM_move(10388,-10456,162,0,0)
+//		CAM(-49,175,162,22,161,0,0)
+		CAM_move(9794,-10422,-18,0,0)
+		CAM(-10,113,-180,29,248,0,0)
+		CAM_move(10492,-10236,-18,90,0)
+		CAM(310,110,-180,29,161,90,0)
+
+//		wait_fade()
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		wait_move(PLAYER1)
+		wait(10)
+		look_chr(PLAYER1,LOTTE,"Bone_Head")
+		wait(40)
+		CAM_move(10388,-10456,162,50,0)
+		CAM(-50,55,162,23,180,50,0)
+		look(LOTTE,"Bone_RightShoulder",0,		5,5,5,			0,0,0)
+		rot(LOTTE,10,0)
+	//	MOT(LOTTE,159,15)
+		KAO(LOTTE,"52625Z3","321","6")
+		MES(LOTTE,"然後對手是……",0)
+		MES_close(LOTTE)
+	
+		//仛摤媄応偱愴偭偨
+		//F_set(FV_FF_FarstBattle)
+	}
+//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+//	name("仸摤媄応偱愴偭偨偙偲偑偁傞応崌")
+//	name("乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗")
+	else
+	{
+		color(PLAYER1,1)
+//		CAM_move(10588,-10456,102,20,0)
+//		CAM(-87,86,102,21,161,20,0)
+//		wait_CAM_move()
+
+		look_chr(PLAYER1,LOTTE,"Bone_Head")
+		cross_fade(20)
+		CAM_move(10588,-10456,102,0,0)
+		CAM(-87,86,102,21,161,0,0)
+		wait_fade()
+
+	//丂丂儘僢僥丄挧愴僉儍儔傪傪巜偡丅乮徯夘偡傞傛偆側姶偠乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀挧愴幰偑儔僌僫偺応崌")
+		CAM_quake("463746")
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(LOTTE,"52625Z4","1","6")
+			MES(LOTTE,"P1S4……挑戰者，\n「飛機狂」拉格那ＶＳ──",0)
+			MES_close(LOTTE)
+		}
+		//	name("佀挧愴幰偑傾儖僂僃儞偺応崌")
+		else
+		{
+			KAO(LOTTE,"52625Z4","1","6")
+			MES(LOTTE,"P1S4……挑戰者，\n「真祖公主」艾爾文ＶＳ──",0)
+			MES_close(LOTTE)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		rot(LOTTE,10,0)
+	}
+
+//丂丂儘僢僥丄愒僐乕僫乕傪巜偡丅
+//	MOT(LOTTE,159,15)
+	look(LOTTE,"Bone_RightShoulder",0,		5,5,5,			10,-20,100)
+	CAM_move(10388,-10456,162,30,0)
+	CAM(-208,30,162,22,179,30,0)
+	rot(LOTTE,30,30)
+	wait(30)
+	look_chr(PLAYER1,ENEMY_CHARA,"Bone_Head")
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭name("佀儌乕儕僗攖偵挧愴偟偨")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(GW_TRY_CUP==1)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4「幹勁十足的中年」莫里斯～！",0)
+		MES_close(LOTTE)
+	//丂丂娊惡俽俤偲嫟偵
+	//丂丂偝偁偝偁偙偭偪傊偔傞偺偱偡丄偲偐尵傢傟側偑傜懳愴幰搊応丅
+
+		wait_MES(LOTTE)
+		SE(593,0)//彫娊惡
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		EV("Move_EnemyAndPenguin1")
+		wait_EV("Move_EnemyAndPenguin1")
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僼儔僌嘔埲慜偺応崌")
+		if(!F5_00_HearLunar)
+		{
+			KAO(ENEMY_CHARA, "12321Z4", "1", "1")	
+			MES(ENEMY_CHARA,"哈，哈哈哈……\n有點難為情……",0)
+			MES_close(ENEMY_CHARA)
+	 		wait_MES(ENEMY_CHARA)
+
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		else
+		{
+		//	name("佀僼儔僌嘕嘖偺応崌")
+			look_chr(ENEMY_CHARA,EV_PENGUIN,"Bone_Head")
+			KAO(ENEMY_CHARA, "12321Z4", "1", "4")
+			MES(ENEMY_CHARA,"那，那個……我現在\n有點忙……",0)
+			MES_close(ENEMY_CHARA)
+			
+			rot_chr(EV_PENGUIN,30,ENEMY_CHARA)
+			KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+			MES(EV_PENGUIN,"好了啦，既然來了。\n就要加油。",0)
+			MES_close(EV_PENGUIN)
+			rot(EV_PENGUIN,30,0)
+			look_off(ENEMY_CHARA)
+//			wait(20)
+			wait_MES(EV_PENGUIN)
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+
+		chr_rename(ENEMY_CHARA,"莫里斯")
+		chr_rename(EV_PENGUIN,"宣傳企鵝")
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜儌乕儕僗偑傗偭偰偔傞丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		EV("Move_EnemyAndPenguin3")
+		wait_EV("Move_EnemyAndPenguin3")
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭name("佀僂僄僗僞儞攖偵挧愴偟偨")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(GW_TRY_CUP==2)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4「餓狼獵手」奧迪莎～！",0)
+		MES_close(LOTTE)
+		if( F6_02_OnMeru ) 
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"咦……\n好像沒有找到她呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"沒辦法了。\n用這個代替吧。",0)
+			MES_close(LOTTE)
+		}
+		else
+		if( F3_07_FlickSwitch2 && !F4_09_GoShrineMia )
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"咦……\n好像沒有找到她呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"沒辦法了。\n用這個代替吧。",0)
+			MES_close(LOTTE)
+		}
+	//丂丂娊惡俽俤偲嫟偵
+	//丂丂偝偁偝偁偙偭偪傊偔傞偺偱偡丄偲偐尵傢傟側偑傜懳愴幰搊応丅
+
+		wait_MES(LOTTE)
+		SE(593,0)//彫娊惡
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		//乮儊儖僙僨僋撍擖屻偺僆僨僢僒乛億僢僋儖乛僺僺儘乛僋儘乕僪乛儔乕儔僀儔乯//丂丂娊惡俽俤偲嫟偵
+		if( F6_02_OnMeru )
+		{
+//儌儞僽儔儞墘弌僇僢僩0821
+//			chr_rename(ENEMY_CHARA,"惡")
+//			MES_pos(ENEMY_CHARA,"S1偪傚丄偪傚偭偲乧乧両丠",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"S2側丄壗傪偡傞僯儍両丠\n乧乧傗丄傗傔傞僯儍乧乧両",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"P1S2偁丄偁偓傖偁偀偀偭乧乧両丠",0,120,130,0,0)
+//			wait_key(0)
+//			MES_close(ENEMY_CHARA)
+//		//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜偄側偄偼偢偺僉儍儔偑傗偭偰偔傞丅
+//
+//			chr_equip2( ENEMY_CHARA,	"eq_048",	"Bone_Spine_Dummy",	100,		0,0,0,	0,0,0)
+//			chr_equip2( ENEMY_CHARA,	"eq_049",	"Bone_Head",	100,		0,0,0,	0,0,0)
+
+			chr_rename(ENEMY_CHARA,"奧迪莎")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+	
+//			MES(ENEMY_CHARA,"仧枹擖椡崁栚\n巹偼恖宍偱偡丅",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9這是本館所有的\n最新型訓練用魔法人偶！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9戰鬥能力與攻擊方式\n都和本人相同，\n不要客氣，開始戰鬥吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		//仛忛丗僗僀僢僠嘇傪擖傟偨丂乣丂仛幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨丂傑偱偺娫
+		else
+		if( F3_07_FlickSwitch2 && !F4_09_GoShrineMia )
+		{
+			chr_rename(ENEMY_CHARA,"奧迪莎")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+	
+//			MES(ENEMY_CHARA,"仧枹擖椡崁栚\n巹偼恖宍偱偡丅",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9這是本館所有的\n最新型訓練用魔法人偶！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9戰鬥能力與攻擊方式\n都和本人相同，\n不要客氣，開始戰鬥吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		else
+		{
+			chr_rename(ENEMY_CHARA,"奧迪莎")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僼儔僌嘔偺応崌")
+			if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			{
+			//	name("惡")
+				KAO(ENEMY_CHARA, "12321Z4", "1233321", "1")	
+				MES(ENEMY_CHARA,"好，輪到我出場了……！",0)
+				MES_close(ENEMY_CHARA)
+				wait_MES(ENEMY_CHARA)
+			}
+			else
+			{
+				KAO(ENEMY_CHARA, "12321Z2", "123", "5")	
+				MES(ENEMY_CHARA,"哎呀呀……",0)
+				KAO(ENEMY_CHARA, "12321Z4", "321", "5")	
+				MES(ENEMY_CHARA,"別看我這樣，\n我可是很忙的。",0)
+				MES_close(ENEMY_CHARA)
+				
+				rot(EV_PENGUIN,30,330)
+				KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+				MES(EV_PENGUIN,"好了啦，既然來了。\n就要加油。",0)
+				MES_close(EV_PENGUIN)
+				wait_MES(EV_PENGUIN)
+				rot(EV_PENGUIN,30,0)
+//				wait(10)
+				wait_MES(EV_PENGUIN)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜僆僨僢僒偑傗偭偰偔傞丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		EV("Move_EnemyAndPenguin3")
+		wait_EV("Move_EnemyAndPenguin3")
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭name("佀弮忣彮擭攖偵挧愴偟偨")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(GW_TRY_CUP==3)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4「純情少年」波克爾～！",0)
+		MES_close(LOTTE)
+		if( F6_02_OnMeru ) 
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"咦……\n好像沒有找到他呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"沒辦法了。\n用這個代替吧。",0)
+			MES_close(LOTTE)
+		}
+	//丂丂娊惡俽俤偲嫟偵
+	//丂丂偝偁偝偁偙偭偪傊偔傞偺偱偡丄偲偐尵傢傟側偑傜懳愴幰搊応丅
+
+		wait_MES(LOTTE)
+		SE(593,0)//彫娊惡
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		//乮儊儖僙僨僋撍擖屻偺僆僨僢僒乛億僢僋儖乛僺僺儘乛僋儘乕僪乛儔乕儔僀儔乯//丂丂娊惡俽俤偲嫟偵
+		if(F6_02_OnMeru)
+		{
+//儌儞僽儔儞墘弌僇僢僩0821
+//			chr_rename(ENEMY_CHARA,"惡")
+//			MES_pos(ENEMY_CHARA,"S1偪傚丄偪傚偭偲乧乧両丠",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"S2側丄壗傪偡傞僯儍両丠\n乧乧傗丄傗傔傞僯儍乧乧両",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"P1S2偁丄偁偓傖偁偀偀偭乧乧両丠",0,120,130,0,0)
+//			wait_key(0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+//		//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜偄側偄偼偢偺僉儍儔偑傗偭偰偔傞丅
+//
+//			chr_equip2( ENEMY_CHARA,	"eq_048",	"Bone_Spine_Dummy",	100,		0,0,0,	0,0,0)
+//			chr_equip2( ENEMY_CHARA,	"eq_049",	"Bone_Head",	100,		0,0,0,	0,0,0)
+
+			chr_rename(ENEMY_CHARA,"波克爾")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+//			MES(ENEMY_CHARA,"仧枹擖椡崁栚\n巹偼恖宍偱偡丅",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9這是本館所有的\n最新型訓練用魔法人偶！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9戰鬥能力與攻擊方式\n都和本人相同，\n不要客氣，開始戰鬥吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+
+		}
+		else
+		{
+			chr_rename(ENEMY_CHARA,"波克爾")
+			look_chr(ENEMY_CHARA,EV_PENGUIN,"Bone_Head")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+			if(!F4_09_GoShrineMia)
+			{
+//				KAO(ENEMY_CHARA, "B232BZ6", "1233321", "5")		//仸懞偱捠梡偟側偄偨傔壓偲崌傢偣偨乮抾0922乯
+//				MES(ENEMY_CHARA,"偁丄偁偺杔丄\n偙偺屻僼傿僆僫偝傫偵\n棅傑傟偰傞挷嵏偑偁偭偰乧乧",0)
+				KAO(ENEMY_CHARA, "B232BZ4", "1233321", "5")	
+				MES(ENEMY_CHARA,"那，那個，\n我現在真的比較忙……",0)
+				MES_close(ENEMY_CHARA)
+			}
+			else
+			{
+				KAO(ENEMY_CHARA, "B232BZ4", "1233321", "5")	
+				MES(ENEMY_CHARA,"那，那個，\n我現在真的比較忙……",0)
+				MES_close(ENEMY_CHARA)
+			}
+			rot(EV_PENGUIN,30,330)
+			KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+			MES(EV_PENGUIN,"好了啦，既然來了。\n就要加油。",0)
+			MES_close(EV_PENGUIN)
+			wait_MES(EV_PENGUIN)
+			rot(EV_PENGUIN,30,0)
+			look_off(ENEMY_CHARA)
+//			wait(10)
+			wait_MES(EV_PENGUIN)
+			KAO(ENEMY_CHARA, "B", "123", "5")	
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜億僢僋儖偑傗偭偰偔傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+ 		EV("Move_EnemyAndPenguin3")
+ 		wait_EV("Move_EnemyAndPenguin3")
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭name("佀杺朄彮彈攖偵挧愴偟偨")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(GW_TRY_CUP==4)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4「魔法少女」皮皮洛～！",0)
+		MES_close(LOTTE)
+		if( F6_02_OnMeru ) 
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"咦……\n好像沒有找到她呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"沒辦法了。\n用這個代替吧。",0)
+			MES_close(LOTTE)
+		}
+	//丂丂娊惡俽俤偲嫟偵
+	//丂丂偝偁偝偁偙偭偪傊偔傞偺偱偡丄偲偐尵傢傟側偑傜懳愴幰搊応丅
+
+		wait_MES(LOTTE)
+		SE(593,0)//彫娊惡
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		//乮儊儖僙僨僋撍擖屻偺僆僨僢僒乛億僢僋儖乛僺僺儘乛僋儘乕僪乛儔乕儔僀儔乯//丂丂娊惡俽俤偲嫟偵
+		if(F6_02_OnMeru)
+		{
+//儌儞僽儔儞墘弌僇僢僩0821
+//			chr_rename(ENEMY_CHARA,"惡")
+//			MES_pos(ENEMY_CHARA,"S1偪傚丄偪傚偭偲乧乧両丠",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"S2側丄壗傪偡傞僯儍両丠\n乧乧傗丄傗傔傞僯儍乧乧両",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"P1S2偁丄偁偓傖偁偀偀偭乧乧両丠",0,120,130,0,0)
+//			wait_key(0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+//		//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜偄側偄偼偢偺僉儍儔偑傗偭偰偔傞丅
+//
+//			chr_equip2( ENEMY_CHARA,	"eq_048",	"Bone_Spine_Dummy",	100,		0,0,0,	0,0,0)
+//			chr_equip2( ENEMY_CHARA,	"eq_049",	"Bone_Head",	100,		0,0,0,	0,0,0)
+
+			chr_rename(ENEMY_CHARA,"皮皮洛")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+//			MES(ENEMY_CHARA,"仧枹擖椡崁栚\n巹偼恖宍偱偡丅",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9這是本館所有的\n最新型訓練用魔法人偶！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9戰鬥能力與攻擊方式\n都和本人相同，\n不要客氣，開始戰鬥吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		else
+		{
+			chr_rename(ENEMY_CHARA,"皮皮洛")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+			EV("Motion_KyoroKyoro")
+
+			KAO(ENEMY_CHARA, "B232BZ4", "123332", "9")	
+			MES(ENEMY_CHARA,"唉，搞什麼啊～。\n要帶我去哪裡？",0)
+			MES_close(ENEMY_CHARA)
+
+			rot(EV_PENGUIN,30,330)
+			KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+			MES(EV_PENGUIN,"好了啦，既然來了。\n就要加油。",0)
+			MES_close(EV_PENGUIN)
+			wait_MES(EV_PENGUIN)
+			wait_EV("Motion_KyoroKyoro")
+			rot(EV_PENGUIN,30,0)
+//			wait(10)
+			wait_MES(EV_PENGUIN)
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜僺僺儘偑傗偭偰偔傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+ 		EV("Move_EnemyAndPenguin3")
+ 		wait_EV("Move_EnemyAndPenguin3")
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭name("佀偪傃偭偙擡幰攖偵挧愴偟偨")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(GW_TRY_CUP==5)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4「見習忍者」昴～！",0)
+		MES_close(LOTTE)
+	//	if(F4_09_GoShrineMia && !F6_00_GoToMeru)
+		if(F4_09_GoShrineMia && !F6_02_OnMeru)
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"咦……\n好像沒有找到人呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"沒辦法了。\n用這個代替吧。",0)
+			MES_close(LOTTE)
+		}
+	//丂丂偝偁偝偁偙偭偪傊偔傞偺偱偡丄偲偐尵傢傟側偑傜懳愴幰搊応丅
+
+		wait_MES(LOTTE)
+		SE(593,0)//彫娊惡
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		//	name("佀僼儔僌嘕偺応崌")
+	//	if(F4_09_GoShrineMia && !F6_00_GoToMeru)
+		if(F4_09_GoShrineMia && !F6_02_OnMeru)
+		{
+//儘儃墘弌僇僢僩0821
+//			chr_rename(ENEMY_CHARA,"惡")
+//			KAO(ENEMY_CHARA,"N","8","9")
+//		//	name("惡")
+//			MES(ENEMY_CHARA,"僉儏僀僀傿傿儞乧乧",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+
+			chr_rename(ENEMY_CHARA,"昴")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+//			MES(ENEMY_CHARA,"仧枹擖椡崁栚\n巹偼恖宍偱偡丅",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9這是本館所有的\n最新型訓練用魔法人偶！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9戰鬥能力與攻擊方式\n都和本人相同，\n不要客氣，開始戰鬥吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+
+		}
+	//	name("佀僼儔僌嘕埲奜偺応崌")
+		else
+		{
+			chr_rename(ENEMY_CHARA,"昴")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+			look_chr(ENEMY_CHARA,EV_PENGUIN,"Bone_Head")
+			KAO(ENEMY_CHARA, "B232BZ4", "1233321", "4")	
+			MES(ENEMY_CHARA,"啊……\n那，那個……？",0)
+			KAO(ENEMY_CHARA, "B232BZ4", "1", "4")	
+			MES(ENEMY_CHARA,"我稍微\n有點事情……",0)
+			MES_close(ENEMY_CHARA)
+
+			rot(EV_PENGUIN,30,330)
+			KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+			MES(EV_PENGUIN,"好了啦，既然來了。\n就要加油。",0)
+			MES_close(EV_PENGUIN)
+			wait_MES(EV_PENGUIN)
+			rot(EV_PENGUIN,30,0)
+//			wait(10)
+			wait_MES(EV_PENGUIN)
+			look_off(ENEMY_CHARA)
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜僗僶儖偑傗偭偰偔傞丅
+	//丂丂僼儔僌嘕偺応崌偼丄傊偺傊偺傕傊偠婄偺僗僶儖偑傗偭偰棃傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		EV("Move_EnemyAndPenguin3")
+		wait_EV("Move_EnemyAndPenguin3")
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭name("佀晲憰偍忟條攖偵挧愴偟偨")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(GW_TRY_CUP==6)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4「聖劍士」菲歐娜～！",0)
+		MES_close(LOTTE)
+		if( F6_02_OnMeru ) 
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"咦……\n好像沒有找到她呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"沒辦法了。\n用這個代替吧。",0)
+			MES_close(LOTTE)
+		}
+	//丂丂偝偁偝偁偙偭偪傊偔傞偺偱偡丄偲偐尵傢傟側偑傜懳愴幰搊応丅
+
+		wait_MES(LOTTE)
+		SE(593,0)//彫娊惡
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+		
+		//乮儊儖僙僨僋撍擖屻偺僆僨僢僒乛億僢僋儖乛僺僺儘乛僋儘乕僪乛儔乕儔僀儔乯//丂丂娊惡俽俤偲嫟偵
+		if(F6_02_OnMeru)
+		{
+//儌儞僽儔儞墘弌僇僢僩0821
+//			chr_rename(ENEMY_CHARA,"惡")
+//			MES_pos(ENEMY_CHARA,"W9S1偪傚丄偪傚偭偲乧乧両丠",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"W9S2側丄壗傪偡傞僯儍両丠\n乧乧傗丄傗傔傞僯儍乧乧両",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"P1S2偁丄偁偓傖偁偀偀偭乧乧両丠",0,120,130,0,0)
+//			wait_key(0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+//		//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜偄側偄偼偢偺僉儍儔偑傗偭偰偔傞丅
+//
+//			chr_equip2( ENEMY_CHARA,	"eq_048",	"Bone_Spine_Dummy",	100,		0,0,0,	0,0,0)
+//			chr_equip2( ENEMY_CHARA,	"eq_049",	"Bone_Head",	100,		0,0,0,	0,0,0)
+
+			chr_rename(ENEMY_CHARA,"菲歐娜")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+//			MES(ENEMY_CHARA,"仧枹擖椡崁栚\n巹偼恖宍偱偡丅",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9這是本館所有的\n最新型訓練用魔法人偶！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9戰鬥能力與攻擊方式\n都和本人相同，\n不要客氣，開始戰鬥吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+
+		}
+		else
+		{
+			chr_rename(ENEMY_CHARA,"菲歐娜")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+			EV("Motion_KyoroKyoro2")
+
+			KAO(ENEMY_CHARA, "B232BZ2", "1233321", "4")	
+			MES(ENEMY_CHARA,"請，請問……？",0)
+			KAO(ENEMY_CHARA, "B232BZ3", "1", "4")	
+			MES(ENEMY_CHARA,"這是哪裡……？",0)
+			MES_close(ENEMY_CHARA)
+
+			KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+			MES(EV_PENGUIN,"好了啦，既然來了。\n就要加油。",0)
+			MES_close(EV_PENGUIN)
+			wait_MES(EV_PENGUIN)
+			wait_EV("Motion_KyoroKyoro2")
+			look_off(ENEMY_CHARA)
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜僼傿僆僫偑傗偭偰偔傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		EV("Move_EnemyAndPenguin3")
+ 		wait_EV("Move_EnemyAndPenguin3")
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭name("佀枩擻幏帠攖偵挧愴偟偨")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(GW_TRY_CUP==7)
+	{
+		CAM_quake("463746")
+			KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4「戰鬥管家」克羅德～！",0)
+		MES_close(LOTTE)
+		if( F6_02_OnMeru ) 
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"咦……\n好像沒有找到他呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"沒辦法了。\n用這個代替吧。",0)
+			MES_close(LOTTE)
+		}
+	//丂丂偝偁偝偁偙偭偪傊偔傞偺偱偡丄偲偐尵傢傟側偑傜懳愴幰搊応丅
+
+		wait_MES(LOTTE)
+		SE(593,0)//彫娊惡
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		//乮儊儖僙僨僋撍擖屻偺僆僨僢僒乛億僢僋儖乛僺僺儘乛僋儘乕僪乛儔乕儔僀儔乯//丂丂娊惡俽俤偲嫟偵
+		if(F6_02_OnMeru)
+		{
+//儌儞僽儔儞墘弌僇僢僩0821
+//			chr_rename(ENEMY_CHARA,"惡")
+//			MES_pos(ENEMY_CHARA,"S1偪傚丄偪傚偭偲乧乧両丠",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"S2側丄壗傪偡傞僯儍両丠\n乧乧傗丄傗傔傞僯儍乧乧両",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"P1S2偁丄偁偓傖偁偀偀偭乧乧両丠",0,120,120,0,0)
+//			wait_key(0)
+//			MES_close(ENEMY_CHARA)
+//		//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜偄側偄偼偢偺僉儍儔偑傗偭偰偔傞丅
+//
+//			chr_equip2( ENEMY_CHARA,	"eq_048",	"Bone_Spine_Dummy",	100,		0,0,0,	0,0,0)
+//			chr_equip2( ENEMY_CHARA,	"eq_049",	"Bone_Head",	100,		0,0,0,	0,0,0)
+
+			chr_rename(ENEMY_CHARA,"管家克羅德")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+//			MES(ENEMY_CHARA,"仧枹擖椡崁栚\n巹偼恖宍偱偡丅",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9這是本館所有的\n最新型訓練用魔法人偶！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9戰鬥能力與攻擊方式\n都和本人相同，\n不要客氣，開始戰鬥吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		else
+		{
+			chr_rename(ENEMY_CHARA,"克羅德管家")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+			wait(10)
+			look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,-30,0)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀挧愴幰偑儔僌僫")
+			if(GW_TRY_CHARA==0)
+			{
+				KAO(ENEMY_CHARA, "12321Z5", "1233321", "1")	
+				MES(ENEMY_CHARA,"──哎呀拉格那大人，\n我們竟然在這裡見面了。",0)
+				MES_close(ENEMY_CHARA)
+			}
+			else
+			{
+			//	name("佀挧愴幰偑傾儖僂僃儞")
+				KAO(ENEMY_CHARA, "12321Z5", "1233321", "1")	
+				MES(ENEMY_CHARA,"──哎呀艾爾文大人，\n我們竟然在這裡見面了。",0)
+				MES_close(ENEMY_CHARA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		wait_MES(ENEMY_CHARA)
+		look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,0,0)
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂娊惡偲嫟偵丄儁儞僊儞偵楢傟傜傟偰丄愒僐乕僫乕懁偐傜僋儘乕僪偑傗偭偰偔傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+ 		EV("Move_EnemyAndPenguin3")
+ 		wait_EV("Move_EnemyAndPenguin3")
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭僊儍儔儞僪僁
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(GW_TRY_CUP==8)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4「面具超人」賈蘭杜～！",0)
+		MES_close(LOTTE)
+		wait_MES(LOTTE)
+
+		SE(593,0)//彫娊惡
+ 		EV("Move_EnemyOnry1")
+ 		wait_EV("Move_EnemyOnry1")
+
+		chr_rename(ENEMY_CHARA,"賈蘭杜")
+		MES(ENEMY_CHARA,"呼呼……\n輪到在下出場了。",0)
+		MES_close(ENEMY_CHARA)
+		wait_MES(ENEMY_CHARA)
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂娊惡偲嫟偵丄愒僐乕僫乕懁偐傜僊儍儔儞僪僁偑傗偭偰偔傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+ 		EV("Move_EnemyOnry2")
+ 		wait_EV("Move_EnemyOnry2")
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭儁儞僊儞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(GW_TRY_CUP==9)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S7紅方，\n企鵝～！",0)
+		MES_close(LOTTE)
+		wait_MES(LOTTE)
+
+		SE(593,0)//彫娊惡
+ 		EV("Move_Penguin1")
+ 		wait_EV("Move_Penguin1")
+
+		chr_rename(ENEMY_CHARA,"宣傳企鵝")
+		EMO(ENEMY_CHARA,EMO_TOGEBIKKURI)
+		KAO(ENEMY_CHARA, "1", "1233321", "1")	
+		wait(30)
+		rot(ENEMY_CHARA,30,320)
+		wait(30)
+		KAO(ENEMY_CHARA, "1", "1", "1")	
+		MES(ENEMY_CHARA,"……？",0)
+		MES_close(ENEMY_CHARA)
+		wait_MES(ENEMY_CHARA)
+		wait(10)
+		rot(ENEMY_CHARA,30,0)
+		
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂愒僐乕僫乕懁偐傜儁儞僊儞偑偺偦偺偦偲傗偭偰偔傞丅
+ 	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+ 		EV("Move_Penguin2")
+ 		wait_EV("Move_Penguin2")
+	}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸懳愴僉儍儔偑堏摦拞偵寉偔僼僃乕僪傾僂僩偟丄
+//丂丂丂俁幰偑拞墰偱岦偐偄崌偭偰偄傞峔恾偵堏傞丅
+//丂丂亙懳愴幰儘僑昞帵亜
+//丂丂亙懳愴幰儃僀僗嵞惗亜
+//丂丂摉帪偵椉幰丄俽俤偮偒偱峔偊傞丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+	KAO(LOTTE,"1","321","1")
+	look(LOTTE,"Bone_RightShoulder",0,		5,5,5,			0,0,0)
+	move( LOTTE, 0, WALK1,10388,10200,1,0)
+	look(LOTTE,"Bone_Head",0,		0,4,0,			0,30,0)
+	wait(10)
+	look(LOTTE,"Bone_Head",0,		0,4,0,			0,-30,0)
+	wait(20)
+	look(LOTTE,"Bone_Head",0,		0,4,0,			0,0,0)
+	wait_move( LOTTE )
+	MOT(LOTTE,159,15)
+	wait_CAM_move()
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂岦偐偄崌偭偨忬懺偱丄椉幰峔偊傞丅
+//丂丂摨帪偵椉幰俽俤偮偒偱峔偊傞丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	EV("KAMAE_SET")
+	wait_EV("KAMAE_SET")
+	
+//	MES(LOTTE,"C4仧岦偐偄崌偭偨忬懺偱丄椉幰俽俤偮偒偱峔偊傞丅",0)
+//	MES_close(LOTTE)
+	
+//	name("佀儁儞僊儞攖傊偺挧愴")
+	if(GW_TRY_CUP==9)
+	{
+		KAO(LOTTE,"12321Z4","321","3")
+		MES(LOTTE,"P1S4二位都準備好了嗎～？",0)
+		//儁儞僊儞偑懪偪柭傜偟偺応崌丄弶婜壔
+		if(WK001==1)
+			MOT(ENEMY_CHARA,57,5)	//丂儁儞僊儞
+		KAO(LOTTE,"12321Z6","1","3")
+		MES(LOTTE,"P1S5那麼接下來的就是\nＧ-競技場最終決戰……",0)
+		MES_close(LOTTE)
+	}
+//	name("佀捠忢偺挧愴")
+	else
+	{
+		KAO(LOTTE,"12321Z4","321","3")
+		MES(LOTTE,"P1S4二位都準備好了嗎～？",0)
+		KAO(LOTTE,"12321Z4","1","3")
+		if(GW_TRY_CUP==1)
+			MES(LOTTE,"P1S4那麼接下來是莫里斯杯……",0)
+		if(GW_TRY_CUP==2)
+			MES(LOTTE,"P1S4那麼接下來是西部杯……",0)
+		if(GW_TRY_CUP==3)
+			MES(LOTTE,"P1S4那麼接下來是純情少年杯……",0)
+		if(GW_TRY_CUP==4)
+			MES(LOTTE,"P1S4那麼接下來是魔法少女杯……",0)
+		if(GW_TRY_CUP==5)
+			MES(LOTTE,"P1S4那麼接下來是小忍者杯……",0)
+		if(GW_TRY_CUP==6)
+			MES(LOTTE,"P1S4那麼接下來是武裝小姐杯……",0)
+		if(GW_TRY_CUP==7)
+			MES(LOTTE,"P1S4那麼接下來是萬能管家杯……",0)
+		if(GW_TRY_CUP==8)
+			MES(LOTTE,"P1S4那麼接下來是最強男子杯……",0)
+
+		MES_close(LOTTE)
+	}
+	///劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂亙儗僨傿丒僼傽僀僩俽俤仌僄僼僃僋僩嵞惗亜
+	//丂丂亙僑儞僌俽俤嵞惗亜
+	//丂丂儘僢僥偑旘傃偺偒丄愴摤奐巒丅
+	//丂丂儘僢僥偼怰敾偺摦偒傪峴偆丅
+	//丂丂儁儞僊儞偼応奜偱儃乕偭偲棫偭偰偄傞丅乮儁儞僊儞攖偺応崌偼栜榑愴摤乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	MES(LOTTE,"C4仧亙儗僨傿丒僼傽僀僩俽俤仌僄僼僃僋僩嵞惗亜\n亙僑儞僌俽俤嵞惗亜",0)
+//	MES_close(LOTTE)
+	stop_BGM(60)
+	EFF(21630,320,240,0,0,100,0)//FIGHT
+	wait(40)
+	SE(211,PLAYER1)
+	EV("PLAY_VOICE_Fight")
+
+	EV("KAMAE_RESET")
+	wait_EV("KAMAE_RESET")
+
+	//儁儞僊儞傪偳偐偡
+	if(GW_TRY_CUP!=9 && GW_TRY_CUP!=8)
+	{
+		rot(EV_PENGUIN,60,360)
+		jump(EV_PENGUIN,0,20,9381,9099,0,400)
+	}
+	
+	//儘僢僥傪偳偐偡
+	MOT(LOTTE,153,2)
+	rot(LOTTE,60,360)
+	KAO(LOTTE,"5","5","6")
+	jump(LOTTE,0,20,9549,9099,0,400)
+
+	CAM_return( 30 )
+
+	workL(WK_BOSSHP,SET,ENEMY_CHARA)	//BOSS丵俫俹昞帵
+	
+	//儘乕僾傪僙僢僩
+	EV("SET_ROPE")
+	BGM(45)
+	EV_end()
+
+	//儁僢僩徚偡
+	color(PET,-1)
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴愴摤奐巒慜偺張棟乮俀夞栚埲崀乯
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂僇儊儔偑摤媄応拞墰偵壓傝偰偒偰丄岦偐偄崌偆俀恖偲儘僢僥傪塮偡丅
+//	name("亙懳愴幰儘僑昞帵亜")
+//	name("亙懳愴幰儃僀僗嵞惗亜")
+//丂丂摨帪偵椉幰俽俤偮偒偱峔偊傞丅
+//	name("亙儗僨傿丒僼傽僀僩俽俤仌僄僼僃僋僩嵞惗亜")
+//	name("亙僑儞僌俽俤嵞惗亜")
+//丂丂儘僢僥偑旘傃偺偒丄愴摤奐巒丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+PRE_BATTLE_2
+{
+	EV_begin()
+
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+	wait(1)
+
+	CAM_move(10388,-10676,102,0,0)
+	CAM(950,183,102,21,180,0,0)
+
+	EV("PRE_BATTLE_SET")
+	wait_EV("PRE_BATTLE_SET")
+	EV("SET_ROPE")
+
+	//弶婜埵抲僙僢僩 2愴栚埲崀
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+	chr_pos(ENEMY_CHARA,	10120,10772,1,270,2)
+
+	if(GW_TRY_CUP!=9)
+	{
+		color(EV_PENGUIN,1)
+		chr_pos(EV_PENGUIN,	9381,9499,0,0,2)
+	}
+
+	CAM_move(10388,-10456,122,120,0)
+	CAM(-50,107,122,22,180,120,0)
+
+	SE(591,0)//娊惡
+	KAO(LOTTE,"1","1","3")
+
+	fade_in( 0, 60, BLACK)	//僼僃乕僪僀儞
+	wait(30)
+
+	//柤慜傪夋柺偵昞帵
+	if(GW_TRY_CUP==1)
+		set_namebmp(34,0)	//傗傞婥拞擭儌乕儕僗	俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==2)
+ 		set_namebmp(35,0)	//夓楾庪傝僆僨僢僒		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==3)
+		set_namebmp(37,0)	//弮忣彮擭億僢僋儖		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==4)
+		set_namebmp(38,0)	//杺朄彮彈僺僺儘		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==5)
+		set_namebmp(36,0)	//尒廗偄擡幰僗僶儖		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==6)	
+		set_namebmp(39,0)	//惞寱巊偄僼傿僆僫		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==7)
+		set_namebmp(40,0)	//愴摤幏帠僋儘乕僪		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==8)
+		set_namebmp(41,0)	//暍柺挻恖僊儍儔儞僪僁	俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==9)
+		set_namebmp(42,0)	//愨懳媶嬌柍揋儁儞僊儞	俧亅僐儘僢僙僆
+	wait(120)
+//	EV("PLAY_VOICE_Fight")
+//	wait_EV("PLAY_VOICE_Fight")
+//	wait(30)
+
+//丂丂摨帪偵椉幰俽俤偮偒偱峔偊傞丅
+	EV("KAMAE_SET")
+	wait_EV("KAMAE_SET")
+
+//	name("亙儗僨傿丒僼傽僀僩俽俤仌僄僼僃僋僩嵞惗亜")
+//	name("亙僑儞僌俽俤嵞惗亜")
+//丂丂儘僢僥偑旘傃偺偒丄愴摤奐巒丅
+//	MES(LOTTE,"C4仧摨帪偵椉幰俽俤偮偒偱峔偊傞丅\n亙儗僨傿丒僼傽僀僩俽俤仌僄僼僃僋僩嵞惗亜\n亙僑儞僌俽俤嵞惗亜",0)
+//	MES_close(LOTTE)
+
+	EFF(21630,320,240,0,0,100,0)//FIGHT
+	wait(40)
+	SE(211,PLAYER1)
+	EV("PLAY_VOICE_Fight")
+
+	//峔偊傪栠偡
+	EV("KAMAE_RESET")
+	wait_EV("KAMAE_RESET")
+
+	//儁儞僊儞傪偳偐偡
+	if(GW_TRY_CUP!=9)
+	{
+		rot(EV_PENGUIN,60,360)
+		jump(EV_PENGUIN,0,20,9381,9099,0,400)
+	}
+
+	//儘僢僥傪偳偐偡
+	MOT(LOTTE,153,2)
+	rot(LOTTE,60,360)
+	KAO(LOTTE,"5","5","6")
+	jump(LOTTE,0,20,9549,9099,0,400)
+
+	CAM_return( 30 )
+
+	workL(WK_BOSSHP,SET,ENEMY_CHARA)	//BOSS丵俫俹昞帵
+	BGM(45)
+	EV_end()
+
+	//儁僢僩徚偡
+	color(PET,-1)
+}
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴摤媄拞丒攕杒帪偺張棟
+//丂丂儔僌僫乛傾儖僂僃儞搢傟傞丅
+//丂丂夋柺埫偔側傜偢偵丄儔僌僫偺朤偵懳愴幰偑傗偭偰棃傞丅
+//丂丂亙挧愴幰彑棙儃僀僗嵞惗亜
+//丂丂偮偄偱偵寉偄墘媄傪擖傟傞丅乮挧愴幰偺儃僀僗師戞乯
+//丂丂敄傟偰偄偔娊惡偲嫟偵僇儊儔堷偒側偑傜僼僃乕僪傾僂僩丅
+//丂丂摤媄応庴晅慜偵僼僃乕僪僀儞偟偰丄庴晅偺攕杒帪張棟傪峴偆丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+EV_DEAD
+{
+	EV_begin()
+	delete(ZAKO_19)	// 敾掕僉儍儔徚嫀
+
+	//晧偗偨GW傪棫偰傞
+	workG(GW_WINLOSE,SET,2)
+	set_hp(PLAYER1,100)
+
+	CAM_return(0)
+	CAM(150,64,-60,34,180,0,0)
+	map_color(100,100,100, 5);//R,G,B, time 100%
+	map_specular(80,80,80, 5);//R,G,B, time 100%
+	wait(20)
+	MOT(ENEMY_CHARA,2,0)//懸婡偵
+	KAO(PLAYER1,"5","5","5")
+	wait(1)
+	map_specular(0,0,0,20);//R,G,B, time 100%
+
+	MOT(PLAYER1,99,15)
+//棎悢僇僢僩偟傑偟偨0822
+//	workL(000,RAND,2)
+//	if(WK000==1)
+//		KAO(PLAYER1,"4","4","4")
+//	else
+//		KAO(PLAYER1,"5","5","5")
+
+	wait(20)
+	EFF(21660,320,240,0,0,100,0)//LOSE
+	CAM(3230,68,-60,24,180,120,0)
+	map_color(80,80,80, 120);//R,G,B, time 100%
+//	wait(40)
+
+	//懳愴憡庤偺彑棙億乕僘
+	EV("PLAY_VOICE_EnemyWin")
+	EV("EnemyWin_KAMAE")
+	wait(30)
+	fade_in(100,90,0)
+//	wait_CAM_move()
+//	wait_EV("PLAY_VOICE_EnemyWin")
+//	wait(60)
+
+//丂丂夋柺埫偔側傜偢偵丄儔僌僫偺朤偵懳愴幰偑傗偭偰棃傞丅
+//仧尰嵼丄懳愴憡庤偑彊乆偵徚偊偰偟傑偆偺偱曐棷拞
+//	MES(ENEMY_CHARA,"C4仧夋柺埫偔側傜偢偵丄儔僌僫偺朤偵懳愴幰偑傗偭偰棃傞丅\n仧尰嵼丄懳愴憡庤偑彊乆偵徚偊偰偟傑偆偺偱曐棷拞",0)
+//	MES_close(ENEMY_CHARA)
+
+
+	//埫揮
+//	fade_in(100,80,0)
+	wait_fade()
+	stop_BGM(60)
+	wait_BGM()
+
+	//-- 晧偗偰庴晅偵栠傞 ------------------------------------------------
+	if(WK002==1)		//WK002偑1側傜僒僶僀僶儖儌乕僪
+	{
+		if(GW_TRY_CHARA==0)
+		{
+			join_party(1)//ALWEN傪僷乕僥傿乕偵栠偡
+		}
+		else
+		{
+			join_party(0)//RAGNA傪僷乕僥傿乕偵栠偡		
+		}	
+		workL(002,SET,0)
+	}
+	else
+	{
+	
+		if(GW_TRY_CHARA==0)
+		{
+			join_party(1)//ALWEN傪僷乕僥傿乕偵栠偡
+			
+			//僼傿僊儏傾僎僢僩
+			if(!F2857)
+			{
+				SE(24,0)//僎僢僩SE
+				MES(0,"L777得到了L667拉格那L777的模型，\n這是參加獎！！",2)
+				MES_close(0)
+				F_set(2857)
+			}
+		}
+		else
+		{
+			join_party(0)//RAGNA傪僷乕僥傿乕偵栠偡
+			
+			//僼傿僊儏傾僎僢僩
+			if(!F2858)
+			{
+				SE(24,0)//僎僢僩SE
+				MES(0,"L777得到了L667艾爾文L777的模型，\n這是參加獎！！",2)
+				MES_close(0)
+				F_set(2858)
+			}
+		}
+	
+	}
+	wait(15)
+	CAM_return( 0 )
+	new_map(10510)
+
+//	EV_end()
+}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴摤媄拞丒彑棙帪偺張棟
+//丂丂懳愴幰偑搢傟傞墘弌丅
+//丂丂僇儊儔偼懳愴幰傪尒偣偨傑傑丄乮偮偄偱偵儘僢僥偑傗偭偰棃傞乯
+//丂丂亙攕杒儃僀僗嵞惗亜
+//丂丂儃僀僗偑廔傢傞偲丄娊惡偲嫟偵儔僌僫傪塮偡丅
+//丂丂彑棙儌乕僔儑儞偱婌傇儔僌僫丅
+//丂丂乮偦偽偵儘僢僥偑傗偭偰棃傞乯
+//丂丂戝偒側娊惡偲嫟偵僇儊儔堷偒側偑傜僼僃乕僪傾僂僩丅
+//丂丂彜昳偑栣偊傞応崌偼徿昳庼梌僀儀儞僩傊偮側偘傞丅
+//丂丂僋儕傾偑俀夞栚埲崀側傜丄庴晅丒彑棙屻偺張棟傊旘偽偡丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+EV_WIN
+{
+	delete(ZAKO_19)	// 敾掕僉儍儔徚嫀
+	delete(30)	// 暘恎僉儍儔徚嫀
+	delete(31)	// 
+	delete(32)	// 
+	delete(33)	// 
+	delete(34)	// 
+
+	DelDropItem()	//僪儘僢僾傾僀僥儉慡徚偟
+	StopEffect()	//僄僼僃僋僩慡徚偟
+
+	map_color(100,100,100, 5);//R,G,B, time 100%
+	map_specular(80,80,80, 5);//R,G,B, time 100%
+
+	EV_begin()
+	wait(20)
+	map_specular(0,0,0,20);//R,G,B, time 100%
+	KAO(ENEMY_CHARA,"5","5","5")//巰朣梡僼僃僀僗僙僢僩0822
+	wait(30)
+	
+	EFF(21650,320,240,0,0,100,0)//WIN
+	wait(60)
+	rot_chr(PLAYER1,30,ENEMY_CHARA)
+
+//	MES(ENEMY_CHARA,"C4仧娊惡偲嫟偵丄懳愴憡庤搢傟傞丅",0)
+//	MES_close(ENEMY_CHARA)
+
+	SE(591,0)//娊惡
+
+//	stop_BGM(90)
+//丂丂懳愴幰偑搢傟傞墘弌丅
+	EV("PLAY_VOICE_EnemyLose")
+	CAM_move_chr(ENEMY_CHARA,90,0)
+	rot_chr(PLAYER1,30,ENEMY_CHARA)
+	wait(30)
+	fade_in(100,90,0)
+	wait_CAM_move()
+	wait_EV("PLAY_VOICE_EnemyLose")
+//	wait(30)
+
+//丂丂儃僀僗偑廔傢傞偲丄娊惡偲嫟偵儔僌僫傪塮偡丅
+//	cross_fade(30)
+//	CAM_move_chr(PLAYER1,0,0)
+//	CAM(190,32,20,44,180,180,0)
+
+//丂丂彑棙儌乕僔儑儞偱婌傇儔僌僫丅
+//丂丂乮偦偽偵儘僢僥偑傗偭偰棃傞乯
+//	MES(PLAYER1,"C4仧彑棙儌乕僔儑儞偱婌傇儔僌僫乛傾儖僂僃儞丅\n偦偽偵儘僢僥偑傗偭偰棃傞",0)
+//	MES_close(PLAYER1)
+//
+//	if(GW_TRY_CHARA==0)
+//	{
+//		MOT(RAGNA,53,15)	//壖偱偡丅
+//	}
+//	else
+//	{
+//		MOT(PARTNER,52,15)	//壖偱偡丅
+//	}
+//	EV("PLAY_VOICE_PlayerWin")
+//	wait_EV("PLAY_VOICE_PlayerWin")
+//	wait(60)
+
+//丂丂戝偒側娊惡偲嫟偵僇儊儔堷偒側偑傜僼僃乕僪傾僂僩丅
+//丂丂彜昳偑栣偊傞応崌偼徿昳庼梌僀儀儞僩傊偮側偘傞丅
+//丂丂僋儕傾偑俀夞栚埲崀側傜丄庴晅丒彑棙屻偺張棟傊旘偽偡丅
+	//埫揮
+//	fade_in(100,60,0)
+	wait_fade()
+	stop_BGM(60)
+	wait_BGM()
+
+//丂丂彜昳偑栣偊傞応崌偼徿昳庼梌僀儀儞僩傊偮側偘傞丅
+//丂丂僋儕傾偑俀夞栚埲崀側傜丄庴晅丒彑棙屻偺張棟傊旘偽偡丅
+	//彑偭偨GW傪棫偰傞
+	workG(GW_WINLOSE,SET,1)
+
+	if(GW_TRY_CUP==8 && !FV_FF_WinGyarandow)	// 嵟嫮偺抝攖弶彑棙
+		EV("WIN_GYARANDOW_BATTLE")
+	else
+	if(GW_TRY_CUP==9 && !FV_FF_WinPenguin)	// 儁儞僊儞攖弶彑棙
+		EV("WIN_PENGUIN_BATTLE")
+	else
+	if(GW_TRY_CUP==7 && !FV_FF_WinKlode)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==6 && !FV_FF_WinFiona)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==5 && !FV_FF_WinSubaru)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==4 && !FV_FF_WinPipiro)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==3 && !FV_FF_WinPockle)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==2 && !FV_FF_WinOdessa)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==1 && !FV_FF_WinMaurice)	// 
+		EV("WIN_NORMAL_BATTLE")
+	//偦傟堄奜偼僋儕傾俀夞栚埲崀偲尒側偡丅
+	else
+	{
+		workG(GW_ENTRY_EVENT,SET,2)
+		if(GW_TRY_CHARA==0)
+		{
+			join_party(1)//ALWEN傪僷乕僥傿乕偵栠偡
+		}
+		else
+		{
+			join_party(0)//RAGNA傪僷乕僥傿乕偵栠偡
+		}
+		CAM_return( 0 )
+		new_map(10510)
+	}
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴彑棙屻偺張棟乮捠忢乯
+//丂丂仸杮愴廔椆屻丄僼僃乕僪僀儞偱
+//丂丂丂摤媄応僗僥乕僕偵棫偭偰偄傞儘僢僥偲挧愴幰丅
+//丂丂仸娰偵僊儍儔儞僪僁偑偄傞応崌丄
+//丂丂丂儘僢僥偺墶偵僊儍儔儞僪僁傕棫偭偰偄傞丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+WIN_NORMAL_BATTLE
+{
+//	wait(150)	// 5昩
+
+	EV_begin()
+	
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+
+	//僇儊儔僙僢僩
+	CAM_move(10168,-10596,142,0,0)
+	CAM(-210,102,142,20,240,0,0)
+
+	delete(ENEMY_CHARA)
+	delete(EV_PENGUIN)
+
+	//仴嘐楃攓摪奐捠埲崀偲嘖埲崀偼偄側偄
+	if(F6_00_GoToMeru)
+	{
+	//	set_chr( LOTTE,82,	-1,-1,  10120,10772,0,	10,270,0,"")	//丂儘僢僥
+		chr_pos( LOTTE, 10120,10772,0,270,2)	//丂儘僢僥
+	}
+	else
+	if(F3_10_OpenChapel && !F4_00_StartSolo)
+	{
+	//	set_chr( LOTTE,82,	-1,-1,  10120,10772,0,	2,270,0,"")	//丂儘僢僥
+		chr_pos( LOTTE,  10120,10772,0,270,2)	//丂儘僢僥
+	}
+	else
+	{
+		set_chr( GYARANDOW,21,	-1,-1,  10120,10772,0	51,270,0,"")	//丂僊儍儔儞僪僁
+		chr_pos( LOTTE,10388,10356,1,330,2)	//丂儘僢僥
+	//	set_chr( LOTTE,82,	-1,-1,  10388,10356,1,	2,330,0,"")	//丂儘僢僥
+
+		MOT_SET(GYARANDOW,151,-1,509,509,152,0)	//僊儍儔儞僪僂丂壗偐搉偡巇憪
+		MOT_SET(GYARANDOW,152,-1,510,510,153,0)
+		MOT_SET(GYARANDOW,153,-1,511,511,-1,0)
+	}
+	MOT_SET(LOTTE,161,-1,509,509,162,0)	//丂壗偐搉偡巇憪
+	MOT_SET(LOTTE,162,-1,510,510,163,0)
+	MOT_SET(LOTTE,163,-1,511,511,-1,0)
+
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+	KAO(LOTTE, "1", "1", "1")
+	F_set_Node(LOTTE,"eq_062",NP_HIDE)//儅僀僋徚偡
+
+	wait(30)
+	BGM(19)
+	fade_in( 0, 60, BLACK)	//僼僃乕僪僀儞
+	wait_fade()
+
+	if(GW_TRY_CUP==1)
+	{
+		VOICE(714,0)	//乽偍傔偱偲偆偛偞偄傑偡乣乿乮摤媄応偱彑偭偨応崌乯
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜您贏得莫里斯杯冠軍～。",0)
+		MES_close(LOTTE)
+		//仛儌乕儕僗偵彑偭偨
+		F_set(FV_FF_WinMaurice)
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		VOICE(714,0)	//乽偍傔偱偲偆偛偞偄傑偡乣乿乮摤媄応偱彑偭偨応崌乯
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜您贏得西部杯冠軍。",0)
+		MES_close(LOTTE)
+		//仛僆僨僢僒偵彑偭偨
+		F_set(FV_FF_WinOdessa)
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		VOICE(714,0)	//乽偍傔偱偲偆偛偞偄傑偡乣乿乮摤媄応偱彑偭偨応崌乯	
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜您贏得純情少年杯冠軍～。",0)
+		MES_close(LOTTE)
+		//仛億僢僋儖偵彑偭偨
+		F_set(FV_FF_WinPockle)
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		VOICE(714,0)	//乽偍傔偱偲偆偛偞偄傑偡乣乿乮摤媄応偱彑偭偨応崌乯	
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜您贏得魔法少女杯冠軍～。",0)
+		MES_close(LOTTE)
+		//仛僺僺儘偵彑偭偨
+		F_set(FV_FF_WinPipiro)
+		F_set(FV_FF_GyakataLv2)//娰俴倴俀
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		VOICE(714,0)	//乽偍傔偱偲偆偛偞偄傑偡乣乿乮摤媄応偱彑偭偨応崌乯	
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜您贏得小忍者杯冠軍～。",0)
+		MES_close(LOTTE)
+		//仛僗僶儖偵彑偭偨
+		F_set(FV_FF_WinSubaru)
+		F_set(FV_FF_GyakataLv2)//娰俴倴俀
+	}
+	else
+	if(GW_TRY_CUP==6)
+	{
+		VOICE(714,0)	//乽偍傔偱偲偆偛偞偄傑偡乣乿乮摤媄応偱彑偭偨応崌乯	
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜您贏得武裝小姐杯冠軍～。",0)
+		MES_close(LOTTE)
+		//仛僼傿僆僫偵彑偭偨
+		F_set(FV_FF_WinFiona)
+		F_set(FV_FF_GyakataLv2)//娰俴倴俀
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		VOICE(714,0)	//乽偍傔偱偲偆偛偞偄傑偡乣乿乮摤媄応偱彑偭偨応崌乯	
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜您贏得萬能管家杯冠軍～。",0)
+		MES_close(LOTTE)
+		//仛僋儘乕僪偵彑偭偨
+		F_set(FV_FF_WinKlode)
+		F_set(FV_FF_GyakataLv3)//娰俴倴俁
+	}
+//埲壓擇偮偼偁傝偊側偄偱偡0821
+//	else
+//	if(GW_TRY_CUP==8)
+//	{
+//		VOICE(714,0)	//乽偍傔偱偲偆偛偞偄傑偡乣乿乮摤媄応偱彑偭偨応崌乯
+//		MES(LOTTE,"嵟嫮偺抝攖惂攅丄\n偍傔偱偲偆偛偞偄傑乣偡丅",0)
+//		MES_close(LOTTE)
+//		//仛僊儍儔儞僪僁偵彑偭偨
+//		F_set(FV_FF_WinGyarandow)
+//	}
+//	else
+//	if(GW_TRY_CUP==9)
+//	{
+//		VOICE(714,0)	//乽偍傔偱偲偆偛偞偄傑偡乣乿乮摤媄応偱彑偭偨応崌乯
+//		MES(LOTTE,"儁儞僊儞攖惂攅丄\n偍傔偱偲偆偛偞偄傑乣偡丅",0)
+//		MES_close(LOTTE)
+//		//仛儁儞僊儞偵彑偭偨
+//		F_set(FV_FF_WinPenguin)
+//	}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("佀娰偵僊儍儔儞僪僁偑偄側偄応崌乮僼儔僌嘖偲僼儔僌嘐亀仛楃攓摪傊偺摴偑奐偄偨亁埲崀乯")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	仧僊儍儔儞僪僁偼忢偵僐儘僔傾儉偐傜慖傋傑偡0821
+	if(F6_00_GoToMeru)
+	{
+		MOT_SET(LOTTE,151,-1,406,406,-1,0)
+		MOT(LOTTE,151,15)
+		KAO(LOTTE, "52625Z4", "321", "6")	
+		MES(LOTTE,"真是場高水準的比賽～。",0)
+		MOT(LOTTE,161,15)
+		KAO(LOTTE, "52625Z4", "1", "6")	
+		MES(LOTTE,"這是獎品。\n請您收下～。",0)
+		MES_close(LOTTE)
+
+		EV("ITEMGET_FIRST")
+		wait_EV("ITEMGET_FIRST")
+
+		MOT(LOTTE,151,15)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀挧愴幰偑儔僌僫")
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(LOTTE, "12321Z4", "1233321", "5")	
+			MES(LOTTE,"不好意思\n主人出去了～……",0)
+			KAO(LOTTE, "12321Z5", "1", "1")	
+			MES(LOTTE,"主人說他很期待\n拉格那大人的表現～。",0)
+			KAO(LOTTE, "52625Z4", "1236", "6")	
+			MES(LOTTE,"今後也請\n再接再勵～。",0)
+			MES_close(LOTTE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，嗯……",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name("佀挧愴幰偑傾儖僂僃儞")
+			KAO(LOTTE, "12321Z4", "1233321", "5")	
+			MES(LOTTE,"不好意思\n主人出去了～……",0)
+			KAO(LOTTE, "12321Z5", "1", "1")	
+			MES(LOTTE,"主人說他很期待\n艾爾文大人的表現～。",0)
+			KAO(LOTTE, "52625Z4", "1236", "6")	
+			MES(LOTTE,"今後也請\n再接再勵～。",0)
+			MES_close(LOTTE)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯，嗯……",0)
+			MES_close(PARTNER)
+		}
+	}
+	else
+	if(F3_10_OpenChapel && !F4_00_StartSolo)
+	{
+		MOT_SET(LOTTE,151,-1,406,406,-1,0)
+		MOT(LOTTE,151,15)
+		KAO(LOTTE, "52625Z4", "321", "6")	
+		MES(LOTTE,"真是場高水準的比賽～",0)
+		MOT(LOTTE,161,15)
+		KAO(LOTTE, "52625Z4", "1", "6")	
+		MES(LOTTE,"這是獎品。\n請您收下～",0)
+		MES_close(LOTTE)
+
+		EV("ITEMGET_FIRST")
+		wait_EV("ITEMGET_FIRST")
+
+		MOT(LOTTE,151,15)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀挧愴幰偑儔僌僫")
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(LOTTE, "12321Z4", "1233321", "5")	
+			MES(LOTTE,"不好意思\n主人出去了～……",0)
+			KAO(LOTTE, "12321Z5", "1", "1")	
+			MES(LOTTE,"主人說他很期待\n拉格那大人的表現～。",0)
+			KAO(LOTTE, "52625Z4", "1236", "6")	
+			MES(LOTTE,"今後也請\n再接再勵～。",0)
+			MES_close(LOTTE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，嗯……",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name("佀挧愴幰偑傾儖僂僃儞")
+			KAO(LOTTE, "12321Z4", "1233321", "5")	
+			MES(LOTTE,"不好意思\n主人出去了～……",0)
+			KAO(LOTTE, "12321Z5", "1", "1")	
+			MES(LOTTE,"主人說他很期待\n艾爾文大人的表現～。",0)
+			KAO(LOTTE, "52625Z4", "1236", "6")	
+			MES(LOTTE,"今後也請\n再接再勵～。",0)
+			MES_close(LOTTE)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯，嗯……",0)
+			MES_close(PARTNER)
+		}
+	}
+	else
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀偦傟埲奜")
+		MES(GYARANDOW,"呵呵，真是場精彩的比賽。\n在下看的甚感欣慰。",0)
+		MOT(GYARANDOW,151,15)
+		MES(GYARANDOW,"這是獎品，收下它吧。",0)
+		MES_close(GYARANDOW)
+
+		EV("ITEMGET_FIRST")
+		wait_EV("ITEMGET_FIRST")
+		MOT(GYARANDOW,51,15)
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀挧愴幰偑儔僌僫")
+		if(GW_TRY_CHARA==0)
+		{
+		//	name("夦恖僊儍儔儞僪僁")
+			MES(GYARANDOW,"拉格那啊，\n我很期待你的表現。",0)
+			MES(GYARANDOW,"今後也希望你的實力\n更加精進。",0)
+			MES_close(GYARANDOW)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈，哈……",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name("佀挧愴幰偑傾儖僂僃儞")
+		//	name("夦恖僊儍儔儞僪僁")
+			MES(GYARANDOW,"艾爾文啊，\n我很期待你的表現。",0)
+			MES(GYARANDOW,"今後也希望你的實力\n更加精進。",0)
+			MES_close(GYARANDOW)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯，嗯……",0)
+			MES_close(PARTNER)
+		}
+
+		//僋儘乕僪偵彑偭偨 && 僊儍儔儞僪僁偵彑偭偰偄側偄0821
+		if(GW_TRY_CUP==7 && !FV_FF_WinGyarandow)
+		{
+		//	name("夦恖僊儍儔儞僪僁")
+			MES(GYARANDOW,"呵呵，接下來\n該輪到在下出場了。",0)
+			MES(GYARANDOW,"你們二位是否能夠\n超越在下呢……",0)
+			MES_close(GYARANDOW)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀挧愴幰偑儔僌僫")
+			if(GW_TRY_CHARA==0)
+			{
+			//	name("夦恖僊儍儔儞僪僁")
+				MES(GYARANDOW,"讓我見識一下吧，\n拉格那！",0)
+				MES_close(GYARANDOW)
+			}
+			else
+			{
+			//	name("佀挧愴幰偑傾儖僂僃儞")
+			//	name("夦恖僊儍儔儞僪僁")
+				MES(GYARANDOW,"讓我見識一下吧，\n艾爾文！",0)
+				MES_close(GYARANDOW
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+
+//娰偺儗儀儖傾僢僾偼柍偟0821
+//		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//		//	name("佀挧愴偟偨偺偑枩擻幏帠攖")
+//		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//		if(GW_TRY_CUP==7 && !FV_FF_GyakataLv3 && FV_FF_GyakataLv2)
+//		{
+//		//	name("夦恖僊儍儔儞僪僁")
+//			MES(GYARANDOW,"僼僼丄偦偟偰師偼\n偄傛偄傛変攜偺弌斣偲側傞丅",0)
+//			MES(GYARANDOW,"壥偨偟偰偍慜偨偪偑\n偙偺変攜傪挻偊傞偙偲偑弌棃傞偺偐乧乧",0)
+//			MES_close(GYARANDOW)
+//			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//			//	name("佀挧愴幰偑儔僌僫")
+//			if(GW_TRY_CHARA==0)
+//			{
+//			//	name("夦恖僊儍儔儞僪僁")
+//				MES(GYARANDOW,"偟偐偲尒撏偗偝偣偰傕傜偆偧丄\n儔僌僫傛両",0)
+//				MES_close(GYARANDOW)
+//			}
+//			else
+//			{
+//			//	name("佀挧愴幰偑傾儖僂僃儞")
+//			//	name("夦恖僊儍儔儞僪僁")
+//				MES(GYARANDOW,"偟偐偲尒撏偗偝偣偰傕傜偆偧丄\n傾儖僂僃儞傛両",0)
+//				MES_close(GYARANDOW
+//			}
+//			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//
+//			//埫揮
+//			fade_in(100,60,0)
+//			wait_fade()
+//			if(GW_TRY_CHARA==0)
+//			{
+//				join_party(1)//ALWEN傪僷乕僥傿乕偵栠偡
+//			}
+//			else
+//			{
+//				join_party(0)//RAGNA傪僷乕僥傿乕偵栠偡
+//			}
+//			CAM_return( 0 )
+//			new_map(10500)
+//			//丂丂堦扷僼僃乕僪傾僂僩偟偰娰奜娤儅僢僾丄僼傽儞僼傽乕儗偲嫟偵僱僆儞僒僀儞偑摂傝丄娰偑戞俁抜奒偵側傞偺傪尒偣傞丅
+//			//丂丂偦偺屻埫揮仌僼僃乕僪僀儞偟偰丄摤媄応庴晅慜偐傜憖嶌嫋壜傪栠偡丅
+//		}
+//		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//		//	僠價僢巕擡幰攖
+//		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//		else
+//		if(GW_TRY_CUP==5 && !FV_FF_GyakataLv2)
+//		{
+//			//埫揮
+//			fade_in(100,60,0)
+//			wait_fade()
+//			if(GW_TRY_CHARA==0)
+//			{
+//				join_party(1)//ALWEN傪僷乕僥傿乕偵栠偡
+//			}
+//			else
+//			{
+//				join_party(0)//RAGNA傪僷乕僥傿乕偵栠偡
+//			}
+//			CAM_return( 0 )
+//			new_map(10500)
+//		//丂丂堦扷僼僃乕僪傾僂僩偟偰娰奜娤儅僢僾丄僼傽儞僼傽乕儗偲嫟偵僱僆儞僒僀儞偑摂傝丄娰偑戞俀抜奒偵側傞偺傪尒偣傞丅
+//		//丂丂偦偺屻埫揮仌僼僃乕僪僀儞偟偰丄摤媄応庴晅慜偐傜憖嶌嫋壜傪栠偡丅
+//		}
+//		else
+//		{
+//			//埫揮
+//			fade_in(100,60,0)
+//			wait_fade()
+//			if(GW_TRY_CHARA==0)
+//			{
+//				join_party(1)//ALWEN傪僷乕僥傿乕偵栠偡
+//			}
+//			else
+//			{
+//				join_party(0)//RAGNA傪僷乕僥傿乕偵栠偡
+//			}
+//			CAM_return( 0 )
+//			new_map(10510)
+//		//丂丂埫揮仌僼僃乕僪僀儞偟偰丄摤媄応庴晅慜偐傜憖嶌嫋壜傪栠偡丅
+//		}
+	}
+
+	//-- 晛捠偵庴晅偵栠傞 ------------------------------------------------
+	//埫揮
+	fade_in(100,60,0)
+	wait_fade()
+	if(GW_TRY_CHARA==0)
+	{
+		join_party(1)//ALWEN傪僷乕僥傿乕偵栠偡
+	}
+	else
+	{
+		join_party(0)//RAGNA傪僷乕僥傿乕偵栠偡
+	}
+	CAM_return( 0 )
+	new_map(10510)
+
+//	EV_end()
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴彑棙屻偺張棟乮僊儍儔儞僪僁偵彑棙乯
+//丂丂仸僊儍儔儞僪僁偵弶彑棙偟偨応崌偼偙偪傜偺張棟傪峴偆丅
+//丂丂丂俀夞栚埲崀偺彑棙偱偼丄捠忢偺彑棙張棟傪峴偆丅
+//丂丂仸杮愴廔椆屻丄僼僃乕僪僀儞偱
+//丂丂丂摤媄応僗僥乕僕偵棫偭偰偄傞儘僢僥偲挧愴幰丄僊儍儔儞僪僁丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+WIN_GYARANDOW_BATTLE
+{
+//	wait(150)	// 5昩
+
+	EV_begin()
+
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+
+	delete(ENEMY_CHARA)
+	delete(EV_PENGUIN)
+
+	//仛僊儍儔儞僪僁偵彑偭偨
+	F_set(FV_FF_WinGyarandow)
+	F_set(FV_FF_GyakataLv3)//娰俴倴俁
+
+	//僇儊儔僙僢僩
+	CAM_move(10168,-10596,142,0,0)
+	CAM(-210,102,142,20,240,0,0)
+
+	//仴嘐楃攓摪奐捠埲崀偲嘖埲崀偼偄側偄
+	set_chr( GYARANDOW,21,	-1,-1,  10120,10772,0	51,270,0,"")	//丂僊儍儔儞僪僁
+	chr_pos( LOTTE,10388,10356,1,330,2)	//丂儘僢僥
+//	set_chr( LOTTE,82,	-1,-1,  10388,10356,1,	2,330,0,"")	//丂儘僢僥
+
+	KAO(LOTTE, "1", "1", "1")	
+
+	//懳愴僉儍儔傪ENEMY_CHARA偱摑堦丅
+	set_chr( ENEMY_CHARA,399,	-1,-1,  9450,9192,1,	2,60,0,"")	//丂儁儞僊儞
+//	chr_pos( PENGUIN,9450,9192,1,-1,2)	//丂儁儞僊儞
+	color(ENEMY_CHARA,-1)//摟夁
+
+	//弶婜埵抲僙僢僩
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+	
+	//僼僃僀僗儕僙僢僩
+	KAO(PARTNER, "1", "1", "1")	
+	KAO(LOTTE, "1", "1", "1")	
+
+	wait(30)
+	BGM(19)
+	fade_in( 0, 60, BLACK)	//僼僃乕僪僀儞
+	wait_fade()
+
+//	name("夦恖僊儍儔儞僪僁")
+	MES(GYARANDOW,"──太令人驚訝了。",0)
+	MES(GYARANDOW,"這麼短時間內你們竟然\n超越了在下，成長如此之快……",0)
+	MES(GYARANDOW,"太偉大了。\n在下甚為感動。",0)
+	MES(GYARANDOW,"為了紀念這一偉大的時刻，\n我決定把這個獎品頒發給你們。",0)
+	MES_close(GYARANDOW)
+
+	MOT_SET(GYARANDOW,151,-1,509,509,152,0)	//僊儍儔儞僪僂丂壗偐搉偡巇憪
+	MOT_SET(GYARANDOW,152,-1,510,510,153,0)
+	MOT_SET(GYARANDOW,153,-1,511,511,-1,0)
+	MOT(GYARANDOW,151,15)
+	wait(30)
+	EV("ITEMGET_FIRST")
+	wait_EV("ITEMGET_FIRST")
+	MOT(GYARANDOW,51,15)
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("佀挧愴僉儍儔偑儔僌僫")
+	if(GW_TRY_CHARA==0)
+	{
+		MES(RAGNA,"多，多謝……",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+	//	name("佀挧愴僉儍儔偑傾儖僂僃儞")
+		MES(PARTNER,"嗯，嗯。\n我們收下吧……",0)
+		MES_close(PARTNER)
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+//	name("夦恖僊儍儔儞僪僁")
+	MES(GYARANDOW,"呵呵，但是啊……",0)
+	MES(GYARANDOW,"在這競技場，\n存在著比在下更厲害的人物。",0)
+	MES_close(GYARANDOW)
+
+//丂丂挧愴僉儍儔偵両僄儌乕僔儑儞丅
+	if(GW_TRY_CHARA==0)
+	{
+		EMO(RAGNA,EMO_BIKKURI)
+		wait(30)
+	//	name("挧愴僉儍儔")
+		MES(RAGNA,"哎……？",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+		EMO(PARTNER,EMO_BIKKURI)
+		wait(30)
+		MES(PARTNER,"哎……？",0)
+		MES_close(PARTNER)
+	}
+
+//	name("夦恖僊儍儔儞僪僁")
+	MES(GYARANDOW,"沒什麼大驚小怪的。",0)
+	MES(GYARANDOW,"但是百聞不如一見……\n……要挑戰試試嗎？",0)
+	MES_close(GYARANDOW)
+
+//	name("慖戰僥僉僗僩")
+	workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+	MES_pos(PLAYER1,"??W9【挑戰】\n【放棄】",0,440,180,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	挧愴偡傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(WK_YESNO==1)
+	{
+	//仛挧愴僐乕僗偵儁儞僊儞攖傪僙僢僩
+		workG(GW_TRY_CUP,SET,9)
+
+		F_set(FV_FF_BAPenguin)
+
+		if(GW_TRYNum_Penguin<99)
+			workG(GW_TRYNum_Penguin,ADD,1)
+
+		set_hp(PLAYER1,100)//慡夣
+
+		wait(10)
+		cross_fade(20)
+		CAM_move(10108,-10776,242,30,0)
+		CAM(-210,49,242,20,269,30,0)
+		MOT_SET(GYARANDOW,154,-1,515,515,155,20)		//偸偆偆偆偆傫傫傫両
+		MOT_SET(GYARANDOW,155,-1,514,514,-1,-1)
+		wait_CAM_move()
+		wait(10)
+		
+		MES(GYARANDOW,"呵呵呵，我就知道會這樣。",0)
+		MES(GYARANDOW,"但是那傢夥一旦開始動起來，\n任誰也是無法阻止的……",0)
+		MOT(GYARANDOW,154,15)
+		CAM_quake("555555463746")
+		MES(GYARANDOW,"P1S3那麼，上吧……\n我忠實的部下，最強的兵器！！",0)
+		MES_close(GYARANDOW)
+
+//		map_color(0,0,0,20);//R,G,B, time 100%
+	//丂丂僇儊儔傪夞偟丄愒僐乕僫乕懁傪塮偡丅
+		CAM_move(9448,-9216,142,60,0)
+		CAM(-48,54,142,21,182,60,0)
+		wait(10)
+		fade_in(100, 30, BLACK)
+		wait_CAM_move()
+
+	//丂丂偠傖傜傜傜丒丒丒偲偄偆俽俤偱娫傪庢偭偨屻丄
+	//丂丂僗億僢僩儔僀僩偱儔僀僩傾僢僾偡傞丅
+	//	MES(ENEMY_CHARA,"C4仧偠傖傜傜傜丒丒丒偲偄偆俽俤偱娫傪庢偭偨屻丄\n僗億僢僩儔僀僩偱儔僀僩傾僢僾偡傞丅",0)
+	//	MES_close(ENEMY_CHARA)
+
+		SE(592,0)//偠傖傜傜
+		wait(90)
+
+//		map_color(85,80,80,0);//R,G,B, time 100%
+		EV("DELETE_ROPE")
+		wait_EV("DELETE_ROPE")
+		EV("SET_ROPE2")
+		wait_EV("SET_ROPE2")
+		color(ENEMY_CHARA,1)//摟夁夝彍
+		fade_in( 0, 1, BLACK)	
+		
+	//丂丂偦偙偵偼儁儞僊儞偑棫偭偰偄傞丅
+	//丂丂儁儞僊儞偵丒丒丒僄儌乕僔儑儞丅
+//		wait(30)
+//		EFF_chr(25124,ENEMY_CHARA,0,100,0,"Bone_Head")
+//		wait(100)
+
+		EMO(ENEMY_CHARA,EMO_ASEASE)
+		wait(60)
+
+		rot(ENEMY_CHARA,30,0)
+
+		KAO(ENEMY_CHARA, "12321", "1233321", "1")	
+		MES(ENEMY_CHARA,"哦呦？",0)
+		MES_close(ENEMY_CHARA)
+		wait_MES(ENEMY_CHARA)
+
+	//丂丂儁儞僊儞偑偺偦偺偦偲傗偭偰棃傞丅
+		EV("Move_Penguin3")
+	//丂丂僋儘僗僼僃乕僪偱摤媄応僗僥乕僕傪塮偡丅
+		wait(170)
+
+		cross_fade(30)
+//		CAM_move(10388,-10456,122,0,0)
+//		CAM(-50,113,122,21,180,0,0)
+		CAM_move(10388,-10456,122,0,0)
+		CAM(-50,158,122,20,180,0,0)
+		look_off( PLAYER1 )
+		look_del( PLAYER1 )
+		wait_EV("Move_Penguin3")
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀挧愴僉儍儔偑儔僌僫")
+//		rot_chr(PLAYER1,60,ENEMY_CHARA)
+
+		look_chr(PLAYER1,LOTTE,"Bone_Head")
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(RAGNA, "B232BZ4", "1233321D", "6")	
+			MES(RAGNA,"請，請等一下。\n這企鵝是……",0)
+			MES_close(RAGNA)
+		}
+		//	name("佀挧愴僉儍儔偑傾儖僂僃儞")
+		else
+		{
+			KAO(PARTNER, "B232BZ4", "1233321D", "6")	
+			MES(PARTNER,"等，等等。\n這企鵝是……",0)
+			MES_close(PARTNER)
+		}
+		
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//儘僢僥堦曕壓偑傞
+
+		CAM_move(10388,-10456,122,60,0)
+		CAM(-50,113,122,21,180,60,0)
+
+		rot(LOTTE,30,0)
+		CAM_move(10388,-10456,122,40,0)
+		CAM(-50,96,122,22,180,40,0)
+		look(LOTTE,"Bone_RightShoulder",0,		5,5,5,			0,0,0)
+		move( LOTTE, 0, WALK1,10388,10200,1,0)
+		look(LOTTE,"Bone_Head",0,		0,4,0,			0,30,0)
+		wait(10)
+		look(LOTTE,"Bone_Head",0,		0,4,0,			0,-30,0)
+		wait(20)
+		look(LOTTE,"Bone_Head",0,		0,4,0,			0,0,0)
+		wait_move( LOTTE )
+		MOT(LOTTE,159,15)
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂岦偐偄崌偭偨忬懺偱丄椉幰峔偊傞丅
+	//丂丂摨帪偵椉幰俽俤偮偒偱峔偊傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		KAO(LOTTE, "12321Z4", "1233321", "3")	
+		MES(LOTTE,"接下來是\nＧ-競技場的最終決戰……",0)
+		MES_close(LOTTE)
+
+		//峔偊
+		EMO(PLAYER1,EMO_ASEASE)
+		KAO(PLAYER1, "1", "1233321", "1")	
+		EV("KAMAE_SET")
+		wait_EV("KAMAE_SET")
+		look_off(PLAYER1)
+
+//		MES(LOTTE,"C4仧亙儗僨傿丒僼傽僀僩俽俤仌僄僼僃僋僩嵞惗亜",0)
+//		MES_close(LOTTE)
+		stop_BGM(60)
+		EFF(21630,320,240,0,0,100,0)//FIGHT
+		wait(40)
+		SE(211,0)
+		EV("PLAY_VOICE_Fight")
+
+	//丂丂儘僢僥偲僊儍儔儞僪僁偼壓偑傝丄儁儞僊儞偲偺寛愴偑奐巒偝傟傞丅
+	//丂丂儁儞僊儞偼慜嵗側偟偱丄斀懃儗儀儖偺嫮偝偵偟偰偍偔丅
+	//丂丂仸搑拞攕戅偟偰傕丄娰偑憹抸偝傟傞偺偼尒偣傞丅
+	//丂丂丂堦扷僼僃乕僪傾僂僩偟偰娰奜娤儅僢僾丄僼傽儞僼傽乕儗偲嫟偵僱僆儞僒僀儞偑摂傝丄娰偑僪攈庤側嵟廔抜奒偵側傞偺傪尒偣傞丅
+
+		F_set_chr(ENEMY_CHARA,CF_NO_DEAD)
+		F_set_chr(ENEMY_CHARA,CF_NO_DROPITEM)
+		set_chr( ZAKO_19,990,	-1,-1,  11388,9309,1,	10,0,8,"(F9 <EV_WIN> RF9)")
+		EV("DELETE_ROPE")
+		wait_EV("DELETE_ROPE")
+		EV("SET_ROPE")
+
+		//峔偊傪栠偡
+		look_off(PLAYER1)
+		EV("KAMAE_RESET")
+		wait_EV("KAMAE_RESET")
+
+		//儘僢僥傪偳偐偡
+		MOT(LOTTE,153,2)
+		rot(LOTTE,60,360)
+		KAO(LOTTE,"5","5","6")
+		jump(LOTTE,0,20,9549,9099,0,400)
+
+		//僊儍儔儞僪僁傪偳偐偡
+		rot(GYARANDOW,60,360)
+		jump(GYARANDOW,0,20,9381,9099,0,400)
+
+		CAM_return( 30 )
+
+		workL(WK_BOSSHP,SET,ENEMY_CHARA)	//BOSS丵俫俹昞帵
+
+		BGM(45)
+		EV_end()
+
+		//儁僢僩徚偡
+		color(PET,-1)
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	傗傔偰偍偔
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	{
+	//	name("夦恖僊儍儔儞僪僁")
+		MES(GYARANDOW,"嗯，原來如此……",0)
+		MES(GYARANDOW,"也好。\n有機會的話\n請來挑戰。",0)
+		MES(GYARANDOW,"在下衷心的等待你們到來。",0)
+		MES_close(GYARANDOW)
+
+
+	//丂丂堦扷僼僃乕僪傾僂僩偟偰娰奜娤儅僢僾丄僼傽儞僼傽乕儗偲嫟偵僱僆儞僒僀儞偑摂傝丄娰偑僪攈庤側嵟廔抜奒偵側傞偺傪尒偣傞丅
+	//丂丂埫揮仌僼僃乕僪僀儞偟偰丄摤媄応庴晅慜偐傜憖嶌嫋壜傪栠偡丅
+		//埫揮
+		fade_in(100,60,0)
+		wait_fade()
+		if(GW_TRY_CHARA==0)
+		{
+			join_party(1)//ALWEN傪僷乕僥傿乕偵栠偡
+		}
+		else
+		{
+			join_party(0)//RAGNA傪僷乕僥傿乕偵栠偡
+		}
+		CAM_return( 0 )
+		new_map(10510)
+
+	//	EV_end()
+	}
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴彑棙屻偺張棟乮儁儞僊儞乯
+//丂丂仸僊儍儔儞僪僁偵弶彑棙偟偨応崌偼偙偪傜偺張棟傪峴偆丅
+//丂丂丂俀夞栚埲崀偺彑棙偱偼丄捠忢偺彑棙張棟傪峴偆丅
+//丂丂仸杮愴廔椆屻丄僼僃乕僪僀儞偱
+//丂丂丂摤媄応僗僥乕僕偵棫偭偰偄傞儘僢僥偲挧愴幰丄僊儍儔儞僪僁丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+WIN_PENGUIN_BATTLE
+{
+//	wait(150)	// 5昩
+
+	EV_begin()
+
+	//埫揮
+	wait(30)
+	BGM(19)
+	fade_in(100,1,0)
+	wait_fade()
+
+	//僇儊儔僙僢僩
+	CAM_move(10168,-10596,142,0,0)
+	CAM(-210,102,142,20,240,0,0)
+
+	delete(ENEMY_CHARA)
+//	delete(EV_PENGUIN)
+//	delete(PENGUIN)
+	delete(GYARANDOW)
+
+	//弶婜埵抲僙僢僩
+//	set_chr( LOTTE,82,	-1,-1,  10388,10356,1,	2,330,0,"")	//丂儘僢僥
+	chr_pos( LOTTE,10388,10356,1,330,2)	//丂儘僢僥
+
+	set_chr( GYARANDOW,21,	-1,-1,  10120,10772,0,	51,270,0,"")	//丂僊儍儔儞僪僁
+//	chr_pos( GYARANDOW,10120,10772,0,270,2)	//丂僊儍儔儞僪僁
+
+/*	//挧愴幰偑儔僌僫
+	if(GW_TRY_CHARA==0)
+	{
+		chr_pos(RAGNA,	10651,10778,1,90,2)
+		chr_pos(PARTNER,11270,11727,0,90,2)
+		KAO(RAGNA, "1", "1", "1")	
+	}
+	//挧愴幰偑傾儖僂僃儞
+	else
+	{
+		chr_pos(PARTNER,10651,10778,1,90,2)
+		chr_pos(RAGNA,11270,11727,0,90,2)
+		KAO(PARTNER, "1", "1", "1")	
+	}
+*/
+
+	chr_pos(PLAYER1,	10651,10778,1,90,2)
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(LOTTE, "1", "1", "1")	
+	fade_in( 0, 60, BLACK)	//僼僃乕僪僀儞
+	wait_fade()
+
+//	name("夦恖僊儍儔儞僪僁")
+	MES(GYARANDOW,"──太美好了。",0)
+	MES(GYARANDOW,"竟然出現了\n能將我的企鵝打倒的人……",0)
+	MES(GYARANDOW,"我太感動了。\n我被你們的愛感動了……！",0)
+	MES_close(GYARANDOW)
+
+//丂丂挧愴僉儍儔偵椻傗娋僄儌乕僔儑儞丅
+	EMO(PLAYER1,EMO_HIYAASE)
+	wait(30)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("佀挧愴僉儍儔偑儔僌僫")
+	if(GW_TRY_CHARA==0)
+	{				
+		MES(RAGNA,"完，完全不明白你在說什麼……",0)
+
+		//慡僐乕僗僋儕傾嵪傒
+		if(FV_FF_WinMaurice && FV_FF_WinOdessa && FV_FF_WinPockle && FV_FF_WinPipiro && FV_FF_WinSubaru && FV_FF_WinFiona && FV_FF_WinKlode)
+			MES(RAGNA,"總之賈蘭杜，\n這樣我們就打敗了\n這個館中所有的對手。",0)
+		else
+			MES(RAGNA,"總之賈蘭杜，\n這樣這裡的最終決戰\n也已經結束了。",0)
+		MES_close(RAGNA)
+
+	//	name("夦恖僊儍儔儞僪僁")
+		MES(GYARANDOW,"嗯，正是這樣，我的拉格那。",0)
+		MES(GYARANDOW,"但是集結在這裡的戰士們，\n每天都進行著魔鬼式訓練……",0)
+		MES(GYARANDOW,"如果就此洋洋自得，\n可是會被別人從背後趕過的哦。",0)
+		MES(GYARANDOW,"今後也不要忘記\n精進自己的技藝。",0)
+		MES_close(GYARANDOW)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"哦，哦。\n不用你說我也是這麼打算的。",0)
+		MES_close(RAGNA)
+
+	//	name("夦恖僊儍儔儞僪僁")
+		MES(GYARANDOW,"有機會的話記得再來玩。\n在下隨時隨地奉陪。",0)
+		MES_close(GYARANDOW)
+	}
+	else
+	{
+	//	name("佀挧愴僉儍儔偑傾儖僂僃儞")
+		MES(PARTNER,"且，且慢。",0)
+
+		//慡僐乕僗僋儕傾嵪傒
+		if(FV_FF_WinMaurice && FV_FF_WinOdessa && FV_FF_WinPockle && FV_FF_WinPipiro && FV_FF_WinSubaru && FV_FF_WinFiona && FV_FF_WinKlode)
+			MES(PARTNER,"蒙面的，也就是說我們終於\n打倒了所有對手獲得優勝了？",0)
+		else
+			MES(PARTNER,"面具男，這樣\n我們就贏得\n這裡的最終決戰勝利了吧？",0)
+		MES_close(PARTNER)
+
+	//	name("夦恖僊儍儔儞僪僁")
+		MES(GYARANDOW,"嗯，正是如此，我的艾爾文。",0)
+		MES(GYARANDOW,"但是集結在這裡的戰士們，\n每天都進行著魔鬼式訓練……",0)
+		MES(GYARANDOW,"如果就此洋洋自得，\n可是會被別人從背後趕過的哦。",0)
+		MES(GYARANDOW,"今後也不要忘記\n精進自己的技藝。",0)
+		MES_close(GYARANDOW)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"哼，那還用說，\n還輪不到你來教我。",0)
+		MES_close(PARTNER)
+
+	//	name("夦恖僊儍儔儞僪僁")
+		MES(GYARANDOW,"有機會的話記得再來玩。\n在下隨時隨地奉陪。",0)
+		MES_close(GYARANDOW)
+	}
+
+	//傾僀僥儉擖庤偑側偐偭偨偺偱丄埫揮忬懺偱傾僀僥儉傪栣偆丅
+	fade_in(100,60,0)
+	wait_fade()
+	wait(20)
+	EV("ITEMGET_FIRST")
+	wait_EV("ITEMGET_FIRST")
+	wait(30)
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂傑偩娰偑嵟廔抜奒偵側偭偰偄側偄応崌丄
+	//丂丂堦扷僼僃乕僪傾僂僩偟偰娰奜娤儅僢僾丄僼傽儞僼傽乕儗偲嫟偵僱僆儞僒僀儞偑摂傝丄娰偑僪攈庤側嵟廔抜奒偵側傞偺傪尒偣傞丅
+	//丂丂埫揮仌僼僃乕僪僀儞偟偰丄摤媄応庴晅慜偐傜憖嶌嫋壜傪栠偡丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	
+	//仛儁儞僊儞偵彑偭偨
+	F_set(FV_FF_WinPenguin)
+	F_set(FV_FF_GyakataLvMAX)//娰俴倴係
+
+//娰偺儗儀儖傾僢僾偼柍偟0821
+//	if(!FV_FF_GyakataLvMAX)
+//	{
+//		if(GW_TRY_CHARA==0)
+//		{
+//			join_party(1)//ALWEN傪僷乕僥傿乕偵栠偡
+//		}
+//		else
+//		{
+//			join_party(0)//RAGNA傪僷乕僥傿乕偵栠偡
+//		}
+//		CAM_return( 0 )
+//		new_map(10500)
+//	}
+//	else
+//	{
+		if(GW_TRY_CHARA==0)
+		{
+			join_party(1)//ALWEN傪僷乕僥傿乕偵栠偡
+		}
+		else
+		{
+			join_party(0)//RAGNA傪僷乕僥傿乕偵栠偡
+		}
+		CAM_return( 0 )
+		new_map(10510)
+	//丂丂埫揮仌僼僃乕僪僀儞偟偰丄摤媄応庴晅慜偐傜憖嶌嫋壜傪栠偡丅
+//	}
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// 摤媄応梡丒傾僀僥儉僎僢僩張棟
+//////////////////////////////////////////////////////////////////////
+ITEMGET_FIRST	//弶傔偰峌棯偟偨斉丅
+{
+/*
+		067	暊姫			AC03	06 	63	0		------ 	2	0	-1	0	偍暊傪椻偊偐傜庣傞暊姫丅\n尒偨栚偼埆偄偑儌僲偼椙偄丅					//摤媄応
+		082	惛恄埨掕偺偍庣傝 AC18	06 	90	0		------ 	0	0	0	0	惛恄忬懺傪惓忢偵曐偮偍庣傝丅\n崿棎忬懺傪梊杊偡傞丅						//僴儞僞乕儔儞僋
+		113	懱廳寁																																	//摤媄応
+		090	孼婱偺僴僠儅僉	AC26	06 	86	0		------ 	0	0	0	0	崻惈偺偙傕偭偨僴僠儅僉丅\n懱椡偑彮側偄帪傎偳晲婍峌寕椡偑傾僢僾両		//摤媄応
+		088	傾儞僠儃儉		AC24	06 	84	0		------ 	0	0	0	0	敋敪偺僟儊乕僕傪柍岠壔偡傞杺朄偺弬丅									//摤媄応
+		080	寬峃婩婅偺偍庣傝 AC16	06 	88	0		------ 	0	0	0	0	撆傪拞榓偡傞偍庣傝丅\n撆忬懺撆徖偺僟儊乕僕傪梊杊偡傞丅					//僴儞僞乕儔儞僋
+		116	倅亅俹俷俢		GG12	09 	130	0		------ 	0	0	0	0	乮夵乯庤帩偪偺俠俢傪僔儍僢僼儖偟偰嵞惗偟傑偡丅							//
+		141 俴倁僾儗乕僩	//摤媄応偺徿昳丂俴倴俁侽
+		071	墹姤			AC07	06 	67	0		------ 	2	2	2	0	埿尩偺昚偆僑乕僕儍僗側墹姤丅											//摤媄応
+
+
+		儌乕儕僗	LV.4	丗暊姫				亜暊姫
+		僆僨僢僒	LV.7	丗惛恄埨掕偺偍庣傝	亜寬峃婩婅偺偍庣傝	仸曄峏			080	寬峃婩婅偺偍庣傝 AC16	06 	88	0		------ 	0	0	0	0	撆傪拞榓偡傞偍庣傝丅\n撆忬懺偲撆徖偺僟儊乕僕傪梊杊偡傞丅			//仛俧摤媄応
+		億僢僋儖	LV.11	丗懱廳寁			亜懱廳寁
+		僺僺儘		LV.13	丗孼婱偺僴僠儅僉	亜惛恄埨掕偺偍庣傝	仸曄峏			082	惛恄埨掕偺偍庣傝 AC18	06 	90	0		------ 	0	0	0	0	惛恄忬懺傪惓忢偵曐偮偍庣傝丅\n崿棎忬懺傪梊杊偡傞丅					//仛俧摤媄応
+		僗僶儖		LV.16	丗傾儞僠儃儉		亜傾儞僠儃儉
+		僼傿僆僫	LV.19	丗寬峃婩婅偺偍庣傝	亜孼婱偺僴僠儅僉	仸曄峏			090	孼婱偺僴僠儅僉	AC26	06 	86	0		------ 	0	0	0	0	崻惈偺偙傕偭偨僴僠儅僉丅\n懱椡偑彮側偄帪傎偳晲婍峌寕椡偑傾僢僾両				//仚俧摤媄応
+		僋儘乕僪	LV.22	丗倅亅俹俷俢		亜倅亅俹俷俢
+		忿菽蕞	LV.25	丗俴倁僾儗乕僩		亜俴倁僾儗乕僩
+		儁儞僊儞	LV.30	丗墹姤				亜墹姤
+
+*/
+/*
+		仸俀廡栚埲崀偼丄弶傔偰峌棯偱傕僼乕僪傾僀僥儉偲側傞丅
+
+		儌乕儕僗		  4		168 偟偟傖傕
+		僆僨僢僒		  7		180	僉僂僀
+		億僢僋儖		 11		196	偳傜從偒
+		僺僺儘			 13		165 惗僴儉
+		僗僶儖			 17		181	儅儞僑乕
+		僼傿僆僫		 20		193	僠儑僐儗乕僩
+		幏帠僋儘乕僪	 23		166 僴儞僶乕僌
+		僊儍儔儞僪僁	 27		182	僷僀僫僢僾儖
+		屇傃崬傒儁儞僊儞 30		194	僔儑乕僩働乕僉
+
+*/
+
+	if(GW_TRY_CUP==1)
+	{
+		BGM_vol(50,15)				//BGM僼僃乕僪
+		wait(20)
+		fade_in(30,10,BLACK)		//彮偟埫揮
+
+		if(IT067>0)
+			get_item(168,1,0)
+		else
+			get_item(067,1,0)
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM栠偟
+		fade_in(0,10,BLACK)			//埫揮夝彍
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//僼傿僊儏傾僎僢僩
+		if(!F2850)
+		{
+			SE(24,0)//僎僢僩SE
+			MES(0,"得到了L667莫里斯L777的模型！！",2)
+			MES_close(0)
+			F_set(2850)
+		}
+	}	
+	else
+	if(GW_TRY_CUP==2)
+	{
+		BGM_vol(50,15)				//BGM僼僃乕僪
+		wait(20)
+		fade_in(30,10,BLACK)		//彮偟埫揮
+
+//		if(IT082)
+//			get_item(180,1,0)
+//		else
+//			get_item(082,1,0)
+
+		if(IT080>0)
+			get_item(180,1,0)
+		else
+			get_item(080,1,0)
+
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM栠偟
+		fade_in(0,10,BLACK)			//埫揮夝彍
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//僼傿僊儏傾僎僢僩
+		if(!F2851)
+		{
+			SE(24,0)//僎僢僩SE
+			MES(0,"得到了L667奧迪莎L777的模型！！",2)
+			MES_close(0)
+			F_set(2851)
+		}
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		BGM_vol(50,15)				//BGM僼僃乕僪
+		wait(20)
+		fade_in(30,10,BLACK)		//彮偟埫揮
+
+		if(IT113>=0)
+			get_item(196,1,0)
+		else
+			get_item(113,1,0)
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM栠偟
+		fade_in(0,10,BLACK)			//埫揮夝彍
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//僼傿僊儏傾僎僢僩
+		if(!F2852)
+		{
+			SE(24,0)//僎僢僩SE
+			MES(0,"得到了L667波克爾L777的模型！！",2)
+			MES_close(0)
+			F_set(2852)
+		}
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		BGM_vol(50,15)				//BGM僼僃乕僪
+		wait(20)
+		fade_in(30,10,BLACK)		//彮偟埫揮
+
+//		if(IT090)
+///			get_item(165,1,0)
+//		else
+//			get_item(090,1,0)
+
+		if(IT082>0)
+			get_item(165,1,0)
+		else
+			get_item(082,1,0)
+
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM栠偟
+		fade_in(0,10,BLACK)			//埫揮夝彍
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//僼傿僊儏傾僎僢僩
+		if(!F2853)
+		{
+			SE(24,0)//僎僢僩SE
+			MES(0,"得到了L667皮皮洛L777的模型！！",2)
+			MES_close(0)
+			F_set(2853)
+		}
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		BGM_vol(50,15)				//BGM僼僃乕僪
+		wait(20)
+		fade_in(30,10,BLACK)		//彮偟埫揮
+
+		if(IT088>0)
+			get_item(181,1,0)
+		else
+			get_item(088,1,0)
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM栠偟
+		fade_in(0,10,BLACK)			//埫揮夝彍
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//僼傿僊儏傾僎僢僩
+		if(!F2854)
+		{
+			SE(24,0)//僎僢僩SE
+			MES(0,"得到了L667昴L777的模型！！",2)
+			MES_close(0)
+			F_set(2854)
+		}
+	}
+	else
+	if(GW_TRY_CUP==6)
+	{
+		BGM_vol(50,15)				//BGM僼僃乕僪
+		wait(20)
+		fade_in(30,10,BLACK)		//彮偟埫揮
+
+//		if(IT080)
+//			get_item(193,1,0)
+//		else
+//			get_item(080,1,0)
+
+		if(IT090>0)
+			get_item(193,1,0)
+		else
+			get_item(090,1,0)
+
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM栠偟
+		fade_in(0,10,BLACK)			//埫揮夝彍
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//僼傿僊儏傾僎僢僩
+		if(!F2855)
+		{
+			SE(24,0)//僎僢僩SE
+			MES(0,"得到了L667菲歐娜L777的模型！！",2)
+			MES_close(0)
+			F_set(2855)
+		}
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		BGM_vol(50,15)				//BGM僼僃乕僪
+		wait(20)
+		fade_in(30,10,BLACK)		//彮偟埫揮
+
+		if(IT116>=0)
+		{
+			get_item(166,1,0)
+			wait(70)
+			wait_key(0)
+			BGM_vol(100,30)				//BGM栠偟
+			fade_in(0,10,BLACK)			//埫揮夝彍
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		}
+		else
+		{
+			get_item(116,1,0)
+			wait(70)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			wait_menu(1)
+			wait_menu(0)
+			wait(15)
+
+			get_item(142,1,0)//142	屆傏偗偨俠俢
+			wait(70)
+			wait_key(0)
+			BGM_vol(100,30)				//BGM栠偟
+			fade_in(0,10,BLACK)			//埫揮夝彍
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			F_set(2480)//俠俢侾
+		}
+
+		//僼傿僊儏傾僎僢僩
+		if(!F2856)
+		{
+			SE(24,0)//僎僢僩SE
+			MES(0,"得到了L667克羅德L777的模型！！",2)
+			MES_close(0)
+			F_set(2856)
+		}
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		BGM_vol(50,15)				//BGM僼僃乕僪
+		wait(20)
+		fade_in(30,10,BLACK)		//彮偟埫揮
+
+		if(IT138>0)
+			get_item(182,1,0)		//僷僀僫僢僾儖
+		else	
+			get_item(138,1,0)		//儗儀儖僾儗乕僩俧
+		wait(70)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)		
+		
+		SE(043,PLAYER1)
+MES_pos(0,"C3迷宮中會發現『等級石板Ｇ』，\n調查後可以使用。\n敵人比平時強了不少，\n道具出現的幾率與部分寶箱中的物品會發生變化。",2,120,200,400,100)	
+		wait_key(0)	
+		MES_close(0)		
+		
+		BGM_vol(100,30)				//BGM栠偟
+		fade_in(0,10,BLACK)			//埫揮夝彍
+
+		
+		//僼傿僊儏傾僎僢僩
+		if(!F2848)
+		{
+			SE(24,0)//僎僢僩SE
+			MES(0,"得到了L667賈蘭杜L777的模型！！",2)
+			MES_close(0)
+			F_set(2848)
+		}
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		BGM_vol(50,15)				//BGM僼僃乕僪
+		wait(20)
+	//	fade_in(30,10,BLACK)		//彮偟埫揮
+
+		if(IT071>0)
+			get_item(194,1,0)
+		else
+			get_item(071,1,0)
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM栠偟
+	//	fade_in(0,10,BLACK)			//埫揮夝彍
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		//僼傿僊儏傾僎僢僩
+		if(!F2849)
+		{
+			SE(24,0)//僎僢僩SE
+			MES(0,"得到了L667宣傳企鵝L777的模型！！",2)
+			MES_close(0)
+			F_set(2849)
+		}
+	}
+	//wait_key(0)
+	//menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	//menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+}
+
+
+//////////////////////////////////////////////////////////////////////
+
+//椉幰峔偊傞//壖
+KAMAE_SET
+{
+	if(GW_TRY_CHARA==0)
+	{
+		// 儔僌僫偱挧愴
+		SE(1014,0)//僊傾峔偊
+		MOT_SET(RAGNA,150,-1,481,481,-1,-1)
+		MOT(RAGNA,150,10)
+	}
+	else
+	{
+		// 傾儖僂僃儞偱挧愴
+		SE(1015,0)//忨峔偊
+		MOT_SET(PARTNER,150,-1,481,481,-1,-1)
+		MOT(PARTNER,150,10)
+	}
+	
+	//揋偺峔偊儌乕僔儑儞
+	if(GW_TRY_CUP==1)
+	{
+		SE(590,0)//
+		EMO(ENEMY_CHARA,EMO_ASEASE)
+		MOT(ENEMY_CHARA,30,10)	//丂儌乕儕僗
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		SE(1015,0)//
+		MOT_SET(ENEMY_CHARA,150,-1,995,995,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//丂僆僨僢僒
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		SE(1033,0)//
+		MOT_SET(ENEMY_CHARA,150,-1,1511,1511,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//丂億僢僋儖
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		SE(1015,0)//忨峔偊
+		MOT_SET(ENEMY_CHARA,150,-1,1133,1133,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//丂僺僺儘
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		SE(590,0)//
+		MOT_SET(ENEMY_CHARA,150,-1,980,980,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//丂僗僶儖
+	}
+	else
+	if(GW_TRY_CUP==6)	
+	{
+		SE(1033,0)//
+		MOT_SET(ENEMY_CHARA,150,-1,840,840,-1,-1)
+		MOT(ENEMY_CHARA,150,10)//丂僼傿僆僫
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		SE(590,0)//
+		MOT(ENEMY_CHARA,7,10)	//丂僋儘乕僪
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		SE(590,0)//
+		MOT_SET(ENEMY_CHARA,150,-1,514,514,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//丂僊儍儔儞僪僁
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		MOT(ENEMY_CHARA,55,10)	//丂儁儞僊儞
+
+//		workL(001,RAND,3)
+//		if(WK001==1)
+//		{
+//			wait(30)
+//			EMO(ENEMY_CHARA,EMO_HIRAMEKI)
+//			wait(30)
+//			MOT(ENEMY_CHARA,55,5)	//丂儁儞僊儞
+//		}
+	}
+}
+
+
+//椉幰偺峔偊傪栠偡//壖
+KAMAE_RESET
+{
+	if(GW_TRY_CHARA==0)
+	{
+		// 儔僌僫偱挧愴
+		MOT(RAGNA,2,5)
+	}
+	else
+	{
+		// 傾儖僂僃儞偱挧愴
+		MOT(PARTNER,2,5)
+	}
+	
+	if(GW_TRY_CUP==1)
+	{
+		MOT(ENEMY_CHARA,2,5)	//丂儌乕儕僗
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		MOT(ENEMY_CHARA,2,5)	//丂僆僨僢僒
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		MOT(ENEMY_CHARA,2,5)	//丂億僢僋儖
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		MOT(ENEMY_CHARA,2,5)	//丂僺僺儘
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		MOT(ENEMY_CHARA,2,5)	//丂僗僶儖
+	}
+	else
+	if(GW_TRY_CUP==6)	
+	{
+		MOT(ENEMY_CHARA,2,5)//丂僼傿僆僫
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		MOT(ENEMY_CHARA,2,5)	//丂僋儘乕僪
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		MOT(ENEMY_CHARA,2,5)	//丂僊儍儔儞僪僁
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		MOT(ENEMY_CHARA,2,5)	//丂儁儞僊儞
+	}
+}
+
+//懳愴憡庤彑棙億乕僘
+EnemyWin_KAMAE
+{
+	rot_chr(ENEMY_CHARA,60,PLAYER1)
+	wait(5)
+	if(GW_TRY_CUP==1)
+	{
+		MOT_SET(ENEMY_CHARA,150,-1,518,518,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//丂儌乕儕僗
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		MOT(ENEMY_CHARA,53,5)	//丂僆僨僢僒
+		KAO(ENEMY_CHARA,"1","123","1")
+		wait(56)
+		KAO(ENEMY_CHARA,"1","321","1")
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		//彑棙儌乕僔儑儞柍偟
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(ENEMY_CHARA,"1","1236","6")
+		}
+		else
+		{
+			KAO(ENEMY_CHARA,"B","1233321D","6")
+		}
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		//彑棙儌乕僔儑儞柍偟
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(ENEMY_CHARA,"1","1236","6")
+		}
+		else
+		{
+			KAO(ENEMY_CHARA,"1","1233321","6")
+		}
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		EMO(ENEMY_CHARA,EMO_ASEASE)
+		MOT_SET(ENEMY_CHARA,150,-1,450,450,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//丂僗僶儖
+		KAO(ENEMY_CHARA,"B","1233321D","4")
+	}
+	else
+	if(GW_TRY_CUP==6)	
+	{
+		MOT_SET(ENEMY_CHARA,150,-1,439,439,-1,-1)
+		MOT(ENEMY_CHARA,150,15)//丂僼傿僆僫
+		KAO(ENEMY_CHARA,"1","1236","6")
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		MOT_SET(ENEMY_CHARA,150,150,325,384,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//丂僋儘乕僪
+		KAO(ENEMY_CHARA,"1","123","1")
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		MOT_SET(ENEMY_CHARA,150,150,1045,1085,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//丂僊儍儔儞僪僁
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		MOT(ENEMY_CHARA,55,10)
+	}
+}
+
+
+
+//儔僌僫/傾儖僂僃儞偑惵僐乕僫乕偐傜尰傟傞
+Move_Player
+{
+	CAM_move(11259,-11495,121,50,0)
+	CAM(-50,43,121,23,341,50,0)
+	wait_CAM_move()
+	
+	//	name("佀挧愴幰偑儔僌僫偺応崌")
+	if(GW_TRY_CHARA==0)
+	{
+	//	VOICE(019,0)	//仛乽壌偺斣偩側両乿
+		VOICE(078,0)	//仛乽偝偰丄巒傔傞偐両乿
+		KAO(RAGNA,"1","321","1")
+	}
+	//	name("佀挧愴幰偑傾儖僂僃儞偺応崌")
+	else
+	{
+	//	VOICE(102,0)	//仛乽偆傓両乿
+		VOICE(165,0)	//仛乽偝偁丄巒傔傞偲偟傛偆偧乿
+		KAO(PARTNER,"1","321","1")
+	}
+	wait(30)
+
+	//拞墰傊
+	CAM_move(11299,-10895,121,100,0)
+	CAM(-50,159,121,18,340,100,0)
+	
+	move( PLAYER1, 0, WALK1,11259,10772,1,0)
+	wait_move(PLAYER1)
+	rot(PLAYER1,60,90)
+	
+	CAM_move(10388,-10456,162,100,0)
+	CAM(-49,175,162,22,161,100,0)
+
+	move( PLAYER1, 0, WALK1,10651,10772,1,0)
+	wait_move(PLAYER1)
+	wait_CAM_move()
+}
+
+//懳愴憡庤偲儁儞僊儞偑惵僐乕僫乕偐傜尰傟傞
+Move_EnemyAndPenguin1
+{
+	color(EV_PENGUIN,1)//摟夁夝彍
+	color(ENEMY_CHARA,1)//摟夁夝彍
+
+	move( EV_PENGUIN, 0, WALK1,9354,8685,1,0)
+	move( ENEMY_CHARA,0, WALK1,9500,8558,1,0)
+
+	cross_fade(20)
+	CAM_move(9349,-8119,121,0,0)
+	CAM(-10,106,-40,19,208,0,0)
+	wait_fade()
+
+	CAM_move(9369,-8557,121,30,0)
+	CAM(110,110,-40,17,219,30,0)
+	wait(20)
+
+}
+
+Move_EnemyAndPenguin2
+{
+	move( ENEMY_CHARA, 0, WALK1, 9504, 9139,0,0)
+	move( EV_PENGUIN,  0, WALK1, 9366, 9289,0,0)
+	wait(30)
+
+}
+
+Move_EnemyAndPenguin3
+{
+	color(EV_PENGUIN,1)//摟夁夝彍
+	color(ENEMY_CHARA,1)//摟夁夝彍
+
+	cross_fade(20)
+	CAM_move(9586,-10543,121,0,0)
+	CAM(110,110,-40,17,147,0,0)
+	look_off(ENEMY_CHARA)
+	look_del(ENEMY_CHARA)
+	KAO(ENEMY_CHARA, "1", "1", "1")	
+	KAO(EV_PENGUIN, "1", "1", "1")	
+	look_off( PLAYER1 )
+	look_del( PLAYER1 )
+
+	if(GW_TRY_CUP==1)
+		set_namebmp(34,0)	//傗傞婥拞擭儌乕儕僗	俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==2)
+ 		set_namebmp(35,0)	//夓楾庪傝僆僨僢僒		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==3)
+		set_namebmp(37,0)	//弮忣彮擭億僢僋儖		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==4)
+		set_namebmp(38,0)	//杺朄彮彈僺僺儘		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==5)
+		set_namebmp(36,0)	//尒廗偄擡幰僗僶儖		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==6)	
+		set_namebmp(39,0)	//惞寱巊偄僼傿僆僫		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==7)
+		set_namebmp(40,0)	//愴摤幏帠僋儘乕僪		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==8)
+		set_namebmp(41,0)	//暍柺挻恖僊儍儔儞僪僁	俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==9)
+		set_namebmp(42,0)	//愨懳媶嬌柍揋儁儞僊儞	俧亅僐儘僢僙僆
+
+	CAM_move(10308,-10596,22,150,0)
+	CAM(309,123,22,20,239,150,0)
+
+	EV("MoveSub_EnemyAndPenguin_A")
+	EV("MoveSub_EnemyAndPenguin_B")
+
+	wait_EV("MoveSub_EnemyAndPenguin_A")
+	wait_EV("MoveSub_EnemyAndPenguin_B")
+	wait(30)
+
+//	look_off(PLAYER1)
+	move( EV_PENGUIN,  0, WALK1,9868,10894,0,2)
+	wait_move(EV_PENGUIN)
+
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	wait(30)
+	//儘僢僥堦曕壓偑傞
+	rot(LOTTE,30,0)
+	CAM_move(10388,-10456,122,40,0)
+	CAM(-50,96,122,22,180,40,0)
+	chr_pos(PLAYER1,10651,10772,1,90,0)
+
+}
+
+MoveSub_EnemyAndPenguin_A
+{
+	chr_pos(ENEMY_CHARA,9480,10275,0,340,2)
+	move( ENEMY_CHARA, 0, WALK1, 9649,10439,0,0)
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,300)
+	move( ENEMY_CHARA, 0, WALK1,10150,10772,0,0)
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,270)
+
+}
+MoveSub_EnemyAndPenguin_B
+{
+	chr_pos(EV_PENGUIN, 9307,10238,0,355,2)
+	move( EV_PENGUIN,  0, WALK1, 9510,10638,0,0)
+	wait_move(EV_PENGUIN)
+	rot(EV_PENGUIN,30,300)
+	
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗
+	workL(000,RAND,5)
+	if(WK000==1)
+		MOT(EV_PENGUIN,90,5)
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+	wait(20)
+//	move( EV_PENGUIN,  0, WALK1, 9977,10694,0,0)
+	move( EV_PENGUIN,  0, WALK1, 9997,10899,0,0)
+	wait_move(EV_PENGUIN)
+
+	rot(EV_PENGUIN,30,270)
+
+}
+
+
+
+
+//懳愴憡庤偺傒偑惵僐乕僫乕偐傜尰傟傞丂乮僊儍儔儞僪僁乯
+Move_EnemyOnry1
+{
+	color(ENEMY_CHARA,1)//摟夁夝彍
+
+	cross_fade(20)
+	CAM_move(9463,-8517,160,0,0)
+	CAM(-130,113,0,18,180,0,0)
+	wait_fade()
+
+}
+
+Move_EnemyOnry2
+{
+	VOICE( 633,0 ) 
+	move( ENEMY_CHARA,0, WALK2,9448,9800,0,0)
+	CAM_move(9463,-8517,160,60,0)
+	CAM(-330,139,0,18,180,60,0)
+	wait(60)
+
+	cross_fade(20)
+	CAM_move(9754,-10214,59,0,0)
+	CAM(-130,96,-100,26,206,0,0)
+	move( ENEMY_CHARA,0, WALK2,10150,10772,0,0)
+	chr_pos(ENEMY_CHARA,10150,10772,0,270,0)
+	chr_pos(PLAYER1,10452,11026,0,90,0)
+	look_off( PLAYER1 )
+	look_del( PLAYER1 )
+	look(PLAYER1,"Bone_Head",0,		0,2,0,			0,30,0)
+	wait_fade()
+
+//	CAM_move(9887,-10687,139,120,0)
+//	CAM(-210,98,-20,13,228,100,0)
+	CAM_move(9867,-10827,139,180,0)
+	CAM(-210,98,-20,13,257,180,0)
+	set_namebmp(41,0)	//暍柺挻恖僊儍儔儞僪僁	俧亅僐儘僢僙僆
+	wait(30)
+	look_chr(ENEMY_CHARA,PLAYER1,"Bone_Head")
+	wait(10)
+//	EV("PLAY_VOICE_Fight")
+//	if(GW_TRY_CHARA==0)	//愴摤奐巒丒懳儔僌僫
+//	{
+//		VOICE( 618,0 ) 
+//		wait(90)
+//		EMO(PLAYER1,EMO_HIYAASE)
+//	}
+//	else				//愴摤奐巒丒懳傾儖僂僃儞
+//	{
+//		VOICE( 619,0 ) 
+//		wait(120)
+//		EMO(PLAYER1,EMO_AOZAME)
+//	}
+
+	VOICE( 634,0 ) 
+	wait(120)
+	EMO(PLAYER1,EMO_AOZAME)
+
+//	if(GW_TRY_CHARA==0)
+//		EMO(PLAYER1,EMO_HIYAASE)
+//	else
+//		EMO(PLAYER1,EMO_AOZAME)
+
+//	CAM_move(9867,-10827,139,50,0)
+//	CAM(-210,98,-20,13,257,30,0)
+	wait(60)
+	wait_CAM_move()
+
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+//	wait(30)
+	cross_fade(30)
+	CAM_move(10388,-10456,122,0,0)
+	CAM(-50,96,122,22,180,0,0)
+	look(PLAYER1,"Bone_Head",0,		0,30,0,			0,0,0)
+	chr_pos(PLAYER1,10651,10772,1,90,0)
+	look_off( ENEMY_CHARA )
+	look_del( ENEMY_CHARA )
+	wait_fade()
+	wait(10)
+
+	//儘僢僥堦曕壓偑傞
+	rot(LOTTE,30,0)
+
+
+}
+
+
+//懳愴憡庤偺傒偑惵僐乕僫乕偐傜尰傟傞丂乮儁儞僊儞乯
+Move_Penguin1
+{
+	color(ENEMY_CHARA,1)//摟夁夝彍
+
+	cross_fade(20)
+	CAM_move(9349,-8119,121,0,0)
+	CAM(-10,106,-40,19,208,0,0)
+	wait_fade()
+
+}
+
+Move_Penguin2
+{
+
+	CAM_move(9369,-8557,121,30,0)
+	CAM(110,110,-40,17,219,30,0)
+	move( ENEMY_CHARA,  0, 8, 9366, 9289,0,0)
+	MOT(ENEMY_CHARA,0,15)
+	wait(60)
+
+	cross_fade(20)
+	CAM_move(9568,-9956,22,0,0)
+//	CAM(68,122,22,19,202,30,0)
+	CAM(68,112,22,19,202,30,0)
+	CAM_move(9868,-10616,42,210,0)
+	CAM(-130,103,42,15,251,210,0)
+	look_off( PLAYER1 )
+	look_del( PLAYER1 )
+	look_chr(PLAYER1,ENEMY_CHARA,"Bone_Head")
+
+	chr_pos(ENEMY_CHARA,9480,10275,0,310,2)
+	move( ENEMY_CHARA, 0, 008, 9649,10439,0,0)
+	MOT(ENEMY_CHARA,0,5)
+	wait(40)
+	set_namebmp(42,0)	//愨懳媶嬌柍揋儁儞僊儞	俧亅僐儘僢僙僆
+
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,300)
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗
+	workL(000,RAND,4)
+	if(WK000==1)
+	{
+		MOT(ENEMY_CHARA,92,5)
+		wait(20)
+	}
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+	move( ENEMY_CHARA, 0, 008,10150,10772,0,0)
+	MOT(ENEMY_CHARA,0,5)
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,270)
+	wait(50)
+	wait_CAM_move()
+
+//	EV("PLAY_VOICE_Fight")
+	wait(80)
+
+//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	cross_fade(20)
+	CAM_move(10388,-10456,122,0,0)
+	CAM(-50,96,122,22,180,0,0)
+	chr_pos(PLAYER1,10651,10772,1,90,0)
+	look_off( PLAYER1 )
+	look_del( PLAYER1 )
+	wait_fade()
+	wait(10)
+
+	//儘僢僥堦曕壓偑傞
+	rot(LOTTE,30,0)
+
+}
+
+//僊儍儔儞僪僁佀儁儞僊儞偺楢愴梡
+Move_Penguin3
+{
+	cross_fade(20)
+	CAM_move(9568,-9956,22,0,0)
+	CAM(68,122,22,19,202,30,0)
+	CAM_move(9868,-10616,42,210,0)
+//	CAM(-130,103,38,15,251,210,0)
+	CAM(-129,118,42,19,250,210,0)
+	look_chr(PLAYER1,ENEMY_CHARA,"Bone_Head")
+
+	chr_pos(ENEMY_CHARA,9480,10275,0,310,2)
+//	chr_pos(GYARANDOW,10019,10990,0,270,51)
+	chr_pos(GYARANDOW,10020,11100,0,270,51)
+	move( ENEMY_CHARA, 0, 008, 9649,10439,0,0)
+	MOT(ENEMY_CHARA,0,5)
+	wait(40)
+	set_namebmp(42,0)	//愨懳媶嬌柍揋儁儞僊儞	俧亅僐儘僢僙僆
+
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,300)
+
+//	//乗乗乗乗乗乗乗乗乗乗乗乗乗
+//	workL(000,RAND,4)
+//	if(WK000==1)
+//	{
+//		MOT(ENEMY_CHARA,92,5)
+//		wait(20)
+//	}
+//	//乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+	move( ENEMY_CHARA, 0, 008,10150,10772,0,0)
+	MOT(ENEMY_CHARA,0,5)
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,270)
+	wait(50)
+	wait_CAM_move()
+
+//	EV("PLAY_VOICE_Fight")
+//	wait(80)
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+
+Motion_KyoroKyoro
+{
+	look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,30,0)
+	wait(20)
+	look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,-30,0)
+	wait(40)
+	look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,0,0)
+}
+
+Motion_KyoroKyoro2
+{
+	look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,30,0)
+	wait(20)
+	look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,-30,0)
+	wait(40)
+	look_chr(ENEMY_CHARA,EV_PENGUIN,"Bone_Head")
+}
+
+Motion_KyoroKyoro_Lotte
+{
+	look(LOTTE,"Bone_Head",0,		0,2,0,			0,30,0)
+	wait(20)
+	look(LOTTE,"Bone_Head",0,		0,2,0,			0,-30,0)
+	wait(40)
+	look(LOTTE,"Bone_Head",0,		0,2,0,			0,0,0)
+}
+
+
+PLAY_VOICE_Fight
+{
+	if(GW_TRY_CHARA==0)//愴摤奐巒丒懳儔僌僫
+	{
+		if(GW_TRY_CUP==1)
+			VOICE( 478,0 ) 
+		if(GW_TRY_CUP==2)
+			VOICE( 294,0 ) 
+		if(GW_TRY_CUP==3)
+			VOICE( 497,0 ) 
+		if(GW_TRY_CUP==4)
+			VOICE( 531,0 ) 
+		if(GW_TRY_CUP==5)
+			VOICE( 242,0 ) 
+		if(GW_TRY_CUP==6)
+			VOICE( 565,0 ) 
+		if(GW_TRY_CUP==7)
+			VOICE( 591,0 ) 
+		if(GW_TRY_CUP==8)
+			VOICE( 618,0 ) 
+		if(GW_TRY_CUP==9)
+			VOICE( 652,0 ) 
+		wait(60)
+	}
+	else
+	{
+		if(GW_TRY_CUP==1)
+			VOICE( 478,0 ) 
+		if(GW_TRY_CUP==2)
+			VOICE( 295,0 ) 
+		if(GW_TRY_CUP==3)
+			VOICE( 498,0 ) 
+		if(GW_TRY_CUP==4)
+			VOICE( 532,0 ) 
+		if(GW_TRY_CUP==5)
+			VOICE( 243,0 ) 
+		if(GW_TRY_CUP==6)
+			VOICE( 566,0 ) 
+		if(GW_TRY_CUP==7)
+			VOICE( 592,0 ) 
+		if(GW_TRY_CUP==8)
+			VOICE( 619,0 ) 
+		if(GW_TRY_CUP==9)
+			VOICE( 652,0 ) 
+		wait(60)
+	}
+}
+
+PLAY_VOICE_EnemyWin
+{
+	if(GW_TRY_CHARA==0)//彑棙丒懳儔僌僫
+	{
+		if(GW_TRY_CUP==1)
+		{
+//			VOICE( 481,0 ) 
+			VOICE2(481,1,100)	//仛乽偁傟傟乧彑偭偪傖偭偨乧丠乿
+			wait(60)
+		}
+		if(GW_TRY_CUP==2)
+		{
+//			VOICE( 296,0 ) 
+			VOICE2(296,1,100)	//仛乽側傫偩丄偦偺掱搙偐偄丠乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==3)
+		{
+//			VOICE( 499,0 ) 
+			VOICE2(499,1,100)	//仛乽傗偭偨偁丄側傫偲偐彑偰偨両乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==4)
+		{
+//			VOICE( 533,0 ) 
+			VOICE2(533,1,100)	//仛乽偝偡偑偼僺僺儘偪傖傫偹侓乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==5)
+		{
+//			VOICE( 244,0 ) 
+			VOICE2(244,1,100)	//仛乽偟丄巘彔丄戝忎晇偱偡偐両丠乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==6)
+		{
+//			VOICE( 567,0 ) 
+			VOICE2(567,1,100)	//仛乽僼僼丄椙偄彑晧偱偟偨傢乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==7)
+		{
+//			VOICE( 593,0 ) 
+			VOICE2(593,1,100)	//仛乽幐楃丄傗傝偡偓傑偟偨乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==8)
+		{
+//			VOICE( 620,0 ) 
+			VOICE2(620,1,100)	//仛乽嬝擏偩丄嬝擏偑懌傜偸偺偩乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==9)
+		{
+//			VOICE( 653,0 ) 
+			VOICE2(653,1,100)	//仛乽偁傟傟丄傕偆廔傢傝側偺偱偡偐丠乿
+			wait(120)
+		}
+	}
+	else
+	{
+		if(GW_TRY_CUP==1)
+		{
+//			VOICE( 481,0 ) 
+			VOICE2(481,1,100)	//仛乽偁傟傟乧彑偭偪傖偭偨乧丠乿
+			wait(60)
+		}
+		if(GW_TRY_CUP==2)
+		{
+//			VOICE( 297,0 ) 
+			VOICE2(297,1,100)	//仛乽傗傟傗傟丄愗傝敳偗偨偐乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==3)
+		{
+//			VOICE( 500,0 ) 
+			VOICE2(500,1,100)	//仛乽偁傢傢丄偩丄戝忎晇偱偡偐両丠乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==4)
+		{
+//			VOICE( 534,0 ) 
+			VOICE2(534,1,100)	//仛乽偁傟傟丄彑偭偪傖偭偨丠乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==5)
+		{
+//			VOICE( 245,0 ) 
+			VOICE2(245,1,100)	//仛乽偛丄偛傔傫側偝偄偭両乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==6)
+		{
+//			VOICE( 568,0 ) 
+			VOICE2(568,1,100)	//仛乽傢偨偔偟偺彑偪偱偡傢偹乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==7)
+		{
+//			VOICE( 594,0 ) 
+			VOICE2(594,1,100)	//仛乽偍嫋偟偔偩偝偄丄儗僨傿乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==8)
+		{
+//			VOICE( 621,0 ) 
+			VOICE2(621,1,100)	//仛乽僼僢丄傑偩傑偩廋峴晄懌偩側乿
+			wait(120)
+		}
+		if(GW_TRY_CUP==9)
+		{
+//			VOICE( 653,0 ) 
+			VOICE2(653,1,100)	//仛乽偁傟傟丄傕偆廔傢傝側偺偱偡偐丠乿
+			wait(120)
+		}
+	}
+}
+
+PLAY_VOICE_EnemyLose
+{
+	if(GW_TRY_CHARA==0)//攕杒丒懳儔僌僫
+	{
+		if(GW_TRY_CUP==1)
+//			VOICE( 482,0 ) 
+			VOICE2(482,1,100)	//仛乽僴僥傿乧偍晝偝傫婃挘偭偨傛乧乿
+		if(GW_TRY_CUP==2)
+//			VOICE( 298,0 ) 
+			VOICE2(298,1,100)	//仛乽傆傆乧傗傞偠傖側偄偐乿
+		if(GW_TRY_CUP==3)
+//			VOICE( 501,0 ) 
+			VOICE2(501,1,100)	//仛乽傗偭傁傝儔僌僫偝傫偼妝乮傜偖乯側憡庤偠傖側偄傗乧乿
+		if(GW_TRY_CUP==4)
+//			VOICE( 535,0 ) 
+			VOICE2(535,1,100)	//仛乽旀傟偨乧傾僀僗怘傋偨偄偂乧乿
+		if(GW_TRY_CUP==5)
+//			VOICE( 246,0 ) 
+			VOICE2(246,1,100)	//仛乽偊傊傊乧偝偡偑儔僌僫巘彔乧乿
+		if(GW_TRY_CUP==6)
+//			VOICE( 569,0 ) 
+			VOICE2(569,1,100)	//仛乽偍尒帠乧偱偡傢乧乿
+		if(GW_TRY_CUP==7)
+//			VOICE( 595,0 ) 
+			VOICE2(595,1,100)	//仛乽偍尒帠乧偄偄摦偒偱偟偨乧乿
+		if(GW_TRY_CUP==8)
+//			VOICE( 622,0 ) 
+			VOICE2(622,1,100)	//仛乽尒帠偩丄柶嫋奆揱偱偁傞乧乿
+		if(GW_TRY_CUP==9)
+//			VOICE( 654,0 ) 
+			VOICE2(654,1,100)	//仛乽偍尒帠偱偡乧姰攕側偺偱偡乧乿
+	}
+	else
+	{
+		if(GW_TRY_CUP==1)
+//			VOICE( 482,0 ) 
+			VOICE2(482,1,100)	//仛乽僴僥傿乧偍晝偝傫婃挘偭偨傛乧乿
+		if(GW_TRY_CUP==2)
+//			VOICE( 299,0 ) 
+			VOICE2(299,1,100)	//仛乽偝偡偑偼恀慶偺昉偩偹乧乿
+		if(GW_TRY_CUP==3)
+//			VOICE( 502,0 ) 
+			VOICE2(502,1,100)	//仛乽晧偗偪傖偭偨乧偊傊傊乧偱傕枮懌偐傕乧乿
+		if(GW_TRY_CUP==4)
+//			VOICE( 536,0 ) 
+			VOICE2(536,1,100)	//仛乽傗丄傗傞傢偹丄僑僗偍巓偝傫乧乿
+		if(GW_TRY_CUP==5)
+//			VOICE( 247,0 ) 
+			VOICE2(247,1,100)	//仛乽傑丄晧偗偪傖偭偨偀乧乿
+		if(GW_TRY_CUP==6)
+//			VOICE( 570,0 ) 
+			VOICE2(570,1,100)	//仛乽偆偆偭丄夨偟偄偱偡傢乧乿
+		if(GW_TRY_CUP==7)
+//			VOICE( 596,0 ) 
+			VOICE2(596,1,100)	//仛乽僼僼乧曌嫮偵側傝傑偟偨乧乿
+		if(GW_TRY_CUP==8)
+//			VOICE( 623,0 ) 
+			VOICE2(623,1,100)	//仛乽惉挿偟偨側丄変偑掜巕傛乧乿
+		if(GW_TRY_CUP==9)
+//			VOICE( 654,0 ) 
+			VOICE2(654,1,100)	//仛乽偍尒帠偱偡乧姰攕側偺偱偡乧乿
+	}
+	wait(60)
+}
+
+PLAY_VOICE_PlayerWin
+{
+//揔摉偵尒慤偭偰偍偔
+/*
+058 ZVO_0058 000 100 000 4	//\彑棙丒儗儀儖傾僢僾丂丂乽傛偭偟傖偁両乿
+062 ZVO_0062 000 100 000 4	//\儖乕僩廔椆帪丂丂丂丂丂乽傑丄偙傫側傕傫偐偹乿乮僽儘儞僘乯
+063 ZVO_0063 000 100 000 4	//\丂丂丂丂丂丂丂丂丂丂丂乽傑偁傑偁偩偭偨側乿乮僔儖僶乕乯
+064 ZVO_0064 000 100 000 4	//\丂丂丂丂丂丂丂丂丂丂丂乽傊傊丄忋弌棃偩偤乿乮僑乕儖僪乯
+084 ZVO_0084 000 100 000 4	//丂丂丂丂丂丂丂丂丂丂丂乽僞儕丒儂乕両乿
+
+134 ZVO_0148 000 100 000 4	//\彑棙丒儗儀儖傾僢僾丂丂乽偆傓丄傗偭偨側両乿
+139 ZVO_0153 000 100 000 4	//\丂丂丂丂丂丂丂丂丂丂丂乽傆傓丄埆偔偼側偄乿乮僔儖僶乕乯
+140 ZVO_0154 000 100 000 4	//\丂丂丂丂丂丂丂丂丂丂丂乽側偐側偐偺弌棃偩側乿乮僑乕儖僪乯
+141 ZVO_0155 000 100 000 4	//\丂丂丂丂丂丂丂丂丂丂丂乽僼僢丄摉慠偺寢壥偱偁傠乿乮僾儔僠僫乯
+167 ZVO_0181 000 100 000 4 	//丂丂丂丂丂丂丂丂丂丂丂乽偙傟偱傛偄偺偐丠乿
+*/
+
+	workL(000,RAND,5)
+	if(GW_TRY_CHARA==0)//彑棙丒儔僌僫
+	{
+		if(WK000==0)
+			VOICE( 058,PLAYER1 )
+		if(WK000==1)
+			VOICE( 062,PLAYER1 )
+		if(WK000==2)
+			VOICE( 063,PLAYER1 )
+		if(WK000==3)
+			VOICE( 064,PLAYER1 )
+		if(WK000==4)
+			VOICE( 084,PLAYER1 )
+	}
+	else
+	{
+		if(WK000==0)
+			VOICE( 134,PLAYER1 )
+		if(WK000==1)
+			VOICE( 139,PLAYER1 )
+		if(WK000==2)
+			VOICE( 140,PLAYER1 )
+		if(WK000==3)
+			VOICE( 141,PLAYER1 )
+		if(WK000==4)
+			VOICE( 167,PLAYER1 )
+	}
+	wait(40)
+}
+
+
+//愴摤拞偺儘乕僾傪僙僢僩偡傞
+SET_ROPE
+{
+//	set_chr( 91,716,	 6, 6,     0, 200,  0,		0,0,0,";")
+//	set_chr( 92,716,	 5, 4,     0,1600,  0,		0,0,0,";")
+
+	set_chr( 91,716,	 6, 6,     0, 250,  0,		0,0,0,";")
+	set_chr( 92,716,	 5, 4,     0,1550,  0,		0,0,0,";")
+
+	set_chr( 93,991,	 6, 6,     0, 250,  0,		0,400501,0,";")	//僗僩僢僷乕
+	set_chr( 94,991,	 5, 4,     0,1550,  0,		0,400501,0,";")	//僗僩僢僷乕
+}
+
+//幬傔偵愝掕
+SET_ROPE2
+{
+//	set_chr( 92,716,	 5, 4,  -100,1600,  0,		0,60,0,";")
+	set_chr( 92,716,	 5, 4,  -100,1550,  0,		0,60,0,";")
+}
+
+DELETE_ROPE
+{
+	delete(91)
+	delete(92)
+}
+
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//僒僶僀僶儖儌乕僪
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+PRE_SURVIVAL
+{
+
+	workG(GW_TRY_CUP,SET,1)
+//	workG(GW_TRY_CUP,SET,6)
+	workL(002,SET,1)
+	set_hp(PLAYER1,100)//慡夣	
+		
+	EV("PRE_SURVIVAL_LOOP")
+	wait_EV("PRE_SURVIVAL_LOOP")
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+// 僒僶僀僶儖乮弶夞乯
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+PRE_SURVIVAL_FIRST
+{
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	//	弶婜壔張棟
+	//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	//埫揮
+//	fade_in(100,1,0)
+//	wait_fade()
+//	wait(1)
+
+//	EV("PRE_BATTLE_SET")
+//	wait_EV("PRE_BATTLE_SET")
+
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+	color(ENEMY_CHARA,	-1)	//摟夁
+	color(PLAYER1,		-1)		//摟夁
+	color(PLAYER2,		-1)		//摟夁
+	color(LOTTE,		1)		//
+
+	set_chr( LOTTE,1068,	-1,-1,  10388,10356,1,	0,0,0,"")	//丂儘僢僥		
+	chr_equip2( LOTTE,"eq_062", "Bone_LeftHand", 100,	90,0,0,	-7,0,2);
+
+	wait(30)
+
+	//僇儊儔僙僢僩
+	CAM_move(10388,-10456,162,0,0)
+	CAM(-50,118,162,20,180,0,0)
+	CAM_move(10388,-10456,162,100,0)
+	CAM(-50,50,162,21,180,100,0)
+
+	fade_in( 0, 60, BLACK)	//僼僃乕僪僀儞
+	wait_fade()
+
+
+	if( GW_TRY_CUP==6)
+	{
+		KAO(LOTTE,"52625Z4","5","6")	
+		MES(LOTTE,"P1S4來吧，精神百倍地面對後面的戰鬥吧！",0)
+		MES_close(LOTTE)
+		wait_MES(LOTTE)			
+	}
+	else
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","5","6")
+		MES(LOTTE,"P1S4各位女士們＆先生們！",0)
+		KAO(LOTTE,"52625Z3","321","6")
+		MES(LOTTE,"P1S4讓你們久等了。",0)
+		KAO(LOTTE,"52625Z6","1","6")
+		MES(LOTTE,"P1S4今晚將舉行生死之戰！",0)
+		KAO(LOTTE,"52625Z6","1236","6")		
+		MES(LOTTE,"P1S4來吧，永無休止的戰鬥開始了！！",0)
+		MES_close(LOTTE)
+		wait_MES(LOTTE)	
+	}
+
+
+	SE(591,0)//娊惡
+	
+	//埫揮
+	fade_in(100,30,0)
+	wait_fade()
+
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+// 僒僶僀僶儖乮儖乕僾乯
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+PRE_SURVIVAL_LOOP
+{
+	EV_begin()
+
+	workG(GW_SKI_MODE,SET,5)	//僊僽傾僢僾儊僯儏乕傪僙僢僩
+
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+	wait(1)
+
+	if(GW_TRY_CUP==1 || GW_TRY_CUP==6)
+	{
+		//弶夞尷掕
+		EV("PRE_SURVIVAL_FIRST")
+		wait_EV("PRE_SURVIVAL_FIRST")
+	}
+
+
+	//懳愴憡庤傪愝掕偡傞
+	if(GW_TRY_CUP==1)
+	{
+		set_chr( ENEMY_CHARA,390,	-1,-1,  9501,8247,1,	2,0,0,"")	//懳愴憡庤丗儌乕儕僗
+		workG(GW_TRY_CHARA,SET,0)										//懳愴幰丂丗儔僌僫
+		chr_state_LV( ENEMY_CHARA, 26 )									//揋儗儀儖愝掕(弶婜4)	chr_state_LV 偼 壛嶼
+		chr_state_LV( ENEMY_CHARA, 30)					
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		set_chr( ENEMY_CHARA,392,	-1,-1,  9501,8247,1,	2,0,0,"")	//懳愴憡庤丗僆僨僢僒
+		workG(GW_TRY_CHARA,SET,1)										//懳愴幰丂丗傾儖僂僃儞
+		chr_state_LV( ENEMY_CHARA, 23 )									//揋儗儀儖愝掕(弶婜7)		
+		chr_state_LV( ENEMY_CHARA, 30)					
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		set_chr( ENEMY_CHARA,396,	-1,-1,  9501,8247,1,	2,0,0,"")	//懳愴憡庤丗億僢僋儖
+		workG(GW_TRY_CHARA,SET,0)										//懳愴幰丂丗儔僌僫
+		chr_state_LV( ENEMY_CHARA, 28 )									//揋儗儀儖愝掕(弶婜12)
+		chr_state_LV( ENEMY_CHARA, 20)			
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		set_chr( ENEMY_CHARA,397,	-1,-1,  9501,8247,1,	2,0,0,"")	//懳愴憡庤丗僺僺儘
+		workG(GW_TRY_CHARA,SET,1)										//懳愴幰丂丗傾儖僂僃儞
+		chr_state_LV( ENEMY_CHARA, 17)									//揋儗儀儖愝掕(弶婜13)
+		chr_state_LV( ENEMY_CHARA, 20)			
+	}	
+	else
+	if(GW_TRY_CUP==5)
+	{
+		set_chr( ENEMY_CHARA,391,	-1,-1,  9501,8247,1,	2,0,0,"")	//懳愴憡庤丗僗僶儖
+		workG(GW_TRY_CHARA,SET,1)										//懳愴幰丂丗傾儖僂僃儞
+		chr_state_LV( ENEMY_CHARA, 13)									//揋儗儀儖愝掕(弶婜17)
+		chr_state_LV( ENEMY_CHARA, 30)	
+	}
+	else	
+	if(GW_TRY_CUP==6)
+	{
+		set_chr( ENEMY_CHARA,393,	-1,-1,  9501,8247,1,	2,0,0,"")	//懳愴憡庤丗僼傿僆僫
+		workG(GW_TRY_CHARA,SET,1)										//懳愴幰丂丗傾儖僂僃儞
+		chr_state_LV( ENEMY_CHARA, 10 )									//揋儗儀儖愝掕(弶婜20)
+		chr_state_LV( ENEMY_CHARA, 5 )									//
+	}	
+	else
+	if(GW_TRY_CUP==7)
+	{
+		set_chr( ENEMY_CHARA,394,	-1,-1,  9501,8247,1,	2,0,0,"")	//懳愴憡庤丗僋儘乕僪
+		workG(GW_TRY_CHARA,SET,0)										//懳愴幰丂丗儔僌僫
+		chr_state_LV( ENEMY_CHARA, 7)									//揋儗儀儖愝掕(弶婜23)
+		chr_state_LV( ENEMY_CHARA, 15 )			
+	}	
+	else
+	if(GW_TRY_CUP==8)
+	{
+		set_chr( ENEMY_CHARA,398,	-1,-1,  9501,8247,1,	2,0,0,"")	//懳愴憡庤丗僊儍儔儞僪僁
+		workG(GW_TRY_CHARA,SET,0)										//懳愴幰丂丗儔僌僫
+		chr_state_LV( ENEMY_CHARA, 3)									//揋儗儀儖愝掕(弶婜27)
+		chr_state_LV( ENEMY_CHARA, 10 )			
+	}	
+	else
+	if(GW_TRY_CUP==9)
+	{
+		set_chr( ENEMY_CHARA,399,	-1,-1,  9501,8247,1,	2,0,0,"")	//懳愴憡庤丗儁儞僊儞
+		workG(GW_TRY_CHARA,SET,1)										//懳愴幰丂丗傾儖僂僃儞
+		chr_state_LV( ENEMY_CHARA, 10 )									//揋儗儀儖愝掕(弶婜30)
+		chr_state_LV( ENEMY_CHARA, 10 )									//
+	}	
+
+
+
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////俫俹0偱傕徚偊側偄丂僉儍儔0偼巰朣帪偵"EV_DEAD"傪嵞惗
+
+	set_chr( ZAKO_19,990,	-1,-1,  11388,9309,1,	10,0,8,"(F9 <EV_WIN_SURVIVAL> RF9)")
+	F_set_chr(ENEMY_CHARA,CF_NO_DEAD)
+	F_set_chr(ENEMY_CHARA,CF_NO_DROPITEM)
+	
+	color(ENEMY_CHARA,1)	//
+
+	//僷乕僥傿傪堦恖偵偡傞丅(仸僷乕僥傿偵俀恖偄傞偙偲慜採)
+	if(GW_TRY_CHARA==0)
+	{
+		clear_party(PARTNER)	//傾儖僂僃儞徚嫀
+//		delete(PLAYER2)	
+		color(PLAYER2,-1)
+		color(PLAYER1, 1)
+	}
+	else
+	{
+		clear_party(99)			//傾儖僂僃儞偺傒偺憖嶌儌乕僪傊	
+//		delete(RAGNA)			//偙傟傗傞偲丄僗僶儖偺暘恎帪偵晄嬶崌敪惗
+		color(PLAYER2,-1)
+		color(PLAYER1, 1)
+	}
+
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+//	chr_pos(PLAYER2,	10651,10772,1,90,2)
+	chr_pos(PLAYER2,	0,0,1,90,2)
+	
+	KAO(PLAYER1, "1", "1", "1")
+	KAO(LOTTE, "1", "1", "1")
+
+
+	EV("SET_ROPE")												//儘乕僾僙僢僩
+
+	//弶婜埵抲僙僢僩 2愴栚埲崀
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+	chr_pos(ENEMY_CHARA,	10120,10772,1,270,2)
+
+
+	CAM_move(10388,-10676,102,0,0)
+	CAM(950,183,102,21,180,0,0)
+	CAM_move(10388,-10456,122,120,0)
+	CAM(-50,107,122,22,180,120,0)
+
+	SE(591,0)//娊惡
+	KAO(LOTTE,"1","1","3")
+
+
+
+	fade_in( 0, 60, BLACK)	//僼僃乕僪僀儞
+	wait_CAM()
+	wait_CAM_move()
+	wait_fade()
+
+
+	//柤慜傪夋柺偵昞帵
+	if(GW_TRY_CUP==1)
+		set_namebmp(34,0)	//傗傞婥拞擭儌乕儕僗	俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==2)
+		set_namebmp(35,0)	//夓楾庪傝僆僨僢僒		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==3)
+		set_namebmp(37,0)	//弮忣彮擭億僢僋儖		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==4)
+		set_namebmp(38,0)	//杺朄彮彈僺僺儘		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==5)
+		set_namebmp(36,0)	//尒廗偄擡幰僗僶儖		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==6)	
+		set_namebmp(39,0)	//惞寱巊偄僼傿僆僫		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==7)
+		set_namebmp(40,0)	//愴摤幏帠僋儘乕僪		俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==8)
+		set_namebmp(41,0)	//暍柺挻恖僊儍儔儞僪僁	俧亅僐儘僢僙僆
+	if(GW_TRY_CUP==9)
+		set_namebmp(42,0)	//愨懳媶嬌柍揋儁儞僊儞	俧亅僐儘僢僙僆
+	wait(90)
+
+//丂丂摨帪偵椉幰俽俤偮偒偱峔偊傞丅
+	EV("KAMAE_SET")
+	wait_EV("KAMAE_SET")
+
+
+	EFF(21630,320,240,0,0,100,0)//FIGHT
+	wait(40)
+	SE(211,PLAYER1)
+	EV("PLAY_VOICE_Fight")
+
+	//峔偊傪栠偡
+	EV("KAMAE_RESET")
+	wait_EV("KAMAE_RESET")
+
+	//儘僢僥傪偳偐偡
+	if(GW_TRY_CUP==1 || GW_TRY_CUP==6)
+	{
+		//弶夞尷掕
+		MOT(LOTTE,153,2)
+		rot(LOTTE,60,360)
+		KAO(LOTTE,"5","5","6")
+		jump(LOTTE,0,20,9549,9099,0,400)
+	}
+
+	CAM_return( 30 )
+
+	workL(WK_BOSSHP,SET,ENEMY_CHARA)	//BOSS丵俫俹昞帵
+	BGM(45)
+	EV_end()
+
+	//儁僢僩徚偡
+	color(PET,-1)
+
+	//愴摤奐巒
+
+
+}
+
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//僒僶僀僶儖偱侾偮偺帋崌偵彑棙
+EV_WIN_SURVIVAL
+{
+	delete(ZAKO_19)	// 敾掕僉儍儔徚嫀
+	delete(30)	// 暘恎僉儍儔徚嫀
+	delete(31)	// 
+	delete(32)	// 
+	delete(33)	// 
+	delete(34)	// 
+	
+	DelDropItem()	//僪儘僢僾傾僀僥儉慡徚偟
+	StopEffect()	//僄僼僃僋僩慡徚偟
+
+	map_color(100,100,100, 5);//R,G,B, time 100%
+	map_specular(80,80,80, 5);//R,G,B, time 100%
+
+	EV_begin()
+	wait(20)
+	map_specular(0,0,0,20);//R,G,B, time 100%
+	KAO(ENEMY_CHARA,"5","5","5")//巰朣梡僼僃僀僗僙僢僩0822
+	wait(30)
+	
+	EV("PLAY_VOICE_EnemyLose")
+	CAM_move_chr(ENEMY_CHARA,90,0)
+	rot_chr(PLAYER1,30,ENEMY_CHARA)	
+	
+	
+	EFF(21650,320,240,0,0,100,0)//WIN
+	wait(60)
+	rot_chr(PLAYER1,30,ENEMY_CHARA)
+
+	wait(30)
+
+	wait(30)
+	fade_in(100,60,0)
+	wait(60)
+	wait_CAM_move()
+//	wait_BGM()
+	wait_EV("PLAY_VOICE_EnemyLose")
+	wait_fade()
+
+	
+	delete(ENEMY_CHARA)
+	
+	
+	//偄側偄傎偆偺僉儍儔傪壛偊丄俀恖慻傒偵栠偡
+	if(GW_TRY_CHARA==0)
+	{
+		join_party(1)			//儔僌僫
+	}
+	else
+	{
+		join_party(0)			//傾儖僂僃儞
+	}	
+	
+	//仴嵟屻偺帋崌偩偭偨
+	if(GW_TRY_CUP==9)
+	{
+		workG(GW_ENTRY_EVENT,SET,3)
+		workG(GW_WINLOSE,SET,1)		//彑偭偨GW傪棫偰傞
+		F_set(FV_FF_WinSurvival)	//仛摤媄応僒僶僀僶儖偵彑偭偨
+		stop_BGM(60)		
+		workL(002,SET,0)
+		new_map(10510)				//俧僐儘偵栠傞
+	}
+	else
+	//仴僇僢僷傊
+	if(GW_TRY_CUP==5)
+//	if(GW_TRY_CUP==1)				//僇僢僷捈慜偺帋崌偩偭偨
+	{
+		workG(GW_TRY_CUP,SET,6)		//師偺帋崌傊丂僇僢僷屻偺帋崌斣崋
+//		workG(GW_TRY_CUP,SET,9)		//師偺帋崌傊丂僇僢僷屻偺帋崌斣崋		
+		stop_BGM(60)	
+		new_map(10521)				
+	}
+	//仴師偺帋崌傊
+	else
+	{
+		workG(GW_TRY_CUP,ADD,1)	//師偺帋崌傊
+	
+//		workG(GW_TRY_CUP,SET,7)	//嫮惂儁儞偓傫
+		EV("PRE_SURVIVAL_LOOP")
+	}
+
+}
+
+
+#EndScriptTable
+//====================================================================

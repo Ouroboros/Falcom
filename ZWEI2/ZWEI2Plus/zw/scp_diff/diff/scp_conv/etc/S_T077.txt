@@ -1,0 +1,695 @@
+//──────────────────────────────
+//	name("◆ルリ（女の子）Luri")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_LURI
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(LURI, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,LURI)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,LURI)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LURI)
+		}
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if(F6_05_EndSixth)
+	{
+		look_chr( LURI, PLAYER1,"Bone_Head")
+		if(!FS_13_TalkLuri)
+		{
+		//　　※アルッテの宿酒場で席についている。（かもしくはダイゴローの傍に立つ）
+		//　　　できれば、頭巾を取った状態。
+		//　　※初回イベント。
+
+			MES(LURI,"おさんぽのついでに\n町まで来たの。",0)
+			MES(LURI,"お腹へっちゃったー。\nなに食べようかな～？",0)
+			MES_close(LURI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"っておいおい、こんな所まで\n子供だけで来ていいのかよ。",0)
+			MES(RAGNA,"ちゃんと里の人に\n断って出てきたのか？",0)
+			MES_close(RAGNA)
+
+		//	name2(LURI)
+			MES(LURI,"ううん、ないしょ。",0)
+			MES(LURI,"ダイジョブだよ、ダイゴローの分も\nぶんしんを残してきたから。",0)
+			MES_close(LURI)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			MES(RAGNA,"（そりゃバレないかも\n  しれねえが……）",0)
+			MES_close(RAGNA)
+			F_set(FS_13_TalkLuri)
+			look_off(LURI)
+		}
+		else
+		{
+			if(!F_LURI)
+			{
+			//──────────────────────────────
+			//　　※以下通常一般メッセージ。
+				MES(LURI,"にーちゃに言っちゃダメだよ～？\nナイショだからね～？",0)
+				MES_close(LURI)
+
+			//　　ルリ、向きを戻しながら。
+				look_off(LURI)
+				MES(LURI,"んーと、なに食べようかな～？",0)
+				MES_close(LURI)
+
+			//　　ルリに．．．エモーション。
+				EMO(LURI,EMO_TENTEN)
+				wait(30)
+				
+				MES(LURI,"……かん…………\nか……かん、さら……？？",0)
+				MES(LURI,"漢字がよめないよ～！",0)
+				MES_close(LURI)
+				F_set(LURI)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(LURI,"漢字がよめないの……",0)
+				MES(LURI,"ちゃんとお勉強、\nしとけばよかった……",0)
+				MES_close(LURI)
+				look_off(LURI)
+				//★ルリ【後悔】
+				F_set_note(LURI,2)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	if(F6_00_GoToMeru)
+	{
+		rot_chr(LURI,30,PLAYER1)
+		EV_stop("LOOKING_LURI")
+		MOT(LURI,51,10)
+		if(!F_LURI)
+		{
+		//　　※里の階段を上った辺りで、ダイゴローの世話をしている。
+		//　　　（立った状態で、フリームーブするダイゴローを注視）
+			MES(LURI,"ヤサクおじさんに\nダイゴローを見といてって\n言われてるの。",0)
+			MES(LURI,"いいよ～？\nみんな忙しそうだし……",0)
+			MES(LURI,"ルリだって、このくらいの\nお仕事はできるんだからねー。",0)
+			MES_close(LURI)
+			F_set(LURI)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(LURI,"今日はなんだかさむいね～。",0)
+			MES(LURI,"……………………………………",0)
+			MES_close(LURI)
+
+		//　　ルリ、ダイゴローに向く。
+			rot_chr(LURI,30,DAIGORO)
+			MES(LURI,"ダイゴロー、さむくないの？\nかぜ引いちゃわない？",0)
+			MES_close(LURI)
+		}
+		MOT(LURI,75,10)
+		EV("LOOKING_LURI")
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		if(!FS_11_TalkKai)
+		{
+			EV("TK_KAI")
+			wait_EV("TK_KAI")
+			TK_end()
+			rot(LURI,160,90)
+		}
+		else
+		{
+			rot_chr(LURI,30,PLAYER1)
+			if(!F_LURI)
+			{
+			//　　※カイの初回イベントを見た後のメッセージ。
+			//　　※カイの家（民家２）の台所にいる。
+				MOT(LURI,75,10)
+				MES(LURI,"にーちゃ、寝てなきゃ\nダメって言われてるの。",0)
+				MES(LURI,"だから今日は\nルリがお料理します。",0)
+				MES_close(LURI)
+				rot(LURI,30,90)
+
+			//　　ルリ、台所に向いて．．．エモーション。
+				MOT(LURI,51,10)
+				EMO(LURI,EMO_TENTEN)
+				wait(30)
+				MES(LURI,"これでいいのかな～？",0)
+				MES_close(LURI)
+				F_set(LURI)
+			}
+			else
+			{
+			//　　★繰り返し
+				MOT(LURI,75,10)
+				MES(LURI,"ルリ、お料理するのはじめてなの。",0)
+				MES(LURI,"火かげん、わかんないよ～。",0)
+				MES_close(LURI)
+				//★ルリ【初めてのお料理】
+				F_set_note(LURI,1)
+				MOT(LURI,51,10)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//　　　ルリは３人配置し、隠れたりフリームーブしている。（分身の術）
+	//　　　誰に話しかけても同じ反応をする。
+	//　　※長老宅横のお稲荷さん辺り。
+	//──────────────────────────────
+	if( F4_05_OnVillage2 )
+	{
+		rot_chr(LURI,60,PLAYER1)
+		//　　※初回イベント。
+		if(!FS_08_TalkLuri)
+		{
+			MOT_SET(LURI,160,-1,476,476,-1,-1)//印を結ぶ
+			
+			rot_chr(PARTNER,30,LURI)
+			MES(PARTNER,"あれ、ルリちゃん？",0)
+			MES(PARTNER,"こんな所で何してるの？",0)
+			MES_close(PARTNER)
+
+		//	name2(LURI)
+			rot_chr(LURI,30,PARTNER)
+			MES(LURI,"おヒマだから遊んでるの～。",0)
+			MOT(LURI,160,10)
+			MES(LURI,"ぶんしんの術～。",0)
+			MES_close(LURI)
+
+		//★　　ルリ、印を結んで２人に分身する。
+		
+			EV("EV_BUNSHIN_LURI")
+			wait_EV("EV_BUNSHIN_LURI")
+					
+			MOT(LURI,2,10)
+			
+			EMO(RAGNA,EMO_BIKKURI)
+			rot_chr(RAGNA,30,LURI_4)
+			rot_chr(PARTNER,30,LURI_4)
+			wait(30)
+
+					
+			MES(RAGNA,"へ、へえ……",0)
+			MES(RAGNA,"こんな小さい子でも\nすげえ術が使えるんだな……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"ルリちゃんは\nカイ兄の妹さんなんですけど、\n分身の術がすごく上手で……",0)
+			MES(PARTNER,"そういえば、よくイタズラして\nカイ兄に怒られてる気がするなぁ……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ふーん、あいつの妹ねぇ……",0)
+			MES(RAGNA,"……全然似てねえな。",0)
+			MES_close(RAGNA)
+
+		//	name2(LURI)
+			rot_chr(LURI,30,PLAYER1)
+			MES(LURI,"あ、にーちゃには\nナイショだよー。",0)
+			MES_pos(LURI,"こっそり\n抜け出してきたんだもん。",0,0,0,0,0)
+			wait(30)
+			rot_chr(LURI_4,30,PLAYER1)
+			MES_pos(LURI_4,"だもーん。",0,0,0,0,0)
+			wait_key(0)
+
+		//　　同時に、分身したもう一方のルリにもポップアップ。
+			
+			MES_close(LURI)
+			MES_close(LURI_4)
+
+			//★カイ【ルリに手を焼く】
+			//★ルリ【分身の術が得意】
+			F_set_note(-76,0)
+			F_set_note(LURI,0)
+			F_set(FS_08_TalkLuri)
+			
+
+		//名前付きキャラ全員に話しかけると露天風呂が開く
+			EV("EV_F4_12_OkRoten")
+		}
+		else
+		{
+			if(!F_LURI)
+			{
+			//　　　以降、ルリは４人になって隠れたりフリームーブしている。
+			//　　★カイ【ルリに手を焼く】
+			//　　★ルリ【分身の術が得意】
+			//──────────────────────────────
+			//　　※以下通常一般メッセージ。
+				MES(LURI,"とってちってたー□",0)
+				MES(LURI,"雪がるんるん、降りまして～\n山がどんどん、白くなる～□",0)
+
+			//　　同時に、他のルリたちにオートポップアップ。
+				MES_pos(LURI,"ほきゃっ☆",0,0,0,0,0)
+				MES_pos(LURI_2,"ほきゃっ☆",0,0,0,0,0)
+				MES_pos(LURI_3,"ほきゃっ☆",0,0,0,0,0)
+				MES_pos(LURI_4,"ほきゃっ☆",0,0,0,0,0)
+
+				wait_key(0)
+				MES_close(LURI)
+				MES_close(LURI_2)
+				MES_close(LURI_3)
+				MES_close(LURI_4)
+
+				F_set(LURI)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(LURI,"にーちゃには\n勉強しなさいって言われちゃうの。",0)
+				MES(LURI,"にーちゃには言わないで～。",0)
+
+			//　　他のルリたちにオートポップアップ。
+				MES_pos(LURI_2,"言わないで～。",0,0,0,0,0)
+				MES_pos(LURI_3,"言わないで～。",0,0,0,0,0)
+				MES_pos(LURI_4,"言わないで～。",0,0,0,0,0)
+				
+				wait_key(0)				
+				MES_close(LURI)
+				MES_close(LURI_2)
+				MES_close(LURI_3)
+				MES_close(LURI_4)
+			}
+		}
+	}
+	
+	TK_end()
+}
+
+//──────────────────────────────
+//分身たちに話しかけた場合の処理
+//──────────────────────────────
+TK_LURI_2
+{
+	TK_begin()
+	EV_stop("HIND_LURI")
+
+	rot_chr(PLAYER1,30,LURI_2)
+	rot_chr(PLAYER2,30,LURI_2)
+	rot_chr(LURI_2,30,PLAYER1)
+
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(PLAYER2, "1", "1", "1")	
+	KAO(LURI_2, "1", "1", "1")	
+
+	//　　※初回イベント。
+	if(!FS_08_TalkLuri)
+	{
+		MOT_SET(LURI_2,160,-1,476,476,-1,-1)//印を結ぶ
+		rot_chr(PARTNER,30,LURI_2)
+		MES(PARTNER,"あれ、ルリちゃん？",0)
+		MES(PARTNER,"こんな所で何してるの？",0)
+		MES_close(PARTNER)
+
+	//	name2(LURI)
+		rot_chr(LURI_2,30,PARTNER)
+		MES(LURI_2,"おヒマだから遊んでるの～。",0)
+		MOT(LURI_2,130,10)
+		MES(LURI_2,"ぶんしんの術～。",0)
+		MES_close(LURI_2)
+
+	//★　　ルリ、印を結んで２人に分身する。
+		EV("EV_BUNSHIN_LURI")
+		wait_EV("EV_BUNSHIN_LURI")
+				
+		MOT(LURI_2,2,10)
+		EMO(RAGNA,EMO_BIKKURI)
+		rot_chr(RAGNA,30,LURI_4)
+		rot_chr(PARTNER,30,LURI_4)
+		wait(30)
+
+		MES(RAGNA,"へ、へえ……",0)
+		MES(RAGNA,"こんな小さい子でも\nすげえ術が使えるんだな……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"ルリちゃんは\nカイ兄の妹さんなんですけど、\n分身の術がすごく上手で……",0)
+		MES(PARTNER,"そういえば、よくイタズラして\nカイ兄に怒られてる気がするなぁ……",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"ふーん、あいつの妹ねぇ……",0)
+		MES(RAGNA,"……全然似てねえな。",0)
+		MES_close(RAGNA)
+
+	//	name2(LURI)
+		rot_chr(LURI_2,30,PLAYER1)
+		MES(LURI_2,"あ、にーちゃには\nナイショだよー。",0)
+		MES_pos(LURI_2,"こっそり\n抜け出してきたんだもん。",0,0,0,0,0)
+		wait(30)
+		rot_chr(LURI_4,30,PLAYER1)
+		MES_pos(LURI_4,"だもーん。",0,0,0,0,0)
+		wait_key(0)
+
+	//　　同時に、分身したもう一方のルリにもポップアップ。
+		
+		MES_close(LURI_2)
+		MES_close(LURI_4)
+
+		//★カイ【ルリに手を焼く】
+		//★ルリ【分身の術が得意】
+		F_set_note(-76,0)
+		F_set_note(LURI,0)
+
+		F_set(FS_08_TalkLuri)
+		
+
+	//名前付きキャラ全員に話しかけると露天風呂が開く
+		EV("EV_F4_12_OkRoten")
+		
+		EV("HIND_LURI")
+	}
+	else
+	{
+		if(!F_LURI)
+		{
+		//　　　以降、ルリは４人になって隠れたりフリームーブしている。
+		//　　★カイ【ルリに手を焼く】
+		//　　★ルリ【分身の術が得意】
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			MES(LURI_2,"とってちってたー□",0)
+			MES(LURI_2,"雪がるんるん、降りまして～\n山がどんどん、白くなる～□",0)
+
+		//　　同時に、他のルリたちにオートポップアップ。
+			MES_pos(LURI,"ほきゃっ☆",0,0,0,0,0)
+			MES_pos(LURI_2,"ほきゃっ☆",0,0,0,0,0)
+			MES_pos(LURI_3,"ほきゃっ☆",0,0,0,0,0)
+			MES_pos(LURI_4,"ほきゃっ☆",0,0,0,0,0)
+
+			wait_key(0)
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+
+			F_set(LURI)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(LURI_2,"にーちゃには\n勉強しなさいって言われちゃうの。",0)
+			MES(LURI_2,"にーちゃには言わないで～。",0)
+
+		//　　他のルリたちにオートポップアップ。
+			MES_pos(LURI,"言わないで～。",0,0,0,0,0)
+			MES_pos(LURI_3,"言わないで～。",0,0,0,0,0)
+			MES_pos(LURI_4,"言わないで～。",0,0,0,0,0)
+			
+			wait_key(0)				
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+		}
+
+		EV("HIND_LURI")															//パッチ 2008/09/22
+	}
+	TK_end()
+}
+TK_LURI_3
+{
+	EV_stop("JUMP_LURI")
+	TK_begin()
+	rot_chr(PLAYER1,30,LURI_3)
+	rot_chr(PLAYER2,30,LURI_3)
+	rot_chr(LURI_3,30,PLAYER1)
+
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(PLAYER2, "1", "1", "1")	
+	KAO(LURI_3, "1", "1", "1")	
+
+	//　　※初回イベント。
+	if(!FS_08_TalkLuri)
+	{
+		MOT_SET(LURI_3,160,-1,476,476,-1,-1)//印を結ぶ
+		rot_chr(PARTNER,30,LURI_3)
+		MES(PARTNER,"あれ、ルリちゃん？",0)
+		MES(PARTNER,"こんな所で何してるの？",0)
+		MES_close(PARTNER)
+
+	//	name2(LURI)
+		rot_chr(LURI_3,30,PARTNER)
+		MES(LURI_3,"おヒマだから遊んでるの～。",0)
+		MOT(LURI_3,160,10)
+		MES(LURI_3,"ぶんしんの術～。",0)
+		MES_close(LURI_3)
+
+	//★　　ルリ、印を結んで２人に分身する。
+		EV("EV_BUNSHIN_LURI")
+		wait_EV("EV_BUNSHIN_LURI")
+				
+		MOT(LURI_3,2,10)
+		EMO(RAGNA,EMO_BIKKURI)
+		rot_chr(RAGNA,30,LURI_4)
+		rot_chr(PARTNER,30,LURI_4)
+		wait(30)
+		
+		MES(RAGNA,"へ、へえ……",0)
+		MES(RAGNA,"こんな小さい子でも\nすげえ術が使えるんだな……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"ルリちゃんは\nカイ兄の妹さんなんですけど、\n分身の術がすごく上手で……",0)
+		MES(PARTNER,"そういえば、よくイタズラして\nカイ兄に怒られてる気がするなぁ……",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"ふーん、あいつの妹ねぇ……",0)
+		MES(RAGNA,"……全然似てねえな。",0)
+		MES_close(RAGNA)
+
+	//	name2(LURI)
+		rot_chr(LURI_3,30,PLAYER1)
+		MES(LURI_3,"あ、にーちゃには\nナイショだよー。",0)
+		MES_pos(LURI_3,"こっそり\n抜け出してきたんだもん。",0,0,0,0,0)
+		wait(30)
+		rot_chr(LURI_4,30,PLAYER1)
+		MES_pos(LURI_4,"だもーん。",0,0,0,0,0)
+		wait_key(0)
+
+	//　　同時に、分身したもう一方のルリにもポップアップ。
+		
+		MES_close(LURI_3)
+		MES_close(LURI_4)
+
+		//★カイ【ルリに手を焼く】
+		//★ルリ【分身の術が得意】
+		F_set_note(-76,0)
+		F_set_note(LURI,0)
+
+		F_set(FS_08_TalkLuri)
+		
+
+		EV("JUMP_LURI")
+	//名前付きキャラ全員に話しかけると露天風呂が開く
+		EV("EV_F4_12_OkRoten")
+	}
+	else
+	{
+		if(!F_LURI)
+		{
+		//　　　以降、ルリは４人になって隠れたりフリームーブしている。
+		//　　★カイ【ルリに手を焼く】
+		//　　★ルリ【分身の術が得意】
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			MES(LURI_3,"とってちってたー□",0)
+			MES(LURI_3,"雪がるんるん、降りまして～\n山がどんどん、白くなる～□",0)
+
+		//　　同時に、他のルリたちにオートポップアップ。
+			MES_pos(LURI,"ほきゃっ☆",0,0,0,0,0)
+			MES_pos(LURI_2,"ほきゃっ☆",0,0,0,0,0)
+			MES_pos(LURI_3,"ほきゃっ☆",0,0,0,0,0)
+			MES_pos(LURI_4,"ほきゃっ☆",0,0,0,0,0)
+
+			wait_key(0)
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+
+			F_set(LURI)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(LURI_3,"にーちゃには\n勉強しなさいって言われちゃうの。",0)
+			MES(LURI_3,"にーちゃには言わないで～。",0)
+
+		//　　他のルリたちにオートポップアップ。
+			MES_pos(LURI,"言わないで～。",0,0,0,0,0)
+			MES_pos(LURI_2,"言わないで～。",0,0,0,0,0)
+			MES_pos(LURI_4,"言わないで～。",0,0,0,0,0)
+			
+			wait_key(0)				
+			MES_close(LURI)
+			MES_close(LURI_2)
+			MES_close(LURI_3)
+			MES_close(LURI_4)
+		}
+
+		EV("JUMP_LURI")													//パッチ 2008/09/22
+	}
+	TK_end()
+}
+
+TK_LURI_4
+{
+	TK_begin()
+	rot_chr(PLAYER1,30,LURI_4)
+	rot_chr(PLAYER2,30,LURI_4)
+	rot_chr(LURI_4,30,PLAYER1)
+
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(PLAYER2, "1", "1", "1")	
+	KAO(LURI_4, "1", "1", "1")	
+
+	
+	if(!F_LURI)
+	{
+	//　　　以降、ルリは４人になって隠れたりフリームーブしている。
+	//　　★カイ【ルリに手を焼く】
+	//　　★ルリ【分身の術が得意】
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		MES(LURI_4,"とってちってたー□",0)
+		MES(LURI_4,"雪がるんるん、降りまして～\n山がどんどん、白くなる～□",0)
+
+	//　　同時に、他のルリたちにオートポップアップ。
+		MES_pos(LURI,"ほきゃっ☆",0,0,0,0,0)
+		MES_pos(LURI_2,"ほきゃっ☆",0,0,0,0,0)
+		MES_pos(LURI_3,"ほきゃっ☆",0,0,0,0,0)
+		MES_pos(LURI_4,"ほきゃっ☆",0,0,0,0,0)
+
+		wait_key(0)
+		MES_close(LURI)
+		MES_close(LURI_2)
+		MES_close(LURI_3)
+		MES_close(LURI_4)
+
+		F_set(LURI)
+	}
+	else
+	{
+	//　　★繰り返し
+		MES(LURI_4,"にーちゃには\n勉強しなさいって言われちゃうの。",0)
+		MES(LURI_4,"にーちゃには言わないで～。",0)
+
+	//　　他のルリたちにオートポップアップ。
+		MES_pos(LURI,"言わないで～。",0,0,0,0,0)
+		MES_pos(LURI_2,"言わないで～。",0,0,0,0,0)
+		MES_pos(LURI_3,"言わないで～。",0,0,0,0,0)
+		
+		wait_key(0)				
+		MES_close(LURI)
+		MES_close(LURI_2)
+		MES_close(LURI_3)
+		MES_close(LURI_4)
+	}
+	
+	TK_end()
+}
+
+//ルリ分身処理
+EV_BUNSHIN_LURI
+{
+/*
+	CAM_move(7480,9856,1655,30,0)
+	CAM(190,65,95,37,180,30,0)
+	wait_CAM_move()
+*/
+	//隠していた分身を移動させ、透過を解除
+//	chr_pos(LURI_4,7495,-9945,1399,0,2)
+	chr_pos(LURI_4,6530,-10404,1660,0,2)
+
+	MOT_SET(LURI_4,150,-1,552,552,-1,-1)
+	MOT(LURI_4,150,0)
+	color(LURI_4,1)
+	EV("ROLING_LURI")
+	
+	wait(30)
+/*
+	cross_fade(20)
+	CAM_return( 0 )
+	wait_fade()
+*/
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+PSWTC

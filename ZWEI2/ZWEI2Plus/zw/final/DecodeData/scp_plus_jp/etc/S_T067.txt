@@ -1,0 +1,724 @@
+//──────────────────────────────
+//	name("◆バラン（風車の管理人）Barom")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_BAROM
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(BAROM, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,BAROM)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,BAROM)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BAROM)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BAROM)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BAROM)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BAROM)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,BAROM)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+	//　　※ロアルタ村・入り口付近でセフィーラと話している。
+	//　　※初回イベント（バランと共通）
+	//　　※振り返らない。
+		if(!FV_13_TalkBaromCeph)
+		{
+			EV("TALK_BC")
+			wait_EV("TALK_BC")
+		}
+		else
+		{
+		//	rot_chr(BAROM,30,PLAYER1)
+			rot_chr(BAROM,30,RAGNA)
+			MOT_SET(BAROM,152,-1,418,418,153,40)	//な、なるほど……
+			MOT_SET(BAROM,153,-1,420,420,-1,40)
+			if(!F_BAROM)
+			{
+				MES(BAROM,"その、突然歌手の方が\n訪ねて来られまして……",0)
+				MES(BAROM,"ええ、確かに以前\n手をお貸しした事があったのですが……",0)
+				MES(BAROM,"ですが、ええと……",0)
+				MES_close(BAROM)
+
+			//　　バランに・・・エモーション。
+				EMO(BAROM,EMO_TENTEN)
+				wait(30)
+				
+				MES(BAROM,"あ、あの、どうしたら\n良いものでしょうか。",0)
+				MES_close(BAROM)
+
+			//　　ラグナに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+
+				MES(RAGNA,"お、俺に聞かれてもな……",0)
+				MES_close(RAGNA)
+
+			//	name2(PET)
+				MES(PET,"ふむ、とりあえず\n奥に案内してみるというのはどうだ？",0)
+				MES_close(PET)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"ふふ、そうですね。\nここでは退屈してしまいますし……",0)
+				MES_close(PARTNER)
+
+				MOT(BAROM,152,10)
+			//	name2(BAROM)
+				MES(BAROM,"な、なるほど……\nそれは気付きませんでした。",0)
+				MES_close(BAROM)
+
+			//　　ラグナに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				wait(30)
+				
+			//　　軽くミアたちに振り返る。
+				rot_chr(RAGNA,30,PARTNER)
+				
+				MES(RAGNA,"（何故か乗り気だな……）",0)
+				MES_close(RAGNA)
+				
+				F_set(BAROM)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(BAROM,"ええ、確かに。\n立ち話も何ですし……",0)
+				MOT(BAROM,152,10)
+				MES(BAROM,"お、お茶でも\n淹れてみましょうか……？",0)
+				MES_close(BAROM)
+
+			//　　ラグナに冷や汗エモーション。
+				MES(RAGNA,"俺に相談しないでくれ……",0)
+				MES_close(RAGNA)
+			}
+			MOT(BAROM,150,10)
+		}
+		rot_chr(BAROM,30,CEPHEILA)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪⑫　わらしべイベント
+	//	name("７．バラン（ロアルタ村）		『うに缶』⇒『猫じゃらし』")149
+	//──────────────────────────────
+	if(F5_00_HearLunar && FV_11_Warasi_6_Sls && !FV_11_Warasi_7_brm)
+	{
+		//	name("⇒初回")
+		if(!F_BAROM)
+		{
+			//──────────────────────────────
+			//	name("⇒フラグ⑪の場合")
+			if( !F6_00_GoToMeru )
+			{
+				MES(BAROM,"さてと、そろそろ\n村に戻らなければ……",0)
+				MES_close(BAROM)
+				rot_chr(BAROM,30,PLAYER1)
+			}
+			//	name("⇒フラグ⑫の場合")
+			else
+			{
+				look_chr(BAROM,PLAYER1,"Bone_Head")
+			}		
+			//──────────────────────────────
+		//　　バランにＰＡエモーション。
+			EMO(BAROM,EMO_PA)
+			wait(30)
+			MES(BAROM,"おや、あなた方のそれは……？\n『うに缶』ではありませんか。",0)
+			MES(BAROM,"ええ、実はうには\n自分の両親の大好物なんですよ。",0)
+			MES(BAROM,"そろそろ実家に手紙を送ろうと\n思っていたのですが、一品添えると\n喜んでくれるかもしれません。",0)
+			MES(BAROM,"どうでしょう、\n自分にお譲りいただけませんか。",0)
+			MES_close(BAROM)
+			
+			F_set(BAROM)
+		}
+		else
+		{
+			//──────────────────────────────
+			//	name("⇒フラグ⑪の場合")
+			if( !F6_00_GoToMeru )
+			{
+				rot_chr(BAROM,30,PLAYER1)
+			}
+			//	name("⇒フラグ⑫の場合")
+			else
+			{
+				look_chr(BAROM,PLAYER1,"Bone_Head")
+			}		
+			//──────────────────────────────
+		//	name("⇒２回目以降。")
+			MES(BAROM,"実家の両親は\nうにが大好物なんですよ。",0)
+			MES(BAROM,"手紙に添えて送ると\n喜んでくれるかもしれません。",0)
+			MES(BAROM,"どうでしょう、その『うに缶』\n自分にお譲りいただけませんか。",0)
+			MES_close(BAROM)
+		}
+
+	//──────────────────────────────
+	//	name("選択テキスト")
+		workL(WK_CANCEL,SET,2)//【やめる】
+		MES_pos(PLAYER1,"??W9【そういう事なら】\n【ごめんなさい】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("⇒【そういう事なら】")
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+			MES(BAROM,"ありがとうございます。\nきっと両親も喜びますよ。",0)
+			MES(BAROM,"……ああ、ですが\n今はお返しできる物も\n持ち合わせていなくて……",0)
+			MES(BAROM,"そうだ、これを差し上げましょう。\n収穫物に混じっていたのです。",0)
+			MES_close(BAROM)
+
+		//	name("アイテム入手テキスト")
+		//	MES(this,"『猫じゃらし』を貰った。",0)
+			//―――――――――――――――――――――――
+			fade_in(30,10,BLACK)
+
+			get_item(148,-1,1)
+			get_item(149,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//―――――――――――――――――――――――
+
+		//──────────────────────────────
+			if(GW_MAN==0)
+			{
+				if(F6_00_GoToMeru)
+				{
+				//	name("⇒アルウェン先頭")
+					MES(PARTNER,"こ、これが噂の\n猫をじゃらす植物……？",0)
+					MES(PARTNER,"フフフ、そなた\nでかしたぞ。",0)
+					MES(PARTNER,"早速試させてもらおう！",0)
+					MES_close(PARTNER)
+
+				//	name2(BAROM)
+					MES(BAROM,"は、はあ……",0)
+					MES(BAROM,"（もしや、猫じゃらしを見るのが\n  初めてなのでしょうか……？）",0)
+					MES_close(BAROM)
+				}
+				else
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+				//	name("⇒オデッサ先頭")
+					MES(PARTNER,"ね、猫じゃらしねえ……",0)
+					MES_close(PARTNER)
+
+					rot_chr(PET,30,PLAYER1)
+				//	name2(PET)
+					MES(PET,"アンタには効かないの？",0)
+					MES_close(PET)
+
+					rot_chr(PLAYER1,30,PET)
+				//	name2(PARTNER)
+					MES(PARTNER,"あのねえ、私は人狼だよ？",0)
+					MES(PARTNER,"猫又連中なら\n喜ぶかもしれないが。",0)
+					MES_close(PARTNER)
+				}
+			}
+			else
+			{
+			//	name("⇒ラグナ先頭")
+				MES(RAGNA,"ね、猫じゃらしか……",0)
+				MES(RAGNA,"（欲しがりそうな奴なんて\n  いたかな……）",0)
+				MES_close(RAGNA)
+			}
+			F_reset(BAROM)
+			F_set(FV_11_Warasi_7_brm)
+		//──────────────────────────────
+		}
+		//──────────────────────────────
+		//	name("⇒【ごめんなさい】")
+		//──────────────────────────────
+		else
+		{
+			MES(BAROM,"いえ、突然\n話を持ちかけてしまって……",0)
+			MES(BAROM,"こちらこそ失礼しました。\nどうかお気になさらないでください。",0)
+			MES_close(BAROM)
+		}
+		//──────────────────────────────
+		//	name("⇒フラグ⑫の場合")
+		if(F6_00_GoToMeru)
+		{
+			look_off(BAROM)
+		}		
+		//──────────────────────────────
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　※風車小屋民家の傍。
+	if( F6_00_GoToMeru )
+	{
+		look_chr(BAROM,PLAYER1,"Bone_Head")
+		if(!F_BAROM)
+		{
+			MES(BAROM,"村長殿のお話では、\n大きな嵐が来るそうなのです。",0)
+			MES(BAROM,"ええ、皆さんと手分けして\nそれに備えている所なのですよ。",0)
+			MES(BAROM,"屋根や窓には\n板を打ち付けた方がよさそうですね。",0)
+			MES(BAROM,"風で飛ぶといけませんから。",0)
+			MES_close(BAROM)
+
+			F_set(BAROM)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(BAROM,"普段は穏やかな気候ばかりですから、\n色々と対策をとらなければ。",0)
+			MES(BAROM,"そうですね、風車の羽根も\n外した方が良いかもしれません。",0)
+			MES(BAROM,"風を受けて\n壊れてしまうかもしれない。",0)
+			MES_close(BAROM)
+		}
+		look_off(BAROM)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	//　　※アルッテ宿酒場１階、シェスターと話している。
+	//　　※振り返らない
+	if( F5_00_HearLunar )
+	{
+		if(!F_BAROM)
+		{
+			MES(SHESTOR,"……しかし助かったぜ。",0)
+			MES(SHESTOR,"まさかセフィーラの奴が\nブッ倒れてたなんてな。",0)
+			MES(SHESTOR,"俺の方から礼を言っておこう。",0)
+			MES_close(SHESTOR)
+
+		//	name2(BAROM)
+			MES(BAROM,"いえ、自分は偶然\n通りがかっただけですし……",0)
+			MES(BAROM,"大したことはしていません。\nお気になさらないでください。",0)
+			MES(BAROM,"自分は教会の方にお婆さんを\n迎えに行かなければいけませんので。",0)
+			MES(BAROM,"ええ、そろそろ失礼させて頂きます。",0)
+			MES_close(BAROM)
+
+		//	name2(SHESTOR)
+			MES(SHESTOR,"あ、ああ……",0)
+			MES(SHESTOR,"お前さんも大変だねえ……",0)
+			MES_close(SHESTOR)
+
+			//★バラン【セフィーラ】
+			F_set_note(BAROM,2)
+
+			//★シェスター
+			F_set_note(SHESTOR,-1)
+			
+			F_set(BAROM)
+		}
+	//　　★繰り返し
+	//　　※振り返らない
+		else
+		{
+			MES(BAROM,"ええ、大きな\nお怪我が無くてよかった。",0)
+			MES(BAROM,"あの方には\nお大事にとお伝えください。",0)
+			MES(BAROM,"ええ、それでは自分はこれで……",0)
+			MES_close(BAROM)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	//　　※風車小屋民家、木箱の前にいる。
+	if( F4_09_GoShrineMia)
+	{
+		look_chr(BAROM,PLAYER1,"Bone_Head")
+		MES(BAROM,"おや……\nどうかなさったのですか？",0)
+		MES(BAROM,"アルベールさんもマーサさんも、\nまだお休みになっていますよ。",0)
+		MES_close(BAROM)
+		look_off(BAROM)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※外、にんじん畑でフリームーブ。
+	if( F4_00_StartSolo )
+	{
+		MOT_SET(BAROM,150,-1,400,400,-1,40)
+		MOT(BAROM,150,10)
+		F_set_chr(BAROM,CF_NO_MOVE)
+		rot_chr(BAROM,30,PLAYER1)
+		if(!F_BAROM)
+		{
+			MES(BAROM,"アルベールさんもマーサさんも\n倒れてしまわれまして……",0)
+			MES(BAROM,"代わりに自分が\n水をやっておかないといけません。",0)
+			MES(BAROM,"まだ本調子ではありませんが、\n自分は体力だけが取り柄ですし。",0)
+			MES(BAROM,"こんな時くらいしか\nお役に立てませんから。",0)
+			MES_close(BAROM)
+
+			F_set(BAROM)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(BAROM,"ごほごほ……\nまだ本調子ではないようです。",0)
+			MES(BAROM,"……しかし………\n村長殿は本当にお元気ですね。",0)
+			MES(BAROM,"ビアンスさんも\nお変わりないようですし……",0)
+			MES_close(BAROM)
+
+		//　　バランに・・・エモーション。
+			EMO(BAROM,EMO_TENTEN)
+			wait(30)
+			
+			MES(BAROM,"あのお２人は\n一体どうなってるんでしょうか。",0)
+			MES_close(BAROM)
+		}
+		F_reset_chr(BAROM,CF_NO_MOVE)
+		MOT(BAROM,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※倒れている。メッセージなし。（メイン参照）
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※風車小屋の手前、木箱が積んである所。
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(BAROM,30,PLAYER1)
+		MOT(BAROM,2,15)
+	//　　※初回イベント
+		if(!FV_05_TalkBarom)
+		{
+			MES(BAROM,"あの、ご存知でしょうか。",0)
+			MES(BAROM,"村の向こう、クリスタルバレーの方角に\nうっすらとモヤが\n掛かっていることがあるのです。",0)
+			MES_close(BAROM)
+
+		//　　ラグナたちに気付きエモーション。
+			EMO(RAGNA,EMO_PA)
+			EMO(PARTNER,EMO_PA)
+			wait(30)
+			MES(RAGNA,"えっ……？",0)
+			MES_close(RAGNA)
+
+		//　　ラグナたち、顔を見合わせる。
+			rot_chr(RAGNA,30,PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			
+			MES(RAGNA,"（それって……\n  ムーンブリア城のことか？）",0)
+			MES_close(RAGNA)
+
+			rot_chr(RAGNA,30,BAROM)
+			rot_chr(PARTNER,30,BAROM)
+		//──────────────────────────────
+		//	name("⇒フラグ②の初回イベントを見ている場合")
+			if(FV_02_TalkBarom)
+			{
+				MES(PARTNER,"（や、やはりこの男、\n  カンが鋭いようだのう……）",0)
+				MES_close(PARTNER)
+
+			//	name2(BAROM)
+				MES(BAROM,"日によって、見えたり\n見えなかったりするのですが。",0)
+				MES(BAROM,"ええ……やはりあれも\n気のせいなのでしょうか。",0)
+				MES_close(BAROM)
+			}
+			else
+			{
+			//	name("⇒見ていない場合")
+				MES(PARTNER,"（こ、この男、\n  カンが鋭いようだのう……）",0)
+				MES_close(PARTNER)
+
+			//	name2(BAROM)
+				MES(BAROM,"日によって、見えたり\n見えなかったりするのですが。",0)
+				MES(BAROM,"ええ……自分の\n気のせいなのでしょうか。",0)
+				MES_close(BAROM)
+			}
+
+		//──────────────────────────────
+			//★バラン【敏感】
+			F_set_note(BAROM,1)
+			F_set(FV_05_TalkBarom)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_BAROM)
+			{
+				MES(BAROM,"ところで……最近村で\n遊んでいる子供をご存知ですか？",0)
+				MES_close(BAROM)
+
+				look_chr(BAROM,WADE,"Bone_Head")
+				MES(BAROM,"実は先ほどから、\n木箱の上に乗っては\nはしゃいでいるようなのです。",0)
+				look_off(BAROM)
+				MES(BAROM,"元気なのは良い事だと\n思いますが……",0)
+				MES(BAROM,"やはり少し危ないですね。\n注意しておかないと。",0)
+				MES_close(BAROM)
+				F_set(BAROM)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(BAROM,"あの子、時々\n村にやって来ては\n遊んでいるようですね。",0)
+				MES(BAROM,"風体からして、\n随分変わった子のようですが……",0)
+				MES(BAROM,"何にせよ、危ないので\n注意しておかないと。",0)
+				MES_close(BAROM)
+			}
+		}
+		MOT(BAROM,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※村広場で、ニワトリの世話をしている。
+	//　　　（放牧地のニワトリ配置をこちらに移し、バランはフリームーブ）
+	if( F2_00_GoForest )
+	{
+		MOT_SET(BAROM,150,-1,405,405,-1,40)
+		MOT(BAROM,150,10)
+		rot_chr(BAROM,30,PLAYER1)
+		if(!F_BAROM)
+		{
+			MES(BAROM,"ご存知かと思いますが、\n最近村にペットショップが\nオープンしたのです。",0)
+			MES(BAROM,"……ですが、店の方が\nどうにも掴み所の無い人でして……",0)
+			MES(BAROM,"いつもニコニコなさっていて、\n何を考えていらっしゃるのか\n分からないのですよ。",0)
+			MES(BAROM,"村に来られるのは初めてでしょうし、\n勝手違いもあるかと思ったのですが……",0)
+			MES_close(BAROM)
+
+			F_set(BAROM)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(BAROM,"ペットショップの方とは\n何度かお話したことがあるのですが、\nどうにも掴み所の無い人でして。",0)
+			MES(BAROM,"とりあえず、今度の収穫祭は\n手伝ってくださるそうですよ。",0)
+			MES(BAROM,"ふう、少し安心しましたが……",0)
+			MES(BAROM,"相変わらずニコニコなさっていて、\n本当は何を考えていらっしゃるのかは\n分からないのですよね。",0)
+			MES_close(BAROM)
+		}
+		MOT(BAROM,2,5)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※風車小屋の手前、木箱が積んである所。
+	if( F1_15_GoVillage )
+	{
+	//　　※初回イベント
+		MOT(BAROM,2,10)
+		rot_chr(BAROM,30,PLAYER1)
+		if(!FV_02_TalkBarom)
+		{
+			MES(BAROM,"収穫物の整理を\nしているところなのですが……",0)
+			MES_close(BAROM)
+
+		//　　バランきょろきょろ。
+			look(BAROM,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(BAROM,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(BAROM,"Bone_Head",0,		0,2,0,			0,0,0)
+			
+			MES(BAROM,"実は先ほどから、\n妙な匂いのようなものを感じるのです。",0)
+			MES(BAROM,"こう、人あらざるような気配が\n近くにあるような気がして……",0)
+			MES_close(BAROM)
+
+		//　　ラグナたちに気付きエモーション。
+			EMO(RAGNA,EMO_PA)
+			EMO(PARTNER,EMO_PA)
+			wait(30)
+			
+			MES(RAGNA,"えっ……？",0)
+			MES_close(RAGNA)
+
+		//　　ラグナたち、顔を見合わせる。
+			rot_chr(RAGNA,30,PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			
+			MES(RAGNA,"（人あらざるって……\n  もしかして、姫さんの気配に？）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（む……わ、私ではないぞ？）",0)
+			MES(PARTNER,"（日中であるし、\n  きちんと力は抑えておる。）",0)
+			MES(PARTNER,"（そもそも、魔力もろくに\n  戻っておらぬのだからな。）",0)
+			MES_close(PARTNER)
+
+		//　　アルウェンに・・・エモーション。
+			EMO(PARTNER,EMO_TENTEN)
+			wait(30)
+			
+		//　　顔を背けて考える素振り。
+			
+			MES(PARTNER,"もしや……\n今朝こっそり追加注文した\n餃子のせいであろうか？",0)
+			MES_close(PARTNER)
+
+		//　　ラグナに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+			wait(30)
+			
+			MES(RAGNA,"いや、それは違うだろ。\n（つーかいつの間にそんな物を……）",0)
+			MES(RAGNA,"（そもそも吸血鬼のくせに\n  ニンニクとか平気なのか……？）",0)
+			MES_close(RAGNA)
+
+		//──────────────────────────────
+			F_set(FV_02_TalkBarom)
+		}
+	//　　★繰り返し
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			if(!F_BAROM)
+			{
+				MES(BAROM,"実は先ほどから、\n妙な気配を感じるのですが……",0)
+				MES(BAROM,"気のせいかもしれませんね。",0)
+				MES(BAROM,"早く収穫物の整理して、\n町に卸す分を仕分けしなければ。",0)
+				MES_close(BAROM)
+
+			//──────────────────────────────
+			//	name("⇒アルウェン先頭")
+				if(GW_MAN==0)
+				{
+					rot_chr(PARTNER,30,BAROM)
+					MES(PARTNER,"うむ、それは急がねばな。",0)
+					MES_close(PARTNER)
+
+				//　　ラグナに冷や汗エモーション。
+					EMO(RAGNA,EMO_HIYAASE)
+					wait(30)
+				}
+				F_set(BAROM)
+			}
+			else
+			{
+				MES(BAROM,"実は先ほどから、\n妙な気配を感じるのですが……",0)
+				MES(BAROM,"早く収穫物の整理して、\n町に卸す分を仕分けしなければ。",0)
+				MES(BAROM,"……この気配に関しては、\n気にしないでおきましょうか。",0)
+				MES_close(BAROM)
+			}
+		}
+		MOT(BAROM,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※ロアルタ村、風車小屋前で柵を直している。
+	if( F1_01_GameStart )
+	{
+		if(!F_BAROM)
+		{
+		//　　バランにＰＡエモーションで首だけ振り向く。
+			EMO(BAROM,EMO_PA)
+			wait(30)
+			look_chr(BAROM,PLAYER1,"Bone_Head")
+			
+			MES(BAROM,"ああ、お気をつけください。",0)
+			MES(BAROM,"ここの柵が外れかけていたもので、\n修理をしていたところです。",0)
+			MES(BAROM,"寄りかかると危ないですよ。",0)
+			MES_close(BAROM)
+
+			
+			//ここで釘うちモーションを止め、向き直る。
+			look_off(BAROM)
+			MOT(BAROM,2,15)
+			wait(20)
+			rot_chr(BAROM,40,PLAYER1)
+			
+			MES(BAROM,"自分は普段\n風車の管理などをしているもので、\nこういった作業は得意なのですよ。",0)
+			MES(BAROM,"村にはお年よりも多いですからね。\n十分注意しておかなければ。",0)
+			MES_close(BAROM)
+			//★バラン【風車の管理】
+			F_set_note(BAROM,0)
+
+			F_set(BAROM)
+		}
+		//　　★繰り返し
+		else
+		{
+			MOT(BAROM,2,15)
+			wait(20)
+			rot_chr(BAROM,40,PLAYER1)
+			MES(BAROM,"ええ……\nもしや村のどなたかに\nご用でしょうか。",0)
+			MES(BAROM,"それならば、マーサおばさんか\nアルベールおじさんに聞くと\nよいと思いますよ。",0)
+			MES(BAROM,"お２人とも、とても\n親切な方ですから。",0)
+			MES_close(BAROM)
+		}
+		MOT(BAROM,150,10)
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

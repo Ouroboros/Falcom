@@ -1,0 +1,696 @@
+//──────────────────────────────
+//	name("◆バーミリア（大道芸人）Vermilia")
+//──────────────────────────────
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_VERMILIA
+{
+	TK_begin()
+	look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(VERMILIA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,VERMILIA)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,VERMILIA)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,VERMILIA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	if( F6_05_EndSixth )
+	{
+		if(!FT_13_TalkVermilia)
+		{
+			MES(VERMILIA,"近ごろ、変わった格好の人が\nちらほら見に来てくれるのだ。",0)
+			MES(VERMILIA,"嬉しいのだ。\nお客さんがいればいるほど、\nバーミリアさんは燃え上がるのだ。",0)
+			MES(VERMILIA,"何故なら、バーミリアさんは\nいつだって陽気な大道芸人なのだ～☆",0)
+			MES_close(VERMILIA)
+
+			F_set(FT_13_TalkVermilia)
+		}
+		else
+		{
+		//　　※以下通常一般メッセージ。
+			if(!F_VERMILIA)
+			{
+				MES(VERMILIA,"実は、バーミリアさんが\nご機嫌なのには\nもう一つ理由があるのだ。",0)
+				MES(VERMILIA,"この前、小さな子猫ちゃんと\nお友達になったのだ。\n迷子の子猫ちゃんだったらしいのだ。",0)
+				MES_close(VERMILIA)
+
+			//　　バーミリアに・・・エモーション。
+				EMO(VERMILIA,EMO_TENTEN)
+				wait(30)
+				look_off(VERMILIA)
+				wait(20)
+				MES(VERMILIA,"P1S3こう見えてもバーミリアさん、\n子猫ちゃんには目が無いのだ～！！",0)
+				MES_close(VERMILIA)
+				wait_MES(VERMILIA)
+				wait(5)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（あ……\n  それで猫の帽子なのか。）",0)
+				MES_close(RAGNA)
+
+			//　　★バーミリア【子猫】
+				F_set_note(VERMILIA,2)
+				F_set(VERMILIA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(VERMILIA,"バーミリアさんは、\n動物はみんな大好きなのだ。",0)
+				MES(VERMILIA,"でも、特に子猫ちゃんには\n目が無いのだ～。",0)
+				MES(VERMILIA,"あの子猫ちゃん、\nまた会いに来てほしいのだ。",0)
+				MES(VERMILIA,"バーミリアさんなら、\nいつでも大歓迎なのだ～☆",0)
+				MES_close(VERMILIA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　※民家３の前の段差に腰掛けている。
+	//　　　できれば俯く。
+	if( F6_00_GoToMeru )
+	{
+		look_chr( VERMILIA, PLAYER1,"Bone_Head")
+		//──────────────────────────────
+		//　　※以下、わらしべイベント後の▼⑫通常一般メッセージ。
+		//　※アイテム「ばんそうこう」の表示が半透明以上　で判定してます(宮崎)
+		//──────────────────────────────
+		if(FV_11_Warasi11_Vml)
+		{
+			MES(VERMILIA,"ふっふっふ……\n今のバーミリアさんには\n秘密兵器があるのだ。",0)
+			MES(VERMILIA,"この変声器を使って\n必ず舞台を取り戻してやるのだ。",0)
+			MES(VERMILIA,"バーミリアさんは、\n竜巻なんかに負けないのだ～！",0)
+			MES_close(VERMILIA)	
+		}
+		//──────────────────────────────
+		//▼　わらしべイベント
+		//	name("11．大道芸人（アルッテの町）	『変声器』⇒『ばんそうこう』")153
+		//──────────────────────────────
+		else
+		if(FV_11_Warasi10_Wzn && !FV_11_Warasi11_Vml)
+		{
+			//──────────────────────────────
+			if(!F_VERMILIA)
+			{
+			//	name("⇒初回の場合")
+			//　　バーミリアにＰＡエモーション。
+				EMO(VERMILIA,EMO_PAI)
+				wait(30)
+				MES(VERMILIA,"おや～……？",0)
+				MES(VERMILIA,"君たち、それはもしかして\n『変声器』なのだ～？",0)
+				MES(VERMILIA,"むむむ……おかしな声で\n街頭に立つバーミリアさん……",0)
+				MOT(VERMILIA,50,15)
+				MES(VERMILIA,"これは新しい客寄せが\n出来るかもしれないのだ！",0)
+				MES(VERMILIA,"君たちにお願いなのだ。\nその変声器を譲って欲しいのだ～！",0)
+				MES_close(VERMILIA)
+				
+				//★初回
+				F_set(VERMILIA)
+			}
+			else
+			{
+			//	name("⇒２回目以降")
+				MOT(VERMILIA,50,15)
+				MES(VERMILIA,"その『変声器』があれば、\nきっと新しい客寄せが出来るのだ。",0)
+				MES(VERMILIA,"君たちにお願いなのだ。\nその変声器を譲って欲しいのだ～！",0)
+				MES_close(VERMILIA)
+			}
+			//──────────────────────────────
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【やめる】
+			MES_pos(PLAYER1,"??W9【モチロンなのだ～！】\n【ダメなのだ。】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+			//──────────────────────────────
+			//	name("⇒【モチロンなのだ～！】")
+			//──────────────────────────────
+			if(WK_YESNO==1)
+			{
+				MES(VERMILIA,"おお～、さすがに\n気前がいいのだ。",0)
+				MES(VERMILIA,"よーし、お礼に\nこれを差し上げるのだ～！",0)
+				MES_close(VERMILIA)
+
+			//	name("アイテム入手テキスト")
+			//	MES(this,"『ばんそうこう』をもらった。",0)
+				//―――――――――――――――――――――――
+				fade_in(30,10,BLACK)
+
+				get_item(152,-1,1)
+				get_item(153,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//―――――――――――――――――――――――
+
+			//　　ラグナたちに？エモーション。
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PARTNER,EMO_HATENA)
+				EMO(PET,EMO_HATENA)
+				wait(30)
+
+				MES(VERMILIA,"大道芸の修行というのは、\nたくさん生傷を作るものなのだ。\nばんそうこうは欠かせないのだ。",0)
+				MES(VERMILIA,"でもプロになったバーミリアさんには、\nもういらない品なのだ～☆",0)
+				MES_close(VERMILIA)
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+				//	name("⇒ラグナ先頭")
+					MES(RAGNA,"な、成る程な。\n一応受け取っておくぜ。",0)
+					MES(RAGNA,"（まあ今の俺じゃ、\n  ばんそうこう程度の傷なら\n  すぐに塞がっちまうんだがな……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("⇒アルウェン先頭")
+					MES(PARTNER,"ふむ、成る程。\nそういう事であったか。",0)
+					MES(PARTNER,"（とは言っても、\n  吸血鬼の身である私にも\n  不要なのだが……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				F_reset(VERMILIA)
+				F_set(FV_11_Warasi11_Vml)
+			}
+			//──────────────────────────────
+			//	name("⇒【ダメなのだ。】")
+			//──────────────────────────────
+			else
+			{
+				MES(VERMILIA,"はう、ガッカリなのだ。",0)
+				MES(VERMILIA,"でも君たちがそう言うなら\n仕方ないのだ～……",0)
+				MES_close(VERMILIA)
+				MOT(VERMILIA,151,15)
+			}
+		}
+		else
+		if(!F_VERMILIA)
+		{
+			MES(RAGNA,"あれ、こんな所で\n落ち込んでいる……",0)
+			MES_close(RAGNA)
+
+			//──────────────────────────────
+			//	name("⇒まだモーリスの話を見ていない。")
+			if(!FT_12_TalkMaurice)
+			{
+				MES(PARTNER,"ふむ、一体どうしたのだ……？",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("⇒モーリスの話を聞いた")
+				MES(PARTNER,"ふむ、あの舞台を\n使えなくなってしまったのだな。",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+		//　　バーミリア、顔を上げる。
+			MES(VERMILIA,"バーミリアさんは\nおヒマになってしまったのだー。",0)
+			MES(VERMILIA,"……………………………………",0)
+			MES_close(VERMILIA)
+
+		//　　バーミリア、俯く。
+			MES(VERMILIA,"はあ、ダメなのだー。\n舞台がないと、やる気が出ないのだ～。",0)
+			MES_close(VERMILIA)
+
+
+			F_set(VERMILIA)
+		}
+	//　　★繰り返し
+	//　　★繰り返し
+		else
+		{
+			MES(VERMILIA,"バーミリアさんは、\n舞台に立っていないとダメなのだ～。",0)
+			MES(VERMILIA,"お客さんがいないと……",0)
+			MES(VERMILIA,"はあ、とんとやる気が\n失せてしまうのだぁぁ～……",0)
+			MES_close(VERMILIA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	if( F5_00_HearLunar )
+	{
+		look_chr( VERMILIA, PLAYER1,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"君たちは、\n芸術の町ロートの話を\n知ってるのだ？",0)
+			MES(VERMILIA,"昔お師匠様から聞いたのだが……\n中央大陸にあって、芸術家が\nたくさん住んでいる町なのだー。",0)
+			MES(VERMILIA,"きっとハチャメチャで\n楽しい町なのだ。",0)
+			MES(VERMILIA,"バーミリアさんも、\nいつか行ってみたいのだー！",0)
+			MES_close(VERMILIA)
+			F_set(VERMILIA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(VERMILIA,"バーミリアさんも、\nいつかは芸術の町と呼ばれる地に\n行ってみたいのだー！",0)
+			MES(VERMILIA,"……というわけで、\n通りすがりの君たちに\nコインをお願いするのだ。",0)
+			MES(VERMILIA,"コインの数は\nいくらでも構わないのだー！",0)
+			MES_close(VERMILIA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	//　　※大道芸人は首だけで振り向き、体の向きは変えない。
+	//　　※スバルがいる場合のみ、１回だけ以下のイベントを行う。
+	if( F4_00_StartSolo )
+	{
+		//スバル合流前
+		if(!F4_02_GoVillage2)
+		{
+			look_chr( VERMILIA, PLAYER1,"Bone_Head")
+			if(!F_VERMILIA)
+			{
+				MES(VERMILIA,"お、お客さんが\nうんと減ってしまったのだ。",0)
+				MES(VERMILIA,"通りかかる人も、忙しそうで\n立ち止まってくれないのだ……",0)
+				MES(VERMILIA,"バ、バーミリアさん\n大ピンチなのだ～！",0)
+				MES_close(VERMILIA)
+				
+				F_set(VERMILIA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(VERMILIA,"そういえば、町の向こうに\nお城のようなものが見えるのだー。",0)
+				MES(VERMILIA,"一日でお城が建つなんて\n不思議な話なのだが……",0)
+				MES(VERMILIA,"みんな、そっちの観光に\n行ってしまったのだ～？",0)
+				MES_close(VERMILIA)
+			}
+		}
+		//スバル合流後
+		else
+		{
+			if(!FT_07_TalkVermilia)
+			{
+				//　　バーミリアにＰＡエモーション。首だけでスバルに振り向く。
+				EMO(VERMILIA,EMO_PA)
+				wait(30)
+			
+				look_chr( VERMILIA, PARTNER ,"Bone_Head")
+						
+				MES(VERMILIA,"おや、君は……",0)
+				MES(VERMILIA,"確か以前、\n屋根の上に居た子なのだ。",0)
+				MES_close(VERMILIA)
+
+			//　　スバルにアセアセエモーション。
+				EMO(PARTNER,EMO_ASEASE)
+				wait(30)
+
+				MES(PARTNER,"えっ、えっと。そうですけど……\n（あ、あれ？\n  隠形の術を使ってたのに……）",0)
+				MES_close(PARTNER)
+
+			//　　バーミリア、体ごとスバルの方に向く。
+				rot_chr(VERMILIA,30,PARTNER)
+				MES(VERMILIA,"むむ、もしかして……",0)
+				MES(VERMILIA,"謎の隠れ里に住む\n忍者だったりするのだ？",0)
+				MES_close(VERMILIA)
+
+			//　　ラグナたちに激しい！エモーション。
+				EMO(RAGNA,EMO_TOGEBIKKURI)
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+				wait(30)
+				
+				MES(PARTNER,"ええっ、そ、そんなっ……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"ど、どうしてそれを……！？",0)
+				MES_close(RAGNA)
+
+			//　　バーミリアに・・・エモーション。
+				EMO(VERMILIA,EMO_TENTEN)
+				wait(30)
+				
+				MES(VERMILIA,"だったら面白いのだー♪",0)
+				MES_close(VERMILIA)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"な、なんだ。\nただの思いつきかよ……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"はあ、驚いたぁ……",0)
+				MES_close(PARTNER)
+
+			//	name2(VERMILIA)
+				MES(VERMILIA,"君が何者なのかは\n知らないのだが……",0)
+				MES(VERMILIA,"どんな人でも、ここに来たからには\nバーミリアさんのお客さんなのだー。",0)
+				MES(VERMILIA,"ゆっくり見て行ってほしいのだ～☆",0)
+				MES_close(VERMILIA)
+
+				//★バーミリア【意外に鋭い】
+				F_set_note(VERMILIA,1)
+			//──────────────────────────────
+				rot(VERMILIA,30,51)
+				F_set(FT_07_TalkVermilia)
+			}
+		//　　※スバル合流後の初回イベントを見た後の通常一般メッセージ。
+			else
+			{
+				//ペンギンが居る場合
+				if(FV_02_VisitGyakata)
+				{
+					if(!F_VERMILIA)
+					{
+						MES(VERMILIA,"最近、稼ぎが少ないのだが……",0)
+						MES(VERMILIA,"今日は変わった子が\n来てくれたのだー。",0)
+						MES(VERMILIA,"ペンギン君……？",0)
+						MES(VERMILIA,"さすがのバーミリアさんも\n驚きなのだ～！",0)
+						MES_close(VERMILIA)
+						F_set(VERMILIA)
+					}
+					//　　★繰り返し
+					else
+					{
+						MES(VERMILIA,"さすがのバーミリアさんも\nペンギン君を見たのは初めてなのだ。",0)
+						MES(VERMILIA,"でも……どんな人でも\nここに来たからには\nバーミリアさんのお客さんなのだー。",0)
+						MES(VERMILIA,"そーれ、\n張り切って回してやるのだ～☆",0)
+						MES_close(VERMILIA)
+					}
+				}
+				//居ない場合
+				else
+				{
+					if(!F_VERMILIA)
+					{
+						MES(VERMILIA,"最近、稼ぎが少ないのだが……",0)
+						MES(VERMILIA,"一人でもお客さんがいれば、\nバーミリアさんはご機嫌なのだー☆",0)
+						MES(VERMILIA,"ゆっくり見て行ってほしいのだ～！",0)
+						MES_close(VERMILIA)
+						F_set(VERMILIA)
+
+					}
+					else
+					{
+					//　　★繰り返し
+						MES(VERMILIA,"一人でもお客さんがいれば、\nバーミリアさんはご機嫌なのだ。",0)
+						MES(VERMILIA,"そーれ、\n張り切って回してやるのだー！",0)
+						MES_close(VERMILIA)
+					}
+				}
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//配置なし
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	//　　※大道芸人は首だけで振り向き、体の向きは変えない。
+	if( F2_14_TalkEnemy )
+	{
+		look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"アルッテの町は、いろんな\nお客さんが見に来てくれるのだ。",0)
+			MES(VERMILIA,"お師匠様の言っていた通り、\n絶好の大道芸スポットなのだ～☆",0)
+			MES(VERMILIA,"ちなみに、バーミリアさんの\nお師匠様は何故かいつも\nメイド衣装だったのだ。",0)
+			MES(VERMILIA,"理由はいまだに謎なのだが……\nその道では、それはそれは\n高名な人だったのだー！",0)
+			MES_close(VERMILIA)
+
+			F_set(VERMILIA)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(VERMILIA,"お師匠様はとてもとても\n厳しい人だったのだが、\n今でも尊敬しているのだ。",0)
+			MES(VERMILIA,"この帽子……ヘルムート４号は\n免許皆伝の証に貰った大切な品なのだ。",0)
+			MES(VERMILIA,"今ではバーミリアさんの\nトレードマークなのだ～☆",0)
+			MES_close(VERMILIA)
+			
+			//★バーミリア【帽子】
+			F_set_note(VERMILIA,0)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	//　　※大道芸人は首だけで振り向き、体の向きは変えない。
+	//　　首だけでスバルがいた屋根の方を向きながら。
+	if( F2_00_GoForest )
+	{
+		if(!F_VERMILIA)
+		{
+			look(VERMILIA,"Bone_Head",0,		0,2,0,			0,-60,0)
+			MES(VERMILIA,"ん～……",0)
+			MES(VERMILIA,"さっきあの屋根の上に\n誰かいた気がするのだが……",0)
+			MES(VERMILIA,"気のせいだったのだ～？",0)
+			MES_close(VERMILIA)
+			F_set(VERMILIA)
+			look_off(VERMILIA)
+			look(VERMILIA,"Bone_Head",0,		0,2,0,			0,0,0)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(VERMILIA,"さっき屋根の上に\n誰かいた気がするのだが……",0)
+			MES(VERMILIA,"……まあいいのだ～。",0)
+			MES(VERMILIA,"バーミリアさんは、\n細かい事は気にしないのだ～☆",0)
+			MES_close(VERMILIA)
+		}
+
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	//　　※大道芸人は首だけで振り向き、体の向きは変えない。
+	if( F1_15_GoVillage )
+	{
+		look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"今日はワンちゃんが\nお客さんなのだ。",0)
+			MES(VERMILIA,"バーミリアさんは、何故だか\n動物に好かれるタチなのだ～。",0)
+			MES(VERMILIA,"以前、牧場だらけの大陸で\n芸をした事があったのだが……",0)
+			MES(VERMILIA,"大勢の牛さんに\n追いかけられてしまったのだー！",0)
+			MES_close(VERMILIA)
+
+		//──────────────────────────────
+		//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"だ、大道芸人も大変だな……",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"（少し楽しそうだのう……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			F_set(VERMILIA)
+		}
+	//──────────────────────────────
+	//　　★繰り返し
+		else
+		{
+			MES(VERMILIA,"バーミリアさんの大道芸は\n万国共通、種族の壁も越えるのだ。",0)
+			MES(VERMILIA,"……というわけで、\n通りすがりの君たちに\nコインをお願いするのだ。",0)
+			MES(VERMILIA,"コインの数は\nいくらでも構わないのだー！",0)
+			MES_close(VERMILIA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+//　　※野外ステージで、大道芸をしている。
+//　　※大道芸人は首だけで振り向き、体の向きは変えない。
+	if( F1_01_GameStart )
+	{
+		look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"ほーい、見てって見てって！",0)
+			MES(VERMILIA,"バーミリアさんの大道芸だぞー☆",0)
+			MES_close(VERMILIA)
+		//──────────────────────────────
+		//	name("⇒１回のみ以下のメッセージを挿入。")
+		//　　バーミリアにＰＡエモーション。
+			if(!FT_01_TalkVermilia)
+			{
+				EMO(VERMILIA,EMO_PA)
+			
+				look_chr( VERMILIA, PARTNER ,"Bone_Head")
+				MES(VERMILIA,"おや～、君たちは初めてなのだ～？",0)
+				MES_close(VERMILIA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"うむ、このような\nパフォーマンスを見るのは\n初めてだぞ。",0)
+				MES(PARTNER,"フフ、人の子の町は\n随分と華やかなのだな。",0)
+				MES_close(PARTNER)
+				
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+			//	name2(RAGNA)
+				MES(RAGNA,"ああ……まあどこの町でもって\nわけじゃないんだが。",0)
+				MES(RAGNA,"アルッテは飛行場がある町だ。\n旅行者なんかも多いだろうし、\nそれで明るい雰囲気なんだろうな。",0)
+				MES_close(RAGNA)
+				look_off(RAGNA)
+
+			//	name2(VERMILIA)
+				MES(VERMILIA,"ふむふむ、ナルホドなのだ。\nそんな気がしなくも無いのだ。",0)
+				rot_chr(RAGNA,30,VERMILIA)
+				MES(VERMILIA,"でも本当の理由は……",0)
+				MES(VERMILIA,"P1S4ここに明るいバーミリアさんが\nいるからなのだー！",0)
+				MES_close(VERMILIA)
+
+
+			//	name2(PARTNER)
+				MES(PARTNER,"な、なるほど……",0)
+				MES_close(PARTNER)
+
+			//	name2(VERMILIA)
+				MES(VERMILIA,"さあさあ、\n君たちも大歓迎なのだ～。",0)
+				MES(VERMILIA,"バーミリアさんの大道芸、\nどーんと見て行ってほしいのだ～☆",0)
+				MES_close(VERMILIA)
+				
+				F_set(FT_01_TalkVermilia)
+			}
+			
+			F_set(VERMILIA)
+		}
+	//──────────────────────────────
+	//　　★繰り返し
+		else
+		{
+			MES(VERMILIA,"おおー……\n今日はお客さんが多いのだ。",0)
+			MES(VERMILIA,"張り切って回してやるのだー☆",0)
+			MES_close(VERMILIA)
+		}
+	}
+	
+	look_off(VERMILIA)
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/▼①城を取り戻すために行動を開始した
+
+//──────────────────────────────
+//▼②ロアルタ村へ向かうことにした
+
+//──────────────────────────────
+//▼③金闇の森へ向かうことにした
+
+//──────────────────────────────
+//▼⑤魔女ラーライラから、敵の正体が明かされた
+
+//──────────────────────────────
+//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった
+//　　※配置なし。
+//──────────────────────────────
+//▼⑦ラグナは単独行動を始めた
+
+//──────────────────────────────
+//▼⑪クリスタルバレーを起動することにした
+
+//──────────────────────────────
+//──────────────────────────────
+//▼⑫飛行機でメルセデクに乗り込むことにした
+
+//──────────────────────────────
+//▼⑬
+
+//──────────────────────────────

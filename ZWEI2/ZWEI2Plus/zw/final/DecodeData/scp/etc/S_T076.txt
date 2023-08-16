@@ -1,0 +1,486 @@
+//──────────────────────────────
+//	name("◆凯（一般人男）Kai")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_KAI
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(KAI, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,KAI)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,KAI)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KAI)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KAI)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KAI)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KAI)
+		}
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□
+	//──────────────────────────────
+	//　　※亚尔迪城镇，站在噴水右側。
+	//　　※初回イベント。
+	if(F6_05_EndSixth)
+	{
+		rot_chr(KAI,30,PLAYER1)
+		MOT(KAI,50,15)
+		if(!FS_13_TalkKai)
+		{
+			MES(RAGNA,"凯……？",0)
+			MES(RAGNA,"来这里了吗。",0)
+			MES_close(RAGNA)
+
+		//	name2(KAI)
+			MES(KAI,"哼，误会了。\n我只是来城镇侦查的。",0)
+			MES(KAI,"绝对，不是来\n送行的。",0)
+			MES_close(KAI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（谁，谁也没听过\n这样的事吧……）",0)
+			MES_close(RAGNA)
+
+		//	name2(KAI)
+			MES(KAI,"──和那个不同。",0)
+			MES(KAI,"受藤藏之托\n转告一些事情。",0)
+			MES(KAI,"『因事外出，\n恐怕不能来送行了。\n实在抱歉。』",0)
+			MES(KAI,"『但是，相信昴一定\n会去的，\n那孩子就作为里的代表吧。』",0)
+			MES(KAI,"『你们２个还年轻。\n以后呢还有更辉煌的人生\n正在等待着你们。』",0)
+			MES(KAI,"『２人未来的幸福。』\n……好像是这样。",0)
+			MES_close(KAI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"是吗……",0)
+			MES(RAGNA,"谢谢您，\n特意来转告。",0)
+			MES_close(RAGNA)
+
+		//	name2(米娅)
+			MES(PARTNER,"真的非常，\n感谢。",0)
+			MES_close(PARTNER)
+
+		//	name2(KAI)
+			MES(KAI,"不不……哨口信\n也是我们忍者的工作。",0)
+			MES(KAI,"快去吧。\n飞机场的人正在等着你们吧？",0)
+			MES(KAI,"是有点迟到了，\n昴那家伙找你们去了。",0)
+			MES_close(KAI)
+			//★藤藏【热情伝言】
+			F_set_note(-24,2)
+			F_set(FS_13_TalkKai)
+		}
+
+		//　　★藤藏【热情伝言】
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			MES(KAI,"我们只是来侦察这个街道。",0)
+			MES(KAI,"鸦先生也是，为了情報収集\n去了别的大陆。",0)
+			MES(KAI,"所以我们\n就要来这里。",0)
+			MES(KAI,"……是这样啊。\n即然这样就赶快去\n飞机场吧。",0)
+			MES_close(KAI)
+		}
+		MOT(KAI,52,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※里之見張りＣから里之外を見ている。
+	//　　　凯は普段着で包帯姿。···エモーション出しっぱなし。
+	//　　※初回イベント。
+	if(F6_00_GoToMeru)
+	{
+		if(!FS_12_TalkKai)
+		{
+			EV_stop("TENTEN_KAI")
+
+			MES(RAGNA,"嗯……？",0)
+			MES(RAGNA,"怎么了？\n这地方……",0)
+			MES_close(RAGNA)
+
+		//　　凯，振り向く。
+			MOT(KAI,50,15)
+			rot_chr(KAI,30,PLAYER1)
+			MES(KAI,"……啊，你们啊。",0)
+			MES(KAI,"还有，村子里的气氛\n也变好了。",0)
+			MES_close(KAI)
+
+		//　　凯，向きを戻す。
+			rot(KAI,30,7)
+			MES(KAI,"这里，因为案件不断\n没有时间照看这里了……",0)
+			MES(KAI,"我们一直守护的\n《守护者》使命也\n结束了。",0)
+			MES_close(KAI)
+
+		//　　凯に···エモーション。
+		//	EMO(RAGNA,EMO_TENTEN)
+			EMO(KAI,EMO_TENTEN)
+			wait(30)
+
+			MES(KAI,"若是这样，\n环境的改变也是当然的了。",0)
+			MES(KAI,"而且……从今以后\n那边也会变好的。",0)
+			MES(KAI,"我们作为忍者。\n对于这次的事件\n当然是要全力以赴的……",0)
+			MES(KAI,"希望琉璃下一代\n能够更自由的生活。",0)
+			MES_close(KAI)
+
+		//　　拉古那，眨眼。
+			MES(RAGNA,"唉……",0)
+			MES_close(RAGNA)
+
+		//　　凯に？エモーション，振り返る。
+			EMO(KAI,EMO_HATENA)
+			rot_chr(KAI,30,RAGNA)
+			wait(30)
+
+			MES(KAI,"什么，犯傻了？",0)
+			MES_close(KAI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"不，不……\n我说你也变通一下嘛。",0)
+			MES_close(RAGNA)
+
+		//	name2(KAI)
+			MES(KAI,"哼……",0)
+			MES(KAI,"虽然这么说但，\n我们至今仍然没有打算\n改变。",0)
+			MES(KAI,"既然没有得到藤藏大人的\n任务变更，\n我们就要守护在这里。",0)
+			MES_close(KAI)
+
+		//　　凯，里之下之ほうを向く。
+			rot(KAI,30,7)
+			
+			MES(KAI,"有外人来了。",0)
+			MES(KAI,"总之先押进去\n……之后再询问。",0)
+			MES_close(KAI)
+			
+			//★凯【里開きには賛成】
+		//	F_set_note(KAI,2)
+			F_set_note(-76,2)
+			F_set(FS_12_TalkKai)
+	
+		}
+		else
+		{
+		//　　★凯【里開きには賛成】
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			rot_chr(KAI,30,RAGNA)
+
+			MOT(KAI,50,15)
+			if(!F_KAI)
+			{
+				MES(KAI,"我们也去\n回村子吧。",0)
+				MES(KAI,"村子里都是像鸦先生似的上忍，\n也许在村子里巡视\n也能增长忍者的阅历。",0)
+				MES_close(KAI)
+
+			//　　凯に···エモーション。
+				EMO(KAI,EMO_TENTEN)
+				wait(30)
+			//　　拉古那に？エモーション。
+				EMO(RAGNA,EMO_HATENA)
+				wait(30)
+				
+				MES(KAI,"……取得了许可。",0)
+				MES(KAI,"没有许可来这里\n我是绝对不允许的。",0)
+				MES_close(KAI)
+				
+				MES(RAGNA,"（啊，怎么还是那么\n顽固啊……）",0)
+				MES_close(RAGNA)
+				
+				F_set(KAI)
+			}
+			else
+			{
+			//	name2(RAGNA)
+
+			//　　★繰り返し
+				MES(KAI,"我们也去\n回村子吧。",0)
+				MES(KAI,"最近琉璃也好像\n冷静下来了。",0)
+				MES(KAI,"巡视也能成为学习\n一部分。",0)
+				MES_close(KAI)
+			}
+		}
+		MOT(KAI,52,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※在凯家（民家２）。
+	//　　※初回事件。
+	//　　　进入到凯家事件開始。
+	//　　※请注意奥迪莎有可能在！
+	//　　凯坐着，琉璃が支えているところ。
+	//　　凯は普段着包帯姿。
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		if(!FS_11_TalkKai)
+		{
+		//　　凯は普段着包帯姿。
+			MES(RAGNA,"喂，喂……\n还能起来吗？",0)
+			MES_close(RAGNA)
+
+			look_chr( KAI, RAGNA,"Bone_Head")
+			look_chr( LURI, RAGNA,"Bone_Head")
+			MES(PET,"等一下，你也受了\n相当严重的伤不是吗？",0)
+			MES_close(PET)
+
+			MOT(LURI,2,15)
+			rot(LURI,10,330)
+			MOT(KAI,2,60)
+
+			MES(KAI,"啊，不……",0)
+			KAO(KAI,"C","1","1")
+			MES(KAI,"听说你们要出发了，\n我特地来道谢的。",0)
+			MES(KAI,"……感谢你们帮助\n昴和藤藏先生。",0)
+			MES_close(KAI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈，那种小伤\n治一下就没问题了。",0)
+			MES(RAGNA,"……还有，帮助了我们２人\n怎么说也多亏了公主殿下啊。",0)
+			MES(RAGNA,"赶走蒙布兰\n也是借助公主的魔法。\n我其实没有做什么。",0)
+			MES(RAGNA,"最后……还是被公主\n给救了。",0)
+			MES_close(RAGNA)
+
+		//	name2(PET)
+			MES(PET,"………………………………",0)
+			MES_close(PET)
+
+			look_off(KAI)
+			KAO(KAI,"B","3","1")
+			MES(KAI,"是吗，\n那个女孩……",0)
+			MES_close(KAI)
+
+		//　　凯に少し···エモーション。
+			EMO(KAI,EMO_TENTEN)
+			wait(30)
+
+		//　　凯が姿勢を崩し，琉璃が支える。
+			look_del(KAI)
+			look(KAI,"Bone_Head",0,		0,2,2,			0,0,-10)
+			MOT(KAI,150,10)
+			MOT(LURI,150,10)
+			rot(LURI,30,270)
+			KAO(KAI,"2","3","1")
+			look_off(LURI)
+			MES(KAI,"呜……",0)
+			MES_close(KAI)
+
+			MES(LURI,"咿呀……",0)
+			MES_close(LURI)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"喂，喂喂喂……\n别勉强。",0)
+			MES_close(RAGNA)
+
+		//	name2(PET)
+			MES(PET,"是啊是啊，以后的事\n就拜托你们了\n请好好休息。",0)
+			MES_close(PET)
+
+			look(KAI,"Bone_Head",0,		0,2,2,			0,0,0)
+			look_chr( LURI, RAGNA,"Bone_Head")
+			//look_chr( KAI, RAGNA,"Bone_Head")
+//			KAO(KAI,"C","1","1")
+			MES(KAI,"原来如此……",0)
+			KAO(KAI,"B","3","1")
+			MES(KAI,"对不起，那样的话\n就休息一会吧。",0)
+			MES_close(KAI)
+
+			look_off(KAI)
+			look_off(LURI)
+		//　　凯，琉璃にもたれ込むような感じ。（もしくは俯く）
+			look(KAI,"Bone_Head",0,		0,2,2,			0,0,-30)
+			//────────────────────────
+			//	name("□奥迪莎がいる场合")
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				MES(ODESSA,"（唉……明明这么年轻\n还是很坚定道理的嘛。）",0)
+				MES_close(ODESSA)
+			}
+			else
+			{
+			//	name("□奥迪莎がいない场合")
+				MES(PET,"（呼，全都是。）",0)
+				MES(PET,"（这个村子里的人\n怎么都这么固执……）",0)
+				MES_close(PET)
+			}
+			//────────────────────────
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+		//　　以降，凯在被子里睡觉。
+			TK_end()
+			chr_pos(KAI,4658,-987,1,270,2)
+			chr_pos(LURI,4660,-185,-49,90,2)
+			TK_begin()
+			look(KAI,"Bone_Head",0,		0,2,20,			0,0,0)
+			MOT(KAI,151,0)
+			wait(30)
+
+			fade_in(0,30,BLACK)
+			wait_fade()
+			F_set(FS_11_TalkKai)
+
+		}
+		else
+		{
+			//　　※以下通常一般メッセージ。
+			//──────────────────────────────
+			KAO(KAI,"B","3","1")//寝顔
+			MES(KAI,"……嘶………嘶………",0)
+			MES_close(KAI)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia )
+	{
+		//　　※倒在村子中央的广场。（梅ンシナリオ参照）
+		//　　　目を閉じたまま，うなされてる。
+			MES(KAI,"……呜……呃………",0)
+			MES(KAI,"……大家……快跑……\n………快跑……………",0)
+			MES_close(KAI)
+
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	if( F4_06_StopAttack )
+	{
+	//　　※在村子中央广场。（梅ンシナリオ参照）
+		MES(KAI,"………………………………",0)
+		MES_close(KAI)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"拉古纳啊，现在赶紧去。",0)
+		MES(PARTNER,"……也许在后面的门那里。",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"啊……！",0)
+		MES_close(RAGNA)
+	}
+	else
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//　　※里之見張りＢに立っている。
+	//　　※初回イベント
+	if( F4_05_OnVillage2 )
+	{
+		if(!FS_08_TalkKai)
+		{
+		//　　※振り返らない
+			MES(KAI,"………………………………",0)
+			MES_close(KAI)
+
+		//　　凯，拉古那に振り返る。
+			MOT(KAI,50,15)
+			rot_chr(KAI,30,RAGNA)
+			MES(KAI,"藤藏大人也那么尊敬你。\n你在村子里住下来是没问题的。",0)
+			MES(KAI,"但是，并不能这么简单的允许你和昴\n的事。",0)
+			MES_close(KAI)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"凯兄，先别说这个……",0)
+			MES_close(PARTNER)
+
+		//　　凯，昴に向く。
+			rot_chr(KAI,30,PARTNER)
+			MES(KAI,"昴，就事论事。",0)
+			MES(KAI,"你见识不广所以考虑欠佳。",0)
+			MES(KAI,"再加上你年龄不大，\n我倒像问问你是在\n真正的修行吗。",0)
+			MES_close(KAI)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"呜呜……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"喂，喂。\n不要在说了怎么样……",0)
+			MES_close(RAGNA)
+
+		//	name2(KAI)
+			MES(KAI,"但是，你是\n藤藏大人的后代。",0)
+			MES(KAI,"大家很重视你，\n希望让你变得更加卓越。",0)
+			MES(KAI,"请不要忘记你背负着\n这样的期待与责任。",0)
+			MES_close(KAI)
+
+		//　　凯，拉古那に向く。
+			rot_chr(KAI,30,RAGNA)
+			MES(KAI,"还有你也是。",0)
+			MES(KAI,"以后要是打算和昴\n生死与共的话……\n也要做好思想准备。",0)
+			MES_close(KAI)
+			
+			F_set(FS_08_TalkKai)
+
+		//名前付きキャラ全員に話しかけると露天温泉が開く
+			EV("EV_F4_12_OkRoten")
+		}
+		else
+		{
+			MOT(KAI,50,15)
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		//　　凯，拉古那之方を向く。
+			rot_chr(KAI,30,RAGNA)
+			MES(KAI,"别慌啊。",0)
+			MES(KAI,"藤藏大人让我\n守护村子……",0)
+			MES(KAI,"要被我发现你的可疑之处，\n立刻拘了你。",0)
+			MES_close(KAI)
+		}
+		MOT(KAI,52,15)
+	}
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

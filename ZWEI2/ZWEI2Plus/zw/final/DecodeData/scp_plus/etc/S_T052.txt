@@ -1,0 +1,453 @@
+//■Zwei2一般メッセージ．アルッテの町（※リプトン）
+//────────────────────────────────────────────────────────────
+//■アルッテ
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆リプトン（上流階級男）Rypton")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_RYPTON
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(RYPTON, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,RYPTON)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,RYPTON)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,RYPTON)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※犬を連れて、大道芸人の前にいる。
+	if( F6_05_EndSixth )
+	{
+		EV("MOTION_TK_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"紳士たるもの、いついかなる時も\n取り乱さないものだ。",0)
+			MES(RYPTON,"勿論あの騒動の間も、\n声一つ上げなかったとも。",0)
+			MES(RYPTON,"ただ……風で\nシルクハットが飛んでしまってね。",0)
+			MES(RYPTON,"ふう、少々慌てたよ。",0)
+			MES_close(RYPTON)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+	
+		//──────────────────────────────
+		//	name("□フラグ⑤のメッセージを見たことがある場合")
+		if(FT_05_RyptonPs)
+		{
+			MES(RAGNA,"（あれだけ大騒ぎだったってのに……）",0)
+			MES(RAGNA,"（うーん、最後まで\n  平和な人だな……）",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name("□それ以外")
+			MES(RAGNA,"（あれだけ大騒ぎだったってのに。\n  平和な人だな……）",0)
+			MES_close(RAGNA)
+		}
+		//──────────────────────────────
+			F_set(RYPTON)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(RYPTON,"ふむ、実は……",0)
+			MES(RYPTON,"今被っているこのシルクハットは、\n予備のものなのだ。",0)
+			MES(RYPTON,"……これはいけない。\nまた無くしてしまうかもしれないからね。",0)
+			MES(RYPTON,"次の連絡便で\n注文しておかなくては。",0)
+			MES_close(RYPTON)
+			
+			//★リプトン【シルクハット】
+			F_set_note(RYPTON,2)
+		}
+		MOT(RYPTON,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_TK_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+		//　　※犬を連れて、噴水の後ろあたりでモーリスの話を聞いている。
+			MES(RYPTON,"つまり要約すると……\n何らかの天変地異が\n近づいているというのだね？",0)
+			MES(RYPTON,"ふむ……\nクラークも興奮しているようだ。",0)
+			MES(RYPTON,"犬は天変地異を\n予知できるともいう。",0)
+			MES(RYPTON,"これはやはり、良からぬことが\n起ころうとしているのかもしれないね。",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(RYPTON,"クラークも大分興奮している。",0)
+			MES(RYPTON,"犬は天変地異を\n予知できるというからね。",0)
+			MES(RYPTON,"ふむ、これは何か良からぬことが\n起ころうとしているのかもしれない。",0)
+			MES_close(RYPTON)
+		}
+		MOT(RYPTON,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※酒場前あたりで、エンジェと話している。
+	//　　　傍に犬がうろうろしている。
+	if( F5_00_HearLunar )
+	{
+		if(!F_RYPTON)
+		{
+		//　　※振り返らない。
+			MES(RYPTON,"近頃変わった事……？",0)
+			MES(RYPTON,"いや、特にないとも。",0)
+			MES(RYPTON,"家内の機嫌が悪いのと、\n私の購読している\n情報誌が届かないくらいだ。",0)
+			MES(RYPTON,"なに、問題はない。\n後で抗議の手紙を\n出しておくつもりだからね。",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない。
+			MES(RYPTON,"なに……家内は神経質でね、\n機嫌が悪いのはいつもの事なんだ。",0)
+			MES(RYPTON,"最近は家に\n閉じこもっているようだが……",0)
+			MES(RYPTON,"まあ大したことではない。\n気を遣わせてしまって済まないね。",0)
+			MES_close(RYPTON)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※アルッテ上段（民家２前～教会前の広場）にかけて、犬の散步をしている。
+	if( F4_00_StartSolo )
+	{
+		EV("MOTION_TK_RYPTON")
+		F_set_chr(DOG,CF_NO_MOVE)
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"おはよう、いい天気だね。\n今日も清々しい一日になりそうだ。",0)
+			MES(RYPTON,"朝を心地よく迎える秘訣……\nそれは十分な睡眠だよ。",0)
+			MES(RYPTON,"もちろん昨晚もぐっすりと眠った。\n……家内は寝付けなかったようだがね。",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(RYPTON,"家内なら、何か心配事があるとかで\n朝早くから教会へ向かったよ。",0)
+			MES(RYPTON,"ふむ、あれは神経質でいけない。",0)
+			MES_close(RYPTON)
+		}
+		F_reset_chr(DOG,CF_NO_MOVE)
+		MOT(RYPTON,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//※いない
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※民家１にいる。
+	if( F2_14_TalkEnemy )
+	{
+		EV("MOTION_TK_RYPTON")
+		EV_stop("LOOKING_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"私はね、世間一般では\n銀行家ということになっている。",0)
+			MES(RYPTON,"──もっとも近頃は\n経営の方も部下に任せきりでね。",0)
+			MES(RYPTON,"数年に一度、\n報告書類が来るくらいなのだが。",0)
+			MES_close(RYPTON)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"（そ、それは……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（ふむ、もしや見放されていたり\n  するのではないか……？）",0)
+			MES_close(PARTNER)
+
+			//★リプトン【自称銀行家】
+			F_set_note(RYPTON,1)
+			F_set(RYPTON)
+			//平和なリプトン　フラグ
+			F_set(FT_05_RyptonPs)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(RYPTON,"今日もクラークはご機嫌なようだ……",0)
+			MES(RYPTON,"ふふ、私はクラークの気持ちが\n良く分かるのだよ。",0)
+			MES(RYPTON,"人心の掌握術なら、\n私の最も得意とする所だからね。",0)
+			MES_close(RYPTON)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（ホントかよ……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+				MES(PARTNER,"（本当かのう……？）",0)
+				MES_close(PARTNER)
+			}
+		}
+		EV("LOOKING_RYPTON")
+		MOT(RYPTON,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※アルッテ上段（民家２前～教会前の広場）にかけて、犬の散步をしている。
+	if( F2_00_GoForest )
+	{
+		EV("MOTION_TK_RYPTON")
+		F_set_chr(DOG,CF_NO_MOVE)
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"アルッテの郊外には、以前から\n全く使われていない屋敷がある。\n……知っているかな？",0)
+			MES(RYPTON,"しかし最近、その屋敷に\n滞在を始めた人物がいるそうだね。",0)
+			MES(RYPTON,"ふむ……\n持ち主が変わったのだろうか。",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(RYPTON,"あの屋敷は持ち主不明だったからね。\nてっきり町が管理しているものと\n思っていたのだが……",0)
+			MES(RYPTON,"もしや、ペンネに困って\n手放してしまったのだろうか。",0)
+			MES(RYPTON,"ふむ、そういうことなら\n私が買い取っても良かったのだが。",0)
+			MES_close(RYPTON)
+		}
+		F_reset_chr(DOG,CF_NO_MOVE)
+		MOT(RYPTON,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※犬を連れて、大道芸人の前にいる。
+	if( F1_15_GoVillage )
+	{
+		EV("MOTION_TK_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"私の犬──クラークは\n芸が分かるのだよ。",0)
+			MES(RYPTON,"犬だからといって\n馬鹿にしてはいけない。\n犬はとても頭がいい動物だ。",0)
+			MES(RYPTON,"……ただし、クラークは\n自分で芸をしたりはしないがね。",0)
+			MES_close(RYPTON)
+
+			//★リプトン【犬の名前】
+			F_set_note(RYPTON,0)
+			F_set(RYPTON)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(RYPTON,"クラークはここの大道芸が\nとても気に入っているらしくてね。",0)
+			MES(RYPTON,"私はクラークに請われて\nよくここへやって来る……",0)
+			MES(RYPTON,"これもまた、\n犬と主人の関係なのだよ。",0)
+			MES_close(RYPTON)
+		}
+		MOT(RYPTON,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※アルッテ上段（民家２前～教会前の広場）にかけて、犬の散步をしている。
+	//　　※初回イベント
+	if( F1_01_GameStart )
+	{
+		F_set_chr(DOG,CF_NO_MOVE)
+		rot_chr(RYPTON,30,PLAYER1)
+		
+		EV("MOTION_TK_RYPTON")
+		if(!FT_01_TalkRypton)
+		{
+			MES(RYPTON,"おはよう。\n実にいい天気だね。",0)
+			MES_close(RYPTON)
+
+//		//──────────────────────────────
+//		//	name("□ラグナ先頭")
+//			if(GW_MAN==1)
+//			{
+//				MES(RAGNA,"あ、ああ。どうも……",0)
+//				MES_close(RAGNA)
+//			}
+//		//	name("□アルウェン先頭")
+//			else
+//			{
+//				MES(PARTNER,"うむ、確かに\nよく晴れておるな。",0)
+//				MES_close(PARTNER)
+//			}
+//		//──────────────────────────────
+		
+			MES(RYPTON,"君たちも散步かな？",0)
+			MES(RYPTON,"実は私も、\n散步を日課にしていてね。",0)
+			MES(RYPTON,"朝に感じる町の空気で\n今日一日の調子が分かるのだよ。",0)
+			MES(RYPTON,"今朝はスーツののりもよかった。",0)
+			MES(RYPTON,"清々しい一日になりそうだ。",0)
+			MES_close(RYPTON)
+
+//		//	name2(RAGNA)
+//			MES(RAGNA,"へ、へえ。そんなもんか。",0)
+//			MES_close(RAGNA)
+//
+//		//	name2(RYPTON)
+//			MES(RYPTON,"ああ、散步友達が増えて\n私も嬉しい……",0)
+//			MES_close(RYPTON)
+//
+//		//　　リプトンにＰＡエモーション。
+//			EMO(RYPTON,EMO_PA)
+//			wait(30)
+//			
+//			MES(RYPTON,"おっと、私はそろそろ失礼するよ。\n残りの散步があるのでね。",0)
+//			MES_close(RYPTON)
+
+		//　　ここでＬＦも立てる。
+			F_set(FT_01_TalkRypton)
+			F_set(RYPTON)		//※マップ切り替え前は繰り返しに飛ばす。
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_RYPTON)
+			{
+				MES(RYPTON,"おはよう。\n実にいい天気だね。",0)
+				MES(RYPTON,"今朝はスーツののりもよかった。",0)
+				MES(RYPTON,"清々しい一日になりそうだ。",0)
+				MES_close(RYPTON)
+				F_set(RYPTON)
+			}
+		//　　★繰りかえし
+			else
+			{
+				MES(RYPTON,"私はね、朝は紅茶と決めている。",0)
+				MES(RYPTON,"そして新鮮なレモンスライスと\nバタークロワッサン。",0)
+				MES(RYPTON,"これらは良い一日を送るために\n必要不可欠なものだからね。",0)
+				MES_close(RYPTON)
+			}
+		}
+		F_reset_chr(DOG,CF_NO_MOVE)
+		MOT(RYPTON,150,15)
+	}
+	
+	TK_end()
+}
+//会話時のモーション
+MOTION_TK_RYPTON
+{
+	MOT_SET(RYPTON,150,-1,404,404,151,15)
+	MOT_SET(RYPTON,151,-1,402,402,150,15)
+	MOT(RYPTON,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

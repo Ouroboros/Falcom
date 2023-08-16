@@ -1,0 +1,1626 @@
+//──────────────────────────────
+//	name("◆ミリアム（★メインキャラ）Milliam")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+//──────────────────────────────
+//▼通常ミリアムカウンター処理
+//　　※各フラグで初回イベントがある場合は、そちらが優先される。
+//　　※フラグ⑥では、専門のショップ処理になる。
+//　　※フラグ□メルセデク突入前は、ショップ処理を行わない。
+//　　　それ以外のタイミングでは、まずこの選択肢を出してから会話処理へ飛ぶ。
+//──────────────────────────────
+
+SHOP_MILLIAM
+{
+	TK_begin()
+	rot_chr(MILLIAM,30,PLAYER1)
+	
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(MILLIAM, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,MILLIAM)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,MILLIAM)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MILLIAM)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MILLIAM)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MILLIAM)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MILLIAM)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,MILLIAM)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼ミリアムに初めてパーツを見せた場合。
+	//──────────────────────────────
+	if(!FT_01_GashreaTp && !FT_01_MilliamTp && !FT_01_GashreaTune && FE_FF_GetPart )
+	{
+	//　　※パーツを持っており、改造を行ったことがなく、かつパーツのことを親方に話していない場合のみ発動。
+	//　　※このイベントを見ると、フラグ①の初回イベントは起こらなくなります。
+		EV("LOOK_PART_MILLIAM")
+		wait_EV("LOOK_PART_MILLIAM")
+	}
+	else
+	//──────────────────────────────
+	//　　※ミリアムに初めてパーツを見せるイベントの後の通常メッセージ。
+	//──────────────────────────────
+	if(FT_01_MilliamTp && !FT_01_GashreaTp && F_MILLIAM)
+	{
+	//　　　マップを切り替えるＯＲ親方に見せるまで、
+	//　　　通常会話処理は全てこのメッセージが表示されます。（つまりＬＦ制御）
+		MES(MILLIAM,"そのパーツのことなら、\n親方に話を聞いてみると\nいいかもしれない。",0)
+		MES(MILLIAM,"親方は物知りだし、\nこういうの詳しいんだ。",0)
+		MES_close(MILLIAM)
+	}
+	//初回イベントがあるときはまず会話処理
+	//⑥は専用のショップ処理
+	else
+	{
+		//──────────────────────────────
+		//▼□エンディング直前
+		//──────────────────────────────
+		//※無し
+		//──────────────────────────────
+		//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+		//──────────────────────────────
+		if( F6_00_GoToMeru )
+		{
+			EV("TK_MILLIAM")
+			wait_EV("TK_MILLIAM")
+		}
+		else
+		//──────────────────────────────
+		//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+		//──────────────────────────────
+		if( F5_00_HearLunar )
+		{
+			MOT_SET(MILLIAM,150,-1,396,396,-1,0)
+			MOT(MILLIAM,150,15)
+			if(!FT_11_TalkMilliam)
+			{
+				EV("TK_MILLIAM")
+				wait_EV("TK_MILLIAM")
+			}
+			else	
+			{
+				VOICE(725,0)								//「やぁ、よく来たね」
+				MES(MILLIAM,"やぁ、よく来たね。",0)	
+							
+//				MES(MILLIAM,"お、何か買ってくかい？",0)
+				MES_close(MILLIAM)
+				EV("SHOP_MILLIAM_LOOP")
+				wait_EV("SHOP_MILLIAM_LOOP")
+			}
+			MOT(MILLIAM,52,15)
+		}
+		else
+/*
+		//──────────────────────────────
+		//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+		//──────────────────────────────
+		if( F4_09_GoShrineMia)
+		{
+			MES(MILLIAM,"お、何か買ってくかい？",0)
+			MES_close(MILLIAM)
+			EV("SHOP_MILLIAM_LOOP")
+			wait_EV("SHOP_MILLIAM_LOOP")
+		}
+		else
+*/
+		//──────────────────────────────
+		//▼⑨汎用忍者が倒れているだけのフラグ。
+		//──────────────────────────────
+		//※無し
+		//──────────────────────────────
+		//▼⑧星降りの里に到着した（ラグナ．スバル）
+		//──────────────────────────────
+		//※無し
+		//──────────────────────────────
+		//▼⑦ラグナは単独行動を始めた
+		//──────────────────────────────
+		if( F4_00_StartSolo )
+		{
+			MOT_SET(MILLIAM,150,-1,396,396,-1,0)
+			MOT(MILLIAM,150,15)
+			if(F4_01_RentTool && !F5_00_HearLunar && !FT_07_TalkMilliamA)
+			{
+				EV("TK_MILLIAM")
+				wait_EV("TK_MILLIAM")
+			}
+			else	
+			if(!F4_01_RentTool && !F5_00_HearLunar && !FT_07_TalkMilliamM)
+			{
+				EV("TK_MILLIAM")
+				wait_EV("TK_MILLIAM")
+			}
+			else	
+			{
+				VOICE(725,0)								//「やぁ、よく来たね」
+				MES(MILLIAM,"やぁ、よく来たね。",0)				
+
+//				MES(MILLIAM,"お、何か買ってくかい？",0)
+				MES_close(MILLIAM)
+				EV("SHOP_MILLIAM_LOOP")
+				wait_EV("SHOP_MILLIAM_LOOP")
+			}
+			MOT(MILLIAM,52,15)
+		}
+		else
+		//──────────────────────────────
+		//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+		//──────────────────────────────
+		if( F3_00_GoMoonCastle )
+		{
+			MOT_SET(MILLIAM,150,-1,396,396,-1,0)
+			MOT(MILLIAM,150,15)
+			if(!FT_06_TalkMilliam)
+			{
+				EV("TK_MILLIAM")
+				wait_EV("TK_MILLIAM")
+			}
+			else	
+			{
+				VOICE(725,0)								//「やぁ、よく来たね」
+				MES(MILLIAM,"やぁ、よく来たね。",0)		
+					
+//				MES(MILLIAM,"何か買ってくかい？",0)
+				MES_close(MILLIAM)
+				EV("SHOP_MILLIAM_LOOP")
+				wait_EV("SHOP_MILLIAM_LOOP")
+			}
+			MOT(MILLIAM,52,15)
+		}
+		else
+		//──────────────────────────────
+		//▼⑤魔女ラーライラから、敵の正体が明かされた
+		//──────────────────────────────
+		if( F2_14_TalkEnemy )
+		{
+			MOT_SET(MILLIAM,150,-1,396,396,-1,0)
+			MOT(MILLIAM,150,15)
+			if(!FT_05_TalkMilliam)
+			{
+				EV("TK_MILLIAM")
+				wait_EV("TK_MILLIAM")
+			}
+			else	
+			{
+				VOICE(725,0)								//「やぁ、よく来たね」
+				MES(MILLIAM,"やぁ、よく来たね。",0)			
+			
+//				MES(MILLIAM,"お、何か買ってくかい？",0)
+				MES_close(MILLIAM)
+				EV("SHOP_MILLIAM_LOOP")
+				wait_EV("SHOP_MILLIAM_LOOP")
+			}
+			MOT(MILLIAM,52,15)
+		}
+		else
+		//──────────────────────────────
+		//▼④炎のパーツを入手した
+		//▼③金闇の森へ向かうことにした
+		//▼②ロアルタ村へ向かうことにした
+		//▼①城を取り戻すために行動を開始した
+		//──────────────────────────────
+		if( F1_01_GameStart )
+		{
+			MOT_SET(MILLIAM,150,-1,396,396,-1,0)
+			MOT(MILLIAM,150,15)
+			
+			if(!F0_06_TutoGadget)//初回はチュートリアルを行う。
+			{
+				EV("Tuto_MILLIAM")
+				wait_EV("Tuto_MILLIAM")
+			}
+			else
+			{
+				VOICE(725,0)								//「やぁ、よく来たね」
+			
+				MES(MILLIAM,"やぁ、よく来たね。",0)
+//				MES(MILLIAM,"お、何か買ってくかい？",0)
+				MES_close(MILLIAM)
+				EV("SHOP_MILLIAM_LOOP")
+				wait_EV("SHOP_MILLIAM_LOOP")
+			}
+			MOT(MILLIAM,52,15)
+		}
+	}
+	TK_end()
+}
+
+SHOP_MILLIAM_LOOP
+{
+//	name("選択テキスト")
+	workL(WK_CANCEL,SET,3)//【やめる】
+	MES_pos(PLAYER1,"??W9【話す】\n【買い物をする】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+	//──────────────────────────────
+	//	name("□話す")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+	//　　通常の会話処理に飛ぶ。
+		EV("TK_MILLIAM")
+		wait_EV("TK_MILLIAM")
+		
+		loop
+	}
+	//──────────────────────────────
+	//	name("□買い物をする")
+	//──────────────────────────────
+	else
+	if(WK_YESNO==2)
+	{
+	//　　工房ショップ処理を行う
+		shop_open(1)
+		wait_W(WK_YESNO)
+
+		if(IT108>0 && IT105>0 && IT106>0 && IT107>0)
+			F_set(FT_FF_GadjetSoldout)
+
+		loop
+	}
+	//──────────────────────────────
+	//	name("□やめる")
+	//──────────────────────────────
+	else
+	{
+		if(F3_00_GoMoonCastle && !F4_00_StartSolo)
+		{
+			MES(MILLIAM,"どこへ行くのか知らないけど……\nあまり無茶しないでよ。",0)
+			MES_close(MILLIAM)
+		}
+		else
+		{
+			VOICE(728,0)								//「またおいでよ」
+			MES(MILLIAM,"またおいでよ。",0)		
+		
+//			MES(MILLIAM,"毎度あり。\nまた何かあったら来なよ。",0)
+			MES_close(MILLIAM)
+		}
+		
+
+	//　　会話処理終了。
+	}
+}
+
+//──────────────────────────────
+//▼ミリアムに初めてパーツを見せた場合。
+//──────────────────────────────
+//　　※パーツを持っており、改造を行ったことがなく、かつパーツのことを親方に話していない場合のみ発動。
+//　　※最初にパーツを入手した際、「ミリアムに相談してみよう」というメッセージがあることを想定。
+//　　※このイベントを見ると、フラグ①の初回イベントは起こらなくなります。
+//──────────────────────────────
+LOOK_PART_MILLIAM
+{
+	MOT_SET(RAGNA,151,-1,509,509,152,0)	//ラグナ　何か渡す仕草
+	MOT_SET(RAGNA,152,-1,510,510,153,0)
+	MOT_SET(RAGNA,153,-1,511,511,-1,0)
+	
+	MOT_SET(MILLIAM,151,-1,509,509,152,0)	//ミリアム　何か渡す仕草
+	MOT_SET(MILLIAM,152,-1,510,510,153,0)
+	MOT_SET(MILLIAM,153,-1,511,511,-1,0)
+	
+	MES(RAGNA,"あー、ミリアム。\nちょっといいか？",0)
+	MES(RAGNA,"聞いてみたいことが\nあるんだが……",0)
+	MES_close(RAGNA)
+
+//　　ミリアムに気づきエモーション。振り返る。
+	EMO(MILLIAM,EMO_PA)
+	wait(30)
+	
+	MES(MILLIAM,"ん、どうしたんだい？",0)
+	MES_close(MILLIAM)
+
+//	name2(RAGNA)
+	MES(RAGNA,"こいつなんだが……",0)
+	MES_close(RAGNA)
+
+//　　ミリアムにアイテムを渡す仕草。
+	MOT(RAGNA,15,15)
+	wait(20)
+	fade_in(30,10,BLACK)
+
+//	name("ナレーション")
+	if(IT128>0)
+	{
+		MES(0,"C3S2ミリアムに『Ａパーツ』を見せた。",2)
+		MES_close(0)
+	}
+	else
+	if(IT129>0)
+	{
+		MES(0,"C3S2ミリアムに『Ｂパーツ』を見せた。",2)
+		MES_close(0)
+	}
+	else
+	if(IT130>0)
+	{
+		MES(0,"C3S2ミリアムに『Ｃパーツ』を見せた。",2)
+		MES_close(0)
+	}
+	else
+	if(IT131>0)
+	{
+		MES(0,"C3S2ミリアムに『Ｄパーツ』を見せた。",2)
+		MES_close(0)
+	}
+	else
+	if(IT132>0)
+	{
+		MES(0,"C3S2ミリアムに『Ｅパーツ』を見せた。",2)
+		MES_close(0)
+	}
+	else
+	if(IT133>0)
+	{
+		MES(0,"C3S2ミリアムに『Ｆパーツ』を見せた。",2)
+		MES_close(0)
+	}
+	
+	fade_in(0,10,BLACK)
+	wait_fade()
+	MOT(RAGNA,2,15)
+
+
+//	name2(MILLIAM)
+	MES(MILLIAM,"へえ、これは古代のパーツだね……",0)
+	MES(MILLIAM,"どこで見つけたの、こんな物。",0)
+	MES_close(MILLIAM)
+
+//	name2(RAGNA)
+	MES(RAGNA,"ああ、ダンジョンの奥でな。",0)
+	MES_close(RAGNA)
+
+//	name2(MILLIAM)
+	MES(MILLIAM,"そっか、ラグナって\nトレジャーハンターだったっけか。",0)
+	MES_close(MILLIAM)
+
+//　　ミリアム、アイテムを眺めるような仕草。
+	MES(MILLIAM,"う～ん、中にかなり複雑な\nギミックが入ってるみたいだ。",0)
+	MES(MILLIAM,"それにこの重さ……",0)
+	MES(MILLIAM,"うん、これは多分\n『魔宝パーツ』の一種だと思うよ。",0)
+	MES(MILLIAM,"工夫すれば、\n何かに使えるんじゃないかな。",0)
+	MES_close(MILLIAM)
+
+//　　ミリアム、アイテムを返す仕草。
+	MOT(MILLIAM,153,15)
+	MOT(RAGNA,153,15)
+	wait(20)
+	MOT(RAGNA,2,15)
+	MOT(MILLIAM,52,15)
+	MES(MILLIAM,"親方に話を聞いてみると\nいいかもしれない。",0)
+	MES(MILLIAM,"親方は物知りだし、\nこういうの詳しいんだ。",0)
+	MES_close(MILLIAM)
+	
+	F_set(FT_01_TalkMilliam)
+	F_set(FT_01_MilliamTp)
+	F_set(MILLIAM)
+}
+
+
+TK_MILLIAM
+{
+
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※飛行場に配置。（メインシナリオ参照）
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※ブランデーヶ丘で作業している。
+	if( F6_00_GoToMeru )
+	{
+		if(!F6_02_OnMeru)
+		{
+			TK_begin()
+			
+		//　　※メインで一度断った後のメッセージ。
+			MES(MILLIAM,"そろそろ修理も終わるけど、\nエンジンチェックだけは\nしとかないとね。",0)
+		//	MES(MILLIAM,"どうする？\nそれまでここで待ってる？",0)
+			MES(MILLIAM,"それで、そっちは\nいつでも出発できるのかい？",0)
+			MES_close(MILLIAM)
+
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【まだ準備がある】
+		//	workL(WK_CANCEL,SET,0)//【まだ準備がある】
+		//	MES_pos(PLAYER1,"??W9【出発までここで待機する】\n【まだ準備がある】",0,320,240,0,0)
+			MES_pos(PLAYER1,"??W9【いつでも出発できる】\n【まだ準備がある】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+			
+			//─────────────────────
+			//	name("□まだ準備がある")
+			//─────────────────────
+			if(WK_YESNO==2)
+			{
+				MES(MILLIAM,"そっか。\n準備が終わったら来てよ。",0)
+				MES(MILLIAM,"修理が完了しだい、\nエンジンのチェックをしよう。",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"ああ、了解だ。",0)
+				MES_close(RAGNA)
+
+			//　　イベント終了、プレイヤー操作許可。
+			}
+			//──────────────────────────────
+			//	name("□出発までここで待機する")
+			//──────────────────────────────
+			else
+			if(WK_YESNO==1)
+			{
+				MES(RAGNA,"こっちの準備はＯＫだ。",0)
+				MES(RAGNA,"そっちの修理が終わったら\nエンジンチェックに付き合うぜ。",0)
+				MES_close(RAGNA)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"了解。",0)
+				MES_close(MILLIAM)
+
+			//	name("親方")
+			//	rot_chr(GASHREA,30,RAGNA)
+				look_chr(GASHREA,RAGNA, "Bone_Head")
+				MES(GASHREA,"ちょいと待ってろ。\nすぐに仕上げてやるからよ。",0)
+				MES_close(GASHREA)
+
+			//　　画面、ゆっくりとフェードアウト。
+				fade_in(100,30,0)
+				wait_fade()
+
+				EV("EV_6_04_RidePlane1")
+			}
+			TK_end()
+		}
+	//　　※メルセデク突入後は、ブランデーヶ丘から
+	//　　　竜巻の観測を始める。
+	//　　　スバルとは、少し距離を置いておく。
+	//　　※初回イベント
+	//　　※振り返らない
+		else
+		{
+			TK_begin()
+			KAO(MILLIAM, "1", "1", "1")	
+			KAO(PLAYER1, "1", "1", "1")	
+			KAO(PLAYER2, "1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			rot_chr(PLAYER1,30,MILLIAM)
+			rot_chr(PLAYER2,30,MILLIAM)
+			rot_chr(PET,30,MILLIAM)
+
+			MOT_SET(MILLIAM,151,-1,396,396,-1,0)//振り返ったとき
+
+			if(!FT_12_TalkMilliam)
+			{
+				MES(RAGNA,"ミリアム……",0)
+				MES(RAGNA,"もしかして、あの竜巻を\n調べてるのか？",0)
+				MES_close(RAGNA)
+
+			//　　ミリアム振り返る。
+				rot_chr(MILLIAM,30,RAGNA)
+				MOT(MILLIAM,151,15)
+				
+				MES(MILLIAM,"ああ、親方と共同で\n竜巻の観測を始めたところさ。",0)
+				look_chr( MILLIAM, SUBARU,"Bone_Head")
+				MES(MILLIAM,"この子も手伝ってくれるって\n言うから、ついでにね。",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"そうか、スバルも……",0)
+				MES_close(RAGNA)
+
+			//	name2(PET)
+				MES(PET,"そういや、一応忍びだし……\n適任かもしれないわね。",0)
+				MES_close(PET)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"それで\nどのような状況なのだ？",0)
+				MES_close(PARTNER)
+
+				look_off( MILLIAM )
+				
+			//	name2(MILLIAM)
+				MES(MILLIAM,"ああ、それなんだけど……",0)
+				MES(MILLIAM,"どうやらあの竜巻は、\nイルバードに近づいている\nわけじゃないらしい。",0)
+				MES(MILLIAM,"どんどん大きくなって、\n飲み込もうとしてるんだよ。",0)
+				MES_close(MILLIAM)
+
+			//	name2(PET)
+				MES(PET,"の、飲み込む……？",0)
+				MES_close(PET)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"それは……近づいてくるよりも\n危険なのではないか？",0)
+				MES_close(PARTNER)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"うん、多分そうだと思う。",0)
+				MES(MILLIAM,"正直言って、この先何が\n待ち受けてるか予想も付かないよ。",0)
+				MES(MILLIAM,"あたしたちはこのまま\n観測を続けるけれど……",0)
+				MES(MILLIAM,"みんな、十分に\n気をつけて進んでおくれよ。",0)
+				MES_close(MILLIAM)
+				F_set(FT_12_TalkMilliam)
+			}
+			else
+			{
+				rot_chr(MILLIAM,30,PLAYER1)
+				MOT(MILLIAM,151,15)
+				if(!F_MILLIAM)
+				{
+					MES(MILLIAM,"親方と共同で\n竜巻の観測を始めたところだよ。",0)
+					MES(MILLIAM,"あの竜巻の規模は\nどんどん大きくなっている……",0)
+					MES(MILLIAM,"正直言って、この先何が\n待ち受けてるか予想も付かないよ。",0)
+					MES(MILLIAM,"みんな、十分に\n気をつけて進んでおくれよ。",0)
+					MES_close(MILLIAM)
+
+					F_set(MILLIAM)
+				}
+			//　　★繰り返し
+				else
+				{
+					MES(MILLIAM,"正直言って、この先何が\n待ち受けてるか分からない。",0)
+					MES(MILLIAM,"みんな、十分に\n気をつけて進んでおくれよ。",0)
+					MES_close(MILLIAM)
+				}
+			}
+			MOT(MILLIAM,150,15)
+			
+			TK_end()
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※工房カウンター。
+	if( F5_00_HearLunar )
+	{
+	//　　※初回イベント
+		if(!FT_11_TalkMilliam)
+		{
+		//　　ミリアム、ラグナに向く。
+			MES(MILLIAM,"あ、いらっしゃい……",0)
+			rot_chr(MILLIAM,30,RAGNA)
+			MES(MILLIAM,"ってラグナじゃない。",0)
+			MES_close(MILLIAM)
+
+		//　　ミリアムに．．．エモーション。
+			EMO(MILLIAM,EMO_TENTEN)
+			wait(30)
+			MES(MILLIAM,"うん……\n調子、戻ったみたいだね。",0)
+			MES_close(MILLIAM)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ああ、心配かけてたみたいだな。",0)
+			MES(RAGNA,"……ちょっとあれから、\n気持ちも切り替えてな。",0)
+			MES(RAGNA,"悪ぃ、もう大丈夫だ。",0)
+			MES_close(RAGNA)
+
+		//	name2(MILLIAM)
+			MES(MILLIAM,"ふふ、そっか。",0)
+			MES(MILLIAM,"あー、でも……\nあたしは駄目だ……",0)
+			MES_close(MILLIAM)
+
+		//　　ミリアム瞑目。
+			look(MILLIAM,"Bone_Head",0,		0,0,2,			0,0,-30)
+	
+			
+		//　　ラグナにアセアセエモーション。
+			EMO(RAGNA,EMO_ASEASE)
+			wait(30)
+			
+			MES(RAGNA,"ミ、ミリアム……？\n何かあったのか……？",0)
+			MES_close(RAGNA)
+
+		//	name2(MILLIAM)
+			look(MILLIAM,"Bone_Head",0,		0,2,2,			0,0,-15)
+			MES(MILLIAM,"うーん、昨日は\n徹夜で作業が入ってさぁ……",0)
+			MES(MILLIAM,"朝方にちょいと\n仮眠を取っただけなんだ。",0)
+			look(MILLIAM,"Bone_Head",0,		0,0,2,			0,0,-30)
+			MES(MILLIAM,"あー、もう駄目。\n今日は眠くてたまんないよ～……",0)
+			MES_close(MILLIAM)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"は、はは。\n（仕事も忙しいみたいだな……）",0)
+			MES_close(RAGNA)
+
+			F_set(FT_11_TalkMilliam)
+			look(MILLIAM,"Bone_Head",0,		0,0,2,			0,0,0)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			MOT_SET(MILLIAM,151,-1,446,446,-1,0)
+			if(!F_MILLIAM)
+			{
+				MOT(MILLIAM,151,10)
+				MES(MILLIAM,"ふあ～あぁ……",0)
+				MOT(MILLIAM,150,15)
+				MES(MILLIAM,"昨日は徹夜で\nエンジン整備をしてたんだ。",0)
+				MES(MILLIAM,"でも……",0)
+				MES_close(MILLIAM)
+
+			//　　ミリアムに．．．エモーション。
+				EMO(MILLIAM,EMO_TENTEN)
+				wait(30)
+				MES(MILLIAM,"うん、苦労して修理した\n甲斐もあったみたいだね。",0)
+				MES_close(MILLIAM)
+
+			//　　ラグナに？エモーション。
+				EMO(RAGNA,EMO_HATENA)
+				wait(30)
+
+				F_set(MILLIAM)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MILLIAM,"受付に立ってる間は\n気を張ってるつもりだけど……",0)
+				MES_close(MILLIAM)
+
+			//　　ミリアム、ＰＡエモーションできょろきょろ。
+				EMO(MILLIAM,EMO_PA)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,30,0)
+				wait(20)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,-30,0)
+				wait(40)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,0,0)
+				
+				MES(MILLIAM,"あれ、そういえば\n親方はどこへ行ったんだろ。",0)
+				MES(MILLIAM,"うーん、出かけたのかな。\n徹夜明けのハズなのに……",0)
+				MES_close(MILLIAM)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※工房カウンターに立つ。
+	//　　※『★工具を借りることにした』の前は、レジの方を向いている。
+	//──────────────────────────────
+	//　　※『★工具を借りることにした』の後は、レジの方を向いている。
+	if( F4_00_StartSolo )
+	{
+		if(F4_01_RentTool)
+		{
+			if(!FT_07_TalkMilliamA)
+			{
+			//　　※初回イベント。
+			//　　※『★工具を借りることにした』の直後は
+			//　　　工具を借りるイベントが発生する。
+			//　　　この処理はショップ処理よりも優先です。
+			//――――――――――――――――――――――――――
+			//	初期化処理
+			//――――――――――――――――――――――――――
+				cross_fade(30)			//クロスフェード
+				//●チュートリアル：ガジェット
+				Load_BMP(20,"sys\\tuto06.itm","0")
+				menuBMP(3,	20,	0,0,288,384)
+				EV_begin()
+
+				//カメラセット
+				CAM_move(-502,296,44,0,0)
+				CAM(-30,63,-116,34,119,0,0)
+
+				//キャラ再配置
+				chr_pos(RAGNA,-822,-176,0,270,2)
+				chr_pos(MILLIAM,-519,-170,0,90,150)
+				
+				//顔初期化
+				KAO(RAGNA, "1", "1", "1")	
+				KAO(MILLIAM,"1", "1", "1")	
+
+				//モーション
+				MOT_SET(MILLIAM,151,-1,509,509,152,0)	//ラグナに何か渡す仕草
+				MOT_SET(MILLIAM,152,-1,510,510,153,0)
+				MOT_SET(MILLIAM,153,-1,511,511,-1,0)
+				MOT_SET(MILLIAM,154,-1,408,408,-1,0)	//探すそぶり
+				wait_fade()
+			//――――――――――――――――――――――――――
+			//	イベント開始
+			//――――――――――――――――――――――――――
+				KAO(MILLIAM, "12321Z2","1","1")
+				MES(MILLIAM,"ん、ラグナ……？",0)
+				KAO(MILLIAM, "12321Z2","1","1")
+				MES(MILLIAM,"どうかしたのかい？",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"ああ、ちょっとミリアムに\n頼みたいことがあるんだが……",0)
+				MES(RAGNA,"余ってたり、使ってない\n工具セットみたいなのはねえかな。",0)
+				MES(RAGNA,"少しの間借りたいんだが……",0)
+				MES_close(RAGNA)
+
+			//	name2(MILLIAM)
+				KAO(MILLIAM, "12321Z2","1","1")
+				MES(MILLIAM,"工具セットかい？",0)
+				KAO(MILLIAM, "12321Z4","1","1")
+				MES(MILLIAM,"まあ、そんな物なら\nいくらでもあるけど……",0)
+				MES_close(MILLIAM)
+
+			//　　ミリアムに少し．．．エモーション。
+				EMO(MILLIAM,EMO_TENTEN)
+				wait(30)
+
+				KAO(MILLIAM, "12321Z4","1","1")
+				MES(MILLIAM,"うん、ちょっと待っててよ。",0)
+				MES_close(MILLIAM)
+
+			//　　ミリアム、奥の机の前に行って、机の上を探す素振り。（カメラ追尾）
+				CAM_move(658,456,44,120,0)
+				CAM(450,47,44,34,133,120,0)
+				
+				rot(MILLIAM,30,270)
+				move( MILLIAM, 0,	WALK1,	600,-170,0, 0)
+				wait_move( MILLIAM )
+				rot(MILLIAM,30,180)
+				move( MILLIAM, 0,	WALK1,	600,-300,0, 0)
+				wait_move( MILLIAM )
+
+				EMO(MILLIAM,EMO_TENTEN)
+				MOT(MILLIAM,154,15)				
+				
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,30,0)
+				wait(20)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,-30,0)
+				wait(40)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,0,0)
+				wait(20)
+
+			//　　ＣＦで机の上の工具箱を消す。
+				cross_fade(20)
+				
+				//工具箱ノード消し命令。
+				F_set_obj("obj\02",NP_HIDE)
+				
+				wait_fade()
+				wait(30)
+				
+			//　　その後、ミリアムはラグナの元に戻ってくる。
+			//　　（ここはカメラ追尾せず、ＣＦで処理する）
+				cross_fade(30)			//クロスフェード
+				CAM_move(-502,296,44,0,0)
+				CAM(-30,63,-116,34,119,0,0)
+
+				chr_pos(MILLIAM,-519,-170,0,90,2)
+				wait(15)
+
+
+			//　　ミリアム、ラグナに何か渡す仕草。
+				MOT(MILLIAM,151,10)
+				KAO(MILLIAM, "12321Z2","1","1")
+				MES(MILLIAM,"ラグナ、これを使ってよ。",0)
+				MES_close(MILLIAM)
+
+			
+				//	アイテム入手 工具セット
+				fade_in(30,10,BLACK)
+
+				get_item(134,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			
+				MOT(MILLIAM,150,10)
+				KAO(MILLIAM, "12321Z4","1","1")
+				MES(MILLIAM,"少し古いけど、一式揃ってるよ。",0)
+				KAO(MILLIAM, "12321Z6","1","1")
+				MES(MILLIAM,"かなり使い込んであるし、\n手にも馴染みやすいと思う。",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"……サンキュー、ミリアム。",0)
+				MES(RAGNA,"恩に着るぜ。",0)
+				MES_close(RAGNA)
+
+				//──────────────────────────────
+				//	name("□チュートリアルを受けている。")
+				if(F0_06_TutoGadget)
+				{
+				//	name2(MILLIAM)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"はは、何言ってるの。\nこんなの恩の内に入んないって。",0)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"ほら、行った行った。\n何か用事があるんだろ？",0)
+					MES_close(MILLIAM)
+				}
+				else
+				{
+				//	name("□受けていない。")
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"はは、何言ってるの。\nこんなの恩の内に入んないって。",0)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"そうだ、ついでだから\nこれも渡しておくよ。",0)
+					MOT(MILLIAM,151,10)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"ずっと渡そうと思ってたんだけど、\nついつい忘れちゃっててさ。",0)
+					MES_close(MILLIAM)
+
+				//　　ミリアム、何かを差し出すような仕草。
+
+
+				//	name("アイテム入手テキスト")
+//					MES(this,"ガジェット『ミニマップ』を貰った。",0)
+//					MES_close(this)
+
+					get_item(104,1,0)
+					wait_key(0)
+					menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+					menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+					MOT(MILLIAM,150,10)
+
+				//	name2(MILLIAM)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"これはあたしが試作した、\n辺りの地形や敵の位置が\n表示されるガジェットさ。",0)
+					MES_close(MILLIAM)
+
+				//	name("先頭キャラ")
+					MES(RAGNA,"ガジェット……？",0)
+					MES_close(RAGNA)
+
+				//	name2(MILLIAM)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"うん、画面上に\nいろいろなものを表示できる\n補助機能のことさ。",0)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"うちじゃミニマップの他にも\nお役立ちのガジェットを\nたくさん扱ってるんだ。",0)
+					MES_close(MILLIAM)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"へえ、ガジェットか……",0)
+					MES_close(RAGNA)
+
+				//　　※一枚絵表示。
+				//──────────────────────────────
+					menu(3,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+					menu(3,	0,	176, 48,  0,	288, 384,	40,100,0)
+					SE(043,PLAYER1)
+					wait(40)
+					wait_key(0)
+					menu(3,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//					wait(30)
+
+					MES(RAGNA,"中々面白そうな機能だな。",0)
+					MES(RAGNA,"サンキュー、\n一応受け取っておくぜ。",0)
+					MES_close(RAGNA)
+
+				//	name2(MILLIAM)
+					KAO(MILLIAM, "12321Z6","1","1")
+					MES(MILLIAM,"うん、また使い心地なんかを\n聞かせてよ、ラグナ。",0)
+					MES_close(MILLIAM)
+					wait_MES(MILLIAM)
+
+					F_set(F0_06_TutoGadget)
+
+				}
+
+				//　　フェードアウトし、ミリアムの配置を戻す。
+				//　　ラグナはカウンター前から操作許可。
+			//――――――――――――――――――――――――――
+			//	イベント終了処理
+			//――――――――――――――――――――――――――
+				fade_in(100,30,BLACK)
+				wait_fade()
+
+				MOT(MILLIAM,52,0)
+				
+				//カメラを初期設定に
+				CAM_return( 0 )
+				wait(30)
+				F_set(FT_07_TalkMilliamA)
+				
+				//★ミリアムに工具を借りた
+				F_set(F4_16_GetTool)
+				
+				EV_end()
+				//フェードイン----------------------
+				fade_in(0,30,BLACK)
+			//	プレイヤー操作許可
+			//――――――――――――――――――――――――――
+
+				
+				
+			}
+		//　　※『★工具を借りることにした』後の通常一般メッセージ。
+			else
+			{
+				MES(MILLIAM,"ラグナ、\n何かあったら声をかけなよ。",0)
+				MES(MILLIAM,"一人じゃどうにも\nならないことってあるんだし。",0)
+				MES(MILLIAM,"ほら、前に言ってた\nいつでも相談に乗るっての──\nあれは嘘じゃないからね。",0)
+				MES_close(MILLIAM)
+			}
+		}
+	//　　※『★工具を借りることにした』より前
+	//　　※初回イベント。
+	//　　　この処理はショップ処理よりも優先です。
+		else
+		{
+			if(!FT_07_TalkMilliamM)
+			{
+			//　　ミリアムにＰＡエモーション。
+				EMO(MILLIAM,EMO_PA)
+				wait(30)
+				
+				MES(MILLIAM,"ラグナ……？",0)
+				MES(MILLIAM,"どうかしたのかい？\n落ち込んでるみたいだけど……",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"はは……",0)
+				MES(RAGNA,"いや、大したことじゃねえんだ。",0)
+				MES(RAGNA,"少し考え事をしてただけさ。",0)
+				MES_close(RAGNA)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"そっか……\nいや、それならいいんだけど。",0)
+				MES(MILLIAM,"もし何かあったら声をかけなよ。\n力になれるかもしれないしさ。",0)
+				MES_close(MILLIAM)
+
+			//　　以降は通常通り正面を向く。
+			
+				F_set(FT_07_TalkMilliamM)
+			}
+			else
+			{
+			//　　※『★工具を借りることにした』前の通常一般メッセージ。
+			//　　　この処理は選択肢内から呼び出されます。
+//				MES(MILLIAM,"ふう、昨日は大変だったよ。",0)
+//				MES(MILLIAM,"あちこちの片付けに\n朝まで掛かってしまってね。",0)
+//				MES(MILLIAM,"怪我人が出なかったのが\n幸いだったけど……",0)
+//				MES(MILLIAM,"ロアルタ村の方は\n大変だったんだって？",0)
+
+				MES(MILLIAM,"ふう、昨日は大変だったよ。",0)
+				MES(MILLIAM,"町の被害を確認してる間に\n朝になってしまってね。\n片付けはまだこれからなんだ。",0)
+				MES(MILLIAM,"怪我人が出なかったのが\n幸いだったけど……",0)
+				MES(MILLIAM,"ロアルタ村の方は\n大変だったんだって？",0)
+				MES_close(MILLIAM)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※町の裏門辺りにいる。
+	if( F3_00_GoMoonCastle )
+	{
+	//　　※初回イベント。
+		if(!FT_06_TalkMilliam)
+		{
+			//──────────────────────────────
+			//	name("□ミリアムと話したことがある。")
+			if(F0_06_TutoGadget)
+			{
+				MES(MILLIAM,"ああ、２人とも……",0)
+//				MES_close(MILLIAM)
+			}
+			//	name("□ない")
+			else
+			{
+				//●チュートリアル：ガジェット
+				Load_BMP(20,"sys\\tuto06.itm","0")
+				menuBMP(3,	20,	0,0,288,384)
+
+				MES(MILLIAM,"ああ、ラグナと\nアルウェンさん……だっけ。",0)
+//				MES_close(MILLIAM)
+			}
+			//──────────────────────────────
+
+			MES(MILLIAM,"親方と駆けつけてきた\n所なんだけど……",0)
+			MES(MILLIAM,"町に魔物が\n現れたってのは本当かい？",0)
+			MES_close(MILLIAM)
+
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"ああ、そうらしいんだ。",0)
+				MES(RAGNA,"フィオナのお嬢さんたちが\n退治しちまったそうだから、\nもう大丈夫だとは思うんだが……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□アルウェン先頭")
+				MES(PARTNER,"うむ、せいぜい\n下級魔族であろうがな。",0)
+				MES(PARTNER,"既にあの娘たちが退治したらしい。\nもう危険はないと思うが……",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			MES(MILLIAM,"そっか……",0)
+			MES(MILLIAM,"２人はこれから、\nどこかに出かけるんだよね。",0)
+			MES_close(MILLIAM)
+
+			//──────────────────────────────
+			//	name("□チュートリアルを受けている。")
+			if(F0_06_TutoGadget)
+			{
+				MES(MILLIAM,"実は、念のために\nいくつかアイテムも\n持ってきてあるんだ。",0)
+				MES(MILLIAM,"もし必要なら声をかけてよ。",0)
+				MES_close(MILLIAM)
+			}
+			else
+			//	name("□受けてない。")
+			{
+				MES(MILLIAM,"丁度良かった。\nそれならこれを持って行きなよ。",0)
+				MES_close(MILLIAM)
+
+				MOT(MILLIAM,151,10)
+			//　　ミリアム、何かを差し出すような仕草。
+			//	name("アイテム入手テキスト")
+//				MES(this,"ガジェット『ミニマップ』を貰った。",0)
+//				MES_close(this)
+
+				get_item(104,1,0)
+				wait_key(0)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+				MOT(MILLIAM,150,10)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"これはあたしが試作した、\n辺りの地形や敵の位置が\n表示されるガジェットさ。",0)
+				MES_close(MILLIAM)
+
+			//	name("先頭キャラ")
+				MES(PLAYER1,"ガジェット……？",0)
+				MES_close(PLAYER1)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"うん、画面上に\nいろいろなものを表示できる\n補助機能のことさ。",0)
+				MES(MILLIAM,"うちは工房だからね。\nこういったお役立ちのガジェットを\nたくさん扱ってるんだ。",0)
+				MES_close(MILLIAM)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"へえ、ガジェットか……",0)
+				MES_close(RAGNA)
+
+			//　　※一枚絵表示。
+				menu(3,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+				menu(3,	0,	176, 48,  0,	288, 384,	40,100,0)
+				SE(043,PLAYER1)
+				wait(40)
+				wait_key(0)
+				menu(3,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//				wait(30)
+
+				MES(RAGNA,"中々使えそうな機能だな。",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"ふむふむ、たくさんと言うからには\n種類があるということだな？",0)
+				MES_close(PARTNER)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"うん、変わったのも多いけど\nきっと冒険の役に立つと思う。",0)
+				MES(MILLIAM,"今も念のためにいくつか\n持ってきてあるんだ。",0)
+				MES(MILLIAM,"もし必要なら声をかけてよ。",0)
+				MES_close(MILLIAM)
+
+				//──────────────────────────────
+				//	name("□ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"ああ、助かるぜ！",0)
+					MES_close(RAGNA)
+					wait_MES(RAGNA)
+				}
+				else
+				{
+				//	name("□アルウェン先頭")
+					MES(PARTNER,"うむ、一度\n見させて貰うとしよう。",0)
+					MES_close(PARTNER)
+					wait_MES(PARTNER)
+				}
+				//──────────────────────────────
+
+				F_set(F0_06_TutoGadget)
+
+			}
+			F_set(FT_06_TalkMilliam)
+		}
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_MILLIAM)
+			{
+				MES(MILLIAM,"飛行場の方は、\n特に異常はなかったよ。",0)
+				MES(MILLIAM,"ただ、町の様子が心配でね。\n親方と２人で様子を見に来たんだ。",0)
+				MES_close(MILLIAM)
+
+			//　　ミリアム、周囲を見渡す仕草。
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,30,0)
+				wait(20)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,-30,0)
+				wait(40)
+				look(MILLIAM,"Bone_Head",0,		0,2,0,			0,0,0)
+				
+				MES(MILLIAM,"派手に荒らされちゃった\nみたいだね。",0)
+				MES(MILLIAM,"街灯は壊れてないみたいだけど……\n後で確認しておかないと。",0)
+				MES_close(MILLIAM)
+
+//				MES(MILLIAM,"いくつか街灯が切れているね。",0)
+//				MES(MILLIAM,"後で取り替えておかないと……",0)
+//				MES_close(MILLIAM)
+				F_set(MILLIAM)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MILLIAM,"でも……見たところ\n大きな被害はなかったみたいだね。",0)
+				MES(MILLIAM,"怪我人もいないみたいだし、\n少し安心したよ。",0)
+				MES_close(MILLIAM)
+
+//				MES(MILLIAM,"でも……大して\n被害はなかったみたいだね。",0)
+//				MES(MILLIAM,"いくつか街灯が切れているけど……",0)
+//				MES(MILLIAM,"怪我人はいないみたいだし、\n少し安心したよ。",0)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※工房カウンター。
+	if( F2_14_TalkEnemy )
+	{
+	//　　※初回イベント
+		if(!FT_05_TalkMilliam)
+		{
+			//──────────────────────────────
+			//	name("□チュートリアルを受けた直後")
+			if(F_MILLIAM)
+			{
+				MES(MILLIAM,"ところでラグナたち……\n何かあったのかい？",0)
+				MES_close(MILLIAM)
+			}
+			else
+			{
+			//	name("□それ以外")
+				MES(MILLIAM,"ラグナたち……\n何かあったのかい？",0)
+				MES_close(MILLIAM)
+			//──────────────────────────────
+			}
+			
+			//ラグナたちにＰＡエモーション。
+			EMO(RAGNA,EMO_PA)
+			EMO(PARTNER,EMO_PA)
+			wait(30)
+
+			MES(PLAYER1,"えっ……？",0)
+			MES_close(PLAYER1)
+
+			MES(MILLIAM,"いや、さっきクロードとかいう\n執事さんがやって来て……",0)
+			MES(MILLIAM,"親方とちょっと\n話し込んでいたからさ。",0)
+			MES(MILLIAM,"町の方で何かあったのかと思って。",0)
+			MES_close(MILLIAM)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"い、いや……",0)
+			//	MES(RAGNA,"町じゃ特に、何も無かったと思うぜ。\n（捕まってた間の事は分かんねえが。）",0)
+				MES(RAGNA,"町じゃ特に、何も無かったと思うぜ。",0)
+				MES(RAGNA,"（森にいた間の事は分かんねえが。）",0)
+				MES_close(RAGNA)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"そうか……\nならいいんだけど。",0)
+				MES_close(MILLIAM)
+
+			}
+		//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"いや、先ほど通りがかったが\n特に変わりは無かったぞ？",0)
+				MES(PARTNER,"……個人的には、\n少々腹の立つ事はあったがな。",0)
+				MES_close(PARTNER)
+
+			//	name2(MILLIAM)
+				MES(MILLIAM,"？？？　まあ……\n何事も無かったみたいだね。",0)
+				MES(MILLIAM,"ならいいんだけど。",0)
+				MES_close(MILLIAM)
+			}
+		//──────────────────────────────
+
+			F_set(FT_05_TalkMilliam)
+			F_reset(MILLIAM)
+		}
+		else
+		{
+			//──────────────────────────────
+			//　　※以下通常一般メッセージ。
+			if(!F_MILLIAM)
+			{
+				MES(MILLIAM,"親方は飛行場の責任者だからね、\n町でも一目置かれてるんだ。",0)
+				MES(MILLIAM,"だから時々\n訪ねてくる人もいるんだけど……",0)
+				MES(MILLIAM,"執事さんなんかが\n親方に何の用事だろう。",0)
+				MES(MILLIAM,"その後から、親方も\n考え込んでいるみたいだし……\nうーん、ちょっと気になるね。",0)
+				MES_close(MILLIAM)
+
+				F_set(MILLIAM)
+			}
+			//　　★繰り返し
+			else
+			{
+				MES(MILLIAM,"あのクロードって執事さん、\n親方と少し話し込んでいたけど……",0)
+				MES(MILLIAM,"うーん、何の用事だったんだろう。\nちょっと深刻そうだったよ。",0)
+				MES_close(MILLIAM)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※工房カウンター。
+	if( F2_00_GoForest )
+	{
+		MOT_SET(MILLIAM,151,-1,544,544,152,15)
+		MOT_SET(MILLIAM,152,-1,545,545,153,15)
+		MOT_SET(MILLIAM,153,-1,546,546,151,15)
+		if(!F_MILLIAM)
+		{
+			MOT(MILLIAM,151,15)
+			MES(MILLIAM,"うう～、また\n髪の毛がハネてきた……",0)
+			MES_close(MILLIAM)
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"？　そうか……？\nいつもと変わんねえようだが……",0)
+				MES_close(RAGNA)
+			}
+		//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"そういえば……\n結った毛先の方がはねてきておるな。",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			MES(MILLIAM,"いや、あたしって\nかなり癖っ毛なんだよねぇ。",0)
+			MES(MILLIAM,"いつもは念入りにとかすんだけど、\n今朝は寝坊しちゃってさ。",0)
+			MES(MILLIAM,"親方は遅刻とか\n絶対に許さないし……\n……ふう、焦った焦った。",0)
+			MES_close(MILLIAM)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"はは、確かにあの親方じゃな……",0)
+				MES_close(RAGNA)
+			}
+		//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"（ふむ、朝が苦手なのは\n  みな同じか……）",0)
+				MES_close(PARTNER)
+			}
+			//★ミリアム【くせっ毛】
+			F_set_note(MILLIAM,1)
+			F_set(MILLIAM)
+			MOT(MILLIAM,150,15)
+		}
+	//　　★繰り返し
+		else
+		{
+			look_chr( MILLIAM, GASHREA,"Bone_Head")
+			MES(MILLIAM,"親方……あのエンジンを\n改造しちゃってるみたいだね。",0)
+			MES(MILLIAM,"その上丹念に\nチューニングしてるみたいだ。",0)
+			look_off(MILLIAM)
+			MES(MILLIAM,"親方、ああいうの\n得意なんだよね～……",0)
+			MES(MILLIAM,"でも昔話を始めると長いから、\n話しかける時は気をつけてね。",0)
+			MES_close(MILLIAM)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※工房カウンターにいる。
+	if( F1_15_GoVillage )
+	{
+		if(!F_MILLIAM)
+		{
+			MES(MILLIAM,"今ちょうど連絡便の\n受け入れ態勢なのさ。",0)
+			MES(MILLIAM,"本当は２～３日前に\n到着してるはずなんだけど……\nどうやら遅れてるらしくってね。",0)
+			MES(MILLIAM,"うーん、何とか今日中に\n着いてくれるといいんだけど。",0)
+			MES(MILLIAM,"次の貨物便とかち合っちゃうと\nマズいからね。",0)
+			MES_close(MILLIAM)
+
+//			MES(MILLIAM,"今ちょうど\n飛行機の受け入れ態勢なのさ。",0)
+//			MES(MILLIAM,"今日は連絡便一機と\n貨物便の予定だね。",0)
+//			MES(MILLIAM,"でも……予定より\n少し遅れているのかな。",0)
+//			MES(MILLIAM,"本当なら、もう通信連絡が\n入るはずなんだけど。",0)
+//			MES_close(MILLIAM)
+
+			F_set(MILLIAM)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MILLIAM,"ああ、ちなみに\n親方は仕事中だから機嫌が悪いよ。",0)
+			MES(MILLIAM,"はは、いつもの事だけど。\n怒られてもへこまないようにね。",0)
+			MES_close(MILLIAM)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※工房カウンターにいる。
+	if( F1_01_GameStart )
+	{
+		if(!F_MILLIAM)
+		{
+			MES(MILLIAM,"ちなみに、ここにある\nガジェットのほとんどは\n親方が暇つぶしに作ったものなんだ。",0)
+			MES(MILLIAM,"こういう小物なら\nちょちょいと作っちゃう人でさ。",0)
+			MES(MILLIAM,"あ、親方なら奥にいるよ。",0)
+			MES(MILLIAM,"ふふ、声は大きいし\nちょっとおっかないけどね。",0)
+			MES_close(MILLIAM)
+			F_set(MILLIAM)
+		}
+		else
+		//　　☆繰り返し
+		{
+			MES(MILLIAM,"奥にいるのがウチの親方だよ。",0)
+			MES(MILLIAM,"この工房の親方兼、\n飛行場の責任者さ。",0)
+			MES(MILLIAM,"ふふ、声は大きいし\nメチャクチャ厳しいけどね。",0)
+			MES(MILLIAM,"あれで結構、\n根は優しい人なんだ。",0)
+			MES_close(MILLIAM)
+		}
+	}
+}
+
+
+
+Tuto_MILLIAM
+{
+	//●チュートリアル：ガジェット
+	Load_BMP(20,"sys\\tuto06.itm","0")
+	menuBMP(3,	20,	0,0,288,384)
+
+	//──────────────────────────────
+	//▼③⑤初回
+	if(F2_00_GoForest && !F3_00_GoMoonCastle)
+	{
+		MES(MILLIAM,"やあ、ラグナと\nアルウェンさん……だっけ。",0)
+		MES(MILLIAM,"だいぶ冒険してるみたいだね。\nちょくちょく噂を耳にするよ。",0)
+		MES_close(MILLIAM)
+
+		MES(RAGNA,"ははは、そうなのか？",0)
+		MES(RAGNA,"そんなに目立ったことは\nしてない……つもりなんだが。",0)
+		MES_close(RAGNA)
+
+		MES(PARTNER,"ふむ、やはりいくら隠しても\n高貴な気品というものは\nにじみ出てしまうのかう……",0)
+		MES_close(PARTNER)
+
+	//　　ラグナに冷や汗エモーション。
+		look_chr(RAGNA,PARTNER,"Bone_Head")
+		EMO(RAGNA,EMO_HIYAASE)
+		wait(30)
+
+		MES(RAGNA,"（いや、姫さんの場合\n  世間知らずっぽい所が\n  目立っちまうんだと思うが……）",0)
+		MES_close(RAGNA)
+
+	//	name2(MILLIAM)
+		MES(MILLIAM,"ふふ、色々あるみたいだね。",0)
+		look_off(RAGNA)
+		MES(MILLIAM,"そんな２人には\nこれを渡してとくよ。",0)
+		MES_close(MILLIAM)
+
+	}
+	else
+	//──────────────────────────────
+	//▼①②初回
+	//if(F1_01_GameStart && !F2_00_GoForest)
+	{
+
+		MES(MILLIAM,"やあ、ラグナ……",0)
+		rot_chr(MILLIAM,30,PARTNER)
+		MES(MILLIAM,"ってあれ……？\nへえ、早速女の子連れかぁ。",0)
+		MES(MILLIAM,"ふふ、中々やるね。",0)
+		MES_close(MILLIAM)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"あー、いや\nそうじゃなくてだな……",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		rot_chr(PARTNER,30,MILLIAM)
+		MES(PARTNER,"うむ、全く違うぞ。",0)
+		MES(PARTNER,"こやつが私の連れなのだ。",0)
+		MES_close(PARTNER)
+
+	//	name2(MILLIAM)
+		rot_chr(MILLIAM,30,PARTNER)
+		MES(MILLIAM,"プッ……",0)
+		MES(MILLIAM,"あはははは……！",0)
+		MES(MILLIAM,"そ、そっかそっか。\nラグナの方が連れなんだ。",0)
+		MES_close(MILLIAM)
+
+	//　　アルウェンに？エモーション。
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+		
+		MES(RAGNA,"（ハァ、こりゃあ\n  誤解されちまったかな……）",0)
+		MES_close(RAGNA)
+
+		MES(MILLIAM,"いやあ、ホント面白いなぁ……",0)
+		MES_close(MILLIAM)
+
+	//　　ミリアムにＰＡエモーション。
+		EMO(MILLIAM,EMO_PA)
+		wait(30)
+
+		rot_chr(MILLIAM,30,RAGNA)
+		MES(MILLIAM,"そうそう、肝心な事を\n忘れる所だった。",0)
+		MES(MILLIAM,"ラグナたちには\nこれを渡してとくよ。",0)
+		MES_close(MILLIAM)
+
+	}
+
+//　　ミリアム、何かを差し出すような仕草。
+	MOT(MILLIAM,151,10)
+
+
+//	name("アイテム入手テキスト")
+//	MES(this,"ガジェット『ミニマップ』を貰った。",0)
+//	MES_close(this)
+
+	get_item(104,1,0)
+	wait_key(0)
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+	MOT(MILLIAM,150,10)
+
+//	name2(MILLIAM)
+	MES(MILLIAM,"これはあたしが試作した、\n辺りの地形や敵の位置が\n表示されるガジェットさ。",0)
+	MES_close(MILLIAM)
+
+//	name("先頭キャラ")
+	MES(PLAYER1,"ガジェット……？",0)
+	MES_close(PLAYER1)
+
+//	name2(MILLIAM)
+	MES(MILLIAM,"うん、画面上に\nいろいろなものを表示できる\n補助機能のことさ。",0)
+	MES(MILLIAM,"うちじゃミニマップの他にも\nお役立ちのガジェットを\nたくさん扱ってるんだ。",0)
+	MES_close(MILLIAM)
+
+//	name2(RAGNA)
+	MES(RAGNA,"へえ、ガジェットか……",0)
+	MES_close(RAGNA)
+
+//　　※一枚絵表示。
+
+	menu(3,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+	menu(3,	0,	176, 48,  0,	288, 384,	40,100,0)
+	SE(043,PLAYER1)
+	wait(40)
+	wait_key(0)
+	menu(3,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//	wait(30)
+
+	MES(RAGNA,"中々面白そうな機能だな。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"ふむふむ、たくさんと言うからには\n種類があるということだな？",0)
+	MES_close(PARTNER)
+
+//	name2(MILLIAM)
+	MES(MILLIAM,"ふふ、変わったのも多いけど\nきっと冒険の役に立つと思うよ。",0)
+	MES(MILLIAM,"お買い求めのときは、\nこのカウンターで声を掛けてね。",0)
+	MES_close(MILLIAM)
+
+	//──────────────────────────────
+	//	name("□ラグナ先頭")
+	if(GW_MAN==1)
+	{
+		MES(RAGNA,"ああ、世話になるぜ！",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	{
+	//	name("□アルウェン先頭")
+		MES(PARTNER,"うむ、一度\n見させて貰うとしよう。",0)
+		MES_close(PARTNER)
+		wait_MES(PARTNER)
+	}
+	//──────────────────────────────
+
+
+	F_set(F0_06_TutoGadget)
+	//★ミリアム【技師兼販売係】
+	F_set_note(MILLIAM,0)
+
+	if( F2_14_TalkEnemy && !F3_00_GoMoonCastle)//フラグ⑤のみＬＦをたて、チュートリアル直後かどうかを判定。
+		F_set(MILLIAM)
+
+}
+
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+

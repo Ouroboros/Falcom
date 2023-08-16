@@ -1,0 +1,585 @@
+//──────────────────────────────
+//	name("◆ヘレナ（メイドさんＢ）Helena")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_HELENA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(HELENA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,HELENA)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,HELENA)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HELENA)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,HELENA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※屋敷．執務室で本棚を掃除。
+	if( F6_05_EndSixth )
+	{
+		if(!F_HELENA)
+		{
+		//　　※振り返らない。
+			MES(HELENA,"ふんふふ～ん……\nお嬢様のた．め．な．ら～□",0)
+			MES_close(HELENA)
+
+		//　　ヘレナ振り返る。
+			rot_chr(HELENA,30,PLAYER1)
+			EV("MOTION_TK_HELENA")
+
+			MES(HELENA,"お嬢様、本家と連絡を取ったりして\nずーっと忙しそうだったんですけど……",0)
+			MES(HELENA,"それもようやく\n一段落したみたいなんです。",0)
+			MES(HELENA,"だから今日は、わたしが\nお部屋をピッカピカにします。",0)
+			MES(HELENA,"ふふっ、わざわざアンナちゃんに\n当番を代わってもらったんですよ～。",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//　　★繰り返し
+		else
+		{
+			EV("MOTION_TK_HELENA")
+			rot_chr(HELENA,30,PLAYER1)
+			MES(HELENA,"この日のために、\nわざわざアンナちゃんに\n当番を代わってもらったんです。",0)
+			MES(HELENA,"しかも、お嬢様と執事さんが\n留守なのを狙っての隠密作戦……",0)
+			MES(HELENA,"ふふっ、わたしも\nしたたかになりましたよね？",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,151,5)
+	}
+	else
+	//──────────────────────────────
+	//▼□□　わらしべイベント
+	//	name("３．ヘレナ（アルッテ．屋敷）	『お手元ライト』□『新品ノート』")145
+	//──────────────────────────────
+	if(F5_00_HearLunar && FV_11_Warasi_2_Teo && !FV_11_Warasi_3_Hln)
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		//──────────────────────────────
+		//	name("□初回")
+		if(!F_HELENA)
+		{
+			MES(HELENA,"あれれ、お客様……",0)
+			MES(HELENA,"お手ごろな形のライトを\nお持ちですよね。",0)
+			MES_close(HELENA)
+
+		//　　ヘレナにＰＡエモーション。
+			EMO(HELENA,EMO_PA)
+			wait(30)
+			
+			MES(HELENA,"そうだ、アンナちゃんへの\nプレゼントに丁度いいかも……",0)
+			MES(HELENA,"あのう、その『お手元ライト』、\nわたしに譲っていただけませんかっ！？",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+		else
+		{
+		//	name("□２回目以降")
+			MES(HELENA,"その『お手元ライト』、\nとってもお手ごろな形ですよね。",0)
+			MES(HELENA,"あのう、それをわたしに\n譲っていただけませんかっ！？",0)
+			MES(HELENA,"アンナちゃんへの\nプレゼントにしたいんですけど……",0)
+			MES_close(HELENA)
+		}
+		//──────────────────────────────
+		
+	//	name("選択テキスト")
+		workL(WK_CANCEL,SET,2)//【やめる】
+		MES_pos(PLAYER1,"??W9【いいとも】\n【拒否する】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+		//──────────────────────────────
+		//	name("□【いいとも】")
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+		//──────────────────────────────
+			MES(HELENA,"わあ、ありがとうございます！",0)
+			MES(HELENA,"うん、アンナちゃんだって\nこれさえあれば、\n夜のおトイレも平気ですよね？",0)
+			MES(HELENA,"お礼にこれを\n持って行ってくださいっ！",0)
+			MES_close(HELENA)
+
+		//	name("アイテム入手テキスト")
+		//	MES(this,"『新品ノート』を貰った。",0)
+			//―――――――――――――――――――――――
+			fade_in(30,10,BLACK)
+
+			get_item(144,-1,1)
+			get_item(145,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//―――――――――――――――――――――――
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ああ、サンキュー。",0)
+			MES(RAGNA,"でも……あのメイドが\n夜のトイレを怖がるとは\n思えないんだが。",0)
+			MES_close(RAGNA)
+
+		//	name2(HELENA)
+			MES(HELENA,"いえ、アンナちゃんも\n夜のおトイレは苦手みたいなんです。",0)
+			MES(HELENA,"よくガンとかゴンとか音を出して、\n『うがっ！？』って叫んでますもん。",0)
+			MES_close(HELENA)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			
+			//アルウェンが居る
+			if(F6_00_GoToMeru)
+			{
+				EMO(PARTNER,EMO_HIYAASE)
+			}
+			else
+			//オデッサが居る
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_HIYAASE)
+			}
+			wait(30)
+
+		//──────────────────────────────
+		if(FT_02_TalkAnna || FT_11_TalkAnna)
+		{
+			if(F6_00_GoToMeru)
+			{
+			//	name("□アンナ．フラグ②または□の初回を見ており、アルウェンがいる場合")
+				MES(PARTNER,"それは……\n頭をぶつけたのだな。",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("□アンナ．フラグ②または□の初回を見ており、アルウェンがいない場合")
+				MES(RAGNA,"それは……\n頭をぶつけたんだな。",0)
+				MES_close(RAGNA)
+			}
+		}
+		else
+		{
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+			//	name("□オデッサがいる場合")
+				MES(PARTNER,"『うがっ！？』ってのは……\n頭でもぶつけたんじゃないかい？",0)
+				MES_close(PARTNER)
+			}
+			else
+			if(F6_00_GoToMeru)
+			{
+			//	name("□アンナ．フラグ②と□の初回を見ておらず、アルウェンがいる場合")
+				MES(PARTNER,"それは……\n頭でもぶつけたのであろ。",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("□それ以外")
+				MES(RAGNA,"それは……\n頭でもぶつけたんだろうな。",0)
+				MES_close(RAGNA)
+				
+				MES(PET,"ライトをプレゼントするのは\nむしろ正解かもね。",0)
+				MES_close(PET)
+			}
+
+			//2008.08.12.根田移動
+			//★ヘレナ【アンナにプレゼント】
+			//F_set_note(HELENA,2)
+
+			//F_set(FV_11_Warasi_3_Hln)
+			//F_reset(HELENA)
+		}
+
+		//2008.08.12.根田移動
+		//★ヘレナ【アンナにプレゼント】
+		F_set_note(HELENA,2)
+
+		F_set(FV_11_Warasi_3_Hln)
+		F_reset(HELENA)
+
+		//──────────────────────────────
+		}
+		//──────────────────────────────
+		//	name("□やめる")
+		//──────────────────────────────
+		else
+		{
+		//	name("□【拒否する】")
+			MES(HELENA,"そ、そうですか。\nしゅん……",0)
+			MES_close(HELENA)
+		}
+		//──────────────────────────────
+		if( F6_00_GoToMeru )
+		{
+			MOT(HELENA,151,5)
+		}
+		else
+		{
+			MOT(HELENA,75,15)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※屋敷．客室で窓の戸締りをしている。
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		if(!F_HELENA)
+		{
+			MES(HELENA,"わたし、偶然聞いちゃったんです。\nみなさんがお話しているところ……",0)
+			MES(HELENA,"お嬢様は心配しないでって\n仰ってましたけど、\n本当はとっても危険なんですよね。",0)
+			MES(HELENA,"……でも、きっと大丈夫です。",0)
+			MES(HELENA,"だって強くて優しい人が\nたくさん集まってるんですから。",0)
+			MES(HELENA,"力を合わせれば、\nできない事なんてありません！\nこのヘレナが保証しますっ！",0)
+			MES_close(HELENA)
+
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"はは。\nど、どうも……",0)
+				MES_close(RAGNA)
+			}
+			//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"うむ、よく分からんが\n気持ちは受け取っておくぞ。",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			
+			F_set(HELENA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HELENA,"みなさんが力を合わせれば、\nできない事なんてありませんっ！",0)
+			MES(HELENA,"このヘレナが保証しますから。",0)
+			MES(HELENA,"みなさん、どうか\n頑張ってきてくださいっ！",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,151,5)
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※屋敷．控え室の食器棚前。
+	if( F5_00_HearLunar )
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		if(!F_HELENA)
+		{
+			MES(HELENA,"そろそろお仕事を\n始める事にしたんです。",0)
+			MES(HELENA,"やっぱりあの魔物は怖かったですし、\nお嬢様も無理しなくていいって\n仰ってくれたんですけど……",0)
+			MES(HELENA,"でもわたし、お嬢様の\nお役に立てないなんてイヤですから。",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HELENA,"それに最近、アンナちゃんが\n優しくしてくれるんですよね。",0)
+			MES(HELENA,"いえ、いじわるなのは\n前と同じなんですけど……\nほんの少しだけ、優しいんです。",0)
+			MES(HELENA,"……わたしも頑張らないと\nいけませんよね。",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,75,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+	//　　※屋敷メイド部屋、椅子に座ってうなだれている。
+		MES(HELENA,"……スン………スン…………",0)
+		MES_close(HELENA)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった
+	//──────────────────────────────
+	//　　※屋敷控え室、手前の椅子に座ってうなだれている。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_HELENA)
+		{
+		//　　※振り返らない。
+			MES(HELENA,"ううっ、こんなの\nもうイヤです……",0)
+			MES(HELENA,"怖いよう、本家に帰りたい……",0)
+			MES_close(HELENA)
+			F_set(HELENA)
+		}
+		else
+		{
+	//　　★繰り返し
+			MES(HELENA,"お嬢様ぁ……",0)
+			MES(HELENA,"ぐすんぐすん……",0)
+			MES_close(HELENA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※屋敷．客室でベッドメイクしている。
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(HELENA,30,PLAYER1)
+		EV("MOTION_TK_HELENA")
+		if(!F_HELENA)
+		{
+			MES(HELENA,"はあ……またお仕事で\n失敗してしまいました。",0)
+			MES(HELENA,"お台所で皿洗いをしていたんですけど、\nそこにアンナちゃんがやってきて……",0)
+			MES(HELENA,"『ヘレナ、知ってる～？\n  お屋敷に泊まってる子供たち……』",0)
+		//	MES(HELENA,"『実は人間じゃなくて、\n  お嬢様の使い魔らしいわよー。』\n……なんて言うんですっ！",0)
+			MES(HELENA,"『実は人間じゃなくて、\n  最新の機械人形らしいわよー。』\n……なんて言うんですっ！",0)
+			MES(HELENA,"びっくりした拍子に\n食器受けをひっくり返して、\n３０枚も割ってしまいました。",0)
+			MES(HELENA,"お嬢様、ごめんなさい……",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HELENA,"しかもその話、\n嘘だったみたいなんです。",0)
+			MES(HELENA,"わたし、一瞬\n信じてしまったのに……",0)
+			MES(HELENA,"アンナちゃんはイジワルです。",0)
+			MES(HELENA,"でも騙されるわたしも\nドジですよね……",0)
+			MES_close(HELENA)
+		}
+		MOT(HELENA,151,5)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※アルッテ．宿酒場カウンターでホアンと話している。
+	if( F2_00_GoForest )
+	{
+		look_chr( HELENA, PLAYER1,"Bone_Head")
+
+		if(!F_HELENA)
+		{
+			MES(HELENA,"昨日の夜、お嬢様たちが\n遅くまでお話していたみたいなんです。",0)
+			MES(HELENA,"うーん、何の\nお話だったんでしょうか。",0)
+			MES(HELENA,"わたしはいつも\n８時には寝てしまうので、\n様子を探れなかったんですよね。",0)
+			MES(HELENA,"もしかして、みんなでどこかに\n観光に行く計画でしょうか。\n気になりますよね……",0)
+			MES_close(HELENA)
+
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（８時には寝るって……\n  ちょっと早くないか？）",0)
+				MES_close(RAGNA)
+			}
+			//★ヘレナ【８時就寝】
+			F_set_note(HELENA,1)
+			
+			F_set(HELENA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(HELENA,"わたし、一度\nアルッテの博物館を\n見学してみたかったんです。",0)
+			MES(HELENA,"だって折角イルバードに来たのに、\nまだどこにも観光に\n行っていないんですよ？",0)
+			MES(HELENA,"うん、きっとその相談ですね。",0)
+			MES(HELENA,"わたしたちには内緒にして、\n驚かせようって筋書きに\n違いありませんっ。",0)
+			MES_close(HELENA)
+		}
+		look_off(HELENA)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※屋敷近くの滝の前。滝を見ている。
+	if( F1_15_GoVillage )
+	{
+		EV("MOTION_TK_HELENA")
+		rot_chr(HELENA,30,PLAYER1)
+		if(!F_HELENA)
+		{
+			MES(HELENA,"お嬢様はとっても優しくて、\nよくわたしたちのことも\n気遣ってくださるんです。",0)
+			MES(HELENA,"それに実はお強くって……\nいざというときは、\n頼もしい方なんですよ。",0)
+			MES(HELENA,"えへへ、わたしお嬢様に\n憧れてメイドになったんです。",0)
+			MES(HELENA,"今はまだ新人ですけど……\nいつかきっと、お嬢様のお役に立つ\n立派なメイドになるんですっ！",0)
+			MES_close(HELENA)
+			
+			F_set(HELENA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(HELENA,"わたしの夢は、\n必殺仕事メイドになることです。",0)
+			MES(HELENA,"お嬢様のために\n風のように現れて、\n超高速でお仕事をこなすんです。",0)
+			MES(HELENA,"カッコイイと思いませんか？",0)
+			MES_close(HELENA)
+			
+			
+			//　　２人に冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（どんなメイドだよ……）",0)
+				MES_close(RAGNA)
+			}
+			//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"（もはや使い魔の領域だのう……）",0)
+				MES_close(PARTNER)
+			//──────────────────────────────
+			}
+			//★ヘレナ【将来の夢】
+			F_set_note(HELENA,0)
+		}
+		MOT(HELENA,2,5)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※屋敷．広間後ろあたりを掃除している。
+	//　　※初回イベント。
+	//　　※振り返らない。
+	if( F1_01_GameStart )
+	{
+		if(!FT_01_TalkHelena)
+		{
+			MES(HELENA,"ふんふふ～ん……\nお嬢様のた．め．な．ら～□",0)
+			MES_close(HELENA)
+
+		//　　ヘレナ振り返る。
+			rot_chr(HELENA,30,PLAYER1)
+			look(HELENA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中．手戻し
+			EV("MOTION_TK_HELENA")
+			
+			MES(HELENA,"あ、知ってます？\nこれは内緒なんですけど……",0)
+			MES(HELENA,"少し前、このお屋敷に\n泥棒が入ったんですよー。",0)
+			MES(HELENA,"それでですね、お嬢様の\n部屋から何か大事なものが\n盗まれちゃったらしいんですっ！",0)
+			MES(HELENA,"どんな物かは知らないですけど……\nきっと、とってもとっても\n大切なものに違いありません。",0)
+			MES(HELENA,"丁度お客様も滞在中だし、\nもっと気をつけていないと\nいけませんよね？",0)
+			MES_close(HELENA)
+			
+			F_set(FT_01_TalkHelena)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			rot_chr(HELENA,30,PLAYER1)
+			look(HELENA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中．手戻し
+		//　　※以下通常一般メッセージ。
+			EV("MOTION_TK_HELENA")
+			MES(HELENA,"はあ、わたしって\nよくぼーっとしてるって\n言われるんですよね……",0)
+			MES(HELENA,"この前もお客様に『天然ボケメイド』\nって言われちゃいました。\nううっ、しくしく……",0)
+			MES_close(HELENA)
+		//　　★繰り返し
+		}
+		look(HELENA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		//待機モーション
+		MOT(HELENA,2,5)
+	}
+	
+	TK_end()
+}
+
+//会話時のモーション
+MOTION_TK_HELENA
+{
+	MOT_SET(HELENA,150,-1,439,439,-1,-1)
+	MOT(HELENA,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

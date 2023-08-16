@@ -1,0 +1,1259 @@
+//====================================================================
+//ステージトラップスクリプト
+//[14019][大鉄塔－中継分岐]
+//====================================================================
+
+#ScriptTable
+
+#POCKLE 	1
+#PIPIRO 	2
+#EVENT_RAGNA 	3
+#ALWEN		 	4
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境SE
+	SE(63,0)
+	SE(51,0)
+
+//  -------  no typ     tip      x    y   z    mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段・扉
+
+	if( F2_07_FrontBurn && !F2_08_CancelBurn )
+	{
+		set_chr( 90,991,	-1,-1, -30, 950,-120,    0,0201,6,"<EV_STOP_01>")	//ストッパー：①エントリ メイン③
+	}
+	else
+	{
+		set_chr( 90,990,	-1,-1, -30, 950,-120,    0,0201,6,"K1_14013;")	//①エントリ メイン③
+	}
+
+	set_chr( 91,990,	-1,-1, 750,  50,880,  270, 0102,6,"K0_14021;")	//②エントリ 武器
+	set_chr( 92,990,	-1,-1,-1550,-150,880,   45, 0202,6,"K0_14031;")	//③エントリ ボス
+
+	//ＧＦ『★大鉄塔：燃える扉を水魔法で解除した』立ってない
+	if(!F2_08_CancelBurn)
+	{
+		set_chr( 53,506,	-1,-1, 925,  50,880,  	10,270,	0,";")			//④扉（塔火炎扉） 閉鎖
+	}
+	else
+	{
+		set_chr( 53,506,	-1,-1, 925,  50,880,  	 6,270,	0,";")			//④扉（塔火炎扉） 開放
+		F_set_obj("line01_add",NP_HIDE)
+		F_set_obj("line02_add",NP_HIDE)
+	}
+	//ＧＦ『★大鉄塔：風車の扉を開いた』立ってない
+	if(!F2_15_CancelWind)
+	{
+		mot_obj("wind01","anim00")
+		mot_obj("wind02","anim00")
+		F_set_obj("line03_add",NP_HIDE)
+		F_set_obj("line04_add",NP_HIDE)
+		set_chr( 54,506,	-1,-1, -1750,  10,880,  	10,50,	0,";")			//④扉（塔風扉） 閉鎖
+	}
+	else
+	{
+		set_chr( 54,506,	-1,-1, -1750,  10,880,  	 6,50,	0,";")			//④扉（塔風扉） 開放
+	}
+
+
+//■スイッチ・看板
+	set_chr( 50,620,	-1,-1,    0,2400,-120,   0,180,	0,";")			//①セーブOBJ
+
+	set_chr( 55,648,	-1,-1, 1150,  50,880,   10,270,	0,";")	//レベルプレート
+	color2( 55, 100,88,81,0,0,0)
+
+	set_chr( 57,654,	-1,-1,  750,-750,880,    4,305,	0,";")	//順路案内（武器）
+
+	set_chr( 56,648,	-1,-1,-1920, 160,880,   11, 50,	0,";")	//レベルプレート
+	color2( 56, 100,88,81,0,0,0)
+
+	set_chr( 58,654,	-1,-1,-1575, 350,880,    3, 80,	0,";")	//順路案内（ボス）
+
+//■イベント
+	//ＧＦ『★大鉄塔：燃える扉を水魔法で解除した』立ってない
+	if(!F2_08_CancelBurn)
+	{
+		set_chr( 60,704,	-1,-1,  755, 520,1210,   2,  0, 8,"M1?60 SF100 <EV_F_R_SwitchON> D0_160;") //
+		set_chr( 61,704,	-1,-1,  805,-470,1210,   2,  0, 8,"M1?61 SF101 <EV_F_L_SwitchON> D0_161;") //
+		set_chr( 80,990,	-1,-1,    0,   0,  0,    0,  0, 8,"F100 F101 WT?20 O1_18 WT?40 <EV_2_09_CancelBurn>;") //火-達成
+
+		set_chr(160,374,	-1,-1,  755, 520,1210,   0,  0, 0,";")
+		set_chr(161,374,	-1,-1,  805,-470,1210,   0,  0, 0,";")
+		chr_equip_chr(160, 60,"obx0704",  100, 0,0,0,	  0,0,0);
+		chr_equip_chr(161, 61,"obx0704",  100, 0,0,0,	  0,0,0);
+		F_set_chr(160,CF_NO_DROPITEM)
+		F_set_chr(160,CF_NO_DAMAGE_C)
+
+		F_set_chr(161,CF_NO_DROPITEM)
+		F_set_chr(161,CF_NO_DAMAGE_C)
+	}
+	//ＧＦ『★大鉄塔：風車の扉を開いた』立ってない
+	if(!F2_15_CancelWind)
+	{
+		set_chr( 62,705,	-1,-1, -880, 450,1180,   1,  0,	8,"M3?62 SF102 <EV_W_R_SwitchON> D0_162;") //
+		set_chr( 63,705,	-1,-1,-1800,-1100,1180,  1,  0,	8,"M3?63 SF103 <EV_W_L_SwitchON> D0_163;") //
+		set_chr( 81,990,	-1,-1,    0,   0,  0,    0,   0,	8,"F102 F103 WT?20 O1_18 WT?40 <EV_2_20_CancelWind>;") //風-達成
+
+		set_chr(162,374,	-1,-1, -880, 450,1180,   0,  0, 0,";")
+		set_chr(163,374,	-1,-1,-1800,-1100,1180,  0,  0, 0,";")
+		chr_equip_chr(162, 62,"obx0704",  100, 0,0,0,	   0,0,0);
+		chr_equip_chr(163, 63,"obx0704",  100, 0,0,0,	   0,0,0);
+		F_set_chr(162,CF_NO_DROPITEM)
+		F_set_chr(162,CF_NO_DAMAGE_C)
+
+		F_set_chr(163,CF_NO_DROPITEM)
+		F_set_chr(163,CF_NO_DAMAGE_C)
+	}
+	else
+	{
+	//	set_chr( 62,705,	-1,-1, -880, 450,1180,   3,  0,	8,";") //エフェクト無しなら無し
+	//	set_chr( 63,705,	-1,-1,-1800,-1100,1180,  3,  0,	8,";") //エフェクト無しなら無し
+	}
+
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼燃える扉をくぐった後のイベント
+		set_namebmp(0,0)
+		EV("EV_2_10_GotoTownPoc")
+	}
+	else
+	if(F1_22_EndFirst && !F2_17_EndSecond)
+	{
+	//２章
+		/*
+		//ＧＦ『★ポックルたちが町に戻った』立ってない
+		if(!F2_09_GotoTownPoc)
+		{
+			delete(91)
+			//▼燃える扉をくぐった後のイベント
+			set_chr( 91,990,	-1,-1, 750,  50,880,  270, 0102,6,"<EV_2_10_GotoTownPoc>;")
+		}
+		*/
+		//ＧＦ『★大鉄塔：燃える扉を水魔法で解除した』立ってない
+		if(!F2_08_CancelBurn)
+		{
+			set_chr(POCKLE,	  2,-1,-1, 1128,14,881, 2,80,20, "<TK_POCKLE>")
+			set_chr(PIPIRO,	  3,-1,-1, 1198,170,881, 2,90,20,"<TK_PIPIRO>")
+			F_set_chr(POCKLE,CF_NO_MOVE)
+			F_set_chr(PIPIRO,CF_NO_MOVE)
+		}
+		//ＧＦ『★大鉄塔：燃える扉の前まで来た』立ってない
+		if(!F2_07_FrontBurn)
+		{
+			//▼ポックルたちと遭遇する
+			set_chr( 80,990,-1,-1,1750,-1150,928,		0,	0401,	6,"<EV_2_08_FrontBurn>;")
+		}
+		//ＧＦ『★大鉄塔の探索を開始した』立ってない
+		if(!F2_06_OnTowerHalf)
+		{
+			//▼大鉄塔の中継マップに到着
+			set_namebmp(0,0)
+			EV("EV_2_07_OnTowerHalf")
+		}
+	}
+
+//■場面固有設定
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+
+EV_F_R_SwitchON
+{
+	F_set_obj("line02_add",NP_HIDE)
+
+	SE(1019,0)
+}
+EV_F_L_SwitchON
+{
+	F_set_obj("line01_add",NP_HIDE)
+
+	SE(1019,0)
+}
+EV_W_R_SwitchON
+{
+	F_reset_obj("line03_add",NP_HIDE)
+	mot_obj("wind02","anim01")
+
+	SE(1064,0)
+}
+EV_W_L_SwitchON
+{
+	F_reset_obj("line04_add",NP_HIDE)
+	mot_obj("wind01","anim01")
+
+	SE(1064,0)
+}
+
+//──────────────────────────────
+//▼大鉄塔の中継マップに到着
+//──────────────────────────────
+//　　外の中継マップに到着したところでイベント発生。
+//　　大鉄塔の外観を遠景で見せながらラグナたちが出てくる。
+//　　ポックルたちがいる場合、可能なら見えないように調整する。
+EV_2_07_OnTowerHalf
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	color(POCKLE,-1)
+	color(PIPIRO,-1)
+
+	F_set_chr(50,CF_NO_CLIP)
+	F_set_chr(50,CF_NO_CLIP2)
+	F_set_chr(53,CF_NO_CLIP)
+	F_set_chr(53,CF_NO_CLIP2)
+	F_set_chr(54,CF_NO_CLIP)
+	F_set_chr(54,CF_NO_CLIP2)
+	F_set_chr(55,CF_NO_CLIP)
+	F_set_chr(55,CF_NO_CLIP2)
+	F_set_chr(56,CF_NO_CLIP)
+	F_set_chr(56,CF_NO_CLIP2)
+	F_set_chr(57,CF_NO_CLIP)
+	F_set_chr(57,CF_NO_CLIP2)
+	F_set_chr(58,CF_NO_CLIP)
+	F_set_chr(58,CF_NO_CLIP2)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	   60,1500,-120,0,2)
+	chr_pos(PARTNER,  -95,1394,-120,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 60,1200,-120, 2,0,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, -95,1104,-120, 2, 0,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"B","1","2")//
+	KAO(ALWEN,"B","1","2")//
+
+	//モーション定義
+	MOT_SET(EVENT_RAGNA,150,-1,580,580,-1,-1)	//すさまじいな
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる。
+
+	//カメラ初期位置
+	CAM_move(-140,-1590,200,0,0)
+	CAM(100,70,200,34,156,0,0)
+
+	move( EVENT_RAGNA, 0, WALK1,60,1500,-120,0)
+	wait(10)
+	move( ALWEN, 0, WALK1,-95,1394,-120,0)
+
+//	CAM_move(154,-1798,278,180,0)
+//	CAM(100,178,278,50,214,180,0)
+	CAM_move(154,-1738,278,210,0)
+	CAM(300,218,278,50,214,210,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+//	wait_fade()
+
+	wait_move( EVENT_RAGNA )
+//	rot(EVENT_RAGNA,30,20)
+	MOT(EVENT_RAGNA,51,15)
+
+	wait(90)
+	MOT(EVENT_RAGNA,150,15)
+//	set_namebmp(33,0)
+
+	wait_CAM_move()
+	wait_CAM()
+	wait(45)
+
+	cross_fade(30)
+//	CAM_move(-64,-1500,58,0,0)
+//	CAM(-380,30,160,34,140,0,0)
+//	CAM(-380,30,160,34,170,1200,2)
+	CAM_move(-44,-1480,18,0,0)
+	CAM(-460,40,18,30,140,0,0)
+	CAM_move(-36,-1490,28,300,0)
+	CAM(-140,46,28,30,148,300,0)
+	rot(EVENT_RAGNA,-1,20)
+	wait(30)
+
+//	look_chr( EVENT_RAGNA, ALWEN, "Bone_Head")
+	KAO(EVENT_RAGNA,"C232CZ4","123332A","4")//
+	MES(EVENT_RAGNA,"くっ……\nこいつは凄まじいな。",0)
+	KAO(EVENT_RAGNA,"C232CZ5","A","4")//
+	MES(EVENT_RAGNA,"これでやっと\n半分くらいまで登ったか。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA, "Bone_Head")
+	wait(5)
+	KAO(EVENT_RAGNA,"B","2321T","2")//
+	MOT(EVENT_RAGNA,2,15)
+	look_chr( EVENT_RAGNA, ALWEN, "Bone_Head")	
+	wait(10)
+	KAO(ALWEN,"B232BZ4","1233321","2")//
+	MES(ALWEN,"うむ……\nまだまだ先は長そうだ。",0)
+	KAO(ALWEN,"B232BZ4","1","2")//
+	MES(ALWEN,"焦らず、確実に登っていこう。",0)
+	MES_close(ALWEN)
+
+	look_off( EVENT_RAGNA )
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z2","1233321","1")//
+	MES(EVENT_RAGNA,"ヘッ、そうだな。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	chr_pos(RAGNA,	   60,1500,-120,0,2)
+	chr_pos(PARTNER,  -95,1394,-120,0,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	color(POCKLE,1)
+	color(PIPIRO,1)
+
+	F_reset_chr(50,CF_NO_CLIP)
+	F_reset_chr(50,CF_NO_CLIP2)
+	F_reset_chr(53,CF_NO_CLIP)
+	F_reset_chr(53,CF_NO_CLIP2)
+	F_reset_chr(54,CF_NO_CLIP)
+	F_reset_chr(54,CF_NO_CLIP2)
+	F_reset_chr(55,CF_NO_CLIP)
+	F_reset_chr(55,CF_NO_CLIP2)
+	F_reset_chr(56,CF_NO_CLIP)
+	F_reset_chr(56,CF_NO_CLIP2)
+	F_reset_chr(57,CF_NO_CLIP)
+	F_reset_chr(57,CF_NO_CLIP2)
+	F_reset_chr(58,CF_NO_CLIP)
+	F_reset_chr(58,CF_NO_CLIP2)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★大鉄塔：中継マップに到着した』を立てる。
+	F_set(F2_06_OnTowerHalf)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+//──────────────────────────────
+//▼ポックルたちと遭遇する
+//──────────────────────────────
+//　　大鉄塔の中継マップには『燃える扉』と『風車の扉』がある。
+//　　水魔法で開く『燃える扉』の先は武器ルートとなっており、
+//　　風魔法で開く『風車の扉』の先はボスルートとなっている。
+//──────────────────────────────
+//　　『燃える扉』の手前まで来るとイベント発生。
+//　　扉は真っ赤に燃えており、その前にポックルとピピロがいる。
+EV_2_08_FrontBurn
+{
+	EV_begin()
+
+	chr_pos(POCKLE,	 1128,14,881,80,2)
+	chr_pos(PIPIRO,	 1198,170,881,90,2)
+
+//　　ラグナたちの頭に！マーク。
+	EMO(RAGNA,EMO_BIKKURI)
+	EMO(PARTNER,EMO_BIKKURI)
+	rot_chr(RAGNA,30,POCKLE)
+	rot_chr(PARTNER,30,POCKLE)
+	wait(30)
+
+//	MES(RAGNA,"（あいつら……！？）",0)
+//	MES_close(RAGNA)
+//	wait_MES(RAGNA)
+
+//　　画面スクロールして、扉の前にポックルたち。
+	CAM_move(1152,-80,1040,90,0)
+	CAM(310,88,1040,24,232,90,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+	cross_fade(30)
+	CAM_move(1152,-80,1040,0,0)
+	CAM(-130,58,1040,24,232,0,0)
+	wait(30)
+
+	//キャラ再配置
+//	chr_pos(RAGNA,	  1510,-980,880,40,2)
+//	chr_pos(PARTNER,	  1690,-914,880,40,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 1560,-980,880, 2,20,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 1740,-914,880, 2,20,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//
+	KAO(ALWEN,"1","1","1")//
+
+	//モーション定義
+	MOT_SET(EVENT_RAGNA,150,-1,480,480,-1,-1)	//怒り
+	MOT_SET(EVENT_RAGNA,151,-1,406,406,-1,-1)	//どうなのよ
+	MOT_SET(EVENT_RAGNA,152,-1,400,400,-1,-1)	//
+	MOT_SET(POCKLE,150,-1,410,410,-1,-1)//フム
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる。
+
+//　　真っ赤になった扉を前にして途方にくれている雰囲気。
+	KAO(POCKLE,"B232BZ5","123332A","5")//
+	MES(POCKLE,"こ、困ったなぁ……\nせっかくここまで来たのに。",0)
+	rot(POCKLE,30,20)
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+	wait(15)
+	KAO(POCKLE,"B232BZ4","A","5")//
+	MES(POCKLE,"ねえ、ピピロ。\n魔法で何とかならない？",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"B232BZ","123","1")
+	MES(PIPIRO,"……無理。",0)
+	KAO(PIPIRO,"B232BZ6","32A","1")
+	MES(PIPIRO,"《極寒の宝玉》があったら\n何とか消せたかもしれないけど。",0)
+	KAO(PIPIRO,"B232BZ5","A","1")
+	MES(PIPIRO,"わたしが普通に使える魔法じゃ\n効果ないわね～。",0)
+	MES_close(PIPIRO)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BZ2","A23","4")//
+	MES(POCKLE,"そ、そっか……",0)
+	MES_close(POCKLE)
+//	look_off(POCKLE)
+	MOT(POCKLE,150,15)
+	wait(15)
+	KAO(POCKLE,"B232BZ5","321","4")//
+	MES(POCKLE,"うーん、この先に絶対、\n何かあると思うんだけど……",0)
+	MES_close(POCKLE)
+
+//	name2(EVENT_RAGNA)
+	MES_pos(EVENT_RAGNA,"W9お前ら……\nここで何やってるんだ！？",0,520,180,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+
+//　　ポックルたちの頭に！マーク。
+//　　画面の向こうからラグナとアルウェンが現れるのを見せる。
+	KAO(POCKLE,"E","12321D","6")//
+	EMO(POCKLE,EMO_BIKKURI)
+	KAO(PIPIRO,"E","2321D","6")//
+	EMO(PIPIRO,EMO_BIKKURI)
+	wait(15)
+	MOT(POCKLE,2,15)
+	look_off(POCKLE)
+	rot_chr(POCKLE,30,EVENT_RAGNA)
+	rot_chr(PIPIRO,30,EVENT_RAGNA)
+
+	CAM_move(1412,382,1000,60,0)
+	CAM(188,82,1000,22,300,60,0)
+	wait_CAM()
+	wait_CAM_move()
+
+	CAM_move(1272,102,1000,100,0)
+//	look_chr( ALWEN, POCKLE ,"Bone_Head")
+//	look_chr( EVENT_RAGNA, POCKLE ,"Bone_Head")
+	move( EVENT_RAGNA, 0,	WALK1,1306,-270,880,0)
+	wait(15)
+	move( ALWEN, 0,	WALK1,1432,-176,880,0)
+//	move( ALWEN, 0,	WALK1,1360,-190,880,0)
+
+	wait_move( EVENT_RAGNA )
+	look_off( EVENT_RAGNA )
+	rot_chr(EVENT_RAGNA,30,POCKLE)
+	wait_move( ALWEN )
+	look_off( ALWEN )
+	rot(ALWEN,30,60)
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(1252,62,1030,0,0)
+	CAM(-174,78,1030,18,358,0,0)
+	wait(15)
+
+	KAO(POCKLE,"12321Z2","1233321","1")//
+	MES(POCKLE,"ラグナさん……",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z6","1233321","1")//
+	MES(PIPIRO,"な～んだ。\nゴスお姉さんと熱血青春ハンターか。",0)
+	MES_close(PIPIRO)
+
+	KAO(EVENT_RAGNA,"B","1232","4")//
+	EMO(EVENT_RAGNA,EMO_HIYAASE)
+	wait(10)
+//	EMO(ALWEN,EMO_BIKKURI)
+	KAO(ALWEN,"E","12321D","6")//
+	EMO(ALWEN,EMO_PA)
+	wait(30)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z5","123","6")//
+	MES(ALWEN,"ゴスお姉さん……\nなかなか新鮮な響きだな。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,150,8)
+	wait(10)
+//	name2(EVENT_RAGNA)
+	CAM_quake("46")
+	KAO(EVENT_RAGNA,"B232B2Z3","23332","2")//
+	MES(EVENT_RAGNA,"だ、誰が熱血青春ハンターだ！",0)
+	MES_close(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,151,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232B2Z6","2321","2")//
+	MES(EVENT_RAGNA,"そんな事よりお前ら……\nこんな危険な場所で何やってる？",0)
+	KAO(EVENT_RAGNA,"B232B2Z5","1","2")//
+	MES(EVENT_RAGNA,"ガキがお遊びで\n入り込んでいい場所じゃねえぞ。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"1","321","1")//
+
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BZ2","123","5")//
+	MES(POCKLE,"す、すみません。",0)
+	KAO(POCKLE,"B232BZ6","32A","4")//
+	MES(POCKLE,"でも僕たち、この塔がいきなり\n燃え始めたのを目撃して……",0)
+	KAO(POCKLE,"B232BZ5","A","4")//
+	MES(POCKLE,"それで気になって\nここまで来ちゃったんです。",0)
+	MES_close(POCKLE)
+
+	look(EVENT_RAGNA,"Bone_Head",0,0,2,2,0,20,-20)
+	MOT(EVENT_RAGNA,152,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ5","123","4")//
+	MES(EVENT_RAGNA,"ふう、だからといって\nよくもまあこんな場所まで……",0)
+	KAO(EVENT_RAGNA,"B","3","2")//
+	MES(EVENT_RAGNA,"（……確かに姫さんの言うとおり\n  ただのガキどもじゃねぇな……）",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"B232BZ6","1232","2")//
+	MES(PIPIRO,"そういうアンタたちこそ\nこんな所まで何の用事なわけ？",0)
+	KAO(PIPIRO,"B232BZ5","2","2")//
+	MES(PIPIRO,"めちゃめちゃ怪しいんですけど。",0)
+	MES_close(PIPIRO)
+
+	look(EVENT_RAGNA,"Bone_Head",0,0,2,2,0,0,0)
+	MOT(EVENT_RAGNA,151,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ5","321D","6")//
+	MES(EVENT_RAGNA,"お、俺たちはその、\nトレジャーハンティングさ。",0)
+	KAO(EVENT_RAGNA,"12321Z6","12321","1")//
+	MES(EVENT_RAGNA,"甦った古代の鉄塔なんか\n絶好の探索ポイントだからな。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"B232BZ3","23","2")//
+	MES(PIPIRO,"ふーん……でも生憎ね。",0)
+	look_off( PIPIRO )
+	look(PIPIRO,"Bone_Head",0,0,3,0,0,-42,0)
+	wait(15)
+	KAO(PIPIRO,"B232BZ5","32A","2")//
+	MES(PIPIRO,"さすがの熱血ハンターも\nここで行き止まりなんじゃない？",0)
+	MES_close(PIPIRO)
+	wait_MES(PIPIRO)
+
+//　　画面、燃えさかる扉をクローズアップする。
+//	CAM_move(702,50,980,60,0)
+//	CAM(108,96,980,36,274,600,0)
+	CAM_move(992,42,1100,60,0)
+	CAM(-14,150,1100,22,270,60,0)
+	MOT(EVENT_RAGNA,2,15)
+	rot( EVENT_RAGNA, 30, 60 )
+	wait_CAM_move()
+	wait_CAM()
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"その扉か……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","2")//
+	MES(EVENT_RAGNA,"姫さん、やれるか？",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","1233321","2")//
+	MES(ALWEN,"うむ、任せるがよい。",0)
+	MES_close(ALWEN)
+
+//　　イベント終了、プレイヤー操作許可。
+//　　ポックルとピピロはその場で待機している状態。
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	look_off(PIPIRO)
+	look_del(PIPIRO)
+	look_off(POCKLE)
+	look_del(POCKLE)
+
+	chr_pos(RAGNA,	   1306,-270,880,0,2)
+	chr_pos(PARTNER,  1432,-176,880,0,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★大鉄塔：燃える扉の前まで来た』を立てる。
+	F_set(F2_07_FrontBurn)
+
+//エントリを差し替える
+	delete(90)
+	set_chr( 90,991,	-1,-1, -30, 950,-120,    0,0201,6,"<EV_STOP_01>")	//ストッパー：①エントリ メイン③
+	workG(GW_WARP_FLAG,SET,0)//ワープ封じる。
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+//──────────────────────────────
+//▼燃える扉を水魔法で解除する
+//──────────────────────────────
+//　　燃える扉にアルウェンが水魔法を放つとイベント発生。
+//　　大量の蒸気が発生しながら、真っ赤になった扉が冷まされ、
+//　　ゆっくりと扉が開いていくのを見せる。
+EV_2_09_CancelBurn
+{
+	EV_stop("TK_PIPIRO")
+	MES_close(PIPIRO)
+	EV_stop("TK_POCKLE")
+	MES_close(POCKLE)
+	wait(1)
+
+	EV_begin()
+
+	cross_fade(30)
+//	fade_in(100,30,0)
+//	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	1380,-6,881,90,2)
+	chr_pos(PARTNER,1236,60,881,90,2)
+//	color(RAGNA,-1)
+//	color(PARTNER,-1)
+	KAO(RAGNA,"1","1","1")//
+	KAO(PARTNER,"1","1","1")//
+
+//	set_chr(EVENT_RAGNA,	  1010,-1,-1, 1380,-6,881, 2,90,0, "")
+//	set_chr(ALWEN, 	 	1011,-1,-1, 1236,60,881, 2,90,0, "")
+//	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+//	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+//	F_set_chr(ALWEN,CF_NO_CLIP)
+//	F_set_chr(ALWEN,CF_NO_CLIP2)
+//	KAO(EVENT_RAGNA,"1","1","1")//
+//	KAO(ALWEN,"1","1","1")//
+
+	//モーション定義
+	MOT_SET(RAGNA,150,-1,480,480,-1,-1)	//怒り
+	MOT_SET(RAGNA,151,-1,407,407,-1,-1)	//どうなのよ2
+	MOT_SET(RAGNA,152,-1,434,434,-1,-1)	//よし
+	MOT_SET(POCKLE,150,-1,441,441,-1,-1)//僕だって
+	MOT_SET(POCKLE,151,-1,415,415,-1,-1)//でも
+	MOT_SET(PARTNER,150,-1,401,401,-1,-1)//左手腰
+
+//	wait(1)
+//	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(PARTNER,53,1)										//アルウェンの右手を開かせる。
+
+	F_reset_chr(POCKLE,CF_NO_MOVE)
+	F_reset_chr(PIPIRO,CF_NO_MOVE)
+	chr_pos(POCKLE,	1120,-250,881,30,2)
+	chr_pos(PIPIRO,	1266,-288,881,40,2)
+	KAO(POCKLE,"1","1","1")//
+	KAO(PIPIRO,"1","1","1")//
+
+	//カメラ初期位置
+	CAM_move(802,-20,1040,0,0)
+	CAM(28,122,1040,28,240,0,0)
+
+	wait(60)
+//	fade_in(0,30,0)
+//	wait_fade()
+
+	SE(280,0)//
+	MOT(53,4,0)
+	wait_MOT(53,4)
+//	VOICE(079,0)	//★ボイス入力演出
+	MOT(53,6,0)
+
+//	MES(RAGNA,"◆未入力項目\n大量の蒸気が発生しながら、\n真っ赤になった扉が冷まされ、\nゆっくりと扉が開いていくのを見せる。",0)
+//	MES_close(RAGNA)
+	wait(5)
+	KAO(POCKLE,"E","12321D","6")//
+	EMO(POCKLE,EMO_BIKKURI)
+	wait(5)
+	KAO(PIPIRO,"E","12321D","6")//
+	EMO(PIPIRO,EMO_BIKKURI)
+	wait(30)
+
+	MOT(RAGNA,152,8)
+	wait(10)
+	MES(RAGNA,"よし！",0)
+	MES_close(RAGNA)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"232","12321D","6")//
+	MES(POCKLE,"わぁ……！",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z2","1233321","6")//
+	MES(PIPIRO,"……やるじゃん。",0)
+	MES_close(PIPIRO)
+
+//　　ラグナとアルウェン、扉の前まで歩み寄る。
+//	CAM_move(902,262,940,60,0)
+//	CAM(28,94,940,28,240,60,0)
+
+	move( PARTNER, 0, 8, 1116,60,881,0)
+	wait(10)
+	move( RAGNA, 0,	8, 1270,-6,881,0)
+
+	wait_move(PARTNER)
+	wait(5)
+	rot(PARTNER,30,190)
+	wait_move(RAGNA)
+	wait(5)
+	rot_chr(RAGNA,30,POCKLE)
+	wait(30)
+
+	cross_fade(30)
+	CAM_move(1202,120,1020,0,0)
+	CAM(-52,50,1020,28,240,0,0)
+	wait(30)
+	CAM_move(1202,120,1020,600,0)
+	CAM(-132,46,1020,28,250,600,0)
+//	wait_CAM_move()
+//	wait_CAM()
+
+	MES(RAGNA,"ま、そういう事だから\n俺たちは先に行くぜ。",0)
+//	MES(RAGNA,"ポックルにピピロって言ったか。",0)
+	MES(RAGNA,"ポックル、それにピピロ。",0)
+	MES(RAGNA,"２人で大冒険はここまでにして\nとっとと町に帰るんだな。",0)
+	MES_close(RAGNA)
+
+	KAO(POCKLE,"E","12321D","6")//
+	EMO(POCKLE,EMO_BIKKURI)
+	wait(2)
+	KAO(PIPIRO,"E","12321D","6")//
+	EMO(PIPIRO,EMO_BIKKURI)
+	wait(13)
+	rot_chr(POCKLE,30,RAGNA)
+	wait(2)
+	rot_chr(PIPIRO,30,RAGNA)
+	wait(13)
+
+	MOT(POCKLE,151,12)
+	wait(15)
+//	name2(POCKLE)
+	KAO(POCKLE,"B232B2","12321","5")//
+	MES(POCKLE,"で、でも！",0)
+	MES_close(POCKLE)
+
+	MOT(RAGNA,151,15)
+	wait(15)
+//	name2(RAGNA)
+	MES(RAGNA,"ま、これも先輩からの忠告だ。",0)
+	MES(RAGNA,"ここまで来れたってことは\n腕には自信があるんだろうが、\nダンジョン探索はそれだけじゃねえ。",0)
+	MES(RAGNA,"トレジャーハンターの試験に\n合格してから出直して来るんだな。",0)
+	MES_close(RAGNA)
+
+	KAO(POCKLE,"B","123","5")//
+	MOT(POCKLE,2,15)
+	look(POCKLE,"Bone_Head",0,0,0,2,0,0,-24)
+	VOICE(492,0)	//★ボイス入力演出
+	wait(5)
+	KAO(PIPIRO,"1","12321","1")//
+	wait(15)
+	KAO(POCKLE,"B232B","3","5")//
+	MES(POCKLE,"ううっ……",0)
+	MES_close(POCKLE)
+	KAO(POCKLE,"B","321","5")//
+	look(POCKLE,"Bone_Head",0,0,0,2,0,0,0)
+	MOT(POCKLE,150,12)
+	wait(15)
+	KAO(POCKLE,"B232BZ5","1","5")//
+	MES(POCKLE,"でもでも！\n僕たちだって前にそれなりに……",0)
+	MES_close(POCKLE)
+
+	look_chr( PIPIRO, POCKLE ,"Bone_Head")
+	wait(15)
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z3","1","1")//
+	MES(PIPIRO,"いいじゃん、ポックル。",0)
+	KAO(PIPIRO,"12321Z6","1","4")//
+	MES(PIPIRO,"暑いし、汗だくになっちゃったから\nわたしもそろそろ町に帰りたい。",0)
+	KAO(PIPIRO,"12321Z6","123","1")//
+	MES(PIPIRO,"それに、そこの青春ハンター、\n頑固そうだから引かなさそうだし。",0)
+	MES_close(PIPIRO)
+
+	KAO(POCKLE,"B","123","5")//
+	look(POCKLE,"Bone_Head",0,0,0,2,0,0,-28)
+	MOT(POCKLE,2,15)
+	EMO(RAGNA,EMO_HIYAASE)
+	wait(30)
+	rot_chr( RAGNA, 60, PIPIRO )
+	MOT(RAGNA,150,8)
+	wait(15)
+	CAM_quake("46")
+	KAO(RAGNA,"C232CZ5","1232","2")//
+	MES(RAGNA,"だ～から！\nその呼び方は止めろっての！",0)
+	MES_close(RAGNA)
+
+	MOT(PARTNER,150,15)
+//	look_chr( PARTNER, RAGNA ,"Bone_Head")
+	look(PARTNER,"Bone_Head",0,0,3,0,0,30,0)
+	wait(15)
+//	name2(PARTNER)
+	KAO(PARTNER,"12321Z3","1232A","6")//
+	MES(PARTNER,"ふむ、似合っておるがのう。",0)
+	MES_close(PARTNER)
+	wait_MES(PARTNER)
+
+//	KAO(POCKLE,"B","123","5")//
+//	look(POCKLE,"Bone_Head",0,0,0,2,0,0,-28)
+//	MOT(POCKLE,2,15)
+//	wait(2)
+//	KAO(PIPIRO,"1","321","1")//
+//	look_off( PIPIRO )
+//	wait(2)
+////	look_off( PARTNER )
+//	look(PARTNER,"Bone_Head",0,0,3,0,0,0,0)
+//	wait(2)
+//	MOT(RAGNA,2,15)
+//	rot_chr(RAGNA,15,POCKLE)
+
+	cross_fade(15)
+	CAM_move(1262,780,1020,0,0)
+	CAM(-292,84,1020,28,176,0,0)
+	color(PARTNER,-1)
+	KAO(PIPIRO,"1","1","1")//
+	look_off( PIPIRO )
+	look_del( PIPIRO )
+	look(PARTNER,"Bone_Head",0,0,30,0,0,0,0)
+	MOT(RAGNA,2,0)
+	rot_chr(RAGNA,-1,POCKLE)
+	KAO(RAGNA,"1","1","1")/
+	chr_pos(PIPIRO,	1236,-310,881,40,2)
+	rot_chr(PIPIRO,-1,RAGNA)
+	wait(15)
+
+//　　ポックルの頭に…マーク。
+	EMO(POCKLE,EMO_TENTEN)
+	wait(60)
+	KAO(POCKLE,"B","321","2")//
+	look(POCKLE,"Bone_Head",0,0,0,2,0,0,0)
+	wait(15)
+	KAO(POCKLE,"B232BZ5","1","2")//
+	MES(POCKLE,"……分かりました。\n僕たちはここで帰ります。",0)
+	KAO(POCKLE,"B232BZ3","12321","4")//
+	MES(POCKLE,"その、ラグナさんたちは……",0)
+	MES_close(POCKLE)
+
+	MOT(RAGNA,151,15)
+	wait(15)
+//	name2(RAGNA)
+	MES(RAGNA,"ん、どうした？",0)
+	MES_close(RAGNA)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z4","123","4")//
+	MES(POCKLE,"ううん、何でもないです。",0)
+	KAO(POCKLE,"12321Z6","321","1")//
+	MES(POCKLE,"探索を続けるんだったら\nくれぐれも気をつけてください。",0)
+	MES_close(POCKLE)
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+	wait(5)
+	look_chr( PIPIRO, POCKLE ,"Bone_Head")
+	MOT(RAGNA,2,15)
+	wait(10)
+	KAO(POCKLE,"12321Z3","1233321","1")//
+	MES(POCKLE,"ピピロ、行こう。",0)
+	MES_close(POCKLE)
+
+	VOICE(543,0)	//★ボイス入力演出
+	KAO(PIPIRO,"F","1233321","1")//
+	MES(PIPIRO,"ほ～い。",0)
+	MES_close(PIPIRO)
+	wait_MES(PIPIRO)
+
+//　　ポックルとピピロ、そのまま去っていってしまう。
+	cross_fade(15)
+	CAM_move(882,-78,920,0,0)
+	CAM(-52,100,920,28,310,0,0)
+	rot(PARTNER,-1,200)
+	MOT(PARTNER,2,0)
+	color(PARTNER,1)
+	look_chr( RAGNA, PIPIRO ,"Bone_Head")
+	MOT(RAGNA,2,0)
+	chr_pos(PIPIRO,	1266,-288,881,40,2)
+	rot_chr(PIPIRO,-1,RAGNA)
+	KAO(PIPIRO,"1","1","1")//
+	look_off( PIPIRO )
+	look_del( PIPIRO )
+	look_off( POCKLE )
+	look_del( POCKLE )
+	wait(15)
+
+//	look_off(PIPIRO)
+	rot(PIPIRO,30,200)
+	wait(5)
+//	look_off(POCKLE)
+	rot(POCKLE,30,200)
+	wait(10)
+
+	CAM_move(1082,226,920,120,0)
+	CAM(-52,100,920,28,310,120,0)
+
+	move( PIPIRO, 0,	WALK1, 1966,-1384,928,0)
+	wait(10)
+	move( POCKLE, 0,	WALK1, 1830,-1362,928,0)
+	wait_move( PIPIRO )
+	wait_move( POCKLE )
+	cross_fade(15)
+	CAM_move(762,-278,920,0,0)
+	CAM(-52,100,920,24,310,0,0)
+	KAO(RAGNA,"1","T","1")//
+	wait(30)
+
+//　　それを見送ってから以下のメッセージ。
+	KAO(PARTNER,"B232BZ5","23332","1")//
+	MES(PARTNER,"ふむ、やはり\nただの子供たちとは思えぬが。",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	KAO(RAGNA,"12321Z3","T23","2")//
+	MES(RAGNA,"……確かにそうかもな。",0)
+	KAO(RAGNA,"12321Z5","32T","1")//
+	MES(RAGNA,"ただまあ、何かを\n企んでる感じじゃなさそうだ。",0)
+	KAO(RAGNA,"12321Z5","T","1")//
+	MES(RAGNA,"あまり気にしないで\n俺たちは先に進むとしようぜ。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	KAO(PARTNER,"12321Z2","23","1")//
+	MES(PARTNER,"うむ、分かった。",0)
+	MES_close(PARTNER)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+
+	look_off( RAGNA )
+	look_del( RAGNA )
+	look_off( PARTNER )
+	look_del( PARTNER )
+
+//	delete(EVENT_RAGNA)
+//	delete(ALWEN)
+	delete(PIPIRO)
+	delete(POCKLE)
+
+	chr_pos(RAGNA,	1500,-90,881,90,2)
+	chr_pos(PARTNER,1500,90,881,90,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★大鉄塔：燃える扉を水魔法で解除した』を立てる。
+	F_set(F2_08_CancelBurn)
+
+//エントリを本物に戻す
+	delete(90)
+	set_chr( 90,990,	-1,-1, -30, 950,-120,    0,0201,6,"K1_14013;")	//①エントリ メイン③
+	workG(GW_WARP_FLAG,SET,1)//ワープ解除。
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+//──────────────────────────────
+//▼燃える扉をくぐった後のイベント
+//──────────────────────────────
+//　　燃える扉をくぐった後、画面フェードアウトせずに、
+//　　そのままスクロールして階段の陰などにいるポックルたち。
+EV_2_10_GotoTownPoc
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	chr_pos(RAGNA,	   60,1500,-120,0,2)
+	chr_pos(PARTNER,  -95,1394,-120,0,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(RAGNA)
+
+	set_chr(POCKLE,	  1012,-1,-1, 970,850,-121, 2,260,0, "")
+	set_chr(PIPIRO,	  1013,-1,-1, 770,850,-121, 2,260,0, "")
+	F_set_chr(POCKLE,CF_NO_CLIP)
+	F_set_chr(POCKLE,CF_NO_CLIP2)
+	F_set_chr(POCKLE,CF_NO_CSP)
+	F_set_chr(PIPIRO,CF_NO_CLIP)
+	F_set_chr(PIPIRO,CF_NO_CLIP2)
+	F_set_chr(PIPIRO,CF_NO_CSP)
+	KAO(POCKLE,"1","1","1")//
+	KAO(PIPIRO,"1","1","1")//
+
+	MOT_SET(POCKLE,150,-1,410,410,-1,-1)//フム
+	MOT_SET(PIPIRO,150,-1,401,401,-1,-1)//左手腰
+	MOT_SET(PIPIRO,151,-1,405,405,-1,-1)//
+//	MOT(PIPIRO,150,0)
+
+	CAM_move(890,-840,-2,0,0)
+	CAM(-100,100,-2,24,126,0,0)
+	wait(30)
+
+	//カメラ初期位置
+//	CAM_move(1000,-128,1200,0,0)
+//	CAM(310,170,1200,34,232,0,0)
+	CAM_move(2314,-70,650,0,0)
+	CAM(-180,134,120,40,174,0,0)
+
+	fade_in(0,30,0)
+	wait_fade()
+
+	CAM_move(1690,-268,-262,150,0)
+	CAM(100,150,-262,34,126,150,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+
+	cross_fade(30)
+//	CAM_move(1770,-200,-182,0,0)
+//	CAM(-100,150,-182,24,126,0,0)
+	CAM_move(890,-840,-2,0,0)
+	CAM(-100,60,-2,24,126,0,0)
+	wait(30)
+	CAM_move(890,-840,18,600,0)
+	CAM(-260,54,18,24,140,600,0)
+
+	MES(POCKLE,"……ピピロ、どう思う？",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	MES(PIPIRO,"あの青春ハンターはともかく、\nゴスお姉さんは只者じゃないわね。",0)
+	MES(PIPIRO,"あの凍結の魔法……\n《極寒の宝玉》以上の魔力だわ。",0)
+	MES_close(PIPIRO)
+
+	rot_chr(POCKLE,30,PIPIRO)
+	wait(30)
+	MOT(POCKLE,150,15)
+	wait(15)
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BZ4","123","2")//
+	MES(POCKLE,"女神のオーブ以上の魔力か……",0)
+	KAO(POCKLE,"B232BZ6","321","3")//
+	MES(POCKLE,"どうしよう、このまま後を\n付けていった方がいいのかな？",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	MES(PIPIRO,"やだ。\n暑くて疲れたのは本当だし。",0)
+	MES(PIPIRO,"それに、カンが良さそうだから\n尾行してもバレるんじゃない？",0)
+	MES_close(PIPIRO)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BZ8","123","2")//
+	MES(POCKLE,"確かにラグナさん、\nトレジャーハンターとしても\nかなりの腕前みたいだし……",0)
+	MES_close(POCKLE)
+	MOT(POCKLE,2,15)
+	wait(15)
+	KAO(POCKLE,"B232BZ4","3","5")//
+	MES(POCKLE,"仕方ない、急いで町に戻ろう。",0)
+	KAO(POCKLE,"B232BZ6","321","1")//
+	MES(POCKLE,"フィオナさんたちに\n何があったのか報告しなきゃ。",0)
+	MES_close(POCKLE)
+
+//	MOT(PIPIRO,151,15)
+//	wait(15)
+//	name2(PIPIRO)
+	MES(PIPIRO,"それよりも前に\nまずはアイスよ、アイス。",0)
+	MES(PIPIRO,"トリプル２つおごるって約束、\n忘れてないでしょーね。",0)
+	MES_close(PIPIRO)
+
+	KAO(POCKLE,"B","1232L","5")/
+	look(POCKLE,"Bone_Head",0,0,0,1,0,0,-12)
+	wait(15)
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BZ4","L","5")/
+	MES(POCKLE,"うう、今月のお小遣いが……",0)
+	MES_close(POCKLE)
+
+//　　画面、ゆっくりとフェードアウト。
+//	CAM_move(1770,-200,-82,90,0)
+//	CAM(-100,154,-82,24,126,90,0)
+	fade_in(100,60,0)
+	wait_fade()
+
+	delete(POCKLE)
+	delete(PIPIRO)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★ポックルたちが町に戻った』を立てる。
+	F_set(F2_09_GotoTownPoc)
+
+	//----------------------------------------------------
+	//Ｇ－館行ってるかどうかのチェック（③～⑪まで行う）
+	if(FV_02_VisitGyakata)
+	{
+		if(FE_FF_NotGotoG)
+			F_set(FE_FF_NotGotoG2)//長い事行ってない
+		F_set(FE_FF_NotGotoG)//しばらく行ってない
+	}
+	//----------------------------------------------------
+
+
+//　　アウロン大鉄塔－武器①マップへ(ev40210)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(14021)
+
+//	EV_end()
+}
+
+//──────────────────────────────
+//▼大鉄塔の《風車の扉》を開く
+//──────────────────────────────
+//　　大鉄塔の中継マップに戻ってから、
+//　　奥にある《風車の扉》の両脇にある換気扇状の装置に
+//　　それぞれアルウェンの風魔法を当てるとギミックが稼動。
+//　　イベント発生して、いったんキャラを再配置した上で、
+//　　換気扇状の装置が猛烈に回り始め、徐々に扉が開いていく。
+EV_2_20_CancelWind
+{
+	EV_begin()
+
+	cross_fade(30)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  -2066,140,881,230,2)
+	chr_pos(PARTNER,	  -1914,160,880,230,2)
+	KAO(RAGNA,"1","1","1")//
+	KAO(PARTNER,"1","1","1")//
+
+	//カメラ初期位置
+	CAM_move(-1394,760,720,0,0)
+//	CAM(140,174,720,24,150,0,0)
+	CAM(140,154,720,30,150,0,0)
+
+	wait(60)
+
+	SE(280,0)//
+	MOT(54,4,0)
+	wait_MOT(54,4)
+	MOT(54,6,0)
+
+	look_chr( RAGNA, PARTNER ,"Bone_Head")
+	wait(15)
+	KAO(RAGNA,"12321Z4","1233321","1")//
+	MES(RAGNA,"よし……\nこれで先に進めるな。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	KAO(PARTNER,"B232B","123","2")//
+	MES(PARTNER,"うむ……",0)
+	KAO(PARTNER,"B232BZ5","3","2")//
+	MES(PARTNER,"《火の魔力》の気配も\nこれまで以上に強く感じる。",0)
+	KAO(PARTNER,"B232BZ5","321","2")//
+	MES(PARTNER,"最後まで気を抜かずに\n確実に進んでいくとしよう。",0)
+	MES_close(PARTNER)
+
+//	name2(RAGNA)
+	KAO(RAGNA,"12321Z3","1233321","2")//
+	MES(RAGNA,"ＯＫ、任せとけ！",0)
+	MES_close(RAGNA)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+
+	look_off(RAGNA)
+	look_del(RAGNA)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★大鉄塔：風車の扉を開いた』を立てる。
+	F_set(F2_15_CancelWind)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+//▽マップから出られないストッパー（扉を解除しないと）
+//　　マップから出ようとするとストッパー。（※当然ワープも封じる）
+//　　（『★大鉄塔：燃える扉を水魔法で解除した』後はストッパー解除）
+EV_STOP_01
+{
+	TK_begin()
+	//　　※ラグナ先頭
+	if( GW_MAN==1)
+	{
+		MES(RAGNA,"あの程度の扉……\n姫さんならサクッと解除できるだろ。",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	//　　※アルウェン先頭
+	else
+	{
+		MES(PARTNER,"灼熱を帯びた扉ならば\n冷ましてやればよいだけのこと……",0)
+		MES(PARTNER,"ふむ、さっさと\n終わらせてしまうとしよう。",0)
+		MES_close(PARTNER)
+		wait_MES(PARTNER)
+	}
+
+	chr_pos(PLAYER1,340,1252,-122,234,2)
+	chr_pos(PLAYER2,104,1331,-122,243,2)
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()	
+
+	TK_end()
+}
+
+#EndScriptTable
+//====================================================================
+
+

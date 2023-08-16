@@ -1,0 +1,716 @@
+//仭Zwei2堦斒儊僢僙乕僕丒傾儖僢僥偺挰乮仸僯僢僾儖乯
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭傾儖僢僥
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僯僢僾儖乮晛捠彈乯Nipple")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_NIPPLE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(NIPPLE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,NIPPLE)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,NIPPLE)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,NIPPLE)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_05_EndSixth )
+	{
+		EV("MOTION_NIPPLE")		
+		if(!F_NIPPLE)
+		{
+		//丂丂仸岺朳僇僂儞僞乕慜偵棃偰偄傞丅
+		//丂丂仸怳傝曉傜側偄丅
+			MES(NIPPLE,"喂，科林……\n你瞧，今天我也帶便當來了哦？",0)
+			MES(NIPPLE,"好啦？不要生氣啦？",0)
+			MES(NIPPLE,"還有，早點\n回家裡來吧～！",0)
+			MES_close(NIPPLE)
+			//仛僯僢僾儖亂椏棟偑摼堄亃
+			F_set_note(NIPPLE,2)
+			F_set(NIPPLE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			MES(NIPPLE,"喂，我說科林……",0)
+			MES(NIPPLE,"……那個，你還是不高興嗎？",0)
+			MES(NIPPLE,"是姐姐不對，\n姐姐已經道過歉了。\n……好嗎？",0)
+			MES_close(NIPPLE)
+		}
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸廻庰応偱丄僙僼傿乕儔偺壧傪挳偄偰偄傞丅
+	//丂丂仸偱偒傟偽僿儖儊僢僩傪旐傞丅
+	//丂丂仸怳傝曉傜側偄
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_NIPPLE")		
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"嗚嗚，多麼動聽的歌聲啊……",0)
+			MES(NIPPLE,"雪菲拉小姐\n為了讓我們鼓起勇氣\n而歌唱……",0)
+			MES_close(NIPPLE)
+
+		//丂丂僯僢僾儖偵丒丒丒僄儌乕僔儑儞丅
+			EMO(NIPPLE,EMO_TENTEN)
+			wait(30)
+
+		//丂丂怳傝曉傞丅
+			rot_chr(NIPPLE,30,PLAYER1)
+
+			MES(NIPPLE,"我終於明白了。\n即使驚慌失措也沒有用。",0)
+			MES_close(NIPPLE)
+
+			EMO(NIPPLE,EMO_KIRAKIRA)
+			wait(30)
+
+			MES(NIPPLE,"S4嗯，我要冷靜下來，\n在家裡挖出一個地窖。",0)
+			MES_close(NIPPLE)
+
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			wait(30)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"這…這算是\n冷靜下來了嗎……？",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"你還是……\n再冷靜一點比較好。",0)
+				MES_close(PARTNER)
+			}
+			F_set(NIPPLE)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仛孞傝曉偟
+		else
+		{
+			rot_chr(NIPPLE,30,PLAYER1)
+			MES(NIPPLE,"我決定要冷靜下來，\n在家裡挖出一個地窖。",0)
+			MES(NIPPLE,"然後把科林接回來。",0)
+			MES_close(NIPPLE)
+
+		//丂丂僯僢僾儖偵傾僙傾僙僄儌乕僔儑儞丅
+			EMO(NIPPLE,EMO_ASEASE)
+			wait(30)
+
+			MES(NIPPLE,"S4誰叫我\n是姐姐呢！",0)
+			MES_close(NIPPLE)
+		}
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F5_00_HearLunar )
+	{
+		EV("MOTION_NIPPLE")		
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+		//丂丂仸柉壠俁偱棫偭偰偄傞丅
+			MES(NIPPLE,"那…那個……我弟弟\n是有些自大吧。",0)
+			MES(NIPPLE,"我只是對他開了個玩笑，\n說「我決定讓哈蒂代替你\n做我的妹妹了」。",0)
+			MES(NIPPLE,"然後科林那傢伙說\n「這樣啊，那我就去工房\n當技師了」……",0)
+			MES(NIPPLE,"就這樣離開了。",0)
+			MES_close(NIPPLE)
+
+		//丂丂儔僌僫偨偪偵惵偞傔僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_AOZAME)
+
+			//僆僨僢僒偑偄傞偲偒
+			if(F5_08_JoinOdessa)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			wait(30)
+			
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"離…離家出走……？",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀僆僨僢僒愭摢")
+			else
+			{
+				MES(PARTNER,"離…離家出走嗎……？",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂僯僢僾儖偆側偢偔丅
+			look(NIPPLE,"Bone_Head",0,	0,0,1,	0,0,-20)
+			wait(12)
+			look(NIPPLE,"Bone_Head",0,	0,0,1,	0,0,0)
+			wait(20)
+			MES(NIPPLE,"怎…怎麼辦……",0)
+			MES_close(NIPPLE)
+			F_set(NIPPLE)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			look(NIPPLE,"Bone_Head",0,	0,0,2,	0,0,0)
+			MES(NIPPLE,"那個，真的只是玩笑啊？",0)
+			MES(NIPPLE,"我想科林\n也應該明白吧……",0)
+			MES(NIPPLE,"那個……\n難道即使是玩笑，\n他也不願意嗎……",0)
+			MES_close(NIPPLE)
+		}
+		look(NIPPLE,"Bone_Head",0,	0,0,2,	0,0,-5)
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸柉壠侾偺慜曈傝偱抮傪尒側偑傜僂儘僂儘丅
+	//丂丂丂傾僙傾僙僄儌乕僔儑儞傪弌偟偰偄傞丅
+	if( F4_00_StartSolo )
+	{
+		EV("MOTION_NIPPLE")		
+		F_set_chr(NIPPLE,CF_NO_MOVE)
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"不…不好了不好了～！",0)
+			MES(NIPPLE,"我好像把\n錢包弄丟了。",0)
+			MES(NIPPLE,"我瞞著科林存起來的\n零花錢都在裡面啊～……",0)
+			MES(NIPPLE,"嗚，太可惜了。\n無論要在科林\n發覺之前找到它……",0)
+			MES_close(NIPPLE)
+			F_set(NIPPLE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(NIPPLE,"居然把錢包弄掉了……\n唉，今天真倒楣。",0)
+			MES(NIPPLE,"總之一定要在被科林\n發現之前把它找出來……",0)
+			MES_close(NIPPLE)
+		}
+		F_reset_chr(NIPPLE,CF_NO_MOVE)
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛慜偺儀儞僠慜偱丄僴僥傿偲榖偟偰偄傞丅
+	//丂丂仸僴僥傿偺曽傪岦偄偰偄偰丄怳傝曉傜側偄丅
+	//丂丂仸弶夞僀儀儞僩乮僴僥傿偲嫟捠乯
+	if( F2_14_TalkEnemy )
+	{
+		if(!FT_05_TalkNipHat)
+		{
+			
+			EV("EV_TALK_HN")
+			wait_EV("EV_TALK_HN")
+			
+			F_set(FT_05_TalkNipHat)
+		}
+		else
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			EV("MOTION_NIPPLE")		
+			if(!F_NIPPLE)
+			{
+				MES(NIPPLE,"嗯—，其實……",0)
+				MES(NIPPLE,"我也不知道以後自己應該做怎樣的女人。",0)
+				MES(NIPPLE,"雪菲拉小姐那樣的偶像當然最好，\n不過好心的卡蒂娜小姐\n那種神秘感也不錯呢。",0)
+				MES(NIPPLE,"說起來，好像有一位大小姐\n也來到了阿魯特鎮……",0)
+				MES(NIPPLE,"可愛一點好像也挺好～。",0)
+				MES_close(NIPPLE)
+
+			//丂丂俀恖偵惵偞傔僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				wait(30)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢丅")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（誰來阻止一下她……）",0)
+					MES_close(RAGNA)
+				}
+			//	name("佀傾儖僂僃儞愭摢丅")
+				else
+				{
+					MES(PARTNER,"（你……\n 還是放棄可愛這個發展方向吧。）",0)
+					MES_close(PARTNER)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				F_set(NIPPLE)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(NIPPLE,"其實我也在猶豫，\n以後自己應該成為什麼樣的女人。",0)
+				MES(NIPPLE,"偶像雪菲拉小姐……\n神秘的卡蒂娜小姐……",0)
+				MES_close(NIPPLE)
+
+			//丂丂僯僢僾儖偵侓僄儌乕僔儑儞丅
+				EMO(NIPPLE,EMO_ONPU)
+				wait(30)
+				MES(NIPPLE,"還是要\n可愛一些呢～㈱",0)
+				MES_close(NIPPLE)
+			}
+			MOT(NIPPLE,2,15)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸挰偺揥朷戜偱僼儕乕儉乕僽偟偰偄傞丅
+	if( F2_00_GoForest )
+	{
+		EV("MOTION_NIPPLE")		
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"天氣這麼好，\n我就提議說\n想去野餐……",0)
+			MES(NIPPLE,"可是科林那傢伙\n卻把我從家裡趕了出來。",0)
+			MES_close(NIPPLE)
+
+		//丂丂僯僢僾儖偵儉僉僄儌乕僔儑儞丅
+			EMO(NIPPLE,EMO_AOSUZI)
+			wait(30)
+			
+			MES(NIPPLE,"分明比我還小，\n卻這麼狂妄，什麼嘛。",0)
+			MES(NIPPLE,"這可不行。這可不行。",0)
+			MES_close(NIPPLE)
+			
+			//仛僐儕儞亂僫儅僀僉亃
+			F_set_note(-57,1)
+
+			F_set(NIPPLE)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(NIPPLE,"話說回來……\n剛才我在噴泉旁邊\n見到了一個可愛的小男孩。",0)
+			MES(NIPPLE,"大概比我年輕一點吧。\n蓬鬆的頭髮紮在腦後，\n还戴著個飾品尾巴。",0)
+			MES_close(NIPPLE)
+
+		//丂丂僯僢僾儖偵僴乕僩僄儌乕僔儑儞丅
+			EMO(NIPPLE,EMO_HATO)
+			wait(30)
+			
+			MES(NIPPLE,"那種天真爛漫的感覺……\n很惹人憐愛呢。",0)
+			MES_close(NIPPLE)
+			
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僼儔僌嘆偺僀儀儞僩傪尒偰偄偰丄儔僌僫愭摢")
+			if(FT_01_TalkNipple)
+			{
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（我已經無話可說了……）",0)
+					MES_close(RAGNA)
+				}
+			//	name("佀僼儔僌嘆偺僀儀儞僩傪尒偰偄偰丄傾儖僂僃儞愭摢")
+				else
+				{
+					MES(PARTNER,"（變得真是簡單啊……）",0)
+					MES_close(PARTNER)
+				}
+			}
+		}
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥丒柉壠侾偲俁偺娫曈傝傪僼儕乕儉乕僽丅
+	if( F1_15_GoVillage )
+	{
+		EV("MOTION_NIPPLE")		
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"剛才有一個\n很帥的人從這裡路過呢。",0)
+			MES(NIPPLE,"穿著一身漂亮的管家西服，\n長著一頭飄逸的金髮……",0)
+			MES(NIPPLE,"眼鏡後面的瞳眸清澈明亮，\n還有嘴邊那溫柔的微笑……",0)
+			MES_close(NIPPLE)
+
+		//丂丂僯僢僾儖偵僴乕僩僄儌乕僔儑儞丅
+			EMO(NIPPLE,EMO_HATO)
+			wait(30)
+			
+			MES(NIPPLE,"啊，他正是\n我理想中的男人啊……！",0)
+			MES_close(NIPPLE)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僼儔僌嘆偺僀儀儞僩傪尒偰偄偨応崌丄侾夞偩偗斀墳傪憓擖偡傞丅")
+			if(FT_01_TalkNipple && !FT_02_TalkNipple)
+			{
+			//丂丂僯僢僾儖偵俹俙僄儌乕僔儑儞丅
+				EMO(NIPPLE,EMO_PA)
+				wait(30)
+				
+			//丂丂儔僌僫偵岦偔丅
+				MES(NIPPLE,"哎呀……\n那個……",0)
+				MES_close(NIPPLE)
+
+			//丂丂僯僢僾儖偵丒丒丒僄儌乕僔儑儞丅
+				EMO(NIPPLE,EMO_TENTEN)
+				wait(30)
+				
+				MES(NIPPLE,"我們以前見過面吧。",0)
+				MES_close(NIPPLE)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"不…不是你\n主動找上來的嗎？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"看來已經不記得了呢……",0)
+				MES_close(PARTNER)
+				
+			//丂丂僯僢僾儖偵丠僄儌乕僔儑儞丅
+				EMO(NIPPLE,EMO_HATENA)
+				wait(30)
+				
+				F_set(FT_02_TalkNipple)
+			}
+
+			F_set(NIPPLE)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(NIPPLE,"那位管家正是\n我理想中的男人啊……！",0)
+			MES(NIPPLE,"嗯，我決定了。\n一輩子都要跟著他。",0)
+			MES(NIPPLE,"首先要從其他人那裡\n問出他的名字、生日、\n血型和愛好！",0)
+			MES_close(NIPPLE)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"不要變成跟蹤狂啊……",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"問題還真不少啊……",0)
+				MES_close(PARTNER)
+			}
+		}		
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸戝摴寍恖僗僥乕僕慜丄戝摴寍恖傪尒偰偄傞丅
+	//丂丂丂俹俙僄儌乕僔儑儞弌偟偭傁側偟丅
+	//丂丂仸弶夞僀儀儞僩
+	//丂丂仸怳傝曉傜側偄丅
+	if( F1_01_GameStart )
+	{
+		if(!FT_01_TalkNipple)
+		{
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	弶婜壔張棟
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		
+			cross_fade(30)			//僋儘僗僼僃乕僪
+			EV_begin()
+			//僇儊儔僙僢僩
+			CAM_move(756,442,196,0,0)
+			CAM(-209,64,35,31,166,0,0)
+			
+			//僉儍儔嵞攝抲
+			chr_pos(NIPPLE,858,-639,0,200,2)
+			chr_pos(COLIN, 948,-574,0,124,2)
+			chr_pos(RAGNA,696,-362,0,208,2)
+			chr_pos(PARTNER,568,-444,0,242,2)
+			
+			//婄弶婜壔
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(NIPPLE, "1", "1", "1")	
+			KAO(COLIN,"1", "1", "1")	
+			
+			F_reset_chr(NIPPLE,CF_NO_MOVE)
+			F_reset_chr(COLIN,CF_NO_MOVE)
+			MOT_SET(COLIN,150,-1,402,402,-1,-1)
+			
+			wait_fade()
+
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	僀儀儞僩奐巒
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			EV_stop("MOVE_NIPPLE")
+			MES(NIPPLE,"哇—，科林，快看快看。\n好厲害哦—……",0)
+			MES_close(NIPPLE)
+
+		//丂丂僯僢僾儖偵丠僄儌乕僔儑儞丅
+			EMO(NIPPLE,EMO_HATENA)
+			wait(30)
+
+		//丂丂儔僌僫偵怳傝曉傞丅
+			rot_chr(NIPPLE,30,RAGNA)
+	
+		
+			KAO(NIPPLE,"12321Z2","J","1")
+			MES(NIPPLE,"啊……？",0)
+			KAO(NIPPLE,"12321Z4","J","1")
+			MES(NIPPLE,"大哥哥，難道……",0)
+			KAO(NIPPLE,"12321Z3","J","1")
+			MES(NIPPLE,"你是我命中注定的伴侶？",0)
+			MES_close(NIPPLE)
+
+			EV("MOTION_NIPPLE")
+			
+			rot_chr(COLIN,30,RAGNA)
+
+		//丂丂仛師偺億僢僾傾僢僾偼摨帪偵昞帵仌暵偠傞丅
+
+//			MES_pos(RAGNA,"傊乧乧丠",0,0,0,0,0)
+//			MES_pos(PARTNER,"傫乧乧丠",0,0,0,0,0)
+//			wait_key(0)
+//			MES_close(PARTNER)
+
+			MES(RAGNA,"哎……？",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"哦……",0)
+			MES_close(PARTNER)
+
+			KAO(NIPPLE,"12321Z6","J","1")
+			MES(NIPPLE,"不，什麼都不要說。\n我全都明白了。",0)
+			KAO(NIPPLE,"12321Z6","J","1")
+			MES(NIPPLE,"這身衣服……\n你是飛行員吧？",0)
+			KAO(NIPPLE,"12321Z5","J","1")
+			MES(NIPPLE,"駕駛著純白色的羽翼\n來迎接我的吧？",0)
+			MES_close(NIPPLE)
+
+			MES(RAGNA,"為…為什麼會變成這樣……",0)
+			MES(RAGNA,"首先，我的\n特里斯坦號可是紅色的哦？",0)
+			MES_close(RAGNA)
+
+			KAO(NIPPLE,"12321Z3","J","1")
+			MES(NIPPLE,"那就重新塗成白色的㈱",0)
+			MES_close(NIPPLE)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"那…那個……",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"唔……\n人類的女孩子真是熱情啊。",0)
+			MES_close(PARTNER)
+
+		//丂丂僐儕儞丄儔僌僫偨偪偵嬤偯偔丅
+//			rot_chr(COLIN,30,RAGNA)
+//			move( COLIN, 0,	WALK1,	862,-477,0,	0)
+//			MOT(COLIN,150,15)
+
+			look_chr( COLIN, NIPPLE,"Bone_Head")
+
+			KAO(COLIN,"12321Z4","1","1")
+			MES(COLIN,"姐姐……\n不要胡鬧了。",0)
+			MES_close(COLIN)
+
+			look_chr( COLIN, RAGNA,"Bone_Head")
+			wait(15)
+			KAO(COLIN,"12321Z7","1","1")
+			MES(COLIN,"實在對不起，\n請不要在意姐姐剛才說的話。",0)
+			KAO(COLIN,"12321Z6","1","1")
+			MES(COLIN,"她總是這樣，\n對誰都一見鍾情。",0)
+			KAO(COLIN,"12321Z7","1","1")
+			MES(COLIN,"而且很容易變心，\n第二天就找上其他人了……",0)
+			MES_close(COLIN)
+
+			look_chr( NIPPLE, COLIN, "Bone_Head")
+			EMO(NIPPLE,EMO_DOKAN)
+			wait(30)
+
+			KAO(NIPPLE,"12321Z6","J","1")
+			MES(NIPPLE,"喂，科林！\n不要說得這麼不禮貌啊。",0)
+			MES_close(NIPPLE)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES(PARTNER,"（唔，看來和\n 熱情還不太一樣。）",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"（唉……\n 弟弟也夠累的了。）",0)
+			MES_close(RAGNA)
+
+		//丂丂僼僃乕僪傾僂僩偟丄僐儕儞偺攝抲傪栠偡丅
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		//	僀儀儞僩廔椆張棟
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			look_off(NIPPLE)
+			look_off(NIPPLE)
+			chr_pos(NIPPLE,858,-639,0,300,52)
+			chr_pos(COLIN, 948,-574,0,124,2)
+			MOT(NIPPLE,52,0)
+			rot(NIPPLE,0,300)
+			look(COLIN,"Bone_Head",0,		0,0,10,			0,0,-30)
+
+//			chr_pos(RAGNA,120,-800,0,0,2)
+//			chr_pos(PARTNER,-100,-800,0,0,2)
+
+			//僇儊儔傪弶婜愝掕偵
+			CAM_return( 0 )
+			wait(30)
+			
+			F_set(FT_01_TalkNipple)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(NIPPLE, "1", "1", "1")	
+			KAO(COLIN,"1", "1", "1")	
+			
+			F_set_chr(NIPPLE,CF_NO_MOVE)
+			F_set_chr(COLIN,CF_NO_MOVE)
+			
+			//仛僐儕儞
+			F_set_note(-57,-1)
+			
+			EV_end()
+			//僼僃乕僪僀儞----------------------
+			fade_in(0,30,BLACK)
+		//	僾儗僀儎乕憖嶌嫋壜
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+		//丂丂儔僌僫偨偪偼傾儖僢僥暚悈偺嵍庤慜偺攝抲偐傜憖嶌嫋壜丅
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		//丂丂仸僐儕儞偺曽岦傪岦偄偰偄傞丅
+		}
+		else
+		{
+			MES(NIPPLE,"喂，科林，\n你亂說些什麼啊！？",0)
+			MES(NIPPLE,"趕快更正！\n不然可就沒有飯吃了！",0)
+			MES_close(NIPPLE)
+		}
+	}
+	
+	TK_end()
+}
+
+MOTION_NIPPLE
+{
+	MOT_SET(NIPPLE,150,-1,476,476,-1,-1)
+	MOT(NIPPLE,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

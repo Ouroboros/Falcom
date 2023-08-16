@@ -1,0 +1,130 @@
+////////////////////
+#CharMotTable:0460//テンペストフラワー之触手右3
+BS_450m.it3
+
+SET 02 02  0011 0280  -01 0000 //待机
+SET 03 02  0145 0280  -01 0000 //途中から再生待机
+SET 04 31  0335 0359  -01 0000 //途中から再生下段待机
+SET 05 32  0405 0439  -01 0000 //途中から再生上段待机
+SET 31 31  0290 0359  -01 0000 //下段待机
+SET 32 32  0370 0439  -01 0000 //上段待机
+
+//上から見た図。各触手之対応番号。
+//　右４　左４
+//右３　　　左３
+//右２　　　左２
+//　右１　左１
+//　 　正面
+
+SET 45 -1  1410 1519  -01 0000 //叩きつけ右３
+OTO 45 1465	662		//たたきつける（小）
+OTO 45 1455	658		//振り回し（そ之他1）
+
+SET 46 02  1520 1559  -01 0000 //叩きつけ右３戻る
+OTO 46 1520	661		//振り回した触手を元之位置に戻す2
+
+SET 52 -1  2010 2089  -01 0000 //振り回し　下段　右回し
+OTO 52 2020	656		//振り回し（赤）
+
+SET 53 02  2090 2179  -01 0000 //振り回し　下段　右回し戻る
+OTO 53 2090	660		//振り回した触手を元之位置に戻す1
+
+SET 54 -1  2190 2279  -01 0000 //振り回し　上段　右回し
+OTO 54 2200	657		//振り回し（青）
+
+SET 67 -1  3370 3439  -01 0000 //右３へたる(1485→)
+SET 68 -1  3440 3539  -01 0000 //右３ちぎれる
+SET 73 -1  3910 3979  -01 0000 //右回し後へたる(2090→)
+SET 74 -1  3980 4079  -01 0000 //右回し後ちぎれる
+SET 75 75  4090 4170  -01 0000 //首縮め用待机
+SET 76 75  4130 4170  -01 0000 //首縮め用待机途中から再生
+
+if_INIT
+{
+	H_@charbaseA -1 -1 10 1
+	B_MOV   -1  0    0   0  0000    00 //待机
+}
+//■■■■■■　エフェクト　■■■■■■
+//						SetID FLame数 effNO size 予約 予約
+E_Bone_LeftArm			45		1465	105	 -4		0	0	//叩きつけ右3HITcline
+E_Bone_LeftForeArm		45		1465	105	 -4		0	0	//叩きつけ右3HITcline
+E_Bone_LeftHand			45		1465	105	 -4		0	0	//叩きつけ右3HITcline
+//E_Bone_LeftFingerBase	45		1465	143	 -4		0	0	//叩きつけ右3HITcline
+
+E_Bone_LeftFingerBase	45		1467   7340	100		0	0	//叩きつけ左 衝撃
+E_Bone_LeftHand			45		1467   7340	100		0	0	//叩きつけ左 衝撃
+E_Bone_LeftForeArm		45		1467   7340	100		0	0	//叩きつけ左 衝撃
+
+E_Bone_LeftFingerBase	45		1455	152	 -1		0	0	LeftFingers_End //軌跡
+E_Bone_LeftForeArm		45		1455	152	 -1		0	0	Bone_LeftHand //軌跡
+E_Bone_LeftHand			45		1455	152	 -1		0	0	Bone_LeftFingerBase //軌跡
+
+E_Bone_LeftForeArm		52		2030	140	 -4		0	0	//振り回し 下段 右回しHITcline
+E_Bone_LeftHand			52		2030	140	 -4		0	0	//振り回し 下段 右回しHITcline
+E_Bone_LeftFingerBase	52		2030	143	 -4		0	0	//振り回し 下段 右回しHITcline
+E_Bone_LeftFingerBase	52		2020	150	 -1		0	0	LeftFingers_End //軌跡
+E_Bone_LeftForeArm		52		2020	150	 -1		0	0	Bone_LeftHand //軌跡
+E_Bone_LeftHand			52		2020	150	 -1		0	0	Bone_LeftFingerBase //軌跡
+
+E_Bone_LeftForeArm		54		2210	140	 -4		0	0	//振り回し 上段 右回しHITcline
+E_Bone_LeftHand			54		2210	140	 -4		0	0	//振り回し 上段 右回しHITcline
+E_Bone_LeftFingerBase	54		2210	143	 -4		0	0	//振り回し 上段 右回しHITcline
+E_Bone_LeftFingerBase	54		2200	151	 -1		0	0	LeftFingers_End //軌跡
+E_Bone_LeftForeArm		54		2200	151	 -1		0	0	Bone_LeftHand //軌跡
+E_Bone_LeftHand			54		2200	151	 -1		0	0	Bone_LeftFingerBase //軌跡
+
+//       SetID FLame数 effNO size 予約 予約
+//■■■■■■■■■■■■■■■■■■■■■■■■■■■
+//t0 R
+//待机	set typ	spd rot	--		--
+if_F 14 18
+{
+}
+else
+{
+	B_NEXT	02	0	100 	30	0	  45	15	//叩きつけ右３
+	B_NEXT	02	0	100 	60	0	  52	15	//振り回し　下段　右回し
+//	B_NEXT	02	0	100 	60	0	  54	15	//振り回し　上段　右回し
+}
+//C_"ノード名" 			SetID frame charNO 予約 予約 予約 frameSet
+//C_Bone_RightArm3_Root	52		2011	1	0	0		0	brandish
+//C_Bone_RightArm3_Root	54		2191	1	0	0		0	brandish
+//C_Bone_RightArm3_Root	53		2091	1	0	0		0	back
+
+//if_HP 100 50
+//{
+	// 		set Ang tim rnd length next Hokan
+	B_NEXT	45	0	150 0		0	46	15	//叩きつけ右３戻る
+	B_NEXT	52	0	80  0		0	53	15	//振り回し 右回し下段戻る
+	B_NEXT	54	0	90  0		0	53	15	//振り回し 右回し上段戻る
+//}
+//if_HP 50 0
+//{
+//	// 		set Ang tim rnd length next Hokan
+//	B_NEXT	45	0	100 	0		0	67	15	//右3へたる
+//	B_NEXT	52	0	80	 	0		0	73	15	//右回し下段後へたる
+//	B_NEXT	54	0	90	 	0		0	73	15	//右回し上段後へたる
+//}
+
+// 		set Ang tim rnd length next Hokan
+B_NEXT	67	0	200 0		0	68	15	//右3ちぎれる
+B_NEXT	73	0	200 0		0	74	15	//右回し後ちぎれる
+	mFX_set 67 -1 18
+	mFX_set 73 -1 18
+
+H_@charbaseA 67 3380 10 2 //たたきつけ後へたりアタリON
+H_@charbaseA 68 3480 10 1 //たたきつけ後へたりアタリOFF
+H_@charbaseA 71 3920 10 2 //振り回し後へたりアタリON
+H_@charbaseA 72 3990 10 1 //振り回し後へたりアタリOFF
+
+	if_EV DIED
+	{
+		OTO -1 -1 678 //触手死亡
+	}
+
+	if_EV DAMAGE	//ダメージeff
+	{
+		E_csp18		-1 -1 24400 130 0 0  //ダメージ
+	}
+
+#EndCharMotTable

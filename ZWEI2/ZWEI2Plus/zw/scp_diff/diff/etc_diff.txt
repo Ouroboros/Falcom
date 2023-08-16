@@ -1,0 +1,2114 @@
+diff --git a/scp_jp_conv/etc/S_T018.txt b/scp_conv/etc/S_T018.txt
+index d0ef164..0308796 100644
+--- a/scp_jp_conv/etc/S_T018.txt
++++ b/scp_conv/etc/S_T018.txt
+@@ -121,7 +121,7 @@ TK_KLODE
+ 			{
+ 			//	name("★以後、繰り返し")
+ 				MES(KLODE,"何よりも大事なのは\nあの竜巻を突破した後です。",0)
+-				MES(KLODE,"万全の準備をされてから\n作戦に望まれるといいでしょう。",0)
++				MES(KLODE,"万全の準備をされてから\n作戦に臨まれるといいでしょう。",0)
+ 				MES_close(KLODE)
+ 			}
+ 		}
+diff --git a/scp_jp_conv/etc/S_T019.txt b/scp_conv/etc/S_T019.txt
+index bbc1ee5..67701c9 100644
+--- a/scp_jp_conv/etc/S_T019.txt
++++ b/scp_conv/etc/S_T019.txt
+@@ -762,17 +762,17 @@ TK_ODESSA
+ //			chr_pos(PARTNER,136,-821,0,180,2)
+ 			chr_pos(ODESSA,100,-1080,5,110,150)
+ 
+-
+-
+ 			//ルートムーブ中のメイとぶつからないように消す
+-			color(MEI,-1)//透過
+-			
+-			//ホアン初回後ならルートムーブ止める
+-			move(MEI, 99, 0,0,0,0,0)//0905追加
+-			EV_stop("MOVE_MEI")
+-			//メイを初期位置へ
+-			chr_pos(MEI,298,-1505,1,351,2)
+-			
++			if(WK000==0)	//0922追加
++			{
++				color(MEI,-1)//透過
++				
++				//ホアン初回後ならルートムーブ止める
++				move(MEI, 99, 0,0,0,0,0)//0905追加
++				EV_stop("MOVE_MEI")
++				//メイを初期位置へ
++				chr_pos(MEI,298,-1505,1,351,2)
++			}
+ 			F_set_chr(RAGNA,CF_NO_ZIMEN)
+ 			F_set_chr(RAGNA,CF_NO_CSP)
+ 			F_set_chr(RAGNA,CF_NO_HEIGHT)
+@@ -964,9 +964,11 @@ TK_ODESSA
+ 			KAO(RAGNA, "1", "1", "1")	
+ 			KAO(ODESSA,"1", "1", "1")	
+ 
+-			color(MEI,1)//メイを表示
+-			
+-			EV("MOVE_MEI")
++			if(WK000==0)	//0922追加
++			{
++				color(MEI,1)//メイを表示
++				EV("MOVE_MEI")
++			}
+ 			look(ODESSA,"Bone_Head",0,		0,10,0,			0,0,0)
+ 			
+ 			F_reset_chr(RAGNA,CF_NO_ZIMEN)
+@@ -1399,7 +1401,8 @@ TK_ODESSA
+ 		//――――――――――――――――――――――――――
+ 			cross_fade(30)			//クロスフェード
+ 			EV_begin()
+-				
++			
++			move(ODESSA, 99, 0,0,0,0,0)//0905追加
+ 			EV_stop("FREEMOVE_ODESSA")
+ 			MOT_SET(ODESSA,150,-1,399,399,-1,-1)		//片手腰
+ 			
+diff --git a/scp_jp_conv/etc/S_T021.txt b/scp_conv/etc/S_T021.txt
+index 7e84128..53f9ca7 100644
+--- a/scp_jp_conv/etc/S_T021.txt
++++ b/scp_conv/etc/S_T021.txt
+@@ -851,7 +851,7 @@ TK_GYARANDOW
+ 
+ 		MES(GYARANDOW,"ここは夢見る戦士たちの\n集いし館……",0)
+ 		MES(GYARANDOW,"お前たちの腕試しには\nピッタリの場所なのである。",0)
+-		MES(GYARANDOW,"さあ、その若さを持って\n遠慮なく挑戦してみるがいい！",0)
++		MES(GYARANDOW,"さあ、その若さをもって\n遠慮なく挑戦してみるがいい！",0)
+ 		MES_close(GYARANDOW)
+ 
+ 	//　　ラグナたちに青ざめエモーション。
+@@ -2038,7 +2038,8 @@ TALK_GYARANDOW
+ 			//　　★メッセージ５
+ 			//──────────────────────────────
+ 			//	name("□フィギュア館が完成していない場合")
+-			if(GW_FIGUER<137)
++			//if(GW_FIGUER<137)
++			if(GW_FIGUER<158)	//0922変更
+ 			{
+ 				MES(GYARANDOW,"む……\nあちらのフィギュア館かね？",0)
+ 				MES(GYARANDOW,"我輩の新しい趣味として\n最近始めたのだよ。",0)
+@@ -5623,7 +5624,7 @@ EV_GetSkil_2
+ 	if(WK010==4)
+ 	{
+ 		MES(GYARANDOW,"今回授けたのは\nL711『奥義．ドラゴンフレア』L400。",0)
+-		MES(GYARANDOW,"闇より出づる六つの火球が\n敵に大ダメージを与える奥義だ。",0)
++		MES(GYARANDOW,"巨大な火龍と化した闘気が\n敵に大ダメージを与える奥義だ。",0)
+ 		MES_close(GYARANDOW)
+ 		get_item(100,1,1)
+ 		//★火の奥義を修得
+@@ -6011,7 +6012,7 @@ EV_GetSkil_3
+ 	wait(30)
+ 
+ //	name("超人ギャランドゥ")
+-	MES(GYARANDOW,"お前たちの才能を持ってすれば、\n我輩を超えるエクササイズマスターと\nなるかもしれん。",0)
++	MES(GYARANDOW,"お前たちの才能をもってすれば、\n我輩を超えるエクササイズマスターと\nなるかもしれん。",0)
+ 	MES(GYARANDOW,"──なにより、お前たちは\nこの世界の将来を担っている……",0)
+ 	MES(GYARANDOW,"そんな若者にお節介を焼くのも\n我輩の勤めであるからな。",0)
+ 	MES_close(GYARANDOW)
+@@ -6316,7 +6317,7 @@ EV_GetSkil_3
+ 
+ 		MOT(GYARANDOW,152,10)
+ 		wait(15)
+-		MES(GYARANDOW,"そう、L711『奥義．ドラゴンフレア』L400は\n闇より出づる六つの火球が\n敵に大ダメージを与える奥義だ。",0)
++		MES(GYARANDOW,"そう、L711『奥義．ドラゴンフレア』L400は\n巨大な火龍と化した闘気が\n敵に大ダメージを与える奥義だ。",0)
+ 		MES(GYARANDOW,"全属性中でも\n最大の威力を備えているぞ。",0)
+ 		MES_close(GYARANDOW)
+ 		get_item(100,1,1)
+diff --git a/scp_jp_conv/etc/S_T040.txt b/scp_conv/etc/S_T040.txt
+index cbd63be..e85fbaf 100644
+--- a/scp_jp_conv/etc/S_T040.txt
++++ b/scp_conv/etc/S_T040.txt
+@@ -540,7 +540,7 @@ TK_ANNA
+ 			wait(30)
+ 
+ 			MES(ANNA,"何よあんたたち。\n見ない顔ねー。",0)
+-			MES(ANNA,"怪しいやつじゃさそうだけどー。",0)
++			MES(ANNA,"怪しいやつじゃなさそうだけどー。",0)
+ 			MES(ANNA,"このお屋敷で\n妙な真似したらぶつわよ。\nいいわねー。",0)
+ 			MES_close(ANNA)
+ 			
+diff --git a/scp_jp_conv/etc/S_T045.txt b/scp_conv/etc/S_T045.txt
+index 80e179f..8a30082 100644
+--- a/scp_jp_conv/etc/S_T045.txt
++++ b/scp_conv/etc/S_T045.txt
+@@ -583,7 +583,7 @@ TK_GREIN
+ 				MES(GREIN,"オデッサのやつ……\nイルバードに来ていたんだな。",0)
+ 				MES(GREIN,"あいつとは、以前\n遺跡を巡っていた頃に\n２、３度会った事がある……",0)
+ 				MES(GREIN,"相変わらず賞金首を\n追いかけているらしいのだが、\n今回は苦戦しているようだったな。",0)
+-				MES(GREIN,"鼻の効くあいつでも手こずるとは\n中々大した相手のようだ……",0)
++				MES(GREIN,"鼻の利くあいつでも手こずるとは\n中々大した相手のようだ……",0)
+ 				MES_close(GREIN)
+ 
+ 				F_set(GREIN)
+@@ -1320,7 +1320,7 @@ CHECK_RANK_GREIN
+ 		EV("RANK_ITEMGET")
+ 		wait_EV("RANK_ITEMGET")
+ 
+-		MES(GREIN,"ビューティハンターは、\n栄光の元、今世を謳歌するハンターに\n贈られるランクだ。",0)
++		MES(GREIN,"ビューティハンターは、\n大いなる栄光を掴んだハンターに\n贈られるランクだ。",0)
+ 		MES(GREIN,"……中々いい顔つきになってきたな。\nこれからも頑張るといい……",0)
+ 		MES_close(GREIN)
+ 		
+@@ -1342,7 +1342,7 @@ CHECK_RANK_GREIN
+ 		EV("RANK_ITEMGET")
+ 		wait_EV("RANK_ITEMGET")
+ 
+-		MES(GREIN,"ビューティハンターは、\n栄光の元、今世を謳歌するハンターに\n贈られるランクだ。",0)
++		MES(GREIN,"ビューティハンターは、\n大いなる栄光を掴んだハンターに\n贈られるランクだ。",0)
+ 		MES(GREIN,"……中々いい顔つきになってきたな。\nこれからも頑張るといい……",0)
+ 		MES_close(GREIN)
+ 		
+@@ -1452,7 +1452,7 @@ CHECK_RANK_GREIN
+ 		EV("RANK_ITEMGET")
+ 		wait_EV("RANK_ITEMGET")
+ 
+-		MES(GREIN,"ベテランハンターは、\nハンターとして十分な実績を治めた者に\n贈られるランクだ。",0)
++		MES(GREIN,"ベテランハンターは、\nハンターとして十分な実績を収めた者に\n贈られるランクだ。",0)
+ 		MES(GREIN,"これからも頑張るといい。",0)
+ 		MES_close(GREIN)
+ 		
+@@ -1474,7 +1474,7 @@ CHECK_RANK_GREIN
+ 		EV("RANK_ITEMGET")
+ 		wait_EV("RANK_ITEMGET")
+ 
+-		MES(GREIN,"ベテランハンターは、\nハンターとして十分な実績を治めた者に\n贈られるランクだ。",0)
++		MES(GREIN,"ベテランハンターは、\nハンターとして十分な実績を収めた者に\n贈られるランクだ。",0)
+ 		MES(GREIN,"これからも頑張るといい。",0)
+ 		MES_close(GREIN)
+ 		
+diff --git a/scp_jp_conv/etc/S_T046.txt b/scp_conv/etc/S_T046.txt
+index 3b7be7a..4782a00 100644
+--- a/scp_jp_conv/etc/S_T046.txt
++++ b/scp_conv/etc/S_T046.txt
+@@ -1746,6 +1746,7 @@ PRESENT_TREASURE
+ 			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+ 			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+ 
++			SE(24,0)	//お金の音だと味気ない
+ 			MES(0,"C3特別報酬として、１０万ペンネを受け取った。",2)
+ 			MES_close(0)
+ 
+@@ -1980,6 +1981,7 @@ EV_PRESENT_Loop
+ 				MES(GREIN,"今日は特別に、\nこれも受け取っておいてくれ。",0)
+ 				MES_close(GREIN)
+ 
++				SE(24,0)	//お金の音だと味気ない
+ 				MES(0,"C3１万ペンネ受け取った。",2)
+ 				MES_close(0)
+ 				get_gold(10000,RAGNA)
+@@ -2062,6 +2064,7 @@ EV_PRESENT_Loop
+ 				MES(GREIN,"今日は特別に、\nこれも受け取っておいてくれ。",0)
+ 				MES_close(GREIN)
+ 
++				SE(24,0)	//お金の音だと味気ない
+ 				MES(0,"C3１万ペンネ受け取った。",2)
+ 				MES_close(0)
+ 				get_gold(10000,RAGNA)
+@@ -2144,6 +2147,7 @@ EV_PRESENT_Loop
+ 				MES(GREIN,"今日は特別に、\nこれも受け取っておいてくれ。",0)
+ 				MES_close(GREIN)
+ 
++				SE(24,0)	//お金の音だと味気ない
+ 				MES(0,"C3１万ペンネ受け取った。",2)
+ 				MES_close(0)
+ 				get_gold(10000,RAGNA)
+@@ -2225,6 +2229,7 @@ EV_PRESENT_Loop
+ 				MES(GREIN,"今日は特別に、\nこれも受け取っておいてくれ。",0)
+ 				MES_close(GREIN)
+ 
++				SE(24,0)	//お金の音だと味気ない
+ 				MES(0,"C3１万ペンネ受け取った。",2)
+ 				MES_close(0)
+ 				get_gold(10000,RAGNA)
+@@ -2322,6 +2327,7 @@ EV_PRESENT_Loop
+ 				MES(GREIN,"……よくやってくれた。\n今日は特別に、これも\n受け取っておいてくれ。",0)
+ 				MES_close(GREIN)
+ 
++				SE(24,0)	//お金の音だと味気ない
+ 				MES(0,"C3２万ペンネ受け取った。",2)
+ 				MES_close(0)
+ 				get_gold(20000,RAGNA)
+@@ -2416,6 +2422,7 @@ EV_PRESENT_Loop
+ 				MES(GREIN,"……よくやってくれた。\n今日は特別に、これも\n受け取っておいてくれ。",0)
+ 				MES_close(GREIN)
+ 
++				SE(24,0)	//お金の音だと味気ない
+ 				MES(0,"C3２万ペンネ受け取った。",2)
+ 				MES_close(0)
+ 				get_gold(20000,RAGNA)
+@@ -3545,7 +3552,7 @@ CHECK_RANK_CARDINA
+ 		EV("RANK_ITEMGET")
+ 		wait_EV("RANK_ITEMGET")
+ 
+-		MES(CARDINA,"ビューティハンターは、\n栄光の元、今世を謳歌するハンターに\n贈られるランクです。",0)
++		MES(CARDINA,"ビューティハンターは、\n大いなる栄光を掴んだハンターに\n贈られるランクです。",0)
+ 		MES(CARDINA,"ラグナさん、これからも\n素晴らしい功績を期待しています。",0)
+ 		MES(CARDINA,"頑張ってくださいね。",0)
+ 		MES_close(CARDINA)
+@@ -3568,7 +3575,7 @@ CHECK_RANK_CARDINA
+ 		EV("RANK_ITEMGET")
+ 		wait_EV("RANK_ITEMGET")
+ 
+-		MES(CARDINA,"ビューティハンターは、\n栄光の元、今世を謳歌するハンターに\n贈られるランクです。",0)
++		MES(CARDINA,"ビューティハンターは、\n大いなる栄光を掴んだハンターに\n贈られるランクです。",0)
+ 		MES(CARDINA,"ラグナさん、これからも\n素晴らしい功績を期待しています。",0)
+ 		MES(CARDINA,"頑張ってくださいね。",0)
+ 		MES_close(CARDINA)
+@@ -3690,7 +3697,7 @@ CHECK_RANK_CARDINA
+ 		EV("RANK_ITEMGET")
+ 		wait_EV("RANK_ITEMGET")
+ 
+-		MES(CARDINA,"ベテランハンターは、\nハンターとして十分な実績を治めた者に\n贈られるランクです。",0)
++		MES(CARDINA,"ベテランハンターは、\nハンターとして十分な実績を収めた者に\n贈られるランクです。",0)
+ 		MES(CARDINA,"ラグナさん、\nこれからも頑張ってくださいね。",0)
+ 		MES_close(CARDINA)
+ 		
+@@ -3712,7 +3719,7 @@ CHECK_RANK_CARDINA
+ 		EV("RANK_ITEMGET")
+ 		wait_EV("RANK_ITEMGET")
+ 
+-		MES(CARDINA,"ベテランハンターは、\nハンターとして十分な実績を治めた者に\n贈られるランクです。",0)
++		MES(CARDINA,"ベテランハンターは、\nハンターとして十分な実績を収めた者に\n贈られるランクです。",0)
+ 		MES(CARDINA,"ラグナさん、\nこれからも頑張ってくださいね。",0)
+ 		MES_close(CARDINA)
+ 		
+diff --git a/scp_jp_conv/etc/S_T048.txt b/scp_conv/etc/S_T048.txt
+index 7e2bb86..188068f 100644
+--- a/scp_jp_conv/etc/S_T048.txt
++++ b/scp_conv/etc/S_T048.txt
+@@ -12,6 +12,7 @@
+ //ローカルワーク
+ //WK000  配置換えに使用(実体は ev00120にあり）
+ //WK001  メッセージランダム分岐
++//WK015　そのときのフード交換回数（ホアン、メイで使う）
+ //---------------------------------------------------------------------
+ 
+ //　　※ホアンがカウンター係の場合は、初めに選択肢を表示する。
+@@ -775,10 +776,90 @@ COUNTER_HOAN
+ 	else
+ 	if(WK_YESNO==2)
+ 	{
++		workL(015,SET,0)												//交換回数
++		EV("EV_FOOD_EXCHANGE")
++		wait_EV("EV_FOOD_EXCHANGE")	
++
++		//　　※カウンター処理選択肢に戻る。
++		loop
++
++	}
++	//──────────────────────────────
++	//	name("□フード交換って？)
++	//──────────────────────────────
++	else
++	if(WK_YESNO==3)
++	{
++		MES(HOAN,"フード交換サービスは\n同じフード１０個を、より高いグレードの\nフードと交換するサービスね。",0)
++		MES(HOAN,"例えば、かっぱ巻き１０個は\n七草かゆ１個と交換できるよ。",0)
++		MES(HOAN,"七草かゆ１個の方が、\nかっぱ巻き１０個食べるより\n得られる経験値が大きいね。",0)
++		MES(HOAN,"つまりレベルアップには、\nどんどん交換サービスを\n使うのが早道ね。",0)
++		MES_close(HOAN)
++
++		//──────────────────────────────
++		//	name("□まだフード交換をした事が無くフラグ①②の場合、一度だけ挿入。")
++		if(!FT_FF_FoodExUse && !FT_FF_FoodExHelp && !F2_00_GoForest)
++		{
++			system_chack(0)//Foodチェック
++			//──────────────────────────────
++			//	name("□フード１０個揃ってる。")
++			if(WK_ITEMBOX1)
++			{
++				MES(RAGNA,"（なるほど……\n  よし、いっちょ試してみるか。）",0)
++				MES_close(RAGNA)
++			}
++			else
++			//	name("□フード１０個揃ってない。")
++			{
++				MES(PARTNER,"ふむ、しかし……\n交換するにも、まずは\nフードを集めねばのう……",0)
++				MES_close(PARTNER)
++
++			//	name2(RAGNA)
++				look_chr(RAGNA,PARTNER,"Bone_Head")
++				MES(RAGNA,"フードなら、ダンジョンで\n手に入るはずだぜ。",0)
++				look_off(RAGNA)
++				MES(RAGNA,"まずはダンジョン探索\nからって事だな。",0)
++				MES_close(RAGNA)
++			}
++			F_set(FT_FF_FoodExHelp)
++			//──────────────────────────────
++		}
++		else
++		{
++		//	name("□それ以外")
++			MES(HOAN,"……どうするかね？",0)
++			MES_close(HOAN)
++		}
++		//──────────────────────────────
++
++		//　　※カウンター処理選択肢に戻る。
++		loop
++	}
++	//──────────────────────────────
++	//	name("□やめる")
++	//　　会話処理終了。
++	//──────────────────────────────
++	else
++	{
++		VOICE(745,0)															//「また来るといいヨ」
++		MES(HOAN,"また来るといいよ。",0)
++		
++//		MES(HOAN,"毎度あり。\n今後もご贔屓にお願いね。",0)
++//		MES(HOAN,"今後もご贔屓にお願いね。",0)
++		MES_close(HOAN)
++	}
++}
++
++//──────────────────────────────
++//フード交換実体
++//──────────────────────────────
++EV_FOOD_EXCHANGE
++{
+ 	//	name("□同じフードを１０個持っている場合")
+ 		system_chack(0)//Foodチェック
+ 		if(WK_ITEMBOX1)
+ 		{
++
+ 			//─────────────────────────────────────────────────────
+ 			//交換がラスト　ＣＤに
+ 			//flag2480-2499を参照してプログラム側で自動判定
+@@ -898,95 +979,55 @@ COUNTER_HOAN
+ 					//　　※フード交換処理を行う。
+ 					system_chack(1)//交換
+ 					F_set(FT_FF_FoodExUse)
++					
++					workL(015,ADD,1)												//交換したか記録
++	
++					loop	//くりかえし　
++					
+ 				}
+ 				//──────────────────────────────
+ 				//	name("□やめる")
+ 				//──────────────────────────────
+ 				else
+ 				{
+-					VOICE(745,0)												//「また来るといいヨ」
+-					MES(HOAN,"また来るといいよ。",0)
++//					VOICE(745,0)												//「また来るといいヨ」
++//					MES(HOAN,"また来るといいよ。",0)
+ //					MES(HOAN,"そう、また今度ね。",0)
++					MES(HOAN,"……どうするかね？",0)
+ 					MES_close(HOAN)
++			
+ 				}
++				
+ 			}
++			
+ 		}
+ 	//──────────────────────────────
+ 	//	name("□同じフードを１０個持っていない場合")
+ 		else
+ 		{
+-			MES(HOAN,"同じフード、\n１０個持ってないみたいね。",0)
+-			MES(HOAN,"それでは交換できないよ。",0)
+-			MES(HOAN,"……どうするかね？",0)
+-			MES_close(HOAN)
+-		//　　※カウンター処理選択肢に戻る。
+-			loop
+-		}
+-	}
+-	//──────────────────────────────
+-	//	name("□フード交換って？)
+-	//──────────────────────────────
+-	else
+-	if(WK_YESNO==3)
+-	{
+-		MES(HOAN,"フード交換サービスは\n同じフード１０個を、より高いグレードの\nフードと交換するサービスね。",0)
+-		MES(HOAN,"例えば、かっぱ巻き１０個は\n七草かゆ１個と交換できるよ。",0)
+-		MES(HOAN,"七草かゆ１個の方が、\nかっぱ巻き１０個食べるより\n得られる経験値が大きいね。",0)
+-		MES(HOAN,"つまりレベルアップには、\nどんどん交換サービスを\n使うのが早道ね。",0)
+-		MES_close(HOAN)
+-
+-		//──────────────────────────────
+-		//	name("□まだフード交換をした事が無くフラグ①②の場合、一度だけ挿入。")
+-		if(!FT_FF_FoodExUse && !FT_FF_FoodExHelp && !F2_00_GoForest)
+-		{
+-			system_chack(0)//Foodチェック
+-			//──────────────────────────────
+-			//	name("□フード１０個揃ってる。")
+-			if(WK_ITEMBOX1)
++			//一回しか交換してない場合はメッセージなし
++			if(WK015==1)
+ 			{
+-				MES(RAGNA,"（なるほど……\n  よし、いっちょ試してみるか。）",0)
+-				MES_close(RAGNA)
+ 			}
+ 			else
+-			//	name("□フード１０個揃ってない。")
++			if(WK015>1)
+ 			{
+-				MES(PARTNER,"ふむ、しかし……\n交換するにも、まずは\nフードを集めねばのう……",0)
+-				MES_close(PARTNER)
+-
+-			//	name2(RAGNA)
+-				look_chr(RAGNA,PARTNER,"Bone_Head")
+-				MES(RAGNA,"フードなら、ダンジョンで\n手に入るはずだぜ。",0)
+-				look_off(RAGNA)
+-				MES(RAGNA,"まずはダンジョン探索\nからって事だな。",0)
+-				MES_close(RAGNA)
++				//何回か交換した場合
++				MES(HOAN,"同じフード、\nもう１０個持ってないみたいね。",0)
++				MES(HOAN,"……どうするかね？",0)
++				MES_close(HOAN)
++			}
++			else
++			{
++				//最初に交換しようとしたとき
++				MES(HOAN,"同じフード、\n１０個持ってないみたいね。",0)
++				MES(HOAN,"それでは交換できないよ。",0)
++				MES(HOAN,"……どうするかね？",0)
++				MES_close(HOAN)
+ 			}
+-			F_set(FT_FF_FoodExHelp)
+-			//──────────────────────────────
+-		}
+-		else
+-		{
+-		//	name("□それ以外")
+-			MES(HOAN,"……どうするかね？",0)
+-			MES_close(HOAN)
+-		}
+-		//──────────────────────────────
+-
+ 		//　　※カウンター処理選択肢に戻る。
+-		loop
+-	}
+-	//──────────────────────────────
+-	//	name("□やめる")
+-	//　　会話処理終了。
+-	//──────────────────────────────
+-	else
+-	{
+-		VOICE(745,0)															//「また来るといいヨ」
+-		MES(HOAN,"また来るといいよ。",0)
+-		
+-//		MES(HOAN,"毎度あり。\n今後もご贔屓にお願いね。",0)
+-//		MES(HOAN,"今後もご贔屓にお願いね。",0)
+-		MES_close(HOAN)
+-	}
++		//	loop
++		}			
+ }
+ 
+ //①初回でのメイの動き
+diff --git a/scp_jp_conv/etc/S_T049.txt b/scp_conv/etc/S_T049.txt
+index d518a84..6a36e7c 100644
+--- a/scp_jp_conv/etc/S_T049.txt
++++ b/scp_conv/etc/S_T049.txt
+@@ -12,6 +12,7 @@
+ //ローカルワーク
+ //WK000  配置換えに使用(実体は ev00120にあり）
+ //WK001  メッセージランダム分岐
++//WK015　そのときのフード交換回数（ホアン、メイで使う）
+ //---------------------------------------------------------------------
+ 
+ //▼通常カウンター処理
+@@ -22,6 +23,8 @@
+ TK_MEI
+ {
+ 	TK_begin()
++	F_set(203)		//メイ移動停止フラグ　パッチ20081010
++
+ ////////////////////////////////////////////////////////////////
+ //仲間全員が話し相手に振り向く
+ ////////////////////////////////////////////////////////////////
+@@ -236,7 +239,10 @@ TK_MEI
+ 		EV("NORMAL_TK_MEI")
+ 		wait_EV("NORMAL_TK_MEI")
+ 	}
++	
++
+ 	TK_end()
++	F_reset(203)		//メイ移動停止フラグ　パッチ20081010
+ 
+ }
+ 
+@@ -265,6 +271,55 @@ COUNTER_MEI
+ 	else
+ 	if(WK_YESNO==2)
+ 	{
++		workL(015,SET,0)												//交換回数
++		
++		EV("EV_FOOD_EXCHANGE_MEI")
++		wait_EV("EV_FOOD_EXCHANGE_MEI")	
++	
++		//　　※カウンター処理選択肢に戻る。
++		loop	
++	
++
++	}
++	//──────────────────────────────
++	//	name("□フード交換って？)
++	//──────────────────────────────
++	else
++	if(WK_YESNO==3)
++	{
++		MES(MEI,"フード交換サービスは\n同じフード１０個を、より高いグレードの\nフードと交換するサービスアルよ。",0)
++		MES(MEI,"例えば、かっぱ巻き１０個は\n七草かゆ１個と交換できるアル。",0)
++		MES(MEI,"七草かゆ１個の方が、\nかっぱ巻き１０個食べるより\n得られる経験値が大きいネ。",0)
++		MES(MEI,"つまりレベルアップには、\nどんどん交換サービスを使うのが\n早道ということアル㈱",0)
++		MES(MEI,"……どうするアルか？",0)
++		MES_close(MEI)
++
++	//　　※上記選択肢に飛ぶ。
++		loop
++	}
++	//──────────────────────────────
++	//	name("□やめる")
++	//　　会話処理終了。
++	//──────────────────────────────
++	else
++	{
++	//	name("□やめる")
++////	MES(MEI,"毎度ありアル。\nまたヨロシクお願いネ。",0)
++//		MES(MEI,"またヨロシクお願いネ。",0)
++		
++		VOICE(724,0)					//「また来てアル」
++		MES(MEI,"また来てアル。",0)
++		
++		MES_close(MEI)
++	}
++}
++
++
++//──────────────────────────────
++//フード交換実体
++//──────────────────────────────
++EV_FOOD_EXCHANGE_MEI
++{
+ 	//	name("□同じフードを１０個持っている場合")
+ 		system_chack(0)//Foodチェック
+ 		if(WK_ITEMBOX1)
+@@ -389,6 +444,10 @@ COUNTER_MEI
+ 					//　　※フード交換処理を行う。
+ 					system_chack(1)//交換
+ 					F_set(FT_FF_FoodExUse)
++					
++					workL(015,ADD,1)												//交換したか記録
++					
++					loop	//くりかえし　
+ 				}
+ 				//──────────────────────────────
+ 				//	name("□やめる")
+@@ -396,11 +455,15 @@ COUNTER_MEI
+ 				else
+ 				{
+ 				
+-					VOICE(724,0)					//「また来てアル」
++/*					VOICE(724,0)					//「また来てアル」
+ 					MES(MEI,"また来てアル。",0)
+ 					
+ 	//				MES(MEI,"そう、残念アルね～……",0)
+ 					MES_close(MEI)
++*/
++					MES(MEI,"……どうするアルか？",0)
++					MES_close(MEI)			
++					
+ 				}
+ 			}
+ 		}
+@@ -408,46 +471,30 @@ COUNTER_MEI
+ 	//	name("□同じフードを１０個持っていない場合")
+ 		else
+ 		{
+-			MES(MEI,"同じフード、\n１０個持ってないアルよ。\nそれでは交換できないネ。",0)
+-			MES(MEI,"……どうするアルか？",0)
+-			MES_close(MEI)
++			//一回しか交換してない場合はメッセージなし
++			if(WK015==1)
++			{
++			}
++			else
++			if(WK015>1)
++			{
++				//何回か交換した場合
++				MES(MEI,"同じフード、\nもう１０個持ってないアルよ。",0)
++				MES(MEI,"……どうするアルか？",0)
++				MES_close(MEI)				
++			}
++			else
++			{
++				MES(MEI,"同じフード、\n１０個持ってないアルよ。\nそれでは交換できないネ。",0)
++				MES(MEI,"……どうするアルか？",0)
++				MES_close(MEI)
++			}
+ 	//　　※上記選択肢に飛ぶ。
+-			loop
++	//		loop
+ 		}
+-	}
+-	//──────────────────────────────
+-	//	name("□フード交換って？)
+-	//──────────────────────────────
+-	else
+-	if(WK_YESNO==3)
+-	{
+-		MES(MEI,"フード交換サービスは\n同じフード１０個を、より高いグレードの\nフードと交換するサービスアルよ。",0)
+-		MES(MEI,"例えば、かっぱ巻き１０個は\n七草かゆ１個と交換できるアル。",0)
+-		MES(MEI,"七草かゆ１個の方が、\nかっぱ巻き１０個食べるより\n得られる経験値が大きいネ。",0)
+-		MES(MEI,"つまりレベルアップには、\nどんどん交換サービスを使うのが\n早道ということアル㈱",0)
+-		MES(MEI,"……どうするアルか？",0)
+-		MES_close(MEI)
+-
+-	//　　※上記選択肢に飛ぶ。
+-		loop
+-	}
+-	//──────────────────────────────
+-	//	name("□やめる")
+-	//　　会話処理終了。
+-	//──────────────────────────────
+-	else
+-	{
+-	//	name("□やめる")
+-////	MES(MEI,"毎度ありアル。\nまたヨロシクお願いネ。",0)
+-//		MES(MEI,"またヨロシクお願いネ。",0)
+-		
+-		VOICE(724,0)					//「また来てアル」
+-		MES(MEI,"また来てアル。",0)
+-		
+-		MES_close(MEI)
+-	}
+ }
+ 
++
+ NORMAL_TK_MEI
+ {
+ 	//──────────────────────────────
+diff --git a/scp_jp_conv/etc/S_T058.txt b/scp_conv/etc/S_T058.txt
+index 9225b49..45143c5 100644
+--- a/scp_jp_conv/etc/S_T058.txt
++++ b/scp_conv/etc/S_T058.txt
+@@ -379,7 +379,7 @@ TK_VERMILIA
+ 				EMO(PARTNER,EMO_ASEASE)
+ 				wait(30)
+ 
+-				MES(PARTNER,"えっ、えっと。そうですけど……\n（あ、あれ？\n  隠行の術を使ってたのに……）",0)
++				MES(PARTNER,"えっ、えっと。そうですけど……\n（あ、あれ？\n  隠形の術を使ってたのに……）",0)
+ 				MES_close(PARTNER)
+ 
+ 			//　　バーミリア、体ごとスバルの方に向く。
+diff --git a/scp_jp_conv/etc/S_T063.txt b/scp_conv/etc/S_T063.txt
+index ddf16d6..79b03d7 100644
+--- a/scp_jp_conv/etc/S_T063.txt
++++ b/scp_conv/etc/S_T063.txt
+@@ -120,74 +120,74 @@ TK_NORTON
+ 		MOT_SET(NORTON,152,-1,538,538,-1,0)
+ 		MOT(NORTON,152,15)
+ 
+-		if(FT_03_TalkNorton && !FT_12_TalkNorton)
++		if(!F6_02_OnMeru)
+ 		{
+-			
+-		//	name("ノートン")
+-			MES(NORTON,"オデッサさんの機体だけ\n給油中なんだ。",0)
+-			MES(NORTON,"まあすぐに終わるから、\n心配しなくていいよ。",0)
+-			MES(NORTON,"ところで……",0)
+-			MES_close(NORTON)
++			if(FT_03_TalkNorton && !FT_12_TalkNorton)
++			{
++				
++			//	name("ノートン")
++				MES(NORTON,"オデッサさんの機体だけ\n給油中なんだ。",0)
++				MES(NORTON,"まあすぐに終わるから、\n心配しなくていいよ。",0)
++				MES(NORTON,"ところで……",0)
++				MES_close(NORTON)
+ 
+-		//　　ノートン、はとに振り返る。
+-		//	name("ノートン")
+-			MES(NORTON,"この鳩の子、最近よく\n仕事を手伝ってくれるんだ。",0)
+-			MES(NORTON,"機体の様子を見たり、\n部品を取って来てくれたりね。",0)
+-			MES_close(NORTON)
++			//　　ノートン、はとに振り返る。
++			//	name("ノートン")
++				MES(NORTON,"この鳩の子、最近よく\n仕事を手伝ってくれるんだ。",0)
++				MES(NORTON,"機体の様子を見たり、\n部品を取って来てくれたりね。",0)
++				MES_close(NORTON)
+ 
+-			//──────────────────────────────
+-			//	name("□ラグナ先頭")
+-			if(GW_MAN==1)
+-			{
+-				MES(RAGNA,"へ、へえ、そうなのか。\nそりゃまた頭のいい鳩だな……",0)
+-				MES_close(RAGNA)
+-			}
+-			//	name("□アルウェン先頭")
+-			else
+-			{
+-				MES(PARTNER,"ふむ、随分と義理堅い者に\n懐かれたようだな。",0)
+-				MES_close(PARTNER)
+-			}
+-			//──────────────────────────────
+-			
+-		//	name("ノートン")
+-			MES(NORTON,"うーん、折角だし。\n名前を付けておこうかな。",0)
+-			MES_close(NORTON)
++				//──────────────────────────────
++				//	name("□ラグナ先頭")
++				if(GW_MAN==1)
++				{
++					MES(RAGNA,"へ、へえ、そうなのか。\nそりゃまた頭のいい鳩だな……",0)
++					MES_close(RAGNA)
++				}
++				//	name("□アルウェン先頭")
++				else
++				{
++					MES(PARTNER,"ふむ、随分と義理堅い者に\n懐かれたようだな。",0)
++					MES_close(PARTNER)
++				}
++				//──────────────────────────────
++				
++			//	name("ノートン")
++				MES(NORTON,"うーん、折角だし。\n名前を付けておこうかな。",0)
++				MES_close(NORTON)
+ 
+-		//　　ノートンにしばらく．．．エモーション。
+-			EMO(NORTON,EMO_TENTEN)
+-			wait(30)
++			//　　ノートンにしばらく．．．エモーション。
++				EMO(NORTON,EMO_TENTEN)
++				wait(30)
+ 
+-		//	name("ノートン")
+-			MES(NORTON,"……『ぽっぽ』なんてどうだろう。",0)
+-			MES_close(NORTON)
++			//	name("ノートン")
++				MES(NORTON,"……『ぽっぽ』なんてどうだろう。",0)
++				MES_close(NORTON)
+ 
+-		//	name2(RAGNA)
+-			MES_pos(RAGNA,"そのままだろーっ！？",0,0,0,0,0)
+-			MES_pos(PARTNER,"W1そのままではないかーっ！！",0,0,0,0,0)
+-			wait_key(0)
+-			MES_close(RAGNA)
+-			MES_close(PARTNER)
++			//	name2(RAGNA)
++				MES_pos(RAGNA,"そのままだろーっ！？",0,0,0,0,0)
++				MES_pos(PARTNER,"W1そのままではないかーっ！！",0,0,0,0,0)
++				wait_key(0)
++				MES_close(RAGNA)
++				MES_close(PARTNER)
+ 
+-		//　　ノートン、アセアセで振り返る。
+-			EMO(NORTON,EMO_ASEASE)
+-			wait(30)
++			//　　ノートン、アセアセで振り返る。
++				EMO(NORTON,EMO_ASEASE)
++				wait(30)
+ 
+-		//	name("ノートン")
+-			MES(NORTON,"あ、あれ？　駄目かな……？",0)
+-			MES_close(NORTON)
++			//	name("ノートン")
++				MES(NORTON,"あ、あれ？　駄目かな……？",0)
++				MES_close(NORTON)
+ 
+-		//　　以降、ソロモンリングで鳩に話しかけると、名前が『ぽっぽ』になる。
+-			chr_rename(POPPO,"ぽっぽ")//		
+-			//★ノートン【ネーミングセンス】
+-			F_set_note(NORTON,2)
+-			F_set(FT_12_TalkNorton)
++			//　　以降、ソロモンリングで鳩に話しかけると、名前が『ぽっぽ』になる。
++				chr_rename(POPPO,"ぽっぽ")//		
++				//★ノートン【ネーミングセンス】
++				F_set_note(NORTON,2)
++				F_set(FT_12_TalkNorton)
+ 
+-			MOT(NORTON,150,15)
+-		}
+-		else
+-		{
+-			if(!F6_02_OnMeru)
++				MOT(NORTON,150,15)
++			}
++			else
+ 			{
+ 			//──────────────────────────────
+ 			//　　※メルセデク突入前の通常一般メッセージ。
+@@ -213,8 +213,9 @@ TK_NORTON
+ 			}
+ 			//──────────────────────────────
+ 			//　　※メルセデク突入後は滑走路で待機。
+-			else
+-			{
++		}
++		else
++		{
+ 				rot_chr(NORTON,30,PLAYER1)
+ 
+ 				MOT_SET(NORTON,152,-1,402,402,-1,0)
+@@ -240,7 +241,6 @@ TK_NORTON
+ 					MES_close(NORTON)
+ 				}
+ 				MOT(NORTON,2,15)
+-			}
+ 		}
+ 	}
+ 	else
+diff --git a/scp_jp_conv/etc/S_T064.txt b/scp_conv/etc/S_T064.txt
+index 742c6c9..9556b1a 100644
+--- a/scp_jp_conv/etc/S_T064.txt
++++ b/scp_conv/etc/S_T064.txt
+@@ -1381,7 +1381,7 @@ TK_BIANS
+ 		if(!F_BIANS)
+ 		{
+ 		//	name("ビアンス")
+-			MES(BIANS,"どうやら、近々村を上げての\n収穫祭があるそうですね。",0)
++			MES(BIANS,"どうやら、近々村を挙げての\n収穫祭があるそうですね。",0)
+ 			MES(BIANS,"私も手伝う事に\nなってしまいましたよ。",0)
+ 			MES(BIANS,"フフ……\nまあ多少ならいいでしょう。",0)
+ 			MES(BIANS,"住人と信頼関係を築いておくのも\n商売のうち、ですので。",0)
+@@ -1414,7 +1414,7 @@ TK_BIANS
+ 		else
+ 		{
+ 		//	name("ビアンス")
+-			MES(BIANS,"村を上げての収穫祭……\nやれやれ、私も手伝う事に\nなってしまいましたよ。",0)
++			MES(BIANS,"村を挙げての収穫祭……\nやれやれ、私も手伝う事に\nなってしまいましたよ。",0)
+ 			MES(BIANS,"フフ、まあ仕方ありません。",0)
+ 			MES(BIANS,"これも商売のためと割り切って、\n参加させて頂きましょうか。",0)
+ 			MES_close(BIANS)
+diff --git a/scp_jp_conv/etc/S_T065.txt b/scp_conv/etc/S_T065.txt
+index 6bf5874..e736ccf 100644
+--- a/scp_jp_conv/etc/S_T065.txt
++++ b/scp_conv/etc/S_T065.txt
+@@ -515,12 +515,13 @@ TK_WIDEZEN
+ 					MES_close(PARTNER)
+ 					wait_MES(PARTNER)
+ 
+-					cross_fade(30)
+-					CAM_return(0)
+-					CAM(-49,109,20,27,179,30,0)
+-					rot_chr(PLAYER1,60,WIDEZEN)
+-					rot_chr(PLAYER2,60,WIDEZEN)
+-					wait_fade()
++				//0922コメント化
++				//	cross_fade(30)
++				//	CAM_return(0)
++				//	CAM(-49,109,20,27,179,30,0)
++				//	rot_chr(PLAYER1,60,WIDEZEN)
++				//	rot_chr(PLAYER2,60,WIDEZEN)
++				//	wait_fade()
+ 
+ 					F_set(F1_24_UwasaTenple)
+ 				}
+diff --git a/scp_jp_conv/etc/S_T066.txt b/scp_conv/etc/S_T066.txt
+index 0d56635..1ae18a2 100644
+--- a/scp_jp_conv/etc/S_T066.txt
++++ b/scp_conv/etc/S_T066.txt
+@@ -369,12 +369,13 @@ TK_LAUNEE
+ 				MES_close(PARTNER)
+ 				wait_MES(PARTNER)
+ 
+-				cross_fade(30)
+-				CAM_return(0)
+-				CAM(200,76,-25,25,210,30,0)
+-				rot_chr(PLAYER1,60,LAUNEE)
+-				rot_chr(PLAYER2,60,LAUNEE)
+-				wait_fade()
++			//0922コメント化
++			//	cross_fade(30)
++			//	CAM_return(0)
++			//	CAM(200,76,-25,25,210,30,0)
++			//	rot_chr(PLAYER1,60,LAUNEE)
++			//	rot_chr(PLAYER2,60,LAUNEE)
++			//	wait_fade()
+ 
+ 				F_set(F1_24_UwasaTenple)
+ 				//　　※『★村で神殿の噂を聞いた』のフラグを立てる。
+diff --git a/scp_jp_conv/etc/S_T076.txt b/scp_conv/etc/S_T076.txt
+index b235270..348c071 100644
+--- a/scp_jp_conv/etc/S_T076.txt
++++ b/scp_conv/etc/S_T076.txt
+@@ -158,7 +158,8 @@ TK_KAI
+ 			MES_close(KAI)
+ 
+ 		//　　カイに．．．エモーション。
+-			EMO(RAGNA,EMO_TENTEN)
++		//	EMO(RAGNA,EMO_TENTEN)
++			EMO(KAI,EMO_TENTEN)
+ 			wait(30)
+ 
+ 			MES(KAI,"ならば、多少\n雰囲気が変わるのも当然か。",0)
+diff --git a/scp_jp_conv/etc/S_T077.txt b/scp_conv/etc/S_T077.txt
+index 161f1a2..a122177 100644
+--- a/scp_jp_conv/etc/S_T077.txt
++++ b/scp_conv/etc/S_T077.txt
+@@ -268,7 +268,7 @@ TK_LURI
+ 			MES_close(RAGNA)
+ 
+ 		//	name2(PARTNER)
+-			MES(PARTNER,"ルリちゃんは\nカイ兄の妹さんなんですけど、\n隠行の術がすごく上手で……",0)
++			MES(PARTNER,"ルリちゃんは\nカイ兄の妹さんなんですけど、\n分身の術がすごく上手で……",0)
+ 			MES(PARTNER,"そういえば、よくイタズラして\nカイ兄に怒られてる気がするなぁ……",0)
+ 			MES_close(PARTNER)
+ 
+@@ -397,7 +397,7 @@ TK_LURI_2
+ 		MES_close(RAGNA)
+ 
+ 	//	name2(PARTNER)
+-		MES(PARTNER,"ルリちゃんは\nカイ兄の妹さんなんですけど、\n隠行の術がすごく上手で……",0)
++		MES(PARTNER,"ルリちゃんは\nカイ兄の妹さんなんですけど、\n分身の術がすごく上手で……",0)
+ 		MES(PARTNER,"そういえば、よくイタズラして\nカイ兄に怒られてる気がするなぁ……",0)
+ 		MES_close(PARTNER)
+ 
+@@ -476,6 +476,8 @@ TK_LURI_2
+ 			MES_close(LURI_3)
+ 			MES_close(LURI_4)
+ 		}
++
++		EV("HIND_LURI")															//パッチ 2008/09/22
+ 	}
+ 	TK_end()
+ }
+@@ -522,7 +524,7 @@ TK_LURI_3
+ 		MES_close(RAGNA)
+ 
+ 	//	name2(PARTNER)
+-		MES(PARTNER,"ルリちゃんは\nカイ兄の妹さんなんですけど、\n隠行の術がすごく上手で……",0)
++		MES(PARTNER,"ルリちゃんは\nカイ兄の妹さんなんですけど、\n分身の術がすごく上手で……",0)
+ 		MES(PARTNER,"そういえば、よくイタズラして\nカイ兄に怒られてる気がするなぁ……",0)
+ 		MES_close(PARTNER)
+ 
+@@ -600,6 +602,8 @@ TK_LURI_3
+ 			MES_close(LURI_3)
+ 			MES_close(LURI_4)
+ 		}
++
++		EV("JUMP_LURI")													//パッチ 2008/09/22
+ 	}
+ 	TK_end()
+ }
+diff --git a/scp_jp_conv/etc/S_T079.txt b/scp_conv/etc/S_T079.txt
+index 65c3ec9..d65d4a0 100644
+--- a/scp_jp_conv/etc/S_T079.txt
++++ b/scp_conv/etc/S_T079.txt
+@@ -150,7 +150,7 @@ TK_NINJYA_A
+ 		else
+ 		{
+ 		//	name("アカトキ")
+-			MES(NINJYA_A,"此度の襲撃、総力で望んでも\n凌げたかどうかは分からぬ……",0)
++			MES(NINJYA_A,"此度の襲撃、総力で臨んでも\n凌げたかどうかは分からぬ……",0)
+ 			MES(NINJYA_A,"が、たとえそうであっても\nご両名が重傷を負われたことは事実──",0)
+ 			MES(NINJYA_A,"このアカトキ、全てが終わり次第\n責任を取らねばなりますまい。",0)
+ 			MES_close(NINJYA_A)
+diff --git a/scp_jp_conv/etc/S_T080.txt b/scp_conv/etc/S_T080.txt
+index 754e954..955f81d 100644
+--- a/scp_jp_conv/etc/S_T080.txt
++++ b/scp_conv/etc/S_T080.txt
+@@ -22,6 +22,9 @@ TK_KAPPA
+ 	KAO(PLAYER2,"1","1","1")//デフォルト
+ 	KAO(PET,"1","1","1")//デフォルト
+ 
++	workG(GW_SKI_MISS,SET,0)	//ミスの回数を初期化
++	workG(GW_SKI_DOWN,SET,0)	//難易度ダウンを初期化
++
+ 	if( !FV_FF_TalkKappa )
+ 	{
+ 	//▼カッパに会うのが初回
+@@ -71,7 +74,7 @@ TK_KAPPA
+ 				MES(KAPPA,"まあいいや。\n丁度ヒマだったし。",0)
+ 				MES(KAPPA,"……遊ぶ？",0)
+ 				MES_close(KAPPA)
+-				F_set(FV_FF_TalkKappa)
++			//	F_set(FV_FF_TalkKappa)
+ 
+ 				workL(WK_CANCEL,SET,2)//【やめる】
+ 				MES_pos(PLAYER1,"??W9【挑戦する】\n【やめとく】",0,320,240,0,0)
+@@ -85,6 +88,8 @@ TK_KAPPA
+ 
+ 					if(IT003>0)
+ 					{
++						F_set(FV_FF_TalkKappa)
++
+ 					//	name("□グライドギアに改造済みの場合")
+ 						MES(KAPPA,"うん、分かったし。",0)
+ 						MES_close(KAPPA)
+@@ -125,11 +130,14 @@ TK_KAPPA
+ 					//	name("□まだグライドギアに改造していない")
+ 						EV("KAPPA_Gia_Check")
+ 						wait_EV("KAPPA_Gia_Check")
++						F_set(FV_FF_TalkKappa)
+ 					}
+ 				}
+ 				else
+ 				if(WK_YESNO==2)//□「やめとく」
+ 				{
++					F_set(FV_FF_TalkKappa)
++
+ 					MES(KAPPA,"あっそ、まあいいや。",0)
+ 					MES(KAPPA,"また別の人を誘うし。",0)
+ 					MES_close(KAPPA)
+@@ -218,31 +226,49 @@ TK_KAPPA
+ 					{
+ 						// LV3以上をクリアしている
+ 						workL(WK_CANCEL,SET,5)//【やめる】
+-						MES_pos(PLAYER1,"??W9【Ｌｖ１に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ３に挑戦】\n【Ｌｖ４に挑戦】\n【やめとく】",0,320,240,0,0)
++						MES_pos(PLAYER1,"??W9【Ｌｖ４に挑戦】\n【Ｌｖ３に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+ 						wait_W(WK_YESNO)
+ 						MES_close(PLAYER1)
+ 						wait_MES(PLAYER1)//閉じきるまで待つ
++						if(WK_YESNO==1)
++							workL(WK_YESNO,SET,4)	//強制変更
++						else if(WK_YESNO==2)
++							workL(WK_YESNO,SET,3)	//強制変更
++						else if(WK_YESNO==3)
++							workL(WK_YESNO,SET,2)	//強制変更
++						else if(WK_YESNO==4)
++							workL(WK_YESNO,SET,1)	//強制変更
+ 					}
+ 					else if( FV_FF_KappaSki_02)
+ 					{
+ 						// LV2をクリアしている
+ 						workL(WK_CANCEL,SET,4)//【やめる】
+-						MES_pos(PLAYER1,"??W9【Ｌｖ１に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ３に挑戦】\n【やめとく】",0,320,240,0,0)
++						MES_pos(PLAYER1,"??W9【Ｌｖ３に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+ 						wait_W(WK_YESNO)
+ 						MES_close(PLAYER1)
+ 						wait_MES(PLAYER1)//閉じきるまで待つ
+-						if(WK_YESNO==4)
++						if(WK_YESNO==1)
++							workL(WK_YESNO,SET,3)	//強制変更
++						else if(WK_YESNO==2)
++							workL(WK_YESNO,SET,2)	//強制変更
++						else if(WK_YESNO==3)
++							workL(WK_YESNO,SET,1)	//強制変更
++						else if(WK_YESNO==4)
+ 							workL(WK_YESNO,SET,5)	//「やめとく」を５に強制変更
+ 					}
+ 					else if( FV_FF_KappaSki_01)
+ 					{
+ 						// LV1をクリアしている
+ 						workL(WK_CANCEL,SET,3)//【やめる】
+-						MES_pos(PLAYER1,"??W9【Ｌｖ１に挑戦】\n【Ｌｖ２に挑戦】\n【やめとく】",0,320,240,0,0)
++						MES_pos(PLAYER1,"??W9【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+ 						wait_W(WK_YESNO)
+ 						MES_close(PLAYER1)
+ 						wait_MES(PLAYER1)//閉じきるまで待つ
+-						if(WK_YESNO==3)
++						if(WK_YESNO==1)
++							workL(WK_YESNO,SET,2)	//強制変更
++						else if(WK_YESNO==2)
++							workL(WK_YESNO,SET,1)	//強制変更
++						else if(WK_YESNO==3)
+ 							workL(WK_YESNO,SET,5)	//「やめとく」を５に強制変更
+ 					}
+ 					else
+@@ -334,8 +360,20 @@ KAPPA_Gia_Check
+ 	//	name("この話を聞くのが初回")
+ 	if(!FV_FF_Kappa_TkGia)
+ 	{
+-		MES(KAPPA,"うん、分かったし。",0)
+-		MES_close(KAPPA)
++		if(!FV_FF_TalkKappa)
++		{
++		//カッパに初めて話しかけて「挑戦する」を選んだ場合
++			MES(KAPPA,"うん、分かったし。",0)
++			MES_close(KAPPA)
++		}
++		else
++		{
++		//カッパに初めて話しかけて「やめとく」を選び、再びカッパに話しかけた場合
++		//	MES(KAPPA,"◆やっぱり遊びたいんじゃん。\nみたいなメッセージ",0)
++			MES(KAPPA,"なんだ、やっぱり遊びたいんじゃん。",0)
++			MES(KAPPA,"うん、分かったし。",0)
++			MES_close(KAPPA)
++		}
+ 	//　　カッパ、一度頭を引っ込めるが、途中でまた出てくる。
+ 		move(KAPPA,2,RUN1,0,0,-150,0)
+ 		wait_move(KAPPA)
+@@ -828,11 +866,11 @@ TK_KAPPA2
+ 	if(WK000==12)
+ 	{
+ 	//　　□壷を一個も割れなかった。
+-		MES(RAGNA,"……あのさ君たち、\n真面目にやってる？",0)
+-		MES(RAGNA,"途中の壷を\n割らなきゃダメじゃん。",0)
+-		MES(RAGNA,"ただ滑るだけなら\n皿でもできるでしょ？\nそうでしょ？",0)
+-		MES(RAGNA,"……もう一度やる？",0)
+-		MES_close(RAGNA)
++		MES(KAPPA,"……あのさ君たち、\n真面目にやってる？",0)
++		MES(KAPPA,"途中の壷を\n割らなきゃダメじゃん。",0)
++		MES(KAPPA,"ただ滑るだけなら\n皿でもできるでしょ？\nそうでしょ？",0)
++		MES(KAPPA,"……もう一度やる？",0)
++		MES_close(KAPPA)
+ 	}
+ 	else
+ 	if(WK000==11)
+@@ -850,7 +888,7 @@ TK_KAPPA2
+ 	//　　□壷をたくさん割ったがメダルに届かなかった。
+ 		MES(KAPPA,"いい線行ってると思うよ、\nカッパ的には。",0)
+ 		MES(KAPPA,"でももうちょっと。\nもうちょっと何かが\n足りない感じだよね。",0)
+-		MES(KAPPA,"……ビタミンＣとか採ってみたら？",0)
++		MES(KAPPA,"……ビタミンＣとか摂ってみたら？",0)
+ 		MES(KAPPA,"君たち足りてなさそうだから。",0)
+ 		MES(KAPPA,"……もう一度やる？",0)
+ 		MES_close(KAPPA)
+@@ -892,128 +930,535 @@ TK_KAPPA2
+ 				{
+ 					// LV3以上をクリアしている
+ 					workL(WK_CANCEL,SET,5)//【やめる】
+-					MES_pos(PLAYER1,"??W9【Ｌｖ１に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ３に挑戦】\n【Ｌｖ４に挑戦】\n【やめとく】",0,320,240,0,0)
++					MES_pos(PLAYER1,"??W9【Ｌｖ４に挑戦】\n【Ｌｖ３に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+ 					wait_W(WK_YESNO)
+ 					MES_close(PLAYER1)
+ 					wait_MES(PLAYER1)//閉じきるまで待つ
++					if(WK_YESNO==1)
++						workL(WK_YESNO,SET,4)	//強制変更
++					else if(WK_YESNO==2)
++						workL(WK_YESNO,SET,3)	//強制変更
++					else if(WK_YESNO==3)
++						workL(WK_YESNO,SET,2)	//強制変更
++					else if(WK_YESNO==4)
++						workL(WK_YESNO,SET,1)	//強制変更
+ 				}
+ 				else if( FV_FF_KappaSki_02)
+ 				{
+ 					// LV2をクリアしている
+ 					workL(WK_CANCEL,SET,4)//【やめる】
+-					MES_pos(PLAYER1,"??W9【Ｌｖ１に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ３に挑戦】\n【やめとく】",0,320,240,0,0)
++					MES_pos(PLAYER1,"??W9【Ｌｖ３に挑戦】\n【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+ 					wait_W(WK_YESNO)
+ 					MES_close(PLAYER1)
+ 					wait_MES(PLAYER1)//閉じきるまで待つ
+-					if(WK_YESNO==4)
++					if(WK_YESNO==1)
++						workL(WK_YESNO,SET,3)	//強制変更
++					else if(WK_YESNO==2)
++						workL(WK_YESNO,SET,2)	//強制変更
++					else if(WK_YESNO==3)
++						workL(WK_YESNO,SET,1)	//強制変更
++					else if(WK_YESNO==4)
+ 						workL(WK_YESNO,SET,5)	//「やめとく」を５に強制変更
+ 				}
+ 				else if( FV_FF_KappaSki_01)
+ 				{
+ 					// LV1をクリアしている
+ 					workL(WK_CANCEL,SET,3)//【やめる】
+-					MES_pos(PLAYER1,"??W9【Ｌｖ１に挑戦】\n【Ｌｖ２に挑戦】\n【やめとく】",0,320,240,0,0)
++					MES_pos(PLAYER1,"??W9【Ｌｖ２に挑戦】\n【Ｌｖ１に挑戦】\n【やめとく】",0,320,240,0,0)
+ 					wait_W(WK_YESNO)
+ 					MES_close(PLAYER1)
+ 					wait_MES(PLAYER1)//閉じきるまで待つ
+-					if(WK_YESNO==3)
++					if(WK_YESNO==1)
++						workL(WK_YESNO,SET,2)	//強制変更
++					else if(WK_YESNO==2)
++						workL(WK_YESNO,SET,1)	//強制変更
++					else if(WK_YESNO==3)
+ 						workL(WK_YESNO,SET,5)	//「やめとく」を５に強制変更
+ 				}
+ 				else
+ 				{
+ 					// まだクリアしていない
+ 					// □まだクリアしていない場合は、問答無用でＬｖ１を開始。
+-//					workL(WK_CANCEL,SET,2)//【やめる】
+-//					MES_pos(PLAYER1,"??W9【挑戦する】\n【やめとく】",0,320,240,0,0)
+-//					wait_W(WK_YESNO)
+-//					MES_close(PLAYER1)
+-//					wait_MES(PLAYER1)//閉じきるまで待つ
+-//					if(WK_YESNO==2)
+-//						workL(WK_YESNO,SET,5)	//「やめとく」を５に強制変更
+ 					workL(WK_YESNO,SET,1)
+ 				}
+ 
+ 				if(WK_YESNO<5)
+ 				{
+-				//	name("□Ｌｖ１～Ｌｖ４")
+-					MES(KAPPA,"じゃあ１００ペンネ貰うね。",0)
+-					SE(008,PLAYER1)
+-					MES(KAPPA,"これ、リフト代\nみたいなものだし。",0)
++					//	name("□Ｌｖ１～Ｌｖ４")
++					EV("KAPPA_RETRY")
++					wait_EV("KAPPA_RETRY")
++				}
++				else	//	name("□「やめる」")
++				{
++					MES(KAPPA,"あっそ。",0)
+ 					MES_close(KAPPA)
++				}
++			}
++		}
++		else
++		if(WK_YESNO==2)	//もう里に帰る
++		{
++			MES(KAPPA,"うん、分かったし。",0)
++			MES(KAPPA,"また遊ぼうね。",0)
++			MES_close(KAPPA)
+ 
+-					fade_in( 100, 60, BLACK)	//暗転
+-					wait_fade()
++		//　　フェードアウト＆ゆっくりフェードインして、星降りの里．井戸の前に出る。
++			fade_in( 100, 60, BLACK)	//暗転
++			wait_fade()
++
++			workG(GW_ENTRY_EVENT,SET,3)	//スキーから戻り
++			new_map(10400)
+ 
+-				//　　所持金を１００ペンネ減らす。
+-					get_gold(-100,RAGNA)
+-				//　　フェードアウトし、もう一度スキーマップのイベントから開始する。
++		//　　イベント終了、操作許可。
++		}
++		else	//	name("□「やめる」")
++		{
++			MES(KAPPA,"あっそ。",0)
++			MES_close(KAPPA)
++		}
++	}
++	workL(005,SET,0)
+ 
+-					workG(GW_SKI_PARTNER,SET,0)	//ラグナだけ
+-					if(SP004==5)
++	TK_end()
++}
++
++
++
++//////////////////////////////////////////////////////////////////////
++// カッパスキーのリトライ処理
++// {のネストが深くなってしまったので、分割した
++
++KAPPA_RETRY
++{
++	//前回のコースと今回のコースが一致している？
++	workL(07,SET,0)
++
++	//コース保存
++	if(WK_YESNO==1)
++		workL(06,SET,1)
++	else if(WK_YESNO==2)
++		workL(06,SET,2)
++	else if(WK_YESNO==3)
++		workL(06,SET,3)
++	else if(WK_YESNO==4)
++		workL(06,SET,4)
++	else
++		workL(06,SET,0)
++
++	//同じコース？
++	if(WK006==1 && WK001==1)
++	{
++		workL(07,SET,1)
++	}
++	else
++	if(WK006==2 && WK001==2)
++	{
++		workL(07,SET,1)
++	}
++	else
++	if(WK006==3 && WK001==3)
++	{
++		workL(07,SET,1)
++	}
++	else
++	if(WK006==4 && WK001==4)
++	{
++		workL(07,SET,1)
++	}
++	else
++	{
++		//違うコースを選択した
++		workL(07,SET,0)
++		workG(GW_SKI_MISS,SET,0)	//ミスの回数を初期化
++		workG(GW_SKI_DOWN,SET,0)	//難易度ダウンを初期化
++	}
++
++	//同じコースで３回以上ミス？
++	if(WK007==1 && GW_SKI_MISS>=5 && GW_SKI_DOWN<3)
++	{
++		//再挑戦
++		workL(WK_CANCEL,SET,4)//【やめとく】
++		if(GW_SKI_DOWN>=2)
++		{
++			//３段階（一番簡単）下げる。
++			MES(KAPPA,"……あれ？",0)
++			MES_close(KAPPA)
++
++//　　カッパに．．．エモーション。
++			EMO(KAPPA,EMO_TENTEN)
++			wait(30)
++
++			MES(KAPPA,"君たちってさ、もしかして……",0)
++			MES(KAPPA,"まだこのコース、\nてこずってるの？",0)
++			MES(KAPPA,"おかしいし。\nもう随分簡単になったはずだし。",0)
++			MES(KAPPA,"カッパ的には居眠りしながらでも\nクリアできるレベルなんだけど。",0)
++			MES_close(KAPPA)
++
++//　　カッパに．．．エモーション。
++			EMO(KAPPA,EMO_TENTEN)
++			wait(30)
++
++			MES(KAPPA,"……仕方ないし。",0)
++			MES(KAPPA,"今日は特別、最後の最後に\nすごく簡単にしてあげるし。",0)
++			MES(KAPPA,"……やってみる？",0)
++			MES_close(KAPPA)
++
++			MES_pos(PLAYER1,"??W9【すごく簡単にして欲しい（￥９００上乗せ）】\n【このまま挑戦】\n【コツを聞く】\n【やめとく】",0,320,240,0,0)
++		}
++		else if(GW_SKI_DOWN==1)
++		{
++			//２段階下げる
++			MES(KAPPA,"ところでさ……",0)
++
++			if( F6_11_GameClear)	//★ＺｗｅｉⅡをクリアした
++			{
++				MES(KAPPA,"君たち知ってる？\n最近、新しいフィギュアが\n出たんだよね。",0)
++				MES(KAPPA,"シークレットの\nラインナップも増えてて、\n集めるの大変だし。",0)
++				MES(KAPPA,"それにアレってさ、\n結構高いんだよね。\nカッパも今月厳しいし。",0)
++				MES(KAPPA,"……言ってる意味、\n分かるよね？",0)
++			}
++			else//一周目
++			{
++				MES(KAPPA,"君たち知ってる？\n近々、新しいフィギュアが\n発売になるんだって。",0)
++				MES(KAPPA,"シークレットの\nラインナップも増えてて、\n集めるの大変みたい。",0)
++				MES(KAPPA,"それにアレってさ、\n結構高いみたいで。\nカッパも今月厳しいし。",0)
++				MES(KAPPA,"……言ってる意味、\n分かるよね？",0)
++			}
++
++			MES_close(KAPPA)
++
++			MES_pos(PLAYER1,"??W9【もっと簡単にして欲しい（￥４００上乗せ）】\n【このまま挑戦】\n【コツを聞く】\n【やめとく】",0,320,240,0,0)
++		}
++		else
++		{
++			//１段階下げる
++		//　　カッパに．．．エモーション。
++			EMO(KAPPA,EMO_TENTEN)
++			wait(30)
++
++			MES(KAPPA,"あのさ……",0)
++			MES(KAPPA,"ひょっとして、苦労してる？",0)
++			MES_close(KAPPA)
++
++		//　　カッパ、手をパタパタ。
++			EV("MOTION_KAPPA")
++			wait_EV("MOTION_KAPPA")
++
++			MES(KAPPA,"途中の壷を割るだけじゃん。\n君たちの感性で滑ればいいだけだし。",0)
++			MES(KAPPA,"……まあ、君たちって\n最近よく来てるし。",0)
++			MES(KAPPA,"サービスで、少しくらいなら\n簡単にしてあげてもいいけどね。\nカッパ的には。",0)
++			MES(KAPPA,"どうする？",0)
++			MES_close(KAPPA)
++
++			MES_pos(PLAYER1,"??W9【簡単にして欲しい（￥１００上乗せ）】\n【このまま挑戦】\n【コツを聞く】\n【やめとく】",0,320,240,0,0)
++		}
++
++		wait_W(WK_YESNO)
++		MES_close(PLAYER1)
++		wait_MES(PLAYER1)//閉じきるまで待つ
++
++		if(WK_YESNO==1)
++		{
++			//難易度下げてリトライ
++			//　　所持金を減らす。
++			if(GW_SKI_DOWN>=2)
++			{
++				if(SP002<1000)
++				{
++				//	name("□１０００ペンネ持ってない場合。")
++					MES(KAPPA,"……君たち貧乏だね。",0)
++					MES(KAPPA,"１０００ペンネないと変えられないよ。",0)
++					MES_close(KAPPA)
++
++					//お金が足りないので、終了
++					workL(07,SET,2)
++				}
++				else
++				{
++					MES(KAPPA,"うん、分かったし。",0)
++					if(WK006==4)
+ 					{
+-						workG(GW_SKI_PARTNER,SET,5)	//オデッサ
++						// LV4
++						MES(KAPPA,"壷１０個までならミスしても\n大丈夫ってことにするし。",0)
++						MES(KAPPA,"ついでにダメージもね、\n５回は目を瞑ってあげるし。",0)
+ 					}
+-					else if(SP004==12)
++					else
++					if(WK006==3)
++					{
++						// LV3
++						MES(KAPPA,"壷１６個までならミスしても\n大丈夫ってことにするし。",0)
++						MES(KAPPA,"ついでにダメージもね、\n５回は目を瞑ってあげるし。",0)
++					}
++					else
++					if(WK006==2)
++					{
++						// LV2
++						MES(KAPPA,"壷２０個までならミスしても\n大丈夫ってことにするし。",0)
++					}
++					else
++					{
++						// LV1
++						MES(KAPPA,"壷１６個までならミスしても\n大丈夫ってことにするし。",0)
++					}
++					MES(KAPPA,"はい、頑張ってね。",0)
++					MES_close(KAPPA)
++
++					MES(KAPPA,"じゃあ１０００ペンネ貰うね。",0)
++					SE(008,PLAYER1)
++					get_gold(-1000,RAGNA)
++					MES(KAPPA,"これ、手数料\nみたいなものだし。",0)
++					MES_close(KAPPA)
++
++					//簡単にする
++					workG(GW_SKI_DOWN,ADD,1)	//これまでより簡単に
++					workG(GW_SKI_MISS,SET,0)	//ミスの回数を初期化
++				}
++			}
++			else
++			if(GW_SKI_DOWN>=1)
++			{
++				if(SP002<500)
++				{
++				//	name("□５００ペンネ持ってない場合。")
++					MES(KAPPA,"……君たち貧乏だね。",0)
++					MES(KAPPA,"５００ペンネないと変えられないよ。",0)
++					MES_close(KAPPA)
++
++					//お金が足りないので、終了
++					workL(07,SET,2)
++				}
++				else
++				{
++					MES(KAPPA,"うん、分かったし。",0)
++					if(WK006==4)
+ 					{
+-						workG(GW_SKI_PARTNER,SET,12)	//オデッサ
++						// LV4
++						MES(KAPPA,"壷５個までならミスしても\n大丈夫ってことにするし。",0)
++						MES(KAPPA,"ついでにダメージもね、\n３回は目を瞑ってあげるし。",0)
+ 					}
+-					else if(SP004==13)
++					else
++					if(WK006==3)
+ 					{
+-						workG(GW_SKI_PARTNER,SET,13)	//オデッサ
++						// LV3
++						MES(KAPPA,"壷８個までならミスしても\n大丈夫ってことにするし。",0)
++						MES(KAPPA,"ついでにダメージもね、\n３回は目を瞑ってあげるし。",0)
+ 					}
+-					else if(SP004==6)
++					else
++					if(WK006==2)
+ 					{
+-						workG(GW_SKI_PARTNER,SET,6)	//スバル
++						// LV2
++						MES(KAPPA,"壷１０個までならミスしても\n大丈夫ってことにするし。",0)
+ 					}
+-					else if(SP004==1)
++					else
+ 					{
+-						workG(GW_SKI_PARTNER,SET,1)	//アルウェン
++						// LV1
++						MES(KAPPA,"壷８個までならミスしても\n大丈夫ってことにするし。",0)
+ 					}
++					MES(KAPPA,"はい、頑張ってね。",0)
++					MES_close(KAPPA)
+ 
+-					clear_party(PARTNER)	//パートナー消去
++					MES(KAPPA,"じゃあ５００ペンネ貰うね。",0)
++					SE(008,PLAYER1)
++					get_gold(-500,RAGNA)
++					MES(KAPPA,"これ、手数料\nみたいなものだし。",0)
++					MES_close(KAPPA)
+ 
+-					workG(GW_ENTRY_EVENT,SET,1)	//スキー開始
+-					if(WK_YESNO==1)
+-						new_map(10490)
+-					else if(WK_YESNO==2)
+-						new_map(10491)
+-					else if(WK_YESNO==3)
+-						new_map(10492)
+-					else if(WK_YESNO==4)
+-						new_map(10493)
++					//簡単にする
++					workG(GW_SKI_DOWN,ADD,1)	//これまでより簡単に
++					workG(GW_SKI_MISS,SET,0)	//ミスの回数を初期化
+ 				}
+-				else	//	name("□「やめる」")
++			}
++			else
++			{
++				if(SP002<200)
+ 				{
+-					MES(KAPPA,"あっそ。",0)
++				//	name("□２００ペンネ持ってない場合。")
++					MES(KAPPA,"……君たち貧乏だね。",0)
++					MES(KAPPA,"２００ペンネないと変えられないよ。",0)
++					MES_close(KAPPA)
++
++					//お金が足りないので、終了
++					workL(07,SET,2)
++				}
++				else
++				{
++
++
++					MES(KAPPA,"うん、分かったし。",0)
++					if(WK006==4)
++					{
++						// LV4
++						MES(KAPPA,"壷２個までならミスしても\n大丈夫ってことにするし。",0)
++						MES(KAPPA,"ついでにダメージもね、\n１回は目を瞑ってあげるし。",0)
++					}
++					else
++					if(WK006==3)
++					{
++						// LV3
++						MES(KAPPA,"壷４個までならミスしても\n大丈夫ってことにするし。",0)
++						MES(KAPPA,"ついでにダメージもね、\n１回は目を瞑ってあげるし。",0)
++					}
++					else
++					if(WK006==2)
++					{
++						// LV2
++						MES(KAPPA,"壷５個までならミスしても\n大丈夫ってことにするし。",0)
++					}
++					else
++					{
++						// LV1
++						MES(KAPPA,"壷４個までならミスしても\n大丈夫ってことにするし。",0)
++					}
++					MES(KAPPA,"はい、頑張ってね。",0)
+ 					MES_close(KAPPA)
++
++					MES(KAPPA,"じゃあ２００ペンネ貰うね。",0)
++					SE(008,PLAYER1)
++					get_gold(-200,RAGNA)
++					MES(KAPPA,"これ、手数料\nみたいなものだし。",0)
++					MES_close(KAPPA)
++
++					//簡単にする
++					workG(GW_SKI_DOWN,ADD,1)	//これまでより簡単に
++					workG(GW_SKI_MISS,SET,0)	//ミスの回数を初期化
+ 				}
+ 			}
+ 		}
+ 		else
+-		if(WK_YESNO==2)	//もう里に帰る
++		if(WK_YESNO==2)
+ 		{
+-			MES(KAPPA,"うん、分かったし。",0)
+-			MES(KAPPA,"また遊ぼうね。",0)
++			//このまま
++			workL(07,SET,0)
++		}
++		else
++		if(WK_YESNO==3)
++		{
++			//コツを聞く
++			MES(KAPPA,"ここの常連に、スキー好きの\nネズミがいるんだけどさ。",0)
++			MES(KAPPA,"そいつが言ってたし。",0)
+ 			MES_close(KAPPA)
+ 
+-		//　　フェードアウト＆ゆっくりフェードインして、星降りの里．井戸の前に出る。
+-			fade_in( 100, 60, BLACK)	//暗転
+-			wait_fade()
++			//ここから色変えしてほしい
++			//コース別アドバイス
++			if(WK006==4)
++			{
++				// LV4
++				MES(KAPPA,"『スキーが苦手なアナタに\n　アドバイスなの。』",0)
++				MES(KAPPA,"『Ｌｖ４だと、\n　ムダな減速は厳禁なの。』",0)
++				MES(KAPPA,"『不必要なジャンプや\n　体のひねりは\n　ムダの元なの。』",0)
++				MES(KAPPA,"『最短ルートを\n　見極めるのも重要なの。』",0)
++				MES(KAPPA,"『ジャンプ注意！\n　ムダ厳禁！　なの。』",0)
++			}
++			else
++			if(WK006==3)
++			{
++				// LV3
++				MES(KAPPA,"『スキーが苦手なアナタに\n　アドバイスなの。』",0)
++				MES(KAPPA,"『Ｌｖ３だと、ジャンプの\n　タイミングが重要なの。』",0)
++				MES(KAPPA,"『いくつか重要なポイントがあるの。』",0)
++				MES(KAPPA,"『①：分岐右の２個のツボは\n　　　１個目を引っ掛けながらジャンプ、\n　　　着地で２個目を踏むの。』",0)
++				MES(KAPPA,"『②：谷越えは、\n　　　手前でジャンプして\n　　　位置調整するの。』",0)
++				MES(KAPPA,"『③：通路上では\n　　　２回ジャンプして\n　　　スピード調整するといいの。』",0)
++				MES(KAPPA,"『④：そして３回目のジャンプで\n　　　ツボを踏みながら\n　　　谷越えするの。』",0)
++				MES(KAPPA,"『タイミング注意！\n　とにかく集中！　なの。』",0)
++			}
++			else
++			if(WK006==2)
++			{
++				// LV2
++				MES(KAPPA,"『スキーが苦手なアナタに\n　アドバイスなの。』",0)
++				MES(KAPPA,"『最初に加速しすぎると\n　ツボが壊せない事があるの。』",0)
++				MES(KAPPA,"『減速しながら\n　ツボを壊すといいの。』",0)
++				MES(KAPPA,"『減速のための横向きと\n　曲がるための横向き。』",0)
++				MES(KAPPA,"『違いを意識しながら\n　練習するといいの。』",0)
++				MES(KAPPA,"『スピードを制するものは\n　スキーを制す！　なの。』",0)
++			}
++			else
++			{
++				// LV1
++				MES(KAPPA,"『スキーが苦手なアナタに\n　アドバイスなの。』",0)
++				MES(KAPPA,"『アナログパッドは\n　上に入れっぱなしに\n　しておくといいの。』",0)
++				MES(KAPPA,"『そこからまわすように\n　左右に入れると\n　方向が微調整しやすいの。』",0)
++				MES(KAPPA,"『速度が上がりすぎると\n　曲がりきれなくなってしまうの。』",0)
++				MES(KAPPA,"『そんな時は、アナログパッドを\n　下に入れると減速しやすいの。』",0)
++				MES(KAPPA,"『それに、体を横に向けたり\n　ジャンプすることでも\n　速度の調節ができるの。』",0)
++				MES(KAPPA,"『スピード注意！\n　スキーは急に曲がれない！　なの。』",0)
++			}
+ 
+-			workG(GW_ENTRY_EVENT,SET,3)	//スキーから戻り
+-			new_map(10400)
++			MES(KAPPA,"……だって。\n参考になった？",0)
++			MES_close(KAPPA)
+ 
+-		//　　イベント終了、操作許可。
++			//お金を支払わず終了
++			workL(07,SET,2)
+ 		}
+ 		else	//	name("□「やめる」")
+ 		{
+ 			MES(KAPPA,"あっそ。",0)
+ 			MES_close(KAPPA)
++
++			//お金を支払わず終了
++			workL(07,SET,2)
+ 		}
+ 	}
+-	workL(005,SET,0)
++	else
++		workL(07,SET,0)
+ 
+-	TK_end()
++	if(WK007==0)
++	{
++		//普通にリトライ
++		MES(KAPPA,"じゃあ１００ペンネ貰うね。",0)
++		SE(008,PLAYER1)
++		MES(KAPPA,"これ、リフト代\nみたいなものだし。",0)
++		MES_close(KAPPA)
++
++		//所持金判定はすでに済んでいる
++		//　　所持金を１００ペンネ減らす。
++		get_gold(-100,RAGNA)
++	}
++
++	if(WK007!=2)	//お金が足りて支払っていれば、スキー場へ行く
++	{
++		fade_in( 100, 60, BLACK)	//暗転
++		wait_fade()
++
++		workG(GW_SKI_PARTNER,SET,0)	//ラグナだけ
++		if(SP004==5)
++		{
++			workG(GW_SKI_PARTNER,SET,5)	//オデッサ
++		}
++		else if(SP004==12)
++		{
++			workG(GW_SKI_PARTNER,SET,12)	//オデッサ
++		}
++		else if(SP004==13)
++		{
++			workG(GW_SKI_PARTNER,SET,13)	//オデッサ
++		}
++		else if(SP004==6)
++		{
++			workG(GW_SKI_PARTNER,SET,6)	//スバル
++		}
++		else if(SP004==1)
++		{
++			workG(GW_SKI_PARTNER,SET,1)	//アルウェン
++		}
++
++		clear_party(PARTNER)	//パートナー消去
++
++		//　　フェードアウトし、もう一度スキーマップのイベントから開始する。
++		workG(GW_ENTRY_EVENT,SET,1)	//スキー開始
++
++		if(WK006==1)
++			new_map(10490)
++		else if(WK006==2)
++			new_map(10491)
++		else if(WK006==3)
++			new_map(10492)
++		else if(WK006==4)
++			new_map(10493)
++		else
++			new_map(10490)
++	}
+ }
+ 
+ 
+diff --git a/scp_jp_conv/etc/S_T082.txt b/scp_conv/etc/S_T082.txt
+index 60e03f1..645c96b 100644
+--- a/scp_jp_conv/etc/S_T082.txt
++++ b/scp_conv/etc/S_T082.txt
+@@ -212,6 +212,63 @@ EV_OK_ALWEN
+ //　　※ペンギン杯の場合は、前座戦闘を飛ばして本戦前の処理に飛ぶ。
+ }
+ 
++////////////////////////////////////////////////////////////////////////////
++//サバイバルモード
++////////////////////////////////////////////////////////////////////////////
++SELECT_SURVIVAL_START
++{
++	//メニュー表示開始
++//	if(FV_FF_WinSurvival)	//★闘技場サバイバルに勝った
++//	{
++//		一応判定可能
++//	}
++//	else
++
++	MES(LOTTE, "サバイバルは、\n闘技場の参加者全員と\n連続して戦うモードでーす。",0)
++	MES(LOTTE, "対戦相手が男性の時はラグナさん、\nそれ以外はアルウェンさんで\n戦ってくださーい。",0)
++	MES(LOTTE, "あ、そうそう、\n途中回復はしないので\nフードの量に気をつけてくださいね。",0)
++	MES(LOTTE, "最後まで戦い抜けば\nいいことがあるかも知れませんよ～。",0)
++	MES_close(LOTTE)
++	wait_MES(CLOSE)
++
++//	name("選択テキスト")
++	MES(LOTTE,"サバイバルに挑戦しますか？",0)
++	MES_close(LOTTE)
++		
++//	name("選択テキスト")
++	workL(WK_CANCEL,SET,2)//【やめる】
++	MES_pos(PLAYER1,"??W9【挑戦する】\n【やめる】",0,320,240,0,0)
++	wait_W(WK_YESNO)
++	MES_close(PLAYER1)
++	wait_MES(PLAYER1)//閉じきるまで待つ
++
++//──────────────────────────────
++//	name("□「挑戦する」")
++	if(WK_YESNO==1)
++	{
++		MES(LOTTE,"それでは、\n闘技場にご案内しま～す！",0)
++		MES_close(LOTTE)
++		workG(GW_ENTRY_EVENT,SET,2)
++		workG(GW_WARP_FLAG,SET,0)
++		
++		fade_in( 100, 60, BLACK)	//フェードアウト
++		wait_fade()
++
++		new_map(10520)
++	}
++	//【やめる】	
++	else
++	{
++		VOICE(716,0)										//「また来てくださいね～」
++		
++		MES(LOTTE,"また来てくださいね～。",0)
++		MES_close(LOTTE)
++
++		//手動向き戻し
++		MOT(LOTTE,150,15)
++		rot(LOTTE,30,90)		
++	}
++}
+ 
+ ////////////////////////////////////////////////////////////////////////////
+ //挑戦コース数計算
+@@ -549,6 +606,7 @@ CUP_MENU_2//
+ 			menu(9,	0,	 450, 40,  0,	208, 64,	60,100,360)
+ 		}
+ 		EV("MOVE_Menu9")
++		wait(30)
+ 	}
+ 	wait(1)
+ 	EV("SET_CUP_Rireki_2")
+@@ -1824,8 +1882,18 @@ TK_LOTTE
+ 			MES(LOTTE,"何か御用ですか？",0)
+ 			MES_close(LOTTE)
+ 			
+-			EV("SHOP_LOTTE_LOOP")
+-			wait_EV("SHOP_LOTTE_LOOP")
++			
++//			if( FV_FF_WinPenguin )											//ペンギン倒した
++			if( IT071>0 && F6_11_GameClear)									//王冠所持 ＆＆　★ＺｗｅｉⅡをクリアした
++			{	//サバイバル出現後
++				EV("SHOP_LOTTE_LOOP2")
++				wait_EV("SHOP_LOTTE_LOOP2")			
++			}
++			else
++			{	//初期
++				EV("SHOP_LOTTE_LOOP")
++				wait_EV("SHOP_LOTTE_LOOP")
++			}
+ 		}
+ 	}
+ //	MOT(LOTTE,150,15)
+@@ -1889,6 +1957,76 @@ SHOP_LOTTE_LOOP
+ 		rot(LOTTE,30,90)
+ 	}
+ }
++
++
++SHOP_LOTTE_LOOP2
++{
++	//	name("選択テキスト")
++	workL(WK_CANCEL,SET,4)//【やめる】
++	MES_pos(PLAYER1,"??W9【話をする】\n【コロッセオに挑戦する】\n【サバイバルに挑戦する】\n【やめる】",0,320,240,0,0)
++	wait_W(WK_YESNO)
++	MES_close(PLAYER1)
++	wait_MES(PLAYER1)//閉じきるまで待つ
++
++	//──────────────────────────────
++	//	name("□話をする")
++	//──────────────────────────────
++	if(WK_YESNO==1)
++	{
++		MOT(LOTTE,150,15)
++		EV("TALK_LOTTE")
++		wait_EV("TALK_LOTTE")
++		MOT(LOTTE,151,15)
++		loop
++	}
++	//──────────────────────────────
++	//	name("□コロッセオに挑戦する")
++	//──────────────────────────────
++	else
++	if(WK_YESNO==2)
++	{
++		if(GW_TRY_CUP==0)
++			MES(LOTTE,"コロッセオに挑戦しますか？",0)//２回目以降は飛ばす。
++		MES(LOTTE,"挑戦コースを選んでくださ～い。",0)
++		MES_close(LOTTE)
++		TK_end()
++		rot_chr(LOTTE,30,PLAYER1)
++		TK_begin()
++
++	//　　※ハンターランクなどの条件に合わせて、選択できる項目が増えていく形式。
++	//　　　一番早く来た場合、挑戦できるのはモーリス杯／ウエスタン杯／最強の男杯の３つ。
++		EV("SELECT_CUP_START")
++//		wait_EV("SELECT_CUP_START")
++	}
++	//──────────────────────────────
++	//	name("□サバイバルに挑戦する")
++	//──────────────────────────────
++	else
++	if(WK_YESNO==3)
++	{
++		rot_chr(LOTTE,30,PLAYER1)
++
++		EV("SELECT_SURVIVAL_START")
++		wait_EV("SELECT_SURVIVAL_START")
++
++	}	
++	//──────────────────────────────
++	//	name("□やめる")
++	//──────────────────────────────
++	else
++	{
++		VOICE(716,0)										//「また来てくださいね～」
++	
++		//MES(LOTTE,"用事があればまたどうぞ～。",0)
++		MES(LOTTE,"また来てくださいね～。",0)
++		MES_close(LOTTE)
++
++		//手動向き戻し
++		MOT(LOTTE,150,15)
++		rot(LOTTE,30,90)
++	}
++}
++
+ //──────────────────────────────
+ //　通常会話処理
+ //──────────────────────────────
+@@ -2448,7 +2586,8 @@ TK_About_Figure_B
+ 	}
+ 	else
+ 	//	name("□フィギュア館収集率がそこそこ")
+-	if(GW_FIGUER<137)
++//	if(GW_FIGUER<137)
++	if(GW_FIGUER<158)	//0922変更
+ 	{
+ 		MES(LOTTE,"マスターのフィギュア館も\nそこそこ埋まって来ましたねー。",0)
+ 		MES(LOTTE,"まあ世の中にはL337魔物が\nL337フィギュアを落しやすくなる\nL337アイテムL300もあるそうですからー。",0)
+@@ -2457,7 +2596,8 @@ TK_About_Figure_B
+ 	}
+ 	else
+ 	//	name("□フィギュア館コンプ")
+-	if(GW_FIGUER>=137)
++//	if(GW_FIGUER>=137)
++	if(GW_FIGUER>=158)	//0922変更
+ 	{
+ 		MES(LOTTE,"で……\nフィギュア館の方も\nコンプリートですか～。",0)
+ 		MES(LOTTE,"やりますねー。",0)
+diff --git a/scp_jp_conv/etc/S_T085.txt b/scp_conv/etc/S_T085.txt
+index 77159a3..672db6c 100644
+--- a/scp_jp_conv/etc/S_T085.txt
++++ b/scp_conv/etc/S_T085.txt
+@@ -399,7 +399,7 @@ TK_SPIRIT_B
+ 	//　　　近づくと、マリンの初回イベントが起動。
+ 	if( F3_00_GoMoonCastle )
+ 	{
+-		MES(SPIRIT_B,"そ、そもそもマリン姉が\n無計画に移動するからいけなんだよっ！",0)
++		MES(SPIRIT_B,"そ、そもそもマリン姉が\n無計画に移動するからいけないんだよっ！",0)
+ 		MES(SPIRIT_B,"ううっ、だから危ない場所は\nやめとこうって言ったのに～……",0)
+ 		MES_close(SPIRIT_B)
+ 	}
+diff --git a/scp_jp_conv/etc/S_T086.txt b/scp_conv/etc/S_T086.txt
+index 96293d8..d6a2ab7 100644
+--- a/scp_jp_conv/etc/S_T086.txt
++++ b/scp_conv/etc/S_T086.txt
+@@ -365,7 +365,7 @@ TK_SPIRIT_C
+ 		//	name("ジョー")
+ 			MES(SPIRIT_C,"がくがく、ぶるぶる……",0)
+ 			MES(SPIRIT_C,"べ、別にオレは\nビビッてなんか無いぜ？",0)
+-			MES(SPIRIT_C,"だた２人が\nスゲエ勢いで逃げてくから、\nくっついてきただけでよ～……",0)
++			MES(SPIRIT_C,"ただ２人が\nスゲエ勢いで逃げてくから、\nくっついてきただけでよ～……",0)
+ 			MES_close(SPIRIT_C)
+ 
+ 		//　　ジョーに．．．エモーション。
+diff --git a/scp_jp_conv/etc/S_T484.txt b/scp_conv/etc/S_T484.txt
+index 16834e9..651fb59 100644
+--- a/scp_jp_conv/etc/S_T484.txt
++++ b/scp_conv/etc/S_T484.txt
+@@ -414,7 +414,7 @@ TK_CAT_B
+ 			//	name("ハッチー")
+ 				MES(CAT_B,"C4ワイなあ……\nホンマは捨て猫やってん。",0)
+ 				MES(CAT_B,"C4実の母親に捨てられてしもて……\nここまで結構苦労したんや。",0)
+-				MES(CAT_B,"C4乗ってた飛行機が嵐で流されたり、\nいろんな飼い主んとこ\n点々としたりなぁ……",0)
++				MES(CAT_B,"C4乗ってた飛行機が嵐で流されたり、\nいろんな飼い主んとこ\n転々としたりなぁ……",0)
+ 				MES(CAT_B,"C4どや、涙をそそる話やろ？\nな、な？",0)
+ 				MES_close(CAT_B)
+ 
+diff --git a/scp_jp_conv/etc/S_T489.txt b/scp_conv/etc/S_T489.txt
+index a77c4fe..50cefb6 100644
+--- a/scp_jp_conv/etc/S_T489.txt
++++ b/scp_conv/etc/S_T489.txt
+@@ -277,7 +277,7 @@ TK_NINJYA_E
+ 		{
+ 		//　　★繰り返し
+ 		//	name("忍び")
+-			MES(NINJYA_E,"自分を初め、みな少なからず\nショックを受けているようです。",0)
++			MES(NINJYA_E,"自分を始め、みな少なからず\nショックを受けているようです。",0)
+ 			MES(NINJYA_E,"ですがカイ隊長が重傷の今、\n我々の班でも人手が足りなくて……",0)
+ 			MES(NINJYA_E,"あれこれと悩んでいる暇はありません。\n今はともかく、\n里を建て直すことが先決です。",0)
+ 			MES_close(NINJYA_E)
+@@ -342,7 +342,7 @@ TK_NINJYA_E
+ 				MES(NINJYA_E,"先ほどから、カイ隊長の妹さんが\nちらほらと姿を見せるのですよ。",0)
+ 				rot(NINJYA_E,30,147)
+ 
+-				MES(NINJYA_E,"あの年で隠行の術を使いこなすとは、\n相当才能があると思うんですが……",0)
++				MES(NINJYA_E,"あの年で分身の術を使いこなすとは、\n相当才能があると思うんですが……",0)
+ 				rot_chr(NINJYA_E,30,PLAYER1)
+ 
+ 				MES(NINJYA_E,"その、少し気が散るんですよね。",0)
+diff --git a/scp_jp_conv/etc/S_T563.txt b/scp_conv/etc/S_T563.txt
+index 5a54f18..b6cce4e 100644
+--- a/scp_jp_conv/etc/S_T563.txt
++++ b/scp_conv/etc/S_T563.txt
+@@ -3,6 +3,31 @@
+ //====================================================================
+ #ScriptTable
+ 
++//Ｇコロッセオ専用（マッスルギア．でもんジャケット）
++TK_PARTGG
++{
++	TK_begin()
++	rot_chr(0,60,TREASURE_CH)
++
++	//宝箱が開く
++	MOT(TREASURE_CH,1,0)
++
++	//宝演出
++	BGM_vol(50,15)				//BGMフェード
++	wait(20)
++	fade_in(30,10,BLACK)		//少し暗転
++
++	get_item(IT_TREASURE,1,0)	//パーツ入手テキスト
++	wait(70)
++	wait_key(0)
++	BGM_vol(100,30)				//BGM戻し
++	fade_in(0,10,BLACK)			//暗転解除
++	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
++	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
++
++	TK_end()
++}
++
+ //--------------------------------------------------------------------
+ //アンカーギアの改造パーツを初入手した時
+ TK_PART
+@@ -127,6 +152,76 @@ TK_PART
+ 	}
+ }
+ 
++//--------------------------------------------------------------------
++//トレジャー発見
++#IT_PART_MM2_1	155		// 夢幻２Ａ
++#IT_PART_MM2_2	156		// 夢幻２Ｂ
++#IT_PART_MM2_3	157		// 夢幻２Ｃ
++#IT_PART_MM2_4	048		// アプリエス
++
++TK_PART_MM2
++{
++	TK_begin()
++	rot_chr(0,60,TAKARA_CH)
++
++	MOT(TAKARA_CH,1,0)
++
++	//宝演出
++	BGM_vol(50,15)				//BGMフェード
++	wait(20)
++	fade_in(30,10,BLACK)		//少し暗転
++
++	if ( IT_PART_MM2_1<1 )
++	{
++		get_item(IT_PART_MM2_1,1,0)//謎トレジャー　鑑定前
++	}
++	else if ( IT_PART_MM2_2<1 )
++	{
++		get_item(IT_PART_MM2_2,1,0)//謎トレジャー　鑑定前
++	}
++	else if ( IT_PART_MM2_3<1 )
++	{
++		get_item(IT_PART_MM2_3,1,0)//謎トレジャー　鑑定前
++	}
++	else if ( IT_PART_MM2_4<1 )
++	{
++		//イベント------------------------------------------------
++	//	name("システムメッセージ")
++		MES(0,"C3S2宝箱にはピンクの衣装が入っている。",2)
++		MES_close(0)
++		
++		SE(1190,0)	//鈴の音
++		
++		fade_in(100,60,WHITE)
++		wait_fade()
++		wait(15)
++		
++		MES(0,"C3S2『うさぎの耳』、『うさぎの手』、『うさぎの尻尾』が\n輝きながら衣装と一つに融合してゆく……",2)
++		MES_close(0)		
++		
++		fade_in(0,60,WHITE)
++		wait_fade()
++		wait(15)	
++	
++		fade_in(30,10,BLACK)		//少し暗転
++		
++		get_item(IT_PART_MM2_4,1,0)//謎トレジャー　鑑定前
++		
++		get_item(155,-1,1)							//うさぎの耳
++		get_item(156,-1,1)							//うさぎの手
++		get_item(157,-1,1)							//うさぎの尻尾		
++	}
++
++	wait(70)
++	wait_key(0)
++	BGM_vol(100,30)				//BGM戻し
++	fade_in(0,10,BLACK)			//暗転解除
++	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
++	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
++
++	TK_end()
++	
++}
+ 
+ #EndScriptTable
+ 

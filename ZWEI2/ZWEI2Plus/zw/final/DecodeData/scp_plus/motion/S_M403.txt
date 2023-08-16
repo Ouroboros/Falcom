@@ -1,0 +1,542 @@
+
+////////////////////
+#CharMotTable:0403//クモ
+BS_403m.it3
+
+if_INIT
+{
+	//eff当り消し　キャラはアドルのみ
+	H_@csp -1 -1 11	2//
+
+//足atari		  種類	  管理NO
+	LOAD	-1 -1 462 0 0 4 Bone_LeftFToeBase	//当り用ターゲット
+	LOAD	-1 -1 462 0 0 5 Bone_LeftMToeBase	//当り用ターゲット
+	LOAD	-1 -1 462 0 0 6 Bone_LeftBToeBase	//当り用ターゲット
+	LOAD	-1 -1 462 0 0 7 Bone_RightFToeBase	//当り用ターゲット
+	LOAD	-1 -1 462 0 0 8 Bone_RightMToeBase	//当り用ターゲット
+	LOAD	-1 -1 462 0 0 9 Bone_RightBToeBase	//当り用ターゲット
+
+	F_SET	-1	-1		MAXMOVE
+
+//
+//頭
+	H_csp61 	-1 -1  10
+
+	I_Bone_Spine1 	-1 -1 4 270 0 0	//ルックAT
+
+	B_NEXT  -1   0   0   0   0  	60 //低姿勢ジャンプ追尾
+}
+
+	SET 65 65 1310 1321 -1 0 //低姿勢空気を吸う□
+	E_Bone_Jaw			 	65 1311 190 200 0 0 //空気を吸う風エフェクト205
+	E_Bone_Jaw			 	65 1311 210 200 0 0 //空気を吸う風エフェクト205
+
+//後半ラスト
+if_F 101
+{
+	I_Bone_Spine1 	-1 -1 4 0 0 0	//ルックAT
+	OTO -1 -1	623		//糸を大量に吐き出す	
+	B_NEXT   	-1  0 0 0 0    65 15 //待機
+	mF0_set	-1	-1	50
+	mFX_reset	-1	-1	101
+}
+
+
+//■ラスト回転アタックへ
+if_mF0= 50
+{
+	if_SET	65
+	{
+		//			俯		zom	Z	tim	node	par
+		CAM	-1 -1 	-1550 	90 	100 15 	csp59	25//Bone_Head//BS_403//
+		F_ELEMENT	-1 -1 0 0 0 0 --	//無敵解除
+
+		B_NEXT   65   0  200   0   0  	4 15//滞空待□回転へ
+	}
+	else
+	{
+		CAM	-1 -1 -2000 80 200 20 csp59	30//Bone_Head//BS_403//
+
+		//風船部分のみダメージ
+		H_csp59 	4 -1  0 1
+		H_csp60 	4 -1  0 1
+		H_csp61 	4 -1  0 1
+		
+		//瞰 ズーム Z 変化時間
+
+	//el_SET	04 47 46 57
+		B_MOV   	04  3  3 4  0  10 //待機
+		B_MOV   	46  0  0 4  0  0 //待機
+		B_MOV   	47  0  8 3  0  0 //待機
+		
+		B_MOV   	57  0  0  20  0 0 //待機
+		B_MOV   	44  0  0  20  0 0 //待機
+		B_MOV   	45  0  0  20  0 0 //待機
+
+		B_MOV   	08  3  18 9  -100   10 //ゲロ
+
+
+		//大技カウント用
+		if_SET 44 45
+		{
+			if_TIME 1 0
+			{
+				mF2_add	-1	-1	1
+				if_RAND 2
+					mF2_add	-1	-1	1
+			}
+		}
+		if_SET 46 08
+		{
+			mF2_set	-1	-1	0
+		}
+
+
+		B_NEXT   47   0  240   0   0  	48 //回転□滞空待機へ
+		if_mF2< 4
+		{
+			B_NEXT   57   0  50   20   0  	44 //滞空待□滞空待機へ
+			B_NEXT   57   0  50   20   0  	45 //滞空待□滞空待機へ
+		}
+		else
+		{
+			//     	 set rot tim rnd length next
+			B_NEXT   57   0  50   30   0  	46 //滞空待□回転へ
+			B_NEXT   57   0  50   30   0  	08 //滞空待□回転へ
+		}
+
+		F_ELEMENT	46 -1 0 0 0 0 BxGxMxKx	//無敵解除
+		F_ELEMENT	57 -1 0 0 0 0 --	//無敵解除
+		B_NEXT   08   0  200   0   0  	57 //回転□滞空待機へ
+
+		//ダメージで袋大きく
+		if_EV DAMAGE
+		{
+			if_SET 47 09
+			{
+				E_Bone_Belly	-1 -1 7360 100 0 0 ADL //破裂赤い火
+				OTO	-1	-1	158		//ガード	キン
+			}
+			else
+			{
+				E_Bone_Jaw		-1 -1 24410 200 0 0 ADL //ダメージ
+
+			//	BIG 	-1 -1	101 101 101 	0 	Bone_Belly 		0
+			//	mF1_add -1 -1 1
+				OTO	-1	-1	622		//おなかが膨らむ
+				OTO	-1	-1	141		//ダメージ
+				OTO	-1	-1	159		//クリティカルヒット	強ヒット
+			}
+		}
+
+		if_SET 47
+			E_Bone_Belly	-1 20 7360 100 0 0 ADL //破裂赤い火
+
+		if_SET 08
+		{
+			E_Bone_Jaw		-1 2	 311  -1 0 0	ADL //ゲロ
+		}
+
+		if_LEN 15000 700
+		{
+			if_SET 47 46
+				-POS    -1 -1  0   15000  4  2 charbase0	//飛ばし
+		}
+
+	}
+
+
+}
+
+
+//■転倒SET
+el_SET	61 62 63 03
+{
+	CAM	-1 -1 300 90 150 20 BS_403//Bone_Head//BS_403//
+
+	mFX_set	-1	-1	100//通常フラグ操作
+
+	mF3_set -1 -1 0
+	mF0_set -1 -1 0
+	//     	 set rot tim rnd length next
+	B_NEXT   62   0  200   0   0  	63 //低姿勢へ
+}
+
+//■連続ジャンプ（前半通常）
+el_mF0< 3
+{
+	CAM	-1 -1 100 90 150 2 BS_403//Bone_Head//BS_403//
+
+	mFX_set	-1	-1	100//通常フラグ操作
+
+	B_NEXT   50   0   0   0   0  	51 //低姿勢へ
+
+	//待機なので　次の行動へ
+	if_SET 02
+	{
+		//視界にいたら遠距離
+		if_mF3= 0
+		{
+			if_VIEW	120
+				mF3_set -1 -1 1
+		}
+
+		if_LEN2D	900 0//近距離も
+		{
+			B_NEXT  -1   0   0   0   0  	60 //低姿勢ジャンプ追尾
+			mF0_add -1 -1 1
+			mF3_set -1 -1 0
+		}
+		el_mF3< 1//踏みつけ
+		{
+			B_NEXT  -1   0   0   0   0  	60 //低姿勢ジャンプ追尾
+			mF0_add -1 -1 1
+			mF3_set -1 -1 0
+		}
+		else//連続三回カマイタチ
+		{
+			B_NEXT  -1   0   0  0   0  	31 //右手カマイタチ
+			B_NEXT  -1   0   0  2   0  	30 //左手カマイタチ
+			B_NEXT  -1   0   0  3   0  	32 //両手カマイタチ
+
+			if_mF3< 3
+				mF3_add -1 -1 1
+			else
+				mF3_set -1 -1 -1
+		}
+	}
+}
+
+//■前半接近（前半通常）
+else
+{
+	CAM	-1 -1 100 90 150 2 BS_403//Bone_Head//BS_403//
+//	CAM	-1 -1 -1 0 0 0 BS_403//Bone_Head//BS_403//
+
+	mFX_reset	-1	-1	100//通常フラグ操作
+
+	if_LEN2D	900 0//近距離
+	{
+		//     	 set rot tim rnd length next
+		B_NEXT   02   0   0   0   0  	52 //起き上がり
+
+		mF0_add 50 5 1	//待機ループカウント
+		if_mF0> 6
+		{
+			mF0_set -1	-1	0
+			B_NEXT   -1   0   60  5   0  	49	4//低空回転ジャンプ
+		}
+		el_SET	50	41	40
+		{
+			//     	 set rot tim rnd length next
+			B_NEXT   50  0   100 50  0  	40 //触覚殴り
+
+			//足は別々に
+			if_RAND	70
+				C_Bone_LeftFrontPelvis		-1 -1 0 0 0 0 +act1	//+act2 +act3
+			if_RAND	70
+				C_Bone_LeftMiddlePelvis		-1 -1 0 0 0 0 +act1	//+act2 +act3
+			if_RAND	70
+				C_Bone_LeftBackPelvis		-1 -1 0 0 0 0 +act1	//+act2 +act3
+			if_RAND	70
+				C_Bone_RightFrontPelvis		-1 -1 0 0 0 0 +act1	//+act2 +act3
+			if_RAND	70
+				C_Bone_RightMiddlePelvis	-1 -1 0 0 0 0 +act1	//+act2 +act3
+			if_RAND	70
+				C_Bone_RightBackPelvis		-1 -1 0 0 0 0 +act1	//+act2 +act3
+		}
+	}
+	else
+	{
+		B_NEXT   50   0   0  0   0  	51	15//低空回転ジャンプ
+		B_NEXT   02   0   80  0   0  	49	//低空回転ジャンプ
+	}
+
+}
+
+
+//■モーション定義■■■■■■■■■■■■■■■■■■■■■■■■■■
+SET 02 02 0145 0234 -1 00 //低姿勢待機
+SET 04 57 0500 0549 -1 00 //低姿勢待機→滞空		滞空→プロペラアタック	外部指令用
+
+
+
+
+
+SET 49 02 2345 2429 -1 00 //低姿勢宙返りジャンプ→踏みつけ
+	E_LeftFrontFoot_End		49 2363 181 100 0 0 //低姿勢宙返りジャンプ離陸土煙
+	E_LeftMiddleFoot_End 	49 2362 181 100 0 0 //低姿勢宙返りジャンプ離陸土煙
+	E_LeftBackFoot_End 		49 2362 181 100 0 0 //低姿勢宙返りジャンプ離陸土煙
+	E_RightFrontFoot_End 	49 2365 181 100 0 0 //低姿勢宙返りジャンプ離陸土煙
+	E_RightMiddleFoot_End 	49 2361 181 100 0 0 //低姿勢宙返りジャンプ離陸土煙
+	E_RightBackFoot_End 	49 2364 181 100 0 0 //低姿勢宙返りジャンプ離陸土煙
+	E_LeftFrontFoot_End		49 2388 180 100 0 0 //低姿勢宙返りジャンプ着地土煙
+	E_LeftMiddleFoot_End 	49 2386 180 100 0 0 //低姿勢宙返りジャンプ着地土煙
+	E_LeftBackFoot_End 		49 2389 180 100 0 0 //低姿勢宙返りジャンプ着地土煙
+	E_RightFrontFoot_End 	49 2390 180 100 0 0 //低姿勢宙返りジャンプ着地土煙
+	E_RightMiddleFoot_End 	49 2385 180 100 0 0 //低姿勢宙返りジャンプ着地土煙
+	E_RightBackFoot_End 	49 2389 180 100 0 0 //低姿勢宙返りジャンプ着地土煙
+	E_charbase0				49 2384 613 100 0 0 //宙返りジャンプ
+	OTO	49	2363	603 0 0 0	//攻撃ジャンプ
+	OTO	49	2384	604 0 0 0	//高姿勢ジャンプ時回転
+	OTO	49	2388	605 0 0 0	//着地
+	OTO	49	2388	611	0 0 0	//岩が四方に広がる2(高姿勢ジャンプ時)
+
+	//  ID 	始frame 終frame 速度 方向 上方速度
+	if_TIME	40	25
+	{
+		if_LEN2D	1000 0
+		{
+			MOV 49	2364 2385 35 0 0
+			B_MOV   49  0   0  7  0   00
+		}
+		else
+		{
+			MOV 49	2364 2385 200 0 0
+			B_MOV   49  0   0  15  0   00
+		}
+	}
+	else
+		B_MOV   49  0   0  0  0   00
+
+SET 60 02 0785 0859 -1 00 //低姿勢ジャンプ
+if_SET 60
+{
+	E_LeftFrontFoot_End		60 799 181 100 0 0 //低姿勢ジャンプ離陸土煙
+	E_LeftMiddleFoot_End 	60 801 181 100 0 0 //低姿勢ジャンプ離陸土煙
+	E_LeftBackFoot_End 		60 803 181 100 0 0 //低姿勢ジャンプ離陸土煙
+	E_RightFrontFoot_End 	60 800 181 100 0 0 //低姿勢ジャンプ離陸土煙
+	E_RightMiddleFoot_End 	60 803 181 100 0 0 //低姿勢ジャンプ離陸土煙
+	E_RightBackFoot_End 	60 798 181 100 0 0 //低姿勢ジャンプ離陸土煙
+	E_LeftFrontFoot_End		60 829 180 100 0 0 //低姿勢ジャンプ着地土煙
+	E_LeftMiddleFoot_End 	60 832 180 100 0 0 //低姿勢ジャンプ着地土煙
+	E_LeftBackFoot_End 		60 835 180 100 0 0 //低姿勢ジャンプ着地土煙
+	E_RightFrontFoot_End 	60 833 180 100 0 0 //低姿勢ジャンプ着地土煙
+	E_RightMiddleFoot_End 	60 832 180 100 0 0 //低姿勢ジャンプ着地土煙
+	E_RightBackFoot_End 	60 832 180 100 0 0 //低姿勢ジャンプ着地土煙
+	E_charbase0				60 0823 260 100 0 0 //低姿勢ジャンプ
+	E_charbase0				60 0835 606 100 0 0 //宙返りジャンプ
+	OTO	60	799	603		//ジャンプ
+	OTO	60	835	605		//着地
+	OTO	60	835	610		//岩が四方に広がる
+
+	//  ID 	始frame 終frame 速度 方向 上方速度
+	if_TIME 60 20
+	{
+		if_LEN2D	600 0
+		{
+			MOV 	60	800 830 5 0 0
+			B_MOV   60  0   0  3  0    00
+		}
+		else
+		{
+			MOV 	60	800 830 10 0 0
+			B_MOV   60  0   0  5  0    00
+		}
+	}
+	else
+		B_MOV   60  0   0  0  0    00
+}
+
+
+SET 30 -1 1590 1620 02 4 //低姿勢カマイタチ左
+	E_Bone_LeftFToeBase		30 1600 270  -1 0 0 LeftFrontFoot_End //低姿勢カマイタチ左軌跡
+	E_Bone_LeftFToeBase		30 1590 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	E_Bone_LeftFToeBase		30 1593 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	E_Bone_LeftFToeBase		30 1599 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	E_Bone_LeftFToeBase		30 1601 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	OTO	30	1600	606		//なぎ払い
+//	OTO	30	1590	612		//蜘蛛から岩が飛んでくる
+//	OTO	30	1593	612		//蜘蛛から岩が飛んでくる
+//	OTO	30	1599	612		//蜘蛛から岩が飛んでくる
+//	OTO	30	1601	612		//蜘蛛から岩が飛んでくる
+
+SET 31 -1 1640 1670 02 4 //低姿勢カマイタチ右
+	E_Bone_RightFToeBase	31 1650 270  -1 0 0 RightFrontFoot_End //低姿勢カマイタチ右軌跡
+	E_Bone_RightFToeBase	31 1640 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	E_Bone_RightFToeBase	31 1643 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	E_Bone_RightFToeBase	31 1649 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	E_Bone_RightFToeBase	31 1651 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	OTO	31	1650	606		//なぎ払い
+//	OTO	31	1640	612		//蜘蛛から岩が飛んでくる
+//	OTO	31	1643	612		//蜘蛛から岩が飛んでくる
+//	OTO	31	1649	612		//蜘蛛から岩が飛んでくる
+//	OTO	31	1651	612		//蜘蛛から岩が飛んでくる
+
+SET 32 -1 1690 1720 02 4 //低姿勢カマイタチ両手
+	E_Bone_LeftFToeBase		32 1698 270  -1 0 0 LeftFrontFoot_End //低姿勢両手カマイタチ左軌跡
+	E_Bone_RightFToeBase	32 1700 270  -1 0 0 RightFrontFoot_End //低姿勢両手カマイタチ右軌跡
+//	E_charbase0				32 1703 300 100 0 0 ADL//低姿勢カマイタチ水平
+	E_Bone_RightFToeBase	32 1690 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	E_Bone_RightFToeBase	32 1698 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	E_Bone_RightFToeBase	32 1706 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+
+	E_Bone_LeftFToeBase		32 1694 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	E_Bone_LeftFToeBase		32 1702 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	E_Bone_LeftFToeBase		32 1712 680 100 0 0 ADL //低姿勢カマイタチ右軌跡
+	OTO	32	1698	615		//足回転ループ
+	OTO	32	1690	612		//蜘蛛から岩が飛んでくる
+	OTO	32	1698	612		//蜘蛛から岩が飛んでくる
+	OTO	32	1706	612		//蜘蛛から岩が飛んでくる
+	OTO	32	1694	612		//蜘蛛から岩が飛んでくる
+	OTO	32	1702	612		//蜘蛛から岩が飛んでくる
+	OTO	32	1712	612		//蜘蛛から岩が飛んでくる
+
+SET 34 50 1756 1779 -1 00 //高姿勢足突き刺し攻撃
+	E_csp9					-1 -1735 230 300 0 0 Bone_LeftFrontPelvis	//高姿勢足突き刺しオーラ
+	E_csp10					-1 -1735 230 300 0 0 Bone_LeftFrontPelvis	//高姿勢足突き刺しオーラ
+	E_csp18					-1 -1735 230 300 0 0 Bone_LeftMiddlePelvis	//高姿勢足突き刺しオーラ
+	E_csp19					-1 -1735 230 300 0 0 Bone_LeftMiddlePelvis	//高姿勢足突き刺しオーラ
+	E_csp27					-1 -1735 230 300 0 0 Bone_LeftBackPelvis	//高姿勢足突き刺しオーラ
+	E_csp28					-1 -1735 230 300 0 0 Bone_LeftBackPelvis	//高姿勢足突き刺しオーラ
+	E_csp37					-1 -1735 230 300 0 0 Bone_RightFrontPelvis	//高姿勢足突き刺しオーラ
+	E_csp38					-1 -1735 230 300 0 0 Bone_RightFrontPelvis	//高姿勢足突き刺しオーラ
+	E_csp46					-1 -1735 230 300 0 0 Bone_RightMiddlePelvis	//高姿勢足突き刺しオーラ
+	E_csp47					-1 -1735 230 300 0 0 Bone_RightMiddlePelvis	//高姿勢足突き刺しオーラ
+	E_csp56					-1 -1735 230 300 0 0 Bone_RightBackPelvis	//高姿勢足突き刺しオーラ
+	E_csp57					-1 -1735 230 300 0 0 Bone_RightBackPelvis	//高姿勢足突き刺しオーラ
+	E_LeftFrontFoot_End		-1 -1760 240 100 0 112 Bone_LeftFrontPelvis	//高姿勢足突き刺し衝撃波
+	E_LeftMiddleFoot_End 	-1 -1760 240 100 0 112 Bone_LeftMiddlePelvis	//高姿勢足突き刺し衝撃波
+	E_LeftBackFoot_End 		-1 -1760 240 100 0 112 Bone_LeftBackPelvis	//高姿勢足突き刺し衝撃波
+	E_RightFrontFoot_End 	-1 -1760 240 100 0 112 Bone_RightFrontPelvis	//高姿勢足突き刺し衝撃波
+	E_RightMiddleFoot_End 	-1 -1760 240 100 0 112 Bone_RightMiddlePelvis	//高姿勢足突き刺し衝撃波
+	E_RightBackFoot_End 	-1 -1760 240 100 0 112 Bone_RightBackPelvis	//高姿勢足突き刺し衝撃波
+	OTO	-1	-1760	609 0 0 0	Bone_LeftFrontPelvis	///地団駄
+	OTO	-1	-1760	609 0 0 0	Bone_LeftMiddlePelvis	//地団駄
+	OTO	-1	-1760	609 0 0 0	Bone_LeftBackPelvis		//地団駄
+	OTO	-1	-1760	609 0 0 0	Bone_RightFrontPelvis	//地団駄
+	OTO	-1	-1760	609 0 0 0	Bone_RightMiddlePelvis	//地団駄
+	OTO	-1	-1760	609 0 0 0	Bone_RightBackPelvis	//地団駄
+
+	OTO	-1	-1735	608 0 0 0	Bone_LeftFrontPelvis	//地団駄(炎をまとったみたいな何か)
+	OTO	-1	-1735	608 0 0 0	Bone_LeftMiddlePelvis	//地団駄(炎をまとったみたいな何か)
+	OTO	-1	-1735	608 0 0 0	Bone_LeftBackPelvis		//地団駄(炎をまとったみたいな何か)
+	OTO	-1	-1735	608 0 0 0	Bone_RightFrontPelvis	//地団駄(炎をまとったみたいな何か)
+	OTO	-1	-1735	608 0 0 0	Bone_RightMiddlePelvis	//地団駄(炎をまとったみたいな何か)
+	OTO	-1	-1735	608 0 0 0	Bone_RightBackPelvis	//地団駄(炎をまとったみたいな何か)
+
+
+SET 40 50 1905 1959 -1 00 //高姿勢手でなぎ払い攻撃
+	E_Bone_LeftArm			40 1922 270  -1 0 112 LeftHand_End //高姿勢手でなぎ払い軌跡
+	E_Bone_RightArm			40 1933 270  -1 0 112 RightHand_End //高姿勢手でなぎ払い軌跡
+	E_csp62					40 1926 31010 5 0 0 0 //手でなぎ払いアタリ
+	E_Bone_LeftForeArm		40 1926 31010 5 0 0 0 //手でなぎ払いアタリ
+	E_Bone_LeftArm			40 1926 31010 5 0 0 0 //手でなぎ払いアタリ
+	E_csp63					40 1936 31010 5 0 0 0 //手でなぎ払いアタリ
+	E_Bone_RightForeArm		40 1936 31010 5 0 0 0 //手でなぎ払いアタリ
+	E_Bone_RightArm			40 1936 31010 5 0 0 0 //手でなぎ払いアタリ
+	OTO	40	1926	607 0 0 0	//触覚なぎ払い
+	OTO	40	1936	607 0 0 0	//触覚なぎ払い
+
+
+SET 56 46 0500 0549 -1 00 //低姿勢待機→滞空
+SET 46 09 2260 2279 -1 00 //滞空→プロペラアタック
+//	E_charbase0				46 2275 613 100 0 0 //宙返りジャンプ着地岩
+	OTO	46	2270	614		//足回転（ループ）
+SET 09 47 2280 2309 -1 00 //滞空→プロペラアタック
+	E_charbase0				09 2285 320 100 0 112 //滞空プロペラアタック
+SET 47 47 2280 2309 -1 00 //滞空プロペラアタック
+	E_charbase0				47 2280 320 100 0 112 //滞空プロペラアタック
+	E_charbase0				47 2295 320 100 0 112 //滞空プロペラアタック
+//	E_charbase0				47 2295 613 100 0 0 //宙返りジャンプ
+SET 48 57 2310 2339 -1 00 //プロペラアタック→滞空
+	OTO	48	2310	-614	//足回転ループＳＴＯＰ
+
+
+SET 57 57 0555 0644 -1 00 //滞空待機
+	OTO	57	0555 -627		//ゲロ吐き ストップ
+SET 08 08 0555 0644 -1 00 //滞空待機　ゲロ用
+	OTO	08	0555 627		//ゲロ吐き ループ
+
+
+
+//SET 44 57 2160 2204 -1 00 //滞空カマイタチ左 21
+SET 44 57 2170 2204 -1 00 //滞空カマイタチ左 21
+	E_Bone_LeftFToeBase		44 2175 270  -1 0 0 LeftFrontFoot_End //滞空カマイタチ左軌跡
+	E_charbase0				44 2180 280 100 0 0 ADL//滞空カマイタチ左
+	OTO	44	2175	617		//カマイタチ片手(なぎ払いの拡張版)
+	OTO	44	2180	618		//カマイタチ後にでてくる風のモーション
+//SET 45 57 2210 2254 -1 00 //滞空カマイタチ右 22
+SET 45 57 2220 2254 -1 00 //滞空カマイタチ右 22
+	E_Bone_RightFToeBase	45 2225 270  -1 0 0 RightFrontFoot_End //滞空カマイタチ右軌跡
+	E_charbase0				45 2230 290 100 0 0 ADL//滞空カマイタチ右
+	OTO	45	2225	617		//カマイタチ片手(なぎ払いの拡張版)
+	OTO	45	2230	618		//カマイタチ後にでてくる風のモーション
+
+
+SET 50 50 0005 0094 -1 00 //高姿勢待機
+
+
+SET 51 02 0096 0143 -1 00 //高姿勢待機→低姿勢待機
+	E_LeftFrontFoot_End		51 0110 181 100 0 0 //高姿勢待機→低姿勢待機土煙
+	E_LeftMiddleFoot_End 	51 0130 181 100 0 0 //高姿勢待機→低姿勢待機土煙
+	E_LeftBackFoot_End 		51 0120 181 100 0 0 //高姿勢待機→低姿勢待機土煙
+	E_RightFrontFoot_End 	51 0125 181 100 0 0 //高姿勢待機→低姿勢待機土煙
+	E_RightMiddleFoot_End 	51 0140 181 100 0 0 //高姿勢待機→低姿勢待機土煙
+	E_RightBackFoot_End 	51 0115 181 100 0 0 //高姿勢待機→低姿勢待機土煙
+
+SET 52 50 0236 0284 -1 00 //低姿勢待機→高姿勢待機
+	E_LeftFrontFoot_End		52 0250 181 100 0 0 //低姿勢待機→高姿勢待機土煙
+	E_LeftMiddleFoot_End 	52 0270 181 100 0 0 //低姿勢待機→高姿勢待機土煙
+	E_LeftBackFoot_End 		52 0260 181 100 0 0 //低姿勢待機→高姿勢待機土煙
+	E_RightFrontFoot_End 	52 0264 181 100 0 0 //低姿勢待機→高姿勢待機土煙
+	E_RightMiddleFoot_End 	52 0279 181 100 0 0 //低姿勢待機→高姿勢待機土煙
+	E_RightBackFoot_End 	52 0255 181 100 0 0 //低姿勢待機→高姿勢待機土煙
+
+SET 03 00 0865 0979 62 05 //高姿勢待機→転倒状態	外部指令用
+	OTO	03	890	620		//足破壊に伴うぐらつき
+	OTO	03	936	621		//足破壊転倒
+
+SET 61 00 0865 0979 62 05 //高姿勢待機→転倒状態
+	E_LeftFrontFoot_End		61 890	200 100 0 0 //転倒足の震え土煙
+	E_LeftMiddleFoot_End 	61 891 	200 100 0 0 //転倒足の震え土煙
+	E_LeftBackFoot_End 		61 892 	200 100 0 0 //転倒足の震え土煙
+	E_RightFrontFoot_End 	61 893 	200 100 0 0 //転倒足の震え土煙
+	E_RightMiddleFoot_End 	61 894 	200 100 0 0 //転倒足の震え土煙
+	E_RightBackFoot_End 	61 895 	200 100 0 0 //転倒足の震え土煙
+	E_LeftFrontFoot_End		61 910	200 100 0 0 //転倒足上げ煙土煙
+	E_LeftMiddleFoot_End 	61 914 	200 100 0 0 //転倒足上げ煙土煙
+	E_LeftBackFoot_End 		61 916 	200 100 0 0 //転倒足上げ煙土煙
+	E_RightFrontFoot_End 	61 914 	200 100 0 0 //転倒足上げ煙土煙
+	E_RightMiddleFoot_End 	61 913	200 100 0 0 //転倒足上げ煙土煙
+	E_RightBackFoot_End 	61 919 	200 100 0 0 //転倒足上げ煙土煙
+	E_charbase0				61 936	195 100 0 0 //転倒バウンド土煙
+	E_charbase0				61 950	195 100 0 0 //転倒バウンド土煙
+	OTO	61	890	620		//足破壊に伴うぐらつき
+	OTO	61	936	621		//足破壊転倒
+SET 62 62 0985 1044 -1 00 //転倒状態
+SET 63 50 1050 1199 -1 00 //転倒状態→高姿勢待機
+	E_LeftFrontFoot_End		63 1126	181 100 0 0 //起き上がり土煙
+	E_LeftMiddleFoot_End 	63 1126	181 100 0 0 //起き上がり土煙
+	E_LeftBackFoot_End 		63 1142	181 100 0 0 //起き上がり土煙
+	E_RightFrontFoot_End 	63 1171	181 100 0 0 //起き上がり土煙
+	E_RightMiddleFoot_End 	63 1140	181 100 0 0 //起き上がり土煙
+	E_RightBackFoot_End 	63 1155	181 100 0 0 //起き上がり土煙
+	E_LeftFrontFoot_End		63 1185	181 100 0 0 //起き上がり土煙
+	E_RightMiddleFoot_End 	63 1185	181 100 0 0 //起き上がり土煙
+	E_LeftBackFoot_End 		63 1195	181 100 0 0 //起き上がり土煙
+
+if_EV DIED
+{
+//	CAM		-1 -1 -110 130 0 30 --- 30
+//	CAM	-1 -1 650 70 50 200 //csp59//Bone_Head//BS_403//
+
+	CAM	-1 -1 -2 0 0 0 0	0//カメラそのまま
+
+	B_NEXT   -1   -1  0   0   0  	61 15 //低姿勢へ
+		OTO	-1	-1	-614	//足回転ループＳＴＯＰ
+		OTO	-1	-1 	-627	//ゲロ吐き ストップ
+
+	E_Bone_BellyRoot		-1	-1	7370	100	0	0	//死亡
+	E_Bone_Jaw				-1	-1	7380	100	0	0	//死亡
+
+	E_Bone_LeftFrontFoot	-1	-1	7380	100	0	0	//死亡
+	E_Bone_LeftMiddleFoot	-1	-1	7380	100	0	0	//死亡
+	E_Bone_LeftBackFoot	-1	-1	7380	100	0	0	//死亡
+	E_Bone_RightFrontFoot	-1	-1	7380	100	0	0	//死亡
+	E_Bone_RightMiddleFoot	-1	-1	7380	100	0	0	//死亡
+	E_Bone_RightBackFoot	-1	-1	7380	100	0	0	//死亡
+}
+//■破裂して死亡
+
+#EndCharMotTable

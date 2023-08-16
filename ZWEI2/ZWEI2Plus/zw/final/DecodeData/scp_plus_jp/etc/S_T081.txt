@@ -1,0 +1,1808 @@
+//──────────────────────────────
+//	name("◆呼び込みペンギン（ペンギン）Penguin")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_PENGUIN
+{
+	TK_begin()
+
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(PENGUIN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,PENGUIN)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,PENGUIN)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PENGUIN)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PENGUIN)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PENGUIN)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,PENGUIN)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,PENGUIN)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　※アルッテ教会・懺悔室の前辺りにいる。
+	if( F6_05_EndSixth )
+	{
+		rot_chr(PENGUIN,30,PLAYER1)
+		rot_chr(PET,30,PENGUIN)
+		rot_chr(PARTNER,30,PENGUIN)
+		
+	//　　※初回イベント。
+		if(!FE_13_TalkPenguin)
+		{
+			cross_fade(30)			//クロスフェード
+			EV_begin()
+			
+			//カメラセット
+		//	CAM_move(-7196,349,194,0,0)
+		//	CAM(150,58,194,25,129,0,0)
+		//	CAM_move(-7196,349,194,0,0)
+		//	CAM(150,62,194,25,132,0,0)
+			CAM_move(-7196,349,194,0,0)
+			CAM(70,57,194,25,125,0,0)
+			//キャラ再配置
+			chr_pos(RAGNA,	-7184,-365,0,180,2)
+			chr_pos(PET,-7063,-283,0,175,2)
+			chr_pos(PARTNER,-6903,-408,1,92,2)
+			rot_chr(PENGUIN,30,RAGNA)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(PARTNER,"9", "1", "7")	
+			KAO(PENGUIN, "1", "1", "1")	
+			
+			F_reset_chr(PENGUIN,CF_NO_MOVE)
+
+			wait_fade()
+			wait(15)
+
+			KAO(PENGUIN,"12321Z2","1","1")
+			MES(PENGUIN,"あー……",0)
+			KAO(PENGUIN,"12321Z3","1","1")
+			MES(PENGUIN,"……懺悔しますか？",0)
+			MES_close(PENGUIN)
+
+		//　　ラグナたちにＰＡエモーション。
+			EMO(RAGNA,EMO_PA)
+			EMO(PET,EMO_PA)
+			wait(30)
+			
+		//────────────────────────
+		//	name("⇒コロッセオに行ったことがある場合")
+			if(FV_02_VisitGyakata)
+			{
+				MES(RAGNA,"お前は確か、ギャランドゥの\nおっさんの所に居たペンギン……",0)
+				MES_close(RAGNA)
+
+			//	name2(PET)
+				MES(PET,"むう、何故このような場所に……",0)
+				MES_close(PET)
+
+			//	name2(PENGUIN)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"しばらく、ここで\nお世話になることにしたのです。",0)
+				KAO(PENGUIN,"12321Z4","1","1")
+				MES(PENGUIN,"ムッシュの言いつけなのです。",0)
+				MES_close(PENGUIN)
+
+			//　　ラグナたちに？エモーション。
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PET,EMO_HATENA)
+				wait(30)
+				
+				MES(RAGNA,"言いつけ……？",0)
+				MES_close(RAGNA)
+
+			//	name2(PENGUIN)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"……ムッシュとロッテは、\n旅立ってしまったのです。",0)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"ペンギンは、\n付いていくことができないのです。",0)
+				MES_close(PENGUIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"旅立ったって……",0)
+				MES(RAGNA,"そ、そういや……\nあれ以来ギャランドゥの\nオッサンも姿を見せねえよな……",0)
+				MES_close(RAGNA)
+			}
+		//	name("⇒行ったことがない場合")
+			else
+			{
+				MES(RAGNA,"ペ、ペンギン……？",0)
+				MES_close(RAGNA)
+
+			//	name2(PET)
+				MES(PET,"そういえばそなた、どこかで\n見たことがある気がするが……",0)
+				MES_close(PET)
+
+			//	name2(PENGUIN)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"しばらく、ここで\nお世話になることにしたのです。",0)
+				KAO(PENGUIN,"12321Z4","1","1")
+				MES(PENGUIN,"ムッシュの言いつけなのです。",0)
+				MES_close(PENGUIN)
+
+			//　　ラグナたちに？エモーション。
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PET,EMO_HATENA)
+				wait(30)
+				
+				MES(RAGNA,"ムッシュ？？",0)
+				MES_close(RAGNA)
+
+			//	name2(PENGUIN)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"ペンギンは、\nムッシュの忠実な部下なのです。",0)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"でもムッシュは、\nもう旅立ってしまったのです。",0)
+				KAO(PENGUIN,"12321Z6","1","1")
+				MES(PENGUIN,"ペンギンは\n付いていくことができないのです。",0)
+				MES_close(PENGUIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"えーっと……",0)
+				MES(RAGNA,"も、もしかして、ムッシュって\nギャランドゥのおっさんのことか……？",0)
+				MES(RAGNA,"そういやあれ以来、\n一度も姿を見てねえが……",0)
+				MES_close(RAGNA)
+			}
+		//────────────────────────
+
+			MES(PET,"……………………………………",0)
+			MES_close(PET)
+
+			KAO(PARTNER,"92329Z6","1","1")
+			MES(PARTNER,"あの……\nそのギャランドゥさんって……？",0)
+			MES_close(PARTNER)
+
+		//　　ラグナにＰＡエモーション。
+			EMO(RAGNA,EMO_PA)
+			wait(30)
+
+		//　　ミアに向く。
+			rot_chr(RAGNA,30,PARTNER)
+			MES(RAGNA,"ああ、ミアは\n会った事が無かったか。",0)
+			MES(RAGNA,"何故だか知らねえが、\n俺たちに協力してくれてた\nおっさんだよ。",0)
+			MES(RAGNA,"ちょっとその、見かけに\nかなりインパクトがあるんだが……",0)
+			MES_close(RAGNA)
+
+		//　　ラグナに・・・エモーション。
+			EMO(RAGNA,EMO_TENTEN)
+			wait(30)
+			
+		//	rot_chr(RAGNA,30,PET)
+			look_chr( RAGNA,PET,"Bone_Head")
+			
+		//　　アルウェンに向く。
+			MES(RAGNA,"なあ、姫さん。\n実は少し気になってる事が\nあるんだ。",0)
+			MES(RAGNA,"スバルから聞いたんだが、\nあのおっさん、本当は……",0)
+			MES_close(RAGNA)
+
+			rot_chr(PET,30,RAGNA)
+		//	look_chr( PET,RAGNA,"Bone_Head")
+
+			KAO(PET,"12321Z3","23","1")
+			MES(PET,"……ああ。",0)
+			KAO(PET,"12321Z6","3","1")
+			MES(PET,"あの者が私の父上かも\n知れぬ、ということであろ。",0)
+			MES_close(PET)
+
+		//　　ラグナとミアにＰＡエモーション。
+			KAO(PARTNER,"1","D","6")
+			EMO(RAGNA,EMO_PA)
+			EMO(PARTNER,EMO_PA)
+			
+			rot_chr(PARTNER,30,PET)
+			rot_chr(PENGUIN,30,PET)
+			wait(30)
+			KAO(PARTNER,"12321Z1","D","6")
+			MES(PARTNER,"えっ……？",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"姫さん、気付いてたのか……",0)
+			MES_close(RAGNA)
+
+			KAO(PET,"12321Z6","21","1")
+			MES(PET,"フフ……\n薄々、そうではないかと\nいう程度だがな。",0)
+			KAO(PET,"12321Z6","1","1")
+			MES(PET,"奇抜な衣装ではあったが、\nその、どこか懐かしい感じがして……",0)
+			MES_close(PET)
+
+			KAO(PARTNER,"1","1","1")
+		//　　アルウェンに・・・エモーション。
+			EMO(PET,EMO_TENTEN)
+			wait(30)
+
+		//　　考える素振り。
+			KAO(PET,"12321Z7","23","1")
+			MES(PET,"だが、あの者が旅立ったというのなら\nあえて捜すこともあるまい。",0)
+			KAO(PET,"12321Z9","3","1")
+			MES(PET,"そもそもあのような格好で\n手助けをするとは、\n何か事情があったのであろうしな。",0)
+			KAO(PET,"12321Z6","3","1")
+			MES(PET,"正直な所、本当に父上であったのか\n私には未だ確信が持てぬ。",0)
+			MES_close(PET)
+
+		//　　アルウェン、顔を戻す。
+			KAO(PET,"12321Z4","21","1")
+			MES(PET,"……だが、それでよいではないか。",0)
+			KAO(PET,"12321Z8","1","1")
+			MES(PET,"時が巡り、女神たちの気が赴けば……\nまた再会できるやもしれぬのだからな。",0)
+			MES_close(PET)
+
+			KAO(PARTNER,"9","26","7")
+			MES(PARTNER,"そう、ですね……",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"ああ……",0)
+			MES(RAGNA,"今はそう信じておくか。",0)
+			MES_close(RAGNA)
+
+		//　　少し間をおく。
+		//　　ペンギン、羽をバタバタさせる。
+			MOT(PENGUIN,55,15)
+			KAO(PENGUIN,"12321Z3","1","1")
+			MES(PENGUIN,"元気を出すのです。",0)
+			KAO(PENGUIN,"12321Z5","1","1")
+			MES(PENGUIN,"懺悔なら、聞いてあげるのです。",0)
+			MES_close(PENGUIN)
+			MOT(PENGUIN,57,15)
+
+		//　　一同に冷や汗エモーション。
+			KAO(PARTNER,"1","D","6")
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			look_off( RAGNA )
+			KAO(PARTNER,"9","1","7")
+			rot_chr(RAGNA,30,PENGUIN)
+			rot_chr(PET,30,PENGUIN)
+			rot_chr(PARTNER,30,PENGUIN)
+			wait(30)
+
+			MES(PET,"き、気持ちは嬉しいのだがな。",0)
+			MES_close(PET)
+
+			MES(RAGNA,"ペンギン、お前……\n懺悔の意味、分かってないだろ……",0)
+			MES_close(RAGNA)
+
+			fade_in(100,30,BLACK)
+			wait_fade()
+			F_set_chr(PENGUIN,CF_NO_MOVE)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(PARTNER,"9", "1", "7")	
+			KAO(PENGUIN, "1", "1", "1")	
+
+			//★ギャランドゥ【正体】
+			F_set_note(-21,2)
+			F_set(FE_13_TalkPenguin)
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			EV_end()
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+
+		}
+		//──────────────────────────────
+		//　　※イベント２（ＧＦ制御）
+		else
+		if(FV_FF_WinGyarandow && !FE_13_TalkPenguin2)
+		{
+		//　　※コロッセオでギャランドゥに勝利している場合のみ発動する。
+			MES(RAGNA,"そういやペンギン、\nお前は何か聞いてないのか？",0)
+			MES(RAGNA,"ギャランドゥのおっさんからの\n伝言とかよ。",0)
+			MES_close(RAGNA)
+
+		//　　ペンギンに？エモーション。
+			EMO(PENGUIN,EMO_HATENA)
+			wait(30)
+			
+			MES(PENGUIN,"ガランドウ？\nそんな名前の人は知らないのです。",0)
+			MES_close(PENGUIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"そ、そうか。\nお前にはムッシュって\n言わないと通じないのか。",0)
+			MES_close(RAGNA)
+
+		//　　ペンギンに少し・・・エモーション。
+			EMO(PENGUIN,EMO_TENTEN)
+			wait(30)
+
+			MES(PENGUIN,"ムッシュは……",0)
+			MES(PENGUIN,"ある日、\nそろそろ行かなければいけないから\nペンギンは町に預けると言ったのです。",0)
+			MES(PENGUIN,"信頼できる教会があるから、\nそこがいいと言ったのです。",0)
+			MES(PENGUIN,"……それだけなのです。",0)
+			MES_close(PENGUIN)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"何も説明して\n下さらなかったんですね……",0)
+			MES_close(PARTNER)
+
+		//──────────────────────────────
+		//	name("⇒シスターと話したことがある場合")
+			if(FT_01_IsabellaEnc)
+			{
+
+			//	name2(PET)
+				MES(PET,"ふむ……しかしここが\n信頼できる教会とはな……",0)
+				MES_close(PET)
+
+				MES(RAGNA,"はは……\n預ける場所を間違ってる気が\nしないでもねえよな……",0)
+				MES_close(RAGNA)
+			}
+		//	name("⇒それ以外")
+			else
+			{
+				MES(RAGNA,"うーん、お前も一応\n顔見知りではあるしな……",0)
+				MES(RAGNA,"よし、後でシスターの人にも\n挨拶しておくか。",0)
+				MES_close(RAGNA)
+			}
+			F_set(FE_13_TalkPenguin2)
+		}
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_PENGUIN)
+			{
+				MES(PENGUIN,"懺悔しますか？",0)
+				MES(PENGUIN,"お一人様３０分で\n５００ペンネなのです。",0)
+				MES_close(PENGUIN)
+
+			//──────────────────────────────
+			//	name("⇒シスターと話したことがある場合")
+				if(FT_01_IsabellaEnc)
+				{
+					MES(RAGNA,"（あのシスターに毒されている……）",0)
+					MES_close(RAGNA)
+				}
+
+				F_set(PENGUIN)
+			}
+		//──────────────────────────────
+		//　　★繰り返し
+			else
+			{
+				MES(PENGUIN,"懺悔しますか？",0)
+				MES(PENGUIN,"お一人様３０分で\n５００ペンネなのです。",0)
+				MES_close(PENGUIN)
+			}
+		}
+	}
+	else
+	//	name("―――――――――――――――――――――――――――――――")
+	//▼まだ魔法障壁の話を聞いていない場合
+	//	name("―――――――――――――――――――――――――――――――")
+	//　　※廃坑入り口分岐、魔法障壁前にいる。
+	//　　※初回イベント
+	//　　※このイベントが起こるまでは、
+	//　　　廃坑入り口分岐の魔法障壁は解除できないようにしておく。
+	//　　ペンギンは魔法障壁の前に立っている。
+	//　　（作業をしているような動作）
+	if(!FE_FF_HearSyouheki)
+	{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			TK_end()
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(7560,-9580,220,0,0)
+			CAM(310,70,60,25,224,0,0)
+
+			//キャラ再配置
+			chr_pos(PENGUIN,7300,9450,0,100,56)
+			
+			chr_pos(RAGNA,7650,9450,0,80,2)
+			chr_pos(PARTNER,7600,9600,0,100,2)
+		
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(PENGUIN,"1", "1", "1")	
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		MES(PENGUIN,"ぺたぺた、ぺたぺた……",0)
+		MES_close(PENGUIN)
+
+	//　　ペンギンに？エモーション。振り返る。
+		EMO(PENGUIN,EMO_HATENA)
+		wait(30)
+//		EV_stop("PATAPATA_PENGUIN")
+		MOT(PENGUIN,57,15)
+		rot(PENGUIN,30,270)
+		wait(30)
+
+	//	name("―――――――――――――――――――――――――――――――")
+		if(!FE_FF_MeetPenguin)
+		{
+		//	name("⇒ペンギンと会うのが初めて")
+			KAO(PENGUIN,"12321Z3","1","1")
+			MES(PENGUIN,"こんにちわなのです。",0)
+			KAO(PENGUIN,"12321Z5","1","1")
+			MES(PENGUIN,"こんな所にお客さんとは、\n珍しいのです。",0)
+			MES_close(PENGUIN)
+
+		//　　ラグナたち、目をぱちくりしてゆっくり・・・エモーション。
+			EFF_chr(25124,PLAYER1,0,100,0,"Bone_Head")
+			EFF_chr(25124,PLAYER2,0,100,0,"Bone_Head")
+			wait(60)
+
+			MES(RAGNA,"（ペンギン……？）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（ペンギンだのう……）",0)
+			MES_close(PARTNER)
+		}
+		else
+		{
+		//	name("⇒ペンギンと会った事がある")
+			KAO(PENGUIN,"12321Z3","1","1")
+			MES(PENGUIN,"こんにちわなのです。",0)
+			KAO(PENGUIN,"12321Z5","1","1")
+			MES(PENGUIN,"お客さんが来てくれて、\n嬉しいのです。",0)
+			MES_close(PENGUIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"あ、ああ。だが……",0)
+			MES_close(RAGNA)
+
+		//　　ラグナたちにゆっくり・・・エモーション。
+			EFF_chr(25124,PLAYER1,0,100,0,"Bone_Head")
+			EFF_chr(25124,PLAYER2,0,100,0,"Bone_Head")
+			wait(60)
+
+			MES(RAGNA,"（どう見ても、ペンギンだよな……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（うむ、こやつは\n  どう見てもペンギンだのう……）",0)
+			MES_close(PARTNER)
+		}
+
+	//	name("―――――――――――――――――――――――――――――――")
+		KAO(PENGUIN,"12321Z4","E","E")
+		MES(PENGUIN,"ほよ……？\nどうしたのですか？",0)
+		MES_close(PENGUIN)
+
+	//　　ペンギン、手を打ち鳴らす。
+		MOT(PENGUIN,56,15)
+		wait(30)
+		MOT(PENGUIN,57,15)
+		wait(25)
+		KAO(PENGUIN,"12321Z3","1","1")
+		MES(PENGUIN,"わかったのです。\nお２人……？　は\nこれが珍しいのです。",0)
+		MES_close(PENGUIN)
+
+	//　　ペンギン、魔法障壁に向く。
+		rot(PENGUIN,20,90)
+		MES(PENGUIN,"これはL337『魔法障壁』L400と\n呼ばれるものなのです。",0)
+		rot_chr(PENGUIN,20,PLAYER1)
+		MES(PENGUIN,"L337反対属性の魔法L400を使わないと、\n解除できないのですよ～？",0)
+		MES_close(PENGUIN)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"ふむ、成る程な……",0)
+		MES(PARTNER,"そういえば、昔父上にも\nそのような事を教わった気がするぞ。",0)
+		MES_close(PARTNER)
+
+//	//　　ペンギン、ラグナたちに向く。
+//		rot_chr(PENGUIN,30,PLAYER1)
+		MOT(PENGUIN,56,15)
+		wait(40)
+		MOT(PENGUIN,57,15)
+		wait(20)
+		KAO(PENGUIN,"12321Z6","1","1")
+		MES(PENGUIN,"それではペンギンは、\nそろそろ失礼するのです。",0)
+		KAO(PENGUIN,"12321Z6","1","1")
+		MES(PENGUIN,"あまりお留守にしていると\nムッシュに怒られてしまうのです。",0)
+		MES_close(PENGUIN)
+		wait_MES(PENGUIN)
+		
+	//　　ペンギン、右上方向に去っていく。
+	//　　ラグナたち、それを見送る。
+		rot(RAGNA,8,180)
+		MOT(RAGNA,2,0)
+		rot(PARTNER,8,180)
+		MOT(PARTNER,2,0)
+
+		F_set_chr(PENGUIN,CF_NO_CLIP)
+		
+		rot(PENGUIN,30,225)
+		move(PENGUIN, 0, WALK1,7650,9200,0,0)
+		wait_move(PENGUIN)
+		rot(PENGUIN,30,180)
+		move(PENGUIN, 0, WALK1,7650,8000,0,0)
+//		wait_move(PENGUIN)
+		wait(60)
+		
+		F_reset_chr(PENGUIN,CF_NO_CLIP)
+
+	//	name("―――――――――――――――――――――――――――――――")
+		if(!FE_FF_MeetPenguin)
+		{
+		//	name("⇒ペンギンと話すのが初めて")
+			MES(RAGNA,"ヘンテコな奴だったな……",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name("⇒ペンギンと会った事がある")
+			MES(RAGNA,"相変わらずヘンテコな奴だな……",0)
+			MES_close(RAGNA)
+		}
+	//	name("―――――――――――――――――――――――――――――――")
+		MES(RAGNA,"まあいいか。\n結構役立ちそうなことを\n教えてくれたからな。",0)
+		MES_close(RAGNA)
+
+	//　　２人、魔法障壁の方を向く。
+		rot_chr(RAGNA,30,76)
+		rot_chr(PARTNER,30,76)
+		
+		MES(RAGNA,"一言で言っちまえば、\n魔法がないと解除できない\nトラップってことだろ？",0)
+		MES_close(RAGNA)
+	//	name("―――――――――――――――――――――――――――――――")
+	//	name("⇒地の魔法持ってない")
+		if(!F1_14_KillBoss1)
+		{
+			MES(PARTNER,"うむ、この障壁はL337風属性L400のようだ。",0)
+			MES(PARTNER,"反対属性のL337地の魔法L400がなければ\n解除できぬだろう。",0)
+			MES(PARTNER,"やはり早く\n魔力を取り戻さねばな……",0)
+			MES_close(PARTNER)
+		}
+		else
+		{
+		//	name("⇒地の魔法持ってる")
+			MES(PARTNER,"うむ、この障壁はL337風属性L400のようだ。",0)
+			MES(PARTNER,"反対属性のL337地の魔法L400を使えば\n解除できるはずだぞ。",0)
+			MES_close(PARTNER)
+		}
+	//――――――――――――――――――――――――――
+	//	イベント終了処理
+	//――――――――――――――――――――――――――
+		fade_in(100,30,BLACK)
+		wait_fade()
+		wait_move(PENGUIN)
+
+		//カメラを初期設定に
+		CAM_return( 0 )
+		wait(30)
+
+		//★ペンギンに会った	
+		F_set(FE_FF_MeetPenguin)
+		
+		//★魔法障壁の話を聞いた
+		F_set(FE_FF_HearSyouheki)
+		
+		//ペンギンを館の守り配置に
+		chr_pos(PENGUIN,6116,7482,0,270,2)
+		TK_begin()
+		EV_end()
+		//フェードイン----------------------
+		fade_in(0,30,BLACK)
+	//	プレイヤー操作許可
+	//――――――――――――――――――――――――――
+	}
+	else
+	//──────────────────────────────
+	//　　※フラグ①～⑫でＧ－コロッセオへの道が開いていない場合は、
+	//　　　必ず廃坑入り口の、サブルート扉前に立っている。
+	//──────────────────────────────
+	if(!FV_02_OpenGyakata)
+	{
+		rot_chr(PENGUIN,30,PLAYER1)
+		
+		if(!F_PENGUIN)
+		{
+		//	name("⇒廃坑入り口の逃げるイベントを見た直後（ＬＦ制御）")
+			if(F_PARTNER)
+			{
+			//　　ペンギン、目をつぶって羽をバタバタ。
+				KAO(PENGUIN,"4","5","5")
+				MOT(PENGUIN,56,5)
+				wait(40)
+				MOT(PENGUIN,57,5)
+				KAO(PENGUIN,"1","1","1")
+				wait(20)
+
+				MES(PENGUIN,"こ、こんにちわなのです。",0)
+				MES(PENGUIN,"その、ちょっとお外の様子が\n気になっただけなのです。",0)
+				MES(PENGUIN,"持ち場を離れていた\nわけではないのですよ～？",0)
+				MES_close(PENGUIN)
+
+				EMO(PENGUIN,EMO_TENTEN)
+				wait(30)
+			}
+			else
+		//	name("⇒ダンジョンに先回りしたペンギンと話したことがある場合。")
+			if(FE_FF_SakiPenguin)
+			{
+				MES(PENGUIN,"お久しぶりなのです。",0)
+				MES_close(PENGUIN)
+			}
+			else
+			{
+			//	name("⇒それ以外")
+				MES(PENGUIN,"こんにちわなのです。",0)
+				MES_close(PENGUIN)
+			}
+			
+			MOT(PENGUIN,2,15)
+			MES(PENGUIN,"会員カード、持ってますか？",0)
+			MES_close(PENGUIN)
+
+		//──────────────────────────────
+		//	name("⇒ピンクチケットを持っている場合。")
+			if(IT137==1)
+			{
+			//	name("⇒このイベントを初めて見た。")
+				if(!FE_FF_HearCard)
+				{
+					MES(RAGNA,"か、会員カード……？",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("⇒このイベントを見たことがある場合")
+					MES(RAGNA,"えっと、その会員カードって……？",0)
+					MES_close(RAGNA)
+				}
+
+			//　　ペンギン、手を差し出してみせる。
+				look(PENGUIN,"Bone_RightArm",0,		10,10,10,			30,-45,60)
+				
+				MES(PENGUIN,"このくらいの大きさの、\nチケットなのです。",0)
+				MES_close(PENGUIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"チケット……",0)
+				MES(RAGNA,"って、もしかして\nこの『ピンクチケット』のことか！？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"ふむ……あの覆面怪人に\n押し付けられたやつだな。",0)
+				MES_close(PARTNER)
+
+			//	name2(PENGUIN)
+				MES(PENGUIN,"あー……",0)
+				MES_close(PENGUIN)
+				look(PENGUIN,"Bone_RightArm",0,		10,10,10,			0,0,0)
+
+			//　　ペンギン、羽をばたばたさせる。
+				MOT(PENGUIN,55,5)
+				wait(45)
+				MOT(PENGUIN,57,15)
+				wait(30)
+				MES(PENGUIN,"……確認したのです。",0)
+				MES_close(PENGUIN)
+
+				rot_chr(PENGUIN,20,GATEROPE)
+				wait(30)
+				
+			//　　ペンギン、サブルートの道を空ける。（クロスフェードでロープを消す
+			//　　◆がちゃ、などのＳＥ？
+				cross_fade(20)
+				delete(GATEROPE)
+				wait_fade()
+				
+			//　　このタイミングから、サブルートに侵入できるようになる。
+				rot_chr(PENGUIN,20,RAGNA)
+				wait(20)
+
+				MES(PENGUIN,"どうぞ、お通りください。",0)
+				MES_close(PENGUIN)
+
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"あ、ああどうも……\n（一体何があるんだ……？）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"う、うむ……\n（一体何なのだ……？）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+			//　　このタイミングから、サブルートに侵入できるようになる。
+				set_chr( 94,990,	3,4,     0,   0,  0,   270,0102,6,"K0_10500;")	//⑦エントリ Ｇ-コロッセヲへ
+			//　　※『★Ｇ－コロッセオへの道が開いた』を立てる。
+				F_set(FV_02_OpenGyakata)
+
+			}
+		//	name("⇒持っていない場合。")
+			else
+			{
+				MES(RAGNA,"か、会員カード……？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"何のことだ？",0)
+				MES_close(PARTNER)
+
+			//	name2(PENGUIN)
+				MES(PENGUIN,"会員カードは\nムッシュが持っているのです。",0)
+				MES(PENGUIN,"ムッシュに会うといいのです。",0)
+				MES_close(PENGUIN)
+
+			//　　ペンギン、右手を上げる。（サブルートの方を指す）
+				rot_chr(PENGUIN,30,92)
+				look(PENGUIN,"Bone_RightArm",0,		10,10,10,			30,-45,60)
+				MES(PENGUIN,"そっちのダンジョンを\n進んでみるといいのですよ～。",0)
+				MES_close(PENGUIN)
+				//──────────────────────────────
+				//	name("⇒地の魔法を持っている場合")
+				if(F1_14_KillBoss1)
+				{
+					MES(PARTNER,"ふむ、魔法障壁があった場所だな。",0)
+					MES_close(PARTNER)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"よく分かんねえが……\n試しに行ってみても\nいいかもしれねえな。",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("⇒持っていない場合")
+					MES(RAGNA,"確か魔法障壁ってのが\nあった場所だな。",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"むむ、仕方がない……\nまた後で来てみるとするか。",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				look(PENGUIN,"Bone_RightArm",0,		10,10,10,			0,0,0)
+				
+			}
+			//会員カードの話を聞いた
+			F_set(FE_FF_HearCard)
+			F_set(PENGUIN)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(PENGUIN,"ここは会員カードがなければ\n通れないのです。",0)
+			MES(PENGUIN,"ムッシュの言いつけなのです。",0)
+			MES_close(PENGUIN)
+		}
+	}
+	//ピンクチケットを見せていて、まだGコロッセオに行っていない時
+	else
+	if(!FV_02_VisitGyakata)
+	{
+		rot_chr(PENGUIN,30,PLAYER1)
+		MES(PENGUIN,"どうぞお通りくださいなのです。",0)
+		MES_close(PENGUIN)
+	}
+	else
+	{
+
+		//──────────────────────────────
+		//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+		//──────────────────────────────
+		//　　※廃坑入り口、夢幻迷宮扉前に立っている。
+		//　　※館への道が開いていない場合は、廃坑入り口・サブルート扉前に配置。
+		//　　　メッセージもそちらのもので対応。
+		//　　（その場合、ＩＮＩＴを通らないと▼⑫のメッセージに切り替わらないようにする）
+		if( F6_00_GoToMeru )
+		{
+			if(FE_12_TalkPenguin)
+			{
+				EV_stop("CHANGE_PENGUIN")
+			}
+			MOT(PENGUIN,2,15)
+			rot_chr(PENGUIN,30,PLAYER1)
+			if(!F_PENGUIN)
+			{
+				MES(PENGUIN,"大変なのです。\n封印が解けてしまったようなのです。",0)
+				MES_close(PENGUIN)
+
+				//──────────────────────────────
+				//	name("⇒１回だけ挿入")
+				if(!FE_12_TalkPenguin)
+				{
+				//	name("先頭キャラ")
+					MES(PLAYER1,"封印……？",0)
+					MES_close(PLAYER1)
+					F_set(FE_12_TalkPenguin)
+				}
+				//──────────────────────────────
+				
+			//　　ペンギン、向きを戻す。
+				rot_chr(PENGUIN,10,59)//59==無限回廊の看板
+				wait(20)
+
+				MES(PENGUIN,"困ったのです。\nちょうどムッシュも\nお留守なのです。",0)
+				MES(PENGUIN,"何とか直さないと\nいけないのです。",0)
+				MES_close(PENGUIN)
+
+			//　　ガチャガチャ、とＳＥ。
+				MOT(PENGUIN,56,10)
+				wait(15)
+				SE_vol(1182,80,0)
+				SE(1182,PENGUIN)
+//				MES(PENGUIN,"C4◆ガチャガチャ、とＳＥ。",0)
+//				MES_close(PENGUIN)
+				
+			//　　夢幻迷宮の看板が別の看板に切り替わる。
+				MOT(59,2,0)
+				wait(30)
+
+				MOT(PENGUIN,2,15)
+				wait(30)
+				MES(PENGUIN,"ほよ……？",0)
+				MES_close(PENGUIN)
+
+			//　　ガチャガチャ、とＳＥ。
+			//　　２，３度、看板が別の看板に切り替わる。
+				MOT(PENGUIN,56,10)
+				wait(20)
+				SE_vol(1182,80,0)
+				SE(1182,PENGUIN)
+				MOT(59,5,0)
+				wait(5)
+				MOT(59,3,0)
+				MOT(PENGUIN,2,15)
+				wait(30)
+
+				MOT(PENGUIN,56,10)
+				wait(20)
+				SE_vol(1182,80,0)
+				SE(1182,PENGUIN)
+				MOT(59,4,0)
+				wait(7)
+				MOT(59,2,0)
+				wait(7)
+				MOT(59,5,0)
+				wait(10)
+				MOT(PENGUIN,2,15)
+				wait(30)
+
+				MES(PENGUIN,"ほよよ……？",0)
+				MES_close(PENGUIN)
+
+				EMO(PENGUIN,EMO_ASEASE)
+				wait(30)
+				MES(PENGUIN,"こ、困ったのです。\nおかしなことになったのです……",0)
+				MES_close(PENGUIN)
+				
+				F_set(PENGUIN)
+			}
+			else
+			{
+			//　　以降、ペンギンは定期的に看板を切り替えている。
+			//　　★繰り返し
+				MES(PENGUIN,"封印が解けないよう見張るのが、\nペンギンの本当の役目だったのです。",0)
+				MES(PENGUIN,"け、決しておろそかに\nしていたわけではないのですよ～？",0)
+				MES_close(PENGUIN)
+				//★呼び込みペンギン【迷宮管理】
+				F_set_note(PENGUIN,2)
+			}
+			
+			if(FE_12_TalkPenguin)
+			{
+				EV("CHANGE_PENGUIN")
+			}
+			MOT(PENGUIN,56,15)
+		}
+		else
+		//──────────────────────────────
+		//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+		//──────────────────────────────
+		//　　※アルッテ宿酒場に来ている。
+		//　　※館への道が開いていない場合は、廃坑入り口・サブルート扉前に配置。
+		if( F5_00_HearLunar )
+		{
+			if(!FE_11_TalkPenguin)
+			{
+				rot_chr(PENGUIN,20,PLAYER1)
+				MES(PENGUIN,"今日は買い出しなのです。",0)
+				MES(PENGUIN,"ここの味付けがいいと聞いて、\nたくさん買ってくるように\n言われたのです。",0)
+				MES_close(PENGUIN)
+
+				rot_chr(PENGUIN,20,MEI)
+			//　　ペンギンに？エモーション。
+				EMO(PENGUIN,EMO_HATENA)
+				wait(30)
+
+			//　　向きを戻す。
+				MES(PENGUIN,"買い間違えてしまったのです……",0)
+				MES(PENGUIN,"ムッシュは、味噌味としょうゆ味を\n間違えると怒るのです。",0)
+				MES_close(PENGUIN)
+
+			//　　ペンギン、再び先頭キャラに向く。
+				rot_chr(PENGUIN,20,PLAYER1)
+				MES(PENGUIN,"そうなのです。\nこれは差し上げるのです。",0)
+				MES_close(PENGUIN)
+
+			//	name("アイテム入手テキスト")
+			//	MES(this,"『パフェ』を貰った！",0)
+			//ver.2008/8/7 栗ようかん
+			//―――――――――――――――――――――――
+				//―――――――――――――――――――――――
+				fade_in(30,10,BLACK)
+				get_item(197,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//―――――――――――――――――――――――
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"ああ、サンキュー……",0)
+					MES_close(RAGNA)
+
+				//　　ラグナに・・・エモーション。
+					EMO(RAGNA,EMO_TENTEN)
+					wait(30)
+
+					MES(RAGNA,"でもよ、ペンギン……\n栗ようかんには味噌味も\nしょうゆ味もねえぞ……",0)
+					MES_close(RAGNA)
+				}
+			//──────────────────────────────
+
+			//　　ペンギンに？エモーション。
+				EMO(PENGUIN,EMO_HATENA)
+				wait(30)
+
+			
+				F_set(FE_11_TalkPenguin)
+			}
+			//──────────────────────────────
+			//　　※以下通常一般メッセージ。
+			else
+			{
+				rot_chr(PENGUIN,30,PLAYER1)
+				if(!F_PENGUIN)
+				{
+					MES(PENGUIN,"ムッシュは味付けにうるさいのです。",0)
+					MES(PENGUIN,"ペンギンが買い物をすると、\nいつも味が違うと怒るのです。",0)
+					MES(PENGUIN,"この前は、ピザを頼んだのに\nアイスクリィムの味がすると\n怒られたのです。",0)
+					MES_close(PENGUIN)
+
+					//──────────────────────────────
+					//	name("⇒ラグナ先頭")
+					if(GW_MAN==1)
+					{
+						MES(RAGNA,"お前、買い物を\n間違ってないか……？",0)
+						MES_close(RAGNA)
+					}
+					//──────────────────────────────
+
+					F_set(PENGUIN)
+				}
+				else
+				{
+			//　　★繰り返し
+					MES(PENGUIN,"ちなみに、ロッテは\nインスタント食品しか食べないのです。",0)
+					MES(PENGUIN,"今朝も、インスタントの\n焼きソバを食べていたのです。",0)
+					MES(PENGUIN,"……お体に悪いのです。",0)
+					MES_close(PENGUIN)
+				}
+			}
+		}
+		else
+		//──────────────────────────────
+		//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+		//──────────────────────────────
+		//　　※大鉄塔入り口分岐、夢幻迷宮の前でフリームーブ。
+		//　　※館への道が開いていない場合は、廃坑入り口・サブルート扉前に配置。
+		//　　　メッセージもそちらのもので対応。
+		if( F4_09_GoShrineMia)
+		{
+			F_set_chr(PENGUIN,CF_NO_MOVE)
+			rot_chr(PENGUIN,30,PLAYER1)
+			if(!F_PENGUIN)
+			{
+				//	name("⇒初回のみ挿入。")
+				if(!FE_10_TalkPenguin)
+				{
+					MES(RAGNA,"あ、あれ？\nこんな所にペンギンが……",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"ふむ、熱くても\n平気らしいのう……",0)
+					MES_close(PARTNER)
+					F_set(FE_10_TalkPenguin)
+				}
+				MES(PENGUIN,"ふう、ようやく\nひと仕事終わったのです。",0)
+				MES(PENGUIN,"……そういえば、さっきムッシュが\nウキウキしながら通りがかって……",0)
+				MES(PENGUIN,"新しい弟子を\n見つけたと言っていたのです。",0)
+				MES(PENGUIN,"なかなか見所のある\n人物らしいのですよ～？",0)
+				MES_close(PENGUIN)
+				
+				F_set(PENGUIN)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(PENGUIN,"さっきムッシュが、新しい\n弟子を見つけたと言っていたのです。",0)
+				MES(PENGUIN,"……ペンギンも気になるのです。",0)
+				MES(PENGUIN,"早く館に戻って、\n見てみたいのです。",0)
+				MES_close(PENGUIN)
+			}
+			F_reset_chr(PENGUIN,CF_NO_MOVE)
+		}
+		else
+		//──────────────────────────────
+		//▼⑦ラグナは単独行動を始めた
+		//──────────────────────────────
+		//　　※アルッテの町で、大道芸人を見ている。
+		//　　※館への道が開いていない場合は、廃坑入り口・サブルート扉前に配置。
+		//　　　メッセージもそちらのもので対応。
+		if( F4_00_StartSolo )
+		{
+			rot_chr(PENGUIN,30,PLAYER1)
+			if(!F_PENGUIN)
+			{
+				MES(PENGUIN,"ムッシュの言いつけで\n町に来たのです。",0)
+				MES(PENGUIN,"お客が少ないから\nもっとアッピ～ルしてくるようにと\n言われたのです。",0)
+				MES_close(PENGUIN)
+
+			//　　ペンギン、向きを戻す。
+				rot_chr(PENGUIN,30,VERMILIA)
+				
+				MES(PENGUIN,"……変わった人がいるのです。",0)
+				MES(PENGUIN,"人間の町は、\nおかしな所なのです。",0)
+				MES_close(PENGUIN)
+
+				//★呼び込みペンギン【呼び込み】
+				F_set_note(PENGUIN,0)
+				F_set(PENGUIN)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(PENGUIN,"町はとても賑やかなのです。",0)
+				MES(PENGUIN,"きっとお客さんも\nたくさん見つかるのです。",0)
+				MES_close(PENGUIN)
+				rot_chr(PENGUIN,30,VERMILIA)
+			}
+		}
+		else
+		//──────────────────────────────
+		//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+		//──────────────────────────────
+		//　　※廃坑入り口の、サブルート扉前に立っている。
+		//　　　目を開けたままＺＺＺエモーション出しっぱなし。
+		//　　　演技モーションなどは切っておく。
+		//　　※初回イベント
+		//　　※振り向かない
+		if( F3_00_GoMoonCastle )
+		{
+			if(!FE_06_TalkPenguin)
+			{
+				cross_fade(30)
+				EV_begin()
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"あ、寝てる……",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"目を開けたまま眠っているな……",0)
+					MES_close(PARTNER)
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"ふむ、眠っておるのか……？",0)
+					MES_close(PARTNER)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"目を開けたまま寝てるな……\n器用な奴……",0)
+					MES_close(RAGNA)
+				}
+				//──────────────────────────────
+
+				EV_stop("SLEEP_PENGUIN")
+				
+			//　　ペンギンに！エモーション。
+				EMO(PENGUIN,EMO_BIKKURI)
+			//　　軽く飛び上がる。
+				jump(PENGUIN,1,5,PENGUIN,0,50,0)
+				wait_move(PENGUIN)
+				
+				MES(PENGUIN,"はっ……！？",0)
+				MES(PENGUIN,"あ、危ない危ないのです……",0)
+				MES(PENGUIN,"ついうっかり、\n眠ってしまったのです……",0)
+				MES_close(PENGUIN)
+
+			//　　ペンギン、？エモーションで振り向く。
+				EMO(PENGUIN,EMO_HATENA)
+				wait(30)
+				rot_chr(PENGUIN,30,PLAYER1)
+				
+				MES(PENGUIN,"こんな夜中に、\nトレーニングなのですか？",0)
+				MES(PENGUIN,"なかなか大変なのです。\nペンギンのお夜食を\nおすそわけなのです。",0)
+				MES_close(PENGUIN)
+
+			//	name("アイテム入手テキスト")
+			//	MES(this,"『（フード名）』を貰った！",0)
+				//ver.2008/8/7 ピザ
+				//―――――――――――――――――――――――
+				fade_in(30,10,BLACK)
+				get_item(173,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//―――――――――――――――――――――――
+
+			//	name2(PENGUIN)
+				MES(PENGUIN,"ムッシュの期待に応えれるよう\n頑張ってほしいのです。",0)
+				MES_close(PENGUIN)
+				
+			//――――――――――――――――――――――――――
+			//	イベント終了処理
+			//――――――――――――――――――――――――――
+				fade_in(100,30,BLACK)
+				wait_fade()
+
+				//カメラを初期設定に
+				CAM_return( 0 )
+				wait(30)
+
+				EV_end()
+				//フェードイン----------------------
+				fade_in(0,30,BLACK)
+			//	プレイヤー操作許可
+			//――――――――――――――――――――――――――
+				
+			//　　少し間をおいて、ペンギンにＺＺＺエモーションが復活。
+			//──────────────────────────────
+				wait(30)
+				EV("SLEEP_PENGUIN")
+			
+				F_set(FE_06_TalkPenguin)
+			}
+		//　　※以下通常一般メッセージ。
+		//　　　マップを切り替えると、ペンギンにＺＺＺエモーションが復活する仕様。
+		//　　※振り向かない
+		//　　ペンギン、！エモーション。
+		//　　アセアセエモーションで振り向く。
+			else
+			{
+				EV_stop("SLEEP_PENGUIN")
+				EMO(PENGUIN,EMO_BIKKURI)
+				wait(30)
+				rot_chr(PENGUIN,30,PLAYER1)
+
+				MES(PENGUIN,"……寝てないのですよ？",0)
+				MES(PENGUIN,"ペンギンは、\nちゃんと起きているのです。",0)
+				MES_close(PENGUIN)
+				
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（というか……\n  ずっと立ってなくても\n  いい気もするんだが……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"（ふむ……\n  ずっと立っている必要も\n  ないのではないか……？）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+			}
+		}
+		else
+		//──────────────────────────────
+		//▼⑤魔女ラーライラから、敵の正体が明かされた
+		//──────────────────────────────
+		//　　※廃坑入り口の、サブルート扉前に立っている。
+		if( F2_14_TalkEnemy )
+		{
+			rot_chr(PENGUIN,30,PLAYER1)
+			if(!FE_05_TalkPenguin)
+			{
+				MES(PENGUIN,"……ペンギンは\n見てしまったのです。",0)
+				MES(PENGUIN,"この前ロッテが\n携帯ゲーム機で遊んでいたのです。",0)
+				MES(PENGUIN,"貸してと言っても\n貸してくれなかったのです。",0)
+				MES_close(PENGUIN)
+
+			//　　ペンギンに・・・エモーション。
+				EMO(PENGUIN,EMO_TENTEN)
+				wait(30)
+				
+				MES(PENGUIN,"ロッテはイジワルなのです。",0)
+				MES(PENGUIN,"ペンギンの手では、ボタンが\n押せないだろうと言われたのです。",0)
+				MES_close(PENGUIN)
+
+			//　　ラグナたちに・・・エモーション。
+				EMO(RAGNA,EMO_TENTEN)
+				EMO(PARTNER,EMO_TENTEN)
+				wait(30)
+				
+				MES(RAGNA,"（その着ぐる……を\n  脱げばいい気がするんだが……）",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（うむ……何故だか\n  言ってはならぬような気がするな……）",0)
+				MES_close(PARTNER)
+
+			//　　ペンギンに？エモーション。
+				EMO(PENGUIN,EMO_HATENA)
+				wait(30)
+				
+				MES(PENGUIN,"どうかしたのですか？",0)
+				MES_close(PENGUIN)
+				
+				//★ロッテ【携帯ゲーム機】
+				F_set_note(-82,1)
+				F_set(FE_05_TalkPenguin)
+			}
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			else
+			{
+				MES(PENGUIN,"ロッテは受付に隠れて\nこっそり携帯ゲーム機で\n遊んでいるのです。",0)
+				MES(PENGUIN,"ずるいのです。\nペンギンもやってみたいのです……",0)
+				MES_close(PENGUIN)
+			}
+		}
+		else
+		//──────────────────────────────
+		//▼④炎のパーツを入手した
+		//▼③金闇の森へ向かうことにした
+		//──────────────────────────────
+		//　　※廃坑入り口の、サブルート扉前に立っている。
+		//　　※ギャランドゥからクエストを受け付けていない、又は差し入れフードを１つも持っていない場合
+		if( F2_00_GoForest )
+		{
+			rot_chr(PENGUIN,30,PLAYER1)
+
+			//クエスト条件を満たしている場合
+			if(FE_03_TalkGyarandow && !FE_03_TalkPenguin && IT185>0)
+			{
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"お、いたいた。",0)
+					MES(RAGNA,"おーいペンギン、\n差し入れを持って来たぞ。",0)
+					MES_close(RAGNA)
+
+				//　　ペンギンに？エモーション。
+					EMO(PENGUIN,EMO_HATENA)
+					wait(30)
+
+					MES(PENGUIN,"差し入れなのですか？",0)
+					MES_close(PENGUIN)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"うむ、そなたの\n主人からの預かりものだ。",0)
+					MES_close(PARTNER)
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"ここに居たか。",0)
+					MES(PARTNER,"ペンギンよ、そなたに\n差し入れを持って来たぞ。",0)
+					MES_close(PARTNER)
+
+				//　　ペンギンに？エモーション。
+					EMO(PENGUIN,EMO_HATENA)
+					wait(30)
+					
+					MES(PENGUIN,"差し入れなのですか？",0)
+					MES_close(PENGUIN)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"ああ、お前の\nムッシュからの預かりものだぜ。",0)
+					MES_close(RAGNA)
+				}
+				//──────────────────────────────
+
+			//　　ペンギンに！エモーション。
+				EMO(PENGUIN,EMO_BIKKURI)
+				wait(15)
+				
+			//　　手を打ち鳴らす。
+				MOT(PENGUIN,56,5)
+				wait(30)
+				MES(RAGNA,"喜んでる、のか……？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"うむ、喜んでおるな……",0)
+				MES_close(PARTNER)
+
+			//　　ペンギン、手を打ち鳴らすのをやめる。
+				MOT(PENGUIN,2,15)
+				MES(PENGUIN,"ちょうどお腹が\n空いていた所なのです。",0)
+				MES(PENGUIN,"早速いただくのです！",0)
+				MES_close(PENGUIN)
+
+			//　　一旦暗転する。
+				fade_in( 100, 60, BLACK)	//フェードアウト
+				wait_fade()
+
+			//　　ここで、差し入れフードを一つ減らす。
+			//ver.2008/8/7 チャーハン
+			//―――――――――――――――――――――――
+				get_item(185,-1,1)
+
+			//　　少し間を取ってフェードイン。
+				wait(30)
+				fade_in( 0, 60, BLACK)	//フェードイン
+				wait_fade()
+				
+				MES(PENGUIN,"とても美味しかったのです。",0)
+				MES(PENGUIN,"お２人……？　には\n感謝するのです。",0)
+				MES(PENGUIN,"お礼はどれがいいのですか？",0)
+				MES_close(PENGUIN)
+
+			//	name("選択テキスト")
+				MES_pos(PLAYER1,"??W9【質実剛健】\n【百花繚乱】\n【一攫千金】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//閉じきるまで待つ
+
+				//
+				//質実剛健：高麗人参５			200	高麗人参		FD40 	20	80	0		------ 	100		0	0	0	滋養強壮効果がある、なかなか高価な人参。\n高い経験値を得られるが体力は回復しない。
+				//百花繚乱：爆弾５０			216	爆弾			US01	30	133	0		------ 	4070 	0	0	56	小型の携帯用爆弾。敵や障害物を吹っ飛ばす。\n自爆しないように注意。
+				//一攫千金：すーぱー万能薬３	217	すーぱー万能薬	US04	22	136	0		------ 	0		30	0	0	あらゆる状態異常を回復する万能薬。\n栄養ドリンク風味。
+				//──────────────────────────────
+				//	name("⇒質実剛健")
+				//──────────────────────────────
+				if(WK_YESNO==1)
+				{
+					MES(PENGUIN,"了解なのです。\nこれをあげるのです。",0)
+					MES_close(PENGUIN)
+
+/*						//	name("システムメッセージ")
+					fade_in(30,10,BLACK)
+					MES(0,"C3S2体力が全回復した！",2)
+					MES_close(0)
+					fade_in(0,10,BLACK)
+					wait_fade()
+
+				//　　※体力・魔力が全回復する。
+					set_hp( RAGNA, 100 )	
+*/
+					fade_in(30,10,BLACK)
+					wait_fade()
+
+					get_item(200,5,0)
+					wait_key(0)
+					menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+					menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+					fade_in(0,10,BLACK)
+					wait_fade()
+
+				}
+				//──────────────────────────────
+				//	name("⇒百花繚乱")
+				//──────────────────────────────
+				else
+				if(WK_YESNO==2)
+				{
+					MES(PENGUIN,"了解なのです。\nこれをあげるのです。",0)
+					MES_close(PENGUIN)
+
+/*					//	name("システムメッセージ")
+					fade_in(30,10,BLACK)
+					MES(0,"C3S2コンボ攻撃回数が増えた！",2)
+					MES_close(0)
+					fade_in(0,10,BLACK)
+
+				//　　※コンボ数がＭＡＸまで増える。
+					workG(GW_BOM,SET,99)
+*/
+					fade_in(30,10,BLACK)
+					wait_fade()
+
+					get_item(216,50,0)
+					wait_key(0)
+					menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+					menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+					fade_in(0,10,BLACK)
+					wait_fade()
+
+				}
+				//──────────────────────────────
+				//	name("⇒一攫千金")
+				//──────────────────────────────
+				else
+				{
+					MES(PENGUIN,"了解なのです。\nこれをあげるのです。",0)
+					MES_close(PENGUIN)
+
+/*					//	name("システムメッセージ")
+				//	MES(this,"ペットフードを貰った！",0)
+				//　　※ペットフードを５個入手する。
+					//―――――――――――――――――――――――
+					fade_in(30,10,BLACK)
+					get_item(218,5,0)
+					wait(10)
+					wait_key(0)
+					
+					fade_in(0,10,BLACK)
+					menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+					menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+*/
+					fade_in(30,10,BLACK)
+					wait_fade()
+
+					get_item(217,3,0)
+					wait_key(0)
+					menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+					menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+					fade_in(0,10,BLACK)
+					wait_fade()
+
+					//―――――――――――――――――――――――
+				}
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"サ、サンキュー。\n（予想と大分違うが……\n  まあいいか。）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"うむ、受け取っておくが……\n（そなた、熟語の意味が\n  分かっておるのか……？）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				MES(PENGUIN,"ご用があれば\nまた来てほしいのです。",0)
+				MES(PENGUIN,"お客さんも少なくて、\n退屈しているのです。",0)
+				MES_close(PENGUIN)
+				F_set(FE_03_TalkPenguin)
+			}
+			//──────────────────────────────
+			//※クエスト後のメッセージ。
+			//──────────────────────────────
+			else
+			if(FE_03_TalkPenguin)
+			{
+				if(!F_PENGUIN)
+				{
+					MES(PENGUIN,"とても美味しかったのです。",0)
+					MES(PENGUIN,"お２人……？　には\n感謝するのです。",0)
+					MES_close(PENGUIN)
+
+					//──────────────────────────────
+					//	name("⇒ラグナ先頭")
+					if(GW_MAN==1)
+					{
+						MES(RAGNA,"ああ、というか……\n（何故俺たちを呼ぶときに\n  疑問系なんだ……？）",0)
+						MES_close(RAGNA)
+					}
+					else
+					//	name("⇒アルウェン先頭")
+					{
+						MES(PARTNER,"フフ、気にするでない。",0)
+						MES(PARTNER,"（しかし……やはり中には\n  人間が入っておるのかのう？）",0)
+						MES_close(PARTNER)
+					}
+					//──────────────────────────────
+					F_set(PENGUIN)
+				}
+			//　　★繰り返し
+				else
+				{
+					MES(PENGUIN,"とても美味しかったのです。",0)
+					MES(PENGUIN,"お２人……？　には\n感謝するのです。",0)
+					MES_close(PENGUIN)
+				}
+			}
+			//──────────────────────────────
+			//※それ以外。
+			//──────────────────────────────
+			else
+			{
+				if(!F_PENGUIN)
+				{
+					MES(PENGUIN,"そういえば……\n昨日から何も食べていないのです。",0)
+					MES(PENGUIN,"ムッシュも、昨日はどうしてか\n迎えに来てくれなかったのです。\nペンギンは立ちっぱなしなのです。",0)
+					MES(PENGUIN,"うう、お腹空いたのです……",0)
+					MES_close(PENGUIN)
+					F_set(PENGUIN)
+				}
+			//　　★繰り返し
+				else
+				{
+					MES(PENGUIN,"ペンギンは、昨日から\n何も食べていないのです。",0)
+					MES(PENGUIN,"お腹空いたのです……",0)
+					MES_close(PENGUIN)
+				}
+			}
+		}
+		else
+		//──────────────────────────────
+		//▼②ロアルタ村へ向かうことにした
+		//──────────────────────────────
+		//　　※廃坑入り口の、サブルート扉前に立っている。
+		if( F1_15_GoVillage )
+		{
+			rot_chr(PENGUIN,30,PLAYER1)
+			if(!F_PENGUIN)
+			{
+				MES(PENGUIN,"どうぞお通りくださいなのです。",0)
+				MES(PENGUIN,"ムッシュがお待ちなのです。",0)
+				MES_close(PENGUIN)
+
+				F_set(PENGUIN)
+			}
+		//　　★繰り返し
+			else
+			{
+			//　　ペンギンに？エモーション。
+				EMO(PENGUIN,EMO_HATENA)
+				wait(30)
+				
+			//　　サブルート階段の方を指す。
+				rot_chr(PENGUIN,30,94)
+				
+				MES(PENGUIN,"……早く行くのです！",0)
+				MES(PENGUIN,"きっとムッシュも喜ぶのです！",0)
+				MES_close(PENGUIN)
+			}
+		}
+		//──────────────────────────────
+		//▼①城を取り戻すために行動を開始した
+		//──────────────────────────────
+		//　　※廃坑入り口の、サブルート扉前に立っている。
+		//　　※フラグ①ではＧ－コロッセオへ行けない為、
+		//　　　ここのメッセージはありません。
+	}
+	
+	TK_end()
+}
+
+//──────────────────────────────
+//▼各ダンジョンの入り口に先回り
+//　　※まだＧ－コロッセオへの道を空けていない場合、
+//　　　以下の３ダンジョンの入り口付近に先回りしている。（常時配置でＯＫ）
+//　　　神殿入り口　：サブルート扉前。休憩所前から体が少し見える位置。
+//　　　森入り口　　：十字路の夢幻迷宮方面。休憩所前から体が少し見える位置。
+//　　　大鉄塔入り口：十字路辺り
+//　　　フラグ⑫ではルナ＝ムンドゥス入り口分岐にも出現する。
+//　　※ペンギンは振り向かない。
+//──────────────────────────────
+TK_PENGUIN_S
+{
+	TK_begin()
+	F_set_note(-81,-1)
+	rot_chr(PLAYER1,30,PENGUIN)
+	rot_chr(PLAYER2,30,PENGUIN)
+	rot_chr(PET,30,PENGUIN)
+
+	if(!F_PENGUIN)
+	{
+		//──────────────────────────────
+		if(!FE_FF_MeetPenguin)
+		{
+		//	name("⇒ペンギンに会うのが初めて")
+		//　　ラグナたちに？エモーション。
+		//	name("先頭キャラ")
+			MES(PLAYER1,"ペ、ペンギン……？",0)
+			MES_close(PLAYER1)
+
+		//　　ペンギンにＰＡエモーション。
+			EMO(PENGUIN,EMO_PA)
+			wait(30)
+		//　　ラグナたちに向く。
+			rot_chr(PENGUIN,30,PLAYER1)
+		//	name2(PENGUIN)
+			MES(PENGUIN,"お客さん、お客さん……",0)
+			MES_close(PENGUIN)
+			F_set(FE_FF_MeetPenguin)
+		}
+		else
+		{
+		//　　ペンギンにＰＡエモーション。
+			EMO(PENGUIN,EMO_PA)
+			wait(30)
+		//　　ラグナたちに向く。
+			rot_chr(PENGUIN,30,PLAYER1)
+		}
+		//──────────────────────────────
+		MES(PENGUIN,"丁度よいところに来たのです。",0)
+		MES(PENGUIN,"お２人……？　は\nムッシュに会いに行くのです。",0)
+		MES_close(PENGUIN)
+
+	//──────────────────────────────
+	//	name("⇒先回りペンギンと話すのが３回目以降")
+	//──────────────────────────────
+		if(FE_FF_SakiPenguin2)
+		{
+			//──────────────────────────────
+			if(GW_MAN==1)
+			{
+			//	name("⇒ラグナ先頭")
+				MES(RAGNA,"ま、また呼び込みか……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"そなたも苦労しているようだな……",0)
+				MES_close(PARTNER)
+
+			}
+			else
+			{
+			//	name("⇒アルウェン先頭")
+				MES(PARTNER,"ま、また\n呼び込みをしておるのか。",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"お前も大変だな……",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+		}
+	//──────────────────────────────
+	//	name("⇒先回りペンギンと話すのが２回目")
+	//──────────────────────────────
+		else
+		if(FE_FF_SakiPenguin)
+		{
+			//──────────────────────────────
+			if(GW_MAN==1)
+			{
+			//	name("⇒ラグナ先頭")
+				MES(RAGNA,"ま、またお前か……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"しかし何故このような所に\n立っておるのかのう……",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("⇒アルウェン先頭")
+				MES(PARTNER,"ま、またそなたか……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"どうやってダンジョンに\n先回りしてるんだか……",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+			F_set(FE_FF_SakiPenguin2)
+		}
+	//──────────────────────────────
+	//	name("⇒先回りペンギンと話すのが初めて")
+	//──────────────────────────────
+		else
+		{
+			//──────────────────────────────
+			if(GW_MAN==1)
+			{
+			//	name("⇒ラグナ先頭")
+				MES(RAGNA,"えっ……？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"突然そのような事を\n言われてものう……",0)
+				MES_close(PARTNER)
+
+			}
+			else
+			{
+			//	name("⇒アルウェン先頭")
+				MES(PARTNER,"えっ……？",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"そんなイキナリ言われてもな……",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+			
+			F_set(FE_FF_SakiPenguin)
+		}
+		
+		MES(PENGUIN,"せむぐ……\nせむくんど廃坑？　に\n行って欲しいのです。",0)
+		MES(PENGUIN,"入り口から入って、\n左の方なのです。",0)
+		MES(PENGUIN,"きっとムッシュが\nお待ちなのですよ～？",0)
+		MES_close(PENGUIN)
+		
+		F_set(PENGUIN)
+	}
+	else
+	{
+	//　　★繰り返し
+		rot_chr(PENGUIN,30,PLAYER1)
+		MES(PENGUIN,"ムッシュに\n会いに行って欲しいのです。",0)
+		MES(PENGUIN,"それがペンギンのお仕事なのです。",0)
+		MES(PENGUIN,"せむ……くんど廃坑？　の\n入り口から入って、\n左の方に進むのですよ～？",0)
+		MES_close(PENGUIN)
+	}
+	
+	TK_end()
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

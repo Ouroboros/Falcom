@@ -1,0 +1,1659 @@
+//====================================================================
+//ステージトラップスクリプト
+//[15018][城－モンブラン]
+//====================================================================
+
+#ScriptTable
+
+#MONTBLANC	1
+#ZONBI_A 	2
+#ZONBI_B 	3
+#ZONBI_C 	4
+#ZONBI_D 	5
+#ZONBI_E 	6
+#ZONBI_F 	7
+#ZONBI_G	8
+#ZONBI_H 	9
+
+//戦闘用キャラ
+#ZONBI_0 	10
+#ZONBI_1 	11
+#ZONBI_2 	12
+#ZONBI_3 	13
+#ZONBI_4 	14
+#ZONBI_5 	15
+#ZONBI_6 	16
+#ZONBI_7 	17
+
+
+#EVENT_RAGNA 	20
+#ALWEN		 	21
+#EFFECT		 	22
+
+
+//--------------------------------------------------------------------
+INIT
+{
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段．扉
+
+	if( F3_03_KillBoss3_1 && !F3_04_FlickSwitch1 )
+	{
+		set_chr( 90,991, 5, 7,     0,   0,  0,		180,  0201, 6,"<EV_STOP_01>")	//ストッパー：①エントリ 墓場終
+	}
+	else
+	{
+		set_chr( 90,990, 5, 7,     0,   0,  0,		180,  0201, 6,"K1_15019;")	//①エントリ 墓場終
+	}
+	set_obj("@obx0092a", 5, 7,     0,   0,  0,		180)						//①階段（墓場）
+
+//■スイッチ．看板
+	set_chr( 50,505,	-1,-1,    9500,11600,0,	  6,   180, 0,";")			//
+
+	if(GW_ENTRY_EVENT==101)		//ゲーセン用
+	{
+		set_chr( 51,736,	-1,-1,     10400,9600,0,  	 2,  0,	8,"M4?51 WT?30 <EV_3_09_FlickSwitch1>;")//スイッチ
+		F_set_chr(51,CF_NO_CSP)
+	}
+	else
+	if(F2_17_EndSecond && !F3_13_EndThird)
+	{
+	//３章
+//		//ＧＦ『★城：スイッチ②を入れた』立っている		//★フラグミスのようなので0815竹修正
+//		if(F3_07_FlickSwitch2)								//★フラグミスのようなので0815竹修正
+		//ＧＦ『★城：スイッチ①を入れた』立っている		//★フラグミスのようなので0815竹修正
+		if(F3_04_FlickSwitch1)								//★フラグミスのようなので0815竹修正//追加修正0819
+		{
+			set_chr( 51,736,	-1,-1,    10400,9600,0,  	 4,  0,	8,"")//スイッチ
+		}
+		//ＧＦ『★中ボス①【モンブラン】を倒した』立っている
+		else
+		if(F3_03_KillBoss3_1)
+		{
+			set_chr( 51,736,	-1,-1,     10400,9600,0,  	 1,  0,	8,"M4?51 WT?30 <EV_3_09_FlickSwitch1>;")//スイッチ
+			set_chr( 81,990,	-1,-1, 10400,9600,0,  	 0, 0202,2,"M3_51;")
+		}
+		else
+		{
+			set_chr( 51,736,	-1,-1,     10400,9600,0,  	 2,  0,	8,"M4?51 WT?30 <EV_3_09_FlickSwitch1>;")//スイッチ
+			F_set_chr(51,CF_NO_CSP)
+		//	set_chr( 81,990,	-1,-1, 10400,9600,0,  	 0, 0202,2,"M3_51;")
+		}
+	}
+
+//■イベント
+	//ボス再戦用
+	if(GW_ENTRY_EVENT==100)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_3_16_BossOnly")
+	}
+	else
+	//ゲーセン用
+	if(GW_ENTRY_EVENT==101)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_3_16_BossOnly_02")
+	}
+	else
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼墓地最奥のスイッチを入れる．礼拝堂への道を開く．後
+		EV("EV_3_16_OpenedChapel1")
+	}
+	else
+	if(F2_17_EndSecond && !F3_13_EndThird)
+	{
+	//３章
+		//ＧＦ『★中ボス①【モンブラン】を倒した』立ってない
+		if(!F3_03_KillBoss3_1)
+		{
+			//▼墓地最奥での戦い（ＶＳモンブラン）．前
+		//	EV("EV_3_07_VSMontblanc")
+			set_chr( 80,990,	-1,-1,   9450,11400,0,  0, 0602,6,"<EV_3_07_VSMontblanc>;")
+		}
+	}
+
+
+//■場面固有設定
+}
+
+
+//====================================================================
+//=== 戦闘処理処理 ===================================================
+//====================================================================
+
+//登場ゲーセン用
+EV_ON_ZONBI_02
+{
+	CAM(790,131,0,25,225,0,0)
+	//10400 700or500 +100
+/*	set_chr(ZONBI_1,	307,-1,-1, 9700,10400,-300, 	51,300,0, "")
+	set_chr(ZONBI_2,	307,-1,-1,10400,11100,-300, 	51,300,0, "")
+	set_chr(ZONBI_3,	307,-1,-1,10400, 9700,-300, 	51,300,0, "")
+	set_chr(ZONBI_4,	307,-1,-1, 9900, 9900,-300, 	2,300,0, "")
+	set_chr(ZONBI_5,	307,-1,-1,10900,10900,-300, 	2,300,0, "")
+	set_chr(ZONBI_6,	307,-1,-1,10900, 9900,-300, 	2,300,0, "")
+	set_chr(ZONBI_7,	307,-1,-1, 9900,10900,-300, 	2,300,0, "")
+	set_chr(ZONBI_0,	 25,-1,-1,11100,10400,0, 		51,300,0, "<EV_3_08_KillBoss3_1>;")
+*/
+	set_chr(ZONBI_1,	307,-1,-1, 9600,10400,-300, 	51,300,0, "")
+	set_chr(ZONBI_2,	307,-1,-1,10400,11200,-300, 	51,300,0, "")
+	set_chr(ZONBI_3,	307,-1,-1,10400, 9600,-300, 	51,300,0, "")
+	set_chr(ZONBI_4,	307,-1,-1, 9800, 9800,-300, 	2,300,0, "")
+	set_chr(ZONBI_5,	307,-1,-1,11000,11000,-300, 	2,300,0, "")
+	set_chr(ZONBI_6,	307,-1,-1,11000, 9800,-300, 	2,300,0, "")
+	set_chr(ZONBI_7,	307,-1,-1, 9800,11000,-300, 	2,300,0, "")
+	set_chr(ZONBI_0,	 25,-1,-1,11200,10400,0, 		51,300,0, "<EV_YOUWIN>;")
+
+//	VOICE(346,0)	//「飛んで火にいる夏の虫ニャ！」
+//	VOICE(331,0)	//「さあ、踊ってもらうニャ！」
+	
+	F_set_chr(ZONBI_0,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,ZONBI_0)	//BOSS＿ＨＰ表示
+
+	jump(ZONBI_1,	2,90,	0,0,300,	0)
+	jump(ZONBI_2,	2,90,	0,0,300,	0)
+	jump(ZONBI_3,	2,90,	0,0,300,	0)
+	jump(ZONBI_4,	2,90,	0,0,300,	0)
+	jump(ZONBI_5,	2,90,	0,0,300,	0)
+	jump(ZONBI_6,	2,90,	0,0,300,	0)
+	jump(ZONBI_7,	2,90,	0,0,300,	0)
+
+	workL(10,SET,1)
+	F_set(100)
+
+	EV("EV_ZONBI_EFF")
+	EV("ROT_ZONBI")
+}
+
+//登場
+EV_ON_ZONBI
+{
+	CAM(790,131,0,25,225,0,0)
+	//10400 700or500 +100
+/*	set_chr(ZONBI_1,	307,-1,-1, 9700,10400,-300, 	51,300,0, "")
+	set_chr(ZONBI_2,	307,-1,-1,10400,11100,-300, 	51,300,0, "")
+	set_chr(ZONBI_3,	307,-1,-1,10400, 9700,-300, 	51,300,0, "")
+	set_chr(ZONBI_4,	307,-1,-1, 9900, 9900,-300, 	2,300,0, "")
+	set_chr(ZONBI_5,	307,-1,-1,10900,10900,-300, 	2,300,0, "")
+	set_chr(ZONBI_6,	307,-1,-1,10900, 9900,-300, 	2,300,0, "")
+	set_chr(ZONBI_7,	307,-1,-1, 9900,10900,-300, 	2,300,0, "")
+	set_chr(ZONBI_0,	 25,-1,-1,11100,10400,0, 		51,300,0, "<EV_3_08_KillBoss3_1>;")
+*/
+	set_chr(ZONBI_1,	307,-1,-1, 9600,10400,-300, 	51,300,0, "")
+	set_chr(ZONBI_2,	307,-1,-1,10400,11200,-300, 	51,300,0, "")
+	set_chr(ZONBI_3,	307,-1,-1,10400, 9600,-300, 	51,300,0, "")
+	set_chr(ZONBI_4,	307,-1,-1, 9800, 9800,-300, 	2,300,0, "")
+	set_chr(ZONBI_5,	307,-1,-1,11000,11000,-300, 	2,300,0, "")
+	set_chr(ZONBI_6,	307,-1,-1,11000, 9800,-300, 	2,300,0, "")
+	set_chr(ZONBI_7,	307,-1,-1, 9800,11000,-300, 	2,300,0, "")
+	set_chr(ZONBI_0,	 25,-1,-1,11200,10400,0, 		51,300,0, "<EV_3_08_KillBoss3_1>;")
+
+//	VOICE(346,0)	//「飛んで火にいる夏の虫ニャ！」
+//	VOICE(331,0)	//「さあ、踊ってもらうニャ！」
+	
+	F_set_chr(ZONBI_0,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,ZONBI_0)	//BOSS＿ＨＰ表示
+
+	jump(ZONBI_1,	2,90,	0,0,300,	0)
+	jump(ZONBI_2,	2,90,	0,0,300,	0)
+	jump(ZONBI_3,	2,90,	0,0,300,	0)
+	jump(ZONBI_4,	2,90,	0,0,300,	0)
+	jump(ZONBI_5,	2,90,	0,0,300,	0)
+	jump(ZONBI_6,	2,90,	0,0,300,	0)
+	jump(ZONBI_7,	2,90,	0,0,300,	0)
+
+	workL(10,SET,1)
+	F_set(100)
+
+	EV("EV_ZONBI_EFF")
+	EV("ROT_ZONBI")
+}
+//向き続け
+ROT_ZONBI
+{
+	rot_chr(ZONBI_0,100,0)
+	rot_chr(ZONBI_1,100,0)
+	rot_chr(ZONBI_2,100,0)
+	rot_chr(ZONBI_3,100,0)
+	rot_chr(ZONBI_4,100,0)
+	rot_chr(ZONBI_5,100,0)
+	rot_chr(ZONBI_6,100,0)
+	rot_chr(ZONBI_7,100,0)
+	wait(1)
+	loop
+}
+//登場土煙　□　回転へ
+EV_ZONBI_EFF
+{
+	MOT(ZONBI_0,50,5)
+	if(WK001<10)
+	{
+		EFF_chr(24590,ZONBI_1,0,100,0,"")
+		EFF_chr(24590,ZONBI_2,0,100,0,"")
+		EFF_chr(24590,ZONBI_3,0,100,0,"")
+		EFF_chr(24590,ZONBI_4,0,100,0,"")
+		EFF_chr(24590,ZONBI_5,0,100,0,"")
+		EFF_chr(24590,ZONBI_6,0,100,0,"")
+		EFF_chr(24590,ZONBI_7,0,100,0,"")
+		wait(10)
+		workL(1,ADD,1)
+		loop
+	}
+	workL(1,SET,1)
+
+	SE(1050,0)	//ゾンビ一斉登場 (イベントSEから
+//	wait(30)
+	MOT(ZONBI_1,40,5)
+	MOT(ZONBI_2,40,5)
+	MOT(ZONBI_3,40,5)
+	MOT(ZONBI_4,40,5)
+	MOT(ZONBI_5,40,5)
+	MOT(ZONBI_6,40,5)
+	MOT(ZONBI_7,40,5)
+	wait(30)
+
+//	VOICE(331,0)	//「さあ、踊ってもらうニャ！」
+
+
+	MOT(ZONBI_0,2,5)
+	F_reset(100)//戦闘開始
+	EV("EV_SE_ROT")
+	EV("MOVE_ZONBI1")
+}
+
+EV_SE_ROT
+{
+// 一速は音無し
+	if(WK010==5)
+		SE(865,0)
+	else
+	if(WK010>=7 && WK010<=9)
+		SE(866,0)
+	else
+	if(WK010>=11)
+		SE(867,0)
+}
+
+//二回転後、技123へ
+MOVE_ZONBI1
+{
+	rotate(ZONBI_0,	30,WK010,	10400,10400,0,	10)
+	rotate(ZONBI_1,	30,WK010,	10400,10400,0,	10)
+	rotate(ZONBI_2,	30,WK010,	10400,10400,0,	10)
+	rotate(ZONBI_3,	30,WK010,	10400,10400,0,	10)
+	rotate(ZONBI_4,	30,WK010,	10400,10400,0,	10)
+	rotate(ZONBI_5,	30,WK010,	10400,10400,0,	10)
+	rotate(ZONBI_6,	30,WK010,	10400,10400,0,	10)
+	rotate(ZONBI_7,	30,WK010,	10400,10400,0,	10)
+	wait_move(ZONBI_0)
+	loop
+}
+//もぐらたたき
+MOVE_ZONBI3
+{
+//	F_set(100)//戦闘開始
+	jump(ZONBI_0,	0,60,	10400,10400,600,	300)
+
+	EV("SE_ROT_STOP") // 回転SEストップ
+	EV_stop("MOVE_ZONBI1")
+	EV_stop("MOVE_ZONBI2")
+	EV_stop("ROT_ZONBI")
+	MOT(ZONBI_0,50,5)
+	MOT(ZONBI_1,36,5)
+	MOT(ZONBI_2,36,5)
+	MOT(ZONBI_3,36,5)
+	MOT(ZONBI_4,36,5)
+	MOT(ZONBI_5,36,5)
+	MOT(ZONBI_6,36,5)
+	MOT(ZONBI_7,36,5)
+
+	wait_move(ZONBI_0)
+	jump(ZONBI_0,	0,500,	10400,10400,500,	0)
+	SE(863,0) 
+	wait(350)
+	stop_SE(863)
+	EV("MOVE_ZONBI4")
+}
+//やめろ
+MOVE_ZONBI4
+{
+	EV("SE_ROT_STOP") // 回転SEストップ
+	EV_stop("MOVE_ZONBI1")
+	EV_stop("MOVE_ZONBI2")
+	EV_stop("ROT_ZONBI")
+	MOT(ZONBI_0,50,5)
+	MOT(ZONBI_1,36,5)
+	MOT(ZONBI_2,36,5)
+	MOT(ZONBI_3,36,5)
+	MOT(ZONBI_4,36,5)
+	MOT(ZONBI_5,36,5)
+	MOT(ZONBI_6,36,5)
+	MOT(ZONBI_7,36,5)
+	SE(789,0)	//復活前のゾンビ一斉破壊
+
+	wait(30)
+
+//	chr_pos(ZONBI_0,	11100,10400,0, 		2,0)
+	chr_pos(ZONBI_1,	 9600,10400,-300, 	2,0)
+	chr_pos(ZONBI_2,	10400,11200,-300, 	2,0)
+	chr_pos(ZONBI_3,	10400, 9600,-300, 	2,0)
+	chr_pos(ZONBI_4,	 9800, 9800,-300, 	2,0)
+	chr_pos(ZONBI_5,	11000,11000,-300, 	2,0)
+	chr_pos(ZONBI_6,	11000, 9800,-300, 	2,0)
+	chr_pos(ZONBI_7,	 9800,11000,-300, 	2,0)
+
+	VOICE(333,0)	//「出てくるニャ！」
+
+	workL(1,SET,7)
+	jump(ZONBI_0,	0,30,	11200,10400,0,	400)
+	jump(ZONBI_1,	2,30,	0,0,300,	0)
+	jump(ZONBI_2,	2,30,	0,0,300,	0)
+	jump(ZONBI_3,	2,30,	0,0,300,	0)
+	jump(ZONBI_4,	2,30,	0,0,300,	0)
+	jump(ZONBI_5,	2,30,	0,0,300,	0)
+	jump(ZONBI_6,	2,30,	0,0,300,	0)
+	jump(ZONBI_7,	2,30,	0,0,300,	0)
+
+	EV("EV_ZONBI_EFF")
+	EV("ROT_ZONBI")
+}
+//キャラ一斉踏み付け
+MOVE_ZONBI2
+{
+	if( !F100 )
+	{
+		VOICE(337,0)	//「ニャハハハハハハハハ！」
+		EV("SE_ROT_STOP") // 回転SEストップ
+
+		EV_stop("MOVE_ZONBI1")
+		EV_stop("MOVE_ZONBI3")
+	//	MOT(ZONBI_0,30,5)
+		MOT(ZONBI_0,50,5)
+
+		jump(ZONBI_0,	0,60,	10400,10400,400,	300)
+
+		MOT(ZONBI_1,30,5)
+		jump(ZONBI_1,	1,15,	0,0,0,	400)
+		wait(3)
+		MOT(ZONBI_2,30,5)
+		jump(ZONBI_2,	1,15,	0,0,0,	400)
+		wait(3)
+		MOT(ZONBI_3,30,5)
+		jump(ZONBI_3,	1,15,	0,0,0,	400)
+		wait(3)
+		MOT(ZONBI_4,30,5)
+		jump(ZONBI_4,	1,15,	0,0,0,	400)
+		wait(3)
+		MOT(ZONBI_5,30,5)
+		jump(ZONBI_5,	1,15,	0,0,0,	400)
+		wait(3)
+		MOT(ZONBI_6,30,5)
+		jump(ZONBI_6,	1,15,	0,0,0,	400)
+		wait(3)
+		MOT(ZONBI_7,30,5)
+		jump(ZONBI_7,	1,15,	0,0,0,	400)
+		wait(15)
+
+		jump(ZONBI_0,	0,30,	11200,10400,0,	400)
+		wait_move(ZONBI_1)
+		jump(ZONBI_1,	0,30,	 9600,10400,0,	600)
+		wait(3)
+		jump(ZONBI_2,	0,30,	10400,11200,0,	600)
+		wait(3)
+		jump(ZONBI_3,	0,30,	10400, 9600,0,	600)
+		wait(3)
+		jump(ZONBI_4,	0,30,	9800,9800,		0,	600)
+		wait(3)
+		jump(ZONBI_5,	0,30,	11000,11000,	0,	600)
+		wait(3)
+		jump(ZONBI_6,	0,30,	11000,9800,		0,	600)
+		wait(3)
+		jump(ZONBI_7,	0,30,	9800,11000,		0,	600)
+		wait_move(ZONBI_7)
+
+	//	VOICE(332,0)	//「踊れ、踊るニャ！」
+
+		MOT(ZONBI_0,2,5)
+		MOT(ZONBI_1,40,5)
+		MOT(ZONBI_2,40,5)
+		MOT(ZONBI_3,40,5)
+		MOT(ZONBI_4,40,5)
+		MOT(ZONBI_5,40,5)
+		MOT(ZONBI_6,40,5)
+		MOT(ZONBI_7,40,5)
+		EV("EV_SE_ROT")
+		EV("MOVE_ZONBI1")
+	}
+}
+
+MOVE_DIED
+{
+	EV("SE_ROT_STOP") // 回転SEストップ
+	EV_stop("EV_ZONBI_EFF")
+	EV_stop("ROT_ZONBI")
+	EV_stop("MOVE_ZONBI1")
+	EV_stop("MOVE_ZONBI2")
+	EV_stop("MOVE_ZONBI3")
+	EV_stop("MOVE_ZONBI4")
+//	MOT(ZONBI_0,2,5)
+	MOT(ZONBI_1,35,15)
+	MOT(ZONBI_2,35,15)
+	MOT(ZONBI_3,35,15)
+	MOT(ZONBI_4,35,15)
+	MOT(ZONBI_5,35,15)
+	MOT(ZONBI_6,35,15)
+	MOT(ZONBI_7,35,15)
+}
+
+SE_ROT_STOP
+{
+		stop_SE(865)
+		stop_SE(866)
+		stop_SE(867)
+}
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+
+//──────────────────────────────
+//▼墓地最奥での戦い（ＶＳモンブラン）．前
+//──────────────────────────────
+//　　墓場の最奥まで来たところでイベント発生。
+EV_3_07_VSMontblanc
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	11000,11200,0,180,2)
+	chr_pos(PARTNER,	11200,11200,0,180,2)
+//	color(RAGNA,-1)
+//	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 9460,11300,0, 2,180,0, "")
+	set_chr(ALWEN,	1011,-1,-1, 9600,11300,0, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	set_chr(MONTBLANC,	 1025,-1,-1, 10400,9720,140, 2,0,0, "")
+	F_set_chr(MONTBLANC,CF_NO_HEIGHT)
+	F_set_chr(MONTBLANC,CF_NO_CLIP)
+	F_set_chr(MONTBLANC,CF_NO_CLIP2)
+	F_set_chr(MONTBLANC,CF_NO_CSP)
+	set_chr(ZONBI_A,	 307,-1,-1, 10750,9950,0, 2,30,0, "")
+	set_chr(ZONBI_B,	 307,-1,-1, 11000,10150,0, 2,60,0, "")
+	set_chr(ZONBI_C,	 307,-1,-1, 10050,9950,0, 2,330,0, "")
+	set_chr(ZONBI_D,	 307,-1,-1,  9800,10150,0, 2,300,0, "")
+	set_chr(ZONBI_E,	 307,-1,-1,  9800,9900,0, 2,310,0, "")
+	set_chr(ZONBI_F,	 307,-1,-1, 11000,9900,0, 2,50,0, "")
+	set_chr(ZONBI_G,	 307,-1,-1, 10300,10000,0, 2,350,0, "")
+	set_chr(ZONBI_H,	 307,-1,-1, 10500,10000,0, 2,10,0, "")
+	F_set_chr(ZONBI_A,CF_NO_CSP)
+	F_set_chr(ZONBI_B,CF_NO_CSP)
+	F_set_chr(ZONBI_C,CF_NO_CSP)
+	F_set_chr(ZONBI_D,CF_NO_CSP)
+	F_set_chr(ZONBI_E,CF_NO_CSP)
+	F_set_chr(ZONBI_F,CF_NO_CSP)
+	F_set_chr(ZONBI_G,CF_NO_CSP)
+	F_set_chr(ZONBI_H,CF_NO_CSP)
+	color(MONTBLANC,-1)
+	color(ZONBI_A,-1)
+	color(ZONBI_B,-1)
+	color(ZONBI_C,-1)
+	color(ZONBI_D,-1)
+	color(ZONBI_E,-1)
+	color(ZONBI_F,-1)
+	color(ZONBI_G,-1)
+	color(ZONBI_H,-1)
+	wait_color(MONTBLANC)
+	KAO(MONTBLANC,"1","1","-")//
+
+	set_chr( EFFECT,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	F_set_chr(EFFECT,CF_NO_CLIP)
+	F_set_chr(EFFECT,CF_NO_CLIP2)
+	F_set_chr(EFFECT,CF_NO_CSP)
+	F_set_chr(EFFECT,CF_NO_ZIMEN)
+	F_set_chr(EFFECT,CF_NO_HEIGHT)
+	color(EFFECT,-1)
+	chr_equip_chr(EFFECT,MONTBLANC,"charbase0",100,		0,0,0,	0,0,0);
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる。
+
+	//モーション定義
+	MOT_SET(MONTBLANC,150,151,280,289,-1,-1)	//
+	MOT_SET(MONTBLANC,151,151,290,298,-1,-1)	//
+	MOT_SET(MONTBLANC,152,-1,200,209,-1,-1)	//
+
+	MOT_SET(ZONBI_A,150,150,135,155,-1,-1)	//
+	MOT_SET(ZONBI_B,150,150,135,155,-1,-1)	//
+	MOT_SET(ZONBI_C,150,150,135,155,-1,-1)	//
+	MOT_SET(ZONBI_D,150,150,135,155,-1,-1)	//
+	MOT_SET(ZONBI_E,150,150,135,155,-1,-1)	//
+	MOT_SET(ZONBI_F,150,150,135,155,-1,-1)	//
+	MOT_SET(ZONBI_G,150,150,135,155,-1,-1)	//
+	MOT_SET(ZONBI_H,150,150,135,155,-1,-1)	//
+
+	//カメラ初期位置
+	CAM_move(9500,-11300,160,0,0)
+	CAM(790,90,160,25,225,0,0)
+
+	//フェードイン
+	stop_BGM(90)
+	fade_in(0,30,0)
+	wait_fade()
+
+//　　トゲのような扉が閉まり、ラグナたちの頭に！マーク。
+//	MES(RAGNA,"◆未入力項目\nトゲのような扉が閉まる。",0)
+//	MES_close(RAGNA)
+
+	MOT(50,5,0)
+	SE(282,0)//柵閉まるSE
+	wait(15)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	look_chr( EVENT_RAGNA, 50 ,"Bone_Head")
+	look_chr( ALWEN, 50 ,"Bone_Head")
+	wait(15)
+	wait_MOT(50,5)
+	MOT(50,7,0)
+
+	if(F3_06_KillBoss3_2 && F3_08_KillBoss3_3)
+	{
+		MES(EVENT_RAGNA,"くっ……！",0)
+		MES_close(EVENT_RAGNA)
+
+		MES(ALWEN,"現れたか……",0)
+		MES_close(ALWEN)
+	}
+	else 
+	if(F3_06_KillBoss3_2 || F3_08_KillBoss3_3)
+	{
+		MES(EVENT_RAGNA,"ちっ……！",0)
+		MES_close(EVENT_RAGNA)
+
+		MES(ALWEN,"またか……",0)
+		MES_close(ALWEN)
+	}
+	else
+	{
+		MES(EVENT_RAGNA,"なに……！",0)
+		MES_close(EVENT_RAGNA)
+
+		MES(ALWEN,"閉じ込められたか……",0)
+		MES_close(ALWEN)
+	}
+
+	VOICE2(336,0,95)		//★ボイス入力演出
+	wait(15)
+	color(MONTBLANC,1)
+	chr_rename(MONTBLANC,"声")//
+	MES_pos(MONTBLANC,"W9ニャハハ！\nよくぞここまで来たニャ！",0,500,120,0,0)
+	wait_key(0)
+	MES_close(MONTBLANC)
+
+	BGM(47)
+
+//　　ラグナたちの頭に！マーク。
+//　　そのままスクロールして、浮遊するモンブランを見せる。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	look_chr( EVENT_RAGNA, MONTBLANC ,"Bone_Head")
+	look_chr( ALWEN, MONTBLANC ,"Bone_Head")
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(10400,-9720,200,0,0)
+	CAM(1630,40,200,28,204,0,0)
+	CAM_move(10400,-9740,220,90,0)
+	CAM(230,36,220,28,188,90,0)
+	wait_CAM_move()
+	wait_CAM()
+	chr_pos(EVENT_RAGNA,9980,11080,0,210,2)
+	chr_pos(ALWEN,10180,11080,0,210,2)
+	wait(15)
+
+	CAM_move(10400,-10160,140,60,0)
+	CAM(190,92,140,24,196,60,0)
+//	wait_CAM_move()
+//	wait_CAM()
+	wait(45)
+
+	look(MONTBLANC,"Bone_Head",0,0,0,1,0,0,-6)
+	move( EVENT_RAGNA, 0, 20,10300,10460,0,0)
+	wait(10)
+	move( ALWEN, 0, 20,10500,10500,0,0)
+	wait_move(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,180)
+	wait_move(ALWEN)
+	rot(ALWEN,30,180)
+	wait(15)
+
+	MES(EVENT_RAGNA,"ヘッ……\n出たな、アホネコ。",0)
+	MES_close(EVENT_RAGNA)
+
+	chr_rename(MONTBLANC,"モンブラン")//
+//	name2(MONTBLANC)
+	KAO(MONTBLANC,"C232CZ4","1232","-")//
+	MES(MONTBLANC,"W1お前までアホネコ言うニャ！",0)
+	KAO(MONTBLANC,"12321Z5","2321","-")//
+	MES(MONTBLANC,"W1……フフフ。\nそれにしても愚かな主従ニャ。",0)
+	KAO(MONTBLANC,"12321Z5","1","-")//
+	MES(MONTBLANC,"W1死地と知りながら\nわざわざ飛び込んで来るとは。",0)
+	MES_close(MONTBLANC)
+
+//	name2(ALWEN)
+	MES(ALWEN,"フン、城主が自分の城に戻るのに\n何を遠慮する必要があろう。",0)
+	MES(ALWEN,"それよりも……\n使い魔風情が大きな口を叩く。",0)
+	MES(ALWEN,"私の力が全て戻ったことは\nそなたにも分かっているであろ？",0)
+	MES_close(ALWEN)
+
+//	name2(MONTBLANC)
+	KAO(MONTBLANC,"B232B2Z2","12321DE","-")//
+	MES(MONTBLANC,"W1お、脅しても無駄ニャ！",0)
+	KAO(MONTBLANC,"B232BZ6","D12321","-")//
+	MES(MONTBLANC,"W1この城にいる限り、我が力は\nザハール様の加護を受けるニャ！",0)
+	MES_close(MONTBLANC)
+
+//　　モンブラン、詠唱パターンになってオーラを漂わせる。
+//	MES(MONTBLANC,"◆未入力項目\n詠唱パターンになってオーラを漂わせる。",0)
+//	MES_close(MONTBLANC)
+
+//	MOT(MONTBLANC,152,0)
+	MOT(MONTBLANC,50,15)
+	wait(15)
+//	EFF_chr(4040,MONTBLANC,0,100,0,"Bone_Hips")
+	MOT(EFFECT,30,0)
+	SE(1066,0)
+	wait(30)
+
+	MES(EVENT_RAGNA,"なに……！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"ほう……\n叔父上から力を借りたか。",0)
+	MES_close(ALWEN)
+
+//	name2(MONTBLANC)
+	KAO(MONTBLANC,"12321Z4","1236","-")//
+	MES(MONTBLANC,"W1ニャハハ！\nそれだけではニャい！",0)
+	KAO(MONTBLANC,"12321Z7","6","-")//
+	MES(MONTBLANC,"W1こうして、\nこの場所で待っていたのには\nちゃんと理由があるニャ！",0)
+	MES_close(MONTBLANC)
+
+	stop_BGM(60)
+//　　モンブラン、杖を高く掲げると
+//　　地中から大量の骸骨．ゾンビ．マミーが現れる。
+	VOICE(333,0)		//★ボイス入力演出
+	MOT(MONTBLANC,31,0)
+	wait(15)
+
+//	CAM_move(10400,-10100,60,30,0)			//これだと、左のゾンビエフェクトがクリップされる
+//	CAM(590,64,60,42,180,30,0)
+	CAM_move(10400,-10100,60,30,0)
+	CAM(589,98,60,26,180,30,0)
+	CAM(588,109,60,25,180,90,0)
+
+	SE(1050,0)//召喚SE
+	EFF_chr(6470,ZONBI_A,0,70,0,"charbase0")
+	EFF_chr(6470,ZONBI_B,0,70,0,"charbase0")
+	EFF_chr(6470,ZONBI_C,0,70,0,"charbase0")
+	EFF_chr(6470,ZONBI_D,0,70,0,"charbase0")
+	EFF_chr(6470,ZONBI_E,0,70,0,"charbase0")
+	EFF_chr(6470,ZONBI_F,0,70,0,"charbase0")
+	EFF_chr(6470,ZONBI_G,0,70,0,"charbase0")
+	EFF_chr(6470,ZONBI_H,0,70,0,"charbase0")
+	wait(15)
+	color(ZONBI_A,30)
+	color(ZONBI_B,30)
+	color(ZONBI_C,30)
+	color(ZONBI_D,30)
+	color(ZONBI_E,30)
+	color(ZONBI_F,30)
+	color(ZONBI_G,30)
+	color(ZONBI_H,30)
+	wait_color(ZONBI_A)
+
+//　　ラグナたちの頭に！マーク。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	wait_BGM()
+	BGM(36)
+	look_off(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,150)
+	wait(5)
+	look_off(ALWEN)
+	rot(ALWEN,30,210)
+	wait(15)
+//	wait_BGM()
+//	BGM(35)
+//	BGM(36)
+//	BGM(57)
+
+	MES(EVENT_RAGNA,"W1チッ……",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, MONTBLANC ,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	MES(ALWEN,"W1やれやれ、力を借りたくせに\nあくまで他人任せというわけか。",0)
+	MES_close(ALWEN)
+
+//	name2(MONTBLANC)
+	KAO(MONTBLANC,"12321Z5","6","-")//
+	MES(MONTBLANC,"W1ニャハハ、それが\nこのモンブラン様の流儀ニャ。",0)
+	KAO(MONTBLANC,"12321Z6","321","-")//
+	MES(MONTBLANC,"W1それに、この死人使いの術は\nこんなことも出来るニャあっ！",0)
+	MES_close(MONTBLANC)
+
+//　　モンブラン、杖を振るいながらリズムを取る。
+//　　空中で自ら軽く踊るようなモーション。
+//	MES(MONTBLANC,"◆未入力項目\n杖を振るいながらリズムを取る。\n空中で自ら軽く踊るようなモーション。",0)
+//	MES_close(MONTBLANC)
+
+	CAM(388,101,120,25,180,90,0)
+	CAM_move(10400,-10100,120,90,0)
+
+	MOT(MONTBLANC,150,0)
+	SE(1038,0)//杖クルクル
+	wait(30)
+
+	VOICE(332,0)		//★ボイス入力演出
+	KAO(MONTBLANC,"12321Z5","1236","-")//
+	MES(MONTBLANC,"W1踊れ、踊るニャ□\n我がシモベたちよ□",0)
+	MES_close(MONTBLANC)
+
+//　　マミーやゾンビたち、一糸乱れぬリズムで
+//　　一斉に踊るような動作を行う。（スリラーっぽく？）
+//	MES(ALWEN,"◆未入力項目\nマミーやゾンビたち、一糸乱れぬリズムで\n一斉に踊るような動作を行う。",0)
+//	MES_close(ALWEN)
+
+	EV("EV_476_loop_1")
+	MOT(ZONBI_A,150,15)
+	MOT(ZONBI_B,150,15)
+	MOT(ZONBI_C,150,15)
+	MOT(ZONBI_D,150,15)
+	MOT(ZONBI_E,150,15)
+	MOT(ZONBI_F,150,15)
+	MOT(ZONBI_G,150,15)
+	MOT(ZONBI_H,150,15)
+	wait(30)
+
+//　　ラグナたちの頭に！マーク。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	look_off(ALWEN)
+	wait(30)
+
+	MES(EVENT_RAGNA,"W1な、なんだこいつら……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"W1フン、怪しげな動きを……",0)
+	MES_close(ALWEN)
+
+//	name2(MONTBLANC)
+	KAO(MONTBLANC,"12321Z5","6","-")//
+	MES(MONTBLANC,"W1ニャハハ！\nそれでは楽しむがいいニャ！",0)
+	KAO(MONTBLANC,"12321Z5","32","-")//
+	MES(MONTBLANC,"W1永遠に終わることのニャい、\n死者たちとのカーニバルを！",0)
+	MES_close(MONTBLANC)
+
+	VOICE(331,1)	//★ボイス入力演出
+	fade_in(100,30,0)
+	wait_fade()
+
+	stop_SE(1038)
+	EV_stop("EV_476_loop_1")
+	EV_stop("EV_476_loop_2")
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	delete(EFFECT)
+	delete(MONTBLANC)
+	delete(ZONBI_A)
+	delete(ZONBI_B)
+	delete(ZONBI_C)
+	delete(ZONBI_D)
+	delete(ZONBI_E)
+	delete(ZONBI_F)
+	delete(ZONBI_G)
+	delete(ZONBI_H)
+
+	chr_pos(RAGNA,		10460,10460,0,180,2)
+	chr_pos(PARTNER,	10600,10450,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+//	set_chr(MONTBLANC,	 25,-1,-1, 10400,10050,150, 2,0,0, "")
+	EV("EV_ON_ZONBI")
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)//ワープ封じる。
+	
+	//ラグナメモ用
+	F_set(F3_25_BattleBoss3_1)	//★中ボス①【モンブラン】との戦闘開始
+
+	//再戦用オートセーブ
+	workG(GW_ENTRY_EVENT,SET,100)
+	workG(GW_DEF_BGM,SET,99)						//デフォルト曲を変更する 無音
+	AutoSave(0)
+	workG(GW_ENTRY_EVENT,SET,0)
+	workG(GW_DEF_BGM,SET,0)							//デフォルト曲を変更する
+
+
+	CAM_return(0)
+	wait(30)
+	SE(878,0)	//初回ゾンビ登場
+
+	fade_in(0,30,0)
+	set_namebmp(27,0)	//ネコ魔人モンブラン			ムーンブリア城
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,67);//モンブラン
+
+	EV_end()
+
+//──────────────────────────────
+//　　中ボス戦【モンブラン】との戦い。（ネコ魔人＋死人の群れ）
+//　　戦闘中のゾンビや骸骨のダンスをどうするかは要検討。
+//──────────────────────────────
+}
+
+//---------------------------------------------------------------------
+// モンブラン　ボス再戦用
+//---------------------------------------------------------------------
+EV_3_16_BossOnly
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+
+	wait(30)									//GAME OVER曲待ち
+
+	//キャラ再配置
+	chr_pos(RAGNA,		10460,10460,0,180,2)
+	chr_pos(PARTNER,	10600,10450,0,180,2)
+	chr_pos(PET,		10500,10880,0,180,2)
+
+	EV("EV_ON_ZONBI")								//ゾンビ登場+モンブラン
+		
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)						//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)							//デフォルト曲を変更する マップ曲
+
+	BGM(36)											//ボス曲
+
+	MOT(50,7,0)										//扉閉める
+	
+	CAM_return(0)
+	wait(15)
+		
+//	CAM(399,150,0,25,225,0,0)						//マップカメラ	
+	SE(878,0)	//初回ゾンビ登場
+
+	fade_in(0,30,0)
+	set_namebmp(27,0)	//ネコ魔人モンブラン			ムーンブリア城
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,67);//モンブラン
+
+	EV_end()
+}
+
+//---------------------------------------------------------------------
+// モンブラン	ゲーセン用
+//---------------------------------------------------------------------
+EV_3_16_BossOnly_02
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////ＨＰ0でも消えない　キャラ0は死亡時に"EV_DEAD"を再生
+
+	wait(30)									//GAME OVER曲待ち
+
+	//キャラ再配置
+	chr_pos(RAGNA,		10460,10460,0,180,2)
+	chr_pos(PARTNER,	10600,10450,0,180,2)
+	chr_pos(PET,		10500,10880,0,180,2)
+
+	EV("EV_ON_ZONBI_02")								//ゾンビ登場+モンブラン
+		
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)						//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)							//デフォルト曲を変更する マップ曲
+
+	//BGM(36)											//ボス曲
+
+	MOT(50,7,0)										//扉閉める
+	
+	CAM_return(0)
+	wait(15)
+		
+//	CAM(399,150,0,25,225,0,0)						//マップカメラ	
+	SE(878,0)	//初回ゾンビ登場
+
+	fade_in(0,30,0)
+	set_namebmp(27,0)	//ネコ魔人モンブラン			ムーンブリア城
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,67);//モンブラン
+
+	EV_end()
+}
+
+//敗北時---------------------
+EV_DEAD
+{
+	wait_EV("EV_YOUWIN")
+
+	stop_SE(863)// ZSE_0863 //モンブラン空中停止時の効果音（ループ）	モンブラン
+	stop_SE(864)// ZSE_0864 //　なし
+	stop_SE(865)// ZSE_0865 //　なし
+	stop_SE(866)// ZSE_0866 //ゾンビ回転 中速2
+	stop_SE(867)// ZSE_0867 //ゾンビ回転 高速
+
+	EV_begin()
+	EFF(21660,320,240,0,0,100,0)//LOSE
+
+	wait(60)
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+	workG(GW_ENTRY_EVENT,SET,106)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//Gミュージアムに
+}
+
+//勝利時---------------------
+EV_YOUWIN
+{
+	wait_EV("EV_DEAD")
+
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+	EFF(21650,320,240,0,0,100,0)//WIN
+
+	stop_SE(863)// ZSE_0863 //モンブラン空中停止時の効果音（ループ）	モンブラン
+	stop_SE(864)// ZSE_0864 //　なし
+	stop_SE(865)// ZSE_0865 //　なし
+	stop_SE(866)// ZSE_0866 //ゾンビ回転 中速2
+	stop_SE(867)// ZSE_0867 //ゾンビ回転 高速
+
+//	VOICE(341,0)	//「馬鹿ニャ…ありえんニャ…」
+	VOICE2(341,1,100)	//★「馬鹿ニャ…ありえんニャ…」
+
+	wait(1)	//1フレーム進めないと、カメラが壊れる。（ボスのカメラのため）
+	EV_begin()
+	wait(200)
+
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+
+	//成績に応じてフィギュア入手	//	猫魔人モンブラン戦	->Figure F2881
+	if(!F2881)
+	{
+		SE(24,0)//ゲットSE
+		MES(0,"L667猫魔人モンブランL777のフィギュアを手に入れた！！",2)
+		MES_close(0)
+		F_set(2881)
+	}
+
+	workG(GW_ENTRY_EVENT,SET,106)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//Gミュージアムに
+}
+
+
+//──────────────────────────────
+//▼墓地最奥での戦い（ＶＳモンブラン）．後
+//──────────────────────────────
+//　　戦闘終了後、バラバラになって崩れ落ち消滅する死人たち。
+//　　モンブラン、アセアセマークを出しながら空中で後ずさる。
+EV_3_08_KillBoss3_1
+{
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+
+	stop_SE(863)// ZSE_0863 //モンブラン空中停止時の効果音（ループ）	モンブラン
+	stop_SE(864)// ZSE_0864 //　なし
+	stop_SE(865)// ZSE_0865 //　なし
+	stop_SE(866)// ZSE_0866 //ゾンビ回転 中速2
+	stop_SE(867)// ZSE_0867 //ゾンビ回転 高速
+
+//	VOICE(341,0)	//「馬鹿ニャ…ありえんニャ…」
+	VOICE2(341,1,100)	//★「馬鹿ニャ…ありえんニャ…」
+	wait(200)
+
+	EV_begin()
+
+	stop_BGM(90)
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(ZONBI_0)
+	delete(ZONBI_1)
+	delete(ZONBI_2)
+	delete(ZONBI_3)
+	delete(ZONBI_4)
+	delete(ZONBI_5)
+	delete(ZONBI_6)
+	delete(ZONBI_7)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	11000,11200,0,180,2)
+	chr_pos(PARTNER,	11200,11200,0,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 10300,10460,0, 2,180,0, "")
+	set_chr(ALWEN,	1011,-1,-1, 10490,10500,0, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	set_chr(MONTBLANC,	 1025,-1,-1, 10400,9820,140, 2,0,0, "")
+//	set_chr(MONTBLANC,	 1025,-1,-1, 10400,9950,150, 2,0,0, "")
+	F_set_chr(MONTBLANC,CF_NO_HEIGHT)
+	F_set_chr(MONTBLANC,CF_NO_CLIP)
+	F_set_chr(MONTBLANC,CF_NO_CLIP2)
+	F_set_chr(MONTBLANC,CF_NO_CSP)
+	KAO(MONTBLANC,"E","E","-")//
+	look(MONTBLANC,"Bone_Head",0,0,0,6,0,0,-6)
+
+	set_chr(ZONBI_A,	 307,-1,-1, 10750,9950,0, 2,30,0, "")
+	set_chr(ZONBI_B,	 307,-1,-1, 11000,10150,0, 2,60,0, "")
+	set_chr(ZONBI_C,	 307,-1,-1, 10050,9950,0, 2,330,0, "")
+	set_chr(ZONBI_D,	 307,-1,-1,  9800,10150,0, 2,300,0, "")
+	set_chr(ZONBI_E,	 307,-1,-1,  9800,9900,0, 2,310,0, "")
+	set_chr(ZONBI_F,	 307,-1,-1, 11000,9900,0, 2,50,0, "")
+	set_chr(ZONBI_G,	 307,-1,-1, 10300,10000,0, 2,350,0, "")
+	set_chr(ZONBI_H,	 307,-1,-1, 10500,10000,0, 2,10,0, "")
+	F_set_chr(ZONBI_A,CF_NO_CSP)
+	F_set_chr(ZONBI_B,CF_NO_CSP)
+	F_set_chr(ZONBI_C,CF_NO_CSP)
+	F_set_chr(ZONBI_D,CF_NO_CSP)
+	F_set_chr(ZONBI_E,CF_NO_CSP)
+	F_set_chr(ZONBI_F,CF_NO_CSP)
+	F_set_chr(ZONBI_G,CF_NO_CSP)
+	F_set_chr(ZONBI_H,CF_NO_CSP)
+
+	MOT_SET(MONTBLANC,150,151,280,289,-1,-1)	//
+	MOT_SET(MONTBLANC,151,151,290,298,-1,-1)	//
+	MOT_SET(MONTBLANC,152,-1,200,209,-1,-1)	//
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる。
+
+	//カメラ初期位置
+//	CAM_move(10400,-10100,60,0,0)
+//	CAM(590,54,60,42,180,0,0)
+//	CAM(590,64,60,42,180,90,0)
+
+	wait_BGM()
+	BGM(26)
+
+	CAM_reset()
+	CAM_move(10400,-10100,60,0,0)
+	CAM(589,98,60,26,180,0,0)
+	CAM(589,107,60,25,180,150,0)
+	
+	//フェードイン
+	fade_in(0,30,0)
+	wait_fade()
+
+	MOT(ZONBI_A,35,15)
+	MOT(ZONBI_B,35,15)
+	MOT(ZONBI_C,35,15)
+	MOT(ZONBI_D,35,15)
+	MOT(ZONBI_E,35,15)
+	MOT(ZONBI_F,35,15)
+	MOT(ZONBI_G,35,15)
+	MOT(ZONBI_H,35,15)
+	wait(25)
+	SE(1070,0)//ゾンビ倒れるSE
+	wait(35)
+	SE(1050,0)//ゾンビ消滅SE
+	SE(1040,0)//ゾンビ消滅SE
+	EFF_chr(6480,ZONBI_A,0,70,0,"Bone_Hips")
+	EFF_chr(6480,ZONBI_B,0,70,0,"Bone_Hips")
+	EFF_chr(6480,ZONBI_C,0,70,0,"Bone_Hips")
+	EFF_chr(6480,ZONBI_D,0,70,0,"Bone_Hips")
+	EFF_chr(6480,ZONBI_E,0,70,0,"Bone_Hips")
+	EFF_chr(6480,ZONBI_F,0,70,0,"Bone_Hips")
+	EFF_chr(6480,ZONBI_G,0,70,0,"Bone_Hips")
+	EFF_chr(6480,ZONBI_H,0,70,0,"Bone_Hips")
+	wait(30)
+	color(ZONBI_A,-30)
+	color(ZONBI_B,-30)
+	color(ZONBI_C,-30)
+	color(ZONBI_D,-30)
+	color(ZONBI_E,-30)
+	color(ZONBI_F,-30)
+	color(ZONBI_G,-30)
+	color(ZONBI_H,-30)
+	wait_color(ZONBI_A)
+	delete(ZONBI_A)
+	delete(ZONBI_B)
+	delete(ZONBI_C)
+	delete(ZONBI_D)
+	delete(ZONBI_E)
+	delete(ZONBI_F)
+	delete(ZONBI_G)
+	delete(ZONBI_H)
+	wait(45)
+
+	cross_fade(15)
+	CAM_move(10400,-10160,140,0,0)
+	CAM(190,92,140,24,196,0,0)
+	wait(15)
+	move( MONTBLANC, 0, 10,10400,9720,140,0)
+	wait_move(MONTBLANC)
+	chr_pos(MONTBLANC,-1,-1,-1,0,2)
+	EMO(MONTBLANC,EMO_ASEASE)
+	wait(15)
+	KAO(MONTBLANC,"B232BKZ2","D12321DE","-")//
+	MES(MONTBLANC,"W1そ、そんな馬鹿ニャ！",0)
+	KAO(MONTBLANC,"B232BZ6","E","-")//
+	MES(MONTBLANC,"W1このモンブラン様の秘術、\n『ゾンビｄｅカーニバル』が\nこうもあっさりと……",0)
+	MES_close(MONTBLANC)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"ば、馬鹿馬鹿しかったが\nある意味ヤバかったぜ……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"うむ……\nただの死人使いの術かと思ったら\nこのように捻ってくるとはな。",0)
+	MES(ALWEN,"見直したぞ、モンブランとやら。",0)
+	MES_close(ALWEN)
+
+//	name2(MONTBLANC)
+	KAO(MONTBLANC,"B232BGZ4","D1232L","-")//
+	MES(MONTBLANC,"W1う、うるさい！\n余裕を見せるんじゃないニャ！",0)
+	KAO(MONTBLANC,"B232BGZ4","L","-")//
+	MES(MONTBLANC,"W1ザハール様にかかれば\nお前たちなど赤子同然……",0)
+	KAO(MONTBLANC,"B232BGZ4","L","-")//
+	MES(MONTBLANC,"W1せいぜい束の間の勝利を\n味わっているがいいニャ！",0)
+	MES_close(MONTBLANC)
+
+//　　モンブラン、詠唱パターンになってそのまま転位する。
+	KAO(MONTBLANC,"B","L23","-")//
+	MOT(MONTBLANC,152,0)
+	wait(15)
+	EFF_chr(24580,MONTBLANC,0,100,0,"charbase0")
+	MOT(MONTBLANC,31,0)	
+	color(MONTBLANC,-15)
+	SE(1016,0)//ワープSE
+	wait_color(MONTBLANC)
+	delete(MONTBLANC)
+	wait(30)
+
+//　　それが消え去ってから以下のメッセージ。
+//　　以下は１回目に倒した相手だった場合。
+	CAM_move(10400,-10360,140,60,0)
+	wait_CAM_move()
+
+	MOT(EVENT_RAGNA,53,15)	//髪をセット
+	wait(15)
+	MES(EVENT_RAGNA,"やれやれ……\n面倒くさい相手だったぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+
+	if(F3_06_KillBoss3_2 || F3_08_KillBoss3_3)	//人狼かテルミドールを倒している場合
+	{
+		MES(ALWEN,"うむ、あのネコですら\nここまでてこずったのだ。",0)
+		MES(ALWEN,"この先も、覚悟を決めて\n前に進む必要がありそうだな。",0)
+		MES_close(ALWEN)
+	}
+	else
+	{
+		MES(ALWEN,"うむ、あのネコですら\nここまでてこずったのだ。",0)
+		MES(ALWEN,"人狼やテルミドール相手では\nさらに気が抜けぬであろうな。",0)
+		MES_close(ALWEN)
+	}
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	MES(EVENT_RAGNA,"ヘッ……そうだな。",0)
+	MES(EVENT_RAGNA,"よし、そんじゃあとっとと\n仕掛けってのを解除しょうぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"心得た。",0)
+	MES_close(ALWEN)
+
+//　　イベント終了、プレイヤー操作許可。
+//　　ボス戦後はスイッチを入れるまで他には行けないようにする。
+	fade_in(100,30,0)
+	wait_fade()
+	wait(30)
+
+	CAM_move(10400,-9600,100,0,0)
+	CAM(1000,80,100,25,225,0,0)
+	CAM(1000,70,100,25,225,60,0)
+	fade_in(0,30,0)
+	wait_fade()
+	wait(30)
+
+	F_reset_chr(51,CF_NO_CSP)
+	MOT(51,1,0)
+	SE(1079,0)//スイッチ出てくるSE
+	CAM_move(10400,-9600,160,50,0)
+	CAM(600,70,160,25,205,50,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(50)
+
+	fade_in(100,30,0)
+	wait_fade()
+
+	MOT(50,6,0)
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	chr_pos(RAGNA,	10310,10580,0,180,2)
+	chr_pos(PARTNER,	10490,10580,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★中ボス①【モンブラン】を倒した』を立てる。
+	F_set(F3_03_KillBoss3_1)
+	//★モンブラン【戦わない】
+	F_set_note(-25,0)
+	
+	//ラグナメモ用////////////////////////////////////////
+	F_set(F3_22_M_KillMonb)
+	//ボスを倒してからスイッチを押すまでの間、一時的にフラグを下げる
+	
+	//2つ解除していた場合
+	if(F3_23_M_KillDygal && F3_24_M_KillTelmi && F3_22_M_KillMonb)
+	{
+		F_reset(F3_16_Switch2nd_1_1)
+		F_reset(F3_17_Switch2nd_1_2)
+		F_reset(F3_18_Switch2nd_2_1)
+		F_reset(F3_19_Switch2nd_2_2)
+		F_reset(F3_20_Switch2nd_3_1)
+		F_reset(F3_21_Switch2nd_3_2)
+	}
+	if(F3_23_M_KillDygal)
+	{
+		F_reset(F3_06_KillBoss3_2)	//ダイガルドを倒した
+		F_reset(F3_07_FlickSwitch2)	//スイッチ②を入れた
+	}
+	if(F3_24_M_KillTelmi)
+	{
+		F_reset(F3_08_KillBoss3_3)	//テルミドールを倒した
+		F_reset(F3_09_FlickSwitch3)	//スイッチ③を入れた
+	}
+
+	//ラグナメモ用
+	F_reset(F3_25_BattleBoss3_1)	//★中ボス①【モンブラン】との戦闘開始　を下げる
+	///////////////////////////////////////////////////////
+//ルックポイント
+	set_chr( 81,990,	-1,-1, 10400,9600,0,  	 0, 0202,2,"M3_51;")
+
+//エントリを差し替える
+	delete(90)
+	set_chr( 90,991,	5,7,     0,   0,  0,   180,0201,6,"<EV_STOP_01>")	//ストッパー：①エントリ 墓場終
+	workG(GW_WARP_FLAG,SET,0)//ワープ封じる。
+
+	fade_in(0,30,0)
+
+	EV_end()
+
+}
+
+
+//──────────────────────────────
+//▼墓地最奥のスイッチを入れる
+//──────────────────────────────
+//　　ボスマップの奥にあるスイッチを入れるとイベント発生。
+//　　マップ上のオブジェクトが何らかの変化を起こし、
+//　　スイッチが入ったのが視覚的に分かるようにする。
+//　　以下は１回目にスイッチを入れた時のパターン。
+//　　（３回目だった場合、玄関広間で道が開くシーンを挿入する）
+EV_3_09_FlickSwitch1
+{
+	EV_begin()
+
+	cross_fade(30)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	10300,9900,0,180,2)
+	chr_pos(PARTNER,	10500,9900,0,180,2)
+//	color(RAGNA,-1)
+//	color(PARTNER,-1)
+/*
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 10300,9900,0, 2,180,0, "")
+	set_chr(ALWEN,	1011,-1,-1, 10500,9900,0, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+*/
+
+	//カメラ初期位置
+	CAM_move(10330,-9660,100,0,0)
+	CAM(390,100,100,25,225,0,0)
+
+	wait(60)
+
+//	MES(RAGNA,"◆未入力項目\nオブジェクトが何らかの変化を起こし、\nスイッチが入ったのが視覚的に分かるようにする。",0)
+//	MES_close(RAGNA)
+
+//ＧＦ『★城：スイッチ①を入れた』を立てる。
+	F_set(F3_04_FlickSwitch1)
+
+
+	//ラグナメモ用////////////////////////////////////////
+	//下げてたフラグを戻す
+	if(F3_23_M_KillDygal)
+	{
+		F_set(F3_06_KillBoss3_2)	//ダイガルドを倒した
+		F_set(F3_07_FlickSwitch2)	//スイッチ②を入れた
+	}
+	if(F3_24_M_KillTelmi)
+	{
+		F_set(F3_08_KillBoss3_3)	//テルミドールを倒した
+		F_set(F3_09_FlickSwitch3)	//スイッチ③を入れた
+	}
+	///////////////////////////////////////////////////////
+
+/*
+	MES(RAGNA,"??W9『◆他の２スイッチＯＮ』\n『◆ダイガルドスイッチＯＮ』\n『◆テルミドールスイッチＯＮ』\n『◆フラグ変えない』",0)
+	wait_W(WK_YESNO)
+	MES_close(RAGNA)
+
+//─────────────────────
+	if(WK_YESNO==1)
+	{
+	//ＧＦ『★城：スイッチ②を入れた』を立てる。
+		F_set(F3_07_FlickSwitch2)
+	//ＧＦ『★城：スイッチ③を入れた』を立てる。
+		F_set(F3_09_FlickSwitch3)
+	}
+	else
+	if(WK_YESNO==2)
+	{
+	//ＧＦ『★城：スイッチ②を入れた』を立てる。
+		F_set(F3_07_FlickSwitch2)
+	}
+	else
+	if(WK_YESNO==3)
+	{
+	//ＧＦ『★城：スイッチ③を入れた』を立てる。
+		F_set(F3_09_FlickSwitch3)
+	}
+	else
+	if(WK_YESNO==4)
+	{
+	}
+//─────────────────────
+*/
+//本物のエントリに差し替える
+	delete(90)
+	set_chr( 90,990,	5,7,     0,   0,  0,   180,0201,6,"K1_15019;")	//①エントリ 墓場終
+	workG(GW_WARP_FLAG,SET,3)//ワープ解除（夜）。
+
+	if(F3_07_FlickSwitch2 && F3_09_FlickSwitch3)
+	{
+	//	//暗転
+		fade_in(100,30,0)
+		wait_fade()
+
+	//　　城－入口分岐（ev50103）へ。
+		workG(GW_ENTRY_EVENT,SET,1)
+		new_map(15010)
+
+	//	EV_end()
+	}
+	else
+	if(!F3_07_FlickSwitch2 && !F3_09_FlickSwitch3)
+	{
+		MES(RAGNA,"よし……\nこれで１つ目だな。",0)
+		MES(RAGNA,"残りの２つを解除すれば\n礼拝堂への道が開けるわけか。",0)
+		MES_close(RAGNA)
+
+		MES(PARTNER,"うむ、次に行くとしよう。",0)
+		MES_close(PARTNER)
+
+	//　　イベント終了、プレイヤー操作許可。
+		fade_in(100,30,0)
+		wait_fade()
+
+	//	delete(EVENT_RAGNA)
+	//	delete(ALWEN)
+
+		chr_pos(RAGNA,	10300,9900,0,180,2)
+		chr_pos(PARTNER,	10500,9900,0,180,2)
+		color(RAGNA,1)
+		color(PARTNER,1)
+
+		CAM_return(0)
+		wait(30)
+
+		fade_in(0,30,0)
+
+		EV_end()
+	}
+	else
+	{
+//		MES(RAGNA,"◆２つ目です。",0)
+//		MES_close(RAGNA)
+		MES(RAGNA,"これで２つ目か……",0)
+		MES(RAGNA,"よし、この調子で\n残りの１つも解除しちまおう。",0)
+		MES_close(RAGNA)
+
+		MES(PARTNER,"うむ、そうだな。",0)
+		MES_close(PARTNER)
+
+	//　　イベント終了、プレイヤー操作許可。
+		fade_in(100,30,0)
+		wait_fade()
+
+	//	delete(EVENT_RAGNA)
+	//	delete(ALWEN)
+	
+	 //既に地下水道のスイッチを入れている
+		 if(F3_09_FlickSwitch3)
+		 {
+		 	F_set(F3_16_Switch2nd_1_1)
+		 }
+		 //既にテラスのスイッチを入れている
+		 else
+		 if(F3_07_FlickSwitch2)
+		 {
+		 	F_set(F3_17_Switch2nd_1_2)
+		 }
+
+		chr_pos(RAGNA,	10300,9900,0,180,2)
+		chr_pos(PARTNER,	10500,9900,0,180,2)
+		color(RAGNA,1)
+		color(PARTNER,1)
+
+		CAM_return(0)
+		wait(30)
+
+		fade_in(0,30,0)
+
+		EV_end()
+	}
+
+}
+
+
+//──────────────────────────────
+//▼墓地最奥のスイッチを入れる．礼拝堂への道を開く．後
+//──────────────────────────────
+//　　画面切り替えして、再び墓地最奥。
+EV_3_16_OpenedChapel1
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	10300,9900,0,180,2)
+	chr_pos(PARTNER,	10500,9900,0,180,2)
+//	color(RAGNA,-1)
+//	color(PARTNER,-1)
+	KAO(RAGNA,"B","1","2")//
+
+/*
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 10300,9900,0, 2,180,0, "")
+	set_chr(ALWEN,	1011,-1,-1, 10500,9900,0, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+*/
+	//カメラ初期位置
+	CAM_move(10330,-9660,100,0,0)
+	CAM(390,100,100,25,225,0,0)
+
+	//フェードイン
+	fade_in(0,30,0)
+	wait_fade()
+
+	look_chr( PARTNER, RAGNA ,"Bone_Head")
+	wait(15)
+	MES(PARTNER,"これでようやく\n３つの仕掛けを解除した。",0)
+	MES(PARTNER,"最初の玄関広間に戻れば\n礼拝堂への道が開けているはずだ。",0)
+	MES_close(PARTNER)
+
+	look_chr( RAGNA, PARTNER ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(RAGNA,"B232BZ2","123","2")//
+	MES(RAGNA,"そうか……",0)
+	KAO(RAGNA,"12321Z4","321","2")//
+	MES(RAGNA,"もう時間もねぇ。\nとっとと戻るとしようぜ。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"うむ。",0)
+	MES_close(PARTNER)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+
+//	delete(EVENT_RAGNA)
+//	delete(ALWEN)
+
+	look_off(RAGNA)
+	look_del(RAGNA)
+	look_off(PARTNER)
+	look_del(PARTNER)
+	chr_pos(RAGNA,	10300,9900,0,180,2)
+	chr_pos(PARTNER,	10500,9900,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+
+
+
+EV_STOP_01
+{
+	TK_begin()
+	if( GW_MAN==1 )
+	{
+	//　　※ラグナ先頭
+		MES(RAGNA,"おっと……",0)
+		MES(RAGNA,"さっさと仕掛けってのを\n解除しねえとな。",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	{
+	//　　※アルウェン先頭
+		MES(PARTNER,"ふむ……",0)
+		MES(PARTNER,"まずは仕掛けを\n解除してしまおう。",0)
+		MES_close(PARTNER)
+		wait_MES(PARTNER)
+	}
+	chr_pos(PLAYER1,9418,12400,0,180,2)
+	chr_pos(PLAYER2,9418,12600,0,180,2)
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()	
+
+	TK_end()
+
+}
+
+//ゾンビプルプル音
+EV_476_loop_1
+{
+	wait(15)
+	SE(476,0)
+	wait(5)
+	EV("EV_476_loop_2")
+}
+
+EV_476_loop_2
+{
+	wait(15)
+	SE(476,0)
+	wait(5)
+	EV("EV_476_loop_1")
+}
+
+#EndScriptTable
+//====================================================================
+

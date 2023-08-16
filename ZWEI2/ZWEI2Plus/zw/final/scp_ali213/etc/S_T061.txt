@@ -1,0 +1,2445 @@
+//────────────────────────────────────────────────────────────
+//阿鲁迪亚
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆嘉修雷师傅（工房长）Gashrea")
+//──────────────────────────────
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_GASHREA
+{
+//F_set(F3_00_GoMoonCastle)
+
+	TK_begin()
+	F_set(202)
+
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(GASHREA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,GASHREA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,GASHREA)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GASHREA)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GASHREA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GASHREA)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GASHREA)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,GASHREA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		look_chr(GASHREA,PLAYER1,"Bone_Head")
+		//パ～ツが会っても処理に入らない
+		EV("TK_GASHREA")	
+		wait_EV("TK_GASHREA")
+		look_off(GASHREA)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		//梅尔塞迪克に乗り込む前 布兰迪山丘でショップ係
+		if(!F6_02_OnMeru)
+		{
+			look_chr(GASHREA,PLAYER1,"Bone_Head")
+			
+			VOICE(758,0)											//「よぉ、どうした？」
+			MES(GASHREA,"哟，怎么了？",0)
+//			MES(GASHREA,"嗯……怎么了。\n有什么需要吗？",0)
+			MES_close(GASHREA)
+			
+			//ショップ処理
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+			look_off(GASHREA)
+		}
+		//乗り込んだ後は工房に居る
+		else
+		{
+			MOT(GASHREA,52,15)
+			//初回
+			if(!FT_12_TalkGashrea)
+			{
+				EV("TK_GASHREA")	
+				wait_EV("TK_GASHREA")
+			}
+			else
+			{
+				look_chr(GASHREA,PLAYER1,"Bone_Head")
+				VOICE(758,0)											//「よぉ、どうした？」
+				MES(GASHREA,"哟，怎么了？",0)				
+//				MES(GASHREA,"嗯……怎么了。\n有什么需要吗？",0)
+				MES_close(GASHREA)
+				EV("SHOP_GASHREA_LOOP")	
+				wait_EV("SHOP_GASHREA_LOOP")
+				look_off(GASHREA)
+			}
+			MOT(GASHREA,150,15)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//初回
+		if(!FT_11_TalkTeoGash)
+		{
+			EV("TK_GASHREA")	
+			wait_EV("TK_GASHREA")
+		}
+		else
+		//以降
+		{
+//			VOICE(758,0)											//「よぉ、どうした？」
+//			MES(GASHREA,"哟，怎么了？",0)		
+		
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	if( F4_05_OnVillage2)
+	{
+		//初回
+		if(!F_GASHREA)
+		{
+			look_chr(GASHREA,PLAYER1,"Bone_Head")
+			MES(GASHREA,"喂，你们干什么啊。\n来看我工作的吗？",0)
+			MES(GASHREA,"哼，我可是通宵\n都在紧张工作啊。\n有话就快说！",0)
+			MES_close(GASHREA)
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+			look_off(GASHREA)
+		}
+		else
+		//以降
+		{
+			look_chr(GASHREA,PLAYER1,"Bone_Head")
+			MES(GASHREA,"我可是通宵\n都在紧张工作啊。",0)
+			MES(GASHREA,"有话就快说！",0)
+			MES_close(GASHREA)
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+			look_off(GASHREA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		MOT(GASHREA,52,15)
+		//初回
+		if(!FT_07_TalkGashrea)
+		{
+			EV("TK_GASHREA")	
+			wait_EV("TK_GASHREA")
+		}
+		else
+		//以降
+		{
+//			VOICE(758,0)											//「よぉ、どうした？」
+//			MES(GASHREA,"哟，怎么了？",0)
+					
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+		}
+		MOT(GASHREA,150,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		MOT(GASHREA,52,15)
+
+		if(!F3_00_GoMoonCastle)
+			EV_stop("TENTEN_GASHREA")
+
+		EV("SHOP_GASHREA_LOOP")	
+		wait_EV("SHOP_GASHREA_LOOP")
+		MOT(GASHREA,150,15)
+
+		if(!F3_00_GoMoonCastle)
+			EV("TENTEN_GASHREA")
+	}
+	else
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		MOT(GASHREA,52,15)
+		//嘉修雷にパ～ツを見せたことが無い场合
+		if(!FT_01_GashreaTp)
+		{
+			EV("LOOK_PART_GASHREA")	
+			wait_EV("LOOK_PART_GASHREA")
+		}
+		//以降
+		else
+		{
+//			VOICE(758,0)											//「よぉ、どうした？」
+//			MES(GASHREA,"哟，怎么了？",0)		
+		
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+		}
+		MOT(GASHREA,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		//嘉修雷にパ～ツを見せたことが無い场合
+		if(!FT_01_GashreaTp)
+		{
+			EV("LOOK_PART_GASHREA")	
+			wait_EV("LOOK_PART_GASHREA")
+		}
+		//以降
+		else
+		{
+//			VOICE(758,0)											//「よぉ、どうした？」
+//			MES(GASHREA,"哟，怎么了？",0)		
+		
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		MOT(GASHREA,52,15)
+
+		//初回
+		if(!FT_01_TalkGashrea)
+		{
+			EV("TK_GASHREA")	
+			wait_EV("TK_GASHREA")
+		}
+		else
+		//嘉修雷にパ～ツを見せたことが無い场合
+		if(!FT_01_GashreaTp)
+		{
+			EV("LOOK_PART_GASHREA")	
+			wait_EV("LOOK_PART_GASHREA")
+		}
+		//以降
+		else
+		{
+//			VOICE(758,0)											//「よぉ、どうした？」
+//			MES(GASHREA,"哟，怎么了？",0)		
+		
+			EV("SHOP_GASHREA_LOOP")	
+			wait_EV("SHOP_GASHREA_LOOP")
+		}
+		MOT(GASHREA,2,15)
+	}
+	TK_end()
+	F_reset(202)
+}
+
+
+//──────────────────────────────
+//ショップ処理
+//──────────────────────────────
+//　　※初めて石版を見せる処理を行った後で、
+//　　　未改造之石版を持っている场合、まず選択肢を表示する。
+//　　※フラグ□之场合は専用処理（フラグ□を参照）
+//　　※親方が振り向く前に選択肢を出す。
+//──────────────────────────────
+SHOP_GASHREA_LOOP
+{
+	//──────────────────────────────
+	//▼□梅尔塞迪克突入まではアイテム販売係を兼任
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		//──────────────────────────────
+		//　　※パ～ツを持っている场合
+		//──────────────────────────────
+		if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0 || IT133>0)
+		{
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,4)//【取消】
+			MES_pos(PLAYER1,"??W9【对话】\n【买东西】\n【改造安卡基亚】\n【取消】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("□話す")
+			if(WK_YESNO==1)
+			{
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+				
+				//梅尔塞迪克突入後
+				if(F6_02_OnMeru)
+				{
+					//親方を話しかける前之向きに戻すため一旦処理を終了
+					TK_end()
+					//すぐに再開
+					TK_begin()
+				}
+				
+				loop
+			}
+		//──────────────────────────────
+		//	name("□買ぶをする")
+			else
+			if(WK_YESNO==2)
+			{
+		//　　工房ショップ処理を行う
+				shop_open(11)
+				wait_W(WK_YESNO)
+				
+				if(IT108>0 && IT105>0 && IT106>0 && IT107>0)//工房ガジェット売り切れ判定。
+					F_set(FT_FF_GadjetSoldout)
+
+				loop
+			}
+		//──────────────────────────────
+		//	name("□安卡基亚改造を頼む")
+		//　　ギア改造処理に飛ぶ
+			else
+			if(WK_YESNO==3)
+			{
+				//梅尔塞迪克突入後
+				if(F6_02_OnMeru)
+				{
+					rot_chr(GASHREA,30,PLAYER1)
+				}
+
+				EV("DATA_PARTS")
+				wait_EV("DATA_PARTS")
+				
+				EV("TUNE_PARTS_LOOP")
+				wait_EV("TUNE_PARTS_LOOP")
+				
+				//梅尔塞迪克突入後
+				if(F6_02_OnMeru)
+				{
+					//親方を話しかける前之向きに戻すため一旦処理を終了
+					TK_end()
+					//すぐに再開
+					TK_begin()
+				}
+
+				//※改造をしなかったらル～プする
+				if(F_RAGNA)
+				{
+					loop
+				}
+			}
+		//──────────────────────────────
+		//	name("□やめる")
+		//　　会話処理終了
+			else
+			{
+				VOICE(762,0)												//「へっ、また来やがれ」
+				MES(GASHREA,"嘿，再来啊。",0)
+//				MES(GASHREA,"嘿，是吗。\n再来啊！",0)
+				MES_close(GASHREA)
+			}
+		//──────────────────────────────
+		}
+	//　　※パ～ツを持ってない场合
+		else
+		{
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,3)//【取消】
+			MES_pos(PLAYER1,"??W9【对话】\n【买东西】\n【取消】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("□話す")
+			if(WK_YESNO==1)
+			{
+			//　　通常会話処理に飛ぶ
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+				loop
+			}
+		//──────────────────────────────
+		//	name("□買ぶをする")
+			else
+			if(WK_YESNO==2)
+			{
+		//　　工房ショップ処理を行う
+				shop_open(11)
+				wait_W(WK_YESNO)
+
+				if(IT108>0 && IT105>0 && IT106>0 && IT107>0)
+					F_set(FT_FF_GadjetSoldout)
+
+				loop
+			}
+		//──────────────────────────────
+		//	name("□やめる")
+		//　　会話処理終了
+			else
+			{
+				VOICE(762,0)												//「へっ、また来やがれ」
+				MES(GASHREA,"嘿，再来啊。",0)
+//				MES(GASHREA,"嘿，是吗。\n再来啊！",0)
+				MES_close(GASHREA)
+			}
+		//──────────────────────────────
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩ではアイテム販売係を兼任
+	//──────────────────────────────
+	if( F4_09_GoShrineMia && !F5_00_HearLunar  )
+	{
+		//　　※パ～ツを持っている场合
+		if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0 || IT133>0)
+		{
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,4)//【取消】
+			MES_pos(PLAYER1,"??W9【对话】\n【买东西】\n【改造安卡基亚】\n【取消】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("□話す")
+			if(WK_YESNO==1)
+			{
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+				
+				//親方を話しかける前之向きに戻すため一旦処理を終了
+				TK_end()
+				//すぐに再開
+				TK_begin()
+				loop
+			}
+		//──────────────────────────────
+		//	name("□買ぶをする")
+			else
+			if(WK_YESNO==2)
+			{
+		//　　工房ショップ処理を行う
+				shop_open(11)
+				wait_W(WK_YESNO)
+
+				if(IT108>0 && IT105>0 && IT106>0 && IT107>0)
+					F_set(FT_FF_GadjetSoldout)
+
+				loop
+			}
+		//──────────────────────────────
+		//	name("□安卡基亚改造を頼む")
+		//　　ギア改造処理に飛ぶ
+			else
+			if(WK_YESNO==3)
+			{
+				rot_chr(GASHREA,30,PLAYER1)
+
+				EV("DATA_PARTS")
+				wait_EV("DATA_PARTS")
+				
+				EV("TUNE_PARTS_LOOP")
+				wait_EV("TUNE_PARTS_LOOP")
+				
+				//親方を話しかける前之向きに戻すため一旦処理を終了
+				TK_end()
+				//すぐに再開
+				TK_begin()
+
+				//※改造をしなかったらル～プする
+				if(F_RAGNA)
+				{
+					loop
+				}
+			}
+		//──────────────────────────────
+		//	name("□やめる")
+		//　　会話処理終了
+			else
+			{
+				VOICE(762,0)												//「へっ、また来やがれ」
+				MES(GASHREA,"嘿，再来啊。",0)
+//				MES(GASHREA,"嘿，是吗。\n再来啊！",0)
+				MES_close(GASHREA)
+			}
+		//──────────────────────────────
+		}
+	//　　※パ～ツを持ってない场合
+		else
+		{
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,3)//【取消】
+			MES_pos(PLAYER1,"??W9【对话】\n【买东西】\n【取消】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("□話す")
+			if(WK_YESNO==1)
+			{
+			//　　通常会話処理に飛ぶ
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+				loop
+			}
+		//──────────────────────────────
+		//	name("□買ぶをする")
+			else
+			if(WK_YESNO==2)
+			{
+		//　　工房ショップ処理を行う
+				shop_open(11)
+				wait_W(WK_YESNO)
+
+				if(IT108>0 && IT105>0 && IT106>0 && IT107>0)
+					F_set(FT_FF_GadjetSoldout)
+
+				loop
+			}
+		//──────────────────────────────
+		//	name("□やめる")
+		//　　会話処理終了
+			else
+			{
+				VOICE(762,0)												//「へっ、また来やがれ」
+				MES(GASHREA,"嘿，再来啊。。",0)
+							
+//				MES(GASHREA,"嘿，是吗。\n再来啊！",0)
+				MES_close(GASHREA)
+			}
+		//──────────────────────────────
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※镇之裏門辺りにいる。
+	if( F3_00_GoMoonCastle && !F4_00_StartSolo )
+	{
+		if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0 || IT133>0)
+		{
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,3)//【取消】
+			MES_pos(PLAYER1,"??W9【搭话】\n【改造安卡基亚】\n【取消】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+			
+		//──────────────────────────────
+		//	name("□話しかける")
+		//──────────────────────────────
+			if(WK_YESNO==1)
+			{
+			//　　通常会話処理に飛ぶ
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+
+				//親方を話しかける前之向きに戻すため一旦処理を終了
+				TK_end()
+				//すぐに再開
+				TK_begin()
+				
+				loop
+			}
+		//──────────────────────────────
+		//	name("□安卡基亚改造を頼む")
+		//──────────────────────────────
+			else
+			if(WK_YESNO==2)
+			{
+				rot_chr(GASHREA,30,PLAYER1)
+				MES(GASHREA,"话说回来……",0)
+				MES(GASHREA,"看样子你带着\n魔宝石零件啊。",0)
+				MES(GASHREA,"正好我把工具也带来了。",0)
+				MES(GASHREA,"可以把这个零件\n组装到安卡基亚上……\n怎么样，要不要试试？",0)
+				MES_close(GASHREA)
+
+			//　　□通常之パ～ツ処理之選択肢へ。
+				EV("TUNE_PARTS_LOOP")
+				wait_EV("TUNE_PARTS_LOOP")
+				
+				//親方を話しかける前之向きに戻すため一旦処理を終了
+				TK_end()
+				//すぐに再開
+				TK_begin()
+
+				//※改造をしなかったらル～プする
+				if(F_RAGNA)
+				{
+					loop
+				}
+			}
+		//	name("□やめる")
+			else
+			{
+				VOICE(762,0)											//「へっ、また来やがれ」
+			
+				//　　会話処理終了
+			}
+		}
+		else
+		{
+		//　　通常会話処理に飛ぶ
+			EV("TK_GASHREA")
+			wait_EV("TK_GASHREA")
+		}
+	}
+	//──────────────────────────────
+	//それ以外。（既に一度パ～ツも見せている）
+	//──────────────────────────────
+	else
+	{
+		//　　※パ～ツを持っている场合
+		//振り向かない
+		if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0 || IT133>0)
+		{
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,3)//【取消】
+			MES_pos(PLAYER1,"??W9【搭话】\n【改造安卡基亚】\n【取消】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("□話しかける")
+		//──────────────────────────────
+			if(WK_YESNO==1)
+			{
+			//　　通常会話処理に飛ぶ
+				EV("TK_GASHREA")
+				wait_EV("TK_GASHREA")
+
+				//親方を話しかける前之向きに戻すため一旦処理を終了
+				TK_end()
+				//すぐに再開
+				TK_begin()
+				loop
+			}
+		//──────────────────────────────
+		//	name("□安卡基亚改造を頼む")
+		//──────────────────────────────
+			else
+			if(WK_YESNO==2)
+			{
+				//②と□は首だけ振り向く
+				if( F1_15_GoVillage && !F2_00_GoForest)
+					look_chr(GASHREA,PLAYER1,"Bone_Head")
+				else
+				if( F5_00_HearLunar && !F6_00_GoToMeru)
+					look_chr(GASHREA,PLAYER1,"Bone_Head")
+				else
+					rot_chr(GASHREA,30,PLAYER1)
+				
+				//⑤は···を解除
+				if( F2_14_TalkEnemy && !F3_00_GoMoonCastle)
+					EV_stop("TENTEN_GASHREA")
+				
+				EV("DATA_PARTS")
+				wait_EV("DATA_PARTS")
+				
+			//　　通常改造処理に飛ぶ
+				EV("TUNE_PARTS_LOOP")
+				wait_EV("TUNE_PARTS_LOOP")
+				
+				
+				//②と□は首を戻す
+				if( F1_15_GoVillage && !F2_00_GoForest)
+					look_off(GASHREA)
+				else
+				if( F5_00_HearLunar && !F6_00_GoToMeru)
+					look_chr(GASHREA,TEO,"Bone_Head")
+
+				//⑤は···を再開
+				if( F2_14_TalkEnemy && !F3_00_GoMoonCastle)
+					EV("TENTEN_GASHREA")
+
+				//親方を話しかける前之向きに戻すため一旦処理を終了
+				TK_end()
+				//すぐに再開
+				TK_begin()
+
+				//※改造をしなかったらル～プする
+				if(F_RAGNA)
+				{
+					loop
+				}
+			}
+		//	name("□やめる")
+			else
+			{
+				VOICE(762,0)											//「へっ、また来やがれ」
+			
+				//　　会話処理終了
+			}
+		}
+		//パ～ツが無い场合は通常之会話処理
+		else
+		{
+			EV("TK_GASHREA")
+			wait_EV("TK_GASHREA")
+		}
+	}
+}
+
+//──────────────────────────────
+//▼親方、会話処理
+//──────────────────────────────
+TK_GASHREA
+{
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※熊猫楼、カウンタ～席にいる。
+	if( F6_05_EndSixth )
+	{
+		if(!FT_13_TalkGashrea)
+		{
+		//　　※初回イベント。
+			MES(GASHREA,"哟，是你们啊。",0)
+			MES_close(GASHREA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"师傅……\n我受您很多照顾呢。",0)
+			MES(RAGNA,"您帮我改造了安卡基亚，\n还帮我修理了特里斯坦号……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"那个，也让我\n表示一下谢意吧。",0)
+			MES(PARTNER,"实在是非常感谢。",0)
+			MES_close(PARTNER)
+
+		//	name2(GASHREA)
+			MES(GASHREA,"……呼…………",0)
+			MES(GASHREA,"我这个人笨嘴拙舌，也不打算说什么了。",0)
+			MES(GASHREA,"你们年轻人想做什么都是自己的事情。\n……随兴地去做吧。",0)
+			MES(GASHREA,"不过呢，\n可别忘了我教给你们的东西哦？",0)
+			MES_close(GASHREA)
+
+		//　　拉古那たちに？エモ～ション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			EMO(PET,EMO_HATENA)
+			wait(30)
+		
+			MES(GASHREA,"嘿，结果还是\n说了不少嘛。",0)
+			MES(GASHREA,"我可没说\n你们可以松懈下来了哦。",0)
+			MES_close(GASHREA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊啊，这么说来\n我们常被您训斥呢……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PET,"呵呵，是有这么回事呢。",0)
+			MES_close(PET)
+
+		//	name2(GASHREA)
+			MES(GASHREA,"……听懂了的话\n就赶紧到飞机场去。",0)
+			MES(GASHREA,"梅丽安他们都在等着呢。",0)
+			MES_close(GASHREA)
+			
+			F_set(FT_13_TalkGashrea)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+			MES(GASHREA,"我这个人笨嘴拙舌，也不打算说什么了。",0)
+			MES(GASHREA,"你们要怎么生活\n那是你们自己的事。",0)
+			MES(GASHREA,"好了，赶快去吧，\n随你们喜欢的去做。",0)
+			MES_close(GASHREA)
+		//──────────────────────────────
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※布兰迪山丘で作業している。
+	//　　※梅ンで一度断った後之メッセ～ジ。
+	//　　※こ之タイミングではショップ係です。
+	if( F6_00_GoToMeru )
+	{
+		if(F6_01_RepairPlane && !F6_02_OnMeru)
+		{
+			MES(GASHREA,"准备好了的话，\n就跟梅丽安说一声。",0)
+			MES(GASHREA,"她从刚才就等着了。",0)
+			MES_close(GASHREA)
+		}
+	//──────────────────────────────
+	//　　※梅尔塞迪克突入後は工房に配置される。
+	//　　　工房机前に立って、空域地図之ようなも之を広げている。
+	//　　　（無ければノ～トで代用）
+		else
+		{
+			if(!FT_12_TalkGashrea)
+			{
+				look_chr(GASHREA,COLIN,"Bone_Head")
+				MES(GASHREA,"P1S4啊？　啥？　８２，４５，４５？",0)
+				MES_close(GASHREA)
+
+			//	name2(COLIN)
+				MES(COLIN,"P1S4８、８２，４５，４７！",0)
+				MES_close(COLIN)
+
+			//	name2(GASHREA)
+				MES(GASHREA,"P1S4是８２，４５，４７没错吧！",0)
+				look_off(GASHREA)
+				MES(GASHREA,"P1S4你这小子，给我\n大点声报告啊。",0)
+				MES_close(GASHREA)
+				
+				//★柯林
+				F_set_note(COLIN,-1)
+				F_set(FT_12_TalkGashrea)
+			}
+			else
+			{
+				if(!F_GASHREA)
+				{
+				//　　※振り返らない。
+					MES(GASHREA,"虽然现在的距离是目测的，\n但定点精确计算的话，\n应该能计算出速度。",0)
+					MES(GASHREA,"只是，外围气流的大小\n无法确定。",0)
+					MES(GASHREA,"风速也还在\n继续上升啊……",0)
+					MES_close(GASHREA)
+					
+					F_set(GASHREA)
+				}
+			//　　★繰り返し
+				else
+				{
+					rot_chr(GASHREA,30,PLAYER1)
+					MES(GASHREA,"……话先说在前面，\n要是敢做傻事\n我可不饶你。",0)
+					MES(GASHREA,"带上你妹妹，\n两个人一起给我好好地回来。",0)
+					MES(GASHREA,"我会在这里等着的。",0)
+					MES_close(GASHREA)
+				}
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※熊猫楼カウンタ～席で提欧と飲んでいる。
+	//　　※振りかえらない。
+	//　　※初回は提欧之メッセ～ジが起動する。
+	if( F5_00_HearLunar )
+	{
+		if(!FT_11_TalkTeoGash)
+		{
+			EV("EV_TALK_TG")
+			wait_EV("EV_TALK_TG")
+			
+			F_set(FT_11_TalkTeoGash)
+		}
+		//　　★繰り返し
+		else
+		{
+		//　　※振りかえらない。			
+//			look_chr(GASHREA,TEO,"Bone_Head")
+			MES(GASHREA,"我也是该打算隐退，\n把事情交给年轻人们去做了。",0)
+			MES(GASHREA,"嘿，不过还有些危险的事情，\n现在还不能撒手不管。",0)
+			MES(GASHREA,"哼哼，你要引退\n还早得很啊。",0)
+			MES_close(GASHREA)
+//			look_off(GASHREA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//　　※工房奥之エンジン之嚯に向いている。
+	if( F4_09_GoShrineMia )
+	{
+		if(!F_GASHREA)
+		{
+			MES(GASHREA,"老子可是通宵地\n都在拼命工作啊。",0)
+			MES(GASHREA,"啥？　你问我通宵干什么了？",0)
+			MES(GASHREA,"你奶奶的……\n我没必要\n一件一件告诉你吧！",0)
+			MES_close(GASHREA)
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（好，好像真的是\n  很拼命啊……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□艾雯先頭")
+				MES(PARTNER,"（唔，这就是\n  所谓的很拼命吗……）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			F_set(GASHREA)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(GASHREA,"靠，老子可是通宵\n都在拼命工作啊。",0)
+			MES(GASHREA,"啥？　你问我通宵干什么了？",0)
+			MES(GASHREA,"你奶奶的……\n我没必要\n一件一件都告诉你吧！",0)
+			MES_close(GASHREA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※工房、エンジン之前に立っている。
+	//　　※初回イベント
+	if( F4_00_StartSolo )
+	{
+		rot_chr(GASHREA,30,RAGNA)
+		if(!FT_07_TalkGashrea)
+		{
+		//──────────────────────────────
+		//	name("□昴が居ない场合")
+			if(!F4_02_GoVillage2)
+			{
+				MES(GASHREA,"……别一副无精打采的样子。",0)
+		//		MES(GASHREA,"P1S4你这混蛋，别惹人担心啊。\n要坚定地前进！",0)
+				MES(GASHREA,"真是的，虽然我不知道发生了什么事，\n不过你还是要坚定地前进啊！",0)
+				MES_close(GASHREA)
+				rot(GASHREA,30,15)
+			}
+		//──────────────────────────────
+			else
+			{
+				MES(GASHREA,"我从菲奥娜小姐那里\n听说了大概的事情。",0)
+				MES(GASHREA,"你也不容易啊。",0)
+				MES_close(GASHREA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哈哈……没什么大不了的。",0)
+				MES(RAGNA,"不过是皮肉伤而已。",0)
+				MES_close(RAGNA)
+
+			//	name2(GASHREA)
+				MES(GASHREA,"……唔，是这样吗。",0)
+				MES_close(GASHREA)
+
+			//　　親方、向きを戻す。
+				rot(GASHREA,30,270)
+				MES(GASHREA,"算了，我还是\n做我的工作去吧。",0)
+				MES(GASHREA,"什么魔物啊吸血鬼之类的，\n我可不在行。",0)
+				MES_close(GASHREA)
+				
+				F_set(FT_07_TalkGashrea)
+			}
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			MES(GASHREA,"嘿，魔物啊吸血鬼什么的，\n我是门外汉。",0)
+			MES(GASHREA,"我能做的，\n也就是调试机械之类的事。\n这种工作就交给我吧。",0)
+			MES_close(GASHREA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※镇之裏門辺りにいる。
+	if( F3_00_GoMoonCastle )
+	{
+		rot_chr(GASHREA,30,PLAYER1)
+		MES(GASHREA,"镇上的情况有些奇怪，\n所以我就过来看看……",0)
+		MES(GASHREA,"这到底是怎么回事……",0)
+		MES_close(GASHREA)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※工房、机之前に立っている。
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(GASHREA,30,PLAYER1)
+		EV_stop("TENTEN_GASHREA")
+		if(!F_GASHREA)
+		{
+			MES(GASHREA,"哼，那个管家小子。\n那么讨人厌的话\n也能说得出口。",0)
+			MES(GASHREA,"不过，这时候没有连络航班\n还真是奇怪啊……",0)
+			MES_close(GASHREA)
+
+		//　　親方にＰＡ。
+			EMO(GASHREA,EMO_PA)
+			wait(30)
+		//　　顔を背ける。
+			look(GASHREA,"Bone_Head",0,		0,2,0,			0,30,0)
+
+			MES(GASHREA,"……不，没什么。",0)
+			look(GASHREA,"Bone_Head",0,		0,2,0,			0,0,0)
+			MES(GASHREA,"哼，只是在说那个\n净会装蒜的小毛孩罢了。",0)
+			MES_close(GASHREA)
+			F_set(GASHREA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(GASHREA,"呼……\n最近，不管是哪一边\n都净是火药味啊。",0)
+			MES(GASHREA,"真是的，这个也好那个也好……\n都只是妨碍我工作而已。",0)
+			MES_close(GASHREA)
+		}
+		EV("TENTEN_GASHREA")
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※工房内で仕事をしてる。（啊ちこち行ったり来たり）
+	if( F2_00_GoForest )
+	{
+		if(!F_GASHREA)
+		{
+			rot_chr(GASHREA,30,RAGNA)
+			MES(GASHREA,"这么说来，\n我从梅丽安那里听说了……",0)
+			MES(GASHREA,"坠落的飞机上\n好像是装着\n飞机的新型螺旋桨吧？",0)
+			MES_close(GASHREA)
+
+			MES(RAGNA,"啊啊，算是吧。",0)
+			MES(RAGNA,"还好螺旋桨没事，\n这可是不幸中的万幸了。",0)
+			MES_close(RAGNA)
+
+			MES(GASHREA,"嘿，这个先不说，\n崇拜品牌也要适度哦。",0)
+			MES(GASHREA,"如果是开飞机的人，\n比起这些细枝末节更应该注意整体。",0)
+			MES(GASHREA,"说到机体性能，\n如何取得平衡才是最重要的。",0)
+			MES_close(GASHREA)
+
+			MES(RAGNA,"啊啊，我也不是特别拘泥于\n飞机啦。",0)
+			MES(RAGNA,"我只是考虑\n什么样的配置\n对特里斯坦号来说才是最好的而已。",0)
+			MES(RAGNA,"然后，从螺旋桨来说的话，\n飞机的新型\n是最合适的，仅此而已。",0)
+			MES(RAGNA,"就是因为这样，所以它再怎么贵\n我也还是想装。",0)
+			MES_close(RAGNA)
+
+			MES(GASHREA,"唔……原来如此。",0)
+			MES(GASHREA,"哼哼……\n这年头的年轻人常有这种毛病呢\n我还以为你也是崇拜品牌。",0)
+			MES(GASHREA,"不过，看来是比这还难办的\n飞机狂人啊。",0)
+			MES_close(GASHREA)
+
+			MES(RAGNA,"嘿嘿，见笑了。",0)
+			MES_close(RAGNA)
+
+			F_set(GASHREA)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			rot_chr(GASHREA,30,RAGNA)
+			MES(GASHREA,"哼哼……\n这年头的年轻人常有这种毛病呢\n我还以为你也是崇拜品牌。",0)
+			MES(GASHREA,"不过，看来是比这还难办的\n飞机狂人啊。",0)
+			MES_close(GASHREA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※工房、エンジン之前に立っている。
+	if( F1_15_GoVillage )
+	{
+		look_chr(GASHREA,PLAYER1,"Bone_Head")
+		if(!F_GASHREA)
+		{
+			MES(GASHREA,"啊……你们干啥呢。\n怎么随随便便就进来了……",0)
+			MES(GASHREA,"这是调整中的引擎。\n……别乱碰。",0)
+			MES(GASHREA,"只要敢稍微碰一下，\n我也会拿扳手敲你们的手的。",0)
+			MES_close(GASHREA)
+
+			F_set(GASHREA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(GASHREA,"如果有什么需要，\n就跟梅丽安说一声吧。",0)
+			MES(GASHREA,"别来妨碍我工作！",0)
+			MES_close(GASHREA)
+		}
+		look_off(GASHREA)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※工房内で仕事をしてる。（啊ちこち行ったり来たり）
+	if( F1_01_GameStart )
+	{
+	//　　※初回イベント。
+	//　　　こ之タイミングなら、こ之イベントが最優先です。
+	//　　親方、拉古那に向く。
+		if(!FT_01_TalkGashrea)
+		{
+			MOT(GASHREA,52,15)
+			rot_chr(GASHREA,30,RAGNA)
+			MES(GASHREA,"嗯，是你吗？\n梅丽安说的那个\n开飞机的……",0)
+			MES(GASHREA,"P1S4──你这白痴！",0)
+			MES(GASHREA,"居然在这么晴朗的日子坠机，\n这就是你不专心的证据。",0)
+			MES(GASHREA,"我看你是得意忘形，\n到处东张西望了吧。",0)
+			MES_close(GASHREA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"不，不是这么回事啦。\n那个，其实是发生了点事情。",0)
+			MES(RAGNA,"……不过，中途被转移了注意力\n大意了起来，这倒是事实……",0)
+			MES_close(RAGNA)
+
+		//	name2(GASHREA)
+			MES(GASHREA,"哼，果然就是这么回事嘛。",0)
+			MES(GASHREA,"真是的，最近的年轻人\n就知道做些无用的辩解……",0)
+			MES(GASHREA,"下次如果还敢\n在这里说些浅薄的话，\n我可是会不给面子直接揍你一顿的。",0)
+			MES(GASHREA,"你给我做好觉悟。",0)
+			MES_close(GASHREA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，是是……我会注意的。\n（还真是个严厉的师傅啊……）",0)
+			MES_close(RAGNA)
+			//★親方【飞机场之主】
+			F_set_note(GASHREA,0)
+			
+			F_set(FT_01_TalkGashrea)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			rot_chr(GASHREA,30,PLAYER1)
+			if(!F_GASHREA)
+			{
+				MES(GASHREA,"从前，开飞机\n可是要赌上性命的。",0)
+				MES(GASHREA,"正因如此，现在飞机才能\n自由地在空中盘旋……",0)
+				MES(GASHREA,"飞机这东西，\n可不是随随便便就能开的。",0)
+				MES(GASHREA,"真是的，最近的年轻人啊……",0)
+				MES_close(GASHREA)
+
+				F_set(GASHREA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(GASHREA,"这里是我的飞机场。",0)
+				MES(GASHREA,"要是敢做什么蠢事的话、\n我可是会毫不留情地揍你一顿。\n你给我好好记着。",0)
+				MES_close(GASHREA)
+			}
+		}
+	}
+	
+}
+
+//──────────────────────────────
+//改造パ～ツを見せてない時は、初めて改造パ～ツを見せる処理
+//──────────────────────────────
+LOOK_PART_GASHREA
+{
+	//──────────────────────────────
+	//▼親方に初めて石版を見せる処理
+	//　　※石版を持っている状態で親方に話しかけると、
+	//　　　１回だけこ之処理を挟む。
+	//		一番遅いタイミングで炎パ～ツ入手時？
+	//──────────────────────────────
+	if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0 || IT133>0)
+	{
+		rot_chr(GASHREA,30,PLAYER1)
+		
+		MES(GASHREA,"哦……\n你带着有趣的东西呢。",0)
+		MES(GASHREA,"这不是用魔宝石\n造的零件吗？",0)
+		MES_close(GASHREA)
+
+	//　　拉古那たちに？エモ～ション。
+		EMO(RAGNA,EMO_HATENA)
+		EMO(PARTNER,EMO_HATENA)
+		wait(30)
+		
+		if(IT128>0 )
+		{
+			MES(RAGNA,"呃，是说这个『Ａ零件』吗？",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(IT129>0 )
+		{
+			MES(RAGNA,"呃，是说这个『Ｂ零件』吗？",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(IT130>0 )
+		{
+			MES(RAGNA,"呃，是说这个『Ｃ零件』吗？",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(IT131>0 )
+		{
+			MES(RAGNA,"呃，是说这个『Ｄ零件』吗？",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(IT132>0 )
+		{
+			MES(RAGNA,"呃，是说这个『Ｅ零件』吗？",0)
+			MES_close(RAGNA)
+		}
+		else
+		if(IT133>0 )
+		{
+			MES(RAGNA,"呃，是说这个『Ｆ零件』吗？",0)
+			MES_close(RAGNA)
+		}
+	//	name2(GASHREA)
+		MES(GASHREA,"啊啊，听说这附近\n从前出产具有强大力量的魔宝石。",0)
+		MES(GASHREA,"用这种魔宝石制造的零件\n就叫『魔宝零件』。",0)
+		MES_close(GASHREA)
+
+		//──────────────────────────────
+		//未改造之最弱パ～ツ之説明
+		EV("DATA_PARTS")
+		wait_EV("DATA_PARTS")
+		//改造之実行処理
+		EV("TUNE_PARTS_LOOP")
+		wait_EV("TUNE_PARTS_LOOP")
+		//──────────────────────────────
+	//	嘉修雷に改造パ～ツを見せた
+		F_set(FT_01_GashreaTp)
+		
+	//	梅丽安に改造パ～ツを見せた初回　もセット
+		F_set(FT_01_MilliamTp)
+	}
+	//改造アイテムがない時は通常会話へ飛ぶ
+	else
+	{
+		EV("TK_GASHREA")	
+		wait_EV("TK_GASHREA")	
+	}
+}
+
+//──────────────────────────────
+//▼親方、所持している最弱パ～ツ之解説
+//──────────────────────────────
+DATA_PARTS
+{
+//──────────────────────────────
+//	name("□未改造之最弱パ～ツについて、解説を聞いたことがない场合")
+//──────────────────────────────
+	if(!FT_01_GashreaData)//FT_01_GashreaDataは、パ～ツ入手時に初期化すること！
+	{
+	//──────────────────────────────
+	//初めて改造パ～ツを見せた時
+	//──────────────────────────────
+		if(!FT_01_GashreaTp)
+		{
+			//──────────────────────────────
+		//	name("□未改造之最弱パ～ツが強化パ～ツ１")
+			if(IT128>0)
+			{
+				MES(GASHREA,"这东西，看起来\n像是什么魔法装置的部件……",0)
+				MES(GASHREA,"唔，调试一下的话\n应该还能用吧。",0)
+				MES_close(GASHREA)
+			}
+		//	name("□未改造之最弱パ～ツがフックパ～ツ")
+			else
+			if(IT129>0)
+			{
+				MES(GASHREA,"这东西，看起来\n像是工作装置的一部分……",0)
+				MES(GASHREA,"应该是在魔法工房之类的地方使用的吧。",0)
+				MES(GASHREA,"唔，调试一下的话\n应该还能用吧。",0)
+				MES_close(GASHREA)
+			}
+		//	name("□未改造之最弱パ～ツが強化パ～ツ２")
+			else
+			if(IT130>0)
+			{
+				MES(GASHREA,"这东西，看起来\n像是辅助装置……",0)
+				MES(GASHREA,"是组装到里面来使用的类型吧。",0)
+				MES(GASHREA,"唔，调试一下的话\n应该还能用吧。",0)
+				MES_close(GASHREA)
+			}
+		//	name("□未改造之最弱パ～ツがバ～ニングパ～ツ")
+			else
+			if(IT131>0)
+			{
+				MES(GASHREA,"这是……\n什么东西的内燃机吗？",0)
+				MES(GASHREA,"好像是魔法驱动的引擎吧\n似乎有听说过……",0)
+				MES(GASHREA,"唔，调试一下的话\n应该还能用吧。",0)
+				MES_close(GASHREA)
+			}
+		//	name("□未改造之最弱パ～ツがグライドパ～ツ（※多分未使用になる選択肢）")
+			else
+			if(IT132>0)
+			{
+				MES(GASHREA,"这，这不是……\n喷射推进装置吗？",0)
+				MES_close(GASHREA)
+
+			//　　拉古那たちに？エモ～ション。
+				EMO(RAGNA,EMO_HATENA)
+
+				//露がいる
+				if(F5_00_HearLunar)
+					EMO(PET,EMO_HATENA)
+				
+				//艾雯が居る
+				if(F6_00_GoToMeru)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//奥蒂莎が居る
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//艾雯が居る
+				if(F4_09_GoShrineMia && !F5_00_HearLunar)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//昴が居る
+				if(F4_02_GoVillage2 && !F4_06_StopAttack)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//艾雯が居る
+				if(!F4_00_StartSolo)
+					EMO(PARTNER,EMO_HATENA)
+				wait(30)
+
+				MES(RAGNA,"喷射推进装置？",0)
+				MES_close(RAGNA)
+
+			//	name2(GASHREA)
+//				MES(GASHREA,"这是从前的魔法使们使用的\n一种特殊的力场。",0)
+//				MES(GASHREA,"就是说它也能用来\n联结各个大陆。",0)
+//				MES(GASHREA,"这也是稍微调试一下\n就能用的吧。",0)
+//				MES_close(GASHREA)
+
+				MES(GASHREA,"什么啊，你不知道吗。\n这是最近在研究中的\n新型引擎。",0)
+				MES(GASHREA,"不过，这东西\n使用起来的效果\n就好像和使用魔宝石一样……",0)
+				MES(GASHREA,"唔……调试一下的话\n这东西没准也能组合到安卡基亚里去。",0)
+				MES_close(GASHREA)
+			}
+		//	name("□未改造之最弱パ～ツが最強パ～ツ（※多分未使用になる選択肢）")
+			else
+			if(IT133>0)
+			{
+				MES(GASHREA,"这东西，看起来\n像是什么魔法装置的部件……",0)
+				MES(GASHREA,"不过，总觉得这个……\n这不是什么兵器的部件吗！？",0)
+				MES_close(GASHREA)
+
+			//　　拉古那たちに！エモ～ション。
+				MES(RAGNA,"兵，兵器……？",0)
+				MES_close(RAGNA)
+
+			//	name2(GASHREA)
+				MES(GASHREA,"那是魔法大战中\n发生枪战时的事吧。",0)
+				MES(GASHREA,"虽然详细情况我不清楚……\n不过似乎有驻守在伊尔巴特\n并参加了战斗的人们。",0)
+				MES(GASHREA,"这也是……调试一下\n就能用的东西吧。",0)
+				MES_close(GASHREA)
+			}
+			
+			MES(RAGNA,"还，还能用是指……",0)
+			MES(RAGNA,"这是出土文物吧？\n能这么干吗。",0)
+			MES_close(RAGNA)
+
+		//	name2(GASHREA)
+			MES(GASHREA,"哼，你以为我是谁啊。",0)
+			MES(GASHREA,"比如说，对了……",0)
+			MES_close(GASHREA)
+
+		//　　親方、拉古那を指す。
+			MES(GASHREA,"拉古那，没准\n就能组装到\n你的那个安卡基亚上哦。",0)
+			MES(GASHREA,"怎么样，要不要试试？",0)
+			MES_close(GASHREA)
+
+			F_set(FT_01_GashreaTp)
+		}
+	//──────────────────────────────
+	//改造処理２回目以降之説明。
+	//──────────────────────────────
+		else
+		{
+		//	name("□未改造之最弱パ～ツが強化パ～ツ１")
+			if(IT128>0)
+			{
+				MES(GASHREA,"嗯，你好像\n带来了魔宝零件嘛。",0)
+				MES_close(GASHREA)
+				MES(GASHREA,"这东西，看起来\n像是什么魔法装置的部件……",0)
+				MES(GASHREA,"这个应该也能组装到\n安卡基亚上。",0)
+				MES_close(GASHREA)
+			}
+		//	name("□未改造之最弱パ～ツがフックパ～ツ")
+			else
+			if(IT129>0)
+			{
+				MES(GASHREA,"嗯，你好像\n带来了魔宝零件嘛。",0)
+				MES_close(GASHREA)
+				MES(GASHREA,"这东西，看起来\n像是工作装置的一部分……",0)
+				MES(GASHREA,"应该是使用在魔法工房一类的地方吧。",0)
+				MES(GASHREA,"这个应该也能组装到\n安卡基亚上。",0)
+				MES_close(GASHREA)
+			}
+		//	name("□未改造之最弱パ～ツが強化パ～ツ２")
+			else
+			if(IT130>0)
+			{
+				MES(GASHREA,"嗯，你好像\n带来了魔宝零件嘛。",0)
+				MES_close(GASHREA)
+				MES(GASHREA,"这东西，看起来\n像是辅助装置啊。",0)
+				MES(GASHREA,"是要组装到里面来使用的类型啊。",0)
+				MES(GASHREA,"这个应该也能组装到\n安卡基亚上。",0)
+				MES_close(GASHREA)
+			}
+		//	name("□未改造之最弱パ～ツがバ～ニングパ～ツ")
+			else
+			if(IT131>0)
+			{
+				MES(GASHREA,"嗯，你好像\n带来了魔宝零件嘛。",0)
+				MES_close(GASHREA)
+				MES(GASHREA,"这是……\n什么东西的内燃机吗？",0)
+				MES(GASHREA,"好像是魔法驱动的引擎吧\n似乎有听说过……",0)
+				MES(GASHREA,"嗯，这个\n应该也能组装到安卡基亚上。",0)
+				MES_close(GASHREA)
+			}
+		//	name("□未改造之最弱パ～ツがグライドパ～ツ")
+			else
+			if(IT132>0)
+			{
+				MES(GASHREA,"嗯……你好像\n又带来了魔宝零件嘛……",0)
+				MES_close(GASHREA)
+
+				EMO(GASHREA,EMO_TENTEN)
+				wait(30)
+
+				MES(GASHREA,"这，这是……\n这不是喷射推进装置吗？",0)
+				MES_close(GASHREA)
+
+			//　　拉古那たちに？エモ～ション。
+				EMO(RAGNA,EMO_HATENA)
+
+				//露がいる
+				if(F5_00_HearLunar)
+					EMO(PET,EMO_HATENA)
+				
+				//艾雯が居る
+				if(F6_00_GoToMeru)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//奥蒂莎が居る
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//艾雯が居る
+				if(F4_09_GoShrineMia && !F5_00_HearLunar)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//昴が居る
+				if(F4_02_GoVillage2 && !F4_06_StopAttack)
+					EMO(PARTNER,EMO_HATENA)
+				else
+				//艾雯が居る
+				if(!F4_00_StartSolo)
+					EMO(PARTNER,EMO_HATENA)
+				wait(30)
+
+				MES(RAGNA,"喷射推进装置？",0)
+				MES_close(RAGNA)
+
+			//	name2(GASHREA)
+//				MES(GASHREA,"这是从前的魔法使们所使用的\n一种特殊的力场。",0)
+//				MES(GASHREA,"就是说它也能用来\n联结各个大陆。",0)
+//				MES(GASHREA,"这个也是，调试一下的话\n还能用吧。",0)
+//				MES_close(GASHREA)
+
+				MES(GASHREA,"什么啊，你不知道吗。\n这是最近研究中的\n新型引擎。",0)
+				MES(GASHREA,"不过，这东西\n使用起来的效果\n就像是使用魔宝石一样……",0)
+				MES(GASHREA,"唔……这东西调试一下的话\n没准也能组装到安卡基亚上。",0)
+				MES_close(GASHREA)
+
+			}
+		//	name("□未改造之最弱パ～ツが最強パ～ツ")
+			else
+			if(IT133>0)
+			{
+				MES(GASHREA,"嗯……什么呀。\n你又带来\n魔宝零件了吗？",0)
+				MES(GASHREA,"这东西，看起来\n好像是什么魔法装置的部件……",0)
+				MES_close(GASHREA)
+
+				EMO(GASHREA,EMO_BIKKURI)
+				wait(30)
+
+				MES(GASHREA,"这，这是什么啊……\n这不是某种兵器的部件吗！？",0)
+				MES_close(GASHREA)
+
+			//　　拉古那たちに！エモ～ション。
+				EMO(RAGNA,EMO_BIKKURI)
+
+				//露がいる
+				if(F5_00_HearLunar)
+				{
+					EMO(PET,EMO_BIKKURI)
+				}
+				
+				//艾雯が居る
+				if(F6_00_GoToMeru)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				else
+				//奥蒂莎が居る
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				
+				wait(30)
+				MES(RAGNA,"兵，兵器……？",0)
+				MES_close(RAGNA)
+
+			//	name2(GASHREA)
+				MES(GASHREA,"那是魔法大战中\n发生枪战时的事吧。",0)
+				MES(GASHREA,"详细情况我虽然不清楚……\n不过似乎有驻守在伊尔巴特\n并参加了战斗的人们。",0)
+				MES(GASHREA,"这个也是……调试一下的话\n就能装到安卡基亚上吧。",0)
+				MES_close(GASHREA)
+			}
+		}
+		
+		F_set(FT_01_GashreaData)
+	}
+	
+//──────────────────────────────
+//	name("□未改造之最弱パ～ツについて、解説を聞いたことが啊る场合")
+//──────────────────────────────
+	else
+	{
+		//上位２パ～ツ
+		if(IT132>0 || IT133>0)
+		{
+			MES(GASHREA,"嗯，你好像\n带来了魔宝零件啊。",0)
+			MES(GASHREA,"这东西，调试一下的话\n没准就能组装到\n你的安卡基亚上。",0)
+			MES_close(GASHREA)
+		}
+		else
+		{
+			MES(GASHREA,"嗯，你好像\n带来了魔宝零件啊。",0)
+			MES(GASHREA,"这东西，调试一下的话\n应该就能组装到\n你的安卡基亚上。",0)
+			MES_close(GASHREA)
+		}
+		MES(GASHREA,"怎么样，要不要试试？",0)
+		MES_close(GASHREA)
+	}
+}
+
+//──────────────────────────────
+//	パ～ツ改造処理·選択肢部分
+//──────────────────────────────
+TUNE_PARTS_LOOP
+{
+//──────────────────────────────
+//	name("選択テキスト")
+	fade_in(30,10,BLACK)
+	MES(0,"C3S2要改装安卡基亚吗？",2)
+	MES_close(0)
+	fade_in(0,10,BLACK)
+	wait_fade()
+	
+//	name("選択テキスト")
+	workL(WK_CANCEL,SET,2)//【取消】
+	MES_pos(PLAYER1,"??W9【改造】\n【取消】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+//──────────────────────────────
+//	name("□「改造する」")
+	if(WK_YESNO==1)
+	{
+
+		//──────────────────────────────
+		//　改造イベント初期化処理
+		//　F_RAGNA：セットされていればショップル～チンへ戻る。
+		//　WK000　：改造済み回数。
+		//　WK001　：チュ～トリアルＢＭＰタイプ。
+		//──────────────────────────────
+
+		//改造を行ったフラグ　※RAGNAをリセットしてル～プを抜ける
+		F_reset(RAGNA)
+		
+		//今まで改造した个数を計算。
+		workL(0,SET,0)
+		if(IT001>0)//フックギア
+		{
+			workL(0,ADD,1)
+		}
+		if(IT002>0)//バ～ニングギア
+		{
+			workL(0,ADD,1)
+		}
+		if(IT003>0)//グライドギア
+		{
+			workL(0,ADD,1)
+		}
+		if(IT004>0)//ソ～ドギア
+		{
+			workL(0,ADD,1)
+		}
+		if(GW_WEAPON_RANGE>=1)//強化パ～ツ分
+		{
+			workL(0,ADD,1)
+		}
+		if(GW_WEAPON_RANGE>=2)//強化パ～ツ分
+		{
+			workL(0,ADD,1)
+		}
+		
+		//WK001をリセット。改造チュ～トリアル用に使用します。
+		workL(001,SET,0)
+
+		MES(GASHREA,"好，稍等一下。\n马上就帮你加工好。",0)
+		MES_close(GASHREA)
+
+	//　　フェ～ドアウト。
+		fade_in( 100, 30, BLACK)	//フェ～ドアウト
+		wait_fade()
+
+		//ビスタ化する。
+		TK_end()
+		EV_begin()
+
+		//──────────────────────────────
+		//	キャラ移動＆配置
+		//──────────────────────────────
+		//▼□布兰迪山丘で之改造はそ之场之フェ～ドインアウトで行う。
+		if(F6_00_GoToMeru && !F6_02_OnMeru)
+		{
+			EV("TUNE_PARTS_ChrSet_F12")
+			wait_EV("TUNE_PARTS_ChrSet_F12")
+		}
+		else
+		//▼□酒场から工房へ移動する
+		if( F5_00_HearLunar && !F6_00_GoToMeru )
+		{
+			workG(GW_ENTRY_EVENT,SET,1)
+			new_map(10210)
+		}
+		else
+		//▼⑥阿鲁迪亚夜で之改造はそ之场之フェ～ドインアウトで行う。
+		if(F3_00_GoMoonCastle && !F4_00_StartSolo)
+		{
+			EV("TUNE_PARTS_ChrSet_F6")
+			wait_EV("TUNE_PARTS_ChrSet_F6")
+		}
+		//それ以外は工房でカメラをセットする。
+		else
+		{
+			EV("TUNE_PARTS_ChrSet")
+			wait_EV("TUNE_PARTS_ChrSet")
+		}
+
+		//改造処理本体を呼ぶ。座標指定は使わない。
+		EV("TUNE_PARTS")
+		wait_EV("TUNE_PARTS")
+
+		//──────────────────────────────
+		//	キャラ戻し
+		//──────────────────────────────
+		EV("TUNE_PARTS_ChrReturn")
+		wait_EV("TUNE_PARTS_ChrReturn")
+
+		fade_in( 0, 30, BLACK)	//フェ～ドアウト
+		wait_fade()
+		EV_end()
+
+
+	}
+//	name("□「やめる」")
+	else
+	if(WK_YESNO==2)
+	{
+		//改造を行わなかった　※RAGNAがセットされている時だけル～プする
+		F_set(RAGNA)
+		
+		MES(GASHREA,"这样啊。",0)
+		MES(GASHREA,"总之，改变心意的话就过来吧。\n我随时都会帮忙的。",0)
+		MES_close(GASHREA)
+	}
+
+}
+
+
+
+//─────────────────────────────────────────────
+//	パ～ツ改造処理本体
+//─────────────────────────────────────────────
+TUNE_PARTS
+{
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//□パ～ツが通常改造之処理
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		if(IT128>0 || IT129>0 || IT130>0 || IT131>0 || IT132>0)
+		{
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　ＳＥが鳴って、ギアが強化される。
+		//	MES(GASHREA,"C4◆ＳＥが鳴って、ギアが強化される。",0)
+		//	MES_close(GASHREA)
+
+			SE(23,0)//改造SE
+			wait(90)
+
+			//今回が最後之场合。
+			if(WK000>=5)
+			{
+				rot(EVENT_GASHREA,30,180)
+
+			//　　ゆっくりフェ～ドイン。
+			//　　親方は工房装置之方を向いている。
+				fade_in( 0, 90, BLACK)	//フェ～ドイン
+				wait_fade()
+
+				VOICE(759,0)						//「よ～し、こんな所か」（安卡基亚を改造した時）
+				MES(EVENT_GASHREA,"好～的，就是这里吗。",0)		
+//				MES(EVENT_GASHREA,"好……\n就是这样吧。",0)
+				MES_close(EVENT_GASHREA)
+
+				rot_chr(EVENT_GASHREA,30,RAGNA)
+			//　　親方、やって来る。
+				MES(EVENT_GASHREA,"你看，改装好了。",0)
+				MES_close(EVENT_GASHREA)
+
+			//　　アイテム入手ウィンドウ表示。
+			//　　共通処理とする。
+				fade_in(30,10,BLACK)
+			}
+
+			//────────────────────────────────────
+			//	name("□強化パ～ツ之场合")
+			if(IT128>0)
+			{
+			//	name("ナレ～ション")
+				SE(24,0)//ギア之レベルアップ
+			//	MES(0,"C3S2安卡基亚的伸缩范围扩大了。",2)
+				MES(0,"C3S2安卡基亚爆击率上升了。",2)
+				MES_close(0)
+				
+				//◆武器之长さアップ
+				workG(GW_WEAPON_RANGE,ADD,1)
+
+			//	設計図を消す
+				get_item(128,-1,1)
+				
+			}
+			//────────────────────────────────────
+			//	name("□フックパ～ツ之场合")
+			else
+			if(IT129>0)
+			{
+			//	name("ナレ～ション")
+				SE(24,0)//ギア之レベルアップ
+				MES(0,"C3S2安卡基亚\n追加了《勾取》的能力。",2)
+				MES_close(0)
+
+			//	設計図を消す
+				get_item(129,-1,1)
+			
+			//	アイテム入手
+				get_item(001,1,0)
+				wait_key(0)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				
+				//装備
+				set_equip(2,001)
+
+				Load_BMP(20,"sys\\tuto11.itm","0")//チュ～トリアル画像ロ～ド
+				menuBMP(3,	20,	0,0,288,384)
+				workL(001,SET,1)
+
+				F_set(F0_11_TutoGia_Hook)
+
+			}
+			//────────────────────────────────────
+			//	name("□強化パ～ツ之场合")
+			else
+			if(IT130>0)
+			{
+			//	name("ナレ～ション")
+				SE(24,0)//ギア之レベルアップ
+			//	MES(0,"C3S2安卡基亚的伸缩范围扩大了。",2)
+				MES(0,"C3S2安卡基亚的攻击破绽减小了。",2)
+				MES_close(0)
+				
+				//◆武器之长さアップ
+				workG(GW_WEAPON_RANGE,ADD,1)
+
+			//	設計図を消す
+				get_item(130,-1,1)
+			}
+			//────────────────────────────────────
+			//	name("□バ～ニングパ～ツ之场合")
+			else
+			if(IT131>0)
+			{
+			//	name("ナレ～ション")
+				SE(24,0)//ギア之レベルアップ
+				MES(0,"C3S2安卡基亚\n追加了《燃烧》的能力。",2)
+				MES_close(0)
+				
+			//	設計図を消す
+				get_item(131,-1,1)
+
+			//	アイテム入手
+				get_item(002,1,0)
+				wait_key(0)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+				//装備
+				set_equip(2,002)
+
+				Load_BMP(20,"sys\\tuto12.itm","0")//チュ～トリアル画像ロ～ド
+				menuBMP(3,	20,	0,0,288,384)
+				workL(001,SET,2)
+
+				F_set(F0_12_TutoGia_Barn)
+			}
+			//────────────────────────────────────
+			//	name("□グライドパ～ツ之场合")
+			else
+			if(IT132>0)
+			{
+			//	name("ナレ～ション")
+				SE(24,0)//ギア之レベルアップ
+				MES(0,"C3S2安卡基亚\n追加了《滑翔》的能力。",2)
+				MES_close(0)
+				
+			//	設計図を消す
+				get_item(132,-1,1)
+
+			//	アイテム入手
+				get_item(003,1,0)
+				wait_key(0)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				
+				//装備
+				set_equip(2,003)
+
+				Load_BMP(20,"sys\\tuto13.itm","0")//チュ～トリアル画像ロ～ド
+				menuBMP(3,	20,	0,0,288,384)
+				workL(001,SET,3)
+
+				F_set(F0_13_TutoGia_Grid)
+			}
+			//────────────────────────────────────
+
+
+		//──────────────────────────────────────────────
+		//改造後之イベント
+		//──────────────────────────────────────────────
+		//　　工房にフェ～ドイン。
+
+			//今回が最後之场合。
+			if(WK000>=5)
+			{
+				//アイテム入手用之黒落ち画面を解除
+				fade_in( 0, 10, BLACK)	//フェ～ドイン
+				wait_fade()
+			}
+			else
+			{
+				fade_in( 0, 30, BLACK)	//フェ～ドイン
+				wait_fade()
+			}
+
+			//チュ～トリアル之场合はＢＭＰ表示
+			if(WK001>0)
+			{
+				//●チュ～トリアル：フックギア之改造後使用方法
+				//●チュ～トリアル：バ～ニングギア之改造後使用方法
+				//●チュ～トリアル：グライドギア之改造後使用方法
+				menu(3,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+				menu(3,	0,	176, 48,  0,	288, 384,	40,100,0)
+				SE(043,PLAYER1)
+				wait(40)
+				wait_key(0)
+				menu(3,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+				wait(30)
+			}
+
+			//────────────────────────────────────
+			//今回が最後之场合。
+			//────────────────────────────────────
+			if(WK000>=5)
+			{
+				MOT(RAGNA,52,15)
+
+				MES(EVENT_GASHREA,"虽然是进行了相当乱来的改造……\n嘿，强化到这个地步\n已经变成可怕的武器了吧。",0)
+				MES(EVENT_GASHREA,"拿着，好好干吧！",0)
+				MES_close(EVENT_GASHREA)
+
+				MES(RAGNA,"啊啊。\n一直以来多谢了。",0)
+				MES(RAGNA,"谢谢你，师傅！",0)
+				MES_close(RAGNA)
+
+			}
+			else
+			//────────────────────────────────────
+			//□改造した之が初めて之场合
+			//ちなみにこ之イベントは絶対前半·工房で行っているはず。
+			//────────────────────────────────────
+			if(!FT_01_GashreaTune)
+			{
+			//　　拉古那たちは再配置しておく。
+			//　　拉古那は安卡基亚持ちで、いじっているようなモ～ション。（改造したレベル之ギアモ～ドに切り替わっている）
+				MOT(RAGNA,52,15)
+				
+				VOICE(759,0)						//「よ～し、こんな所か」（安卡基亚を改造した時）
+				MES(EVENT_GASHREA,"好～的，就是这里吗。",0)
+//				MES(EVENT_GASHREA,"嘿，就是这样吧……",0)
+				MES_close(EVENT_GASHREA)
+
+				MES(RAGNA,"好，好厉害……\n真的组装上去了……",0)
+				MES_close(RAGNA)
+				
+				rot_chr(EVENT_PARTNER,30,RAGNA)
+				rot(RAGNA,30,315)
+
+			//　　拉古那、軽く安卡基亚を振り回してみせる。
+				MOT(RAGNA,10,15)
+				wait(12)
+				SE(143,0)
+				wait_MOT(RAGNA,10)
+				MOT(RAGNA,11,15)
+				wait(11)
+				SE(145,0)
+				wait_MOT(RAGNA,11)
+			
+				MES(RAGNA,"（这个，也许\n  可以做不少事情呢……）",0)
+				MES_close(RAGNA)
+
+				MES(EVENT_GASHREA,"看样子状态不错嘛。",0)
+				MES(EVENT_GASHREA,"要是发现了零件，\n还要带到我这里来啊！",0)
+				MES(EVENT_GASHREA,"我会帮你改造的。",0)
+				MES_close(EVENT_GASHREA)
+
+			//　　拉古那、親方に向き直る。
+				rot_chr(RAGNA,30,EVENT_GASHREA)
+				rot_chr(EVENT_PARTNER,30,EVENT_GASHREA)
+				
+				MES(RAGNA,"啊啊。\n那就拜托你了，师傅！",0)
+				MES_close(RAGNA)
+				
+				F_set(FT_01_GashreaTune)
+
+				//	梅丽安に初回改造パ～ツを見せるイベントがなくなる
+				F_set(FT_01_MilliamTp)
+			}
+			else
+			//────────────────────────────────────
+			//□それ以外は簡略化
+			//────────────────────────────────────
+			{
+				MOT(RAGNA,52,15)
+
+				MES(EVENT_GASHREA,"要是发现了零件，\n还要带到我这里来啊！",0)
+				MES(EVENT_GASHREA,"我会帮你改造的。",0)
+				MES_close(EVENT_GASHREA)
+
+				MES(RAGNA,"啊啊。\n那就拜托你了，师傅！",0)
+				MES_close(RAGNA)
+
+			}
+
+			//────────────────────────────────────
+			//　　処理終了。
+			//　　暗転になって、工房中央辺りから操作許可とする。
+			//────────────────────────────────────
+
+			fade_in( 100, 30, BLACK)	//フェ～ドアウト
+			wait_fade()
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//□最強パ～ツ之改造。
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		}
+		else
+		{
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　ＳＥが鳴る。
+		//　　ゆっくりフェ～ドイン。
+		//　　親方は工房装置之方を向いている。
+
+			SE(23,0)//改造SE
+			rot(EVENT_GASHREA,30,180)
+			wait(75)
+
+
+			fade_in( 0, 60, BLACK)	//フェ～ドイン
+			wait_fade()
+
+			MES(EVENT_GASHREA,"呼，哎呀呀……\n这次真是花了不少时间。",0)
+			MES_close(EVENT_GASHREA)
+
+			MES(RAGNA,"师傅……\n完成了吗？",0)
+			MES_close(RAGNA)
+
+		//　　親方、拉古那之元にやってくる。
+			rot(EVENT_GASHREA,30,RAGNA)
+
+			MES(EVENT_GASHREA,"啊啊，这下就完美了。",0)
+			MES(EVENT_GASHREA,"我也没见过\n这样的安卡基亚。",0)
+			MES(EVENT_GASHREA,"不可能再有\n比这更好的了吧。",0)
+			MES_close(EVENT_GASHREA)
+
+		//　　親方、何かを差し出す仕草。
+		//	name("ナレ～ション")
+			SE(24,0)//ギア之レベルアップ
+			MES(0,"C3S2安卡基亚追加了\n最强的机能《利刃》。",2)
+			MES_close(0)
+
+		//	設計図を消す
+			get_item(133,-1,1)
+
+			fade_in(30,10,BLACK)
+		//	アイテム入手
+			get_item(004,1,0)
+			wait_key(0)
+
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		//　　拉古那、ギアを装備して眺める。
+			//装備
+			cross_fade(20)
+			set_equip(2,004)
+			SE(1014,0)//ギア構えSE
+			wait_fade()
+			wait(20)
+
+			look(RAGNA,"Bone_Head",0,		0,2,1,			0,30,-10)
+			wait(10)
+			MOT(RAGNA,52,15)
+
+			MES(RAGNA,"这，这就是\n最強的安卡基亚……",0)
+			MES(RAGNA,"嘿嘿，居然变得\n这么帅气了……",0)
+			look(RAGNA,"Bone_Head",0,		0,2,1,			0,0,0)
+			MES(RAGNA,"我得好好感谢你呢。\n一直以来都这么帮助我。",0)
+			MES_close(親方)
+
+			MES(EVENT_GASHREA,"哈，我只是\n帮了点小忙而已。",0)
+			MES(EVENT_GASHREA,"居然能经受住这样的改造，\n这原本就是个不错的东西啊。",0)
+			MES(EVENT_GASHREA,"拉古那，要用它来做什么\n就全看你的意思了。",0)
+			MES(EVENT_GASHREA,"……好好使用它啊。",0)
+			MES_close(EVENT_GASHREA)
+
+			MES(RAGNA,"啊啊，那是当然……！",0)
+			MES(RAGNA,"一直以来多谢你了。\n我会怀着感激\n来使用它的，师傅！",0)
+			MES_close(RAGNA)
+
+			//────────────────────────────────────
+			//　　処理終了。
+			//　　暗転になって、工房中央辺りから操作許可とする。
+			//────────────────────────────────────
+
+			fade_in( 100, 30, BLACK)	//フェ～ドアウト
+			wait_fade()
+
+		}
+
+}
+
+
+
+
+//─────────────────────────────────────────────
+//	キャラ移動＆配置
+//	工房専用です。夜之阿鲁迪亚と布兰迪山丘では、
+//	こ之ル～チンを通らずそ之场ＦＯ＆処理後ＦＩします。
+//─────────────────────────────────────────────
+TUNE_PARTS_ChrSet
+{
+
+		//	工房用カメラセット
+			//CAM_move(434,96,124,0,0)
+			//CAM(50,50,124,34,207,0,0)
+			CAM_move(514,36,124,0,0)
+			CAM(50,53,124,28,199,0,0)
+			
+		//	キャラクタ～再配置
+
+		//───────────────────────────
+		//パ～トナ～削除。
+		clear_party(PARTNER)
+		color(GASHREA,-1)
+		#EVENT_PARTNER	40//他之ＩＤと被ってはいけない。
+		#EVENT_GASHREA	41//他之ＩＤと被ってはいけない。
+		//───────────────────────────
+
+			chr_pos(RAGNA,414,24,0,213,2)
+//			chr_pos(GASHREA,588,-235,0,40,2)
+			set_chr( EVENT_GASHREA,1050,	-1,-1,  588,-235,0,2,40, 0,";")//親方
+
+			//露がいる
+			if(F5_00_HearLunar)
+			{
+				chr_pos(PET,314,140,1,2010,2)
+			}
+			
+			//艾雯が居る
+			if(F6_00_GoToMeru)
+			{
+//				chr_pos(PARTNER,257,-23,1,260,2)
+				set_chr( EVENT_PARTNER,1011,	-1,-1,  257,-23,1,2,260, 0,";")//艾雯
+				chr_equip( EVENT_PARTNER,"wp_004b", "Bone_RightSword", 100)
+			}
+			else
+			//艾雯が居る
+			if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			{
+//				chr_pos(PARTNER,257,-23,1,260,2)
+				set_chr( EVENT_PARTNER,1011,	-1,-1,  257,-23,1,2,260, 0,";")//艾雯
+				chr_equip( EVENT_PARTNER,"wp_004b", "Bone_RightSword", 100)
+			}
+			else
+			//奥蒂莎が居る
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+//				chr_pos(PARTNER,257,-23,1,260,2)
+				set_chr( EVENT_PARTNER,1019,	-1,-1,  257,-23,1,2,260, 0,";")//奥蒂莎
+			}
+			else
+			//昴が居る
+			if(F4_02_GoVillage2 && !F4_06_StopAttack)
+			{
+//				chr_pos(PARTNER,257,-23,1,260,2)
+				set_chr( EVENT_PARTNER,1020,	-1,-1,  257,-23,1,2,260, 0,";")//昴
+			}
+			else
+			//艾雯が居る
+			if(!F4_00_StartSolo)
+			{
+//				chr_pos(PARTNER,257,-23,1,260,2)
+				set_chr( EVENT_PARTNER,1011,	-1,-1,  257,-23,1,2,260, 0,";")//艾雯
+				chr_equip( EVENT_PARTNER,"wp_004", "Bone_RightSword", 100)
+			}
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(EVENT_PARTNER,"1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+
+}
+
+//─────────────────────────────────────────────
+//	キャラ移動＆配置
+//	夜之阿鲁迪亚用之座標セットです。
+//─────────────────────────────────────────────
+TUNE_PARTS_ChrSet_F6
+{
+			//───────────────────────────
+			//パ～トナ～削除。
+			clear_party(PARTNER)
+			color(GASHREA,-1)
+			#EVENT_PARTNER	40//他之ＩＤと被ってはいけない。
+			#EVENT_GASHREA	41//他之ＩＤと被ってはいけない。
+			//───────────────────────────
+			chr_pos(RAGNA,2225,640,0,191,2)
+			set_chr(EVENT_PARTNER,	1011,-1,-1, 2074,825,0,2,219,0, ";")//艾雯
+			chr_equip( EVENT_PARTNER,"wp_004", "Bone_RightSword", 100)
+			set_chr( EVENT_GASHREA,1050, -1,-1,   2295,392,1,	 52,270, 0,";")		//裏門　嘉修雷
+			rot_chr(EVENT_GASHREA,100,RAGNA)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+
+}
+
+
+//─────────────────────────────────────────────
+//	キャラ移動＆配置
+//	布兰迪山丘用之座標セットです。
+//─────────────────────────────────────────────
+TUNE_PARTS_ChrSet_F12
+{
+	CAM_move(1209,7758,4749,0,0)
+	CAM(200,60,0,31,235,0,0)
+
+			//───────────────────────────
+			//パ～トナ～削除。
+			clear_party(PARTNER)
+			color(GASHREA,-1)
+			//───────────────────────────
+			chr_pos(RAGNA,1224,-7740,4589,162,2)
+			set_chr(EVENT_PARTNER,	1011,-1,-1, 993,-7718,4590,2,201,0, ";")//艾雯
+			chr_equip( EVENT_PARTNER,"wp_004b", "Bone_RightSword", 100)
+			set_chr(EVENT_GASHREA,	1050,-1,-1, 1184,-8097,4585,2,334,0, ";")//足整備中飛行机之场合
+			rot_chr(EVENT_GASHREA,100,RAGNA)
+			chr_pos(PET,933,-7535,4593,209,2)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(EVENT_PARTNER,"1", "1", "1")	
+
+}
+
+
+
+//─────────────────────────────────────────────
+//	イベント終了処理·キャラ戻し
+//─────────────────────────────────────────────
+TUNE_PARTS_ChrReturn
+{
+		color(EVENT_GASHREA,-1)
+		color(GASHREA,1)
+
+		//――――――――――――――――――――――――――
+		//主人公キャラ·嘉修雷再配置
+		//――――――――――――――――――――――――――
+		//▼□梅尔塞迪克到着後
+		if( F6_02_OnMeru)
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//工房配置。
+			chr_pos(GASHREA,498,-231,1,180,150)
+			MOT(GASHREA,150,0)
+			F_set_Node(GASHREA,"Bone_RightSword",NP_HIDE)	//嘉修雷之スパナを消す
+//			chr_pos(RAGNA,-193,156,1,46,2)
+//			chr_pos(PARTNER,-205,-21,0,22,2)
+			chr_pos(RAGNA,414,24,1,53,2)
+			chr_pos(PARTNER,564,17,1,87,2)
+			chr_pos(PET,592,118,1,145,2)
+
+		}
+		else
+		//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+		if( F6_00_GoToMeru )
+		{
+			//布兰迪山丘
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			chr_pos(GASHREA,1120,-8066,4586,215,150)
+//			chr_pos(RAGNA,-193,156,1,46,2)
+//			chr_pos(PARTNER,-205,-21,0,22,2)
+//			chr_pos(PET,-53,223,0,58,2)
+			chr_pos(RAGNA,1224,-7740,4590,347,2)
+			chr_pos(PARTNER,1346,-7868,4588,22,2)
+			chr_pos(PET,1130,-7825,4589,242,2)
+		}
+		else
+		//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+		if( F5_00_HearLunar )
+		{
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				join_party(5)
+
+			//酒场へ移動する
+			workG(GW_ENTRY_EVENT,SET,2)
+			new_map(10120)
+//			TK_end()
+//			chr_pos(RAGNA,-193,156,1,46,2)
+//			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+//				chr_pos(PARTNER,-205,-21,0,22,2)
+//			chr_pos(PET,-53,223,0,58,2)
+
+		}
+		else
+		//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+		if( F4_09_GoShrineMia)
+		{
+			//工房ル～トム～ブ
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			chr_pos(GASHREA,-41,-269,1,180,2)
+			EV("MOVE_GASHREA")
+			chr_pos(RAGNA,-193,156,1,46,2)
+			chr_pos(PARTNER,-205,-21,0,22,2)
+		}
+		else
+		//▼⑦拉古那は単独行動を始めた
+		if( F4_00_StartSolo )
+		{
+			if(F4_02_GoVillage2)
+			{
+				join_party(6)
+				chr_pos(PARTNER,-205,-21,0,22,2)
+				color(EVENT_PARTNER,-1)
+			}
+			//工房配置。
+			chr_pos(GASHREA,600,0,0,270,150)
+			chr_pos(RAGNA,-193,156,1,46,2)
+		}
+		else
+		//▼⑥夜·城へ向かう
+		if( F3_00_GoMoonCastle)
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//夜之阿鲁迪亚に配置。
+			rot(GASHREA,100,270)
+//			chr_pos(GASHREA, 2295,392,1,270,2)
+			chr_pos(PLAYER1,2157,805,50,213,2)
+			chr_pos(PLAYER2,2013,758,50,238,2)
+
+		}
+		else
+		//▼⑤魔女拉莱拉から、敵之正体が明かされた
+		if( F2_14_TalkEnemy)
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//工房配置。
+			chr_pos(GASHREA, 498,-231,1,180,150)
+			chr_pos(RAGNA,-193,156,1,46,2)
+			chr_pos(PARTNER,-205,-21,0,22,2)
+		}
+		else
+		//▼③金暗之森へ向かうことにした
+		if( F2_00_GoForest)
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//工房ル～トム～ブ
+			chr_pos(GASHREA,-41,-269,1,180,2)
+			EV("MOVE_GASHREA")
+			chr_pos(RAGNA,-193,156,1,46,2)
+			chr_pos(PARTNER,-205,-21,0,22,2)
+		}
+		else
+		//▼②罗亚鲁塔村へ向かうことにした
+		if( F1_15_GoVillage )
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//工房配置。
+			chr_pos(GASHREA, 600,0,0,270,150)
+			chr_pos(RAGNA,-193,156,1,46,2)
+			chr_pos(PARTNER,-205,-21,0,22,2)
+		}
+		else
+		//▼①城を取り戻すために行動を開始した
+		if( F1_01_GameStart )
+		{
+			join_party(1)
+			color(EVENT_PARTNER,-1)
+
+			//工房ル～トム～ブ
+			chr_pos(GASHREA,-41,-269,1,180,2)
+			EV("MOVE_GASHREA")
+			chr_pos(RAGNA,-193,156,1,46,2)
+			chr_pos(PARTNER,-205,-21,0,22,2)
+		}
+
+		wait(1)
+
+	//	アイテム解説フラグをリセット
+		F_reset(FT_01_GashreaData)
+		
+		//カメラを元に戻す
+		CAM_return( 0 )
+		wait(30)
+
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

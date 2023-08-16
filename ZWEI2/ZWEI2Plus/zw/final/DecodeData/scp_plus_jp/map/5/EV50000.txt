@@ -1,0 +1,1519 @@
+//====================================================================
+//ステージトラップスクリプト
+//[15000][城－入口]
+//====================================================================
+
+#ScriptTable
+
+#ALWEN 			1
+#EVENT_RAGNA 	2
+#EFFECT			3
+#EFFECT2		4
+#EFFECT3		5
+#EFFECT4		6
+#EFFECT5		7
+#EFFECT6		8
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境SE
+	SE(52,0)
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段・扉
+	//⑥では夜マップへ移動する
+	if( F3_00_GoMoonCastle && !F4_00_StartSolo )
+		set_chr( 90,990,	-1,-1,   0,19200,0,		180,  1002, 6,"K8_10001;")	//フィールドマップ夜へ
+	else
+		set_chr( 90,990,	-1,-1,   0,19200,0,		180,  1002, 6,"K8_10000;")	//フィールドマップへ
+
+	set_chr( 91,990,	-1,-1,   0,2900,1310,		  0,  1002, 6,"K0_15010;")	//城入口分岐へ
+
+	//★ラグナは単独行動を始めた～★社へ向かったミアを追うことにしたまでは、ダンジョンに入れない。
+	if( F4_00_StartSolo && !F4_09_GoShrineMia )
+	{
+		set_chr( 92,991,	-1,-1,  -9,14896,486,    0,  1002, 6,"<EV_STOP_01>")	//ストッパーエリア
+	}
+	//第五章中は、アルウェン不在のためダンジョンに入れない
+	if( (F4_11_EndFourth && !F5_17_EndFifth)
+	{
+		set_chr( 92,991,	-1,-1, -9,14896,486,   0,  1002, 6,"<EV_STOP_01>")	//ストッパーエリア
+	}
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼ムーンブリア城の結界を破壊する・後
+		set_namebmp(0,0)
+		EV("EV_3_05_BreakedBaria")
+	}
+	else
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼挿入ムービー①の代わり
+		set_namebmp(0,0)
+		EV("EV_3_02_CastleDisp")
+	}
+	else
+	if(F2_17_EndSecond && !F3_13_EndThird)
+	{
+	//３章
+		//ＧＦ『★ムーンブリア城の結界を破壊した』立ってない
+		if(!F3_01_BreakBaria)
+		{
+			//▼ムーンブリア城の結界を破壊する・前
+			set_namebmp(0,0)
+			EV("EV_3_03_BreakBaria")
+		}
+	}
+
+//■場面固有設定
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼挿入ムービー①の代わり
+//──────────────────────────────
+EV_3_02_CastleDisp
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+	wait(1)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  80,18570,10,180,2)
+	chr_pos(PARTNER,	 -80,18570,10,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr( EFFECT,749,	-1,-1,  0,500,4000,     13, 0, 0,";")
+	F_set_chr(EFFECT,CF_NO_CLIP)
+	F_set_chr(EFFECT,CF_NO_CLIP2)
+	F_set_chr(EFFECT,CF_NO_CSP)
+	F_set_chr(EFFECT,CF_NO_ZIMEN)
+	F_set_chr(EFFECT,CF_NO_HEIGHT)
+	color(EFFECT,-1)
+
+	//カメラ初期位置
+	CAM_move(0,0,4544,0,0)
+	CAM(30,1300,4544,56,208,0,0)
+	wait(1)
+
+	CAM_move(0,0,4544,300,0)
+	CAM(-330,900,4544,56,190,300,0)
+
+	//フェードイン
+	SE(1073,0)//結界SE
+	fade_in(0,90,0)
+	wait_fade()
+
+	wait(150)
+
+	EV("EV_52_fadeout")//強風SEフェードアウト
+	EV("EV_1073_fadeout")//結界SEフェードアウト
+	fade_in(100,60,0)
+	wait_fade()
+
+//　　夜のロアルタ村マップへ(ev00301)
+	workG(GW_ENTRY_EVENT,SET,2)
+	new_map(10301)
+
+//	EV_end()
+}
+
+
+//──────────────────────────────
+//▼ムーンブリア城の結界を破壊する・前
+//──────────────────────────────
+//　　ムーンブリア城前のマップに来るとイベント発生。
+//　　陽炎のような雰囲気は消え、城は完全に実体化しているが、
+//　　巨大な紫の結界もまたはっきり見えるようになっている。
+//　　地名表示しながら、ラグナたちが入ってくるのを見せる。
+EV_3_03_BreakBaria
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+//	stop_BGM(90)
+	wait(60)
+
+	delete(90)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  300,18400,10,180,2)
+	chr_pos(PARTNER,	 300,18600,10,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1,  100,19210,10, 2,180,0, "")
+	set_chr(ALWEN,	1011,-1,-1, -60,19210,10, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+//	F_set_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+//	F_set_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+//	F_set_chr(ALWEN,CF_NO_ZIMEN)
+//	F_set_chr(ALWEN,CF_NO_HEIGHT)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+
+	set_chr( EFFECT,749,	-1,-1,  0,200,3800,     13, 0, 0,"")
+	set_chr( EFFECT2,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT3,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT4,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT5,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT6,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	F_set_chr(EFFECT,CF_NO_CLIP)
+	F_set_chr(EFFECT,CF_NO_CLIP2)
+	F_set_chr(EFFECT,CF_NO_CSP)
+	F_set_chr(EFFECT,CF_NO_ZIMEN)
+	F_set_chr(EFFECT,CF_NO_HEIGHT)
+	F_set_chr(EFFECT2,CF_NO_CLIP)
+	F_set_chr(EFFECT2,CF_NO_CLIP2)
+	F_set_chr(EFFECT2,CF_NO_CSP)
+	F_set_chr(EFFECT2,CF_NO_ZIMEN)
+	F_set_chr(EFFECT2,CF_NO_HEIGHT)
+	F_set_chr(EFFECT3,CF_NO_CLIP)
+	F_set_chr(EFFECT3,CF_NO_CLIP2)
+	F_set_chr(EFFECT3,CF_NO_CSP)
+	F_set_chr(EFFECT3,CF_NO_ZIMEN)
+	F_set_chr(EFFECT3,CF_NO_HEIGHT)
+	F_set_chr(EFFECT4,CF_NO_CLIP)
+	F_set_chr(EFFECT4,CF_NO_CLIP2)
+	F_set_chr(EFFECT4,CF_NO_CSP)
+	F_set_chr(EFFECT4,CF_NO_ZIMEN)
+	F_set_chr(EFFECT4,CF_NO_HEIGHT)
+	F_set_chr(EFFECT5,CF_NO_CLIP)
+	F_set_chr(EFFECT5,CF_NO_CLIP2)
+	F_set_chr(EFFECT5,CF_NO_CSP)
+	F_set_chr(EFFECT5,CF_NO_ZIMEN)
+	F_set_chr(EFFECT5,CF_NO_HEIGHT)
+	F_set_chr(EFFECT6,CF_NO_CLIP)
+	F_set_chr(EFFECT6,CF_NO_CLIP2)
+	F_set_chr(EFFECT6,CF_NO_CSP)
+	F_set_chr(EFFECT6,CF_NO_ZIMEN)
+	F_set_chr(EFFECT6,CF_NO_HEIGHT)
+	chr_equip_chr(EFFECT6,ALWEN,"wtop",100,		0,0,0,	0,0,0);
+
+	//モーション定義
+	MOT_SET(ALWEN,150,150,4590,4615,-1,-1)//詠唱
+	MOT_SET(ALWEN,151,-1,1097,1097,-1,-1)//振り下ろす
+
+	//カメラ初期位置
+	CAM_move(0,-17960,180,0,0)
+	CAM(-10,110,180,26,218,0,0)
+
+	CAM_move(0,-18540,160,0,0)
+	CAM(120,110,160,26,218,0,0)
+
+	move( EVENT_RAGNA, 0, 9,100,11300,1310,0)
+	wait(10)
+	move( ALWEN, 0, 9,-60,11320,1310,0)
+
+	BGM(50)
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	wait(60)
+
+	SE(1073,0)//結界SE
+
+	CAM_move(450,-8770,3260,240,0)
+	CAM(-490,330,3260,42,190,240,0)
+	wait(180)
+	set_namebmp(13,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(60)
+
+	cross_fade(30)
+	color(EVENT_RAGNA,-1)
+	color(ALWEN,-1)
+	CAM_move(1060,-2410,6880,0,0)
+	CAM(-940,430,6880,38,210,0,0)
+	CAM_move(460,-2410,3860,240,0)
+	CAM(-660,630,3860,44,190,240,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+
+	cross_fade(15)
+	move(EVENT_RAGNA, 99, 0,0,0,0,0)
+	move(ALWEN, 99, 0,0,0,0,0)
+	color(EVENT_RAGNA,1)
+	color(ALWEN,1)
+	CAM_move(0,-10100,1540,0,0)
+	CAM(40,106,1540,34,180,0,0)
+	F_reset_chr(EVENT_RAGNA,CF_NO_ZIMEN)
+	F_reset_chr(EVENT_RAGNA,CF_NO_HEIGHT)
+	F_reset_chr(ALWEN,CF_NO_ZIMEN)
+	F_reset_chr(ALWEN,CF_NO_HEIGHT)
+	chr_pos(EVENT_RAGNA,80,11080,1310,180,2)
+	chr_pos(ALWEN,	 -40,11120,1310,180,2)
+	CAM_move(0,-10100,1540,160,0)
+	CAM(-200,76,1540,34,180,160,0)
+	move( EVENT_RAGNA, 0, 9,80,10080,1310,0)
+	wait(10)
+	move( ALWEN, 0, 9,-80,10120,1310,0)
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+	wait(30)
+
+	MES(EVENT_RAGNA,"蜃気楼みてぇだったのが\nあんなにはっきりと……",0)
+	MES(EVENT_RAGNA,"しかし、あの紫色のはなんだ？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"叔父上の張った《結界》だ。",0)
+	MES(ALWEN,"今まで不可視の幻術によって\n見えなくなっていたが……",0)
+	MES(ALWEN,"幻術が解けたことで\n城と共に姿を現したのであろ。",0)
+	MES_close(ALWEN)
+
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"なるほど……",0)
+	MES(EVENT_RAGNA,"なら、城に乗り込むには\nあれをブチ破る必要があるわけか。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"うむ、そのために私は\n全ての力を取り戻す必要があった。",0)
+	MES(ALWEN,"今こそ、あれを打ち砕く時。",0)
+	MES_close(ALWEN)
+
+//	BGM(53)
+
+//　　アルウェン、ラグナの方に視線を向ける。
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+	MES(ALWEN,"ラグナ、下がっているがよい。",0)
+	MES(ALWEN,"真祖としての力を全て解放する。",0)
+	MES(ALWEN,"巻き込まれれば\n無事では済まぬであろう。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"……分かった。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ、アルウェンの背後に下がる。
+	look_off(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,145)
+	move( EVENT_RAGNA, 0,	7, 160,10320,1310,0)
+//	wait_move( EVENT_RAGNA )
+	wait(30)
+
+//　　アルウェン、杖を高く掲げて呪文詠唱開始。
+	look_off( ALWEN )
+	rot(ALWEN,30,215)
+	move( ALWEN, 0,	9,  0,10000,1310,0)
+	wait_move( ALWEN )
+//	VOICE(165,0)	//★ボイス入力演出
+	rot(ALWEN,30,180)
+	wait(30)
+
+//　　以下、それぞれの呪文に呼応するようにエフェクトを展開。
+	IK(ALWEN,"Bone_LeftWing1",0)
+	IK(ALWEN,"Bone_RightWing1",0)
+	MOT(ALWEN,133,0)
+	SE(1032,0)//羽広げSE
+	wait(45)
+/*
+	cross_fade(15)
+	chr_scale( ALWEN,	"Bone_LeftWing1",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWing2",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWingEnd",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing1",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing2",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWingEnd",	120,120,120,	0,	1);
+	wait(15)
+*/
+	cross_fade(30)
+	CAM_move(0,-10020,1420,0,0)
+	CAM(800,76,1420,20,324,0,0)
+	CAM_move(0,-10020,1440,450,0)
+	CAM(800,86,1440,20,298,450,0)
+	KAO(ALWEN,"B","3","2")//
+	KAO(EVENT_RAGNA,"2","D","6")//
+	look_off(ALWEN)
+	look_del(ALWEN)
+	IK(ALWEN,"Bone_LeftWing1",1)
+	IK(ALWEN,"Bone_RightWing1",1)
+	chr_scale( ALWEN,	"Bone_LeftWing1",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWing2",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_LeftWingEnd",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing1",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWing2",		120,120,120,	0,	1);
+	chr_scale( ALWEN,	"Bone_RightWingEnd",	120,120,120,	0,	1);
+	wait(30)
+
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,12)
+	MOT(ALWEN,150,15)
+	wait(30)
+	SE(1050,0)
+	MOT(EFFECT6,18,0)
+	EV("EV_EFFECT_01")
+
+//	MES(ALWEN,"◆未入力項目\n４つのエフェクトが渦を巻いてアルウェンを取り囲む。\n巨大な紅い魔法陣が空中に描かれていく。",0)
+//	MES_close(ALWEN)
+
+	KAO(ALWEN,"B232BZ4","3","2")//
+	MES_pos(ALWEN,"C2『我が内なる地の霊脈よ……』",0,0,0,0,0)
+	wait(10)
+	SE(1034,0)
+	wait(50)
+	KAO(ALWEN,"B232BZ4","3","2")//
+	MES_pos(ALWEN,"C2『我が内なる水の霊脈よ……』",0,0,0,0,0)
+	wait(10)
+	SE(1034,0)
+	wait(50)
+	KAO(ALWEN,"B232BZ4","3","2")//
+	MES_pos(ALWEN,"C2『我が内なる火の霊脈よ……』",0,0,0,0,0)
+	wait(10)
+	SE(1034,0)
+	wait(50)
+	KAO(ALWEN,"B232BZ4","3","2")//
+	MES_pos(ALWEN,"C2『我が内なる風の霊脈よ……』",0,0,0,0,0)
+	wait(10)
+	SE(1034,0)
+	wait(50)
+	KAO(ALWEN,"B232BZ4","3","2")//
+	MES_pos(ALWEN,"C2『巡り巡りて、螺旋を描き、\n  根源たる力と化せ……！』",0,0,0,0,0)
+	SE(453,0)//4つの力がまとまるSE
+	SE(1074,0)//4つの力がまとまるSE
+	wait(60)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+	wait(40)
+//	SE(1037,0)//4つの力がまとまるSE
+	SE(1069,0)//4つの力がまとまるSE
+	SE(439,0)//4つの力がまとまるSE
+	wait(10)
+	SE(1052,0)//アルウェンのオーラ強力にSE
+	SE(1051,0)//アルウェンのオーラ強力にSE
+	wait(40)
+
+//　　４つのエフェクトが渦を巻いてアルウェンを取り囲む。
+//　　かつてない凄まじい魔力がアルウェンを包んでゆき、
+//　　次の瞬間、巨大な紅い魔法陣が空中に描かれていく。
+//	VOICE(172,0)	//★ボイス入力演出
+
+	cross_fade(30)
+	CAM_move(240,-10150,2860,0,0)
+	CAM(480,234,2860,40,204,0,0)
+	wait(30)
+
+	CAM_move(340,-10150,2820,100,0)
+	CAM(280,214,2820,40,212,100,0)
+
+	SE(1042,0)//大きい魔方陣が出来る準備ＳＥ
+
+	EV("EV_EFFECT_02")
+	wait(40)
+	SE(473,0)//大きい魔方陣が出来る準備ＳＥ
+	wait(90)
+
+//	MES(EVENT_RAGNA,"おおっ……！？",0)
+	MES_pos(EVENT_RAGNA,"おおっ……！？",0,0,0,0,0)
+	wait(50)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　紅い魔法陣が完成したところで、杖を振るうアルウェン。
+	cross_fade(15)
+	CAM_move(0,-10020,1480,0,0)
+	CAM(80,110,1480,22,222,0,0)
+	SE(1077,0)//ハッタリSE
+		wait(25)
+	CAM_quake("37")
+
+//	VOICE(150,0)	//★ボイス入力演出
+	MES_pos(ALWEN,"S5P1C2『力よ、迸れ！』",0,0,0,0,0)
+	wait(50)
+	SE(466,0)//アルウェンアクションSE
+	MES_close(ALWEN)
+	MOT(ALWEN,151,5)
+	wait(10)
+
+//　　魔法陣から巨大な紅いレーザーが放たれ、
+//　　城を包んでいた結界にぶち当たり、バチバチと放電する。
+//　　そして次の瞬間、紫の結界がバキーンと音を立てて砕け散る。
+//	MES(ALWEN,"◆未入力項目\n魔法陣から巨大な紅いレーザーが放たれ、\n城を包んでいた結界にぶち当たり、バチバチと放電する。\n紫の結界がバキーンと音を立てて砕け散る。",0)
+//	MES_close(ALWEN)
+	cross_fade(15)
+	CAM_move(400,-9100,2700,0,0)
+	CAM(-200,400,2700,30,214,0,0)
+	wait(30)
+
+	SE(405,0)//波動砲発射準備SE
+	SE(1042,0)//波動砲発射準備SE
+	chr_pos(EFFECT4,	 0,9900,2720,180,0)
+	chr_pos(EFFECT5,	 0,6000,2720,0,0)
+	EFF(6585,0,-9900,2720,135,100,-1)
+	wait(40)
+	SE(1051,0)//波動砲発射準備SE
+	MOT(EFFECT5,16,0)
+	wait(10)
+	MOT(EFFECT4,15,0)
+	wait(30)
+
+	SE(482,0)//波動砲SE
+	SE(1075,0)//波動砲SE
+	CAM_move(200,-8100,2700,10,0)
+	CAM(-400,400,2700,30,224,10,0)
+	CAM_quake("37L")
+	wait_CAM_move()
+	wait_CAM()
+	CAM(-400,360,2700,30,232,240,0)
+	wait(120)
+
+	SE(1039,0)//結界割れるSE
+	SE(1076,0)//結界割れるSE
+	EFF(6525,0,0,2720,0,100,-1)
+	CAM_quake("1919")
+	wait_CAM_quake()
+	CAM_quake("37L")
+	wait(26)
+
+	EV("EV_1073_fadeout")//結界SEフェードアウト
+	EV("EV_1052_fadeout")//オーラSEフェードアウト
+	fade_in(100,60,WHITE)
+	wait_fade()
+
+	CAM_quake("")
+
+//　　ムーンブリア城礼拝堂（ev53993）へ。
+	workG(GW_DEF_BGM,SET,50)	//デフォルト曲を変更する
+//	workG(GW_DEF_BGM,SET,53)	//デフォルト曲を変更する
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(15099)
+
+//	EV_end()
+}
+
+EV_EFFECT_01
+{
+	chr_pos(EFFECT2,	 0,10020,1320,180,0)
+	EFF(6530,0,-10020,1320,180,100,-1)
+//	wait(135)
+	wait(210)
+	MOT(EFFECT2,14,0)
+}
+
+EV_EFFECT_02
+{
+	chr_pos(EFFECT3,	 0,9900,2720,180,0)
+	EFF(6550,0,-9900,2720,135,100,-1)
+//	wait(30)
+	MOT(EFFECT3,17,0)
+	wait(90)
+	SE(1050,0)//大きい魔方陣が出来たSE
+	CAM_quake("37")
+}
+
+//──────────────────────────────
+//▼ムーンブリア城の結界を破壊する・後
+//──────────────────────────────
+//　　画面切り替えして、再び城門前。
+//　　結界が粉々に砕け散った後のエフェクトを見せながら
+//　　アルウェンを包んでいたオーラ、ゆっくりと消滅する。
+EV_3_05_BreakedBaria
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  300,18400,10,180,2)
+	chr_pos(PARTNER,	 300,18600,10,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 160,10320,1310, 2,180,0, "")
+	set_chr(ALWEN,	1011,-1,-1, 0,10000,1310, 2,180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+
+	MOT_SET(EVENT_RAGNA,150,-1,452,452,-1,-1)	//しゃがみ
+	MOT_SET(EVENT_RAGNA,151,-1,434,434,-1,-1)	//やるぜ
+	MOT_SET(ALWEN,150,-1,6315,6349,-1,-1)//しゃがみ
+	MOT_SET(ALWEN,151,-1,6355,6395,-1,-1)//しゃがみ
+
+	//カメラ初期位置
+	CAM_move(0,-870,3900,0,0)
+	CAM(480,480,3900,34,206,0,0)
+	wait(1)
+	CAM(480,880,3900,34,198,240,0)
+
+	//フェードイン
+	fade_in(0,120,0)
+	wait_fade()
+	wait_CAM()
+
+	cross_fade(30)
+	CAM_move(0,-10100,1540,0,0)
+	CAM(-200,76,1540,34,180,0,0)
+	wait(30)
+
+	MES(EVENT_RAGNA,"す、すげぇ……！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"……上手くいったか。",0)
+	MES(ALWEN,"くっ……",0)
+	MES_close(ALWEN)
+
+//　　アルウェン、少しふらついて膝を突いてしまう。
+	MOT(ALWEN,150,15)
+	wait(35)
+
+//　　ラグナの頭に！マーク。アルウェンの元に駆け寄る。
+	KAO(EVENT_RAGNA,"B","12321D","6")//
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(15)
+
+	CAM_move(60,-10020,1440,30,0)
+	CAM(-120,64,1440,24,198,30,0)
+	move( EVENT_RAGNA, 0,	20, 110,10000,1310,0)
+	wait_move( EVENT_RAGNA )
+	MOT(EVENT_RAGNA,150,15)
+	rot_chr(EVENT_RAGNA,45,ALWEN)
+	wait(30)
+	KAO(EVENT_RAGNA,"B232B2Z2","12321D","2")//
+	MES(EVENT_RAGNA,"おい、大丈夫か！？",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"12321Z3","123","1")//
+	MES(ALWEN,"フフ、心配無用だ……",0)
+	KAO(ALWEN,"12321Z4","3","1")//
+	MES(ALWEN,"少しばかり魔力を\n使いすぎただけのこと。",0)
+	MES_close(ALWEN)
+
+//　　アルウェン、ラグナの助けを借りて起き上がる。
+	CAM_move(60,-9980,1440,30,0)
+	CAM(-80,58,1440,24,230,30,0)
+	look_off(ALWEN)
+	MOT(ALWEN,151,0)
+	wait(30)
+	KAO(EVENT_RAGNA,"B","12321","2")//
+	MOT(EVENT_RAGNA,2,15)
+	rot(EVENT_RAGNA,30,90)
+	wait(15)
+	move( EVENT_RAGNA, 0,	4, 150,10000,1310,0)
+	wait_move( EVENT_RAGNA )
+	rot(ALWEN,30,270)
+	wait(15)
+
+	KAO(ALWEN,"B232BZ3","321","3")//
+	MES(ALWEN,"約束を果たす時が来た。",0)
+	KAO(ALWEN,"B232BZ5","1","3")//
+	MES(ALWEN,"この城を取り戻せば\nそなたとの契約は終わりだ。",0)
+	KAO(ALWEN,"B232BZ4","1","3")//
+	MES(ALWEN,"どうか、最後までよろしく頼む。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(15)
+	CAM_move(60,-10020,1440,0,0)
+	CAM(-80,54,1440,24,132,0,0)
+	KAO(EVENT_RAGNA,"1","3","2")//
+	wait(15)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","3","2")//
+	MES(EVENT_RAGNA,"ああ……言うまでもねぇ。",0)
+	MOT(EVENT_RAGNA,151,12)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z6","321","2")//
+	MES(EVENT_RAGNA,"あんたの戦士としての役目、\nキッチリ務めさせてもらうぜ！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　画面、フェードアウトしてキャラ再配置。
+//　　フェードインしてイベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+	stop_BGM(90)
+	wait_BGM()
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	chr_pos(RAGNA,	  80,10000,1310,180,2)
+	chr_pos(PARTNER,	 -80,10000,1310,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★ムーンブリア城の結界を破壊した』を立てる。
+	F_set(F3_01_BreakBaria)
+	workG(GW_DEF_BGM,SET,0)	//デフォルト曲を戻す
+//	BGM(18)
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+//---------------------------------------------------------------------------------------------------
+//▽各地のダンジョンのストッパー（特に用事はない）
+//---------------------------------------------------------------------------------------------------
+EV_STOP_01
+{
+	TK_begin()
+//	name("・ラグナ単独行動になって")
+	if( F4_00_StartSolo && !F4_02_GoVillage2 )
+	{
+		if( !F_RAGNA )
+		{
+			MES(RAGNA,"姫さんの城か……",0)
+			MES(RAGNA,"……特に用事はないな。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+			F_set(RAGNA)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(RAGNA,"……特に用事はないな。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+	}
+	else
+	//if( !F4_03_OnRoots )
+	if( !F4_05_OnVillage2 )
+	{
+//	name("・スバルと合流後")
+		if( GW_MAN==1 )
+		{
+		//　　※ラグナ先頭
+			MES(RAGNA,"特に用事もねえな。",0)
+			MES(RAGNA,"……今は雪山に向かうか。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+		else
+		{
+		//　　※スバル先頭
+			if( !F_SUBARU )
+			{
+				rot_chr(RAGNA,60,PARTNER)
+				MES(RAGNA,"スバル、お前の住んでる里って\n雪山の中にあるんだよな。",0)
+				MES(RAGNA,"今はそっちへ向かおうぜ。",0)
+				MES_close(RAGNA)
+				
+				rot_chr(PARTNER,60,RAGNA)
+				
+				//	name2(PARTNER)
+				MES(PARTNER,"あ、はい。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+				
+				F_set(SUBARU)
+			}
+			else
+			{
+
+			//　　★繰り返し
+				MES(RAGNA,"さっさと雪山の方に\n向かおうぜ。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		}
+		//chr_pos(PLAYER2,-178,13568,4100,0,2)
+		chr_pos(PLAYER2,190,15405,383,0,2)
+	}
+	else
+	if( !F4_11_EndFourth )
+	{
+		//ストッパーなし。
+	}
+	else
+	if( !F5_06_RunCrystal )
+	{
+//	name("・怪我をしたスバルと話した後")
+//　　（３人全員に話をつける前のみ発生）
+
+		if( F5_03_OfferLaraira && F5_04_OfferPipiro && F5_05_OfferFiona )
+		{
+		//　　※全員に声を掛けてからは以下のストッパー
+			MES(RAGNA,"おっと……",0)
+			MES(RAGNA,"今はクリスタルバレーに\n急がねえと……！",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+		else
+		if( !F5_24_NotDanjion )
+		{
+		//　　初回のみ、以下のメッセージを挿入。
+			rot_chr(PET,30,RAGNA)
+			MES(PET,"……ちょっとラグナ！？\nどこへ行く気よ！",0)
+		//	MES(PET,"ダンジョンに入る前に、\n居場所が分かってる連中に\n話してみた方がいいと思うけど。",0)
+			MES(PET,"こういう場所を探す前に\nまず当たるべき所があるでしょ！",0)
+			MES_close(PET)
+
+				rot_chr(RAGNA,30,PET)
+		//	name2(RAGNA)
+		//	MES(RAGNA,"あ、ああ……\n確かにダンジョンに入って\n探すとなると大変だな。",0)
+			MES(RAGNA,"あ、ああ……\n確かに時間もかかるしな。",0)
+			MES_close(RAGNA)
+
+			if( !F5_05_OfferFiona )
+			{
+			//	name("⇒フィオナに話をしていない")
+			//	MES(RAGNA,"先にフィオナのお嬢さんたちに\n話をつけておくか……",0)
+				MES(RAGNA,"まずはフィオナのお嬢さんたちに\n話をつけておくか……",0)
+				MES_close(RAGNA)
+
+				MES(PET,"あの女なら町の屋敷にいるはずよ。\nとりあえず顔だけでも出してみましょ。",0)
+				MES_close(PET)
+				wait_MES(PET)
+			}
+			else
+			if( !F5_03_OfferLaraira )
+			{
+			//	MES(RAGNA,"先に残りの連中に\n話をつけておくか……",0)
+				MES(RAGNA,"次はラーライラの\n婆さんの所にでも行くか……",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+			else
+			{
+			//	MES(RAGNA,"まずは町の方を\n探してみるか……",0)
+				MES(RAGNA,"とりあえず、\n町の隅々を探してみるか……",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+			F_set(F5_24_NotDanjion)
+		}
+		else
+		{
+		//　　※２回目以降は以下のメッセージ。
+		//	MES(RAGNA,"ダンジョンに入って\n探すとなると大変だな……",0)
+			MES(RAGNA,"あてずっぽうに\n探してたんじゃ仕方ないな……",0)
+			MES(RAGNA,"まずは心当たりがある場所から\n当たってみるとするか。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+		//chr_pos(PET,101,13568,4100,0,2)
+		chr_pos(PET,-190,15405,383,0,2)
+	}
+	else
+	if( !F5_17_EndFifth )
+	{
+//	name("・クリスタルバレー起動後")
+
+		if( GW_MAN==1 )
+		{
+		//　　※ラグナ先頭
+			if( !F_RAGNA )
+			{
+				rot_chr(PET,30,RAGNA)
+				MES(PET,"ラグナ、どこに行く気よ！",0)
+				MES(PET,"早く姫様を助けに行くわよ！",0)
+				MES_close(PET)
+
+				rot_chr(RAGNA,30,PET)
+			//	name2(RAGNA)
+				MES(RAGNA,"ああ、そうだな。",0)
+				MES(RAGNA,"早いとこ準備を整えて、\nクリスタルバレーへ向かわねえと。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(RAGNA,"早いとこ準備を整えて、\n姫さんを迎えに行かねえとな！",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		}
+		else
+		{
+		//　　※オデッサ先頭
+			if( !F_RAGNA )
+			{
+				rot_chr(PET,30,PARTNER)
+				MES(PET,"ちょっと狼女、どこに行く気よ！",0)
+				MES(PET,"早く姫様を助けに行くわよ！",0)
+				MES_close(PET)
+
+				rot_chr(PARTNER,30,PET)
+			//	name2(PARTNER)
+				MES(PARTNER,"はは、わかってるさ。",0)
+				MES(PARTNER,"さっさと準備を整えて、\n連中の元へ乗り込むとしようか。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(PARTNER,"寄り道をしてる暇はない……",0)
+				MES(PARTNER,"さっさと準備を整えて、\n連中の元へ乗り込まないとね。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+			}
+		}
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			chr_pos(PLAYER2,190,15405,383,0,2)
+		}
+		chr_pos(PET,-190,15405,383,0,2)
+	}
+	chr_pos(PLAYER1,0,15530,364,0,2)
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()	
+
+	TK_end()
+
+}
+
+//強風SEフェードアウト
+EV_52_fadeout
+{
+	SE_vol(52,100,0)
+	wait(1)
+	SE_vol(52,99,0)
+	wait(1)
+	SE_vol(52,98,0)
+	wait(1)
+	SE_vol(52,97,0)
+	wait(1)
+	SE_vol(52,96,0)
+	wait(1)
+	SE_vol(52,95,0)
+	wait(1)
+	SE_vol(52,94,0)
+	wait(1)
+	SE_vol(52,93,0)
+	wait(1)
+	SE_vol(52,92,0)
+	wait(1)
+	SE_vol(52,91,0)
+	wait(1)
+	SE_vol(52,90,0)
+	wait(1)
+	SE_vol(52,89,0)
+	wait(1)
+	SE_vol(52,88,0)
+	wait(1)
+	SE_vol(52,87,0)
+	wait(1)
+	SE_vol(52,86,0)
+	wait(1)
+	SE_vol(52,85,0)
+	wait(1)
+	SE_vol(52,84,0)
+	wait(1)
+	SE_vol(52,83,0)
+	wait(1)
+	SE_vol(52,82,0)
+	wait(1)
+	SE_vol(52,81,0)
+	wait(1)
+	SE_vol(52,80,0)
+	wait(1)
+	SE_vol(52,79,0)
+	wait(1)
+	SE_vol(52,78,0)
+	wait(1)
+	SE_vol(52,77,0)
+	wait(1)
+	SE_vol(52,76,0)
+	wait(1)
+	SE_vol(52,75,0)
+	wait(1)
+	SE_vol(52,74,0)
+	wait(1)
+	SE_vol(52,73,0)
+	wait(1)
+	SE_vol(52,72,0)
+	wait(1)
+	SE_vol(52,71,0)
+	wait(1)
+	SE_vol(52,70,0)
+	wait(1)
+	SE_vol(52,69,0)
+	wait(1)
+	SE_vol(52,68,0)
+	wait(1)
+	SE_vol(52,67,0)
+	wait(1)
+	SE_vol(52,66,0)
+	wait(1)
+	SE_vol(52,65,0)
+	wait(1)
+	SE_vol(52,64,0)
+	wait(1)
+	SE_vol(52,63,0)
+	wait(1)
+	SE_vol(52,62,0)
+	wait(1)
+	SE_vol(52,61,0)
+	wait(1)
+	SE_vol(52,60,0)
+	wait(1)
+	SE_vol(52,59,0)
+	wait(1)
+	SE_vol(52,58,0)
+	wait(1)
+	SE_vol(52,57,0)
+	wait(1)
+	SE_vol(52,56,0)
+	wait(1)
+	SE_vol(52,55,0)
+	wait(1)
+	SE_vol(52,54,0)
+	wait(1)
+	SE_vol(52,53,0)
+	wait(1)
+	SE_vol(52,52,0)
+	wait(1)
+	SE_vol(52,51,0)
+	wait(1)
+	SE_vol(52,50,0)
+	wait(1)
+	SE_vol(52,49,0)
+	wait(1)
+	SE_vol(52,48,0)
+	wait(1)
+	SE_vol(52,47,0)
+	wait(1)
+	SE_vol(52,46,0)
+	wait(1)
+	SE_vol(52,45,0)
+	wait(1)
+	SE_vol(52,44,0)
+	wait(1)
+	SE_vol(52,43,0)
+	wait(1)
+	SE_vol(52,42,0)
+	wait(1)
+	SE_vol(52,41,0)
+	wait(1)
+	SE_vol(52,40,0)
+	wait(1)
+	SE_vol(52,39,0)
+	wait(1)
+	SE_vol(52,38,0)
+	wait(1)
+	SE_vol(52,37,0)
+	wait(1)
+	SE_vol(52,36,0)
+	wait(1)
+	SE_vol(52,35,0)
+	wait(1)
+	SE_vol(52,34,0)
+	wait(1)
+	SE_vol(52,33,0)
+	wait(1)
+	SE_vol(52,32,0)
+	wait(1)
+	SE_vol(52,31,0)
+	wait(1)
+	SE_vol(52,30,0)
+	wait(1)
+	SE_vol(52,29,0)
+	wait(1)
+	SE_vol(52,28,0)
+	wait(1)
+	SE_vol(52,27,0)
+	wait(1)
+	SE_vol(52,26,0)
+	wait(1)
+	SE_vol(52,25,0)
+	wait(1)
+	SE_vol(52,24,0)
+	wait(1)
+	SE_vol(52,23,0)
+	wait(1)
+	SE_vol(52,22,0)
+	wait(1)
+	SE_vol(52,21,0)
+	wait(1)
+	SE_vol(52,20,0)
+	wait(1)
+	SE_vol(52,19,0)
+	wait(1)
+	SE_vol(52,18,0)
+	wait(1)
+	SE_vol(52,17,0)
+	wait(1)
+	SE_vol(52,16,0)
+	wait(1)
+	SE_vol(52,15,0)
+	wait(1)
+	SE_vol(52,14,0)
+	wait(1)
+	SE_vol(52,13,0)
+	wait(1)
+	SE_vol(52,12,0)
+	wait(1)
+	SE_vol(52,11,0)
+	wait(1)
+	SE_vol(52,10,0)
+	wait(1)
+	SE_vol(52,9,0)
+	wait(1)
+	SE_vol(52,8,0)
+	wait(1)
+	SE_vol(52,7,0)
+	wait(1)
+	SE_vol(52,6,0)
+	wait(1)
+	SE_vol(52,5,0)
+	wait(1)
+	SE_vol(52,4,0)
+	wait(1)
+	SE_vol(52,3,0)
+	wait(1)
+	SE_vol(52,2,0)
+	wait(1)
+	stop_SE(52)
+}
+
+//結界SEフェードアウト
+EV_1073_fadeout
+{
+	SE_vol(1073,100,0)
+	wait(1)
+	SE_vol(1073,99,0)
+	wait(1)
+	SE_vol(1073,98,0)
+	wait(1)
+	SE_vol(1073,97,0)
+	wait(1)
+	SE_vol(1073,96,0)
+	wait(1)
+	SE_vol(1073,95,0)
+	wait(1)
+	SE_vol(1073,94,0)
+	wait(1)
+	SE_vol(1073,93,0)
+	wait(1)
+	SE_vol(1073,92,0)
+	wait(1)
+	SE_vol(1073,91,0)
+	wait(1)
+	SE_vol(1073,90,0)
+	wait(1)
+	SE_vol(1073,89,0)
+	wait(1)
+	SE_vol(1073,88,0)
+	wait(1)
+	SE_vol(1073,87,0)
+	wait(1)
+	SE_vol(1073,86,0)
+	wait(1)
+	SE_vol(1073,85,0)
+	wait(1)
+	SE_vol(1073,84,0)
+	wait(1)
+	SE_vol(1073,83,0)
+	wait(1)
+	SE_vol(1073,82,0)
+	wait(1)
+	SE_vol(1073,81,0)
+	wait(1)
+	SE_vol(1073,80,0)
+	wait(1)
+	SE_vol(1073,79,0)
+	wait(1)
+	SE_vol(1073,78,0)
+	wait(1)
+	SE_vol(1073,77,0)
+	wait(1)
+	SE_vol(1073,76,0)
+	wait(1)
+	SE_vol(1073,75,0)
+	wait(1)
+	SE_vol(1073,74,0)
+	wait(1)
+	SE_vol(1073,73,0)
+	wait(1)
+	SE_vol(1073,72,0)
+	wait(1)
+	SE_vol(1073,71,0)
+	wait(1)
+	SE_vol(1073,70,0)
+	wait(1)
+	SE_vol(1073,69,0)
+	wait(1)
+	SE_vol(1073,68,0)
+	wait(1)
+	SE_vol(1073,67,0)
+	wait(1)
+	SE_vol(1073,66,0)
+	wait(1)
+	SE_vol(1073,65,0)
+	wait(1)
+	SE_vol(1073,64,0)
+	wait(1)
+	SE_vol(1073,63,0)
+	wait(1)
+	SE_vol(1073,62,0)
+	wait(1)
+	SE_vol(1073,61,0)
+	wait(1)
+	SE_vol(1073,60,0)
+	wait(1)
+	SE_vol(1073,59,0)
+	wait(1)
+	SE_vol(1073,58,0)
+	wait(1)
+	SE_vol(1073,57,0)
+	wait(1)
+	SE_vol(1073,56,0)
+	wait(1)
+	SE_vol(1073,55,0)
+	wait(1)
+	SE_vol(1073,54,0)
+	wait(1)
+	SE_vol(1073,53,0)
+	wait(1)
+	SE_vol(1073,52,0)
+	wait(1)
+	SE_vol(1073,51,0)
+	wait(1)
+	SE_vol(1073,50,0)
+	wait(1)
+	SE_vol(1073,49,0)
+	wait(1)
+	SE_vol(1073,48,0)
+	wait(1)
+	SE_vol(1073,47,0)
+	wait(1)
+	SE_vol(1073,46,0)
+	wait(1)
+	SE_vol(1073,45,0)
+	wait(1)
+	SE_vol(1073,44,0)
+	wait(1)
+	SE_vol(1073,43,0)
+	wait(1)
+	SE_vol(1073,42,0)
+	wait(1)
+	SE_vol(1073,41,0)
+	wait(1)
+	SE_vol(1073,40,0)
+	wait(1)
+	SE_vol(1073,39,0)
+	wait(1)
+	SE_vol(1073,38,0)
+	wait(1)
+	SE_vol(1073,37,0)
+	wait(1)
+	SE_vol(1073,36,0)
+	wait(1)
+	SE_vol(1073,35,0)
+	wait(1)
+	SE_vol(1073,34,0)
+	wait(1)
+	SE_vol(1073,33,0)
+	wait(1)
+	SE_vol(1073,32,0)
+	wait(1)
+	SE_vol(1073,31,0)
+	wait(1)
+	SE_vol(1073,30,0)
+	wait(1)
+	SE_vol(1073,29,0)
+	wait(1)
+	SE_vol(1073,28,0)
+	wait(1)
+	SE_vol(1073,27,0)
+	wait(1)
+	SE_vol(1073,26,0)
+	wait(1)
+	SE_vol(1073,25,0)
+	wait(1)
+	SE_vol(1073,24,0)
+	wait(1)
+	SE_vol(1073,23,0)
+	wait(1)
+	SE_vol(1073,22,0)
+	wait(1)
+	SE_vol(1073,21,0)
+	wait(1)
+	SE_vol(1073,20,0)
+	wait(1)
+	SE_vol(1073,19,0)
+	wait(1)
+	SE_vol(1073,18,0)
+	wait(1)
+	SE_vol(1073,17,0)
+	wait(1)
+	SE_vol(1073,16,0)
+	wait(1)
+	SE_vol(1073,15,0)
+	wait(1)
+	SE_vol(1073,14,0)
+	wait(1)
+	SE_vol(1073,13,0)
+	wait(1)
+	SE_vol(1073,12,0)
+	wait(1)
+	SE_vol(1073,11,0)
+	wait(1)
+	SE_vol(1073,10,0)
+	wait(1)
+	SE_vol(1073,9,0)
+	wait(1)
+	SE_vol(1073,8,0)
+	wait(1)
+	SE_vol(1073,7,0)
+	wait(1)
+	SE_vol(1073,6,0)
+	wait(1)
+	SE_vol(1073,5,0)
+	wait(1)
+	SE_vol(1073,4,0)
+	wait(1)
+	SE_vol(1073,3,0)
+	wait(1)
+	SE_vol(1073,2,0)
+	wait(1)
+	stop_SE(1073)
+}
+
+//結界SEフェードアウト
+EV_1052_fadeout
+{
+	SE_vol(1052,100,0)
+	wait(1)
+	SE_vol(1052,99,0)
+	wait(1)
+	SE_vol(1052,98,0)
+	wait(1)
+	SE_vol(1052,97,0)
+	wait(1)
+	SE_vol(1052,96,0)
+	wait(1)
+	SE_vol(1052,95,0)
+	wait(1)
+	SE_vol(1052,94,0)
+	wait(1)
+	SE_vol(1052,93,0)
+	wait(1)
+	SE_vol(1052,92,0)
+	wait(1)
+	SE_vol(1052,91,0)
+	wait(1)
+	SE_vol(1052,90,0)
+	wait(1)
+	SE_vol(1052,89,0)
+	wait(1)
+	SE_vol(1052,88,0)
+	wait(1)
+	SE_vol(1052,87,0)
+	wait(1)
+	SE_vol(1052,86,0)
+	wait(1)
+	SE_vol(1052,85,0)
+	wait(1)
+	SE_vol(1052,84,0)
+	wait(1)
+	SE_vol(1052,83,0)
+	wait(1)
+	SE_vol(1052,82,0)
+	wait(1)
+	SE_vol(1052,81,0)
+	wait(1)
+	SE_vol(1052,80,0)
+	wait(1)
+	SE_vol(1052,79,0)
+	wait(1)
+	SE_vol(1052,78,0)
+	wait(1)
+	SE_vol(1052,77,0)
+	wait(1)
+	SE_vol(1052,76,0)
+	wait(1)
+	SE_vol(1052,75,0)
+	wait(1)
+	SE_vol(1052,74,0)
+	wait(1)
+	SE_vol(1052,73,0)
+	wait(1)
+	SE_vol(1052,72,0)
+	wait(1)
+	SE_vol(1052,71,0)
+	wait(1)
+	SE_vol(1052,70,0)
+	wait(1)
+	SE_vol(1052,69,0)
+	wait(1)
+	SE_vol(1052,68,0)
+	wait(1)
+	SE_vol(1052,67,0)
+	wait(1)
+	SE_vol(1052,66,0)
+	wait(1)
+	SE_vol(1052,65,0)
+	wait(1)
+	SE_vol(1052,64,0)
+	wait(1)
+	SE_vol(1052,63,0)
+	wait(1)
+	SE_vol(1052,62,0)
+	wait(1)
+	SE_vol(1052,61,0)
+	wait(1)
+	SE_vol(1052,60,0)
+	wait(1)
+	SE_vol(1052,59,0)
+	wait(1)
+	SE_vol(1052,58,0)
+	wait(1)
+	SE_vol(1052,57,0)
+	wait(1)
+	SE_vol(1052,56,0)
+	wait(1)
+	SE_vol(1052,55,0)
+	wait(1)
+	SE_vol(1052,54,0)
+	wait(1)
+	SE_vol(1052,53,0)
+	wait(1)
+	SE_vol(1052,52,0)
+	wait(1)
+	SE_vol(1052,51,0)
+	wait(1)
+	SE_vol(1052,50,0)
+	wait(1)
+	SE_vol(1052,49,0)
+	wait(1)
+	SE_vol(1052,48,0)
+	wait(1)
+	SE_vol(1052,47,0)
+	wait(1)
+	SE_vol(1052,46,0)
+	wait(1)
+	SE_vol(1052,45,0)
+	wait(1)
+	SE_vol(1052,44,0)
+	wait(1)
+	SE_vol(1052,43,0)
+	wait(1)
+	SE_vol(1052,42,0)
+	wait(1)
+	SE_vol(1052,41,0)
+	wait(1)
+	SE_vol(1052,40,0)
+	wait(1)
+	SE_vol(1052,39,0)
+	wait(1)
+	SE_vol(1052,38,0)
+	wait(1)
+	SE_vol(1052,37,0)
+	wait(1)
+	SE_vol(1052,36,0)
+	wait(1)
+	SE_vol(1052,35,0)
+	wait(1)
+	SE_vol(1052,34,0)
+	wait(1)
+	SE_vol(1052,33,0)
+	wait(1)
+	SE_vol(1052,32,0)
+	wait(1)
+	SE_vol(1052,31,0)
+	wait(1)
+	SE_vol(1052,30,0)
+	wait(1)
+	SE_vol(1052,29,0)
+	wait(1)
+	SE_vol(1052,28,0)
+	wait(1)
+	SE_vol(1052,27,0)
+	wait(1)
+	SE_vol(1052,26,0)
+	wait(1)
+	SE_vol(1052,25,0)
+	wait(1)
+	SE_vol(1052,24,0)
+	wait(1)
+	SE_vol(1052,23,0)
+	wait(1)
+	SE_vol(1052,22,0)
+	wait(1)
+	SE_vol(1052,21,0)
+	wait(1)
+	SE_vol(1052,20,0)
+	wait(1)
+	SE_vol(1052,19,0)
+	wait(1)
+	SE_vol(1052,18,0)
+	wait(1)
+	SE_vol(1052,17,0)
+	wait(1)
+	SE_vol(1052,16,0)
+	wait(1)
+	SE_vol(1052,15,0)
+	wait(1)
+	SE_vol(1052,14,0)
+	wait(1)
+	SE_vol(1052,13,0)
+	wait(1)
+	SE_vol(1052,12,0)
+	wait(1)
+	SE_vol(1052,11,0)
+	wait(1)
+	SE_vol(1052,10,0)
+	wait(1)
+	SE_vol(1052,9,0)
+	wait(1)
+	SE_vol(1052,8,0)
+	wait(1)
+	SE_vol(1052,7,0)
+	wait(1)
+	SE_vol(1052,6,0)
+	wait(1)
+	SE_vol(1052,5,0)
+	wait(1)
+	SE_vol(1052,4,0)
+	wait(1)
+	SE_vol(1052,3,0)
+	wait(1)
+	SE_vol(1052,2,0)
+	wait(1)
+	stop_SE(1052)
+}
+
+#EndScriptTable
+//====================================================================
+

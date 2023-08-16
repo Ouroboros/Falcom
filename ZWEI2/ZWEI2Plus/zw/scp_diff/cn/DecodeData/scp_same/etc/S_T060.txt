@@ -1,0 +1,1058 @@
+//──────────────────────────────
+//	name("◆薬売り（行商人）Karasu")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_KARASU
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(KARASU, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,KARASU)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,KARASU)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,KARASU)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//いない
+	//
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(KARASU,30,PLAYER1)
+		//モ～ション
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+
+		//──────────────────────────────
+		//わらしべ条件を満たしている：かつＬＦ立ってない
+		//──────────────────────────────
+		if(FV_11_Warasi13_Cls && !FV_11_Warasi14_krs && !F_KARASU)
+		{
+			MOT(KARASU,150,10)
+			EV("WARASHI_Karasu_FIRST")
+			wait_EV("WARASHI_Karasu_FIRST")
+		}
+		else
+		//□初回
+		if(!FT_12_TalkKarasu)
+		{
+			EV("TK_KARASU")
+			wait_EV("TK_KARASU")
+		}
+		//以下通常
+		else
+		{
+			VOICE(754, 0,)			//「何か入用か？」
+					
+			MOT(KARASU,150,10)
+			MES(KARASU,"……需要什么？",0)
+			MES_close(KARASU)
+
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+		}
+		MOT(KARASU,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//　※TK_KARASU内で分岐
+	//──────────────────────────────
+	if( F4_05_OnVillage2)
+	{
+		EV("TK_KARASU")
+		wait_EV("TK_KARASU")
+	}
+	else
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		//初回
+		if(!FT_06_TalkKarasu)
+		{
+			EV("TK_KARASU")
+			wait_EV("TK_KARASU")
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+		}
+		else
+		{
+			VOICE(754, 0,)			//「何か入用か？」		
+		
+			MOT(KARASU,150,10)
+			rot_chr(KARASU,30,PLAYER1)
+			MES(KARASU,"……需要什么？",0)
+			MES_close(KARASU)
+				
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+		}
+		MOT(KARASU,54,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//▼④炎之パ～ツを入手した
+	//▼③金暗之森へ向かうことにした
+	//▼②罗亚鲁塔村へ向かうことにした
+	//　※TK_KARASU内で分岐
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		//モ～ション
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+		MOT(KARASU,150,10)
+
+		VOICE(754, 0,)			//「何か入用か？」
+			
+		rot_chr(KARASU,30,PLAYER1)
+		MES(KARASU,"……需要什么？",0)
+		MES_close(KARASU)
+			
+		EV("SHOP_KARASU_LOOP")
+		wait_EV("SHOP_KARASU_LOOP")
+
+		MOT(KARASU,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		//モ～ション
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+		MOT(KARASU,150,10)
+
+		rot_chr(KARASU,30,PLAYER1)
+		//初回
+		if(!FT_01_TalkKarasu)
+		{
+			EV("TK_KARASU")
+			wait_EV("TK_KARASU")
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+
+			MES(KARASU,"如果有必须的东西的话\n我会卖给你的。",0)
+			MES_close(KARASU)
+		}
+		else
+		{
+			VOICE(754, 0,)			//「何か入用か？」
+		
+			MES(KARASU,"……需要什么？",0)
+			MES_close(KARASU)
+				
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+			
+		}
+		MOT(KARASU,2,10)
+	}
+	
+
+	TK_end()
+}
+
+SHOP_KARASU_LOOP
+{
+//	name("選択テキスト")
+	workL(WK_CANCEL,SET,3)//【取消】
+	MES_pos(PLAYER1,"??W9【对话】\n【买东西】\n【取消】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	//──────────────────────────────
+	//	name("□对话")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		EV("TK_KARASU")
+		wait_EV("TK_KARASU")
+		loop
+	}
+	//──────────────────────────────
+	//	name("□買ぶをする")
+	//──────────────────────────────
+	else
+	if(WK_YESNO==2)
+	{
+		shop_open(2)
+		wait_W(WK_YESNO)
+
+		if(!FT_FF_FoodHutoru)
+		{
+			if( IT200>0 || IT201>0 || IT202>0 )
+			{
+				EV("Tuto_Karasu")
+				wait_EV("Tuto_Karasu")
+			}
+		}
+		loop
+	}
+	//──────────────────────────────
+	//	name("□やめる")
+	//　　会話処理終了。
+	//──────────────────────────────
+	else
+	{
+		//□
+		if(F6_00_GoToMeru)
+		{
+			VOICE(757,0)	//「また来い」
+			MES(KARASU,"欢迎再来。",0)	
+					
+//			MES(KARASU,"呵呵……\n欢迎随时再来。",0)
+			MES_close(KARASU)
+		}
+		else
+		//⑥
+		if( F3_00_GoMoonCastle )
+		{
+			VOICE(757,0)	//「また来い」
+			MES(KARASU,"欢迎再来。",0)	
+				
+//			MES(KARASU,"……别忘了整顿装备。",0)
+			MES_close(KARASU)
+		}
+		else
+		{
+			VOICE(757,0)	//「また来い」
+		
+			MES(KARASU,"欢迎再来。",0)
+			MES_close(KARASU)
+		}
+	}
+}
+
+
+//一般メッセ～ジ/////////////////////////////////////////////////////////////////////////////
+TK_KARASU
+{
+
+	//──────────────────────────────
+	//　　※わらしべイベント中。
+	//──────────────────────────────
+	if(FV_11_Warasi13_Cls && !FV_11_Warasi14_krs && F_KARASU)
+	{
+		MES(KARASU,"我听说，阿尔杰斯\n是那场魔法大战的决战之地。",0)
+		MES(KARASU,"虽然我从前就对此很有兴趣\n但却一直没有去过那里。",0)
+		MES(KARASU,"如何，\n能把那张地图让给我吗？",0)
+		MES_close(KARASU)
+		EV("WARASHI_Karasu_LOOP")
+		wait_EV("WARASHI_Karasu_LOOP")
+	}
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※阿鲁迪亚镇にいる。
+	//　　※噴水右之木箱が積んで啊る辺りに立っている。
+	//	name("鸦")
+	else
+	if(F6_00_GoToMeru)
+	{
+		if(!FT_12_TalkKarasu)
+		{
+		//　　拉古那たちにＰＡエモ～ション。
+			EMO(RAGNA,EMO_TOGEBIKKURI)
+			EMO(PARTNER,EMO_TOGEBIKKURI)
+			wait(30)
+			
+			MES(RAGNA,"话说……\n你回来了啊。",0)
+			MES_close(RAGNA)
+
+		//	name("鸦")
+			MOT(KARASU,150,10)
+			MES(KARASU,"呵呵，算是吧。",0)
+			MES(KARASU,"头领也说，\n让我要支援你们。",0)
+			MES(KARASU,"虽然目前里的存在尚未曝光\n我不能高调地行动……",0)
+			MES(KARASU,"不过要是有什么麻烦事，你们尽管开口。",0)
+			MES_close(KARASU)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"啊啊，我知道了。",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾雯先頭")
+			else
+			{
+				MES(PARTNER,"嗯，我明白了。",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			F_set(FT_12_TalkKarasu)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_KARASU)
+			{
+				MES(KARASU,"实话说……能打破目前这种状况的\n也只有你们了吧。",0)
+				MES(KARASU,"呵呵，不愧是\n继承了里的使命的人啊……",0)
+				MES(KARASU,"进入那个要塞之前\n先做好万全的准备吧。",0)
+				MES_close(KARASU)
+				
+				F_set(KARASU)
+			}
+
+		//　　★繰り返し
+			else
+			{
+				MES(KARASU,"呵呵，不愧是\n继承了里的使命的人啊。",0)
+				MES(KARASU,"……进入之前\n先做好万全的准备吧。",0)
+				MES_close(KARASU)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※茶屋先之、残った长いすに座って茶を飲んでいる。
+	if( F5_00_HearLunar )
+	{
+		look_chr( KARASU, RAGNA,"Bone_Head")
+
+		if(!FS_11_TalkKarasu)
+		{
+		//　　鸦、拉古那に向く。
+			
+		//	name("鸦")
+			MES(KARASU,"……看来，月支之剑\n似乎是由你们继承了。",0)
+			MES(KARASU,"呵，从一开始\n我就觉得你们不简单。\n看来果然是有些缘分啊。",0)
+			MES_close(KARASU)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈哈……原来我们从那么早\n就被盯上了啊。",0)
+			MES(RAGNA,"嗯，看来，\n或许我们真的有点引人注目啊……",0)
+			MES_close(RAGNA)
+
+		//	name("鸦")
+			MES(KARASU,"这与其说是气息，\n不如说更像是我的直觉。\n不用特别在意。",0)
+			MES(KARASU,"不过，既然《守护者》的使命\n已经解除，我的任务\n也暂时告一段落了。",0)
+			MES(KARASU,"在头领下达其他指令之前，\n我就待命吧……",0)
+			MES_close(KARASU)
+			F_set(FS_11_TalkKarasu)
+		}
+		else
+		{
+			//──────────────────────────────
+			//　　※以下通常一般メッセ～ジ。
+			if(!F910)
+			{
+			//	name("鸦")
+				MES(KARASU,"意外地\n变得闲得慌呢。",0)
+				MES(KARASU,"在头领下达其他指令之前\n我就待命吧。",0)
+				MES(KARASU,"……偶尔\n也做些看孩子的工作吧。",0)
+				MES(KARASU,"这样有种被亲近的感觉呢。",0)
+				MES_close(KARASU)
+				F_set(910)
+			}
+			else
+			{
+			//　　★繰り返し
+			//	name("鸦")
+				MES(KARASU,"在头领下达其他指令之前\n我就待命吧。",0)
+				MES(KARASU,"……偶尔\n也分担一些里中的工作吧。",0)
+				MES_close(KARASU)
+			}
+		}
+		look_off(KARASU)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//　　※露天温泉方面に向かおうとするとイベント開始。
+	//　　　橋之途中で、エリアで引っ掛けて起動させます。
+	//　　手裏剑が飛んできて、先頭キャラ之足元に刺さる。
+
+/*  □里夜マップへ移植。
+	//──────────────────────────────
+	if( F4_09_GoShrineMia )
+	{
+		if(!FS_10_TalkKarasu)
+		{
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"哦……！？",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾雯先頭")
+			else
+			{
+				MES(PARTNER,"唔……！？",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		//　　先頭キャラ、驚いて少し後ろに下がる。
+		//　　温泉屋之前に、薬売りが出現している。
+		//　　背中之荷物はなしで、膝突き、手は手裏剑を投げた後之状態。
+		//	name("鸦")
+			MES(KARASU,"是你们吗……",0)
+			MES_close(KARASU)
+
+		//　　薬売り、立ち上がる。
+		//	name("鸦")
+			MES(KARASU,"昴和头领――\n还有那个妖精\n已经运到前面去了。",0)
+			MES(KARASU,"放心吧。",0)
+			MES_close(KARASU)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"是，是吗。\n大家都没事吧？",0)
+			MES_close(RAGNA)
+
+		//	name("鸦")
+			MES(KARASU,"嗯。",0)
+			MES(KARASU,"其他的重伤者和妇女儿童\n都在这里避难。",0)
+			MES(KARASU,"虽然敌人似乎都已经撤走了……\n不过保险起见，我还是在这里警戒。",0)
+			MES(KARASU,"里山的神社那里就拜托你们了。",0)
+			MES_close(KARASU)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"……明白了。",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"那里就包在我们身上了！",0)
+			MES_close(RAGNA)
+			
+			F_set(FS_10_TalkKarasu)
+		}
+		else
+		{
+		//　　★鸦【防衛之指揮】
+		//　　以降は、露天温泉方面には薬売りが立っており、ストッパ～となっている。
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。（ストッパ～）
+		//	name("鸦")
+			MES(KARASU,"这里有我，\n还有限爷爷和茜殿后。",0)
+			MES(KARASU,"……这里就交给我们\n你们到社那里去吧。",0)
+			MES(KARASU,"还有，广场上应该有个叫\n日户目的人。",0)
+			MES(KARASU,"如果有什么需要的话，\n就跟他说吧。",0)
+			MES_close(KARASU)
+		}
+	}
+	else
+*/
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//　　※配置なし。
+
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//　　※茶屋先で荷物を降ろし、茶を飲んでいる。
+	//　　※初回イベント。
+	//★名前が判明するまで表示名を「薬売り」に
+	if( F4_05_OnVillage2 )
+	{
+		//★鸦
+		F_set_note(-60,-1)
+
+		if(!FS_08_TalkKarasu)
+		{
+			look_chr( KARASU, RAGNA,"Bone_Head")
+			MOT(KARASU,63,15)
+			MES(KARASU,"……好久不见。\n情况怎么样？",0)
+			MES_close(KARASU)
+
+			//	name("□限と之初回会話がまだ")
+			//──────────────────────────────
+			if(!FS_08_TalkGen)
+			{
+				EMO(RAGNA,EMO_HATENA)			//　　拉古那に？エモ～ション。
+				wait(30)
+				MES(RAGNA,"咦，我好像\n在哪里见过你……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（咦，咦？\n  在里中\n  还有这样的人吗……？）",0)
+				MES_close(PARTNER)
+
+			//　　２人にしばらく···エモ～ション。
+				EFF_chr(25124,RAGNA,0,100,0,"Bone_Head")
+				EFF_chr(25124,PARTNER,0,100,0,"Bone_Head")
+				wait(80)
+				
+			//　　そ之後拉古那に！エモ～ション。昴にＰＡエモ～ション。
+			//　　２人同時にポップアップを出す。
+				EMO(RAGNA,EMO_BIKKURI)			//　　拉古那に！エモ～ション。
+				EMO(PARTNER,EMO_PA)			//　　昴にPAエモ～ション。
+				wait(30)
+			
+				MES(RAGNA,"啊，我记得\n你是阿鲁迪亚镇上那个卖药的！？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"啊，难道是鸦叔叔？",0)
+				MES_close(PARTNER)
+			}
+			//	name("□限と初回会話済み")
+			//──────────────────────────────
+			else
+			{
+				MES(RAGNA,"咦，我好像\n在哪见过你……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（咦，咦？\n  在里中\n  还有这样的人吗……？）",0)
+				MES_close(PARTNER)
+
+			//　　２人にしばらく···エモ～ション。
+			//　　そ之後ＰＡエモ～ション。
+			//　　２人にしばらく···エモ～ション。
+				EFF_chr(25124,RAGNA,0,100,0,"Bone_Head")
+				EFF_chr(25124,PARTNER,0,100,0,"Bone_Head")
+				wait(80)
+				EMO(RAGNA,EMO_PA)
+				EMO(PARTNER,EMO_PA)
+				wait(30)
+
+			//　　２人同時にポップアップを出す。
+				MES(RAGNA,"啊，你不就是阿鲁迪亚镇上\n那个卖药的吗！",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"啊，难道是鸦叔叔？",0)
+				MES_close(PARTNER)
+			}
+
+		//──────────────────────────────
+
+		//名前を鸦に
+			chr_rename(KARASU,"鸦")
+
+		//　　拉古那、昴に向く。
+			rot_chr(RAGNA,30,PARTNER)
+
+			MES(RAGNA,"……呃，\n果然你也是忍者吗？",0)
+			MES_close(RAGNA)
+
+		//　　昴、拉古那に向く。
+			rot_chr(PARTNER,30,RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"对，他是里中本领最强的，\n被称为爷爷的左右手\n的人哦。",0)
+			MES(PARTNER,"因为不经常待在这里，\n又常常变装成各种各样的人，\n所以不知道到底长什么样子呢……",0)
+			MES_close(PARTNER)
+
+		//	name("鸦")
+			MES(KARASU,"呵呵……",0)
+
+		//　　拉古那、鸦に向く。
+			rot_chr(RAGNA,30,KARASU)
+		//　　昴、鸦に向く。
+			rot_chr(PARTNER,30,KARASU)
+			
+			MES(KARASU,"头领派给我的\n是收集情报的任务。",0)
+			MES(KARASU,"话虽如此，也就是\n定期确认下界情况的程度而已。",0)
+			MES_close(KARASU)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"那个，今天果然是\n来向爷爷报告的吗……？",0)
+			MES_close(PARTNER)
+
+		//	name("鸦")
+			look_chr(KARASU,PARTNER,"Bone_Head")
+			MES(KARASU,"……嗯，刚才已经报告完了。",0)
+			MES(KARASU,"虽然我很快就要下山……\n对了，头领马上就要回来了吧。",0)
+			MES(KARASU,"你们慢慢走过去就行了。",0)
+			MES_close(KARASU)
+			
+			//★鸦【凄腕忍者】
+			F_set_note(-60,1)
+			F_set(FS_08_TalkKarasu)
+			
+		//名前付きキャラ全員に話しかけると露天温泉が開く
+			EV("EV_F4_12_OkRoten")
+		}
+		else
+		{
+		//　　★鸦【本名鸦】
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		//	name("鸦")
+//			MES(KARASU,"虽然我很快就要下山，\n不过头领马上就要回来了吧。",0)
+//			MES(KARASU,"慢慢走过去就行了。",0)
+//			MES_close(KARASU)
+
+			MES(KARASU,"呵呵……不过不管什么时候回来，\n这个里都没有变呢。",0)
+			MES_close(KARASU)
+
+		//　　鸦振り返る。
+			look_chr(KARASU,PLAYER1,"Bone_Head")
+			MOT(KARASU,63,15)
+		//	name("鸦")
+			MES(KARASU,"头领\n马上就要回来了吧。",0)
+			MES(KARASU,"慢慢走过去就行了。",0)
+			MES_close(KARASU)
+		}
+		look_off(KARASU)
+	}
+	else
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※雑貨屋之横之階段前。
+	if( F3_00_GoMoonCastle )
+	{
+		//会話モ～ション
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+
+	//　　※初回イベント
+		if(!FT_06_TalkKarasu)
+		{
+		//　　※振り向かない
+			MES(KARASU,"（那座城……散发着\n  不祥的妖气啊……）",0)
+			MES_close(KARASU)
+
+		//　　薬売り、ＰＡエモ～ションで振り向く。
+			EMO(KARASU,EMO_PA)
+			wait(30)
+			rot_chr(KARASU,30,PLAYER1)
+			MOT(KARASU,150,10)
+			
+			VOICE(754, 0,)			//「何か入用か？」
+			
+			MES(KARASU,"……需要什么？",0)
+			MES_close(KARASU)
+
+		//　　□ショップ処理を挟む。
+			
+			F_set(FT_06_TalkKarasu)
+		}
+		else
+		{
+			if(!F_KARASU)
+			{
+			//	name("□对话")
+				MES(KARASU,"那座城……似乎是随着钟声\n而突然出现的。",0)
+				MES_close(KARASU)
+
+			//　　薬売りに···エモ～ション。
+				EMO(KARASU,EMO_TENTEN)
+				wait(30)
+				
+				MES(KARASU,"但是，那种不祥的妖气……",0)
+				MES(KARASU,"居然强烈到\n在这里都能感觉到……",0)
+				MES_close(KARASU)
+
+				F_set(KARASU)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(KARASU,"……要走了吗？",0)
+				MES(KARASU,"别忘了整顿装备。",0)
+				MES_close(KARASU)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※噴水右之木箱が積んで啊る辺りに立っている。
+	if( F2_14_TalkEnemy )
+	{
+		MES(KARASU,"………………………………",0)
+		MES(KARASU,"最近，人流量还真是大啊……",0)
+		MES_close(KARASU)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※罗亚鲁塔村、村长宅前に配置。
+	if( F2_00_GoForest )
+	{
+		if(!F_KARASU)
+		{
+			MES(KARASU,"……人生，\n就是不知道有什么事会发生的东西啊。",0)
+			MES(KARASU,"备齐必要的物品吧。",0)
+			MES_close(KARASU)
+
+			F_set(KARASU)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(KARASU,"所谓人生，\n就是不知道途中会发生什么的东西……",0)
+			MES(KARASU,"备齐必要的物品吧。",0)
+			MES_close(KARASU)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※菲奥娜邸に行く道之手前に立っている。
+	if( F1_15_GoVillage )
+	{
+		if(!F_KARASU)
+		{
+			MES(KARASU,"你们……\n最近似乎在\n探索洞窟啊。",0)
+			MES(KARASU,"那就带上炸弹吧。",0)
+			MES(KARASU,"应该会派上用场的。",0)
+			MES_close(KARASU)
+
+			F_set(KARASU)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(KARASU,"要进入洞窟的话，\n还是带上炸弹好些吧。",0)
+			MES(KARASU,"炸弹常常滞销啊。\n呵呵，虽说这是常识呢。",0)
+			MES_close(KARASU)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※菲奥娜邸に行く道之手前に立っている。
+	if( F1_01_GameStart )
+	{
+
+		rot_chr(KARASU,30,PLAYER1)
+
+	//　　※初回イベント。
+		if(!FT_01_TalkKarasu)
+		{
+		//　　薬売りにＰＡエモ～ション。
+			EMO(KARASU,EMO_PA)
+			wait(30)
+			
+			MES(KARASU,"唔……\n是陌生的面孔呢。",0)
+			MES_close(KARASU)
+
+		//　　薬売りに少し···エモ～ション。
+			EMO(KARASU,EMO_TENTEN)
+			wait(30)
+			
+			VOICE(754, 0,)			//「何か入用か？」
+			
+			MES(KARASU,"……算了。\n需要什么？",0)
+			MES_close(KARASU)
+			
+			//ショップ処理をはさむ
+
+			F_set(FT_01_TalkKarasu)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			MES(KARASU,"如果有什么需要\n就尽管开口吧。",0)
+			MES(KARASU,"呵呵……如果东西比较多的话\n我会给你们优惠的。",0)
+			MES_close(KARASU)
+		}
+	}
+}
+
+
+//鸦之ちょっとしたアドバイス。
+//前半フラグ之み見れる。
+Tuto_Karasu
+{
+	wait(20)
+//	MES(KARASU,"呵呵，你们买了好东西呢。",0)
+//	MES(KARASU,"这个食物虽然不能回复体力，\n但是能得到很高的经验值……",0)
+	MES(KARASU,"呵呵，我卖的食物\n可是有点不一样的……",0)
+	MES(KARASU,"虽然不能回复体力，\n但相对的，却可以得到\n很高的经验值。",0)
+	MES_close(KARASU)
+
+	//──────────────────────────────
+	//	name("□拉古那先頭")
+	if(GW_MAN==1)
+	{
+		MES(RAGNA,"嘿，是这样吗。",0)
+		MES(RAGNA,"就是说\n是升级专用食物啰……",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+	//	name("□艾雯先頭")
+		MES(PARTNER,"哦，是这样啊。",0)
+		MES(PARTNER,"升级专用食物\n就是这么回事吧……",0)
+		MES_close(PARTNER)
+	}
+	//──────────────────────────────
+	MES(KARASU,"唔，类似于\n促进成长的灵药吧。",0)
+	MES(KARASU,"不过，就像刚才说过的\n这是不能回复体力的。",0)
+	MES(KARASU,"你们要注意\n别在危险的时候用错了。",0)
+	MES_close(KARASU)
+
+	F_set(FT_FF_FoodHutoru)
+
+}
+
+
+//わらしべアイテムを持っていれば初回はすぐに見れるようにする。
+//２回目以降は選択肢之会話之中から見れる。
+
+//↓以下、初回分。
+WARASHI_Karasu_FIRST
+{
+
+	//──────────────────────────────
+	//▼　わらしべイベント
+	//	name("13·鸦（阿鲁迪亚镇）		『阿尔杰斯之地図』□最強装備？")
+	//──────────────────────────────
+
+	//まだ初回イベントみていない□合体させる。
+	if(!FT_12_TalkKarasu)
+	{
+	//　　拉古那たちにＰＡエモ～ション。
+		EMO(RAGNA,EMO_TOGEBIKKURI)
+		EMO(PARTNER,EMO_TOGEBIKKURI)
+		wait(30)
+		
+		MES(RAGNA,"话说……\n你回镇上来了啊。",0)
+		MES_close(RAGNA)
+
+	//	name("鸦")
+		MOT(KARASU,150,10)
+		MES(KARASU,"呵呵，算是吧。",0)
+		MES(KARASU,"头领也说了，\n让我要支援你们。",0)
+		MES(KARASU,"虽然目前里的存在尚未曝光\n我不能高调地行动……",0)
+		MES(KARASU,"不过要是有什么麻烦事，你们尽管开口。",0)
+		MES_close(KARASU)
+
+	//──────────────────────────────
+	//	name("□拉古那先頭")
+		if(GW_MAN==1)
+		{
+			MES(RAGNA,"啊啊，我知道了。",0)
+			MES_close(RAGNA)
+		}
+	//	name("□艾雯先頭")
+		else
+		{
+			MES(PARTNER,"嗯，我明白了。",0)
+			MES_close(PARTNER)
+		}
+	//──────────────────────────────
+
+		F_set(FT_12_TalkKarasu)//初回フラグを立てる。
+
+		MES(KARASU,"……话说回来，\n你们带着有趣的东西呢。",0)
+	}
+	//初回見てる。
+	else
+	{
+		MES(KARASU,"……哦。",0)
+		MES(KARASU,"你们，\n带着有趣的东西呢。",0)
+	}
+
+	MES(KARASU,"这是\n『阿尔杰斯的地图』吧。",0)
+	MES_close(KARASU)
+
+	MES(RAGNA,"嗯，是这样没错……",0)
+	MES(RAGNA,"不过你知道的还真清楚呢。\n这可是个\n相当小的大陆啊。",0)
+	MES_close(RAGNA)
+
+	MES(KARASU,"呵呵，因为\n我是负责收集情报的嘛。",0)
+	MES(KARASU,"变装成各种人，到各个大陆去\n也不是什么少见的事。",0)
+	MES(KARASU,"……不过，我却还没去过\n阿尔杰斯呢。",0)
+	MES(KARASU,"如何，那个地图\n能让给我吗？",0)
+	MES_close(KARASU)
+
+	F_set(KARASU)
+
+	EV("WARASHI_Karasu_LOOP")
+	wait_EV("WARASHI_Karasu_LOOP")
+
+}
+
+
+
+
+
+
+
+
+WARASHI_Karasu_LOOP
+{
+
+	workL(WK_CANCEL,SET,2)//【取消】
+	MES_pos(PLAYER1,"??W9【请拿去吧】\n【我再考虑考虑】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+	//──────────────────────────────
+	//	name("□【役立ててください】")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+	//	name("鸦")
+		MES(KARASU,"是吗……\n这样的话，作为交换\n把这个给你们吧。",0)
+		MES_close(KARASU)
+
+	//	name("アイテム入手テキスト")
+	//	MES(KARASU,"收下了『道具名』。",0)
+		//―――――――――――――――――――――――
+		fade_in(30,10,BLACK)
+		
+		//◆仮として、Fパ～ツをくれるようになっています。
+		get_item(154,-1,1)
+		get_item(133,1,0)
+		wait(10)
+		wait_key(0)
+		
+		fade_in(0,10,BLACK)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		//―――――――――――――――――――――――
+	
+	
+		MES(KARASU,"说到阿尔杰斯……\n你听过这样一个传闻吗？",0)
+		MES(KARASU,"大约一年前，在那里\n似乎发生过不祥的骚动。",0)
+		MES(KARASU,"据说是被封印在阿尔杰斯的\n最后的六魔王《无限的维斯帕》\n复活了。",0)
+		MES_close(KARASU)
+
+	//　　拉古那たちに！エモ～ション。
+		EMO(RAGNA,EMO_BIKKURI)
+		EMO(PARTNER,EMO_BIKKURI)
+		EMO(PET,EMO_BIKKURI)
+		wait(30)
+
+		MES(PARTNER,"咦……！？",0)
+		MES_close(PARTNER)
+
+		MES(RAGNA,"复，复活了……？",0)
+		MES_close(RAGNA)
+
+		MES(KARASU,"啊啊，不过到底是传闻，\n没有任何根据就是了。",0)
+		MES_close(KARASU)
+
+	//　　鸦、龙卷に振り向く仕草。
+		rot(KARASU,30,110)
+		MES(KARASU,"但是，看到目前的状况，\n怀疑的念头也淡薄了……",0)
+		MES_close(KARASU)
+
+	//　　鸦、向きを戻す。
+		rot_chr(KARASU,30,PLAYER1)
+
+		MES(KARASU,"《金色的路西昂》\n似乎继承了\n古代的庞大魔力。",0)
+		MES(KARASU,"能打破现在这种状况的\n也只有你们了吧。",0)
+		MES(KARASU,"……临走之前\n先做好万全的准备吧。",0)
+		MES_close(KARASU)
+		
+		F_reset(KARASU)
+		F_set(FV_11_Warasi14_krs)
+	}
+	//──────────────────────────────
+	//	name("□【少し考えさせて】")
+	//──────────────────────────────
+	else
+	{
+	//	name("鸦")
+		MES(KARASU,"……是吗。\n那就好好考虑吧。",0)
+		MES_close(KARASU)
+	}
+	//★鸦【他之大陸へ】
+	F_set_note(-60,2)
+}
+
+
+
+
+
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+*/

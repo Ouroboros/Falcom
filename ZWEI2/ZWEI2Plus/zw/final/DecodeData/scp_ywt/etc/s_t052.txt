@@ -1,0 +1,453 @@
+//仭Zwei2堦斒儊僢僙乕僕丒傾儖僢僥偺挰乮仸儕僾僩儞乯
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭傾儖僢僥
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧儕僾僩儞乮忋棳奒媺抝乯Rypton")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_RYPTON
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(RYPTON, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,RYPTON)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,RYPTON)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,RYPTON)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,RYPTON)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸將傪楢傟偰丄戝摴寍恖偺慜偵偄傞丅
+	if( F6_05_EndSixth )
+	{
+		EV("MOTION_TK_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"身為紳士，無論處在何種狀況之中\n都不能慌張。",0)
+			MES(RYPTON,"當然在那場騷動過程中\n我也一聲都沒吭。",0)
+			MES(RYPTON,"不過……我的\n禮帽被大風吹走了。",0)
+			MES(RYPTON,"呼，當時還是有些著急呢。",0)
+			MES_close(RYPTON)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+	
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僼儔僌嘍偺儊僢僙乕僕傪尒偨偙偲偑偁傞応崌")
+		if(FT_05_RyptonPs)
+		{
+			MES(RAGNA,"（明明發生了那麼大的騷動……）",0)
+			MES(RAGNA,"（嗯—，直到最後\n 都還這麼沈穩……）",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name("佀偦傟埲奜")
+			MES(RAGNA,"（明明發生了那麼大的騷動。\n 真是沈穩啊……）",0)
+			MES_close(RAGNA)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(RYPTON)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(RYPTON,"唔，實際上……",0)
+			MES(RYPTON,"現在我戴著的禮帽\n是備用品。",0)
+			MES(RYPTON,"……這樣下去可不行。\n因為不知道什麼時候還會弄丟。",0)
+			MES(RYPTON,"一定要趁下次送貨之前\n儘快訂購才行。",0)
+			MES_close(RYPTON)
+			
+			//仛儕僾僩儞亂僔儖僋僴僢僩亃
+			F_set_note(RYPTON,2)
+		}
+		MOT(RYPTON,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_TK_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+		//丂丂仸將傪楢傟偰丄暚悈偺屻傠偁偨傝偱儌乕儕僗偺榖傪暦偄偰偄傞丅
+			MES(RYPTON,"總而言之……\n就是說有什麼\n嚴重的異變即將來臨了嗎？",0)
+			MES(RYPTON,"唔……\n克拉克似乎也很興奮。",0)
+			MES(RYPTON,"聽說狗\n能夠預知災難。",0)
+			MES(RYPTON,"看來這果然\n是個不好的兆頭呢。",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(RYPTON,"克拉克似乎也很興奮。",0)
+			MES(RYPTON,"聽說狗\n能夠預知災難。",0)
+			MES(RYPTON,"唔，看來這果然\n是個不好的兆頭呢。",0)
+			MES_close(RYPTON)
+		}
+		MOT(RYPTON,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸庰応慜偁偨傝偱丄僄儞僕僃偲榖偟偰偄傞丅
+	//丂丂丂朤偵將偑偆傠偆傠偟偰偄傞丅
+	if( F5_00_HearLunar )
+	{
+		if(!F_RYPTON)
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			MES(RYPTON,"最近的怪事……？",0)
+			MES(RYPTON,"好像是沒有。",0)
+			MES(RYPTON,"最多不過是內人心情不太好，\n還有我訂購的\n情報雜誌一直沒有送到。",0)
+			MES(RYPTON,"沒有關係。\n我正打算向那邊寄信\n提出抗議呢。",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			MES(RYPTON,"那個……內人有些神經質，\n情緒不好也是常事。",0)
+			MES(RYPTON,"最近好像經常\n在家裡閉門不出……",0)
+			MES(RYPTON,"總之不是什麼大事。\n讓你們操心真是過意不去。",0)
+			MES_close(RYPTON)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥忋抜乮柉壠俀慜乣嫵夛慜偺峀応乯偵偐偗偰丄將偺嶶曕傪偟偰偄傞丅
+	if( F4_00_StartSolo )
+	{
+		EV("MOTION_TK_RYPTON")
+		F_set_chr(DOG,CF_NO_MOVE)
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"早安，今天天氣不錯啊。\n看來又是清爽的一天了。",0)
+			MES(RYPTON,"在清晨保持舒爽心情的秘訣……\n那就是充分的睡眠。",0)
+			MES(RYPTON,"當然昨晚我也睡得很香。\n……不過內人似乎沒有睡著。",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(RYPTON,"內人好像在擔心什麼事，\n一早就去教會了。",0)
+			MES(RYPTON,"唔，她還是那麼神經質。",0)
+			MES_close(RYPTON)
+		}
+		F_reset_chr(DOG,CF_NO_MOVE)
+		MOT(RYPTON,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸偄側偄
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸柉壠侾偵偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		EV("MOTION_TK_RYPTON")
+		EV_stop("LOOKING_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"我的工作\n就是世人所謂的銀行家。",0)
+			MES(RYPTON,"——不過最近\n經營已經交由部下全權負責了。",0)
+			MES(RYPTON,"只是每隔幾年我都會收到\n報告文書。",0)
+			MES_close(RYPTON)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"（這……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（唔，看起來他\n 該不會是被放棄了吧……？）",0)
+			MES_close(PARTNER)
+
+			//仛儕僾僩儞亂帺徧嬧峴壠亃
+			F_set_note(RYPTON,1)
+			F_set(RYPTON)
+			//暯榓側儕僾僩儞丂僼儔僌
+			F_set(FT_05_RyptonPs)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(RYPTON,"今天一整天克拉克心情也不錯……",0)
+			MES(RYPTON,"呵呵，它的心情\n我可是很清楚的。",0)
+			MES(RYPTON,"掌握人心畢竟是我\n最拿手的絕活呢。",0)
+			MES_close(RYPTON)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（真的嗎……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+				MES(PARTNER,"（真的嗎……？）",0)
+				MES_close(PARTNER)
+			}
+		}
+		EV("LOOKING_RYPTON")
+		MOT(RYPTON,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥忋抜乮柉壠俀慜乣嫵夛慜偺峀応乯偵偐偗偰丄將偺嶶曕傪偟偰偄傞丅
+	if( F2_00_GoForest )
+	{
+		EV("MOTION_TK_RYPTON")
+		F_set_chr(DOG,CF_NO_MOVE)
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"阿魯特鎮郊外有一間宅邸，\n一直以來都荒廢著。\n……你們知道嗎？",0)
+			MES(RYPTON,"不過最近，好像有人\n開始在那裡居住了。",0)
+			MES(RYPTON,"唔……\n難道已經易主了嗎？",0)
+			MES_close(RYPTON)
+
+			F_set(RYPTON)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(RYPTON,"沒有人知道那間宅邸的主人。\n我一直以為那裡是\n阿魯特鎮的財產……",0)
+			MES(RYPTON,"難道是因為手頭緊\n才放棄那裡的嗎？",0)
+			MES(RYPTON,"唔，那樣的話\n我倒是可以買下來。",0)
+			MES_close(RYPTON)
+		}
+		F_reset_chr(DOG,CF_NO_MOVE)
+		MOT(RYPTON,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸將傪楢傟偰丄戝摴寍恖偺慜偵偄傞丅
+	if( F1_15_GoVillage )
+	{
+		EV("MOTION_TK_RYPTON")
+		rot_chr(RYPTON,30,PLAYER1)
+		if(!F_RYPTON)
+		{
+			MES(RYPTON,"我的這隻狗——克拉克\n可是很懂雜技的。",0)
+			MES(RYPTON,"不要以為它是狗\n就小看它。\n狗的腦子很好呢。",0)
+			MES(RYPTON,"……只不過克拉克\n自己倒是不耍雜技。",0)
+			MES_close(RYPTON)
+
+			//仛儕僾僩儞亂將偺柤慜亃
+			F_set_note(RYPTON,0)
+			F_set(RYPTON)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(RYPTON,"看來克拉克也很喜歡\n這裡的雜技呢。",0)
+			MES(RYPTON,"它經常要求我\n帶它來這裡……",0)
+			MES(RYPTON,"這也是\n狗與主人的一種關係啊。",0)
+			MES_close(RYPTON)
+		}
+		MOT(RYPTON,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥忋抜乮柉壠俀慜乣嫵夛慜偺峀応乯偵偐偗偰丄將偺嶶曕傪偟偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩
+	if( F1_01_GameStart )
+	{
+		F_set_chr(DOG,CF_NO_MOVE)
+		rot_chr(RYPTON,30,PLAYER1)
+		
+		EV("MOTION_TK_RYPTON")
+		if(!FT_01_TalkRypton)
+		{
+			MES(RYPTON,"早安。\n今天天氣很好呢。",0)
+			MES_close(RYPTON)
+
+//		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//		//	name("佀儔僌僫愭摢")
+//			if(GW_MAN==1)
+//			{
+//				MES(RAGNA,"偁丄偁偁丅偳偆傕乧乧",0)
+//				MES_close(RAGNA)
+//			}
+//		//	name("佀傾儖僂僃儞愭摢")
+//			else
+//			{
+//				MES(PARTNER,"偆傓丄妋偐偵\n傛偔惏傟偰偍傞側丅",0)
+//				MES_close(PARTNER)
+//			}
+//		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		
+			MES(RYPTON,"你們也在散步嗎？",0)
+			MES(RYPTON,"實際上我每天\n都會出來散步。",0)
+			MES(RYPTON,"從每天早上鎮中的空氣\n就可以知道當天的狀態。",0)
+			MES(RYPTON,"今天衣服也很整齊。",0)
+			MES(RYPTON,"看來又是個清爽的一天啊。",0)
+			MES_close(RYPTON)
+
+//		//	name2(RAGNA)
+//			MES(RAGNA,"傊丄傊偊丅偦傫側傕傫偐丅",0)
+//			MES_close(RAGNA)
+//
+//		//	name2(RYPTON)
+//			MES(RYPTON,"偁偁丄嶶曕桭払偑憹偊偰\n巹傕婐偟偄乧乧",0)
+//			MES_close(RYPTON)
+//
+//		//丂丂儕僾僩儞偵俹俙僄儌乕僔儑儞丅
+//			EMO(RYPTON,EMO_PA)
+//			wait(30)
+//			
+//			MES(RYPTON,"偍偭偲丄巹偼偦傠偦傠幐楃偡傞傛丅\n巆傝偺嶶曕偑偁傞偺偱偹丅",0)
+//			MES_close(RYPTON)
+
+		//丂丂偙偙偱俴俥傕棫偰傞丅
+			F_set(FT_01_TalkRypton)
+			F_set(RYPTON)		//仸儅僢僾愗傝懼偊慜偼孞傝曉偟偵旘偽偡丅
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_RYPTON)
+			{
+				MES(RYPTON,"早安。\n今天天氣很好呢。",0)
+				MES(RYPTON,"今天衣服也很整齊。",0)
+				MES(RYPTON,"看來又是個清爽的一天啊。",0)
+				MES_close(RYPTON)
+				F_set(RYPTON)
+			}
+		//丂丂仛孞傝偐偊偟
+			else
+			{
+				MES(RYPTON,"我認為早上一定要有紅茶。",0)
+				MES(RYPTON,"再加上新鮮的檸檬切片\n和黃油牛角麵包。",0)
+				MES(RYPTON,"要度過完美的一天\n可缺不了這些東西。",0)
+				MES_close(RYPTON)
+			}
+		}
+		F_reset_chr(DOG,CF_NO_MOVE)
+		MOT(RYPTON,150,15)
+	}
+	
+	TK_end()
+}
+//夛榖帪偺儌乕僔儑儞
+MOTION_TK_RYPTON
+{
+	MOT_SET(RYPTON,150,-1,404,404,151,15)
+	MOT_SET(RYPTON,151,-1,402,402,150,15)
+	MOT(RYPTON,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

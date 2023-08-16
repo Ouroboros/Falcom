@@ -1,0 +1,2024 @@
+//====================================================================
+//ステージトラップスクリプト
+//[17019][異－ボス１終]
+//====================================================================
+
+#ScriptTable
+
+
+#LUE 		1
+#DYGALD		2
+#ODESSA		3
+#BOSS		4
+#EVENT_RAGNA	5
+#B_ODESSA		6
+#H_DYGALD		7
+#EFFDUMMY1		8
+#EFFDUMMY2		9
+#EFFDUMMY3		10
+#EFFDUMMY4		11
+#HYPERDYGALD	12
+#EFFDUMMY5		13
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境SE
+	SE(68,0)
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段．扉
+	set_chr( 90,990,	-1,-1,	12850, 0,-1950, 	 90,  0102, 6,"K1_17023;")	//①エントリ ボス１③
+	set_chr( 91,990,	-1,-1,	-2725,-2725,3500,   315,  0101, 6,"K0_17031;")	//②エントリ ボス２①
+
+//■スイッチ．看板
+	set_chr( 50,620,	-1,-1,  11900, 700,-2000,	  0,   180, 0,";")	//①セーブOBJ
+
+	set_chr( 53,648,	-1,-1,  11190,   0,-2000,	 23,   270, 0,";")	//②レベルプレート
+	color2( 53,  75,75,100, 0,0,0)	// 異次元のレベルプレートの色
+
+	set_chr( 55,648,	-1,-1,  -2100,-2100,3500,	 24,   315, 0,";")	//③レベルプレート
+	color2( 55,  75,75,100, 0,0,0)	// 異次元のレベルプレートの色
+	set_chr( 56,654,	-1,-1,  -2240,-1965,3500,	  3,   335, 0,";")	//③順路案内（ボス）
+	set_chr( 57,654,	-1,-1,  -2235,-1960,3640,	  3,   295, 0,";")	//③順路案内（ボス）
+
+
+	set_chr( 60,658,	-1, -1,  10150,250,-1550,		  0,   270, 0,";")	//④中ボス看板
+
+	if(GW_ENTRY_EVENT==101)		//ゲーセン用
+	{
+	}
+	else
+	{
+		if( !F5_13_KillDygald )
+		{
+			set_chr( 81,990,	-1, -1,  10050,  0,-1550,		  0,070105, 6,"#8_99 S0_1 WT?120;")//警報出現
+		}
+
+		if(F5_13_KillDygald)			//ＧＦ『★中ボス⑥【真ダイガルド】を倒した』
+		{
+			F_reset_obj("bossatari", NP_GROUND)												//ストッパー当たりOFF
+		}
+
+	//■キャラ配置
+		//ＧＦ『★中ボス⑥【真ダイガルド】を倒した』立ってない
+		if(F5_13_KillDygald && !F5_17_EndFifth)
+		{
+			//オデッサが倒れている
+			set_chr(ODESSA,	 	1034,-1,-1,  460,0,2800 2,90,20, "<TK_ODESSA>")
+			MOT_SET(ODESSA,150,-1,523,523,-1,-1)	//たおれ
+			MOT(ODESSA,150,0)
+			KAO(ODESSA,"C","3","3")
+			F_set_chr(ODESSA,CF_NO_MOVE)
+			EV("EV_ODESSA_TAIL")
+		}
+	}
+
+//■イベント
+
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼真ダイガルドとの戦い後、オデッサをパーティからはずす処理
+			EV("EV_5_18_KillOverDygaldEnd")
+	}
+	else
+	//ボス再戦用
+	if(GW_ENTRY_EVENT==100 || GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼真ダイガルドとの戦い s
+			EV("EV_5_17_BossOverDygald")
+	}
+	else
+	//ゲーセン用
+	if(GW_ENTRY_EVENT==101)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼真ダイガルドとの戦い s
+			EV("EV_5_17_BossOverDygald_02")
+	}
+	else
+	if(F4_11_EndFourth && !F5_17_EndFifth)
+	{
+	//５章
+		//ＧＦ『★中ボス⑥【真ダイガルド】を倒した』立ってない
+		if(!F5_13_KillDygald)
+		{
+			//▼真ダイガルドとの戦い．前
+			set_chr( 80,990,	-1,-1,   2160,0,2458,  0, 0106,6,"<EV_5_17_VSOverDygald>;")
+		}
+		
+		//ＧＦ『★ダイガルドの気配を確認した』立ってない
+		if(!F5_12_SignDygald)
+		{
+			//▼ダイガルドの気配に気付く
+			EV("EV_5_16_SignDygald")
+		}
+	}
+
+//■場面固有設定
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+
+EV_ODESSA_TAIL
+{
+	wait(1)
+//	IK(ODESSA,"Bone_Tail1",0)
+//	IK(ODESSA,"Bone_Tail2",0)
+	look(ODESSA,"Bone_Tail1",0,0,0,30,0,0,30)
+	look(ODESSA,"Bone_Tail2",0,0,0,30,0,0,30)
+}
+
+//──────────────────────────────
+//▼ダイガルドの気配に気付く
+//──────────────────────────────
+//　　ルート②をクリアし、休憩所エリアに入ったらイベント発生。
+//　　遠景を見せながらラグナたちが入ってくるのを見せる。
+EV_5_16_SignDygald
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 13000,-400,-2000,90,2)
+	chr_pos(PARTNER, 13000,-200,-2000,90,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+//	set_chr(EVENT_RAGNA,	  1010,-1,-1, 12850,100,-2000, 2,90,0, "")
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 12810,56,-1971,  2,90,0, "")
+	set_chr(EFFDUMMY1,		   749,-1,-1,     0,  0,    0, 0,00,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	color(EVENT_RAGNA,-1)
+
+	set_chr(LUE,	  1015,-1,-1,  12858,-25,-1954,2,90,0, "")
+	set_chr(ODESSA,	  1034,-1,-1,  12850,20,-2000, 2,90,0, "")
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	color(LUE,-1)
+	color(ODESSA,-1)
+
+	//モーション定義
+	MOT_SET(EVENT_RAGNA,150,-1,405,405,-1,-1)	//どうなのよ
+	MOT_SET(EVENT_RAGNA,151,-1,481,481,-1,-1)	//やらねえとな！
+	MOT_SET(EVENT_RAGNA,152,-1,3057,3057,-1,0)	//ギア防御
+	MOT_SET(ODESSA,150,-1,439,439,-1,-1)		//胸手
+	MOT_SET(ODESSA,151,-1,399,399,-1,-1)		//片手腰
+
+	chr_equip_chr(EFFDUMMY1, EVENT_RAGNA, "Bone_RightSword", 100, 0,0,0, 0,0,0 )
+
+	//カメラ初期位置
+	CAM_move(1331,-544,3140,0,0)
+	CAM(910,481,200,36,239,0,0)
+
+
+	KAO(ODESSA,     "1","1","1")
+	KAO(EVENT_RAGNA,"1","1","1")
+	KAO(LUE,        "1","1","1")
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+	CAM_move(11483,-593,-1219,300,0)
+	CAM(910,50,620,36,138,300,0)	
+	wait(200)
+
+	color(EVENT_RAGNA,30)
+	move( EVENT_RAGNA, 0, 10,11800,130,-2000,0)
+	wait(10)
+	color(LUE,30)
+	move( LUE, 0, 10,11820,-50,-2000,0)
+	wait(10)
+	color(ODESSA,30)
+	move( ODESSA, 0, 10,12100,20,-2000,0)
+	wait(60)
+
+//　　オデッサ、ピタリと立ち止まる。
+	cross_fade(5)
+	CAM_move(11900,-80,-1838,0,0)
+	CAM(-49,54,-1838,28,254,0,0)
+	CAM(-569,54,-1838,28,254,60,0)
+	wait_CAM()
+
+
+	MES(ODESSA,"………………………………",0)
+	MES_close(ODESSA)
+	wait_MES(ODESSA)
+
+
+//　　それに気付いたラグナとルゥ、振り返る。
+//	cross_fade(15)
+//	CAM_move(12080,40,-1878,0,0)
+//	CAM(-90,84,-1878,18,130,0,0)
+//	wait(15)
+//	CAM_move(12040,36,-1878,900,0)
+//	CAM(-130,84,-1878,18,138,900,0)
+
+	KAO(EVENT_RAGNA,"B","1","6")
+	EMO(EVENT_RAGNA,EMO_PA)
+	KAO(LUE,"E","1","6")
+	EMO(LUE,EMO_PA)
+	wait(15)
+	rot_chr(EVENT_RAGNA,30,ODESSA)
+	rot_chr(LUE,30,ODESSA)
+	wait(15)
+
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","6")
+	MES(EVENT_RAGNA,"どうした、オデッサ？",0)
+	MES_close(EVENT_RAGNA)
+
+	wait(15)
+
+	MES(ODESSA,"……いや。",0)
+	MES(ODESSA,"どうやらこの先に\n私の獲物がいるようだ。",0)
+	MES_close(ODESSA)
+
+//　　ラグナたちの頭に！マーク。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(LUE,EMO_BIKKURI)
+	KAO(LUE,        "B","12321D","6")	
+	KAO(EVENT_RAGNA,"B","12321D","6")
+			
+	wait(30)
+	KAO(EVENT_RAGNA,"C232CZ2","12321D","2")
+	MES(EVENT_RAGNA,"なに……！？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"B232BZ2","12321D","6")
+	MES(LUE,"な、何で分かるの？",0)
+	MES_close(LUE)
+
+	//オデッサアップカメラ
+	wait(15)
+	cross_fade(15)
+	CAM_move(12110,-19,-1828,0,0)
+	CAM(-130,23,-1828,37,88,0,0)
+	KAO(ODESSA,"B","3","2")
+	wait_fade()
+
+	MOT(ODESSA,151,15)
+	wait(15)
+	
+//	KAO(ODESSA,"B232BZ4","3","2")
+	KAO(ODESSA,"12321Z4","2","1")
+	MES(ODESSA,"……匂いさ。\nもう向こうも気付いている。",0)
+//	KAO(ODESSA,"B232BZ4","32A","2")
+	KAO(ODESSA,"12321Z4","2","1")
+	MES(ODESSA,"しかも私以上に\n月の力を得ているようだね。",0)
+	MES_close(ODESSA)
+
+	//
+	wait(15)
+	cross_fade(15)
+	CAM_move(12092,-30,-1880,0,0)
+	CAM(70,58,-40,25,81,0,0)
+	CAM(70,58,-40,25,102,1200,0)
+	wait_fade()
+
+
+	MES(EVENT_RAGNA,"そうか……",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(LUE,"そ、それって\n不死身なんじゃないの！？",0)
+	MES_close(LUE)
+	
+//	KAO(ODESSA,"B232BZ3","A23","2")
+	KAO(ODESSA,"B232BZ3","123","2")
+	MES(ODESSA,"ああ……\n簡単には行かないだろう。",0)
+	MOT(ODESSA,150,15)
+	wait(15)
+	KAO(ODESSA,"B232BZ4","321","2")
+	MES(ODESSA,"ここは私一人に任せて\nあんたたちは先に……",0)
+	MES_close(ODESSA)
+
+	MOT(EVENT_RAGNA,150,15)
+//	wait(15)
+	MES(EVENT_RAGNA,"おいおい……ここまで\n一緒に来てそりゃねえだろ。",0)
+	MES_close(EVENT_RAGNA)	
+	
+	look_chr(ODESSA,EVENT_RAGNA,"Bone_Head")
+	
+	MES(EVENT_RAGNA,"あんたが倒されたら\nこっちの背中もヤバイんだ。",0)
+	MES(EVENT_RAGNA,"ここは協力するとしようぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"B","12321D","6")
+	MES(ODESSA,"………………………………",0)
+	MES_close(ODESSA)
+//	look_chr(ODESSA,LUE,"Bone_Head")
+	look_off(ODESSA)
+	KAO(ODESSA,"B","12321","6")
+
+	MES(LUE,"ま、コイツの言う通りでしょ。",0)
+	MES(LUE,"仕方ないから\n付き合ってあげるわよ。",0)
+	MES_close(LUE)
+
+	MOT(ODESSA,2,15)
+	
+	wait(15)
+	
+	cross_fade(15)
+//	CAM_move(11965,-31,-1839,0,0)
+//	CAM(-130,50,0,25,347,0,0)
+//	CAM(-130,45,-1839,25,357,900,0)
+	
+	CAM_move(11905,-31,-1839,0,0)
+	CAM(-130,40,-1839,25,39,0,0)
+	
+//	CAM_move(11965,-31,-1839,0,0)
+//	CAM(-130,46,-1839,25,353,0,0)	//オデッサのクチが変
+
+	KAO(EVENT_RAGNA,"1","1","1")
+	KAO(LUE,"1","1","1")
+	wait_fade()
+	
+	KAO(ODESSA,"12321Z2","123","6")
+	MES(ODESSA,"……分かった。",0)
+	MES_close(ODESSA)
+	wait(10)
+//	KAO(ODESSA,"B","2","1")
+	wait(20)
+	KAO(ODESSA,"B232BZ5","321","1")
+	MES(ODESSA,"ダイガルドは私の一族の\n伝説的な戦士だった男だ。",0)
+	KAO(ODESSA,"B232BZ3","1","1")
+	MES(ODESSA,"とっくの昔に死んだハズの、ね。",0)
+	MES_close(ODESSA)
+
+//　　ラグナたちの頭に！マーク。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(EVENT_RAGNA,"B","12321D","6")
+	EMO(LUE,EMO_BIKKURI)
+	KAO(LUE,"B","12321D","6")
+	wait(15)
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+	
+	KAO(EVENT_RAGNA,"C232C","12321D","2")
+	MES(EVENT_RAGNA,"なに……！？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"C232CZ3","12321D","5")
+	MES(LUE,"そ、それって\nザハール様と同じ……！？",0)
+	MES_close(LUE)
+
+	KAO(ODESSA,"B232BZ6","123","1")
+	MES(ODESSA,"経緯は知らないが……\nおそらくザハールたちは\n彼の墓を暴いたんだろう。",0)
+	KAO(ODESSA,"B232BZ4","3","1")
+	MES(ODESSA,"そして彼を甦らせ\n《血の契約》を結んだ……",0)
+	MES_close(ODESSA)
+	wait(10)
+	KAO(ODESSA,"B","321","2")
+	wait(20)
+	KAO(ODESSA,"B232BZ6","1","2")
+	MES(ODESSA,"私は一族の戦士として\nダイガルドを再び、\n眠りにつかせるつもりだ。",0)
+	MES_close(ODESSA)
+
+	KAO(EVENT_RAGNA,"B232B","123","1")
+	MES(EVENT_RAGNA,"そうか……",0)
+	MES_close(EVENT_RAGNA)
+	
+	MOT(EVENT_RAGNA, 151, 10)	
+	
+	KAO(EVENT_RAGNA,"12321Z3","321","2")
+	MES(EVENT_RAGNA,"なら、気合を入れて\nブチ倒してやらねぇとな。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"12321Z2","123","6")
+	MES(ODESSA,"フフ、そうだね。",0)
+	KAO(ODESSA,"12321Z5","321","1")
+	MES(ODESSA,"──苦しい戦いになる。\n万全の態勢で戦いに臨もう。",0)
+	MES_close(ODESSA)
+
+
+	wait_MES(ODESSA)
+	
+	cross_fade(15)
+	CAM_move(11905,-31,-1879,0,0)
+	CAM(-10,54,-1879,25,312,0,0)
+	wait_fade()
+
+
+	MOT(EVENT_RAGNA,2,10)
+
+	KAO(EVENT_RAGNA,"12321Z2","1233321","2")
+	MES(EVENT_RAGNA,"ああ……！",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(LUE,"B232BZ2","1233321","2")
+	MES(LUE,"う、うん……！",0)
+	MES_close(LUE)
+
+//　　ルゥ、ここでラグナのアンカーギアと同化する。
+	rot_chr(LUE, 20, EVENT_RAGNA )
+
+	EFF_chr(6830,LUE,0,100,0,"Bone_Spine")						//エフェクト：ルゥが宿る
+	EFF_chr(6825,LUE,0,100,0,"Bone_Spine")						//エフェクト：ルゥが宿る
+	SE(1059,0)
+	wait(15)
+	
+	rot_chr(EVENT_RAGNA, 20, LUE )	
+	
+	color(LUE,-30)
+	wait_color(LUE)
+	
+	KAO(EVENT_RAGNA, "1","23","1")
+
+	MOT(EVENT_RAGNA, 152, 10)	
+	EFF_chr(6815, LUE, 0,100,EFFDUMMY1,"Bone_Hips")	//エフェクト：ルゥが宿る
+	SE(1035,0)
+
+	wait(15)
+
+
+
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+
+	CAM_return(0)
+	wait(30)
+
+	delete(EVENT_RAGNA)
+	delete(ODESSA)
+	delete(LUE)
+	delete(EFFDUMMY1)
+
+	chr_pos(RAGNA,	 11800,130,-2000,90,2)
+	chr_pos(PARTNER, 12100,20,-2000,90,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+//ＧＦ『★ダイガルドの気配を確認した』を立てる。
+	F_set(F5_12_SignDygald)
+	//★ダイガルド【伝説的な英雄】
+	F_set_note(-22,1)
+
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+//──────────────────────────────
+//▼真ダイガルドとの戦い．前
+//──────────────────────────────
+//　　ダイガルド戦のマップの戦闘エリアに入るとイベント発生。
+EV_5_17_VSOverDygald
+{
+	EV_begin()
+
+//	cross_fade(30)
+	fade_in(100,30,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 -2000,-2000,3500, 90,2)
+	chr_pos(PARTNER, -2100,-2100,3500, 90,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 2180,100,2470, 2,90,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+
+	set_chr(LUE,	  	1015,-1,-1,  660,-110,2800, 2,90,0, "")
+	set_chr(ODESSA,	 	1034,-1,-1,  2180,-100,2470, 2,90,0, "")
+	set_chr(B_ODESSA,	1033,-1,-1,  460,0,2800, 2,90,0, "")
+	set_chr(DYGALD, 	1022,-1,-1, -400,0,2800, 2,270,0, "")
+	set_chr(HYPERDYGALD,1067,-1,-1, -400,0,2800, 2,270,0, "")
+	set_chr(EFFDUMMY1,  749,-1,-1,  0, 0,0, 0, 0,0, "")
+	set_chr(EFFDUMMY2,  749,-1,-1,  0, 0,0, 0, 0,0, "")
+	set_chr(EFFDUMMY3,  749,-1,-1,  0, 0,0, 0, 0,0, "")
+	set_chr(EFFDUMMY4,  749,-1,-1,  0, 0,0, 0, 0,0, "")	
+	MOT_SET(ODESSA, 150,-1, 460, 460, -1, 0)		//おおおお
+	MOT_SET(DYGALD, 150,-1,1202,1202, -1, 0)		//おおおお	
+//	MOT_SET(HYPERDYGALD, 151,-1, 1184,1184, -1, 0)	//行くぞ
+	MOT_SET(HYPERDYGALD, 151,-1, 819,819, -1, 0)	//行くぞ
+	MOT_SET(HYPERDYGALD, 152,153,1210,1230, -1, 0)		//構え
+	MOT_SET(HYPERDYGALD, 153,153,1235,1265, -1, 0)		//構え待機
+
+	MOT_SET(HYPERDYGALD, 150,-1,1202,1202, -1, 0)		//おおおお	
+
+	MOT_SET(B_ODESSA, 150,-1, 971, 971, -1, 0)		//行くぞ
+	MOT_SET(B_ODESSA, 151,-1, 1199, 1199, -1, 0)	//
+	
+	MOT_SET(B_ODESSA, 152,153,1210,1230,-1,0)		//構える
+	MOT_SET(B_ODESSA, 153,153,1235,1265,-1,0)		//構え待機
+	
+	
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(B_ODESSA,CF_NO_CLIP)
+	F_set_chr(B_ODESSA,CF_NO_CLIP2)
+	F_set_chr(B_ODESSA,CF_NO_CSP)
+	F_set_chr(DYGALD,CF_NO_CLIP)
+	F_set_chr(DYGALD,CF_NO_CLIP2)
+	F_set_chr(DYGALD,CF_NO_CSP)
+	F_set_chr(HYPERDYGALD,CF_NO_CLIP)
+	F_set_chr(HYPERDYGALD,CF_NO_CLIP2)
+	F_set_chr(HYPERDYGALD,CF_NO_CSP)	
+	F_set_chr(EFFDUMMY1,CF_NO_CLIP)
+	F_set_chr(EFFDUMMY1,CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY1,CF_NO_CSP)
+	F_set_chr(EFFDUMMY2,CF_NO_CLIP)
+	F_set_chr(EFFDUMMY2,CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY2,CF_NO_CSP)
+	F_set_chr(EFFDUMMY3,CF_NO_CLIP)
+	F_set_chr(EFFDUMMY3,CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY3,CF_NO_CSP)
+	F_set_chr(EFFDUMMY4,CF_NO_CLIP)
+	F_set_chr(EFFDUMMY4,CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY4,CF_NO_CSP)
+				
+	color(LUE,-1)
+	color(B_ODESSA,-1)
+	color(DYGALD,-1)
+	color(HYPERDYGALD,-1)
+	wait_color(DYGALD)
+
+	//カメラ初期位置
+	CAM_move(2040,0,2680,0,0)
+	CAM(30,112,2680,25,214,0,0)
+
+//	wait(60)
+	fade_in(0,30,0)
+	wait_fade()
+
+	chr_rename(DYGALD,"男の声")
+	MES_pos(DYGALD,"W3ハハ……\n覚悟を決めて来たようだな。",0,5,120,0,0)
+	wait_key(0)
+	MES_close(DYGALD)
+
+//　　ラグナたちの頭に！マーク。
+//　　画面スクロールして、ダイガルドが佇んでいるのを見せ、
+//　　そこにオデッサを先頭に間合いをとってラグナたちが現れる。
+	color(DYGALD,1)
+	wait_color(DYGALD)
+
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ODESSA,EMO_BIKKURI)
+	wait(15)
+
+	CAM_move(-280,20,3000,90,0)
+	CAM(230,40,3000,36,252,90,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+
+	cross_fade(30)
+	CAM_move(100,40,2960,0,0)
+	CAM(-130,74,2960,36,242,0,0)
+
+	chr_pos(ODESSA, 960,0,2800,90,2)
+	chr_pos(EVENT_RAGNA,	  1160,110,2800,90,2)
+	chr_pos(LUE,	  1160,-110,2800,90,2)
+	color(LUE,1)
+	wait(15)
+
+	move( ODESSA, 0, 20,460,0,2800,0)
+	wait(5)
+	move( EVENT_RAGNA, 0, 20, 660,110,2800,0)
+	move( LUE, 0, 20, 600,-110,2800,0)
+	wait_move(EVENT_RAGNA)
+	wait_move(LUE)
+	wait_move(ODESSA)
+
+	MES(ODESSA,"…………………………",0)
+	MES_close(ODESSA)
+
+	chr_rename(DYGALD,"ダイガルド")
+	KAO(DYGALD,"-","123","1")	
+	MES(DYGALD,"しかし幼子よ。\nどのような心境の変化だ？",0)
+	KAO(DYGALD,"-","321","1")
+	MES(DYGALD,"城の時のように\n一人で挑んでは来ぬのか？",0)
+	MES_close(DYGALD)
+
+	KAO(ODESSA,"12321Z5","1","1")
+	MES(ODESSA,"伝説の戦士相手に\n片意地張っても仕方ない……",0)
+	KAO(ODESSA,"12321Z6","1","1")
+	MES(ODESSA,"この坊やたちを見てて\nそう思ってしまっただけさ。",0)
+	MES_close(ODESSA)
+	
+	KAO(DYGALD,"-","123332","6")
+	MES(DYGALD,"ほう……",0)
+	MES_close(DYGALD)
+
+	wait(5)
+	EMO(EVENT_RAGNA,EMO_HIYAASE)
+	wait(25)
+	look_chr( EVENT_RAGNA,ODESSA,"Bone_Head")
+	KAO(EVENT_RAGNA,"12321Z5","1","1")	
+	MES(EVENT_RAGNA,"S1あのな……\nだから誰が坊やだ、誰が。",0)
+	MES_close(EVENT_RAGNA)
+	wait(15)
+
+	KAO(ODESSA,"12321Z5","1","1")
+	MES(ODESSA,"戦士としては私も未熟。\nその事は恥じ入るしかない。",0)
+	KAO(ODESSA,"12321Z7","1","1")
+	MES(ODESSA,"だが、今の自分を見極め、\n大切なものを見失わなければ\n最善を尽くすこともできる。",0)
+	KAO(ODESSA,"12321Z3","1","1")
+	MES(ODESSA,"そう教えられたよ。",0)
+	MES_close(ODESSA)
+
+
+	MES(EVENT_RAGNA,"あ……",0)
+	MES_close(EVENT_RAGNA)
+	
+	KAO(DYGALD,"-","23","1")
+	MES(DYGALD,"フフ……\nその通りだ、幼子よ。",0)
+	KAO(DYGALD,"-","321","3")	
+	MES(DYGALD,"それが真に己を貫くこと……\n戦士としての本分というものだ！",0)
+	MES_close(DYGALD)
+	wait_MES(DYGALD)
+
+//　　ダイガルド、かつてないほど強烈なオーラを漂わせ始める。
+
+	stop_BGM(120)
+	cross_fade(15)
+	CAM_move(-379,-8,2977,0,0)
+	CAM(150,66,20,25,293,0,0)
+	CAM_move(-379,-8,2933,300,0)
+	CAM(-290,36,2937,39,251,300,0)
+	look_chr( LUE,ODESSA,"Bone_Head")
+	CAM_quake("4646L")
+	EV("EV_1113")//地鳴りSE処理
+	wait(30)
+	VOICE(380,0)	//★ボイス入力演出
+
+	chr_equip_chr(EFFDUMMY1, DYGALD, "charbase0", 100, 0,0,0, 0,0,0)
+	chr_equip_chr(EFFDUMMY3, DYGALD, "charbase0", 100, 0,0,0, 0,0,0)
+	chr_equip_chr(EFFDUMMY2, ODESSA, "charbase0", 100, 0,0,0, 0,0,0)
+	chr_equip_chr(EFFDUMMY4, ODESSA, "charbase0", 100, 0,0,0, 0,0,0)
+	wait(1)
+
+	MOT(DYGALD, 150, 10)
+	MOT(HYPERDYGALD, 150, 10)
+	KAO(DYGALD, "-","D","3")
+	KAO(HYPERDYGALD, "-","D","3")
+	wait(15) 
+
+	MOT(EFFDUMMY1, 3, 0)			//エフェクト：金色のオーラ
+	MOT(EFFDUMMY3,69, 0)			//エフェクト：金色のオーラ足元
+	EV("EV_1135")//オーラSE処理
+	wait(30)
+	
+	KAO(LUE,        "2","E","6")
+	KAO(EVENT_RAGNA,"C","E","1")
+	
+//	BGM(41)
+//	MES(DYGALD,"……ぉぉぉおおお………",0)
+//	VOICE(369,0)	//★ボイス入力演出
+	MES_pos(DYGALD,"C2……ぉぉぉおおお………",0,0,0,0,0)
+	wait(120)
+	MES_close(DYGALD)
+	wait_MES(DYGALD)
+
+	color(HYPERDYGALD,1)
+	SE(1088,0)
+	SE(1042,0)
+	cross_fade(15)
+	color(DYGALD,    -1)
+	wait_fade()
+	wait(15)
+
+	wait_CAM()
+
+
+//　　巨体の筋肉が隆起し、最強ブースト状態へと変化してゆく。
+
+	MOT(EFFDUMMY1, 0, 0)				//エフェクト：終了
+//	MOT(EFFDUMMY3, 0, 0)				//エフェクト：終了
+	
+	//オデッサカメラ
+	cross_fade(15)
+	chr_equip_chr(EFFDUMMY3, ODESSA, "charbase0", 100, 0,0,0, 0,0,10)
+	MOT(EFFDUMMY3, 69, 0)				//エフェクト：
+	CAM_move(440,0,2956,0,0)
+	CAM(-890,24,2960,40,54,0,0)
+	CAM(30,24,2960,40,89,300,0)
+	F_set_Node(ODESSA,"Bone_RightSword",NP_HIDE)
+	MOT(ODESSA, 150, 10)
+	KAO(ODESSA, "3","E","3")
+	wait(20)
+
+	VOICE(317,0)	//★ボイス入力演出
+	MOT(EFFDUMMY2, 9, 0)			//エフェクト：金色のオーラ
+	wait(30)
+
+//	MES(ODESSA,"……ぁぁぁあああ………",0)
+	MES_pos(ODESSA,"C2……ぁぁぁあああ………",0,0,0,0,0)
+	wait(120)
+	MES_close(ODESSA)
+
+	wait(80)
+	MOT(EFFDUMMY4, 9, 0)			//エフェクト：金色のオーラ
+	wait(30)
+
+	BGM(41)
+//　　オデッサ、全身の四肢が変化して最強ブースト状態に変化。
+	cross_fade(30)
+	color(ODESSA,-1)
+	SE(1088,0)
+	SE(1042,0)
+	color(B_ODESSA,1)
+	MOT(EFFDUMMY4, 0, 0)				//エフェクト：終了		
+	MOT(B_ODESSA, 151, 0)
+	wait(45)
+	MOT(B_ODESSA, 2, 15)
+	MOT(EFFDUMMY2, 0, 0)				//エフェクト：終了	
+	MOT(EFFDUMMY3, 0, 0)				//エフェクト：終了
+
+	wait(15)
+
+	CAM_quake("")
+	
+	KAO(LUE,"2323232","D1233321D","4")
+	MES(LUE,"あ、あわわ……",0)
+	MES_close(LUE)
+	
+	KAO(EVENT_RAGNA,"B232BZ2","1233321","2")
+	MES(EVENT_RAGNA,"……凄まじいぜ………",0)
+	MES_close(EVENT_RAGNA)
+
+//	KAO(EVENT_RAGNA,"1","1","3")
+	KAO(HYPERDYGALD,     "-","1","1")
+//　　ダイガルドとオデッサ、共に最終形態へと変化を完了する。
+//　　それと合わせて、ルゥがアンカーギアへと同化する。
+
+
+	KAO(LUE,"B","123","2")
+	EFF_chr(6830,LUE,0,100,0,"Bone_Spine")						//エフェクト：ルゥが宿る
+	EFF_chr(6825,LUE,0,100,0,"Bone_Spine")						//エフェクト：ルゥが宿る
+	SE(1059,0)
+	wait(15)
+	color(LUE,-30)
+	wait_color(LUE)
+	EFF_chr(6815, LUE, 0,100,EVENT_RAGNA,"Bone_RightSword")	//エフェクト：ルゥが宿る
+	SE(1035,0)
+	wait(30)
+
+	MOT(HYPERDYGALD, 2, 0)	
+	wait_color(LUE)
+	look_off( EVENT_RAGNA )
+
+	cross_fade(15)
+	KAO(EVENT_RAGNA,"B","1","3")
+	CAM_move(40,220,3020,60,0)
+	CAM(-450,64,3020,43,215,0,0)
+	CAM(-450,64,3020,43,143,600,0)
+//	wait_CAM_move()
+//	wait_CAM()
+//	MOT(HYPERDYGALD, 152, 0)
+
+//	BGM(41)
+	wait(15)
+	KAO(HYPERDYGALD,"-","123","3")
+	MES(HYPERDYGALD,"C2……もはや言葉は不要。",0)
+	KAO(HYPERDYGALD,"-","321","3")
+	MES(HYPERDYGALD,"C2この月世界を舞台に\n最後の幕引きをするとしよう。",0)
+	MES_close(HYPERDYGALD)
+
+	KAO(B_ODESSA,"B232BZ2","123","3")
+	MES(B_ODESSA,"C4同感だ……",0)
+	KAO(B_ODESSA,"B232BZ6","321","3")	
+	MES(B_ODESSA,"C4長かったあんたの夜……\n今度こそ本当に終わらせてやる。",0)
+	MES_close(B_ODESSA)
+
+
+//	MOT(HYPERDYGALD, 151, 10)
+	MOT(HYPERDYGALD, 152, 10)
+	KAO(HYPERDYGALD,"-","1233321","3")
+	MES(HYPERDYGALD,"C2それではいざ……",0)
+	MES_close(HYPERDYGALD)
+
+
+	MOT(B_ODESSA,152,10)
+	KAO(B_ODESSA,"B232BZ2","1233321","3")
+	MES(B_ODESSA,"C4尋常に勝負……！",0)
+	MES_close(B_ODESSA)
+
+//	CAM(189,66,2820,43,143,150,0)
+//	CAM_move(40,220,2820,150,0)
+	VOICE(367,0)	//★ボイス入力演出
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(ODESSA)
+	delete(B_ODESSA)
+	delete(LUE)
+	delete(DYGALD)
+	delete(HYPERDYGALD)
+	delete(EFFDUMMY1)
+	delete(EFFDUMMY2)
+	delete(EFFDUMMY3)
+	delete(EFFDUMMY4)
+
+
+	chr_pos(RAGNA,	 650,150,2800, 90,2)
+	chr_pos(PARTNER, 650,-150,2800, 90,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	F_reset_chr(DYGALD,CF_NO_CLIP)
+	F_reset_chr(DYGALD,CF_NO_CLIP2)
+	F_reset_chr(DYGALD,CF_NO_CSP)
+	
+	
+
+	F_set(F5_25_BattleDigald)//★真ダイガルド戦
+
+	//獣オデッサを仲間に。
+	clear_party(PARTNER)
+	join_party(13)//ODESSA
+
+	//ラグナメモ用
+	F_set(F5_35_BattleDygald)//★中ボス⑥【真ダイガルド】と戦闘開始
+	
+	//──────────────────────────────
+	//　　中ボス戦【真ダイガルド】との戦い。
+	//　　あらゆる点で前回よりもパワーアップしているが、
+	//　　オデッサもパワーアップしているので、
+	//　　彼女を如何に戦わせるかが攻略のポイントとなる。
+	//　　また、ラグナを使うべき局面もきちんと用意しておく。
+	//──────────────────────────────
+	
+	
+//	set_chr( BOSS,		208,-1,-1,-908,121,2800,	0, 270,	0,"<EV_5_18_KillOverDygald>;")	//◆ダミーモンスター
+	set_chr( BOSS,		1066,-1,-1,-908,121,2800,	0, 270,	0,"<EV_5_18_KillOverDygald>;")	//◆ダミーモンスター
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)	//BOSS＿ＨＰ表示
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)//ワープ封じる。
+
+	//再戦用オートセーブ
+	workG(GW_ENTRY_EVENT,SET,100)
+	workG(GW_DEF_BGM,SET,99)				//デフォルト曲を変更する  無音
+	AutoSave(0)
+	workG(GW_ENTRY_EVENT,SET,0)
+	workG(GW_DEF_BGM,SET,0)					//デフォルト曲を変更する マップ曲
+	
+	CAM_return(0)
+	wait(30)
+	
+	CAM(309,199,0,25,225,0,0)				//マップのカメラ値
+
+	fade_in(0,30,0)
+	set_namebmp(32,0)	//月の戦鬼ダイガルド			ルナ．ムンドゥス
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,98);//真ダイガルド
+
+	EV_end()
+}
+
+
+
+//──────────────────────────────
+//　　中ボス戦【真ダイガルド】との戦い。
+//　　再戦用
+//──────────────────────────────
+EV_5_17_BossOverDygald
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+
+	wait(30)									//GAME OVER曲待ち
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 750, 150,2800, 90,2)
+	chr_pos(PARTNER, 750,-150,2800, 90,2)	
+	chr_pos(PET,     750,-150,2800, 90,2)	
+
+	//獣オデッサを仲間に。
+	clear_party(PARTNER)
+	join_party(13)//ODESSA
+
+//	set_chr( BOSS,		208,-1,-1,0,0,2800,	0, 270,	0,"<EV_5_18_KillOverDygald>;")	//◆ダミーモンスター
+	set_chr( BOSS,		1066,-1,-1,-908,121,2800,	0, 270,	0,"<EV_5_18_KillOverDygald>;")	//◆ダミーモンスター
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)	//BOSS＿ＨＰ表示
+	
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)				//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)					//デフォルト曲を変更する マップ曲	
+	
+	BGM(41)							//ボス曲
+
+	CAM_return(0)
+	wait(15)
+
+	CAM(309,199,0,25,225,0,0)				//マップのカメラ値
+
+	fade_in(0,30,0)
+	set_namebmp(32,0)	//月の戦鬼ダイガルド			ルナ．ムンドゥス
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,98);//真ダイガルド
+
+	EV_end()
+}
+//──────────────────────────────
+//　　中ボス戦【真ダイガルド】との戦い。	ゲーセン用
+//──────────────────────────────
+EV_5_17_BossOverDygald_02
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////ＨＰ0でも消えない　キャラ0は死亡時に"EV_DEAD"を再生
+
+	wait(30)									//GAME OVER曲待ち
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 750, 150,2800, 90,2)
+	chr_pos(PARTNER, 750,-150,2800, 90,2)	
+	chr_pos(PET,     750,-150,2800, 90,2)	
+
+//	set_chr( BOSS,		208,-1,-1,0,0,2800,	0, 270,	0,"<EV_5_18_KillOverDygald>;")	//◆ダミーモンスター
+	set_chr( BOSS,		1066,-1,-1,-908,121,2800,	0, 270,	0,"<EV_YOUWIN>;")	//◆ダミーモンスター
+	F_set_chr(BOSS,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,BOSS)	//BOSS＿ＨＰ表示
+	
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)				//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)					//デフォルト曲を変更する マップ曲	
+	
+	//BGM(41)							//ボス曲
+
+	CAM_return(0)
+	wait(30)
+
+	CAM(309,199,0,25,225,0,0)				//マップのカメラ値
+
+	fade_in(0,30,0)
+	set_namebmp(32,0)	//月の戦鬼ダイガルド			ルナ．ムンドゥス
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,98);//真ダイガルド
+
+	EV_end()
+}
+//敗北時---------------------
+EV_DEAD
+{
+	wait_EV("EV_YOUWIN")
+
+	EV_begin()
+	EFF(21660,320,240,0,0,100,0)//LOSE
+
+	wait(60)
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+	workG(GW_ENTRY_EVENT,SET,110)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//Gミュージアムに
+}
+
+//勝利時---------------------
+EV_YOUWIN
+{
+	wait_EV("EV_DEAD")
+
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+	EFF(21650,320,240,0,0,100,0)//WIN
+
+	wait(60)
+//	VOICE(377,0)	//★ボイス入力演出
+	VOICE2(377,1,100)	//★「み、見事だ…」
+	wait(1)	//1フレーム進めないと、カメラが壊れる。（ボスのカメラのため）
+	EV_begin()
+
+	wait(100)
+
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+
+	//成績に応じてフィギュア入手	//	月の戦鬼ダイガルド戦	->Figure F2885
+	if(!F2885)
+	{
+		SE(24,0)//ゲットSE
+		MES(0,"L667月の戦鬼ダイガルドL777のフィギュアを手に入れた！！",2)
+		MES_close(0)
+		F_set(2885)
+	}
+
+	workG(GW_ENTRY_EVENT,SET,110)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//Gミュージアムに
+}
+
+//──────────────────────────────
+//▼真ダイガルドとの戦い．後
+//──────────────────────────────
+//　　戦闘終了後、仁王立ちになるダイガルド。
+//　　全身から凄まじいオーラが立ち上るような状態。
+EV_5_18_KillOverDygald
+{
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+
+//	VOICE(377,0)	//★ボイス入力演出
+	VOICE2(377,1,100)	//★「み、見事だ…」
+	wait(100)
+	EV_begin()
+
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(BOSS)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 -2000,-2000,3500, 90,2)
+	chr_pos(PARTNER, -2100,-2100,3500, 90,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	workG(GW_WARP_FLAG,SET,2)//ワープ解除。（ルゥ）
+
+//	set_chr(EVENT_RAGNA,	  1010,-1,-1, 600,140,2800, 2,90,0, "")
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 565,206,2801, 2,90,0, "")
+	set_chr(LUE,	  	1015,-1,-1,  580,-70,2800, 2,90,0, "")
+	set_chr(ODESSA,	 	1034,-1,-1,  460,0,2800 2,90,0, "")
+	set_chr(B_ODESSA,	1033,-1,-1,  460,0,2800, 2,90,0, "")
+	set_chr(DYGALD, 	1067,-1,-1, -260,0,2800, 2,270,0, "")
+	set_chr(H_DYGALD, 	1037,-1,-1, -260,0,2800, 2,270,0, "")
+	set_chr(EFFDUMMY1, 	 749,-1,-1, -0,0,0, 0,0,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)	
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+	F_set_chr(ODESSA,CF_NO_CLIP)
+	F_set_chr(ODESSA,CF_NO_CLIP2)
+	F_set_chr(ODESSA,CF_NO_CSP)
+	F_set_chr(B_ODESSA,CF_NO_CLIP)
+	F_set_chr(B_ODESSA,CF_NO_CLIP2)
+	F_set_chr(B_ODESSA,CF_NO_CSP)
+	F_set_chr(DYGALD,CF_NO_CLIP)
+	F_set_chr(DYGALD,CF_NO_CLIP2)
+	F_set_chr(DYGALD,CF_NO_CSP)
+	F_set_chr(H_DYGALD,CF_NO_CLIP)
+	F_set_chr(H_DYGALD,CF_NO_CLIP2)
+	F_set_chr(H_DYGALD,CF_NO_CSP)
+	F_set_chr(EFFDUMMY2,CF_NO_CLIP)
+	F_set_chr(EFFDUMMY2,CF_NO_CLIP2)
+	F_set_chr(EFFDUMMY2,CF_NO_CSP)
+	
+//	color(LUE,-1)
+	color(ODESSA,-1)
+	color(H_DYGALD,-1)
+
+	//モーション定義
+	MOT_SET(DYGALD,150,150,3180,3240,-1,-1)	//仁王立ち
+	MOT_SET(DYGALD,151, -1,3260,3330,-1,-1)	//仁王立ちから、唐突に膝を付く
+
+//	MOT_SET(DYGALD,151,-1,457,457,-1,-1)	//膝つき
+//	MOT_SET(DYGALD,151,-1,1266,1266,-1,-1)	//膝つき
+	MOT_SET(H_DYGALD,150,-1,523,523,-1,-1)	//たおれ
+	MOT_SET(H_DYGALD,151,-1,454,454,-1,-1)	//膝つき
+	MOT_SET(H_DYGALD,152,-1,1849,1849,-1,-1)	//膝つき
+	MOT_SET(H_DYGALD,153,-1,1848,1811,-1,-1)	//起き上がる
+	MOT_SET(H_DYGALD,154,-1,801,801,-1,-1)		//立ち大気
+	MOT_SET(H_DYGALD,155,-1,1811,1905,-1,-1)	//立ち→倒れ
+	MOT_SET(B_ODESSA,150,-1,556,556,-1,-1)//膝つき
+	MOT_SET(B_ODESSA,151,-1,523,523,-1,-1)	//たおれ
+	MOT_SET(ODESSA,150,-1,523,523,-1,-1)	//たおれ
+	MOT_SET(ODESSA,151,-1,2335,2335,-1,-1)	//
+	MOT_SET(ODESSA,152,-1,1811,1850,-1,-1)	//立ち→膝付
+	MOT_SET(ODESSA,153,-1,1851,1905,-1,-1)	//膝付→倒れ
+	
+	MOT_SET(EVENT_RAGNA,150,-1,2120,2120,-1,-1)	//なに？
+	MOT(DYGALD,150,0)
+
+	chr_equip_chr(EFFDUMMY1, DYGALD,"Bone_Spine", 100, 0,0,0, 0,0,0)
+
+	//カメラ初期位置
+//	CAM_move(-220,0,2980,0,0)
+//	CAM(70,44,2980,34,270,0,0)
+//	CAM_move(-220,0,3020,0,0)
+//	CAM(-530,51,3020,34,359,0,0)
+//	CAM(-530,51,3020,34,316,150,0)
+
+	CAM_reset()
+	CAM_move(-340,-68,2999,0,0)
+	CAM(270,82,40,25,311,0,0)
+	CAM_move(-340,-68,3059,150,0)
+	CAM(-490,82,100,25,311,150,0)
+	
+	KAO(H_DYGALD,"-","4","3")
+	KAO(DYGALD,"-","4","3")
+	KAO(EVENT_RAGNA, "C","1","3")
+	KAO(ODESSA,      "C","1","3")
+	KAO(B_ODESSA,     "C","1","1")
+	KAO(LUE,         "B","1","1")
+	
+	//フェードイン
+	VOICE(369,0)	//★ボイス入力演出
+	fade_in(0,30,0)
+	wait_fade()
+
+//　　戦闘終了後、仁王立ちになるダイガルド。
+//　　全身から凄まじいオーラが立ち上るような状態。
+
+	wait(15)
+	
+	MOT(EFFDUMMY1, 6, 0)														//エフェクト：ダイガルド
+	EV("EV_1135_loop")//オーラSE処理
+
+	wait(15)
+	MES(DYGALD,"C2くっ……おおおお……",0)
+	MES_close(DYGALD)	
+	
+	wait_CAM()
+	
+//	CAM_move(140,0,2980,30,0)
+//	CAM(70,70,2980,34,270,30,0)
+//	CAM_move(40,0,2980,0,0)
+//	CAM(-210,123,2980,17,60,0,0)
+	
+//	wait_CAM_move()
+//	wait_CAM()
+	CAM_move(40,0,2980,0,0)
+	CAM(-210,123,2980,17,60,0,0)
+
+	KAO(LUE,"B232B5","12321","5")
+	MES(LUE,"ひ、ひいっ……",0)
+	MES_close(LUE)
+	
+	KAO(EVENT_RAGNA,"C232CZ2","1233321","3")
+	MES(EVENT_RAGNA,"クソ、駄目か……！？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(B_ODESSA,"C232CZ2","1233321","3")
+	MES(B_ODESSA,"………いや…………",0)
+	MES_close(B_ODESSA)
+	wait_MES(B_ODESSA)
+
+//　　ダイガルド、唐突に膝を付いてオーラが消えてゆき、
+//　　代わりに消滅時の魂エフェクトが徐々に立ち上り始める。
+//　　可能ならここで、狼の頭から人間の男性の顔に戻る演出。
+
+	MOT(EFFDUMMY1, 0, 0)
+	MOT(EFFDUMMY1, 58, 0)																				//エフェクト：魂
+
+	cross_fade(10)
+	CAM_move(-185,-21,2964,0,0)
+	CAM(-90,64,0,25,253,0,0)
+	wait_fade()
+	
+	
+	stop_BGM(120)
+	MOT(DYGALD,151,5)
+	wait(10)
+	EV_stop("EV_1135_loop")//オーラSE止め
+	EV_stop("EV_1135_loop2")//オーラSE止め
+	wait(60)
+	
+	
+	EFF_chr(6220, H_DYGALD, 0, 100,0,"Bone_Hips")															//エフェクト：変身解ける
+	SE(1051,0)
+	wait(30)
+
+	EV("EV_1138")//魂SE処理
+	cross_fade(15)
+	color(DYGALD,-1)
+	color(H_DYGALD,1)
+	color(ODESSA,1)
+	color(B_ODESSA,-1)	
+	F_set_Node(ODESSA, "Bone_RightSword", NP_HIDE )
+	
+	MOT(H_DYGALD,151,0)
+	KAO(H_DYGALD,"C","43","3")
+	KAO(DYGALD,"-","3","3")
+//	EFF_chr(1940, H_DYGALD, 0,200,0,"charbase0")
+//	EFF(1940,	 -260,0,2600,	0,200,0)
+//	EFF(1940,	 -260, 50,2700,	0,200,0)
+//	EFF(1940,	 -260,-50,2500,	0,200,0)
+	
+
+	
+	chr_pos(EVENT_RAGNA, 565,206,2801,102, 2 )
+	
+//	CAM_move(-185,-21,2964,0,0)
+//	CAM(-90,64,0,25,253,0,0)
+	
+//	CAM_move(0,40,2900,60,0)
+//	CAM(-10,80,2900,24,258,60,0)
+//	wait_CAM_move()
+//	wait_CAM()
+	wait(30)
+	
+	CAM_move(255,-1,2964,60,0)
+	CAM(-170,75,2964,25,238,60,0)
+	CAM_move(175,-1,2964,60,0)
+	CAM(-169,53,2964,25,238,60,0)
+	
+//	CAM_move(415,-81,3004,30,0)
+//	CAM(-129,25,3004,25,262,30,0)
+	wait_CAM()
+	
+	MES(ODESSA,"ダイガルド、あんた……",0)
+	MES_close(ODESSA)
+	
+	CAM_move(255,-101,2964,1200,0)
+	CAM(-48,75,2964,25,295,1200,0)
+
+	wait_BGM()
+	BGM(62)
+//	look_chr( H_DYGALD,B_ODESSA,"Bone_Head")
+	wait(15)
+
+	KAO(H_DYGALD,"12321Z4","3","1")
+	MES(H_DYGALD,"C4フフ……\n幼子よ……礼を言うぞ……",0)
+	MES_close(H_DYGALD)
+	
+	look_del(H_DYGALD)
+	MOT(H_DYGALD, 152, 15)		
+	look(H_DYGALD, "Bone_Head", 0,0,0,5, 0,0,30)
+	
+	KAO(H_DYGALD,"12321Z5","32A","1")	
+	MES(H_DYGALD,"C4ようやく……\n我が望みは成就したようだ……",0)
+	KAO(H_DYGALD,"12321Z6","A","1")	
+	MES(H_DYGALD,"C4《血の契約》にも……\nもはや縛られることはない……",0)
+	MES_close(H_DYGALD)
+
+	KAO(H_DYGALD, "1","A23","1")
+	MOT(H_DYGALD, 153, 15)
+	wait(10)
+	look(H_DYGALD, "Bone_Head", 0,0,0,5, 0,0,00)
+	wait(30)
+
+	KAO(EVENT_RAGNA,"C232CZ3","1233321","3")
+	MES(EVENT_RAGNA,"ど、どういう事だ……？",0)
+	MES_close(EVENT_RAGNA)
+	
+
+	KAO(H_DYGALD,"12321Z5","321","1")
+	MES(H_DYGALD,"C4俺の望みは……\n戦士としての生を全うすること……",0)
+	KAO(H_DYGALD,"12321Z6","1","1")	
+	MES(H_DYGALD,"C4全てを尽くした戦いの果てに\n……安らかに逝くことだった……",0)
+	MES_close(H_DYGALD)
+
+
+	MES(ODESSA,"だがあんたは\n病に倒れて亡くなった……",0)
+	MES(ODESSA,"その未練にザハールは\n付け込んだんだな……？",0)
+	MES_close(ODESSA)
+
+
+	KAO(H_DYGALD,"12321Z3","123","4")
+	MES(H_DYGALD,"C4フフ……言い訳はすまい。",0)
+	KAO(H_DYGALD,"12321Z6","3","4")	
+	MES(H_DYGALD,"C4いかに浅ましくとも……\nそれが俺の望みであったから……",0)
+	KAO(H_DYGALD,"12321Z6","321","1")	
+	MES(H_DYGALD,"C4共感はできなかったが……\nザハール候には感謝している……",0)
+	MES_close(H_DYGALD)
+
+	MES(ODESSA,"そうか……",0)
+	MES_close(ODESSA)
+
+	look_off(H_DYGALD)
+	look_del(H_DYGALD)
+	look_chr( H_DYGALD,EVENT_RAGNA,"Bone_Head")
+	wait(15)
+	
+	KAO(H_DYGALD,"12321Z3","12332A","1")
+	MES(H_DYGALD,"C4……ラグナといったか………",0)
+	KAO(H_DYGALD,"12321Z5","A","1")	
+	MES(H_DYGALD,"C4おぬしにも感謝を……\nよき戦いぶりであったぞ……",0)
+	MES_close(H_DYGALD)
+	wait_MES(H_DYGALD)
+	
+	cross_fade(15)
+	CAM_move(115,-1,2944,0,0)
+	CAM(-89,90,2944,18,101,0,0)
+	CAM(-89,90,2944,18,112,900,0)
+	
+	look_chr(ODESSA,      H_DYGALD, "Bone_Head")
+	look_chr(EVENT_RAGNA, H_DYGALD, "Bone_Head")
+	look_chr(LUE,         H_DYGALD, "Bone_Head")
+	KAO(LUE,"B","1","2")
+	wait_fade()
+
+	KAO(EVENT_RAGNA,"12321Z2","123","6")
+	MES(EVENT_RAGNA,"ヘッ……光栄だね。",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","1")	
+	MES(EVENT_RAGNA,"あんたも……\n俺が戦った中では最強だった。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")	
+	MES(EVENT_RAGNA,"これからの糧にさせてもらうぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+
+	KAO(H_DYGALD,"12321Z3","A23","6")
+	MES(H_DYGALD,"C4フフ……そうか……",0)
+	KAO(H_DYGALD,"12321Z4","3","2")	
+	MES(H_DYGALD,"C4ラグナよ……\n一つ言っておこう……",0)
+	KAO(H_DYGALD,"12321Z3","3","2")	
+	MES(H_DYGALD,"C4此度の事件……\n鍵を握るのはおぬしだ……",0)
+	MES_close(H_DYGALD)
+
+//　　ラグナの頭に！マーク。
+	KAO(EVENT_RAGNA,"B","12321DE","1")	
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(30)
+
+	KAO(EVENT_RAGNA,"B232BZ2","12321","3")	
+	MES(EVENT_RAGNA,"なに……？",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(H_DYGALD,"C4過去と現在……",0)
+	MES(H_DYGALD,"C4因果と宿縁を解きほぐし\n未来をたぐり寄せるられるのは\nおぬしをおいて他にはない……",0)
+	KAO(H_DYGALD,"5","3","5")
+	MES(H_DYGALD,"C4……武運を祈るぞ……",0)
+	MES_close(H_DYGALD)
+
+	MOT(EVENT_RAGNA, 150, 5)	
+	KAO(EVENT_RAGNA,"B232BZ3","123332A","2")
+	MES(EVENT_RAGNA,"そ、それはどういう……",0)
+	MES_close(EVENT_RAGNA)
+
+//	CAM_move(55,-21,2884,60,0)
+//	CAM(71,103,2884,18,115,60,0)
+//	CAM_move(-130,-29,2880,0,0)
+//	CAM(110,48,-80,25,217,0,0)
+
+	CAM_move(115,-1,2864,60,0)
+	CAM(-49,89,2864,18,115,60,0)
+
+//　　ここで魂のエフェクトが強くなり、崩れ落ちるダイガルド。
+
+	look_off(H_DYGALD)
+	MOT(H_DYGALD, 155, 15)										//倒れる
+	wait(20)
+	SE(1029,0)//膝つきSE
+	chr_equip_off(EFFDUMMY1)
+	chr_pos(EFFDUMMY1, -148,-18,2800,0,58 )						//魂エフェクト
+//	IK(H_DYGALD,"Bone_Tail1",0)
+//	IK(H_DYGALD,"Bone_Tail2",0)
+//	look(H_DYGALD,"Bone_Tail1",0,0,0,1,0,0,30)
+//	look(H_DYGALD,"Bone_Tail2",0,0,0,1,0,0,30)
+	wait(25)
+
+//　　ラグナたちの頭に！マーク。
+	EMO(ODESSA,EMO_BIKKURI)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(EVENT_RAGNA,"B","2321D","6")
+	KAO(ODESSA,     "B","12321DE","2")
+	KAO(LUE,        "B","12321DE","6")
+	MOT(ODESSA, 151, 10)
+	wait(25)
+	SE(1139,0)//倒れるSE
+	wait(5)
+
+	KAO(ODESSA,     "B232BZ2","D12321D","2")
+	MES(ODESSA,"ダイガルド……！",0)
+	MES_close(ODESSA)
+
+	KAO(H_DYGALD,"1","2","5")
+
+	wait_MES(ODESSA)
+
+	cross_fade(15)
+	CAM_move(-130,-29,2880,0,0)
+	CAM(110,48,-80,25,217,0,0)
+	CAM(110,41,2880,25,216,600,0)
+	wait_fade()
+	
+	KAO(H_DYGALD,"12321Z4","2","5")
+	MES(H_DYGALD,"C4フフ……\nどうやら頃合いのようだ……",0)
+	KAO(H_DYGALD,"12321Z4","3","5")	
+	MES(H_DYGALD,"C4オデッサ……我が孫娘よ……",0)
+	KAO(H_DYGALD,"12321Z4","3","5")	
+	MES(H_DYGALD,"C4……お前に会えて良かった………",0)
+	MES_close(H_DYGALD)
+	wait_MES(H_DYGALD)
+
+//　　魂のエフェクトが弾けるようにして膨れ上がり、
+//　　それと合わせてダイガルドの身体がゆっくりと消えてゆく。
+//　　その様子をカメラで映してから、膝をつくオデッサ。
+
+	EV_stop("EV_1138")//魂SE止め
+	EV_stop("EV_1138_2")//魂SE止め
+	CAM_move(-130,-29,2880,150,0)
+	CAM(30,92,2880,25,262,150,0)	
+
+	VOICE(385,0)	//★ボイス入力演出
+//	EFF_chr(6480,H_DYGALD,0,100,0,"charbase0")
+	EFF_chr(6996,H_DYGALD,0,100,0,"Bone_Spine")
+//	EFF(6480, -147,13,2800, 0,100,0 )
+//	EFF(6996, -147,13,2800, 0,100,0 )
+	MOT(EFFDUMMY1, 0,0 )
+	wait(10)
+	SE(1137,0)//昇天SE
+	wait(20)
+	color(H_DYGALD,-60)
+	wait_color(H_DYGALD)
+
+
+	wait_CAM()
+//	wait(30)
+	
+//	cross_fade(15)
+//	CAM_move(120,40,2880,0,0)
+//	CAM(-10,92,2880,24,258,0,0)
+//	wait(30)
+
+	MES(ODESSA,"……あ………",0)
+	MES_close(ODESSA)
+		
+	MOT(ODESSA, 2, 15)
+	MES(ODESSA,"……………………………",0)
+	MES_close(ODESSA)
+
+	MES(LUE,"消えちゃった……",0)
+	MES_close(LUE)
+
+	wait(15)
+	cross_fade(15)
+//	CAM_move(474,0,2960,0,0)
+//	CAM(-10,48,0,25,55,0,0)
+//	CAM(-10,48,0,25,99,900,0)
+	CAM_move(474,0,2920,0,0)
+	CAM(-10,48,0,25,99,0,0)	
+	CAM(-90,47,2920,25,44,900,0)
+	CAM_move(474,0,2920,900,0)
+	
+	look_off(ODESSA)
+
+	KAO(LUE,         "B","A","4")
+	KAO(ODESSA,      "B","D","2")
+	KAO(EVENT_RAGNA, "B","1","2")
+	MOT(ODESSA, 2, 0)
+	wait_fade()
+
+	look_chr( EVENT_RAGNA,ODESSA,"Bone_Head")
+
+	wait(15)
+
+	MOT(EVENT_RAGNA, 2, 10)
+	KAO(EVENT_RAGNA,"B232BZ4","1233321","1")
+	MES(EVENT_RAGNA,"……オデッサ……\n孫娘っていうのは……",0)
+	MES_close(EVENT_RAGNA)
+	
+	look_chr( LUE,        ODESSA,"Bone_Head")
+	KAO(LUE,         "B","A2321","4")
+
+	wait(10)
+	KAO(ODESSA,"B","123","1")
+	wait(20)
+	KAO(ODESSA,"B232BZ2","3","1")
+	MES(ODESSA,"ああ……その通りさ。",0)
+	KAO(ODESSA,"B232BZ6","3","1")	
+	MES(ODESSA,"会ったことはなかったけど……\n祖父は一族の、私の誇りだった……",0)
+	KAO(ODESSA,"B232BZ5","3","1")	
+	MES(ODESSA,"だから私は……\n祖父の誇りを守りたかった……",0)
+	MES_close(ODESSA)
+	wait(10)
+	KAO(ODESSA,"1","21","6")	
+	wait(20)
+//	KAO(ODESSA,"12321Z5","3","5")	
+	KAO(ODESSA,"12321Z5","1","6")	
+	MES(ODESSA,"フフ……\nまさか気付かれてたなんてね……",0)
+	MES_close(ODESSA)
+
+	KAO(EVENT_RAGNA,"B232BZ2","1233321","4")
+	MES(EVENT_RAGNA,"そうか……",0)
+	MES_close(EVENT_RAGNA)
+	
+	look_del(ODESSA)
+	look_chr(EVENT_RAGNA, ODESSA,"Bone_Head")	
+
+	
+//	VOICE(266,0)	//★ボイス入力演出
+	MOT(ODESSA, 152, 5)		//立ち→膝付	
+//	KAO(ODESSA,"B","4","5")
+	KAO(ODESSA,"B","24","5")
+	wait(5)
+	SE(1029,0)//ガクリSE
+//	MES(ODESSA,"……くっ………",0)
+	MES_pos(ODESSA,"……くっ………",0,0,0,0,0)
+	wait(30)
+	MES_close(ODESSA)
+//	wait_MES(ODESSA)
+//　　ここでオデッサ、ぐらりと傾いで崩れ落ちる。
+
+//　　ラグナとルゥの頭に！マーク。
+	KAO(LUE,         "2","12321D","5")
+	KAO(EVENT_RAGNA, "B","12321D","6")
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(LUE,        EMO_BIKKURI)
+	wait(15)
+	look_off( EVENT_RAGNA )
+	rot_chr(EVENT_RAGNA,30,ODESSA)
+	rot_chr(LUE,30,ODESSA)
+	look_off(EVENT_RAGNA)
+	wait(15)
+	look_del(EVENT_RAGNA)	
+	look(EVENT_RAGNA, "Bone_Head", 0, 2,2,2, 0,0,-10)	
+
+	KAO(EVENT_RAGNA,"B232BZ2","1233321","5")
+	MES(EVENT_RAGNA,"お、おい！？",0)
+	MES_close(EVENT_RAGNA)
+	
+	KAO(LUE,"B232BZ2","123321","4")
+	MES(LUE,"だ、大丈夫！？",0)
+	MES_close(LUE)
+
+
+	KAO(ODESSA,"B232BZ4","3Q","5")
+	MES(ODESSA,"はは……\nさすがに力を使いすぎた……",0)
+	KAO(ODESSA,"B232BZ4","3","5")
+	MES(ODESSA,"すまない……\n私はここまでのようだ……",0)
+	MES_close(ODESSA)
+
+	KAO(EVENT_RAGNA,"B232BZ5","1233321","4")
+	MES(EVENT_RAGNA,"……気にすんな。\nあんたがいてくれて助かった。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1","4")	
+	MES(EVENT_RAGNA,"ケリは俺たちが付けるから\nゆっくり休んでてくれ。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ODESSA,"B232BZ3","3","5")
+	MES(ODESSA,"……ああ……頼んだよ………",0)
+	MES_close(ODESSA)
+
+//　　オデッサ、そのままガクリと気絶してしまう。
+	wait(30)
+
+	CAM_move(474,0,2900,90,0)
+	MOT(ODESSA, 153, 0)
+	wait(10)
+	SE(1139,0)//倒れるSE
+	wait(5)
+	look(EVENT_RAGNA, "Bone_Head", 0, 1,1,1, 0,-10,-10)	
+	wait(30)
+	
+	KAO(LUE, "2","1233321","4")
+	MES(LUE,"あ……",0)
+	MES_close(LUE)
+
+	wait(5)
+	KAO(EVENT_RAGNA, "B","A23","2")
+	wait(10)
+	EMO(EVENT_RAGNA,EMO_TENTEN)
+	wait(40)
+	KAO(EVENT_RAGNA, "B","321","2")
+	wait(10)
+//	look_chr( EVENT_RAGNA,LUE,"Bone_Head")
+	look(EVENT_RAGNA, "Bone_Head", 0, 2,2,2, 0,10,0)	
+	CAM_move(534,0,2940,300,0)
+	CAM(-89,41,2940,25,44,300,0)
+	wait(20)
+
+	KAO(EVENT_RAGNA, "B232BZ4","1","2")
+	MES(EVENT_RAGNA,"よし……\nこっから先は俺たちの仕事だ。",0)
+	KAO(EVENT_RAGNA, "B232BZ3","1","2")	
+	MES(EVENT_RAGNA,"覚悟は出来てるな、ルゥ？",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr( LUE,EVENT_RAGNA,"Bone_Head")
+	wait(15)
+	
+	KAO(LUE, "B232BZ2","1233321","2")
+	MES(LUE,"い、言われなくても！",0)
+	KAO(LUE, "B232BZ2","1","2")	
+	MES(LUE,"終点も近いみたいだし……\n早く姫さまを助けに行きましょ！",0)
+	MES_close(LUE)
+
+	KAO(EVENT_RAGNA, "B232BZ2","1233321","2")
+	MES(EVENT_RAGNA,"ああ……！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　オデッサをパートナーから外した上で、
+//　　そのままイベント終了、プレイヤー操作許可。
+//　　異次元クリアまで、オデッサはそのまま気絶させておく。
+	fade_in(100,30,0)
+	wait_fade()
+
+	EV("EV_68_fadeout")//環境SEフェードアウト
+	stop_BGM(90)
+	wait_BGM()
+
+	delete(LUE)
+	delete(B_ODESSA)
+	delete(DYGALD)
+	delete(H_DYGALD)
+	delete(EVENT_RAGNA)
+	delete(EFFDUMMY1)
+
+	F_reset_chr(ODESSA,CF_NO_CLIP)
+	F_reset_chr(ODESSA,CF_NO_CLIP2)
+	F_reset_chr(ODESSA,CF_NO_CSP)
+
+	clear_party(PARTNER)
+	chr_pos(RAGNA,	 600,140,2800, 90,2)
+	color(RAGNA,1)
+	color(PARTNER,-1)
+
+//	CAM_return(0)
+//	wait(30)
+
+//ＧＦ『★中ボス⑥【真ダイガルド】を倒した』を立てる。
+	F_set(F5_13_KillDygald)
+	//★ダイガルド【病で倒れた】
+	F_set_note(-22,2)
+
+	//パーティからオデッサをはずすため、ダミーマップへ一度飛ぶ
+	workG(GW_ENTRY_EVENT,SET,6)
+	new_map(10800)
+
+//	fade_in(0,30,0)
+
+//	EV_end()
+	
+}
+//--------------------------------------------------------------------
+// パーティを
+EV_5_18_KillOverDygaldEnd
+{
+	set_namebmp(0,0)
+	chr_pos(RAGNA,	 600,140,2800, 90,2)
+	chr_pos(PET,	 600,140,2800, 90,2)
+	color(RAGNA,1)
+	color(PARTNER,-1)
+	
+	fade_in(0,30,0)
+	EV_end()
+}
+
+//地鳴りSE処理------------------------
+EV_1113
+{
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+	wait(21)
+	SE(1113,0)
+}
+
+//オーラSE処理------------------------
+EV_1135
+{
+	wait(10)
+	SE(1136,0)
+	wait(20)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+//	SE(1135,0)
+	wait(26)
+	wait(35)
+	SE(1135,0)
+	wait(26)
+	SE(1136,0)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+	wait(26)
+	SE(1135,0)
+}
+
+//オーラSEループ処理------------------------
+EV_1135_loop
+{
+	SE(1135,0)
+	wait(26)
+	EV("EV_1135_loop2")
+}
+EV_1135_loop2
+{
+	SE(1135,0)
+	wait(26)
+	EV("EV_1135_loop")
+}
+
+//魂SE処理-----------------------------------
+EV_1138
+{
+	SE(1138,H_DYGALD)
+	wait(45)
+	EV("EV_1138_2")
+}
+EV_1138_2
+{
+	SE(1138,H_DYGALD)
+	wait(45)
+	EV("EV_1138")
+}
+
+//環境SEフェードアウト-------------------------
+EV_68_fadeout
+{
+	SE_vol(68,100,0)
+	wait(1)
+	SE_vol(68,99,0)
+	wait(1)
+	SE_vol(68,98,0)
+	wait(1)
+	SE_vol(68,97,0)
+	wait(1)
+	SE_vol(68,96,0)
+	wait(1)
+	SE_vol(68,95,0)
+	wait(1)
+	SE_vol(68,94,0)
+	wait(1)
+	SE_vol(68,93,0)
+	wait(1)
+	SE_vol(68,92,0)
+	wait(1)
+	SE_vol(68,91,0)
+	wait(1)
+	SE_vol(68,90,0)
+	wait(1)
+	SE_vol(68,89,0)
+	wait(1)
+	SE_vol(68,88,0)
+	wait(1)
+	SE_vol(68,87,0)
+	wait(1)
+	SE_vol(68,86,0)
+	wait(1)
+	SE_vol(68,85,0)
+	wait(1)
+	SE_vol(68,84,0)
+	wait(1)
+	SE_vol(68,83,0)
+	wait(1)
+	SE_vol(68,82,0)
+	wait(1)
+	SE_vol(68,81,0)
+	wait(1)
+	SE_vol(68,80,0)
+	wait(1)
+	SE_vol(68,79,0)
+	wait(1)
+	SE_vol(68,78,0)
+	wait(1)
+	SE_vol(68,77,0)
+	wait(1)
+	SE_vol(68,76,0)
+	wait(1)
+	SE_vol(68,75,0)
+	wait(1)
+	SE_vol(68,74,0)
+	wait(1)
+	SE_vol(68,73,0)
+	wait(1)
+	SE_vol(68,72,0)
+	wait(1)
+	SE_vol(68,71,0)
+	wait(1)
+	SE_vol(68,70,0)
+	wait(1)
+	SE_vol(68,69,0)
+	wait(1)
+	SE_vol(68,68,0)
+	wait(1)
+	SE_vol(68,67,0)
+	wait(1)
+	SE_vol(68,66,0)
+	wait(1)
+	SE_vol(68,65,0)
+	wait(1)
+	SE_vol(68,64,0)
+	wait(1)
+	SE_vol(68,63,0)
+	wait(1)
+	SE_vol(68,62,0)
+	wait(1)
+	SE_vol(68,61,0)
+	wait(1)
+	SE_vol(68,60,0)
+	wait(1)
+	SE_vol(68,59,0)
+	wait(1)
+	SE_vol(68,58,0)
+	wait(1)
+	SE_vol(68,57,0)
+	wait(1)
+	SE_vol(68,56,0)
+	wait(1)
+	SE_vol(68,55,0)
+	wait(1)
+	SE_vol(68,54,0)
+	wait(1)
+	SE_vol(68,53,0)
+	wait(1)
+	SE_vol(68,52,0)
+	wait(1)
+	SE_vol(68,51,0)
+	wait(1)
+	SE_vol(68,50,0)
+	wait(1)
+	SE_vol(68,49,0)
+	wait(1)
+	SE_vol(68,48,0)
+	wait(1)
+	SE_vol(68,47,0)
+	wait(1)
+	SE_vol(68,46,0)
+	wait(1)
+	SE_vol(68,45,0)
+	wait(1)
+	SE_vol(68,44,0)
+	wait(1)
+	SE_vol(68,43,0)
+	wait(1)
+	SE_vol(68,42,0)
+	wait(1)
+	SE_vol(68,41,0)
+	wait(1)
+	SE_vol(68,40,0)
+	wait(1)
+	SE_vol(68,39,0)
+	wait(1)
+	SE_vol(68,38,0)
+	wait(1)
+	SE_vol(68,37,0)
+	wait(1)
+	SE_vol(68,36,0)
+	wait(1)
+	SE_vol(68,35,0)
+	wait(1)
+	SE_vol(68,34,0)
+	wait(1)
+	SE_vol(68,33,0)
+	wait(1)
+	SE_vol(68,32,0)
+	wait(1)
+	SE_vol(68,31,0)
+	wait(1)
+	SE_vol(68,30,0)
+	wait(1)
+	SE_vol(68,29,0)
+	wait(1)
+	SE_vol(68,28,0)
+	wait(1)
+	SE_vol(68,27,0)
+	wait(1)
+	SE_vol(68,26,0)
+	wait(1)
+	SE_vol(68,25,0)
+	wait(1)
+	SE_vol(68,24,0)
+	wait(1)
+	SE_vol(68,23,0)
+	wait(1)
+	SE_vol(68,22,0)
+	wait(1)
+	SE_vol(68,21,0)
+	wait(1)
+	SE_vol(68,20,0)
+	wait(1)
+	SE_vol(68,19,0)
+	wait(1)
+	SE_vol(68,18,0)
+	wait(1)
+	SE_vol(68,17,0)
+	wait(1)
+	SE_vol(68,16,0)
+	wait(1)
+	SE_vol(68,15,0)
+	wait(1)
+	SE_vol(68,14,0)
+	wait(1)
+	SE_vol(68,13,0)
+	wait(1)
+	SE_vol(68,12,0)
+	wait(1)
+	SE_vol(68,11,0)
+	wait(1)
+	SE_vol(68,10,0)
+	wait(1)
+	SE_vol(68,9,0)
+	wait(1)
+	SE_vol(68,8,0)
+	wait(1)
+	SE_vol(68,7,0)
+	wait(1)
+	SE_vol(68,6,0)
+	wait(1)
+	SE_vol(68,5,0)
+	wait(1)
+	SE_vol(68,4,0)
+	wait(1)
+	SE_vol(68,3,0)
+	wait(1)
+	SE_vol(68,2,0)
+	wait(1)
+	stop_SE(68)
+}
+
+#EndScriptTable
+//====================================================================

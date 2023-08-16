@@ -1,0 +1,1531 @@
+//──────────────────────────────
+//	name("◆ビアンス（ペットショップ従業員）Bians")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+//会話中のモーション
+MOTION_TK_BIANS
+{
+	MOT_SET(BIANS,150,-1,422,422,151,15)
+	MOT_SET(BIANS,151,-1,423,423,150,15)
+	MOT(BIANS,150,15)
+}
+
+SHOP_BIANS
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(BIANS, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,BIANS)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,BIANS)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,BIANS)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		EV("MOTION_TK_BIANS")
+		rot_chr(BIANS,30,PLAYER1)
+		EV("TK_BIANS")
+		wait_EV("TK_BIANS")
+		MOT_SET(BIANS,151,-1,461,461,152,15)		//本棚掃除
+		MOT_SET(BIANS,152,-1,462,462,151,15)		//本棚掃除
+		MOT(BIANS,151,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		//ペットショップ初回イベント
+		if(!FV_01_TalkBians)
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		//□□わらしべイベント
+		if(FV_11_Warasi_3_Hln && !FV_11_Warasi_4_Bns)
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		else
+		//□□共通初回
+		if(!FV_11_TalkBians)
+		{
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		//以降はペットショップ処理
+		else
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"フフ、いらっしゃいませ。",0)
+			
+//			MES(BIANS,"これはいらっしゃいませ。",0)
+			MES(BIANS,"ペットショップ《アントニー》では\nあなたにぴったりのペットを\nお選びいただけます。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//ペットショップ初回イベント
+		if(!FV_01_TalkBians)
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		//□□わらしべイベント
+		if(FV_11_Warasi_3_Hln && !FV_11_Warasi_4_Bns)
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		else
+		//□□共通初回
+		if(!FV_11_TalkBians)
+		{
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		//以降はペットショップ処理
+		else
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"フフ、いらっしゃいませ。",0)
+			
+//			MES(BIANS,"これはいらっしゃいませ。",0)
+			MES(BIANS,"ペットショップ《アントニー》では\nあなたにぴったりのペットを\nお選びいただけます。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+		//ペットショップ初回イベント
+		if(!FV_01_TalkBians)
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		//初回はペットショップ選択肢に入らず直接会話
+		if(!FV_10_TalkBians)
+		{
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		//以降はペットショップ処理
+		else
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("MOTION_TK_BIANS")
+
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"フフ、いらっしゃいませ。",0)
+			
+//			MES(BIANS,"これはいらっしゃいませ。",0)
+			MES(BIANS,"ペットショップ《アントニー》では\nあなたにぴったりのペットを\nお選びいただけます。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		EV("MOTION_TK_BIANS")
+		rot_chr(BIANS,30,PLAYER1)
+		//ペットショップ初回イベント
+		if(!FV_01_TalkBians)
+		{
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		{
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"フフ、いらっしゃいませ。",0)
+
+//			MES(BIANS,"これはいらっしゃいませ。",0)
+			MES(BIANS,"ペットショップ《アントニー》では\nあなたにぴったりのペットを\nお選びいただけます。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		EV("MOTION_TK_BIANS")
+		rot_chr(BIANS,30,PLAYER1)
+		//初回イベント
+		if(!FV_06_TalkBians)
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		else
+		{
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"フフ、いらっしゃいませ。",0)
+			
+//			MES(BIANS,"いらっしゃいませ。",0)
+			MES(BIANS,"ペットショップ《アントニー》では\nあなたにぴったりのペットを\nお選びいただけます。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//▼④炎のパーツを入手した
+	//▼③金闇の森へ向かうことにした
+	//▼②ロアルタ村へ向かうことにした
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		EV("MOTION_TK_BIANS")
+		
+		rot_chr(BIANS,30,PLAYER1)
+		//ペットショップ初回イベント
+		if(!FV_01_TalkBians)
+		{
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		{
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"フフ、いらっしゃいませ。",0)
+			
+//			MES(BIANS,"これはいらっしゃいませ。",0)
+			MES(BIANS,"ペットショップ《アントニー》では\nあなたにぴったりのペットを\nお選びいただけます。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+
+	TK_end()
+}
+
+SHOP_BIANS_LOOP
+{
+	workL(WK_CANCEL,SET,4)//【やめる】
+	MES_pos(PLAYER1,"??W9【話をする】\n【ペットを選ぶ】\n【説明を聞く】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+	
+	//──────────────────────────────
+	//	name("□話をする")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		//会話処理
+		EV("TK_BIANS")
+		wait_EV("TK_BIANS")
+		loop
+	}
+	//──────────────────────────────
+	//	name("□ペットを選ぶ")
+	//──────────────────────────────
+	else
+	if(WK_YESNO==2)
+	{
+	//	name("ビアンス")
+		MES(BIANS,"どのペットをお求めですか？",0)
+		MES_close(BIANS)
+		
+		shop_open(3)//ペット
+		wait_W(WK_YESNO)
+
+		if(IT016>0 && IT017>0 && IT018>0 )
+			F_set(FV_FF_PetSoldout)
+
+		if(!F0_14_TutoPet)
+		{
+			if(IT017>0 || IT016>0 || IT018>0)
+			{
+				//●チュートリアル：ペット
+				Load_BMP(20,"sys\\tuto14.itm","0")
+				menuBMP(1,	20,	0,0,288,384)
+			//　　※初回ペットお買い上げ直後に表示。
+			//	name("ビアンス")
+				MES(BIANS,"フフ、お買い上げ\nありがとうございます。",0)
+				MES(BIANS,"それでは、私が少々\nペットの飼いかたなどを\n解説させていただきましょう。",0)
+				MES(BIANS,"まず、お求めになったペットは\nステータス欄にアイコンが\n追加されているはずですので。",0)
+				MES(BIANS,"忘れずに、連れて步きたい\nペットを選択してください。",0)
+				MES(BIANS,"ペットを選択していると、\nダンジョンなどで\nお供してくれるようになりますよ。",0)
+				MES(BIANS,"攻撃やアイテム拾い……その他にも\nそれぞれのペットの能力を発揮して\n手助けしてくれることでしょう。",0)
+				MES(BIANS,"フフ、どうか大切に\n育ててやってくださいませ。",0)
+				MES_close(BIANS)
+				wait_MES(BIANS)
+
+				menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+				menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+				SE(043,PLAYER1)
+				wait(40)
+				wait_key(0)
+				menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+				wait(30)
+				F_set(F0_14_TutoPet)
+			}
+		}
+
+		loop
+	}
+	//──────────────────────────────
+	//	name("□説明を聞く")
+	//──────────────────────────────
+	else
+	if(WK_YESNO==3)
+	{
+	//	name("ビアンス")
+		MES(BIANS,"ペットショップ《アントニー》では\nお好きなペットをお買い求め\nいただくことが出来ます。",0)
+		MES(BIANS,"ペットたちは冒険のお供をしてくれる\nだけではなく、アイテムを拾ったり、\n支援してくれることもあります。",0)
+		MES(BIANS,"その能力は、あなた方の\n大きな助けとなるでしょう。",0)
+		MES(BIANS,"またペットたちは、\nペットフードを使うことによって\n成長させることもできます。",0)
+		MES(BIANS,"さあ、ペットショップ《アントニー》で\nあなたにぴったりのペットを探しましょう。",0)
+		MES_close(BIANS)
+		
+	//　　※冒頭選択肢に戻る。
+		loop
+	}
+	//──────────────────────────────
+	//	name("□やめる")
+	//──────────────────────────────
+	else
+	{
+		//	お買い上げペット数を計算。
+		workL(0,SET,0)
+		if(IT016>0)
+		{
+			workL(0,ADD,1)
+		}
+		if(IT017>0)
+		{
+			workL(0,ADD,1)
+		}
+		if(IT019>0)
+		{
+			workL(0,ADD,1)
+		}
+
+		//たくさん買ったよ！
+		if(WK000>2)
+		{
+			//	name("ビアンス")
+			MES(BIANS,"これはこれは、\nご愛用ありがとうございます。",0)
+//			MES(BIANS,"またのお越しをお待ちしております。",0)
+			
+			VOICE(741,0)		//「フフ、またどうぞ」						
+			MES(BIANS,"フフ、またどうぞ。",0)			
+			MES_close(BIANS)
+		}
+		else
+		//そこそこ買った！
+		if(WK000>1)
+		{
+//			MES(BIANS,"ご愛用ありがとうございます。\nまたのお越しをお待ちしております。",0)
+
+			MES(BIANS,"ご愛用ありがとうございます。",0)
+			VOICE(741,0)		//「フフ、またどうぞ」						
+			MES(BIANS,"フフ、またどうぞ。",0)
+			MES_close(BIANS)
+		}
+	//	name("□◆何かを買った場合")
+		else
+		{
+			if(WK_ITEMBOX1>0)
+			{
+//				MES(BIANS,"お買い上げ、ありがとうございます。\nまたのお越しをお待ちしております。",0)
+			
+				MES(BIANS,"お買い上げ、ありがとうございます。",0)
+				VOICE(741,0)		//「フフ、またどうぞ」					
+				MES(BIANS,"フフ、またどうぞ。",0)
+				MES_close(BIANS)
+			}
+		//	name("□◆何も買わなかった場合")
+			else
+			{	
+				VOICE(741,0)		//「フフ、またどうぞ」	
+				MES(BIANS,"フフ、またどうぞ。",0)
+				
+//				MES(BIANS,"またのお越しをお待ちしております。",0)
+				
+				MES_close(BIANS)
+			}
+		}
+//		VOICE(741,0)		//「フフ、またどうぞ」	
+		
+	}
+
+}
+
+//──────────────────────────────
+//▼ペットショップ初回イベント
+//──────────────────────────────
+//　　※フラグ⑥⑩□では発生しない。
+EV_FV_01_PetBegin
+{
+//	name("ビアンス")
+	MES(BIANS,"これはいらっしゃいませ。\nペットショップ《アントニー》へようこそ。",0)
+	MES(BIANS,"初めてのお客様で\nいらっしゃいますね？",0)
+	MES_close(BIANS)
+
+	//──────────────────────────────
+		if(GW_MAN==0)
+		{
+	//	name("□アルウェン先頭")
+			//～⑦、□～
+			if(!F4_00_StartSolo || F6_00_GoToMeru)
+			{
+				MES(PARTNER,"うむ、その通りだ。",0)
+				MES_close(PARTNER)
+			}
+			else
+			//⑩
+			if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			{
+				MES(PARTNER,"うむ、その通りだ。",0)
+				MES_close(PARTNER)
+			}
+			//オデッサ．スバルのときはメッセージが無いのでラグナを読む
+			else
+			{
+		//	name("□ラグナ先頭")
+				MES(RAGNA,"ああ、そうだが。",0)
+				MES_close(RAGNA)
+			}
+		}
+		else
+		{
+	//	name("□ラグナ先頭")
+			MES(RAGNA,"ああ、そうだが。",0)
+			MES_close(RAGNA)
+		}
+	//──────────────────────────────
+
+
+	MES(BIANS,"私、当店の店員\nビアンスと申します。",0)
+	MES(BIANS,"ペットについて\n何か分からない事があれば\nぜひご質問ください。",0)
+	MES(BIANS,"どのような疑問にも、\nこの私が誠心誠意\n対応させて頂きますので。",0)
+	MES_close(BIANS)
+
+	//──────────────────────────────
+		if(GW_MAN==0)
+		{
+	//	name("□アルウェン先頭")
+			//～⑦、□～
+			if(!F4_00_StartSolo || F6_00_GoToMeru)
+			{
+				MES(PARTNER,"ふむ、中々丁寧な者だな……",0)
+				MES_close(PARTNER)
+			}
+			else
+			//⑩
+			if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			{
+				MES(PARTNER,"ふむ、中々丁寧な者だな……",0)
+				MES_close(PARTNER)
+			}
+			//オデッサ．スバルのときはメッセージが無いのでラグナを読む
+			else
+			{
+		//	name("□ラグナ先頭")
+				MES(RAGNA,"は、はあ。\nそりゃどうも……",0)
+				MES_close(RAGNA)
+			}
+		}
+		else
+		{
+	//	name("□ラグナ先頭")
+			MES(RAGNA,"は、はあ。\nそりゃどうも……",0)
+			MES_close(RAGNA)
+		}
+	//──────────────────────────────
+
+	MES(BIANS,"フフ……\nそれではごゆっくりどうぞ。",0)
+	MES_close(BIANS)
+
+	F_set(FV_01_TalkBians)
+}
+
+
+
+//会話処理本体
+TK_BIANS
+{
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※ペットショップ前を掃除している。（ホウキ持ち）
+	if( F6_05_EndSixth )
+	{
+		rot_chr(BIANS,30,PLAYER1)
+		//──────────────────────────────
+		//　　※フラグ□□初回イベントを見ていない場合。
+		//──────────────────────────────
+		if(!FV_11_TalkBians)
+		{
+			if(!F_BIANS)
+			{
+			//	name("ビアンス")
+				MES(BIANS,"これはいらっしゃいませ。",0)
+				MES(BIANS,"……しかし申し訳ありませんね。",0)
+				MES(BIANS,"ペットショップ《アントニー》は\n本日定休日なのですよ。",0)
+				MES(BIANS,"よろしければ、\nまたお越しくださいませ。",0)
+				MES_close(BIANS)
+				
+				F_set(BIANS)
+			}
+			//　　★繰り返し
+			else
+			{
+			//	name("ビアンス")
+				MES(BIANS,"ペットショップ《アントニー》は\n本日定休日となっております。",0)
+				MES(BIANS,"よろしければ、\nまたお越しくださいませ。",0)
+				MES_close(BIANS)
+			}
+		}
+		//──────────────────────────────
+		//　　※フラグ□□初回イベントを見ている場合。
+		//──────────────────────────────
+		else
+		{
+			if(!F_BIANS)
+			{
+			//	name("ビアンス")
+				MES(BIANS,"これはいらっしゃいませ。",0)
+				MES(BIANS,"……しかし申し訳ありません。\nペットショップ《アントニー》は\n本日定休日なのですよ。",0)
+				MES(BIANS,"ああ、ちなみに。",0)
+				MES(BIANS,"以前お話した、\n本店乗っ取り計画は順調ですよ。",0)
+				MES(BIANS,"私が本店店長となった暁には、\nこの看板は『ミラクルペットショップ．\nハッピービアンス』になる予定ですので。",0)
+				MES(BIANS,"よろしければ、\nまたお越しくださいませ。",0)
+				MES_close(BIANS)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+			//	EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"（やっぱ本気で\n  腹黒いな、この人……）",0)
+				MES_close(RAGNA)
+
+				F_set(FV_13_TalkBians)
+				F_set(BIANS)
+			}
+		//　　★繰り返し
+			else
+			{
+			//	name("ビアンス")
+				MES(BIANS,"この看板は、近々\n『ミラクルペットショップ．\nハッピービアンス』になる予定ですので。",0)
+				MES(BIANS,"よろしければ、\nまたお越しくださいませ。",0)
+				MES_close(BIANS)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□□　わらしべイベント
+	//	name("４．ビアンス（ロアルタ村）		『新品ノート』□『謎のペットフード』")146
+	//◆初回イベント/2回目以降分割予定
+	//──────────────────────────────
+//　　※▼□□共通初回イベントよりも優先される。
+	if(F5_00_HearLunar && FV_11_Warasi_3_Hln && !FV_11_Warasi_4_Bns)
+	{
+
+		rot_chr(BIANS,30,PLAYER1)
+
+		if(!F_BIANS)
+		{
+		//	name("ビアンス")
+			MES(BIANS,"おや……？",0)
+			MES(BIANS,"お客様、中々良い物を\nお持ちですね。",0)
+			MES(BIANS,"その『新品ノート』、私に\n譲っていただけないでしょうか。",0)
+			MES_close(BIANS)
+
+			//──────────────────────────────
+			if(GW_MAN==0 && F6_00_GoToMeru)
+			{
+			//	name("□アルウェン先頭")
+				MES(PARTNER,"ふむ、何かに\n使いたいというのだな？",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("□ラグナ先頭")
+				MES(RAGNA,"あ、ああ……\n一応理由を聞いておいていいか？",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+			
+			//──────────────────────────────
+			if(FV_11_TalkBians)
+			{
+			//	name("□▼□□共通初回イベントを見ている場合。")
+			//	name("ビアンス")
+				MES(BIANS,"ええ、以前にも\n申し上げたかもしれませんが……",0)
+				MES(BIANS,"私、本店乗っ取り計画などを\n進めておりましてね。",0)
+				MES(BIANS,"フフ、そろそろ資金集めのために\n裏帳簿を始めようかと思いまして。",0)
+				MES_close(BIANS)
+
+			//　　ラグナたちに！エモーション。
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PET,EMO_BIKKURI)
+				//アルウェンが居る
+				if(F6_00_GoToMeru)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				else
+				//オデッサが居る
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				wait(30)
+				
+				MES(PET,"う、裏帳簿……",0)
+				MES_close(PET)
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+					if(F5_08_JoinOdessa && !F5_13_KillDygald)
+					{
+					//	name("□ラグナ先頭で、オデッサがいる")
+						MES(PARTNER,"ア、アンタもあくどいねえ……",0)
+						MES_close(PARTNER)
+					}
+					else
+					if(F6_00_GoToMeru)
+					{
+					//	name("□ラグナ先頭で、アルウェンがいる場合")
+						MES(PARTNER,"そ、そなたも\n相当あくどいな……",0)
+						MES_close(PARTNER)
+					}
+				}
+				else
+				{
+				//	name("□それ以外")
+					MES(RAGNA,"つ、ついにそこまで……",0)
+					MES_close(RAGNA)
+				}
+				//──────────────────────────────
+			}
+			else
+			{
+			//	name("□それ以外")
+			//	name("ビアンス")
+				MES(BIANS,"ええ、実は私──\n本店店長の座を狙っていましてね。",0)
+				MES(BIANS,"ここは一支店に過ぎませんから、\n本店乗っ取りということになりますか。",0)
+			 	MES(BIANS,"フフ、その資金集めに\n裏帳簿を始めようかと思いまして。",0)
+				MES_close(BIANS)
+
+			//　　ラグナたちに！エモーション。
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PET,EMO_BIKKURI)
+				//アルウェンが居る
+				if(F6_00_GoToMeru)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				else
+				//オデッサが居る
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				wait(30)
+
+			//	name("一同")
+				chr_rename(RAGNA,"一同")
+				MES(RAGNA,"（ほ、本気であくどい……）",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				chr_rename(RAGNA,"ラグナ")
+			}
+		//──────────────────────────────
+		//	name("ビアンス")
+			MES(BIANS,"……いかがです？\n私の野望に\n協力してくださいませんか。",0)
+			MES_close(BIANS)
+			F_set(BIANS)
+		}
+		else
+		{
+			MES(BIANS,"フフフ……お客様。",0)
+			MES(BIANS,"ここは一つ、その『新品ノート』を\n私に譲っていただけませんか。",0)
+			MES_close(BIANS)
+		}
+
+	//	name("選択テキスト")
+		workL(WK_CANCEL,SET,2)//【絶対渡さない】
+		MES_pos(PLAYER1,"??W9【ノートを渡す】\n【絶対渡さない】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+	//──────────────────────────────
+		//──────────────────────────────
+		//	name("□【ノートを渡す】")
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+		//	name("ビアンス")
+			MES(BIANS,"フフ、これはどうも……",0)
+			MES(BIANS,"代わりにこれを差し上げましょう。",0)
+			MES(BIANS,"仕入れ品の中に\n紛れ込んでいたのですよ。",0)
+			MES_close(BIANS)
+
+		//	name("アイテム入手テキスト")
+		//	MES(BIANS,"『謎のペットフード』をもらった。",0)
+			//―――――――――――――――――――――――
+			fade_in(30,10,BLACK)
+
+			get_item(145,-1,1)
+			get_item(146,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//―――――――――――――――――――――――
+
+			//──────────────────────────────
+			if(FV_11_TalkBians)
+			{
+			//	name("□▼□□共通初回イベントを見ている場合。")
+			//	name("ビアンス")
+				MES(BIANS,"さて、これで\n資金対策も万全ですね。",0)
+				MES(BIANS,"いよいよあの店の\n全てが私のものに……\nウフフフフ……",0)
+				MES_close(BIANS)
+			}
+			else
+			{
+			//	name("□見ていない場合。")
+				//──────────────────────────────
+				if(GW_MAN==0 && F6_00_GoToMeru)
+				{
+				//	name("□アルウェン先頭")
+					MES(PARTNER,"う、うむ。\n受け取っておこう……",0)
+					MES(PARTNER,"というかそなた、\nその本店乗っ取りというのは……",0)
+					MES_close(PARTNER)
+				}
+				else
+				{
+				//	name("□ラグナ先頭")
+					MES(RAGNA,"サ、サンキュー……",0)
+					MES(RAGNA,"というかあんた、\n本店乗っ取りって……",0)
+					MES_close(RAGNA)
+				}
+				//──────────────────────────────
+
+			//──────────────────────────────
+			//	name("ビアンス")
+				MES(BIANS,"フフフ、ご心配なく。\n私が狙うのは本店店長の座のみ……",0)
+				MES(BIANS,"お客様にはこれまで通り\n誠心誠意対応させて頂きますので。\n（ニッコリ）",0)
+				MES_close(BIANS)
+			}
+			//──────────────────────────────
+			
+		//　　ラグナたちに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PET,EMO_AOZAME)
+			//アルウェンが居る
+			if(F6_00_GoToMeru)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			else
+			//オデッサが居る
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			wait(30)
+
+			MES(PET,"（怖っ……！）",0)
+			MES_close(PET)
+
+			//──────────────────────────────
+			if(GW_MAN==1)
+			{
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+				//	name("□ラグナ先頭で、オデッサがいる")
+					MES(PARTNER,"（不気味な笑顔だねえ……）",0)
+					MES_close(PARTNER)
+				}
+				else
+				if(F6_00_GoToMeru)
+				{
+				//	name("□ラグナ先頭で、アルウェンがいる場合")
+					MES(PARTNER,"（え、笑顔が怖いのう……）",0)
+					MES_close(PARTNER)
+				}
+			}
+			else
+			{
+			//	name("□それ以外")
+				MES(RAGNA,"（え、笑顔が怖い人だぜ……）",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+
+			//　　※このイベントが起こると、▼□□共通初回イベントは発生しなくなる。
+			F_set(FV_11_TalkBians)
+			
+			//★ビアンス【裏帳簿】
+			F_set_note(BIANS,2)
+			F_set(FV_11_Warasi_4_Bns)
+			F_reset(BIANS)
+		}
+		//──────────────────────────────
+		//	name("□【絶対渡さない】")
+		//──────────────────────────────
+		else
+		{
+		//	name("ビアンス")
+			MES(BIANS,"おや、そうですか。\nそれは残念……",0)
+			MES(BIANS,"また気が向いたときにでも\nお譲りください。\nお待ちしておりますので。",0)
+			MES_close(BIANS)
+		}
+
+	//──────────────────────────────
+	//　　※このイベントが起こると、▼□□共通初回イベントは発生しなくなる。
+	}
+	else
+	//──────────────────────────────
+	//▼□□、共通初回イベント
+	//──────────────────────────────
+	//　　※ペットショップカウンター裏の、窓から外を見ている。
+	//　　※初回イベント
+	//	name("ビアンス")
+	if(F5_00_HearLunar && !FV_11_TalkBians)
+	{
+		MES(BIANS,"今月の売り上げもまずまず……",0)
+		MES(BIANS,"フフ、例の計画の方も順調ですね。",0)
+		MES(BIANS,"後は資金さえ溜まれば\nあの店の全てが私のものに……",0)
+		MES_close(BIANS)
+
+	//　　ラグナたちに青ざめエモーション。
+		EMO(RAGNA,EMO_AOZAME)
+		EMO(PET,EMO_AOZAME)
+		//アルウェンが居る
+		if(F6_00_GoToMeru)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		else
+		//オデッサが居る
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		wait(30)
+		
+		rot_chr(PET,30,BIANS)
+		MES(PET,"あ、あんた……",0)
+		MES_close(PET)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"いま何か口走らなかったか……？",0)
+		MES_close(RAGNA)
+
+	//　　ビアンスにＰＡエモーション、振り返る。
+		EMO(BIANS,EMO_PA)
+		wait(30)
+		rot_chr(BIANS,30,PLAYER1)
+
+	//	name("ビアンス")
+		EV("MOTION_TK_BIANS")
+		MES(BIANS,"おっとこれは失礼……\n聞かれてしまいましたか。",0)
+		MES(BIANS,"フフ、どうかお気になさらず。\n少々本店の乗っ取り計画について\n考えを巡らせていただけのことですよ。",0)
+		MES(BIANS,"お客様には今まで通り、\n誠心誠意の対応をさせて頂きますので。",0)
+		MES(BIANS,"フフフ、ご心配なく。",0)
+		MES_close(BIANS)
+
+	//　　ラグナたちに青ざめエモーション。
+		EMO(RAGNA,EMO_AOZAME)
+		EMO(PET,EMO_AOZAME)
+		//アルウェンが居る
+		if(F6_00_GoToMeru)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		else
+		//オデッサが居る
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		wait(30)
+
+		//──────────────────────────────
+		//	name("□アルウェンがいる場合")
+		if(F6_00_GoToMeru)
+		{
+			MES(PARTNER,"こ、こんな時に\n何を考えておるのかと思えば……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"つーかそんな誠実に\n打ち明けられてもな……",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+			//	name("□オデッサがいる")
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				MES(PARTNER,"そんなさくっと\n打ち明けられてもねえ……",0)
+				MES_close(PARTNER)
+			}
+			//	name("□オデッサが居ない")
+			else
+			{
+				MES(RAGNA,"そ、そんな誠実に\n打ち明けられてもな……",0)
+				MES_close(RAGNA)
+			}
+		}
+		//──────────────────────────────
+
+		MES(PET,"は、腹黒い人間ね、\nまったく……",0)
+		MES_close(PET)
+		
+		F_set(FV_11_TalkBians)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※□□、共通初回イベントが優先される。
+	//　　　マップＩＮＩＴの配置は通常カウンター位置とする。
+	if( F6_00_GoToMeru )
+	{
+		if(!F_BIANS)
+		{
+		//	name("ビアンス")
+			MES(BIANS,"……ご心配なく。\n当店は普段から準備万全ですよ。",0)
+			MES(BIANS,"地震、雷、火災、洪水……",0)
+			MES(BIANS,"あらゆる保険に入っておりますので。",0)
+			MES_close(BIANS)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+			//　　ラグナに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+
+				MES(RAGNA,"保険の問題か……？",0)
+				MES_close(RAGNA)
+
+			}
+			else
+		//	name("□アルウェン先頭")
+			{
+				MES(PARTNER,"（保険……？\n  ふむ、随分と便利なものらしいな……）",0)
+				MES_close(PARTNER)
+
+			//　　ラグナに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+
+				MES(RAGNA,"いや、そうじゃないと思うぜ。",0)
+				MES_close(RAGNA)
+			}
+		//──────────────────────────────
+
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("ビアンス")
+			MES(BIANS,"当店は普段から準備万全ですよ。",0)
+			MES(BIANS,"保険に入っておりますので。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※□□、共通初回イベントが優先される。
+	//　　　マップＩＮＩＴの配置は通常カウンター位置とする。
+	if( F5_00_HearLunar )
+	{
+		if(!F_BIANS)
+		{
+		//	name("ビアンス")
+			MES(BIANS,"フフ、どうかご心配なく。",0)
+			MES(BIANS,"私は少々、本店の乗っ取りなどを\n考えさせて頂いておりますが……",0)
+			MES(BIANS,"お客様には今まで通り\n誠心誠意の対応を致しますので。",0)
+			MES(BIANS,"どうぞご利用になって、\n当店の売り上げに貢献してください。",0)
+			MES_close(BIANS)
+
+		//　　ラグナたちに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PET,EMO_AOZAME)
+			//オデッサが居る
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			wait(30)
+		
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("ビアンス")
+			MES(BIANS,"本店の乗っ取り計画が成功しても、\nお客様にご迷惑をお掛けするような\nことではございませんので。",0)
+			MES(BIANS,"フフ、どうかご心配なく。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//　　※並んでいるペットケース前。
+	if( F4_09_GoShrineMia )
+	{
+	//　　※初回イベント
+		if(!FV_10_TalkBians)
+		{
+		//　　ビアンス、ＰＡエモーションで振り返る。
+			EMO(BIANS,EMO_PA)
+			wait(30)
+			rot_chr(BIANS,30,PLAYER1)
+
+		//	name("ビアンス")
+			MES(BIANS,"おや……？",0)
+			EV("MOTION_TK_BIANS")
+			MES(BIANS,"これはいらっしゃいませ。\nペットショップ《アントニー》へようこそ。",0)
+			MES(BIANS,"随分とお早いのですね。",0)
+			MES(BIANS,"ですがご心配なく。\n当店もまもなく開店時間ですので、\nお買い求めいただけますよ。",0)
+			MES_close(BIANS)
+
+		//　　□ショップ選択肢に飛ぶ。
+		//──────────────────────────────
+			
+			F_set(FV_10_TalkBians)
+		}
+		else
+		{
+		//　　※以下通常一般メッセージ。
+		//	name("ビアンス")
+			MES(BIANS,"申し訳ありません。\nただ今はエサの時間でして。",0)
+			MES(BIANS,"ご用件なら\nこの場で承りますが。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※ペットショップカウンター。
+	if( F4_00_StartSolo )
+	{
+		if(!F_BIANS)
+		{
+		//	name("ビアンス")
+//			MES(BIANS,"今朝は随分と\n村の方が静かですね。",0)
+//			MES(BIANS,"いつもは早朝から\n騒がしいものなのですが。",0)
+//			MES(BIANS,"……まあ、当店はご覧の通り\nいつも通りの騒がしさですので。",0)
+//			MES(BIANS,"何も変わりませんけどね。",0)
+//			MES_close(BIANS)
+
+			MES(BIANS,"今朝は随分と\n村の方が静かですね。",0)
+			MES(BIANS,"いつもは早朝から\n農作業を始める音などが\nするものなのですが。",0)
+			MES(BIANS,"……まあ、当店はご覧の通り\nいつも通りの騒がしさですので。",0)
+			MES(BIANS,"何も変わりませんけどね。",0)
+			MES_close(BIANS)
+
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("ビアンス")
+			MES(BIANS,"今朝は水汲みに出ても\n誰もいらっしゃらなかったのですよ。",0)
+			MES(BIANS,"ロアルタ村は、ご覧の通り農村……\n朝は早いものなのですが。",0)
+//			MES(BIANS,"当店はいつも通りの騒がしさですが、\n村では何かあったのでしょうかね。",0)
+			MES(BIANS,"はて、何かあったのでしょうかね。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※ペットショップカウンター。
+	if( F3_00_GoMoonCastle )
+	{
+	//　　※初回イベント。
+		if(!FV_06_TalkBians)
+		{
+		//	name("ビアンス")
+			MES(BIANS,"いらっしゃいませ。",0)
+			MES(BIANS,"ペットショップ《アントニー》では\nあなたにぴったりのペットを\nお選びいただけます。",0)
+			MES_close(BIANS)
+
+		//	name("□チェスク初回を見ていない")
+			if(!FV_06_TalkWade)
+			{
+				MES(RAGNA,"って、おいおい……\nこんな状況で……",0)
+				MES(RAGNA,"あんた、大丈夫なのか？",0)
+				MES_close(RAGNA)
+				F_set(BIANS)
+			}
+		//	name("□チェスク初回を見ている")
+			else
+			{
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"ど、どうやらあんたも\n大丈夫だったみてえだな。",0)
+				MES_close(RAGNA)
+			}
+		
+		//	name("ビアンス")
+			MES(BIANS,"大丈夫……？",0)
+			MES(BIANS,"ええ、当店では夜行性動物も\n取り扱っておりますよ。",0)
+			MES(BIANS,"どうぞ、こちらのコーナーを\nご覧ください。",0)
+			MES_close(BIANS)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"いや、そういう\n意味じゃねえんだが……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"ふむ……",0)
+			MES_close(PARTNER)
+
+		//　　アルウェンきょろきょろする。
+			look(PARTNER,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(PARTNER,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(PARTNER,"Bone_Head",0,		0,2,0,			0,0,0)
+		//──────────────────────────────
+			if(!FV_06_TalkWade)
+			{
+			//	name("□チェスク初回を見ていない")
+				MES(PARTNER,"この建物の中からは\n邪気が感じられぬ。",0)
+				MES(PARTNER,"叔父上の目に\n留まらなかったようだな……",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("□チェスク初回を見ている")
+				MES(PARTNER,"やはりこの建物の中からは\n邪気が感じられぬ。",0)
+				MES(PARTNER,"先ほどの少年のせいか、\n叔父上の目に\n留まらなかったようだな……",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			MES(RAGNA,"そ、そうだったのか……",0)
+			MES_close(RAGNA)
+
+		//	name("ビアンス")
+			MES(BIANS,"──さらに当店では、\n一部の魔獣種も\n取り扱っておりますよ。",0)
+			MES(BIANS,"フフ、それではどうぞ\nごゆっくりお選びください。",0)
+			MES_close(BIANS)
+
+			F_set(FV_06_TalkBians)
+
+		//　　□ショップ選択肢に飛ぶ。
+		//──────────────────────────────
+		}
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_BIANS)
+			{
+			//	name("ビアンス")
+				MES(BIANS,"ご存知かもしれませんが、\nペットの中には\n夜行性のものも多いのですよ。",0)
+				MES(BIANS,"例えばニシキヘビ……",0)
+				MES(BIANS,"多少大型になってしまいますが、\n中々愛嬌のある顔立ちをしております。",0)
+				MES(BIANS,"いかがでしょうか？",0)
+				MES_close(BIANS)
+
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"え、遠慮しておくぜ……",0)
+					MES_close(RAGNA)
+
+					//	name("□チェスク初回を見ている場合、挿入")
+					if(FV_06_TalkWade)
+					{
+						MES(RAGNA,"（つうか、あの少年がいる事に\n  気付いてないのか……？）",0)
+						MES_close(RAGNA)
+					}
+				}
+				else
+			//	name("□アルウェン先頭")
+				{
+					MES(PARTNER,"い、今は遠慮しておこう……",0)
+					MES_close(PARTNER)
+
+				//	name("□チェスク初回を見ている場合、挿入")
+					if(FV_06_TalkWade)
+					{
+						MES(PARTNER,"（ふむ、やはりあの少年の姿は\n  見えておらぬようだな……）",0)
+						MES_close(PARTNER)
+					}
+				}
+			//──────────────────────────────
+			
+				F_set(BIANS)
+			}
+		//　　★繰り返し
+			else
+			{
+			//	name("ビアンス")
+				MES(BIANS,"フフ、ペットのご案内なら\nお任せください。",0)
+				MES(BIANS,"当店でも、夜行性のものを\nいくつか取り扱っておりますので。",0)
+				MES_close(BIANS)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※ペットショップカウンター。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_BIANS)
+		{
+			//	name("□ペットを買った事がある場合")
+			if( IT016==1 || IT017==1 || IT018==1 || IT019==1 || IT020==1 || IT021==1 )
+			{
+			//	name("ビアンス")
+				MES(BIANS,"どうやらペットを\nご愛玩頂いているようですね。",0)
+				MES(BIANS,"ペットたちは、飼い主の仕事を\n手伝う事で成長します。",0)
+				MES(BIANS,"ペットフードで育てる事もできますが、\nやはり連れて步くのが一番でしょう。",0)
+				MES(BIANS,"袖振り合うも多生の縁と申します。\n大切にしてやってくださいませ。",0)
+				MES_close(BIANS)
+
+			}
+		//	name("□ペットを買った事がない場合")
+			else
+			{
+			//	name("ビアンス")
+				MES(BIANS,"ペットたちは、飼い主の仕事を\n手伝う事で成長します。",0)
+				MES(BIANS,"そして成長するごとに、\nそれぞれの能力を伸ばしていきます。",0)
+				MES(BIANS,"ペットフードで育てる事もできますが、\nやはり連れて步くのが一番でしょうね。",0)
+				MES_close(BIANS)
+			}
+			
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("ビアンス")
+			MES(BIANS,"ペットを育てるには、\nやはり連れて步くのが一番ですよ。",0)
+			MES(BIANS,"育てたいペットは\n積極的に連れて步きましょう。",0)
+			MES(BIANS,"ペットにとっても、\nよい散步になるでしょうから。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※ペットショップカウンター
+	if( F2_00_GoForest )
+	{
+		if(!F_BIANS)
+		{
+		//	name("ビアンス")
+			MES(BIANS,"どうやら、近々村を上げての\n収穫祭があるそうですね。",0)
+			MES(BIANS,"私も手伝う事に\nなってしまいましたよ。",0)
+			MES(BIANS,"フフ……\nまあ多少ならいいでしょう。",0)
+			MES(BIANS,"住人と信頼関係を築いておくのも\n商売のうち、ですので。",0)
+			MES_close(BIANS)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（この人、ちょっと黒くないか……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□アルウェン先頭")
+			{
+				MES(PARTNER,"（こやつ……\n  何を考えておるのやら……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			//★ビアンス【商売のコツ】
+			F_set_note(BIANS,1)
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("ビアンス")
+			MES(BIANS,"村を上げての収穫祭……\nやれやれ、私も手伝う事に\nなってしまいましたよ。",0)
+			MES(BIANS,"フフ、まあ仕方ありません。",0)
+			MES(BIANS,"これも商売のためと割り切って、\n参加させて頂きましょうか。",0)
+			MES_close(BIANS)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（営業スマイルが怖えな……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□アルウェン先頭")
+			{
+				MES(PARTNER,"（営業スマイルというやつかのう……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※ペットショップカウンター
+	if( F1_15_GoVillage )
+	{
+		if(!F_BIANS)
+		{
+		//	name("ビアンス")
+			MES(BIANS,"当店は、ペットショップチェーン\n《アントニー》のイルバード支店と\nなっておりまして。",0)
+			MES(BIANS,"ここにいないペットを\n本店よりお取り寄せすることも\nできますよ。",0)
+			MES(BIANS,"希少種なども扱っておりますので、\n一応ご案内させていただきます。",0)
+			MES_close(BIANS)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"へえ、そうかなのか。",0)
+				MES(RAGNA,"（でも今って、姫さんの敵が\n  イルバードを封鎖してるんだよな。）",0)
+				MES(RAGNA,"（取り寄せの類は\n  できねえだろうな……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□アルウェン先頭")
+			{
+				MES(PARTNER,"ふむ、希少種というのは\n面白そうだが……",0)
+				MES(PARTNER,"（今は何者かが\n  このイルバードを封鎖しておるのだ。）",0)
+				MES(PARTNER,"（取り寄せの類はできぬであろうな。）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("ビアンス")
+			MES(BIANS,"希少種などは、本店より\nお取り寄せすることもできますよ。",0)
+			MES(BIANS,"ですが、売り上げが\n本店の方に流れてしまいますので……",0)
+			MES(BIANS,"当店ではお勧め致しません。",0)
+			MES_close(BIANS)
+			
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES_pos(RAGNA,"（そ、そうなのか……）",0,0,0,0,0)
+			MES_pos(PARTNER,"（そ、そうなのか……）",0,0,0,0,0)
+			wait_key(0)
+			MES_close(RAGNA)
+			MES_close(PARTNER)
+			//★ビアンス【支店の店長】
+			F_set_note(BIANS,0)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※ペットショップカウンター
+	if( F1_01_GameStart )
+	{
+		if(!F_BIANS)
+		{
+		//	name("ビアンス")
+			MES(BIANS,"ペットをお買い上げになると、\nメニューのステータス欄に\nペットアイコンが追加されますよ。",0)
+			MES(BIANS,"つれて步きたいペットを\n選択してください。",0)
+			MES(BIANS,"また、彼らにも\nそれぞれ性格がありますので。",0)
+			MES(BIANS,"アイテムを拾ったり戦闘に参加したりと、\nそれぞれ得意な分野で\n手助けをしてくれることでしょう。",0)
+			MES_close(BIANS)
+			
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("ビアンス")
+			MES(BIANS,"ペットたちは様々な分野で\n冒険の手助けをしてくれるでしょう。",0)
+			MES(BIANS,"どうか当店で\nお好みのペットをお求めください。",0)
+			MES_close(BIANS)
+		}
+	}
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

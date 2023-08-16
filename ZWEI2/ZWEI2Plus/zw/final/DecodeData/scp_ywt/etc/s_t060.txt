@@ -1,0 +1,1058 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧栻攧傝乮峴彜恖乯Karasu")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_KARASU
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(KARASU, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,KARASU)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,KARASU)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,KARASU)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//偄側偄
+	//
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(KARASU,30,PLAYER1)
+		//儌乕僔儑儞
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//傢傜偟傋忦審傪枮偨偟偰偄傞丗偐偮俴俥棫偭偰側偄
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(FV_11_Warasi13_Cls && !FV_11_Warasi14_krs && !F_KARASU)
+		{
+			MOT(KARASU,150,10)
+			EV("WARASHI_Karasu_FIRST")
+			wait_EV("WARASHI_Karasu_FIRST")
+		}
+		else
+		//嘖弶夞
+		if(!FT_12_TalkKarasu)
+		{
+			EV("TK_KARASU")
+			wait_EV("TK_KARASU")
+		}
+		//埲壓捠忢
+		else
+		{
+			VOICE(754, 0,)			//乽壗偐擖梡偐丠乿
+					
+			MOT(KARASU,150,10)
+			MES(KARASU,"……有什麼需要嗎？",0)
+			MES_close(KARASU)
+
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+		}
+		MOT(KARASU,2,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//丂仸TK_KARASU撪偱暘婒
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_05_OnVillage2)
+	{
+		EV("TK_KARASU")
+		wait_EV("TK_KARASU")
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F3_00_GoMoonCastle )
+	{
+		//弶夞
+		if(!FT_06_TalkKarasu)
+		{
+			EV("TK_KARASU")
+			wait_EV("TK_KARASU")
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+		}
+		else
+		{
+			VOICE(754, 0,)			//乽壗偐擖梡偐丠乿		
+		
+			MOT(KARASU,150,10)
+			rot_chr(KARASU,30,PLAYER1)
+			MES(KARASU,"……有什麼需要嗎？",0)
+			MES_close(KARASU)
+				
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+		}
+		MOT(KARASU,54,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//丂仸TK_KARASU撪偱暘婒
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F1_15_GoVillage )
+	{
+		//儌乕僔儑儞
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+		MOT(KARASU,150,10)
+
+		VOICE(754, 0,)			//乽壗偐擖梡偐丠乿
+			
+		rot_chr(KARASU,30,PLAYER1)
+		MES(KARASU,"……有什麼需要嗎？",0)
+		MES_close(KARASU)
+			
+		EV("SHOP_KARASU_LOOP")
+		wait_EV("SHOP_KARASU_LOOP")
+
+		MOT(KARASU,2,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F1_01_GameStart )
+	{
+		//儌乕僔儑儞
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+		MOT(KARASU,150,10)
+
+		rot_chr(KARASU,30,PLAYER1)
+		//弶夞
+		if(!FT_01_TalkKarasu)
+		{
+			EV("TK_KARASU")
+			wait_EV("TK_KARASU")
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+
+			MES(KARASU,"如果你有什麼需要的東西，\n我都可以出售。",0)
+			MES_close(KARASU)
+		}
+		else
+		{
+			VOICE(754, 0,)			//乽壗偐擖梡偐丠乿
+		
+			MES(KARASU,"……有什麼需要嗎？",0)
+			MES_close(KARASU)
+				
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+			
+		}
+		MOT(KARASU,2,10)
+	}
+	
+
+	TK_end()
+}
+
+SHOP_KARASU_LOOP
+{
+//	name("慖戰僥僉僗僩")
+	workL(WK_CANCEL,SET,3)//亂傗傔傞亃
+	MES_pos(PLAYER1,"??W9【對話】\n【購物】\n【離開】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀榖傪偡傞")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(WK_YESNO==1)
+	{
+		EV("TK_KARASU")
+		wait_EV("TK_KARASU")
+		loop
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀攦偄暔傪偡傞")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(WK_YESNO==2)
+	{
+		shop_open(2)
+		wait_W(WK_YESNO)
+
+		if(!FT_FF_FoodHutoru)
+		{
+			if( IT200>0 || IT201>0 || IT202>0 )
+			{
+				EV("Tuto_Karasu")
+				wait_EV("Tuto_Karasu")
+			}
+		}
+		loop
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀傗傔傞")
+	//丂丂夛榖張棟廔椆丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	{
+		//嘖
+		if(F6_00_GoToMeru)
+		{
+			VOICE(757,0)	//乽傑偨棃偄乿
+			MES(KARASU,"歡迎再來。",0)	
+					
+//			MES(KARASU,"僼僼乧乧\n傑偨偄偮偱傕棃偄丅",0)
+			MES_close(KARASU)
+		}
+		else
+		//嘐
+		if( F3_00_GoMoonCastle )
+		{
+			VOICE(757,0)	//乽傑偨棃偄乿
+			MES(KARASU,"歡迎再來。",0)	
+				
+//			MES(KARASU,"乧乧憰旛傪懹傞側傛丅",0)
+			MES_close(KARASU)
+		}
+		else
+		{
+			VOICE(757,0)	//乽傑偨棃偄乿
+		
+			MES(KARASU,"歡迎再來。",0)
+			MES_close(KARASU)
+		}
+	}
+}
+
+
+//堦斒儊僢僙乕僕/////////////////////////////////////////////////////////////////////////////
+TK_KARASU
+{
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傢傜偟傋僀儀儞僩拞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(FV_11_Warasi13_Cls && !FV_11_Warasi14_krs && F_KARASU)
+	{
+		MES(KARASU,"據說阿爾傑斯是\n那次魔法大戰中最後的戰場。",0)
+		MES(KARASU,"我以前也對它很有興趣，\n可是還沒有機會去過。",0)
+		MES(KARASU,"如何，可以把\n那份地圖送給我嗎？",0)
+		MES_close(KARASU)
+		EV("WARASHI_Karasu_LOOP")
+		wait_EV("WARASHI_Karasu_LOOP")
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥偺挰偵偄傞丅
+	//丂丂仸暚悈塃偺栘敔偑愊傫偱偁傞曈傝偵棫偭偰偄傞丅
+	//	name("僇儔僗")
+	else
+	if(F6_00_GoToMeru)
+	{
+		if(!FT_12_TalkKarasu)
+		{
+		//丂丂儔僌僫偨偪偵俹俙僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_TOGEBIKKURI)
+			EMO(PARTNER,EMO_TOGEBIKKURI)
+			wait(30)
+			
+			MES(RAGNA,"你……\n你又回到鎮裡了啊。",0)
+			MES_close(RAGNA)
+
+		//	name("僇儔僗")
+			MOT(KARASU,150,10)
+			MES(KARASU,"呵呵，是啊。",0)
+			MES(KARASU,"首領吩咐我\n過來協助你們。",0)
+			MES(KARASU,"現在落星之鄉仍然不為人所知，\n所以我的行動還不能太顯眼……",0)
+			MES(KARASU,"你們有什麼困難就來找我吧。",0)
+			MES_close(KARASU)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"嗯，知道了。",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"唔，明白了。",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			F_set(FT_12_TalkKarasu)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_KARASU)
+			{
+				MES(KARASU,"說實話……能夠解決這次危機的\n應該也只有你們了吧。",0)
+				MES(KARASU,"呵呵，不愧是繼承了\n落星之鄉使命的人……",0)
+				MES(KARASU,"在進入那座要塞之前，\n一定要做好萬全準備哦。",0)
+				MES_close(KARASU)
+				
+				F_set(KARASU)
+			}
+
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(KARASU,"呵呵，不愧是繼承了\n落星之鄉使命的人。",0)
+				MES(KARASU,"……一定要做好\n萬全準備再去挑戰哦。",0)
+				MES_close(KARASU)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸拑壆愭偺丄巆偭偨挿偄偡偵嵗偭偰拑傪堸傫偱偄傞丅
+	if( F5_00_HearLunar )
+	{
+		look_chr( KARASU, RAGNA,"Bone_Head")
+
+		if(!FS_11_TalkKarasu)
+		{
+		//丂丂僇儔僗丄儔僌僫偵岦偔丅
+			
+		//	name("僇儔僗")
+			MES(KARASU,"……看來你繼承了\n月支之劍啊。",0)
+			MES(KARASU,"呵呵，一開始我就覺得\n你很特別。\n看來我們果然是有緣分啊。",0)
+			MES_close(KARASU)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈哈……原來你那時候\n就開始注意我了。",0)
+			MES(RAGNA,"嗯，確實我也\n有些顯眼……",0)
+			MES_close(RAGNA)
+
+		//	name("僇儔僗")
+			MES(KARASU,"與其說是因為你顯眼，\n不如說是因為我的直覺。\n你也不要太在意。",0)
+			MES(KARASU,"不過現在守護者的\n使命已經解除，我的任務\n也暫時告一段落了。",0)
+			MES(KARASU,"在首領下達其他命令之前，\n我就繼續等待吧……",0)
+			MES_close(KARASU)
+			F_set(FS_11_TalkKarasu)
+		}
+		else
+		{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			if(!F910)
+			{
+			//	name("僇儔僗")
+				MES(KARASU,"沒想到我現在\n居然會閒得無聊。",0)
+				MES(KARASU,"在首領下達其他命令之前\n我會繼續等待。",0)
+				MES(KARASU,"……偶爾也去\n照顧一下孩子吧。",0)
+				MES(KARASU,"他好像很想念我呢。",0)
+				MES_close(KARASU)
+				F_set(910)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+			//	name("僇儔僗")
+				MES(KARASU,"在首領下達其他命令之前\n我會繼續等待。",0)
+				MES(KARASU,"……偶爾也在\n鄉里工作一會兒吧。",0)
+				MES_close(KARASU)
+			}
+		}
+		look_off(KARASU)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸業揤晽楥曽柺偵岦偐偍偆偲偡傞偲僀儀儞僩奐巒丅
+	//丂丂丂嫶偺搑拞偱丄僄儕傾偱堷偭妡偗偰婲摦偝偣傑偡丅
+	//丂丂庤棤寱偑旘傫偱偒偰丄愭摢僉儍儔偺懌尦偵巋偝傞丅
+
+/*  佀棦栭儅僢僾傊堏怉丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_09_GoShrineMia )
+	{
+		if(!FS_10_TalkKarasu)
+		{
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"偆偍偭乧乧両丠",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"傓傓偭乧乧両丠",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂愭摢僉儍儔丄嬃偄偰彮偟屻傠偵壓偑傞丅
+		//丂丂晽楥壆偺慜偵丄栻攧傝偑弌尰偟偰偄傞丅
+		//丂丂攚拞偺壸暔偼側偟偱丄旼撍偒丄庤偼庤棤寱傪搳偘偨屻偺忬懺丅
+		//	name("僇儔僗")
+			MES(KARASU,"偍慜偨偪偐乧乧",0)
+			MES_close(KARASU)
+
+		//丂丂栻攧傝丄棫偪忋偑傞丅
+		//	name("僇儔僗")
+			MES(KARASU,"僗僶儖偲偍摢乗乗\n偦傟偵偁偺梔惛偼\n偙偺愭偵塣傃崬傫偩丅",0)
+			MES(KARASU,"埨怱偡傞偲偄偄丅",0)
+			MES_close(KARASU)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"偦丄偦偆偐丅\n傒傫側柍帠側傫偩側丠",0)
+			MES_close(RAGNA)
+
+		//	name("僇儔僗")
+			MES(KARASU,"偁偁丅",0)
+			MES(KARASU,"懠偺廳彎幰傗彈巕嫙傕\n偙偪傜偵旔擄偝偣偰偄傞丅",0)
+			MES(KARASU,"揋偺攇傕堷偄偨傛偆偩偑乧乧\n擮偺偨傔丄偙偙偵偼壌偑棫偮丅",0)
+			MES(KARASU,"偍慜偨偪偼丄棤嶳偺幮偺曽傪棅傓丅",0)
+			MES_close(KARASU)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"乧乧椆夝偩丅",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"偙偙偼擟偣偨偤両",0)
+			MES_close(RAGNA)
+			
+			F_set(FS_10_TalkKarasu)
+		}
+		else
+		{
+		//丂丂仛僇儔僗亂杊塹偺巜婗亃
+		//丂丂埲崀偼丄業揤晽楥曽柺偵偼栻攧傝偑棫偭偰偍傝丄僗僩僢僷乕偲側偭偰偄傞丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅乮僗僩僢僷乕乯
+		//	name("僇儔僗")
+			MES(KARASU,"偙偙偼壌偑丄棤庤偼\n僎儞栮偲傾僇僱偑屌傔偰偄傞丅",0)
+			MES(KARASU,"乧乧偙偙偼擟偣偰\n偍慜偨偪偼幮傊岦偐偊丅",0)
+			MES(KARASU,"偦傟偲丄峀応偺曽偵\n僸僐儊偲偄偆搝偑偄傞偼偢偩丅",0)
+			MES(KARASU,"傕偟壗偐擖梡側傕偺偑偁傟偽丄\n偦偄偮偵尵偄偮偗傞偲偄偄丅",0)
+			MES_close(KARASU)
+		}
+	}
+	else
+*/
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸攝抲側偟丅
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸拑壆愭偱壸暔傪崀傠偟丄拑傪堸傫偱偄傞丅
+	//丂丂仸弶夞僀儀儞僩丅
+	//仛柤慜偑敾柧偡傞傑偱昞帵柤傪乽栻攧傝乿偵
+	if( F4_05_OnVillage2 )
+	{
+		//仛僇儔僗
+		F_set_note(-60,-1)
+
+		if(!FS_08_TalkKarasu)
+		{
+			look_chr( KARASU, RAGNA,"Bone_Head")
+			MOT(KARASU,63,15)
+			MES(KARASU,"……好久不見了。\n你們還好嗎？",0)
+			MES_close(KARASU)
+
+			//	name("佀僎儞偲偺弶夞夛榖偑傑偩")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(!FS_08_TalkGen)
+			{
+				EMO(RAGNA,EMO_HATENA)			//丂丂儔僌僫偵丠僄儌乕僔儑儞丅
+				wait(30)
+				MES(RAGNA,"咦，好像在哪裡\n見過你……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（咦？\n 鄉裡有\n 這個人嗎……？）",0)
+				MES_close(PARTNER)
+
+			//丂丂俀恖偵偟偽傜偔丒丒丒僄儌乕僔儑儞丅
+				EFF_chr(25124,RAGNA,0,100,0,"Bone_Head")
+				EFF_chr(25124,PARTNER,0,100,0,"Bone_Head")
+				wait(80)
+				
+			//丂丂偦偺屻儔僌僫偵両僄儌乕僔儑儞丅僗僶儖偵俹俙僄儌乕僔儑儞丅
+			//丂丂俀恖摨帪偵億僢僾傾僢僾傪弌偡丅
+				EMO(RAGNA,EMO_BIKKURI)			//丂丂儔僌僫偵両僄儌乕僔儑儞丅
+				EMO(PARTNER,EMO_PA)			//丂丂僗僶儖偵PA僄儌乕僔儑儞丅
+				wait(30)
+			
+				MES(RAGNA,"啊，你是\n在阿魯特鎮賣藥的人！？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"啊，難道是鴉？",0)
+				MES_close(PARTNER)
+			}
+			//	name("佀僎儞偲弶夞夛榖嵪傒")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			{
+				MES(RAGNA,"咦，好像在哪裡\n見過你……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（咦？\n 鄉里有\n 這個人嗎……？）",0)
+				MES_close(PARTNER)
+
+			//丂丂俀恖偵偟偽傜偔丒丒丒僄儌乕僔儑儞丅
+			//丂丂偦偺屻俹俙僄儌乕僔儑儞丅
+			//丂丂俀恖偵偟偽傜偔丒丒丒僄儌乕僔儑儞丅
+				EFF_chr(25124,RAGNA,0,100,0,"Bone_Head")
+				EFF_chr(25124,PARTNER,0,100,0,"Bone_Head")
+				wait(80)
+				EMO(RAGNA,EMO_PA)
+				EMO(PARTNER,EMO_PA)
+				wait(30)
+
+			//丂丂俀恖摨帪偵億僢僾傾僢僾傪弌偡丅
+				MES(RAGNA,"啊，你不是\n在阿魯特賣藥嗎！",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"啊，難道是鴉？",0)
+				MES_close(PARTNER)
+			}
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		//柤慜傪僇儔僗偵
+			chr_rename(KARASU,"鴉")
+
+		//丂丂儔僌僫丄僗僶儖偵岦偔丅
+			rot_chr(RAGNA,30,PARTNER)
+
+			MES(RAGNA,"……那個，\n你也是忍者？",0)
+			MES_close(RAGNA)
+
+		//丂丂僗僶儖丄儔僌僫偵岦偔丅
+			rot_chr(PARTNER,30,RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"是的，他是這裡武藝\n最為高超的人，一直是\n爺爺最信賴的人。",0)
+			MES(PARTNER,"他很少出現在鄉里，\n而且經常改變裝束，\n我都不知道他真正的樣子……",0)
+			MES_close(PARTNER)
+
+		//	name("僇儔僗")
+			MES(KARASU,"呵呵……",0)
+
+		//丂丂儔僌僫丄僇儔僗偵岦偔丅
+			rot_chr(RAGNA,30,KARASU)
+		//丂丂僗僶儖丄僇儔僗偵岦偔丅
+			rot_chr(PARTNER,30,KARASU)
+			
+			MES(KARASU,"首領要我\n去收集情報。",0)
+			MES(KARASU,"其實我也只是定期\n去外界察看情況而已。",0)
+			MES_close(KARASU)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"那個，今天是\n回來向爺爺報告……？",0)
+			MES_close(PARTNER)
+
+		//	name("僇儔僗")
+			look_chr(KARASU,PARTNER,"Bone_Head")
+			MES(KARASU,"……嗯，剛剛完成報告。",0)
+			MES(KARASU,"我馬上就要下山……\n對了，首領也就快回來了。",0)
+			MES(KARASU,"在那之前，你們就在這裡慢慢遊覽一下吧。",0)
+			MES_close(KARASU)
+			
+			//仛僇儔僗亂惁榬擡幰亃
+			F_set_note(-60,1)
+			F_set(FS_08_TalkKarasu)
+			
+		//柤慜晅偒僉儍儔慡堳偵榖偟偐偗傞偲業揤晽楥偑奐偔
+			EV("EV_F4_12_OkRoten")
+		}
+		else
+		{
+		//丂丂仛僇儔僗亂杮柤僇儔僗亃
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		//	name("僇儔僗")
+//			MES(KARASU,"壌偼偡偖偵嶳傪崀傝傞偑丄\n偍摢偼偠偒偵栠偭偰偔傞偩傠偆丅",0)
+//			MES(KARASU,"備偭偔傝偟偰偄偗丅",0)
+//			MES_close(KARASU)
+
+			MES(KARASU,"呵呵……不過每次回到這裡，\n落星之鄉都沒有變化呢。",0)
+			MES_close(KARASU)
+
+		//丂丂僇儔僗怳傝曉傞丅
+			look_chr(KARASU,PLAYER1,"Bone_Head")
+			MOT(KARASU,63,15)
+		//	name("僇儔僗")
+			MES(KARASU,"首領應該\n就快回來了。",0)
+			MES(KARASU,"你們慢慢遊覽吧。",0)
+			MES_close(KARASU)
+		}
+		look_off(KARASU)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嶨壿壆偺墶偺奒抜慜丅
+	if( F3_00_GoMoonCastle )
+	{
+		//夛榖儌乕僔儑儞
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+
+	//丂丂仸弶夞僀儀儞僩
+		if(!FT_06_TalkKarasu)
+		{
+		//丂丂仸怳傝岦偐側偄
+			MES(KARASU,"（那座城堡……散發著\n 不祥的妖氣啊……）",0)
+			MES_close(KARASU)
+
+		//丂丂栻攧傝丄俹俙僄儌乕僔儑儞偱怳傝岦偔丅
+			EMO(KARASU,EMO_PA)
+			wait(30)
+			rot_chr(KARASU,30,PLAYER1)
+			MOT(KARASU,150,10)
+			
+			VOICE(754, 0,)			//乽壗偐擖梡偐丠乿
+			
+			MES(KARASU,"……有什麼需要嗎？",0)
+			MES_close(KARASU)
+
+		//丂丂佀僔儑僢僾張棟傪嫴傓丅
+			
+			F_set(FT_06_TalkKarasu)
+		}
+		else
+		{
+			if(!F_KARASU)
+			{
+			//	name("佀榖傪偡傞")
+				MES(KARASU,"那座城堡……是伴隨著鐘聲\n突然出現的。",0)
+				MES_close(KARASU)
+
+			//丂丂栻攧傝偵丒丒丒僄儌乕僔儑儞丅
+				EMO(KARASU,EMO_TENTEN)
+				wait(30)
+				
+				MES(KARASU,"可是那不祥的妖氣……",0)
+				MES(KARASU,"即使人在這裡\n都可以感覺到……",0)
+				MES_close(KARASU)
+
+				F_set(KARASU)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(KARASU,"……要出去嗎？",0)
+				MES(KARASU,"一定要認真做準備哦。",0)
+				MES_close(KARASU)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸暚悈塃偺栘敔偑愊傫偱偁傞曈傝偵棫偭偰偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		MES(KARASU,"………………………………",0)
+		MES(KARASU,"這裡最近常有人來往呢……",0)
+		MES_close(KARASU)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儘傾儖僞懞丄懞挿戭慜偵攝抲丅
+	if( F2_00_GoForest )
+	{
+		if(!F_KARASU)
+		{
+			MES(KARASU,"……人生\n是難以預測的。",0)
+			MES(KARASU,"必要的東西一定要做好準備。",0)
+			MES_close(KARASU)
+
+			F_set(KARASU)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(KARASU,"誰也不知道\n人生之中會發生什麼……",0)
+			MES(KARASU,"必要的東西一定要做好準備。",0)
+			MES_close(KARASU)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僼傿僆僫揁偵峴偔摴偺庤慜偵棫偭偰偄傞丅
+	if( F1_15_GoVillage )
+	{
+		if(!F_KARASU)
+		{
+			MES(KARASU,"你們……\n好像最近在\n探索迷宮吧。",0)
+			MES(KARASU,"那樣的話就帶著炸彈吧。",0)
+			MES(KARASU,"肯定能派上用場的。",0)
+			MES_close(KARASU)
+
+			F_set(KARASU)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(KARASU,"進入迷宮的時候\n還是帶著炸彈吧。",0)
+			MES(KARASU,"而且一定要帶夠。\n呵呵，這可是常識。",0)
+			MES_close(KARASU)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僼傿僆僫揁偵峴偔摴偺庤慜偵棫偭偰偄傞丅
+	if( F1_01_GameStart )
+	{
+
+		rot_chr(KARASU,30,PLAYER1)
+
+	//丂丂仸弶夞僀儀儞僩丅
+		if(!FT_01_TalkKarasu)
+		{
+		//丂丂栻攧傝偵俹俙僄儌乕僔儑儞丅
+			EMO(KARASU,EMO_PA)
+			wait(30)
+			
+			MES(KARASU,"哦……\n是陌生的面孔呢。",0)
+			MES_close(KARASU)
+
+		//丂丂栻攧傝偵彮偟丒丒丒僄儌乕僔儑儞丅
+			EMO(KARASU,EMO_TENTEN)
+			wait(30)
+			
+			VOICE(754, 0,)			//乽壗偐擖梡偐丠乿
+			
+			MES(KARASU,"……沒關係。\n有什麼需要嗎？",0)
+			MES_close(KARASU)
+			
+			//僔儑僢僾張棟傪偼偝傓
+
+			F_set(FT_01_TalkKarasu)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			MES(KARASU,"有什麼需要的話\n隨時過來找我。",0)
+			MES(KARASU,"呵呵……我也可以算你們\n便宜一點。",0)
+			MES_close(KARASU)
+		}
+	}
+}
+
+
+//僇儔僗偺偪傚偭偲偟偨傾僪僶僀僗丅
+//慜敿僼儔僌偺傒尒傟傞丅
+Tuto_Karasu
+{
+	wait(20)
+//	MES(KARASU,"僼僼丄拞乆偄偄攦偄暔傪偟偨側丅",0)
+//	MES(KARASU,"偦偺僼乕僪偼丄懱椡偼夞暅偟側偄偑\n崅偄宱尡抣傪摼傞偙偲偑弌棃傞乧乧",0)
+	MES(KARASU,"呵呵，這裡賣的食物\n和普通食物不太一樣。",0)
+	MES(KARASU,"雖然不能回復體力，\n但是可以讓你獲得大量經驗值……",0)
+	MES_close(KARASU)
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀儔僌僫愭摢")
+	if(GW_MAN==1)
+	{
+		MES(RAGNA,"哎，這樣啊。",0)
+		MES(RAGNA,"專門用來\n昇級的食物……",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+	//	name("佀傾儖僂僃儞愭摢")
+		MES(PARTNER,"哦，是這樣啊。",0)
+		MES(PARTNER,"是專門用於昇級\n的食物呢……",0)
+		MES_close(PARTNER)
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	MES(KARASU,"嗯，差不多就是\n促進成長的靈藥吧。",0)
+	MES(KARASU,"不過，就像我剛才說過的，\n它不會為你回復體力。",0)
+	MES(KARASU,"注意在緊急關頭\n不要用錯。",0)
+	MES_close(KARASU)
+
+	F_set(FT_FF_FoodHutoru)
+
+}
+
+
+//傢傜偟傋傾僀僥儉傪帩偭偰偄傟偽弶夞偼偡偖偵尒傟傞傛偆偵偡傞丅
+//俀夞栚埲崀偼慖戰巿偺夛榖偺拞偐傜尒傟傞丅
+
+//伀埲壓丄弶夞暘丅
+WARASHI_Karasu_FIRST
+{
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴丂傢傜偟傋僀儀儞僩
+	//	name("13丏僇儔僗乮傾儖僢僥偺挰乯		亀傾儖僕僃僗偺抧恾亁佀嵟嫮憰旛丠")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+	//傑偩弶夞僀儀儞僩傒偰偄側偄佀崌懱偝偣傞丅
+	if(!FT_12_TalkKarasu)
+	{
+	//丂丂儔僌僫偨偪偵俹俙僄儌乕僔儑儞丅
+		EMO(RAGNA,EMO_TOGEBIKKURI)
+		EMO(PARTNER,EMO_TOGEBIKKURI)
+		wait(30)
+		
+		MES(RAGNA,"你……\n你又回到鎮裡了啊。",0)
+		MES_close(RAGNA)
+
+	//	name("僇儔僗")
+		MOT(KARASU,150,10)
+		MES(KARASU,"呵呵，是啊。",0)
+		MES(KARASU,"首領吩咐我\n過來協助你們。",0)
+		MES(KARASU,"現在落星之鄉仍然不為人所知，\n所以我的行動還不能太顯眼……",0)
+		MES(KARASU,"你們有什麼困難就來找我吧。",0)
+		MES_close(KARASU)
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀儔僌僫愭摢")
+		if(GW_MAN==1)
+		{
+			MES(RAGNA,"嗯，知道了。",0)
+			MES_close(RAGNA)
+		}
+	//	name("佀傾儖僂僃儞愭摢")
+		else
+		{
+			MES(PARTNER,"唔，明白了。",0)
+			MES_close(PARTNER)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		F_set(FT_12_TalkKarasu)//弶夞僼儔僌傪棫偰傞丅
+
+		MES(KARASU,"……另外，你們\n有一件有意思的東西呢。",0)
+	}
+	//弶夞尒偰傞丅
+	else
+	{
+		MES(KARASU,"……哦。",0)
+		MES(KARASU,"你們有一件\n有意思的東西呢。",0)
+	}
+
+	MES(KARASU,"那是\n「阿爾傑斯的地圖」吧。",0)
+	MES_close(KARASU)
+
+	MES(RAGNA,"嗯，沒錯……",0)
+	MES(RAGNA,"可是你居然會知道啊。\n印象中那應該是一片\n很小的大陸。",0)
+	MES_close(RAGNA)
+
+	MES(KARASU,"呵呵，我的工作\n可是收集情報。",0)
+	MES(KARASU,"經常在喬裝打扮之後\n去其他大陸進行調查。",0)
+	MES(KARASU,"……不過我還沒去過\n阿爾傑斯。",0)
+	MES(KARASU,"如何，可以把\n那份地圖送給我嗎？",0)
+	MES_close(KARASU)
+
+	F_set(KARASU)
+
+	EV("WARASHI_Karasu_LOOP")
+	wait_EV("WARASHI_Karasu_LOOP")
+
+}
+
+
+
+
+
+
+
+
+WARASHI_Karasu_LOOP
+{
+
+	workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+	MES_pos(PLAYER1,"??W9【希望能派上用場】\n【再讓我考慮一下】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀亂栶棫偰偰偔偩偝偄亃")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(WK_YESNO==1)
+	{
+	//	name("僇儔僗")
+		MES(KARASU,"這樣啊……\n你就帶走這個，\n當成我的謝禮吧。",0)
+		MES_close(KARASU)
+
+	//	name("傾僀僥儉擖庤僥僉僗僩")
+	//	MES(KARASU,"亀傾僀僥儉柤亁傪庴偗庢偭偨丅",0)
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		fade_in(30,10,BLACK)
+		
+		//仧壖偲偟偰丄F僷乕僣傪偔傟傞傛偆偵側偭偰偄傑偡丅
+		get_item(154,-1,1)
+		get_item(133,1,0)
+		wait(10)
+		wait_key(0)
+		
+		fade_in(0,10,BLACK)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+	
+	
+		MES(KARASU,"說到阿爾傑斯……\n你聽說過這個傳言嗎？",0)
+		MES(KARASU,"大概一年之前，\n那裡好像發生了一件相當危險的事。",0)
+		MES(KARASU,"被封印在阿爾傑斯的\n六魔王之一「無限之威斯帕」\n竟然復活了。",0)
+		MES_close(KARASU)
+
+	//丂丂儔僌僫偨偪偵両僄儌乕僔儑儞丅
+		EMO(RAGNA,EMO_BIKKURI)
+		EMO(PARTNER,EMO_BIKKURI)
+		EMO(PET,EMO_BIKKURI)
+		wait(30)
+
+		MES(PARTNER,"唔……！？",0)
+		MES_close(PARTNER)
+
+		MES(RAGNA,"魔…魔王……？",0)
+		MES_close(RAGNA)
+
+		MES(KARASU,"嗯，當然只是傳言，\n沒有什麼具體依據。",0)
+		MES_close(KARASU)
+
+	//丂丂僇儔僗丄棾姫偵怳傝岦偔巇憪丅
+		rot(KARASU,30,110)
+		MES(KARASU,"不過現在看來，\n也很難懷疑其真實性了……",0)
+		MES_close(KARASU)
+
+	//丂丂僇儔僗丄岦偒傪栠偡丅
+		rot_chr(KARASU,30,PLAYER1)
+
+		MES(KARASU,"「金色之路西亞」\n繼承了他以前\n擁有的莫大魔力。",0)
+		MES(KARASU,"能夠解決這次危機的\n應該也只有你們了吧。",0)
+		MES(KARASU,"……一定要做好\n萬全準備再去挑戰哦。",0)
+		MES_close(KARASU)
+		
+		F_reset(KARASU)
+		F_set(FV_11_Warasi14_krs)
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀亂彮偟峫偊偝偣偰亃")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	{
+	//	name("僇儔僗")
+		MES(KARASU,"……這樣啊。\n那你就好好考慮一下吧。",0)
+		MES_close(KARASU)
+	}
+	//仛僇儔僗亂懠偺戝棨傊亃
+	F_set_note(-60,2)
+}
+
+
+
+
+
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+*/

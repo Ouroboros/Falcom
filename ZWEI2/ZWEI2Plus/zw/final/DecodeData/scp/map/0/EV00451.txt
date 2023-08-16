@@ -1,0 +1,1099 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10451][露天温泉]
+//====================================================================
+
+#ScriptTable
+
+#EVENT_RAGNA 		1
+#SUBARU	 			2
+#DUMMY	 			3
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//環境SE
+	SE(64,0)//温泉
+
+//  set_chr  no typ     tip     	x     y   z    mot  向  状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+	map_color(70,70,90,0);//R,G,B, time 100%
+//■エントリー
+	set_chr( 90,990,	-1,-1,      0, -100,  0,  	 0,0502, 6,"K1_10441;")	//エントリ 更衣室（夜）
+
+
+//■イベント
+	if(!F4_06_StopAttack)
+	{
+		if(GW_ENTRY_EVENT==1)
+		{
+			//▼露天温泉で的イベント
+			workG(GW_ENTRY_EVENT,SET,0)		
+			EV("EV_4_10_AreYouSubaru")
+		}
+	}
+
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼露天温泉で的イベント·続き
+//──────────────────────────────
+//　　画面，暗転状態になってからお湯が流れるＳＥ。
+//　　カポーンなど的ベタなＳＥもタイミングを合わせて流す。
+//　　画面，ゆっくりとフェードインして露天温泉。
+//　　既に日は暮れており，石灯籠など的灯りが点いている状態。
+//　　拉古那は頭にタオルを乗せて，ゆったりと湯に漬かっている。
+EV_4_10_AreYouSubaru
+{
+	set_namebmp(0,0)	//地名非表示
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	  610,678,-48,214,2)
+	chr_pos(PARTNER,  635,832,-49,120,2)	
+
+	set_chr(EVENT_RAGNA,	  1044,-1,-1,  -654,1438,-149, 2,356,0, "")
+//	set_chr(SUBARU,	  		  1045,-1,-1,  -40,177,1,2,10,0, "")
+	set_chr(SUBARU,	  		  1045,-1,-1,  -103,126,0,2,20,0, "")
+	set_chr(DUMMY,	  		  1045,-1,-1,  -40,177,1,2,120,0, "")
+	color(DUMMY,-1)
+	color(SUBARU,-1)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	wait_color(SUBARU)	
+
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(SUBARU,     CF_NO_CLIP)
+	F_set_chr(SUBARU,     CF_NO_CLIP2)
+	F_set_chr(SUBARU,     CF_NO_CSP)
+
+		
+	//--- モーション設定 --------------------------------------------------
+
+	MOT_SET(EVENT_RAGNA,150,-2,521,521,-1,-1)		//座り
+	MOT_SET(EVENT_RAGNA,151,-2,557,557,-1,-1)		//座り2
+	MOT_SET(EVENT_RAGNA,152,-1,5950,5986,-1,-1)		//あたふた振り返り
+//	MOT_SET(SUBARU,     150,-2,556,556,-1,-1)		//座り
+	MOT_SET(SUBARU,     150,-2,1354,1354,-1,-1)		//座り
+	MOT_SET(SUBARU,     151,-2,450,450,-1,-1)		//
+	MOT_SET(SUBARU,     152,152,1360,1438,-1,-1)	//座りもじもじ
+	MOT_SET(SUBARU,     153,153,8000,8039,-1,-1)	//湯衣で步く
+//	MOT_SET(SUBARU,     154,-1,8000,8000,-1,-1)		//湯衣で待机
+	MOT_SET(SUBARU,     154,-1,6545,6545,-1,-1)		//湯衣で待机
+	
+	MOT(EVENT_RAGNA, 150, 1 )
+	
+	//--- デフォルト表情 --------------------------------------------------
+	KAO(EVENT_RAGNA, "1", "3", "6")
+	KAO(SUBARU,      "1", "1", "1")
+
+	//カメラ初期位置
+//	CAM_move(-612,-1442,-55,0,0)
+//	CAM(-50,31,-55,27,199,0,0)
+
+	//星空からスクロール
+	CAM_move(-450,-1251,623,0,0)
+	CAM(-1090,58,513,27,325,0,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+	CAM_move(-450,-1251,144,150,0)
+	CAM(-90,58,33,27,328,150,0)
+
+
+	wait_CAM()
+	CAM_move(-299,-1577,-193,150,0)
+	CAM(509,187,-193,27,210,150,0)
+	wait_CAM()
+	wait(15)
+
+
+
+	cross_fade(15)
+	CAM_move(-612,-1442,-55,0,0)
+	CAM(-50,31,-55,27,199,0,0)
+	wait_fade()
+	wait(15)
+
+//	MES(EVENT_RAGNA,"◆未入力項目\n頭にタオルを乗せて，ゆったりと湯に漬かっている。",0)
+	
+	KAO(EVENT_RAGNA, "12321Z3", "32A", "6")
+	MES(EVENT_RAGNA,"啊……\n真是太舒服了。",0)
+	KAO(EVENT_RAGNA, "12321Z4", "A", "6")	
+	MES(EVENT_RAGNA,"这些日子以来的疲劳……\n好像都融化了。",0)
+	MES_close(EVENT_RAGNA)
+	wait(15)
+
+//　　拉古那，目を閉じながら浸っているような雰囲気。
+//　　あたりには湯気が立ち込めており，視界はぼんやりしている。
+	KAO(EVENT_RAGNA, "1", "A23", "5")
+	wait(30)
+	KAO(EVENT_RAGNA, "12321Z4", "3", "5")
+	MES(EVENT_RAGNA,"要是可以的话……\n真想带公主来啊。",0)
+	KAO(EVENT_RAGNA, "12321Z4", "3", "5")	
+	MES(EVENT_RAGNA,"比起我，她有更多\n精神上的疲劳吧……",0)
+	MES(EVENT_RAGNA,"………………………………",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　拉古那，目を開いて…マーク。
+//	EMO(EVENT_RAGNA, EMO_TENTEN)
+	EFF_chr(25120,EVENT_RAGNA,0,80,1,"Bone_Neck")
+	wait(60)
+	KAO(EVENT_RAGNA, "1", "32A", "5")
+	wait(15)
+
+	KAO(EVENT_RAGNA, "12321Z4", "A", "5")
+	MES(EVENT_RAGNA,"……哈哈。\n所谓事到如今，说的就是这个吧。",0)
+	KAO(EVENT_RAGNA, "12321Z3", "A", "6")	
+	MES(EVENT_RAGNA,"嗯，那个豪华的城吗。",0)
+	KAO(EVENT_RAGNA, "12321Z5", "A", "6")	
+	MES(EVENT_RAGNA,"现在，她或许在铺散着玫瑰花瓣的\n大理石浴场之类的地方，\n优雅地享受沐浴时光吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(EVENT_RAGNA, "1", "A23", "6")
+	wait(30)
+
+//　　拉古那，両手で湯をすくって顔をバシャリと洗う。
+	KAO(EVENT_RAGNA, "12321", "3", "6")
+	MES(EVENT_RAGNA,"呼……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那的頭にＰＡマーク。
+	KAO(EVENT_RAGNA, "E", "321", "6")
+	EMO(EVENT_RAGNA, EMO_PA)
+	wait(20)
+	look_chr(EVENT_RAGNA, SUBARU, "Bone_Head")
+	wait(10)
+//	KAO(EVENT_RAGNA, "B232BZ3", "123332V", "6")	
+	KAO(EVENT_RAGNA, "E", "123332V", "6")	
+	MES(EVENT_RAGNA,"（说起来……\n  昴那家伙还真是慢呢。）",0)
+//	KAO(EVENT_RAGNA, "B232BZ5", "V", "6")	
+	KAO(EVENT_RAGNA, "E", "V", "6")	
+	MES(EVENT_RAGNA,"（虽说是去准备浴衣，\n  不过花了这么多时间，也太──）",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ここでガラリと脱衣场方面的扉が開く音。
+//　　拉古那的頭にＰＡマーク。
+//	MES(EVENT_RAGNA,"◆未入力項目\nガラリと脱衣场方面的扉が開く音。",0)
+//	EMO(EVENT_RAGNA, EMO_PA)
+	wait(15)
+
+	chr_rename(SUBARU, "声")
+	MES_pos(SUBARU,"W2我，我进来了……",0,600,50,0,0)
+	wait_key(0)
+	MES_close(SUBARU)
+	EMO(EVENT_RAGNA, EMO_BIKKURI)
+
+//　　髪を下ろして湯衣をまとった昴，
+//　　扉を閉めてからそ的まま露天温泉的側まで步いてくる。
+//　　あたりは湯気が立ち込めて，昴的顔はよく見えない。
+//　　さらに拉古那，身体的向きから，まだ気付いていない状態。
+
+
+	color(SUBARU,30)
+	wait_color(SUBARU)
+	
+	cross_fade(15)
+/*
+	IK(EVENT_RAGNA,"Bone_Pony1",0)
+	IK(EVENT_RAGNA,"Bone_Pony2",0)
+	IK(EVENT_RAGNA,"Bone_Pony3",0)
+	IK(EVENT_RAGNA,"Bone_Pony4",0)
+	IK(EVENT_RAGNA,"Bone_Pony5",0)
+	IK(EVENT_RAGNA,"Bone_End",0)
+	IK(EVENT_RAGNA,"Bone_End2",0)
+	ResetIK(EVENT_RAGNA)
+*/
+		
+//	CAM_move(-613,-1462,-4,0,0)
+//	CAM(-210,85,-45,5,163,0,0)		//以前的バージョン
+	KAO(EVENT_RAGNA, "1", "V", "1")	
+	
+	CAM_move(-613,-1422,-4,0,0)
+	CAM(-209,68,-4,7,163,0,0)
+	CAM(-290,68,-4,7,163,150,0)
+	MOT(SUBARU, 153, 0)		//専用步き
+	
+	wait_fade()
+	
+	move(SUBARU, 40, WALK1, 	-473,1222,-49,0)
+	wait_move(SUBARU)
+	MOT(SUBARU, 151,15)		//タオル前持ち待机
+//	MOT(SUBARU, 154,15)		//タオル前持ち待机
+	
+	IK(SUBARU,"Bone_RightSword",0）
+	
+	KAO(EVENT_RAGNA,"12321Z2","V23","6")
+	MES(EVENT_RAGNA,"哦，是昴吗。",0)
+	KAO(EVENT_RAGNA,"12321Z5","32V","6")	
+	MES(EVENT_RAGNA,"你动作还真慢呢。\n到底干什么去了──",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+	rot_chr(EVENT_RAGNA,30,SUBARU)
+	
+//　　拉古那的目がまん丸に見開かれる。
+//	MES(EVENT_RAGNA,"什……",0)
+//	MES_close(EVENT_RAGNA)
+
+//　　ここでカメラを切り替えて，湯衣をまとった昴を映す。
+//　　湯気が立ち込めながらも，全身的様子が分かるカメラワーク。
+//　　ただし顔までははっきりとは分からない状態。
+
+	stop_BGM(90)
+	cross_fade(15)
+	CAM_move(-648,-1479,-34,0,0)	
+	CAM(-250,23,-34,14,147,0,0)
+	CAM_move(-648,-1479,66,120,0)
+	
+	CAM_move(-476,-1175,46,0,0)
+	CAM(-330,119,46,7,152,0,0)
+	
+	KAO(SUBARU,"1","I","4")
+
+//	MOT(SUBARU, 151,1)
+	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")
+	wait(30)
+	KAO(SUBARU,"1","IHG","4")
+	wait(60)
+
+	chr_rename(SUBARU, "？？？")
+//	MES(SUBARU,"◆未入力項目\n湯気で顔までははっきりとは分からない状態。",0)
+	
+	KAO(SUBARU,"12321Z4","G","4")
+	MES(SUBARU,"那……\n那个，打扰了……",0)
+	MES_close(SUBARU)
+	wait(30)
+	
+	cross_fade(15)
+	CAM_move(-628,-1579,26,0,0)
+	CAM(-250,35,26,18,168,0,0)
+	CAM(-250,47,46,18,168,60,0)
+	look_off(EVENT_RAGNA)
+	look_del(EVENT_RAGNA)
+//	wait(30)
+	wait_fade()
+	wait_CAM()
+	EMO(EVENT_RAGNA,EMO_TOGEBIKKURI)
+	wait(20)
+
+//	EMO(EVENT_RAGNA,EMO_ASEASE)
+	MES(EVENT_RAGNA,"什，什……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那，お湯的中で慌てた様子で後ずさる。
+	
+//	move(EVENT_RAGNA, 0, WALK1, -674,1495,-149,0)
+//	wait_move(EVENT_RAGNA)
+
+	BGM(54)
+
+	EMO(EVENT_RAGNA, EMO_ASEASE)
+	wait(15)
+	CAM_quake("46")
+	MES(EVENT_RAGNA,"等，等一下！\n虽然我不知道你是谁……",0)
+	MES(EVENT_RAGNA,"不过你也不要这么毫无防备地\n闯进有男人在的地方啊！？",0)
+	MES_close(EVENT_RAGNA)
+	
+	KAO(SUBARU,"F","GHI3321D","1")
+	MES(SUBARU,"咦……",0)
+	MES_close(SUBARU)
+
+	MES(EVENT_RAGNA,"那，那个……　\n你认识昴吧？",0)
+	MES(EVENT_RAGNA,"是因为有他带路，\n我才能进来的……",0)
+	MES(EVENT_RAGNA,"啊啊真是的！\n那家伙到底在干什么啊！",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"12321Z2","123IIJ","4")
+	MES(SUBARU,"啊哈哈……",0)
+	KAO(SUBARU,"12321Z4","J","4")	
+	MES(SUBARU,"师父真是的。\n你不要看错人啊。",0)
+	KAO(SUBARU,"12321Z2","IHG","1")	
+	MES(SUBARU,"是我啦，是我。",0)
+	MES_close(SUBARU)
+
+	MES(EVENT_RAGNA,"咦……",0)
+	MES_close(EVENT_RAGNA)
+	wait(10)
+	EMO(EVENT_RAGNA,EMO_TENTEN)
+	wait(60)
+
+//	MES(EVENT_RAGNA,"………………………（目瞪口呆）",0)
+//	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"12321Z5","GHI","4")
+	MES(SUBARU,"嘿，嘿嘿……\n对不起，久等了。",0)
+	KAO(SUBARU,"12321Z6","I","4")	
+	MES(SUBARU,"那，那个……\n心理准备\n果然要花些时间……",0)
+	KAO(SUBARU,"12321Z7","IHG","5")
+	MES(SUBARU,"我，我很没用吧。\n明明是师徒，\n居然还难为情……",0)
+	MES_close(SUBARU)
+
+	wait(15)
+	cross_fade(15)
+/*	これやってももどんねぇー。どうやん的
+	IK(EVENT_RAGNA,"Bone_Pony1",1)
+	IK(EVENT_RAGNA,"Bone_Pony2",1)
+	IK(EVENT_RAGNA,"Bone_Pony3",1)
+	IK(EVENT_RAGNA,"Bone_Pony4",1)
+	IK(EVENT_RAGNA,"Bone_Pony5",1)
+	IK(EVENT_RAGNA,"Bone_End",1)
+	IK(EVENT_RAGNA,"Bone_End2",1)	
+	ResetIK(EVENT_RAGNA)
+*/
+	
+//	CAM_move(-408,-1359,106,0,0)
+//	CAM(110,50,66,17,261,0,0)
+	
+	CAM_move(-468,-1319,66,0,0)
+	CAM(150,50,66,17,275,0,0)
+	CAM(150,50,66,17,300,900,0)
+	MOT(EVENT_RAGNA, 151, 1)
+	KAO(EVENT_RAGNA,"B","3","4")
+	wait_fade()
+
+	KAO(EVENT_RAGNA,"B232BZ2","3","4")
+	MES(EVENT_RAGNA,"……等一下。",0)
+	KAO(EVENT_RAGNA,"B232BZ2","3","4")	
+	MES(EVENT_RAGNA,"这是某种陷阱。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"12321Z1","1","1")
+	MES(SUBARU,"咦……",0)
+	MES_close(SUBARU)
+	
+	KAO(EVENT_RAGNA,"B","9","9")
+	look(EVENT_RAGNA, "Bone_Head", 0,0,0,10,0,0,20)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","9","9")
+	MES(EVENT_RAGNA,"Ａｒｅ ｙｏｕ Ｓｕｂａｒｕ？",0)
+	KAO(EVENT_RAGNA,"B232BZ3","9","9")	
+	MES(EVENT_RAGNA,"请问，你是小昴吗？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"12321Z3","1","1")
+	MES(SUBARU,"是的，我是……",0)
+	chr_rename(SUBARU, "昴")
+	KAO(SUBARU,"12321Z3","1","4")
+	MES(SUBARU,"呵呵，你好奇怪啊，拉古那师父。",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"B","321DE","7")
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(20)
+	KAO(EVENT_RAGNA,"B232BZ3","E","7")
+	MES(EVENT_RAGNA,"对了……！\n这就是忍术吗！",0)
+//	KAO(EVENT_RAGNA,"12321Z4","D123","2")	
+	KAO(EVENT_RAGNA,"12321Z4","D126","5")	
+	MES(EVENT_RAGNA,"哎呀～，好险，\n差点就上当了。",0)
+//	KAO(EVENT_RAGNA,"B232BZ7","321","2")	
+	KAO(EVENT_RAGNA,"B232BZ7","6","5")	
+	MES(EVENT_RAGNA,"像这样用布把身体包起来，\n装成女孩子的样子，\n我怎么可能这么容易被骗──",0)
+	MES_close(EVENT_RAGNA)
+
+//	set_chr(RAGNA,	  1044,-1,-1,  -654,1418,-149, 2,356,0, "")	//エモ用
+	set_chr(RAGNA,	  1044,-1,-1,  -664,1410,-139, 2,356,0, "")	//エモ用
+	color(RAGNA,-1)
+	MOT_SET(RAGNA,150,-2,521,521,-1,-1)		//座り	//エモ用
+	MOT(RAGNA, 150, 1 )								//エモ用
+
+	KAO(SUBARU,"12321Z3","1","1")
+	MES(SUBARU,"那，那个……",0)
+	KAO(SUBARU,"12321Z7","1","1")	
+	MES(SUBARU,"虽然我听不大明白，\n不过要把浴巾脱掉\n到底是有些不好意思呢……",0)
+	KAO(SUBARU,"12321Z6","1","1")	
+	MES(SUBARU,"不，不过！\n既然师父这么说了，\n那我就鼓起勇气……",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"B","21DE","7")
+//	EMO(EVENT_RAGNA,EMO_TOGEBIKKURI)
+	EMO(RAGNA,EMO_TOGEBIKKURI)
+//	EFF_chr(25120,EVENT_RAGNA,0,80,1,"Bone_Neck")
+//	SE(1002,0)//トゲビックリSE
+//	set_chr(EVENT_RAGNA,	  1044,-1,-1,  -654,1438,-149, 2,356,0, "")
+//	EFF(25140,6660,-8460,140,0,100,-1)
+//	EFF(25140,-654,1438,-100,0,100,-1)
+
+	wait(20)
+	EMO(EVENT_RAGNA, EMO_ASEASE)
+	wait(15)
+	CAM_quake("37")
+	KAO(EVENT_RAGNA,"B232B3Z2","123IHGK","7")
+	MES(EVENT_RAGNA,"哇啊啊！\n不用脱啦！",0)
+	KAO(EVENT_RAGNA,"B232B3Z2","K","7")	
+	MES(EVENT_RAGNA,"Ｊｕｓｔ ａ ｍｏｍｅｎｔ！",0)
+	KAO(EVENT_RAGNA,"B232B3Z2","GHIHGK","3")	
+	MES(EVENT_RAGNA,"啊啊你冷静点！\n拜托你冷静点啊！",0)
+	MES_close(EVENT_RAGNA)
+	
+	KAO(SUBARU,"123213Z1","1","9")
+	MES(SUBARU,"哦……",0)
+	MES_close(SUBARU)
+
+//　　拉古那，昴から背を向けて口元まで湯に浸かる。
+	KAO(EVENT_RAGNA,"BBBBBBG","DGHI","3")	
+	look_off(EVENT_RAGNA)
+//	rot(EVENT_RAGNA,30,20)
+	MOT(EVENT_RAGNA,152,0)		//拉古那，後ろを向く
+	
+	wait(15)
+	cross_fade(15)
+	CAM_move(-612,-1442,-55,0,0)
+	CAM(-50,53,-55,17,199,0,0)
+//	MOT(EVENT_RAGNA, 151, 1)
+	look(EVENT_RAGNA, "Bone_Head", 0,0,0,10,0,0,0)
+	wait(30)
+
+	EMO(EVENT_RAGNA, EMO_ASEASE)
+	wait(15)
+	KAO(EVENT_RAGNA,"G","IH","3")
+	MES(EVENT_RAGNA,"（我，我是白痴吗……！）",0)
+//	KAO(EVENT_RAGNA,"B","HI","5")	
+	KAO(EVENT_RAGNA,"G","H","3")	
+	MES(EVENT_RAGNA,"（为什么\n  一直都没发现啊！？）",0)
+	KAO(EVENT_RAGNA,"G","H","3")	
+	MES(EVENT_RAGNA,"（外貌也好，纤细的身体也好，\n  不应该是一目了然的吗！？）",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(SUBARU,"W1那，那个，师父……\n真的没关系吗？",0)
+	MES(SUBARU,"W1我刚进来倒是没什么事，\n你不会是温泉泡久发晕了吧？",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"12321Z3","HI","5")
+	MES(EVENT_RAGNA,"哈哈……\n不是这样的。",0)
+	MES_close(EVENT_RAGNA)
+	wait(5)
+	KAO(EVENT_RAGNA,"B","N","5")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ6","N","5")	
+	MES(EVENT_RAGNA,"怎么说，我只是终于了解到\n我有多么蠢了……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　画面，ゆっくりとフェードアウト。
+	fade_in(100,60,0)
+	wait_fade()
+	stop_BGM(90)
+	wait_BGM()
+
+	//キャラ再配置
+	chr_pos(EVENT_RAGNA,	 -176,20,1,214,2)
+	chr_pos(SUBARU,	 -67,183,0,120,2)
+
+//	CAM_move(-20,0,144,0,0)
+//	CAM(250,189,144,17,180,0,0)
+
+	chr_pos(EVENT_RAGNA, -486,1488,-149,274,150)
+	chr_pos(SUBARU,      -677,1720,-149,360,150)
+
+	look_off(EVENT_RAGNA)
+	look_off(SUBARU)
+	//CAM_move(582,-2160,186,0,0)
+	//CAM(-110,37,204,14,249,0,0)
+	//CAM_move(-1085,-1864,4,0,0)
+	//CAM(-130,85,-5,15,138,0,0)
+
+
+//	CAM_move(-430,-1775,-14,0,0)
+//	CAM(-170,85,-25,21,239,0,0)
+//	CAM(95,85,-25,21,239,150,0)
+//調整しました0829
+	CAM_move(-430,-1775,-14,0,0)
+	CAM(-65,100,-14,18,242,0,0)
+	CAM(-65,104,-14,18,242,150,0)
+
+	KAO(SUBARU,     "1","3","1")
+	KAO(EVENT_RAGNA,"B","I","4")
+	wait(30)
+
+	BGM(52)
+	fade_in(0,60,0)
+	wait_fade()
+	
+	
+//──────────────────────────────
+//　　画面，再びフェードインして，
+//　　改めて２人で温泉に浸かっている拉古那と昴。
+//　　拉古那，端的方でやや気まずそうな角度。
+//　　昴は上気しながらも堂々と入っている雰囲気。
+
+	wait(120)
+
+	cross_fade(15)
+	CAM_move(-610,-1615,-14,0,0)
+	CAM(-50,71,-14,18,192,0,0)
+	wait(30)
+	
+	KAO(SUBARU,"12321Z4","6","6")
+	MES(SUBARU,"哈～……\n温泉果然好舒服啊。",0)
+	KAO(SUBARU,"12321Z6","321","1")	
+	MES(SUBARU,"离开村子的这段时间里，\n最不尽人意的\n就是洗澡了呢～。",0)
+	KAO(SUBARU,"12321Z5","123","1")
+	MES(SUBARU,"只靠淋浴的话，\n果然是无法消除疲劳的呢……",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"12321Z3","3","6")
+	MES(EVENT_RAGNA,"哈哈……是啊。",0)
+	KAO(EVENT_RAGNA,"12321Z4","3","1")	
+	MES(EVENT_RAGNA,"（呼……\n  终于平静下来了。）",0)
+	MES_close(EVENT_RAGNA)
+	wait(30)
+	
+//　　拉古那，気持ちを切り替えるように夜空を見上げる。
+//　　そ的まま画面，夜空的またたく星空に切り替える。
+
+//	MES(EVENT_RAGNA,"◆未入力項目\nそ的まま画面，夜空的またたく星空に切り替える",0)
+//	MES_close(EVENT_RAGNA)
+//	wait(30)
+
+	cross_fade(15)
+	CAM_move(-610,-1615,686,0,0)
+	CAM(-1170,70,686,18,357,0,0)
+	CAM(-1170,70,686,18,340,900,2)
+	wait(60)
+
+
+//	KAO(EVENT_RAGNA,"12321Z5","1","1")
+	MES_pos(EVENT_RAGNA,"W9不过，这里不但温泉绝妙，\n星空也非常广阔呢。",0,450,350,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+		
+//	KAO(EVENT_RAGNA,"12321Z5","1","1")
+	MES_pos(EVENT_RAGNA,"W9这么多的星星，\n可不多见啊。",0,450,350,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)	
+
+		
+//	KAO(SUBARU,"12321Z5","1","1")
+	MES_pos(SUBARU,"W9嘿嘿，因为这里可是\n名副其实的《星降之里》嘛。",0,150,380,0,0)
+	wait_key(0)
+	MES_close(SUBARU)	
+//	KAO(SUBARU,"12321Z6","1","1")	
+	MES_pos(SUBARU,"W9因为这里地势高，所以空气也特别清澈，\n比起镇上，这里能看到更远的地方。",0,150,380,0,0)
+	wait_key(0)
+	MES_close(SUBARU)
+	wait(30)
+	
+	cross_fade(15)
+//	CAM_move(-610,-1615,-14,0,0)
+//	CAM(-50,71,-14,18,192,0,0)
+	CAM_move(-1110,-1975,46,0,0)
+	CAM(-130,82,46,19,134,0,0)
+//CAM_move(-1110,-1975,46,1200,0)
+//CAM(-90,62,46,18,134,1200,0)	
+	wait(30)
+
+
+	KAO(EVENT_RAGNA,"12321Z2","1","1")
+	MES(EVENT_RAGNA,"原来如此……",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","1")	
+	MES(EVENT_RAGNA,"真羡慕你们啊。\n住在这么个好地方。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")
+	KAO(SUBARU,"12321Z4","123IIHG","1")	
+	MES(SUBARU,"要，要是师父喜欢的话，\n住在这里也……",0)
+	MES_close(SUBARU)
+
+	look_chr(EVENT_RAGNA,SUBARU,"Bone_Head")
+	KAO(EVENT_RAGNA,"2","12321D","6")	
+	MES(EVENT_RAGNA,"咦……",0)
+	MES_close(EVENT_RAGNA)
+
+	look_off(SUBARU)
+	EMO(SUBARU, EMO_ASEASE)
+	wait(15)
+	KAO(SUBARU,"B232BZ3","GHI","2")
+	MES(SUBARU,"啊，不！\n没什么！",0)
+	KAO(SUBARU,"12321Z4","321","6")
+	MES(SUBARU,"先不说这个……\n你能喜欢真是太好了。",0)
+	KAO(SUBARU,"12321Z5","1236","6")	
+	MES(SUBARU,"特地把你带到这里来，\n果然有些用处。",0)
+	MES_close(SUBARU)
+
+	look_chr(EVENT_RAGNA,SUBARU,"Bone_Head")
+	KAO(EVENT_RAGNA,"B232BZ2","1232A","1")
+	MES(EVENT_RAGNA,"你……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那，改めて昴に向き直る。
+	rot(EVENT_RAGNA, 30, 310 )
+//	rot_chr(EVENT_RAGNA,30,SUBARU)
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(-610,-1615,-14,0,0)
+	CAM(-50,71,-14,18,192,0,0)
+	wait(30)
+	
+
+
+	KAO(EVENT_RAGNA,"12321Z2", "A23332T", "6")
+	MES(EVENT_RAGNA,"呐，昴……",0)
+	KAO(EVENT_RAGNA,"12321Z4", "T", "6")
+	MES(EVENT_RAGNA,"为什么\n要为我做这么多呢？",0)
+	MES_close(EVENT_RAGNA)
+	
+	look_chr(SUBARU,EVENT_RAGNA,"Bone_Head")
+	KAO(SUBARU,"F", "321D", "1")
+	MES(SUBARU,"咦……",0)
+	MES_close(SUBARU)
+	
+	KAO(EVENT_RAGNA,"B232BZ5", "T23", "1")
+	MES(EVENT_RAGNA,"不惜破坏村里的规矩，\n特地带我来这里……",0)
+	KAO(EVENT_RAGNA,"B232BZ6", "32T", "1")	
+	MES(EVENT_RAGNA,"你明明没做什么坏事，\n却还是挨了顿骂不是吗。",0)
+	KAO(EVENT_RAGNA,"B232BZ5", "T23332T", "9")	
+	MES(EVENT_RAGNA,"嗯，虽然最后大家\n又都接受了……",0)
+	MES_close(EVENT_RAGNA)
+	
+	look_off(SUBARU)
+		
+	KAO(SUBARU,"12321Z2","1236","5")
+	MES(SUBARU,"啊，啊哈哈……",0)
+	MES_close(SUBARU)
+	
+	KAO(EVENT_RAGNA,"12321Z5", "T23332T", "6")
+	MES(EVENT_RAGNA,"说起来，是因为你爷爷\n说了什么“选择”之类的话呢。",0)
+	KAO(EVENT_RAGNA,"12321Z3", "T", "6")	
+	MES(EVENT_RAGNA,"那是什么？",0)
+	MES_close(EVENT_RAGNA)
+	
+//　　昴，もじもじと，両手的人差し指を合わせ始める。
+//	MES(EVENT_RAGNA,"◆未入力項目\n昴，もじもじと，両手的人差し指を合わせ始める。",0)
+//	MES_close(EVENT_RAGNA)
+//	wait(30)
+
+	KAO(SUBARU,"1","I","4")
+	MOT(SUBARU, 152, 10)
+	wait(30)	
+	
+	KAO(SUBARU,"12321Z3","IHG","4")
+	MES(SUBARU,"呃，那个，那个……",0)
+	MES_close(SUBARU)
+
+	
+	KAO(SUBARU,"B232BZ5","G","4")
+	MES(SUBARU,"这个村子一直很隐蔽，\n也没有和外部的交流……",0)
+	KAO(SUBARU,"B232BZ5","G","4")	
+	MES(SUBARU,"不过偶尔也会有人像我这样外出，\n去收集各种情报。",0)
+	KAO(SUBARU,"B232BZ6","GHI","4")	
+	MES(SUBARU,"不，不止如此……\n……也有在外面找到结婚对象，\n把人家带回来的人……",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"B","TDE","7")
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(20)
+
+//	KAO(EVENT_RAGNA,"B232B2Z2","T233321DE","7")
+	KAO(EVENT_RAGNA,"B232B2Z2","E","7")
+	MES(EVENT_RAGNA,"等，等一下！",0)
+	KAO(EVENT_RAGNA,"B232B2Z2","D12321D","6")	
+	MES(EVENT_RAGNA,"这么说，那时候的\n“选择”是说！？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"B232BZ4","IH","5")
+	MES(SUBARU,"那，那个……\n那只是一种说法啦……",0)
+	KAO(SUBARU,"B232BZ5","H","5")	
+	MES(SUBARU,"要让凯大哥他们接受的话，\n只能那么说……",0)
+	KAO(SUBARU,"B232BZ4","HI","5")
+	MES(SUBARU,"对，对不起。\n我这种人很麻烦吧……",0)
+	MES_close(SUBARU)
+	
+	look_off(EVENT_RAGNA)
+	
+//	KAO(EVENT_RAGNA,"C","123I","B")
+	KAO(EVENT_RAGNA,"G","123IH","B")
+	MES(EVENT_RAGNA,"～～～～！！！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那，昴から顔背けて震える動作。
+	
+	look_chr(SUBARU,EVENT_RAGNA,"Bone_Head")
+
+	KAO(SUBARU,"B232BZ2","321D","1")
+	MES(SUBARU,"师，师父……？",0)
+	MES_close(SUBARU)
+	
+//	KAO(EVENT_RAGNA,"12321Z4","IHG","4")
+	KAO(EVENT_RAGNA,"12321Z4","HI3","4")
+	MES(EVENT_RAGNA,"……不，没什么。\n才没有麻烦呢。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　拉古那，再び昴に顔を向けてため息をつく。
+	
+	KAO(EVENT_RAGNA,"B","2A","5")
+	look_chr(EVENT_RAGNA,SUBARU,"Bone_Head")
+
+//	KAO(EVENT_RAGNA,"B232BZ5","GHI3","5")
+	KAO(EVENT_RAGNA,"12321Z5","32","5")
+	MES(EVENT_RAGNA,"话说回来……\n你离结婚还早着吧。",0)
+	KAO(EVENT_RAGNA,"12321Z6","2","5")	
+	MES(EVENT_RAGNA,"我也会去解释的，\n至少要向你爷爷\n澄清这个误会啊。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+cross_fade(15)
+CAM_move(-838,-1679,-135,0,0)
+CAM(-10,67,-135,18,289,0,0)
+chr_pos(SUBARU,      -677,1720,-149,270,150)
+wait(15)
+	
+	KAO(SUBARU,"B232BZ2","123332A","5")
+	MES(SUBARU,"不，不过……",0)
+	MES_close(SUBARU)
+	
+	KAO(EVENT_RAGNA,"12321Z5","A23","1")
+	MES(EVENT_RAGNA,"没关系的，你爷爷\n应该能明白的。",0)
+	KAO(EVENT_RAGNA,"12321Z5","3","1")	
+	MES(EVENT_RAGNA,"到底是长老，\n风度和普通人就是不一样。",0)
+	KAO(EVENT_RAGNA,"12321Z6","2A","1")	
+	MES(EVENT_RAGNA,"刚才不也是猜到了事情的经过，\n才出手相助的吗？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"12321Z3","233321D","1")
+	MES(SUBARU,"啊……\n也，也许是这样呢。",0)
+	KAO(SUBARU,"12321Z5","1","1")	
+	MES(SUBARU,"爷爷就是这种\n非常善于观察的人哦。",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"12321","A","1")
+	MES(EVENT_RAGNA,"对吧？",0)
+	KAO(EVENT_RAGNA,"12321Z5","A23","1")	
+	MES(EVENT_RAGNA,"刚才我只是想稍微谈谈，\n不过也许已经被他全看穿了。",0)
+
+	look_off(EVENT_RAGNA)
+	
+	KAO(EVENT_RAGNA,"B232BZ3","32A","2")	
+	MES(EVENT_RAGNA,"──包括我是在逃避这一点。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　昴的頭に！マーク。
+	KAO(SUBARU,"E","12321D","6")	
+//	EMO(SUBARU, EMO_BIKKURI)
+	EFF(25100,-677,-1720,-90,0,80,-1)
+	wait(30)
+	
+	KAO(SUBARU,"F","D","6")	
+	MES(SUBARU,"咦……",0)
+	MES_close(SUBARU)
+
+//　　拉古那，昴から視線を外す動作。
+	KAO(EVENT_RAGNA,"B232BZ4","A23","2")
+	MES(EVENT_RAGNA,"实话说……\n我是在逃避现实。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","3","2")	
+	MES(EVENT_RAGNA,"对你提出的好主意，\n装出非常感兴趣的样子……",0)
+	KAO(EVENT_RAGNA,"B232BZ3","32A","2")	
+	MES(EVENT_RAGNA,"从那座山丘上看到的情景那里……",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"B232B","12321","4")
+	MES(SUBARU,"あ……",0)
+	MES_close(SUBARU)
+//	wait_MES(SUBARU)
+
+//　　ここで一瞬だけ，セピア的回想ビジュアルを表示。
+//　　遠くにはっきり蒙布利亚城が映っている構図。
+//	fade_in(100,30,0)
+
+	if(SP005>15)
+	{	//ワイド960x600 -> *0.8
+		Load_BMP(14,"sys\\portray10w.itm","0")			//portray10 丘から見える蒙布利亚城（青空）
+		menuBMP(1,	14,	0,0,768,480)
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480	60,100,0)
+		wait(60)
+	//	wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+	}
+	else
+	{	//４：３
+		Load_BMP(14,"sys\\portray10n.itm","0")			//portray10 丘から見える蒙布利亚城（青空）
+		menuBMP(1,	14,	0,0,640, 480)
+		menu(1,	0,	0, 0,  0,	640, 480,	 0,  0,0)
+		menu(1,	0,	0, 0,  0,	640, 480,	60,100,0)
+		wait(60)
+	//	wait_key(0)
+		menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+	}
+
+//	fade_in(0,15,0)
+//	wait_fade()
+	wait_menu(1)
+	wait(15)
+	
+	KAO(EVENT_RAGNA,"B232BZ3","A23","1")
+	MES(EVENT_RAGNA,"从公主……大家……",0)
+	KAO(EVENT_RAGNA,"B232BZ4","3","1")	
+	MES(EVENT_RAGNA,"还有在那座城里\n发生的所有事……",0)
+	KAO(EVENT_RAGNA,"B232BZ4","3","1")	
+	MES(EVENT_RAGNA,"从这些事物里，\n我逃了出来。",0)
+	KAO(EVENT_RAGNA,"B232BZ3","32A","2")	
+	MES(EVENT_RAGNA,"……因为害怕得知真相。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"B232BZ2","1233321","4")
+	MES(SUBARU,"拉古那师父……",0)
+	MES_close(SUBARU)
+	
+	KAO(EVENT_RAGNA,"12321Z3","A23","5")
+	MES(EVENT_RAGNA,"哈哈……很可耻吧？",0)
+	KAO(EVENT_RAGNA,"12321Z5","3","5")	
+	MES(EVENT_RAGNA,"坚强的飞行员。\n意气风发的宝物猎人。",0)
+	KAO(EVENT_RAGNA,"12321Z5","3","5")	
+	MES(EVENT_RAGNA,"我的真实身份，不过是个既胆小又懦弱\n的小鬼罢了。",0)
+//	KAO(EVENT_RAGNA,"B232BZ3","32A","4")	
+	KAO(EVENT_RAGNA,"B232BZ3","32A","4")	
+	MES(EVENT_RAGNA,"……就和７年前一样，啊。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　画面，ゆっくりとフェードアウト。
+//　　そ的ままＢＧＭやお湯など的ＳＥも消していく。
+	fade_in(100,90,0)
+	wait_fade()
+	EV("EV_64_fadeout")//温泉SEフェードアウト
+	stop_BGM(120)
+	wait_BGM()
+	wait(60)
+
+	delete(EVENT_RAGNA)
+	delete(SUBARU)
+
+//　　休憩所へ
+	workG(GW_DEF_BGM,SET,62)		//デフォルト曲を変更する
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(10401)
+	
+	//キャラ再配置
+//	chr_pos(RAGNA,	 -176,20,1,214,2)
+//	chr_pos(PARTNER,	 -67,183,0,200,2)
+
+//	CAM_move(-20,0,144,0,0)
+//	CAM(250,189,144,17,180,0,0)
+
+//	fade_in(0,60,0)
+//	wait_fade()
+
+}
+
+//温泉SEフェードアウト
+EV_64_fadeout
+{
+	SE_vol(64,100,0)
+	wait(1)
+	SE_vol(64,99,0)
+	wait(1)
+	SE_vol(64,98,0)
+	wait(1)
+	SE_vol(64,97,0)
+	wait(1)
+	SE_vol(64,96,0)
+	wait(1)
+	SE_vol(64,95,0)
+	wait(1)
+	SE_vol(64,94,0)
+	wait(1)
+	SE_vol(64,93,0)
+	wait(1)
+	SE_vol(64,92,0)
+	wait(1)
+	SE_vol(64,91,0)
+	wait(1)
+	SE_vol(64,90,0)
+	wait(1)
+	SE_vol(64,89,0)
+	wait(1)
+	SE_vol(64,88,0)
+	wait(1)
+	SE_vol(64,87,0)
+	wait(1)
+	SE_vol(64,86,0)
+	wait(1)
+	SE_vol(64,85,0)
+	wait(1)
+	SE_vol(64,84,0)
+	wait(1)
+	SE_vol(64,83,0)
+	wait(1)
+	SE_vol(64,82,0)
+	wait(1)
+	SE_vol(64,81,0)
+	wait(1)
+	SE_vol(64,80,0)
+	wait(1)
+	SE_vol(64,79,0)
+	wait(1)
+	SE_vol(64,78,0)
+	wait(1)
+	SE_vol(64,77,0)
+	wait(1)
+	SE_vol(64,76,0)
+	wait(1)
+	SE_vol(64,75,0)
+	wait(1)
+	SE_vol(64,74,0)
+	wait(1)
+	SE_vol(64,73,0)
+	wait(1)
+	SE_vol(64,72,0)
+	wait(1)
+	SE_vol(64,71,0)
+	wait(1)
+	SE_vol(64,70,0)
+	wait(1)
+	SE_vol(64,69,0)
+	wait(1)
+	SE_vol(64,68,0)
+	wait(1)
+	SE_vol(64,67,0)
+	wait(1)
+	SE_vol(64,66,0)
+	wait(1)
+	SE_vol(64,65,0)
+	wait(1)
+	SE_vol(64,64,0)
+	wait(1)
+	SE_vol(64,63,0)
+	wait(1)
+	SE_vol(64,62,0)
+	wait(1)
+	SE_vol(64,61,0)
+	wait(1)
+	SE_vol(64,60,0)
+	wait(1)
+	SE_vol(64,59,0)
+	wait(1)
+	SE_vol(64,58,0)
+	wait(1)
+	SE_vol(64,57,0)
+	wait(1)
+	SE_vol(64,56,0)
+	wait(1)
+	SE_vol(64,55,0)
+	wait(1)
+	SE_vol(64,54,0)
+	wait(1)
+	SE_vol(64,53,0)
+	wait(1)
+	SE_vol(64,52,0)
+	wait(1)
+	SE_vol(64,51,0)
+	wait(1)
+	SE_vol(64,50,0)
+	wait(1)
+	SE_vol(64,49,0)
+	wait(1)
+	SE_vol(64,48,0)
+	wait(1)
+	SE_vol(64,47,0)
+	wait(1)
+	SE_vol(64,46,0)
+	wait(1)
+	SE_vol(64,45,0)
+	wait(1)
+	SE_vol(64,44,0)
+	wait(1)
+	SE_vol(64,43,0)
+	wait(1)
+	SE_vol(64,42,0)
+	wait(1)
+	SE_vol(64,41,0)
+	wait(1)
+	SE_vol(64,40,0)
+	wait(1)
+	SE_vol(64,39,0)
+	wait(1)
+	SE_vol(64,38,0)
+	wait(1)
+	SE_vol(64,37,0)
+	wait(1)
+	SE_vol(64,36,0)
+	wait(1)
+	SE_vol(64,35,0)
+	wait(1)
+	SE_vol(64,34,0)
+	wait(1)
+	SE_vol(64,33,0)
+	wait(1)
+	SE_vol(64,32,0)
+	wait(1)
+	SE_vol(64,31,0)
+	wait(1)
+	SE_vol(64,30,0)
+	wait(1)
+	SE_vol(64,29,0)
+	wait(1)
+	SE_vol(64,28,0)
+	wait(1)
+	SE_vol(64,27,0)
+	wait(1)
+	SE_vol(64,26,0)
+	wait(1)
+	SE_vol(64,25,0)
+	wait(1)
+	SE_vol(64,24,0)
+	wait(1)
+	SE_vol(64,23,0)
+	wait(1)
+	SE_vol(64,22,0)
+	wait(1)
+	SE_vol(64,21,0)
+	wait(1)
+	SE_vol(64,20,0)
+	wait(1)
+	SE_vol(64,19,0)
+	wait(1)
+	SE_vol(64,18,0)
+	wait(1)
+	SE_vol(64,17,0)
+	wait(1)
+	SE_vol(64,16,0)
+	wait(1)
+	SE_vol(64,15,0)
+	wait(1)
+	SE_vol(64,14,0)
+	wait(1)
+	SE_vol(64,13,0)
+	wait(1)
+	SE_vol(64,12,0)
+	wait(1)
+	SE_vol(64,11,0)
+	wait(1)
+	SE_vol(64,10,0)
+	wait(1)
+	SE_vol(64,9,0)
+	wait(1)
+	SE_vol(64,8,0)
+	wait(1)
+	SE_vol(64,7,0)
+	wait(1)
+	SE_vol(64,6,0)
+	wait(1)
+	SE_vol(64,5,0)
+	wait(1)
+	SE_vol(64,4,0)
+	wait(1)
+	SE_vol(64,3,0)
+	wait(1)
+	SE_vol(64,2,0)
+	wait(1)
+	stop_SE(64)
+}
+
+#EndScriptTable
+//====================================================================
+

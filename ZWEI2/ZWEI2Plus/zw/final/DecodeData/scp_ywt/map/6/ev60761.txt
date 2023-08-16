@@ -1,0 +1,380 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[16076][嶳亅擖岥(栭)]
+//====================================================================
+
+#ScriptTable
+
+#PARTNER	255
+#PET 		254
+#RAGNA 		0
+
+#PLAYER		252	//憖嶌僉儍儔僋僞乕
+#PLAYER2 	253	//旕憖嶌僉儍儔僋僞乕
+
+#MONTBLANC	2
+#EVENT_RAGNA	3
+#SUBARU			4
+#DUMMY			5
+#ALWEN			6
+#POCKLE			7
+#PIPIRO			8
+
+#SPIRIT_A	10
+#SPIRIT_B	11
+#SPIRIT_C	12
+
+#KAPPA		15
+
+#ZIZOU_1	20
+#ZIZOU_2	21
+#ZIZOU_3	22
+#ZIZOU_4	23
+
+//--------------------------------------------------------------------
+INIT
+{
+//娐嫬SE
+	SE(51,0)
+
+//  -------  no typ   	  tip      x    y   z       mot     岦 忬  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+map_color(68,68,98,0);//R,G,B, time 100%
+
+//仭奒抜丒斷
+
+	set_chr( 90,990,	-1,-1,   -450,3000,-300,   	180,  1201, 6,"K9_10001;")	//嘆僄儞僩儕 僼傿乕儖僪
+
+//	set_chr( 91,990,	-1,-1,   -100,-1330,0,  	330,050202, 6,"K0_16010;")	//嘆僄儞僩儕 擖岥暘婒
+	set_chr( 92,991,	-1,-1,   3344,-3040,337, 	 38,  1001, 6,"<EV_STOP_01>")	//嘆僄儞僩儕 嶁忋揔摉
+
+
+	//抧憼
+	//	 	娗棟no/typ		tip嵗昗	 +嵗昗		  mot 岦偒 忬懺  EasyScript
+	//抧憼
+	if( F4_04_OpenRoad )	//奐偄偨屻	//俧俥亀仛塀傟棦傊偺摴傪奐偄偨亁
+	{
+		set_chr(ZIZOU_1, 651, -1,-1, -286,-796,1,  0, 0,    3,"") 
+		set_chr(ZIZOU_2, 651, -1,-1, -115,-911,1,  0,  0,    3,"") 
+		set_chr(ZIZOU_3, 651, -1,-1,  224,-1139,1,  0,0,    3,"") 
+		set_chr(ZIZOU_4, 651, -1,-1,  412,-1247,1,  0, 0,    3,"") 
+	}
+	else 					//奐偔慜
+	{	//抧憼
+		set_chr(ZIZOU_1, 651, -1,-1, -286,-796,1,  0, 90,    3,"") 
+		set_chr(ZIZOU_2, 651, -1,-1, -115,-911,1,  0,  0,    3,"") 
+		set_chr(ZIZOU_3, 651, -1,-1,  224,-1139,1,  0,270,    3,"") 
+		set_chr(ZIZOU_4, 651, -1,-1,  412,-1247,1,  0, 90,    3,"") 
+	}
+	F_set_chr(ZIZOU_1, CF_NO_CLIP)
+	F_set_chr(ZIZOU_2, CF_NO_CLIP)
+	F_set_chr(ZIZOU_3, CF_NO_CLIP)
+	F_set_chr(ZIZOU_4, CF_NO_CLIP)
+	F_set_chr(ZIZOU_1, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_2, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_3, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_4, CF_NO_CLIP2)
+
+
+//仭僀儀儞僩
+
+//仭応柺屌桳愝掕
+	if( F4_04_OpenRoad )
+	{
+		mot_obj("rockgate", "open0")		//斷奐偔
+	}
+
+	EV("EV_SnowFall")
+}
+
+//-------------------------------------------------------------------
+EV_SnowFall
+{
+	EFF_chr(4292, 0, 0,100, -1, "charbase0" )
+	wait( 50 )
+	loop
+}
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+//丂丂嶳摴傪搊傠偆偲偡傞偲妸偭偰棊偪偰偟傑偆丅
+EV_STOP_01
+{
+
+	TK_begin()
+
+//	if( F4_09_GoShrineMia )
+	//{
+	move(PLAYER,0,RUN2,2644,-1934,0,200)
+	//move(PLAYER2,0,RUN2,2644,-1934,0,50)
+	move(PLAYER2,0,RUN2,2632,-1874,0,50)
+	wait_move(PLAYER)
+	wait_move(PLAYER2)
+
+	if( !F_RAGNA )
+	{
+		if(GW_MAN==1)
+		{
+		//丂丂仸儔僌僫愭摢偺応崌
+			MES(RAGNA,"嗯……",0)
+			MES(RAGNA,"不是在這裡\n閒逛的時候了。",0)
+			MES(RAGNA,"趕快前去那座城堡吧。",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//丂丂仸傾儖僂僃儞愭摢偺応崌
+			MES(PARTNER,"唔……腳下很滑呢……",0)
+			MES(PARTNER,"不能在這裡\n耽擱下去了。",0)
+			MES(PARTNER,"必須要儘快趕到我的穆普利亞城啊。",0)
+			MES_close(PARTNER)
+		}
+		F_set(RAGNA)
+	}
+	//}
+
+	TK_end()
+}
+//---------------------------------------------------------------------
+//抧憼僗僀僢僠
+//慡偰偺抧憼偺摢傪尦偺妏搙乮惓柺乯偵偡傟偽丄斷偑奐偔
+//峌棯朄
+//弶婜妏搙 0,270,270,180偺忬懺偐傜嘆傪侾夞丄嘇傪俀夞丄係傪侾夞丂偱俷俲丅偨偩偺壛嶼側偺偱夞偡弴斣偼娭學側偟
+//
+EV_ZIZOU_CHECK
+{
+	if(WK001==0 && WK002==0 && WK003==0 && WK004==0)
+	{
+		EV("EV_4_06_OpenRoad")	//斷奐偔僀儀儞僩奐巒
+		wait_EV("EV_4_06_OpenRoad")
+	}
+}
+//---------------------------------------------------------------------
+//--- 抧憼1 -----------------------------------------------------------
+//抧憼1傪夞偡偲丄抧憼3丄抧憼4傕夞傞
+EV_ZIZOU_1
+{
+	TK_begin()
+	EV("EV_ZIZOU_1b")
+	EV("EV_ZIZOU_3b")
+	EV("EV_ZIZOU_4b")	
+	wait_EV("EV_ZIZOU_1b")
+	wait_EV("EV_ZIZOU_3b")
+	wait_EV("EV_ZIZOU_4b")
+	
+	//抧憼岦偒僠僃僢僋
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end()
+}
+//---------------------------------------------------------------------
+//--- 抧憼2 -----------------------------------------------------------
+//抧憼2傪夞偡偲丄抧憼1丄抧憼3傕夞傞
+EV_ZIZOU_2
+{
+	TK_begin()
+	EV("EV_ZIZOU_1b")
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_3b")	
+	wait_EV("EV_ZIZOU_1b")
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_3b")
+	
+	//抧憼岦偒僠僃僢僋
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+	TK_end()
+}
+//---------------------------------------------------------------------
+//--- 抧憼3 -----------------------------------------------------------
+//抧憼2傪夞偡偲丄抧憼3丄抧憼4傕夞傞
+EV_ZIZOU_3
+{
+	TK_begin()
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_3b")
+	EV("EV_ZIZOU_4b")	
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_3b")
+	wait_EV("EV_ZIZOU_4b")	
+	
+	//抧憼岦偒僠僃僢僋
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end()
+}
+//---------------------------------------------------------------------
+//--- 抧憼4 -----------------------------------------------------------
+//抧憼4傪夞偡偲丄抧憼1丄抧憼2傕夞傞
+EV_ZIZOU_4
+{
+	TK_begin()
+	EV("EV_ZIZOU_1b")
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_4b")	
+	wait_EV("EV_ZIZOU_1b")
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_4b")	
+	
+	//抧憼岦偒僠僃僢僋
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end()
+}
+
+//抧憼侾夞揮
+EV_ZIZOU_1b
+{
+	if(WK001==0)
+	{
+		rot(ZIZOU_1, 30, 270)
+		workL(1,SET,27)		
+	
+//		MES(ZIZOU_1,"妏搙270",0)
+	}
+	else
+	if(WK001==9)
+	{
+		rot(ZIZOU_1, 30, 0)
+		workL(1,SET,0)
+			
+//		MES(ZIZOU_1,"妏搙000",0)
+	}
+	else
+	if(WK001==18)
+	{
+		rot(ZIZOU_1, 30, 90)
+		workL(1,SET,9)	
+		
+//		MES(ZIZOU_1,"妏搙090",0)
+	}
+	else
+	if(WK001==27)
+	{
+		rot(ZIZOU_1, 30, 180)
+		workL(1,SET,18)
+//		MES(ZIZOU_1,"妏搙180",0)
+
+	}
+	else
+	{
+		MES(ZIZOU_1,"角度？",0)
+	}
+	MES_close(ZIZOU_1)	
+	
+	wait(30)
+}
+
+//抧憼俀夞揮
+EV_ZIZOU_2b
+{
+	EMO(ZIZOU_2, EMO_BIKKURI)
+	if(WK002==0)
+	{
+		rot(ZIZOU_2, 30, 270)
+		workL(2,SET,27)	
+	}
+	else
+	if(WK002==9)
+	{
+		rot(ZIZOU_2, 30, 360)
+		workL(2,SET,0)
+	}
+	else
+	if(WK002==18)
+	{
+		rot(ZIZOU_2, 30, 90)
+		workL(2,SET,9)
+	}
+	else
+	if(WK002==27)
+	{
+		rot(ZIZOU_2, 30, 180)
+		workL(2,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_2,"角度？",0)
+
+	}
+	MES_close(ZIZOU_2)		
+	wait(30)
+}
+
+//抧憼俁夞揮
+EV_ZIZOU_3b
+{
+	EMO(ZIZOU_3, EMO_BIKKURI)
+	if(WK003==0)
+	{
+		rot(ZIZOU_3, 30, 270)
+		workL(3,SET,27)	
+	}
+	else
+	if(WK003==9)
+	{
+		rot(ZIZOU_3, 30, 0)
+		workL(3,SET,0)
+	}
+	else
+	if(WK003==18)
+	{
+		rot(ZIZOU_3, 30, 90)
+		workL(3,SET,9)	
+	}
+	else
+	if(WK003==27)
+	{
+		rot(ZIZOU_3, 30, 180)
+		workL(3,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_3,"角度？",0)
+		MES_close(ZIZOU_3)	
+	}
+	wait(30)
+}
+
+//抧憼係夞揮
+EV_ZIZOU_4b
+{
+	if(WK004==0)
+	{
+		rot(ZIZOU_4, 30, 270)
+		workL(4,SET,27)	
+	}
+	else
+	if(WK004==9)
+	{
+		rot(ZIZOU_4, 30, 0)
+		workL(4,SET,0)
+	}
+	else
+	if(WK004==18)
+	{
+		rot(ZIZOU_4, 30, 90)
+		workL(4,SET,9)	
+	}
+	else
+	if(WK004==27)
+	{
+		rot(ZIZOU_4, 30, 180)
+		workL(4,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_4,"角度？",0)
+		MES_close(ZIZOU_4)	
+	}
+	wait(30)
+}
+
+#EndScriptTable
+//====================================================================
+

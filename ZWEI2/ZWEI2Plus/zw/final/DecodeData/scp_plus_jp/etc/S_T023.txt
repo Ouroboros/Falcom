@@ -1,0 +1,988 @@
+//──────────────────────────────
+//	name("●魔女ラーライラ")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_LA-RAIRA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(LA-RAIRA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,LA-RAIRA)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,LA-RAIRA)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LA-RAIRA)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LA-RAIRA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LA-RAIRA)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LA-RAIRA)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,LA-RAIRA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　飛行場の工房の中、もしくはどこか適当な場所にいる。
+	//　　（オデッサと離しておく必要があるため、滑走路以外？）
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(LA-RAIRA,30,PLAYER1)
+	//	name("★１回目")
+	//	if(!F_LA-RAIRA)
+		if(!FM_12_TkLa-raira_1)
+		{
+			cross_fade(30)			//クロスフェード
+			
+			EV_begin()
+			//カメラセット
+//			CAM_move(-8571,787,320,0,0)			
+//			CAM(129,66,235,28,136,0,0)
+			CAM_move(-8671,527,320,0,0)
+			CAM(89,14,320,28,143,0,0)
+			//キャラ再配置
+//			chr_pos(PARTNER,690,356,1,200,2)
+			chr_pos(RAGNA,-8156,-993,-75,160,2)
+			chr_pos(PARTNER,-8335,-930,-75,200,2)
+			chr_pos(PET,-8238,-794,-75,180,2)
+			rot_chr(LA-RAIRA,30,RAGNA)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　話しかけるとキャラ再配置してイベント発生。
+		
+			wait(15)
+			KAO(LA-RAIRA,"12321Z8","1","1")
+			MES(LA-RAIRA,"アタシたちの魔力を集中すれば\n確かに竜巻に綻びは作れるだろう。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"だが、その隙を逃せば\n再びチャンスを作るのは難しい。",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"何はともあれ、\n準備だけは万全にしておくんだね。",0)
+			MES_close(LA-RAIRA)
+
+			MES(RAGNA,"ああ、もちろんだ。",0)
+			MES(RAGNA,"それにしても……\nここからだと竜巻が良く見えるな。",0)
+			MES_close(RAGNA)
+
+			MES(PET,"う、うん……\nぞっとしない光景かも。",0)
+			MES_close(PET)
+
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"《螺旋要塞》メルセデク……",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"数多の島と大陸を呑み込んで\n破壊の限りを尽くした空中要塞。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"……伝承では聞いていたが\nまさかあそこまでの代物とはねぇ。",0)
+			MES(LA-RAIRA,"さすがのアタシも魂消たよ。",0)
+			MES_close(LA-RAIRA)
+
+			MES(PARTNER,"うむ……\nさすがは魔王の城だけはある。",0)
+			MES(PARTNER,"残念ながら、私の城には\nあそこまでの迫力は無いな。",0)
+			MES_close(PARTNER)
+
+			EMO(PARTNER,EMO_TENTEN)
+			wait(50)
+
+			MES(PARTNER,"むう、何だか\n負けたようで面白くないのう。",0)
+			MES_close(PARTNER)
+
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			EMO(LA-RAIRA,EMO_HIYAASE)
+			wait(30)
+			KAO(RAGNA,"B","2","1")
+			look_chr( RAGNA, PARTNER,"Bone_Head")
+			look_chr( PET, PARTNER,"Bone_Head")
+			look_chr( LA-RAIRA, PARTNER,"Bone_Head")
+			wait(15)
+
+			MES(PET,"ひ、姫さま……",0)
+			MES_close(PET)
+
+			KAO(RAGNA,"B232BZ4","2","1")
+			MES(RAGNA,"いや、そこは負けてもいいだろ。",0)
+			MES_close(RAGNA)
+
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			look_off( LA-RAIRA )
+			rot(LA-RAIRA,60,180)
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			KAO(RAGNA, "1", "1", "1")
+			KAO(PARTNER,"1", "1", "1")
+			KAO(PET,"1", "1", "1")
+			KAO(LA-RAIRA,"1", "1", "1")
+
+			EV_end()
+		//	F_set(LA-RAIRA)
+			F_set(FM_12_TkLa-raira_1)
+
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+
+		}
+	//	name("★以後、繰り返し")
+		else
+		{
+			MES(LA-RAIRA,"アタシたちの魔力を集中すれば\n確かに竜巻に綻びは作れるだろう。",0)
+			MES(LA-RAIRA,"だが、その隙を逃せば\n再びチャンスを作るのは難しい。",0)
+			MES(LA-RAIRA,"何はともあれ、\n準備だけは万全にしておくんだね。",0)
+			MES_close(LA-RAIRA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//──────────────────────────────
+		//▼フラグ⑪（クリスタルバレーへ向かう）
+		//──────────────────────────────
+		//　　魔女の家の右上のおく、調合台の前にいる。
+		//	name("★初回（一回のみ／イベント処理）")
+		if(!F5_03_OfferLaraira)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,0)
+			wait_fade()
+			
+			TK_end()
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(123,-49,135,0,0)
+			CAM(-100,56,135,27,146,0,0)
+			
+			//キャラセット
+			chr_pos(LA-RAIRA, 317,34,0,270,2)
+			
+			chr_pos(RAGNA,-372,-337,0,4,2)
+			chr_pos(PET,-125,-373,0,355,2)
+			color(RAGNA,-1)//透過
+			color(PET,-1)//透過
+			
+			//ハイポリキャラセット
+			set_chr(EVENT_RAGNA,1010,-1,-1, 26,164,0,	2,250,0, "")
+			set_chr(LUE,  	 	1015,-1,-1, -88,38,1,	2,264,0, "")
+
+			KAO(EVENT_RAGNA, "1", "1", "1")	
+			KAO(LUE,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+			//フェードイン----------------------
+			fade_in(0,30,0)
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　話しかけるとキャラ再配置してイベント発生。
+			MES(LA-RAIRA,"来たね。\nラグナ、それにルゥ。",0)
+			MES_close(LA-RAIRA)
+			rot_chr(LA-RAIRA,30,EVENT_RAGNA)
+			wait(15)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"用件は分かっている。\nアルウェン姫が攫われたんだろう？",0)
+			MES_close(LA-RAIRA)
+
+		//　　ラグナたちの頭に！マーク。
+			EMO(EVENT_RAGNA,EMO_BIKKURI)
+			EMO(LUE,EMO_BIKKURI)
+			KAO(EVENT_RAGNA, "E", "D", "1")	
+			KAO(LUE,"2", "D", "6")	
+			wait(30)
+
+			MES(EVENT_RAGNA,"なっ……",0)
+			MES_close(EVENT_RAGNA)
+
+		//	name2(LUE)
+			MES(LUE,"ど、どうして！？",0)
+			MES_close(LUE)
+
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"やれやれ、アタシの\n得意技を忘れたのかい？",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"異世界に封じられた魔王の力に\n《扉》を開くための《鍵》……",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"そこの水晶玉を通じて\n大体の事情は承知しているよ。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(LUE)
+			MES(LUE,"そ、そういうことね。",0)
+			MES_close(LUE)
+
+		//	name2(EVENT_RAGNA)
+			MES(EVENT_RAGNA,"話が早くて助かるぜ。",0)
+			MES(EVENT_RAGNA,"それで婆さん。\nあんたも協力してくれるか？",0)
+			MES_close(EVENT_RAGNA)
+
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"ああ、ちょうど今、\n支度を終えたところさ。",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"アタシは先にホウキで\nクリスタルバレーに向かう。",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"アンタたちも準備が済んだら\nとっとと来るんだね。",0)
+			MES_close(LA-RAIRA)
+			wait_MES(LA-RAIRA)
+
+		//　　ラーライラ、そのままラグナの脇を通って
+		//　　すたすたと家から出て行ってしまう。
+		
+			CAM_move(-117,-289,175,120,0)
+			CAM(-30,56,175,24,164,120,0)
+			EV("MOVE_LA-RAIRA")
+			
+			wait(20)
+			rot_chr(EVENT_RAGNA,30,LA-RAIRA)
+			rot_chr(LUE,30,LA-RAIRA)
+		
+		//　　それを見ながらラグナたちの頭に…マーク。
+			
+			wait(20)
+			rot_chr(EVENT_RAGNA,10,LA-RAIRA)
+			rot_chr(LUE,30,LA-RAIRA)
+
+			wait(20)
+			rot_chr(EVENT_RAGNA,10,LA-RAIRA)
+			rot_chr(LUE,30,LA-RAIRA)
+
+			wait(20)
+			rot_chr(EVENT_RAGNA,10,LA-RAIRA)
+			rot_chr(LUE,30,LA-RAIRA)
+
+			EMO(EVENT_RAGNA,EMO_TENTEN)
+			EMO(LUE,EMO_TENTEN)
+			wait(20)
+			rot_chr(EVENT_RAGNA,10,LA-RAIRA)
+			rot_chr(LUE,30,LA-RAIRA)
+			wait(90)
+
+			KAO(EVENT_RAGNA,"12321Z3","23","1")
+			MES(EVENT_RAGNA,"行っちまった……",0)
+			KAO(EVENT_RAGNA,"112321Z5","21","1")
+			MES(EVENT_RAGNA,"話が早くて助かったが\nえらく行動的な婆さんだな。",0)
+			MES_close(EVENT_RAGNA)
+
+			KAO(LUE,"12321Z4","23","1")
+			MES(LUE,"何せグランヴァレン中を\n飛び回ってるらしいからね。",0)
+			rot_chr(LUE,30,EVENT_RAGNA)
+			KAO(LUE,"12321Z4","1","1")
+			MES(LUE,"まあいいわ。\nあたしたちも行きましょ。",0)
+			MES_close(LUE)
+
+//			CAM_move(-37,-129,175,50,0)
+//			CAM(-100,50,175,25,147,50,0)
+//			wait(50)
+			
+			rot_chr(EVENT_RAGNA,30,LUE)
+			//─────────────────────
+			//	name("⇒フィオナとポックルたちに事情を説明した")
+			if(F5_04_OfferPipiro && F5_05_OfferFiona)
+			{
+				KAO(EVENT_RAGNA,"12321Z4","1","1")
+				MES(EVENT_RAGNA,"ああ。\nこれで全員に声をかけたな。",0)
+				KAO(EVENT_RAGNA,"12321Z5","1","1")
+				MES(EVENT_RAGNA,"俺たちも準備を済ませたら\nクリスタルバレーに行こうぜ。",0)
+				MES_close(EVENT_RAGNA)
+				
+				KAO(LUE,"12321","1","1")
+				MES(LUE,"うん……！",0)
+				MES_close(LUE)
+				
+				//★手帳用フラグ：全員に交渉後
+				F_set(F5_33_OfferEnd)
+
+			}
+			else
+			if(F5_05_OfferFiona)
+			{
+			//	name("⇒フィオナに事情を説明した")
+				KAO(EVENT_RAGNA,"12321Z4","1","1")
+				MES(EVENT_RAGNA,"ああ、残るはピピロだけか。",0)
+				KAO(EVENT_RAGNA,"12321Z5","1","1")
+				MES(EVENT_RAGNA,"ふむ、どこにいるか\nちょいと見当が付かないな。",0)
+				MES_close(EVENT_RAGNA)
+
+				KAO(LUE,"12321Z5","1","1")
+				MES(LUE,"まあ、普通に考えたら\n町にいる可能性が高そうね。",0)
+				KAO(LUE,"12321Z4","1","1")
+				MES(LUE,"とにかく探してみましょ。",0)
+				MES_close(LUE)
+
+				KAO(EVENT_RAGNA,"12321","1","1")
+				MES(EVENT_RAGNA,"おう！",0)
+				MES_close(EVENT_RAGNA)
+
+				//★手帳用フラグ：ラーライラに協力を申し込んだ（このキャラが２人目・残りがピピロ）
+				F_set(F5_27_OfferLarFio)
+
+			}
+			else
+			if(F5_04_OfferPipiro)
+			{
+			//	name("⇒ポックルたちに事情を説明した")
+				KAO(EVENT_RAGNA,"12321Z4","1","1")
+				MES(EVENT_RAGNA,"ああ。\n残るはフィオナお嬢さんか。",0)
+				KAO(EVENT_RAGNA,"12321Z5","1","1")
+				MES(EVENT_RAGNA,"屋敷にいるんだろうから\nとっとと訪ねに行くとしよう。",0)
+				MES_close(EVENT_RAGNA)
+
+				KAO(LUE,"12321","1","1")
+				MES(LUE,"うん！",0)
+				MES_close(LUE)
+
+				//★★手帳用フラグ：ラーライラに協力を申し込んだ（このキャラが２人目・残りがフィオナ）
+				F_set(F5_28_OfferLarPip)
+
+			}
+			else
+			{
+			//	name("⇒フィオナとポックルたちに事情を説明していない")
+				KAO(EVENT_RAGNA,"12321Z2","1","1")
+				MES(EVENT_RAGNA,"そうだな。",0)
+				KAO(EVENT_RAGNA,"12321Z4","1","1")
+				MES(EVENT_RAGNA,"後はフィオナお嬢さんに\nピピロたちだが……",0)
+				MES_close(EVENT_RAGNA)
+
+				KAO(LUE,"12321Z4","1","1")
+				MES(LUE,"フィオナって女は\n多分、屋敷にいるはずよ。",0)
+				KAO(LUE,"12321Z5","1","1")
+				MES(LUE,"ピピロって子は……\n適当に探してみるしかないわね。",0)
+				MES_close(LUE)
+
+				KAO(EVENT_RAGNA,"12321Z3","1","1")
+				MES(EVENT_RAGNA,"ま、とにかく探してみよう。",0)
+				MES_close(EVENT_RAGNA)
+			}
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			
+			delete(LA-RAIRA)
+			delete(EVENT_RAGNA)
+			delete(LUE)
+			color(RAGNA,1)	//透過解除
+			color(PET,1)//透過解除
+
+			chr_pos(RAGNA,26,164,0,250,2)
+			chr_pos(PET,-88,38,1,264,2)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+
+			F_set(F5_03_OfferLaraira)
+			//★ラーライラ【旅をしていた】
+			F_set_note(-23,1)
+			
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+			EV_end()
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+		//──────────────────────────────
+		//▽ラーライラに事情を話した
+		//──────────────────────────────
+		//　　クリスタルバレーの一角にいる。
+		else
+		if(!F5_06_RunCrystal)
+		{
+			if(!F5_06_WaitCrystal)
+			{
+				rot_chr(LA-RAIRA,30,PLAYER1)
+			//	name("★１回目")
+				if(!F_LA-RAIRA)
+				{
+					MES(LA-RAIRA,"この遺跡は、以前から\nずっと気になっていたんだよ。",0)
+					MES(LA-RAIRA,"まさか魔王の魔力を封じた\n異世界への扉だったとはねぇ。",0)
+					MES(LA-RAIRA,"そりゃあ、ギスカール公も\n教えてくれなかったわけだ。",0)
+					MES_close(LA-RAIRA)
+					F_set(LA-RAIRA)
+				}
+			//	name("★以後、繰り返し")
+				else
+				{
+					MES(LA-RAIRA,"アタシと、フィオナ嬢と\nピピロって子の魔力を集めれば\n何とか《扉》は起動できるはずだ。",0)
+					MES(LA-RAIRA,"とっとと集めて来るんだね。",0)
+					MES_close(LA-RAIRA)
+				}
+			}
+			//──────────────────────────────
+			//▽クリスタルバレーに全員が集まった直後
+			//──────────────────────────────
+			//　　メインの選択肢で「まだ開かない」を選んだ後。
+			else
+			{
+				rot_chr(LA-RAIRA,30,PLAYER1)
+				
+				MES(LA-RAIRA,"どうする、ラグナ。\nそろそろ《扉》を開くかい？",0)
+				MES_close(LA-RAIRA)
+
+			//	name("選択テキスト")
+				workL(WK_CANCEL,SET,2)//【やめる】
+			//	workL(WK_CANCEL,SET,0)//【やめる】
+				MES_pos(PLAYER1,"??W9【扉を開く】\n【まだ開かない】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//閉じきるまで待つ
+
+
+			//	name("⇒扉を開く")
+			//　　メインのイベントに接続。
+				if(WK_YESNO==1)
+				{
+					//フェードアウト
+					fade_in(100,30,0)
+					wait_fade()
+
+					workL(1,SET,1)		//扉イベントへ接続
+
+					//　　以下のイベントに接続。
+					EV("EV_5_07_OpenCrystal")
+				}
+			//─────────────────────
+			//	name("⇒まだ開かない")
+				else
+				{
+				//	name("⇒まだ開かない")
+					MES(LA-RAIRA,"まあ、万全の準備を\nしといた方がいいだろうね。",0)
+					MES(LA-RAIRA,"アタシらはここで待ってるから\n準備ができたら声をかけるといい。",0)
+					MES_close(LA-RAIRA)
+
+					MES(RAGNA,"ああ、了解だ。",0)
+					MES_close(RAGNA)	
+				}
+			//─────────────────────
+			}
+		}
+		//──────────────────────────────
+		//▽クリスタルバレーを起動した
+		//　　クリスタルバレーの扉の前にいる。
+		//　　杖を構えて、呪文詠唱をしているような雰囲気。
+		//─────────────────────
+		else
+		{
+			look_chr( LA-RAIRA, PLAYER1,"Bone_Head")
+
+		//	name("⇒オデッサが仲間になっていない")
+			if(!F5_08_JoinOdessa)
+			{
+			//	name("★１回目")
+				if(!F_LA-RAIRA)
+				{
+					MES(LA-RAIRA,"魔力で出来た空中階段……\n大量の魔力が必要なのも当然か。",0)
+					MES(LA-RAIRA,"やれやれ、ギスカール公も\n面倒なモノを遺してくれたねぇ。",0)
+					MES_close(LA-RAIRA)
+					F_set(LA-RAIRA)
+				}
+			//	name("★以後、繰り返し")
+				else
+				{
+					MES(LA-RAIRA,"ほら、ボヤっとしてないで\nとっととお行き。",0)
+					MES(LA-RAIRA,"そう長い間は保たないよ。",0)
+					MES_close(LA-RAIRA)
+				}
+			}
+		//	name("⇒ダイガルドを倒していない")]
+			else
+			if(!F5_13_KillDygald)
+			{
+				if(!F_LA-RAIRA)
+				{
+				//	name("★１回目")
+					look_chr( LA-RAIRA, PARTNER,"Bone_Head")
+					MES(LA-RAIRA,"やれやれ。\nやっと加勢が到着したか。",0)
+					MES(LA-RAIRA,"遅いじゃないか、お嬢ちゃん。",0)
+					MES_close(LA-RAIRA)
+
+				//	name2(ODESSA)
+					rot_chr(PARTNER,30,LA-RAIRA)
+					MES(PARTNER,"お嬢ちゃんはやめてくれ。",0)
+					MES(PARTNER,"ま、遅れた分は\nせいぜい働かせてもらうよ。",0)
+					MES_close(PARTNER)
+
+					F_set(LA-RAIRA)
+				}
+			//	name("★以後、繰り返し")
+				else
+				{
+					MES(LA-RAIRA,"さあ、早くお行き。",0)
+					MES(LA-RAIRA,"こうしている間にも\nザハール候が何をするか\n分かったもんじゃないよ。",0)
+					MES_close(LA-RAIRA)
+
+				}
+			}
+			else
+			{
+			//	name("⇒ダイガルドを倒した")
+				MES(LA-RAIRA,"ふう……\nさすがに厳しくなってきたね。",0)
+				MES(LA-RAIRA,"早いところ\nアルウェン姫を助けて\n戻ってきとくれ。",0)
+				MES_close(LA-RAIRA)
+			}
+			
+			look_off(LA-RAIRA)
+		//─────────────────────
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	//　　魔女の家の大釜の前で薬を煎じている。
+	if( F4_09_GoShrineMia)
+	{
+	//	name("★初回（一回のみ／イベント処理）")
+		if(!FM_10_TkLa-raira_1)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(735,-331,240,0,0)
+			CAM(100,56,80,27,137,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,856,391,1,170,2)
+			chr_pos(PARTNER,690,356,1,200,2)
+			
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		//　　話しかけるとキャラ再配置してイベント発生。
+		
+			rot_chr(LA-RAIRA,30,PARTNER)
+
+			MOT(LA-RAIRA,2,15)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"アルウェン姫……\nそれに赤毛の小僧かい。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"ふむ、どうやら\nのっぴきならない状況に\nなっているみたいだね。",0)
+			MES_close(LA-RAIRA)
+
+			MES(PARTNER,"分かるか、魔女殿。",0)
+			MES(PARTNER,"《護人の里》は見つけたが\nすでに襲撃を受けた後だった。",0)
+			MES(PARTNER,"どうやら叔父上に\n先手を打たれたらしい。",0)
+			MES_close(PARTNER)
+
+//			rot_chr(LA-RAIRA,30,PARTNER)
+			
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"ふむ、さすがは\nギスカール公の弟君か。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"しかしその様子だと\nまだ終わっていないようだね。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"うむ、例の宝玉の娘を追って\n今から山頂に向かうつもりだ。",0)
+			MES(PARTNER,"我が《血の戦士》と共にな。",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ああ……！",0)
+			MES_close(RAGNA)
+
+//			rot_chr(LA-RAIRA,30,RAGNA)
+			look_chr( LA-RAIRA, RAGNA,"Bone_Head")
+			wait(15)
+
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"ふふ、どうやら\n吹っ切れたみたいだね。",0)
+//			MES_close(LA-RAIRA)
+//			look_chr( LA-RAIRA, PARTNER,"Bone_Head")
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"……伝説の巫女姫が使った\n《虹の宝玉》の魔力は\n正直、かなりのものだろう。",0)
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"くれぐれも気をつけるといい。",0)
+			MES_close(LA-RAIRA)
+
+			MES(PARTNER,"うむ……！",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"肝に銘じておくぜ。",0)
+			MES_close(RAGNA)
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			look_off( LA-RAIRA )
+			MOT(LA-RAIRA,150,0)
+			rot(LA-RAIRA,30,70)
+			
+			F_set(FM_10_TkLa-raira_1)
+			
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+			EV_end()
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+			MOT(LA-RAIRA,2,15)
+		//	name("★２回目（一回のみ／イベント処理？）")
+			if(!FM_10_TkLa-raira_2)
+			{
+				rot_chr(LA-RAIRA,30,PARTNER)
+
+				MES(LA-RAIRA,"そういえば、アルウェン姫。",0)
+				MES(LA-RAIRA,"新しい杖の調子はどうだい？",0)
+				MES_close(LA-RAIRA)
+
+				rot_chr(PARTNER,30,LA-RAIRA)
+			//	name2(PARTNER)
+				MES(PARTNER,"うむ、すこぶる好調だ。",0)
+				MES(PARTNER,"正直、闇の眷族たる身で\n光の魔法が使いこなせるとは\n思いもよらなかったぞ。",0)
+				MES_close(PARTNER)
+
+			//	name2(LA-RAIRA)
+				MES(LA-RAIRA,"その杖は、アンタの母上が\n愛用していた杖だからね。",0)
+				MES(LA-RAIRA,"アンタに馴染むのも\n当然といえば当然だろう。",0)
+				MES_close(LA-RAIRA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"そうか……",0)
+				MES(PARTNER,"（母上……私が物心ついた頃には\n  既にお亡くなりになっていたが……）",0)
+				MES(PARTNER,"（こうして杖を持っていると\n  何か温かいものを感じる……）",0)
+				MES_close(PARTNER)
+
+				rot_chr(RAGNA,30,PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"姫さん……",0)
+				MES_close(RAGNA)
+
+			//	name2(LA-RAIRA)
+				MES(LA-RAIRA,"フフ、お母上も\nきっと喜んでいることだろう。",0)
+				MES(LA-RAIRA,"今までの魔法と合わせて\n使いこなしていくといい。",0)
+				MES_close(LA-RAIRA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"うむ……承知した。",0)
+				MES_close(PARTNER)
+				
+				F_set(FM_10_TkLa-raira_2)
+			}
+		//	name("★以後、繰り返し")
+			else
+			{
+				rot_chr(LA-RAIRA,30,PLAYER1)
+				MES(LA-RAIRA,"《星降る里の護人》……",0)
+				MES(LA-RAIRA,"一体、何を護っていたのか\n明らかになる時が来たようだね。",0)
+				MES_close(LA-RAIRA)
+			}
+			MOT(LA-RAIRA,150,15)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//▽スバルが仲間になった
+	//──────────────────────────────
+	//　　町のブティックにいる。
+	if( F4_00_StartSolo )
+	{
+	//──────────────────────────────
+	//	name("★初回（一回のみ／イベント処理）")
+	//　　話しかけるとキャラ再配置してイベント発生。
+		if(!FM_07_TalkLa-raira)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(-1130,89,135,0,0)
+			CAM(310,104,135,15,252,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,-1105,-161,0,51,2)
+			chr_pos(PARTNER,-956,20,0,100,2)
+			
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+					
+			rot_chr(LA-RAIRA,30,RAGNA)
+			KAO(LA-RAIRA,"12321Z3","1","1")
+			MES(LA-RAIRA,"おや……\n赤毛の小僧じゃないか。",0)
+//			rot_chr(LA-RAIRA,30,PARTNER)
+			look_chr( LA-RAIRA, PARTNER,"Bone_Head")
+			KAO(LA-RAIRA,"12321Z3","1","1")
+			MES(LA-RAIRA,"それにスバルも一緒かい。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"ラーライラのお婆ちゃん！",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"婆さん……\n何やってんだ、こんな所で。",0)
+			MES_close(RAGNA)
+
+		//	name2(LA-RAIRA)
+//			rot_chr(LA-RAIRA,30,RAGNA)
+			look_chr( LA-RAIRA, RAGNA,"Bone_Head")
+			KAO(LA-RAIRA,"12321Z3","1","1")
+			MES(LA-RAIRA,"見ての通り、ショッピングさ。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"この店はいいね。\n流行をちゃんと押さえながらも\n独自のセンスを活かしている。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"イルバードに戻ってきたのは\n１０年ぶりくらいだが\nこんな店が出来ているとはねぇ。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"そ、そうか……",0)
+			MES(RAGNA,"その……姫さんの\n手伝いはしなくていいのか？",0)
+			MES_close(RAGNA)
+
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"アルウェン姫の所には\n今晩でも伺うつもりさ。",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"ギスカール公が遺した書庫を\n一緒に調べてみるつもりだよ。",0)
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"アンタも一緒にどうだい？",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"い、いや、俺は……",0)
+			MES_close(RAGNA)
+
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"冗談だよ。\nなにマジに取ってんだい。",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"アルウェン姫との\n契約は切れたんだろう？",0)
+			KAO(LA-RAIRA,"12321Z5","1","1")
+			MES(LA-RAIRA,"付き合う義理はないって\nアンタも言ってたじゃないか。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"………………………………",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"ラグナ師匠……",0)
+			MES_close(PARTNER)
+
+		//	name2(LA-RAIRA)
+			KAO(LA-RAIRA,"12321Z4","1","1")
+			MES(LA-RAIRA,"ま、若いうちは\nせいぜい悩むがいいさね。",0)
+			KAO(LA-RAIRA,"12321Z6","1","1")
+			MES(LA-RAIRA,"もっとも悩んだからって\n答えが見つかるとは限らないのが\n人生ってモンだけどね。",0)
+			MES_close(LA-RAIRA)
+			
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			look_off( LA-RAIRA )
+			rot(LA-RAIRA,30,100)
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(LA-RAIRA,"1", "1", "1")	
+
+			EV_end()
+			F_set(FM_07_TalkLa-raira)
+			
+			//フェードイン----------------------
+			fade_in(0,60,BLACK)
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+		//	name("★２回目")
+			if(!F_LA-RAIRA)
+			{
+				MES(LA-RAIRA,"ふむ……\nこの色合いもなかなか\nビビッドでいい感じだねぇ。",0)
+				MES(LA-RAIRA,"まあ、アタシが着るには\n少し若者向けすぎるか……",0)
+//				rot_chr(LA-RAIRA,30,PARTNER)
+				look_chr( LA-RAIRA, PARTNER,"Bone_Head")
+//				wait(15)
+				MES(LA-RAIRA,"スバル、アンタどうだい？",0)
+				MES_close(LA-RAIRA)
+
+				MES(PARTNER,"え、遠慮しておきます～。",0)
+				MES_close(PARTNER)
+
+				look_off( LA-RAIRA )
+				F_set(LA-RAIRA)
+			}
+		//	name("★以後、繰り返し")
+			else
+			{
+				MES(LA-RAIRA,"ふむ、あのピピロって子なら\n似合うかもしれないねぇ……",0)
+				MES(LA-RAIRA,"今度会ったら勧めてみるか。",0)
+				MES_close(LA-RAIRA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　魔女の家で水晶玉に手を当てながら占いをしている。
+	//　　ルゥとスバルからは多少離しておく。
+	if( F2_14_TalkEnemy )
+	{
+		look_chr( LA-RAIRA, PLAYER,"Bone_Head")
+
+		if(!F_LA-RAIRA)
+		{
+			MES(LA-RAIRA,"《アウロン大鉄塔》か……",0)
+			MES(LA-RAIRA,"かつて魔王が、莫大な量の鉄を\n造るために築いたそうだが……",0)
+			MES(LA-RAIRA,"何が起きるか分からない。\nくれぐれも気をつけてお行き。",0)
+			MES_close(LA-RAIRA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"うむ、そのつもりだ。",0)
+			MES_close(PARTNER)
+
+			F_set(LA-RAIRA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(LA-RAIRA,"ザハール候の狙いは\n何とか突き止めてみせよう。",0)
+			MES(LA-RAIRA,"アルウェン姫。\nくれぐれも気をつけてお行き。",0)
+			MES_close(LA-RAIRA)
+		}
+
+		look_off(LA-RAIRA)
+	}
+	
+	TK_end()
+}
+
+//⑪で協力を頼んだ後家から出るラーライラ
+MOVE_LA-RAIRA
+{
+	rot(LA-RAIRA,30,42)
+	move(LA-RAIRA, 0, WALK1,121,389,0,0)
+	wait_move(LA-RAIRA)
+	rot(LA-RAIRA,30,80)
+	move(LA-RAIRA, 0, WALK1,-750,369,0,,0)
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

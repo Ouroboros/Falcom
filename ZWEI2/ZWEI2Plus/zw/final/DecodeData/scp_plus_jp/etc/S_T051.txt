@@ -1,0 +1,594 @@
+//■Zwei2一般メッセージ・アルッテの町（※シェスター）
+//────────────────────────────────────────────────────────────
+//■アルッテ
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆シェスター（ピアニスト）Shestor")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_SHESTOR
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(SHESTOR, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,SHESTOR)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,SHESTOR)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SHESTOR)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,SHESTOR)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　※宿酒場・真ん中の円卓に座る。
+	//　　　シェスターの前にはグラスが置かれている。
+	//　　　シェスターは新聞を読んでいる。
+	//　　　シェスターに・・・エモーション出しっぱなし。
+	if( F6_05_EndSixth )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		if(!F_SHESTOR)
+		{
+		//　　※振り返らない。
+			MES(SHESTOR,"フム……どうやら\n情報誌にもめぼしい事は\n書かれていないようだな。",0)
+			MES(SHESTOR,"イルバード近郊で異常気象発生……\n連絡便欠航の模様──",0)
+			MES(SHESTOR,"あの竜巻や金の粒子のことは\n一言も書かれていないと来た。",0)
+			MES(SHESTOR,"……フフ、まあいいか。\nあの騒動のことは、俺たちの\n胸の中だけに留めておくとしよう。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(SHESTOR,"セフィーラの奴なら、\n丁度ロアルタ村に行っているぜ。",0)
+			MES(SHESTOR,"何でも大事な用事があるとかでな。",0)
+			MES(SHESTOR,"詳しくは知らないが……\nま、たまには息抜きもいいだろう。",0)
+			MES_close(SHESTOR)
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　※酒場ステージでピアノを弾いている。
+	//　　※初回イベント
+	if( F6_00_GoToMeru )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+
+		if(!FT_12_TalkShestor)
+		{
+		//　　※初回イベント
+		//──────────────────────────────
+		//	name("⇒シェスターと話した事がある場合")
+			MES(SHESTOR,"……お前さんたちかい。",0)
+			MES_close(SHESTOR)
+
+		//──────────────────────────────
+			MES(SHESTOR,"話は聞いたぜ。\nかなりマズイ事に\nなっているらしいな。",0)
+			MES(SHESTOR,"ま、こんな時に\n周りの連中を落ち着かせて\nやるのも音楽家の使命だ。",0)
+			MES(SHESTOR,"嵐の中に留まって\nメロディを奏で続ける\nというのも悪くない……",0)
+			MES_close(SHESTOR)
+
+//			MES(RAGNA,"そ、そいつはちょっと……",0)
+			MES(RAGNA,"そうか……",0)
+			MES_close(RAGNA)
+
+//			MES(PARTNER,"うむ、あまり感心できぬ話だな。",0)
+			MES(PARTNER,"ふむ、なかなか潔い心がけだな。",0)
+			MES_close(PARTNER)
+
+//			MES(SHESTOR,"フフ、だが今のイルバードに\n絶対安全な場所なんてないんだろう？",0)
+//			MES(SHESTOR,"なら同じ事さ。",0)
+			MES(SHESTOR,"フフ、今さら慌てたところで\n他に逃げる場所も無いからな。",0)
+			MES(SHESTOR,"お前さんたちも\n良かったら聴いていけよ。\nセフィーラも喜ぶだろう。",0)
+			MES_close(SHESTOR)
+			F_set(FT_12_TalkShestor)
+
+		//──────────────────────────────
+
+		}
+		//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"ああ……\nセフィーラの歌が\nいつもと違うという話か？",0)
+				MES(SHESTOR,"フフ、歌だけじゃない。\n何だか知らんが\n調子も戻ってきたらしくてな。",0)
+				MES(SHESTOR,"いつになくいい声を出している……\n今日のステージは一味違うぜ。",0)
+				MES(SHESTOR,"ま、良かったら聴いていけよ。",0)
+				MES_close(SHESTOR)
+				F_set(SHESTOR)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(SHESTOR,"あいつ、まだ足が\n治ってないんだがな……",0)
+				MES(SHESTOR,"フフ、まあ今回は\n本人の希望を尊重してやるか。",0)
+				MES(SHESTOR,"……心配ない。\n我らが歌姫が無茶をする前に\nきちんと休ませるさ。",0)
+				MES_close(SHESTOR)
+			}
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+	//　　※酒場１階階段下で、バランと話している。
+	//　　※初回イベント。
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		if(!FT_11_TalkShestor)
+		{
+			MES(SHESTOR,"セフィーラの奴……\n帰りが遅いと思ったら、\n足を挫いて倒れていたらしくてな。",0)
+			MES(SHESTOR,"この御仁に担がれて\n帰ってきたのさ。",0)
+			MES_close(SHESTOR)
+
+			//──────────────────────────────
+			//	name("⇒セフィーラと会った事がある")
+			if(FT_05_TalkCepheila || FT_01_TalkCepheila )
+			{
+				MES(RAGNA,"へええ、そうだったのか。",0)
+				MES(RAGNA,"で、大丈夫なのか？\n下手にひねっちまうと\n治りが遅かったりするもんだが……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("⇒ない")
+				MES(RAGNA,"へええ、そりゃ大変そうだな。",0)
+				MES(RAGNA,"えっと……大丈夫なのか？",0)
+				MES(RAGNA,"下手にひねっちまうと\n治りが遅かったりするもんだが……",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+			MES(SHESTOR,"ああ、今は２階で休ませている。",0)
+			MES(SHESTOR,"本人は平気だと言い張ってるが、\n一人じゃ立てないザマだからな。",0)
+			MES_close(SHESTOR)
+			F_set(FT_11_TalkShestor)
+
+			//★バラン【セフィーラ】
+			F_set_note(BAROM,2)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"セフィーラの奴は\nブランデーヶ丘で歌の練習をした\n帰りに転んじまったらしいな。",0)
+				MES(SHESTOR,"気の緩みってヤツだろう。\nやれやれ、心配かけさせやがって。",0)
+				MES(SHESTOR,"ま、しばらくはステージも\n休まざるを得んだろう。",0)
+				MES(SHESTOR,"一人じゃ立てないザマだからな。",0)
+				MES_close(SHESTOR)
+
+			//	MES(RAGNA,"（うーん、しばらく町に\n  帰ってない間にそんな事がなあ……）",0)
+			//	MES_close(RAGNA)
+			//
+			//	MES(PET,"（しばらくって言っても、\n  ほんの一日二日だけどね。）",0)
+			//	MES_close(PET)
+			//
+			//	MES(RAGNA,"（うっ……そりゃそうだが。\n  その、気分的にな。）",0)
+			//	MES_close(RAGNA)
+				F_set(SHESTOR)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(SHESTOR,"セフィーラの奴なら\n２階で休ませているぜ。",0)
+				MES(SHESTOR,"ま、しばらくはステージも\n休まざるを得んだろう。",0)
+				MES(SHESTOR,"一人じゃ立てないザマだからな。",0)
+				MES_close(SHESTOR)
+			}
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	//7/24イベント追加しました。
+
+	//　　※フラグ⑤でセフィーラがブランデーヶ丘に配置されている場合のみ出現。
+	//　　※ブランデーヶ丘に来ている。
+	//　　　左側から、空や景色を眺めているような雰囲気。
+	if( F4_09_GoShrineMia && FT_05_CepheilaSt)
+	{
+		//　　※初回イベント
+		if(!FT_10_TalkShestor)
+		{
+			//────────────────────────
+			//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"あれ……？",0)
+				MES(RAGNA,"ピアニストの人じゃないか。\nこんな朝早くにどうしたんだ……？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("⇒アルウェン先頭")
+				MES(PARTNER,"む……？",0)
+				MES(PARTNER,"そなたは確か、町にいた\nピアニストではないか。",0)
+				MES_close(PARTNER)
+
+				MES(RAGNA,"こんな朝早くに\nどうしたんだ……？",0)
+				MES_close(RAGNA)
+			//────────────────────────
+			}
+
+			rot_chr(SHESTOR,30,PLAYER1)
+			wait(30)
+			MES(SHESTOR,"ああ、お前さんたちか。",0)
+			MES(SHESTOR,"いやなに、\n早朝の散歩というやつだ。",0)
+			MES(SHESTOR,"ここは俺のお気に入りの場所でね。",0)
+			MES_close(SHESTOR)
+
+			//────────────────────────
+			//	name("⇒アルウェン先頭")
+			if(GW_MAN==0)
+			{
+				MES(RAGNA,"そういや……\n空気も澄んでるみたいだから\n散歩には丁度いいかもな。",0)
+				MES(RAGNA,"あの歌手の人も\n時々練習に来てるみたいだし……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("⇒ラグナ先頭")
+				MES(PARTNER,"ふむ、確かにこの丘は\nいつも空気も澄んでおるし\n散歩には良いかも知れんな。",0)
+				MES(PARTNER,"あの歌手の者も\n時折練習に訪れておるようだし……",0)
+				MES_close(PARTNER)
+			}
+			//────────────────────────
+
+		//　　シェスターにＰＡエモーション。
+			EMO(SHESTOR,EMO_PA)
+			wait(30)
+			MES(SHESTOR,"ああ、成る程。\nセフィーラの話を聞いてやったのは\nお前さんたちかい。",0)
+			MES_close(SHESTOR)
+
+		//　　シェスター、辺りを見渡す。
+			MES(SHESTOR,"あいつにこの場所を\n勧めたのは俺でね。",0)
+			MES(SHESTOR,"ま、最近行き詰っているようなんでな、\n環境を変えてみたらどうかと思ったのさ。",0)
+			MES(SHESTOR,"歌手のスランプなんざ、\n他人がどうこうできるものじゃ\nないんだが……",0)
+			MES(SHESTOR,"流石に少々\n心配になってきたもんでねえ。",0)
+			MES_close(SHESTOR)
+
+		//　　★シェスター【散歩を進言】
+			F_set_note(SHESTOR,2)
+			F_set(FT_10_TalkShestor)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+		//　　※振り向かない。
+			MES(SHESTOR,"ふう、だが\nやはり朝の空気は心地いいな。",0)
+			MES_close(SHESTOR)
+
+		//　　シェスター、軽く振り向く。
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"……お前さんたち、\n何か用事でもあるのかい？",0)
+			MES(SHESTOR,"いや、ちょいと\n急いでるように見えたもんでな。",0)
+			MES_close(SHESTOR)
+			look_off(SHESTOR)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※宿酒場前の壊された木箱、あるいは荒らされた付近で片付けている。
+	if( F4_00_StartSolo )
+	{
+		rot_chr(SHESTOR,30,PLAYER1)
+		if(!F_SHESTOR)
+		{
+			MES(SHESTOR,"今日は店の方の手伝いでね。\n片付けをさせてもらっている。",0)
+			MES(SHESTOR,"ま、この様子じゃしばらく\n客足も遠のきそうだしな。",0)
+			MES(SHESTOR,"かといって、ただで店主の\n厄介になるのも気が引ける……",0)
+			MES(SHESTOR,"少しは汗を流すとするか。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(SHESTOR,"にしても……\n街中で魔物が暴れるとはねえ。",0)
+			MES(SHESTOR,"俺もトラブルには\n慣れているつもりだが、魔物に\nステージを止められたのは初めてだな。",0)
+			MES(SHESTOR,"フム……\n何かがおかしい、と\n感じているのは俺だけか？",0)
+			MES_close(SHESTOR)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※宿酒場２階、一番右の部屋で窓から外を見ている。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_SHESTOR)
+		{
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"今晩のステージは一時キャンセル──\n俺たちはここで待機中だ。",0)
+			MES(SHESTOR,"……店主からのお達しでね。",0)
+			MES(SHESTOR,"事情はよく分からんが、\n少し切羽詰っていたようだったな。",0)
+			MES_close(SHESTOR)
+
+			F_set(SHESTOR)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(SHESTOR,"にしても……",0)
+			MES_close(SHESTOR)
+
+		//　　シェスター、セフィーラのほうを向く。
+			look_chr(SHESTOR,CEPHEILA,"Bone_Head")
+			MES(SHESTOR,"セフィーラは寝ちまったか……\nいつになく\n寝つきのいい奴だ。",0)
+			MES(SHESTOR,"近頃調子が悪そうだが、\n疲れでも溜まっているのか……？",0)
+			MES_close(SHESTOR)
+		}
+//		look_off(SHESTOR)
+		look_chr(SHESTOR,94,"Bone_Head")
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※カウンター近く、テオの傍に立って話している
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_SHESTOR)
+		{
+			look_chr(TEO,SHESTOR,"Bone_Head")
+		//　　※振り返らない。
+			MES(SHESTOR,"ええ、お貸しいただいた雑誌は\n読ませていただきましたよ。",0)
+			MES(SHESTOR,"フフ、歴史的な考察が\n載っている所がいい。",0)
+			MES(SHESTOR,"俺は骨董品の事は分かりませんがね、\n物に秘められたドラマというものには\n共感できるつもりですよ。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+			look_off(TEO)
+		}
+		else
+		{
+		//　　★繰り返し
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"ああ……お前さんたち。\nセフィーラの奴を見なかったかい？",0)
+			MES(SHESTOR,"練習に出かけたはずなんだが、\n中々戻ってこなくてな。",0)
+			MES(SHESTOR,"……ふむ、まあいいか。\n今日は公演も入っていないからな。",0)
+			MES_close(SHESTOR)
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※宿酒場・真ん中の円卓に座る。
+	//　　　本を読んでいる。
+	//　　　・・・エモーション出しっぱなし。
+	if( F2_00_GoForest )
+	{
+		EV_stop("TENTEN_SHESTOR")
+		if(!F_SHESTOR)
+		{
+			look_chr(SHESTOR,PLAYER1,"Bone_Head")
+			MES(SHESTOR,"ん……この本かい？",0)
+			MES(SHESTOR,"題は『きのこたちの挽歌』──\nきのこ好きが書いた\nエッセー集という所だな。",0)
+			MES_close(SHESTOR)
+
+			MES(PLAYER1,"き、きのこ……？",0)
+			MES_close(PLAYER1)
+
+			MES(SHESTOR,"ああ、俺も本を嗜む方だが\nこいつは中々ユニークで面白い。",0)
+			MES(SHESTOR,"一つお勧めしておこう。",0)
+			MES_close(SHESTOR)
+			F_set(SHESTOR)
+		}
+	//　　★繰り返し
+		else
+		{
+			look_chr(SHESTOR,CEPHEILA,"Bone_Head")
+			MES(SHESTOR,"それにしても……\nセフィーラの奴はまたお喋りか。",0)
+			MES(SHESTOR,"まあ構わないが、他のお客さんの\n迷惑にならない程度に頼むぜ。",0)
+			MES_close(SHESTOR)
+		}
+		look_off(SHESTOR)
+		EV("TENTEN_SHESTOR")
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※宿酒場・真ん中の円卓に座る。
+	//　　　シェスターの前には食事皿が置かれている。
+	if( F1_15_GoVillage )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		
+	//　　※初回イベント（セフィーラと共通のＧＦ）
+		if(!FT_02_TalkCepShes)
+		{
+			MES(SHESTOR,"おっと、悪いな。\n今日はオフにさせて貰っている。",0)
+			MES(SHESTOR,"ステージにも休息は必要だからな。",0)
+			MES(SHESTOR,"夜にはまた公演も入っている。\n気が向いたら聴きに来てくれ。",0)
+			MES_close(SHESTOR)
+			F_set(FT_02_TalkCepShes)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"俺たちは演奏旅行中でね、\n今まで色んな場所で\n公演をさせてもらってきたが……",0)
+				MES(SHESTOR,"ここのステージは悪くない。",0)
+				MES(SHESTOR,"異文化風味を取り込んで、\n上手く落ち着いた雰囲気を\n作り出している。",0)
+				MES(SHESTOR,"どうやら店主の趣味のようだな。\n中々いいセンスだ。",0)
+				MES_close(SHESTOR)
+				//　　★シェスター【演奏旅行中】
+				F_set_note(SHESTOR,0)
+				F_set(SHESTOR)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(SHESTOR,"そろそろ次の大陸へ\n行こうとは思ってるんだが……",0)
+				MES(SHESTOR,"ここの雰囲気が\n満更でもないんでな。",0)
+				MES(SHESTOR,"フフ、料理の味もいいときたら\nつい長居をしてしまうものだろう？",0)
+				MES_close(SHESTOR)
+
+				//──────────────────────────────
+				//	name("⇒アルウェン先頭")
+				if( GW_MAN==0)
+				{
+					MES(PARTNER,"うむ、それには同意しよう。",0)
+					MES_close(PARTNER)
+
+				//　　ラグナに冷や汗エモーション。
+					EMO(RAGNA,EMO_HIYAASE)
+					wait(30)
+				}
+				//──────────────────────────────
+			}
+		}
+		look_off(SHESTOR)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※酒場ステージでピアノを弾いている。
+	if( F1_01_GameStart )
+	{
+		look_chr(SHESTOR,PLAYER1,"Bone_Head")
+		if(!FT_01_TalkShestor)
+		{
+		//　　※初回イベント。
+			MES(SHESTOR,"おいおい……\n演奏中に上がってくる奴があるかよ。",0)
+			MES(SHESTOR,"人のステージには\n黙って耳を傾けるもんだぜ。",0)
+			MES_close(SHESTOR)
+
+		//──────────────────────────────
+		//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"……っと、悪い。",0)
+				MES(RAGNA,"その、ついな……",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("⇒アルウェン先頭")
+			{
+				MES(PARTNER,"ふむ、これは済まぬ。",0)
+				MES(PARTNER,"一度上がって\nみたかったものでな。",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			MES(SHESTOR,"フフ、まあいいさ。",0)
+			MES(SHESTOR,"……座ったらどうだ。\n楽しませてやるぜ。",0)
+			MES_close(SHESTOR)
+
+			F_set(FT_01_TalkShestor)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			if(!F_SHESTOR)
+			{
+				MES(SHESTOR,"セフィーラの歌はいいだろう。\n細いくせに良く透る。",0)
+				MES(SHESTOR,"歌手としては\nまだまだ未熟な面もあるがな。",0)
+				MES(SHESTOR,"この歌声だけは一級品だ。\nま、ゆっくり聴いていけよ。",0)
+				MES_close(SHESTOR)
+				F_set(SHESTOR)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(SHESTOR,"お前さんたち、\n観光客か何かかい？",0)
+				MES(SHESTOR,"ま、今後ともよろしくな。",0)
+				MES_close(SHESTOR)
+			}
+
+		}
+		look_off(SHESTOR)
+	}
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,1535 @@
+//====================================================================
+//ステージトラップスクリプト
+//[10300][ロアルタ村（昼）]
+//====================================================================
+
+#ScriptTable
+
+#LUE		1
+#MIA		2
+#EVENT_RAGNA	3
+#ALWEN			4
+
+#WIDEZEN	10
+#BAROM		11
+#CEPHEILA	12
+#KARASU		13
+#ALBERS		14
+#MARSA		15
+#FEDERICA	16
+#WADE		17
+
+#HIYOKO_A	18
+#HIYOKO_B	19
+#HIYOKO_C	20
+#HIYOKO_D	21
+
+#USI_A		22
+#USI_B		23
+
+#CHICKIN_A	24
+#CHICKIN_B	25
+#CHICKIN_C	26
+
+#HIYOKO_WADE_A	27
+#HIYOKO_WADE_B	28
+
+#CLEESE			29
+
+#EVENT_MARSA	30
+#EVENT_ALBERS	31
+
+#DOG_A		32
+#CAT_A		33
+
+//--------------------------------------------------------------------
+//ローカルワーク
+// 000 乱数
+
+
+//=====================================================================
+//=== 初期化処理 ======================================================
+//=====================================================================
+INIT
+{
+//環境SE
+	SE_distance(56,-2510,-3245,-31)//風車
+
+//  set_chr  no typ     tip        x     y    z     mot  向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■エントリー
+	set_chr( 90,990,	-1,-1,  3400, 9150,-300,   160,  3002,  6,"K4_10000;")	//フィールドマップ-東
+	set_chr( 91,990,	-1,-1,  5000,-4600, 300,    35,   802,  6,"Ka_10000;")	//フィールドマップ-北
+	set_chr( 92,990,	-1,-1, -4650,-5100, 300,   315,  0202,  6,"Kb_10000;")	//フィールドマップ-西
+	set_chr( 93,990,	-1,-1,  -150,-3000, 300,     0,050303, 11,"K0_10310;")	//ロアルタ村・村長宅
+	set_chr( 94,990,	-1,-1,  1000, 2900,   0,    30,050303, 11,"K0_10320;")	//ロアルタ村・ペット
+	set_chr( 95,990,	-1,-1, -1850, 3150,-300,   315,050303, 11,"K0_10330;")	//ロアルタ村・風車小屋
+	set_chr( 96,990,	-1,-1,  4325,  725,   0,   315,050303, 11,"K0_10340;")	//ロアルタ村・牛舎
+
+	set_chr(100,990,	-1,-1,  4450, 8750,-300,   160,   806,  6,"K4_10000;")	//フィールドマップ-東 （行き専用）
+
+	set_chr(102,990,	-1,-1,  4300,-4800, 300,    35,  1002,  6,"Ka_10000;")	//フィールドマップ-北 （行き専用）
+	set_chr(103,990,	-1,-1,  5700,-4400, 300,    35,   802,  6,"Ka_10000;")	//フィールドマップ-北 （行き専用）
+
+	set_chr(105,990,	-1,-1, -4850,-4600, 300,   315,  0209,  6,"Kb_10000;")	//フィールドマップ-西 （行き専用）
+	set_chr(106,990,	-1,-1, -4150,-5300, 300,   315,   902,  6,"Kb_10000;")	//フィールドマップ-西 （行き専用）
+
+	set_chr( 50,620,	-1,-1, 	  350,-2941,301,   0,      0,   0,";")			//①セーブOBJ
+
+	//▼⑩では、以下の建物は封鎖。
+	if( F4_06_StopAttack && !F4_11_EndFourth)
+	{
+	//　　村長宅／風車民家
+		delete(93)
+		delete(95)
+	}
+
+//ノード制御
+	F_set_obj("roal_oke", NP_HIDE)
+	F_reset_obj("CA_teoke", NP_GROUND)
+
+	//NPC
+	//しゃべるニワトリ、ひよこ
+	//⑩
+	if(F4_09_GoShrineMia && !F5_00_HearLunar)
+	{
+		set_chr( CHICKIN_A,467,	-1,-1,4099,1656,1,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_A>")//放牧地　ニワトリA
+		set_chr( CHICKIN_B,468,	-1,-1,4574,3101,1,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_B>")//放牧地　ニワトリB
+		set_chr( CHICKIN_C,469,	-1,-1,5174,2555,1,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_C>")//放牧地　ニワトリC		
+		set_chr( HIYOKO_A,470,	-1,-1,4045,1688,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_A>")//放牧地　ヒヨコA
+		set_chr( HIYOKO_B,471,	-1,-1,4704,932,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_B>")//放牧地　ヒヨコB
+		set_chr( HIYOKO_C,472,	-1,-1,5859,2139,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_C>")//放牧地　ヒヨコC
+		set_chr( HIYOKO_D,473,	-1,-1,4928,3205,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_D>")//放牧地　ヒヨコC
+
+	}
+	//③のときは広場
+	else
+	if(F2_00_GoForest && !F2_14_TalkEnemy)
+	{
+		set_chr( CHICKIN_A,467,	-1,-1,571,4455,0,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_A>")//放牧地　ニワトリA
+		set_chr( CHICKIN_B,468,	-1,-1,-142,4298,0,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_B>")//放牧地　ニワトリB
+		set_chr( CHICKIN_C,469,	-1,-1,-650,5231,0,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_C>")//放牧地　ニワトリC
+		set_chr( HIYOKO_A,470,	-1,-1,-1,4414,0,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_A>")//放牧地　ヒヨコA
+		set_chr( HIYOKO_B,471,	-1,-1,-324,5014,0,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_B>")//放牧地　ヒヨコB
+		set_chr( HIYOKO_C,472,	-1,-1,515,5067,0,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_C>")//放牧地　ヒヨコC
+		set_chr( HIYOKO_D,473,	-1,-1,486,3975,0,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_D>")//放牧地　ヒヨコC
+	}
+	//　それ以外は放牧地へ
+	else
+	{
+		set_chr( CHICKIN_A,467,	-1,-1,4099,1656,1,	1,0,	9,"L2?9900 <RUNAWAY_CHICKIN_A>")//放牧地　ニワトリA
+		set_chr( CHICKIN_B,468,	-1,-1,4574,3101,1,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_B>")//放牧地　ニワトリB
+		set_chr( CHICKIN_C,469,	-1,-1,5174,2555,1,	0,0,	9,"L2?9900 <RUNAWAY_CHICKIN_C>")//放牧地　ニワトリC		
+		set_chr( HIYOKO_A,470,	-1,-1,4045,1688,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_A>")//放牧地　ヒヨコA
+		set_chr( HIYOKO_B,471,	-1,-1,4704,932,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_B>")//放牧地　ヒヨコB
+		set_chr( HIYOKO_C,472,	-1,-1,5859,2139,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_C>")//放牧地　ヒヨコC
+		set_chr( HIYOKO_D,473,	-1,-1,4928,3205,1,	0,0,	9,"L2?9900 <RUNAWAY_HIYOKO_D>")//放牧地　ヒヨコC
+	}
+	EV("FREEMOVE_CHICKIN_A")
+	EV("FREEMOVE_CHICKIN_B")
+	EV("FREEMOVE_CHICKIN_C")
+	EV("FREEMOVE_HIYOKO_A")
+	EV("FREEMOVE_HIYOKO_B")
+	EV("FREEMOVE_HIYOKO_C")
+	EV("FREEMOVE_HIYOKO_D")
+	//Name制御──────────────
+	//ニワトリＡ	ニワゴン
+	//ニワトリＢ	ニワコ
+	//ニワトリＣ	ニワート
+	//ヒヨコＡ	ヒヨッコ
+	//ヒヨコＢ	ヒヨヒヨ
+	//ヒヨコＣ	ヒヨコウ
+	//ヒヨコＤ	ヒヨコ
+		if(FV_FF_NameNiwa_A)
+			chr_rename(CHICKIN_A,"ニワゴン")
+		if(FV_FF_NameNiwa_B)
+			chr_rename(CHICKIN_B,"ニワコ")
+		if(FV_FF_NameNiwa_C)
+			chr_rename(CHICKIN_C,"ニワート")
+
+		if(FV_FF_NameHiyo_A)
+			chr_rename(HIYOKO_A,"ヒヨッコ")
+		if(FV_FF_NameHiyo_B)
+			chr_rename(HIYOKO_B,"ヒヨヒヨ")
+		if(FV_FF_NameHiyo_C)
+			chr_rename(HIYOKO_C,"ヒヨコウ")
+		if(FV_FF_NameHiyo_D)
+			chr_rename(HIYOKO_D,"ヒヨコ")
+	//──────────────────
+
+	if(F6_00_GoToMeru && !F6_05_EndSixth)//フラグ１２
+	{
+	}
+	else
+	{
+		set_chr( DOG_A,446,-1,-1,	1676,3042,-21,		10,0,	20,"<TK_DOG_A>")	//いぬ
+		chr_scale(DOG_A,	"charbase0",	110,110,110,	0,	1)
+
+		set_chr( CAT_A,449,-1,-1,	1794,2890,-23,		25,0,	20,"<TK_CAT_A>")	//ねこ
+	}
+
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		set_chr( WADE,71,	-1,-1,	-1666,-320,283,		2,0,	20,"<TK_WADE>")		//にんじんの穴　チェスク
+		EV("SLEEP_WADE")
+		
+		set_chr( HIYOKO_WADE_A,474,	-1,-1,	-1775,334,339,		2,0, 20,"<TK_HIYOKO_WADE_A>")	//にんじんの家　ヒヨコA
+		set_chr( HIYOKO_WADE_B,475,	-1,-1,	-1587,150,291,		2,0, 20,"<TK_HIYOKO_WADE_B>")	//にんじんの家　ヒヨコB
+		EV("FREEMOVE_HIYOKO_WADE_A")
+		EV("FREEMOVE_HIYOKO_WADE_B")
+		//Name制御──────────────
+		//チェスクのヒヨコＡ	アルキメデス
+		//チェスクのヒヨコＢ  ノトルファス
+			if(FV_FF_NameTHiyo_A)
+				chr_rename(HIYOKO_WADE_A,"アンデルセン")
+			if(FV_FF_NameTHiyo_B)
+				chr_rename(HIYOKO_WADE_B,"ノトルファス")
+		//──────────────────
+
+		set_chr( FEDERICA,70,	-1,-1,	4792,2405,0,		2,0,	20,"<TK_FEDERICA>")	//放牧地　フェデリカ
+		EV("FREEMOVE_FEDERICA")
+		set_chr( CEPHEILA,50,	-1,-1,	522,4962,0,		75,56,	20,"<TK_CEPHEILA>")	//入り口　バランと会話　セフィーラ
+		set_chr( BAROM,67,	-1,-1,		311,5105,-22,	2,234,	20,"<TK_BAROM>"	)		//入り口　バラン
+//		set_chr( WIDEZEN,65,	-1,-1,	-1227,-35,284,	2,90,	20,"<TK_WIDEZEN>")	//村長宅前にんじん見てる　ワイゼン村長
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//村長宅前　ワイゼン村長
+
+		//初回前・バランとセフィーラを見ている
+		if(!FV_13_TalkAlbMar)
+		{
+			//初回イベント用
+			set_chr( EVENT_ALBERS,68,	-1,-1,	-467,2047,-23,	2,340,	20,"<TK_ALBERS>")	//広場　アルベール
+			set_chr( EVENT_MARSA,69,	-1,-1,	-658,2225,-23,	2,330,	20,"<TK_MARSA>")	//広場　マーサ
+			
+			//初回イベント後用
+			set_chr( MARSA,69,	-1,-1,	-1755,849,327,		2,0,	20,"<TK_MARSA>")	//にんじん畑　マーサ
+			set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//かぼちゃ畑　アルベール
+			color(MARSA,-1)//透過
+			color(ALBERS,-1)//透過
+			
+			//会話が出来ない位置に移動しておく
+			chr_pos(MARSA,-1755,849,1500,0,2)
+			chr_pos(ALBERS,1157,753,1500,0,2)
+			
+			F_set_chr(MARSA,CF_NO_ZIMEN)
+			F_set_chr(MARSA,CF_NO_CSP)
+			F_set_chr(MARSA,CF_NO_HEIGHT)
+			F_set_chr(ALBERS,CF_NO_ZIMEN)
+			F_set_chr(ALBERS,CF_NO_CSP)
+			F_set_chr(ALBERS,CF_NO_HEIGHT)
+
+			F_set_chr(EVENT_ALBERS,CF_NO_MOVE)
+			F_set_chr(EVENT_MARSA,CF_NO_MOVE)
+		}
+		else
+		{
+			set_chr( MARSA,69,	-1,-1,	-1755,849,327,		2,0,	20,"<TK_MARSA>")	//にんじん畑　マーサ
+			set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//かぼちゃ畑　アルベール
+			EV("FREEMOVE_MARSA")
+			EV("FREEMOVE_ALBERS")
+		}
+		set_chr( USI_A,465,	-1,-1,	5533,1936,-4,		2,194,	20,"<TK_USI_A>")	//放牧地　牛A
+		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//放牧地　牛B
+		EV("FREEMOVE_USI_B")
+		//Name制御──────────────
+		//牛Ａ		さちこ
+		//牛Ｂ		よしえ
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"さちこ")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"よしえ")
+		//──────────────────
+
+		//モーション
+		MOT_SET(WADE,150,-1,521,521,-1,0)	//チェスク　にんじんの家に座っている
+		MOT(WADE,150,0)
+		MOT_SET(BAROM,150,-1,541,541,151,40)	//バラン
+		MOT_SET(BAROM,151,-1,543,543,150,40)
+		MOT(BAROM,150,0)
+
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(CEPHEILA,CF_NO_MOVE)
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//村長宅前　ワイゼン村長
+		set_chr( BAROM,67,	-1,-1,	-2365,3606,-304,		2,30,	20,"<TK_BAROM>")	//風車小屋前　バラン
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//かぼちゃ畑　アルベール
+		EV("FREEMOVE_ALBERS")
+//		set_chr( FEDERICA,70,	-1,-1,	2390,7427,-45,		2,10,	20,"<TK_FEDERICA>")	//入り口　フェデリカ
+		set_chr( FEDERICA,70,	-1,-1,	1192,4091,-23,		2,57,	20,"<TK_FEDERICA>")	//入り口　フェデリカ
+		F_reset_obj("roal_oke", NP_HIDE)
+		F_set_obj("CA_teoke", NP_GROUND)
+
+		F_set(200)		//チェスクにヒヨコを乗せるＬフラグ。モーション定義スクリプトで判定する。
+		set_chr( WADE,71,	-1,-1,	-1680,-3603,300,		2,0,	20,"<TK_WADE>")	//村長宅横　チェスク
+		EV("FREEMOVE_WADE")
+		set_chr( USI_A,465,	-1,-1,	5533,1936,-4,		2,194,	20,"<TK_USI_A>")	//放牧地　牛A
+		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//放牧地　牛B
+		EV("FREEMOVE_USI_B")
+		//Name制御──────────────
+		//牛Ａ		さちこ
+		//牛Ｂ		よしえ
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"さちこ")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"よしえ")
+		//──────────────────
+
+		//モーション
+		MOT_SET(BAROM,150,-1,452,452,151,40)	//バラン
+		MOT_SET(BAROM,151,-1,453,453,150,40)	//バラン
+		MOT(BAROM,150,0)
+		MOT_SET(FEDERICA,150,-1,445,445,-1,-1)	//フェデリカ
+		MOT(FEDERICA,150,0)
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(FEDERICA,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//村長宅前　ワイゼン村長
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//かぼちゃ畑　アルベール
+		EV("FREEMOVE_ALBERS")
+		set_chr( MARSA,69,	-1,-1,	-1755,849,327,		2,0,	20,"<TK_MARSA>")	//にんじん畑　マーサ
+		EV("FREEMOVE_MARSA")
+		set_chr( FEDERICA,70,	-1,-1,	4792,2405,0,		2,0,	20,"<TK_FEDERICA>")	//放牧地　フェデリカ
+		EV("FREEMOVE_FEDERICA")
+		F_set(200)		//チェスクにヒヨコを乗せるＬフラグ。モーション定義スクリプトで判定する。
+		set_chr( WADE,71,	-1,-1,	-2272,217,301,		2,25,	20,"<TK_WADE>")	//にんじん畑　チェスク
+		EV("FREEMOVE_WADE_11")
+//		set_chr( USI_A,465,	-1,-1,	4698,3244,0,		2,0,	20,"<TK_USI_A>")	//放牧地　牛A
+//		set_chr( USI_B,466,	-1,-1,	4968,2116,1,		2,0,	20,"<TK_USI_B>")	//放牧地　牛B0
+		set_chr( USI_A,465,	-1,-1,	4915,3003,0,		2,171,	20,"<TK_USI_A>")	//放牧地　牛A
+		set_chr( USI_B,466,	-1,-1,	4830,1653,0,		2,49,	20,"<TK_USI_B>")	//放牧地　牛B
+		EV("FREEMOVE_USI_B")
+		//Name制御──────────────
+		//牛Ａ		さちこ
+		//牛Ｂ		よしえ
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"さちこ")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"よしえ")
+		//──────────────────
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+		SE(36,0)//朝のSE
+		SE(61,0)//鳥のSE
+
+		set_chr( BAROM,67,	-1,-1,	-2365,3606,-304,		2,30,	20,"<TK_BAROM>")	//風車小屋前　バラン
+		F_set(200)		//チェスクにヒヨコを乗せるＬフラグ。モーション定義スクリプトで判定する。
+		set_chr( WADE,71,	-1,-1,	4842,-3224,307,		54,160,	20,"<TK_WADE>")		//出口　チェスク
+		//モーション
+		MOT_SET(WADE,150,-1,397,397,-1,0)	//チェスク　にんじんの家に座っている
+		MOT(WADE,150,0)
+		MOT_SET(BAROM,150,-1,452,452,151,40)	//バラン
+		MOT_SET(BAROM,151,-1,453,453,150,40)	//バラン
+		MOT(BAROM,150,0)
+
+		set_chr( USI_A,465,	-1,-1,	4612,94,-13,		2,0,	20,"<TK_USI_A>")	//牛舎　牛A
+//		set_chr( USI_B,466,	-1,-1,	4372,-37,-13,		2,0,	20,"<TK_USI_B>")	//牛舎　牛B
+		set_chr( USI_B,466,	-1,-1,	4500,-40,-14,		2,250,	20,"<TK_USI_B>")	//牛舎　牛B
+		//Name制御──────────────
+		//牛Ａ		さちこ
+		//牛Ｂ		よしえ
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"さちこ")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"よしえ")
+		//──────────────────
+
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		F_set(200)		//チェスクにヒヨコを乗せるＬフラグ。モーション定義スクリプトで判定する。
+		set_chr( WADE,71,	-1,-1,	-1666,-320,283,		2,0,	20,"<TK_WADE>")		//にんじんの穴　チェスク
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//村長宅前　ワイゼン村長
+		set_chr( BAROM,67,	-1,-1,	-1804,811,353,		2,0,	20,"<TK_BAROM>")	//にんじん畑　バラン
+		EV("FREEMOVE_BAROM")
+		set_chr( USI_A,465,	-1,-1,	5533,1936,-4,		2,194,	20,"<TK_USI_A>")	//放牧地　牛A
+//		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//放牧地　牛B
+		set_chr( USI_B,466,	-1,-1,	5505,653,1,			2,0,	20,"<TK_USI_B>")	//放牧地　牛
+		EV("FREEMOVE_USI_B")
+		//Name制御──────────────
+		//牛Ａ		さちこ
+		//牛Ｂ		よしえ
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"さちこ")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"よしえ")
+		//──────────────────
+
+		//モーション
+		MOT_SET(WADE,150,-1,521,521,-1,0)	//チェスク　にんじんの家に座っている
+		MOT(WADE,150,0)
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//村長宅前　ワイゼン村長
+		set_chr( BAROM,67,	-1,-1,	-2365,3606,-304,		2,30,	20,"<TK_BAROM>")	//風車小屋前　バラン
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//かぼちゃ畑　アルベール
+		EV("FREEMOVE_ALBERS")
+		set_chr( FEDERICA,70,	-1,-1,	4283,1368,-5,		50,74,	20,"<TK_FEDERICA>")	//放牧地　フェデリカ
+
+		F_set(200)		//チェスクにヒヨコを乗せるＬフラグ。モーション定義スクリプトで判定する。
+		set_chr( WADE,71,	-1,-1,	2143,1887,300,		2,330,	20,"<TK_WADE>")	//ペットショップ前木箱の上　チェスク
+		F_set_chr(WADE,CF_NO_FALL)
+		F_set_chr(WADE,CF_NO_HEIGHT)
+		set_chr( USI_A,465,	-1,-1,	4910,2598,-4,		2,130,	20,"<TK_USI_A>")	//放牧地　牛A
+		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//放牧地　牛B
+		EV("FREEMOVE_USI_A")
+		EV("FREEMOVE_USI_B")
+		//Name制御──────────────
+		//牛Ａ		さちこ
+		//牛Ｂ		よしえ
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"さちこ")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"よしえ")
+		//──────────────────
+
+		//モーション
+		MOT_SET(WADE,150,-1,473,473,151,5)	//チェスク
+		MOT_SET(WADE,151,-1,475,475,150,5)	//チェスク
+		MOT(WADE,150,0)
+		MOT_SET(BAROM,150,-1,452,452,151,40)	//バラン
+		MOT_SET(BAROM,151,-1,453,453,150,40)	//バラン
+		MOT(BAROM,150,0)
+		MOT_SET(FEDERICA,150,-1,410,410,-1,0)	//フェデリカ　訝しげに木箱を見ている
+		MOT(FEDERICA,150,0)
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(FEDERICA,CF_NO_MOVE)
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//村長宅前　ワイゼン村長
+
+		//この時点では薬売り
+		set_chr( KARASU,60,	-1,-1,	214,-1707,300,		2,46,	20,"<SHOP_KARASU>")	//村長宅前　カラス
+		chr_rename(KARASU,"薬売り")
+		set_chr( MARSA,69,	-1,-1,	106,-1521,300,		2,210,	20,"<TK_MARSA>")	//村長宅前　マーサ
+		set_chr( BAROM,67,	-1,-1,	-468,4831,0,		2,242,	20,"<TK_BAROM>")	//広場　バラン
+		EV("FREEMOVE_BAROM")
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//かぼちゃ畑　アルベール
+		EV("FREEMOVE_ALBERS")
+
+		F_set(200)		//チェスクにヒヨコを乗せるＬフラグ。モーション定義スクリプトで判定する。
+		set_chr( WADE,71,	-1,-1,	12,7300,-40,		2,0,	20,"<TK_WADE>")	//入口　チェスク
+		set_chr( USI_B,466,	-1,-1,	5261,1251,-14,		2,285,	20,"<TK_USI_B>")	//放牧地　牛B
+
+		//Name制御──────────────
+		//牛Ｂ		よしえ
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"よしえ")
+		//──────────────────
+
+		//モーション
+		MOT_SET(WADE,150,-1,560,560,-1,0)	//チェスク
+		MOT(WADE,150,0)
+		MOT_SET(MARSA,150,-1,414,414,-1,-1)
+		MOT(MARSA,150,0)
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(MARSA,CF_NO_MOVE)
+		F_set_chr(KARASU,CF_NO_MOVE)
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		set_chr( WIDEZEN,65,	-1,-1,	-516,-2505,300,		2,0,	20,"<TK_WIDEZEN>")	//村長宅前　ワイゼン村長
+		set_chr( CLEESE,83,-1,-1,	3971,-3518,301,	2,0,	20,"<TK_CLEESE>")	//神殿への出口前　クレース
+		EV("FREEMOVE_CLEESE")
+
+		set_chr( BAROM,67,	-1,-1,	-2365,3606,-304,		2,30,	20,"<TK_BAROM>")	//風車小屋前　バラン
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//かぼちゃ畑　アルベール
+		EV("FREEMOVE_ALBERS")
+		set_chr( MARSA,69,	-1,-1,	-1755,849,327,		2,0,	20,"<TK_MARSA>")	//にんじん畑　マーサ
+		EV("FREEMOVE_MARSA")
+
+		F_set(200)		//チェスクにヒヨコを乗せるＬフラグ。モーション定義スクリプトで判定する。
+		set_chr( WADE,71,	-1,-1,	784,3615,0,		2,25,	20,"<TK_WADE>")	//ペットショップ前　チェスク
+		EV("FREEMOVE_WADE")
+
+		set_chr( USI_A,465,	-1,-1,	5533,1936,-4,		2,194,	20,"<TK_USI_A>")	//放牧地　牛A
+		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//放牧地　牛B
+		EV("FREEMOVE_USI_B")
+
+		//Name制御──────────────
+		//牛Ａ		さちこ
+		//牛Ｂ		よしえ
+			if(FV_FF_NameUsi_A)
+				chr_rename(USI_A,"さちこ")
+			if(FV_FF_NameUsi_B)
+				chr_rename(USI_B,"よしえ")
+		//──────────────────
+
+		//モーション
+		MOT_SET(BAROM,150,-1,452,452,151,40)	//バラン
+		MOT_SET(BAROM,151,-1,453,453,150,40)	//バラン
+		MOT(BAROM,150,0)
+
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+		F_set_chr(USI_B,CF_NO_MOVE)
+
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		set_chr( WIDEZEN,65,-1,-1,	-516,-2505,300,	2,90,	20,"<TK_WIDEZEN>")	//村長宅前　ワイゼン村長
+		set_chr( CLEESE,83,-1,-1,	-720,-2452,291,	50,270,	20,"<TK_CLEESE>")	//村長宅前　クレース
+		
+		set_chr( BAROM,67,	-1,-1,	-939,2987,-22,		2,20,	20,"<TK_BAROM>")	//風車小屋前　バラン
+		chr_equip( BAROM,	"eq_052",	"Bone_RightSword",100);	//トンカチ
+
+		set_chr( ALBERS,68,	-1,-1,	1157,753,295,		2,0,	20,"<TK_ALBERS>")	//かぼちゃ畑　アルベール
+		EV("FREEMOVE_ALBERS")
+		set_chr( MARSA,69,	-1,-1,	-1755,849,327,		2,0,	20,"<TK_MARSA>")	//にんじん畑　マーサ
+		EV("FREEMOVE_MARSA")
+		set_chr( FEDERICA,70,	-1,-1,	4792,2405,0,	2,0,	20,"<TK_FEDERICA>")	//放牧地　フェデリカ
+		EV("FREEMOVE_FEDERICA")
+
+		F_set(200)		//チェスクにヒヨコを乗せるＬフラグ。モーション定義スクリプトで判定する。
+		set_chr( WADE,71,	-1,-1,	5217,-3538,296,		2,36,	20,"<TK_WADE>")	//出口　チェスク
+//		set_chr( USI_A,465,	-1,-1,	5428,2065,0,		2,0,	20,"<TK_USI_A>")	//放牧地　牛A
+//		set_chr( USI_B,466,	-1,-1,	5505,653,1,			2,0,	20,"<TK_USI_B>")	//放牧地　牛B
+		set_chr( USI_A,465,	-1,-1,	5533,1936,-4,		2,194,	20,"<TK_USI_A>")	//放牧地　牛A
+		set_chr( USI_B,466,	-1,-1,	4908,1459,-4,		2,354,	20,"<TK_USI_B>")	//放牧地　牛B
+		EV("FREEMOVE_USI_B")
+
+		//モーション
+		MOT_SET(WADE,150,-1,521,521,-1,0)		//チェスク　石碑にもたれかかっている
+		MOT(WADE,150,0)
+		MOT_SET(BAROM,150,-1,572,572,151,40)	//バラン　柵を直している
+		MOT_SET(BAROM,151,-1,574,574,150,40)
+		MOT(BAROM,150,0)
+
+		F_set_chr(WIDEZEN,CF_NO_MOVE)
+		F_set_chr(CLEESE,CF_NO_MOVE)
+		F_set_chr(BAROM,CF_NO_MOVE)
+		F_set_chr(WADE,CF_NO_MOVE)
+		F_set_chr(USI_A,CF_NO_MOVE)
+//		F_set_chr(USI_B,CF_NO_MOVE)
+	}
+
+
+//■イベント
+	if(F1_02_EndPrologue && !F1_22_EndFirst)
+	{
+	//１章
+		if(!F1_15_GoVillage)
+		{
+			//ＧＦ『★すでにロアルタ村に行っていた』立てる
+			F_set(F1_34_GoneVillage)
+		}
+
+		//ＧＦ『★ロアルタ村に到着した』立ってない
+		if(F1_15_GoVillage && !F1_16_OnVillage)
+		{
+			//▼ロアルタ村に到着するイベント
+			set_namebmp(0,0)
+			EV("EV_1_07_OnVillage")
+		}
+	}
+}
+
+//====================================================================
+//=== NPC処理 ===================================================
+//====================================================================
+
+
+
+//──────────────────────────────
+//▼牛フリームーブ
+//──────────────────────────────
+/*
+FREEMOVE_USI_A
+{
+	workL(011,RAND,360)
+	rot(USI_A,10,WK011)
+	wait(40)
+	workL(011,RAND,300)
+	workL(012,RAND,300)
+	move( USI_A, 2,	WALK1,	WK011,WK012,0,	10)
+	wait(150)
+	loop
+}
+*/
+FREEMOVE_USI_A
+{
+	MOT(USI_A,0,15)
+	move( USI_A, 25,	5,	1500,1500,0,	100)
+	wait(210)
+	workL(011,RAND,3)
+	if(WK011==0)
+		wait(60)
+	loop
+}
+
+FREEMOVE_USI_B
+{
+	MOT(USI_B,0,15)
+	move( USI_B, 25,	5,	1500,1500,0,	100)
+	wait(210)
+	workL(012,RAND,3)
+	if(WK012==0)
+		wait(60)
+	loop
+}
+
+
+
+//──────────────────────────────
+//▼動物フリームーブ
+//──────────────────────────────
+FREEMOVE_CHICKIN_A
+{
+	move( CHICKIN_A, 25,	WALK1,	800,800,0,	50)
+	wait(50)
+	loop
+}
+FREEMOVE_CHICKIN_B
+{
+	move( CHICKIN_B, 25,	WALK1,	800,800,0,	50)
+	wait(50)
+	loop
+}
+FREEMOVE_CHICKIN_C
+{
+	move( CHICKIN_C, 25,	WALK1,	800,800,0,	50)
+	wait(50)
+	loop
+}
+
+FREEMOVE_HIYOKO_A
+{
+	move( HIYOKO_A, 25,	5,	800,800,0,	30)
+	wait(80)
+	loop
+}
+FREEMOVE_HIYOKO_B
+{
+	move( HIYOKO_B, 25,	5,	800,800,0,	30)
+	wait(80)
+	loop
+}
+FREEMOVE_HIYOKO_C
+{
+	move( HIYOKO_C, 25,	5,	800,800,0,	30)
+	wait(80)
+	loop
+}
+FREEMOVE_HIYOKO_D
+{
+	move( HIYOKO_D, 25,	5,	800,800,0,	30)
+	wait(80)
+	loop
+}
+
+
+
+//──────────────────────────────
+//	name("◆ニワトリ（※アルウェンがおり、指輪を装着している場合のみセリフが見れる）")
+//──────────────────────────────
+//　　※フェデリカが飼っているニワトリです。
+//　　※ソロモンリング装備時のみメッセージを表示。
+//　　　それ以外は鳴き声ＳＥを鳴らすだけ。
+//　　※メッセージは全て色換え（赤）とします。
+//──────────────────────────────
+//　　※ニワトリはフラグに関係なく、同一のメッセージです。
+//　　　またソロモンリングの有無に関わらず、近づくと逃げていきます。
+//　　※処理の関係上、触れた際に「自動で閉じるウィンドウ」を出します。
+//　　※個体は一体一体区別してください。
+//　　　（必要数分、量産の予定）
+//　　※普段は放牧地、フラグ③では村広場をフリームーブ。
+RUNAWAY_CHICKIN_A
+{
+	//──────────────────────────────
+	//ソロモンリング装備時
+	//──────────────────────────────
+	if(EQ092)
+	{
+		SE(32,CHICKIN_A)
+		chr_rename(CHICKIN_A,"ニワゴン")
+		F_set(FV_FF_NameNiwa_A)
+		MES_pos(CHICKIN_A,"C4ヨホホーイ！",0,0,0,0,0)
+		wait(30)		
+		MES_close(CHICKIN_A)
+	}
+	else
+	{
+		//ニワトリの鳴き声
+		SE(32,CHICKIN_A)
+
+		//泣き声の後のwaitをランダムで変える
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+RUNAWAY_CHICKIN_B
+{
+	//──────────────────────────────
+	//ソロモンリング装備時
+	//──────────────────────────────
+	if(EQ092)
+	{
+		SE(32,CHICKIN_B)
+		chr_rename(CHICKIN_B,"ニワコ")
+		F_set(FV_FF_NameNiwa_B)
+		MES_pos(CHICKIN_B,"C4スマイルスマイル！\nこんな時こそスマイルや！",0,0,0,0,0)
+		wait(30)		
+		MES_close(CHICKIN_B)
+	}
+	else
+	{
+		//ニワトリの鳴き声
+		SE(32,CHICKIN_B)
+
+		//泣き声の後のwaitをランダムで変える
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+RUNAWAY_CHICKIN_C
+{
+	//──────────────────────────────
+	//ソロモンリング装備時
+	//──────────────────────────────
+	if(EQ092)
+	{
+		SE(39,CHICKIN_C)
+		chr_rename(CHICKIN_C,"ニワート")
+		F_set(FV_FF_NameNiwa_C)
+		MES_pos(CHICKIN_C,"C4ベイビー、行くぜ。\nあの雲の彼方までッ！",0,0,0,0,0)
+		wait(30)		
+		MES_close(CHICKIN_C)
+	}
+	else
+	{
+		//ニワトリの鳴き声
+		SE(39,CHICKIN_C)
+
+		//泣き声の後のwaitをランダムで変える
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+//──────────────────────────────
+//	name("◆ヒヨコ（※アルウェンがおり、指輪を装着している場合のみセリフが見れる）")
+//──────────────────────────────
+//　　※フェデリカが飼っているヒヨコです。
+//　　※ソロモンリング装備時のみメッセージを表示。
+//　　　それ以外は鳴き声ＳＥを鳴らすだけ。
+//　　※メッセージは全て色換え（緑）とします。
+//──────────────────────────────
+//　　※ヒヨコはフラグに関係なく、同一のメッセージです。
+//　　　またソロモンリングの有無に関わらず、近づくと逃げていきます。
+//　　※処理の関係上、触れた際に「自動で閉じるウィンドウ」を出します。
+//　　※個体は一体一体区別してください。
+//　　　（必要数分、量産の予定）
+//　　※普段は放牧地、フラグ③では村広場をフリームーブ。
+
+RUNAWAY_HIYOKO_A
+{
+	//──────────────────────────────
+	//ソロモンリング装備時
+	//──────────────────────────────
+	if(EQ092)
+	{
+		SE(33,HIYOKO_A)
+		chr_rename(HIYOKO_A,"ヒヨッコ")
+		F_set(FV_FF_NameHiyo_A)
+		MES_pos(HIYOKO_A,"C4やーん、やめて～！",0,0,0,0,0)
+		wait(30)		
+		MES_close(HIYOKO_A)
+	}
+	else
+	{
+		SE(33,HIYOKO_A)
+
+		//泣き声の後のwaitをランダムで変える
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+RUNAWAY_HIYOKO_B
+{
+	//──────────────────────────────
+	//ソロモンリング装備時
+	//──────────────────────────────
+	if(EQ092)
+	{
+		SE(33,HIYOKO_B)
+		chr_rename(HIYOKO_B,"ヒヨヒヨ")
+		F_set(FV_FF_NameHiyo_B)
+		MES_pos(HIYOKO_B,"C4アウチ！",0,0,0,0,0)
+		wait(30)		
+		MES_close(HIYOKO_B)
+	}
+	else
+	{
+		SE(33,HIYOKO_B)
+
+		//泣き声の後のwaitをランダムで変える
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+RUNAWAY_HIYOKO_C
+{
+	//──────────────────────────────
+	//ソロモンリング装備時
+	//──────────────────────────────
+	if(EQ092)
+	{
+		SE(33,HIYOKO_C)
+		chr_rename(HIYOKO_C,"ヒヨコウ")
+		F_set(FV_FF_NameHiyo_C)
+		MES_pos(HIYOKO_C,"C4こっちくんな～！",0,0,0,0,0)
+		wait(30)		
+		MES_close(HIYOKO_C)
+	}
+	else
+	{
+		SE(33,HIYOKO_C)
+
+		//泣き声の後のwaitをランダムで変える
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+RUNAWAY_HIYOKO_D
+{
+	//──────────────────────────────
+	//ソロモンリング装備時
+	//──────────────────────────────
+	if(EQ092)
+	{
+		SE(33,HIYOKO_D)
+		chr_rename(HIYOKO_D,"ヒヨコ")
+		F_set(FV_FF_NameHiyo_D)
+		MES_pos(HIYOKO_D,"C4シュワッチ……！",0,0,0,0,0)
+		wait(30)		
+		MES_close(HIYOKO_D)
+	}
+	else
+	{
+		SE(33,HIYOKO_D)
+
+		//泣き声の後のwaitをランダムで変える
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+
+//──────────────────────────────
+//▼チェスクフリームーブ
+//──────────────────────────────
+FREEMOVE_WADE
+{
+	move( WADE, 25,	WALK1,	500,500,0,	150)
+	wait_move( WADE )
+	wait(50)
+	loop
+}
+//大きくなれー！のフリームーブ
+FREEMOVE_WADE_11
+{
+	//モーション
+	MOT_SET(WADE,150,-1,473,473,151,5)	//チェスク
+	MOT_SET(WADE,151,-1,475,475,150,5)
+	
+	move( WADE, 25,	WALK1,	500,500,0,	120)
+	wait_move( WADE )
+	MOT(WADE,150,15)
+	wait(50)
+	MOT(WADE,2,10)
+	loop
+}
+//──────────────────────────────
+//▼チェスク眠りエモーション
+//──────────────────────────────
+SLEEP_WADE
+{
+	EMO(WADE,EMO_ZZZ)
+	wait(50)
+	loop
+}
+
+//──────────────────────────────
+//　　※にんじんの家近くに、ヒヨコ２体をフリームーブ。
+//　　※ソロモンリングを装備している場合のみメッセージが見れる。
+TK_HIYOKO_WADE_A
+{
+	if(EQ092)
+	{
+	//　　★ヒヨコＡ
+	//	name("ヒヨコ")
+		TK_begin()
+		chr_rename(HIYOKO_WADE_A,"アンデルセン")
+		F_set(FV_FF_NameTHiyo_A)
+
+		rot_chr(HIYOKO_WADE_A,10,PLAYER1)
+		KAO(PLAYER1, "1", "1", "1")
+		KAO(PLAYER2, "1", "1", "1")
+		KAO(PET, "1", "1", "1")
+		rot_chr(PLAYER1,30,HIYOKO_WADE_A)
+		rot_chr(PLAYER2,30,HIYOKO_WADE_A)
+		rot_chr(PET,30,HIYOKO_WADE_A)
+
+		MES(HIYOKO_WADE_A,"C4チェスク様、少し疲れた。\nお休み中。お休み中。",0)
+		MES_close(HIYOKO_WADE_A)
+		TK_end()
+	}
+	else
+	{
+		SE(33,HIYOKO_WADE_A)
+
+		//泣き声の後のwaitをランダムで変える
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+
+TK_HIYOKO_WADE_B
+{
+	if(EQ092)
+	{
+	//　　★ヒヨコＢ
+	//	name("ヒヨコ")
+		TK_begin()
+		chr_rename(HIYOKO_WADE_B,"ノトルファス")
+		F_set(FV_FF_NameTHiyo_B)
+
+		rot_chr(HIYOKO_WADE_B,10,PLAYER1)
+		KAO(PLAYER1, "1", "1", "1")
+		KAO(PLAYER2, "1", "1", "1")
+		KAO(PET, "1", "1", "1")
+		rot_chr(PLAYER1,30,HIYOKO_WADE_B)
+		rot_chr(PLAYER2,30,HIYOKO_WADE_B)
+		rot_chr(PET,30,HIYOKO_WADE_B)
+
+		MES(HIYOKO_WADE_B,"C4チェスク様、もう満腹。\n食べ過ぎた。食べ過ぎた。",0)
+		MES_close(HIYOKO_WADE_B)
+		TK_end()
+	}
+	else
+	{
+		SE(33,HIYOKO_WADE_B)
+
+		//泣き声の後のwaitをランダムで変える
+		workL(0,RAND,2)
+		if(WK000)
+			wait(30)
+		else
+			wait(60)
+	}
+}
+//──────────────────────────────
+
+FREEMOVE_HIYOKO_WADE_A
+{
+	move( HIYOKO_WADE_A, 25,	5,	300,300,0,	50)
+	wait(50)
+	loop
+}
+
+FREEMOVE_HIYOKO_WADE_B
+{
+	move( HIYOKO_WADE_B, 25,	5,	300,300,0,	50)
+	wait(50)
+	loop
+}
+
+
+//──────────────────────────────
+//▼クレースフリームーブ
+//──────────────────────────────
+FREEMOVE_CLEESE
+{
+	move( CLEESE, 25,	WALK1,	500,500,0,	50)
+	wait_move( CLEESE )
+	wait(50)
+	loop
+}
+
+//──────────────────────────────
+//▼フェデリカフリームーブ
+//──────────────────────────────
+FREEMOVE_FEDERICA
+{
+	move( FEDERICA, 25,	WALK1,	500,500,0,	50)
+	wait_move( FEDERICA )
+	wait(50)
+	loop
+}
+//──────────────────────────────
+//▼アルベールフリームーブ
+//──────────────────────────────
+FREEMOVE_ALBERS
+{
+	MOT_SET(ALBERS,150,-1,453,453,151,10)
+	MOT_SET(ALBERS,151,-1,454,454,150,10)
+	move( ALBERS, 25,	WALK1,	500,500,0,	100)
+	wait_move( ALBERS )
+	MOT(ALBERS,150,10)
+	wait(50)
+	MOT(ALBERS,2,10)
+	loop
+}
+//──────────────────────────────
+//▼バランフリームーブ
+//──────────────────────────────
+FREEMOVE_BAROM
+{
+	move( BAROM, 25,	WALK1,	500,500,0,	50)
+	wait_move( BAROM )
+	wait(50)
+	loop
+}
+//──────────────────────────────
+//▼マーサフリームーブ
+//──────────────────────────────
+FREEMOVE_MARSA
+{
+	MOT_SET(MARSA,150,-1,453,453,151,10)
+	MOT_SET(MARSA,151,-1,454,454,150,10)
+	
+	move( MARSA, 25,	WALK1,	500,500,0,	100)
+	wait_move( MARSA )
+	MOT(MARSA,150,10)
+	wait(50)
+	MOT(MARSA,2,10)
+	loop
+}
+
+
+//──────────────────────────────
+//▼⑬アルベールとマーサの会話
+//──────────────────────────────
+TALK_AM
+{
+//――――――――――――――――――――――――――
+//	初期化処理
+//――――――――――――――――――――――――――
+	cross_fade(30)			//クロスフェード
+	EV_begin()
+	
+	//カメラセット
+	CAM_move(-731,-2292,156,0,0)
+	CAM(-210,94,156,25,205,0,0)
+	
+	//キャラ再配置
+	chr_pos(RAGNA,-871,2372,-22,250,2)
+	chr_pos(PARTNER,-909,2568,-23,250,2)
+	chr_pos(PET,-1005,2324,-4,250,2)
+	chr_pos(EVENT_ALBERS,-467,2047,-23,340,2)
+	chr_pos(EVENT_MARSA,-658,2225,-23,330,2)
+		
+	//顔初期化
+	KAO(RAGNA, "1", "1", "1")	
+	KAO(PARTNER,"1", "1", "1")	
+	KAO(PET, "1", "1", "1")	
+	KAO(EVENT_ALBERS, "1", "1", "1")	
+	KAO(EVENT_MARSA,"1", "1", "1")	
+	
+	F_reset_chr(EVENT_ALBERS,CF_NO_MOVE)
+	F_reset_chr(EVENT_MARSA,CF_NO_MOVE)
+	//モーション
+	MOT_SET(EVENT_ALBERS,150,-1,410,410,-1,0)	//ごほん
+	MOT_SET(EVENT_MARSA,150,-1,395,395,-1,0)	//おや・・・どうしてあんたが
+	MOT_SET(EVENT_MARSA,151,-1,434,434,-1,0)	//ぶっ飛ばしとく
+	wait_fade()
+//――――――――――――――――――――――――――
+//	イベント開始
+//――――――――――――――――――――――――――
+	
+	//	name("アルベール")
+	KAO(EVENT_ALBERS,"12321Z4","1","1")
+	MES(EVENT_ALBERS,"そんな、セフィーラさんが……",0)
+	KAO(EVENT_ALBERS,"12321Z2","1","1")
+	MES(EVENT_ALBERS,"ショックだ……",0)
+	MES_close(EVENT_ALBERS)
+
+	look_chr( EVENT_MARSA, EVENT_ALBERS,"Bone_Head")
+
+
+//	name("マーサ")
+	MOT(EVENT_MARSA,150,15)
+	KAO(EVENT_MARSA,"12321Z4","2","1")
+	MES(EVENT_MARSA,"おや……",0)
+	KAO(EVENT_MARSA,"12321Z6","2","1")
+	MES(EVENT_MARSA,"どうしてアンタが\nショックを受けるんだい？",0)
+	MES_close(EVENT_MARSA)
+
+//　　アルベールに気付きエモーション。
+//　　マーサに振り返る。
+	EMO(EVENT_ALBERS,EMO_PA)
+	wait(30)
+	look_chr(  EVENT_ALBERS, EVENT_MARSA,"Bone_Head")
+	
+//	name("アルベール")
+	KAO(EVENT_ALBERS,"12321Z6","1","1")
+	MES(EVENT_ALBERS,"い、いや。\n決してやましい意味じゃないぞ？",0)
+	KAO(EVENT_ALBERS,"12321Z4","1","1")
+	MES(EVENT_ALBERS,"その、一ファンとしてだな。",0)
+	MES_close(EVENT_ALBERS)
+
+//	name("マーサ")
+	KAO(EVENT_MARSA,"12321Z3","2","1")
+	MES(EVENT_MARSA,"本当かい？",0)
+	MES_close(EVENT_MARSA)
+
+//	name("アルベール")
+	KAO(EVENT_ALBERS,"12321Z3","1","1")
+	MES(EVENT_ALBERS,"ああ、本当だとも。",0)
+	MES_close(EVENT_ALBERS)
+
+//　　アルベールに少し・・・エモーション。
+	EMO(EVENT_ALBERS,EMO_TENTEN)
+	wait(30)
+
+	look_off(EVENT_ALBERS)
+//	name("アルベール")
+	MOT(EVENT_ALBERS,150,15)
+	KAO(EVENT_ALBERS,"12321Z6","1","1")
+	MES(EVENT_ALBERS,"ごほん……そろそろ\n来年の種まきを始めないとな。",0)
+	MES_close(EVENT_ALBERS)
+	
+
+//　　アルベール、かぼちゃ畑の方に去っていく。
+//　　マーサたち、見送る。
+	EV("MV_EVENT_ALBERS_13")
+	wait(40)
+
+//　　ラグナたちに冷や汗エモーション。
+	EMO(RAGNA,EMO_HIYAASE)
+	EMO(PET,EMO_HIYAASE)
+	EMO(PARTNER,EMO_HIYAASE)
+	wait(30)
+	
+	
+	KAO(PET,"12321Z3","1","1")
+	MES(PET,"ふむ、逃げたようにも見えるが……",0)
+	MES_close(PET)
+	
+	look_off(EVENT_MARSA)
+	look_off(RAGNA)
+	look_off(PET)
+	look_off(PARTNER)
+
+
+	rot_chr(EVENT_MARSA,60,PARTNER)
+	
+//	name("マーサ")
+	KAO(EVENT_MARSA,"12321Z6","1","1")
+	MES(EVENT_MARSA,"あはは、大丈夫だよ。\nあの人が生真面目なのは\nあたしがよーく知ってるからねえ。",0)
+	KAO(EVENT_MARSA,"12321Z6","1","1")
+	MOT(EVENT_MARSA,151,15)
+	MES(EVENT_MARSA,"ま、浮気に走りそうになったら\nあたしがブッ飛ばしとくから大丈夫さ。",0)
+	MES_close(EVENT_MARSA)
+
+//　　ラグナたちに冷や汗エモーション。
+	EMO(RAGNA,EMO_HIYAASE)
+	EMO(PET,EMO_HIYAASE)
+	EMO(PARTNER,EMO_HIYAASE)
+	wait(30)
+	MOT(EVENT_MARSA,2,15)
+
+//	name("マーサ")
+	KAO(EVENT_MARSA,"12321Z6","1","1")
+	MES(EVENT_MARSA,"さて、あたしもそろそろ\n農作業に戻るとしようかね。",0)
+	KAO(EVENT_MARSA,"12321Z5","1","1")
+	MES(EVENT_MARSA,"あんたたちも、\nゆっくりしてお行き。",0)
+	MES_close(EVENT_MARSA)
+	
+	
+//　　マーサ、にんじん畑の方に去っていく。
+	EV("MV_EVENT_MARSA_13")
+	wait(40)
+
+//　　以降、アルベールとマーサはそれぞれ
+//　　かぼちゃ畑・にんじん畑をフリームーブする。
+	
+//――――――――――――――――――――――――――
+//	イベント終了処理
+//――――――――――――――――――――――――――
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	//カメラを初期設定に
+	CAM_return( 0 )
+	wait(30)
+	
+	F_set(FV_13_TalkAlbMar)
+	
+	delete(EVENT_MARSA)
+	delete(EVENT_ALBERS)
+
+	//マーサ・アルベールを通常位置に
+	chr_pos(MARSA,-1755,849,327,0,2)
+	chr_pos(ALBERS,1157,753,295,0,2)
+	
+	color(MARSA,1)	//透過解除
+	color(ALBERS,1)//透過解除
+	EV("FREEMOVE_MARSA")
+	EV("FREEMOVE_ALBERS")
+	
+	F_reset_chr(MARSA,CF_NO_ZIMEN)
+	F_reset_chr(MARSA,CF_NO_CSP)
+	F_reset_chr(MARSA,CF_NO_HEIGHT)
+	F_reset_chr(ALBERS,CF_NO_ZIMEN)
+	F_reset_chr(ALBERS,CF_NO_CSP)
+	F_reset_chr(ALBERS,CF_NO_HEIGHT)
+
+	
+	EV_end()
+	
+	//フェードイン----------------------
+	fade_in(0,30,BLACK)
+	
+	//★アルベール
+	F_set_note(ALBERS,-1)
+	//★マーサ
+	F_set_note(MARSA,-1)
+	
+	//★マーサ【亭主より強い】
+	F_set_note(EVENT_MARSA,2)
+//	プレイヤー操作許可
+//――――――――――――――――――――――――――
+}
+
+//かぼちゃ畑に行くアルベール
+MV_EVENT_ALBERS_13
+{
+	rot( EVENT_ALBERS,60,226)
+	move( EVENT_ALBERS, 0, WALK1, -103,1573,-21, 0)
+	wait_move(EVENT_ALBERS)
+}
+
+//にんじん畑に行くマーサ
+MV_EVENT_MARSA_13
+{
+	rot(EVENT_MARSA,60,230)
+	move( EVENT_MARSA, 0, WALK1,-103,1573,-21, 0)
+	wait_move(EVENT_MARSA)
+}
+
+
+//──────────────────────────────
+//▼⑬バランとセフィーラの会話
+//──────────────────────────────
+TALK_BC
+{
+	MES(CEPHEILA,"ごめんなさい、\n突然来ちゃって……",0)
+	MES(CEPHEILA,"でも、バランさんには\n助けてもらっていたのに\nまだお礼を言ってなかったから。",0)
+	MES_close(CEPHEILA)
+
+//	name2(BAROM)
+	MES(BAROM,"いえ、そんな……",0)
+	MES(BAROM,"自分は当然のことを\nしたまでですし……",0)
+	MES_close(BAROM)
+
+//	name2(CEPHEILA)
+	MES(CEPHEILA,"ふふ、まあ\nそうかもしれないけど……",0)
+	MES(CEPHEILA,"あれから、少し自分に素直になって\n歌えるようになったから……",0)
+	MES(CEPHEILA,"バランさんのお陰かなって思って。",0)
+	MES_close(CEPHEILA)
+
+//　　バラン、目をぱちぱち。
+	MES(BAROM,"？？？\nあ、あの……？",0)
+	MES_close(BAROM)
+
+//	name2(CEPHEILA)
+	MES(CEPHEILA,"ふふ、なんでもない。\nこっちの話よ。",0)
+	MES_close(CEPHEILA)
+	
+	//★バラン
+	F_set_note(BAROM,-1)
+	//★セフィーラ
+	F_set_note(CEPHEILA,-1)
+
+	//★セフィーラ【バランに礼】
+	F_set_note(CEPHEILA,2)
+	F_set(FV_13_TalkBaromCeph)
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼ロアルタ村に到着するイベント
+//──────────────────────────────
+//　　ロアルタ村に入ったところでイベント発生。
+//　　フェードアウト抜けで、ロアルタ村の全景を見せるカメラ。
+//　　一通り見せてから入口にいるラグナたちを見せる。
+EV_1_07_OnVillage
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 -332,5858,-23,180,2)
+	chr_pos(PARTNER, -92,5946,-23,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, -332,5858,-23, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, -92,5946,-23, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//デフォルト
+	KAO(ALWEN,"1","1","1")//デフォルト
+
+	MOT_SET(EVENT_RAGNA,150,-2,405,405,-1,-1)//提案
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+
+	//カメラ初期位置
+	CAM_move(-1656,364,320,0,0)
+	CAM(70,140,320,24,180,0,0)
+
+	CAM_move(-1456,284,660,200,0)
+	CAM(270,210,660,24,144,200,0)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(30)
+	CAM_move(1790,32,-298,0,0)
+	CAM(590,456,-298,36,220,0,0)
+//	CAM_move(410,-1868,-298,300,0)
+//	CAM(470,404,-298,36,200,300,0)
+	CAM_move(190,-1788,-318,360,0)
+	CAM(390,404,-318,36,190,360,0)
+	wait(90)
+	set_namebmp(5,0)
+	move( EVENT_RAGNA, 0, WALK1,-282,4358,-23,0)
+	wait(10)
+	move( ALWEN, 0, WALK1,-42,4446,-23,0)
+
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+	wait_CAM_move()
+	wait_CAM()
+
+	cross_fade(30)
+	chr_pos(EVENT_RAGNA,	 -162,4858,-23,180,2)
+	chr_pos(ALWEN, 78,4946,-23,180,2)
+	CAM_move(-140,-4440,40,0,0)
+	CAM(-50,110,40,24,204,0,0)
+	CAM_move(-260,-4480,20,600,0)
+	CAM(-90,94,20,24,214,600,0)
+	wait(30)
+
+	wait_move(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,51,0)//キョロキョロ
+	wait(15)
+
+	if(F1_34_GoneVillage)
+	{	//既にロアルタ村を訪れている
+		KAO(EVENT_RAGNA,"12321Z4","1233321","1")//
+		MES(EVENT_RAGNA,"ふう……\n相変わらずノンビリした村だな。",0)
+	}
+	else
+	{
+		KAO(EVENT_RAGNA,"12321Z4","1233321","1")//
+		MES(EVENT_RAGNA,"へえ……\n随分のどかな村だな。",0)
+	}
+	KAO(EVENT_RAGNA,"12321Z6","1","1")//
+	MES(EVENT_RAGNA,"こんな所に、あんたの魔力が\n隠されているっていうのかよ？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B232B","123","2")//
+	MES(ALWEN,"いや……",0)
+	KAO(ALWEN,"B232BZ5","3","2")//
+	MES(ALWEN,"ううむ、気配はするが\nこの村の中ではなさそうだ。",0)
+	KAO(ALWEN,"B232BZ5","321","2")//
+	MES(ALWEN,"この近辺であるのは\n間違いないと思うのだが……",0)
+	MES_close(ALWEN)
+
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+	MOT(EVENT_RAGNA,150,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"だったら、村を見物がてら\n情報収集と行こうぜ。",0)
+	KAO(EVENT_RAGNA,"12321Z7","1","1")//
+	MES(EVENT_RAGNA,"トレジャーハンティングも\nまずは現地の住民からの\n情報収集から始めるもんだぜ。",0)
+	MES_close(EVENT_RAGNA)
+	MOT(EVENT_RAGNA,2,15)
+
+	look_chr(ALWEN,EVENT_RAGNA,"Bone_Head")
+	wait(15)
+	KAO(ALWEN,"12321Z5","1233321","1")//
+	MES(ALWEN,"よく分からぬが……\n情報を集めるというのは賛成だ。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	look_off(ALWEN)
+	rot(ALWEN,30,260)
+	wait(15)
+	KAO(ALWEN,"12321Z5","123332A","1")//
+	MES(ALWEN,"ふむ、しかしあれが\n野菜畑に牧場というものか。",0)
+	KAO(ALWEN,"12321Z5","236","6")//
+	MES(ALWEN,"さぞ、美味なる食材を\n丹念に育てているのであろうな。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,53,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"C","123332","9")//
+	MES(EVENT_RAGNA,"（メシ喰わなくても平気なクセに\n  妙に食い意地張ってんだよな……）",0)
+	MES_close(EVENT_RAGNA)
+
+//	MES(RAGNA,"◆村には３つの出入り口があり、\n北口からは水中神殿に行ける。",0)
+//	MES_close(RAGNA)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in(100,30,BLACK)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	chr_pos(RAGNA,	 -162,4858,-23,180,2)
+	chr_pos(PARTNER, 78,4946,-23,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★ロアルタ村に到着した』立てる
+	F_set(F1_16_OnVillage)
+
+	//フェードイン
+	fade_in(0,30,BLACK)
+
+	EV_end()
+
+	//──────────────────────────────
+	//　　村では湖に水没したオルディウム神殿と、
+	//　　見知らぬ格好をした少年少女の噂が聞けるという流れ。
+	//　　ＮＰＣ設定と合わせて、一般メッセージ方面に依頼予定。
+	//──────────────────────────────
+}
+
+#EndScriptTable
+//====================================================================
+

@@ -1,0 +1,1851 @@
+//====================================================================
+//ステージトラップスクリプト
+//[15038][城－テルミドール]
+//====================================================================
+
+#ScriptTable
+
+#TELMIDORL		1
+#BOSS			2
+#EVENT_RAGNA	3
+#ALWEN			4
+#MAKEN			5
+#EFFECT			6
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境
+	SE(66,0)
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段．扉
+
+	if( F3_08_KillBoss3_3 && !F3_09_FlickSwitch3 )
+	{
+		set_chr( 90,991, 7, 6,     0,   0,  0,		 90,  0102, 6,"<EV_STOP_01>")	//ストッパー：①エントリ 地下終
+	}
+	else
+	{
+		set_chr( 90,990, 7, 6,     0,   0,  0,		 90,  0102, 6,"K1_15039;")	//①エントリ 地下終
+	}
+	set_obj("@obx0042a", 7, 6,     0,   0,  0,		 90)						//①階段上（地下）
+
+//■スイッチ．看板
+	set_chr( 50,505,	-1,-1,    11550,11250,0,	  6,    90, 0,";")			//
+
+	if(GW_ENTRY_EVENT==101)	//ゲーセン用
+	{
+		set_chr( 51,736,	-1,-1,     9500,10400,0,  	 2,  90,	8,"M4?51 <EV_3_16_FlickSwitch3>;")//スイッチ
+		F_set_chr(51,CF_NO_CSP)
+	}
+	else
+	if(F2_17_EndSecond && !F3_13_EndThird)
+	{
+	//３章
+		//ＧＦ『★城：スイッチ③を入れた』立っている
+		if(F3_09_FlickSwitch3)
+		{
+			set_chr( 51,736,	-1,-1,    9500,10400,0,  	 4,  90,	8,"")//スイッチ
+		}
+		//ＧＦ『★中ボス③【テルミドール】を倒した』立っている
+		else
+		if(F3_08_KillBoss3_3)
+		{
+			set_chr( 51,736,	-1,-1,     9500,10400,0,  	 1,  90,	8,"M4?51 WT?30 <EV_3_16_FlickSwitch3>;")//スイッチ
+			set_chr( 81,990,	-1,-1, 9500,10400,0,  	 0, 0202,2,"M3_51;")
+		}
+		else
+		{
+			set_chr( 51,736,	-1,-1,     9500,10400,0,  	 2,  90,	8,"M4?51 <EV_3_16_FlickSwitch3>;")//スイッチ
+			F_set_chr(51,CF_NO_CSP)
+		//	set_chr( 81,990,	-1,-1, 9500,10400,0,  	 0, 0202,2,"M3_51;")
+		}
+	}
+
+//■イベント
+	if(GW_ENTRY_EVENT==1)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼地下水道最奥のスイッチを入れる．礼拝堂への道を開く．後
+		EV("EV_3_16_OpenedChapel3")
+	}
+	else
+	//ボス再戦用
+	if(GW_ENTRY_EVENT==100)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_3_16_BossOnly")
+	}
+	else
+	//ゲーセン用
+	if(GW_ENTRY_EVENT==101)
+	{
+		workG(GW_ENTRY_EVENT,SET,0)
+		EV("EV_3_16_BossOnly_02")
+	}
+	else	
+	if(F2_17_EndSecond && !F3_13_EndThird)
+	{
+	//３章
+		//ＧＦ『★中ボス③【テルミドール】を倒した』立ってない
+		if(!F3_08_KillBoss3_3)
+		{
+			//▼地下水道での戦い（ＶＳテルミドール）．前
+		//	EV("EV_3_14_VSTelmidorl")
+			set_chr( 80,990,	-1,-1,   11350,11250,0,  0, 0206,6,"<EV_3_14_VSTelmidorl>;")
+		}
+	}
+
+//■場面固有設定
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼地下水道での戦い（ＶＳテルミドール）．前
+//──────────────────────────────
+//　　地下水道の最奥まで来たところでイベント発生。
+EV_3_14_VSTelmidorl
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	11000,11200,0,90,2)
+	chr_pos(PARTNER,	11200,11200,0,90,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 11300,11350,0, 2,90,0, "")
+	set_chr(ALWEN,	1011,-1,-1, 11300,11200,0, 2,90,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	set_chr(TELMIDORL,	 1028,-1,-1, 9700,10400,1, 2,270,0, "<EV_3_15_KillBoss3_3>;")
+//	workL(WK_BOSSHP,SET,TELMIDORL)	//BOSS＿ＨＰ表示
+	F_set_chr(TELMIDORL,CF_NO_CLIP)
+	F_set_chr(TELMIDORL,CF_NO_CLIP2)
+	F_set_chr(TELMIDORL,CF_NO_CSP)
+	color(TELMIDORL,-1)
+	wait_color(TELMIDORL)
+	F_set_Node(TELMIDORL,"Bone_RightSword",NP_HIDE)
+	KAO(TELMIDORL,"1","1","1")//
+
+	set_chr(MAKEN,	 750,-1,-1, 9800,10400,240, 0,90,0, "")
+	F_set_chr(MAKEN,CF_NO_CLIP)
+	F_set_chr(MAKEN,CF_NO_CLIP2)
+	F_set_chr(MAKEN,CF_NO_CSP)
+	F_set_chr(MAKEN,CF_NO_HEIGHT)
+	F_set_chr(MAKEN,CF_NO_ZIMEN)
+	color(MAKEN,-1)
+
+	set_chr( EFFECT,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	F_set_chr(EFFECT,CF_NO_CLIP)
+	F_set_chr(EFFECT,CF_NO_CLIP2)
+	F_set_chr(EFFECT,CF_NO_CSP)
+	F_set_chr(EFFECT,CF_NO_ZIMEN)
+	F_set_chr(EFFECT,CF_NO_HEIGHT)
+	color(EFFECT,-1)
+
+	//モーション定義
+	MOT_SET(ALWEN,150,-1,512,512,-1,-1)	//命令
+	MOT_SET(ALWEN,151,-1,4560,4585,-1,-1)	//構え
+	MOT_SET(EVENT_RAGNA,150,-1,3360,3387,-1,-1)	//つきつけ
+	MOT_SET(EVENT_RAGNA,151,-1,3010,3029,-1,-1)	//構え
+	MOT_SET(EVENT_RAGNA,152,-1,3060,3083,-1,-1)	//地面叩く
+	MOT_SET(TELMIDORL,150,-1,416,416,-1,-1)	//やれやれ
+	MOT_SET(TELMIDORL,151,-1,417,417,-1,-1)	//
+	MOT_SET(TELMIDORL,152,-1,405,405,-1,-1)	//どうなのよ
+	MOT_SET(TELMIDORL,153,-1,454,454,-1,-1)	//しゃがみ
+	MOT_SET(TELMIDORL,154,154,3070,3130,-1,-1)	//浮遊詠唱
+	MOT_SET(TELMIDORL,155,-1,3136,3160,-1,-1)	//浮遊剣取り
+	MOT_SET(TELMIDORL,156,157,3160,3200,-1,-1)	//浮遊剣戻り
+	MOT_SET(TELMIDORL,157,157,3200,3260,-1,-1)	//浮遊剣ループ
+	MOT_SET(TELMIDORL,158,-1,2065,2125,-1,-1)	//高笑い
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる。
+
+	//カメラ初期位置
+	CAM_move(11300,-11300,160,0,0)
+	CAM(790,90,160,25,225,0,0)
+
+	//フェードイン
+	stop_BGM(90)
+	fade_in(0,60,0)
+	wait_fade()
+
+//　　トゲのような扉が閉まり、ラグナたちの頭に！マーク。
+//	MES(EVENT_RAGNA,"◆未入力項目\nトゲのような扉が閉まる。",0)
+//	MES_close(EVENT_RAGNA)
+
+	MOT(50,5,0)
+	SE(282,0)//柵SE
+	wait(15)
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	look_chr( EVENT_RAGNA, 50 ,"Bone_Head")
+	look_chr( ALWEN, 50 ,"Bone_Head")
+	wait(15)
+	wait_MOT(50,5)
+	MOT(50,7,0)
+
+	if(F3_03_KillBoss3_1 && F3_06_KillBoss3_2)
+	{
+		MES(EVENT_RAGNA,"くっ……！",0)
+		MES_close(EVENT_RAGNA)
+
+		MES(ALWEN,"現れたか……",0)
+		MES_close(ALWEN)
+	}
+	else
+	if(F3_03_KillBoss3_1 || F3_06_KillBoss3_2)
+	{
+		MES(EVENT_RAGNA,"ちっ……！",0)
+		MES_close(EVENT_RAGNA)
+
+		MES(ALWEN,"またか……",0)
+		MES_close(ALWEN)
+	}
+	else
+	{
+		MES(EVENT_RAGNA,"なに……！",0)
+		MES_close(EVENT_RAGNA)
+
+		MES(ALWEN,"閉じ込められたか……",0)
+		MES_close(ALWEN)
+	}
+
+	color(TELMIDORL,1)
+
+	VOICE(404,0)		//★ボイス入力演出
+	wait(15)
+	chr_rename(TELMIDORL,"青年の声")//
+	MES_pos(TELMIDORL,"W9ようこそ。\n絶望の怨嗟が木霊する\n蒼き水獄地帯へ。",0,180,100,0,0)
+	wait_key(0)
+	MES_close(TELMIDORL)
+
+	BGM(46)
+
+//　　ラグナたちの頭に！マーク。
+//　　そのままスクロールして、悠然と立つテルミドールを見せる。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+	look_chr( EVENT_RAGNA, TELMIDORL ,"Bone_Head")
+	look_chr( ALWEN, TELMIDORL ,"Bone_Head")
+	wait(15)
+
+	cross_fade(15)
+	CAM_move(9700,-10400,120,0,0)
+	CAM(950,54,120,26,270,0,0)
+	CAM(190,46,120,26,270,90,0)
+	wait_CAM()
+	wait(15)
+
+	MES_pos(EVENT_RAGNA,"W9てめえ……",0,200,380,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナとアルウェン、そのまま移動してテルミドールと対峙。
+	look_off(EVENT_RAGNA)
+	look_del(EVENT_RAGNA)
+	look_off(ALWEN)
+	look_del(ALWEN)
+	chr_pos(EVENT_RAGNA,11300,10880,0,120,2)
+	chr_pos(ALWEN,11300,10700,0,120,2)
+
+	CAM_move(10360,-10400,160,60,0)
+	CAM(-10,66,160,28,244,60,0)
+//	wait_CAM_move()
+//	wait_CAM()
+	wait(45)
+
+	move( EVENT_RAGNA, 0, 20,10580,10490,0,0)
+	wait(10)
+	move( ALWEN, 0, 20,10600,10310,0,0)
+	wait_move(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,90)
+	wait_move(ALWEN)
+	rot(ALWEN,30,90)
+	wait(15)
+
+	wait_CAM_move()
+	wait_CAM()
+	CAM_move(10360,-10380,160,600,0)
+	CAM(-10,60,160,28,248,600,0)
+
+	chr_rename(TELMIDORL,"テルミドール")//
+	KAO(TELMIDORL,"12321Z6","1233321","1")//
+	MES(TELMIDORL,"フフ、みごと結界を破って\nご自分の城に帰還できたようだね。",0)
+	KAO(TELMIDORL,"12321Z5","1","1")//
+	MES(TELMIDORL,"おめでとうと言わせてもらうよ。\nアルウェン姫。",0)
+	MES_close(TELMIDORL)
+
+//	name2(ALWEN)
+	MES(ALWEN,"痴れ言を……",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"………………………………",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(TELMIDORL)
+	KAO(TELMIDORL,"12321Z5","123QP","6")//
+	MES(TELMIDORL,"おや、ラグナ君。\nずいぶん大人しいじゃないか。",0)
+	KAO(TELMIDORL,"12321Z5","P","6")//
+	MES(TELMIDORL,"この前会った時のように\n狂犬みたいに吠えないのかい？",0)
+	MES_close(TELMIDORL)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"フン……挑発は乗らねえよ。",0)
+	MES(EVENT_RAGNA,"てめぇが何を知っていようが\nやるべき事はただ一つだけ……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ、アンカーギアを構えてテルミドールに突きつける。
+	MOT(EVENT_RAGNA,150,1)
+//	wait(30)
+	wait(10)
+	SE(1014,0)//ギア構え
+	wait(30)
+	MES(EVENT_RAGNA,"てめえをブッ倒して\n洗いざらい全部吐かせる……",0)
+	MES(EVENT_RAGNA,"その事に変わりはねえからな。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(TELMIDORL,"12321Z3","PQ3","1")//
+	MES(TELMIDORL,"はは、開き直ったか。",0)
+	KAO(TELMIDORL,"12321Z5","3A","1")//
+	MES(TELMIDORL,"しかしその開き直り……\nずいぶん無理をしていないかい？",0)
+	MES_close(TELMIDORL)
+
+	MOT(EVENT_RAGNA,2,15)
+	MES(EVENT_RAGNA,"……ッ………",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(ALWEN,"戯言はそれまでだ。",0)
+	MES(ALWEN,"そなたとラグナの間に\nどのような縁があるのか……",0)
+	MES(ALWEN,"立ち入るつもりはないが\n見過ごすわけにもいかぬ。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//　　アルウェン、杖を構えてテルミドールに突きつける。
+	cross_fade(15)
+	CAM_move(10520,-10320,140,0,0)
+	CAM(70,50,140,24,40,0,0)
+	CAM_move(10520,-10340,140,600,0)
+	CAM(30,44,140,24,50,600,0)
+	rot(ALWEN,-1,80)
+	KAO(EVENT_RAGNA,"C","A","5")//
+	KAO(ALWEN,"B","3","3")//
+
+	MOT(ALWEN,150,10)
+	SE(1015,0)//杖構え
+	wait(8)
+	SE(1033,0)//
+	wait(7)
+	KAO(ALWEN,"B232BZ5","321","3")//
+	MES(ALWEN,"アルウェン．ド．ムーンブリアが\nそなたに命ずる。",0)
+	KAO(ALWEN,"B232BZ5","1","3")//
+	MES(ALWEN,"この一戦、我らが勝てば\n知ることを全て話すと誓うがよい。",0)
+	MES_close(ALWEN)
+
+//　　ラグナとテルミドールの頭に！マーク。
+	KAO(EVENT_RAGNA,"E","2321D","6")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	KAO(TELMIDORL,"E","321D","6")//
+	EMO(TELMIDORL,EMO_BIKKURI)
+	wait(15)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ2","D","6")//
+	MES(EVENT_RAGNA,"お、おい……",0)
+	MES_close(EVENT_RAGNA)
+/*
+	MOT(TELMIDORL,152,15)
+	wait(15)
+//	name2(TELMIDORL)
+	KAO(TELMIDORL,"12321Z5","1232A","4")//
+	MES(TELMIDORL,"おやおや、交渉の基本を\n何も知らないお姫様だ。",0)
+	KAO(TELMIDORL,"12321Z6","A","4")//
+	MES(TELMIDORL,"そうする事で、私の方に\nどんなメリットがあるんだい？",0)
+	MES_close(TELMIDORL)
+*/
+//	name2(TELMIDORL)
+	KAO(TELMIDORL,"12321Z5","1232A","4")//
+	MES_pos(TELMIDORL,"W2おやおや、交渉の基本を\n何も知らないお姫様だ。",0,640,320,0,0)
+	wait_key(0)
+	KAO(TELMIDORL,"12321Z6","A","4")//
+	MES_pos(TELMIDORL,"W2そうする事で、私の方に\nどんなメリットがあるんだい？",0,640,320,0,0)
+	wait_key(0)
+	MES_close(TELMIDORL)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","123","2")//
+	MES(ALWEN,"そんな事はどうでもよい。",0)
+	MES_close(ALWEN)
+
+//　　アルウェン、真紅の瞳でテルミドールに冷たく微笑む。
+//　　陽炎のような魔力のオーラがアルウェンを包み込む。
+//	MES(ALWEN,"◆未入力項目\n陽炎のような魔力のオーラがアルウェンを包み込む。",0)
+//	MES_close(ALWEN)
+
+	chr_pos(EFFECT,10600,10310,20,0,29)
+	wait(15)
+	SE(1037,ALWEN)//オーラSE
+	SE(1065,ALWEN)//アルウェンオーラ
+	wait(15)
+	wait(15)	//★竹追加
+	KAO(ALWEN,"B232BZ5","3S","3")//
+	MES(ALWEN,"C2この私が命じているのだ。\n──従わぬ道理がどこにある？",0)
+	MES_close(ALWEN)
+/*
+//	name2(TELMIDORL)
+	KAO(TELMIDORL,"C","2321D","4")//
+	MES(TELMIDORL,"……っ………",0)
+	MES_close(TELMIDORL)
+*/
+//	name2(TELMIDORL)
+	KAO(TELMIDORL,"C","2321D","4")//
+	MES_pos(TELMIDORL,"W2……っ………",0,640,320,0,0)
+	wait_key(0)
+	MES_close(TELMIDORL)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ2","1233321","2")//
+	MES(EVENT_RAGNA,"姫さん……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　テルミドール、しばらく怯んだ様子を見せるが、
+//　　すぐに微笑みながら瞑目し、余裕ある態度を取り戻す。
+	cross_fade(15)
+	CAM_move(10360,-10400,160,0,0)
+	CAM(-10,66,160,28,244,0,0)
+	CAM_move(10360,-10380,160,600,0)
+	CAM(-10,60,160,28,248,600,0)
+	rot(ALWEN,-1,90)
+	wait(30)
+
+	KAO(TELMIDORL,"1","D123","1")//
+	MOT(TELMIDORL,2,15)
+	wait(15)
+	KAO(TELMIDORL,"12321Z5","3","1")//
+	MES(TELMIDORL,"……フフ、さすがは\nザハール候の姪御なだけはある。",0)
+	KAO(TELMIDORL,"12321Z3","321","1")//
+	MES(TELMIDORL,"いいだろう、アルウェン姫。",0)
+	KAO(TELMIDORL,"12321Z7","1","1")//
+	MES(TELMIDORL,"貴女の誇りと威厳にかけて\n万が一、私が敗れれば\n知っていることは全て話そう。",0)
+	KAO(TELMIDORL,"12321Z3","1","1")//
+	MES(TELMIDORL,"それでいいかな？",0)
+	MES_close(TELMIDORL)
+
+	MOT(EFFECT,0,0)
+	MOT(ALWEN,2,15)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232B","S3","2")//
+	MES(ALWEN,"C2うむ。",0)
+	EV("EV_1065_fadeout")//オーラフェードアウト
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+	KAO(ALWEN,"B232BZ3","3SR","2")//
+	MES(ALWEN,"C2ラグナ、それでよいな？",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"あ、ああ……",0)
+	MES(EVENT_RAGNA,"すまねえ、姫さん……！",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ、改めてアンカーギアを構え直す。
+//	look_chr( EVENT_RAGNA, TELMIDORL ,"Bone_Head")
+	look_off( EVENT_RAGNA )
+	MOT(EVENT_RAGNA,151,15)
+	wait(30)
+	SE(1014,0)//ギア構え
+//	look_chr( ALWEN, TELMIDORL ,"Bone_Head")
+	look_off( ALWEN )
+	MOT(ALWEN,151,15)
+	wait(30)
+	SE(1015,0)//杖構え
+
+	KAO(TELMIDORL,"1","A23","5")//
+	MOT(TELMIDORL,150,15)
+	wait(15)
+	KAO(TELMIDORL,"12321Z5","3","5")//
+	MES(TELMIDORL,"やれやれ、この私が\nこんな譲步をさせられるとは。",0)
+	MES_close(TELMIDORL)
+	MOT(TELMIDORL,2,15)
+	wait(15)
+	KAO(TELMIDORL,"12321Z4","321","2")//
+	MES(TELMIDORL,"しかし、勘違いはしないことだ。",0)
+	KAO(TELMIDORL,"12321Z4","1","2")//
+	MES(TELMIDORL,"あくまで万が一と言ったはずだよ。",0)
+	MES_close(TELMIDORL)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"なに……！？",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+//　　テルミドール、空中に浮かび上がって召喚パターン。
+//　　エフェクトと共に漆黒の長剣がテルミドールの前に現れる。
+//　　それを手に取るテルミドール。
+
+//	MES(TELMIDORL,"◆未入力項目\nエフェクトと共に漆黒の長剣が現れる。\nそれを手に取るテルミドール。",0)
+//	MES_close(TELMIDORL)
+
+	stop_BGM(90)
+	cross_fade(15)
+	CAM_move(9700,-10400,170,0,0)
+	CAM(70,50,170,28,240,0,0)
+
+	CAM_move(9700,-10400,370,60,0)
+	CAM(70,50,370,28,270,60,0)
+	F_set_chr(TELMIDORL,CF_NO_HEIGHT)
+	MOT(TELMIDORL,54,15)
+	SE(1090,0)//羽ばたき
+	move( TELMIDORL, 30, 4,9700,10400,200,0)
+	wait_move(TELMIDORL)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+	wait_BGM()
+//	BGM(35)
+	BGM(49)
+
+//	VOICE(421,0)		//★ボイス入力演出
+	VOICE(402,0)		//★ボイス入力演出
+	MOT(TELMIDORL,154,15)
+	wait(45)
+
+	SE(1088,0)//剣出現
+	EFF(6350,	9800,-10400,290,	0,100,0)
+//	EFF_chr(4040,TELMIDORL,0,100,0,"Bone_Hips")
+	wait(15)
+	color(MAKEN,15)
+	wait(30)
+
+	CAM_move(10380,-10400,220,45,0)
+	CAM(70,64,220,32,270,45,0)
+	wait_CAM_move()
+	wait_CAM()
+
+	MOT(TELMIDORL,54,15)
+
+	MES(EVENT_RAGNA,"紅い剣……！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"C2気をつけろ、ラグナ！",0)
+	MES(ALWEN,"C2おそらく魔剣の類……\n尋常ならざる力を感じるぞ！",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(15)
+	CAM_move(9700,-10400,370,0,0)
+	CAM(70,54,370,28,270,0,0)
+	CAM(70,48,370,28,270,600,0)
+	wait(15)
+
+	MOT(TELMIDORL,155,15)
+	wait(40)
+	VOICE(421,0)		//★ボイス入力演出
+	cross_fade(15)
+	color(MAKEN,-1)
+	F_reset_Node(TELMIDORL,"Bone_RightSword",NP_HIDE)
+	SE(1033,0)//剣つかみ
+	wait(15)
+	look( TELMIDORL,"Bone_Head",0,0,0,1,0,0,-4 )
+	MOT(TELMIDORL,156,15)
+	wait(30)
+	SE(300,0)//剣振り
+	wait(10)
+	SE(388,0)//剣振り
+	SE(1089,0)//剣振り
+	wait(20)
+
+//	name2(TELMIDORL)
+	KAO(TELMIDORL,"12321Z4","123","1")//
+	MES(TELMIDORL,"──“魂喰らい”\n《グラムドリオン》。",0)
+	KAO(TELMIDORL,"12321Z5","3","1")//
+	MES(TELMIDORL,"フフ、言っただろう？\nこれでも剣士の端くれでね。",0)
+	KAO(TELMIDORL,"12321Z4","321","3")//
+	MES(TELMIDORL,"それでは──\n尋常に立ち合わせてもらうよ！",0)
+	MES_close(TELMIDORL)
+
+	VOICE(422,0)		//★ボイス入力演出
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(MAKEN)
+	delete(EFFECT)
+	delete(TELMIDORL)
+
+	chr_pos(RAGNA,	10700,10500,0,180,2)
+	chr_pos(PARTNER,10700,10300,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+//	F_reset_chr(TELMIDORL,CF_NO_CLIP)
+//	F_reset_chr(TELMIDORL,CF_NO_CLIP2)
+//	F_reset_chr(TELMIDORL,CF_NO_CSP)
+//	F_reset_chr(TELMIDORL,CF_NO_HEIGHT)
+//	set_chr(BOSS,	 208,-1,-1, 9400,10400,1, 2,270,0, "<EV_3_15_KillBoss3_3>;")
+
+	set_chr(TELMIDORL,	 28,-1,-1, 9700,10400,1, 2,270,0, "<EV_3_15_KillBoss3_3>;")
+	F_set_chr(TELMIDORL,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,TELMIDORL)	//BOSS＿ＨＰ表示
+
+	//ラグナメモ用
+	F_set(F3_27_BattleBoss3_3)	//★中ボス③【テルミドール】との戦闘開始
+
+	
+	//再戦用オートセーブ
+	workG(GW_ENTRY_EVENT,SET,100)
+	workG(GW_DEF_BGM,SET,99)						//デフォルト曲を変更する 無音
+	AutoSave(0)
+	workG(GW_ENTRY_EVENT,SET,0)
+	workG(GW_DEF_BGM,SET,0)						//デフォルト曲を変更する
+
+
+	CAM_return(0)
+	wait(30)
+
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)//ワープ封じる。
+
+	fade_in(0,30,0)
+	set_namebmp(29,0)	//魔剣使いテルミドール		ムーンブリア城
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,71);//テルミドール
+
+	EV_end()
+
+//──────────────────────────────
+//　　中ボス戦【テルミドール】との戦い。
+//　　勝利すると、テルミドールが膝をつくように倒れる。
+//──────────────────────────────
+}
+
+//--------------------------------------------------------------------
+// テルミ　再戦用
+//---------------------------------------------------------------------
+EV_3_16_BossOnly
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+
+	wait(30)									//GAME OVER曲待ち
+
+	//キャラ再配置
+	chr_pos(RAGNA,	10700,10500,0,180,2)
+	chr_pos(PARTNER,10700,10300,0,180,2)
+	chr_pos(PET,    10700,10300,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+	
+
+	set_chr(TELMIDORL,	 28,-1,-1, 9500,10400,1, 2,270,0, "<EV_3_15_KillBoss3_3>;")
+	F_set_chr(TELMIDORL,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,TELMIDORL)					//BOSS＿ＨＰ表示
+	
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)						//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)							//デフォルト曲を変更する マップ曲
+
+	BGM(49)											//ボス曲
+
+	MOT(50,7,0)										//扉閉める
+
+	CAM_return(0)
+	CAM(870,100,0,31,225,0,0)
+	wait(15)
+
+
+	fade_in(0,30,0)
+	set_namebmp(29,0)	//魔剣使いテルミドール		ムーンブリア城
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,71);//テルミドール
+
+	EV_end()
+}
+//--------------------------------------------------------------------
+// テルミ　ゲーセン用
+//---------------------------------------------------------------------
+EV_3_16_BossOnly_02
+{
+	EV_begin()
+	fade_in(100,1,0)
+	wait_fade()
+
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////ＨＰ0でも消えない　キャラ0は死亡時に"EV_DEAD"を再生
+
+	wait(30)									//GAME OVER曲待ち
+
+	//キャラ再配置
+	chr_pos(RAGNA,	10700,10500,0,180,2)
+	chr_pos(PARTNER,10700,10300,0,180,2)
+	chr_pos(PET,    10700,10300,0,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+	
+
+	set_chr(TELMIDORL,	 28,-1,-1, 9500,10400,1, 2,270,0, "<EV_YOUWIN>;")
+	F_set_chr(TELMIDORL,CF_NO_DEAD)
+	workL(WK_BOSSHP,SET,TELMIDORL)					//BOSS＿ＨＰ表示
+	
+	//ワープ封じ
+	workG(GW_WARP_FLAG,SET,0)						//ワープ封じる。
+	workG(GW_DEF_BGM,SET,0)							//デフォルト曲を変更する マップ曲
+
+	//BGM(49)											//ボス曲
+
+	MOT(50,7,0)										//扉閉める
+
+	CAM_return(0)
+	CAM(870,100,0,31,225,0,0)
+	wait(15)
+	
+	fade_in(0,30,0)
+	set_namebmp(29,0)	//魔剣使いテルミドール		ムーンブリア城
+
+	SCORE(0,0,0)//念のためスコア初期化
+	//ルートスタート
+	workG(GW_NOW_ROUTE,SET,71);//テルミドール
+
+	EV_end()
+}
+
+//敗北時---------------------
+EV_DEAD
+{
+	wait_EV("EV_YOUWIN")
+
+	EV_begin()
+	EFF(21660,320,240,0,0,100,0)//LOSE
+
+	wait(60)
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+	workG(GW_ENTRY_EVENT,SET,108)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//Gミュージアムに
+}
+
+//勝利時---------------------
+EV_YOUWIN
+{
+	wait_EV("EV_DEAD")
+
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+	EFF(21650,320,240,0,0,100,0)//WIN
+
+//	VOICE(411,0)		//★ボイス入力演出
+	VOICE2(411,1,100)	//★「フフ…遊びすぎたか…」
+
+	wait(1)	//1フレーム進めないと、カメラが壊れる。（ボスのカメラのため）
+	EV_begin()
+	wait(200)
+
+	fade_in(100,100,BLACK)
+	wait_fade()
+
+	set_hp(PLAYER1,100)//全快
+
+	//成績に応じてフィギュア入手	//	魔剣使いテルミドール戦	->Figure F2883
+	if(!F2883)
+	{
+		SE(24,0)//ゲットSE
+		MES(0,"L667魔剣使いテルミドールL777のフィギュアを手に入れた！！",2)
+		MES_close(0)
+		F_set(2883)
+	}
+
+	workG(GW_ENTRY_EVENT,SET,108)
+	workG(GW_DEF_BGM,SET,0)
+	new_map(10530)//Gミュージアムに
+}
+
+
+
+//──────────────────────────────
+//▼地下水道での戦い（ＶＳテルミドール）．後
+//──────────────────────────────
+//　　戦闘終了後、膝を突いているテルミドール。
+//　　ラグナとアルウェン、少し間を空けて武器を構えている。
+EV_3_15_KillBoss3_3
+{
+	SCORE(-1,-1,-1)//強制ルート終了＆メニュー表示
+//	VOICE(411,0)		//★ボイス入力演出
+	VOICE2(411,1,100)	//★「フフ…遊びすぎたか…」
+	wait(200)
+
+	EV_begin()
+
+	stop_BGM(90)
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+	delete(TELMIDORL)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	11000,11200,0,90,2)
+	chr_pos(PARTNER,	11200,11200,0,90,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 10600,10500,0, 2,90,0, "")
+	set_chr(ALWEN,	1011,-1,-1, 10600,10300,0, 2,90,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"B","1","2")//
+	KAO(ALWEN,"B","1","2")//
+
+	set_chr(TELMIDORL,	 1028,-1,-1, 9800,10400,1, 2,270,2, "")
+	F_set_chr(TELMIDORL,CF_NO_CLIP)
+	F_set_chr(TELMIDORL,CF_NO_CLIP2)
+	F_set_chr(TELMIDORL,CF_NO_CSP)
+	KAO(TELMIDORL,"C","3","5")//
+
+	//モーション定義
+	MOT_SET(ALWEN,150,-1,439,439,-1,-1)//
+	MOT_SET(ALWEN,151,-1,4585,4585,-1,-1)	//構え
+	MOT_SET(ALWEN,152,-1,4585,4560,-1,-1)	//構え
+	MOT_SET(EVENT_RAGNA,150,-1,454,454,-1,-1)	//しゃがみ
+	MOT_SET(EVENT_RAGNA,151,-1,3029,3029,-1,-1)	//構え
+	MOT_SET(EVENT_RAGNA,152,-1,3060,3083,-1,-1)	//地面叩く
+	MOT_SET(EVENT_RAGNA,153,-1,480,480,-1,-1)	//ふざけんな
+	MOT_SET(TELMIDORL,150,-1,416,416,-1,-1)	//やれやれ
+	MOT_SET(TELMIDORL,151,-1,417,417,-1,-1)	//
+	MOT_SET(TELMIDORL,152,-1,405,405,-1,-1)	//どうなのよ
+	MOT_SET(TELMIDORL,153,-1,454,454,-1,-1)	//しゃがみ
+	MOT_SET(TELMIDORL,154,154,3070,3130,-1,-1)	//浮遊詠唱
+	MOT_SET(TELMIDORL,155,-1,3136,3160,-1,-1)	//浮遊剣取り
+	MOT_SET(TELMIDORL,156,157,3160,3200,-1,-1)	//浮遊剣戻り
+	MOT_SET(TELMIDORL,157,157,3200,3260,-1,-1)	//浮遊剣ループ
+	MOT_SET(TELMIDORL,158,-1,2065,2125,-1,-1)	//高笑い
+	MOT(TELMIDORL,153,0)
+	MOT(EVENT_RAGNA,151,0)
+	MOT(ALWEN,151,0)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる。
+
+//	look_chr( EVENT_RAGNA, TELMIDORL ,"Bone_Head")
+//	look_chr( ALWEN, TELMIDORL ,"Bone_Head")
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,0,0,0,0)
+	look(ALWEN,"Bone_Head",0,0,0,0,0,0,0)
+
+	//カメラ初期位置
+	CAM_reset()
+	CAM_move(10340,-10400,120,0,0)
+	CAM(70,84,120,26,236,0,0)
+	CAM_move(10340,-10400,120,900,0)
+	CAM(-10,64,120,26,244,900,0)
+
+	wait_BGM()
+	BGM(46)
+
+	//フェードイン
+	fade_in(0,60,0)
+	wait_fade()
+
+	KAO(TELMIDORL,"12321Z3","3","5")//
+	MES(TELMIDORL,"はは……参ったな。",0)
+	KAO(TELMIDORL,"12321Z4","3","5")//
+	MES(TELMIDORL,"まさかこの私が\n膝を付かされるとはね……",0)
+	MES_close(TELMIDORL)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"はあはあ……約束だ！",0)
+	MES(EVENT_RAGNA,"てめぇが知ってることは\n洗いざらい話してもらうぞ！",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(TELMIDORL)
+	KAO(TELMIDORL,"12321Z3","3","1")//
+	MES(TELMIDORL,"ふふ……いいだろう。",0)
+	look(TELMIDORL,"Bone_Head",0,0,0,2,0,0,26)
+	wait(15)
+	KAO(TELMIDORL,"A232AZ4","3QP","1")//
+	MES(TELMIDORL,"しかしラグナ君。\n本当にいいのかな……？",0)
+	MES_close(TELMIDORL)
+
+//　　ラグナの頭に！マーク。
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(15)
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+	MES(EVENT_RAGNA,"………え…………",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(TELMIDORL)
+	KAO(TELMIDORL,"A232AZ5","P","1")//
+	MES(TELMIDORL,"恐らく私は、君の疑問に\n答えることが出来るだろう。",0)
+	KAO(TELMIDORL,"A232AZ3","P","1")//
+	MES(TELMIDORL,"だが、本当にいいのかな？",0)
+	KAO(TELMIDORL,"A232AZ5","PQ333QP","6")//
+	MES(TELMIDORL,"……知りたくないことまで\n知ってしまうかもしれないよ？",0)
+	MES_close(TELMIDORL)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"な……ん………",0)
+	MES_close(EVENT_RAGNA)
+
+//	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	look(ALWEN,"Bone_Head",0,0,2,0,0,-32,0)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","1233321","3")//
+	MES(ALWEN,"ラグナ、耳を貸すな！",0)
+	KAO(ALWEN,"B232BZ5","1","3")//
+	MES(ALWEN,"この者はそうやって\nそなたを惑わしているだけだ！",0)
+	MES_close(ALWEN)
+
+//	name2(TELMIDORL)
+	KAO(TELMIDORL,"B232BZ4","Q321","2")//
+	MES(TELMIDORL,"アルウェン姫。\n貴女こそ黙るがいい。",0)
+	KAO(TELMIDORL,"B232BZ5","1","2")//
+	MES(TELMIDORL,"これは私と彼の話だ。\n立ち入らないでいただこうか。",0)
+	MES_close(TELMIDORL)
+
+//	look_chr( ALWEN, TELMIDORL ,"Bone_Head")
+	look(ALWEN,"Bone_Head",0,0,2,0,0,0,0)
+	wait(15)
+//	name2(ALWEN)
+	KAO(ALWEN,"L","1232A","4")//
+	MES(ALWEN,"くっ……",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,153,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"ふ、ふざけるなよ……！\nてめえ、さっきから何を……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(TELMIDORL)
+	KAO(TELMIDORL,"A232AZ3","123","1")//
+	MES(TELMIDORL,"だってそうだろう？",0)
+	KAO(TELMIDORL,"A232AZ7","3QP","1")//
+	MES(TELMIDORL,"君、さっきから怒るだけで\n具体的なことは何一つ\n聞いてこないじゃないか？",0)
+	MES_close(TELMIDORL)
+
+	wait(15)
+	CAM_quake("37")
+	MES(EVENT_RAGNA,"P1S5！ ！ ！",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(TELMIDORL,"A232AZ5","PQ333QP","6")//
+	MES(TELMIDORL,"ふふ、それでは私も\n答えようがないというものだ。",0)
+	KAO(TELMIDORL,"A232AZ6","P","6")//
+	MES(TELMIDORL,"全てを話せと言われても\n一体、何を話せばいいのかな？",0)
+	MES_close(TELMIDORL)
+
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,1,0,0,-20)
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+	MES(EVENT_RAGNA,"……………………………",0)
+	MES_close(EVENT_RAGNA)
+
+//	MOT(ALWEN,2,15)
+//	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	KAO(ALWEN,"B","A","4")//
+	look(ALWEN,"Bone_Head",0,0,2,0,0,-32,0)
+	wait(15)
+	KAO(ALWEN,"B232BZ2","A","4")//
+	MES(ALWEN,"ラグナ……",0)
+	MES_close(ALWEN)
+
+	KAO(TELMIDORL,"12321Z3","PQ3","1")//
+	MES(TELMIDORL,"フフ、時間切れだ。",0)
+	KAO(TELMIDORL,"12321Z4","3","1")//
+	MES(TELMIDORL,"私はこれで\n失礼させてもらうよ。",0)
+	MES_close(TELMIDORL)
+	wait_MES(TELMIDORL)
+
+//　　ラグナたちの頭に！マーク。
+//　　膝を付いたテルミドール、再び空中に浮かび上がる。
+	cross_fade(15)
+	CAM_move(10060,-10400,60,0,0)
+	CAM(190,64,60,28,114,0,0)
+	CAM_move(10060,-10400,300,45,0)
+	CAM(190,64,300,28,114,45,0)
+	SE(1090,0)//羽ばたきSE
+	F_set_chr(TELMIDORL,CF_NO_HEIGHT)
+	MOT(TELMIDORL,54,15)
+	look(TELMIDORL,"Bone_Head",0,0,0,2,0,0,-4)
+	move( TELMIDORL, 30, 6,9800,10400,220,0)
+	wait(15)
+
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,2,0,0,14)
+	KAO(EVENT_RAGNA,"B","12321D","6")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	MOT(ALWEN,2,15)
+//	look_chr( ALWEN, TELMIDORL ,"Bone_Head")
+	look(ALWEN,"Bone_Head",0,0,2,1,0,0,14)
+	KAO(ALWEN,"B","2321D","6")//
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(15)
+
+	wait_CAM_move()
+	wait_CAM()
+	CAM_move(10060,-10400,300,600,0)
+	CAM(190,68,300,28,122,600,0)
+
+	KAO(EVENT_RAGNA,"C232CZ2","1232A","3")//
+	MES(EVENT_RAGNA,"て……てめぇ……！",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B","12321","3")//
+
+	KAO(TELMIDORL,"A232AZ6","3QP","1")//
+	MES(TELMIDORL,"クク、可哀想な君のために\n一つだけ情報を教えてあげよう。",0)
+	KAO(TELMIDORL,"A232AZ6","PQ3","1")//
+	MES(TELMIDORL,"私の可愛い人形だが……\nザハール候と共に礼拝堂にいる。",0)
+	MES_close(TELMIDORL)
+
+//　　ラグナの頭に激しい！マーク。
+	KAO(EVENT_RAGNA,"B","2321DE","7")//
+	EMO(EVENT_RAGNA,EMO_TOGEBIKKURI)
+	wait(30)
+	CAM_quake("37")
+	KAO(EVENT_RAGNA,"2","D12321D","6")//
+	MES(EVENT_RAGNA,"S4なっ……！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","12321","3")//
+	MES(ALWEN,"どういう事だ……！？",0)
+	MES_close(ALWEN)
+
+	rot(TELMIDORL,30,340)
+	look(TELMIDORL,"Bone_Head",0,0,2,2,0,-24,-4)
+	wait(15)
+//	name2(TELMIDORL)
+	KAO(TELMIDORL,"A232AZ3","321","6")//
+	MES(TELMIDORL,"フフ、サービスはここまでだ。",0)
+	KAO(TELMIDORL,"A232AZ5","1","6")//
+	MES(TELMIDORL,"それでは、ラグナ君。\nせいぜい考えておきたまえ。",0)
+	KAO(TELMIDORL,"A232AZ3","123","6")//
+	MES(TELMIDORL,"君が何を知りたいのか……",0)
+	KAO(TELMIDORL,"A232AZ5","321","6")//
+	MES(TELMIDORL,"そして、それを知りたいと\n本当に思っているのかをね。",0)
+	MES_close(TELMIDORL)
+	VOICE(404,0)		//★ボイス入力演出
+	look(TELMIDORL,"Bone_Head",0,0,2,2,0,0,-4)
+//	wait(30)		//★ボイス入力演出
+	wait(60)		//★ボイス入力演出
+	VOICE(405,0)		//★ボイス入力演出
+	EV("EV_WAHAHA")
+	CAM_quake("37")
+	KAO(TELMIDORL,"A787AZ9","PQ36","6")//
+//	CAM_quake("46")
+//	MES(TELMIDORL,"S5アーッハッハッハッハッ！",0)
+	MES_pos(TELMIDORL,"S5アーッハッハッハッハッ！",0,0,0,0,0)
+	wait(60)
+	MES_close(TELMIDORL)
+
+//　　テルミドール、羽ばたきながら転位魔法で消え去る。
+//　　後には黒い羽（？）がわずかに舞い散るのみ。
+	stop_BGM(90)
+	EFF_chr(24580,TELMIDORL,0,100,0,"charbase0")
+	color(TELMIDORL,-15)
+	SE(1016,0)//ワープSE
+	wait_color(TELMIDORL)
+	wait(30)
+
+//　　それを呆然と見送りながらラグナの頭に…マーク。
+	cross_fade(30)
+	CAM_move(10620,-10400,130,0,0)
+	CAM(-50,60,130,24,132,0,0)
+	CAM(-80,54,130,24,142,1200,0)
+	KAO(EVENT_RAGNA,"2","D","4")//
+	wait(30)
+
+	EMO(EVENT_RAGNA,EMO_TENTEN)
+	wait(30)
+
+	KAO(ALWEN,"B","123","4")//
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,0)
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(15)
+	KAO(ALWEN,"B232BZ3","321","4")//
+	MES(ALWEN,"ラグナ……そなた。",0)
+	MES_close(ALWEN)
+
+//	VOICE(11,0)		//★ボイス入力演出
+	KAO(EVENT_RAGNA,"L","123","B")//
+	MES(EVENT_RAGNA,"……くっ………",0)
+	look(EVENT_RAGNA,"Bone_Head",0,0,0,1,0,0,0)
+
+	MOT(EVENT_RAGNA,152,15)
+	KAO(EVENT_RAGNA,"23232Z2","33333321","3")//
+	MES_pos(EVENT_RAGNA,"P1S5うおおおおおおおっ！！",0,0,0,0,0)
+	wait(15)
+	CAM_move(10600,-10400,130,15,0)
+	SE(1045,0)//ギア叩きつけ
+	wait(15)
+	SE(143,0)//ギア叩きつけ
+	CAM_quake("464646")
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,-6)
+	wait(30)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ、ギアの側面の頑丈な部分を地面に叩きつける。
+	KAO(ALWEN,"B232BZ2","12321D","6")//
+	MES(ALWEN,"ラグナ……！？",0)
+	MES_close(ALWEN)
+
+	wait_BGM()
+	BGM(62)
+
+	KAO(EVENT_RAGNA,"C","123","B")//
+	MES(EVENT_RAGNA,"………………………………",0)
+	KAO(EVENT_RAGNA,"B232BZ3","32A","5")//
+	MES(EVENT_RAGNA,"……すまねぇ、姫さん。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","A","5")//
+	MES(EVENT_RAGNA,"せっかく俺のために\n機会を作ってくれたのに……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ3","123","4")//
+	MES(ALWEN,"……気にするでない。",0)
+	KAO(ALWEN,"B232BZ6","321","4")//
+	MES(ALWEN,"察するに、そなたはいまだ\n心の整理が付いていないのだな。",0)
+	KAO(ALWEN,"B232BZ5","1","4")//
+	MES(ALWEN,"そのことを改めて\n気付かされたといった所か。",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ3","A23","5")//
+	MES(EVENT_RAGNA,"ああ……そんな所だ。",0)
+	KAO(EVENT_RAGNA,"B232BZ2","3","5")//
+	MES(EVENT_RAGNA,"……情けねぇ………",0)
+	KAO(EVENT_RAGNA,"C232CZ4","3","B")//
+	MES(EVENT_RAGNA,"……何も……\n何も言い返せなかった……",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B","123","2")//
+	MES(ALWEN,"………………………………",0)
+	KAO(ALWEN,"B232BZ5","321","2")//
+	MES(ALWEN,"……ならばそなたは、\nあの者に感謝すべきであろうな。",0)
+	MES_close(ALWEN)
+
+//　　ラグナの頭に！マーク。
+//　　驚いてアルウェンの方を見やる。
+	KAO(EVENT_RAGNA,"E","321D","6")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(15)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Hips")
+	wait(15)
+	KAO(EVENT_RAGNA,"F","D","7")//
+	MES(EVENT_RAGNA,"……え………",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ5","1233321","2")//
+	MES(ALWEN,"そなたが己を恥じるのは\nそなたが前に進みたいからだ。",0)
+	KAO(ALWEN,"B232BZ5","1","2")//
+	MES(ALWEN,"でなければ、そのように\n心底悔しがったりするものか。",0)
+	KAO(ALWEN,"B232BZ5","1","2")//
+	MES(ALWEN,"そのことに気付けただけでも\n収穫だったのではないか？",0)
+	MES_close(ALWEN)
+
+	look_off(EVENT_RAGNA)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B","D123","2")//
+	MES(EVENT_RAGNA,"………………………………",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ4","1232A","4")//
+	MES(ALWEN,"その……\n見当違いなら許すがよい。",0)
+	KAO(ALWEN,"B232BZ7","A","4")//
+	MES(ALWEN,"私も所詮、この城という\n狭い世界しか知らなかった\n未熟者にすぎない。",0)
+	KAO(ALWEN,"B232BZ5","A23","4")//
+	MES(ALWEN,"そなたの事情が何なのか\n残念だが想像すら付かない……",0)
+	KAO(ALWEN,"B232BZ5","3","4")//
+	MES(ALWEN,"そんな者が偉そうに──",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232B","3","2")//
+	MES(EVENT_RAGNA,"──いや。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ、首を振りながら立ち上がる。
+	CAM_move(10620,-10400,130,15,0)
+
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ4","321","2")//
+	MES(EVENT_RAGNA,"姫さん……\nあんた、やっぱり凄ぇよ。",0)
+	KAO(EVENT_RAGNA,"B232BZ4","1","2")//
+	MES(EVENT_RAGNA,"何かちょっとだけ、\n気合が入った気がするぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,0)
+//	name2(ALWEN)
+	KAO(ALWEN,"F","321","6")//
+	MES(ALWEN,"え……",0)
+	MES_close(ALWEN)
+
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ7","123","2")//
+	MES(EVENT_RAGNA,"せめて……\n礼拝堂にたどり着くまでには\nさっきの答えは考えておく。",0)
+	KAO(EVENT_RAGNA,"B232B6","3","2")//
+	MES(EVENT_RAGNA,"俺が何を知りたいのか……\nそこん所だけは、絶対にな。",0)
+	KAO(EVENT_RAGNA,"B232BZ3","321","2")//
+	MES(EVENT_RAGNA,"訳分からねぇかもしれねぇが\nあんたに約束させて欲しいんだ。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"1","1233321","6")//
+	MES(ALWEN,"………………………………",0)
+	KAO(ALWEN,"12321Z2","23","1")//
+	MES(ALWEN,"……よかろう。",0)
+	MOT(ALWEN,150,15)
+	wait(15)
+	KAO(ALWEN,"12321Z3","3","1")//
+	MES(ALWEN,"その約束、しかと聞き届けた。",0)
+	KAO(ALWEN,"12321Z3","36","6")//
+	MES(ALWEN,"違えたりしたら\n心ゆくまで罵倒してやるから\nせいぜい覚悟しておくがよい。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,53,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z2","123","6")//
+	MES(EVENT_RAGNA,"へへ……",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","1")//
+	MES(EVENT_RAGNA,"ああ、そん時は\n思いっきり罵ってやってくれ。",0)
+	MES_close(EVENT_RAGNA)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+//	stop_BGM(90)
+//	wait_BGM()
+	wait(30)
+
+	CAM_move(9500,-10400,100,0,0)
+	CAM(1000,80,100,25,225,0,0)
+	CAM(1000,70,100,25,225,60,0)
+	fade_in(0,30,0)
+	wait_fade()
+	wait(30)
+
+	SE(1079,0)//城スイッチ出てくるSE
+	F_reset_chr(51,CF_NO_CSP)
+	MOT(51,1,0)
+	CAM_move(9500,-10400,160,50,0)
+	CAM(600,70,160,25,205,50,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(50)
+
+	fade_in(100,30,0)
+	wait_fade()
+
+	MOT(50,6,0)
+
+	delete(TELMIDORL)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	chr_pos(RAGNA,	10500,10500,0,90,2)
+	chr_pos(PARTNER,	10500,10300,0,900,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★中ボス③【テルミドール】を倒した』を立てる。
+	F_set(F3_08_KillBoss3_3)
+	//★テルミドール
+	F_set_note(-27,-1)
+	//★テルミドール【正体】
+	F_set_note(-27,0)
+
+	//ラグナメモ用////////////////////////////////////////
+	//ボスを倒してからスイッチを押すまでの間、一時的にフラグを下げる
+	F_set(F3_24_M_KillTelmi)
+	
+	//2つ解除していた場合
+	if(F3_23_M_KillDygal && F3_24_M_KillTelmi && F3_22_M_KillMonb)
+	{
+		F_reset(F3_16_Switch2nd_1_1)
+		F_reset(F3_17_Switch2nd_1_2)
+		F_reset(F3_18_Switch2nd_2_1)
+		F_reset(F3_19_Switch2nd_2_2)
+		F_reset(F3_20_Switch2nd_3_1)
+		F_reset(F3_21_Switch2nd_3_2)
+	}
+	if(F3_23_M_KillDygal)
+	{
+		F_reset(F3_03_KillBoss3_1)	//モンブランを倒した
+		F_reset(F3_04_FlickSwitch1)	//スイッチ①を入れた
+	}
+	if(F3_23_M_KillDygal)
+	{
+		F_reset(F3_06_KillBoss3_2)	//ダイガルドを倒した
+		F_reset(F3_07_FlickSwitch2)	//スイッチ②を入れた
+	}
+ 	//ラグナメモ用
+	F_reset(F3_27_BattleBoss3_3)	//★中ボス③【テルミドール】との戦闘開始　を下げる
+	///////////////////////////////////////////////////////
+
+//ルックポイント
+	set_chr( 81,990,	-1,-1, 9500,10400,0,  	 0, 0202,2,"M3_51;")
+
+//エントリを差し替える
+	delete(90)
+	set_chr( 90,991,	7,6,     0,   0,  0,   180,0201,6,"<EV_STOP_01>")	//ストッパー：①エントリ 地下終
+
+//	BGM(28)
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+EV_WAHAHA
+{
+	MOT(TELMIDORL,158,15)
+	wait(60)
+	MOT(TELMIDORL,54,15)
+}
+
+//──────────────────────────────
+//▼地下水道最奥のスイッチを入れる
+//──────────────────────────────
+//　　ボスマップの奥にあるスイッチを入れるとイベント発生。
+//　　マップ上のオブジェクトが何らかの変化を起こし、
+//　　スイッチが入ったのが視覚的に分かるようにする。
+//　　以下は３回目にスイッチを入れた時のパターン。
+//　　（それ以外の場合は、画面切り替えずに別のメッセージ）
+EV_3_16_FlickSwitch3
+{
+	EV_begin()
+
+	cross_fade(30)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	9900,10500,0,90,2)
+	chr_pos(PARTNER,	9900,10300,0,90,2)
+//	color(RAGNA,-1)
+//	color(PARTNER,-1)
+/*
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 9900,10500,0, 2,90,0, "")
+	set_chr(ALWEN,	1011,-1,-1, 9900,10300,0, 2,90,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+*/
+
+	//カメラ初期位置
+	CAM_move(9660,-10330,100,0,0)
+	CAM(390,100,100,25,225,0,0)
+
+	wait(60)
+
+//	MES(RAGNA,"◆未入力項目\nオブジェクトが何らかの変化を起こし、\nスイッチが入ったのが視覚的に分かるようにする。",0)
+//	MES_close(RAGNA)
+
+//ＧＦ『★城：スイッチ③を入れた』を立てる。
+	F_set(F3_09_FlickSwitch3)
+	
+	//ラグナメモ用////////////////////////////////////////
+	//下げてたフラグを戻す
+	if(F3_22_M_KillMonb)
+	{
+		F_set(F3_03_KillBoss3_1)	//モンブランを倒した
+		F_set(F3_04_FlickSwitch1)	//スイッチ①を入れた
+	}
+	if(F3_23_M_KillDygal)
+	{
+		F_set(F3_06_KillBoss3_2)	//ダイガルドを倒した
+		F_set(F3_07_FlickSwitch2)	//スイッチ②を入れた
+	}
+	///////////////////////////////////////////////////////
+/*
+	MES(RAGNA,"??W9『◆他の２スイッチＯＮ』\n『◆モンブランスイッチＯＮ』\n『◆ダイガルドスイッチＯＮ』\n『◆フラグ変えない』",0)
+	wait_W(WK_YESNO)
+	MES_close(RAGNA)
+
+//─────────────────────
+	if(WK_YESNO==1)
+	{
+	//ＧＦ『★城：スイッチ①を入れた』を立てる。
+		F_set(F3_04_FlickSwitch1)
+	//ＧＦ『★城：スイッチ②を入れた』を立てる。
+		F_set(F3_07_FlickSwitch2)
+	}
+	else
+	if(WK_YESNO==2)
+	{
+	//ＧＦ『★城：スイッチ①を入れた』を立てる。
+		F_set(F3_04_FlickSwitch1)
+	}
+	else
+	if(WK_YESNO==3)
+	{
+	//ＧＦ『★城：スイッチ②を入れた』を立てる。
+		F_set(F3_07_FlickSwitch2)
+	}
+	else
+	if(WK_YESNO==4)
+	{
+	}
+//─────────────────────
+*/
+//本物のエントリに差し替える
+	delete(90)
+	set_chr( 90,990,	7,6,     0,   0,  0,   180,0201,6,"K1_15039;")	//①エントリ 地下終
+	workG(GW_WARP_FLAG,SET,3)//ワープ解除（夜）。
+
+	if(F3_04_FlickSwitch1 && F3_07_FlickSwitch2)
+	{
+	//	//暗転
+		fade_in(100,30,0)
+		wait_fade()
+
+	//　　城－入口分岐（ev50103）へ。
+		workG(GW_DEF_BGM,SET,62)	//デフォルト曲を変更する
+		workG(GW_ENTRY_EVENT,SET,3)
+		new_map(15010)
+
+	//	EV_end()
+	}
+	else
+	if(!F3_04_FlickSwitch1 && !F3_07_FlickSwitch2)
+	{
+		MES(RAGNA,"よし……\nこれで１つ目だな。",0)
+		MES(RAGNA,"残りの２つを解除すれば\n礼拝堂への道が開けるわけか。",0)
+		MES_close(RAGNA)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"うむ、次に行くとしよう。",0)
+		MES_close(PARTNER)
+
+	//　　イベント終了、プレイヤー操作許可。
+		fade_in(100,30,0)
+		wait_fade()
+
+	//	delete(EVENT_RAGNA)
+	//	delete(ALWEN)
+
+		chr_pos(RAGNA,	9900,10500,0,90,2)
+		chr_pos(PARTNER,	9900,10300,0,90,2)
+		color(RAGNA,1)
+		color(PARTNER,1)
+
+		CAM_return(0)
+		wait(30)
+
+		fade_in(0,30,0)
+
+		EV_end()
+	}
+	else
+	{
+//		MES(RAGNA,"◆２つ目です。",0)
+//		MES_close(RAGNA)
+		MES(RAGNA,"これで２つ目か……",0)
+		MES(RAGNA,"よし、この調子で\n残りの１つも解除しちまおう。",0)
+		MES_close(RAGNA)
+
+		MES(PARTNER,"うむ、そうだな。",0)
+		MES_close(PARTNER)
+
+	//　　イベント終了、プレイヤー操作許可。
+		fade_in(100,30,0)
+		wait_fade()
+
+		//既にテラスのスイッチを入れている
+		if(F3_07_FlickSwitch2)
+		{
+			F_set(F3_20_Switch2nd_3_1)
+		}
+		//既に墓場のスイッチを入れている
+		else
+		if(F3_04_FlickSwitch1)
+		{
+			F_set(F3_21_Switch2nd_3_2)
+		}
+ 
+	//	delete(EVENT_RAGNA)
+	//	delete(ALWEN)
+
+		chr_pos(RAGNA,	9900,10500,0,90,2)
+		chr_pos(PARTNER,	9900,10300,0,90,2)
+		color(RAGNA,1)
+		color(PARTNER,1)
+
+		CAM_return(0)
+		wait(30)
+
+		fade_in(0,30,0)
+
+		EV_end()
+	}
+}
+
+//──────────────────────────────
+//▼地下水道最奥のスイッチを入れる．礼拝堂への道を開く．後
+//──────────────────────────────
+//　　画面切り替えして、再び地下水道最奥。
+EV_3_16_OpenedChapel3
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+	chr_pos(RAGNA,	9900,10500,0,90,2)
+	chr_pos(PARTNER,	9900,10300,0,90,2)
+//	color(RAGNA,-1)
+//	color(PARTNER,-1)
+	KAO(PARTNER,"B","1","2")//
+/*
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 9900,10500,0, 2,90,0, "")
+	set_chr(ALWEN,	1011,-1,-1, 9900,10300,0, 2,90,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる
+*/
+	//カメラ初期位置
+	CAM_move(9660,-10330,100,0,0)
+	CAM(390,100,100,25,225,0,0)
+
+	//フェードイン
+	fade_in(0,30,0)
+	wait_fade()
+
+	look_chr( PARTNER, RAGNA ,"Bone_Head")
+	wait(15)
+	KAO(PARTNER,"B232BZ4","1233321","2")//
+	MES(PARTNER,"これでようやく\n３つの仕掛けを解除した。",0)
+	KAO(PARTNER,"B232BZ5","1","2")//
+	MES(PARTNER,"最初の玄関広間に戻れば\n礼拝堂への道が開けているはずだ。",0)
+	MES_close(PARTNER)
+
+	look_chr( RAGNA, PARTNER ,"Bone_Head")
+	wait(15)
+//	name2(RAGNA)
+	MES(RAGNA,"そうか……",0)
+	MES(RAGNA,"もう時間もねぇ。\nとっとと戻るとしようぜ。",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	KAO(PARTNER,"12321","1233321","1")//
+	MES(PARTNER,"うむ。",0)
+	MES_close(PARTNER)
+
+//　　イベント終了、プレイヤー操作許可。
+	fade_in(100,30,0)
+	wait_fade()
+
+//	delete(EVENT_RAGNA)
+//	delete(ALWEN)
+
+	look_off(RAGNA)
+	look_del(RAGNA)
+	look_off(PARTNER)
+	look_del(PARTNER)
+	chr_pos(RAGNA,	9900,10500,0,90,2)
+	chr_pos(PARTNER,	9900,10300,0,90,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+	workG(GW_DEF_BGM,SET,0)	//デフォルト曲を戻す
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+EV_STOP_01
+{
+	TK_begin()
+	if( GW_MAN==1 )
+	{
+	//　　※ラグナ先頭
+		MES(RAGNA,"おっと……",0)
+		MES(RAGNA,"さっさと仕掛けってのを\n解除しねえとな。",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	{
+	//　　※アルウェン先頭
+		MES(PARTNER,"ふむ……",0)
+		MES(PARTNER,"まずは仕掛けを\n解除してしまおう。",0)
+		MES_close(PARTNER)
+		wait_MES(PARTNER)
+	}
+	chr_pos(PLAYER1,12600,11250,0,90,2)
+	chr_pos(PLAYER2,12800,11250,0,90,2)
+	gather_party(PLAYER2)
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()	
+
+	TK_end()
+
+}
+
+//アルウェンオーラフェードアウト
+EV_1065_fadeout
+{
+	SE_vol(1065,100,0)
+	wait(1)
+	SE_vol(1065,99,0)
+	wait(1)
+	SE_vol(1065,98,0)
+	wait(1)
+	SE_vol(1065,97,0)
+	wait(1)
+	SE_vol(1065,96,0)
+	wait(1)
+	SE_vol(1065,95,0)
+	wait(1)
+	SE_vol(1065,94,0)
+	wait(1)
+	SE_vol(1065,93,0)
+	wait(1)
+	SE_vol(1065,92,0)
+	wait(1)
+	SE_vol(1065,91,0)
+	wait(1)
+	SE_vol(1065,90,0)
+	wait(1)
+	SE_vol(1065,89,0)
+	wait(1)
+	SE_vol(1065,88,0)
+	wait(1)
+	SE_vol(1065,87,0)
+	wait(1)
+	SE_vol(1065,86,0)
+	wait(1)
+	SE_vol(1065,85,0)
+	wait(1)
+	SE_vol(1065,84,0)
+	wait(1)
+	SE_vol(1065,83,0)
+	wait(1)
+	SE_vol(1065,82,0)
+	wait(1)
+	SE_vol(1065,81,0)
+	wait(1)
+	SE_vol(1065,80,0)
+	wait(1)
+	SE_vol(1065,79,0)
+	wait(1)
+	SE_vol(1065,78,0)
+	wait(1)
+	SE_vol(1065,77,0)
+	wait(1)
+	SE_vol(1065,76,0)
+	wait(1)
+	SE_vol(1065,75,0)
+	wait(1)
+	SE_vol(1065,74,0)
+	wait(1)
+	SE_vol(1065,73,0)
+	wait(1)
+	SE_vol(1065,72,0)
+	wait(1)
+	SE_vol(1065,71,0)
+	wait(1)
+	SE_vol(1065,70,0)
+	wait(1)
+	SE_vol(1065,69,0)
+	wait(1)
+	SE_vol(1065,68,0)
+	wait(1)
+	SE_vol(1065,67,0)
+	wait(1)
+	SE_vol(1065,66,0)
+	wait(1)
+	SE_vol(1065,65,0)
+	wait(1)
+	SE_vol(1065,64,0)
+	wait(1)
+	SE_vol(1065,63,0)
+	wait(1)
+	SE_vol(1065,62,0)
+	wait(1)
+	SE_vol(1065,61,0)
+	wait(1)
+	SE_vol(1065,60,0)
+	wait(1)
+	SE_vol(1065,59,0)
+	wait(1)
+	SE_vol(1065,58,0)
+	wait(1)
+	SE_vol(1065,57,0)
+	wait(1)
+	SE_vol(1065,56,0)
+	wait(1)
+	SE_vol(1065,55,0)
+	wait(1)
+	SE_vol(1065,54,0)
+	wait(1)
+	SE_vol(1065,53,0)
+	wait(1)
+	SE_vol(1065,52,0)
+	wait(1)
+	SE_vol(1065,51,0)
+	wait(1)
+	SE_vol(1065,50,0)
+	wait(1)
+	SE_vol(1065,49,0)
+	wait(1)
+	SE_vol(1065,48,0)
+	wait(1)
+	SE_vol(1065,47,0)
+	wait(1)
+	SE_vol(1065,46,0)
+	wait(1)
+	SE_vol(1065,45,0)
+	wait(1)
+	SE_vol(1065,44,0)
+	wait(1)
+	SE_vol(1065,43,0)
+	wait(1)
+	SE_vol(1065,42,0)
+	wait(1)
+	SE_vol(1065,41,0)
+	wait(1)
+	SE_vol(1065,40,0)
+	wait(1)
+	SE_vol(1065,39,0)
+	wait(1)
+	SE_vol(1065,38,0)
+	wait(1)
+	SE_vol(1065,37,0)
+	wait(1)
+	SE_vol(1065,36,0)
+	wait(1)
+	SE_vol(1065,35,0)
+	wait(1)
+	SE_vol(1065,34,0)
+	wait(1)
+	SE_vol(1065,33,0)
+	wait(1)
+	SE_vol(1065,32,0)
+	wait(1)
+	SE_vol(1065,31,0)
+	wait(1)
+	SE_vol(1065,30,0)
+	wait(1)
+	SE_vol(1065,29,0)
+	wait(1)
+	SE_vol(1065,28,0)
+	wait(1)
+	SE_vol(1065,27,0)
+	wait(1)
+	SE_vol(1065,26,0)
+	wait(1)
+	SE_vol(1065,25,0)
+	wait(1)
+	SE_vol(1065,24,0)
+	wait(1)
+	SE_vol(1065,23,0)
+	wait(1)
+	SE_vol(1065,22,0)
+	wait(1)
+	SE_vol(1065,21,0)
+	wait(1)
+	SE_vol(1065,20,0)
+	wait(1)
+	SE_vol(1065,19,0)
+	wait(1)
+	SE_vol(1065,18,0)
+	wait(1)
+	SE_vol(1065,17,0)
+	wait(1)
+	SE_vol(1065,16,0)
+	wait(1)
+	SE_vol(1065,15,0)
+	wait(1)
+	SE_vol(1065,14,0)
+	wait(1)
+	SE_vol(1065,13,0)
+	wait(1)
+	SE_vol(1065,12,0)
+	wait(1)
+	SE_vol(1065,11,0)
+	wait(1)
+	SE_vol(1065,10,0)
+	wait(1)
+	SE_vol(1065,9,0)
+	wait(1)
+	SE_vol(1065,8,0)
+	wait(1)
+	SE_vol(1065,7,0)
+	wait(1)
+	SE_vol(1065,6,0)
+	wait(1)
+	SE_vol(1065,5,0)
+	wait(1)
+	SE_vol(1065,4,0)
+	wait(1)
+	SE_vol(1065,3,0)
+	wait(1)
+	SE_vol(1065,2,0)
+	wait(1)
+	stop_SE(1065)
+}
+
+#EndScriptTable
+//====================================================================
+

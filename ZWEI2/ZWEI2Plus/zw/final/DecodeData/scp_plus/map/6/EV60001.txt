@@ -1,0 +1,1917 @@
+//====================================================================
+//ステージトラップスクリプト
+//[16000][山－入口]
+//====================================================================
+
+#ScriptTable
+
+#MONTBLANC	2
+#EVENT_RAGNA	3
+#SUBARU			4
+#DUMMY			5
+#ALWEN			6
+#POCKLE			7
+#PIPIRO			8
+
+#SPIRIT_A	10
+#SPIRIT_B	11
+#SPIRIT_C	12
+
+#KAPPA		15
+
+#ZIZOU_1	20
+#ZIZOU_2	21
+#ZIZOU_3	22
+#ZIZOU_4	23
+
+#TAKARA_CH	49
+//#IT_TAKARA	121		//◇121壁紙②
+#IT_TAKARA	101		//101	極光の魔法			//←実際には使ってません。
+
+//--------------------------------------------------------------------
+
+// GW_ENTRY_EVENT 1=スキーLV1クリア(銅)
+//                2=スキーLV2クリア(銀)
+//                3=スキーLV3クリア(金)
+//                4=スキーLV4クリア(プラチナ)
+//                5=スキークリア済みメダル
+//                6=スキー失敗(奈落)
+//                7=スキー失敗(死亡)
+//                8=スキー失敗(ツボ、おしい)
+//                9=スキー失敗(ダメージ)
+//               10=スキー失敗(タイム)
+//               11=スキー失敗(ツボ、足りない)
+//               12=スキー失敗(ツボ、ゼロ)
+//               13=スキー失敗(カッパに負けた)
+
+//ローカルワーク
+//
+// 00 結果のコピー
+// 01 リトライ用コース
+// 02 クリア済み判定用
+// 05 カッパリトライ処理を飛ばす。
+// 06 リトライ用ワーク
+// 07 リトライ用ワーク
+// 10 カッパ一般会話用のランダムナンバー
+//
+//ローカルフラグ
+//
+
+//--------------------------------------------------------------------
+INIT
+{
+//環境SE
+	SE(51,0)
+
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段．扉
+
+	//★星降りの里に到着した～アルウェン合流するまでは、フィールドに出れない。
+	if( F4_05_OnVillage2 && !F4_09_GoShrineMia)
+	{
+		set_chr( 90,991,	-1,-1,   -450,3000,-300,   	180,  1201,	6,"<EV_STOP_02>")	//フィールドに出れないストッパー
+	}
+	else
+	{
+		set_chr( 90,990,	-1,-1,   -450,3000,-300,   	180,  1201,	6,"K9_10000;")	//①エントリ フィールド
+	}
+
+	set_chr( 91,990,	-1,-1,   -237,-1513,0,  	330,050202,	6,"K0_16010;")	//①エントリ 入口分岐
+
+	set_chr( 92,991,	-1,-1,   3344,-3040,337, 	38,  1001,	6,"<EV_STOP_01>")	//①エントリ 坂上適当
+
+	//第五章中は、アルウェン不在のためダンジョンに入れない
+	if( (F4_11_EndFourth && !F5_17_EndFifth)
+	{
+		set_chr( 93,991,	-1,-1,  -100,-1330,0,  45,0404,	6,"<EV_STOP_03>")	//ダンジョンに入れないストッパー
+	}
+
+	// ミッション達成でカッパから貰えるアイテム
+	// アルウェンがいる時でないと出現しない
+//	if(F4_09_GoShrineMia)//カッパスキーが出来るタイミング以降。
+	// 奥義入手済み
+	if(IT_TAKARA>0)
+	{
+		set_chr( TAKARA_CH,560,    -1,-1,296,-6783,1,  	   7,     0, 0,";")		//②宝箱（並）画面外
+		chr_pos(TAKARA_CH,1212,-1386,1,0,7)	//カッパの横
+		F_set_chr(TAKARA_CH,CF_NO_ZIMEN)
+		F_set_chr(TAKARA_CH,CF_NO_HEIGHT)
+	}
+	else
+	if(GW_ENTRY_EVENT>=1 && GW_ENTRY_EVENT<=13)		//スキーしてきた
+	{
+		if(GW_SKI_PARTNER==1)//アルウェンがいる
+		{
+			if(FV_FF_KappaSki_03 || GW_ENTRY_EVENT==3)	//カッパスキーLV3クリア会話した or LV3クリアしてきた
+			{
+				set_chr( TAKARA_CH,560,	   -1,-1,296,-6783,1,  	   6,     0,20,"<TK_OUGI_1>;")		//②宝箱（並）	//画面外(カッパが呼び出す)
+				F_set_chr(TAKARA_CH,CF_NO_ZIMEN)
+				F_set_chr(TAKARA_CH,CF_NO_HEIGHT)
+				if(FV_FF_KappaSki_03)	//話しかけた
+				{
+					chr_pos(TAKARA_CH,1212,-1386,1,0,6)	//カッパの横
+				}
+			}
+		}
+	}
+
+	//NPC
+	if(GW_ENTRY_EVENT>=1 && GW_ENTRY_EVENT<=13)
+	{
+	//カッパゲーム直後のみ配置。
+		set_chr( KAPPA, 80,	   -1,-1,1395,-1371,1,  340, 15,20,"<TK_KAPPA2>")
+		F_set_chr(KAPPA,CF_NO_ZIMEN)
+		F_set_chr(KAPPA,CF_NO_HEIGHT)
+		F_set_chr(KAPPA,CF_NO_MOVE)
+
+		//結果のコピー(グローバルを消さないといけないため)
+		if(GW_ENTRY_EVENT==1)
+			workL(00,SET,1)
+		else if(GW_ENTRY_EVENT==2)
+			workL(00,SET,2)
+		else if(GW_ENTRY_EVENT==3)
+			workL(00,SET,3)
+		else if(GW_ENTRY_EVENT==4)
+			workL(00,SET,4)
+		else if(GW_ENTRY_EVENT==5)
+			workL(00,SET,5)
+		else if(GW_ENTRY_EVENT==6)
+			workL(00,SET,6)
+		else if(GW_ENTRY_EVENT==7)
+			workL(00,SET,7)
+		else if(GW_ENTRY_EVENT==8)
+			workL(00,SET,8)
+		else if(GW_ENTRY_EVENT==9)
+			workL(00,SET,9)
+		else if(GW_ENTRY_EVENT==10)
+			workL(00,SET,10)
+		else if(GW_ENTRY_EVENT==11)
+			workL(00,SET,11)
+		else if(GW_ENTRY_EVENT==12)
+			workL(00,SET,12)
+		else if(GW_ENTRY_EVENT==13)
+			workL(00,SET,13)
+
+		if(GW_ENTRY_EVENT>4)	//クリアできなかった
+		{
+			if(GW_SKI_MISS<5)
+				workG(GW_SKI_MISS,ADD,1)	//ミスを加算
+		}
+
+		//今クリアしてきたコース番号
+		if(GW_SKI_MODE==1)
+			workL(01,SET,1)
+		else if(GW_SKI_MODE==2)
+			workL(01,SET,2)
+		else if(GW_SKI_MODE==3)
+			workL(01,SET,3)
+		else if(GW_SKI_MODE==4)
+			workL(01,SET,4)
+
+		//すでにクリアしたことのあるコースだったかどうか
+		if(WK000==1 && FV_FF_KappaSki_01)
+			workL(02,SET,1)
+		if(WK000==2 && FV_FF_KappaSki_02)
+			workL(02,SET,2)
+		if(WK000==3 && FV_FF_KappaSki_03)
+			workL(02,SET,3)
+		if(WK000==4 && FV_FF_KappaSki_04)
+			workL(02,SET,4)
+
+		workG(GW_ENTRY_EVENT,SET,0)	// クリア
+		workG(GW_SKI_MODE,SET,0)	// クリア
+		workG(GW_NOW_ROUTE,SET,0)	//攻略中ルートクリア
+
+		if(F4_09_GoShrineMia && !F5_00_HearLunar)//アルウェンがいる
+			workG(GW_WARP_FLAG,SET,1)//ワープ解除。
+		else
+		if(F6_00_GoToMeru)//アルウェンがいる
+			workG(GW_WARP_FLAG,SET,1)//ワープ解除。
+		else
+			workG(GW_WARP_FLAG,SET,2)//ワープ解除。（ルゥ）
+
+		//カッパ．魔法を貰った際のリトライ抜け用Ｌワーク
+		workL(05,SET,0)
+
+		//カッパゲーム、終わりだよ
+		EV("EV_KappaEnd")
+	}
+
+	//②３妖精
+	if( F1_15_GoVillage && !F2_00_GoForest)
+	{
+		set_chr( SPIRIT_A,84,	-1,-1,	368,431,0,	 15,270, 20,"<TK_SPIRIT_A>")	//マリン
+		set_chr( SPIRIT_B,85,	-1,-1,	557,308,0,	 15,44, 20,"<TK_SPIRIT_B>")	//リッキー
+		set_chr( SPIRIT_C,86,	-1,-1,	596,498,0,	 15,112, 20,"<TK_SPIRIT_C>")	//ジョー
+		F_set_chr(SPIRIT_A,CF_NO_MOVE)
+		F_set_chr(SPIRIT_B,CF_NO_MOVE)
+		F_set_chr(SPIRIT_C,CF_NO_MOVE)
+	}
+
+	//地蔵
+	if( F4_04_OpenRoad )	//開いた後	//ＧＦ『★隠れ里への道を開いた』
+	{
+		set_chr(ZIZOU_1, 651, -1,-1, -286,-796,1,  0, 0,    3,"") 
+		set_chr(ZIZOU_2, 651, -1,-1, -115,-911,1,  0,  0,    3,"") 
+		set_chr(ZIZOU_3, 651, -1,-1,  224,-1139,1,  0,0,    3,"") 
+		set_chr(ZIZOU_4, 651, -1,-1,  412,-1247,1,  0, 0,    3,"") 
+	}
+	else
+//	if( F4_03_OnRoots  )	//スバルと一緒にやってきた後
+	if( F4_02_GoVillage2 )	//スバルと一緒にやってきた	
+	{
+	//	 	管理no/typ		tip座標	 +座標		  mot 向き 状態  EasyScript
+		set_chr(ZIZOU_1, 651, -1,-1, -286,-796,1,  0, 90,    2,"<EV_ZIZOU_1>") 
+		set_chr(ZIZOU_2, 651, -1,-1, -115,-911,1,  0,  0,    2,"<EV_ZIZOU_2>") 
+		set_chr(ZIZOU_3, 651, -1,-1,  224,-1139,1,  0,270,    2,"<EV_ZIZOU_3>") 
+		set_chr(ZIZOU_4, 651, -1,-1,  412,-1247,1,  0, 90,    2,"<EV_ZIZOU_4>") 
+		workL(1,SET, 9)
+		workL(2,SET, 0)
+		workL(3,SET,27)
+		workL(4,SET, 9)	
+	}
+	else 						//スバルと来る前
+	{	//地蔵
+		set_chr(ZIZOU_1, 651, -1,-1, -286,-796,1,  0, 90,    3,"") 
+		set_chr(ZIZOU_2, 651, -1,-1, -115,-911,1,  0,  0,    3,"") 
+		set_chr(ZIZOU_3, 651, -1,-1,  224,-1139,1,  0,270,    3,"") 
+		set_chr(ZIZOU_4, 651, -1,-1,  412,-1247,1,  0, 90,    3,"") 
+	}
+	F_set_chr(ZIZOU_1, CF_NO_CLIP)
+	F_set_chr(ZIZOU_2, CF_NO_CLIP)
+	F_set_chr(ZIZOU_3, CF_NO_CLIP)
+	F_set_chr(ZIZOU_4, CF_NO_CLIP)
+	F_set_chr(ZIZOU_1, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_2, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_3, CF_NO_CLIP2)
+	F_set_chr(ZIZOU_4, CF_NO_CLIP2)
+			
+//■イベント
+	if(F3_13_EndThird && !F4_11_EndFourth)
+	{
+	//４章
+		//ＧＦ『★星降りの里へ向かうことにした』立っている
+		//ＧＦ『★隠れ里への道を開いた』立ってない
+		if(F4_02_GoVillage2 && !F4_04_OpenRoad)
+		{
+			//▼隠れ里への道を開く
+//			set_chr( 80,990,	-1,-1,   000,-1330,0, 0, 051616,6,"<EV_4_06_OpenRoad>;")
+		}
+		//ＧＦ『★星降りの里へ向かうことにした』立っている
+		//ＧＦ『★星ヶ峰のふもとにやってきた』立ってない
+		if(F4_02_GoVillage2 && !F4_03_OnRoots)
+		{
+			//▼星ヶ峰のふもとに来る
+			EV("EV_4_05_OnRoots")
+		}
+	}
+	else 
+	if(F2_00_GoForest && !F2_04_IntoTower)		//★金闇の森へ向かうことにした ★大鉄塔に入れるようになった
+	{
+		if(!F2_18_P&PinMnt)	//★ポックル＆ピピロに出会う（山入口）
+		{
+			EV("EV_2_18_PipiroPockle")
+		}
+	
+	}
+
+//■場面固有設定
+	if( F4_04_OpenRoad )
+	{
+		mot_obj("rockgate", "open0")		//扉開く
+	}
+
+	EV("EV_SnowFall")
+}
+
+//-------------------------------------------------------------------
+EV_SnowFall
+{
+	EFF_chr(4292, 0, 0,100, -1, "charbase0" )
+	wait( 50 )
+	loop
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼星ヶ峰のふもとに来る
+//──────────────────────────────
+//　　スバルを連れて星ヶ峰のふもとに入るとイベント発生。
+//　　吹雪いた状態のマップを遠景で見せながら、
+//　　入口方面からラグナたちが入ってくるのを見せる。
+//　　以下は、すでに奥の坂道登りにトライして失敗した場合。
+EV_4_05_OnRoots
+{
+	set_namebmp(0,0)		//地名非表示
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//キャラ再配置
+
+	//      no          typ tip           x   y   z   mot deg state sc
+	set_chr(EVENT_RAGNA, 1010, -1, -1, -616,2782,-299, 2, 190, 0,  "")
+	set_chr(SUBARU,      1020, -1, -1, -485,2819,-303, 2, 190, 0,  "")
+
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(SUBARU,     CF_NO_CLIP)
+	F_set_chr(SUBARU,     CF_NO_CLIP2)
+	F_set_chr(SUBARU,     CF_NO_CSP)
+	
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	
+	//カメラ初期位置
+	CAM_move(-167,640,259,0,0)
+	CAM(-480,75,100,25,145,0,0)
+	CAM_move(-65,-715,261, 150,0)
+	CAM(599,174,261,31,163,150,0)
+
+	//モーション設定
+	MOT_SET(SUBARU, 150,-2,541,541,-1,-1)	//えへへ
+	MOT_SET(SUBARU, 151,-2,443,443,-1,-1)	//びっくり
+
+//--- 表情初期 --------------------------------------------------------
+	KAO(RAGNA,   "1","1","1")
+	KAO(PARTNER, "1","1","1")
+	
+	//山カメラ
+	CAM_move(-390,-1469,1181,0,0)
+	CAM(-720,155,1020,29,199,0,0)
+	//フェードイン
+	fade_in(0,60,0)	
+	wait_fade()
+	CAM_move(-390,-1469,1181,120,0)
+	CAM(240,155,1020,29,171,120,0)
+
+
+	wait_CAM()
+	//坂カメラ		
+	cross_fade(15)
+	CAM_move(3067,2134,241,0,0)
+	CAM(-440,206,80,25,174,0,0)
+	CAM_move(3067,2134,901,90,0)
+	CAM(-440,206,740,25,174,90,0)
+	wait_CAM()
+
+	//地蔵カメラ
+	cross_fade(15)
+	CAM_move(-54,1022,181,0,0)
+	CAM(-360,85,20,25,275,0,0)
+	CAM(-360,90,20,25,275,30,0)
+	wait_fade()
+	wait(30)
+	set_namebmp(14,0)		//地名表示
+	CAM_move(513,-955,761,150,0)
+	CAM(-200,222,600,34,185,150,0)
+
+	move( EVENT_RAGNA,   0, WALK1, -233,707,0,0)
+	wait(30)
+	move( SUBARU, 0, WALK1, -120,897,-17,0)
+	wait(150)
+
+	cross_fade(15)
+	CAM_move(20,-782,157,0,0)
+	CAM(-310,26,109,31,261,0,0)
+
+	wait_move(EVENT_RAGNA)
+	wait(15)
+	wait_fade()
+	
+	KAO(EVENT_RAGNA,"B232BZ4","1232A","5")
+	MES(EVENT_RAGNA,"うへぇ……\n相変わらず吹雪いてやがるな。",0)
+//	rot_chr(EVENT_RAGNA,30,SUBARU)
+	rot(EVENT_RAGNA,30,240)
+
+	look_chr(EVENT_RAGNA, SUBARU, "Bone_Head")
+	KAO(EVENT_RAGNA,"B232BZ3","A233321","1")
+	MES(EVENT_RAGNA,"それで、この先はどうするんだ？",0)
+	KAO(EVENT_RAGNA,"B232BZ4","1","1")
+	MES(EVENT_RAGNA,"かなりの急勾配で\n登れそうな感じじゃなかったが。",0)
+	MES_close(EVENT_RAGNA)
+	
+	look_chr(SUBARU, EVENT_RAGNA,"Bone_Head" );
+	MOT(SUBARU, 150, 10)
+	
+	KAO(SUBARU,"12321Z4","1236","6")
+	MES(SUBARU,"えへへ……\n実は隠された道がありまして。",0)
+	KAO(SUBARU,"12321Z4","321","1")
+	MES(SUBARU,"そちらの方を開かないと\n里には辿り着けないんです。",0)
+	MES_close(SUBARU)
+	
+	MOT(SUBARU,2,10)
+	KAO(EVENT_RAGNA,"B232BZ3","12321D","6")
+	MES(EVENT_RAGNA,"へえ……そうだったのか。",0)
+	
+	look_off(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"12321Z3","1232A","1")	
+	MES(EVENT_RAGNA,"ふむ、そうなると……",0)
+	MES_close(EVENT_RAGNA)
+
+//　　ラグナ、吹雪の中であちこちを見回す。
+
+//	CAM_move(-80,-802,157,60,0)
+//	CAM(-110,27,157,31,174,60,0)
+	CAM_move(-120,-802,157,60,0)
+	CAM(-110,27,157,31,184,60,0)
+	wait(45)
+
+//　　ＰＡマークの後、画面スクロールして地蔵のあるあたり。
+	KAO(EVENT_RAGNA,"1","A2321","1")
+	EMO(EVENT_RAGNA,EMO_PA)
+	wait(15)
+	
+	KAO(EVENT_RAGNA,"12321Z3","123332A","1")
+	MES(EVENT_RAGNA,"……あそこにある地蔵か。",0)
+	KAO(EVENT_RAGNA,"12321Z4","A","1")	
+	MES(EVENT_RAGNA,"あれの向きを揃えたら\n隠し扉が開くんじゃねえか？",0)
+	MES_close(EVENT_RAGNA)
+
+//　　スバルの頭に！マーク
+	EMO(SUBARU,EMO_BIKKURI)
+	wait(30)
+
+	look_chr(SUBARU,EVENT_RAGNA,"Bone_Head")
+//	MOT(SUBARU,151,5)
+	KAO(SUBARU,"12321Z4","1236","6")	
+	MES(SUBARU,"すごい！\nよく分かりましたね！？",0)
+	MES_close(SUBARU)
+	
+	KAO(EVENT_RAGNA,"12321Z4","A23","1")
+	MES(EVENT_RAGNA,"トレジャーハントでは\nよくあるギミックだからな。",0)
+
+	look_chr(EVENT_RAGNA,SUBARU,"Bone_Head")	
+	KAO(EVENT_RAGNA,"12321Z6","36","5")	
+	MES(EVENT_RAGNA,"ま、道があるって\n知らなきゃ気付けないようじゃ、\n俺もまだまだ修行不足だぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+	MES(SUBARU,"うーん……\n奥が深いんですねぇ。",0)
+//	KAO(SUBARU,"12321Z5","1","1")
+//	MES(SUBARU,"えっと、じゃあ\nすぐに開きますから\n行ってみましょう。",0)
+	MES(SUBARU,"えっと、仕掛けを解除するには\n全部のお地蔵さんの向きを\n正面に揃える必要があるんです。",0)
+	MES(SUBARU,"ただ、幾つかが連動しているから\n注意する必要があって……",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"12321Z3","32TU","1")	
+	MES(EVENT_RAGNA,"なるほど……\n簡単には行かないわけか。",0)
+	KAO(EVENT_RAGNA,"12321Z3","U","1")	
+	MES(EVENT_RAGNA,"まあいい、試してみるとしようぜ。",0)
+	MES_close(EVENT_RAGNA)
+
+//	KAO(EVENT_RAGNA,"12321Z6","1","1")	
+//	MES(EVENT_RAGNA,"なあ、スバル。\n仕掛けの解除を俺に\nやらせてみてくれないか？",0)
+//	KAO(EVENT_RAGNA,"12321Z6","1","1")	
+//	MES(EVENT_RAGNA,"ちょっくら腕試しがしたいんだ。\n",0)
+//	MES_close(EVENT_RAGNA)
+//
+//	KAO(SUBARU,"12321Z3","1","1")
+//	MES(SUBARU,"あ、はい。\nお手並み拝見させてもらいます。",0)
+//	MES_close(SUBARU)
+//	wait(15)
+
+	fade_in(100,30,0)
+	wait_fade()
+
+	wait(15)
+
+	SE(043,PLAYER1)
+	MES(EVENT_RAGNA,"C3S2地蔵の向きを動かしてください。\n全ての地蔵の向きを正面に揃えたら\n仕掛けが解除されます。",2)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//　　イベント終了、プレイヤー操作許可。
+//	cross_fade(15)
+	CAM_return(0)
+	delete(EVENT_RAGNA)
+	delete(SUBARU)
+	chr_pos(RAGNA, -233,707,0,180,0)
+	chr_pos(PARTNER, -120,897,-17,180,0)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	wait(15)
+	fade_in(0,30,0)
+
+//ＧＦ『★星ヶ峰のふもとにやってきた』を立てる。
+	F_set(F4_03_OnRoots)
+
+	EV_end()
+}
+
+
+//──────────────────────────────
+//▼隠れ里への道を開く
+//──────────────────────────────
+//　　左奥にある地蔵たちの近くまで来るとイベント開始。
+//　　スバルがたたっと走って、地蔵の一つ一つを動かしていく。
+EV_4_06_OpenRoad
+{
+	EV_begin()
+
+	fade_in(100,30,0)
+	wait_fade()
+	
+	
+	
+//	cross_fade(15)
+	//カメラ初期位置
+//	CAM_move(250,747,274,0,0)
+//	CAM(-220,12,174,37,195,0,0)
+//	CAM_move(250,747,174,  120,0)	
+//	CAM(-220,12,174,37,239,120,0)
+		
+	//キャラ再配置	
+	//      no          typ tip           x   y   z   mot deg state sc
+	set_chr(EVENT_RAGNA, 1010, -1, -1, 502,227,    0, 2, 119, 0,  "")			//ラグナ
+//	set_chr(SUBARU,      1020, -1, -1, 25,-830,  0, 2, 190, 0,  "")				//スバル
+	set_chr(SUBARU,      1020, -1, -1,-23,-410,  0, 2, 158, 0,  "")				//スバル
+	set_chr(DUMMY,       1015, -1, -1, 25,-830,  0, 2, 190, 0,  "")
+	set_chr(MONTBLANC,   1025,-1,-1, -929,-164,0, 2,240,0, "")					//モンブラン
+	color(MONTBLANC,-1)
+	wait_color(MONTBLANC)
+
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(SUBARU,     CF_NO_CLIP)
+	F_set_chr(SUBARU,     CF_NO_CLIP2)
+	F_set_chr(SUBARU,     CF_NO_CSP)
+	F_set_chr(DUMMY,     CF_NO_CLIP)
+	F_set_chr(DUMMY,     CF_NO_CLIP2)
+	F_set_chr(DUMMY,     CF_NO_CSP)
+	F_set_chr(DUMMY,     CF_NO_HEIGHT)
+	F_set_chr(DUMMY,     CF_NO_ZIMEN)
+
+	//--- モーション設定 -------------------------------------------------- 
+	MOT_SET(SUBARU, 150,-2,512,512,-1,-1)	//
+//	MOT_SET(SUBARU, 150,-2,458,458,-1,-1)	//
+	MOT_SET(SUBARU, 151,-2,459,459,-1,-1)	//
+	MOT_SET(MONTBLANC,152,-1,200,209,-1,-1)	//
+	
+	//表情初期
+	KAO(EVENT_RAGNA, "1","1","1");
+	KAO(SUBARU,      "1","1","1")
+	KAO(MONTBLANC,   "1","1","1")
+
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	color(MONTBLANC,-1)
+	color(DUMMY,-1)
+	color(EVENT_RAGNA,-1)
+	color(SUBARU,-1)
+//	wait(60)
+		
+	chr_pos(DUMMY, -213,-866,0,0,0)
+
+//	move(SUBARU, 0, WALK1, -102,-825,0,0 )
+//
+//	wait_move(SUBARU)
+////	wait(30)
+////	chr_pos(SUBARU,-102,-825,0,0,0)
+////	rot(SUBARU, 100, 110)
+////	rot_chr(SUBARU, 60, DUMMY)
+//
+////	wait(15)
+//
+////	MES(SUBARU,"◆未入力項目\n地蔵を動かし、\n隠し扉がある方向を全て向かせていく。",0)
+////	MES(SUBARU,"◆未入力項目\n隠し扉が開いていくシーン。",0)
+////	MES_close(SUBARU)
+//	
+////	MOT(SUBARU, 150, 5)
+////	wait(10)
+//
+////	MES(SUBARU,"えっと……\nこれを、こう。",0)
+////	MES_close(SUBARU)
+//	
+//	MOT(SUBARU, 2,5)
+//	wait(30)	
+//	
+//	chr_pos(DUMMY, -183,-1030,0,0,0)	
+//	rot_chr(SUBARU,60,DUMMY)
+//	move(SUBARU, 0, RUN1, -76,-949,0,0)
+//	wait_move(SUBARU)
+//	rot_chr(SUBARU,60,DUMMY)
+//	wait(30)
+//	
+//	MOT(SUBARU, 150, 5)
+//	wait(10)
+//
+////	MES(SUBARU,"これをこうして……",0)
+////	MES_close(SUBARU)	
+//	
+//	MOT(SUBARU, 2,5)
+//	wait(30)	
+//	
+//	CAM(-320,11,174,37,177,30,0)
+//	
+//	chr_pos(DUMMY,278,-1252,0,0,0)
+//	rot_chr(SUBARU,60,DUMMY)	
+//	move(SUBARU, 0, RUN1, 214,-1190,0,0);
+//	wait_move(SUBARU)
+//	rot_chr(SUBARU,60,DUMMY)
+//	wait(10)
+//	
+//	MOT(SUBARU, 150, 5)
+//	wait(30)
+//	MOT(SUBARU, 2,5)
+//	wait(30)
+//
+//
+//	move(SUBARU, 0, RUN1, 352,-1118,0,0)
+//	wait_move(SUBARU)	
+//
+//	chr_pos(DUMMY,405,-1361,0,0,0)
+//	rot_chr(SUBARU,60,DUMMY)
+//	
+//	move(SUBARU, 0, RUN1, 426,-1271,0,0)
+//	wait_move(SUBARU)
+//	rot_chr(SUBARU,60,DUMMY)
+//	wait(10)	
+//	
+//	MOT(SUBARU, 150, 5)
+//	wait(30)
+//	MOT(SUBARU, 2,5)
+//	wait(30)
+//
+//	chr_pos(DUMMY,	590,-1232,0,0,0)
+//	rot_chr(SUBARU,60,DUMMY)	
+////	move(SUBARU, 0, RUN1, 535,-1227,0,0)
+//	move(SUBARU, 0, RUN1, 538,-1194,0,0)
+//	wait_move(SUBARU)
+//	rot_chr(SUBARU,60,DUMMY)
+//	wait(10)
+//		
+//	MOT(SUBARU, 150, 5)
+//	wait(30)
+//	
+////	MES(SUBARU,"で、これをこうと……",0)
+////	MES_close(SUBARU)
+//	MOT(SUBARU, 2,5)
+//	wait(5)	
+//	
+//	rot(SUBARU, 30, 140)
+	
+//　　上記の台詞にあわせて地蔵を動かし、
+//　　隠し扉がある方向を全て向かせていくとギミック解除音。
+//　　ゴゴゴという音と共に、隠されていた岩の扉が開いていく。
+
+
+	CAM_move(43,1062,240,0,0)
+	CAM(40,107,80,25,210,0,0)
+	fade_in(0,30,0)	
+	wait_fade()		
+	
+	CAM_move(23,1062,240,90,0)
+	CAM(-240,95,80,25,210,90,0)
+
+
+	CAM_quake("4646L")		//画面振動 "5"を中心に上下の強弱を設定。"L"で始めに戻ってループ
+//	CAM(-320,11,174,37,213,150,0)
+
+	SE(1024,0)//扉が開く地鳴りSE
+
+	wait(14)
+	mot_obj("rockgate", "open")		//扉開く
+//	wait(100)
+	wait(70)			//★ボイス入力演出
+	if( GW_MAN==1 )
+	{
+		//　　※ラグナ先頭
+		VOICE(253,0)		//★ボイス入力演出
+	}
+	else
+	{
+		//　　※スバル先頭
+		VOICE(241,0)		//★ボイス入力演出
+	}
+	wait(70)			//★ボイス入力演出
+	CAM_quake("")
+
+	cross_fade(15)
+	CAM_move(90,1007,174,0,0)
+	CAM(-160,66,174,26,162,0,0)	
+	chr_pos(SUBARU,      170,-1026,0,35, 0)
+	chr_pos(EVENT_RAGNA, 191,-774,0,131, 0)
+	color(SUBARU,1)
+	color(EVENT_RAGNA,1)
+	look_chr(SUBARU, EVENT_RAGNA, "Bone_Head")
+	wait_fade()
+	wait(15)
+
+	KAO(EVENT_RAGNA,"12321FZ2","12321D","6");
+	MES(EVENT_RAGNA,"なるほど……",0)
+	KAO(EVENT_RAGNA,"12321Z4","1232A","1");	
+//	MES(EVENT_RAGNA,"全部の地蔵の視線を\n一点に集める必要があるわけか。",0)
+	MES(EVENT_RAGNA,"こいつは意外と複雑な\n仕掛けかもしれねぇな。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(EVENT_RAGNA, SUBARU,  "Bone_Head")
+
+	KAO(SUBARU,"12321Z4","1236","5");
+//	MES(SUBARU,"えへへ……\n意外と気付かれないんですよね。",0)
+	MES(SUBARU,"えへへ……\n知っていても解除するのに\n手間取るんですよね。",0)
+	KAO(SUBARU,"12321Z4","321","1");	
+	MES(SUBARU,"この先を抜けて行くと\n里に通じている山道に出ます。",0)
+	KAO(SUBARU,"123212Z3","1111111112321D","1");	
+	MES(SUBARU,"小一時間ほど登れば\n里に着きますけど……あっ！",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"12321Z3","12321D","1");
+	MES(EVENT_RAGNA,"なんだ、どうした？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU,"B232BZ6","1232A","4");
+	MES(SUBARU,"えっと、山道から降りてくる時、\nかなり魔物がうろついてたんです。",0)
+	KAO(SUBARU,"B232BZ5","A","4");
+	MES(SUBARU,"ボク一人の時は、忍術で隠れながら\nやり過ごしてたんですけど……",0)
+	MES_close(SUBARU)
+
+	KAO(EVENT_RAGNA,"B232BZ4","123","4");
+	MES(EVENT_RAGNA,"さすがにそいつは\n俺には無理な芸当だな……",0)
+	KAO(EVENT_RAGNA,"12321Z5","321","2");	
+	MES(EVENT_RAGNA,"ま、魔物くらいだったら\n何とかコイツで対処できるだろ。",0)
+	MES_close(EVENT_RAGNA)
+
+	look_off(EVENT_RAGNA)
+//　　ラグナ、アンカーギアを構えてふっと眺める動作。
+	MOT(EVENT_RAGNA,52,7)
+	SE(1025,0)//ギア構えSE
+	wait_MOT(EVENT_RAGNA,52)
+
+	KAO(EVENT_RAGNA,"12321Z5","123332A","4");	
+	MES(EVENT_RAGNA,"……姫さんに付き合ったおかげで\nやたらと鍛えられちまったしな。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU, "12321Z2", "A23332A", "4")
+	MES(SUBARU,"師匠……",0)
+	MES_close(SUBARU)
+
+	look_chr(EVENT_RAGNA, SUBARU,  "Bone_Head")
+	KAO(EVENT_RAGNA, "12321Z3", "A23", "6")
+	MES(EVENT_RAGNA,"はは、悪い。\nとっとと行くとしようぜ。",0)
+	KAO(EVENT_RAGNA, "12321Z5", "321", "1")
+	MES(EVENT_RAGNA,"これ以上、ここでじっとしてたら\n風邪引いちまいそうだからな。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(SUBARU, "12321Z3", "2IJ", "4")
+	MES(SUBARU,"そ、そうですね。",0)
+	MES_close(SUBARU)
+	KAO(SUBARU, "1", "33321", "1")
+	wait(15)
+
+//　　ラグナとスバル、そのまま扉の中に入っていく。
+
+	F_set_chr(SUBARU,     CF_NO_HEIGHT)
+	F_set_chr(SUBARU,     CF_NO_ZIMEN)
+
+	F_set_chr(EVENT_RAGNA,     CF_NO_HEIGHT)
+	F_set_chr(EVENT_RAGNA,     CF_NO_ZIMEN)
+
+	look_off(SUBARU)
+	look_off(EVENT_RAGNA)
+	rot(SUBARU, 30, 136)
+	move( SUBARU,0, WALK1,-462,-1775,0,0)
+	wait(10)
+	rot(EVENT_RAGNA, 30, 136)	
+	move( EVENT_RAGNA, 0,	WALK1, -462,-1775,0,0)
+
+	wait_move( SUBARU )
+	wait_move( EVENT_RAGNA )
+
+	color(EVENT_RAGNA,-1)
+	color(SUBARU,-1)
+	
+	//---------------------------------------------------------------------
+//　　完全に入ってから、画面スクロールして入口方面。
+//　　羽ばたく音と共に、モンブランが物陰などから現れる。
+	color(MONTBLANC,1)
+	wait_color(MONTBLANC)
+
+	CAM_move(-539,271,141,150,0)
+//	CAM(-400,19,220,28,289,150,0)
+	CAM(-399,19,101,28,288,150,0)	
+	wait(150)
+	CAM(-399,11,141,27,288,1200,0)
+
+	VOICE(336,0)		//★ボイス入力演出
+	move(MONTBLANC, 0, WALK1, -859,-111,0,0 )
+//	set_chr(MONTBLANC,   1025,-1,-1, -929,-164,0, 2,240,0, "")
+
+	KAO(MONTBLANC, "12321Z3", "1233321", "-")
+	MES(MONTBLANC,"ニャハハッ……\nあんな所に道があったとは。",0)
+	KAO(MONTBLANC, "12321Z3", "1236", "-")
+	MES(MONTBLANC,"護人の里……\nようやく見つけたニャ！",0)
+	MES_close(MONTBLANC)
+
+//　　ここでモンブラン、不意に顔をしかめる。
+	KAO(MONTBLANC, "12333Z3", "4", "-")
+	MES(MONTBLANC,"ふぁ、ふぁ、ふぁ……",0)
+	
+	MOT(MONTBLANC, 93, 3)	
+	KAO(MONTBLANC, "4444444445", "5", "-")
+	MES(MONTBLANC,"はーくしょん！！",0)
+	MES_close(MONTBLANC)
+
+//　　モンブラン、ぶるると身体を震わせる。
+	KAO(MONTBLANC, "C232CZ3", "I", "-")
+	MES(MONTBLANC,"い、いかん……\nここはあまりに冷えるニャ！",0)
+	KAO(MONTBLANC, "C232CZ4", "IHG", "-")
+	MES(MONTBLANC,"急いでザハール様の所に戻って\n暖を取るとするニャ！",0)
+	MES_close(MONTBLANC)
+
+//　　モンブラン、杖を掲げて詠唱モーション。
+//　　そのまま転位エフェクトと共にモンブランが消えて、
+	KAO(MONTBLANC, "C", "GHI", "-")
+	MOT(MONTBLANC,50,10)
+	wait(30)
+	
+	EFF_chr(24580,MONTBLANC,0,100,0,"charbase0")
+	SE(1016,0)//ワープSE
+
+	color(MONTBLANC,-30)
+	wait_color(MONTBLANC)
+	
+//　　画面ゆっくりとフェードアウト。
+	fade_in(100,60,0)
+	wait_fade()
+
+	CAM_return(0)
+	wait(30)
+	
+	delete(DUMMY)
+	delete(EVENT_RAGNA)
+	delete(SUBARU)
+	delete(MONTBLANC)
+
+//ＧＦ『★隠れ里への道を開いた』を立てる。
+	F_set(F4_04_OpenRoad)
+
+//　　山－入口分岐マップへ(ev60100)
+	workG(GW_ENTRY_EVENT,SET,1)
+	new_map(16010)
+
+//	EV_end()
+}
+
+//──────────────────────────────
+//▼星ヶ峰のふもとでピピロ、ポックルに出会う　サブイベント
+//──────────────────────────────
+EV_2_18_PipiroPockle
+{
+	EV_begin()
+//	color(SPIRIT_A,-1)
+//	color(SPIRIT_B,-1)
+//	color(SPIRIT_C,-1)
+
+	fade_in(100,1,0)
+	wait_fade()
+
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+	set_chr(PIPIRO, 3,-1,-1, 1754,-1086,0,,2,230,0,"")	//ピピロ
+	set_chr(POCKLE, 2,-1,-1, 1866, -922,0,2,220,0,"")	//ポックル
+
+
+	set_chr(EVENT_RAGNA,   1010,-1,-1, -477,2648,-278,2,190,0, "")
+//	set_chr(EVENT_RAGNA,   1010,-1,-1, -376,2265,-221,2,190,0, "")
+	set_chr(ALWEN,         1011,-1,-1, -661,2685,-284,2,190,0, "")
+//	set_chr(ALWEN,         1011,-1,-1, -551,2216,-216,2,190,0, "")
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる。
+
+	F_set_chr(PIPIRO, CF_NO_CLIP)
+	F_set_chr(PIPIRO, CF_NO_CLIP2)
+	F_set_chr(PIPIRO, CF_NO_SCP)
+	F_set_chr(POCKLE, CF_NO_CLIP)
+	F_set_chr(POCKLE, CF_NO_CLIP2)
+	F_set_chr(POCKLE, CF_NO_CSP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA, CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA, CF_NO_CSP)
+	
+	MOT_SET(POCKLE, 150, -1, 472, 472, -1,0)	//ええ！
+	MOT_SET(PIPIRO, 150, -1, 514, 514, -1,0)	//
+	
+	
+//	MOT_SET(PIPIRO, 151, -1, 515, 515, -1,0)	//
+	MOT_SET(PIPIRO, 151, -1, 475, 475, -1,0)	//
+	MOT_SET(PIPIRO, 152, -1, 460, 460, -1,0)	//あーもー
+	MOT(PIPIRO, 150, 1)
+	
+	
+	KAO(PIPIRO, "1","1","1")
+	KAO(POCKLE, "1","1","1")
+	KAO(EVENT_RAGNA, "1","1","1")
+	KAO(ALEWN, "1","1","1")
+	
+//	CAM_move(-311,-2209,47,0,0)
+//	CAM(800,175,100,25,196,0,0)
+	CAM_move(-150,-1750,405,0,0)
+	CAM(1160,175,540,25,210,0,0)
+	
+	color(KAPPA, -1)
+	
+	move(EVENT_RAGNA, 0,WALK1, -376,2265,-221,10)
+	move(ALWEN,       0,WALK1, -551,2216,-216,10)
+
+	fade_in(0,60,0)
+	wait(60)
+//	CAM_move(1164,798,720,150,0)
+//	CAM(-160,175,560,25,167,150,0)
+	CAM_move(1964,-262,880,150,0)
+	CAM(-158,159,880,25,177,150,0)
+	wait_CAM()
+	
+	cross_fade(15)
+	CAM_move(1804,1034,639,0,0)
+	CAM(-160,65,480,25,145,0,0)
+	CAM_move(1804,1034,199,150,0)
+	CAM(-520,64,199,25,144,150,0)
+	wait_CAM()
+	wait_fade()
+
+//	EV("MV_TremblePipiro")
+	KAO(PIPIRO,"G", "5", "5")
+	MES(PIPIRO,"ガクガク、ブルブル……",0)
+	MES_close(PIPIRO)
+	
+	look_chr(PIPIRO, POCKLE, "Bone_Head")
+	wait(10)
+		
+	KAO(PIPIRO,"C232CZ3", "32", "5")		
+	MES(PIPIRO,"……ちょっとポックル……",0)
+	KAO(PIPIRO,"C232CZ5", "2", "5")		
+	MES(PIPIRO,"なんでわたしたち、\nこんな場所にいるわけ……？",0)
+	MES_close(PIPIRO)
+
+	look_chr(POCKLE, PIPIRO, "Bone_Head")
+	wait(10)
+	
+	KAO(POCKLE,"12321Z5", "1233321", "5")	
+	MES(POCKLE,"あはは……ちょっと\n道に迷ったみたいだね。",0)
+	KAO(POCKLE,"B232BZ7", "123", "2")		
+	MES(POCKLE,"でも、ひょっとしたら\nこの先に《城》の手がかりが\nあるかもしれないし……",0)
+	KAO(POCKLE,"B232BZ4", "321", "2")		
+	MES(POCKLE,"例の犯人がこっちの方に\n逃げた可能性だって……",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"C232CZ3", "2", "3")		
+	MES(PIPIRO,"あり得ないから……！",0)
+	KAO(PIPIRO,"C232CZ5", "23", "3")			
+	MES(PIPIRO,"第一、あんな急な坂、\n登れるわけないでしょっ！",0)
+	KAO(PIPIRO,"C232CZ7", "32", "3")		
+	MES(PIPIRO,"まったく、寒いのは\nポックルのギャグだけで\n十分すぎるってーの……",0)
+	MES_close(PIPIRO)
+
+	KAO(POCKLE,"B232BZ3", "1233321", "6")		
+	MES(POCKLE,"そ、そんなに寒いかなぁ？",0)
+	MES_close(POCKLE)
+
+	MES_pos(EVENT_RAGNA,"W3よう、何してるんだ？",0,50,240,0,0)
+	wait_key(0)	
+	MES_close(EVENT_RAGNA)
+
+//　　ポックルたちの頭に！マーク。
+	EMO(PIPIRO, EMO_PA)
+	KAO(PIPIRO,"C", "2321D", "5")
+	EMO(POCKLE, EMO_PA)
+	KAO(POCKLE,"E", "12321D", "6")
+	wait(30)
+
+//　　画面下方からラグナとアルウェンが現れる。
+
+	cross_fade(15)
+	CAM_move(1684,894,159,0,0)
+	CAM(-359,64,159,25,212,0,0)
+	look_chr(PIPIRO, EVENT_RAGNA, "Bone_Head")
+	look_chr(POCKLE, EVENT_RAGNA, "Bone_Head")
+	look_chr(ALWEN,  POCKLE, "Bone_Head")
+	
+	chr_pos(PIPIRO,      1754,-1070,0,226,2)	
+	chr_pos(EVENT_RAGNA, 1090,-330,0,226,2)
+	chr_pos(ALWEN,       938,-438,0,232,2)	
+	move(EVENT_RAGNA, 0, WALK1, 1595,-749,0,0)
+	move(ALWEN,       0, WALK1, 1517,-929,0,0)
+
+	rot(PIPIRO, 30, 40)
+	rot(POCKLE, 30, 40)
+	wait_fade()
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+
+	KAO(POCKLE,"12321Z3", "1233321", "6")
+	MES(POCKLE,"あ、ラグナさん。",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"B232BZ4", "D123", "5")
+//	MES(PIPIRO,"な、なんだ……\nゴスお姉さんたちか……",0)
+	MES(PIPIRO,"な、なんだ……\nお姉さんたちか……",0)
+	MES_close(PIPIRO)
+
+	KAO(EVENT_RAGNA, "B232BZ4", "1233321", "6")
+	MES(EVENT_RAGNA,"しかし、お前らも\nいいかげん物好きだな。",0)
+	KAO(EVENT_RAGNA, "C232CZ4", "123", "5")
+	MES(EVENT_RAGNA,"何を好きこのんで\nこんなクソ寒い場所に……",0)
+	MES_close(EVENT_RAGNA)
+
+	look_chr(ALWEN, EVENT_RAGNA, "Bone_Head")
+	rot(ALWEN, 30, 300)
+	KAO(ALWEN, "92329Z4", "123", "6")
+	MES(ALWEN,"フッ。\n愚問だな、ラグナ。",0)
+	KAO(ALWEN, "92329Z7", "3QP", "6")	
+	MES(ALWEN,"うら若き２人の男女が\nこのような場所まで来て\nする事といえば決まっておろう。",0)
+	MES_close(ALWEN)
+	
+	look_chr(EVENT_RAGNA, ALWEN, "Bone_Head")
+	
+	EMO(EVENT_RAGNA, EMO_HATENA)
+	KAO(EVENT_RAGNA, "B", "321D", "6")
+	wait(30)
+	KAO(EVENT_RAGNA, "2", "D", "6")	
+	MES(EVENT_RAGNA,"へっ……",0)
+	MES_close(EVENT_RAGNA)
+
+	EMO(POCKLE, EMO_TOGEBIKKURI)
+	KAO(POCKLE, "B", "123IIHGK", "7")
+	wait(30)	
+	KAO(PIPIRO,"B", "3IH", "5")
+	MOT(POCKLE, 150, 10)
+	KAO(POCKLE, "B232B2Z2", "K", "7")	
+	MES(POCKLE,"ええっ！？",0)
+	MES_close(POCKLE)
+
+
+	rot(ALWEN, 30, 226 )
+	look_chr(ALWEN, POCKLE, "Bone_Head")
+	KAO(ALWEN, "12321Z7", "PQ36", "6")	
+	MES(ALWEN,"フフフ……\n『ゆきだるま』やら『かまくら』\nなるものを作りに来たのであろ？",0)
+	KAO(ALWEN, "12321Z6", "3", "6")	
+	MES(ALWEN,"人の子はそのように\n雪で楽しむと読んだ事がある。",0)
+	MES_close(ALWEN)
+
+//　　ラグナたちの頭に冷や汗マーク。
+	EMO(EVENT_RAGNA, EMO_HIYAASE)
+	EMO(PIPIRO, EMO_HIYAASE)
+	KAO(PIPIRO,"B", "2", "5")
+	EMO(POCKLE, EMO_HIYAASE)
+	KAO(POCKLE, "B", "D", "6")	
+	look_chr(EVENT_RAGNA, POCKLE, "Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA, "B232BZ2", "123332", "5")		
+	MES(EVENT_RAGNA,"……そうなのか？",0)
+	MES_close(EVENT_RAGNA)
+	
+	MOT(POCKLE, 2, 10)
+	KAO(POCKLE, "12321Z4", "123", "4")	
+	MES(POCKLE,"う、うーん……\n確かに楽しそうですけど。",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"C232CZ4", "3", "5")
+	MES(PIPIRO,"や、やるなら一人で\n勝手にやんなさいよ……",0)
+	MES_close(PIPIRO)	
+	
+	MOT(PIPIRO, 152, 10)
+	KAO(PIPIRO, "C252CZ3", "5", "5")
+	MES(PIPIRO,"あーダメ！\nもうガマンの限界ぃ！",0)
+	rot(PIPIRO, 30, 360 )
+	look_chr(PIPIRO, POCKLE, "Bone_Head")
+	MOT(PIPIRO, 2, 10)
+	wait(15)
+
+	KAO(EVENT_RAGNA, "B", "2321", "1")	
+	KAO(ALWEN, "1", "321", "6")	
+	
+	KAO(PIPIRO, "C232CZ4", "321", "3")	
+	MES(PIPIRO,"ほらポックル！\nとっとと行くわよ！",0)
+	MES_close(PIPIRO)
+
+	rot(POCKLE, 30, 90 )
+	look_chr(POCKLE, PIPIRO, "Bone_Head")
+	KAO(POCKLE, "B232BZ2", "321", "1")
+	MES(POCKLE,"え、でも……",0)
+	MES_close(POCKLE)
+	
+	MOT(PIPIRO, 151, 10)	
+	KAO(PIPIRO, "C232CZ5", "123332", "3")
+	MES(PIPIRO,"えーい、ぐずぐずしたら\nその尻尾に火を点けるわよっ！",0)
+	KAO(PIPIRO, "C232CZ5", "234", "3")	
+	MES(PIPIRO,"とにかく一秒でも早く\nあったかい場所に行くの～！",0)
+	MES_close(PIPIRO)
+	
+	MOT(POCKLE, 150, 100)
+	EMO(POCKLE, EMO_HIYAASE)
+	KAO(POCKLE, "B232BZ3", "12321D", "5")
+	MES(POCKLE,"わ、分かったってば。",0)
+	MES_close(POCKLE)
+		
+	KAO(PIPIRO, "C", "32", "5")
+	look_chr(POCKLE, EVENT_RAGNA, "Bone_Head")
+	look_chr(PIPIRO, EVENT_RAGNA, "Bone_Head")
+	rot(POCKLE, 30, 30 )
+	MOT(PIPIRO, 2, 10)
+	MOT(POCKLE, 2, 10)
+	wait(15)
+	KAO(POCKLE, "12321Z4", "321", "1")
+	MES(POCKLE,"ラグナさん、アルウェンさん。\n僕たちはこれで……",0)
+	MES_close(POCKLE)
+	
+	MOT(PIPIRO, 2, 0)
+
+	KAO(EVENT_RAGNA, "B232BZ2","1233321D","6")
+	MES(EVENT_RAGNA,"お、おう。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN, "12321Z3", "1233321", "6")	
+	MES(ALWEN,"気をつけて帰るがよい。",0)
+	MES_close(ALWEN)
+
+	look_off(PIPIRO)
+	look_off(POCKLE)
+	EV("MV_MovePipiro")
+	wait(5)
+	EV("MV_MovePockle")
+
+	wait(60)
+	CAM_move(1015,538,260,0,0)
+	CAM(320,175,100,25,282,0,0)
+	rot(EVENT_RAGNA, -1, 30)
+	rot(ALWEN, -1, 30)
+
+	wait(30)
+//	EV("MV_MesPockle")
+
+	wait(60)
+	
+	//暗転
+	fade_in(100,60,0)
+	wait_fade()
+	
+	wait_EV("MV_MovePipiro")
+	wait_EV("MV_MovePockle")
+	
+	EV_stop("MV_MovePipiro")
+	EV_stop("MV_MovePockle")
+	EV_stop("MV_MesPockle")
+	
+	CAM_return(0)
+	
+	chr_pos(RAGNA, 1579,-730,1,54,2 )
+	chr_pos(PARTNER, 1527,-945,1,40,2 )
+	color(RAGNA,1)
+	color(PARTNER,1)
+	color(KAPPA, 1)	
+	delete(PIPIRO)
+	delete(POCKLE)
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	//フェードイン
+	fade_in(0,30,0)
+	wait_fade()	
+	
+	
+	
+	F_set(F2_18_P&PinMnt)	//★ポックル＆ピピロに出会う（山入口）
+	EV_end()
+}	
+
+MV_MovePipiro
+{
+	KAO(PIPIRO, "C", "234", "5")
+	rot(PIPIRO, 60, 60 )
+	move(PIPIRO, 0, RUN1, 1481,-1062,0,10)
+	wait_move(PIPIRO)
+	
+	rot(PIPIRO, 60, 51)
+	move(PIPIRO,  0, RUN1,781,-693,0, 20)
+	wait_move(PIPIRO)
+	
+	rot(PIPIRO, 60, 20)	
+	move(PIPIRO,  0, RUN1,	12,509,0, 20)
+	wait_move(PIPIRO)
+	
+	rot(PIPIRO, 60, 20)		
+	move(PIPIRO,  0, RUN1,	-299,1850,-160, 20)
+	wait_move(PIPIRO)
+}
+
+MV_MovePockle
+{
+	rot(POCKLE, 60, 80 )
+	move(POCKLE, 0, WALK1, 1473,-1106,0,20)
+	wait_move(POCKLE)
+
+	rot(POCKLE, 60, 51)
+	move(POCKLE,  0, WALK2,781,-693,0,20)
+	wait_move(POCKLE)	
+
+
+	
+	rot(POCKLE, 60, 20)	
+	move(POCKLE,  0, RUN1,	12,509,0, 20)
+	wait_move(POCKLE)
+	
+	rot(POCKLE, 60, 20)		
+	move(POCKLE,  0, RUN1,	-299,1850,-160, 20)
+	wait_move(POCKLE)
+}
+
+MV_MesPockle
+{
+	MES_popup(POCKLE, "ま、待ってよ～",60)	
+//	MES(POCKLE, "ま、待ってよ～",0)	
+//	MES_close(POCKLE)
+}
+
+//がくぶる
+MV_TremblePipiro
+{
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)	
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)
+	MOT(PIPIRO, 150, 5)	//
+	wait(1)
+	MOT(PIPIRO, 2,10)
+	wait(1)		
+	
+	
+	MOT(PIPIRO, 150, 2)	//
+	wait(1)	
+}
+
+
+//　　山道を登ろうとすると滑って落ちてしまう。
+EV_STOP_01
+{
+
+	TK_begin()
+
+//	move(RAGNA,2,RUN2,-300,200,-100,50)
+
+	if( F4_09_GoShrineMia )
+	{
+	//	name("．社へ向かったミアを追うことにした場面から")
+		move(PLAYER1,0,RUN2,2644,-1934,0,200)
+		//move(PLAYER2,0,RUN2,2644,-1934,0,50)
+		move(PLAYER2,0,RUN2,2632,-1874,0,50)
+		wait_move(PLAYER1)
+		//wait_move(PLAYER2)
+
+		if( F5_08_JoinOdessa && !F5_13_KillDygald )//オデッサがいる場合
+			wait_move(PLAYER2)
+		else
+		if( F6_00_GoToMeru )//アルウェンがいる場合
+			wait_move(PLAYER2)
+
+		if( !F_PET )
+		{
+			if(GW_MAN==1)
+			{
+			//　　※ラグナ先頭の場合
+				MES(RAGNA,"っと……",0)
+				MES(RAGNA,"ここを登るのは無理みたいだな……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+				if( F5_08_JoinOdessa && !F5_13_KillDygald )
+				{
+				//　　※オデッサ先頭の場合
+					MES(PARTNER,"おっと、滑るねえ……",0)
+					MES(PARTNER,"時間もないし、\nここを登るのはやめておこうか。",0)
+					MES_close(PARTNER)
+				}
+				else
+				{				
+				//　　※アルウェン先頭の場合
+					MES(PARTNER,"むむ……滑るのう……",0)
+					MES(PARTNER,"ここを登るのは無理なようだ……",0)
+					MES_close(PARTNER)
+				}
+			}
+			F_set(PET)
+		}
+	}
+	else
+	if( F4_02_GoVillage2 )
+	{
+	//	name("．スバルと合流後")
+
+		move(PLAYER1,0,RUN2,2644,-1934,0,200)
+		//move(PLAYER2,0,RUN2,2644,-1934,0,50)
+		move(PLAYER2,0,RUN2,2632,-1874,0,50)
+		wait_move(PLAYER1)
+		wait_move(PLAYER2)
+		
+		if( !F_PET )
+		{
+			if( GW_MAN==1 )
+			{
+			//□ラグナ先頭
+
+				if( !F4_04_OpenRoad )
+				{
+					MES(RAGNA,"滑って登れないな……",0)
+					MES_close(RAGNA)
+
+					//name2(PARTNER)
+					MES(PARTNER,"こっちの道って、\nいつも通れないんですよね。",0)
+					MES(PARTNER,"師匠、地蔵を動かして\n隠し扉を開きましょう！",0)
+					MES_close(PARTNER)
+
+				}
+				else
+				{
+					MES(RAGNA,"滑って登れないな……",0)
+					MES_close(RAGNA)
+
+					//name2(PARTNER)
+					MES(PARTNER,"師匠、里へ行くには\nさっきの抜け道を使ってください！",0)
+					MES_close(PARTNER)
+				}
+			}
+			else
+			{
+			//□スバル先頭
+				MES(PARTNER,"ううっ、滑る……",0)
+				MES(PARTNER,"こっちの道って、\nいつも通れないんですよね……",0)
+				MES_close(PARTNER)
+			}
+			F_set(PET)
+		}
+	}
+	else
+	if( F4_00_StartSolo )
+	{
+		move(PLAYER1,0,RUN2,2644,-1934,0,200)
+		wait_move(PLAYER1)
+		
+		if( !F_PET )
+		{
+		//	name("．ラグナ単独行動になって")
+			MES(RAGNA,"登れないな……",0)
+			MES(RAGNA,"ま、遊んでる場合でもねえし。",0)
+			MES(RAGNA,"トリスタンの様子を\n見てくるとするか。",0)
+			MES_close(RAGNA)
+			F_set(PET)
+		}
+	}
+	else
+	if( !F2_17_EndSecond )
+	{
+		move(PLAYER1,0,RUN2,2644,-1934,0,200)
+		//move(PLAYER2,0,RUN2,2553,-1974,0,50)
+		move(PLAYER2,0,RUN2,2632,-1874,0,50)
+		wait_move(PLAYER1)
+		wait_move(PLAYER2)
+		if( !F1_29_MountSuberu)
+		{
+//　　山道を登ろうとすると滑って落ちてしまう。
+		
+//　　初回のみ、以下のメッセージを挿入。
+//　　（第２章中なら起動可能）
+			//　　※ラグナ先頭の場合
+			if( GW_MAN==1 )
+			{
+				MES(RAGNA,"くそっ……滑るな……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"ふむ、上の方は\nさらに酷い吹雪のようだのう……",0)
+				MES(PARTNER,"ラグナよ、魔力の気配も感じぬし、\nここを登るのは準備を整えてからの\nほうがいいかもしれん。",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//　　※アルウェン先頭の場合
+				MES(PARTNER,"むむ……滑るのう……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"上の方は、かなり\n吹雪いてるみたいだな……",0)
+				MES(RAGNA,"姫さん、用がねえなら\nここは後回しにした方がいいぜ。",0)
+				MES_close(RAGNA)
+			}
+			F_set(F1_29_MountSuberu)
+		}
+		else
+		{
+			if( !F_PET )
+			{
+				//　　※ラグナ先頭の場合
+				if( GW_MAN==1 )
+				{
+					MES(RAGNA,"くそっ……滑るな……\nここは後回しにするか……",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//　　※アルウェン先頭の場合
+					MES(PARTNER,"むむ……滑るのう……",0)
+					MES(PARTNER,"魔力の気配も感じぬし、\nここは後回しにするか……",0)
+					MES_close(PARTNER)
+				}
+				F_set(PET)
+			}
+		}
+	}
+
+	TK_end()
+}
+
+//▽山ふもとから出れないストッパー（あまり遠くへ行くのはやめておこう）
+EV_STOP_02
+{
+
+	TK_begin()
+	if( GW_MAN==1 )
+	{
+	//　　※ラグナ先頭の場合
+//		MES(RAGNA,"もう夕方になっちまったしな。",0)
+//		MES(RAGNA,"あまり遠くまで行くのはやめとくか。",0)
+		MES(RAGNA,"（じきに日も暮れそうだ……）",0)
+		MES(RAGNA,"（あまり遠くまで行くのはやめとくか。）",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	}
+	else
+	{
+	//　　□スバル先頭
+		MES(PARTNER,"（あっと……\n  こっちは町の方だ。）",0)
+		MES(PARTNER,"（ラグナ師匠にも温泉に\n  入ってもらわなくちゃいけないし、\n  遠くまで行くのはやめておこうっと。）",0)
+		MES_close(PARTNER)
+		wait_MES(PARTNER)
+	}
+
+	cross_fade( 30 )
+	chr_pos(PLAYER1,-327,1857,-161,186,2)
+	chr_pos(PLAYER2,-429,2004,-183,180,2)
+	CAM_return(0)
+	wait_fade()	
+	TK_end()
+
+}
+
+//---------------------------------------------------------------------------------------------------
+//▽各地のダンジョンのストッパー（特に用事はない）
+//---------------------------------------------------------------------------------------------------
+EV_STOP_03
+{
+	TK_begin()
+	if( F4_11_EndFourth && !F5_06_RunCrystal )
+	{
+//	name("．怪我をしたスバルと話した後")
+//　　（３人全員に話をつける前のみ発生）
+
+		if( F5_03_OfferLaraira && F5_04_OfferPipiro && F5_05_OfferFiona )
+		{
+		//　　※全員に声を掛けてからは以下のストッパー
+			MES(RAGNA,"おっと……",0)
+			MES(RAGNA,"今はクリスタルバレーに\n急がねえと……！",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+		else
+		if( !F5_24_NotDanjion )
+		{
+		//　　初回のみ、以下のメッセージを挿入。
+			rot_chr(PET,30,PLAYER1)
+			MES(PET,"……ちょっとラグナ！？\nどこへ行く気よ！",0)
+		//	MES(PET,"ダンジョンに入る前に、\n居場所が分かってる連中に\n話してみた方がいいと思うけど。",0)
+			MES(PET,"こういう場所を探す前に\nまず当たるべき所があるでしょ！",0)
+			MES_close(PET)
+
+			rot_chr(PLAYER1,30,PET)
+		//	name2(RAGNA)
+		//	MES(RAGNA,"あ、ああ……\n確かにダンジョンに入って\n探すとなると大変だな。",0)
+			MES(RAGNA,"あ、ああ……\n確かに時間もかかるしな。",0)
+			MES_close(RAGNA)
+
+			if( !F5_05_OfferFiona )
+			{
+			//	name("□フィオナに話をしていない")
+			//	MES(RAGNA,"先にフィオナのお嬢さんたちに\n話をつけておくか……",0)
+				MES(RAGNA,"まずはフィオナのお嬢さんたちに\n話をつけておくか……",0)
+				MES_close(RAGNA)
+
+				MES(PET,"あの女なら町の屋敷にいるはずよ。\nとりあえず顔だけでも出してみましょ。",0)
+				MES_close(PET)
+				wait_MES(PET)
+			}
+			else
+			if( !F5_03_OfferLaraira )
+			{
+			//	MES(RAGNA,"先に残りの連中に\n話をつけておくか……",0)
+				MES(RAGNA,"次はラーライラの\n婆さんの所にでも行くか……",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+			else
+			{
+			//	MES(RAGNA,"まずは町の方を\n探してみるか……",0)
+				MES(RAGNA,"とりあえず、\n町の隅々を探してみるか……",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+			F_set(F5_24_NotDanjion)
+		}
+		else
+		{
+		//　　※２回目以降は以下のメッセージ。
+		//	MES(RAGNA,"ダンジョンに入って\n探すとなると大変だな……",0)
+			MES(RAGNA,"あてずっぽうに\n探してたんじゃ仕方ないな……",0)
+			MES(RAGNA,"まずは心当たりがある場所から\n当たってみるとするか。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+	}
+	else
+	if( !F5_17_EndFifth )
+	{
+//	name("．クリスタルバレー起動後")
+
+		if( GW_MAN==1 )
+		{
+		//　　※ラグナ先頭
+			if( !F_RAGNA )
+			{
+				rot_chr(PET,30,PLAYER1)
+				MES(PET,"ラグナ、どこに行く気よ！",0)
+				MES(PET,"早く姫様を助けに行くわよ！",0)
+				MES_close(PET)
+
+				rot_chr(PLAYER1,30,PET)
+			//	name2(RAGNA)
+				MES(RAGNA,"ああ、そうだな。",0)
+				MES(RAGNA,"早いとこ準備を整えて、\nクリスタルバレーへ向かわねえと。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(RAGNA,"早いとこ準備を整えて、\n姫さんを迎えに行かねえとな！",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		chr_pos(PET,-143,-680,1,0,2)
+		}
+		else
+		{
+		//　　※オデッサ先頭
+			if( !F_RAGNA )
+			{
+				rot_chr(PET,30,PLAYER1)
+				MES(PET,"ちょっと狼女、どこに行く気よ！",0)
+				MES(PET,"早く姫様を助けに行くわよ！",0)
+				MES_close(PET)
+
+				rot_chr(PLAYER1,30,PET)
+			//	name2(PARTNER)
+				MES(PARTNER,"はは、わかってるさ。",0)
+				MES(PARTNER,"さっさと準備を整えて、\n連中の元へ乗り込むとしようか。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(PARTNER,"寄り道をしてる暇はない……",0)
+				MES(PARTNER,"さっさと準備を整えて、\n連中の元へ乗り込まないとね。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+			}
+		}
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			chr_pos(PLAYER2,126,-717,1,0,2)
+		}
+		chr_pos(PET,-143,-680,1,0,2)
+	}
+	chr_pos(PLAYER1,37,-791,0,0,2)
+	
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()	
+
+	TK_end()
+
+}
+
+
+//---------------------------------------------------------------------
+//地蔵スイッチ
+//全ての地蔵の頭を元の角度（正面）にすれば、扉が開く
+//攻略法
+// 旧Ver(初期角度 0,270,270,180の状態から①を１回、②を２回、４を１回　でＯＫ。ただの加算なので回す順番は関係なし)
+//全ての地蔵１回ずつ回すだけ。
+EV_ZIZOU_CHECK
+{
+	if(WK001==0 && WK002==0 && WK003==0 && WK004==0)
+	{
+		EV("EV_4_06_OpenRoad")	//扉開くイベント開始
+		wait_EV("EV_4_06_OpenRoad")
+	}
+}
+//---------------------------------------------------------------------
+//--- 地蔵1 -----------------------------------------------------------
+//地蔵1を回すと、地蔵2、地蔵3も回る
+EV_ZIZOU_1
+{
+	TK_begin()
+	
+	SE(1110,0)//地蔵回転SE
+	EV("EV_ZIZOU_1b")
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_3b")	
+	wait_EV("EV_ZIZOU_1b")
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_3b")
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end2(0)
+}
+//---------------------------------------------------------------------
+//--- 地蔵2 -----------------------------------------------------------
+//地蔵2を回す
+EV_ZIZOU_2
+{
+	TK_begin()
+	SE(1110,0)//地蔵回転SE
+	EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_2b")
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+	TK_end2(0)
+}
+//---------------------------------------------------------------------
+//--- 地蔵3 -----------------------------------------------------------
+//地蔵3を回すと、地蔵2、も回る
+EV_ZIZOU_3
+{
+	TK_begin()
+	SE(1110,0)//地蔵回転SE
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_3b")
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_3b")
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end2(0)
+}
+//---------------------------------------------------------------------
+//--- 地蔵4 -----------------------------------------------------------
+//地蔵4を回すと、地蔵2、地蔵3も回る
+EV_ZIZOU_4
+{
+	TK_begin()
+	SE(1110,0)//地蔵回転SE
+	EV("EV_ZIZOU_4b")
+	EV("EV_ZIZOU_2b")
+	EV("EV_ZIZOU_3b")	
+	wait_EV("EV_ZIZOU_4b")
+	wait_EV("EV_ZIZOU_2b")
+	wait_EV("EV_ZIZOU_3b")	
+	
+	//地蔵向きチェック
+	EV("EV_ZIZOU_CHECK")
+	wait_EV("EV_ZIZOU_CHECK")
+
+	TK_end2(0)
+}
+
+//地蔵１回転
+EV_ZIZOU_1b
+{
+	EMO(ZIZOU_1, EMO_BIKKURI)
+	if(WK001==0)
+	{
+		rot(ZIZOU_1, 30, 270)
+		workL(1,SET,27)		
+	
+//		MES(ZIZOU_1,"角度270",0)
+	}
+	else
+	if(WK001==9)
+	{
+		rot(ZIZOU_1, 30, 0)
+		workL(1,SET,0)
+			
+//		MES(ZIZOU_1,"角度000",0)
+	}
+	else
+	if(WK001==18)
+	{
+		rot(ZIZOU_1, 30, 90)
+		workL(1,SET,9)	
+		
+//		MES(ZIZOU_1,"角度090",0)
+	}
+	else
+	if(WK001==27)
+	{
+		rot(ZIZOU_1, 30, 180)
+		workL(1,SET,18)
+//		MES(ZIZOU_1,"角度180",0)
+
+	}
+	else
+	{
+//		MES(ZIZOU_1,"角度？",0)
+	}
+	MES_close(ZIZOU_1)	
+	
+	wait(30)
+}
+
+//地蔵２回転
+EV_ZIZOU_2b
+{
+	EMO(ZIZOU_2, EMO_BIKKURI)
+	if(WK002==0)
+	{
+		rot(ZIZOU_2, 30, 270)
+		workL(2,SET,27)	
+	}
+	else
+	if(WK002==9)
+	{
+		rot(ZIZOU_2, 30, 360)
+		workL(2,SET,0)
+	}
+	else
+	if(WK002==18)
+	{
+		rot(ZIZOU_2, 30, 90)
+		workL(2,SET,9)
+	}
+	else
+	if(WK002==27)
+	{
+		rot(ZIZOU_2, 30, 180)
+		workL(2,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_2,"角度？",0)
+
+	}
+	MES_close(ZIZOU_2)		
+	wait(30)
+}
+
+//地蔵３回転
+EV_ZIZOU_3b
+{
+	EMO(ZIZOU_3, EMO_BIKKURI)
+	if(WK003==0)
+	{
+		rot(ZIZOU_3, 30, 270)
+		workL(3,SET,27)	
+	}
+	else
+	if(WK003==9)
+	{
+		rot(ZIZOU_3, 30, 0)
+		workL(3,SET,0)
+	}
+	else
+	if(WK003==18)
+	{
+		rot(ZIZOU_3, 30, 90)
+		workL(3,SET,9)	
+	}
+	else
+	if(WK003==27)
+	{
+		rot(ZIZOU_3, 30, 180)
+		workL(3,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_3,"角度？",0)
+		MES_close(ZIZOU_3)	
+	}
+	wait(30)
+}
+
+//地蔵４回転
+EV_ZIZOU_4b
+{
+	EMO(ZIZOU_4, EMO_BIKKURI)
+	if(WK004==0)
+	{
+		rot(ZIZOU_4, 30, 270)
+		workL(4,SET,27)	
+	}
+	else
+	if(WK004==9)
+	{
+		rot(ZIZOU_4, 30, 0)
+		workL(4,SET,0)
+	}
+	else
+	if(WK004==18)
+	{
+		rot(ZIZOU_4, 30, 90)
+		workL(4,SET,9)	
+	}
+	else
+	if(WK004==27)
+	{
+		rot(ZIZOU_4, 30, 180)
+		workL(4,SET,18)
+	}
+	else
+	{
+		MES(ZIZOU_4,"角度？",0)
+		MES_close(ZIZOU_4)	
+	}
+	wait(30)
+}
+
+//--------------------------------------------------------------------
+//-- カッパゲーム終了 ------------------------------------------------
+//--------------------------------------------------------------------
+
+EV_KappaEnd
+{
+
+//	EV_begin()
+	TK_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	chr_pos(RAGNA, 1930,-1332,1,49,2 )
+	chr_pos(PARTNER, 2160,-1366,1,60,2 )
+	chr_pos(PET, 2371,-1599,0,10,2 )
+//	set_chr( KAPPA,80,	-1,-1,1395,-1371,1,		15,340, 20,"<TK_KAPPA2>")	//チェックしやすいようこっちに移植
+//	set_chr( KAPPA, 80,	   -1,-1,296,-6783,1,  	   6,     0,20,"<TK_KAPPA2>")
+//	chr_pos(KAPPA,1395,-1371,1,340,15)
+
+	F_reset_chr(KAPPA,CF_NO_ZIMEN)
+	F_reset_chr(KAPPA,CF_NO_HEIGHT)
+
+	//カッパ一般会話用のWK
+	if( GW_HUNTER_RANK>=16 )
+		workL(010,RAND,5)
+	else
+		workL(010,RAND,4)
+
+	wait(1)
+
+	//明るく
+	fade_in(0,60,0)
+	wait_fade()
+
+//	EV_end()
+	TK_end()
+}
+
+
+#EndScriptTable
+//====================================================================
+

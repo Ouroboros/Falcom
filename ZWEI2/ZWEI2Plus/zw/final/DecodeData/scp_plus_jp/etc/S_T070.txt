@@ -1,0 +1,733 @@
+//──────────────────────────────
+//	name("◆フェデリカ（牛舎のお姉さん）Federica")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_FEDERICA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(FEDERICA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,FEDERICA)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,FEDERICA)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,FEDERICA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　※放牧地をフリームーブ。
+	if( F6_05_EndSixth )
+	{
+		MOT_SET(FEDERICA,150,-1,450,450,-1,40)
+		MOT(FEDERICA,150,10)
+		rot_chr(FEDERICA,30,PLAYER1)
+
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"バランさんもやるじゃない。\nあんな美人さんと知り合いだなんて。",0)
+			MES(FEDERICA,"ふふ、遠目に見ただけだけど\nちょっとお似合いみたいだし。",0)
+			MES(FEDERICA,"案外このまま上手く行っちゃったり\nするかもしれないわね。",0)
+			MES(FEDERICA,"うーん、正直者には\n福来るってことかしら。",0)
+			MES_close(FEDERICA)
+
+			F_set(FEDERICA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(FEDERICA,"さーて、私も\nもう一仕事しますか。",0)
+			MES(FEDERICA,"ふふ、明日には\nアネットに会いにいけるかしら。",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　※ロアルタ村入り口前辺りで、呆然としている。
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+
+		MOT(FEDERICA,2,10)
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"さ、さっきね……",0)
+			MES(FEDERICA,"変なムキムキの人が\nここを通って行ったのよ……",0)
+			MES_close(FEDERICA)
+
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"へ、変なムキムキの人……？",0)
+					MES_close(RAGNA)
+
+					//	name("⇒ギャランドゥに会った事がある")
+//					if(FV_02_VisitGyakata)
+					if(FE_FF_GetSkil_1)
+					{
+						MES(PARTNER,"うーむ、可能性が一つしか\n思い浮かばぬな……",0)
+						MES_close(PARTNER)
+					}
+				}
+				else
+			//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"変なムキムキの人、とな……",0)
+					MES_close(PARTNER)
+
+					//	name("⇒ギャランドゥに会った事がある")
+//					if(FV_02_VisitGyakata)
+					if(FE_FF_GetSkil_1)
+					{
+						MES(RAGNA,"可能性が一つしか\n思い浮かばねえんだが……",0)
+						MES_close(RAGNA)
+					}
+				}
+			//──────────────────────────────
+			
+		//　　フェデリカ、顔を背ける。
+			MOT(FEDERICA,150,10)
+			look(FEDERICA,"Bone_Head",0,		0,3,0,			0,-45,0)
+			MES(FEDERICA,"ううっ、何だか\n凄いものを見てしまったわ。",0)
+			MES(FEDERICA,"夢に出てきそうで怖い……",0)
+			MES_close(FEDERICA)
+
+			//──────────────────────────────
+			//	name("⇒ギャランドゥに会った事がある")
+//			if(FV_02_VisitGyakata)
+			if(FE_FF_GetSkil_1)
+			{
+
+			//　　以下のポップアップは同時に表示＆消去。
+				MES_pos(RAGNA,"（その気持ち、分かる……）",0,0,0,0,0)
+				MES_pos(PARTNER,"W1（その気持ち、分かるのう……）",0,0,0,0,0)
+
+				wait_key(0)
+				MES_close(PARTNER)
+				MES_close(RAGNA)
+
+				if(IT137<1)//丘でＧと会ってない
+				{
+				//　　ルゥに？エモーション。
+					EMO(PET,EMO_HATENA)
+					wait(30)
+
+					MES(PET,"一体何の話……？",0)
+					MES_close(PET)
+				}
+			}
+			//	name("⇒ギャランドゥに会った事がない")
+			//──────────────────────────────
+			else
+			//丘でギャランドゥと会った
+			if(IT137>0)
+			{
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（えっと、それってやっぱり……？）",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"（ふむ、やはりあの者の\n  事であろうか……）",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+			}
+			else
+			{
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（よっぽどインパクトが\n  あったみてえだな。\n  ちょっと想像できないが……）",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"（よほどのショックのようだな。\n  ……どんな人物か\n  想像はできんのだが……）",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+			}
+
+		//──────────────────────────────
+
+			//★フェデリカ【あの人物を目撃】
+			F_set_note(FEDERICA,2)
+			F_set(FEDERICA)
+		}
+		//──────────────────────────────
+		//　　★繰り返し
+		else
+		{
+			MES(FEDERICA,"水汲みをしていて、\nふと振り返ったら……",0)
+			MES(FEDERICA,"いたのよ。\nそのムキムキの男が……",0)
+			MES_close(FEDERICA)
+
+		//　　フェデリカ、顔を背ける。
+			MOT(FEDERICA,150,10)
+			look(FEDERICA,"Bone_Head",0,		0,3,0,			0,-45,0)
+			MES(FEDERICA,"あれは強烈ね。\n一生忘れられそうにないわ……",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,150,10)
+		look(FEDERICA,"Bone_Head",0,		0,5,0,			0,0,0)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	//　　※放牧地をフリームーブ。
+	if( F5_00_HearLunar )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+		MOT_SET(FEDERICA,150,-1,445,445,-1,-1)//　　額に手を当てて俯く
+
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"ふう……干草の方は\nこのくらいでいいかしら。",0)
+			MES(FEDERICA,"まだちょっとクラッと来るんだけど、\nこの子達の世話もやっておかないとね。",0)
+			MES(FEDERICA,"でも、村で一番回復が遅いのって\nもしかして……私？",0)
+			MES_close(FEDERICA)
+
+		//　　フェデリカに・・・エモーション。
+			EMO(FEDERICA,EMO_TENTEN)
+			wait(30)
+		
+		//　　額に手を当てて俯くような仕草。
+			MOT(FEDERICA,150,10)
+		
+			MES(FEDERICA,"うわあショック……\n私まだ２２なのに……",0)
+			MES_close(FEDERICA)
+
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"ははは……\nまあ他の人の回復が\n早かったって線もあるし、な？",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("⇒オデッサ先頭")
+				{
+					MES(PARTNER,"おや、私と同い年じゃないか。",0)
+					MES_close(PARTNER)
+
+					rot_chr(RAGNA,30,PARTNER)
+				//　　ラグナとルゥに冷や汗エモーション。
+					EMO(RAGNA,EMO_HIYAASE)
+					EMO(PET,EMO_HIYAASE)
+					wait(30)
+					
+					MES(RAGNA,"いや、オデッサ……\nサバを読むなよな……",0)
+					MES_close(RAGNA)
+				}
+			//──────────────────────────────
+			F_set(FEDERICA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(FEDERICA,"流石にこれはショックね……\nみんな無理を押して\n仕事をしてると信じたい。",0)
+			MES(FEDERICA,"でも、バランさんとラウニ婆様は\nアルッテの教会まで出かけたのよね。",0)
+			MES_close(FEDERICA)
+
+		//　　フェデリカに青ざめエモーション。
+			EMO(FEDERICA,EMO_AOZAME)
+			wait(30)
+			
+			MOT(FEDERICA,150,10)
+			MES(FEDERICA,"負けてる……\n若さで負けてるわ……",0)
+			MES_close(FEDERICA)
+
+		//	name2(PET)
+			MES(PET,"（今は何を言ってもムダみたいね。）",0)
+			MES_close(PET)
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+	//　　※牛舎民家の台所に立っている。
+		MOT_SET(FEDERICA,150,-1,446,446,-1,-1)
+		if(!F_FEDERICA)
+		{
+		//　　フェデリカにＰＡエモーションで振り返る。
+			EMO(FEDERICA,EMO_PA)
+			wait(30)
+			rot_chr(FEDERICA,30,PLAYER1)
+			MOT(FEDERICA,150,5)
+			MES(FEDERICA,"あ、あらこんな時間から……",0)
+			MOT(FEDERICA,2,10)
+			MES(FEDERICA,"ふふ、朝早いのね。",0)
+			MES(FEDERICA,"私もこれから\n動物たちの世話をする所よ。",0)
+			MES(FEDERICA,"ずっと寝込んでたんだから、\n頑張らなくっちゃね。",0)
+			MES_close(FEDERICA)
+			F_set(FEDERICA)
+			
+			rot(FEDERICA,30,90)
+		}
+		else
+		{
+		//　　★繰り返し
+		//　　※振り返らない。
+			MES(FEDERICA,"っと、その前に\n腹ごしらえしないと。",0)
+			MES(FEDERICA,"うわあ、腕の力が落ちている……",0)
+			MES(FEDERICA,"やっぱり寝込んでると、\n体力落ちちゃうわねぇ～……",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,151,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※牛舎民家、ベッドの上で起き上がっている。
+	//　　※『★星降りの里へ向かうことにした』の前は、
+	//　　　アネットがお見舞いに来ている。
+	if( F4_00_StartSolo )
+	{
+		//　　※アネットと共通の初回イベント。
+		//　　※振り返らない。
+		if(!FT_07_TalkAneFede && !F4_02_GoVillage2)
+		{
+			EV("TALK_FA")
+			wait_EV("TALK_FA")
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下『★星降りの里へ向かうことにした』前の通常一般メッセージ。
+			if(!F4_02_GoVillage2)
+			{
+				look_chr(FEDERICA,PLAYER1,"Bone_Head")
+				if(!F_FEDERICA)
+				{
+					MES(FEDERICA,"あはは……アネットには\n随分心配かけちゃってたみたいね。",0)
+					MES(FEDERICA,"うーん……\nでも本当は、こういうのも\n悪くないかなって思ってるのよね。",0)
+					MES(FEDERICA,"その、ちょっとだけ\n……だけなんだけど。",0)
+					MES(FEDERICA,"だってこの子ったら、普段は\n滅多に会いに来てくれないんだもの。",0)
+					MES_close(FEDERICA)
+
+					F_set(FEDERICA)
+				}
+				//　　★繰り返し
+				else
+				{
+					MES(FEDERICA,"アネットには\n心配かけちゃったみたいだけど……",0)
+					MES(FEDERICA,"お見舞いに来てくれたのは、\n本当に嬉しいわ。",0)
+					MES(FEDERICA,"この子ったら、普段は\n滅多に会いに来てくれなくて、\nちょっと寂しかったから。",0)
+					MES_close(FEDERICA)
+				}
+				look_off(FEDERICA)
+				look_chr(FEDERICA,ANNETTE,"Bone_Head")
+			}
+		//──────────────────────────────
+		//　　※『★星降りの里へ向かうことにした』の後。
+			else
+			{
+				look_chr(FEDERICA,PLAYER1,"Bone_Head")
+				if(!F_FEDERICA)
+				{
+					MES(FEDERICA,"さっき、妹が\nお見舞いに来てくれたのよ。",0)
+					MES(FEDERICA,"まあ、『心配したのよっ！』\nって怒られちゃったんだけど。",0)
+					MES(FEDERICA,"でも、本当はちょっと嬉しいのよね。",0)
+					MES(FEDERICA,"だってあの子ったら、\n滅多に会いに来てくれないんだもの。",0)
+					MES_close(FEDERICA)
+
+					F_set(FEDERICA)
+				}
+	//　　★繰り返し
+				else
+				{
+					MES(FEDERICA,"アネットには随分\n心配かけちゃってたみたいだけど……",0)
+					MES(FEDERICA,"でも本当は、こういうのも\n悪くないかなって思ってるのよね。",0)
+					MES(FEDERICA,"だってあの子ったら、\n滅多に会いに来てくれないんだもの。\nそれもちょっと寂しいじゃない？",0)
+					MES_close(FEDERICA)
+				}
+				look_off(FEDERICA)
+			}
+			//★フェデリカ【アネットの見舞い】
+			F_set_note(FEDERICA,1)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//倒れている。
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※放牧地から、チェスクが積み上げた木箱を見ている。
+	if( F2_14_TalkEnemy )
+	{
+		MOT_SET(FEDERICA,151,-1,402,402,-1,0)	//フェデリカ　訝しげに木箱を見ている
+		if(!F_FEDERICA)
+		{
+		//　　※振り返らない
+			MES(FEDERICA,"あ、あれ……？",0)
+			MES_close(FEDERICA)
+
+		//　　フェデリカ振りかえる。
+			MOT(FEDERICA,151,10)
+			rot_chr(FEDERICA,30,PLAYER1)
+
+			MES(FEDERICA,"いま、そこの木箱が\nガタガタって動いた気がしたのよ。",0)
+			MES(FEDERICA,"そういえば、今朝\nバランさんが整理したのに\nまた積みあがっちゃってるし……",0)
+			MES(FEDERICA,"でもそんな事あるわけないわよね。\n誰もいないのに、\n木箱が勝手に動くなんて。",0)
+			MES_close(FEDERICA)
+
+//			MES(FEDERICA,"いま木箱が勝手に動いて、\nあんなに積みあがっちゃったのよ。",0)
+//			MES(FEDERICA,"おかしいわね……\n誰もいないはずなのに。",0)
+//			MES_close(FEDERICA)
+
+		//　　ラグナたちに？エモーション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+
+			MES(RAGNA,"（誰もいないって……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（あの少年が\n  いるのではないか……？）",0)
+			MES_close(PARTNER)
+
+			F_set(FEDERICA)
+		}
+		//　　★繰り返し
+		else
+		{
+			rot_chr(FEDERICA,30,PLAYER1)
+//			MES(FEDERICA,"今確かに、木箱がふわって浮いて\n積みあがっちゃったのよ。",0)
+			MES(FEDERICA,"ふと見たら、そこの木箱が\nひとりでに積みあがってたのよ。",0)
+			MES(FEDERICA,"そういえば、毎年収穫祭が近づくと\nあちこちで不思議な事が起こるって\n聞いたことがあるけど……",0)
+			MES(FEDERICA,"もしかして、それなのかしら……？",0)
+			MES_close(FEDERICA)
+			
+		}
+		MOT(FEDERICA,150,10)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※アルッテ、雑貨屋で話している。
+	//　　　ついでに、雑貨屋の前辺りのベンチ付近に、牛を一頭置いておきます。
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		MOT_SET(FEDERICA,150,-1,405,405,-1,40)
+		MOT(FEDERICA,150,10)
+		if(!FT_03_TalkAneFede)
+		{
+			//　　※初回はアネットの初回イベントが起動する。
+			//　　※振り返らない。
+
+			MES(FEDERICA,"アネットは偏見強すぎ。",0)
+			MES(FEDERICA,"こっちの生活も\nそんなに悪いものじゃないわよ？",0)
+			MES(FEDERICA,"まあアネットから見れば\n田舎臭いかもしれないけど……",0)
+			MES_close(FEDERICA)
+
+		//	name2(ANNETTE)
+			MES(ANNETTE,"む～、だから\nそういう意味じゃなくって……",0)
+			MES(ANNETTE,"あたしが言ってるのはね、お姉ちゃん。",0)
+			MES(ANNETTE,"あたしたち双子なんだし、\n一緒に暮らすのが自然じゃないのって事。",0)
+			MES(ANNETTE,"てゆーかね、\nあたしはお姉ちゃんと一緒がいいの！\nどうして分かんないのかなぁ……",0)
+			MES_close(ANNETTE)
+
+		/*
+		//	name2(FEDERICA)
+			MES(FEDERICA,"まあまあ、少し落ち着きなさいって。",0)
+			MES(FEDERICA,"あ、これお土産ね。\n今朝焼いた紅茶のケーキよ。",0)
+			MES_close(FEDERICA)
+
+		//	name2(ANNETTE)
+			MES(ANNETTE,"うっ……\nケーキで誤魔化さないでよね。\nそりゃあモチロン貰っとくけど……",0)
+			MES_close(ANNETTE)
+		*/	
+			//★アネット
+			F_set_note(ANNETTE,-1)
+			//★フェデリカ
+			F_set_note(FEDERICA,-1)
+			
+			//★アネット【双子の姉】
+			F_set_note(ANNETTE,1)
+
+			F_set(FT_03_TalkAneFede)
+
+		}
+	//　　※以下通常一般メッセージ。
+	//　　※振り返らない。
+		else
+		{
+			if(!F_FEDERICA)
+			{
+				MES(FEDERICA,"まあお互い生活もあるんだし、\nここは別々に暮らすってことで\nいいじゃない。",0)
+				MES(FEDERICA,"……そうだアネット、\n私のケーキって美味しい？",0)
+				MES(FEDERICA,"その内ケーキを出すプチカフェなんて\n始めてみようかしら……",0)
+				MES_close(FEDERICA)
+
+			//	name2(ANNETTE)
+				MES(ANNETTE,"え～、ダメ！\nそれならこっちで開いてよ～。",0)
+				MES(ANNETTE,"お店にお客さんも入って、\n一石二鳥じゃない、ね？",0)
+				MES_close(ANNETTE)
+
+				F_set(FEDERICA)
+			}
+	//　　★繰り返し
+			else
+			{
+			//　　※振り返らない。
+				MES(FEDERICA,"ふふ、悪いけど……\nウチの動物たちの事もあるから、\nアネットの言う通りには出来ないのよ。",0)
+				MES(FEDERICA,"それに、アネットだって\nたまにはこっちにも顔を出してよ。",0)
+				MES(FEDERICA,"なんだか\n私ばっかり見に来てるじゃない？",0)
+				MES_close(FEDERICA)
+			}
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※牛舎辺りで仕事している。
+	if( F1_15_GoVillage )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+		MOT_SET(FEDERICA,150,-1,450,450,-1,40)
+		MOT(FEDERICA,150,10)
+
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"ふう、そろそろ\n荷物を纏めておかなくちゃ。",0)
+			MES(FEDERICA,"ちょっとアルッテまで\n野菜を卸しに行く用事があるのよ。",0)
+			MES(FEDERICA,"村で取れた野菜一式、\nこう、牛の背中に載せて運ぶの。",0)
+			MES(FEDERICA,"ふふ、面白そうでしょ。",0)
+			MES_close(FEDERICA)
+
+			F_set(FEDERICA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(FEDERICA,"アルッテまで収穫物を\n運ぶのは私の仕事なのよ。",0)
+			MES(FEDERICA,"月に２～３回くらいかしら。",0)
+			MES(FEDERICA,"ふふ、今回はついでに\nアネットの様子も見てくるつもりなの。\n楽しみだわ。",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※放牧地でフリームーブ。
+	if( F1_01_GameStart )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+		MOT_SET(FEDERICA,150,-1,450,450,-1,40)
+		MOT(FEDERICA,150,10)
+
+		if(!FV_01_TalkFederica)
+		{
+		//　　※初回イベント
+			MES(FEDERICA,"あら、旅行者の人？\n珍しいわね、こんなトコまで。",0)
+			MES(FEDERICA,"ふふ、もしかして\n動物の世話に興味あったりする？",0)
+			MES_close(FEDERICA)
+
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【やめる】
+			MES_pos(PLAYER1,"??W9【もちろん】\n【興味なし】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			//──────────────────────────────
+			//	name("⇒興味なし")
+			//──────────────────────────────
+			if(WK_YESNO==2)
+			{
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"はは、悪いがイマイチ……\n（というか、今は姫さんの\n  魔力を探さねえと……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"うむ、悪いのだが……\n（私はむしろ、食す方が\n  専門なのでな。）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				
+				MES(FEDERICA,"そう、残念。",0)
+				MES(FEDERICA,"でもこの村はいいわよ、\nのんびりしてて。",0)
+				MES(FEDERICA,"私の妹は『田舎臭い』なんて\n言うんだけどね。",0)
+				MES(FEDERICA,"また気が向いたら立ち寄って。\nこうやってエサをあげるのなんて、\n中々楽しいわよ？",0)
+				MES_close(FEDERICA)
+			}
+			//──────────────────────────────
+			//	name("⇒もちろん")
+			//──────────────────────────────
+			else
+			{
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"ああ、まあ嫌いじゃないぜ。\n（飛行機の世話の方が好きだけどな。）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"うむ、嫌いではないぞ。\n（ムーンブリア城には\n  ニワトリもおるしな。）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				MES(FEDERICA,"わっ、ホント？",0)
+				MES(FEDERICA,"ふふ、そうじゃないかと思った。",0)
+				MES(FEDERICA,"観光の人だったら、\nこんな放牧地までこないものね。",0)
+				MES_close(FEDERICA)
+
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"はは、まあな。",0)
+					MES(RAGNA,"というかこの牧場、\n１人でやってんのか……？",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"ふむ、この牧場は\n１人でやっておるのか……？",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+
+				MES(FEDERICA,"ええ、そうよ。",0)
+				MES(FEDERICA,"私の妹は『田舎臭い』なんて\n言うんだけど、どうしても\n一度やってみたくってね。",0)
+				MES(FEDERICA,"ふふ、また気が向いたら立ち寄って。\nこうやってエサをあげるのなんて、\n中々楽しいわよ？",0)
+				MES_close(FEDERICA)
+			}
+			//──────────────────────────────
+			F_set(FV_01_TalkFederica)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_FEDERICA)
+			{
+				MES(FEDERICA,"この村はいいわよ、のんびりしてて。",0)
+				MES(FEDERICA,"私の妹は『田舎臭い』なんて\n言うんだけどね。",0)
+				MES(FEDERICA,"また気が向いたら立ち寄ってね。\nこうやってエサをあげるのなんて、\n中々楽しいわよ？",0)
+				MES_close(FEDERICA)
+
+				F_set(FEDERICA)
+			}
+			//　　★繰り返し
+			else
+			{
+				MES(FEDERICA,"さーて、仕事仕事。",0)
+				MES(FEDERICA,"今のうちに\n干草を集めておきますか。",0)
+				MES_close(FEDERICA)
+			}
+		}
+		MOT(FEDERICA,2,10)
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

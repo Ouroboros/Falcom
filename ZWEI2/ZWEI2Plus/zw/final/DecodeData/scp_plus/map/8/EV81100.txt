@@ -1,0 +1,324 @@
+//====================================================================
+//ステージトラップスクリプト
+//[18010][要塞－入口]
+//====================================================================
+
+#ScriptTable
+
+
+#LUE 		1
+#EVENT_RAGNA 	2
+#ALWEN	 		3
+#LUEDUMMY		4
+
+// 101 入口
+
+INIT
+{
+//環境SE
+	SE(70,0)
+
+//  -------  no typ   	  tip      x     y     z    mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+	map_color(70,60,90,0)
+//■階段．扉
+	set_chr( 90,990,	-1,-1,   800,10800,    0,   180,     0, 0,";")	//①ダミー 初期位置
+	set_chr( 91,990,	-1,-1,     0, 6500, -200,     0,     0, 0,";")	//①ダミー メイン①から戻り
+
+	set_chr( 92,990,	-1,-1,     0, 6750,-1050,     0,081210, 0,"K0_18011;")	//①エントリ－メイン①
+	set_chr(150,990,	-1,-1,     0, 7550,   50,     0,071001, 6,"SF101 #6_92 #6_82;")		// エレベーター下り有効化用エントリ
+	set_chr( 82,990,	-1,-1,     0, 6750,   50,     0,081210, 0,"<EV_Down>;")	//①エントリ－メイン①
+
+//■スイッチ．看板
+	set_chr( 50,620,	-1,-1,  -1450,8350,    0,	  0,   270, 0,";")			//①セーブOBJ
+	F_set_chr( 50,     CF_NO_CLIP);
+
+	set_chr( 56,648,	-1,-1,     0, 8150,   -26,	 26,     0, 0,";")	//レベルプレート
+	color2( 56, 100,75,85,0,0,0)
+
+//■イベント
+	if(WK_ENTRY==91)//階段91 から来た時（帰り）
+	{
+		mot_obj("move_yuka","anime1")
+		EV("EV_ElevatorSE")
+	}
+	else
+	{
+		mot_obj("move_yuka","stop0")
+	}
+
+
+	if(GW_ENTRY_EVENT==1)
+	{
+		set_namebmp(0,0)
+		workG(GW_ENTRY_EVENT,SET,0)
+		//▼巨大竜巻を突破して空中要塞に到着する
+		EV("EV_6_07_OnMeru")
+	}
+
+//■場面固有設定
+}
+
+//====================================================================
+EV_Down
+{
+	mot_obj("move_yuka","anime0")
+	SE(1314,0)
+}
+
+//エレベーターのＳＥ再生（タイミング取るためスレッド化）（08.08.28ひ）
+EV_ElevatorSE
+{
+	wait(40)
+	SE(1314,0)
+}
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//▼巨大竜巻を突破して空中要塞に到着する
+//──────────────────────────────
+//　　画面しばらく暗転した後、ゆっくりとフェードイン。
+//　　螺旋要塞の一角にトリスタン号が着陸しており、
+//　　ラグナとアルウェン、そしてルゥがその側に立っている。
+//　　それらを遠景で見せながら、地名表示を行う。
+//　　要塞の威容を見上げながら厳しい表情のラグナたち。
+EV_6_07_OnMeru
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	F_set_chr( 56,     CF_NO_CLIP)
+
+	//キャラ再配置
+	chr_pos(RAGNA,	 3630,5470,-17,180,2)
+	chr_pos(PARTNER,	 3630,5270,-17,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(LUEDUMMY,   	  749,-1,-1, 0,0,0, 0,0,0, "")
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, 470,10340,-17, 2,150,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, 522,10580,-17, 2,130,0, "")
+	set_chr(LUE,	 1015,-1,-1,  340,10580,3, 2,130,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	F_set_chr(LUE,CF_NO_HEIGHT)
+	F_set_chr(LUE,CF_NO_CLIP)
+	F_set_chr(LUE,CF_NO_CLIP2)
+	F_set_chr(LUE,CF_NO_CSP)
+
+	KAO(EVENT_RAGNA,"B","1","2")
+	KAO(ALWEN,"B","1","2")
+	KAO(LUE,"B","1","2")
+
+//	MOT_SET(EVENT_RAGNA, 150,-1,3090,3101,-1,0)				//ギア突き出す
+	MOT_SET(EVENT_RAGNA, 150,-1,3035,3057,-1,0)				//ギア突き出す
+
+	wait(30)											//カメラロックを回避
+	chr_equip( ALWEN,"wp_004b", "Bone_RightSword", 100)	//杖を装備させるのはこちら。
+//	MOT(ALWEN,53,1)										//アルウェンの右手を開かせる。
+	chr_equip_chr(LUEDUMMY, EVENT_RAGNA, "Bone_RightSword", 100,		0,0,0,	0,0,0);
+
+	//カメラ初期位置
+	CAM_move(4224,7970,19690,0,0)
+	CAM(-610,80,19690,58,284,0,0)
+
+	CAM_move(464,-10430,3870,360,0)
+	CAM(-610,50,3870,58,220,360,0)
+
+	//フェードイン
+	fade_in(0,90,0)
+	wait_fade()
+
+	wait(60)
+	set_namebmp(16,0)										//地名
+
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(30)
+	CAM_move(1004,-5850,1490,0,0)
+	CAM(190,324,1490,46,210,0,0)
+	CAM_move(464,-10430,970,300,0)
+	CAM(190,280,970,46,238,300,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	cross_fade(30)
+	CAM_move(464,-10430,390,0,0)
+	CAM(-530,50,190,38,220,0,0)
+	CAM_move(464,-10430,190,120,0)
+	wait_CAM_move()
+	wait(15)
+
+	MES(LUE,"す、すごい……",0)
+	MES_close(LUE)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"こいつが……\n魔王の城ってヤツか。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	MES(ALWEN,"《螺旋要塞》メルセデク。",0)
+	MES(ALWEN,"魔法大戦で猛威を振るった\n《金色の魔王》の居城だ。",0)
+	MES(ALWEN,"そして今は……\nそなたの妹が動かしている。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B","1","2")
+	MES(EVENT_RAGNA,"ああ……",0)
+	MES_close(EVENT_RAGNA)
+
+	CAM_move(464,-10470,110,60,0)
+	CAM(-170,33,110,37,234,60,0)
+
+//　　ラグナ、ここでアルウェンたちに向き直る。
+
+	rot_chr(EVENT_RAGNA,20,ALWEN)
+	wait(15)
+
+//	wait_BGM()
+	wait_CAM()
+	wait_CAM_move()
+//	BGM(33)
+//	workG(GW_DEF_BGM,SET,0)		//デフォルト曲を元に戻す
+
+	KAO(EVENT_RAGNA,"B232BZ5","123","2")
+	MES(EVENT_RAGNA,"どんだけデカかろうが\n俺はミアに会いに行くだけだ。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","3","2")
+	MES(EVENT_RAGNA,"あのキザ野郎とだって\n話を付けなくちゃならねぇ。",0)
+	KAO(EVENT_RAGNA,"B232BZ4","321","2")
+	MES(EVENT_RAGNA,"２人とも……\nよろしく力を貸してくれ。",0)
+	MES_close(EVENT_RAGNA)
+
+	wait_MES(EVENT_RAGNA)
+
+	stop_BGM(90)
+
+	cross_fade(15)
+	CAM(-130,33,130,37,299,0,0)
+	CAM_move(464,-10470,130,0,0)
+	CAM(-370,33,130,37,299,300,0)
+
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	wait(5)
+	rot_chr(LUE,30,EVENT_RAGNA)
+	wait(10)
+	wait_fade()
+
+	KAO(ALWEN,"12321Z3","1233321","3")
+	MES(ALWEN,"うむ、任せるがよい。",0)
+	MES_close(ALWEN)
+
+	KAO(LUE,"B232BZ4","123","2")
+	MES(LUE,"ま、まあ……\nこれが最後だろうしね。",0)
+	MES_close(LUE)
+
+	look_chr(EVENT_RAGNA, LUE, "Bone_Head")
+	
+	wait_BGM()
+	BGM(33)
+	wait_MES(LUE)
+	
+//　　ルゥ、そのままラグナのアンカーギアへと宿る。
+//	MOT(EVENT_RAGNA, 150, 10)
+
+//	stop_BGM(90)
+	cross_fade(15)
+	CAM_move(464,-10470,110,0,0)
+//	CAM(149,33,110,37,144,0,0)
+	CAM(149,33,110,37,241,0,0)
+	
+	wait(15)
+	EFF_chr(6830,LUE,0,100,0,"Bone_Spine")						//エフェクト：ルゥが宿る
+	EFF_chr(6825,LUE,0,100,0,"Bone_Spine")						//エフェクト：ルゥが宿る
+	SE(1059,0)//ルゥ宿り
+	wait(15)
+
+	MOT(EVENT_RAGNA, 150, 10)	
+
+	EV("EV_1014")//ギア構えSE
+
+	color(LUE,-30)
+	wait_color(LUE)
+	EFF_chr(6815, LUE, 0,100,LUEDUMMY,"Bone_Hips")	//エフェクト：ルゥが宿る
+	SE(1035,0)//ルゥ宿り
+
+	wait(60)
+
+	look_off(EVENT_RAGNA)
+	MOT(EVENT_RAGNA, 2, 10)							//ラグナ、待機
+	wait(15)
+	
+//	wait_BGM()
+//	BGM(33)
+
+	KAO(EVENT_RAGNA,"12321Z3","1233321","2")
+	MES(EVENT_RAGNA,"よし……準備はＯＫだ。",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	cross_fade(15)
+	CAM_move(464,-10470,190,0,0)
+	CAM(-570,33,190,37,237,0,0)
+//	CAM_move(464,-10470,230,150,0)
+//	CAM(-970,33,230,37,237,150,0)
+	CAM_move(464,-10470,230,90,0)
+	CAM(-970,33,230,37,237,90,0)
+//　　ラグナ、改めて螺旋要塞の威容を見上げる。
+	rot(EVENT_RAGNA,20,150)	
+	rot(ALWEN,30,130)
+	wait_CAM()
+	wait_CAM_move()
+	workG(GW_DEF_BGM,SET,0)		//デフォルト曲を元に戻す
+
+	KAO(EVENT_RAGNA,"B232BZ3","1233321","3")	
+	MES(EVENT_RAGNA,"──待ってろよ、ミア！",0)
+	MES_close(EVENT_RAGNA)
+
+//	CAM_move(464,-10430,240,60,0)
+	fade_in(100,60,0)
+	wait_fade()
+
+	F_reset_chr( 56,     CF_NO_CLIP)
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(LUE)
+	delete(LUEDUMMY)
+
+	chr_pos(RAGNA,	 470,10340,-17,180,2)
+	chr_pos(PARTNER,	 522,10580,-17,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return(0)
+	wait(30)
+
+//ＧＦ『★螺旋要塞メルセデクに到着した』を立てる。
+	F_set(F6_02_OnMeru)
+
+	fade_in(0,30,0)
+
+	EV_end()
+
+	color(PET,-1)
+}
+
+EV_1014
+{
+	wait(15)
+	SE(1014,0)//ギア構え
+}
+
+#EndScriptTable
+//====================================================================
+

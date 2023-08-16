@@ -1,0 +1,255 @@
+//──────────────────────────────
+//	name("◆大五郎（男之子）Daigoro")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_DAIGORO
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(DAIGORO, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,DAIGORO)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,DAIGORO)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,DAIGORO)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,DAIGORO)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,DAIGORO)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,DAIGORO)
+		}
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□
+	//──────────────────────────────
+	if(F6_05_EndSixth)
+	{
+//　　★大五郎【熊猫楼に遊びに来た】
+	//　　※亚尔迪之熊猫楼，琉璃之傍に立っている。
+	//　　※振り返らない。
+		MES(DAIGORO,"啊呜……",0)
+		MES(DAIGORO,"这个，我要吃这个……！",0)
+		MES(DAIGORO,"啊呜啊呜！",0)
+		MES_close(DAIGORO)
+		//★大五郎【熊猫楼に遊びに来た】
+		F_set_note(DAIGORO,2)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※里之階段上辺りでフリ～ム～ブ。
+	if(F6_00_GoToMeru)
+	{
+		MOT(DAIGORO,2,10)
+		MOT_SET(DAIGORO,150,-1,478,478,151,25)	//大五郎
+		MOT_SET(DAIGORO,151,-1,476,476,-1,10)
+
+		rot_chr(DAIGORO,30,PLAYER1)
+		MES(DAIGORO,"啊呜。",0)
+		MES(DAIGORO,"啊呜呜～……",0)
+		MES_close(DAIGORO)
+
+	//　　ずず～っというＳＥと共に，鼻をすする。
+		MOT(DAIGORO,150,15)
+		wait(5)
+	//　　鼻はすぐに垂れてくる。
+//		MES(DAIGORO,"C4◆一边发出嘶嘶的声音，一边吸着鼻子。\n鼻涕马上又垂下来了。",0)
+		MES(DAIGORO,"嘶嘶……",0)
+		MES_close(DAIGORO)
+		MOT(DAIGORO,2,10)
+		wait(20)
+	
+		MES(DAIGORO,"啊呜……",0)
+		MES_close(DAIGORO)
+	}
+	else
+	//──────────────────────────── ──
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+	//　　※出店跡で，鸦に懐いている。（手を引っ張るなど）
+	//　　※振り返らない。
+		MES(DAIGORO,"啊啊……",0)
+		MES(DAIGORO,"哎呀呀～！",0)
+		MES_close(DAIGORO)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼夕方
+	//──────────────────────────────
+	if( F4_17_InTheEvening )
+	{
+		rot_chr(DAIGORO,30,PLAYER1)
+		
+		MES(DAIGORO,"啊……",0)
+		MES(DAIGORO,"啊嗯啊嗯啊嗯～……",0)
+		MES_close(DAIGORO)	
+	}
+	else
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//　　※階段下之辺りをうろうろしている。
+	if( F4_05_OnVillage2 )
+	{
+		rot_chr(DAIGORO,30,PLAYER1)
+		
+		MES(DAIGORO,"啊……",0)
+		MES(DAIGORO,"啊嗯啊嗯啊嗯～？\n（要去山脚吗？）",0)
+		MES_close(DAIGORO)
+		
+		if(!FS_08_TalkDaigoro)
+		{
+			//　　※ＧＦ『フラグ⑧大五郎と話した』を立てる。
+			F_set(FS_08_TalkDaigoro)
+
+		//名前付きキャラ全員に話しかけると露天温泉が開く
+			EV("EV_F4_12_OkRoten")
+		}
+		MOT(DAIGORO,2,10)
+
+		//メニュ～表示---------------------------------------------------------
+		
+//		MES(DAIGORO,"未入力項目：仮メッセ～ジ",0)
+//		MES_close(DAIGORO)		
+		
+		workL(WK_CANCEL,SET,2)//【取消】
+		MES_pos(PLAYER1,"??W9【去山脚】\n【留在这】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)
+		
+		if(WK_YESNO==1)
+		{
+		//	name("□是")
+//			MES(PLAYER1,"好，我们去山脚了！",0)
+//			MES_close(PLAYER1)
+			MES(DAIGORO,"嗯～！",0)
+			MES_close(DAIGORO)
+
+			fade_in(100,30,0)
+			wait_fade()
+						
+			//麓手前マップに戻る
+			workG(GW_ENTRY_EVENT,SET,3)
+			new_map(16010)
+			
+		}
+		else
+		{
+		//	name("□否")
+//			MES(PLAYER1,"不……\n嗯，现在还是算了。",0)
+//			MES_close(PLAYER1)
+			MES(DAIGORO,"啊～……",0)
+			MES_close(DAIGORO)
+		}
+		
+	}
+	TK_end()
+}
+
+//---------------------------------------------------------------------
+//麓にいる大五郎（★夕方にするため之フラグ立て·処理は入りません）
+TK_DAIGORO2
+{
+	TK_begin()
+	
+		rot_chr(DAIGORO,30,PLAYER1)
+	
+//		MES(DAIGORO,"未入力項目：仮メッセ～ジ",0)
+//		MES_close(DAIGORO)
+				
+		MES(DAIGORO,"啊～……",0)
+		MES(DAIGORO,"啊嗯啊嗯啊嗯～……\n（要回到里去吗？）",0)
+		MES_close(DAIGORO)
+	
+		//メニュ～表示---------------------------------------------------------
+		workL(WK_CANCEL,SET,2)//【取消】
+		MES_pos(PLAYER1,"??W9【回到里】\n【留在这】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)
+		
+		if(WK_YESNO==1)
+		{
+		//	name("□是")
+//			MES(PLAYER1,"好，我们回星降之里去了！",0)
+//			MES_close(PLAYER1)
+			MES(DAIGORO,"嗯～！",0)
+			MES_close(DAIGORO)
+
+			fade_in(100,30,0)
+			wait_fade()
+						
+			//里マップに戻る
+			workG(GW_ENTRY_EVENT,SET,4)
+			new_map(10400)
+			
+		}
+		else
+		{
+		//	name("□否")
+//			MES(PLAYER1,"不……\n嗯，现在还是算了。",0)
+//			MES_close(PLAYER1)
+			MES(DAIGORO,"啊～……",0)
+			MES_close(DAIGORO)
+		}
+			
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

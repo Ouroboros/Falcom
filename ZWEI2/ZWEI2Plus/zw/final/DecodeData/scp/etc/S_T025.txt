@@ -1,0 +1,489 @@
+//──────────────────────────────
+//	name("●蒙布兰")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_MONTBLANC
+{
+	TK_begin()
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　水晶祭坛之閉じた扉之前にいる。
+	//　　しょぼくれた表情で，話しかけても振り返らない。
+	if( F6_05_EndSixth )
+	{
+		if(!FM_13_TalkMontblanc)
+		{
+		//	name("★初回（１回之み／イベント制御）")
+		//　　話しかけたらキャラ再配置してイベント発生。
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(-4,5581,320,0,0)
+			CAM(-250,75,320,40,179,0,0)
+			//キャラ再配置
+			chr_pos(RAGNA,		-500,-4900,201,267,2)
+			chr_pos(PARTNER,	-500,-5000,201,270,2)
+			chr_pos(PET,		-480,-5100,201,280,2)
+			chr_pos(MONTBLANC,-3,-5016,200,180,2)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			KAO(MONTBLANC,"1", "1", "1")
+			
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			MES(MONTBLANC,"呜呜……\n适可而止吧，魔力快到极限了喵……",0)
+			MES(MONTBLANC,"如，如此下去的话……\n如此下去的话我就要\n变回原形了喵……",0)
+			MES_close(MONTBLANC)
+			wait_MES(MONTBLANC)
+			
+			cross_fade(30)
+//			CAM_move(-264,5501,320,0,0)
+//			CAM(-250,75,320,40,176,0,0)
+			CAM_move(-264,5501,320,0,0)
+			CAM(-210,88,320,33,179,0,0)
+			wait_fade()
+		//　　米娅，蒙布兰之方に一步進み出る。
+		
+			move(PARTNER, 0, 10,-400,-5000,201,0)
+			wait(40)
+
+			KAO(PARTNER,"12321Z2","1","1")
+			MES(PARTNER,"蒙布兰……",0)
+			MES_close(PARTNER)
+
+		//　　蒙布兰之頭に！マ～ク。
+			EMO(MONTBLANC,EMO_BIKKURI)
+			KAO(MONTBLANC,"E", "E", "1")
+			wait(30)
+
+		//　　驚き之表情になって米娅之方に向き直る。
+			rot_chr(MONTBLANC,30,PARTNER)
+
+			KAO(MONTBLANC,"12321Z3", "E", "1")
+			MES(MONTBLANC,"你，你，你是……",0)
+			KAO(MONTBLANC,"12321Z4", "E", "1")
+			MES(MONTBLANC,"人偶女孩，你在干什么喵！？",0)
+			MES_close(MONTBLANC)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z4","1","1")
+			MES(PARTNER,"……原来你在这里么。",0)
+			KAO(PARTNER,"12321Z4","1","1")
+			MES(PARTNER,"真可怜……\n一个人孤零零的。",0)
+			MES_close(PARTNER)
+
+		//	name2(MONTBLANC)
+			KAO(MONTBLANC,"12321Z3", "5", "1")
+			MES(MONTBLANC,"啊，不要用怜悯的眼神\n看着蒙布兰大人喵！",0)
+			KAO(MONTBLANC,"12321Z3", "2", "1")
+			MES(MONTBLANC,"你这个叛徒！\n就是因为你扎哈鲁大人他\n居然会出那种事～……！",0)
+			MES_close(MONTBLANC)
+
+		//　　米娅，悲しそうな表情になる。
+			KAO(PARTNER,"B","23","B")
+			
+			KAO(RAGNA,"B232BZ4","1","3")
+			MES(RAGNA,"喂，等一下啊。",0)
+			KAO(RAGNA,"B232BZ5","1","3")
+			MES(RAGNA,"抓走别人的妹妹\n做如此丢人的事情……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			look_chr( PARTNER, RAGNA,"Bone_Head")
+
+			KAO(PARTNER,"B232BZ3","21","1")
+			MES(PARTNER,"哥哥，行了。",0)
+			MES_close(PARTNER)
+			KAO(PARTNER,"1","23","1")
+			look_off(PARTNER)
+			wait(30)
+			KAO(PARTNER,"12321Z5","3","1")
+			MES(PARTNER,"……对不起。\n骗了你们我表示歉意。",0)
+			KAO(PARTNER,"12321Z6","3","1")
+			MES(PARTNER,"眼下只要我能做到的事\n我愿意做一切事情来补偿。",0)
+			KAO(PARTNER,"12321Z5","21","1")
+			MES(PARTNER,"所以蒙布兰你……\n请无论如何振作起来。",0)
+			MES_close(PARTNER)
+
+		//　　蒙布兰之頭に！マ～ク。
+			EMO(MONTBLANC,EMO_BIKKURI)
+			KAO(MONTBLANC,"1", "E", "1")
+			wait(30)
+
+			KAO(MONTBLANC,"12321Z3", "E", "1")
+			MES(MONTBLANC,"你，你是……\n真的是那个人偶女孩……？",0)
+			KAO(MONTBLANC,"12321Z5", "E", "1")
+			MES(MONTBLANC,"那，居然说出这种话\n简直难以置信喵……",0)
+			MES_close(MONTBLANC)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z5","1","1")
+			MES(PARTNER,"我现在是作为米娅本人\n与你在对话。",0)
+			KAO(PARTNER,"12321Z6","23","1")
+			MES(PARTNER,"艾克斯玛绮娜\n是因为我那颗不想受到伤害的脆弱的心\n而产生的……",0)
+			KAO(PARTNER,"12321Z6","3","1")
+			MES(PARTNER,"如果我更坚强一些的话\n你的主人也\n不会死的……",0)
+			KAO(PARTNER,"12321Z4","3","1")
+			MES(PARTNER,"所以……\n真的是对不起。",0)
+			MES_close(PARTNER)
+
+			look_chr( RAGNA,PARTNER, "Bone_Head")
+			
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z2","1","1")
+			MES(RAGNA,"米娅……",0)
+			MES_close(RAGNA)
+
+		//	name2(MONTBLANC)
+			KAO(MONTBLANC,"H", "H", "1")
+			MES(MONTBLANC,"嗯，嗯嗯嗯……",0)
+			MES_close(MONTBLANC)
+
+			look_off(RAGNA)
+
+		//	name2(PET)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"蒙布兰。\n适可而止吧。",0)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"叔父大人的死\n有一半是他自作自受。",0)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"实际杀死他的人\n是特尔米多鲁。",0)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"她并没有错\n这点你也应该知道的。",0)
+			MES_close(PET)
+
+			KAO(MONTBLANC,"12321", "E", "1")
+			MES(MONTBLANC,"………呃…………",0)
+			MES_close(MONTBLANC)
+
+//			rot_chr(PARTNER,30,PET)
+			look_chr( PARTNER,PET, "Bone_Head")
+
+			KAO(PARTNER,"12321Z3","1","1")
+			MES(PARTNER,"艾尔雯，但是……",0)
+			MES_close(PARTNER)
+
+			look_chr( PET,PARTNER, "Bone_Head")
+			KAO(PET,"12321Z3","23","1")
+			MES(PET,"坏习惯哟，米娅。",0)
+			KAO(PET,"12321Z4","21","1")
+			MES(PET,"自我批评是不可或缺的。",0)
+			KAO(PET,"12321Z6","1","1")
+			MES(PET,"但是，什么乱七八糟的责任\n全部自己承担的话\n那反倒是你自己太高傲了。",0)
+			MES_close(PET)
+
+			KAO(PARTNER,"92329Z1","1","1")
+			MES(PARTNER,"……是。",0)
+			MES_close(PARTNER)
+
+			KAO(RAGNA,"12321Z2","23","1")
+			MES(RAGNA,"啊呀呀……",0)
+			KAO(RAGNA,"12321Z5","21","1")
+			MES(RAGNA,"算了，米娅的事暂且放一放\n眼下战斗已经结束了呢。",0)
+			KAO(RAGNA,"12321Z6","1","1")
+			MES(RAGNA,"之前的事就让它过去吧\n有什么困难要跟我们说哦？",0)
+			MES_close(RAGNA)
+
+//			rot_chr(PARTNER,30,MONTBLANC)
+//			look_chr( PARTNER,MONTBLANC, "Bone_Head")
+			look_off(PET)
+			look_off(PARTNER)
+
+			KAO(MONTBLANC,"12321Z5", "D", "1")
+			MES(MONTBLANC,"谁，谁要接受你们的\n施舍喵！",0)
+			KAO(MONTBLANC,"12321Z6", "E", "1")
+			MES(MONTBLANC,"而且你们人类\n也无法解决\n我现在的苦恼的喵！",0)
+			MES_close(MONTBLANC)
+
+			KAO(RAGNA,"12321E","D","1")
+			MES(RAGNA,"诶……？",0)
+			MES_close(RAGNA)
+
+		//　　ここで米娅之頭にＰＡマ～ク。
+			KAO(PARTNER,"1","D","7")
+			EMO(PARTNER,EMO_PA)
+			wait(30)
+			KAO(PARTNER,"1232Z4","1","1")
+			MES(PARTNER,"蒙布兰，你……",0)
+			KAO(PARTNER,"1232Z6","1","1")
+			MES(PARTNER,"魔力耗尽之后\n就无法保持这个样子了吧？",0)
+			MES_close(PARTNER)
+
+		//　　蒙布兰にアセアセエモ～ション。
+			EMO(MONTBLANC,EMO_ASEASE)
+			KAO(MONTBLANC,"7", "7", "7")
+			wait(30)
+			MES(MONTBLANC,"寒……",0)
+			MES_close(MONTBLANC)
+
+		//	name2(PET)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"嗯，虽然说是使魔\n之前也是普通的猫吧。",0)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"叔父大人死去之后，也就无法继续保持\n眼下这个样子了。",0)
+			MES_close(PET)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z5","1","1")
+			MES(RAGNA,"原来如此，也就是\n要变原来的猫了。",0)
+			KAO(RAGNA,"12321Z5","1","1")
+			MES(RAGNA,"啊，不就是变回原形吗\n不用太在意吧？",0)
+			MES_close(RAGNA)
+
+		//	name2(MONTBLANC)
+			KAO(MONTBLANC,"12321Z3", "5", "1")
+			MES(MONTBLANC,"不，不要乱说！？",0)
+			KAO(MONTBLANC,"12321Z5", "L", "1")
+			MES(MONTBLANC,"事到如今，让我再变成只会说喵啊喵\n的无能的生物\n我绝对不要喵！！",0)
+			MES_close(MONTBLANC)
+
+		//　　蒙布兰，背を向ける。
+			rot(MONTBLANC,30,180)
+			wait(30)
+			
+			KAO(MONTBLANC,"1", "1", "1")
+			MES(MONTBLANC,"……因此\n我讨厌感觉迟钝的人类喵……",0)
+			MES(MONTBLANC,"快点走喵。\n不要再在我面前\n出现了喵……！",0)
+			MES_close(MONTBLANC)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z2","1","5")
+			MES(RAGNA,"（嗯，嗯……）",0)
+			MES_close(RAGNA)
+
+//			rot_chr(PARTNER,30,RAGNA)
+//			rot_chr(PET,30,PARTNER)
+//			rot_chr(RAGNA,30,PARTNER)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z5","23","5")
+			MES(PARTNER,"（因为我的魔力完全丧失了\n  只有这样的话……）",0)
+			MES_close(PARTNER)
+
+			KAO(PET,"12321Z5","23","1")
+			MES(PET,"（嗯，我已经有露了\n  所以不再需要使魔了。）",0)
+			KAO(PET,"12321Z5","21","1")
+			MES(PET,"（啊，如果是魔女的话\n  一定有什么方法吧。）",0)
+			KAO(PET,"12321Z3","1","1")
+			MES(PET,"（我去找她问问看吧。）",0)
+			MES_close(PET)
+
+//			rot_chr(PARTNER,30,PET)
+			look_chr( PARTNER,PET, "Bone_Head")
+
+			KAO(PARTNER,"92329Z5","21","7")
+			MES(PARTNER,"（好的……\n 拜托了。）",0)
+			MES_close(PARTNER)
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			look_off(PET)
+			look_off(PARTNER)
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			
+			//克雷斯に幸運之金貨を返しているとイベント発生エントリ出現
+			if(!FE_13_MeetCleese && FE_03_KinkaCleese)
+			{
+				set_chr(101,990,	-1,-1,     0,-2000,-100,    0, 2401, 6,"<EV_Meets_Cleese>;")	//克雷斯とすれ違うイベント
+			}
+
+			F_set(FM_13_TalkMontblanc)
+			
+			EV_end()
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		if(FM_13_MontblancMiss)
+		{
+			KAO(PLAYER1, "1", "1", "1")	
+			KAO(PLAYER2, "1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			rot_chr(PLAYER1,30,S_MONTBLANC)
+			rot_chr(PLAYER2,30,S_MONTBLANC)
+			rot_chr(PET,30,S_MONTBLANC)
+			rot_chr(S_MONTBLANC,30,PLAYER1)
+			if(!F_S_MONTBLANC)
+			{
+			//　　※克雷斯之使い魔になるイベント後，蒙布兰之通常一般メッセ～ジ。
+				MES(S_MONTBLANC,"至，至少，想和拥有魔力的\n人类缔结契约喵。",0)
+				MES(S_MONTBLANC,"直到契约结束，\n一直是这个样子喵……",0)
+				MES(S_MONTBLANC,"连魔法都没法用喵～！！",0)
+				MES_close(S_MONTBLANC)
+				
+				F_set(S_MONTBLANC)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(S_MONTBLANC,"为什么会和\n这种没精打采的人类……",0)
+				MES(S_MONTBLANC,"呜喵～～～，真是恶梦喵～！！",0)
+				MES_close(S_MONTBLANC)
+			}
+			rot_chr(S_MONTBLANC,30,CLEESE)
+		}
+		else
+		{
+		//──────────────────────────────
+			KAO(PLAYER1, "1", "1", "1")	
+			KAO(PLAYER2, "1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			rot_chr(PLAYER1,30,MONTBLANC)
+			rot_chr(PLAYER2,30,MONTBLANC)
+			rot_chr(PET,30,MONTBLANC)
+		//　　※幸運之金貨を返却していない场合，蒙布兰之通常一般メッセ～ジ。
+			MES(MONTBLANC,"可恶……\n我讨厌你们喵喵。",0)
+			MES(MONTBLANC,"我不要你们的帮忙喵。\n快点走开喵！",0)
+			MES_close(MONTBLANC)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+	//　　水晶祭坛之閉じた扉之前にいる。
+	//　　しょぼくれた表情で，話しかけても振り返らない。
+	//	name("★初回（１回之み／イベント制御）")
+	//　　話しかけたらキャラ再配置してイベント発生。
+	//　　できれば蒙布兰之表情が見えるカメラ配置にする。
+		if(!FM_12_TalkMontblanc)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(-725,5041,380,0,0)
+			CAM(-370,85,20,40,280,0,0)
+
+			//キャラ再配置
+			chr_pos(RAGNA,-665,-5101,201,270,2)
+			chr_pos(PARTNER,-684,-5001,201,267,2)
+			chr_pos(PET,-666,-5246,200,,280,2)
+			chr_pos(MONTBLANC,-3,-5016,200,180,2)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			KAO(MONTBLANC,"1", "1", "1")	
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			
+			KAO(MONTBLANC,"12321Z3", "L", "5")
+			MES(MONTBLANC,"喵，出了这种事喵～……",0)
+			KAO(MONTBLANC,"12321Z3", "L", "5")
+			MES(MONTBLANC,"真没想到扎哈鲁大人居然\n会死喵～……",0)
+			KAO(MONTBLANC,"12321Z3", "L", "5")
+			MES(MONTBLANC,"呜喵～～～……\n从今往后要怎么办喵……",0)
+			MES_close(MONTBLANC)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z4","1","1")
+			MES(RAGNA,"（是吗，这家伙在呀……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PET)
+			KAO(PET,"12321Z4","1","1")
+			MES(PET,"（真，真有些可怜……）",0)
+			MES_close(PET)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z6","1","1")
+			MES(PARTNER,"（既然叔父大人死了，\n  魔力也该失去了大半了。）",0)
+			KAO(PARTNER,"12321Z6","1","1")
+			MES(PARTNER,"（我觉得也没什么危险了\n  就静静的让他在这里吧。）",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z3","1","1")
+			MES(RAGNA,"（啊，也是。）",0)
+			MES_close(RAGNA)
+			
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			
+			F_set(FM_12_TalkMontblanc)
+
+			
+			EV_end()
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+			KAO(PLAYER1, "1", "1", "1")	
+			KAO(PLAYER2, "1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			rot_chr(PLAYER1,30,MONTBLANC)
+			rot_chr(PLAYER2,30,MONTBLANC)
+			rot_chr(PET,30,MONTBLANC)
+		//	name("★以後，繰り返し")
+			MES(MONTBLANC,"真没想到扎哈鲁大人居然\n会死喵～……",0)
+			MES(MONTBLANC,"呜喵……\n从今往后要怎么办喵……",0)
+			MES_close(MONTBLANC)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		KAO(PLAYER1, "1", "1", "1")	
+		rot_chr(PLAYER1,30,MONTBLANC)
+		
+		if(!F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MONTBLANC)
+		}
+
+	//▽偽艾尔雯を倒した
+	//　　异次元·中ボス地点１で気絶して倒れている。
+	//　　月·异世界攻略終了までこ之まま置き続ける。
+		MES(MONTBLANC,"………唔喵………………",0)
+		MES_close(MONTBLANC)
+
+	//	name("テキスト（色換え·表示しない）")
+		MES(0,"C3S2好像晕过去了。",2)
+		MES_close(0)
+	}
+
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

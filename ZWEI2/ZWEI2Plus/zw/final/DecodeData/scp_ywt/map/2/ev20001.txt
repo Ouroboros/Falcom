@@ -1,0 +1,2171 @@
+//====================================================================
+//僗僥乕僕僩儔僢僾僗僋儕僾僩
+//[12000][悈杤恄揳亅擖岥]
+//====================================================================
+
+#ScriptTable
+
+#PIPIRO		1
+#POCKLE		2
+#EVENT_RAGNA	3
+#ALWEN			4
+#EFFECT			5
+#EFFECT2		6
+#EFFECT3		7
+#EFFECT4		8
+
+#CLEESE		10
+
+//=====================================================================
+//=== 弶婜壔張棟 ======================================================
+//=====================================================================
+INIT
+{
+//娐嫬SE
+	SE(59,0)//屛
+
+//  -------- no typ     tip      x    y   z   		mot  岦    忬  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//仭奒抜丒斷
+	set_chr( 90,990,	-1,-1,  -640, 18200, 800,  	180, 5001,	6,"Kc_10000;")	//奒抜栠傝乮僼傿乕儖僪傊乯
+	set_chr( 91,990,	-1,-1,     0,  5012,  90,    0,0401,6,"K0_12010;")	//嘇僄儞僩儕 儊僀儞嘆
+
+	//仛儔僌僫偼扨撈峴摦傪巒傔偨乣仛幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨傑偱偼丄僟儞僕儑儞偵擖傟側偄丅
+	if( F4_00_StartSolo && !F4_09_GoShrineMia )
+	{
+		set_chr( 92,991,	-1,-1,    11,5439,90,  0,0403,	6,"<EV_STOP_01>")	//僟儞僕儑儞偵擖傟側偄僗僩僢僷乕
+	}
+	//戞屲復拞偼丄傾儖僂僃儞晄嵼偺偨傔僟儞僕儑儞偵擖傟側偄
+	if( (F4_11_EndFourth && !F5_17_EndFifth)
+	{
+		set_chr( 92,991,	-1,-1,    11,5439,90,  0,0403,	6,"<EV_STOP_01>")	//僟儞僕儑儞偵擖傟側偄僗僩僢僷乕
+	}
+
+
+	if( !F1_17_MeetPipiPoc && !F1_18_OnTemple )
+	{
+		set_chr( 100,990,	-1,-1,	-568,13371,800,    0,0,2,"<LP_NoHasi>")	//愭抂偵攝抲偺俴俹
+	}
+
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋嘊偺娫偼僋儗乕僗偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F2_00_GoForest && !F2_14_TalkEnemy)
+	{
+		set_chr( CLEESE,83,-1,-1,	-72,14551,800,	2,324,	20,"<TK_CLEESE>")	//恄揳傊偺弌岥慜丂僋儗乕僗
+//		-398,14551,801,324
+		//儌乕僔儑儞丂偡傢傝僋儗乕僗
+//		MOT_SET(CLEESE,150,-1,452,452,-1,0)		//僋儗乕僗
+//		MOT(CLEESE,150,0)
+		MOT_SET(CLEESE,150,-1,521,521,-1,0)		//僠僃僗僋丂愇旇偵傕偨傟偐偐偭偰偄傞
+		MOT(CLEESE,150,0)
+
+		F_set_chr(CLEESE,CF_NO_MOVE)
+	}
+
+	//俧俥亀仛恄揳傊偺摴偑弌尰偟偨亁棫偭偰偄傞
+	if(F1_18_OnTemple)
+	{
+		mot_obj("hashi","open0")
+	}
+	else
+	{
+		//傾僞儕
+		set_chr( 81,991,	-1,-1,	 -16,13500,500,   0,  0401,	0,";")
+		set_chr( 82,991,	-1,-1,	-116,13400,500,   0,  0401,	0,";")
+		set_chr( 83,991,	-1,-1,	-216,13300,500,   0,  0401,	0,";")
+	}
+
+	F_set(F1_23_VisitTenple)
+
+//仭僀儀儞僩
+	if(F1_02_EndPrologue && !F1_22_EndFirst)
+	{
+	//侾復
+		//俧俥亀仛恄揳傊偺摴偑弌尰偟偨亁棫偭偰側偄
+		if(!F1_18_OnTemple && F1_24_UwasaTenple)
+		{
+			//仴恄揳傊偺捠傝摴偑尰傟傞
+//		//	set_chr( 80,990,-1,-1,-609,13951,800,		0,	1201,	6,"<EV_1_09_OnTemple>;")
+			set_chr( 80,990,-1,-1,	-568,13371,800,    0,0,2,"<EV_1_09_OnTemple>;")
+		//	set_chr( 80,990,-1,-1,	-568,13371,800,    0,0,2,"<EV_1_09_OnTemple_Taikenban>")	//懱尡斉梡
+		}
+		//俧俥亀仛恄揳慜偱億僢僋儖丒僺僺儘偲弌夛偭偨亁棫偭偰側偄丂佀丂僗僩僢僷乕巇條曄峏丗懞恖偨偪偵僂儚僒傪暦偄偰偐傜丄僀儀儞僩奐巒偲側傝傑偟偨丅
+//		if(!F1_17_MeetPipiPoc)
+		if(!F1_17_MeetPipiPoc && F1_24_UwasaTenple)
+		{
+			//仴恄揳慜偵摓拝偡傞僀儀儞僩
+			set_namebmp(0,0)
+			EV("EV_1_08_MeetPP")
+		}
+
+	}
+}
+
+
+//====================================================================
+//=== 僀儀儞僩張棟 ===================================================
+//====================================================================
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴恄揳慜偵摓拝偡傞僀儀儞僩
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂夋柺僼僃乕僪僀儞偟偰丄恄揳偑悈杤偟偰偄傞條巕傪尒偣傞丅
+//丂丂偦偺傑傑僗僋儘乕儖偟偰丄
+//丂丂悈曈偺堦斣愭抂晹暘偵偄傞丄億僢僋儖偲僺僺儘傪尒偣傞丅
+EV_1_08_MeetPP
+{
+	EV_begin()
+
+	//埫揮
+	fade_in(100,1,0)
+	wait_fade()
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,-630,15266,800,180,2)
+	chr_pos(PARTNER,-810,15324,800,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, -630,15266,800, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, -810,15324,800, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	color(EVENT_RAGNA,-1)
+	color(ALWEN,-1)
+
+	//僀儀儞僩梡僺僺儘偲億僢僋儖攝抲
+	set_chr( PIPIRO, 1013,-1,-1,-818,13982,800, 2,	180,0,"") //僺僺儘
+	set_chr( POCKLE, 1012,-1,-1,-556,13866,800, 2,	180,0,"") //億僢僋儖
+	F_set_chr(POCKLE,CF_NO_CLIP)
+	F_set_chr(POCKLE,CF_NO_CLIP2)
+	F_set_chr(POCKLE,CF_NO_CSP)
+	F_set_chr(PIPIRO,CF_NO_CLIP)
+	F_set_chr(PIPIRO,CF_NO_CLIP2)
+	F_set_chr(PIPIRO,CF_NO_CSP)
+	color(POCKLE,-1)
+	color(PIPIRO,-1)
+
+	KAO(EVENT_RAGNA,"1","1","1")//僨僼僅儖僩
+	KAO(ALWEN,"1","1","1")//僨僼僅儖僩
+	KAO(POCKLE,"1","1","1")//僨僼僅儖僩
+	KAO(PIPIRO,"1","1","1")//僨僼僅儖僩
+
+	//儌乕僔儑儞掕媊
+	MOT_SET(ALWEN,150,-1,399,399,-1,-1)//崢偵庤傪摉偰傞乮嵍乯
+	MOT_SET(ALWEN,151,-1,439,439,-1,-1)	//嫻庤
+	MOT_SET(POCKLE,150,-1,491,491,-1,-1)	//偪偑偆偪偑偆
+	MOT_SET(POCKLE,151,-1,493,493,-1,-1)	//
+	MOT_SET(POCKLE,152,-1,441,441,-1,-1)//嫻庤
+	MOT_SET(POCKLE,153,-1,469,469,-1,-1)//偆傢
+	MOT_SET(POCKLE,154,-1,579,579,-1,-1)//楃
+	MOT_SET(POCKLE,155,-1,435,435,-1,-1)//偡偘偉
+	MOT_SET(POCKLE,156,-1,416,416,-1,-1)//傗傠偆傛
+	MOT_SET(EVENT_RAGNA,150,-1,405,405,-1,-1)	//偳偆側偺傛
+	MOT_SET(PIPIRO,150,-1,410,410,-1,-1)	//僼儉
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//忨傪憰旛偝偣傞偺偼偙偪傜丅
+//	MOT(ALWEN,53,1)										//傾儖僂僃儞偺塃庤傪奐偐偣傞
+
+	//僇儊儔弶婜埵抲
+	CAM_move(-1520,-5020,-320,0,0)
+	CAM(230,250,-320,38,138,0,0)
+
+	CAM(230,300,-320,38,138,160,0)
+
+	//僼僃乕僪僀儞
+	fade_in(0,90,0)
+//	wait_fade()
+//	wait(160)
+//	wait_CAM_move()
+	wait_CAM()
+
+	cross_fade(60)
+	CAM_move(-3092,-2904,282,0,0)
+	CAM(-210,652,282,24,208,0,0)
+	CAM_move(88,-2904,282,200,0)
+	CAM(-210,602,282,24,208,200,0)
+//	wait(200)
+	wait_CAM_move()
+	wait_CAM()
+
+//	cross_fade(60)
+//	CAM_move(4440,-2820,60,0,0)
+//	CAM(270,378,60,40,200,0,0)	
+//	CAM_move(4440,-7480,60,300,0)
+//	CAM(470,378,60,40,215,300,0)
+//	wait(200)
+
+	cross_fade(60)
+	CAM_move(888,-7124,62,0,0)
+	CAM(270,400,-898,46,200,0,0)
+	CAM_move(148,-8064,-238,270,0)
+	CAM(150,520,-238,46,190,270,0)
+	wait(120)
+	set_namebmp(3,0)
+	wait_CAM_move()
+	wait_CAM()
+	wait(30)
+
+	//奟晅嬤傪僋儘乕僘傾僢僾
+	cross_fade(30)
+	color(POCKLE,1)
+	color(PIPIRO,1)
+	CAM_move(-652,-13624,782,0,0)
+	CAM(630,260,782,22,204,0,0)
+	CAM(630,200,782,22,204,120,0)
+	wait(120)
+
+	//億僢僋儖傾僢僾僇儊儔
+	cross_fade(30)
+	CAM_move(-430,-13950,980,0,0)
+	CAM(-50,28,980,28,192,0,0)
+	CAM_move(-430,-13950,960,300,0)
+	CAM(-90,26,960,28,188,300,0)
+	wait_fade()
+	wait(30)
+
+	chr_rename(POCKLE,"男孩子")
+//	name("抝偺巕")
+	MES(POCKLE,"嗯……",0)
+	MES(POCKLE,"還是覺得似乎有什麼東西存在。",0)
+	MES(POCKLE,"果然……這種距離，\n即使是長索也無能為力。",0)
+	MES_close(POCKLE)
+	wait_MES(POCKLE)
+
+	cross_fade(15)
+	CAM_move(-810,-14050,960,0,0)
+	CAM(70,36,960,28,134,0,0)
+//	wait_CAM_move()
+//	wait_CAM()
+	CAM_move(-770,-14070,940,600,0)
+	CAM(30,36,940,28,152,600,0)
+
+//	look_chr( PIPIRO, POCKLE ,"Bone_Head")
+	rot_chr(PIPIRO, 30, POCKLE )
+	wait(15)
+	chr_rename(PIPIRO,"女孩子")
+//	name("彈偺巕")
+	MES(PIPIRO,"如果不在城裡的話，\n就算找下去也是浪費時間。",0)
+	MES(PIPIRO,"我肚子餓了，咱們回到鎮上\n去喝下午茶吧。",0)
+	MES_close(PIPIRO)
+	wait_MES(PIPIRO)
+
+//	CAM_move(-689,-13929,920,0,0)
+//	CAM(150,75,920,20,170,0,0)
+//	CAM_move(-669,-13929,920,1600,0)
+//	CAM(150,76,920,20,257,1600,0)
+
+	KAO(POCKLE,"1","123","4")//
+	EMO(POCKLE,EMO_TENTEN)
+	wait(45)
+//	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+	rot_chr(POCKLE, 30, PIPIRO )
+	wait(15)
+	MOT(POCKLE,156,15)
+	wait(15)
+//	name("抝偺巕")
+	KAO(POCKLE,"12321Z4","321","4")//
+	MES(POCKLE,"真是的……\n你稍微認真點嘛。",0)
+	KAO(POCKLE,"12321Z4","1","4")//
+	MES(POCKLE,"這也和我們\n有關係啊。",0)
+	MES_close(POCKLE)
+
+//	name("彈偺巕")
+	MES(PIPIRO,"我們只是受託\n把東西送到這座島上。",0)
+	MES(PIPIRO,"之後不管它被偷被搶，\n都和我們無關了啊！",0)
+	MES_close(PIPIRO)
+
+	MOT(POCKLE,2,15)
+	wait(15)
+//	name("抝偺巕")
+	KAO(POCKLE,"12321Z8","1233321","4")//
+	MES(POCKLE,"話雖如此……\n我們也受到菲歐娜小姐和克羅德先生\n不少照顧。",0)
+	KAO(POCKLE,"12321Z7","1","1")//
+	MES(POCKLE,"而且……\n這座島上發生了什麼事情，\n難道你不在意嗎？",0)
+	MES_close(POCKLE)
+
+//	name("彈偺巕")
+	MES(PIPIRO,"無所謂～。",0)
+	MES(PIPIRO,"說起來鎮上女裝店推出的新款\n我很喜歡呢～。",0)
+	MES(PIPIRO,"嗯，果然是和布庫村有天壤之別，\n那鄉下連座飛機場都沒有。",0)
+	MES_close(PIPIRO)
+
+//	name("抝偺巕")
+	KAO(POCKLE,"12321Z2","123","5")//
+	MES(POCKLE,"皮皮洛～……",0)
+	MES_close(POCKLE)
+
+//	name2(EVENT_RAGNA)
+//	MES_pos(EVENT_RAGNA,"W9傛偆丄壗偟偰傫偩丠",0,480,340,0,0)
+	MES_pos(EVENT_RAGNA,"W9嘿，你們在做什麼？",0,520,380,0,0)
+	wait_key(0)
+	MES_close(EVENT_RAGNA)
+
+//丂丂億僢僋儖偲僺僺儘偺摢偵両儅乕僋丅
+//	MES(POCKLE,"両儅乕僋丅",0)
+//	MES_close(POCKLE)
+
+	KAO(POCKLE,"E","321D","6")//
+	EMO(POCKLE,EMO_BIKKURI)
+	KAO(PIPIRO,"E","12321D","6")//
+	EMO(PIPIRO,EMO_BIKKURI)
+	wait(15)
+	rot_chr(POCKLE,30,EVENT_RAGNA)
+	rot_chr(PIPIRO,30,ALWEN)
+	wait(30)
+
+//丂丂僇儊儔愗傝懼偊偟偰丄儔僌僫偨偪偑尰傟傞偺傪尒偣傞丅
+	color(EVENT_RAGNA,1)
+	color(ALWEN,1)
+	cross_fade(15)
+
+//	CAM_move(-678,-15150,960,0,0)
+//	CAM(90,74,960,28,190,0,0)
+	CAM_move(-678,-14990,940,0,0)
+	CAM(-70,84,940,28,190,0,0)
+
+	chr_pos(PIPIRO,-740,13902,800,350,2)
+	look_chr( PIPIRO, EVENT_RAGNA ,"Bone_Head")
+	look_chr( POCKLE, EVENT_RAGNA ,"Bone_Head")
+	wait_fade()
+
+//	name("抝偺巕")
+	KAO(POCKLE,"F","12321D","6")//
+	MES(POCKLE,"啊……",0)
+	MES_close(POCKLE)
+
+//	name("彈偺巕")
+	KAO(PIPIRO,"12321Z3","12321","1")//
+	MES(PIPIRO,"嗯？\n好像有客人來了。",0)
+	MES_close(PIPIRO)
+	wait_MES(PIPIRO)
+
+//丂丂儔僌僫偲傾儖僂僃儞丄億僢僋儖偨偪偺慜傑偱堏摦丅
+//	CAM_move(-618,-14170,940,140,0)
+//	CAM(10,80,940,19,224,140,0)
+	CAM_move(-638,-14170,940,140,0)
+	CAM(-30,50,940,28,220,140,0)
+	KAO(POCKLE,"1","1","1")//
+
+	move( EVENT_RAGNA, 0, WALK1,-614,14300,800,0)
+	wait(10)
+	move( ALWEN, 0, WALK1,-768,14326,800,0)
+	wait_move(EVENT_RAGNA)
+	wait_move(ALWEN)
+	look_chr( ALWEN, POCKLE ,"Bone_Head")
+
+	wait_CAM_move()
+	wait_CAM()
+//	CAM_move(-598,-14190,920,900,0)
+//	CAM(-150,62,920,20,206,900,0)
+
+	MES(EVENT_RAGNA,"嘿，二位。",0)
+	MOT(EVENT_RAGNA,150,15)
+	wait(15)
+	MES(EVENT_RAGNA,"在這種地方兩人獨處，\n約會嗎？",0)
+	MES_close(EVENT_RAGNA)
+
+//丂丂億僢僋儖偺摢偵両儅乕僋丅
+//丂丂傢偨傢偨偲峇偰傞傛偆側摦嶌偵側傞丅
+	KAO(POCKLE,"E","12IHGK","7")//
+	EMO(POCKLE,EMO_BIKKURI)
+	wait(15)
+	VOICE(494,0)	//儃僀僗捛壛墘弌
+//	VOICE(495,0)	//儃僀僗捛壛墘弌
+	MOT(POCKLE, 150, 5)
+	wait(5)
+	MOT(POCKLE, 151, 5)
+	wait(5)
+	MOT(POCKLE, 150, 5)
+	wait(5)
+	MOT(POCKLE, 151, 5)
+//	name("抝偺巕")
+	KAO(POCKLE,"123212Z3","K","7")//
+	MES(POCKLE,"才…才沒有約會！",0)
+	KAO(POCKLE,"123212Z6","GHIIIHGK","7")//
+	MES(POCKLE,"我們兩個是兄妹，\n家人一樣的關係……！",0)
+	MES_close(POCKLE)
+
+//	look_chr( PIPIRO, POCKLE ,"Bone_Head")
+//	wait(15)
+//	name("彈偺巕")
+	KAO(PIPIRO,"B232BZ3","123","2")//
+	MES(PIPIRO,"……你慌什麼？沒出息。",0)
+	MOT(POCKLE, 2, 15)
+	KAO(POCKLE,"E","GHI","5")//
+	look_chr( PIPIRO, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+	KAO(PIPIRO,"B232BZ4","321","2")//
+	MES(PIPIRO,"那你們是這村裡的人嗎？",0)
+	KAO(PIPIRO,"B232BZ3","23332","2")//
+	MES(PIPIRO,"看起來也不像在幽會的情侶。",0)
+	MES_close(PIPIRO)
+
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"不，我們不是這村子裡的人。",0)
+	MES(EVENT_RAGNA,"可以說是尋寶獵人吧。",0)
+	MES(EVENT_RAGNA,"來到這個遺跡調查。",0)
+	MES_close(EVENT_RAGNA)
+
+//丂丂億僢僋儖偨偪偺摢偵両儅乕僋丅
+	KAO(POCKLE,"E","321DE","7")//
+	EMO(POCKLE,EMO_BIKKURI)
+	KAO(PIPIRO,"E","1D","6")//
+	EMO(PIPIRO,EMO_BIKKURI)
+	wait(30)
+//	name("抝偺巕")
+	KAO(POCKLE,"123212Z2","D12321D","6")//
+	MES(POCKLE,"尋寶獵人！？",0)
+	MES_close(POCKLE)
+
+//	name("彈偺巕")
+//	KAO(PIPIRO,"12321Z3","1233321","1")//
+//	MES(PIPIRO,"傊乕丄僇僀僩偝傫偲摨偠偐丅",0)
+//	KAO(PIPIRO,"12321Z3","1","1")//
+//	MES(PIPIRO,"妋偐偵偦傟偭傐偄奿岲偐傕丅",0)
+	KAO(PIPIRO,"12321Z5","1233321","1")//
+	MES(PIPIRO,"哦～\n確實有那種味道。",0)
+	MES_close(PIPIRO)
+
+//丂丂億僢僋儖丄儔僌僫偺慜偵堏摦偡傞丅
+	CAM_move(-618,-14170,930,30,0)
+	CAM(-190,46,930,28,206,30,0)
+
+	KAO(POCKLE,"1","D12321","1")//
+	MOT(POCKLE,1,5)
+	move( POCKLE, 30, 15,-590,14090,800,0)
+	wait_move(POCKLE)
+	MOT(POCKLE,2,5)
+	look_off( ALWEN )
+	rot_chr(ALWEN, 60, POCKLE )
+
+	MOT(POCKLE,155,12)
+	wait(15)
+//	name("抝偺巕")
+	KAO(POCKLE,"12621Z6","123321","6")//
+	MES(POCKLE,"哇～！\n我很崇拜尋寶獵人的！",0)
+	KAO(POCKLE,"12621Z5","1","6")//
+	MES(POCKLE,"還打算以後要\n參加協會的考試……",0)
+	KAO(POCKLE,"12621Z7","1236","6")//
+	MES(POCKLE,"來到伊魯巴特後，\n發現有協會的支部，\n還拿了介紹手冊！",0)
+	MES_close(POCKLE)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"嗯……\n這真是讓人高興的事情。",0)
+	MES(EVENT_RAGNA,"我叫拉格那。\n拉格那·瓦倫丁。",0)
+	MES(EVENT_RAGNA,"照剛才所說的……\n你們也是旅客？",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(POCKLE,2,15)
+	wait(15)
+//	name("抝偺巕")
+	KAO(POCKLE,"12321Z2","321","1")//
+	MES(POCKLE,"啊，是的。",0)
+	KAO(POCKLE,"12321Z5","1","1")//
+	MES(POCKLE,"我叫波克爾。\n她是皮皮洛。",0)
+	KAO(POCKLE,"12321Z6","1","1")//
+	MES(POCKLE,"我們來自維蘭世界西南方的阿爾傑斯。",0)
+	MES_close(POCKLE)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"哦……阿爾傑斯嗎？",0)
+	MES(EVENT_RAGNA,"竟然從那麼遠的地方跑到這裡來。",0)
+	MES(EVENT_RAGNA,"果然是來觀光的吧？",0)
+	MES_close(EVENT_RAGNA)
+
+	chr_rename(POCKLE,"波克爾")
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z4","1236","5")//
+	MES(POCKLE,"不，其實……\n是有人拜託我們辦事情。",0)
+	MES_close(POCKLE)
+	wait_MES(POCKLE)
+
+//丂丂偙偙偱億僢僋儖偺摢偵俹俙儅乕僋丅
+	cross_fade(15)
+	CAM_move(-658,-14170,920,0,0)
+	CAM(-90,60,920,26,156,0,0)
+	wait(15)
+
+	KAO(POCKLE,"E","321D","6")//
+	EMO(POCKLE,EMO_PA)
+	wait(15)
+	look_chr( POCKLE, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(POCKLE,"12321FZ2","D","6")//
+	MES(POCKLE,"啊，那邊的姐姐是……",0)
+	MES_close(POCKLE)
+
+	look_chr( PIPIRO, ALWEN ,"Bone_Head")
+
+//	name2(ALWEN)
+	MES(ALWEN,"我還沒自我介紹。",0)
+	MOT(ALWEN,151,15)
+	wait(15)
+	MES(ALWEN,"我叫艾爾文。\n請多指教。",0)
+	MES_close(ALWEN)
+
+//丂丂億僢僋儖偺摢偵両儅乕僋丅
+//丂丂恀偭愒偵側偭偰傾儖僂僃儞傪尒偮傔傞丅
+	KAO(POCKLE,"E","12IIIHGK","7")//
+	EMO(POCKLE,EMO_BIKKURI)
+	wait(15)
+
+	CAM_move(-598,-14030,920,15,0)
+	CAM(-10,54,920,26,160,15,0)
+
+//	cross_fade(15)
+//	CAM_move(-578,-13970,910,0,0)
+//	CAM(-28,60,910,18,158,0,0)
+	look_off(POCKLE)
+	look_off(PIPIRO)
+	rot_chr(POCKLE,30,ALWEN)
+//	MOT(POCKLE,1,5)
+	jump( POCKLE, 0, 10,-580,14024,800,20)
+	wait_move(POCKLE)
+//	MOT(POCKLE,2,5)
+	MOT(POCKLE,152,5)
+	wait(15)
+
+	KAO(POCKLE,"B232B2Z3","GHIIIHG","3")//
+	MES(POCKLE,"初，初次見面！",0)
+	KAO(POCKLE,"B232BZ4","GHI","3")//
+	MES(POCKLE,"我說那個，今天真是個好日子！",0)
+	MES_close(POCKLE)
+
+//	EMO(ALWEN,EMO_HATENA)
+//	name2(ALWEN)
+	MES(ALWEN,"？？？",0)
+	MES_close(ALWEN)
+//	wait(45)
+	chr_rename(PIPIRO,"皮皮洛")
+//	name2(PIPIRO)
+	KAO(PIPIRO,"B232BZ3","123","5")//
+	MES(PIPIRO,"唉……又開始了……",0)
+	MES_close(PIPIRO)
+
+	look_chr( EVENT_RAGNA, PIPIRO ,"Bone_Head")
+	MOT(EVENT_RAGNA,150,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"那個……\n你男朋友怎麼了？",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+	cross_fade(15)
+	CAM_move(-724,-13690,900,0,0)
+	CAM(-110,62,900,22,196,0,0)
+	look(PIPIRO,"Bone_Neck",0,0,0,0,0,0,0)
+	color(EVENT_RAGNA,-1)
+	MOT(ALWEN,2,0)
+	MOT(EVENT_RAGNA,2,0)
+	wait(15)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"B232BZ3","321","2")//
+	MES(PIPIRO,"他不是我男朋友。",0)
+//	look_chr( PIPIRO, POCKLE ,"Bone_Head")
+	look(PIPIRO,"Bone_Neck",0,0,2,0,0,-30,0)
+	wait(15)
+	KAO(PIPIRO,"B232BZ6","123332","2")//
+	MES(PIPIRO,"那個純情毛頭小子\n對姐姐型的女生沒抵抗力的。",0)
+	KAO(PIPIRO,"B232BZ8","2","2")//
+	MES(PIPIRO,"還不管什麼類型，\n人妻型也好，Ｓ型女王也罷，\n他都會一見鍾情。",0)
+	MES_close(PIPIRO)
+
+	KAO(POCKLE,"B","123D","7")//
+	MOT(POCKLE,153,8)
+//	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+	look(POCKLE,"Bone_Head",0,0,4,0,0,32,0)
+	wait(15)
+//	name2(POCKLE)
+	KAO(POCKLE,"B232B2Z3","D","7")//
+	MES(POCKLE,"不要這樣說嘛！",0)
+	KAO(POCKLE,"B232BZ4","123332L","5")//
+	MES(POCKLE,"還有什麼純情毛頭小子……\n你說的也太過分了……",0)
+	MES_close(POCKLE)
+
+	KAO(PIPIRO,"B","3","2")//
+//	look_off( PIPIRO )
+	look(PIPIRO,"Bone_Neck",0,0,4,0,0,18,0)
+	wait(15)
+//	name2(PIPIRO)
+	KAO(PIPIRO,"B232B","3","2")//
+	MES(PIPIRO,"哼。",0)
+	MES_close(PIPIRO)
+	wait_MES(PIPIRO)
+
+	cross_fade(15)
+	color(EVENT_RAGNA,1)
+	CAM_move(-758,-14070,920,0,0)
+	CAM(-70,72,920,22,220,0,0)
+	chr_pos(ALWEN,-768,14286,800,210,2)
+	look_chr( EVENT_RAGNA, PIPIRO ,"Bone_Head")
+	look(PIPIRO,"Bone_Neck",0,0,18,0,0,0,0)
+	wait(30)
+	CAM_move(-758,-14010,920,900,0)
+	CAM(-110,80,920,22,212,900,0)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"哈哈……\n你們倆真有意思。",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z3","321","1")//
+	MES(PIPIRO,"你們也是。",0)
+	look_chr( PIPIRO, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(PIPIRO,"12321Z6","1232A","1")//
+	MES(PIPIRO,"仔細看的話，那位姐姐\n打扮得真可愛。",0)
+	KAO(PIPIRO,"12321Z3","A","1")//
+	MES(PIPIRO,"那身衣服哪裡買的？",0)
+	MES_close(PIPIRO)
+
+//	look_chr( ALWEN, PIPIRO ,"Bone_Head")
+	rot_chr(ALWEN,30,PIPIRO)
+	MOT(ALWEN,151,15)
+	wait(15)
+//	name2(ALWEN)
+	MES(ALWEN,"這個嗎？",0)
+	MES(ALWEN,"這是拜託熟人特別訂做的。",0)
+	MES(ALWEN,"市面上應該找不到。",0)
+	MES_close(ALWEN)
+
+	MOT(PIPIRO,150,15)
+	wait(15)
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z3","A","1")//
+	MES(PIPIRO,"哦～也就是說，你是大小姐。",0)
+	KAO(PIPIRO,"12321Z8","A23","1")//
+	MES(PIPIRO,"啊～我也想\n大把大把的賺鈔票，\n雇一個專屬設計師啊。",0)
+	look_chr( PIPIRO, POCKLE ,"Bone_Head")
+	wait(15)
+	KAO(PIPIRO,"B232BZ6","321","2")//
+	MES(PIPIRO,"波克爾，你還是去當尋寶獵人吧。",0)
+	MES_close(PIPIRO)
+
+	MOT(POCKLE,2,10)
+	wait(15)
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BZ6","23","5")//
+	MES(POCKLE,"你明明一直反對的，\n不要只在這種時候鼓勵我嘛……",0)
+	MES_close(POCKLE)
+
+	MOT(ALWEN,2,15)
+	wait(15)
+//	name2(ALWEN)
+	MES(ALWEN,"打造出服裝的絕妙搭配，\n並不是靠錢堆出來的。",0)
+	MES(ALWEN,"看來你也有屬於自己的衣著風格，\n應該不需要羨慕別人吧？",0)
+	MES_close(ALWEN)
+
+	look_chr( PIPIRO, ALWEN ,"Bone_Head")
+	wait(15)
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z5","1","2")//
+	MES(PIPIRO,"哦～這位姐姐你真是有概念。",0)
+	KAO(PIPIRO,"12321Z6","1236","6")//
+	MES(PIPIRO,"決定了，果然我的目標只有一個，\n那就是成為有名的服裝設計師！",0)
+	MES_close(PIPIRO)
+
+//	name2(POCKLE)
+	KAO(POCKLE,"B232BZ4","321","5")//
+	MES(POCKLE,"咦咦……\n我們一起當尋寶獵人……",0)
+	MES_close(POCKLE)
+
+	look_chr( PIPIRO, POCKLE ,"Bone_Head")
+	wait(15)
+//	name2(PIPIRO)
+	KAO(PIPIRO,"B232BZ3","32","2")//
+	MES(PIPIRO,"絕對不要。",0)
+	MES_close(PIPIRO)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"哈哈……",0)
+	look_off( EVENT_RAGNA )
+	MOT(EVENT_RAGNA,150,15)
+	wait(15)
+	MES(EVENT_RAGNA,"順便問一下，如果你們不是來觀光的，\n那你們在這裡做什麼？",0)
+	MES(EVENT_RAGNA,"對這個遺跡感興趣？",0)
+	MES_close(EVENT_RAGNA)
+
+	look(POCKLE,"Bone_Head",0,0,26,0,0,0,0)
+	look_chr( POCKLE, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z3","23332A","4")//
+	MES(POCKLE,"啊，不，那個……",0)
+	KAO(POCKLE,"12321Z4","A","4")//
+	MES(POCKLE,"的確感興趣，\n但找不到過去的方法。",0)
+	KAO(POCKLE,"12321Z4","A","4")//
+	MES(POCKLE,"如果有一艘小船\n就好了。",0)
+	MES_close(POCKLE)
+
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"嗯，是啊……",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(PIPIRO,2,15)
+	wait(15)
+//	name2(PIPIRO)
+	KAO(PIPIRO,"12321Z8","233321","1")//
+	MES(PIPIRO,"我們在這一帶隨便散步，\n不知不覺就走到這裡了。",0)
+	KAO(PIPIRO,"12321Z5","1","1")//
+	MES(PIPIRO,"並不是說特別在意這裡。",0)
+	MES_close(PIPIRO)
+
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+	wait(15)
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z4","A23","1")//
+	MES(POCKLE,"嗯……\n說的也是。",0)
+	MES_close(POCKLE)
+
+//丂丂億僢僋儖丄儔僌僫偺曽偵岦偒捈傞丅
+	wait(30)
+	look_off( POCKLE )
+	rot_chr( POCKLE, 30, EVENT_RAGNA )
+	wait(15)
+	KAO(POCKLE,"12321Z3","321","1")//
+	MES(POCKLE,"那個，拉格那先生。",0)
+	KAO(POCKLE,"12321Z6","1","1")//
+	MES(POCKLE,"如果你有辦法進入這座遺跡，\n可以將裡面發生的事情告訴我們嗎？",0)
+	KAO(POCKLE,"12321Z4","1","1")//
+	MES(POCKLE,"等到我們下次見面的時候就可以了。",0)
+	MES_close(POCKLE)
+
+//	name2(EVENT_RAGNA)
+	MES(EVENT_RAGNA,"啊啊，沒問題。",0)
+	MES(EVENT_RAGNA,"這可是\n未來後輩的請求呢。",0)
+	MES_close(EVENT_RAGNA)
+
+//	MOT(POCKLE,154,15)
+//	name2(POCKLE)
+	KAO(POCKLE,"12321Z4","1236","6")//
+	MES(POCKLE,"哈哈……\n謝謝。",0)
+	look_chr( POCKLE, PIPIRO ,"Bone_Head")
+//	MOT(POCKLE,2,15)
+//	wait(15)
+	KAO(POCKLE,"12321Z5","321","1")//
+	MES(POCKLE,"那麼，皮皮洛。\n我們先回鎮上吧。",0)
+	MES_close(POCKLE)
+
+//	name2(PIPIRO)
+	VOICE2(543,0,95)	//儃僀僗捛壛墘弌
+//	KAO(PIPIRO,"12321","1233321","1")//
+	KAO(PIPIRO,"1FFFFFFFFF1","1233321","1")//
+	MES(PIPIRO,"好～。",0)
+	MES_close(PIPIRO)
+	look_off( PIPIRO )
+	wait(15)
+	KAO(PIPIRO,"12321Z2","1","1")//
+	MES(PIPIRO,"再見了，二位。",0)
+	MES_close(PIPIRO)
+	wait_MES(PIPIRO)
+
+//丂丂億僢僋儖偲僺僺儘丄偦偺傑傑嫀偭偰偄偔丅
+//丂丂偦傟傪尒憲偭偰偐傜埲壓偺儊僢僙乕僕丅
+//	CAM_move(-618,-14670,920,120,0)
+//	CAM(-70,92,920,26,160,120,0)
+	CAM_move(-538,-14670,920,120,0)
+	CAM(-70,84,920,26,160,120,0)
+
+	look_off( POCKLE )
+	rot(POCKLE,30,300)
+	wait(15)
+	look_chr( EVENT_RAGNA, POCKLE ,"Bone_Head")
+	move( POCKLE, 0, WALK1,-428,14122,801,0)
+	wait(15)
+	rot(PIPIRO,30,300)
+	look_chr( ALWEN, PIPIRO ,"Bone_Head")
+	move( PIPIRO, 0, WALK1,-428,14122,801,0)
+	wait_move(POCKLE)
+	rot(POCKLE,30,0)
+	move( POCKLE, 0, WALK1,-428,15522,801,0)
+	wait_move(PIPIRO)
+	rot(PIPIRO,30,0)
+	move( PIPIRO, 0, WALK1,-428,15322,801,0)
+	wait(15)
+	look_off(ALWEN)
+	rot(ALWEN,15,350)
+	wait(15)
+	look_off(EVENT_RAGNA)
+	rot(EVENT_RAGNA,15,0)
+	wait_move(POCKLE)
+	wait_move(PIPIRO)
+	color(POCKLE,-1)
+	color(PIPIRO,-1)
+	wait(30)
+
+	cross_fade(30)
+	CAM_move(-684,-14300,920,0,0)
+	CAM(-70,60,920,26,160,0,0)
+	KAO(ALWEN,"B","3","2")//
+	wait(30)
+	CAM_move(-684,-14290,920,600,0)
+	CAM(-150,56,920,26,150,600,0)
+
+	KAO(EVENT_RAGNA,"12321Z3","1236","6")//
+	MES(EVENT_RAGNA,"哈哈……\n真是兩個有趣的傢伙。",0)
+	KAO(EVENT_RAGNA,"12321Z7","3","6")//
+	MES(EVENT_RAGNA,"那個叫波克爾的……\n看起來是個樂天派，\n身體又結實。",0)
+	KAO(EVENT_RAGNA,"12321Z6","6","6")//
+	MES(EVENT_RAGNA,"我認為他是個能成為\n尋寶獵人的料。",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,150,15)
+	wait(15)
+//	name2(ALWEN)
+	MES(ALWEN,"………………………………",0)
+	MES_close(ALWEN)
+
+//丂丂儔僌僫偺摢偵丠儅乕僋丅
+	KAO(EVENT_RAGNA,"E","321D","6")//
+	EMO(EVENT_RAGNA,EMO_HATENA)
+	wait(15)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BFZ2","123332A","6")//
+	MES(EVENT_RAGNA,"嗯，怎麼了？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ2","32","2")//
+	MES(ALWEN,"不，那個女孩……",0)
+	KAO(ALWEN,"B232BZ5","2","2")//
+	MES(ALWEN,"身為人類，\n卻是個強大的魔法師。",0)
+	MES_close(ALWEN)
+
+//丂丂儔僌僫偺摢偵両儅乕僋丅
+	KAO(EVENT_RAGNA,"E","2321DE","7")//
+	EMO(EVENT_RAGNA,EMO_BIKKURI)
+	wait(30)
+	KAO(EVENT_RAGNA,"B232BZ2","D1232T","3")//
+	MES(EVENT_RAGNA,"什麼……！？",0)
+	MES_close(EVENT_RAGNA)
+
+//	name2(ALWEN)
+	KAO(ALWEN,"B232BZ6","23332","2")//
+	MES(ALWEN,"恐怕這是與生俱來的魔力，\n非比尋常。",0)
+	KAO(ALWEN,"B232BZ7","2","2")//
+	MES(ALWEN,"過去的「魔法大戰」中，\n也曾有人類的魔力，\n凌駕於魔族之上……",0)
+	KAO(ALWEN,"B232BZ5","23","2")//
+	MES(ALWEN,"也許不要把他們\n當作普通的小孩子比較好。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B","T23","2")//
+	look_off( EVENT_RAGNA )
+	wait(15)
+//	name2(EVENT_RAGNA)
+	KAO(EVENT_RAGNA,"B232BZ6","3","2")//
+	MES(EVENT_RAGNA,"……嗯，他們有提到是因為某些事情\n來到這個島的。",0)
+	KAO(EVENT_RAGNA,"B232BZ3","321","2")//
+	MES(EVENT_RAGNA,"也罷，還是小心為妙。",0)
+	MES_close(EVENT_RAGNA)
+
+//丂丂僀儀儞僩廔椆丄僾儗僀儎乕憖嶌嫋壜丅
+	fade_in( 100, 30, 0 )
+	wait_fade()
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+	delete(PIPIRO)
+	delete(POCKLE)
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,-530,14714,800,0,2)
+	chr_pos(PARTNER,-680,14714,800,0,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return( 0 )
+	wait(30)
+
+//俧俥亀仛恄揳慜偱億僢僋儖丒僺僺儘偲弌夛偭偨亁傪棫偰傞丅
+	F_set(F1_17_MeetPipiPoc)
+	//仛億僢僋儖
+	F_set_note(-2,-1)
+	//仛僺僺儘
+	F_set_note(-3,-1)
+	//仛億僢僋儖亂擭忋偺彈惈亃
+	F_set_note(-2,0)
+	//仛僺僺儘亂僨僓僀僫乕巙朷亃
+	F_set_note(-3,0)
+
+	delete(100)
+
+	//僼僃乕僪僀儞
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴懱尡斉僗僩僢僷乕
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+EV_1_09_OnTemple_Taikenban
+{
+	TK_begin()
+	MES(RAGNA,"偍旀傟條偱偟偨丅\n懱尡斉偼偙偙偱廔椆偱偡丅",0)
+	MES(RAGNA,"偙偺懕偒偼惢昳斉偱偍妝偟傒偔偩偝偄丅",0)
+	MES_close(RAGNA)
+	TK_end()
+}
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴恄揳傊偺捠傝摴偑尰傟傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂忋婰僀儀儞僩廔椆屻丄堦斣愭抂傑偱棃傞偲僀儀儞僩敪惗丅
+//丂丂僇儊儔丄悈杤偟偨恄揳傑偱傪僘乕儉傾僢僾偱尒偣偰偄偔丅
+EV_1_09_OnTemple
+{
+	EV_begin()
+
+	//埫揮
+	fade_in(100,30,0)
+	wait_fade()
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,-406,13616,800,180,2)
+	chr_pos(PARTNER,-600,13570,800,180,2)
+	color(RAGNA,-1)
+	color(PARTNER,-1)
+
+	set_chr(EVENT_RAGNA,	  1010,-1,-1, -406,13616,800, 2,180,0, "")
+	set_chr(ALWEN, 	 	1011,-1,-1, -600,13570,800, 2, 180,0, "")
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP)
+	F_set_chr(EVENT_RAGNA,CF_NO_CLIP2)
+	F_set_chr(EVENT_RAGNA,CF_NO_CSP)
+	F_set_chr(ALWEN,CF_NO_CLIP)
+	F_set_chr(ALWEN,CF_NO_CLIP2)
+	F_set_chr(ALWEN,CF_NO_CSP)
+	KAO(EVENT_RAGNA,"1","1","1")//僨僼僅儖僩
+	KAO(ALWEN,"1","1","1")//僨僼僅儖僩
+
+	//儌乕僔儑儞掕媊
+	MOT_SET(ALWEN,150,-1,399,399,-1,-1)//崢偵庤傪摉偰傞乮嵍乯
+	MOT_SET(ALWEN,151,151,4590,4615,-1,-1)//塺彞
+	MOT_SET(ALWEN,152,-1,6100,6110,-1,-1)//偪偑偆
+	MOT_SET(ALWEN,153,-1,6100,6105,-1,-1)//偪偑偆
+	MOT_SET(ALWEN,154,-1,439,439,-1,-1)	//嫻庤
+	MOT_SET(EVENT_RAGNA,150,-1,405,405,-1,-1)	//偳偆側偺傛
+	MOT_SET(EVENT_RAGNA,151,-1,580,580,-1,-1)	//側傫偩偀
+	MOT_SET(EVENT_RAGNA,152,-1,407,407,-1,-1)	//偳偆側偺傛2
+
+	wait(1)
+	chr_equip( ALWEN,"wp_004", "Bone_RightSword", 100)	//忨傪憰旛偝偣傞偺偼偙偪傜丅
+//	MOT(ALWEN,53,1)										//傾儖僂僃儞偺塃庤傪奐偐偣傞
+
+	set_chr( EFFECT,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT2,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT3,749,	-1,-1,  0,0,0,     0, 0, 0,"")
+	set_chr( EFFECT4,749,	-1,-1,  -600,13470,780,     0, 0, 0,"")
+	F_set_chr(EFFECT,CF_NO_CLIP)
+	F_set_chr(EFFECT,CF_NO_CLIP2)
+	F_set_chr(EFFECT,CF_NO_CSP)
+	F_set_chr(EFFECT,CF_NO_ZIMEN)
+	F_set_chr(EFFECT,CF_NO_HEIGHT)
+	F_set_chr(EFFECT2,CF_NO_CLIP)
+	F_set_chr(EFFECT2,CF_NO_CLIP2)
+	F_set_chr(EFFECT2,CF_NO_CSP)
+	F_set_chr(EFFECT2,CF_NO_ZIMEN)
+	F_set_chr(EFFECT2,CF_NO_HEIGHT)
+	F_set_chr(EFFECT3,CF_NO_CLIP)
+	F_set_chr(EFFECT3,CF_NO_CLIP2)
+	F_set_chr(EFFECT3,CF_NO_CSP)
+	F_set_chr(EFFECT3,CF_NO_ZIMEN)
+	F_set_chr(EFFECT3,CF_NO_HEIGHT)
+	F_set_chr(EFFECT4,CF_NO_CLIP)
+	F_set_chr(EFFECT4,CF_NO_CLIP2)
+	F_set_chr(EFFECT4,CF_NO_CSP)
+	F_set_chr(EFFECT4,CF_NO_ZIMEN)
+	F_set_chr(EFFECT4,CF_NO_HEIGHT)
+	chr_equip_chr(EFFECT,ALWEN,"wtop",100,		0,0,0,	0,0,0);
+	chr_equip_chr(EFFECT2,ALWEN,"Bone_Spine",100,		0,0,0,	0,0,0);
+
+	//僇儊儔弶婜埵抲
+	CAM_move(-288,-13314,1060,0,0)
+	CAM(130,70,1060,44,200,0,0)
+	CAM(130,84,1060,44,200,300,0)
+
+	//僼僃乕僪僀儞
+	fade_in(0,60,0)
+//	wait_fade()
+	wait(30)
+	MOT(EVENT_RAGNA,51,0)//僉儑儘僉儑儘
+	wait(30)
+
+	KAO(EVENT_RAGNA,"12321Z5","1233321","1")//
+	MES(EVENT_RAGNA,"呼……大水把古代神殿\n愛普瑞絲淹沒了啊。",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","1")//
+	MES(EVENT_RAGNA,"你感覺到魔力的氣息嗎？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"B232BZ6","1","2")//
+	MES(ALWEN,"還是一樣的微弱……\n但是在裡面絕對沒錯。",0)
+	KAO(ALWEN,"B232BZ6","1","2")//
+	MES(ALWEN,"原本我們一族的魔力\n就和愛普瑞絲的力量相互抵制。",0)
+	KAO(ALWEN,"B232BZ5","1233321","2")//
+	MES(ALWEN,"也許魔力的氣息\n因此而被抑制住了吧。",0)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	cross_fade(30)
+	CAM_move(-448,-13474,960,0,0)
+	CAM(-430,48,960,28,290,0,0)
+	CAM_move(-448,-13494,960,900,0)
+	CAM(-390,44,960,28,270,900,0)
+	wait(30)
+
+	MOT(EVENT_RAGNA,53,15)	//敮傪僙僢僩
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ3","123332A","1")//
+	MES(EVENT_RAGNA,"原來如此……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MOT(EVENT_RAGNA,53)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ5","A2321","1")//
+	MES(EVENT_RAGNA,"但是，如果真那樣的話，\n我們無論如何都要過去。",0)
+	KAO(EVENT_RAGNA,"B232BZ5","1","1")//
+	MES(EVENT_RAGNA,"乾脆就游過去怎麼樣？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z5","123","2")//
+	MES(ALWEN,"……建議駁回。\n這太不優雅了。",0)
+	KAO(ALWEN,"12321Z5","3","2")//
+	MES(ALWEN,"你喜歡可以自己游，\n但是你想讓我變成落湯雞嗎？",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,150,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232BZ4","1233321","5")//
+	MES(EVENT_RAGNA,"不，我不是那個意思……",0)
+	KAO(EVENT_RAGNA,"12321Z5","2321D","4")//
+	MES(EVENT_RAGNA,"對了，你不是有翅膀嗎？",0)
+	KAO(EVENT_RAGNA,"12321Z5","1","1")//
+	MES(EVENT_RAGNA,"在我游過去的時候，\n你直接飛過去不就好了？",0)
+	MES_close(EVENT_RAGNA)
+
+	rot(ALWEN,30,200)
+	look_chr( ALWEN, EVENT_RAGNA ,"Bone_Head")
+	wait(15)
+	KAO(ALWEN,"B232BZ3","32T","2")//
+	MES(ALWEN,"不，那也不行。",0)
+	KAO(ALWEN,"B232BZ5","T","2")//
+	MES(ALWEN,"現在的我，\n在白天是無法展翅飛翔的。",0)
+	KAO(ALWEN,"B232BZ5","T","2")//
+	MES(ALWEN,"從黃昏時分到黑夜這段期間，\n魔力比較強，那時就沒問題。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,2,15)
+	KAO(EVENT_RAGNA,"12321FZ2","1233321D","4")//
+	MES(EVENT_RAGNA,"是嗎，這樣啊？",0)
+	KAO(EVENT_RAGNA,"B232BZ4","123","5")//
+	MES(EVENT_RAGNA,"沒辦法……\n那我們只好等入夜再行動了。",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z5","T23332T","1")//
+	MES(ALWEN,"嗯，那也可以，\n但我打算用一種完全不同的方法。",0)
+	KAO(ALWEN,"12321Z5","T","1")//
+	MES(ALWEN,"使用剛剛奪回來的「地之魔法」。",0)
+	MES_close(ALWEN)
+
+	look_off(EVENT_RAGNA)
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321FZ4","321D","4")//
+	MES(EVENT_RAGNA,"什麼嘛……\n還有這樣的方法嗎？",0)
+	MES_close(EVENT_RAGNA)
+
+	KAO(ALWEN,"12321Z5","T23","1")//
+	MES(ALWEN,"嗯，順便練習一下，\n值得一試。",0)
+	KAO(ALWEN,"12321Z3","32T","1")//
+	MES(ALWEN,"你退下。",0)
+	MES_close(ALWEN)
+
+	KAO(EVENT_RAGNA,"B232BF","D","4")//
+	MES(EVENT_RAGNA,"嗯，好……",0)
+	MES_close(EVENT_RAGNA)
+
+//丂丂儔僌僫丄堦曕壓偑偭偰傾儖僂僃儞偑慜偵恑傒弌傞丅
+//丂丂傾儖僂僃儞丄忨傪宖偘偰塺彞偺億乕僘丅
+//丂丂偙偙偱忨偺曮嬍偑噫噙怓偵婸偔偺傪尒偣傞丅
+	stop_BGM(90)
+	CAM_move(-600,-13574,920,60,0)
+	CAM(140,38,920,28,360,60,0)
+	KAO(EVENT_RAGNA,"B","12321","1")//
+	move( EVENT_RAGNA, 0, WALK1,-436,13806,800,0)
+	wait(15)
+	KAO(ALWEN,"1","T233321","1")//
+	wait_move(EVENT_RAGNA)
+	rot(EVENT_RAGNA,30,150)
+	look_chr( EVENT_RAGNA, ALWEN ,"Bone_Head")
+
+	look_off(ALWEN)
+	rot(ALWEN,15,180)
+	wait_CAM_move()
+	wait_CAM()
+	wait(15)
+
+	KAO(ALWEN,"B","123","3")//
+	MOT(ALWEN,151,15)
+	wait(15)
+	MOT(EFFECT2,8,0)
+	MOT(EFFECT,18,0)
+
+	wait_BGM()
+	BGM(53)
+
+	KAO(EVENT_RAGNA,"F","1233321D","6")//
+
+	CAM_move(-600,-13574,940,135,0)
+	CAM(220,38,940,32,338,135,0)
+
+	KAO(ALWEN,"B232BFZ4","3","3")//
+	MES_pos(ALWEN,"C2「吾體內之大地靈脈啊……」",0,0,0,0,0)
+	SE(1034,0)//忨偑岝傞
+	wait(5)
+	SE(1061,ALWEN)//塺彞拞SE
+	wait(75)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+	KAO(ALWEN,"B232B2Z5","321","3")//
+	MES_pos(ALWEN,"C2「奔流不息，與大地輝映，\n 速速將吾眼前之道路開闢！」",0,0,0,0,0)
+	wait(100)
+	MES_close(ALWEN)
+	wait_MES(ALWEN)
+
+//丂丂師偺弖娫丄傾儖僂僃儞偑噫噙怓偺僆乕儔偵曪傑傟偰丄
+//丂丂懌尦偐傜戝抧傊偲僄僱儖僊乕偑棳傟崬傓條巕傪尒偣傞丅
+	wait_CAM()
+
+	cross_fade(15)
+	CAM_move(-600,-13470,1070,0,0)
+	CAM(260,40,1070,32,312,0,0)
+	chr_pos(EFFECT3,-600,13370,1160,0,43)
+	wait(40)
+	SE(1041,0)//抧偺杺椡SE
+	wait(80)
+
+	CAM_move(-600,-13510,910,60,0)
+	CAM(140,44,910,32,340,60,0)
+	MOT(EFFECT3,0,0)
+	SE(1042,0)//杺椡偑旘傫偱偄偔SE
+	EV("EV_1041_fadeout")
+	F_reset_chr(EFFECT4,CF_NO_CSP)
+	EFF_chr(6930, EFFECT3, 0,100, EFFECT4, "Bone_Head" )
+	wait(90)
+
+	MOT(EVENT_RAGNA,151,10)
+	KAO(EVENT_RAGNA,"B232B2","D12321DE","7")//
+//	MES(EVENT_RAGNA,"側丄側傫偩偀乧乧両丠",0)
+	MES_pos(EVENT_RAGNA,"什，什麼……！？",0,0,0,0,0)
+	wait(40)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//丂丂僑僑僑乧偲偄偆怳摦偲俽俤偲嫟偵丄
+//丂丂傾儖僂僃儞偺娽慜偺悈柺壓偐傜娾偑師乆偲棽婲偟丄
+//丂丂恄揳偺擖岥傑偱懕偔摴傊偲曄壔偟偰偄偔偺傪尒偣傞丅
+	delete(81)
+	delete(82)
+	delete(83)
+	mot_obj("hashi","open")
+
+	look_off(EVENT_RAGNA)
+	rot(EVENT_RAGNA,15,200)
+	MOT(EVENT_RAGNA,2,0)
+
+	EV("EV_zinari")//抧柭傝SE
+
+	CAM_quake("1937L")
+	CAM_move(-380,-13274,1180,0,0)
+	CAM(50,128,1180,38,164,0,0)
+//	wait(300)
+
+	wait(135)
+	EFF(6450,1450,-12090,100,0,90,-1)
+	SE(1062,0)//拰弌尰SE
+	wait(30)
+	EFF(6450,-1184,-11600,100,0,90,-1)
+	SE(1062,0)//拰弌尰SE
+	wait(30)
+	EFF(6450,1310,-10740,100,0,80,-1)
+	SE(1062,0)//拰弌尰SE
+	wait(60)
+	EFF(6450,-730,-10260,100,0,80,-1)
+	SE(1062,0)//拰弌尰SE
+	wait(30)
+	EFF(6450,980,-9450,100,0,80,-1)
+	SE(1062,0)//拰弌尰SE
+	wait(15)
+	EFF(6450,-1070,-8930,100,0,80,-1)
+
+//丂拰ver
+//	CAM_move(-1160,-11554,748,0,0)
+//	CAM(-470,150,788,40,124,0,0)
+//	wait(240)
+//	cross_fade(15)
+//	CAM_move(-380,-13274,1180,0,0)
+//	CAM(50,128,1180,38,164,0,0)
+//	wait(60)
+
+	CAM_move(800,-12154,960,120,0)
+	CAM(690,128,960,38,218,120,0)
+//	CAM_Roll(10,120)
+
+	EV("EV_EFF_SIBUKI")
+	wait(15)
+	EFF(6450,-1070,-8930,100,0,80,-1)
+
+	wait_CAM_move()
+	wait_CAM()
+	CAM_move(-260,-10414,620,80,0)
+	CAM(330,128,620,38,162,80,0)
+//	CAM_Roll(-10,80)
+	wait_CAM_move()
+	wait_CAM()
+	CAM_quake("3746L")
+	wait(30)
+	CAM_quake("")
+//	CAM_Roll(0,60)
+//	wait(60)
+	CAM_move(-140,-12094,580,180,0)
+	CAM(330,212,580,40,196,180,0)
+	wait_CAM_move()
+	wait_CAM()
+
+	KAO(EVENT_RAGNA,"F","1233321DE","7")//
+	MES(EVENT_RAGNA,"這…這…這……",0)
+	MES_close(EVENT_RAGNA)
+	wait_MES(EVENT_RAGNA)
+
+//丂丂摴偑弌棃偨屻丄僆乕儔偼敄傟偰備偭偔傝徚偊偰偄偔丅
+//丂丂姰慡偵徚偊偰偐傜忨傪壓傠偟丄栚傪尒奐偔傾儖僂僃儞丅
+	cross_fade(30)
+	EV("EV_1061_fadeout")//塺彞拞SE僼僃乕僪傾僂僩
+	CAM_move(-600,-14074,1060,0,0)
+	CAM(50,42,1060,24,166,0,0)
+	CAM_move(-558,-14074,1020,600,0)
+	CAM(-30,30,1020,24,172,600,0)
+	look(ALWEN,"Bone_Head",0,1,1,1,0,0,0)
+	MOT(EFFECT2,0,0)
+	MOT(EFFECT,0,0)
+	wait(30)
+
+	MOT(ALWEN,150,15)
+	wait(15)
+	KAO(ALWEN,"12321Z4","1233321","6")//
+	MES(ALWEN,"嗯，還算順利。",0)
+	MES_close(ALWEN)
+
+	rot_chr(EVENT_RAGNA,30,ALWEN)
+	wait(15)
+	MOT(EVENT_RAGNA,152,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"B232B2Z4","D12321D","6")//
+	MES(EVENT_RAGNA,"這……\n不是順不順利的問題吧……",0)
+	KAO(EVENT_RAGNA,"B232B2Z3","D","6")//
+	MES(EVENT_RAGNA,"吸血鬼\n連這種事也能做到……",0)
+	MES_close(EVENT_RAGNA)
+
+	rot_chr(ALWEN,30,EVENT_RAGNA)
+	MOT(ALWEN,2,15)
+	wait(15)
+	KAO(ALWEN,"12321Z4","1","6")//
+	MES(ALWEN,"這種程度太小兒科了。",0)
+	MOT(ALWEN,154,15)
+	wait(15)
+	KAO(ALWEN,"12321Z6","123","6")//
+	MES(ALWEN,"所謂真祖，就是能操縱森羅萬象，\n也才能成為夜之帝王統治大地。",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321FZ2","1233321","6")//
+	MES(EVENT_RAGNA,"原，原來如此……",0)
+	KAO(EVENT_RAGNA,"12321FZ6","1","1")//
+	MES(EVENT_RAGNA,"但是，厲害歸厲害，\n我們只是要過去，\n你太小題大作了吧……",0)
+	MES_close(EVENT_RAGNA)
+
+	MOT(ALWEN,2,15)
+	wait(15)
+	KAO(ALWEN,"12321Z5","6","6")//
+	MES(ALWEN,"你在說什麼？\n這樣往返不是更方便了嗎？",0)
+	KAO(ALWEN,"12321Z6","3","6")//
+	MES(ALWEN,"而且，如果不用這種方法，\n萬一腳下一滑失足溺水的話……",0)
+	MES_close(ALWEN)
+
+//丂丂傾儖僂僃儞偺摢偵両儅乕僋丅
+//	MES(ALWEN,"両儅乕僋丅",0)
+	KAO(ALWEN,"E","321DE","7")//
+	EMO(ALWEN,EMO_BIKKURI)
+	wait(45)
+
+	KAO(ALWEN,"C","D123I","5")//
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,-10)
+	wait(10)
+	MES(ALWEN,"………………………………",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,152,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z3","1233321","6")//
+	MES(EVENT_RAGNA,"那個，公主殿下。",0)
+	KAO(EVENT_RAGNA,"12321Z4","1","6")//
+	MES(EVENT_RAGNA,"難道你是旱鴨子？",0)
+	MES_close(EVENT_RAGNA)
+
+	EV("EV_MOT_ALWEN")
+	KAO(ALWEN,"B232B2Z2","HG","3")//
+	MES(ALWEN,"怎，怎麼可能！",0)
+	KAO(ALWEN,"B232B2Z6","G","3")//
+	MES(ALWEN,"小時候，在城堡中的地下水道中失足溺水這種事情，\n怎麼可能發生在我身上！",0)
+	MES_close(ALWEN)
+
+	MOT(EVENT_RAGNA,2,15)
+	wait(15)
+	KAO(EVENT_RAGNA,"12321Z4","1233321D","6")//
+	MES(EVENT_RAGNA,"不，我沒有問你這個……",0)
+	KAO(EVENT_RAGNA,"12321Z3","1236","6")//
+	MES(EVENT_RAGNA,"哈哈，算了。",0)
+	KAO(EVENT_RAGNA,"12321Z5","6","6")//
+	MES(EVENT_RAGNA,"難得開出的道路，\n我們就趕快進去吧。",0)
+	MES_close(EVENT_RAGNA)
+
+	wait_EV("EV_MOT_ALWEN")
+	KAO(ALWEN,"C","HGI","3")//
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,0)
+	MOT(ALWEN,2,10)
+	wait(10)
+	KAO(ALWEN,"C232CZ6","I","3")//
+	MES(ALWEN,"哦，哦。\n那就好。",0)
+	MES_close(ALWEN)
+
+//丂丂僀儀儞僩廔椆丄僾儗僀儎乕憖嶌嫋壜丅
+	fade_in( 100, 30, 0 )
+	wait_fade()
+	stop_BGM(90)
+
+	delete(EVENT_RAGNA)
+	delete(ALWEN)
+
+	delete(EFFECT)
+	delete(EFFECT2)
+	delete(EFFECT3)
+	delete(EFFECT4)
+
+	//僉儍儔嵞攝抲
+	chr_pos(RAGNA,-406,13616,800,180,2)
+	chr_pos(PARTNER,-600,13570,800,180,2)
+	color(RAGNA,1)
+	color(PARTNER,1)
+
+	CAM_return( 0 )
+	wait(30)
+
+//俧俥亀仛恄揳傊偺摴偑弌尰偟偨亁傪棫偰傞丅
+	F_set(F1_18_OnTemple)
+
+	wait_BGM()
+	BGM(10)
+	//僼僃乕僪僀儞
+	fade_in(0,30,0)
+
+	EV_end()
+}
+
+EV_MOT_ALWEN
+{
+	look(ALWEN,"Bone_Head",0,0,0,1,0,0,4)
+	MOT(ALWEN,152,10)
+	wait(20)
+	MOT(ALWEN,153,0)
+}
+
+EV_EFF_SIBUKI
+{
+	wait(5)
+	EFF(6450,-200,-13200,100,0,150,-1)
+	EFF(6450,-100,-12890,100,0,150,-1)
+	SE(1063,0)//戝娾弌尰SE
+	wait(50)
+	EFF(6450,448,-12174,100,0,150,-1)
+	EFF(6450,580,-11654,100,0,150,-1)
+	SE(1063,0)//戝娾弌尰SE
+	wait(50)
+	EFF(6450,678,-10720,100,0,150,-1)
+	EFF(6450,944,-11156,100,0,150,-1)
+	SE(1063,0)//戝娾弌尰SE
+	wait(55)
+	EFF(6450,-100,-9260,100,0,150,-1)
+	EFF(6450,-240,-8600,100,0,150,-1)
+	SE(1063,0)//戝娾弌尰SE
+}
+
+//---------------------------------------------------------------------------------------------------
+//仱悈杤恄揳偵搉傟側偄姶憐乮屆偄恄揳偱丄徻偟偄偙偲偼抦傜側偄乯
+//丂丂仸愭抂偵俴俹傪攝抲丅挷傋傞偲僀儀儞僩婲摦偡傞丅
+//丂丂乮亀仛恄揳傊偺摴偑弌尰偟偨亁慜傑偱偼婲摦壜擻乯
+//---------------------------------------------------------------------------------------------------
+LP_NoHasi
+{
+	TK_begin()
+	if( !F1_18_OnTemple && !F1_27_SeeTemple)
+	{
+
+		cross_fade(30)
+		//僉儍儔嵞攝抲
+		chr_pos(RAGNA,-594,13632,800,180,2)
+		chr_pos(PARTNER,-469,13850,800,180,2)
+		
+		KAO(RAGNA, "1", "1", "1")	
+		KAO(PARTNER,"1", "1", "1")	
+
+		CAM_move(-566,-13331,1040,0,0)
+		CAM(-270,85,1040,37,162,0,0)
+		rot_chr(RAGNA,30,91)
+		
+		wait_fade()	
+
+//0905廋惓
+		//MOT(RAGNA,51,0)//僉儑儘僉儑儘
+		MOT_SET(RAGNA,150,-1,2340,2419,-1,-1)
+		MOT(RAGNA,150,0)//僉儑儘僉儑儘
+		MES(RAGNA,"咦……\n這地方很漂亮嘛。",0)
+		wait(10)
+		MES(RAGNA,"從那邊看的話\n像是古代神殿……\n被水淹沒了。",0)
+		MES_close(RAGNA)
+
+	//	name2(ALWEN)
+		MES(PARTNER,"嗯，看來是的。",0)
+		MES_close(PARTNER)
+
+	//丂丂儔僌僫偵丠僄儌乕僔儑儞丅傾儖僂僃儞偵岦偔丅
+		EMO(RAGNA,EMO_HATENA)
+		wait(30)
+
+		rot_chr(RAGNA,30,PARTNER)
+		wait(10)
+
+		MES(RAGNA,"那個……",0)
+		MES(RAGNA,"難不成，\n你沒來過這裡？",0)
+		MES_close(RAGNA)
+
+	//	name2(ALWEN)
+		MES(PARTNER,"哼哼，我可是真祖的公主。",0)
+		MES(PARTNER,"怎麼可能來過這種邊荒地帶。",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		rot_chr(RAGNA,30,91)
+		MES(RAGNA,"哈哈，是嗎……\n（果然是象牙塔裡的公主。\n 我要振作……）",0)
+		MES_close(RAGNA)
+
+		wait(10)
+		cross_fade(30)
+		CAM_return(0)
+		wait_fade()	
+
+		F_set(F1_27_SeeTemple)
+
+	}
+	else
+	if( !F1_15_GoVillage)
+	{
+	//丂丂仸埲崀偺愭抂俴俹偼埲壓偺傛偆偵偡傞丅乮亀仛儘傾儖僞懞傊岦偐偆偙偲偵偟偨亁傑偱乯
+	//丂丂仸俴俹側偺偱丄愭摢僉儍儔偱暿乆偺撪梕偱偡丅
+		rot(PLAYER1,30,180)
+		rot(PLAYER2,30,180)
+		if(GW_MAN==1)
+		{
+			MES(RAGNA,"真是座巨大的神殿。\n有機會的話去探索一下吧。",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+			MES(PARTNER,"這裡沒有魔力的氣息。\n應該在更偏南的地方吧。",0)
+			MES_close(PARTNER)
+		}
+	}
+	else
+	{
+	//丂丂仸埲崀偺愭抂俴俹偼埲壓偺傛偆偵偡傞丅乮亀仛恄揳傊偺摴偑弌尰偟偨亁傑偱乯
+		rot(PLAYER1,30,180)
+		rot(PLAYER2,30,180)
+		if(GW_MAN==1)
+		{
+			MES(RAGNA,"真是座巨大的神殿。\n有機會的話去探索一下吧。",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name2(ALWEN)
+			MES(PARTNER,"魔力的氣息……\n嗯，還不甚明朗。",0)
+			MES_close(PARTNER)
+		}
+	}
+	TK_end()
+}
+
+//---------------------------------------------------------------------------------------------------
+//仱奺抧偺僟儞僕儑儞偺僗僩僢僷乕乮摿偵梡帠偼側偄乯
+//---------------------------------------------------------------------------------------------------
+EV_STOP_01
+{
+	TK_begin()
+//	name("丒儔僌僫扨撈峴摦偵側偭偰")
+	if( F4_00_StartSolo && !F4_02_GoVillage2 )
+	{
+		if( !F_RAGNA )
+		{
+			MES(RAGNA,"……沒有特別的理由\n需要進去。",0)
+			MES(RAGNA,"我已經達成了\n和公主之間的約定。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+			F_set(RAGNA)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(RAGNA,"沒有什麼特別的事情……",0)
+			MES(RAGNA,"必須儘快回到特里斯坦號那裡去。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+	}
+	else
+	//if( !F4_03_OnRoots )
+	if( !F4_05_OnVillage2 )
+	{
+//	name("丒僗僶儖偲崌棳屻")
+		if( GW_MAN==1 )
+		{
+		//丂丂仸儔僌僫愭摢
+			MES(RAGNA,"沒有什麼特別的事情。",0)
+			MES(RAGNA,"馬上向雪山前進吧。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+		else
+		{
+		//丂丂仸僗僶儖愭摢
+			if( !F_SUBARU )
+			{
+				rot_chr(RAGNA,60,PARTNER)
+				MES(RAGNA,"昴，你居住的村子\n在這雪山中啊。",0)
+				MES(RAGNA,"現在我們就過去吧。",0)
+				MES_close(RAGNA)
+				
+				rot_chr(PARTNER,60,RAGNA)
+				
+				//	name2(PARTNER)
+				MES(PARTNER,"啊，是。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+				
+				F_set(SUBARU)
+			}
+			else
+			{
+
+			//丂丂仛孞傝曉偟
+				MES(RAGNA,"快點到雪山去吧。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		}
+		chr_pos(PLAYER2,135,5796,1,6,2)
+	}
+	else
+	if( !F4_11_EndFourth )
+	{
+		//僗僩僢僷乕側偟丅
+	}
+	else
+	if( !F5_06_RunCrystal )
+	{
+//	name("丒夦変傪偟偨僗僶儖偲榖偟偨屻")
+//丂丂乮俁恖慡堳偵榖傪偮偗傞慜偺傒敪惗乯
+
+		if( F5_03_OfferLaraira && F5_04_OfferPipiro && F5_05_OfferFiona )
+		{
+		//丂丂仸慡堳偵惡傪妡偗偰偐傜偼埲壓偺僗僩僢僷乕
+			MES(RAGNA,"啊……",0)
+			MES(RAGNA,"現在必須前往水晶谷……！",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+		else
+		if( !F5_24_NotDanjion )
+		{
+		//丂丂弶夞偺傒丄埲壓偺儊僢僙乕僕傪憓擖丅
+			rot_chr(PET,30,PLAYER)
+			MES(PET,"……等等拉格那！？\n你要去哪裡！",0)
+		//	MES(PET,"僟儞僕儑儞偵擖傞慜偵丄\n嫃応強偑暘偐偭偰傞楢拞偵\n榖偟偰傒偨曽偑偄偄偲巚偆偗偳丅",0)
+			MES(PET,"在來這種地方找人之前，\n我覺得還是先去找\n那些比較好找的人吧。",0)
+			MES_close(PET)
+
+			rot_chr(PLAYER,30,PET)
+		//	name2(RAGNA)
+		//	MES(RAGNA,"偁丄偁偁乧乧\n妋偐偵僟儞僕儑儞偵擖偭偰\n扵偡偲側傞偲戝曄偩側丅",0)
+			MES(RAGNA,"啊，嗯……\n的確這樣比較費時間呢。",0)
+			MES_close(RAGNA)
+
+			if( !F5_05_OfferFiona )
+			{
+			//	name("佀僼傿僆僫偵榖傪偟偰偄側偄")
+			//	MES(RAGNA,"愭偵僼傿僆僫偺偍忟偝傫偨偪偵\n榖傪偮偗偰偍偔偐乧乧",0)
+				MES(RAGNA,"先去找菲歐娜小姐\n談一下吧……",0)
+				MES_close(RAGNA)
+
+				MES(PET,"她應該在鎮上自己的房子裡。\n總之先去看一下吧。",0)
+				MES_close(PET)
+				wait_MES(PET)
+			}
+			else
+			if( !F5_03_OfferLaraira )
+			{
+			//	MES(RAGNA,"愭偵巆傝偺楢拞偵\n榖傪偮偗偰偍偔偐乧乧",0)
+				MES(RAGNA,"接下來就去\n拉萊拉婆婆那裡吧……",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+			else
+			{
+			//	MES(RAGNA,"傑偢偼挰偺曽傪\n扵偟偰傒傞偐乧乧",0)
+				MES(RAGNA,"總之先在鎮上\n找找看吧……",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+			F_set(F5_24_NotDanjion)
+		}
+		else
+		{
+		//丂丂仸俀夞栚埲崀偼埲壓偺儊僢僙乕僕丅
+		//	MES(RAGNA,"僟儞僕儑儞偵擖偭偰\n扵偡偲側傞偲戝曄偩側乧乧",0)
+			MES(RAGNA,"沒有線索的話找人\n相當困難呢……",0)
+			MES(RAGNA,"先從有線索的地方著手吧。",0)
+			MES_close(RAGNA)
+			wait_MES(RAGNA)
+		}
+		chr_pos(PET,-153,5775,0,0,2)
+	}
+	else
+	if( !F5_17_EndFifth )
+	{
+//	name("丒僋儕僗僞儖僶儗乕婲摦屻")
+
+		if( GW_MAN==1 )
+		{
+		//丂丂仸儔僌僫愭摢
+			if( !F_RAGNA )
+			{
+				rot_chr(PET,30,PLAYER)
+				MES(PET,"拉格那，你要去哪裡！",0)
+				MES(PET,"快去營救公主殿下！",0)
+				MES_close(PET)
+
+				rot_chr(PLAYER,30,PET)
+			//	name2(RAGNA)
+				MES(RAGNA,"啊啊，是啊。",0)
+				MES(RAGNA,"快點整理裝備，\n必須前往水晶谷。",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(RAGNA,"快點整理裝備，\n必須去迎接公主！",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+			}
+		}
+		else
+		{
+		//丂丂仸僆僨僢僒愭摢
+			if( !F_RAGNA )
+			{
+				rot_chr(PET,30,PLAYER)
+				MES(PET,"等一下狼女，你要去哪裡！",0)
+				MES(PET,"快去營救公主殿下！",0)
+				MES_close(PET)
+
+				rot_chr(PLAYER,30,PET)
+			//	name2(PARTNER)
+				MES(PARTNER,"是是，我知道了。",0)
+				MES(PARTNER,"快點整理裝備，\n潛入他們的老巢去。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+				F_set(RAGNA)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(PARTNER,"沒有時間繞遠……",0)
+				MES(PARTNER,"快點整理裝備，\n必須潛入敵人內部。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+			}
+		}
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			chr_pos(PLAYER2,135,5796,1,0,2)
+		}
+		chr_pos(PET,-153,5775,0,0,2)
+	}
+	//chr_pos(PLAYER,0,5950,1,0,2)
+	chr_pos(PLAYER1,0,5950,1,0,2)
+	CAM_return(0)
+	cross_fade( 30 )
+	wait_fade()	
+
+	TK_end()
+
+}
+
+
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴僀儀儞僩偼尒偨偔側偄偗偳嫶偼傎偟偄傾僫僞偵
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+EV_HashiOpen
+{
+	mot_obj("hashi","open0")
+}
+
+//杺椡SE僼僃乕僪傾僂僩張棟
+EV_1041_fadeout
+{
+	SE_vol(1041,100,0)
+	wait(1)
+	SE_vol(1041,99,0)
+	wait(1)
+	SE_vol(1041,98,0)
+	wait(1)
+	SE_vol(1041,97,0)
+	wait(1)
+	SE_vol(1041,96,0)
+	wait(1)
+	SE_vol(1041,95,0)
+	wait(1)
+	SE_vol(1041,94,0)
+	wait(1)
+	SE_vol(1041,93,0)
+	wait(1)
+	SE_vol(1041,92,0)
+	wait(1)
+	SE_vol(1041,91,0)
+	wait(1)
+	SE_vol(1041,90,0)
+	wait(1)
+	SE_vol(1041,89,0)
+	wait(1)
+	SE_vol(1041,88,0)
+	wait(1)
+	SE_vol(1041,87,0)
+	wait(1)
+	SE_vol(1041,86,0)
+	wait(1)
+	SE_vol(1041,85,0)
+	wait(1)
+	SE_vol(1041,84,0)
+	wait(1)
+	SE_vol(1041,83,0)
+	wait(1)
+	SE_vol(1041,82,0)
+	wait(1)
+	SE_vol(1041,81,0)
+	wait(1)
+	SE_vol(1041,80,0)
+	wait(1)
+	SE_vol(1041,79,0)
+	wait(1)
+	SE_vol(1041,78,0)
+	wait(1)
+	SE_vol(1041,77,0)
+	wait(1)
+	SE_vol(1041,76,0)
+	wait(1)
+	SE_vol(1041,75,0)
+	wait(1)
+	SE_vol(1041,74,0)
+	wait(1)
+	SE_vol(1041,73,0)
+	wait(1)
+	SE_vol(1041,72,0)
+	wait(1)
+	SE_vol(1041,71,0)
+	wait(1)
+	SE_vol(1041,70,0)
+	wait(1)
+	SE_vol(1041,69,0)
+	wait(1)
+	SE_vol(1041,68,0)
+	wait(1)
+	SE_vol(1041,67,0)
+	wait(1)
+	SE_vol(1041,66,0)
+	wait(1)
+	SE_vol(1041,65,0)
+	wait(1)
+	SE_vol(1041,64,0)
+	wait(1)
+	SE_vol(1041,63,0)
+	wait(1)
+	SE_vol(1041,62,0)
+	wait(1)
+	SE_vol(1041,61,0)
+	wait(1)
+	SE_vol(1041,60,0)
+	wait(1)
+	SE_vol(1041,59,0)
+	wait(1)
+	SE_vol(1041,58,0)
+	wait(1)
+	SE_vol(1041,57,0)
+	wait(1)
+	SE_vol(1041,56,0)
+	wait(1)
+	SE_vol(1041,55,0)
+	wait(1)
+	SE_vol(1041,54,0)
+	wait(1)
+	SE_vol(1041,53,0)
+	wait(1)
+	SE_vol(1041,52,0)
+	wait(1)
+	SE_vol(1041,51,0)
+	wait(1)
+	SE_vol(1041,50,0)
+	wait(1)
+	SE_vol(1041,49,0)
+	wait(1)
+	SE_vol(1041,48,0)
+	wait(1)
+	SE_vol(1041,47,0)
+	wait(1)
+	SE_vol(1041,46,0)
+	wait(1)
+	SE_vol(1041,45,0)
+	wait(1)
+	SE_vol(1041,44,0)
+	wait(1)
+	SE_vol(1041,43,0)
+	wait(1)
+	SE_vol(1041,42,0)
+	wait(1)
+	SE_vol(1041,41,0)
+	wait(1)
+	SE_vol(1041,40,0)
+	wait(1)
+	SE_vol(1041,39,0)
+	wait(1)
+	SE_vol(1041,38,0)
+	wait(1)
+	SE_vol(1041,37,0)
+	wait(1)
+	SE_vol(1041,36,0)
+	wait(1)
+	SE_vol(1041,35,0)
+	wait(1)
+	SE_vol(1041,34,0)
+	wait(1)
+	SE_vol(1041,33,0)
+	wait(1)
+	SE_vol(1041,32,0)
+	wait(1)
+	SE_vol(1041,31,0)
+	wait(1)
+	SE_vol(1041,30,0)
+	wait(1)
+	SE_vol(1041,29,0)
+	wait(1)
+	SE_vol(1041,28,0)
+	wait(1)
+	SE_vol(1041,27,0)
+	wait(1)
+	SE_vol(1041,26,0)
+	wait(1)
+	SE_vol(1041,25,0)
+	wait(1)
+	SE_vol(1041,24,0)
+	wait(1)
+	SE_vol(1041,23,0)
+	wait(1)
+	SE_vol(1041,22,0)
+	wait(1)
+	SE_vol(1041,21,0)
+	wait(1)
+	SE_vol(1041,20,0)
+	wait(1)
+	SE_vol(1041,19,0)
+	wait(1)
+	SE_vol(1041,18,0)
+	wait(1)
+	SE_vol(1041,17,0)
+	wait(1)
+	SE_vol(1041,16,0)
+	wait(1)
+	SE_vol(1041,15,0)
+	wait(1)
+	SE_vol(1041,14,0)
+	wait(1)
+	SE_vol(1041,13,0)
+	wait(1)
+	SE_vol(1041,12,0)
+	wait(1)
+	SE_vol(1041,11,0)
+	wait(1)
+	SE_vol(1041,10,0)
+	wait(1)
+	SE_vol(1041,9,0)
+	wait(1)
+	SE_vol(1041,8,0)
+	wait(1)
+	SE_vol(1041,7,0)
+	wait(1)
+	SE_vol(1041,6,0)
+	wait(1)
+	SE_vol(1041,5,0)
+	wait(1)
+	SE_vol(1041,4,0)
+	wait(1)
+	SE_vol(1041,3,0)
+	wait(1)
+	SE_vol(1041,2,0)
+	wait(1)
+	stop_SE(1041)
+}
+
+//抧柭傝SE張棟
+EV_zinari
+{
+	SE(1024,0)
+	wait(130)
+	SE(1024,0)
+	wait(130)
+	SE(1024,0)
+	wait(130)
+	SE(1024,0)
+}
+
+//塺彞拞SE僼僃乕僪傾僂僩張棟
+EV_1061_fadeout
+{
+	SE_vol(1061,100,0)
+	wait(1)
+	SE_vol(1061,99,0)
+	wait(1)
+	SE_vol(1061,98,0)
+	wait(1)
+	SE_vol(1061,97,0)
+	wait(1)
+	SE_vol(1061,96,0)
+	wait(1)
+	SE_vol(1061,95,0)
+	wait(1)
+	SE_vol(1061,94,0)
+	wait(1)
+	SE_vol(1061,93,0)
+	wait(1)
+	SE_vol(1061,92,0)
+	wait(1)
+	SE_vol(1061,91,0)
+	wait(1)
+	SE_vol(1061,90,0)
+	wait(1)
+	SE_vol(1061,89,0)
+	wait(1)
+	SE_vol(1061,88,0)
+	wait(1)
+	SE_vol(1061,87,0)
+	wait(1)
+	SE_vol(1061,86,0)
+	wait(1)
+	SE_vol(1061,85,0)
+	wait(1)
+	SE_vol(1061,84,0)
+	wait(1)
+	SE_vol(1061,83,0)
+	wait(1)
+	SE_vol(1061,82,0)
+	wait(1)
+	SE_vol(1061,81,0)
+	wait(1)
+	SE_vol(1061,80,0)
+	wait(1)
+	SE_vol(1061,79,0)
+	wait(1)
+	SE_vol(1061,78,0)
+	wait(1)
+	SE_vol(1061,77,0)
+	wait(1)
+	SE_vol(1061,76,0)
+	wait(1)
+	SE_vol(1061,75,0)
+	wait(1)
+	SE_vol(1061,74,0)
+	wait(1)
+	SE_vol(1061,73,0)
+	wait(1)
+	SE_vol(1061,72,0)
+	wait(1)
+	SE_vol(1061,71,0)
+	wait(1)
+	SE_vol(1061,70,0)
+	wait(1)
+	SE_vol(1061,69,0)
+	wait(1)
+	SE_vol(1061,68,0)
+	wait(1)
+	SE_vol(1061,67,0)
+	wait(1)
+	SE_vol(1061,66,0)
+	wait(1)
+	SE_vol(1061,65,0)
+	wait(1)
+	SE_vol(1061,64,0)
+	wait(1)
+	SE_vol(1061,63,0)
+	wait(1)
+	SE_vol(1061,62,0)
+	wait(1)
+	SE_vol(1061,61,0)
+	wait(1)
+	SE_vol(1061,60,0)
+	wait(1)
+	SE_vol(1061,59,0)
+	wait(1)
+	SE_vol(1061,58,0)
+	wait(1)
+	SE_vol(1061,57,0)
+	wait(1)
+	SE_vol(1061,56,0)
+	wait(1)
+	SE_vol(1061,55,0)
+	wait(1)
+	SE_vol(1061,54,0)
+	wait(1)
+	SE_vol(1061,53,0)
+	wait(1)
+	SE_vol(1061,52,0)
+	wait(1)
+	SE_vol(1061,51,0)
+	wait(1)
+	SE_vol(1061,50,0)
+	wait(1)
+	SE_vol(1061,49,0)
+	wait(1)
+	SE_vol(1061,48,0)
+	wait(1)
+	SE_vol(1061,47,0)
+	wait(1)
+	SE_vol(1061,46,0)
+	wait(1)
+	SE_vol(1061,45,0)
+	wait(1)
+	SE_vol(1061,44,0)
+	wait(1)
+	SE_vol(1061,43,0)
+	wait(1)
+	SE_vol(1061,42,0)
+	wait(1)
+	SE_vol(1061,41,0)
+	wait(1)
+	SE_vol(1061,40,0)
+	wait(1)
+	SE_vol(1061,39,0)
+	wait(1)
+	SE_vol(1061,38,0)
+	wait(1)
+	SE_vol(1061,37,0)
+	wait(1)
+	SE_vol(1061,36,0)
+	wait(1)
+	SE_vol(1061,35,0)
+	wait(1)
+	SE_vol(1061,34,0)
+	wait(1)
+	SE_vol(1061,33,0)
+	wait(1)
+	SE_vol(1061,32,0)
+	wait(1)
+	SE_vol(1061,31,0)
+	wait(1)
+	SE_vol(1061,30,0)
+	wait(1)
+	SE_vol(1061,29,0)
+	wait(1)
+	SE_vol(1061,28,0)
+	wait(1)
+	SE_vol(1061,27,0)
+	wait(1)
+	SE_vol(1061,26,0)
+	wait(1)
+	SE_vol(1061,25,0)
+	wait(1)
+	SE_vol(1061,24,0)
+	wait(1)
+	SE_vol(1061,23,0)
+	wait(1)
+	SE_vol(1061,22,0)
+	wait(1)
+	SE_vol(1061,21,0)
+	wait(1)
+	SE_vol(1061,20,0)
+	wait(1)
+	SE_vol(1061,19,0)
+	wait(1)
+	SE_vol(1061,18,0)
+	wait(1)
+	SE_vol(1061,17,0)
+	wait(1)
+	SE_vol(1061,16,0)
+	wait(1)
+	SE_vol(1061,15,0)
+	wait(1)
+	SE_vol(1061,14,0)
+	wait(1)
+	SE_vol(1061,13,0)
+	wait(1)
+	SE_vol(1061,12,0)
+	wait(1)
+	SE_vol(1061,11,0)
+	wait(1)
+	SE_vol(1061,10,0)
+	wait(1)
+	SE_vol(1061,9,0)
+	wait(1)
+	SE_vol(1061,8,0)
+	wait(1)
+	SE_vol(1061,7,0)
+	wait(1)
+	SE_vol(1061,6,0)
+	wait(1)
+	SE_vol(1061,5,0)
+	wait(1)
+	SE_vol(1061,4,0)
+	wait(1)
+	SE_vol(1061,3,0)
+	wait(1)
+	SE_vol(1061,2,0)
+	wait(1)
+	stop_SE(1061)
+}
+
+#EndScriptTable
+//====================================================================
+

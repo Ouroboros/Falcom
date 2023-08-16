@@ -1,0 +1,451 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧儔僂僯攌偝傫乮偍攌偝傫乯Launee")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_LAUNEE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(LAUNEE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,LAUNEE)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,LAUNEE)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LAUNEE)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LAUNEE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LAUNEE)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,LAUNEE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,LAUNEE)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸懞挿戭偱戜強偵岦偄偰偄傞丅
+	if( F6_05_EndSixth )
+	{
+		rot_chr(LAUNEE,15,PLAYER1)
+		if(!F_LAUNEE)
+		{
+		//	name("儔僂僯")
+			MES(LAUNEE,"收穫祭終於結束了，\n這裡的生活又變得悠閒自得。",0)
+			MES(LAUNEE,"對了，那個叫比安斯的孩子\n也幫我們忙了。",0)
+			MES(LAUNEE,"嘿嘿，雖然有些奇怪，\n但好像也是個好孩子呢。",0)
+			MES_close(LAUNEE)
+
+		//丂丂儔僂僯丄俹俙僄儌乕僔儑儞偱岦偒傪栠偡丅
+			EMO(LAUNEE,EMO_PA)
+			wait(30)
+
+			rot(LAUNEE,30,180)
+
+		//	name("儔僂僯")
+			MES(LAUNEE,"啊，做得\n有些多了。",0)
+			MES(LAUNEE,"把這些\n分給年輕人吧。",0)
+			MES_close(LAUNEE)
+			
+			F_set(LAUNEE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("儔僂僯")
+			MES(LAUNEE,"唉呀……\n你們要不要也嘗嘗看？",0)
+			MES(LAUNEE,"嘿嘿，勞尼特製的焗烤。\n營養豐富哦。",0)
+			MES_close(LAUNEE)
+			rot(LAUNEE,30,204)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸懞挿戭偱丄儅乕僒偲榖偟偰偄傞丅
+	//丂丂仸弶夞偼儅乕僒偲嫟捠偺儊僢僙乕僕丅
+	if( F6_00_GoToMeru )
+	{
+	//丂丂仸怳傝曉傜側偄丅
+		if(!FV_12_TalkLauMar)
+		{
+			EV("TALK_LM")
+			wait_EV("TALK_LM")
+		}
+		else
+		{
+			look_chr( LAUNEE, PLAYER1,"Bone_Head")
+		//	name("儔僂僯")
+			MES(LAUNEE,"啊，這讓我回憶起從前。",0)
+			MES(LAUNEE,"差不多１００年以前吧，\n也有過一場颱風。",0)
+			MES(LAUNEE,"那時候我還小，\n不過記得當時受害非常嚴重。",0)
+			MES(LAUNEE,"……可是不用擔心。\n那時也有女神大人\n與精靈大人的保佑呢。",0)
+			MES_close(LAUNEE)
+			//仛儔僂僯亂戝棐傪宱尡亃
+			F_set_note(LAUNEE,2)
+		}
+		look_off(LAUNEE)
+
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥偺嫵夛丄偍婩傝偵棃偰偄傞丅
+	if( F5_00_HearLunar )
+	{
+	//	name("儔僂僯")
+		if(!F_LAUNEE)
+		{
+			rot_chr(LAUNEE,15,PLAYER1)
+			MES(LAUNEE,"我很久沒來過教會了，\n可是畢竟之前發生過那種事。",0)
+			MES(LAUNEE,"沒什麼，村裡的巴朗\n送我過來的，不用擔心。",0)
+			MES(LAUNEE,"……哎，確實歲月不饒人啊。\n走到這裡渾身都疼了。",0)
+			MES_close(LAUNEE)
+
+			F_set(LAUNEE)
+		}
+	//丂丂仛孞傝曉偟
+	//丂丂仸怳傝曉傜側偄丅
+		else
+		{
+		//	name("儔僂僯")
+			MES(LAUNEE,"女神愛普瑞絲，\n住在村中的精靈大人……",0)
+			MES(LAUNEE,"這次村中的人們承蒙相救，\n真是感激不盡。",0)
+			MES(LAUNEE,"今後也請保佑我們，\n祛除災厄，帶來豐收。\n請一定要保佑我們……",0)
+			MES_close(LAUNEE)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸懞挿戭丄儀僢僪偵嵗偭偰偄傞丅
+	if( F4_00_StartSolo )
+	{
+		look_chr( LAUNEE, PLAYER1,"Bone_Head")
+		if(!F_LAUNEE)
+		{
+		//	name("儔僂僯")
+			MES(LAUNEE,"啊……\n我已經沒事了。",0)
+			MES(LAUNEE,"渾身還有些疼，\n不過這不算什麼。",0)
+			MES(LAUNEE,"話雖如此，\n怪物闖進村子破壞農田，\n可是居然沒有人受傷……",0)
+			MES(LAUNEE,"這一定是村中的\n精靈在保佑我們。",0)
+			MES_close(LAUNEE)
+
+			F_set(LAUNEE)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("儔僂僯")
+			MES(LAUNEE,"這個村莊裡由一位\n偉大的精靈大人守護。",0)
+			MES(LAUNEE,"所以這次才\n沒有人受傷。",0)
+			MES(LAUNEE,"啊，我真的要\n感謝精靈大人。",0)
+			MES_close(LAUNEE)
+		}
+		look_off(LAUNEE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸搢傟偰偄傞丅儊僢僙乕僕側偟丅乮儊僀儞嶲徠乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸懞挿戭偵偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_LAUNEE)
+		{
+		//丂丂儔僂僯丄俹俙僄儌乕僔儑儞偱怳傝曉傞丅
+			EMO(LAUNEE,EMO_PA)
+			wait(30)
+			look_chr( LAUNEE, PLAYER1,"Bone_Head")
+			
+		//	name("儔僂僯")
+			MES(LAUNEE,"啊，對了。\n為防萬一，我話說在前……",0)
+			MES(LAUNEE,"我不是那個懷森村長\n的妻子，是他母親哦。",0)
+			MES(LAUNEE,"經常有人搞錯。",0)
+			MES_close(LAUNEE)
+			//仛儔僂僯亂儚僀僛儞偺曣恊亃
+			F_set_note(LAUNEE,1)
+			F_set(LAUNEE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			look_chr( LAUNEE, PLAYER1,"Bone_Head")
+		//	name("儔僂僯")
+			MES(LAUNEE,"那孩子\n整天說些\n不知所謂的話。",0)
+			MES(LAUNEE,"……是我的\n教育方法不對嗎？",0)
+			MES_close(LAUNEE)
+		}
+		look_off(LAUNEE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸懞挿戭偵偄傞丅
+	if( F2_00_GoForest )
+	{
+		look_chr( LAUNEE, PLAYER1,"Bone_Head")
+		if(!F_LAUNEE)
+		{
+		//	name("儔僂僯")
+			MES(LAUNEE,"我已經老了，\n要趁現在照顧一下\n年輕人才行。",0)
+			MES(LAUNEE,"最近我把用乳酪做菜的訣竅\n教給了叫費德利卡的人。",0)
+			MES(LAUNEE,"嘿嘿，那孩子真好。\n又有朝氣，學得也快。",0)
+			MES(LAUNEE,"就像我年輕\n的時候一樣。",0)
+			MES_close(LAUNEE)
+
+			F_set(LAUNEE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("儔僂僯")
+			MES(LAUNEE,"另外……\n那個比安斯是誰？",0)
+			MES(LAUNEE,"好像在這裡開了家寵物商店，\n但是完全不幫村裡耕作。",0)
+			MES(LAUNEE,"我也知道經營店面很忙，\n可是收穫祭還是\n要參加才行。",0)
+			MES(LAUNEE,"那可是這村子裡\n代代遺留下來的重要傳統呢。",0)
+			MES_close(LAUNEE)
+		}
+		look_off(LAUNEE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸懞挿戭偵偄傞丅
+	if( F1_15_GoVillage )
+	{
+		look_chr( LAUNEE, PLAYER1,"Bone_Head")
+		if(!F_LAUNEE)
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀恄揳偵峴偭偨偙偲偑側偄")
+			if(!F1_23_VisitTenple)
+			{
+			//	name("儔僂僯")
+				MES(LAUNEE,"村外有一個很大的神殿吧？",0)
+			//	MES(LAUNEE,"偦傟偼偦傟偼棫攈側恄揳偱偹偊丅\n恄惞墹壠偝傑偑偄傜偭偟傖偭偨崰偵偼丄\n俆戝恄揳偺堦偮偵悢偊傜傟偰偄偨偔傜偄偝丅",0)
+				MES(LAUNEE,"以前也是非常宏偉的。\n在神聖王國時代還是\n五大神殿之一呢。",0)
+				MES_close(LAUNEE)
+			}
+		//	name("佀恄揳偵峴偭偨偙偲偑偁傞")
+			else
+			{
+			//	name("儔僂僯")
+				MES(LAUNEE,"唉呀，你們去\n那座神殿參觀過了吧。",0)
+				MES_close(LAUNEE)
+
+			//	name2(LAUNEE)
+			//	MES(LAUNEE,"棫攈側恄揳偩傠偆丠\n恄惞墹壠偝傑偑偄傜偭偟傖偭偨崰偵偼丄\n俆戝恄揳偺堦偮偵悢偊傜傟偰偄偨偔傜偄偝丅",0)
+				MES(LAUNEE,"很壯觀吧？\n在神聖王國時代那裡還是\n五大神殿之一呢。",0)
+				MES_close(LAUNEE)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		
+		//	name("儔僂僯")
+			MES(LAUNEE,"魔法大戰開始的時候，\n也有很多戰士\n集中在這裡呢。",0)
+			MES_close(LAUNEE)
+
+		//	name2(LAUNEE)
+			MES(LAUNEE,"不過現在它被\n湖水淹沒，已經\n不能再去參拜了。",0)
+			MES_close(LAUNEE)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀亀仛懞偱恄揳偺塡傪暦偄偨亁偺僼儔僌偑棫偭偰偄側偄応崌丄憓擖丅")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(!F1_24_UwasaTenple)
+			{
+			//	name("佀恄揳偵峴偭偨帠偑柍偄")
+				if(!F1_23_VisitTenple)
+				{
+					MES(RAGNA,"哎……好像是一個\n很有來由的神殿啊……",0)
+					MES_close(RAGNA)
+
+				//丂丂儔僌僫偲傾儖僂僃儞丄岦偒崌偆丅
+				//丂丂儔僌僫偲傾儖僂僃儞丄岦偒崌偆丅
+					rot_chr(RAGNA,30,PARTNER)
+					rot_chr(PARTNER,30,RAGNA)
+					
+					MES(RAGNA,"離這座村子\n好像也不算太遠……",0)
+					MES(RAGNA,"怎麼樣，公主殿下。\n要過去看看嗎？",0)
+					MES_close(RAGNA)
+				}
+			//	name("佀恄揳偵峴偭偨帠偑偁傞")
+				else
+				{
+					MES(RAGNA,"哎……不愧是古老的神殿，\n有這麼多故事呢……",0)
+					MES(RAGNA,"說起來它的規模也很大，\n正適合隱藏些東西。",0)
+					MES_close(RAGNA)
+
+				//丂丂儔僌僫偲傾儖僂僃儞丄岦偒崌偆丅
+					rot_chr(RAGNA,30,PARTNER)
+					rot_chr(PARTNER,30,RAGNA)
+					MES(RAGNA,"怎麼樣，公主殿下。\n再過去看看嗎？",0)
+					MES_close(RAGNA)
+				}
+
+				MES(PARTNER,"唔。\n被水淹沒這一點……\n確實讓人在意……",0)
+				MES_close(PARTNER)
+
+			//丂丂儔僌僫偵丠僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HATENA)
+				wait(30)
+				
+				MES(PARTNER,"不，沒什麼。\n我們決定過去看看。",0)
+				MES_close(PARTNER)
+				wait_MES(PARTNER)
+
+			//0922僐儊儞僩壔
+			//	cross_fade(30)
+			//	CAM_return(0)
+			//	CAM(200,76,-25,25,210,30,0)
+			//	rot_chr(PLAYER1,60,LAUNEE)
+			//	rot_chr(PLAYER2,60,LAUNEE)
+			//	wait_fade()
+
+				F_set(F1_24_UwasaTenple)
+				//丂丂仸亀仛懞偱恄揳偺塡傪暦偄偨亁偺僼儔僌傪棫偰傞丅
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+
+			F_set(LAUNEE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("儔僂僯")
+		//	MES(LAUNEE,"偁偺恄揳偼丄恄惞墹壠偝傑傕\n偍擣傔偵側偭偰偄偨棫攈側傕偺偱偹偊丅",0)
+			MES(LAUNEE,"那座神殿在神聖王國時代\n宏偉程度是屈指可數的。",0)
+			MES(LAUNEE,"啊，住在村子裡的人\n都引以為豪。",0)
+			MES(LAUNEE,"不過現在已經被水淹沒，\n只能在遠處瞻仰了。",0)
+			MES_close(LAUNEE)
+		}
+
+		look_off(LAUNEE)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸懞挿戭丄戜強偵偄傞丅
+	if( F1_01_GameStart )
+	{
+		rot_chr(LAUNEE,15,PLAYER1)
+	//丂丂仸弶夞僀儀儞僩
+		if(!FV_01_TalkLaunee)
+		{
+		//	name("儔僂僯")
+			MES(LAUNEE,"唉呀……\n年輕人們來做什麼？",0)
+			MES(LAUNEE,"嘿嘿，是被味道\n吸引過來的吧？",0)
+			MES(LAUNEE,"沒關係，\n好好休息一會兒吧。",0)
+			MES_close(LAUNEE)
+			
+			F_set(FV_01_TalkLaunee)
+		}
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_LAUNEE)
+			{
+			//	name("儔僂僯")
+				MES(LAUNEE,"這個村莊是\n很久以前為那些參拜神殿的人\n而建造的。",0)
+				MES(LAUNEE,"確實是很久以前了，\n應該還是神聖王國繁榮昌盛的年代。",0)
+				MES(LAUNEE,"那時伊魯巴特\n比現在要大得多。",0)
+				MES(LAUNEE,"據說這裡住過\n不少魔導士呢。",0)
+				MES_close(LAUNEE)
+
+				//仛儔僂僯亂揱彸偵徻偟偄亃
+				F_set_note(LAUNEE,0)
+				F_set(LAUNEE)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("儔僂僯")
+				MES(LAUNEE,"這個村莊有不少\n神秘的傳說。",0)
+				MES(LAUNEE,"也是理所當然。",0)
+				MES(LAUNEE,"畢竟這裡是從神聖王國時代\n留存到現在的村莊呢。",0)
+				MES_close(LAUNEE)
+			}
+		}
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

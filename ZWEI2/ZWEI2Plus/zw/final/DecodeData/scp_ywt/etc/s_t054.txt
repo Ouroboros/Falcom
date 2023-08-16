@@ -1,0 +1,789 @@
+//仭Zwei2堦斒儊僢僙乕僕丒傾儖僢僥偺挰乮仸儌乕儕僗乯
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭傾儖僢僥
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧儌乕儕僗乮塣摦拞偺恖乯Maurice")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_MAURICE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(MAURICE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,MAURICE)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,MAURICE)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,MAURICE)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僗乕僣巔丄暚悈嵍懁偺儀儞僠偵嵗傞丅
+	if( F6_05_EndSixth )
+	{
+		look_chr( MAURICE, PLAYER1,"Bone_Head")
+		//儌乕僔儑儞
+		MOT_SET(MAURICE,151,-1,561,561,-1,-1)		//儌乕儕僗偑嵗偭偰傞
+		MOT(MAURICE,151,10)
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"喲，是你們啊……",0)
+			MES(MAURICE,"雖然不知道為什麼，\n不過女兒又高興起來了。",0)
+			MES(MAURICE,"今天她還問我要不要\n一起出去野餐呢。",0)
+			MES_close(MAURICE)
+
+		//丂丂儌乕儕僗偵俹俙僄儌乕僔儑儞丅
+			EMO(MAURICE,EMO_PA)
+			wait(30)
+
+			MES(MAURICE,"啊，對了……\n你們知道嗎？",0)
+			MES(MAURICE,"之前有一次遠足\n走到了水晶谷。",0)
+			MES(MAURICE,"忽然聽見有人喊\n「不要過來喵！」，\n就只好回來了。",0)
+			MES_close(MAURICE)
+
+			MOT(MAURICE,150,10)
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（那聲音……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+				MES(PARTNER,"（那聲音是……）",0)
+				MES_close(PARTNER)
+			}
+
+			MOT(MAURICE,151,10)
+			MES(MAURICE,"嗯—，雖然不是很清楚……\n不過還是不要接近那邊了。",0)
+			MES(MAURICE,"把它從今天的預定路線\n上去掉吧。",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(MAURICE,"上次我去水晶谷，\n忽然聽見有人喊「不要過來喵！」，\n就只好回來了。",0)
+			MES(MAURICE,"嗯—，雖然不是很清楚……\n可是好不容易有機會和女兒一起野餐。",0)
+			MES(MAURICE,"今天還是遵從哈蒂的願望\n去洛塔村\n逛一下吧。",0)
+			MES_close(MAURICE)
+		}
+		MOT(MAURICE,150,10)
+		look_off( MAURICE )
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F6_00_GoToMeru )
+	{
+		F_set_note(-54,-1)
+		if(!F_MAURICE)
+		{
+			if(!FT_12_TalkMaurice && FT_FF_TalkOkMaurice)
+			{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀崱傑偱偵儌乕儕僗偲榖偟偨帠偑偁傞応崌丄侾夞偩偗憓擖丅")
+			//丂丂俀恖偵丠僄儌乕僔儑儞丅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（咦，這個人……）",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"（唔，穿著正裝……）",0)
+					MES_close(PARTNER)
+				}
+				else
+			//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"（這個男人……）",0)
+					MES_close(PARTNER)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（正裝……？）",0)
+					MES_close(RAGNA)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+			MES(MAURICE,"嗯，大家注意。\n……是這樣的。",0)
+			MES(MAURICE,"關於旋風造成的影響，\n我從菲歐娜小姐那裡\n收到了這些報告……",0)
+			MES(MAURICE,"首先呢，那個，全鎮要做好\n完善的防範對策……",0)
+			MES_close(MAURICE)
+
+			//仛儌乕儕僗亂挰挿亃
+			F_set_note(-54,2)
+			
+			F_set(MAURICE)
+			F_set(FT_12_TalkMaurice)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			MES(MAURICE,"嗯，由於旋風的影響，\n現在無法對外取得聯絡……",0)
+			MES(MAURICE,"那個，大家\n不要慌張……",0)
+			MES_close(MAURICE)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛丄滒夨幒偵偄傞丅
+	//丂丂丂弶夞偼僔僗僞乕偺僀儀儞僩偑婲摦偡傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+	if( F5_00_HearLunar )
+	{
+		if(!F_MAURICE)
+		{
+			look(MAURICE,"Bone_Head",0,		0,0,3,			0,0,0)
+			wait(5)
+			look_chr( MAURICE, PLAYER1,"Bone_Head")
+
+			MES(MAURICE,"那…那個……\n我想和你談一下女兒的事。",0)
+			MES(MAURICE,"……實際上很久以來，\n我一直想和別人談這個問題。",0)
+			MES(MAURICE,"可是，她…她特別嚴格。\n我稍微說兩句洩氣話，\n就會被罵呢。",0)
+			MES_close(MAURICE)
+
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"……哎呀，還東張西望？",0)
+			MES(ISABELLA,"P1S5你這傢伙……\n挺有種的嘛！！",0)
+			MES_close(ISABELLA)
+
+		//丂丂儌乕儕僗丄傾僙傾僙偱僀僓儀儔偵岦偔丅
+			EMO(MAURICE,EMO_ASEASE)
+			look(MAURICE,"Bone_Head",0,		0,10,0,			0,0,0)
+
+			wait(30)
+			look_off(MAURICE)
+
+			MES(MAURICE,"對…對…對…對不起！",0)
+			MES_close(MAURICE)
+
+			look(MAURICE,"Bone_Head",0,		0,0,3,			0,0,-20)
+			F_set(MAURICE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			look(MAURICE,"Bone_Head",0,		0,0,3,			0,0,0)
+			wait(10)
+			look_chr( MAURICE, PLAYER,"Bone_Head")
+			MES(MAURICE,"不…不要再和我說話了。\n她會生氣的。",0)
+			MES_close(MAURICE)
+
+			look_off( MAURICE )
+			wait(15)
+			IK(MAURICE,"Bone_Head",0)
+			look(MAURICE,"Bone_Head",0,		0,0,1,			0,0,-20)
+		}
+
+		//儌乕儕僗偲榖偟偨偙偲偑偁傞
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸傾儖僢僥暚悈夞傝傪僌儖僌儖儔儞僯儞僌偟偰偄傞丅
+	if( F4_09_GoShrineMia)
+	{
+		look_chr( MAURICE, PLAYER1,"Bone_Head")
+		MES(MAURICE,"喲，你們……\n你們也是來跑步的嗎？",0)
+		MES(MAURICE,"跑…跑步真是愉快啊。",0)
+		MES(MAURICE,"拼命跑步的時候，\n可以忘卻一切煩心事呢。\n哈哈哈……",0)
+		MES_close(MAURICE)
+		look_off( MAURICE )
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸柉壠俀偺慜偱僐儕儞偲榖偟偰偄傞丅
+	if( F4_00_StartSolo )
+	{
+		look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"我晚上回家以後，\n發現有一條留言\n「請不要來找我」。",0)
+			MES(MAURICE,"我…我還以為一定是\n女兒離家出走了……",0)
+			MES(MAURICE,"結果她好像只是\n受到邀請住在朋友家而已。",0)
+			MES(MAURICE,"可…可是你看\n正好又遇上怪物騷動……\n唉……讓人擔心死了……",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(MAURICE,"我是覺得住在\n外面也沒什麼。",0)
+			MES(MAURICE,"可…可是至少還是……\n應該和我說一下啊。",0)
+			MES(MAURICE,"一想到連女兒會討厭我，\n我話也不敢說得太重……",0)
+			MES_close(MAURICE)
+		}
+		look_off( MAURICE)
+
+		//儌乕儕僗偲榖偟偨偙偲偑偁傞
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//偄側偄
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傑偩僐儘僢僙僆偵峴偭偰偄側偄応崌偺傒丅
+	//丂丂仸挰丄暚悈偺嵍懁丄奨楬偺偳恀傫拞偱僗僩儗僢僠塣摦傪偟偰偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_MAURICE)
+		{
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+			EV_stop("MOTION_TRAINING_MAURICE")	//儌乕儕僗丂僗僩儗僢僠
+			MOT_SET(MAURICE,150,-1,517,517,-1,-1)
+
+			MOT(MAURICE,2,15)
+
+			MES(MAURICE,"啊，原來是你們。",0)
+			MES_close(MAURICE)
+
+		//丂丂儌乕儕僗丄僈僢僣億乕僘傪偟偰傒偣傞丅
+			MOT(MAURICE,150,15)
+
+			MES(MAURICE,"「……你們的熱血燃燒起來了嗎？」",0)
+			MES_close(MAURICE)
+
+		//丂丂儌乕儕僗丄捠忢僷僞偵栠傞丅
+			MOT(MAURICE,2,15)
+			
+			MES(MAURICE,"開…開玩笑。哈哈哈……",0)
+			MES_close(MAURICE)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+		//	EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			look_off( MAURICE)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//		//	name("佀儔僌僫愭摢")
+//			if(GW_MAN==1)
+//			{
+//				MES(RAGNA,"乮奜偟傑偔傝偩側乧乧乯",0)
+//				MES_close(RAGNA)
+//			}
+//		//	name("佀傾儖僂僃儞愭摢")
+//			else
+//			{
+//				MES(PARTNER,"乮妋偐偵僇僢僐埆偄抝偩偺偆乧乧乯",0)
+//				MES_close(PARTNER)
+//			}
+
+			MES(RAGNA,"（錯了好多……）",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"（唔……是這樣嗎？）",0)
+			MES_close(PARTNER)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(MAURICE)
+			EV("MOTION_TRAINING_MAURICE")	//儌乕儕僗丂僗僩儗僢僠
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+			MES(MAURICE,"呵呵，最近我的臂力\n也逐漸增長了。",0)
+			MES(MAURICE,"這些都是\n多虧了那座體育館。",0)
+			MES(MAURICE,"咦，對了……\n我為什麼開始\n鍛鍊身體來著？",0)
+			MES(MAURICE,"唔～，想不起來了。",0)
+			MES_close(MAURICE)
+			look_off( MAURICE)
+		}
+
+		//儌乕儕僗偲榖偟偨偙偲偑偁傞
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傑偩僐儘僢僙僆偵峴偭偰偄側偄応崌偺傒攝抲丅
+
+	//仛曄峏
+	//丂丂佀僼傿乕儖僪偐傜挰偵擖偭偨僞僀儈儞僌偱丄儔儞僟儉敾掕丅
+	//丂丂妋棪1/3偱攝抲偡傞丅
+
+	//丂丂仸柉壠俀偺慜偱僗僩儗僢僠塣摦傪偟偰偄傞丅
+	if( F2_00_GoForest )
+	{
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"呼……",0)
+			MES(MAURICE,"在工作空閒\n做個鍛鍊剛剛好……",0)
+			MES_close(MAURICE)
+
+		//丂丂儌乕儕僗怳傝曉傞丅
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀傑偩僐儘僢僙僆偵峴偭偰偄側偄応崌")
+			if(!FV_02_VisitGyakata)
+			{
+				MES(MAURICE,"最近我發現了一個\n最適合鍛鍊身體的場所。",0)
+				MES(MAURICE,"在廢坑裡居然\n有一個可以提供實際指導的體育館。",0)
+				MES(MAURICE,"你們有興趣的話\n也可以去看一下哦。",0)
+				MES_close(MAURICE)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（廢坑裡……？）",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（有體育館嗎……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("佀僐儘僢僙僆偵峴偭偨")
+			{
+				MES(MAURICE,"呵呵，我也是在\n找到那座體育館後\n才迷上肌肉鍛鍊的。",0)
+				MES(MAURICE,"雖然開在廢坑裡\n有些奇怪……",0)
+				MES(MAURICE,"不…不過可以得到\n實際指導，相當有趣呢。",0)
+				MES_close(MAURICE)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（好…好像不太能同意……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("佀傾儖僂僃儞愭摢")
+					MES(PARTNER,"（人類比較容易\n 接受這種東西啊……）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+			//仛儌乕儕僗亂嬝僩儗亃
+			look_off( MAURICE)
+			F_set_note(MAURICE,1)
+			F_set(MAURICE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			if(!FV_02_VisitGyakata)
+			{
+				look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+				MES(MAURICE,"開辦體育館的人\n似乎也有些奇怪。",0)
+				MES(MAURICE,"在我離開的時候，\n他還爽快地送我蛋白錠呢。",0)
+				MES_close(MAURICE)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+
+				MES(MAURICE,"好—，繼續\n鍛鍊肌肉啦～……",0)
+				MES_close(MAURICE)
+				look_off( MAURICE)
+			}
+			else
+			{
+			//	name("佀僐儘僢僙僆偵峴偭偨")
+				MES(MAURICE,"嘿…嘿……",0)
+				MES(MAURICE,"呼，鍛鍊肌肉\n果然可以讓人神清氣爽～……",0)
+				MES(MAURICE,"好—，繼續\n鍛鍊肌肉，\n強健身體啦～……",0)
+				MES_close(MAURICE)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+			}
+		}
+		//儌乕儕僗偲榖偟偨偙偲偑偁傞
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸柉壠俀偺慜偱備偭偔傝僗僩儗僢僠塣摦傪偟偰偄傞丅
+	//丂丂仸儔僌僫偨偪偑俧亅僐儘僢僙僆偵摓払偟丄儌乕儕僗傪屇傃弌偟偨応崌丄徚嫀偡傞丅
+	if( F1_15_GoVillage )
+	{
+
+		if(FE_FF_TalkLotte && FE_FF_TkWinMaurice)//俀廡栚埲崀偼丄儘僢僥偺堷宲偓張棟傪峴偭偰偐傜丅
+		{
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"哈…哈哈哈……\n你們果然很強呢。",0)
+				MES(MAURICE,"我的鍛鍊\n方法還是有問題吧……",0)
+				MES(MAURICE,"嗯，不過我可不\n打算就此放棄。",0)
+				MES(MAURICE,"我會繼續鍛鍊肌肉，\n今後一定會趕上你們的。",0)
+				MES_close(MAURICE)
+
+				F_set(MAURICE)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(MAURICE,"我可不打算\n就此放棄。",0)
+				MES(MAURICE,"我會繼續鍛鍊肌肉，\n今後一定會趕上你們的。",0)
+				MES(MAURICE,"我的精神永不屈……\n開…開玩笑啦。\n啊哈哈……",0)
+				MES_close(MAURICE)
+			}
+			look_off( MAURICE)
+		}
+		else
+		{
+			if(!F_MAURICE)
+			{
+				look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+				MES(MAURICE,"我決定開始\n進行一些運動。",0)
+				MES(MAURICE,"如果肌肉更發達一些的話，\n女兒會不會不再討厭我了呢……？\n……這…這樣。",0)
+				MES(MAURICE,"於是我試著\n在郊外跑步……",0)
+				MES(MAURICE,"呼…呼……\n這…這比想像中要艱苦很多呢……",0)
+				
+				MES_close(MAURICE)
+				F_set(MAURICE)
+				look_off( MAURICE)
+			}
+		//丂丂仸怳傝曉傜側偄丅
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(MAURICE,"呼…呼……",0)
+				MES(MAURICE,"好…稍微休息一下，\n然後再來一次……",0)
+				MES_close(MAURICE)
+			}
+		}
+
+		//儌乕儕僗偲榖偟偨偙偲偑偁傞
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸柉壠俀偺拞偱僼儕乕儉乕僽丅
+	if( F1_01_GameStart )
+	{
+		rot_chr(MAURICE,30,PLAYER1)
+		
+		EV("MOTION_TK_MAURICE")
+
+		//丂丂仸弶夞僀儀儞僩丅
+		if(!FT_01_TalkMaurice)
+		{
+			MES(MAURICE,"喲，你們好……",0)
+			MES(MAURICE,"是來觀光的嗎？\n第一次來阿魯特？",0)
+			MES(MAURICE,"啊哈哈，\n請慢慢享受。",0)
+			MES_close(MAURICE)
+			MOT(MAURICE,2,10)
+
+			MES(RAGNA,"啊，多謝……",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"（唔，他的服飾\n 好奇怪……）",0)
+			MES_close(PARTNER)
+
+		//丂丂儌乕儕僗偵丒丒丒僄儌乕僔儑儞丅
+			EMO(MAURICE,EMO_TENTEN)
+			wait(40)
+			MES(MAURICE,"還有……",0)
+			MES(MAURICE,"青春期的少女\n果然很難理解呢……",0)
+			MES_close(MAURICE)
+
+		//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"哎……？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("佀傾儖僂僃儞愭摢")
+				MES(PARTNER,"唔……？",0)
+				MES_close(PARTNER)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			MES(MAURICE,"不，沒什麼。",0)
+			MES(MAURICE,"啊哈哈…哈哈哈哈……",0)
+			MES_close(MAURICE)
+			F_set(FT_01_TalkMaurice)
+		}
+		else
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"實際上最近因為妻子出差，\n我把女兒領了過來……",0)
+				MES(MAURICE,"早上起來穿著短褲刷牙的時候，\n突然冷冷地對我說\n「我最討厭爸爸了」……",0)
+				MES_close(MAURICE)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"這真是典型……",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("佀傾儖僂僃儞愭摢")
+					MES(PARTNER,"……這可是你不對。",0)
+					MES_close(PARTNER)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				MES(MAURICE,"啊，我是想要道歉，\n可她都不肯見我。",0)
+				MES(MAURICE,"唉……\n這個年紀的女兒可真是不好對付……",0)
+				MES_close(MAURICE)
+
+			//丂丂仛儌乕儕僗亂偐偭偙埆偄亃
+				F_set_note(MAURICE,0)
+				F_set(MAURICE)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(MAURICE,"我…我在這裡\n也一直是一個人住。",0)
+				MES(MAURICE,"確實不是很明白\n女兒的心情……",0)
+				MES_close(MAURICE)
+
+			//丂丂儌乕儕僗丄岦偒傪栠偡丅
+				MES(MAURICE,"唉……\n哈蒂還在生氣嗎……",0)
+				MES_close(MAURICE)
+			}
+		}
+		//儌乕儕僗偲榖偟偨偙偲偑偁傞
+		F_set(FT_FF_TalkOkMaurice)
+		MOT(MAURICE,2,10)
+	}
+	TK_end()
+}
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧儌乕儕僗乮僊儍儔儞僪僁偺娰梡乯")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸儌乕儕僗偼丄僼儔僌嘇嘊嘍偱攝抲偟傑偡丅
+//丂丂丂摤媄応庴晅僼儘傾偺墶曈傝偱僗僩儗僢僠偟偰偄傞丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+TK_YAKATA_MAURICE
+{
+	TK_begin()
+	rot_chr(PLAYER1,30,MAURICE)
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴僼儔僌嘍偺斖埻
+	//丂丂仸僗僩儗僢僠塣摦傪偟偰偄傞丅
+	look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+	if(F2_14_TalkEnemy)
+	{
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"１?２、１?２……",0)
+			MES(MAURICE,"呼，最近呢\n我的臂力也逐漸變強了。",0)
+			MES(MAURICE,"咦，對了……\n我為什麼決定\n開始鍛鍊身體了呢。",0)
+			MES(MAURICE,"嗯～，不記得了。",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(MAURICE,"我為什麼決定\n開始鍛鍊身體呢？",0)
+			MES(MAURICE,"嗯～……",0)
+			MES(MAURICE,"算了，動機什麼的\n都無所謂。",0)
+			MES_close(MAURICE)
+		}
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴儌乕儕僗偲愴偭偨偙偲偑側偄応崌
+	else
+	if(GW_TRYNum_Maurice<=0)
+	{
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"喲，是你們啊……",0)
+			MES(MAURICE,"我最近也常來\n這座體育館。",0)
+			MES(MAURICE,"很…很不錯呢。\n居然可以\n現場指導肌肉鍛鍊……",0)
+			MES(MAURICE,"呵呵，我也要鍛鍊肌肉\n繼續變強呢～！",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(MAURICE,"呵呵，我也要鍛鍊肌肉，\n變得像老師\n一樣強呢～！",0)
+			MES_close(MAURICE)
+		}
+	}
+	else
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴儌乕儕僗偵彑偭偨偙偲偑偁傞応崌
+		if(FV_FF_WinMaurice)
+		{
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"哈…哈哈哈……\n你們果然很強呢。",0)
+				MES(MAURICE,"我的鍛鍊\n方法還是有問題吧……",0)
+				MES(MAURICE,"嗯，不過我可不\n打算就此放棄。",0)
+				MES(MAURICE,"我會繼續鍛鍊肌肉，\n今後一定會趕上你們的。",0)
+				MES_close(MAURICE)
+
+				F_set(MAURICE)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(MAURICE,"我可不打算\n就此放棄。",0)
+				MES(MAURICE,"我會繼續鍛鍊肌肉，\n今後一定會趕上你們的。",0)
+				MES(MAURICE,"我的精神永不屈……\n開…開玩笑啦。\n啊哈哈……",0)
+				MES_close(MAURICE)
+			}
+			F_set(FE_FF_TkWinMaurice)//仛娰撪儌乕儕僗丒彑棙屻夛榖偟偨
+		}
+		else
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴儌乕儕僗偵晧偗偨応崌
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"哈…哈哈哈……",0)
+				MES(MAURICE,"不好意思，看來\n這次是我贏了。",0)
+				MES(MAURICE,"不過在我看來\n你們也很強了。",0)
+				MES(MAURICE,"嗯，不要氣餒，\n繼續鍛鍊吧。",0)
+				MES_close(MAURICE)
+
+				F_set(MAURICE)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(MAURICE,"哈哈……\n其實我還是第一次\n打贏了別人呢。",0)
+				MES(MAURICE,"其實也有些\n興奮的感覺呢。",0)
+				MES_close(MAURICE)
+			}
+		}
+	}
+	look_off( MAURICE )
+
+	TK_end()
+}
+
+//夛榖帪偺儌乕僔儑儞
+MOTION_TK_MAURICE
+{
+	MOT_SET(MAURICE,150,-1,404,404,-1,-1)
+	MOT(MAURICE,150,15)
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

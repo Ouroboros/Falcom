@@ -1,0 +1,649 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僄儞僕僃乮儊僀僪偝傫俠乯Anje")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_ANJE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(ANJE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ANJE)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ANJE)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANJE)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANJE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANJE)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANJE)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ANJE)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘尯娭偱憒彍偟偰偄傞丅乮儂僂僉帩偪乯
+	if( F6_05_EndSixth )
+	{
+		rot_chr(ANJE,30,PLAYER1)
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+		EV("MOTION_TK_ANJE")
+		if(!FT_13_TalkAnje)
+		{
+			
+			MOT_SET(ANJE,151,-1,579,579,-1,15)		//1楃
+			MOT_SET(ANJE,152,-1,410,410,-1,-1)
+
+		//丂丂仸弶夞僀儀儞僩丅
+			MES(ANJE,"各位……",0)
+			MES(ANJE,"這段時間真是辛苦了。",0)
+			MES(ANJE,"託你們的福，鎮上\n也已經恢復了平靜。",0)
+			MES(ANJE,"——我也\n必須要向你們表達謝意。\n真的是非常感謝。",0)
+			MES_close(ANJE)
+
+		//丂丂僄儞僕僃丄寉偔堦楃偡傞丅
+			MOT(ANJE,151,15)
+			wait(20)
+			MOT(ANJE,150,15)
+			
+			MES(ANJE,"如果有機會的話，\n大小姐也希望你們\n隨時都過來玩。",0)
+			MES(ANJE,"我們會\n盡力款待各位的。",0)
+			MES_close(ANJE)
+
+			F_set(FT_13_TalkAnje)
+		}
+		else
+		{
+			if(!F_ANJE)
+			{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+				MES(ANJE,"有機會的話\n隨時都可以過來玩。",0)
+				MES(ANJE,"……對了，還有。",0)
+				MES(ANJE,"如果有空的話，\n還請到瓦倫斯的本家來一趟。",0)
+				MES(ANJE,"到那個時候，\n我一定會再長高些。",0)
+				MES_close(ANJE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哈…哈哈哈……",0)
+				MES_close(RAGNA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僼儔僌嘆偺捠忢儊僢僙乕僕傪暦偄偰偄傞応崌丅")
+				if(FT_01_AnjeTb)
+				{
+					MES(PET,"（還在拘泥於這種小事啊……）",0)
+					MES_close(PET)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+				F_set(ANJE)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(ANJE,"有機會的話\n隨時都可以過來玩。",0)
+				MES(ANJE,"……還有，如果有空的話，\n還請到瓦倫斯的本家來一趟。",0)
+				MES(ANJE,"到那個時候，\n我一定會再長高些。",0)
+				MES_close(ANJE)
+			}
+		}
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//憒彍拞
+		MOT(ANJE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘丒幏柋幒偱憢偺屗掲傝傪偟偰偄傞丅
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_TK_ANJE")
+		rot_chr(ANJE,30,PLAYER1)
+		if(!F_ANJE)
+		{
+			MES(ANJE,"我從小姐那裡\n聽說了事情的大概。",0)
+			MES(ANJE,"你們是打算去阻止那道\n恐怖的旋風吧。",0)
+			MES(ANJE,"……請多加小心。",0)
+			MES(ANJE,"我們也會盡微薄之力，\n為你們祈求成功的。",0)
+			MES_close(ANJE)
+			
+			F_set(ANJE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(ANJE,"請不用擔心我們。",0)
+			MES(ANJE,"這次我們也\n已經做好了心理準備。",0)
+			MES(ANJE,"……請多加小心。\n我們也會為你們\n祈求成功的。",0)
+			MES_close(ANJE)
+		}
+		MOT(ANJE,151,5)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥廻庰応慜偱丄儕僾僩儞偲榖偟偰偄傞丅
+	if( F5_00_HearLunar )
+	{
+		EV("MOTION_TK_ANJE")
+		rot_chr(ANJE,30,PLAYER1)
+		if(!F_ANJE)
+		{
+			MES(ANJE,"從前一段時間開始，不僅僅是郵件\n無法送達，就連收音機和\n通訊器材都失去信號了呢……",0)
+			MES(ANJE,"小姐她們看起來也很忙，\n伊魯巴特這裡果然\n發生了事件。",0)
+			MES(ANJE,"……可是這一位\n卻好像毫不知情。",0)
+			MES(ANJE,"這種時候還在無憂無慮地聊天……\n唉，真是讓人無話可說。",0)
+			MES_close(ANJE)
+			
+			F_set(ANJE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(ANJE,"我感覺伊魯巴特\n這裡一定發生了事件。",0)
+			MES(ANJE,"小姐她們也肯定\n正盡自己的努力\n為事情奔走。",0)
+			MES(ANJE,"可是這一位……",0)
+			MES(ANJE,"禮帽怎麼會這麼貴，\n真是的。",0)
+			MES_close(ANJE)
+		}
+		MOT(ANJE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘慜傪憒彍乮儂僂僉帩偪乯丅
+	if( F4_09_GoShrineMia)
+	{
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+		EV("MOTION_TK_ANJE")
+		rot_chr(ANJE,30,PLAYER1)
+		MES(ANJE,"哎呀，二位……",0)
+		MES(ANJE,"這麼早\n有什麼事嗎？",0)
+		MES(ANJE,"大家還\n都在休息……？",0)
+		MES_close(ANJE)
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//憒彍拞
+		MOT(ANJE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘丒峊偊幒偺戜強慜偵棫偮丅
+	if( F4_00_StartSolo )
+	{
+		if(!FT_07_TalkAnje && F4_02_GoVillage2)
+		{
+			MOT_SET(ANJE,151,-1,476,476,-1,15)		//偆傟偟偦偆側儌乕僔儑儞
+		//丂丂仸僼儔僌嘑亅俛丄僗僶儖偲崌棳屻偺夛榖偱偡丅
+		//丂丂仸弶夞僀儀儞僩
+		//丂丂僄儞僕僃丄僗僶儖偵岦偔丅
+			rot_chr(ANJE,30,PARTNER)
+			rot_chr(PARTNER,30,ANJE)
+		
+			MES(PARTNER,"啊，安傑……",0)
+			MES(PARTNER,"剛才真是多謝了。\n我們突然提出要借廚房一用……",0)
+			MES_close(PARTNER)
+
+		//	name2(ANJE)
+			MES(ANJE,"不必在意。",0)
+			MES(ANJE,"我也很少有機會\n製作日式料理……",0)
+			MES(ANJE,"剛好可以趁此機會\n參考一下昴小姐的手藝。",0)
+			MES_close(ANJE)
+
+		//丂丂僄儞僕僃丄峫偊傞慺怳傝丅
+			EV("MOTION_TK_ANJE")
+			//仛峫偊傞儌乕僔儑儞
+			
+			MES(ANJE,"而且我和昴小姐\n身高也很接近……",0)
+			MES(ANJE,"以後也請\n經常過來玩啊。",0)
+			MES_close(ANJE)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嘿嘿，那我有空\n就過來吧！",0)
+			MES_close(PARTNER)
+
+		//丂丂僄儞僕僃偵僉儔僉儔僄儌乕僔儑儞丅
+			MOT(ANJE,151,15)
+			EMO(ANJE,EMO_KIRAKIRA)
+			wait(30)
+			
+			MES(ANJE,"好的，我期待著您的來訪！",0)
+			MES_close(ANJE)
+			
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（唔—，她是真心地在高興呢……）",0)
+			MES_close(RAGNA)
+			//仛僄儞僕僃亂僗僶儖偲桭恖亃
+			F_set_note(ANJE,2)
+
+			F_set(FT_07_TalkAnje)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			EV("MOTION_TK_ANJE")
+			rot_chr(ANJE,30,PLAYER1)
+			if(!F_ANJE)
+			{
+				MES(ANJE,"雖然我很掛念\n精神消沈的海蓮娜……",0)
+				MES(ANJE,"可是大小姐的\n狀況更令人擔憂。",0)
+				MES(ANJE,"這幾天以來她一直在工作，\n就連夜間也沒有休息。",0)
+				MES(ANJE,"我也希望她能\n保重身體……",0)
+				MES_close(ANJE)
+				
+				F_set(ANJE)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+				MES(ANJE,"唉，我也希望\n大小姐能\n注意保重自己的身體……",0)
+				MES(ANJE,"可這並不是身為女傭的我\n該說的話。",0)
+				MES(ANJE,"我能做的只有\n沏上一壺好茶\n讓小姐品嚐了。",0)
+				MES_close(ANJE)
+			}
+		}
+		MOT(ANJE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F3_00_GoMoonCastle )
+	//丂丂仸栭儅僢僾丅
+	//丂丂仸壆晘峊偊幒偺擖傝岥晅嬤偵棫偭偰偄傞丅
+	{
+		EV("MOTION_TK_ANJE")
+		rot_chr(ANJE,30,RAGNA)
+		if(!F_ANJE)
+		{
+			MES(ANJE,"啊……",0)
+			MES(ANJE,"剛才真是太糟糕了。\n忽然不知從哪裡冒出了\n一大群怪物……",0)
+			MES(ANJE,"安娜牽著海蓮娜的手\n逃進了宅邸。",0)
+			MES(ANJE,"怪物就\n在她們身後緊追不捨……",0)
+			MES(ANJE,"門窗被鎖好之後，\n怪物仍然在\n房屋四週徘徊著。",0)
+			MES_close(ANJE)
+			
+			F_set(ANJE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		MES(ANJE,"還好，大小姐和克羅德先生\n一起把怪物趕走了……",0)
+		MES(ANJE,"可是海蓮娜似乎\n還是受了不小的驚嚇。",0)
+		MES(ANJE,"……這也難怪。\n連我都覺得很可怕呢……",0)
+		MES_close(ANJE)
+		}
+		rot(ANJE,30,350)
+		MOT(ANJE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F2_14_TalkEnemy )
+	//丂丂仸壆晘峊偊幒丄嵗偭偰挔曤婰擖偟偰偄傞丅
+	//丂丂丂婘偺忋偵偼僲乕僩傪峀偘偰偍偔丅
+	{	
+		look_chr(ANJE, PLAYER1,"Bone_Head")
+
+		if(!F_ANJE)
+		{
+			MES(ANJE,"安娜和海蓮娜\n都還沒有做好\n當女傭的心理準備呢。",0)
+			MES(ANJE,"小姐正在和別人談話的時候\n還這麼不安分……",0)
+			MES(ANJE,"這種時候我們女傭\n應該維持禮貌站在一旁。\n這都應該是常識了。",0)
+			MES(ANJE,"真是的……\n她們究竟有沒有身為\n瓦倫斯家女傭的自覺呢。",0)
+			MES_close(ANJE)
+			//仛僄儞僕僃亂儊僀僪偺屩傝亃
+			F_set_note(ANJE,1)
+
+			F_set(ANJE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(ANJE,"對了……",0)
+			MES(ANJE,"有一個戴草笠的人\n經常會來到\n阿魯特鎮。",0)
+			MES(ANJE,"……可能是推銷員吧。\n一定要去找他問問看\n有沒有能快速增長身高的藥……",0)
+			MES_close(ANJE)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"剛才是誰說\n要一直站在一旁\n來著……？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("佀傾儖僂僃儞愭摢")
+				MES(PARTNER,"你也不必擺出\n這麼一幅為難的表情啊……",0)
+				MES_close(PARTNER)
+			}
+			//仛僇儔僗亂朘栤斕攧丠亃
+			F_set_note(-60,0)
+		}
+		look_off(ANJE)
+
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸旘峴応丒岺朳僇僂儞僞乕偱儈儕傾儉偲榖偟偰偄傞丅
+	if( F2_00_GoForest )
+	{
+		EV("MOTION_TK_ANJE")
+		if(!F_ANJE)
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			MES(ANJE,"咦……\n我買的東西還沒有到嗎？",0)
+			MES(ANJE,"郵件耽擱了……\n是…是這樣嗎……",0)
+			MES(ANJE,"唉，我好不容易才買了\n據說能快速長高的營養劑……",0)
+			MES_close(ANJE)
+			
+		//丂丂俀恖偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（難…難道你\n 那麼想長高嗎……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"（能讓人快速長高的藥……？）",0)
+				MES(PARTNER,"（聽起來\n 總感覺很奇怪呀……）",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(ANJE)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			rot_chr(ANJE,50,PLAYER1)
+			MES(ANJE,"話說回來，這裡的\n櫃檯好高啊。",0)
+			MES_close(ANJE)
+
+			EMO(ANJE,EMO_AOSUZI)
+			wait(30)
+
+			MES(ANJE,"怎麼了？\n有什麼不滿嗎？",0)
+			MES_close(ANJE)
+
+		//丂丂俀恖偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+		}
+		MOT(ANJE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘丒幏柋幒偱怉栘偵悈尛傝傪偟偰偄傞丅
+	if( F1_15_GoVillage )
+	{
+		EV("MOTION_TK_ANJE")
+		rot_chr(ANJE,30,PLAYER1)
+		if(!F_ANJE)
+		{
+			MES(ANJE,"呼，今天清掃\n得也很乾淨。",0)
+			MES(ANJE,"果然做事十全十美\n心情也會好起來呢。",0)
+			MES(ANJE,"可是……\n安娜和海蓮娜\n都不把我當回事啊。",0)
+			MES(ANJE,"安娜整天偷懶，\n海蓮娜一直安靜不下來。",0)
+			MES(ANJE,"肯定是因為我身材矮小，\n她們才這麼小看我！",0)
+			MES_close(ANJE)
+			
+			F_set(ANJE)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(ANJE,"話說在前面，\n論輩分，我可是在安娜之上哦？",0)
+			MES(ANJE,"而且我才是女傭長。",0)
+			MES(ANJE,"可是那兩個人\n完全不聽我的話。",0)
+			MES(ANJE,"肯定是因為我身材矮小，\n她們才這麼小看我！",0)
+			MES_close(ANJE)
+		}
+		MOT(ANJE,2,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸壆晘丒峀娫偺庤慜偺曽傪憒彍偟偰偄傞丅
+	//丂丂乮儂僂僉帩偪乯
+	if( F1_01_GameStart )
+	{
+	//丂丂仸弶夞僀儀儞僩
+		if(!FT_01_TalkAnje)
+		{
+			//丂丂僄儞僕僃丄婥晅偒僄儌乕僔儑儞偱怳傝曉傞丅
+			EMO(ANJE,EMO_PA)
+			rot_chr(ANJE,30,PLAYER1)
+			look(ANJE,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+			wait(30)
+			
+			EV("MOTION_TK_ANJE")
+			MES(ANJE,"哎呀，歡迎光臨。",0)
+			MES(ANJE,"我叫安傑，\n是這間房屋中的\n女傭長。",0)
+			MES(ANJE,"非常抱歉，\n小姐現在\n並不在家。",0)
+//			MES_close(ANJE)
+//
+//		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//		//	name("佀儔僌僫愭摢")
+//			if(GW_MAN==1)
+//			{
+//				MES(RAGNA,"傊偊乧乧偍忟條偑\n庡恖傪傗偭偰傞壆晘側偺偐丠",0)
+//				MES_close(RAGNA)
+//			}
+//			else
+//		//	name("佀傾儖僂僃儞愭摢")
+//			{
+//				MES(PARTNER,"傎偆乧乧偙偺壆晘偼\n偳偙偧偺巕彈偺傕偺偺傛偆偩側丅",0)
+//				MES_close(PARTNER)
+//			}
+//		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//		
+////			MES(ANJE,"偊偊丄僼傿僆僫偍忟條偺\n暿憫偲側偭偰偍傝傑偡丅",0)
+//			MES(ANJE,"偊偊丄僼傿僆僫偍忟條偺\n暿憫偲側偭偰偍傝傑偡丅",0)
+//			MES(ANJE,"幐楃偱偡偑丄偍忟條偵\n屼梡偱偼側偐偭偨偺偱偡偐丠",0)
+
+			MES(ANJE,"大概到傍晚\n才會回來……",0)
+			MES_close(ANJE)
+
+			MES(RAGNA,"不，我們是來觀光的。",0)
+			MES(RAGNA,"只是順便走過來\n看一下而已。",0)
+			MES_close(RAGNA)
+
+		//	name2(ANJE)
+		//	MES(ANJE,"偦偆偱偟偨偐乧乧\n乮埆偄曽偱偼側偝偦偆偱偡偹乧乧乯",0)
+			MES(ANJE,"是這樣啊……",0)
+			MES(ANJE,"那麼，\n您可以在房屋內\n隨意觀光。",0)
+			MES(ANJE,"請慢慢享受。",0)
+			MES_close(ANJE)
+			MOT(ANJE,2,15)
+
+			F_set(FT_01_TalkAnje)
+		}
+		else
+		{
+			if(!F_ANJE)
+			{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			//丂丂僄儞僕僃偼怳傝曉傜側偄丅
+			//丂丂僄儞僕僃偵両僄儌乕僔儑儞丅
+				EMO(ANJE,EMO_BIKKURI)
+				wait(30)
+
+				MES(ANJE,"啊……",0)
+				MES_close(ANJE)
+
+			//丂丂僄儞僕僃丄慺憗偔怳傝曉傞丅
+				look(ANJE,"Bone_RightForeArm",0,	10,0,10,	0,0,0)//憒彍拞丒庤栠偟
+//				EV("MOTION_TK_ANJE")
+				MOT_SET(ANJE,150,-1,410,410,-1,-1)
+				MOT(ANJE,150,10)
+				rot_chr(ANJE,80,PLAYER1)
+
+				MES(ANJE,"剛才你們覺得我很矮對吧？",0)
+				MES(ANJE,"覺得我是\n一個小個子女傭對吧？",0)
+				MES_close(ANJE)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"沒…沒有啊……？",0)
+					MES_close(RAGNA)
+				}
+			//	name("佀傾儖僂僃儞愭摢")
+				else
+				{
+					MES(PARTNER,"沒…沒有啊……？",0)
+					MES_close(PARTNER)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+				MES(ANJE,"是…是嗎？\n那真是失敬了。",0)
+				MES(ANJE,"請不要在意。",0)
+				MES_close(ANJE)
+				MOT(ANJE,2,15)
+				//仛僄儞僕僃亂攚偑掅偄亃
+				F_set_note(ANJE,0)
+
+				rot(ANJE,30,252)
+				F_set(ANJE)
+			}
+			else
+			{
+				rot_chr(ANJE,30,PLAYER1)
+				look(ANJE,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+				EV("MOTION_TK_ANJE")
+			//丂丂仛孞傝曉偟
+				MES(ANJE,"……你們真的沒有\n覺得我很矮嗎？",0)
+				MES(ANJE,"沒有想著「矮個子」\n或者「迷你尺寸」嗎？",0)
+				MES(ANJE,"嗯，沒想就好。",0)
+				MES_close(ANJE)
+
+			//丂丂俀恖偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+			
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（她那麼在意嗎……？）",0)
+					MES_close(RAGNA)
+				}
+			//	name("佀傾儖僂僃儞愭摢")
+				else
+				{
+					MES(PARTNER,"（看起來相當\n 在意啊……）",0)
+					MES_close(PARTNER)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+			//	仴嘆捠忢夛榖丒恎挿傪婥偵偡傞僄儞僕僃
+				if(!FT_01_AnjeTb)
+				{
+					F_set(FT_01_AnjeTb)
+				}
+			}
+		look(ANJE,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//憒彍拞
+		}
+	}
+	
+	TK_end()
+}
+
+MOTION_TK_ANJE
+{
+	MOT_SET(ANJE,150,-1,410,410,-1,-1)
+	MOT(ANJE,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

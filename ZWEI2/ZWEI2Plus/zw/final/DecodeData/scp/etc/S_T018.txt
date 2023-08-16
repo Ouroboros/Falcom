@@ -1,0 +1,509 @@
+//──────────────────────────────
+//	name("●克罗德")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_KLODE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(KLODE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,KLODE)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,KLODE)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KLODE)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KLODE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KLODE)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KLODE)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,KLODE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		//──────────────────────────────
+		//▼フラグ□（梅尔塞迪克に乗り込む）
+		//──────────────────────────────
+		//　　克罗德と共に飞机场之瓦伦斯家之飛行机之前にいる。
+		//　　こ之段階ではまだドレス姿之まま。
+		//──────────────────────────────
+		//	name("★初回（克罗德と共通／１回之み／イベント処理）")
+		if(!FM_12_TalkFioKlo)
+		{
+			EV("TALK_FIOKLO_12")
+			wait_EV("TALK_FIOKLO_12")
+		}
+		//	name("★以後，繰り返し")
+		else
+		{
+			rot_chr(KLODE,30,PLAYER1)
+			if(!F_KLODE)
+			{
+			//	name("★２回目")
+				MES(KLODE,"单从说明来看\n这个《俄瓦伦号》的\n性能比较突出……",0)
+				MES(KLODE,"不过在那个巨大的龙卷风面前\n些许性能上的差异并不能起决定性的作用。",0)
+				MES(KLODE,"果然还是要靠我们\n4个机体的并肩合力才能成功。",0)
+				MES_close(KLODE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"啊，我和你的看法一样。",0)
+				MES(RAGNA,"拜托了，管家先生。",0)
+				MES_close(RAGNA)
+
+			//	name2(KLODE)
+				MES(KLODE,"能让在下略尽微薄之力实在是荣幸。",0)
+				MES_close(KLODE)
+				F_set(KLODE)
+			}
+			else
+			{
+			//	name("★以後，繰り返し")
+				MES(KLODE,"当务之急是先要\n突破那个龙卷风。",0)
+				MES(KLODE,"做好万全的准备\n作战才能成功。",0)
+				MES_close(KLODE)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//────────────────────────────
+		//▽水晶祭坛を起動した
+		//　　水晶祭坛で菲欧娜たちを見守っている。
+		//─────────────────────
+		if( F5_06_RunCrystal )
+		{
+			rot_chr(KLODE,30,PLAYER1)
+			//──────────────────────────────
+			//	name("□奥迪莎が仲間になっていない")
+			//──────────────────────────────
+			if(!F5_08_JoinOdessa)
+			{
+				MES(KLODE,"拉古那，这里\n就交给我们吧。",0)
+				MES(KLODE,"祝您一路顺风。",0)
+				MES_close(KLODE)
+			}
+			//──────────────────────────────
+			//▽奥迪莎が仲間になった
+			//──────────────────────────────
+			else
+			{
+				if(!F5_13_KillDygald)
+				{
+					if(!F_KLODE)
+					{
+						rot_chr(KLODE,30,PARTNER)
+						MES(KLODE,"您就是……\n奥迪莎吗。",0)
+						MES(KLODE,"请一定多多\n帮助拉古那阁下。",0)
+						MES_close(KLODE)
+
+						rot_chr(PARTNER,30,KLODE)
+					//	name2(PARTNER)
+						MES(PARTNER,"啊，交给我吧。",0)
+						MES_close(PARTNER)
+					}
+					else
+					{
+						rot_chr(KLODE,30,PLAYER1)
+						MES(KLODE,"祝二位一路顺风。",0)
+						MES_close(KLODE)
+					}
+					
+					F_set(KLODE)
+				}
+				//	name("□帝嘉鲁德を倒した")
+				else
+				{
+					rot_chr(KLODE,30,PLAYER1)
+					MES(KLODE,"小姐她们那边也已经\n快接近极限了……",0)
+					MES(KLODE,"拉古那，请快一点。",0)
+					MES_close(KLODE)
+				}
+			}
+		}
+		//◆菲欧娜に事情を話すイベント？
+		/*
+		else
+		if(!F5_05_OfferFiona)
+		{
+			//未入力
+		}
+		*/
+		//──────────────────────────────
+		//▽菲欧娜たちに事情を話した
+		//──────────────────────────────
+		else
+		{
+			rot_chr(KLODE,30,PLAYER1)
+			if(!F_KLODE)
+			{
+			//	name("★１回目")
+				MES(KLODE,"不过，吉斯卡鲁公\n真的是一位了不起的人物。",0)
+				MES(KLODE,"虽身为魔族的一份子\n不仅打败了\n暴虐无道的魔王……",0)
+				MES(KLODE,"而且为了封印那强大无比的魔力\n精心设置了这样的装置。",0)
+				MES_close(KLODE)
+
+				F_set(KLODE)
+			}
+			else
+			{
+			//	name("★以後，繰り返し")
+				MES(KLODE,"吉斯卡鲁公的名字\n似乎在瓦伦斯家族的传承中\n也留有记载。",0)
+				MES(KLODE,"虽然是魔族中人但他是一位高洁且\n值得信赖的人物……",0)
+				MES(KLODE,"看来艾尔雯\n和令尊非常的相似。",0)
+				MES_close(KLODE)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		//──────────────────────────────
+		//▽昴が仲間になった
+		//──────────────────────────────
+		//　　菲欧娜は机に，克罗德は書棚前にいて離れている。
+		//──────────────────────────────
+		//	name("★初回（一回之み／イベント処理）")
+		//　　話しかけるとキャラ再配置してイベント発生。
+		if(!FM_07_TalkKlode)
+		{
+			cross_fade(30)
+			EV_begin()
+			//カメラセット
+			CAM_move(-1876,711,-4,0,0)
+			CAM(70,100,-4,31,247,0,0)
+			
+			//キャラ位置セット
+			chr_pos(RAGNA,	-1228,-528,1,79,2)
+			chr_pos(PARTNER,-1234,-358,1,119,2)
+			chr_pos(KLODE,-1575,-519,1,270,53)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(KLODE,"1", "1", "1")	
+			
+			wait_fade()
+
+			KAO(KLODE,"B232BZ4","1","B")
+			MES(KLODE,"拉古那……\n请恕我冒昧，有件事想请教一下。",0)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"是关于那个叫艾克斯玛绮娜的\n少女魔术师的事情。",0)
+			MES_close(KLODE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"……啊………",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"克，克罗德……！",0)
+			MES_close(PARTNER)
+
+		//	name2(KLODE)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"抱歉，严格来说我想知道的不是那个少女的事\n而是镶嵌在她魔杖上的\n《虹之宝玉》的事情。",0)
+			MES_close(KLODE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊啊……\n就是上次提到的那个被偷的东西。",0)
+			MES_close(RAGNA)
+
+		//	name2(KLODE)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"是的，那原本是我家小姐\n为了消灭吸血鬼\n而托人取来的东西。",0)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"然而，就在布库尔先生\n送来后的第三天傍晚，\n被什么人偷走了。",0)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"我想，极有可能是那个叫做特尔米多鲁的\n魔族之人偷走的。",0)
+			MES_close(KLODE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"……是那家伙………",0)
+			MES_close(RAGNA)
+
+		//	name2(KLODE)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"嗯，听说他在镇上\n滞留了半个多月……",0)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"打着寻找作诗题材的幌子\n曾几次拜访这里。",0)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"大概，他是在寻找\n盗取宝玉的时机吧。",0)
+			MES_close(KLODE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"……原来如此。",0)
+			MES(RAGNA,"不过，是他把偷出来的宝玉\n交给那个女孩的吗。",0)
+			MES_close(RAGNA)
+
+		//	name2(KLODE)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"嗯，我等\n是如此推测的。",0)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"不过，《彩虹宝玉》是\n受到女神加护的神器……",0)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"从其本质上来讲，魔族之人\n是不能随心所欲使用的。",0)
+			KAO(KLODE,"B232BZ6","1","B")
+			MES(KLODE,"究竟为什么，那个女孩\n能运用自如呢……",0)
+			MES_close(KLODE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"………………………………",0)
+			MES(RAGNA,"哈哈，这种事情\n我怎么会知道。",0)
+			MES(RAGNA,"我只是个宝物猎人罢了\n对魔法可是一窍不通，不是吗？",0)
+			MES_close(RAGNA)
+
+		//	name2(KLODE)
+			KAO(KLODE,"B232BZ2","1","B")
+			MES(KLODE,"但是……",0)
+			MES_close(KLODE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"不好意思，不要再说这件事情了。",0)
+			MES(RAGNA,"如果你想问的话……\n去找公主或者魔女婆婆吧。",0)
+			MES(RAGNA,"比问我强多了\n也许他们能给你一些帮助。",0)
+			MES_close(RAGNA)
+
+			rot_chr(PARTNER,30,RAGNA)
+		//	name2(PARTNER)
+			MES(PARTNER,"拉古那师父……",0)
+			MES_close(PARTNER)
+
+		//	name2(KLODE)
+			KAO(KLODE,"B232BZ5","3","B")
+			MES(KLODE,"……看来我再问下去\n也于事无补。",0)
+			KAO(KLODE,"B232BZ5","1","B")
+			MES(KLODE,"耽误了您的时间\n十分抱歉。",0)
+			MES_close(KLODE)
+
+			
+			fade_in(100,30,BLACK)
+			wait_fade()
+			//カメラを初期設定に
+			CAM_return( 0 )
+			F_set(FM_07_TalkKlode)
+			//★特尔米多鲁【虹之宝玉】
+			F_set_note(-27,1)
+			
+			EV_end()
+			fade_in(0,30,BLACK)
+		}
+	//	name("★以後，繰り返し")
+		else
+		{
+			rot_chr(KLODE,30,PLAYER1)
+			MES(KLODE,"看来我再问下去\n也于事无补。",0)
+			MES(KLODE,"耽误了您的时间\n十分抱歉。",0)
+			MES_close(KLODE)
+
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		look_chr( KLODE, PARTNER,"Bone_Head")
+		//──────────────────────────────
+		//▼フラグ⑥（夜·罗亚鲁塔村襲撃直後）
+		//──────────────────────────────
+		//　　罗亚鲁塔村之広场にいる。（甲冑姿）
+		//　　倒れた村人を介抱しているような動作。
+		//──────────────────────────────
+		if(!F3_02_InMoonCastle)
+		{
+			MES(KLODE,"吸血鬼扎哈鲁……\n似乎是个非常令人恐惧的对手。",0)
+			MES(KLODE,"请千万小心。",0)
+			MES_close(KLODE)
+			
+			F_set(KLODE)
+		}
+		//──────────────────────────────
+		//▽城之玄関広間に入った
+		//──────────────────────────────
+		//　　罗亚鲁塔村之広场にいる。（甲冑姿）
+		//　　倒れた村人を介抱しているような動作。
+		//──────────────────────────────
+		else
+		{
+			MES(KLODE,"嗯，病情虽然稳定了，\n但也不能就这样撒手不管……",0)
+			MES(KLODE,"即使要赶往城里\n也应该留下人来照顾他们才好。",0)
+			MES_close(KLODE)
+		}
+		look_off(KLODE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵之正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+	//▼フラグ③（金暗之森へ向かう）
+	//　　屋敷之執務室に克罗德と共にいる。
+		if(!FM_03_TalkFioKlo)
+		{
+			EV("TALK_FIOKLO_03")
+			wait_EV("TALK_FIOKLO_03")
+		}
+		else
+		{
+			//	name("★２回目（一回之み／イベント処理）")
+			//　　拉古那之方を向いて以下之メッセ～ジ。
+			if(!FM_03_TalkKlode)
+			{
+				rot_chr(KLODE,30,RAGNA)
+				MES(KLODE,"……嗯嗯。",0)
+				MES_close(KLODE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"怎，怎么了？",0)
+				MES_close(RAGNA)
+
+			//	name2(KLODE)
+				MES(KLODE,"没什么，我只是觉得\n您使用的武器\n很少见。",0)
+				MES(KLODE,"名字是叫『锚剑』吧。",0)
+				MES_close(KLODE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"是的，你很内行啊。",0)
+				MES(RAGNA,"即使是在宝物猎人当中\n使用这武器的也很少。",0)
+				MES_close(RAGNA)
+
+			//	name2(KLODE)
+				MES(KLODE,"虽然难以上手\n但只要熟练的话就能应付任何情况\n有万能武器之称。",0)
+				MES(KLODE,"看来，您的\n武艺很高超啊。",0)
+				MES_close(KLODE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哈哈，其实我还在修行之中啦。",0)
+				MES(RAGNA,"不过话说回来管家先生\n你究竟是干什么的？",0)
+				MES(RAGNA,"对这方面似乎很了解。",0)
+				MES_close(RAGNA)
+
+			//	name2(KLODE)
+				MES(KLODE,"呵呵，我平时喜欢看一些闲书\n这是闲暇之时的兴趣。",0)
+				MES(KLODE,"那件武器\n不过偶然得知而已。",0)
+				MES_close(KLODE)
+				
+				F_set(FM_03_TalkKlode)
+			}
+			else
+			{
+				rot_chr(KLODE,30,PLAYER1)
+			//	name("★以後，繰り返し")
+				MES(KLODE,"拉古那先生，艾尔雯小姐。",0)
+				MES(KLODE,"如果二位有何需要，请不要客气\n尽管吩咐下人去做。",0)
+				MES_close(KLODE)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

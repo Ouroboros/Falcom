@@ -1,0 +1,515 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僋儔乕僋乮將乯")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸儕僾僩儞偑帞偭偰偄傞將偱偡丅
+//丂丂仸僜儘儌儞儕儞僌憰旛帪偺傒儊僢僙乕僕傪昞帵丅
+//丂丂丂偦傟埲奜偼怳傝岦偄偰媰偒惡俽俤傪柭傜偡偩偗丅
+//丂丂仸儊僢僙乕僕偼慡偰怓姺偊乮惵乯偲偟傑偡丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_DOG
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(DOG, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,DOG)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,DOG)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,DOG)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,DOG)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,DOG)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,DOG)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,DOG)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僜儘儌儞儕儞僌憰旛帪偼堦斒儊僢僙乕僕
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(EQ092)
+	{
+		chr_rename(DOG,"克拉克")
+		F_set(FV_FF_NameCrac)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘗僄儞僨傿儞僌捈慜
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸戝摴寍恖偺慜偵偄傞丅
+		//丂丂仸僼儔僌嘗偱偼丄憰旛偺桳柍偱偼側偔丄
+		//丂丂丂僜儘儌儞儕儞僌傪強桳偟偰偄傞偐偱敾掕丅
+		if( F6_05_EndSixth )
+		{
+			if(!F_DOG)
+			{
+				rot_chr(DOG,30,PLAYER1)
+			//	name("僋儔乕僋")
+				MES(DOG,"C4上一次我偷偷溜走\n到了一直憧憬的大姐姐那裡。",0)
+				MES(DOG,"C4可是\n有一隻小貓先到了。\n就是那隻小咪。",0)
+				MES(DOG,"C4而且還被大姐姐抱著，\n在她的腿上睡得很舒服……",0)
+				MES(DOG,"C4嗚嗚，為什麼……\n她甚至都沒有\n摸過我的頭呢……",0)
+				MES_close(DOG)
+
+				F_set(DOG)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				rot_chr(DOG,30,PLAYER1)
+				MES(DOG,"C4嗚嗚，我才知道……\n大姐姐居然是喜歡貓的……",0)
+				MES(DOG,"C4我的……我的愛情\n已經到此為止了。",0)
+				rot(DOG,20,191)
+				MES(DOG,"C4永別了……\n我的心將與\n古老的戀情一同逝去……",0)
+				MES_close(DOG)
+
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+			}
+		}
+		else
+		if(F5_00_HearLunar && FV_11_Warasi_4_Bns && !FV_11_Warasi_5_Han && !FV_11_Warasi_Fake)
+		{
+			rot_chr(DOG,30,PLAYER1)
+			if(!F_DOG)
+			{
+			//	name("佀弶夞")
+			//丂丂僋儔乕僋偵俹俙僄儌乕僔儑儞丅
+				EMO(DOG,EMO_PA)
+			//	name("僋儔乕僋")
+				MES(DOG,"C4哦，那寵物罐頭是……",0)
+				MES(DOG,"C4多…多麼好聞的氣味……！\n如果把它送給大姐姐的話\n她也一定會喜歡的……",0)
+				MES(DOG,"C4嗯，這樣就可以\n牢牢捉住她的心了！",0)
+				MES(DOG,"C4請把\n「謎之寵物罐頭」\n送給我吧！",0)
+			 	MES_close(DOG)
+			 	
+			}
+			else
+			{
+			//	name("佀俀夞栚埲崀丅")
+				MES(DOG,"C4我無論如何都想得到\n「謎之寵物罐頭」。",0)
+				MES(DOG,"C4為了獲得\n大姐姐的芳心，\n請你把它送給我吧！",0)
+				MES_close(DOG)
+			}
+			
+		//	name("慖戰僥僉僗僩")
+			workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【好吧】\n【不給】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀亂偄偄傛亃")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(WK_YESNO==1)
+			{
+			//	name("僋儔乕僋")
+				MES(DOG,"真的嗎……？\n真的可以嗎？",0)
+			 	MES_close(DOG)
+				
+			//	name("慖戰僥僉僗僩")
+				workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+				MES_pos(PLAYER1,"??W9【當然】\n【還是算了】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀亂傕偪傠傫亃")
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				if(WK_YESNO==1)
+				{
+				//	name("僋儔乕僋")
+					MES(DOG,"C4多…多謝。\n你們太偉大了。",0)
+					MES(DOG,"C4我要把這個寵物罐頭\n命名為機密約會必勝武器，\n妥善地保管起來！",0)
+					MES(DOG,"C4收下這個，\n就當作我的回禮吧！",0)
+					MES(DOG,"C4這是我從以前撿的\n錢包裡找到的！",0)
+				 	MES_close(DOG)
+
+				//	name("傾僀僥儉擖庤僥僉僗僩")
+					fade_in(30,10,BLACK)
+					SE(24,0)	//偍嬥偺壒偩偲枴婥側偄偺偱偙傟偱乮抾乯
+					MES(0,"C3S2得到了４０００芬尼。",2)
+					MES_close(0)
+					fade_in(0,10,BLACK)
+					wait_fade()
+
+					//3000儁儞僱擖庤
+					get_gold(4000,PLAYER1)
+					
+					//撲偺儁僢僩僼乕僪徚柵
+					get_item(146,-1,1)
+
+				//	name("僋儔乕僋")
+					MES(DOG,"C4謝謝…謝謝。",0)
+					MES(DOG,"C4我一輩子\n都不會忘記這份恩德！",0)
+					MES_close(DOG)
+
+				//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+					EMO(RAGNA,EMO_HIYAASE)
+					EMO(PET,EMO_HIYAASE)
+					//傾儖僂僃儞偑嫃傞
+					if(F6_00_GoToMeru)
+					{
+						EMO(PARTNER,EMO_HIYAASE)
+					}
+					else
+					//僆僨僢僒偑嫃傞
+					if(F5_08_JoinOdessa && !F5_13_KillDygald)
+					{
+						EMO(PARTNER,EMO_HIYAASE)
+					}
+					wait(30)
+
+					MES(PET,"會…會不會太誇張啊……",0)
+					MES_close(PET)
+					
+					//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+					if(GW_MAN==0 && F6_00_GoToMeru)
+					{
+					//	name("佀傾儖僂僃儞愭摢")
+						MES(PARTNER,"唔……\n結果還是不知道\n那究竟是什麼寵物罐頭……",0)
+						MES_close(PARTNER)
+					}
+					else
+					{
+					//	name("佀偦傟埲奜")
+						MES(RAGNA,"唉……\n結果還是沒弄清楚\n那寵物罐頭是什麼……",0)
+						MES_close(RAGNA)
+					}
+					//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+					F_set(FV_11_Warasi_Fake)
+				 	F_reset(DOG)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀亂傗偭傁僟儊亃")
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				else
+				{
+				//	name("僋儔乕僋")
+					MES(DOG,"C4這…這樣啊……",0)
+					MES(DOG,"C4同意以後又被拒絕，\n就像愛情一樣……",0)
+					MES_close(DOG)
+
+				//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+					EMO(RAGNA,EMO_HIYAASE)
+					EMO(PET,EMO_HIYAASE)
+					//傾儖僂僃儞偑嫃傞
+					if(F6_00_GoToMeru)
+					{
+						EMO(PARTNER,EMO_HIYAASE)
+					}
+					else
+					//僆僨僢僒偑嫃傞
+					if(F5_08_JoinOdessa && !F5_13_KillDygald)
+					{
+						EMO(PARTNER,EMO_HIYAASE)
+					}
+					
+					//2008.08.12.崻揷堏摦
+		 			F_set(DOG)
+
+					wait(30)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀亂搉偣側偄亃")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			{
+			//	name("僋儔乕僋")
+				MES(DOG,"C4這…這樣啊。\n真是遺憾……",0)
+				MES_close(DOG)
+
+				//2008.08.12.崻揷堏摦
+		 		F_set(DOG)
+
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			//2008.08.12.崻揷堏摦
+		 	//F_set(DOG)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸戝摴寍恖僗僥乕僕慜丄儕僾僩儞偺朤偱偆傠偆傠偟偰偄傞丅
+		if( F6_00_GoToMeru )
+		{
+			rot_chr(DOG,30,PLAYER1)
+			if(!F_DOG)
+			{
+			//	name("僋儔乕僋")
+				MES(DOG,"C4啊，大姐姐\n到哪裡去了！",0)
+				MES(DOG,"C4我可不想聽那種\n無聊的演說！",0)
+				MES_close(DOG)
+				
+				F_set(DOG)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("僋儔乕僋")
+				MES(DOG,"C4啊，怎麼會這樣。\n我的大姐姐\n竟然不在了……",0)
+				MES(DOG,"C4我的思念\n還沒能傳達給她呢！",0)
+				MES_close(DOG)
+			}
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸廻庰応慜偺儕僾僩儞偺朤丅
+		//丂丂仸怳傝曉傜側偄
+		if( F5_00_HearLunar )
+		{
+			rot(DOG,30,195)
+			if(!F_DOG)
+			{
+			//	name("僋儔乕僋")
+				MES(DOG,"C4居然和那麼年輕的女孩子對話……",0)
+				MES(DOG,"C4利普頓先生難道見異思遷了！？",0)
+				MES(DOG,"C4怎麼會……令人難以置信。\n骯髒！太骯髒了！",0)
+				MES(DOG,"C4我…我可沒有\n見異思遷哦！？",0)
+				MES_close(DOG)
+				
+				F_set(DOG)
+			}
+		//丂丂仛孞傝曉偟
+		//丂丂仸怳傝曉傜側偄
+			else
+			{
+			//	name("僋儔乕僋")
+				MES(DOG,"C4利普頓先生真是骯髒！",0)
+				MES(DOG,"C4我沒有見異思遷啊！",0)
+				MES_close(DOG)
+			}
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仸柍偟
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仸柍偟
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仸柍偟
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸柉壠侾乣廻庰応嵍曈傝偵偐偗偰丄儕僾僩儞偵嶶曕偝傟偰偄傞丅
+		//丂丂仸怳傝曉傜側偄
+		//	name("僋儔乕僋")
+		if( F4_00_StartSolo )
+		{
+			F_set_chr(RYPTON,CF_NO_MOVE)
+			if(!F_DOG)
+			{
+			//	name("僋儔乕僋")
+				MES(DOG,"C4利普頓先生，\n不是這邊。",0)
+				MES(DOG,"C4請把我帶到\n大姐姐那裡去！",0)
+				MES_close(DOG)
+				
+				F_set(DOG)
+			}
+		//丂丂仛孞傝曉偟
+		//丂丂仸怳傝曉傜側偄
+		//	name("僋儔乕僋")
+			else
+			{
+				MES(DOG,"C4對我來說，\n散步什麼的根本就無所謂。",0)
+				MES(DOG,"C4快點把我帶到\n大姐姐那裡去！",0)
+				MES_close(DOG)
+			}
+			F_reset_chr(RYPTON,CF_NO_MOVE)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸偄側偄丅
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸柉壠侾偺拞傪僼儕乕儉乕僽偟偰偄傞丅
+		if( F2_14_TalkEnemy )
+		{
+			rot_chr(DOG,30,PLAYER1)
+			if(!F_DOG)
+			{
+			//	name("僋儔乕僋")
+				MES(DOG,"C4啊，有沒有什麼辦法\n可以把我的心意傳達給大姐姐呢。",0)
+				MES(DOG,"C4每天都去看她。\n把我珍藏的骨頭送給她。",0)
+				MES(DOG,"C4對了，下次邀請她一起散步吧。",0)
+				MES(DOG,"C4令人興奮……\n啊，完全無法平靜下來……",0)
+				MES_close(DOG)
+				
+				F_set(DOG)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	name("僋儔乕僋")
+				MES(DOG,"C4啊，一想到那位大姐姐\n就靜不下心來了……",0)
+				MES(DOG,"C4我的胸口\n就想要破裂一般！",0)
+				MES_close(DOG)
+			}
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘋墛偺僷乕僣傪擖庤偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仸柍偟
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸柉壠侾乣廻庰応嵍曈傝偵偐偗偰丄儕僾僩儞偵嶶曕偝傟偰偄傞丅
+		if( F2_00_GoForest )
+		{
+			F_set_chr(RYPTON,CF_NO_MOVE)
+			if(!F_DOG)
+			{
+				rot_chr(DOG,30,PLAYER1)
+				//	name("僋儔乕僋")
+				MES(DOG,"C4大姐姐是雲游四方的雜耍演員……\n當大姐姐來到這座城鎮的時候，\n我們邂逅了。",0)
+				MES(DOG,"C4一個月以前……大姐姐\n對我問好了。",0)
+				MES(DOG,"C4兩週以前……大姐姐\n向我微笑了。",0)
+				MES(DOG,"C4然後昨天，大姐姐\n終於叫出了我的名字！",0)
+				MES(DOG,"C4啊，我……我真是幸福……",0)
+				MES_close(DOG)
+				
+				F_set(DOG)
+			}
+		//丂丂仛孞傝曉偟
+		//丂丂仸怳傝曉傜側偄
+			else
+			{
+			//	name("僋儔乕僋")
+				MES(DOG,"C4呵呵……\n大姐姐是我一個人的……",0)
+				MES_close(DOG)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀傾儖僂僃儞愭摢")
+				if(GW_MAN==0)
+				{
+					MES(PARTNER,"（唔，這就是所謂\n 愛情會讓人喪失理智吧……）",0)
+					MES_close(PARTNER)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+			F_reset_chr(RYPTON,CF_NO_MOVE)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸戝摴寍恖偺慜偱丄惙傫偵怟旜傪怳偭偰偄傞丅
+		//丂丂仸怳傝曉傜側偄丅
+		if( F1_15_GoVillage )
+		{
+			rot(DOG,30,199)
+			if(!F_DOG)
+			{
+			//	name("僋儔乕僋")
+				MES(DOG,"C4我喜歡大姐姐！",0)
+				MES(DOG,"C4請和我結婚吧！",0)
+				MES_close(DOG)
+				
+				//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（很直接啊……）",0)
+					MES_close(RAGNA)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+				F_set(DOG)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//丂丂仸怳傝曉傜側偄丅
+			//	name("僋儔乕僋")s
+				MES(DOG,"C4啊，多麼漂亮的人啊。",0)
+				MES(DOG,"C4如果是為了你，\n我不惜獻出自己的生命！",0)
+				MES_close(DOG)
+			}
+		}
+	}
+	else
+	{
+		//將偺柭偒惡
+		SE(30,DOG)
+	}
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,789 @@
+//■Zwei2一般メッセージ·阿鲁迪亚镇（※莫里斯）
+//────────────────────────────────────────────────────────────
+//■阿鲁迪亚
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆莫里斯（運動中之人）Maurice")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_MAURICE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(MAURICE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,MAURICE)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,MAURICE)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,MAURICE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※スーツ姿、噴水左側之ベンチに座る。
+	if( F6_05_EndSixth )
+	{
+		look_chr( MAURICE, PLAYER1,"Bone_Head")
+		//モーション
+		MOT_SET(MAURICE,151,-1,561,561,-1,-1)		//莫里斯が座ってる
+		MOT(MAURICE,151,10)
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"哦，你们好……",0)
+			MES(MAURICE,"虽然不知道怎么回事，\n不过女儿的心情好像恢复了。",0)
+			MES(MAURICE,"今天还问我要不要\n悠闲地去野餐呢。",0)
+			MES_close(MAURICE)
+
+		//　　莫里斯にＰＡエモーション。
+			EMO(MAURICE,EMO_PA)
+			wait(30)
+
+			MES(MAURICE,"啊，说起来……\n你们知道吗？",0)
+			MES(MAURICE,"我之前曾经慢跑到\n水晶峡谷去。",0)
+			MES(MAURICE,"却听到『不要过来喵！』\n之类的声音，\n被赶回来了。",0)
+			MES_close(MAURICE)
+
+			MOT(MAURICE,150,10)
+		//　　拉古那たちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（那个声音是……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+				MES(PARTNER,"（说到那个声音的话……）",0)
+				MES_close(PARTNER)
+			}
+
+			MOT(MAURICE,151,10)
+			MES(MAURICE,"嗯，虽然不太清楚……\n不过好像还是别靠近为好。",0)
+			MES(MAURICE,"今天的野餐\n也到别的地方去吧。",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MAURICE,"到水晶峡谷去的话，\n就会听到『不要过来喵！』之类的声音，\n被赶回来呢。",0)
+			MES(MAURICE,"嗯，虽然不太清楚……\n不过这是和女儿的难得的野餐呢。",0)
+			MES(MAURICE,"今天就依哈提，\n在罗亚鲁塔村\n悠闲地度过吧。",0)
+			MES_close(MAURICE)
+		}
+		MOT(MAURICE,150,10)
+		look_off( MAURICE )
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		F_set_note(-54,-1)
+		if(!F_MAURICE)
+		{
+			if(!FT_12_TalkMaurice && FT_FF_TalkOkMaurice)
+			{
+			//──────────────────────────────
+			//	name("□今までに莫里斯と話した事がある场合、１回だけ挿入。")
+			//　　２人に？エモーション。
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（咦，这个人……）",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"（唔，穿起西装了吗……）",0)
+					MES_close(PARTNER)
+				}
+				else
+			//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"（这个男人……）",0)
+					MES_close(PARTNER)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（西装版……？）",0)
+					MES_close(RAGNA)
+				}
+			//──────────────────────────────
+			}
+			MES(MAURICE,"呃，各位。\n……嗯，都在吧。",0)
+			MES(MAURICE,"关于那个龙卷的影响，\n菲奥娜小姐给出了\n如下的情报……",0)
+			MES(MAURICE,"首先，呃，街上可能\n突然刮起暴风，要做好万全准备……",0)
+			MES_close(MAURICE)
+
+			//★莫里斯【镇长】
+			F_set_note(-54,2)
+			
+			F_set(MAURICE)
+			F_set(FT_12_TalkMaurice)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない。
+			MES(MAURICE,"呃，由于其影响，\n将无法与外界连络……",0)
+			MES(MAURICE,"那个，大家不要慌，\n要镇定，呃……",0)
+			MES_close(MAURICE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※教会、懺悔室にいる。
+	//　　　初回はシスター之イベントが起動する。
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+	if( F5_00_HearLunar )
+	{
+		if(!F_MAURICE)
+		{
+			look(MAURICE,"Bone_Head",0,		0,0,3,			0,0,0)
+			wait(5)
+			look_chr( MAURICE, PLAYER1,"Bone_Head")
+
+			MES(MAURICE,"那个……\n我想稍微商量一下我女儿的事。",0)
+			MES(MAURICE,"……其实，在这之前\n已经从别人那里听到过了。",0)
+			MES(MAURICE,"可是，真，真的很严厉啊。\n就算只是说稍微有点示弱的话，\n她也马上就生气了。",0)
+			MES_close(MAURICE)
+
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"……哎呀，别人看来呢？",0)
+			MES(ISABELLA,"P1S5你……\n别太老好人了！！",0)
+			MES_close(ISABELLA)
+
+		//　　莫里斯、アセアセで伊萨贝拉に向く。
+			EMO(MAURICE,EMO_ASEASE)
+			look(MAURICE,"Bone_Head",0,		0,10,0,			0,0,0)
+
+			wait(30)
+			look_off(MAURICE)
+
+			MES(MAURICE,"对，对，对，对不起！",0)
+			MES_close(MAURICE)
+
+			look(MAURICE,"Bone_Head",0,		0,0,3,			0,0,-20)
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			look(MAURICE,"Bone_Head",0,		0,0,3,			0,0,0)
+			wait(10)
+			look_chr( MAURICE, PLAYER,"Bone_Head")
+			MES(MAURICE,"不，不要再跟我说话了。\n会生气的。",0)
+			MES_close(MAURICE)
+
+			look_off( MAURICE )
+			wait(15)
+			IK(MAURICE,"Bone_Head",0)
+			look(MAURICE,"Bone_Head",0,		0,0,1,			0,0,-20)
+		}
+
+		//莫里斯と話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+//　　※阿鲁迪亚噴水回りをグルグルランニングしている。
+	if( F4_09_GoShrineMia)
+	{
+		look_chr( MAURICE, PLAYER1,"Bone_Head")
+		MES(MAURICE,"啊，你们……\n你们也在跑步吗？",0)
+		MES(MAURICE,"很，很快乐吧，跑步。",0)
+		MES(MAURICE,"拼命地奔跑的话，\n烦恼的事啊什么的都能抛到脑后了。\n哈哈哈……",0)
+		MES_close(MAURICE)
+		look_off( MAURICE )
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※民家２之前で柯林と話している。
+	if( F4_00_StartSolo )
+	{
+		look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"晚上回家的时候，\n发现了一张字条，\n写着『请不要来找我』。",0)
+			MES(MAURICE,"这，这一定是\n女儿离家出走了……",0)
+			MES(MAURICE,"看来好像是被朋友邀请，\n到他们家去住了吧。",0)
+			MES(MAURICE,"可，可是，你看，\n发生了魔物骚动这种事……\n唉……真的好担心啊……",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MAURICE,"到朋友家住\n其实也没什么。",0)
+			MES(MAURICE,"可，可是……\n至少也跟我说一声嘛。",0)
+			MES(MAURICE,"那个，虽然觉得会被女儿讨厌，\n可是我说话就是硬气不起来……",0)
+			MES_close(MAURICE)
+		}
+		look_off( MAURICE)
+
+		//莫里斯と話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//いない
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※まだ斗技场に行っていない场合之み。
+	//　　※村、噴水之左側、街路之ど真ん中でストレッチ運動をしている。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_MAURICE)
+		{
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+			EV_stop("MOTION_TRAINING_MAURICE")	//莫里斯　ストレッチ
+			MOT_SET(MAURICE,150,-1,517,517,-1,-1)
+
+			MOT(MAURICE,2,15)
+
+			MES(MAURICE,"啊，是你们啊。",0)
+			MES_close(MAURICE)
+
+		//　　莫里斯、ガッツポーズをしてみせる。
+			MOT(MAURICE,150,15)
+
+			MES(MAURICE,"『……兴奋起来了吗？』",0)
+			MES_close(MAURICE)
+
+		//　　莫里斯、通常パタに戻る。
+			MOT(MAURICE,2,15)
+			
+			MES(MAURICE,"我，我说什么啊。哈哈哈……",0)
+			MES_close(MAURICE)
+
+		//　　拉古那たちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+		//	EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			look_off( MAURICE)
+
+		//──────────────────────────────
+//		//	name("□拉古那先頭")
+//			if(GW_MAN==1)
+//			{
+//				MES(RAGNA,"（外しまくりだな……）",0)
+//				MES_close(RAGNA)
+//			}
+//		//	name("□艾雯先頭")
+//			else
+//			{
+//				MES(PARTNER,"（確かにカッコ悪い男だ之う……）",0)
+//				MES_close(PARTNER)
+//			}
+
+			MES(RAGNA,"（好脱线的人……）",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"（唔……是这样吗？）",0)
+			MES_close(PARTNER)
+
+		//──────────────────────────────
+			F_set(MAURICE)
+			EV("MOTION_TRAINING_MAURICE")	//莫里斯　ストレッチ
+		}
+		else
+		{
+		//　　★繰り返し
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+			MES(MAURICE,"呵呵，最近啊，\n我也多多少少有点腕力了。",0)
+			MES(MAURICE,"这也是\n多亏了那个练习场啊。",0)
+			MES(MAURICE,"咦，说起来……\n我是怎么会想到\n要锻炼身体的呢？",0)
+			MES(MAURICE,"嗯～，不记得了呢。",0)
+			MES_close(MAURICE)
+			look_off( MAURICE)
+		}
+
+		//莫里斯と話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※まだ斗技场に行っていない场合之み配置。
+
+	//★変更
+	//　　□フィールドから村に入ったタイミングで、ランダム判定。
+	//　　確率1/3で配置する。
+
+	//　　※民家２之前でストレッチ運動をしている。
+	if( F2_00_GoForest )
+	{
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"呼……",0)
+			MES(MAURICE,"在工作之余\n做这个练习正合适呢……",0)
+			MES_close(MAURICE)
+
+		//　　莫里斯振り返る。
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+
+			//──────────────────────────────
+			//	name("□まだ斗技场に行っていない场合")
+			if(!FV_02_VisitGyakata)
+			{
+				MES(MAURICE,"最近，我发现了一个\n锻炼身体的绝妙的点子。",0)
+				MES(MAURICE,"在废坑中，\n有一个给予实践指导的练习场。",0)
+				MES(MAURICE,"你们要是有兴趣的话，\n也可以去看看哦。",0)
+				MES_close(MAURICE)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（废坑里……？）",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（有练习场吗……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□斗技场に行った")
+			{
+				MES(MAURICE,"呵呵，我也是\n在发现了那个练习场之后\n才迷上锻炼肌肉的。",0)
+				MES(MAURICE,"建在废坑里\n虽然是有点奇怪，不过……",0)
+				MES(MAURICE,"有，有不少\n实践性的指导，挺有意思的。",0)
+				MES_close(MAURICE)
+
+			//　　拉古那たちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				//──────────────────────────────
+				//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（微，微妙地很有同感……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□艾雯先頭")
+					MES(PARTNER,"（人类\n  也会接受这种东西吗……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+			}
+			//★莫里斯【筋トレ】
+			look_off( MAURICE)
+			F_set_note(MAURICE,1)
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			if(!FV_02_VisitGyakata)
+			{
+				look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+				MES(MAURICE,"开设这个练习场的，\n是个有些奇怪的人。",0)
+				MES(MAURICE,"离开的时候，还很爽快地\n送给我蛋白质片剂。",0)
+				MES_close(MAURICE)
+
+			//　　拉古那たちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+
+				MES(MAURICE,"好的，要更加努力地\n锻炼肌肉～……",0)
+				MES_close(MAURICE)
+				look_off( MAURICE)
+			}
+			else
+			{
+			//	name("□斗技场に行った")
+				MES(MAURICE,"嘿呀，嘿呀……",0)
+				MES(MAURICE,"呼，锻炼肌肉\n果然让人神清气爽啊～……",0)
+				MES(MAURICE,"好的，要更加努力地\n锻炼肌肉，\n变得更强～……",0)
+				MES_close(MAURICE)
+
+			//　　拉古那たちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+			}
+		}
+		//莫里斯と話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※民家２之前でゆっくりストレッチ運動をしている。
+	//　　※拉古那たちがＧ－斗技场に到達し、莫里斯を呼び出した场合、消去する。
+	if( F1_15_GoVillage )
+	{
+
+		if(FE_FF_TalkLotte && FE_FF_TkWinMaurice)//２週目以降は、露缇之引继ぎ処理を行ってから。
+		{
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"哈，哈哈哈……\n你们真强啊。",0)
+				MES(MAURICE,"果然是\n锻炼方法不同吗……",0)
+				MES(MAURICE,"嗯，不过\n我不会就此放弃的。",0)
+				MES(MAURICE,"我会更加努力锻炼肌肉，\n总有一天会追上你们的。",0)
+				MES_close(MAURICE)
+
+				F_set(MAURICE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MAURICE,"我可\n还没打算放弃。",0)
+				MES(MAURICE,"我会更加努力锻炼肌肉，\n总有一天会追上你们的。",0)
+				MES(MAURICE,"我有不屈的精神……\n我，我说什么啊。\n啊哈哈……",0)
+				MES_close(MAURICE)
+			}
+			look_off( MAURICE)
+		}
+		else
+		{
+			if(!F_MAURICE)
+			{
+				look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+				MES(MAURICE,"我啊，正试着\n开始稍微进行一些运动。",0)
+				MES(MAURICE,"有些肌肉的话，\n也许女儿就会喜欢我了吧……？\n……之，之类的。",0)
+				MES(MAURICE,"然后，就试着\n跑步到郊外去了……",0)
+				MES(MAURICE,"呼，呼……\n比，比想像中的要困难呢，这个……",0)
+				
+				MES_close(MAURICE)
+				F_set(MAURICE)
+				look_off( MAURICE)
+			}
+		//　　※振り返らない。
+			else
+			{
+			//　　★繰り返し
+				MES(MAURICE,"呼，呼……",0)
+				MES(MAURICE,"好，休息一会儿，\n然后再来一次……",0)
+				MES_close(MAURICE)
+			}
+		}
+
+		//莫里斯と話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※民家２之中でフリームーブ。
+	if( F1_01_GameStart )
+	{
+		rot_chr(MAURICE,30,PLAYER1)
+		
+		EV("MOTION_TK_MAURICE")
+
+		//　　※初回イベント。
+		if(!FT_01_TalkMaurice)
+		{
+			MES(MAURICE,"呀，你们是……",0)
+			MES(MAURICE,"游客吗？\n是第一次到阿鲁迪亚吗？",0)
+			MES(MAURICE,"啊哈哈，请慢慢观光，\n在这里多待几天。",0)
+			MES_close(MAURICE)
+			MOT(MAURICE,2,10)
+
+			MES(RAGNA,"啊，谢谢……",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"（唔，打扮奇怪\n  的男人……）",0)
+			MES_close(PARTNER)
+
+		//　　莫里斯に···エモーション。
+			EMO(MAURICE,EMO_TENTEN)
+			wait(40)
+			MES(MAURICE,"话说……",0)
+			MES(MAURICE,"果，果然，\n这个年纪的女孩不好对付呢……",0)
+			MES_close(MAURICE)
+
+		//　　拉古那たちに？エモーション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"咦……？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□艾雯先頭")
+				MES(PARTNER,"唔……？",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			MES(MAURICE,"不，我什么都没说。",0)
+			MES(MAURICE,"啊哈哈，啊哈哈哈哈……",0)
+			MES_close(MAURICE)
+			F_set(FT_01_TalkMaurice)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"其实，最近从独自在外工作的妻子那里\n领回了女儿，不过……",0)
+				MES(MAURICE,"我早上穿着短裤，女儿一边刷牙\n一边用冷冰冰的声音说\n『爸爸好讨厌』什么的……",0)
+				MES_close(MAURICE)
+
+			//　　拉古那たちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"这还真是典型的……",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□艾雯先頭")
+					MES(PARTNER,"……这是你不好吧。",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+				MES(MAURICE,"啊，就算是道歉，\n她也完全不理我。",0)
+				MES(MAURICE,"唉，唉……\n这个年纪的孩子，真难办啊……",0)
+				MES_close(MAURICE)
+
+			//　　★莫里斯【かっこ悪い】
+				F_set_note(MAURICE,0)
+				F_set(MAURICE)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(MAURICE,"因，因为我曾经\n独居过一段时间。",0)
+				MES(MAURICE,"那个，实在是弄不明白呢。\n女儿到底是怎么想的……",0)
+				MES_close(MAURICE)
+
+			//　　莫里斯、向きを戻す。
+				MES(MAURICE,"唉……\n哈提，你还在生气吗……",0)
+				MES_close(MAURICE)
+			}
+		}
+		//莫里斯と話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+		MOT(MAURICE,2,10)
+	}
+	TK_end()
+}
+
+//──────────────────────────────
+//	name("◆莫里斯（嘉兰多之馆用）")
+//──────────────────────────────
+//　　※莫里斯は、フラグ②③⑤で配置します。
+//　　　斗技场受付フロア之横辺りでストレッチしている。
+//──────────────────────────────
+TK_YAKATA_MAURICE
+{
+	TK_begin()
+	rot_chr(PLAYER1,30,MAURICE)
+
+	//──────────────────────────────
+	//▼フラグ⑤之範囲
+	//　　※ストレッチ運動をしている。
+	look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+	if(F2_14_TalkEnemy)
+	{
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"１·２，１·２……",0)
+			MES(MAURICE,"呵，最近啊，\n我也多少有些腕力了。",0)
+			MES(MAURICE,"嗯，不过……\n我是怎么会想到\n要锻炼身体的呢。",0)
+			MES(MAURICE,"嗯～，不记得了呢。",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MAURICE,"我是怎么会想到\n要锻炼身体的呢。",0)
+			MES(MAURICE,"嗯～……",0)
+			MES(MAURICE,"算了，原因什么的\n无所谓啦。",0)
+			MES_close(MAURICE)
+		}
+	}
+	//──────────────────────────────
+	//▼莫里斯と战ったことがない场合
+	else
+	if(GW_TRYNum_Maurice<=0)
+	{
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"哦，是你们啊……",0)
+			MES(MAURICE,"我啊，\n最近也到这个练习场来了。",0)
+			MES(MAURICE,"真，真不错呢。\n从锻炼肌肉到实战\n都能得到指导……",0)
+			MES(MAURICE,"呵呵，我也要锻炼肌肉，\n变得更强～！",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MAURICE,"呵呵，我也要锻炼肌肉，\n变得\n像老板那样强～！",0)
+			MES_close(MAURICE)
+		}
+	}
+	else
+	{
+	//──────────────────────────────
+	//▼莫里斯に勝ったことがある场合
+		if(FV_FF_WinMaurice)
+		{
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"哈，哈哈哈……\n你们很强啊。",0)
+				MES(MAURICE,"果然是\n锻炼方法不同吗……",0)
+				MES(MAURICE,"嗯，不过\n我不会就此放弃的。",0)
+				MES(MAURICE,"我会更加努力锻炼肌肉，\n总有一天会追上你们的。",0)
+				MES_close(MAURICE)
+
+				F_set(MAURICE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MAURICE,"我可\n还没打算放弃。",0)
+				MES(MAURICE,"我会更加努力锻炼肌肉，\n总有一天会追上你们的。",0)
+				MES(MAURICE,"我有不屈的精神……\n我，我说什么啊。\n啊哈哈……",0)
+				MES_close(MAURICE)
+			}
+			F_set(FE_FF_TkWinMaurice)//★馆内莫里斯·勝利後会話した
+		}
+		else
+		{
+		//──────────────────────────────
+		//▼莫里斯に負けた场合
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"哈，哈哈哈……",0)
+				MES(MAURICE,"不好意思呢，\n这次好像是我赢了。",0)
+				MES(MAURICE,"不，不过我觉得\n你们也挺强的。",0)
+				MES(MAURICE,"嗯，要不畏困难\n努力锻炼肌肉哦。",0)
+				MES_close(MAURICE)
+
+				F_set(MAURICE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MAURICE,"哈哈……\n不过，我和别人打架\n打赢的，这还是第一次呢。",0)
+				MES(MAURICE,"有，有点高兴呢。\n居然能赢。",0)
+				MES_close(MAURICE)
+			}
+		}
+	}
+	look_off( MAURICE )
+
+	TK_end()
+}
+
+//会話時之モーション
+MOTION_TK_MAURICE
+{
+	MOT_SET(MAURICE,150,-1,404,404,-1,-1)
+	MOT(MAURICE,150,15)
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

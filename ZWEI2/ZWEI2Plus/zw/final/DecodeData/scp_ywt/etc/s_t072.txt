@@ -1,0 +1,405 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僸僐儊乮傛傠偢壆揦堳乯Hikome")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_HIKOME
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(HIKOME, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,HIKOME)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,HIKOME)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F5_00_HearLunar )
+	{
+		VOICE(750,0)							//乽偄傜偭偟傖偄乿	
+	
+		look_chr( HIKOME, PLAYER1,"Bone_Head")
+		MES(HIKOME,"歡迎光臨。",0)
+		MES_close(HIKOME)
+		
+		EV("SHOP_HIKOME_LOOP")
+		wait_EV("SHOP_HIKOME_LOOP")
+		look_off(HIKOME)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_09_GoShrineMia)
+	{
+//		rot_chr(HIKOME,30,PLAYER1)
+//		MOT(HIKOME, 2, 15)
+		look_chr(HIKOME,PLAYER1,"Bone_Head")
+		//弶夞僀儀儞僩偁傝
+		if(!FS_10_TalkHikome)
+		{
+			EV("TK_HIKOME")
+			wait_EV("TK_HIKOME")
+			
+			EV("SHOP_HIKOME_LOOP")
+			wait_EV("SHOP_HIKOME_LOOP")
+		}
+		else
+		{
+			VOICE(750,0)							//乽偄傜偭偟傖偄乿
+		
+			MES(HIKOME,"歡迎光臨。",0)
+			MES_close(HIKOME)
+			
+			EV("SHOP_HIKOME_LOOP")
+			wait_EV("SHOP_HIKOME_LOOP")
+		}
+//		MOT(HIKOME, 150, 15)
+		look_off(HIKOME)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_05_OnVillage2)
+	{
+		look_chr( HIKOME, PLAYER1,"Bone_Head")
+		//弶夞僀儀儞僩偁傝
+		if(!FS_08_TalkHikome)
+		{
+			EV("TK_HIKOME")
+			wait_EV("TK_HIKOME")
+		}
+		else
+		{
+			VOICE(750,0)							//乽偄傜偭偟傖偄乿
+					
+			MES(HIKOME,"歡迎光臨。",0)
+			MES_close(HIKOME)
+			
+			EV("SHOP_HIKOME_LOOP")
+			wait_EV("SHOP_HIKOME_LOOP")
+		}
+		look_off(HIKOME)
+	}
+	TK_end()
+}
+
+SHOP_HIKOME_LOOP
+{
+	workL(WK_CANCEL,SET,3)//亂傗傔傞亃
+//	MES(PLAYER1,"??W9亂榖傪偡傞亃\n亂攦偄暔偡傞亃\n亂傗傔傞亃",0)
+	MES_pos(PLAYER1,"??W9【對話】\n【購物】\n【離開】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀榖傪偡傞")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(WK_YESNO==1)
+	{
+		EV("TK_HIKOME")
+		wait_EV("TK_HIKOME")
+		loop
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀攦偄暔傪偡傞")
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(WK_YESNO==2)
+	{
+		shop_open(4)//傛傠偢傗
+		wait_W(WK_YESNO)
+		loop
+	}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀傗傔傞")
+	//丂丂夛榖張棟廔椆丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(WK_YESNO==3)
+	{
+		//嘔偺娫偼儊僢僙乕僕曄峏
+		if(F4_09_GoShrineMia && !F5_00_HearLunar )
+		{
+//			偝偡偑偵偙傟偼堘榓姶
+//			VOICE(753,0)									//乽傑偨偳偆偧乿
+//			MES(HIKOME,"傑偨偳偆偧丅",0)		
+		
+			MES(HIKOME,"……要小心啊。",0)
+			MES_close(HIKOME)
+		}
+		//捠忢帪
+		else
+		{
+			VOICE(753,0)									//乽傑偨偳偆偧乿
+			MES(HIKOME,"歡迎再來。",0)
+			
+//			MES(HIKOME,"枅搙偁傝丅\n傑偨偄偮偱傕偳偆偧丅",0)
+			MES_close(HIKOME)
+		}
+	}
+}
+
+//捠忢張棟////////////////////////////////////////////////////////////////////////////
+TK_HIKOME
+{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傛傠偢壆僇僂儞僞乕丅
+	if(F6_00_GoToMeru)
+	{
+		if(!F_HIKOME)
+		{
+			MES(HIKOME,"我已經聽說了。\n你們打算闖進那座要塞啊。",0)
+			MES(HIKOME,"梅爾賽迪克只在一小部分\n古書中被提及過。",0)
+			MES(HIKOME,"據說它可以利用巨大的魔力\n產生颶風將大陸粉碎。",0)
+			MES(HIKOME,"以前伊魯巴特好像\n就曾經遭受過劇烈的打擊，\n造成了巨大的損失。",0)
+			MES(HIKOME,"……我也不知道要塞裡面是什麼樣子。\n請一定要小心。",0)
+			MES_close(HIKOME)
+			//丂丂仛僸僐儊亂儊儖僙僨僋偺揱彸亃
+			F_set_note(HIKOME,2)
+			F_set(HIKOME)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(HIKOME,"那可是能夠消滅整塊大陸的要塞。\n我也不知道裡面是什麼樣的。",0)
+			MES(HIKOME,"最好事先仔細地\n檢查一下裝備。",0)
+			MES(HIKOME,"有什麼需要就來找我。\n我這裡基本上什麼東西都有。",0)
+			MES_close(HIKOME)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傛傠偢壆僇僂儞僞乕丅
+	if( F5_00_HearLunar )
+	{
+		if(!F_HIKOME)
+		{
+			MES(HIKOME,"昨天真是多謝了。",0)
+			MES(HIKOME,"鄉里現在好像\n還是一片混亂。",0)
+			MES(HIKOME,"有很多人受傷，\n所以還要重新編隊。",0)
+			MES(HIKOME,"這麼看來，要完成重建\n估計需要不少時間。",0)
+			MES_close(HIKOME)
+			
+			F_set(HIKOME)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			MES(HIKOME,"重建落星之鄉\n看來需要不少時間。",0)
+			MES(HIKOME,"而且這裡還從來沒有\n受到過如此巨大的打擊。",0)
+			MES(HIKOME,"大家好像也都在\n考慮各自的出路了。",0)
+			MES_close(HIKOME)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸峀応偱搢傟偨僇僀傪彆偗偰偄傞丅
+	if( F4_09_GoShrineMia )
+	{
+		//丂丂仸弶夞僀儀儞僩丅
+		if(!FS_10_TalkHikome)
+		{
+			MES(HIKOME,"不要緊，沒有傷到要害。",0)
+			MES(HIKOME,"完成急救之後\n馬上就可以運走。",0)
+			MES_close(HIKOME)
+
+		//丂丂僸僐儊怳傝岦偔丅
+//			rot_chr(HIKOME,30,PLAYER1)
+		
+			MES(HIKOME,"先不說這個，\n你們現在是要去神社吧？",0)
+			MES(HIKOME,"有什麼需要的\n請儘管說。",0)
+			MES(HIKOME,"為了以防萬一，\n我也準備了一些稱手的武器。",0)
+			MES_close(HIKOME)
+			
+			F_set(FS_10_TalkHikome)
+			
+			//僔儑僢僾張棟傊
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+		//丂丂僸僐儊怳傝岦偔丅
+
+			MES(HIKOME,"凱現在還很痛苦，\n不過已經不要緊了。",0)
+			MES(HIKOME,"完成急救之後\n馬上就可以轉移走。",0)
+			MES_close(HIKOME)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_05_OnVillage2)
+	{
+	//仴弶夞僀儀儞僩
+		if(!FS_08_TalkHikome)
+		{
+			MES(HIKOME,"歡迎光臨。",0)
+			MES_close(HIKOME)
+
+		//丂丂寉偔儔僌僫偺傎偆傪岦偔丅
+			look_chr( HIKOME, RAGNA,"Bone_Head")
+			MES(HIKOME,"我從沒見過哥哥你呢。\n要買些什麼嗎？",0)
+			MES(HIKOME,"我們這裡基本上什麼都有哦。\n畢竟是雜貨店。",0)
+			MES_close(HIKOME)
+
+
+			MES(RAGNA,"啊，多謝……",0)
+			MES_close(RAGNA)
+
+		//丂丂儔僌僫丄偒傚傠偒傚傠丅
+			look(RAGNA,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(RAGNA,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(RAGNA,"Bone_Head",0,		0,2,0,			0,0,0)
+
+			MES(RAGNA,"可是，這裡\n刀槍齊備……\n太像武器店了吧？",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			look_chr(PARTNER,RAGNA,"Bone_Head")
+			MES(PARTNER,"哎，是嗎？\n我覺得這挺普通的……",0)
+			MES(PARTNER,"啊，不過對武器和\n忍者道具有什麼疑問的話，\n都可以去問彥芽。",0)
+			MES(PARTNER,"彥芽精通\n很多種武器道具呢～。",0)
+			MES_close(PARTNER)
+			look_off(PARTNER)
+
+		//	name2(HIKOME)
+			MES(HIKOME,"怎麼說呢，比起使用來，\n我還是更擅長欣賞。",0)
+			MES(HIKOME,"合適的話，\n要不要給你們看一下？",0)
+			MES_close(HIKOME)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈，我會考慮的……\n（果然還是和\n 普通的村莊不一樣啊……）",0)
+			MES_close(RAGNA)
+
+			//仛僸僐儊亂擡嬶偺僄僉僗僷乕僩亃
+			F_set_note(HIKOME,0)
+			F_set(FS_08_TalkHikome)
+
+		//柤慜晅偒僉儍儔慡堳偵榖偟偐偗傞偲業揤晽楥偑奐偔
+			if(FS_08_TalkHikome && FS_08_TalkKarasu && FS_08_TalkDaigoro && FS_08_TalkYasaku && FS_08_TalkKai && FS_08_TalkAkane && FS_08_TalkLuri && FS_08_TalkGen)
+			{
+				F_set(F4_12_OkRoten)
+			}
+		}
+		else
+		{
+			if(!F_HIKOME)
+			{
+			//丂丂仸傛傠偢壆僇僂儞僞乕丅
+			//丂丂僸僐儊丄儔僌僫偵岦偔丅
+				look_chr( HIKOME, RAGNA,"Bone_Head")
+				MES(HIKOME,"對了，大哥要不要考慮一下\n風車手裡劍呢？",0)
+				MES(HIKOME,"熟練以後不僅機動性很高，\n同時也可以當成重量級武器使用。",0)
+				MES(HIKOME,"這也是我最喜歡的武器之一。\n現在還可以算你們便宜一點？",0)
+				MES_close(HIKOME)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（就算你這麼高興地向我推薦……）",0)
+					MES_close(RAGNA)
+				}
+			//	name("佀僗僶儖愭摢")
+				else
+				{
+				//丂丂僸僐儊丄僗僶儖偵岦偔丅
+					look_chr( HIKOME, PARTNER,"Bone_Head")
+					MES(HIKOME,"昴的話……",0)
+					MES(HIKOME,"可能用不了風車手裡劍。\n畢竟還是比較難用的。",0)
+					MES_close(HIKOME)
+
+				//丂丂僗僶儖丄僸僐儊偵岦偔丅
+					rot_chr(PARTNER,30,HIKOME)
+					
+				//	name2(PARTNER)
+					MES(PARTNER,"哎～……？\n這麼簡單就被……",0)
+					MES_close(PARTNER)
+				}
+				F_set(HIKOME)
+			}
+			else
+			{
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//丂丂仛孞傝曉偟
+					MES(HIKOME,"這裡畢竟是雜貨店。\n基本上什麼都有哦。",0)
+					MES(HIKOME,"手裡劍、鐵手套、鏈甲，\n還有食物、藥丸、苦無……",0)
+					MES(HIKOME,"那邊架子上的藥品\n都是根據古書調配出的精品。",0)
+					MES(HIKOME,"你們可以去看看。",0)
+					MES_close(HIKOME)
+					//仛僸僐儊亂栻昳偼帺暘偱挷崌亃
+					F_set_note(HIKOME,1)
+			}
+		}
+	}
+}
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

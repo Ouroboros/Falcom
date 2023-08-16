@@ -1,0 +1,871 @@
+//仭Zwei2堦斒儊僢僙乕僕丒傾儖僢僥偺挰乮仸僥僆乯
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仭傾儖僢僥
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僥僆乮僴僇僙乯Teo")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_TEO
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(TEO, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,TEO)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,TEO)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TEO)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TEO)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TEO)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TEO)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,TEO)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仱嘆乣嘍丄愊壸幱嵾僀儀儞僩
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僊儖僪庴晅偱僥僆偺嫃応強傪暦偄偨屻丄僥僆偵榖偟偐偗傞偲
+	//丂丂丂幱嵾僀儀儞僩偑敪惗偟傑偡丅
+	//丂丂仸僼儔僌嘐埲崀偼丄偙偺僀儀儞僩偼敪惗偟傑偣傫丅
+	if(FT_01_Guildbigin && !F3_00_GoMoonCastle && !FT_01_TeoSolly)
+	{
+	//丂丂仸僥僆偼怳傝曉傜側偄丅
+		MES(RAGNA,"（唔—，確實\n 也沒有其它人了啊……）",0)
+		MES_close(RAGNA)
+
+	//丂丂僥僆偵俹俙僄儌乕僔儑儞丅怳傝曉傞丅
+		EMO(TEO,EMO_PA)
+		wait(30)
+		rot_chr(TEO,30,PLAYER1)
+		MOT(TEO,52,15)
+
+		MES(TEO,"喲，拉格那。\n……有什麼事嗎？",0)
+		MES_close(TEO)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"啊，嗯……\n有件事想問一下……",0)
+		MES(RAGNA,"緹奧醫生\n就是博物館的館長嗎……？",0)
+		MES_close(RAGNA)
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("佀僼儔僌嘍偺応崌")
+		if(F2_14_TalkEnemy)
+		{
+			MES(TEO,"嗯，是啊。",0)
+			MES(TEO,"那座博物館是\n我投資私人財產建設的。",0)
+			MES(TEO,"呵呵呵……本來\n玩古董就是我的一個興趣。\n算是玩出一點成績吧？",0)
+			MES_close(TEO)
+		}
+		else
+	//	name("佀僼儔僌嘇嘊偺応崌")
+		if(F1_15_GoVillage)
+		{
+			MES(TEO,"嗯，是啊。",0)
+			MES(TEO,"那座博物館是\n我投資私人財產建設的。",0)
+			MES(TEO,"呵呵呵……本來\n玩古董就是我的一個興趣。\n算是玩出一點成績吧？",0)
+			MES_close(TEO)
+		}
+		else
+	//	name("佀僼儔僌嘆偺応崌")
+		if(F1_01_GameStart)
+		{
+			MES(TEO,"嗯，是啊。",0)
+			MES(TEO,"那座博物館是\n我投資私人財產建設的。",0)
+			MES(TEO,"呵呵呵……本來\n玩古董就是我的一個興趣。\n算是玩出一點成績吧？",0)
+			MES_close(TEO)
+		}
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+
+	//	name2(PARTNER)
+	//	MES(PARTNER,"傆傓丄偦傟偼傑偨\n  悘暘偲崅偠偨傕偺偩側丅",0)
+		MES(PARTNER,"唔，想不到\n 興趣可以發展成這樣。",0)
+		MES_close(PARTNER)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"那個……\n就是說我們必須要向\n緹奧醫生道歉才行啊。",0)
+		MES_close(RAGNA)
+
+	//丂丂僥僆偵丠僄儌乕僔儑儞丅
+		EMO(TEO,EMO_HATENA)
+		wait(30)
+	
+	
+	//丂丂仛儔僌僫丄堦曕慜偵弌傞丅
+	
+		MES(RAGNA,"實際上是關於\n緹奧醫生訂購的貨物……",0)
+		MES(RAGNA,"在飛機墜毀的過程中\n已經弄丟了。",0)
+		MES(RAGNA,"不好意思，本來你是\n信任我才交給我這個任務的……",0)
+		MES_close(RAGNA)
+
+	//	name2(TEO)
+		MES(TEO,"哦，那件貨物……",0)
+		MES(TEO,"這…這樣啊。\n負責運送它的就是\n拉格那嗎……",0)
+		MES_close(TEO)
+
+	//丂丂仛僥僆丄峫偊傞慺怳傝丅
+		MES(TEO,"唔—，這也是麻煩啊。\n那是些古書呀。",0)
+		MES_close(TEO)
+
+	//丂丂儔僌僫偵俹俙僄儌乕僔儑儞丅
+		EMO(RAGNA,EMO_PA)
+		wait(30)
+		
+		MES(RAGNA,"哎？　古書……？",0)
+		MES_close(RAGNA)
+
+	//	name2(TEO)
+		MES(TEO,"嗯，古老的圖鑑與樂譜集……\n裡面應該也有些\n貴重的古代文書……",0)
+		MES(TEO,"唔，不過遭遇了\n墜機事故嗎……",0)
+		MES(TEO,"那差不多可以認為\n是被燒毀了吧。",0)
+		MES_close(TEO)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"不…不好意思。\n果然是非常重要的東西啊……",0)
+		MES_close(RAGNA)
+
+	//	name2(TEO)
+		MES(TEO,"不……確實對我來說\n是很重要的東西……",0)
+		MES(TEO,"唔，但也不能一直\n拘泥於此。",0)
+		MES_close(TEO)
+
+	//丂丂僥僆丄儔僌僫偵岦偔丅
+		rot_chr(TEO,30,RAGNA)
+
+		MES(TEO,"拉格那，你說過自己是\n尋寶獵人對吧。",0)
+		MES(TEO,"這也不能說是補償，\n不過你找到貴重物品的時候\n可否捐贈給我的博物館呢？",0)
+		MES(TEO,"當然我會支付適當的報酬。\n我只是在收集\n那些值得鑑賞的物品。",0)
+		MES_close(TEO)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"嗯……\n這種小事沒有問題。",0)
+		MES_close(RAGNA)
+
+	//	name2(TEO)
+		MES(TEO,"嗯，那麼之前那件事\n就一筆勾銷了。",0)
+		MES(TEO,"博物館的日常業務\n都由格雷因和卡蒂娜負責。\n到時候在櫃檯那裡說一聲就好了。",0)
+		MES(TEO,"那麼就拜託了。",0)
+		MES_close(TEO)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"嗯，包在我身上！",0)
+		MES_close(RAGNA)		
+		
+		//仛僥僆亂幚偼娰挿亃
+		F_set_note(TEO,0)
+
+	//僥僆偵幱嵾偟偨僼儔僌
+		F_set(FT_01_TeoSolly)
+		MOT(TEO,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸僊儖僪庴偗晅偗偺墶偵棫偭偰偄傞丅乮仸儊僀儞僔僫儕僆嶲徠乯
+	if( F6_05_EndSixth )
+	{
+		MOT(TEO,52,15)
+		rot_chr(TEO,30,PLAYER1)
+	//丂丂仸弶夞僀儀儞僩丅
+		if(!FT_13_TalkTeo)
+		{
+		//	00亾乣49亾	丗侾楍栚偺僼乕僪傪堦偮偢偮丄寁11屄
+		//	50亾乣74亾	丗俀楍栚偺僼乕僪傪堦偮偢偮丄寁11屄
+		//	75亾乣99亾	丗俁楍栚偺僼乕僪傪堦偮偢偮丄寁11屄
+		//	100亾		丗係楍栚偺僼乕僪傪堦偮偢偮丄寁11屄
+		//仛劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+//僠僃僢僋梡
+//workG(GW_TREASURE,SET,48)
+
+			if(GW_TREASURE<24)
+			{
+				MES(TEO,"新設的展位大多仍然空著，\n確實有些遺憾……",0)
+			}
+			else
+			if(GW_TREASURE<36)
+			{
+				MES(TEO,"這次新設的展位\n還空著不少……",0)
+			}
+			else
+			if(GW_TREASURE<48)
+			{
+				MES(TEO,"拉格那，託你的福，\n新設展位現在相當充實了。",0)
+			}
+			else
+			{
+				MES(TEO,"拉格那，託你的福，\n展位也充實了不少。\n看起來非常完美。",0)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			MES(TEO,"有機會的話\n捐贈方面還是拜託你了。",0)
+			MES(TEO,"用航空郵件\n送來也沒有關係。",0)
+			MES_close(TEO)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈哈……",0)
+			MES(RAGNA,"好的，那就等\n我再有發現的時候吧。",0)
+			MES_close(RAGNA)
+
+		//	name2(TEO)
+			MES(TEO,"嗯，拜託了。",0)
+			MES_close(TEO)
+
+			F_set(FT_13_TalkTeo)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			MES(TEO,"啊……差不多也\n該走了。",0)
+			MES(TEO,"拉格那、米婭。\n你們兩個人都要保重啊。",0)
+			MES(TEO,"有機會的話\n捐贈方面就拜託了。",0)
+			MES_close(TEO)
+		}
+		MOT(TEO,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕嘖丂傢傜偟傋僀儀儞僩
+	//	name("俀丏僥僆乮傾儖僢僥偺挰乯		亀戦偺挙傝暔亁佀亀偍庤尦儔僀僩亁")144
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar && FV_11_Warasi_1_Ysk && !FV_11_Warasi_2_Teo)
+	{
+		if( F6_00_GoToMeru )
+		{
+			MOT(TEO,52,15)
+			rot_chr(TEO,30,RAGNA)
+		}
+		else
+		{
+			look_chr(TEO, RAGNA, "Bone_Head")
+		}
+		
+	//丂丂僥僆偵俹俙僄儌乕僔儑儞丅
+		if(!F_TEO)
+		{
+		//	name("佀弶夞")
+			EMO(TEO,EMO_PA)
+			wait(30)
+			MES(TEO,"哦，拉格那。\n那個「雄鷹雕像」是……？",0)
+			MES(TEO,"唔，這富有情趣的雕刻手法……\n哎呀，真是絕妙的作品。\n我非常想收下它呢。",0)
+			MES(TEO,"怎麼樣，\n可以把它轉讓給我嗎？",0)
+			MES_close(TEO)
+			
+			F_set(TEO)
+		}
+		else
+		{
+		//	name("佀俀夞栚埲崀")
+			MES(TEO,"那個「雄鷹雕像」……\n真是絕妙的作品啊。",0)
+			MES(TEO,"怎麼樣，\n可以把它轉讓給我嗎？",0)
+			MES_close(TEO)
+		}
+
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//	name("慖戰僥僉僗僩")
+		workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+		MES_pos(PLAYER1,"??W9【非常樂意】\n【十分抱歉】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+		
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀亂婌傫偱亃")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(WK_YESNO==1)
+		{
+			MES(TEO,"感激不盡。",0)
+			MES(TEO,"對了，這個送給你，\n當作謝禮吧。",0)
+			MES_close(TEO)
+
+		//	name("傾僀僥儉擖庤僥僉僗僩")
+		//	MES(this,"亀偍庤尦儔僀僩亁傪栣偭偨丅",0)
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			fade_in(30,10,BLACK)
+
+
+			get_item(143,-1,1)
+			get_item(144,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+
+		//	name2(TEO)
+			MES(TEO,"這是修整古董時\n使用的燈具。",0)
+			MES(TEO,"這是使用加修雷\n提供的零件，\n由本人組裝的特別製品。",0)
+			MES_close(TEO)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"那個……\n和普通的燈有什麼不一樣呢？",0)
+			MES_close(RAGNA)
+
+		//	name2(TEO)
+			MES(TEO,"嗯，首先它的亮度可以\n自由調節……",0)
+			MES(TEO,"此外還附帶有紅外線照明功能，\n在暗室中工作時也可以使用。\n此外還附有防手振功能。",0)
+			MES_close(TEO)
+
+		//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			
+			//傾儖僂僃儞偑嫃傞
+			if(F6_00_GoToMeru)
+			{
+				EMO(PARTNER,EMO_HIYAASE)
+			}
+			else
+			//僆僨僢僒偑嫃傞
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_HIYAASE)
+			}
+			wait(30)
+
+			MES(PET,"這…這是什麼燈啊……",0)
+			MES_close(PET)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傾儖僂僃儞偑偄傞応崌")
+			if(F6_00_GoToMeru)
+			{
+				MES(PARTNER,"唔，總感覺還有些\n秘密功能……",0)
+				MES_close(PARTNER)
+			}
+			else
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+			//	name("佀僆僨僢僒偑偄傞応崌")
+				MES(PARTNER,"這還真是相當\n正式的東西呢……",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("佀偦傟埲奜")
+				MES(RAGNA,"緹奧醫生太認真了吧……",0)
+				MES_close(RAGNA)
+			}
+
+			F_set(FV_11_Warasi_2_Teo)
+			F_reset(TEO)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傗傔傞")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		{
+			MES(TEO,"唔，是嗎？\n真是遺憾……",0)
+			MES_close(TEO)
+		}
+		
+		if( F6_00_GoToMeru )
+		{
+			MOT(TEO,53,15)
+		}
+		else
+		{
+			look_chr(TEO,GASHREA,"Bone_Head")
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸戝摴寍恖偺僗僥乕僕慜偱丄挰挿偺榖傪暦偄偰偄傞丅
+	if( F6_00_GoToMeru )
+	{
+		MOT(TEO,52,15)
+		rot_chr(TEO,30,PLAYER1)
+	
+		if(!F_TEO)
+		{
+			MES(TEO,"這……\n看來已經很糟糕了。",0)
+			MES(TEO,"看看那些雲。\n簡直是充滿了\n瘋狂與災禍的漩渦。",0)
+			MES(TEO,"離這裡比較遠的時候\n還有辦法採取防風措施……",0)
+			MES(TEO,"但是如果它從正面來襲的話，\n我們會和整個伊魯巴特\n一起被它吞沒的。",0)
+			MES_close(TEO)
+
+			F_set(TEO)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(TEO,"你也知道，\n伊魯巴特是由大量\n小浮游島連接形成的。",0)
+			MES(TEO,"很可能在被旋風吞沒之前，\n浮游島之間的連接就會被切斷，\n使伊魯巴特變得四分五裂。",0)
+			MES(TEO,"……這種時候，\n連我都想要向女神祈禱了……",0)
+			MES_close(TEO)
+		}
+		MOT(TEO,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸廻庰応偱堸傫偱偄傞丅
+	//丂丂仸弶夞偼僈僔儏儗乕偲嫟捠丅
+	//丂丂仸怳傝偐偊傜側偄丅
+	if( F5_00_HearLunar )
+	{
+		if(!FT_11_TalkTeoGash)
+		{
+			EV("EV_TALK_TG")
+			wait_EV("EV_TALK_TG")
+			
+			F_set(FT_11_TalkTeoGash)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			look_chr(TEO, GASHREA, "Bone_Head")
+		//丂丂仸怳傝偐偊傜側偄丅
+			MES(TEO,"不，我也知道這是個\n任性的請求。",0)
+			MES(TEO,"我也差不多該退休，\n好好享受自己的興趣了。",0)
+			MES(TEO,"……呼，我接下來必須要去\n洛塔村出診了。",0)
+			MES(TEO,"大家有沒有\n好好靜養呢……",0)
+			MES_close(TEO)
+//			look_off(TEO)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儘傾儖僞懞丄晽幵柉壠偱傾儖儀乕儖傪恌偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩丅
+	//丂丂仸怳傝岦偐側偄丅
+	if( F4_00_StartSolo )
+	{
+		if(!FT_07_TalkTeo)
+		{
+			MES(RAGNA,"這樣啊，村民們\n都是緹奧醫生診療的啊……",0)
+			MES_close(RAGNA)
+
+		//丂丂僥僆丄怳傝偐偊傞丅
+			rot_chr(TEO,30,PLAYER1)
+			MOT(TEO,52,15)
+			MES(TEO,"嗯，差不多吧。",0)
+			MES(TEO,"我也經常來這邊出診，\n和大家都認識。",0)
+			MES_close(TEO)
+
+		//丂丂僥僆丄傾儖儀乕儖偺曽傪岦偔丅
+			rot_chr(TEO,30,ALBERS)
+		
+			MES(TEO,"是被怪物吸取了活力吧，\n雖然都很虛弱，\n但是沒有明顯的外傷。",0)
+			MES(TEO,"體力恢復以後\n應該就能清醒過來了吧。",0)
+			MES(TEO,"可能短時間內會有一些後遺症……\n不過靜養一陣應該就能康復了。",0)
+			MES_close(TEO)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"這樣啊……",0)
+			MES_close(RAGNA)
+
+		//丂丂僥僆丄儔僌僫偺曽傪岦偔丅
+			rot_chr(TEO,30,RAGNA)
+			
+			MES(TEO,"拉格那，你沒事吧？",0)
+			MES(TEO,"聽說你也和怪物戰鬥過……\n沒有受傷嗎？",0)
+			MES_close(TEO)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僗僶儖偑嫃側偄応崌")
+			if(!F4_02_GoVillage2)
+			{
+				MES(RAGNA,"啊，嗯……",0)
+				MES(RAGNA,"沒什麼大不了的。",0)
+				MES(RAGNA,"你還是先為村中的人們看病吧。\n緹奧醫生在\n確實能讓人安心不少呢。",0)
+				MES_close(RAGNA)
+
+			//	name2(TEO)
+				MES(TEO,"嗯，這倒是可以。",0)
+				MES(TEO,"（臉色看起來也不是很好……\n 不過現在還是不要多問吧。）",0)
+				MES_close(TEO)
+			}
+		//	name("佀僗僶儖偑偄傞応崌")
+			else
+			{
+				MES(PARTNER,"啊，那個……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"哈哈，沒什麼大不了的。",0)
+				MES(RAGNA,"你還是先為村中的人們看病吧。\n緹奧醫生在\n確實能讓人安心不少呢。",0)
+				MES_close(RAGNA)
+
+			//	name2(TEO)
+				MES(TEO,"嗯，這倒是可以。",0)
+				MES(TEO,"（臉色看起來也不是很好……\n 不過現在還是不要多問吧。）",0)
+				MES_close(TEO)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(FT_07_TalkTeo)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			MOT(TEO,52,15)
+			rot_chr(TEO,30,PLAYER1)
+			if(!F_TEO)
+			{
+				MES(TEO,"他們雖然都很虛弱，\n但是沒有明顯的外傷。",0)
+				MES(TEO,"體力恢復以後\n應該就能清醒過來了吧。",0)
+				MES(TEO,"可能短時間內會有一些後遺症……\n不過靜養一陣應該就能康復了。",0)
+				MES_close(TEO)
+				
+				F_set(TEO)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(TEO,"村裡的人們\n似乎是被怪物吸去了活力。\n他們都變得相當虛弱。",0)
+				MES(TEO,"好像已經有人\n起來活動了……",0)
+				MES(TEO,"這可不行啊，\n不繼續靜養的話……",0)
+				MES_close(TEO)
+			}
+		}
+		rot_chr(TEO,30,ALBERS)
+		MOT(TEO,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F3_00_GoMoonCastle )
+	{
+		MOT(TEO,52,15)
+		rot_chr(TEO,30,PLAYER1)
+		if(!F_TEO)
+		{
+		//丂丂仸僊儖僪庴晅偺墶曈傝偵棫偭偰偄傞丅
+			MES(TEO,"聽說村中出現了怪物呢。",0)
+			MES(TEO,"怪物的領地意識\n本應是很強的。",0)
+			MES(TEO,"平時既不會離開自己的領地，\n更不應該成群地\n出現在村中……",0)
+			MES(TEO,"唔，這是為什麼呢。\n應該是有些其他原因吧。",0)
+			MES_close(TEO)
+			
+			F_set(TEO)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(TEO,"總之，\n我很擔心洛塔村的情況。",0)
+			MES(TEO,"天亮之後\n我就趕過去吧。",0)
+			MES(TEO,"希望沒有人\n受到重傷……",0)
+			MES_close(TEO)
+		}
+		MOT(TEO,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸庰応偱僇僂儞僞乕惾偵偮偄偰偄傞丅
+	//丂丂丂僔僃僗僞乕偲彮偟榖偟偰偄傞姶偠丅
+	if( F2_14_TalkEnemy )
+	{
+		//丂丂仸弶夞僀儀儞僩丅
+		if(!FT_05_TalkTeo)
+		{
+
+			MES(RAGNA,"咦……？\n緹奧醫生在吃飯嗎？",0)
+			MES_close(RAGNA)
+
+		//丂丂僥僆丄怳傝曉傞丅
+			look_chr(TEO,RAGNA,"Bone_Head")
+
+			MES(TEO,"喲，是拉格那啊。",0)
+			MES(TEO,"我確實是在吃飯。\n不過更重要的是我和加修雷先生\n約好了在這裡見面。",0)
+			MES(TEO,"呵呵，這裡的歌手\n發表了一首相當不錯的新歌呢，\n這裡作為會面地點再合適不過了。",0)
+			MES(TEO,"只可惜，\n今天似乎沒有準備表演呢。",0)
+			MES_close(TEO)
+
+			look_chr(TEO,SHESTOR,"Bone_Head")
+			F_set(FT_05_TalkTeo)
+		}
+		else
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		{
+		//丂丂仸怳傝曉傜側偄丅
+			if(!F_TEO)
+			{
+				MES(TEO,"呵呵，是這樣的。",0)
+				MES(TEO,"古董的價值\n並不是只由年代與\n珍貴程度決定的。",0)
+				MES(TEO,"人們能在其中感受到魅力，\n是因為每一件古董都蘊含著一段\n精妙的故事。",0)
+				MES(TEO,"隨著歲月的流逝，\n它們也會變得更加吸引人……",0)
+				MES(TEO,"這才是古董\n真正的價值呢。",0)
+				MES_close(TEO)
+				F_set(TEO)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+				look_chr(TEO,RAGNA,"Bone_Head")
+				MES(TEO,"呵呵……\n他從我這裡借了一本\n有古董專欄的美術雜誌。",0)
+				MES(TEO,"他的讀後感讓我非常高興。",0)
+				MES(TEO,"如何，\n你們要不要也讀讀看？",0)
+				MES_close(TEO)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哈哈……不必了，\n現在正好有些急事。\n（真是瘋狂的對話……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("佀傾儖僂僃儞愭摢")
+					MES(PARTNER,"唔。\n不好意思，我們正在趕時間。\n（一開始恐怕就沒完沒了……）",0)
+					MES_close(PARTNER)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//丂丂仛僥僆亂旤弍嶨帍亃
+				F_set_note(TEO,1)
+				look_chr(TEO,SHESTOR,"Bone_Head")
+			}
+		}
+//		look_off(TEO)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸攷暔娰丒揥帵幒丄婑憽嵪傒偱偁傠偆揥帵昳偺慜偵偄傞丅
+	//丂丂丂乮婑憽嵪傒僩儗僕儍乕偐傜敾掕乯
+	if( F2_00_GoForest )
+	{
+		MOT(TEO,52,15)
+		rot_chr(TEO,30,PLAYER1)
+		if(!F_TEO)
+		{
+			MES(TEO,"拉格那，你知道嗎？\n格雷因原來也當過獵人。",0)
+			MES(TEO,"他的能力也非常出眾，\n還被稱作是遺跡探索專家……\n後來因為傷退出了獵人工會。",0)
+			MES(TEO,"如果他還活躍的話，\n說不定還能為我的博物館捐贈很多東西呢……",0)
+			MES(TEO,"唉，真是遺憾。",0)
+			MES_close(TEO)
+			
+			//仛僌儗僀儞亂僗儁僔儍儕僗僩亃
+			F_set_note(-45,1)
+			F_set(TEO)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(TEO,"格雷因和卡蒂娜\n在當獵人時就是搭檔。",0)
+			MES(TEO,"在格雷因退役的同時，\n卡蒂娜也開始在這裡擔任招待了。",0)
+			MES(TEO,"現在兩位\n都幫了我很大的忙。",0)
+			MES(TEO,"唔……對我來說\n感覺又是高興又是惋惜。",0)
+			MES_close(TEO)
+
+			//仛僇儖僨傿僫亂僌儗僀儞偺憡朹亃
+			F_set_note(-46,1)
+		}
+		MOT(TEO,53,15)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸攷暔娰擖傝岥丄惓柺偺揥帵昳偺慜偵偄傞丅
+	if( F1_15_GoVillage )
+	{
+		if(!F_TEO)
+		{
+			EV_stop("MOTION_TEO_02")
+			MOT_SET(TEO,154, -2,406,406,-1,15)
+			MOT(TEO,154,15)
+			rot_chr(TEO,30,PLAYER1)
+			MES(TEO,"從前一段時間開始，\n有一位客人時常過來參觀。",0)
+			MES(TEO,"他似乎對\n遺跡和發掘出的古董\n很感興趣。",0)
+			MES(TEO,"呵呵，他給人感覺很獨特，\n是位有趣的客人呢，算是志趣高雅吧。",0)
+			MES(TEO,"自從我開了這家博物館以後，\n見到了很多興趣相投的人，\n真是讓人心情愉悅。",0)
+			MES_close(TEO)
+			
+			F_set(TEO)
+			EV("MOTION_TEO_02")
+		}
+	//丂丂仛孞傝曉偟
+	//丂丂仸怳傝曉傜側偄丅
+		else
+		{
+			MES(TEO,"對了，有這麼一個傳說。",0)
+			MES(TEO,"不過你也應該知道，\n史實與傳說\n經常會有分歧。",0)
+			MES(TEO,"例如打倒六魔王其中一人\n的具體過程……",0)
+			MES_close(TEO)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛慜偺儀儞僠偵嵗偭偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩丅
+	//丂丂仸愊壸幱嵾僀儀儞僩偑婲偙傞偲丄偙偺僀儀儞僩偼敪惗偟傑偣傫丅
+	if( F1_01_GameStart)
+	{
+		MOT(TEO,52,15)
+		rot_chr(TEO,30,PLAYER1)
+		if(!FT_01_TeoSolly && !FT_01_TalkTeo)
+		{
+			MES(TEO,"喲，拉格那。\n身體情況怎麼樣？",0)
+			MES(TEO,"也對……\n好像已經沒事了啊。",0)
+			MES_close(TEO)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，嗯。\n是緹奧醫生……對吧。",0)
+			MES(RAGNA,"幫我治療以後\n我還沒有道過謝呢。",0)
+			MES_close(RAGNA)
+
+		//	name2(TEO)
+			MES(TEO,"哈哈哈，不要在意。",0)
+			MES(TEO,"而且我的本職\n也不是醫生呢。",0)
+			MES_close(TEO)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"咦……是嗎？",0)
+			MES_close(RAGNA)
+
+		//	name2(TEO)
+			MES(TEO,"嗯，醫生的執照\n我的確有。",0)
+			MES(TEO,"總之，如果\n還有哪裡不舒服的話\n就來找我吧。",0)
+			MES(TEO,"我會為你做一些\n簡單的治療。",0)
+			MES_close(TEO)
+			
+			F_set(FT_01_TalkTeo)
+		}
+		else
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			if(!F_TEO)
+			{
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀愊壸幱嵾僀儀儞僩傪尒偰偄側偄応崌")
+				if( !FT_01_TeoSolly )
+				{
+					MES(TEO,"我確實也在鎮裡當醫生……",0)
+					MES(TEO,"不過本職並非如此，\n我只是在業餘時間行醫。",0)
+					MES(TEO,"總之，如果\n還有哪裡不舒服的話\n就來找我吧。",0)
+					MES(TEO,"我會為你做一些\n簡單的治療。",0)
+					MES_close(TEO)
+				}
+				else
+				{
+				//	name("佀尒偰偄傞応崌丅")
+					MES(TEO,"我確實也在\n鎮裡當醫生……",0)
+					MES(TEO,"呵呵，不過本職\n可是博物館的館長。",0)
+					MES(TEO,"古董的鑑賞\n和修繕才是我的工作。",0)
+					MES(TEO,"我只是在業餘時間行醫而已。",0)
+					MES_close(TEO)
+					//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+					//	name("佀儔僌僫愭摢")
+					if( GW_MAN==1 )
+					{
+						MES(RAGNA,"哈哈哈，原來如此……\n（確實興趣\n 相當高雅呢。）",0)
+						MES_close(RAGNA)
+					}
+					else
+					{
+					//	name("佀傾儖僂僃儞愭摢")
+						MES(PARTNER,"（唔，果然\n 是個很講究的人呢……）",0)
+						MES_close(PARTNER)
+					}
+				}
+				F_set(TEO)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(TEO,"不過你居然已經可以四處走動了，\n不愧是年輕人啊……",0)
+				MES(TEO,"唉，真讓人羨慕。",0)
+				MES(TEO,"如果我也像你們一樣年輕的話\n一定天天都在遺跡裡探險了。",0)
+				MES_close(TEO)
+			}
+		}
+		MOT(TEO,53,15)
+	}
+	
+	TK_end()
+}
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

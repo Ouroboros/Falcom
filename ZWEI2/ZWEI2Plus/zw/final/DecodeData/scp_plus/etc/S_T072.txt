@@ -1,0 +1,405 @@
+//──────────────────────────────
+//	name("◆ヒコメ（よろず屋店員）Hikome")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_HIKOME
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(HIKOME, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,HIKOME)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,HIKOME)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		VOICE(750,0)							//「いらっしゃい」	
+	
+		look_chr( HIKOME, PLAYER1,"Bone_Head")
+		MES(HIKOME,"いらっしゃい。",0)
+		MES_close(HIKOME)
+		
+		EV("SHOP_HIKOME_LOOP")
+		wait_EV("SHOP_HIKOME_LOOP")
+		look_off(HIKOME)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+//		rot_chr(HIKOME,30,PLAYER1)
+//		MOT(HIKOME, 2, 15)
+		look_chr(HIKOME,PLAYER1,"Bone_Head")
+		//初回イベントあり
+		if(!FS_10_TalkHikome)
+		{
+			EV("TK_HIKOME")
+			wait_EV("TK_HIKOME")
+			
+			EV("SHOP_HIKOME_LOOP")
+			wait_EV("SHOP_HIKOME_LOOP")
+		}
+		else
+		{
+			VOICE(750,0)							//「いらっしゃい」
+		
+			MES(HIKOME,"いらっしゃい。",0)
+			MES_close(HIKOME)
+			
+			EV("SHOP_HIKOME_LOOP")
+			wait_EV("SHOP_HIKOME_LOOP")
+		}
+//		MOT(HIKOME, 150, 15)
+		look_off(HIKOME)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	if( F4_05_OnVillage2)
+	{
+		look_chr( HIKOME, PLAYER1,"Bone_Head")
+		//初回イベントあり
+		if(!FS_08_TalkHikome)
+		{
+			EV("TK_HIKOME")
+			wait_EV("TK_HIKOME")
+		}
+		else
+		{
+			VOICE(750,0)							//「いらっしゃい」
+					
+			MES(HIKOME,"いらっしゃい。",0)
+			MES_close(HIKOME)
+			
+			EV("SHOP_HIKOME_LOOP")
+			wait_EV("SHOP_HIKOME_LOOP")
+		}
+		look_off(HIKOME)
+	}
+	TK_end()
+}
+
+SHOP_HIKOME_LOOP
+{
+	workL(WK_CANCEL,SET,3)//【やめる】
+//	MES(PLAYER1,"??W9【話をする】\n【買い物する】\n【やめる】",0)
+	MES_pos(PLAYER1,"??W9【話をする】\n【買い物する】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	//──────────────────────────────
+	//	name("□話をする")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		EV("TK_HIKOME")
+		wait_EV("TK_HIKOME")
+		loop
+	}
+	//──────────────────────────────
+	//	name("□買い物をする")
+	//──────────────────────────────
+	else
+	if(WK_YESNO==2)
+	{
+		shop_open(4)//よろずや
+		wait_W(WK_YESNO)
+		loop
+	}
+	//──────────────────────────────
+	//	name("□やめる")
+	//　　会話処理終了。
+	//──────────────────────────────
+	else
+	if(WK_YESNO==3)
+	{
+		//⑩の間はメッセージ変更
+		if(F4_09_GoShrineMia && !F5_00_HearLunar )
+		{
+//			さすがにこれは違和感
+//			VOICE(753,0)									//「またどうぞ」
+//			MES(HIKOME,"またどうぞ。",0)		
+		
+			MES(HIKOME,"……気をつけてね。",0)
+			MES_close(HIKOME)
+		}
+		//通常時
+		else
+		{
+			VOICE(753,0)									//「またどうぞ」
+			MES(HIKOME,"またどうぞ。",0)
+			
+//			MES(HIKOME,"毎度あり。\nまたいつでもどうぞ。",0)
+			MES_close(HIKOME)
+		}
+	}
+}
+
+//通常処理////////////////////////////////////////////////////////////////////////////
+TK_HIKOME
+{
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※よろず屋カウンター。
+	if(F6_00_GoToMeru)
+	{
+		if(!F_HIKOME)
+		{
+			MES(HIKOME,"話は聞いたよ。\nあの要塞に乗り込むんだってね。",0)
+			MES(HIKOME,"メルセデクの存在は、\n一部の古文書に記されているきりだ。",0)
+			MES(HIKOME,"膨大な魔力を編みこんだ竜巻で\n大陸すら粉々に砕いてしまうそうだよ。",0)
+			MES(HIKOME,"かつてこのイルバードも\n激しい攻撃に遭って\n大被害を出した事があるらしい。",0)
+			MES(HIKOME,"……中では何があるか分からない。\n気をつけてね。",0)
+			MES_close(HIKOME)
+			//　　★ヒコメ【メルセデクの伝承】
+			F_set_note(HIKOME,2)
+			F_set(HIKOME)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(HIKOME,"大陸を墜とすほどの要塞だ。\n中では何があるか分からない。",0)
+			MES(HIKOME,"装備は入念に\nチェックしておいた方がいいよ。",0)
+			MES(HIKOME,"必要なものがあれば声をかけて。\n大抵のものなら取り揃えるから。",0)
+			MES_close(HIKOME)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※よろず屋カウンター。
+	if( F5_00_HearLunar )
+	{
+		if(!F_HIKOME)
+		{
+			MES(HIKOME,"昨日はどうも。",0)
+			MES(HIKOME,"里はまだ\n混乱しているみだいだね。",0)
+			MES(HIKOME,"負傷者が多いから\n班組みの再編成も必要だ。",0)
+			MES(HIKOME,"この分だと、建て直すにも\n多少時間が掛かるんじゃないかな。",0)
+			MES_close(HIKOME)
+			
+			F_set(HIKOME)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(HIKOME,"里の建て直しには\n多少時間が掛かりそうだ。",0)
+			MES(HIKOME,"それに、こんな被害を\n受けるのは初めての事だからね。",0)
+			MES(HIKOME,"みんなそれぞれ、\n思う所があるみたいだよ。",0)
+			MES_close(HIKOME)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//　　※広場で倒れたカイを助けている。
+	if( F4_09_GoShrineMia )
+	{
+		//　　※初回イベント。
+		if(!FS_10_TalkHikome)
+		{
+			MES(HIKOME,"大丈夫、急所は外れている。",0)
+			MES(HIKOME,"応急手当を済ませたら\nすぐに運び出すよ。",0)
+			MES_close(HIKOME)
+
+		//　　ヒコメ振り向く。
+//			rot_chr(HIKOME,30,PLAYER1)
+		
+			MES(HIKOME,"それはそうと、君たち\nこれから社に向かうんだろ？",0)
+			MES(HIKOME,"こんな時だけど、\n入用なものがあったら言ってくれ。",0)
+			MES(HIKOME,"念のため、手ごろな装備も\nかき集めてきたんだ。",0)
+			MES_close(HIKOME)
+			
+			F_set(FS_10_TalkHikome)
+			
+			//ショップ処理へ
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		else
+		{
+		//　　ヒコメ振り向く。
+
+			MES(HIKOME,"カイなら少し\nうなされているけど大丈夫だ。",0)
+			MES(HIKOME,"応急手当を済ませたら\nすぐに搬送するよ。",0)
+			MES_close(HIKOME)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	if( F4_05_OnVillage2)
+	{
+	//▼初回イベント
+		if(!FS_08_TalkHikome)
+		{
+			MES(HIKOME,"いらっしゃい。",0)
+			MES_close(HIKOME)
+
+		//　　軽くラグナのほうを向く。
+			look_chr( HIKOME, RAGNA,"Bone_Head")
+			MES(HIKOME,"お兄さん、見ない顔だね。\n何か買っていくかい？",0)
+			MES(HIKOME,"大抵のものは揃ってるよ。\nここはよろず屋だからね。",0)
+			MES_close(HIKOME)
+
+
+			MES(RAGNA,"ああ、サンキュー……",0)
+			MES_close(RAGNA)
+
+		//　　ラグナ、きょろきょろ。
+			look(RAGNA,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(RAGNA,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(RAGNA,"Bone_Head",0,		0,2,0,			0,0,0)
+
+			MES(RAGNA,"っていうか、\n刀に槍って……\n武器屋っぽくないか？",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			look_chr(PARTNER,RAGNA,"Bone_Head")
+			MES(PARTNER,"え、そうですか？\n別に普通だと思いますけど……",0)
+			MES(PARTNER,"あ、でも武器や忍具のことで\n何かあったら、ヒコメさんに\n相談するといいかもしれません。",0)
+			MES(PARTNER,"ヒコメさんは、いろんな忍具に\n精通したエキスパートなんですよ～。",0)
+			MES_close(PARTNER)
+			look_off(PARTNER)
+
+		//	name2(HIKOME)
+			MES(HIKOME,"まあ、使うより愛でる方が\n得意だけどね。",0)
+			MES(HIKOME,"良かったら、\n何か一つ見繕ってあげようか？",0)
+			MES_close(HIKOME)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"はは、まあ考えておくぜ……\n（やっぱちょっと\n  普通の村とは違うよな……）",0)
+			MES_close(RAGNA)
+
+			//★ヒコメ【忍具のエキスパート】
+			F_set_note(HIKOME,0)
+			F_set(FS_08_TalkHikome)
+
+		//名前付きキャラ全員に話しかけると露天風呂が開く
+			if(FS_08_TalkHikome && FS_08_TalkKarasu && FS_08_TalkDaigoro && FS_08_TalkYasaku && FS_08_TalkKai && FS_08_TalkAkane && FS_08_TalkLuri && FS_08_TalkGen)
+			{
+				F_set(F4_12_OkRoten)
+			}
+		}
+		else
+		{
+			if(!F_HIKOME)
+			{
+			//　　※よろず屋カウンター。
+			//　　ヒコメ、ラグナに向く。
+				look_chr( HIKOME, RAGNA,"Bone_Head")
+				MES(HIKOME,"そうだね、お兄さんなら\n風車手裏剣なんてどう？",0)
+				MES(HIKOME,"慣れれば機動性も高いし、\n重量武器としても使えるよ。",0)
+				MES(HIKOME,"僕のお気に入りの武具の一つさ。\n今ならお安くしとくけど？",0)
+				MES_close(HIKOME)
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（そんな平然と薦められてもな……）",0)
+					MES_close(RAGNA)
+				}
+			//	name("□スバル先頭")
+				else
+				{
+				//　　ヒコメ、スバルに向く。
+					look_chr( HIKOME, PARTNER,"Bone_Head")
+					MES(HIKOME,"スバルには……",0)
+					MES(HIKOME,"風車手裏剣は、ちょっと無理かな。\n扱いが難しいから。",0)
+					MES_close(HIKOME)
+
+				//　　スバル、ヒコメに向く。
+					rot_chr(PARTNER,30,HIKOME)
+					
+				//	name2(PARTNER)
+					MES(PARTNER,"ええ～っ……？\nそんなあっさり……",0)
+					MES_close(PARTNER)
+				}
+				F_set(HIKOME)
+			}
+			else
+			{
+				//──────────────────────────────
+				//　　★繰り返し
+					MES(HIKOME,"ここはよろず屋だからね。\n大抵のものは揃えてあるよ。",0)
+					MES(HIKOME,"手裏剣、手甲カギ、鎖帷子に\n糧食丸薬、飛びクナイ……",0)
+					MES(HIKOME,"そちらの棚の薬品は、\n古文書どおりに調合した一品だ。",0)
+					MES(HIKOME,"よかったら見ていってね。",0)
+					MES_close(HIKOME)
+					//★ヒコメ【薬品は自分で調合】
+					F_set_note(HIKOME,1)
+			}
+		}
+	}
+}
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

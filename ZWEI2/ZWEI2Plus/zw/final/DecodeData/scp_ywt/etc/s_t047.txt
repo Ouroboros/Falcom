@@ -1,0 +1,717 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僔僗僞乕丒僀僓儀儔乮傗偝偖傟僔僗僞乕乯Isabella")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_ISABELLA
+{
+	TK_begin()
+	rot_chr(ISABELLA,30,PLAYER1)
+
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(ISABELLA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ISABELLA)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ISABELLA)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ISABELLA)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛偵擖偭偨強偱僞僶僐傪媧偭偰偄傞丅
+	if( F6_05_EndSixth )
+	{
+	//丂丂仸弶夞僀儀儞僩
+		if(!FT_13_TalkIsabella)
+		{
+
+			cross_fade(30)			//僋儘僗僼僃乕僪
+			EV_begin()
+			
+			//僇儊儔僙僢僩
+			CAM_move(119,-1019,215,0,0)
+			CAM(-130,64,215,30,151,0,0)
+			//僉儍儔嵞攝抲
+			chr_pos(RAGNA,	119,1019,0,260,2)
+			chr_pos(PET,112,853,0,280,2)
+			chr_pos(PARTNER,5,972,0,270,2)
+			rot_chr(ISABELLA,30,PARTNER)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(PARTNER,"9", "1", "7")	
+			KAO(ISABELLA, "1", "1", "1")	
+			
+			F_reset_chr(ISABELLA,CF_NO_MOVE)
+
+			wait_fade()
+			wait(15)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僀僓儀儔偵夛偭偨帠偑偁傞応崌")
+			if(FT_01_IsabellaEnc)
+			{
+			//	name("僀僓儀儔")
+				KAO(ISABELLA,"12321Z3","1","1")
+				MES(ISABELLA,"哎呀……",0)
+				KAO(ISABELLA,"12321Z6","1","1")
+				MES(ISABELLA,"今天有這麼多人啊。\n差不多１２００芬尼左右吧。",0)
+				MES_close(ISABELLA)
+
+				MES(RAGNA,"我…我也沒說\n要懺悔吧？",0)
+				MES_close(RAGNA)
+
+				MES(PET,"還是一點都沒變啊……",0)
+				MES(PET,"你倒是改變一下態度，\n不要再這麼傲慢無理了，如何？",0)
+				MES_close(PET)
+			}
+		//	name("佀夛偭偨帠偑側偄応崌")
+			else
+			{
+			//	name("僀僓儀儔")
+				KAO(ISABELLA,"12321Z3","1","1")
+				MES(ISABELLA,"哎呀……",0)
+				KAO(ISABELLA,"12321Z5","1","1")
+				MES(ISABELLA,"來了這麼多人啊。",0)
+				KAO(ISABELLA,"12321Z8","1","1")
+				MES(ISABELLA,"為自己的行動懺悔的話５００芬尼，\n有重大犯罪的話就是１２００芬尼了哦。",0)
+				MES_close(ISABELLA)
+
+				MES(RAGNA,"沒有人說\n要懺悔吧？",0)
+				MES_close(RAGNA)
+
+				MES(PET,"唔，這種修女……",0)
+				MES(PET,"你倒是改變一下態度，\n不要再這麼傲慢無理了，怎麼樣？",0)
+				MES_close(PET)
+
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			KAO(ISABELLA,"12321Z1","23","1")
+			MES(ISABELLA,"呵呵……",0)
+			MES_close(ISABELLA)
+
+		//丂丂僔僗僞乕丄儈傾偵岦偔丅
+			KAO(ISABELLA,"1","321","1")
+			rot_chr(ISABELLA,30,PARTNER)
+			wait(30)
+			KAO(ISABELLA,"12321Z8","1","1")
+			MES(ISABELLA,"……看來你\n還沒有意識到\n自己犯下的過錯呢。",0)
+			MES_close(ISABELLA)
+
+			MES(PARTNER,"……啊………",0)
+			MES(PARTNER,"…………嗯。",0)
+			MES_close(PARTNER)
+
+			KAO(ISABELLA,"12321Z8","1","1")
+			MES(ISABELLA,"如果不想重蹈覆轍的話，\n就要一直前進。",0)
+			KAO(ISABELLA,"12321ZA","1","1")
+			MES(ISABELLA,"另外，你還要\n意識到……個人承擔一切，\n那是何等重大的罪責。",0)
+			KAO(ISABELLA,"12321Z8","1","1")
+			MES(ISABELLA,"每個人的罪孽並非是源於\n其出身與境遇。",0)
+			KAO(ISABELLA,"12321Z7","1","1")
+			MES(ISABELLA,"一直以來支持著你的人\n就在你身邊。",0)
+			MES_close(ISABELLA)
+
+			MES(PARTNER,"……是的。",0)
+			MES(PARTNER,"謝謝你，\n修女小姐。",0)
+			MES_close(PARTNER)
+
+		//丂丂僇儊儔傪傾儖僂僃儞偨偪偵婑偣傞丅
+			wait(15)
+			MES(PET,"沒…沒想到說得這麼正經……",0)
+			MES_close(PET)
+
+			MES(RAGNA,"嗯，莫名其妙的修女……",0)
+			MES_close(RAGNA)
+
+			KAO(ISABELLA,"12321Z1","23","1")
+			MES(ISABELLA,"呵呵……",0)
+			MES_close(ISABELLA)
+
+		//丂丂僔僗僞乕丄僞僶僐傪傆偐偡丅
+			MOT(ISABELLA,68,15)
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//捠忢偗傓傝徚偟
+			wait(60)
+			MOT(ISABELLA,52,15)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//偗傓傝栠偟
+			
+		//	name("僀僓儀儔")
+			KAO(ISABELLA,"12321Z3","21","1")
+			MES(ISABELLA,"啊，對了。",0)
+			KAO(ISABELLA,"12321Z4","1","1")
+			MES(ISABELLA,"現在這裡收了一個徒弟哦。",0)
+			MES_close(ISABELLA)
+
+		//丂丂堦摨偵丠僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			EMO(PET,EMO_HATENA)
+			wait(30)
+			
+			MES(PET,"徒弟……？",0)
+			MES_close(PET)
+
+		//	name("僀僓儀儔")
+			KAO(ISABELLA,"12321Z3","1","1")
+			MES(ISABELLA,"就在裡面。",0)
+			KAO(ISABELLA,"12321Z4","1","1")
+			MES(ISABELLA,"有空的話，就去見一面吧。",0)
+			MES_close(ISABELLA)
+		
+			fade_in(100,30,BLACK)
+			wait_fade()
+			F_set_chr(ISABELLA,CF_NO_MOVE)
+
+			//仛僀僓儀儔亂弌棃傞恖暔亃
+			F_set_note(ISABELLA,2)
+			F_set(FT_13_TalkIsabella)
+
+			//僇儊儔傪弶婜愝掕偵
+			CAM_return( 0 )
+			wait(30)
+			EV_end()
+			//僼僃乕僪僀儞----------------------
+			fade_in(0,30,BLACK)
+
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+	//	name("僀僓儀儔")
+		else
+		{
+			MES(ISABELLA,"我要說的就這麼多了。",0)
+			MES(ISABELLA,"還有……\n現在這裡收了一個徒弟哦。",0)
+			MES(ISABELLA,"可以的話，就去見一面吧。",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛偺拞偱僞僶僐傪媧偭偰偄傞丅
+	if( F6_00_GoToMeru )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"……現在的表情\n也很不錯呢。",0)
+			MES(ISABELLA,"雖然我不清楚\n你們打算怎麼做，\n但是希望你們將來不會後悔。",0)
+			MES(ISABELLA,"再怎麼懺悔也是改變不了過去的——",0)
+			MES(ISABELLA,"每個人能做到的\n也只是拼命地活下去而已。",0)
+			MES_close(ISABELLA)
+			
+			F_set(ISABELLA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"……畢竟，每個人\n也只能為了現在拼命地活下去。",0)
+			MES(ISABELLA,"不要擔心。",0)
+			MES(ISABELLA,"這座教會是會為那些走上錯誤道路\n丟掉性命的人祈求冥福的。",0)
+			MES(ISABELLA,"每人大約３９８０芬尼吧。",0)
+			MES_close(ISABELLA)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（聽起來像是大拍賣啊……）",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"（我可不想讓\n 這傢伙為我祈求冥福……）",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸滒夨幒丄憢偺岦偙偆偵偄傞丅
+	//丂丂丂滒夨幒偵偼儌乕儕僗偑嵗傜偝傟偰偄傞丅
+	if( F5_00_HearLunar )
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+	//丂丂丂滒夨幒偺憢偁偨傝偺俴俹傪挷傋傞偲斀墳偡傞丅
+		//	name("僀僓儀儔")
+		MES(ISABELLA,"現在正忙著呢。\n要懺悔的話請排隊。",0)
+		MES(ISABELLA,"還有，你們現在\n妨礙到我了，趕快出去。",0)
+		MES_close(ISABELLA)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛偺拞偱丄僞僶僐傪傆偐偣偰偄傞丅
+	//	name("僀僓儀儔")
+	if( F4_00_StartSolo )
+	{
+		if(!F_ISABELLA)
+		{
+			MES(ISABELLA,"可能是受到那件事的影響吧。",0)
+			MES(ISABELLA,"即使不出去招攬，\n也時常會有人過來。",0)
+			MES_close(ISABELLA)
+
+		//丂丂僔僗僞乕丄僞僶僐傪傆偐偡丅
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//捠忢偗傓傝徚偟
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//偗傓傝栠偟
+
+
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"……太礙眼了。\n還是想辦法減少客流量吧。",0)
+			MES_close(ISABELLA)
+		
+			F_set(ISABELLA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"現在也有一位為將來\n感到擔憂的太太在裡面呢。",0)
+			MES(ISABELLA,"……太礙眼了。\n真希望她趕緊回去。",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛奜偱僞僶僐傪傆偐偣偰偄傞丅
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"哎呀，這時候還要出去嗎？",0)
+			MES(ISABELLA,"很辛苦嘛。",0)
+			MES_close(ISABELLA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，嗯……",0)
+			MES(RAGNA,"可是，這一帶\n似乎沒有受到什麼影響呢。",0)
+			MES_close(RAGNA)
+
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"呵呵……",0)
+			MES_close(ISABELLA)
+
+		//丂丂僔僗僞乕丄備偭偔傝僞僶僐傪傆偐偡丅
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//捠忢偗傓傝徚偟
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//偗傓傝栠偟
+
+
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"……看來沒錯呢。",0)
+			MES_close(ISABELLA)
+
+		//丂丂傾儖僂僃儞丄儔僌僫偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			MES(RAGNA,"（果然是這傢伙\n 把怪物趕走的嗎……？）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（唔……多半\n 也就是用煙頭\n 「嗤嗤……」之類的吧。）",0)
+			MES_close(PARTNER)
+		
+			F_set(ISABELLA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"我這個人每天睡\n不到十個小時就不痛快。",0)
+			MES(ISABELLA,"就這些怪物也敢\n打擾我寶貴的睡眠時間，真是有種。",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛偺奜偱僞僶僐傪媧偭偰偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"第一個……",0)
+			MES_close(ISABELLA)
+
+		//丂丂僀僓儀儔偵俹俙僄儌乕僔儑儞丄僯僢僾儖偨偪偵岦偔丅
+			EMO(ISABELLA,EMO_PA)
+			wait(30)
+			
+			rot_chr(ISABELLA,30,NIPPLE)
+
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"哎呀，那邊也有小孩子呢。",0)
+			MES_close(ISABELLA)
+
+		//丂丂僔僗僞乕丄僞僶僐傪傆偐偡丅
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//捠忢偗傓傝徚偟
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//偗傓傝栠偟
+
+
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"……把他們叫過來吧。",0)
+			MES_close(ISABELLA)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（總覺得這個修女\n 非常危險……）",0)
+				MES(RAGNA,"（為什麼呢……？）",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"（好…好像有些不好的感覺……）",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			F_set(ISABELLA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//丂丂僔僗僞乕丄僞僶僐傪傆偐偡丅
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//捠忢偗傓傝徚偟
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//偗傓傝栠偟
+
+
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"每個人的心中\n都有黑暗。",0)
+			MES(ISABELLA,"要把他們吸引過來\n實在是太簡單了。",0)
+			MES_close(ISABELLA)
+
+		//丂丂俀恖偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			//仛僀僓儀儔亂怱傪弉抦亃
+			F_set_note(ISABELLA,0)
+		}
+		F_set(FT_05_TalkIsabella)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛偺奜偱僞僶僐傪媧偭偰偄傞丅
+	//丂丂仸弶夞僀儀儞僩丅
+	//	name("僀僓儀儔")
+	if( F2_00_GoForest )
+	{
+		if(!FT_03_TalkIsabella	)
+		{
+			MES(ISABELLA,"呼……",0)
+			MES(ISABELLA,"這座教會通風很差，\n真讓人頭疼。",0)
+			MES(ISABELLA,"空氣老是鬱結在裡面啊。",0)
+			MES_close(ISABELLA)
+
+			//丂丂俀恖偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀僔僗僞乕偺弶夞僀儀儞僩傪尒偨偙偲偑偁傞応崌丅")
+			if(FT_01_IsabellaEnc)
+			{
+				MES(PARTNER,"虧你這個煙槍\n敢說這種話……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"說起來這裡\n平常都見不到人吧。",0)
+				MES(RAGNA,"真的有人\n會來嗎？",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀尒偨偙偲偑側偄応崌丅")
+			else
+			{
+				MES(PARTNER,"她倒是一口接一口\n很快活的樣子……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"修女也吸煙……",0)
+				MES(RAGNA,"這種教會有人來嗎？",0)
+				MES_close(RAGNA)
+			}
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"哎呀……",0)
+			MES(ISABELLA,"呵呵，這還不簡單。",0)
+			MES_close(ISABELLA)
+
+		//丂丂僔僗僞乕丄僞僶僐傪傆偐偡丅
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//捠忢偗傓傝徚偟
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//偗傓傝栠偟
+
+			
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"要不然，有機會\n讓你們見識一下？",0)
+			MES_close(ISABELLA)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（這腔調就像\n 黑手黨老大一樣……）",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"（……哼，到底想讓我們\n 見識什麼。）",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			F_set(FT_03_TalkIsabella)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"這裡是教會哦。\n當然會有客人來。",0)
+			MES(ISABELLA,"要不然，有機會\n讓你們見識一下？",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛偱僞僶僐傪媧偭偰偄傞丅
+	//丂丂丂夛榖拞傕媔墝儌乕僔儑儞偼巭傑傜側偄丅乮偐丄傕偟偔偼庤摦偱嫴傓乯
+	if( F1_15_GoVillage )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"對了，有句話忘了說……",0)
+			MES(ISABELLA,"這間教會\n也是很有來頭的哦。",0)
+			MES(ISABELLA,"好像和神聖王國的皇室\n也有些因緣。",0)
+			MES(ISABELLA,"……這可是非常有名的。\n你來到這裡就一定要記住。",0)
+			MES_close(ISABELLA)
+
+			MES(PARTNER,"（這個修女\n 為什麼如此傲慢……）",0)
+			MES_close(PARTNER)
+
+			F_set(ISABELLA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"這裡可是與神聖王國的皇室\n也有因緣，很有來歷的教會哦。",0)
+			MES(ISABELLA,"想要祈禱的話請便。",0)
+			MES(ISABELLA,"不過，祈禱本來\n就是最沒用的一種行為。",0)
+			MES_close(ISABELLA)
+
+		//丂丂俀恖偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸嫵夛偱僞僶僐傪媧偭偰偄傞丅
+	if( F1_01_GameStart )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"哎呀……\n想要懺悔嗎？",0)
+			MES_close(ISABELLA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"哼，不好意思，我沒那個打算。",0)
+			MES(PARTNER,"在那之前，\n你難道不應該把煙給熄了嗎？\n這對客人很不禮貌吧？",0)
+			MES_close(PARTNER)
+
+		//丂丂僔僗僞乕丄僞僶僐傪揻偒偐偗傞丅
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//捠忢偗傓傝徚偟
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//偗傓傝栠偟
+
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"……你不打算懺悔嗎？",0)
+			MES_close(ISABELLA)
+
+		//	name2(ISABELLA)
+			MES(ISABELLA,"那就出去吧。\n根本就沒有進教會該有的態度。",0)
+			MES_close(ISABELLA)
+
+		//丂丂俀恖偵椻傗娋僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+			//	MES(RAGNA,"乮偙丄晐偊僔僗僞乕偩側乧乧乯",0)
+				MES(RAGNA,"（這修女真是豈有此理……）",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"還…還會擺架子……",0)
+				MES_close(PARTNER)
+			}
+
+			F_set(ISABELLA)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仛孞傝曉偟
+		else
+		{
+		//	name("僀僓儀儔")
+			MES(ISABELLA,"煩惱傾訴１００芬尼、\n聖典訓話２００芬尼。",0)
+			MES_close(ISABELLA)
+
+		//	name2(ISABELLA)
+			MES(ISABELLA,"為自己的行動懺悔的話５００芬尼，\n有重大犯罪的話就是１２００芬尼。",0)
+			MES_close(ISABELLA)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（敲詐修女……？）",0)
+				MES_close(RAGNA)
+			}
+		//	name("佀傾儖僂僃儞愭摢")
+			else
+			{
+				MES(PARTNER,"我…我們說過\n沒有這些打算了吧……",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		}
+	}
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,665 @@
+//──────────────────────────────
+//	name("◆小咪（猫）")
+//──────────────────────────────
+//　　※蒙德兰夫人が飼っている猫です。
+//　　※ソロモンリング装備時之みメッセ～ジを表示。
+//　　　それ以外は振り向いて泣き声ＳＥを鳴らすだけ。
+//　　※メッセ～ジは全て色換え（ピンク）とします。
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_CAT_A
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(CAT_A, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,CAT_A)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,CAT_A)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CAT_A)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CAT_A)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CAT_A)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CAT_A)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,CAT_A)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	//──────────────────────────────
+	//ソロモンリング装備時は一般メッセ～ジ
+	//──────────────────────────────
+	if(EQ092)
+	{
+		chr_rename(CAT_A,"小咪")
+		F_set(FV_FF_NameMe)
+		//──────────────────────────────
+		//▼□エンディング直前でソロモンリング所持
+		//──────────────────────────────
+		//　　※民家１，モンドレアン之近くでフリ～ム～ブ
+		//　　※フラグ□では，装備之有無ではなく，
+		//　　　ソロモンリングを所有しているかで判定。
+		if( F6_05_EndSixth )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+			if(!F_CAT_A)
+			{
+			//	name("小咪")
+				MES(CAT_A,"C4知道吗～，知道吗～？",0)
+				MES(CAT_A,"C4前几天～，咪咪我\n遇到了一位温柔的姐姐。",0)
+				MES(CAT_A,"C4她的膝盖好暖和～，\n这样轻柔柔的抚摸我来着？",0)
+				MES(CAT_A,"C4好喜欢姐姐……\n还想再见到她～噴",0)
+				MES_close(CAT_A)
+
+				F_set(CAT_A)
+			}
+		//　　★繰り返し
+			else
+			{
+			//　　★繰り返し
+			//	name("小咪")
+				MES(CAT_A,"C4姐姐，\n的膝盖好暖和～……",0)
+				MES(CAT_A,"C4当她抚摸我的时候，\n真的好舒服。",0)
+				MES(CAT_A,"C4咪咪，不由得\n就打起瞌睡来☆",0)
+				MES(CAT_A,"C4好喜欢姐姐……\n还想再见到她～噴",0)
+				MES_close(CAT_A)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+		else
+	//　　※ソロモンリング装備で猫じゃらしを持っていると，無条件で以下之メッセ～ジが発動。
+		if(F5_00_HearLunar && FV_11_Warasi_7_brm && !FV_11_Warasi_8_Lot)
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			if(!F_RAGNA)
+			{
+			//　　小咪にアセアセエモ～ション。
+
+				EMO(CAT_A,EMO_ASEASE)
+				wait(30)
+				
+				MES(CAT_A,"C4……啊………\n那是猫猫草……？",0)
+				MES(CAT_A,"C4喵咩咕噜……\n喵咩，喵咩～喵噴",0)
+				MES_close(CAT_A)
+				
+				//──────────────────────────────
+				if(GW_MAN==0 && F6_00_GoToMeru)
+				{
+				//	name("□艾尔雯先頭")
+					MES(PARTNER,"嚯，真的有效哦……",0)
+					MES(PARTNER,"嗨，咬住！",0)
+					MES_close(PARTNER)
+
+				//	name("小咪")
+					MES(CAT_A,"C4喵喵，不要这样～！\n咩喵，喵喵喵喵噴",0)
+					MES_close(CAT_A)
+					
+				//	name2(RAGNA)
+					MES(RAGNA,"（不要玩了……）",0)
+					MES_close(RAGNA)
+
+				//	name2(PET)
+					MES(PET,"（公主殿下……）",0)
+					MES_close(PET)
+				}
+				else
+				{
+				//	name("□拉古那先頭")
+					MES(RAGNA,"玩的忘形了……",0)
+					MES_close(RAGNA)
+				}
+				//──────────────────────────────
+				
+			//　　※ここ之ＬＦは猫３匹共通。
+				F_set(RAGNA)
+			}
+			else
+			{
+			//　　小咪にアセアセエモ～ション。
+				EMO(CAT_A,EMO_ASEASE)
+				wait(30)
+							
+			//	name("小咪")
+				MES(CAT_A,"C4……啊………\n是猫猫草……？",0)
+				MES(CAT_A,"C4喵咩咕噜……\n喵咩，喵咩～喵噴",0)
+				MES_close(CAT_A)
+				
+				//──────────────────────────────
+				if(GW_MAN==0 && F6_00_GoToMeru)
+				{
+				//	name("□艾尔雯先頭")
+				//　　艾尔雯に□エモ～ション。
+					EMO(PARTNER,EMO_ONPU)
+					wait(30)
+					MES(PARTNER,"嘿这里这里。\n真好玩！",0)
+					MES_close(PARTNER)
+
+				//　　拉古那と露に冷や汗エモ～ション。
+					EMO(RAGNA,EMO_HIYAASE)
+					EMO(PET,EMO_HIYAASE)
+					wait(30)
+				}
+			}
+		}
+		else
+		//──────────────────────────────
+		//▼□□　わらしべイベント
+		//	name("●トラップ：亚尔迪之狗猫たち	『謎之ペットフ～ド』□芬尼")
+		//──────────────────────────────
+		if(F5_00_HearLunar && FV_11_Warasi_4_Bns && !FV_11_Warasi_5_Han && !FV_11_Warasi_Fake)
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			if(!F_CAT_A)
+			{
+			//	name("□初回之场合。")
+			//	name("小咪")
+				MES(CAT_A,"C4嗅嗅，嗅嗅……",0)
+				MES(CAT_A,"C4那个，那个～？",0)
+				MES(CAT_A,"C4我闻到了一股，非常\n香香的味道。",0)
+				MES_close(CAT_A)
+
+			//　　小咪に！エモ～ション。
+				EMO(CAT_A,EMO_BIKKURI)
+				wait(30)
+		
+			//	name("小咪")
+				MES(CAT_A,"C4那个，那不是\n『神秘的宠物食物』嘛？",0)
+				MES(CAT_A,"C4喵喵喵噴\n把那个给咪咪吧？",0)
+			 	MES_close(CAT_A)
+			}
+			else
+			{
+			//	name("□２回目以降。")
+			//	name("小咪")
+				MES(CAT_A,"C4那个宠物食物，散发出一股\n非常香香的味道。",0)
+				MES(CAT_A,"C4那个，那个～？\n咪咪，好想要啊～噴",0)
+				MES_close(CAT_A)
+			}
+			
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【取消】
+			MES_pos(PLAYER1,"??W9【吃吧噴】\n【抱歉】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+			//────────────────────────────────────────
+			//──────────────────────────────
+			//	name("□【吃吧噴】")
+			//──────────────────────────────
+			if(WK_YESNO==1)
+			{
+				MES(CAT_A,"C4真的给我～？",0)
+				MES(CAT_A,"C4我真的可以，\n吃么～？",0)
+			 	MES_close(CAT_A)
+				
+			//	name("選択テキスト")
+				workL(WK_CANCEL,SET,2)//【取消】
+				MES_pos(PLAYER1,"??W9【可以噴】\n【哎呀，不行】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//閉じきるまで待つ
+
+				//────────────────────────────────────────
+				//──────────────────────────────
+				//	name("□【可以噴】")
+				//──────────────────────────────
+				if(WK_YESNO==1)
+				{
+					MES(CAT_A,"C4哇～，咪咪好高兴！",0)
+					MES_close(CAT_A)
+
+				//　　小咪にアセアセエモ～ション。
+					EMO(CAT_A,EMO_ASEASE)
+					wait(30)
+				//	name("小咪")
+					MES(CAT_A,"C4我吃我吃，吧唧吧唧……",0)
+					MES(CAT_A,"C4……咕隆。",0)
+					MES(CAT_A,"C4哈啊，真好吃……\n实在是太好吃了～。",0)
+					MES_close(CAT_A)
+
+					//──────────────────────────────
+					if(GW_MAN==0)
+					{
+						if(F5_08_JoinOdessa && !F5_13_KillDygald)
+						{
+						//	name("□奥迪莎先頭")
+							MES(PARTNER,"唉，真那么好吃吗。",0)
+							MES(PARTNER,"这个……你知道\n这个究竟是个怎样的宠物食品吗？",0)
+							MES_close(PARTNER)
+						}
+						else
+						if(F6_00_GoToMeru)
+						{
+						//	name("□艾尔雯先頭")
+							MES(PARTNER,"嚯，真的如此美味吗。",0)
+							MES(PARTNER,"这个……你知道\n这个究竟是个怎样的宠物食品吗？",0)
+							MES_close(PARTNER)
+						}
+					}
+					else
+					{
+					//	name("□それ以外")
+						MES(RAGNA,"唉，真那么好吃吗。",0)
+						MES(RAGNA,"这个……你知道\n这个究竟是个怎样的宠物食品吗？",0)
+						MES_close(RAGNA)
+					}
+					//──────────────────────────────
+					
+				//	name("小咪")
+					MES(CAT_A,"C4嗯～嗯，不知道……\n咪咪从来没有尝过\n这种味道。",0)
+					MES_close(CAT_A)
+
+				//　　小咪にＰＡエモ～ション。
+					EMO(CAT_A,EMO_PA)
+					wait(30)
+					
+				//	name("小咪")
+					MES(CAT_A,"C4啊，对了。\n这个，是咪咪送给你们的礼物？",0)
+					MES(CAT_A,"C4以前捡到的\n放在钱包里的东西。",0)
+					MES(CAT_A,"C4希望你们好好使用。",0)
+				 	MES_close(CAT_A)
+
+
+				//	name("アイテム入手テキスト")
+					fade_in(30,10,BLACK)
+					SE(24,0)	//お金之音だと味気ない之でこれで（竹）
+					MES(0,"C3S2得到３０００芬尼。",2)
+					MES_close(0)
+					fade_in(0,10,BLACK)
+					wait_fade()
+
+					//3000芬尼入手
+					get_gold(3000,PLAYER1)
+					
+					//謎之ペットフ～ド消滅
+					get_item(146,-1,1)
+
+
+				//	name("小咪")
+					MES(CAT_A,"C4喵～喵，呼噜呼噜……",0)
+					MES(CAT_A,"C4咪咪想\n睡觉了……",0)
+				 	MES_close(CAT_A)
+				 	
+					F_set(FV_11_Warasi_Fake)
+					F_reset(CAT_A)
+				}
+				//──────────────────────────────
+				//	name("□【哎呀，不行】")
+				//──────────────────────────────
+				else
+				{
+					MES(CAT_A,"C4好失望……\n不要耍咪咪喵……",0)
+				 	MES_close(CAT_A)
+				 	
+				 	//2008.08.12.根田移動
+					F_set(CAT_A)
+
+				}
+				//────────────────────────────────────────
+			}
+			//──────────────────────────────
+			//	name("□【不行】")
+			//──────────────────────────────
+			else
+			{
+				if(!F_CAT_A)
+				{
+				//	name("□初回之场合。")
+				//	name("小咪")
+					MES(CAT_A,"C4轰轰轰！",0)
+					MES(CAT_A,"C4好失望……\n咪咪好伤心……",0)
+				 	MES_close(CAT_A)
+				 	
+					//2008.08.12.根田移動
+					F_set(CAT_A)
+				}
+				else
+				{
+				//	name("□２回目以降。")
+				//	name("小咪")
+					MES(CAT_A,"C4好失望……\n咪咪好伤心……",0)
+					MES_close(CAT_A)
+				}
+
+			}
+			//────────────────────────────────────────
+			
+			//2008.08.12.根田移動
+			//F_set(CAT_A)
+		}
+		else
+		//──────────────────────────────
+		//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+		//──────────────────────────────
+		//　　※亚尔迪正門付近でフリ～ム～ブ
+		if( F6_00_GoToMeru )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+			
+			if(!F_CAT_A)
+			{
+			//	name("小咪")
+				MES(CAT_A,"C4最近，婆婆\n有些烦躁～。",0)
+				MES(CAT_A,"C4有一点怕……",0)
+				MES(CAT_A,"C4婆婆，\n究竟怎么了～……",0)
+				MES_close(CAT_A)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"唉呀，先别说这个了。",0)
+					MES(RAGNA,"你好像和你的主人走散了，\n没事吧……？",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("□艾尔雯先頭")
+				{
+					MES(PARTNER,"嗯，你……",0)
+					MES(PARTNER,"你离开你主人的\n身边，没关系吗？",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+			//　　小咪に？エモ～ション。
+				EMO(CAT_A,EMO_HATENA)
+				wait(30)
+				
+				F_set(CAT_A)
+			}
+		//　　★繰り返し
+			else
+			{
+			//	name("小咪")
+				MES(CAT_A,"C4婆婆，为什么\n会发火……",0)
+				MES(CAT_A,"C4嘤嘤嘤，\n完全不明白……",0)
+				MES_close(CAT_A)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+		else
+		//──────────────────────────────
+		//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+		//──────────────────────────────
+		//　　※民家１前，モンドレアン之近くでフリ～ム～ブ。
+		if( F5_00_HearLunar )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+			if(!F_CAT_A)
+			{
+			//	name("小咪")
+				MES(CAT_A,"C4那个～，那个～？",0)
+				MES(CAT_A,"C4咪咪，真的看不见\n大人们的样子。",0)
+				MES(CAT_A,"C4因为，咪咪的个子\n很矮……",0)
+				MES(CAT_A,"C4连他们长什么样子都不知道。",0)
+				MES_close(CAT_A)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（啊，的确……\n  细想想这也难怪……）",0)
+				MES_close(RAGNA)
+				
+				F_set(CAT_A)
+			}
+		//　　★繰り返し
+			else
+			{
+				//	name("小咪")
+				MES(CAT_A,"C4咪咪，除了婆婆\n对其他的人都不太了解。",0)
+				MES(CAT_A,"C4因为，咪咪\n个子太矮了……\n连他们长什么样子都不知道。",0)
+				MES(CAT_A,"C4咪咪长大的话，\n就能看清他们的脸了吧？",0)
+				MES_close(CAT_A)
+
+			//	name2(PET)
+				MES(PET,"除非……\n你能长成那只妖猫的个头，否则恐怕会很困难。",0)
+				MES_close(PET)
+
+			//　　拉古那，冷や汗エモ～ションで露に向く。
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+				rot_chr(RAGNA,30,PET)
+
+				MES(RAGNA,"居然想到了妖猫……",0)
+				MES_close(RAGNA)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+		else
+		//──────────────────────────────
+		//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+		//──────────────────────────────
+		//※無し
+		//──────────────────────────────
+		//▼⑨汎用忍者が倒れているだけ之フラグ。
+		//──────────────────────────────
+		//※無し
+		//──────────────────────────────
+		//▼⑧星降之里に到着した（拉古那·昴）
+		//──────────────────────────────
+		//※無し
+		//──────────────────────────────
+		//▼⑦拉古那は単独行動を始めた
+		//──────────────────────────────
+		//　　※教会，モンドレアン之近くでフリ～ム～ブ
+		if( F4_00_StartSolo )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+			if(!F_CAT_A)
+			{
+			//	name("小咪")
+				MES(CAT_A,"C4听我说～，听我说～？",0)
+				MES(CAT_A,"C4刚才外面有\n一只蝴蝶。",0)
+				MES(CAT_A,"C4黄色的，在空中飞翔……",0)
+				MES(CAT_A,"C4我还想再看看～……",0)
+				MES_close(CAT_A)
+
+				F_set(CAT_A)
+			}
+		//　　★繰り返し
+			else
+			{
+			//	name("小咪")
+				MES(CAT_A,"C4咪咪我，想去追那只\n蝴蝶来着……",0)
+				MES(CAT_A,"C4但是被婆婆拦住了。",0)
+				MES(CAT_A,"C4婆婆，有些害怕似的……\n究竟发生什么事了……",0)
+				MES_close(CAT_A)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+		else
+		//──────────────────────────────
+		//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+		//──────────────────────────────
+		//　　※いない。
+		//──────────────────────────────
+		//▼⑤魔女拉莱拉から，敵之正体が明かされた
+		//──────────────────────────────
+		//　　※民家１前，モンドレアン之近くでゆっくりフリ～ム～ブ。
+		if( F2_14_TalkEnemy )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+			if(!F_CAT_A)
+			{
+			//	name("小咪")
+				MES(CAT_A,"C4那个～，那个～？",0)
+				MES(CAT_A,"C4午睡的时间就要到了……",0)
+				MES(CAT_A,"C4但是，婆婆\n说要出门……",0)
+				MES(CAT_A,"C4咪咪，已经\n很困了……",0)
+				MES_close(CAT_A)
+
+				F_set(CAT_A)
+			}
+		//　　★繰り返し
+			else
+			{
+			//	name("小咪")
+				MES(CAT_A,"C4咪咪，\n好困啊……",0)
+				MES_close(CAT_A)
+
+			//　　小咪，軽く振動。
+			//	name("小咪")
+				MES(CAT_A,"C4呼呼～呼……",0)
+				MES(CAT_A,"C4咪咪，好困。\n让我睡……？",0)
+				MES_close(CAT_A)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+		else
+		//──────────────────────────────
+		//▼④炎之パ～ツを入手した
+		//──────────────────────────────
+		//※無し
+		//──────────────────────────────
+		//▼③金暗之森へ向かうことにした
+		//──────────────────────────────
+		//　　※民家１，モンドレアンに向いてじゃれつくム～ブ。
+		//　　※振り返らない
+		if( F2_00_GoForest )
+		{
+			if(!F_CAT_A)
+			{
+			//	name("小咪")
+				MES(CAT_A,"C4喂～，喂～……",0)
+				MES(CAT_A,"C4婆婆，和我玩不？",0)
+				MES(CAT_A,"C4喵喵喵喵☆",0)
+				MES_close(CAT_A)
+
+				F_set(CAT_A)
+			}
+		//　　★繰り返し
+			else
+			{
+			//　　小咪に？エモ～ション，振り向く。
+				EMO(CAT_A,EMO_HATENA)
+				MOT(CAT_A,2,10)
+				wait(30)
+				rot_chr(CAT_A,10,PLAYER1)
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+				//	name("小咪")
+					MES(CAT_A,"C4哥哥，你们有什么事么……？",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("□艾尔雯先頭")
+				{
+				//	name("小咪")
+					MES(CAT_A,"C4姐姐，你们有什么事么……？",0)
+					MES_close(CAT_A)
+				}
+			//──────────────────────────────
+			//	name("小咪")
+				MES(CAT_A,"C4和咪咪玩不？",0)
+				MES_close(CAT_A)
+
+			//　　じゃれ付くム～ブを再生。
+				MOT(CAT_A,11,10)
+			
+			//	name("小咪")
+				MES(CAT_A,"C4喵喵喵喵☆",0)
+				MES_close(CAT_A)
+			}
+		}
+		else
+		//──────────────────────────────
+		//▼②罗亚鲁塔村へ向かうことにした
+		//──────────────────────────────
+		//　　※噴水右辺り。モンドレアン之近くでフリ～ム～ブ
+		if( F1_15_GoVillage )
+		{
+			rot_chr(CAT_A,30,PLAYER1)
+			F_set_chr(CAT_A,CF_NO_MOVE)
+
+			if(!F_CAT_A)
+			{
+				//	name("小咪")
+				MES(CAT_A,"C4那个～，那个～？",0)
+				MES(CAT_A,"C4咪咪我，\n喜欢吃金枪鱼罐头。",0)
+				MES(CAT_A,"C4因为能，\n一口一个的吃……",0)
+				MES(CAT_A,"C4甜滋滋的，\n非常好吃～噴",0)
+				MES_close(CAT_A)
+				
+				F_set(CAT_A)
+			}
+		//　　★繰り返し
+			else
+			{
+			//	name("小咪")
+				MES(CAT_A,"C4婆婆，总是给咪咪\n金枪鱼罐头吃。",0)
+				MES(CAT_A,"C4嘿嘿嘿，好喜欢婆婆噴",0)
+				MES_close(CAT_A)
+			}
+			F_reset_chr(CAT_A,CF_NO_MOVE)
+		}
+	}
+	//──────────────────────────────
+	//ソロモンリング非装備時は振り向きとＳＥ
+	//──────────────────────────────
+	else
+	{
+		//鳴き声
+		SE(31,CAT_A)
+	}
+	
+	
+	TK_end()
+	
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

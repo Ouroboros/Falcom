@@ -1,0 +1,716 @@
+//■Zwei2一般メッセージ．アルッテの町（※ニップル）
+//────────────────────────────────────────────────────────────
+//■アルッテ
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆ニップル（普通女）Nipple")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_NIPPLE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(NIPPLE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,NIPPLE)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,NIPPLE)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,NIPPLE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		EV("MOTION_NIPPLE")		
+		if(!F_NIPPLE)
+		{
+		//　　※工房カウンター前に来ている。
+		//　　※振り返らない。
+			MES(NIPPLE,"ねえコリン……\nほら、今日もお弁当持って来たよ？",0)
+			MES(NIPPLE,"ね？　そろそろ機嫌直して？",0)
+			MES(NIPPLE,"それでさ、早く\nお家に戻ってきてよ～！",0)
+			MES_close(NIPPLE)
+			//★ニップル【料理が得意】
+			F_set_note(NIPPLE,2)
+			F_set(NIPPLE)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない。
+			MES(NIPPLE,"ねえコリンってば……",0)
+			MES(NIPPLE,"……えっと、まだ怒ってるの？",0)
+			MES(NIPPLE,"おねーちゃんが悪かったって\n謝ってるじゃなーい。\n……ね？",0)
+			MES_close(NIPPLE)
+		}
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※宿酒場で、セフィーラの歌を聴いている。
+	//　　※できればヘルメットを被る。
+	//　　※振り返らない
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_NIPPLE")		
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"ううっ、とってもいい歌よね……",0)
+			MES(NIPPLE,"セフィーラさん、\nわたしたちを勇気付けるために\n歌ってくれるんだって……",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルに．．．エモーション。
+			EMO(NIPPLE,EMO_TENTEN)
+			wait(30)
+
+		//　　振り返る。
+			rot_chr(NIPPLE,30,PLAYER1)
+
+			MES(NIPPLE,"わたし、ようやく判ったわ。\nやっぱりパニックはいけないわよね。",0)
+			MES_close(NIPPLE)
+
+			EMO(NIPPLE,EMO_KIRAKIRA)
+			wait(30)
+
+			MES(NIPPLE,"S4うん、今から落ち着いて、\n家に地下室を掘ることにする！",0)
+			MES_close(NIPPLE)
+
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			wait(30)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"そ、それって\n落ち着いてるのか……？",0)
+				MES_close(RAGNA)
+			}
+		//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"そなた……\nもう少し落ち着くがよい。",0)
+				MES_close(PARTNER)
+			}
+			F_set(NIPPLE)
+		}
+	//──────────────────────────────
+	//　　★繰り返し
+		else
+		{
+			rot_chr(NIPPLE,30,PLAYER1)
+			MES(NIPPLE,"わたし、今から落ち着いて\n家に地下室を掘ることにする。",0)
+			MES(NIPPLE,"それからコリンを迎えに行くわ。",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルにアセアセエモーション。
+			EMO(NIPPLE,EMO_ASEASE)
+			wait(30)
+
+			MES(NIPPLE,"S4だってわたし、\nおねーちゃんだもの！",0)
+			MES_close(NIPPLE)
+		}
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		EV("MOTION_NIPPLE")		
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+		//　　※民家３で立っている。
+			MES(NIPPLE,"そ、その……ウチの弟って\nちょっとナマイキよね。",0)
+			MES(NIPPLE,"それでちょっとふざけてね、\n『あんたの代わりに、ハティちゃんを\n妹にすることにした！』って言ったの。",0)
+			MES(NIPPLE,"そしたらコリンの奴、\nそうですか、それじゃあ自分は\n工房で技師になりますからって……",0)
+			MES(NIPPLE,"それで、家を出てっちゃったの。",0)
+			MES_close(NIPPLE)
+
+		//　　ラグナたちに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+
+			//オデッサがいるとき
+			if(F5_08_JoinOdessa)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			wait(30)
+			
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"い、家出……？",0)
+				MES_close(RAGNA)
+			}
+		//	name("□オデッサ先頭")
+			else
+			{
+				MES(PARTNER,"い、家出かい……？",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		//　　ニップルうなずく。
+			look(NIPPLE,"Bone_Head",0,	0,0,1,	0,0,-20)
+			wait(12)
+			look(NIPPLE,"Bone_Head",0,	0,0,1,	0,0,0)
+			wait(20)
+			MES(NIPPLE,"ど、どうしよう……",0)
+			MES_close(NIPPLE)
+			F_set(NIPPLE)
+		}
+		else
+		{
+		//　　★繰り返し
+			look(NIPPLE,"Bone_Head",0,	0,0,2,	0,0,0)
+			MES(NIPPLE,"その、ホントに冗談だったのよ？",0)
+			MES(NIPPLE,"コリンだってそのくらい、\n分かってるかな～って思って……",0)
+			MES(NIPPLE,"えっと……\nやっぱり冗談でもイヤ、\nだったのかなぁ……",0)
+			MES_close(NIPPLE)
+		}
+		look(NIPPLE,"Bone_Head",0,	0,0,2,	0,0,-5)
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※民家１の前辺りで池を見ながらウロウロ。
+	//　　　アセアセエモーションを出している。
+	if( F4_00_StartSolo )
+	{
+		EV("MOTION_NIPPLE")		
+		F_set_chr(NIPPLE,CF_NO_MOVE)
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"た、大変大変～！",0)
+			MES(NIPPLE,"お財布を無くしちゃった\nみたいなの。",0)
+			MES(NIPPLE,"あれには、コリンの目を盗んで溜めた\nへそくりが入ってたのに～……",0)
+			MES(NIPPLE,"ああん、もったいない。\n何とかコリンに見つかる前に\n探し出さないと……",0)
+			MES_close(NIPPLE)
+			F_set(NIPPLE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(NIPPLE,"お財布を落しちゃうなんて……\nはあ、今日はついてないかも。",0)
+			MES(NIPPLE,"とにかくコリンに見つかる前に\n拾い出さないと……",0)
+			MES_close(NIPPLE)
+		}
+		F_reset_chr(NIPPLE,CF_NO_MOVE)
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※教会前のベンチ前で、ハティと話している。
+	//　　※ハティの方を向いていて、振り返らない。
+	//　　※初回イベント（ハティと共通）
+	if( F2_14_TalkEnemy )
+	{
+		if(!FT_05_TalkNipHat)
+		{
+			
+			EV("EV_TALK_HN")
+			wait_EV("EV_TALK_HN")
+			
+			F_set(FT_05_TalkNipHat)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			EV("MOTION_NIPPLE")		
+			if(!F_NIPPLE)
+			{
+				MES(NIPPLE,"うーん、実はわたしも……",0)
+				MES(NIPPLE,"将来どんな女になろうか迷ってるの。",0)
+				MES(NIPPLE,"アイドルのセフィーラさんが一番だけど、\nいつも親切なカルディナさんも\nミステリアスな感じがステキよね。",0)
+				MES(NIPPLE,"そういえば、アルッテに\nお嬢様が来てるそうだけど……",0)
+				MES(NIPPLE,"可憐なタイプもいいかも～。",0)
+				MES_close(NIPPLE)
+
+			//　　２人に青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				wait(30)
+			//──────────────────────────────
+			//	name("□ラグナ先頭。")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（誰か無理だと言ってやれ……）",0)
+					MES_close(RAGNA)
+				}
+			//	name("□アルウェン先頭。")
+				else
+				{
+					MES(PARTNER,"（そなた……\n  可憐なタイプは諦めた方がよい。）",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+				F_set(NIPPLE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(NIPPLE,"実はわたしも、将来どんな\n女になろうか迷ってるの。",0)
+				MES(NIPPLE,"アイドルのセフィーラさん……\nミステリアスなカルディナさん……",0)
+				MES_close(NIPPLE)
+
+			//　　ニップルに□エモーション。
+				EMO(NIPPLE,EMO_ONPU)
+				wait(30)
+				MES(NIPPLE,"それとも可憐なタイプに\nしようかしら～㈱",0)
+				MES_close(NIPPLE)
+			}
+			MOT(NIPPLE,2,15)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※町の展望台でフリームーブしている。
+	if( F2_00_GoForest )
+	{
+		EV("MOTION_NIPPLE")		
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"いいお天気だから\nピクニックに行きたいって\n言ったら……",0)
+			MES(NIPPLE,"コリンの奴、\nわたしを家から追い出したの。",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルにムキエモーション。
+			EMO(NIPPLE,EMO_AOSUZI)
+			wait(30)
+			
+			MES(NIPPLE,"年下のクセに\nなによう、あのナマイキな態度。",0)
+			MES(NIPPLE,"ありえないよね。ありえないよね。",0)
+			MES_close(NIPPLE)
+			
+			//★コリン【ナマイキ】
+			F_set_note(-57,1)
+
+			F_set(NIPPLE)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(NIPPLE,"そういえば……\nさっき噴水の辺りで\n可愛らしい男の子を見かけたわ。",0)
+			MES(NIPPLE,"わたしよりちょっと年下かしら。\nボサボサの髪の毛を後ろで束ねて、\n尻尾のアクセサリーを付けてるの。",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルにハートエモーション。
+			EMO(NIPPLE,EMO_HATO)
+			wait(30)
+			
+			MES(NIPPLE,"あのあどけない感じ……\nちょっと好みかも。",0)
+			MES_close(NIPPLE)
+			
+		//　　ラグナたちに冷や汗エモーション。
+		//──────────────────────────────
+		//	name("□フラグ①のイベントを見ていて、ラグナ先頭")
+			if(FT_01_TalkNipple)
+			{
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（もはやツッコミ所もねえな……）",0)
+					MES_close(RAGNA)
+				}
+			//	name("□フラグ①のイベントを見ていて、アルウェン先頭")
+				else
+				{
+					MES(PARTNER,"（随分とお手軽なようだのう……）",0)
+					MES_close(PARTNER)
+				}
+			}
+		}
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※アルッテ．民家１と３の間辺りをフリームーブ。
+	if( F1_15_GoVillage )
+	{
+		EV("MOTION_NIPPLE")		
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"さっきね、とっても\nステキな人が通りがかったのよ。",0)
+			MES(NIPPLE,"綺麗な執事服を着て、\n金髪をなびかせて……",0)
+			MES(NIPPLE,"眼鏡の奥の涼しげな瞳に\n優しく微笑む口元……",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルにハートエモーション。
+			EMO(NIPPLE,EMO_HATO)
+			wait(30)
+			
+			MES(NIPPLE,"はあ、あの人こそ\nわたしの理想のタイプだわ……！",0)
+			MES_close(NIPPLE)
+
+		//──────────────────────────────
+		//	name("□フラグ①のイベントを見ていた場合、１回だけ反応を挿入する。")
+			if(FT_01_TalkNipple && !FT_02_TalkNipple)
+			{
+			//　　ニップルにＰＡエモーション。
+				EMO(NIPPLE,EMO_PA)
+				wait(30)
+				
+			//　　ラグナに向く。
+				MES(NIPPLE,"あら、あなた……\nえっと……",0)
+				MES_close(NIPPLE)
+
+			//　　ニップルに．．．エモーション。
+				EMO(NIPPLE,EMO_TENTEN)
+				wait(30)
+				
+				MES(NIPPLE,"前にどこかで会ったっけ。",0)
+				MES_close(NIPPLE)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"そ、そっちから\n絡んできたじゃねえか。",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"もう忘れてしまったようだのう……",0)
+				MES_close(PARTNER)
+				
+			//　　ニップルに？エモーション。
+				EMO(NIPPLE,EMO_HATENA)
+				wait(30)
+				
+				F_set(FT_02_TalkNipple)
+			}
+
+			F_set(NIPPLE)
+		}
+	//──────────────────────────────
+	//　　★繰り返し
+		else
+		{
+			MES(NIPPLE,"あの執事さんこそ\nわたしの理想のタイプだわ……！",0)
+			MES(NIPPLE,"うん、決めた。\nわたし一生あの人に付いていく。",0)
+			MES(NIPPLE,"手始めに、名前と生年月日と\n血液型と好きな食べ物と趣味その他を\n聞き出してくるわ！",0)
+			MES_close(NIPPLE)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"ストーカーにならねえ程度にな……",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□アルウェン先頭")
+			{
+				MES(PARTNER,"質問攻めだのう……",0)
+				MES_close(PARTNER)
+			}
+		}		
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※大道芸人ステージ前、大道芸人を見ている。
+	//　　　ＰＡエモーション出しっぱなし。
+	//　　※初回イベント
+	//　　※振り返らない。
+	if( F1_01_GameStart )
+	{
+		if(!FT_01_TalkNipple)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+		
+			cross_fade(30)			//クロスフェード
+			EV_begin()
+			//カメラセット
+			CAM_move(756,442,196,0,0)
+			CAM(-209,64,35,31,166,0,0)
+			
+			//キャラ再配置
+			chr_pos(NIPPLE,858,-639,0,200,2)
+			chr_pos(COLIN, 948,-574,0,124,2)
+			chr_pos(RAGNA,696,-362,0,208,2)
+			chr_pos(PARTNER,568,-444,0,242,2)
+			
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(NIPPLE, "1", "1", "1")	
+			KAO(COLIN,"1", "1", "1")	
+			
+			F_reset_chr(NIPPLE,CF_NO_MOVE)
+			F_reset_chr(COLIN,CF_NO_MOVE)
+			MOT_SET(COLIN,150,-1,402,402,-1,-1)
+			
+			wait_fade()
+
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			EV_stop("MOVE_NIPPLE")
+			MES(NIPPLE,"わー、見て見てコリン。\n凄いわよー……",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルに？エモーション。
+			EMO(NIPPLE,EMO_HATENA)
+			wait(30)
+
+		//　　ラグナに振り返る。
+			rot_chr(NIPPLE,30,RAGNA)
+	
+		
+			KAO(NIPPLE,"12321Z2","J","1")
+			MES(NIPPLE,"はっ……？",0)
+			KAO(NIPPLE,"12321Z4","J","1")
+			MES(NIPPLE,"お兄さん、もしかして……",0)
+			KAO(NIPPLE,"12321Z3","J","1")
+			MES(NIPPLE,"わたしの運命の人ね？",0)
+			MES_close(NIPPLE)
+
+			EV("MOTION_NIPPLE")
+			
+			rot_chr(COLIN,30,RAGNA)
+
+		//　　★次のポップアップは同時に表示＆閉じる。
+
+//			MES_pos(RAGNA,"へ……？",0,0,0,0,0)
+//			MES_pos(PARTNER,"ん……？",0,0,0,0,0)
+//			wait_key(0)
+//			MES_close(PARTNER)
+
+			MES(RAGNA,"へ……？",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"ほう……",0)
+			MES_close(PARTNER)
+
+			KAO(NIPPLE,"12321Z6","J","1")
+			MES(NIPPLE,"ううん、何も言わないで。\nわたしには分かっているから。",0)
+			KAO(NIPPLE,"12321Z6","J","1")
+			MES(NIPPLE,"そのフライトジャケット……\n飛行機に乗ってるんでしょう？",0)
+			KAO(NIPPLE,"12321Z5","J","1")
+			MES(NIPPLE,"純白の飛行機で\nわたしを迎えに来たのよね？",0)
+			MES_close(NIPPLE)
+
+			MES(RAGNA,"な、何でそうなる……",0)
+			MES(RAGNA,"第一、俺が乗ってる\nトリスタンの色は赤だぞ？",0)
+			MES_close(RAGNA)
+
+			KAO(NIPPLE,"12321Z3","J","1")
+			MES(NIPPLE,"じゃあ白に塗り替えて㈱",0)
+			MES_close(NIPPLE)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"あ、あのな……",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"ふむ……\n人間の娘は情熱的だのう。",0)
+			MES_close(PARTNER)
+
+		//　　コリン、ラグナたちに近づく。
+//			rot_chr(COLIN,30,RAGNA)
+//			move( COLIN, 0,	WALK1,	862,-477,0,	0)
+//			MOT(COLIN,150,15)
+
+			look_chr( COLIN, NIPPLE,"Bone_Head")
+
+			KAO(COLIN,"12321Z4","1","1")
+			MES(COLIN,"姉さん……\nいい加減にしてください。",0)
+			MES_close(COLIN)
+
+			look_chr( COLIN, RAGNA,"Bone_Head")
+			wait(15)
+			KAO(COLIN,"12321Z7","1","1")
+			MES(COLIN,"すみません、姉の言う事は\nどうか気にしないでください。",0)
+			KAO(COLIN,"12321Z6","1","1")
+			MES(COLIN,"いつもこの調子で\n一目ボレを繰り返してるんです。",0)
+			KAO(COLIN,"12321Z7","1","1")
+			MES(COLIN,"そのくせ飽きっぽいから\n次の日には他の人に目移りして……",0)
+			MES_close(COLIN)
+
+			look_chr( NIPPLE, COLIN, "Bone_Head")
+			EMO(NIPPLE,EMO_DOKAN)
+			wait(30)
+
+			KAO(NIPPLE,"12321Z6","J","1")
+			MES(NIPPLE,"ちょっとコリン！\n失礼なこと言わないでよ。",0)
+			MES_close(NIPPLE)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES(PARTNER,"（ふむ、情熱的とは\n  少し違っていたようだな。）",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"（ああ……\n  弟の方も大変そうだぜ。）",0)
+			MES_close(RAGNA)
+
+		//　　フェードアウトし、コリンの配置を戻す。
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			look_off(NIPPLE)
+			look_off(NIPPLE)
+			chr_pos(NIPPLE,858,-639,0,300,52)
+			chr_pos(COLIN, 948,-574,0,124,2)
+			MOT(NIPPLE,52,0)
+			rot(NIPPLE,0,300)
+			look(COLIN,"Bone_Head",0,		0,0,10,			0,0,-30)
+
+//			chr_pos(RAGNA,120,-800,0,0,2)
+//			chr_pos(PARTNER,-100,-800,0,0,2)
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			
+			F_set(FT_01_TalkNipple)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(NIPPLE, "1", "1", "1")	
+			KAO(COLIN,"1", "1", "1")	
+			
+			F_set_chr(NIPPLE,CF_NO_MOVE)
+			F_set_chr(COLIN,CF_NO_MOVE)
+			
+			//★コリン
+			F_set_note(-57,-1)
+			
+			EV_end()
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+
+		//　　ラグナたちはアルッテ噴水の左手前の配置から操作許可。
+
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		//　　※コリンの方向を向いている。
+		}
+		else
+		{
+			MES(NIPPLE,"ちょっとコリン、\n何てことを言うのよ！？",0)
+			MES(NIPPLE,"訂正しなさい！\nじゃないと食事抜きにするから！",0)
+			MES_close(NIPPLE)
+		}
+	}
+	
+	TK_end()
+}
+
+MOTION_NIPPLE
+{
+	MOT_SET(NIPPLE,150,-1,476,476,-1,-1)
+	MOT(NIPPLE,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,140 @@
+////////////////////
+#CharMotTable:0456//テンペストフラワーの触手左3
+BS_450m.it3
+
+SET 02 02  0011 0280  -01 0000 //待機
+SET 03 02  0145 0280  -01 0000 //途中から再生待機
+SET 04 31  0335 0359  -01 0000 //途中から再生下段待機
+SET 05 32  0405 0439  -01 0000 //途中から再生上段待機
+SET 31 31  0290 0359  -01 0000 //下段待機
+SET 32 32  0370 0439  -01 0000 //上段待機
+
+//上から見た図。各触手の対応番号。
+//　右４　左４
+//右３　　　左３
+//右２　　　左２
+//　右１　左１
+//　 　正面
+
+SET 37 -1  0770 0879  -01 0000 //叩きつけ左３
+OTO 37 825	662		//たたきつける（小）
+OTO 37 815	658		//振り回し（その他1）
+
+SET 38 02  0880 0919  -01 0000 //叩きつけ左３戻る
+OTO 38 880	661		//振り回した触手を元の位置に戻す2
+
+SET 49 -1  1730 1814  -01 0000 //振り回し　下段　左回し
+OTO 49 1745	656		//振り回し（赤）
+
+SET 50 02  1815 1879  -01 0000 //振り回し　下段　左回し戻る
+OTO 50 1815	660		//振り回した触手を元の位置に戻す1
+
+SET 51 -1  1910 1999  -01 0000 //振り回し　上段　左回し
+OTO 51 1925	657		//振り回し（青）
+
+SET 59 -1  2650 2719  -01 0000 //左３へたる(850→)
+SET 60 -1  2720 2819  -01 0000 //左３ちぎれる
+SET 71 -1  3730 3799  -01 0000 //左回し後へたる(1815→)
+SET 72 -1  3800 3899  -01 0000 //左回し後ちぎれる
+SET 75 75  4090 4170  -01 0000 //首縮め用待機
+SET 76 75  4130 4170  -01 0000 //首縮め用待機途中から再生
+
+
+if_INIT
+{
+	H_@charbaseA -1 -1 10 1
+	B_NEXT	-1	0	0 	0	0	03	5	//途中から再生待機が初期モーション
+	B_MOV   -1  0    0   0  0000    00 //待機
+}
+B_NEXT	0	0	0 	0	0	03	5	//途中から再生待機が初期モーション
+B_NEXT	1	0	0 	0	0	03	5	//途中から再生待機が初期モーション
+//B_NEXT	2	0	0 	0	0	03	5	//途中から再生待機が初期モーション
+
+//■■■■■■　エフェクト　■■■■■■
+//						SetID FLame数 effNO size 予約 予約
+E_Bone_LeftArm			37		825		105	 -4		0	0	//叩きつけ左3HITcline
+E_Bone_LeftForeArm		37		825		105	 -4		0	0	//叩きつけ左3HITcline
+E_Bone_LeftHand			37		825		105	 -4		0	0	//叩きつけ左3HITcline
+//E_Bone_LeftFingerBase	37		825		143	 -4		0	0	//叩きつけ左3HITcline
+
+E_Bone_LeftFingerBase	37		827	   7340	100		0	0	//叩きつけ左 衝撃
+E_Bone_LeftHand			37		827	   7340	100		0	0	//叩きつけ左 衝撃
+E_Bone_LeftForeArm		37		827	   7340	100		0	0	//叩きつけ左 衝撃
+
+E_Bone_LeftFingerBase	37		815		152	 -1		0	0	LeftFingers_End //軌跡
+E_Bone_LeftForeArm		37		815		152	 -1		0	0	Bone_LeftHand //軌跡
+E_Bone_LeftHand			37		815		152	 -1		0	0	Bone_LeftFingerBase //軌跡
+
+E_Bone_LeftForeArm		49		1755	140	 -4		0	0	//振り回し 下段 左回しHITcline
+E_Bone_LeftHand			49		1755	140	 -4		0	0	//振り回し 下段 左回しHITcline
+E_Bone_LeftFingerBase	49		1755	143	 -4		0	0	//振り回し 下段 左回しHITcline
+E_Bone_LeftFingerBase	49		1745	150	 -1		0	0	LeftFingers_End //軌跡
+E_Bone_LeftForeArm		49		1745	150	 -1		0	0	Bone_LeftHand //軌跡
+E_Bone_LeftHand			49		1745	150	 -1		0	0	Bone_LeftFingerBase //軌跡
+
+E_Bone_LeftForeArm		51		1935	140	 -4		0	0	//振り回し 上段 左回しHITcline
+E_Bone_LeftHand			51		1935	140	 -4		0	0	//振り回し 上段 左回しHITcline
+E_Bone_LeftFingerBase	51		1935	143	 -4		0	0	//振り回し 上段 左回しHITcline
+E_Bone_LeftFingerBase	51		1925	151	 -1		0	0	LeftFingers_End //軌跡
+E_Bone_LeftForeArm		51		1925	151	 -1		0	0	Bone_LeftHand //軌跡
+E_Bone_LeftHand			51		1925	151	 -1		0	0	Bone_LeftFingerBase //軌跡
+
+//       SetID FLame数 effNO size 予約 予約
+//■■■■■■■■■■■■■■■■■■■■■■■■■■■
+//t0 R
+//待機	set typ	spd rot	--		--
+if_F 14 18
+{
+}
+else
+{
+	B_NEXT	02	0	100 	30	0	  37	15	//叩きつけ左３
+	B_NEXT	02	0	100 	60	0	  49	15	//振り回し　下段　左回し
+//	B_NEXT	02	0	100 	60	0	  51	15	//振り回し　上段　左回し
+}
+//C_"ノード名" 			SetID frame charNO 予約 予約 予約 frameSet
+//C_Bone_LeftArm3_Root	49		1731	1	0	0		0	brandish
+//C_Bone_LeftArm3_Root	51		1911	1	0	0		0	brandish
+//C_Bone_LeftArm3_Root	50		1816	1	0	0		0	back
+
+//if_HP 100 50
+//{
+	// 		set Ang tim rnd length next Hokan
+	B_NEXT	37	0	150 0		0	38	15	//叩きつけ左３戻る
+	B_NEXT	49	0	85  0		0	50	15	//振り回し 左回し戻る
+	B_NEXT	51	0	90  0		0	50	15	//振り回し 左回し戻る
+//}
+//if_HP 50 0
+//{
+//	// 		set Ang tim rnd length next Hokan
+//	B_NEXT	37	0	100 	0		0	59	15	//左3へたる
+//	B_NEXT	49	0	85	 	0		0	71	15	//左回し下段後へたる
+//	B_NEXT	51	0	90	 	0		0	71	15	//左回し上段後へたる
+//}
+// 		set Ang tim rnd length next Hokan
+B_NEXT	59	0	200 0		0	60	15	//左3ちぎれる
+B_NEXT	71	0	200 0		0	72	15	//左回し後ちぎれる
+	mFX_set 60 -1 14
+	mFX_set 72 -1 14
+
+H_@charbaseA 59 2660 10 2//たたきつけ後へたりアタリON
+H_@charbaseA 60 2760 10 1//たたきつけ後へたりアタリOFF
+H_@charbaseA 71 3740 10 2//振り回し後へたりアタリON
+H_@charbaseA 72 2390 10 1//振り回し後へたりアタリOFF
+
+if_F 6
+{
+	B_NEXT	-1 0 0 0 0 60 15//左3ちぎれる
+}
+
+	if_EV DIED
+	{
+		OTO -1 -1 678 //触手死亡
+	}
+
+	if_EV DAMAGE	//ダメージeff
+	{
+		E_csp18		-1 -1 24400 130 0 0  //ダメージ
+	}
+
+#EndCharMotTable

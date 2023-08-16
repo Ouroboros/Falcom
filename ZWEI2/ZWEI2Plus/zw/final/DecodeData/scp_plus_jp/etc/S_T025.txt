@@ -1,0 +1,489 @@
+//──────────────────────────────
+//	name("●モンブラン")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_MONTBLANC
+{
+	TK_begin()
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　クリスタルバレーの閉じた扉の前にいる。
+	//　　しょぼくれた表情で、話しかけても振り返らない。
+	if( F6_05_EndSixth )
+	{
+		if(!FM_13_TalkMontblanc)
+		{
+		//	name("★初回（１回のみ／イベント制御）")
+		//　　話しかけたらキャラ再配置してイベント発生。
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(-4,5581,320,0,0)
+			CAM(-250,75,320,40,179,0,0)
+			//キャラ再配置
+			chr_pos(RAGNA,		-500,-4900,201,267,2)
+			chr_pos(PARTNER,	-500,-5000,201,270,2)
+			chr_pos(PET,		-480,-5100,201,280,2)
+			chr_pos(MONTBLANC,-3,-5016,200,180,2)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			KAO(MONTBLANC,"1", "1", "1")
+			
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			MES(MONTBLANC,"うう……\nいいかげん魔力も限界ニャ……",0)
+			MES(MONTBLANC,"こ、このままでは……\nこのままではワタシは\n元の姿に戻ってしまうニャ……",0)
+			MES_close(MONTBLANC)
+			wait_MES(MONTBLANC)
+			
+			cross_fade(30)
+//			CAM_move(-264,5501,320,0,0)
+//			CAM(-250,75,320,40,176,0,0)
+			CAM_move(-264,5501,320,0,0)
+			CAM(-210,88,320,33,179,0,0)
+			wait_fade()
+		//　　ミア、モンブランの方に一歩進み出る。
+		
+			move(PARTNER, 0, 10,-400,-5000,201,0)
+			wait(40)
+
+			KAO(PARTNER,"12321Z2","1","1")
+			MES(PARTNER,"モンブラン……",0)
+			MES_close(PARTNER)
+
+		//　　モンブランの頭に！マーク。
+			EMO(MONTBLANC,EMO_BIKKURI)
+			KAO(MONTBLANC,"E", "E", "1")
+			wait(30)
+
+		//　　驚きの表情になってミアの方に向き直る。
+			rot_chr(MONTBLANC,30,PARTNER)
+
+			KAO(MONTBLANC,"12321Z3", "E", "1")
+			MES(MONTBLANC,"お、お、お前は……",0)
+			KAO(MONTBLANC,"12321Z4", "E", "1")
+			MES(MONTBLANC,"人形娘、何をしてるニャ！？",0)
+			MES_close(MONTBLANC)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z4","1","1")
+			MES(PARTNER,"……こんな所にいたんですか。",0)
+			KAO(PARTNER,"12321Z4","1","1")
+			MES(PARTNER,"可哀想に……\n一人ぼっちだったんですね。",0)
+			MES_close(PARTNER)
+
+		//	name2(MONTBLANC)
+			KAO(MONTBLANC,"12321Z3", "5", "1")
+			MES(MONTBLANC,"あ、哀れみの目で\nこのモンブラン様を見るニャ！",0)
+			KAO(MONTBLANC,"12321Z3", "2", "1")
+			MES(MONTBLANC,"この裏切り者っ！\nお前のせいでザハール様は\nあんなことに～っ……！",0)
+			MES_close(MONTBLANC)
+
+		//　　ミア、悲しそうな表情になる。
+			KAO(PARTNER,"B","23","B")
+			
+			KAO(RAGNA,"B232BZ4","1","3")
+			MES(RAGNA,"コラ、ちょっと待てよ。",0)
+			KAO(RAGNA,"B232BZ5","1","3")
+			MES(RAGNA,"人の妹を捕まえて\n人聞きの悪いことを……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			look_chr( PARTNER, RAGNA,"Bone_Head")
+
+			KAO(PARTNER,"B232BZ3","21","1")
+			MES(PARTNER,"お兄ちゃん、いいの。",0)
+			MES_close(PARTNER)
+			KAO(PARTNER,"1","23","1")
+			look_off(PARTNER)
+			wait(30)
+			KAO(PARTNER,"12321Z5","3","1")
+			MES(PARTNER,"……ごめんなさい。\n騙していたことは謝ります。",0)
+			KAO(PARTNER,"12321Z6","3","1")
+			MES(PARTNER,"今の私に出来ることがあるなら\nどんな償いでもするつもりです。",0)
+			KAO(PARTNER,"12321Z5","21","1")
+			MES(PARTNER,"だからモンブラン……\nどうか元気を出して。",0)
+			MES_close(PARTNER)
+
+		//　　モンブランの頭に！マーク。
+			EMO(MONTBLANC,EMO_BIKKURI)
+			KAO(MONTBLANC,"1", "E", "1")
+			wait(30)
+
+			KAO(MONTBLANC,"12321Z3", "E", "1")
+			MES(MONTBLANC,"お、お前……\n本当にあの人形娘か……？",0)
+			KAO(MONTBLANC,"12321Z5", "E", "1")
+			MES(MONTBLANC,"そ、そんな事を言い出すなんて\n信じられないニャ……",0)
+			MES_close(MONTBLANC)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z5","1","1")
+			MES(PARTNER,"今はミア本人として\nあなたと話をしているわ。",0)
+			KAO(PARTNER,"12321Z6","23","1")
+			MES(PARTNER,"エクスマキナとしての私は\n傷付きたくない私の弱い心が\n生み出したもの……",0)
+			KAO(PARTNER,"12321Z6","3","1")
+			MES(PARTNER,"もっと私が強かったら\nあなたの主人が死ぬことにも\nならなかった……",0)
+			KAO(PARTNER,"12321Z4","3","1")
+			MES(PARTNER,"だから……\n本当にごめんなさい。",0)
+			MES_close(PARTNER)
+
+			look_chr( RAGNA,PARTNER, "Bone_Head")
+			
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z2","1","1")
+			MES(RAGNA,"ミア……",0)
+			MES_close(RAGNA)
+
+		//	name2(MONTBLANC)
+			KAO(MONTBLANC,"H", "H", "1")
+			MES(MONTBLANC,"ぬ、ぬぬぬ……",0)
+			MES_close(MONTBLANC)
+
+			look_off(RAGNA)
+
+		//	name2(PET)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"モンブランよ。\nその辺りにしておくがよい。",0)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"叔父上が亡くなったのは\n半ば自業自得というものだ。",0)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"実際に手にかけたのも\nテルミドールの方であろう。",0)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"彼女に非がないことは\nそなたも判っているはずだ。",0)
+			MES_close(PET)
+
+			KAO(MONTBLANC,"12321", "E", "1")
+			MES(MONTBLANC,"………くっ…………",0)
+			MES_close(MONTBLANC)
+
+//			rot_chr(PARTNER,30,PET)
+			look_chr( PARTNER,PET, "Bone_Head")
+
+			KAO(PARTNER,"12321Z3","1","1")
+			MES(PARTNER,"アルウェンさん、でも……",0)
+			MES_close(PARTNER)
+
+			look_chr( PET,PARTNER, "Bone_Head")
+			KAO(PET,"12321Z3","23","1")
+			MES(PET,"悪いクセだぞ、ミア。",0)
+			KAO(PET,"12321Z4","21","1")
+			MES(PET,"自分を責めるなとは言わぬ。",0)
+			KAO(PET,"12321Z6","1","1")
+			MES(PET,"だが、筋違いの責まで\n全てを負おうというのは\nそなたの傲慢というものだ。",0)
+			MES_close(PET)
+
+			KAO(PARTNER,"92329Z1","1","1")
+			MES(PARTNER,"……はい。",0)
+			MES_close(PARTNER)
+
+			KAO(RAGNA,"12321Z2","23","1")
+			MES(RAGNA,"やれやれ……",0)
+			KAO(RAGNA,"12321Z5","21","1")
+			MES(RAGNA,"ま、ミアの事はともかく\n戦いも終わったわけだしな。",0)
+			KAO(RAGNA,"12321Z6","1","1")
+			MES(RAGNA,"今までの事は水に流してやるから\n困ったことがあるなら聞くぜ？",0)
+			MES_close(RAGNA)
+
+//			rot_chr(PARTNER,30,MONTBLANC)
+//			look_chr( PARTNER,MONTBLANC, "Bone_Head")
+			look_off(PET)
+			look_off(PARTNER)
+
+			KAO(MONTBLANC,"12321Z5", "D", "1")
+			MES(MONTBLANC,"だ、誰がお前たちの\n哀れみを受けるものかニャ！",0)
+			KAO(MONTBLANC,"12321Z6", "E", "1")
+			MES(MONTBLANC,"それに人間のお前などに\n今のワタシの悩みを\n解決できるはずがないニャ！",0)
+			MES_close(MONTBLANC)
+
+			KAO(RAGNA,"12321E","D","1")
+			MES(RAGNA,"へ……？",0)
+			MES_close(RAGNA)
+
+		//　　ここでミアの頭にＰＡマーク。
+			KAO(PARTNER,"1","D","7")
+			EMO(PARTNER,EMO_PA)
+			wait(30)
+			KAO(PARTNER,"1232Z4","1","1")
+			MES(PARTNER,"モンブラン、あなた……",0)
+			KAO(PARTNER,"1232Z6","1","1")
+			MES(PARTNER,"魔力が尽きてその姿が\n保てなくなりそうなの？",0)
+			MES_close(PARTNER)
+
+		//　　モンブランにアセアセエモーション。
+			EMO(MONTBLANC,EMO_ASEASE)
+			KAO(MONTBLANC,"7", "7", "7")
+			wait(30)
+			MES(MONTBLANC,"ギクっ……",0)
+			MES_close(MONTBLANC)
+
+		//	name2(PET)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"ふむ、使い魔とはいえ\n元々は普通のネコであったか。",0)
+			KAO(PET,"12321Z5","1","1")
+			MES(PET,"叔父上亡き後、その姿を\n保てなくなるのも道理だな。",0)
+			MES_close(PET)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z5","1","1")
+			MES(RAGNA,"なるほど、要するに\n元のネコに戻っちまうわけか。",0)
+			KAO(RAGNA,"12321Z5","1","1")
+			MES(RAGNA,"ま、別に元に戻るんだったら\n気にしなくていいんじゃねえか？",0)
+			MES_close(RAGNA)
+
+		//	name2(MONTBLANC)
+			KAO(MONTBLANC,"12321Z3", "5", "1")
+			MES(MONTBLANC,"か、勝手なことを言うニャッ！？",0)
+			KAO(MONTBLANC,"12321Z5", "L", "1")
+			MES(MONTBLANC,"今更、ニャーニャー言うしか\n能のない生き物に戻るニャど\n真っ平ゴメンにゃ！！",0)
+			MES_close(MONTBLANC)
+
+		//　　モンブラン、背を向ける。
+			rot(MONTBLANC,30,180)
+			wait(30)
+			
+			KAO(MONTBLANC,"1", "1", "1")
+			MES(MONTBLANC,"……これだから\n無神経な人間は嫌いニャ……",0)
+			MES(MONTBLANC,"さっさと行くニャ。\n二度とワタシの前に\n現れるんじゃないニャ……！",0)
+			MES_close(MONTBLANC)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z2","1","5")
+			MES(RAGNA,"（う、うーん……）",0)
+			MES_close(RAGNA)
+
+//			rot_chr(PARTNER,30,RAGNA)
+//			rot_chr(PET,30,PARTNER)
+//			rot_chr(RAGNA,30,PARTNER)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z5","23","5")
+			MES(PARTNER,"（私も全ての魔力を失ったから\n  こればっかりは……）",0)
+			MES_close(PARTNER)
+
+			KAO(PET,"12321Z5","23","1")
+			MES(PET,"（ふむ、私にはルゥがいるから\n  使い魔にするわけにもいかぬし。）",0)
+			KAO(PET,"12321Z5","21","1")
+			MES(PET,"（まあ、魔女殿あたりなら\n  何か方法を存じているであろ。）",0)
+			KAO(PET,"12321Z3","1","1")
+			MES(PET,"（私の方で相談してみよう。）",0)
+			MES_close(PET)
+
+//			rot_chr(PARTNER,30,PET)
+			look_chr( PARTNER,PET, "Bone_Head")
+
+			KAO(PARTNER,"92329Z5","21","7")
+			MES(PARTNER,"（はい……\n  よろしくお願いしします。）",0)
+			MES_close(PARTNER)
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			look_off(PET)
+			look_off(PARTNER)
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			
+			//クレースに幸運の金貨を返しているとイベント発生エントリ出現
+			if(!FE_13_MeetCleese && FE_03_KinkaCleese)
+			{
+				set_chr(101,990,	-1,-1,     0,-2000,-100,    0, 2401, 6,"<EV_Meets_Cleese>;")	//クレースとすれ違うイベント
+			}
+
+			F_set(FM_13_TalkMontblanc)
+			
+			EV_end()
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		if(FM_13_MontblancMiss)
+		{
+			KAO(PLAYER1, "1", "1", "1")	
+			KAO(PLAYER2, "1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			rot_chr(PLAYER1,30,S_MONTBLANC)
+			rot_chr(PLAYER2,30,S_MONTBLANC)
+			rot_chr(PET,30,S_MONTBLANC)
+			rot_chr(S_MONTBLANC,30,PLAYER1)
+			if(!F_S_MONTBLANC)
+			{
+			//　　※クレースの使い魔になるイベント後、モンブランの通常一般メッセージ。
+				MES(S_MONTBLANC,"せ、せめて、魔力を持つ\n人間と契約したかったニャ。",0)
+				MES(S_MONTBLANC,"契約が切れるまで、\nずっとこの姿ニャ……",0)
+				MES(S_MONTBLANC,"ろくに魔法も使えないニャ～ッ！！",0)
+				MES_close(S_MONTBLANC)
+				
+				F_set(S_MONTBLANC)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(S_MONTBLANC,"どうしてこんな\n冴えない人間などと……",0)
+				MES(S_MONTBLANC,"ふにゃ～ん、悪夢ニャ～ッ！！",0)
+				MES_close(S_MONTBLANC)
+			}
+			rot_chr(S_MONTBLANC,30,CLEESE)
+		}
+		else
+		{
+		//──────────────────────────────
+			KAO(PLAYER1, "1", "1", "1")	
+			KAO(PLAYER2, "1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			rot_chr(PLAYER1,30,MONTBLANC)
+			rot_chr(PLAYER2,30,MONTBLANC)
+			rot_chr(PET,30,MONTBLANC)
+		//　　※幸運の金貨を返却していない場合、モンブランの通常一般メッセージ。
+			MES(MONTBLANC,"ぐすん……\nお前たちなんか嫌いニャ。",0)
+			MES(MONTBLANC,"お前たちの手は借りないニャ。\nさっさとあっちに行くニャ！",0)
+			MES_close(MONTBLANC)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+	//　　クリスタルバレーの閉じた扉の前にいる。
+	//　　しょぼくれた表情で、話しかけても振り返らない。
+	//	name("★初回（１回のみ／イベント制御）")
+	//　　話しかけたらキャラ再配置してイベント発生。
+	//　　できればモンブランの表情が見えるカメラ配置にする。
+		if(!FM_12_TalkMontblanc)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(-725,5041,380,0,0)
+			CAM(-370,85,20,40,280,0,0)
+
+			//キャラ再配置
+			chr_pos(RAGNA,-665,-5101,201,270,2)
+			chr_pos(PARTNER,-684,-5001,201,267,2)
+			chr_pos(PET,-666,-5246,200,,280,2)
+			chr_pos(MONTBLANC,-3,-5016,200,180,2)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			KAO(MONTBLANC,"1", "1", "1")	
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			
+			KAO(MONTBLANC,"12321Z3", "L", "5")
+			MES(MONTBLANC,"ニャ、ニャンたる事ニャ～……",0)
+			KAO(MONTBLANC,"12321Z3", "L", "5")
+			MES(MONTBLANC,"まさかザハール様が\nお亡くなりになるとは～……",0)
+			KAO(MONTBLANC,"12321Z3", "L", "5")
+			MES(MONTBLANC,"ふにゃああ……\nこれからどうすればいいニャ……",0)
+			MES_close(MONTBLANC)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z4","1","1")
+			MES(RAGNA,"（そうか、コイツがいたか……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PET)
+			KAO(PET,"12321Z4","1","1")
+			MES(PET,"（さ、さすがに哀れかもね……）",0)
+			MES_close(PET)
+
+		//	name2(PARTNER)
+			KAO(PARTNER,"12321Z6","1","1")
+			MES(PARTNER,"（叔父上が亡くなった以上、\n  魔力の大半を失ったはずだ。）",0)
+			KAO(PARTNER,"12321Z6","1","1")
+			MES(PARTNER,"（危険もないと思うゆえ\n  今はそっとしておいてやろう。）",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z3","1","1")
+			MES(RAGNA,"（ああ、そうだな。）",0)
+			MES_close(RAGNA)
+			
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			
+			F_set(FM_12_TalkMontblanc)
+
+			
+			EV_end()
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+			KAO(PLAYER1, "1", "1", "1")	
+			KAO(PLAYER2, "1", "1", "1")	
+			KAO(PET, "1", "1", "1")	
+			rot_chr(PLAYER1,30,MONTBLANC)
+			rot_chr(PLAYER2,30,MONTBLANC)
+			rot_chr(PET,30,MONTBLANC)
+		//	name("★以後、繰り返し")
+			MES(MONTBLANC,"ま、まさかザハール様が\nお亡くなりになるとは～……",0)
+			MES(MONTBLANC,"ふにゃああ……\nこれからどうすればいいニャ……",0)
+			MES_close(MONTBLANC)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		KAO(PLAYER1, "1", "1", "1")	
+		rot_chr(PLAYER1,30,MONTBLANC)
+		
+		if(!F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MONTBLANC)
+		}
+
+	//▽偽アルウェンを倒した
+	//　　異次元・中ボス地点１で気絶して倒れている。
+	//　　ルナ＝ムンドゥス攻略終了までこのまま置き続ける。
+		MES(MONTBLANC,"………ふにゃあ………………",0)
+		MES_close(MONTBLANC)
+
+	//	name("テキスト（色換え・表示しない）")
+		MES(0,"C3S2完全に気絶しているようだ。",2)
+		MES_close(0)
+	}
+
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

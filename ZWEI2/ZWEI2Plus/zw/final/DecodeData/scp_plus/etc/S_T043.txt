@@ -1,0 +1,1324 @@
+//──────────────────────────────
+//	name("◆アネット（雑貨屋店員）Annette")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_ANNETTE
+{
+	TK_begin()
+
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(ANNETTE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ANNETTE)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ANNETTE)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ANNETTE)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ANNETTE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		//モーション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+//		MOT(ANNETTE,2,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		if(!FT_12_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			VOICE(709,0)									//「ハァイ、いらっしゃい」			
+			MES(ANNETTE,"ハァイ、いらっしゃい。",0)		
+//			MES(ANNETTE,"ハァイ、いらっしゃい。\n何か見ていく？",0)
+			MES_close(ANNETTE)
+			EV("SHOP_ANNETE_LOOP")
+			wait_EV("SHOP_ANNETE_LOOP")
+		}
+		//モーション復帰
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//モーション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+//		MOT(ANNETTE,2,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		if(!FT_11_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			VOICE(709,0)									//「ハァイ、いらっしゃい」			
+			MES(ANNETTE,"ハァイ、いらっしゃい。",0)
+//			MES(ANNETTE,"ハァイ、いらっしゃい。\n何か見ていく？",0)
+			MES_close(ANNETTE)
+		}
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//モーション復帰
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+		if(!FT_10_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			//モーション初期化
+			//EV_stop("MOTION_ANETTE")
+			//EV_stop("LOOKING_ANETTE")
+			MOT(ANNETTE,50,15)
+//			MOT(ANNETTE,2,15)
+			rot_chr(ANNETTE,30,PLAYER1)
+
+			VOICE(709,0)									//「ハァイ、いらっしゃい」
+
+//			MES(ANNETTE,"いらっしゃい。\n何か見ていく？",0)
+			MES(ANNETTE,"ハァイ、いらっしゃい。",0)
+			MES_close(ANNETTE)
+		}
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//モーション復帰
+		MOT(ANNETTE,51,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦－Ｂ星降りのへ向かう事にした
+	//──────────────────────────────
+	if( F4_02_GoVillage2 )
+	{
+		//モーション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//「ハァイ、いらっしゃい」
+
+//		MES(ANNETTE,"いらっしゃい。\n何か見ていく？",0)
+		MES(ANNETTE,"ハァイ、いらっしゃい。",0)	
+		MES_close(ANNETTE)
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//モーション復帰
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼⑦－Ａラグナは単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		EV("TK_ANNETTE")
+		wait_EV("TK_ANNETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		//モーション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//「ハァイ、いらっしゃい」
+
+		if(!F_ANNETTE)
+		{
+//			MES(ANNETTE,"あ、いらっしゃい。\n何か見ていく？",0)
+			MES(ANNETTE,"ハァイ、いらっしゃい。",0)
+			MES_close(ANNETTE)
+		}
+	//　　★繰り返し
+		else
+		{
+//			MES(ANNETTE,"いらっしゃい。\n何か見ていく？",0)
+			MES(ANNETTE,"ハァイ、いらっしゃい。",0)
+			
+			MES_close(ANNETTE)
+		}
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		MOT(ANNETTE,75,15)
+		//モーション復帰
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	if( F2_14_TalkEnemy )
+	{
+		//モーション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,50,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//「ハァイ、いらっしゃい」
+
+//		MES(ANNETTE,"ハァイ、いらっしゃい。\nブティック《アネット》へようこそ！",0)
+		MES(ANNETTE,"ハァイ、いらっしゃい。",0)
+		MES_close(ANNETTE)
+		
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//モーション復帰
+		MOT(ANNETTE,75,15)
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+		if(!FT_03_TalkAneFede)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			MOT_SET(ANNETTE,150,-1,406,406,-1,0)
+			if(!F_ANNETTE)
+			{
+			//　　アネット、ＰＡエモーションで振り返る。
+				EMO(ANNETTE,EMO_PA)
+				wait(30)
+				rot_chr(ANNETTE,30,PLAYER1)
+
+				//モーション初期化
+//				EV_stop("MOTION_ANETTE_03")
+//				MOT(ANNETTE,2,15)
+				MOT(ANNETTE,150,10)
+
+				MES(ANNETTE,"あ、ごめんごめん。\nちょっとお姉ちゃんが来ててさ。",0)
+				MES(ANNETTE,"……何か見ていく？",0)
+				MES_close(ANNETTE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MOT(SHESTOR,150,10)
+				//モーション初期化
+//				EV_stop("MOTION_ANETTE_03")
+//				MOT(ANNETTE,2,15)
+				MOT(ANNETTE,50,15)
+				rot_chr(ANNETTE,30,PLAYER1)
+
+				VOICE(709,0)									//「ハァイ、いらっしゃい」
+		
+//				MES(ANNETTE,"いらっしゃい。\n何か見ていく？",0)
+				MES(ANNETTE,"ハァイ、いらっしゃい。",0)
+				MES_close(ANNETTE)
+			}
+			EV("SHOP_ANNETE_LOOP")
+			wait_EV("SHOP_ANNETE_LOOP")
+
+			
+			//モーション復帰
+//			EV("MOTION_ANETTE_03")
+
+			MOT(ANNETTE,50,15)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		//モーション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		//MOT(ANNETTE,2,15)
+		MOT(ANNETTE,52,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		VOICE(709,0)									//「ハァイ、いらっしゃい」
+
+		if(!F_ANNETTE)
+		{
+//			MES(ANNETTE,"あ、いらっしゃい。",0)
+			MES(ANNETTE,"ハァイ、いらっしゃい。",0)
+			MES(ANNETTE,"ちょっと入れ替えてる所だけど……\n何か見ていく？",0)
+			MES_close(ANNETTE)
+		}
+	//　　★繰り返し
+		else
+		{
+//			MES(ANNETTE,"いらっしゃい。\n何か見ていく？",0)
+			MES(ANNETTE,"ハァイ、いらっしゃい。",0)
+			MES_close(ANNETTE)
+		}
+		
+		EV("SHOP_ANNETE_LOOP")
+		wait_EV("SHOP_ANNETE_LOOP")
+
+		//モーション復帰
+		//EV("MOTION_ANETTE")
+		//EV("LOOKING_ANETTE")
+		MOT(ANNETTE,75,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		//モーション初期化
+		//EV_stop("MOTION_ANETTE")
+		//EV_stop("LOOKING_ANETTE")
+		MOT(ANNETTE,52,15)
+		rot_chr(ANNETTE,30,PLAYER1)
+
+		if(!FT_01_TalkAnnette)
+		{
+			EV("TK_ANNETTE")
+			wait_EV("TK_ANNETTE")
+		}
+		else
+		{
+			VOICE(709,0)									//「ハァイ、いらっしゃい」
+		
+//			MES(ANNETTE,"ハァイ、いらっしゃい。\nブティック《アネット》へようこそ！",0)
+			MES(ANNETTE,"ハァイ、いらっしゃい。",0)
+			MES_close(ANNETTE)
+			EV("SHOP_ANNETE_LOOP")
+			wait_EV("SHOP_ANNETE_LOOP")
+		}
+		//モーション復帰
+		//EV("MOTION_ANETTE")
+//		//EV("LOOKING_ANETTE")
+		MOT(ANNETTE,75,15)
+	}
+	
+	TK_end()
+}
+
+SHOP_ANNETE_LOOP
+{
+	workL(WK_CANCEL,SET,3)//【やめる】
+	MES_pos(PLAYER1,"??W9【話をする】\n【買い物をする】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	//──────────────────────────────
+	//	name("□話をする")
+	//　　通常会話処理へ飛ぶ。
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		EV("TK_ANNETTE")
+		wait_EV("TK_ANNETTE")
+		loop
+	}
+	else
+	//──────────────────────────────
+	//	name("□買い物をする")
+	//　　ショップ処理を挟む。
+	//──────────────────────────────
+	if(WK_YESNO==2)
+	{
+
+		MES(ANNETTE,"ゆっくり見てってね☆",0)
+		MES_close(ANNETTE)
+
+		//品揃え変える＆安売り
+		if( F5_00_HearLunar )
+		{
+			shop_open(10)
+		}
+		else
+		{
+			shop_open(0)
+		}
+		wait_W(WK_YESNO)
+		
+//		if(WK_ITEMBOX1==1)			//何か買った
+//		{	
+//			workL(0,RAND,2)	
+//			if(WK000==0)
+//			{
+//				VOICE(710,0)				//「ありがとねー」　　　　（服を買った直後）
+//			}
+//			else
+//			{
+//				VOICE(711,0)				//「うん、似合ってるわよ」（服を買った直後）
+//			}
+//		}
+//		workL(WK_ITEMBOX1,SET,0)
+		
+		loop
+	}
+	//──────────────────────────────
+	//	name("□やめる")
+	//　　会話処理終了。
+	//──────────────────────────────
+	else
+	{
+		VOICE(712,0)													//「またどうぞ～」
+	
+		MES(ANNETTE,"またどうぞ～！",0)
+		MES_close(ANNETTE)
+	}
+}
+
+TK_ANNETTE
+{
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※メインキャラの一般メッセージを参照
+	//　　※雑貨屋．奥の棚の前に配置。
+	//　　※初回イベント。
+	//　　　話しかけるとクロスフェードでラグナたちを再配置する。
+	if( F6_05_EndSixth )
+	{
+		if(!FT_13_TalkAnnette)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(-1097,-224,135,0,0)
+			CAM(270,64,-25,27,239,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,-1097,44,1,38,2)
+			chr_pos(PET,-973,415,1,110,2)
+			
+			
+			chr_pos(PARTNER,-1323,-362,1,349,2)
+			color(PARTNER,-1)//透過		
+			
+			//ハイポリキャラセット
+			set_chr(MIA,1091,-1,-1, -932,240,0,	2,70,0, "")
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(MIA,"1", "1", "1")	
+			KAO(ANETTE,"1", "1", "1")	
+			
+			MOT_SET(MIA,150,-1,579,579,-1,0)
+			wait_fade()
+
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			rot_chr(ANNETTE,30,MIA)
+
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"あ、いらっしゃい。\nブティック《アネット》へようこそ！",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"ってあれ、ミアちゃんじゃな～い。",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"うんうん、やっぱりその服が\n一番似合ってるわね□",0)
+			MES_close(ANNETTE)
+
+		//	name2(MIA)
+			MES(MIA,"あはは、ありがとうございます。",0)
+			MES_close(MIA)
+
+		//	name2(RAGNA)
+			look_chr(RAGNA,MIA,"Bone_Head")
+			MES(RAGNA,"へえ、そうか……\nその服って、ここで\n見立ててもらったんだな。",0)
+			MES_close(RAGNA)
+
+			rot_chr(ANNETTE,30,RAGNA)
+		//	name2(ANNETTE)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"ふふ、ピピロちゃんが\n連れて来てくれたの。",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"ラグナ君も人が悪いなぁ。\nこんな可愛い妹さんを\n紹介してくれないなんて☆",0)
+			MES_close(ANNETTE)
+			look_off(RAGNA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"はは、そいつは済まん……\n（というか、ここって\n  謝る所なのか……？）",0)
+			MES_close(RAGNA)
+			rot_chr(ANNETTE,30,MIA)
+			
+		//　　アネット、３人を見渡す。
+			look(ANNETTE,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(ANNETTE,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(ANNETTE,"Bone_Head",0,		0,2,0,			0,0,0)
+			
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"でも……\nどうしたの、今日は。",0)
+			KAO(ANNETTE,"12321Z5","1","1")
+			MES(ANNETTE,"みんなでお買い物ってわけでも\nなさそうだけど……",0)
+			MES_close(ANNETTE)
+
+		//	name2(PET)
+			MES(PET,"うむ、それなのだが……",0)
+			MES(PET,"実は店主、今日は\nこの２人が発つというのでな。",0)
+			MES(PET,"その挨拶に回っているのだ。",0)
+			MES_close(PET)
+
+		//　　アネットに！エモーション。
+			EMO(ANNETTE,EMO_BIKKURI)
+			look_chr(ANNETTE,PET,"Bone_Head")
+			wait(30)
+
+			KAO(ANNETTE,"12321Z3","1","1")
+			MES(ANNETTE,"え、え～っ……！？",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"２人とも、もう帰っちゃうの？",0)
+			MES_close(ANNETTE)
+			
+			look_off(ANNETTE)
+
+		//	name2(MIA)
+			MES(MIA,"アネットさん、\nお洋服ありがとうございました。",0)
+			MES(MIA,"試着まで手伝って頂いて……",0)
+			MES_close(MIA)
+
+		//	name2(ANNETTE)
+			rot_chr(ANNETTE,30,MIA)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"あ、いいのいいの。\nあたしも好きでやってるんだし。",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"はあ、でも寂しくなるな～。",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"ミアちゃんには、まだまだ\nこれからたくさん着てもらおうと\n思ってたのに～……",0)
+			MES_close(ANNETTE)
+
+		//	name2(MIA)
+			MES(MIA,"あはは……\nえっと、ごめんなさい……",0)
+			MES_close(MIA)
+
+		//	name2(ANNETTE)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"ううん、\nミアちゃんったら謝らないで。",0)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"可愛いお客さんが\n減っちゃうのは残念だけど……\nま、これも仕方ないものね。",0)
+			MES_close(ANNETTE)
+
+		//　　アネット、ラグナに向く。
+			rot_chr(ANNETTE,30,RAGNA)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"ねえラグナ君、お土産に\nマフラーでもと思ったんだけど。",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"冬物だと、\nちょっとかさばっちゃうかな？",0)
+			MES_close(ANNETTE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ああ、気にしないでくれ。",0)
+			MES(RAGNA,"途中で必要なものは\n揃えてあるからさ。",0)
+			MES_close(RAGNA)
+
+		//	name2(ANNETTE)
+			KAO(ANNETTE,"12321Z2","1","1")
+			MES(ANNETTE,"そっかぁ……",0)
+			KAO(ANNETTE,"12321Z4","1","1")
+			MES(ANNETTE,"うん、じゃあもう何も言わない。",0)
+			rot_chr(ANNETTE,30,MIA)
+			KAO(ANNETTE,"12321Z6","1","1")
+			MES(ANNETTE,"元気でね、２人とも！\n故郷でもガンバるんだぞ！",0)
+			MES_close(ANNETTE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"はは、了解。",0)
+			MES_close(RAGNA)
+
+		//　　◆ミア、軽くお辞儀をする。
+			MOT(MIA,150,15)
+
+			MES(MIA,"お世話になりました。",0)
+			MES_close(MIA)
+
+		//　　軽く暗転してから操作許可を戻す。
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+			
+			rot(ANNETTE,30,100)
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			delete(MIA)
+			color(PARTNER,1)//透過解除
+			chr_pos(PARTNER,-932,240,0,70,2)
+			MOT(MIA,2,0)
+			
+			
+			F_set(FT_13_TalkAnnette)
+			EV_end()
+			
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+		//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			TK_begin()
+			rot_chr(ANNETTE,30,PLAYER1)
+			MES(ANNETTE,"可愛いお客さんが\n減っちゃうのは残念だけど……",0)
+			MES(ANNETTE,"出会いあれば別れアリ。\nま、これも仕方ないものね。",0)
+			MES(ANNETTE,"元気でね、２人とも！\n故郷でもガンバるんだぞ！",0)
+			MES_close(ANNETTE)
+			TK_end()
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※雑貨屋．カウンターに配置。
+	if( F6_00_GoToMeru )
+	{
+//　　（※初回イベントに分離します）
+//　　※雑貨屋．カウンターに配置。
+//　　※初回イベント
+		rot_chr(ANNETTE,30,PLAYER1)
+		if(!FT_12_TalkAnnette)
+		{
+			MES(ANNETTE,"みんな、竜巻が\nやってくるって大騒ぎよね。",0)
+			MES(ANNETTE,"あたしもそろそろ\nお店閉めないとなぁ……",0)
+			MES_close(ANNETTE)
+
+		//　　アネットにＰＡエモーション。
+			EMO(ANNETTE,EMO_PA)
+			wait(30)
+			
+			MES(ANNETTE,"あ、そういえば。",0)
+			MES(ANNETTE,"さっきピピロちゃんが来てね、\nいくつかカワイイ系のを\n予約していったんだけど……",0)
+			MES(ANNETTE,"『あたしが解決するから。\n  任せとけって☆』\nとか言ってたのよね。",0)
+			MES_close(ANNETTE)
+
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(ANNETTE,"どーしたのかしら……\nラグナ君、意味分かる？",0)
+				MES_close(ANNETTE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"はは、まあな……\n（ピピロのやつ、意外と\n  乗り気だったみたいだな……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□アルウェン先頭")
+			{
+				MES(ANNETTE,"どーしたのかしら……\nアルウェンさん、意味分かる？",0)
+				MES_close(ANNETTE)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"ふむ、大体の想像は付くがな。",0)
+				MES(PARTNER,"（ブティックが無くなると困るとか、\n  そんな所であろうか。）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			
+			F_set(FT_12_TalkAnnette)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(ANNETTE,"ピピロちゃん……\n何だったのかしら。",0)
+			MES(ANNETTE,"もしかして\nあの竜巻の話と関係あるのかな。",0)
+			MES(ANNETTE,"う～～～～ん………\n一体どういう関係が……",0)
+			MES_close(ANNETTE)
+
+		//　　アネットに少し．．．エモーション。
+			EMO(ANNETTE,EMO_TENTEN)
+			wait(30)
+			
+			MES(ANNETTE,"何だか分かんないけど……\n任せたぞ、ピピロちゃん！",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※雑貨屋．カウンターに配置。
+	if( F5_00_HearLunar )
+	{
+		//　　※初回イベント
+		if(!FT_11_TalkAnnette)
+		{
+			VOICE(709,0)									//「ハァイ、いらっしゃい」			
+			MES(ANNETTE,"ハァイ、いらっしゃい。",0)		
+//			MES(ANNETTE,"ハァイ、いらっしゃい。\nブティック《アネット》へようこそ！",0)
+			MES(ANNETTE,"気がついた？\nじみ～に品揃え変えたの。",0)
+			MES(ANNETTE,"それと、お馴染みの商品は\nちょっと値下げしたから、\nお買い求めやすくなってるハズよ。",0)
+			MES(ANNETTE,"ふふ、是非見てってね☆",0)
+			MES_close(ANNETTE)
+			
+			//★アネット【結構商売上手】
+			F_set_note(ANNETTE,2)
+			F_set(FT_11_TalkAnnette)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			MES(ANNETTE,"春の新作は入荷してないんだけど、\n奥に引っ込めてたアクセサリを追加したの。",0)
+			MES(ANNETTE,"これだって発表されたばかりの\n有名デザイナー作．ブランド品なのよ。",0)
+			MES(ANNETTE,"ま、ちょっとお値段が張るけど……\nそこんとこは我慢してね☆",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//　　※屋敷前を掃除（ホウキ持ち）。
+	//　　※雑貨屋、商品の手入れをしている。
+	if( F4_09_GoShrineMia)
+	{
+	//　　※初回イベント。
+		if(!FT_10_TalkAnnette)
+		{
+			MES(ANNETTE,"パタパタ、パタパタ……",0)
+			MES_close(ANNETTE)
+
+		//　　アネット、ＰＡエモーションで振り返る。
+			EMO(ANNETTE,EMO_PA)
+			rot_chr(ANNETTE,30,PLAYER1)
+			wait(30)
+			MOT(ANNETTE,50,15)
+			MES(ANNETTE,"あ、あれ？\n２人とも、朝早いのねー。",0)
+			MES(ANNETTE,"まだ準備中だけど……\nよかったら見ていく？",0)
+			MES_close(ANNETTE)
+			
+			F_set(FT_10_TalkAnnette)
+
+		//　　□ショップ選択肢に飛ぶ。
+		//──────────────────────────────
+		}
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			MES(ANNETTE,"今朝は何とな～く\n早めに目が覚めちゃったの。",0)
+			MES(ANNETTE,"はあ、こんなに早起きするなんて\n久しぶりかなぁ～……",0)
+			MES(ANNETTE,"時間が勿体無いから、開店時間まで\n軽くホコリはたきでもしてよっかな。",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※『★星降りの里へ向かうことにした』の前は、
+	//　　　ロアルタ村に来ている。
+	//　　※ロアルタ村．牛舎つき民家で、ベッドのそばにいる。
+	//　　※初回は、フェデリカのイベントが起動する。
+	if( F4_00_StartSolo )
+	{
+		//──────────────────────────────
+		//　　※以下『★星降りの里へ向かうことにした』前の通常一般メッセージ。
+		//　　※振り返らない。
+		if(!F4_02_GoVillage2)
+		{
+		//　　※アネットと共通の初回イベント。
+		//　　※振り返らない。
+			TK_begin()
+			
+			MOT_SET(ANNETTE,151,-1,458,458,152,3)
+			MOT_SET(ANNETTE,152,-1,459,459,153,3)
+			MOT_SET(ANNETTE,153,-1,458,458,154,3)
+			MOT_SET(ANNETTE,154,-1,459,459,150,10)
+			if(!FT_07_TalkAneFede)
+			{
+				EV("TALK_FA")
+				wait_EV("TALK_FA")
+			}
+			else
+			{
+				MES(ANNETTE,"ホントにホントに……",0)
+				MES(ANNETTE,"グス、そんな話知ってたら、\nあたし絶対お姉ちゃんを\n一人にしなかったのにっ……",0)
+				MOT(ANNETTE,151,5)
+				MES(ANNETTE,"もう、どうして笑ってるのっ！？",0)
+				MES_close(ANNETTE)
+				MOT(ANNETTE,150,10)
+			}
+			TK_end()
+		}
+		//──────────────────────────────
+		//　　※『★星降りの里へ向かうことにした』の後は、アルッテに戻っています。
+		//　　※雑貨屋．カウンターに配置。
+		else
+		{
+			if(!F_ANNETTE)
+			{
+				MES(ANNETTE,"さっきね、お姉ちゃんの\nお見舞いに行ってきたの。",0)
+				MES(ANNETTE,"ふう……思ったより\n元気そうで安心したわ。",0)
+				MES(ANNETTE,"本当は無理にでも\n連れて帰ろうかと思ったけど……\n町にも魔物が現れたばっかりなのよね。",0)
+				MES(ANNETTE,"お互い、気に入ってる生活もあるし……\nやっぱり無理強いはできないかなぁ～。",0)
+				MES_close(ANNETTE)
+				
+				//──────────────────────────────
+				//	name("□このフラグでラーライラと話している場合、１回だけ挿入。")
+				if(!FT_07_TalkAnnette)
+				{
+					MES(ANNETTE,"ところで……",0)
+					MES_close(ANNETTE)
+
+				//　　アネット、ラーライラを見てから、向きを戻す。
+					rot_chr(ANNETTE,30,LA-RAIRA)
+					CAM_move(-1071,173,134,90,0)
+					wait_CAM_move()
+					
+					wait(30)
+					cross_fade(30)
+					CAM_return(0)
+					CAM(230,80,-25,25,225,0,0)
+					wait_fade()
+					
+					rot_chr(ANNETTE,30,PLAYER1)
+					MES(ANNETTE,"（あのお婆さん、だれ？）",0)
+					MES(ANNETTE,"（見たこと無い人だけど……\n  さっきお店に戻ってきたら、\n  商品を物色していたの。）",0)
+					MES(ANNETTE,"（怪しい人じゃ、ないよね？？）",0)
+					MES_close(ANNETTE)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（あ、ああ。）",0)
+					MES(RAGNA,"（あからさまに不審人物だが、\n  悪い人間じゃないぜ……）",0)
+					MES_close(RAGNA)
+
+				//	name2(SUBARU)
+					MES(PARTNER,"（ええ、お婆ちゃんはただ\n  とってもファンキーなだけですよ！）",0)
+					MES_close(PARTNER)
+
+				//	name2(ANNETTE)
+					MES(ANNETTE,"（そ、そうなんだ……）",0)
+					MES(ANNETTE,"（よくわかんないけど、了解。\n  ありがとね、２人とも！）",0)
+					MES_close(ANNETTE)
+					F_set(FT_07_TalkAnnette)
+				}
+				
+				F_set(ANNETTE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(ANNETTE,"また今度、\n様子を見に行くつもりなの。",0)
+				MES(ANNETTE,"テオ先生は問題ないって言ってたけど、\nやっぱり心配は心配だし……",0)
+				MES(ANNETTE,"今まであんまり\n会いに行ったことなかったのよね。",0)
+				MES(ANNETTE,"うん、時々お休みをとって\n顔を見に行くことにしようかな。",0)
+				MES_close(ANNETTE)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※雑貨屋．カウンターに配置。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_ANNETTE)
+		{
+			MES(ANNETTE,"っと、いっけない。\nもうこんな時間……",0)
+			MES(ANNETTE,"ちょっとうたた寝\nしちゃったかなぁ。",0)
+			MES_close(ANNETTE)
+
+		//　　アネットにＰＡエモーション。
+			EMO(ANNETTE,EMO_PA)
+			wait(30)
+			
+			MES(ANNETTE,"そういえば、さっきまで\n表が騒がしかったみたいだけど……\n……何かあったの？",0)
+			MES_close(ANNETTE)
+
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"ああ……",0)
+				MES(RAGNA,"とりあえず、店の外には\n出ないようにな。",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□アルウェン先頭")
+			{
+				MES(PARTNER,"うむ、今は少々問題がある。",0)
+				MES(PARTNER,"店の外には出ない方がよかろう。",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			
+			F_set(ANNETTE)
+		}
+		else
+		{
+	//　　★繰り返し
+			MES(ANNETTE,"お店のレイアウトとか考えてたら\nうたた寝しちゃってたみたい。",0)
+			MES(ANNETTE,"大分遅くなっちゃった。\nそろそろお店閉めないと……",0)
+			MES_close(ANNETTE)
+
+		//　　アネットにＰＡエモーション。
+			EMO(ANNETTE,EMO_PA)
+			wait(30)
+			
+			MES(ANNETTE,"あ、心配しないで。\n２人の買い物には\nちゃんと付き合うから。",0)
+			MES(ANNETTE,"用事があればいつでも寄ってね。",0)
+			MES_close(ANNETTE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※雑貨屋．カウンターに配置。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_ANNETTE)
+		{
+			MES(ANNETTE,"ふう、飛行機遅れてるわね～……",0)
+			MES(ANNETTE,"今度の連絡便で\n春の新作が届くはずだったのに……",0)
+			MES(ANNETTE,"仕方ない、\n先に売り場のディスプレイを\n変えちゃおうかな。",0)
+			MES(ANNETTE,"やっぱり新鮮味を出さないと、\nお客さんの入りとかも違うし。",0)
+			MES_close(ANNETTE)
+			
+			F_set(ANNETTE)
+		}
+	//　　★繰りかえし
+		else
+		{
+			MES(ANNETTE,"個人的には、そろそろ\n短いスパッツとかキュロット系が\n流行るんじゃないかと思ってるの。",0)
+			MES(ANNETTE,"最近は柄もいろいろ出てきてるし、\nアレンジしやすいじゃない？",0)
+			MES(ANNETTE,"うーん、この辺りをプッシュした\nレイアウトとかを考えてみようかな～。",0)
+			MES_close(ANNETTE)
+		}
+	}
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※雑貨屋．カウンターでフェデリカと話している。
+	//　　※２人共通の初回イベント
+	//　　※２人とも振り返らない。
+	else
+	if( F2_00_GoForest )
+	{
+		if(!FT_03_TalkAneFede)
+		{
+			//共通会話。
+			EV("TK_FEDERICA")
+			wait_EV("TK_FEDERICA")
+		}
+		else
+		{
+			if(!F_ANNETTE)
+			{
+				MES(ANNETTE,"お姉ちゃん、\nロアルタ村に住んでるのよ。",0)
+				MES(ANNETTE,"近いんだから一緒に住もうって\nずっと言ってるのに……",0)
+				MES(ANNETTE,"ふう、何故だか\n村から離れたくないみたい。",0)
+				MES(ANNETTE,"中々頑固なのよね～。",0)
+				MES_close(ANNETTE)
+				
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"はは、頑固っていうか……\nそいつはこだわりの問題だよな。",0)
+					MES_close(RAGNA)
+
+				//	name2(ANNETTE)
+					MES(ANNETTE,"あっ、ラグナ君。\nお姉ちゃんの肩を持つんだ。",0)
+					MES(ANNETTE,"うーん、許せないかも。\nちょっと値上げしちゃおっかな～？",0)
+					MES_close(ANNETTE)
+
+				//　　ラグナに青ざめエモーション。
+					EMO(RAGNA,EMO_AOZAME)
+					wait(30)
+					
+					MES(RAGNA,"済まん、勘弁してくれ。",0)
+					MES_close(RAGNA)
+				}
+			//	name("□アルウェン先頭")
+				else
+				{
+					MES(PARTNER,"喧嘩をしてる割には\n楽しそうだのう……",0)
+					MES_close(PARTNER)
+
+				//	name2(ANNETTE)
+					MES(ANNETTE,"む～、あたしは本気なのに……",0)
+					MES(ANNETTE,"アルウェンさん？\nそんなこと言う人には\n値上げしちゃうけど～？",0)
+					MES_close(ANNETTE)
+
+				//　　アルウェンに冷や汗エモーション。
+					EMO(PARTNER,EMO_HIYAASE)
+					wait(30)
+					
+					MES(PARTNER,"済まぬ、非礼を詫びよう。",0)
+					MES_close(PARTNER)
+				}
+
+				F_set(ANNETTE)
+			}
+			else
+			{
+				MES(ANNETTE,"あたしたち双子なんだし、\n一緒に暮らすのが自然よね。",0)
+				MES(ANNETTE,"それにこのお店だって、\nお姉ちゃんと一緒にやろうと\n思って始めたのに……",0)
+				MES(ANNETTE,"ふう、ホント頑固なんだから……",0)
+				MES_close(ANNETTE)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※雑貨屋．フロアで商品の手入れをしている。
+	if( F1_15_GoVillage )
+	{
+		if(!F_ANNETTE)
+		{
+			MES(ANNETTE,"ウチの常連さんにね、\n女の子がいるの。",0)
+			MES(ANNETTE,"毎日熱心に見に来てくれるんだけど……\nお目当ての新作が\nまだ入ってないのよね～。",0)
+			MES(ANNETTE,"ちょっと飛行機が遅れてるみたい。",0)
+			MES(ANNETTE,"まー、我慢してね。\n来週には届くと思うから。",0)
+			MES_close(ANNETTE)
+			
+			F_set(ANNETTE)
+		}
+	//　　★繰り返し
+		else
+		{
+			look(ANNETTE,"Bone_Head",0,		0,1,0,			0,-30,0)
+			MES(ANNETTE,"うーん、でもなんだか\n今日は落ち着かないなぁ……",0)
+			look(ANNETTE,"Bone_Head",0,		0,1,0,			0,0,0)
+			MES(ANNETTE,"実はね、そろそろ\nウチに姉が来るはずなの。",0)
+			MES(ANNETTE,"ま、大したことじゃないんだけど……\n今日か明日くらいだと思うのよね。",0)
+			MES_close(ANNETTE)
+
+		//　　アネット、横を向いて．．．エモーション。
+			EMO(ANNETTE,EMO_TENTEN)
+			wait(30)
+//			look(ANNETTE,"Bone_Head",0,		0,1,1,			0,20,-10)
+			
+			MES(ANNETTE,"あーん、なんだか落ち着かないなぁ。\n早く来ればいいのに……",0)
+			MES_close(ANNETTE)
+
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（随分と心待ちみたいだな……）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"（ふむ、随分と心待ちに\n  しておるようだな……）",0)
+				MES_close(PARTNER)
+			}
+//			look(ANNETTE,"Bone_Head",0,		0,1,1,			0,0,0)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※雑貨屋．カウンターに配置。
+	if( F1_01_GameStart )
+	{
+	//　　※初回イベント。
+		if(!FT_01_TalkAnnette)
+		{
+			MES(ANNETTE,"ハァイ、いらっしゃい。\nブティック《アネット》へようこそ！",0)
+			MES(ANNETTE,"ってあれ、そっちの子……",0)
+			MES_close(ANNETTE)
+
+		//　　アネット、アルウェンを見る。
+			rot_chr(ANNETTE,30,PARTNER)
+			
+			MES(ANNETTE,"へえ、その羽カワイイな～……",0)
+			MES(ANNETTE,"ね、ね、どこで買ったの？",0)
+			MES_close(ANNETTE)
+
+		//	name2(PARTNER)
+			rot_chr(PARTNER,30,ANNETTE)
+			
+			MES(PARTNER,"うむ、この翼は我が誇り高き\nムーンブリア家のだな……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			rot_chr(RAGNA,30,PARTNER)
+			MES(RAGNA,"ちょ、ちょっと姫さん……",0)
+			MES_close(RAGNA)
+
+		//　　ラグナ、慌ててアルウェンに向く。
+			MES(RAGNA,"（何を語りだしてんだよ。\n  自分から正体をバラしてどうする。）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			MES(PARTNER,"（家名を明かすくらいならば\n  構わぬであろ。）",0)
+			MES(PARTNER,"（それにこの翼の良さが分かるとは、\n  なかなか見込みのある者でもあるし……）",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（いや、そういう問題じゃねえから。）",0)
+			MES_close(RAGNA)
+
+		//	name2(ANNETTE)
+			MES(ANNETTE,"？？？\nよくわかんないけど……",0)
+			MES_close(ANNETTE)
+
+		//　　ラグナとアルウェン、向きを戻す。
+			rot_chr(RAGNA,30,ANNETTE)
+			rot_chr(PARTNER,30,ANNETTE)
+			
+			MES(ANNETTE,"ま、いいわ。\n深くは聞かない。",0)
+			MES(ANNETTE,"その代わり、色々見ていってね。\nウチはデコレーション系の小物とかも\n扱ってるの。",0)
+			MES_close(ANNETTE)
+
+			F_set(FT_01_TalkAnnette)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!FT_01_TalkAnnette2)
+			{
+			//　　※初回イベント２を追加。
+			//　　　このイベントは普通の初回とは違い、「話をする」を選んだ後の
+			//　　　TK_ANETTEルーチン内で判定してください。
+				MES(ANNETTE,"ところで……",0)
+				MES(ANNETTE,"２人って、噂のラグナ君と\nアルウェンさん？",0)
+				MES_close(ANNETTE)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"あ、ああそうだが……",0)
+				MES(RAGNA,"……噂になってるのか？\n（まさか姫さんが何か\n  目立つ事をやっちまって……）",0)
+				MES_close(RAGNA)
+
+				rot_chr(ANNETTE,30,RAGNA)
+			//	name2(ANNETTE)
+				MES(ANNETTE,"確かラグナ君は飛行機が\n落っこちちゃったのよね。",0)
+				MES(ANNETTE,"でもそれがきっかけで出会った\nアルウェンさんに一目ボレして、\n即日電撃プロポーズしたって。",0)
+				MES(ANNETTE,"昨日もメイさんが\n言いふらしてたけど。",0)
+				MES_close(ANNETTE)
+
+				
+			//　　ラグナに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				wait(30)
+				
+			//　　チーンというＳＥ。				
+//				MES(RAGNA,"C4◆チーンというＳＥ。",0)
+//				MES_close(RAGNA)
+				
+			//　　顔を落す。（もしくはため息）
+				look(RAGNA,"Bone_Head",0,		0,28,2,			0,0,-30)
+				MES_close(RAGNA)
+				
+				MES(RAGNA,"そ、そういう話かよ……",0)
+				MES(RAGNA,"しかも激しく不名誉な話に\nなってるんだが……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"フフン、この私を\n信用せぬから悪いのだ。",0)
+				MES_close(PARTNER)
+
+				look(RAGNA,"Bone_Head",0,		0,0,1,			0,0,0)
+				rot_chr(PARTNER,30,ANNETTE)
+			//　　アルウェン、キョロキョロ。
+				look(PARTNER,"Bone_Head",0,		0,2,0,			0,30,0)
+				wait(20)
+				look(PARTNER,"Bone_Head",0,		0,2,0,			0,-30,0)
+				wait(40)
+				look(PARTNER,"Bone_Head",0,		0,2,0,			0,0,0)
+				
+				MES(PARTNER,"しかし……\n中々楽しそうな店だな。",0)
+				MES(PARTNER,"この店は、店主が\n一人でやっておるのか？",0)
+				MES_close(PARTNER)
+
+				rot_chr(ANNETTE,30,PARTNER)
+			//	name2(ANNETTE)
+				MES(ANNETTE,"あ、アルウェンさんは\n気に入ってくれた？",0)
+				MES(ANNETTE,"ふふ、実は１年ほど前に\n開店したばっかりなの。",0)
+				MES_close(ANNETTE)
+
+			//　　アネット、軽く商品のほうを向く。
+				rot(ANNETTE,30,45)			
+				MES(ANNETTE,"趣味で始めたみたいなものだけど、\n結構繁盛しちゃってるのよね。",0)
+				
+				rot_chr(ANNETTE,30,PLAYER1)
+				MES(ANNETTE,"２人もじっくり見てってね。\nここにあるのは、あたしが選び抜いた\nザ．ベスト商品ばっかりなの☆",0)
+				MES_close(ANNETTE)
+				
+				//★アネット【趣味の店】
+				F_set_note(ANNETTE,0)
+
+			//　　（※通常一般メッセージは、既存の物を使用）
+				F_set(FT_01_TalkAnnette2)
+			}
+			else
+			{
+				if(!F_ANNETTE)
+				{
+					rot_chr(ANNETTE,30,PARTNER)
+					MES(ANNETTE,"そうねー……\nアルウェンさんの服だと、大き目の\nアクセサリなんかも似合うかも。",0)
+					MES(ANNETTE,"ウチはデコレーション系の\n小物とかも揃えてるから。",0)
+					MES(ANNETTE,"ゆっくりしてってね☆",0)
+					MES_close(ANNETTE)
+
+				//　　アルウェンに□エモーション。
+					EMO(PARTNER,EMO_ONPU)
+					wait(30)
+					MES(PARTNER,"うむ、そうさせてもらおう。",0)
+					MES_close(PARTNER)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（ぽろっと妙な事を\n  言わなきゃいいがな……）",0)
+					MES_close(RAGNA)
+
+					F_set(ANNETTE)
+				}
+			//　　★繰り返し
+				else
+				{
+				//　　アネットにＰＡエモーション。
+					EMO(ANNETTE,EMO_PA)
+					wait(30)
+					MES(ANNETTE,"あ、もしかして\nどれにしようか迷ってる？",0)
+					MES(ANNETTE,"あっちのショーケースの中に、\nオススメの小物類を集めてあるの。",0)
+					MES(ANNETTE,"気が向いたら試してみて☆",0)
+					MES_close(ANNETTE)
+				}
+			}
+		}
+	}
+}
+
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

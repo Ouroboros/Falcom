@@ -1,0 +1,522 @@
+//──────────────────────────────
+//	name("◆更纱（露天温泉従業員）Salasya")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_SALASYA
+{
+	TK_begin()
+	rot_chr(PLAYER1,30,SALASYA)
+
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(SALASYA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,SALASYA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,SALASYA)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	//──────────────────────────────
+	//▼□□　わらしべイベント
+	//	name("６·更纱（星降之里）		『おしぼり』□『うに缶』")148
+	//──────────────────────────────
+	if(F5_00_HearLunar && FV_11_Warasi_5_Han && !FV_11_Warasi_6_Sls)
+	{
+		//会話モ～ション
+		MOT_SET(SALASYA,150,-1,427,427,151,10)
+		MOT_SET(SALASYA,151,-1,428,428,150,10)
+		//──────────────────────────────
+		if(!F_SALASYA)
+		{
+		//	name("□初回")
+			MES(SALASYA,"哎呀真讨厌，\n手又裂开了。",0)
+			MES(SALASYA,"果然，只是做清洗工作\n对皮肤不好呢……",0)
+			MES_close(SALASYA)
+
+		//　　更纱，ＰＡエモ～ションで振り返る。
+			EMO(SALASYA,EMO_PA)
+			rot_chr(SALASYA,30,RAGNA)
+			wait(30)
+	
+			MOT(SALASYA,150,10)
+			MES(SALASYA,"哎呀，小拉古那？\n你正好带着个好东西嘛。",0)
+			MES(SALASYA,"那个『擦手巾』，\n能让给大婶我吗？",0)
+			MES_close(SALASYA)
+			
+			F_set(SALASYA)
+		}
+		else
+		{
+		//	name("□２回目以降")
+			rot_chr(SALASYA,30,RAGNA)
+			MOT(SALASYA,150,10)
+			MES(SALASYA,"只做澡堂的清洗工作，\n皮肤就容易裂开呢。",0)
+			MES(SALASYA,"呐，小拉古那。\n那个『擦手巾』，能不能\n让给我呢？",0)
+			MES_close(SALASYA)
+		}
+		//──────────────────────────────
+		
+	//	name("選択テキスト")
+		workL(WK_CANCEL,SET,2)//【取消】
+		MES_pos(PLAYER1,"??W9【请拿去吧】\n【这个有点……】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+		//──────────────────────────────
+		//	name("□【どうぞどうぞ】")
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+			MES(SALASYA,"哎呀呀，谢谢了。\n有了这个，再抹上药膏的话，\n皮肤干裂应该能好转吧。",0)
+			MES(SALASYA,"啊啊，对了，\n难得有这个，就给你们吧。",0)
+			MES(SALASYA,"呵呵，就算是交换吧。",0)
+			MES_close(SALASYA)
+
+		//	name("アイテム入手テキスト")
+		//	MES(this,"『うに缶』を貰った。",0)
+			//―――――――――――――――――――――――
+			fade_in(30,10,BLACK)
+
+			get_item(147,-1,1)
+			get_item(148,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//―――――――――――――――――――――――
+
+		//	name2(RAGNA)
+			MES(RAGNA,"海，海胆罐头……？",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"这是海胆罐头。\n之前得到的礼物。",0)
+			MES(SALASYA,"但是这个里是山地吧？\n很多人对海胆都不熟悉，\n也没什么机会送出去。",0)
+			MES_close(SALASYA)
+
+			//──────────────────────────────
+			if(GW_MAN==0 && F6_00_GoToMeru)
+			{
+			//	name("□艾尔雯先頭")
+				MES(PARTNER,"哦哦，这是\n没见过的食物呢……",0)
+				MES(PARTNER,"这是可以直接吃的吗？",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（立刻就感兴趣起来了啊……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□拉古那先頭")
+				MES(RAGNA,"哈哈，是这样吗。",0)
+				MES(RAGNA,"（……其实，我也\n  对海胆不拿手啊……）",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+			F_reset(SALASYA)
+			F_set(FV_11_Warasi_6_Sls)
+		}
+		//──────────────────────────────
+		//	name("□【これはちょっと……】")
+		//──────────────────────────────
+		else
+		{
+			MES(SALASYA,"这样啊，真遗憾。",0)
+			MES(SALASYA,"那就只能用药膏\n忍耐一下吧。",0)
+			MES_close(SALASYA)
+		}
+		MOT(SALASYA,152,10)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	if(F6_00_GoToMeru)
+	{
+		rot_chr(SALASYA,30,PLAYER1)
+
+		EV("MOTION_TK_SALASYA")
+		if(!FS_12_TalkSalasya)
+		{
+
+		//　　※温泉屋で仕事をしている。
+			MES(SALASYA,"哎呀，小拉古那……",0)
+			MES(SALASYA,"你是来洗澡的？\n呵呵，非常欢迎哦噴",0)
+
+			if(SP001>60000)
+			{
+				MES(SALASYA,"正因为是在这种时候，\n才必须要泡个澡，\n好好地消除疲劳啊。",0)
+				MES_close(SALASYA)
+
+				MES(RAGNA,"哈哈哈，是啊……",0)
+			}
+			else
+			{
+				MES(SALASYA,"哎呀，不过现在\n好像还在清扫中……？",0)
+				MES_close(SALASYA)
+
+				MES(RAGNA,"啊，不用在意。",0)
+			}
+			MES(RAGNA,"对了，那之后你也一直\n在照顾昴吧。",0)
+			MES(RAGNA,"请让我谢谢你。",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"哎呀客气什么，\n这种事不用在意啦……",0)
+			MES(SALASYA,"小昴\n就像我女儿一样。\n照看她这种事是理所当然的嘛。",0)
+			MES_close(SALASYA)
+
+		//　　更纱に···エモ～ション。
+			EMO(SALASYA,EMO_TENTEN)
+			wait(30)
+
+			MES(SALASYA,"说起来……\n关于仪式你有什么打算？",0)
+			MES_close(SALASYA)
+
+		//　　拉古那たちに？エモ～ション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			EMO(PET,EMO_HATENA)
+			wait(30)
+
+			MES(RAGNA,"咦……？",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"虽说不用着急，不过……",0)
+			MES(SALASYA,"你看，小昴明年就１５岁了。\n马上就到合适的年龄了呢。",0)
+			MES(SALASYA,"……哎呀，小拉古那\n什么都还没考虑吗？",0)
+			MES_close(SALASYA)
+
+		//　　拉古那，そっぽを向く。もしくは青ざめエモ～ション。
+			EMO(RAGNA,EMO_AOZAME)
+			wait(30)
+			MES(RAGNA,"啊，呃，那个……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"呼呼……\n你们进展得很快嘛。",0)
+			MES_close(PARTNER)
+
+		//　　拉古那，アセアセで艾尔雯に向く。
+			rot_chr(RAGNA,30,PARTNER)
+
+			EMO(RAGNA,EMO_ASEASE)
+			wait(30)
+			MES(RAGNA,"那个，那个是之前\n为了进这个里而找的托词，呐？",0)
+			MES_close(RAGNA)
+
+		//	name2(PET)
+			MES(PET,"……鄙视你。",0)
+			MES_close(PET)
+			F_set(FS_12_TalkSalasya)
+		}
+		//──────────────────────────────
+		else
+		{
+			if(!F_SALASYA)
+			{
+				rot_chr(SALASYA,30,RAGNA)			//　　拉古那に向く。
+
+		//　　※以下通常一般メッセ～ジ。
+				MES(SALASYA,"其实，大婶我\n也是从里外面嫁进来的哦。",0)
+				MES(SALASYA,"所以很理解小拉古那的\n困惑的心情……",0)
+				MES(SALASYA,"不过这种事情，\n到底还是早点决定\n比较好吧。",0)
+				MES(SALASYA,"而且，小昴\n穿上装饰得华丽丽的\n新娘礼服的样子……",0)
+				MES(SALASYA,"啊啊，大婶我\n光是想像一下就非常激动了啊～噴",0)
+				MES_close(SALASYA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（我不行了，不找个机会\n  解除这个误会的话……）",0)
+				MES_close(RAGNA)
+				//★更纱【２人之仲に賛成】
+				F_set_note(SALASYA,2)
+				F_set(SALASYA)
+			}
+		//　　★繰り返し
+			else
+			{
+			//	if(EQ112 && SP001<=60000)	//万步計を装備していて６万步以下之场合はヒントを出す
+				if(IT112>0 && SP001>50000 && SP001<=60000)	//万步計を持っていて５万より上，６万步以下之场合はヒントを出す
+				{
+					MES(SALASYA,"不好意思呢。\n澡堂的清扫\n还要再花点时间。",0)
+					MES(SALASYA,"大婶我马上就能清扫完的，\n你们先去散散步怎么样？",0)
+					MES(SALASYA,"对了，那个计步器\n计到６万步的话\n我想那时清扫就结束了。",0)
+					MES_close(SALASYA)
+				}
+				else
+				{
+					MES(SALASYA,"确实，这里的生活习惯\n和外面有所不同，\n有疑虑也可以理解……",0)
+					MES(SALASYA,"还请你\n好好考虑考虑啊。",0)
+					MES(SALASYA,"呵呵，大婶\n会替你们加油的哦噴",0)
+					MES_close(SALASYA)
+				}
+			}
+		}
+		MOT(SALASYA,152,10)
+	}
+	
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※杂货店，棚之前にいる。
+	if( F5_00_HearLunar )
+	{
+		//会話モ～ション
+		EV("MOTION_TK_SALASYA")
+		if(!FS_11_TalkSalasya)
+		{	
+			rot_chr(SALASYA,30,PLAYER1)
+			MES(SALASYA,"火势增大的时候，\n真是挺吓人的，不过……",0)
+			MES(SALASYA,"由于上忍们的引导，\n女孩子们都躲起来了。\n万幸都没有受伤。",0)
+			MES(SALASYA,"嗯……\n之后就是小昴了。",0)
+			MES(SALASYA,"烧已经退了，\n我想没什么关系了。",0)
+			MES_close(SALASYA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"……是吗。",0)
+			MES(RAGNA,"对不起了，她的事\n还要再稍微麻烦你一下。",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"哎呀，小拉古那。\n不用露出这样的表情啊。",0)
+			MES(SALASYA,"这孩子还是有一些体力的。\n大婶我\n会对她严加照顾的。",0)
+			MES_close(SALASYA)
+			F_set(FS_11_TalkSalasya)
+			rot(SALASYA,30,170)
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_SALASYA)
+			{
+				rot_chr(SALASYA,30,PLAYER1)
+				MES(SALASYA,"如果是小昴的事，\n你就不用担心了。",0)
+				MES(SALASYA,"大婶我啊，从她小的时候\n就一直在归顾她了。",0)
+				MES(SALASYA,"这种事情就包在我身上吧。\n保证很快就会恢复精神了。",0)
+				MES_close(SALASYA)
+				F_set(SALASYA)
+				rot(SALASYA,30,170)
+			}
+			//　　★繰り返し
+			else
+			{
+			//　　※振り返らない。
+				MES(SALASYA,"嗯嗯，绷带和退烧药……",0)
+				MES(SALASYA,"对了，差不多\n得去准备一些粥了。",0)
+				MES(SALASYA,"小昴醒了的话\n肚子肯定会饿的。",0)
+				MES_close(SALASYA)
+			}
+		}
+		MOT(SALASYA,152,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//　　※温泉屋之前で掃除している。
+	if( F4_05_OnVillage2 )
+	{
+		
+		//会話モ～ション
+		look(SALASYA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//掃除中·手戻し
+		EV("MOTION_TK_SALASYA")
+
+		if( !FS_08_TalkSalasya )
+		{
+			rot_chr(SALASYA,30,PARTNER)
+			MES(SALASYA,"哎呀……\n小昴？",0)
+			MES(SALASYA,"真是的，上哪去了～……\n大婶好担心呢。",0)
+			MES_close(SALASYA)
+
+		//	name2(RAGNA)
+			rot_chr(RAGNA,30,PARTNER)
+			MES(RAGNA,"哈哈，『小昴』吗。",0)
+			MES(RAGNA,"昴\n在里中很受疼爱嘛。",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			MES(PARTNER,"真是的，师父，\n不要取笑我嘛～。",0)
+			MES(PARTNER,"只是因为更纱大婶\n从小时候起\n就一直在照顾我……",0)
+			MES_close(PARTNER)
+
+		//	name2(SALASYA)
+			rot_chr(SALASYA,30,RAGNA)
+			MES(SALASYA,"呵呵，从你父母\n病逝时开始，\n就一直是这样呢。",0)
+			MES(SALASYA,"话说……\n你就是那个人？",0)
+			MES_close(SALASYA)
+
+		//　　拉古那に？エモ～ション。
+			EMO(RAGNA,EMO_HATENA)
+			rot_chr(RAGNA,30,SALASYA)
+			wait(30)
+			
+			MES(RAGNA,"那个人……？？",0)
+			MES_close(RAGNA)
+
+		//　　昴，アセアセで拉古那に向く。
+			EMO(PARTNER,EMO_ASEASE)
+			rot_chr(PARTNER,30,RAGNA)
+			wait(30)
+
+			MES(PARTNER,"啊啊啊，那个。\n这个是那个，那个……",0)
+			MES(PARTNER,"啊，对了，更纱大婶！",0)
+			MES_close(PARTNER)
+			
+		//　　昴，更纱に向く。
+			rot_chr(PARTNER,30,SALASYA)			
+
+			MES(PARTNER,"我想让拉古那师父\n洗个澡……",0)
+			MES_close(PARTNER)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"哎呀，原来是这样吗。\n那还真是失礼了。",0)
+			MES(SALASYA,"不过呢，很不好意思，\n现在正在大扫除呢。",0)
+			MES(SALASYA,"对不起啊。\n大婶很快就会干完活的，\n那时再来可以吗？",0)
+			MES_close(SALASYA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"啊，是的。\n要是这样的话……",0)
+			MES_close(PARTNER)
+
+		//　　昴，拉古那に向く。
+			rot_chr(PARTNER,30,RAGNA)
+			MES(PARTNER,"那么，就稍微\n在里中逛一逛怎么样呢？",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"好啊，反正\n也不着急嘛。",0)
+			MES_close(RAGNA)
+
+		//　　拉古那，更纱に向く。
+			rot_chr(RAGNA,30,SALASYA)
+			MES(RAGNA,"那么，\n我们之后再过来吧。",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"呵呵，一会儿见。\n小昴，小拉古那噴",0)
+			MES_close(SALASYA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"嗯，啊啊……\n（连我也变成小拉古那了吗……）",0)
+			MES_close(RAGNA)
+			
+			//★藤藏【息子夫婦は病死】
+			F_set_note(-24,0)
+			//★更纱【昴之母親代わり】
+			F_set_note(SALASYA,0)
+			
+			F_set(FS_08_TalkSalasya)
+
+		//名前付きキャラ全員に話しかけると露天温泉が開く
+		}
+		//──────────────────────────────
+		//　　★藤藏【息子夫婦は病死】
+		//　　★更纱【昴之母親代わり】
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			rot_chr(SALASYA,30,PLAYER1)
+			if(!F_SALASYA)
+			{
+				MES(SALASYA,"其实……\n我也是“例外”\n所以稍微能理解呢……",0)
+				MES(SALASYA,"一开始，确实\n觉得心情不太舒服。",0)
+				MES(SALASYA,"不过，这里的人们\n大家真的都是很好的人。",0)
+				MES(SALASYA,"嗯，你慢慢就会明白了。",0)
+				MES(SALASYA,"今后也多多指教了。\n小拉古那噴",0)
+				MES_close(SALASYA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"啊，啊……",0)
+				MES_close(RAGNA)
+				F_set(SALASYA)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(SALASYA,"呵呵，不过，小昴\n会离开里\n原来是因为这样啊。",0)
+				MES(SALASYA,"好，大婶我今晚\n就大显身手一番！",0)
+				MES(SALASYA,"你们就期等着\n晚上大吃一顿吧噴",0)
+				MES_close(SALASYA)
+				//★更纱【手料理が得意】
+				F_set_note(SALASYA,1)
+			}
+		}
+		look(SALASYA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//掃除中
+		MOT(SALASYA,2,10)
+	}
+	TK_end()
+}
+
+//会話時モ～ション
+MOTION_TK_SALASYA
+{
+	MOT_SET(SALASYA,150,-1,427,427,151,10)
+	MOT_SET(SALASYA,151,-1,428,428,150,10)
+	MOT(SALASYA,150,10)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

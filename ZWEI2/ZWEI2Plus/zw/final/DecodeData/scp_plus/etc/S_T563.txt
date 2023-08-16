@@ -1,0 +1,228 @@
+//====================================================================
+//==通常アイテム宝箱 一般会話 ========================================================
+//====================================================================
+#ScriptTable
+
+//Ｇコロッセオ専用（マッスルギア．でもんジャケット）
+TK_PARTGG
+{
+	TK_begin()
+	rot_chr(0,60,TREASURE_CH)
+
+	//宝箱が開く
+	MOT(TREASURE_CH,1,0)
+
+	//宝演出
+	BGM_vol(50,15)				//BGMフェード
+	wait(20)
+	fade_in(30,10,BLACK)		//少し暗転
+
+	get_item(IT_TREASURE,1,0)	//パーツ入手テキスト
+	wait(70)
+	wait_key(0)
+	BGM_vol(100,30)				//BGM戻し
+	fade_in(0,10,BLACK)			//暗転解除
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+	TK_end()
+}
+
+//--------------------------------------------------------------------
+//アンカーギアの改造パーツを初入手した時
+TK_PART
+{
+	TK_begin()
+	rot_chr(0,60,TREASURE_CH)
+
+	//宝箱が開く
+	MOT(TREASURE_CH,1,0)
+
+	//宝演出
+	BGM_vol(50,15)				//BGMフェード
+	wait(20)
+	fade_in(30,10,BLACK)		//少し暗転
+
+	get_item(IT_TREASURE,1,0)	//パーツ入手テキスト
+	wait(70)
+	wait_key(0)
+	BGM_vol(100,30)				//BGM戻し
+	fade_in(0,10,BLACK)			//暗転解除
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+
+	TK_end()
+	
+	//宝箱からパーツを入手したのが初めての場合
+	if(!FE_FF_GetPart)
+	{
+		EV_begin()
+		
+		//クロスフェード
+		cross_fade(30)
+		CAM(470,98,0,22,225,0,0)
+		
+		//キャラの再配置(アイテムの種類で配置を分岐)
+		//Aパーツ(射程距離延長/セクンドゥム廃坑)
+		if(IT128==1)
+		{
+			chr_pos(RAGNA,7736,11267,1,4,2)
+			chr_pos(PARTNER,7540,11201,1,319,2)
+		}
+		//Bパーツ(フックギア/オルディウム神殿)
+		else
+		if(IT129==1)
+		{
+//			chr_pos(RAGNA,11300,7643,0,153,2)
+//			chr_pos(PARTNER,11216,7774,0,167,2)
+			chr_pos(RAGNA,11206,7538,0,284,2)
+			chr_pos(PARTNER,11206,7747,1,225,2)
+		}
+		//Cパーツ(射程距離延長/金闇の森)
+		else
+		if(IT130==1)
+		{
+			chr_pos(RAGNA,7459,6828,0,93,2)
+			chr_pos(PARTNER,7582,7016,0,119,2)
+		}
+/*
+		//メインイベント中武器終マップにイベントアリ
+	  	//Dパーツ(バーニングギア/アウロン大鉄塔)
+		else
+		if(IT131==1)
+		{
+			chr_pos(RAGNA,7764,11251,0,8,2)
+			chr_pos(PARTNER,7562,11189,0,328,2)
+		}
+		
+*/
+		//Eパーツ(グライドギア/星が峰)
+		else
+		if(IT132==1)
+		{
+			chr_pos(RAGNA,13079,7682,0,180,2)
+			chr_pos(PARTNER,12937,7754,0,191,2)
+		}
+/*
+		//Eパーツ(最強パーツ/？？)
+		else
+		{
+			chr_pos(RAGNA,7764,11251,0,8,2)
+			chr_pos(PARTNER,7562,11189,0,328,2)
+		}
+*/		
+		rot_chr(RAGNA,60,TREASURE_CH)
+		rot_chr(PARTNER,60,TREASURE_CH)
+		wait_fade()
+
+		MES(PARTNER,"これは……？",0)
+		MES(PARTNER,"かなり古い品のようだが……",0)
+		MES_close(PARTNER)
+
+//		rot_chr(RAGNA,60,PARTNER)
+		look_chr(RAGNA,PARTNER,"Bone_Head")
+
+	//	name2(RAGNA)
+		MES(RAGNA,"ああ、何かのパーツみたいだな。",0)
+		look_off(RAGNA)
+		MES(RAGNA,"大分さび付いちまってるし、\nちょっと見たことのないタイプだが……",0)
+		MES_close(RAGNA)
+		wait_MES(RAGNA)
+	//　　ラグナにＰＡエモーション。
+	
+		EMO(RAGNA,EMO_PA)
+		wait(30)
+
+		MES(RAGNA,"そうだ、一度\nミリアム辺りに聞いてみるか。",0)
+		MES(RAGNA,"何か知ってるかもしれねえし。",0)
+		MES_close(RAGNA)
+
+		fade_in(100,60,BLACK)
+		wait_fade()
+		CAM_return(0)
+		
+		//★改造パーツを入手した▼初回
+		F_set(FE_FF_GetPart)
+		
+		fade_in(0,30,BLACK)
+//		wait_fade()
+		EV_end()
+		//　　操作許可を戻す。
+	}
+}
+
+//--------------------------------------------------------------------
+//トレジャー発見
+#IT_PART_MM2_1	155		// 夢幻２Ａ
+#IT_PART_MM2_2	156		// 夢幻２Ｂ
+#IT_PART_MM2_3	157		// 夢幻２Ｃ
+#IT_PART_MM2_4	048		// アプリエス
+
+TK_PART_MM2
+{
+	TK_begin()
+	rot_chr(0,60,TAKARA_CH)
+
+	MOT(TAKARA_CH,1,0)
+
+	//宝演出
+	BGM_vol(50,15)				//BGMフェード
+	wait(20)
+	fade_in(30,10,BLACK)		//少し暗転
+
+	if ( IT_PART_MM2_1<1 )
+	{
+		get_item(IT_PART_MM2_1,1,0)//謎トレジャー　鑑定前
+	}
+	else if ( IT_PART_MM2_2<1 )
+	{
+		get_item(IT_PART_MM2_2,1,0)//謎トレジャー　鑑定前
+	}
+	else if ( IT_PART_MM2_3<1 )
+	{
+		get_item(IT_PART_MM2_3,1,0)//謎トレジャー　鑑定前
+	}
+	else if ( IT_PART_MM2_4<1 )
+	{
+		//イベント------------------------------------------------
+	//	name("システムメッセージ")
+		MES(0,"C3S2宝箱にはピンクの衣装が入っている。",2)
+		MES_close(0)
+		
+		SE(1190,0)	//鈴の音
+		
+		fade_in(100,60,WHITE)
+		wait_fade()
+		wait(15)
+		
+		MES(0,"C3S2『うさぎの耳』、『うさぎの手』、『うさぎの尻尾』が\n輝きながら衣装と一つに融合してゆく……",2)
+		MES_close(0)		
+		
+		fade_in(0,60,WHITE)
+		wait_fade()
+		wait(15)	
+	
+		fade_in(30,10,BLACK)		//少し暗転
+		
+		get_item(IT_PART_MM2_4,1,0)//謎トレジャー　鑑定前
+		
+		get_item(155,-1,1)							//うさぎの耳
+		get_item(156,-1,1)							//うさぎの手
+		get_item(157,-1,1)							//うさぎの尻尾		
+	}
+
+	wait(70)
+	wait_key(0)
+	BGM_vol(100,30)				//BGM戻し
+	fade_in(0,10,BLACK)			//暗転解除
+	menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+	TK_end()
+	
+}
+
+#EndScriptTable
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////

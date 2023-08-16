@@ -1,0 +1,717 @@
+//──────────────────────────────
+//	name("◆修女·伊萨贝拉（やさぐれ修女）Isabella")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_ISABELLA
+{
+	TK_begin()
+	rot_chr(ISABELLA,30,PLAYER1)
+
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(ISABELLA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,ISABELLA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,ISABELLA)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,ISABELLA)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,ISABELLA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※教会に入った所でタバコを吸っている。
+	if( F6_05_EndSixth )
+	{
+	//　　※初回イベント
+		if(!FT_13_TalkIsabella)
+		{
+
+			cross_fade(30)			//クロスフェ～ド
+			EV_begin()
+			
+			//カメラセット
+			CAM_move(119,-1019,215,0,0)
+			CAM(-130,64,215,30,151,0,0)
+			//キャラ再配置
+			chr_pos(RAGNA,	119,1019,0,260,2)
+			chr_pos(PET,112,853,0,280,2)
+			chr_pos(PARTNER,5,972,0,270,2)
+			rot_chr(ISABELLA,30,PARTNER)
+
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PET,"1", "1", "1")	
+			KAO(PARTNER,"9", "1", "7")	
+			KAO(ISABELLA, "1", "1", "1")	
+			
+			F_reset_chr(ISABELLA,CF_NO_MOVE)
+
+			wait_fade()
+			wait(15)
+
+		//────────────────────────
+		//	name("□伊萨贝拉に会った事が啊る场合")
+			if(FT_01_IsabellaEnc)
+			{
+			//	name("伊萨贝拉")
+				KAO(ISABELLA,"12321Z3","1","1")
+				MES(ISABELLA,"哎呀……",0)
+				KAO(ISABELLA,"12321Z6","1","1")
+				MES(ISABELLA,"今天真的是很多人啊。\n１２００芬尼左右吧。",0)
+				MES_close(ISABELLA)
+
+				MES(RAGNA,"谁，谁\n说要忏悔啊。",0)
+				MES_close(RAGNA)
+
+				MES(PET,"你呀，一点都没变……",0)
+				MES(PET,"那种蛮横的态度\n不知道以后会怎么样呐。",0)
+				MES_close(PET)
+			}
+		//	name("□会った事がない场合")
+			else
+			{
+			//	name("伊萨贝拉")
+				KAO(ISABELLA,"12321Z3","1","1")
+				MES(ISABELLA,"哎呀……",0)
+				KAO(ISABELLA,"12321Z5","1","1")
+				MES(ISABELLA,"好象来了很多人啊。",0)
+				KAO(ISABELLA,"12321Z8","1","1")
+				MES(ISABELLA,"忏悔的话５００芬尼，\n重犯罪的话１２００芬尼。",0)
+				MES_close(ISABELLA)
+
+				MES(RAGNA,"谁，谁\n说要忏悔了。",0)
+				MES_close(RAGNA)
+
+				MES(PET,"真是的，是个什么样的修女啊……",0)
+				MES(PET,"那种蛮横的态度\n不知道以后会怎么样那呐。",0)
+				MES_close(PET)
+
+			}
+		//────────────────────────
+			KAO(ISABELLA,"12321Z1","23","1")
+			MES(ISABELLA,"咳咳……",0)
+			MES_close(ISABELLA)
+
+		//　　修女，米娅に向く。
+			KAO(ISABELLA,"1","321","1")
+			rot_chr(ISABELLA,30,PARTNER)
+			wait(30)
+			KAO(ISABELLA,"12321Z8","1","1")
+			MES(ISABELLA,"……不论怎么说\n总是很在意\n自己所犯下的过错。",0)
+			MES_close(ISABELLA)
+
+			MES(PARTNER,"……啊………",0)
+			MES(PARTNER,"…………是的。",0)
+			MES_close(PARTNER)
+
+			KAO(ISABELLA,"12321Z8","1","1")
+			MES(ISABELLA,"真的不想再回去了，\n现在想勇往直前。",0)
+			KAO(ISABELLA,"12321ZA","1","1")
+			MES(ISABELLA,"那么，\n所有的事都自己扛着……\n好好想想犯了什么错吧。",0)
+			KAO(ISABELLA,"12321Z8","1","1")
+			MES(ISABELLA,"人类的罪恶，有出生就有的\n也有根据境况而出现的。",0)
+			KAO(ISABELLA,"12321Z7","1","1")
+			MES(ISABELLA,"对你而言，从今以后\n也许会这样交织而行。",0)
+			MES_close(ISABELLA)
+
+			MES(PARTNER,"……是。",0)
+			MES(PARTNER,"谢谢，\n修女。",0)
+			MES_close(PARTNER)
+
+		//　　カメラを艾尔雯たちに寄せる。
+			wait(15)
+			MES(PET,"意…意外的认真呢……",0)
+			MES_close(PET)
+
+			MES(RAGNA,"嗯～，谜一样的修女……",0)
+			MES_close(RAGNA)
+
+			KAO(ISABELLA,"12321Z1","23","1")
+			MES(ISABELLA,"咳咳……",0)
+			MES_close(ISABELLA)
+
+		//　　修女，タバコをふかす。
+			MOT(ISABELLA,68,15)
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			wait(60)
+			MOT(ISABELLA,52,15)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+			
+		//	name("伊萨贝拉")
+			KAO(ISABELLA,"12321Z3","21","1")
+			MES(ISABELLA,"对了，差点忘了。",0)
+			KAO(ISABELLA,"12321Z4","1","1")
+			MES(ISABELLA,"最近我刚收了个弟子哦。",0)
+			MES_close(ISABELLA)
+
+		//　　一同に？エモ～ション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			EMO(PET,EMO_HATENA)
+			wait(30)
+			
+			MES(PET,"弟子……？",0)
+			MES_close(PET)
+
+		//	name("伊萨贝拉")
+			KAO(ISABELLA,"12321Z3","1","1")
+			MES(ISABELLA,"在里面的房间里。",0)
+			KAO(ISABELLA,"12321Z4","1","1")
+			MES(ISABELLA,"没什么事的话，去见见吧。",0)
+			MES_close(ISABELLA)
+		
+			fade_in(100,30,BLACK)
+			wait_fade()
+			F_set_chr(ISABELLA,CF_NO_MOVE)
+
+			//★伊萨贝拉【出来る人物】
+			F_set_note(ISABELLA,2)
+			F_set(FT_13_TalkIsabella)
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			EV_end()
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+	//	name("伊萨贝拉")
+		else
+		{
+			MES(ISABELLA,"我的话就这些了。",0)
+			MES(ISABELLA,"另外……\n现在，收了个弟子在这里呢。",0)
+			MES(ISABELLA,"方便的话去见见吧。",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※教会之中でタバコを吸っている。
+	if( F6_00_GoToMeru )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"……真是\n很荣幸见到你。",0)
+			MES(ISABELLA,"虽然不清楚\n你想去做什么，\n但是不要做出后悔的事。",0)
+			MES(ISABELLA,"就算忏悔也不能改变过去──",0)
+			MES(ISABELLA,"归根结底人类，\n只能拼命的让自己活下去罢了。",0)
+			MES_close(ISABELLA)
+			
+			F_set(ISABELLA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"归根结底人类，\n只能拼命的让自己活下去罢了。",0)
+			MES(ISABELLA,"没必要担心。",0)
+			MES(ISABELLA,"这个教会，也做为\n冥福的祈祷哦。",0)
+			MES(ISABELLA,"１个人需要３９８０芬尼。",0)
+			MES_close(ISABELLA)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（好象大甩卖一样……）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾尔雯先頭")
+			else
+			{
+				MES(PARTNER,"（不是太想对这个人\n  祈祷冥福呢……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※懺悔室，窓之向こうにいる。
+	//　　　懺悔室には莫里斯が座らされている。
+	if( F5_00_HearLunar )
+	{
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+	//　　　懺悔室之窓啊たり之ＬＰを調べると反応する。
+		//	name("伊萨贝拉")
+		MES(ISABELLA,"现在正在忙。\n想忏悔的话请去排队。",0)
+		MES(ISABELLA,"还有，妨碍到我工作了\n请出去。",0)
+		MES_close(ISABELLA)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※教会之中で，タバコをふかせている。
+	//	name("伊萨贝拉")
+	if( F4_00_StartSolo )
+	{
+		if(!F_ISABELLA)
+		{
+			MES(ISABELLA,"是因为往常那件事的影响吗。",0)
+			MES(ISABELLA,"就算不去招揽客户\n但是还是有人会来哦。",0)
+			MES_close(ISABELLA)
+
+		//　　修女，タバコをふかす。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"……真是讨厌。\n让他们变少点吧。",0)
+			MES_close(ISABELLA)
+		
+			F_set(ISABELLA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"现在也是，\n那个经常说对未来有不好的预感的\n那个夫人又来了。",0)
+			MES(ISABELLA,"……真是碍眼。\n真想让她快点回去。",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※教会外でタバコをふかせている。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"喔呀，现在也出去吗？",0)
+			MES(ISABELLA,"真是辛苦的差使呢。",0)
+			MES_close(ISABELLA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，是呀……",0)
+			MES(RAGNA,"真是这样，这附近\n就没有什么地方被损害嘛。",0)
+			MES_close(RAGNA)
+
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"咳咳……",0)
+			MES_close(ISABELLA)
+
+		//　　修女，ゆっくりタバコをふかす。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"……好象是呢。",0)
+			MES_close(ISABELLA)
+
+		//　　艾尔雯，拉古那に冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			MES(RAGNA,"（果然是这家伙\n  追上去吗……？）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（嗯……大概\n  与『香烟……！』\n  有种很相似的感觉。）",0)
+			MES_close(PARTNER)
+		
+			F_set(ISABELLA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"我的话，一天不睡１０个小时\n就没什么精神。",0)
+			MES(ISABELLA,"居然敢削减我的睡眠时间，\n这些魔物好大的胆子。",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵之正体が明かされた
+	//──────────────────────────────
+	//　　※教会之外でタバコを吸っている。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"逐个来吧……",0)
+			MES_close(ISABELLA)
+
+		//　　伊萨贝拉にＰＡエモ～ション，艾普尔たちに向く。
+			EMO(ISABELLA,EMO_PA)
+			wait(30)
+			
+			rot_chr(ISABELLA,30,NIPPLE)
+
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"喔呀，那里也有个小孩子。",0)
+			MES_close(ISABELLA)
+
+		//　　修女，タバコをふかす。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"……叫过来吗。",0)
+			MES_close(ISABELLA)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（那个修女，\n  好象感觉到危险……）",0)
+				MES(RAGNA,"（为什么……？）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾尔雯先頭")
+			else
+			{
+				MES(PARTNER,"（什么……好象感觉到什么不好的东西……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			F_set(ISABELLA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　修女，タバコをふかす。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"不管是谁，\n内心都会有黑暗的东西。",0)
+			MES(ISABELLA,"全部到教会，\n不能想太多了。",0)
+			MES_close(ISABELLA)
+
+		//　　２人に冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			//★伊萨贝拉【心を熟知】
+			F_set_note(ISABELLA,0)
+		}
+		F_set(FT_05_TalkIsabella)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※教会之外でタバコを吸っている。
+	//　　※初回イベント。
+	//	name("伊萨贝拉")
+	if( F2_00_GoForest )
+	{
+		if(!FT_03_TalkIsabella	)
+		{
+			MES(ISABELLA,"哼……",0)
+			MES(ISABELLA,"这个教会的通风\n效果很差真烦。",0)
+			MES(ISABELLA,"空气不流通不行啊。",0)
+			MES_close(ISABELLA)
+
+			//　　２人に冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+		//──────────────────────────────
+		//	name("□修女之初回イベントを見たことが啊る场合。")
+			if(FT_01_IsabellaEnc)
+			{
+				MES(PARTNER,"好重的烟啊～\n好象说了些什么……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"怎么，这个教会里，\n一直都没有人。",0)
+				MES(RAGNA,"真的好象\n没有什么人来过。",0)
+				MES_close(RAGNA)
+			}
+		//	name("□見たことがない场合。")
+			else
+			{
+				MES(PARTNER,"并且好象嘶嘶的\n吸着什么东西……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"修女吸烟……",0)
+				MES(RAGNA,"这样的教会有人来吗？",0)
+				MES_close(RAGNA)
+			}
+
+		//──────────────────────────────
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"喔呀……",0)
+			MES(ISABELLA,"呵呵，这事很简单嘛。",0)
+			MES_close(ISABELLA)
+
+		//　　修女，タバコをふかす。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+			
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"不管怎样，\n让我看看怎么样？",0)
+			MES_close(ISABELLA)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（黑手党老大\n  的说法真讨厌……）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾尔雯先頭")
+			else
+			{
+				MES(PARTNER,"（……唉。到底\n  让我给她看什么啊。）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			F_set(FT_03_TalkIsabella)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"这里是教会。\n经常有客人会来。",0)
+			MES(ISABELLA,"不管怎样，\n让我看看怎么样？",0)
+			MES_close(ISABELLA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※教会でタバコを吸っている。
+	//　　　会話中も喫煙モ～ションは止まらない。（か，もしくは手動で挟む）
+	if( F1_15_GoVillage )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"对对，不过忘记说了……",0)
+			MES(ISABELLA,"这里可是很正统的教会。",0)
+			MES(ISABELLA,"与神圣王国的皇家\n都有渊源。",0)
+			MES(ISABELLA,"……那个来历可是很有名的。\n每次来都要讲叙的。",0)
+			MES_close(ISABELLA)
+
+			MES(PARTNER,"（这个修女，\n  怎么这么无礼啊……）",0)
+			MES_close(PARTNER)
+
+			F_set(ISABELLA)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"这里可是与神圣王国\n皇家都有渊源，很正统的教会哦。",0)
+			MES(ISABELLA,"想祈祷的话就祈祷吧。",0)
+			MES(ISABELLA,"反正，祈祷什么的\n是最无用的行为的一种。",0)
+			MES_close(ISABELLA)
+
+		//　　２人に冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※教会でタバコを吸っている。
+	if( F1_01_GameStart )
+	{
+		if(!F_ISABELLA)
+		{
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"哎呀……\n想忏悔吗？",0)
+			MES_close(ISABELLA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"哼，完全没有那个意思。",0)
+			MES(PARTNER,"首先，把你的烟戒了。\n这样对来客人来说是很失礼的。",0)
+			MES_close(PARTNER)
+
+		//　　修女，タバコを吐きかける。
+			F_set_Node(ISABELLA,"smokeroot",NP_HIDE)//通常けむり消し
+			MOT(ISABELLA,68,15)
+			wait(60)
+			MOT(ISABELLA,52,15)
+			wait(20)
+			F_reset_Node(ISABELLA,"smokeroot",NP_HIDE)//けむり戻し
+
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"……不想忏悔吗？",0)
+			MES_close(ISABELLA)
+
+		//	name2(ISABELLA)
+			MES(ISABELLA,"那么出去吧。\n首先就要把来教会的态度放端正了。",0)
+			MES_close(ISABELLA)
+
+		//　　２人に冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+			//	MES(RAGNA,"（真…真是恐怖的修女……）",0)
+				MES(RAGNA,"（那有这样的修女……）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾尔雯先頭")
+			else
+			{
+				MES(PARTNER,"真…真是了不起……",0)
+				MES_close(PARTNER)
+			}
+
+			F_set(ISABELLA)
+		}
+	//──────────────────────────────
+	//　　★繰り返し
+		else
+		{
+		//	name("伊萨贝拉")
+			MES(ISABELLA,"说出烦恼１００芬尼，\n圣典训诫２００芬尼。",0)
+			MES_close(ISABELLA)
+
+		//	name2(ISABELLA)
+			MES(ISABELLA,"忏悔的话５００芬尼，\n重犯罪级别的１２００芬尼。",0)
+			MES_close(ISABELLA)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（谋取暴利的修女……？）",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾尔雯先頭")
+			else
+			{
+				MES(PARTNER,"应…应该\n没这打算吧……",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+		}
+	}
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

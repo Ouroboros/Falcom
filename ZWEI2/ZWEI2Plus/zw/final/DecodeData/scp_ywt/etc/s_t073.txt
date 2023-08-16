@@ -1,0 +1,522 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僒儔僒乮業揤晽楥廬嬈堳乯Salasya")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_SALASYA
+{
+	TK_begin()
+	rot_chr(PLAYER1,30,SALASYA)
+
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(SALASYA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,SALASYA)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,SALASYA)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,SALASYA)
+		}
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕嘖丂傢傜偟傋僀儀儞僩
+	//	name("俇丏僒儔僒乮惎崀傝偺棦乯		亀偍偟傏傝亁佀亀偆偵娛亁")148
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar && FV_11_Warasi_5_Han && !FV_11_Warasi_6_Sls)
+	{
+		//夛榖儌乕僔儑儞
+		MOT_SET(SALASYA,150,-1,427,427,151,10)
+		MOT_SET(SALASYA,151,-1,428,428,150,10)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(!F_SALASYA)
+		{
+		//	name("佀弶夞")
+			MES(SALASYA,"哎呀，\n手又皴了。",0)
+			MES(SALASYA,"果然整天做清潔工作\n對皮膚不好啊……",0)
+			MES_close(SALASYA)
+
+		//丂丂僒儔僒丄俹俙僄儌乕僔儑儞偱怳傝曉傞丅
+			EMO(SALASYA,EMO_PA)
+			rot_chr(SALASYA,30,RAGNA)
+			wait(30)
+	
+			MOT(SALASYA,150,10)
+			MES(SALASYA,"哎呀，小拉？\n你拿著的東西不錯啊。",0)
+			MES(SALASYA,"可以把那條「濕毛巾」\n送給阿姨嗎？",0)
+			MES_close(SALASYA)
+			
+			F_set(SALASYA)
+		}
+		else
+		{
+		//	name("佀俀夞栚埲崀")
+			rot_chr(SALASYA,30,RAGNA)
+			MOT(SALASYA,150,10)
+			MES(SALASYA,"整天清洗溫泉，\n手上的皮膚都皴了。",0)
+			MES(SALASYA,"喂，小拉。\n那條「濕毛巾」\n可以送給阿姨嗎？",0)
+			MES_close(SALASYA)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		
+	//	name("慖戰僥僉僗僩")
+		workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+		MES_pos(PLAYER1,"??W9【沒問題】\n【這個有點……】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀亂偳偆偧偳偆偧亃")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(WK_YESNO==1)
+		{
+			MES(SALASYA,"呵呵，謝謝。\n有了這個和藥膏\n應該能讓皮膚光滑一些。",0)
+			MES(SALASYA,"啊，對了，\n作為謝禮，你就收下這個吧。",0)
+			MES(SALASYA,"呵呵，就當作是交換吧。",0)
+			MES_close(SALASYA)
+
+		//	name("傾僀僥儉擖庤僥僉僗僩")
+		//	MES(this,"亀偆偵娛亁傪栣偭偨丅",0)
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+			fade_in(30,10,BLACK)
+
+			get_item(147,-1,1)
+			get_item(148,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+		//	name2(RAGNA)
+			MES(RAGNA,"海…海膽罐頭……？",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"就是海膽罐頭哦。\n之前別人送給我的。",0)
+			MES(SALASYA,"可是這裡在山上呀？\n有好多人吃不了海膽，\n所以沒什麼機會用。",0)
+			MES_close(SALASYA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(GW_MAN==0 && F6_00_GoToMeru)
+			{
+			//	name("佀傾儖僂僃儞愭摢")
+				MES(PARTNER,"呵呵，從沒見過\n這種食物啊……",0)
+				MES(PARTNER,"這個直接吃就行嗎？",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（突然間就興奮起來了……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("佀儔僌僫愭摢")
+				MES(RAGNA,"哈哈，是這樣啊。",0)
+				MES(RAGNA,"（……其實我也\n 吃不慣海膽啊……）",0)
+				MES_close(RAGNA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_reset(SALASYA)
+			F_set(FV_11_Warasi_6_Sls)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀亂偙傟偼偪傚偭偲乧乧亃")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		{
+			MES(SALASYA,"這樣啊，真遺憾。",0)
+			MES(SALASYA,"那就忍著一點吧，\n簡單地抹些藥好了。",0)
+			MES_close(SALASYA)
+		}
+		MOT(SALASYA,152,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F6_00_GoToMeru)
+	{
+		rot_chr(SALASYA,30,PLAYER1)
+
+		EV("MOTION_TK_SALASYA")
+		if(!FS_12_TalkSalasya)
+		{
+
+		//丂丂仸晽楥壆偱巇帠傪偟偰偄傞丅
+			MES(SALASYA,"哎呀，小拉……",0)
+			MES(SALASYA,"來泡溫泉嗎？\n呵呵，歡迎㈱",0)
+
+			if(SP001>60000)
+			{
+				MES(SALASYA,"這種時候才應該\n舒舒服服地泡一澡，\n緩解一下疲勞呢。",0)
+				MES_close(SALASYA)
+
+				MES(RAGNA,"哈哈哈，是啊……",0)
+			}
+			else
+			{
+				MES(SALASYA,"哎呀，現在\n正在清掃呢……？",0)
+				MES_close(SALASYA)
+
+				MES(RAGNA,"不要在意啊。",0)
+			}
+			MES(RAGNA,"對了，後來你一直\n在照料昴吧。",0)
+			MES(RAGNA,"多謝了。",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"什麼嘛，這點小事\n不用在意……",0)
+			MES(SALASYA,"小昴本來就像是\n我的女兒一樣。\n我當然要照料她了。",0)
+			MES_close(SALASYA)
+
+		//丂丂僒儔僒偵丒丒丒僄儌乕僔儑儞丅
+			EMO(SALASYA,EMO_TENTEN)
+			wait(30)
+
+			MES(SALASYA,"還有……\n婚禮打算怎麼辦？",0)
+			MES_close(SALASYA)
+
+		//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			EMO(PET,EMO_HATENA)
+			wait(30)
+
+			MES(RAGNA,"哎……？",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"倒是不用那麼著急……",0)
+			MES(SALASYA,"可是你看，小昴明年也１５歲了。\n也差不多到年紀了。",0)
+			MES(SALASYA,"……哎呀，小拉難道\n還沒有考慮過？",0)
+			MES_close(SALASYA)
+
+		//丂丂儔僌僫丄偦偭傐傪岦偔丅傕偟偔偼惵偞傔僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_AOZAME)
+			wait(30)
+			MES(RAGNA,"啊—，嗯—，那個……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"呵呵……\n進展得很快嘛。",0)
+			MES_close(PARTNER)
+
+		//丂丂儔僌僫丄傾僙傾僙偱傾儖僂僃儞偵岦偔丅
+			rot_chr(RAGNA,30,PARTNER)
+
+			EMO(RAGNA,EMO_ASEASE)
+			wait(30)
+			MES(RAGNA,"那個，這不過是\n之前來這裡時用的藉口，真的…",0)
+			MES_close(RAGNA)
+
+		//	name2(PET)
+			MES(PET,"……差勁。",0)
+			MES_close(PET)
+			F_set(FS_12_TalkSalasya)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		{
+			if(!F_SALASYA)
+			{
+				rot_chr(SALASYA,30,RAGNA)			//丂丂儔僌僫偵岦偔丅
+
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+				MES(SALASYA,"其實阿姨也是從\n外面嫁進來的。",0)
+				MES(SALASYA,"所以我也多少能明白\n小拉現在的心情……",0)
+				MES(SALASYA,"不過這種事情\n還是儘早確定下來\n比較好。",0)
+				MES(SALASYA,"而且，小昴\n化好妝打扮成\n新娘的樣子……",0)
+				MES(SALASYA,"啊，阿姨只是想像一下\n就激動起來了～㈱",0)
+				MES_close(SALASYA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（不行了，再不找個機會\n 消除這誤會的話……）",0)
+				MES_close(RAGNA)
+				//仛僒儔僒亂俀恖偺拠偵巀惉亃
+				F_set_note(SALASYA,2)
+				F_set(SALASYA)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+			//	if(EQ112 && SP001<=60000)	//枩曕寁傪憰旛偟偰偄偰俇枩曕埲壓偺応崌偼僸儞僩傪弌偡
+				if(IT112>0 && SP001>50000 && SP001<=60000)	//枩曕寁傪帩偭偰偄偰俆枩傛傝忋丄俇枩曕埲壓偺応崌偼僸儞僩傪弌偡
+				{
+					MES(SALASYA,"抱歉啊。\n溫泉的清掃\n還需要一些時間。",0)
+					MES(SALASYA,"阿姨會儘快做完的，\n你們不如出去散散步？",0)
+					MES(SALASYA,"對了，\n等你身上的計步器走到６萬歩左右，\n我也應該能清掃完了。",0)
+					MES_close(SALASYA)
+				}
+				else
+				{
+					MES(SALASYA,"生活習慣也有不少差異，\n我也多少能明白\n你猶豫不決的原因……",0)
+					MES(SALASYA,"不過你一定要認真\n考慮哦。",0)
+					MES(SALASYA,"呵呵，阿姨\n會支持你們的㈱",0)
+					MES_close(SALASYA)
+				}
+			}
+		}
+		MOT(SALASYA,152,10)
+	}
+	
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傛傠偢壆丄扞偺慜偵偄傞丅
+	if( F5_00_HearLunar )
+	{
+		//夛榖儌乕僔儑儞
+		EV("MOTION_TK_SALASYA")
+		if(!FS_11_TalkSalasya)
+		{	
+			rot_chr(SALASYA,30,PLAYER1)
+			MES(SALASYA,"火勢起來的時候\n我也非常害怕……",0)
+			MES(SALASYA,"不過多虧了上忍們\n把女性和小孩都引導到藏身處。\n所以我也沒有受傷。",0)
+			MES(SALASYA,"呼……\n然後就是小昴了。",0)
+			MES(SALASYA,"燒已經退了，\n應該沒有大礙了。",0)
+			MES_close(SALASYA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"……這樣啊。",0)
+			MES(RAGNA,"抱歉了，這段時間我還要把\n那傢伙託付給你。",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"哎呀，小拉。\n不要擺出這麼一副表情哦？",0)
+			MES(SALASYA,"那孩子體力一向沒有問題。\n阿姨也會好好\n照料她的。",0)
+			MES_close(SALASYA)
+			F_set(FS_11_TalkSalasya)
+			rot(SALASYA,30,170)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_SALASYA)
+			{
+				rot_chr(SALASYA,30,PLAYER1)
+				MES(SALASYA,"不用擔心\n小昴了。",0)
+				MES(SALASYA,"阿姨從她小時候\n開始就一直在照顧她了。",0)
+				MES(SALASYA,"這點小事就交給我吧。\n她肯定很快就能精神起來的。",0)
+				MES_close(SALASYA)
+				F_set(SALASYA)
+				rot(SALASYA,30,170)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+			//丂丂仸怳傝曉傜側偄丅
+				MES(SALASYA,"嗯，繃帶，還有退燒藥……",0)
+				MES(SALASYA,"對了，差不多\n該去熬粥了。",0)
+				MES(SALASYA,"小昴醒過來以後\n肯定會餓的。",0)
+				MES_close(SALASYA)
+			}
+		}
+		MOT(SALASYA,152,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸偄側偄丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸晽楥壆偺慜偱憒彍偟偰偄傞丅
+	if( F4_05_OnVillage2 )
+	{
+		
+		//夛榖儌乕僔儑儞
+		look(SALASYA,"Bone_RightForeArm",0,	2,0,2,	0,0,0)//憒彍拞丒庤栠偟
+		EV("MOTION_TK_SALASYA")
+
+		if( !FS_08_TalkSalasya )
+		{
+			rot_chr(SALASYA,30,PARTNER)
+			MES(SALASYA,"哎呀……\n小昴？",0)
+			MES(SALASYA,"跑到哪裡去了呀，真是的～……\n阿姨非常擔心呢。",0)
+			MES_close(SALASYA)
+
+		//	name2(RAGNA)
+			rot_chr(RAGNA,30,PARTNER)
+			MES(RAGNA,"哈哈哈，「小」昴。",0)
+			MES(RAGNA,"看來鄉里的人們\n都很喜歡昴呢。",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			MES(PARTNER,"師父，不要\n拿我開玩笑了～。",0)
+			MES(PARTNER,"更紗阿姨只不過是\n從我小時候就一直\n在照顧我……",0)
+			MES_close(PARTNER)
+
+		//	name2(SALASYA)
+			rot_chr(SALASYA,30,RAGNA)
+			MES(SALASYA,"呵呵，她雙親\n病故之後，\n我就一直在照顧小昴了。",0)
+			MES(SALASYA,"不說這個……\n你就是那個人？",0)
+			MES_close(SALASYA)
+
+		//丂丂儔僌僫偵丠僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HATENA)
+			rot_chr(RAGNA,30,SALASYA)
+			wait(30)
+			
+			MES(RAGNA,"那個人……？？",0)
+			MES_close(RAGNA)
+
+		//丂丂僗僶儖丄傾僙傾僙偱儔僌僫偵岦偔丅
+			EMO(PARTNER,EMO_ASEASE)
+			rot_chr(PARTNER,30,RAGNA)
+			wait(30)
+
+			MES(PARTNER,"啊，那個。\n這是，就是說……",0)
+			MES(PARTNER,"啊，對了，更紗阿姨！",0)
+			MES_close(PARTNER)
+			
+		//丂丂僗僶儖丄僒儔僒偵岦偔丅
+			rot_chr(PARTNER,30,SALASYA)			
+
+			MES(PARTNER,"我想請拉格那師父\n去泡一下溫泉……",0)
+			MES_close(PARTNER)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"什麼呀，是這樣啊。\n這真是不好意思。",0)
+			MES(SALASYA,"現在這裡正好\n在大掃除。",0)
+			MES(SALASYA,"對不起啦。\n阿姨會儘快的，\n到時候你們再過來吧？",0)
+			MES_close(SALASYA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"啊，好的。\n這樣的話……",0)
+			MES_close(PARTNER)
+
+		//丂丂僗僶儖丄儔僌僫偵岦偔丅
+			rot_chr(PARTNER,30,RAGNA)
+			MES(PARTNER,"那就在鄉里\n再逛逛吧。",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"嗯，我也\n不是那麼著急。",0)
+			MES_close(RAGNA)
+
+		//丂丂儔僌僫丄僒儔僒偵岦偔丅
+			rot_chr(RAGNA,30,SALASYA)
+			MES(RAGNA,"那我們就\n過後再來了。",0)
+			MES_close(RAGNA)
+
+		//	name2(SALASYA)
+			MES(SALASYA,"呵呵，再見。\n小昴，小拉㈱",0)
+			MES_close(SALASYA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，嗯……\n（居然叫我小拉……）",0)
+			MES_close(RAGNA)
+			
+			//仛僥儞僓儞亂懅巕晇晈偼昦巰亃
+			F_set_note(-24,0)
+			//仛僒儔僒亂僗僶儖偺曣恊戙傢傝亃
+			F_set_note(SALASYA,0)
+			
+			F_set(FS_08_TalkSalasya)
+
+		//柤慜晅偒僉儍儔慡堳偵榖偟偐偗傞偲業揤晽楥偑奐偔
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仛僥儞僓儞亂懅巕晇晈偼昦巰亃
+		//丂丂仛僒儔僒亂僗僶儖偺曣恊戙傢傝亃
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			rot_chr(SALASYA,30,PLAYER1)
+			if(!F_SALASYA)
+			{
+				MES(SALASYA,"是啊……\n我也曾經是「例外」\n所以也能明白一點……",0)
+				MES(SALASYA,"一開始確實\n心情很不舒暢。",0)
+				MES(SALASYA,"不過這裡的人們\n其實都非常溫和善良。",0)
+				MES(SALASYA,"你會逐漸明白的。",0)
+				MES(SALASYA,"今後也請多指教哦。\n小拉㈱",0)
+				MES_close(SALASYA)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"啊……",0)
+				MES_close(RAGNA)
+				F_set(SALASYA)
+			}
+		//丂丂仛孞傝曉偟
+			else
+			{
+				MES(SALASYA,"呵呵，話說回來小昴\n會偷偷溜出去原來是\n這麼回事啊。",0)
+				MES(SALASYA,"好的，阿姨今天晚上\n要好好顯一下身手了！",0)
+				MES(SALASYA,"你們兩個好好期待\n今天的晚飯吧㈱",0)
+				MES_close(SALASYA)
+				//仛僒儔僒亂庤椏棟偑摼堄亃
+				F_set_note(SALASYA,1)
+			}
+		}
+		look(SALASYA,"Bone_RightForeArm",0,	2,0,2,	90,0,40)//憒彍拞
+		MOT(SALASYA,2,10)
+	}
+	TK_end()
+}
+
+//夛榖帪儌乕僔儑儞
+MOTION_TK_SALASYA
+{
+	MOT_SET(SALASYA,150,-1,427,427,151,10)
+	MOT_SET(SALASYA,151,-1,428,428,150,10)
+	MOT(SALASYA,150,10)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

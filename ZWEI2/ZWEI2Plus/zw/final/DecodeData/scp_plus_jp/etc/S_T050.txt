@@ -1,0 +1,888 @@
+//■Zwei2一般メッセージ・アルッテの町（※セフィーラ）
+//────────────────────────────────────────────────────────────
+//■アルッテ
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆セフィーラ（歌手）Cepheila")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_CEPHEILA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+//	KAO(CEPHEILA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,CEPHEILA)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,CEPHEILA)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CEPHEILA)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CEPHEILA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CEPHEILA)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,CEPHEILA)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,CEPHEILA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+	//　　※ロアルタ村・入り口付近でバランと話している。
+	//　　※初回イベント（バランと共通）
+	//　　※振り返らない。
+		if(!FV_13_TalkBaromCeph)
+		{
+			EV("TALK_BC")
+			wait_EV("TALK_BC")
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+	//　　※振り返らない。
+		else
+		{
+			if(!CEPHEILA)
+			{
+				MES(CEPHEILA,"ふふ……\nのどかでいい村よね。",0)
+				MES(CEPHEILA,"なんだか空気も\n美味しい気がするわ。",0)
+				MES(CEPHEILA,"ちょっと見て回っていい？",0)
+				MES_close(CEPHEILA)
+
+			//	name2(BAROM)
+				MES(BAROM,"あ、は、はい。",0)
+				MES(BAROM,"それでしたら、ご案内しますよ。\n大したものもありませんが……",0)
+				MES_close(BAROM)
+				
+				F_set(CEPHEILA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(CEPHEILA,"ふふ……\nのどかでいい村。",0)
+				MES(CEPHEILA,"なんだか自然に\nリラックスできる気がするわ。",0)
+				MES(CEPHEILA,"……時々遊びに来ちゃおうかしら。",0)
+				MES_close(CEPHEILA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　※できればこのタイミングでは、酒場をボーカル付きＢＧＭに切り替えておき、
+	//　　　通常メッセージでは話しかける処理を外す。
+	if( F6_00_GoToMeru )
+	{
+	//　　※初回イベント。
+	//　　　ボーカル付きＢＧＭの場合は、初回イベント中はＢＧＭの音量を下げる。
+		if(!FT_12_TalkCepheila)
+		{
+
+			MES(RAGNA,"あ、あれ？\n今日はステージやってるのか。",0)
+			MES_close(RAGNA)
+
+		//　　セフィーラに気付きエモーション。振り向く。
+			EMO(CEPHEILA,EMO_PA)
+			wait(30)
+			
+			look_chr(CEPHEILA,PLAYER1,"Bone_Head")
+			
+			EV_stop("SING_CEPHEILA")
+
+			MES(CEPHEILA,"あら、こんにちは。",0)
+			MES(CEPHEILA,"こんな時に公演なんて\n開いてしまって、ごめんなさいね。",0)
+			MES_close(CEPHEILA)
+
+			MES(PARTNER,"ふむ、謝罪するほどの\n事ではないが。",0)
+			MES(PARTNER,"町の混乱振りからすると\n少々意外であったものでな。",0)
+			MES_close(PARTNER)
+
+			MES(CEPHEILA,"そうね、本当は私たちも\n避難なんかをしなくちゃ\nいけないんでしょうけど……",0)
+			MES(CEPHEILA,"こんな時だからこそ、\n私は歌う事にしたの。",0)
+			MES(CEPHEILA,"私の歌で皆を勇気付けられれば……\nそれでいいんじゃないかと思って。",0)
+			MES_close(CEPHEILA)
+
+		//──────────────────────────────
+		//	name("⇒フラグ⑤で「早くここから出た方がいい」の選択をした")
+			if(FT_05_CepheilaSt)
+			{
+				MES(CEPHEILA,"ふふ、ありがとう。\nあの時話を聞いてくれて。",0)
+				MES(CEPHEILA,"忙しいかもしれないけれど、\nゆっくり聴いていってね。",0)
+				MES_close(CEPHEILA)
+
+			}
+		//	name("⇒それ以外")
+			else
+			{
+				MES(CEPHEILA,"忙しいかもしれないけれど、\nゆっくり聴いていってね。",0)
+				MES_close(CEPHEILA)
+			}
+			
+		//──────────────────────────────
+			EV("SING_CEPHEILA")
+			
+			F_set(FT_12_TalkCepheila)
+			look_off(CEPHEILA)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+	//　　　ボーカル付きＢＧＭの場合は、ＢＧＭの音量を下げる。
+		else
+		{
+			look_chr(CEPHEILA,PLAYER1,"Bone_Head")
+			EV_stop("SING_CEPHEILA")
+			if(!F_CEPHEILA)
+			{
+				MES(CEPHEILA,"私って、今まで\n難しいことばかり考えていたみたい。",0)
+				MES(CEPHEILA,"早く上手くならなきゃとか、\nお客さんの要望に応えなきゃとか。",0)
+				MES(CEPHEILA,"でも……私はこうして\n歌うのが好きなのよね。",0)
+				MES(CEPHEILA,"今日は、思うがままに\n歌ってみる事にするわ。",0)
+				MES_close(CEPHEILA)
+				F_set(CEPHEILA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(CEPHEILA,"こんな時だからこそ、\n思うがままに\n歌ってみようと思ったの。",0)
+				MES(CEPHEILA,"忙しいかもしれないけれど、\nゆっくり聴いていって頂戴。",0)
+				MES_close(CEPHEILA)
+			}
+			look_off(CEPHEILA)
+			EV("SING_CEPHEILA")
+		}
+		rot(CEPHEILA,30,353)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	//　　※宿酒場・２階小部屋
+	//　　　ベッドに腰掛けている。
+	if( F5_00_HearLunar )
+	{
+	//　　セフィーラ、首だけで振り返る。
+		look_chr(CEPHEILA,PLAYER1,"Bone_Head")
+		
+		if(!F_CEPHEILA)
+		{
+			MES(CEPHEILA,"ふう、みんな大げさなんだから。",0)
+			MES(CEPHEILA,"軽く転んじゃって、\nちょっと足を挫いただけなのに……",0)
+			MES(CEPHEILA,"本当に大したことないのよ？",0)
+			MES(CEPHEILA,"あのバランさんって人が\n大げさに負ぶって連れてくるから、\nみんな必要以上に心配しちゃったのよ。",0)
+			MES(CEPHEILA,"まあ……とっても\n親切な人ではあったけどね。",0)
+			MES_close(CEPHEILA)
+			F_set(CEPHEILA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CEPHEILA,"ふう、やっぱり私も\nどこか焦ってたのかな……",0)
+			MES(CEPHEILA,"早く上達したいとか、\nお客さんの声援とか……",0)
+			MES(CEPHEILA,"そんなのばかり気にしすぎて、\n自分の好きな歌が\n見えなくなっちゃってたから。",0)
+			MES_close(CEPHEILA)
+		}
+		
+		look_off(CEPHEILA)
+		//セフィーラと会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※宿酒場・食器棚の前にいる。
+	if( F4_00_StartSolo )
+	{
+		rot_chr(CEPHEILA,30,PLAYER1)
+		MOT(CEPHEILA,2,15)
+		if(!F_CEPHEILA)
+		{
+			MES(CEPHEILA,"今日の公演は\n中止になってしまったの。",0)
+			MES(CEPHEILA,"ふう、残念。",0)
+			MES(CEPHEILA,"最近歌の調子がでなくて\n困っていた所だけど……",0)
+			MES(CEPHEILA,"それでも公演がなくなると\n寂しいものよね。",0)
+			MES_close(CEPHEILA)
+			
+			F_set(CEPHEILA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(CEPHEILA,"最近思ったように歌えなくて\n困っていた所だけど……",0)
+			MES(CEPHEILA,"やっぱり公演がなくなると\n落ち着かないのよね。",0)
+			MES(CEPHEILA,"ステージで歌えないなんて、\n妙に寂しい気分だわ……",0)
+			MES_close(CEPHEILA)
+		}
+		MOT(CEPHEILA,150,15)
+		//セフィーラと会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※宿酒場２階小部屋で寝ている。
+	if( F3_00_GoMoonCastle )
+	{
+		if(!F_CEPHEILA)
+		{
+			MES(CEPHEILA,"スー……スー……",0)
+			EV("MOTION_CEPHEILA_SLEEPING")
+			MES(CEPHEILA,"う、う～ん……\nもうちょっと寝かせて……",0)
+			MES_close(CEPHEILA)
+			F_set(CEPHEILA)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(CEPHEILA,"う～ん……\nあと５分だけ……寝かせて……",0)
+			MES(CEPHEILA,"スー……スー……",0)
+			MES_close(CEPHEILA)
+		}
+		//セフィーラと会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※教会、礼拝席真ん中辺りに立っている。
+	//　　※初回イベント。（多分キャラを再配置した方が良い）
+	if( F2_14_TalkEnemy )
+	{
+		if(!FT_05_TalkCepheila)
+		{
+			
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェード
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(2,-77,94,0,0)
+			CAM(30,65,94,30,168,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,111,241,0,146,2)
+			chr_pos(PARTNER,-110,287,1,200,2)
+			chr_pos(CEPHEILA,0,80,0,180,150)
+			
+			F_reset_chr(CEPHEILA,CF_NO_MOVE)
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(CEPHEILA,"1", "1", "1")	
+			
+			MOT_SET(CEPHEILA,151, -2,445,445,-1,0)	//ケホケホ
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			wait_fade()
+			
+		//　　セフィーラにＰＡエモーション。振り返る。
+			EMO(CEPHEILA,EMO_PA)
+			wait(30)
+
+			rot(CEPHEILA,30,0)
+			MOT(CEPHEILA,2,5)
+			
+			KAO(CEPHEILA,"12321Z2","1","1")
+			MES(CEPHEILA,"あら、えっと……",0)
+			MES_close(CEPHEILA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"あれ、あんたは……\n確か酒場の歌手の人じゃないか？",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"ふむ、そなた\nこんな所で何をやっておるのだ？",0)
+			MES_close(PARTNER)
+
+		//	name2(CEPHEILA)
+
+			look_chr( CEPHEILA, PARTNER,"Bone_Head")
+
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"え、ええ。\nその、日課の歌唱練習に\n行く所だったんだけど……",0)
+			MES_close(CEPHEILA)
+
+		//　　セフィーラに少し・・・エモーション。
+			EMO(CEPHEILA,EMO_TENTEN)
+			wait(30)
+	
+			KAO(CEPHEILA,"12321Z5","1","1")
+			MES(CEPHEILA,"実は最近、\nちょっと調子が出ないのよ。",0)
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"うまく音に乗れなくって……\n今朝のステージでも、\n思ったように歌えなかったの。",0)
+			MES_close(CEPHEILA)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"へ、へえ……\nそうだったのか。",0)
+			MES_close(RAGNA)
+
+			look_chr( CEPHEILA, RAGNA,"Bone_Head")
+		//	name2(CEPHEILA)
+			KAO(CEPHEILA,"12321","1","1")
+			MES(CEPHEILA,"ええ……",0)
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"それでさっき、シスターの人に\n『あなた、悩み事があるようね』\nって声を掛けられたから……",0)
+			MES_close(CEPHEILA)
+
+		//　　ラグナたちに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PARTNER,EMO_AOZAME)
+			wait(30)
+			//──────────────────────────────
+			//	name("⇒シスター・フラグ③のメッセージを見ている場合")
+			if(FT_03_TalkIsabella)
+			{
+				MES(PARTNER,"あ、あのシスターめ……\n卑怯な手で客寄せしおって……",0)
+				MES_close(PARTNER)
+			}
+			else
+			//	name("⇒シスターと話した事が無い")
+			if(!FT_01_IsabellaEnc)
+			{
+				MES(RAGNA,"な、なるほど。\nそれで教会へ来たってわけか。",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"そのシスター、何やら\nいかがわしい匂いがするが……",0)
+				MES_close(PARTNER)
+			}
+			//	name("⇒それ以外")
+			//──────────────────────────────
+			else
+			{
+				MES(RAGNA,"な、なるほど。\nそれで教会へ来たってわけか。",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"やはりあのシスター、\n油断のならぬ奴だな……",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+		//　　セフィーラ、少し向きを変える。
+			look_off(CEPHEILA)
+		//★少し向きを変える
+			rot(CEPHEILA,30,270)
+
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"ふう、上手く歌えないことも\nショックなのだけど……",0)
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"みんなが、いつもと変わらず\n私の歌を褒めてくれるのにも\n違和感があるのよね。",0)
+			KAO(CEPHEILA,"12321Z6","1","1")
+			MES(CEPHEILA,"みんな調子の悪い歌に\n気付いてないんだって思うと\n……何だか空しくなっちゃって。",0)
+			KAO(CEPHEILA,"1","3","1")
+			MES(CEPHEILA,"（……私って………\n  何のために歌ってたのかな……）",0)
+			MES_close(CEPHEILA)
+
+		//　　セフィーラに？エモーション。
+			EMO(CEPHEILA,EMO_HATENA)
+			KAO(CEPHEILA,"1","1","1")
+			rot(CEPHEILA,30,0)
+			wait(30)
+			
+		//　　周囲を見渡して、口に手を当てる。
+			look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,0,0)
+
+			MOT(CEPHEILA,151,10)
+		
+			KAO(CEPHEILA,"12321Z4","3","B")
+			MES(CEPHEILA,"あら、でも何だか……\nこほこほ……",0)
+			KAO(CEPHEILA,"12321Z4","3","B")
+			MES(CEPHEILA,"ここって、タバコ臭いわね。",0)
+			KAO(CEPHEILA,"12321Z4","3","B")
+			MES(CEPHEILA,"こほこほ……\nのどが痛いわ……",0)
+			MES_close(CEPHEILA)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			//──────────────────────────────
+			//	name("⇒シスターと話した事が無い")
+			if(!FT_01_IsabellaEnc)
+			{
+				MES(RAGNA,"（あのシスター、よく\n  タバコ吸ってるみたいだからな……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("⇒それ以外")
+				MES(PARTNER,"あの喫煙シスターめ……",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			
+		//★セフィーラ【悩み】	
+			F_set_note(CEPHEILA,1)
+				
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【やめる】
+			MES_pos(PLAYER1,"??W9【早くここから出た方がいい】\n【折角だから祈りを薦める】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+			//──────────────────────────────
+			//	name("⇒「早くここから出た方がいい」")
+			if(WK_YESNO==1)
+			{
+				MOT(CEPHEILA,2,15)
+				KAO(CEPHEILA,"1","1","1")
+				EV("EV_CEPHEILA_GO_HILL")
+				wait_EV("EV_CEPHEILA_GO_HILL")
+			}
+			else
+			//──────────────────────────────
+			//	name("⇒「折角だから祈りを薦める」")
+			if(WK_YESNO==2)
+			{
+				look_chr( CEPHEILA, RAGNA,"Bone_Head")
+				MES(RAGNA,"まあ折角だし……\n祈るくらいはしていったら\nいいんじゃないか？",0)
+				MES_close(RAGNA)
+
+				MOT(CEPHEILA,2,15)
+			//	name2(CEPHEILA)
+				KAO(CEPHEILA,"12321Z4","1","1")
+				MES(CEPHEILA,"うん、そうね。\n折角教会に来ているんだもの。",0)
+				KAO(CEPHEILA,"12321Z6","1","1")
+				MES(CEPHEILA,"早く調子が戻るように……\n少しお祈りしていくことにするわ。",0)
+				MES_close(CEPHEILA)
+
+			//──────────────────────────────
+			}
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+
+			F_set_chr(CEPHEILA,CF_NO_MOVE)
+			MOT(CEPHEILA,150,0)
+			F_set(FT_05_TalkCepheila)
+			look_off(CEPHEILA)
+			
+			EV_end()
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+			rot_chr(CEPHEILA,30,PLAYER1)
+
+			if(!FT_05_CepheilaSt)
+			{
+			//──────────────────────────────
+			//　　※教会配置・通常一般メッセージ。
+				MOT(CEPHEILA,2,5)
+				MES(CEPHEILA,"折角教会に来ているんだもの。\n少しお祈りしていくことにするわ。",0)
+				MES(CEPHEILA,"こほ、こほこほ……\n少しタバコ臭いけど……",0)
+				MES_close(CEPHEILA)
+
+			//──────────────────────────────
+			//	name("選択テキスト")
+				workL(WK_CANCEL,SET,2)//【やめる】
+				MES_pos(PLAYER1,"??W9【早くここから出た方がいい】\n【折角だから祈りを薦める】",0,320,240,0,0)
+				wait_W(WK_YESNO)
+				MES_close(PLAYER1)
+				wait_MES(PLAYER1)//閉じきるまで待つ
+
+				//──────────────────────────────
+				//	name("⇒「早くここから出た方がいい」")
+					if(WK_YESNO==1)
+					{
+					//――――――――――――――――――――――――――
+					//	初期化処理
+					//――――――――――――――――――――――――――
+						cross_fade(30)			//クロスフェード
+						
+						EV_begin()
+						//カメラセット
+						CAM_move(2,-77,94,0,0)
+						CAM(30,65,94,30,168,0,0)
+						
+						//キャラ再配置
+						chr_pos(RAGNA,111,241,0,146,2)
+						chr_pos(PARTNER,-110,287,1,200,2)
+						chr_pos(CEPHEILA,0,80,0,0,2)
+						
+						//顔初期化
+						KAO(RAGNA, "1", "1", "1")	
+						KAO(PARTNER,"1", "1", "1")	
+						KAO(CEPHEILA,"1", "1", "1")	
+						
+						wait_fade()
+					//――――――――――――――――――――――――――
+					//	イベント開始
+					//――――――――――――――――――――――――――
+						EV("EV_CEPHEILA_GO_HILL")
+						wait_EV("EV_CEPHEILA_GO_HILL")
+					//――――――――――――――――――――――――――
+					//	イベント終了処理
+					//――――――――――――――――――――――――――
+						fade_in(100,30,BLACK)
+						wait_fade()
+
+						//カメラを初期設定に
+						CAM_return( 0 )
+						wait(30)
+						EV_end()
+
+						//フェードイン----------------------
+						fade_in(0,30,BLACK)
+					//	プレイヤー操作許可
+					//――――――――――――――――――――――――――
+					}
+					else
+				//──────────────────────────────
+				//	name("⇒「折角だから祈りを薦める」")
+					if(WK_YESNO==2)
+					{
+						MES(RAGNA,"まあ折角だし……\n祈るくらいはしていったら\nいいんじゃないか？",0)
+						MES_close(RAGNA)
+
+					//	name2(CEPHEILA)
+						MES(CEPHEILA,"うん、そうね。\n折角教会に来ているんだもの。",0)
+						MES(CEPHEILA,"早く調子が戻るように……\n少しお祈りしていくことにするわ。",0)
+						MES_close(CEPHEILA)
+				//──────────────────────────────
+						MOT(CEPHEILA,150,5)
+						rot(CEPHEILA,30,180)
+					}
+			}
+			//　　※セフィーラが教会から去った後は、ブランデーヶ丘に配置される。
+			//　　　通常時♪エモーション出しっぱなしで、話しかけるとエモーションを停止する。
+			//──────────────────────────────
+			else
+			{
+				EV_stop("SING_CEPHEILA")
+				if(!F_CEPHEILA)
+				{
+					MES(CEPHEILA,"ふう、やっぱり\n上手くいかないわ……",0)
+					MES(CEPHEILA,"毎日欠かさず練習してるのに、\nちっとも上達しないなんて……",0)
+					MES(CEPHEILA,"ふう、歌を始めた頃は\nこんなこと無かったのに……",0)
+					MES_close(CEPHEILA)
+					
+					F_set(CEPHEILA)
+				}
+			//　　★繰り返し
+				else
+				{
+					MES(CEPHEILA,"早く上達したいのに、\n最近何だか空しいのよね。",0)
+					MES(CEPHEILA,"ふう、歌を始めた頃は\nこんなこと無かったのに……",0)
+					MES_close(CEPHEILA)
+				}
+				EV("SING_CEPHEILA")
+				rot(CEPHEILA,30,180)
+			}
+		}
+		//セフィーラと会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※宿酒場・手前の円卓に座る。
+	//　　　カルディナ・メイと同席。
+	//　　　　　　 カル
+	//　　　セフィ　○　メイ
+	//　　※初回はメイの初回イベントが起動する。
+	//──────────────────────────────
+	if( F2_00_GoForest )
+	{
+	//　　※以下通常一般メッセージ。
+		if(!FT_03_TalkMei)
+		{
+			EV("EV_TALK_MSC")
+			wait_EV("EV_TALK_MSC")
+		
+			F_set(FT_03_TalkMei)
+		}
+		else
+		{
+			if(!F_CEPHEILA)
+			{
+			//　　※振り返らない。
+				look_chr( CEPHEILA,CARDINA,"Bone_Head")
+				look_chr( CARDINA,CEPHEILA,"Bone_Head")
+
+				MES(CEPHEILA,"ふふ、カルディナさんも大変ね。",0)
+				MES(CEPHEILA,"でもきっと大丈夫。\nカルディナさんって\n元ハンターだったんでしょう？",0)
+				MES(CEPHEILA,"いざとなったら\nぶん殴っちゃえばいいじゃない。",0)
+				MES_close(CEPHEILA)
+
+				MES(CARDINA,"もう……\nしませんよ、そんな事。",0)
+				MES(CARDINA,"セフィーラさんまで\nからかうんですか？",0)
+				MES_close(CARDINA)
+
+				F_set(CEPHEILA)
+				look_off(CARDINA)
+			}
+		//　　★繰り返し
+			else
+			{
+				look_chr( CEPHEILA,PLAYER1,"Bone_Head")
+				MES(CEPHEILA,"あら……",0)
+				MES(CEPHEILA,"ごめんなさいね、\n話し込んでしまって。",0)
+				MES(CEPHEILA,"ふふ、メイさんが絡むと\nいつもこうなってしまうのよね。",0)
+				MES_close(CEPHEILA)
+			}
+		}
+		look_off(CEPHEILA)
+		//セフィーラと会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+	//　　※宿酒場・真ん中の円卓に座る。
+	//　　　セフィーラの前にはジュースのグラスが一つ。
+	//　　※初回イベント（シェスターと共通のＧＦ）
+		
+		if(!F_CEPHEILA)
+		{
+		//　　出来れば、机に片肘を突くポーズ。
+		//　　※振り返らない。
+			MES(CEPHEILA,"ふう、疲れちゃったわ。",0)
+			MES(CEPHEILA,"今日は少し\n歌いすぎたかしら……",0)
+			MES_close(CEPHEILA)
+
+		//	name2(SHESTOR)
+			MES(SHESTOR,"やれやれ、\nお前は感情的でいけない。",0)
+			MES(SHESTOR,"休憩も挟まずにぶっ続けで\n歌えるほど、甘い世界じゃない\n事は分かっているだろう。",0)
+			MES(SHESTOR,"少しはペース配分って\nやつも考えろよ。",0)
+			MES_close(SHESTOR)
+
+		//	name2(CEPHEILA)
+			MES(CEPHEILA,"はいはい、\n今度から気をつけるわ。",0)
+			MES(CEPHEILA,"でも……お客さんに\n頼まれたら断れないものよね……",0)
+			MES_close(CEPHEILA)
+			F_set(CEPHEILA)
+			
+			//★シェスター
+			F_set_note(SHESTOR,-1)
+		}
+		else
+		{
+			look_chr(CEPHEILA,PLAYER1,"Bone_Head")
+		//　　★繰り返し
+			MES(CEPHEILA,"ふう、今日は少し\n歌いすぎてしまったみたい。",0)
+			MES(CEPHEILA,"私って、ついつい\nリクエストに応えてしまうの。",0)
+			MES(CEPHEILA,"シェスターさんの言うとおり、\nもう少しペース配分なんかを\n気にした方がいいわよね……",0)
+			MES_close(CEPHEILA)
+			look_off(CEPHEILA)
+		}
+		//セフィーラと会った(①初回で代用)
+		F_set(FT_01_TalkCepheila)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※酒場ステージで歌っている。
+	//　　　♪エモーション出しっぱなし。
+	//　　※できればこのタイミングでは、酒場をボーカル付きＢＧＭに切り替えておき、
+	//　　　話しかける処理を外す。
+	if( F1_01_GameStart )
+	{
+
+		EV_stop("SING_CEPHEILA")
+		if(!FT_01_TalkCepheila)
+		{
+			look_chr(CEPHEILA,RAGNA,"Bone_Head")
+		//　　※話しかけると、ＢＧＭのボリュームを下げる。
+		//　　セフィーラ、首だけで振り返る。
+			MES(CEPHEILA,"あら……お客さん？",0)
+			MES(CEPHEILA,"ふふ、ゆっくりしていってね。",0)
+			MES_close(CEPHEILA)
+
+			MES(RAGNA,"ああ、サンキュー。",0)
+			MES(RAGNA,"（流しの歌手あたりか……\n  この町も色んな人間がいるな。）",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"そなたは昨日も\nここで歌っていたようだが……",0)
+			MES(PARTNER,"ふむ、人の子にしては\nなかなか見事な歌声だな。",0)
+			MES(PARTNER,"気に入ったぞ。",0)
+			MES_close(PARTNER)
+
+		//　　ラグナに冷や汗エモーション。
+			look_chr(CEPHEILA,PARTNER,"Bone_Head")
+			EMO(CEPHEILA,EMO_HATENA)
+			EMO(RAGNA,EMO_AOZAME)
+			wait(30)
+			rot_chr(RAGNA,30,PARTNER)
+			MES(RAGNA,"（だあっ……！？）",0)
+			MES_close(RAGNA)
+
+			MES(CEPHEILA,"ふふっ、何だか面白い人ね。",0)
+			MES(CEPHEILA,"私たちは……そうね。\n旅の音楽家って所かしら。",0)
+			MES(CEPHEILA,"見ての通り、この宿で\n公演をさせてもらっているの。",0)
+			MES(CEPHEILA,"あなたたちも\nゆっくり聞いていってね。",0)
+			MES_close(CEPHEILA)
+
+		//　　メッセージが閉じると、ボリュームを元に戻す。
+			F_set(FT_01_TalkCepheila)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		//　　※話しかけると、ＢＧＭのボリュームを下げる。
+			look_chr(CEPHEILA,PLAYER1,"Bone_Head")
+			MES(CEPHEILA,"ふふ、あなたたちって\nちょっと面白いわね。",0)
+			MES(CEPHEILA,"折角だもの、\nゆっくり聞いていって頂戴ね。",0)
+			MES_close(CEPHEILA)
+
+		//　　メッセージが閉じると、ボリュームを元に戻す。
+		}
+		look_off(CEPHEILA)
+		EV("SING_CEPHEILA")
+
+	}
+	TK_end()
+}
+
+EV_CEPHEILA_GO_HILL
+{
+	MES(RAGNA,"えーっとだ、とりあえず\nここは喉に悪いだろうし……",0)
+	MES_close(RAGNA)
+
+//	name2(PARTNER)
+	MES(PARTNER,"うむ、このような教会では\n大して利益（りやく）もなかろう。",0)
+	MES(PARTNER,"早く歌唱練習とやらに\n行った方がよいぞ。",0)
+	MES_close(PARTNER)
+
+//	name2(CEPHEILA)
+	KAO(CEPHEILA,"12321Z3","1","1")
+	MES(CEPHEILA,"そ、そうかしら。",0)
+	KAO(CEPHEILA,"12321Z6","1","1")
+	MES(CEPHEILA,"……うん、\nじゃあそうしようかな。",0)
+	KAO(CEPHEILA,"12321Z6","1","1")
+	MES(CEPHEILA,"今日はブランデーヶ丘まで\n行くつもりだったから、早くしないと\n日が暮れてしまうものね。",0)
+	MES_close(CEPHEILA)
+
+//　　セフィーラ、２人を見比べる。
+	look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,30,0)
+	wait(20)
+	look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,-30,0)
+	wait(40)
+	look(CEPHEILA,"Bone_Head",0,		0,2,0,			0,0,0)
+
+	KAO(CEPHEILA,"12321Z3","1","1")
+	MES(CEPHEILA,"ありがとう、話を聞いてくれて。\nじゃあね。",0)
+	MES_close(CEPHEILA)
+
+//　　セフィーラ、出口の方へ歩いて消える。
+	F_reset_chr(CEPHEILA,CF_NO_MOVE)
+	
+	rot(CEPHEILA,10,0)
+	rot(RAGNA,10,30)
+	rot(PARTNER,30,330)
+	move(CEPHEILA, 0, WALK1,0,1100,0,0)
+
+	wait(70)
+
+	delete(CEPHEILA)
+
+//　　ラグナたちはそれを見送る。
+//　　※以降、セフィーラはブランデーヶ丘に配置され、教会配置は消す。
+	F_set(FT_05_CepheilaSt)
+}
+
+
+
+MOTION_CEPHEILA_SLEEPING
+{
+
+	look(CEPHEILA,"Bone_Head",0,			0,1,0,	0,-10,10)
+	wait(50)
+	look(CEPHEILA,"Bone_Head",0,			0,1,0,	0,-30,10)
+
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,572 @@
+//──────────────────────────────
+//	name("●特尔米多鲁")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+//会話処理へ
+////////////////////////////////////////////////////////////////
+TK_TELMIDORL
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(TELMIDORL, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,TELMIDORL)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,TELMIDORL)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,TELMIDORL)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,TELMIDORL)
+	}
+	
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　螺旋要塞·中ボスで気絶して倒れている。
+	if( F6_00_GoToMeru )
+	{
+		MES(LOSE_TELMI,"………………………………",0)
+		MES_close(LOSE_TELMI)
+
+	//	name("テキスト（色換え·表示しない）")
+		MES(0,"C3S2特尔米多鲁力竭晕倒了。",2)
+		MES_close(0)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　水晶峡谷之扉之祭坛之前に立っている。
+	//　　奥蒂莎とは异なり、扉そ之も之を凝視している雰囲気。
+	if( F2_00_GoForest )
+	{
+		//モ～ションセット
+		MOT_SET(TELMIDORL,150, -2,405,405,-1,15)
+	//	name("★初回（１回之み／イベント処理）")
+		if(!FM_03_TalkTelmidorl)
+		{
+		//　　話しかけるとキャラ再配置してイベント発生。
+
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(-26,5303,440,0,0)
+			CAM(-570,46,80,40,168,0,0)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,294,-4863,200,110,2)
+			chr_pos(PARTNER,178,-4712,201,140,2)
+			chr_pos(TELMIDORL,-0,-5000,201,180,2)
+			
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(TELMIDORL,"1", "1", "1")	
+			
+			look(TELMIDORL,"Bone_Head",0,		0,0,2,			0,0,30)
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+
+			if(!FM_01_TalkTelmidorl)
+			{
+				chr_rename(TELMIDORL,"青年")//
+			}
+
+			MES(TELMIDORL,"这是黑水晶之柱……\n哎呀、真是不可思议的景象。",0)
+			MES(TELMIDORL,"但是、这个\n门一样的祭坛到底是……",0)
+			MES_close(TELMIDORL)
+
+		//　　特尔米多鲁、ＰＡマ～クなどを出して振り返る。
+		
+
+			EMO(TELMIDORL,EMO_PA)
+			wait(30)
+			look(TELMIDORL,"Bone_Head",0,		0,0,5,			0,0,0)
+			
+//			CAM_move(13,3560,139,60,0)
+//			CAM(-49,17,139,41,150,60,0)
+//			CAM_move(153,4900,339,60,0)
+//			CAM(-88,38,339,40,142,60,0)
+
+			cross_fade(30)
+			CAM_move(153,4900,339,0,0)
+			CAM(-87,38,339,40,224,0,0)
+			rot_chr(TELMIDORL,30,RAGNA)
+//			wait_CAM_move()
+			wait_fade()
+
+			//─────────────────────
+			//	name("□以前特尔米多鲁と会っている场合")
+			if(FM_01_TalkTelmidorl)
+			{
+				MOT(TELMIDORL,150,10)
+				wait(15)
+				KAO(TELMIDORL,"12321Z4","1","1")
+				MES(TELMIDORL,"呀、是你们啊。\n又见面了呢。",0)
+				MES_close(TELMIDORL)
+			}
+		//	name("□以前特尔米多鲁と会っていない场合")
+			else
+			{
+				MES(RAGNA,"你是……？",0)
+				MES_close(RAGNA)
+
+				MOT(TELMIDORL,150,10)
+				wait(15)
+				KAO(TELMIDORL,"12321Z5","1","1")
+				MES(TELMIDORL,"啊啊、真是失礼。\n一不注意就入神了呢。",0)
+				KAO(TELMIDORL,"12321Z5","1","1")
+				MES(TELMIDORL,"我叫特尔米多鲁。\n是个随心所欲的诗人。",0)
+				MES_close(TELMIDORL)
+			}
+			//──────────────────────────────
+			
+		//　　特尔米多鲁、扉之祭坛之方を向く。
+			MOT(TELMIDORL,2,10)
+			wait(15)
+			look(TELMIDORL,"Bone_Head",0,		0,0,2,			0,0,20)
+			rot(TELMIDORL,30,180)
+			wait(15)
+			chr_rename(TELMIDORL,"特尔米多鲁")//
+			MES(TELMIDORL,"喂、快看呀。\n非常美丽的景象对吧？",0)
+			MES(TELMIDORL,"好像是从巨大水晶矿脉上\n剥离出来的祭坛一样……",0)
+			MES(TELMIDORL,"嗯、到底\n为什么会在这里呢。",0)
+			MES(TELMIDORL,"虽然问了好多人\n但还是不太清楚。",0)
+			MES_close(TELMIDORL)
+
+			rot(RAGNA,30,170)
+			rot(PARTNER,30,180)
+			wait(10)
+
+//			cross_fade(30)			//クロスフェ～ド
+//			CAM_move(153,4900,399,0,0)
+//			CAM(-448,42,399,40,217,0,0)
+//			CAM_move(153,4900,399,60,0)
+//			CAM(-448,42,399,40,217,60,0)
+			CAM_move(153,4900,439,60,0)
+			CAM(-447,41,439,40,213,60,0)
+			look(PARTNER,"Bone_Head",0,		0,0,2,			0,0,20)
+//			wait_fade()
+			wait(60)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"………………………………",0)
+			MES(PARTNER,"（回想起来……我和父亲大人\n  经常来这里玩呢。）",0)
+			MES(PARTNER,"（带我出城的时候、\n  已经决定了目的地就是这里。）",0)
+			MES(PARTNER,"（……最后一次来这里玩\n  是什么时候呢……？）",0)
+			MES_close(PARTNER)
+
+		//　　拉古那之頭に？マ～クを表示。
+			EMO(RAGNA,EMO_HATENA)
+			wait(30)
+		
+		//　　そ之まま艾雯之方に向き直る。
+			rot_chr(RAGNA,30,PARTNER)
+			
+			KAO(RAGNA,"12321Z2","1","1")
+			MES(RAGNA,"公主……？",0)
+			MES_close(RAGNA)
+
+//			wait_MES(RAGNA)
+//			cross_fade(30)			//クロスフェ～ド
+//			CAM_move(153,4900,339,0,0)
+//			CAM(-87,38,339,40,224,0,0)
+//			wait_fade()
+			
+			MES(PARTNER,"哎呀……没什么。",0)
+			MES_close(PARTNER)
+
+			CAM_move(153,4900,339,50,0)
+			CAM(-87,38,339,40,224,50,0)
+			rot_chr(PARTNER,30,RAGNA)
+//			look_chr(PARTNER,RAGNA,"Bone_Head")
+			look(PARTNER,"Bone_Head",0,		0,0,5,			0,0,0)
+			wait(50)
+			KAO(PARTNER,"12321Z6","1","1")
+			MES(PARTNER,"路上耽误的太久\n貌似不太合时宜。",0)
+			KAO(PARTNER,"12321Z4","1","1")
+			MES(PARTNER,"出发吧、拉古那。",0)
+			MES_close(PARTNER)
+
+			KAO(RAGNA,"12321Z2","1","1")
+			MES(RAGNA,"啊啊、是啊。",0)
+			MES_close(RAGNA)
+
+		//　　拉古那、特尔米多鲁之方を見る。
+			rot_chr(RAGNA,30,TELMIDORL)
+			rot_chr(PARTNER,30,TELMIDORL)
+			wait(20)
+			KAO(RAGNA,"12321Z6","1","1")
+			MES(RAGNA,"再见了、叫特尔米多鲁对吧。\n不要太入神而摔倒哦。",0)
+			KAO(RAGNA,"12321Z4","1","1")
+			MES(RAGNA,"那样一定会很疼的。",0)
+			MES_close(RAGNA)
+
+			look(TELMIDORL,"Bone_Head",0,		0,0,5,			0,0,0)
+			rot_chr(TELMIDORL,30,RAGNA)
+			MOT(TELMIDORL,150,10)
+			wait(15)
+			KAO(TELMIDORL,"12321Z3","23","1")
+			MES(TELMIDORL,"呵呵……多谢忠告。",0)
+			MES_close(TELMIDORL)
+
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			MOT(TELMIDORL,2,0)
+			KAO(TELMIDORL,"1","1","1")
+			
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			F_set(FM_03_TalkTelmidorl)
+			EV_end()
+
+			
+			//フェ～ドイン----------------------
+			fade_in(0,30,BLACK)
+
+//			//★特尔米多鲁
+//			F_set_note(TELMIDORL,-1)
+
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+	//　　★繰り返し
+		else
+		{
+			rot_chr(TELMIDORL,30,PLAYER1)
+			MOT(TELMIDORL,150,10)
+			wait(15)
+			if(!F_TELMIDORL)
+			{
+				MES(TELMIDORL,"嗯、差不多该回去\n创作我的诗歌了。",0)
+				MES(TELMIDORL,"这次我要以、不幸的少女为主人公\n进行戏曲的创作。",0)
+				MES(TELMIDORL,"结尾的诗中\n就使用这里的印象吧。",0)
+				MES_close(TELMIDORL)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"………………………………",0)
+				MES_close(PARTNER)
+
+				MOT(TELMIDORL,2,10)
+				F_set(TELMIDORL)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(TELMIDORL,"差不多该回去\n创作我的诗歌了。",0)
+				MES(TELMIDORL,"这次我要以、不幸的少女为主人公\n进行戏曲的创作。",0)
+				MES(TELMIDORL,"呵呵……\n大家敬请期待哦。",0)
+				MES_close(TELMIDORL)
+				MOT(TELMIDORL,2,10)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　博物馆で提欧馆长と向かい合っている状態。
+	if( F1_15_GoVillage )
+	{
+		rot_chr(TELMIDORL,30,PLAYER1)
+		MOT_SET(TELMIDORL,150, -2,405,405,-1,15)
+
+	//	name("★初回")
+		if(!F_TELMIDORL)
+		{
+			MOT(TELMIDORL,150,15)
+			//─────────────────────
+			//	name("□以前特尔米多鲁と会っている场合")
+			if(FM_01_TalkTelmidorl)
+			{
+				MES(TELMIDORL,"嘿、是你们啊。",0)
+				
+			}
+			//─────────────────────
+			MES(TELMIDORL,"知道吗？\n相传北方村子的尽头\n残留着一座古代神殿。",0)
+			MES(TELMIDORL,"叫做奥鲁荻姆神殿把。\n时到今日还不为人知呢……",0)
+			MES(TELMIDORL,"听说那次魔法大战、许多人\n以那里为据点大战了一场。",0)
+			MES(TELMIDORL,"而如今、好像已经\n沉没到哀伤之湖底下了。",0)
+			MES_close(TELMIDORL)
+
+			F_set(TELMIDORL)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(TELMIDORL,"呵呵、这次\n创作一首戏曲吧。",0)
+			MES(TELMIDORL,"被湖水吞没的\n闪耀神殿、奥鲁荻姆……",0)
+			MES(TELMIDORL,"好像十分的\n适合作悲剧题材不是吗。",0)
+			MES_close(TELMIDORL)
+		}
+		MOT(TELMIDORL,52,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　熊猫楼之どこかに座っている。
+	//　　廃坑で奥蒂莎と会ったら彼女も酒场に現れる之で
+	//　　啊まり印象がかぶらないよう、位置はなるべく離しておく。
+	if( F1_01_GameStart )
+	{
+		MOT_SET(TELMIDORL,151, -2,568,568,-1,0)		//特尔米多鲁　会話モ～ション
+	//	name("★初回（１回之み／イベント処理）")
+		if(!FM_01_TalkTelmidorl)
+		{
+		//　　話しかけるとキャラ再配置してイベント発生。
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+			cross_fade(30)			//クロスフェ～ド
+			
+			EV_begin()
+			//カメラセット
+			CAM_move(-799,1008,135,0,0)
+			CAM(-130,47,-25,27,296,0,0)
+
+			//ル～トム～ブ中之梅とぶつからないように消す
+			color(MEI,-1)//透過
+			
+			//ル～トム～ブ止める
+			move(MEI, 99, 0,0,0,0,0)//0905追加
+			EV_stop("MOVE_MEI")
+			//梅を初期位置へ
+			chr_pos(MEI,298,-1505,1,351,2)
+			
+			//キャラ再配置
+			chr_pos(RAGNA,-916,-846,0,166,2)
+			chr_pos(PARTNER,-741,-877,1,135,2)
+			chr_pos(TELMIDORL,-1030,-1100,0,240,150)
+			
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(TELMIDORL,"1", "1", "1")	
+			
+
+			wait_fade()
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+		
+			look_chr( TELMIDORL, RAGNA,"Bone_Head")
+
+		//	name("青年")
+			KAO(TELMIDORL,"12321Z3","1","1")
+			MES(TELMIDORL,"哎呀、你们……",0)
+			KAO(TELMIDORL,"12321Z6","1","1")
+			MES(TELMIDORL,"昨天晚上、就是你们\n在楼上订的房间吧。",0)
+			KAO(TELMIDORL,"12321Z3","1","1")
+			MES(TELMIDORL,"从外地来的旅行者吗？",0)
+			MES_close(TELMIDORL)
+
+		//	name2(RAGNA)
+			KAO(RAGNA,"12321Z3","1","1")
+			MES(RAGNA,"啊、嗯。\n就算是吧。",0)
+			KAO(RAGNA,"12321Z3","1","1")
+			MES(RAGNA,"你也是旅行者吗？",0)
+			MES_close(RAGNA)
+
+			KAO(TELMIDORL,"12321Z4","23","1")
+			MES(TELMIDORL,"呵呵、我的名字叫\n特尔米多鲁。",0)
+			chr_rename(TELMIDORL,"特尔米多鲁")
+			KAO(TELMIDORL,"12321Z6","3","1")
+			MES(TELMIDORL,"追求无边的浪漫\n在库朗毕林中流浪\n随心所欲的一介诗人。",0)
+			MES_close(TELMIDORL)
+
+			KAO(PARTNER,"12321Z2","D","1")
+			MES(PARTNER,"哦……",0)
+			MES_close(PARTNER)
+
+			KAO(RAGNA,"12321Z3","D","1")
+			MES(RAGNA,"诶……是诗人呢。",0)
+			MES_close(RAGNA)
+
+			KAO(TELMIDORL,"12321Z6","21","6")
+			MES(TELMIDORL,"现在正被流传在伊尔巴特各地\n的各种传说所吸引。",0)
+			KAO(TELMIDORL,"12321Z6","26","6")
+			MES(TELMIDORL,"……不、\n呵呵、应该说已经沉醉其中了。",0)
+			KAO(TELMIDORL,"12321Z6","6","6")
+			MES(TELMIDORL,"创作欲望收到了强烈的刺激\n新的诗篇一个接一个的涌出来了呢。",0)
+			MES_close(TELMIDORL)
+
+		//　　特尔米多鲁、髪を掻き揚げる仕草。
+			KAO(PARTNER,"12321Z2","1","1")
+			MES(PARTNER,"（嗯、非常入迷呢……）",0)
+			KAO(PARTNER,"12321Z5","1","1")
+			MES(PARTNER,"（在人类世界中\n  居然有这么风流倜傥的人啊。）",0)
+			MES_close(PARTNER)
+
+			look_chr( RAGNA, PARTNER,"Bone_Head")
+			KAO(RAGNA,"1","11TTUU","1")
+			wait(15)
+			KAO(RAGNA,"12321Z5","U","1")
+			MES(RAGNA,"（嘛、如此讨人厌的\n  还真是稀有啊……）",0)
+			MES_close(RAGNA)
+
+			look_off(RAGNA)
+			KAO(RAGNA,"1","UTT11","1")
+			KAO(TELMIDORL,"12321Z6","21","1")
+			MES(TELMIDORL,"听说\n好像除了古代神殿之外\n还有有趣的场所呢。",0)
+			KAO(TELMIDORL,"12321Z3","1","1")
+			MES(TELMIDORL,"古代的巨大铁塔。",0)
+			KAO(TELMIDORL,"12321Z4","1","1")
+			MES(TELMIDORL,"一但踏入就无法脱出的\n魔性之森。",0)
+			KAO(TELMIDORL,"12321Z5","23","1")
+			MES(TELMIDORL,"还有隐居着高贵魔族\n的城堡……",0)
+			MES_close(TELMIDORL)
+
+			KAO(RAGNA,"12321Z5","A","1")
+			MES(RAGNA,"啊～、那个莫非是……\n吸血鬼之城？",0)
+			MES_close(RAGNA)
+
+			KAO(TELMIDORL,"12321Z6","21D","6")
+			MES(TELMIDORL,"对呀对呀、你还真了解呢。\n这可是连观光手册里\n都没写的呢……",0)
+			KAO(TELMIDORL,"12321Z6","23","1")
+			MES(TELMIDORL,"──传说在伊尔巴特的某处\n有一座只在满月之夜出现的、\n妖娆壮丽的城堡……",0)
+			KAO(TELMIDORL,"12321Z6","2B","6")
+			MES(TELMIDORL,"呵呵、你们也\n喜欢这种话题吗？",0)
+			MES_close(TELMIDORL)
+
+			KAO(RAGNA,"12321Z5","26","1")
+			MES(RAGNA,"哈哈哈……\n也算不上是啦。",0)
+			MES_close(RAGNA)
+
+		//　　艾雯之頭に…マ～ク。
+			EMO(PARTNER,EMO_TENTEN)
+			KAO(PARTNER,"1","23","1")
+			wait(30)
+
+			KAO(PARTNER,"1","2A","1")
+			MES(PARTNER,"（…………嗯……………）",0)
+			MES_close(PARTNER)
+			
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			//ル～トム～ブ中之梅とぶつからないように消す
+			color(MEI,1)//透過
+			
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(TELMIDORL,"1", "1", "1")	
+
+			//贺安初回後ならル～トム～ブ開始
+			EV("MOVE_MEI")
+			
+
+			EV_end()
+			F_set(FM_01_TalkTelmidorl)
+			look_off(TELMIDORL)
+			CAM_return( 0 )			//カメラを初期設定に
+			fade_in(0,30,BLACK)
+			
+//			//★特尔米多鲁
+//			F_set_note(TELMIDORL,-1)
+		//	プレイヤ～操作許可
+		//――――――――――――――――――――――――――
+		}
+		else
+		{
+			look_chr( TELMIDORL, PLAYER,"Bone_Head")
+			MOT(TELMIDORL,151,15)
+		//	name("★２回目")
+			if(!F_TELMIDORL)
+			{
+				MES(TELMIDORL,"其实以前呢\n我也出过诗集、\n但是实在是难卖。",0)
+				MES(TELMIDORL,"啊，在那上面\n花掉了我不少钱呢……",0)
+				MES_close(TELMIDORL)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（是自费出版吗……？）",0)
+				MES_close(RAGNA)
+				
+				F_set(TELMIDORL)
+			}
+		//	name("★以後、繰り返し")
+			else
+			{
+				MES(TELMIDORL,"其实是找到了有钱的投资者\n想要随心所欲地去自由创作。",0)
+				MES(TELMIDORL,"现实却是\n没有那么顺利呢……",0)
+				MES_close(TELMIDORL)
+			}
+			MOT(TELMIDORL,150,15)
+			look_off(TELMIDORL)
+		}
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

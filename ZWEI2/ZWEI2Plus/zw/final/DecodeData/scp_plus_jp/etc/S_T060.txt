@@ -1,0 +1,1058 @@
+//──────────────────────────────
+//	name("◆薬売り（行商人）Karasu")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_KARASU
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(KARASU, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,KARASU)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,KARASU)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,KARASU)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,KARASU)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//いない
+	//
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(KARASU,30,PLAYER1)
+		//モーション
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+
+		//──────────────────────────────
+		//わらしべ条件を満たしている：かつＬＦ立ってない
+		//──────────────────────────────
+		if(FV_11_Warasi13_Cls && !FV_11_Warasi14_krs && !F_KARASU)
+		{
+			MOT(KARASU,150,10)
+			EV("WARASHI_Karasu_FIRST")
+			wait_EV("WARASHI_Karasu_FIRST")
+		}
+		else
+		//⑫初回
+		if(!FT_12_TalkKarasu)
+		{
+			EV("TK_KARASU")
+			wait_EV("TK_KARASU")
+		}
+		//以下通常
+		else
+		{
+			VOICE(754, 0,)			//「何か入用か？」
+					
+			MOT(KARASU,150,10)
+			MES(KARASU,"……何か入用か？",0)
+			MES_close(KARASU)
+
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+		}
+		MOT(KARASU,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//　※TK_KARASU内で分岐
+	//──────────────────────────────
+	if( F4_05_OnVillage2)
+	{
+		EV("TK_KARASU")
+		wait_EV("TK_KARASU")
+	}
+	else
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		//初回
+		if(!FT_06_TalkKarasu)
+		{
+			EV("TK_KARASU")
+			wait_EV("TK_KARASU")
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+		}
+		else
+		{
+			VOICE(754, 0,)			//「何か入用か？」		
+		
+			MOT(KARASU,150,10)
+			rot_chr(KARASU,30,PLAYER1)
+			MES(KARASU,"……何か入用か？",0)
+			MES_close(KARASU)
+				
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+		}
+		MOT(KARASU,54,10)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//▼④炎のパーツを入手した
+	//▼③金闇の森へ向かうことにした
+	//▼②ロアルタ村へ向かうことにした
+	//　※TK_KARASU内で分岐
+	//──────────────────────────────
+	if( F1_15_GoVillage )
+	{
+		//モーション
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+		MOT(KARASU,150,10)
+
+		VOICE(754, 0,)			//「何か入用か？」
+			
+		rot_chr(KARASU,30,PLAYER1)
+		MES(KARASU,"……何か入用か？",0)
+		MES_close(KARASU)
+			
+		EV("SHOP_KARASU_LOOP")
+		wait_EV("SHOP_KARASU_LOOP")
+
+		MOT(KARASU,2,10)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		//モーション
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+		MOT(KARASU,150,10)
+
+		rot_chr(KARASU,30,PLAYER1)
+		//初回
+		if(!FT_01_TalkKarasu)
+		{
+			EV("TK_KARASU")
+			wait_EV("TK_KARASU")
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+
+			MES(KARASU,"必要なものがあれば\n売ってやろう。",0)
+			MES_close(KARASU)
+		}
+		else
+		{
+			VOICE(754, 0,)			//「何か入用か？」
+		
+			MES(KARASU,"……何か入用か？",0)
+			MES_close(KARASU)
+				
+			EV("SHOP_KARASU_LOOP")
+			wait_EV("SHOP_KARASU_LOOP")
+			
+		}
+		MOT(KARASU,2,10)
+	}
+	
+
+	TK_end()
+}
+
+SHOP_KARASU_LOOP
+{
+//	name("選択テキスト")
+	workL(WK_CANCEL,SET,3)//【やめる】
+	MES_pos(PLAYER1,"??W9【話をする】\n【買い物する】\n【やめる】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	//──────────────────────────────
+	//	name("⇒話をする")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		EV("TK_KARASU")
+		wait_EV("TK_KARASU")
+		loop
+	}
+	//──────────────────────────────
+	//	name("⇒買い物をする")
+	//──────────────────────────────
+	else
+	if(WK_YESNO==2)
+	{
+		shop_open(2)
+		wait_W(WK_YESNO)
+
+		if(!FT_FF_FoodHutoru)
+		{
+			if( IT200>0 || IT201>0 || IT202>0 )
+			{
+				EV("Tuto_Karasu")
+				wait_EV("Tuto_Karasu")
+			}
+		}
+		loop
+	}
+	//──────────────────────────────
+	//	name("⇒やめる")
+	//　　会話処理終了。
+	//──────────────────────────────
+	else
+	{
+		//⑫
+		if(F6_00_GoToMeru)
+		{
+			VOICE(757,0)	//「また来い」
+			MES(KARASU,"また来い。",0)	
+					
+//			MES(KARASU,"フフ……\nまたいつでも来い。",0)
+			MES_close(KARASU)
+		}
+		else
+		//⑥
+		if( F3_00_GoMoonCastle )
+		{
+			VOICE(757,0)	//「また来い」
+			MES(KARASU,"また来い。",0)	
+				
+//			MES(KARASU,"……装備を怠るなよ。",0)
+			MES_close(KARASU)
+		}
+		else
+		{
+			VOICE(757,0)	//「また来い」
+		
+			MES(KARASU,"また来い。",0)
+			MES_close(KARASU)
+		}
+	}
+}
+
+
+//一般メッセージ/////////////////////////////////////////////////////////////////////////////
+TK_KARASU
+{
+
+	//──────────────────────────────
+	//　　※わらしべイベント中。
+	//──────────────────────────────
+	if(FV_11_Warasi13_Cls && !FV_11_Warasi14_krs && F_KARASU)
+	{
+		MES(KARASU,"アルジェスは、かの魔法大戦\n最後の戦いが行われた地だと聞く。",0)
+		MES(KARASU,"俺も以前から興味はあったのが、\nまだ行った事が無くてな。",0)
+		MES(KARASU,"どうだ、その地図\n俺に譲る気はないか？",0)
+		MES_close(KARASU)
+		EV("WARASHI_Karasu_LOOP")
+		wait_EV("WARASHI_Karasu_LOOP")
+	}
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	//　　※アルッテの町にいる。
+	//　　※噴水右の木箱が積んである辺りに立っている。
+	//	name("カラス")
+	else
+	if(F6_00_GoToMeru)
+	{
+		if(!FT_12_TalkKarasu)
+		{
+		//　　ラグナたちにＰＡエモーション。
+			EMO(RAGNA,EMO_TOGEBIKKURI)
+			EMO(PARTNER,EMO_TOGEBIKKURI)
+			wait(30)
+			
+			MES(RAGNA,"ってあんた……\n町に戻ってたのか。",0)
+			MES_close(RAGNA)
+
+		//	name("カラス")
+			MOT(KARASU,150,10)
+			MES(KARASU,"フフ、まあな。",0)
+			MES(KARASU,"お頭からも、お前たちを\nサポートするようにと言われている。",0)
+			MES(KARASU,"未だ里の存在が伏せられている以上\n派手なことはできんが……",0)
+			MES(KARASU,"困った事があれば声を掛けろ。",0)
+			MES_close(KARASU)
+
+		//──────────────────────────────
+		//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"ああ、分かった。",0)
+				MES_close(RAGNA)
+			}
+		//	name("⇒アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"うむ、了解だ。",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			F_set(FT_12_TalkKarasu)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_KARASU)
+			{
+				MES(KARASU,"正直……この事態を打開できるのは\nお前たちだけだろう。",0)
+				MES(KARASU,"フフ、さすが\n里の使命を継いだだけの事はある……",0)
+				MES(KARASU,"あの要塞に乗り込む前に\n万全の準備をしておけよ。",0)
+				MES_close(KARASU)
+				
+				F_set(KARASU)
+			}
+
+		//　　★繰り返し
+			else
+			{
+				MES(KARASU,"フフ、さすがに\n里の使命を継いだだけの事はあるな。",0)
+				MES(KARASU,"……乗り込む前に\n万全の準備をしておけよ。",0)
+				MES_close(KARASU)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	//　　※茶屋先の、残った長いすに座って茶を飲んでいる。
+	if( F5_00_HearLunar )
+	{
+		look_chr( KARASU, RAGNA,"Bone_Head")
+
+		if(!FS_11_TalkKarasu)
+		{
+		//　　カラス、ラグナに向く。
+			
+		//	name("カラス")
+			MES(KARASU,"……どうやら、月支の剣は\nお前が引き継いだようだな。",0)
+			MES(KARASU,"フッ、お前には初めから\n何かあるとは思っていたが。\nやはり縁があったようだな。",0)
+			MES_close(KARASU)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ははは……そんな前から\n目を付けられてたのか。",0)
+			MES(RAGNA,"うーん、確かにちょいと\n目立ってたかもしれねえが……",0)
+			MES_close(RAGNA)
+
+		//	name("カラス")
+			MES(KARASU,"これは気配云々というより\n俺のカンのようなものだ。\nあまり気にするな。",0)
+			MES(KARASU,"しかし《護人》の使命が\n解かれたとなると、俺の任務も\n一旦は打ち切りだな。",0)
+			MES(KARASU,"お頭から別命あるまで\n待機しているか……",0)
+			MES_close(KARASU)
+			F_set(FS_11_TalkKarasu)
+		}
+		else
+		{
+			//──────────────────────────────
+			//　　※以下通常一般メッセージ。
+			if(!F910)
+			{
+			//	name("カラス")
+				MES(KARASU,"思いがけずも手持ち\n無沙汰になってしまったな。",0)
+				MES(KARASU,"俺はお頭から\n別命あるまで待機だ。",0)
+				MES(KARASU,"……たまには\n子守りなどしてみるか。",0)
+				MES(KARASU,"懐かれてしまったようだしな。",0)
+				MES_close(KARASU)
+				F_set(910)
+			}
+			else
+			{
+			//　　★繰り返し
+			//	name("カラス")
+				MES(KARASU,"俺はお頭から\n別命あるまで待機だ。",0)
+				MES(KARASU,"……たまには\n里の仕事などをしてみるか。",0)
+				MES_close(KARASU)
+			}
+		}
+		look_off(KARASU)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+	//　　※露天風呂方面に向かおうとするとイベント開始。
+	//　　　橋の途中で、エリアで引っ掛けて起動させます。
+	//　　手裏剣が飛んできて、先頭キャラの足元に刺さる。
+
+/*  ⇒里夜マップへ移植。
+	//──────────────────────────────
+	if( F4_09_GoShrineMia )
+	{
+		if(!FS_10_TalkKarasu)
+		{
+		//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"うおっ……！？",0)
+				MES_close(RAGNA)
+			}
+		//	name("⇒アルウェン先頭")
+			else
+			{
+				MES(PARTNER,"むむっ……！？",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		//　　先頭キャラ、驚いて少し後ろに下がる。
+		//　　風呂屋の前に、薬売りが出現している。
+		//　　背中の荷物はなしで、膝突き、手は手裏剣を投げた後の状態。
+		//	name("カラス")
+			MES(KARASU,"お前たちか……",0)
+			MES_close(KARASU)
+
+		//　　薬売り、立ち上がる。
+		//	name("カラス")
+			MES(KARASU,"スバルとお頭――\nそれにあの妖精は\nこの先に運び込んだ。",0)
+			MES(KARASU,"安心するといい。",0)
+			MES_close(KARASU)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"そ、そうか。\nみんな無事なんだな？",0)
+			MES_close(RAGNA)
+
+		//	name("カラス")
+			MES(KARASU,"ああ。",0)
+			MES(KARASU,"他の重傷者や女子供も\nこちらに避難させている。",0)
+			MES(KARASU,"敵の波も引いたようだが……\n念のため、ここには俺が立つ。",0)
+			MES(KARASU,"お前たちは、裏山の社の方を頼む。",0)
+			MES_close(KARASU)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"……了解だ。",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"ここは任せたぜ！",0)
+			MES_close(RAGNA)
+			
+			F_set(FS_10_TalkKarasu)
+		}
+		else
+		{
+		//　　★カラス【防衛の指揮】
+		//　　以降は、露天風呂方面には薬売りが立っており、ストッパーとなっている。
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。（ストッパー）
+		//	name("カラス")
+			MES(KARASU,"ここは俺が、裏手は\nゲン爺とアカネが固めている。",0)
+			MES(KARASU,"……ここは任せて\nお前たちは社へ向かえ。",0)
+			MES(KARASU,"それと、広場の方に\nヒコメという奴がいるはずだ。",0)
+			MES(KARASU,"もし何か入用なものがあれば、\nそいつに言いつけるといい。",0)
+			MES_close(KARASU)
+		}
+	}
+	else
+*/
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//　　※配置なし。
+
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//　　※茶屋先で荷物を降ろし、茶を飲んでいる。
+	//　　※初回イベント。
+	//★名前が判明するまで表示名を「薬売り」に
+	if( F4_05_OnVillage2 )
+	{
+		//★カラス
+		F_set_note(-60,-1)
+
+		if(!FS_08_TalkKarasu)
+		{
+			look_chr( KARASU, RAGNA,"Bone_Head")
+			MOT(KARASU,63,15)
+			MES(KARASU,"……久しいな。\n調子はどうだ？",0)
+			MES_close(KARASU)
+
+			//	name("⇒ゲンとの初回会話がまだ")
+			//──────────────────────────────
+			if(!FS_08_TalkGen)
+			{
+				EMO(RAGNA,EMO_HATENA)			//　　ラグナに？エモーション。
+				wait(30)
+				MES(RAGNA,"あれ、あんたどっかで\n見たことあるような……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（あ、あれ？\n  里にこんな人\n  いたかなぁ……？）",0)
+				MES_close(PARTNER)
+
+			//　　２人にしばらく・・・エモーション。
+				EFF_chr(25124,RAGNA,0,100,0,"Bone_Head")
+				EFF_chr(25124,PARTNER,0,100,0,"Bone_Head")
+				wait(80)
+				
+			//　　その後ラグナに！エモーション。スバルにＰＡエモーション。
+			//　　２人同時にポップアップを出す。
+				EMO(RAGNA,EMO_BIKKURI)			//　　ラグナに！エモーション。
+				EMO(PARTNER,EMO_PA)			//　　スバルにPAエモーション。
+				wait(30)
+			
+				MES(RAGNA,"あ、確か\nアルッテの町にいた薬売り！？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"あ、もしかしてカラスさん？",0)
+				MES_close(PARTNER)
+			}
+			//	name("⇒ゲンと初回会話済み")
+			//──────────────────────────────
+			else
+			{
+				MES(RAGNA,"あれ、あんたもどっかで\n見たことあるような……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（あ、あれ？\n  里にこんな人\n  いたかなぁ……？）",0)
+				MES_close(PARTNER)
+
+			//　　２人にしばらく・・・エモーション。
+			//　　その後ＰＡエモーション。
+			//　　２人にしばらく・・・エモーション。
+				EFF_chr(25124,RAGNA,0,100,0,"Bone_Head")
+				EFF_chr(25124,PARTNER,0,100,0,"Bone_Head")
+				wait(80)
+				EMO(RAGNA,EMO_PA)
+				EMO(PARTNER,EMO_PA)
+				wait(30)
+
+			//　　２人同時にポップアップを出す。
+				MES(RAGNA,"あ、アルッテの町にいた\n薬売りじゃねえか！",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"あ、もしかしてカラスさん？",0)
+				MES_close(PARTNER)
+			}
+
+		//──────────────────────────────
+
+		//名前をカラスに
+			chr_rename(KARASU,"カラス")
+
+		//　　ラグナ、スバルに向く。
+			rot_chr(RAGNA,30,PARTNER)
+
+			MES(RAGNA,"……えっと、\nやっぱ忍びの人か？",0)
+			MES_close(RAGNA)
+
+		//　　スバル、ラグナに向く。
+			rot_chr(PARTNER,30,RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"はい、里一番のスゴ腕で、\nお祖父ちゃんの右腕って\n言われてる人です。",0)
+			MES(PARTNER,"あんまり里にいないし、\nよく変装が変わっててどれが\n素顔か分からないんですよね……",0)
+			MES_close(PARTNER)
+
+		//	name("カラス")
+			MES(KARASU,"フフ……",0)
+
+		//　　ラグナ、カラスに向く。
+			rot_chr(RAGNA,30,KARASU)
+		//　　スバル、カラスに向く。
+			rot_chr(PARTNER,30,KARASU)
+			
+			MES(KARASU,"俺はお頭から\n情報収集を任されている者だ。",0)
+			MES(KARASU,"といっても、下界の様子を\n定期的に確認している程度だがな。",0)
+			MES_close(KARASU)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"えっと、今日はやっぱり\nお祖父ちゃんに報告を……？",0)
+			MES_close(PARTNER)
+
+		//	name("カラス")
+			look_chr(KARASU,PARTNER,"Bone_Head")
+			MES(KARASU,"……ああ、先ほど済ませた。",0)
+			MES(KARASU,"俺はすぐに山を降りるが……\nそうだな、お頭はじきに戻るだろう。",0)
+			MES(KARASU,"それまでゆっくりしていけ。",0)
+			MES_close(KARASU)
+			
+			//★カラス【凄腕忍者】
+			F_set_note(-60,1)
+			F_set(FS_08_TalkKarasu)
+			
+		//名前付きキャラ全員に話しかけると露天風呂が開く
+			EV("EV_F4_12_OkRoten")
+		}
+		else
+		{
+		//　　★カラス【本名カラス】
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		//	name("カラス")
+//			MES(KARASU,"俺はすぐに山を降りるが、\nお頭はじきに戻ってくるだろう。",0)
+//			MES(KARASU,"ゆっくりしていけ。",0)
+//			MES_close(KARASU)
+
+			MES(KARASU,"フフ……しかしこの里は\nいつ戻っても変わらんな。",0)
+			MES_close(KARASU)
+
+		//　　カラス振り返る。
+			look_chr(KARASU,PLAYER1,"Bone_Head")
+			MOT(KARASU,63,15)
+		//	name("カラス")
+			MES(KARASU,"お頭なら\nじきに戻ってくるだろう。",0)
+			MES(KARASU,"ゆっくりしていけ。",0)
+			MES_close(KARASU)
+		}
+		look_off(KARASU)
+	}
+	else
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※雑貨屋の横の階段前。
+	if( F3_00_GoMoonCastle )
+	{
+		//会話モーション
+		MOT_SET(KARASU,150,-1,402,402,-1,-1)
+
+	//　　※初回イベント
+		if(!FT_06_TalkKarasu)
+		{
+		//　　※振り向かない
+			MES(KARASU,"（あの城……禍々しい妖気を\n  発しているな……）",0)
+			MES_close(KARASU)
+
+		//　　薬売り、ＰＡエモーションで振り向く。
+			EMO(KARASU,EMO_PA)
+			wait(30)
+			rot_chr(KARASU,30,PLAYER1)
+			MOT(KARASU,150,10)
+			
+			VOICE(754, 0,)			//「何か入用か？」
+			
+			MES(KARASU,"……何か入用か？",0)
+			MES_close(KARASU)
+
+		//　　⇒ショップ処理を挟む。
+			
+			F_set(FT_06_TalkKarasu)
+		}
+		else
+		{
+			if(!F_KARASU)
+			{
+			//	name("⇒話をする")
+				MES(KARASU,"あの城……鐘の音と共に、\n突然現れたそうだな。",0)
+				MES_close(KARASU)
+
+			//　　薬売りに・・・エモーション。
+				EMO(KARASU,EMO_TENTEN)
+				wait(30)
+				
+				MES(KARASU,"しかしあの禍々しい妖気……",0)
+				MES(KARASU,"この場に居ても\n感じ取れるほど強烈だな……",0)
+				MES_close(KARASU)
+
+				F_set(KARASU)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(KARASU,"……出かけるのか？",0)
+				MES(KARASU,"装備を怠るなよ。",0)
+				MES_close(KARASU)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※噴水右の木箱が積んである辺りに立っている。
+	if( F2_14_TalkEnemy )
+	{
+		MES(KARASU,"………………………………",0)
+		MES(KARASU,"近頃は人の出入りが激しいな……",0)
+		MES_close(KARASU)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※ロアルタ村、村長宅前に配置。
+	if( F2_00_GoForest )
+	{
+		if(!F_KARASU)
+		{
+			MES(KARASU,"……人生、\n何があるか分からぬものだ。",0)
+			MES(KARASU,"必要なものは揃えておけ。",0)
+			MES_close(KARASU)
+
+			F_set(KARASU)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(KARASU,"人生とは、途中\n何があるか分からぬもの……",0)
+			MES(KARASU,"必要なものは揃えておけ。",0)
+			MES_close(KARASU)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※フィオナ邸に行く道の手前に立っている。
+	if( F1_15_GoVillage )
+	{
+		if(!F_KARASU)
+		{
+			MES(KARASU,"お前たち……\n近頃ダンジョン探索を\nしているようだな。",0)
+			MES(KARASU,"ならば爆弾を持っていけ。",0)
+			MES(KARASU,"何かと役に立つだろう。",0)
+			MES_close(KARASU)
+
+			F_set(KARASU)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(KARASU,"ダンジョンに入るなら\n爆弾を持っていくといいだろう。",0)
+			MES(KARASU,"常に切らさぬ事だ。\nフフ、常識だろうがな。",0)
+			MES_close(KARASU)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※フィオナ邸に行く道の手前に立っている。
+	if( F1_01_GameStart )
+	{
+
+		rot_chr(KARASU,30,PLAYER1)
+
+	//　　※初回イベント。
+		if(!FT_01_TalkKarasu)
+		{
+		//　　薬売りにＰＡエモーション。
+			EMO(KARASU,EMO_PA)
+			wait(30)
+			
+			MES(KARASU,"ほう……\n見慣れぬ顔だな。",0)
+			MES_close(KARASU)
+
+		//　　薬売りに少し・・・エモーション。
+			EMO(KARASU,EMO_TENTEN)
+			wait(30)
+			
+			VOICE(754, 0,)			//「何か入用か？」
+			
+			MES(KARASU,"……まあいい。\n何か入用か？",0)
+			MES_close(KARASU)
+			
+			//ショップ処理をはさむ
+
+			F_set(FT_01_TalkKarasu)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			MES(KARASU,"何か必要なものがあれば\n声を掛けるといい。",0)
+			MES(KARASU,"フフ……多少の物なら\n融通してやるぞ。",0)
+			MES_close(KARASU)
+		}
+	}
+}
+
+
+//カラスのちょっとしたアドバイス。
+//前半フラグのみ見れる。
+Tuto_Karasu
+{
+	wait(20)
+//	MES(KARASU,"フフ、中々いい買い物をしたな。",0)
+//	MES(KARASU,"そのフードは、体力は回復しないが\n高い経験値を得ることが出来る……",0)
+	MES(KARASU,"フフ、ここで扱っているフードは\n少々変わっていてな……",0)
+	MES(KARASU,"体力は回復しないが\n代わりに高い経験値を\n得ることが出来る。",0)
+	MES_close(KARASU)
+
+	//──────────────────────────────
+	//	name("⇒ラグナ先頭")
+	if(GW_MAN==1)
+	{
+		MES(RAGNA,"へえ、そうなのか。",0)
+		MES(RAGNA,"レベルアップ専門の\nフードってわけだな……",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+	//	name("⇒アルウェン先頭")
+		MES(PARTNER,"ほう、そうなのか。",0)
+		MES(PARTNER,"レベルアップ専門の\nフードという事だのう……",0)
+		MES_close(PARTNER)
+	}
+	//──────────────────────────────
+	MES(KARASU,"うむ、成長を促進するための\n霊薬みたいなものだ。",0)
+	MES(KARASU,"ただし、今も言ったように\n体力を回復するものではない。",0)
+	MES(KARASU,"危険な時に間違って使わぬよう\n気をつけるがいい。",0)
+	MES_close(KARASU)
+
+	F_set(FT_FF_FoodHutoru)
+
+}
+
+
+//わらしべアイテムを持っていれば初回はすぐに見れるようにする。
+//２回目以降は選択肢の会話の中から見れる。
+
+//↓以下、初回分。
+WARASHI_Karasu_FIRST
+{
+
+	//──────────────────────────────
+	//▼　わらしべイベント
+	//	name("13．カラス（アルッテの町）		『アルジェスの地図』⇒最強装備？")
+	//──────────────────────────────
+
+	//まだ初回イベントみていない⇒合体させる。
+	if(!FT_12_TalkKarasu)
+	{
+	//　　ラグナたちにＰＡエモーション。
+		EMO(RAGNA,EMO_TOGEBIKKURI)
+		EMO(PARTNER,EMO_TOGEBIKKURI)
+		wait(30)
+		
+		MES(RAGNA,"ってあんた……\n町に戻ってたのか。",0)
+		MES_close(RAGNA)
+
+	//	name("カラス")
+		MOT(KARASU,150,10)
+		MES(KARASU,"フフ、まあな。",0)
+		MES(KARASU,"お頭からも、お前たちを\nサポートするようにと言われている。",0)
+		MES(KARASU,"未だ里の存在が伏せられている以上\n派手なことはできんが……",0)
+		MES(KARASU,"困った事があれば声を掛けろ。",0)
+		MES_close(KARASU)
+
+	//──────────────────────────────
+	//	name("⇒ラグナ先頭")
+		if(GW_MAN==1)
+		{
+			MES(RAGNA,"ああ、分かった。",0)
+			MES_close(RAGNA)
+		}
+	//	name("⇒アルウェン先頭")
+		else
+		{
+			MES(PARTNER,"うむ、了解だ。",0)
+			MES_close(PARTNER)
+		}
+	//──────────────────────────────
+
+		F_set(FT_12_TalkKarasu)//初回フラグを立てる。
+
+		MES(KARASU,"……ところでお前たち、\n面白いものを持っているな。",0)
+	}
+	//初回見てる。
+	else
+	{
+		MES(KARASU,"……ほう。",0)
+		MES(KARASU,"お前たち、面白いものを\n持っているな。",0)
+	}
+
+	MES(KARASU,"それは\n『アルジェスの地図』だろう。",0)
+	MES_close(KARASU)
+
+	MES(RAGNA,"あ、ああそうだが……",0)
+	MES(RAGNA,"しかしよく分かったな。\n結構マイナーな\n大陸だと思うんだが。",0)
+	MES_close(RAGNA)
+
+	MES(KARASU,"フフ、俺は\n情報収集が担当だからな。",0)
+	MES(KARASU,"変装を変えて、方々の大陸に\n赴くことも珍しくない。",0)
+	MES(KARASU,"……だが、アルジェスには\nまだ行った事は無いな。",0)
+	MES(KARASU,"どうだ、その地図\n俺に譲る気はないか？",0)
+	MES_close(KARASU)
+
+	F_set(KARASU)
+
+	EV("WARASHI_Karasu_LOOP")
+	wait_EV("WARASHI_Karasu_LOOP")
+
+}
+
+
+
+
+
+
+
+
+WARASHI_Karasu_LOOP
+{
+
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【役立ててください】\n【少し考えさせて】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+	//──────────────────────────────
+	//	name("⇒【役立ててください】")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+	//	name("カラス")
+		MES(KARASU,"そうか……\nそれでは代わりに\nこれを持って行くといい。",0)
+		MES_close(KARASU)
+
+	//	name("アイテム入手テキスト")
+	//	MES(KARASU,"『アイテム名』を受け取った。",0)
+		//―――――――――――――――――――――――
+		fade_in(30,10,BLACK)
+		
+		//◆仮として、Fパーツをくれるようになっています。
+		get_item(154,-1,1)
+		get_item(133,1,0)
+		wait(10)
+		wait_key(0)
+		
+		fade_in(0,10,BLACK)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		//―――――――――――――――――――――――
+	
+	
+		MES(KARASU,"アルジェスと言えば……\nこんな噂を知っているか？",0)
+		MES(KARASU,"１年ほど前、かの地で\nよからぬ動きがあったらしくてな。",0)
+		MES(KARASU,"アルジェスに封じられた\n最後の六魔王《無限のヴェスパー》が\n復活したというのだ。",0)
+		MES_close(KARASU)
+
+	//　　ラグナたちに！エモーション。
+		EMO(RAGNA,EMO_BIKKURI)
+		EMO(PARTNER,EMO_BIKKURI)
+		EMO(PET,EMO_BIKKURI)
+		wait(30)
+
+		MES(PARTNER,"む……！？",0)
+		MES_close(PARTNER)
+
+		MES(RAGNA,"ま、魔王が……？",0)
+		MES_close(RAGNA)
+
+		MES(KARASU,"ああ、あくまで噂、\n何の根拠も無い話だがな。",0)
+		MES_close(KARASU)
+
+	//　　カラス、竜巻に振り向く仕草。
+		rot(KARASU,30,110)
+		MES(KARASU,"しかし今の状況を見れば、\n疑う気持ちも薄れると言うものだ……",0)
+		MES_close(KARASU)
+
+	//　　カラス、向きを戻す。
+		rot_chr(KARASU,30,PLAYER1)
+
+		MES(KARASU,"《金色のルシアン》は\nかつての絶大な魔力を\nそのまま継承しているようだ。",0)
+		MES(KARASU,"この事態を打開できるのは\nお前たちだけだろう。",0)
+		MES(KARASU,"……臨む前に\n万全の準備をしておけよ。",0)
+		MES_close(KARASU)
+		
+		F_reset(KARASU)
+		F_set(FV_11_Warasi14_krs)
+	}
+	//──────────────────────────────
+	//	name("⇒【少し考えさせて】")
+	//──────────────────────────────
+	else
+	{
+	//	name("カラス")
+		MES(KARASU,"……そうか。\nまあ考えておいてくれ。",0)
+		MES_close(KARASU)
+	}
+	//★カラス【他の大陸へ】
+	F_set_note(-60,2)
+}
+
+
+
+
+
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+*/

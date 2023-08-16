@@ -1,0 +1,1531 @@
+//──────────────────────────────
+//	name("◆比安斯（宠物店従業員）Bians")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+//会話中之モ～ション
+MOTION_TK_BIANS
+{
+	MOT_SET(BIANS,150,-1,422,422,151,15)
+	MOT_SET(BIANS,151,-1,423,423,150,15)
+	MOT(BIANS,150,15)
+}
+
+SHOP_BIANS
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(BIANS, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,BIANS)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,BIANS)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,BIANS)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,BIANS)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		EV("MOTION_TK_BIANS")
+		rot_chr(BIANS,30,PLAYER1)
+		EV("TK_BIANS")
+		wait_EV("TK_BIANS")
+		MOT_SET(BIANS,151,-1,461,461,152,15)		//本棚掃除
+		MOT_SET(BIANS,152,-1,462,462,151,15)		//本棚掃除
+		MOT(BIANS,151,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		//宠物店初回イベント
+		if(!FV_01_TalkBians)
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		//□□わらしべイベント
+		if(FV_11_Warasi_3_Hln && !FV_11_Warasi_4_Bns)
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		else
+		//□□共通初回
+		if(!FV_11_TalkBians)
+		{
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		//以降は宠物店処理
+		else
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"呵呵，欢迎光临。",0)
+			
+//			MES(BIANS,"欢迎光临。",0)
+			MES(BIANS,"请在宠物店《安东尼》\n选择\n最适合您的宠物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		//宠物店初回イベント
+		if(!FV_01_TalkBians)
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		//□□わらしべイベント
+		if(FV_11_Warasi_3_Hln && !FV_11_Warasi_4_Bns)
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		else
+		//□□共通初回
+		if(!FV_11_TalkBians)
+		{
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		//以降は宠物店処理
+		else
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"呵呵，欢迎光临。",0)
+			
+//			MES(BIANS,"欢迎光临。",0)
+			MES(BIANS,"请在宠物店《安东尼》\n选择\n最适合您的宠物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+		//宠物店初回イベント
+		if(!FV_01_TalkBians)
+		{
+			EV("MOTION_TK_BIANS")
+			rot_chr(BIANS,30,PLAYER1)
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		//初回は宠物店選択肢に入らず直接会話
+		if(!FV_10_TalkBians)
+		{
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		//以降は宠物店処理
+		else
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("MOTION_TK_BIANS")
+
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"呵呵，欢迎光临。",0)
+			
+//			MES(BIANS,"欢迎光临。",0)
+			MES(BIANS,"请在宠物店《安东尼》\n选择\n最适合您的宠物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	if( F4_00_StartSolo )
+	{
+		EV("MOTION_TK_BIANS")
+		rot_chr(BIANS,30,PLAYER1)
+		//宠物店初回イベント
+		if(!FV_01_TalkBians)
+		{
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		{
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"呵呵，欢迎光临。",0)
+
+//			MES(BIANS,"欢迎光临。",0)
+			MES(BIANS,"请在宠物店《安东尼》\n选择\n最适合您的宠物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	if( F3_00_GoMoonCastle )
+	{
+		EV("MOTION_TK_BIANS")
+		rot_chr(BIANS,30,PLAYER1)
+		//初回イベント
+		if(!FV_06_TalkBians)
+		{
+			rot_chr(BIANS,30,PLAYER1)
+			EV("TK_BIANS")
+			wait_EV("TK_BIANS")
+		}
+		else
+		{
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"呵呵，欢迎光临。",0)
+			
+//			MES(BIANS,"欢迎光临。",0)
+			MES(BIANS,"请在宠物店《安东尼》\n选择\n最适合您的宠物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//▼④炎之パ～ツを入手した
+	//▼③金暗之森へ向かうことにした
+	//▼②罗亚鲁塔村へ向かうことにした
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	if( F1_01_GameStart )
+	{
+		EV("MOTION_TK_BIANS")
+		
+		rot_chr(BIANS,30,PLAYER1)
+		//宠物店初回イベント
+		if(!FV_01_TalkBians)
+		{
+			EV("EV_FV_01_PetBegin")
+			wait_EV("EV_FV_01_PetBegin")
+		}
+		else
+		{
+			VOICE(738,0)			//「フフ、いらっしゃいませ」
+			MES(BIANS,"呵呵，欢迎光临。",0)
+			
+//			MES(BIANS,"欢迎光临。",0)
+			MES(BIANS,"请在宠物店《安东尼》\n选择\n最适合您的宠物。",0)
+			MES_close(BIANS)
+			
+			EV("SHOP_BIANS_LOOP")
+			wait_EV("SHOP_BIANS_LOOP")
+		}
+		MOT(BIANS,53,15)
+	}
+
+	TK_end()
+}
+
+SHOP_BIANS_LOOP
+{
+	workL(WK_CANCEL,SET,4)//【取消】
+	MES_pos(PLAYER1,"??W9【对话】\n【选择宠物】\n【听说明】\n【取消】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+	
+	//──────────────────────────────
+	//	name("□对话")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		//会話処理
+		EV("TK_BIANS")
+		wait_EV("TK_BIANS")
+		loop
+	}
+	//──────────────────────────────
+	//	name("□ペットを選ぶ")
+	//──────────────────────────────
+	else
+	if(WK_YESNO==2)
+	{
+	//	name("比安斯")
+		MES(BIANS,"想要哪个宠物呢？",0)
+		MES_close(BIANS)
+		
+		shop_open(3)//ペット
+		wait_W(WK_YESNO)
+
+		if(IT016>0 && IT017>0 && IT018>0 )
+			F_set(FV_FF_PetSoldout)
+
+		if(!F0_14_TutoPet)
+		{
+			if(IT017>0 || IT016>0 || IT018>0)
+			{
+				//●チュ～トリアル：ペット
+				Load_BMP(20,"sys\\tuto14.itm","0")
+				menuBMP(1,	20,	0,0,288,384)
+			//　　※初回ペットお買い上げ直後に表示。
+			//	name("比安斯")
+				MES(BIANS,"呵呵，多谢\n您的购买。",0)
+				MES(BIANS,"那么，我就为您\n稍微说明一下\n宠物的饲养方法吧。",0)
+				MES(BIANS,"首先，\n要在状态栏中\n选中想要的宠物。",0)
+				MES(BIANS,"请别忘了，一定要\n选中您想带着走的宠物。",0)
+				MES(BIANS,"选中了宠物的话，\n在洞窟之类的地方\n它可以成为好伴侣哦。",0)
+				MES(BIANS,"不仅是攻击和拾取道具……\n还能发挥各自的特殊能力，\n为您提供助力。",0)
+				MES(BIANS,"呵呵，请一定要\n用心地养育它们哦。",0)
+				MES_close(BIANS)
+				wait_MES(BIANS)
+
+				menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+				menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+				SE(043,PLAYER1)
+				wait(40)
+				wait_key(0)
+				menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+				wait(30)
+				F_set(F0_14_TutoPet)
+			}
+		}
+
+		loop
+	}
+	//──────────────────────────────
+	//	name("□説明を聞く")
+	//──────────────────────────────
+	else
+	if(WK_YESNO==3)
+	{
+	//	name("比安斯")
+		MES(BIANS,"在宠物店《安东尼》，\n您可以买到\n喜欢的宠物。",0)
+		MES(BIANS,"宠物们\n不仅能倍伴您的冒险之旅，\n也能为您拾取道具和提供支援。",0)
+		MES(BIANS,"它们的能力\n可以为您提供很大的帮助。",0)
+		MES(BIANS,"并且，\n宠物们还可以通过\n宠物食品来进行成长。",0)
+		MES(BIANS,"那么，就在《安东尼》中\n寻找最适合您的宠物吧。",0)
+		MES_close(BIANS)
+		
+	//　　※冒頭選択肢に戻る。
+		loop
+	}
+	//──────────────────────────────
+	//	name("□やめる")
+	//──────────────────────────────
+	else
+	{
+		//	お買い上げペット数を計算。
+		workL(0,SET,0)
+		if(IT016>0)
+		{
+			workL(0,ADD,1)
+		}
+		if(IT017>0)
+		{
+			workL(0,ADD,1)
+		}
+		if(IT019>0)
+		{
+			workL(0,ADD,1)
+		}
+
+		//たく買ったよ！
+		if(WK000>2)
+		{
+			//	name("比安斯")
+			MES(BIANS,"哎呀呀，\n谢谢您的购买。",0)
+//			MES(BIANS,"恭候您再次光临。",0)
+			
+			VOICE(741,0)		//「フフ、またどうぞ」						
+			MES(BIANS,"呵呵，欢迎再来。",0)			
+			MES_close(BIANS)
+		}
+		else
+		//そこそこ買った！
+		if(WK000>1)
+		{
+//			MES(BIANS,"谢谢您的购买。\n恭候您再次光临。",0)
+
+			MES(BIANS,"谢谢您的购买。",0)
+			VOICE(741,0)		//「フフ、またどうぞ」						
+			MES(BIANS,"呵呵，欢迎再来。",0)
+			MES_close(BIANS)
+		}
+	//	name("□◆何かを買った场合")
+		else
+		{
+			if(WK_ITEMBOX1>0)
+			{
+//				MES(BIANS,"谢谢您的购买。\n恭候您再次光临。",0)
+			
+				MES(BIANS,"谢谢您的购买。",0)
+				VOICE(741,0)		//「フフ、またどうぞ」					
+				MES(BIANS,"呵呵，欢迎再来。",0)
+				MES_close(BIANS)
+			}
+		//	name("□◆何も買わなかった场合")
+			else
+			{	
+				VOICE(741,0)		//「フフ、またどうぞ」	
+				MES(BIANS,"呵呵，欢迎再来。",0)
+				
+//				MES(BIANS,"恭候您再次光临。",0)
+				
+				MES_close(BIANS)
+			}
+		}
+//		VOICE(741,0)		//「フフ、またどうぞ」	
+		
+	}
+
+}
+
+//──────────────────────────────
+//▼宠物店初回イベント
+//──────────────────────────────
+//　　※フラグ⑥⑩□では発生しない。
+EV_FV_01_PetBegin
+{
+//	name("比安斯")
+	MES(BIANS,"欢迎光临。\n欢迎来到宠物店《安东尼》。",0)
+	MES(BIANS,"欢迎啊，\n您是第一位客人呢。",0)
+	MES_close(BIANS)
+
+	//──────────────────────────────
+		if(GW_MAN==0)
+		{
+	//	name("□艾雯先頭")
+			//～⑦、□～
+			if(!F4_00_StartSolo || F6_00_GoToMeru)
+			{
+				MES(PARTNER,"唔，是这样啊。",0)
+				MES_close(PARTNER)
+			}
+			else
+			//⑩
+			if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			{
+				MES(PARTNER,"唔，是这样啊。",0)
+				MES_close(PARTNER)
+			}
+			//奥蒂莎·昴之ときはメッセ～ジが無い之で拉古那を読む
+			else
+			{
+		//	name("□拉古那先頭")
+				MES(RAGNA,"啊，是这样吗。",0)
+				MES_close(RAGNA)
+			}
+		}
+		else
+		{
+	//	name("□拉古那先頭")
+			MES(RAGNA,"啊，是这样吗。",0)
+			MES_close(RAGNA)
+		}
+	//──────────────────────────────
+
+
+	MES(BIANS,"我是本店的店员，\n我叫比安斯。",0)
+	MES(BIANS,"关于宠物，\n如果有什么不明白的地方，\n请务必来问我。",0)
+	MES(BIANS,"无论是怎样的问题，\n我都会诚心诚意地\n为您解答。",0)
+	MES_close(BIANS)
+
+	//──────────────────────────────
+		if(GW_MAN==0)
+		{
+	//	name("□艾雯先頭")
+			//～⑦、□～
+			if(!F4_00_StartSolo || F6_00_GoToMeru)
+			{
+				MES(PARTNER,"唔，是个相当有礼貌的家伙呢……",0)
+				MES_close(PARTNER)
+			}
+			else
+			//⑩
+			if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			{
+				MES(PARTNER,"唔，是个相当有礼貌的家伙呢……",0)
+				MES_close(PARTNER)
+			}
+			//奥蒂莎·昴之ときはメッセ～ジが無い之で拉古那を読む
+			else
+			{
+		//	name("□拉古那先頭")
+				MES(RAGNA,"哦，啊。\n谢谢了……",0)
+				MES_close(RAGNA)
+			}
+		}
+		else
+		{
+	//	name("□拉古那先頭")
+			MES(RAGNA,"哦，啊。\n谢谢了……",0)
+			MES_close(RAGNA)
+		}
+	//──────────────────────────────
+
+	MES(BIANS,"呵呵……\n那么就请您慢慢挑选吧。",0)
+	MES_close(BIANS)
+
+	F_set(FV_01_TalkBians)
+}
+
+
+
+//会話処理本体
+TK_BIANS
+{
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※宠物店前を掃除している。（ホウキ持ち）
+	if( F6_05_EndSixth )
+	{
+		rot_chr(BIANS,30,PLAYER1)
+		//──────────────────────────────
+		//　　※フラグ□□初回イベントを見ていない场合。
+		//──────────────────────────────
+		if(!FV_11_TalkBians)
+		{
+			if(!F_BIANS)
+			{
+			//	name("比安斯")
+				MES(BIANS,"欢迎光临。",0)
+				MES(BIANS,"……不过非常抱歉。",0)
+				MES(BIANS,"今天是宠物店《安东尼》的\n定期休息日。",0)
+				MES(BIANS,"如果可以的话，\n请您下次再来。",0)
+				MES_close(BIANS)
+				
+				F_set(BIANS)
+			}
+			//　　★繰り返し
+			else
+			{
+			//	name("比安斯")
+				MES(BIANS,"今天是宠物店《安东尼》的\n定期休息日。",0)
+				MES(BIANS,"如果可以的话，\n请您下次再来。",0)
+				MES_close(BIANS)
+			}
+		}
+		//──────────────────────────────
+		//　　※フラグ□□初回イベントを見ている场合。
+		//──────────────────────────────
+		else
+		{
+			if(!F_BIANS)
+			{
+			//	name("比安斯")
+				MES(BIANS,"欢迎光临。",0)
+				MES(BIANS,"……不过非常抱歉。\n今天是宠物店《安东尼》的\n定期休息日。",0)
+				MES(BIANS,"啊，顺带一提。",0)
+				MES(BIANS,"以前和你们提起过的\n总店夺取计划相当顺利哦。",0)
+				MES(BIANS,"等我成为总店店长的时候，\n我打算把招牌换成\n『神秘的宠物店·欢乐～比安斯』。",0)
+				MES(BIANS,"如果可以的话，\n请您下次再来。",0)
+				MES_close(BIANS)
+
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+			//	EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"（果然是认真的\n  这人真是腹黑啊……）",0)
+				MES_close(RAGNA)
+
+				F_set(FV_13_TalkBians)
+				F_set(BIANS)
+			}
+		//　　★繰り返し
+			else
+			{
+			//	name("比安斯")
+				MES(BIANS,"这块招牌不久就会变成\n『神秘的宠物店·欢乐～比安斯』了。",0)
+				MES(BIANS,"如果可以的话，\n请您下次再来。",0)
+				MES_close(BIANS)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□□　わらしべイベント
+	//	name("４·比安斯（罗亚鲁塔村）		『时髦笔记本』□『謎之ペットフ～ド』")146
+	//◆初回イベント/2回目以降分割予定
+	//──────────────────────────────
+//　　※▼□□共通初回イベントよりも優先される。
+	if(F5_00_HearLunar && FV_11_Warasi_3_Hln && !FV_11_Warasi_4_Bns)
+	{
+
+		rot_chr(BIANS,30,PLAYER1)
+
+		if(!F_BIANS)
+		{
+		//	name("比安斯")
+			MES(BIANS,"哦呀……？",0)
+			MES(BIANS,"客人，您带着\n不错的东西呢。",0)
+			MES(BIANS,"那个『时髦笔记本』，\n能不能让给我呢？",0)
+			MES_close(BIANS)
+
+			//──────────────────────────────
+			if(GW_MAN==0 && F6_00_GoToMeru)
+			{
+			//	name("□艾雯先頭")
+				MES(PARTNER,"唔，你有什么地方\n要用到这个本子吗？",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("□拉古那先頭")
+				MES(RAGNA,"哦，啊啊……\n我能姑且听一下理由吗？",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+			
+			//──────────────────────────────
+			if(FV_11_TalkBians)
+			{
+			//	name("□▼□□共通初回イベントを見ている场合。")
+			//	name("比安斯")
+				MES(BIANS,"当然。我以前\n也许就告诉过你们……",0)
+				MES(BIANS,"我正在进行一项\n夺取总店的计划。",0)
+				MES(BIANS,"呵呵，我觉得也是时候\n开设一本暗帐作募集资金之用了。",0)
+				MES_close(BIANS)
+
+			//　　拉古那たちに！エモ～ション。
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PET,EMO_BIKKURI)
+				//艾雯が居る
+				if(F6_00_GoToMeru)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				else
+				//奥蒂莎が居る
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				wait(30)
+				
+				MES(PET,"暗，暗帐……",0)
+				MES_close(PET)
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+					if(F5_08_JoinOdessa && !F5_13_KillDygald)
+					{
+					//	name("□拉古那先頭で、奥蒂莎がいる")
+						MES(PARTNER,"你，你也真是阴毒……",0)
+						MES_close(PARTNER)
+					}
+					else
+					if(F6_00_GoToMeru)
+					{
+					//	name("□拉古那先頭で、艾雯がいる场合")
+						MES(PARTNER,"你，你也真是\n相当的阴毒啊……",0)
+						MES_close(PARTNER)
+					}
+				}
+				else
+				{
+				//	name("□それ以外")
+					MES(RAGNA,"终，终于走到这一步了……",0)
+					MES_close(RAGNA)
+				}
+				//──────────────────────────────
+			}
+			else
+			{
+			//	name("□それ以外")
+			//	name("比安斯")
+				MES(BIANS,"是啊，其实──\n我瞄准的是总店店长的宝座。",0)
+				MES(BIANS,"这里不过是一家分店，\n能不能顺利夺取总店呢。",0)
+			 	MES(BIANS,"呵呵，我想是到了开设暗帐\n来募集资金的时候了。",0)
+				MES_close(BIANS)
+
+			//　　拉古那たちに！エモ～ション。
+				EMO(RAGNA,EMO_BIKKURI)
+				EMO(PET,EMO_BIKKURI)
+				//艾雯が居る
+				if(F6_00_GoToMeru)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				else
+				//奥蒂莎が居る
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+					EMO(PARTNER,EMO_BIKKURI)
+				}
+				wait(30)
+
+			//	name("一同")
+				chr_rename(RAGNA,"一同")
+				MES(RAGNA,"（真，真的好阴毒……）",0)
+				MES_close(RAGNA)
+				wait_MES(RAGNA)
+				chr_rename(RAGNA,"拉古那")
+			}
+		//──────────────────────────────
+		//	name("比安斯")
+			MES(BIANS,"……如何？\n能不能为我的野心\n提供协助呢？",0)
+			MES_close(BIANS)
+			F_set(BIANS)
+		}
+		else
+		{
+			MES(BIANS,"呵呵呵……客人。",0)
+			MES(BIANS,"我有一个请求，这个『时髦笔记本』\n能不能让给我呢？",0)
+			MES_close(BIANS)
+		}
+
+	//	name("選択テキスト")
+		workL(WK_CANCEL,SET,2)//【絶対渡さない】
+		MES_pos(PLAYER1,"??W9【给他笔记本】\n【坚决不给】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+		wait_MES(PLAYER1)//閉じきるまで待つ
+
+	//──────────────────────────────
+		//──────────────────────────────
+		//	name("□【ノ～トを渡す】")
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+		//	name("比安斯")
+			MES(BIANS,"呵呵，那么多谢了……",0)
+			MES(BIANS,"作为交换，请收下它。",0)
+			MES(BIANS,"在采购的货物中\n混进了这个。",0)
+			MES_close(BIANS)
+
+		//	name("アイテム入手テキスト")
+		//	MES(BIANS,"得到了『谜之宠物食品』。",0)
+			//―――――――――――――――――――――――
+			fade_in(30,10,BLACK)
+
+			get_item(145,-1,1)
+			get_item(146,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//―――――――――――――――――――――――
+
+			//──────────────────────────────
+			if(FV_11_TalkBians)
+			{
+			//	name("□▼□□共通初回イベントを見ている场合。")
+			//	name("比安斯")
+				MES(BIANS,"那么，这样一来\n募集资金的准备也完成了。",0)
+				MES(BIANS,"终于，这个店\n就要完全成为我的东西了……\n哦呵呵呵呵……",0)
+				MES_close(BIANS)
+			}
+			else
+			{
+			//	name("□見ていない场合。")
+				//──────────────────────────────
+				if(GW_MAN==0 && F6_00_GoToMeru)
+				{
+				//	name("□艾雯先頭")
+					MES(PARTNER,"呃，嗯。\n我收下了……",0)
+					MES(PARTNER,"我说你，\n那个夺取总店的计划……",0)
+					MES_close(PARTNER)
+				}
+				else
+				{
+				//	name("□拉古那先頭")
+					MES(RAGNA,"谢，谢了……",0)
+					MES(RAGNA,"我说你啊，\n那个夺取总店……",0)
+					MES_close(RAGNA)
+				}
+				//──────────────────────────────
+
+			//──────────────────────────────
+			//	name("比安斯")
+				MES(BIANS,"呵呵呵，不必担心。\n我的目标只是总店店长的位置……",0)
+				MES(BIANS,"对于客人们，会像从前一样\n诚心诚意地对待你们的。\n（微笑）",0)
+				MES_close(BIANS)
+			}
+			//──────────────────────────────
+			
+		//　　拉古那たちに青ざめエモ～ション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PET,EMO_AOZAME)
+			//艾雯が居る
+			if(F6_00_GoToMeru)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			else
+			//奥蒂莎が居る
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			wait(30)
+
+			MES(PET,"（好可怕……！）",0)
+			MES_close(PET)
+
+			//──────────────────────────────
+			if(GW_MAN==1)
+			{
+				if(F5_08_JoinOdessa && !F5_13_KillDygald)
+				{
+				//	name("□拉古那先頭で、奥蒂莎がいる")
+					MES(PARTNER,"（真是令人毛骨悚然的笑容……）",0)
+					MES_close(PARTNER)
+				}
+				else
+				if(F6_00_GoToMeru)
+				{
+				//	name("□拉古那先頭で、艾雯がいる场合")
+					MES(PARTNER,"（笑得真可怕……）",0)
+					MES_close(PARTNER)
+				}
+			}
+			else
+			{
+			//	name("□それ以外")
+				MES(RAGNA,"（这，这人的笑容真可怕……）",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+
+			//　　※こ之イベントが起こると、▼□□共通初回イベントは発生しなくなる。
+			F_set(FV_11_TalkBians)
+			
+			//★比安斯【裏帳簿】
+			F_set_note(BIANS,2)
+			F_set(FV_11_Warasi_4_Bns)
+			F_reset(BIANS)
+		}
+		//──────────────────────────────
+		//	name("□【絶対渡さない】")
+		//──────────────────────────────
+		else
+		{
+		//	name("比安斯")
+			MES(BIANS,"哎呀，是这样吗。\n那真遗憾……",0)
+			MES(BIANS,"如果改变主意的话\n就请让给我吧。\n我会静候消息的。",0)
+			MES_close(BIANS)
+		}
+
+	//──────────────────────────────
+	//　　※こ之イベントが起こると、▼□□共通初回イベントは発生しなくなる。
+	}
+	else
+	//──────────────────────────────
+	//▼□□、共通初回イベント
+	//──────────────────────────────
+	//　　※宠物店カウンタ～裏之、窓から外を見ている。
+	//　　※初回イベント
+	//	name("比安斯")
+	if(F5_00_HearLunar && !FV_11_TalkBians)
+	{
+		MES(BIANS,"这个月的销售额也很正常……",0)
+		MES(BIANS,"呵呵，那个计划也很顺利。",0)
+		MES(BIANS,"之后只要攒下资金，\n这个店就完全属于我了……",0)
+		MES_close(BIANS)
+
+	//　　拉古那たちに青ざめエモ～ション。
+		EMO(RAGNA,EMO_AOZAME)
+		EMO(PET,EMO_AOZAME)
+		//艾雯が居る
+		if(F6_00_GoToMeru)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		else
+		//奥蒂莎が居る
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		wait(30)
+		
+		rot_chr(PET,30,BIANS)
+		MES(PET,"你，你这家伙……",0)
+		MES_close(PET)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"刚才有没有说漏了什么……？",0)
+		MES_close(RAGNA)
+
+	//　　比安斯にＰＡエモ～ション、振り返る。
+		EMO(BIANS,EMO_PA)
+		wait(30)
+		rot_chr(BIANS,30,PLAYER1)
+
+	//	name("比安斯")
+		EV("MOTION_TK_BIANS")
+		MES(BIANS,"哎呀这还真是抱歉……\n被听到了吗？",0)
+		MES(BIANS,"呵呵，请不要在意。\n关于总店夺取计划，\n我也只是稍微有点念头而已。",0)
+		MES(BIANS,"对于客人们，还是会像从前一样\n诚心诚意地为你们服务的。",0)
+		MES(BIANS,"呵呵呵，请不要担心。",0)
+		MES_close(BIANS)
+
+	//　　拉古那たちに青ざめエモ～ション。
+		EMO(RAGNA,EMO_AOZAME)
+		EMO(PET,EMO_AOZAME)
+		//艾雯が居る
+		if(F6_00_GoToMeru)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		else
+		//奥蒂莎が居る
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			EMO(PARTNER,EMO_AOZAME)
+		}
+		wait(30)
+
+		//──────────────────────────────
+		//	name("□艾雯がいる场合")
+		if(F6_00_GoToMeru)
+		{
+			MES(PARTNER,"在，在这种状况下\n你要让我怎么想……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"话说你居然就这么\n口无遮拦地说出来了……",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+			//	name("□奥蒂莎がいる")
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				MES(PARTNER,"而且还是这么干脆地\n说得这么清楚……",0)
+				MES_close(PARTNER)
+			}
+			//	name("□奥蒂莎が居ない")
+			else
+			{
+				MES(RAGNA,"居，居然这么\n口无遮拦地说出来了……",0)
+				MES_close(RAGNA)
+			}
+		}
+		//──────────────────────────────
+
+		MES(PET,"真，真是腹黑啊\n你这家伙……",0)
+		MES_close(PET)
+		
+		F_set(FV_11_TalkBians)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※□□、共通初回イベントが優先される。
+	//　　　マップＩＮＩＴ之配置は通常カウンタ～位置とする。
+	if( F6_00_GoToMeru )
+	{
+		if(!F_BIANS)
+		{
+		//	name("比安斯")
+			MES(BIANS,"……请不必担心。\n本店平时都有万全的准备。",0)
+			MES(BIANS,"地震，雷击，火灾，洪水……",0)
+			MES(BIANS,"这一切都已经上了保险。",0)
+			MES_close(BIANS)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+			//　　拉古那に冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+
+				MES(RAGNA,"这是保险的问题吗……？",0)
+				MES_close(RAGNA)
+
+			}
+			else
+		//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"（保险……？\n  唔，好像是相当方便的东西啊……）",0)
+				MES_close(PARTNER)
+
+			//　　拉古那に冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+
+				MES(RAGNA,"不，我觉得问题不在这里。",0)
+				MES_close(RAGNA)
+			}
+		//──────────────────────────────
+
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("比安斯")
+			MES(BIANS,"本店平时都有万全的准备。",0)
+			MES(BIANS,"我们进行了各种灾害的保险。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※□□、共通初回イベントが優先される。
+	//　　　マップＩＮＩＴ之配置は通常カウンタ～位置とする。
+	if( F5_00_HearLunar )
+	{
+		if(!F_BIANS)
+		{
+		//	name("比安斯")
+			MES(BIANS,"呵呵，请不必担心。",0)
+			MES(BIANS,"我只是稍微考虑了一下\n夺取总店的计划而已……",0)
+			MES(BIANS,"对于客人，我还是会一如既往\n诚心诚意地为您服务的。",0)
+			MES(BIANS,"请常来光顾，\n为本店的销售额做些贡献吧。",0)
+			MES_close(BIANS)
+
+		//　　拉古那たちに青ざめエモ～ション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PET,EMO_AOZAME)
+			//奥蒂莎が居る
+			if(F5_08_JoinOdessa && !F5_13_KillDygald)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			wait(30)
+		
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("比安斯")
+			MES(BIANS,"即使总店夺取计划成功了，\n也不会对客人们\n造成任何困扰的。",0)
+			MES(BIANS,"呵呵，请不必担心。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//　　※並んでいるペットケ～ス前。
+	if( F4_09_GoShrineMia )
+	{
+	//　　※初回イベント
+		if(!FV_10_TalkBians)
+		{
+		//　　比安斯、ＰＡエモ～ションで振り返る。
+			EMO(BIANS,EMO_PA)
+			wait(30)
+			rot_chr(BIANS,30,PLAYER1)
+
+		//	name("比安斯")
+			MES(BIANS,"哦呀……？",0)
+			EV("MOTION_TK_BIANS")
+			MES(BIANS,"欢迎光临。\n欢迎来到宠物店《安东尼》。",0)
+			MES(BIANS,"您来得真是早呢。",0)
+			MES(BIANS,"但是不必担心。\n马上就到本店的开店时间了，\n所以现在已经可以购买商品了。",0)
+			MES_close(BIANS)
+
+		//　　□ショップ選択肢に飛ぶ。
+		//──────────────────────────────
+			
+			F_set(FV_10_TalkBians)
+		}
+		else
+		{
+		//　　※以下通常一般メッセ～ジ。
+		//	name("比安斯")
+			MES(BIANS,"非常抱歉。\n现在是喂食时间。",0)
+			MES(BIANS,"如果有需要的话\n请到柜台那里去。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※宠物店カウンタ～。
+	if( F4_00_StartSolo )
+	{
+		if(!F_BIANS)
+		{
+		//	name("比安斯")
+//			MES(BIANS,"今天早上，村子里\n还真是安静呢。",0)
+//			MES(BIANS,"平时总是从早晨开始\n就相当喧闹的呢。",0)
+//			MES(BIANS,"……不过，就如您所见，\n本店还是和以往一样热闹。",0)
+//			MES(BIANS,"什么也没有改变呢。",0)
+//			MES_close(BIANS)
+
+			MES(BIANS,"今天早上，村子里\n还真是安静呢。",0)
+			MES(BIANS,"平时总是从早晨开始\n就会发出\n干农活的声响呢。",0)
+			MES(BIANS,"……不过，就如您所见，\n本店还是和以往一样热闹。",0)
+			MES(BIANS,"什么也没有改变呢。",0)
+			MES_close(BIANS)
+
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("比安斯")
+			MES(BIANS,"今天早晨出去打水的时候，\n周围也是一个人都没有。",0)
+			MES(BIANS,"如您所见，罗亚鲁塔村是个农村……\n早晨应该是相当忙碌的。",0)
+//			MES(BIANS,"本店虽然和以往一相热闹，\n但村子里应该是发生了什么事吧。",0)
+			MES(BIANS,"那么，到底是怎么了呢。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※宠物店カウンタ～。
+	if( F3_00_GoMoonCastle )
+	{
+	//　　※初回イベント。
+		if(!FV_06_TalkBians)
+		{
+		//	name("比安斯")
+			MES(BIANS,"欢迎光临。",0)
+			MES(BIANS,"请在宠物店《安东尼》\n选择\n最适合您的宠物。",0)
+			MES_close(BIANS)
+
+		//	name("□切斯克初回を見ていない")
+			if(!FV_06_TalkWade)
+			{
+				MES(RAGNA,"喂喂，话说……\n在这种状况下……",0)
+				MES(RAGNA,"你没事吧？",0)
+				MES_close(RAGNA)
+				F_set(BIANS)
+			}
+		//	name("□切斯克初回を見ている")
+			else
+			{
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"看，看来\n你这里好像没什么要紧的嘛。",0)
+				MES_close(RAGNA)
+			}
+		
+		//	name("比安斯")
+			MES(BIANS,"不要紧……？",0)
+			MES(BIANS,"那是当然，因为本店也经营\n夜行动物啊。",0)
+			MES(BIANS,"请看看\n这边的专柜吧。",0)
+			MES_close(BIANS)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"不，我不是\n这个意思啊……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯……",0)
+			MES_close(PARTNER)
+
+		//　　艾雯きょろきょろする。
+			look(PARTNER,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(PARTNER,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(PARTNER,"Bone_Head",0,		0,2,0,			0,0,0)
+		//──────────────────────────────
+			if(!FV_06_TalkWade)
+			{
+			//	name("□切斯克初回を見ていない")
+				MES(PARTNER,"这座建筑里\n感觉不到邪气。",0)
+				MES(PARTNER,"似乎是\n避过了叔叔的耳目……",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("□切斯克初回を見ている")
+				MES(PARTNER,"果然，这座建筑之中\n感觉不到邪气。",0)
+				MES(PARTNER,"似乎是因为刚才的少年，\n而避过了\n叔叔的耳目……",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			MES(RAGNA,"是，是这样吗……",0)
+			MES_close(RAGNA)
+
+		//	name("比安斯")
+			MES(BIANS,"──而且，\n本店也经营\n一部分魔兽哦。",0)
+			MES(BIANS,"呵呵，那么\n就请慢慢挑选吧。",0)
+			MES_close(BIANS)
+
+			F_set(FV_06_TalkBians)
+
+		//　　□ショップ選択肢に飛ぶ。
+		//──────────────────────────────
+		}
+	//　　※以下通常一般メッセ～ジ。
+		else
+		{
+			if(!F_BIANS)
+			{
+			//	name("比安斯")
+				MES(BIANS,"您也许知道\n在宠物中\n也有许多是夜行性的哦。",0)
+				MES(BIANS,"比如说蟒蛇……",0)
+				MES(BIANS,"虽然体型稍微有些大，\n不过相貌还是相当有魅力的哦。",0)
+				MES(BIANS,"您觉得如何呢？",0)
+				MES_close(BIANS)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"还，还是算了……",0)
+					MES_close(RAGNA)
+
+					//	name("□切斯克初回を見ている场合、挿入")
+					if(FV_06_TalkWade)
+					{
+						MES(RAGNA,"（话说，他没注意到\n  那个少年的存在吗……？）",0)
+						MES_close(RAGNA)
+					}
+				}
+				else
+			//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"现，现在还是算了……",0)
+					MES_close(PARTNER)
+
+				//	name("□切斯克初回を見ている场合、挿入")
+					if(FV_06_TalkWade)
+					{
+						MES(PARTNER,"（唔，看来其他人\n  果然是看不到这个少年的……）",0)
+						MES_close(PARTNER)
+					}
+				}
+			//──────────────────────────────
+			
+				F_set(BIANS)
+			}
+		//　　★繰り返し
+			else
+			{
+			//	name("比安斯")
+				MES(BIANS,"呵呵，如果想了解本店，\n就请交给我吧。",0)
+				MES(BIANS,"本店也有一些\n用于交易的夜行性动物。",0)
+				MES_close(BIANS)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※宠物店カウンタ～。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_BIANS)
+		{
+			//	name("□ペットを買った事が啊る场合")
+			if( IT016==1 || IT017==1 || IT018==1 || IT019==1 || IT020==1 || IT021==1 )
+			{
+			//	name("比安斯")
+				MES(BIANS,"看来，您似乎\n很喜欢和宠物玩耍呢。",0)
+				MES(BIANS,"宠物们是通过\n支援主人的工作而成长的。",0)
+				MES(BIANS,"虽说也可以用宠物食品来培育，\n不过带着它们一起走始终是最好的。",0)
+				MES(BIANS,"不是有句话叫日久生情吗。\n请用心地养育它们吧。",0)
+				MES_close(BIANS)
+
+			}
+		//	name("□ペットを買った事がない场合")
+			else
+			{
+			//	name("比安斯")
+				MES(BIANS,"宠物们是通过\n支援主人的工作而成长的。",0)
+				MES(BIANS,"而随着成长，\n它们各自的特殊能力也会有所增强。",0)
+				MES(BIANS,"虽说也可以用宠物食品来培育，\n不过带着它们一起走始终是最好的。",0)
+				MES_close(BIANS)
+			}
+			
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("比安斯")
+			MES(BIANS,"要培养宠物，\n最好的办法就是带着它们一起走。",0)
+			MES(BIANS,"对想要培养的宠物，\n就多带着它们一起走吧。",0)
+			MES(BIANS,"因为对宠物来说，\n这也是很好的散步啊。",0)
+			MES_close(BIANS)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※宠物店カウンタ～
+	if( F2_00_GoForest )
+	{
+		if(!F_BIANS)
+		{
+		//	name("比安斯")
+			MES(BIANS,"看起来，过几天就是\n村里举行收获祭典的时候了。",0)
+ 			MES(BIANS,"我也会\n去帮忙哦。",0)
+			MES(BIANS,"呵呵……\n还是多少帮点忙比较好。",0)
+			MES(BIANS,"构筑与居民之间的信任，\n这也是做买卖啊。",0)
+			MES_close(BIANS)
+
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（这个人，不觉得有点阴险吗……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"（这家伙……\n  到底在想些什么……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+			//★比安斯【商売之コツ】
+			F_set_note(BIANS,1)
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("比安斯")
+			MES(BIANS,"全村的收获祭典……\n哎呀呀，我也去\n帮点忙吧。",0)
+			MES(BIANS,"呵呵，这也是没办法的事。",0)
+			MES(BIANS,"这也是买卖交易，\n还是参加吧。",0)
+			MES_close(BIANS)
+
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（业务式微笑真可怕……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"（这就是所谓的业务式微笑吗……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※宠物店カウンタ～
+	if( F1_15_GoVillage )
+	{
+		if(!F_BIANS)
+		{
+		//	name("比安斯")
+			MES(BIANS,"本店是\n宠物连锁店《安东尼》\n在伊尔巴特的分店。",0)
+			MES(BIANS,"您也可以在这里\n向总店订购\n本地所没有的宠物哦。",0)
+			MES(BIANS,"本店也经营稀有物种，\n让我为您大略介绍一下吧。",0)
+			MES_close(BIANS)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"嘿，是这样吗。",0)
+				MES(RAGNA,"（不过，现在公主的敌人\n  封锁了伊尔巴特。）",0)
+				MES(RAGNA,"（订购的宠物\n  也没办法送过来吧……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"唔，稀有物种\n似乎挺有趣……",0)
+				MES(PARTNER,"（但是现在有人\n  封锁了伊尔巴特。）",0)
+				MES(PARTNER,"（订购的宠物是没有办法送过来的吧。）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("比安斯")
+			MES(BIANS,"在本店，也可以\n向总店订购稀有物种。",0)
+			MES(BIANS,"不过，因为销售额\n将会流向总店，……",0)
+			MES(BIANS,"所以本店并不推荐。",0)
+			MES_close(BIANS)
+			
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES_pos(RAGNA,"（是，是这样吗……）",0,0,0,0,0)
+			MES_pos(PARTNER,"（是，是这样吗……）",0,0,0,0,0)
+			wait_key(0)
+			MES_close(RAGNA)
+			MES_close(PARTNER)
+			//★比安斯【支店之店长】
+			F_set_note(BIANS,0)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※宠物店カウンタ～
+	if( F1_01_GameStart )
+	{
+		if(!F_BIANS)
+		{
+		//	name("比安斯")
+			MES(BIANS,"购买了宠物之后，\n在主选单的状态栏上\n将增加宠物图标。",0)
+			MES(BIANS,"请选择\n想要让它跟随你的宠物。",0)
+			MES(BIANS,"并且，它们\n也都有着各自的性格。",0)
+			MES(BIANS,"除了拾取道具以及参加战斗，\n也能在各自所擅长的领域\n为您提供帮助。",0)
+			MES_close(BIANS)
+			
+			F_set(BIANS)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("比安斯")
+			MES(BIANS,"宠物们能在各种各样的领域\n为您的冒险提供帮助。",0)
+			MES(BIANS,"请在本店\n选择您所喜欢的宠物。",0)
+			MES_close(BIANS)
+		}
+	}
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,340 @@
+//====================================================================
+//ステージトラップスクリプト
+//[14051][大鉄塔－夢幻]
+//====================================================================
+
+#ScriptTable
+
+#WARP_CH	81
+#DOOR_CH	82
+#EXIT_CH	70
+#BOSS_CH	75
+#TAKARA_CH	76
+#KIBAKO_CH	79
+#CAMTGT_CH	69
+
+#IT_TAKARA	47		//チェックスカート
+
+#GF_BOSS10	3213	//Fx_MUGEN_KA_10B
+#GF_BOSS20	3215	//Fx_MUGEN_KA_20B
+
+//--------------------------------------------------------------------
+INIT
+{
+	//※キャラ配置などはプログラム側でやっています（CRndMap.cpp参照）
+	
+	map_color(100,100,100,0);//R,G,B, time 100%
+	map_spotbmp(0);//100%
+
+	CAM(990,130,0,25,225,0,0)
+}
+
+//──────────────────────────────
+//▼エンカウント
+//──────────────────────────────
+EV_Encount
+{
+	jump(PLAYER2,	1,	10,	PLAYER1, 0, 0,	 150)
+	jump(PET,		1,	10,	PLAYER1, 0, 0,	 150)
+}
+
+//──────────────────────────────
+//▼ワープ
+//──────────────────────────────
+EV_Warp
+{
+	EV_begin()
+
+	SE(1016,0)
+
+	EFF_chr(24580, PLAYER1, 0, 100, 0, "Bone_Hips")
+	jump(PLAYER2,	1,	10,	PLAYER1, 0, 0,	 150)
+	jump(PET,		1,	10,	PLAYER1, 0, 0,	 150)
+	wait( 5)
+
+	color(PLAYER1,	-10)
+	color(PLAYER2,	-10)
+	color(PET,		-10)
+	wait(10)
+
+	cross_fade(15)
+
+	if(WK005==0)
+	{
+		workL(5,SET,1)
+
+		chr_pos(PLAYER1,10350,11100,0,180, 2)
+		chr_pos(PLAYER2,10350,11100,0,180, 2)
+		chr_pos(PET,	10350,11100,0,180, 2)
+	}
+	else
+	{
+		workL(5,SET,0)
+
+		chr_pos(PLAYER1, 2250, 2250,0,270, 2)
+		chr_pos(PLAYER2, 2250, 2250,0,270, 2)
+		chr_pos(PET,	 2250, 2250,0,270, 2)
+	}
+	wait(15)
+
+	SE(1016,0)
+
+	EFF_chr(24580, PLAYER1, 0, 100, 0, "Bone_Hips")
+	color(PLAYER1,	10)
+	color(PLAYER2,	10)
+	color(PET,		10)
+	wait(10)
+
+	EV_end()
+}
+
+//──────────────────────────────
+//▼ボス出現
+//──────────────────────────────
+EV_AppearBoss
+{
+	if(WK001==0)
+	{
+ 		SCORE(0,0,0)//念のためスコア初期化
+		//ルートスタート
+		workG(GW_NOW_ROUTE,SET,57);//火∞迷宮
+
+		workL(1,SET,1)
+
+		EV_begin()
+
+		chr_pos(PLAYER1	10250,10890,0,180,2)
+		chr_pos(PLAYER2,10450,10890,0,180,2)
+
+		stop_BGM(30)
+
+		cross_fade(30)
+
+		CAM_move_chr(CAMTGT_CH,0,0)	// camera_dummy
+//		CAM_move_chr(BOSS_CH,0,0)
+		wait_CAM_move()
+
+		wait(60)
+
+		BGM(35)		//ボスＢＧＭ
+
+		workL(WK_BOSSHP,SET,BOSS_CH)	//ボスＨＰ表示
+
+		CAM_quake("7364736473647364736473645")
+
+		blur(1,100,0)
+
+		SE(728,0)	//落雷っぽいＳＥ
+
+		F_set(101)
+
+		MOT(75,80,0)
+
+		if(WK006==1)
+		{
+			MOT(71,80,0)
+		}
+		if(WK004==1)
+		{
+			MOT(77,80,0)
+			MOT(78,80,0)
+		}
+		
+		wait(75)
+
+		blur(0,0,0)
+
+		cross_fade(15)
+
+		CAM_return(0)
+		
+		CAM(750,150,0,25,225,0,0)	//ボス戦用カメラへ（※特に変えてませんが…）
+
+		EV_end()
+	}
+}
+
+//──────────────────────────────
+//▼ボス死亡
+//──────────────────────────────
+EV_DefeatBoss
+{
+	if(WK002==0)
+	{
+		wait(150)			//アイテム回収用ウェイト（08.09.01ひ）
+
+		workL(2,SET,1)
+		
+		workG(130,SET,1)	//倒したお
+		
+		EV_begin()
+		
+		chr_pos(PLAYER1	10250,10890,0,180,2)
+		chr_pos(PLAYER2,10450,10890,0,180,2)
+
+		stop_BGM(30)
+
+		cross_fade(30)
+
+		workL(WK_BOSSHP,SET,0)
+
+		workL(5,SET,0)		//※水面屈折を一時ＯＦＦ（クラーケン部屋対策）
+
+		//ストッパー開く
+		CAM_move_chr(DOOR_CH,0,0)
+		wait_CAM_move()
+
+		wait(30)
+		BGM(-1)			//デフォルトＢＧＭに戻す（選曲はプログラム側で行う）
+		
+		MOT(DOOR_CH,4,0)
+
+		if(WK003==1)
+		{
+			SE(287,DOOR_CH)//20階用
+		}
+		else
+		{
+			SE(280,DOOR_CH)//10階用
+		}
+
+		wait(30)
+		
+		//ついでにワープゲート閉じる
+		chr_pos(WARP_CH,0,0,0,0,0)
+
+		cross_fade(30)
+
+		workL(5,SET,1)
+
+		//ワープゲート出現
+		chr_pos(EXIT_CH,10350,9630,10,0,0)
+		
+		color(EXIT_CH,-1)
+		
+		CAM_move_chr(EXIT_CH,0,0)
+		wait_CAM_move()
+
+		wait(30)
+
+		SE( 1050, EXIT_CH )
+
+		EFF_chr( 4232, EXIT_CH, 0, 100, -1, "warp01")
+		wait(15)
+		color(EXIT_CH, 20)
+		wait(20)
+		
+		wait(15)
+		
+		//宝箱出現
+		if(WK003==1)
+		{
+			if( !Fx_MUGEN_EXTRA )
+			{
+				F_set(GF_BOSS20)		//２０階のボス倒した
+				
+				if(IT_TAKARA<1)
+				{
+					color(TAKARA_CH,-1)
+					
+					chr_pos(TAKARA_CH,10350,10350,0,0,-1)
+					
+					CAM_move_chr(TAKARA_CH,45,0)
+					wait_CAM_move()
+
+					SE( 1016, TAKARA_CH)
+
+					EFF_chr(24580, TAKARA_CH, 0, 100, -1, "csp1")
+
+					color(TAKARA_CH,20)
+					wait(20)
+
+					wait(15)
+				}
+				else
+				{
+					color(KIBAKO_CH,-1)
+					
+					chr_pos(KIBAKO_CH,10350,10350,0,0,-1)
+					
+					CAM_move_chr(KIBAKO_CH,45,0)
+					wait_CAM_move()
+
+					SE( 1016, KIBAKO_CH)
+
+					EFF_chr(24580, KIBAKO_CH, 0, 100, -1, "CA")
+
+					color(KIBAKO_CH,20)
+					wait(20)
+
+					wait(15)
+				}
+			}
+			else
+			{
+				if(!Fx_MUGEN2_KA_BOX)
+				{
+					color(TAKARA_CH,-1)
+					
+					chr_pos(TAKARA_CH,10350,10350,0,0,-1)
+					
+					CAM_move_chr(TAKARA_CH,45,0)
+					wait_CAM_move()
+
+					SE( 1016, TAKARA_CH)
+
+					EFF_chr(24580, TAKARA_CH, 0, 100, -1, "csp1")
+
+					color(TAKARA_CH,20)
+					wait(20)
+
+					wait(15)
+				}
+				else
+				{
+					color(KIBAKO_CH,-1)
+					
+					chr_pos(KIBAKO_CH,10350,10350,0,0,-1)
+					
+					CAM_move_chr(KIBAKO_CH,45,0)
+					wait_CAM_move()
+
+					SE( 1016, KIBAKO_CH)
+
+					EFF_chr(24580, KIBAKO_CH, 0, 100, -1, "CA")
+
+					color(KIBAKO_CH,20)
+					wait(20)
+
+					wait(15)
+				}
+			}
+		}
+		else
+		{
+			if( !Fx_MUGEN_EXTRA )
+			{
+				F_set(GF_BOSS10)		//１０階のボス倒した
+			}
+		}
+
+		SCORE(-1,-1,-1)		//スコア表示
+		cross_fade(15)
+
+		CAM_return(0)
+
+		CAM(990,130,0,25,225,0,0)		//通常カメラへ（※特に変えてませんが…）
+
+		EV_end()
+	}
+}
+
+//──────────────────────────────
+EV_MM2_BoxOpened
+{
+	F_set( Fx_MUGEN2_KA_BOX )
+}
+
+#EndScriptTable
+//====================================================================
+

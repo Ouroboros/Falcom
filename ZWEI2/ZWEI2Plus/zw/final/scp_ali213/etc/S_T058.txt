@@ -1,0 +1,696 @@
+//──────────────────────────────
+//	name("◆瓦米莉娅（大道芸人）Vermilia")
+//──────────────────────────────
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_VERMILIA
+{
+	TK_begin()
+	look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(VERMILIA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,VERMILIA)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,VERMILIA)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,VERMILIA)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	if( F6_05_EndSixth )
+	{
+		if(!FT_13_TalkVermilia)
+		{
+			MES(VERMILIA,"最近，陆陆续续\n有打扮奇怪的人来看我表演呢。",0)
+			MES(VERMILIA,"我真高兴。\n观众越多，\n我就表演得越有劲啊。",0)
+			MES(VERMILIA,"因为，我可\n一直都是个开朗的街头艺人嘛～☆",0)
+			MES_close(VERMILIA)
+
+			F_set(FT_13_TalkVermilia)
+		}
+		else
+		{
+		//　　※以下通常一般メッセージ。
+			if(!F_VERMILIA)
+			{
+				MES(VERMILIA,"其实，我之所以\n心情这么好，\n还有一个理由。",0)
+				MES(VERMILIA,"之前，我和\n一只小猫成了朋友。\n那只小猫好像迷路了。",0)
+				MES_close(VERMILIA)
+
+			//　　瓦米莉娅に···エモーション。
+				EMO(VERMILIA,EMO_TENTEN)
+				wait(30)
+				look_off(VERMILIA)
+				wait(20)
+				MES(VERMILIA,"P1S3这么看来，\n我还真是无法抵挡小猫的诱惑呢～！！",0)
+				MES_close(VERMILIA)
+				wait_MES(VERMILIA)
+				wait(5)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（啊……\n  那个是猫帽子吗。）",0)
+				MES_close(RAGNA)
+
+			//　　★瓦米莉娅【子猫】
+				F_set_note(VERMILIA,2)
+				F_set(VERMILIA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(VERMILIA,"我啊，\n是非常喜欢动物的。",0)
+				MES(VERMILIA,"不过呢，对小猫\n尤其不能自拔～。",0)
+				MES(VERMILIA,"真希望以后\n能再见到那只小猫啊。",0)
+				MES(VERMILIA,"它要是来找我的话，\n随时都热烈欢迎啊～☆",0)
+				MES_close(VERMILIA)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※民家３之前之段差に腰掛けている。
+	//　　　できれば俯く。
+	if( F6_00_GoToMeru )
+	{
+		look_chr( VERMILIA, PLAYER1,"Bone_Head")
+		//──────────────────────────────
+		//　　※以下、わらしべイベント後之▼□通常一般メッセージ。
+		//　※アイテム「ばんそうこう」之表示が半透明以上　で判定してます(宮崎)
+		//──────────────────────────────
+		if(FV_11_Warasi11_Vml)
+		{
+			MES(VERMILIA,"呼，呼，呼……\n我啊，\n现在有秘密武器了。",0)
+			MES(VERMILIA,"用这个变声器，\n一定要夺回舞台。",0)
+			MES(VERMILIA,"我啊，\n才不会输给什么龙卷呢～！",0)
+			MES_close(VERMILIA)	
+		}
+		//──────────────────────────────
+		//▼　わらしべイベント
+		//	name("11·大道芸人（阿鲁迪亚镇）	『変声器』□『ばんそうこう』")153
+		//──────────────────────────────
+		else
+		if(FV_11_Warasi10_Wzn && !FV_11_Warasi11_Vml)
+		{
+			//──────────────────────────────
+			if(!F_VERMILIA)
+			{
+			//	name("□初回之场合")
+			//　　瓦米莉娅にＰＡエモーション。
+				EMO(VERMILIA,EMO_PAI)
+				wait(30)
+				MES(VERMILIA,"哦呀～……？",0)
+				MES(VERMILIA,"你们等等，那个莫非是\n『变声器』吗～？",0)
+				MES(VERMILIA,"唔唔唔……发出奇怪的声音\n站在街头的我……",0)
+				MOT(VERMILIA,50,15)
+				MES(VERMILIA,"这样说不定\n会有新的观众来呢！",0)
+				MES(VERMILIA,"拜托你们了。\n希望你们把这个变声器让给我～！",0)
+				MES_close(VERMILIA)
+				
+				//★初回
+				F_set(VERMILIA)
+			}
+			else
+			{
+			//	name("□２回目以降")
+				MOT(VERMILIA,50,15)
+				MES(VERMILIA,"如果有这个『变声器』的话，\n一定能吸引到新的观众的。",0)
+				MES(VERMILIA,"拜托你们了。\n希望你们把这个变声器让给我～！",0)
+				MES_close(VERMILIA)
+			}
+			//──────────────────────────────
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【不行】
+			MES_pos(PLAYER1,"??W9【当然没问题～！】\n【不行。】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+			//──────────────────────────────
+			//	name("□【モチロンな之だ～！】")
+			//──────────────────────────────
+			if(WK_YESNO==1)
+			{
+				MES(VERMILIA,"哦哦～你们\n果然很大方。",0)
+				MES(VERMILIA,"好，作为感谢\n这个就给你们了～！",0)
+				MES_close(VERMILIA)
+
+			//	name("アイテム入手テキスト")
+			//	MES(this,"得到了『创可贴』。",0)
+				//―――――――――――――――――――――――
+				fade_in(30,10,BLACK)
+
+				get_item(152,-1,1)
+				get_item(153,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//―――――――――――――――――――――――
+
+			//　　拉古那たちに？エモーション。
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PARTNER,EMO_HATENA)
+				EMO(PET,EMO_HATENA)
+				wait(30)
+
+				MES(VERMILIA,"在街头表演的修行中，\n总是新伤不断。\n创可贴是必不可少的。",0)
+				MES(VERMILIA,"不过对职业级的我来说，\n已经不需要了～☆",0)
+				MES_close(VERMILIA)
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+				//	name("□拉古那先頭")
+					MES(RAGNA,"原，原来如此。\n那么我姑且收下了。",0)
+					MES(RAGNA,"（不过现在的我，\n  要贴创可贴这种程度的伤\n  马上就会愈合了……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□艾雯先頭")
+					MES(PARTNER,"唔，原来如此。\n原来如此。",0)
+					MES(PARTNER,"（就算如此，\n  对吸血鬼之身的我而言，\n  也是用不着的东西……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				F_reset(VERMILIA)
+				F_set(FV_11_Warasi11_Vml)
+			}
+			//──────────────────────────────
+			//	name("□【ダメな之だ。】")
+			//──────────────────────────────
+			else
+			{
+				MES(VERMILIA,"啊，真令人失望。",0)
+				MES(VERMILIA,"不过你们既然这样说，\n那也没办法～……",0)
+				MES_close(VERMILIA)
+				MOT(VERMILIA,151,15)
+			}
+		}
+		else
+		if(!F_VERMILIA)
+		{
+			MES(RAGNA,"咦，怎么\n在这种地方无精打采的……",0)
+			MES_close(RAGNA)
+
+			//──────────────────────────────
+			//	name("□まだ莫里斯之話を見ていない。")
+			if(!FT_12_TalkMaurice)
+			{
+				MES(PARTNER,"唔，到底怎么了……？",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("□莫里斯之話を聞いた")
+				MES(PARTNER,"唔，是因为\n无法使用那个舞台了吧。",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+		//　　瓦米莉娅、顔を上げる。
+			MES(VERMILIA,"我啊，\n变闲了啦。",0)
+			MES(VERMILIA,"……………………………………",0)
+			MES_close(VERMILIA)
+
+		//　　瓦米莉娅、俯く。
+			MES(VERMILIA,"啊，完全不行嘛。\n要是没有舞台的话，就没有干劲了～。",0)
+			MES_close(VERMILIA)
+
+
+			F_set(VERMILIA)
+		}
+	//　　★繰り返し
+	//　　★繰り返し
+		else
+		{
+			MES(VERMILIA,"我啊，\n不站在舞台上是不行的～。",0)
+			MES(VERMILIA,"要是没有观众的话……",0)
+			MES(VERMILIA,"啊，完全\n失去干劲了啊～……",0)
+			MES_close(VERMILIA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	if( F5_00_HearLunar )
+	{
+		look_chr( VERMILIA, PLAYER1,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"你们，\n有没有听过\n艺术之镇洛特？",0)
+			MES(VERMILIA,"这是以前师父告诉我的……\n那是个位于中央大陆，\n居住着许多艺术家的城镇。",0)
+			MES(VERMILIA,"一定是个\n好玩到不行的镇子。",0)
+			MES(VERMILIA,"我也好想\n哪天去看看啊！",0)
+			MES_close(VERMILIA)
+			F_set(VERMILIA)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(VERMILIA,"我也好想\n哪天能到那个被叫做艺术之镇的地方\n去看看啊！",0)
+			MES(VERMILIA,"……所以，\n希望路过的你们\n能给我一点钱。",0)
+			MES(VERMILIA,"给多给少\n都没关系啊！",0)
+			MES_close(VERMILIA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	//　　※大道芸人は首だけで振り向き、体之向きは変えない。
+	//　　※昴がいる场合之み、１回だけ以下之イベントを行う。
+	if( F4_00_StartSolo )
+	{
+		//昴合流前
+		if(!F4_02_GoVillage2)
+		{
+			look_chr( VERMILIA, PLAYER1,"Bone_Head")
+			if(!F_VERMILIA)
+			{
+				MES(VERMILIA,"观，观众\n少了很多啊。",0)
+				MES(VERMILIA,"过路的人也都很忙，\n没人停下来看表演……",0)
+				MES(VERMILIA,"我，我\n有大麻烦了～！",0)
+				MES_close(VERMILIA)
+				
+				F_set(VERMILIA)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(VERMILIA,"说起来，在镇子对面\n能看到一个像城一样的东西。",0)
+				MES(VERMILIA,"一天之内建成的城，\n真是很不可思议……",0)
+				MES(VERMILIA,"难道，大家\n都到那里去观光了吗～？",0)
+				MES_close(VERMILIA)
+			}
+		}
+		//昴合流後
+		else
+		{
+			if(!FT_07_TalkVermilia)
+			{
+				//　　瓦米莉娅にＰＡエモーション。首だけで昴に振り向く。
+				EMO(VERMILIA,EMO_PA)
+				wait(30)
+			
+				look_chr( VERMILIA, PARTNER ,"Bone_Head")
+						
+				MES(VERMILIA,"哦呀，你……",0)
+				MES(VERMILIA,"记得是\n之前在房顶上的那个孩子嘛。",0)
+				MES_close(VERMILIA)
+
+			//　　昴にアセアセエモーション。
+				EMO(PARTNER,EMO_ASEASE)
+				wait(30)
+
+				MES(PARTNER,"呃，那个，是这样没错……\n（咦，咦？\n  我明明用了隐行术的……）",0)
+				MES_close(PARTNER)
+
+			//　　瓦米莉娅、体ごと昴之方に向く。
+				rot_chr(VERMILIA,30,PARTNER)
+				MES(VERMILIA,"唔唔，难道说……",0)
+				MES(VERMILIA,"你是住在\n谜之隐之村的忍者吗？",0)
+				MES_close(VERMILIA)
+
+			//　　拉古那たちに激しい！エモーション。
+				EMO(RAGNA,EMO_TOGEBIKKURI)
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+				wait(30)
+				
+				MES(PARTNER,"咦咦，那，那个……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"为，为什么你会知道……！？",0)
+				MES_close(RAGNA)
+
+			//　　瓦米莉娅に···エモーション。
+				EMO(VERMILIA,EMO_TENTEN)
+				wait(30)
+				
+				MES(VERMILIA,"那就好玩了□",0)
+				MES_close(VERMILIA)
+
+			//　　拉古那たちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"什，什么啊。\n只是突然想到吗……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"哈，吓了一跳……",0)
+				MES_close(PARTNER)
+
+			//	name2(VERMILIA)
+				MES(VERMILIA,"虽然我不知道\n你是什么人，不过……",0)
+				MES(VERMILIA,"不管是什么人，只要来了\n就是我的客人。",0)
+				MES(VERMILIA,"希望你能慢慢欣赏我的表演～☆",0)
+				MES_close(VERMILIA)
+
+				//★瓦米莉娅【意外に鋭い】
+				F_set_note(VERMILIA,1)
+			//──────────────────────────────
+				rot(VERMILIA,30,51)
+				F_set(FT_07_TalkVermilia)
+			}
+		//　　※昴合流後之初回イベントを見た後之通常一般メッセージ。
+			else
+			{
+				//ペンギンが居る场合
+				if(FV_02_VisitGyakata)
+				{
+					if(!F_VERMILIA)
+					{
+						MES(VERMILIA,"最近工钱挺少呢……",0)
+						MES(VERMILIA,"今天，来了个\n奇怪的观众。",0)
+						MES(VERMILIA,"叫做企鹅……？",0)
+						MES(VERMILIA,"就算是我\n也吓了一跳～！",0)
+						MES_close(VERMILIA)
+						F_set(VERMILIA)
+					}
+					//　　★繰り返し
+					else
+					{
+						MES(VERMILIA,"就算是我，\n也是第一次见到企鹅。",0)
+						MES(VERMILIA,"不过……不管是什么人，\n只要来了\n就是我的客人。",0)
+						MES(VERMILIA,"那么，\n鼓足精神再开始表演吧～☆",0)
+						MES_close(VERMILIA)
+					}
+				}
+				//居ない场合
+				else
+				{
+					if(!F_VERMILIA)
+					{
+						MES(VERMILIA,"最近工钱挺少呢……",0)
+						MES(VERMILIA,"就算只有一个观众，\n我也会很高兴的☆",0)
+						MES(VERMILIA,"真希望能有人细细地看我的表演啊～！",0)
+						MES_close(VERMILIA)
+						F_set(VERMILIA)
+
+					}
+					else
+					{
+					//　　★繰り返し
+						MES(VERMILIA,"就算只有一个观众，\n我也会很高兴的。",0)
+						MES(VERMILIA,"那么，\n鼓足精神再开始表演吧！",0)
+						MES_close(VERMILIA)
+					}
+				}
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//配置なし
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	//　　※大道芸人は首だけで振り向き、体之向きは変えない。
+	if( F2_14_TalkEnemy )
+	{
+		look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"阿鲁迪亚镇\n有很多客人来看表演。",0)
+			MES(VERMILIA,"就和师父说的一样，\n是个表演街头艺术的好地方～☆",0)
+			MES(VERMILIA,"顺带一提，\n我师父不知为何\n总是穿着女仆装。",0)
+			MES(VERMILIA,"原因现在还是个谜……\n不过在这个领域，\n有各种各样的高人啊！",0)
+			MES_close(VERMILIA)
+
+			F_set(VERMILIA)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(VERMILIA,"虽然我师父\n是个非常非常严厉的人，\n不过我到现在都很尊敬他。",0)
+			MES(VERMILIA,"这个帽子……赫尔穆特４号\n就是作为得到了真传的证明而获得的非常重要的东西啊。",0)
+			MES(VERMILIA,"现在，它就是\n我的商标了～☆",0)
+			MES_close(VERMILIA)
+			
+			//★瓦米莉娅【帽子】
+			F_set_note(VERMILIA,0)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	//　　※大道芸人は首だけで振り向き、体之向きは変えない。
+	//　　首だけで昴がいた屋根之方を向きながら。
+	if( F2_00_GoForest )
+	{
+		if(!F_VERMILIA)
+		{
+			look(VERMILIA,"Bone_Head",0,		0,2,0,			0,-60,0)
+			MES(VERMILIA,"嗯～……",0)
+			MES(VERMILIA,"刚才，那边的房顶上\n好像有什么人……",0)
+			MES(VERMILIA,"是错觉吗～？",0)
+			MES_close(VERMILIA)
+			F_set(VERMILIA)
+			look_off(VERMILIA)
+			look(VERMILIA,"Bone_Head",0,		0,2,0,			0,0,0)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(VERMILIA,"刚才，那边的房顶上\n好像有什么人……",0)
+			MES(VERMILIA,"……嗯，算了～。",0)
+			MES(VERMILIA,"我啊，\n向来不在意这种小事～☆",0)
+			MES_close(VERMILIA)
+		}
+
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※野外ステージで、大道芸をしている。
+	//　　※大道芸人は首だけで振り向き、体之向きは変えない。
+	if( F1_15_GoVillage )
+	{
+		look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"今天小汪\n是客人。",0)
+			MES(VERMILIA,"我啊，不知为何\n很受动物欢迎～。",0)
+			MES(VERMILIA,"我以前在满是牧场的大陆上\n表演街头艺术的时候……",0)
+			MES(VERMILIA,"曾经被一大堆的牛\n追在后面跑！",0)
+			MES_close(VERMILIA)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"街，街头艺人也不好做啊……",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"（你好像挺高兴的嘛……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			F_set(VERMILIA)
+		}
+	//──────────────────────────────
+	//　　★繰り返し
+		else
+		{
+			MES(VERMILIA,"我的街头艺术\n是无国界无种族的。",0)
+			MES(VERMILIA,"……所以，\n我希望路过的你们\n能给我一点钱。",0)
+			MES(VERMILIA,"给多给少\n都没关系啊！",0)
+			MES_close(VERMILIA)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+//　　※野外ステージで、大道芸をしている。
+//　　※大道芸人は首だけで振り向き、体之向きは変えない。
+	if( F1_01_GameStart )
+	{
+		look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"嘿呀，来看看来看看！",0)
+			MES(VERMILIA,"这是我瓦米莉娅的街头表演哦☆",0)
+			MES_close(VERMILIA)
+		//──────────────────────────────
+		//	name("□１回之み以下之メッセージを挿入。")
+		//　　瓦米莉娅にＰＡエモーション。
+			if(!FT_01_TalkVermilia)
+			{
+				EMO(VERMILIA,EMO_PA)
+			
+				look_chr( VERMILIA, PARTNER ,"Bone_Head")
+				MES(VERMILIA,"哦呀～你们是第一次来看吗～？",0)
+				MES_close(VERMILIA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"唔，这样的表演\n确实是\n第一次看。",0)
+				MES(PARTNER,"呵呵，人类的城镇\n也很热闹嘛。",0)
+				MES_close(PARTNER)
+				
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+			//	name2(RAGNA)
+				MES(RAGNA,"啊啊……不过也不是所有的镇子\n都是这样啦。",0)
+				MES(RAGNA,"阿鲁迪亚是有机场的城镇。\n也有不少游客，\n所以才会有活跃的气氛。",0)
+				MES_close(RAGNA)
+				look_off(RAGNA)
+
+			//	name2(VERMILIA)
+				MES(VERMILIA,"唔唔，原来如此。\n这也是一个原因。",0)
+				rot_chr(RAGNA,30,VERMILIA)
+				MES(VERMILIA,"不过真正的原因……",0)
+				MES(VERMILIA,"P1S4是因为这里有\n活泼的我嘛！",0)
+				MES_close(VERMILIA)
+
+
+			//	name2(PARTNER)
+				MES(PARTNER,"原，原来如此……",0)
+				MES_close(PARTNER)
+
+			//	name2(VERMILIA)
+				MES(VERMILIA,"来来，\n对你们也是热烈欢迎啊～。",0)
+				MES(VERMILIA,"我的街头表演，\n请细细欣赏啊～☆",0)
+				MES_close(VERMILIA)
+				
+				F_set(FT_01_TalkVermilia)
+			}
+			
+			F_set(VERMILIA)
+		}
+	//──────────────────────────────
+	//　　★繰り返し
+		else
+		{
+			MES(VERMILIA,"哦哦……\n今天的观众真多啊。",0)
+			MES(VERMILIA,"鼓足精神再开始表演吧☆",0)
+			MES_close(VERMILIA)
+		}
+	}
+	
+	look_off(VERMILIA)
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/▼①城を取り戻すために行動を開始した
+
+//──────────────────────────────
+//▼②罗亚鲁塔村へ向かうことにした
+
+//──────────────────────────────
+//▼③金暗之森へ向かうことにした
+
+//──────────────────────────────
+//▼⑤魔女拉莱拉から、敵之正体が明かされた
+
+//──────────────────────────────
+//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった
+//　　※配置なし。
+//──────────────────────────────
+//▼⑦拉古那は単独行動を始めた
+
+//──────────────────────────────
+//▼□水晶峡谷を起動することにした
+
+//──────────────────────────────
+//──────────────────────────────
+//▼□飛行机で梅尔塞迪克に乗り込むことにした
+
+//──────────────────────────────
+//▼□
+
+//──────────────────────────────

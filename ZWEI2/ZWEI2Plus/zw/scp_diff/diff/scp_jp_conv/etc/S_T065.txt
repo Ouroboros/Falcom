@@ -1,0 +1,658 @@
+//──────────────────────────────
+//	name("◆ワイゼン村長（村長）Widezen")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_WIDEZEN
+{
+	TK_begin()
+	rot_chr(WIDEZEN,15,PLAYER1)
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(WIDEZEN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,WIDEZEN)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,WIDEZEN)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WIDEZEN)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WIDEZEN)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WIDEZEN)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WIDEZEN)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,WIDEZEN)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※村長宅前、穴の開いた巨大にんじんを見ている。
+	if( F6_05_EndSixth )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"ワシはこう見えて、\n若い頃はイケイケだったのですじゃ。",0)
+			MES(WIDEZEN,"あちこちの大陸を回っては、\n連日連夜、ディスコやカラオケを\n渡り步いておったものです。",0)
+			MES(WIDEZEN,"しかし年を取ると、\nこう望郷の念が強くなってきましてな。",0)
+			MES(WIDEZEN,"この村で村長として、慎ましやかな\n生活を送ることにしたのです。",0)
+			MES_close(WIDEZEN)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+		//	EMO(PARTNER,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			wait(30)
+			
+			MES(RAGNA,"（何という半生だ……）",0)
+			MES_close(RAGNA)
+
+		//	name2(WIDEZEN)
+			MES(WIDEZEN,"うふふ、やはり生まれ育った\n村にいるのが一番落ち着きますわい。",0)
+			MES_close(WIDEZEN)
+
+		//　　村長、向きを戻す。
+			MES(WIDEZEN,"ところで……\n畑のにんじんに、見慣れぬ\n穴が空いておるですな。",0)
+			MES(WIDEZEN,"はて、あんなもの\n前からあったじゃろうか。\nトンビか何かの仕業かのう……",0)
+			MES_close(WIDEZEN)
+
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"うむ、この村は今日も平和ですな。",0)
+			MES_close(WIDEZEN)
+
+		//　　村長、向きを戻す。
+			MES(WIDEZEN,"ところで……\n畑のにんじんに、見慣れぬ\n穴が空いておるですな。",0)
+			MES(WIDEZEN,"はて、トンビか何かの\n仕業じゃろうか。",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※村長宅前に立っている。
+	if( F6_00_GoToMeru )
+	{
+		//──────────────────────────────
+		//▼　わらしべイベント
+		//	name("10．ワイゼン（ロアルタ村）		『手裏剣』□『変声器』")152
+		//──────────────────────────────
+		if(FV_11_Warasi_9_Nja && !FV_11_Warasi10_Wzn)
+		{
+			//──────────────────────────────
+			if(!F_WIDEZEN)
+			{
+			//	name("□初回の場合")
+			//　　村長に！エモーション。
+				EMO(WIDEZEN,EMO_BIKKURI)
+				wait(30)
+				MES(WIDEZEN,"そ、それは伝説の……",0)
+				MES(WIDEZEN,"子供から大人まで、誰もが\n一度は夢見た定番アイテム\n『手裏剣』ではないですか！",0)
+				MES(WIDEZEN,"いやあ、珍しいものを\nお持ちですのう。",0)
+				MES(WIDEZEN,"ウフフ、どうですかな。\nその手裏剣、この私に\n譲ってはいただけませぬか。",0)
+				MES_close(WIDEZEN)
+				
+				F_set(WIDEZEN)
+			}
+			else
+			{
+			//	name("□２回目以降。")
+				MES(WIDEZEN,"まさか『手裏剣』とは……\nいやあ、珍しいものを\nお持ちですのう。",0)
+				MES(WIDEZEN,"それこそ\n男のロマンですぞ、ロマン。",0)
+				MES(WIDEZEN,"……どうですかな。\nその手裏剣、この私に\n譲ってはいただけませぬか。",0)
+				MES_close(WIDEZEN)
+			}
+			//──────────────────────────────
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【やめる】
+			MES_pos(PLAYER1,"??W9【いいとも】\n【ダメダメ】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			//──────────────────────────────
+			//	name("□【いいとも】")
+			//──────────────────────────────
+			if(WK_YESNO==1)
+			{
+				MES(WIDEZEN,"ウホホ、これはこれは……",0)
+				MES(WIDEZEN,"いや、やはり\n本物の質感は堪りませぬなぁ□",0)
+				MES_close(WIDEZEN)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+				
+				MES(WIDEZEN,"そうじゃ、代わりに\nこれを持って行きなされ。",0)
+				MES_close(WIDEZEN)
+
+			//	name("アイテム入手テキスト")
+			//	MES(this,"『変声器』をもらった。",0)
+				//―――――――――――――――――――――――
+				fade_in(30,10,BLACK)
+
+				get_item(151,-1,1)
+				get_item(152,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//―――――――――――――――――――――――
+
+			//	name2(WIDEZEN)
+				MES(WIDEZEN,"これを使えば、\nきっと人気者になれますぞ。",0)
+				MES_close(WIDEZEN)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+				//	name("□ラグナ先頭")
+					MES(RAGNA,"（一体どこで使えと……？）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□アルウェン先頭")
+					MES(PARTNER,"（な、なぜ田舎村の村長が\n  このような物を\n  持っておるのだ……？）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				F_reset(WIDEZEN)
+				F_set(FV_11_Warasi10_Wzn)
+			}
+			//──────────────────────────────
+			//　　□【ダメダメ】
+			//──────────────────────────────
+			else
+			{
+				MES(WIDEZEN,"そ、そうですか。\n残念ですじゃ……",0)
+				MES_close(WIDEZEN)
+			}
+		}
+		else
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"フィオナ殿からお話は聞きましたが、\nなあに心配することはありません。",0)
+			MES(WIDEZEN,"ただ少し空が荒れそうだということで、\nみなと話し合って\n畑仕事は控えることにしましたがな。",0)
+			MES(WIDEZEN,"この村の平和は変わりませぬ。",0)
+			MES(WIDEZEN,"ワシはいつも、心に\nそうお祈りしてますのじゃ。",0)
+			MES_close(WIDEZEN)
+
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"この村はいつも平和ですぞ。",0)
+			MES(WIDEZEN,"村には、守り神である精霊様が\n住んでおります。",0)
+			MES(WIDEZEN,"目には見えませぬが、ワシはいつも\n心に祈りを捧げておりますのじゃ。",0)
+			MES(WIDEZEN,"ですから、心配は要りませんぞ？",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※村長宅前に立っている。
+	if( F5_00_HearLunar )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"おお、ご存知ですかな。",0)
+			MES(WIDEZEN,"実はもうすぐ、\nワシの誕生日なのですじゃ。",0)
+			MES(WIDEZEN,"うふふ、この年になっても\n誕生日というのは嬉しいものですな。",0)
+			MES(WIDEZEN,"今年もまた、みなが\n盛大に祝ってくれるに違いない。\n……これは期待大ですぞ。",0)
+			MES_close(WIDEZEN)
+
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"実はもうすぐ、\nワシの誕生日でしてな。",0)
+			MES(WIDEZEN,"盛大なパーティが\n催される予定なのですじゃ。",0)
+			MES(WIDEZEN,"……どうですかな、ご一緒に。",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//いない
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※村長宅前に立っている。
+	if( F4_00_StartSolo )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"昨晚のことは\nよく覚えておりませぬ……",0)
+			MES(WIDEZEN,"ただ、暗雲と共にやってきた者によって\n村人たちが操られてしまったのですじゃ。",0)
+			MES(WIDEZEN,"ワシは一振りの剣を手に\n魔物どもをこうバッタバッタとなぎ倒し、\nついにみなを救出したのじゃが……",0)
+			MES(WIDEZEN,"はて、あれは夢だったのかのう……？",0)
+			MES_close(WIDEZEN)
+
+		//──────────────────────────────
+		//	name("□スバルがいる場合")
+			if(F4_02_GoVillage2)
+			{
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(PARTNER,"え、ええっと……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"現実と妄想がごっちゃに\nなっちまってるみたいだな……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//　　ラグナに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"（何だそりゃ……）",0)
+				MES_close(RAGNA)
+			}
+		//──────────────────────────────
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"ふう、これからいよいよ\nヒロインとイチャイチャする\nという所じゃったのに……",0)
+			MES(WIDEZEN,"途中で目が覚めてしまうとは、\n残念じゃよ……",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※倒れている。メッセージなし。（メイン参照）
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※村長宅前に立っている。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"ワシは日光浴をするのが\n趣味でしてな。",0)
+			MES(WIDEZEN,"日に当たっておると、\nこう色々な考えが湧いてきますのじゃ。",0)
+			MES(WIDEZEN,"ふふ……今日も一日、\n楽しく想像に浸りますぞ。",0)
+			MES_close(WIDEZEN)
+
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"日光浴は良いですぞ。",0)
+			MES(WIDEZEN,"どうですかな、ご一緒に。",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※村長宅前に立っている。
+	if( F2_00_GoForest )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"おお、ご存知ですかな。",0)
+			MES(WIDEZEN,"今朝方に散步をしておったら、\nなんと神殿の前に\n立派な道が通っておりましてな。",0)
+			MES(WIDEZEN,"うむ、あれは村に住む\n精霊の仕業に違いありませんぞ。",0)
+			MES(WIDEZEN,"うふふ、これはマイ年表に\n記録しておかねばなりませんのう。",0)
+			MES_close(WIDEZEN)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			MES(RAGNA,"（ま、何とか勘違いして\n  くれたみたいだな……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（フン、便利になったのだから\n  良いではないか。）",0)
+			MES_close(PARTNER)
+
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"この村には昔から、目に見えない\n精霊が住むと言われておりましてな。",0)
+			MES(WIDEZEN,"毎年収穫祭が近づくと、\n村のあちこちで不思議な事が\n起こるのですじゃ。",0)
+			MES(WIDEZEN,"しかしまさか、\nあのような道を作ってくださるとは。",0)
+			MES(WIDEZEN,"うふふ、これはマイ年表に\n記録しておかねばなりませんのう。",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※村長宅前に立っている。
+	if( F1_15_GoVillage )
+	{
+	//　　※神殿前でピピロたちと会う前
+		if(!F1_17_MeetPipiPoc)
+		{
+			if(!F_WIDEZEN)
+			{
+				MES(WIDEZEN,"おや……あなた方も\nあの神殿に向かわれるのですかな？",0)
+				MES_close(WIDEZEN)
+
+			//──────────────────────────────
+			//	name("□神殿に行ったことがない")
+				if(!F1_23_VisitTenple)
+				{
+				//　　ラグナたちに？エモーション。
+					EMO(RAGNA,EMO_HATENA)
+					EMO(PARTNER,EMO_HATENA)
+					wait(30)
+					
+					MES(RAGNA,"神殿……？",0)
+					MES_close(RAGNA)
+
+				//	name2(WIDEZEN)
+					MES(WIDEZEN,"ええ、この村の東に\n水没した神殿が残されておるのですじゃ。",0)
+					MES(WIDEZEN,"それが近頃人気のようでしてな、\n先ほども見慣れぬ格好をした\n少年と少女が道を尋ねにきましたぞ。",0)
+					MES_close(WIDEZEN)
+				}
+				else
+				{
+				//	name("□神殿に行ったことがある")
+					MES(WIDEZEN,"先ほども見慣れぬ格好をした\n少年と少女がやってきましてな。\n道を訪ねて行きましたのじゃ。",0)
+					MES_close(WIDEZEN)
+				}
+			//──────────────────────────────
+				MES(WIDEZEN,"いやあ、これほど観光客が\n訪れるというのも珍しい。",0)
+				MES(WIDEZEN,"うふふ、これは\n久々の大ヒットかのう……",0)
+				MES_close(WIDEZEN)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+
+			//──────────────────────────────
+			//	name("□『★村で神殿の噂を聞いた』のフラグが立っていない場合、挿入。")
+			//──────────────────────────────
+				if(!F1_24_UwasaTenple)
+				{
+
+					if(!F1_23_VisitTenple)
+					{
+					//	name("□神殿に行った事が無い")
+						MES(RAGNA,"まあそれは置いといて……",0)
+						MES_close(RAGNA)
+
+					//　　ラグナとアルウェン、向き合う。
+						rot_chr(RAGNA,30,PARTNER)
+						rot_chr(PARTNER,30,RAGNA)
+						
+						MES(RAGNA,"ちょっと気になる話だよな。",0)
+						MES(RAGNA,"この村からも\nそう離れてねえみたいだし……",0)
+						MES(RAGNA,"どうする姫さん。\n寄ってみるか？",0)
+						MES_close(RAGNA)
+
+					//	name2(PARTNER)
+						MES(PARTNER,"う、うむ。\nその水没……\nというのが気にはなるがな。",0)
+						MES_close(PARTNER)
+					}
+					else
+					{
+					//	name("□神殿に行った事がある")
+						MES(RAGNA,"まあそれは置いといて……",0)
+						MES_close(RAGNA)
+
+					//　　ラグナとアルウェン、向き合う。
+						rot_chr(RAGNA,30,PARTNER)
+						rot_chr(PARTNER,30,RAGNA)
+						
+					//	MES(RAGNA,"まあ規模は結構あったから、何かを\n隠すにはもってこいかもしれねえな。",0)
+						MES(RAGNA,"あの神殿、規模は結構あったから\n何かを隠すには\nもってこいかもしれねえな。",0)
+						MES(RAGNA,"どうする姫さん。\nもう一度寄ってみるか？",0)
+						MES_close(RAGNA)
+
+					//	name2(PARTNER)
+						MES(PARTNER,"う、うむ。\n水に浸かっておったのが、\nやや気にはなるがな……",0)
+						MES_close(PARTNER)
+					}
+
+				//──────────────────────────────
+				//　　ラグナに？エモーション。
+					EMO(RAGNA,EMO_HATENA)
+					wait(30)
+					
+					MES(PARTNER,"いや、大したことではない。\n行ってみるとしよう。",0)
+					MES_close(PARTNER)
+					wait_MES(PARTNER)
+
+					cross_fade(30)
+					CAM_return(0)
+					CAM(-49,109,20,27,179,30,0)
+					rot_chr(PLAYER1,60,WIDEZEN)
+					rot_chr(PLAYER2,60,WIDEZEN)
+					wait_fade()
+
+					F_set(F1_24_UwasaTenple)
+				}
+				
+				F_set(WIDEZEN)
+			}
+			//　　★繰り返し
+			else
+			{
+				MES(WIDEZEN,"村の外れに、水没した神殿が\n残されておるのですがな。",0)
+				MES(WIDEZEN,"今日訪ねてきたのは、\nあなた方で４人目ですじゃ。",0)
+				MES(WIDEZEN,"うふふ、今や\n空前の大フィーバーですぞ。",0)
+				MES_close(WIDEZEN)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（それほど流行ってないだろ……）",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("□アルウェン先頭")
+				{
+					MES(PARTNER,"（それほど人気とも思えん……）",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+			}
+		}
+	//──────────────────────────────
+	//　　※神殿前でピピロたちと会った後
+		else
+		{
+			if(!F_WIDEZEN)
+			{
+				MES(WIDEZEN,"ふむ……",0)
+				MES(WIDEZEN,"しかしワイゼンという名は\n少し地味すぎじゃな。",0)
+				MES(WIDEZEN,"もっとイカした名前の方が\nよいとは思わんですか。",0)
+				MES(WIDEZEN,"ゴードンとかロックフェラーとか\nいうのはどうじゃろう。",0)
+				MES(WIDEZEN,"どうせ改名するなら\n豪華で運勢の上がりそうな名前にして、\nどどーんとリッチになりたいのう。",0)
+				MES_close(WIDEZEN)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				F_set(WIDEZEN)
+			}
+	//　　★繰り返し
+			else
+			{
+				MES(WIDEZEN,"名は体を表すと申します。",0)
+				MES(WIDEZEN,"ふむ……\nやはり一度、豪華そうな名前に\n改名してみようかのう。",0)
+				MES_close(WIDEZEN)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※村長宅前に立っている。
+	if( F1_01_GameStart )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"ようこそ、ロアルタ村へ……",0)
+			MES(WIDEZEN,"この村には不思議な\n言い伝えがありましてな。",0)
+			MES(WIDEZEN,"昔から、村を守る『精霊様』が\n住むといわれておりますのじゃ。",0)
+			MES_close(WIDEZEN)
+			
+			//頭にキラーん！
+			EMO(WIDEZEN,EMO_KIRAKIRA)
+			wait(30)
+			
+			MES(WIDEZEN,"うふふ、中々ミステリアスですぞ。\nどうですかな、観光でも。",0)
+			MES_close(WIDEZEN)
+
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"はは、どうも……",0)
+				MES(RAGNA,"（この村の村長さんか。\n  頭が眩しいぜ……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□アルウェン先頭")
+				MES(PARTNER,"（むむむ……\n  これが『頭きらーん！』\n  というやつかのう。）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			F_set(WIDEZEN)
+		}
+		//　　★繰り返し
+		else
+		{
+//			MES(WIDEZEN,"この村には昔から、村を守る\n精霊が住むと伝えられております。",0)
+//			MES(WIDEZEN,"ワシは村長として、\nこの点をプッシュした観光などを\n日々考えておるのですがな。",0)
+//			MES(WIDEZEN,"うふふ、今日は客が多めですじゃ。",0)
+//			MES(WIDEZEN,"この前ラジオ番組に\n投稿してみたのが当たったのかのう……",0)
+
+			MES(WIDEZEN,"ワシは日頃から、村の精霊様を\nプッシュした観光などを\n考えておるのですがな……",0)
+			MES(WIDEZEN,"うふふ、その甲斐あってか\n今日は客が多めですじゃ。",0)
+			MES(WIDEZEN,"この前ラジオ番組に\n精霊様の噂話を投稿したのが\n当たったみたいですのう。",0)
+//			MES(WIDEZEN,"この村には昔から、村を守る\n精霊が住むと伝えられております。",0)
+//			MES(WIDEZEN,"ワシは村長として、\nこの点をプッシュした観光などを\n日々考えておるのですがな。",0)
+//			MES(WIDEZEN,"うふふ、今日は客が多めですじゃ。",0)
+//			MES(WIDEZEN,"この前ラジオ番組に\n投稿してみたのが当たったのかのう……",0)
+			MES_close(WIDEZEN)
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			
+			//★ワイゼン【精霊をプッシュ】
+			F_set_note(WIDEZEN,0)
+		}
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

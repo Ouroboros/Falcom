@@ -1,0 +1,554 @@
+//■Zwei2一般メッセージ·亚尔迪镇（※蒙德兰夫人）
+//────────────────────────────────────────────────────────────
+//■亚尔迪
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆蒙德兰夫人（上流階級女）Mondriaan")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_MONDRIAAN
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(MONDRIAAN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,MONDRIAAN)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,MONDRIAAN)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MONDRIAAN)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MONDRIAAN)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MONDRIAAN)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MONDRIAAN)
+		}
+	}
+//───────────────
+//～⑥艾尔雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,MONDRIAAN)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※民家１之前にいる。
+	//　　　周りに猫３匹がフリームーブしている。
+	if( F6_05_EndSixth )
+	{
+		MOT_SET(MONDRIAAN,150,-1,561,561,-1,-1)	
+		if(!F_MONDRIAAN)
+		{
+		//──────────────────────────────
+		//	name("□フラグ□之初回を見ている场合")
+		//　　夫人，ＰＡエモーションで振り返る。
+			EMO(MONDRIAAN,EMO_PA)
+			look_chr( MONDRIAAN, PLAYER1,"Bone_Head")
+			wait(30)
+
+			MOT(MONDRIAAN,150,15)
+			
+			MES(MONDRIAAN,"哦呀……是你们吗。",0)
+			MES_close(MONDRIAAN)
+
+		//──────────────────────────────
+			MES(MONDRIAAN,"那时还真是辛苦呢。",0)
+			MES(MONDRIAAN,"明明风暴就要来了，\n小咪却不见了……\n我和先生到处一番好找呢。",0)
+			MES(MONDRIAAN,"不过，找到小咪的，\n是我先生的狗。",0)
+			MES(MONDRIAAN,"我从前一直以为\n狗是安静不下来的……\n有些刮目相看了呢。",0)
+			MES_close(MONDRIAAN)
+
+			//★モンドレアン【库拉克を見直した】
+			F_set_note(MONDRIAAN,2)
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			look_chr( MONDRIAAN, PLAYER1,"Bone_Head")
+			MOT(MONDRIAAN,150,15)
+			MES(MONDRIAAN,"我先生的狗\n找到了迷路的小咪。",0)
+			MES(MONDRIAAN,"对它有些刮目相看了。",0)
+			MES(MONDRIAAN,"而且，最近\n它看起来成熟了不少……",0)
+			MES(MONDRIAAN,"我不会再对先生养狗\n有什么不满了。",0)
+			MES_close(MONDRIAAN)
+		}
+		MOT(MONDRIAAN,151,15)
+		look_off(MONDRIAAN)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※外で镇长之演説を聴いている。
+	//　　　周りに哈其と修克拉がフリームーブしている。
+	//　　　夫人にアセアセエモーション出しっぱなし。
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_TK_MONDRIAAN")
+		if(!FT_12_TalkMondriaan)
+		{
+		//　　※初回イベント
+		//　　※振り返らない
+			MES(MONDRIAAN,"龙卷……\n发生可怕的事了呢。",0)
+			MES(MONDRIAAN,"哎呦呦……\n到底该往哪里逃……",0)
+			MES_close(MONDRIAAN)
+
+		//　　夫人，ＰＡエモーションで振り返る。
+			EMO(MONDRIAAN,EMO_PA)
+			wait(30)
+			
+			rot_chr(MONDRIAAN,30,PLAYER1)
+			
+			MES(MONDRIAAN,"你们……",0)
+			MES(MONDRIAAN,"带我逃吧！",0)
+			MES_close(MONDRIAAN)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"咦……？",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾尔雯先頭")
+			{
+				MES(PARTNER,"唔……？",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+			MES(MONDRIAAN,"你有飞机吧。\n别想瞒我。",0)
+			MES(MONDRIAAN,"带上我和小猫们，\n逃出这个大陆！",0)
+			MES_close(MONDRIAAN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"那个……对，对不起。",0)
+			MES(RAGNA,"特里斯坦号还要执行任务，\n不能用在这种事情上。",0)
+			MES(RAGNA,"不过，我们会努力\n解决那个龙卷的。",0)
+			MES(RAGNA,"你也冷静一些吧。",0)
+			MES_close(RAGNA)
+
+		//　　夫人に···エモーション。
+			EMO(MONDRIAAN,EMO_TENTEN)
+			EV_stop("ASEASE_MONDRIAAN")
+			wait(30)
+			MOT(MONDRIAAN,2,15)
+			
+			MES(MONDRIAAN,"真的吗？\n我可以相信你吧？",0)
+			MES(MONDRIAAN,"……要是撒谎的话，\n我可要提出\n３亿芬尼的赔偿要求。",0)
+			MES_close(MONDRIAAN)
+
+		//　　拉古那たちに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PARTNER,EMO_AOZAME)
+			wait(30)
+		
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"３，３亿芬尼……？\n（那能买多少架\n  最新型的飞机啊……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾尔雯先頭")
+			{
+				MES(PARTNER,"３，３亿芬尼……？\n（这在人类世界可不是小数啊……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+		//　　夫人に少し···エモーション。
+			EMO(MONDRIAAN,EMO_TENTEN)
+			wait(30)
+			
+			MES(MONDRIAAN,"唔……没办法呢。\n确实，\n现在也不知道这场骚动将如何发展……",0)
+			MES(MONDRIAAN,"总之先听镇长\n说说详细情况吧。",0)
+			MES_close(MONDRIAAN)
+
+		//　　以降夫人之アセアセエモーションは出さない。
+		
+			F_set(FT_12_TalkMondriaan)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			if(!F_MONDRIAAN)
+			{
+			//　　※振り返らない。
+				MES(MONDRIAAN,"话说回来，\n这还真是没有要点的说话方式呢……",0)
+				MES(MONDRIAAN,"这对居民可是件重要的事哦！？",0)
+				MES(MONDRIAAN,"应该更清楚明了地\n全都说出来嘛！",0)
+				MES(MONDRIAAN,"真是，\n永远都没有靠得住的地方啊……",0)
+				MES_close(MONDRIAAN)
+				F_set(MONDRIAAN)
+			}
+		//　　★繰り返し
+			else
+			{
+			//　　※振り返らない。
+				MES(MONDRIAAN,"应该更清楚明了地\n全都说出来嘛！",0)
+				MES(MONDRIAAN,"真是，\n永远都没有靠得住的地方啊……",0)
+				MES_close(MONDRIAAN)
+			}
+		}
+		MOT(MONDRIAAN,153,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※民家１之前にいる。
+	//　　　周りに猫３匹がフリームーブしている。
+	if( F5_00_HearLunar )
+	{
+		rot_chr(MONDRIAAN,30,PLAYER1)
+		EV("MOTION_TK_MONDRIAAN")
+
+		if(!F_MONDRIAAN)
+		{
+			MES(MONDRIAAN,"那次魔物骚动以来，\n就没怎么外出了……",0)
+			MES(MONDRIAAN,"可是一直一个人在家，\n反而不安起来了。",0)
+			MES(MONDRIAAN,"唉……",0)
+			MES(MONDRIAAN,"早知道这样，请个保镖\n或是买个女仆机器人\n就好了。",0)
+			MES_close(MONDRIAAN)
+
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MONDRIAAN,"虽然有带小猫们\n出门散步，\n不过已经不怎么外出了。",0)
+			MES(MONDRIAAN,"真是的，要是\n没有那种骚动就好了……",0)
+			MES_close(MONDRIAAN)
+		}
+		MOT(MONDRIAAN,153,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※教会，適当な席に座っている。
+	//　　　近くに猫３匹がフリームーブしている。
+	if( F4_00_StartSolo )
+	{
+		rot_chr(MONDRIAAN,30,PLAYER1)
+		EV("MOTION_TK_MONDRIAAN")
+
+		if(!F_MONDRIAAN)
+		{
+			MES(MONDRIAAN,"昨天晚上，\n外面乒乒乓乓的很不太平。",0)
+			MES(MONDRIAAN,"然后后来才听说，\n是魔物出现了。",0)
+			MES(MONDRIAAN,"明明都这样了，先生还睡得很香。\n他的狗也没有一点反应。",0)
+			MES(MONDRIAAN,"真是，一到关键时刻\n就什么用场也派不上……！",0)
+			MES_close(MONDRIAAN)
+
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MONDRIAAN,"刚才，我打算去别的大陆避难\n而去了机场……",0)
+			MES(MONDRIAAN,"但不知为何，\n所有的连络航班都取消了。",0)
+			MES(MONDRIAAN,"真是不安啊……\n只能求助于教会了。",0)
+			MES_close(MONDRIAAN)
+		}
+		MOT(MONDRIAAN,153,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し，蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//※いない
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から，敵之正体が明かされた
+	//──────────────────────────────
+	//　　※民家１之前付近に立っている。
+	//　　　周りに猫３匹がフリームーブしている。
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(MONDRIAAN,30,PLAYER1)
+		if(!FT_05_TalkMondriaan)
+		{
+		EV("MOTION_TK_MONDRIAAN")
+		//　　※初回イベント。
+			MES(MONDRIAAN,"我先生\n带着那只不安分的狗\n回来了。",0)
+			MES_close(MONDRIAAN)
+
+		//　　夫人にぷんすかエモーション。
+			EMO(MONDRIAAN,EMO_DOKAN)
+			wait(30)
+
+			MES(MONDRIAAN,"真是的，狗这东西……\n要是吓到这些孩子了\n怎么办。",0)
+			MES(MONDRIAAN,"哼，真让人生气，\n把我先生买的\n宠物食品拿去吧。",0)
+			MES_close(MONDRIAAN)
+
+		//	name("アイテム入手テキスト")
+		//	MES(this,"ペットフードをもらった。",0)
+			fade_in(30,10,BLACK)
+			get_item(218,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		//　　※ペットフードを入手。
+		//　　　正式なペットフード名がある场合は名称を差し替えます。
+			MES(MONDRIAAN,"赶紧吃掉，\n要隐藏证据哦！？",0)
+			
+			MES_close(MONDRIAAN)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"呃，啊。谢谢……",0)
+				MES(RAGNA,"（结果就这么收下了。\n  算了……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾尔雯先頭")
+			{
+				MES(PARTNER,"唔，嗯。我知道了。",0)
+				MES(PARTNER,"（结果就这么收下了。\n  算了……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+
+		//──────────────────────────────
+		//　　※ここでＬＦも立てておく。
+		//──────────────────────────────
+		
+			F_set(FT_05_TalkMondriaan)
+		}
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_MONDRIAAN)
+			{
+				MES(MONDRIAAN,"要是平时，现在可是\n让小猫们坐在膝上，\n享受午间剧场的时候……",0)
+				MES(MONDRIAAN,"真是的，我先生\n既迟钝又自私……！",0)
+				MES(MONDRIAAN,"反正，从来就不会\n为我们考虑。",0)
+				MES_close(MONDRIAAN)
+				
+				//★モンドレアン【ラジオドラマ】
+				F_set_note(MONDRIAAN,1)
+				F_set(MONDRIAAN)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MONDRIAAN,"我先生\n从来就不会\n为我们考虑。",0)
+				MES(MONDRIAAN,"……哼，懒得理他。\n以后就常常\n做些让他不爽的事来教训他。",0)
+				MES_close(MONDRIAAN)
+			}
+		}
+		MOT(MONDRIAAN,153,15)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※民家１にいる。
+	//　　　周りに猫３匹がフリームーブしている。
+	if( F2_00_GoForest )
+	{
+		look_chr( MONDRIAAN, PLAYER1,"Bone_Head")
+		MOT_SET(MONDRIAAN,150,-1,561,561,-1,-1)	
+		MOT(MONDRIAAN,150,15)
+
+		if(!F_MONDRIAAN)
+		{
+			MES(MONDRIAAN,"我们隔壁\n住着两个孩子……",0)
+			MES(MONDRIAAN,"我觉得这样不太好呢。\n放任孩子自己生活什么的……\n应该多考虑考虑面子问题吧。",0)
+			MES(MONDRIAAN,"而且，那两个孩子\n的关系不太好哦。",0)
+			MES(MONDRIAAN,"就连我们家\n都能听到争吵声呢。",0)
+			MES_close(MONDRIAAN)
+
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MONDRIAAN,"别的不提，\n我也希望这种噪音能停止。",0)
+			MES(MONDRIAAN,"哈其和修克拉会\n睡不好觉的。",0)
+			MES_close(MONDRIAAN)
+
+		//　　夫人にぷんすかエモーション。
+			EMO(MONDRIAAN,EMO_AOSUZI)
+			wait(30)
+
+			MES(MONDRIAAN,"P1S3我家的小猫\n要是被吵得神经衰弱了\n要怎么办！？",0)
+			MES_close(MONDRIAAN)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（好凶……）",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾尔雯先頭")
+			{
+				MES(PARTNER,"（竭斯底里了吗……）",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		}
+		MOT(MONDRIAAN,151,15)
+		look_off(MONDRIAAN)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※噴水之ベンチで座っている。
+	if( F1_15_GoVillage )
+	{
+		look_chr( MONDRIAAN, PLAYER1,"Bone_Head")
+		MOT_SET(MONDRIAAN,150,-1,561,561,-1,-1)	
+		MOT(MONDRIAAN,150,15)
+		if(!F_MONDRIAAN)
+		{
+			MES(MONDRIAAN,"虽然\n没说过……",0)
+			MES(MONDRIAAN,"这些孩子们\n只吃最高级的宠物食品哦。",0)
+			MES(MONDRIAAN,"每周，会通过连络航班\n送来特别订购的\n宠物食品。",0)
+			MES(MONDRIAAN,"因为罗亚鲁塔村的宠物商店\n已经库存不多了。",0)
+			MES_close(MONDRIAAN)
+
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MONDRIAAN,"这些孩子们\n只吃最高级的宠物食品哦。",0)
+			MES(MONDRIAAN,"尤其是小咪，\n它只吃金枪鱼饲料。",0)
+			MES_close(MONDRIAAN)
+		}
+		MOT(MONDRIAAN,151,15)
+		look_off(MONDRIAAN)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※民家１にいる。
+	//　　　周りに猫３匹がフリームーブしている。
+	if( F1_01_GameStart )
+	{
+		look_chr( MONDRIAAN, PLAYER1,"Bone_Head")
+		MOT_SET(MONDRIAAN,150,-1,561,561,-1,-1)	
+		MOT(MONDRIAAN,150,15)
+
+		if(!F_MONDRIAAN)
+		{
+			MES(MONDRIAAN,"差不多是散步时间了。",0)
+			MES(MONDRIAAN,"养３只小猫的话，\n散步也不容易呢。",0)
+			MES(MONDRIAAN,"顺便一提，睫毛最长的是小咪，\n皮毛最浓密的是哈奇，\n走路姿势最优雅的是修克拉。",0)
+			MES_close(MONDRIAAN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"（就，就算你跟我说……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（唔，不知道哪只是哪只呢。）",0)
+			MES_close(PARTNER)
+
+			//★モンドレアン【猫之名前】
+			F_set_note(MONDRIAAN,0)
+			F_set(MONDRIAAN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MONDRIAAN,"我先生啊，\n最近开始养狗了。",0)
+			MES(MONDRIAAN,"而且还是那种没品的狗……",0)
+			MES(MONDRIAAN,"明明就有这些这么可爱的孩子，\n真是搞不懂他在想什么。",0)
+			MES_close(MONDRIAAN)
+		}
+		MOT(MONDRIAAN,151,15)
+		look_off(MONDRIAAN)
+	}
+	
+	TK_end()
+}
+//会話時之モーション
+MOTION_TK_MONDRIAAN
+{
+	MOT_SET(MONDRIAAN,150,-1,415,415,151,15)		//モンドレアン会話
+	MOT_SET(MONDRIAAN,151,-1,416,416,152,15)		//モンドレアン会話
+	MOT_SET(MONDRIAAN,152,-1,417,417,150,15)		//モンドレアン会話
+	MOT(MONDRIAAN,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

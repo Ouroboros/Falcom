@@ -1,0 +1,696 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僶乕儈儕傾乮戝摴寍恖乯Vermilia")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_VERMILIA
+{
+	TK_begin()
+	look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(VERMILIA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,VERMILIA)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,VERMILIA)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,VERMILIA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,VERMILIA)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸栰奜僗僥乕僕偱丄戝摴寍傪偟偰偄傞丅
+	if( F6_05_EndSixth )
+	{
+		if(!FT_13_TalkVermilia)
+		{
+			MES(VERMILIA,"最近有一些打扮很奇怪的人\n過來觀看表演。",0)
+			MES(VERMILIA,"好開心。\n客人越多，\n巴米利亞就越有熱情。",0)
+			MES(VERMILIA,"要說為什麼，那是因為\n巴米利亞永遠都是快樂的賣藝人～☆",0)
+			MES_close(VERMILIA)
+
+			F_set(FT_13_TalkVermilia)
+		}
+		else
+		{
+		//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			if(!F_VERMILIA)
+			{
+				MES(VERMILIA,"其實巴米利亞\n會這麼高興\n還有一個原因。",0)
+				MES(VERMILIA,"之前和一隻可愛的\n小貓作了朋友。\n好像是隻迷路的小貓呢。",0)
+				MES_close(VERMILIA)
+
+			//丂丂僶乕儈儕傾偵丒丒丒僄儌乕僔儑儞丅
+				EMO(VERMILIA,EMO_TENTEN)
+				wait(30)
+				look_off(VERMILIA)
+				wait(20)
+				MES(VERMILIA,"P1S3巴米利亞可是\n非常喜歡小貓的～！！",0)
+				MES_close(VERMILIA)
+				wait_MES(VERMILIA)
+				wait(5)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（啊……\n 所以帽子才是那樣的。）",0)
+				MES_close(RAGNA)
+
+			//丂丂仛僶乕儈儕傾亂巕擫亃
+				F_set_note(VERMILIA,2)
+				F_set(VERMILIA)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(VERMILIA,"巴米利亞\n喜歡所有動物。",0)
+				MES(VERMILIA,"可是，最喜歡的\n還是小貓～。",0)
+				MES(VERMILIA,"希望那隻小貓\n還會過來看我。",0)
+				MES(VERMILIA,"巴米利亞\n永遠歡迎它～☆",0)
+				MES_close(VERMILIA)
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸柉壠俁偺慜偺抜嵎偵崢妡偗偰偄傞丅
+	//丂丂丂偱偒傟偽橂偔丅
+	if( F6_00_GoToMeru )
+	{
+		look_chr( VERMILIA, PLAYER1,"Bone_Head")
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓丄傢傜偟傋僀儀儞僩屻偺仴嘖捠忢堦斒儊僢僙乕僕丅
+		//丂仸傾僀僥儉乽偽傫偦偆偙偆乿偺昞帵偑敿摟柧埲忋丂偱敾掕偟偰傑偡(媨嶈)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(FV_11_Warasi11_Vml)
+		{
+			MES(VERMILIA,"呵呵呵……\n現在巴米利亞\n有了秘密武器。",0)
+			MES(VERMILIA,"用這個變聲器，我一定\n能為舞臺贏回人氣。",0)
+			MES(VERMILIA,"巴米利亞是不會\n輸給什麼旋風的～！",0)
+			MES_close(VERMILIA)	
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//仴丂傢傜偟傋僀儀儞僩
+		//	name("11丏戝摴寍恖乮傾儖僢僥偺挰乯	亀曄惡婍亁佀亀偽傫偦偆偙偆亁")153
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		else
+		if(FV_11_Warasi10_Wzn && !FV_11_Warasi11_Vml)
+		{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(!F_VERMILIA)
+			{
+			//	name("佀弶夞偺応崌")
+			//丂丂僶乕儈儕傾偵俹俙僄儌乕僔儑儞丅
+				EMO(VERMILIA,EMO_PAI)
+				wait(30)
+				MES(VERMILIA,"唉呀～……？",0)
+				MES(VERMILIA,"你們帶著的\n莫非是「變聲器」～？",0)
+				MES(VERMILIA,"唔唔唔……站在街頭的\n巴米利亞發出奇怪的聲音……",0)
+				MOT(VERMILIA,50,15)
+				MES(VERMILIA,"這說不定能\n招攬到新的客人！",0)
+				MES(VERMILIA,"拜託你們了。\n把那個變聲器送給我吧～！",0)
+				MES_close(VERMILIA)
+				
+				//仛弶夞
+				F_set(VERMILIA)
+			}
+			else
+			{
+			//	name("佀俀夞栚埲崀")
+				MOT(VERMILIA,50,15)
+				MES(VERMILIA,"只要有那個「變聲器」，\n肯定能招攬到新的客人。",0)
+				MES(VERMILIA,"拜託你們了。\n把那個變聲器送給我吧～！",0)
+				MES_close(VERMILIA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("慖戰僥僉僗僩")
+			workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【當然沒問題～！】\n【這可不行。】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀亂儌僠儘儞側偺偩乣両亃")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(WK_YESNO==1)
+			{
+				MES(VERMILIA,"哦～，你們\n果然慷慨大方。",0)
+				MES(VERMILIA,"好，就把這個\n送給你們當謝禮吧～！",0)
+				MES_close(VERMILIA)
+
+			//	name("傾僀僥儉擖庤僥僉僗僩")
+			//	MES(this,"亀偽傫偦偆偙偆亁傪傕傜偭偨丅",0)
+				//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+				fade_in(30,10,BLACK)
+
+				get_item(152,-1,1)
+				get_item(153,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+			//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PARTNER,EMO_HATENA)
+				EMO(PET,EMO_HATENA)
+				wait(30)
+
+				MES(VERMILIA,"練習雜耍的時候\n經常會受些小傷。\nＯＫ绷是不可或缺的。",0)
+				MES(VERMILIA,"不過對於技藝高超的巴米利亞而言，\n已經不需要這東西了～☆",0)
+				MES_close(VERMILIA)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				if(GW_MAN==1)
+				{
+				//	name("佀儔僌僫愭摢")
+					MES(RAGNA,"原…原來如此啊。\n那我就收下了。",0)
+					MES(RAGNA,"（不過現在我\n 受到這種小傷，\n 傷口馬上就能愈合了呢……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("佀傾儖僂僃儞愭摢")
+					MES(PARTNER,"唔，原來如此。\n是這麼回事啊。",0)
+					MES(PARTNER,"（不管怎麼說，\n 對身為吸血鬼的我而言，\n ＯＫ绷毫無用處啊……）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				F_reset(VERMILIA)
+				F_set(FV_11_Warasi11_Vml)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀亂僟儊側偺偩丅亃")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			{
+				MES(VERMILIA,"嗚，令人失望。",0)
+				MES(VERMILIA,"可是你們這麼說，\n我也沒有辦法～……",0)
+				MES_close(VERMILIA)
+				MOT(VERMILIA,151,15)
+			}
+		}
+		else
+		if(!F_VERMILIA)
+		{
+			MES(RAGNA,"咦，她意志消沈地\n待在這裡……",0)
+			MES_close(RAGNA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀傑偩儌乕儕僗偺榖傪尒偰偄側偄丅")
+			if(!FT_12_TalkMaurice)
+			{
+				MES(PARTNER,"唔，究竟怎麼了……？",0)
+				MES_close(PARTNER)
+			}
+			else
+			{
+			//	name("佀儌乕儕僗偺榖傪暦偄偨")
+				MES(PARTNER,"唔，是因為不能再用\n那裡當舞臺了吧。",0)
+				MES_close(PARTNER)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂僶乕儈儕傾丄婄傪忋偘傞丅
+			MES(VERMILIA,"巴米利亞\n沒有工作了。",0)
+			MES(VERMILIA,"……………………………………",0)
+			MES_close(VERMILIA)
+
+		//丂丂僶乕儈儕傾丄橂偔丅
+			MES(VERMILIA,"唉，不行呀。\n沒有舞臺就打不起幹勁～。",0)
+			MES_close(VERMILIA)
+
+
+			F_set(VERMILIA)
+		}
+	//丂丂仛孞傝曉偟
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(VERMILIA,"巴米利亞\n必須要站在舞臺上～。",0)
+			MES(VERMILIA,"沒有客人的話……",0)
+			MES(VERMILIA,"唉，越來越沒有\n幹勁了啊～……",0)
+			MES_close(VERMILIA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸栰奜僗僥乕僕偱丄戝摴寍傪偟偰偄傞丅
+	if( F5_00_HearLunar )
+	{
+		look_chr( VERMILIA, PLAYER1,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"你們聽說過\n藝術之城\n羅托嗎？",0)
+			MES(VERMILIA,"以前從師父那裡聽說……\n那時一座位於中央大陸的城市，\n裡面住著很多藝術家。",0)
+			MES(VERMILIA,"肯定是個\n非常有趣的地方。",0)
+			MES(VERMILIA,"巴米利亞\n也想去一次！",0)
+			MES_close(VERMILIA)
+			F_set(VERMILIA)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			MES(VERMILIA,"巴米利亞\n也想去那個被稱為\n藝術之城的地方！",0)
+			MES(VERMILIA,"……所以說，\n希望你們路過時\n能夠扔給我一些硬幣。",0)
+			MES(VERMILIA,"數量多少\n都沒有關係——！",0)
+			MES_close(VERMILIA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸栰奜僗僥乕僕偱丄戝摴寍傪偟偰偄傞丅
+	//丂丂仸戝摴寍恖偼庱偩偗偱怳傝岦偒丄懱偺岦偒偼曄偊側偄丅
+	//丂丂仸僗僶儖偑偄傞応崌偺傒丄侾夞偩偗埲壓偺僀儀儞僩傪峴偆丅
+	if( F4_00_StartSolo )
+	{
+		//僗僶儖崌棳慜
+		if(!F4_02_GoVillage2)
+		{
+			look_chr( VERMILIA, PLAYER1,"Bone_Head")
+			if(!F_VERMILIA)
+			{
+				MES(VERMILIA,"客…客人\n突然變少了。",0)
+				MES(VERMILIA,"路過的人看起來都很忙，\n不肯停下來看我表演……",0)
+				MES(VERMILIA,"巴…巴米利亞\n陷入危機～！",0)
+				MES_close(VERMILIA)
+				
+				F_set(VERMILIA)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(VERMILIA,"說起來，鎮上那邊\n可以看到城堡一樣的東西。",0)
+				MES(VERMILIA,"那麼大的城堡竟然只用一天就能建成，\n實在是令人不可思議……",0)
+				MES(VERMILIA,"大家都去那裡\n遊覽了嗎～？",0)
+				MES_close(VERMILIA)
+			}
+		}
+		//僗僶儖崌棳屻
+		else
+		{
+			if(!FT_07_TalkVermilia)
+			{
+				//丂丂僶乕儈儕傾偵俹俙僄儌乕僔儑儞丅庱偩偗偱僗僶儖偵怳傝岦偔丅
+				EMO(VERMILIA,EMO_PA)
+				wait(30)
+			
+				look_chr( VERMILIA, PARTNER ,"Bone_Head")
+						
+				MES(VERMILIA,"唉呀，你是……",0)
+				MES(VERMILIA,"以前在\n屋簷上的那個孩子啊。",0)
+				MES_close(VERMILIA)
+
+			//丂丂僗僶儖偵傾僙傾僙僄儌乕僔儑儞丅
+				EMO(PARTNER,EMO_ASEASE)
+				wait(30)
+
+				MES(PARTNER,"那個。確實……\n（咦？\n 我明明使用了隱形忍術……）",0)
+				MES_close(PARTNER)
+
+			//丂丂僶乕儈儕傾丄懱偛偲僗僶儖偺曽偵岦偔丅
+				rot_chr(VERMILIA,30,PARTNER)
+				MES(VERMILIA,"唔，莫非……",0)
+				MES(VERMILIA,"你是一位忍者，\n住在與世隔絕的村莊之中？",0)
+				MES_close(VERMILIA)
+
+			//丂丂儔僌僫偨偪偵寖偟偄両僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_TOGEBIKKURI)
+				EMO(PARTNER,EMO_TOGEBIKKURI)
+				wait(30)
+				
+				MES(PARTNER,"哎，怎麼會……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"為…為什麼這麼說……！？",0)
+				MES_close(RAGNA)
+
+			//丂丂僶乕儈儕傾偵丒丒丒僄儌乕僔儑儞丅
+				EMO(VERMILIA,EMO_TENTEN)
+				wait(30)
+				
+				MES(VERMILIA,"因為這樣才有趣嘛?",0)
+				MES_close(VERMILIA)
+
+			//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"什…什麼啊。\n只是隨便想的呀……",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"唉，嚇死我了……",0)
+				MES_close(PARTNER)
+
+			//	name2(VERMILIA)
+				MES(VERMILIA,"我不知道你\n從哪裡來……",0)
+				MES(VERMILIA,"可是不管是誰，到了這裡\n就都是巴米利亞的客人。",0)
+				MES(VERMILIA,"請慢慢欣賞吧～☆",0)
+				MES_close(VERMILIA)
+
+				//仛僶乕儈儕傾亂堄奜偵塻偄亃
+				F_set_note(VERMILIA,1)
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				rot(VERMILIA,30,51)
+				F_set(FT_07_TalkVermilia)
+			}
+		//丂丂仸僗僶儖崌棳屻偺弶夞僀儀儞僩傪尒偨屻偺捠忢堦斒儊僢僙乕僕丅
+			else
+			{
+				//儁儞僊儞偑嫃傞応崌
+				if(FV_02_VisitGyakata)
+				{
+					if(!F_VERMILIA)
+					{
+						MES(VERMILIA,"最近賺得很少啊……",0)
+						MES(VERMILIA,"今天也有個奇怪的孩子\n過來觀看表演了。",0)
+						MES(VERMILIA,"企鵝……？",0)
+						MES(VERMILIA,"就連巴米利亞\n也被嚇了一跳～！",0)
+						MES_close(VERMILIA)
+						F_set(VERMILIA)
+					}
+					//丂丂仛孞傝曉偟
+					else
+					{
+						MES(VERMILIA,"巴米利亞也是\n第一次看見企鵝呢。",0)
+						MES(VERMILIA,"不過……不管是誰，\n到了這裡\n就都是巴米利亞的客人。",0)
+						MES(VERMILIA,"看著，\n我要努力表演了～☆",0)
+						MES_close(VERMILIA)
+					}
+				}
+				//嫃側偄応崌
+				else
+				{
+					if(!F_VERMILIA)
+					{
+						MES(VERMILIA,"最近賺得很少啊……",0)
+						MES(VERMILIA,"只要有一位觀眾，\n巴米利亞就很高興。",0)
+						MES(VERMILIA,"請慢慢欣賞吧～☆",0)
+						MES_close(VERMILIA)
+						F_set(VERMILIA)
+
+					}
+					else
+					{
+					//丂丂仛孞傝曉偟
+						MES(VERMILIA,"只要有一位觀眾，\n巴米利亞就很高興。",0)
+						MES(VERMILIA,"看著，\n我要努力表演了～☆",0)
+						MES_close(VERMILIA)
+					}
+				}
+			}
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//攝抲側偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸栰奜僗僥乕僕偱丄戝摴寍傪偟偰偄傞丅
+	//丂丂仸戝摴寍恖偼庱偩偗偱怳傝岦偒丄懱偺岦偒偼曄偊側偄丅
+	if( F2_14_TalkEnemy )
+	{
+		look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"阿魯特鎮總能\n招來很多遊客。",0)
+			MES(VERMILIA,"和師父說的一樣，\n這裡的確是絕佳的表演地點～☆",0)
+			MES(VERMILIA,"另外，不知為什麼，\n巴米利亞的師父\n總是一身女傭裝扮。",0)
+			MES(VERMILIA,"原因至今仍然是個謎……\n他在我們這行當中\n也十分有名呢～！",0)
+			MES_close(VERMILIA)
+
+			F_set(VERMILIA)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+			MES(VERMILIA,"師父對我\n非常非常嚴格，\n我現在仍然很尊重他。",0)
+			MES(VERMILIA,"這個帽子……帽盔４號\n是我得到真傳時他送給我的。",0)
+			MES(VERMILIA,"現在它就是我巴米利亞\n的商標了～☆",0)
+			MES_close(VERMILIA)
+			
+			//仛僶乕儈儕傾亂朮巕亃
+			F_set_note(VERMILIA,0)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸栰奜僗僥乕僕偱丄戝摴寍傪偟偰偄傞丅
+	//丂丂仸戝摴寍恖偼庱偩偗偱怳傝岦偒丄懱偺岦偒偼曄偊側偄丅
+	//丂丂庱偩偗偱僗僶儖偑偄偨壆崻偺曽傪岦偒側偑傜丅
+	if( F2_00_GoForest )
+	{
+		if(!F_VERMILIA)
+		{
+			look(VERMILIA,"Bone_Head",0,		0,2,0,			0,-60,0)
+			MES(VERMILIA,"嗯～……",0)
+			MES(VERMILIA,"剛才那邊屋簷上\n好像有一個人影……",0)
+			MES(VERMILIA,"是錯覺嗎～？",0)
+			MES_close(VERMILIA)
+			F_set(VERMILIA)
+			look_off(VERMILIA)
+			look(VERMILIA,"Bone_Head",0,		0,2,0,			0,0,0)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			MES(VERMILIA,"我感覺剛才\n屋簷上好像有人……",0)
+			MES(VERMILIA,"……算了～。",0)
+			MES(VERMILIA,"巴米利亞不會\n在意這種小事的～☆",0)
+			MES_close(VERMILIA)
+		}
+
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸栰奜僗僥乕僕偱丄戝摴寍傪偟偰偄傞丅
+	//丂丂仸戝摴寍恖偼庱偩偗偱怳傝岦偒丄懱偺岦偒偼曄偊側偄丅
+	if( F1_15_GoVillage )
+	{
+		look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"今天有一隻小狗\n做我的觀眾。",0)
+			MES(VERMILIA,"不知為什麼，動物們\n就是很喜歡巴米利亞～。",0)
+			MES(VERMILIA,"以前在滿是牧場的大陸上\n表演時……",0)
+			MES(VERMILIA,"曾經被\n很多頭牛追著跑呢！",0)
+			MES_close(VERMILIA)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀儔僌僫愭摢")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"賣…賣藝也是件麻煩事呢……",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("佀傾儖僂僃儞愭摢")
+			{
+				MES(PARTNER,"（好像很開心呢……）",0)
+				MES_close(PARTNER)
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			F_set(VERMILIA)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(VERMILIA,"巴米利亞的雜耍表演\n世界共通，甚至跨越了種族。",0)
+			MES(VERMILIA,"……所以說，\n希望你們走過路過\n也能扔給我一些硬幣。",0)
+			MES(VERMILIA,"數量多少\n都沒有關係——！",0)
+			MES_close(VERMILIA)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//丂丂仸栰奜僗僥乕僕偱丄戝摴寍傪偟偰偄傞丅
+//丂丂仸戝摴寍恖偼庱偩偗偱怳傝岦偒丄懱偺岦偒偼曄偊側偄丅
+	if( F1_01_GameStart )
+	{
+		look_chr( VERMILIA, PLAYER1 ,"Bone_Head")
+		if(!F_VERMILIA)
+		{
+			MES(VERMILIA,"哦—，大家來看大家來看！",0)
+			MES(VERMILIA,"巴米利亞的雜耍表演哦☆",0)
+			MES_close(VERMILIA)
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀侾夞偺傒埲壓偺儊僢僙乕僕傪憓擖丅")
+		//丂丂僶乕儈儕傾偵俹俙僄儌乕僔儑儞丅
+			if(!FT_01_TalkVermilia)
+			{
+				EMO(VERMILIA,EMO_PA)
+			
+				look_chr( VERMILIA, PARTNER ,"Bone_Head")
+				MES(VERMILIA,"唉呀，你們是第一次看雜耍嗎～？",0)
+				MES_close(VERMILIA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"唔，\n我還沒見過\n這種表演。",0)
+				MES(PARTNER,"呵呵，人類的城鎮\n很有活力呢。",0)
+				MES_close(PARTNER)
+				
+				look_chr(RAGNA,PARTNER,"Bone_Head")
+			//	name2(RAGNA)
+				MES(RAGNA,"嗯……也不是\n每個城鎮都這樣。",0)
+				MES(RAGNA,"阿魯特這裡有飛機場。\n所以遊客比較多，\n氣氛自然就會活躍。",0)
+				MES_close(RAGNA)
+				look_off(RAGNA)
+
+			//	name2(VERMILIA)
+				MES(VERMILIA,"唔唔，原來如此。\n這也有道理。",0)
+				rot_chr(RAGNA,30,VERMILIA)
+				MES(VERMILIA,"不過真正的原因是……",0)
+				MES(VERMILIA,"P1S4這裡有一位充滿活力的\n巴米利亞！",0)
+				MES_close(VERMILIA)
+
+
+			//	name2(PARTNER)
+				MES(PARTNER,"是…是這樣啊……",0)
+				MES_close(PARTNER)
+
+			//	name2(VERMILIA)
+				MES(VERMILIA,"好了，\n歡迎你們參觀～。",0)
+				MES(VERMILIA,"你們就好好欣賞\n我巴米利亞的雜耍吧～☆",0)
+				MES_close(VERMILIA)
+				
+				F_set(FT_01_TalkVermilia)
+			}
+			
+			F_set(VERMILIA)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(VERMILIA,"哦哦……\n今天客人也不少呢。",0)
+			MES(VERMILIA,"我要努力表演了☆",0)
+			MES_close(VERMILIA)
+		}
+	}
+	
+	look_off(VERMILIA)
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨
+//丂丂仸攝抲側偟丅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//仴嘗
+
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅

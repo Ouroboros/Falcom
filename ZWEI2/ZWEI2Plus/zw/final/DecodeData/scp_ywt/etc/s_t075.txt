@@ -1,0 +1,333 @@
+//仭Zwei2堦斒儊僢僙乕僕丒惎崀傝偺棦 TEST
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧儎僒僋乮偒偙傝乯Yasaku")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_YASAKU
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(YASAKU, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,YASAKU)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,YASAKU)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,YASAKU)
+		}
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕嘖丂傢傜偟傋僀儀儞僩
+	//	name("侾丏儎僒僋乮惎崀傝偺棦乯		佀亀戦偺挙傝暔亁")143
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar && !FV_11_Warasi_1_Ysk)
+	{
+	//丂丂儎僒僋丄儔僌僫偵岦偔丅
+		//嘕偱偼庱偩偗摦偐偡
+		if(!F6_00_GoToMeru)
+		{
+			look_chr(YASAKU, RAGNA, "Bone_Head")
+		}
+		//嘖偱偼懱偛偲摦偐偡
+		else
+		{
+			MOT(YASAKU,52,10)
+			rot_chr(YASAKU,30,PLAYER1)
+		}
+
+		MES(YASAKU,"是你們啊……",0)
+		MES(YASAKU,"昨天多謝你們了。\n這個拿去吧。",0)
+		MES_close(YASAKU)
+
+	//	name("傾僀僥儉擖庤僥僉僗僩")
+	//	MES(this,"亀戦偺挙傝暔亁傪庤偵擖傟偨丅",0)
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+		fade_in(30,10,BLACK)
+
+		get_item(143,1,0)
+		wait(10)
+		wait_key(0)
+		
+		fade_in(0,10,BLACK)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		//乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗乗
+
+		MES(RAGNA,"啊，嗯。謝謝。",0)
+		MES_close(RAGNA)
+
+	//	name2(PET)
+		MES(PET,"哎……\n這雕刻還是很生動的呢。",0)
+		MES_close(PET)
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//	name("佀傾儖僂僃儞愭摢")
+		if(GW_MAN==0 && F6_00_GoToMeru)
+		{
+			MES(PARTNER,"唔，看起來\n做得很認真啊。",0)
+			MES_close(PARTNER)
+		}
+		//	name("佀儔僌僫愭摢")
+//		else
+//		{
+//			MES(RAGNA,"偁偁丄偐側傝挌擩偵\n嶌傝崬傫偱偁傞昳傒偨偄偩側丅",0)
+//			MES_close(RAGNA)			
+//		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+		MES(YASAKU,"這是我花了三年時間雕出的傑作。\n你們可要小心保管哦。",0)
+		MES_close(YASAKU)
+
+	//丂丂儔僌僫偨偪偵椻傗娋僄儌乕僔儑儞丅
+		EMO(RAGNA,EMO_HIYAASE)
+		EMO(PET,EMO_HIYAASE)
+		
+		//傾儖僂僃儞偑嫃傞
+		if(F6_00_GoToMeru)
+		{
+			EMO(PARTNER,EMO_HIYAASE)
+		}
+		else
+		//僆僨僢僒偑嫃傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			EMO(PARTNER,EMO_HIYAASE)
+		}
+		wait(30)
+		
+		MES(RAGNA,"（突然間拿到了一件\n 如此貴重的東西。）",0)
+		MES(RAGNA,"（怎…怎麼辦好呢……）",0)
+		MES_close(RAGNA)
+		
+		//仛儎僒僋亂挙傝暔傪偡傞亃
+		F_set_note(YASAKU,1)
+		F_set(FV_11_Warasi_1_Ysk)
+		
+		if(!F6_00_GoToMeru)
+		{
+			look_off(YASAKU)
+		}
+		else
+		{
+			MOT(YASAKU,2,10)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸柉壠侾偺慜偁偨傝偱丄巇帠偟偰偄傞丅
+	if(F6_00_GoToMeru)
+	{
+		MOT(YASAKU,52,10)
+		rot_chr(YASAKU,30,PLAYER1)
+		if(!F_YASAKU)
+		{
+//			MES(YASAKU,"乧乧傛偦幰偑\n柪偄崬傓偲偼捒偟偄側丅",0)
+//			MES(YASAKU,"傑偁嬤崰偼丄棦偺楢拞傕\n摢偑廮傜偐偔側偭偰偒偨丅",0)
+//			MES(YASAKU,"尒偨強戝恖偟偦偆側抝偱偼偁傞偟丄\n戝帠偵偼帄傜傫偩傠偆丅",0)
+//			MES_close(YASAKU)
+
+			look_chr(YASAKU,CLEESE,"Bone_Head")
+			MES(YASAKU,"唔，那個年輕人……\n看來是迷路\n闖進這裡的旅客啊。",0)
+			look_off(YASAKU)
+			MES(YASAKU,"這種時候\n也會發生這種稀罕事呢。",0)
+			MES(YASAKU,"不過最近，鄉里的傢伙們\n也沒有以前那麼頑固了。",0)
+			MES(YASAKU,"這個人看起來也算是老實，\n應該沒有什麼大問題吧。",0)
+			MES_close(YASAKU)
+
+/*			//	name("佀傑偩亀戦偺挙傝暔亁傪栣偭偰側偄応崌")
+			if( !FV_00_Warasi_1_Ysk )
+			{
+				MES(YASAKU,"偲偙傠偱乧乧",0)
+				MES(YASAKU,"偍慜偨偪偵偼\n愭擔傕悽榖偵側偭偨側丅",0)
+				MES(YASAKU,"偙傟傪帩偭偰峴偔偑偄偄丅",0)
+				MES_close(YASAKU)
+
+			//	name("傾僀僥儉擖庤僥僉僗僩")
+				fade_in(30,10,BLACK)
+
+				get_item(143,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			//丂丂仸傢傜偟傋僀儀儞僩梡偺傾僀僥儉偱偡丅
+
+				MES(YASAKU,"壌偑嶌偭偨傕偺偩丅",0)
+				MES(YASAKU,"戝偟偨傕偺偱偼側偄偑丄\n庴偗庢偭偰偍偄偰偔傟丅",0)
+				MES_close(YASAKU)
+				
+				F_set(FV_00_Warasi_1_Ysk)
+			}
+*/			
+			F_set(YASAKU)
+		}
+		//仛孞傝曉偟
+		else
+		{
+			MES(YASAKU,"最近，鄉里的傢伙們\n也沒有以前那麼頑固了。",0)
+			MES(YASAKU,"……這可能也是個不錯的趨勢吧。",0)
+			MES_close(YASAKU)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F5_00_HearLunar )
+	{
+		//丂丂仸柉壠侾丄墢懁偵嵗偭偰偄傞丅
+		//丂丂仸弶夞僀儀儞僩丅
+		look_chr(YASAKU, RAGNA, "Bone_Head")
+		if(!F_YASAKU)
+		{
+			//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+			MES(YASAKU,"無論如何，\n大五郎平安無事真是太好了。",0)
+			MES(YASAKU,"那次襲擊過程中，\n我也沒能保護好他。\n只好把他託付給了鴉……",0)
+			MES(YASAKU,"那孩子當時好像非常老實，\n連一滴眼淚都沒掉呢。",0)
+			MES(YASAKU,"唔……\n這樣我拚死\n保護他也算是得到回報了。",0)
+			MES_close(YASAKU)
+			
+			//仛僟僀僑儘乕亂媰偐側偄亃
+			F_set_note(-74,1)
+			F_set(YASAKU)
+		}
+		else
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仛孞傝曉偟
+			MES(YASAKU,"好了，我也差不多\n該開始幹活了。",0)
+			MES(YASAKU,"現在很有必要\n從山上砍些木頭回來。",0)
+			MES(YASAKU,"雖然傷口還沒有完全恢復……\n可是現如今能去雪山深處的\n也就只有我一個人了。",0)
+			MES_close(YASAKU)
+		}
+		look_off(YASAKU)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸棦擖傝岥晅嬤偱搢傟偰偄傞丅
+	if( F4_09_GoShrineMia )
+	{
+		MES(YASAKU,"………………………………",0)
+		MES_close(YASAKU)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸棦擖傝岥晅嬤偱搢傟偰偄傞丅
+	if( F4_06_StopAttack )
+	{
+		MES(YASAKU,"………………………………",0)
+		MES_close(YASAKU)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸柉壠侾偺慜偁偨傝偱丄巇帠偟偰偄傞丅
+	if( F4_05_OnVillage2 )
+	{
+		MOT(YASAKU,52,10)
+		rot_chr(YASAKU,30,PLAYER1)
+		//丂丂仸弶夞儊僢僙乕僕
+		if( !FS_08_TalkYasaku )
+		{
+			MES(YASAKU,"唔，你們是從修練場進來的啊。",0)
+			MES(YASAKU,"那邊的怪物還算\n比較老實了。",0)
+			MES(YASAKU,"後山……特別是神社附近\n會有凶暴的怪物出沒。",0)
+			MES(YASAKU,"天黑以後\n不要隨便出去哦。",0)
+			MES_close(YASAKU)
+			F_set(FS_08_TalkYasaku)
+			
+		//柤慜晅偒僉儍儔慡堳偵榖偟偐偗傞偲業揤晽楥偑奐偔
+			EV("EV_F4_12_OkRoten")
+		}
+		//仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_YASAKU)
+			{
+				MES(YASAKU,"後山有一間神社，\n那是落星之鄉的象徵。",0)
+				MES(YASAKU,"不過那附近也有不少\n凶暴的怪物出沒。",0)
+				MES(YASAKU,"天黑之後尤其危險。",0)
+				MES(YASAKU,"到時候不要\n隨便出去哦。",0)
+				MES_close(YASAKU)
+				F_set(YASAKU)
+			}
+			else
+			{
+			//丂丂仛孞傝曉偟
+				MES(YASAKU,"還有，你們看到\n大五郎了嗎？",0)
+				MES(YASAKU,"剛才還看見他在\n雜貨店門口玩……",0)
+				MES(YASAKU,"唔，那孩子\n總是四處亂跑。",0)
+//				MES(YASAKU,"崱搙偐傜偼扤偐偵\n梐偗偰偍偔偲偡傞偐乧乧",0)
+				MES(YASAKU,"到底是像誰呢……",0)
+				MES_close(YASAKU)
+				
+				//仛儎僒僋亂僟僀僑儘乕偼懅巕亃
+				//仛僟僀僑儘乕亂僼儔僼儔弌偐偗傞亃
+				F_set_note(YASAKU,0)
+				F_set_note(-74,0)
+			}
+		}
+		MOT(YASAKU,2,10)
+	}
+	TK_end()
+}
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

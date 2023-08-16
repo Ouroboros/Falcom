@@ -1,0 +1,658 @@
+//──────────────────────────────
+//	name("◆怀森村长（村长）Widezen")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_WIDEZEN
+{
+	TK_begin()
+	rot_chr(WIDEZEN,15,PLAYER1)
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(WIDEZEN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,WIDEZEN)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,WIDEZEN)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WIDEZEN)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WIDEZEN)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WIDEZEN)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WIDEZEN)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,WIDEZEN)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※村长宅前、穴之開いた巨大にんじんを見ている。
+	if( F6_05_EndSixth )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"你们别看我这个样子，\n我年轻的时候可是相当狂放的。",0)
+			MES(WIDEZEN,"不仅到各个大陆旅行，\n而且还没日没夜地跑遍了\n当地的迪厅和卡啦ＯＫ厅。",0)
+			MES(WIDEZEN,"不过随着年岁渐长，\n这种思乡的感情也强烈了起来。",0)
+			MES(WIDEZEN,"于是就在这个村子里，作为村长，\n过起了谦虚谨慎的生活。",0)
+			MES_close(WIDEZEN)
+
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+		//	EMO(PARTNER,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			wait(30)
+			
+			MES(RAGNA,"（这是什么样的前半生啊……）",0)
+			MES_close(RAGNA)
+
+		//	name2(WIDEZEN)
+			MES(WIDEZEN,"呵呵，果然待在这个生养我的村子里\n才是最安心的啊。",0)
+			MES_close(WIDEZEN)
+
+		//　　村长、向きを戻す。
+			MES(WIDEZEN,"话说回来……\n田里的胡萝卜上，\n有个陌生的洞呢。",0)
+			MES(WIDEZEN,"嗯，那个洞\n从以前开始就有吗？\n可能是老鹰之类的干的吧……",0)
+			MES_close(WIDEZEN)
+
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"嗯，这个村子今天也很和平啊。",0)
+			MES_close(WIDEZEN)
+
+		//　　村长、向きを戻す。
+			MES(WIDEZEN,"话说回来……\n田里的胡萝卜上，\n有个陌生的洞呢。",0)
+			MES(WIDEZEN,"嗯，那是老鹰还是什么东西\n干的好事吧。",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※村长宅前に立っている。
+	if( F6_00_GoToMeru )
+	{
+		//──────────────────────────────
+		//▼　わらしべイベント
+		//	name("10·怀森（罗亚鲁塔村）		『手裏剑』□『変声器』")152
+		//──────────────────────────────
+		if(FV_11_Warasi_9_Nja && !FV_11_Warasi10_Wzn)
+		{
+			//──────────────────────────────
+			if(!F_WIDEZEN)
+			{
+			//	name("□初回之场合")
+			//　　村长に！エモ～ション。
+				EMO(WIDEZEN,EMO_BIKKURI)
+				wait(30)
+				MES(WIDEZEN,"这，这是传说中的……",0)
+				MES(WIDEZEN,"这不是大人小孩通吃，\n无论是谁都必定\n憧憬过的道具『手里剑』吗！",0)
+				MES(WIDEZEN,"哎呀，你们居然带着\n这么珍贵的东西。",0)
+				MES(WIDEZEN,"呼呼呼，原来是这样啊。\n这把手里剑\n能不能让给我呢？",0)
+				MES_close(WIDEZEN)
+				
+				F_set(WIDEZEN)
+			}
+			else
+			{
+			//	name("□２回目以降。")
+				MES(WIDEZEN,"没想到竟然是『手里剑』啊……\n哎呀，你们居然带着\n这么珍贵的东西。",0)
+				MES(WIDEZEN,"这才是\n男人的浪漫啊，浪漫。",0)
+				MES(WIDEZEN,"……怎么样？\n这把手里剑\n能不能让给我呢？",0)
+				MES_close(WIDEZEN)
+			}
+			//──────────────────────────────
+		//	name("選択テキスト")
+			workL(WK_CANCEL,SET,2)//【取消】
+			MES_pos(PLAYER1,"??W9【可以啊】\n【那可不行】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+
+			//──────────────────────────────
+			//	name("□【いいとも】")
+			//──────────────────────────────
+			if(WK_YESNO==1)
+			{
+				MES(WIDEZEN,"哦呵呵，哎呀哎呀……",0)
+				MES(WIDEZEN,"哎呀，真货的感觉\n果然让人忍不住兴奋啊□",0)
+				MES_close(WIDEZEN)
+
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+				
+				MES(WIDEZEN,"对了，作为交换，\n你们就把这个拿去吧。",0)
+				MES_close(WIDEZEN)
+
+			//	name("アイテム入手テキスト")
+			//	MES(this,"得到了『变声器』。",0)
+				//―――――――――――――――――――――――
+				fade_in(30,10,BLACK)
+
+				get_item(151,-1,1)
+				get_item(152,1,0)
+				wait(10)
+				wait_key(0)
+				
+				fade_in(0,10,BLACK)
+				menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+				//―――――――――――――――――――――――
+
+			//	name2(WIDEZEN)
+				MES(WIDEZEN,"用了这个的话，\n肯定会大受欢迎的哟。",0)
+				MES_close(WIDEZEN)
+
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				EMO(PET,EMO_HIYAASE)
+				wait(30)
+
+				//──────────────────────────────
+				if(GW_MAN==1)
+				{
+				//	name("□拉古那先頭")
+					MES(RAGNA,"（到底要用在哪里啊……？）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□艾雯先頭")
+					MES(PARTNER,"（为，为什么小村庄的村长\n  会有\n  这种东西……？）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				F_reset(WIDEZEN)
+				F_set(FV_11_Warasi10_Wzn)
+			}
+			//──────────────────────────────
+			//　　□【ダメダメ】
+			//──────────────────────────────
+			else
+			{
+				MES(WIDEZEN,"这，这样啊。\n真遗憾……",0)
+				MES_close(WIDEZEN)
+			}
+		}
+		else
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"事情的经过我从菲奥娜大人那里听说了。\n没什么需要担心的。",0)
+			MES(WIDEZEN,"只是天气稍微有点要起风暴的样子而已。\n和大家商量一下的话，\n田里的工作还是能管理的。",0)
+			MES(WIDEZEN,"这个村子的和平是不会改变的。",0)
+			MES(WIDEZEN,"我会一直\n在心里祈祷的。",0)
+			MES_close(WIDEZEN)
+
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"这个村庄一直都很和平。",0)
+			MES(WIDEZEN,"在这个村子里，\n住着守护精灵哦。",0)
+			MES(WIDEZEN,"虽然我看不见他，但我一直\n都在心中向他祈祷。",0)
+			MES(WIDEZEN,"所以，不用担心",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	//　　※村长宅前に立っている。
+	if( F5_00_HearLunar )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"哦哦，你们知道吗。",0)
+			MES(WIDEZEN,"其实啊，\n我的生日很快就要到了。",0)
+			MES(WIDEZEN,"呵呵呵，即使是到了这个岁数，\n说到生日还是很高兴的。",0)
+			MES(WIDEZEN,"今年，\n大家也一定会替我盛大地庆祝一番吧。\n……真是好期待呀。",0)
+			MES_close(WIDEZEN)
+
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"其实啊，\n我的生日就快到了。",0)
+			MES(WIDEZEN,"到时候会举办\n盛大的宴会。",0)
+			MES(WIDEZEN,"……怎么样，一起来参加吧？",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//いない
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※村长宅前に立っている。
+	if( F4_00_StartSolo )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"昨天晚上的事\n我都没什么印象了……",0)
+			MES(WIDEZEN,"只记得有人和黑云一起到来，\n把村民都控制了。",0)
+			MES(WIDEZEN,"然后我挥舞着剑，\n哗啦啦地扫平了魔兽，\n终于把大家都救了出来……",0)
+			MES(WIDEZEN,"咦，那好像是梦吧……？",0)
+			MES_close(WIDEZEN)
+
+		//──────────────────────────────
+		//	name("□昴がいる场合")
+			if(F4_02_GoVillage2)
+			{
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(PARTNER,"呃，那个……",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"好像是把现实和幻想\n混成一团了啊……",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//　　拉古那に冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"（那是啥啊……）",0)
+				MES_close(RAGNA)
+			}
+		//──────────────────────────────
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"哼，然后，\n就在我终于\n要和女主角双宿双飞的时候……",0)
+			MES(WIDEZEN,"居然醒过来了，\n真是太遗憾了……",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※倒れている。メッセ～ジなし。（梅ン参照）
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※村长宅前に立っている。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"我很喜欢\n晒日光浴啊。",0)
+			MES(WIDEZEN,"像这样晒着太阳，\n就会涌起许多想法。",0)
+			MES(WIDEZEN,"呵呵……今天也一整天\n都沉浸在快乐的想像中吧。",0)
+			MES_close(WIDEZEN)
+
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"日光浴很舒服的。",0)
+			MES(WIDEZEN,"怎么样，要不要一起来啊？",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パ～ツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※村长宅前に立っている。
+	if( F2_00_GoForest )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"哦哦，你们知道吗。",0)
+			MES(WIDEZEN,"今天我去散步的时候，\n不知道为什么，\n神殿前出现了一条平整的通道。",0)
+			MES(WIDEZEN,"嗯，这一定是住在村子里的\n精灵所做的吧。",0)
+			MES(WIDEZEN,"呼呼呼，这件事我一定要\n记录在我的年表上。",0)
+			MES_close(WIDEZEN)
+
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			MES(RAGNA,"（呃，这里面\n  貌似有什么误会吧……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（嗯，这样一来就变得方便了，\n  这也没什么不好。）",0)
+			MES_close(PARTNER)
+
+			F_set(WIDEZEN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(WIDEZEN,"传说，在这个村子里\n住着我们看不见的精灵。",0)
+			MES(WIDEZEN,"每个年快到收获祭典的时候，\n他就会在村子的某些地方\n引起怪事。",0)
+			MES(WIDEZEN,"不过，还真是没想到\n他会造出那样的道路来呢。",0)
+			MES(WIDEZEN,"呼呼呼，这件事我一定要\n记录在我的年表上。",0)
+			MES_close(WIDEZEN)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※村长宅前に立っている。
+	if( F1_15_GoVillage )
+	{
+	//　　※神殿前で皮皮洛たちと会う前
+		if(!F1_17_MeetPipiPoc)
+		{
+			if(!F_WIDEZEN)
+			{
+				MES(WIDEZEN,"哦呀……你们\n也是要到神殿那里去吗？",0)
+				MES_close(WIDEZEN)
+
+			//──────────────────────────────
+			//	name("□神殿に行ったことがない")
+				if(!F1_23_VisitTenple)
+				{
+				//　　拉古那たちに？エモ～ション。
+					EMO(RAGNA,EMO_HATENA)
+					EMO(PARTNER,EMO_HATENA)
+					wait(30)
+					
+					MES(RAGNA,"神殿……？",0)
+					MES_close(RAGNA)
+
+				//	name2(WIDEZEN)
+					MES(WIDEZEN,"嗯，在这个村庄的东方，\n残留着一座被水淹没的神殿。",0)
+					MES(WIDEZEN,"最近那座神殿好像很受欢迎，\n刚才也有穿着陌生服饰的\n少年和少女来问路。",0)
+					MES_close(WIDEZEN)
+				}
+				else
+				{
+				//	name("□神殿に行ったことが啊る")
+					MES(WIDEZEN,"刚才也有穿着陌生服饰的\n少年和少女来过。\n他们也是来问去那里的路。",0)
+					MES_close(WIDEZEN)
+				}
+			//──────────────────────────────
+				MES(WIDEZEN,"哎呀，有这么多游人来访\n还真是少见。",0)
+				MES(WIDEZEN,"呼呼呼，这就是\n许久未曾出现的大热门吗……",0)
+				MES_close(WIDEZEN)
+
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+
+			//──────────────────────────────
+			//	name("□『★村で神殿之噂を聞いた』之フラグが立っていない场合、挿入。")
+			//──────────────────────────────
+				if(!F1_24_UwasaTenple)
+				{
+
+					if(!F1_23_VisitTenple)
+					{
+					//	name("□神殿に行った事が無い")
+						MES(RAGNA,"这个还是先放一边……",0)
+						MES_close(RAGNA)
+
+					//　　拉古那と艾雯、向き合う。
+						rot_chr(RAGNA,30,PARTNER)
+						rot_chr(PARTNER,30,RAGNA)
+						
+						MES(RAGNA,"真是令人有些在意啊。",0)
+						MES(RAGNA,"看来，神殿离这个村子\n似乎不是很远……",0)
+						MES(RAGNA,"怎么样，公主？\n要过去看看吗？",0)
+						MES_close(RAGNA)
+
+					//	name2(PARTNER)
+						MES(PARTNER,"唔，嗯。\n被淹没的神殿……\n令人有些在意呢。",0)
+						MES_close(PARTNER)
+					}
+					else
+					{
+					//	name("□神殿に行った事が啊る")
+						MES(RAGNA,"这个还是先放一边……",0)
+						MES_close(RAGNA)
+
+					//　　拉古那と艾雯、向き合う。
+						rot_chr(RAGNA,30,PARTNER)
+						rot_chr(PARTNER,30,RAGNA)
+						
+					//	MES(RAGNA,"那里还是有相当规模的，\n或许里面藏着什么东西。",0)
+						MES(RAGNA,"那个神殿的规模也不小，\n说不定\n里面藏着什么。",0)
+						MES(RAGNA,"怎么样，公主？\n要再去看看吗？",0)
+						MES_close(RAGNA)
+
+					//	name2(PARTNER)
+						MES(PARTNER,"唔，嗯。\n虽说是被淹没在水中，\n但还是相当在意啊……",0)
+						MES_close(PARTNER)
+					}
+
+				//──────────────────────────────
+				//　　拉古那に？エモ～ション。
+					EMO(RAGNA,EMO_HATENA)
+					wait(30)
+					
+					MES(PARTNER,"不，没什么问题。\n我们去看看吧。",0)
+					MES_close(PARTNER)
+					wait_MES(PARTNER)
+
+				//0922コメント化					cross_fade(30)
+				//	CAM_return(0)
+				//	CAM(-49,109,20,27,179,30,0)
+				//	rot_chr(PLAYER1,60,WIDEZEN)
+				//	rot_chr(PLAYER2,60,WIDEZEN)
+				//	wait_fade()
+
+					F_set(F1_24_UwasaTenple)
+				}
+				
+				F_set(WIDEZEN)
+			}
+			//　　★繰り返し
+			else
+			{
+				MES(WIDEZEN,"在村外，有一座\n被水淹没的神殿。",0)
+				MES(WIDEZEN,"今天来访的，\n算上你们就有４个人了。",0)
+				MES(WIDEZEN,"呵呵，这可是\n破天荒的大热门呢。",0)
+				MES_close(WIDEZEN)
+
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（也没这么流行吧……）",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("□艾雯先頭")
+				{
+					MES(PARTNER,"（我不觉得有这么高的人气……）",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+			}
+		}
+	//──────────────────────────────
+	//　　※神殿前で皮皮洛たちと会った後
+		else
+		{
+			if(!F_WIDEZEN)
+			{
+				MES(WIDEZEN,"嗯……",0)
+				MES(WIDEZEN,"不过怀森这个名字\n有点俗呢。",0)
+				MES(WIDEZEN,"起个更特别的名字\n会更好吧。",0)
+				MES(WIDEZEN,"哥顿～或者洛克菲拉～之类的\n怎么样？",0)
+				MES(WIDEZEN,"总之，如果要改名的话，\n就要改个华丽的吉利的名字，\n好让自己变得有钱一点。",0)
+				MES_close(WIDEZEN)
+
+			//　　拉古那たちに冷や汗エモ～ション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				F_set(WIDEZEN)
+			}
+	//　　★繰り返し
+			else
+			{
+				MES(WIDEZEN,"名字是用来表示实体的。",0)
+				MES(WIDEZEN,"唔……\n果然还是要改一次名字，\n改得拉风一点。",0)
+				MES_close(WIDEZEN)
+			}
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※村长宅前に立っている。
+	if( F1_01_GameStart )
+	{
+		if(!F_WIDEZEN)
+		{
+			MES(WIDEZEN,"欢迎来到罗亚鲁塔村……",0)
+			MES(WIDEZEN,"在这个村子里，\n有一个传说。",0)
+			MES(WIDEZEN,"从很久以前，就有一个『精灵大人』\n住在这里，守护着这个村子。",0)
+			MES_close(WIDEZEN)
+			
+			//頭にキラ～ん！
+			EMO(WIDEZEN,EMO_KIRAKIRA)
+			wait(30)
+			
+			MES(WIDEZEN,"呼呼呼，很神秘吧。\n怎样，来观光也不错啊",0)
+			MES_close(WIDEZEN)
+
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"哈哈，谢了……",0)
+				MES(RAGNA,"（这就是这个村的村长吗？\n  他的头还真是亮啊……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□艾雯先頭")
+				MES(PARTNER,"（唔唔唔……\n  这就是所谓的\n  『精光锃亮的脑袋！』吧。）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			F_set(WIDEZEN)
+		}
+		//　　★繰り返し
+		else
+		{
+//			MES(WIDEZEN,"传说，从以前开始，这个村子里\n就住着保护村庄的精灵。",0)
+//			MES(WIDEZEN,"作为村长，\n我天天都在考虑\n主推这一条来吸引游客。",0)
+//			MES(WIDEZEN,"哦呵呵，今天的客人不是挺多的嘛。",0)
+//			MES(WIDEZEN,"难道是在这之前提交到\n电台节目里碰运气的稿子起作用了……",0)
+
+			MES(WIDEZEN,"我最近一直在考虑\n要推出村里的精灵大人\n作为旅游的卖点……",0)
+			MES(WIDEZEN,"呼呼呼，今天的客人不少嘛，\n难道已经起效了？",0)
+			MES(WIDEZEN,"在这之前，我也向电台节目\n提交了关于精灵大人的传说\n看来是押对宝了啊。",0)
+//			MES(WIDEZEN,"传说，从很久以前，这个村子里\n就住着保护村庄的精灵。",0)
+//			MES(WIDEZEN,"作为村长，\n我天天都在考虑\n主推这一条来吸引游客。",0)
+//			MES(WIDEZEN,"哦呵呵，今天的客人不是挺多的嘛。",0)
+//			MES(WIDEZEN,"难道是在这之前提交到\n电台节目里碰运气的稿子起作用了……",0)
+			MES_close(WIDEZEN)
+		//　　拉古那たちに冷や汗エモ～ション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			
+			//★怀森【精霊をプッシュ】
+			F_set_note(WIDEZEN,0)
+		}
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

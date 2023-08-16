@@ -1,0 +1,951 @@
+//──────────────────────────────
+//	name("◆チェスク（貧乏少年）Wade　改名：ウェード□チェスク")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_WADE
+{
+	TK_begin()
+
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(WADE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,WADE)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,WADE)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WADE)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WADE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WADE)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,WADE)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,WADE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※にんじんの家の奥で寝ている（あまり見えない位置）。
+	//　　　チェスクからはヒヨコを消し、ＺＺＺエモーション出しっぱなし。
+	if( F6_05_EndSixth )
+	{
+	//	name("チェスク")
+		MES(WADE,"スカー、スカー……",0)
+		MES(WADE,"うーん、むにゃむにゃ……",0)
+		MES(WADE,"へへ、あのにんじんは\n美味かった～……",0)
+		MES_close(WADE)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※村長宅横をフリームーブ。
+	if( F6_00_GoToMeru )
+	{
+		MOT(WADE,53,5)
+		rot_chr(WADE,30,PLAYER1)
+		if(!FV_12_TalkWade)
+		{
+		//　　※初回イベント
+		//	name("チェスク")
+			MES(WADE,"……村長さん、\nいつも祈ってくれてんな。",0)
+			MES(WADE,"オイラ、村長さんには感謝してんだ。",0)
+			MES(WADE,"オイラが村にいられるのは、\n祈ってくれる人がいるからだもんな。",0)
+			MES_close(WADE)
+
+		//──────────────────────────────
+		//	name("□フラグ⑥の初回イベントを見ている場合")
+			if(FV_06_TalkWade)
+			{
+			//　　アルウェンにＰＡエモーション。
+				EMO(PARTNER,EMO_PA)
+				wait(30)
+				MES(PARTNER,"む、すると\nそなたはやはり……",0)
+				MES_close(PARTNER)
+			}
+		//	name("□フラグ⑥の初回イベントを見ていない場合")
+			else
+			{
+				//　　ラグナたちに？エモーション。
+				//──────────────────────────────
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PARTNER,EMO_HATENA)
+				wait(30)
+				//	name("□ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"って、あんたは一体……",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□アルウェン先頭")
+				{
+				MES(PARTNER,"そなたは一体……",0)
+				MES_close(PARTNER)
+				}
+				//──────────────────────────────
+			}
+		
+		//	name("チェスク")
+			MES(WADE,"へへ、オイラ村のためなら\nできる事、何だってするぜ。",0)
+			MES(WADE,"……この村、大好きだからな！",0)
+			MES_close(WADE)
+			
+			//　　★チェスク【村の精霊】
+			//　　★ワイゼン【お祈り】
+			F_set_note(-65,2)
+			F_set_note(WADE,2)
+
+			F_set(FV_12_TalkWade)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_WADE)
+			{
+			//	name("チェスク")
+				MES(WADE,"……村長さん、いつも\nオイラのために祈ってくれてんだ。",0)
+				MES(WADE,"へへ、気付いてなかった\nわけじゃねえぜ？",0)
+				MES(WADE,"オイラがこの村にいられるのは、\n祈ってくれる人がいるからだもんな！",0)
+				MES_close(WADE)
+				F_set(WADE)
+			}
+			else
+			{
+			//　　★繰り返し
+			//	name("チェスク")
+				MES(WADE,"オイラ、村のためなら\nできるだけの事はするぜ。",0)
+				MES(WADE,"……この村、大好きだからな！",0)
+				MES_close(WADE)
+			}
+		}
+		MOT(WADE,2,5)
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※にんじん畑をフリームーブ。
+	if( F5_00_HearLunar )
+	{
+		if(!F_WADE)
+		{
+			MOT(WADE,2,5)
+		//	name("チェスク")
+			MES(WADE,"大きくなれー、大きくなれー！",0)
+			MES_close(WADE)
+
+		//　　チェスク、振り返る。
+			rot_chr(WADE,30,PLAYER1)
+		//	name("チェスク")
+			MES(WADE,"へへ、もうすぐ収穫祭だぜ。",0)
+			MES(WADE,"オイラはにんじん、大好物だからな。",0)
+			MES(WADE,"こいつらにも\n大きくなってもらわねえとな！",0)
+			MES_close(WADE)
+
+			F_set(WADE)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない。
+		//	name("チェスク")
+			MES(WADE,"大きくなれー、大きくなれー！",0)
+			MES(WADE,"おめえらみーんな、\n大きくなれーっ！",0)
+			MES_close(WADE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	//　　※神殿出口あたりから、山の方を見ている。
+	//　　※振り返らない
+	if( F4_09_GoShrineMia)
+	{
+		if(!F_WADE)
+		{
+		//	name("チェスク")
+			MES(WADE,"山の方から、いやな感じがすんな……",0)
+			MES(WADE,"………………………………",0)
+			MES_close(WADE)
+
+		//　　チェスク、振りかえる。
+			rot_chr(WADE,30,PLAYER1)
+			MOT(WADE,2,5)
+			
+		//	name("チェスク")
+			MES(WADE,"オイラ、この村から出れねえんだ。",0)
+			MES(WADE,"だから外のことは\nどうしようもねえんだよな……",0)
+			MES_close(WADE)
+
+			F_set(WADE)
+			rot(WADE,30,102)
+			MOT(WADE,150,5)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない
+		//	name("チェスク")
+			MES(WADE,"山の方から、いやな感じがすんな……",0)
+			MES_close(WADE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※村長宅横の、にんじんの穴で横になっている。
+	if( F4_00_StartSolo )
+	{
+		look_chr(WADE, PLAYER1,"Bone_Head")
+		if(!F_WADE)
+		{
+			MES(WADE,"ふう、昨日は大分疲れちまった。\nオイラも少し休まねえと……",0)
+			MES(WADE,"へへ……\nでもやっぱ家は落ち着くぜ。",0)
+			MES(WADE,"こう、なんだか\n居心地がいいんだよな。",0)
+			MES(WADE,"なにせオイラ、\nにんじんが大好物だからな！",0)
+			MES_close(WADE)
+
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（に、にんじんの家……？）",0)
+					MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□スバル先頭")
+				MES(PARTNER,"（も、もしかして\n  にんじんの家……？）",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+			//★チェスク【にんじんの家】
+			F_set_note(WADE,1)
+			F_set(WADE)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("チェスク")
+			MES(WADE,"ふぅい……\nやっぱ家は落ち着くよな。",0)
+			MES_close(WADE)
+
+		//──────────────────────────────
+			if(F4_02_GoVillage2)
+			{
+			//	name("□スバルがいる")
+			//	name("チェスク")
+				MES(WADE,"へへ、君らも休んでくかい？",0)
+				MES_close(WADE)
+
+				//　　	ラグナたちに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				wait(30)
+				//──────────────────────────────
+				//	name("□ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"い、いや、\n遠慮しておくぜ……",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("□スバル先頭")
+					MES(PARTNER,"え、遠慮しときます……",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+			}
+			else
+			{
+			//	name("□スバルが居ない")
+			//	name("チェスク")
+				MES(WADE,"へへ、君も休んでくかい？",0)
+				MES_close(WADE)
+
+			//　　	ラグナに青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				wait(30)
+				MES(RAGNA,"い、いや、\n遠慮しておくぜ……",0)
+				MES_close(RAGNA)
+
+			}
+		}
+		look_off(WADE)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※ペットショップに配置。
+	//　　　ペットケースの前に、もたれるようにして座り込んでいる。
+	if( F3_00_GoMoonCastle )
+	{
+	//　　※初回イベント
+	//　　できれば、俯いていて顔を上げる仕草。
+		look(WADE,"Bone_Head",0,		0,2,2,			0,0,0)
+		
+		if(!FV_06_TalkWade)
+		{
+		//	name("チェスク")
+			MES(WADE,"う、うーん……",0)
+			MES(WADE,"あれ……？\nあいつ、もう消えちまったのか……",0)
+			MES_close(WADE)
+
+			//──────────────────────────────
+			//	name("□ビアンス初回を見ている")
+			if(FV_06_TalkBians)
+			{
+				MES(RAGNA,"お、もう一人\n無事だったみてえだな。",0)
+				MES_close(RAGNA)
+			}
+			//	name("□ビアンス初回を見ていない")
+			else
+			{
+				MES(RAGNA,"お、おいおい……\n大丈夫かよ……",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+		//　　アルウェンに．．．エモーション。
+			rot_chr(PARTNER,30,WADE)
+			EMO(PARTNER,EMO_TENTEN)
+			wait(30)
+			
+			MES(PARTNER,"この少年……",0)
+			MES_close(PARTNER)
+
+		//　　ラグナに？エモーション。
+			EMO(RAGNA,EMO_HATENA)
+			wait(30)
+		//　　アルウェンに振り返る。
+			rot_chr(RAGNA,30,PARTNER)
+			
+		//　　チェスクは、できれば再び俯く仕草。
+			look(WADE,"Bone_Head",0,		0,2,2,			0,0,-30)
+			
+			MES(PARTNER,"このような事態であるのに、\nまるで気配が感じられん。",0)
+			MES(PARTNER,"不思議な奴だな……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"てえと……？？",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"私にも詳しくは分からぬ。",0)
+			MES(PARTNER,"人の中でも、聖人のような者は\n気配が希薄になると\n聞いたことがあるが……",0)
+			MES(PARTNER,"……うむ、今は\n深く詮索している場合ではないか。",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"あ、ああ。そうだな。",0)
+			MES(RAGNA,"俺たちは早く準備を整えて、\nあの城に向かわねえと。",0)
+			MES_close(RAGNA)
+
+		//　　ラグナ、チェスクに向く。
+			rot_chr(RAGNA,30,WADE)
+			MES(RAGNA,"（つうか……）",0)
+			MES(RAGNA,"（頭の上のヒヨコが\n  気になってるのって、\n  俺だけか……？）",0)
+			MES_close(RAGNA)
+
+			F_set(FV_06_TalkWade)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+	//　　できれば、俯いていて顔を上げる仕草。
+		else
+		{
+			if(!F_WADE)
+			{
+			//	name("チェスク")
+				MES(WADE,"う、うーん……",0)
+				MES(WADE,"あいつ、何だったんだろう。\nいきなり怖い顔してやってきやがって……",0)
+				MES(WADE,"でもこいつらは無事みてえだな。",0)
+				MES(WADE,"へへ、ちょいとホッとしちまったぜ。",0)
+				MES_close(WADE)
+
+				F_set(WADE)
+			}
+		//　　★繰り返し
+			else
+			{
+			//　　できれば、俯いていて顔を上げる仕草。
+			//	name("チェスク")
+				MES(WADE,"外の連中、無事かなぁ……",0)
+				MES(WADE,"動けるようになったら、\n様子を見に行ってやらなくちゃな。",0)
+				MES_close(WADE)
+			}
+			look(WADE,"Bone_Head",0,		0,2,2,			0,0,-30)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※ペットショップ前に木箱を積み上げ、その上に立っている。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_WADE)
+		{
+			rot_chr(WADE,30,PLAYER1)
+			look(WADE,"Bone_Head",0,		0,2,5,			0,0,-30)
+		//	name("チェスク")
+			MOT(WADE,52,10)
+			MES(WADE,"へへ、どうだい？\nこいつ、オイラが積み上げたんだぜ？",0)
+			MES_close(WADE)
+
+		//　　チェスク、□エモーション。
+			EMO(WADE,EMO_ONPU)
+			wait(30)
+
+		//　　向きを戻す。
+			rot(WADE,30,330)
+			look(WADE,"Bone_Head",0,		0,2,5,			0,0,0)
+	
+		//	name("チェスク")
+			MES(WADE,"収穫祭まで、あっと少し～□",0)
+			MOT(WADE,150,10)
+			MES(WADE,"ひゃっほー！\n風が気持ちいいぜ～！",0)
+			MES_close(WADE)
+
+			F_set(WADE)
+		}
+	//　　★繰り返し
+	//　　※振り向かない。
+		else
+		{
+		//　　チェスク、□エモーション。
+			EMO(WADE,EMO_ONPU)
+			wait(30)
+
+		//	name("チェスク")
+			MES(WADE,"収穫祭まで、あっと少し～□",0)
+			MES_close(WADE)
+
+		//　　チェスク振り向く。
+			look(WADE,"Bone_Head",0,		0,2,5,			0,0,-30)
+			rot_chr(WADE,30,PLAYER1)
+		//	name("チェスク")
+			MES(WADE,"へへ、君らも乗ってくかい？",0)
+			MES(WADE,"高いトコだと、風が気持ちいいぜ！",0)
+			MES_close(WADE)
+		
+			rot(WADE,30,0)
+			look(WADE,"Bone_Head",0,		0,2,5,			0,0,0)
+		}
+		
+		//　　□ソロモンリングを持っていない場合、ソロモンリング処理を呼び出す。
+		if(!FE_FF_GetRing)
+		{
+			rot_chr(WADE,30,PLAYER1)
+			MOT(WADE,52,10)
+			look(WADE,"Bone_Head",0,		0,2,5,			0,0,-30)
+			EV("ITEM_WADE")
+			wait_EV("ITEM_WADE")
+			look(WADE,"Bone_Head",0,		0,2,5,			0,0,0)
+			MOT(WADE,150,10)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※村入り口近く左で、端から雲を見下ろしている。
+	//　　※振り返らない
+	if( F2_00_GoForest )
+	{
+		if(!F_WADE)
+		{
+		//	name("チェスク")
+			MES(WADE,"ひゃあ、すげえ。\nでっかい雲が流れてら。",0)
+			MES(WADE,"どんどこどんどこ。",0)
+			MES(WADE,"うへへ、\n飲み込まれちまいそうだ！",0)
+			MES_close(WADE)
+
+			F_set(WADE)
+		}
+	//　　★繰り返し
+		else
+		{
+		//	name("チェスク")
+			MES(WADE,"あの雲の上に乗っかったら\n気持ちよさそうだな。",0)
+			MES(WADE,"へへ、昼寝してる間に\n世界のはしっこまで行っちまうぜ。",0)
+			MES_close(WADE)
+
+		}
+		
+		//　　□ソロモンリングを持っていない場合、ソロモンリング処理を呼び出す。
+		if(!FE_FF_GetRing)
+		{
+			look_chr(WADE, PLAYER1,"Bone_Head")
+			EV("ITEM_WADE")
+			wait_EV("ITEM_WADE")
+			look_off(WADE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※ペットショップ前辺りでフリームーブ。
+	if( F1_15_GoVillage )
+	{
+		F_set_chr(WADE,CF_NO_MOVE)
+		if(!F_WADE)
+		{
+		//　　※振り返らない。
+		//	name("チェスク")
+			MES(WADE,"ピイピイ、ピイピイピイ。",0)
+			MES(WADE,"えっ、何だい？\n右へ行きてえのかい？",0)
+			MES(WADE,"ピイピイ……\nえ？　今度は左？",0)
+			MES(WADE,"うーん、オイラ分かんねえや。",0)
+			MES_close(WADE)
+
+		//	name2(WADE)
+			MES(WADE,"おめえら２羽で、\nどっちにするか決めてくれよな！",0)
+			MES_close(WADE)
+
+			F_set(WADE)
+		}
+	//　　★繰り返し
+		else
+		{
+			rot_chr(WADE,30,PLAYER1)
+		//	name("チェスク")
+			MES(WADE,"こいつら、なんでもかんでも\n正反対のことを言うんだ。",0)
+			MES(WADE,"オイラ、一体どっちに\n行きゃあいいか分かんねえぜ。",0)
+			MES(WADE,"へへ……まあいいんだけどよ。\nこいつら、かわいーしな！",0)
+			MES_close(WADE)
+
+		}
+		
+		//　　□ソロモンリングを持っていない場合、ソロモンリング処理を呼び出す。
+		if(!FE_FF_GetRing)
+		{
+			rot_chr(WADE,30,PLAYER1)
+			EV("ITEM_WADE")
+			wait_EV("ITEM_WADE")
+		}
+		F_reset_chr(WADE,CF_NO_MOVE)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※村の出口、石碑にもたれて座っている。
+	//　　※振り向かない。
+	if( F1_01_GameStart )
+	{
+		if(!F_WADE)
+		{
+		//	name("チェスク")
+			MES(WADE,"ああ、気持ちいい。",0)
+			MES(WADE,"へへ、ぽかぽかだぁ。",0)
+			MES_close(WADE)
+
+		//　　チェスク、ＰＡエモーションで振り向く。
+			EMO(WADE,EMO_PA)
+			look_chr(WADE, PLAYER1,"Bone_Head")
+			wait(30)
+
+		//	name("チェスク")
+			MES(WADE,"君たちもどうだい？\n芝生って、気持ちいいぜ！",0)
+			MES_close(WADE)
+			look_off(WADE)
+
+			F_set(WADE)
+		}
+	//　　★繰り返し
+	//　　※振り返らない。
+		else
+		{
+		//	name("チェスク")
+			MES(WADE,"ふあ～あぁ……\n何だか眠くなってきやがった。",0)
+			look_chr(WADE, PLAYER1,"Bone_Head")
+			MES(WADE,"へへ、君たちもどうだい？",0)
+			MES(WADE,"大の字に寝っ転がったら、\nきっと気持ちいいぜ！",0)
+			MES_close(WADE)
+		}
+		look_off(WADE)
+		rot(WADE,30,25)
+	}
+	
+	TK_end()
+}
+//──────────────────────────────
+//▽②～⑤、チェスク．ソロモンリング処理
+//──────────────────────────────
+//　　※フラグ②～⑤の間は、指定のフードをあげるとソロモンリングをくれます。
+//　　　各通常会話処理から呼び出されるルーチンです。
+//　　※指定のフードは、大体以下の予定です。
+//　　　フラグ②：神殿メインルートで手に入る最高フードより、ワンランク上のもの。
+//　　　フラグ③：森メインルートで手に入る最高フードより、ワンランク上のもの。
+//　　　フラグ⑤：大鉄塔ボスルートで手に入る最高フード。
+
+//		仮で、
+//		フラグ②：生ハム
+//		フラグ③：焼き鳥
+//		フラグ⑤：チャーハン
+//		としておきました。
+
+//ver.2008/8/7
+//		②：ピザ
+//		③：チャーハン
+//		⑤：うなぎの蒲焼
+
+//ver.2008/9/2
+//		②：ピザ
+//		③：チャーハン
+//		⑤：チョコレート
+
+//―――――――――――――――――――――――
+ITEM_WADE
+{
+//　　チェスク振り返る。
+
+
+	if( F1_15_GoVillage && !F1_22_EndFirst )//▼②
+	{
+		MES(WADE,"それはそうと……\nオイラ腹減っちまったな。",0)
+		MES(WADE,"今日はL337『ピザ』L400が\n食べたいキブンだぜ。",0)
+		MES(WADE,"……君たち、\nL337ピザL400持ってねえ？",0)
+		MES_close(WADE)
+		if(IT173>0)
+			workL(1,SET,1)
+		else
+			workL(1,SET,0)
+	}
+	else
+	if( F2_00_GoForest && !F2_14_TalkEnemy )//▼③
+	{
+		MES(WADE,"それはそうと……\nオイラ腹減っちまったな。",0)
+		MES(WADE,"今日はL337『チャーハン』L400が\n食べたいキブンだぜ。",0)
+		MES(WADE,"……君たち、\nL337チャーハンL400持ってねえ？",0)
+		MES_close(WADE)
+		if(IT185>0)
+			workL(1,SET,1)
+		else
+			workL(1,SET,0)
+	}
+	else
+	if( F2_14_TalkEnemy && !F2_17_EndSecond )//▼⑤
+	{
+		MES(WADE,"それはそうと……\nオイラ腹減っちまったな。",0)
+		MES(WADE,"今日はL337『チョコレート』L400が\n食べたいキブンだぜ。",0)
+		MES(WADE,"……君たち、\nL337チョコレートL400持ってねえ？",0)
+		MES_close(WADE)
+	//	if(IT170>0)
+		if(IT193>0)
+			workL(1,SET,1)
+		else
+			workL(1,SET,0)
+	}
+
+	//──────────────────────────────
+	//	name("□指定フードを持っていない。")
+	//──────────────────────────────
+	if(WK001==0)
+	{
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+		if(GW_MAN==1)
+		{
+			MES(RAGNA,"ああ、生憎と持ってないな。",0)
+			MES_close(RAGNA)
+		}
+		else
+		//	name("□アルウェン先頭")
+		{
+			MES(PARTNER,"うむ、悪いが持ち合わせておらぬぞ。",0)
+			MES_close(PARTNER)
+		}
+		//──────────────────────────────
+
+	//	name("チェスク")
+		MES(WADE,"ちぇっ、そんじゃ仕方ねえや……",0)
+		MES(WADE,"収穫祭のご馳走まで、\n我慢するとすっかな～。",0)
+		MES_close(WADE)
+	}
+	//──────────────────────────────
+	//	name("□指定フードを持っている。")
+	//──────────────────────────────
+	else
+	{
+		//──────────────────────────────
+		//	name("□ラグナ先頭")
+		if(GW_MAN==1)
+		{
+			MES(RAGNA,"ああ、一応持ってるが……",0)
+			MES_close(RAGNA)
+		}
+		else
+		//	name("□アルウェン先頭")
+		{
+			MES(PARTNER,"うむ、一応持っておるぞ。",0)
+			MES_close(PARTNER)
+		}
+		//──────────────────────────────
+
+	//	name("選択テキスト")
+
+		if( F1_15_GoVillage && !F1_22_EndFirst )//▼②
+		{
+			workL(WK_CANCEL,SET,2)//【渡さない】
+			MES_pos(PLAYER1,"??W9【ピザを渡す】\n【渡さない】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+		}
+		else
+		if( F2_00_GoForest && !F2_14_TalkEnemy )//▼③
+		{
+			workL(WK_CANCEL,SET,2)//【渡さない】
+			MES_pos(PLAYER1,"??W9【チャーハンを渡す】\n【渡さない】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+		}
+		else
+		if( F2_14_TalkEnemy && !F2_17_EndSecond )//▼⑤
+		{
+			workL(WK_CANCEL,SET,2)//【渡さない】
+			MES_pos(PLAYER1,"??W9【チョコレートを渡す】\n【渡さない】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//閉じきるまで待つ
+		}
+		
+		//──────────────────────────────
+		//	name("□「○○を渡す」")
+		//──────────────────────────────
+		if(WK_YESNO==1)
+		{
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"ま、俺たちは別に\n空腹ってワケでもねえしな。",0)
+				MES(RAGNA,"良かったら持ってけよ。",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（むむ、もったいない……）",0)
+				MES_close(PARTNER)
+			}
+			else
+			//	name("□アルウェン先頭")
+			{
+				MES(PARTNER,"空腹の辛さはみな同じ……\nこれで良ければ、食すがよい。",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+
+		//──────────────────────────────
+		//	name("チェスク")
+			MES(WADE,"へへ、サンキュー！",0)
+			MES_close(WADE)
+
+			if( F1_15_GoVillage && !F1_22_EndFirst )//▼②
+				get_item(173,-1,1)
+			else
+			if( F2_00_GoForest && !F2_14_TalkEnemy )//▼③
+				get_item(185,-1,1)
+			else
+			if( F2_14_TalkEnemy && !F2_17_EndSecond )//▼⑤
+			//	get_item(170,-1,1)
+				get_item(193,-1,1)
+
+		//　　　チェスク、口に手を持っていく動作。
+		//	name("チェスク")
+			MES(WADE,"むしゃむしゃ、はぐはぐ……",0)
+			MES_close(WADE)
+
+		//　　ラグナ、アルウェンに向く。
+		//──────────────────────────────
+			//──────────────────────────────
+			//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				rot_chr(RAGNA,30,PARTNER)
+				MES(RAGNA,"……つーか姫さん？\n勿体無いとか呟かなかったか？",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"い、今のは反射的に\n思ってしまっただけだ。",0)
+				MES(PARTNER,"決して、みみっちい心を\n抱いているわけではないぞ？",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"ま、いいんだけどよ。\n（食い物が絡むとすぐこれだよな……）",0)
+				MES_close(RAGNA)
+				rot_chr(RAGNA,30,WADE)
+			}
+			else
+			{
+			//	name("□アルウェン先頭")
+				MES(RAGNA,"……つーか姫さん？\n吸血鬼は何も食べなくても\n平気なんだろ？",0)
+				MES_close(RAGNA)
+
+			//　　アルウェン、□エモーションを飛ばす。
+				EMO(PARTNER,EMO_ONPU)
+				wait(30)
+				
+				MES(PARTNER,"それでも空腹を感じるものなのだ。",0)
+				MES_close(PARTNER)
+
+			//　　ラグナ、冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				wait(30)
+				MES(RAGNA,"ホントかよ……",0)
+				MES_close(RAGNA)
+			}
+
+		//──────────────────────────────
+		//	name("チェスク")
+			MES(WADE,"うーん、うめえ……\nやっぱ最高だぜ！",0)
+			MES_close(WADE)
+
+		//　　チェスク、食べるモーションを終える。
+		//　　ラグナたち、向きを戻す。
+		//	name("チェスク")
+			MES(WADE,"へへ、君たちには\nお返しをしねえとな！",0)
+			MES_close(WADE)
+
+		//　　チェスク、物を渡すモーション。
+		//	name("システムメッセージ")
+			//―――――――――――――――――――――――
+			fade_in(30,10,BLACK)
+			get_item(092,1,0)
+			wait(10)
+			wait_key(0)
+			
+			fade_in(0,10,BLACK)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			//―――――――――――――――――――――――
+
+		//	name("チェスク")
+			MES(WADE,"こいつを持ってけよ。",0)
+			MES(WADE,"オイラと同じものが\n聞こえるかもしれねえぜ！",0)
+			MES_close(WADE)
+
+		//　　ラグナたちに？エモーション。
+		//──────────────────────────────
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+		//──────────────────────────────
+			//	name("□ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（同じもの？\n  どういう意味だ……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("□アルウェン先頭")
+			{
+				MES(PARTNER,"（？？？\n  妙なことを言う少年だな……）",0)
+				MES_close(PARTNER)
+			}
+			//★チェスク【謎のリング】
+			F_set_note(WADE,0)
+			
+			//★ソロモンリングを入手した
+			F_set(FE_FF_GetRing)
+		}
+		//──────────────────────────────
+		//	name("□渡さない")
+		//──────────────────────────────
+		else
+		{
+			if(GW_MAN==1)
+			{
+			//	name("□ラグナ先頭")
+				MES(RAGNA,"悪い、今はちょっと渡せねえな。",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□アルウェン先頭")
+				MES(PARTNER,"だがこれは私の食料でな。\n悪いが、今は渡せぬのだ。",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		//	name("チェスク")
+			MES(WADE,"ちぇっ、そんじゃ仕方ねえや……",0)
+			MES(WADE,"収穫祭のご馳走まで、\n我慢するとすっかな～。",0)
+			MES_close(WADE)
+		}
+	}
+}
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+

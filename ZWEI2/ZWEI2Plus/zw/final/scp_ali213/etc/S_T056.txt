@@ -1,0 +1,716 @@
+//■Zwei2一般メッセージ·阿鲁迪亚镇（※ニップル）
+//────────────────────────────────────────────────────────────
+//■阿鲁迪亚
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆ニップル（普通女）Nipple")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_NIPPLE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(NIPPLE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,NIPPLE)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,NIPPLE)
+		
+		//奥蒂莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+		//艾雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+		else
+	//───────────────
+	//艾雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,NIPPLE)
+		}
+	}
+//───────────────
+//～⑥艾雯が居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,NIPPLE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	if( F6_05_EndSixth )
+	{
+		EV("MOTION_NIPPLE")		
+		if(!F_NIPPLE)
+		{
+		//　　※工房カウンター前に来ている。
+		//　　※振り返らない。
+			MES(NIPPLE,"呐，柯林……\n你看，今天我带便当来了哦？",0)
+			MES(NIPPLE,"呐？　心情也该好点了吧？",0)
+			MES(NIPPLE,"那就快点回家吧～！",0)
+			MES_close(NIPPLE)
+			//★ニップル【料理が得意】
+			F_set_note(NIPPLE,2)
+			F_set(NIPPLE)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない。
+			MES(NIPPLE,"呐，柯林……",0)
+			MES(NIPPLE,"……那个，还在生气吗？",0)
+			MES(NIPPLE,"都是我不好，\n我这不是来道歉了吗。\n……呐？",0)
+			MES_close(NIPPLE)
+		}
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾雯·露）
+	//──────────────────────────────
+	//　　※熊猫楼で、瑟菲拉之歌を聴いている。
+	//　　※できればヘルメットを被る。
+	//　　※振り返らない
+	if( F6_00_GoToMeru )
+	{
+		EV("MOTION_NIPPLE")		
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"嗯嗯，真好听的歌……",0)
+			MES(NIPPLE,"瑟菲拉姐姐，\n是为了给予我们勇气\n而歌唱的……",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルに···エモーション。
+			EMO(NIPPLE,EMO_TENTEN)
+			wait(30)
+
+		//　　振り返る。
+			rot_chr(NIPPLE,30,PLAYER1)
+
+			MES(NIPPLE,"我终于明白了。\n果然恐慌是不行的。",0)
+			MES_close(NIPPLE)
+
+			EMO(NIPPLE,EMO_KIRAKIRA)
+			wait(30)
+
+			MES(NIPPLE,"S4嗯，从今以后，\n就沉着地开始在家里挖掘地下室吧！",0)
+			MES_close(NIPPLE)
+
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			EMO(PET,EMO_HIYAASE)
+			wait(30)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"那，那跟\n沉着有什么关系……？",0)
+				MES_close(RAGNA)
+			}
+		//	name("□艾雯先頭")
+			else
+			{
+				MES(PARTNER,"我倒觉得……\n是你自己该冷静点。",0)
+				MES_close(PARTNER)
+			}
+			F_set(NIPPLE)
+		}
+	//──────────────────────────────
+	//　　★繰り返し
+		else
+		{
+			rot_chr(NIPPLE,30,PLAYER1)
+			MES(NIPPLE,"从现在起，我要沉着地\n在家里挖个地下室。",0)
+			MES(NIPPLE,"然后去把柯林接回来。",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルにアセアセエモーション。
+			EMO(NIPPLE,EMO_ASEASE)
+			wait(30)
+
+			MES(NIPPLE,"S4因为，\n我是姐姐嘛！",0)
+			MES_close(NIPPLE)
+		}
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶峡谷を起動することにした（拉古那·露（·奥蒂莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		EV("MOTION_NIPPLE")		
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+		//　　※民家３で立っている。
+			MES(NIPPLE,"那，那个……我家弟弟\n有点狂妄呢。",0)
+			MES(NIPPLE,"而且他有些搞笑，\n说什么『我要用哈提做我的妹妹\n来代替你！』之类的。",0)
+			MES(NIPPLE,"然后呢，柯林那家伙\n对，说什么自己\n今后就要成为工房的技师了……",0)
+			MES(NIPPLE,"然后就离家出走了。",0)
+			MES_close(NIPPLE)
+
+		//　　拉古那たちに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+
+			//奥蒂莎がいるとき
+			if(F5_08_JoinOdessa)
+			{
+				EMO(PARTNER,EMO_AOZAME)
+			}
+			wait(30)
+			
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"离，离家出走……？",0)
+				MES_close(RAGNA)
+			}
+		//	name("□奥蒂莎先頭")
+			else
+			{
+				MES(PARTNER,"离，离家出走……？",0)
+				MES_close(PARTNER)
+			}
+		//──────────────────────────────
+		//　　ニップルうなずく。
+			look(NIPPLE,"Bone_Head",0,	0,0,1,	0,0,-20)
+			wait(12)
+			look(NIPPLE,"Bone_Head",0,	0,0,1,	0,0,0)
+			wait(20)
+			MES(NIPPLE,"怎，怎么办……",0)
+			MES_close(NIPPLE)
+			F_set(NIPPLE)
+		}
+		else
+		{
+		//　　★繰り返し
+			look(NIPPLE,"Bone_Head",0,	0,0,2,	0,0,0)
+			MES(NIPPLE,"那个，其实是开玩笑的吧？",0)
+			MES(NIPPLE,"就算是柯林，我觉得\n这种程度的道理他还是懂的吧～……",0)
+			MES(NIPPLE,"那个……\n果然不是开玩笑\n的吗……",0)
+			MES_close(NIPPLE)
+		}
+		look(NIPPLE,"Bone_Head",0,	0,0,2,	0,0,-5)
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾雯）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦拉古那は単独行動を始めた
+	//──────────────────────────────
+	//　　※民家１之前辺りで池を見ながらウロウロ。
+	//　　　アセアセエモーションを出している。
+	if( F4_00_StartSolo )
+	{
+		EV("MOTION_NIPPLE")		
+		F_set_chr(NIPPLE,CF_NO_MOVE)
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"不，不好了不好了～！",0)
+			MES(NIPPLE,"我的钱包\n好像不见了。",0)
+			MES(NIPPLE,"那可是瞒着柯林\n偷偷藏起来的～……",0)
+			MES(NIPPLE,"啊啊，太可惜了。\n要是不想办法在柯林发现之前\n找出来的话……",0)
+			MES_close(NIPPLE)
+			F_set(NIPPLE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(NIPPLE,"钱包怎么会丢了呢……\n唉，也许今天没带出来呢。",0)
+			MES(NIPPLE,"总之，要是不在柯林发现之前\n找出来的话……",0)
+			MES_close(NIPPLE)
+		}
+		F_reset_chr(NIPPLE,CF_NO_MOVE)
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥罗亚鲁塔村之人々を救出し、蒙布利亚城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※いない。
+	//──────────────────────────────
+	//▼⑤魔女拉莱拉から、敵之正体が明かされた
+	//──────────────────────────────
+	//　　※教会前之ベンチ前で、哈提と話している。
+	//　　※哈提之方を向いていて、振り返らない。
+	//　　※初回イベント（哈提と共通）
+	if( F2_14_TalkEnemy )
+	{
+		if(!FT_05_TalkNipHat)
+		{
+			
+			EV("EV_TALK_HN")
+			wait_EV("EV_TALK_HN")
+			
+			F_set(FT_05_TalkNipHat)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			EV("MOTION_NIPPLE")		
+			if(!F_NIPPLE)
+			{
+				MES(NIPPLE,"嗯，其实啊，我呢……",0)
+				MES(NIPPLE,"正犹豫着将来要成为什么样的女人呢。",0)
+				MES(NIPPLE,"成为偶像瑟菲拉那样的人当然是最好的，\n不过像一直很亲切的卡尔蒂娜姐姐\n那种充满神秘感的感觉也很棒啊。",0)
+				MES(NIPPLE,"说起来，好像有位大小姐\n来到了阿鲁迪亚……",0)
+				MES(NIPPLE,"那种可爱型的没准也不错～。",0)
+				MES_close(NIPPLE)
+
+			//　　２人に青ざめエモーション。
+				EMO(RAGNA,EMO_AOZAME)
+				EMO(PARTNER,EMO_AOZAME)
+				wait(30)
+			//──────────────────────────────
+			//	name("□拉古那先頭。")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（谁来叫她别做梦了……）",0)
+					MES_close(RAGNA)
+				}
+			//	name("□艾雯先頭。")
+				else
+				{
+					MES(PARTNER,"（你嘛……\n  还是放弃可爱型吧。）",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+				F_set(NIPPLE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(NIPPLE,"嗯，其实啊我正犹豫着\n将来要成为什么样的女人呢。",0)
+				MES(NIPPLE,"偶像瑟菲拉小姐……\n充满神秘感的卡尔蒂娜姐姐……",0)
+				MES_close(NIPPLE)
+
+			//　　ニップルに□エモーション。
+				EMO(NIPPLE,EMO_ONPU)
+				wait(30)
+				MES(NIPPLE,"还是说要向可爱型\n的方向发展呢～㈱",0)
+				MES_close(NIPPLE)
+			}
+			MOT(NIPPLE,2,15)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼④炎之パーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金暗之森へ向かうことにした
+	//──────────────────────────────
+	//　　※村之展望台でフリームーブしている。
+	if( F2_00_GoForest )
+	{
+		EV("MOTION_NIPPLE")		
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"我只不过是说了\n今天天气不错，\n想出去野餐……",0)
+			MES(NIPPLE,"柯林那家伙，\n居然就把我从家里赶出来了。",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルにムキエモーション。
+			EMO(NIPPLE,EMO_AOSUZI)
+			wait(30)
+			
+			MES(NIPPLE,"明明就比我小，\n跩什么跩嘛。",0)
+			MES(NIPPLE,"想要管我，门都没有。",0)
+			MES_close(NIPPLE)
+			
+			//★柯林【ナマイキ】
+			F_set_note(-57,1)
+
+			F_set(NIPPLE)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(NIPPLE,"说起来……\n刚才在喷水池边\n发现了一个很讨人喜欢的男孩子。",0)
+			MES(NIPPLE,"没准比我小一点呢。\n蓬蓬的头发在脑后扎成一束，\n还戴着尾巴的装饰。",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルにハートエモーション。
+			EMO(NIPPLE,EMO_HATO)
+			wait(30)
+			
+			MES(NIPPLE,"那种天真无邪的感觉……\n我可能有点喜欢上他了。",0)
+			MES_close(NIPPLE)
+			
+		//　　拉古那たちに冷や汗エモーション。
+		//──────────────────────────────
+		//	name("□フラグ①之イベントを見ていて、拉古那先頭")
+			if(FT_01_TalkNipple)
+			{
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（已经不是深不深入的问题了……）",0)
+					MES_close(RAGNA)
+				}
+			//	name("□フラグ①之イベントを見ていて、艾雯先頭")
+				else
+				{
+					MES(PARTNER,"（还真是水性杨花啊……）",0)
+					MES_close(PARTNER)
+				}
+			}
+		}
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼②罗亚鲁塔村へ向かうことにした
+	//──────────────────────────────
+	//　　※阿鲁迪亚·民家１と３之间辺りをフリームーブ。
+	if( F1_15_GoVillage )
+	{
+		EV("MOTION_NIPPLE")		
+		rot_chr(NIPPLE,30,PLAYER1)
+		if(!F_NIPPLE)
+		{
+			MES(NIPPLE,"刚才啊，有一个\n帅呆了的人经过哦。",0)
+			MES(NIPPLE,"穿着漂亮的管家服，\n金发飘扬……",0)
+			MES(NIPPLE,"眼镜之下的明亮的双眸，\n挂着温柔笑容的嘴角……",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルにハートエモーション。
+			EMO(NIPPLE,EMO_HATO)
+			wait(30)
+			
+			MES(NIPPLE,"啊啊，那个人\n正是我理想中的另一半……！",0)
+			MES_close(NIPPLE)
+
+		//──────────────────────────────
+		//	name("□フラグ①之イベントを見ていた场合、１回だけ反応を挿入する。")
+			if(FT_01_TalkNipple && !FT_02_TalkNipple)
+			{
+			//　　ニップルにＰＡエモーション。
+				EMO(NIPPLE,EMO_PA)
+				wait(30)
+				
+			//　　拉古那に向く。
+				MES(NIPPLE,"哎呀，你是……\n那个……",0)
+				MES_close(NIPPLE)
+
+			//　　ニップルに···エモーション。
+				EMO(NIPPLE,EMO_TENTEN)
+				wait(30)
+				
+				MES(NIPPLE,"之前在哪见过吗。",0)
+				MES_close(NIPPLE)
+
+			//　　拉古那たちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				
+				MES(RAGNA,"不，不是\n你自己缠上我的吗。",0)
+				MES_close(RAGNA)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"看来已经忘得一干二净了……",0)
+				MES_close(PARTNER)
+				
+			//　　ニップルに？エモーション。
+				EMO(NIPPLE,EMO_HATENA)
+				wait(30)
+				
+				F_set(FT_02_TalkNipple)
+			}
+
+			F_set(NIPPLE)
+		}
+	//──────────────────────────────
+	//　　★繰り返し
+		else
+		{
+			MES(NIPPLE,"那位管家先生\n正是我理想中的另一半……！",0)
+			MES(NIPPLE,"嗯，我决定了。\n我这辈子跟定他了。",0)
+			MES(NIPPLE,"首先，要问出他的\n姓名生日血型\n喜欢的食物还有兴趣和其他！",0)
+			MES_close(NIPPLE)
+
+		//──────────────────────────────
+		//	name("□拉古那先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"真是跟踪狂都望尘莫及的程度……",0)
+				MES_close(RAGNA)
+			}
+			else
+		//	name("□艾雯先頭")
+			{
+				MES(PARTNER,"这是问题攻击吗……",0)
+				MES_close(PARTNER)
+			}
+		}		
+		MOT(NIPPLE,2,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※大道芸人ステージ前、大道芸人を見ている。
+	//　　　ＰＡエモーション出しっぱなし。
+	//　　※初回イベント
+	//　　※振り返らない。
+	if( F1_01_GameStart )
+	{
+		if(!FT_01_TalkNipple)
+		{
+		//――――――――――――――――――――――――――
+		//	初期化処理
+		//――――――――――――――――――――――――――
+		
+			cross_fade(30)			//クロスフェード
+			EV_begin()
+			//カメラセット
+			CAM_move(756,442,196,0,0)
+			CAM(-209,64,35,31,166,0,0)
+			
+			//キャラ再配置
+			chr_pos(NIPPLE,858,-639,0,200,2)
+			chr_pos(COLIN, 948,-574,0,124,2)
+			chr_pos(RAGNA,696,-362,0,208,2)
+			chr_pos(PARTNER,568,-444,0,242,2)
+			
+			//顔初期化
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(NIPPLE, "1", "1", "1")	
+			KAO(COLIN,"1", "1", "1")	
+			
+			F_reset_chr(NIPPLE,CF_NO_MOVE)
+			F_reset_chr(COLIN,CF_NO_MOVE)
+			MOT_SET(COLIN,150,-1,402,402,-1,-1)
+			
+			wait_fade()
+
+		//――――――――――――――――――――――――――
+		//	イベント開始
+		//――――――――――――――――――――――――――
+			EV_stop("MOVE_NIPPLE")
+			MES(NIPPLE,"哇，快看快看，柯林。\n好厉害啊……",0)
+			MES_close(NIPPLE)
+
+		//　　ニップルに？エモーション。
+			EMO(NIPPLE,EMO_HATENA)
+			wait(30)
+
+		//　　拉古那に振り返る。
+			rot_chr(NIPPLE,30,RAGNA)
+	
+		
+			KAO(NIPPLE,"12321Z2","J","1")
+			MES(NIPPLE,"啊……？",0)
+			KAO(NIPPLE,"12321Z4","J","1")
+			MES(NIPPLE,"这位大哥，莫非……",0)
+			KAO(NIPPLE,"12321Z3","J","1")
+			MES(NIPPLE,"你是我命中注定的人吗？",0)
+			MES_close(NIPPLE)
+
+			EV("MOTION_NIPPLE")
+			
+			rot_chr(COLIN,30,RAGNA)
+
+		//　　★次之ポップアップは同時に表示＆閉じる。
+
+//			MES_pos(RAGNA,"啥……？",0,0,0,0,0)
+//			MES_pos(PARTNER,"嗯……？",0,0,0,0,0)
+//			wait_key(0)
+//			MES_close(PARTNER)
+
+			MES(RAGNA,"哈……？",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"哦……",0)
+			MES_close(PARTNER)
+
+			KAO(NIPPLE,"12321Z6","J","1")
+			MES(NIPPLE,"嗯嗯，什么都不必说了。\n我都知道。",0)
+			KAO(NIPPLE,"12321Z6","J","1")
+			MES(NIPPLE,"这身飞行夹克……\n你是开飞机来的吧？",0)
+			KAO(NIPPLE,"12321Z5","J","1")
+			MES(NIPPLE,"你是驾着纯白的飞机\n来迎接我的吧？",0)
+			MES_close(NIPPLE)
+
+			MES(RAGNA,"你，你在说啥啊……",0)
+			MES(RAGNA,"第一，我开的\n特里斯坦号是红色的吧？",0)
+			MES_close(RAGNA)
+
+			KAO(NIPPLE,"12321Z3","J","1")
+			MES(NIPPLE,"那就把它涂成白色㈱",0)
+			MES_close(NIPPLE)
+
+		//　　拉古那たちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"我，我说啊……",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"唔……\n人类的女孩真是热情呢。",0)
+			MES_close(PARTNER)
+
+		//　　柯林、拉古那たちに近づく。
+//			rot_chr(COLIN,30,RAGNA)
+//			move( COLIN, 0,	WALK1,	862,-477,0,	0)
+//			MOT(COLIN,150,15)
+
+			look_chr( COLIN, NIPPLE,"Bone_Head")
+
+			KAO(COLIN,"12321Z4","1","1")
+			MES(COLIN,"姐姐……\n请你正常一点。",0)
+			MES_close(COLIN)
+
+			look_chr( COLIN, RAGNA,"Bone_Head")
+			wait(15)
+			KAO(COLIN,"12321Z7","1","1")
+			MES(COLIN,"对不起，我姐姐说的话\n请你不要在意。",0)
+			KAO(COLIN,"12321Z6","1","1")
+			MES(COLIN,"她一直都是这个样子\n不断地对别人一见钟情。",0)
+			KAO(COLIN,"12321Z7","1","1")
+			MES(COLIN,"而且这个毛病只有三分钟热度，\n第二天就转移到别人身上去了……",0)
+			MES_close(COLIN)
+
+			look_chr( NIPPLE, COLIN, "Bone_Head")
+			EMO(NIPPLE,EMO_DOKAN)
+			wait(30)
+
+			KAO(NIPPLE,"12321Z6","J","1")
+			MES(NIPPLE,"喂，柯林！\n不要说那么失礼的话啊。",0)
+			MES_close(NIPPLE)
+
+		//　　拉古那たちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES(PARTNER,"（唔，好像和热情\n  有点不一样啊。）",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"（啊啊……\n  这个弟弟也不好当啊。）",0)
+			MES_close(RAGNA)
+
+		//　　フェードアウトし、柯林之配置を戻す。
+		//――――――――――――――――――――――――――
+		//	イベント終了処理
+		//――――――――――――――――――――――――――
+			fade_in(100,30,BLACK)
+			wait_fade()
+
+			look_off(NIPPLE)
+			look_off(NIPPLE)
+			chr_pos(NIPPLE,858,-639,0,300,52)
+			chr_pos(COLIN, 948,-574,0,124,2)
+			MOT(NIPPLE,52,0)
+			rot(NIPPLE,0,300)
+			look(COLIN,"Bone_Head",0,		0,0,10,			0,0,-30)
+
+//			chr_pos(RAGNA,120,-800,0,0,2)
+//			chr_pos(PARTNER,-100,-800,0,0,2)
+
+			//カメラを初期設定に
+			CAM_return( 0 )
+			wait(30)
+			
+			F_set(FT_01_TalkNipple)
+			KAO(RAGNA, "1", "1", "1")	
+			KAO(PARTNER,"1", "1", "1")	
+			KAO(NIPPLE, "1", "1", "1")	
+			KAO(COLIN,"1", "1", "1")	
+			
+			F_set_chr(NIPPLE,CF_NO_MOVE)
+			F_set_chr(COLIN,CF_NO_MOVE)
+			
+			//★柯林
+			F_set_note(-57,-1)
+			
+			EV_end()
+			//フェードイン----------------------
+			fade_in(0,30,BLACK)
+		//	プレイヤー操作許可
+		//――――――――――――――――――――――――――
+
+		//　　拉古那たちは阿鲁迪亚噴水之左手前之配置から操作許可。
+
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+		//　　※柯林之方向を向いている。
+		}
+		else
+		{
+			MES(NIPPLE,"喂，柯林，\n你说什么啊！？",0)
+			MES(NIPPLE,"快给我更正！\n否则别想有饭吃！",0)
+			MES_close(NIPPLE)
+		}
+	}
+	
+	TK_end()
+}
+
+MOTION_NIPPLE
+{
+	MOT_SET(NIPPLE,150,-1,476,476,-1,-1)
+	MOT(NIPPLE,150,15)
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

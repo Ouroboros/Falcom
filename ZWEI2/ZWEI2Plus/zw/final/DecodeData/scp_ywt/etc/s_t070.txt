@@ -1,0 +1,733 @@
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//	name("仧僼僃僨儕僇乮媿幧偺偍巓偝傫乯Federica")
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_FEDERICA
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//拠娫慡堳偑榖偟憡庤偵怳傝岦偔
+////////////////////////////////////////////////////////////////
+	KAO(FEDERICA, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,FEDERICA)
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘕儖僁偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,FEDERICA)
+		
+		//僆僨僢僒偑偄傞
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+		//傾儖僂僃儞偑偄傞
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//嘑堦恖偱峴摦
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(F4_00_StartSolo)
+	{
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//僗僶儖偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+		else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//傾儖僂僃儞偑嫃傞
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,FEDERICA)
+		}
+	}
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+//乣嘐傾儖僂僃儞偑嫃傞
+//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,FEDERICA)
+	}
+//夛榖張棟傊
+////////////////////////////////////////////////////////////////
+	
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘗僄儞僨傿儞僌捈慜
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸曻杚抧傪僼儕乕儉乕僽丅
+	if( F6_05_EndSixth )
+	{
+		MOT_SET(FEDERICA,150,-1,450,450,-1,40)
+		MOT(FEDERICA,150,10)
+		rot_chr(FEDERICA,30,PLAYER1)
+
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"巴朗也很厲害嘛。\n居然認識那麼漂亮的人。",0)
+			MES(FEDERICA,"呵呵，從遠處看起來\n確實很相配呢。",0)
+			MES(FEDERICA,"說不定能這樣\n順利發展下去了呢。",0)
+			MES(FEDERICA,"嗯—，這就是所謂的\n老實人有福氣吧。",0)
+			MES_close(FEDERICA)
+
+			F_set(FEDERICA)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			MES(FEDERICA,"好了，我也\n開始耕種吧。",0)
+			MES(FEDERICA,"呵呵，明天就可以\n見到亞涅特了呢。",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘖旘峴婡偱儊儖僙僨僋偵忔傝崬傓偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞丒儖僁乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸儘傾儖僞懞擖傝岥慜曈傝偱丄曫慠偲偟偰偄傞丅
+	if( F6_00_GoToMeru )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+
+		MOT(FEDERICA,2,10)
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"剛…剛才……",0)
+			MES(FEDERICA,"剛才有一個身材壯實的怪人\n走過這裡……",0)
+			MES_close(FEDERICA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"身…身材壯實的怪人……？",0)
+					MES_close(RAGNA)
+
+					//	name("佀僊儍儔儞僪僁偵夛偭偨帠偑偁傞")
+//					if(FV_02_VisitGyakata)
+					if(FE_FF_GetSkil_1)
+					{
+						MES(PARTNER,"唔，只想到了\n一種可能性……",0)
+						MES_close(PARTNER)
+					}
+				}
+				else
+			//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"身材壯實的怪人啊……",0)
+					MES_close(PARTNER)
+
+					//	name("佀僊儍儔儞僪僁偵夛偭偨帠偑偁傞")
+//					if(FV_02_VisitGyakata)
+					if(FE_FF_GetSkil_1)
+					{
+						MES(RAGNA,"我好像只想到了\n一種可能性……",0)
+						MES_close(RAGNA)
+					}
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			
+		//丂丂僼僃僨儕僇丄婄傪攚偗傞丅
+			MOT(FEDERICA,150,10)
+			look(FEDERICA,"Bone_Head",0,		0,3,0,			0,-45,0)
+			MES(FEDERICA,"嗚嗚，我好像看見了\n不該看的東西。",0)
+			MES(FEDERICA,"太可怕了，一定會做惡夢的……",0)
+			MES_close(FEDERICA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀僊儍儔儞僪僁偵夛偭偨帠偑偁傞")
+//			if(FV_02_VisitGyakata)
+			if(FE_FF_GetSkil_1)
+			{
+
+			//丂丂埲壓偺億僢僾傾僢僾偼摨帪偵昞帵仌徚嫀丅
+				MES_pos(RAGNA,"（我理解你的心情……）",0,0,0,0,0)
+				MES_pos(PARTNER,"W1（我理解你的心情……）",0,0,0,0,0)
+
+				wait_key(0)
+				MES_close(PARTNER)
+				MES_close(RAGNA)
+
+				if(IT137<1)//媢偱俧偲夛偭偰側偄
+				{
+				//丂丂儖僁偵丠僄儌乕僔儑儞丅
+					EMO(PET,EMO_HATENA)
+					wait(30)
+
+					MES(PET,"到底在說什麼……？",0)
+					MES_close(PET)
+				}
+			}
+			//	name("佀僊儍儔儞僪僁偵夛偭偨帠偑側偄")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			//媢偱僊儍儔儞僪僁偲夛偭偨
+			if(IT137>0)
+			{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（那個，就是說……？）",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"（唔，果然是\n 這樣啊……）",0)
+					MES_close(PARTNER)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+			else
+			{
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（看來應該\n 很有衝擊力啊。\n 有些難以想像……）",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"（似乎受了很大的打擊呢。\n ……可是實在想像\n 不出來……）",0)
+					MES_close(PARTNER)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			}
+
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+			//仛僼僃僨儕僇亂偁偺恖暔傪栚寕亃
+			F_set_note(FEDERICA,2)
+			F_set(FEDERICA)
+		}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仛孞傝曉偟
+		else
+		{
+			MES(FEDERICA,"我正在打水，\n偶然間回頭一看……",0)
+			MES(FEDERICA,"他就在那裡。\n那個渾身肌肉的男人……",0)
+			MES_close(FEDERICA)
+
+		//丂丂僼僃僨儕僇丄婄傪攚偗傞丅
+			MOT(FEDERICA,150,10)
+			look(FEDERICA,"Bone_Head",0,		0,3,0,			0,-45,0)
+			MES(FEDERICA,"那刺激太強烈了。\n恐怕我一輩子都忘不掉……",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,150,10)
+		look(FEDERICA,"Bone_Head",0,		0,5,0,			0,0,0)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘕僋儕僗僞儖僶儗乕傪婲摦偡傞偙偲偵偟偨乮儔僌僫丒儖僁乮丒僆僨僢僒乯乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸曻杚抧傪僼儕乕儉乕僽丅
+	if( F5_00_HearLunar )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+		MOT_SET(FEDERICA,150,-1,445,445,-1,-1)//丂丂妟偵庤傪摉偰偰橂偔
+
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"呼……這麼些乾草\n應該就夠了吧。",0)
+			MES(FEDERICA,"雖然還有些頭暈，\n可是也不能放著這些孩子不管。",0)
+			MES(FEDERICA,"可是，這村子裡身體恢復得最慢的\n難道……是我？",0)
+			MES_close(FEDERICA)
+
+		//丂丂僼僃僨儕僇偵丒丒丒僄儌乕僔儑儞丅
+			EMO(FEDERICA,EMO_TENTEN)
+			wait(30)
+		
+		//丂丂妟偵庤傪摉偰偰橂偔傛偆側巇憪丅
+			MOT(FEDERICA,150,10)
+		
+			MES(FEDERICA,"嗚哇，真受打擊……\n我明明才２２歲……",0)
+			MES_close(FEDERICA)
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哈哈哈……\n也可以理解成\n其他人恢復得快，對吧？",0)
+					MES_close(RAGNA)
+				}
+				else
+			//	name("佀僆僨僢僒愭摢")
+				{
+					MES(PARTNER,"哦，和我同樣年紀啊。",0)
+					MES_close(PARTNER)
+
+					rot_chr(RAGNA,30,PARTNER)
+				//丂丂儔僌僫偲儖僁偵椻傗娋僄儌乕僔儑儞丅
+					EMO(RAGNA,EMO_HIYAASE)
+					EMO(PET,EMO_HIYAASE)
+					wait(30)
+					
+					MES(RAGNA,"不對，奧迪莎……\n不要岔開話題……",0)
+					MES_close(RAGNA)
+				}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(FEDERICA)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			MES(FEDERICA,"這打擊太大了……\n我真希望大家\n都是在強忍著傷痛進行工作。",0)
+			MES(FEDERICA,"可是勞尼婆婆和巴朗\n都已經能去阿魯特鎮的教會了。",0)
+			MES_close(FEDERICA)
+
+		//丂丂僼僃僨儕僇偵惵偞傔僄儌乕僔儑儞丅
+			EMO(FEDERICA,EMO_AOZAME)
+			wait(30)
+			
+			MOT(FEDERICA,150,10)
+			MES(FEDERICA,"輸了……\n竟然在青春活力上輸了……",0)
+			MES_close(FEDERICA)
+
+		//	name2(PET)
+			MES(PET,"（現在好像說什麼都沒用了啊。）",0)
+			MES_close(PET)
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘔幮傊岦偐偭偨儈傾傪捛偆偙偲偵偟偨乮儔僌僫丒傾儖僂僃儞乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F4_09_GoShrineMia)
+	{
+	//丂丂仸媿幧柉壠偺戜強偵棫偭偰偄傞丅
+		MOT_SET(FEDERICA,150,-1,446,446,-1,-1)
+		if(!F_FEDERICA)
+		{
+		//丂丂僼僃僨儕僇偵俹俙僄儌乕僔儑儞偱怳傝曉傞丅
+			EMO(FEDERICA,EMO_PA)
+			wait(30)
+			rot_chr(FEDERICA,30,PLAYER1)
+			MOT(FEDERICA,150,5)
+			MES(FEDERICA,"哎呀，這麼早就出來了……",0)
+			MOT(FEDERICA,2,10)
+			MES(FEDERICA,"呵呵，今天真早啊。",0)
+			MES(FEDERICA,"我正準備\n要去照顧動物呢。",0)
+			MES(FEDERICA,"最近在床上躺了很久，\n現在必須要加把勁了。",0)
+			MES_close(FEDERICA)
+			F_set(FEDERICA)
+			
+			rot(FEDERICA,30,90)
+		}
+		else
+		{
+		//丂丂仛孞傝曉偟
+		//丂丂仸怳傝曉傜側偄丅
+			MES(FEDERICA,"對了，還要\n先填一下肚子。",0)
+			MES(FEDERICA,"嗚哇，手臂的力量變差了……",0)
+			MES(FEDERICA,"果然長時間臥床\n體力下降了不少啊～……",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,151,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘓斈梡擡幰偑搢傟偰偄傞偩偗偺僼儔僌丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘒惎崀傝偺棦偵摓拝偟偨乮儔僌僫丒僗僶儖乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘑儔僌僫偼扨撈峴摦傪巒傔偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸媿幧柉壠丄儀僢僪偺忋偱婲偒忋偑偭偰偄傞丅
+	//丂丂仸亀仛惎崀傝偺棦傊岦偐偆偙偲偵偟偨亁偺慜偼丄
+	//丂丂丂傾僱僢僩偑偍尒晳偄偵棃偰偄傞丅
+	if( F4_00_StartSolo )
+	{
+		//丂丂仸傾僱僢僩偲嫟捠偺弶夞僀儀儞僩丅
+		//丂丂仸怳傝曉傜側偄丅
+		if(!FT_07_TalkAneFede && !F4_02_GoVillage2)
+		{
+			EV("TALK_FA")
+			wait_EV("TALK_FA")
+		}
+		else
+		{
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸埲壓亀仛惎崀傝偺棦傊岦偐偆偙偲偵偟偨亁慜偺捠忢堦斒儊僢僙乕僕丅
+			if(!F4_02_GoVillage2)
+			{
+				look_chr(FEDERICA,PLAYER1,"Bone_Head")
+				if(!F_FEDERICA)
+				{
+					MES(FEDERICA,"哈哈……亞涅特\n好像很擔心我呢。",0)
+					MES(FEDERICA,"唔—……\n說實話，我覺得\n發生這種事也不錯。",0)
+					MES(FEDERICA,"那個，只是有一點這種感覺\n……只有一點。",0)
+					MES(FEDERICA,"因為那孩子平常\n根本不來見我嘛。",0)
+					MES_close(FEDERICA)
+
+					F_set(FEDERICA)
+				}
+				//丂丂仛孞傝曉偟
+				else
+				{
+					MES(FEDERICA,"我好像讓亞涅特\n擔心了……",0)
+					MES(FEDERICA,"可是她能來探望我，\n我真的很開心。",0)
+					MES(FEDERICA,"那孩子平常\n根本不過來，\n我都有些寂寞了。",0)
+					MES_close(FEDERICA)
+				}
+				look_off(FEDERICA)
+				look_chr(FEDERICA,ANNETTE,"Bone_Head")
+			}
+		//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+		//丂丂仸亀仛惎崀傝偺棦傊岦偐偆偙偲偵偟偨亁偺屻丅
+			else
+			{
+				look_chr(FEDERICA,PLAYER1,"Bone_Head")
+				if(!F_FEDERICA)
+				{
+					MES(FEDERICA,"剛才妹妹\n過來探望我了。",0)
+					MES(FEDERICA,"雖然她對我大發雷霆，\n喊著「我很擔心你啊」。",0)
+					MES(FEDERICA,"可事實上我還是很高興。",0)
+					MES(FEDERICA,"因為那孩子平常\n根本不來見我嘛。",0)
+					MES_close(FEDERICA)
+
+					F_set(FEDERICA)
+				}
+	//丂丂仛孞傝曉偟
+				else
+				{
+					MES(FEDERICA,"我好像讓亞涅特\n擔心了……",0)
+					MES(FEDERICA,"可是說實話，我覺得\n這樣也不錯。",0)
+					MES(FEDERICA,"因為那孩子平常\n根本不來見我嘛。\n我不是也很寂寞嗎？",0)
+					MES_close(FEDERICA)
+				}
+				look_off(FEDERICA)
+			}
+			//仛僼僃僨儕僇亂傾僱僢僩偺尒晳偄亃
+			F_set_note(FEDERICA,1)
+		}
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘐儘傾儖僞懞偺恖乆傪媬弌偟丄儉乕儞僽儕傾忛傊岦偐偭偨乮儅僢僾丗栭乯
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//搢傟偰偄傞丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘍杺彈儔乕儔僀儔偐傜丄揋偺惓懱偑柧偐偝傟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸曻杚抧偐傜丄僠僃僗僋偑愊傒忋偘偨栘敔傪尒偰偄傞丅
+	if( F2_14_TalkEnemy )
+	{
+		MOT_SET(FEDERICA,151,-1,402,402,-1,0)	//僼僃僨儕僇丂鎎偟偘偵栘敔傪尒偰偄傞
+		if(!F_FEDERICA)
+		{
+		//丂丂仸怳傝曉傜側偄
+			MES(FEDERICA,"咦……？",0)
+			MES_close(FEDERICA)
+
+		//丂丂僼僃僨儕僇怳傝偐偊傞丅
+			MOT(FEDERICA,151,10)
+			rot_chr(FEDERICA,30,PLAYER1)
+
+			MES(FEDERICA,"剛才那裡的木箱\n好像搖晃了一下。",0)
+			MES(FEDERICA,"而且今天早上\n巴朗剛剛整理過，\n現在又堆起來了……",0)
+			MES(FEDERICA,"但是不可能會發生這種事的。\n一個人都沒有，\n木箱怎麼可能自己動起來呢。",0)
+			MES_close(FEDERICA)
+
+//			MES(FEDERICA,"偄傑栘敔偑彑庤偵摦偄偰丄\n偁傫側偵愊傒偁偑偭偪傖偭偨偺傛丅",0)
+//			MES(FEDERICA,"偍偐偟偄傢偹乧乧\n扤傕偄側偄偼偢側偺偵丅",0)
+//			MES_close(FEDERICA)
+
+		//丂丂儔僌僫偨偪偵丠僄儌乕僔儑儞丅
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+
+			MES(RAGNA,"（一個人都沒有……）",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（那位少年\n 不就在那裡嗎……？）",0)
+			MES_close(PARTNER)
+
+			F_set(FEDERICA)
+		}
+		//丂丂仛孞傝曉偟
+		else
+		{
+			rot_chr(FEDERICA,30,PLAYER1)
+//			MES(FEDERICA,"崱妋偐偵丄栘敔偑傆傢偭偰晜偄偰\n愊傒偁偑偭偪傖偭偨偺傛丅",0)
+			MES(FEDERICA,"我剛才看過去，\n發現那裡的木箱自己堆起來了。",0)
+			MES(FEDERICA,"說起來每年快要收穫的時候\n據說都會發生\n很多不可思議的事件……",0)
+			MES(FEDERICA,"難道這也是……？",0)
+			MES_close(FEDERICA)
+			
+		}
+		MOT(FEDERICA,150,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘋墛偺僷乕僣傪擖庤偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仸柍偟
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘊嬥埮偺怷傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸傾儖僢僥丄嶨壿壆偱榖偟偰偄傞丅
+	//丂丂丂偮偄偱偵丄嶨壿壆偺慜曈傝偺儀儞僠晅嬤偵丄媿傪堦摢抲偄偰偍偒傑偡丅
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	if( F2_00_GoForest )
+	{
+		MOT_SET(FEDERICA,150,-1,405,405,-1,40)
+		MOT(FEDERICA,150,10)
+		if(!FT_03_TalkAneFede)
+		{
+			//丂丂仸弶夞偼傾僱僢僩偺弶夞僀儀儞僩偑婲摦偡傞丅
+			//丂丂仸怳傝曉傜側偄丅
+
+			MES(FEDERICA,"亞涅特的偏見還是太強了。",0)
+			MES(FEDERICA,"那邊的生活\n可沒有那麼差？",0)
+			MES(FEDERICA,"對亞涅特而言\n可能是有些俗氣……",0)
+			MES_close(FEDERICA)
+
+		//	name2(ANNETTE)
+			MES(ANNETTE,"唔～，所以說\n不是這個意思……",0)
+			MES(ANNETTE,"姐姐，我想說的是。",0)
+			MES(ANNETTE,"我們本來就是雙胞胎，\n理所當然應該生活在一起。",0)
+			MES(ANNETTE,"換句話說，\n我想和姐姐住在一起！\n為什麼你就不明白呢……",0)
+			MES_close(ANNETTE)
+
+		/*
+		//	name2(FEDERICA)
+			MES(FEDERICA,"傑偁傑偁丄彮偟棊偪拝偒側偝偄偭偰丅",0)
+			MES(FEDERICA,"偁丄偙傟偍搚嶻偹丅\n崱挬從偄偨峠拑偺働乕僉傛丅",0)
+			MES_close(FEDERICA)
+
+		//	name2(ANNETTE)
+			MES(ANNETTE,"偆偭乧乧\n働乕僉偱岆杺壔偝側偄偱傛偹丅\n偦傝傖偁儌僠儘儞栣偭偲偔偗偳乧乧",0)
+			MES_close(ANNETTE)
+		*/	
+			//仛傾僱僢僩
+			F_set_note(ANNETTE,-1)
+			//仛僼僃僨儕僇
+			F_set_note(FEDERICA,-1)
+			
+			//仛傾僱僢僩亂憃巕偺巓亃
+			F_set_note(ANNETTE,1)
+
+			F_set(FT_03_TalkAneFede)
+
+		}
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+	//丂丂仸怳傝曉傜側偄丅
+		else
+		{
+			if(!F_FEDERICA)
+			{
+				MES(FEDERICA,"現在我們都有了自己的生活，\n像這樣分開住\n不是也很好嗎？",0)
+				MES(FEDERICA,"……對了亞涅特，\n我做的蛋糕好吃嗎？",0)
+				MES(FEDERICA,"要不要最近開個\n西餐館呢……",0)
+				MES_close(FEDERICA)
+
+			//	name2(ANNETTE)
+				MES(ANNETTE,"哎～，不行！\n要開就到我那開吧～。",0)
+				MES(ANNETTE,"這樣客人也更多，\n這不是一石二鳥嗎？",0)
+				MES_close(ANNETTE)
+
+				F_set(FEDERICA)
+			}
+	//丂丂仛孞傝曉偟
+			else
+			{
+			//丂丂仸怳傝曉傜側偄丅
+				MES(FEDERICA,"呵呵，抱歉……\n我還要照顧動物，\n沒辦法照著亞涅特所說的做。",0)
+				MES(FEDERICA,"還有，亞涅特也是，\n偶爾回來我這裡看看啊。",0)
+				MES(FEDERICA,"一直都只有\n我過來看你吧？",0)
+				MES_close(FEDERICA)
+			}
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘇儘傾儖僞懞傊岦偐偆偙偲偵偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸媿幧曈傝偱巇帠偟偰偄傞丅
+	if( F1_15_GoVillage )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+		MOT_SET(FEDERICA,150,-1,450,450,-1,40)
+		MOT(FEDERICA,150,10)
+
+		if(!F_FEDERICA)
+		{
+			MES(FEDERICA,"呼，差不多該\n整理一下行李了。",0)
+			MES(FEDERICA,"接下來要去\n阿魯特鎮批發蔬菜。",0)
+			MES(FEDERICA,"這樣，把村裡採的蔬菜\n用牛運過去。",0)
+			MES(FEDERICA,"呵呵，有意思吧。",0)
+			MES_close(FEDERICA)
+
+			F_set(FEDERICA)
+		}
+	//丂丂仛孞傝曉偟
+		else
+		{
+			MES(FEDERICA,"把農產品運到\n阿魯特鎮是我的工作。",0)
+			MES(FEDERICA,"大約每月兩三次吧。",0)
+			MES(FEDERICA,"呵呵，這次我打算\n順便去看一下亞涅特。\n真令人期待呢。",0)
+			MES_close(FEDERICA)
+		}
+		MOT(FEDERICA,2,10)
+	}
+	else
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//仴嘆忛傪庢傝栠偡偨傔偵峴摦傪奐巒偟偨
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸曻杚抧偱僼儕乕儉乕僽丅
+	if( F1_01_GameStart )
+	{
+		rot_chr(FEDERICA,30,PLAYER1)
+		MOT_SET(FEDERICA,150,-1,450,450,-1,40)
+		MOT(FEDERICA,150,10)
+
+		if(!FV_01_TalkFederica)
+		{
+		//丂丂仸弶夞僀儀儞僩
+			MES(FEDERICA,"哎呀，是旅客？\n真難得啊，居然會到這種地方來。",0)
+			MES(FEDERICA,"呵呵，莫非\n你也喜歡養動物？",0)
+			MES_close(FEDERICA)
+
+		//	name("慖戰僥僉僗僩")
+			workL(WK_CANCEL,SET,2)//亂傗傔傞亃
+			MES_pos(PLAYER1,"??W9【當然】\n【不是】",0,320,240,0,0)
+			wait_W(WK_YESNO)
+			MES_close(PLAYER1)
+			wait_MES(PLAYER1)//暵偠偒傞傑偱懸偮
+
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀嫽枴側偟")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			if(WK_YESNO==2)
+			{
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哈哈，抱歉，不怎麼喜歡……\n（關鍵是現在一定要\n 找回公主殿下的魔力才行……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"唔，不好意思……\n（不如說我更擅長\n 吃動物。）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				
+				MES(FEDERICA,"這樣啊，真可惜。",0)
+				MES(FEDERICA,"不過這裡確實不錯呢，\n能讓人靜下心來。",0)
+				MES(FEDERICA,"我妹妹卻總是嫌這裡\n「俗氣」。",0)
+				MES(FEDERICA,"高興的話還可以再過來。\n這樣餵動物吃飼料\n也是很有趣的哦？",0)
+				MES_close(FEDERICA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			//	name("佀傕偪傠傫")
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			else
+			{
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"嗯，我倒是不討厭。\n（只是我比較喜歡飛機。）",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"唔，我並不討厭這樣。\n（穆普利亞城裡\n 也有雞啊。）",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+				MES(FEDERICA,"哇，真的？",0)
+				MES(FEDERICA,"呵呵，我就覺得是這樣。",0)
+				MES(FEDERICA,"普通的觀光客\n是不會到我們農場來的。",0)
+				MES_close(FEDERICA)
+
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+				//	name("佀儔僌僫愭摢")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"哈哈，差不多吧。",0)
+					MES(RAGNA,"不過這農場\n是你一個人經營嗎……？",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("佀傾儖僂僃儞愭摢")
+				{
+					MES(PARTNER,"唔，這裡的農場\n是你一個人經營的嗎……？",0)
+					MES_close(PARTNER)
+				}
+				//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+
+				MES(FEDERICA,"嗯，沒錯。",0)
+				MES(FEDERICA,"我的妹妹嫌這裡\n太「俗氣」，可是我無論如何\n也想嘗試一下。",0)
+				MES(FEDERICA,"呵呵，高興的話還可以再過來。\n這樣餵動物吃飼料\n也是很有趣的哦？",0)
+				MES_close(FEDERICA)
+			}
+			//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+			F_set(FV_01_TalkFederica)
+		}
+	//劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅劅
+	//丂丂仸埲壓捠忢堦斒儊僢僙乕僕丅
+		else
+		{
+			if(!F_FEDERICA)
+			{
+				MES(FEDERICA,"這村莊很不錯呢，\n能讓人靜下心來。",0)
+				MES(FEDERICA,"我妹妹卻總是嫌這裡\n「俗氣」。",0)
+				MES(FEDERICA,"高興的話還可以再過來。\n這樣餵動物吃飼料\n也是很有趣的哦？",0)
+				MES_close(FEDERICA)
+
+				F_set(FEDERICA)
+			}
+			//丂丂仛孞傝曉偟
+			else
+			{
+				MES(FEDERICA,"好了，工作工作。",0)
+				MES(FEDERICA,"趁現在先把\n乾草收集起來吧。",0)
+				MES_close(FEDERICA)
+			}
+		}
+		MOT(FEDERICA,2,10)
+	}
+	
+	TK_end()
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

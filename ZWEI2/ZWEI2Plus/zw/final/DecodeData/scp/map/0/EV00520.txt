@@ -1,0 +1,4591 @@
+//====================================================================
+//ステージトラップスクリプト
+//[mc52022][Ｇ-竞技场]
+//====================================================================
+
+#ScriptTable
+
+//対战相手的ラベルを ENEMY_CHARAに統一しました
+#ENEMY_CHARA	9
+
+#LOTTE		10
+
+//30～34は分身？
+
+/*
+#MAURICE	11
+#ODESSA		12
+#PIPIRO		13
+#POCKLE		14
+#SUBARU		15
+#FIONA		16
+#KLODE		17
+*/
+#GYARANDOW	18
+//#GYARANDOW_2 19	//嘉兰多·企鹅娘的連战に勝利した场合用
+
+//１回战
+/*
+#ZAKO_1		20
+#ZAKO_2		21
+#ZAKO_3		22
+#ZAKO_4		23
+#ZAKO_5		24
+#ZAKO_6		25
+#ZAKO_7		26
+#ZAKO_8		27
+*/
+#ZAKO_19		28	// 判定用
+
+#EV_PENGUIN	29
+
+//２回战
+/*
+#ZAKO_11	30
+#ZAKO_12	31
+#ZAKO_13	32
+#ZAKO_14	33
+#ZAKO_15	34
+#ZAKO_16	35
+#ZAKO_17	36
+#ZAKO_18	37
+
+#ZAKO_19	38	// 判定用
+*/
+
+
+//■ローカルワーク
+// 001:倒したザコ的数
+// 002:サバイバルモードのとき1
+
+INIT
+{
+//  -------  no typ   	  tip      x    y   z       mot     向 状  000+++++++010+++++++020+++++++030+++++++040+++++++050+++++++060+++++++070+++++++080+++++++090+++++++100+++++++110+++++++120+++++++130+++++++140+++++++150+++++++160+++++++170+++++++180+++++++190+++++++200+++++++210+++++++220+++++++230+++++++240+++++++250++
+//■階段·扉
+
+	//チェック用にエントリほしい的で，復活させます。チェック終了後コメントアウトします。2008.08.06
+	set_chr( 90,990,	 6, 7,     0,   0,  0,		180,070201, 6,"K1_10510;")	//①エントリ
+
+	set_obj("@obx0082a", 6, 7,     0,   0,  0,		180)						//アーチ
+	set_obj("@obx0082a", 5, 4,     0,   0,  0,		0)						//アーチ(敵側)
+	set_chr(191,1301,	 6, 7,     0,   0,  0,		  0,   180, 0,";")			//階段下（ダ小咪）
+	set_chr(192,1301,	 5, 4,     0,   0,  0,		  0,   0, 0,";")			//階段上（ダ小咪）
+
+
+	//馆内にいるよＬＦ。
+	F_set(90)
+
+	//▼河童モード
+/*	if(GW_ENTRY_EVENT==3)
+	{
+		set_chr( 1,311,		0,0,10280,10210,0,	0,	0,		0,";")//普通スライム
+		set_chr( 2,311,		0,0,10280,10210,0,	0,	0,		0,";")//普通スライム
+		set_chr( 3,311,		0,0,10280,10210,0,	0,	0,		0,";")//普通スライム
+		set_chr( 4,311,		0,0,10280,10210,0,	0,	0,		0,";")//普通スライム
+		set_chr( 5,311,		0,0,10280,10210,0,	0,	0,		0,";")//普通スライム
+		set_chr( 6,311,		0,0,10280,10210,0,	0,	0,		0,";")//普通スライム
+		set_chr( 7,311,		0,0,10280,10210,0,	0,	0,		0,";")//普通スライム
+		set_chr( 8,311,		0,0,10280,10210,0,	0,	0,		0,";")//普通スライム
+		set_chr( 9,311,		0,0,10280,10210,0,	0,	0,		0,";")//普通スライム
+//		set_chr( 10,350,	0,0,10280,10210,800,-1,	0,		8,"!F10 F1 F2 F3 F4 F5 F6 F7 F8 F9 S0_1 WT?120 V0_99;")//大スライム
+	
+	
+		EV("PRE_KAPPA_BATTLE")										//河童
+	}
+	else*/
+	
+	//▼サバイバル（河童後）
+	if(GW_ENTRY_EVENT==3)
+	{
+		workG(GW_ENTRY_EVENT,SET,3)							//終了後の分岐に使用
+		EV("PRE_SURVIVAL_LOOP")
+		wait_EV("PRE_SURVIVAL_LOOP")
+		
+		
+	}
+	else
+	//▼サバイバル	
+	if(GW_ENTRY_EVENT==2)
+	{
+		workG(GW_ENTRY_EVENT,SET,3)							//終了後の分岐に使用
+		EV("PRE_SURVIVAL")									//サバイバル
+	}
+	//▼竞技场
+	else
+	{
+	
+		if(GW_ENTRY_EVENT==1)
+		{
+	//必ず本戦から始まるように修正 2008.07.29. 18:40
+			workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+
+			set_chr( LOTTE,1068,	-1,-1,  10388,10356,1,	0,0,0,"")	//　ロッテ
+			MOT_SET( LOTTE,159,159,3001,3061,-1,-1 )
+			MOT(LOTTE,159,0)
+
+			//バトルに挑戦するのが初回の場合，演出を見せる初期位置に
+			if(GW_TRY_CUP==1)
+ 			{
+				if(!FV_FF_BAMaurice)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAMaurice)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+ 			}
+ 			else
+			if(GW_TRY_CUP==2)
+ 			{
+				if(!FV_FF_BAOdessa)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAOdessa)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+ 			}
+ 			else
+			if(GW_TRY_CUP==3)
+ 			{
+				if(!FV_FF_BAPockle)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAPockle)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+ 			}
+ 			else
+			if(GW_TRY_CUP==4)
+ 			{
+				if(!FV_FF_BAPipiro)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAPipiro)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+ 			}
+ 			else
+			if(GW_TRY_CUP==5)
+ 			{
+				if(!FV_FF_BASubaru)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BASubaru)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+ 			}
+ 			else
+			if(GW_TRY_CUP==6)
+ 			{
+				if(!FV_FF_BAFiona)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAFiona)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+ 			}
+ 			else
+			if(GW_TRY_CUP==7)
+ 			{
+				if(!FV_FF_BAKlode)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAKlode)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+ 			}
+			else
+			if(GW_TRY_CUP==8)
+ 			{
+				if(!FV_FF_BAGyarandow)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAGyarandow)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+ 			}
+ 			else
+			if(GW_TRY_CUP==9)
+ 			{
+				if(!FV_FF_BAPenguin)
+				{
+					F_set(FV_FF_FarstBattle)
+					F_set(FV_FF_BAPenguin)
+				}
+				else
+				{
+					F_reset(FV_FF_FarstBattle)
+				}
+ 			}
+ 		}
+
+		if(FV_FF_FarstBattle)
+ 		{
+			//初回の処理
+			EV("PRE_BATTLE")
+ 		}
+		//そうでない場合は最初から敵と向き合っている
+ 		else
+ 		{
+		//2回目以降の処理
+			EV("PRE_BATTLE_2")
+ 		}
+ 
+ 	}
+	map_color(85,80,80,0);//R,G,B, time 100%
+}
+
+
+//====================================================================
+//=== イベント処理 ===================================================
+//====================================================================
+//──────────────────────────────
+//	name("◆竞技场処理")
+//──────────────────────────────
+/*
+Test
+{
+	set_chr( LOTTE,82,	-1,-1,  10388,10356,1,	51,0,0,"")	//　露缇
+	set_chr( ENEMY_CHARA,081,	-1,-1,  9450,9192,1,	2,0,0,"")	//　企鹅娘
+	set_chr( GYARANDOW,21,	-1,-1,  10120,10772,0	51,270,0,"")	//　嘉兰多
+
+	set_chr( 11,1010,	-1,-1,  10150,10772,0	2,90,0,"")	//　嘉兰多
+
+	set_chr(12,081,-1,-1, 9480,10275,0,2,310,0,"")
+	set_chr(13,081,-1,-1, 9649,10439,0,2,310,0,"")
+	set_chr(14,081,-1,-1,10150,10772,0,2,310,0,"")
+
+	set_chr(15,21,-1,-1,10019,10977,0,51,270,0,"")
+}
+*/
+/*
+Monster_test
+{
+	set_chr( 50,129,	 -1, -1,    11232,7754,-500,		50,0, 0,";")	//
+	color2(50,0,0,0, 50,50,50)
+	chr_scale(50,	"charbase0",	200,200,200,	0,	1)
+	F_set_chr(50,CF_NO_CSP)
+	F_set_chr(50,CF_NO_ZIMEN)
+	F_set_chr(50,CF_NO_HEIGHT)
+	F_set_chr(50,CF_NO_CLIP)
+
+	set_chr( 51,129,	 -1, -1,    12313,8504,-631,		50,250, 0,";")	//
+	color2(51,0,0,0, 50,50,50)
+	chr_scale(51,	"charbase0",	200,200,200,	0,	1)
+	F_set_chr(51,CF_NO_CSP)
+	F_set_chr(51,CF_NO_ZIMEN)
+	F_set_chr(51,CF_NO_HEIGHT)
+	F_set_chr(51,CF_NO_CLIP)
+
+	set_chr( 52,129,	 -1, -1,    12864,9556,-450,		50,90, 0,";")	//
+	color2(52,0,0,0, 50,50,50)
+	chr_scale(52,	"charbase0",	200,200,200,	0,	1)
+	F_set_chr(52,CF_NO_CSP)
+	F_set_chr(52,CF_NO_ZIMEN)
+	F_set_chr(52,CF_NO_HEIGHT)
+	F_set_chr(52,CF_NO_CLIP)
+}
+*/
+
+//PRE_BATTLE用各種ワーク初期化処理
+PRE_BATTLE_SET
+{
+	//初期位置セット
+	if(GW_TRY_CHARA==0)
+	{
+		// 拉古那で挑战
+		chr_pos(RAGNA,		11250,11600,1,180,2)
+		clear_party(PARTNER)	//艾尔雯消去
+	//	delete(PARTNER)
+	}
+	else
+	{
+		// 艾尔雯で挑战
+		chr_pos(RAGNA,		11156,11809,1,180,2)
+		chr_pos(PARTNER,	11250,11600,1,180,2)
+		clear_party(99)		//艾尔雯的み的操作モードへ
+	//	delete(RAGNA)
+
+	}
+
+	set_hp(PLAYER1,100)//全快
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////ＨＰ0でも消えない　キャラ0は死亡時に"EV_DEAD"を再生
+	KAO(PLAYER1, "1", "1", "1")
+
+	chr_equip2( LOTTE,"eq_062", "Bone_LeftHand", 100,	90,0,0,	-7,0,2);
+	KAO(LOTTE, "1", "1", "1")
+
+	//モーション
+	MOT_SET(LOTTE,150,-1,461,461,151,15)	//声援に答える
+	MOT_SET(LOTTE,151,-1,462,462,152,15)
+	MOT_SET(LOTTE,152,-1,463,463,150,15)
+	MOT_SET(LOTTE,153,-1,497,497,154,15)	//ジャンプ
+	MOT_SET(LOTTE,154,-1,499,499,2,5)
+
+	F_reset(FV_FF_FarstBattle)
+
+	//対战相手をセット
+	if(GW_TRY_CUP==1)
+	{
+		set_chr( ENEMY_CHARA,390,	-1,-1,  9501,8247,1,	2,0,0,"")	//　莫里斯
+		if(GW_TRYNum_Maurice<99)
+			workG(GW_TRYNum_Maurice,ADD,1)
+
+		if(GW_TRYNum_Maurice==1)//初回挑战
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		set_chr( ENEMY_CHARA,392,	-1,-1,  9501,8247,1,	2,0,0,"")	//　奥迪莎
+		if(GW_TRYNum_Odessa<99)
+			workG(GW_TRYNum_Odessa,ADD,1)
+
+		if(GW_TRYNum_Odessa==1)//初回挑战
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		set_chr( ENEMY_CHARA,396,	-1,-1,  9501,8247,1,	2,0,0,"")	//　布库尔
+		if(GW_TRYNum_Pockle<99)
+			workG(GW_TRYNum_Pockle,ADD,1)
+
+		if(GW_TRYNum_Pockle==1)//初回挑战
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		set_chr( ENEMY_CHARA,397,	-1,-1,  9501,8247,1,	2,0,0,"")	//　皮皮洛
+		if(GW_TRYNum_Pipiro<99)
+			workG(GW_TRYNum_Pipiro,ADD,1)
+
+		if(GW_TRYNum_Pipiro==1)//初回挑战
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		set_chr( ENEMY_CHARA,391,	-1,-1,  9501,8247,1,	2,0,0,"")	//　昴
+		if(GW_TRYNum_Subaru<99)
+			workG(GW_TRYNum_Subaru,ADD,1)
+
+		if(GW_TRYNum_Subaru==1)//初回挑战
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==6)
+	{
+		set_chr( ENEMY_CHARA,393,		-1,-1,  9501,8247,1,	2,0,0,"")	//　菲欧娜
+		if(GW_TRYNum_Fiona<99)
+			workG(GW_TRYNum_Fiona,ADD,1)
+
+		if(GW_TRYNum_Fiona==1)//初回挑战
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		set_chr( ENEMY_CHARA,394,		-1,-1,  9501,8247,1,	2,0,0,"")	//　克罗德
+		if(GW_TRYNum_Klode<99)
+			workG(GW_TRYNum_Klode,ADD,1)
+
+		if(GW_TRYNum_Klode==1)//初回挑战
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		set_chr( ENEMY_CHARA,398,	-1,-1,  9448,8507,0,	2,0,0,"")	//　嘉兰多
+		if(GW_TRYNum_Gyarand<99)
+			workG(GW_TRYNum_Gyarand,ADD,1)
+
+		if(GW_TRYNum_Gyarand==1)//初回挑战
+			F_set(FV_FF_FarstBattle)
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		set_chr( ENEMY_CHARA,399,	-1,-1,  9370,8349,1,	2,0,0,"")	//　企鹅娘
+		if(GW_TRYNum_Penguin<99)
+			workG(GW_TRYNum_Penguin,ADD,1)
+
+		if(GW_TRYNum_Penguin==1)//初回挑战
+			F_set(FV_FF_FarstBattle)
+	}
+	set_chr( ZAKO_19,990,	-1,-1,  11388,9309,1,	10,0,8,"(F9 <EV_WIN> RF9)")
+	F_set_chr(ENEMY_CHARA,CF_NO_DEAD)
+	F_set_chr(ENEMY_CHARA,CF_NO_DROPITEM)
+
+
+	//企鹅娘杯じゃなければ，対战相手を連れてくるイベント用企鹅娘配置
+	if(GW_TRY_CUP!=9 && GW_TRY_CUP!=8)
+	{
+//		set_chr( EV_PENGUIN,81,	-1,-1,  9526,9192,1,	2,0,0,"")	//　企鹅娘
+		set_chr( EV_PENGUIN,81,	-1,-1,  9370,8349,0,	2,0,0,"")	//　企鹅娘
+		color(EV_PENGUIN,-1)//透過
+	}
+
+
+}
+//──────────────────────────────
+//▼战闘開始前的処理（１回目版）
+//──────────────────────────────
+//　　竞技场で１回目に战闘する场合は演出を长めに取る。
+//　　２回目以降は演出を簡略化する。
+//　　一度馆をでてからもう一度やってくると，１回目版的処理になる。
+//　　※特に，初めて竞技场で战う场合はカメラ演出を強化する。
+//　　ネオンサインを潜りながら，揺れるようなカメラで
+//　　１人舞台中央に立つ露缇に近づいていく。
+//　　歓声が鳴る中，派手なカメラ演出をしながら露缇的イントロ。
+//　　※竞技场で战ったことがある场合は，カメラ演出は簡略化する。
+//　　舞台に露缇と拉古那／艾尔雯が立っている形。
+//──────────────────────────────
+PRE_BATTLE
+{
+	EV_begin()
+
+	//――――――――――――――――――――――――――
+	//	初期化処理
+	//――――――――――――――――――――――――――
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+	wait(1)
+
+	//カメラセット
+	CAM_move(10388,-10456,162,0,0)
+	CAM(-50,118,162,20,180,0,0)
+	wait_CAM_move()
+
+	EV("PRE_BATTLE_SET")
+	wait_EV("PRE_BATTLE_SET")
+
+	//初期位置セット 初回
+	if(FV_FF_FarstBattle)
+	{
+		chr_pos(PLAYER1,	11250,11600,1,180,2)
+		color(PLAYER1,-1)
+	}
+	else
+	{
+		chr_pos(PLAYER1,	10651,10772,1,90,2)
+	}
+	color(ENEMY_CHARA,-1)//透過
+
+	//――――――――――――――――――――――――――
+	//■イベント開始
+	//――――――――――――――――――――――――――
+	wait(10)
+//	name("―――――――――――――――――――――――――――――――")
+//	name("※竞技场で战う的が初めて的场合。")
+//	name("―――――――――――――――――――――――――――――――")
+	if(FV_FF_FarstBattle)
+	{
+		CAM_move(10338,-10552,119,0,0)
+		CAM(8000,46,-40,50,226,0,0)
+		CAM_move(10325,-10215,119,180,0)
+		CAM(8000,30,-40,42,143,180,0)
+
+		fade_in( 0, 80, BLACK)	//フェードイン
+		wait(150)
+
+		fade_in(100, 20, BLACK)	//フェードイン
+		wait_fade()
+
+		CAM_move(10392,-10300,160,0,0)
+		CAM(-170,112,0,46,282,0,0)
+		CAM(-170,112,0,46,250,240,0)
+		fade_in(  0, 40, BLACK)	//フェードイン
+		wait(50)
+
+		KAO(LOTTE,"52625Z4","5","6")
+		MES_pos(LOTTE,"P1S4女士们＆先生们！",0,0,0,0,0)
+		wait(80)
+		MES_close(LOTTE)
+		wait_MES(LOTTE)
+
+		cross_fade(30)
+		CAM_move(10372,-10440,160,0,0)
+		CAM(-170,62,160,18,215,0,0)
+		wait_fade()
+	}
+	else
+	{
+//	name("―――――――――――――――――――――――――――――――")
+//	name("※竞技场で战う的が初めてでない。")
+//	name("―――――――――――――――――――――――――――――――")
+		CAM_move(10388,-10456,162,100,0)
+		CAM(-50,50,162,21,180,100,0)
+
+		if(GW_TRY_CHARA==0)
+			MOT(RAGNA,50,15)
+		else
+			MOT(PARTNER,51,15)
+		wait(5)
+		fade_in( 0, 60, BLACK)	//フェードイン
+		wait_fade()
+
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","5","6")
+		MES(LOTTE,"P1S4女士们＆先生们！",0)
+	}
+
+	KAO(LOTTE,"52625Z3","321","6")
+	MES(LOTTE,"P1S4让大家久等了～。",0)
+	MES_close(LOTTE)
+
+	if(GW_TRY_CUP==1)
+	{
+		KAO(LOTTE,"52625Z6","1236","6")
+		MES(LOTTE,"P1S4今晚将举行\n莫里斯杯锦标赛～！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		KAO(LOTTE,"52625Z6","1236","6")
+		MES(LOTTE,"P1S4今晚将举行\n西部牛仔杯锦标赛～！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		KAO(LOTTE,"52625Z6","1236","6")
+		MES(LOTTE,"P1S4各位久等了！\n今晚将举行纯情少年杯锦标赛～！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		KAO(LOTTE,"52625Z5","123","6")
+		MES(LOTTE,"P1S4今晚登场的是\n这位毒舌女——皮皮洛！",0)
+		KAO(LOTTE,"52625Z5","36","6")
+		MES(LOTTE,"P1S4即将举行的是\n魔法少女杯锦标赛～！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		KAO(LOTTE,"52625Z6","1236","6")
+		MES(LOTTE,"P1S4今晚将举行\n小忍者杯锦标赛～！",0)
+		KAO(LOTTE,"52625Z6","5","6")
+		MES(LOTTE,"P1S4被称为小忍者的\n究竟是哪一位呢～！？",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==6)
+	{
+		KAO(LOTTE,"52625Z5","123","6")
+		MES(LOTTE,"P1S4今晚将召唤出\n特别来宾……",0)
+		KAO(LOTTE,"52625Z6","36","6")
+		MES(LOTTE,"P1S4即将举行的是\n武装大小姐杯锦标赛～！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		KAO(LOTTE,"52625Z5","123","6")
+		MES(LOTTE,"P1S4哎呀呀，今晚登场的\n就是传言中的那一位……",0)
+		KAO(LOTTE,"52625Z6","36","6")
+		MES(LOTTE,"P1S4即将举行\n万能管家杯锦标赛～！",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		KAO(LOTTE,"52625Z6","1236","6")
+		MES(LOTTE,"P1S4今晚将举行\n最强之男杯锦标赛～！",0)
+		KAO(LOTTE,"52625Z6","5","6")
+		MES(LOTTE,"P1S4挑战者究竟能不能\n夺取最强之男的宝座呢～！？",0)
+		MES_close(LOTTE)
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		KAO(LOTTE,"52625Z5","123","6")
+		MES(LOTTE,"P1S4这个时刻\n终于到来了～。",0)
+		KAO(LOTTE,"52625Z6","36","6")
+		MES(LOTTE,"P1S4今晚，终于\n将要举行\n企鹅杯锦标赛了～！！",0)
+		MES_close(LOTTE)
+	}
+	wait_MES(LOTTE)
+
+//───────────────────────
+//　　派手に歓声ＳＥが鳴り，露缇は手を振ってそれに応える。
+//	MES(LOTTE,"C4◆派手に歓声ＳＥが鳴り，露缇は手を振ってそれに応える。",0)
+//	MES_close(LOTTE)
+
+	SE(591,0)//歓声
+
+	cross_fade(30)
+	color(PLAYER1,-1)
+	CAM_move(10374,-10469,119,0,0)
+	CAM(-330,90,-40,9,-30,0,0)
+	CAM_move(10414,-10469,119,250,0)
+	CAM(-50,90,-40,9,37,250,0)
+
+	KAO(LOTTE,"5","321","6")
+	MOT(LOTTE,150,15)
+	rot(LOTTE,30,330)
+	wait(60)
+	rot(LOTTE,30,30)
+	wait(60)
+	rot(LOTTE,30,0)
+	MOT(LOTTE,159,15)
+//	wait(30)
+
+//　　露缇，青コーナーを指す。
+	rot(LOTTE,30,330)
+	look(LOTTE,"Bone_RightShoulder",0,		5,5,5,			10,-20,100)
+
+//	name("―――――――――――――――――――――――――――――――")
+//	name("※竞技场で战う的が初めて的场合。")
+//	name("―――――――――――――――――――――――――――――――")
+	if(FV_FF_FarstBattle)
+	{
+
+		cross_fade(20)
+		CAM_move(10388,-10456,162,0,0)
+		CAM(-208,32,162,26,178,0,0)
+		CAM(-208,32,162,19,178,20,0)
+		wait(50)
+//		CAM_move(10348,-10456,202,40,0)
+//		CAM(-50,56,202,20,54,40,0)
+
+		//───────────────────────
+		//	name("□挑战者が拉古那的场合")
+		if(GW_TRY_CHARA==0)
+		{
+			CAM_quake("463746")
+			KAO(LOTTE,"52625Z4","1236","6")
+			MES(LOTTE,"P1S4本次的挑战者是\n《飞机狂人》拉古那～！",0)
+			MES_close(LOTTE)
+
+			KAO(RAGNA,"1","3","1")
+			MOT(RAGNA,50,15)
+			
+		}
+		//	name("□挑战者が艾尔雯的场合")
+		else
+		{
+			CAM_quake("463746")
+			KAO(LOTTE,"52625Z4","1236","6")
+			MES(LOTTE,"P1S4本次的挑战者是\n《真祖之姬》，同时也是月姬的女主角，\n爱尔奎特·布伦史泰德！",0)
+			MES_close(LOTTE)
+
+			KAO(PARTNER,"1","3","1")
+			MOT(PARTNER,51,15)
+		}
+		wait_MES(LOTTE)
+		color(PLAYER1,1)
+
+		//　　青コーナーから拉古那/艾尔雯がやって来る。
+		SE(593,0)//小歓声
+ 		EV("Move_Player")
+// 		wait_EV("Move_Player")
+		wait(120)
+
+		cross_fade(10)
+		EV_stop("Move_Player")
+		chr_pos(PLAYER1,10933,10946,0,90,2)
+		move( PLAYER1, 0, 008,10651,10772,1,0)
+
+//		CAM_move(10388,-10456,162,0,0)
+//		CAM(-49,175,162,22,161,0,0)
+		CAM_move(9794,-10422,-18,0,0)
+		CAM(-10,113,-180,29,248,0,0)
+		CAM_move(10492,-10236,-18,90,0)
+		CAM(310,110,-180,29,161,90,0)
+
+//		wait_fade()
+
+		//───────────────────────
+		wait_move(PLAYER1)
+		wait(10)
+		look_chr(PLAYER1,LOTTE,"Bone_Head")
+		wait(40)
+		CAM_move(10388,-10456,162,50,0)
+		CAM(-50,55,162,23,180,50,0)
+		look(LOTTE,"Bone_RightShoulder",0,		5,5,5,			0,0,0)
+		rot(LOTTE,10,0)
+	//	MOT(LOTTE,159,15)
+		KAO(LOTTE,"52625Z3","321","6")
+		MES(LOTTE,"对战方是……",0)
+		MES_close(LOTTE)
+	
+		//★竞技场で战った
+		//F_set(FV_FF_FarstBattle)
+	}
+//	name("―――――――――――――――――――――――――――――――")
+//	name("※竞技场で战ったことがある场合")
+//	name("―――――――――――――――――――――――――――――――")
+	else
+	{
+		color(PLAYER1,1)
+//		CAM_move(10588,-10456,102,20,0)
+//		CAM(-87,86,102,21,161,20,0)
+//		wait_CAM_move()
+
+		look_chr(PLAYER1,LOTTE,"Bone_Head")
+		cross_fade(20)
+		CAM_move(10588,-10456,102,0,0)
+		CAM(-87,86,102,21,161,0,0)
+		wait_fade()
+
+	//　　露缇，挑战キャラをを指す。（紹介するような感じ）
+		//───────────────────────
+		//	name("□挑战者が拉古那的场合")
+		CAM_quake("463746")
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(LOTTE,"52625Z4","1","6")
+			MES(LOTTE,"P1S4……挑战者\n《飞机狂人》拉古那ＶＳ──",0)
+			MES_close(LOTTE)
+		}
+		//	name("□挑战者が艾尔雯的场合")
+		else
+		{
+			KAO(LOTTE,"52625Z4","1","6")
+			MES(LOTTE,"P1S4……挑战者\n《真祖之姫》艾尔雯ＶＳ──",0)
+			MES_close(LOTTE)
+		}
+		//───────────────────────
+		rot(LOTTE,10,0)
+	}
+
+//　　露缇，赤コーナーを指す。
+//	MOT(LOTTE,159,15)
+	look(LOTTE,"Bone_RightShoulder",0,		5,5,5,			10,-20,100)
+	CAM_move(10388,-10456,162,30,0)
+	CAM(-208,30,162,22,179,30,0)
+	rot(LOTTE,30,30)
+	wait(30)
+	look_chr(PLAYER1,ENEMY_CHARA,"Bone_Head")
+
+//───────────────────────────────────────────
+//■name("□莫里斯杯に挑战した")
+//───────────────────────────────────────────
+	if(GW_TRY_CUP==1)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4《热血中年》莫里斯～！",0)
+		MES_close(LOTTE)
+	//　　歓声ＳＥと共に
+	//　　さあさあこっちへくる的です，とか言われながら対战者登场。
+
+		wait_MES(LOTTE)
+		SE(593,0)//小歓声
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		EV("Move_EnemyAndPenguin1")
+		wait_EV("Move_EnemyAndPenguin1")
+
+		//───────────────────────
+		//	name("□フラグ⑩以前的场合")
+		if(!F5_00_HearLunar)
+		{
+			KAO(ENEMY_CHARA, "12321Z4", "1", "1")	
+			MES(ENEMY_CHARA,"哈，哈哈哈……\n有点害羞呢……",0)
+			MES_close(ENEMY_CHARA)
+	 		wait_MES(ENEMY_CHARA)
+
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		else
+		{
+		//	name("□フラグ□□的场合")
+			look_chr(ENEMY_CHARA,EV_PENGUIN,"Bone_Head")
+			KAO(ENEMY_CHARA, "12321Z4", "1", "4")
+			MES(ENEMY_CHARA,"那，那个……\n我现在有点忙啊……",0)
+			MES_close(ENEMY_CHARA)
+			
+			rot_chr(EV_PENGUIN,30,ENEMY_CHARA)
+			KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+			MES(EV_PENGUIN,"没关系的啦，来吧。\n加油。",0)
+			MES_close(EV_PENGUIN)
+			rot(EV_PENGUIN,30,0)
+			look_off(ENEMY_CHARA)
+//			wait(20)
+			wait_MES(EV_PENGUIN)
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+
+		chr_rename(ENEMY_CHARA,"莫里斯")
+		chr_rename(EV_PENGUIN,"企鹅娘")
+
+		//───────────────────────
+		//　　歓声と共に，企鹅娘に連れられて，赤コーナー側から莫里斯がやってくる。
+		//───────────────────────
+		EV("Move_EnemyAndPenguin3")
+		wait_EV("Move_EnemyAndPenguin3")
+	}
+//───────────────────────────────────────────
+//■name("□西部牛仔杯に挑战した")
+//───────────────────────────────────────────
+	else
+	if(GW_TRY_CUP==2)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4《饿狼狩猎者》奥迪莎～！",0)
+		MES_close(LOTTE)
+		if( F6_02_OnMeru ) 
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"哎呀呀……\n好像没找到呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"没办法。\n准备替身吧。",0)
+			MES_close(LOTTE)
+		}
+		else
+		if( F3_07_FlickSwitch2 && !F4_09_GoShrineMia )
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"哎呀呀……\n好像没找到呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"没办法。\n准备替身吧。",0)
+			MES_close(LOTTE)
+		}
+	//　　歓声ＳＥと共に
+	//　　さあさあこっちへくる的です，とか言われながら対战者登场。
+
+		wait_MES(LOTTE)
+		SE(593,0)//小歓声
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		//（梅尔塞迪克突入後的奥迪莎／布库尔／皮皮洛／克罗德／拉莱拉）//　　歓声ＳＥと共に
+		if( F6_02_OnMeru )
+		{
+//蒙布兰演出カット0821
+//			chr_rename(ENEMY_CHARA,"声")
+//			MES_pos(ENEMY_CHARA,"S1ちょ，ちょっと……！？",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"S2な，何をするニャ！？\n……や，やめるニャ……！",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"P1S2あ，あぎゃあぁぁっ……！？",0,120,130,0,0)
+//			wait_key(0)
+//			MES_close(ENEMY_CHARA)
+//		//　　歓声と共に，企鹅娘に連れられて，赤コーナー側からいないはず的キャラがやってくる。
+//
+//			chr_equip2( ENEMY_CHARA,	"eq_048",	"Bone_Spine_Dummy",	100,		0,0,0,	0,0,0)
+//			chr_equip2( ENEMY_CHARA,	"eq_049",	"Bone_Head",	100,		0,0,0,	0,0,0)
+
+			chr_rename(ENEMY_CHARA,"奥迪莎")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+	
+//			MES(ENEMY_CHARA,"◆未入力項目\n私は人形です。",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9这是本馆所拥有的\n最新型训练用魔法人偶！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9战斗能力和攻击模式\n与本人几乎相同，\n请不必手下留情，痛快地战斗吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		//★城：スイッチ②を入れた　～　★社へ向かった米娅を追うことにした　まで的間
+		else
+		if( F3_07_FlickSwitch2 && !F4_09_GoShrineMia )
+		{
+			chr_rename(ENEMY_CHARA,"奥迪莎")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+	
+//			MES(ENEMY_CHARA,"◆未入力項目\n私は人形です。",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9这是本馆所拥有的\n最新型训练用魔法人偶！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9战斗能力和攻击模式\n与本人几乎相同，\n请不必手下留情，痛快地战斗吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		else
+		{
+			chr_rename(ENEMY_CHARA,"奥迪莎")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+			//───────────────────────
+			//	name("□フラグ⑩的场合")
+			if(F4_09_GoShrineMia && !F5_00_HearLunar)
+			{
+			//	name("声")
+				KAO(ENEMY_CHARA, "12321Z4", "1233321", "1")	
+				MES(ENEMY_CHARA,"好，轮到我出场了……！",0)
+				MES_close(ENEMY_CHARA)
+				wait_MES(ENEMY_CHARA)
+			}
+			else
+			{
+				KAO(ENEMY_CHARA, "12321Z2", "123", "5")	
+				MES(ENEMY_CHARA,"哎呀呀……",0)
+				KAO(ENEMY_CHARA, "12321Z4", "321", "5")	
+				MES(ENEMY_CHARA,"只要这样看一眼\n就能知道我很忙了啊。",0)
+				MES_close(ENEMY_CHARA)
+				
+				rot(EV_PENGUIN,30,330)
+				KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+				MES(EV_PENGUIN,"没关系的，来吧。\n加油啊。",0)
+				MES_close(EV_PENGUIN)
+				wait_MES(EV_PENGUIN)
+				rot(EV_PENGUIN,30,0)
+//				wait(10)
+				wait_MES(EV_PENGUIN)
+			}
+			//───────────────────────
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		//───────────────────────
+		//　　歓声と共に，企鹅娘に連れられて，赤コーナー側から奥迪莎がやってくる。
+		//───────────────────────
+		EV("Move_EnemyAndPenguin3")
+		wait_EV("Move_EnemyAndPenguin3")
+	}
+//───────────────────────────────────────────
+//■name("□纯情少年杯に挑战した")
+//───────────────────────────────────────────
+	else
+	if(GW_TRY_CUP==3)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4《纯情少年》布库尔～！",0)
+		MES_close(LOTTE)
+		if( F6_02_OnMeru ) 
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"哎呀呀……\n好像没找到呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"没办法。\n准备替身吧。",0)
+			MES_close(LOTTE)
+		}
+	//　　歓声ＳＥと共に
+	//　　さあさあこっちへくる的です，とか言われながら対战者登场。
+
+		wait_MES(LOTTE)
+		SE(593,0)//小歓声
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		//（梅尔塞迪克突入後的奥迪莎／布库尔／皮皮洛／克罗德／拉莱拉）//　　歓声ＳＥと共に
+		if(F6_02_OnMeru)
+		{
+//蒙布兰演出カット0821
+//			chr_rename(ENEMY_CHARA,"声")
+//			MES_pos(ENEMY_CHARA,"S1ちょ，ちょっと……！？",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"S2な，何をするニャ！？\n……や，やめるニャ……！",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"P1S2あ，あぎゃあぁぁっ……！？",0,120,130,0,0)
+//			wait_key(0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+//		//　　歓声と共に，企鹅娘に連れられて，赤コーナー側からいないはず的キャラがやってくる。
+//
+//			chr_equip2( ENEMY_CHARA,	"eq_048",	"Bone_Spine_Dummy",	100,		0,0,0,	0,0,0)
+//			chr_equip2( ENEMY_CHARA,	"eq_049",	"Bone_Head",	100,		0,0,0,	0,0,0)
+
+			chr_rename(ENEMY_CHARA,"布库尔")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+//			MES(ENEMY_CHARA,"◆未入力項目\n私は人形です。",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9这是本馆所拥有的\n最新型训练用魔法人偶！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9战斗能力和攻击模式\n与本人几乎相同，\n请不必手下留情，痛快地战斗吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+
+		}
+		else
+		{
+			chr_rename(ENEMY_CHARA,"布库尔")
+			look_chr(ENEMY_CHARA,EV_PENGUIN,"Bone_Head")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+			if(!F4_09_GoShrineMia)
+			{
+				KAO(ENEMY_CHARA, "B232BZ4", "1233321", "5")	
+				MES(ENEMY_CHARA,"那，那个，我现在\n稍微有点忙啊……",0)
+				MES_close(ENEMY_CHARA)
+			}
+			else
+			{
+				KAO(ENEMY_CHARA, "B232BZ4", "1233321", "5")	
+				MES(ENEMY_CHARA,"那，那个，我现在\n稍微有点忙啊……",0)
+				MES_close(ENEMY_CHARA)
+			}
+			rot(EV_PENGUIN,30,330)
+			KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+			MES(EV_PENGUIN,"没关系的，来吧。\n加油啊。",0)
+			MES_close(EV_PENGUIN)
+			wait_MES(EV_PENGUIN)
+			rot(EV_PENGUIN,30,0)
+			look_off(ENEMY_CHARA)
+//			wait(10)
+			wait_MES(EV_PENGUIN)
+			KAO(ENEMY_CHARA, "B", "123", "5")	
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+	//───────────────────────
+	//　　歓声と共に，企鹅娘に連れられて，赤コーナー側から布库尔がやってくる。
+	//───────────────────────
+ 		EV("Move_EnemyAndPenguin3")
+ 		wait_EV("Move_EnemyAndPenguin3")
+	}
+//───────────────────────────────────────────
+//■name("□魔法少女杯に挑战した")
+//───────────────────────────────────────────
+	else
+	if(GW_TRY_CUP==4)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4《魔法少女》皮皮洛～！",0)
+		MES_close(LOTTE)
+		if( F6_02_OnMeru ) 
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"哎呀呀……\n好像没找到呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"没办法。\n准备替身吧。",0)
+			MES_close(LOTTE)
+		}
+	//　　歓声ＳＥと共に
+	//　　さあさあこっちへくる的です，とか言われながら対战者登场。
+
+		wait_MES(LOTTE)
+		SE(593,0)//小歓声
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		//（梅尔塞迪克突入後的奥迪莎／布库尔／皮皮洛／克罗德／拉莱拉）//　　歓声ＳＥと共に
+		if(F6_02_OnMeru)
+		{
+//蒙布兰演出カット0821
+//			chr_rename(ENEMY_CHARA,"声")
+//			MES_pos(ENEMY_CHARA,"S1ちょ，ちょっと……！？",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"S2な，何をするニャ！？\n……や，やめるニャ……！",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"P1S2あ，あぎゃあぁぁっ……！？",0,120,130,0,0)
+//			wait_key(0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+//		//　　歓声と共に，企鹅娘に連れられて，赤コーナー側からいないはず的キャラがやってくる。
+//
+//			chr_equip2( ENEMY_CHARA,	"eq_048",	"Bone_Spine_Dummy",	100,		0,0,0,	0,0,0)
+//			chr_equip2( ENEMY_CHARA,	"eq_049",	"Bone_Head",	100,		0,0,0,	0,0,0)
+
+			chr_rename(ENEMY_CHARA,"皮皮洛")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+//			MES(ENEMY_CHARA,"◆未入力項目\n私は人形です。",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9这是本馆所拥有的\n最新型训练用魔法人偶！！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9战斗能力和攻击模式\n与本人几乎相同，\n请不必手下留情，痛快地战斗吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		else
+		{
+			chr_rename(ENEMY_CHARA,"皮皮洛")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+			EV("Motion_KyoroKyoro")
+
+			KAO(ENEMY_CHARA, "B232BZ4", "123332", "9")	
+			MES(ENEMY_CHARA,"咦，什么啊～。\n你要把我带到哪去？",0)
+			MES_close(ENEMY_CHARA)
+
+			rot(EV_PENGUIN,30,330)
+			KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+			MES(EV_PENGUIN,"没关系的，来吧。\n加油啊。",0)
+			MES_close(EV_PENGUIN)
+			wait_MES(EV_PENGUIN)
+			wait_EV("Motion_KyoroKyoro")
+			rot(EV_PENGUIN,30,0)
+//			wait(10)
+			wait_MES(EV_PENGUIN)
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+	//───────────────────────
+	//　　歓声と共に，企鹅娘に連れられて，赤コーナー側から皮皮洛がやってくる。
+	//───────────────────────
+ 		EV("Move_EnemyAndPenguin3")
+ 		wait_EV("Move_EnemyAndPenguin3")
+	}
+//───────────────────────────────────────────
+//■name("□ちびっこ忍者杯に挑战した")
+//───────────────────────────────────────────
+	else
+	if(GW_TRY_CUP==5)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4《见习忍者》昴～！",0)
+		MES_close(LOTTE)
+	//	if(F4_09_GoShrineMia && !F6_00_GoToMeru)
+		if(F4_09_GoShrineMia && !F6_02_OnMeru)
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"哎呀呀……\n好像没找到呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"没办法。\n准备替身吧。",0)
+			MES_close(LOTTE)
+		}
+	//　　さあさあこっちへくる的です，とか言われながら対战者登场。
+
+		wait_MES(LOTTE)
+		SE(593,0)//小歓声
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		//	name("□フラグ□的场合")
+	//	if(F4_09_GoShrineMia && !F6_00_GoToMeru)
+		if(F4_09_GoShrineMia && !F6_02_OnMeru)
+		{
+//ロボ演出カット0821
+//			chr_rename(ENEMY_CHARA,"声")
+//			KAO(ENEMY_CHARA,"N","8","9")
+//		//	name("声")
+//			MES(ENEMY_CHARA,"キュイイィィン……",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+
+			chr_rename(ENEMY_CHARA,"昴")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+//			MES(ENEMY_CHARA,"◆未入力項目\n私は人形です。",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9这是本馆所拥有的\n最新型训练用魔法人偶！！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9战斗能力和攻击模式\n与本人几乎相同，\n请不必手下留情，痛快地战斗吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+
+		}
+	//	name("□フラグ□以外的场合")
+		else
+		{
+			chr_rename(ENEMY_CHARA,"昴")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+			look_chr(ENEMY_CHARA,EV_PENGUIN,"Bone_Head")
+			KAO(ENEMY_CHARA, "B232BZ4", "1233321", "4")	
+			MES(ENEMY_CHARA,"咦……\n那，那个……？",0)
+			KAO(ENEMY_CHARA, "B232BZ4", "1", "4")	
+			MES(ENEMY_CHARA,"我还\n有点事情……",0)
+			MES_close(ENEMY_CHARA)
+
+			rot(EV_PENGUIN,30,330)
+			KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+			MES(EV_PENGUIN,"没关系的，来吧。\n加油啊。",0)
+			MES_close(EV_PENGUIN)
+			wait_MES(EV_PENGUIN)
+			rot(EV_PENGUIN,30,0)
+//			wait(10)
+			wait_MES(EV_PENGUIN)
+			look_off(ENEMY_CHARA)
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+	//───────────────────────
+	//　　歓声と共に，企鹅娘に連れられて，赤コーナー側から昴がやってくる。
+	//　　フラグ□的场合は，へ的へ的もへじ顔的昴がやって来る。
+	//───────────────────────
+		EV("Move_EnemyAndPenguin3")
+		wait_EV("Move_EnemyAndPenguin3")
+	}
+//───────────────────────────────────────────
+//■name("□武装お嬢様杯に挑战した")
+//───────────────────────────────────────────
+	else
+	if(GW_TRY_CUP==6)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4《圣剑使者》菲欧娜～！",0)
+		MES_close(LOTTE)
+		if( F6_02_OnMeru ) 
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"哎呀呀……\n好像没找到呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"没办法。\n准备替身吧。",0)
+			MES_close(LOTTE)
+		}
+	//　　さあさあこっちへくる的です，とか言われながら対战者登场。
+
+		wait_MES(LOTTE)
+		SE(593,0)//小歓声
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+		
+		//（梅尔塞迪克突入後的奥迪莎／布库尔／皮皮洛／克罗德／拉莱拉）//　　歓声ＳＥと共に
+		if(F6_02_OnMeru)
+		{
+//蒙布兰演出カット0821
+//			chr_rename(ENEMY_CHARA,"声")
+//			MES_pos(ENEMY_CHARA,"W9S1ちょ，ちょっと……！？",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"W9S2な，何をするニャ！？\n……や，やめるニャ……！",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"P1S2あ，あぎゃあぁぁっ……！？",0,120,130,0,0)
+//			wait_key(0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+//		//　　歓声と共に，企鹅娘に連れられて，赤コーナー側からいないはず的キャラがやってくる。
+//
+//			chr_equip2( ENEMY_CHARA,	"eq_048",	"Bone_Spine_Dummy",	100,		0,0,0,	0,0,0)
+//			chr_equip2( ENEMY_CHARA,	"eq_049",	"Bone_Head",	100,		0,0,0,	0,0,0)
+
+			chr_rename(ENEMY_CHARA,"菲欧娜")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+//			MES(ENEMY_CHARA,"◆未入力項目\n私は人形です。",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9这是本馆所拥有的\n最新型训练用魔法人偶！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9战斗能力和攻击模式\n与本人几乎相同，\n请不必手下留情，痛快地战斗吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+
+		}
+		else
+		{
+			chr_rename(ENEMY_CHARA,"菲欧娜")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+			EV("Motion_KyoroKyoro2")
+
+			KAO(ENEMY_CHARA, "B232BZ2", "1233321", "4")	
+			MES(ENEMY_CHARA,"那，那个……？",0)
+			KAO(ENEMY_CHARA, "B232BZ3", "1", "4")	
+			MES(ENEMY_CHARA,"这里是什么地方……？",0)
+			MES_close(ENEMY_CHARA)
+
+			KAO(EV_PENGUIN, "12321Z4", "1233321", "2")
+			MES(EV_PENGUIN,"没关系的，来吧。\n加油啊。",0)
+			MES_close(EV_PENGUIN)
+			wait_MES(EV_PENGUIN)
+			wait_EV("Motion_KyoroKyoro2")
+			look_off(ENEMY_CHARA)
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+	//───────────────────────
+	//　　歓声と共に，企鹅娘に連れられて，赤コーナー側から菲欧娜がやってくる。
+	//───────────────────────
+		EV("Move_EnemyAndPenguin3")
+ 		wait_EV("Move_EnemyAndPenguin3")
+	}
+//───────────────────────────────────────────
+//■name("□万能執事杯に挑战した")
+//───────────────────────────────────────────
+	else
+	if(GW_TRY_CUP==7)
+	{
+		CAM_quake("463746")
+			KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4《战斗管家》克罗德～！",0)
+		MES_close(LOTTE)
+		if( F6_02_OnMeru ) 
+		{
+			wait(15)
+			EMO(LOTTE,EMO_TENTEN)
+			wait(60)
+			KAO(LOTTE,"12321Z4","321","5")
+			MES(LOTTE,"哎呀呀……\n好像没找到呢。",0)
+			KAO(LOTTE,"12321Z5","123","5")
+			MES(LOTTE,"没办法。\n准备替身吧。",0)
+			MES_close(LOTTE)
+		}
+	//　　さあさあこっちへくる的です，とか言われながら対战者登场。
+
+		wait_MES(LOTTE)
+		SE(593,0)//小歓声
+		VOICE( 786,EV_PENGUIN ) 
+		wait(1)
+
+		//（梅尔塞迪克突入後的奥迪莎／布库尔／皮皮洛／克罗德／拉莱拉）//　　歓声ＳＥと共に
+		if(F6_02_OnMeru)
+		{
+//蒙布兰演出カット0821
+//			chr_rename(ENEMY_CHARA,"声")
+//			MES_pos(ENEMY_CHARA,"S1ちょ，ちょっと……！？",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"S2な，何をするニャ！？\n……や，やめるニャ……！",0,120,120,0,0)
+//			wait_key(0)
+//			MES_pos(ENEMY_CHARA,"P1S2あ，あぎゃあぁぁっ……！？",0,120,120,0,0)
+//			wait_key(0)
+//			MES_close(ENEMY_CHARA)
+//		//　　歓声と共に，企鹅娘に連れられて，赤コーナー側からいないはず的キャラがやってくる。
+//
+//			chr_equip2( ENEMY_CHARA,	"eq_048",	"Bone_Spine_Dummy",	100,		0,0,0,	0,0,0)
+//			chr_equip2( ENEMY_CHARA,	"eq_049",	"Bone_Head",	100,		0,0,0,	0,0,0)
+
+			chr_rename(ENEMY_CHARA,"管家克罗德")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+
+//			MES(ENEMY_CHARA,"◆未入力項目\n私は人形です。",0)
+//			MES_close(ENEMY_CHARA)
+//			wait_MES(ENEMY_CHARA)
+			wait(15)
+			MES_pos(LOTTE,"W9这是本馆所拥有的\n最新型训练用魔法人偶！！",0,330,330,0,0)
+			wait_key(0)
+			MES_pos(LOTTE,"W9战斗能力和攻击模式\n与本人几乎相同，\n请不必手下留情，痛快地战斗吧！",0,330,330,0,0)
+			wait_key(0)
+			MES_close(LOTTE)
+
+			KAO(LOTTE,"5","6","6")
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		else
+		{
+			chr_rename(ENEMY_CHARA,"管家克罗德")
+
+			EV("Move_EnemyAndPenguin1")
+			wait_EV("Move_EnemyAndPenguin1")
+			wait(10)
+			look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,-30,0)
+			//───────────────────────
+			//	name("□挑战者が拉古那")
+			if(GW_TRY_CHARA==0)
+			{
+				KAO(ENEMY_CHARA, "12321Z5", "1233321", "1")	
+				MES(ENEMY_CHARA,"──拉古那先生，\n我们在奇妙的地方碰面了呢。",0)
+				MES_close(ENEMY_CHARA)
+			}
+			else
+			{
+			//	name("□挑战者が艾尔雯")
+				KAO(ENEMY_CHARA, "12321Z5", "1233321", "1")	
+				MES(ENEMY_CHARA,"──艾尔雯小姐，\n我们在奇妙的地方碰面了呢。",0)
+				MES_close(ENEMY_CHARA)
+			}
+			//───────────────────────
+			EV("Move_EnemyAndPenguin2")
+			wait_EV("Move_EnemyAndPenguin2")
+		}
+		wait_MES(ENEMY_CHARA)
+		look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,0,0)
+	//───────────────────────
+	//　　歓声と共に，企鹅娘に連れられて，赤コーナー側から克罗德がやってくる。
+	//───────────────────────
+ 		EV("Move_EnemyAndPenguin3")
+ 		wait_EV("Move_EnemyAndPenguin3")
+	}
+//───────────────────────────────────────────
+//■嘉兰多
+//───────────────────────────────────────────
+	else
+	if(GW_TRY_CUP==8)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S4《蒙面超人》嘉兰多～！",0)
+		MES_close(LOTTE)
+		wait_MES(LOTTE)
+
+		SE(593,0)//小歓声
+ 		EV("Move_EnemyOnry1")
+ 		wait_EV("Move_EnemyOnry1")
+
+		chr_rename(ENEMY_CHARA,"嘉兰多")
+		MES(ENEMY_CHARA,"呵呵……\n似乎轮到吾辈出场了。",0)
+		MES_close(ENEMY_CHARA)
+		wait_MES(ENEMY_CHARA)
+	//───────────────────────
+	//　　歓声と共に，赤コーナー側から嘉兰多がやってくる。
+	//───────────────────────
+ 		EV("Move_EnemyOnry2")
+ 		wait_EV("Move_EnemyOnry2")
+	}
+//───────────────────────────────────────────
+//■企鹅娘
+//───────────────────────────────────────────
+	else
+	if(GW_TRY_CUP==9)
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","1236","6")
+		MES(LOTTE,"P1S7红帽子\n企鹅～！",0)
+		MES_close(LOTTE)
+		wait_MES(LOTTE)
+
+		SE(593,0)//小歓声
+ 		EV("Move_Penguin1")
+ 		wait_EV("Move_Penguin1")
+
+		chr_rename(ENEMY_CHARA,"企鹅娘")
+		EMO(ENEMY_CHARA,EMO_TOGEBIKKURI)
+		KAO(ENEMY_CHARA, "1", "1233321", "1")	
+		wait(30)
+		rot(ENEMY_CHARA,30,320)
+		wait(30)
+		KAO(ENEMY_CHARA, "1", "1", "1")	
+		MES(ENEMY_CHARA,"……？",0)
+		MES_close(ENEMY_CHARA)
+		wait_MES(ENEMY_CHARA)
+		wait(10)
+		rot(ENEMY_CHARA,30,0)
+		
+	//───────────────────────
+	//　　赤コーナー側から企鹅娘が的そ的そとやってくる。
+ 	//───────────────────────
+ 		EV("Move_Penguin2")
+ 		wait_EV("Move_Penguin2")
+	}
+
+//───────────────────────
+//　　※対战キャラが移動中に軽くフェードアウトし，
+//　　　３者が中央で向かい合っている構図に移る。
+//　　＜対战者ロゴ表示＞
+//　　＜対战者ボイス再生＞
+//　　当時に両者，ＳＥつきで構える。
+//───────────────────────
+
+	KAO(LOTTE,"1","321","1")
+	look(LOTTE,"Bone_RightShoulder",0,		5,5,5,			0,0,0)
+	move( LOTTE, 0, WALK1,10388,10200,1,0)
+	look(LOTTE,"Bone_Head",0,		0,4,0,			0,30,0)
+	wait(10)
+	look(LOTTE,"Bone_Head",0,		0,4,0,			0,-30,0)
+	wait(20)
+	look(LOTTE,"Bone_Head",0,		0,4,0,			0,0,0)
+	wait_move( LOTTE )
+	MOT(LOTTE,159,15)
+	wait_CAM_move()
+
+//───────────────────────
+//　　向かい合った状態で，両者構える。
+//　　同時に両者ＳＥつきで構える。
+//───────────────────────
+	EV("KAMAE_SET")
+	wait_EV("KAMAE_SET")
+	
+//	MES(LOTTE,"C4◆向かい合った状態で，両者ＳＥつきで構える。",0)
+//	MES_close(LOTTE)
+	
+//	name("□企鹅娘杯へ的挑战")
+	if(GW_TRY_CUP==9)
+	{
+		KAO(LOTTE,"12321Z4","321","3")
+		MES(LOTTE,"P1S4两位，都准备好了吧～？",0)
+		//企鹅娘が打ち鳴らし的场合，初期化
+		if(WK001==1)
+			MOT(ENEMY_CHARA,57,5)	//　企鹅娘
+		KAO(LOTTE,"12321Z6","1","3")
+		MES(LOTTE,"P1S5那么，\nＧ－竞技场最终决战……",0)
+		MES_close(LOTTE)
+	}
+//	name("□通常的挑战")
+	else
+	{
+		KAO(LOTTE,"12321Z4","321","3")
+		MES(LOTTE,"P1S4两位，都准备好了吧～？",0)
+		KAO(LOTTE,"12321Z4","1","3")
+		if(GW_TRY_CUP==1)
+			MES(LOTTE,"P1S4那么，莫里斯杯……",0)
+		if(GW_TRY_CUP==2)
+			MES(LOTTE,"P1S4那么，西部牛仔杯……",0)
+		if(GW_TRY_CUP==3)
+			MES(LOTTE,"P1S4那么，纯情少年杯……",0)
+		if(GW_TRY_CUP==4)
+			MES(LOTTE,"P1S4那么，魔法少女杯……",0)
+		if(GW_TRY_CUP==5)
+			MES(LOTTE,"P1S4那么，小忍者杯……",0)
+		if(GW_TRY_CUP==6)
+			MES(LOTTE,"P1S4那么，武装大小姐杯……",0)
+		if(GW_TRY_CUP==7)
+			MES(LOTTE,"P1S4那么，万能管家杯……",0)
+		if(GW_TRY_CUP==8)
+			MES(LOTTE,"P1S4那么，最强之男杯……",0)
+
+		MES_close(LOTTE)
+	}
+	///───────────────────────
+	//　　＜レディ·ファイトＳＥ＆エフェクト再生＞
+	//　　＜ゴングＳＥ再生＞
+	//　　露缇が飛び的き，战闘開始。
+	//　　露缇は審判的動きを行う。
+	//　　企鹅娘は场外でボーっと立っている。（企鹅娘杯的场合は勿論战闘）
+	//──────────────────────────────
+//	MES(LOTTE,"C4◆＜レディ·ファイトＳＥ＆エフェクト再生＞\n＜ゴングＳＥ再生＞",0)
+//	MES_close(LOTTE)
+	stop_BGM(60)
+	EFF(21630,320,240,0,0,100,0)//FIGHT
+	wait(40)
+	SE(211,PLAYER1)
+	EV("PLAY_VOICE_Fight")
+
+	EV("KAMAE_RESET")
+	wait_EV("KAMAE_RESET")
+
+	//企鹅娘をどかす
+	if(GW_TRY_CUP!=9 && GW_TRY_CUP!=8)
+	{
+		rot(EV_PENGUIN,60,360)
+		jump(EV_PENGUIN,0,20,9381,9099,0,400)
+	}
+	
+	//露缇をどかす
+	MOT(LOTTE,153,2)
+	rot(LOTTE,60,360)
+	KAO(LOTTE,"5","5","6")
+	jump(LOTTE,0,20,9549,9099,0,400)
+
+	CAM_return( 30 )
+
+	workL(WK_BOSSHP,SET,ENEMY_CHARA)	//BOSS＿ＨＰ表示
+	
+	//ロープをセット
+	EV("SET_ROPE")
+	BGM(45)
+	EV_end()
+
+	//ペット消す
+	color(PET,-1)
+}
+
+//──────────────────────────────
+//▼战闘開始前的処理（２回目以降）
+//──────────────────────────────
+//　　カメラが竞技场中央に下りてきて，向かい合う２人と露缇を映す。
+//	name("＜対战者ロゴ表示＞")
+//	name("＜対战者ボイス再生＞")
+//　　同時に両者ＳＥつきで構える。
+//	name("＜レディ·ファイトＳＥ＆エフェクト再生＞")
+//	name("＜ゴングＳＥ再生＞")
+//　　露缇が飛び的き，战闘開始。
+//──────────────────────────────
+PRE_BATTLE_2
+{
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+	wait(1)
+
+	CAM_move(10388,-10676,102,0,0)
+	CAM(950,183,102,21,180,0,0)
+
+	EV("PRE_BATTLE_SET")
+	wait_EV("PRE_BATTLE_SET")
+	EV("SET_ROPE")
+
+	//初期位置セット 2战目以降
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+	chr_pos(ENEMY_CHARA,	10120,10772,1,270,2)
+
+	if(GW_TRY_CUP!=9)
+	{
+		color(EV_PENGUIN,1)
+		chr_pos(EV_PENGUIN,	9381,9499,0,0,2)
+	}
+
+	CAM_move(10388,-10456,122,120,0)
+	CAM(-50,107,122,22,180,120,0)
+
+	SE(591,0)//歓声
+	KAO(LOTTE,"1","1","3")
+
+	fade_in( 0, 60, BLACK)	//フェードイン
+	wait(30)
+
+	//名前を画面に表示
+	if(GW_TRY_CUP==1)
+		set_namebmp(34,0)	//斗志高昂的中年莫里斯	Ｇ－竞技场
+	if(GW_TRY_CUP==2)
+ 		set_namebmp(35,0)	//饿狼狩猎者奥迪莎		Ｇ－竞技场
+	if(GW_TRY_CUP==3)
+		set_namebmp(37,0)	//纯情少年布库尔		Ｇ－竞技场
+	if(GW_TRY_CUP==4)
+		set_namebmp(38,0)	//魔法少女皮皮洛		Ｇ－竞技场
+	if(GW_TRY_CUP==5)
+		set_namebmp(36,0)	//忍者实习生昴		Ｇ－竞技场
+	if(GW_TRY_CUP==6)	
+		set_namebmp(39,0)	//圣剑使菲欧娜		Ｇ－竞技场
+	if(GW_TRY_CUP==7)
+		set_namebmp(40,0)	//战闘管家克罗德		Ｇ－竞技场
+	if(GW_TRY_CUP==8)
+		set_namebmp(41,0)	//蒙面超人嘉兰多	Ｇ－竞技场
+	if(GW_TRY_CUP==9)
+		set_namebmp(42,0)	//绝对究极无敌企鹅娘	Ｇ－竞技场
+	wait(120)
+//	EV("PLAY_VOICE_Fight")
+//	wait_EV("PLAY_VOICE_Fight")
+//	wait(30)
+
+//　　同時に両者ＳＥつきで構える。
+	EV("KAMAE_SET")
+	wait_EV("KAMAE_SET")
+
+//	name("＜レディ·ファイトＳＥ＆エフェクト再生＞")
+//	name("＜ゴングＳＥ再生＞")
+//　　露缇が飛び的き，战闘開始。
+//	MES(LOTTE,"C4◆同時に両者ＳＥつきで構える。\n＜レディ·ファイトＳＥ＆エフェクト再生＞\n＜ゴングＳＥ再生＞",0)
+//	MES_close(LOTTE)
+
+	EFF(21630,320,240,0,0,100,0)//FIGHT
+	wait(40)
+	SE(211,PLAYER1)
+	EV("PLAY_VOICE_Fight")
+
+	//構えを戻す
+	EV("KAMAE_RESET")
+	wait_EV("KAMAE_RESET")
+
+	//企鹅娘をどかす
+	if(GW_TRY_CUP!=9)
+	{
+		rot(EV_PENGUIN,60,360)
+		jump(EV_PENGUIN,0,20,9381,9099,0,400)
+	}
+
+	//露缇をどかす
+	MOT(LOTTE,153,2)
+	rot(LOTTE,60,360)
+	KAO(LOTTE,"5","5","6")
+	jump(LOTTE,0,20,9549,9099,0,400)
+
+	CAM_return( 30 )
+
+	workL(WK_BOSSHP,SET,ENEMY_CHARA)	//BOSS＿ＨＰ表示
+	BGM(45)
+	EV_end()
+
+	//ペット消す
+	color(PET,-1)
+}
+
+
+//──────────────────────────────
+//▼闘技中·敗北時的処理
+//　　拉古那／艾尔雯倒れる。
+//　　画面暗くならずに，拉古那的傍に対战者がやって来る。
+//　　＜挑战者勝利ボイス再生＞
+//　　ついでに軽い演技を入れる。（挑战者的ボイス次第）
+//　　薄れていく歓声と共にカメラ引きながらフェードアウト。
+//　　竞技场受付前にフェードインして，受付的敗北時処理を行う。
+//──────────────────────────────
+EV_DEAD
+{
+	EV_begin()
+	delete(ZAKO_19)	// 判定キャラ消去
+
+	//負けたGWを立てる
+	workG(GW_WINLOSE,SET,2)
+	set_hp(PLAYER1,100)
+
+	CAM_return(0)
+	CAM(150,64,-60,34,180,0,0)
+	map_color(100,100,100, 5);//R,G,B, time 100%
+	map_specular(80,80,80, 5);//R,G,B, time 100%
+	wait(20)
+	MOT(ENEMY_CHARA,2,0)//待机に
+	KAO(PLAYER1,"5","5","5")
+	wait(1)
+	map_specular(0,0,0,20);//R,G,B, time 100%
+
+	MOT(PLAYER1,99,15)
+//乱数カットしました0822
+//	workL(000,RAND,2)
+//	if(WK000==1)
+//		KAO(PLAYER1,"4","4","4")
+//	else
+//		KAO(PLAYER1,"5","5","5")
+
+	wait(20)
+	EFF(21660,320,240,0,0,100,0)//LOSE
+	CAM(3230,68,-60,24,180,120,0)
+	map_color(80,80,80, 120);//R,G,B, time 100%
+//	wait(40)
+
+	//対战相手的勝利ポーズ
+	EV("PLAY_VOICE_EnemyWin")
+	EV("EnemyWin_KAMAE")
+	wait(30)
+	fade_in(100,90,0)
+//	wait_CAM_move()
+//	wait_EV("PLAY_VOICE_EnemyWin")
+//	wait(60)
+
+//　　画面暗くならずに，拉古那的傍に対战者がやって来る。
+//◆現在，対战相手が徐々に消えてしまう的で保留中
+//	MES(ENEMY_CHARA,"C4◆画面暗くならずに，拉古那的傍に対战者がやって来る。\n◆現在，対战相手が徐々に消えてしまう的で保留中",0)
+//	MES_close(ENEMY_CHARA)
+
+
+	//暗転
+//	fade_in(100,80,0)
+	wait_fade()
+	stop_BGM(60)
+	wait_BGM()
+
+	if(WK002==1)		//WK002が1ならサバイバルモード
+	{
+		if(GW_TRY_CHARA==0)
+		{
+			join_party(1)//ALWENをパーティーに戻す
+		}
+		else
+		{
+			join_party(0)//RAGNAをパーティーに戻す		
+		}	
+		workL(002,SET,0)
+	}
+	else
+	{
+		if(GW_TRY_CHARA==0)
+		{
+			join_party(1)//ALWENをパーティーに戻す
+			
+			//拉古那的手办入手
+			if(!F2857)
+			{
+				SE(24,0)//ゲットSE
+				MES(0,"L777作为安慰奖，\nL667拉古那L777的手办入手了！！",2)
+				MES_close(0)
+				F_set(2857)
+			}
+		}
+		else
+		{
+			join_party(0)//RAGNAをパーティーに戻す
+			
+			//艾尔雯的手办入手
+			if(!F2858)
+			{
+				SE(24,0)//ゲットSE
+				MES(0,"L777作为安慰奖，\nL667艾尔雯L777的手办入手了！！",2)
+				MES_close(0)
+				F_set(2858)
+			}
+		}
+	}
+
+	wait(15)
+	CAM_return( 0 )
+	new_map(10510)
+
+//	EV_end()
+}
+//──────────────────────────────
+//▼闘技中·勝利時的処理
+//　　対战者が倒れる演出。
+//　　カメラは対战者を見せたまま，（ついでに露缇がやって来る）
+//　　＜敗北ボイス再生＞
+//　　ボイスが終わると，歓声と共に拉古那を映す。
+//　　勝利モーションで喜ぶ拉古那。
+//　　（そばに露缇がやって来る）
+//　　大きな歓声と共にカメラ引きながらフェードアウト。
+//　　商品が貰える场合は賞品授与イベントへつなげる。
+//　　クリアが２回目以降なら，受付·勝利後的処理へ飛ばす。
+//──────────────────────────────
+EV_WIN
+{
+	delete(ZAKO_19)	// 判定キャラ消去
+	delete(30)	// 分身キャラ消去
+	delete(31)	// 
+	delete(32)	// 
+	delete(33)	// 
+	delete(34)	// 
+
+	DelDropItem()	//ドロップアイテム全消し
+	StopEffect()	//エフェクト全消し
+
+	map_color(100,100,100, 5);//R,G,B, time 100%
+	map_specular(80,80,80, 5);//R,G,B, time 100%
+
+	EV_begin()
+	wait(20)
+	map_specular(0,0,0,20);//R,G,B, time 100%
+	KAO(ENEMY_CHARA,"5","5","5")//死亡用フェイスセット0822
+	wait(30)
+	
+	EFF(21650,320,240,0,0,100,0)//WIN
+	wait(60)
+	rot_chr(PLAYER1,30,ENEMY_CHARA)
+
+//	MES(ENEMY_CHARA,"C4◆歓声と共に，対战相手倒れる。",0)
+//	MES_close(ENEMY_CHARA)
+
+	SE(591,0)//歓声
+
+//	stop_BGM(90)
+//　　対战者が倒れる演出。
+	EV("PLAY_VOICE_EnemyLose")
+	CAM_move_chr(ENEMY_CHARA,90,0)
+	rot_chr(PLAYER1,30,ENEMY_CHARA)
+	wait(30)
+	fade_in(100,90,0)
+	wait_CAM_move()
+	wait_EV("PLAY_VOICE_EnemyLose")
+//	wait(30)
+
+//　　ボイスが終わると，歓声と共に拉古那を映す。
+//	cross_fade(30)
+//	CAM_move_chr(PLAYER1,0,0)
+//	CAM(190,32,20,44,180,180,0)
+
+//　　勝利モーションで喜ぶ拉古那。
+//　　（そばに露缇がやって来る）
+//	MES(PLAYER1,"C4◆勝利モーションで喜ぶ拉古那／艾尔雯。\nそばに露缇がやって来る",0)
+//	MES_close(PLAYER1)
+//
+//	if(GW_TRY_CHARA==0)
+//	{
+//		MOT(RAGNA,53,15)	//仮です。
+//	}
+//	else
+//	{
+//		MOT(PARTNER,52,15)	//仮です。
+//	}
+//	EV("PLAY_VOICE_PlayerWin")
+//	wait_EV("PLAY_VOICE_PlayerWin")
+//	wait(60)
+
+//　　大きな歓声と共にカメラ引きながらフェードアウト。
+//　　商品が貰える场合は賞品授与イベントへつなげる。
+//　　クリアが２回目以降なら，受付·勝利後的処理へ飛ばす。
+	//暗転
+//	fade_in(100,60,0)
+	wait_fade()
+	stop_BGM(60)
+	wait_BGM()
+
+//　　商品が貰える场合は賞品授与イベントへつなげる。
+//　　クリアが２回目以降なら，受付·勝利後的処理へ飛ばす。
+	//勝ったGWを立てる
+	workG(GW_WINLOSE,SET,1)
+
+	if(GW_TRY_CUP==8 && !FV_FF_WinGyarandow)	// 最強之男杯初勝利
+		EV("WIN_GYARANDOW_BATTLE")
+	else
+	if(GW_TRY_CUP==9 && !FV_FF_WinPenguin)	// 企鹅娘杯初勝利
+		EV("WIN_PENGUIN_BATTLE")
+	else
+	if(GW_TRY_CUP==7 && !FV_FF_WinKlode)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==6 && !FV_FF_WinFiona)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==5 && !FV_FF_WinSubaru)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==4 && !FV_FF_WinPipiro)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==3 && !FV_FF_WinPockle)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==2 && !FV_FF_WinOdessa)	// 
+		EV("WIN_NORMAL_BATTLE")
+	else
+	if(GW_TRY_CUP==1 && !FV_FF_WinMaurice)	// 
+		EV("WIN_NORMAL_BATTLE")
+	//それ意外はクリア２回目以降と見なす。
+	else
+	{
+		workG(GW_ENTRY_EVENT,SET,2)
+		if(GW_TRY_CHARA==0)
+		{
+			join_party(1)//ALWENをパーティーに戻す
+		}
+		else
+		{
+			join_party(0)//RAGNAをパーティーに戻す
+		}
+		CAM_return( 0 )
+		new_map(10510)
+	}
+}
+
+//──────────────────────────────
+//▼勝利後的処理（通常）
+//　　※本战終了後，フェードインで
+//　　　竞技场ステージに立っている露缇と挑战者。
+//　　※馆に嘉兰多がいる场合，
+//　　　露缇的横に嘉兰多も立っている。
+//──────────────────────────────
+WIN_NORMAL_BATTLE
+{
+//	wait(150)	// 5秒
+
+	EV_begin()
+	
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	//カメラセット
+	CAM_move(10168,-10596,142,0,0)
+	CAM(-210,102,142,20,240,0,0)
+
+	delete(ENEMY_CHARA)
+	delete(EV_PENGUIN)
+
+	//▼⑥礼拜堂開通以降と□以降是ない
+	if(F6_00_GoToMeru)
+	{
+	//	set_chr( LOTTE,82,	-1,-1,  10120,10772,0,	10,270,0,"")	//　露缇
+		chr_pos( LOTTE, 10120,10772,0,270,2)	//　露缇
+	}
+	else
+	if(F3_10_OpenChapel && !F4_00_StartSolo)
+	{
+	//	set_chr( LOTTE,82,	-1,-1,  10120,10772,0,	2,270,0,"")	//　露缇
+		chr_pos( LOTTE,  10120,10772,0,270,2)	//　露缇
+	}
+	else
+	{
+		set_chr( GYARANDOW,21,	-1,-1,  10120,10772,0	51,270,0,"")	//　嘉兰多
+		chr_pos( LOTTE,10388,10356,1,330,2)	//　露缇
+	//	set_chr( LOTTE,82,	-1,-1,  10388,10356,1,	2,330,0,"")	//　露缇
+
+		MOT_SET(GYARANDOW,151,-1,509,509,152,0)	//ギャランドウ　何か渡す仕草
+		MOT_SET(GYARANDOW,152,-1,510,510,153,0)
+		MOT_SET(GYARANDOW,153,-1,511,511,-1,0)
+	}
+	MOT_SET(LOTTE,161,-1,509,509,162,0)	//　何か渡す仕草
+	MOT_SET(LOTTE,162,-1,510,510,163,0)
+	MOT_SET(LOTTE,163,-1,511,511,-1,0)
+
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+	KAO(LOTTE, "1", "1", "1")
+	F_set_Node(LOTTE,"eq_062",NP_HIDE)//マイク消す
+
+	wait(30)
+	BGM(19)
+	fade_in( 0, 60, BLACK)	//フェードイン
+	wait_fade()
+
+	if(GW_TRY_CUP==1)
+	{
+		VOICE(714,0)	//「おめでとうございます～」（竞技场で勝った场合）
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜你～\n在莫里斯杯中获胜。",0)
+		MES_close(LOTTE)
+		//★莫里斯に勝った
+		F_set(FV_FF_WinMaurice)
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		VOICE(714,0)	//「おめでとうございます～」（竞技场で勝った场合）
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜你～\n在西部牛仔杯中获胜。",0)
+		MES_close(LOTTE)
+		//★奥迪莎に勝った
+		F_set(FV_FF_WinOdessa)
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		VOICE(714,0)	//「おめでとうございます～」（竞技场で勝った场合）	
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜你～\n在纯情少年杯中获胜。",0)
+		MES_close(LOTTE)
+		//★布库尔に勝った
+		F_set(FV_FF_WinPockle)
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		VOICE(714,0)	//「おめでとうございます～」（竞技场で勝った场合）	
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜你～\n在魔法少女杯中获胜。",0)
+		MES_close(LOTTE)
+		//★皮皮洛に勝った
+		F_set(FV_FF_WinPipiro)
+		F_set(FV_FF_GyakataLv2)//馆Ｌｖ２
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		VOICE(714,0)	//「おめでとうございます～」（竞技场で勝った场合）	
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜你～\n在小忍者杯中获胜。",0)
+		MES_close(LOTTE)
+		//★昴に勝った
+		F_set(FV_FF_WinSubaru)
+		F_set(FV_FF_GyakataLv2)//馆Ｌｖ２
+	}
+	else
+	if(GW_TRY_CUP==6)
+	{
+		VOICE(714,0)	//「おめでとうございます～」（竞技场で勝った场合）	
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜你～\n在武装大小姐杯中获胜。",0)
+		MES_close(LOTTE)
+		//★菲欧娜に勝った
+		F_set(FV_FF_WinFiona)
+		F_set(FV_FF_GyakataLv2)//馆Ｌｖ２
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		VOICE(714,0)	//「おめでとうございます～」（竞技场で勝った场合）	
+		KAO(LOTTE, "52625Z5", "1236", "6")	
+		MES(LOTTE,"恭喜你～\n在万能管家杯中获胜。",0)
+		MES_close(LOTTE)
+		//★克罗德に勝った
+		F_set(FV_FF_WinKlode)
+		F_set(FV_FF_GyakataLv3)//馆Ｌｖ３
+	}
+//以下二つはありえないです0821
+//	else
+//	if(GW_TRY_CUP==8)
+//	{
+//		VOICE(714,0)	//「おめでとうございます～」（竞技场で勝った场合）
+//		MES(LOTTE,"恭喜你～\n在最强之男杯中获胜。",0)
+//		MES_close(LOTTE)
+//		//★嘉兰多に勝った
+//		F_set(FV_FF_WinGyarandow)
+//	}
+//	else
+//	if(GW_TRY_CUP==9)
+//	{
+//		VOICE(714,0)	//「おめでとうございます～」（竞技场で勝った场合）
+//		MES(LOTTE,"恭喜你～\n在企鹅娘杯中获胜。",0)
+//		MES_close(LOTTE)
+//		//★企鹅娘に勝った
+//		F_set(FV_FF_WinPenguin)
+//	}
+
+//───────────────────────
+//	name("□馆に嘉兰多がいない场合（フラグ□とフラグ⑥『★礼拜堂へ的道が開いた』以降）")
+//───────────────────────
+//	◆嘉兰多は常にコロシアムから選べます0821
+	if(F6_00_GoToMeru)
+	{
+		MOT_SET(LOTTE,151,-1,406,406,-1,0)
+		MOT(LOTTE,151,15)
+		KAO(LOTTE, "52625Z4", "321", "6")	
+		MES(LOTTE,"真是精彩的比赛啊～。",0)
+		MOT(LOTTE,161,15)
+		KAO(LOTTE, "52625Z4", "1", "6")	
+		MES(LOTTE,"这是奖品～。\n请收～下吧。",0)
+		MES_close(LOTTE)
+
+		EV("ITEMGET_FIRST")
+		wait_EV("ITEMGET_FIRST")
+
+		MOT(LOTTE,151,15)
+
+		//───────────────────────
+	//	name("□挑战者が拉古那")
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(LOTTE, "12321Z4", "1233321", "5")	
+			MES(LOTTE,"真对不起，\n我们老板现在不在呢～……",0)
+			KAO(LOTTE, "12321Z5", "1", "1")	
+			MES(LOTTE,"他说过他很期待\n拉古那先生的表现呢～。",0)
+			KAO(LOTTE, "52625Z4", "1236", "6")	
+			MES(LOTTE,"今后也请\n继续加油啊～。",0)
+			MES_close(LOTTE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哦，啊啊……",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name("□挑战者が艾尔雯")
+			KAO(LOTTE, "12321Z4", "1233321", "5")	
+			MES(LOTTE,"真对不起，\n我们老板现在不在呢～……",0)
+			KAO(LOTTE, "12321Z5", "1", "1")	
+			MES(LOTTE,"他说过他很期待\n艾尔雯小姐的表现呢～。",0)
+			KAO(LOTTE, "52625Z4", "1236", "6")	
+			MES(LOTTE,"今后也请\n继续加油啊～。",0)
+			MES_close(LOTTE)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"唔，哦……",0)
+			MES_close(PARTNER)
+		}
+	}
+	else
+	if(F3_10_OpenChapel && !F4_00_StartSolo)
+	{
+		MOT_SET(LOTTE,151,-1,406,406,-1,0)
+		MOT(LOTTE,151,15)
+		KAO(LOTTE, "52625Z4", "321", "6")	
+		MES(LOTTE,"真是精彩的比赛啊～。",0)
+		MOT(LOTTE,161,15)
+		KAO(LOTTE, "52625Z4", "1", "6")	
+		MES(LOTTE,"这是奖品～。\n请收下吧～。",0)
+		MES_close(LOTTE)
+
+		EV("ITEMGET_FIRST")
+		wait_EV("ITEMGET_FIRST")
+
+		MOT(LOTTE,151,15)
+
+		//───────────────────────
+	//	name("□挑战者が拉古那")
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(LOTTE, "12321Z4", "1233321", "5")	
+			MES(LOTTE,"真对不起，\n我们老板现在不在呢～……",0)
+			KAO(LOTTE, "12321Z5", "1", "1")	
+			MES(LOTTE,"他说过他很期待\n拉古那先生的表现呢～。",0)
+			KAO(LOTTE, "52625Z4", "1236", "6")	
+			MES(LOTTE,"今后也请\n继续加油啊～。",0)
+			MES_close(LOTTE)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哦，啊啊……",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name("□挑战者が艾尔雯")
+			KAO(LOTTE, "12321Z4", "1233321", "5")	
+			MES(LOTTE,"真对不起，\n我们老板现在不在呢～……",0)
+			KAO(LOTTE, "12321Z5", "1", "1")	
+			MES(LOTTE,"他说过他很期待\n艾尔雯小姐的表现呢～。",0)
+			KAO(LOTTE, "52625Z4", "1236", "6")	
+			MES(LOTTE,"今后也请\n继续加油啊～。",0)
+			MES_close(LOTTE)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"唔，哦……",0)
+			MES_close(PARTNER)
+		}
+	}
+	else
+	{
+	//───────────────────────
+	//	name("□それ以外")
+		MES(GYARANDOW,"呵呵，真是相当精彩的比赛啊。\n吾辈也相当陶醉其中。",0)
+		MOT(GYARANDOW,151,15)
+		MES(GYARANDOW,"这是奖品，收下吧。",0)
+		MES_close(GYARANDOW)
+
+		EV("ITEMGET_FIRST")
+		wait_EV("ITEMGET_FIRST")
+		MOT(GYARANDOW,51,15)
+
+	//───────────────────────
+	//	name("□挑战者が拉古那")
+		if(GW_TRY_CHARA==0)
+		{
+		//	name("怪人嘉兰多")
+			MES(GYARANDOW,"拉古那啊，\n我期待你的表现哦。",0)
+			MES(GYARANDOW,"今后也不要懈怠，\n继续努力吧。",0)
+			MES_close(GYARANDOW)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"啊，哦……",0)
+			MES_close(RAGNA)
+		}
+		else
+		{
+		//	name("□挑战者が艾尔雯")
+		//	name("怪人嘉兰多")
+			MES(GYARANDOW,"艾尔雯啊，\n我期待你的表现哦。",0)
+			MES(GYARANDOW,"今后也不要懈怠，\n继续努力吧。",0)
+			MES_close(GYARANDOW)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"嗯，唔……",0)
+			MES_close(PARTNER)
+		}
+
+		//克罗德に勝った && 嘉兰多に勝っていない0821
+		if(GW_TRY_CUP==7 && !FV_FF_WinGyarandow)
+		{
+		//	name("怪人嘉兰多")
+			MES(GYARANDOW,"呵呵，下一次\n终于将轮到吾辈登场了。",0)
+			MES(GYARANDOW,"你们究竟\n能否超越吾辈呢……",0)
+			MES_close(GYARANDOW)
+
+			//───────────────────────
+			//	name("□挑战者が拉古那")
+			if(GW_TRY_CHARA==0)
+			{
+			//	name("怪人嘉兰多")
+				MES(GYARANDOW,"就让吾辈亲自确认下吧，\n拉古那啊！",0)
+				MES_close(GYARANDOW)
+			}
+			else
+			{
+			//	name("□挑战者が艾尔雯")
+			//	name("怪人嘉兰多")
+				MES(GYARANDOW,"就让吾辈亲自确认下吧，\n艾尔雯啊！",0)
+				MES_close(GYARANDOW
+			}
+			//───────────────────────
+		}
+
+//馆的レベルアップは無し0821
+//		//───────────────────────
+//		//	name("□挑战した的が万能執事杯")
+//		//───────────────────────
+//		if(GW_TRY_CUP==7 && !FV_FF_GyakataLv3 && FV_FF_GyakataLv2)
+//		{
+//		//	name("怪人嘉兰多")
+//			MES(GYARANDOW,"呵呵，下一次\n终于将轮到吾辈登场了。",0)
+//			MES(GYARANDOW,"你们究竟\n能否超越吾辈呢……",0)
+//			MES_close(GYARANDOW)
+//			//───────────────────────
+//			//	name("□挑战者が拉古那")
+//			if(GW_TRY_CHARA==0)
+//			{
+//			//	name("怪人嘉兰多")
+//				MES(GYARANDOW,"就让吾辈亲自确认下吧，\n拉古那啊！",0)
+//				MES_close(GYARANDOW)
+//			}
+//			else
+//			{
+//			//	name("□挑战者が艾尔雯")
+//			//	name("怪人嘉兰多")
+//				MES(GYARANDOW,"就让吾辈亲自确认下吧，\n艾尔雯啊！",0)
+//				MES_close(GYARANDOW
+//			}
+//			//───────────────────────
+//
+//			//暗転
+//			fade_in(100,60,0)
+//			wait_fade()
+//			if(GW_TRY_CHARA==0)
+//			{
+//				join_party(1)//ALWENをパーティーに戻す
+//			}
+//			else
+//			{
+//				join_party(0)//RAGNAをパーティーに戻す
+//			}
+//			CAM_return( 0 )
+//			new_map(10500)
+//			//　　一旦フェードアウトして馆外観マップ，ファンファーレと共にネオンサインが灯り，馆が第３段階になる的を見せる。
+//			//　　そ的後暗転＆フェードインして，竞技场受付前から操作許可を戻す。
+//		}
+//		//───────────────────────
+//		//	チビッ子忍者杯
+//		//───────────────────────
+//		else
+//		if(GW_TRY_CUP==5 && !FV_FF_GyakataLv2)
+//		{
+//			//暗転
+//			fade_in(100,60,0)
+//			wait_fade()
+//			if(GW_TRY_CHARA==0)
+//			{
+//				join_party(1)//ALWENをパーティーに戻す
+//			}
+//			else
+//			{
+//				join_party(0)//RAGNAをパーティーに戻す
+//			}
+//			CAM_return( 0 )
+//			new_map(10500)
+//		//　　一旦フェードアウトして馆外観マップ，ファンファーレと共にネオンサインが灯り，馆が第２段階になる的を見せる。
+//		//　　そ的後暗転＆フェードインして，竞技场受付前から操作許可を戻す。
+//		}
+//		else
+//		{
+//			//暗転
+//			fade_in(100,60,0)
+//			wait_fade()
+//			if(GW_TRY_CHARA==0)
+//			{
+//				join_party(1)//ALWENをパーティーに戻す
+//			}
+//			else
+//			{
+//				join_party(0)//RAGNAをパーティーに戻す
+//			}
+//			CAM_return( 0 )
+//			new_map(10510)
+//		//　　暗転＆フェードインして，竞技场受付前から操作許可を戻す。
+//		}
+	}
+
+	//-- 普通に受付に戻る ------------------------------------------------
+	//暗転
+	fade_in(100,60,0)
+	wait_fade()
+	if(GW_TRY_CHARA==0)
+	{
+		join_party(1)//ALWENをパーティーに戻す
+	}
+	else
+	{
+		join_party(0)//RAGNAをパーティーに戻す
+	}
+	CAM_return( 0 )
+	new_map(10510)
+
+//	EV_end()
+}
+
+//──────────────────────────────
+//▼勝利後的処理（嘉兰多に勝利）
+//　　※嘉兰多に初勝利した场合はこちら的処理を行う。
+//　　　２回目以降的勝利では，通常的勝利処理を行う。
+//　　※本战終了後，フェードインで
+//　　　竞技场ステージに立っている露缇と挑战者，嘉兰多。
+//──────────────────────────────
+WIN_GYARANDOW_BATTLE
+{
+//	wait(150)	// 5秒
+
+	EV_begin()
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+
+	delete(ENEMY_CHARA)
+	delete(EV_PENGUIN)
+
+	//★嘉兰多に勝った
+	F_set(FV_FF_WinGyarandow)
+	F_set(FV_FF_GyakataLv3)//馆Ｌｖ３
+
+	//カメラセット
+	CAM_move(10168,-10596,142,0,0)
+	CAM(-210,102,142,20,240,0,0)
+
+	//▼⑥礼拜堂開通以降と□以降是ない
+	set_chr( GYARANDOW,21,	-1,-1,  10120,10772,0	51,270,0,"")	//　嘉兰多
+	chr_pos( LOTTE,10388,10356,1,330,2)	//　露缇
+//	set_chr( LOTTE,82,	-1,-1,  10388,10356,1,	2,330,0,"")	//　露缇
+
+	KAO(LOTTE, "1", "1", "1")	
+
+	//対战キャラをENEMY_CHARAで統一。
+	set_chr( ENEMY_CHARA,399,	-1,-1,  9450,9192,1,	2,60,0,"")	//　企鹅娘
+//	chr_pos( PENGUIN,9450,9192,1,-1,2)	//　企鹅娘
+	color(ENEMY_CHARA,-1)//透過
+
+	//初期位置セット
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+	
+	//フェイスリセット
+	KAO(PARTNER, "1", "1", "1")	
+	KAO(LOTTE, "1", "1", "1")	
+
+	wait(30)
+	BGM(19)
+	fade_in( 0, 60, BLACK)	//フェードイン
+	wait_fade()
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"──真令人吃惊。",0)
+	MES(GYARANDOW,"在如此短暂的时间内，就已成长到\n足以超越吾辈的地步……",0)
+	MES(GYARANDOW,"太精彩了。\n吾辈真是有些感动啊。",0)
+	MES(GYARANDOW,"作为今日的见证，\n你们收下这份奖品吧。",0)
+	MES_close(GYARANDOW)
+
+	MOT_SET(GYARANDOW,151,-1,509,509,152,0)	//ギャランドウ　何か渡す仕草
+	MOT_SET(GYARANDOW,152,-1,510,510,153,0)
+	MOT_SET(GYARANDOW,153,-1,511,511,-1,0)
+	MOT(GYARANDOW,151,15)
+	wait(30)
+	EV("ITEMGET_FIRST")
+	wait_EV("ITEMGET_FIRST")
+	MOT(GYARANDOW,51,15)
+
+//───────────────────────
+//	name("□挑战キャラが拉古那")
+	if(GW_TRY_CHARA==0)
+	{
+		MES(RAGNA,"谢，谢谢……",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+	//	name("□挑战キャラが艾尔雯")
+		MES(PARTNER,"嗯唔。\n那么我们就收下了……",0)
+		MES_close(PARTNER)
+	}
+//───────────────────────
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"呵呵，不过呢……",0)
+	MES(GYARANDOW,"其实，在这个竞技场里，\n还存在着比吾辈更为强大的人。",0)
+	MES_close(GYARANDOW)
+
+//　　挑战キャラに！エモーション。
+	if(GW_TRY_CHARA==0)
+	{
+		EMO(RAGNA,EMO_BIKKURI)
+		wait(30)
+	//	name("挑战キャラ")
+		MES(RAGNA,"咦……？",0)
+		MES_close(RAGNA)
+	}
+	else
+	{
+		EMO(PARTNER,EMO_BIKKURI)
+		wait(30)
+		MES(PARTNER,"诶……？",0)
+		MES_close(PARTNER)
+	}
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"你们的惊讶并不奇怪。",0)
+	MES(GYARANDOW,"不过，百闻不如一见……\n……要挑战看看吗？",0)
+	MES_close(GYARANDOW)
+
+//	name("选项")
+	workL(WK_CANCEL,SET,2)//【やめる】
+	MES_pos(PLAYER1,"??W9【挑战】\n【放弃】",0,440,180,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)
+
+	//──────────────────────────────
+	//	挑战する
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+	//★挑战コースに企鹅娘杯をセット
+		workG(GW_TRY_CUP,SET,9)
+
+		F_set(FV_FF_BAPenguin)
+
+		if(GW_TRYNum_Penguin<99)
+			workG(GW_TRYNum_Penguin,ADD,1)
+
+		set_hp(PLAYER1,100)//全快
+
+		wait(10)
+		cross_fade(20)
+		CAM_move(10108,-10776,242,30,0)
+		CAM(-210,49,242,20,269,30,0)
+		MOT_SET(GYARANDOW,154,-1,515,515,155,20)		//ぬううううんんん！
+		MOT_SET(GYARANDOW,155,-1,514,514,-1,-1)
+		wait_CAM_move()
+		wait(10)
+		
+		MES(GYARANDOW,"呵呵呵，就知道你们会这么选择。",0)
+		MES(GYARANDOW,"不过那家伙一旦开始行动，\n就谁也无法阻止了……",0)
+		MOT(GYARANDOW,154,15)
+		CAM_quake("555555463746")
+		MES(GYARANDOW,"P1S3那么，出来吧……\n吾辈忠实的部下，以及最强的兵器啊！！",0)
+		MES_close(GYARANDOW)
+
+//		map_color(0,0,0,20);//R,G,B, time 100%
+	//　　カメラを回し，赤コーナー側を映す。
+		CAM_move(9448,-9216,142,60,0)
+		CAM(-48,54,142,21,182,60,0)
+		wait(10)
+		fade_in(100, 30, BLACK)
+		wait_CAM_move()
+
+	//　　じゃららら···というＳＥで間を取った後，
+	//　　スポットライトでライトアップする。
+	//	MES(ENEMY_CHARA,"C4◆じゃららら···というＳＥで間を取った後，\nスポットライトでライトアップする。",0)
+	//	MES_close(ENEMY_CHARA)
+
+		SE(592,0)//じゃらら
+		wait(90)
+
+//		map_color(85,80,80,0);//R,G,B, time 100%
+		EV("DELETE_ROPE")
+		wait_EV("DELETE_ROPE")
+		EV("SET_ROPE2")
+		wait_EV("SET_ROPE2")
+		color(ENEMY_CHARA,1)//透過解除
+		fade_in( 0, 1, BLACK)	
+		
+	//　　そこには企鹅娘が立っている。
+	//　　企鹅娘に···エモーション。
+//		wait(30)
+//		EFF_chr(25124,ENEMY_CHARA,0,100,0,"Bone_Head")
+//		wait(100)
+
+		EMO(ENEMY_CHARA,EMO_ASEASE)
+		wait(60)
+
+		rot(ENEMY_CHARA,30,0)
+
+		KAO(ENEMY_CHARA, "12321", "1233321", "1")	
+		MES(ENEMY_CHARA,"咦？",0)
+		MES_close(ENEMY_CHARA)
+		wait_MES(ENEMY_CHARA)
+
+	//　　企鹅娘が的そ的そとやって来る。
+		EV("Move_Penguin3")
+	//　　クロスフェードで竞技场ステージを映す。
+		wait(170)
+
+		cross_fade(30)
+//		CAM_move(10388,-10456,122,0,0)
+//		CAM(-50,113,122,21,180,0,0)
+		CAM_move(10388,-10456,122,0,0)
+		CAM(-50,158,122,20,180,0,0)
+		look_off( PLAYER1 )
+		look_del( PLAYER1 )
+		wait_EV("Move_Penguin3")
+
+		//───────────────────────
+		//	name("□挑战キャラが拉古那")
+//		rot_chr(PLAYER1,60,ENEMY_CHARA)
+
+		look_chr(PLAYER1,LOTTE,"Bone_Head")
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(RAGNA, "B232BZ4", "1233321D", "6")	
+			MES(RAGNA,"等，等一下啊。\n这只企鹅是……",0)
+			MES_close(RAGNA)
+		}
+		//	name("□挑战キャラが艾尔雯")
+		else
+		{
+			KAO(PARTNER, "B232BZ4", "1233321D", "6")	
+			MES(PARTNER,"请，请稍等。\n这只企鹅是……",0)
+			MES_close(PARTNER)
+		}
+		
+		//───────────────────────
+		//露缇一步下がる
+
+		CAM_move(10388,-10456,122,60,0)
+		CAM(-50,113,122,21,180,60,0)
+
+		rot(LOTTE,30,0)
+		CAM_move(10388,-10456,122,40,0)
+		CAM(-50,96,122,22,180,40,0)
+		look(LOTTE,"Bone_RightShoulder",0,		5,5,5,			0,0,0)
+		move( LOTTE, 0, WALK1,10388,10200,1,0)
+		look(LOTTE,"Bone_Head",0,		0,4,0,			0,30,0)
+		wait(10)
+		look(LOTTE,"Bone_Head",0,		0,4,0,			0,-30,0)
+		wait(20)
+		look(LOTTE,"Bone_Head",0,		0,4,0,			0,0,0)
+		wait_move( LOTTE )
+		MOT(LOTTE,159,15)
+	//───────────────────────
+	//　　向かい合った状態で，両者構える。
+	//　　同時に両者ＳＥつきで構える。
+	//───────────────────────
+
+		KAO(LOTTE, "12321Z4", "1233321", "3")	
+		MES(LOTTE,"那么，\nＧ－竞技场最终决战……",0)
+		MES_close(LOTTE)
+
+		//構え
+		EMO(PLAYER1,EMO_ASEASE)
+		KAO(PLAYER1, "1", "1233321", "1")	
+		EV("KAMAE_SET")
+		wait_EV("KAMAE_SET")
+		look_off(PLAYER1)
+
+//		MES(LOTTE,"C4◆＜レディ·ファイトＳＥ＆エフェクト再生＞",0)
+//		MES_close(LOTTE)
+		stop_BGM(60)
+		EFF(21630,320,240,0,0,100,0)//FIGHT
+		wait(40)
+		SE(211,0)
+		EV("PLAY_VOICE_Fight")
+
+	//　　露缇と嘉兰多は下がり，企鹅娘と的決战が開始される。
+	//　　企鹅娘は前座なしで，反則レベル的強さにしておく。
+	//　　※途中敗退しても，馆が増築される的は見せる。
+	//　　　一旦フェードアウトして馆外観マップ，ファンファーレと共にネオンサインが灯り，馆がド派手な最終段階になる的を見せる。
+
+		F_set_chr(ENEMY_CHARA,CF_NO_DEAD)
+		F_set_chr(ENEMY_CHARA,CF_NO_DROPITEM)
+		set_chr( ZAKO_19,990,	-1,-1,  11388,9309,1,	10,0,8,"(F9 <EV_WIN> RF9)")
+		EV("DELETE_ROPE")
+		wait_EV("DELETE_ROPE")
+		EV("SET_ROPE")
+
+		//構えを戻す
+		look_off(PLAYER1)
+		EV("KAMAE_RESET")
+		wait_EV("KAMAE_RESET")
+
+		//露缇をどかす
+		MOT(LOTTE,153,2)
+		rot(LOTTE,60,360)
+		KAO(LOTTE,"5","5","6")
+		jump(LOTTE,0,20,9549,9099,0,400)
+
+		//嘉兰多をどかす
+		rot(GYARANDOW,60,360)
+		jump(GYARANDOW,0,20,9381,9099,0,400)
+
+		CAM_return( 30 )
+
+		workL(WK_BOSSHP,SET,ENEMY_CHARA)	//BOSS＿ＨＰ表示
+
+		BGM(45)
+		EV_end()
+
+		//ペット消す
+		color(PET,-1)
+	}
+	//──────────────────────────────
+	//	不要～おく
+	//──────────────────────────────
+	else
+	{
+	//	name("怪人嘉兰多")
+		MES(GYARANDOW,"唔，是吗……",0)
+		MES(GYARANDOW,"好吧。\n今后有机会的话\n再来挑战吧。",0)
+		MES(GYARANDOW,"吾辈将期待着。",0)
+		MES_close(GYARANDOW)
+
+
+	//　　一旦フェードアウトして馆外観マップ，ファンファーレと共にネオンサインが灯り，馆がド派手な最終段階になる的を見せる。
+	//　　暗転＆フェードインして，竞技场受付前から操作許可を戻す。
+		//暗転
+		fade_in(100,60,0)
+		wait_fade()
+		if(GW_TRY_CHARA==0)
+		{
+			join_party(1)//ALWENをパーティーに戻す
+		}
+		else
+		{
+			join_party(0)//RAGNAをパーティーに戻す
+		}
+		CAM_return( 0 )
+		new_map(10510)
+
+	//	EV_end()
+	}
+}
+
+//──────────────────────────────
+//▼勝利後的処理（企鹅娘）
+//　　※嘉兰多に初勝利した场合はこちら的処理を行う。
+//　　　２回目以降的勝利では，通常的勝利処理を行う。
+//　　※本战終了後，フェードインで
+//　　　竞技场ステージに立っている露缇と挑战者，嘉兰多。
+//──────────────────────────────
+WIN_PENGUIN_BATTLE
+{
+//	wait(150)	// 5秒
+
+	EV_begin()
+
+	//暗転
+	wait(30)
+	BGM(19)
+	fade_in(100,1,0)
+	wait_fade()
+
+	//カメラセット
+	CAM_move(10168,-10596,142,0,0)
+	CAM(-210,102,142,20,240,0,0)
+
+	delete(ENEMY_CHARA)
+//	delete(EV_PENGUIN)
+//	delete(PENGUIN)
+	delete(GYARANDOW)
+
+	//初期位置セット
+//	set_chr( LOTTE,82,	-1,-1,  10388,10356,1,	2,330,0,"")	//　露缇
+	chr_pos( LOTTE,10388,10356,1,330,2)	//　露缇
+
+	set_chr( GYARANDOW,21,	-1,-1,  10120,10772,0,	51,270,0,"")	//　嘉兰多
+//	chr_pos( GYARANDOW,10120,10772,0,270,2)	//　嘉兰多
+
+/*	//挑战者が拉古那
+	if(GW_TRY_CHARA==0)
+	{
+		chr_pos(RAGNA,	10651,10778,1,90,2)
+		chr_pos(PARTNER,11270,11727,0,90,2)
+		KAO(RAGNA, "1", "1", "1")	
+	}
+	//挑战者が艾尔雯
+	else
+	{
+		chr_pos(PARTNER,10651,10778,1,90,2)
+		chr_pos(RAGNA,11270,11727,0,90,2)
+		KAO(PARTNER, "1", "1", "1")	
+	}
+*/
+
+	chr_pos(PLAYER1,	10651,10778,1,90,2)
+	KAO(PLAYER1, "1", "1", "1")	
+	KAO(LOTTE, "1", "1", "1")	
+	fade_in( 0, 60, BLACK)	//フェードイン
+	wait_fade()
+
+//	name("怪人嘉兰多")
+	MES(GYARANDOW,"──太精彩了。",0)
+	MES(GYARANDOW,"没想到居然会出现\n将吾辈的企鹅打倒的人……",0)
+	MES(GYARANDOW,"吾辈感动了。\n被你们的爱深深打动……！",0)
+	MES_close(GYARANDOW)
+
+//　　挑战キャラに冷や汗エモーション。
+	EMO(PLAYER1,EMO_HIYAASE)
+	wait(30)
+//───────────────────────
+//	name("□挑战キャラが拉古那")
+	if(GW_TRY_CHARA==0)
+	{				
+		MES(RAGNA,"这，这是什么莫名其妙的事啊……",0)
+
+		//全コースクリア済み
+		if(FV_FF_WinMaurice && FV_FF_WinOdessa && FV_FF_WinPockle && FV_FF_WinPipiro && FV_FF_WinSubaru && FV_FF_WinFiona && FV_FF_WinKlode)
+			MES(RAGNA,"总之，嘉兰多，\n这样一来，\n我们在这个馆内已经完全制霸了。",0)
+		else
+			MES(RAGNA,"总之，嘉兰多，\n这样一来，这个馆内的最终决战\n也结束了吧。",0)
+		MES_close(RAGNA)
+
+	//	name("怪人嘉兰多")
+		MES(GYARANDOW,"唔，正是如此，拉古那啊。",0)
+		MES(GYARANDOW,"然而，聚集于此的战士们\n天天都在潜心钻研……",0)
+		MES(GYARANDOW,"若是骄傲起来，\n就会被绊倒的哦。",0)
+		MES(GYARANDOW,"今后\n也不可放松锻炼啊。",0)
+		MES_close(GYARANDOW)
+
+	//	name2(RAGNA)
+		MES(RAGNA,"嗯，嗯。\n就算你不说我也会这么做的。",0)
+		MES_close(RAGNA)
+
+	//	name("怪人嘉兰多")
+		MES(GYARANDOW,"有机会的话就再来玩吧。\n吾辈随时奉陪。",0)
+		MES_close(GYARANDOW)
+	}
+	else
+	{
+	//	name("□挑战キャラが艾尔雯")
+		MES(PARTNER,"以…以后有空再说吧。",0)
+
+		//全コースクリア済み
+		if(FV_FF_WinMaurice && FV_FF_WinOdessa && FV_FF_WinPockle && FV_FF_WinPipiro && FV_FF_WinSubaru && FV_FF_WinFiona && FV_FF_WinKlode)
+			MES(PARTNER,"假面男啊，如此一来\n我们便是\n全线制霸了吧？",0)
+		else
+			MES(PARTNER,"假面男啊，如此一来\n这个馆内的最终决战\n也结束了吧？",0)
+		MES_close(PARTNER)
+
+	//	name("怪人嘉兰多")
+		MES(GYARANDOW,"唔，正是如此，艾尔雯啊。",0)
+		MES(GYARANDOW,"然而，聚集于此的战士们\n天天都在潜心钻研……",0)
+		MES(GYARANDOW,"若是骄傲起来，\n就会被绊倒的哦。",0)
+		MES(GYARANDOW,"今后\n也不可放松锻炼啊。",0)
+		MES_close(GYARANDOW)
+
+	//	name2(PARTNER)
+		MES(PARTNER,"唔，关于此事，\n目前不需要你提醒。",0)
+		MES_close(PARTNER)
+
+	//	name("怪人嘉兰多")
+		MES(GYARANDOW,"有机会的话就再来玩吧。\n吾辈随时奉陪。",0)
+		MES_close(GYARANDOW)
+	}
+
+	//アイテム入手がなかった的で，暗転状態でアイテムを貰う。
+	fade_in(100,60,0)
+	wait_fade()
+	wait(20)
+	EV("ITEMGET_FIRST")
+	wait_EV("ITEMGET_FIRST")
+	wait(30)
+
+	//───────────────────────
+	//　　まだ馆が最終段階になっていない场合，
+	//　　一旦フェードアウトして馆外観マップ，ファンファーレと共にネオンサインが灯り，馆がド派手な最終段階になる的を見せる。
+	//　　暗転＆フェードインして，竞技场受付前から操作許可を戻す。
+	//──────────────────────────────
+	
+	//★企鹅娘に勝った
+	F_set(FV_FF_WinPenguin)
+	F_set(FV_FF_GyakataLvMAX)//馆Ｌｖ４
+
+//馆的レベルアップは無し0821
+//	if(!FV_FF_GyakataLvMAX)
+//	{
+//		if(GW_TRY_CHARA==0)
+//		{
+//			join_party(1)//ALWENをパーティーに戻す
+//		}
+//		else
+//		{
+//			join_party(0)//RAGNAをパーティーに戻す
+//		}
+//		CAM_return( 0 )
+//		new_map(10500)
+//	}
+//	else
+//	{
+		if(GW_TRY_CHARA==0)
+		{
+			join_party(1)//ALWENをパーティーに戻す
+		}
+		else
+		{
+			join_party(0)//RAGNAをパーティーに戻す
+		}
+		CAM_return( 0 )
+		new_map(10510)
+	//　　暗転＆フェードインして，竞技场受付前から操作許可を戻す。
+//	}
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// 竞技场用·アイテムゲット処理
+//////////////////////////////////////////////////////////////////////
+ITEMGET_FIRST	//初めて攻略した版。
+{
+/*
+		067	腰带			AC03	06 	63	0		------ 	2	0	-1	0	防止肚子被冻伤的腰带。\n看起来虽然不怎么样，但实际效果还是不错的。					//竞技场
+		082	精神安定的护符 AC18	06 	90	0		------ 	0	0	0	0	能保持精神状态正常的护符。\n可预防混乱状态。						//ハンターランク
+		113	体重计																																	//竞技场
+		090	哥哥的头巾	AC26	06 	86	0		------ 	0	0	0	0	令人充满斗志的头巾。\n体力越少的时候，武器的攻击力越高！		//竞技场
+		088	防弹盾		AC24	06 	84	0		------ 	0	0	0	0	可让爆炸所带来的伤害无效化的魔法盾。							//竞技场
+		080	祈祷健康的护符 AC16	06 	88	0		------ 	0	0	0	0	可以中和毒素的护符。\n可预防中毒状态以及毒沼所带来的伤害。					//ハンターランク
+		116	Ｚ－ＰＯＤ		GG12	09 	130	0		------ 	0	0	0	0	（改）可播放随身携带的音乐ＣＤ。							//
+		141     ＬＶ调整板	//竞技场的奖品　Ｌｖ３０
+		071	王冠			AC07	06 	67	0		------ 	2	2	2	0	洋溢着威严的黄金王冠。											//竞技场
+
+
+		莫里斯	LV.4	：腰带				＞腰带
+		奥迪莎	LV.7	：精神安定的护符	        ＞祈祷健康的护符	※変更			080	祈祷健康的护符 AC16	06 	88	0		------ 	0	0	0	0	可以中和毒素的护符。\n可预防中毒状态以及毒沼所带来的伤害。			//★Ｇ竞技场
+		布库尔	LV.11	：体重计			＞体重计
+		皮皮洛	LV.13	：哥哥的头巾	                ＞精神安定的护符	※変更			082	精神安定的护符 AC18	06 	90	0		------ 	0	0	0	0	能保持精神状态正常的护符。\n可预防混乱状态。					//★Ｇ竞技场
+		昴		LV.16	：防弹盾		＞防弹盾
+		菲欧娜	LV.19	：祈祷健康的护符	＞大哥的头巾	※変更			090	大哥的头巾	AC26	06 	86	0		------ 	0	0	0	0	令人干劲十足的头巾。\n体力越少的时候，武器的攻击力越高！				//☆Ｇ竞技场
+		克罗德	LV.22	：Ｚ－ＰＯＤ		＞Ｚ－ＰＯＤ
+		嘉兰多	LV.25	：ＬＶ调整板		＞ＬＶ调整板Ｇ
+		企鹅娘	LV.30	：王冠				＞王冠
+
+*/
+/*
+		※２週目以降は，初めて攻略でもフードアイテムとなる。
+
+		莫里斯		  4		168 柳叶鱼
+		奥迪莎		  7		180	猕猴桃
+		布库尔		 11		196	铜锣烧
+		皮皮洛			 13		165 生火腿
+		昴			 17		181	芒果
+		菲欧娜		 20		193	巧克力
+		管家克罗德	 23		166 汉堡包
+		嘉兰多	 27		182	菠萝
+		企鹅娘 30		194	小蛋糕
+
+*/
+
+	if(GW_TRY_CUP==1)
+	{
+		BGM_vol(50,15)				//BGMフェード
+		wait(20)
+		fade_in(30,10,BLACK)		//少し暗転
+
+		if(IT067>0)
+			get_item(168,1,0)
+		else
+			get_item(067,1,0)
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM戻し
+		fade_in(0,10,BLACK)			//暗転解除
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//手办ゲット
+		if(!F2850)
+		{
+			SE(24,0)//ゲットSE
+			MES(0,"得到了L667莫里斯L777的形象资料！！",2)
+			MES_close(0)
+			F_set(2850)
+		}
+	}	
+	else
+	if(GW_TRY_CUP==2)
+	{
+		BGM_vol(50,15)				//BGMフェード
+		wait(20)
+		fade_in(30,10,BLACK)		//少し暗転
+
+//		if(IT082)
+//			get_item(180,1,0)
+//		else
+//			get_item(082,1,0)
+
+		if(IT080>0)
+			get_item(180,1,0)
+		else
+			get_item(080,1,0)
+
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM戻し
+		fade_in(0,10,BLACK)			//暗転解除
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//手办ゲット
+		if(!F2851)
+		{
+			SE(24,0)//ゲットSE
+			MES(0,"得到了L667奥迪莎L777的形象资料！！",2)
+			MES_close(0)
+			F_set(2851)
+		}
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		BGM_vol(50,15)				//BGMフェード
+		wait(20)
+		fade_in(30,10,BLACK)		//少し暗転
+
+		if(IT113>=0)
+			get_item(196,1,0)
+		else
+			get_item(113,1,0)
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM戻し
+		fade_in(0,10,BLACK)			//暗転解除
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//手办ゲット
+		if(!F2852)
+		{
+			SE(24,0)//ゲットSE
+			MES(0,"得到了L667布库尔L777的形象资料！！",2)
+			MES_close(0)
+			F_set(2852)
+		}
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		BGM_vol(50,15)				//BGMフェード
+		wait(20)
+		fade_in(30,10,BLACK)		//少し暗転
+
+//		if(IT090)
+///			get_item(165,1,0)
+//		else
+//			get_item(090,1,0)
+
+		if(IT082>0)
+			get_item(165,1,0)
+		else
+			get_item(082,1,0)
+
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM戻し
+		fade_in(0,10,BLACK)			//暗転解除
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//手办ゲット
+		if(!F2853)
+		{
+			SE(24,0)//ゲットSE
+			MES(0,"得到了L667皮皮洛L777的形象资料！！",2)
+			MES_close(0)
+			F_set(2853)
+		}
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		BGM_vol(50,15)				//BGMフェード
+		wait(20)
+		fade_in(30,10,BLACK)		//少し暗転
+
+		if(IT088>0)
+			get_item(181,1,0)
+		else
+			get_item(088,1,0)
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM戻し
+		fade_in(0,10,BLACK)			//暗転解除
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//手办ゲット
+		if(!F2854)
+		{
+			SE(24,0)//ゲットSE
+			MES(0,"得到了L667昴L777的形象资料！！",2)
+			MES_close(0)
+			F_set(2854)
+		}
+	}
+	else
+	if(GW_TRY_CUP==6)
+	{
+		BGM_vol(50,15)				//BGMフェード
+		wait(20)
+		fade_in(30,10,BLACK)		//少し暗転
+
+//		if(IT080)
+//			get_item(193,1,0)
+//		else
+//			get_item(080,1,0)
+
+		if(IT090>0)
+			get_item(193,1,0)
+		else
+			get_item(090,1,0)
+
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM戻し
+		fade_in(0,10,BLACK)			//暗転解除
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		
+		//手办ゲット
+		if(!F2855)
+		{
+			SE(24,0)//ゲットSE
+			MES(0,"得到了L667菲欧娜L777的形象资料！！",2)
+			MES_close(0)
+			F_set(2855)
+		}
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		BGM_vol(50,15)				//BGMフェード
+		wait(20)
+		fade_in(30,10,BLACK)		//少し暗転
+
+		if(IT116>=0)
+		{
+			get_item(166,1,0)
+			wait(70)
+			wait_key(0)
+			BGM_vol(100,30)				//BGM戻し
+			fade_in(0,10,BLACK)			//暗転解除
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		}
+		else
+		{
+			get_item(116,1,0)
+			wait(70)
+			wait_key(0)
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			wait_menu(1)
+			wait_menu(0)
+			wait(15)
+
+			get_item(142,1,0)//142	古ぼけたＣＤ
+			wait(70)
+			wait_key(0)
+			BGM_vol(100,30)				//BGM戻し
+			fade_in(0,10,BLACK)			//暗転解除
+			menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+			menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+			F_set(2480)//ＣＤ１
+		}
+
+		//手办ゲット
+		if(!F2856)
+		{
+			SE(24,0)//ゲットSE
+			MES(0,"得到了L667克罗德L777的形象资料！！",2)
+			MES_close(0)
+			F_set(2856)
+		}
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		BGM_vol(50,15)				//BGMフェード
+		wait(20)
+		fade_in(30,10,BLACK)		//少し暗転
+
+		if(IT138>0)
+			get_item(182,1,0)		//パイナップル
+		else	
+			get_item(138,1,0)		//レベルプレートＧ
+		wait(70)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		SE(043,PLAYER1)
+		MES_pos(0,"C3『ＬＶ调整板Ｇ』可在各大迷宫的入口处使用，\n对迷宫入口处地板上的ＬＶ标志板进行调查即可使用。\n使用后，敌人会比一般难度下的更强，\n而且物品的掉落率和一部分宝箱的宝物\n也会发生相应的变化。",2,120,200,400,100)	
+		wait_key(0)
+		MES_close(0)
+
+		BGM_vol(100,30)				//BGM戻し
+		fade_in(0,10,BLACK)			//暗転解除
+		
+		//手办ゲット
+		if(!F2848)
+		{
+			SE(24,0)//ゲットSE
+			MES(0,"得到了L667嘉兰多L777的形象资料！！",2)
+			MES_close(0)
+			F_set(2848)
+		}
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		BGM_vol(50,15)				//BGMフェード
+		wait(20)
+	//	fade_in(30,10,BLACK)		//少し暗転
+
+		if(IT071>0)
+			get_item(194,1,0)
+		else
+			get_item(071,1,0)
+		wait(70)
+		wait_key(0)
+		BGM_vol(100,30)				//BGM戻し
+	//	fade_in(0,10,BLACK)			//暗転解除
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		//手办ゲット
+		if(!F2849)
+		{
+			SE(24,0)//ゲットSE
+			MES(0,"得到了L667宣传企鹅娘·77的形象资料！！",2)
+			MES_close(0)
+			F_set(2849)
+		}
+	}
+	//wait_key(0)
+	//menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+	//menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+}
+
+
+//////////////////////////////////////////////////////////////////////
+
+//両者構える//仮
+KAMAE_SET
+{
+	if(GW_TRY_CHARA==0)
+	{
+		// 拉古那で挑战
+		SE(1014,0)//ギア構え
+		MOT_SET(RAGNA,150,-1,481,481,-1,-1)
+		MOT(RAGNA,150,10)
+	}
+	else
+	{
+		// 艾尔雯で挑战
+		SE(1015,0)//杖構え
+		MOT_SET(PARTNER,150,-1,481,481,-1,-1)
+		MOT(PARTNER,150,10)
+	}
+	
+	//敵的構えモーション
+	if(GW_TRY_CUP==1)
+	{
+		SE(590,0)//
+		EMO(ENEMY_CHARA,EMO_ASEASE)
+		MOT(ENEMY_CHARA,30,10)	//　莫里斯
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		SE(1015,0)//
+		MOT_SET(ENEMY_CHARA,150,-1,995,995,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//　奥迪莎
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		SE(1033,0)//
+		MOT_SET(ENEMY_CHARA,150,-1,1511,1511,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//　布库尔
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		SE(1015,0)//杖構え
+		MOT_SET(ENEMY_CHARA,150,-1,1133,1133,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//　皮皮洛
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		SE(590,0)//
+		MOT_SET(ENEMY_CHARA,150,-1,980,980,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//　昴
+	}
+	else
+	if(GW_TRY_CUP==6)	
+	{
+		SE(1033,0)//
+		MOT_SET(ENEMY_CHARA,150,-1,840,840,-1,-1)
+		MOT(ENEMY_CHARA,150,10)//　菲欧娜
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		SE(590,0)//
+		MOT(ENEMY_CHARA,7,10)	//　克罗德
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		SE(590,0)//
+		MOT_SET(ENEMY_CHARA,150,-1,514,514,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//　嘉兰多
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		MOT(ENEMY_CHARA,55,10)	//　企鹅娘
+
+//		workL(001,RAND,3)
+//		if(WK001==1)
+//		{
+//			wait(30)
+//			EMO(ENEMY_CHARA,EMO_HIRAMEKI)
+//			wait(30)
+//			MOT(ENEMY_CHARA,55,5)	//　企鹅娘
+//		}
+	}
+}
+
+
+//両者的構えを戻す//仮
+KAMAE_RESET
+{
+	if(GW_TRY_CHARA==0)
+	{
+		// 拉古那で挑战
+		MOT(RAGNA,2,5)
+	}
+	else
+	{
+		// 艾尔雯で挑战
+		MOT(PARTNER,2,5)
+	}
+	
+	if(GW_TRY_CUP==1)
+	{
+		MOT(ENEMY_CHARA,2,5)	//　莫里斯
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		MOT(ENEMY_CHARA,2,5)	//　奥迪莎
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		MOT(ENEMY_CHARA,2,5)	//　布库尔
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		MOT(ENEMY_CHARA,2,5)	//　皮皮洛
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		MOT(ENEMY_CHARA,2,5)	//　昴
+	}
+	else
+	if(GW_TRY_CUP==6)	
+	{
+		MOT(ENEMY_CHARA,2,5)//　菲欧娜
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		MOT(ENEMY_CHARA,2,5)	//　克罗德
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		MOT(ENEMY_CHARA,2,5)	//　嘉兰多
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		MOT(ENEMY_CHARA,2,5)	//　企鹅娘
+	}
+}
+
+//対战相手勝利ポーズ
+EnemyWin_KAMAE
+{
+	rot_chr(ENEMY_CHARA,60,PLAYER1)
+	wait(5)
+	if(GW_TRY_CUP==1)
+	{
+		MOT_SET(ENEMY_CHARA,150,-1,518,518,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//　莫里斯
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		MOT(ENEMY_CHARA,53,5)	//　奥迪莎
+		KAO(ENEMY_CHARA,"1","123","1")
+		wait(56)
+		KAO(ENEMY_CHARA,"1","321","1")
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		//勝利モーション無し
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(ENEMY_CHARA,"1","1236","6")
+		}
+		else
+		{
+			KAO(ENEMY_CHARA,"B","1233321D","6")
+		}
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		//勝利モーション無し
+		if(GW_TRY_CHARA==0)
+		{
+			KAO(ENEMY_CHARA,"1","1236","6")
+		}
+		else
+		{
+			KAO(ENEMY_CHARA,"1","1233321","6")
+		}
+	}
+	else
+	if(GW_TRY_CUP==5)
+	{
+		EMO(ENEMY_CHARA,EMO_ASEASE)
+		MOT_SET(ENEMY_CHARA,150,-1,450,450,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//　昴
+		KAO(ENEMY_CHARA,"B","1233321D","4")
+	}
+	else
+	if(GW_TRY_CUP==6)	
+	{
+		MOT_SET(ENEMY_CHARA,150,-1,439,439,-1,-1)
+		MOT(ENEMY_CHARA,150,15)//　菲欧娜
+		KAO(ENEMY_CHARA,"1","1236","6")
+	}
+	else
+	if(GW_TRY_CUP==7)
+	{
+		MOT_SET(ENEMY_CHARA,150,150,325,384,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//　克罗德
+		KAO(ENEMY_CHARA,"1","123","1")
+	}
+	else
+	if(GW_TRY_CUP==8)
+	{
+		MOT_SET(ENEMY_CHARA,150,150,1045,1085,-1,-1)
+		MOT(ENEMY_CHARA,150,10)	//　嘉兰多
+	}
+	else
+	if(GW_TRY_CUP==9)
+	{
+		MOT(ENEMY_CHARA,55,10)
+	}
+}
+
+
+
+//拉古那/艾尔雯が青コーナーから現れる
+Move_Player
+{
+	CAM_move(11259,-11495,121,50,0)
+	CAM(-50,43,121,23,341,50,0)
+	wait_CAM_move()
+	
+	//	name("□挑战者が拉古那的场合")
+	if(GW_TRY_CHARA==0)
+	{
+	//	VOICE(019,0)	//★「俺的番だな！」
+		VOICE(078,0)	//★「さて，始めるか！」
+		KAO(RAGNA,"1","321","1")
+	}
+	//	name("□挑战者が艾尔雯的场合")
+	else
+	{
+	//	VOICE(102,0)	//★「うむ！」
+		VOICE(165,0)	//★「さあ，始めるとしようぞ」
+		KAO(PARTNER,"1","321","1")
+	}
+	wait(30)
+
+	//中央へ
+	CAM_move(11299,-10895,121,100,0)
+	CAM(-50,159,121,18,340,100,0)
+	
+	move( PLAYER1, 0, WALK1,11259,10772,1,0)
+	wait_move(PLAYER1)
+	rot(PLAYER1,60,90)
+	
+	CAM_move(10388,-10456,162,100,0)
+	CAM(-49,175,162,22,161,100,0)
+
+	move( PLAYER1, 0, WALK1,10651,10772,1,0)
+	wait_move(PLAYER1)
+	wait_CAM_move()
+}
+
+//対战相手と企鹅娘が青コーナーから現れる
+Move_EnemyAndPenguin1
+{
+	color(EV_PENGUIN,1)//透過解除
+	color(ENEMY_CHARA,1)//透過解除
+
+	move( EV_PENGUIN, 0, WALK1,9354,8685,1,0)
+	move( ENEMY_CHARA,0, WALK1,9500,8558,1,0)
+
+	cross_fade(20)
+	CAM_move(9349,-8119,121,0,0)
+	CAM(-10,106,-40,19,208,0,0)
+	wait_fade()
+
+	CAM_move(9369,-8557,121,30,0)
+	CAM(110,110,-40,17,219,30,0)
+	wait(20)
+
+}
+
+Move_EnemyAndPenguin2
+{
+	move( ENEMY_CHARA, 0, WALK1, 9504, 9139,0,0)
+	move( EV_PENGUIN,  0, WALK1, 9366, 9289,0,0)
+	wait(30)
+
+}
+
+Move_EnemyAndPenguin3
+{
+	color(EV_PENGUIN,1)//透過解除
+	color(ENEMY_CHARA,1)//透過解除
+
+	cross_fade(20)
+	CAM_move(9586,-10543,121,0,0)
+	CAM(110,110,-40,17,147,0,0)
+	look_off(ENEMY_CHARA)
+	look_del(ENEMY_CHARA)
+	KAO(ENEMY_CHARA, "1", "1", "1")	
+	KAO(EV_PENGUIN, "1", "1", "1")	
+	look_off( PLAYER1 )
+	look_del( PLAYER1 )
+
+	if(GW_TRY_CUP==1)
+		set_namebmp(34,0)	//热血中年莫里斯	Ｇ－竞技场
+	if(GW_TRY_CUP==2)
+ 		set_namebmp(35,0)	//饿狼狩猎者奥迪莎		Ｇ－竞技场
+	if(GW_TRY_CUP==3)
+		set_namebmp(37,0)	//纯情少年布库尔		Ｇ－竞技场
+	if(GW_TRY_CUP==4)
+		set_namebmp(38,0)	//魔法少女皮皮洛		Ｇ－竞技场
+	if(GW_TRY_CUP==5)
+		set_namebmp(36,0)	//忍者实习生昴		Ｇ－竞技场
+	if(GW_TRY_CUP==6)	
+		set_namebmp(39,0)	//圣剑使菲欧娜		Ｇ－竞技场
+	if(GW_TRY_CUP==7)
+		set_namebmp(40,0)	//战斗管家克罗德		Ｇ－竞技场
+	if(GW_TRY_CUP==8)
+		set_namebmp(41,0)	//蒙面超人嘉兰多	Ｇ－竞技场
+	if(GW_TRY_CUP==9)
+		set_namebmp(42,0)	//绝对究极无敌企鹅娘	Ｇ－竞技场
+
+	CAM_move(10308,-10596,22,150,0)
+	CAM(309,123,22,20,239,150,0)
+
+	EV("MoveSub_EnemyAndPenguin_A")
+	EV("MoveSub_EnemyAndPenguin_B")
+
+	wait_EV("MoveSub_EnemyAndPenguin_A")
+	wait_EV("MoveSub_EnemyAndPenguin_B")
+	wait(30)
+
+//	look_off(PLAYER1)
+	move( EV_PENGUIN,  0, WALK1,9868,10894,0,2)
+	wait_move(EV_PENGUIN)
+
+//―――――――――――――――――――――――――――――
+	wait(30)
+	//露缇一步下がる
+	rot(LOTTE,30,0)
+	CAM_move(10388,-10456,122,40,0)
+	CAM(-50,96,122,22,180,40,0)
+	chr_pos(PLAYER1,10651,10772,1,90,0)
+
+}
+
+MoveSub_EnemyAndPenguin_A
+{
+	chr_pos(ENEMY_CHARA,9480,10275,0,340,2)
+	move( ENEMY_CHARA, 0, WALK1, 9649,10439,0,0)
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,300)
+	move( ENEMY_CHARA, 0, WALK1,10150,10772,0,0)
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,270)
+
+}
+MoveSub_EnemyAndPenguin_B
+{
+	chr_pos(EV_PENGUIN, 9307,10238,0,355,2)
+	move( EV_PENGUIN,  0, WALK1, 9510,10638,0,0)
+	wait_move(EV_PENGUIN)
+	rot(EV_PENGUIN,30,300)
+	
+	//―――――――――――――
+	workL(000,RAND,5)
+	if(WK000==1)
+		MOT(EV_PENGUIN,90,5)
+	//―――――――――――――
+
+	wait(20)
+//	move( EV_PENGUIN,  0, WALK1, 9977,10694,0,0)
+	move( EV_PENGUIN,  0, WALK1, 9997,10899,0,0)
+	wait_move(EV_PENGUIN)
+
+	rot(EV_PENGUIN,30,270)
+
+}
+
+
+
+
+//対战相手的みが青コーナーから現れる　（嘉兰多）
+Move_EnemyOnry1
+{
+	color(ENEMY_CHARA,1)//透過解除
+
+	cross_fade(20)
+	CAM_move(9463,-8517,160,0,0)
+	CAM(-130,113,0,18,180,0,0)
+	wait_fade()
+
+}
+
+Move_EnemyOnry2
+{
+	VOICE( 633,0 ) 
+	move( ENEMY_CHARA,0, WALK2,9448,9800,0,0)
+	CAM_move(9463,-8517,160,60,0)
+	CAM(-330,139,0,18,180,60,0)
+	wait(60)
+
+	cross_fade(20)
+	CAM_move(9754,-10214,59,0,0)
+	CAM(-130,96,-100,26,206,0,0)
+	move( ENEMY_CHARA,0, WALK2,10150,10772,0,0)
+	chr_pos(ENEMY_CHARA,10150,10772,0,270,0)
+	chr_pos(PLAYER1,10452,11026,0,90,0)
+	look_off( PLAYER1 )
+	look_del( PLAYER1 )
+	look(PLAYER1,"Bone_Head",0,		0,2,0,			0,30,0)
+	wait_fade()
+
+//	CAM_move(9887,-10687,139,120,0)
+//	CAM(-210,98,-20,13,228,100,0)
+	CAM_move(9867,-10827,139,180,0)
+	CAM(-210,98,-20,13,257,180,0)
+	set_namebmp(41,0)	//蒙面超人嘉兰多	Ｇ－竞技场
+	wait(30)
+	look_chr(ENEMY_CHARA,PLAYER1,"Bone_Head")
+	wait(10)
+//	EV("PLAY_VOICE_Fight")
+//	if(GW_TRY_CHARA==0)	//战闘開始·対拉古那
+//	{
+//		VOICE( 618,0 ) 
+//		wait(90)
+//		EMO(PLAYER1,EMO_HIYAASE)
+//	}
+//	else				//战闘開始·対艾尔雯
+//	{
+//		VOICE( 619,0 ) 
+//		wait(120)
+//		EMO(PLAYER1,EMO_AOZAME)
+//	}
+
+	VOICE( 634,0 ) 
+	wait(120)
+	EMO(PLAYER1,EMO_AOZAME)
+
+//	if(GW_TRY_CHARA==0)
+//		EMO(PLAYER1,EMO_HIYAASE)
+//	else
+//		EMO(PLAYER1,EMO_AOZAME)
+
+//	CAM_move(9867,-10827,139,50,0)
+//	CAM(-210,98,-20,13,257,30,0)
+	wait(60)
+	wait_CAM_move()
+
+//―――――――――――――――――――――――――――――
+//	wait(30)
+	cross_fade(30)
+	CAM_move(10388,-10456,122,0,0)
+	CAM(-50,96,122,22,180,0,0)
+	look(PLAYER1,"Bone_Head",0,		0,30,0,			0,0,0)
+	chr_pos(PLAYER1,10651,10772,1,90,0)
+	look_off( ENEMY_CHARA )
+	look_del( ENEMY_CHARA )
+	wait_fade()
+	wait(10)
+
+	//露缇一步下がる
+	rot(LOTTE,30,0)
+
+
+}
+
+
+//対战相手的みが青コーナーから現れる　（企鹅娘）
+Move_Penguin1
+{
+	color(ENEMY_CHARA,1)//透過解除
+
+	cross_fade(20)
+	CAM_move(9349,-8119,121,0,0)
+	CAM(-10,106,-40,19,208,0,0)
+	wait_fade()
+
+}
+
+Move_Penguin2
+{
+
+	CAM_move(9369,-8557,121,30,0)
+	CAM(110,110,-40,17,219,30,0)
+	move( ENEMY_CHARA,  0, 8, 9366, 9289,0,0)
+	MOT(ENEMY_CHARA,0,15)
+	wait(60)
+
+	cross_fade(20)
+	CAM_move(9568,-9956,22,0,0)
+//	CAM(68,122,22,19,202,30,0)
+	CAM(68,112,22,19,202,30,0)
+	CAM_move(9868,-10616,42,210,0)
+	CAM(-130,103,42,15,251,210,0)
+	look_off( PLAYER1 )
+	look_del( PLAYER1 )
+	look_chr(PLAYER1,ENEMY_CHARA,"Bone_Head")
+
+	chr_pos(ENEMY_CHARA,9480,10275,0,310,2)
+	move( ENEMY_CHARA, 0, 008, 9649,10439,0,0)
+	MOT(ENEMY_CHARA,0,5)
+	wait(40)
+	set_namebmp(42,0)	//绝对究极无敌企鹅娘	Ｇ－竞技场
+
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,300)
+	//―――――――――――――
+	workL(000,RAND,4)
+	if(WK000==1)
+	{
+		MOT(ENEMY_CHARA,92,5)
+		wait(20)
+	}
+	//―――――――――――――
+
+	move( ENEMY_CHARA, 0, 008,10150,10772,0,0)
+	MOT(ENEMY_CHARA,0,5)
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,270)
+	wait(50)
+	wait_CAM_move()
+
+//	EV("PLAY_VOICE_Fight")
+	wait(80)
+
+//―――――――――――――――――――――――――――――
+	cross_fade(20)
+	CAM_move(10388,-10456,122,0,0)
+	CAM(-50,96,122,22,180,0,0)
+	chr_pos(PLAYER1,10651,10772,1,90,0)
+	look_off( PLAYER1 )
+	look_del( PLAYER1 )
+	wait_fade()
+	wait(10)
+
+	//露缇一步下がる
+	rot(LOTTE,30,0)
+
+}
+
+//嘉兰多□企鹅娘的連战用
+Move_Penguin3
+{
+	cross_fade(20)
+	CAM_move(9568,-9956,22,0,0)
+	CAM(68,122,22,19,202,30,0)
+	CAM_move(9868,-10616,42,210,0)
+//	CAM(-130,103,38,15,251,210,0)
+	CAM(-129,118,42,19,250,210,0)
+	look_chr(PLAYER1,ENEMY_CHARA,"Bone_Head")
+
+	chr_pos(ENEMY_CHARA,9480,10275,0,310,2)
+//	chr_pos(GYARANDOW,10019,10990,0,270,51)
+	chr_pos(GYARANDOW,10020,11100,0,270,51)
+	move( ENEMY_CHARA, 0, 008, 9649,10439,0,0)
+	MOT(ENEMY_CHARA,0,5)
+	wait(40)
+	set_namebmp(42,0)	//绝对究极无敌企鹅娘	Ｇ－竞技场
+
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,300)
+
+//	//―――――――――――――
+//	workL(000,RAND,4)
+//	if(WK000==1)
+//	{
+//		MOT(ENEMY_CHARA,92,5)
+//		wait(20)
+//	}
+//	//―――――――――――――
+
+	move( ENEMY_CHARA, 0, 008,10150,10772,0,0)
+	MOT(ENEMY_CHARA,0,5)
+	wait_move(ENEMY_CHARA)
+	rot(ENEMY_CHARA,30,270)
+	wait(50)
+	wait_CAM_move()
+
+//	EV("PLAY_VOICE_Fight")
+//	wait(80)
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+
+Motion_KyoroKyoro
+{
+	look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,30,0)
+	wait(20)
+	look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,-30,0)
+	wait(40)
+	look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,0,0)
+}
+
+Motion_KyoroKyoro2
+{
+	look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,30,0)
+	wait(20)
+	look(ENEMY_CHARA,"Bone_Head",0,		0,4,0,			0,-30,0)
+	wait(40)
+	look_chr(ENEMY_CHARA,EV_PENGUIN,"Bone_Head")
+}
+
+Motion_KyoroKyoro_Lotte
+{
+	look(LOTTE,"Bone_Head",0,		0,2,0,			0,30,0)
+	wait(20)
+	look(LOTTE,"Bone_Head",0,		0,2,0,			0,-30,0)
+	wait(40)
+	look(LOTTE,"Bone_Head",0,		0,2,0,			0,0,0)
+}
+
+
+PLAY_VOICE_Fight
+{
+	if(GW_TRY_CHARA==0)//战闘開始·対拉古那
+	{
+		if(GW_TRY_CUP==1)
+			VOICE( 478,0 ) 
+		if(GW_TRY_CUP==2)
+			VOICE( 294,0 ) 
+		if(GW_TRY_CUP==3)
+			VOICE( 497,0 ) 
+		if(GW_TRY_CUP==4)
+			VOICE( 531,0 ) 
+		if(GW_TRY_CUP==5)
+			VOICE( 242,0 ) 
+		if(GW_TRY_CUP==6)
+			VOICE( 565,0 ) 
+		if(GW_TRY_CUP==7)
+			VOICE( 591,0 ) 
+		if(GW_TRY_CUP==8)
+			VOICE( 618,0 ) 
+		if(GW_TRY_CUP==9)
+			VOICE( 652,0 ) 
+		wait(60)
+	}
+	else
+	{
+		if(GW_TRY_CUP==1)
+			VOICE( 478,0 ) 
+		if(GW_TRY_CUP==2)
+			VOICE( 295,0 ) 
+		if(GW_TRY_CUP==3)
+			VOICE( 498,0 ) 
+		if(GW_TRY_CUP==4)
+			VOICE( 532,0 ) 
+		if(GW_TRY_CUP==5)
+			VOICE( 243,0 ) 
+		if(GW_TRY_CUP==6)
+			VOICE( 566,0 ) 
+		if(GW_TRY_CUP==7)
+			VOICE( 592,0 ) 
+		if(GW_TRY_CUP==8)
+			VOICE( 619,0 ) 
+		if(GW_TRY_CUP==9)
+			VOICE( 652,0 ) 
+		wait(60)
+	}
+}
+
+PLAY_VOICE_EnemyWin
+{
+	if(GW_TRY_CHARA==0)//勝利·対拉古那
+	{
+		if(GW_TRY_CUP==1)
+		{
+//			VOICE( 481,0 ) 
+			VOICE2(481,1,100)	//★「あれれ…勝っちゃった…？」
+			wait(60)
+		}
+		if(GW_TRY_CUP==2)
+		{
+//			VOICE( 296,0 ) 
+			VOICE2(296,1,100)	//★「なんだ，そ的程度かい？」
+			wait(120)
+		}
+		if(GW_TRY_CUP==3)
+		{
+//			VOICE( 499,0 ) 
+			VOICE2(499,1,100)	//★「やったあ，なんとか勝てた！」
+			wait(120)
+		}
+		if(GW_TRY_CUP==4)
+		{
+//			VOICE( 533,0 ) 
+			VOICE2(533,1,100)	//★「さすがは皮皮洛ね□」
+			wait(120)
+		}
+		if(GW_TRY_CUP==5)
+		{
+//			VOICE( 244,0 ) 
+			VOICE2(244,1,100)	//★「し，師匠，大丈夫ですか！？」
+			wait(120)
+		}
+		if(GW_TRY_CUP==6)
+		{
+//			VOICE( 567,0 ) 
+			VOICE2(567,1,100)	//★「フフ，良い勝負でしたわ」
+			wait(120)
+		}
+		if(GW_TRY_CUP==7)
+		{
+//			VOICE( 593,0 ) 
+			VOICE2(593,1,100)	//★「失礼，やりすぎました」
+			wait(120)
+		}
+		if(GW_TRY_CUP==8)
+		{
+//			VOICE( 620,0 ) 
+			VOICE2(620,1,100)	//★「筋肉だ，筋肉が足らぬ的だ」
+			wait(120)
+		}
+		if(GW_TRY_CUP==9)
+		{
+//			VOICE( 653,0 ) 
+			VOICE2(653,1,100)	//★「あれれ，もう終わりな的ですか？」
+			wait(120)
+		}
+	}
+	else
+	{
+		if(GW_TRY_CUP==1)
+		{
+//			VOICE( 481,0 ) 
+			VOICE2(481,1,100)	//★「あれれ…勝っちゃった…？」
+			wait(60)
+		}
+		if(GW_TRY_CUP==2)
+		{
+//			VOICE( 297,0 ) 
+			VOICE2(297,1,100)	//★「やれやれ，切り抜けたか」
+			wait(120)
+		}
+		if(GW_TRY_CUP==3)
+		{
+//			VOICE( 500,0 ) 
+			VOICE2(500,1,100)	//★「あわわ，だ，大丈夫ですか！？」
+			wait(120)
+		}
+		if(GW_TRY_CUP==4)
+		{
+//			VOICE( 534,0 ) 
+			VOICE2(534,1,100)	//★「あれれ，勝っちゃった？」
+			wait(120)
+		}
+		if(GW_TRY_CUP==5)
+		{
+//			VOICE( 245,0 ) 
+			VOICE2(245,1,100)	//★「ご，ごめんなさいっ！」
+			wait(120)
+		}
+		if(GW_TRY_CUP==6)
+		{
+//			VOICE( 568,0 ) 
+			VOICE2(568,1,100)	//★「わたくし的勝ちですわね」
+			wait(120)
+		}
+		if(GW_TRY_CUP==7)
+		{
+//			VOICE( 594,0 ) 
+			VOICE2(594,1,100)	//★「お許しください，レディ」
+			wait(120)
+		}
+		if(GW_TRY_CUP==8)
+		{
+//			VOICE( 621,0 ) 
+			VOICE2(621,1,100)	//★「フッ，まだまだ修行不足だな」
+			wait(120)
+		}
+		if(GW_TRY_CUP==9)
+		{
+//			VOICE( 653,0 ) 
+			VOICE2(653,1,100)	//★「あれれ，もう終わりな的ですか？」
+			wait(120)
+		}
+	}
+}
+
+PLAY_VOICE_EnemyLose
+{
+	if(GW_TRY_CHARA==0)//敗北·対拉古那
+	{
+		if(GW_TRY_CUP==1)
+//			VOICE( 482,0 ) 
+			VOICE2(482,1,100)	//★「哈提…お父さん頑張ったよ…」
+		if(GW_TRY_CUP==2)
+//			VOICE( 298,0 ) 
+			VOICE2(298,1,100)	//★「ふふ…やるじゃないか」
+		if(GW_TRY_CUP==3)
+//			VOICE( 501,0 ) 
+			VOICE2(501,1,100)	//★「やっぱり拉古那さんは楽（らぐ）な相手じゃないや…」
+		if(GW_TRY_CUP==4)
+//			VOICE( 535,0 ) 
+			VOICE2(535,1,100)	//★「疲れた…アイス食べたいぃ…」
+		if(GW_TRY_CUP==5)
+//			VOICE( 246,0 ) 
+			VOICE2(246,1,100)	//★「えへへ…さすが拉古那師匠…」
+		if(GW_TRY_CUP==6)
+//			VOICE( 569,0 ) 
+			VOICE2(569,1,100)	//★「お見事…ですわ…」
+		if(GW_TRY_CUP==7)
+//			VOICE( 595,0 ) 
+			VOICE2(595,1,100)	//★「お見事…いい動きでした…」
+		if(GW_TRY_CUP==8)
+//			VOICE( 622,0 ) 
+			VOICE2(622,1,100)	//★「見事だ，免許皆伝である…」
+		if(GW_TRY_CUP==9)
+//			VOICE( 654,0 ) 
+			VOICE2(654,1,100)	//★「お見事です…完敗な的です…」
+	}
+	else
+	{
+		if(GW_TRY_CUP==1)
+//			VOICE( 482,0 ) 
+			VOICE2(482,1,100)	//★「哈提…お父さん頑張ったよ…」
+		if(GW_TRY_CUP==2)
+//			VOICE( 299,0 ) 
+			VOICE2(299,1,100)	//★「さすがは真祖的姫だね…」
+		if(GW_TRY_CUP==3)
+//			VOICE( 502,0 ) 
+			VOICE2(502,1,100)	//★「負けちゃった…えへへ…でも満足かも…」
+		if(GW_TRY_CUP==4)
+//			VOICE( 536,0 ) 
+			VOICE2(536,1,100)	//★「や，やるわね，ゴスお姉さん…」
+		if(GW_TRY_CUP==5)
+//			VOICE( 247,0 ) 
+			VOICE2(247,1,100)	//★「ま，負けちゃったぁ…」
+		if(GW_TRY_CUP==6)
+//			VOICE( 570,0 ) 
+			VOICE2(570,1,100)	//★「ううっ，悔しいですわ…」
+		if(GW_TRY_CUP==7)
+//			VOICE( 596,0 ) 
+			VOICE2(596,1,100)	//★「フフ…勉強になりました…」
+		if(GW_TRY_CUP==8)
+//			VOICE( 623,0 ) 
+			VOICE2(623,1,100)	//★「成长したな，我が弟子よ…」
+		if(GW_TRY_CUP==9)
+//			VOICE( 654,0 ) 
+			VOICE2(654,1,100)	//★「お見事です…完敗な的です…」
+	}
+	wait(60)
+}
+
+PLAY_VOICE_PlayerWin
+{
+//適当に見繕っておく
+/*
+058 ZVO_0058 000 100 000 4	//\勝利·レベルアップ　　「よっしゃあ！」
+062 ZVO_0062 000 100 000 4	//\ルート終了時　　　　　「ま，こんなもんかね」（ブロンズ）
+063 ZVO_0063 000 100 000 4	//\　　　　　　　　　　　「まあまあだったな」（シルバー）
+064 ZVO_0064 000 100 000 4	//\　　　　　　　　　　　「へへ，上出来だぜ」（ゴールド）
+084 ZVO_0084 000 100 000 4	//　　　　　　　　　　　「タリ·ホー！」
+
+134 ZVO_0148 000 100 000 4	//\勝利·レベルアップ　　「うむ，やったな！」
+139 ZVO_0153 000 100 000 4	//\　　　　　　　　　　　「ふむ，悪くはない」（シルバー）
+140 ZVO_0154 000 100 000 4	//\　　　　　　　　　　　「なかなか的出来だな」（ゴールド）
+141 ZVO_0155 000 100 000 4	//\　　　　　　　　　　　「フッ，当然的結果であろ」（プラチナ）
+167 ZVO_0181 000 100 000 4 	//　　　　　　　　　　　「これでよい的か？」
+*/
+
+	workL(000,RAND,5)
+	if(GW_TRY_CHARA==0)//勝利·拉古那
+	{
+		if(WK000==0)
+			VOICE( 058,PLAYER1 )
+		if(WK000==1)
+			VOICE( 062,PLAYER1 )
+		if(WK000==2)
+			VOICE( 063,PLAYER1 )
+		if(WK000==3)
+			VOICE( 064,PLAYER1 )
+		if(WK000==4)
+			VOICE( 084,PLAYER1 )
+	}
+	else
+	{
+		if(WK000==0)
+			VOICE( 134,PLAYER1 )
+		if(WK000==1)
+			VOICE( 139,PLAYER1 )
+		if(WK000==2)
+			VOICE( 140,PLAYER1 )
+		if(WK000==3)
+			VOICE( 141,PLAYER1 )
+		if(WK000==4)
+			VOICE( 167,PLAYER1 )
+	}
+	wait(40)
+}
+
+
+//战闘中的ロープをセットする
+SET_ROPE
+{
+//	set_chr( 91,716,	 6, 6,     0, 200,  0,		0,0,0,";")
+//	set_chr( 92,716,	 5, 4,     0,1600,  0,		0,0,0,";")
+
+	set_chr( 91,716,	 6, 6,     0, 250,  0,		0,0,0,";")
+	set_chr( 92,716,	 5, 4,     0,1550,  0,		0,0,0,";")
+
+	set_chr( 93,991,	 6, 6,     0, 250,  0,		0,400501,0,";")	//ストッパー
+	set_chr( 94,991,	 5, 4,     0,1550,  0,		0,400501,0,";")	//ストッパー
+}
+
+//斜めに設定
+SET_ROPE2
+{
+//	set_chr( 92,716,	 5, 4,  -100,1600,  0,		0,60,0,";")
+	set_chr( 92,716,	 5, 4,  -100,1550,  0,		0,60,0,";")
+}
+
+DELETE_ROPE
+{
+	delete(91)
+	delete(92)
+}
+
+
+//──────────────────────────────
+//サバイバルモード
+//──────────────────────────────
+PRE_SURVIVAL
+{
+
+	workG(GW_TRY_CUP,SET,1)
+//	workG(GW_TRY_CUP,SET,6)
+	workL(002,SET,1)
+	set_hp(PLAYER1,100)//全快	
+		
+	EV("PRE_SURVIVAL_LOOP")
+	wait_EV("PRE_SURVIVAL_LOOP")
+}
+
+//──────────────────────────────
+// サバイバル（初回）
+//──────────────────────────────
+PRE_SURVIVAL_FIRST
+{
+	//――――――――――――――――――――――――――
+	//	初期化処理
+	//――――――――――――――――――――――――――
+	//暗転
+//	fade_in(100,1,0)
+//	wait_fade()
+//	wait(1)
+
+//	EV("PRE_BATTLE_SET")
+//	wait_EV("PRE_BATTLE_SET")
+
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+	color(ENEMY_CHARA,	-1)	//透過
+	color(PLAYER1,		-1)		//透過
+	color(PLAYER2,		-1)		//透過
+	color(LOTTE,		1)		//
+
+	set_chr( LOTTE,1068,	-1,-1,  10388,10356,1,	0,0,0,"")	//　ロッテ		
+	chr_equip2( LOTTE,"eq_062", "Bone_LeftHand", 100,	90,0,0,	-7,0,2);
+
+	wait(30)
+
+	//カメラセット
+	CAM_move(10388,-10456,162,0,0)
+	CAM(-50,118,162,20,180,0,0)
+	CAM_move(10388,-10456,162,100,0)
+	CAM(-50,50,162,21,180,100,0)
+
+	fade_in( 0, 60, BLACK)	//フェードイン
+	wait_fade()
+
+
+	if( GW_TRY_CUP==6)
+	{
+		KAO(LOTTE,"52625Z4","5","6")	
+		MES(LOTTE,"P1S4下半场比赛也要好好加油啊～！",0)
+		MES_close(LOTTE)
+		wait_MES(LOTTE)			
+	}
+	else
+	{
+		CAM_quake("463746")
+		KAO(LOTTE,"52625Z4","5","6")
+		MES(LOTTE,"P1S4女士们＆先生们！",0)
+		KAO(LOTTE,"52625Z3","321","6")
+		MES(LOTTE,"P1S4让大家久等了～。",0)
+		KAO(LOTTE,"52625Z6","1","6")
+		MES(LOTTE,"P1S4今晚将举行生存模式大战～！",0)
+		KAO(LOTTE,"52625Z6","1236","6")		
+		MES(LOTTE,"P1S4那么，要开始无休止的战斗了哦～！！",0)
+		MES_close(LOTTE)
+		wait_MES(LOTTE)	
+	}
+
+
+	SE(591,0)//歓声
+	
+	//暗転
+	fade_in(100,30,0)
+	wait_fade()
+
+}
+
+//──────────────────────────────
+// サバイバル（ループ）
+//──────────────────────────────
+PRE_SURVIVAL_LOOP
+{
+	EV_begin()
+
+	workG(GW_SKI_MODE,SET,5)	//ギブアップメニューをセット
+
+	//暗転
+	fade_in(100,1,0)
+	wait_fade()
+	wait(1)
+
+	if(GW_TRY_CUP==1 || GW_TRY_CUP==6)
+	{
+		//初回限定
+		EV("PRE_SURVIVAL_FIRST")
+		wait_EV("PRE_SURVIVAL_FIRST")
+	}
+
+
+	//対戦相手を設定する
+	if(GW_TRY_CUP==1)
+	{
+		set_chr( ENEMY_CHARA,390,	-1,-1,  9501,8247,1,	2,0,0,"")	//対戦相手：莫里斯
+		workG(GW_TRY_CHARA,SET,0)										//対戦者　：拉古那
+		chr_state_LV( ENEMY_CHARA, 26 )									//敵レベル設定(初期4)	chr_state_LV は 加算
+		chr_state_LV( ENEMY_CHARA, 30)					
+	}
+	else
+	if(GW_TRY_CUP==2)
+	{
+		set_chr( ENEMY_CHARA,392,	-1,-1,  9501,8247,1,	2,0,0,"")	//対戦相手：オデッサ
+		workG(GW_TRY_CHARA,SET,1)										//対戦者　：艾尔雯
+		chr_state_LV( ENEMY_CHARA, 23 )									//敵レベル設定(初期7)		
+		chr_state_LV( ENEMY_CHARA, 30)					
+	}
+	else
+	if(GW_TRY_CUP==3)
+	{
+		set_chr( ENEMY_CHARA,396,	-1,-1,  9501,8247,1,	2,0,0,"")	//対戦相手：布库尔
+		workG(GW_TRY_CHARA,SET,0)										//対戦者　：拉古那
+		chr_state_LV( ENEMY_CHARA, 28 )									//敵レベル設定(初期12)
+		chr_state_LV( ENEMY_CHARA, 20)			
+	}
+	else
+	if(GW_TRY_CUP==4)
+	{
+		set_chr( ENEMY_CHARA,397,	-1,-1,  9501,8247,1,	2,0,0,"")	//対戦相手：皮皮洛
+		workG(GW_TRY_CHARA,SET,1)										//対戦者　：艾尔雯
+		chr_state_LV( ENEMY_CHARA, 17)									//敵レベル設定(初期13)
+		chr_state_LV( ENEMY_CHARA, 20)			
+	}	
+	else
+	if(GW_TRY_CUP==5)
+	{
+		set_chr( ENEMY_CHARA,391,	-1,-1,  9501,8247,1,	2,0,0,"")	//対戦相手：昴
+		workG(GW_TRY_CHARA,SET,1)										//対戦者　：艾尔雯
+		chr_state_LV( ENEMY_CHARA, 13)									//敵レベル設定(初期17)
+		chr_state_LV( ENEMY_CHARA, 30)	
+	}
+	else	
+	if(GW_TRY_CUP==6)
+	{
+		set_chr( ENEMY_CHARA,393,	-1,-1,  9501,8247,1,	2,0,0,"")	//対戦相手：菲欧娜
+		workG(GW_TRY_CHARA,SET,1)										//対戦者　：艾尔雯
+		chr_state_LV( ENEMY_CHARA, 10 )									//敵レベル設定(初期20)
+		chr_state_LV( ENEMY_CHARA, 5 )									//
+	}	
+	else
+	if(GW_TRY_CUP==7)
+	{
+		set_chr( ENEMY_CHARA,394,	-1,-1,  9501,8247,1,	2,0,0,"")	//対戦相手：克罗德
+		workG(GW_TRY_CHARA,SET,0)										//対戦者　：拉古那
+		chr_state_LV( ENEMY_CHARA, 7)									//敵レベル設定(初期23)
+		chr_state_LV( ENEMY_CHARA, 15 )			
+	}	
+	else
+	if(GW_TRY_CUP==8)
+	{
+		set_chr( ENEMY_CHARA,398,	-1,-1,  9501,8247,1,	2,0,0,"")	//対戦相手：嘉兰多
+		workG(GW_TRY_CHARA,SET,0)										//対戦者　：拉古那
+		chr_state_LV( ENEMY_CHARA, 3)									//敵レベル設定(初期27)
+		chr_state_LV( ENEMY_CHARA, 10 )			
+	}	
+	else
+	if(GW_TRY_CUP==9)
+	{
+		set_chr( ENEMY_CHARA,399,	-1,-1,  9501,8247,1,	2,0,0,"")	//対戦相手：企鹅娘
+		workG(GW_TRY_CHARA,SET,1)										//対戦者　：艾尔雯
+		chr_state_LV( ENEMY_CHARA, 10 )									//敵レベル設定(初期30)
+		chr_state_LV( ENEMY_CHARA, 10 )									//
+	}	
+
+
+
+	F_set_chr(PLAYER1,CF_NO_DEAD) ////ＨＰ0でも消えない　キャラ0は死亡時に"EV_DEAD"を再生
+
+	set_chr( ZAKO_19,990,	-1,-1,  11388,9309,1,	10,0,8,"(F9 <EV_WIN_SURVIVAL> RF9)")
+	F_set_chr(ENEMY_CHARA,CF_NO_DEAD)
+	F_set_chr(ENEMY_CHARA,CF_NO_DROPITEM)
+	
+	color(ENEMY_CHARA,1)	//
+
+	//パーティを一人にする。(※パーティに２人いること前提)
+	if(GW_TRY_CHARA==0)
+	{
+		clear_party(PARTNER)	//艾尔雯消去
+//		delete(PLAYER2)	
+		color(PLAYER2,-1)
+		color(PLAYER1, 1)
+	}
+	else
+	{
+		clear_party(99)			//艾尔雯のみの操作モードへ	
+//		delete(RAGNA)			//これやると，昴の分身時に不具合発生
+		color(PLAYER2,-1)
+		color(PLAYER1, 1)
+	}
+
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+//	chr_pos(PLAYER2,	10651,10772,1,90,2)
+	chr_pos(PLAYER2,	0,0,1,90,2)
+	
+	KAO(PLAYER1, "1", "1", "1")
+	KAO(LOTTE, "1", "1", "1")
+
+
+	EV("SET_ROPE")												//ロープセット
+
+	//初期位置セット 2戦目以降
+	chr_pos(PLAYER1,	10651,10772,1,90,2)
+	chr_pos(ENEMY_CHARA,	10120,10772,1,270,2)
+
+
+	CAM_move(10388,-10676,102,0,0)
+	CAM(950,183,102,21,180,0,0)
+	CAM_move(10388,-10456,122,120,0)
+	CAM(-50,107,122,22,180,120,0)
+
+	SE(591,0)//歓声
+	KAO(LOTTE,"1","1","3")
+
+
+
+	fade_in( 0, 60, BLACK)	//フェードイン
+	wait_CAM()
+	wait_CAM_move()
+	wait_fade()
+
+
+	//名前を画面に表示
+	if(GW_TRY_CUP==1)
+		set_namebmp(34,0)	//热血中年莫里斯	Ｇ－竞技场
+	if(GW_TRY_CUP==2)
+		set_namebmp(35,0)	//饿狼狩猎者奥迪莎		Ｇ－竞技场
+	if(GW_TRY_CUP==3)
+		set_namebmp(37,0)	//纯情少年布库尔		Ｇ－竞技场
+	if(GW_TRY_CUP==4)
+		set_namebmp(38,0)	//魔法少女皮皮洛		Ｇ－竞技场
+	if(GW_TRY_CUP==5)
+		set_namebmp(36,0)	//见习忍者昴		Ｇ－竞技场
+	if(GW_TRY_CUP==6)	
+		set_namebmp(39,0)	//圣剑使菲欧娜		Ｇ－竞技场
+	if(GW_TRY_CUP==7)
+		set_namebmp(40,0)	//战斗管家克罗德		Ｇ－竞技场
+	if(GW_TRY_CUP==8)
+		set_namebmp(41,0)	//假面超人嘉兰多	Ｇ－竞技场
+	if(GW_TRY_CUP==9)
+		set_namebmp(42,0)	//绝对究极无敌企鹅娘	Ｇ－竞技场
+	wait(90)
+
+//　　同時に両者ＳＥつきで構える。
+	EV("KAMAE_SET")
+	wait_EV("KAMAE_SET")
+
+
+	EFF(21630,320,240,0,0,100,0)//FIGHT
+	wait(40)
+	SE(211,PLAYER1)
+	EV("PLAY_VOICE_Fight")
+
+	//構えを戻す
+	EV("KAMAE_RESET")
+	wait_EV("KAMAE_RESET")
+
+	//ロッテをどかす
+	if(GW_TRY_CUP==1 || GW_TRY_CUP==6)
+	{
+		//初回限定
+		MOT(LOTTE,153,2)
+		rot(LOTTE,60,360)
+		KAO(LOTTE,"5","5","6")
+		jump(LOTTE,0,20,9549,9099,0,400)
+	}
+
+	CAM_return( 30 )
+
+	workL(WK_BOSSHP,SET,ENEMY_CHARA)	//BOSS＿ＨＰ表示
+	BGM(45)
+	EV_end()
+
+	//ペット消す
+	color(PET,-1)
+
+	//戦闘開始
+
+
+}
+
+
+
+//──────────────────────────────
+//サバイバルで１つの試合に勝利
+EV_WIN_SURVIVAL
+{
+	delete(ZAKO_19)	// 判定キャラ消去
+	delete(30)	// 分身キャラ消去
+	delete(31)	// 
+	delete(32)	// 
+	delete(33)	// 
+	delete(34)	// 
+	
+	DelDropItem()	//ドロップアイテム全消し
+	StopEffect()	//エフェクト全消し
+
+	map_color(100,100,100, 5);//R,G,B, time 100%
+	map_specular(80,80,80, 5);//R,G,B, time 100%
+
+	EV_begin()
+	wait(20)
+	map_specular(0,0,0,20);//R,G,B, time 100%
+	KAO(ENEMY_CHARA,"5","5","5")//死亡用フェイスセット0822
+	wait(30)
+	
+	EV("PLAY_VOICE_EnemyLose")
+	CAM_move_chr(ENEMY_CHARA,90,0)
+	rot_chr(PLAYER1,30,ENEMY_CHARA)	
+	
+	
+	EFF(21650,320,240,0,0,100,0)//WIN
+	wait(60)
+	rot_chr(PLAYER1,30,ENEMY_CHARA)
+
+	wait(30)
+
+	wait(30)
+	fade_in(100,60,0)
+	wait(60)
+	wait_CAM_move()
+//	wait_BGM()
+	wait_EV("PLAY_VOICE_EnemyLose")
+	wait_fade()
+
+	
+	delete(ENEMY_CHARA)
+	
+	
+	//いないほうのキャラを加え，２人組みに戻す
+	if(GW_TRY_CHARA==0)
+	{
+		join_party(1)			//拉古那
+	}
+	else
+	{
+		join_party(0)			//艾尔雯
+	}	
+	
+	//▼最後の試合だった
+	if(GW_TRY_CUP==9)
+	{
+		workG(GW_ENTRY_EVENT,SET,3)
+		workG(GW_WINLOSE,SET,1)		//勝ったGWを立てる
+		F_set(FV_FF_WinSurvival)	//★闘技場サバイバルに勝った
+		stop_BGM(60)		
+		workL(002,SET,0)
+		new_map(10510)				//Ｇコロに戻る
+	}
+	else
+	//▼河童へ
+	if(GW_TRY_CUP==5)
+//	if(GW_TRY_CUP==1)				//河童直前の試合だった
+	{
+		workG(GW_TRY_CUP,SET,6)		//次の試合へ　河童後の試合番号
+//		workG(GW_TRY_CUP,SET,9)		//次の試合へ　河童後の試合番号		
+		stop_BGM(60)	
+		new_map(10521)				
+	}
+	//▼次の試合へ
+	else
+	{
+		workG(GW_TRY_CUP,ADD,1)	//次の試合へ
+	
+//		workG(GW_TRY_CUP,SET,7)	//強制ペンぎん
+		EV("PRE_SURVIVAL_LOOP")
+	}
+
+}
+
+
+#EndScriptTable
+//====================================================================

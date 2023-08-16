@@ -1,0 +1,789 @@
+//■Zwei2一般メッセージ・アルッテの町（※モーリス）
+//────────────────────────────────────────────────────────────
+//■アルッテ
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆モーリス（運動中の人）Maurice")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+TK_MAURICE
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(MAURICE, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,MAURICE)
+//───────────────
+//⑪ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,MAURICE)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,MAURICE)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,MAURICE)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼⑬エンディング直前
+	//──────────────────────────────
+	//　　※スーツ姿、噴水左側のベンチに座る。
+	if( F6_05_EndSixth )
+	{
+		look_chr( MAURICE, PLAYER1,"Bone_Head")
+		//モーション
+		MOT_SET(MAURICE,151,-1,561,561,-1,-1)		//モーリスが座ってる
+		MOT(MAURICE,151,10)
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"やあ、君たち……",0)
+			MES(MAURICE,"なんだか分からないけど、\n娘の機嫌も直ったみたいでね。",0)
+			MES(MAURICE,"今日はのんびりピクニックにでも\n行こうかって話してるんだよ。",0)
+			MES_close(MAURICE)
+
+		//　　モーリスにＰＡエモーション。
+			EMO(MAURICE,EMO_PA)
+			wait(30)
+
+			MES(MAURICE,"あ、そういえば……\n君たち知ってるかい？",0)
+			MES(MAURICE,"この前、クリスタルバレーまで\nジョギングに行ったんだけどね。",0)
+			MES(MAURICE,"『来るんじゃないニャ！』\nとか声がして、\n追い返されちゃったんだ。",0)
+			MES_close(MAURICE)
+
+			MOT(MAURICE,150,10)
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"（その声って……）",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+				MES(PARTNER,"（その声というのは……）",0)
+				MES_close(PARTNER)
+			}
+
+			MOT(MAURICE,151,10)
+			MES(MAURICE,"うーん、よく分からないけど……\n近づかない方がよさそうだよね。",0)
+			MES(MAURICE,"今日のピクニックコースからも\n外しておこうかな。",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MAURICE,"クリスタルバレーに行ったら、\n『来るんじゃないニャ！』とか声がして\n追い返されちゃったんだよね。",0)
+			MES(MAURICE,"うーん、よく分からないけど……\n折角の娘とのピクニックだからね。",0)
+			MES(MAURICE,"今日はハティの希望通り、\nロアルタ村でのんびり\nしてくることにするよ。",0)
+			MES_close(MAURICE)
+		}
+		MOT(MAURICE,150,10)
+		look_off( MAURICE )
+	}
+	else
+	//──────────────────────────────
+	//▼⑫飛行機でメルセデクに乗り込むことにした（ラグナ・アルウェン・ルゥ）
+	//──────────────────────────────
+	if( F6_00_GoToMeru )
+	{
+		F_set_note(-54,-1)
+		if(!F_MAURICE)
+		{
+			if(!FT_12_TalkMaurice && FT_FF_TalkOkMaurice)
+			{
+			//──────────────────────────────
+			//	name("⇒今までにモーリスと話した事がある場合、１回だけ挿入。")
+			//　　２人に？エモーション。
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（あ、あれこの人……）",0)
+					MES_close(RAGNA)
+
+				//	name2(PARTNER)
+					MES(PARTNER,"（ふむ、スーツ姿だのう……）",0)
+					MES_close(PARTNER)
+				}
+				else
+			//	name("⇒アルウェン先頭")
+				{
+					MES(PARTNER,"（この男……）",0)
+					MES_close(PARTNER)
+
+				//	name2(RAGNA)
+					MES(RAGNA,"（スーツ姿……？）",0)
+					MES_close(RAGNA)
+				}
+			//──────────────────────────────
+			}
+			MES(MAURICE,"えー、みなさん。\n……で、あるからですね。",0)
+			MES(MAURICE,"あの竜巻の影響については、\nフィオナさんの方から以上のような\n報告がありまして……",0)
+			MES(MAURICE,"まずは、えー、街路の\n突風対策などを万全に、ですね……",0)
+			MES_close(MAURICE)
+
+			//★モーリス【町長】
+			F_set_note(-54,2)
+			
+			F_set(MAURICE)
+			F_set(FT_12_TalkMaurice)
+		}
+	//　　★繰り返し
+		else
+		{
+		//　　※振り返らない。
+			MES(MAURICE,"えー、その影響で\n連絡は取れない状況にありますが……",0)
+			MES(MAURICE,"その、そこを慌てず\n落ち着いて、ですね……",0)
+			MES_close(MAURICE)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑪クリスタルバレーを起動することにした（ラグナ・ルゥ（・オデッサ））
+	//──────────────────────────────
+	//　　※教会、懺悔室にいる。
+	//　　　初回はシスターのイベントが起動する。
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+	if( F5_00_HearLunar )
+	{
+		if(!F_MAURICE)
+		{
+			look(MAURICE,"Bone_Head",0,		0,0,3,			0,0,0)
+			wait(5)
+			look_chr( MAURICE, PLAYER1,"Bone_Head")
+
+			MES(MAURICE,"そ、その……\n少し娘のことで相談をね。",0)
+			MES(MAURICE,"……実は前から、誰かに\n聞いてもらいたかったんだ。",0)
+			MES(MAURICE,"でも、す、すごく厳しくてね。\n少しでも弱音を吐くと、\n怒られるんだよ。",0)
+			MES_close(MAURICE)
+
+		//	name("イザベラ")
+			MES(ISABELLA,"……あら、ヨソ見？",0)
+			MES(ISABELLA,"P1S5テメエ……\nいい根性してんなコラァ！！",0)
+			MES_close(ISABELLA)
+
+		//　　モーリス、アセアセでイザベラに向く。
+			EMO(MAURICE,EMO_ASEASE)
+			look(MAURICE,"Bone_Head",0,		0,10,0,			0,0,0)
+
+			wait(30)
+			look_off(MAURICE)
+
+			MES(MAURICE,"す、す、す、すみませんっ！",0)
+			MES_close(MAURICE)
+
+			look(MAURICE,"Bone_Head",0,		0,0,3,			0,0,-20)
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			look(MAURICE,"Bone_Head",0,		0,0,3,			0,0,0)
+			wait(10)
+			look_chr( MAURICE, PLAYER,"Bone_Head")
+			MES(MAURICE,"も、もう話しかけないで。\n怒られちゃうから。",0)
+			MES_close(MAURICE)
+
+			look_off( MAURICE )
+			wait(15)
+			IK(MAURICE,"Bone_Head",0)
+			look(MAURICE,"Bone_Head",0,		0,0,1,			0,0,-20)
+		}
+
+		//モーリスと話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ・アルウェン）
+	//──────────────────────────────
+//　　※アルッテ噴水回りをグルグルランニングしている。
+	if( F4_09_GoShrineMia)
+	{
+		look_chr( MAURICE, PLAYER1,"Bone_Head")
+		MES(MAURICE,"や、やあ君たち……\n君たちもランニング？",0)
+		MES(MAURICE,"た、楽しいよね、ランニング。",0)
+		MES(MAURICE,"一生懸命走ってると、\n悩み事なんかも忘れられるからね。\nははは……",0)
+		MES_close(MAURICE)
+		look_off( MAURICE )
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ・スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※民家２の前でコリンと話している。
+	if( F4_00_StartSolo )
+	{
+		look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"夜、家に帰ったらね、\n『探さないでください』と\n書き置きがあったんだ。",0)
+			MES(MAURICE,"そ、それでてっきり\n娘が家出したのかと……",0)
+			MES(MAURICE,"どうやら友達に誘われて\nお泊りしてただけみたいだね。",0)
+			MES(MAURICE,"で、でもほら、ちょうど\n魔物騒動なんかもあって……\nはあ……本当に心配したよ……",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MAURICE,"お泊りするのは\n別にいいと思うんだけどね。",0)
+			MES(MAURICE,"や、やっぱり僕にも……\n一言くらい、相談して欲しいよね。",0)
+			MES(MAURICE,"その、娘に嫌われたらって思うと、\n強くは言えないんだけどね……",0)
+			MES_close(MAURICE)
+		}
+		look_off( MAURICE)
+
+		//モーリスと話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//いない
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※まだコロッセオに行っていない場合のみ。
+	//　　※町、噴水の左側、街路のど真ん中でストレッチ運動をしている。
+	if( F2_14_TalkEnemy )
+	{
+		if(!F_MAURICE)
+		{
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+			EV_stop("MOTION_TRAINING_MAURICE")	//モーリス　ストレッチ
+			MOT_SET(MAURICE,150,-1,517,517,-1,-1)
+
+			MOT(MAURICE,2,15)
+
+			MES(MAURICE,"あ、ああ君たち。",0)
+			MES_close(MAURICE)
+
+		//　　モーリス、ガッツポーズをしてみせる。
+			MOT(MAURICE,150,15)
+
+			MES(MAURICE,"『……燃えてるかい？』",0)
+			MES_close(MAURICE)
+
+		//　　モーリス、通常パタに戻る。
+			MOT(MAURICE,2,15)
+			
+			MES(MAURICE,"な、なんてね。ははは……",0)
+			MES_close(MAURICE)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+		//	EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			look_off( MAURICE)
+
+		//──────────────────────────────
+//		//	name("⇒ラグナ先頭")
+//			if(GW_MAN==1)
+//			{
+//				MES(RAGNA,"（外しまくりだな……）",0)
+//				MES_close(RAGNA)
+//			}
+//		//	name("⇒アルウェン先頭")
+//			else
+//			{
+//				MES(PARTNER,"（確かにカッコ悪い男だのう……）",0)
+//				MES_close(PARTNER)
+//			}
+
+			MES(RAGNA,"（外しまくりだな……）",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"（ふむ……そうなのか？）",0)
+			MES_close(PARTNER)
+
+		//──────────────────────────────
+			F_set(MAURICE)
+			EV("MOTION_TRAINING_MAURICE")	//モーリス　ストレッチ
+		}
+		else
+		{
+		//　　★繰り返し
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+			MES(MAURICE,"ふふ、最近はね、僕もそこそこ\n腕力が付いてきたんだよ。",0)
+			MES(MAURICE,"それもこれも、\nあのジムのお陰だね。",0)
+			MES(MAURICE,"あれ、そういえば……\nどうして体を鍛えてみようなんて\n思ったんだっけ？",0)
+			MES(MAURICE,"う～ん、忘れちゃったよ。",0)
+			MES_close(MAURICE)
+			look_off( MAURICE)
+		}
+
+		//モーリスと話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//──────────────────────────────
+	//▼④炎のパーツを入手した
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼③金闇の森へ向かうことにした
+	//──────────────────────────────
+	//　　※まだコロッセオに行っていない場合のみ配置。
+
+	//★変更
+	//　　⇒フィールドから町に入ったタイミングで、ランダム判定。
+	//　　確率1/3で配置する。
+
+	//　　※民家２の前でストレッチ運動をしている。
+	if( F2_00_GoForest )
+	{
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"ふう……",0)
+			MES(MAURICE,"このエクササイズは\n仕事の合間に丁度いいなぁ……",0)
+			MES_close(MAURICE)
+
+		//　　モーリス振り返る。
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+
+			//──────────────────────────────
+			//	name("⇒まだコロッセオに行っていない場合")
+			if(!FV_02_VisitGyakata)
+			{
+				MES(MAURICE,"最近ね、体を鍛える\n絶好のポイントを見つけたんだ。",0)
+				MES(MAURICE,"なんと廃坑の中にあるんだけどね、\n実践的な指導をしてくれるジムなんだ。",0)
+				MES(MAURICE,"君たちも、興味があったら\n覗いてみるといいよ。",0)
+				MES_close(MAURICE)
+
+			//	name2(PARTNER)
+				MES(PARTNER,"（廃坑の中……？）",0)
+				MES_close(PARTNER)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"（ジムなんてあったか……？）",0)
+				MES_close(RAGNA)
+			}
+			else
+			//	name("⇒コロッセオに行った")
+			{
+				MES(MAURICE,"ふふ、僕も\nあのジムを見つけてから\n筋トレにはまっちゃったよ。",0)
+				MES(MAURICE,"廃坑の中にあるなんて\nちょっと変わってるけど……",0)
+				MES(MAURICE,"な、なかなか実践的な\n指導が多くて、面白いよね。",0)
+				MES_close(MAURICE)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+				//──────────────────────────────
+				//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（び、微妙に同意しかねるぜ……）",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("⇒アルウェン先頭")
+					MES(PARTNER,"（人の子にはああいうものが\n  ウケるのかのう……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+			}
+			//★モーリス【筋トレ】
+			look_off( MAURICE)
+			F_set_note(MAURICE,1)
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			if(!FV_02_VisitGyakata)
+			{
+				look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+				MES(MAURICE,"ジムをやっているのは、\nちょっと変わった人だけどね。",0)
+				MES(MAURICE,"別れ際に、爽やかに\nプロテイン錠剤を渡してくれたよ。",0)
+				MES_close(MAURICE)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+
+				MES(MAURICE,"よーし、もっともっと\n筋肉をつけるぞぉ～……",0)
+				MES_close(MAURICE)
+				look_off( MAURICE)
+			}
+			else
+			{
+			//	name("⇒コロッセオに行った")
+				MES(MAURICE,"おいっちに、おいっちに……",0)
+				MES(MAURICE,"ふう、やっぱり筋トレは\nすがすがしいなぁ～……",0)
+				MES(MAURICE,"よーし、もっともっと\n筋肉をつけて、\n強くなってやるぞぉ～……",0)
+				MES_close(MAURICE)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+			}
+		}
+		//モーリスと話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※民家２の前でゆっくりストレッチ運動をしている。
+	//　　※ラグナたちがＧ－コロッセオに到達し、モーリスを呼び出した場合、消去する。
+	if( F1_15_GoVillage )
+	{
+
+		if(FE_FF_TalkLotte && FE_FF_TkWinMaurice)//２週目以降は、ロッテの引継ぎ処理を行ってから。
+		{
+			look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"は、ははは……\n君たち、強いね。",0)
+				MES(MAURICE,"やっぱり\n鍛え方が違うのかなぁ……",0)
+				MES(MAURICE,"うん、でも僕も\nここで諦めるつもりはないんだ。",0)
+				MES(MAURICE,"もっともっと筋肉をつけて、\nいつか君たちに追いついちゃうからね。",0)
+				MES_close(MAURICE)
+
+				F_set(MAURICE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MAURICE,"僕もまだ\n諦めるつもりはないからね。",0)
+				MES(MAURICE,"もっともっと筋肉をつけて、\nいつか君たちに追いついちゃうからね。",0)
+				MES(MAURICE,"不屈の精神我に有り……\nな、なんちゃってね。\nあはは……",0)
+				MES_close(MAURICE)
+			}
+			look_off( MAURICE)
+		}
+		else
+		{
+			if(!F_MAURICE)
+			{
+				look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+				MES(MAURICE,"少しね、運動を\n始めてみることにしたんだ。",0)
+				MES(MAURICE,"筋肉をつければ、僕も\n娘に好かれるようになるかな……？\n……な、なんてね。",0)
+				MES(MAURICE,"それで試しに郊外を\nランニングしてみたんだけど……",0)
+				MES(MAURICE,"はあ、はあ……\nお、思ったよりきついね、これ……",0)
+				
+				MES_close(MAURICE)
+				F_set(MAURICE)
+				look_off( MAURICE)
+			}
+		//　　※振り返らない。
+			else
+			{
+			//　　★繰り返し
+				MES(MAURICE,"はあ、はあ……",0)
+				MES(MAURICE,"よし、少し休んだら\nもう一度挑戦だ……",0)
+				MES_close(MAURICE)
+			}
+		}
+
+		//モーリスと話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※民家２の中でフリームーブ。
+	if( F1_01_GameStart )
+	{
+		rot_chr(MAURICE,30,PLAYER1)
+		
+		EV("MOTION_TK_MAURICE")
+
+		//　　※初回イベント。
+		if(!FT_01_TalkMaurice)
+		{
+			MES(MAURICE,"や、やあ君たち……",0)
+			MES(MAURICE,"観光客かな？\nアルッテは初めて？",0)
+			MES(MAURICE,"あはは、ゆっくり\n滞在していくといいよ。",0)
+			MES_close(MAURICE)
+			MOT(MAURICE,2,10)
+
+			MES(RAGNA,"はあ、どうも……",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"（ふむ、奇妙な出立ちの\n  男だのう……）",0)
+			MES_close(PARTNER)
+
+		//　　モーリスに・・・エモーション。
+			EMO(MAURICE,EMO_TENTEN)
+			wait(40)
+			MES(MAURICE,"ところで……",0)
+			MES(MAURICE,"や、やっぱり、\n年頃の娘って難しいよね……",0)
+			MES_close(MAURICE)
+
+		//　　ラグナたちに？エモーション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+			if(GW_MAN==1)
+			{
+				MES(RAGNA,"へ……？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("⇒アルウェン先頭")
+				MES(PARTNER,"ふむ……？",0)
+				MES_close(PARTNER)
+			}
+			//──────────────────────────────
+			MES(MAURICE,"いや、何でもないんだけどね。",0)
+			MES(MAURICE,"あはは、あはははは……",0)
+			MES_close(MAURICE)
+			F_set(FT_01_TalkMaurice)
+		}
+		else
+		{
+		//──────────────────────────────
+		//　　※以下通常一般メッセージ。
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"実は最近ね、単身赴任中の妻から\n娘を引き取ったんだけど……",0)
+				MES(MAURICE,"朝に短パン姿で歯磨きしていたら、\n冷たい声で『お父さんなんて嫌い』\nなんて言われちゃってね……",0)
+				MES_close(MAURICE)
+
+			//　　ラグナたちに冷や汗エモーション。
+				EMO(RAGNA,EMO_HIYAASE)
+				EMO(PARTNER,EMO_HIYAASE)
+				wait(30)
+			//──────────────────────────────
+			//	name("⇒ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"そいつはまた典型的な……",0)
+					MES_close(RAGNA)
+				}
+				else
+				{
+				//	name("⇒アルウェン先頭")
+					MES(PARTNER,"……それはそなたが悪いな。",0)
+					MES_close(PARTNER)
+				}
+			//──────────────────────────────
+				MES(MAURICE,"あ、謝ろうにも\n顔を合わせてくれないんだ。",0)
+				MES(MAURICE,"は、はあ……\n年頃の娘って、難しいよね……",0)
+				MES_close(MAURICE)
+
+			//　　★モーリス【かっこ悪い】
+				F_set_note(MAURICE,0)
+				F_set(MAURICE)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(MAURICE,"ぼ、僕はここしばらく\n一人暮らしだったから。",0)
+				MES(MAURICE,"そのう、よく分からないんだよね。\n娘の気持ちとかはさ……",0)
+				MES_close(MAURICE)
+
+			//　　モーリス、向きを戻す。
+				MES(MAURICE,"はあ……\nハティ、まだ怒ってるのかなぁ……",0)
+				MES_close(MAURICE)
+			}
+		}
+		//モーリスと話したことがある
+		F_set(FT_FF_TalkOkMaurice)
+		MOT(MAURICE,2,10)
+	}
+	TK_end()
+}
+
+//──────────────────────────────
+//	name("◆モーリス（ギャランドゥの館用）")
+//──────────────────────────────
+//　　※モーリスは、フラグ②③⑤で配置します。
+//　　　闘技場受付フロアの横辺りでストレッチしている。
+//──────────────────────────────
+TK_YAKATA_MAURICE
+{
+	TK_begin()
+	rot_chr(PLAYER1,30,MAURICE)
+
+	//──────────────────────────────
+	//▼フラグ⑤の範囲
+	//　　※ストレッチ運動をしている。
+	look_chr( MAURICE, PLAYER1 ,"Bone_Head")
+	if(F2_14_TalkEnemy)
+	{
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"１・２、１・２……",0)
+			MES(MAURICE,"ふう、最近はね、僕もそこそこ\n腕力が付いてきたんだよ。",0)
+			MES(MAURICE,"あれ、でも……\nどうして体を鍛えてみようなんて\n思ったんだったかな。",0)
+			MES(MAURICE,"う～ん、忘れちゃったよ。",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MAURICE,"どうして体を鍛えてみようなんて\n思ったんだったかな。",0)
+			MES(MAURICE,"う～ん……",0)
+			MES(MAURICE,"まあ、きっかけなんて\nどうでもいいよね。",0)
+			MES_close(MAURICE)
+		}
+	}
+	//──────────────────────────────
+	//▼モーリスと戦ったことがない場合
+	else
+	if(GW_TRYNum_Maurice<=0)
+	{
+		if(!F_MAURICE)
+		{
+			MES(MAURICE,"や、やあ君たち……",0)
+			MES(MAURICE,"僕もね、最近\nこのジムに通ってるんだ。",0)
+			MES(MAURICE,"い、いいよね。\n筋トレから実戦まで\n指導してくれるなんて……",0)
+			MES(MAURICE,"ふふ、僕も筋肉をつけて\n強くなってやるぞ～！",0)
+			MES_close(MAURICE)
+
+			F_set(MAURICE)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(MAURICE,"ふふ、僕も筋肉をつけて\nマスターみたいに\n強くなってやるぞ～！",0)
+			MES_close(MAURICE)
+		}
+	}
+	else
+	{
+	//──────────────────────────────
+	//▼モーリスに勝ったことがある場合
+		if(FV_FF_WinMaurice)
+		{
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"は、ははは……\n君たち、強いね。",0)
+				MES(MAURICE,"やっぱり\n鍛え方が違うのかなぁ……",0)
+				MES(MAURICE,"うん、でも僕も\nここで諦めるつもりはないんだ。",0)
+				MES(MAURICE,"もっともっと筋肉をつけて、\nいつか君たちに追いついちゃうからね。",0)
+				MES_close(MAURICE)
+
+				F_set(MAURICE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MAURICE,"僕もまだ\n諦めるつもりはないからね。",0)
+				MES(MAURICE,"もっともっと筋肉をつけて、\nいつか君たちに追いついちゃうからね。",0)
+				MES(MAURICE,"不屈の精神我に有り……\nな、なんちゃってね。\nあはは……",0)
+				MES_close(MAURICE)
+			}
+			F_set(FE_FF_TkWinMaurice)//★館内モーリス・勝利後会話した
+		}
+		else
+		{
+		//──────────────────────────────
+		//▼モーリスに負けた場合
+			if(!F_MAURICE)
+			{
+				MES(MAURICE,"は、ははは……",0)
+				MES(MAURICE,"ごめんね、今回は\n僕の勝ちみたいだね。",0)
+				MES(MAURICE,"だ、だけど君たちも\n結構強かったと思うよ。",0)
+				MES(MAURICE,"うん、めげずに\n筋トレ頑張ってね。",0)
+				MES_close(MAURICE)
+
+				F_set(MAURICE)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(MAURICE,"はは……\nでも僕、誰かとケンカして\n勝っちゃったのは初めてだな。",0)
+				MES(MAURICE,"ちょ、ちょっと嬉しいよね、\nこういうのって。",0)
+				MES_close(MAURICE)
+			}
+		}
+	}
+	look_off( MAURICE )
+
+	TK_end()
+}
+
+//会話時のモーション
+MOTION_TK_MAURICE
+{
+	MOT_SET(MAURICE,150,-1,404,404,-1,-1)
+	MOT(MAURICE,150,15)
+}
+
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

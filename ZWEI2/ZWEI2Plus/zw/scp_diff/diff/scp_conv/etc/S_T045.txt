@@ -1,0 +1,1671 @@
+//■Zwei2一般メッセージ．アルッテの町（※グレイン）
+//────────────────────────────────────────────────────────────
+//■アルッテ
+//────────────────────────────────────────────────────────────
+//──────────────────────────────
+//	name("◆グレイン（博物館従業員）Grein")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_GREIN
+{
+
+	TK_begin()
+	rot_chr(GREIN,30,PLAYER1)
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(GREIN, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,GREIN)
+//───────────────
+//□ルゥが居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,GREIN)
+		
+		//オデッサがいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GREIN)
+		}
+		//アルウェンがいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GREIN)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//スバルが居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GREIN)
+		}
+		else
+	//───────────────
+	//アルウェンが居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,GREIN)
+		}
+	}
+//───────────────
+//～⑥アルウェンが居る
+//───────────────
+	else
+	if(!F4_00_StartSolo)
+	{
+		KAO(PLAYER2, "1", "1", "1")	
+		rot_chr(PLAYER2,30,GREIN)
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+
+	//　　※フラグ③④で、グレインが受付に立っています。
+	if( F2_00_GoForest && !F2_14_TalkEnemy )
+	{
+		//　　　このタイミングでギルド受付会話が初めてなら、このイベントが最優先されます。
+		if(!FT_01_Guildbigin)
+		{
+			EV("TK_GREIN")
+			wait_EV("TK_GREIN")
+		}
+		else
+		{
+			MES(GREIN,"ああ、君たちか……",0)
+
+			VOICE(746,0)				//「ようこそ、ギルドへ…」
+			MES(GREIN,"ようこそ、ギルドへ……",0)
+
+			MES_close(GREIN)
+
+			EV("SHOP_GREIN_LOOP")
+			wait_EV("SHOP_GREIN_LOOP")
+		}
+	
+	}
+	else
+	{
+		EV("TK_GREIN")
+		wait_EV("TK_GREIN")
+	}
+	TK_end()
+}
+
+SHOP_GREIN_LOOP
+{
+		workL(WK_CANCEL,SET,4)//【やめる】
+		MES_pos(PLAYER1,"??W9【話す】\n【ハンターランクを確認する】\n【トレジャーを寄贈する】\n【やめる】",0,320,240,0,0)
+		wait_W(WK_YESNO)
+		MES_close(PLAYER1)
+
+	//──────────────────────────────
+	//	name("□話をする")
+	//　　通常会話処理へ飛ぶ。
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		EV("TK_GREIN")
+		wait_EV("TK_GREIN")
+		loop
+	}
+	else
+	//──────────────────────────────
+	//	name("□ハンターランクを確認する")
+	//　　ハンターランク確認処理へ飛ぶ。
+	//──────────────────────────────
+	if(WK_YESNO==2)
+	{
+		EV("CHECK_RANK_GREIN")
+		wait_EV("CHECK_RANK_GREIN")
+		loop
+	}
+	else
+	//──────────────────────────────
+	//	name("□トレジャーを寄贈する")
+	//　　トレジャー寄贈処理へ飛ぶ。
+	//──────────────────────────────
+	if(WK_YESNO==3)
+	{
+		EV("PRESENT_TREASURE_GREIN")
+		wait_EV("PRESENT_TREASURE_GREIN")
+
+		//寄贈しなかった場合のみ、loop
+		if(F_PARTNER)
+			loop
+	}
+	//──────────────────────────────
+	//	name("□やめる")
+	//　　会話処理終了。
+	//──────────────────────────────
+	else
+	{
+//		MES(GREIN,"またな……",0)
+//		MES_close(GREIN)
+		
+		VOICE(749,0)			//「また来るといい…」
+		MES(GREIN,"また来るといい…",0)		
+		MES_close(GREIN)		
+	}
+}
+
+
+//現在デッドメッセージ。対応未定、そもそも必要？
+/*
+		//トレジャーを見せた後マップを切り替えるまでこちらのメッセージ
+			else
+			{
+				MES(GREIN,"またどこかでトレジャーを見つけたら\nここへ持ってきてほしい。",0)
+				MES(GREIN,"値打ちものなら買い取ろう。\n……頼んだぞ。",0)
+				MES_close(GREIN)
+			}
+		}
+*/
+
+
+TK_GREIN
+{
+
+	//──────────────────────────────
+	//▼□エンディング直前
+	//──────────────────────────────
+	//　　※博物館、２つ目の展示ルームで腕を組んで立っている。
+	if( F6_05_EndSixth )
+	{
+		rot_chr(GREIN,30,PLAYER1)
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+
+		if(!FT_13_TalkGrein)
+		{
+			MES(GREIN,"君たちか……",0)
+			MES(GREIN,"俺も近々、イルバードを\n離れようと思っている。",0)
+			MES(GREIN,"初心に帰って、もう一度\nトレジャーハンターをやるつもりだ。",0)
+			MES_close(GREIN)
+
+		//──────────────────────────────
+		//	name("□□のメッセージを見ていない場合")
+			if(!FT_11_TalkGrein)
+			{
+				MES(RAGNA,"あ、あれ？　そうなのか？",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+				MES(RAGNA,"そうか……",0)
+				MES(RAGNA,"カルディナさんとも\n話をしたみたいだな。",0)
+				MES_close(RAGNA)
+			}
+		//──────────────────────────────
+			MES(GREIN,"ああ、大分迷ったんだが……",0)
+			MES(GREIN,"カルディナのやつに話してみたら、\n自分に気を遣う必要は無いと\n一蹴されてな。",0)
+			MES(GREIN,"それにあいつは、今の受付の\n仕事が気に入っているらしい。\nこのままギルドを続けたいそうだ。",0)
+			MES(GREIN,"……次に会ったときは\nギルドの管理人として支援してやると\nからかわれてしまった。",0)
+			MES_close(GREIN)
+
+			MES(RAGNA,"ははは、そうだったのか。",0)
+			MES_close(RAGNA)
+
+			MES(PET,"フフ……それぞれの道を\n步むということだな？",0)
+			MES_close(PET)
+
+			MES(GREIN,"……ああ。",0)
+			MES(GREIN,"これからは……\n昔の相棒に恥ずかしくないよう\n活躍しないとな。",0)
+			MES_close(GREIN)
+
+		//　　★グレイン【ハンターに復帰】
+			F_set_note(GREIN,2)
+			F_set(FT_13_TalkGrein)
+		}
+		else
+		//　　※以下通常一般メッセージ。
+		{
+			MES(GREIN,"俺ももう一度、\nトレジャーハンターに\n戻る事にしたんだ。",0)
+			MES(GREIN,"近々イルバードを離れて、\nまたグランヴァレン中を回るつもりだ。",0)
+			MES(GREIN,"フ……君たちとも\nまたどこかで\n会えるかもしれないな……",0)
+			MES_close(GREIN)
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//──────────────────────────────
+	//トレジャーコンプ用．通常一般配置より優先します
+	//──────────────────────────────
+	if(F2408)
+	{
+		//──────────────────────────────
+		//　　※謎の飛行機寄贈後
+
+		//　　★繰り返し２（コンプリートしている場合のみ）
+		if(FT_FF_TreasureComp && F_GREIN)
+		{
+			MES(GREIN,"だが、ついにこの展示室も\nきれいに埋まったな……",0)
+			MES_close(GREIN)
+
+		//　　グレインにキラキラエモーション。
+			EMO(GREIN,EMO_KIRAKIRA)
+			wait(30)
+
+			MES(GREIN,"やはりトレジャーはいい……",0)
+			MES(GREIN,"手入れをして展示するだけで\nこれほどまでの感動を\n与えてくれるんだからな……",0)
+			MES_close(GREIN)
+
+		//　　グレイン振り返る。
+			rot_chr(GREIN,30,PLAYER1)
+			MES(GREIN,"君たちには本当に感謝する……",0)
+			MES(GREIN,"これからも、機会があれば\nぜひこの博物館に立ち寄ってくれ。",0)
+			MES_close(GREIN)
+		}
+		else
+		//　　※謎の飛行機寄贈後
+		{
+			rot_chr(GREIN,30,PLAYER1)
+			MES(GREIN,"ああ、君たちか……",0)
+			MES(GREIN,"展示したぞ。",0)
+			MES_close(GREIN)
+			rot_chr(GREIN,30,NAZO)
+			EMO(GREIN,EMO_TENTEN)
+			wait(30)
+			MES(GREIN,"しかし一体何なんだ、\nこれは……",0)
+			MES(GREIN,"形状からして、飛ぶのか……？",0)
+			MES(GREIN,"幸い中枢装置は\n外されているようだが……",0)
+			MES(GREIN,"まったく、君たちの\n集めてくるトレジャーには\nいつも驚かされるな……",0)
+			MES_close(GREIN)
+			F_set(GREIN)
+		}
+//		else
+//		if(!F_RAGNA)
+//		{
+//		//　　★繰り返し
+//			look_chr(GREIN,PLAYER1,"Bone_Head")
+//			MES(GREIN,"こいつの中心部には、\n機能中枢として水晶のようなものが\n埋め込まれていたようだ。",0)
+//			MES(GREIN,"……魔族の持つ\n技術は凄まじいな……",0)
+//			MES(GREIN,"機械文明は元々魔族のものだった\nという研究者もいるそうだが……",0)
+//			MES(GREIN,"あながち外れては\nいないのかもしれないな……",0)
+//			MES_close(GREIN)
+//			look_off(GREIN)
+//			
+//			if(FT_FF_TreasureComp)
+//				F_set(RAGNA)
+//		}
+	}
+	else
+	//──────────────────────────────
+	//▼□飛行機でメルセデクに乗り込むことにした（ラグナ．アルウェン．ルゥ）
+	//──────────────────────────────
+	//　　※アルッテ．展望台でメルセデクを見上げている。
+	//　　※初回イベント。
+	if( F6_00_GoToMeru )
+	{
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		if(!FT_12_TalkGrein)
+		{
+			rot_chr(GREIN,30,PLAYER1)
+			MOT(GREIN,150,15)
+			MES(GREIN,"あの気流……まさか\nあれはメルセデクじゃないか……？",0)
+			MES(GREIN,"魔法大戦中、グランヴァレン北西で\n猛威を振るった魔族側の攻撃要塞だ。",0)
+			MES(GREIN,"かつてのイルバードは、\n繁栄を極めた大きな大陸だったと\n伝えられているんだが……",0)
+			MES(GREIN,"大戦中にあの要塞の攻撃を受けて、\nほとんどの土地が\n崩落してしまったらしい。",0)
+			MES(GREIN,"イルバードが今の姿になったのは、\n大戦が終わった後の事なんだ……",0)
+			MES_close(GREIN)
+			
+			F_set(FT_12_TalkGrein)
+			MOT(GREIN,52,15)
+		}
+		else
+		if(!FT_12_TalkGrein2)
+		{
+			rot_chr(GREIN,30,PLAYER1)
+			MOT(GREIN,150,15)
+			MES(GREIN,"ところで……\n実はこの前、廃坑まで\n足を延ばしてみたんだが……",0)
+			MES(GREIN,"入り口にあった封印の扉が\n開いているのを\n見つけてしまってな……",0)
+			MES(GREIN,"しかもその奥から、\n恐ろしいほどの邪悪な気配が\n漏れ出ていたんだ……",0)
+			MES_close(GREIN)
+
+		//　　グレインに．．．エモーション。
+			EMO(GREIN,EMO_TENTEN)
+			wait(30)
+			EMO(GREIN,EMO_TENTEN)
+			wait(40)
+
+			MES(GREIN,"あれは一体なんだったんだ……",0)
+			MES(GREIN,"メルセデクの出現といい……\nただならぬ物を感じるな……",0)
+			MES_close(GREIN)
+
+			F_set(FT_12_TalkGrein2)
+			MOT(GREIN,52,15)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+	//　　※振り返らない
+		else
+		{
+			if(!F_GREIN)
+			{
+				MES(GREIN,"螺旋要塞メルセデク……\nかつてイルバードにも\n大被害をもたらした攻撃要塞だ……",0)
+				MES_close(GREIN)
+
+			//　　グレイン、振り返る。
+				MOT(GREIN,150,15)
+				rot_chr(GREIN,30,PLAYER1)
+				MES(GREIN,"イルバードの周りに、不自然な\n壁のようなものがあるだろう。",0)
+				MES(GREIN,"あれは当時の戦いの\n名残だと言われているんだ……",0)
+				MES(GREIN,"正に大陸を潰す要塞……\nそんな物が残っていたとはな……",0)
+				MES_close(GREIN)
+				
+				F_set(GREIN)
+				MOT(GREIN,52,15)
+			}
+		//　　★繰り返し
+			else
+			{
+			//　　※振り返らない
+				MES(GREIN,"螺旋要塞メルセデク……",0)
+				MES(GREIN,"あの竜巻の中に、今まで誰も\n見たことが無い遺跡があるのか……",0)
+				MES(GREIN,"……不謹慎なようだが、\nやはり遺跡ハンターの血が騒ぐな……",0)
+				MES_close(GREIN)
+			}
+		}
+		rot(GREIN,30,141)
+	}
+	else
+	//──────────────────────────────
+	//▼□クリスタルバレーを起動することにした（ラグナ．ルゥ（．オデッサ））
+	//──────────────────────────────
+	//　　※博物館、２つ目の展示ルームに立っている。
+	//　　　★グレインに．．．エモーション出しっぱなし。
+	if( F5_00_HearLunar )
+	{
+		EV_stop("TENTEN_GREIN")
+		rot_chr(GREIN,30,PLAYER1)
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+		if(!F_GREIN)
+		{
+			MES(GREIN,"実は……ハンターに\n戻ろうかと思っているんだ。",0)
+			MES(GREIN,"俺は怪我が元で引退したんだが、\nどうしても諦め切れなくてな……",0)
+			MES_close(GREIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"へええ、そうなのか。",0)
+			MES(RAGNA,"まあ、諦め切れないんじゃ\n仕方ねえしな……",0)
+			MES(RAGNA,"そうするのが\n一番なんじゃないか？",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"ああ……だが、\nカルディナの奴のことを考えるとな。",0)
+			MES(GREIN,"あいつは俺の相棒だったんだが、\n俺に付き合う形で引退したんだ。",0)
+			MES(GREIN,"……迷惑をかけておいて、\n俺だけ復帰するのもな……",0)
+			MES_close(GREIN)
+
+			F_set(FT_11_TalkGrein)
+			F_set(GREIN)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(GREIN,"カルディナは、\n俺の現役時代の相棒だったんだ。",0)
+			MES(GREIN,"俺に付き合う形で引退して、\n今ではギルドの受付をやっている。",0)
+//			MES(GREIN,"……今更あいつを巻き込むのも\n自分勝手な話だしな……",0)
+			MES(GREIN,"……俺だけ復帰するのも悪いが、\n復帰したくなったから付いて来い\nというのも身勝手な話だしな……",0)
+			MES(GREIN,"一体どうすればいいんだ……",0)
+			MES_close(GREIN)
+		}
+		MOT(GREIN,52,15)
+		EV("TENTEN_GREIN")
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かったミアを追うことにした（ラグナ．アルウェン）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+		//　　※ギルド展示室に立っている。
+	//　　　寄贈品が無い場合、配置しない。
+	//　　※振り返らない
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+		if(!F_GREIN)
+		{
+			MES(GREIN,"やはり、早朝に一通り\n手入れしてやると気分がいいな……",0)
+			MES(GREIN,"今日は保管庫の分も整理してやるか。",0)
+			MES(GREIN,"フフ、楽しみだ……",0)
+			MES_close(GREIN)
+			
+			F_set(GREIN)
+		}
+	//　　★繰り返し
+		else
+		{
+			rot_chr(GREIN,30,PLAYER1)
+			MES(GREIN,"む……\n何か用事か？",0)
+			MES(GREIN,"君たちの寄贈した品だ。\nいつでも見て行ってくれて\n構わないぞ……",0)
+			MES_close(GREIN)
+			rot(GREIN,30,190)
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけのフラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降りの里に到着した（ラグナ．スバル）
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑦ラグナは単独行動を始めた
+	//──────────────────────────────
+	//　　※ギルドの外に立っている。
+	if( F4_00_StartSolo )
+	{
+		if(!F_GREIN)
+		{
+			MOT_SET(GREIN,150, -2,400,400,-1,15)
+			MOT(GREIN,150,15)
+			rot_chr(GREIN,30,PLAYER1)
+			MES(GREIN,"あの突如現れた城……\n魔法大戦時代の遺跡のようだな。",0)
+			MES(GREIN,"きっと今まで\n封印されていたんだろう。\n遺跡には珍しくない話だ……",0)
+			MES(GREIN,"だがまさか、あんな目と鼻の先に\n隠されていたなんてな……",0)
+			MES_close(GREIN)
+			
+			F_set(GREIN)
+			MOT(GREIN,52,15)
+		}
+		//　　★繰り返し
+		else
+		{
+		//　　※振り返らない。
+			MES(GREIN,"………………………………",0)
+			MES(GREIN,"……あの遺跡は興味深いが……",0)
+			MES(GREIN,"俺はもう引退した身だしな……",0)
+			MES_close(GREIN)
+		}
+		rot(GREIN,30,0)
+	}
+	else
+	//──────────────────────────────
+	//▼⑥ロアルタ村の人々を救出し、ムーンブリア城へ向かった（マップ：夜）
+	//──────────────────────────────
+	//　　※ギルド建物の前で腕組み。
+	if( F3_00_GoMoonCastle )
+	{
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+		rot_chr(GREIN,30,PLAYER1)
+		if(!F_GREIN)
+		{
+			MES(GREIN,"あの程度の魔物なら、\n今の俺にも追い払える。",0)
+			MES(GREIN,"あのお嬢さんや執事も\n相当の使い手のようだしな。",0)
+			MES(GREIN,"ここは心配ない……\n君たちは早く行け。",0)
+			MES_close(GREIN)
+
+			F_set(GREIN)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(GREIN,"魔物を追い払うくらいなら、\n今の俺にもできる……",0)
+			MES(GREIN,"ここは心配ない。\n君たちは早く行け。",0)
+			MES_close(GREIN)
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//──────────────────────────────
+	//▼⑤魔女ラーライラから、敵の正体が明かされた
+	//──────────────────────────────
+	//　　※博物館、２つ目の展示ルームに立っている。
+	if( F2_14_TalkEnemy )
+	{
+		rot_chr(GREIN,30,PLAYER1)
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+
+		//　　※シスターと話した後は、１回だけ挿入。
+		if( FT_05_TalkIsabella && !FT_05_AboutIsabella )
+		{
+
+			MES(GREIN,"そういえば、今しがた町で\nシスターとすれ違ったんだが……",0)
+			MES(GREIN,"全く隙が無かったぞ。\nあれは一体何者なんだ……？",0)
+			MES_close(GREIN)
+
+			MES(PARTNER,"ふむ、それは\nこちらが聞きたいくらいだ。",0)
+			MES_close(PARTNER)
+
+			MES(RAGNA,"はは……",0)
+			MES(RAGNA,"やっぱ同じアルッテに住んでても\n話とか聞かないのか？",0)
+			MES_close(RAGNA)
+
+			MES(GREIN,"ああ、あまり面識が無いな。",0)
+			MES(GREIN,"しかしあの身のこなし……\nそれにゴツゴツとした重い靴音……",0)
+			MES(GREIN,"靴底に鉄板でも\n仕込んでいるんじゃないか？\nとても堅気とは思えん……",0)
+			MES_close(GREIN)
+
+		//　　ラグナたちに青ざめエモーション。
+			EMO(RAGNA,EMO_AOZAME)
+			EMO(PARTNER,EMO_AOZAME)
+			wait(30)
+
+			MES(RAGNA,"堅気じゃない、か……",0)
+			MES_close(RAGNA)
+
+			MES(PARTNER,"うむ、同感だのう……",0)
+			MES_close(PARTNER)
+			
+			//★イザベラ【靴底に鉄板】
+			F_set_note(-47,1)
+			
+			F_set(FT_05_AboutIsabella)
+		}
+		else
+		{
+			if(!F_GREIN)
+			{
+	//			MES(GREIN,"さっき、オデッサのやつが\n顔を出していったぞ。",0)
+				MES(GREIN,"オデッサのやつ……\nイルバードに来ていたんだな。",0)
+				MES(GREIN,"あいつとは、以前\n遺跡を巡っていた頃に\n２、３度会った事がある……",0)
+				MES(GREIN,"相変わらず賞金首を\n追いかけているらしいのだが、\n今回は苦戦しているようだったな。",0)
+				MES(GREIN,"鼻の利くあいつでも手こずるとは\n中々大した相手のようだ……",0)
+				MES_close(GREIN)
+
+				F_set(GREIN)
+			}
+		//　　★繰り返し
+			else
+			{
+				MES(GREIN,"オデッサの\n勘の鋭さは有名だからな。",0)
+				MES(GREIN,"あいつでも尻尾を\n掴めないとなると、相手は\n相当腕の立つヤツだろう。",0)
+				MES(GREIN,"……君たちも気を付けた方がいい。\nどこかでばったり\n出くわさないとも限らないからな……",0)
+				MES_close(GREIN)
+			}
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//──────────────────────────────
+	//▼③④
+	//──────────────────────────────
+	//※グレインのみ、特別に分岐。
+	//　配置はギルド受付。
+	if( F2_00_GoForest )
+	{
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+
+		//▼③④ギルド受付、初回イベント
+		//　　　このタイミングでギルド受付会話が初めてなら、このイベントが最優先されます。
+		if(!FT_01_Guildbigin)
+		{
+			//●チュートリアル：ギルドシステム
+			Load_BMP(20,"sys\\tuto08.itm","0")
+			Load_BMP(21,"sys\\tuto09.itm","0")
+			menuBMP(1,	20,	0,0,288,384)
+			menuBMP(2,	21,	0,0,288,384)
+
+		//──────────────────────────────
+		//	name("□フラグ①②でグレインと会っていない場合。")
+			if(!FT_01_TalkGrein && !FT_02_TalkGrein)
+			{
+				MES(GREIN,"ん、どうした。\n見ない顔だな……",0)
+				MES_close(GREIN)
+			}
+		//	name("□それ以外の場合")
+			else
+			{
+				MES(GREIN,"ああ、君たちか……",0)
+				
+				VOICE(746,0)				//「ようこそ、ギルドへ…」
+				MES(GREIN,"ようこそ、ギルドへ……",0)
+								
+				MES_close(GREIN)
+			}
+		//──────────────────────────────
+			MES(GREIN,"ギルドに用事か？\nそれとも博物館の方か……？",0)
+			MES_close(GREIN)
+
+		//　　ラグナたちに？エモーション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+
+			MES(RAGNA,"えっと……",0)
+			MES(RAGNA,"ギルドと博物館が\n一緒になってるのか……？",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"ああ……\nここは共通の受付なんだ。",0)
+			MES(GREIN,"俺はギルドの人間ではあるが\n趣味は発掘品いじりでな……",0)
+			MES(GREIN,"ギルドの仕事をするついでに\n展示品の管理もしているわけだ。\n……便利だろう？",0)
+			MES_close(GREIN)
+
+		//　　２人に冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+			
+			MES(PARTNER,"ふむ、奇妙な場所だな……",0)
+			MES_close(PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"いやまあ、ハンター協会なんて\n変わったところが多いからな。",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"堅苦しく考えなくていい……",0)
+			MES(GREIN,"ギルドはそもそも、現役ハンターを\n支援するための組織だからな。",0)
+			MES(GREIN,"管理人が好きなように\n開いているものだ……",0)
+			MES_close(GREIN)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"成る程、好きな連中が\n好きなようにやっておるのだな。",0)
+			MES_close(PARTNER)
+
+		//ラグナ、アルウェンに向く
+			rot_chr(RAGNA,30,PARTNER)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"い、言っておくが、\nハンターは厳しい世界だぜ。",0)
+			MES(RAGNA,"自由ってことは、それだけ\n背負ってる責任も大きいんだからな。",0)
+			MES_close(RAGNA)
+
+		//ラグナ、アルウェンに向く
+			rot_chr(RAGNA,30,GREIN)
+
+		//　　ラグナ、グレインに向く。
+			MES(RAGNA,"えーっと、それでだ。\n俺はラグナ．バレンタインと\nいうんだが……",0)
+		//	MES(RAGNA,"実は今日は詫びとかねえと\nいけないことがあるんだ。",0)
+			MES(RAGNA,"ここが博物館ってことなら\n実は詫びとかねえと\nいけないことがあるんだ。",0)
+			MES(RAGNA,"こっちに運送を頼まれてた\n荷物があったハズなんだが、\n途中で飛行機が墜落しちまってな。",0)
+			MES(RAGNA,"……すまねえ、そのとき\n荷物の方も落しちまったらしいんだ。",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"ああ、墜落の噂は聞いてたが\n君だったのか……",0)
+			MES(GREIN,"確か奇跡的に\n怪我もなかったとか……",0)
+			MES_close(GREIN)
+
+		//　　ラグナとアルウェン、顔を見合わせる。
+			rot_chr(RAGNA,30,PARTNER)
+			rot_chr(PARTNER,30,RAGNA)
+			EMO(RAGNA,EMO_TENTEN)
+			EMO(PARTNER,EMO_TENTEN)
+			wait(30)
+			
+			rot_chr(RAGNA,30,GREIN)
+			rot_chr(PARTNER,30,GREIN)
+			
+			MES(RAGNA,"は、はは。まあな……",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"ふむ、そうだな……\n君の運んでいた荷物は、恐らく\n館長が注文なさった品だ。",0)
+			MES(GREIN,"その話は、直接\n館長にした方がいいだろう。",0)
+			MES(GREIN,"奥の博物館、展示室の方に\nいらっしゃるはずだ。",0)
+			MES_close(GREIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"そうか……",0)
+			MES(RAGNA,"わかった。\n声を掛けてみるぜ。",0)
+			MES_close(RAGNA)
+
+
+		//	name2(GREIN)
+			MES(GREIN,"ああ、それと……",0)
+			MES_close(GREIN)
+
+		//　　ラグナたちに？エモーション。
+			EMO(RAGNA,EMO_HATENA)
+			EMO(PARTNER,EMO_HATENA)
+			wait(30)
+
+			MES(GREIN,"イルバードでハンター活動を\n行うなら、このギルドを\n利用するといい。",0)
+			MES(GREIN,"ギルドでは、L337『ハンターランク』L400に\n応じた援助を行っているからな……",0)
+			MES_close(GREIN)
+
+		//　　ラグナにＰＡエモーション。
+			EMO(RAGNA,EMO_PA)
+			wait(30)
+
+			MES(RAGNA,"おっと、忘れてたぜ。\nハンターランクの査定か……",0)
+			MES_close(RAGNA)
+
+		//　　※ハンターランクＢＭＰ表示。
+			menu(1,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+			menu(1,	0,	176, 48,  0,	288, 384,	40,100,0)
+			SE(043,PLAYER1)
+			wait(40)
+			wait_key(0)
+			menu(1,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+
+			MES(PARTNER,"ふむ、ランクに応じて\nアイテムが貰えるようだな。",0)
+			MES_close(PARTNER)
+
+			look_chr(RAGNA,PARTNER,"Bone_Head")
+			MES(RAGNA,"ああ、結構\n便利なアイテムが多いんだ。",0)
+			MES(RAGNA,"ダンジョン探索も楽になるし、\n気をつけておかなきゃな。",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"それと……この受付では\nL337『トレジャー』L400の\n買取も行っているんだ……",0)
+			MES_close(GREIN)
+
+			look_off(RAGNA)
+
+		//──────────────────────────────
+		//	name("□グレインと話したことがない（トレジャーの話を聞いたことがない）")
+			if(!FT_01_TalkGrein && !FT_02_TalkGrein)
+			{
+			//　　ラグナとアルウェンに？エモーション。
+				EMO(RAGNA,EMO_HATENA)
+				EMO(PARTNER,EMO_HATENA)
+				wait(30)
+
+				MES(PLAYER1,"トレジャー……？",0)
+				MES_close(PLAYER1)
+			}
+			else
+			{
+			//	name("□話したことがある。")
+				MES(RAGNA,"ああ、トレジャーっていやあ……",0)
+				MES_close(RAGNA)
+			}
+		//──────────────────────────────
+		//　　※トレジャー買取ＢＭＰ表示。
+
+			menu(2,	0,	176, 48,  0,	288, 384,	 0,  0,0)
+			menu(2,	0,	176, 48,  0,	288, 384,	40,100,0)
+			wait(40)
+			wait_key(0)
+			menu(2,	-1,	-1, -1, -1,	-1, -1,	30,0,0)
+//			wait(30)
+
+			MES(GREIN,"どこかでトレジャーを見つけたら、\n是非ここへ持って来てくれないか。",0)
+			MES(GREIN,"もちろん報酬は用意する。\nハンター活動の資金にでも\n使ってくれ……",0)
+			MES_close(GREIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"はは、サンキュー。",0)
+			MES(RAGNA,"そんじゃ、ちょくちょく\n顔を出させてもらうぜ。",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"ああ、そうするといい……",0)
+			MES_close(GREIN)
+//			wait_MES(GREIN)
+
+			F_set(F0_08_TutoHunter)
+
+			//初回メッセージをみたフラグ
+			F_set(FT_01_Guildbigin)
+		}
+		else
+		{
+			//──────────────────────────────
+			//▼④炎のパーツを入手した
+			//──────────────────────────────
+			if( F2_08_CancelBurn )
+			{
+				if( !GREIN )
+				{
+					MES(GREIN,"さっき見かけたが、\n北の方から煙が立っているな……",0)
+					MES(GREIN,"まさか、あの《アウロン大鉄塔》が\n火を噴き始めたのか……？",0)
+					MES_close(GREIN)
+
+						//──────────────────────────────
+						//	name("□ラグナ先頭")
+						if( GW_MAN==1 )
+						{
+							MES(RAGNA,"あ、ああ。",0)
+							MES(RAGNA,"ちらっと見てきただけだが、\nかなりゴウゴウと鳴っていたぜ。",0)
+							MES_close(RAGNA)
+						}
+						else
+						{
+						//	name("□アルウェン先頭")
+							MES(PARTNER,"うむ、詳細は伏せるが\n好ましくない状況であった。",0)
+							MES_close(PARTNER)
+						}
+						//──────────────────────────────
+
+					MES(GREIN,"そうか……",0)
+					MES(GREIN,"だが妙だな、あの遺跡は\n何百年も動いてないはずだが……",0)
+					MES_close(GREIN)
+
+				//　　グレインに．．．エモーション。
+					EMO(GREIN,EMO_TENTEN)
+					wait(30)
+
+				//　　向きを戻す。
+					MES(GREIN,"……俺も怪我さえなければな……",0)
+					MES_close(GREIN)
+
+					F_set(GREIN)
+				}
+		//　　　★繰りかえし
+				else
+				{
+					MES(GREIN,"あの大鉄塔は、\n俺が引退する直前まで\n調べていた遺跡なんだ……",0)
+					MES(GREIN,"謎の多い遺跡でな、未だに\n内部はほとんど調査されていない。",0)
+					MES_close(GREIN)
+
+				//　　グレインに．．．エモーション。
+					EMO(GREIN,EMO_TENTEN)
+					wait(30)
+				//　　向きを戻す。
+					MES(GREIN,"……俺も怪我さえなければな……",0)
+					MES_close(GREIN)
+				}
+			}
+			//──────────────────────────────
+			//▼③金闇の森へ向かうことにした
+			//──────────────────────────────
+			else
+			{
+				rot_chr(GREIN,30,PLAYER1)
+				if(!F_GREIN)
+				{
+	/*				MES(GREIN,"館長には本当に感謝している……",0)
+					MES(GREIN,"俺も以前は\n遺跡ハンターをしていたんだ。",0)
+					MES(GREIN,"だが、遺跡の調査中に事故にあって\n瀕死の重傷を負ってしまった……\nそれを助けてくれたのが館長だ。",0)
+					MES(GREIN,"それ以来、何かと世話になっている。\n……趣味も近いしな。",0)
+					MES_close(GREIN)
+	*/				
+
+					MES(GREIN,"館長には本当に感謝している……",0)
+					MES(GREIN,"俺も以前は\n遺跡ハンターをしていたんだが、\n調査中に事故にあってしまってな。",0)
+					MES(GREIN,"瀕死の重傷を負ってしまった……",0)
+					MES(GREIN,"そこを助けてくれたのが館長なんだ。",0)
+					MES(GREIN,"それ以来、何かと世話になっている。\n……趣味も近いしな。",0)
+					MES_close(GREIN)
+
+					F_set(GREIN)
+				}
+			//　　　★繰りかえし
+				else
+				{
+					MES(GREIN,"俺はもう、トレジャーハントには\n戻れないが……",0)
+					MES(GREIN,"もしどこかでトレジャーを見つけたら、\nここへ持ってきてくれないか。",0)
+					MES(GREIN,"値打ちものなら買い取ってもいい……",0)
+					MES_close(GREIN)
+				}
+			}
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//──────────────────────────────
+	//▼②ロアルタ村へ向かうことにした
+	//──────────────────────────────
+	//　　※博物館、１Ｆ展示ルームに立っている。
+	if( F1_15_GoVillage )
+	{
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		MOT(GREIN,150,15)
+		if(!FT_02_TalkGrein)
+		{
+			//──────────────────────────────
+			//	name("□フラグ①初回を見ている場合")
+			if(FT_01_TalkGrein)
+			{
+				MES(GREIN,"調子はどうだ……\nトレジャーは見つかったか？",0)
+				MES(GREIN,"トレジャーを入手するには、\n大抵難易度の高いトラップを\nクリアする必要がある……",0)
+				MES(GREIN,"難しいとは思うが、\nチャレンジしてみてくれ……",0)
+				MES_close(GREIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"はは、任しとけって。\n面白そうな話だしな。",0)
+				MES_close(RAGNA)
+			}
+			else
+			{
+			//	name("□フラグ①初回を見てない場合")
+				MES(GREIN,"……君は………\n現役のトレジャーハンターか？",0)
+				MES_close(GREIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"あ、ああ。そうだが……",0)
+				MES_close(RAGNA)
+
+			//	name2(GREIN)
+				MES(GREIN,"なら、丁度いいかも\nしれないな……",0)
+				MES_close(GREIN)
+
+			//　　グレイン、向きを戻す。
+				rot(GREIN,30,190)
+				MES(GREIN,"もしダンジョンの中で\n《トレジャー》を見つけたら、\nここへ持って来てくれないか？",0)
+				MES(GREIN,"トレジャーを入手するには、\n大抵難易度の高いトラップを\nクリアする必要があるが……",0)
+				MES_close(GREIN)
+
+			//　　グレイン、再びラグナに向く。
+				rot_chr(GREIN,30,RAGNA)
+				MES(GREIN,"丁度この展示室に並べる品を\n集めている所なんだ……\nぜひ展示してみたい……",0)
+				MES_close(GREIN)
+
+			//	name2(RAGNA)
+				MES(RAGNA,"そ、そうなのか。",0)
+				MES(RAGNA,"ま、事情は分かんねえが、\nいろいろ試してみるぜ。\n面白そうな話でもあるしな。",0)
+				MES_close(RAGNA)
+			}
+			//──────────────────────────────
+			
+			MES(RAGNA,"にしても、あんたも\n結構詳しいみたいだよな。",0)
+			MES(RAGNA,"えっと……\n経験者だったりするのか？",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"ああ……俺も以前は\nトレジャーハンターをしていたんだ。",0)
+			MES(GREIN,"もう引退してしまって、\n今はこの博物館で働いているがな。",0)
+			MES_close(GREIN)
+
+		//　　グレイン、向きを戻す。
+			MOT(GREIN,52,15)
+			rot(GREIN,30,190)
+			MES(GREIN,"だが、やはり\nトレジャーはいい……",0)
+			MES(GREIN,"今でもトレジャーの手入れや\n展示方法を考えているときが\n一番落ち着くんだ……",0)
+			MES_close(GREIN)
+
+		//　　ラグナたちに冷や汗エモーション。
+			EMO(RAGNA,EMO_HIYAASE)
+			EMO(PARTNER,EMO_HIYAASE)
+			wait(30)
+
+			MES(RAGNA,"そ、そうなのか……",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			MES(PARTNER,"（根っからの“とれじゃあ”\n  マニアのようだのう……）",0)
+			MES_close(PARTNER)
+			
+			F_set(FT_02_TalkGrein)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			if(!F_GREIN)
+			{
+				MES(GREIN,"それぞれのダンジョンには\n推奨レベルというものがある。",0)
+				MES(GREIN,"入り口にレベルプレートが\n掛かっているだろう。\n目安にするといい……",0)
+				MES(GREIN,"レベルが高いダンジョンは\n無理せず後回しにするべきだろうな。",0)
+				MES(GREIN,"だが、高レベルのダンジョンほど\n高価なトレジャーが見つかるものだ……\n……中々悩ましい話だな………",0)
+				MES_close(GREIN)
+
+				//──────────────────────────────
+				//	name("□ラグナ先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"ま、まあ焦らず\nトライしてみる事にするぜ。",0)
+					MES_close(RAGNA)
+				}
+				else
+				//	name("□アルウェン先頭")
+				{
+					MES(PARTNER,"（ふむ、それほど\n  “とれじゃあ”が好きなら\n  自分で探しに行けば良いものを……）",0)
+					MES_close(PARTNER)
+				}
+				//──────────────────────────────
+				
+		//		F_set(FT_01_TalkGrein)
+				F_set(GREIN)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(GREIN,"そういえば……",0)
+				MES(GREIN,"今朝子供が２人訪ねてきてな、\nイルバードのダンジョンについて\n質問されたんだ。",0)
+				MES(GREIN,"まだ１４、５歳くらいの子供だったが、\nそこそこ腕が立ちそうだった……",0)
+				MES(GREIN,"アルッテでは見かけない顔だな。\n旅行者か何かか……？",0)
+				MES_close(GREIN)
+
+				//★グレイン【鋭い眼力】
+				F_set_note(GREIN,0)
+
+			}
+		}
+		MOT(GREIN,52,15)
+	}
+	else
+	//──────────────────────────────
+	//▼①城を取り戻すために行動を開始した
+	//──────────────────────────────
+	//　　※博物館、２つ目の展示ルームに立っている。
+	//　　※初回イベント。
+	if( F1_01_GameStart )
+	{
+		MOT_SET(GREIN,150, -2,400,400,-1,15)
+		rot_chr(GREIN,30,PLAYER1)
+		if(!FT_01_TalkGrein)
+		{
+			MOT(GREIN,150,15)
+			MES(GREIN,"……君は………\n現役のトレジャーハンターか？",0)
+			MES_close(GREIN)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"あ、ああ。そうだが……",0)
+			MES_close(RAGNA)
+
+		//	name2(GREIN)
+			MES(GREIN,"なら、丁度いいかも\nしれないな……",0)
+			MES_close(GREIN)
+
+		//　　グレイン、向きを戻す。
+			rot(GREIN,30,190)
+			MOT(GREIN,52,15)
+			
+			MES(GREIN,"実は今、この展示室に並べる品を\n集めている所なんだ……",0)
+			MES(GREIN,"館長は特に拘っていないようだが、\nできればイルバードで出土した品を\n展示したいと思っている……",0)
+			MES_close(GREIN)
+
+		//　　グレイン、顔だけで振り向く。
+			look_chr( GREIN, RAGNA,"Bone_Head")
+			
+			MES(GREIN,"……もしダンジョンの中で\n《トレジャー》を見つけたら、\nここへ持って来てくれないか？",0)
+			MES(GREIN,"そうだな、受付のカルディナに\n声を掛けてくれればいい……",0)
+			MES(GREIN,"値打ちものなら買い取ろう。\n宜しく頼むぞ……",0)
+			MES_close(GREIN)
+			
+			F_set(FT_01_TalkGrein)
+
+		//解除
+			look_off(RAGNA)
+		}
+	//──────────────────────────────
+	//　　※以下通常一般メッセージ。
+		else
+		{
+			MOT(GREIN,150,15)
+			if(F_GREIN)
+			{
+				MES(GREIN,"イルバードには\n複雑な遺跡がいくつもある。",0)
+				MES(GREIN,"何度もハンターが出入りしているが、\nまだまだ《トレジャー》が\n眠っているはずなんだ……",0)
+				MES(GREIN,"……もしダンジョンの中で\nトレジャーを見つけたら、\nここへ持って来てくれないか？",0)
+				MES(GREIN,"値打ちものなら\n買い取ってもいい……",0)
+				MES_close(GREIN)
+				
+				F_set(GREIN)
+			}
+			else
+			{
+			//　　★繰り返し
+				MES(GREIN,"ダンジョンの中で\nトレジャーを見つけたら、\nここへ持って来てくれ。",0)
+				MES(GREIN,"受付のカルディナに\n声を掛けてくれればいい……",0)
+				MES(GREIN,"値打ちものなら買い取ろう。\n宜しく頼むぞ……",0)
+				MES_close(GREIN)
+			}
+			MOT(GREIN,52,15)
+		}
+	}
+}
+
+
+
+
+//=================================================================================================
+//▼トレジャー寄贈．開始処理（グレイン版）
+//=================================================================================================
+PRESENT_TREASURE_GREIN
+{
+
+	EV("Cal_TREASURENum")
+	wait_EV("Cal_TREASURENum")
+
+	//	name("□有効なトレジャーを持っていない場合。")
+	if(WK003==0)
+	{
+		//　　※メッセージを表示後、イベント処理を終了する。
+		if(!F_RAGNA)
+		{
+			MES(GREIN,"トレジャーを\n持っていないようだな……",0)
+			MES(GREIN,"トレジャーとは、\nダンジョンの中などで見つかる\n遺物や発掘品のことだ。",0)
+			MES(GREIN,"もしそれらしき物を見かけたら\nこちらへ持ってきてくれ。",0)
+			MES(GREIN,"値打ちものなら\n買い取ってもいい……",0)
+			MES_close(GREIN)
+			F_set(RAGNA)
+		}
+	//　　★繰り返し
+		else
+		{
+			MES(GREIN,"トレジャーとは、\nダンジョンの中などで見つかる\n遺物や発掘品のことだ。",0)
+			MES(GREIN,"もしそれらしき物を見かけたら\nこちらへ持ってきてくれ。",0)
+			MES(GREIN,"値打ちものなら\n買い取ってもいい……",0)
+			MES_close(GREIN)
+		}
+		
+		//ループ用LF
+		F_set(PARTNER)
+
+	}
+//──────────────────────────────
+//　　※以下は有効なトレジャーを持っていることが前提。
+	else
+	{
+		MES(GREIN,"そのトレジャーは……",0)
+		//MES(GREIN,"少し待ってくれ。\n詳しく調べてみたい……",0)
+		MES(GREIN,"少し待ってくれ。\n詳しく調べる必要がありそうだ……",0)
+		
+		VOICE(748,0)			//「では、預かっておこう」（トレジャーを預ける時）
+		MES(GREIN,"では、預かっておこう。",0)
+				
+		MES_close(GREIN)
+
+	//　　一旦フェードアウトし、ギルド受け付け前。
+
+		fade_in( 100, 60, BLACK)	//フェードアウト
+		wait_fade()
+
+		workL(10,SET,0)//WK010= 0:カルディナいない／1:カルディナいる
+		EV("PRESENT_TREASURE")
+		wait_EV("PRESENT_TREASURE")
+		
+	}
+}
+
+
+//──────────────────────────────
+//▼ハンターランク確認処理
+//──────────────────────────────
+//　　※ハンターランクは以下の通り。
+
+//		Rank	Name							point		□返す値は1/10！
+//		０：ノーマルハンター（初期状態）		  0- 29			 0-2
+//		１：ダンジョンハンター補佐				 30- 59			 3-5
+//		２：ダンジョンハンター					 60-			 6
+//		３：ワイルドハンター補佐				 90-			 9
+//		４：ワイルドハンター					120-			12
+//		５：ベテランハンター補佐				150-			15
+//		６：ベテランハンター					180-			18
+//		７：ゴージャスハンター補佐				210-			21
+//		８：ゴージャスハンター					240-			24
+//		９：スペシャルハンター補佐				270-			27
+//		10：スペシャルハンター					300-			30
+//		11：ビューティハンター補佐				330-			33
+//		12：ビューティハンター					360-			36
+//		13：マーベラスハンター補佐				390-			39
+//		14：マーベラスハンター					420-			42
+//		15：アルティメットハンター				450-			45
+//		16：伝説の赤毛（コンプリート）			480				48
+
+//──────────────────────────────
+CHECK_RANK_GREIN
+{
+	//ハンターランク査定
+	system_chack(3)
+
+	if( GW_HUNTER_POINT>=45 && GW_HUNTER_RANK<15)
+	{
+	
+		MES(GREIN,"これは……\n中々目覚しい活躍だ……",0)
+		
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君を正式にL337アルティメットハンターL400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"アルティメットハンターは、\n無二の功績を成し遂げたハンターに\n贈られる、究極のランクだ。",0)
+		MES(GREIN,"その若さでここまで\n登りつめるとはな……",0)
+		MES(GREIN,"……君には期待している。\nこれからも頑張るといい……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,15)
+	}
+/*
+//	アルティメットハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=65 && GW_HUNTER_RANK<15)
+	{
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+	
+		MES(GREIN,"これは……\n中々目覚しい活躍だ……",0)
+		MES(GREIN,"よく頑張ったな。\n君をアルティメットハンター補佐と認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手（仮）
+		get_item(001,1,0)
+		wait_key(0)
+		menu(1,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+		menu(0,		-1,	-1,-1,-1,	-1,-1,	10,0,0)
+
+		MES(GREIN,"アルティメットハンターは、\n無二の功績を数多成し遂げたハンターに\n贈られる、究極のランクだ。",0)
+		MES(GREIN,"その年でここまで\n登りつめるとはな……",0)
+		MES(GREIN,"……君には期待している。\nこれからも頑張るといい……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,15)
+	}
+*/
+
+	//	マーベラスハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=42 && GW_HUNTER_RANK<14)
+	{
+	
+		MES(GREIN,"……どうやら\nかなり活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君を正式にL337マーベラスハンターL400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"マーベラスハンターは、\nありとあらゆる分野に精通したハンターに\nのみ贈られるランクだ。",0)
+		MES(GREIN,"その若さでここまで\n登りつめるとはな……",0)
+		MES(GREIN,"……君には期待している。\nこれからも頑張るといい……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,14)
+	}
+//	マーベラスハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=39 && GW_HUNTER_RANK<13)
+	{
+
+	
+		MES(GREIN,"……どうやら\nかなり活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君をL337マーベラスハンター補佐L400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"マーベラスハンターは、\nありとあらゆる分野に精通したハンターに\nのみ贈られるランクだ。",0)
+		MES(GREIN,"その若さでここまで\n登りつめるとはな……",0)
+		MES(GREIN,"……君には期待している。\nこれからも頑張るといい……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,13)
+	}
+//	ビューティハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=36 && GW_HUNTER_RANK<12)
+	{
+	
+		MES(GREIN,"……どうやら\nかなり活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君を正式にL337ビューティハンターL400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"ビューティハンターは、\n大いなる栄光を掴んだハンターに\n贈られるランクだ。",0)
+		MES(GREIN,"……中々いい顔つきになってきたな。\nこれからも頑張るといい……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,12)
+	}
+//	ビューティハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=33 && GW_HUNTER_RANK<11)
+	{
+	
+		MES(GREIN,"……どうやら\nかなり活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君をL337ビューティハンター補佐L400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"ビューティハンターは、\n大いなる栄光を掴んだハンターに\n贈られるランクだ。",0)
+		MES(GREIN,"……中々いい顔つきになってきたな。\nこれからも頑張るといい……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,11)
+	}
+//	スペシャルハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=30 && GW_HUNTER_RANK<10)
+	{
+	
+		MES(GREIN,"ふむ……\n中々活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君を正式にL337スペシャルハンターL400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"スペシャルハンターは、\n非常に優れた功績を残したハンターに\n贈られるランクだ。",0)
+		MES(GREIN,"……中々いい顔つきになってきたな。\nこれからも頑張るといい……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,10)
+	}
+//	スペシャルハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=27 && GW_HUNTER_RANK<9)
+	{
+	
+		MES(GREIN,"ふむ……\n中々活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君をL337スペシャルハンター補佐L400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"スペシャルハンターは、\n非常に優れた功績を残したハンターに\n贈られるランクだ。",0)
+		MES(GREIN,"……中々いい顔つきになってきたな。\nこれからも頑張るといい……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,9)
+	}
+//	ゴージャスハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=24 && GW_HUNTER_RANK<8)
+	{
+	
+		MES(GREIN,"ふむ……\n中々活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君を正式にL337ゴージャスハンターL400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"ゴージャスハンターは、\n誰もが羨む、ひとヤマ当てたハンターに\n贈られるランクだ。",0)
+		MES(GREIN,"……中々いい顔つきになってきたな。\nこれからも頑張るといい……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,8)
+	}
+//	ゴージャスハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=21 && GW_HUNTER_RANK<7)
+	{
+	
+		MES(GREIN,"ふむ……\n中々活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君をL337ゴージャスハンター補佐L400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"ゴージャスハンターは、\n誰もが羨む、ひとヤマ当てたハンターに\n贈られるランクだ。",0)
+		MES(GREIN,"……中々いい顔つきになってきたな。\nこれからも頑張るといい……",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,7)
+	}
+//	ベテランハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=18 && GW_HUNTER_RANK<6)
+	{
+	
+		MES(GREIN,"……大分活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君を正式にL337ベテランハンターL400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"ベテランハンターは、\nハンターとして十分な実績を収めた者に\n贈られるランクだ。",0)
+		MES(GREIN,"これからも頑張るといい。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,6)
+	}
+//	ベテランハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=15 && GW_HUNTER_RANK<5)
+	{
+	
+		MES(GREIN,"……大分活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君をL337ベテランハンター補佐L400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"ベテランハンターは、\nハンターとして十分な実績を収めた者に\n贈られるランクだ。",0)
+		MES(GREIN,"これからも頑張るといい。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,5)
+	}
+//	ワイルドハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=12 && GW_HUNTER_RANK<4)
+	{
+	
+		MES(GREIN,"……大分活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君を正式にL337ワイルドハンターL400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"ワイルドハンターは、\n様々な野心的活動を行ったハンターに\n贈られるランクだ。",0)
+		MES(GREIN,"これからも頑張るといい。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,4)
+	}
+//	ワイルドハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=9 && GW_HUNTER_RANK<3)
+	{
+	
+		MES(GREIN,"……大分活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君をL337ワイルドハンター補佐L400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"ワイルドハンターは、\n様々な野心的活動を行ったハンターに\n贈られるランクだ。",0)
+		MES(GREIN,"これからも頑張るといい。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,3)
+	}
+//	ダンジョンハンターへ昇格
+	else
+	if( GW_HUNTER_POINT>=6 && GW_HUNTER_RANK<2)
+	{
+	
+		MES(GREIN,"……大分活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君を正式にL337ダンジョンハンターL400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"ダンジョンハンターは、\nダンジョン探索に長じたハンターに\n贈られるランクだ。",0)
+		MES(GREIN,"これからも頑張るといい。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,2)
+	}
+//	ダンジョンハンター補佐へ昇格
+	else
+	if( GW_HUNTER_POINT>=3 && GW_HUNTER_RANK<1)
+	{
+	
+		MES(GREIN,"……大分活躍したようだな。",0)
+
+		VOICE(747,0)				//「よく頑張ったな…」　　（ハンターランクが上がった時）
+		MES(GREIN,"よく頑張ったな。\n君をL337ダンジョンハンター補佐L400\nと認定しよう。",0)
+		MES(GREIN,"これはギルドからの褒賞だ。\n受け取っておくといい……",0)
+		MES_close(GREIN)
+		
+		//アイテム入手
+		EV("RANK_ITEMGET")
+		wait_EV("RANK_ITEMGET")
+
+		MES(GREIN,"ダンジョンハンターは、\nダンジョン探索に長じたハンターに\n贈られるランクだ。",0)
+		MES(GREIN,"これからも頑張るといい。",0)
+		MES_close(GREIN)
+		
+		workG(GW_HUNTER_RANK,SET,1)
+	}
+//	name("□昇格がない場合")
+	else
+	{
+		if(GW_HUNTER_RANK==0)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337ノーマルハンターL400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==1)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337ダンジョンハンター補佐L400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==2)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337ダンジョンハンターL400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==3)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337ワイルドハンター補佐L400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==4)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337ワイルドハンターL400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==5)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337ベテランハンター補佐L400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==6)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337ベテランハンターL400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==7)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337ゴージャスハンター補佐L400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==8)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337ゴージャスハンターL400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==9)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337スペシャルハンター補佐L400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==10)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337スペシャルハンターL400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==11)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337ビューティハンター補佐L400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==12)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337ビューティハンターL400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==13)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337マーベラスハンター補佐L400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==14)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337マーベラスハンターL400だな。",0)
+		}
+		else
+/*		if(GW_HUNTER_RANK==15)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337アルティメットハンター補佐だな。",0)
+		}
+		else
+*/		if(GW_HUNTER_RANK==15)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL337アルティメットハンターL400だな。",0)
+		}
+		else
+		if(GW_HUNTER_RANK==16)
+		{
+			MES(GREIN,"君の現在のハンターランクは\nL700伝説の赤毛L400だな。",0)
+		}
+	
+		MES(GREIN,"ダンジョンでクリア成績を溜めてから\nもう一度来るといい……",0)
+		MES(GREIN,"ギルドでは、優秀なハンターには\n多少の援助をしているんだ……",0)
+		MES_close(GREIN)
+	}
+}
+
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////

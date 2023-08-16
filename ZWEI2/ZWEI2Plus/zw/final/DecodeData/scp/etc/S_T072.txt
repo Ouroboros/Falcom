@@ -1,0 +1,405 @@
+//──────────────────────────────
+//	name("◆日户目（杂货店店員）Hikome")
+//──────────────────────────────
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+#ScriptTable
+
+SHOP_HIKOME
+{
+	TK_begin()
+////////////////////////////////////////////////////////////////
+//仲間全員が話し相手に振り向く
+////////////////////////////////////////////////////////////////
+	KAO(HIKOME, "1", "1", "1")	
+	KAO(PLAYER1, "1", "1", "1")	
+	rot_chr(PLAYER1,30,HIKOME)
+//───────────────
+//□露が居る
+//───────────────
+	if(F5_00_HearLunar)
+	{
+		KAO(PET, "1", "1", "1")	
+		rot_chr(PET,30,HIKOME)
+		
+		//奥迪莎がいる
+		if(F5_08_JoinOdessa && !F5_13_KillDygald)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+		//艾尔雯がいる
+		else
+		if(F6_00_GoToMeru)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+	}
+//───────────────
+//⑦一人で行動
+//───────────────
+	else
+	if(F4_00_StartSolo)
+	{
+	//───────────────
+	//昴が居る
+	//───────────────
+		if(F4_02_GoVillage2 && !F4_06_StopAttack)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+		else
+	//───────────────
+	//艾尔雯が居る
+	//───────────────
+		if(F4_09_GoShrineMia)
+		{
+			KAO(PLAYER2, "1", "1", "1")	
+			rot_chr(PLAYER2,30,HIKOME)
+		}
+	}
+//会話処理へ
+////////////////////////////////////////////////////////////////
+	
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	if( F5_00_HearLunar )
+	{
+		VOICE(750,0)							//「いらっしゃい」	
+	
+		look_chr( HIKOME, PLAYER1,"Bone_Head")
+		MES(HIKOME,"欢迎光临。",0)
+		MES_close(HIKOME)
+		
+		EV("SHOP_HIKOME_LOOP")
+		wait_EV("SHOP_HIKOME_LOOP")
+		look_off(HIKOME)
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	if( F4_09_GoShrineMia)
+	{
+//		rot_chr(HIKOME,30,PLAYER1)
+//		MOT(HIKOME, 2, 15)
+		look_chr(HIKOME,PLAYER1,"Bone_Head")
+		//初回イベント啊り
+		if(!FS_10_TalkHikome)
+		{
+			EV("TK_HIKOME")
+			wait_EV("TK_HIKOME")
+			
+			EV("SHOP_HIKOME_LOOP")
+			wait_EV("SHOP_HIKOME_LOOP")
+		}
+		else
+		{
+			VOICE(750,0)							//「いらっしゃい」
+		
+			MES(HIKOME,"欢迎光临。",0)
+			MES_close(HIKOME)
+			
+			EV("SHOP_HIKOME_LOOP")
+			wait_EV("SHOP_HIKOME_LOOP")
+		}
+//		MOT(HIKOME, 150, 15)
+		look_off(HIKOME)
+	}
+	else
+	//──────────────────────────────
+	//▼⑨汎用忍者が倒れているだけ之フラグ。
+	//──────────────────────────────
+	//※無し
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	if( F4_05_OnVillage2)
+	{
+		look_chr( HIKOME, PLAYER1,"Bone_Head")
+		//初回イベント啊り
+		if(!FS_08_TalkHikome)
+		{
+			EV("TK_HIKOME")
+			wait_EV("TK_HIKOME")
+		}
+		else
+		{
+			VOICE(750,0)							//「いらっしゃい」
+					
+			MES(HIKOME,"欢迎光临。",0)
+			MES_close(HIKOME)
+			
+			EV("SHOP_HIKOME_LOOP")
+			wait_EV("SHOP_HIKOME_LOOP")
+		}
+		look_off(HIKOME)
+	}
+	TK_end()
+}
+
+SHOP_HIKOME_LOOP
+{
+	workL(WK_CANCEL,SET,3)//【取消】
+//	MES(PLAYER1,"??W9【对话】\n【买东西】\n【取消】",0)
+	MES_pos(PLAYER1,"??W9【对话】\n【买东西】\n【取消】",0,320,240,0,0)
+	wait_W(WK_YESNO)
+	MES_close(PLAYER1)
+	wait_MES(PLAYER1)//閉じきるまで待つ
+
+	//──────────────────────────────
+	//	name("□对话")
+	//──────────────────────────────
+	if(WK_YESNO==1)
+	{
+		EV("TK_HIKOME")
+		wait_EV("TK_HIKOME")
+		loop
+	}
+	//──────────────────────────────
+	//	name("□買ぶをする")
+	//──────────────────────────────
+	else
+	if(WK_YESNO==2)
+	{
+		shop_open(4)//よろずや
+		wait_W(WK_YESNO)
+		loop
+	}
+	//──────────────────────────────
+	//	name("□やめる")
+	//　　会話処理終了。
+	//──────────────────────────────
+	else
+	if(WK_YESNO==3)
+	{
+		//⑩之间はメッセ～ジ変更
+		if(F4_09_GoShrineMia && !F5_00_HearLunar )
+		{
+//			さすがにこれは違和感
+//			VOICE(753,0)									//「またどうぞ」
+//			MES(HIKOME,"欢迎再来。",0)		
+		
+			MES(HIKOME,"……小心啊。",0)
+			MES_close(HIKOME)
+		}
+		//通常時
+		else
+		{
+			VOICE(753,0)									//「またどうぞ」
+			MES(HIKOME,"欢迎再来。",0)
+			
+//			MES(HIKOME,"本店商品应有尽有。\n欢迎随时光临。",0)
+			MES_close(HIKOME)
+		}
+	}
+}
+
+//通常処理////////////////////////////////////////////////////////////////////////////
+TK_HIKOME
+{
+	//──────────────────────────────
+	//▼□飛行机で梅尔塞迪克に乗り込むことにした（拉古那·艾尔雯·露）
+	//──────────────────────────────
+	//　　※杂货店カウンタ～。
+	if(F6_00_GoToMeru)
+	{
+		if(!F_HIKOME)
+		{
+			MES(HIKOME,"我听说了。\n是要闯进那座要塞吧。",0)
+			MES(HIKOME,"梅尔塞迪克的存在，\n只记载在一部分的古文书中。",0)
+			MES(HIKOME,"由如此庞大的魔力造成的龙卷，\n恐怕连大陆都能毁得粉碎吧。",0)
+			MES(HIKOME,"过去，伊尔巴特\n也曾受到猛烈的攻击，\n受灾惨重。",0)
+			MES(HIKOME,"……要塞里会发生什么谁也不知道。\n要小心啊。",0)
+			MES_close(HIKOME)
+			//　　★日户目【梅尔塞迪克之伝承】
+			F_set_note(HIKOME,2)
+			F_set(HIKOME)
+		}
+		else
+		{
+		//　　★繰り返し
+			MES(HIKOME,"那可是个能击落大陆的要塞。\n里面会发生什么没人知道。",0)
+			MES(HIKOME,"最好仔细地\n检查一下装备。",0)
+			MES(HIKOME,"如果有什么需要的就说吧。\n要是一般的东西，我会帮你们备齐的。",0)
+			MES_close(HIKOME)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼□水晶祭坛を起動することにした（拉古那·露（·奥迪莎））
+	//──────────────────────────────
+	//　　※杂货店カウンタ～。
+	if( F5_00_HearLunar )
+	{
+		if(!F_HIKOME)
+		{
+			MES(HIKOME,"昨天多谢了。",0)
+			MES(HIKOME,"里似乎\n还在混乱着。",0)
+			MES(HIKOME,"因为伤者比较多，\n队伍也需要再重新编排。",0)
+			MES(HIKOME,"现在这种形势下，\n重建也多少要花些时间了吧。",0)
+			MES_close(HIKOME)
+			
+			F_set(HIKOME)
+		}
+		//　　★繰り返し
+		else
+		{
+			MES(HIKOME,"里的重建\n似乎多少要花些时间。",0)
+			MES(HIKOME,"而且，也是第一次\n受到这么严重的损失。",0)
+			MES(HIKOME,"大家好像\n也各有各的想法。",0)
+			MES_close(HIKOME)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑩社へ向かった米娅を追うことにした（拉古那·艾尔雯）
+	//──────────────────────────────
+	//　　※広场で倒れた凯を助けている。
+	if( F4_09_GoShrineMia )
+	{
+		//　　※初回イベント。
+		if(!FS_10_TalkHikome)
+		{
+			MES(HIKOME,"不要紧，没有伤到要害。",0)
+			MES(HIKOME,"抢救结束后\n马上就会搬出去的。",0)
+			MES_close(HIKOME)
+
+		//　　日户目振り向く。
+//			rot_chr(HIKOME,30,PLAYER1)
+		
+			MES(HIKOME,"对了，\n你们这就要去神社了吧？",0)
+			MES(HIKOME,"虽然时间不凑巧，\n不过要是有什么需要就开口吧。",0)
+			MES(HIKOME,"保险起见，我已经\n备下了一些有用的工具。",0)
+			MES_close(HIKOME)
+			
+			F_set(FS_10_TalkHikome)
+			
+			//ショップ処理へ
+		}
+		//──────────────────────────────
+		//　　※以下通常一般メッセ～ジ。
+		else
+		{
+		//　　日户目振り向く。
+
+			MES(HIKOME,"凯虽然\n睡得不太安稳，不过没事的。",0)
+			MES(HIKOME,"抢救结束后\n马上就会搬出去的。",0)
+			MES_close(HIKOME)
+		}
+	}
+	else
+	//──────────────────────────────
+	//▼⑧星降之里に到着した（拉古那·昴）
+	//──────────────────────────────
+	if( F4_05_OnVillage2)
+	{
+	//▼初回イベント
+		if(!FS_08_TalkHikome)
+		{
+			MES(HIKOME,"欢迎光临。",0)
+			MES_close(HIKOME)
+
+		//　　軽く拉古那之嚯を向く。
+			look_chr( HIKOME, RAGNA,"Bone_Head")
+			MES(HIKOME,"这位兄弟，从前没见过呢。\n要买什么？",0)
+			MES(HIKOME,"一般的东西这里都有哦。\n因为是杂货店嘛。",0)
+			MES_close(HIKOME)
+
+
+			MES(RAGNA,"啊啊，谢了……",0)
+			MES_close(RAGNA)
+
+		//　　拉古那，きょろきょろ。
+			look(RAGNA,"Bone_Head",0,		0,2,0,			0,30,0)
+			wait(20)
+			look(RAGNA,"Bone_Head",0,		0,2,0,			0,-30,0)
+			wait(40)
+			look(RAGNA,"Bone_Head",0,		0,2,0,			0,0,0)
+
+			MES(RAGNA,"话说，\n刀啊枪的……\n不是武器店么？",0)
+			MES_close(RAGNA)
+
+		//	name2(PARTNER)
+			look_chr(PARTNER,RAGNA,"Bone_Head")
+			MES(PARTNER,"咦，是这样吗？\n我觉得挺普通的啊……",0)
+			MES(PARTNER,"啊，如果对武器或是忍具\n有什么问题的话，来找日户目哥哥\n商量或许比较好。",0)
+			MES(PARTNER,"日户目哥哥可是\n精通很多忍具的专家哦～。",0)
+			MES_close(PARTNER)
+			look_off(PARTNER)
+
+		//	name2(HIKOME)
+			MES(HIKOME,"嗯，比起使用，我还是\n在欣赏方面更有心得。",0)
+			MES(HIKOME,"要是你愿意，\n不如我替你处理个什么武器吧？",0)
+			MES_close(HIKOME)
+
+		//	name2(RAGNA)
+			MES(RAGNA,"哈哈，我再考虑吧……\n（这里跟普通的村子\n  果然有点不一样啊……）",0)
+			MES_close(RAGNA)
+
+			//★日户目【忍具之エキスパ～ト】
+			F_set_note(HIKOME,0)
+			F_set(FS_08_TalkHikome)
+
+		//名前付きキャラ全員に話しかけると露天温泉が開く
+			if(FS_08_TalkHikome && FS_08_TalkKarasu && FS_08_TalkDaigoro && FS_08_TalkYasaku && FS_08_TalkKai && FS_08_TalkAkane && FS_08_TalkLuri && FS_08_TalkGen)
+			{
+				F_set(F4_12_OkRoten)
+			}
+		}
+		else
+		{
+			if(!F_HIKOME)
+			{
+			//　　※杂货店カウンタ～。
+			//　　日户目，拉古那に向く。
+				look_chr( HIKOME, RAGNA,"Bone_Head")
+				MES(HIKOME,"对了，小兄弟的话，\n风车手里剑怎么样？",0)
+				MES(HIKOME,"习惯了的话，它的机动性也很高，\n也能作为重型武器来使用。",0)
+				MES(HIKOME,"是我中意的武器之一。\n现在的话可以优惠哦。",0)
+				MES_close(HIKOME)
+			//──────────────────────────────
+			//	name("□拉古那先頭")
+				if(GW_MAN==1)
+				{
+					MES(RAGNA,"（这推荐得还真是若无其事啊……）",0)
+					MES_close(RAGNA)
+				}
+			//	name("□昴先頭")
+				else
+				{
+				//　　日户目，昴に向く。
+					look_chr( HIKOME, PARTNER,"Bone_Head")
+					MES(HIKOME,"昴的话……",0)
+					MES(HIKOME,"你用风车手里剑太勉强了点。\n因为它不太容易使用。",0)
+					MES_close(HIKOME)
+
+				//　　昴，日户目に向く。
+					rot_chr(PARTNER,30,HIKOME)
+					
+				//	name2(PARTNER)
+					MES(PARTNER,"唉唉～……？\n拒绝得真干脆……",0)
+					MES_close(PARTNER)
+				}
+				F_set(HIKOME)
+			}
+			else
+			{
+				//──────────────────────────────
+				//　　★繰り返し
+					MES(HIKOME,"这里是杂货店哦。\n一般物品应有尽有。",0)
+					MES(HIKOME,"手里剑，钥匙，连环甲，\n粮食药丸，飞镖……",0)
+					MES(HIKOME,"那边架子上的，是按照\n古文书的记载所配制的举世无双的药品。",0)
+					MES(HIKOME,"可以的话就看看吧。",0)
+					MES_close(HIKOME)
+					//★日户目【薬品は自分で調合】
+					F_set_note(HIKOME,1)
+			}
+		}
+	}
+}
+#EndScriptTable
+/////////////////////////////////////////////////////////////////////////////////////////////////////
