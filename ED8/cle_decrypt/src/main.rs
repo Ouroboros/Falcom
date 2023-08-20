@@ -72,13 +72,28 @@ fn decrypt_ed9(input: &str, output: &str) -> Result<bool> {
     const KEY: &[u8] = b"\x16\x4B\x7D\x0F\x4F\xA7\x4C\xAC\xD3\x7A\x06\xD9\xF8\x6D\x20\x94";
     const IV: &[u8] = b"\x9D\x8F\x9D\xA1\x49\x60\xCC\x4C";
 
+    const MAGIC_ENCRYPTED1: u32 = 0x41423943;
+    const MAGIC_ENCRYPTED2: u32 = 0x41423946;
+    const MAGIC_COMPRESSED: u32 = 0x41423944;
+
     let mut fs = File::open(input).with_context(|| format!("open input failed: {}", input))?;
-    let mut buffer = Vec::new();
+
+    if fs.metadata()?.len() < 4 {
+        return Ok(false);
+    }
+
+    let mut buffer = vec![0u8; 4];
+
+    fs.read_exact(&mut buffer)?;
+
+    match Cursor::new(&buffer).u32::<LE>() {
+        MAGIC_ENCRYPTED1 | MAGIC_ENCRYPTED2 | MAGIC_COMPRESSED => (),
+        _ => return Ok(false),
+    }
 
     fs.read_to_end(&mut buffer)?;
 
     let mut buffer_size = buffer.len();
-    let mut decrypted_or_decompressed = false;
 
     loop {
         let mut cursor = Cursor::new(&buffer[..buffer_size]);
@@ -86,18 +101,16 @@ fn decrypt_ed9(input: &str, output: &str) -> Result<bool> {
         let size = cursor.u32::<LE>() as usize;
 
         match magic {
-            0x41423943 | 0x41423946 => {
+            MAGIC_ENCRYPTED1 | MAGIC_ENCRYPTED2 => {
                 let mut cipher = Blowfish128Ctr64::new_from_slices(KEY, IV).unwrap();
 
                 cipher.apply_keystream(&mut buffer[8..buffer_size]);
 
                 buffer.copy_within(8..size + 8, 0);
                 buffer_size = size;
-
-                decrypted_or_decompressed = true;
             },
 
-            0x41423944 => {
+            MAGIC_COMPRESSED => {
                 // {
                 //     let mut fs = File::create(r".\c0000.dec.bin")?;
                 //     fs.write_all(&buffer[..buffer_size]).unwrap();
@@ -112,15 +125,9 @@ fn decrypt_ed9(input: &str, output: &str) -> Result<bool> {
                 }
 
                 buffer[..buffer_size].copy_from_slice(&decompressed);
-
-                decrypted_or_decompressed = true;
             },
 
             _ => {
-                if !decrypted_or_decompressed {
-                    return Ok(false);
-                }
-
                 std::fs::create_dir_all(Path::new(output).parent().unwrap())?;
                 let mut fs = File::create(output)?;
                 fs.write_all(&buffer)?;
@@ -137,7 +144,7 @@ fn do_decrypt<F>(idx: Range<usize>, input: &str, output: &str, f: F) -> Result<b
 where
     F: FnOnce(&str, &str) -> Result<bool>
 {
-    let processed = f(input, output).context("decrypt failed")?;
+    let processed = f(input, output).with_context(|| format!("decrypt failed: {}", input))?;
 
     if processed {
         println!("decrypted ({:04}/{:04}): {} -> {}", idx.start, idx.end, input, output);
