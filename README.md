@@ -339,5 +339,5 @@ bin
 
 有用的链接
 =============
-https://ghpages.uyjulian.pw/falcom-dumps/
-https://docs.google.com/spreadsheets/d/15Tb3YVCtyp2In1ahC0s8Z0u-_LxjpyHYiaNGxZSnsRM/edit#gid=1019886408
+* https://ghpages.uyjulian.pw/falcom-dumps/
+* https://docs.google.com/spreadsheets/d/15Tb3YVCtyp2In1ahC0s8Z0u-_LxjpyHYiaNGxZSnsRM/edit#gid=1019886408
