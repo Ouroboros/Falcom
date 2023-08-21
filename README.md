@@ -9,15 +9,27 @@
 - [英雄传说 碧之轨迹](#零之轨迹碧之轨迹)
 - [英雄传说 闪之轨迹3](#闪之轨迹)
 - [英雄传说 闪之轨迹4](#闪之轨迹)
-- [英雄传说 创之轨迹](#闪之轨迹)
+- [英雄传说 创之轨迹](#创之轨迹)
 - [英雄传说 黎之轨迹](#decompiler2)
 - [双星物语2 Plus](#双星物语2)
+
+
+创之轨迹
+=============
+
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED8/cle_decrypt" target="_blank">cle_decrypt</a>
+
+写于 2023-08-18
+
+云豹版的 创之轨迹/黎之轨迹 解密工具
+
+<a href="https://github.com/Ouroboros/Falcom/tree/master/bin/tools/cle_decrypt.exe" target="_blank">cle_decrypt.exe</a>
 
 
 闪之轨迹
 =============
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ed83/frida" target="_blank">ED83 Frida</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED8/ed83/frida" target="_blank">ED83 Frida</a>
 
 写于 2021-06-01
 
@@ -25,7 +37,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ed83/loader" target="_blank">ED83 Loader</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED8/ed83/loader" target="_blank">ED83 Loader</a>
 
 写于 2021-07-03
 
@@ -63,14 +75,14 @@
 空之轨迹
 =============
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6Steam" target="_blank">ED6Steam</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/ED6Steam" target="_blank">ED6Steam</a>
 
 写于 2022-04-16 ~ 2022-08-14
 
 移植 Steam 版汉化模块到 frida
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/3rd%20Kuro" target="_blank">3rd Kuro</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/3rd%20Kuro" target="_blank">3rd Kuro</a>
 
 可能写于 2008 年
 
@@ -80,7 +92,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/3rdText" target="_blank">3rdText</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/3rdText" target="_blank">3rdText</a>
 
 可能写于 2008 年
 
@@ -88,7 +100,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED63Loader" target="_blank">ED63Loader</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/ED63Loader" target="_blank">ED63Loader</a>
 
 可能写于 2008 年
 
@@ -96,7 +108,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ed63cn" target="_blank">ed63cn</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/ed63cn" target="_blank">ed63cn</a>
 
 在 2008 ~ 2010 年之间
 
@@ -106,7 +118,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ed63cn/ASDecompiler" target="_blank">ED63 ASDecompiler</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/ed63cn/ASDecompiler" target="_blank">ED63 ASDecompiler</a>
 
 于 2011-06-01 完成
 
@@ -116,7 +128,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/tobc" target="_blank">tobc</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/tobc" target="_blank">tobc</a>
 
 写于 2011-05
 
@@ -128,7 +140,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6Back" target="_blank">ED6Back</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/ED6Back" target="_blank">ED6Back</a>
 
 写于 2008 年或更早
 
@@ -138,7 +150,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6Walk" target="_blank">ED6Walk</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/ED6Walk" target="_blank">ED6Walk</a>
 
 在 2010 ~ 2014 年之间
 
@@ -148,7 +160,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/tga2_ch" target="_blank">tga2_ch</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/tga2_ch" target="_blank">tga2_ch</a>
 
 时间不详
 
@@ -158,7 +170,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6DatCreator" target="_blank">ED6DatCreator</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/ED6DatCreator" target="_blank">ED6DatCreator</a>
 
 写于 2007 ~ 2008 年
 
@@ -166,7 +178,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6Extract" target="_blank">ED6Extract</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/ED6Extract" target="_blank">ED6Extract</a>
 
 时间不详
 
@@ -174,7 +186,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/MS Editor" target="_blank">MS Editor</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/MS Editor" target="_blank">MS Editor</a>
 
 写于 2011 年之前
 
@@ -182,7 +194,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6FC%20Steam" target="_blank">ED6FC Steam</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED6/ED6FC%20Steam" target="_blank">ED6FC Steam</a>
 
 写于 2015-11
 
@@ -193,7 +205,7 @@
 零之轨迹、碧之轨迹
 =============
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/EDZero" target="_blank">EDZero</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED7/EDZero" target="_blank">EDZero</a>
 
 写于 2011-08
 
@@ -203,7 +215,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/EDZero/ASDecompiler" target="_blank">EDZero ASDecompiler</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED7/EDZero/ASDecompiler" target="_blank">EDZero ASDecompiler</a>
 
 写于 2011-09
 
@@ -211,7 +223,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/YamaNeko" target="_blank">YamaNeko</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED7/YamaNeko" target="_blank">YamaNeko</a>
 
 写于 2011-09
 
@@ -219,7 +231,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/EDAO" target="_blank">EDAO</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED7/EDAO" target="_blank">EDAO</a>
 
 写于 2013-04
 
@@ -229,7 +241,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/EDAO/RecordViewer" target="_blank">碧之轨迹存档宝箱查看器</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED7/EDAO/RecordViewer" target="_blank">碧之轨迹存档宝箱查看器</a>
 
 写于 2015-07
 
@@ -237,7 +249,7 @@
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/Decompiler" target="_blank">Decompiler</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ED7/Decompiler" target="_blank">Decompiler</a>
 
 写于 2015-07
 
@@ -255,7 +267,7 @@
 双星物语2
 =============
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2" target="_blank">ZWEI2</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2/ZWEI2" target="_blank">ZWEI2</a>
 
 时间不详
 
@@ -263,7 +275,7 @@ itm 加/解密工具, 逆向自游侠论坛的 `jiacat`
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2Scp" target="_blank">ZWEI2Scp</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2/ZWEI2Scp" target="_blank">ZWEI2Scp</a>
 
 时间不详
 
@@ -271,7 +283,7 @@ itm 加/解密工具, 逆向自游侠论坛的 `jiacat`
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2Plus" target="_blank">ZWEI2Plus</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2/ZWEI2Plus" target="_blank">ZWEI2Plus</a>
 
 2010-04
 
@@ -281,7 +293,7 @@ itm 加/解密工具, 逆向自游侠论坛的 `jiacat`
 
 
 
-## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2Trainer" target="_blank">ZWEI2Trainer</a>
+## <a href="https://github.com/Ouroboros/Falcom/tree/master/ZWEI2/ZWEI2Trainer" target="_blank">ZWEI2Trainer</a>
 
 时间不详
 
