@@ -23,16 +23,15 @@ class ED85InstructionTable(ED84InstructionTable):
 
     def preDisasmInstruction(self, context: InstructionHandlerContext):
         inst = context.instruction
-        if inst.opcode not in [
-            0x00,   # abort
-            0x01,   # return
-            0x04,
-        ]:
-            dbginfo = context.disasmContext.fs.ReadULong()
-            lineno, size = dbginfo & 0x00FFFFFF, dbginfo >> 0x18
-            context.dbgInfo = (lineno, size)
-        else:
-            context.dbgInfo = None
+        match inst.opcode:
+            case 0x00 | 0x01 | 0x04:
+                # abort return
+                context.dbgInfo = None
+
+            case _:
+                dbginfo = context.disasmContext.fs.ReadULong()
+                lineno, size = dbginfo & 0x00FFFFFF, dbginfo >> 0x18
+                context.dbgInfo = (lineno, size)
 
     def postDisasmInstruction(self, context: InstructionHandlerContext):
         if context.dbgInfo is None:
@@ -74,7 +73,12 @@ class ED85InstructionTable(ED84InstructionTable):
     def writeOpCode(self, fs: fileio.FileStream, opcode: int):
         fs.WriteByte(opcode)
         # fs.WriteULong(0)
-        fs.WriteULong(0xFF << 0x18)
+        match opcode:
+            case 0x00 | 0x01 | 0x04:
+                pass
+
+            case _:
+                fs.WriteULong(0xFF << 0x18)
 
 def applyDescriptorsToOperands(operands: List[Operand], fmts: str):
     assert len(operands) == len(fmts)
