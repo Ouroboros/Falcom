@@ -14,3 +14,7 @@
 - ...
 
 存档问题可通过[下载正常存档](https://home.gamer.com.tw/artwork.php?sn=4259147)解决
+
+然後还有一个音量bug，不过我不是装的这个汉化mod出现的，我是装的原版ys8_cht_200128之后出现的这个bug，而且哪怕删除所有mod与汉化文件、重置所有存档与设定、删掉所有相关注册表也根本没法解决\
+开[systom informer](https://www.systeminformer.com/)和[process monitor](https://learn.microsoft.com/en-us/sysinternals/downloads/procmon)扫过也没发现什么有用的信息\
+这我是真没招了，只能说我是真不想浪费这流量重装
